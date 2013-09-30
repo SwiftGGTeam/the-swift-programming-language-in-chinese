@@ -3,7 +3,7 @@ Language Guide
 
 .. container:: docdescription
 
-	**Overview**
+	.. rubric:: Overview
 
 	The Language Guide will provide a complete guide to all aspects of the language and standard library. It will have the following structure:
 
@@ -22,7 +22,7 @@ Language Guide
 
 .. container:: docdescription
 
-	**Overlap between the Language Guide and Reference Manual**
+	.. rubric:: Overlap between the Language Guide and Reference Manual
 
 	The Language Guide aims to cover every aspect of the language to at least some degree. However, it should not enforce absolute completeness of coverage if this is at the expense of narrative disclosure and the reader’s willingness to progress and learn. Where completeness is better served by a reference work, the Language Guide will point readers to the appropriate section of the :doc:`Reference Manual`.
 
@@ -33,7 +33,7 @@ Language Guide
 
 .. container:: docdescription
 
-	**Voice and style**
+	.. rubric:: Voice and style
 
 	The Language Guide will have a conversational style. It will be friendly but not too personal. It will be written as a continuing narrative, starting each subject with a simple code example, and building further complexity into the same example until it is no longer the best way to illustrate the current subject, or until the subject changes sufficiently as to require a different example.
 

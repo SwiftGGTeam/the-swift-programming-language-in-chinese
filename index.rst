@@ -10,16 +10,16 @@ Contents
 
 .. container:: docdescription
 
-	**Positioning statement**
+	.. rubric:: Positioning statement
 
 	This book will be Swift’s equivalent of `The C Programming Language <http://en.wikipedia.org/wiki/The_C_Programming_Language>`_ – i.e. the canonical work on the language, its syntax, and its standard library of functions.
 
 
 .. container:: docdescription
 
-	**Structure**
+	.. rubric:: Structure
 
-	*The Swift Programming Language* will be split into three parts:
+	`The Swift Programming Language` will be split into three parts:
 	
 	* an introductory :doc:`Foreword` from the language’s authors, positioning why the language has been created (and how it relates to other languages), together with a statement of its overall design goals and principles;
 	* a :doc:`Language Guide`, introducing the language and standard library through code examples and exercises; and
@@ -28,9 +28,9 @@ Contents
 
 .. container:: docdescription
 
-	**Audience**
+	.. rubric:: Audience
 
-	The audience for *The Swift Programming Language* is very broad. It includes:
+	The audience for `The Swift Programming Language` is very broad. It includes:
 
 	* developers who have created a single iOS app in Objective-C, and are only vaguely aware of its principles and structure
 	* developers who have been coding in Objective-C for some years, and are confident and comfortable with its syntax and principle
@@ -45,9 +45,9 @@ Contents
 	
 .. container:: docdescription
 
-	**Purpose**
+	.. rubric:: Purpose
 
-	*The Swift Programming Language* has a dual role:
+	`The Swift Programming Language` has a dual role:
 
 	1. It is the definitive reference work to the Swift language and standard library, including if that language is open-sourced at some point in the future
 	2. It is the language reference work for anyone looking to undertake development for Apple platforms, specifically iOS and OS X
@@ -56,21 +56,21 @@ Contents
 
 	It is for this reason that I have positioned the chapter (or chapters) on Swift’s integration with Objective-C and Cocoa after the chapters on the language and standard library. In theory, the book could be published without this additional material as a stand-alone reference with no Apple-specific context. (However, this is not something I believe we intend to do in the immediate future.)
 
-	*The Swift Programming Language* is not intended to act as a migration guide for developers moving their code from Objective-C to Swift, and a separate document will be created to serve this purpose. Wherever possible, The Swift Programming Language will be written in such a way that it is a timeless description of the language and standard library, rather than a document that has been created specifically for WWDC 2014.
+	`The Swift Programming Language` is not intended to act as a migration guide for developers moving their code from Objective-C to Swift, and a separate document will be created to serve this purpose. Wherever possible, The Swift Programming Language will be written in such a way that it is a timeless description of the language and standard library, rather than a document that has been created specifically for WWDC 2014.
 
 	Where appropriate, the :doc:`Language Guide` may describe how Swift’s use of particular concepts is similar to or different from other languages. This will, however, primarily focus on its relationship to Objective-C, as this is the language with which we expect many readers to have at least some familiarity.
 
 
 .. container:: docdescription
 
-	**Core language vs standard library**
+	.. rubric:: Core language vs standard library
 
-	One of the design principles of Swift is that the language and its standard library are very tightly integrated. To this end, *The Swift Programming Language* will not differentiate between the two within either the :doc:`Language Guide` or :doc:`Reference Manual` sections. Rather, it will introduce the concepts developers need from both sources in the order that is most useful for learning and comprehension.
+	One of the design principles of Swift is that the language and its standard library are very tightly integrated. To this end, `The Swift Programming Language` will not differentiate between the two within either the :doc:`Language Guide` or :doc:`Reference Manual` sections. Rather, it will introduce the concepts developers need from both sources in the order that is most useful for learning and comprehension.
 
 
 
 .. container:: docdescription
 
-	**Voice and style**
+	.. rubric:: Voice and style
 
 	The two top-level sections of the book will each be written with a consistent voice within that section. While the two sections will also aim for overall consistency, they each serve quite different purposes, and as such should not enforce unity of voice if it is to the detriment of clarity of communication given each section’s purpose.
