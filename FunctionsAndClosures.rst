@@ -70,3 +70,115 @@ Functions
 		        }
 		(swift) fetchBetterGasPrices().midgrade
 		// Float = 3.59
+
+
+Closures
+--------
+
+.. refnote:: From the Guided Tour:
+
+	A closure is just a function without a name. As an example, the ``sort()`` library function takes an array of strings and sorts them using a comparison closure::
+
+		(swift) var strings = ["Hello", "Bye", "Good day"]
+		// strings : String[] = ["Hello", "Bye", "Good day"]
+		(swift) var sortedStrings = sort(strings, {
+					(lhs : String, rhs : String) -> Bool in
+					return lhs.toUpper() < rhs.toUpper()
+				  })
+		// sortedStrings : String[] = ["Bye", "Good day", "Hello"]
+		(swift) for eachString in sortedStrings {
+				  println(eachString)
+				}
+		Bye
+		Good day
+		Hello
+		(swift)
+
+	The closure in this example is described in curly braces:
+
+	.. code-block:: swift
+
+		{ 
+		  (lhs : String, rhs : String) -> Bool in
+		  return lhs.toUpper() < rhs.toUpper() 
+		}
+
+	The parentheses denote the parameters of the closure, followed by the
+	return type, then "in" to separate the signature of the closure from
+	its body. As you've already seen throughout this tour, the types in a Swift expression can be omitted if they can be inferred from the context. In this case, the parameter and return types can be inferred, so aren't necessary::
+
+		(swift) sortedStrings = sort(strings, { (lhs, rhs) in
+				  return lhs.toUpper() < rhs.toUpper() 
+				})
+		(swift) 
+
+	One can also omit the names of the parameters, using the positional
+	placeholders ``$0``, ``$1``, and so on. The ``return`` can also be
+	omitted from single-expression closures, as in::
+
+		(swift) sortedStrings = sort(strings, {$0 < $1})
+		(swift) 
+
+	Closures can also capture any variable from the local scope::
+
+		(swift) var uppercase = true
+		// uppercase : Bool = true
+		(swift) sortedStrings = sort(strings, { (x, y) in 
+					if uppercase {
+					  x = x.toUpper()
+					  y = y.toUpper()
+					}
+					return x < y
+				  }
+				)
+		(swift) 
+
+	Note that if a closure captures a value, Swift automatically manages the storage of the original variable such that you can change the value from within the closure without the need for any keywords on the original declaration. Internally, Swift also makes sure that if the closure outlives the scope of the original variable declaration, everything still "just works":
+
+	.. code-block:: swift
+
+		var someValue = 42
+	
+		dispatch_async(someQueue, {
+			println("Value is \(someValue)")
+			someValue += 1
+		})
+
+	Closures are typically the last argument to a function. In such cases,
+	one can place the closure outside of the parentheses:
+
+	.. code-block:: swift
+
+		var someValue = 42
+	
+		dispatch_async(someQueue) {
+			println("Value is \(someValue)")
+			someValue += 1
+		}
+	
+	For longer closures, or cases where the same function will be re-used
+	several times, you may prefer to use a local function instead::
+
+		(swift) func compareStrings(lhs : String, rhs : String) -> Bool {
+				  if uppercase {
+					lhs = lhs.toUpper()
+					rhs = rhs.toUpper()
+				  }
+				  return lhs < rhs
+				}
+		(swift) sortedStrings = sort(strings, compareStrings)
+		(swift) 
+
+	A closure argument to a function is just like any other argument, with a colon ``:`` "is a," followed by the function arguments and return type::
+
+		(swift) func repeat(count : Int, myClosure : () -> Void) {
+				  for i in 0..count {
+					myClosure()
+				  }
+				}
+		(swift) repeat(3, {println("Hello!")})
+		Hello!
+		Hello!
+		Hello!
+		(swift) 
+
