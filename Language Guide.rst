@@ -1,7 +1,7 @@
 Language Guide
 ==============
 
-.. annotation:: Overview
+.. docnote:: Overview
 
 	The Language Guide will provide a complete guide to all aspects of the language and standard library. It will have the following structure:
 
@@ -18,7 +18,7 @@ Language Guide
 	The book’s aim is to introduce the language to developers, rather than to describe the detail of its creation. It will not look ‘behind the scenes’,and neither section of the book will cover the Swift compiler, the Swift Intermediate Language (SIL), or the Swift lexer and type checker.
 
 
-.. annotation:: Overlap between the Language Guide and Reference Manual
+.. docnote:: Overlap between the Language Guide and Reference Manual
 
 	The Language Guide aims to cover every aspect of the language to at least some degree. However, it should not enforce absolute completeness of coverage if this is at the expense of narrative disclosure and the reader’s willingness to progress and learn. Where completeness is better served by a reference work, the Language Guide will point readers to the appropriate section of the :doc:`Reference Manual`.
 
@@ -27,7 +27,7 @@ Language Guide
 	The book’s aim is to introduce the language to developers, rather than to describe the detail of its creation. It will not look ‘behind the scenes’,and neither section of the book will cover the Swift compiler, the Swift Intermediate Language (SIL), or the Swift lexer and type checker.
 
 
-.. annotation:: Voice and style
+.. docnote:: Voice and style
 
 	The Language Guide will have a conversational style. It will be friendly but not too personal. It will be written as a continuing narrative, starting each subject with a simple code example, and building further complexity into the same example until it is no longer the best way to illustrate the current subject, or until the subject changes sufficiently as to require a different example.
 
@@ -91,7 +91,7 @@ Basic types
 * Pattern binding
 * Literals
 
-.. annotation:: Metatypes and static functions
+.. docnote:: Metatypes and static functions
 
 	Is this the right section for metatypes and static functions? My understanding (from an initial reading) is that they are roughly analogous to class methods in Objective-C, but can be implemented on any type; however, this may be a slightly over-complex concept for this early in the book.
 
@@ -113,7 +113,7 @@ Strings and characters
 * String interpolation
 * printf() and string formatting
 
-.. annotation:: Strings and characters
+.. docnote:: Strings and characters
 
 	I've given string definition and manipulation its own chapter, as it's such a fundamental thing that developers do all the time, and we have a lot of flexibility to cover.
 
@@ -129,7 +129,7 @@ Generics
 * Creating generic functions, classes etc.
 * Delayed Identifier Resolution
 
-.. annotation:: Generics
+.. docnote:: Generics
 
 	I've given generics their own chapter, as the ability to define one's own generics (in addition to the library-provided ones) is such a powerful part of Swift. I've also included Delayed Identifier Resolution here, as it feels conceptually like part of Swift's ability to deal with types in a generic way.
 
@@ -142,7 +142,7 @@ Control flow
 * Switch statement (including pattern matching)
 * Control transfer (return, break, continue, fallthrough)
 
-.. annotation:: Control flow
+.. docnote:: Control flow
 
 	Some aspects of control flow will already have been introduced before this chapter as part of the language tour. I'm envisaging that the basic flow control introduced in that chapter will provide enough flexibility to get us through the chapters on types, operators, strings and generics, before going into much more detail on all the possibilities here.
 
@@ -161,7 +161,7 @@ Functions and closures
 * Thick and thin functions (?)
 * Attributes (infix, resilience, inout, auto_closure, noreturn)
 
-.. annotation:: Functions and closures
+.. docnote:: Functions and closures
 
 	I've grouped functions and closures into a single chapter, as they are so closely interlinked (and frequently interchangeable) in Swift. This also gives us a good opportunity to discuss when it is best to use each approach.
 
@@ -179,7 +179,7 @@ Classes, objects and structures
 * Super
 * Memory management
 
-.. annotation:: Objects and structs
+.. docnote:: Objects and structs
 
 	I've grouped ``object`` and ``struct`` together because they are very similar in Swift, at least in practice. This enables me to cover how they *do* differ in practice – something which has the potential to trip people up – and to discuss Swift's approach to passing by value and by reference in more detail.
 
@@ -197,7 +197,7 @@ Protocols
 * Default implementations of methods
 * Protocol compositions
 
-.. annotation:: Extensions and protocols
+.. docnote:: Extensions and protocols
 
 	I'm wondering whether extensions and protocols should be combined into a single chapter.
 
@@ -212,7 +212,7 @@ Standard functions
 * sort()
 * etc.
 
-.. annotation:: Standard functions vs Standard Library
+.. docnote:: Standard functions vs Standard Library
 
 	I deliberately haven't referred to this as the ‘Standard Library’, for reasons mentioned previously. However, this does beg the question: are there enough standard functions to warrant a stand-alone (and potentially rather dry) chapter? Should some of these (find, swap, sort, map) be covered under Generics, and others (min, max) under Basic Types instead?
 
@@ -236,13 +236,13 @@ Interacting with Objective-C
 * Relationship to message send syntax
 
 
-.. annotation:: Things I haven't yet found a good home for
+.. docnote:: Things I haven't yet found a good home for
 
 	* ``import``
 	* Name binding
 	
 
-.. annotation:: Things I deliberately haven't included in the Language Guide (which may or may not be correct)
+.. docnote:: Things I deliberately haven't included in the Language Guide (which may or may not be correct)
 
 	* AppKit
 	* Integration with Interface Builder
