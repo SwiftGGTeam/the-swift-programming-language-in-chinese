@@ -62,3 +62,158 @@ Language Guide
 	The Language Guide will include exercises for the reader within its narrative chapters. These exercises will be included as appropriate at the end of logical sections of each chapter, and not just at the end of the chapter itself. Each exercise will encourage the reader to experiment with and build upon the concepts within that section of the chapter. It will be possible to complete these exercises without the need for the reader to refer to new concepts that have yet to be introduced.
 
 	Standard answers for every exercise will be written as part of the book’s creation. For the book’s electronic edition, these will be made available as part of the Swift playground system. For the printed book, the standard answers will be made available as part of an accompanying source code download file, to be hosted on Apple servers.
+
+Language Guide structure
+========================
+
+A Tour of the Swift Language
+----------------------------
+
+* Basic grammar structure
+* Braces, semicolons and whitespace
+* Comments
+* Lack of header files
+
+Basic types
+-----------
+
+* Declaration syntax
+* Naming conventions
+* Integer types
+* Floating point types
+* Bool
+* No suffixes for integers / floats
+* Lack of promotion and truncation
+* Lazy initialization
+* Characters
+* Strings
+* Tuples
+* Enums
+* Type inference
+* Type casting through type initializers
+
+Basic operators
+---------------
+
+* An introduction to the basic operators in Swift
+
+Strings and characters
+----------------------
+
+* String literals
+* Substrings and iteration
+* String encoding and Unicode support
+* String interpolation
+* printf() and string formatting
+
+Generics
+--------
+
+* Vector
+* Array
+* Dictionary
+* (other generics from the Standard Library)
+* Typing of generics
+* Working with subscripts
+* Creating generic functions, classes etc.
+
+Flow control
+------------
+
+* Conditional branching
+* Looping
+* Iteration
+* Switch / pattern matching
+
+Functions and closures
+----------------------
+
+* Functions
+* Function signatures
+* Naming conventions
+* Closures
+* Trailing closures
+* Nested closures
+* Capturing values
+* Different closure expression forms
+* Thick and thin functions (?)
+* Attributes (infix, resilience, inout, auto_closure, noreturn)
+
+Classes, objects and structures
+-------------------------------
+
+* Classes
+* Objects
+* Structures
+* Instance variables
+* Getters and setters
+* Constructors and destructors
+* Instance and class methods
+* Working with self and Self
+* Memory management
+* Metatypes and static functions on types
+
+.. container:: docdescription
+
+	I've grouped ``object`` and ``struct`` together because they are very similar in Swift, at least in practice. This enables me to cover how they *do* differ in practice – something which has the potential to trip people up – and to discuss Swift's approach to passing by value and by reference in more detail.
+
+	Is this the right section for metatypes and static functions? My understanding (from an initial reading) is that they are roughly analogous to class methods in Objective-C, but this may be incorrect.
+
+Extensions
+----------
+
+* Extending classes and structures
+
+Protocols
+---------
+
+* Definition of protocols
+* Adoption of protocols
+* Standard protocols (Equatable etc.)
+* Default implementations of methods
+
+Standard functions
+------------------
+
+* find()
+* min()
+* max()
+* map()
+* swap()
+* sort()
+* etc.
+
+Interacting with Objective-C
+----------------------------
+
+* Compatibility with Objective-C (and related C) basic data types
+* Importing modules
+* Working with Objective-C classes, methods and properties
+* id compatibility
+* Inheriting Objective-C classes
+* Objective-C protocols
+* Objective-C containers, structures and enums
+* Initializing Objective-C objects
+* Extending Objective-C types
+* Working with Objective-C selectors
+* Dot syntax
+* Blocks, and how they relate to closures
+* Importing Objective-C macros
+* Overloading and selectors
+* Relationship to message send syntax
+
+
+.. container:: docdescription
+
+	.. rubric:: Things I haven't yet found a good home for:
+
+	* ``import``
+	
+
+.. container:: docdescription
+
+	.. rubric:: Things I deliberately haven't included in the Language Guide (which may be incorrect)
+
+	* AppKit
+	* Integration with Interface Builder
+	* Concurrency
