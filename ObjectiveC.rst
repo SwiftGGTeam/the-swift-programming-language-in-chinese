@@ -19,11 +19,7 @@ Interacting with Objective-C and Cocoa
 	* Overloading and selectors
 	* Relationship to message send syntax
 
-
-Interacting with Objective-C and Cocoa
---------------------------------------
-
-.. refnote:: From the Guided Tour:
+.. refnote:: Guided Tour: Interacting with Objective-C and Cocoa
 
 	A major design goal for Swift is seamless interoperation with Objective-C and
 	our existing frameworks. You use the same syntax to work with Cocoa framework
@@ -139,11 +135,7 @@ Interacting with Objective-C and Cocoa
 	If you do this, the extensions are not visible to Objective-C code, because it
 	has no way to model this.  It is extremely useful in Swift code though.
 
-
-Invoking Objective-C Selectors
-------------------------------
-
-.. refnote:: From the Guided Tour:
+.. refnote:: Guided Tour: Invoking Objective-C Selectors
 
 	When invoking an Objective-C selector that takes one argument (or no arguments), you simply use the Swift function call syntax::
 
@@ -163,11 +155,7 @@ Invoking Objective-C Selectors
 		// NSRange = NSRange(12, 1)
 		(swift) 
 
-
-AppKit Magic
-------------
-
-.. refnote:: From the Guided Tour:
+.. refnote:: Guided Tour: AppKit Magic:
 
 	You're not just limited to working with Foundation classes in the REPL. When importing Cocoa, the REPL sets up a run loop for you, so you can also test AppKit classes, like ``NSWindow``::
 	

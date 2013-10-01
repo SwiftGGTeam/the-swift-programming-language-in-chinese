@@ -13,10 +13,7 @@ Control flow
 	* Switch statement (including pattern matching)
 	* Control transfer (return, break, continue, fallthrough)
 
-Branching and Looping
----------------------
-
-.. refnote:: From the Guided Tour:
+.. refnote:: Guided Tour: Branching and Looping
 
 	Swift supports the usual conditional and flow control statements. Parentheses are optional around conditions, but braces are required to avoid ambiguity issues like the dangling else problem, so a typical branch looks like this::
 
@@ -79,7 +76,7 @@ Branching and Looping
 Switch
 ------
 
-.. refnote:: From the Guided Tour:
+.. refnote:: Guided Tour: Switch
 
 	Swift supports a switch statement superficially similar to the one in C::
 

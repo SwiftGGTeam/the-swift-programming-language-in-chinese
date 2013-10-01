@@ -16,12 +16,49 @@ Generics
 	* Creating generic functions, classes etc.
 	* Delayed Identifier Resolution
 
+.. refnote:: Types and Values: Arrays
 
+	Swift provides support for creating and manipulating arrays. Arrays can
+	be created with the ``new`` operator::
 
-Generics
---------
+	  (swift) var array = new Int[10]
+	  // array : Int[] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
-.. refnote:: From the Guided Tour:
+	One can use subscripting to access or modify elements of
+	the array. This operation is bounds-checked to provide memory safety::
+
+	  (swift) for i in 0..10 { array[i] = i }
+	  (swift) array
+	  // array : Int[] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+	The type ``Int[]`` is an array *slice* with elements of type ``Int``,
+	meaning it refers to all or part of an existing array. For example, if
+	one assigns it to another variable, only the reference is copied: the
+	two slices share the same underlying data::
+
+	  (swift) var array2 = array
+	  // array2 : Int[] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+	  (swift) array2[0] = 11
+	  (swift) array2
+	  // array2 : Int[] = [11, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+	  (swift) array
+	  // array : Int[] = [11, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+	As implied by the name, array slices can themselves be sliced by
+	subscripting with an index range. For example, one can select the
+	elements from index 3 to index 7 (noninclusive) with::
+
+	  (swift) array[3..7]
+	  // r1 : Int[] = [3, 4, 5, 6]
+
+	Arrays can also be constructed with array literals, which are
+	comma-separted lists of array elements enclosed in square brackets::
+
+	  (swift) array = [1, 1, 2, 3, 5, 8]
+	  (swift) array
+	  // array : Int[] = [1, 1, 2, 3, 5, 8]
+
+.. refnote:: Guided Tour: Generics
 
 	Swift supports generics through parameterized types. As an example, the standard library includes the ``Vector`` class, which makes it easy to work with typed collections (though it is important to note that the entire standard library is at best a strawman design right now)::
 

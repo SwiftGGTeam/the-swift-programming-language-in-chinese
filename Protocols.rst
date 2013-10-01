@@ -13,11 +13,7 @@ Protocols
 
 	I'm wondering whether extensions and protocols should be combined into a single chapter.
 
-
-Protocols
----------
-
-.. refnote:: From the Guided Tour:
+.. refnote:: Guided Tour: Protocols
 
 	A protocol is an abstract description of behavior---usually related functions and/or properties---that can be adopted by one or more types::
 
