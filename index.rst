@@ -8,16 +8,13 @@ Contents
 	Language Guide
 	Reference Manual
 
-.. container:: docdescription
 
-	.. rubric:: Positioning statement
+.. annotation:: Positioning Statement
 
 	This book will be Swift’s equivalent of `The C Programming Language <http://en.wikipedia.org/wiki/The_C_Programming_Language>`_ – i.e. the canonical work on the language, its syntax, and its standard library of functions.
 
 
-.. container:: docdescription
-
-	.. rubric:: Structure
+.. annotation:: Structure
 
 	`The Swift Programming Language` will be split into three parts:
 	
@@ -26,9 +23,7 @@ Contents
 	* a complete :doc:`Reference Manual` for the language and standard library.
 
 
-.. container:: docdescription
-
-	.. rubric:: Audience
+.. annotation:: Audience
 
 	The audience for `The Swift Programming Language` is very broad. It includes:
 
@@ -42,10 +37,9 @@ Contents
 	I propose we adopt the same approach as *The C Programming Language*:
 
 		“The book is not an introductory programming manual; it assumes some familiarity with basic programming concepts like variables, assignment statements, loops, and functions. Nonetheless, a novice programmer should be able to read along and pick up the language, although access to a more knowledgeable colleague will help.”
-	
-.. container:: docdescription
 
-	.. rubric:: Purpose
+
+.. annotation:: Purpose
 
 	`The Swift Programming Language` has a dual role:
 
@@ -61,16 +55,11 @@ Contents
 	Where appropriate, the :doc:`Language Guide` may describe how Swift’s use of particular concepts is similar to or different from other languages. This will, however, primarily focus on its relationship to Objective-C, as this is the language with which we expect many readers to have at least some familiarity.
 
 
-.. container:: docdescription
-
-	.. rubric:: Core language vs standard library
+.. annotation:: Core language vs standard library
 
 	One of the design principles of Swift is that the language and its standard library are very tightly integrated. To this end, `The Swift Programming Language` will not differentiate between the two within either the :doc:`Language Guide` or :doc:`Reference Manual` sections. Rather, it will introduce the concepts developers need from both sources in the order that is most useful for learning and comprehension.
 
 
-
-.. container:: docdescription
-
-	.. rubric:: Voice and style
+.. annotation:: Voice and style
 
 	The two top-level sections of the book will each be written with a consistent voice within that section. While the two sections will also aim for overall consistency, they each serve quite different purposes, and as such should not enforce unity of voice if it is to the detriment of clarity of communication given each section’s purpose.
