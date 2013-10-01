@@ -2,11 +2,11 @@ Contents
 ========
 
 .. toctree::
-	:maxdepth: 1
+	:maxdepth: 2
 
 	Foreword
-	Language Guide
-	Reference Manual
+	LanguageGuide
+	ReferenceManual
 
 
 .. docnote:: Positioning Statement
@@ -19,8 +19,8 @@ Contents
 	`The Swift Programming Language` will be split into three parts:
 	
 	* an introductory :doc:`Foreword` from the language’s authors, positioning why the language has been created (and how it relates to other languages), together with a statement of its overall design goals and principles;
-	* a :doc:`Language Guide`, introducing the language and standard library through code examples and exercises; and
-	* a complete :doc:`Reference Manual` for the language and standard library.
+	* a :doc:`LanguageGuide`, introducing the language and standard library through code examples and exercises; and
+	* a complete :doc:`ReferenceManual` for the language and standard library.
 
 
 .. docnote:: Audience
@@ -52,12 +52,12 @@ Contents
 
 	`The Swift Programming Language` is not intended to act as a migration guide for developers moving their code from Objective-C to Swift, and a separate document will be created to serve this purpose. Wherever possible, The Swift Programming Language will be written in such a way that it is a timeless description of the language and standard library, rather than a document that has been created specifically for WWDC 2014.
 
-	Where appropriate, the :doc:`Language Guide` may describe how Swift’s use of particular concepts is similar to or different from other languages. This will, however, primarily focus on its relationship to Objective-C, as this is the language with which we expect many readers to have at least some familiarity.
+	Where appropriate, the :doc:`LanguageGuide` may describe how Swift’s use of particular concepts is similar to or different from other languages. This will, however, primarily focus on its relationship to Objective-C, as this is the language with which we expect many readers to have at least some familiarity.
 
 
 .. docnote:: Core language vs standard library
 
-	One of the design principles of Swift is that the language and its standard library are very tightly integrated. To this end, `The Swift Programming Language` will not differentiate between the two within either the :doc:`Language Guide` or :doc:`Reference Manual` sections. Rather, it will introduce the concepts developers need from both sources in the order that is most useful for learning and comprehension.
+	One of the design principles of Swift is that the language and its standard library are very tightly integrated. To this end, `The Swift Programming Language` will not differentiate between the two within either the :doc:`LanguageGuide` or :doc:`ReferenceManual` sections. Rather, it will introduce the concepts developers need from both sources in the order that is most useful for learning and comprehension.
 
 
 .. docnote:: Voice and style
