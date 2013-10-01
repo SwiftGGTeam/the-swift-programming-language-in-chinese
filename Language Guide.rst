@@ -63,8 +63,6 @@ Language Guide
 
 	Standard answers for every exercise will be written as part of the book’s creation. For the book’s electronic edition, these will be made available as part of the Swift playground system. For the printed book, the standard answers will be made available as part of an accompanying source code download file, to be hosted on Apple servers.
 
-Language Guide structure
-========================
 
 A Tour of the Swift Language
 ----------------------------
@@ -73,6 +71,7 @@ A Tour of the Swift Language
 * Braces, semicolons and whitespace
 * Comments
 * Lack of header files
+* Introduction to the core concepts from the chapters below
 
 Basic types
 -----------
@@ -82,20 +81,34 @@ Basic types
 * Integer types
 * Floating point types
 * Bool
+* Void
 * No suffixes for integers / floats
 * Lack of promotion and truncation
 * Lazy initialization
-* Characters
-* Strings
+* A brief mention of characters and strings
 * Tuples
 * Enums
+* Enum element patterns
+* Typealiases
 * Type inference
 * Type casting through type initializers
+* Metatypes and static functions on types
+* Optional types
+* Pattern binding
+* Literals
 
-Basic operators
----------------
+.. container:: docdescription
 
-* An introduction to the basic operators in Swift
+	Is this the right section for metatypes and static functions? My understanding (from an initial reading) is that they are roughly analogous to class methods in Objective-C, but can be implemented on any type; however, this may be a slightly over-complex concept for this early in the book.
+
+Operators and expressions
+-------------------------
+
+* Arithmetic operators
+* Relational and equality operators
+* Short circuiting logical operators
+* Expressions
+* The ‘is’ pattern
 
 Strings and characters
 ----------------------
@@ -106,38 +119,57 @@ Strings and characters
 * String interpolation
 * printf() and string formatting
 
+.. container:: docdescription
+
+	I've given string definition and manipulation its own chapter, as it's such a fundamental thing that developers do all the time, and we have a lot of flexibility to cover.
+
 Generics
 --------
 
 * Vector
 * Array
 * Dictionary
-* (other generics from the Standard Library)
+* (any other generics from the Standard Library)
 * Typing of generics
 * Working with subscripts
 * Creating generic functions, classes etc.
+* Delayed Identifier Resolution
 
-Flow control
+.. container:: docdescription
+
+	I've given generics their own chapter, as the ability to define one's own generics (in addition to the library-provided ones) is such a powerful part of Swift. I've also included Delayed Identifier Resolution here, as it feels conceptually like part of Swift's ability to deal with types in a generic way.
+
+Control flow
 ------------
 
-* Conditional branching
-* Looping
-* Iteration
-* Switch / pattern matching
+* Conditional branching (if)
+* Looping (while, do while, for, for in)
+* Iterators
+* Switch statement (including pattern matching)
+* Control transfer (return, break, continue, fallthrough)
+
+.. container:: docdescription
+
+	Some flow control will already have been introduced before this chapter as part of the language tour. I'm envisaging that the basic flow control introduced in that chapter will provide enough flexibility to get us through the chapters on types, operators, strings and generics, before going into much more detail on all the possibilities here.
 
 Functions and closures
 ----------------------
 
 * Functions
-* Function signatures
+* Function signatures (including pattern matching)
 * Naming conventions
 * Closures
 * Trailing closures
 * Nested closures
 * Capturing values
 * Different closure expression forms
+* Anonymous closure arguments
 * Thick and thin functions (?)
 * Attributes (infix, resilience, inout, auto_closure, noreturn)
+
+.. container:: docdescription
+
+	I've grouped functions and closures into a single chapter, as they are so closely interlinked (and frequently interchangeable) in Swift. This also gives us a good opportunity to discuss when it is best to use each approach.
 
 Classes, objects and structures
 -------------------------------
@@ -150,17 +182,15 @@ Classes, objects and structures
 * Constructors and destructors
 * Instance and class methods
 * Working with self and Self
+* Super
 * Memory management
-* Metatypes and static functions on types
 
 .. container:: docdescription
 
 	I've grouped ``object`` and ``struct`` together because they are very similar in Swift, at least in practice. This enables me to cover how they *do* differ in practice – something which has the potential to trip people up – and to discuss Swift's approach to passing by value and by reference in more detail.
 
-	Is this the right section for metatypes and static functions? My understanding (from an initial reading) is that they are roughly analogous to class methods in Objective-C, but this may be incorrect.
-
 Extensions
-----------
+------------------------
 
 * Extending classes and structures
 
@@ -171,6 +201,11 @@ Protocols
 * Adoption of protocols
 * Standard protocols (Equatable etc.)
 * Default implementations of methods
+* Protocol compositions
+
+.. container:: docdescription
+
+	I'm wondering whether extensions and protocols should be combined into a single chapter.
 
 Standard functions
 ------------------
@@ -182,6 +217,10 @@ Standard functions
 * swap()
 * sort()
 * etc.
+
+.. container:: docdescription
+
+	I deliberately haven't referred to this as the ‘Standard Library’, for reasons mentioned previously. However, this does beg the question: are there enough standard functions to warrant a stand-alone (and potentially rather dry) chapter? Should some of these (find, swap, sort, map) be covered under Generics, and others (min, max) under Basic Types instead?
 
 Interacting with Objective-C
 ----------------------------
@@ -208,11 +247,12 @@ Interacting with Objective-C
 	.. rubric:: Things I haven't yet found a good home for:
 
 	* ``import``
+	* Name binding
 	
 
 .. container:: docdescription
 
-	.. rubric:: Things I deliberately haven't included in the Language Guide (which may be incorrect)
+	.. rubric:: Things I deliberately haven't included in the Language Guide (which may or may not be correct)
 
 	* AppKit
 	* Integration with Interface Builder
