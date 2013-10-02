@@ -1,6 +1,62 @@
 Basic types
 ===========
 
+Numbers
+-------
+
+Swift provides :term:`integers` and :term:`floating-point numbers` in :term:`signed and unsigned` forms up to 128 bits in size. These basic numeric types follow a similar naming convention to C. An 8-bit unsigned integer is a ``UInt8``, and a signed 64-bit floating-point number is a ``Float64``. However, unlike C, these base types have capitalized names (``UInt8`` rather than ``uint8``). All types have capitalized names in Swift, and numbers are no exception. (See the :doc:`ReferenceManual` for a complete list of numeric types.)
+
+.. glossary::
+
+	integers
+		An integer is a whole number with no fractional component (such as ``42``, ``0`` and ``-23``).
+
+	floating-point numbers
+		A floating-point number (also known as a float) is a number with a fractional component (such as ``3.14159``, ``0.1`` or ``-273.15``).
+
+	signed and unsigned
+		Signed values can be positive or negative. Unsigned values can only be positive.
+
+In most cases, there's no need to pick a specific size of integer or floating-point number to use in your code. Swift provides three standard types, which can be used in almost all cases:
+
+* ``Int``, which is the same as ``Int64``, and should be used for integer values
+* ``Float``, which is the same as ``Float32``, and should be used for normal floating-point values
+* ``Double``, which is the same as ``Float64``, and should be used for very large floating-point values
+
+Unless you need to work with a :term:`specific size` of integer or floating-point number, you should always use ``Int``, ``Float`` or ``Double`` for code consistency and interoperability.
+
+.. glossary::
+
+	specific size
+		Certain tasks may require you to be more specific about the type of number that you need. You might use a ``Float16`` to read 16-bit audio samples, or a ``UInt8`` when working with raw 8-bit byte data, for example.
+
+Strong typing and type inference
+--------------------------------
+
+Swift is a :term:`strongly-typed language`. Strong typing enables Swift to perform type checks when it compiles your code, which helps to avoid accidental errors when working with different value types. However, this doesn't mean that you always have to provide an explicit type definition. If you don't specify the type of value you need, Swift will use :term:`type inference` to work out the appropriate type to use.
+
+.. glossary::
+
+	strongly-typed language
+		Strongly-typed languages require you to be clear about the types of values and objects your code can work with. If some part of your code expects a string, for example, strong typing means that you can't accidentally pass it an integer by mistake.
+
+	type inference
+		Type inference is the ability for a compiler to automatically deduce the type of a particular expression at compile-time (rather than at run-time). The Swift compiler can often infer the type of a variable without the need for explicit type definitions, just by examining the values you provide.
+
+For example: if you assign the value ``42`` to a variable, without saying what type it is::
+
+	(swift) var a = 42
+	// a : Int = 42
+
+…Swift will deduce that you want the variable to be an ``Int``, because you have initialized it with an integer value.
+
+Likewise, if you don't specify a type for a floating-point number::
+
+	(swift) var pi = 3.1415926
+	// pi : Double = 3.1415926
+
+…Swift assumes that you want to create a ``Double`` from the value of ``3.1415926``. (Swift always chooses ``Double`` rather than ``Float`` when inferring the type of floating-point numbers.)
+
 .. docnote:: Subjects to be covered in this section
 
 	* Declaration syntax
