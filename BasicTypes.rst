@@ -146,7 +146,8 @@ All of these literals are valid in Swift::
 	Is this the right section for metatypes and static functions? My understanding (from an initial reading) is that they are roughly analogous to class methods in Objective-C, but can be implemented on any type; however, this may be a slightly over-complex concept for this early in the book.
 
 .. refnote:: Language Reference: Integer Literals
-  
+  	:state: done
+
 	Definition::
 
 		integer_literal ::= [0-9][0-9_]*
@@ -173,6 +174,7 @@ All of these literals are valid in Swift::
 		0xFB
 
 .. refnote:: Language Reference: Floating Point Literals
+	:state: partdone
 
 	Definition::
 
@@ -211,6 +213,7 @@ All of these literals are valid in Swift::
 	types.
 
 .. refnote:: Types and Values: Integer Types
+  	:state: done
 
 	Like C, Swift supports 8, 16, 32, 64, and 128-bit integer in both signed and
 	unsigned form, and supports the same basic operator set.  Swift names these
@@ -318,6 +321,7 @@ All of these literals are valid in Swift::
 		2) "-x == x" if x == T.min()
 
 .. refnote:: Types and Values: Separators in Literals
+  	:state: done
 
 	Swift numeric literals may contain underscores as separators. These separators
 	don't affect the value of the literal, but can aid readability and make typos
@@ -327,6 +331,7 @@ All of these literals are valid in Swift::
 	  var MAXINT = 0x7FFF_FFFF_FFFF_FFFF
 
 .. refnote:: Types and Values: Floating Point Types
+  	:state: partdone
 
 	Swift names its floating point types ``Float32``, ``Float64`` (and eventually
 	``Float16``, ``Float80``, ``Float128``, etc).  In addition to these canonical
@@ -543,6 +548,7 @@ All of these literals are valid in Swift::
 	.. TODO: DollarIdent is $[0-9a-zA-Z_$]*
 
 .. refnote:: Lexical Structure: Integer Literals
+  	:state: partdone
 
 	Literal integers may be written in decimal, hexidecimal, octal or binary form,
 	following one of these regular expressions::
@@ -576,6 +582,7 @@ All of these literals are valid in Swift::
 	so you can write large, easy to read literals, such as ``1_000_000``.
 
 .. refnote:: Lexical Structure: Floating Point Literals
+  	:state: partdone
 
 	Floating point literals follow one of these regular expressions::
 
