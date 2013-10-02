@@ -155,7 +155,7 @@ Interacting with Objective-C and Cocoa
 		// NSRange = NSRange(12, 1)
 		(swift) 
 
-.. refnote:: Guided Tour: AppKit Magic:
+.. refnote:: Guided Tour: AppKit Magic
 
 	You're not just limited to working with Foundation classes in the REPL. When importing Cocoa, the REPL sets up a run loop for you, so you can also test AppKit classes, like ``NSWindow``::
 	

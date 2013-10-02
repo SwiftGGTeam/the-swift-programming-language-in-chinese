@@ -72,10 +72,6 @@ Control flow
 		Key: 'second', Value: 2
 		Key: 'third', Value: 3
 
-
-Switch
-------
-
 .. refnote:: Guided Tour: Switch
 
 	Swift supports a switch statement superficially similar to the one in C::
