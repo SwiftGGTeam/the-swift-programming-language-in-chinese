@@ -4,7 +4,7 @@ Basic types
 Numbers
 -------
 
-Swift provides :term:`integers` and :term:`floating-point numbers` in :term:`signed and unsigned` forms up to 128 bits in size. These basic numeric types follow a similar naming convention to C. An 8-bit unsigned integer is a ``UInt8``, and a signed 64-bit floating-point number is a ``Float64``. However, unlike C, these base types have capitalized names (``UInt8`` rather than ``uint8``). All types have capitalized names in Swift, and numbers are no exception. (See the :doc:`ReferenceManual` for a complete list of numeric types.)
+Swift provides :term:`integers` and :term:`floating-point numbers` in :term:`signed and unsigned` forms up to 128 bits in size. These basic numeric types follow a similar naming convention to C, in that an 8-bit unsigned integer is a ``UInt8``, and a signed 64-bit floating-point number is a ``Float64``. However, unlike C, these base types have capitalized names (``UInt8`` rather than ``uint8``). All types have capitalized names in Swift, and numbers are no exception. (See the :doc:`ReferenceManual` for a complete list of numeric types.)
 
 .. glossary::
 
@@ -21,7 +21,7 @@ In most cases, there's no need to pick a specific size of integer or floating-po
 
 * ``Int``, which is the same as ``Int64``, and should be used for integer values
 * ``Float``, which is the same as ``Float32``, and should be used for normal floating-point values
-* ``Double``, which is the same as ``Float64``, and should be used for very large floating-point values
+* ``Double``, which is the same as ``Float64``, and should be used when floating-point values need to be very large or precise
 
 Unless you need to work with a :term:`specific size` of integer or floating-point number, you should always use ``Int``, ``Float`` or ``Double`` for code consistency and interoperability.
 
@@ -29,6 +29,53 @@ Unless you need to work with a :term:`specific size` of integer or floating-poin
 
 	specific size
 		Certain tasks may require you to be more specific about the type of number that you need. You might use a ``Float16`` to read 16-bit audio samples, or a ``UInt8`` when working with raw 8-bit byte data, for example.
+
+Number literals
+---------------
+
+:term:`Number literals` can be expressed in several different ways. Integer literals can be either decimal (with no prefix), :term:`binary` (with a ``0b`` prefix), :term:`octal` (``0o`` prefix) or :term:`hexadecimal` (``0x`` prefix).
+
+.. glossary::
+
+	number literals
+		Number literals are fixed-value numbers included directly in your source code, such as ``42`` or ``3.14159``.
+
+	binary
+		Binary numbers are counted with two (rather than ten) basic units. They only ever contain the numbers ``0`` and ``1``. In binary notation, ``1`` is ``0b1``, and ``2`` is ``0b10``.
+
+	octal
+		Octal numbers are counted with eight (rather than ten) basic values. They only ever contain the numbers ``0`` to ``7``. In octal notation, ``7`` is ``0o7``, and ``8`` is ``0o10``.
+
+	hexadecimal
+		Hexadecimal numbers are counted with 16 (rather than ten) basic values. They contain the numbers ``0`` to ``9``, plus the letters ``A`` through ``F`` (to represent base units with values of ``10`` through ``15``). In hexadecimal notation, ``9`` is ``0x9``, ``10`` is ``0xA``, ``15`` is ``0xF``, and ``16`` is ``0x10``.
+
+All of these integer literals have a decimal value of ``17``::
+
+	(swift) var dec = 17
+	// dec : Int = 17
+	(swift) var bin = 0b10001	// 17 in binary notation
+	// bin : Int = 17
+	(swift) var oct = 0o21		// 17 in octal notation
+	// oct : Int = 17
+	(swift) var hex = 0x11		// 17 in hexadecimal notation
+	// hex : Int = 17
+
+Number literals can contain extra formatting to make them easier to read. Both integers and floats can be padded with :term:`extra zeroes` on the beginning (so ``01234 == 1234``), and can contain underscores to help with readability. Neither type of formatting affects the underlying value of the literal.
+
+.. glossary::
+
+	extra zeroes
+		In C, adding an extra zero to the beginning of an integer literal indicates that the literal is in octal notation. This isn't the case in Swift. Always add the ``0o`` prefix if your numbers are in octal notation.
+
+All of these literals are valid in Swift::
+
+	(swift) var oneMillion = 1_000_000
+	// oneMillion : Int = 1000000
+	(swift) var justOverOneMillion = 1_000_000.000_000_1
+	// justOverOneMillion : Double = 1000000.0000001
+	(swift) var paddedDouble = 000123.456
+	// paddedDouble : Double = 123.456
+
 
 Strong typing and type inference
 --------------------------------
@@ -118,8 +165,7 @@ Likewise, if you don't specify a type for a floating-point number::
 		floating_literal ::= [0-9][0-9_]*\.[0-9][0-9_]*
 		floating_literal ::= [0-9][0-9_]*\.[0-9][0-9_]*[eE][+-]?[0-9][0-9_]*
 		floating_literal ::= [0-9][0-9_]*[eE][+-]?[0-9][0-9_]*
-		floating_literal ::= 0x[0-9A-Fa-f][0-9A-Fa-f_]*
-							   (\.[0-9A-Fa-f][0-9A-Fa-f_]*)?[pP][+-]?[0-9][0-9_]*
+		floating_literal ::= 0x[0-9A-Fa-f][0-9A-Fa-f_]*(\.[0-9A-Fa-f][0-9A-Fa-f_]*)?[pP][+-]?[0-9][0-9_]*
 
 	Floating point literal tokens represent floating point values of unspecified precision. Decimal and hexadecimal floating-point literals are supported.
 
