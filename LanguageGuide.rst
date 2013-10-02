@@ -8,8 +8,8 @@ Language Guide
 	BasicTypes
 	OperatorsAndExpressions
 	Strings
-	Generics
 	ControlFlow
+	Generics
 	FunctionsAndClosures
 	ClassesObjectsAndStructs
 	Extensions

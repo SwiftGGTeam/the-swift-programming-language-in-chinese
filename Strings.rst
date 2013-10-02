@@ -86,6 +86,90 @@ Strings and characters
 	the language from the starting point.  See the rationale for ``Char`` for more
 	details on this design.
 
+.. refnote:: Lexical Structure: Character Literals
+
+	Character literals are enclosed in single quotes and may include an escape
+	sequence.  The specific regular expression is::
+
+	   character_literal ::= '([^'\\\n\r]|character_escape)'
+	   character_escape  ::= \\ | \t | \n | \r | \" | \'
+	   character_escape  ::= \x hex hex
+	   character_escape  ::= \u hex hex hex hex
+	   character_escape  ::= \U hex hex hex hex hex hex hex hex
+	   hex               ::= [0-9a-fA-F]
+
+	This follows C's style, allowing things like ``'x'`` and ``'\n'``, as well as
+	allowing direct use of unicode characters like ``'☃'`` and even high-characters
+	like Emoji ``'💩'``.
+
+	Character literals default to having type ``Char``, which holds a UTF-32
+	codepoint.  As with integer and floating point literals, character literals
+	work with any type that conforms to the right protocol.
+
+.. refnote:: Lexical Structure: String Literals
+
+	String literals are enclosed in double quotes, and support the same escape
+	sequences as character literals.  This follows C's general style, allowing
+	things like ``"hello Mr. Snowman! ☃"``.  String literals
+	default to having type ``String``, which holds a UTF-8 encoded unicode string.
+
+	Swift does not currently support a `Raw String Literal
+	<http://en.wikipedia.org/wiki/Raw_string#Raw_strings>`_ syntax, though we will
+	eventually design and implement one.
+
+.. refnote:: Lexical Structure: String Literal Interpolation
+
+	In addition to basic C-style string notation, Swift's string literals
+	support `String Literal Interpolation 
+	<http://en.wikipedia.org/wiki/String_interpolation>`_ through the use of the 
+	``\(xyz)`` escape sequence.  This allows natural and elegant substitution of
+	values into string literals, for example::
+
+	  var apples = 4, bananas = 3
+	  print("I have \(apples) apples")
+	  print("I have \(apples+bananas) pieces of fruit")
+
+	These escapes are processed by passing the subexpression into a constructor of
+	the string's base type, then concatenating the fixed pieces into the result. For
+	example::
+
+	  var a = "hello \(foo()) people"
+
+	is expanded out to::
+
+	  var a = "hello " + String(foo()) + " people"
+
+	This means that it is possible to interpolate any datatype into a string literal
+	that can be cast to that type.  For user defined datatypes, this is done by 
+	adding an extension [[todo: add link]] onto String.
+
+
+	**Rationale:** We consider strings to be one of the most important datatypes in
+	a modern language, and literal interpolation to be a critical feature that makes
+	them easy to use.  String literal interpolation is *not* a replacement for 100%
+	of the string formatting that you might want to do, but it does elegantly cover
+	a large number of the simple cases, and is frequently requested in Objective-C.
+
+	We considered a number of different syntaxes for string literal interpolation,
+	including ``"I have $apples apples"`` and ``"I have #{apples} apples"``.  After
+	extensive discussion, we settled on the ``\(expression)`` syntax, despite it
+	being somewhat subtle, for a number of reasons:
+
+	- We did not want to be gratuitously incompatible with C string literals. Taking
+	  over the ``$`` character in strings (for example) would require introducing
+	  new escape sequences and would be very surprising to people coming from the
+	  C family of languages.  Using a compatible syntax also makes it possible to
+	  bring this directly back to Objective-C.
+	- Any string interpolation syntax greatly benefits from proper syntax
+	  highlighting support in a source editor.  We believe that Xcode can do a great
+	  job highlighting the subexpression to make it clear what is executable code
+	  versus the fixed literal portion of a string.  We believe that this will solve
+	  the subtlety problem in practice.
+	- The parentheses are a natural grouping operator for expressions, so we do not
+	  need both a "single identifier" and an "arbitrary expression" syntax.
+	- The parentheses supports multiple argument constructors (e.g.
+	  ``"foo \(a,b) bar"`` calls ``String(a,b)``) which may or may not be useful.
+
 .. refnote:: Guided Tour: Strings
 
 	Because strings are such a common and essential part of any codebase, they are built right into Swift as a native datatype.  Swift strings are designed with natural and expressive syntax, to be fast and memory efficient, and to maintain transparent interoperation with Cocoa APIs and ``NSString``.

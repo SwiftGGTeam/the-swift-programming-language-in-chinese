@@ -351,6 +351,86 @@ Basic types
 		println("string value \(s)")
 	  }
 
+.. refnote:: Lexical Structure: Identifiers and Operators
+
+	Basic identifiers (e.g. used for variable, function and type names) in Swift
+	follow the regular expression ``[a-zA-Z_][a-zA-Z0-9_]*``. Unicode alphanumeric
+	and combining characters can also be used in identifiers::
+
+	  var one = 1
+	  var _0 = one - one
+	  var π = 3.14159
+
+	  protocol Mathematician {
+		var erdősNumber : Int
+	  }
+
+	  class Животное { }
+	  class Собака : Животное { }
+	  class Кошка : Животное { }
+
+	For operators, Swift uses the ``/=-+*%<>!&|^~.`` punctuation characters in various
+	combinations.
+
+	.. TODO: DollarIdent is $[0-9a-zA-Z_$]*
+
+.. refnote:: Lexical Structure: Integer Literals
+
+	Literal integers may be written in decimal, hexidecimal, octal or binary form,
+	following one of these regular expressions::
+
+	   integer_literal  ::= [0-9][0-9_]*
+	   integer_literal  ::= 0x[0-9a-fA-F][0-9a-fA-F_]*
+	   integer_literal  ::= 0o[0-7][0-7_]*
+	   integer_literal  ::= 0b[01][01_]*
+
+	Unlike in C, integers that start with a 0 (such as ``01234``) are not implicitly
+	octal.  This means that ``01234 == 1234`` in Swift, not ``01234 == 668`` as in
+	C.  To write an octal identifier, you must use the 0o prefix (e.g. ``0o1234``)
+	which makes the code more explicit and avoids a class of accidental errors.
+
+	If no other type is inferred, integer literals default to type ``Int``.  These
+	are equivalent::
+
+	  var x = 4
+	  var x : Int = 4
+
+	Swift does not use suffixes (e.g. `42ULL`) to denote literals of a specific
+	type.  These are generally unnecessary with Swift's strong type inference, and
+	an explicit type can be provided with a type cast if needed.  These
+	are three equivalent ways to achieve the same thing::
+
+	  var x1 : Int8 = 4
+	  var x2 = Int8(4)
+	  var x3 : Int8; x3 = 4
+
+	Swift allows the use of the underscore character as a digit separator,
+	so you can write large, easy to read literals, such as ``1_000_000``.
+
+.. refnote:: Lexical Structure: Floating Point Literals
+
+	Floating point literals follow one of these regular expressions::
+
+	   floating_literal ::= [0-9][0-9]_*\.[0-9][0-9_]*
+	   floating_literal ::= [0-9][0-9]*\.[0-9][0-9_]*[eE][+-]?[0-9][0-9_]*
+	   floating_literal ::= [0-9][0-9_]*[eE][+-]?[0-9][0-9_]*
+	   floating_literal ::= 0x[0-9A-Fa-f][0-9A-Fa-f_]*
+							  (\.[0-9A-Fa-f][0-9A-Fa-f_]*)?[pP][+-]?[0-9][0-9_]*
+
+	We require a digit on both sides of the dot to allow lexing ``4.km`` as
+	``4 . km`` instead of ``4. km`` and for a series of dots to be an operator (for
+	ranges).  The regex for decimal literals is same as Java, and the one for
+	hex literals is the same as C99, except that we do not allow a trailing
+	suffix that specifies a precision.
+
+	If no type is inferred, floating point literals default to having type
+	``Double``.  As with integer literals, suffixes are not used to select specific
+	types (e.g. ``0.1f`` in C).
+
+	As with integer literals, underscores may be used as separator characters
+	in arbitrary positions, such as ``3.1415_9265_359`` to improve
+	readability.
+
 .. refnote:: Guided Tour: Declaration syntax
 
 	In addition to the primary goals like safety and performance, Swift was also designed with consistency and clarity in mind. Wherever possible, the syntax follows the natural language order of expressing something. A variable declaration reads as *"declare a variable called X of type Y with initial value Z"*.
