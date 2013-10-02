@@ -17,6 +17,7 @@ Classes, objects and structures
 	* Working with self and Self
 	* Super
 	* Memory management
+	* UnsafePointer
 
 .. refnote:: Types and Values: Structures
 

@@ -140,6 +140,8 @@ All of these literals are valid in Swift::
 	* Optional types
 	* Pattern binding
 	* Literals
+	* Immutability
+	* (Don't redeclare objects within a REPL session)
 
 .. docnote:: Metatypes and static functions
 

@@ -5,6 +5,7 @@ Operators and expressions
 
 	* Arithmetic operators
 	* Relational and equality operators
+	* === vs ==
 	* Short circuiting logical operators
 	* Expressions
 	* The ‘is’ pattern
