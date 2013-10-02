@@ -9,6 +9,24 @@ A Tour of the Swift Language
 	* Lack of header files
 	* Introduction to the core concepts from each of the chapters in the Language Guide
 
+.. refnote:: Language Reference: Whitespace and Comments
+
+    Definition::
+    
+		whitespace ::= ' '
+		whitespace ::= '\n'
+		whitespace ::= '\r'
+		whitespace ::= '\t'
+		whitespace ::= '\0'
+		comment    ::= //.*[\n\r]
+		comment    ::= /* .... */
+
+	Space, newline, tab, and the nul byte are all considered whitespace and are discarded, with one exception:  a '(' or '[' which does not follow a non-whitespace character is different kind of token (called *spaced*) from one which does not (called *unspaced*). A '(' or '[' at the beginning of a file is spaced.
+  
+	Comments may follow the BCPL style, starting with a "//" and running to the	end of the line, or may be recursively nested /**/ style comments. Comments are ignored and treated as whitespace.
+
+	Nested block comments are important because we don't have the nestable "#if 0" hack from C to rely on.
+
 .. refnote:: Lexical Structure: Introduction
 
 	Source files in Swift are UTF-8 encoded text files, which are first tokenized

@@ -13,6 +13,54 @@ Strings and characters
 	* String interpolation
 	* printf() and string formatting
 
+.. refnote:: Langauge Reference: Character Literals
+
+	Definition::
+
+		character_literal ::= '[^'\\\n\r]|character_escape'
+		character_escape  ::= [\]0 [\][\] | [\]t | [\]n | [\]r | [\]" | [\]'
+		character_escape  ::= [\]x hex hex
+		character_escape  ::= [\]u hex hex hex hex
+		character_escape  ::= [\]U hex hex hex hex hex hex hex hex
+		hex               ::= [0-9a-fA-F]
+  
+	character_literal tokens represent a single character, and are surrounded by single quotes.
+
+	The ASCII and Unicode character escapes::
+
+		\0 == nul
+		\n == new line
+		\r == carriage return
+		\t == horizontal tab
+		\u == small Unicode code points
+		\U == large Unicode code points
+		\x == raw ASCII byte (less than 0x80)
+
+.. refnote:: Language Reference: String Literals
+
+	Definition::
+
+		string_literal   ::= ["]([^"\\\n\r]|character_escape|escape_expr)*["]
+		escape_expr      ::= [\]escape_expr_body
+		escape_expr_body ::= [(]escape_expr_body[)]
+		escape_expr_body ::= [^\n\r"()]
+  
+	string_literal tokens represent a string, and are surrounded by double quotes. String literals cannot span multiple lines.
+  
+	String literals may contain embedded expressions in them (known as "interpolated expressions") subject to some specific lexical constraints: the expression may not contain a double quote ["], newline [\n], or carriage return [\r].  All parentheses must be balanced.
+
+	In addition to these lexical rules, an interpolated expression must satisfy the <a href="#expr">expr</a> production of the general swift grammar.  This expression is evaluated, and passed to the constructor for the inferred type of the string literal.  It is concatenated onto any fixed portions of the string literal with a global "+" operator that is found through normal name lookup.
+
+	::
+
+		// Simple string literal.
+		"Hello world!"
+	
+		// Interpolated expressions.
+		"\(min)..\(max)" + "Result is \((4+i)*j)"
+
+	FIXME: Forcing + to concatenate strings is somewhat gross, a proper protocol would be better.
+
 .. refnote:: Types and Values: Char
 
 	Swift aims to have full `Unicode <http://en.wikipedia.org/wiki/Unicode>`_ 

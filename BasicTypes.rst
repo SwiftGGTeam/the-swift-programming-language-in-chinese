@@ -28,6 +28,58 @@ Basic types
 
 	Is this the right section for metatypes and static functions? My understanding (from an initial reading) is that they are roughly analogous to class methods in Objective-C, but can be implemented on any type; however, this may be a slightly over-complex concept for this early in the book.
 
+.. refnote:: Language Reference: Integer Literals
+  
+	Definition::
+
+		integer_literal ::= [0-9][0-9_]*
+		integer_literal ::= 0x[0-9a-fA-F][0-9a-fA-F_]*
+		integer_literal ::= 0o[0-7][0-7_]*
+		integer_literal ::= 0b[01][01_]*
+
+	Integer literal tokens represent simple integer values of unspecified precision. They may be expressed in decimal, binary with the ``0b`` prefix, octal with the ``0o`` prefix, or hexadecimal with the ``0x`` prefix. Unlike C, a leading zero does not affect the base of the literal.
+     
+	Integer literals may contain underscores at arbitrary positions after the first digit. These underscores may be used for human readability and do not affect the value of the literal.
+	
+	::
+
+		789
+		0789
+
+		1000000
+		1_000_000
+
+		0b111_101_101
+		0o755
+
+		0b1111_1011
+		0xFB
+
+.. refnote:: Language Reference: Floating Point Literals
+
+	Definition::
+
+		floating_literal ::= [0-9][0-9_]*\.[0-9][0-9_]*
+		floating_literal ::= [0-9][0-9_]*\.[0-9][0-9_]*[eE][+-]?[0-9][0-9_]*
+		floating_literal ::= [0-9][0-9_]*[eE][+-]?[0-9][0-9_]*
+		floating_literal ::= 0x[0-9A-Fa-f][0-9A-Fa-f_]*
+							   (\.[0-9A-Fa-f][0-9A-Fa-f_]*)?[pP][+-]?[0-9][0-9_]*
+
+	Floating point literal tokens represent floating point values of unspecified precision. Decimal and hexadecimal floating-point literals are supported.
+
+	The integer, fraction, and exponent of a floating point literal may each contain underscores at arbitrary positions after their first digits. These underscores may be used for human readability and do not affect the value of the literal. Each part of the floating point literal must however start with a digit; ``1._0`` would be a reference to the ``_0`` member of ``1``.
+	
+	::
+
+		1.0
+		1000000.75
+		1_000_000.75
+
+		0x1.FFFFFFFFFFFFFp1022
+		0x1.FFFF_FFFF_FFFF_Fp1_022
+
+	We require a digit on both sides of the dot to allow lexing ``4.km`` as ``4 . km`` instead of ``4. km`` and for a series of dots to be an operator (for ranges). The regex for decimal literals is same as Java, and the one for hex literals is the same as C99, except that we do not allow a trailing suffix that specifies a precision.
+
 .. refnote:: Types and Values: Introduction
 
 	Swift includes a full gamut of basic data types built into the language and
