@@ -1,6 +1,48 @@
 A Tour of the Swift Language
 ============================
 
+.. docnote:: Placeholder tour
+
+	The tour below is the whitepaper's Guided Tour. It has yet to be adapted / rewritten / replaced for use in the book, but in the absence of a new Tour, it's a good starting point for now.
+
+In addition to the primary goals like safety and performance, Swift was also designed with consistency and clarity in mind. Wherever possible, the syntax follows the natural language order of expressing something. A variable declaration reads as *"declare a variable called X of type Y with initial value Z"*.
+
+Let's start by declaring a variable ``a`` of type ``Int`` with an initial value of ``42``:
+
+.. testcode:: declareGroup
+
+    (swift) var a : Int = 42
+    // a : Int = 42
+
+Note that ``Int`` is capitalized. Swift follows the Objective-C naming convention consistently for all type names, including built-in types like ``Int`` and ``String``.
+
+As mentioned earlier, you can omit the type and it will be inferred automatically from the assigned value:
+
+.. testcode:: declareGroup
+
+    (swift) var b = 10
+    // b : Int = 10 
+
+Variables can also be named using non-English letters:
+
+.. testcode:: declareGroup
+
+    (swift) var 你好 = "你好世界"
+    // 你好 : String = "你好世界"
+    (swift) var π = 3.14159
+    // π : Double = 3.14159
+
+The standard operators work as expected (note that Swift relies on consistent spacing around operators; see Statements and Expressions for the rationale):
+
+.. testcode:: declareGroup
+
+    (swift) var c = a + b
+    // c : Int = 52
+    (swift) c - b * a
+    // Int = -368
+    (swift) sin(π/2)
+    // r1 : Double = 1.0
+
 .. docnote:: Subjects to be covered in this section
 
 	* Basic grammar structure

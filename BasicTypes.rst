@@ -1,6 +1,21 @@
 Basic types
 ===========
 
+Just some test code
+-------------------
+
+.. testcode:: multilineTest
+
+	(swift) var a = 42
+	// a : Int = 42
+	(swift) if a == 42 {
+	            a = 27
+	        } else {
+	            a = 31
+	        }
+	(swift) var b = a
+	// b : Int = 27
+
 Numbers
 -------
 
@@ -45,7 +60,7 @@ Swift is a :term:`strongly-typed language`. Strong typing enables Swift to perfo
 
 For example: if you assign the value ``42`` to a variable, without saying what type it is:
 
-.. testcode::
+.. testcode:: typeInference
 
 	(swift) var a = 42
 	// a : Int = 42
@@ -54,7 +69,7 @@ For example: if you assign the value ``42`` to a variable, without saying what t
 
 Likewise, if you don't specify a type for a floating-point number:
 
-.. testcode::
+.. testcode:: typeInference
 
 	(swift) var pi = 3.1415926
 	// pi : Double = 3.14159
@@ -88,7 +103,7 @@ Number literals
 
 All of these integer literals have a decimal value of ``17``:
 
-.. testcode::
+.. testcode:: numberLiterals
 
 	(swift) var dec = 17
 	// dec : Int = 17
@@ -101,7 +116,7 @@ All of these integer literals have a decimal value of ``17``:
 
 All of these floating-point literals have a decimal value of ``12.5``:
 
-.. testcode::
+.. testcode:: numberLiterals
 
 	(swift) var dec = 12.5
 	// dec : Double = 12.5
@@ -117,12 +132,14 @@ Number literals can contain extra formatting to make them easier to read. Both i
 	extra zeroes
 		In C, adding an extra zero to the beginning of an integer literal indicates that the literal is in octal notation. This isn't the case in Swift. Always add the ``0o`` prefix if your numbers are in octal notation.
 
-All of these literals are valid in Swift::
+All of these literals are valid in Swift:
+
+.. testcode:: numberLiterals
 
 	(swift) var oneMillion = 1_000_000
 	// oneMillion : Int = 1000000
 	(swift) var justOverOneMillion = 1_000_000.000_000_1
-	// justOverOneMillion : Double = 1000000.0000001
+	// justOverOneMillion : Double = 1e+06
 	(swift) var paddedDouble = 000123.456
 	// paddedDouble : Double = 123.456
 
@@ -150,6 +167,7 @@ All of these literals are valid in Swift::
 	* Literals
 	* Immutability
 	* (Don't redeclare objects within a REPL session)
+	* Must provide initial values
 
 .. docnote:: Metatypes and static functions
 
