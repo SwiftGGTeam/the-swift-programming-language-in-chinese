@@ -43,17 +43,21 @@ Swift is a :term:`strongly-typed language`. Strong typing enables Swift to perfo
 	type inference
 		Type inference is the ability for a compiler to automatically deduce the type of a particular expression at compile-time (rather than at run-time). The Swift compiler can often infer the type of a variable without the need for explicit type definitions, just by examining the values you provide.
 
-For example: if you assign the value ``42`` to a variable, without saying what type it is::
+For example: if you assign the value ``42`` to a variable, without saying what type it is:
+
+.. testcode::
 
 	(swift) var a = 42
 	// a : Int = 42
 
 …Swift will deduce that you want the variable to be an ``Int``, because you have initialized it with an integer value.
 
-Likewise, if you don't specify a type for a floating-point number::
+Likewise, if you don't specify a type for a floating-point number:
+
+.. testcode::
 
 	(swift) var pi = 3.1415926
-	// pi : Double = 3.1415926
+	// pi : Double = 3.14159
 
 …Swift assumes that you want to create a ``Double`` from the value of ``3.1415926``. (Swift always chooses ``Double`` rather than ``Float`` when inferring the type of floating-point numbers.)
 
@@ -82,7 +86,9 @@ Number literals
 	exponent
 		Floating-point values with an exponent are of the form ‘*[number]* shifted by *[exponent]* decimal places’ (such as ``1.25e2``). All the exponent does is to shift the number right or left by that many decimal places. Positive exponents move the number to the left; negative exponents move it to the right. So, ``1.25e2`` means ‘``1.25`` shifted ``2`` places to the left’ (aka ``125.0``), and ``1.25e-2`` means ‘``1.25`` shifted ``2`` places to the right’ (aka ``0.0125``).
 
-All of these integer literals have a decimal value of ``17``::
+All of these integer literals have a decimal value of ``17``:
+
+.. testcode::
 
 	(swift) var dec = 17
 	// dec : Int = 17
@@ -93,7 +99,9 @@ All of these integer literals have a decimal value of ``17``::
 	(swift) var hex = 0x11		// 17 in hexadecimal notation
 	// hex : Int = 17
 
-All of these floating-point literals have a decimal value of ``12.5``::
+All of these floating-point literals have a decimal value of ``12.5``:
+
+.. testcode::
 
 	(swift) var dec = 12.5
 	// dec : Double = 12.5
