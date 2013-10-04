@@ -2,8 +2,6 @@
 
 	The tour below is the whitepaper's Guided Tour. It has yet to be adapted / rewritten / replaced for use in the book, but in the absence of a new Tour, it's a good starting point for now.
 
-In addition to the primary goals like safety and performance, Swift was also designed with consistency and clarity in mind. Wherever possible, the syntax follows the natural language order of expressing something. A variable declaration reads as *"declare a variable called X of type Y with initial value Z"*.
-
 A tour of the Swift language
 ============================
 
@@ -39,7 +37,7 @@ The ``addItem`` action shows an alert if the user attempts to insert a duplicate
 Finally, you may have noticed a lack of semi-colons in the examples. While they are accepted as statement separators, Swift syntax is deliberately designed to be unambiguous, so semi-colons are optional. 
 
 Exploring Swift with the REPL
-=============================
+-----------------------------
 
 In addition to speed and efficiency in compiled code, Swift is also suitable for use as a scripting language, or for runtime "just-in-time" compilation. Swift's modern implementation approach means we can provide a Read-Eval-Print-Loop (REPL), offering beginners the perfect environment to learn and experiment with Swift.
 
@@ -49,7 +47,7 @@ Run the ``swift`` binary with no arguments and you'll enter the REPL. This makes
    :align: center
 
 Declarations and Basic Syntax
-=============================
+-----------------------------
 
 In addition to the primary goals like safety and performance, Swift was also designed with consistency and clarity in mind. Wherever possible, the syntax follows the natural language order of expressing something. A variable declaration reads as *"declare a variable called X of type Y with initial value Z"*.
 
@@ -90,7 +88,7 @@ The standard operators work as expected (note that Swift relies on consistent sp
     // r1 : Double = 1.0
 
 Tuples
-------
+~~~~~~
 
 As well as simple value types, Swift also supports tuple types for ordered lists of elements.  The elements may be accessed with constant numeric indices:
 
@@ -147,7 +145,7 @@ to make it even easier to extract or change the values:
 This is particularly useful with multiple return values (described below).
 
 Branching and Looping
----------------------
+~~~~~~~~~~~~~~~~~~~~~
 
 Swift supports the usual conditional and flow control statements. Parentheses are optional around conditions, but braces are required to avoid ambiguity issues like the dangling else problem, so a typical branch looks like this:
 
@@ -214,7 +212,7 @@ Some enumerable types use a tuple rather than a single loop variable. If you ite
 	>>> Key: 'first', Value: 1
 
 Functions
----------
+~~~~~~~~~
 
 As with variable declaration syntax, Swift function declarations follow the natural language order of "declare a function X, which takes arguments Y, and returns Z." Continuing the theme of consistency, Swift function argument syntax follows the syntactic pattern of a variable declaration, where the colon means "of type":
 
@@ -292,7 +290,7 @@ Functions can also be defined to take variable argument lists:
 Variable argument lists act like an array of the element type within the function body.  Compared to C, Swift variable argument lists are type safe, and much more convenient to use.
 
 Pattern Matching
-----------------
+~~~~~~~~~~~~~~~~
 
 Swift supports a switch statement superficially similar to the one in C:
 
@@ -453,7 +451,7 @@ a case may be tested using a ``where`` expression:
     >>> 50 units from the origin
 
 Enums
------
+~~~~~
 
 Swift supports ``enum`` types. Values of the enum are introduced with the
 ``case`` keyword, and are scoped inside the enum type:
@@ -522,7 +520,7 @@ matched:
   // r0 : Double = 5
 
 Objects and Classes
--------------------
+~~~~~~~~~~~~~~~~~~~
 
 As you might expect, the ``class`` keyword is used to declare a new Swift class:
 
@@ -611,7 +609,7 @@ The compiler manages the necessary mechanisms to safely pass the object by refer
 
 
 Structures
-----------
+~~~~~~~~~~
 
 For types that should be passed by value (i.e., by copying it), like graphics coordinates or sizes, you can create a ``struct``:
 
@@ -656,7 +654,7 @@ Note that it's not necessary to include the initializer implementation shown for
     // size : Size = Size(50.0, 100.0)
 
 Strings
-=======
+-------
 
 Because strings are such a common and essential part of any codebase, they are built right into Swift as a native datatype.  Swift strings are designed with natural and expressive syntax, to be fast and memory efficient, and to maintain transparent interoperation with Cocoa APIs and ``NSString``.
 
@@ -733,7 +731,7 @@ You can also iterate by lines:
     >>> 137
 
 String Interpolation
---------------------
+~~~~~~~~~~~~~~~~~~~~
 
 You've already seen various ways to create a Swift string, including concatenating substrings using ``+``:
 
@@ -777,7 +775,7 @@ For more power and flexibility, the Swift standard library also provides a type-
     >>> Take 42 and sell it for $3.14159
 
 Protocols
-=========
+---------
 
 A protocol is an abstract description of behavior --- usually related functions and/or properties --- that can be adopted by one or more types:
 
@@ -855,7 +853,7 @@ This example uses a variable argument list and returns an optional value
 (to either return an element or not), which are discussed later in this tour.
 
 Extensions
-==========
+----------
 
 An extension allows you to add functions or properties to an existing class or structure. As described earlier, you might use an extension to add suitable initializers to the Swift ``String`` class:
 
@@ -898,7 +896,7 @@ This is particularly important for "retroactive modeling", which is important
 when you make two libraries work together, when you cannot change their code.
 
 Closures
-========
+--------
 
 A closure is just a function without a name. As an example, the ``sort()`` library function takes an array of strings and sorts them using a comparison closure:
 
@@ -1013,7 +1011,7 @@ A closure argument to a function is just like any other argument, with a colon `
     >>> Hello!
 
 Generics
-========
+--------
 
 Swift supports generics through parameterized types. As an example, the standard library includes the ``Vector`` class, which makes it easy to work with typed collections (though it is important to note that the entire standard library is at best a strawman design right now):
 
@@ -1177,7 +1175,7 @@ Note: the Swift standard library already includes a ``find()`` function, as well
 
 
 Interacting with Objective-C and Cocoa
-======================================
+--------------------------------------
 
 The major design goal for Swift is seamless interoperation with Objective-C and
 our existing frameworks. You use the same syntax to work with Cocoa framework
@@ -1290,7 +1288,7 @@ has no way to model this.  It is extremely useful in Swift code though.
 
 
 Invoking Objective-C Selectors
-------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 When invoking an Objective-C selector that takes one argument (or no arguments), you simply use the Swift function call syntax::
 
@@ -1310,7 +1308,7 @@ If there are multiple possible selectors, or if you prefer to be explicit, you c
 
 
 AppKit Magic
-------------
+~~~~~~~~~~~~
 
 You're not just limited to working with Foundation classes in the REPL. When importing Cocoa, the REPL sets up a run loop for you, so you can also test AppKit classes, like ``NSWindow``::
     
