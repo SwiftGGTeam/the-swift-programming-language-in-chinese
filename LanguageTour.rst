@@ -638,7 +638,7 @@ Unlike other languages, Swift structures aren't limited just to holding values, 
               }
             }
 
-Because Swift is statically-typed, the compiler always knows whether a type is passed by-value or by-reference so there's no need for any differences in syntax::
+Because Swift is statically-typed, the compiler always knows whether a type is passed by-value or by-reference so there's no need for any differences in syntax:
 
 .. testcode:: structures
 
@@ -648,7 +648,7 @@ Because Swift is statically-typed, the compiler always knows whether a type is p
     (swift) myPoint
     // myPoint : Point = Point(250.0, 200.0)
 
-Note that it's not necessary to include the initializer implementation shown for ``Point``, because a default initializer is automatically provided to set the values::
+Note that it's not necessary to include the initializer implementation shown for ``Point``, because a default initializer is automatically provided to set the values:
 
 .. testcode:: structures
 
