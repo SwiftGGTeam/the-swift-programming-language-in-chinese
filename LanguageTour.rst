@@ -164,30 +164,34 @@ Swift supports the usual conditional and flow control statements. Parentheses ar
 
 The ``println()`` function is an alternative to ``print()`` that automatically inserts a final ``\n`` newline.  It is not so useful when you're working with a string literal like this, but is very handy when working with string variables or non-string values.
 
-As you saw in the earlier Objective-C example, Swift provides a for-each-style loop to make it easy to iterate over the contents of a collection. To test this, try iterating over the characters in a string, like this::
+As you saw in the earlier Objective-C example, Swift provides a for-each-style loop to make it easy to iterate over the contents of a collection. To test this, try iterating over the characters in a string, like this:
 
-    (swift) for eachCharacter in "Hello".chars {
-              println(eachCharacter)
-            }
-    H
-    e
-    l
-    l
-    o
+.. testcode::
+
+	(swift) for eachCharacter in "Hello".chars {
+	            println(eachCharacter)
+	        }
+	>>> H
+	>>> e
+	>>> l
+	>>> l
+	>>> o
 
 
 .. note:: If you're wondering why/how this works, it's because the return value of ``String.chars`` adopts the ``Enumerable`` protocol. `Protocols`_ are covered later in this tour.
 
-Also try the ``..`` operator, which generates a half-open enumerable range between two values::
+Also try the ``..`` operator, which generates a half-open enumerable range between two values:
+
+.. testcode::
 
     (swift) for index in b..15 {
               println(index)
             }
-    10
-    11
-    12
-    13
-    14
+    >>> 10
+    >>> 11
+    >>> 12
+    >>> 13
+    >>> 14
 
 As before, there's no need to provide a type for the loop variable because it can be inferred from the elements in the range, which is itself of type ``IntEnumeratorType``:
 
@@ -198,21 +202,23 @@ As before, there's no need to provide a type for the loop variable because it ca
 
 The b..a syntax also works great with ``NSRange``, providing natural and elegant syntax for many common idioms.
 
-Some enumerable types use a tuple rather than a single loop variable. If you iterate over a Swift ``Dictionary``, for example, you have access to each key and value through a tuple pair::
+Some enumerable types use a tuple rather than a single loop variable. If you iterate over a Swift ``Dictionary``, for example, you have access to each key and value through a tuple pair:
 
-    (swift) var dict = ["first" : 1, "second" : 2, "third" : 3]
-    // dict : Dictionary = <swift.Dictionary instance>
-    (swift) for (key, value) in dict {
-              println("Key: '\(key)', Value: \(value)")
-            }
-    Key: 'first', Value: 1
-    Key: 'second', Value: 2
-    Key: 'third', Value: 3
+.. testcode::
+
+	(swift) var dict = ["first" : 1, "second" : 2, "third" : 3]
+	// dict : Dictionary<String, Int> = ["second" : 2, "third" : 3, "first" : 1]
+	(swift) for (key, value) in dict {
+	            println("Key: '\(key)', Value: \(value)")
+	        }
+	>>> Key: 'second', Value: 2
+	>>> Key: 'third', Value: 3
+	>>> Key: 'first', Value: 1
 
 Functions
 ---------
 
-As with variable declaration syntax, Swift function declarations follow the natural language order of "declare a function X, which takes arguments Y, and returns Z." Continuing the theme of consistency, Swift function argument syntax follows the syntactic pattern of a variable declaration, where the colon ``:`` means "of type":
+As with variable declaration syntax, Swift function declarations follow the natural language order of "declare a function X, which takes arguments Y, and returns Z." Continuing the theme of consistency, Swift function argument syntax follows the syntactic pattern of a variable declaration, where the colon means "of type":
 
 .. testcode:: functions
 
@@ -315,6 +321,8 @@ with the next case, default, or closing brace, at which point control moves
 out of the switch. You can however explicitly continue execution using the
 "fallthrough" statement if that's what you want::
 
+.. testcode:: switch
+
     (swift) switch 5 {
             case 2:
             case 3:
@@ -326,11 +334,12 @@ out of the switch. You can however explicitly continue execution using the
             default:
               println("integer")
             }
-    prime
-    integer
+    >>> prime
+    >>> integer
 
-As shorthand, you can also specify multiple values in a single case separated
-by commas::
+As shorthand, you can also specify multiple values in a single case separated by commas:
+
+.. testcode:: switch
 
     (swift) switch 5 {
             case 2, 3, 5, 7:
@@ -340,11 +349,12 @@ by commas::
             default:
               println("integer")
             }
-    prime
-    integer
+    >>> prime
+    >>> integer
 
-Swift's switch is considerably more powerful than C's. For one thing, it
-can be used with non-integer types::
+Swift's switch is considerably more powerful than C's. For one thing, it can be used with non-integer types:
+
+.. testcode:: switch
 
     (swift) for fruit in ["orange", "key", "cherry", "strawberry"] {
               switch fruit {
@@ -358,12 +368,14 @@ can be used with non-integer types::
                 println("not a fruit")
               }
             }
-    500 pts
-    not a fruit
-    100 pts
-    300 pts
+    >>> 500 pts
+    >>> not a fruit
+    >>> 100 pts
+    >>> 300 pts
 
-Values can also be tested for inclusion in a range::
+Values can also be tested for inclusion in a range:
+
+.. testcode:: switch
 
     (swift) func naturalCount(x : Int) -> String {
               switch x {
@@ -386,13 +398,15 @@ Values can also be tested for inclusion in a range::
               }
             }
     (swift) println("There are \(naturalCount(8)) planets in the solar system!")
-    There are a handful of planets in the solar system!
+    >>> There are a handful of planets in the solar system!
     (swift) println("There are \(naturalCount(1024)) bytes in a kilobyte!")
-    There are thousands of bytes in a kilobyte!
+    >>> There are thousands of bytes in a kilobyte!
 
 Multiple values can be tested at once in the same switch using tuples. Each
 element of a tuple may be individually tested against a literal value, a range,
-or ignored using the special ``_`` identifier::
+or ignored using the special ``_`` identifier:
+
+.. testcode:: switch
 
     (swift) func classifyPoint(x : Int, y : Int) {
               switch (x, y) {
@@ -409,19 +423,21 @@ or ignored using the special ``_`` identifier::
               }
             }
     (swift) classifyPoint(0, 0)
-    origin
+    >>> origin
     (swift) classifyPoint(2, 0)
-    on the X axis
+    >>> on the X axis
     (swift) classifyPoint(0, 100)
-    on the Y axis
+    >>> on the Y axis
     (swift) classifyPoint(-5, 5)
-    near the origin
+    >>> near the origin
     (swift) classifyPoint(-5, 50)
-    far from the origin
+    >>> far from the origin
 
 Variables can be bound to individual tuple elements, which then
 become available in the scope of the following case. Additional conditions for
-a case may be tested using a ``where`` expression::
+a case may be tested using a ``where`` expression:
+
+.. testcode:: switch
 
     (swift) func classifyPoint2(p : (Int, Int)) {
               switch p {
@@ -442,33 +458,39 @@ a case may be tested using a ``where`` expression::
               }
             }
     (swift) classifyPoint2(1, 1)
-    on the + diagonal
+    >>> on the + diagonal
     (swift) classifyPoint2(-1, 1)
-    on the - diagonal
+    >>> on the - diagonal
     (swift) classifyPoint2(30, 40)
-    50 units from the origin
+    >>> 50 units from the origin
 
 Enums
 -----
 
 Swift supports ``enum`` types. Values of the enum are introduced with the
-``case`` keyword, and are scoped inside the enum type::
+``case`` keyword, and are scoped inside the enum type:
+
+.. testcode:: enums
 
   (swift) enum Color {
             case Red, Green, Blue
           }
   (swift) var c = Color.Green
-  // c : Color = .Green
+  // c : Color = <unprintable value>
 
 The type name can also be inferred from context if a case is referenced by a
-leading dot::
+leading dot:
+
+.. testcode:: enums
 
   (swift) c = .Blue
   (swift) c
-  // c : Color = .Blue
+  // c : Color = <unprintable value>
 
 Enum values can be used in ``switch`` statements, including in patterns. The
-compiler enforces exhaustiveness (which you can silence by adding a ``default``)::
+compiler enforces exhaustiveness (which you can silence by adding a ``default``):
+
+.. testcode:: enums
 
   (swift) switch c {
           case .Blue:
@@ -477,20 +499,24 @@ compiler enforces exhaustiveness (which you can silence by adding a ``default``)
           case .Green:
             println("not blue")
           }
-  blue
+  >>> blue
 
 Unlike a C enum (but like an algebraic datatype in functional languages like Haskell or ML), the cases of a switch don't need to be purely symbolic.
-A case can have data associated with itself::
+A case can have data associated with itself:
+
+.. testcode:: enums
 
   (swift) enum Path {
             case Point(Int, Int)
             case Line((Int, Int), (Int, Int))
           }
   (swift) var p : Path = .Point(0, 0)
-  // p : Path = .Point(0, 0)
+  // p : Path = <unprintable value>
 
 This data can then be pattern-matched and accessed when the case itself is
-matched::
+matched:
+
+.. testcode:: enums
 
   (swift) func pathLength(p : Path) -> Double {
             switch p {
@@ -510,7 +536,9 @@ matched::
 Objects and Classes
 -------------------
 
-As you might expect, the ``class`` keyword is used to declare a new Swift class::
+As you might expect, the ``class`` keyword is used to declare a new Swift class:
+
+.. testcode:: objects
 
     (swift) class Shape {
               var numberOfSides : Int
@@ -518,14 +546,18 @@ As you might expect, the ``class`` keyword is used to declare a new Swift class:
 
 Note that there's no need for a Swift class to inherit from any base class.  Of course, it is still fine to inherit from ``NSObject`` if you would like to get its methods.
 
-You create an instance with function call syntax (referred to as initialization syntax)::
+You create an instance with function call syntax (referred to as initialization syntax):
+
+.. testcode:: objects
 
     (swift) var blob = Shape()
-    // blob : Shape = <unprintable value>
+    // blob : Shape = <Shape instance>
 
 and memory is managed automatically for you using ARC (Automatic Reference Counting) for great performance and maximum compatibility with our frameworks.
 
-When you create subclasses, you use the familiar colon ``:`` to indicate the inherited type::
+When you create subclasses, you use the familiar colon ``:`` to indicate the inherited type:
+
+.. testcode:: objects
 
     (swift) class Quadrilateral : Shape {
               init() {
@@ -533,14 +565,18 @@ When you create subclasses, you use the familiar colon ``:`` to indicate the inh
               }
             }
 
-Instance variables can be accessed via the ``.`` operator::
+Instance variables can be accessed via the ``.`` operator:
+
+.. testcode:: objects
 
     (swift) var square = Quadrilateral()
-    // square : Quadrilateral = <unprintable value>
+    // square : Quadrilateral = <Quadrilateral instance>
     (swift) println("A square has \(square.numberOfSides) sides.")
-    // A square has 4 sides.
+    >>> A square has 4 sides.
 
-Variables declared in a class are properties. By default, they have implicit getters and setters that access an underlying (unnamed) instance variable, but you can also specify a custom getter and/or setter::
+Variables declared in a class are properties. By default, they have implicit getters and setters that access an underlying (unnamed) instance variable, but you can also specify a custom getter and/or setter:
+
+.. testcode:: objects
 
     (swift) class Circle : Shape {
               var radius : Float
@@ -555,31 +591,33 @@ Variables declared in a class are properties. By default, they have implicit get
               }
             }
     (swift) var circle = Circle()
-    // circle : Circle = <unprintable value>
+    // circle : Circle = <Circle instance>
     (swift) circle.radius = 5
     (swift) circle.circumference
-    // Float = 31.4159
+    // r0 : Float = 31.4159
     (swift) circle.circumference = 62.8318
     (swift) circle.radius
-    // Float = 10.0
+    // r1 : Float = 10.0
 
-Notice that there are no asterisks in any of the variable declarations for objects:
-
-.. code-block:: swift
+Notice that there are no asterisks in any of the variable declarations for objects::
  
-    var circle = Circle()
+    (swift) var circle = Circle()
 
-This is one of the primary safety features---**Swift does not require you to manipulate and manage direct pointers to memory**. It means you can define a function that takes an argument like this::
+This is one of the primary safety features --- **Swift does not require you to manipulate and manage direct pointers to memory**. It means you can define a function that takes an argument like this:
+
+.. testcode:: objects
 
     (swift) func enlarge(circle : Circle) {
               circle.radius *= 2
             }
 	
-and call it like this::
+…and call it like this:
+
+.. testcode:: objects
 
     (swift) enlarge(circle)
     (swift) circle.radius
-    // Float = 20.0
+    // r2 : Float = 20.0
 
 The compiler manages the necessary mechanisms to safely pass the object by reference.  However, because we use ARC, the programmer is still responsible for reasoning about and breaking cycles (e.g. with weak pointers).
 
@@ -589,12 +627,16 @@ Structures
 
 For types that should be passed by value (i.e., by copying it), like graphics coordinates or sizes, you can create a ``struct``::
 
+.. testcode:: structures
+
     (swift) struct Size {
               var width, height : Float
             }
 
 Unlike other languages, Swift structures aren't limited just to holding values,
 they can also have functions and initializers, as well as adopt protocols and be extended (as described later in this tour)::
+
+.. testcode:: structures
 
     (swift) struct Point {
               var x, y : Float
@@ -611,6 +653,8 @@ they can also have functions and initializers, as well as adopt protocols and be
 
 Because Swift is statically-typed, the compiler always knows whether a type is passed by-value or by-reference so there's no need for any differences in syntax::
 
+.. testcode:: structures
+
     (swift) var myPoint = Point(50, 200)
     // myPoint : Point = Point(50.0, 200.0)
     (swift) myPoint.moveToTheRightBy(200)
@@ -619,30 +663,36 @@ Because Swift is statically-typed, the compiler always knows whether a type is p
 
 Note that it's not necessary to include the initializer implementation shown for ``Point``, because a default initializer is automatically provided to set the values::
 
+.. testcode:: structures
+
     (swift) var size = Size(50, 100)
     // size : Size = Size(50.0, 100.0)
-
-
 
 Strings
 =======
 
 Because strings are such a common and essential part of any codebase, they are built right into Swift as a native datatype.  Swift strings are designed with natural and expressive syntax, to be fast and memory efficient, and to maintain transparent interoperation with Cocoa APIs and ``NSString``.
 
-Swift string literals use double-quote marks, like this::
+Swift string literals use double-quote marks, like this:
+
+.. testcode:: strings
 
     (swift) var firstWord = "Hello"
     // firstWord : String = "Hello"
 
-The standard operators are supported for string concatenation::
+The standard operators are supported for string concatenation:
+
+.. testcode:: strings
 
     (swift) var message = firstWord + ", world"
     // message : String = "Hello, world"
     (swift) message += "!"
     (swift) message
-    // String = Hello, world!
+    // message : String = "Hello, world!"
 
-and you can refer to a substring, or slice, using a character range::
+and you can refer to a substring, or slice, using a character range:
+
+.. testcode:: strings
 
     (swift) var name = message[7..12]
     // name : String = "world"
@@ -653,65 +703,76 @@ Swift strings are immutable, which means we can make string slicing extremely ef
    :width: 30em
    :align: center
 
-Continuing with the theme of efficiency, Swift strings are encoded internally as UTF-8, keeping storage compact. When iterating over the characters in a string, Swift decodes UTF-8 on the fly to produce a sequence of ``Char`` values (each of which holds a UTF-32 codepoint), making it easy to work with multi-byte characters, for example::
+Continuing with the theme of efficiency, Swift strings are encoded internally as UTF-8, keeping storage compact. When iterating over the characters in a string, Swift decodes UTF-8 on the fly to produce a sequence of ``Char`` values (each of which holds a UTF-32 codepoint), making it easy to work with multi-byte characters, for example:
+
+.. testcode:: strings
 
     (swift) var emoji = "🙉😈😄👏"
     // emoji : String = "🙉😈😄👏"
     (swift) for eachChar in emoji.chars {
               println(eachChar)
             }
-    🙉 
-    😈
-    😄
-    👏
+    >>> 🙉 
+    >>> 😈
+    >>> 😄
+    >>> 👏
     (swift) emoji.length
-    // Int = 4
+    // r0 : Int = 4
 
-You can also iterate by lines::
+.. testcode:: strings
+
+You can also iterate by lines:
 
     (swift) var multiline = "Once upon a time\nThe end"
     (swift) for eachLine in multiline.lines {
               println(eachLine)
             }
-    Once upon a time
-    The end
+    >>> Once upon a time
+    >>> The end
 
-or even by bytes::
+…or even by bytes:
+
+.. testcode:: strings
 
     (swift) var singleEmoji = "🙉"
     // singleEmoji : String = "🙉" 
     (swift) for eachByte in singleEmoji.bytes {
               println(Int64(eachByte))
             }
-    240
-    159
-    153
-    137
-
-
+    >>> 240
+    >>> 159
+    >>> 153
+    >>> 137
 
 String Interpolation
 --------------------
 
 You've already seen various ways to create a Swift string, including concatenating substrings using ``+``:
 
-.. code-block:: swift
+.. testcode:: interpolation
 
-    var message = "Hello" + ", world" + "!"
+    (swift) var message = "Hello" + ", world" + "!"
+    // message : String = "Hello, world!"
 
-If you need to append string representations of other types, you can create a Swift string from a value::
+If you need to append string representations of other types, you can create a Swift string from a value:
+
+.. testcode:: interpolation
 
     (swift) var someValue = 42
     // someValue : Int = 42
     (swift) var magic = "The magic number is: " + String(someValue) + "!"
     // magic : String = "The magic number is: 42!"
 
-Interpolating values into strings is such a common task, however, that Swift provides an alternative, more readable syntax::
+Interpolating values into strings is such a common task, however, that Swift provides an alternative, more readable syntax:
+
+.. testcode:: interpolation
 
     (swift) var blackMagic = "The magic number is: \(someValue)!"
     // blackMagic : String = "The magic number is: 42!"
 
-You can also use this syntax to interpolate the values of arbitrary expressions::
+You can also use this syntax to interpolate the values of arbitrary expressions:
+
+.. testcode:: interpolation
 
     (swift) var luckyForSome = 13
     luckyForSome : Int = 13
@@ -720,24 +781,27 @@ You can also use this syntax to interpolate the values of arbitrary expressions:
 
 Rather than requiring you to think about how best to format a value every time you want to insert it into a string, it's up to the developer of the original type to provide an implementation for the string conversion. This involves adding a suitable initializer to the Swift ``String`` type through the use of an extension, as discussed later in this tour (see Extensions_).
 
-For more power and flexibility, the Swift standard library also provides a type-safe ``printf()`` function::
+For more power and flexibility, the Swift standard library also provides a type-safe ``printf()`` function:
+
+.. testcode:: interpolation
 
     (swift) printf("Take %v and sell it for $%.2v", 42, 3.14159)
     Take 42 and sell it for $3.14159
-    (swift)
-
-
 
 Protocols
 =========
 
-A protocol is an abstract description of behavior --- usually related functions and/or properties --- that can be adopted by one or more types::
+A protocol is an abstract description of behavior --- usually related functions and/or properties --- that can be adopted by one or more types:
+
+.. testcode:: protocols
 
     (swift) protocol HitTestable {
               func containsPoint(point : Point) -> Bool 
             }
 
-All named Swift types (i.e., classes, structs and enums, but not tuples), can adopt protocols and implement the required behavior::
+All named Swift types (i.e., classes, structs and enums, but not tuples), can adopt protocols and implement the required behavior:
+
+.. testcode:: protocols
 
     (swift) struct Rect : HitTestable {
               var origin = Point()
@@ -752,16 +816,22 @@ All named Swift types (i.e., classes, structs and enums, but not tuples), can ad
 
 The ``: HitTestable`` syntax in this structure declaration indicates conformance to the protocol. As with all other ``:`` use in Swift, you can read the colon as *is a*, so *"a Rect is a HitTestable type"*.  
 
-You can use a protocol in a variable declaration to indicate the variable has some unknown, dynamic type that conforms to that protocol::
+You can use a protocol in a variable declaration to indicate the variable has some unknown, dynamic type that conforms to that protocol:
+
+.. testcode:: protocols
 
     (swift) var testableThing : HitTestable
 
-You can only assign a value if its type conforms to the protocol::
+You can only assign a value if its type conforms to the protocol:
+
+.. testcode:: protocols
 
     (swift) var rect : Rect
     (swift) testableThing = rect
 
-and Swift ensures that you can only call functions or access properties that are defined as part of the protocol::
+and Swift ensures that you can only call functions or access properties that are defined as part of the protocol:
+
+.. code-block:: swift
 
     (swift) var pt : Point(4, 5)
     // (Double, Double) = (4.0, 5.0)
