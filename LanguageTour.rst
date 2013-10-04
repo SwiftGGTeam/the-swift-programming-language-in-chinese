@@ -38,8 +38,6 @@ The ``addItem`` action shows an alert if the user attempts to insert a duplicate
 
 Finally, you may have noticed a lack of semi-colons in the examples. While they are accepted as statement separators, Swift syntax is deliberately designed to be unambiguous, so semi-colons are optional. 
 
-
-
 Exploring Swift with the REPL
 =============================
 
@@ -185,7 +183,7 @@ Also try the ``..`` operator, which generates a half-open enumerable range betwe
 .. testcode::
 
     (swift) for index in b..15 {
-              println(index)
+                println(index)
             }
     >>> 10
     >>> 11
@@ -223,11 +221,11 @@ As with variable declaration syntax, Swift function declarations follow the natu
 .. testcode:: functions
 
     (swift) func fibonacci(n : Int) -> Int {
-              if n < 2 {
-                return 1
-              } else {
-                return fibonacci(n - 2) + fibonacci(n - 1)
-              }
+                if n < 2 {
+                    return 1
+                } else {
+                    return fibonacci(n - 2) + fibonacci(n - 1)
+                }
             }
     (swift) fibonacci(10)
     // r0 : Int = 89
@@ -237,8 +235,8 @@ Argument names are part of the signature, so you can specify each parameter by n
 .. testcode:: functions
 
     (swift) func divideTwoNumbers(numerator : Float, denominator : Float) -> Float {
-              assert(denominator != 0)
-              return numerator / denominator
+                assert(denominator != 0)
+                return numerator / denominator
             }
     (swift) divideTwoNumbers(4, 5)
     // r1 : Float = 0.8
@@ -250,7 +248,7 @@ And, in the same way that you can assign a value as part of a variable declarati
 .. testcode:: functions
 
 	(swift) func sayHello(name : String = "World") {
-	          print("Hello, \(name)!\n")
+	            print("Hello, \(name)!\n")
 	        }
 	(swift) sayHello("Bob")
 	>>> Hello, Bob!
@@ -262,7 +260,7 @@ If you omit the return type, as with this ``sayHello()`` function, the default i
 .. testcode:: functions
 
     (swift) func fetchLocalGasPrices() -> (Float, Float, Float) {
-              return (3.59, 3.69, 3.79)
+                return (3.59, 3.69, 3.79)
             }
 
 Since you name the elements in any tuple, these features work together to make it easier to query the values:
@@ -270,7 +268,7 @@ Since you name the elements in any tuple, these features work together to make i
 .. testcode:: functions
 
     (swift) func fetchBetterGasPrices() -> (regular : Float, midgrade : Float, premium : Float) {
-              return (3.49, 3.59, 3.69)
+                return (3.49, 3.59, 3.69)
             }
     (swift) fetchBetterGasPrices().midgrade
     // r3 : Float = 3.59
@@ -280,20 +278,18 @@ Functions can also be defined to take variable argument lists:
 .. testcode:: functions
 
     (swift) func addAllTheInts(theInts : Int...) -> Int {
-              var Sum = 0
-              for i in theInts {
-                Sum += i
-              }
-              return Sum
+                var sum = 0
+                for i in theInts {
+                    sum += i
+                }
+                return sum
             }
     (swift) addAllTheInts()
     // r4 : Int = 0
     (swift) addAllTheInts(42, 597, 12)
     // r5 : Int = 651
 
-Variable argument lists act like an array of the element type within the
-function body.  Compared to C, Swift variable argument lists are type safe, and
-much more convenient to use.
+Variable argument lists act like an array of the element type within the function body.  Compared to C, Swift variable argument lists are type safe, and much more convenient to use.
 
 Pattern Matching
 ----------------
@@ -307,35 +303,28 @@ Swift supports a switch statement superficially similar to the one in C:
             case 3:
             case 5:
             case 7:
-              println("prime")
-
+                println("prime")
             default:
-              println("not prime, or greater than 7")
+                println("not prime, or greater than 7")
             }
     >>> prime
 
-Note that, unlike C, cases do not implicitly fallthrough to their neighboring
-statement, so you don't need to "break" out of cases. Consecutive
-case labels all apply to the next block of statements, and the block ends
-with the next case, default, or closing brace, at which point control moves
-out of the switch. You can however explicitly continue execution using the
-"fallthrough" statement if that's what you want::
+Note that, unlike C, cases do not implicitly fallthrough to their neighboring statement, so you don't need to "break" out of cases. Consecutive case labels all apply to the next block of statements, and the block ends with the next case, default, or closing brace, at which point control moves out of the switch. You can however explicitly continue execution using the "fallthrough" statement if that's what you want:
 
 .. testcode:: switch
 
-    (swift) switch 5 {
-            case 2:
-            case 3:
-            case 5:
-            case 7:
-              println("prime")
-              fallthrough
-
-            default:
-              println("integer")
-            }
-    >>> prime
-    >>> integer
+	(swift) switch 5 {
+	        case 2:
+	        case 3:
+	        case 5:
+	        case 7:
+	            println("prime")
+	            fallthrough
+	        default:
+	            println("integer")
+	        }
+	>>> prime
+	>>> integer
 
 As shorthand, you can also specify multiple values in a single case separated by commas:
 
@@ -343,11 +332,10 @@ As shorthand, you can also specify multiple values in a single case separated by
 
     (swift) switch 5 {
             case 2, 3, 5, 7:
-              println("prime")
-              fallthrough
-
+                println("prime")
+                fallthrough
             default:
-              println("integer")
+                println("integer")
             }
     >>> prime
     >>> integer
@@ -357,16 +345,16 @@ Swift's switch is considerably more powerful than C's. For one thing, it can be 
 .. testcode:: switch
 
     (swift) for fruit in ["orange", "key", "cherry", "strawberry"] {
-              switch fruit {
-              case "cherry":
-                println("100 pts")
-              case "strawberry":
-                println("300 pts")
-              case "orange":
-                println("500 pts")
-              default:
-                println("not a fruit")
-              }
+                switch fruit {
+                case "cherry":
+                    println("100 pts")
+                case "strawberry":
+                    println("300 pts")
+                case "orange":
+                    println("500 pts")
+                default:
+                    println("not a fruit")
+                }
             }
     >>> 500 pts
     >>> not a fruit
@@ -378,24 +366,24 @@ Values can also be tested for inclusion in a range:
 .. testcode:: switch
 
     (swift) func naturalCount(x : Int) -> String {
-              switch x {
-              case 0:
-                return "no"
-              case 1:
-                return "one"
-              case 2:
-                return "a couple of"
-              case 3..12:
-                return "a handful of"
-              case 12..100:
-                return "dozens of"
-              case 100..1000:
-                return "hundreds of"
-              case 1000..1000000:
-                return "thousands of"
-              default:
-                return "bajillions of"
-              }
+                switch x {
+                case 0:
+                    return "no"
+                case 1:
+                    return "one"
+                case 2:
+                    return "a couple of"
+                case 3..12:
+                    return "a handful of"
+                case 12..100:
+                    return "dozens of"
+                case 100..1000:
+                    return "hundreds of"
+                case 1000..1000000:
+                    return "thousands of"
+                default:
+                    return "bajillions of"
+                }
             }
     (swift) println("There are \(naturalCount(8)) planets in the solar system!")
     >>> There are a handful of planets in the solar system!
@@ -409,19 +397,19 @@ or ignored using the special ``_`` identifier:
 .. testcode:: switch
 
     (swift) func classifyPoint(x : Int, y : Int) {
-              switch (x, y) {
-              case (0, 0):
-                println("origin")
-              case (_, 0):
-                println("on the X axis")
-              case (0, _):
-                println("on the Y axis")
-              case (-10..10, -10..10):
-                println("near the origin")
-              default:
-                println("far from the origin")
-              }
-            }
+                switch (x, y) {
+                case (0, 0):
+                    println("origin")
+                case (_, 0):
+                    println("on the X axis")
+                case (0, _):
+                    println("on the Y axis")
+                case (-10..10, -10..10):
+                    println("near the origin")
+                default:
+                    println("far from the origin")
+                }
+         }
     (swift) classifyPoint(0, 0)
     >>> origin
     (swift) classifyPoint(2, 0)
@@ -440,22 +428,22 @@ a case may be tested using a ``where`` expression:
 .. testcode:: switch
 
     (swift) func classifyPoint2(p : (Int, Int)) {
-              switch p {
-              case (0, 0):
-                println("origin")
-              case (_, 0):
-                println("on the X axis")
-              case (0, _):
-                println("on the Y axis")
-              case (var x, var y) where x == y:
-                println("on the + diagonal")
-              case (var x, var y) where x == -y:
-                println("on the - diagonal")
-              case (-10..10, -10..10):
-                println("near the origin")
-              case (var x, var y):
-                println("\(sqrt(x*x + y*y)) units from the origin")
-              }
+                switch p {
+                case (0, 0):
+                    println("origin")
+                case (_, 0):
+                    println("on the X axis")
+                case (0, _):
+                    println("on the Y axis")
+                case (var x, var y) where x == y:
+                    println("on the + diagonal")
+                case (var x, var y) where x == -y:
+                    println("on the - diagonal")
+                case (-10..10, -10..10):
+                    println("near the origin")
+                case (var x, var y):
+                    println("\(sqrt(x*x + y*y)) units from the origin")
+                }
             }
     (swift) classifyPoint2(1, 1)
     >>> on the + diagonal
@@ -473,7 +461,7 @@ Swift supports ``enum`` types. Values of the enum are introduced with the
 .. testcode:: enums
 
   (swift) enum Color {
-            case Red, Green, Blue
+              case Red, Green, Blue
           }
   (swift) var c = Color.Green
   // c : Color = <unprintable value>
@@ -494,10 +482,10 @@ compiler enforces exhaustiveness (which you can silence by adding a ``default``)
 
   (swift) switch c {
           case .Blue:
-            println("blue")
+              println("blue")
           case .Red:
           case .Green:
-            println("not blue")
+              println("not blue")
           }
   >>> blue
 
@@ -507,8 +495,8 @@ A case can have data associated with itself:
 .. testcode:: enums
 
   (swift) enum Path {
-            case Point(Int, Int)
-            case Line((Int, Int), (Int, Int))
+              case Point(Int, Int)
+              case Line((Int, Int), (Int, Int))
           }
   (swift) var p : Path = .Point(0, 0)
   // p : Path = <unprintable value>
@@ -519,14 +507,14 @@ matched:
 .. testcode:: enums
 
   (swift) func pathLength(p : Path) -> Double {
-            switch p {
-            case .Point(_):
-              return 0
-            case .Line((var fx, var fy), (var tx, var ty)):
-              var dx = tx - fx
-              var dy = ty - fy
-              return sqrt(Double(dx*dx), Double(dy*dy))
-            }
+              switch p {
+              case .Point(_):
+                  return 0
+              case .Line((var fx, var fy), (var tx, var ty)):
+                  var dx = tx - fx
+                  var dy = ty - fy
+                  return sqrt(Double(dx*dx), Double(dy*dy))
+              }
           }
   (swift) pathLength(.Point(219, 0))
   // r0 : Double = 0
@@ -579,16 +567,16 @@ Variables declared in a class are properties. By default, they have implicit get
 .. testcode:: objects
 
     (swift) class Circle : Shape {
-              var radius : Float
-              init() {
-                numberOfSides = 1
-              }
-              var circumference : Float {
-              get:
-                return radius * 2 * 3.14159
-              set (circ): 
-                radius = circ / (2 * 3.14159)
-              }
+                var radius : Float
+                init() {
+                    numberOfSides = 1
+                }
+                var circumference : Float {
+                get:
+                    return radius * 2 * 3.14159
+                set (circumf): 
+                    radius = circumf / (2 * 3.14159)
+                }
             }
     (swift) var circle = Circle()
     // circle : Circle = <Circle instance>
@@ -608,7 +596,7 @@ This is one of the primary safety features --- **Swift does not require you to m
 .. testcode:: objects
 
     (swift) func enlarge(circle : Circle) {
-              circle.radius *= 2
+                circle.radius *= 2
             }
 	
 …and call it like this:
@@ -625,16 +613,15 @@ The compiler manages the necessary mechanisms to safely pass the object by refer
 Structures
 ----------
 
-For types that should be passed by value (i.e., by copying it), like graphics coordinates or sizes, you can create a ``struct``::
+For types that should be passed by value (i.e., by copying it), like graphics coordinates or sizes, you can create a ``struct``:
 
 .. testcode:: structures
 
-    (swift) struct Size {
-              var width, height : Float
-            }
+	(swift) struct Size {
+	            var width, height : Float
+	        }
 
-Unlike other languages, Swift structures aren't limited just to holding values,
-they can also have functions and initializers, as well as adopt protocols and be extended (as described later in this tour)::
+Unlike other languages, Swift structures aren't limited just to holding values, they can also have functions and initializers, as well as adopt protocols and be extended (as described later in this tour):
 
 .. testcode:: structures
 
@@ -710,7 +697,7 @@ Continuing with the theme of efficiency, Swift strings are encoded internally as
     (swift) var emoji = "🙉😈😄👏"
     // emoji : String = "🙉😈😄👏"
     (swift) for eachChar in emoji.chars {
-              println(eachChar)
+                println(eachChar)
             }
     >>> 🙉 
     >>> 😈
@@ -719,13 +706,14 @@ Continuing with the theme of efficiency, Swift strings are encoded internally as
     (swift) emoji.length
     // r0 : Int = 4
 
-.. testcode:: strings
-
 You can also iterate by lines:
 
+.. testcode:: strings
+
     (swift) var multiline = "Once upon a time\nThe end"
+    // multiline : String = "Once upon a time\nThe end"
     (swift) for eachLine in multiline.lines {
-              println(eachLine)
+                println(eachLine)
             }
     >>> Once upon a time
     >>> The end
@@ -737,7 +725,7 @@ You can also iterate by lines:
     (swift) var singleEmoji = "🙉"
     // singleEmoji : String = "🙉" 
     (swift) for eachByte in singleEmoji.bytes {
-              println(Int64(eachByte))
+                println(Int64(eachByte))
             }
     >>> 240
     >>> 159
@@ -775,9 +763,9 @@ You can also use this syntax to interpolate the values of arbitrary expressions:
 .. testcode:: interpolation
 
     (swift) var luckyForSome = 13
-    luckyForSome : Int = 13
+    // luckyForSome : Int = 13
     (swift) var addMessage = "Adding \(luckyForSome) to \(someValue) gives \(luckyForSome + someValue)"
-    addMessage : String = "Adding 13 to 42 gives 55"
+    // addMessage : String = "Adding 13 to 42 gives 55"
 
 Rather than requiring you to think about how best to format a value every time you want to insert it into a string, it's up to the developer of the original type to provide an implementation for the string conversion. This involves adding a suitable initializer to the Swift ``String`` type through the use of an extension, as discussed later in this tour (see Extensions_).
 
@@ -785,8 +773,8 @@ For more power and flexibility, the Swift standard library also provides a type-
 
 .. testcode:: interpolation
 
-    (swift) printf("Take %v and sell it for $%.2v", 42, 3.14159)
-    Take 42 and sell it for $3.14159
+    (swift) printf("Take %v and sell it for $%.2v\n", 42, 3.14159)
+    >>> Take 42 and sell it for $3.14159
 
 Protocols
 =========
@@ -796,7 +784,7 @@ A protocol is an abstract description of behavior --- usually related functions 
 .. testcode:: protocols
 
     (swift) protocol HitTestable {
-              func containsPoint(point : Point) -> Bool 
+                func containsPoint(point : Point) -> Bool 
             }
 
 All named Swift types (i.e., classes, structs and enums, but not tuples), can adopt protocols and implement the required behavior:
@@ -804,14 +792,14 @@ All named Swift types (i.e., classes, structs and enums, but not tuples), can ad
 .. testcode:: protocols
 
     (swift) struct Rect : HitTestable {
-              var origin = Point()
-              var size = Size()
-              func containsPoint(point : Point) -> Bool {
-                return point.x >= origin.x && 
-                       point.x < (origin.x + size.width) &&
-                       point.y >= origin.y &&
-                       point.y < (origin.y + size.height)
-              }
+                var origin = Point()
+                var size = Size()
+                func containsPoint(point : Point) -> Bool {
+                    return point.x >= origin.x && 
+                        point.x < (origin.x + size.width) &&
+                        point.y >= origin.y &&
+                        point.y < (origin.y + size.height)
+                }
             }
 
 The ``: HitTestable`` syntax in this structure declaration indicates conformance to the protocol. As with all other ``:`` use in Swift, you can read the colon as *is a*, so *"a Rect is a HitTestable type"*.  
@@ -869,30 +857,38 @@ This example uses a variable argument list and returns an optional value
 Extensions
 ==========
 
-An extension allows you to add functions or properties to an existing class or structure. As described earlier, you might use an extension to add suitable initializers to the Swift ``String`` class::
+An extension allows you to add functions or properties to an existing class or structure. As described earlier, you might use an extension to add suitable initializers to the Swift ``String`` class:
+
+.. testcode:: extensions
 
     (swift) extension String {
-              init(point : Point) {
-                self = "{\(point.x), \(point.y)}"
-              }
+                init(point : Point) {
+                    self = "{\(point.x), \(point.y)}"
+                }
             }
 
-to make it easy to convert your own classes or structures into strings, either by constructing a ``String`` explicitly::
+to make it easy to convert your own classes or structures into strings, either by constructing a ``String`` explicitly:
+
+.. testcode:: extensions
 
     (swift) String(pt)
     // String = "{4.0, 5.0}"
 
-or implicitly with Swift's interpolation syntax::
+or implicitly with Swift's interpolation syntax:
+
+.. testcode:: extensions
 
     (swift) println("The point is \(pt)")
     The point is {4.0, 5.0}
 
-You can also use an extension to add protocol conformance to an existing class or structure::
+You can also use an extension to add protocol conformance to an existing class or structure:
+
+.. testcode:: extensions
 
     (swift) extension Point : HitTestable {
-              func containsPoint(point : Point) -> Bool {
-                return self.x == point.x && self.y == point.y
-              }
+                func containsPoint(point : Point) -> Bool {
+                    return self.x == point.x && self.y == point.y
+                }
             }
     (swift) var testPoint = Point(5.0, 10.0)
     (swift) pt.containsPoint(testPoint)
@@ -904,57 +900,64 @@ when you make two libraries work together, when you cannot change their code.
 Closures
 ========
 
-A closure is just a function without a name. As an example, the ``sort()`` library function takes an array of strings and sorts them using a comparison closure::
+A closure is just a function without a name. As an example, the ``sort()`` library function takes an array of strings and sorts them using a comparison closure:
+
+.. testcode:: closures
 
     (swift) var strings = ["Hello", "Bye", "Good day"]
     // strings : String[] = ["Hello", "Bye", "Good day"]
     (swift) var sortedStrings = sort(strings, {
                 (lhs : String, rhs : String) -> Bool in
                 return lhs.toUpper() < rhs.toUpper()
-              })
+            })
     // sortedStrings : String[] = ["Bye", "Good day", "Hello"]
     (swift) for eachString in sortedStrings {
-              println(eachString)
+                println(eachString)
             }
-    Bye
-    Good day
-    Hello
-    (swift)
+    >>> Bye
+    >>> Good day
+    >>> Hello
 
 The closure in this example is described in curly braces:
 
 .. code-block:: swift
 
     { 
-      (lhs : String, rhs : String) -> Bool in
-      return lhs.toUpper() < rhs.toUpper() 
+        (lhs : String, rhs : String) -> Bool in
+        return lhs.toUpper() < rhs.toUpper() 
     }
 
 The parentheses denote the parameters of the closure, followed by the
 return type, then "in" to separate the signature of the closure from
-its body. As you've already seen throughout this tour, the types in a Swift expression can be omitted if they can be inferred from the context. In this case, the parameter and return types can be inferred, so aren't necessary::
+its body. As you've already seen throughout this tour, the types in a Swift expression can be omitted if they can be inferred from the context. In this case, the parameter and return types can be inferred, so aren't necessary:
+
+.. testcode:: closures
 
     (swift) sortedStrings = sort(strings, { (lhs, rhs) in
-              return lhs.toUpper() < rhs.toUpper() 
+                return lhs.toUpper() < rhs.toUpper() 
             })
 
 One can also omit the names of the parameters, using the positional
 placeholders ``$0``, ``$1``, and so on. The ``return`` can also be
-omitted from single-expression closures, as in::
+omitted from single-expression closures, as in:
+
+.. testcode:: closures
 
     (swift) sortedStrings = sort(strings, {$0 < $1})
 
-Closures can also capture any variable from the local scope::
+Closures can also capture any variable from the local scope:
+
+.. testcode:: closures
 
     (swift) var uppercase = true
     // uppercase : Bool = true
     (swift) sortedStrings = sort(strings, { (x, y) in 
-                if uppercase {
-                  x = x.toUpper()
-                  y = y.toUpper()
+                    if uppercase {
+                        x = x.toUpper()
+                        y = y.toUpper()
+                    }
+                    return x < y
                 }
-                return x < y
-              }
             )
 
 Note that if a closure captures a value, Swift automatically manages the storage of the original variable such that you can change the value from within the closure without the need for any keywords on the original declaration. Internally, Swift also makes sure that if the closure outlives the scope of the original variable declaration, everything still "just works":
@@ -982,38 +985,42 @@ one can place the closure outside of the parentheses:
     
 For longer closures, cases where the same function will be re-used
 several times, or cases where you want a descriptive name to show up in a stack
-trace, you may prefer to use a local function instead::
+trace, you may prefer to use a local function instead:
+
+.. testcode:: closures
 
     (swift) func compareStrings(lhs : String, rhs : String) -> Bool {
-              if uppercase {
-                lhs = lhs.toUpper()
-                rhs = rhs.toUpper()
-              }
-              return lhs < rhs
+                if uppercase {
+                    lhs = lhs.toUpper()
+                    rhs = rhs.toUpper()
+                }
+                return lhs < rhs
             }
     (swift) sortedStrings = sort(strings, compareStrings)
 
-A closure argument to a function is just like any other argument, with a colon ``:`` "is a," followed by the function arguments and return type::
+A closure argument to a function is just like any other argument, with a colon ``:`` "is a," followed by the function arguments and return type:
+
+.. testcode:: closures
 
     (swift) func repeat(count : Int, myClosure : () -> Void) {
-              for i in 0..count {
-                myClosure()
-              }
+                for i in 0..count {
+                    myClosure()
+                }
             }
     (swift) repeat(3, {println("Hello!")})
-    Hello!
-    Hello!
-    Hello!
-
-
+    >>> Hello!
+    >>> Hello!
+    >>> Hello!
 
 Generics
 ========
 
-Swift supports generics through parameterized types. As an example, the standard library includes the ``Vector`` class, which makes it easy to work with typed collections (though it is important to note that the entire standard library is at best a strawman design right now)::
+Swift supports generics through parameterized types. As an example, the standard library includes the ``Vector`` class, which makes it easy to work with typed collections (though it is important to note that the entire standard library is at best a strawman design right now):
+
+.. testcode:: generics
 
     (swift) var names = Vector<String>()
-    // names : Vector<String> = <unprintable value>
+    // names : Vector<String> = <_TtCSs6Vector instance>
     (swift) names.append("William")
     (swift) names.append("Hilary")
     (swift) names.append("Carlton")
@@ -1033,42 +1040,47 @@ Swift generics offer transparent support for both class and value types without 
     testCollection.append(Test())
     testCollection.append(Test())
 
-It's even safe in Swift to mix by-reference and value types if you use a protocol for a parameterized type declaration::
+It's even safe in Swift to mix by-reference and value types if you use a protocol for a parameterized type declaration:
+
+.. testcode:: generics
 
     (swift) protocol Workable {
-              func work()
+                func work()
             }
     (swift) class Foo : Workable {
-              func work() {
-                println("A foo is working")
-              }
+                func work() {
+                    println("A foo is working")
+                }
             }
     (swift) struct Bar : Workable {
-              func work() {
-                println("A bar is working")
-              }
+                func work() {
+                    println("A bar is working")
+                }
             }
     (swift) extension Int : Workable {
-              func work() {
-                println("An integer is working")
-              }
+                func work() {
+                    println("An integer is working")
+                }
             }
     (swift) var foo = Foo()
-    // foo : Foo = <unprintable value>
+    // foo : Foo = <Foo instance>
     (swift) var bar : Bar
+    // bar : Bar = Bar()
     (swift) var workers = Vector<Workable>()
-    // workers : Vector<Workable> = <unprintable value>
+    // workers : Vector<Workable> = <_TtCSs6Vector instance>
     (swift) workers.append(foo)
     (swift) workers.append(bar)
     (swift) workers.append(42)
     (swift) for eachThing in workers {
               eachThing.work()
             }
-    A foo is working
-    A bar is working
-    An integer is working
+    >>> A foo is working
+    >>> A bar is working
+    >>> An integer is working
 
-Swift makes it easy to create your own parameterized types, like this simple implementation of a stack class::
+Swift makes it easy to create your own parameterized types, like this simple implementation of a stack class:
+
+.. testcode:: generics
 
     (swift) class Stack<ElementType> {
               var elements : Vector<ElementType>
@@ -1086,28 +1098,32 @@ Swift makes it easy to create your own parameterized types, like this simple imp
               }
             }
 
-As with a Swift ``Vector``, this generic ``Stack`` class is unrestricted, which means you can create an instance of the class to hold any first class type, including value and by-reference types::
+As with a Swift ``Vector``, this generic ``Stack`` class is unrestricted, which means you can create an instance of the class to hold any first class type, including value and by-reference types:
+
+.. testcode:: generics
 
     (swift) var intStack = Stack<Int>()
-    // intStack : Stack<Int> = <unprintable value>
+    // intStack : Stack<Int> = <Stack<Int> instance>
     (swift) intStack.push(1)
     (swift) intStack.push(5)
     (swift) intStack.pop()
-    // Int = 5
+    // r0 : Int = 5
     (swift) intStack.pop()
-    // Int = 1
+    // r1 : Int = 1
     (swift) var stringStack = Stack<String>()
-    // stringStack : Stack<String> = <unprintable value>
+    // stringStack : Stack<String> = <Stack<String> instance>
     (swift) stringStack.push("bye")
     (swift) stringStack.push("hello")
     (swift) stringStack.pop()
-    // String = "hello"
+    // r2 : String = "hello"
     (swift) stringStack.pop()
-    // String = "bye"
+    // r3 : String = "bye"
 
 Definining a type or algorithm to take any type means that you only have access to basic operations that all types support, like copyability.
 
-In order to use more specific behavior, you need to indicate which behavior the data structure requires. If you require a ``work()`` function, for example, just indicate that that the type should conform to the ``Workable`` protocol::
+In order to use more specific behavior, you need to indicate which behavior the data structure requires. If you require a ``work()`` function, for example, just indicate that that the type should conform to the ``Workable`` protocol:
+
+.. testcode:: generics
 
     (swift) class Workforce<Type : Workable> {
               var workers : Vector<Type>
@@ -1118,7 +1134,9 @@ In order to use more specific behavior, you need to indicate which behavior the 
               }
             }
 
-Once you have generic data structures, you'll likely need to be able to implement generic algorithms to act on them. As an example, first consider a trivial non-generic function to find the index of a string in an array of strings::
+Once you have generic data structures, you'll likely need to be able to implement generic algorithms to act on them. As an example, first consider a trivial non-generic function to find the index of a string in an array of strings:
+
+.. testcode:: generics
 
     (swift) func findIndexOfString(strings : String[], searchString : String) -> Int {
               for index in 0..strings.length {
@@ -1131,7 +1149,9 @@ Once you have generic data structures, you'll likely need to be able to implemen
 
 Without generics, you'd need to write an identical function for each type you wanted to support---``findIndexOfInt()``, ``findIndexOfFloat``, etc.
 
-Swift makes it easy to write a generic version, which works with any element that supports an equality test::
+Swift makes it easy to write a generic version, which works with any element that supports an equality test:
+
+.. testcode:: generics
 
     (swift) func findIndexOf<Type : Equatable>(elements : Type[], searchElement : Type) -> Int {
               var index = 0
@@ -1144,15 +1164,16 @@ Swift makes it easy to write a generic version, which works with any element tha
               return -1
             }
 
-Test this with an array of integers::
+Test this with an array of integers:
+
+.. testcode:: generics
 
     (swift) var integers = [1,2,3,4,5]
     // integers : Int[] = [1, 2, 3, 4, 5]
     (swift) findIndexOf(integers, 4)
-    // Int = 3
+    // r4 : Int = 3
 
 Note: the Swift standard library already includes a ``find()`` function, as well as other useful generic functions like ``min()``, ``max()``, ``map()``, ``swap()``, and the ``sort()`` function described earlier in the Closures section.
-
 
 
 Interacting with Objective-C and Cocoa
