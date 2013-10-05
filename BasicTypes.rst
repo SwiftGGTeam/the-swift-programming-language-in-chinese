@@ -167,7 +167,7 @@ All of these literals are valid in Swift:
 	* Literals
 	* Immutability
 	* (Don't redeclare objects within a REPL session)
-	* Must provide initial values
+	* C primitive types
 
 .. docnote:: Metatypes and static functions
 

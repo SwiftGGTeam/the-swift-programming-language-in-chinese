@@ -18,6 +18,7 @@ Classes, objects and structures
 	* Super
 	* Memory management
 	* UnsafePointer
+	* Cast operators (?, !, b as D, b is D)
 
 .. refnote:: Types and Values: Structures
 

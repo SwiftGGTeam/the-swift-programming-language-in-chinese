@@ -11,7 +11,7 @@ Protocols
 
 .. docnote:: Extensions and protocols
 
-	I'm wondering whether extensions and protocols should be combined into a single chapter.
+	I'm wondering whether extensions and protocols should be combined into a single chapter, or indeed if they should be part of a super-chapter with Classes, Objects and Structs.
 
 .. refnote:: Guided Tour: Protocols
 

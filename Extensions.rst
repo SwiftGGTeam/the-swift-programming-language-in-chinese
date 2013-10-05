@@ -7,8 +7,8 @@ Extensions
 
 .. docnote:: Extensions and protocols
 
-	I'm wondering whether extensions and protocols should be combined into a single chapter.
-
+	I'm wondering whether extensions and protocols should be combined into a single chapter, or indeed if they should be part of a super-chapter with Classes, Objects and Structs.
+	
 .. refnote:: Guided Tour: Extensions
 
 	An extension allows you to add functions or properties to an existing class or structure. As described earlier, you might use an extension to add suitable constructors to the Swift ``String`` class::
