@@ -440,7 +440,7 @@ a case may be tested using a ``where`` expression:
                 case (-10..10, -10..10):
                     println("near the origin")
                 case (var x, var y):
-                    println("\(sqrt(x*x + y*y)) units from the origin")
+                    println("\(sqrt(Double(x*x) + Double(y*y))) units from the origin")
                 }
             }
     (swift) classifyPoint2(1, 1)
@@ -448,7 +448,7 @@ a case may be tested using a ``where`` expression:
     (swift) classifyPoint2(-1, 1)
     >>> on the - diagonal
     (swift) classifyPoint2(30, 40)
-    >>> 50 units from the origin
+    >>> 50.0 units from the origin
 
 Enums
 ~~~~~
@@ -511,13 +511,13 @@ matched:
               case .Line((var fx, var fy), (var tx, var ty)):
                   var dx = tx - fx
                   var dy = ty - fy
-                  return sqrt(Double(dx*dx), Double(dy*dy))
+                  return sqrt(Double(dx*dx) + Double(dy*dy))
               }
           }
   (swift) pathLength(.Point(219, 0))
-  // r0 : Double = 0
+  // r0 : Double = 0.0
   (swift) pathLength(.Line((0, 0), (3, 4)))
-  // r0 : Double = 5
+  // r1 : Double = 5.0
 
 Objects and Classes
 ~~~~~~~~~~~~~~~~~~~
@@ -737,61 +737,65 @@ You've already seen various ways to create a Swift string, including concatenati
 
 .. testcode:: interpolation
 
-    (swift) var message = "Hello" + ", world" + "!"
-    // message : String = "Hello, world!"
+	(swift) var message = "Hello" + ", world" + "!"
+	// message : String = "Hello, world!"
 
 If you need to append string representations of other types, you can create a Swift string from a value:
 
 .. testcode:: interpolation
 
-    (swift) var someValue = 42
-    // someValue : Int = 42
-    (swift) var magic = "The magic number is: " + String(someValue) + "!"
-    // magic : String = "The magic number is: 42!"
+	(swift) var someValue = 42
+	// someValue : Int = 42
+	(swift) var magic = "The magic number is: " + String(someValue) + "!"
+	// magic : String = "The magic number is: 42!"
 
 Interpolating values into strings is such a common task, however, that Swift provides an alternative, more readable syntax:
 
 .. testcode:: interpolation
 
-    (swift) var blackMagic = "The magic number is: \(someValue)!"
-    // blackMagic : String = "The magic number is: 42!"
+	(swift) var blackMagic = "The magic number is: \(someValue)!"
+	// blackMagic : String = "The magic number is: 42!"
 
 You can also use this syntax to interpolate the values of arbitrary expressions:
 
 .. testcode:: interpolation
 
-    (swift) var luckyForSome = 13
-    // luckyForSome : Int = 13
-    (swift) var addMessage = "Adding \(luckyForSome) to \(someValue) gives \(luckyForSome + someValue)"
-    // addMessage : String = "Adding 13 to 42 gives 55"
+	(swift) var luckyForSome = 13
+	// luckyForSome : Int = 13
+	(swift) var addMessage = "Adding \(luckyForSome) to \(someValue) gives \(luckyForSome + someValue)"
+	// addMessage : String = "Adding 13 to 42 gives 55"
 
 Rather than requiring you to think about how best to format a value every time you want to insert it into a string, it's up to the developer of the original type to provide an implementation for the string conversion. This involves adding a suitable initializer to the Swift ``String`` type through the use of an extension, as discussed later in this tour (see Extensions_).
 
-For more power and flexibility, the Swift standard library also provides a type-safe ``printf()`` function:
+For more power and flexibility, the Swift standard library also provides a type-safe ``printf()`` function::
 
-.. testcode:: interpolation
-
-    (swift) printf("Take %v and sell it for $%.2v\n", 42, 3.14159)
-    >>> Take 42 and sell it for $3.14159
+	(swift) printf("Take %v and sell it for $%.2v\n", 42, 3.14159)
+	>>> Take 42 and sell it for $3.14159
 
 Protocols
 ---------
 
 A protocol is an abstract description of behavior --- usually related functions and/or properties --- that can be adopted by one or more types:
 
-.. testcode:: protocols
+.. testcode:: protocols_and_extensions
 
+    (swift) struct Point {
+              var x, y : Float
+            }
     (swift) protocol HitTestable {
                 func containsPoint(point : Point) -> Bool 
             }
 
 All named Swift types (i.e., classes, structs and enums, but not tuples), can adopt protocols and implement the required behavior:
 
-.. testcode:: protocols
+.. testcode:: protocols_and_extensions
 
+	(swift) struct Size {
+	            var width, height : Float
+	        }
     (swift) struct Rect : HitTestable {
-                var origin = Point()
-                var size = Size()
+                var origin : Point = Point()
+                var size : Size = Size()
                 func containsPoint(point : Point) -> Bool {
                     return point.x >= origin.x && 
                         point.x < (origin.x + size.width) &&
@@ -804,13 +808,13 @@ The ``: HitTestable`` syntax in this structure declaration indicates conformance
 
 You can use a protocol in a variable declaration to indicate the variable has some unknown, dynamic type that conforms to that protocol:
 
-.. testcode:: protocols
+.. testcode:: protocols_and_extensions
 
     (swift) var testableThing : HitTestable
 
 You can only assign a value if its type conforms to the protocol:
 
-.. testcode:: protocols
+.. testcode:: protocols_and_extensions
 
     (swift) var rect : Rect
     (swift) testableThing = rect
@@ -857,7 +861,7 @@ Extensions
 
 An extension allows you to add functions or properties to an existing class or structure. As described earlier, you might use an extension to add suitable initializers to the Swift ``String`` class:
 
-.. testcode:: extensions
+.. testcode:: protocols_and_extensions
 
     (swift) extension String {
                 init(point : Point) {
@@ -867,21 +871,21 @@ An extension allows you to add functions or properties to an existing class or s
 
 to make it easy to convert your own classes or structures into strings, either by constructing a ``String`` explicitly:
 
-.. testcode:: extensions
+.. testcode:: protocols_and_extensions
 
     (swift) String(pt)
     // String = "{4.0, 5.0}"
 
 or implicitly with Swift's interpolation syntax:
 
-.. testcode:: extensions
+.. testcode:: protocols_and_extensions
 
     (swift) println("The point is \(pt)")
     The point is {4.0, 5.0}
 
 You can also use an extension to add protocol conformance to an existing class or structure:
 
-.. testcode:: extensions
+.. testcode:: protocols_and_extensions
 
     (swift) extension Point : HitTestable {
                 func containsPoint(point : Point) -> Bool {
@@ -906,7 +910,7 @@ A closure is just a function without a name. As an example, the ``sort()`` libra
     // strings : String[] = ["Hello", "Bye", "Good day"]
     (swift) var sortedStrings = sort(strings, {
                 (lhs : String, rhs : String) -> Bool in
-                return lhs.toUpper() < rhs.toUpper()
+                return lhs.uppercase < rhs.uppercase
             })
     // sortedStrings : String[] = ["Bye", "Good day", "Hello"]
     (swift) for eachString in sortedStrings {
@@ -922,7 +926,7 @@ The closure in this example is described in curly braces:
 
     { 
         (lhs : String, rhs : String) -> Bool in
-        return lhs.toUpper() < rhs.toUpper() 
+        return lhs.uppercase < rhs.uppercase
     }
 
 The parentheses denote the parameters of the closure, followed by the
@@ -932,7 +936,7 @@ its body. As you've already seen throughout this tour, the types in a Swift expr
 .. testcode:: closures
 
     (swift) sortedStrings = sort(strings, { (lhs, rhs) in
-                return lhs.toUpper() < rhs.toUpper() 
+                return lhs.uppercase < rhs.uppercase
             })
 
 One can also omit the names of the parameters, using the positional
@@ -951,8 +955,8 @@ Closures can also capture any variable from the local scope:
     // uppercase : Bool = true
     (swift) sortedStrings = sort(strings, { (x, y) in 
                     if uppercase {
-                        x = x.toUpper()
-                        y = y.toUpper()
+                        x = x.uppercase
+                        y = y.uppercase
                     }
                     return x < y
                 }
@@ -989,8 +993,8 @@ trace, you may prefer to use a local function instead:
 
     (swift) func compareStrings(lhs : String, rhs : String) -> Bool {
                 if uppercase {
-                    lhs = lhs.toUpper()
-                    rhs = rhs.toUpper()
+                    lhs = lhs.uppercase
+                    rhs = rhs.uppercase
                 }
                 return lhs < rhs
             }
