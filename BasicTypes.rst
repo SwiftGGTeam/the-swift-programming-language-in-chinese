@@ -1,21 +1,6 @@
 Basic types
 ===========
 
-Just some test code
--------------------
-
-.. testcode:: multilineTest
-
-	(swift) var a = 42
-	// a : Int = 42
-	(swift) if a == 42 {
-	            a = 27
-	        } else {
-	            a = 31
-	        }
-	(swift) var b = a
-	// b : Int = 27
-
 Numbers
 -------
 
