@@ -1,6 +1,6 @@
 .. docnote:: Placeholder tour
 
-	The tour below is the whitepaper's Guided Tour. It has yet to be adapted / rewritten / replaced for use in the book, but in the absence of a new Tour, it's a good starting point for now.
+    The tour below is the whitepaper's Guided Tour. It has yet to be adapted / rewritten / replaced for use in the book, but in the absence of a new Tour, it's a good starting point for now.
 
 A tour of the Swift language
 ============================
@@ -164,14 +164,14 @@ As you saw in the earlier Objective-C example, Swift provides a for-each-style l
 
 .. testcode::
 
-	(swift) for eachCharacter in "Hello".chars {
-	            println(eachCharacter)
-	        }
-	>>> H
-	>>> e
-	>>> l
-	>>> l
-	>>> o
+    (swift) for eachCharacter in "Hello".chars {
+                println(eachCharacter)
+            }
+    >>> H
+    >>> e
+    >>> l
+    >>> l
+    >>> o
 
 
 .. note:: If you're wondering why/how this works, it's because the return value of ``String.chars`` adopts the ``Enumerable`` protocol. `Protocols`_ are covered later in this tour.
@@ -202,14 +202,14 @@ Some enumerable types use a tuple rather than a single loop variable. If you ite
 
 .. testcode::
 
-	(swift) var dict = ["first" : 1, "second" : 2, "third" : 3]
-	// dict : Dictionary<String, Int> = ["second" : 2, "third" : 3, "first" : 1]
-	(swift) for (key, value) in dict {
-	            println("Key: '\(key)', Value: \(value)")
-	        }
-	>>> Key: 'second', Value: 2
-	>>> Key: 'third', Value: 3
-	>>> Key: 'first', Value: 1
+    (swift) var dict = ["first" : 1, "second" : 2, "third" : 3]
+    // dict : Dictionary<String, Int> = ["second" : 2, "third" : 3, "first" : 1]
+    (swift) for (key, value) in dict {
+                println("Key: '\(key)', Value: \(value)")
+            }
+    >>> Key: 'second', Value: 2
+    >>> Key: 'third', Value: 3
+    >>> Key: 'first', Value: 1
 
 Functions
 ~~~~~~~~~
@@ -245,13 +245,13 @@ And, in the same way that you can assign a value as part of a variable declarati
 
 .. testcode:: functions
 
-	(swift) func sayHello(name : String = "World") {
-	            print("Hello, \(name)!\n")
-	        }
-	(swift) sayHello("Bob")
-	>>> Hello, Bob!
-	(swift) sayHello()
-	>>> Hello, World!
+    (swift) func sayHello(name : String = "World") {
+                print("Hello, \(name)!\n")
+            }
+    (swift) sayHello("Bob")
+    >>> Hello, Bob!
+    (swift) sayHello()
+    >>> Hello, World!
 
 If you omit the return type, as with this ``sayHello()`` function, the default is Void. To return multiple values from a function, just return a multi-element tuple:
 
@@ -311,18 +311,18 @@ Note that, unlike C, cases do not implicitly fallthrough to their neighboring st
 
 .. testcode:: switch
 
-	(swift) switch 5 {
-	        case 2:
-	        case 3:
-	        case 5:
-	        case 7:
-	            println("prime")
-	            fallthrough
-	        default:
-	            println("integer")
-	        }
-	>>> prime
-	>>> integer
+    (swift) switch 5 {
+            case 2:
+            case 3:
+            case 5:
+            case 7:
+                println("prime")
+                fallthrough
+            default:
+                println("integer")
+            }
+    >>> prime
+    >>> integer
 
 As shorthand, you can also specify multiple values in a single case separated by commas:
 
@@ -527,7 +527,7 @@ As you might expect, the ``class`` keyword is used to declare a new Swift class:
 .. testcode:: objects
 
     (swift) class Shape {
-              var numberOfSides : Int
+                var numberOfSides : Int
             }
 
 Note that there's no need for a Swift class to inherit from any base class.  Of course, it is still fine to inherit from ``NSObject`` if you would like to get its methods.
@@ -546,9 +546,9 @@ When you create subclasses, you use the familiar colon ``:`` to indicate the inh
 .. testcode:: objects
 
     (swift) class Quadrilateral : Shape {
-              init() {
-                numberOfSides = 4
-              }
+                init() {
+                    numberOfSides = 4
+                }
             }
 
 Instance variables can be accessed via the ``.`` operator:
@@ -596,7 +596,7 @@ This is one of the primary safety features --- **Swift does not require you to m
     (swift) func enlarge(circle : Circle) {
                 circle.radius *= 2
             }
-	
+    
 …and call it like this:
 
 .. testcode:: objects
@@ -615,9 +615,9 @@ For types that should be passed by value (i.e., by copying it), like graphics co
 
 .. testcode:: structures
 
-	(swift) struct Size {
-	            var width, height : Float
-	        }
+    (swift) struct Size {
+                var width, height : Float
+            }
 
 Unlike other languages, Swift structures aren't limited just to holding values, they can also have functions and initializers, as well as adopt protocols and be extended (as described later in this tour):
 
@@ -737,40 +737,40 @@ You've already seen various ways to create a Swift string, including concatenati
 
 .. testcode:: interpolation
 
-	(swift) var message = "Hello" + ", world" + "!"
-	// message : String = "Hello, world!"
+    (swift) var message = "Hello" + ", world" + "!"
+    // message : String = "Hello, world!"
 
 If you need to append string representations of other types, you can create a Swift string from a value:
 
 .. testcode:: interpolation
 
-	(swift) var someValue = 42
-	// someValue : Int = 42
-	(swift) var magic = "The magic number is: " + String(someValue) + "!"
-	// magic : String = "The magic number is: 42!"
+    (swift) var someValue = 42
+    // someValue : Int = 42
+    (swift) var magic = "The magic number is: " + String(someValue) + "!"
+    // magic : String = "The magic number is: 42!"
 
 Interpolating values into strings is such a common task, however, that Swift provides an alternative, more readable syntax:
 
 .. testcode:: interpolation
 
-	(swift) var blackMagic = "The magic number is: \(someValue)!"
-	// blackMagic : String = "The magic number is: 42!"
+    (swift) var blackMagic = "The magic number is: \(someValue)!"
+    // blackMagic : String = "The magic number is: 42!"
 
 You can also use this syntax to interpolate the values of arbitrary expressions:
 
 .. testcode:: interpolation
 
-	(swift) var luckyForSome = 13
-	// luckyForSome : Int = 13
-	(swift) var addMessage = "Adding \(luckyForSome) to \(someValue) gives \(luckyForSome + someValue)"
-	// addMessage : String = "Adding 13 to 42 gives 55"
+    (swift) var luckyForSome = 13
+    // luckyForSome : Int = 13
+    (swift) var addMessage = "Adding \(luckyForSome) to \(someValue) gives \(luckyForSome + someValue)"
+    // addMessage : String = "Adding 13 to 42 gives 55"
 
 Rather than requiring you to think about how best to format a value every time you want to insert it into a string, it's up to the developer of the original type to provide an implementation for the string conversion. This involves adding a suitable initializer to the Swift ``String`` type through the use of an extension, as discussed later in this tour (see Extensions_).
 
 For more power and flexibility, the Swift standard library also provides a type-safe ``printf()`` function::
 
-	(swift) printf("Take %v and sell it for $%.2v\n", 42, 3.14159)
-	>>> Take 42 and sell it for $3.14159
+    (swift) printf("Take %v and sell it for $%.2v\n", 42, 3.14159)
+    >>> Take 42 and sell it for $3.14159
 
 Protocols
 ---------
@@ -790,9 +790,9 @@ All named Swift types (i.e., classes, structs and enums, but not tuples), can ad
 
 .. testcode:: protocols_and_extensions
 
-	(swift) struct Size {
-	            var width, height : Float
-	        }
+    (swift) struct Size {
+                var width, height : Float
+            }
     (swift) struct Rect : HitTestable {
                 var origin : Point = Point()
                 var size : Size = Size()
@@ -1196,7 +1196,6 @@ Even the REPL works great with Cocoa.  To see this, start by importing the Clang
 Cocoa module (which is built directly from Cocoa.h)::
 
     (swift) import Cocoa 
-    (swift)  
 
 You can create an instance of a Cocoa class just like any other class::
 
@@ -1250,13 +1249,11 @@ You can even use Swift's interpolation syntax::
     // Number 1
     // Number 2
     // Number 3
-    (swift)
 
 You can initialize Objective-C objects using ``initWith...`` methods by supplying initializer arguments::
 
     (swift) var number = NSNumber(true)
     // number : NSNumber = 1
-    (swift)
 
 Because Swift uses the standard Objective-C object model, you can extend a class
 written in Objective-C with a Swift extension (which just defines a "category"
@@ -1271,7 +1268,6 @@ in Objective-C parlance)::
     (swift) string = "       trim me       "
     (swift) string.stringByTrimmingWhitespace()
     // NSString = trim me
-    (swift)
     
 and you can even extend non-class Objective-C types, like structures::
 
@@ -1296,7 +1292,6 @@ When invoking an Objective-C selector that takes one argument (or no arguments),
 
     (swift) string.uppercaseString()
     // NSString =        TRIM ME       
-    (swift)
 
 For selectors that take more than one argument, you have a variety of options. In situations where there is only one possible selector for a given set of arguments, just supply them in order::
 
@@ -1370,84 +1365,84 @@ Click the button and you'll see the message appear in the REPL:
 
 .. docnote:: Subjects to be covered in this section
 
-	* Basic grammar structure
-	* Braces, semicolons and whitespace
-	* Comments
-	* Lack of header files
-	* Introduction to the core concepts from each of the chapters in the Language Guide
+    * Basic grammar structure
+    * Braces, semicolons and whitespace
+    * Comments
+    * Lack of header files
+    * Introduction to the core concepts from each of the chapters in the Language Guide
 
 .. refnote:: Language Reference: Whitespace and Comments
 
     Definition::
     
-		whitespace ::= ' '
-		whitespace ::= '\n'
-		whitespace ::= '\r'
-		whitespace ::= '\t'
-		whitespace ::= '\0'
-		comment    ::= //.*[\n\r]
-		comment    ::= /* .... */
+        whitespace ::= ' '
+        whitespace ::= '\n'
+        whitespace ::= '\r'
+        whitespace ::= '\t'
+        whitespace ::= '\0'
+        comment    ::= //.*[\n\r]
+        comment    ::= /* .... */
 
-	Space, newline, tab, and the nul byte are all considered whitespace and are discarded, with one exception:  a '(' or '[' which does not follow a non-whitespace character is different kind of token (called *spaced*) from one which does not (called *unspaced*). A '(' or '[' at the beginning of a file is spaced.
+    Space, newline, tab, and the nul byte are all considered whitespace and are discarded, with one exception:  a '(' or '[' which does not follow a non-whitespace character is different kind of token (called *spaced*) from one which does not (called *unspaced*). A '(' or '[' at the beginning of a file is spaced.
   
-	Comments may follow the BCPL style, starting with a "//" and running to the	end of the line, or may be recursively nested /**/ style comments. Comments are ignored and treated as whitespace.
+    Comments may follow the BCPL style, starting with a "//" and running to the    end of the line, or may be recursively nested /**/ style comments. Comments are ignored and treated as whitespace.
 
-	Nested block comments are important because we don't have the nestable "#if 0" hack from C to rely on.
+    Nested block comments are important because we don't have the nestable "#if 0" hack from C to rely on.
 
 .. refnote:: Lexical Structure: Introduction
 
-	Source files in Swift are UTF-8 encoded text files, which are first tokenized
-	using the "`maximal munch <http://en.wikipedia.org/wiki/Maximal_munch>`_" rule,
-	then parsed.  Unlike C, Swift does not use a preprocessor, and does not include
-	digraphs, trigraphs, or "line splicing" with escaped newlines.
+    Source files in Swift are UTF-8 encoded text files, which are first tokenized
+    using the "`maximal munch <http://en.wikipedia.org/wiki/Maximal_munch>`_" rule,
+    then parsed.  Unlike C, Swift does not use a preprocessor, and does not include
+    digraphs, trigraphs, or "line splicing" with escaped newlines.
 
-	As mentioned earlier, it is a strong goal to follow C's basic syntax where
-	reasonably possible, which is a major influence on its basic lexical structure.
+    As mentioned earlier, it is a strong goal to follow C's basic syntax where
+    reasonably possible, which is a major influence on its basic lexical structure.
 
 .. refnote:: Lexical Structure: Whitespace
 
-	Space, tab, newline and return are all considered whitespace and ignored (other
-	than separating tokens).  Line breaks do not affect the Swift parser, but we do
-	require a semicolon to separate two statements on the same line to make it
-	easier to read the code::
+    Space, tab, newline and return are all considered whitespace and ignored (other
+    than separating tokens).  Line breaks do not affect the Swift parser, but we do
+    require a semicolon to separate two statements on the same line to make it
+    easier to read the code::
 
-	  var x : Int
-	  x = 4
+      var x : Int
+      x = 4
   
-	  var x : Int; x = 4
+      var x : Int; x = 4
 
-	Semicolons are also accepted and ignored at the end of all statements and
-	declarations, but we don't encourage their use.
+    Semicolons are also accepted and ignored at the end of all statements and
+    declarations, but we don't encourage their use.
 
 .. refnote:: Lexical Structure: Comments
 
-	Swift supports both "``//``" line-comments (where the "``//``" and the rest of
-	the line are discarded) and "``/* */``" block comments like C99.  Because Swift
-	does not include a preprocessor (and thus does not support ``#if 0`` tricks), it
-	allows ``/* */`` comments to be nested.  As such, these examples "do the right
-	thing" in Swift::
+    Swift supports both "``//``" line-comments (where the "``//``" and the rest of
+    the line are discarded) and "``/* */``" block comments like C99.  Because Swift
+    does not include a preprocessor (and thus does not support ``#if 0`` tricks), it
+    allows ``/* */`` comments to be nested.  As such, these examples "do the right
+    thing" in Swift::
 
-	  // This is a line comment.
-	  // This ascii art doesn't cause the next line to be commented: /---\
-	  var x = 0
+      // This is a line comment.
+      // This ascii art doesn't cause the next line to be commented: /---\
+      var x = 0
   
-	  /* This is a block comment.  y is commented out.
-	  var y = 1
+      /* This is a block comment.  y is commented out.
+      var y = 1
 
-	  /* This is a nested block comment.  z is also commented out. */
-	  var z = 2
+      /* This is a nested block comment.  z is also commented out. */
+      var z = 2
 
-	  end of outer block comment.
-	  */
+      end of outer block comment.
+      */
   
-	Though we have no design or implementation yet, we would eventually like to
-	have a standard form for documentation generation from source (e.g.
-	`Javadoc <http://en.wikipedia.org/wiki/Javadoc>`_ or `Doxygen
-	<http://en.wikipedia.org/wiki/Doxygen>`_ that is parsed and validated by the
-	compiler (similar to Clang's -Wdocumentation flag).
+    Though we have no design or implementation yet, we would eventually like to
+    have a standard form for documentation generation from source (e.g.
+    `Javadoc <http://en.wikipedia.org/wiki/Javadoc>`_ or `Doxygen
+    <http://en.wikipedia.org/wiki/Doxygen>`_ that is parsed and validated by the
+    compiler (similar to Clang's -Wdocumentation flag).
 
 .. refnote:: Lexical Structure: Keywords
 
-	Swift includes a number of keywords that are baked into the compiler, and thus
-	not usable as an identifier.  These including things like ``if``, ``break``,
-	``return``, ``var``, etc.
+    Swift includes a number of keywords that are baked into the compiler, and thus
+    not usable as an identifier.  These including things like ``if``, ``break``,
+    ``return``, ``var``, etc.
