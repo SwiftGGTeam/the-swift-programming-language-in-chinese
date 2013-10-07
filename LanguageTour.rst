@@ -806,27 +806,23 @@ All named Swift types (i.e., classes, structs and enums, but not tuples), can ad
 
 The ``: HitTestable`` syntax in this structure declaration indicates conformance to the protocol. As with all other ``:`` use in Swift, you can read the colon as *is a*, so *"a Rect is a HitTestable type"*.  
 
-You can use a protocol in a variable declaration to indicate the variable has some unknown, dynamic type that conforms to that protocol:
+You can use a protocol in a variable declaration to indicate the variable has some unknown, dynamic type that conforms to that protocol. If you do, you can only assign a value if its type conforms to the protocol:
 
 .. testcode:: protocols_and_extensions
 
-    (swift) var testableThing : HitTestable
-
-You can only assign a value if its type conforms to the protocol:
-
-.. testcode:: protocols_and_extensions
-
-    (swift) var rect : Rect
-    (swift) testableThing = rect
+    (swift) var rect = Rect(Point(0.0, 0.0), Size(2.0, 2.0))
+    // rect : Rect = Rect(Point(0.0, 0.0), Size(2.0, 2.0))
+    (swift) var testableThing : HitTestable = rect
+    // testableThing : HitTestable = <unprintable value>
+    (swift) var hitPoint = Point(4.0, 5.0)
+    // hitPoint : Point = Point(4.0, 5.0)
+    (swift) testableThing.containsPoint(hitPoint)
+    // r0 : Bool = false
 
 and Swift ensures that you can only call functions or access properties that are defined as part of the protocol:
 
 .. code-block:: swift
 
-    (swift) var pt : Point(4, 5)
-    // (Double, Double) = (4.0, 5.0)
-    (swift) testableThing.containsPoint(pt)
-    // Bool = false
     (swift) testableThing.origin
     <REPL Buffer>:51:14: error: protocol 'HitTestable' has no member named 'origin'
     testableThing.origin
@@ -852,7 +848,6 @@ This guarantees safety when dealing with different types, such as when hit-testi
     var elephant = Elephant()
     var element = findFirstHitElement(pt, circle, elephant)
 
-
 This example uses a variable argument list and returns an optional value
 (to either return an element or not), which are discussed later in this tour.
 
@@ -873,15 +868,15 @@ to make it easy to convert your own classes or structures into strings, either b
 
 .. testcode:: protocols_and_extensions
 
-    (swift) String(pt)
-    // String = "{4.0, 5.0}"
+    (swift) String(hitPoint)
+    // r1 : String = "{4.0, 5.0}"
 
 or implicitly with Swift's interpolation syntax:
 
 .. testcode:: protocols_and_extensions
 
-    (swift) println("The point is \(pt)")
-    The point is {4.0, 5.0}
+    (swift) println("The hit point is \(hitPoint)")
+    >>> The hit point is {4.0, 5.0}
 
 You can also use an extension to add protocol conformance to an existing class or structure:
 
@@ -892,9 +887,12 @@ You can also use an extension to add protocol conformance to an existing class o
                     return self.x == point.x && self.y == point.y
                 }
             }
-    (swift) var testPoint = Point(5.0, 10.0)
-    (swift) pt.containsPoint(testPoint)
-    // false
+    (swift) var someOtherPoint = Point(5.0, 10.0)
+    // someOtherPoint : Point = Point(5.0, 10.0)
+    (swift) hitPoint.containsPoint(someOtherPoint)
+    // r2 : Bool = false
+    (swift) hitPoint.containsPoint(hitPoint)
+    // r3 : Bool = true
 
 This is particularly important for "retroactive modeling", which is important
 when you make two libraries work together, when you cannot change their code.
@@ -1066,7 +1064,7 @@ It's even safe in Swift to mix by-reference and value types if you use a protoco
             }
     (swift) var foo = Foo()
     // foo : Foo = <Foo instance>
-    (swift) var bar : Bar
+    (swift) var bar = Bar()
     // bar : Bar = Bar()
     (swift) var workers = Vector<Workable>()
     // workers : Vector<Workable> = <_TtCSs6Vector instance>
