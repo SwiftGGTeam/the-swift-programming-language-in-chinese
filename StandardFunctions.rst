@@ -1,4 +1,4 @@
-Standard functions
+Standard Functions
 ==================
 
 .. docnote:: Subjects to be covered in this section

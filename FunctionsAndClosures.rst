@@ -1,4 +1,4 @@
-Functions and closures
+Functions and Closures
 ======================
 
 .. docnote:: Functions and closures

@@ -1,4 +1,4 @@
-Classes, objects and structures
+Classes, Objects and Structures
 ===============================
 
 .. docnote:: Objects and structs

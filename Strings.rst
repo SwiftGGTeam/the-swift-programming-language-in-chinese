@@ -1,4 +1,4 @@
-Strings and characters
+Strings and Characters
 ======================
 
 .. docnote:: Strings and characters

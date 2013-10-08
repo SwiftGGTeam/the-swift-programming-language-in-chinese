@@ -1,4 +1,4 @@
-Basic types
+Basic Types
 ===========
 
 Numbers

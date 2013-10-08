@@ -1,4 +1,4 @@
-Control flow
+Control Flow
 ============
 
 .. docnote:: Control flow

@@ -1,4 +1,4 @@
-Operators and expressions
+Operators and Expressions
 =========================
 
 .. docnote:: Subjects to be covered in this section

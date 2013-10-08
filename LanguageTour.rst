@@ -2,7 +2,7 @@
 
     The tour below is the whitepaper's Guided Tour. It has yet to be adapted / rewritten / replaced for use in the book, but in the absence of a new Tour, it's a good starting point for now.
 
-A tour of the Swift language
+A Tour of the Swift Language
 ============================
 
 So what does Swift look like? History suggests that we start with "Hello, world":
