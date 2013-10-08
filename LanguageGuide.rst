@@ -12,8 +12,7 @@ Language Guide
 	Generics
 	FunctionsAndClosures
 	ClassesObjectsAndStructs
-	Protocols
-	Extensions
+	ProtocolsAndExtensions
 	StandardFunctions
 	ObjectiveC
 
