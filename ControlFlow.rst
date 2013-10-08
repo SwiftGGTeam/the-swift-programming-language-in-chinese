@@ -11,7 +11,10 @@ Control flow
 	* Looping (while, do while, for, for in)
 	* Iterators
 	* Switch statement (including pattern matching)
+	* Pattern matching on classes?
 	* Control transfer (return, break, continue, fallthrough)
+	* Ranges
+	* Clarity around half-closed (1..10) and closed (1...10) ranges
 
 .. refnote:: Guided Tour: Branching and Looping
 

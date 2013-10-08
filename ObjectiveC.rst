@@ -18,6 +18,7 @@ Interacting with Objective-C and Cocoa
 	* Importing Objective-C macros
 	* Overloading and selectors
 	* Relationship to message send syntax
+	* Using NSLog
 
 .. refnote:: Guided Tour: Interacting with Objective-C and Cocoa
 

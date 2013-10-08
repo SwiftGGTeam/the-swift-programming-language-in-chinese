@@ -131,6 +131,7 @@ All of these literals are valid in Swift:
 .. docnote:: Subjects to be covered in this section
 
 	* Declaration syntax
+	* Multiple variable declarations and initializations on one line
 	* Naming conventions
 	* Integer types
 	* Floating point types
@@ -143,6 +144,10 @@ All of these literals are valid in Swift:
 	* Tuples
 	* Enums
 	* Enum element patterns
+	* Enums for groups of constants
+	* Enums with raw values (inc. getting / setting raw values)
+	* Enum default / unknown values?
+	* Enums with multiple identical values?
 	* Typealiases
 	* Type inference
 	* Type casting through type initializers

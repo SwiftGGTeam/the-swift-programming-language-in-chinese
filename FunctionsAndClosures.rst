@@ -12,12 +12,14 @@ Functions and closures
 	* Naming conventions
 	* Closures
 	* Trailing closures
+	* Can only have one variadic parameter
 	* Nested closures
 	* Capturing values
 	* Different closure expression forms
 	* Anonymous closure arguments
 	* Thick and thin functions (?)
 	* Attributes (infix, resilience, inout, auto_closure, noreturn)
+	* Typedefs for closure signatures to aid readability?
 
 .. refnote:: Types and Values: Functions
 

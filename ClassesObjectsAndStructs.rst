@@ -4,6 +4,8 @@ Classes, objects and structures
 .. docnote:: Objects and structs
 
 	I've grouped ``object`` and ``struct`` together because they are very similar in Swift, at least in practice. This enables me to cover how they *do* differ in practice – something which has the potential to trip people up – and to discuss Swift's approach to passing by value and by reference in more detail.
+	
+	Should this perhaps be more generally about 'types', rather than two special kinds of types (structs and objects)?
 
 .. docnote:: Subjects to be covered in this section
 
@@ -12,6 +14,7 @@ Classes, objects and structures
 	* Structures
 	* Instance variables
 	* Getters and setters
+	* WillSet / DidSet
 	* Constructors and destructors
 	* Instance and class methods
 	* Working with self and Self
@@ -19,6 +22,7 @@ Classes, objects and structures
 	* Memory management
 	* UnsafePointer
 	* Cast operators (?, !, b as D, b is D)
+	* Type inference and discovery?
 
 .. refnote:: Types and Values: Structures
 
