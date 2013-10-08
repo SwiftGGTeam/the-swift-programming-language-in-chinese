@@ -1,6 +1,3 @@
-Operators and Expressions
-=========================
-
 .. docnote:: Subjects to be covered in this section
 
 	* Arithmetic operators
@@ -9,3 +6,6 @@ Operators and Expressions
 	* Short circuiting logical operators
 	* Expressions
 	* The ‘is’ pattern
+
+Operators and Expressions
+=========================

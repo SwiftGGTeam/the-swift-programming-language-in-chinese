@@ -1,6 +1,3 @@
-Standard Functions
-==================
-
 .. docnote:: Subjects to be covered in this section
 
 	* find()
@@ -10,6 +7,9 @@ Standard Functions
 	* swap()
 	* sort()
 	* etc.
+
+Standard Functions
+==================
 
 .. docnote:: Standard functions vs Standard Library
 

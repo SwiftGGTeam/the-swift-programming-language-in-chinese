@@ -9,10 +9,10 @@ Language Guide
 	OperatorsAndExpressions
 	Strings
 	ControlFlow
-	Generics
 	FunctionsAndClosures
 	ClassesObjectsAndStructs
 	ProtocolsAndExtensions
+	Generics
 	StandardFunctions
 	ObjectiveC
 
