@@ -36,29 +36,29 @@ Basic Types
 Declaring Variables
 -------------------
 
-Creating and naming variables in Swift takes the following form:
+All variables in Swift must be declared before they are used. Here's a simple variable declaration:
 
 .. testcode:: declaringVariables
 
     (swift) var a = 1
     // a : Int = 1
 	
-This declaration says “Define a variable called ``a``, and give it an initial value of ``1``”.
+This statement says “Declare a variable called ``a``, and give it an initial value of ``1``”.
 
 Variable definitions can include a specific *type*, to be explicit about the kind of variable you want to create:
 
 .. testcode:: declaringVariables
 
-    (swift) var b : Int = 2
+    (swift) var b: Int = 2
     // b : Int = 2
 
-This asks Swift to create a new variable called ``b`` to store whole numbers (shown here as ``Int``), and to give ``b`` an initial value of ``2``. The colon in the declaration means ‘of type’, so we can read this as “define a variable called ``b``, which is of type ``Int``, and set it to equal ``2``”.
+This declares a new variable called ``b`` to store whole numbers (shown here as ``Int``), and to give ``b`` an initial value of ``2``. The colon in the declaration means ‘of type’, so we can read this as “define a variable called ``b``, which is of type ``Int``, and set it to equal ``2``”.
 
-You can use pretty much :term:`any character` you like in a variable name:
+You can use pretty much :term:`any character you like` in a variable name:
 
 .. glossary::
 
-    any character
+    any character you like
         Variable names can't start with a number, but they can contain numbers elsewhere in their name. They also can't contain mathematical symbols, arrows, line and box drawing characters, or private-use or invalid Unicode code points.
 
 .. testcode:: declaringVariables
@@ -253,15 +253,14 @@ You can also optionally name the elements in a tuple, and retrieve them using do
 
 .. testcode:: tuples
 
-    (swift) var webPageRetrievalError = (statusCode : 404, statusString : "Not Found")
-    // webPageRetrievalError : (statusCode: Int, statusString: String) = (404, "Not Found")
-    (swift) webPageRetrievalError.statusCode
+    (swift) var httpNotFoundError = (statusCode : 404, statusString : "Not Found")
+    // httpNotFoundError : (statusCode: Int, statusString: String) = (404, "Not Found")
+    (swift) httpNotFoundError.statusCode
     // r2 : Int = 404
-    (swift) webPageRetrievalError.statusString
+    (swift) httpNotFoundError.statusString
     // r3 : String = "Not Found"
 
-Tuples are particularly useful as the return values of functions. A function that tries to retrieve a web page might return our ``webPageRetrievalError`` tuple if it is unable to find the page we have requested. By returning a tuple with two distinct values, each of a different type, the function is able to provide much more useful information about its outcome than if it could only return a single value of a single type.
-
+Tuples are particularly useful as the return values of functions. A function that tries to retrieve a web page might return our ``httpNotFoundError`` tuple if it is unable to find the page we have requested. By returning a tuple with two distinct values, each of a different type, the function is able to provide much more useful information about its outcome than if it could only return a single value of a single type.
 
 .. refnote:: References
 
