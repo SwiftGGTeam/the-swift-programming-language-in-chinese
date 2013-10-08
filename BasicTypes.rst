@@ -52,7 +52,7 @@ Variable definitions can include a specific *type*, to be explicit about the kin
     (swift) var b: Int = 2
     // b : Int = 2
 
-This declares a new variable called ``b`` to store whole numbers (shown here as ``Int``), and to give ``b`` an initial value of ``2``. The colon in the declaration means ‘of type’, so we can read this as “define a variable called ``b``, which is of type ``Int``, and set it to equal ``2``”.
+This declares a new variable called ``b`` to store whole numbers (shown here as ``Int``), and gives it an initial value of ``2``. The colon in the declaration means ‘of type’, so we can read this as “define a variable called ``b``, which is of type ``Int``, and set it to equal ``2``”.
 
 You can use pretty much :term:`any character you like` in a variable name:
 
@@ -224,12 +224,12 @@ Swift has a basic :term:`boolean` type, called ``Bool``. Values of type ``Bool``
     (swift) var turnipsAreDelicious = false
     // turnipsAreDelicious : Bool = false
 
-Note that Swift has inferred the types of ``orangesAreOrange`` and ``turnipsAreDelicious`` from the fact that we initialized them with ``Bool`` values. As with ``Int`` and ``Double`` above, we don't need to declare variables as being ``Bool`` if we set them to ``true`` or ``false`` as soon as we create them. Type inference helps to make Swift code much more concise and readable when initializing variables with known values.
+Note that Swift has inferred the types of ``orangesAreOrange`` and ``turnipsAreDelicious`` from the fact that we initialized them with ``Bool`` values. As with ``Int`` and ``Double`` above, you don't need to declare variables as being ``Bool`` if you set them to ``true`` or ``false`` as soon as you create them. Type inference helps to make Swift code much more concise and readable when initializing variables with known values.
 
 Tuples
 ------
 
-Tuples are a way to group multiple values together in a simple and flexible way. Here's an example of a tuple:
+Tuples are a way to group multiple values together. Here's an example of a tuple:
 
 .. testcode:: tuples
 
@@ -253,14 +253,49 @@ You can also optionally name the elements in a tuple, and retrieve them using do
 
 .. testcode:: tuples
 
-    (swift) var httpNotFoundError = (statusCode : 404, statusString : "Not Found")
-    // httpNotFoundError : (statusCode: Int, statusString: String) = (404, "Not Found")
-    (swift) httpNotFoundError.statusCode
+    (swift) var httpError = (statusCode: 404, description: "Not Found")
+    // httpError : (statusCode: Int, description: String) = (404, "Not Found")
+    (swift) httpError.statusCode
     // r2 : Int = 404
-    (swift) httpNotFoundError.statusString
+    (swift) httpError.description
     // r3 : String = "Not Found"
 
-Tuples are particularly useful as the return values of functions. A function that tries to retrieve a web page might return our ``httpNotFoundError`` tuple if it is unable to find the page we have requested. By returning a tuple with two distinct values, each of a different type, the function is able to provide much more useful information about its outcome than if it could only return a single value of a single type.
+Tuples are particularly useful as the return values of functions. A function that tries to retrieve a web page might return this ``httpError`` tuple if it is unable to find the requested page. By returning a tuple with two distinct values, each of a different type, the function is able to provide more useful information about its outcome than if it could only return a single value of a single type.
+
+If you find yourself using a particular type of tuple several times, you can define a ``typealias`` as a shorthand description of that tuple type. Here's how to define a generic tuple type to describe any HTTP status code:
+
+.. testcode:: tuples
+
+    (swift) typealias httpStatus = (statusCode: Int, description: String)
+
+This can be read as:
+
+	“define a ``typealias`` called ``httpStatus``, which is a specific kind of tuple that contains (a ``statusCode`` of type ``Int``, and a ``description`` of type ``String``)”.
+
+Note that this ``typealias`` doesn't set a value for ``statusCode`` or ``description``. It's not actually creating a new ``httpStatus`` tuple – it's just defining what one looks like.
+
+This new ``typealias`` can then be used to create several tuples of the same type:
+
+.. testcode:: tuples
+
+    (swift) var http200SuccessStatus : httpStatus = (statusCode: 200, description: "OK")
+    // http200SuccessStatus : httpStatus = (200, "OK")
+    (swift) var http404ErrorStatus : httpStatus = (statusCode: 404, description: "Not Found")
+    // http404ErrorStatus : httpStatus = (404, "Not Found")
+
+It can also be used in a shorter form, without needing to provide the element names:
+
+.. testcode:: tuples
+
+    (swift) var http500ErrorStatus : httpStatus = (500, "Internal Server Error")
+    // http500ErrorStatus : httpStatus = (500, "Internal Server Error")
+
+…while still allowing access to the tuple's elements by name:
+
+.. testcode:: tuples
+
+    (swift) http500ErrorStatus.statusCode
+    // r4 : Int = 500
 
 .. refnote:: References
 
