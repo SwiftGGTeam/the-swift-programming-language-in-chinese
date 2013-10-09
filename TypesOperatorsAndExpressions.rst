@@ -29,9 +29,15 @@
     * Immutability
     * (Don't redeclare objects within a REPL session)
     * C primitive types
+    * Arithmetic operators
+    * Relational and equality operators
+    * === vs ==
+    * Short circuiting logical operators
+    * Expressions
+    * The ‘is’ pattern
 
-Basic Types
-===========
+Types, Operators and Expressions
+================================
 
 Declaring Variables
 -------------------
@@ -42,7 +48,7 @@ All variables in Swift must be declared before they are used. Here's a simple va
 
     (swift) var a = 1
     // a : Int = 1
-	
+    
 This can be read as:
 
     “Declare a variable called ``a``, and give it an initial value of ``1``”.
@@ -285,7 +291,7 @@ You can also optionally name the elements in a tuple:
 
 This can be read as:
 
-	“Declare a variable called ``http404Error``, and set it to a tuple containing (a ``statusCode`` that is ``404``, and a ``description`` that is ``"Not Found"``)”.
+    “Declare a variable called ``http404Error``, and set it to a tuple containing (a ``statusCode`` that is ``404``, and a ``description`` that is ``"Not Found"``)”.
 
 Once you've done this, you can retrieve the element values by name via dot syntax:
 
@@ -306,7 +312,7 @@ If you find yourself using a particular type of tuple several times, you can def
 
 This can be read as:
 
-	“Define a ``typealias`` called ``HTTPStatus``, and set it to the tuple type (a ``statusCode`` that is an ``Int``, and a ``description`` that is a ``String``)”.
+    “Define a ``typealias`` called ``HTTPStatus``, and set it to the tuple type (a ``statusCode`` that is an ``Int``, and a ``description`` that is a ``String``)”.
 
 Note that this ``typealias`` doesn't set a *value* for ``statusCode`` or ``description``. It's not actually creating a new ``HTTPStatus`` tuple for a specific status code – it's just defining what HTTP status codes *look* like.
 
@@ -321,7 +327,7 @@ Because it's a type, ``HTTPStatus`` can be used to create new tuples:
     
 This can be read as:
 
-	“Declare a variable called ``http304Status`` that is an ``HTTPStatus``. Initialize it with (a ``statusCode`` that is ``304``, and a ``description`` that is ``"Not Modified"``)”.
+    “Declare a variable called ``http304Status`` that is an ``HTTPStatus``. Initialize it with (a ``statusCode`` that is ``304``, and a ``description`` that is ``"Not Modified"``)”.
 
 ``HTTPStatus`` can also be used in a shorter form, without needing to provide the element names:
 
@@ -332,7 +338,7 @@ This can be read as:
 
 This can be read as:
 
-	“Declare a variable called ``http500Error`` that is an ``HTTPStatus``. Initialize it with (a first element value that is ``500``, and a second element value that is ``"Internal Server Error"``)”.
+    “Declare a variable called ``http500Error`` that is an ``HTTPStatus``. Initialize it with (a first element value that is ``500``, and a second element value that is ``"Internal Server Error"``)”.
 
 This fits the signature of an ``HTTPStatus`` (first element ``Int``, second element ``String``), and so this initialization is allowed by the Swift type-checker.
 
