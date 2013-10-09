@@ -5,7 +5,7 @@ Language Guide
 	:maxdepth: 1
 
 	LanguageTour
-	TypesOperatorsAndExpressions
+	TypesAndOperators
 	Strings
 	ControlFlow
 	FunctionsAndClosures

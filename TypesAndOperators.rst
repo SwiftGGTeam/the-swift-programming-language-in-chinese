@@ -36,11 +36,30 @@
     * Expressions
     * The ‘is’ pattern
 
-Types, Operators and Expressions
-================================
+Types and Operators
+===================
 
-Declaring Variables
--------------------
+Swift provides several basic types for working with fundamental values. Some of these types will be familiar to C and Objective-C developers:
+
+* *numbers* (including integers and floating-point numbers)
+* *booleans* (for values that can only be true or false)
+* *arrays* (which can contain several values in a defined order), and
+* *enumerations* (which can specify several different values of a similar type)
+    
+Although these types may be familiar, Swift expands their capabilities beyond what is possible in other languages.
+
+In addition to these simple types, Swift introduces some less familiar (but very powerful) advanced types:
+
+* arbitrary groups of values of different types (known as *tuples*)
+* types that can be either a known value or a missing value (known as *optionals*)
+* [some other things most likely]
+
+Each of these types, and the ways in which they can be used, are discussed in more detail below. This chapter also covers the ways in which values can be compared and modified using *operators* (such as ``+``, ``-``, ``*`` and ``==``), and how they are declared as *variables*.
+
+Swift provides a powerful and flexible way to create and work with string and character types. These are introduced below, and are discussed in more detail in the :doc:`Strings` chapter.
+
+Declaring and Naming Variables
+------------------------------
 
 All variables in Swift must be declared before they are used. Here's a simple variable declaration:
 
@@ -51,18 +70,18 @@ All variables in Swift must be declared before they are used. Here's a simple va
     
 This can be read as:
 
-    “Declare a variable called ``a``, and give it an initial value of ``1``”.
+    Declare a variable called ``a``, and give it an initial value of ``1``.
 
 Variable definitions can include a specific *type*, to be explicit about the kind of variable you want to create:
 
 .. testcode:: declaringVariables
 
-    (swift) var b: Int = 2
-    // b : Int = 2
+    (swift) var b: String = "Hello"
+    // b : String = "Hello"
 
 The colon in the declaration means *“…that is…”*, giving:
 
-    “Declare a variable called ``b`` that is an ``Int``, and give it an initial value of ``2``”.
+    Declare a variable called ``b`` that is a ``String``, and give it an initial value of ``"Hello"``.
 
 You can use pretty much :term:`any character you like` in a variable name:
 
@@ -119,8 +138,8 @@ Unless you need to work with a :term:`specific size` of integer or floating-poin
     specific size
         Certain tasks may require you to be more specific about the type of number that you need. You might use a ``Float16`` to read 16-bit audio samples, or a ``UInt8`` when working with raw 8-bit byte data, for example.
 
-Strong typing and type inference
---------------------------------
+Strong Typing and Type Inference
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Swift is a :term:`strongly-typed language`. Strong typing enables Swift to perform :term:`type checks` when it compiles your code, which helps to avoid accidental errors when working with different value types. However, this doesn't mean that you always have to provide an explicit type definition. If you don't specify the type of value you need, Swift will use :term:`type inference` to work out the appropriate type to use.
 
@@ -151,10 +170,10 @@ Likewise, if you don't specify a type for a floating-point number:
     (swift) var pi = 3.14159
     // pi : Double = 3.14159
 
-…Swift assumes that you want to create a ``Double`` from the value of ``3.14159``. (Swift always chooses ``Double`` rather than ``Float`` when inferring the type of floating-point numbers.)
+…Swift assumes that you want to create a ``Double`` from the value of ``3.14159``. Note that Swift always chooses ``Double`` rather than ``Float`` when inferring the type of floating-point numbers.
 
 Number literals
----------------
+~~~~~~~~~~~~~~~
 
 :term:`Number literals` can be expressed in several different ways:
 
@@ -220,7 +239,7 @@ All of these literals are valid in Swift:
     (swift) var justOverOneMillion = 1_000_000.000_000_1
     // justOverOneMillion : Double = 1e+06
 
-Note that Swift has printed the value of ``justOverOneMillion`` as ``1e+06``. This is just a shortened way to express its underlying ``Double`` value, which is actually still ``1000000.0000001`` behind the scenes.
+Note that Swift has printed the value of ``justOverOneMillion`` as ``1e+06``. This is a short-form representation of its underlying ``Double`` value of ``1000000.0000001``. The actual value of ``justOverOneMillion`` still has all of the precision of the original.
 
 Booleans
 --------
@@ -271,7 +290,7 @@ Tuples are a way to group together multiple values of various types. Here's an e
     HTTP status code
         When a web browser makes a request for a web page (such as http://www.apple.com), it connects to the server and asks for a specific page. The server sends back a response containing a *status code* that describes whether or not the request was successful. Each status code has a number (such as ``200``) and a message (such as ``OK``), to describe the outcome of the request.
 
-You can create tuples from whatever permutation of types you like, and they can contain as many values as you like. There's nothing stopping you from having a tuple of type ``(Int, Int, Int)``, or ``(String, Bool)``, or any other combination you need.
+You can create tuples from whatever permutation of types you like, and they can contain as many values as you like. There's nothing stopping you from having a tuple of type ``(Int, Int, Int)``, or ``(String, Bool)``, or indeed any other combination you need.
 
 You can access the individual element values in a tuple using index numbers starting at zero:
 
@@ -291,7 +310,7 @@ You can also optionally name the elements in a tuple:
 
 This can be read as:
 
-    “Declare a variable called ``http404Error``, and set it to a tuple containing (a ``statusCode`` that is ``404``, and a ``description`` that is ``"Not Found"``)”.
+    Declare a variable called ``http404Error``, and set it to a tuple containing (an element called ``statusCode`` that is ``404``, and an element called ``description`` that is ``"Not Found"``).
 
 Once you've done this, you can retrieve the element values by name via dot syntax:
 
@@ -304,6 +323,9 @@ Once you've done this, you can retrieve the element values by name via dot synta
 
 Tuples are particularly useful as the return values of functions. A function that tries to retrieve a web page might return this ``http404Error`` tuple if it is unable to find the requested page. By returning a tuple with two distinct values, each of a different type, the function is able to provide more useful information about its outcome than if it could only return a single value of a single type.
 
+Typealiases
+~~~~~~~~~~~
+
 If you find yourself using a particular type of tuple several times, you can define a ``typealias`` as shorthand for that tuple type. Here's how to define a generic tuple type to describe any HTTP status code:
 
 .. testcode:: tuples
@@ -312,7 +334,7 @@ If you find yourself using a particular type of tuple several times, you can def
 
 This can be read as:
 
-    “Define a ``typealias`` called ``HTTPStatus``, and set it to the tuple type (a ``statusCode`` that is an ``Int``, and a ``description`` that is a ``String``)”.
+    Define a ``typealias`` called ``HTTPStatus``, and set it to the tuple type that has (an element called ``statusCode`` that is an ``Int``, and an element called ``description`` that is a ``String``).
 
 Note that this ``typealias`` doesn't set a *value* for ``statusCode`` or ``description``. It's not actually creating a new ``HTTPStatus`` tuple for a specific status code – it's just defining what HTTP status codes *look* like.
 
@@ -327,7 +349,7 @@ Because it's a type, ``HTTPStatus`` can be used to create new tuples:
     
 This can be read as:
 
-    “Declare a variable called ``http304Status`` that is an ``HTTPStatus``. Initialize it with (a ``statusCode`` that is ``304``, and a ``description`` that is ``"Not Modified"``)”.
+    Declare a variable called ``http304Status`` that is an ``HTTPStatus``. Initialize it with (a ``statusCode`` that is ``304``, and a ``description`` that is ``"Not Modified"``).
 
 ``HTTPStatus`` can also be used in a shorter form, without needing to provide the element names:
 
@@ -338,7 +360,7 @@ This can be read as:
 
 This can be read as:
 
-    “Declare a variable called ``http500Error`` that is an ``HTTPStatus``. Initialize it with (a first element value that is ``500``, and a second element value that is ``"Internal Server Error"``)”.
+    Declare a variable called ``http500Error`` that is an ``HTTPStatus``. Initialize it with (a first element value that is ``500``, and a second element value that is ``"Internal Server Error"``).
 
 This fits the signature of an ``HTTPStatus`` (first element ``Int``, second element ``String``), and so this initialization is allowed by the Swift type-checker.
 
