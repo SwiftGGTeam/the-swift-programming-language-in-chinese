@@ -14,4 +14,4 @@ Contents
 
 	Introduction
 	LanguageGuide/LanguageGuide
-	ReferenceManual
+	ReferenceManual/ReferenceManual
