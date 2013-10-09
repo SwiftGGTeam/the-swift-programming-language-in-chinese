@@ -372,6 +372,89 @@ Because ``http500Error`` was defined as an ``HTTPStatus``, you can still access 
     // r4 : Int = 500
     (swift) http500Error.description
     // r5 : String = "Internal Server Error"
+    
+Enumerations
+------------
+
+:term:`Enumerations` (also known as *enums*) are used to define multiple items of a similar type. For example:
+
+.. glossary::
+
+    Enumerations
+        Enumerations are used to define lists of possible values that a function might accept. For example, a text layout system might allow text to be left-, center- or right-aligned, based on the developer's preference. Each of these three options is of a similar nature, and so an enum could be defined to encapsulate all three text alignment options as being of a similar type.
+
+.. testcode:: enums
+
+    (swift) enum CompassPoint {
+                case North
+                case South
+                case East
+                case West
+            }
+
+The ``case`` keyword is used to indicate each new line of values. Multiple values can appear on a single line, separated by commas:
+
+.. testcode:: enums
+
+    (swift) enum Planet {
+                case Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune
+            }
+
+Unlike C and Objective-C, Swift enums are not assigned a default integer value when they are created. In the CompassPoints example, ``North``, ``South``, ``East`` and ``West`` do not implicitly equal ``0``, ``1``, ``2`` and ``3``. Instead, the different ``enum`` cases are used as fully-fledged ‘values’ in their own right, with an explicitly-defined type indicated by the ``enum``'s name.
+
+Each ``enum`` effectively defines a brand new type, and so their names (``CompasssPoint``, ``Planet``) start with a capital letter. Enum names should be singular rather than plural, so that they make sense when declaring a variable of that type:
+
+.. testcode:: enums
+
+    (swift) var directionToHead = CompassPoint.West
+    // directionToHead : CompassPoint = <unprintable value>
+
+Note that the type of ``directionToHead`` has been inferred from the fact that it was initialized it with one of the possible values of ``CompassPoint``. Once it is declared as being a ``CompassPoint``, it can be set to a different ``CompassPoint`` value using a shorter dot syntax:
+
+.. testcode:: enums
+
+    (swift) directionToHead = .South
+
+The type of ``directionToHead`` is already known, and so we can drop the type when setting its value. This makes for very readable code when working with explicitly-typed enumeration values.
+
+Enumeration values can be checked with ``switch`` statements:
+
+.. testcode:: enums
+
+    (swift) switch directionToHead {
+                case .North:
+                    println("Most planets have a north")
+                case .South:
+                    println("Watch out for penguins")
+                case .East:
+                    println("Where the sun rises")
+                case .West:
+                    println("Where the skies are blue")
+            }
+    >>> Watch out for penguins
+
+Note that ``switch`` uses the ``case`` keyword to indicate each of the possible cases it will consider. You can read this as:
+
+    In the case where ``directionToHead`` is ``.North``, print ``"Most planets have a north"``. In the case where it is ``.South``, …
+
+…and so on. This is different from ``enum``'s uses the word ``case``, which means ‘here are some possible values for this ``enum``’.
+
+``switch`` statements need to be exhaustive when working with ``enum`` values. If the ``case`` for ``.West`` had been omitted, this code would not compile, as it would not provide an exhaustive list of ``CompassPoint`` values. Rather than provide a ``case`` statement for every possible value, you can define a ``default`` catch-all case for any values you have not covered explicitly:
+
+.. testcode:: enums
+
+    (swift) var somePlanet = Planet.Earth
+    // somePlanet : Planet = <unprintable value>
+    (swift) switch somePlanet {
+                case .Earth:
+                    println("An amazing blue marble")
+                default:
+                    println("Just a ball of rock and gas")
+            }
+    >>> An amazing blue marble
+
+``switch`` statements are covered in more detail in :doc:`ControlFlow`.
+
 
 .. refnote:: References
 
