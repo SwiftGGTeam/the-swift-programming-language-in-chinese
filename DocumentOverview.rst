@@ -17,8 +17,8 @@ Structure
 `The Swift Programming Language` will be split into three parts:
 
 * an :doc:`Introduction` from the language’s authors, positioning why the language has been created (and how it relates to other languages), together with a statement of its overall design goals and principles;
-* a :doc:`LanguageGuide`, introducing the language and standard library through code examples and exercises; and
-* a complete :doc:`ReferenceManual` for the language and standard library.
+* a :doc:`LanguageGuide/LanguageGuide`, introducing the language and standard library through code examples and exercises; and
+* a complete :doc:`ReferenceManual/ReferenceManual` for the language and standard library.
 
 Language Guide
 ~~~~~~~~~~~~~~
