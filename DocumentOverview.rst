@@ -1,6 +1,11 @@
 Document Overview
 =================
 
+Introduction
+------------
+
+Developer Publications are creating a new book called *The Swift Programming Language*, to help with the adoption of Swift. This page describes a suggested approach for this book. Please send any comments to Dave Addey (`dave.addey@apple.com <mailto:dave.addey@apple.com>`_).
+
 The Swift Programming Language
 ------------------------------
 
