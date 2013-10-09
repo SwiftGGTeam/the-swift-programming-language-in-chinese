@@ -16,6 +16,7 @@
 	* Overloading and selectors
 	* Relationship to message send syntax
 	* Using NSLog
+	* Autorelease pools
 
 Interacting with Objective-C and Cocoa
 ======================================
