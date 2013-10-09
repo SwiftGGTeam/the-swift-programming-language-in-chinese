@@ -13,5 +13,5 @@ Contents
 	:maxdepth: 2
 
 	Introduction
-	LanguageGuide
+	LanguageGuide/LanguageGuide
 	ReferenceManual
