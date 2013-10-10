@@ -484,7 +484,7 @@ The raw value of an ``enum`` member can be accessed using its ``toRaw()`` method
 .. testcode:: enums
 
     (swift) var code = AreaCode.SanFrancisco.toRaw()
-    // code : Int = 425
+    // code : Int = 415
 
 Integer raw values will auto-increment if no value is specified for some of the ``enum`` elements:
 
