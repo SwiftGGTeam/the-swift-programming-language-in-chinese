@@ -54,7 +54,7 @@ In addition to these simple types, Swift introduces some less familiar (but very
 * types that can be either a known value or a missing value (known as *optionals*)
 * [some other things most likely]
 
-Each of these types, and the ways in which they can be used, are discussed in more detail below. This chapter also covers the ways in which values can be compared and modified using *operators* (such as ``+``, ``-``, ``*`` and ``==``), and how they are declared as *variables*.
+Each of these types, and the ways in which they can be used, are discussed in more detail below. This chapter also covers the ways in which values can be compared and modified using *operators* (such as ``+``, ``-``, ``*`` and ``==``), and how values are declared as *variables*.
 
 Swift provides a powerful and flexible way to create and work with string and character types. These are introduced below, and are discussed in more detail in the :doc:`Strings` chapter.
 
@@ -464,39 +464,92 @@ When it is not appropriate to provide a ``case`` statement for every value, you 
 Raw Values
 ~~~~~~~~~~
 
-As mentioned above, Swift does not assign default integer values to ``enum`` members when they are created. However, it can sometimes be useful to store an associated value with each ``enum`` member. In Swift, these are called *raw values*:
+As mentioned above, Swift does not assign default integer values to ``enum`` members when they are created. However, it can sometimes be useful to store an associated value with each ``enum`` member. In Swift, these are called *raw values*. Raw values can be strings, characters, or any of the integer or floating-point number types. Each raw value must be unique within its ``enum`` declaration:
 
 .. testcode:: enums
 
-    (swift) enum AreaCode : Int {
-                case SanJose = 408
-                case SanFrancisco = 415
-                case EastBay = 510
-                case Peninsula = 650
+    (swift) enum ASCIIControlCharacter : Char {
+                case Tab = '\t'
+                case LineFeed = '\n'
+                case CarriageReturn = '\r'
             }
 
-Here, the raw values for an ``enum`` called ``AreaCode`` are declared to be of type ``Int``, and are set to equal each area's telephone area code as an integer number.
+Here, the raw values for an ``enum`` called ``ASCIIControlCharacter`` are declared to be of type ``Char`` (short for *single character*), and are set to equal some common ASCII control character values.
 
-Raw values can be strings, characters, or any of the integer or floating-point number types. Each raw value must be unique within its ``enum`` declaration.
+Values of type ``Char`` are used to store single Unicode characters. They are marked up using single quote marks (``'``) rather than double quote marks (``"``), to distingush them from strings. ``Char`` values are described in more detail in :doc:`Strings`.
+
+Integer raw values will auto-increment if no value is specified for some of the enumeration members. The enumeration below defines the first seven chemical elements, and uses raw integer values to represent their atomic numbers:
+
+.. testcode:: optionals
+
+    (swift) enum ChemicalElement : Int {
+                case Hydrogen = 1, Helium, Lithium, Beryllium, Boron, Carbon, Nitrogen
+            }
+
+Auto-incrementation means that ``ChemicalElement.Helium`` will have a raw value of ``2``, and so on.
 
 The raw value of an ``enum`` member can be accessed using its ``toRaw()`` method:
 
-.. testcode:: enums
+.. testcode:: optionals
 
-    (swift) var code = AreaCode.SanFrancisco.toRaw()
-    // code : Int = 415
+    (swift) var atomicNumberOfCarbon = ChemicalElement.Carbon.toRaw()
+    // atomicNumberOfCarbon : Int = 6
 
-Integer raw values will auto-increment if no value is specified for some of the ``enum`` elements:
+The reverse is also true. Raw values can be used to look up the corresponding enumeration member – for example, to find ``ChemicalElement.Nitrogen`` from its raw value of ``7``. This is an example of one of Swift's most powerful features, known as *optionals*.
 
-.. testcode:: enums
+Optionals
+---------
 
-    (swift) enum SnookerBall : Int {
-                case Red = 1, Yellow, Green, Brown, Blue, Pink, Black
+Optionals are a way to handle missing values. They can be used to say:
+
+* There *is* a value, and it equals *x*
+
+…or…
+
+* There *isn't* a value at all
+
+This concept doesn't exist in C or Objective-C. The nearest thing in Objective-C is the ability to return ``nil`` from a method that would otherwise return an object, with ``nil`` meaning ‘the absence of a valid object’. However, this only works for objects – it wouldn't work for a struct, or an integer, or an enumeration value. Optionals in Swift indicate the absence of a value in a way that works for any type at all.
+
+Here's an example. The ``ChemicalElement`` enumeration above contains elements and raw atomic numbers for the first seven elements in the periodic table. In addition to its ``toRaw()`` method, it also has a ``fromRaw()`` method that can be used to try and find a chemical element for a given atomic number:
+
+.. testcode:: optionals
+
+    (swift) var possibleElement = ChemicalElement.fromRaw(7)
+    // possibleElement : ChemicalElement? = <unprintable value>
+
+``ChemicalElement`` has a member with an atomic number of ``7`` (i.e. ``ChemicalElement.Nitrogen``). But what if you try an atomic number of ``8`` (for oxygen)? ``ChemicalElement`` doesn't know about oxygen, so you might expect the following statement to fail:
+
+.. testcode:: optionals
+
+    (swift) possibleElement = ChemicalElement.fromRaw(8)
+
+However, it turns out that this is a perfectly valid statement. This is because ``fromRaw()`` returns an *optional*. In the response above, ``possibleElement`` has an inferred type of ``ChemicalElement?``, not ``ChemicalElement``. Note the question mark at the end. This indicates that the value of ``possibleElement`` is an *optional* ``ChemicalElement`` – it might contain *some* value of that type, or it might contain *no value at all*.
+
+Optional values can be :term:`checked` using an ``if`` statement, in a similar way to ``Bool`` values. If an optional *does* have a value, it equates to ``true``, and the underlying value can be retrieved using the optional's ``get()`` method:
+
+.. glossary::
+
+    checked
+        Optionals are a bit like Schrödinger's cat. The cat might be alive or dead – the only way to find out is to look inside the box.
+
+.. testcode:: optionals
+
+    (swift) if (possibleElement) {
+                var actualElement = possibleElement.get()
+                switch actualElement {
+                    case .Hydrogen:
+                        println("A bit explodey")
+                    case .Helium:
+                        println("Like a friendly hydrogen")
+                    default:
+                        println("Some other element")
+                }
+            } else {
+                println("No element was found")
             }
-    (swift) var pinkBallScore = SnookerBall.Pink.toRaw()
-    // pinkBallScore : Int = 6
+    >>> No element was found
 
-Raw ``enum`` values can also be used to look up the original ``enum`` member value. This is an example of one of Swift's most powerful features, known as *optionals*, and is covered in more detail below.
+``possibleElement`` was most recently set to an optional ``ChemicalElement`` for the atomic number of oxygen (``8``), which doesn't exist in the enumeration. This means that the optional contains *no value at all* – causing ``if (possibleElement)`` to equate to ``false``, triggering the ``else`` part of the statement above and printing the text ``"No element was found"``.
 
 .. refnote:: References
 
