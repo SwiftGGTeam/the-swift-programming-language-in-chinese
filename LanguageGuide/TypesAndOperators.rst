@@ -76,10 +76,10 @@ Variable definitions can include a specific *type*, to be explicit about the kin
 
 .. testcode:: declaringVariables
 
-    (swift) var b: String = "Hello"
+    (swift) var b : String = "Hello"
     // b : String = "Hello"
 
-The colon in the declaration means *“…that is…”*, giving:
+The colon in the declaration means *“…that is…”*, so this can be read as:
 
     Declare a variable called ``b`` that is a ``String``, and give it an initial value of ``"Hello"``.
 
@@ -312,7 +312,7 @@ This can be read as:
 
     Declare a variable called ``http404Error``, and set it to a tuple containing (an element called ``statusCode`` that is ``404``, and an element called ``description`` that is ``"Not Found"``).
 
-Once you've done this, you can retrieve the element values by name via dot syntax:
+Once you've done this, you can retrieve the element values by name, using dot syntax:
 
 .. testcode:: tuples
 
@@ -376,7 +376,7 @@ Because ``http500Error`` was defined as an ``HTTPStatus``, you can still access 
 Enumerations
 ------------
 
-:term:`Enumerations` (also known as *enums*) are used to define multiple items of a similar type. The four main points of a compass are all of a similar type, and could be written as an enumeration using the ``enum`` keyword:
+:term:`Enumerations` (also known as *enums*) are used to define multiple items of a similar type. For example: the four main points of a compass are all of a similar type, and can be written as an enumeration using the ``enum`` keyword:
 
 .. glossary::
 
@@ -400,9 +400,9 @@ The ``case`` keyword is used to indicate each new line of values. Multiple value
                 case Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune
             }
 
-Unlike C and Objective-C, Swift enums are not assigned a default integer value when they are created. In the CompassPoints example, ``North``, ``South``, ``East`` and ``West`` do not implicitly equal ``0``, ``1``, ``2`` and ``3``. Instead, the different ``enum`` cases are used as fully-fledged ‘values’ in their own right, with an explicitly-defined type indicated by the ``enum``'s name.
+Unlike C and Objective-C, Swift enums are not assigned a default integer value when they are created. In the CompassPoints example above, ``North``, ``South``, ``East`` and ``West`` do not implicitly equal ``0``, ``1``, ``2`` and ``3``. Instead, the different ``enum`` cases are fully-fledged values in their own right, with an explicitly-defined type of ``CompassPoint``.
 
-Each ``enum`` effectively defines a brand new type, and so their names (``CompasssPoint``, ``Planet``) start with a capital letter. Enum names should be singular rather than plural, so that they make sense when declaring a variable of that type:
+Each ``enum`` definition effectively defines a brand new type. As a result, their names (such as ``CompassPoint`` and ``Planet``) should start with a capital letter. ``enum`` types should have singular rather than plural names, so that they read as a sentence when declaring a variable of that type:
 
 .. testcode:: enums
 
@@ -413,17 +413,18 @@ Note that the type of ``directionToHead`` has been inferred from the fact that i
 
 .. testcode:: enums
 
-    (swift) directionToHead = .South
+    (swift) directionToHead = .East
 
-The type of ``directionToHead`` is already known, and so we can drop the type when setting its value. This makes for very readable code when working with explicitly-typed enumeration values.
+The type of ``directionToHead`` is already known, and so we can drop the type when setting its value. This makes for highly readable code when working with explicitly-typed enumeration values.
 
-Enumerations and the ``switch`` statement
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+The ``switch`` statement
+~~~~~~~~~~~~~~~~~~~~~~~~
 
-Enumeration values can be checked with ``switch`` statements:
+Enumeration values can be checked with a ``switch`` statement:
 
 .. testcode:: enums
 
+    (swift) directionToHead = .South
     (swift) switch directionToHead {
                 case .North:
                     println("Most planets have a north")
@@ -436,15 +437,15 @@ Enumeration values can be checked with ``switch`` statements:
             }
     >>> Watch out for penguins
 
-The ``switch`` uses the ``case`` keyword to indicate each of the possible cases it will consider. You can read this as:
+``switch`` statements use the ``case`` keyword to indicate each of the possible cases they will consider. You can read this as:
 
     Consider the value of ``directionToHead``. In the case where it equals ``.North``, print ``"Most planets have a north"``. In the case where it equals ``.South``, print ``"Watch out for penguins"``.
 
 …and so on.
 
-``switch`` statements need to be exhaustive when working with ``enum`` values. If the ``case`` for ``.West`` had been omitted, this code would not compile, as it would not provide an exhaustive list of ``CompassPoint`` values.
+``switch`` statements must be exhaustive when working with ``enum`` values. If the ``case`` for ``.West`` had been omitted, this code would not compile, as it would not provide an exhaustive list of ``CompassPoint`` values. Enforcing completeness ensures that cases are not accidentally missed or forgotten, and is part of Swift's goal of completeness and lack of ambiguity.
 
-Instead of providing a ``case`` statement for every possible value, you can define a ``default`` catch-all case for any values you have not covered explicitly:
+When it is not appropriate to provide a ``case`` statement for every value, you can define a ``default`` catch-all case to cover any values that are not addressed explicitly:
 
 .. testcode:: enums
 
@@ -474,7 +475,9 @@ As mentioned above, Swift does not assign default integer values to ``enum`` mem
                 case Peninsula = 650
             }
 
-Here, the raw values for an ``enum`` called ``AreaCode`` are declared to be of type ``Int``. Raw values can be strings, characters, or any of the integer or floating-point number types. Each raw value must be unique within that ``enum`` declaration.
+Here, the raw values for an ``enum`` called ``AreaCode`` are declared to be of type ``Int``, and are set to equal each area's telephone area code as an integer number.
+
+Raw values can be strings, characters, or any of the integer or floating-point number types. Each raw value must be unique within its ``enum`` declaration.
 
 The raw value of an ``enum`` member can be accessed using its ``toRaw()`` method:
 
@@ -493,7 +496,7 @@ Integer raw values will auto-increment if no value is specified for some of the 
     (swift) var pinkBallScore = SnookerBall.Pink.toRaw()
     // pinkBallScore : Int = 6
 
-Raw ``enum`` values can also be used to look up the original ``enum`` member value. This is an example of one of Swift's most powerful features, known as *optionals*.
+Raw ``enum`` values can also be used to look up the original ``enum`` member value. This is an example of one of Swift's most powerful features, known as *optionals*, and is covered in more detail below.
 
 .. refnote:: References
 
