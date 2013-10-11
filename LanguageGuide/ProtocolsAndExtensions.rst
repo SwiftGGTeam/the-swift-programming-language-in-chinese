@@ -12,6 +12,8 @@
 Protocols and Extensions
 ========================
 
+.. TODO: Include the 42.km + 5.m example from https://[Internal Staging Server]/docs/whitepaper/TypesAndValues.html#no-integer-suffixes to show how basic types can also be extended.
+
 .. refnote:: References
 
 	* https://[Internal Staging Server]/docs/whitepaper/GuidedTour.html#protocols
