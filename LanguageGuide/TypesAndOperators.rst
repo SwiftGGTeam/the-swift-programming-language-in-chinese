@@ -112,7 +112,9 @@ Once you've declared a variable, you can't redeclare it again with the same name
 Numbers
 -------
 
-Swift supports two fundamental types of number: :term:`integers`, and :term:`floating-point numbers`. Swift provides both types of number in :term:`signed and unsigned` forms up to 128 bits in size. These basic numeric types follow a similar naming convention to C, in that an 8-bit unsigned integer is a ``UInt8``, and a signed 64-bit floating-point number is a ``Float64``. Like all types in Swift, these basic numeric types have capitalized names. (See the :doc:`../ReferenceManual/ReferenceManual` for a complete list of numeric types.)
+Swift supports two fundamental types of number: :term:`integers`, and :term:`floating-point numbers`. Swift provides both types of number in :term:`signed and unsigned` forms up to 128 bits in size. These basic numeric types follow a similar naming convention to C, in that an 8-bit unsigned integer is a ``UInt8``, and a signed 64-bit floating-point number is a ``Float64``. However, note that Swift does not use C-style suffixes (such as :term:`10ul`) to indicate the specific size of a number. Like all types in Swift, these basic numeric types have capitalized names. (See the :doc:`../ReferenceManual/ReferenceManual` for a complete list of numeric types.)
+
+.. TODO: do we actually have a Float16? It's mentioned on https://[Internal Staging Server]/docs/whitepaper/TypesAndValues.html#floating-point-types , but doesn't exist as of rev. 9212.
 
 .. glossary::
 
@@ -124,6 +126,9 @@ Swift supports two fundamental types of number: :term:`integers`, and :term:`flo
 
     signed and unsigned
         Signed values can be positive or negative. Unsigned values can only be positive.
+
+    10ul
+        In C, ``10ul`` means ‘the number ``10`` as an unsigned long integer’. Long integers in C are usually 32 bits in size, so the equivalent in Swift would be ``var i : UInt32 = 10``.
 
 In most cases, there's no need to pick a specific size of integer or floating-point number to use in your code. Swift provides three standard number types:
 
@@ -154,36 +159,48 @@ Swift is a :term:`strongly-typed language`. Strong typing enables Swift to perfo
     type inference
         Type inference is the ability for a compiler to automatically deduce the type of a particular expression at compile-time (rather than at run-time). The Swift compiler can often infer the type of a variable without the need for explicit type definitions, just by examining the values you provide.
 
-For example: if you assign the value ``42`` to a variable, without saying what type it is:
+For example, if you assign a :term:`literal value` of ``42`` to a variable, without saying what type it is:
+
+.. glossary::
+
+    literal value
+        A *literal value* is a one-off value that appears directly in your source code, such as ``42`` and ``3.14159`` in the examples below.
+
 
 .. testcode:: typeInference
 
     (swift) var meaningOfLife = 42
     // meaningOfLife : Int = 42
 
-…Swift will deduce that you want the variable to be an ``Int``, because you have initialized it with an integer value.
+…Swift will deduce that you want the variable to be an ``Int``, because you have initialized it with a number that looks like an integer.
 
-Likewise, if you don't specify a type for a floating-point number:
+Likewise, if you don't specify a type for a floating-point literal:
 
 .. testcode:: typeInference
 
     (swift) var pi = 3.14159
     // pi : Double = 3.14159
 
-…Swift assumes that you want to create a ``Double`` from the value of ``3.14159``. Note that Swift always chooses ``Double`` rather than ``Float`` when inferring the type of floating-point numbers.
+…Swift assumes that you want to create a ``Double`` from the value of ``3.14159``. (Note that Swift always chooses ``Double`` rather than ``Float`` when inferring the type of floating-point numbers.)
 
-Number literals
-~~~~~~~~~~~~~~~
+If you combine integer and floating-point literals in an expression, a type of ``Double`` will be inferred from the context:
 
-:term:`Number literals` can be expressed in several different ways:
+.. testcode:: typeInference
+
+    (swift) var anotherPi = 3 + 0.14159
+    // anotherPi : Double = 3.14159
+
+Note that the literal value of ``3`` does not have an explicit type in and of itself, and the appropriate output type of ``Double`` is inferred from the presence of a floating-point literal as part of the addition.
+
+Number literal expressions
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Number literals can be expressed in several different ways:
 
 * Integer literals can be decimal (with no prefix), :term:`binary` (with a ``0b`` prefix), :term:`octal` (``0o``), or :term:`hexadecimal` (``0x``)
 * Floating-point literals can be decimal (no prefix) or hexadecimal (``0x``), and can have an optional :term:`exponent` (indicated by an upper- or lower-case ``e`` for decimal floats, and upper- or lower-case ``p`` for hexadecimal floats).
 
 .. glossary::
-
-    number literals
-        Number literals are fixed-value numbers included directly in your source code, such as ``42`` or ``3.14159``.
 
     binary
         Binary numbers are counted with two (rather than ten) basic units. They only ever contain the numbers ``0`` and ``1``. In binary notation, ``1`` is ``0b1``, and ``2`` is ``0b10``.
@@ -241,6 +258,52 @@ All of these literals are valid in Swift:
 
 Note that Swift has printed the value of ``justOverOneMillion`` as ``1e+06``. This is a short-form representation of its underlying ``Double`` value of ``1000000.0000001``. The actual value of ``justOverOneMillion`` still has all of the precision of the original.
 
+Number Type Conversion
+~~~~~~~~~~~~~~~~~~~~~~
+
+As mentioned above, you should use ``Int`` for all integers in your code, and ``Float`` or ``Double`` for all floating-point numbers, unless you have a specific reason not to do so. This ensures that numbers of a similar nature can be used together safely, and reserves the more specific number types for when the exact size and type is important.
+
+If you *do* need to use specific sizes, be aware that Swift does not allow :term:`implicit conversion` between different number types. You can't add a ``UInt8`` to a ``UInt16``, for example. This avoids accidental errors when working with numbers of specific sizes, and means that number type conversion is something you choose to opt in to on a case-by-case basis. This helps to make type conversion intentions explicit in your code.
+
+.. glossary::
+
+    implicit conversion
+        This is different to the rule for number literals seen earlier – where ``3`` was added to ``0.14159`` – because number literals do not have an explicit type in and of themselves.
+
+To convert from one number type to another, you initialize a new number of the desired type with the existing value, like this:
+
+.. testcode:: typeInference
+
+    (swift) var twoThousand : UInt16 = 2000
+    // twoThousand : UInt16 = 2000
+    (swift) var one : UInt8 = 1
+    // one : UInt8 = 1
+    (swift) var twoThousandAndOne = twoThousand + UInt16(one)
+    // twoThousandAndOne : UInt16 = 2001
+
+``twoThousand`` is a ``UInt16``, but ``one`` is a ``UInt8``. They cannot be added together directly, because they are not of the same type. Instead, this code calls ``UInt16(one)`` to create a new ``UInt16`` initialized with the value of ``one``, and uses this value in place of the original. Because both sides of the addition are now of type ``UInt16``, the addition is allowed. (Note that the output variable, ``twoThousandAndOne``, is inferred to be a ``UInt16`` too.)
+
+The syntax seen above – ``SomeType(ofInitialValue)`` – is the default way to call the initializer of a Swift type, and to pass in an initial value. Behind the scenes, ``UInt16`` has an initializer that accepts the ``UInt8`` type, and so it knows how to make a new ``UInt16`` from an existing ``UInt8``. You can't just pass in any type, however – it has to be something that ``UInt16`` already knows how to convert. The :doc:`ProtocolsAndExtensions` chapter shows how to extend existing types to accept new types (including your own type definitions) as initializers.
+
+.. TODO: add a note that this is not traditional type-casting, and perhaps include a forward reference to the objects chapter.
+
+The same is true for conversions between integer and floating-point variables. Conversions must be made explicit, as shown below:
+
+.. testcode:: typeInference
+
+    (swift) var three = 3
+    // three : Int = 3
+    (swift) var pointOneFourOneFiveNine = 0.14159
+    // pointOneFourOneFiveNine : Double = 0.14159
+    (swift) var pi = Double(three) + pointOneFourOneFiveNine
+    // pi : Float64 = 3.14159
+
+Here, the value of ``three`` is used to create a new ``Double``, so that both sides of the addition are of the same type.
+
+.. TODO: the return type of pi here is inferred as Float64, but it should really be inferred as Double. This is due to rdar://15211554 . This code sample should be updated once the issue is fixed.
+
+.. NOTE: this section on explicit conversions could be included below in the Operators section. I think it's more appropriate here, however, and helps to reinforce the ‘just use Int’ message.
+
 Booleans
 --------
 
@@ -290,7 +353,7 @@ Tuples are a way to group together multiple values of various types. Here's an e
     HTTP status code
         When a web browser makes a request for a web page (such as http://www.apple.com), it connects to the server and asks for a specific page. The server sends back a response containing a *status code* that describes whether or not the request was successful. Each status code has a number (such as ``200``) and a message (such as ``OK``), to describe the outcome of the request.
 
-You can create tuples from whatever permutation of types you like, and they can contain as many values as you like. There's nothing stopping you from having a tuple of type ``(Int, Int, Int)``, or ``(String, Bool)``, or indeed any other combination you need.
+You can create tuples from whatever permutation of types you like, and they can contain as many different types as you like. There's nothing stopping you from having a tuple of type ``(Int, Int, Int)``, or ``(String, Bool)``, or indeed any other combination you need.
 
 You can access the individual element values in a tuple using index numbers starting at zero:
 
@@ -336,7 +399,7 @@ This can be read as:
 
     Define a ``typealias`` called ``HTTPStatus``, and set it to the tuple type that has (an element called ``statusCode`` that is an ``Int``, and an element called ``description`` that is a ``String``).
 
-Note that this ``typealias`` doesn't set a *value* for ``statusCode`` or ``description``. It's not actually creating a new ``HTTPStatus`` tuple for a specific status code – it's just defining what HTTP status codes *look* like.
+Note that this ``typealias`` doesn't set a *value* for ``statusCode`` or ``description``. It's not actually creating a tuple for a specific status code – it's defining what *all* HTTP status codes look like.
 
 Note also that ``HTTPStatus`` has a capitalized name, as it is a new *type* of tuple, rather than an instance of a particular tuple type. This is different from the variable name ``http404Error``, which starts with a lowercase letter, and capitalizes sub-words within the name. This approach – ``CapitalizedWords`` for types, ``lowercaseThenCapitalizedWords`` for variable names – is strongly encouraged to help make your code more readable.
 
@@ -376,7 +439,7 @@ Because ``http500Error`` was defined as an ``HTTPStatus``, you can still access 
 Enumerations
 ------------
 
-:term:`Enumerations` (also known as *enums*) are used to define multiple items of a similar type. For example: the four main points of a compass are all of a similar type, and can be written as an enumeration using the ``enum`` keyword:
+:term:`Enumerations` (also known as *enums*) are used to define multiple items of a similar type. For example, the four main points of a compass are all of a similar type, and can be written as an enumeration using the ``enum`` keyword:
 
 .. glossary::
 
@@ -400,7 +463,7 @@ The ``case`` keyword is used to indicate each new line of values. Multiple value
                 case Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune
             }
 
-Unlike C and Objective-C, Swift enums are not assigned a default integer value when they are created. In the CompassPoints example above, ``North``, ``South``, ``East`` and ``West`` do not implicitly equal ``0``, ``1``, ``2`` and ``3``. Instead, the different ``enum`` cases are fully-fledged values in their own right, with an explicitly-defined type of ``CompassPoint``.
+Unlike C and Objective-C, Swift enums are not assigned a default integer value when they are created. In the CompassPoints example above, ``North``, ``South``, ``East`` and ``West`` do not implicitly equal ``0``, ``1``, ``2`` and ``3``. Instead, the different ``enum`` members are fully-fledged values in their own right, with an explicitly-defined type of ``CompassPoint``.
 
 Each ``enum`` definition effectively defines a brand new type. As a result, their names (such as ``CompassPoint`` and ``Planet``) should start with a capital letter. ``enum`` types should have singular rather than plural names, so that they read as a sentence when declaring a variable of that type:
 
@@ -464,7 +527,7 @@ When it is not appropriate to provide a ``case`` statement for every value, you 
 Raw Values
 ~~~~~~~~~~
 
-As mentioned above, Swift does not assign default integer values to ``enum`` members when they are created. However, it can sometimes be useful to store an associated value with each ``enum`` member. In Swift, these are called *raw values*. Raw values can be strings, characters, or any of the integer or floating-point number types. Each raw value must be unique within its ``enum`` declaration:
+As mentioned above, Swift does not assign default integer values to ``enum`` members when they are created. However, it can sometimes be useful to store an associated value with each ``enum`` member. In Swift, these are called *raw values*. Raw values can be strings, characters, or any of the integer or floating-point number types. Each raw value must be unique within its ``enum`` declaration.
 
 .. testcode:: enums
 
@@ -478,7 +541,7 @@ Here, the raw values for an ``enum`` called ``ASCIIControlCharacter`` are declar
 
 Values of type ``Char`` are used to store single Unicode characters. They are marked up using single quote marks (``'``) rather than double quote marks (``"``), to distingush them from strings. ``Char`` values are described in more detail in :doc:`Strings`.
 
-Integer raw values will auto-increment if no value is specified for some of the enumeration members. The enumeration below defines the first seven chemical elements, and uses raw integer values to represent their atomic numbers:
+When integers are used for raw values, they auto-increment if no value is specified for some of the enumeration members. The enumeration below defines the first seven chemical elements, and uses raw integer values to represent their atomic numbers:
 
 .. testcode:: optionals
 
@@ -545,21 +608,25 @@ Optional values can be :term:`checked` using an ``if`` statement, in a similar w
                         println("Some other element")
                 }
             } else {
-                println("No element was found")
+                println("Not an element I know about")
             }
-    >>> No element was found
+    >>> Not an element I know about
 
-``possibleElement`` was most recently set to an optional ``ChemicalElement`` for the atomic number of oxygen (``8``), which doesn't exist in the enumeration. This means that the optional contains *no value at all* – causing ``if (possibleElement)`` to equate to ``false``, triggering the ``else`` part of the statement above and printing the text ``"No element was found"``.
+``possibleElement`` was most recently set to an optional ``ChemicalElement`` for the atomic number of oxygen (``8``), which doesn't exist in the enumeration. This means that the optional contains *no value at all* – causing ``if (possibleElement)`` to equate to ``false``, triggering the ``else`` part of the statement above and printing the text ``"Not an element I know about"``.
+
+
+.. TODO: the section on Operators should note that the floating-point types support the % (modulo) operation.
+
 
 .. refnote:: References
 
     * https://[Internal Staging Server]/docs/LangRef.html#integer_literal ✔︎
-    * https://[Internal Staging Server]/docs/LangRef.html#floating_literal
-    * https://[Internal Staging Server]/docs/LangRef.html#expr-delayed-identifier
-    * https://[Internal Staging Server]/docs/whitepaper/TypesAndValues.html#types-and-values
+    * https://[Internal Staging Server]/docs/LangRef.html#floating_literal ✔︎
+    * https://[Internal Staging Server]/docs/LangRef.html#expr-delayed-identifier ✔︎
+    * https://[Internal Staging Server]/docs/whitepaper/TypesAndValues.html#types-and-values ✔︎
     * https://[Internal Staging Server]/docs/whitepaper/TypesAndValues.html#integer-types ✔︎
-    * https://[Internal Staging Server]/docs/whitepaper/TypesAndValues.html#no-integer-suffixes
-    * https://[Internal Staging Server]/docs/whitepaper/TypesAndValues.html#no-implicit-integer-promotions-or-conversions
+    * https://[Internal Staging Server]/docs/whitepaper/TypesAndValues.html#no-integer-suffixes ✔︎
+    * https://[Internal Staging Server]/docs/whitepaper/TypesAndValues.html#no-implicit-integer-promotions-or-conversions ✔︎
     * https://[Internal Staging Server]/docs/whitepaper/TypesAndValues.html#no-silent-truncation-or-undefined-behavior
     * https://[Internal Staging Server]/docs/whitepaper/TypesAndValues.html#separators-in-literals ✔︎
     * https://[Internal Staging Server]/docs/whitepaper/TypesAndValues.html#floating-point-types
