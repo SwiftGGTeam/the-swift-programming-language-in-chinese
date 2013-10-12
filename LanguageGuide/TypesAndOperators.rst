@@ -336,6 +336,24 @@ Boolean values are particularly useful when working with conditional statements 
 
 Conditional statements are covered in more detail in :doc:`ControlFlow`.
 
+Swift's strict type-checking means that non-boolean values cannot be substituted for ``Bool``. You cannot, for example, say::
+
+    (swift) var i = 1
+    // i : Int = 1
+    (swift) if i {
+        // do stuff
+    }
+
+…but it is valid to say::
+
+    (swift) if i == 1 {
+        // do stuff
+    }
+    
+The result of ``i == 1`` is a ``Bool``, and so this second example passes the strict type-check.
+
+As with other examples of strict typing in Swift, this approach avoids accidental errors, and ensures that the intention of a particular section of code is made clear.
+
 Tuples
 ------
 
@@ -630,7 +648,7 @@ Optional values can be :term:`checked` using an ``if`` statement, in a similar w
     * https://[Internal Staging Server]/docs/whitepaper/TypesAndValues.html#no-silent-truncation-or-undefined-behavior
     * https://[Internal Staging Server]/docs/whitepaper/TypesAndValues.html#separators-in-literals ✔︎
     * https://[Internal Staging Server]/docs/whitepaper/TypesAndValues.html#floating-point-types ✔︎
-    * https://[Internal Staging Server]/docs/whitepaper/TypesAndValues.html#bool
+    * https://[Internal Staging Server]/docs/whitepaper/TypesAndValues.html#bool ✔︎
     * https://[Internal Staging Server]/docs/whitepaper/TypesAndValues.html#tuples
     * https://[Internal Staging Server]/docs/whitepaper/TypesAndValues.html#arrays
     * https://[Internal Staging Server]/docs/whitepaper/TypesAndValues.html#enumerations
