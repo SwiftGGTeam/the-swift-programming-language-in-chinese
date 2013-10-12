@@ -197,12 +197,12 @@ Also try the ``..`` operator, which generates a half-open enumerable range betwe
     >>> 13
     >>> 14
 
-As before, there's no need to provide a type for the loop variable because it can be inferred from the elements in the range, which is itself of type ``IntEnumeratorType``:
+As before, there's no need to provide a type for the loop variable because it can be inferred from the elements in the range, which is itself of type ``IntGeneratorType``:
 
 .. testcode::
 
     (swift) b..a
-    // r6 : IntEnumeratorType = 10..42
+    // r6 : IntGeneratorType = 10..42
 
 The b..a syntax also works great with ``NSRange``, providing natural and elegant syntax for many common idioms.
 

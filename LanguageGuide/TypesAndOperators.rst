@@ -272,7 +272,7 @@ If you *do* need to use specific sizes, be aware that Swift does not allow :term
 
 To convert from one number type to another, you initialize a new number of the desired type with the existing value, like this:
 
-.. testcode:: typeInference
+.. testcode:: typeConversion
 
     (swift) var twoThousand : UInt16 = 2000
     // twoThousand : UInt16 = 2000
@@ -289,7 +289,7 @@ The syntax seen above – ``SomeType(ofInitialValue)`` – is the default way to
 
 The same is true for conversions between integer and floating-point variables. Conversions must be made explicit, as shown below:
 
-.. testcode:: typeInference
+.. testcode:: typeConversion
 
     (swift) var three = 3
     // three : Int = 3
@@ -629,7 +629,7 @@ Optional values can be :term:`checked` using an ``if`` statement, in a similar w
     * https://[Internal Staging Server]/docs/whitepaper/TypesAndValues.html#no-implicit-integer-promotions-or-conversions ✔︎
     * https://[Internal Staging Server]/docs/whitepaper/TypesAndValues.html#no-silent-truncation-or-undefined-behavior
     * https://[Internal Staging Server]/docs/whitepaper/TypesAndValues.html#separators-in-literals ✔︎
-    * https://[Internal Staging Server]/docs/whitepaper/TypesAndValues.html#floating-point-types
+    * https://[Internal Staging Server]/docs/whitepaper/TypesAndValues.html#floating-point-types ✔︎
     * https://[Internal Staging Server]/docs/whitepaper/TypesAndValues.html#bool
     * https://[Internal Staging Server]/docs/whitepaper/TypesAndValues.html#tuples
     * https://[Internal Staging Server]/docs/whitepaper/TypesAndValues.html#arrays
