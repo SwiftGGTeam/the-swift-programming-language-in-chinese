@@ -457,7 +457,7 @@ Because ``http500Error`` was defined as an ``HTTPStatus``, you can still access 
 Enumerations
 ------------
 
-:term:`Enumerations` (also known as *enums*) are used to define multiple items of a similar type. For example, the four main points of a compass are all of a similar type, and can be written as an enumeration using the ``enum`` keyword:
+:term:`Enumerations` (also known as *enums*) are used to define multiple items of a similar type. For example: the four main points of a compass are all of a similar type, and can be written as an enumeration using the ``enum`` keyword:
 
 .. glossary::
 
@@ -542,10 +542,79 @@ When it is not appropriate to provide a ``case`` statement for every value, you 
 
 ``switch`` statements are covered in more detail in :doc:`ControlFlow`.
 
+Enumerations with Associated Values
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The examples above show how the members of an enumeration are a defined (and typed) value in their own right. You can set a variable to the value ``Planet.Earth``, and check for this value later. However, it can sometimes be useful for enumeration members to also store an *associated* value of another type alongside their own.
+
+Swift enumerations can be defined to store an associated value of any given type, and this type can be :term:`different` for each member of the enumeration if needed. For example: imagine an inventory tracking system that needs to track products using two different types of barcode. Some products are labelled with barcodes in `UPC-A <http://en.wikipedia.org/wiki/Universal_Product_Code>`_ format, which uses the numbers ``0`` to ``9``:
+
+
+.. glossary::
+
+    different
+        These kinds of variables are known as *tagged unions* or *variants* in other programming languages.
+
+.. image:: ../images/barcode_UPC.png
+    :height: 80
+
+Other products are labelled with barcodes in `Code 128 <http://en.wikipedia.org/wiki/Code_128>`_ format, which can use any of the first 128 ASCII characters:
+
+.. image:: ../images/barcode_Code128.png
+    :height: 80
+
+It would be convenient for an inventory tracking system to store UPC-A barcodes as integers, and Code 128 barcodes as strings.
+
+In Swift, an enumeration to define product barcodes of either type might look like this:
+
+.. testcode:: enums
+
+    (swift) enum Barcode {
+                case UPCA(Int)
+                case Code128(String)
+            }
+
+This can be read as:
+
+    Declare an enumeration type called ``Barcode``, than can take either a value of ``UPCA`` with an associated value of type ``Int``, or a value of ``Code128`` with an associated value of type ``String``.
+
+Note that this definition does not provide any actual ``Int`` or ``String`` values – it just defines the *type* of associated value that ``Barcode`` variables can store when they are equal to ``Barcode.UPCA`` or ``Barcode.Code128``.
+
+New barcodes can then be created using either of these types, as shown below:
+
+.. testcode:: enums
+
+    (swift) var productBarcode = Barcode.UPCA(8_85909_51226_3)
+    // productBarcode : Barcode = <unprintable value>
+
+This creates a new variable called ``productBarcode``, and asigns it a value of ``Barcode.UPCA`` with an associated ``Int`` value of ``885909512263``. (Note that the value has underscores within its integer literal (``8_85909_51226_3``) to make it easier to read as a barcode.)
+
+The same product can be changed to have a different type of barcode:
+
+.. testcode:: enums
+
+    (swift) productBarcode = .Code128("ABCDEFGH")
+
+At this point, the original ``Barcode.UPCA`` and its integer value are replaced by the new ``Barcode.Code128`` and its string value. Variables of type ``Barcode`` can store either a ``.UPCA`` or a ``Code128`` (together with its associated value), but they can only store one at a time.
+
+The different barcode types can be checked using a ``switch`` statement, as before. This time, however, the associated value can be extracted as part of the ``switch``:
+
+.. testcode:: enums
+
+    (swift) switch productBarcode {
+                case .UPCA(var i):
+                    println("This product has a UPC-A barcode with an Int value of \(i).")
+                case .Code128(var s):
+                    println("This product has a Code 128 barcode with a String value of \(s).")
+            }
+    >>> This product has a Code 128 barcode with a String value of ABCDEFGH.
+
 Raw Values
 ~~~~~~~~~~
 
-As mentioned above, Swift does not assign default integer values to ``enum`` members when they are created. However, it can sometimes be useful to store an associated value with each ``enum`` member. In Swift, these are called *raw values*. Raw values can be strings, characters, or any of the integer or floating-point number types. Each raw value must be unique within its ``enum`` declaration.
+The barcode example above shows how members of an enumeration can declare that they store *associated* values of different types. In addition to associated values, enumerations can also come pre-populated with default values (called *raw values*), which are all of the *same* type.
+
+Here's an example that stores raw ASCII values alongside named enumeration members:
 
 .. testcode:: enums
 
@@ -555,11 +624,11 @@ As mentioned above, Swift does not assign default integer values to ``enum`` mem
                 case CarriageReturn = '\r'
             }
 
-Here, the raw values for an ``enum`` called ``ASCIIControlCharacter`` are declared to be of type ``Char`` (short for *single character*), and are set to equal some common ASCII control character values.
+Here, the raw values for an ``enum`` called ``ASCIIControlCharacter`` are declared to be of type ``Char`` (short for *single character*), and are set to equal some of the more common ASCII control character values. Values of type ``Char`` are used to store single Unicode characters, and are marked up using single quote marks (``'``) rather than double quote marks (``"``), to distingush them from strings. (``Char`` values are described in more detail in :doc:`Strings`.)
 
-Values of type ``Char`` are used to store single Unicode characters. They are marked up using single quote marks (``'``) rather than double quote marks (``"``), to distingush them from strings. ``Char`` values are described in more detail in :doc:`Strings`.
+Note that raw values are not the same as associated values. Raw values are set to pre-populated values when the ``enum`` is defined in your code, like the ASCII codes above. Associated values are only set when you create a new variable based on one of the ``enum`` members.
 
-When integers are used for raw values, they auto-increment if no value is specified for some of the enumeration members. The enumeration below defines the first seven chemical elements, and uses raw integer values to represent their atomic numbers:
+Raw values can be strings, characters, or any of the integer or floating-point number types. Each raw value must be unique within its ``enum`` declaration. When integers are used for raw values, they auto-increment if no value is specified for some of the enumeration members. The enumeration below defines the first seven chemical elements, and uses raw integer values to represent their atomic numbers:
 
 .. testcode:: optionals
 
@@ -651,10 +720,10 @@ Optional values can be :term:`checked` using an ``if`` statement, in a similar w
     * https://[Internal Staging Server]/docs/whitepaper/TypesAndValues.html#bool ✔︎
     * https://[Internal Staging Server]/docs/whitepaper/TypesAndValues.html#tuples
     * https://[Internal Staging Server]/docs/whitepaper/TypesAndValues.html#arrays
-    * https://[Internal Staging Server]/docs/whitepaper/TypesAndValues.html#enumerations
+    * https://[Internal Staging Server]/docs/whitepaper/TypesAndValues.html#enumerations ✔︎
     * https://[Internal Staging Server]/docs/whitepaper/LexicalStructure.html#identifiers-and-operators
     * https://[Internal Staging Server]/docs/whitepaper/LexicalStructure.html#integer-literals
     * https://[Internal Staging Server]/docs/whitepaper/LexicalStructure.html#floating-point-literals
     * https://[Internal Staging Server]/docs/whitepaper/GuidedTour.html#declarations-and-basic-syntax
     * https://[Internal Staging Server]/docs/whitepaper/GuidedTour.html#tuples
-    * https://[Internal Staging Server]/docs/whitepaper/GuidedTour.html#enums
+    * https://[Internal Staging Server]/docs/whitepaper/GuidedTour.html#enums ✔︎
