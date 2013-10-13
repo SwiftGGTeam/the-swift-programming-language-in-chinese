@@ -12,6 +12,7 @@ Language Guide
 	ClassesObjectsAndStructs
 	ProtocolsAndExtensions
 	Generics
+	Modules
 	StandardFunctions
 	ObjectiveC
 

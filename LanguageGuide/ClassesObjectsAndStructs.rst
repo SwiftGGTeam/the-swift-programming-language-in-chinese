@@ -25,3 +25,9 @@ Classes, Structures and Types
 	* https://[Internal Staging Server]/docs/whitepaper/TypesAndValues.html#classes
 	* https://[Internal Staging Server]/docs/whitepaper/GuidedTour.html#objects-and-classes
 	* https://[Internal Staging Server]/docs/whitepaper/GuidedTour.html#structures
+	* https://[Internal Staging Server]/docs/classes.html
+	* https://[Internal Staging Server]/docs/logicalobjects.html
+	* https://[Internal Staging Server]/docs/Resilience.html
+	* https://[Internal Staging Server]/docs/StoredAndComputedVariables.html
+	* https://[Internal Staging Server]/docs/typechecker.html
+	* https://[Internal Staging Server]/docs/weak.html

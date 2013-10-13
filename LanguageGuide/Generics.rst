@@ -13,3 +13,4 @@ Generics
 .. refnote:: References
 
 	* https://[Internal Staging Server]/docs/whitepaper/GuidedTour.html#generics
+	* https://[Internal Staging Server]/docs/Generics%20Syntax%20Tradeoffs.html

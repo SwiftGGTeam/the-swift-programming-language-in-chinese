@@ -9,6 +9,7 @@
     * Comments
     * Lack of header files
     * Introduction to the core concepts from each of the chapters in the Language Guide
+    * Coding style
 
 A Tour of the Swift Language
 ============================
@@ -1378,3 +1379,4 @@ Click the button and you'll see the message appear in the REPL:
 	* https://[Internal Staging Server]/docs/whitepaper/LexicalStructure.html#whitespace
 	* https://[Internal Staging Server]/docs/whitepaper/LexicalStructure.html#comments
 	* https://[Internal Staging Server]/docs/whitepaper/LexicalStructure.html#keywords
+	* https://[Internal Staging Server]/docs/SwiftCodingStyle.html

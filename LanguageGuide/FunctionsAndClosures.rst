@@ -28,3 +28,4 @@ Functions and Closures
 	* https://[Internal Staging Server]/docs/whitepaper/Closures.html#trailing-closures
 	* https://[Internal Staging Server]/docs/whitepaper/GuidedTour.html#functions
 	* https://[Internal Staging Server]/docs/whitepaper/GuidedTour.html#closures
+	* https://[Internal Staging Server]/docs/Expressions.html

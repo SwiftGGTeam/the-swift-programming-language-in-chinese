@@ -20,3 +20,5 @@ Strings and Characters
 	* https://[Internal Staging Server]/docs/whitepaper/LexicalStructure.html#string-literal-interpolation
 	* https://[Internal Staging Server]/docs/whitepaper/GuidedTour.html#strings
 	* https://[Internal Staging Server]/docs/whitepaper/GuidedTour.html#string-interpolation
+	* https://[Internal Staging Server]/docs/stringdesign.html
+	* https://[Internal Staging Server]/docs/textformatting.html

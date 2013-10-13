@@ -35,6 +35,7 @@
     * Short circuiting logical operators
     * Expressions
     * The ‘is’ pattern
+    * Stored vs Computed variables 
 
 Types and Operators
 ===================
@@ -595,7 +596,7 @@ The same product can be changed to have a different type of barcode:
 
     (swift) productBarcode = .Code128("ABCDEFGH")
 
-At this point, the original ``Barcode.UPCA`` and its integer value are replaced by the new ``Barcode.Code128`` and its string value. Variables of type ``Barcode`` can store either a ``.UPCA`` or a ``Code128`` (together with its associated value), but they can only store one at a time.
+At this point, the original ``Barcode.UPCA`` and its integer value are replaced by the new ``Barcode.Code128`` and its string value. Variables of type ``Barcode`` can store either a ``.UPCA`` or a ``.Code128`` (together with its associated value), but they can only store one at a time.
 
 The different barcode types can be checked using a ``switch`` statement, as before. This time, however, the associated value can be extracted as part of the ``switch``:
 
@@ -727,3 +728,4 @@ Optional values can be :term:`checked` using an ``if`` statement, in a similar w
     * https://[Internal Staging Server]/docs/whitepaper/GuidedTour.html#declarations-and-basic-syntax
     * https://[Internal Staging Server]/docs/whitepaper/GuidedTour.html#tuples
     * https://[Internal Staging Server]/docs/whitepaper/GuidedTour.html#enums ✔︎
+    * https://[Internal Staging Server]/docs/literals.html
