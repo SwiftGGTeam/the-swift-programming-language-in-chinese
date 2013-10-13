@@ -4,7 +4,10 @@ Document Overview
 Introduction
 ------------
 
-Developer Publications are creating a new book called *The Swift Programming Language*, to help with the adoption of Swift. This page describes a suggested approach for this book. Please send any comments to Dave Addey (`dave.addey@apple.com <mailto:dave.addey@apple.com>`_).
+Developer Publications are creating a new book called *The Swift Programming Language*, to help with the adoption of Swift. A first edition of the complete book will be made available at WWDC 2014. An overview of its structure and purpose is provided below.
+
+Please send any comments on this book to Dave Addey (`dave.addey@apple.com <mailto:dave.addey@apple.com?subject=The%20Swift%20Programming%20Language%20book>`_), Senior Writer, Developer Publications.
+
 
 The Swift Programming Language
 ------------------------------
@@ -16,7 +19,7 @@ Structure
 
 `The Swift Programming Language` will be split into three parts:
 
-* an :doc:`Introduction` from the language’s authors, positioning why the language has been created (and how it relates to other languages), together with a statement of its overall design goals and principles;
+* an :doc:`Introduction` positioning why the language has been created (and how it relates to other languages), together with a statement of its overall design goals and principles;
 * a :doc:`LanguageGuide/LanguageGuide`, introducing the language and standard library through code examples and exercises; and
 * a complete :doc:`ReferenceManual/ReferenceManual` for the language and standard library.
 
