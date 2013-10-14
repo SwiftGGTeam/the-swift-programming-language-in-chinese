@@ -1,44 +1,37 @@
 .. docnote:: Subjects to be covered in this section
 
-    * Declaration syntax
+    * Declaration syntax ✔︎
     * Multiple variable declarations and initializations on one line
-    * Naming conventions
-    * Integer types
-    * Floating point types
-    * Bool
+    * Naming conventions ✔︎
+    * Integer types ✔︎
+    * Floating point types ✔︎
+    * Bool ✔︎
     * Void
-    * No suffixes for integers / floats
-    * Lack of promotion and truncation
+    * No suffixes for integers / floats ✔︎
     * Lazy initialization
     * A brief mention of characters and strings
-    * Tuples
-    * Enums
+    * Tuples ✔︎
+    * Enums ✔︎
     * Enum element patterns
-    * Enums for groups of constants
-    * Enums with raw values (inc. getting / setting raw values)
+    * Enums for groups of constants ✔︎
+    * Enums with raw values (inc. getting / setting raw values) ✔︎
     * Enum default / unknown values?
     * Enums with multiple identical values?
     * Enum delayed identifier resolution
-    * Typealiases
-    * Type inference
-    * Type casting through type initializers
+    * Typealiases ✔︎
+    * Type inference ✔︎
+    * Type casting through type initializers ✔︎
     * Arrays
-    * Optional types
+    * Optional types ✔︎
     * Pattern binding
-    * Literals
+    * Literals ✔︎
     * Immutability
     * (Don't redeclare objects within a REPL session)
-    * C primitive types
-    * Arithmetic operators
-    * Relational and equality operators
-    * === vs ==
-    * Short circuiting logical operators
-    * Expressions
-    * The ‘is’ pattern
-    * Stored vs Computed variables 
+    * min() and max() static functions for integers
 
-Types and Operators
-===================
+
+Basic Types
+===========
 
 Swift provides several basic types for working with fundamental values. Some of these types will be familiar to C and Objective-C developers:
 
@@ -702,10 +695,6 @@ Optional values can be :term:`checked` using an ``if`` statement, in a similar w
 
 ``possibleElement`` was most recently set to an optional ``ChemicalElement`` for the atomic number of oxygen (``8``), which doesn't exist in the enumeration. This means that the optional contains *no value at all* – causing ``if (possibleElement)`` to equate to ``false``, triggering the ``else`` part of the statement above and printing the text ``"Not an element I know about"``.
 
-
-.. TODO: the section on Operators should note that the floating-point types support the % (modulo) operation.
-
-
 .. refnote:: References
 
     * https://[Internal Staging Server]/docs/LangRef.html#integer_literal ✔︎
@@ -729,3 +718,4 @@ Optional values can be :term:`checked` using an ``if`` statement, in a similar w
     * https://[Internal Staging Server]/docs/whitepaper/GuidedTour.html#tuples
     * https://[Internal Staging Server]/docs/whitepaper/GuidedTour.html#enums ✔︎
     * https://[Internal Staging Server]/docs/literals.html
+    * http://en.wikipedia.org/wiki/Operator_(computer_programming)
