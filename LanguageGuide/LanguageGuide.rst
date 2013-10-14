@@ -4,7 +4,6 @@ Language Guide
 .. toctree::
 	:maxdepth: 1
 
-	LanguageTour
 	BasicTypes
 	Operators
 	Strings
