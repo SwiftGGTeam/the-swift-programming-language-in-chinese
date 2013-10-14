@@ -15,6 +15,7 @@
 	* Cast operators (?, !, b as D, b is D)
 	* Type inference and discovery?
 	* "Everything is a type"
+	* Stored vs computed variables
 
 Classes, Structures and Types
 =============================

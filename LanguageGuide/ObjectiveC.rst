@@ -17,6 +17,7 @@
     * Relationship to message send syntax
     * Using NSLog
     * Autorelease pools
+    * C primitive types
 
 Interacting with Objective-C and Cocoa
 ======================================
