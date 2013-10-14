@@ -102,11 +102,9 @@ Like C, Swift provides ``++`` and ``--`` operators as shorthand for increasing o
     (swift) var i = 0
     // i : Int = 0
     (swift) ++i
-    (swift) println(i)
-    >>> 1
+    // r7 : Int = 1
     (swift) ++i
-    (swift) println(i)
-    >>> 2
+    // r8 : Int = 2
 
 Each time you call ``++i``, the value of ``i`` is increased by ``1``. Essentially, ``++i`` is shorthand for saying ``i = i + 1``. Likewise, ``--i`` can be used as shorthand for ``i = i - 1``.
 
@@ -209,6 +207,7 @@ The integer increment and comparison operators are often combined in a ``for`` l
 ``for`` loops are defined in more detail in :doc:`ControlFlow`.
 
 .. TODO: which types do these operate on by default? How do they work with strings? How about with tuples / with your own types?
+.. TODO: Talk about the difference between == and ===.
 
 Logical Operators
 -----------------
