@@ -215,7 +215,7 @@ Logical Operators
 NOT
 ~~~
 
-The NOT operator (``!a``) inverts a ``Bool`` value so that ``true`` becomes ``false``, and ``false`` becomes ``true``. It can be read as “not a”, as seen in the following example:
+The NOT operator (``!a``) inverts a ``Bool`` value so that ``true`` becomes ``false``, and ``false`` becomes ``true``. It can be read as “not ``a``”, as seen in the following example:
 
 .. testcode:: logicalOperators
 
@@ -226,7 +226,7 @@ The NOT operator (``!a``) inverts a ``Bool`` value so that ``true`` becomes ``fa
             }
     >>> You are not allowed entry into this restricted area. Go away!
 
-``if !allowedEntry`` can be read as “if not allowed entry”. This makes sense as a human-readable line of code. The following line is only executed if “not allowed entry” is true, i.e. if ``allowedEntry`` is ``false``.
+The phrase ``if !allowedEntry`` can be read as “if not allowed entry”. This makes sense as a human-readable line of code. The following line is only executed if “not allowed entry” is true, i.e. if ``allowedEntry`` is ``false``.
 
 As in this example, careful choice of boolean variable names can help to keep code readable and concise, while avoiding double negatives and confusing logic statements.
 

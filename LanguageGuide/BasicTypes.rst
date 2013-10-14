@@ -335,14 +335,14 @@ Swift's strict type-checking means that non-boolean values cannot be substituted
     (swift) var i = 1
     // i : Int = 1
     (swift) if i {
-        // do stuff
-    }
+                // do stuff
+            }
 
 …but it is valid to say::
 
     (swift) if i == 1 {
-        // do stuff
-    }
+                // do stuff
+            }
     
 The result of ``i == 1`` is a ``Bool``, and so this second example passes the strict type-check.
 
@@ -597,11 +597,11 @@ The different barcode types can be checked using a ``switch`` statement, as befo
 
     (swift) switch productBarcode {
                 case .UPCA(var i):
-                    println("This product has a UPC-A barcode with an Int value of \(i).")
+                    println("This product has a UPC-A barcode with an associated Int value of \(i).")
                 case .Code128(var s):
-                    println("This product has a Code 128 barcode with a String value of \(s).")
+                    println("This product has a Code 128 barcode with an associated String value of \(s).")
             }
-    >>> This product has a Code 128 barcode with a String value of ABCDEFGH.
+    >>> This product has a Code 128 barcode with an associated String value of ABCDEFGH.
 
 Raw Values
 ~~~~~~~~~~
@@ -654,7 +654,7 @@ Optionals are a way to handle missing values. They can be used to say:
 
 This concept doesn't exist in C or Objective-C. The nearest thing in Objective-C is the ability to return ``nil`` from a method that would otherwise return an object, with ``nil`` meaning ‘the absence of a valid object’. However, this only works for objects – it wouldn't work for a struct, or an integer, or an enumeration value. Optionals in Swift indicate the absence of a value in a way that works for any type at all.
 
-Here's an example. The ``ChemicalElement`` enumeration above contains elements and raw atomic numbers for the first seven elements in the periodic table. In addition to its ``toRaw()`` method, it also has a ``fromRaw()`` method that can be used to try and find a chemical element for a given atomic number:
+Here's an example. The ``ChemicalElement`` enumeration above contains elements and raw atomic numbers for the first seven elements in the periodic table. In addition to their ``toRaw()`` method, enumerations also have a ``fromRaw()`` method. This can be used to try and find a chemical element for a given atomic number:
 
 .. testcode:: optionals
 
