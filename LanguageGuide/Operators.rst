@@ -7,9 +7,8 @@
     * === vs ==
     * Short-circuit nature of the logical operators && and ||
     * Expressions
-    * The ‘is’ pattern
     * The ternary operator
-    * .. and ...
+    * range operators
     * ,
 
 Operators
@@ -593,8 +592,13 @@ Priority and associativity mean that evaluation can always be tied down to one a
 
 The parentheses make it clear that the first two values are being considered as part of a separate possible state in the overall logic. The output of the compound expression doesn't change, but the overall intention is clearer to the reader. Readability is always to be preferred over brevity, and parentheses should be used if they help to make your intentions clear.
 
+Range Operators
+---------------
+
 .. refnote:: References
 
+    * https://[Internal Staging Server]/docs/LangRef.html#expr-assign
+    * https://[Internal Staging Server]/docs/LangRef.html#expr-ternary
     * https://[Internal Staging Server]/docs/whitepaper/TypesAndValues.html#no-silent-truncation-or-undefined-behavior
     * https://[Internal Staging Server]/docs/whitepaper/LexicalStructure.html#identifiers-and-operators
     * http://en.wikipedia.org/wiki/Operator_(computer_programming)

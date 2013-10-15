@@ -17,6 +17,10 @@
 	* "Everything is a type"
 	* Stored vs computed variables
 	* === vs ==
+	* ‘is’ to check for class membership
+	* ‘as’ for casting
+	* No 'self = [super init]' (assignment equates to void)
+
 
 
 Classes, Structures and Types
@@ -34,3 +38,4 @@ Classes, Structures and Types
 	* https://[Internal Staging Server]/docs/StoredAndComputedVariables.html
 	* https://[Internal Staging Server]/docs/typechecker.html
 	* https://[Internal Staging Server]/docs/weak.html
+	* https://[Internal Staging Server]/docs/LangRef.html#expr-cast

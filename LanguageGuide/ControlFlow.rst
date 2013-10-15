@@ -8,7 +8,8 @@
 	* Looping (while, do while, for, for in)
 	* Iterators
 	* Switch statement (including pattern matching)
-	* Pattern matching
+	* Pattern matching and expressions in patterns
+	* Overloading the ~= function for pattern matching
 	* Control transfer (return, break, continue, fallthrough)
 	* Ranges
 	* Clarity around half-closed (1..10) and closed (1...10) ranges
@@ -21,3 +22,4 @@ Control Flow
 	* https://[Internal Staging Server]/docs/whitepaper/GuidedTour.html#branching-and-looping
 	* https://[Internal Staging Server]/docs/whitepaper/GuidedTour.html#pattern-matching
 	* https://[Internal Staging Server]/docs/Pattern%20Matching.html
+	* https://[Internal Staging Server]/docs/LangRef.html#pattern-expr

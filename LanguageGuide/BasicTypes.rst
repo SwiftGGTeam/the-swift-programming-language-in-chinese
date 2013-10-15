@@ -11,6 +11,7 @@
     * Lazy initialization
     * A brief mention of characters and strings
     * Tuples ✔︎
+    * Varargs tuples
     * Enums ✔︎
     * Enum element patterns
     * Enums for groups of constants ✔︎
@@ -643,6 +644,8 @@ The different barcode types can be checked using a ``switch`` statement, as befo
             }
     >>> This product has a Code 128 barcode with an associated String value of ABCDEFGH.
 
+.. TODO: each enum member can have multiple associated values, and these values can be named. See https://[Internal Staging Server]/docs/LangRef.html#pattern-enum-element .
+
 Raw Values
 ~~~~~~~~~~
 
@@ -741,6 +744,7 @@ When the optional *does* contain a value, the underlying value can accessed by a
     * https://[Internal Staging Server]/docs/LangRef.html#integer_literal ✔︎
     * https://[Internal Staging Server]/docs/LangRef.html#floating_literal ✔︎
     * https://[Internal Staging Server]/docs/LangRef.html#expr-delayed-identifier ✔︎
+    * https://[Internal Staging Server]/docs/LangRef.html#type-tuple
     * https://[Internal Staging Server]/docs/whitepaper/TypesAndValues.html#types-and-values ✔︎
     * https://[Internal Staging Server]/docs/whitepaper/TypesAndValues.html#integer-types ✔︎
     * https://[Internal Staging Server]/docs/whitepaper/TypesAndValues.html#no-integer-suffixes ✔︎
