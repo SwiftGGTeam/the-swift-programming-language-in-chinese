@@ -49,9 +49,9 @@ In addition to these simple types, Swift introduces some less familiar (but very
 * types that can be either a known value or a missing value (known as *optionals*)
 * [some other things most likely]
 
-Each of these types, and the ways in which they can be used, are discussed in more detail below. This chapter also covers the ways in which values can be compared and modified using *operators* (such as ``+``, ``-``, ``*`` and ``==``), and how values are declared as *variables*.
+Each of these types, and the ways in which they can be used, are discussed in more detail below.
 
-Swift provides a powerful and flexible way to create and work with string and character types. These are introduced below, and are discussed in more detail in the :doc:`Strings` chapter.
+Swift provides a powerful and flexible way to create and work with string and character types. These are introduced below, and are discussed in more detail in :doc:`Strings`.
 
 Declaring and Naming Variables
 ------------------------------
@@ -74,11 +74,11 @@ Variable definitions can include a specific *type*, to be explicit about the kin
     (swift) var b : String = "Hello"
     // b : String = "Hello"
 
-The colon in the declaration means *“…that is…”*, so this can be read as:
+The colon in the declaration means *“…that is a…”*, so this can be read as:
 
     Declare a variable called ``b`` that is a ``String``, and give it an initial value of ``"Hello"``.
 
-You can use pretty much :term:`any character you like` in a variable name:
+You can use pretty much :term:`any character you like` in a variable name, including `Unicode <http://en.wikipedia.org/wiki/Unicode>`_ characters:
 
 .. glossary::
 
@@ -107,7 +107,7 @@ Once you've declared a variable, you can't redeclare it again with the same name
 Numbers
 -------
 
-Swift supports two fundamental types of number: :term:`integers`, and :term:`floating-point numbers`. Swift provides both types of number in :term:`signed and unsigned` forms up to 128 bits in size. These basic numeric types follow a similar naming convention to C, in that an 8-bit unsigned integer is a ``UInt8``, and a signed 64-bit floating-point number is a ``Float64``. However, note that Swift does not use C-style suffixes (such as :term:`10ul`) to indicate the specific size of a number. Like all types in Swift, these basic numeric types have capitalized names. (See the :doc:`../ReferenceManual/ReferenceManual` for a complete list of numeric types.)
+Swift supports two fundamental types of number: :term:`integers`, and :term:`floating-point numbers`. Swift provides both types of number in :term:`signed and unsigned` forms up to 128 bits in size. These basic numeric types follow a similar naming convention to C, in that an 8-bit unsigned integer is a ``UInt8``, and a signed 64-bit floating-point number is a ``Float64``. Like all types in Swift, these basic numeric types have capitalized names. (See the :doc:`../ReferenceManual/ReferenceManual` for a complete list of numeric types.)
 
 .. TODO: do we actually have a Float16? It's mentioned on https://[Internal Staging Server]/docs/whitepaper/TypesAndValues.html#floating-point-types , but doesn't exist as of rev. 9212.
 
@@ -122,9 +122,6 @@ Swift supports two fundamental types of number: :term:`integers`, and :term:`flo
     signed and unsigned
         Signed values can be positive or negative. Unsigned values can only be positive.
 
-    10ul
-        In C, ``10ul`` means ‘the number ``10`` as an unsigned long integer’. Long integers in C are usually 32 bits in size, so the equivalent in Swift would be ``var i : UInt32 = 10``.
-
 In most cases, there's no need to pick a specific size of integer or floating-point number to use in your code. Swift provides three standard number types:
 
 * ``Int``, which is the same as ``Int64``, and should be used for general integer values
@@ -138,6 +135,9 @@ Unless you need to work with a :term:`specific size` of integer or floating-poin
     specific size
         Certain tasks may require you to be more specific about the type of number that you need. You might use a ``Float16`` to read 16-bit audio samples, or a ``UInt8`` when working with raw 8-bit byte data, for example.
 
+min() and max()
+~~~~~~~~~~~~~~~
+
 The minimum and maximum values of the integer types can be accessed using their ``min()`` and ``max()`` type methods:
 
 .. testcode:: declaringVariables
@@ -146,6 +146,8 @@ The minimum and maximum values of the integer types can be accessed using their 
     // minimumValue : UInt8 = 0
     (swift) var maximumValue = UInt8.max()
     // maximumValue : UInt8 = 255
+
+Note that the ``min()`` and ``max()`` values are of the appropriate number type.
 
 Strong Typing and Type Inference
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -423,9 +425,9 @@ This can be read as:
 
 Note that this ``typealias`` doesn't set a *value* for ``statusCode`` or ``description``. It's not actually creating a tuple for a specific status code – it's defining what *all* HTTP status codes look like.
 
-Note also that ``HTTPStatus`` has a capitalized name, as it is a new *type* of tuple, rather than an instance of a particular tuple type. This is different from the variable name ``http404Error``, which starts with a lowercase letter, and capitalizes sub-words within the name. This approach – ``CapitalizedWords`` for types, ``lowercaseThenCapitalizedWords`` for variable names – is strongly encouraged to help make your code more readable.
+Note also that ``HTTPStatus`` has a capitalized name, because it is a new *type* of tuple, rather than an instance of a particular tuple type. This is different from the variable name ``http404Error``, which starts with a lowercase letter, and capitalizes sub-words within the name. This approach – ``CapitalizedWords`` for types, ``lowercaseThenCapitalizedWords`` for variable names – is strongly encouraged for consistency and readability.
 
-Because it's a type, ``HTTPStatus`` can be used to create new tuples:
+Because it's a type, ``HTTPStatus`` can be used to declare new tuple variables of that type:
 
 .. testcode:: tuples
 
@@ -436,7 +438,7 @@ This can be read as:
 
     Declare a variable called ``http304Status`` that is an ``HTTPStatus``. Initialize it with (a ``statusCode`` that is ``304``, and a ``description`` that is ``"Not Modified"``).
 
-``HTTPStatus`` can also be used in a shorter form, without needing to provide the element names:
+``HTTPStatus`` tuples can also be created in a shorter form, without needing to provide the element names:
 
 .. testcode:: tuples
 
@@ -457,7 +459,33 @@ Because ``http500Error`` was defined as an ``HTTPStatus``, you can still access 
     // r4 : Int = 500
     (swift) http500Error.description
     // r5 : String = "Internal Server Error"
-    
+
+Initializer Syntax
+~~~~~~~~~~~~~~~~~~
+
+Tuple types defined by ``typealias`` are fully-fledged types in Swift. Because ``HTTPStatus`` is now a type, you can also create new ``HTTPStatus`` tuples using *initializer syntax*:
+
+.. testcode:: tuples
+
+    (swift) var http301Status = HTTPStatus(statusCode: 301, description: "Moved Permanently")
+    // http301Status : (statusCode: Int, description: String) = (301, "Moved Permanently")
+
+This can be read as:
+
+    Declare a variable called ``http301Status``, and set it to a new ``HTTPStatus`` initialized with (a ``statusCode`` that is ``301``, and a ``description`` that is ``"Moved Permanently"``).
+
+Again, it is not essential to name the elements if they are provided in the same order as they were defined:
+
+.. testcode:: tuples
+
+    (swift) var http403Error = HTTPStatus(403, "Forbidden")
+    // http403Error : (statusCode: Int, description: String) = (403, "Forbidden")
+
+Initializer syntax is also used when creating struct and object instances, and is described in more detail in :doc:`ClassesObjectsAndStructs`.
+
+.. QUESTION: Which is the preferred initialization syntax? Should we even give people the option?
+.. QUESTION: Is this too early to introduce the concept of the default initializer?
+
 Enumerations
 ------------
 
@@ -528,7 +556,9 @@ Enumeration values can be checked with a ``switch`` statement:
 
 …and so on.
 
-``switch`` statements must be exhaustive when working with ``enum`` values. If the ``case`` for ``.West`` had been omitted, this code would not compile, as it would not provide an exhaustive list of ``CompassPoint`` values. Enforcing completeness ensures that cases are not accidentally missed or forgotten, and is part of Swift's goal of completeness and lack of ambiguity.
+Note that ``switch`` statements in Swift do not ‘fall through’ the bottom of each case and into the next one. Instead, the entire ``switch`` statement completes its execution as soon as the first matching case is completed. This is different from C, which requires you to insert an explicit ``break`` statement at the end of every ``case`` to prevent fall-through. Avoiding default fall-through means that Swift switch statements are much more concise and predictable than their counterparts in C.
+
+``switch`` statements must be exhaustive when working with ``enum`` values. If the ``case`` for ``.West`` had been omitted, this code would not compile, because it would not provide an exhaustive list of ``CompassPoint`` values. Enforcing completeness ensures that cases are not accidentally missed or forgotten, and is part of Swift's goal of completeness and lack of ambiguity.
 
 When it is not appropriate to provide a ``case`` statement for every value, you can define a ``default`` catch-all case to cover any values that are not addressed explicitly:
 
@@ -662,35 +692,36 @@ Optionals are a way to handle missing values. They can be used to say:
 
 * There *isn't* a value at all
 
-This concept doesn't exist in C or Objective-C. The nearest thing in Objective-C is the ability to return ``nil`` from a method that would otherwise return an object, with ``nil`` meaning ‘the absence of a valid object’. However, this only works for objects – it wouldn't work for a struct, or an integer, or an enumeration value. Optionals in Swift indicate the absence of a value in a way that works for any type at all.
+This concept doesn't exist in C or Objective-C. The nearest thing in Objective-C is the ability to return ``nil`` from a method that would otherwise return an object, with ``nil`` meaning ‘the absence of a valid object’. However, this only works for objects – it doesn't work for structs, or basic C types, or enumeration values. For these types, Objective-C methods typically return a special value (such as ``NSNotFound``) to indicate the absence of a value. However, this assumes that the method's caller knows there is a special value to test for, and remembers to check for it. Swift's optionals give a way to indicate the absence of a value for *any type at all*, without the need for special constants or ``nil`` tests.
 
 Here's an example. The ``ChemicalElement`` enumeration above contains elements and raw atomic numbers for the first seven elements in the periodic table. In addition to their ``toRaw()`` method, enumerations also have a ``fromRaw()`` method. This can be used to try and find a chemical element for a given atomic number:
 
 .. testcode:: optionals
 
-    (swift) var possibleElement = ChemicalElement.fromRaw(7)
+    (swift) var possibleElement = ChemicalElement.fromRaw(7)        // Nitrogen
     // possibleElement : ChemicalElement? = <unprintable value>
 
 ``ChemicalElement`` has a member with an atomic number of ``7`` (i.e. ``ChemicalElement.Nitrogen``). But what if you try an atomic number of ``8`` (for oxygen)? ``ChemicalElement`` doesn't know about oxygen, so you might expect the following statement to fail:
 
 .. testcode:: optionals
 
-    (swift) possibleElement = ChemicalElement.fromRaw(8)
+    (swift) possibleElement = ChemicalElement.fromRaw(8)            // Oxygen
 
-However, it turns out that this is a perfectly valid statement. This is because ``fromRaw()`` returns an *optional*. In the response above, ``possibleElement`` has an inferred type of ``ChemicalElement?``, not ``ChemicalElement``. Note the question mark at the end. This indicates that the value of ``possibleElement`` is an *optional* ``ChemicalElement`` – it might contain *some* value of that type, or it might contain *no value at all*.
+However, it turns out that this is a perfectly valid statement. This is because ``fromRaw()`` returns an *optional*. If you look closely at the nitrogen example above, you'll see that ``possibleElement`` has an inferred type of ``ChemicalElement?``, not ``ChemicalElement``. Note the question mark at the end. This indicates that the value of ``possibleElement`` is an *optional* ``ChemicalElement`` – it might contain *some* value of that type, or it might contain *no value at all*.
 
-Optional values can be :term:`checked` using an ``if`` statement, in a similar way to ``Bool`` values. If an optional *does* have a value, it equates to ``true``, and the underlying value can be retrieved using the optional's ``get()`` method:
+Optional values can be :term:`checked` using an ``if`` statement, in a similar way to ``Bool`` values. If an optional does have a value, it equates to ``true``; if it has no value at all, it equates to ``false``.
+
+When the optional *does* contain a value, the underlying value can accessed by adding an exclamation mark (``!``) to the end of the optional's name. The exclamation mark effectively says “I know that this optional definitely has a value – please use it”.
 
 .. glossary::
 
     checked
-        Optionals are a bit like Schrödinger's cat. The cat might be alive or dead – the only way to find out is to look inside the box.
+        Optionals are a bit like `Schrödinger's cat <http://en.wikipedia.org/wiki/Schrödinger's_cat>`_. The cat might be alive or dead – the only way to find out is to look inside the box.
 
 .. testcode:: optionals
 
     (swift) if (possibleElement) {
-                var actualElement = possibleElement.get()
-                switch actualElement {
+                switch possibleElement! {
                     case .Hydrogen:
                         println("A bit explodey")
                     case .Helium:
@@ -703,7 +734,7 @@ Optional values can be :term:`checked` using an ``if`` statement, in a similar w
             }
     >>> Not an element I know about
 
-``possibleElement`` was most recently set to an optional ``ChemicalElement`` for the atomic number of oxygen (``8``), which doesn't exist in the enumeration. This means that the optional contains *no value at all* – causing ``if (possibleElement)`` to equate to ``false``, triggering the ``else`` part of the statement above and printing the text ``"Not an element I know about"``.
+``possibleElement`` was most recently set to an optional ``ChemicalElement`` for the atomic number of oxygen (``8``), which doesn't exist in the enumeration. This means that the optional contains *no value at all* – causing ``if (possibleElement)`` to equate to ``false``, triggering the ``else`` part of the statement above, and printing the text ``"Not an element I know about"``.
 
 .. refnote:: References
 

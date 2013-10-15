@@ -9,6 +9,8 @@
     * Expressions
     * The ‘is’ pattern
     * The ternary operator
+    * .. and ...
+    * ,
 
 Operators
 =========
@@ -127,7 +129,7 @@ In the example above, ``var b = ++a`` sets ``b`` to the value of ``a``, *after* 
 
 However, ``var c = a++`` sets ``c`` to the value of ``a`` *before* it is incremented. The result is that ``c`` gets the old value of ``1``, but ``a`` now equals ``2``.
 
-Unless you need the specific behavior of ``i++``, it is recommended that you use ``++i`` in all cases, as it has the typical expected behavior of increasing ``i``, and then providing the result. (The same rules and advice apply for ``--``.)
+Unless you need the specific behavior of ``i++``, it is recommended that you use ``++i`` in all cases, because it has the typical expected behavior of increasing ``i``, and then providing the result. (The same rules and advice apply for ``--``.)
 
 Unary Plus and Minus
 ~~~~~~~~~~~~~~~~~~~~
@@ -256,7 +258,7 @@ This is effectively shorthand for:
 
 In this case, the ternary comparison operator provides an efficient shorthand when deciding which of two values to use.
 
-The ternary comparison operator should be used with care, however. It is very concise, but this conciseness can lead to hard-to-read code if over-used. Don't be tempted to combine multiple instances of it into one compound statement, as this can quickly become difficult to read.
+The ternary comparison operator should be used with care, however. It is very concise, but this conciseness can lead to hard-to-read code if over-used. Don't be tempted to combine multiple instances of it into one compound statement; this quickly becomes difficult to read.
 
 Bitwise Operators
 -----------------
@@ -491,7 +493,7 @@ The OR operator (``||``, i.e. two adjacent pipe characters) is used to create lo
 
 In this example, the first ``Bool`` value (``hasValidDoorKey``) is ``false``, but the second value (``knowsEmergencyOverridePassword``) is ``true``. Because one value is ``true``, the overall expression also equates to ``true``, and access is allowed.
 
-Note that if the left-hand side of an OR expression is ``true``, the right-hand side will not be evaluated, as it will not change the outcome of the overall expression.
+Note that if the left-hand side of an OR expression is ``true``, the right-hand side will not be evaluated, because it cannot change the outcome of the overall expression.
 
 Combining Logical Operators
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -516,7 +518,7 @@ Based on the example values from earlier, the first two mini-expressions are ``f
 Priority and Associativity
 --------------------------
 
-.. NOTE: I've chosen to use ‘priority’ rather than ‘precedence’ here, as I think it's a clearer phrase to use.
+.. NOTE: I've chosen to use ‘priority’ rather than ‘precedence’ here, because I think it's a clearer phrase to use.
 .. QUESTION: Could priority and associativity be made clear as part of the hypothetical ‘show invisibles’ feature, to show the invisible parentheses implied by priority and associativity?
 
 It is important to consider each operator's *priority* and *associativity* when working out how to calculate a compound expression. These two principles are used to work out the order in which an expression should be calculated.
