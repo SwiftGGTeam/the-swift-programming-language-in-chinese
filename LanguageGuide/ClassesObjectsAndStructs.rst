@@ -16,6 +16,8 @@
 	* Type inference and discovery?
 	* "Everything is a type"
 	* Stored vs computed variables
+	* === vs ==
+
 
 Classes, Structures and Types
 =============================
