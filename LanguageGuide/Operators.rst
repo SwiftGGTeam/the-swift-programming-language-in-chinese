@@ -1,15 +1,15 @@
 .. docnote:: Subjects to be covered in this section
 
-    * Lack of promotion and truncation
-    * Arithmetic operators
-    * Operator precendence and associativity
-    * Relational and equality operators
-    * === vs ==
-    * Short-circuit nature of the logical operators && and ||
-    * Expressions
-    * The ternary operator
-    * range operators
-    * ,
+    * Lack of promotion and truncation ✔︎
+    * Arithmetic operators ✔︎
+    * Operator precendence and associativity ✔︎
+    * Relational and equality operators ✔︎
+    * === vs == ✔︎
+    * Short-circuit nature of the logical operators && and || ✔︎
+    * Expressions (kind of ✔︎)
+    * The ternary operator ✔︎
+    * range operators ✔︎
+    * The comma operator
 
 Operators
 =========
@@ -32,7 +32,38 @@ Operators are often referred to as *unary*, *binary* or *ternary*:
 Assignment Operator
 -------------------
 
-[TODO]
+The assignment operator (``a = b``) updates the value of ``a`` with the value of ``b``:
+
+.. testcode:: assignmentOperator
+
+    (swift) var b = 10
+    // b : Int = 10
+    (swift) var a = 5
+    // a : Int = 5
+    (swift) a = b
+    (swift) println("a is now \(a)")
+    >>> a is now 10
+
+If the right-hand side of the assignment is a tuple with multiple values, its elements can be decomposed into multiple variables at once:
+
+.. testcode:: assignmentOperator
+
+    (swift) var (x, y) = (1, 2)
+    // (x, y) : (Int, Int) = (1, 2)
+    (swift) println("x is now \(x)")
+    >>> x is now 1
+
+Unlike C and Objective-C, the assignment expression does not itself return a value. The following statement is not valid:
+
+.. testcode:: assignmentOperator
+
+    (swift) if x = y {
+                // do something now that x is equal to y
+            }
+
+This avoids errors where the assignment expression ``=`` is accidentally used in place of the equality comparison operator ``==``. By making ``if x = y`` invalid, Swift makes it much easier to avoid these kinds of errors in your code.
+
+.. TODO: Should we mention that x = y = z is also not valid? If so, is there a convincing argument as to why this is a good thing?
 
 Arithmetic Operators
 --------------------
@@ -128,7 +159,7 @@ In the example above, ``var b = ++a`` sets ``b`` to the value of ``a``, *after* 
 
 However, ``var c = a++`` sets ``c`` to the value of ``a`` *before* it is incremented. The result is that ``c`` gets the old value of ``1``, but ``a`` now equals ``2``.
 
-Unless you need the specific behavior of ``i++``, it is recommended that you use ``++i`` in all cases, because it has the typical expected behavior of increasing ``i``, and then providing the result. (The same rules and advice apply for ``--``.)
+Unless you need the specific behavior of ``i++``, it is recommended that you use ``++i`` in all cases, because it has the typical expected behavior of increasing ``i``, and then providing the result. (The same rules and advice apply for ``--i`` and ``i--``.)
 
 Unary Plus and Minus
 ~~~~~~~~~~~~~~~~~~~~
@@ -174,7 +205,7 @@ Swift supports two additional comparison operators, to check if values are ident
 * Identical to (``a === b``)
 * Not identical to (``a !== b``)
 
-The identical operators are used to test if two object variables both refer to the same object instance. They are described in detail in :doc:`ClassesObjectsAndStructs`.
+The identical operators are used to test if two object variables both refer to the same object instance. These are described in detail in :doc:`ClassesObjectsAndStructs`.
 
 Each of the comparison operators returns a ``Bool`` value to indicate whether or not the statement is true:
 
@@ -224,40 +255,52 @@ Comparison operators are also often seen in conditional statements such as the `
 Ternary Comparison Operator
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The ternary comparison operator is a special operator with three parts, which takes the form ``expression ? value1 : value2``. It provides a shorthand way to select one of two values based on whether ``expression`` is ``true`` or ``false``. If ``expression`` is ``true``, it equates to ``value1``; if ``expression`` is ``false``, it equates to ``value2``.
+The ternary comparison operator is a special operator with three parts, which takes the form ``question ? answer1 : answer2``. It provides a shorthand way to evaluate one of two expressions based on whether ``question`` is ``true`` or ``false``. If ``question`` is ``true``, it evaluates ``answer1``; if ``question`` is ``false``, it evaluates ``answer2``.
 
-Here's an example to calculate the pixel height for a table row. The height should be 80 pixels if the row has a header, and 44 pixels if it doesn't.
+Effectively, it is shorthand for::
+
+    if (some input expression equates to true) {
+        return the result of evaluating expression 1
+    } else {
+        return the result of evaluating expression 2
+    }
+
+Here's an example, which calculates the pixel height for a table row. The row should be 50 pixels taller than the content if it has a header, and 20 pixels taller if it doesn't:
 
 .. testcode:: ternaryComparisonOperatorPart1
 
+    (swift) var contentHeight = 40
+    // contentHeight : Int = 40
     (swift) var hasHeader = true
     // hasHeader : Bool = true
-    (swift) var rowHeight = hasHeader ? 80 : 44
-    // rowHeight : Int = 80
+    (swift) var rowHeight = hasHeader ? contentHeight + 50 : contentHeight + 20
+    // rowHeight : Int = 90
     (swift) println("The row height is \(rowHeight) pixels.")
-    >>> The row height is 80 pixels.
+    >>> The row height is 90 pixels.
 
 This is effectively shorthand for:
 
 .. testcode:: ternaryComparisonOperatorPart2
 
+    (swift) var contentHeight = 40
+    // contentHeight : Int = 40
     (swift) var hasHeader = true
     // hasHeader : Bool = true
-    (swift) var rowHeight = 0
-    // rowHeight : Int = 0
+    (swift) var rowHeight = contentHeight
+    // rowHeight : Int = 40
     (swift) if hasHeader {
-                rowHeight = 80
+                rowHeight = rowHeight + 50
             } else {
-                rowHeight = 44
+                rowHeight = rowHeight + 20
             }
     (swift) println("The row height is \(rowHeight) pixels.")
-    >>> The row height is 80 pixels.
+    >>> The row height is 90 pixels.
 
-.. TODO: leave yearSuffix uninitialized once the REPL allows uninitialized variables.
+.. TODO: leave rowHeight uninitialized once the REPL allows uninitialized variables?
 
-In this case, the ternary comparison operator provides an efficient shorthand when deciding which of two values to use.
+In this case, the ternary comparison operator provides an efficient shorthand for deciding which of two expressions to consider.
 
-The ternary comparison operator should be used with care, however. It is very concise, but this conciseness can lead to hard-to-read code if over-used. Don't be tempted to combine multiple instances of it into one compound statement; this quickly becomes difficult to read.
+The ternary comparison operator should be used with care, however. It is very concise, but this conciseness can lead to hard-to-read code if over-used. Avoid combining multiple instances of ternary comparison operator into one compound statement.
 
 Bitwise Operators
 -----------------
@@ -341,7 +384,7 @@ Bitwise Left and Right Shifts
 Compound Assignment Operators
 -----------------------------
 
-Like C, Swift provides shorthand operators that combine *assignment* (``=``) with another operation. For example:
+Like C, Swift provides shorthand operators that combine *assignment* (``=``) with another operation. One example is the *addition assignment* operator (``+=``):
 
 .. testcode:: compoundAssignment
 
@@ -351,7 +394,7 @@ Like C, Swift provides shorthand operators that combine *assignment* (``=``) wit
     (swift) println("a is now equal to \(a)")
     >>> a is now equal to 3
 
-The expression ``a += b`` is shorthand for ``a = a + b``. Effectively, the addition and the assignment are rolled into one operator that performs both tasks in one go.
+The expression ``a += 2`` is shorthand for ``a = a + 2``. Effectively, the addition and the assignment are rolled into one operator that performs both tasks in one go.
 
 A complete list of compound assignment operators can be found in the :doc:`../ReferenceManual/ReferenceManual`.
 
@@ -360,7 +403,7 @@ Overflow Operators
 
 Swift will throw an error if you try to insert a value into an integer variable that cannot hold that value. This gives extra safety when working with values that are too large or too small.
 
-For example, the ``Int16`` integer type can hold any signed value between ``-32768`` and ``32767``. If you try and set a variable of this type to a value outside of this range, Swift will throw an error:
+For example: the ``Int16`` integer type can hold any signed value between ``-32768`` and ``32767``. If you try and set a variable of this type to a value outside of this range, Swift will throw an error:
 
 .. testcode:: overflowOperators
 
@@ -377,7 +420,7 @@ Throwing an error in these scenarios is much safer than allowing an outsized val
     overflow
         A variable *overflows* when it no longer fits into the space assigned to it. In the case of a ``UInt8``, the variable has eight bits of storage, giving a maximum unsigned value of ``11111111`` in binary (or ``255`` in decimal). If you add ``1`` to this number, you get the binary number ``100000000`` (a one with eight zeroes), which needs nine bits of storage. Because ``UInt8`` only has eight bits of storage, it *overflows*, and the value that remains is the the value that is still stored in the right-hand eight bits. In this case, the value is ``00000000``, or zero.
 
-However, in the cases where you *do* want the value to overflow, you can opt in to this behavior rather than triggering an error. Swift provides five arithmetic *overflow operators* that opt in to the overflow behavior. These operators all begin with an ampersand (``&``):
+However, in the cases where you *do* want the value to overflow, you can opt in to this behavior rather than triggering an error. Swift provides five arithmetic *overflow operators* that opt in to the overflow behavior for integer calculations. These operators all begin with an ampersand (``&``):
 
 * Overflow addition (``&+``)
 * Overflow subtraction (``&-``)
@@ -395,7 +438,7 @@ For example:
     (swift) println("willOverflow is now \(willOverflow)")
     >>> willOverflow is now 0
 
-The variable ``willOverflow`` is initialized with the largest value a ``UInt8`` can hold. It is then incremented by ``1`` using the overflow addition operator, ``&+``. This pushes it just over the size it can hold, causing it to overflow round to its smallest possible value (``0``).
+Here, the variable ``willOverflow`` is initialized with the largest value a ``UInt8`` can hold. It is then incremented by ``1`` using the overflow addition operator, ``&+``. This pushes it just over the size it can hold, causing it to overflow round to its smallest possible value (``0``).
 
 Similarly, if a value becomes too small:
 
@@ -409,7 +452,7 @@ Similarly, if a value becomes too small:
 
 Pushing the value of ``willUnderflow`` just slightly lower than it can store causes it to overflow round to its maximum value.
 
-Note: the overflow operators should not be confused with the bitwise AND compound assignment operator ``&=``.
+Note: the overflow operators should not be confused with the bitwise AND compound assignment operator, ``&=``.
 
 Division by zero
 ~~~~~~~~~~~~~~~~
@@ -422,7 +465,7 @@ If you divide a number by zero, or try to calculate modulo zero, Swift will thro
     // x : Int = 1
     (swift) var y = x / 0       // this will throw an error
 
-Integer division by zero is not a valid mathematical action, which is why Swift throws an error rather than creating an invalid value.
+Integer division by zero is not a valid mathematical action, and so Swift throws an error rather than creating an invalid value.
 
 Logical Operators
 -----------------
@@ -522,10 +565,6 @@ Priority and Associativity
 
 It is important to consider each operator's *priority* and *associativity* when working out how to calculate a compound expression. These two principles are used to work out the order in which an expression should be calculated.
 
-* Operator :term:`priority` means that some operators are given higher priority than others.
-
-* Operator :term:`associativity` defines how operators of the same priority are grouped together – either grouped from the left, or grouped from the right. Think of it as meaning ‘they associate with the expression to their left’, or ‘they associate with the expression to their right’.
-
 .. glossary::
 
     priority
@@ -547,9 +586,13 @@ Taken literally, you might expect this to read:
 
     2 plus 3 equals 5; 5 times 4 equals 20; 20 modulo 5 equals 0.
 
-However, this is not the actual answer, due to the priorities and associativity of the operators used.
+However, the actual answer is ``4``, not ``20``. This is due to the *priorities* and *associativity* of the operators used:
 
-Here's how the actual evaluation order is calculated. Priority is considered first. Higher-priority operators are evaluated before lower-priority ones. In Swift, as in C, the multiplication operator (``*``) and the modulo operator (``%``) have a higher priority than the addition operator (``+``). As a result, they are both evaluated before the addition is considered.
+* Operator :term:`priority` means that some operators are given higher priority than others, and are calculated first.
+
+* Operator :term:`associativity` defines how operators of the same priority are grouped together – either grouped from the left, or grouped from the right. Think of it as meaning ‘they associate with the expression to their left’, or ‘they associate with the expression to their right’.
+
+Here's how the actual evaluation order is calculated for the example above. Priority is considered first. Higher-priority operators are evaluated before lower-priority ones. In Swift, as in C, the multiplication operator (``*``) and the modulo operator (``%``) have a higher priority than the addition operator (``+``). As a result, they are both evaluated before the addition is considered.
 
 However, multiplication and modulo happen to have the *same* priority as each other. To work out the exact evaluation order to use, we therefore need to also look at their *associativity*. Multiplication and modulo both associate with the expression to their left. You can think of this as adding implicit parentheses around these parts of the expression, starting from their left:
 
@@ -558,28 +601,28 @@ However, multiplication and modulo happen to have the *same* priority as each ot
     (swift) 2 + ((3 * 4) % 5)
     // r1 : Int = 4
 
-The expression can now be refactored to give:
+``(3 * 4)`` is ``12``, so this is actually:
 
 .. testcode:: evaluationOrder
 
     (swift) 2 + (12 % 5)
     // r2 : Int = 4
 
-…which can be refactored even further to give:
+…and ``(12 % 5)`` is ``2``:
 
 .. testcode:: evaluationOrder
 
     (swift) 2 + 2
     // r3 : Int = 4
 
-…giving the eventual answer of ``4``.
+…which gives the eventual answer of ``4``.
 
 A complete list of Swift operator priorities and associativity rules can be found in the :doc:`../ReferenceManual/ReferenceManual`.
 
 Explicit Parentheses
 ~~~~~~~~~~~~~~~~~~~~
 
-Priority and associativity mean that evaluation can always be tied down to one and only one possible order. However, it can sometimes be useful to include parentheses anyway, to make the intention of a complex expression easier to read. In the door access example above, it would be useful to add parentheses around the first part of the compound expression:
+Priority and associativity mean that evaluation can always be tied down to one and only one possible order of calculation. However, it can sometimes be useful to include parentheses anyway, to make the intention of a complex expression easier to read. In the door access example above, it would be useful to add parentheses around the first part of the compound expression:
 
 .. testcode:: logicalOperators
 
@@ -594,6 +637,45 @@ The parentheses make it clear that the first two values are being considered as 
 
 Range Operators
 ---------------
+
+Swift includes two *range operators*, which provide a shorthand way to express a range of values:
+
+* a *closed* range operator (``a...b``), which includes both ``a`` and ``b``
+* a *half-closed* range operator (``a..b``), which includes ``a`` but not ``b``
+
+The closed range operator is useful for iterating between two values. Here's an example that prints out the first five lines of the three-times-table:
+
+.. testcode:: rangeOperators
+
+    (swift) for i in 1...5 {
+                println("\(i) times 3 is \(i * 3)")
+            }
+    >>> 1 times 3 is 3
+    >>> 2 times 3 is 6
+    >>> 3 times 3 is 9
+    >>> 4 times 3 is 12
+    >>> 5 times 3 is 15
+
+The half-closed range operator is useful when working with zero-based lists, such as when counting up to (but not including) the length of a zero-based array:
+
+.. testcode:: rangeOperators
+
+    (swift) var names = ["Anna", "Brian", "Christine", "Daniel"]
+    // names : String[] = ["Anna", "Brian", "Christine", "Daniel"]
+    (swift) var length = names.length
+    // length : Int = 4
+    (swift) for i in 0..length {
+                println("Person \(i + 1) is called \(names[i])")
+            }
+    >>> Person 1 is called Anna
+    >>> Person 2 is called Brian
+    >>> Person 3 is called Christine
+    >>> Person 4 is called Daniel
+
+Note that the length of the array is ``4``, but ``0..length`` only counts as far as ``3`` (the index of the last item in the array), because it is a half-closed range.
+
+.. QUESTION: Should these appear here, or in Control Flow?
+.. QUESTION: Should we note the difference between the closed range operator and the varargs indicator (which is also ...)? If so, where should this be noted?
 
 .. refnote:: References
 
