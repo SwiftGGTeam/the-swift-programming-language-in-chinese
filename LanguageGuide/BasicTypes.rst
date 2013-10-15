@@ -18,6 +18,7 @@
     * Enum default / unknown values?
     * Enums with multiple identical values?
     * Enum delayed identifier resolution
+    * Option sets
     * Typealiases ✔︎
     * Type inference ✔︎
     * Type casting through type initializers ✔︎
@@ -136,6 +137,15 @@ Unless you need to work with a :term:`specific size` of integer or floating-poin
 
     specific size
         Certain tasks may require you to be more specific about the type of number that you need. You might use a ``Float16`` to read 16-bit audio samples, or a ``UInt8`` when working with raw 8-bit byte data, for example.
+
+The minimum and maximum values of the integer types can be accessed using their ``min()`` and ``max()`` type methods:
+
+.. testcode:: declaringVariables
+
+    (swift) var minimumValue = UInt8.min()
+    // minimumValue : UInt8 = 0
+    (swift) var maximumValue = UInt8.max()
+    // maximumValue : UInt8 = 255
 
 Strong Typing and Type Inference
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
