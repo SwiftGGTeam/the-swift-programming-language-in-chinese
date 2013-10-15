@@ -7,7 +7,7 @@ Whitespace and Comments
 -----------------------
 
 
-Space, newline, table, and the nul byte are all considered ...
+
 
 
 Identifiers
