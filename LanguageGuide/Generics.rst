@@ -1,6 +1,6 @@
 .. docnote:: Subjects to be covered in this section
 
-	* Vector
+	* Array
 	* Dictionary
 	* (any other generics from the Standard Library)
 	* Typing of generics
