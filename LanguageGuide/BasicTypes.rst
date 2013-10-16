@@ -353,15 +353,15 @@ Swift's strict type-checking means that non-boolean values cannot be substituted
                 // do stuff
             }
 
-…but it is valid to say::
+…because ``i`` is not a ``Bool``. However, it is valid to say::
 
     (swift) if i == 1 {
                 // do stuff
             }
     
-The result of ``i == 1`` is a ``Bool``, and so this second example passes the strict type-check.
+The result of the ``i == 1`` comparison is a ``Bool``, and so this second example passes the strict type-check. (Comparisons like ``i == 1`` are discussed in :doc:`Operators`.)
 
-As with other examples of strict typing in Swift, this approach avoids accidental errors, and ensures that the intention of a particular section of code is made clear.
+As with other examples of strict typing in Swift, this approach avoids accidental errors, and ensures that the intention of a particular section of code is always made clear.
 
 Tuples
 ------
@@ -525,7 +525,7 @@ Each ``enum`` definition effectively defines a brand new type. As a result, thei
     (swift) var directionToHead = CompassPoint.West
     // directionToHead : CompassPoint = <unprintable value>
 
-Note that the type of ``directionToHead`` has been inferred from the fact that it was initialized it with one of the possible values of ``CompassPoint``. Once it is declared as being a ``CompassPoint``, it can be set to a different ``CompassPoint`` value using a shorter dot syntax:
+Note that the type of ``directionToHead`` has been inferred from the fact that it was initialized with one of the possible values of ``CompassPoint``. Once it is declared as being a ``CompassPoint``, it can be set to a different ``CompassPoint`` value using a shorter dot syntax:
 
 .. testcode:: enums
 
@@ -586,12 +586,12 @@ The examples above show how the members of an enumeration are a defined (and typ
 
 Swift enumerations can be defined to store an associated value of any given type, and this type can be :term:`different` for each member of the enumeration if needed. For example: imagine an inventory tracking system that needs to track products using two different types of barcode.
 
-Some products are labelled with 1D barcodes in `UPC-A <http://en.wikipedia.org/wiki/Universal_Product_Code>`_ format, which uses the numbers ``0`` to ``9``. Each barcode has one ‘number system’ digit, ten ‘identifier’ digits, and one ‘check‘ digit to verify that the code has been scanned correctly:
-
 .. glossary::
 
     different
         These kinds of variables are known as *tagged unions* or *variants* in other programming languages.
+
+Some products are labelled with 1D barcodes in `UPC-A <http://en.wikipedia.org/wiki/Universal_Product_Code>`_ format, which uses the numbers ``0`` to ``9``. Each barcode has a ‘number system’ digit followed by ten ‘identifier’ digits. These are followed by a ‘check‘ digit to verify that the code has been scanned correctly:
 
 .. image:: ../images/barcode_UPC.png
     :height: 80
@@ -601,7 +601,7 @@ Other products are labelled with 2D barcodes in `QR code <http://en.wikipedia.or
 .. image:: ../images/barcode_QR.png
     :height: 80
 
-It would be convenient for an inventory tracking system to store UPC-A barcode values as a tuple of three integers, and QR code barcode values as a string of any length.
+It would be convenient for an inventory tracking system to be able to store UPC-A barcodes as a tuple of three integers, and QR code barcodes as a string of any length.
 
 In Swift, an enumeration to define product barcodes of either type might look like this:
 
@@ -609,7 +609,7 @@ In Swift, an enumeration to define product barcodes of either type might look li
 
     (swift) enum Barcode {
                 case UPCA(numberSystem: Int, identifier: Int, check: Int)
-                case QRCode(identifier: String)
+                case QRCode(productCode: String)
             }
 
 This can be read as:
@@ -627,13 +627,13 @@ New barcodes can then be created using either of these types, as shown below:
     (swift) var productBarcode = Barcode.UPCA(numberSystem: 8, identifier: 85909_51226, check: 3)
     // productBarcode : Barcode = <unprintable value>
 
-This creates a new variable called ``productBarcode``, and asigns it a value of ``Barcode.UPCA`` with an associated tuple value of ``(8, 8590951226, 3)``. (Note that the provided ``identifier`` value has an underscore within its integer literal – ``85909_51226`` – to make it easier to read as a barcode.)
+This creates a new variable called ``productBarcode``, and assigns it a value of ``Barcode.UPCA`` with an associated tuple value of ``(8, 8590951226, 3)``. (Note that the provided ``identifier`` value has an underscore within its integer literal – ``85909_51226`` – to make it easier to read as a barcode.)
 
 The same product can be changed to have a different type of barcode:
 
 .. testcode:: enums
 
-    (swift) productBarcode = .QRCode(identifier: "ABCDEFGHIJKLMNOP")
+    (swift) productBarcode = .QRCode(productCode: "ABCDEFGHIJKLMNOP")
 
 At this point, the original ``Barcode.UPCA`` and its integer values are replaced by the new ``Barcode.QRCode`` and its string value. Variables of type ``Barcode`` can store either a ``.UPCA`` or a ``.QRCode`` (together with their associated values), but they can only store one or the other at a time.
 
@@ -643,11 +643,13 @@ The different barcode types can be checked using a ``switch`` statement, as befo
 
     (swift) switch productBarcode {
                 case .UPCA(var numberSystem, var identifier, var check):
-                    println("This product has a UPC-A barcode with an associated tuple value of (\(numberSystem), \(identifier), \(check)).")
-                case .QRCode(var identifier):
-                    println("This product has a QR code barcode with an associated string value of \(identifier).")
+                    println("This product has a UPC-A barcode with an associated tuple value of \(numberSystem), \(identifier), \(check).")
+                case .QRCode(var productCode):
+                    println("This product has a QR code barcode with an associated string value of \(productCode).")
             }
     >>> This product has a QR code barcode with an associated string value of ABCDEFGHIJKLMNOP.
+
+These two calls to ``println()`` use a special syntax to insert the current values of ``numberSystem``, ``identifier``, ``check`` and ``productCode`` into printed descriptions of the barcodes. This syntax is known as *string interpolation*, and is a handy way to create and print strings that contain the current values of variables. All you need to do is to include ``\(variableName)`` in a longer string, and the current value of ``variableName`` will be inserted in place when the string is printed. (String interpolation is covered in more detail in :doc:`Strings`.)
 
 Raw Values
 ~~~~~~~~~~
@@ -666,7 +668,7 @@ Here's an example that stores raw ASCII values alongside named enumeration membe
 
 Here, the raw values for an ``enum`` called ``ASCIIControlCharacter`` are declared to be of type ``Char`` (short for *single character*), and are set to equal some of the more common ASCII control character values. Values of type ``Char`` are used to store single Unicode characters, and are marked up using single quote marks (``'``) rather than double quote marks (``"``), to distingush them from strings. (``Char`` values are described in more detail in :doc:`Strings`.)
 
-Note that raw values are not the same as associated values. Raw values are set to pre-populated values when the ``enum`` is defined in your code, like the ASCII codes above. Associated values are only set when you create a new variable based on one of the ``enum`` members.
+Note that raw values are not the same as associated values. Raw values are set to pre-populated values when the ``enum`` is defined in your code, like the three ASCII codes above. Associated values are only set when you create a new variable based on one of the ``enum`` members.
 
 Raw values can be strings, characters, or any of the integer or floating-point number types. Each raw value must be unique within its ``enum`` declaration. When integers are used for raw values, they auto-increment if no value is specified for some of the enumeration members. The enumeration below defines the first seven chemical elements, and uses raw integer values to represent their atomic numbers:
 
@@ -685,7 +687,7 @@ The raw value of an ``enum`` member can be accessed using its ``toRaw()`` method
     (swift) var atomicNumberOfCarbon = ChemicalElement.Carbon.toRaw()
     // atomicNumberOfCarbon : Int = 6
 
-The reverse is also true. Raw values can be used to look up the corresponding enumeration member – for example, to find ``ChemicalElement.Nitrogen`` from its raw value of ``7``. This is an example of one of Swift's most powerful features, known as *optionals*.
+The reverse is also true. Raw values can be used to look up their corresponding enumeration member – for example, to find ``ChemicalElement.Nitrogen`` from its raw value of ``7``. This is an example of one of Swift's most powerful features, known as *optionals*.
 
 Optionals
 ---------
@@ -717,12 +719,12 @@ However, it turns out that this is a perfectly valid statement. This is because 
 
 Optional values can be :term:`checked` using an ``if`` statement, in a similar way to ``Bool`` values. If an optional does have a value, it equates to ``true``; if it has no value at all, it equates to ``false``.
 
-When the optional *does* contain a value, the underlying value can accessed by adding an exclamation mark (``!``) to the end of the optional's name. The exclamation mark effectively says “I know that this optional definitely has a value – please use it”.
-
 .. glossary::
 
     checked
         Optionals are a bit like `Schrödinger's cat <http://en.wikipedia.org/wiki/Schrödinger's_cat>`_. The cat might be alive or dead – the only way to find out is to look inside the box.
+
+When the optional *does* contain a value, the underlying value can accessed by adding an exclamation mark (``!``) to the end of the optional's name. The exclamation mark effectively says “I know that this optional definitely has a value – please use it”.
 
 .. testcode:: optionals
 
