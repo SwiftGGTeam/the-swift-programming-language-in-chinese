@@ -6,8 +6,8 @@ Lexical Structure
 Whitespace and Comments
 -----------------------
 
+Space, newline, table, and the NUL byte are all considered.
 
-Space, newline, table, and the nul byte are all considered ...
 
 
 Identifiers
