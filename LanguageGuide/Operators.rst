@@ -50,8 +50,8 @@ If the right-hand side of the assignment is a tuple with multiple values, its el
 
     (swift) var (x, y) = (1, 2)
     // (x, y) : (Int, Int) = (1, 2)
-    (swift) println("x is now \(x)")
-    >>> x is now 1
+    (swift) println("x is \(x)")
+    >>> x is 1
 
 Unlike C and Objective-C, the assignment expression does not itself return a value. The following statement is not valid::
 
