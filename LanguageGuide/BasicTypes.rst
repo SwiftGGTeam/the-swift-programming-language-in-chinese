@@ -591,7 +591,7 @@ Swift enumerations can be defined to store an associated value of any given type
     different
         These kinds of variables are known as *tagged unions* or *variants* in other programming languages.
 
-Some products are labelled with 1D barcodes in `UPC-A <http://en.wikipedia.org/wiki/Universal_Product_Code>`_ format, which uses the numbers ``0`` to ``9``. Each barcode has a ‘number system’ digit followed by ten ‘identifier’ digits. These are followed by a ‘check‘ digit to verify that the code has been scanned correctly:
+Some products are labelled with 1D barcodes in `UPC-A <http://en.wikipedia.org/wiki/Universal_Product_Code>`_ format, which uses the numbers ``0`` to ``9``. Each barcode has a ‘number system’ digit, followed by ten ‘identifier’ digits. These are followed by a ‘check‘ digit to verify that the code has been scanned correctly:
 
 .. image:: ../images/barcode_UPC.png
     :height: 80
@@ -608,15 +608,13 @@ In Swift, an enumeration to define product barcodes of either type might look li
 .. testcode:: enums
 
     (swift) enum Barcode {
-                case UPCA(numberSystem: Int, identifier: Int, check: Int)
-                case QRCode(productCode: String)
+                case UPCA(Int, Int, Int)
+                case QRCode(String)
             }
 
 This can be read as:
 
     Declare an enumeration type called ``Barcode``, than can take either a value of ``UPCA`` with an associated value of type (``Int``, ``Int``, ``Int``), or a value of ``QRCode`` with an associated value of type ``String``.
-
-In both cases the values have also been named (although this is optional, as described earlier for tuples).
 
 Note that this definition does not provide any actual ``Int`` or ``String`` values – it just defines the *type* of associated values that ``Barcode`` variables can store when they are equal to ``Barcode.UPCA`` or ``Barcode.QRCode``.
 
@@ -624,16 +622,16 @@ New barcodes can then be created using either of these types, as shown below:
 
 .. testcode:: enums
 
-    (swift) var productBarcode = Barcode.UPCA(numberSystem: 8, identifier: 85909_51226, check: 3)
+    (swift) var productBarcode = Barcode.UPCA(8, 85909_51226, 3)
     // productBarcode : Barcode = <unprintable value>
 
-This creates a new variable called ``productBarcode``, and assigns it a value of ``Barcode.UPCA`` with an associated tuple value of ``(8, 8590951226, 3)``. (Note that the provided ``identifier`` value has an underscore within its integer literal – ``85909_51226`` – to make it easier to read as a barcode.)
+This creates a new variable called ``productBarcode``, and assigns it a value of ``Barcode.UPCA`` with an associated tuple value of ``(8, 8590951226, 3)``. (Note that the provided identifier value has an underscore within its integer literal – ``85909_51226`` – to make it easier to read as a barcode.)
 
 The same product can be changed to have a different type of barcode:
 
 .. testcode:: enums
 
-    (swift) productBarcode = .QRCode(productCode: "ABCDEFGHIJKLMNOP")
+    (swift) productBarcode = .QRCode("ABCDEFGHIJKLMNOP")
 
 At this point, the original ``Barcode.UPCA`` and its integer values are replaced by the new ``Barcode.QRCode`` and its string value. Variables of type ``Barcode`` can store either a ``.UPCA`` or a ``.QRCode`` (together with their associated values), but they can only store one or the other at a time.
 
@@ -649,7 +647,9 @@ The different barcode types can be checked using a ``switch`` statement, as befo
             }
     >>> This product has a QR code barcode with an associated string value of ABCDEFGHIJKLMNOP.
 
-These two calls to ``println()`` use a special syntax to insert the current values of ``numberSystem``, ``identifier``, ``check`` and ``productCode`` into printed descriptions of the barcodes. This syntax is known as *string interpolation*, and is a handy way to create and print strings that contain the current values of variables. All you need to do is to include ``\(variableName)`` in a longer string, and the current value of ``variableName`` will be inserted in place when the string is printed. (String interpolation is covered in more detail in :doc:`Strings`.)
+These two calls to ``println()`` use a special syntax to insert the values of ``numberSystem``, ``identifier``, ``check`` and ``productCode`` into printed descriptions of the barcodes. This syntax is known as *string interpolation*, and is a handy way to create and print strings that contain the current values of variables. All you need to do is to include ``\(variableName)`` in a longer string, and the current value of ``variableName`` will be inserted in place when the string is printed. (String interpolation is covered in more detail in :doc:`Strings`.)
+
+.. TODO: Going by the Swift Language Reference Manual, it should be possible to name the members of the enum tuples above. However, this isn't currently working (see rdar://15238803). The example above should be updated if this is fixed.
 
 Raw Values
 ~~~~~~~~~~
