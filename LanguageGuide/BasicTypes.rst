@@ -563,7 +563,7 @@ Note that ``switch`` statements in Swift do not ‘fall through’ the bottom of
 
 ``switch`` statements must be exhaustive when working with ``enum`` values. If the ``case`` for ``.West`` had been omitted, this code would not compile, because it would not provide an exhaustive list of ``CompassPoint`` values. Enforcing completeness ensures that cases are not accidentally missed or forgotten, and is part of Swift's goal of completeness and lack of ambiguity.
 
-When it is not appropriate to provide a ``case`` statement for every value, you can define a ``default`` catch-all case to cover any values that are not addressed explicitly:
+When it is not appropriate to provide a ``case`` statement for every value, you can define a ``default`` catch-all case to cover any values that are not addressed explicitly. The ``default`` catch-all case should always appear last:
 
 .. testcode:: enums
 
