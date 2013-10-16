@@ -39,3 +39,4 @@ Classes, Structures and Types
 	* https://[Internal Staging Server]/docs/typechecker.html
 	* https://[Internal Staging Server]/docs/weak.html
 	* https://[Internal Staging Server]/docs/LangRef.html#expr-cast
+	* https://[Internal Staging Server]/docs/textformatting.html
