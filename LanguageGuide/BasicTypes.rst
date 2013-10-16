@@ -47,14 +47,15 @@ In addition to these simple types, Swift introduces some less familiar (but very
 
 * arbitrary groups of values of different types (known as *tuples*)
 * types that can be either a known value or a missing value (known as *optionals*)
-* [some other things most likely]
 
 Each of these types, and the ways in which they can be used, are discussed in more detail below.
 
-Swift provides a powerful and flexible way to create and work with string and character types. These are introduced below, and are discussed in more detail in :doc:`Strings`.
+Swift also provides a powerful and flexible way to create and work with string and character types. These are introduced below, and are discussed in more detail in :doc:`Strings`.
 
 Declaring and Naming Variables
 ------------------------------
+
+.. QUESTION: Do we need to have introduced the REPL (or some other learning environment) before starting this section?
 
 All variables in Swift must be declared before they are used. Here's a simple variable declaration:
 
@@ -94,15 +95,17 @@ You can use pretty much :term:`any character you like` in a variable name, inclu
     (swift) var 🐶🐮 = "dogcow"
     // 🐶🐮 : String = "dogcow"
     
-Once you've declared a variable, you can't redeclare it again with the same name, but you can set the existing variable to another value of the same type:
+Once you've declared a variable, you can't redeclare it again with the same name, but you can set the existing variable to another value of the same type. You can also print the value of a variable using the ``println()`` function, to see its current value:
 
 .. testcode:: declaringVariables
 
-    (swift) var dessertCourse = "Apple Crumble"
-    // dessertCourse : String = "Apple Crumble"
-    (swift) dessertCourse = "Lemon Sorbet"
-    (swift) println(dessertCourse)
-    >>> Lemon Sorbet
+    (swift) var friendlyWelcome = "hello, world"
+    // friendlyWelcome : String = "hello, world"
+    (swift) friendlyWelcome = "👋, 🌎"
+    (swift) println(friendlyWelcome)
+    >>> 👋, 🌎
+
+.. NOTE: this is a deliberately simplistic description of what you can do with println(). It will be expanded later on.
 
 Numbers
 -------
