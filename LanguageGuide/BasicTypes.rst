@@ -141,7 +141,7 @@ Unless you need to work with a :term:`specific size` of integer or floating-poin
 min() and max()
 ~~~~~~~~~~~~~~~
 
-The minimum and maximum values of the integer types can be accessed using their ``min()`` and ``max()`` type methods:
+The minimum and maximum values of each integer type can be accessed using its ``min()`` and ``max()`` functions:
 
 .. testcode:: declaringVariables
 
@@ -150,7 +150,7 @@ The minimum and maximum values of the integer types can be accessed using their 
     (swift) var maximumValue = UInt8.max()
     // maximumValue : UInt8 = 255
 
-Note that the ``min()`` and ``max()`` values are of the appropriate number type.
+Note that the ``min()`` and ``max()`` functions return a value that is also of the appropriate number type.
 
 Strong Typing and Type Inference
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
