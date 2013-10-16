@@ -308,7 +308,7 @@ Here, the value of ``three`` is used to create a new ``Double``, so that both si
 
 .. TODO: the return type of pi here is inferred as Float64, but it should really be inferred as Double. This is due to rdar://15211554 . This code sample should be updated once the issue is fixed.
 
-.. NOTE: this section on explicit conversions could be included below in the Operators section. I think it's more appropriate here, however, and helps to reinforce the ‘just use Int’ message.
+.. NOTE: this section on explicit conversions could be included in the Operators section. I think it's more appropriate here, however, and helps to reinforce the ‘just use Int’ message.
 
 Booleans
 --------
@@ -579,10 +579,11 @@ When it is not appropriate to provide a ``case`` statement for every value, you 
 Enumerations with Associated Values
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The examples above show how the members of an enumeration are a defined (and typed) value in their own right. You can set a variable to the value ``Planet.Earth``, and check for this value later. However, it can sometimes be useful for enumeration members to also store an *associated* value of another type alongside their own.
+The examples above show how the members of an enumeration are a defined (and typed) value in their own right. You can set a variable to the value ``Planet.Earth``, and check for this value later. However, it can sometimes be useful for enumeration members to also store *associated* values of other types alongside their own.
 
-Swift enumerations can be defined to store an associated value of any given type, and this type can be :term:`different` for each member of the enumeration if needed. For example: imagine an inventory tracking system that needs to track products using two different types of barcode. Some products are labelled with barcodes in `UPC-A <http://en.wikipedia.org/wiki/Universal_Product_Code>`_ format, which uses the numbers ``0`` to ``9``:
+Swift enumerations can be defined to store an associated value of any given type, and this type can be :term:`different` for each member of the enumeration if needed. For example: imagine an inventory tracking system that needs to track products using two different types of barcode.
 
+Some products are labelled with 1D barcodes in `UPC-A <http://en.wikipedia.org/wiki/Universal_Product_Code>`_ format, which uses the numbers ``0`` to ``9``. Each barcode has one ‘number system’ digit, ten ‘identifier’ digits, and one ‘check‘ digit to verify that the code has been scanned correctly:
 
 .. glossary::
 
@@ -592,59 +593,58 @@ Swift enumerations can be defined to store an associated value of any given type
 .. image:: ../images/barcode_UPC.png
     :height: 80
 
-Other products are labelled with barcodes in `Code 128 <http://en.wikipedia.org/wiki/Code_128>`_ format, which can use any of the first 128 ASCII characters:
+Other products are labelled with 2D barcodes in `QR code <http://en.wikipedia.org/wiki/QR_Code>`_ format, which can use any `ISO 8859-1 <http://en.wikipedia.org/wiki/ISO_8859-1>`_ character and can encode a string up to 2,953 characters long:
 
-.. image:: ../images/barcode_Code128.png
+.. image:: ../images/barcode_QR.png
     :height: 80
 
-It would be convenient for an inventory tracking system to store UPC-A barcodes as integers, and Code 128 barcodes as strings.
+It would be convenient for an inventory tracking system to store UPC-A barcode values as a tuple of three integers, and QR code barcode values as a string of any length.
 
 In Swift, an enumeration to define product barcodes of either type might look like this:
 
 .. testcode:: enums
 
     (swift) enum Barcode {
-                case UPCA(Int)
-                case Code128(String)
+                case UPCA(numberSystem: Int, identifier: Int, check: Int)
+                case QRCode(identifier: String)
             }
 
 This can be read as:
 
-    Declare an enumeration type called ``Barcode``, than can take either a value of ``UPCA`` with an associated value of type ``Int``, or a value of ``Code128`` with an associated value of type ``String``.
+    Declare an enumeration type called ``Barcode``, than can take either a value of ``UPCA`` with an associated value of type (``Int``, ``Int``, ``Int``), or a value of ``QRCode`` with an associated value of type ``String``.
 
-Note that this definition does not provide any actual ``Int`` or ``String`` values – it just defines the *type* of associated value that ``Barcode`` variables can store when they are equal to ``Barcode.UPCA`` or ``Barcode.Code128``.
+In both cases the values have also been named (although this is optional, as described earlier for tuples).
+
+Note that this definition does not provide any actual ``Int`` or ``String`` values – it just defines the *type* of associated values that ``Barcode`` variables can store when they are equal to ``Barcode.UPCA`` or ``Barcode.QRCode``.
 
 New barcodes can then be created using either of these types, as shown below:
 
 .. testcode:: enums
 
-    (swift) var productBarcode = Barcode.UPCA(8_85909_51226_3)
+    (swift) var productBarcode = Barcode.UPCA(numberSystem: 8, identifier: 85909_51226, check: 3)
     // productBarcode : Barcode = <unprintable value>
 
-This creates a new variable called ``productBarcode``, and asigns it a value of ``Barcode.UPCA`` with an associated ``Int`` value of ``885909512263``. (Note that the value has underscores within its integer literal (``8_85909_51226_3``) to make it easier to read as a barcode.)
+This creates a new variable called ``productBarcode``, and asigns it a value of ``Barcode.UPCA`` with an associated tuple value of ``(8, 8590951226, 3)``. (Note that the provided ``identifier`` value has an underscore within its integer literal – ``85909_51226`` – to make it easier to read as a barcode.)
 
 The same product can be changed to have a different type of barcode:
 
 .. testcode:: enums
 
-    (swift) productBarcode = .Code128("ABCDEFGH")
+    (swift) productBarcode = .QRCode(identifier: "ABCDEFGHIJKLMNOP")
 
-At this point, the original ``Barcode.UPCA`` and its integer value are replaced by the new ``Barcode.Code128`` and its string value. Variables of type ``Barcode`` can store either a ``.UPCA`` or a ``.Code128`` (together with its associated value), but they can only store one at a time.
+At this point, the original ``Barcode.UPCA`` and its integer values are replaced by the new ``Barcode.QRCode`` and its string value. Variables of type ``Barcode`` can store either a ``.UPCA`` or a ``.QRCode`` (together with their associated values), but they can only store one or the other at a time.
 
-The different barcode types can be checked using a ``switch`` statement, as before. This time, however, the associated value can be extracted as part of the ``switch``:
+The different barcode types can be checked using a ``switch`` statement, as before. This time, however, the associated values can be extracted as part of the ``switch``:
 
 .. testcode:: enums
 
     (swift) switch productBarcode {
-                case .UPCA(var i):
-                    println("This product has a UPC-A barcode with an associated Int value of \(i).")
-                case .Code128(var s):
-                    println("This product has a Code 128 barcode with an associated String value of \(s).")
+                case .UPCA(var numberSystem, var identifier, var check):
+                    println("This product has a UPC-A barcode with an associated tuple value of (\(numberSystem), \(identifier), \(check)).")
+                case .QRCode(var identifier):
+                    println("This product has a QR code barcode with an associated string value of \(identifier).")
             }
-    >>> This product has a Code 128 barcode with an associated String value of ABCDEFGH.
-
-.. TODO: each enum member can have multiple associated values, and these values can be named. See https://[Internal Staging Server]/docs/LangRef.html#pattern-enum-element .
-.. TODO: The UPC-A example could be expanded to store the number system and check digit as separate associated values.
+    >>> This product has a QR code barcode with an associated string value of ABCDEFGHIJKLMNOP.
 
 Raw Values
 ~~~~~~~~~~
