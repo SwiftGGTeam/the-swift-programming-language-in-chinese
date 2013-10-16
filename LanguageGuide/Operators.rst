@@ -53,9 +53,7 @@ If the right-hand side of the assignment is a tuple with multiple values, its el
     (swift) println("x is now \(x)")
     >>> x is now 1
 
-Unlike C and Objective-C, the assignment expression does not itself return a value. The following statement is not valid:
-
-.. testcode:: assignmentOperator
+Unlike C and Objective-C, the assignment expression does not itself return a value. The following statement is not valid::
 
     (swift) if x = y {
                 // do something now that x is equal to y
@@ -274,9 +272,11 @@ Here's an example, which calculates the pixel height for a table row. The row sh
     (swift) var hasHeader = true
     // hasHeader : Bool = true
     (swift) var rowHeight = hasHeader ? contentHeight + 50 : contentHeight + 20
-    // rowHeight : Int = 90
+    // rowHeight : Int64 = 90
     (swift) println("The row height is \(rowHeight) pixels.")
     >>> The row height is 90 pixels.
+
+.. TODO: the return type of rowHeight should be an Int, but it is an Int64 due to rdar://15238852 . This example should be updated once the issue is fixed.
 
 This is effectively shorthand for:
 
