@@ -17,7 +17,6 @@
     * Enums for groups of constants ✔︎
     * Enums with raw values (inc. getting / setting raw values) ✔︎
     * Enum default / unknown values?
-    * Enums with multiple identical values?
     * Enum delayed identifier resolution
     * Option sets
     * Typealiases ✔︎
@@ -29,7 +28,7 @@
     * Literals ✔︎
     * Immutability
     * (Don't redeclare objects within a REPL session)
-    * min() and max() static functions for integers
+    * min() and max() static functions for integers ✔︎
 
 
 Basic Types
@@ -645,6 +644,7 @@ The different barcode types can be checked using a ``switch`` statement, as befo
     >>> This product has a Code 128 barcode with an associated String value of ABCDEFGH.
 
 .. TODO: each enum member can have multiple associated values, and these values can be named. See https://[Internal Staging Server]/docs/LangRef.html#pattern-enum-element .
+.. TODO: The UPC-A example could be expanded to store the number system and check digit as separate associated values.
 
 Raw Values
 ~~~~~~~~~~
