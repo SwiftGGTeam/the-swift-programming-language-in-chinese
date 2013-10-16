@@ -1374,9 +1374,9 @@ Click the button and you'll see the message appear in the REPL:
 
 .. refnote:: References
 
-	* https://[Internal Staging Server]/docs/LangRef.html#whitespace
-	* https://[Internal Staging Server]/docs/whitepaper/LexicalStructure.html#lexical-structure
-	* https://[Internal Staging Server]/docs/whitepaper/LexicalStructure.html#whitespace
-	* https://[Internal Staging Server]/docs/whitepaper/LexicalStructure.html#comments
-	* https://[Internal Staging Server]/docs/whitepaper/LexicalStructure.html#keywords
-	* https://[Internal Staging Server]/docs/SwiftCodingStyle.html
+    * https://[Internal Staging Server]/docs/LangRef.html#whitespace
+    * https://[Internal Staging Server]/docs/whitepaper/LexicalStructure.html#lexical-structure
+    * https://[Internal Staging Server]/docs/whitepaper/LexicalStructure.html#whitespace
+    * https://[Internal Staging Server]/docs/whitepaper/LexicalStructure.html#comments
+    * https://[Internal Staging Server]/docs/whitepaper/LexicalStructure.html#keywords
+    * https://[Internal Staging Server]/docs/SwiftCodingStyle.html

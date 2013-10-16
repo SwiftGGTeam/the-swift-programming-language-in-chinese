@@ -2,16 +2,16 @@ Language Guide
 ==============
 
 .. toctree::
-	:maxdepth: 1
+    :maxdepth: 1
 
-	BasicTypes
-	Operators
-	Strings
-	ControlFlow
-	FunctionsAndClosures
-	ClassesObjectsAndStructs
-	ProtocolsAndExtensions
-	Generics
-	Modules
-	StandardFunctions
-	ObjectiveC
+    BasicTypes
+    Operators
+    Strings
+    ControlFlow
+    FunctionsAndClosures
+    ClassesObjectsAndStructs
+    ProtocolsAndExtensions
+    Generics
+    Modules
+    StandardFunctions
+    ObjectiveC
