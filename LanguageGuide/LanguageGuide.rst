@@ -15,12 +15,3 @@ Language Guide
 	Modules
 	StandardFunctions
 	ObjectiveC
-
-
-.. docnote:: To be included?
-
-	* AppKit
-	* Integration with Interface Builder
-	* Concurrency
-	* ``import``
-	* Name binding
