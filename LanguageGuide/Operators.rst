@@ -300,7 +300,7 @@ This is effectively shorthand for:
 
 In this case, the ternary comparison operator provides an efficient shorthand for deciding which of two expressions to consider.
 
-The ternary comparison operator should be used with care, however. It is very concise, but this conciseness can lead to hard-to-read code if over-used. Avoid combining multiple instances of ternary comparison operator into one compound statement.
+The ternary comparison operator should be used with care, however. It is very concise, but this conciseness can lead to hard-to-read code if over-used. Avoid combining multiple instances of the ternary comparison operator into one compound statement.
 
 Bitwise Operators
 -----------------
