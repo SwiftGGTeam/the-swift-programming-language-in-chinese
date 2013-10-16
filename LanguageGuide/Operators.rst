@@ -635,28 +635,12 @@ Priority and associativity mean that evaluation can always be tied down to one a
 
 The parentheses make it clear that the first two values are being considered as part of a separate possible state in the overall logic. The output of the compound expression doesn't change, but the overall intention is clearer to the reader. Readability is always to be preferred over brevity, and parentheses should be used if they help to make your intentions clear.
 
-Range Operators
----------------
+Range Operator
+--------------
 
-Swift includes two *range operators*, which provide a shorthand way to express a range of values:
+Swift includes a *range operator*, which provides a shorthand way to express a range of values. The range operator ``a..b`` defines a range that runs from ``a`` to ``b``, but does not include ``b``. For this reason, it is said to be *half-closed*.
 
-* a *closed* range operator (``a...b``), which includes both ``a`` and ``b``
-* a *half-closed* range operator (``a..b``), which includes ``a`` but not ``b``
-
-The closed range operator is useful for iterating between two values. Here's an example that prints out the first five lines of the three-times-table:
-
-.. testcode:: rangeOperators
-
-    (swift) for i in 1...5 {
-                println("\(i) times 3 is \(i * 3)")
-            }
-    >>> 1 times 3 is 3
-    >>> 2 times 3 is 6
-    >>> 3 times 3 is 9
-    >>> 4 times 3 is 12
-    >>> 5 times 3 is 15
-
-The half-closed range operator is useful when working with zero-based lists, such as when counting up to (but not including) the length of a zero-based array:
+The range operator is particularly useful when working with zero-based lists, for counting up to (but not including) the length of a zero-based array:
 
 .. testcode:: rangeOperators
 
@@ -675,7 +659,6 @@ The half-closed range operator is useful when working with zero-based lists, suc
 Note that the length of the array is ``4``, but ``0..length`` only counts as far as ``3`` (the index of the last item in the array), because it is a half-closed range.
 
 .. QUESTION: Should these appear here, or in Control Flow?
-.. QUESTION: Should we note the difference between the closed range operator and the varargs indicator (which is also ...)? If so, where should this be noted?
 
 .. refnote:: References
 
