@@ -1,7 +1,10 @@
 .. docnote:: Subjects to be covered in this section
 
     * Declaration syntax ✔︎
-    * Multiple variable declarations and initializations on one line
+    * Multiple variable declarations and initializations on one line:
+    * var i = 1; var j = 2; print(i + j)
+    * var k = 1, l = 2
+    * …but not… var m, n = 2
     * Naming conventions ✔︎
     * Integer types ✔︎
     * Floating point types ✔︎
