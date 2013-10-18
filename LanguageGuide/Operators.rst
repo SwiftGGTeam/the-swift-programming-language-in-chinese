@@ -508,12 +508,7 @@ This example considers two ``Bool`` values, and only allows access if both value
             }
     >>> ACCESS DENIED
 
-If either value is ``false``, the overall expression will also be ``false``, as shown above. In fact, if the *first* value is false, the second value :term:`won't even be checked`, as it can't possibly make the overall expression equal ``true``.
-
-.. glossary::
-
-    won't even be checked
-        This is known as *short-circuit evaluation*.
+If either value is ``false``, the overall expression will also be ``false``, as shown above. In fact, if the *first* value is false, the second value won't even be checked, as it can't possibly make the overall expression equal ``true``. This is known as *short-circuit evaluation*.
 
 Logical OR
 ~~~~~~~~~~
@@ -565,14 +560,6 @@ Priority and Associativity
 
 It is important to consider each operator's *priority* and *associativity* when working out how to calculate a compound expression. These two principles are used to work out the order in which an expression should be calculated.
 
-.. glossary::
-
-    priority
-        Operator priority is also known as *operator precendence*, or *order of operations*.
-        
-    associativity
-        Operator associativity is also known as *fixity*.
-
 .. NOTE: these examples are taking an awful long time to run!
 
 Here's an example. Why does the following expression equal ``4``?
@@ -588,9 +575,9 @@ Taken literally, you might expect this to read:
 
 However, the actual answer is ``4``, not ``20``. This is due to the *priorities* and *associativity* of the operators used:
 
-* Operator :term:`priority` means that some operators are given higher priority than others, and are calculated first.
+* Operator *priority* (also known as *precedence*) means that some operators are given higher priority than others, and are calculated first.
 
-* Operator :term:`associativity` defines how operators of the same priority are grouped together – either grouped from the left, or grouped from the right. Think of it as meaning ‘they associate with the expression to their left’, or ‘they associate with the expression to their right’.
+* Operator *associativity* defines how operators of the same priority are grouped together (or *associated*) – either grouped from the left, or grouped from the right. Think of it as meaning ‘they associate with the expression to their left’, or ‘they associate with the expression to their right’.
 
 Here's how the actual evaluation order is calculated for the example above. Priority is considered first. Higher-priority operators are evaluated before lower-priority ones. In Swift, as in C, the multiplication operator (``*``) and the modulo operator (``%``) have a higher priority than the addition operator (``+``). As a result, they are both evaluated before the addition is considered.
 

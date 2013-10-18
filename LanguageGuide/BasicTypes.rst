@@ -82,12 +82,7 @@ The colon in the declaration means *“…that is a…”*, so this can be read 
 
     Declare a variable called ``b`` that is a ``String``, and give it an initial value of ``"Hello"``.
 
-You can use pretty much :term:`any character you like` in a variable name, including `Unicode <http://en.wikipedia.org/wiki/Unicode>`_ characters:
-
-.. glossary::
-
-    any character you like
-        Variable names can't start with a number, but they can contain numbers elsewhere in their name. They also can't contain mathematical symbols, arrows, line and box drawing characters, or private-use or invalid Unicode code points.
+You can use pretty much any character you like in a variable name, including `Unicode <http://en.wikipedia.org/wiki/Unicode>`_ characters:
 
 .. testcode:: declaringVariables
 
@@ -97,6 +92,8 @@ You can use pretty much :term:`any character you like` in a variable name, inclu
     // 你好 : String = "你好世界"
     (swift) var 🐶🐮 = "dogcow"
     // 🐶🐮 : String = "dogcow"
+
+Variable names can't start with a number, but they can contain numbers elsewhere in their name. They also can't contain mathematical symbols, arrows, line and box drawing characters, or private-use or invalid Unicode code points.
     
 Once you've declared a variable, you can't redeclare it again with the same name, but you can set the existing variable to another value of the same type. You can also print the value of a variable using the ``println()`` function, to see its current value:
 
@@ -158,20 +155,13 @@ Note that the ``min()`` and ``max()`` functions return a value that is also of t
 Strong Typing and Type Inference
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Swift is a :term:`strongly-typed language`. Strong typing enables Swift to perform :term:`type checks` when it compiles your code, which helps to avoid accidental errors when working with different value types. However, this doesn't mean that you always have to provide an explicit type definition. If you don't specify the type of value you need, Swift will use :term:`type inference` to work out the appropriate type to use.
+Swift is a *strongly-typed* language. This means that it encourages you to be clear about the types of values and objects your code can work with. If some part of your code expects a string, for example, strong typing means that you can't accidentally pass it an integer by mistake.
 
-.. glossary::
+Because Swift is strongly-typed, it is able to perform *type checks* when compiling your code. Any mismatched types are flagged up as errors so that you can fix them.
 
-    strongly-typed language
-        Strongly-typed languages require you to be clear about the types of values and objects your code can work with. If some part of your code expects a string, for example, strong typing means that you can't accidentally pass it an integer by mistake.
+Type-checking helps to avoid accidental errors when working with different types of value. However, this doesn't mean that you have to define the type of every variable you use. If you don't specify the type of value you need, Swift will use *type inference* to work out the appropriate type. Type inference is the ability for a compiler to automatically deduce the type of a particular expression when it compiles your code, just by examining the values you provide.
 
-    type checks
-        Because Swift is strongly-typed, its compiler is able to check that the types and values in your code are all of matching types. Any type mismatches are spotted when the code is compiled, and are flagged up as errors so that you can fix them.
-
-    type inference
-        Type inference is the ability for a compiler to automatically deduce the type of a particular expression at compile-time (rather than at run-time). The Swift compiler can often infer the type of a variable without the need for explicit type definitions, just by examining the values you provide.
-
-For example, if you assign a :term:`literal value` of ``42`` to a variable, without saying what type it is:
+For example: if you assign a :term:`literal value` of ``42`` to a variable, without saying what type it is:
 
 .. glossary::
 
@@ -203,6 +193,8 @@ If you combine integer and floating-point literals in an expression, a type of `
     // anotherPi : Double = 3.14159
 
 Note that the literal value of ``3`` does not have an explicit type in and of itself, and the appropriate output type of ``Double`` is inferred from the presence of a floating-point literal as part of the addition.
+
+Type inference means that Swift requires far fewer type declarations than languages such as C or Objective-C. Variables are still explicitly-typed, but much of the work of specifying their type is done for you.
 
 Number literal expressions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -275,12 +267,9 @@ Number Type Conversion
 
 As mentioned above, you should use ``Int`` for all integers in your code, and ``Float`` or ``Double`` for all floating-point numbers, unless you have a specific reason not to do so. This ensures that numbers of a similar nature can be used together safely, and reserves the more specific number types for when the exact size and type is important.
 
-If you *do* need to use specific sizes, be aware that Swift does not allow :term:`implicit conversion` between different number types. You can't add a ``UInt8`` to a ``UInt16``, for example. This avoids accidental errors when working with numbers of specific sizes, and means that number type conversion is something you choose to opt in to on a case-by-case basis. This helps to make type conversion intentions explicit in your code.
+If you *do* need to use specific sizes, be aware that Swift does not allow implicit conversion between variables of different number types. You can't add a ``UInt8`` variable to a ``UInt16`` variable, for example. This avoids accidental errors when working with numbers of specific sizes, and means that number type conversion is something you choose to opt in to on a case-by-case basis. This helps to make type conversion intentions explicit in your code.
 
-.. glossary::
-
-    implicit conversion
-        This is different to the rule for number literals seen earlier – where ``3`` was added to ``0.14159`` – because number literals do not have an explicit type in and of themselves.
+Note that this is different to the rule for number *literals* seen earlier – where ``3`` was added to ``0.14159`` – because number literals do not have an explicit type in and of themselves. Their type is only inferred at the point that they are evaluated by the compiler.
 
 To convert from one number type to another, you initialize a new number of the desired type with the existing value, like this:
 
@@ -587,14 +576,9 @@ Enumerations with Associated Values
 
 The examples above show how the members of an enumeration are a defined (and typed) value in their own right. You can set a variable to the value ``Planet.Earth``, and check for this value later. However, it can sometimes be useful for enumeration members to also store *associated* values of other types alongside their own.
 
-Swift enumerations can be defined to store an associated value of any given type, and this type can be :term:`different` for each member of the enumeration if needed. For example: imagine an inventory tracking system that needs to track products using two different types of barcode.
+Swift enumerations can be defined to store an associated value of any given type, and this type can be different for each member of the enumeration if needed. These kinds of variables are known as *tagged unions* or *variants* in other programming languages.
 
-.. glossary::
-
-    different
-        These kinds of variables are known as *tagged unions* or *variants* in other programming languages.
-
-Some products are labelled with 1D barcodes in `UPC-A <http://en.wikipedia.org/wiki/Universal_Product_Code>`_ format, which uses the numbers ``0`` to ``9``. Each barcode has a ‘number system’ digit, followed by ten ‘identifier’ digits. These are followed by a ‘check‘ digit to verify that the code has been scanned correctly:
+For example: imagine an inventory tracking system that needs to track products using two different types of barcode. Some products are labelled with 1D barcodes in `UPC-A <http://en.wikipedia.org/wiki/Universal_Product_Code>`_ format, which uses the numbers ``0`` to ``9``. Each barcode has a ‘number system’ digit, followed by ten ‘identifier’ digits. These are followed by a ‘check‘ digit to verify that the code has been scanned correctly:
 
 .. image:: ../images/barcode_UPC.png
     :height: 80
@@ -720,14 +704,9 @@ Here's an example. The ``ChemicalElement`` enumeration above contains elements a
 
 However, it turns out that this is a perfectly valid statement. This is because ``fromRaw()`` returns an *optional*. If you look closely at the nitrogen example above, you'll see that ``possibleElement`` has an inferred type of ``ChemicalElement?``, not ``ChemicalElement``. Note the question mark at the end. This indicates that the value of ``possibleElement`` is an *optional* ``ChemicalElement`` – it might contain *some* value of that type, or it might contain *no value at all*.
 
-Optional values can be :term:`checked` using an ``if`` statement, in a similar way to ``Bool`` values. If an optional does have a value, it equates to ``true``; if it has no value at all, it equates to ``false``.
+Optional values are a bit like `Schrödinger's cat <http://en.wikipedia.org/wiki/Schrödinger's_cat>`_. The cat might be alive, or it might be dead – the only way to find out is to look inside the box. An optional's value can be checked using an ``if`` statement, in a similar way to a ``Bool``. If an optional does have a value, it equates to ``true``; if it has no value at all, it equates to ``false``.
 
-.. glossary::
-
-    checked
-        Optionals are a bit like `Schrödinger's cat <http://en.wikipedia.org/wiki/Schrödinger's_cat>`_. The cat might be alive or dead – the only way to find out is to look inside the box.
-
-When the optional *does* contain a value, the underlying value can accessed by adding an exclamation mark (``!``) to the end of the optional's name. The exclamation mark effectively says “I know that this optional definitely has a value – please use it”.
+When the optional *does* contain a value, the underlying value can accessed by adding an exclamation mark (``!``) to the end of the optional's name. The exclamation mark effectively says “I know that this optional definitely has a value – please use it”:
 
 .. testcode:: optionals
 
