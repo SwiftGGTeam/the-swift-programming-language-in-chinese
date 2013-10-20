@@ -159,6 +159,8 @@ However, ``var c = a++`` sets ``c`` to the value of ``a`` *before* it is increme
 
 Unless you need the specific behavior of ``i++``, it is recommended that you use ``++i`` in all cases, because it has the typical expected behavior of increasing ``i``, and then providing the result. (The same rules and advice apply for ``--i`` and ``i--``.)
 
+.. QUESTION: is this good advice (given the general prevalence of i++ in the world), and indeed is it even advice we need to bother giving (given that lots of people might disagree or not care)?
+
 Unary Plus and Minus
 ~~~~~~~~~~~~~~~~~~~~
 
