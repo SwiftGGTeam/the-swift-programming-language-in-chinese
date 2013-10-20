@@ -157,3 +157,8 @@ Braces for control flow keywords such as ``else if`` and ``else`` should appear 
             } else {
                 // statements
             }
+
+Half-closed ranges should not have spaces between their end values and operator::
+
+    (swift) for i in 0..10                      // good
+    (swift) for i in 0 .. 10                    // bad
