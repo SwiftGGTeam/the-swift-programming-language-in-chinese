@@ -25,57 +25,158 @@ Loops
 for x in y
 ~~~~~~~~~~
 
-Enumerable protocol
+Swift provides a powerful way to iterate over a collection of items. This might be a range of numbers, or the items in an array, or the characters in a string. Here's a simple example:
 
-for x in y {…}
+.. testcode::
 
-for _ in y {…}
+    (swift) for index in 1..5 {
+                println("\(index) times 5 is \(index * 5)")
+            }
+    >>> 1 times 5 is 5
+    >>> 2 times 5 is 10
+    >>> 3 times 5 is 15
+    >>> 4 times 5 is 20
 
-for i in a..b {…}
+In this example, the collection of items being iterated is a half-open range of numbers from ``1`` to ``5``. The value of ``index`` is set to the first number in the range (``1``), and the statements inside the loop are executed. In this case, the loop only contains one statement, which prints an entry from the five-times-table for the current value of ``index``. Once the statement has been executed, the value of ``index`` is updated to contain the second value in the range (``2``), and the ``println`` statement is executed again. This continues until the end of the range is reached. Because the range is half-open, its final value of ``5`` is not used.
 
-for i in reverse(a..b) {…}
+Note that the variable ``index`` does not have to be declared before it is used as part of this loop. It is implicitly declared simply by its inclusion in the loop declaration. This does, however, mean that it only exists within the scope of the loop. If you want to check the value of ``index`` after the loop has completed, you must declare it as a variable in advance of its use in the loop.
 
-for (key, value) in dict {…}
+If you don't actually need each value from the range, you can ignore them using an underscore in place of a variable name:
+
+.. testcode::
+
+    (swift) var base = 3
+    // base : Int = 3
+    (swift) var power = 10
+    // power : Int = 10
+    (swift) var answer = 1
+    // answer : Int = 1
+    (swift) for _ in 0..power {
+                answer *= base
+            }
+    (swift) println("\(base) to the power of \(power) is \(answer)")
+    >>> 3 to the power of 10 is 59049
+
+This example calculates the value of one number to the power of another (in this case, ``3`` to the power of ``10``). It does this by multiplying a starting value of ``1`` (i.e. ``3`` to the power of ``0``) by ``3``, ten times, using a half-open loop that starts with ``0`` and ends with ``9``. This calculation doesn't need to know the individual counter values each time through the loop – it simply needs to execute the loop for the correct number of iterations. The underscore character ``_``, used in place of a loop variable, causes the individual values to be ignored.
+
+``for x in y`` can also be used to iterate over the items in an array:
+
+.. testcode::
+
+    (swift) var names = ["Alan", "Barbara", "Carol", "Doug"]
+    // names : String[] = ["Alan", "Barbara", "Carol", "Doug"]
+    (swift) for name in names {
+                println("Hello, \(name)!")
+            }
+    >>> Hello, Alan!
+    >>> Hello, Barbara!
+    >>> Hello, Carol!
+    >>> Hello, Doug!
+
+Lists can be iterated in reverse, using the ``reverse()`` function:
+
+.. testcode::
+
+    (swift) for name in reverse(names) {
+                println("Goodbye, \(name)!")
+            }
+    >>> Goodbye, Doug!
+    >>> Goodbye, Carol!
+    >>> Goodbye, Barbara!
+    >>> Goodbye, Alan!
+
+Swift's ``String`` type has a ``chars`` property, which provides the individual characters in the string as an ``Array`` of ``Char`` values. This can be used to iterate through the characters of a string in order. The following example takes a lowercase string, and removes all of its vowels and spaces to create a cryptic puzzle phrase for someone to try and guess:
+
+.. testcode::
+
+    (swift) var puzzlePhrase = "great minds think alike"
+    // puzzlePhrase : String = "great minds think alike"
+    (swift) for letter in puzzlePhrase.chars {
+                switch letter {
+                    case 'a', 'e', 'i', 'o', 'u', ' ':
+                        continue
+                    default:
+                        print(letter)
+                }
+            }
+    >>> grtmndsthnklk
+
+The type of ``letter`` is inferred to be a ``Char`` from the fact that it is initialized with an array of ``Char`` values (also known as an ‘``Array`` of type ``Char``’). This is why the ``case`` statement compares against ``Char`` values indicated by single quote marks (``'``), rather than ``String`` values indicated by double quote marks (``"``).
+
+Note that the code above calls the ``continue`` statement whenever it matches a vowel or a space. ``continue`` is a special control flow keyword that causes the current iteration of the loop to end immediately and jump straight to the start of the next iteration. It enables the ``switch`` block to match (and ignore) just these six special characters, rather than having to match every possible character that could get printed. (The ``continue`` keyword is described in more detail later in this section.)
+
+Iteration can also be used with ``Dictionary`` values, to iterate over the ``Dictionary``'s key-value pairs:
+
+.. testcode::
+
+    (swift) var numberOfLegs = ["spider" : 8, "ant" : 6, "cat" : 4, "bird" : 2]
+    // numberOfLegs : Dictionary<String, Int> = ["spider" : 8, "cat" : 4, "insect" : 6, "bird" : 2]
+    (swift) for (key, value) in numberOfLegs {
+                println("\(key)s have \(value) legs")
+            }
+    >>> spiders have 8 legs
+    >>> cats have 4 legs
+    >>> ants have 6 legs
+    >>> birds have 2 legs
+
+Note that the items in the ``Dictionary`` are not iterated in the same order as they were inserted. The contents of a ``Dictionary`` are inherently unordered, and iterating over them does not guarantee the order in which they will be retrieved.
+
+.. TODO: provide some advice on how to iterate over a Dictionary in order (perhaps sorted by key), using a predicate or array sort or some kind.
+
+The examples above use ``for x in y`` to iterate ranges, arrays, strings and dictionaries. However, this syntax can be used to iterate *any* collection, as long as it conforms to the ``Enumerable`` protocol. This can include your own classes and collection types. Protocols, including ``Enumerable``, are described in detail in :doc:`ProtocolsAndExtensions`.
+
+.. QUESTION: are there any plans for enums be Enumerable? If so, they might make for a good example. What would the syntax be if they did? 'for planet in Planet', or even just 'for Planet'?
 
 while and do while
-------------------
+~~~~~~~~~~~~~~~~~~
 
-``while`` loops are useful when you need to repeat a task an unknown number of times until a certain condition arises. They keep repeating a task ``while`` a certain condition is true. Usually, the condition will change from ``true`` to ``false`` at some point due to the actions in the loop's body, causing the loop to end the next time around.
+``while`` loops perform a set of statements until a condition becomes ``false``. They are best used when the number of iterations is not known before the first iteration begins. Swift provides two variations of the loop, known as ``while`` and ``do while``.
 
-Swift provides two variations of the ``while`` loop. The first considers a single condition, and then repeats the loop until the condition equates to false:
+while
+_____
+
+``while`` loops start by considering a single condition. If the condition is ``true``, a set of statements are repeated until the condition becomes ``false``.
+
+``while`` loops have a general form of::
+
+    while <#condition equates to true#> {
+        <#statements#>
+    }
+
+For example:
 
 .. testcode::
 
-    (swift) var alphabet = ""
-    // alphabet : String = ""
-    (swift) var asciiCodeForA = 65
-    (swift) while alphabet.length < 26 {
-                alphabet += Char(asciiCodeForA + alphabet.length)
-            }
-    (swift) println(alphabet)
-    >>> ABCDEFGHIJKLMNOPQRSTUVWXYZ
-
-.. testcode::
-
-    (swift) var output = ""
+    (swift) var personName = ""
     (swift) var keyboard = Keyboard()
     (swift) println("Please enter your name, then press return.")
-    (swift) var input = Char(keyboard.read())
-    (swift) while input != '\r' {
-                output += input
-                input = keyboard.read()
+    (swift) var inputCharacter = Char(keyboard.read())
+    (swift) while inputCharacter != '\r' {
+                personName += inputCharacter
+                inputCharacter = Char(keyboard.read())
             }
-    (swift) if output == "" {
+    (swift) if personName == "" {
                 println("You didn't enter your name. How can I say hello to you?")
             } else {
-                println("Hello, \(output)!")
+                println("Hello, \(personName)!")
             }
 
-The second form performs a single pass through the loop block first, *before* considering the single condition. It then continues to repeat the loop until the condition is ``false`` at the end of one pass through the loop:
+This example reads input from the keyboard one character at a time, and appends each character to a string. It continues to do this until the user presses the return key. When they do so, the value of ``inputCharacter`` will be a carriage return character (``\r``), causing ``while inputCharacter != '\r'`` to equate to ``false``, ending the loop. The person's name is then validated (to ensure that they did not press the return key without entering a name), and is printed if it exists.
 
-    (swift) do {
-                
-            } while condition
+A ``while`` loop is appropriate in this case because the length of the input name is not known at the start of the ``while`` loop. The loop's condition is dependent on external forces that cannot be predicted.
+
+.. NOTE: this example cannot be run in the REPL, due to the fact that it is reliant on keyboard input. I have yet to come up with a better example where ‘while’ is the right kind of loop to use, however. (I'm trying to avoid any examples where the number of iterations is known at the start of the loop.)
+
+do while
+________
+
+The second variation of the ``while`` loop performs a single pass through the loop block first, *before* considering a condition. It then continues to repeat the loop until the condition is ``false``::
+
+    do {
+        <#statements#>
+    } while <#condition equates to true#>
+
+.. TODO: come up with a good example for when you'd actually want to use a do while loop.
 
 for initialization; condition; increment
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -97,7 +198,7 @@ The general form of this loop format is::
         <#statements#>
     }
 
-Note that semicolons are used to separate the three parts of the ``for`` loop's definition, and that parentheses are not required around the three expressions that define the ``for`` loop.
+Note that semicolons are used to separate the three parts of the ``for`` loop's definition, and that parentheses are not required.
 
 Here's how the loop is executed:
 
@@ -115,11 +216,12 @@ This is effectively shorthand for::
         <#increment#>
     }
 
-Note that any variables defined within the initialization expression (such as ``var index = 0``) are only valid within the scope of the ``for`` loop. If you want to retrieve the final value of ``index`` after the loop had ended, you need to declare ``index`` before the loop scope begins:
+Variables defined within the initialization expression (such as ``var index = 0``) are only valid within the scope of the ``for`` loop itself. If you wanted to retrieve the final value of ``index`` after the loop ended, you would need to declare ``index`` outside of the loop's scope:
 
 .. testcode::
 
-    (swift) var index : Int = 0
+    (swift) var index = 0
+    // index : Int = 0
     (swift) for index = 0; index < 3; ++index {
                 println("index is \(index)")
             }
@@ -132,22 +234,6 @@ Note that any variables defined within the initialization expression (such as ``
 .. We shouldn't need to initialize index to 0 on the first line of this example, but sadly we have no choice, as variables can't currently be used unitialized in the REPL.
 
 Note that the final value of ``index`` after completing this loop is ``3``, not ``2``. The last time the increment statement ``++index`` is called, it sets ``index`` to ``3``, which causes ``index < 3`` to equate to ``false``, ending the loop.
-
-Multiple variables can be initialized at the same time, and multiple incrementers can be evaluated at once:
-
-.. testcode::
-
-    (swift) for var x = 0, y = 0; x + y <= 9; (++x, ++y) {
-                println("Point \(x) on the line x == y is (\(x), \(y))")
-            }
-    >>> Point 0 on the line x == y is (0, 0)
-    >>> Point 1 on the line x == y is (1, 1)
-    >>> Point 2 on the line x == y is (2, 2)
-    >>> Point 3 on the line x == y is (3, 3)
-
-.. TODO: Remove the parentheses around the incrementers once rdar://15267269 is fixed.
-
-.. QUESTION: this is quite a lot of information on C-style for loops, which aren't really the preferred way to loop in Swift. Should we cut this section back?
 
 Conditional Checks
 ------------------
