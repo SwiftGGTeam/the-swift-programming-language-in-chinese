@@ -648,6 +648,7 @@ The range operator is particularly useful when working with zero-based lists, fo
 Note that the length of the array is ``4``, but ``0..length`` only counts as far as ``3`` (the index of the last item in the array), because it is a half-closed range.
 
 .. QUESTION: Should these appear here, or in Control Flow?
+.. NOTE: Ranges have handy functions (well, specifically IntGeneratorType and DoubleGeneratorType at present) such as reverse(), contains() and by() - where should these be mentioned?
 
 .. refnote:: References
 
