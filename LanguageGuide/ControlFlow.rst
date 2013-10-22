@@ -12,7 +12,6 @@
     * Overloading the ~= function for pattern matching
     * Control transfer (return, break, continue, fallthrough)
     * Ranges
-    * Clarity around half-closed (1..10) and closed (1...10) ranges
     * Variable scope (as this is the first time we've defined scopes)
     * Clarification around expressions and statements?
 
@@ -25,7 +24,7 @@ Loops
 for x in y
 ~~~~~~~~~~
 
-Swift provides a powerful way to iterate over a collection of items. This might be a range of numbers, or the items in an array, or the characters in a string. Here's a simple example:
+Swift provides a powerful way to iterate over collections of items, such as a range of numbers, the items in an array, or the characters in a string. Here's a simple example, which prints the first few entries in the five-times-table:
 
 .. testcode::
 
@@ -37,7 +36,7 @@ Swift provides a powerful way to iterate over a collection of items. This might 
     >>> 3 times 5 is 15
     >>> 4 times 5 is 20
 
-In this example, the collection of items being iterated is a half-open range of numbers from ``1`` to ``5``. The value of ``index`` is set to the first number in the range (``1``), and the statements inside the loop are executed. In this case, the loop only contains one statement, which prints an entry from the five-times-table for the current value of ``index``. Once the statement has been executed, the value of ``index`` is updated to contain the second value in the range (``2``), and the ``println`` statement is executed again. This continues until the end of the range is reached. Because the range is half-open, its final value of ``5`` is not used.
+Here, the collection of items being iterated is a half-open range of numbers from ``1`` to ``5``. The value of ``index`` is set to the first number in the range (``1``), and the statements inside the loop are executed. In this case, the loop only contains one statement, which prints an entry from the five-times-table for the current value of ``index``. Once the statement has been executed, the value of ``index`` is updated to contain the second value in the range (``2``), and the ``println`` statement is executed again. This continues until the end of the range is reached. Because the range is half-open, its final value of ``5`` is not used.
 
 Note that the variable ``index`` does not have to be declared before it is used as part of this loop. It is implicitly declared simply by its inclusion in the loop declaration. This does, however, mean that it only exists within the scope of the loop. If you want to check the value of ``index`` after the loop has completed, you must declare it as a variable in advance of its use in the loop.
 
@@ -57,7 +56,7 @@ If you don't actually need each value from the range, you can ignore them using 
     (swift) println("\(base) to the power of \(power) is \(answer)")
     >>> 3 to the power of 10 is 59049
 
-This example calculates the value of one number to the power of another (in this case, ``3`` to the power of ``10``). It does this by multiplying a starting value of ``1`` (i.e. ``3`` to the power of ``0``) by ``3``, ten times, using a half-open loop that starts with ``0`` and ends with ``9``. This calculation doesn't need to know the individual counter values each time through the loop – it simply needs to execute the loop for the correct number of iterations. The underscore character ``_``, used in place of a loop variable, causes the individual values to be ignored.
+This example calculates the value of one number to the power of another (in this case, ``3`` to the power of ``10``). It does this by multiplying a starting value of ``1`` (i.e. ``3`` to the power of ``0``) by ``3``, ten times, using a half-open loop that starts with ``0`` and ends with ``9``. This calculation doesn't need to know the individual counter values each time through the loop – it simply needs to execute the loop the correct number of times. The underscore character ``_``, used in place of a loop variable, causes the individual values to be ignored.
 
 ``for x in y`` can also be used to iterate over the items in an array:
 
@@ -85,7 +84,7 @@ Lists can be iterated in reverse, using the ``reverse()`` function:
     >>> Goodbye, Barbara!
     >>> Goodbye, Alan!
 
-Swift's ``String`` type has a ``chars`` property, which provides the individual characters in the string as an ``Array`` of ``Char`` values. This can be used to iterate through the characters of a string in order. The following example takes a lowercase string, and removes all of its vowels and spaces to create a cryptic puzzle phrase for someone to try and guess:
+Swift's ``String`` type has a ``chars`` property, which provides the individual characters in the string as an ``Array`` of ``Char`` values (also known as an ‘``Array`` of type ``Char``’). This can be used to iterate through the characters of a string in order. The following example takes a lowercase string, and removes all of its vowels and spaces to create a cryptic puzzle phrase for someone to try and guess:
 
 .. testcode::
 
@@ -101,11 +100,11 @@ Swift's ``String`` type has a ``chars`` property, which provides the individual 
             }
     >>> grtmndsthnklk
 
-The type of ``letter`` is inferred to be a ``Char`` from the fact that it is initialized with an array of ``Char`` values (also known as an ‘``Array`` of type ``Char``’). This is why the ``case`` statement compares against ``Char`` values indicated by single quote marks (``'``), rather than ``String`` values indicated by double quote marks (``"``).
+The ``letter`` variable is inferred to be of type ``Char`` from the fact that it is iterating over an array of ``Char`` values. This is why the ``case`` statement compares ``letter`` against ``Char`` values (with single quote marks) rather than ``String`` values.
 
-Note that the code above calls the ``continue`` statement whenever it matches a vowel or a space. ``continue`` is a special control flow keyword that causes the current iteration of the loop to end immediately and jump straight to the start of the next iteration. It enables the ``switch`` block to match (and ignore) just these six special characters, rather than having to match every possible character that could get printed. (The ``continue`` keyword is described in more detail later in this section.)
+Note that the code above calls the ``continue`` statement whenever it matches a vowel or a space. ``continue`` is a special control flow keyword that causes the current iteration of the loop to end immediately and jump straight to the start of the next iteration. It enables the ``switch`` block to match (and ignore) just these six special characters, rather than having to match every character that should get printed. (The ``continue`` keyword is described in more detail later in this section.)
 
-Iteration can also be used with ``Dictionary`` values, to iterate over the ``Dictionary``'s key-value pairs:
+Iteration can also be used with dictionaries, to iterate over their key-value pairs:
 
 .. testcode::
 
@@ -161,7 +160,9 @@ For example:
                 println("Hello, \(personName)!")
             }
 
-This example reads input from the keyboard one character at a time, and appends each character to a string. It continues to do this until the user presses the return key. When they do so, the value of ``inputCharacter`` will be a carriage return character (``\r``), causing ``while inputCharacter != '\r'`` to equate to ``false``, ending the loop. The person's name is then validated (to ensure that they did not press the return key without entering a name), and is printed if it exists.
+This example reads input from the keyboard one character at a time, and appends each character to a string. It does this using Swift's built-in ``Keyboard`` class, which reads keystrokes from an attached keyboard. The example creates a new ``Keyboard`` instance by calling its initializer method ``Keyboard()``. It then reads a key using the keyboard's ``read()`` method. This causes the program to pause and wait for a keystroke before continuing. The keystroke's value is returned as a ``UInt8`` value, containing the ASCII code of the key that was pressed. This is converted to a ``Char`` value, so that it can be appended to a ``String`` representing the person's name.
+
+This program continues to read in keystrokes until the user presses the return key. When they do so, the value of ``inputCharacter`` will be a carriage return character (``\r``), causing ``while inputCharacter != '\r'`` to equate to ``false``, ending the loop. The person's name is then validated (to ensure that they did not press the return key without entering a name), and is printed if it exists.
 
 A ``while`` loop is appropriate in this case because the length of the input name is not known at the start of the ``while`` loop. The loop's condition is dependent on external forces that cannot be predicted.
 
@@ -181,7 +182,7 @@ The second variation of the ``while`` loop performs a single pass through the lo
 for initialization; condition; increment
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Although ``for x in y`` is the preferred loop syntax, Swift also supports the traditional C-style ``for`` loop:
+In addition to ``for x in y``, Swift also supports traditional ``for`` loops:
 
 .. testcode::
 
@@ -216,7 +217,7 @@ This is effectively shorthand for::
         <#increment#>
     }
 
-Variables defined within the initialization expression (such as ``var index = 0``) are only valid within the scope of the ``for`` loop itself. If you wanted to retrieve the final value of ``index`` after the loop ended, you would need to declare ``index`` outside of the loop's scope:
+Variables defined within the initialization expression (such as ``var index = 0``) are only valid within the scope of the ``for`` loop itself. If you want to retrieve the final value of ``index`` after the loop ends, you must declare ``index`` before the loop's scope begins:
 
 .. testcode::
 
@@ -231,7 +232,7 @@ Variables defined within the initialization expression (such as ``var index = 0`
     (swift) println("The loop statements were executed \(index) times")
     >>> The loop statements were executed 3 times
 
-.. We shouldn't need to initialize index to 0 on the first line of this example, but sadly we have no choice, as variables can't currently be used unitialized in the REPL.
+.. TODO: We shouldn't need to initialize index to 0 on the first line of this example, but variables can't currently be used unitialized in the REPL.
 
 Note that the final value of ``index`` after completing this loop is ``3``, not ``2``. The last time the increment statement ``++index`` is called, it sets ``index`` to ``3``, which causes ``index < 3`` to equate to ``false``, ending the loop.
 
