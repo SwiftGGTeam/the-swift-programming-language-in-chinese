@@ -566,7 +566,7 @@ Taken literally, you might expect this to read:
 
     2 plus 3 equals 5; 5 times 4 equals 20; 20 modulo 5 equals 0.
 
-However, the actual answer is ``4``, not ``20``. This is due to the *priorities* and *associativity* of the operators used:
+However, the actual answer is ``4``, not ``0``. This is due to the *priorities* and *associativity* of the operators used:
 
 * Operator *priority* (also known as *precedence*) means that some operators are given higher priority than others, and are calculated first.
 
