@@ -25,7 +25,7 @@ If Statements
 -------------
 The general format of an ``if`` statement is
 
-| ``if`` ``(`` *condition* ``)`` ``{``
+| ``if`` *condition* ``{``
 |    *statements-if-true*
 | ``} else {``
 |    *statements-if-false*
@@ -46,7 +46,7 @@ While Statements
 ----------------
 A ``while`` statement has the general form:
 
-    | ``while`` ``(`` *condition* ``)`` ``{``
+    | ``while`` *condition* ``{``
     |    *statements*
     | ``}``
 
