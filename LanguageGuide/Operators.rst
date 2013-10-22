@@ -224,20 +224,7 @@ Each of the comparison operators returns a ``Bool`` value to indicate whether or
     (swift) 2 <= 1          // false, because 2 is greater than 1, so 2 is not less than or equal to 1
     // r5 : Bool = false
 
-The comparison operators are often combined with an integer increment operator (``++i``) in a ``for`` loop, to perform a task a certain number of times:
-
-.. testcode:: comparisonOperators
-
-    (swift) for (var i = 0; i < 3; ++i) {
-                println("i is \(i)")
-            }
-    >>> i is 0
-    >>> i is 1
-    >>> i is 2
-
-``for`` loops are defined in more detail in :doc:`ControlFlow`.
-
-Comparison operators are also often seen in conditional statements such as the ``if {...} else {...}`` statement:
+Comparison operators are often used in conditional statements, such as the ``if else`` statement:
 
 .. testcode:: comparisonOperators
 
@@ -250,6 +237,8 @@ Comparison operators are also often seen in conditional statements such as the `
             }
     >>> hello, world
 
+The ``if else`` statement is described in more detail in :doc:`ControlFlow`.
+
 .. TODO: which types do these operate on by default? How do they work with strings? How about with tuples / with your own types?
 
 Ternary Comparison Operator
@@ -259,10 +248,10 @@ The ternary comparison operator is a special operator with three parts, which ta
 
 Effectively, it is shorthand for::
 
-    if (some input expression equates to true) {
-        return the result of evaluating expression 1
+    if (<#some input expression equates to true#>) {
+        <#return the result of evaluating expression 1#>
     } else {
-        return the result of evaluating expression 2
+        <#return the result of evaluating expression 2#>
     }
 
 Here's an example, which calculates the pixel height for a table row. The row should be 50 pixels taller than the content if it has a header, and 20 pixels taller if it doesn't:
@@ -308,6 +297,8 @@ Bitwise Operators
 -----------------
 
 Swift supports all of the bitwise operators found in C, as described below.
+
+.. TODO: Describe why bitwise operators are useful, and give some examples of when they might be used.
 
 Bitwise NOT
 ~~~~~~~~~~~
