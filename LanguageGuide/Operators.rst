@@ -29,6 +29,8 @@ Operators are often referred to as *unary*, *binary* or *ternary*:
 * Binary operators operate on two targets (such as ``2 + 3``), and are said to be *infix* because they appear inbetween their two targets.
 * Ternary operators operate on three targets. Like C, Swift has just one ternary operator, known as the *ternary comparison operator* (``a ? b : c``).
 
+The values that operators affect are known as *operands*. In the expression ``1 + 2``, the ``+`` symbol is a binary operator, and its two operands are the values ``1`` and ``2``.
+
 Assignment Operator
 -------------------
 
