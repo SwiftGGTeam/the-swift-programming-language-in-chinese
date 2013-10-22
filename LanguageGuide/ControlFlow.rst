@@ -236,32 +236,183 @@ Variables defined within the initialization expression (such as ``var index = 0`
 
 Note that the final value of ``index`` after completing this loop is ``3``, not ``2``. The last time the increment statement ``++index`` is called, it sets ``index`` to ``3``, which causes ``index < 3`` to equate to ``false``, ending the loop.
 
-Conditional Checks
-------------------
+Conditional Statements
+----------------------
 
-if condition {…} else {…}
+It is often useful to execute different pieces of code based on certain conditions. You might want to run an extra piece of code when an error occurs, or to display a message when some value becomes too high or too low. To do this, you need to make parts of your code *conditional*.
 
-if condition {…} else if condition {…} else {…}
+Swift provides two ways to add conditional branches to your code: the ``if else`` statement, and the ``switch`` statement. The ``if else`` statement is typically used to consider simple conditions with only a few possible outcomes. The ``switch`` statement is better suited to more complex conditions with multiple possible permutations.
 
-Switch Statements
------------------
+if else
+~~~~~~~
 
-switch {…}
+In its simplest form, the ``if else`` statement has a single ``if`` condition. It only executes a set of statements if that condition is ``true``:
 
-* case
-* default
-* break
-* fallthrough
+.. testcode::
+
+    (swift) var temperatureInFahrenheit = 30
+    // temperatureInFahrenheit : Int = 30
+    (swift) if temperatureInFahrenheit <= 32 {
+                println("It's very cold. Consider wearing a scarf.")
+            }
+    >>> It's very cold. Consider wearing a scarf.
+
+This example checks to see if the temperature (expressed using the `Fahrenheit <http://en.wikipedia.org/wiki/Fahrenheit>`_ scale) is less than or equal to 32 degrees (the freezing point of water). If it is, a message is printed. Otherwise, no message is printed, and code execution continues after the ``if`` statement's closing brace.
+
+As its name suggests, the ``if else`` statement can provide an alternative set of statements for when the ``if`` condition is ``false``:
+
+.. testcode::
+
+    (swift) temperatureInFahrenheit = 40
+    (swift) if temperatureInFahrenheit <= 32 {
+                println("It's very cold. Consider wearing a scarf.")
+            } else {
+                println("It's not that cold. Wear a t-shirt.")
+            }
+    >>> It's not that cold. Wear a t-shirt.
+
+One of of these two branches will always be executed. Because the temperature has increased to ``40`` degrees Fahrenheit, it is no longer cold enough to advise knitwear, and so the ``else`` branch is triggered instead.
+
+Multiple ``if else`` statements can be chained together, to consider additional clauses:
+
+.. testcode::
+
+    (swift) temperatureInFahrenheit = 90
+    (swift) if temperatureInFahrenheit <= 32 {
+                println("It's very cold. Consider wearing a scarf.")
+            } else if temperatureInFahrenheit >= 86 {
+                println("It's really warm. Don't forget to to wear sunscreen.")
+            } else {
+                println("It's not that cold. Wear a t-shirt.")
+            }
+    >>> It's really warm. Don't forget to to wear sunscreen.
+
+Here, an additional ``if`` clause has been added to respond to particularly warm temperatures. Note that the final ``else`` clause still remains, as a catch-all for temperatures that are neither too warm or too cold.
+
+The final ``else`` clause is optional, however, and can be excluded if the set of conditions does not need to be complete:
+
+.. testcode::
+
+    (swift) temperatureInFahrenheit = 72
+    (swift) if temperatureInFahrenheit <= 32 {
+                println("It's very cold. Consider wearing a scarf.")
+            } else if temperatureInFahrenheit >= 86 {
+                println("It's really warm. Don't forget to to wear sunscreen.")
+            }
+
+In this example, the temperature is neither too cold nor too warm to trigger the conditions in the ``if else`` statement, and so no message is printed.
+
+switch
+~~~~~~
+
+The :doc:`BasicTypes` section showed how ``switch`` statements can be used to consider the values of an enumeration, with ``default`` providing a similar catch-all to ``else``:
+
+.. testcode::
+
+    (swift) enum Planet {
+                case Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune
+            }
+    (swift) var somePlanet = Planet.Earth
+    // somePlanet : Planet = <unprintable value>
+    (swift) switch somePlanet {
+                case .Earth:
+                    println("Mostly harmless")
+                default:
+                    println("Not a safe place for humans")
+            }
+    >>> Mostly harmless
+
+``switch`` can also be used to match any other type of value. The following example matches a ``Char``, and determines if it represents a number symbol in one of four languages. Multiple values are covered in a single ``case`` statement on one line, for brevity:
+
+.. testcode::
+
+    (swift) var numberSymbol = '三'   // Chinese symbol for the number 3
+    // numberSymbol : Char = '三'
+    (swift) var integerValue : Int? = .None
+    // integerValue : Int? = <unprintable value>
+    (swift) switch numberSymbol {
+                case '1', '١', '一', '일':
+                    integerValue = 1
+                case '2', '٢', '二', '이':
+                    integerValue = 2
+                case '3', '٣', '三', '셋':
+                    integerValue = 3
+                case '4', '٤', '四', '넷':
+                    integerValue = 4
+                default:
+                    integerValue = .None
+            }
+    (swift) if integerValue {
+                println("The integer value of \(numberSymbol) is \(integerValue!).")
+            } else {
+                println("An integer value could not be found for \(numberSymbol).")
+            }
+    >>> The integer value of 三 is 3.
+
+.. TODO: The initialization of integerValue can be removed once the REPL supports uninitialized variables.
+
+This example checks ``numberSymbol`` to see if it is a Latin, Arabic, Chinese or Korean symbol for the numbers ``1`` to ``4``. If a match is found, it sets an optional ``Int?`` variable (``integerValue``) to the appropriate integer value. If the symbol is not recognized, the optional ``Int?`` is set to a value of ``.None``, meaning ‘no value’. Finally, it checks to see if a value was found. If it was, the output value is printed; otherwise, an error message is reported.
+
+Note that the value of ``integerValue`` has an exclamation mark on the end when it is printed (``integerValue!``). This tells Swift to retrieve and use the *actual* value stored inside the optional variable, which has been confirmed to exist on the previous line. (Optional values are described in more detail in :doc:`BasicTypes`.)
+
+``switch`` statements must be exhaustive. This means that every possible input value must be matched by one of the cases in the ``switch`` statement. However, it is not practical to list every single possible ``Char`` value, and so the ``default`` statement is used to provide a catch-all case for any characters that have not already been matched. This also provides a handy opportunity to set the optional integer value to ``.None``, to indicate that no match was found.
+
+fallthrough
+___________
+
+Unlike C, ``switch`` statements in Swift do not ‘fall through’ the bottom of each case and into the next one. If you want to opt in to C-style fallthrough behavior, you can do so using the ``fallthrough`` keyword. The next example shows this in action.
+
+This example also introduces an important new concept, known as *functions*. Functions are self-contained blocks of code that perform a certain task. Every function is given a name to identify what it does. The function below is called ``describeInteger``, because that's what it does – it takes an integer value, and passes back a textual description of that integer.
+
+A function can be given some input values to work with (known as *parameters*), and can pass back some output (known as a *return value*). This function takes one input parameter – an ``Int`` value called ``integerToDescribe`` – and returns a ``String`` value containing a description of that integer.
+
+All of this information is rolled up into the function's *declaration*, which can be seen in the first line of the example below. This declares a function (``func``) called ``describeInteger`` that accepts a single parameter called ``integerToDescribe``, which is of type ``Int``. The function returns a ``String`` value when it is done, as indicated by the return symbol, ``->``.
+
+This declaration describes what the function does, what it expects to receive, and what it will return. This description makes it easy for the function to be called from elsewhere in your code.
+
+.. testcode::
+
+    (swift) func describeInteger(integerToDescribe : Int) -> String {
+                var description = "The number \(integerToDescribe) is"
+                switch integerToDescribe {
+                    case 2, 3, 5, 7, 11, 13, 17, 19:
+                        description += " a prime number, and also"
+                        fallthrough
+                    default:
+                        description += " an integer."
+                }
+                return description
+            }
+    (swift) println(describeInteger(12))
+    >>> The number 12 is an integer.
+    (swift) println(describeInteger(5))
+    >>> The number 5 is a prime number, and also an integer.
+
+The ``describeInteger`` function is called by passing it an ``Int`` value in parentheses, such as ``describeInteger(12)``. Because ``describeInteger`` returns a ``String``, it can be wrapped in a ``println()`` function to print that string and see its value, as shown above.
+
+Now that it has been defined as a function, ``describeInteger()`` can be called multiple times with different input values. The example above shows what happens if it is called with an input value of ``12`` (which is not a prime number), and an input value of ``5`` (which is a prime number). The function returns a different description in each case.
+
+Let's take a look at what happens inside the function. First, a new ``String`` variable called ``description`` is declared, and is given an initial value. ``description`` is the string that will eventually be returned from the function when it has completed its task of describing ``integerToDescribe``.
+
+The function then considers the value of ``integerToDescribe`` using a ``switch`` statement. If the the value of ``integerToDescribe`` is one of the prime numbers in the list, the function appends some text to the end of ``description``, to note that the number is prime. It then uses the ``fallthrough`` keyword to ‘fall into’ the ``default`` case as well. The ``default`` case adds some extra text onto the end of the description, and the ``switch`` statement is complete.
+
+If the value value of ``integerToDescribe`` is *not* in the list of known prime numbers, it is not matched by the first ``case`` at all. There are no other specific cases, and so it ends up being matched by the catch-all ``default`` case. (This is why ``12`` is not described as being a prime number, because it is not in the list.)
+
+Either way, once the ``switch`` statement is done, the ``description`` that has been constructed is returned as a ``String``. This is done using the ``return`` keyword. As soon as ``return description`` is called, the function finishes its execution, and passes back the current value of ``description``.
+
+Functions are described in more detail in the next chapter, :doc:`FunctionsAndClosures`.
+
+Pattern Matching
+________________
+
+[TODO]
 
 Control Statements
 ------------------
 
-return
-break
-continue
-
-Pattern Matching
-~~~~~~~~~~~~~~~~
+* return
+* break
+* continue
 
 .. refnote:: References
 
