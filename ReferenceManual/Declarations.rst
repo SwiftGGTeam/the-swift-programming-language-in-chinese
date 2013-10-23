@@ -9,21 +9,21 @@ Brace Enclosed Items
 ~~~~~~~~~~~~~~~~~~~~
 
 
-``import`` Declarations
------------------------
+Import Declarations
+-------------------
 
 
 
-``extension`` Declarations
---------------------------
+Extension Declarations
+----------------------
 
 
-``var`` Declarations
---------------------
+Variable Declarations
+---------------------
 
 
 
-``func`` Declarations
+Function Declarations
 ---------------------
 
 
@@ -32,50 +32,50 @@ Function Signatures
 
 
 
-``typealias`` Declarations
---------------------------
-
-
-``enum`` Declarations
----------------------
-
-
-
-``struct`` Declarations
------------------------
-
-
-``class`` Declarations
+Typealias Declarations
 ----------------------
+
+
+Enumeration Declarations
+------------------------
+
+
+
+Structure Declarations
+----------------------
+
+
+Class Declarations
+------------------
 
 
 Protocol Declarations
 ---------------------
 
 
-``func`` Protocol Elements
+Function Protocol Elements
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-``var`` Protocol Elements
-~~~~~~~~~~~~~~~~~~~~~~~~~
+Variable Protocol Elements
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-``subscript`` Protocol Elements
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Subscript Protocol Elements
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-``typealias`` Protocol Elements
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Typealias Protocol Elements
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-``subscript`` Declarations
---------------------------
+Subscript Declarations
+----------------------
 
 
 Constructor Declarations
 ------------------------
 
 
-``destructor`` Declarations
----------------------------
+Destructor Declarations
+-----------------------
 
 
 Attribute Lists
@@ -87,10 +87,10 @@ Infix Attributes
 Resilience Attributes
 ~~~~~~~~~~~~~~~~~~~~~
 
-The ``inout`` Attribute
+The inout Attribute
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-The ``auto-closure`` Attribute
+The auto-closure Attribute
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The No Return Attribute
