@@ -355,24 +355,9 @@ In this example, the temperature is neither too cold nor too warm to trigger the
 switch
 ~~~~~~
 
-The :doc:`BasicTypes` section showed how ``switch`` statements can be used to consider the values of an enumeration, with ``default`` providing a similar catch-all to ``else``:
+The :doc:`BasicTypes` section showed how ``switch`` statements can be used to consider the values of an enumeration. ``switch`` statements aren't just confined to enumerations, however – in Swift, they be used to match any type of value at all.
 
-.. testcode::
-
-    (swift) enum Planet {
-                case Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune
-            }
-    (swift) var somePlanet = Planet.Earth
-    // somePlanet : Planet = <unprintable value>
-    (swift) switch somePlanet {
-                case .Earth:
-                    println("Mostly harmless")
-                default:
-                    println("Not a safe place for humans")
-            }
-    >>> Mostly harmless
-
-``switch`` can also be used to match any other type of value. The following example matches a ``Char``, and determines if it represents a number symbol in one of four languages. Multiple values are covered in a single ``case`` statement on one line, for brevity:
+The following example matches a ``Char``, and determines if it represents a number symbol in one of four languages. Multiple values are covered in a single ``case`` statement on one line, for brevity:
 
 .. testcode::
 
