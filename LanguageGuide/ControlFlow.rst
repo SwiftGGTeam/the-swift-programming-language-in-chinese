@@ -150,7 +150,7 @@ For example:
     (swift) var keyboard = Keyboard()
     (swift) println("Please enter your name, then press return.")
     (swift) var inputCharacter = Char(keyboard.read())
-    (swift) while inputCharacter != '\r' {
+    (swift) while inputCharacter != '\n' {
                 personName += inputCharacter
                 inputCharacter = Char(keyboard.read())
             }
@@ -235,6 +235,56 @@ Variables defined within the initialization expression (such as ``var index = 0`
 .. TODO: We shouldn't need to initialize index to 0 on the first line of this example, but variables can't currently be used unitialized in the REPL.
 
 Note that the final value of ``index`` after completing this loop is ``3``, not ``2``. The last time the increment statement ``++index`` is called, it sets ``index`` to ``3``, which causes ``index < 3`` to equate to ``false``, ending the loop.
+
+Loop Control Statements
+~~~~~~~~~~~~~~~~~~~~~~~
+
+Loop control statements give a way to end the current loop iteration immediately. Swift has two loop control statements: ``continue``, and ``break``.
+
+continue
+________
+
+The ``continue`` statement tells a loop to stop what it is doing, and start again at the beginning of the next iteration through the loop. It gives a way to say “I am done with the current loop iteration”, without leaving the loop altogether.
+
+Note that in a ``for`` loop with an incrementer expression, the incrementer will still be evaluated after calling ``continue``. The loop itself continues to work as normal; only code within the loop is skipped.
+
+break
+_____
+
+The ``break`` statement is similar to the ``continue`` statement, except that it jumps out of the loop altogether, transferring control to the first line of code after the loop's closing brace (``}``). No further code from the current iteration of the loop is executed, and no further iterations of the loop are started.
+
+The following example shows ``continue`` and ``break`` in action. This is an adapted version of the keyboard example from earlier. Unlike before, this version deliberately ignores any spaces in the person's name. Try entering your full name (rather than just your first name or given name) to see it in action.
+
+.. testcode::
+
+    (swift) var personName = ""
+    // personName : String = ""
+    (swift) var keyboard = Keyboard()
+    // keyboard : Keyboard = <_TtCSs8Keyboard instance>
+    (swift) println("Please enter your name, then press return.")
+    >>> Please enter your name, then press return.
+    (swift) while true {
+                var inputCharacter = Char(keyboard.read())
+                switch inputCharacter {
+                    case ' ':
+                        continue
+                    case '\n':
+                        break
+                    default:
+                        personName += inputCharacter
+                }
+            }
+    (swift) if personName == "" {
+                println("You didn't enter your name. How can I say hello to you?")
+            } else {
+                println("HelloToYou, \(personName)!")
+            }
+
+This time, the keyboard's ``while`` loop has a very simple condition: ``while true``. This condition will *always* be true, and so this is effectively an infinite loop. The only way to end this loop is to ``break`` out of it from within.
+
+Each time the loop runs, a new ``inputCharacter`` is read from the keyboard. If the character is a space, a ``continue`` statement is used to skip to the next loop iteration. This effectively ignores the space altogether. If the character is a line break (meaning that the return key was pressed), a ``break`` statement is used to exit the loop immediately, jumping to the ``if personName == ""`` line after the loop. Otherwise, the new character is appended to the ``personName`` string as before.
+
+It is rare to need to use the ``break`` statement in general use. Normally, loops should end when their condition changes from ``true`` to ``false``, rather than when a ``break`` statement is encountered. If you find yourself needing to use ``break``, it may be a sign that your loop's conditional check should be improved.
 
 Conditional Statements
 ----------------------
@@ -496,13 +546,6 @@ Note that this ``switch`` statement does not have a ``default`` case block. The 
 
 .. QUESTION: This example is not self-contained, in that it uses the same declared variable (point) as the previous example. This is primarily to keep the variable name readable within the println string interpolation. Is this okay? Should it be changed so that it is self-contained?
 .. QUESTION: These examples do not name their tuple elements, to avoid confusion between their likely element names of x and y, and the appropriate names for the where variables (also x and y). Is this the right approach, or should we be advising named tuple elements in all cases?
-
-Control Statements
-------------------
-
-* return
-* break
-* continue
 
 .. refnote:: References
 

@@ -4,6 +4,7 @@
     * Function signatures (including pattern matching)
     * init() functions for enums
     * Naming conventions
+    * return statement
     * Closures
     * Trailing closures
     * Can only have one variadic parameter
