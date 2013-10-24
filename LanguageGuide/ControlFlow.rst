@@ -369,7 +369,8 @@ The example below uses ``fallthrough`` to create a textual description of a numb
     (swift) var integerToDescribe = 5
     // integerToDescribe : Int = 5
     (swift) var description = "The number \(integerToDescribe) is"
-            switch integerToDescribe {
+    // description : String = "The number 5 is"
+    (swift) switch integerToDescribe {
                 case 2, 3, 5, 7, 11, 13, 17, 19:
                     description += " a prime number, and also"
                     fallthrough
@@ -387,12 +388,114 @@ Once the ``switch`` statement is done, the number's description is printed using
 
 Note that ``fallthrough`` does not check the ``case`` conditions for the block it falls into. It simply causes code execution to move directly to the statements inside the next ``case`` (or ``default``) block, as in C.
 
-Pattern Matching
-________________
+Range Matching
+______________
 
-[TODO]
+Values in ``case`` statements can be checked for their inclusion in a range. This example uses number ranges to provide a natural-language count for numbers of any size:
 
-.. TODO: mention that unlike C you can have multiple matches, but only the first will actually get matched.
+.. testcode::
+
+    (swift) var count = 3_000_000_000_000
+    // count : Int = 3000000000000
+    (swift) var countedThings = "stars in the Milky Way"
+    // countedThings : String = "stars in the Milky Way"
+    (swift) var naturalCount = ""
+    // naturalCount : String = ""
+    (swift) switch count {
+                case 0:
+                    naturalCount = "no"
+                case 1:
+                    naturalCount = "one"
+                case 2:
+                    naturalCount = "a couple of"
+                case 3:
+                    naturalCount = "a few"
+                case 4..12:
+                    naturalCount = "several"
+                case 12..100:
+                    naturalCount = "dozens of"
+                case 100..1000:
+                    naturalCount = "hundreds of"
+                default:
+                    naturalCount = "lots and lots of"
+            }
+    (swift) println("There are \(naturalCount) \(countedThings).")
+    >>> There are lots and lots of stars in the Milky Way.
+
+.. TODO: change these ranges to be closed ranges rather than half-closed ranges once rdar://14586400 is implemented.
+.. TODO: remove the initializer for naturalCount once we can declare unitialized variables in the REPL.
+
+Tuples
+______
+
+Multiple values can be tested in the same ``switch`` statement using tuples. Each element of the tuple can be tested against a different value or range of values. Alternatively, the underscore (``_``) identifier can be used to match any possible value.
+
+This example takes an (x, y) point, and categorizes it on the following graph:
+
+.. image:: ../images/coordinateGraphSimple.png
+    :height: 250
+
+It decides if the point is at the origin (0, 0); on the red x-axis; on the orange y-axis; inside the blue 4-by-4 box centered on the origin; or outside of the box altogether.
+
+.. testcode::
+
+    (swift) var point = (1, 1)
+    // point : (Int, Int) = (1, 1)
+    (swift) switch point {
+                case (0, 0):
+                    println("(0, 0) is at the origin")
+                case (_, 0):
+                    println("(\(point.0), 0) is on the x-axis")
+                case (0, _):
+                    println("(0, \(point.1)) is on the y-axis")
+                case (-2..3, -2..3):
+                    println("(\(point.0), \(point.1)) is inside the box")
+                default:
+                    println("(\(point.0), \(point.1)) is outside of the box")
+            }
+    >>> (1, 1) is inside the box
+
+Unlike C, Swift allows multiple ``case`` statements to consider the same value or values. In fact, the point (0, 0) could match all *four* of the ``case`` statements in this example. However, if multiple matches are possible, the first matching ``case`` will always be used. The point (0, 0) would match ``case (0, 0)`` first, and so all other matching cases would be ignored.
+
+where
+_____
+
+``case`` statements can check for additional conditions using the ``where`` clause. The example below takes an (x, y) point, and categorizes it on the following graph:
+
+.. image:: ../images/coordinateGraphComplex.png
+    :height: 250
+
+It decides if the point is at the origin (0, 0); on the red x-axis; on the orange y-axis; on the green diagonal line where ``x == y``; or on the purple diagonal line where ``x == -y``. If none of these cases are true, it calculates the point's distance from the origin using `Pythagoras' theorem <http://en.wikipedia.org/wiki/Pythagorean_theorem>`_:
+
+.. testcode::
+
+    (swift) point = (1, -1)
+    (swift) switch point {
+                case (0, 0):
+                    println("(0, 0) is at the origin")
+                case (_, 0):
+                    println("(\(point.0), 0) is on the x-axis")
+                case (0, _):
+                    println("(0, \(point.1)) is on the y-axis")
+                case (var x, var y) where x == y:
+                    println("(\(x), \(y)) is on the line x == y")
+                case (var x, var y) where x == -y:
+                    println("(\(x), \(y)) is on the line x == -y")
+                case (var x, var y):
+                    println("(\(x), \(y)) is \(sqrt(Double(x * x + y * y))) units from the origin")
+            }
+    >>> (1, -1) is on the line x == -y
+
+The final three ``case`` statements declare placeholder variables ``x`` and ``y``, which temporarily take on the two tuple values from ``point``. These variables can then be used as part of a ``where`` clause, to create a dynamic filter. The ``case`` statement will only match the current value of ``point`` if the ``where`` clause's condition equates to ``true`` for that value.
+
+Note that the x-axis and y-axis checks could have been written with a ``where`` clause too. ``case (_, 0)`` could have been written as ``case (_, var y) where y == 0``, to match points on the x-axis. However, the original version is more concise, and is preferred when matching against a fixed value.
+
+Once the temporary variables ``x`` and ``y`` have been declared, they can be used within the ``case`` statement's code block. Here, they are used as shorthand for printing the values via ``println()``. The final case statement also uses the variables to calculate the square root (``sqrt()``) value needed for Pythagoras' theorem. (The earlier ``case`` blocks printed the tuples' individual values using the shorthand syntax ``point.0`` and ``point.1`` instead, as they did not have the temporary variables to hand.)
+
+Note that this ``switch`` statement does not have a ``default`` case block. The final ``case`` block, ``case (var x, var y)``, declares two placeholder variables but does *not* provide a ``where`` clause to filter them. As a result, it matches all possible remaining values, and a ``default`` block is not needed to make the ``switch`` statement exhaustive.
+
+.. QUESTION: This example is not self-contained, in that it uses the same declared variable (point) as the previous example. This is primarily to keep the variable name readable within the println string interpolation. Is this okay? Should it be changed so that it is self-contained?
+.. QUESTION: These examples do not name their tuple elements, to avoid confusion between their likely element names of x and y, and the appropriate names for the where variables (also x and y). Is this the right approach, or should we be advising named tuple elements in all cases?
 
 Control Statements
 ------------------
