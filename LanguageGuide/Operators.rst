@@ -29,6 +29,8 @@ Operators are often referred to as *unary*, *binary* or *ternary*:
 * Binary operators operate on two targets (such as ``2 + 3``), and are said to be *infix* because they appear inbetween their two targets.
 * Ternary operators operate on three targets. Like C, Swift has just one ternary operator, known as the *ternary comparison operator* (``a ? b : c``).
 
+The values that operators affect are known as *operands*. In the expression ``1 + 2``, the ``+`` symbol is a binary operator, and its two operands are the values ``1`` and ``2``.
+
 Assignment Operator
 -------------------
 
@@ -224,20 +226,7 @@ Each of the comparison operators returns a ``Bool`` value to indicate whether or
     (swift) 2 <= 1          // false, because 2 is greater than 1, so 2 is not less than or equal to 1
     // r5 : Bool = false
 
-The comparison operators are often combined with an integer increment operator (``++i``) in a ``for`` loop, to perform a task a certain number of times:
-
-.. testcode:: comparisonOperators
-
-    (swift) for (var i = 0; i < 3; ++i) {
-                println("i is \(i)")
-            }
-    >>> i is 0
-    >>> i is 1
-    >>> i is 2
-
-``for`` loops are defined in more detail in :doc:`ControlFlow`.
-
-Comparison operators are also often seen in conditional statements such as the ``if {...} else {...}`` statement:
+Comparison operators are often used in conditional statements, such as the ``if else`` statement:
 
 .. testcode:: comparisonOperators
 
@@ -250,6 +239,8 @@ Comparison operators are also often seen in conditional statements such as the `
             }
     >>> hello, world
 
+The ``if else`` statement is described in more detail in :doc:`ControlFlow`.
+
 .. TODO: which types do these operate on by default? How do they work with strings? How about with tuples / with your own types?
 
 Ternary Comparison Operator
@@ -259,10 +250,10 @@ The ternary comparison operator is a special operator with three parts, which ta
 
 Effectively, it is shorthand for::
 
-    if (some input expression equates to true) {
-        return the result of evaluating expression 1
+    if (<#some input expression equates to true#>) {
+        <#return the result of evaluating expression 1#>
     } else {
-        return the result of evaluating expression 2
+        <#return the result of evaluating expression 2#>
     }
 
 Here's an example, which calculates the pixel height for a table row. The row should be 50 pixels taller than the content if it has a header, and 20 pixels taller if it doesn't:
@@ -308,6 +299,8 @@ Bitwise Operators
 -----------------
 
 Swift supports all of the bitwise operators found in C, as described below.
+
+.. TODO: Describe why bitwise operators are useful, and give some examples of when they might be used.
 
 Bitwise NOT
 ~~~~~~~~~~~
@@ -575,7 +568,7 @@ Taken literally, you might expect this to read:
 
     2 plus 3 equals 5; 5 times 4 equals 20; 20 modulo 5 equals 0.
 
-However, the actual answer is ``4``, not ``20``. This is due to the *priorities* and *associativity* of the operators used:
+However, the actual answer is ``4``, not ``0``. This is due to the *priorities* and *associativity* of the operators used:
 
 * Operator *priority* (also known as *precedence*) means that some operators are given higher priority than others, and are calculated first.
 
@@ -635,9 +628,9 @@ The range operator is particularly useful when working with zero-based lists, fo
 
     (swift) var names = ["Anna", "Brian", "Christine", "Daniel"]
     // names : String[] = ["Anna", "Brian", "Christine", "Daniel"]
-    (swift) var length = names.length
-    // length : Int = 4
-    (swift) for i in 0..length {
+    (swift) var count = names.count
+    // count : Int = 4
+    (swift) for i in 0..count {
                 println("Person \(i + 1) is called \(names[i])")
             }
     >>> Person 1 is called Anna
@@ -645,9 +638,10 @@ The range operator is particularly useful when working with zero-based lists, fo
     >>> Person 3 is called Christine
     >>> Person 4 is called Daniel
 
-Note that the length of the array is ``4``, but ``0..length`` only counts as far as ``3`` (the index of the last item in the array), because it is a half-closed range.
+Note that the array contains ``4`` items, but ``0..count`` only counts as far as ``3`` (the index of the last item in the array), because it is a half-closed range.
 
 .. QUESTION: Should these appear here, or in Control Flow?
+.. NOTE: Ranges have handy functions (well, specifically IntGeneratorType and DoubleGeneratorType at present) such as reverse(), contains() and by() - where should these be mentioned?
 
 .. refnote:: References
 
