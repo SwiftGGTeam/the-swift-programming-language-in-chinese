@@ -287,7 +287,7 @@ Multiple ``if else`` statements can be chained together, to consider additional 
             }
     >>> It's really warm. Don't forget to to wear sunscreen.
 
-Here, an additional ``if`` clause has been added to respond to particularly warm temperatures. Note that the final ``else`` clause still remains, as a catch-all for temperatures that are neither too warm or too cold.
+Here, an additional ``if`` clause has been added to respond to particularly warm temperatures. Note that the final ``else`` clause still remains, as a catch-all for temperatures that are neither too warm nor too cold.
 
 The final ``else`` clause is optional, however, and can be excluded if the set of conditions does not need to be complete:
 
@@ -353,59 +353,46 @@ The :doc:`BasicTypes` section showed how ``switch`` statements can be used to co
 
 This example checks ``numberSymbol`` to see if it is a Latin, Arabic, Chinese or Korean symbol for the numbers ``1`` to ``4``. If a match is found, it sets an optional ``Int?`` variable (``integerValue``) to the appropriate integer value. If the symbol is not recognized, the optional ``Int?`` is set to a value of ``.None``, meaning ‘no value’. Finally, it checks to see if a value was found. If it was, the output value is printed; otherwise, an error message is reported.
 
-Note that the value of ``integerValue`` has an exclamation mark on the end when it is printed (``integerValue!``). This tells Swift to retrieve and use the *actual* value stored inside the optional variable, which has been confirmed to exist on the previous line. (Optional values are described in more detail in :doc:`BasicTypes`.)
+Note that the value of ``integerValue`` has an exclamation mark on the end (``integerValue!``) when it is printed by ``println``. This tells Swift to retrieve and use the *actual* value stored inside the optional variable, which has been confirmed to exist by the previous line of code. (Optional values are described in more detail in :doc:`BasicTypes`.)
 
 ``switch`` statements must be exhaustive. This means that every possible input value must be matched by one of the cases in the ``switch`` statement. However, it is not practical to list every single possible ``Char`` value, and so the ``default`` statement is used to provide a catch-all case for any characters that have not already been matched. This also provides a handy opportunity to set the optional integer value to ``.None``, to indicate that no match was found.
 
 fallthrough
 ___________
 
-Unlike C, ``switch`` statements in Swift do not ‘fall through’ the bottom of each case and into the next one. If you want to opt in to C-style fallthrough behavior, you can do so using the ``fallthrough`` keyword. The next example shows this in action.
+Unlike C, ``switch`` statements in Swift do not ‘fall through’ the bottom of each case and into the next one. If you want to opt in to C-style fallthrough behavior, you can do so using the ``fallthrough`` keyword.
 
-This example also introduces an important new concept, known as *functions*. Functions are self-contained blocks of code that perform a certain task. Every function is given a name to identify what it does. The function below is called ``describeInteger``, because that's what it does – it takes an integer value, and passes back a textual description of that integer.
-
-A function can be given some input values to work with (known as *parameters*), and can pass back some output (known as a *return value*). This function takes one input parameter – an ``Int`` value called ``integerToDescribe`` – and returns a ``String`` value containing a description of that integer.
-
-All of this information is rolled up into the function's *declaration*, which can be seen in the first line of the example below. This declares a function (``func``) called ``describeInteger`` that accepts a single parameter called ``integerToDescribe``, which is of type ``Int``. The function returns a ``String`` value when it is done, as indicated by the return symbol, ``->``.
-
-This declaration describes what the function does, what it expects to receive, and what it will return. This description makes it easy for the function to be called from elsewhere in your code.
+The example below uses ``fallthrough`` to create a textual description of a number:
 
 .. testcode::
 
-    (swift) func describeInteger(integerToDescribe : Int) -> String {
-                var description = "The number \(integerToDescribe) is"
-                switch integerToDescribe {
-                    case 2, 3, 5, 7, 11, 13, 17, 19:
-                        description += " a prime number, and also"
-                        fallthrough
-                    default:
-                        description += " an integer."
-                }
-                return description
+    (swift) var integerToDescribe = 5
+    // integerToDescribe : Int = 5
+    (swift) var description = "The number \(integerToDescribe) is"
+            switch integerToDescribe {
+                case 2, 3, 5, 7, 11, 13, 17, 19:
+                    description += " a prime number, and also"
+                    fallthrough
+                default:
+                    description += " an integer."
             }
-    (swift) println(describeInteger(12))
-    >>> The number 12 is an integer.
-    (swift) println(describeInteger(5))
+    (swift) println(description)
     >>> The number 5 is a prime number, and also an integer.
 
-The ``describeInteger`` function is called by passing it an ``Int`` value in parentheses, such as ``describeInteger(12)``. Because ``describeInteger`` returns a ``String``, it can be wrapped in a ``println()`` function to print that string and see its value, as shown above.
+This example declares a new ``String`` variable called ``description``, and assigns it an initial value. The function then considers the value of ``integerToDescribe`` using a ``switch`` statement. If the the value of ``integerToDescribe`` is one of the prime numbers in the list, the function appends some text to the end of ``description``, to note that the number is prime. It then uses the ``fallthrough`` keyword to ‘fall into’ the ``default`` case as well. The ``default`` case adds some extra text onto the end of the description, and the ``switch`` statement is complete.
 
-Now that it has been defined as a function, ``describeInteger()`` can be called multiple times with different input values. The example above shows what happens if it is called with an input value of ``12`` (which is not a prime number), and an input value of ``5`` (which is a prime number). The function returns a different description in each case.
+If the value value of ``integerToDescribe`` is *not* in the list of known prime numbers, it is not matched by the first ``case`` at all. There are no other specific cases, and so it ends up being matched by the catch-all ``default`` case.
 
-Let's take a look at what happens inside the function. First, a new ``String`` variable called ``description`` is declared, and is given an initial value. ``description`` is the string that will eventually be returned from the function when it has completed its task of describing ``integerToDescribe``.
+Once the ``switch`` statement is done, the number's description is printed using ``println``. In this example, the number ``5`` is correctly identified as being a prime number.
 
-The function then considers the value of ``integerToDescribe`` using a ``switch`` statement. If the the value of ``integerToDescribe`` is one of the prime numbers in the list, the function appends some text to the end of ``description``, to note that the number is prime. It then uses the ``fallthrough`` keyword to ‘fall into’ the ``default`` case as well. The ``default`` case adds some extra text onto the end of the description, and the ``switch`` statement is complete.
-
-If the value value of ``integerToDescribe`` is *not* in the list of known prime numbers, it is not matched by the first ``case`` at all. There are no other specific cases, and so it ends up being matched by the catch-all ``default`` case. (This is why ``12`` is not described as being a prime number, because it is not in the list.)
-
-Either way, once the ``switch`` statement is done, the ``description`` that has been constructed is returned as a ``String``. This is done using the ``return`` keyword. As soon as ``return description`` is called, the function finishes its execution, and passes back the current value of ``description``.
-
-Functions are described in more detail in the next chapter, :doc:`FunctionsAndClosures`.
+Note that ``fallthrough`` does not check the ``case`` conditions for the block it falls into. It simply causes code execution to move directly to the statements inside the next ``case`` (or ``default``) block, as in C.
 
 Pattern Matching
 ________________
 
 [TODO]
+
+.. TODO: mention that unlike C you can have multiple matches, but only the first will actually get matched.
 
 Control Statements
 ------------------
