@@ -395,9 +395,9 @@ Note that the value of ``integerValue`` has an exclamation mark on the end (``in
 fallthrough
 ___________
 
-Unlike C, ``switch`` statements in Swift do not ‘fall through’ the bottom of each case and into the next one. If you want to opt in to C-style fallthrough behavior, you can do so using the ``fallthrough`` keyword.
+Unlike C, ``switch`` statements in Swift do not ‘fall through’ the bottom of each case and into the next one. This leads to shorter, clearer code, and avoids executing multiple cases by mistake.
 
-The example below uses ``fallthrough`` to create a textual description of a number:
+If you want to opt in to C-style fallthrough behavior, you can do so using the ``fallthrough`` keyword. The example below uses ``fallthrough`` to create a textual description of a number:
 
 .. testcode::
 
@@ -421,7 +421,7 @@ If the value value of ``integerToDescribe`` is *not* in the list of known prime 
 
 Once the ``switch`` statement is done, the number's description is printed using ``println``. In this example, the number ``5`` is correctly identified as being a prime number.
 
-Note that ``fallthrough`` does not check the ``case`` conditions for the block it falls into. It simply causes code execution to move directly to the statements inside the next ``case`` (or ``default``) block, as in C.
+Note that ``fallthrough`` does not check the ``case`` conditions for the block it falls into. It simply causes code execution to move directly to the statements inside the next ``case`` (or ``default``) block, as in C's standard ``switch`` behavior.
 
 Range Matching
 ______________
