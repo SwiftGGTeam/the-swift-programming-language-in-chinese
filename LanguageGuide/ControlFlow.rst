@@ -88,16 +88,19 @@ Swift's ``String`` type has a ``chars`` property, which provides the individual 
 
 .. testcode::
 
-    (swift) var puzzlePhrase = "great minds think alike"
-    // puzzlePhrase : String = "great minds think alike"
-    (swift) for letter in puzzlePhrase.chars {
+    (swift) var puzzleInput = "great minds think alike"
+    // puzzleInput : String = "great minds think alike"
+    (swift) var puzzleOutput = ""
+    // puzzleOutput : String = ""
+    (swift) for letter in puzzleInput.chars {
                 switch letter {
                     case 'a', 'e', 'i', 'o', 'u', ' ':
                         continue
                     default:
-                        print(letter)
+                        puzzleOutput += letter
                 }
             }
+    (swift) println(puzzleOutput)
     >>> grtmndsthnklk
 
 The ``letter`` variable is inferred to be of type ``Char`` from the fact that it is iterating over an array of ``Char`` values. This is why the ``case`` statement compares ``letter`` against ``Char`` values (with single quote marks) rather than ``String`` values.
@@ -109,7 +112,7 @@ Iteration can also be used with dictionaries, to iterate over their key-value pa
 .. testcode::
 
     (swift) var numberOfLegs = ["spider" : 8, "ant" : 6, "cat" : 4, "bird" : 2]
-    // numberOfLegs : Dictionary<String, Int> = ["spider" : 8, "cat" : 4, "insect" : 6, "bird" : 2]
+    // numberOfLegs : Dictionary<String, Int> = ["spider" : 8, "cat" : 4, "ant" : 6, "bird" : 2]
     (swift) for (key, value) in numberOfLegs {
                 println("\(key)s have \(value) legs")
             }
@@ -142,9 +145,7 @@ _____
         <#statements#>
     }
 
-For example:
-
-.. testcode::
+For example::
 
     (swift) var personName = ""
     // personName : String = ""
@@ -257,9 +258,7 @@ _____
 
 The ``break`` statement is similar to the ``continue`` statement, except that it jumps out of the loop altogether, transferring control to the first line of code after the loop's closing brace (``}``). No further code from the current iteration of the loop is executed, and no further iterations of the loop are started.
 
-The following example shows ``continue`` and ``break`` in action. This is an adapted version of the keyboard example from earlier. Unlike before, this version deliberately ignores any spaces in the person's name. Try entering your full name (rather than just your first name or given name) to see it in action.
-
-.. testcode::
+The following example shows ``continue`` and ``break`` in action. This is an adapted version of the keyboard example from earlier. Unlike before, this version deliberately ignores any spaces in the person's name. Try entering your full name (rather than just your first name or given name) to see it in action::
 
     (swift) var personName = ""
     // personName : String = ""
