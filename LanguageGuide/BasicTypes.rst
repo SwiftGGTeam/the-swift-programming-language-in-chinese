@@ -64,7 +64,7 @@ All variables in Swift must be declared before they are used. Here's a simple va
 
 .. testcode:: declaringVariables
 
-    var a = 1
+    (swift) var a = 1
     // a : Int = 1
     
 This can be read as:
@@ -75,7 +75,7 @@ Variable definitions can include a specific *type*, to be explicit about the kin
 
 .. testcode:: declaringVariables
 
-    var b : String = "Hello"
+    (swift) var b : String = "Hello"
     // b : String = "Hello"
 
 The colon in the declaration means *“…that is a…”*, so this can be read as:
@@ -86,11 +86,11 @@ You can use pretty much any character you like in a variable name, including `Un
 
 .. testcode:: declaringVariables
 
-    var π = 3.14159
+    (swift) var π = 3.14159
     // π : Double = 3.14159
-    var 你好 = "你好世界"
+    (swift) var 你好 = "你好世界"
     // 你好 : String = "你好世界"
-    var 🐶🐮 = "dogcow"
+    (swift) var 🐶🐮 = "dogcow"
     // 🐶🐮 : String = "dogcow"
 
 Variable names can't start with a number, but they can contain numbers elsewhere in their name. They also can't contain mathematical symbols, arrows, line and box drawing characters, or private-use or invalid Unicode code points.
@@ -99,11 +99,11 @@ Once you've declared a variable, you can't redeclare it again with the same name
 
 .. testcode:: declaringVariables
 
-    var friendlyWelcome = "hello, world"
+    (swift) var friendlyWelcome = "hello, world"
     // friendlyWelcome : String = "hello, world"
-    friendlyWelcome = "👋, 🌎"
-    println(friendlyWelcome)
-    // >>> 👋, 🌎
+    (swift) friendlyWelcome = "👋, 🌎"
+    (swift) println(friendlyWelcome)
+    >>> 👋, 🌎
 
 .. NOTE: this is a deliberately simplistic description of what you can do with println(). It will be expanded later on.
 
@@ -145,9 +145,9 @@ The minimum and maximum values of each integer type can be accessed using its ``
 
 .. testcode:: declaringVariables
 
-    var minimumValue = UInt8.min()
+    (swift) var minimumValue = UInt8.min()
     // minimumValue : UInt8 = 0
-    var maximumValue = UInt8.max()
+    (swift) var maximumValue = UInt8.max()
     // maximumValue : UInt8 = 255
 
 Note that the ``min()`` and ``max()`` functions return a value that is also of the appropriate number type.
@@ -171,7 +171,7 @@ For example: if you assign a :term:`literal value` of ``42`` to a variable, with
 
 .. testcode:: typeInference
 
-    var meaningOfLife = 42
+    (swift) var meaningOfLife = 42
     // meaningOfLife : Int = 42
 
 …Swift will deduce that you want the variable to be an ``Int``, because you have initialized it with a number that looks like an integer.
@@ -180,7 +180,7 @@ Likewise, if you don't specify a type for a floating-point literal:
 
 .. testcode:: typeInference
 
-    var pi = 3.14159
+    (swift) var pi = 3.14159
     // pi : Double = 3.14159
 
 …Swift assumes that you want to create a ``Double`` from the value of ``3.14159``. (Note that Swift always chooses ``Double`` rather than ``Float`` when inferring the type of floating-point numbers.)
@@ -189,7 +189,7 @@ If you combine integer and floating-point literals in an expression, a type of `
 
 .. testcode:: typeInference
 
-    var anotherPi = 3 + 0.14159
+    (swift) var anotherPi = 3 + 0.14159
     // anotherPi : Double = 3.14159
 
 Note that the literal value of ``3`` does not have an explicit type in and of itself, and the appropriate output type of ``Double`` is inferred from the presence of a floating-point literal as part of the addition.
@@ -222,24 +222,24 @@ All of these integer literals have a decimal value of ``17``:
 
 .. testcode:: numberLiterals
 
-    var decimalInteger = 17
+    (swift) var decimalInteger = 17
     // decimalInteger : Int = 17
-    var binaryInteger = 0b10001    // 17 in binary notation
+    (swift) var binaryInteger = 0b10001    // 17 in binary notation
     // binaryInteger : Int = 17
-    var octalInteger = 0o21        // 17 in octal notation
+    (swift) var octalInteger = 0o21        // 17 in octal notation
     // octalInteger : Int = 17
-    var hexadecimalInteger = 0x11  // 17 in hexadecimal notation
+    (swift) var hexadecimalInteger = 0x11  // 17 in hexadecimal notation
     // hexadecimalInteger : Int = 17
 
 All of these floating-point literals have a decimal value of ``12.5``:
 
 .. testcode:: numberLiterals
 
-    var decimalDouble = 12.5
+    (swift) var decimalDouble = 12.5
     // decimalDouble : Double = 12.5
-    var exponentDouble = 1.25e1
+    (swift) var exponentDouble = 1.25e1
     // exponentDouble : Double = 12.5
-    var hexadecimalDouble = 0xC.8p0
+    (swift) var hexadecimalDouble = 0xC.8p0
     // hexadecimalDouble : Double = 12.5
 
 Number literals can contain extra formatting to make them easier to read. Both integers and floats can be padded with :term:`extra zeroes` on the beginning (so ``01234 == 1234``), and can contain underscores to help with readability. Neither type of formatting affects the underlying value of the literal.
@@ -253,11 +253,11 @@ All of these literals are valid in Swift:
 
 .. testcode:: numberLiterals
 
-    var paddedDouble = 000123.456
+    (swift) var paddedDouble = 000123.456
     // paddedDouble : Double = 123.456
-    var oneMillion = 1_000_000
+    (swift) var oneMillion = 1_000_000
     // oneMillion : Int = 1000000
-    var justOverOneMillion = 1_000_000.000_000_1
+    (swift) var justOverOneMillion = 1_000_000.000_000_1
     // justOverOneMillion : Double = 1e+06
 
 Note that Swift has printed the value of ``justOverOneMillion`` as ``1e+06``. This is a short-form representation of its underlying ``Double`` value of ``1000000.0000001``. The actual value of ``justOverOneMillion`` still has all of the precision of the original.
@@ -275,11 +275,11 @@ To convert from one number type to another, you initialize a new number of the d
 
 .. testcode:: typeConversion
 
-    var twoThousand : UInt16 = 2000
+    (swift) var twoThousand : UInt16 = 2000
     // twoThousand : UInt16 = 2000
-    var one : UInt8 = 1
+    (swift) var one : UInt8 = 1
     // one : UInt8 = 1
-    var twoThousandAndOne = twoThousand + UInt16(one)
+    (swift) var twoThousandAndOne = twoThousand + UInt16(one)
     // twoThousandAndOne : UInt16 = 2001
 
 ``twoThousand`` is a ``UInt16``, but ``one`` is a ``UInt8``. They cannot be added together directly, because they are not of the same type. Instead, this code calls ``UInt16(one)`` to create a new ``UInt16`` initialized with the value of ``one``, and uses this value in place of the original. Because both sides of the addition are now of type ``UInt16``, the addition is allowed. (Note that the output variable, ``twoThousandAndOne``, is inferred to be a ``UInt16`` too.)
@@ -292,11 +292,11 @@ The same is true for conversions between integer and floating-point variables. C
 
 .. testcode:: typeConversion
 
-    var three = 3
+    (swift) var three = 3
     // three : Int = 3
-    var pointOneFourOneFiveNine = 0.14159
+    (swift) var pointOneFourOneFiveNine = 0.14159
     // pointOneFourOneFiveNine : Double = 0.14159
-    var pi = Double(three) + pointOneFourOneFiveNine
+    (swift) var pi = Double(three) + pointOneFourOneFiveNine
     // pi : Float64 = 3.14159
 
 Here, the value of ``three`` is used to create a new ``Double``, so that both sides of the addition are of the same type.
@@ -317,9 +317,9 @@ Swift has a basic :term:`boolean` type, called ``Bool``. Values of type ``Bool``
 
 .. testcode:: booleans
 
-    var orangesAreOrange = true
+    (swift) var orangesAreOrange = true
     // orangesAreOrange : Bool = true
-    var turnipsAreDelicious = false
+    (swift) var turnipsAreDelicious = false
     // turnipsAreDelicious : Bool = false
 
 Note that Swift has inferred the types of ``orangesAreOrange`` and ``turnipsAreDelicious`` from the fact that they were initialized with ``Bool`` values. As with ``Int`` and ``Double`` above, you don't need to declare variables as being ``Bool`` if you set them to ``true`` or ``false`` as soon as you create them. Type inference helps to make Swift code much more concise and readable when initializing variables with known values.
@@ -328,28 +328,28 @@ Boolean values are particularly useful when working with conditional statements 
 
 .. testcode:: booleans
 
-    if turnipsAreDelicious {
-        println("Mmm, tasty turnips!")
-    } else {
-        println("Eww, turnips are horrible.")
-    }
-    // >>> Eww, turnips are horrible.
+    (swift) if turnipsAreDelicious {
+                println("Mmm, tasty turnips!")
+            } else {
+                println("Eww, turnips are horrible.")
+            }
+    >>> Eww, turnips are horrible.
 
 Conditional statements are covered in more detail in :doc:`ControlFlow`.
 
 Swift's strict type-checking means that non-boolean values cannot be substituted for ``Bool``. You cannot, for example, say::
 
-    var i = 1
+    (swift) var i = 1
     // i : Int = 1
-    if i {
-        // do stuff
-    }
+    (swift) if i {
+                // do stuff
+            }
 
 …because ``i`` is not a ``Bool``. However, it is valid to say::
 
-    if i == 1 {
-        // do stuff
-    }
+    (swift) if i == 1 {
+                // do stuff
+            }
     
 The result of the ``i == 1`` comparison is a ``Bool``, and so this second example passes the strict type-check. (Comparisons like ``i == 1`` are discussed in :doc:`Operators`.)
 
@@ -362,7 +362,7 @@ Tuples are a way to group together multiple values of various types. Here's an e
 
 .. testcode:: tuples
 
-    var http200Status = (200, "OK")
+    (swift) var http200Status = (200, "OK")
     // http200Status : (Int, String) = (200, "OK")
 
 ``(200, "OK")`` is a tuple that groups together an ``Int`` and a ``String`` to describe an :term:`HTTP status code`. It could be described as “a tuple of type ``(Int, String)``”.
@@ -378,16 +378,16 @@ You can access the individual element values in a tuple using index numbers star
 
 .. testcode:: tuples
 
-    http200Status.0
+    (swift) http200Status.0
     // r0 : Int = 200
-    http200Status.1
+    (swift) http200Status.1
     // r1 : String = "OK"
 
 You can also optionally name the elements in a tuple:
 
 .. testcode:: tuples
 
-    var http404Error = (statusCode: 404, description: "Not Found")
+    (swift) var http404Error = (statusCode: 404, description: "Not Found")
     // http404Error : (statusCode: Int, description: String) = (404, "Not Found")
 
 This can be read as:
@@ -398,9 +398,9 @@ Once you've done this, you can retrieve the element values by name, using dot sy
 
 .. testcode:: tuples
 
-    http404Error.statusCode
+    (swift) http404Error.statusCode
     // r2 : Int = 404
-    http404Error.description
+    (swift) http404Error.description
     // r3 : String = "Not Found"
 
 Tuples are particularly useful as the return values of functions. A function that tries to retrieve a web page might return this ``http404Error`` tuple if it is unable to find the requested page. By returning a tuple with two distinct values, each of a different type, the function is able to provide more useful information about its outcome than if it could only return a single value of a single type.
@@ -412,7 +412,7 @@ If you find yourself using a particular type of tuple several times, you can def
 
 .. testcode:: tuples
 
-    typealias HTTPStatus = (statusCode: Int, description: String)
+    (swift) typealias HTTPStatus = (statusCode: Int, description: String)
 
 This can be read as:
 
@@ -426,7 +426,7 @@ Because it's a type, ``HTTPStatus`` can be used to declare new tuple variables o
 
 .. testcode:: tuples
 
-    var http304Status : HTTPStatus = (statusCode: 304, description: "Not Modified")
+    (swift) var http304Status : HTTPStatus = (statusCode: 304, description: "Not Modified")
     // http304Status : HTTPStatus = (304, "Not Modified")
     
 This can be read as:
@@ -437,7 +437,7 @@ This can be read as:
 
 .. testcode:: tuples
 
-    var http500Error : HTTPStatus = (500, "Internal Server Error")
+    (swift) var http500Error : HTTPStatus = (500, "Internal Server Error")
     // http500Error : HTTPStatus = (500, "Internal Server Error")
 
 This can be read as:
@@ -450,9 +450,9 @@ Because ``http500Error`` was defined as an ``HTTPStatus``, you can still access 
 
 .. testcode:: tuples
 
-    http500Error.statusCode
+    (swift) http500Error.statusCode
     // r4 : Int = 500
-    http500Error.description
+    (swift) http500Error.description
     // r5 : String = "Internal Server Error"
 
 Initializer Syntax
@@ -462,7 +462,7 @@ Tuple types defined by ``typealias`` are fully-fledged types in Swift. Because `
 
 .. testcode:: tuples
 
-    var http301Status = HTTPStatus(statusCode: 301, description: "Moved Permanently")
+    (swift) var http301Status = HTTPStatus(statusCode: 301, description: "Moved Permanently")
     // http301Status : (statusCode: Int, description: String) = (301, "Moved Permanently")
 
 This can be read as:
@@ -473,7 +473,7 @@ Again, it is not essential to name the elements if they are provided in the same
 
 .. testcode:: tuples
 
-    var http403Error = HTTPStatus(403, "Forbidden")
+    (swift) var http403Error = HTTPStatus(403, "Forbidden")
     // http403Error : (statusCode: Int, description: String) = (403, "Forbidden")
 
 Initializer syntax is also used when creating struct and object instances, and is described in more detail in :doc:`ClassesObjectsAndStructs`.
@@ -493,20 +493,20 @@ Enumerations
 
 .. testcode:: enums
 
-    enum CompassPoint {
-        case North
-        case South
-        case East
-        case West
-    }
+    (swift) enum CompassPoint {
+                case North
+                case South
+                case East
+                case West
+            }
 
 The ``case`` keyword is used to indicate each new line of values. Multiple values can appear on a single line, separated by commas:
 
 .. testcode:: enums
 
-    enum Planet {
-        case Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune
-    }
+    (swift) enum Planet {
+                case Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune
+            }
 
 Unlike C and Objective-C, Swift enums are not assigned a default integer value when they are created. In the CompassPoints example above, ``North``, ``South``, ``East`` and ``West`` do not implicitly equal ``0``, ``1``, ``2`` and ``3``. Instead, the different ``enum`` members are fully-fledged values in their own right, with an explicitly-defined type of ``CompassPoint``.
 
@@ -514,14 +514,14 @@ Each ``enum`` definition effectively defines a brand new type. As a result, thei
 
 .. testcode:: enums
 
-    var directionToHead = CompassPoint.West
+    (swift) var directionToHead = CompassPoint.West
     // directionToHead : CompassPoint = <unprintable value>
 
 Note that the type of ``directionToHead`` has been inferred from the fact that it was initialized with one of the possible values of ``CompassPoint``. Once it is declared as being a ``CompassPoint``, it can be set to a different ``CompassPoint`` value using a shorter dot syntax:
 
 .. testcode:: enums
 
-    directionToHead = .East
+    (swift) directionToHead = .East
 
 The type of ``directionToHead`` is already known, and so we can drop the type when setting its value. This makes for highly readable code when working with explicitly-typed enumeration values.
 
@@ -532,18 +532,18 @@ Enumeration values can be checked with a ``switch`` statement:
 
 .. testcode:: enums
 
-    directionToHead = .South
-    switch directionToHead {
-        case .North:
-            println("Most planets have a north")
-        case .South:
-            println("Watch out for penguins")
-        case .East:
-            println("Where the sun rises")
-        case .West:
-            println("Where the skies are blue")
-    }
-    // >>> Watch out for penguins
+    (swift) directionToHead = .South
+    (swift) switch directionToHead {
+                case .North:
+                    println("Most planets have a north")
+                case .South:
+                    println("Watch out for penguins")
+                case .East:
+                    println("Where the sun rises")
+                case .West:
+                    println("Where the skies are blue")
+            }
+    >>> Watch out for penguins
 
 ``switch`` statements use the ``case`` keyword to indicate each of the possible cases they will consider. You can read this as:
 
@@ -559,15 +559,15 @@ When it is not appropriate to provide a ``case`` statement for every value, you 
 
 .. testcode:: enums
 
-    var somePlanet = Planet.Earth
+    (swift) var somePlanet = Planet.Earth
     // somePlanet : Planet = <unprintable value>
-    switch somePlanet {
-        case .Earth:
-            println("Mostly harmless")
-        default:
-            println("Not a safe place for humans")
-    }
-    // >>> Mostly harmless
+    (swift) switch somePlanet {
+                case .Earth:
+                    println("Mostly harmless")
+                default:
+                    println("Not a safe place for humans")
+            }
+    >>> Mostly harmless
 
 ``switch`` statements are covered in more detail in :doc:`ControlFlow`.
 
@@ -594,10 +594,10 @@ In Swift, an enumeration to define product barcodes of either type might look li
 
 .. testcode:: enums
 
-    enum Barcode {
-        case UPCA(Int, Int, Int)
-        case QRCode(String)
-    }
+    (swift) enum Barcode {
+                case UPCA(Int, Int, Int)
+                case QRCode(String)
+            }
 
 This can be read as:
 
@@ -609,7 +609,7 @@ New barcodes can then be created using either of these types, as shown below:
 
 .. testcode:: enums
 
-    var productBarcode = Barcode.UPCA(8, 85909_51226, 3)
+    (swift) var productBarcode = Barcode.UPCA(8, 85909_51226, 3)
     // productBarcode : Barcode = <unprintable value>
 
 This creates a new variable called ``productBarcode``, and assigns it a value of ``Barcode.UPCA`` with an associated tuple value of ``(8, 8590951226, 3)``. (Note that the provided identifier value has an underscore within its integer literal – ``85909_51226`` – to make it easier to read as a barcode.)
@@ -618,7 +618,7 @@ The same product can be changed to have a different type of barcode:
 
 .. testcode:: enums
 
-    productBarcode = .QRCode("ABCDEFGHIJKLMNOP")
+    (swift) productBarcode = .QRCode("ABCDEFGHIJKLMNOP")
 
 At this point, the original ``Barcode.UPCA`` and its integer values are replaced by the new ``Barcode.QRCode`` and its string value. Variables of type ``Barcode`` can store either a ``.UPCA`` or a ``.QRCode`` (together with their associated values), but they can only store one or the other at a time.
 
@@ -626,13 +626,13 @@ The different barcode types can be checked using a ``switch`` statement, as befo
 
 .. testcode:: enums
 
-    switch productBarcode {
-        case .UPCA(var numberSystem, var identifier, var check):
-            println("This product has a UPC-A barcode with an associated tuple value of \(numberSystem), \(identifier), \(check).")
-        case .QRCode(var productCode):
-            println("This product has a QR code barcode with an associated string value of \(productCode).")
-    }
-    // >>> This product has a QR code barcode with an associated string value of ABCDEFGHIJKLMNOP.
+    (swift) switch productBarcode {
+                case .UPCA(var numberSystem, var identifier, var check):
+                    println("This product has a UPC-A barcode with an associated tuple value of \(numberSystem), \(identifier), \(check).")
+                case .QRCode(var productCode):
+                    println("This product has a QR code barcode with an associated string value of \(productCode).")
+            }
+    >>> This product has a QR code barcode with an associated string value of ABCDEFGHIJKLMNOP.
 
 These two calls to ``println()`` use a special syntax to insert the values of ``numberSystem``, ``identifier``, ``check`` and ``productCode`` into printed descriptions of the barcodes. This syntax is known as *string interpolation*, and is a handy way to create and print strings that contain the current values of variables. All you need to do is to include ``\(variableName)`` in a longer string, and the current value of ``variableName`` will be inserted in place when the string is printed. (String interpolation is covered in more detail in :doc:`Strings`.)
 
@@ -647,11 +647,11 @@ Here's an example that stores raw ASCII values alongside named enumeration membe
 
 .. testcode:: enums
 
-    enum ASCIIControlCharacter : Char {
-        case Tab = '\t'
-        case LineFeed = '\n'
-        case CarriageReturn = '\r'
-    }
+    (swift) enum ASCIIControlCharacter : Char {
+                case Tab = '\t'
+                case LineFeed = '\n'
+                case CarriageReturn = '\r'
+            }
 
 Here, the raw values for an ``enum`` called ``ASCIIControlCharacter`` are declared to be of type ``Char`` (short for *single character*), and are set to equal some of the more common ASCII control character values. Values of type ``Char`` are used to store single Unicode characters, and are marked up using single quote marks (``'``) rather than double quote marks (``"``), to distingush them from strings. (``Char`` values are described in more detail in :doc:`Strings`.)
 
@@ -661,9 +661,9 @@ Raw values can be strings, characters, or any of the integer or floating-point n
 
 .. testcode:: optionals
 
-    enum ChemicalElement : Int {
-        case Hydrogen = 1, Helium, Lithium, Beryllium, Boron, Carbon, Nitrogen
-    }
+    (swift) enum ChemicalElement : Int {
+                case Hydrogen = 1, Helium, Lithium, Beryllium, Boron, Carbon, Nitrogen
+            }
 
 Auto-incrementation means that ``ChemicalElement.Helium`` will have a raw value of ``2``, and so on.
 
@@ -671,7 +671,7 @@ The raw value of an ``enum`` member can be accessed using its ``toRaw()`` method
 
 .. testcode:: optionals
 
-    var atomicNumberOfCarbon = ChemicalElement.Carbon.toRaw()
+    (swift) var atomicNumberOfCarbon = ChemicalElement.Carbon.toRaw()
     // atomicNumberOfCarbon : Int = 6
 
 The reverse is also true. Raw values can be used to look up their corresponding enumeration member – for example, to find ``ChemicalElement.Nitrogen`` from its raw value of ``7``. This is an example of one of Swift's most powerful features, known as *optionals*.
@@ -693,14 +693,14 @@ Here's an example. The ``ChemicalElement`` enumeration above contains elements a
 
 .. testcode:: optionals
 
-    var possibleElement = ChemicalElement.fromRaw(7)        // Nitrogen
+    (swift) var possibleElement = ChemicalElement.fromRaw(7)        // Nitrogen
     // possibleElement : ChemicalElement? = <unprintable value>
 
 ``ChemicalElement`` has a member with an atomic number of ``7`` (i.e. ``ChemicalElement.Nitrogen``). But what if you try an atomic number of ``8`` (for oxygen)? ``ChemicalElement`` doesn't know about oxygen, so you might expect the following statement to fail:
 
 .. testcode:: optionals
 
-    possibleElement = ChemicalElement.fromRaw(8)            // Oxygen
+    (swift) possibleElement = ChemicalElement.fromRaw(8)            // Oxygen
 
 However, it turns out that this is a perfectly valid statement. This is because ``fromRaw()`` returns an *optional*. If you look closely at the nitrogen example above, you'll see that ``possibleElement`` has an inferred type of ``ChemicalElement?``, not ``ChemicalElement``. Note the question mark at the end. This indicates that the value of ``possibleElement`` is an *optional* ``ChemicalElement`` – it might contain *some* value of that type, or it might contain *no value at all*.
 
@@ -710,19 +710,19 @@ When the optional *does* contain a value, the underlying value can accessed by a
 
 .. testcode:: optionals
 
-    if (possibleElement) {
-        switch possibleElement! {
-            case .Hydrogen:
-                println("A bit explodey")
-            case .Helium:
-                println("Like a friendly hydrogen")
-            default:
-                println("Some other element")
-        }
-    } else {
-        println("Not an element I know about")
-    }
-    // >>> Not an element I know about
+    (swift) if (possibleElement) {
+                switch possibleElement! {
+                    case .Hydrogen:
+                        println("A bit explodey")
+                    case .Helium:
+                        println("Like a friendly hydrogen")
+                    default:
+                        println("Some other element")
+                }
+            } else {
+                println("Not an element I know about")
+            }
+    >>> Not an element I know about
 
 ``possibleElement`` was most recently set to an optional ``ChemicalElement`` for the atomic number of oxygen (``8``), which doesn't exist in the enumeration. This means that the optional contains *no value at all* – causing ``if (possibleElement)`` to equate to ``false``, triggering the ``else`` part of the statement above, and printing the text ``"Not an element I know about"``.
 
