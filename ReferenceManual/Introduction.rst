@@ -1,10 +1,13 @@
 Introduction
 ============
 
-Syntactical Conventions
------------------------
+Notational Conventions
+----------------------
+
 
 .. TODO: Describe the notation and conventions found throughout the reference manual.
+
+
 
 Phases of Translation
 ---------------------
