@@ -9,20 +9,20 @@ Any Patterns
 ------------
 
 
-``var`` Patterns
-----------------
+Variable Patterns
+-----------------
 
 
 Tuple Patterns
 --------------
 
 
-``is`` Patterns
----------------
+Is Patterns
+-----------
 
 
-``enum`` Element Patterns
--------------------------
+Enumeration Element Patterns
+----------------------------
 
 
 Expressions in Patterns
