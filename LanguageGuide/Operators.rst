@@ -628,9 +628,9 @@ The range operator is particularly useful when working with zero-based lists, fo
 
     (swift) var names = ["Anna", "Brian", "Christine", "Daniel"]
     // names : String[] = ["Anna", "Brian", "Christine", "Daniel"]
-    (swift) var length = names.length
-    // length : Int = 4
-    (swift) for i in 0..length {
+    (swift) var count = names.count
+    // count : Int = 4
+    (swift) for i in 0..count {
                 println("Person \(i + 1) is called \(names[i])")
             }
     >>> Person 1 is called Anna
@@ -638,7 +638,7 @@ The range operator is particularly useful when working with zero-based lists, fo
     >>> Person 3 is called Christine
     >>> Person 4 is called Daniel
 
-Note that the length of the array is ``4``, but ``0..length`` only counts as far as ``3`` (the index of the last item in the array), because it is a half-closed range.
+Note that the array contains ``4`` items, but ``0..count`` only counts as far as ``3`` (the index of the last item in the array), because it is a half-closed range.
 
 .. QUESTION: Should these appear here, or in Control Flow?
 .. NOTE: Ranges have handy functions (well, specifically IntGeneratorType and DoubleGeneratorType at present) such as reverse(), contains() and by() - where should these be mentioned?
