@@ -24,7 +24,7 @@ Loops
 for x in y
 ~~~~~~~~~~
 
-Swift provides a powerful way to iterate over collections of items, such as a range of numbers, the items in an array, or the characters in a string. Here's a simple example, which prints the first few entries in the five-times-table:
+Swift provides a powerful way to iterate over collections of items, such as ranges of numbers, items in an array, or characters in a string. Here's a simple example, which prints the first few entries in the five-times-table:
 
 .. testcode::
 
@@ -134,7 +134,7 @@ while and do while
 while
 _____
 
-``while`` loops start by considering a single condition. If the condition is ``true``, a set of statements are repeated until the condition becomes ``false``.
+``while`` loops start by considering a single condition. If the condition is ``true``, a set of statements is repeated until the condition becomes ``false``.
 
 ``while`` loops have a general form of::
 
@@ -147,9 +147,13 @@ For example:
 .. testcode::
 
     (swift) var personName = ""
+    // personName : String = ""
     (swift) var keyboard = Keyboard()
+    // keyboard : Keyboard = <_TtCSs8Keyboard instance>
     (swift) println("Please enter your name, then press return.")
+    >>> Please enter your name, then press return.
     (swift) var inputCharacter = Char(keyboard.read())
+    // inputCharacter : Char = 'a'
     (swift) while inputCharacter != '\n' {
                 personName += inputCharacter
                 inputCharacter = Char(keyboard.read())
@@ -162,7 +166,7 @@ For example:
 
 This example reads input from the keyboard one character at a time, and appends each character to a string. It does this using Swift's built-in ``Keyboard`` class, which reads keystrokes from an attached keyboard. The example creates a new ``Keyboard`` instance by calling its initializer method ``Keyboard()``. It then reads a key using the keyboard's ``read()`` method. This causes the program to pause and wait for a keystroke before continuing. The keystroke's value is returned as a ``UInt8`` value, containing the ASCII code of the key that was pressed. This is converted to a ``Char`` value, so that it can be appended to a ``String`` representing the person's name.
 
-This program continues to read in keystrokes until the user presses the return key. When they do so, the value of ``inputCharacter`` will be a carriage return character (``\r``), causing ``while inputCharacter != '\r'`` to equate to ``false``, ending the loop. The person's name is then validated (to ensure that they did not press the return key without entering a name), and is printed if it exists.
+This program continues to read in keystrokes until the user presses the return key. When they do so, the value of ``inputCharacter`` will be a line feed character (``\n``), causing ``while inputCharacter != '\n'`` to equate to ``false``, ending the loop. The person's name is then validated (to ensure that they did not press the return key without entering a name), and is printed if it exists.
 
 A ``while`` loop is appropriate in this case because the length of the input name is not known at the start of the ``while`` loop. The loop's condition is dependent on external forces that cannot be predicted.
 
@@ -527,7 +531,7 @@ Note that the x-axis and y-axis checks could have been written with a ``where`` 
 
 Once the temporary variables ``x`` and ``y`` have been declared, they can be used within the ``case`` statement's code block. Here, they are used as shorthand for printing the values via ``println()``. The final case statement also uses the variables to calculate the square root (``sqrt()``) value needed for Pythagoras' theorem. (The earlier ``case`` blocks printed the tuples' individual values using the shorthand syntax ``point.0`` and ``point.1`` instead, as they did not have the temporary variables to hand.)
 
-Note that this ``switch`` statement does not have a ``default`` case block. The final ``case`` block, ``case (var x, var y)``, declares two placeholder variables but does *not* provide a ``where`` clause to filter them. As a result, it matches all possible remaining values, and a ``default`` block is not needed to make the ``switch`` statement exhaustive.
+Note that this ``switch`` statement does not have a ``default`` case block. The final ``case`` block, ``case (var x, var y)``, declares two placeholder variables, but does *not* provide a ``where`` clause to filter them. As a result, it matches all possible remaining values, and a ``default`` block is not needed to make the ``switch`` statement exhaustive.
 
 .. QUESTION: This example is not self-contained, in that it uses the same declared variable (point) as the previous example. This is primarily to keep the variable name readable within the println string interpolation. Is this okay? Should it be changed so that it is self-contained?
 .. QUESTION: These examples do not name their tuple elements, to avoid confusion between their likely element names of x and y, and the appropriate names for the where variables (also x and y). Is this the right approach, or should we be advising named tuple elements in all cases?
