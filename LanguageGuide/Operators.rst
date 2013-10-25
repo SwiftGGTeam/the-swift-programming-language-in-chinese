@@ -503,7 +503,7 @@ This example considers two ``Bool`` values, and only allows access if both value
             }
     >>> ACCESS DENIED
 
-If either value is ``false``, the overall expression will also be ``false``, as shown above. In fact, if the *first* value is false, the second value won't even be checked, as it can't possibly make the overall expression equal ``true``. This is known as *short-circuit evaluation*.
+If either value is ``false``, the overall expression will also be ``false``, as shown above. In fact, if the *first* value is false, the second value won't even be checked, because it can't possibly make the overall expression equal ``true``. This is known as *short-circuit evaluation*.
 
 Logical OR
 ~~~~~~~~~~

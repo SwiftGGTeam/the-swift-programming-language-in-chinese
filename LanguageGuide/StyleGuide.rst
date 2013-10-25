@@ -54,7 +54,7 @@ Variable names should be human-readable, and should not use Hungarian notation o
 
 Variables of custom-defined types *may* include the type name (or a shortened version thereof), if it aids with readability of code::
 
-    (swift) var rootNode = Node()                   // preferred over just 'root', as it makes the variable easier to read below
+    (swift) var rootNode = Node()                   // preferred over just 'root', because it makes the variable easier to read below
     (swift) rootNode.addChild(Node())               // Can be read as "add a new child node to the root node"
 
 As a general rule for the above, think about how you would read the code out loud. You wouldn't say “Add a discounted price float to the total float”, but you might say “add a new child node to the root node”. It is by no means *necessary* to append ``Node`` to the variable name above, but it is entirely acceptable if it makes the code's intentions clearer.
@@ -75,9 +75,9 @@ Iteration is preferred over counted loops wherever appropriate::
 
 Boolean variables should be named in a way that can be read as a logical sentence, to reflect their purpose when reading conditional statements::
 
-    (swift) var showMiddleName = true               // good, as it can be read as part of a logical sentence.
+    (swift) var showMiddleName = true               // good, because it can be read as part of a logical sentence.
     (swift) if showMiddleName {...}
-    (swift) var middleName = true                   // not so good, as 'middleName' sounds like a variable declaration for the middle name itself
+    (swift) var middleName = true                   // not so good, because 'middleName' sounds like a variable declaration for the middle name itself
     (swift) if middleName {...}                     // …which makes this sound like an implicit 'if middleName != nil'.
 
 Tuple typealiases should include element names definitions, and should place a single space after (but not before) each colon in their definition::
