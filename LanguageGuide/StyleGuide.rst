@@ -158,6 +158,15 @@ Braces for control flow keywords such as ``else if`` and ``else`` should appear 
                 // statements
             }
 
+Value checks in ``if`` clauses should always put the value to be tested on the left, and the value to test against on the right::
+
+    (swift) if valueToTest == 3 {               // good
+                // statements
+            }
+    (swift) if 3 == valueToTest {               // bad
+                // statements
+            }
+
 Half-closed ranges should not have spaces between their end values and operator::
 
     (swift) for i in 0..10                      // good
