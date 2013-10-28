@@ -26,11 +26,14 @@ Functions
 
 Functions are self-contained chunks of code that perform a specific task. Every function is given a name to identify what it does, and this name is used to ‘call’ the function to perform its task when needed.
 
-A function can be given some *input* values to work with (known as *parameters*), and can pass back some *output* (known as a *return value*) when it is done. The function below is called ``sayHello``, because that's what it does – it takes a person's name as input, and passes back a greeting for that person. To do this, it takes one input parameter – a ``String`` value called ``personName`` – and returns an output ``String`` value containing a greeting for that person.
+Function Declarations
+~~~~~~~~~~~~~~~~~~~~~
 
-All of this information is rolled up into the function's *declaration*, which can be seen in the first line of the example below. Functions are declared using the ``func`` keyword (in a similar way to how variables are declared using the ``var`` keyword). This example declares a function called ``sayHello`` that accepts a single parameter called ``personName``, which is of type ``String``. The function returns a ``String`` value when it is done, as indicated by the return symbol, ``->``.
+A function can be given some *input* values to work with (known as *parameters*), and can pass back some *output* (known as a *return value*) when it is done. The function's name should describe the task that it performs. The function below is called ``sayHello``, because that's what it does – it takes a person's name as input, and passes back a greeting for that person. To do this, it takes one input parameter – a ``String`` value called ``personName`` – and returns an output ``String`` value containing a greeting for that person.
 
-This declaration describes what the function does, what it expects to receive, and what it will return when it is done. This makes it easy for the function to be called from elsewhere in your code in a clear and unambiguous way.
+All of this information is rolled up into the function's *declaration*, which can be seen in the first line of the example below. Functions are declared using the ``func`` keyword (in a similar way to how variables are declared using the ``var`` keyword). This example declares a function called ``sayHello`` that accepts a single parameter called ``personName``, which is of type ``String``. The function returns a ``String`` value when it is done, as indicated by the return operator ``->`` (a hyphen followed by a greater-than symbol).
+
+The declaration describes what the function does, what it expects to receive, and what it will return when it is done. This makes it easy for the function to be called from elsewhere in your code in a clear and unambiguous way.
 
 .. testcode::
 
@@ -43,11 +46,11 @@ This declaration describes what the function does, what it expects to receive, a
     (swift) println(sayHello("Dave"))
     >>> Hello, Dave!
 
-The ``sayHello`` function is called by passing it a ``String`` value in parentheses, such as ``sayHello("Cheryl")``. Because ``sayHello`` returns a ``String``, it can be wrapped in a ``println()`` function to print that string and see its value, as shown above.
+The ``sayHello`` function is called by passing it a ``String`` value in parentheses, such as ``sayHello("Cheryl")``. Because ``sayHello`` returns a ``String``, it can be wrapped in a ``println()`` function to print that ``String`` and see its value, as shown above.
 
 ``sayHello`` starts by declaring a new ``String`` variable called ``greeting``, and setting it to a simple greeting message for ``personName``. This greeting is then passed back out of the function using the ``return`` keyword. As soon as ``return greeting`` is called, the function finishes its execution, and passes back the current value of ``greeting``.
 
-Now that it has been defined as a function, ``sayHello()`` can be called multiple times with different input values. The example above shows what happens if it is called with an input value of ``"Cheryl"``, and an input value of ``"Dave"``. The function returns a different greeting in each case.
+Now that it has been defined as a function, ``sayHello()`` can be called multiple times with different input values. The example above shows what happens if it is called with an input value of ``"Cheryl"``, and an input value of ``"Dave"``. The function returns a tailored greeting in each case.
 
 The contents of this function could actually be simplified further, to combine the message creation and ``return`` statement into one line:
 
@@ -61,13 +64,16 @@ The contents of this function could actually be simplified further, to combine t
 
 .. admonition:: Experiment
 
-    Try calling this function with your own name. See what happens if you change the message to a different greeting.
+    Try calling this function with your own name. Once you've done that, see what happens if you change the message to a different greeting.
     
-    Try using this function to say hello to a friend instead. Perhaps use an ``if else`` statement to make it reply with a special greeting when it recognizes your name, and a different greeting for everyone else.
+    Try using this function to say hello to a friend instead. You could use an ``if else`` statement to make it reply with a special greeting when it recognizes your name, and a different greeting for everyone else.
     
-    What about if you pass in a second input parameter (also a ``String``), called ``birthdayType``? (You can separate multiple input parameters using a comma.) ``birthdayType`` should contain the type of birthday you want to celebrate, such as ``12th`` or ``21st``. Can you make a function called ``sayHappyBirthday``, and use it to wish somebody called ``Peter`` a happy ``40th`` birthday?
+    What about if you pass in a second input parameter (also a ``String``), called ``birthdayType``? (You can separate multiple input parameters with a comma.) ``birthdayType`` should contain the type of birthday you want to celebrate, such as ``12th`` or ``21st``. Can you make a function called ``sayHappyBirthday``, and use it to wish somebody called ``Peter`` a happy ``40th`` birthday?
     
-    For bonus points, make the second parameter be an ``Int`` called ``age`` (rather than a ``String`` called ``birthdayType``), and work out whether ``age`` should have ``st``, ``nd``, ``rd`` or ``th`` (as in ``1st``, ``2nd``, ``3rd`` and ``4th``) on the end. Can you get it to work for any value of ``age``?
+    For bonus points, make this new second parameter be an ``Int`` called ``age`` (rather than a ``String`` called ``birthdayType``), and work out whether ``age`` should have ``st``, ``nd``, ``rd`` or ``th`` (as in ``1st``, ``2nd``, ``3rd`` or ``4th``) on the end. Can you get it to work for any value of ``age``?
+
+Multiple Input Parameters
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Functions can have multiple input parameters. This function takes an x and y value for a coordinate, and works out how far that coordinate is from the origin (0, 0) using Pythagoras' Theorem:
 
@@ -79,11 +85,16 @@ Functions can have multiple input parameters. This function takes an x and y val
     (swift) println(distanceFromOrigin(3.0, 4.0))
     >>> 5.0
 
-This example uses a ‘square root’ function, called ``sqrt()``, to help calculate Pythagoras' Theorem. ``sqrt()`` takes one ``Double`` value as input, and returns the square root of that value as its output (also as a ``Double``).
+This example uses a square root function called ``sqrt()`` to help calculate Pythagoras' Theorem. ``sqrt()`` is an always-available global math function provided ‘for free’ by Swift. (There are quite a few others too, as described in :doc:`StandardFunctions`.)
 
-``sqrt()`` is one of several always-available math functions provided ‘for free’ by Swift. These are described in more detail in :doc:`StandardFunctions`.
+``sqrt()`` is defined to take a ``Double`` value as its only input parameter, and to return the square root of that value as its output (also as a ``Double``).
 
-Any type of value can be passed into a function. The distance function above could be reritten to take a tuple called ``point``, as a tuple made up of two ``Double`` values:
+Tuples As Input Parameters
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Any type of value can be used as an input parameter for a function, if it is declared appropriately. For example, the distance function above can be rewritten to take a tuple of two ``Double`` values:
+
+.. QUESTION: Is my use of ‘any’ technically correct here? Is there some type that cannot be passed to a function?
 
 .. testcode::
 
@@ -95,37 +106,98 @@ Any type of value can be passed into a function. The distance function above cou
     (swift) println(distanceFromOriginForPoint(somePoint))
     >>> 5.0
 
-Note that this function only takes *one* input parameter, not two. It's single input parameter is a tuple containing two ``Double`` values. This ability to bundle up related values into a single compound value is one of the major benefits of tuples. This function can be passed any tuple of type ``(Double, Double)`` – such as ``(3.0, 4.0)`` in the example above – and it will happily calculate the distance for that tuple.
+Note that this function takes *one* input parameter, not two. Its single input parameter is a tuple containing two ``Double`` values. This ability to bundle up related values into a single compound value is one of the major benefits of tuples. This function can be passed any tuple of type ``(Double, Double)`` – such as ``(3.0, 4.0)`` in the example above – and it will happily calculate the distance for that tuple.
 
-The elements of an input tuple can be named by a function's declaration, even if the original tuple doesn't have named elements. For example, the two ``Double`` elements above could be called ``x`` and ``y`` by the function:
+The elements of an input tuple can be named by a function's declaration, even if the original tuple doesn't have named elements. For example, the two ``Double`` elements above could be named ``x`` and ``y`` by the function:
 
 .. testcode::
 
-    (swift) func distanceFromOriginForPoint2(point : (x : Double, y : Double)) -> Double {
+    (swift) func distanceFromOriginForNamedPoint(point : (x : Double, y : Double)) -> Double {
                 return sqrt(Double(point.x * point.x + point.y * point.y))
             }
-    (swift) var somePoint = (3.0, 4.0)
-    // somePoint : (Double, Double) = (3.0, 4.0)
-    (swift) println(distanceFromOriginForPoint2(somePoint))
+    (swift) println(distanceFromOriginForNamedPoint(somePoint))
     >>> 5.0
 
-``somePoint``'s elements are not named when it is created outside of the function. However, ``distanceFromOriginForPoint2`` gives the tuple values it receives a temporary name for use within the function.
+``somePoint``'s elements were not named when the tuple was originally defined. However, ``distanceFromOriginForNamedPoint`` gives temporary names of ``x`` and ``y`` to the tuple values it receives, for use within the function. These names can then be used inside the function's opening and closing braces to calculate the square root value as before.
 
-.. QUESTION Is my use of ‘any’ technically correct here? Is there some kind of value that cannot be passed to a function?
+Parameter Names
+~~~~~~~~~~~~~~~
 
-Functions don't have to return a value. Here's a version of the ``sayHello`` function, called ``sayGoodbye``, which prints its own ``String`` value rather than returning it:
+Values can be passed to a function using the parameter names from the function's declaration. This helps to make their purpose clear, and also enables values to be passed in a different order to the original function declaration.
 
 .. testcode::
 
-    (swift) func sayGoodbye(personName : String) {
-                println("Goodbye, \(personName) 👋")
+    (swift) func stringContainsCharacter(stringToSearch : String, characterToFind : Char) -> Bool {
+                for character in stringToSearch.chars {
+                    if character == characterToFind {
+                        return true
+                    }
+                }
+                return false
             }
-    (swift) sayGoodbye("Dave")
-    >>> Goodbye, Dave 👋
+    (swift) var containsASpace = stringContainsCharacter(characterToFind: ' ', stringToSearch: "This will return true")
+    // containsASpace : Bool = true
 
-Because it does not return a value, the function's declaration does not include the return symbol (``->``) or a return type.
+Here, the parameter values are passed in a different order when the function is actually called. Because they are named, it is still clear which value should be used for which parameter.
 
-Functions don't have to have input parameters, either. Here's a function that always returns the same ``String`` message whenever it is called:
+Note that if ``characterToFind`` is found quickly, this example returns ``true`` before the entire set of characters in ``stringToSearch`` has been checked. As soon as the first matching character is found, ``stringContainsCharacter`` returns ``true``, and doesn't even bother to check the remaining characters. You can ``return`` control from a function at any time, and it will stop what it is doing immediately. In fact, this function will only return ``false`` if the entire set of characters in ``stringToSearch`` is exhausted, and the end of the ``for`` loop is reached.
+
+If parameter names are *not* provided when calling a method, the passed parameters are assumed to be in the order they were originally declared:
+
+.. testcode::
+
+    (swift) var containsAHyphen = stringContainsCharacter("This will return false", '-')
+    // containsAHyphen : Bool = false
+
+Default Parameter Values
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Function parameters can be assigned default values. If a default value is defined in the function declaration, it can be omitted when calling the function:
+
+.. testcode::
+
+    (swift) func joinTwoStrings(string1 : String, string2 : String, joiner : String = " ") -> String {
+                return string1 + joiner + string2
+            }
+    (swift) joinTwoStrings("hello", "world", ":")
+    // r0 : String = "hello:world"
+    (swift) joinTwoStrings("hello", "world")
+    // r1 : String = "hello world"
+
+This function joins two strings together. If a value for ``joiner`` is provided, that string is used to join the two strings together, as shown in the first example, which uses a colon to join the two words. If no value of ``joiner`` is provided, a default value (in this case a string containing a single space) is used instead.
+
+It's important to choose an appropriate order for function parameters when working with default values. The ``joinTwoStrings`` function could have been written with ``joiner`` as the second (rather than third) parameter:
+
+.. testcode::
+
+    (swift) func joinTwoStringsVersion2(string1 : String, joiner : String = " ", string2 : String) -> String {
+                return string1 + joiner + string2
+            }
+    (swift) joinTwoStringsVersion2("hello", ":", "world")
+    // r3 : String = "hello:world"
+
+However, if you try and call this version of the function without passing in a value for ``joiner``, and without using named values, the code will not compile::
+
+    (swift) joinTwoStringsVersion2("hello", "world")           // this will cause an error
+
+Because the values are not named in the function call, it looks as though you have only provided two (rather than three) of the expected parameters for the function. Without named values, Swift assigns the first value (``"hello"``) to the first parameter (``string1``); the second value (``"world"``) to the second parameter (``joiner``), and cannot find a value for the third parameter (``string2``).
+
+This problem can be avoided by naming the values when you call the function:
+
+.. testcode::
+
+    (swift) joinTwoStringsVersion2(string1: "hello", string2: "world")
+
+This tells Swift which parameters you want the values of "hello" and "world" to be used for, and the code compiles without error, using the default value of ``joiner`` as before.
+
+As a general rule, it is best to place any parameters with default values at the end of a function declaration. It is also advisable to name the values in your function calls whenever a function takes more than one parameter, to ensure that your intentions are clearly expressed in your code.
+
+.. QUESTION: how does this advice overlap with the principle of putting variadic parameters last, and also the principle of putting closure parameters last?
+
+Non-Mandatory Parameters and Return Values
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Functions don't have to have input parameters. Here's a function that always returns the same ``String`` message whenever it is called:
 
 .. testcode::
 
@@ -134,6 +206,39 @@ Functions don't have to have input parameters, either. Here's a function that al
             }
     (swift) println(sayHelloWorld())
     >>> hello, world
+
+Note that the function declaration still needs parentheses after the function's name, even though it does not take any parameters. It is also called with empty parentheses after its name when used.
+
+Functions don't have to return a value, either. Here's a version of the ``sayHello`` function, called ``waveGoodbye``, which prints its own ``String`` value rather than returning it:
+
+.. testcode::
+
+    (swift) func waveGoodbye(personName : String) {
+                println("Goodbye, \(personName) 👋")
+            }
+    (swift) waveGoodbye("Dave")
+    >>> Goodbye, Dave 👋
+
+Because it does not return a value, the function's declaration does not include the return symbol (``->``) or a return type.
+
+The return value of a function can be ignored when it is called:
+
+.. testcode::
+
+    (swift) func printAndReturnHelloWorld() -> String {
+                var message = "hello, world"
+                println(message)
+                return message
+            }
+    (swift) func printHelloWorld() {
+                printAndReturnHelloWorld()
+            }
+    (swift) printHelloWorld()
+    >>> hello, world
+
+The first function, ``printAndReturnHelloWorld()``, creates a new ``message``, prints it, and then also returns it as a ``String``. The second function, ``printHelloWorld()``, calls the first function, but ignores its returned value. When the second function is called, the message is still printed by the first function, but the returned ``String`` value is not used.
+
+Return values can be ignored, but a function that says it will return a value must always do so. A function with a declared return type must never allow control to fall out of the bottom of the function without returning a value.
 
 .. refnote:: References
 

@@ -168,13 +168,17 @@ Half-closed ranges should not have spaces between their end values and operator:
     for i in 0..10                      // good
     for i in 0 .. 10                    // bad
 
+Function names and parameter names should follow the Objective-C method naming convention of ``lowerThenWordCaps``, as with variable names. Unlike Objective-C, this also includes function names and parameter names beginning with words that would otherwise be capitalized::
+
+    func urlComponentsFromString(urlString : String) -> Array<String> {...}
+
 Functions should always name their parameters. Each parameter should always have a space before and after the colon. There should also be a space after the comma separating each parameter, and a space before and after the return operator (``->``). Opening braces for functions should be on the same line as the function declaration::
 
     func sayHello(personName : String, salutation : String) -> String {
         // statements
     }
 
-Functions with more than one parameter should always have names assigned to their parameters in the function definition. Parameter names do not *have* to be used when calling a function, but should be used wherever it aids clarity. If parameter names *are* used, they should have a space after (but not before) their colon::
+Parameter names do not *have* to be used when calling a function, but should be used wherever it aids clarity. If parameter names *are* used, they should have a space after (but not before) their colon::
 
     sayHello(personName: "Chris", salutation: "Howdy!")     // good
     sayHello(personName : "Chris", salutation : "Howdy!")   // bad
