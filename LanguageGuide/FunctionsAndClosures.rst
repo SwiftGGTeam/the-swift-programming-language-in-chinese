@@ -111,7 +111,7 @@ The elements of an input tuple can be named by a function's declaration, even if
 
 ``somePoint``'s elements are not named when it is created outside of the function. However, ``distanceFromOriginForPoint2`` gives the tuple values it receives a temporary name for use within the function.
 
-.. QUESTION:: Is my use of ‘any’ technically correct here? Is there some kind of value that cannot be passed to a function?
+.. QUESTION Is my use of ‘any’ technically correct here? Is there some kind of value that cannot be passed to a function?
 
 Functions don't have to return a value. Here's a version of the ``sayHello`` function, called ``sayGoodbye``, which prints its own ``String`` value rather than returning it:
 
@@ -123,7 +123,7 @@ Functions don't have to return a value. Here's a version of the ``sayHello`` fun
     (swift) sayGoodbye("Dave")
     >>> Goodbye, Dave 👋
 
-Because it does not return a value, the function's declaration does not contain the return symbol (``->``) or a return type.
+Because it does not return a value, the function's declaration does not include the return symbol (``->``) or a return type.
 
 Functions don't have to have input parameters, either. Here's a function that always returns the same ``String`` message whenever it is called:
 
@@ -132,7 +132,7 @@ Functions don't have to have input parameters, either. Here's a function that al
     (swift) func sayHelloWorld() -> String {
                 return "hello, world"
             }
-    (swift) sayHelloWorld()
+    (swift) println(sayHelloWorld())
     >>> hello, world
 
 .. refnote:: References
