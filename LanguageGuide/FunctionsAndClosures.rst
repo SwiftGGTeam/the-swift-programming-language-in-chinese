@@ -174,7 +174,7 @@ It's important to choose an appropriate order for function parameters when worki
                 return string1 + joiner + string2
             }
     (swift) joinTwoStringsVersion2("hello", ":", "world")
-    // r3 : String = "hello:world"
+    // r2 : String = "hello:world"
 
 However, if you try and call this version of the function without passing in a value for ``joiner``, and without using named values, the code will not compile::
 
@@ -187,6 +187,7 @@ This problem can be avoided by naming the values when you call the function:
 .. testcode::
 
     (swift) joinTwoStringsVersion2(string1: "hello", string2: "world")
+    // r3 : String = "hello world"
 
 This tells Swift which parameters you want the values of "hello" and "world" to be used for, and the code compiles without error, using the default value of ``joiner`` as before.
 
