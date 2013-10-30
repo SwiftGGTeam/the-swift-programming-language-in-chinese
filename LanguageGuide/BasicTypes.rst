@@ -8,6 +8,7 @@
     * Naming conventions ✔︎
     * Integer types ✔︎
     * Floating point types ✔︎
+    * infinity and -infinity
     * Bool ✔︎
     * Void
     * No suffixes for integers / floats ✔︎
@@ -601,7 +602,7 @@ In Swift, an enumeration to define product barcodes of either type might look li
 
 This can be read as:
 
-    Declare an enumeration type called ``Barcode``, than can take either a value of ``UPCA`` with an associated value of type (``Int``, ``Int``, ``Int``), or a value of ``QRCode`` with an associated value of type ``String``.
+    Declare an enumeration type called ``Barcode``, that can take either a value of ``UPCA`` with an associated value of type (``Int``, ``Int``, ``Int``), or a value of ``QRCode`` with an associated value of type ``String``.
 
 Note that this definition does not provide any actual ``Int`` or ``String`` values – it just defines the *type* of associated values that ``Barcode`` variables can store when they are equal to ``Barcode.UPCA`` or ``Barcode.QRCode``.
 
@@ -710,7 +711,7 @@ When the optional *does* contain a value, the underlying value can accessed by a
 
 .. testcode:: optionals
 
-    (swift) if (possibleElement) {
+    (swift) if possibleElement {
                 switch possibleElement! {
                     case .Hydrogen:
                         println("A bit explodey")
