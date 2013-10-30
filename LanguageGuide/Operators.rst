@@ -400,13 +400,15 @@ Swift will throw an error if you try to insert a value into an integer variable 
 
 For example: the ``Int16`` integer type can hold any signed value between ``-32768`` and ``32767``. If you try and set a variable of this type to a value outside of this range, Swift will throw an error:
 
-.. testcode:: overflowOperators
+.. testcode:: overflowOperatorsWillFailToOverflow
 
     (swift) var potentialOverflow = Int16.max()     // the largest value that Int16 can hold
     // potentialOverflow : Int16 = 32767
     (swift) potentialOverflow += 1                  // this will throw an error
+    !!! 0  swift
 
 .. TODO: is "throw an error" the correct phrase to use here? It actually triggers an assertion, causing the REPL to crash.
+.. TODO: change the error text we detect here once overflowing provides an error message rather than just an assert.
 
 Throwing an error in these scenarios is much safer than allowing an outsized value to :term:`overflow`. Providing error handling when values get too large or too small gives you much more flexibility when coding for boundary value conditions.
 
@@ -425,7 +427,7 @@ However, in the cases where you *do* want the value to overflow, you can opt in 
 
 For example:
 
-.. testcode:: overflowOperators
+.. testcode:: overflowOperatorsWillOverflow
 
     (swift) var willOverflow = UInt8.max()      // the largest value that UInt8 can hold
     // willOverflow : UInt8 = 255
@@ -437,7 +439,7 @@ Here, the variable ``willOverflow`` is initialized with the largest value a ``UI
 
 Similarly, if a value becomes too small:
 
-.. testcode:: overflowOperators
+.. testcode:: overflowOperatorsWillUnderflow
 
     (swift) var willUnderflow = Int16.min()     // the smallest value that Int16 can hold
     // willUnderflow : Int16 = -32768
@@ -454,13 +456,18 @@ Division by zero
 
 If you divide a number by zero, or try to calculate modulo zero, Swift will throw an error:
 
-.. testcode:: overflowOperators
+.. testcode:: overflowOperatorsDivZeroError
 
     (swift) var x = 1
     // x : Int = 1
-    (swift) var y = x / 0       // this will throw an error
-
+    (swift) var y = x / 0
+    !!! <REPL Input>:1:11: error: division by zero
+    !!! var y = x / 0
+    !!!           ^
+ 
 Integer division by zero is not a valid mathematical action, and so Swift throws an error rather than creating an invalid value.
+
+.. NOTE: currently, this testcode block must be the last in the overflowOperators group, as otherwise the stack trace crash from the division-by-zero will mean that subsequent blocks in the group won't get tested.
 
 Logical Operators
 -----------------
