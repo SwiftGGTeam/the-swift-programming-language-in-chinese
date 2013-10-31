@@ -4,7 +4,7 @@ Document Overview
 Introduction
 ------------
 
-Developer Publications are creating a new book called *The Swift Programming Language*, to help with the adoption of Swift. A first edition of the complete book will be made available at WWDC 2014. An overview of its structure and purpose is provided below.
+Developer Publications are creating a new book called `The Swift Programming Language`, to help with the adoption of Swift. A first edition of the complete book will be made available at WWDC 2014. An overview of its structure and purpose is provided below.
 
 Please send any comments on this book to Dave Addey (`dave.addey@apple.com <mailto:dave.addey@apple.com?subject=The%20Swift%20Programming%20Language%20book>`_), Senior Writer, Developer Publications.
 
