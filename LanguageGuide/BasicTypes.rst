@@ -9,6 +9,7 @@
     * Integer types ✔︎
     * Floating point types ✔︎
     * infinity and -infinity
+    * Word32 / Word64?
     * Bool ✔︎
     * Void
     * No suffixes for integers / floats ✔︎
