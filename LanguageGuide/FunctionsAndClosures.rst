@@ -198,7 +198,7 @@ As a general rule, it is best to place any parameters with default values at the
 Non-Mandatory Parameters and Return Values
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Functions don't have to have input parameters. Here's a function that always returns the same ``String`` message whenever it is called:
+Functions don't have to have input parameters. Here's a function with no input parameters, which always returns the same ``String`` message whenever it is called:
 
 .. testcode::
 
@@ -208,7 +208,7 @@ Functions don't have to have input parameters. Here's a function that always ret
     (swift) println(sayHelloWorld())
     >>> hello, world
 
-Note that the function declaration still needs parentheses after the function's name, even though it does not take any parameters. It is also called with empty parentheses after its name when used.
+Note that the function declaration still needs parentheses after the function's name, even though it does not take any parameters. It is also called with empty parentheses when used.
 
 Functions don't have to return a value, either. Here's a version of the ``sayHello`` function, called ``waveGoodbye``, which prints its own ``String`` value rather than returning it:
 
@@ -220,26 +220,61 @@ Functions don't have to return a value, either. Here's a version of the ``sayHel
     (swift) waveGoodbye("Dave")
     >>> Goodbye, Dave 👋
 
-Because it does not return a value, the function's declaration does not include the return symbol (``->``) or a return type.
+Because it does not need to return a value, the function's declaration does not include the return operator (``->``) or a return type.
+
+Strictly speaking, this function *does* still return a value, even though no return value is declared. Functions without a declared return type return a special value of type ``Void``. This is simply an empty tuple, i.e. a tuple with zero elements, which can be written as ``()``.
 
 The return value of a function can be ignored when it is called:
 
 .. testcode::
 
-    (swift) func printAndReturnHelloWorld() -> String {
-                var message = "hello, world"
-                println(message)
-                return message
+    (swift) func printAndCount(stringToPrint : String) -> Int {
+                println(stringToPrint)
+                return stringToPrint.length
             }
-    (swift) func printHelloWorld() {
-                printAndReturnHelloWorld()
+    (swift) func printWithoutCounting(stringToPrint : String) {
+                printAndCount(stringToPrint)
             }
-    (swift) printHelloWorld()
+    (swift) printAndCount("hello, world")
+    >>> hello, world
+    // r4 : Int = 12
+    (swift) printWithoutCounting("hello, world")
     >>> hello, world
 
-The first function, ``printAndReturnHelloWorld()``, creates a new ``message``, prints it, and then also returns it as a ``String``. The second function, ``printHelloWorld()``, calls the first function, but ignores its returned value. When the second function is called, the message is still printed by the first function, but the returned ``String`` value is not used.
+The first function, ``printAndCount()``, prints a string, and then returns its length as an ``Int``. The second function, ``printWithoutCounting()``, calls the first function, but ignores its returned value. When the second function is called, the message is still printed by the first function, but the returned value is not used.
 
 Return values can be ignored, but a function that says it will return a value must always do so. A function with a declared return type must never allow control to fall out of the bottom of the function without returning a value.
+
+Selector-Style Function Declarations
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Swift actually supports *two* different styles of function declaration. All of the examples so far have used the first style, known as *function-style* declaration. This follows the C approach of putting all of the parameters inside one set of parentheses immediately after the function name.
+
+The second style, known as *selector-style* declaration, follows a similar style to Objective-C messaging. Each parameter has its own set of parentheses, and the function's name is split into multiple parts if it has more than one parameter.
+
+Here's an example of a function written with selector-style declaration:
+
+.. testcode::
+
+    (swift) func joinString(string1 : String) toString(string2 : String) withJoiner(joiner : String) -> String {
+                return string1 + joiner + string2
+            }
+    (swift) joinString("hello", toString: "world", withJoiner: ":")
+    // r5 : String = "hello:world"
+
+
+
+.. variables can be set to functions, and then called e.g. var fork = g.fork; fork() .
+.. functions can be written in one of three forms: multiple parameters; selector-style; curried
+.. need to give a clear, Dave-understandable explanation of why currying is actually useful
+.. functions can be passed in as parameters, and can be returned as return values
+.. capturing / closing over variables (and what this means in practice)
+.. no need for __block; discuss memory safety
+.. functions are just a really special non-capturing version of closures
+.. closures can be named
+.. inout properties and a general discussion of byref / byvalue
+.. badger and mushroom example for repeating things different numbers of times
+.. pass a tuple as the entire set of arguments, as in var argTuple = (0, "one", '2'); x.foo:bar:bas:(argTuple)
 
 .. refnote:: References
 

@@ -8,6 +8,8 @@
     * Naming conventions ✔︎
     * Integer types ✔︎
     * Floating point types ✔︎
+    * infinity and -infinity
+    * Word32 / Word64?
     * Bool ✔︎
     * Void
     * No suffixes for integers / floats ✔︎
@@ -110,9 +112,7 @@ Once you've declared a variable, you can't redeclare it again with the same name
 Numbers
 -------
 
-Swift supports two fundamental types of number: :term:`integers`, and :term:`floating-point numbers`. Swift provides both types of number in :term:`signed and unsigned` forms up to 128 bits in size. These basic numeric types follow a similar naming convention to C, in that an 8-bit unsigned integer is a ``UInt8``, and a signed 64-bit floating-point number is a ``Float64``. Like all types in Swift, these basic numeric types have capitalized names. (See the :doc:`../ReferenceManual/ReferenceManual` for a complete list of numeric types.)
-
-.. TODO: do we actually have a Float16? It's mentioned on https://[Internal Staging Server]/docs/whitepaper/TypesAndValues.html#floating-point-types , but doesn't exist as of rev. 9212.
+Swift supports two fundamental types of number: :term:`integers`, and :term:`floating-point numbers`. Swift provides integers in :term:`signed and unsigned` forms at 8, 16, 32, 64 and 128-bit sizes. It also provides signed floating-point numbers in 32 and 64-bit sizes. These basic numeric types follow a similar naming convention to C, in that an 8-bit unsigned integer is a ``UInt8``, a 128-bit signed integer is an ``Int128``, and a signed 64-bit floating-point number is a ``Float64``. Like all types in Swift, these basic numeric types have capitalized names. (See the :doc:`../ReferenceManual/ReferenceManual` for a complete list of numeric types.)
 
 .. glossary::
 
@@ -128,7 +128,7 @@ Swift supports two fundamental types of number: :term:`integers`, and :term:`flo
 In most cases, there's no need to pick a specific size of integer or floating-point number to use in your code. Swift provides three standard number types:
 
 * ``Int``, which is the same as ``Int64``, and should be used for general integer values
-* ``Float``, which is the same as ``Float32``, and should be used for normal floating-point values
+* ``Float``, which is the same as ``Float32``, and should be used when floating-point values do not require 64-bit precision
 * ``Double``, which is the same as ``Float64``, and should be used when floating-point values need to be very large or particularly precise
 
 Unless you need to work with a :term:`specific size` of integer or floating-point number, you should always use ``Int``, ``Float`` or ``Double`` for code consistency and interoperability.
@@ -601,7 +601,7 @@ In Swift, an enumeration to define product barcodes of either type might look li
 
 This can be read as:
 
-    Declare an enumeration type called ``Barcode``, than can take either a value of ``UPCA`` with an associated value of type (``Int``, ``Int``, ``Int``), or a value of ``QRCode`` with an associated value of type ``String``.
+    Declare an enumeration type called ``Barcode``, that can take either a value of ``UPCA`` with an associated value of type (``Int``, ``Int``, ``Int``), or a value of ``QRCode`` with an associated value of type ``String``.
 
 Note that this definition does not provide any actual ``Int`` or ``String`` values – it just defines the *type* of associated values that ``Barcode`` variables can store when they are equal to ``Barcode.UPCA`` or ``Barcode.QRCode``.
 
@@ -710,7 +710,7 @@ When the optional *does* contain a value, the underlying value can accessed by a
 
 .. testcode:: optionals
 
-    (swift) if (possibleElement) {
+    (swift) if possibleElement {
                 switch possibleElement! {
                     case .Hydrogen:
                         println("A bit explodey")
