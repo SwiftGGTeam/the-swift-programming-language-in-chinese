@@ -30,15 +30,17 @@ While Statement
 
 A while statement has the following general form:
 
-| ``while`` *condition* ``{``
-|    *code-to-execute*
-| ``}``
+::
+
+    while <#condition#> {
+        <#code-to-execute#>
+    }
 
 blah blah
 
-    **Grammar of a while statement**
+    Grammar of a while statement
 
-    | *while-statement*  ⟶ ``while`` *basic-expression*  *brace-item-list*
+    | *while-statement* --> while *basic-expression*  *brace-item-list*
 
 
 
