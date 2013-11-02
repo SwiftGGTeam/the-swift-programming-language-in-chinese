@@ -227,7 +227,7 @@ As with variable declaration syntax, Swift function declarations follow the natu
 
 .. testcode:: functions
 
-    (swift) func fibonacci(n : Int) -> Int {
+    (swift) def fibonacci(n : Int) -> Int {
                 if n < 2 {
                     return 1
                 } else {
@@ -241,7 +241,7 @@ Argument names are part of the signature, so you can specify each parameter by n
 
 .. testcode:: functions
 
-    (swift) func divideTwoNumbers(numerator : Float, denominator : Float) -> Float {
+    (swift) def divideTwoNumbers(numerator : Float, denominator : Float) -> Float {
                 assert(denominator != 0)
                 return numerator / denominator
             }
@@ -254,7 +254,7 @@ And, in the same way that you can assign a value as part of a variable declarati
 
 .. testcode:: functions
 
-    (swift) func sayHello(name : String = "World") {
+    (swift) def sayHello(name : String = "World") {
                 print("Hello, \(name)!\n")
             }
     (swift) sayHello("Bob")
@@ -266,7 +266,7 @@ If you omit the return type, as with this ``sayHello()`` function, the default i
 
 .. testcode:: functions
 
-    (swift) func fetchLocalGasPrices() -> (Float, Float, Float) {
+    (swift) def fetchLocalGasPrices() -> (Float, Float, Float) {
                 return (3.59, 3.69, 3.79)
             }
 
@@ -274,7 +274,7 @@ Since you name the elements in any tuple, these features work together to make i
 
 .. testcode:: functions
 
-    (swift) func fetchBetterGasPrices() -> (regular : Float, midgrade : Float, premium : Float) {
+    (swift) def fetchBetterGasPrices() -> (regular : Float, midgrade : Float, premium : Float) {
                 return (3.49, 3.59, 3.69)
             }
     (swift) fetchBetterGasPrices().midgrade
@@ -284,7 +284,7 @@ Functions can also be defined to take variable argument lists:
 
 .. testcode:: functions
 
-    (swift) func addAllTheInts(theInts : Int...) -> Int {
+    (swift) def addAllTheInts(theInts : Int...) -> Int {
                 var sum = 0
                 for i in theInts {
                     sum += i
@@ -372,7 +372,7 @@ Values can also be tested for inclusion in a range:
 
 .. testcode:: switch
 
-    (swift) func naturalCount(x : Int) -> String {
+    (swift) def naturalCount(x : Int) -> String {
                 switch x {
                 case 0:
                     return "no"
@@ -403,7 +403,7 @@ or ignored using the special ``_`` identifier:
 
 .. testcode:: switch
 
-    (swift) func classifyPoint(x : Int, y : Int) {
+    (swift) def classifyPoint(x : Int, y : Int) {
                 switch (x, y) {
                 case (0, 0):
                     println("origin")
@@ -434,7 +434,7 @@ a case may be tested using a ``where`` expression:
 
 .. testcode:: switch
 
-    (swift) func classifyPoint2(p : (Int, Int)) {
+    (swift) def classifyPoint2(p : (Int, Int)) {
                 switch p {
                 case (0, 0):
                     println("origin")
@@ -513,7 +513,7 @@ matched:
 
 .. testcode:: enums
 
-  (swift) func pathLength(p : Path) -> Double {
+  (swift) def pathLength(p : Path) -> Double {
               switch p {
               case .Point(_):
                   return 0
@@ -602,7 +602,7 @@ This is one of the primary safety features --- **Swift does not require you to m
 
 .. testcode:: objects
 
-    (swift) func enlarge(circle : Circle) {
+    (swift) def enlarge(circle : Circle) {
                 circle.radius *= 2
             }
     
@@ -640,7 +640,7 @@ Unlike other languages, Swift structures aren't limited just to holding values, 
                 y = inY
               }
               
-              func moveToTheRightBy(value : Float) {
+              def moveToTheRightBy(value : Float) {
                 x += value
               }
             }
@@ -792,7 +792,7 @@ A protocol is an abstract description of behavior --- usually related functions 
               var x, y : Float
             }
     (swift) protocol HitTestable {
-                func containsPoint(point : Point) -> Bool 
+                def containsPoint(point : Point) -> Bool 
             }
 
 All named Swift types (i.e., classes, structs and enums, but not tuples), can adopt protocols and implement the required behavior:
@@ -805,7 +805,7 @@ All named Swift types (i.e., classes, structs and enums, but not tuples), can ad
     (swift) struct Rect : HitTestable {
                 var origin : Point = Point()
                 var size : Size = Size()
-                func containsPoint(point : Point) -> Bool {
+                def containsPoint(point : Point) -> Bool {
                     return point.x >= origin.x && 
                         point.x < (origin.x + size.width) &&
                         point.y >= origin.y &&
@@ -844,7 +844,7 @@ This guarantees safety when dealing with different types, such as when hit-testi
     struct Circle : HitTestable { ... }
     class Elephant : HitTestable { ... }
 
-    func findFirstHitElement(point : Point, elements : HitTestable...) -> HitTestable? {
+    def findFirstHitElement(point : Point, elements : HitTestable...) -> HitTestable? {
         for eachElement in elements {
             if eachElement.containsPoint(point) {
                 return eachElement
@@ -892,7 +892,7 @@ You can also use an extension to add protocol conformance to an existing class o
 .. testcode:: protocols_and_extensions
 
     (swift) extension Point : HitTestable {
-                func containsPoint(point : Point) -> Bool {
+                def containsPoint(point : Point) -> Bool {
                     return self.x == point.x && self.y == point.y
                 }
             }
@@ -998,7 +998,7 @@ trace, you may prefer to use a local function instead:
 
 .. testcode:: closures
 
-    (swift) func compareStrings(lhs : String, rhs : String) -> Bool {
+    (swift) def compareStrings(lhs : String, rhs : String) -> Bool {
                 if uppercase {
                     lhs = lhs.uppercase
                     rhs = rhs.uppercase
@@ -1011,7 +1011,7 @@ A closure argument to a function is just like any other argument, with a colon `
 
 .. testcode:: closures
 
-    (swift) func repeat(count : Int, myClosure : () -> Void) {
+    (swift) def repeat(count : Int, myClosure : () -> Void) {
                 for i in 0..count {
                     myClosure()
                 }
@@ -1054,20 +1054,20 @@ It's even safe in Swift to mix by-reference and value types if you use a protoco
 .. testcode:: generics
 
     (swift) protocol Workable {
-                func work()
+                def work()
             }
     (swift) class Foo : Workable {
-                func work() {
+                def work() {
                     println("A foo is working")
                 }
             }
     (swift) struct Bar : Workable {
-                func work() {
+                def work() {
                     println("A bar is working")
                 }
             }
     (swift) extension Int : Workable {
-                func work() {
+                def work() {
                     println("An integer is working")
                 }
             }
@@ -1096,10 +1096,10 @@ Swift makes it easy to create your own parameterized types, like this simple imp
               init() {
                 elements = Vector<ElementType>()
               }
-              func push(element : ElementType) {
+              def push(element : ElementType) {
                 elements.append(element)
               }
-              func pop() -> ElementType {
+              def pop() -> ElementType {
                 assert(elements.length > 0, "can't pop an empty stack")
                 var tmp = elements[elements.length - 1]
                 elements.popBack()
@@ -1136,7 +1136,7 @@ In order to use more specific behavior, you need to indicate which behavior the 
 
     (swift) class Workforce<Type : Workable> {
               var workers : Vector<Type>
-              func startWorking() {
+              def startWorking() {
                 for eachWorker in workers {
                   eachWorker.work()
                 }
@@ -1147,7 +1147,7 @@ Once you have generic data structures, you'll likely need to be able to implemen
 
 .. testcode:: generics
 
-    (swift) func findIndexOfString(strings : String[], searchString : String) -> Int {
+    (swift) def findIndexOfString(strings : String[], searchString : String) -> Int {
               for index in 0..strings.length {
                 if strings[index] == searchString {
                   return index
@@ -1162,7 +1162,7 @@ Swift makes it easy to write a generic version, which works with any element tha
 
 .. testcode:: generics
 
-    (swift) func findIndexOf<Type : Equatable>(elements : Type[], searchElement : Type) -> Int {
+    (swift) def findIndexOf<Type : Equatable>(elements : Type[], searchElement : Type) -> Int {
               var index = 0
               for eachElement in elements {
                 if eachElement == searchElement {
@@ -1269,7 +1269,7 @@ written in Objective-C with a Swift extension (which just defines a "category"
 in Objective-C parlance)::
 
     (swift) extension NSString {
-              func stringByTrimmingWhitespace() -> NSString {
+              def stringByTrimmingWhitespace() -> NSString {
                 var wsSet = NSCharacterSet.whitespaceCharacterSet()
                 return self.stringByTrimmingCharactersInSet(NSCharacterSet(wsSet))
               }
@@ -1281,7 +1281,7 @@ in Objective-C parlance)::
 and you can even extend non-class Objective-C types, like structures::
 
     (swift) extension NSRect {
-              func area() -> CGFloat {
+              def area() -> CGFloat {
                 return self.size.height * self.size.width
               }
             } 
@@ -1357,7 +1357,7 @@ Next add a button and create an instance of a Swift class to act as the target::
     (swift) content.addSubview(button)
     (swift) button.setBezelStyle(NSRoundedBezelStyle)
     (swift) class Delegate : NSObject {
-              func doSomething(sender : id) {
+              def doSomething(sender : id) {
                 println("Doing something!")
               }
             }

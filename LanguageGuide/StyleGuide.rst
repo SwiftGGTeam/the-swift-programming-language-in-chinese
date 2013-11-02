@@ -265,13 +265,13 @@ Examples are shown below::
     // -----------------------------------------------------------------------------
     
     class httpConnection {
-        func retrieveWebPage(atURL: String, withTimeout: Double, method: String,
+        def retrieveWebPage(atURL: String, withTimeout: Double, method: String,
                 allowUserCancellation: Bool) -> (source: String?, error: String?)
         {
             // wrapped lines above are inset by 8 spaces from the root of the func
             // statements inside are inset by four spaces from the root of the func
         }
-        func retrieveWebPageAtURL(url: String) withTimeout(timeout: Double)
+        def retrieveWebPageAtURL(url: String) withTimeout(timeout: Double)
                 method(method: String)
                 allowUserCancellation(allowUserCancellation: Bool)
                 -> (source: String?, error: String?)
@@ -288,7 +288,7 @@ Examples are shown below::
     // -----------------------------------------------------------------------------
     
     class httpConnection {
-        func retrieveWebPage
+        def retrieveWebPage
                (atURL: String,
                 withTimeout: Double,
                 method: String,
@@ -298,7 +298,7 @@ Examples are shown below::
             // wrapped lines above are inset by 8 spaces from the root of the func
             // statements inside are inset by four spaces from the root of the func
         }
-        func retrieveWebPageAtURL(url: String)
+        def retrieveWebPageAtURL(url: String)
                 withTimeout(timeout: Double)
                 method(method: String)
                 allowUserCancellation(allowUserCancellation: Bool)
@@ -349,13 +349,13 @@ Functions
 
 Function names and their parameter names / argument names should follow the Objective-C method naming convention of ``lowerThenWordCaps``, as with variable names. Unlike Objective-C, this also includes function names and parameter names beginning with words that would otherwise be capitalized::
 
-    func urlComponentsFromString(urlString: String) -> Array<String> {...}
+    def urlComponentsFromString(urlString: String) -> Array<String> {...}
 
 *Rationale: This provides consistency with variable names, and reserves capitalized names for Types only.*
 
 Functions should always name their parameters, in both C-style and selector-style syntax. Each parameter should have a space after (but not before) the colon. There should also be a space after the comma separating each parameter, and a space before and after the return operator (``->``)::
 
-    func sayHello(personName: String, salutation: String) -> String {
+    def sayHello(personName: String, salutation: String) -> String {
         // statements
     }
 
@@ -375,14 +375,14 @@ A single space should be included after (but not before) any commas separating p
 
 Class functions and instance functions should be referred to as ‘methods’ (rather than functions) within comments and descriptive prose.
 
-*Rationale: Although all functions will be prefixed by the func keyword, we have a long history of referring to class and instance functions as ‘methods’. This is certainly true throughout our existing Cocoa documentation. Given that all of our existing developers will refer to these functions as ‘methods’, and given that there is no compelling reason to do otherwise, we should remain consistent with our exising approach.*
+*Rationale: Although all functions will be prefixed by the def keyword, we have a long history of referring to class and instance functions as ‘methods’. This is certainly true throughout our existing Cocoa documentation. Given that all of our existing developers will refer to these functions as ‘methods’, and given that there is no compelling reason to do otherwise, we should remain consistent with our exising approach.*
 
 Single-statement named functions should always place their single statement on a new line, for ease of readability::
 
-    func sayHelloWorld() {
+    def sayHelloWorld() {
         println("hello, world")                         // good
     }
-    func sayHelloWorld() { println("hello, world") }    // bad
+    def sayHelloWorld() { println("hello, world") }    // bad
 
 *Rationale: In addition to readability, this approach also means that single-line functions can have a breakpoint inserted inside the braces in Xcode.*
 
