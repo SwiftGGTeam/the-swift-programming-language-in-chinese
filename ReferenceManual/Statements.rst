@@ -38,7 +38,7 @@ A while statement has the following general form:
 
 blah blah
 
-.. syntax-grammar:: while
+.. syntax-grammar:: while-statement
 
     *while-statement* --> while *basic-expression*  *brace-item-list*
 
