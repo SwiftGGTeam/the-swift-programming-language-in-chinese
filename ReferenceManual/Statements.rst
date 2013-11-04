@@ -30,7 +30,7 @@ While Statement
 
 A while statement has the following general form:
 
-::
+.. synatax-outline::
 
     while <#condition#> {
         <#code-to-execute#>
@@ -38,9 +38,9 @@ A while statement has the following general form:
 
 blah blah
 
-    Grammar of a while statement
+.. syntax-grammar:: while
 
-    | *while-statement* --> while *basic-expression*  *brace-item-list*
+    *while-statement* --> while *basic-expression*  *brace-item-list*
 
 
 
@@ -145,7 +145,7 @@ none of those patterns may contain variable bindings.
 Switch Statements Must Be Exhaustive
 ++++++++++++++++++++++++++++++++++++
 
-In Swift, switch statements must be **exhaustive**—that is, 
+In Swift, switch statements must be **exhaustive** — that is, 
 every possible value of the control expression’s type must match the value of at least one pattern of a case. 
 When this simply isn’t feasible (for instance, when the control expression’s type is ``Int``), 
 you can include a default case to satisfy the requirement.
