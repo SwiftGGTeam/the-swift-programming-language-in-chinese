@@ -30,7 +30,7 @@ While Statement
 
 A while statement has the following general form:
 
-.. synatax-outline::
+.. syntax-outline::
 
     while <#condition#> {
         <#code-to-execute#>
@@ -38,7 +38,9 @@ A while statement has the following general form:
 
 blah blah
 
-.. syntax-grammar:: while-statement
+.. syntax-grammar::
+   
+    Grammar of a while statement
 
     *while-statement* --> while *basic-expression*  *brace-item-list*
 
