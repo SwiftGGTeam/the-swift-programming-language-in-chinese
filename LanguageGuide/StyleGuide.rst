@@ -225,10 +225,6 @@ Four consecutive spaces should be used to inset the statements within the braces
 
 *Rationale: We need to settle on some choice of indentation standard. Four spaces has always been the Xcode default, and is therefore likely to be the default habit learnt by many of our developers.*
 
-Where the writing context means that the number of spaces is not copy-and-pasteable by developers, such as in a WWDC slide, the default inset multiple of four spaces may be reduced to a multiple of two spaces instead.
-
-*Rationale: If the code viewing context means that horizontal space is drastically reduced, the display width of a single space is likely to be reasonably wide. As a result, the current level of indentation will be clear enough without the need for four spaces. Because the code is intended to be used for reference only, or to be typed in by the developer, this does not lead to copy-and-paste inconsistency.*
-
 As a general rule, opening braces for code blocks should appear on the same line as the opening statement they accompany, *if* the entire opening statement that they accompany (including the brace itself) will fit onto one line. (The definition of ‘one line’ is context-dependent, as described later)::
 
     // these examples assume a line length of 80 characters, as indicated here by --
@@ -239,14 +235,20 @@ As a general rule, opening braces for code blocks should appear on the same line
         // statements inside are inset by four characters
     }
 
-If the entire statement that the opening brace accompanies does *not* fit on one line, then the opening brace should be moved to the start of a new line and indented to the same level as the root of the block it accompanies. The block's contents should then begin on another new line, with indentation of four spaces as before.
+    class HTTPConnection {
+        def retrieveWebPageAtURL(url: String) {
+            // statements
+        }
+    }
+    var connection = HTTPConnection()
+    connection.retrieveWebPageAtURL("http://apple.com")
 
-Over-long lines of code should be broken over multiple lines in the file. Wrapped parts of the line should be inset from the current inset depth by *eight* spaces, to avoid visual confusion with the four-space indent of the first line within the code block::
+If the entire statement that the opening brace accompanies does *not* fit on one line, then the opening brace should be moved to the start of a new line and indented to the same level as the root of the block it accompanies. The block's contents should then begin on another new line, with indentation of four spaces::
 
     // -----------------------------------------------------------------------------
 
     if enteredCorrectDoorCode && passedRetinaScan || hasValidDoorKey
-            || knowsEmergencyOverridePassword
+        || knowsEmergencyOverridePassword
     {
         // did not all fit on one line, so it has wrapped
         // and the brace is at the start of another line
@@ -255,61 +257,90 @@ Over-long lines of code should be broken over multiple lines in the file. Wrappe
 
 Where code needs to break over multiple lines, the line breaks should be inserted subject to the following rules:
 
-* For conditional statements: before the first operator or opening parenthesis that is followed by an expression that will not fit (as in the example above)
-* For C-style function definitions: before each ``parameterName: Type`` pair inside the parentheses that will not fit
-* For selector-style function definitions: before each ``parameterName(argumentName: Type)`` triple that will not fit
+* For conditional statements: before the first operator or opening parenthesis that is followed by an expression that will not fit (e.g. before ``|| knowsEmergencyOverridePassword`` in the example above)
+* For C-style function declarations: before each ``parameterName: Type`` pair inside the parentheses
+* For selector-style function declarations: before each ``parameterName(argumentName: Type)`` triple
 * For either style of functions: if the return indicator ``->`` and its return type will not both fit, both should be moved to a new line
+* For function calls: before each parameter name (with the opening parenthesis remaining on the first line of the call, and the closing parenthesis moved to a new line without an inset)
 
-Examples are shown below::
-
-    // -----------------------------------------------------------------------------
-    
-    class httpConnection {
-        def retrieveWebPage(atURL: String, withTimeout: Double, method: String,
-                allowUserCancellation: Bool) -> (source: String?, error: String?)
-        {
-            // wrapped lines above are inset by 8 spaces from the root of the func
-            // statements inside are inset by four spaces from the root of the func
-        }
-        def retrieveWebPageAtURL(url: String) withTimeout(timeout: Double)
-                method(method: String)
-                allowUserCancellation(allowUserCancellation: Bool)
-                -> (source: String?, error: String?)
-        {
-            // wrapped lines above are inset by 8 spaces from the root of the func
-            // statements inside are inset by four spaces from the root of the func
-        }
-    }
-
-*Rationale: The principle here is that the final horizontal line that opens a code block is always indented less than the first line within that code block. For this reason, where it appears on a new line, the opening brace is not indented further than the root of the block in which it itself is contained. As in the httpConnection example shown here, the opening brace then provides a handy reminder of where the current block's indentation begins, and neatly terminates the double-indentation of the previous wrapped lines. Braces are part of the block scope declaration, not part of its contents, and this difference is made clearer by associating them visually with the block-level declaration, rather than with its contents.*
-
-*The variants below show an alternative style for discussion, with all parameters moved on to new lines whenever wrapping occurs (note the alignment of the parentheses and return symbol)*::
+For example, using the C-style function syntax::
 
     // -----------------------------------------------------------------------------
     
-    class httpConnection {
+    class HTTPConnection {
         def retrieveWebPage
-               (atURL: String,
-                withTimeout: Double,
-                method: String,
-                allowUserCancellation: Bool)
+            (atURL: String,
+            withTimeout: Double,
+            method: String,
+            allowUserCancellation: Bool)
             -> (source: String?, error: String?)
         {
-            // wrapped lines above are inset by 8 spaces from the root of the func
-            // statements inside are inset by four spaces from the root of the func
-        }
-        def retrieveWebPageAtURL(url: String)
-                withTimeout(timeout: Double)
-                method(method: String)
-                allowUserCancellation(allowUserCancellation: Bool)
-            -> (source: String?, error: String?)
-        {
-            // wrapped lines above are inset by 8 spaces from the root of the func
-            // statements inside are inset by four spaces from the root of the func
+            // wrapped lines above are inset by four spaces from the root of the def
+            // statements inside are inset by four spaces from the root of the def
         }
     }
+    var connection = HTTPConnection()
+    var result = connection.retrieveWebPage(
+        atUrl: "http://apple.com",
+        withTimeout: 30,
+        method: "GET",
+        allowUserCancellation: false
+    )
 
-As mentioned above, the appropriate line length to use will depend on the context. Writing for a WWDC slide (c. 60 characters) is different from writing for PDF (c. 70 characters), which is different again from online documentation (c. 80 characters), or for Xcode sample code (where longer line lengths are acceptable). The exact length used for wrapping is therefore left to the writer's discretion, dependent on context. However, the rules above should be applied consistently.
+Another example, using Joe's proposed new selector-style syntax with root function names and elidable keynames::
+
+    class HTTPConnection {
+        def retrieveWebPage
+            atUrl:(String)
+            withTimeout:(timeout: Double)
+            method:(String)
+            allowUserCancellation:(Bool)
+            -> (source: String?, error: String?)
+        {
+            // wrapped lines above are inset by four spaces from the root of the def
+            // statements inside are inset by four spaces from the root of the def
+        }
+    }
+    var connection = HTTPConnection()
+    var result = connection.retrieveWebPage(
+        atUrl: "http://apple.com",
+        withTimeout: 30,
+        method: "GET",
+        allowUserCancellation: false
+    )
+
+Also using Joe's proposed new selector-style syntax, but rewritten without a root name, as per Cocoa imports::
+
+    class HTTPConnection {
+        def retrieveWebPageAtUrl:(String)
+            withTimeout:(timeout: Double)
+            method:(String)
+            allowUserCancellation:(Bool)
+            -> (source: String?, error: String?)
+        {
+            // wrapped lines above are inset by four spaces from the root of the def
+            // statements inside are inset by four spaces from the root of the def
+        }
+    }
+    var connection = HTTPConnection()
+    var result = connection.(
+        retrieveWebPageAtUrl: "http://apple.com",
+        withTimeout: 30,
+        method: "GET",
+        allowUserCancellation: false
+    )
+
+*Rationale: With this approach, the final horizontal line that opens a code block is always indented less than the first line within that code block. The opening brace is indented to the same level as the root of the block in which it is contained. As in the HTTPConnection example shown here, the opening brace then provides a handy reminder of where the current block's indentation begins, and neatly terminates the indentation of the previous wrapped lines.*
+
+*Braces are part of the block scope declaration, not part of its contents. This difference is made clearer by associating them visually with the block-level declaration, rather than with its contents.*
+
+*Conveniently, the* ``def`` *keyword is exactly three characters long. This means that the wrapped function declaration left-aligns neatly with the function's name.*
+
+The appropriate line length to wrap to will depend on the context. Writing for a WWDC slide (c. 75 characters) is different from writing for PDF (c. 65 characters), which is different again from online documentation or Xcode sample code (where longer line lengths are acceptable). The exact length used for wrapping is therefore left to the writer's discretion, dependent on context. However, the rules above should be applied consistently.
+
+Where the writing context means that the number of spaces used for indentation is not easily copy-and-pasteable by developers, such as in a WWDC slide, the default inset multiple of four spaces may be reduced to a multiple of two spaces instead.
+
+*Rationale: If the code viewing context means that horizontal space is drastically reduced, the display width of a single space is likely to be reasonably wide. As a result, the current level of indentation will be clear enough without the need for four spaces. Because the code is intended to be used for reference only, or to be typed in by the developer, this does not lead to copy-and-paste inconsistency.*
 
 Switch ``case`` declarations should be inset from the root of the switch statement by four spaces, and the statements within each case should be inset from the ``case`` statement by a further four spaces::
 
@@ -353,20 +384,16 @@ Function names and their parameter names / argument names should follow the Obje
 
 *Rationale: This provides consistency with variable names, and reserves capitalized names for Types only.*
 
-Functions should always name their parameters, in both C-style and selector-style syntax. Each parameter should have a space after (but not before) the colon. There should also be a space after the comma separating each parameter, and a space before and after the return operator (``->``)::
+If a function names its parameters, the parameter names should have a space after (but not before) the colon. There should also be a space after the comma separating each parameter, and a space before and after the return operator (``->``)::
 
     def sayHello(personName: String, salutation: String) -> String {
         // statements
     }
 
-*Note: The selector-style syntax is still being refined, and so the advice about always naming parameters may change or require more context.*
-
-Parameter names do not *have* to be used when calling a function, but should be used wherever it aids clarity. If parameter names *are* used, they should have a space after (but not before) their colon::
+If parameter names are used when calling a function, they should have a space after (but not before) their colon::
 
     sayHello(personName: "Dave", salutation: "Howdy!")     // good
     sayHello(personName : "Dave", salutation : "Howdy!")   // bad
-
-*Rationale: Calling functions using their parameter names helps to clarify the intention of the values that are passed in to that function. This is particularly true where the function has more than one parameter. This is also consistent with the selector-style approach from Objective-C.*
 
 A single space should be included after (but not before) any commas separating parameters. Spaces should not be placed between parentheses and parameter values::
 
@@ -375,16 +402,71 @@ A single space should be included after (but not before) any commas separating p
 
 Class functions and instance functions should be referred to as ‘methods’ (rather than functions) within comments and descriptive prose.
 
-*Rationale: Although all functions will be prefixed by the def keyword, we have a long history of referring to class and instance functions as ‘methods’. This is certainly true throughout our existing Cocoa documentation. Given that all of our existing developers will refer to these functions as ‘methods’, and given that there is no compelling reason to do otherwise, we should remain consistent with our exising approach.*
+*Rationale: Although all functions will be prefixed by the* ``def`` *keyword, we have a long history of referring to class and instance functions as ‘methods’. This is certainly true throughout our existing Cocoa documentation. Given that all of our existing developers will refer to these functions as ‘methods’, and given that there is no compelling reason to do otherwise, we should remain consistent with our exising approach.*
 
-Single-statement named functions should always place their single statement on a new line, for ease of readability::
+Single-statement functions should always place their single statement on a new line, for ease of readability::
 
     def sayHelloWorld() {
         println("hello, world")                         // good
     }
-    def sayHelloWorld() { println("hello, world") }    // bad
+    def sayHelloWorld() { println("hello, world") }     // bad
 
-*Rationale: In addition to readability, this approach also means that single-line functions can have a breakpoint inserted inside the braces in Xcode.*
+*Rationale: In addition to improved readability, this approach means that single-line functions can have a breakpoint inserted inside the braces in Xcode.*
+
+Closures
+--------
+
+Functions and methods that take a closure as their final parameter should write the closure outside of the function's braces where circumstances allow. The closure's parameters and ``in`` statement should be on a new line inset by four characters, with the closure's body statements inset by a further four characters. Double-indentation is not required if the closure does not have any arguments. Parameter types and return type may be inferred, and do not need to be specified explicitly if they are obvious enough from the context::
+
+    var sortedStrings = sort(strings) {
+        (string1, string2) in
+            return string1.uppercase < string2.uppercase
+    }
+    
+    var someValue = 42
+    dispatch_async(someQueue) {
+        println("Value is \(someValue)")
+        someValue += 1
+    }
+
+Where it is not possible to place the closure outside of the parentheses (due to a named closure in the function definition), a new line should start after the closure's opening brace::
+
+    var session = NSURLSession.sharedSession()
+    var downloadTask = session.(downloadTaskWithURL: url, completionHandler: {
+        (url: NSURL, response: NSURLResponse, error: NSError) in
+            // statements
+            // statements
+    })
+
+*Note: it seems unusual not to have any punctuation after the* ``in`` *keyword. A colon here would make sense for consistency with syntax seen elsewhere in Swift.*
+
+Shorthand numeric placeholders for closure parameters should not be used unless the context makes their purpose explicitly obvious. Although they are a useful shorthand to have in the language, their use can be at the expense of clarity of purpose. It is generally better to use the full parameter names to make the purpose of each argument clear. Exceptions can be made when the closure takes two values of the same type for comparison or ordering::
+
+    var sortedStrings = sort(strings) {
+        $0 < $1                             // okay to use the shorthand here due to context
+    }
+
+*Rationale: in the comparison or sorting scenario, the two arguments are essentially equivalent, and their type and purpose is clear.*
+
+Methods with particularly long closures, or multiple closure parameters, can be wrapped as per the rules from earlier::
+
+    // -----------------------------------------------------------------------------
+
+    viewController.(
+        transitionFromViewController: fromViewController
+        toViewController: toViewController
+        duration: 1.0
+        options: UIViewAnimationOptionLayoutSubviews
+        animations: {
+            // a closure containing the changes to commit to the views
+            // note that this parameter-less closure is not double-inset
+        }
+        completion: {
+            (finished: Bool) in
+                // a closure to be called when the animation completes
+                // this closure is double-inset, as it has parameters
+        }
+    )
 
 Classes and Structs
 -------------------
@@ -399,6 +481,8 @@ Class and struct definitions should inset all of their contents by four spaces w
         var numberOfLegs: Int
     }
 
+*Rationale: This is different from Objective-C, where the root level of code blocks and braces in a class definition file is at the start of a line. However, the approach described here 'feels' right in Swift, and is consistent with the code insetting approach defined above for use wherever else code is contained within braces.*
+
 Superclasses should be indicated with a space on *both* sides of the colon. Method declarations should inset their contents by four spaces within their braces::
 
     class Quadrilateral : Shape {
@@ -406,6 +490,8 @@ Superclasses should be indicated with a space on *both* sides of the colon. Meth
             numberOfSides = 4
         }
     }
+
+*Rationale: I'm not sure I actually agree with this one. Why do we treat these as special? If we're standardizing on 'x of type T' being written as* ``x: T`` *rather than* ``x : T``\ *, why should this be the one exception?*
 
 Properties with getters or setters should inset the ``get`` / ``set`` statements by four spaces, and these should in turn inset their contents by a further four spaces. ``set`` should not have any spaces before or within its parentheses::
 
@@ -421,6 +507,8 @@ Properties with getters or setters should inset the ``get`` / ``set`` statements
                 radius = aCircumference / (2 * 3.14159)
         }
     }
+
+*Rationale: This is consistent with the code insetting policy defined earlier for colon-terminated lines in switch case statements. It also helps to clarify that the contents of the getter / setter methods have their own scope. It does seem slightly odd that these use colons rather than wrapping braces (as seen in all other functions), however – is there a reason for this distinction?*
 
 Classes and structs that conform to one or more protocols should list their protocols in alphabetical order, separated by commas with a space after but not before the comma::
 
