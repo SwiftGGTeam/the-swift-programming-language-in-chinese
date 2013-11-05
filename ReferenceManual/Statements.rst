@@ -2,10 +2,27 @@ Statements
 ==========
 
 
+.. syntax-grammar::
+
+    Grammar of a statement
+    
+    *statement* --> *semicolon-statement*
+    *statement* --> *if-statement*
+    *statement* --> *while-statement*
+    *statement* --> *c-style-for-statement*
+    *statement* --> *for-each-statement*
+    *statement* --> *switch-statement*
+    *statement* --> *control-transfer-statement*
+
 Semicolon Statement
 -------------------
 
 
+.. syntax-grammar::
+
+    Grammar of a semicolon statement
+    
+    *semicolon-statement* --> ;
 
 Looping Statements
 ------------------
@@ -19,10 +36,39 @@ C-Style For Statements
 ++++++++++++++++++++++
 
 
+.. syntax-outline::
 
-Fast Enumeration For Statements
-+++++++++++++++++++++++++++++++
+    for (<#initialization#>; <#expression#>; <#basic-expression#>) {
+        <#code-to-execute#>
+    }
 
+where the parentheses are optional.
+
+.. syntax-grammar::
+
+    Grammar of a C-style for statement
+    
+    *c-style-for-statement* --> for *for-init*\ :sub:`opt` ; *expression*\ :sub:`opt` ; *basic-expression*\ :sub:`opt` *brace-item-list*
+    *c-style-for-statement* --> for ( *for-init*\ :sub:`opt` ; *expression*\ :sub:`opt` ; *basic-expression*\ :sub:`opt` ) *brace-item-list*
+    
+    *for-init* --> *variable-declaration* | *expression*
+
+For-Each Statement
+++++++++++++++++++
+
+.. syntax-outline::
+
+    for <#pattern#> in <#basic-expression#> {
+        <#code-to-execute#>
+    }
+
+
+
+.. syntax-grammar::
+
+    Grammar of a for-each statement
+    
+    *for-each-statement* --> for *pattern* in *basic-expression* *brace-item-list*
 
 While Statement
 ~~~~~~~~~~~~~~~
@@ -32,22 +78,36 @@ A while statement has the following general form:
 
 .. syntax-outline::
 
-    while <#condition#> {
-        <#code-to-execute#>
+    while <#basic-expression#> {
+        <#code-to-execute-while-true#>
     }
 
-blah blah
+
 
 .. syntax-grammar::
    
     Grammar of a while statement
 
-    *while-statement* --> while *basic-expression*  *brace-item-list*
+    *while-statement* --> while *basic-expression* *brace-item-list*
 
 
 Do-While Statement
 ~~~~~~~~~~~~~~~~~~
 
+
+.. syntax-outline::
+
+    do {
+        <#code-to-execute#>
+    } while <#expression#>
+
+
+
+.. syntax-grammar::
+   
+    Grammar of a do-while statement
+
+    *do-while-statement* --> do *brace-item-list* while *expression*
 
 Branching Statements
 --------------------
@@ -60,7 +120,7 @@ The general format of an ``if`` statement is
 
 .. syntax-outline::
 
-    if <#condition#> {
+    if <#basic-expression#> {
         <#code-to-execute-if-true#>
     } else {
         <#code-to-execute-if-false#>
@@ -68,12 +128,24 @@ The general format of an ``if`` statement is
 
 where the ``else`` part is optional.
 
+
+.. syntax-outline::
+
+    if <#basic-expression 1#> {
+        <#code-to-execute-if-1-is-true#>
+    } else if <#basic-expression 2#> {
+        <#code-to-execute-if-2-is-true#>
+    } else {
+        <#code-to-execute-if-both-are-false#>
+    }
+
+
 .. syntax-grammar::
 
     Grammar of an if statement
 
     *if-statement* --> if *basic-expression* *brace-item-list* *if-else-statement*\ :sub:`opt`
-    *if-else-statement* --> else *brace-item-list* | else  *if-statement*
+    *if-else-statement* --> else *brace-item-list* | else *if-statement*
 
 Switch Statements
 ~~~~~~~~~~~~~~~~~
@@ -169,29 +241,58 @@ see “Fall Through” in the :doc:`../LanguageGuide/LanguageGuide`.
     *guard-expression* --> where *expression*
     
 
-Control Flow Statements
------------------------
+Control Transfer Statements
+---------------------------
 
+
+.. syntax-grammar::
+
+    Grammar of a control transfer statement
+    
+    *control-transfer-statement* --> *break-statement*
+    *control-transfer-statement* --> *continue-statement*
+    *control-transfer-statement* --> *fallthrough-statement*
+    *control-transfer-statement* --> *return-statement*
 
 Break Statement
 ~~~~~~~~~~~~~~~
+
+
+.. syntax-grammar::
+
+    Grammar of a break statement
+    
+    *break-statement* --> break
 
 
 Continue Statement
 ~~~~~~~~~~~~~~~~~~
 
 
+.. syntax-grammar::
+
+    Grammar of a continue statement
+    
+    *continue-statement* --> continue
+
+
 Fall-Through Statement
 ~~~~~~~~~~~~~~~~~~~~~~
 
+
+.. syntax-grammar::
+
+    Grammar of a fall-through statement
+    
+    *fallthrough-statement* --> fallthrough
 
 Return Statements
 ~~~~~~~~~~~~~~~~~
 
 
+.. syntax-grammar::
 
-
-
-
-
+    Grammar of a return statement
+    
+    *return-statement* --> return | return *expression*
 
