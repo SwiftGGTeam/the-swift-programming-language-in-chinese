@@ -88,7 +88,7 @@ A while statement has the following general form:
    
     Grammar of a while statement
 
-    *while-statement* --> while *basic-expression* *brace-item-list*
+    while-statement --> ``while`` basic-expression  brace-item-list
 
 
 Do-While Statement
@@ -144,8 +144,8 @@ where the ``else`` part is optional.
 
     Grammar of an if statement
 
-    *if-statement* --> if *basic-expression* *brace-item-list* *if-else-statement*\ :sub:`opt`
-    *if-else-statement* --> else *brace-item-list* | else *if-statement*
+    if-statement  --> ``if`` basic-expression brace-item-list if-else-statement-OPT
+    if-else-statement  --> ``else`` brace-item-list | ``else`` if-statement
 
 Switch Statements
 ~~~~~~~~~~~~~~~~~
