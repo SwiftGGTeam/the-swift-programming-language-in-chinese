@@ -72,10 +72,8 @@ where the ``else`` part is optional.
 
     Grammar of an if statement
 
-    *if-statement*  --> if *basic-expression* *brace-item-list* *if-else-statement*\ :sub:`opt`
-
-    *if-else-statement*  --> else *brace-item-list* | else  *if-statement*
-
+    *if-statement* --> if *basic-expression* *brace-item-list* *if-else-statement*\ :sub:`opt`
+    *if-else-statement* --> else *brace-item-list* | else  *if-statement*
 
 Switch Statements
 ~~~~~~~~~~~~~~~~~
@@ -88,56 +86,33 @@ which may include declarations, expressions, and other statements.
 
 A switch statement has the following general form:
 
-| ``switch`` *basic-expression* ``{``
-|       ``case`` *pattern-list 1*\ ``:``
-|           *code-to*execute*
-|       ``case`` *pattern-list 2* ``where`` *expression*\ ``:``
-|           *code-to-execute*
-|
-|       ``default:``
-|           *code-to-execute*
-| ``}``
+.. syntax-outline::
+
+    switch <#basic-expression#> {
+        case <#pattern-list 1#>:
+            <#code-to-execute#>
+        case <#pattern-list 2#> where <#expression#>:
+            <#code-to-execute#>
+
+        default:
+            <#code-to-execute#>
+    }
 
 Because the control expression in a Swift switch statement is a *basic-expression*, 
-the values of expressions your code can branch on is very flexible. 
-For instance, in addition to the values of scalar types, such as ``Int`` and ``Char``, 
+the values of expressions your code can branch on is very flexible. For instance, 
+in addition to the values of scalar types, such as ``Int`` and ``Char``, 
 your code can branch on the values of any type, including floating point numbers, strings, 
 tuples, instances of custom classes, and optionals. 
 The value of a control expression can even be pattern-matched to the value of a case in an enumeration 
 and checked for inclusion in a specified range of values. 
-The following example illustrates the various kinds of patterns that may be matched to the value of a control expression.
-
-::
-
-    (swift) switch basic-expression {
-	            case 2:
-	            case 3, 5:
-		            println(“matches one of the first three prime numbers”)
-	            case 10..100:
-		            println(“matches a number between 10 and 99”)
-	            case .Bar
-		            println(“matches the value of the ‘Bar’ enum case”)
-	            case (sin(π/2), 2):
-		            println(“matches the value of the tuple (1.0, 2)”)
-	            case (_, “world”):
-		            println(“the second element mathces the String ‘world’”)
-	            case myObject:
-		            println(“matches the value of myObject”)
-	            case .None:
-		            println(“the value of the expression is not present”)
-	            case (var x, var y) where x == y:
-		            println(“both elements have the same value”)
-	
-	            default:
-		            println(“didn’t match any other pattern”)
-	        }
-
+For examples of how to use these various types of values in switch statements, 
+see “Switch” in the :doc:`../LanguageGuide/LanguageGuide`.
 
 A switch case may optionally contain a **guard expression**, which is introduced by the keyword ``where`` followed by an expression. 
 Guard expressions are used to provide an additional condition before a case is considered matched to the control expression. 
 If a guard expression is present, the block of code within the relevant case is executed only if 
 the value of the control expression matches one of the patterns of the case and the guard expression evaluates to ``true``.  
-In the example above, for instance, the control expression matches the case::
+In the following example, for instance, a control expression matches the case::
  
     (swift) case (var x, var y) where x == y:
  
@@ -148,10 +123,22 @@ and throughout the rest of the code within the scope of the case.
 That said, if the case contains multiple patterns that match the control expression, 
 none of those patterns may contain variable bindings.
 
+Switch statements may also include a default case, introduced by the keyword ``default``. 
+The code within a default case is executed only if no other cases match the control expression. 
+Switch statements may include only one default case, which must appear at the end of the switch statement.
+
+Although the actual execution order of pattern-matching operations, 
+and in particular the evaluation order of patterns in cases, is unspecified, 
+pattern matching in a switch statement behaves as if the evaluation is performed in source order—that is, 
+the order in which they appear in source code. 
+As a result, if multiple cases contain patterns that evaluate to the same value, 
+and thus can match the value of the control expression, 
+the program executes only the code within the first matching case in source order.
+
 Switch Statements Must Be Exhaustive
 ++++++++++++++++++++++++++++++++++++
 
-In Swift, switch statements must be **exhaustive** — that is, 
+In Swift, switch statements must be **exhaustive**—that is, 
 every possible value of the control expression’s type must match the value of at least one pattern of a case. 
 When this simply isn’t feasible (for instance, when the control expression’s type is ``Int``), 
 you can include a default case to satisfy the requirement.
@@ -167,19 +154,20 @@ in the case from which you want execution to continue.
 For an example of how to use a fall-through statement in a switch statement, 
 see “Fall Through” in the :doc:`../LanguageGuide/LanguageGuide`.
 
+.. syntax-grammar::
 
-    **Grammar of a switch statement**
+    Grammar of a switch statement
 
-    | *switch-statement*  ⟶ ``switch`` *basic-expression* ``{`` *switch-cases*\ :sub:`opt` ``}``
-    | *switch-cases*  ⟶ *switch-case*  |  *switch-case* *switch-cases*
-    | *switch-case*   ⟶ *case-labels* *brace-item*\ :sub:`opt`  |  *default-label* *brace-item*\ :sub:`opt`
-    |
-    | *case-labels*   ⟶ *case-label*  |  *case-label*  *case-labels*
-    | *case-label*    ⟶ ``case`` *pattern-list* *guard-expression*\ :sub:`opt` ``:``
-    | *default-label* ⟶ ``default`` ``:``
-    |
-    | *guard-expression* ⟶ ``where`` *expression*
-
+    *switch-statement* --> switch *basic-expression* { *switch-cases*\ :sub:`opt` }
+    *switch-cases* --> *switch-case* | *switch-case* *switch-cases*
+    *switch-case* --> *case-labels* *brace-item*\ :sub:`opt` | *default-label* *brace-item*\ :sub:`opt`
+    
+    *case-labels* --> *case-label* | *case-label* *case-labels*
+    *case-label* --> case *pattern-list* *guard-expression*\ :sub:`opt` :
+    *default-label* --> default :
+   
+    *guard-expression* --> where *expression*
+    
 
 Control Flow Statements
 -----------------------
