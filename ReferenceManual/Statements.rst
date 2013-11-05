@@ -6,13 +6,13 @@ Statements
 
     Grammar of a statement
    
-    *statement* --> *semicolon-statement*
-    *statement* --> *if-statement*
-    *statement* --> *while-statement*
-    *statement* --> *c-style-for-statement*
-    *statement* --> *for-each-statement*
-    *statement* --> *switch-statement*
-    *statement* --> *control-transfer-statement*
+    statement --> semicolon-statement
+    statement --> if-statement
+    statement --> while-statement
+    statement --> c-style-for-statement
+    statement --> for-each-statement
+    statement --> switch-statement
+    statement --> control-transfer-statement
 
 Semicolon Statement
 -------------------
@@ -22,7 +22,7 @@ Semicolon Statement
 
     Grammar of a semicolon statement
    
-    *semicolon-statement* --> ;
+    semicolon-statement --> ``;``
 
 Looping Statements
 ------------------
@@ -48,10 +48,10 @@ where the parentheses are optional.
 
     Grammar of a C-style for statement
    
-    *c-style-for-statement* --> for *for-init*\ :sub:`opt` ; *expression*\ :sub:`opt` ; *basic-expression*\ :sub:`opt` *brace-item-list*
-    *c-style-for-statement* --> for ( *for-init*\ :sub:`opt` ; *expression*\ :sub:`opt` ; *basic-expression*\ :sub:`opt` ) *brace-item-list*
+    c-style-for-statement --> ``for`` for-init-OPT ``;`` expression-OPT ``;`` basic-expression-OPT brace-item-list
+    c-style-for-statement --> ``for`` ``(`` for-init-OPT ``;`` expression-OPT ``;`` basic-expression-OPT ``)`` brace-item-list
    
-    *for-init* --> *variable-declaration* | *expression*
+    for-init --> variable-declaration | expression
 
 For-Each Statement
 ++++++++++++++++++
@@ -68,7 +68,7 @@ For-Each Statement
 
     Grammar of a for-each statement
    
-    *for-each-statement* --> for *pattern* in *basic-expression* *brace-item-list*
+    for-each-statement --> ``for`` pattern ``in`` basic-expression brace-item-list
 
 While Statement
 ~~~~~~~~~~~~~~~
@@ -107,7 +107,7 @@ Do-While Statement
   
     Grammar of a do-while statement
 
-    *do-while-statement* --> do *brace-item-list* while *expression*
+    do-while-statement --> ``do`` brace-item-list ``while`` expression
 
 Branching Statements
 --------------------
