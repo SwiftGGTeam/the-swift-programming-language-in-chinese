@@ -231,10 +231,10 @@ see “Fall Through” in the :doc:`../LanguageGuide/LanguageGuide`.
     Grammar of a switch statement
 
     switch-statement --> ``switch`` basic-expression ``{`` switch-cases-OPT ``}``
-    switch-cases --> switch-case ``|`` switch-case switch-cases
-    switch-case --> case-labels brace-item-OPT ``|`` default-label brace-item-OPT
+    switch-cases --> switch-case | switch-case switch-cases
+    switch-case --> case-labels brace-item-OPT | default-label brace-item-OPT
    
-    case-labels --> case-label ``|`` case-label case-labels
+    case-labels --> case-label | case-label case-labels
     case-label --> ``case`` pattern-list guard-expression-OPT ``:``
     default-label --> ``default:``
   
