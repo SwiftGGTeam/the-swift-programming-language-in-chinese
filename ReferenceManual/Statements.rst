@@ -58,18 +58,23 @@ If Statements
 
 The general format of an ``if`` statement is
 
-| ``if`` *condition* ``{``
-|    *code-to-execute-if-true*
-| ``} else {``
-|    *code-to-execute-if-false*
-| ``}``
+.. syntax-outline::
+
+    if <#condition#> {
+        <#code-to-execute-if-true#>
+    } else {
+        <#code-to-execute-if-false#>
+    }
 
 where the ``else`` part is optional.
 
-    **Grammar of an if statement**
+.. syntax-grammar::
 
-    | *if-statement*  ⟶ ``if`` *basic-expression*  *brace-item-list*  *if-else-statement*\ :sub:`opt`
-    | *if-else-statement*  ⟶ ``else``  *brace-item-list* | ``else``  *if-statement*
+    Grammar of an if statement
+
+    *if-statement*  --> if *basic-expression* *brace-item-list* *if-else-statement*\ :sub:`opt`
+
+    *if-else-statement*  --> else *brace-item-list* | else  *if-statement*
 
 
 Switch Statements
