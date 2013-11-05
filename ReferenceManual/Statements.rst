@@ -230,15 +230,15 @@ see “Fall Through” in the :doc:`../LanguageGuide/LanguageGuide`.
 
     Grammar of a switch statement
 
-    *switch-statement* --> switch *basic-expression* { *switch-cases*\ :sub:`opt` }
-    *switch-cases* --> *switch-case* | *switch-case* *switch-cases*
-    *switch-case* --> *case-labels* *brace-item*\ :sub:`opt` | *default-label* *brace-item*\ :sub:`opt`
+    switch-statement --> ``switch`` basic-expression ``{`` switch-cases-OPT ``}``
+    switch-cases --> switch-case ``|`` switch-case switch-cases
+    switch-case --> case-labels brace-item-OPT ``|`` default-label brace-item-OPT
     
-    *case-labels* --> *case-label* | *case-label* *case-labels*
-    *case-label* --> case *pattern-list* *guard-expression*\ :sub:`opt` :
-    *default-label* --> default :
+    case-labels --> case-label ``|`` case-label case-labels
+    case-label --> ``case`` pattern-list guard-expression-OPT ``:``
+    default-label --> ``default:``
    
-    *guard-expression* --> where *expression*
+    guard-expression --> ``where`` expression
     
 
 Control Transfer Statements
@@ -249,10 +249,10 @@ Control Transfer Statements
 
     Grammar of a control transfer statement
     
-    *control-transfer-statement* --> *break-statement*
-    *control-transfer-statement* --> *continue-statement*
-    *control-transfer-statement* --> *fallthrough-statement*
-    *control-transfer-statement* --> *return-statement*
+    control-transfer-statement --> break-statement
+    control-transfer-statement --> continue-statement
+    control-transfer-statement --> fallthrough-statement
+    control-transfer-statement --> return-statement
 
 Break Statement
 ~~~~~~~~~~~~~~~
@@ -262,7 +262,7 @@ Break Statement
 
     Grammar of a break statement
     
-    *break-statement* --> break
+    break-statement --> ``break``
 
 
 Continue Statement
@@ -273,7 +273,7 @@ Continue Statement
 
     Grammar of a continue statement
     
-    *continue-statement* --> continue
+    continue-statement --> ``continue``
 
 
 Fall-Through Statement
@@ -284,7 +284,7 @@ Fall-Through Statement
 
     Grammar of a fall-through statement
     
-    *fallthrough-statement* --> fallthrough
+    fallthrough-statement* --> ``fallthrough``
 
 Return Statements
 ~~~~~~~~~~~~~~~~~
@@ -294,5 +294,5 @@ Return Statements
 
     Grammar of a return statement
     
-    *return-statement* --> return | return *expression*
+    return-statement --> ``return`` | ``return`` expression
 
