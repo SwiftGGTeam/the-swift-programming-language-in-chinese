@@ -284,7 +284,7 @@ Fall-Through Statement
 
     Grammar of a fall-through statement
    
-    fallthrough-statement* --> ``fallthrough``
+    fallthrough-statement --> ``fallthrough``
 
 Return Statements
 ~~~~~~~~~~~~~~~~~
