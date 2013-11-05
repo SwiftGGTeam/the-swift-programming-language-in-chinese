@@ -405,6 +405,7 @@ For example: the ``Int16`` integer type can hold any signed value between ``-327
     (swift) var potentialOverflow = Int16.max()     // the largest value that Int16 can hold
     // potentialOverflow : Int16 = 32767
     (swift) potentialOverflow += 1                  // this will throw an error
+    xxx overflow
 
 .. TODO: is "throw an error" the correct phrase to use here? It actually triggers an assertion, causing the REPL to crash.
 .. TODO: change the error text we detect here once overflowing provides an error message rather than just an assert.

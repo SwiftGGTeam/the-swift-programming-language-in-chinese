@@ -37,7 +37,7 @@ The declaration describes what the function does, what it expects to receive, an
 
 .. testcode::
 
-    (swift) func sayHello(personName : String) -> String {
+    (swift) def sayHello(personName : String) -> String {
                 var greeting = "Hello, " + personName + "!"
                 return greeting
             }
@@ -56,7 +56,7 @@ The contents of this function could actually be simplified further, to combine t
 
 .. testcode::
 
-    (swift) func sayHelloAgain(personName : String) -> String {
+    (swift) def sayHelloAgain(personName : String) -> String {
                 return "Hello again, " + personName + "!"
             }
     (swift) println(sayHelloAgain("Cheryl"))
@@ -79,7 +79,7 @@ Functions can have multiple input parameters. This function takes an x and y val
 
 .. testcode::
 
-    (swift) func distanceFromOrigin(x : Double, y : Double) -> Double {
+    (swift) def distanceFromOrigin(x : Double, y : Double) -> Double {
                 return sqrt(Double(x * x + y * y))
             }
     (swift) println(distanceFromOrigin(3.0, 4.0))
@@ -98,7 +98,7 @@ Any type of value can be used as an input parameter for a function, if it is dec
 
 .. testcode::
 
-    (swift) func distanceFromOriginForPoint(point : (Double, Double)) -> Double {
+    (swift) def distanceFromOriginForPoint(point : (Double, Double)) -> Double {
                 return sqrt(Double(point.0 * point.0 + point.1 * point.1))
             }
     (swift) var somePoint = (3.0, 4.0)
@@ -112,7 +112,7 @@ The elements of an input tuple can be named by a function's declaration, even if
 
 .. testcode::
 
-    (swift) func distanceFromOriginForNamedPoint(point : (x : Double, y : Double)) -> Double {
+    (swift) def distanceFromOriginForNamedPoint(point : (x : Double, y : Double)) -> Double {
                 return sqrt(Double(point.x * point.x + point.y * point.y))
             }
     (swift) println(distanceFromOriginForNamedPoint(somePoint))
@@ -127,7 +127,7 @@ Values can be passed to a function using the parameter names from the function's
 
 .. testcode::
 
-    (swift) func stringContainsCharacter(stringToSearch : String, characterToFind : Char) -> Bool {
+    (swift) def stringContainsCharacter(stringToSearch : String, characterToFind : Char) -> Bool {
                 for character in stringToSearch.chars {
                     if character == characterToFind {
                         return true
@@ -156,7 +156,7 @@ Function parameters can be assigned default values. If a default value is define
 
 .. testcode::
 
-    (swift) func joinTwoStrings(string1 : String, string2 : String, joiner : String = " ") -> String {
+    (swift) def joinTwoStrings(string1 : String, string2 : String, joiner : String = " ") -> String {
                 return string1 + joiner + string2
             }
     (swift) joinTwoStrings("hello", "world", ":")
@@ -170,7 +170,7 @@ It's important to choose an appropriate order for function parameters when worki
 
 .. testcode::
 
-    (swift) func joinTwoStringsVersion2(string1 : String, joiner : String = " ", string2 : String) -> String {
+    (swift) def joinTwoStringsVersion2(string1 : String, joiner : String = " ", string2 : String) -> String {
                 return string1 + joiner + string2
             }
     (swift) joinTwoStringsVersion2("hello", ":", "world")
@@ -202,7 +202,7 @@ Functions don't have to have input parameters. Here's a function with no input p
 
 .. testcode::
 
-    (swift) func sayHelloWorld() -> String {
+    (swift) def sayHelloWorld() -> String {
                 return "hello, world"
             }
     (swift) println(sayHelloWorld())
@@ -214,7 +214,7 @@ Functions don't have to return a value, either. Here's a version of the ``sayHel
 
 .. testcode::
 
-    (swift) func waveGoodbye(personName : String) {
+    (swift) def waveGoodbye(personName : String) {
                 println("Goodbye, \(personName) 👋")
             }
     (swift) waveGoodbye("Dave")
@@ -228,11 +228,11 @@ The return value of a function can be ignored when it is called:
 
 .. testcode::
 
-    (swift) func printAndCount(stringToPrint : String) -> Int {
+    (swift) def printAndCount(stringToPrint : String) -> Int {
                 println(stringToPrint)
                 return stringToPrint.length
             }
-    (swift) func printWithoutCounting(stringToPrint : String) {
+    (swift) def printWithoutCounting(stringToPrint : String) {
                 printAndCount(stringToPrint)
             }
     (swift) printAndCount("hello, world")
@@ -256,7 +256,7 @@ Here's an example of a function written with selector-style declaration:
 
 .. testcode::
 
-    (swift) func joinString(string1 : String) toString(string2 : String) withJoiner(joiner : String) -> String {
+    (swift) def joinString(string1 : String) toString(string2 : String) withJoiner(joiner : String) -> String {
                 return string1 + joiner + string2
             }
     (swift) joinString("hello", toString: "world", withJoiner: ":")
