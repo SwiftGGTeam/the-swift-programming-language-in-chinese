@@ -5,7 +5,7 @@ Statements
 .. syntax-grammar::
 
     Grammar of a statement
-    
+   
     *statement* --> *semicolon-statement*
     *statement* --> *if-statement*
     *statement* --> *while-statement*
@@ -21,7 +21,7 @@ Semicolon Statement
 .. syntax-grammar::
 
     Grammar of a semicolon statement
-    
+   
     *semicolon-statement* --> ;
 
 Looping Statements
@@ -47,10 +47,10 @@ where the parentheses are optional.
 .. syntax-grammar::
 
     Grammar of a C-style for statement
-    
+   
     *c-style-for-statement* --> for *for-init*\ :sub:`opt` ; *expression*\ :sub:`opt` ; *basic-expression*\ :sub:`opt` *brace-item-list*
     *c-style-for-statement* --> for ( *for-init*\ :sub:`opt` ; *expression*\ :sub:`opt` ; *basic-expression*\ :sub:`opt` ) *brace-item-list*
-    
+   
     *for-init* --> *variable-declaration* | *expression*
 
 For-Each Statement
@@ -67,7 +67,7 @@ For-Each Statement
 .. syntax-grammar::
 
     Grammar of a for-each statement
-    
+   
     *for-each-statement* --> for *pattern* in *basic-expression* *brace-item-list*
 
 While Statement
@@ -85,7 +85,7 @@ A while statement has the following general form:
 
 
 .. syntax-grammar::
-   
+  
     Grammar of a while statement
 
     while-statement --> ``while`` basic-expression  brace-item-list
@@ -104,7 +104,7 @@ Do-While Statement
 
 
 .. syntax-grammar::
-   
+  
     Grammar of a do-while statement
 
     *do-while-statement* --> do *brace-item-list* while *expression*
@@ -150,10 +150,10 @@ where the ``else`` part is optional.
 Switch Statements
 ~~~~~~~~~~~~~~~~~
 
-You can use a switch statement to execute certain blocks of code depending on the value of a 
-**control expression**---the expression following the keyword ``switch``. 
-The control expression of the switch statement is evaluated and then compared with the patterns specified in each case. 
-If a match is found, the program executes the code listed within the scope of that case, 
+You can use a switch statement to execute certain blocks of code depending on the value of a
+**control expression**---the expression following the keyword ``switch``.
+The control expression of the switch statement is evaluated and then compared with the patterns specified in each case.
+If a match is found, the program executes the code listed within the scope of that case,
 which may include declarations, expressions, and other statements.
 
 A switch statement has the following general form:
@@ -170,60 +170,60 @@ A switch statement has the following general form:
             <#code-to-execute#>
     }
 
-Because the control expression in a Swift switch statement is a *basic-expression*, 
-the values of expressions your code can branch on is very flexible. For instance, 
-in addition to the values of scalar types, such as ``Int`` and ``Char``, 
-your code can branch on the values of any type, including floating point numbers, strings, 
-tuples, instances of custom classes, and optionals. 
-The value of a control expression can even be pattern-matched to the value of a case in an enumeration 
-and checked for inclusion in a specified range of values. 
-For examples of how to use these various types of values in switch statements, 
+Because the control expression in a Swift switch statement is a *basic-expression*,
+the values of expressions your code can branch on is very flexible. For instance,
+in addition to the values of scalar types, such as ``Int`` and ``Char``,
+your code can branch on the values of any type, including floating point numbers, strings,
+tuples, instances of custom classes, and optionals.
+The value of a control expression can even be pattern-matched to the value of a case in an enumeration
+and checked for inclusion in a specified range of values.
+For examples of how to use these various types of values in switch statements,
 see “Switch” in the :doc:`../LanguageGuide/LanguageGuide`.
 
-A switch case may optionally contain a **guard expression**, which is introduced by the keyword ``where`` followed by an expression. 
-Guard expressions are used to provide an additional condition before a case is considered matched to the control expression. 
-If a guard expression is present, the block of code within the relevant case is executed only if 
-the value of the control expression matches one of the patterns of the case and the guard expression evaluates to ``true``.  
+A switch case may optionally contain a **guard expression**, which is introduced by the keyword ``where`` followed by an expression.
+Guard expressions are used to provide an additional condition before a case is considered matched to the control expression.
+If a guard expression is present, the block of code within the relevant case is executed only if
+the value of the control expression matches one of the patterns of the case and the guard expression evaluates to ``true``. 
 In the following example, for instance, a control expression matches the case::
- 
+
     (swift) case (var x, var y) where x == y:
- 
-only if it is a tuple that contains two elements of the same value, such as ``(1, 1)``. 
-As this example shows, patterns in a case may also bind variables using the keyword ``var``. 
-These variables can then be referenced in a corresponding guard expression 
-and throughout the rest of the code within the scope of the case. 
-That said, if the case contains multiple patterns that match the control expression, 
+
+only if it is a tuple that contains two elements of the same value, such as ``(1, 1)``.
+As this example shows, patterns in a case may also bind variables using the keyword ``var``.
+These variables can then be referenced in a corresponding guard expression
+and throughout the rest of the code within the scope of the case.
+That said, if the case contains multiple patterns that match the control expression,
 none of those patterns may contain variable bindings.
 
-Switch statements may also include a default case, introduced by the keyword ``default``. 
-The code within a default case is executed only if no other cases match the control expression. 
+Switch statements may also include a default case, introduced by the keyword ``default``.
+The code within a default case is executed only if no other cases match the control expression.
 Switch statements may include only one default case, which must appear at the end of the switch statement.
 
-Although the actual execution order of pattern-matching operations, 
-and in particular the evaluation order of patterns in cases, is unspecified, 
-pattern matching in a switch statement behaves as if the evaluation is performed in source order---that is, 
-the order in which they appear in source code. 
-As a result, if multiple cases contain patterns that evaluate to the same value, 
-and thus can match the value of the control expression, 
+Although the actual execution order of pattern-matching operations,
+and in particular the evaluation order of patterns in cases, is unspecified,
+pattern matching in a switch statement behaves as if the evaluation is performed in source order---that is,
+the order in which they appear in source code.
+As a result, if multiple cases contain patterns that evaluate to the same value,
+and thus can match the value of the control expression,
 the program executes only the code within the first matching case in source order.
 
 Switch Statements Must Be Exhaustive
 ++++++++++++++++++++++++++++++++++++
 
-In Swift, switch statements must be **exhaustive**---that is, 
-every possible value of the control expression’s type must match the value of at least one pattern of a case. 
-When this simply isn’t feasible (for instance, when the control expression’s type is ``Int``), 
+In Swift, switch statements must be **exhaustive**---that is,
+every possible value of the control expression’s type must match the value of at least one pattern of a case.
+When this simply isn’t feasible (for instance, when the control expression’s type is ``Int``),
 you can include a default case to satisfy the requirement.
 
 Execution Does Not Fall Through Cases Implicitly
 ++++++++++++++++++++++++++++++++++++++++++++++++
 
-After the code within a matched case is finished executing, the program exits out of the switch statement. 
-Program execution does not continue or "fall through" to the next case or default case. 
-That said, if you want execution to continue from one case to the next, 
-explicitly include a fall-through statement, which simply consists of the keyword ``fallthrough``, 
-in the case from which you want execution to continue. 
-For an example of how to use a fall-through statement in a switch statement, 
+After the code within a matched case is finished executing, the program exits out of the switch statement.
+Program execution does not continue or "fall through" to the next case or default case.
+That said, if you want execution to continue from one case to the next,
+explicitly include a fall-through statement, which simply consists of the keyword ``fallthrough``,
+in the case from which you want execution to continue.
+For an example of how to use a fall-through statement in a switch statement,
 see “Fall Through” in the :doc:`../LanguageGuide/LanguageGuide`.
 
 .. syntax-grammar::
@@ -233,13 +233,13 @@ see “Fall Through” in the :doc:`../LanguageGuide/LanguageGuide`.
     switch-statement --> ``switch`` basic-expression ``{`` switch-cases-OPT ``}``
     switch-cases --> switch-case ``|`` switch-case switch-cases
     switch-case --> case-labels brace-item-OPT ``|`` default-label brace-item-OPT
-    
+   
     case-labels --> case-label ``|`` case-label case-labels
     case-label --> ``case`` pattern-list guard-expression-OPT ``:``
     default-label --> ``default:``
-   
+  
     guard-expression --> ``where`` expression
-    
+   
 
 Control Transfer Statements
 ---------------------------
@@ -248,7 +248,7 @@ Control Transfer Statements
 .. syntax-grammar::
 
     Grammar of a control transfer statement
-    
+   
     control-transfer-statement --> break-statement
     control-transfer-statement --> continue-statement
     control-transfer-statement --> fallthrough-statement
@@ -261,7 +261,7 @@ Break Statement
 .. syntax-grammar::
 
     Grammar of a break statement
-    
+   
     break-statement --> ``break``
 
 
@@ -272,7 +272,7 @@ Continue Statement
 .. syntax-grammar::
 
     Grammar of a continue statement
-    
+   
     continue-statement --> ``continue``
 
 
@@ -283,7 +283,7 @@ Fall-Through Statement
 .. syntax-grammar::
 
     Grammar of a fall-through statement
-    
+   
     fallthrough-statement* --> ``fallthrough``
 
 Return Statements
@@ -293,6 +293,6 @@ Return Statements
 .. syntax-grammar::
 
     Grammar of a return statement
-    
+   
     return-statement --> ``return`` | ``return`` expression
 
