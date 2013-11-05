@@ -151,7 +151,7 @@ Switch Statements
 ~~~~~~~~~~~~~~~~~
 
 You can use a switch statement to execute certain blocks of code depending on the value of a 
-**control expression**—the expression following the keyword ``switch``. 
+**control expression**---the expression following the keyword ``switch``. 
 The control expression of the switch statement is evaluated and then compared with the patterns specified in each case. 
 If a match is found, the program executes the code listed within the scope of that case, 
 which may include declarations, expressions, and other statements.
@@ -201,7 +201,7 @@ Switch statements may include only one default case, which must appear at the en
 
 Although the actual execution order of pattern-matching operations, 
 and in particular the evaluation order of patterns in cases, is unspecified, 
-pattern matching in a switch statement behaves as if the evaluation is performed in source order—that is, 
+pattern matching in a switch statement behaves as if the evaluation is performed in source order---that is, 
 the order in which they appear in source code. 
 As a result, if multiple cases contain patterns that evaluate to the same value, 
 and thus can match the value of the control expression, 
@@ -210,7 +210,7 @@ the program executes only the code within the first matching case in source orde
 Switch Statements Must Be Exhaustive
 ++++++++++++++++++++++++++++++++++++
 
-In Swift, switch statements must be **exhaustive**—that is, 
+In Swift, switch statements must be **exhaustive**---that is, 
 every possible value of the control expression’s type must match the value of at least one pattern of a case. 
 When this simply isn’t feasible (for instance, when the control expression’s type is ``Int``), 
 you can include a default case to satisfy the requirement.
