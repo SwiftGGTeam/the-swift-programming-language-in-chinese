@@ -1,6 +1,15 @@
 Statements
 ==========
 
+.. langref-grammar
+
+    stmt ::= stmt-semicolon
+    stmt ::= stmt-if
+    stmt ::= stmt-while
+    stmt ::= stmt-for-c-style
+    stmt ::= stmt-for-each
+    stmt ::= stmt-switch
+    stmt ::= stmt-control-transfer
 
 .. syntax-grammar::
 
@@ -16,6 +25,10 @@ Statements
 
 Semicolon Statement
 -------------------
+
+.. langref-grammar
+
+    stmt-semicolon ::= ';'
 
 
 .. syntax-grammar::
@@ -44,12 +57,21 @@ C-Style For Statements
 
 where the parentheses are optional.
 
+
+.. langref-grammar
+
+    stmt-for-c-style    ::= 'for'     stmt-for-c-style-init? ';' expr? ';' expr-basic?     brace-item-list
+    stmt-for-c-style    ::= 'for' '(' stmt-for-c-style-init? ';' expr? ';' expr-basic? ')' brace-item-list
+    stmt-for-c-style-init ::= decl-var
+    stmt-for-c-style-init ::= expr
+
+
 .. syntax-grammar::
 
     Grammar of a C-style for statement
    
-    c-style-for-statement --> ``for`` for-init-OPT ``;`` expression-OPT ``;`` basic-expression-OPT brace-item-list
-    c-style-for-statement --> ``for`` ``(`` for-init-OPT ``;`` expression-OPT ``;`` basic-expression-OPT ``)`` brace-item-list
+    c-style-for-statement --> ``for`` for-init-OPT ``;`` expression-OPT ``;`` basic-expression-OPT code-block
+    c-style-for-statement --> ``for`` ``(`` for-init-OPT ``;`` expression-OPT ``;`` basic-expression-OPT ``)`` code-block
    
     for-init --> variable-declaration | expression
 
@@ -63,12 +85,16 @@ For-Each Statement
     }
 
 
+.. langref-grammar
+
+    stmt-for-each ::= 'for' pattern 'in' expr-basic brace-item-list
+
 
 .. syntax-grammar::
 
     Grammar of a for-each statement
    
-    for-each-statement --> ``for`` pattern ``in`` basic-expression brace-item-list
+    for-each-statement --> ``for`` pattern ``in`` basic-expression code-block
 
 While Statement
 ~~~~~~~~~~~~~~~
@@ -82,13 +108,16 @@ A while statement has the following general form:
         <#code-to-execute-while-true#>
     }
 
+.. langref-grammar
+
+    stmt-while ::= 'while' expr-basic brace-item-list
 
 
 .. syntax-grammar::
   
     Grammar of a while statement
 
-    while-statement --> ``while`` basic-expression  brace-item-list
+    while-statement --> ``while`` basic-expression  code-block
 
 
 Do-While Statement
@@ -102,12 +131,16 @@ Do-While Statement
     } while <#expression#>
 
 
+.. langref-grammar
+
+    stmt-do-while ::= 'do' brace-item-list 'while' expr
+
 
 .. syntax-grammar::
   
     Grammar of a do-while statement
 
-    do-while-statement --> ``do`` brace-item-list ``while`` expression
+    do-while-statement --> ``do`` code-block ``while`` expression
 
 Branching Statements
 --------------------
@@ -140,12 +173,19 @@ where the ``else`` part is optional.
     }
 
 
+.. langref-grammar
+
+    stmt-if      ::= 'if' expr-basic brace-item-list stmt-if-else?
+    stmt-if-else ::= 'else' brace-item-list
+    stmt-if-else ::= 'else' stmt-if
+
+
 .. syntax-grammar::
 
     Grammar of an if statement
 
-    if-statement  --> ``if`` basic-expression brace-item-list if-else-statement-OPT
-    if-else-statement  --> ``else`` brace-item-list | ``else`` if-statement
+    if-statement  --> ``if`` basic-expression code-block if-else-statement-OPT
+    if-else-statement  --> ``else`` code-block | ``else`` if-statement
 
 Switch Statements
 ~~~~~~~~~~~~~~~~~
@@ -226,23 +266,43 @@ in the case from which you want execution to continue.
 For an example of how to use a fall-through statement in a switch statement,
 see “Fall Through” in the :doc:`../LanguageGuide/LanguageGuide`.
 
+
+.. langref-grammar
+
+    stmt-switch ::= 'switch' expr-basic '{' stmt-switch-case* '}'
+    stmt-switch-case ::= (case-label+ | default-label) brace-item*
+    case-label ::= 'case' pattern (',' pattern)* ('where' expr)? ':'
+    default-label ::= 'default' ':'
+
+
 .. syntax-grammar::
 
     Grammar of a switch statement
 
     switch-statement --> ``switch`` basic-expression ``{`` switch-cases-OPT ``}``
     switch-cases --> switch-case | switch-case switch-cases
-    switch-case --> case-labels brace-item-OPT | default-label brace-item-OPT
+    switch-case --> case-labels code-block-items-OPT | default-label code-block-items-OPT
    
     case-labels --> case-label | case-label case-labels
     case-label --> ``case`` pattern-list guard-expression-OPT ``:``
     default-label --> ``default:``
   
     guard-expression --> ``where`` expression
-   
+ 
+.. TODO:
+ 
+     Add elsewhere: code-block-items, pattern-list, and possibly move guard-expression to the
+     expressions chapter.
 
 Control Transfer Statements
 ---------------------------
+
+.. langref-grammar
+
+    stmt-control-transfer ::= stmt-return
+    stmt-control-transfer ::= stmt-break
+    stmt-control-transfer ::= stmt-continue
+    stmt-control-transfer ::= stmt-fallthrough
 
 
 .. syntax-grammar::
@@ -257,6 +317,10 @@ Control Transfer Statements
 Break Statement
 ~~~~~~~~~~~~~~~
 
+.. langref-grammar
+
+    stmt-break ::= 'break' (Note: the langref grammar contained a typo)
+
 
 .. syntax-grammar::
 
@@ -267,6 +331,10 @@ Break Statement
 
 Continue Statement
 ~~~~~~~~~~~~~~~~~~
+
+.. langref-grammar
+
+    stmt-continue ::= 'continue' (Note: the langref grammar contained a typo)
 
 
 .. syntax-grammar::
@@ -279,6 +347,9 @@ Continue Statement
 Fall-Through Statement
 ~~~~~~~~~~~~~~~~~~~~~~
 
+.. langref-grammar
+
+    stmt-fallthrough ::= 'fallthrough'
 
 .. syntax-grammar::
 
@@ -288,6 +359,12 @@ Fall-Through Statement
 
 Return Statements
 ~~~~~~~~~~~~~~~~~
+
+
+.. langref-grammar
+
+    stmt-return ::= 'return' expr
+    stmt-return ::= 'return'
 
 
 .. syntax-grammar::

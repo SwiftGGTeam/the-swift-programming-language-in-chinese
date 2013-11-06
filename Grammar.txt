@@ -1,3 +1,6 @@
+When you start working on one of these, leave a .. langref-grammar comment that contains the
+original LangRef grammar; delete the corresponding grammar from this document.
+
     whitespace ::= ' '
     whitespace ::= '\n'
     whitespace ::= '\r'
@@ -104,6 +107,8 @@
     right-binder ::= [ \r\n\t\)\]\},;:]
     any-identifier ::= identifier | operator
     dollarident ::= '$' id-continue+
+    
+    
     decl ::= decl-class
     decl ::= decl-constructor
     decl ::= decl-destructor
@@ -135,7 +140,7 @@
     decl-var        ::= attribute-list 'var' pattern initializer?  (',' pattern initializer?)*
     decl-var        ::= attribute-list 'var' identifier ':' type-annotation brace-item-list
     decl-var        ::= attribute-list 'var' identifier ':' type-annotation '{' get-set '}'
-   initializer     ::= '=' expr
+    initializer     ::= '=' expr
     get-set         ::= get set?
     get-set         ::= set get
     get             ::= 'get:' brace-item*
@@ -186,6 +191,8 @@
     attribute-inout ::= 'inout'
     attribute-auto_closure ::= 'auto_closure'
     attribute-noreturn ::= 'noreturn'
+
+
     type ::= type-function
     type ::= type-array
     type-simple ::= type-identifier
@@ -205,10 +212,12 @@
     type-array ::= type-array '[' ']'
     type-array ::= type-array '[' expr ']'
     type-metatype ::= type-simple '.' 'metatype'
-      type-optional ::= type-simple '?'-postfix
-   type-composition ::= 'protocol' '<' type-composition-list? '>'
-   type-composition-list ::= type-identifier (',' type-identifier)*
+    type-optional ::= type-simple '?'-postfix
+    type-composition ::= 'protocol' '<' type-composition-list? '>'
+    type-composition-list ::= type-identifier (',' type-identifier)*
     inheritance ::= ':' type-identifier (',' type-identifier)*
+
+
     pattern-atom ::= pattern-var
     pattern-atom ::= pattern-any
     pattern-atom ::= pattern-tuple
@@ -226,6 +235,8 @@
     pattern-tuple-element ::= pattern '=' expr
     pattern-is ::= 'is' type
     pattern-enum-element ::= type-identifier? '.' identifier pattern-tuple?
+
+
     expr          ::= expr-basic
     expr          ::= expr-trailing-closure expr-cast?
     expr-basic    ::= expr-sequence expr-cast?
@@ -286,37 +297,8 @@
     expr-trailing-closure ::= expr-postfix expr-closure+
     expr-optional ::= expr-postfix '?'-postfix
     expr-force-value ::= expr-postfix '!'
-    stmt ::= stmt-semicolon
-    stmt ::= stmt-if
-    stmt ::= stmt-while
-    stmt ::= stmt-for-c-style
-    stmt ::= stmt-for-each
-    stmt ::= stmt-switch
-    stmt ::= stmt-control-transfer
-    stmt-control-transfer ::= stmt-return
-    stmt-control-transfer ::= stmt-break
-    stmt-control-transfer ::= stmt-continue
-    stmt-control-transfer ::= stmt-fallthrough
-    stmt-semicolon ::= ';'
-    stmt-return ::= 'return' expr
-    stmt-return ::= 'return'
-    stmt-return ::= 'break'
-    stmt-return ::= 'continue'
-    stmt-if      ::= 'if' expr-basic brace-item-list stmt-if-else?
-    stmt-if-else ::= 'else' brace-item-list
-    stmt-if-else ::= 'else' stmt-if
-    stmt-while ::= 'while' expr-basic brace-item-list
-    stmt-do-while ::= 'do' brace-item-list 'while' expr
-    stmt-for-c-style    ::= 'for'     stmt-for-c-style-init? ';' expr? ';' expr-basic?     brace-item-list
-    stmt-for-c-style    ::= 'for' '(' stmt-for-c-style-init? ';' expr? ';' expr-basic? ')' brace-item-list
-    stmt-for-c-style-init ::= decl-var
-    stmt-for-c-style-init ::= expr
-    stmt-for-each ::= 'for' pattern 'in' expr-basic brace-item-list
-    stmt-switch ::= 'switch' expr-basic '{' stmt-switch-case* '}'
-    stmt-switch-case ::= (case-label+ | default-label) brace-item*
-    case-label ::= 'case' pattern (',' pattern)* ('where' expr)? ':'
-    default-label ::= 'default' ':'
-    stmt-fallthrough ::= 'fallthrough'
+ 
+    
     generic-params ::= '<' generic-param (',' generic-param)* where-clause? '>'
     generic-param ::= identifier
     generic-param ::= identifier ':' type-identifier
