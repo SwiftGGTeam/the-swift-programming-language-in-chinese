@@ -291,7 +291,7 @@ see “Fall Through” in the :doc:`../LanguageGuide/LanguageGuide`.
  
 .. TODO:
  
-     Add elsewhere: code-block-items, pattern-list, and possibly move guard-expression to the
+     Add elsewhere: pattern-list, and possibly move guard-expression to the
      expressions chapter.
 
 Control Transfer Statements

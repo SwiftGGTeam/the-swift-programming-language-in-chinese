@@ -109,33 +109,9 @@ original LangRef grammar; delete the corresponding grammar from this document.
     dollarident ::= '$' id-continue+
     
     
-    decl ::= decl-class
-    decl ::= decl-constructor
-    decl ::= decl-destructor
-    decl ::= decl-extension
-    decl ::= decl-func
-    decl ::= decl-import
-    decl ::= decl-enum
-    decl ::= decl-enum-element
-    decl ::= decl-protocol
-    decl ::= decl-struct
-    decl ::= decl-typealias
-    decl ::= decl-var
-    decl ::= decl-subscript
-    translation-unit ::= brace-item*
-    brace-item-list ::= '{' brace-item* '}'
-    brace-item      ::= decl
-    brace-item      ::= expr
-    brace-item      ::= stmt
-    decl-import ::=  attribute-list 'import' import-kind? import-path
-    import-kind ::= 'typealias'
-    import-kind ::= 'struct'
-    import-kind ::= 'class'
-    import-kind ::= 'enum'
-    import-kind ::= 'protocol'
-    import-kind ::= 'var'
-    import-kind ::= 'def'
-    import-path ::= any-identifier ('.' any-identifier)*
+    
+    
+    
     decl-extension ::= 'extension' type-identifier inheritance? '{' decl* '}'
     decl-var        ::= attribute-list 'var' pattern initializer?  (',' pattern initializer?)*
     decl-var        ::= attribute-list 'var' identifier ':' type-annotation brace-item-list

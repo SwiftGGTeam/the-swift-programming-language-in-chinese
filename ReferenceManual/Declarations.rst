@@ -2,6 +2,43 @@ Declarations
 ============
 
 
+
+.. langref-grammar
+
+    decl ::= decl-class
+    decl ::= decl-constructor
+    decl ::= decl-destructor
+    decl ::= decl-extension
+    decl ::= decl-func
+    decl ::= decl-import
+    decl ::= decl-enum
+    decl ::= decl-enum-element
+    decl ::= decl-protocol
+    decl ::= decl-struct
+    decl ::= decl-typealias
+    decl ::= decl-var
+    decl ::= decl-subscript
+
+
+.. syntax-grammar::
+
+    Grammar of a declaration
+    
+    declaration --> class-declaration
+    declaration --> constructor-declaration
+    declaration --> destructor-declaration
+    declaration --> extension-declaration
+    declaration --> function-declaration
+    declaration --> import-declaration
+    declaration --> enum-declaration
+    declaration --> enum-element-declaration
+    declaration --> protocol-declaration
+    declaration --> struct-declaration
+    declaration --> typealias-declaration
+    declaration --> variable-declaration
+    declaration --> subscript-declaration
+
+
 Translation Unit
 ----------------
 
