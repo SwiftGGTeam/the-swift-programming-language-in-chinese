@@ -212,7 +212,16 @@ Function Signatures
 Typealias Declarations
 ----------------------
 
+.. langref-grammar
 
+    decl-typealias ::= typealias-head '=' type
+    typealias-head ::= 'typealias' identifier inheritance?
+
+.. syntax-grammar::
+    
+    Grammar of a typealias declaration
+    
+    typealias-declaration --> ``typealias`` identifier type-inheritance-list-OPT ``=`` type
 
 
 Enumeration Declarations
