@@ -227,11 +227,27 @@ Typealias Declarations
 Enumeration Declarations
 ------------------------
 
-
-
 Structure Declarations
 ----------------------
 
+.. langref-grammar
+
+    decl-struct ::= attribute-list 'struct' identifier generic-params? inheritance? '{' decl-struct-body '}'
+    decl-struct-body ::= decl*
+
+.. syntax-grammar::
+
+    Grammar of a structure declaration
+
+   struct-declaration --> attribute-list ``struct`` identifier generic-parameters-OPT type-inheritance-list-OPT ``{`` struct-declaration-body ``}``
+   struct-declaration-body --> declaration-OPT struct-declaration-body-OPT
+
+.. TODO:
+
+   Define elsewhere: generic-parameters --> ``<`` ... ``>``
+   This in for <foo> templated types.
+   "Generic" isn't the best choice of names;
+   maybe we should call this a templated type parameter list?
 
 Class Declarations
 ------------------

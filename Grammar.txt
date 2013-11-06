@@ -115,8 +115,7 @@ original LangRef grammar; delete the corresponding grammar from this document.
     enum-body ::= '{' decl* '}'
     decl-enum-element ::= attribute-list 'case' enum-case (',' enum-case)*
     enum-case ::= identifier type-tuple? ('->' type)?
-    decl-struct ::= attribute-list 'struct' identifier generic-params? inheritance? '{' decl-struct-body '}'
-    decl-struct-body ::= decl*
+
     decl-class ::= attribute-list 'class' identifier generic-params? inheritance? '{' decl-class-body '}'
     decl-class-body ::= decl*
     decl-protocol ::= attribute-list 'protocol' identifier inheritance? '{' protocol-member* '}'
