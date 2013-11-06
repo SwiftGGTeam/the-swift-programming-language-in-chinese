@@ -90,6 +90,8 @@ Import Declarations
 
 .. syntax-grammar::
 
+    Grammar of an import declaration
+    
     import-declaration --> attribute-list ``import`` import-kind-OPT import-path
     
     import-kind --> ``typealias`` | ``struct`` | ``class`` | ``enum`` | ``protocol`` | ``var`` | ``def``
@@ -100,22 +102,117 @@ Extension Declarations
 ----------------------
 
 
+.. langref-grammar
+
+    decl-extension ::= 'extension' type-identifier inheritance? '{' decl* '}'
+
+
+.. syntax-grammar::
+
+    Grammar of an extension declaration
+    
+    extension-declaration --> ``extension`` type-identifier type-inheritance-list-OPT ``{`` declaration-OPT ``}``
+
+.. TODO:
+ 
+     Add elsewhere: type-inheritance-list
+
+
+
 Variable Declarations
 ---------------------
 
 
+.. langref-grammar
 
+    decl-var        ::= attribute-list 'var' pattern initializer?  (',' pattern initializer?)*
+    decl-var        ::= attribute-list 'var' identifier ':' type-annotation brace-item-list
+    decl-var        ::= attribute-list 'var' identifier ':' type-annotation '{' get-set '}'
+    initializer     ::= '=' expr
+    get-set         ::= get set?
+    get-set         ::= set get
+    get             ::= 'get:' brace-item*
+    set             ::= 'set' set-name? ':' brace-item*
+    set-name        ::= '(' identifier ')'
+
+
+.. syntax-grammar::
+
+    Grammar of a variable declaration
+
+    variable-declaration --> attribute-list-OPT ``var`` pattern-initializer-list
+    variable-declaration --> attribute-list-OPT ``var`` typed-pattern-list
+    variable-declaration --> attribute-list-OPT ``var`` identifier ``:`` type-annotation code-block
+    variable-declaration --> attribute-list-OPT ``var`` identifier ``:`` type-annotation getter-setter-block
+    
+    pattern-initializer-list --> pattern-initializer | pattern-initializer ``,`` pattern-initializer-list
+    pattern-initializer --> pattern initializer
+    initializer --> ``=`` expression
+    
+    getter-setter-block --> ``{`` getter setter-OPT ``}`` | ``{`` setter getter ``}``
+    getter --> ``get`` ``:`` code-block-items-OPT
+    setter --> ``set`` setter-name-OPT ``:`` code-block-items-OPT
+    setter-name --> ``(`` identifier ``)``
+    
+.. TODO:
+
+    Follow up with the compiler team to get the correct grammar for the first var declaration
+    definition.
+    
+    Add elsewhere: typed-pattern-list (typed-pattern-list --> typed-pattern | typed-pattern ``,`` typed-pattern-list);
+    Also, change tuple-pattern-element to use pattern-initializer as one of its alternatives.
+    
 Function Declarations
 ---------------------
 
+    
 
 Function Signatures
 ~~~~~~~~~~~~~~~~~~~
 
 
+.. langref-grammar
+
+    decl-func        ::= attribute-list 'static'? 'def' any-identifier generic-params? func-signature brace-item-list?
+    func-signature ::= func-arguments func-signature-result?
+    func-arguments ::= pattern-tuple+
+    func-arguments ::= selector-tuple
+    selector-tuple ::= '(' pattern-tuple-element ')' (identifier-or-any '(' pattern-tuple-element ')')+
+    func-signature-result ::= '->' type-annotation
+
+
+.. syntax-grammar::
+    
+    Grammar of a function declaration
+    
+    function-declaration --> attribute-list ``def`` any-identifier generic-parameters-OPT function-signature code-block-OPT
+    
+    function-signature --> function-arguments function-signature-result-OPT
+    function-arguments --> tuple-patterns | selector-arguments
+    
+    selector-arguments --> ``(`` tuple-pattern-element ``)`` selector-tuples
+    selector-tuples --> identifier-or-any ``(`` tuple-pattern-element ``)`` selector-tuples-OPT
+    
+    
+.. TODO: 
+
+    Revisit function-declaration; the ``static`` keyword may be renamed and/or made into an attribute.
+    The reason is that ``static`` isn't the most appropriate term, because we're using it to 
+    mark a class function, not a static function (in the proper sense). 
+    This issue is being tracked by:
+    <rdar://problem/13347488> Consider renaming "static" functions to "class" functions
+    Also, selector-style syntax is still under discussion/development.
+    
+    Discuss with compiler team: tuple-patterns and ``(`` tuple-pattern-element ``)`` seem to allow
+    the same elements; how are they different?
+    
+    Add elsewhere: tuple-patterns (tuple-patterns --> tuple-pattern | tuple-pattern tuple-patterns)
+
 
 Typealias Declarations
 ----------------------
+
+
 
 
 Enumeration Declarations

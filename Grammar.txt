@@ -108,26 +108,7 @@ original LangRef grammar; delete the corresponding grammar from this document.
     any-identifier ::= identifier | operator
     dollarident ::= '$' id-continue+
     
-    
-    
-    
-    
-    decl-extension ::= 'extension' type-identifier inheritance? '{' decl* '}'
-    decl-var        ::= attribute-list 'var' pattern initializer?  (',' pattern initializer?)*
-    decl-var        ::= attribute-list 'var' identifier ':' type-annotation brace-item-list
-    decl-var        ::= attribute-list 'var' identifier ':' type-annotation '{' get-set '}'
-    initializer     ::= '=' expr
-    get-set         ::= get set?
-    get-set         ::= set get
-    get             ::= 'get:' brace-item*
-    set             ::= 'set' set-name? ':' brace-item*
-    set-name        ::= '(' identifier ')'
-    decl-func        ::= attribute-list 'static'? 'def' any-identifier generic-params? func-signature brace-item-list?
-    func-signature ::= func-arguments func-signature-result?
-    func-arguments ::= pattern-tuple+
-    func-arguments ::= selector-tuple
-    selector-tuple ::= '(' pattern-tuple-element ')' (identifier-or-any '(' pattern-tuple-element ')')+
-    func-signature-result ::= '->' type-annotation
+
     decl-typealias ::= typealias-head '=' type
     typealias-head ::= 'typealias' identifier inheritance?
     decl-enum ::= attribute-list 'enum' identifier generic-params? inheritance? enum-body
