@@ -275,7 +275,7 @@ Braces that enclose executable code should only be placed on a new line if they 
     }
 
     if enteredCorrectDoorCode && passedRetinaScan || hasValidDoorKey
-        || knowsEmergencyOverridePassword
+      || knowsEmergencyOverridePassword
     {
         // did not all fit on one line, so the line has been wrapped
         // the brace is then placed at the start of a new line,
@@ -302,10 +302,7 @@ Braces move the current indent level four spaces to the right::
         var numberOfLegs: Int
     }
 
-*Rationale: This is different from Objective-C, where the root level of code blocks and braces in a class definition file is at the start of a line. However, the approach described here 'feels' right in Swift, and is consistent with the code insetting approach defined above for use wherever else code is contained within braces.*
-
-
-Statements terminated by a colon (such as ``case``, ``default``, ``get`` and ``set``) should be *de*-dented two spaces to the left of the current indent level::
+Statements terminated by a colon (such as ``case``, ``default``, ``get`` and ``set``) should be de-dented two spaces to the *left* of the current indent level::
 
     switch somePlanet {
       case .Earth:
@@ -425,13 +422,13 @@ Value checks in ``if`` clauses should always put the value to be tested on the l
 Functions
 ---------
 
-A space should be inserted before and after unwrapped return operators (``->``)::
+A space should be inserted before and after return operators (``->``)::
 
     def sayHello(personName: String, salutation: String) -> String {
         // statements
     }
 
-Spaces should not be placed between parentheses and parameter values::
+Spaces should not be placed between parentheses and parameter names or values::
 
     sayHello(personName: "Dave", salutation: "Howdy!")     // yes
     sayHello( personName: "Dave", salutation: "Howdy!" )   // no
@@ -475,7 +472,7 @@ Closure parameter types and return types may be inferred if they are clear from 
         return $0.uppercase < $1.uppercase
     }
 
-For named closures in Cocoa methods, a new line should be started after the closure's opening brace::
+For named closures in Cocoa imported methods, a new line should be started after the closure's opening brace::
 
     var session = NSURLSession.sharedSession()
     var downloadTask = session.downloadTaskWithURL(url, completionHandler: {
