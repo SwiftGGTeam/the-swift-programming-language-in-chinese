@@ -57,15 +57,14 @@ readability or pedagogical perspective.
 Use a Pipe (|) or a New Line for Alternatives
 ---------------------------------------------
 
-Use at **most** one pipe '|' for specifying an alternative.
-If you need more than one, use a new line for each alternative instead.
+Use a pipe '|' to specify an alternative. When there are too many alternatives
+to fit on a single line, use a new line for each alternative.
 
-For example, to specify that *case-labels* can consist of
-either a single *case-label* or a single *case-label* followed by any number of *case-labels*,
-you can use a pipe instead of a new line,
-because there are only two alternatives (choices to make):
+For example, to specify that a *case-block-item* can consist of a *declaration*, 
+*expression*, or a *statement*, you can use a pipe instead of a new line,
+because all three alternatives fit nicely on one line:
 
-| case-labels --> case-label | case-label case-labels
+| code-block-item --> declaration | expression | statement
 
 On the other hand, consider the grammar of a control transfer statement:
 
@@ -79,13 +78,6 @@ The following tends not to loog good:
 
 | control-transfer-statement --> break-statement | continue-statement | fallthrough-statement | return-statement
 
-When possible, use just a single syntactic category to the left of the pipe.
-In cases of recursion (expressing repetition),
-use a right recursion as shown in the *case-labels* example above.
-This is easier to read because the syntactic category
-on the left and the right side of the pipe is the same ---
-there is no confusion about whether the pipe might only apply
-to the items directly to its left/right.
 
 Append -OPT to Indicate Optionality
 -----------------------------------
@@ -100,7 +92,7 @@ Zero or More of a Category (*)
 ------------------------------
 
 | category* ==> categories-OPT
-| categories --> category | category categories
+| categories --> category categories-OPT
 
 For example,
 
@@ -110,12 +102,13 @@ is replaced with
 
 | switch-statement --> ``switch`` basic-expression { switch-cases-OPT }
 
+As shown above, use right-recursion when dealing with repetition.
 
 One or More of a Category (+)
 -----------------------------
 
 | category+ ==> categories
-| categories --> category | category categories
+| categories --> category categories-OPT
 
 
 Remove Grouping Parentheses
