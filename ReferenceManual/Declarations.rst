@@ -66,7 +66,7 @@ Code Blocks
     Grammar of a code block
    
     code-block --> ``{`` code-block-items-OPT ``}``
-    code-block-items --> code-block-item | code-block-item code-block-items
+    code-block-items --> code-block-item code-block-items-OPT
     code-block-item --> declaration | expression | statement
 
 
