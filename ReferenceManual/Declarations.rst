@@ -252,6 +252,8 @@ Enumeration Declarations
 
 .. TODO:
 
+    Add elsewhere: declarations
+    
     Discuss with the compiler team: in the enum-case, ('->' type)? doesn't match what the REPL
     expects: 
     (swift) enum SomeInt {
@@ -278,15 +280,8 @@ Structure Declarations
 
     Grammar of a structure declaration
 
-   struct-declaration --> attribute-list ``struct`` identifier generic-parameters-OPT type-inheritance-list-OPT ``{`` struct-declaration-body ``}``
-   struct-declaration-body --> declaration-OPT struct-declaration-body-OPT
+   struct-declaration --> attribute-list ``struct`` identifier generic-parameters-OPT type-inheritance-list-OPT ``{`` declarations-OPT ``}``
 
-.. TODO:
-
-   Define elsewhere: generic-parameters --> ``<`` ... ``>``
-   This in for <foo> templated types.
-   "Generic" isn't the best choice of names;
-   maybe we should call this a templated type parameter list?
 
 Class Declarations
 ------------------
