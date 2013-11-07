@@ -204,7 +204,9 @@ Function Signatures
     Also, selector-style syntax is still under discussion/development.
     
     Discuss with compiler team: tuple-patterns and ``(`` tuple-pattern-element ``)`` seem to allow
-    the same elements; how are they different?
+    the same elements; how are they different? Maybe type-tuple and type-tuple-element is what is meant?
+    In any case, what's the difference between tuple-patterns/``(`` tuple-pattern-element ``)`` and
+    type-tuple/type-tuple-element?
     
     Add elsewhere: tuple-patterns (tuple-patterns --> tuple-pattern | tuple-pattern tuple-patterns)
 
@@ -217,15 +219,52 @@ Typealias Declarations
     decl-typealias ::= typealias-head '=' type
     typealias-head ::= 'typealias' identifier inheritance?
 
+    
 .. syntax-grammar::
-    
+
     Grammar of a typealias declaration
-    
+
     typealias-declaration --> ``typealias`` identifier type-inheritance-list-OPT ``=`` type
 
 
 Enumeration Declarations
 ------------------------
+
+.. langref-grammar
+
+    decl-enum ::= attribute-list 'enum' identifier generic-params? inheritance? enum-body
+    enum-body ::= '{' decl* '}'
+    decl-enum-element ::= attribute-list 'case' enum-case (',' enum-case)*
+    enum-case ::= identifier type-tuple? ('->' type)?
+
+.. syntax-grammar::
+
+    Grammar of an enum declaration
+    
+    enum-declaration --> attribute-list ``enum`` identifier generic-parameters-OPT type-inheritance-list-OPT enum-body
+    enum-body --> ``{`` declarations-OPT ``}``
+    
+    enum-element-declaration --> attribute-list ``case`` enum-case-list
+    enum-case-list --> enum-case | enum case ``,`` enum-case-list
+    enum-case --> identifier type-tuple-OPT enum-case-return-type-OPT
+    enum-case-return-type --> ``->`` type
+
+
+.. TODO:
+
+    Discuss with the compiler team: in the enum-case, ('->' type)? doesn't match what the REPL
+    expects: 
+    (swift) enum SomeInt {
+              case None
+              case One(Int) -> (Int)
+            }
+    <REPL Input>:3:16: error: consecutive declarations on a line must be separated by ';'
+      case One(Int) -> (Int)
+                   ^
+                   ;
+    <REPL Input>:3:17: error: expected declaration
+      case One(Int) -> (Int)
+
 
 Structure Declarations
 ----------------------
