@@ -109,13 +109,6 @@ original LangRef grammar; delete the corresponding grammar from this document.
     dollarident ::= '$' id-continue+
     
 
-    decl-typealias ::= typealias-head '=' type
-    typealias-head ::= 'typealias' identifier inheritance?
-    decl-enum ::= attribute-list 'enum' identifier generic-params? inheritance? enum-body
-    enum-body ::= '{' decl* '}'
-    decl-enum-element ::= attribute-list 'case' enum-case (',' enum-case)*
-    enum-case ::= identifier type-tuple? ('->' type)?
-
     decl-class ::= attribute-list 'class' identifier generic-params? inheritance? '{' decl-class-body '}'
     decl-class-body ::= decl*
     decl-protocol ::= attribute-list 'protocol' identifier inheritance? '{' protocol-member* '}'
