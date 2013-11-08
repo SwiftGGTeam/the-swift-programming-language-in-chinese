@@ -22,3 +22,12 @@ Contents
 	Introduction
 	LanguageGuide/LanguageGuide
 	ReferenceManual/ReferenceManual
+
+Internal Chapters
+=================
+
+.. toctree::
+	:maxdepth: 1
+
+	LaguageGuide/StyleGuide
+	ReplacementRules
