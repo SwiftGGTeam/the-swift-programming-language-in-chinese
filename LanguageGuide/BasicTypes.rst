@@ -723,7 +723,7 @@ When the optional *does* contain a value, the underlying value can accessed by a
             }
     >>> Not an element I know about
 
-``possibleElement`` was most recently set to an optional ``ChemicalElement`` for the atomic number of oxygen (``8``), which doesn't exist in the enumeration. This means that the optional contains *no value at all* – causing ``if (possibleElement)`` to equate to ``false``, triggering the ``else`` part of the statement above, and printing the text ``"Not an element I know about"``.
+``possibleElement`` was most recently set to an optional ``ChemicalElement`` for the atomic number of oxygen (``8``), which doesn't exist in the enumeration. This means that the optional contains *no value at all* – causing ``if possibleElement`` to equate to ``false``, triggering the ``else`` part of the statement above, and printing the text ``"Not an element I know about"``.
 
 .. TODO: Add a section about arrays and dictionaries once their design is more tied down.
 
