@@ -87,7 +87,8 @@ A type or typealias for HTTP statuses might be called ``HTTPStatus``, for exampl
 whereas a variable of this type might be called ``http304Status``.
 (Acronyms should still be capitalized if they are not the first word in a name, however, as in ``retrievePageAtURL``.)
 
-*Rationale: This provides a consistently-applied capitalization rule,
+*Rationale:
+This provides a consistently-applied capitalization rule,
 unlike the Cocoa approach of* ``lowerCamelCase`` *for all variables and methods
 apart from those that begin with an acronym.
 Names can then be distinguished by capitalization, even if the code is not syntax-colored.
