@@ -280,7 +280,8 @@ Structure Declarations
 
     Grammar of a structure declaration
 
-   struct-declaration --> attribute-list ``struct`` identifier generic-parameters-OPT type-inheritance-list-OPT ``{`` declarations-OPT ``}``
+   struct-declaration --> attribute-list ``struct`` identifier generic-parameters-OPT type-inheritance-list-OPT struct-body
+   struct-body --> ``{`` declarations-OPT ``}``
 
 
 Class Declarations
@@ -295,7 +296,8 @@ Class Declarations
 
     Grammar of a class declaration
 
-    class-declaration --> attribute-list ``class`` identifier generic-parameters-OPT type-inheritance-list-OPT ``{`` declarations-OPT ``}``
+    class-declaration --> attribute-list ``class`` identifier generic-parameters-OPT type-inheritance-list-OPT
+    class-body --> ``{`` declarations-OPT ``}``
 
 
 Protocol Declarations
