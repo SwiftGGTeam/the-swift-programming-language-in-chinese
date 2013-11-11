@@ -295,6 +295,8 @@ Class Declarations
 
     Grammar of a class declaration
 
+    class-declaration --> attribute-list ``class`` identifier generic-parameters-OPT type-inheritance-list-OPT ``{`` declarations-OPT ``}``
+
 
 Protocol Declarations
 ---------------------
