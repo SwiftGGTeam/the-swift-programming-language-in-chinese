@@ -143,8 +143,9 @@ Variable Declarations
 
     variable-declaration --> attribute-sequence-OPT ``var`` pattern-initializer-list
     variable-declaration --> attribute-sequence-OPT ``var`` typed-pattern-list
-    variable-declaration --> attribute-sequence-OPT ``var`` identifier ``:`` type-annotation code-block
-    variable-declaration --> attribute-sequence-OPT ``var`` identifier ``:`` type-annotation getter-setter-block
+    variable-declaration --> attribute-sequence-OPT ``var`` variable-name ``:`` type-annotation code-block
+    variable-declaration --> attribute-sequence-OPT ``var`` variable-name ``:`` type-annotation getter-setter-block
+    variable-name --> identifier
     
     pattern-initializer-list --> pattern-initializer | pattern-initializer ``,`` pattern-initializer-list
     pattern-initializer --> pattern initializer
@@ -186,14 +187,15 @@ Function Signatures
     
     Grammar of a function declaration
     
-    function-declaration --> attribute-sequence-OPT ``def`` any-identifier generic-parameters-OPT function-signature code-block-OPT
+    function-declaration --> attribute-sequence-OPT ``def`` function-name generic-parameters-OPT function-signature code-block-OPT
+    function-name --> any-identifier
     
     function-signature --> function-arguments function-signature-result-OPT
     function-arguments --> tuple-patterns | selector-arguments
     
     selector-arguments --> ``(`` tuple-pattern-element ``)`` selector-tuples
-    selector-tuples --> identifier-or-any ``(`` tuple-pattern-element ``)`` selector-tuples-OPT
-    
+    selector-tuples --> selector-name ``(`` tuple-pattern-element ``)`` selector-tuples-OPT
+    selector-name --> identifier-or-any
     
 .. TODO: 
 
@@ -226,7 +228,8 @@ Typealias Declarations
     Grammar of a typealias declaration
 
     typealias-declaration --> typealias-head ``=`` type
-    typealias-head --> ``typealias`` identifier type-inheritance-list-OPT
+    typealias-head --> ``typealias`` typealias-name type-inheritance-list-OPT
+    typealias-name --> identifier
 
 
 Enumeration Declarations
@@ -243,7 +246,8 @@ Enumeration Declarations
 
     Grammar of an enumeration declaration
     
-    enum-declaration --> attribute-sequence-OPT ``enum`` identifier generic-parameters-OPT type-inheritance-list-OPT enum-body
+    enum-declaration --> attribute-sequence-OPT ``enum`` enum-name generic-parameters-OPT type-inheritance-list-OPT enum-body
+    enum-name --> identifier
     enum-body --> ``{`` declarations-OPT ``}``
     
     enum-element-declaration --> attribute-sequence-OPT ``case`` enum-case-list
@@ -255,6 +259,8 @@ Enumeration Declarations
 .. TODO:
 
     Add elsewhere: declarations (declarations --> declaration declarations-OPT)
+    
+    Where does enum-element-declaration come in?
     
     Discuss with the compiler team: in the enum-case, ('->' type)? doesn't match what the REPL
     expects: 
@@ -282,7 +288,8 @@ Structure Declarations
 
     Grammar of a structure declaration
 
-   struct-declaration --> attribute-sequence-OPT ``struct`` identifier generic-parameters-OPT type-inheritance-list-OPT struct-body
+   struct-declaration --> attribute-sequence-OPT ``struct`` struct-name generic-parameters-OPT type-inheritance-list-OPT struct-body
+   struct-name --> identifier
    struct-body --> ``{`` declarations-OPT ``}``
 
 
@@ -298,7 +305,8 @@ Class Declarations
 
     Grammar of a class declaration
 
-    class-declaration --> attribute-sequence-OPT ``class`` identifier generic-parameters-OPT type-inheritance-list-OPT class-body
+    class-declaration --> attribute-sequence-OPT ``class`` class-name generic-parameters-OPT type-inheritance-list-OPT class-body
+    class-name --> identifier
     class-body --> ``{`` declarations-OPT ``}``
 
 
@@ -332,7 +340,8 @@ Typealias Protocol Elements
 
     Grammar of a protocol declaration
 
-    protocol-declaration --> attribute-sequence-OPT ``protocol`` identifier type-inheritance-list-OPT protocol-body
+    protocol-declaration --> attribute-sequence-OPT ``protocol`` protocol-name type-inheritance-list-OPT protocol-body
+    protocol-name --> identifier
     protocol-body --> ``{`` protocol-members-OPT ``}``
     
     protocol-members --> protocol-member protocol-members-OPT
