@@ -239,7 +239,7 @@ Enumeration Declarations
 
 .. syntax-grammar::
 
-    Grammar of an enum declaration
+    Grammar of an enumeration declaration
     
     enum-declaration --> attribute-list ``enum`` identifier generic-parameters-OPT type-inheritance-list-OPT enum-body
     enum-body --> ``{`` declarations-OPT ``}``
@@ -252,7 +252,7 @@ Enumeration Declarations
 
 .. TODO:
 
-    Add elsewhere: declarations
+    Add elsewhere: declarations (declarations --> declaration declarations-OPT)
     
     Discuss with the compiler team: in the enum-case, ('->' type)? doesn't match what the REPL
     expects: 
@@ -285,6 +285,15 @@ Structure Declarations
 
 Class Declarations
 ------------------
+
+.. langref-grammar
+
+    decl-class ::= attribute-list 'class' identifier generic-params? inheritance? '{' decl-class-body '}'
+    decl-class-body ::= decl*
+
+.. syntax-grammar::
+
+    Grammar of a class declaration
 
 
 Protocol Declarations
