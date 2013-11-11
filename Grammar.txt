@@ -109,10 +109,6 @@ original LangRef grammar; delete the corresponding grammar from this document.
     dollarident ::= '$' id-continue+
     
 
-    decl-constructor ::= attribute-list 'init' generic-params? constructor-signature brace-item-list
-    constructor-signature ::= pattern-tuple
-    constructor-signature ::= identifier-or-any selector-tuple
-    decl-constructor ::= attribute-list 'destructor' '(' ')' brace-item-list
     attribute-list        ::= /*empty*/
     attribute-list        ::= attribute-list-clause attribute-list
     attribute-list-clause ::= '@' attribute

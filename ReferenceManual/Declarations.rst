@@ -359,8 +359,35 @@ Constructor Declarations
 ------------------------
 
 
+.. langref-grammar
+
+    decl-constructor ::= attribute-list 'init' generic-params? constructor-signature brace-item-list
+    constructor-signature ::= pattern-tuple
+    constructor-signature ::= identifier-or-any selector-tuple
+
+
+.. syntax-grammar::
+
+    Grammar of a constructor declaration
+
+    constructor-declaration --> attribute-list ``init`` generic-parameters-OPT constructor-signature code-block
+    constructor-signature --> tuple-pattern | identifier-or-any selector-arguments
+
 Destructor Declarations
 -----------------------
+
+
+.. langref-grammar
+
+    decl-constructor ::= attribute-list 'destructor' '(' ')' brace-item-list
+    NOTE: langref contains a typo here---should be 'decl-destructor'
+
+
+.. syntax-grammar::
+
+    Grammar of a destructor declaration
+    
+    destructor-declaration --> attribute-list ``destructor`` ``(`` ``)`` code-block
 
 
 Attribute Lists
