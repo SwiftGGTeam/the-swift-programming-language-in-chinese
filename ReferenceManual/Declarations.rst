@@ -224,7 +224,8 @@ Typealias Declarations
 
     Grammar of a typealias declaration
 
-    typealias-declaration --> ``typealias`` identifier type-inheritance-list-OPT ``=`` type
+    typealias-declaration --> typealias-head ``=`` type
+    typealias-head --> ``typealias`` identifier type-inheritance-list-OPT
 
 
 Enumeration Declarations
@@ -302,6 +303,26 @@ Class Declarations
 
 Protocol Declarations
 ---------------------
+
+
+.. langref-grammar
+
+    decl-protocol ::= attribute-list 'protocol' identifier inheritance? '{' protocol-member* '}'
+    protocol-member ::= decl-func
+    protocol-member ::= decl-var
+    protocol-member ::= subscript-head
+    protocol-member ::= typealias-head
+
+
+.. syntax-grammar::
+
+    Grammar of a protocol declaration
+
+    protocol-declaration --> attribute-list ``protocol`` identifier type-inheritance-list-OPT protocol-body
+    protocol-body --> ``{`` protocol-members-OPT ``}``
+    
+    protocol-members --> protocol-member protocol-members-OPT
+    protocol-member --> variable-declaration | function-declaration | typealias-head | subscript-head
 
 
 Function Protocol Elements

@@ -109,13 +109,8 @@ original LangRef grammar; delete the corresponding grammar from this document.
     dollarident ::= '$' id-continue+
     
 
-    decl-class ::= attribute-list 'class' identifier generic-params? inheritance? '{' decl-class-body '}'
-    decl-class-body ::= decl*
-    decl-protocol ::= attribute-list 'protocol' identifier inheritance? '{' protocol-member* '}'
-    protocol-member ::= decl-func
-    protocol-member ::= decl-var
-    protocol-member ::= subscript-head
-    protocol-member ::= typealias-head
+    
+    
     decl-subscript        ::= subscript-head '{' get-set '}'
     subscript-head        ::= attribute-list 'subscript' pattern-tuple '->' type
     decl-constructor ::= attribute-list 'init' generic-params? constructor-signature brace-item-list
