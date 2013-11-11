@@ -92,7 +92,7 @@ Import Declarations
 
     Grammar of an import declaration
     
-    import-declaration --> attribute-list ``import`` import-kind-OPT import-path
+    import-declaration --> attribute-sequence-OPT ``import`` import-kind-OPT import-path
     
     import-kind --> ``typealias`` | ``struct`` | ``class`` | ``enum`` | ``protocol`` | ``var`` | ``def``
     import-path --> any-identifier | any-identifier ``.`` import-path
@@ -140,10 +140,10 @@ Variable Declarations
 
     Grammar of a variable declaration
 
-    variable-declaration --> attribute-list-OPT ``var`` pattern-initializer-list
-    variable-declaration --> attribute-list-OPT ``var`` typed-pattern-list
-    variable-declaration --> attribute-list-OPT ``var`` identifier ``:`` type-annotation code-block
-    variable-declaration --> attribute-list-OPT ``var`` identifier ``:`` type-annotation getter-setter-block
+    variable-declaration --> attribute-sequence-OPT ``var`` pattern-initializer-list
+    variable-declaration --> attribute-sequence-OPT ``var`` typed-pattern-list
+    variable-declaration --> attribute-sequence-OPT ``var`` identifier ``:`` type-annotation code-block
+    variable-declaration --> attribute-sequence-OPT ``var`` identifier ``:`` type-annotation getter-setter-block
     
     pattern-initializer-list --> pattern-initializer | pattern-initializer ``,`` pattern-initializer-list
     pattern-initializer --> pattern initializer
@@ -185,7 +185,7 @@ Function Signatures
     
     Grammar of a function declaration
     
-    function-declaration --> attribute-list ``def`` any-identifier generic-parameters-OPT function-signature code-block-OPT
+    function-declaration --> attribute-sequence-OPT ``def`` any-identifier generic-parameters-OPT function-signature code-block-OPT
     
     function-signature --> function-arguments function-signature-result-OPT
     function-arguments --> tuple-patterns | selector-arguments
@@ -242,10 +242,10 @@ Enumeration Declarations
 
     Grammar of an enumeration declaration
     
-    enum-declaration --> attribute-list ``enum`` identifier generic-parameters-OPT type-inheritance-list-OPT enum-body
+    enum-declaration --> attribute-sequence-OPT ``enum`` identifier generic-parameters-OPT type-inheritance-list-OPT enum-body
     enum-body --> ``{`` declarations-OPT ``}``
     
-    enum-element-declaration --> attribute-list ``case`` enum-case-list
+    enum-element-declaration --> attribute-sequence-OPT ``case`` enum-case-list
     enum-case-list --> enum-case | enum case ``,`` enum-case-list
     enum-case --> identifier type-tuple-OPT enum-case-return-type-OPT
     enum-case-return-type --> ``->`` type
@@ -281,7 +281,7 @@ Structure Declarations
 
     Grammar of a structure declaration
 
-   struct-declaration --> attribute-list ``struct`` identifier generic-parameters-OPT type-inheritance-list-OPT struct-body
+   struct-declaration --> attribute-sequence-OPT ``struct`` identifier generic-parameters-OPT type-inheritance-list-OPT struct-body
    struct-body --> ``{`` declarations-OPT ``}``
 
 
@@ -297,7 +297,7 @@ Class Declarations
 
     Grammar of a class declaration
 
-    class-declaration --> attribute-list ``class`` identifier generic-parameters-OPT type-inheritance-list-OPT class-body
+    class-declaration --> attribute-sequence-OPT ``class`` identifier generic-parameters-OPT type-inheritance-list-OPT class-body
     class-body --> ``{`` declarations-OPT ``}``
 
 
@@ -331,7 +331,7 @@ Typealias Protocol Elements
 
     Grammar of a protocol declaration
 
-    protocol-declaration --> attribute-list ``protocol`` identifier type-inheritance-list-OPT protocol-body
+    protocol-declaration --> attribute-sequence-OPT ``protocol`` identifier type-inheritance-list-OPT protocol-body
     protocol-body --> ``{`` protocol-members-OPT ``}``
     
     protocol-members --> protocol-member protocol-members-OPT
@@ -353,7 +353,7 @@ Subscript Declarations
     Grammar of a subscript declaration
 
     subscript-declaration --> subscript-head getter-setter-block
-    subscript-head --> attribute-list ``subscript`` tuple-pattern ``->`` type
+    subscript-head --> attribute-sequence-OPT ``subscript`` tuple-pattern ``->`` type
 
 Constructor Declarations
 ------------------------
@@ -370,7 +370,7 @@ Constructor Declarations
 
     Grammar of a constructor declaration
 
-    constructor-declaration --> attribute-list ``init`` generic-parameters-OPT constructor-signature code-block
+    constructor-declaration --> attribute-sequence-OPT ``init`` generic-parameters-OPT constructor-signature code-block
     constructor-signature --> tuple-pattern | identifier-or-any selector-arguments
 
 Destructor Declarations
@@ -387,7 +387,7 @@ Destructor Declarations
 
     Grammar of a destructor declaration
     
-    destructor-declaration --> attribute-list ``destructor`` ``(`` ``)`` code-block
+    destructor-declaration --> attribute-sequence-OPT ``destructor`` ``(`` ``)`` code-block
 
 
 Attribute Sequences
