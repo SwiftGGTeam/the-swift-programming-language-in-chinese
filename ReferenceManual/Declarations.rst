@@ -305,6 +305,19 @@ Protocol Declarations
 ---------------------
 
 
+Function Protocol Elements
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Variable Protocol Elements
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Subscript Protocol Elements
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Typealias Protocol Elements
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
 .. langref-grammar
 
     decl-protocol ::= attribute-list 'protocol' identifier inheritance? '{' protocol-member* '}'
@@ -323,19 +336,6 @@ Protocol Declarations
     
     protocol-members --> protocol-member protocol-members-OPT
     protocol-member --> variable-declaration | function-declaration | typealias-head | subscript-head
-
-
-Function Protocol Elements
-~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Variable Protocol Elements
-~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Subscript Protocol Elements
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Typealias Protocol Elements
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
 Subscript Declarations
