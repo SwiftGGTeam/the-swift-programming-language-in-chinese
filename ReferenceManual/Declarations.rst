@@ -342,6 +342,19 @@ Subscript Declarations
 ----------------------
 
 
+.. langref-grammar
+
+    decl-subscript ::= subscript-head '{' get-set '}'
+    subscript-head ::= attribute-list 'subscript' pattern-tuple '->' type
+
+
+.. syntax-grammar::
+
+    Grammar of a subscript declaration
+
+    subscript-declaration --> subscript-head getter-setter-block
+    subscript-head --> attribute-list ``subscript`` tuple-pattern ``->`` type
+
 Constructor Declarations
 ------------------------
 
