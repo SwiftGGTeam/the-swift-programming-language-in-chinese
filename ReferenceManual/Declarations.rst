@@ -111,7 +111,8 @@ Extension Declarations
 
     Grammar of an extension declaration
     
-    extension-declaration --> ``extension`` type-identifier type-inheritance-list-OPT ``{`` declaration-OPT ``}``
+    extension-declaration --> ``extension`` type-identifier type-inheritance-list-OPT extension-body
+    extension-body --> ``{`` declarations-OPT ``}``
 
 .. TODO:
  
