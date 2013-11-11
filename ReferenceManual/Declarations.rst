@@ -297,7 +297,7 @@ Class Declarations
 
     Grammar of a class declaration
 
-    class-declaration --> attribute-list ``class`` identifier generic-parameters-OPT type-inheritance-list-OPT
+    class-declaration --> attribute-list ``class`` identifier generic-parameters-OPT type-inheritance-list-OPT class-body
     class-body --> ``{`` declarations-OPT ``}``
 
 
@@ -390,20 +390,112 @@ Destructor Declarations
     destructor-declaration --> attribute-list ``destructor`` ``(`` ``)`` code-block
 
 
-Attribute Lists
----------------
+Attribute Sequences
+-------------------
+
+
+.. langref-grammar
+
+    attribute-list        ::= /*empty*/
+    attribute-list        ::= attribute-list-clause attribute-list
+    attribute-list-clause ::= '@' attribute
+    attribute-list-clause ::= '@' attribute ','? attribute-list-clause
+    attribute      ::= attribute-infix
+    attribute      ::= attribute-resilience
+    attribute      ::= attribute-inout
+    attribute      ::= attribute-auto_closure
+    attribute      ::= attribute-noreturn
+
+
+.. syntax-grammar::
+
+    Grammar of an attribute sequence
+    
+    attribute-sequence --> attribute-clause attribute-sequence-OPT
+    attribute-clause --> ``@`` attribute-list attribute-clause-OPT
+    attribute-list --> attribute | attribute ``,`` attribute-list
+    attribute --> infix-attribute | resilience-attribute | in-out-attribute | auto-closure-attribute | no-return-attribute
+
+
 
 Infix Attributes
 ~~~~~~~~~~~~~~~~
 
+
+.. langref-grammar
+
+    attribute-infix ::= 'infix_left'  '=' integer_literal
+    attribute-infix ::= 'infix_right' '=' integer_literal
+    attribute-infix ::= 'infix        '=' integer_literal
+
+.. syntax-grammar::
+
+    Grammar of an infix attribute
+
+    infix-attribute --> infix-head ``=`` integer-literal
+    infix-head --> ``infix`` | ``infix_left`` | ``infix-right``
+
+
 Resilience Attributes
 ~~~~~~~~~~~~~~~~~~~~~
 
-The inout Attribute
+.. langref-grammar
+
+    attribute-resilience ::= 'resilient'
+    attribute-resilience ::= 'fragile'
+    attribute-resilience ::= 'born_fragile'
+
+
+.. syntax-grammar::
+
+    Grammar of a resilience attribute
+
+    resilience-attribute --> ``resilient`` | ``fragile`` | ``born_fragile``
+
+ 
+The In-Out Attribute
+~~~~~~~~~~~~~~~~~~~~
+
+.. langref-grammar
+
+    attribute-inout ::= 'inout'
+
+
+.. syntax-grammar::
+
+    Grammar of an in-out attribute
+
+    in-out-attribute --> ``inout``
+
+
+The Auto-Closure Attribute
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. langref-grammar
+
+    attribute-auto_closure ::= 'auto_closure'
+
+
+.. syntax-grammar::
+
+    Grammar of an auto-closure attribute
+
+    auto-closure-attribute --> ``auto_closure``
+
+
+
+The No-Return Attribute
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-The auto-closure Attribute
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. langref-grammar
 
-The No Return Attribute
-~~~~~~~~~~~~~~~~~~~~~~~
+    attribute-noreturn ::= 'noreturn'
+
+
+.. syntax-grammar::
+
+    Grammar of a no-return attribute
+
+    no-return-attribute --> ``noreturn``
+
+

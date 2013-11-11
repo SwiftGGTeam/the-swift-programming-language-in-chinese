@@ -107,26 +107,6 @@ original LangRef grammar; delete the corresponding grammar from this document.
     right-binder ::= [ \r\n\t\)\]\},;:]
     any-identifier ::= identifier | operator
     dollarident ::= '$' id-continue+
-    
-
-    attribute-list        ::= /*empty*/
-    attribute-list        ::= attribute-list-clause attribute-list
-    attribute-list-clause ::= '@' attribute
-    attribute-list-clause ::= '@' attribute ','? attribute-list-clause
-    attribute      ::= attribute-infix
-    attribute      ::= attribute-resilience
-    attribute      ::= attribute-inout
-    attribute      ::= attribute-auto_closure
-    attribute      ::= attribute-noreturn
-    attribute-infix ::= 'infix_left'  '=' integer_literal
-    attribute-infix ::= 'infix_right' '=' integer_literal
-    attribute-infix ::= 'infix        '=' integer_literal
-    attribute-resilience ::= 'resilient'
-    attribute-resilience ::= 'fragile'
-    attribute-resilience ::= 'born_fragile'
-    attribute-inout ::= 'inout'
-    attribute-auto_closure ::= 'auto_closure'
-    attribute-noreturn ::= 'noreturn'
 
 
     type ::= type-function
