@@ -147,6 +147,28 @@ Variable Declarations
 ---------------------
 
 
+.. syntax-outline::
+
+    var <#variable-name#> : <#type#> = <#expression#>
+
+
+.. syntax-outline::
+
+    var <#variable-name#> : <#type#> {
+    get:
+        <#code-to-execute#>
+    set(<#setter-name#>):
+        <#code-to-execute#>
+    }
+
+.. TODO:
+
+    In prose: discuss that 'name' can also be a pattern in the first syntax-outline.
+    Also, discuss that when you only want to provide a getter, 'get:' is optional
+    (as shown in the third form of the grammar).
+
+
+
 .. langref-grammar
 
     decl-var        ::= attribute-list 'var' pattern initializer?  (',' pattern initializer?)*
@@ -190,7 +212,16 @@ Variable Declarations
 Function Declarations
 ---------------------
 
-    
+.. syntax-outline::
+
+    def <#function-name#> (<#arguments#>) -> <#return-type#> {
+        <#code-to-execute#>
+    }
+
+.. TODO:
+
+    Discuss in prose: Variadic functions and the other permutations of function declarations.
+    Also, write a syntax-outline for selector-style functions, once these are nailed down.
 
 Function Signatures
 ~~~~~~~~~~~~~~~~~~~
@@ -233,6 +264,8 @@ Function Signatures
     the same elements; how are they different? Maybe type-tuple and type-tuple-element is what is meant?
     In any case, what's the difference between tuple-patterns/``(`` tuple-pattern-element ``)`` and
     type-tuple/type-tuple-element?
+    
+    Also, is the code-block-OPT really optional? What does it mean when you leave off the code-block?
     
     Revised selector-name---can we come up with a better name for this?
     
