@@ -216,7 +216,6 @@ Function Declarations
 
     def <#function-name#> (<#arguments#>) -> <#return-type#> {
         <#code-to-execute#>
-        <#return-statement#>
     }
 
 .. TODO:
