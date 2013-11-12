@@ -275,6 +275,13 @@ Function Signatures
 Typealias Declarations
 ----------------------
 
+
+.. syntax-outline::
+
+    typealias <#new-type#> : <#inheritance#> = <#existing-type#>
+
+
+
 .. langref-grammar
 
     decl-typealias ::= typealias-head '=' type
