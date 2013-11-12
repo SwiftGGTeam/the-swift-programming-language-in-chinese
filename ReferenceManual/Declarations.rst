@@ -216,6 +216,7 @@ Function Declarations
 
     def <#function-name#> (<#arguments#>) -> <#return-type#> {
         <#code-to-execute#>
+        <#return-statement#>
     }
 
 .. TODO:
@@ -246,6 +247,7 @@ Function Signatures
     
     function-signature --> function-arguments function-signature-result-OPT
     function-arguments --> tuple-patterns | selector-arguments
+    function-signature-result --> ``->`` type-annotation
     
     selector-arguments --> ``(`` tuple-pattern-element ``)`` selector-tuples
     selector-tuples --> selector-name ``(`` tuple-pattern-element ``)`` selector-tuples-OPT
@@ -300,6 +302,25 @@ Typealias Declarations
 Enumeration Declarations
 ------------------------
 
+.. syntax-outline::
+
+    enum <#enumeration-name#> {
+        case: <#enumerator 1#>
+        case: <#enumerator 2#>(<#associated-value-type#>)
+    }
+
+.. syntax-outline::
+
+    enum <#enumeration-name#> : <#raw-value-type#> {
+        case: #enumerator 1#> = <#raw-value 1#>
+        case: #enumerator 2#> = <#raw-value 2#>
+
+.. TODO:
+
+    Is raw-value-type the correct thing to put here?
+    According to the grammar, it's an inheritance list,
+    which can take a list of protocols.
+
 .. langref-grammar
 
     decl-enum ::= attribute-list 'enum' identifier generic-params? inheritance? enum-body
@@ -317,7 +338,7 @@ Enumeration Declarations
     
     enum-element-declaration --> attribute-sequence-OPT ``case`` enum-case-list
     enum-case-list --> enum-case | enum case ``,`` enum-case-list
-    enum-case --> identifier type-tuple-OPT enum-case-return-type-OPT
+    enum-case --> identifier tuple-type-OPT enum-case-return-type-OPT
     enum-case-return-type --> ``->`` type
 
 
@@ -325,9 +346,11 @@ Enumeration Declarations
 
     Add elsewhere: declarations (declarations --> declaration declarations-OPT)
     
-    Is it really the case that you can declarations other than enum-element-declaration
+    Is it really the case that you can have declarations other than enum-element-declaration
     inside an enum-body? If not, we should replace enum-body with:
     enum-body --> ``{`` enum-element-declarations-OPT ``}``.
+    
+    Also, do we need to modify the grammar to allow for raw values?
     
     Discuss with the compiler team: in the enum-case, ('->' type)? doesn't match what the REPL
     expects: 
@@ -343,8 +366,15 @@ Enumeration Declarations
       case One(Int) -> (Int)
 
 
+
 Structure Declarations
 ----------------------
+
+.. syntax-outline::
+
+    struct <#structure-name#>
+
+
 
 .. langref-grammar
 
