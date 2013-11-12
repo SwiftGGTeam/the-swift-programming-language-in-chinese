@@ -53,6 +53,13 @@ Translation Unit
 Code Blocks
 -----------
 
+.. syntax-outline::
+
+    {
+        <#code-to-execute#>
+    }
+        
+
 .. langref-grammar
 
     brace-item-list ::= '{' brace-item* '}'
@@ -72,6 +79,15 @@ Code Blocks
 
 Import Declarations
 -------------------
+
+.. syntax-outline::
+
+    import <#module#>
+
+
+.. syntax-outline::
+
+    import <#import-kind#> <#module#>
 
 
 
@@ -100,6 +116,13 @@ Import Declarations
 
 Extension Declarations
 ----------------------
+
+
+.. syntax-outline::
+
+    extension <#type#> : <#inheritance#> {
+        <#declarations#>
+    }
 
 
 .. langref-grammar
@@ -211,6 +234,8 @@ Function Signatures
     In any case, what's the difference between tuple-patterns/``(`` tuple-pattern-element ``)`` and
     type-tuple/type-tuple-element?
     
+    Revised selector-name---can we come up with a better name for this?
+    
     Add elsewhere: tuple-patterns (tuple-patterns --> tuple-pattern | tuple-pattern tuple-patterns)
 
 
@@ -260,7 +285,9 @@ Enumeration Declarations
 
     Add elsewhere: declarations (declarations --> declaration declarations-OPT)
     
-    Where does enum-element-declaration come in?
+    Is it really the case that you can declarations other than enum-element-declaration
+    inside an enum-body? If not, we should replace enum-body with:
+    enum-body --> ``{`` enum-element-declarations-OPT ``}``.
     
     Discuss with the compiler team: in the enum-case, ('->' type)? doesn't match what the REPL
     expects: 
@@ -443,7 +470,7 @@ Infix Attributes
     Grammar of an infix attribute
 
     infix-attribute --> infix-head ``=`` integer-literal
-    infix-head --> ``infix`` | ``infix_left`` | ``infix-right``
+    infix-head --> ``infix`` | ``infix_left`` | ``infix_right``
 
 
 Resilience Attributes
