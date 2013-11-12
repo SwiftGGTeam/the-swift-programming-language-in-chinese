@@ -371,9 +371,15 @@ Structure Declarations
 
 .. syntax-outline::
 
-    struct <#structure-name#>
+    struct <#structure-name#> : <#adopted-protocols#> {
+        <#member-declarations#>
+        <#other-declarations#>
+    }
 
+.. TODO:
 
+    Member declarations and other declarations can appear in any order (we tested this).
+    Stylistically, you probably want member declarations to come first.
 
 .. langref-grammar
 
