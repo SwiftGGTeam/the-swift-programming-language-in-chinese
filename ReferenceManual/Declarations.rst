@@ -311,8 +311,8 @@ Enumeration Declarations
 .. syntax-outline::
 
     enum <#enumeration-name#> : <#raw-value-type#> {
-        case: #enumerator 1#> = <#raw-value 1#>
-        case: #enumerator 2#> = <#raw-value 2#>
+        case: <#enumerator 1#> = <#raw-value 1#>
+        case: <#enumerator 2#> = <#raw-value 2#>
 
 .. TODO:
 
