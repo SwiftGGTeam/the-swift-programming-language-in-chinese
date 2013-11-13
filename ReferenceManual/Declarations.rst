@@ -372,8 +372,7 @@ Structure Declarations
 .. syntax-outline::
 
     struct <#structure-name#> : <#adopted-protocols#> {
-        <#member-declarations#>
-        <#other-declarations#>
+        <#declarations#>
     }
 
 .. TODO:
@@ -397,6 +396,12 @@ Structure Declarations
 
 Class Declarations
 ------------------
+
+.. syntax-outline::
+
+    class <#class-name#> : <#superclass>, <#adopted-protocols#> {
+        <#declarations#>
+    }
 
 .. langref-grammar
 
