@@ -169,7 +169,7 @@ where the ``else`` part is optional.
     } else if <#condition 2#> {
         <#code to execute if condition 2 is true#>
     } else {
-        <#code to execute if both are false#>
+        <#code to execute if both conditions are false#>
     }
 
 
