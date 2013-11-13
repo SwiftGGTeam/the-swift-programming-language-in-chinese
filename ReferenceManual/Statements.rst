@@ -205,7 +205,6 @@ A switch statement has the following general form:
             <#code to execute#>
         case <#pattern list 2#> where <#condition#>:
             <#code to execute#>
-
         default:
             <#code to execute#>
     }
