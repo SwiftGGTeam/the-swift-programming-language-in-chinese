@@ -9,25 +9,26 @@ About This Book
 ===============
 
 .. toctree::
-	:maxdepth: 1
+    :maxdepth: 1
 
-	DocumentOverview
+    DocumentOverview
 
 Contents
 ========
 
 .. toctree::
-	:maxdepth: 1
+    :maxdepth: 1
 
-	Introduction
-	LanguageGuide/LanguageGuide
-	ReferenceManual/ReferenceManual
+    Introduction
+    LanguageGuide/LanguageGuide
+    ReferenceManual/ReferenceManual
 
 Internal Chapters
 =================
 
 .. toctree::
-	:maxdepth: 1
+    :maxdepth: 1
 
-	LaguageGuide/StyleGuide
-	ReplacementRules
+    ReplacementRules
+    LanguageGuide/StyleGuide
+    LanguageGuide/LanguageTour
