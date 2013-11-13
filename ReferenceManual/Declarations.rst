@@ -56,7 +56,7 @@ Code Blocks
 .. syntax-outline::
 
     {
-        <#code-to-execute#>
+        <#code to execute#>
     }
         
 
@@ -149,16 +149,16 @@ Variable Declarations
 
 .. syntax-outline::
 
-    var <#variable-name#> : <#type#> = <#expression#>
+    var <#variable name#> : <#type#> = <#expression#>
 
 
 .. syntax-outline::
 
-    var <#variable-name#> : <#type#> {
+    var <#variable name#> : <#type#> {
     get:
-        <#code-to-execute#>
-    set(<#setter-name#>):
-        <#code-to-execute#>
+        <#code to execute#>
+    set(<#setter name#>):
+        <#code to execute#>
     }
 
 .. TODO:
@@ -214,8 +214,8 @@ Function Declarations
 
 .. syntax-outline::
 
-    def <#function-name#> (<#arguments#>) -> <#return-type#> {
-        <#code-to-execute#>
+    def <#function name#> (<#arguments#>) -> <#return type#> {
+        <#code to execute#>
     }
 
 .. TODO:
@@ -279,7 +279,7 @@ Typealias Declarations
 
 .. syntax-outline::
 
-    typealias <#new-type#> : <#inheritance#> = <#existing-type#>
+    typealias <#new type#> : <#inheritance#> = <#existing type#>
 
 
 
@@ -303,16 +303,16 @@ Enumeration Declarations
 
 .. syntax-outline::
 
-    enum <#enumeration-name#> {
-        case: <#enumerator-list 1#>
-        case: <#enumerator-list 2#>(<#associated-value-type#>)
+    enum <#enumeration name#> {
+        case: <#enumerator list 1#>
+        case: <#enumerator list 2#>(<#associated value type#>)
     }
 
 .. syntax-outline::
 
-    enum <#enumeration-name#> : <#raw-value-type#> {
-        case: <#enumerator-list 1#> = <#raw-value 1#>
-        case: <#enumerator-list 2#> = <#raw-value 2#>
+    enum <#enumeration name#> : <#raw value type#> {
+        case: <#enumerator list 1#> = <#raw value 1#>
+        case: <#enumerator list 2#> = <#raw value 2#>
 
 .. TODO:
 
@@ -371,7 +371,7 @@ Structure Declarations
 
 .. syntax-outline::
 
-    struct <#structure-name#> : <#adopted-protocols#> {
+    struct <#structure name#> : <#adopted protocols#> {
         <#declarations#>
     }
 
@@ -399,7 +399,7 @@ Class Declarations
 
 .. syntax-outline::
 
-    class <#class-name#> : <#superclass>, <#adopted-protocols#> {
+    class <#class name#> : <#superclass>, <#adopted protocols#> {
         <#declarations#>
     }
 

@@ -51,8 +51,8 @@ C-Style For Statements
 
 .. syntax-outline::
 
-    for (<#initialization#>; <#expression#>; <#basic-expression#>) {
-        <#code-to-execute#>
+    for (<#initialization#>; <#condition#>; <#increment#>) {
+        <#code to execute#>
     }
 
 where the parentheses are optional.
@@ -80,8 +80,8 @@ For-Each Statement
 
 .. syntax-outline::
 
-    for <#pattern#> in <#basic-expression#> {
-        <#code-to-execute#>
+    for <#item#> in <#collection#> {
+        <#code to execute#>
     }
 
 
@@ -104,8 +104,8 @@ A while statement has the following general form:
 
 .. syntax-outline::
 
-    while <#basic-expression#> {
-        <#code-to-execute-while-true#>
+    while <#condition#> {
+        <#code to execute#>
     }
 
 .. langref-grammar
@@ -127,8 +127,8 @@ Do-While Statement
 .. syntax-outline::
 
     do {
-        <#code-to-execute#>
-    } while <#expression#>
+        <#code to execute#>
+    } while <#condition#>
 
 
 .. langref-grammar
@@ -153,10 +153,10 @@ The general format of an ``if`` statement is
 
 .. syntax-outline::
 
-    if <#basic-expression#> {
-        <#code-to-execute-if-true#>
+    if <#condition#> {
+        <#code to execute if condition is true#>
     } else {
-        <#code-to-execute-if-false#>
+        <#code to execute if condition is false#>
     }
 
 where the ``else`` part is optional.
@@ -164,12 +164,12 @@ where the ``else`` part is optional.
 
 .. syntax-outline::
 
-    if <#basic-expression 1#> {
-        <#code-to-execute-if-1-is-true#>
-    } else if <#basic-expression 2#> {
-        <#code-to-execute-if-2-is-true#>
+    if <#condition 1#> {
+        <#code to execute if condition 1 is true#>
+    } else if <#condition 2#> {
+        <#code to execute if condition 2 is true#>
     } else {
-        <#code-to-execute-if-both-are-false#>
+        <#code to execute if both are false#>
     }
 
 
@@ -200,14 +200,14 @@ A switch statement has the following general form:
 
 .. syntax-outline::
 
-    switch <#basic-expression#> {
-        case <#pattern-list 1#>:
-            <#code-to-execute#>
-        case <#pattern-list 2#> where <#expression#>:
-            <#code-to-execute#>
+    switch <#control expression#> {
+        case <#pattern list 1#>:
+            <#code to execute#>
+        case <#pattern list 2#> where <#condition#>:
+            <#code to execute#>
 
         default:
-            <#code-to-execute#>
+            <#code to execute#>
     }
 
 Because the control expression in a Swift switch statement is a *basic-expression*,
