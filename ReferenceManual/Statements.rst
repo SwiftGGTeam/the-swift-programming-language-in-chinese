@@ -284,10 +284,11 @@ see “Fall Through” in the :doc:`../LanguageGuide/LanguageGuide`.
     switch-case --> case-labels code-block-items-OPT | default-label code-block-items-OPT
    
     case-labels --> case-label case-labels-OPT
-    case-label --> ``case`` pattern-list guard-expression-OPT ``:``
+    case-label --> ``case`` pattern-list guard-clause-OPT ``:``
     default-label --> ``default:``
   
-    guard-expression --> ``where`` expression
+    guard-clause --> ``where`` guard-expression
+    guard-expression --> expression
  
 .. TODO:
  
