@@ -304,15 +304,15 @@ Enumeration Declarations
 .. syntax-outline::
 
     enum <#enumeration-name#> {
-        case: <#enumerator 1#>
-        case: <#enumerator 2#>(<#associated-value-type#>)
+        case: <#enumerator-list 1#>
+        case: <#enumerator-list 2#>(<#associated-value-type#>)
     }
 
 .. syntax-outline::
 
     enum <#enumeration-name#> : <#raw-value-type#> {
-        case: <#enumerator 1#> = <#raw-value 1#>
-        case: <#enumerator 2#> = <#raw-value 2#>
+        case: <#enumerator-list 1#> = <#raw-value 1#>
+        case: <#enumerator-list 2#> = <#raw-value 2#>
 
 .. TODO:
 
@@ -335,10 +335,10 @@ Enumeration Declarations
     enum-name --> identifier
     enum-body --> ``{`` declarations-OPT ``}``
     
-    enum-element-declaration --> attribute-sequence-OPT ``case`` enum-case-list
-    enum-case-list --> enum-case | enum case ``,`` enum-case-list
-    enum-case --> identifier tuple-type-OPT enum-case-return-type-OPT
-    enum-case-return-type --> ``->`` type
+    enum-element-declaration --> attribute-sequence-OPT ``case`` enumerator-list
+    enumerator-list --> enumerator | enumerator ``,`` enumerator-list
+    enumerator --> identifier tuple-type-OPT enumerator-return-type-OPT
+    enumerator-return-type --> ``->`` type
 
 
 .. TODO:
