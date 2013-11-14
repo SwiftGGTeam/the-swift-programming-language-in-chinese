@@ -5,50 +5,39 @@ This document defines a consistent and considered style for Swift code.
 This style should be used for all externally-facing code written by Apple.
 Its overriding aim is to help the developer community
 (including new developers, for whom Swift is their first programming language)
-to develop good habits while discovering Swift's syntax.
-This aim is best achieved by appyling a consistent style to all Swift code within
+to adopt and work with the language,
+by establishing a consistent and recognizable style within
 Apple's documentation, sample code, presentation slides, Xcode templates and code snippets.
 
-The Guide aims to define a considered and internally-consistent style,
-with the flexibility to suit anything from a printed book to a WWDC slide deck.
 Where the language offers multiple possibilities for style and formatting,
 an easy-to-remember rule has been selected,
-with code readability as the primary goal.
+with the following goals:
+
+* code readability
+* compatibility with Xcode and other tools
+* ease of debugging
+* reduction of formatting busywork
+* ease of version control system integration
 
 The Style Guide is currently a work in progress.
 Please send any comments and suggestions to Dave Addey, Developer Publications
 (`dave.addey@apple.com <mailto:dave.addey@apple.com?subject=Swift%20Style%20Guide>`_).
-
-Number Literals
----------------
-
-Underscores should be used in number literals wherever it increases readability.
-Their positioning should be based on US English number formatting::
-
-    var oneBillion = 1_000_000_000          // thousand separators make this large number clearer to read
-    var oneBillion = 1000000000             // not as clear
-    var wordMax = 0x7FFF_FFFF_FFFF_FFFF     // hexadecimal has established grouping conventions into powers of two
-    var upperBound = 0b1111_1111_1111_1111  // as does binary
-
-*Rationale:
-Given that we have the ability to use underscores,
-we should do so to aid clarity and readability.*
 
 Declaring Variables
 -------------------
 
 ``Int`` should be used for all integer numbers,
 and ``Double`` for all floating-point numbers,
-unless specific sizes are explicitly needed for the task at hand
+unless specific sizes are needed for the task at hand
 (due to explicitly-sized data from an external source,
 or for performance, memory usage, or other optimization)::
 
-    var meaningOfLife = 42                  // yes - general-purpose integer inferred as Int
-    var count: UInt8 = 17                   // no - use of sized type is unnecessary here
-    var price: Double                       // yes - general-purpose floating-point declared as Double
+    var meaningOfLife = 42        // yes - general integer inferred as Int
+    var count: UInt8 = 17         // no - use of sized type is unnecessary here
+    var price: Double             // yes - general floating-point declared as Double
 
 *Rationale:
-Defaulting to Int and Double means that everyday values are immediately interoperable in Swift code.
+Choosing default numeric types means that everyday values are immediately interoperable in Swift code.
 It also matches the inferred types for numeric literals.*
 
 *Conversely, using sized types when working with explicitly-sized external data
@@ -74,7 +63,9 @@ If the inferred type may be open to doubt,
 or if the desired type is not the default inferred type from a literal,
 it should be made explicit::
 
-    var languageName: NSString = "Swift"    // An NSString instance is not the inferred type from a string literal
+    var languageName: NSString = "Swift"
+    // the type declaration is needed here because NSString is not
+    // the inferred type of a string literal
 
 Naming Conventions
 ------------------
@@ -95,28 +86,26 @@ Names can then be distinguished by capitalization, even if the code is not synta
 Note, however, that Cocoa names will still be imported into Swift with their existing capitalization.*
 
 Variable names should be human-readable, and should not use unnecessary abbreviation.
-Variables of standard types should generally not include the name of the variable's type as part of their name.
 Clarity is preferred over brevity::
 
-    var discountedPrice = 19.99             // yes
-    var priceFloat = 19.99                  // no - includes a standard type as part of the name
-    var discPrice = 19.99                   // no - unnecessary shortening of part of the name
-    var p = 19.99                           // no - no context from single-character name
+    var discountedPrice = 19.99 // yes
+    var priceFloat = 19.99      // no - includes a standard type as part of the name
+    var discPrice = 19.99       // no - unnecessary shortening of part of the name
+    var p = 19.99               // no - no context from single-character name
 
 *Rationale:
 This follows the existing Cocoa idiom,
 and encourages readable code.*
 
 As a general rule, a variable's name should describe its *purpose*, rather than its type.
-Don't include the type name in the variable name unless it helps to clarify the variable's purpose.
+Don't indicate the type name in the variable name unless it helps to clarify the variable's purpose.
 
 One-character variable names should only be used where it is specifically appropriate due to context::
 
-    typealias GridPoint = (x: Int, y: Int)  // x and y acceptable due to coordinate context
+    def drawAtPoint(x: Int, y: Int) {...}   // x and y OK due to coordinate context
 
 *Rationale:
-Longer variable names give more information about their purpose,
-and help to make code more readable.*
+Descriptive variable names make code more readable.*
 
 One-character variable names can also be used for loop iteration variables::
 
@@ -135,10 +124,11 @@ Colons after ``lowerCamelCase`` names should have a space after the colon, but n
 
     def sayHello(personName: String, salutation: String) -> String {...}
     
-    sayHello(personName: "Dave", salutation: "Howdy!")
+    sayHello(personName: "Tim", salutation: "Howdy!")
 
 *Rationale:
-This mirrors Objective-C's selector-style use of colons for declaring and calling methods.*
+This follows Objective-C's selector-style use of colons for calling methods,
+and unifies the style for both calling and declaration.*
 
 Colons after ``UpperCamelCase`` names should have a space on *both* sides of the colon::
 
@@ -148,7 +138,8 @@ Colons after ``UpperCamelCase`` names should have a space on *both* sides of the
 
     enum Weekday : Int {...}
     
-    struct Stack<Type : Stackable> {...}  // a generic that takes any type that conforms to Stackable
+    // a generic that takes any type that conforms to Stackable
+    struct Stack<Type : Stackable> {...}
 
 *Rationale:
 This follows the tradition in other languages (including Objective-C)
@@ -195,10 +186,7 @@ this does not lead to overly-dense code.*
 Braces
 ------
 
-Opening ``{`` braces should only be placed on a new line if they terminate a line that has been wrapped::
-
-    // these examples assume a line length of 80 characters, as indicated here by --
-    // -----------------------------------------------------------------------------
+Opening ``{`` braces should be placed on a new line if and only if they terminate a line that has been wrapped::
 
     if enteredCorrectDoorCode && passedRetinaScan || hasValidDoorKey {
         // all fits on one line, so the brace accompanies that line
@@ -217,10 +205,10 @@ Any line terminated by an opening brace defines the root indentation level for t
 If the line is wrapped, the root indentation level becomes unclear.
 Placing the brace on a new line clarifies the root indentation level for the first line within the braces.*
 
-Vertical Space
---------------
+Vertical Whitespace
+-------------------
 
-Vertical space is encouraged if it aids readability,
+The use of vertical whitespace is encouraged if it aids readability,
 such as within long ``class``, ``struct`` and ``protocol`` definitions::
 
     class Shape : Rotatable, Scalable {
@@ -244,7 +232,7 @@ such as within long ``class``, ``struct`` and ``protocol`` definitions::
 Indentation
 -----------
 
-Braces move the current indent level four spaces to the right::
+Braces move the current indentation level four spaces to the right::
 
     for i in 1..10 {
         if i % 2 == 0 {
@@ -260,7 +248,7 @@ Braces move the current indent level four spaces to the right::
 
 Statement introducers terminated by a colon (``case``, ``default``, ``get`` and ``set``),
 and the ``in`` closure statement introducer,
-should be de-dented four spaces to the *left* of the current indent level::
+should be aligned with the brace that ends the enclosing brace pair::
 
     switch somePlanet {
     case .Earth:
@@ -310,39 +298,48 @@ regardless of the current window size.*
 Where content has to wrap,
 the wrapped lines should move the current indent level four spaces to the right for the second and subsequent wrapped lines.
 Where the wrapped content is inside parentheses,
-the closing parenthesis should be moved to a new line,
-to reiterate the current indent level::
-
-    // -----------------------------------------------------------------------------
+the closing parenthesis should stay with the final wrapped line,
+rather than move to a new line::
 
     var animationControllerToUse = delegate.tabBarController(
         controller,
         animationControllerForTransitionFromViewController: sourceViewController,
-        toViewController: destinationViewController
-    )
+        toViewController: destinationViewController)
 
 Line Break Rules
 ~~~~~~~~~~~~~~~~
 
 These rules define the correct points to insert line breaks in manually-wrapped code.
 
-Function Definitions and Calls
-______________________________
+Functions
+_________
 
-* For named parameters, place a newline immediately before each ``name: Type`` (or  ``name: value``) that does not fit on the preceding line
-* For unnamed parameters, place a newline immediately before each ``Type`` (or ``value``) that does not fit on the preceding line
-* Opening parentheses should always remain attached to the end of the name that precedes them
-* If the return indicator ``->`` and its return type will not both fit, both should be moved to a new line
+For all function definitions:
 
-For example, using C-style function syntax::
+* A function name or selector name should be followed immediately by its opening parenthesis, with no intervening whitespace
+* If the return indicator ``->`` and its return type will not both fit on the same line, both should be moved to a new line
 
-    // -----------------------------------------------------------------------------
-    
+For tuple-style function definitions:
+
+* Place a line break after the function's opening parenthesis
+* Place a line break before each ``name: type`` parameter that does not fit on the preceding line
+
+For selector-style function definitions:
+
+* Place a line break before each ``selector(name: Type)`` parameter that does not fit on the preceding line
+
+For all function calls:
+
+* Place a line break after the function's opening parenthesis
+* Place a line break before each ``name: value`` (or unnamed ``value``) argument that does not fit on the preceding line
+
+For example, using tuple-style function syntax::
+
     class HTTPConnection {
         def retrieveWebPage(
             atURL: String, withTimeout: Double, method: String,
-            allowUserCancellation: Bool
-        ) -> (source: String?, error: String?)
+            allowUserCancellation: Bool)
+            -> (source: String?, error: String?)
         {
             // statements
         }
@@ -351,16 +348,14 @@ For example, using C-style function syntax::
     var connection = HTTPConnection()
     var result = connection.retrieveWebPage(
         atURL: "http://www.apple.com/", withTimeout: 30, method: "GET",
-        allowUserCancellation: false
-    )
+        allowUserCancellation: false)
 
 Using selector-style function syntax::
 
-    // -----------------------------------------------------------------------------
-    
     class HTTPConnection {
-        def retrieveWebPageAtUrl(String) withTimeout(timeout: Double)
-            method(method: String) allowUserCancellation(allowUserCancellation: Bool)
+        def retrieveWebPageAtUrl(url: String) withTimeout(timeout: Double)
+            method(method: String)
+            allowUserCancellation(allowUserCancellation: Bool)
             -> (source: String?, error: String?)
         {
             // statements
@@ -370,8 +365,7 @@ Using selector-style function syntax::
     var connection = HTTPConnection()
     var result = connection.retrieveWebPageAtURL(
         "http://www.apple.com/", withTimeout: 30, method: "GET",
-        allowUserCancellation: false
-    )
+        allowUserCancellation: false)
 
 Expressions
 ___________
@@ -381,22 +375,10 @@ ___________
 
 ::
 
-    // -----------------------------------------------------------------------------
-
     var totalHeight = defaultTopMargin + defaultHeaderHeight
         + (titleHeight * numberOfTitles)
         + ((individualCellHeight + cellPadding) * numberOfTableRows)
         + defaultBottomMargin
-
-Code Comments
--------------
-
-Single-line code comments should start with a lowercase letter,
-and should not have a period at the end::
-
-    // sizes for the various kinds of objects
-    var asteroidSize = 18
-    var planetSize = 128
 
 Tuples
 ------
@@ -413,13 +395,9 @@ and is recommended here for consistency.
 This approach also aids clarity when inferring type,
 as the tuple type is the very first thing to be read after the equality operator.*
 
-Tuple typealiases should only be used for multi-part return types and properties.
-If it ever becomes desirable to extend a tuple typealias beyond this simple usage,
-a new struct type should be created and used instead.
-
-*Rationale:
 Tuples are not intended to become complex data structures.
-They should only be used for simple packaging of related values.*
+If it ever becomes desirable to extend a tuple typealias beyond simple usage,
+a new struct type should be created and used instead.
 
 Enumerations
 ------------
@@ -437,13 +415,14 @@ its type should be inferred by initializing it with a fully-qualified member of 
 
 *Rationale:
 This enum syntax (*\ ``Planet.Earth``\ *) makes for highly readable enum members.
-Singular enum type names are also consistent with other singular type names
-(*\ ``String``\ *,* ``Double`` *etc.).*
+Singular enum type names are consistent with other singular type names
+(*\ ``String``\ *,* ``Double`` *etc.)*
 
 Where an enum variable type is already declared or known,
 the enum type should be dropped from assignments::
 
-    nearestPlanet = .Jupiter        // yes - still reads as a sentence when nearestPlanet changes value
+    nearestPlanet = .Jupiter
+    // yes - still reads as a sentence when nearestPlanet changes value
 
 *Rationale:
 Dropping the enum type where it is clear from the context makes for shorter, more readable code.*
@@ -452,8 +431,9 @@ Enumeration members should not duplicate the enumeration type within their name,
 or otherwise prefix the member names::
 
     enum Planet {
-        case kPlanetMercury, kPlanetVenus, kPlanetEarth, kPlanetMars, kPlanetJupiter, kPlanetSaturn, kPlanetUranus, kPlanetNeptune
-        // bad - member names include duplication of type, and use an unnecessary 'k' prefix
+        case kPlanetMercury, kPlanetVenus, kPlanetEarth, kPlanetMars,
+            kPlanetJupiter, kPlanetSaturn, kPlanetUranus, kPlanetNeptune
+        // no - member names include duplication of type, and an unnecessary prefix
     }
 
 *Rationale:
@@ -496,7 +476,7 @@ due to the multiple components for each member's declaration.*
 Generics
 --------
 
-Generics of type ``SomeType`` should not have any whitespace between the generic type and the following ``<``::
+Generic types should not have any whitespace between the generic type and the following ``<``::
 
     var someStrings = Array<String>         // yes
     var someStrings = Array <String>        // no
@@ -535,7 +515,9 @@ and the value to test against on the right::
     if 3 == valueToTest {...}           // no
 
 *Rationale:
-This is the natural reading order for the check being performed.*
+This is the natural reading order for the check being performed.
+The alternative style is used in C to avoid confusion between* ``=`` and ``==``\ *,
+which is avoided in Swift by the fact that* ``=`` *does not return a value.*
 
 Functions
 ---------
@@ -562,7 +544,7 @@ Given that all of our existing developers will refer to these functions as ‘me
 we should remain consistent with our exising approach.*
 
 Single-statement functions should always place their single statement on a new line,
-for ease of readability::
+for ease of readability and debuggability::
 
     def sayHelloWorld() {
         println("hello, world")                         // yes
@@ -594,8 +576,8 @@ Closure parameter types and return types may be inferred if they are clear from 
         return string1.uppercase < string2.uppercase
     }
 
-Trailing closures with shorthand (``$0``) parameter names may be used where both parameters are interchangeable,
-as in sorting and comparison closures::
+Trailing closures with shorthand (``$0``) parameter names may be used where all parameters are of the same type,
+and the closure considers their values relative to each other (as in sorting and comparison closures)::
 
     var sortedStrings = sort(strings) {
         return $0.uppercase < $1.uppercase
@@ -607,8 +589,7 @@ if there is no loss of clarity::
 
     var sortedStrings = sort(strings) { return $0 < $1 }
 
-A new line should be started for named closures,
-immediately after the closure's opening brace::
+Multi-line closures that are passed as keyword arguments should place a new line after the closure's opening brace::
 
     var session = NSURLSession.sharedSession()
     var downloadTask = session.downloadTaskWithURL(
@@ -618,24 +599,42 @@ immediately after the closure's opening brace::
         in
             // statements
             // statements
-        }
-    )
+        })
 
 Methods with line-wrapped definitions,
 or with multiple closure parameters,
 should move each closure's parameter name onto a new line to improve readability::
 
-    // -----------------------------------------------------------------------------
-
     viewController.transitionFromViewController(
-        fromViewController toViewController: toViewController duration: 1.0
-        options: UIViewAnimationOptionLayoutSubviews
+        fromViewController, toViewController: toViewController, duration: 1.0,
+        options: UIViewAnimationOptionLayoutSubviews,
         animations: {
             // a closure containing the changes to commit to the views
-        }
+        },
         completion: {
             (finished: Bool)
         in
             // a closure to be called when the animation completes
-        }
-    )
+        })
+
+Number Literals
+---------------
+
+Underscores should be used in number literals wherever it increases readability.
+Their positioning should be based on US English number formatting::
+
+    // yes - thousand separators make this large number clearer to read
+    var oneBillion = 1_000_000_000
+    
+    // no - not as clear
+    var oneBillion = 1000000000
+    
+    // yes - hexadecimal has established grouping conventions into powers of two
+    var wordMax = 0x7FFF_FFFF_FFFF_FFFF
+    
+    // as does binary
+    var upperBound = 0b1111_1111_1111_1111
+
+*Rationale:
+Given that we have the ability to use underscores,
+we should do so to aid clarity and readability.*
