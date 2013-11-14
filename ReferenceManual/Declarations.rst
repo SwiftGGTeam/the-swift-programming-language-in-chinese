@@ -304,15 +304,15 @@ Enumeration Declarations
 .. syntax-outline::
 
     enum <#enumeration name#> {
-        case: <#enumerator list 1#>
-        case: <#enumerator list 2#>(<#associated value type#>)
+        case <#enumerator list 1#>
+        case <#enumerator list 2#>(<#associated value type#>)
     }
 
 .. syntax-outline::
 
     enum <#enumeration name#> : <#raw value type#> {
-        case: <#enumerator list 1#> = <#raw value 1#>
-        case: <#enumerator list 2#> = <#raw value 2#>
+        case <#enumerator list 1#> = <#raw value 1#>
+        case <#enumerator list 2#> = <#raw value 2#>
 
 .. TODO:
 
