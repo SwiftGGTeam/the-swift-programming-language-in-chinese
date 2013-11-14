@@ -736,7 +736,7 @@ Here's the same thing in Swift code:
 .. testcode:: overflowOperatorsWillUnderflow
 
     (swift) var signedUnderflow = Int8.min()     // the smallest value that Int8 can hold
-    // signedUnderflow : Int16 = -128
+    // signedUnderflow : Int8 = -128
     (swift) signedUnderflow = signedUnderflow &- 1
     (swift) println("signedUnderflow is now \(signedUnderflow)")
     >>> signedUnderflow is now 127
