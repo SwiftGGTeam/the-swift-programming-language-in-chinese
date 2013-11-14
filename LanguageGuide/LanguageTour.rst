@@ -29,7 +29,7 @@ You'll learn more about Swift syntax and interaction with Objective-C and Cocoa 
 
 This example uses a typed collection to keep track of the shopping list items displayed in the table view::
 
-    (swift) var items : Vector<ShoppingListItem>
+    (swift) var items : Array<ShoppingListItem>
 
 You'd get a compile-time error if you tried to insert anything other than a ``ShoppingListItem`` into this array. 
 
@@ -37,7 +37,7 @@ When using a variable to keep track of an item extracted from the collection, no
 
     (swift) var item = items[row]
 
-You can omit the type in a Swift variable declaration if it can be deduced from the assignment. In this example, the vector is typed, so the type of the ``item`` variable can safely be inferred. You don't lose any of the power or safety of strong/static typing by using this concise syntax.
+You can omit the type in a Swift variable declaration if it can be deduced from the assignment. In this example, the array is typed, so the type of the ``item`` variable can safely be inferred. You don't lose any of the power or safety of strong/static typing by using this concise syntax.
 
 The ``addItem`` action shows an alert if the user attempts to insert a duplicate item. The ``messageText`` for this alert is set using Swift's **string interpolation syntax**, which offers a readable (and, again, safe) way to build a string using values provided inline::
 
@@ -1024,7 +1024,7 @@ A closure argument to a function is just like any other argument, with a colon `
 Generics
 --------
 
-Swift supports generics through parameterized types. As an example, the standard library includes the ``Vector`` class, which makes it easy to work with typed collections (though it is important to note that the entire standard library is at best a strawman design right now):
+Swift supports generics through parameterized types. As an example, the standard library includes the ``Array`` class, which makes it easy to work with typed collections (though it is important to note that the entire standard library is at best a strawman design right now):
 
 .. testcode:: generics
 
@@ -1034,7 +1034,7 @@ Swift supports generics through parameterized types. As an example, the standard
     (swift) names.append("Hilary")
     (swift) names.append("Carlton")
 
-This vector can only be used with ``String`` elements; you'll get an error if you attempt to insert anything else, like an integer.
+This array can only be used with ``String`` elements; you'll get an error if you attempt to insert anything else, like an integer.
 
 Swift generics offer transparent support for both class and value types without the need for boxing. This means you can work with a collection of integer values, for example, in exactly the same way as you would work with a collection of objects:
 
