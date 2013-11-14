@@ -76,35 +76,6 @@ Import Declarations
     import-path --> any-identifier | any-identifier ``.`` import-path
 
 
-Extension Declarations
-----------------------
-
-
-.. syntax-outline::
-
-    extension <#type#> : <#inheritance#> {
-        <#declarations#>
-    }
-
-
-.. langref-grammar
-
-    decl-extension ::= 'extension' type-identifier inheritance? '{' decl* '}'
-
-
-.. syntax-grammar::
-
-    Grammar of an extension declaration
-    
-    extension-declaration --> ``extension`` type-identifier type-inheritance-list-OPT extension-body
-    extension-body --> ``{`` declarations-OPT ``}``
-
-.. TODO:
- 
-     Add elsewhere: type-inheritance-list
-
-
-
 Variable Declarations
 ---------------------
 
@@ -170,7 +141,33 @@ Variable Declarations
     
     Add elsewhere: typed-pattern-list (typed-pattern-list --> typed-pattern | typed-pattern ``,`` typed-pattern-list);
     Also, change tuple-pattern-element to use pattern-initializer as one of its alternatives.
+
+
+Typealias Declarations
+----------------------
+
+
+.. syntax-outline::
+
+    typealias <#new type#> : <#inheritance#> = <#existing type#>
+
+
+
+.. langref-grammar
+
+    decl-typealias ::= typealias-head '=' type
+    typealias-head ::= 'typealias' identifier inheritance?
+
     
+.. syntax-grammar::
+
+    Grammar of a typealias declaration
+
+    typealias-declaration --> typealias-head ``=`` type
+    typealias-head --> ``typealias`` typealias-name type-inheritance-list-OPT
+    typealias-name --> identifier
+
+
 Function Declarations
 ---------------------
 
@@ -234,30 +231,6 @@ Function Signatures
     
     Add elsewhere: tuple-patterns (tuple-patterns --> tuple-pattern | tuple-pattern tuple-patterns)
 
-
-Typealias Declarations
-----------------------
-
-
-.. syntax-outline::
-
-    typealias <#new type#> : <#inheritance#> = <#existing type#>
-
-
-
-.. langref-grammar
-
-    decl-typealias ::= typealias-head '=' type
-    typealias-head ::= 'typealias' identifier inheritance?
-
-    
-.. syntax-grammar::
-
-    Grammar of a typealias declaration
-
-    typealias-declaration --> typealias-head ``=`` type
-    typealias-head --> ``typealias`` typealias-name type-inheritance-list-OPT
-    typealias-name --> identifier
 
 
 Enumeration Declarations
@@ -417,22 +390,6 @@ Typealias Protocol Elements
     protocol-member --> variable-declaration | function-declaration | typealias-head | subscript-head
 
 
-Subscript Declarations
-----------------------
-
-
-.. langref-grammar
-
-    decl-subscript ::= subscript-head '{' get-set '}'
-    subscript-head ::= attribute-list 'subscript' pattern-tuple '->' type
-
-
-.. syntax-grammar::
-
-    Grammar of a subscript declaration
-
-    subscript-declaration --> subscript-head getter-setter-block
-    subscript-head --> attribute-sequence-OPT ``subscript`` tuple-pattern ``->`` type
 
 Constructor Declarations
 ------------------------
@@ -469,8 +426,55 @@ Destructor Declarations
     destructor-declaration --> attribute-sequence-OPT ``destructor`` ``(`` ``)`` code-block
 
 
-Attribute Sequences
--------------------
+Extension Declarations
+----------------------
+
+
+.. syntax-outline::
+
+    extension <#type#> : <#inheritance#> {
+        <#declarations#>
+    }
+
+
+.. langref-grammar
+
+    decl-extension ::= 'extension' type-identifier inheritance? '{' decl* '}'
+
+
+.. syntax-grammar::
+
+    Grammar of an extension declaration
+    
+    extension-declaration --> ``extension`` type-identifier type-inheritance-list-OPT extension-body
+    extension-body --> ``{`` declarations-OPT ``}``
+
+.. TODO:
+ 
+     Add elsewhere: type-inheritance-list
+
+
+Subscript Declarations
+----------------------
+
+
+.. langref-grammar
+
+    decl-subscript ::= subscript-head '{' get-set '}'
+    subscript-head ::= attribute-list 'subscript' pattern-tuple '->' type
+
+
+.. syntax-grammar::
+
+    Grammar of a subscript declaration
+
+    subscript-declaration --> subscript-head getter-setter-block
+    subscript-head --> attribute-sequence-OPT ``subscript`` tuple-pattern ``->`` type
+
+
+
+Attribute Sequence Declarations
+-------------------------------
 
 
 .. langref-grammar
