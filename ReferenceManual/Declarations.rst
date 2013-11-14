@@ -39,44 +39,6 @@ Declarations
     declaration --> subscript-declaration
 
 
-Translation Unit
-----------------
-
-.. TODO:
-
-    Better to describe this part of the grammar in prose.
-    
-.. langref-grammar
-
-    translation-unit ::= brace-item*
-
-Code Blocks
------------
-
-.. syntax-outline::
-
-    {
-        <#code to execute#>
-    }
-        
-
-.. langref-grammar
-
-    brace-item-list ::= '{' brace-item* '}'
-    brace-item      ::= decl
-    brace-item      ::= expr
-    brace-item      ::= stmt
-
-
-.. syntax-grammar::
-
-    Grammar of a code block
-   
-    code-block --> ``{`` code-block-items-OPT ``}``
-    code-block-items --> code-block-item code-block-items-OPT
-    code-block-item --> declaration | expression | statement
-
-
 Import Declarations
 -------------------
 
