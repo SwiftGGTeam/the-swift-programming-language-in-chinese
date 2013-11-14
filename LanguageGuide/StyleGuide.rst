@@ -218,7 +218,7 @@ If the line is wrapped, the root indentation level becomes unclear.
 Placing the brace on a new line clarifies the root indentation level for the first line within the braces.*
 
 Vertical Space
------------
+--------------
 
 Vertical space is encouraged if it aids readability,
 such as within long ``class``, ``struct`` and ``protocol`` definitions::
@@ -315,7 +315,8 @@ to reiterate the current indent level::
 
     // -----------------------------------------------------------------------------
 
-    var animationControllerToUse = delegate.tabBarController(controller,
+    var animationControllerToUse = delegate.tabBarController(
+        controller,
         animationControllerForTransitionFromViewController: sourceViewController,
         toViewController: destinationViewController
     )
@@ -338,7 +339,8 @@ For example, using C-style function syntax::
     // -----------------------------------------------------------------------------
     
     class HTTPConnection {
-        def retrieveWebPage(atURL: String, withTimeout: Double, method: String,
+        def retrieveWebPage(
+            atURL: String, withTimeout: Double, method: String,
             allowUserCancellation: Bool
         ) -> (source: String?, error: String?)
         {
@@ -347,12 +349,9 @@ For example, using C-style function syntax::
     }
     
     var connection = HTTPConnection()
-    var appleResult = connection.retrieveWebPage(atURL: "http://www.apple.com/",
-        withTimeout: 30, method: "GET", allowUserCancellation: false
-    )
-    var macProPerformanceResult = connection.retrieveWebPage(
-        atURL: "http://www.apple.com/mac-pro/performance/", withTimeout: 30,
-        method: "GET", allowUserCancellation: false
+    var result = connection.retrieveWebPage(
+        atURL: "http://www.apple.com/", withTimeout: 30, method: "GET",
+        allowUserCancellation: false
     )
 
 Using selector-style function syntax::
@@ -369,11 +368,8 @@ Using selector-style function syntax::
     }
     
     var connection = HTTPConnection()
-    var appleResult = connection.retrieveWebPageAtURL("http://www.apple.com/",
-        withTimeout: 30, method: "GET", allowUserCancellation: false
-    )
-    var macProPerformanceResult = connection.retrieveWebPageAtURL(
-        "http://www.apple.com/mac-pro/performance/", withTimeout: 30, method: "GET",
+    var result = connection.retrieveWebPageAtURL(
+        "http://www.apple.com/", withTimeout: 30, method: "GET",
         allowUserCancellation: false
     )
 
@@ -615,12 +611,15 @@ A new line should be started for named closures,
 immediately after the closure's opening brace::
 
     var session = NSURLSession.sharedSession()
-    var downloadTask = session.downloadTaskWithURL(url, completionHandler: {
-        (url: NSURL, response: NSURLResponse, error: NSError)
-    in
-        // statements
-        // statements
-    })
+    var downloadTask = session.downloadTaskWithURL(
+        url,
+        completionHandler: {
+            (url: NSURL, response: NSURLResponse, error: NSError)
+        in
+            // statements
+            // statements
+        }
+    )
 
 Methods with line-wrapped definitions,
 or with multiple closure parameters,
@@ -628,8 +627,8 @@ should move each closure's parameter name onto a new line to improve readability
 
     // -----------------------------------------------------------------------------
 
-    viewController.transitionFromViewController(fromViewController
-        toViewController: toViewController duration: 1.0
+    viewController.transitionFromViewController(
+        fromViewController toViewController: toViewController duration: 1.0
         options: UIViewAnimationOptionLayoutSubviews
         animations: {
             // a closure containing the changes to commit to the views
