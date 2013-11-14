@@ -155,14 +155,14 @@ to iterate over their key-value pairs:
 .. testcode::
 
     (swift) var numberOfLegs = ["spider" : 8, "ant" : 6, "cat" : 4, "bird" : 2]
-    // numberOfLegs : Dictionary<String, Int> = ["spider" : 8, "cat" : 4, "ant" : 6, "bird" : 2]
+    // numberOfLegs : Dictionary<String, Int> = ["bird" : 2, "ant" : 6, "spider" : 8, "cat" : 4]
     (swift) for (key, value) in numberOfLegs {
                 println("\(key)s have \(value) legs")
             }
+    >>> birds have 2 legs
+    >>> ants have 6 legs
     >>> spiders have 8 legs
     >>> cats have 4 legs
-    >>> ants have 6 legs
-    >>> birds have 2 legs
 
 Note that the items in the ``Dictionary`` are not iterated in the same order as they were inserted.
 The contents of a ``Dictionary`` are inherently unordered,
