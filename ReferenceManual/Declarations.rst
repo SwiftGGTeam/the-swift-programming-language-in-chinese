@@ -149,7 +149,7 @@ Typealias Declarations
 
 .. syntax-outline::
 
-    typealias <#new type#> : <#inheritance#> = <#existing type#>
+    typealias <#new type#> : <#adopted protocols#> = <#existing type#>
 
 
 
