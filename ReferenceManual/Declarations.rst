@@ -473,6 +473,16 @@ Subscript Declarations
 ----------------------
 
 
+.. syntax-outline::
+
+    subscript (<#arguments#>) -> <#return type#> {
+    get:
+        <#code to execute#>
+    set(<#setter name#>):
+        <#code to execute#>
+    }
+
+
 .. langref-grammar
 
     decl-subscript ::= subscript-head '{' get-set '}'
