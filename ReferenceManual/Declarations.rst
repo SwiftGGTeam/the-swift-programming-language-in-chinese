@@ -399,6 +399,9 @@ Typealias Protocol Elements
 Constructor Declarations
 ------------------------
 
+.. TODO:
+
+    Add syntax-outline once selector syntax is nailed down.
 
 .. langref-grammar
 
@@ -416,6 +419,13 @@ Constructor Declarations
 
 Destructor Declarations
 -----------------------
+
+.. syntax-outline::
+
+    destructor() {
+        <#code to execute#>
+    }
+
 
 
 .. langref-grammar
