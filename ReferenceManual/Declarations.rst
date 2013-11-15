@@ -432,7 +432,7 @@ Extension Declarations
 
 .. syntax-outline::
 
-    extension <#type#> : <#inheritance#> {
+    extension <#type#> : <#adopted protocols#> {
         <#declarations#>
     }
 
