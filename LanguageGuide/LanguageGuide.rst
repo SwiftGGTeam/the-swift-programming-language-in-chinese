@@ -15,4 +15,3 @@ Language Guide
     Modules
     StandardFunctions
     ObjectiveC
-    StyleGuide

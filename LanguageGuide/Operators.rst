@@ -280,8 +280,8 @@ to check if values are identical:
 * Identical to (``a === b``)
 * Not identical to (``a !== b``)
 
-The identical operators are used to test if two object variables both refer to the same object instance.
-These are described in detail in :doc:`ClassesObjectsAndStructs`.
+These *identity operators* are used to test if two object variables both refer to the same object instance.
+They are described in detail in :doc:`ClassesObjectsAndStructs`.
 
 Each of the comparison operators returns a ``Bool`` value to indicate whether or not the statement is true:
 
@@ -568,7 +568,7 @@ A sign bit of ``0`` means positive, and a sign bit of ``1`` means negative.
 The remaining bits (known as the *value bits*) are then used to store the actual value.
 Positive numbers are stored in exactly the same way as for unsigned integers,
 counting upwards from ``0``.
-Here's how the bits inside a ``UInt8`` look for the number ``4``:
+Here's how the bits inside an ``Int8`` look for the number ``4``:
 
 .. image:: ../images/bitshiftSignedFour.png
     :width: 388
@@ -584,14 +584,14 @@ where ``n`` is the number of value bits.
 In an eight-bit number, we have seven value bits,
 so this means ``2`` to the power of ``7``, or ``128``.
 
-Here's how the bits inside a ``UInt8`` look for the number ``-4``:
+Here's how the bits inside an ``Int8`` look for the number ``-4``:
 
 .. image:: ../images/bitshiftSignedMinusFour.png
     :width: 388
     :align: center
 
 This time, the sign bit is ``1`` (meaning ‘negative’),
-and the seven value bits actually have a binary value of ``124``:
+and the seven value bits actually have a binary value of ``124`` (which is ``128 - 4``):
 
 .. image:: ../images/bitshiftSignedMinusFourValue.png
     :width: 388
@@ -601,7 +601,7 @@ The encoding used for negative numbers is known as a *two's complement* represen
 It may seem an unusual way to represent negative numbers,
 but it has several advantages.
 
-For example, you can add ``-1`` to ``-4``,
+Firstly, it means you can add ``-1`` to ``-4``,
 just by performing a standard binary addition of all eight bits
 (including the sign bit),
 and discarding anything that doesn't fit in the eight bits once you're done:
@@ -644,7 +644,7 @@ Swift will throw an error:
 
 .. testcode:: overflowOperatorsWillFailToOverflow
 
-    (swift) var potentialOverflow = Int16.max()     // the largest value that Int16 can hold
+    (swift) var potentialOverflow = Int16.max()
     // potentialOverflow : Int16 = 32767
     (swift) potentialOverflow += 1                  // this will throw an error
     xxx overflow
@@ -674,7 +674,7 @@ using the overflow addition operator ``&+``:
 
 .. testcode:: overflowOperatorsWillOverflow
 
-    (swift) var willOverflow = UInt8.max()      // the largest value that UInt8 can hold
+    (swift) var willOverflow = UInt8.max()
     // willOverflow : UInt8 = 255
     (swift) willOverflow = willOverflow &+ 1
     (swift) println("willOverflow is now \(willOverflow)")
@@ -711,7 +711,7 @@ Here's how that looks in Swift code:
 
 .. testcode:: overflowOperatorsWillUnderflow
 
-    (swift) var willUnderflow = UInt8.min()      // the smallest value that UInt8 can hold
+    (swift) var willUnderflow = UInt8.min()
     // willUnderflow : UInt8 = 0
     (swift) willUnderflow = willUnderflow &- 1
     (swift) println("willUnderflow is now \(willUnderflow)")
@@ -735,8 +735,8 @@ Here's the same thing in Swift code:
 
 .. testcode:: overflowOperatorsWillUnderflow
 
-    (swift) var signedUnderflow = Int8.min()     // the smallest value that Int8 can hold
-    // signedUnderflow : Int16 = -128
+    (swift) var signedUnderflow = Int8.min()
+    // signedUnderflow : Int8 = -128
     (swift) signedUnderflow = signedUnderflow &- 1
     (swift) println("signedUnderflow is now \(signedUnderflow)")
     >>> signedUnderflow is now 127

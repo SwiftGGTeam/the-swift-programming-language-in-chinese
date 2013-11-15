@@ -29,7 +29,7 @@ You'll learn more about Swift syntax and interaction with Objective-C and Cocoa 
 
 This example uses a typed collection to keep track of the shopping list items displayed in the table view::
 
-    (swift) var items : Vector<ShoppingListItem>
+    (swift) var items : Array<ShoppingListItem>
 
 You'd get a compile-time error if you tried to insert anything other than a ``ShoppingListItem`` into this array. 
 
@@ -37,7 +37,7 @@ When using a variable to keep track of an item extracted from the collection, no
 
     (swift) var item = items[row]
 
-You can omit the type in a Swift variable declaration if it can be deduced from the assignment. In this example, the vector is typed, so the type of the ``item`` variable can safely be inferred. You don't lose any of the power or safety of strong/static typing by using this concise syntax.
+You can omit the type in a Swift variable declaration if it can be deduced from the assignment. In this example, the array is typed, so the type of the ``item`` variable can safely be inferred. You don't lose any of the power or safety of strong/static typing by using this concise syntax.
 
 The ``addItem`` action shows an alert if the user attempts to insert a duplicate item. The ``messageText`` for this alert is set using Swift's **string interpolation syntax**, which offers a readable (and, again, safe) way to build a string using values provided inline::
 
@@ -212,12 +212,12 @@ Some enumerable types use a tuple rather than a single loop variable. If you ite
 .. testcode::
 
     (swift) var dict = ["first" : 1, "second" : 2, "third" : 3]
-    // dict : Dictionary<String, Int> = ["second" : 2, "third" : 3, "first" : 1]
+    // dict : Dictionary<String, Int> = ["third" : 3, "second" : 2, "first" : 1]
     (swift) for (key, value) in dict {
                 println("Key: '\(key)', Value: \(value)")
             }
-    >>> Key: 'second', Value: 2
     >>> Key: 'third', Value: 3
+    >>> Key: 'second', Value: 2
     >>> Key: 'first', Value: 1
 
 Functions
@@ -1024,28 +1024,28 @@ A closure argument to a function is just like any other argument, with a colon `
 Generics
 --------
 
-Swift supports generics through parameterized types. As an example, the standard library includes the ``Vector`` class, which makes it easy to work with typed collections (though it is important to note that the entire standard library is at best a strawman design right now):
+Swift supports generics through parameterized types. As an example, the standard library includes the ``Array`` class, which makes it easy to work with typed collections (though it is important to note that the entire standard library is at best a strawman design right now):
 
 .. testcode:: generics
 
-    (swift) var names = Vector<String>()
-    // names : Vector<String> = <_TtCSs6Vector instance>
+    (swift) var names = Array<String>()
+    // names : Array<String> = Array<String>(ArrayImplementation<String>(UnsafePointer<String>(<unprintable value>), <unprintable value>))
     (swift) names.append("William")
     (swift) names.append("Hilary")
     (swift) names.append("Carlton")
 
-This vector can only be used with ``String`` elements; you'll get an error if you attempt to insert anything else, like an integer.
+This array can only be used with ``String`` elements; you'll get an error if you attempt to insert anything else, like an integer.
 
 Swift generics offer transparent support for both class and value types without the need for boxing. This means you can work with a collection of integer values, for example, in exactly the same way as you would work with a collection of objects:
 
 .. code-block:: swift
 
-    var intCollection = Vector<Int>()
+    var intCollection = Array<Int>()
     intCollection.append(42)
     intCollection.append(314)
     
     class Test { .. }
-    var testCollection = Vector<Test>()
+    var testCollection = Array<Test>()
     testCollection.append(Test())
     testCollection.append(Test())
 
@@ -1075,39 +1075,55 @@ It's even safe in Swift to mix by-reference and value types if you use a protoco
     // foo : Foo = <Foo instance>
     (swift) var bar = Bar()
     // bar : Bar = Bar()
-    (swift) var workers = Vector<Workable>()
-    // workers : Vector<Workable> = <_TtCSs6Vector instance>
+    (swift) var workers = Array<Workable>()
+    >>> P4REPL8Workable_
+    // workers : Array<Workable> = Array<Workable>(ArrayImplementation<Workable>(UnsafePointer<Workable>(<unprintable value>), <unprintable value>))
     (swift) workers.append(foo)
+    >>> P4REPL8Workable_
     (swift) workers.append(bar)
+    >>> P4REPL8Workable_
     (swift) workers.append(42)
+    >>> P4REPL8Workable_
     (swift) for eachThing in workers {
               eachThing.work()
             }
+    >>> P4REPL8Workable_
+    >>> P4REPL8Workable_
+    >>> P4REPL8Workable_
+    >>> P4REPL8Workable_
     >>> A foo is working
+    >>> P4REPL8Workable_
+    >>> P4REPL8Workable_
+    >>> P4REPL8Workable_
     >>> A bar is working
+    >>> P4REPL8Workable_
+    >>> P4REPL8Workable_
+    >>> P4REPL8Workable_
     >>> An integer is working
+    >>> P4REPL8Workable_
+    >>> P4REPL8Workable_
 
 Swift makes it easy to create your own parameterized types, like this simple implementation of a stack class:
 
 .. testcode:: generics
 
     (swift) class Stack<ElementType> {
-              var elements : Vector<ElementType>
+              var elements : Array<ElementType>
               init() {
-                elements = Vector<ElementType>()
+                elements = Array<ElementType>()
               }
               def push(element : ElementType) {
                 elements.append(element)
               }
               def pop() -> ElementType {
-                assert(elements.length > 0, "can't pop an empty stack")
-                var tmp = elements[elements.length - 1]
-                elements.popBack()
+                assert(elements.count > 0, "can't pop an empty stack")
+                var tmp = elements[elements.count - 1]
+                elements.popLast()
                 return tmp
               }
             }
 
-As with a Swift ``Vector``, this generic ``Stack`` class is unrestricted, which means you can create an instance of the class to hold any first class type, including value and by-reference types:
+As with a Swift ``Array``, this generic ``Stack`` class is unrestricted, which means you can create an instance of the class to hold any first class type, including value and by-reference types:
 
 .. testcode:: generics
 
@@ -1135,7 +1151,7 @@ In order to use more specific behavior, you need to indicate which behavior the 
 .. testcode:: generics
 
     (swift) class Workforce<Type : Workable> {
-              var workers : Vector<Type>
+              var workers : Array<Type>
               def startWorking() {
                 for eachWorker in workers {
                   eachWorker.work()
@@ -1148,7 +1164,7 @@ Once you have generic data structures, you'll likely need to be able to implemen
 .. testcode:: generics
 
     (swift) def findIndexOfString(strings : String[], searchString : String) -> Int {
-              for index in 0..strings.length {
+              for index in 0..strings.count {
                 if strings[index] == searchString {
                   return index
                 }
