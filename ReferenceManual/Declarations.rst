@@ -355,6 +355,11 @@ Class Declarations
 Protocol Declarations
 ---------------------
 
+.. syntax-outline::
+
+    protocol <#protocol name#> : <#adopted protocols#> {
+        <#protocol members#>
+    }
 
 Function Protocol Elements
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
