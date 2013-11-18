@@ -6,11 +6,11 @@ Reference Manual
 
 	Introduction
 	LexicalStructure
-	Declarations
 	Types
-	Patterns
 	Expressions
 	Statements
+	Declarations
+	Patterns
 	Protocols
 	Objects
 	Generics
@@ -32,5 +32,5 @@ Reference Manual
 	* Generics
 	* Name Binding
 	* Type Checking
-	* Standard Library
+	* Standard Library?
 	* Summary of the Grammar
