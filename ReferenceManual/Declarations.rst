@@ -62,7 +62,7 @@ Import Declarations
     import-kind ::= 'enum'
     import-kind ::= 'protocol'
     import-kind ::= 'var'
-    import-kind ::= 'def'
+    import-kind ::= 'func'
     import-path ::= any-identifier ('.' any-identifier)*
 
 
@@ -72,7 +72,7 @@ Import Declarations
     
     import-declaration --> attribute-sequence-OPT ``import`` import-kind-OPT import-path
     
-    import-kind --> ``typealias`` | ``struct`` | ``class`` | ``enum`` | ``protocol`` | ``var`` | ``def``
+    import-kind --> ``typealias`` | ``struct`` | ``class`` | ``enum`` | ``protocol`` | ``var`` | ``func``
     import-path --> any-identifier | any-identifier ``.`` import-path
 
 
@@ -173,7 +173,7 @@ Function Declarations
 
 .. syntax-outline::
 
-    def <#function name#> (<#arguments#>) -> <#return type#> {
+    func <#function name#> (<#arguments#>) -> <#return type#> {
         <#code to execute#>
     }
 
@@ -188,7 +188,7 @@ Function Signatures
 
 .. langref-grammar
 
-    decl-func        ::= attribute-list 'static'? 'def' any-identifier generic-params? func-signature brace-item-list?
+    decl-func        ::= attribute-list 'static'? 'func' any-identifier generic-params? func-signature brace-item-list?
     func-signature ::= func-arguments func-signature-result?
     func-arguments ::= pattern-tuple+
     func-arguments ::= selector-tuple
@@ -200,7 +200,7 @@ Function Signatures
     
     Grammar of a function declaration
     
-    function-declaration --> attribute-sequence-OPT ``def`` function-name generic-parameters-OPT function-signature code-block-OPT
+    function-declaration --> attribute-sequence-OPT ``func`` function-name generic-parameters-OPT function-signature code-block-OPT
     function-name --> any-identifier
     
     function-signature --> function-arguments function-signature-result-OPT
