@@ -205,8 +205,15 @@ Placing the brace on a new line clarifies the root indentation level for the fir
 Vertical Whitespace
 -------------------
 
-The use of vertical whitespace is encouraged to aid readability,
-such as within otherwise-too-dense
+Leave at least one blank line:
+
+* between adjacent methods and functions
+* before and after contiguous sets of var declarations
+* before and after any multi-line var declaration
+* before and after any enum declaration.
+
+You are also encouraged to add vertical whitespace where it is not mandated but helps readability,
+such as immediately after the opening braces of otherwise-too-dense
 ``class``, ``struct`` and ``protocol`` definitions::
 
     class Shape : Rotatable, Scalable {
@@ -228,13 +235,6 @@ such as within otherwise-too-dense
 
     }
 
-Vertical whitespace should be added:
-
-* between adjacent methods and functions
-* before and after contiguous sets of var declarations
-* before and after any multi-line var declaration
-* before and after any enum declaration.
-
 Indentation
 -----------
 
@@ -248,7 +248,7 @@ Braces move the current indentation level four spaces to the right::
         }
     }
 
-Statement introducers terminated by a colon (``case``, ``default``, ``get`` and ``set``),
+Statement introducers terminated by a colon (``case:``, ``default:``, ``get:`` and ``set:``),
 and the ``in`` closure statement introducer,
 should be aligned with the brace that ends the enclosing brace pair::
 
@@ -322,12 +322,21 @@ The opening delimeters here are ``[``, ``(``, ``{`` and ``<``.
 
 Additionally, when a line break is needed, prefer to break *before* ``->``, conformance colons and binary operators, rather than after them.
 
+Where possible, delimiter pairs should be kept together on a line. The following code has been wrapped without this rule::
+
+    var totalHeight = defaultTopMargin + defaultHeaderHeight + (titleHeight
+        * numberOfTitles) + ((individualCellHeight + cellPadding)
+        * numberOfTableRows) + defaultBottomMargin
+
+Moving its delimited sub-expressions to new lines helps to make the code's intention clearer::
+
+    var totalHeight = defaultTopMargin + defaultHeaderHeight
+        + (titleHeight * numberOfTitles)
+        + ((individualCellHeight + cellPadding) * numberOfTableRows)
+        + defaultBottomMargin
+
 Functions
 _________
-
-For all function definitions:
-
-* If the return indicator ``->`` and its return type will not both fit on the same line, both should be moved to a new line.
 
 For tuple-style function definitions:
 
@@ -374,24 +383,6 @@ Using selector-style function syntax::
     var result = connection.retrieveWebPageAtURL(
         "http://www.apple.com/", withTimeout: 30, method: "GET",
         allowUserCancellation: false)
-
-Expressions
-___________
-
-Sub-expressions wrapped in parentheses may be moved to a new line as a unit,
-if this aids readability.
-The following code has been wrapped without this rule::
-
-    var totalHeight = defaultTopMargin + defaultHeaderHeight + (titleHeight
-        * numberOfTitles) + ((individualCellHeight + cellPadding)
-        * numberOfTableRows) + defaultBottomMargin
-
-Moving its parenthesized sub-expressions to new lines helps to make the code's intention clearer::
-
-    var totalHeight = defaultTopMargin + defaultHeaderHeight
-        + (titleHeight * numberOfTitles)
-        + ((individualCellHeight + cellPadding) * numberOfTableRows)
-        + defaultBottomMargin
 
 Optional Line Breaks
 ____________________
