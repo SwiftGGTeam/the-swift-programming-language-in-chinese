@@ -558,7 +558,7 @@ Class functions and instance functions should be referred to as ‘methods’ (r
 within comments and descriptive prose.
 
 *Rationale:
-Although all functions will be prefixed by the same* ``def`` *keyword,
+Although all functions will be prefixed by the same* ``func`` *keyword,
 we have a long history of referring to class and instance functions as ‘methods’.
 This is certainly true throughout our existing Cocoa documentation.
 Given that all of our existing developers will refer to these functions as ‘methods’,
