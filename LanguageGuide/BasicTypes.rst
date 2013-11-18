@@ -32,7 +32,7 @@
     * Literals ✔︎
     * Immutability
     * (Don't redeclare objects within a REPL session)
-    * min() and max() static functions for integers ✔︎
+    * min and max for integers ✔︎
 
 
 Basic Types
@@ -176,19 +176,19 @@ you should always use ``Int``, ``Float`` or ``Double`` for code consistency and 
         You might use a ``Float16`` to read 16-bit audio samples,
         or a ``UInt8`` when working with raw 8-bit byte data, for example.
 
-min() and max()
-~~~~~~~~~~~~~~~
+min and max
+~~~~~~~~~~~
 
-The minimum and maximum values of each integer type can be accessed using its ``min()`` and ``max()`` functions:
+The minimum and maximum values of each integer type can be accessed using its ``min`` and ``max`` properties:
 
 .. testcode:: declaringVariables
 
-    (swift) var minimumValue = UInt8.min()
+    (swift) var minimumValue = UInt8.min
     // minimumValue : UInt8 = 0
-    (swift) var maximumValue = UInt8.max()
+    (swift) var maximumValue = UInt8.max
     // maximumValue : UInt8 = 255
 
-Note that the ``min()`` and ``max()`` functions return a value that is also of the appropriate number type.
+Note that the ``min`` and ``max`` properties are also of the appropriate sized number type.
 
 Strong Typing and Type Inference
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

@@ -674,7 +674,7 @@ using the overflow addition operator ``&+``:
 
 .. testcode:: overflowOperatorsWillOverflow
 
-    (swift) var willOverflow = UInt8.max()
+    (swift) var willOverflow = UInt8.max
     // willOverflow : UInt8 = 255
     (swift) willOverflow = willOverflow &+ 1
     (swift) println("willOverflow is now \(willOverflow)")
@@ -711,7 +711,7 @@ Here's how that looks in Swift code:
 
 .. testcode:: overflowOperatorsWillUnderflow
 
-    (swift) var willUnderflow = UInt8.min()
+    (swift) var willUnderflow = UInt8.min
     // willUnderflow : UInt8 = 0
     (swift) willUnderflow = willUnderflow &- 1
     (swift) println("willUnderflow is now \(willUnderflow)")
@@ -735,7 +735,7 @@ Here's the same thing in Swift code:
 
 .. testcode:: overflowOperatorsWillUnderflow
 
-    (swift) var signedUnderflow = Int8.min()
+    (swift) var signedUnderflow = Int8.min
     // signedUnderflow : Int8 = -128
     (swift) signedUnderflow = signedUnderflow &- 1
     (swift) println("signedUnderflow is now \(signedUnderflow)")
