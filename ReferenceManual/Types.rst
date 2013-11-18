@@ -47,6 +47,13 @@ Annotated Type
     
     annotated-type --> attribute-sequence-OPT type
 
+.. NOTE
+
+   An annotated type is first and foremost a type,
+   it just happens to have an attribute list that can come before it.
+   Hence the preference for the name "annotated type" rather
+   than the LangRef name of "type annotation".
+   An type annotation would be first and foremost an annotation.
 
 
 Array Types
