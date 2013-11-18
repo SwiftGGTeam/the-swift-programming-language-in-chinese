@@ -136,7 +136,7 @@ Variable Declarations
     
 .. TODO:
 
-    Follow up with the compiler team to get the correct grammar for the first var declaration
+    TR: Follow up with the compiler team to get the correct grammar for the first var declaration
     definition.
     
     Add elsewhere: typed-pattern-list (typed-pattern-list --> typed-pattern | typed-pattern ``,`` typed-pattern-list);
@@ -220,12 +220,12 @@ Function Signatures
     <rdar://problem/13347488> Consider renaming "static" functions to "class" functions
     Also, selector-style syntax is still under discussion/development.
     
-    Discuss with compiler team: tuple-patterns and ``(`` tuple-pattern-element ``)`` seem to allow
+    TR: Discuss with compiler team: tuple-patterns and ``(`` tuple-pattern-element ``)`` seem to allow
     the same elements; how are they different? Maybe type-tuple and type-tuple-element is what is meant?
     In any case, what's the difference between tuple-patterns/``(`` tuple-pattern-element ``)`` and
     type-tuple/type-tuple-element?
     
-    Also, is the code-block-OPT really optional? What does it mean when you leave off the code-block?
+    TR: Also, is the code-block-OPT really optional? What does it mean when you leave off the code-block?
     
     Revised selector-name---can we come up with a better name for this?
     
@@ -251,7 +251,7 @@ Enumeration Declarations
 
 .. TODO:
 
-    Is raw-value-type the correct thing to put here?
+    TR: Is raw-value-type the correct thing to put here?
     According to the grammar, it's an inheritance list,
     which can take a list of protocols.
 
@@ -280,13 +280,13 @@ Enumeration Declarations
 
     Add elsewhere: declarations (declarations --> declaration declarations-OPT)
     
-    Is it really the case that you can have declarations other than enum-element-declaration
+    TR: Is it really the case that you can have declarations other than enum-element-declaration
     inside an enum-body? If not, we should replace enum-body with:
     enum-body --> ``{`` enum-element-declarations-OPT ``}``.
     
-    Also, do we need to modify the grammar to allow for raw values?
+    TR: Also, do we need to modify the grammar to allow for raw values?
     
-    Discuss with the compiler team: in the enum-case, ('->' type)? doesn't match what the REPL
+    TR: Discuss with the compiler team: in the enum-case, ('->' type)? doesn't match what the REPL
     expects: 
     (swift) enum SomeInt {
               case None

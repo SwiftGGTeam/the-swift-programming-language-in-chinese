@@ -3,7 +3,7 @@ Types
 
 .. TODO:
 
-    Discuss "fully-typed types" and "materializable types" in the intro paragraphs,
+    TR: Discuss "fully-typed types" and "materializable types" in the intro paragraphs,
     rather than in discrete sections. Also, try to come up with better terms for these,
     or just explain the concept without giving them explicit terms.
     
