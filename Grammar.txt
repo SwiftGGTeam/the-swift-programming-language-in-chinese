@@ -109,31 +109,6 @@ original LangRef grammar; delete the corresponding grammar from this document.
     dollarident ::= '$' id-continue+
 
 
-    type ::= type-function
-    type ::= type-array
-    type-simple ::= type-identifier
-    type-simple ::= type-tuple
-    type-simple ::= type-composition
-    type-simple ::= type-metatype
-    type-simple ::= type-optional
-    type-annotation ::= attribute-list type
-    type-identifier ::= type-identifier-component ('.' type-identifier-component)*
-    type-identifier-component ::= identifier generic-args?
-    type-tuple ::= '(' type-tuple-body? ')'
-    type-tuple-body ::= type-tuple-element (',' type-tuple-element)* '...'?
-    type-tuple-element ::= identifier ':' type-annotation
-    type-tuple-element ::= type-annotation
-    type-function ::= type-tuple '->' type-annotation
-    type-array ::= type-simple
-    type-array ::= type-array '[' ']'
-    type-array ::= type-array '[' expr ']'
-    type-metatype ::= type-simple '.' 'metatype'
-    type-optional ::= type-simple '?'-postfix
-    type-composition ::= 'protocol' '<' type-composition-list? '>'
-    type-composition-list ::= type-identifier (',' type-identifier)*
-    inheritance ::= ':' type-identifier (',' type-identifier)*
-
-
     pattern-atom ::= pattern-var
     pattern-atom ::= pattern-any
     pattern-atom ::= pattern-tuple
