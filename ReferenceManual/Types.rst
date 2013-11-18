@@ -23,11 +23,21 @@ Types
     type-annotation ::= attribute-list type
 
 
+.. TODO:
+
+   TR: Why is there a distinction between simple types "type-simple"
+   and other kinds of types?
+   For example, based on this distiction,
+   there isn't a syntactic way to have an array of functions:
+   type-array and type-simple don't expand to type-function.
+
+
+
 .. syntax-grammar::
 
     Grammar of a type
     
-    type --> annotated-type | array-type | function-type | simple-type
+    type --> annotated-type | array-type | function-type | (contents of type-simple)
 
 
 
@@ -64,7 +74,10 @@ Array Types
 
     Grammar of an array type
     
-    array-type --> simple-type | array-type ``[`` ``]`` | array-type ``[`` expression ``]``
+    array-type --> type array-brackets
+    array-brackets --> ``[`` expression-OPT ``]`` array-brackets-OPT
+
+.. TODO: 'array-brackets' isn't a great name...
 
 
 
