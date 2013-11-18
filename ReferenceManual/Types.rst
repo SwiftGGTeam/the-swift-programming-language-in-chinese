@@ -73,6 +73,15 @@ Array Types
     
     array-type --> simple-type | array-type ``[`` ``]`` | array-type ``[`` expression ``]``
 
+.. TODO:
+
+    TR: Is it just an accident that this definition of array types
+    allows a simple type without any square brackets to be called an
+    "array", or is that for some reason?  Alex's guess is that it's
+    written this way just because it makes the recusive definition work:
+    you can keep adding square brackets by recursion,
+    and eventually hit a simple-type and stop recursing.
+
 
 
 Function Type
