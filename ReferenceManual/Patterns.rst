@@ -177,6 +177,6 @@ Tuple Patterns
     
     tuple-pattern --> ``(`` tuple-pattern-body-OPT ``)``
     tuple-pattern-body --> tuple-pattern-element-list ``...``-OPT
-    tuple-pattern-element-list --> 
-    
-.. TODO: Finish this!
+    tuple-pattern-element-list --> tuple-pattern-element | tuple-pattern-element ``,`` tuple-pattern-element-list
+    tuple-pattern-element --> pattern | pattern-initializer
+

@@ -128,6 +128,7 @@ Variable Declarations
     pattern-initializer-list --> pattern-initializer | pattern-initializer ``,`` pattern-initializer-list
     pattern-initializer --> pattern initializer
     initializer --> ``=`` expression
+    typed-pattern-list --> typed-pattern | typed-pattern ``,`` typed-pattern-list
     
     getter-setter-block --> ``{`` getter setter-OPT ``}`` | ``{`` setter getter ``}``
     getter --> ``get`` ``:`` code-block-items-OPT
@@ -138,9 +139,6 @@ Variable Declarations
 
     TR: Follow up with the compiler team to get the correct grammar for the first var declaration
     definition.
-    
-    Add elsewhere: typed-pattern-list (typed-pattern-list --> typed-pattern | typed-pattern ``,`` typed-pattern-list);
-    Also, change tuple-pattern-element to use pattern-initializer as one of its alternatives.
 
 
 Typealias Declarations
