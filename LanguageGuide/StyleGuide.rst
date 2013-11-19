@@ -493,7 +493,7 @@ as with the days of the week shown above.*
 
 Enumerations with any other kind of raw values,
 and / or with associated value tuples,
-should list each case as a separate statement on a new line::
+should be written with each case on its own line::
 
     enum ASCIIControlCharacter : Char {
         case Tab = '\t'
@@ -546,7 +546,7 @@ it would likely save you a comment.*
 Conditional Statements
 ----------------------
 
-Comparisons between a computed value and a literal should always have
+Comparisons between a computed value and a literal should always be written with
 the computed value on the left, and the literal on the right::
 
     if valueToTest == 3 {           // yes
@@ -568,7 +568,7 @@ A space should be inserted before and after the return indicator (``->``)::
         // statements
     }
 
-Do not separate parentheses surrounding parameters and arguments from their contents,
+Don't separate parentheses surrounding parameters and arguments from their contents,
 except by a newline.::
 
     sayHello(personName: "Tim", salutation: "Howdy!")     // yes
