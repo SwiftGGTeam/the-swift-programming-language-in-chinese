@@ -1,5 +1,5 @@
-Style Guide
-===========
+Swift Style Guide
+=================
 
 This document defines a consistent and considered style for Swift code.
 This style should be used for all externally-facing code written by Apple.
@@ -9,16 +9,13 @@ to adopt and work with the language,
 by establishing a consistent and recognizable style within
 Apple's documentation, sample code, presentation slides, Xcode templates and code snippets.
 
-Where the language offers multiple possibilities for style and formatting,
-an easy-to-remember rule has been selected,
-with the following goals:
+The rules in this guide have been chosen with the following goals:
 
-* code readability
-* code maintainability
+* code readability and maintainability
 * compatibility with Xcode and other tools
 * ease of debugging
 * reduction of formatting busywork
-* support for version control workflows
+* ease of understanding
 
 The Style Guide is currently a work in progress.
 Please send any comments and suggestions to Dave Addey, Developer Publications
@@ -39,12 +36,12 @@ or for performance, memory usage, or other optimization)::
 
 *Rationale:
 Choosing default numeric types means that everyday values are immediately interoperable in Swift code.
-It also matches the inferred types for numeric literals.*
+The default numeric types also match the inferred types for numeric literals.*
 
 *Conversely, using sized types when working with explicitly-sized external data
-(such as samples from an audio file, or 8-bit data from an Arduino board)
-helps to catch any accidental overflows when writing new values to the external source.
-It also implicitly documents the nature of the external data.*
+(such as samples from an audio file)
+helps to catch any accidental overflows when writing new values to the external source,
+and implicitly documents the nature of the external data.*
 
 When variables are initialized at the same time as they are declared,
 their type should be inferred (rather than explicitly typed) in variable declarations,
@@ -58,7 +55,9 @@ as long as the initializing value makes the type sufficiently clear::
 
 *Rationale:
 This keeps code as concise as possible,
-without any loss of type-safety.*
+without any loss of type-safety.
+The type is very often already explicitly written on the right-hand side of the ``=`` sign,
+as in the last example above.*
 
 If the inferred type may be open to doubt,
 or if the desired type is not the default inferred type from a literal,
@@ -87,19 +86,18 @@ Names can then be distinguished by capitalization, even if the code is not synta
 Note, however, that Cocoa names will still be imported into Swift with their existing capitalization.*
 
 Variable names should be human-readable, and should not use unnecessary abbreviation.
-Clarity is preferred over brevity::
-
-    var originalPrice = 19.99    // yes
-    var priceFloat = 19.99       // no - includes a standard type as part of the name
-    var origPrice = 19.99        // no - unnecessary shortening of part of the name
-    var p = 19.99                // no - no context from single-character name
+Clarity is preferred over brevity.
 
 *Rationale:
-This follows the existing Cocoa idiom,
-and encourages readable code.*
+This follows the existing Cocoa idiom, and encourages readable code.*
 
-As a general rule, a variable's name should describe its *purpose*, rather than its type.
-Don't indicate the type name in the variable name unless it helps to clarify the variable's purpose.
+A variable's name should describe its *purpose*, rather than its type.
+Don't indicate the type name in the variable name unless it helps to clarify the variable's purpose::
+
+    var originalPrice = 19.99     // yes
+    var priceFloat = Float(19.99) // no - Float doesn't clarify the variable's purpose
+    var origPrice = 19.99         // no - unnecessary shortening of part of the name
+    var p = 19.99                 // no - no context from single-character name
 
 One-character variable names should only be used where it is specifically appropriate due to context::
 
@@ -153,22 +151,26 @@ Commas should always have a space after the comma, but not before::
 *Rationale:
 This follows the usage of commas as punctuation in the English language.*
 
-Single spaces should be used around binary operators,
-with no spaces between operands and parentheses::
+Binary and ternary operators should be separated from their operands with single spaces,
+with the exception of the range operator ``..`` (see below)::
 
     var a = (1 + 2) / 3                     // yes
     var a=(1+2)/3                           // no
+    var height = hasHeader ? 50 : 20        // yes
+
+Do not separate unary operators from their operands,
+or parentheses from the expressions they enclose::
+
+    var b = - a                             // no
+    var c = -a                              // yes
     var a = ( 1 + 2 ) / 3                   // no
-
-Single spaces should also be used around the parts of the ternary operator::
-
-    var rowHeight = hasHeader ? contentHeight + 50 : contentHeight + 20
+    var a = (1 + 2) / 3                     // yes
 
 *Rationale:
-Separating operands from their operators makes it easier to read the operation's purpose,
+Separating operands from their non-unary operators makes it easier to read the operation's purpose,
 and avoids unnecessarily dense code.*
 
-Ranges, however, should not have spaces between their end values and operator::
+Ranges should not have spaces between their end values and operator::
 
     for index in 0..10                  // yes
     for index in 0 .. 10                // no
@@ -176,14 +178,15 @@ Ranges, however, should not have spaces between their end values and operator::
 *Rationale:
 This approach makes the range feel like a single entity,
 as a combination of its end values and operator.
-Because the operator in this case is fixed to the baseline,
+Because the operator is fixed to the baseline,
 and is already a familiar punctuation style for eliding values,
 this does not lead to overly-dense code.*
 
-Braces
-------
+Braces and Parentheses
+----------------------
 
-Opening ``{`` braces should be placed on a new line if and only if they terminate a line that has been wrapped::
+Opening ``{`` braces should be placed on a new line if and only if they terminate a line that has been wrapped,
+and closing ``}`` braces should be given their own line::
 
     if enteredCorrectDoorCode && passedRetinaScan || hasValidDoorKey {
         // all fits on one line, so the brace accompanies that line
@@ -202,19 +205,26 @@ Any line terminated by an opening brace defines the root indentation level for t
 If the line is wrapped, the root indentation level becomes unclear.
 Placing the brace on a new line clarifies the root indentation level for the first line within the braces.*
 
+Closing ``)`` parentheses should be kept on the same line as the code preceding them::
+
+    var result = connection.retrieveWebPage(
+        atURL: "http://www.apple.com/", withTimeout: 30, method: "GET",
+        allowUserCancellation: false)
+   
 Vertical Whitespace
 -------------------
 
-Leave at least one blank line:
+At least one blank line should be inserted between any pair of the following constructs:
 
-* between adjacent methods and functions
-* before and after contiguous sets of var declarations
-* before and after any multi-line var declaration
-* before and after any enum declaration.
+* functions
+* methods
+* contiguous blocks of of single-line ``var`` declarations
+* multi-line ``var`` declarations
+* ``enum`` declarations
 
-You are also encouraged to add vertical whitespace where it is not mandated but helps readability,
-such as immediately after the opening braces of otherwise-too-dense
-``class``, ``struct`` and ``protocol`` definitions::
+You are also encouraged to add vertical whitespace wherever it may improve readability,
+such as immediately after the opening brace of a
+``class``, ``struct`` or ``protocol`` declaration::
 
     class Shape : Rotatable, Scalable {
 
@@ -278,7 +288,7 @@ Line Length and Wrapping
 It is often necessary to wrap code over multiple lines when writing for a fixed-width medium.
 The rules below define a consistent approach for line-wrapping in any medium.
 
-The appropriate line length to use for line wrapping will depend on the writing context.
+The appropriate line length to use for line wrapping depends on context.
 Writing code for a WWDC slide (c. 75 characters)
 is different from writing for PDF (c. 65 characters),
 which is different again from online documentation.
@@ -289,8 +299,7 @@ If the work will be published to multiple media,
 the shortest matching line width for all media should be used throughout.
 
 Xcode sample code projects do not have to be wrapped to a fixed line width.
-However, line-wrapping should still be applied where it aids code readability,
-or avoids the code becoming too dense.
+However, line-wrapping should still be applied manually where it aids readability.
 
 *Rationale:
 Xcode windows do not have a fixed width.
@@ -301,7 +310,7 @@ Relying on Xcode's automatic wrapping can therefore give contextually-appropriat
 based on the current window size.*
 
 Where content has to wrap,
-the wrapped lines should move the current indent level four spaces to the right for the second and subsequent wrapped lines.
+the second and subsequent wrapped lines should be indented by four additional spaces.
 Where the wrapped content is inside parentheses,
 the closing parenthesis should stay with the final wrapped line,
 rather than move to a new line::
@@ -311,44 +320,53 @@ rather than move to a new line::
         animationControllerForTransitionFromViewController: sourceViewController,
         toViewController: destinationViewController)
 
-Line Break Rules
-~~~~~~~~~~~~~~~~
+Line Breaking Rules
+~~~~~~~~~~~~~~~~~~~
 
-All line wrapping should follow the *endline layout rule*:
+Delimiters
+__________
 
-* Any opening delimiter on a line that can’t be matched on that line must be the last non-comment, non-whitespace character on the line.
-
-The opening delimeters here are ``[``, ``(``, ``{`` and ``<``.
-
-Additionally, when a line break is needed, prefer to break *before* ``->``, conformance colons and binary operators, rather than after them.
-
-Where possible, delimiter pairs should be kept together on a line. The following code has been wrapped without this rule::
-
-    var totalHeight = defaultTopMargin + defaultHeaderHeight + (titleHeight
-        * numberOfTitles) + ((individualCellHeight + cellPadding)
-        * numberOfTableRows) + defaultBottomMargin
-
-Moving its delimited sub-expressions to new lines helps to make the code's intention clearer::
+Swift has four sets of paired delimiters:
+``[…]``, ``(…)``, ``{…}``, and ``<…>``.
+Where possible, delimiter pairs other than curly braces (``{…}``)
+should be kept together on a line::
 
     var totalHeight = defaultTopMargin + defaultHeaderHeight
         + (titleHeight * numberOfTitles)
         + ((individualCellHeight + cellPadding) * numberOfTableRows)
         + defaultBottomMargin
 
-Functions
-_________
+A line break (or a line break and a comment) should be added after *any* opening delimiter
+whose closing partner does not fit on the same line
+(the opening delimeters are ``[``, ``(``, ``{`` and ``<``)::
 
-For tuple-style function definitions:
+  func retrieveWebPage(atURL: String, withTimeout: Double, method: String,
+      allowUserCancellation: Bool)               // no
 
-* Place a line break before each ``name: type`` parameter that does not fit on the preceding line
+  func retrieveWebPage(
+      atURL: String, withTimeout: Double, method: String,
+      allowUserCancellation: Bool)               // yes
 
-For selector-style function definitions:
+Other Punctuation
+_________________
+  
+If a line break is required next to one of the following symbols,
+it should be inserted:
 
-* Place a line break before each ``selector(name: Type)`` parameter that does not fit on the preceding line
+* *before* the return indicator ``->``
+* *before* an operator symbol or ``=``
+* *before* a colon indicating conformance or inheritance
+* *after* a colon preceding the type of a var or function parameter
+* *after* a comma
 
-For all function calls:
-
-* Place a line break before each ``name: value`` (or unnamed ``value``) argument that does not fit on the preceding line
+General Guidelines
+__________________ 
+  
+In general, prefer to break lines between, rather than within, syntactic units.
+In particular try to keep declaration fragments of the form ``name: type``
+(which includes function parameter declarations)
+and function selector fragments of the form ``selector(name: Type)``
+on a single line.
 
 For example, using tuple-style function syntax::
 
@@ -387,11 +405,11 @@ Using selector-style function syntax::
 Optional Line Breaks
 ____________________
 
-The rules above define how elements of code should be wrapped when they do not fit on a single line.
-However, these rules may also be applied even where an element *does* fit on a single line,
-if the additional line breaks help to improve readability and avoid over-dense code.
+The rules above explain how code should be wrapped when it does not fit on a single line.
+However, these rules may also be applied at the programmer's discretion,
+if additional line breaks will help to improve readability.
 
-Optional line breaks may also help when the *information* density is high,
+Keep in mind that optional line breaks may also help when the *information* density is high,
 even if the textual density is not.
 The first line of this function is very information-dense::
 
@@ -399,8 +417,7 @@ The first line of this function is very information-dense::
         return EnumerableOf( { s.put($1) } )
     }
 
-An optional line break, inserted before the return indicator,
-helps to make this code more human-parseable::
+A line break inserted before the return indicator helps the reader to digest the code in smaller pieces::
 
     func existential<S: Sink>(base: S)
         -> SinkOf<S.Element>
@@ -411,8 +428,8 @@ helps to make this code more human-parseable::
 Be wary of adding too many optional line breaks, however.
 Code becomes hard to read if it is either too wide or too tall.
 Adding too many line breaks makes it hard to take in a substantial amount of code at once.
-Conversely, using too few line breaks causes readability to suffer because of fewer clues
-(particularly indentation clues)
+Conversely, using too few line breaks removes valuable cues
+(particularly indentation cues)
 about the code's structure.
 
 Enumerations
@@ -450,9 +467,9 @@ Enumeration case names should not be unnecessarily adorned,
 either to indicate the enumeration type or otherwise::
 
     enum Planet {
+        // no - member names include the type name and an unnecessary prefix
         case kPlanetMercury, kPlanetVenus, kPlanetEarth, kPlanetMars,
             kPlanetJupiter, kPlanetSaturn, kPlanetUranus, kPlanetNeptune
-        // no - member names include duplication of type, and an unnecessary prefix
     }
 
 *Rationale:
@@ -495,7 +512,7 @@ due to the multiple components for each member's declaration.*
 Generics
 --------
 
-Generic types should not have any whitespace between the leading name and the following ``<``::
+Generic type names should be kept adjacent to their opening ``<``, with no intervening whitespace::
 
     var someStrings = Array<String>         // yes
     var someStrings = Array <String>        // no
@@ -529,19 +546,21 @@ it would likely save you a comment.*
 Conditional Statements
 ----------------------
 
-Value checks in ``if`` clauses should always put the value to be tested on the left,
-and the value to test against on the right::
+Comparisons between a computed value and a literal should always place
+the computed value on the left, and the literal on the right::
 
-    if valueToTest == 3 {...}           // yes
-    if 3 == valueToTest {...}           // no
+    if valueToTest == 3 {           // yes
+    }
+    if 3 == valueToTest {           // no
+    }
 
 *Rationale:
 This is the natural reading order for the check being performed.
 The alternative style is used in C to avoid confusion between* ``=`` and ``==``\ *,
 which is avoided in Swift by the fact that* ``=`` *does not return a value.*
 
-Functions
----------
+Functions and Methods
+---------------------
 
 A space should be inserted before and after the return indicator (``->``)::
 
@@ -554,8 +573,8 @@ Spaces should not be placed between parentheses and parameter names or values::
     sayHello(personName: "Tim", salutation: "Howdy!")     // yes
     sayHello( personName: "Tim", salutation: "Howdy!" )   // no
 
-Class functions and instance functions should be referred to as ‘methods’ (rather than functions)
-within comments and descriptive prose.
+Functions should be referred to as ‘methods’ in comments and descriptive prose
+if they are declared within the braces of a ``class``, ``struct`` or ``enum`` body.
 
 *Rationale:
 Although all functions will be prefixed by the same* ``func`` *keyword,
