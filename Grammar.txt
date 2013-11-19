@@ -109,24 +109,6 @@ original LangRef grammar; delete the corresponding grammar from this document.
     dollarident ::= '$' id-continue+
 
 
-    pattern-atom ::= pattern-var
-    pattern-atom ::= pattern-any
-    pattern-atom ::= pattern-tuple
-    pattern-atom ::= pattern-is
-    pattern-atom ::= pattern-enum-element
-    pattern-atom ::= expr
-    pattern      ::= pattern-atom
-    pattern      ::= pattern-typed
-    pattern-typed ::= pattern-atom ':' type-annotation
-    pattern-any ::= '_'
-    pattern-var ::= 'var' pattern
-    pattern-tuple ::= '(' pattern-tuple-body? ')'
-    pattern-tuple-body ::= pattern-tuple-element (',' pattern-tuple-body)* '...'?
-    pattern-tuple-element ::= pattern
-    pattern-tuple-element ::= pattern '=' expr
-    pattern-is ::= 'is' type
-    pattern-enum-element ::= type-identifier? '.' identifier pattern-tuple?
-
 
     expr          ::= expr-basic
     expr          ::= expr-trailing-closure expr-cast?

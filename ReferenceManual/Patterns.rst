@@ -1,30 +1,182 @@
 Patterns
 ========
 
+.. langref-grammar
+
+    pattern-atom ::= pattern-var
+    pattern-atom ::= pattern-any
+    pattern-atom ::= pattern-tuple
+    pattern-atom ::= pattern-is
+    pattern-atom ::= pattern-enum-element
+    pattern-atom ::= expr
+    pattern      ::= pattern-atom
+    pattern      ::= pattern-typed
+    pattern-typed ::= pattern-atom ':' type-annotation
+
+.. syntax-grammar::
+
+    Grammar of a pattern
+
+    pattern --> basic-pattern | typed-pattern
+
+
 Typed Patterns
 --------------
 
 
-Any Patterns
-------------
+.. langref-grammar
+
+    pattern-typed ::= pattern-atom ':' type-annotation   
 
 
-Variable Patterns
------------------
+.. syntax-grammar::
+
+    Grammar of a typed pattern
+    
+    typed-pattern --> basic-pattern ``:`` annotated-type
 
 
-Tuple Patterns
+Basic Patterns
 --------------
 
 
-Is Patterns
------------
+.. langref-grammar
+
+    pattern-atom ::= pattern-var
+    pattern-atom ::= pattern-any
+    pattern-atom ::= pattern-tuple
+    pattern-atom ::= pattern-is
+    pattern-atom ::= pattern-enum-element
+    pattern-atom ::= expr
 
 
-Enumeration Element Patterns
-----------------------------
+.. syntax-grammar::
+
+    Grammar of a basic pattern
+    
+    basic-pattern --> any-pattern
+    basic-pattern --> is-pattern
+    basic-pattern --> variable-pattern
+    basic-pattern --> expression-pattern
+    basic-pattern --> enumerator-pattern
+    basic-pattern --> tuple-pattern
 
 
-Expressions in Patterns
------------------------
+Any Pattern
+~~~~~~~~~~~
 
+
+.. langref-grammar
+
+    pattern-any ::= '_'
+
+
+.. syntax-grammar::
+
+    Grammar of an any pattern
+    
+    any-pattern --> ``_``
+
+.. TODO: Try to come up with a better name for "any pattern".
+
+
+
+Is Pattern
+~~~~~~~~~~
+
+
+.. langref-grammar
+
+    pattern-is ::= 'is' type
+
+
+.. syntax-grammar::
+
+    Grammar of an is pattern
+
+    is-pattern --> ``is`` type
+
+
+.. TODO: 
+
+    Try to come up with a better name for "is pattern".
+    Candidates:
+    type-checking-pattern
+
+    
+
+
+Variable-Binding Patterns
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. langref-grammar
+
+    pattern-var ::= 'var' pattern
+
+
+.. syntax-grammar::
+
+    Grammar of a variable-binding pattern
+    
+    variable-binding-pattern --> ``var`` pattern
+
+.. NOTE:
+
+    We chose to call this "variable-binding pattern"
+    instead of "variable pattern",
+    because it's a pattern that binds variables,
+    not a pattern that varies.
+    "Variable pattern" is ambiguous between those two meanings.
+
+
+Expression Patterns
+~~~~~~~~~~~~~~~~~~~
+
+
+.. syntax-grammar::
+
+    Grammar of an expression pattern
+    
+    expression-pattern --> expression
+
+
+
+Enumerator Patterns
+~~~~~~~~~~~~~~~~~~~
+
+An enumerator pattern matches an enumerator declared in an enumeration.
+
+
+.. langref-grammar
+
+    pattern-enum-element ::= type-identifier? '.' identifier pattern-tuple?
+
+
+.. syntax-grammar::
+
+    Grammar of an enumerator pattern
+    
+    enumerator-pattern --> type-identifier-OPT ``.`` identifier tuple-pattern-OPT
+
+
+Tuple Patterns
+~~~~~~~~~~~~~~
+
+.. langref-grammar
+
+    pattern-tuple ::= '(' pattern-tuple-body? ')'
+    pattern-tuple-body ::= pattern-tuple-element (',' pattern-tuple-body)* '...'?
+    pattern-tuple-element ::= pattern
+    pattern-tuple-element ::= pattern '=' expr
+
+
+.. syntax-grammar::
+
+    Grammar of a tuple pattern
+    
+    tuple-pattern --> ``(`` tuple-pattern-body-OPT ``)``
+    tuple-pattern-body --> tuple-pattern-element-list ``...``-OPT
+    tuple-pattern-element-list --> 
+    
+.. TODO: Finish this!
