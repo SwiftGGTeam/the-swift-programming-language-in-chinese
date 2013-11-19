@@ -28,7 +28,9 @@ Declaring Variables
 and ``Double`` for all floating-point numbers,
 unless specific sizes are needed for the task at hand
 (due to explicitly-sized data from an external source,
-or for performance, memory usage, or other optimization)::
+or for performance, memory usage, or other optimization).
+``Int`` should generally be used in preference to an unsigned type,
+even for numbers that are known to be non-negative::
 
     var meaningOfLife = 42        // yes - general integer inferred as Int
     var count: UInt8 = 17         // no - use of sized type is unnecessary here
@@ -70,7 +72,7 @@ it should be made explicit::
 Naming Conventions
 ------------------
 
-Types, protocols, typealiases, type parameters and enumeration member names
+Types, protocols, typealiases, type parameters and enumeration case names
 should always be written in ``UpperCamelCase``.
 Variable names and function names should always be written in ``lowerCamelCase``.
 This includes variable names and function names containing words and acronyms that would otherwise be capitalized.
@@ -95,13 +97,13 @@ A variable's name should describe its *purpose*, rather than its type.
 Don't indicate the type name in the variable name unless it helps to clarify the variable's purpose::
 
     var originalPrice = 19.99     // yes
-    var priceFloat = Float(19.99) // no - Float doesn't clarify the variable's purpose
-    var origPrice = 19.99         // no - unnecessary shortening of part of the name
+    var priceDouble = 19.99       // no - Double doesn't clarify the purpose
+    var origPrice = 19.99         // no - unnecessary shortening of the name
     var p = 19.99                 // no - no context from single-character name
 
 One-character variable names should only be used where it is specifically appropriate due to context::
 
-    func drawAtPoint(x: Int, y: Int) {...}   // x and y OK due to coordinate context
+    func drawAtPoint(x: Int, y: Int) {...}   // OK due to coordinate context
 
 *Rationale:
 Descriptive variable names make code more readable.*
@@ -179,7 +181,7 @@ Ranges should not have spaces between their end values and operator::
 This approach makes the range feel like a single entity,
 as a combination of its end values and operator.
 Because the operator is fixed to the baseline,
-and is already a familiar punctuation style for eliding values,
+and is already a familiar notation for ranges,
 this does not lead to overly-dense code.*
 
 Braces and Parentheses
@@ -336,7 +338,7 @@ should be kept together on a line::
         + ((individualCellHeight + cellPadding) * numberOfTableRows)
         + defaultBottomMargin
 
-A line break (or a line break and a comment) should be added after *any* opening delimiter
+A line break (or a comment and a line break) should be added after *any* opening delimiter
 whose closing partner does not fit on the same line
 (the opening delimeters are ``[``, ``(``, ``{`` and ``<``)::
 
@@ -442,20 +444,18 @@ so that they read as part of a sentence when initializing a variable of that typ
     enum Planet {
         case Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune
     }
-    
-If an enum variable is initialized when it is declared,
-its type should be inferred by initializing it with a fully-qualified member of that enum::
+
+When an enum variable is declared and initialized at once,
+it should be initialized it with a fully-qualified case for that enum::
 
     var nearestPlanet = Planet.Earth
 
-
 *Rationale:
-This enum syntax (*\ ``Planet.Earth``\ *) makes for highly readable enum members.
+This enum syntax (*\ ``Planet.Earth``\ *) makes for highly readable enum cases.
 Singular enum type names are consistent with other singular type names
 (*\ ``String``\ *,* ``Double`` *etc.)*
 
-Where an enum variable type is already declared or known,
-the enum type should be dropped from assignments::
+The enum type prefix should be dropped wherever it can be deduced from context::
 
     nearestPlanet = .Jupiter
     // yes - still reads as a sentence when nearestPlanet changes value
@@ -467,33 +467,33 @@ Enumeration case names should not be unnecessarily adorned,
 either to indicate the enumeration type or otherwise::
 
     enum Planet {
-        // no - member names include the type name and an unnecessary prefix
+        // no - case names include the type name and an unnecessary prefix
         case kPlanetMercury, kPlanetVenus, kPlanetEarth, kPlanetMars,
             kPlanetJupiter, kPlanetSaturn, kPlanetUranus, kPlanetNeptune
     }
 
 *Rationale:
-The enum members above lead to unnecessary duplication when written in full.*
+The enum cases above lead to unnecessary duplication when written in full.*
 ``Planet.Earth`` *is much more readable than* ``Planet.kPlanetEarth``\ *, say.
-This is also consistent with how we import Cocoa enum member names.*
+This is also consistent with how we import Cocoa enum case names.*
 
-Enumeration members should be listed on a single line where the list is short enough to fit,
+Enumeration cases should be listed on a single line where the list is short enough to fit,
 as long as they do not have raw values.
 This is also acceptable in the case where they have a raw value that is an automatically-incrementing integer.
-This approach is particularly appropriate if the enum members have a natural reading order::
+This approach is particularly appropriate if the enum cases have a natural reading order::
 
     enum Weekday : Int {
         case Sunday = 1, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday
     }
 
 *Rationale:
-Enum members without raw values or associated types can easily be scanned as a list when comma-separated.
+Enum cases without raw values or associated types can easily be scanned as a list when comma-separated.
 This is particularly true if they have a natural order,
 as with the days of the week shown above.*
 
 Enumerations with any other kind of raw values,
 and / or with associated value tuples,
-should list each member as a separate ``case`` statement on a new line::
+should list each case as a separate statement on a new line::
 
     enum ASCIIControlCharacter : Char {
         case Tab = '\t'
@@ -507,7 +507,7 @@ should list each member as a separate ``case`` statement on a new line::
 
 *Rationale:
 Enums with raw values or associated values are harder to scan-read as a list when comma-separated,
-due to the multiple components for each member's declaration.*
+due to the multiple components for each case's declaration.*
 
 Generics
 --------
@@ -546,7 +546,7 @@ it would likely save you a comment.*
 Conditional Statements
 ----------------------
 
-Comparisons between a computed value and a literal should always place
+Comparisons between a computed value and a literal should always have
 the computed value on the left, and the literal on the right::
 
     if valueToTest == 3 {           // yes
@@ -556,7 +556,7 @@ the computed value on the left, and the literal on the right::
 
 *Rationale:
 This is the natural reading order for the check being performed.
-The alternative style is used in C to avoid confusion between* ``=`` and ``==``\ *,
+The alternative style is commonly used in C to make the compiler catch cases where* ``==`` *is written as* ``=``\ *,
 which is avoided in Swift by the fact that* ``=`` *does not return a value.*
 
 Functions and Methods
@@ -568,7 +568,8 @@ A space should be inserted before and after the return indicator (``->``)::
         // statements
     }
 
-Spaces should not be placed between parentheses and parameter names or values::
+Do not separate parentheses surrounding parameters and arguments from their contents,
+except by a newline.::
 
     sayHello(personName: "Tim", salutation: "Howdy!")     // yes
     sayHello( personName: "Tim", salutation: "Howdy!" )   // no
@@ -583,7 +584,7 @@ This is certainly true throughout our existing Cocoa documentation.
 Given that all of our existing developers will refer to these functions as ‘methods’,
 we should remain consistent with our exising approach.*
 
-Single-statement functions should always place their single statement on a new line,
+Single-statement functions should always be written with their single statement on a new line,
 for ease of readability and debuggability::
 
     func sayHelloWorld() {
@@ -591,10 +592,6 @@ for ease of readability and debuggability::
     }
     
     func sayHelloWorld() { println("hello, world") }     // no
-
-*Rationale:
-In addition to improved readability,
-this approach means that single-line functions can have a breakpoint inserted inside the braces in Xcode.*
 
 Closures
 --------
@@ -631,7 +628,7 @@ Where this is done, the braces should be contained within the closure's parenthe
 
     var sortedStrings = sort(strings, { $0 < $1 })
 
-Multi-line closures should place a new line after the closure's opening brace::
+Multi-line closures should be written with a new line after the closure's opening brace::
 
     var session = NSURLSession.sharedSession()
     var downloadTask = session.downloadTaskWithURL(
@@ -647,7 +644,7 @@ Number Literals
 ---------------
 
 Underscores should be used in number literals wherever it increases readability.
-Their positioning should be based on US English number formatting::
+For base-10 numbers, these separators should appear on three-digit boundaries::
 
     // yes - thousand separators make this large number clearer to read
     var oneBillion = 1_000_000_000
