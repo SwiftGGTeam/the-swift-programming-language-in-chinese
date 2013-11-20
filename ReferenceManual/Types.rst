@@ -27,7 +27,7 @@ Types
 
     Grammar of a type
     
-    type --> annotated-type | array-type | function-type | simple-type
+    type --> annotated-type | array-type | function-type | basic-type
 
 
 
@@ -71,16 +71,16 @@ Array Types
 
     Grammar of an array type
     
-    array-type --> simple-type | array-type ``[`` ``]`` | array-type ``[`` expression ``]``
+    array-type --> basic-type | array-type ``[`` ``]`` | array-type ``[`` expression ``]``
 
 .. TODO:
 
     TR: Is it just an accident that this definition of array types
-    allows a simple type without any square brackets to be called an
+    allows a basic type without any square brackets to be called an
     "array", or is that for some reason?  Alex's guess is that it's
     written this way just because it makes the recusive definition work:
     you can keep adding square brackets by recursion,
-    and eventually hit a simple-type and stop recursing.
+    and eventually hit a basic-type and stop recursing.
 
 
 
@@ -101,8 +101,8 @@ Function Type
 
 
 
-Simple Types
-------------
+Basic Types
+-----------
 
 
 .. langref-grammar
@@ -116,9 +116,9 @@ Simple Types
 
 .. syntax-grammar::
 
-    Grammar of a simple type
+    Grammar of a basic type
     
-    simple-type --> type-identifier | tuple-type | optional-type | protocol-composition-type | metatype-type
+    basic-type --> type-identifier | tuple-type | optional-type | protocol-composition-type | metatype-type
 
 
 Type Identifiers
@@ -192,7 +192,7 @@ Optional Type
 
     Grammar of an optional type
     
-    optional-type --> simple-type ``?``
+    optional-type --> basic-type ``?``
 
 
 
@@ -240,7 +240,7 @@ Metatype Type
 
     Grammar of a metatype type
     
-    metatype-type --> simple-type ``.`` ``metatype``
+    metatype-type --> basic-type ``.`` ``metatype``
 
 
 
