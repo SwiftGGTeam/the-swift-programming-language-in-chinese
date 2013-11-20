@@ -121,8 +121,8 @@ Variable Declarations
 
     variable-declaration --> attribute-sequence-OPT ``var`` pattern-initializer-list
     variable-declaration --> attribute-sequence-OPT ``var`` typed-pattern-list
-    variable-declaration --> attribute-sequence-OPT ``var`` variable-name ``:`` type-annotation code-block
-    variable-declaration --> attribute-sequence-OPT ``var`` variable-name ``:`` type-annotation getter-setter-block
+    variable-declaration --> attribute-sequence-OPT ``var`` variable-name type-specifier code-block
+    variable-declaration --> attribute-sequence-OPT ``var`` variable-name type-specifier getter-setter-block
     variable-name --> identifier
     
     pattern-initializer-list --> pattern-initializer | pattern-initializer ``,`` pattern-initializer-list

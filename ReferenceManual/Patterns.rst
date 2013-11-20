@@ -17,53 +17,20 @@ Patterns
 
     Grammar of a pattern
 
-    pattern --> basic-pattern | typed-pattern
+    pattern --> any-pattern type-specifier-OPT
+    pattern --> is-pattern type-specifier-OPT
+    pattern --> variable-pattern type-specifier-OPT
+    pattern --> expression-pattern type-specifier-OPT
+    pattern --> enumerator-pattern type-specifier-OPT
+    pattern --> tuple-pattern type-specifier-OPT
 
 
-Typed Patterns
---------------
 
-
-.. langref-grammar
-
-    pattern-typed ::= pattern-atom ':' type-annotation   
-
-
-.. syntax-grammar::
-
-    Grammar of a typed pattern
-    
-    typed-pattern --> basic-pattern ``:`` annotated-type
-
-
-Basic Patterns
---------------
-
-
-.. langref-grammar
-
-    pattern-atom ::= pattern-var
-    pattern-atom ::= pattern-any
-    pattern-atom ::= pattern-tuple
-    pattern-atom ::= pattern-is
-    pattern-atom ::= pattern-enum-element
-    pattern-atom ::= expr
-
-
-.. syntax-grammar::
-
-    Grammar of a basic pattern
-    
-    basic-pattern --> any-pattern
-    basic-pattern --> is-pattern
-    basic-pattern --> variable-pattern
-    basic-pattern --> expression-pattern
-    basic-pattern --> enumerator-pattern
-    basic-pattern --> tuple-pattern
+.. TODO: In prose, we discuss the meaning of the explicit type.
 
 
 Any Pattern
-~~~~~~~~~~~
+-----------
 
 
 .. langref-grammar
@@ -82,7 +49,7 @@ Any Pattern
 
 
 Is Pattern
-~~~~~~~~~~
+----------
 
 
 .. langref-grammar
@@ -107,7 +74,7 @@ Is Pattern
 
 
 Variable-Binding Patterns
-~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------
 
 
 .. langref-grammar
@@ -131,7 +98,7 @@ Variable-Binding Patterns
 
 
 Expression Patterns
-~~~~~~~~~~~~~~~~~~~
+-------------------
 
 
 .. syntax-grammar::
@@ -143,7 +110,7 @@ Expression Patterns
 
 
 Enumerator Patterns
-~~~~~~~~~~~~~~~~~~~
+-------------------
 
 An enumerator pattern matches an enumerator declared in an enumeration.
 
@@ -161,7 +128,7 @@ An enumerator pattern matches an enumerator declared in an enumeration.
 
 
 Tuple Patterns
-~~~~~~~~~~~~~~
+--------------
 
 .. langref-grammar
 

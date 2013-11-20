@@ -56,6 +56,16 @@ Annotated Type
    An type annotation would be first and foremost an annotation.
 
 
+Type Specifier
+~~~~~~~~~~~~~~
+
+.. syntax-grammar::
+
+    Grammar of a type specifier
+
+    type-specifier --> ``:`` annotated-type
+
+
 Array Types
 -----------
 
@@ -173,7 +183,7 @@ Tuple Types
     tuple-type --> ``(`` tuple-type-body-OPT ``)``
     tuple-type-body --> tuple-type-element-list ``...``-OPT
     tuple-type-element-list --> tuple-type-element | tuple-type-element ``,`` tuple-type-element-list
-    tuple-type-element --> annotated-type | element-name ``:`` annotated-type
+    tuple-type-element --> annotated-type | element-name type-specifier
 
 
 Optional Type
