@@ -17,16 +17,25 @@ Patterns
 
     Grammar of a pattern
 
-    pattern --> any-pattern type-specifier-OPT
-    pattern --> is-pattern type-specifier-OPT
+    pattern --> any-pattern
+    pattern --> is-pattern
     pattern --> variable-pattern type-specifier-OPT
     pattern --> expression-pattern type-specifier-OPT
-    pattern --> enumerator-pattern type-specifier-OPT
+    pattern --> enumerator-pattern
     pattern --> tuple-pattern type-specifier-OPT
 
 
 
-.. TODO: In prose, we discuss the meaning of the explicit type.
+.. TODO: In prose, we discuss the meaning of the explicit type. 
+    The optional type specifier contrains a pattern to
+    match only values of the specified type.
+    
+.. TODO: TR: Do you really mean that a pattern *has* a type,
+    as it says in the LangRef,
+    or do you mean that patterns can be constrained to match against a type?
+    Strictly speaking, should only values (and types) have a type?
+
+
 
 
 Any Pattern
