@@ -283,7 +283,7 @@ see “Fall Through” in the :doc:`../LanguageGuide/LanguageGuide`.
     switch-case --> case-labels code-block-items-OPT | default-label code-block-items-OPT
    
     case-labels --> case-label case-labels-OPT
-    case-label --> ``case`` pattern-list guard-clause-OPT ``:``
+    case-label --> ``case`` untyped-pattern-list guard-clause-OPT ``:``
     default-label --> ``default:``
   
     guard-clause --> ``where`` guard-expression
@@ -291,8 +291,10 @@ see “Fall Through” in the :doc:`../LanguageGuide/LanguageGuide`.
  
 .. TODO:
  
-     Add elsewhere: pattern-list, and possibly move guard-expression to the
+     Add elsewhere: untyped-pattern-list, and possibly move guard-expression to the
      expressions chapter.
+
+     untyped-pattern-list --> untyped-pattern | untyped-pattern ``,`` untyped-pattern-list
 
 Control Transfer Statements
 ---------------------------
