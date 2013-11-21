@@ -32,7 +32,19 @@ Patterns
 
 
 
-.. TODO: In prose, we discuss the meaning of the explicit type.
+.. TODO: In prose, we discuss the meaning of the explicit type 
+    (i.e., what type-specifier means).
+    
+    TR: It doesn't really make sense for some of the patterns to have optional type specifiers.
+    For example, is-pattern type-specifier-OPT could then be expanded to:
+    ``is`` type attribute-sequence-OPT type, which is redundant and doesn't work.
+    Same kinds of considerations apply to any-pattern, and enumerator-pattern.
+    Shouldn't the grammar reflect this? There are two ways we are considering to fix this.
+    The first is to removed the type-specifier-OPT 
+    after the patterns to which it isn't appropriate.
+    The second is to make pattern --> untyped-pattern | typed-pattern.
+    This has the advantage that we can use these more fined-grained categories elsewhere in the grammar.    
+    
 
 
 Any Pattern
