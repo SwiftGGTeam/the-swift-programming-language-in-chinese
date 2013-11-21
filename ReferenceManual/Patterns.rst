@@ -17,12 +17,18 @@ Patterns
 
     Grammar of a pattern
 
-    pattern --> any-pattern type-specifier-OPT
-    pattern --> is-pattern type-specifier-OPT
-    pattern --> variable-pattern type-specifier-OPT
-    pattern --> expression-pattern type-specifier-OPT
-    pattern --> enumerator-pattern type-specifier-OPT
-    pattern --> tuple-pattern type-specifier-OPT
+    pattern --> typed-pattern | untyped-pattern
+
+    typed-pattern --> variable-pattern type-specifier-OPT
+    typed-pattern --> expression-pattern type-specifier-OPT
+    typed-pattern --> tuple-pattern type-specifier-OPT
+
+    untyped-pattern --> any-pattern
+    untyped-pattern --> is-pattern
+    untyped-pattern --> variable-pattern type-specifier-OPT
+    untyped-pattern --> expression-pattern type-specifier-OPT
+    untyped-pattern --> enumerator-pattern
+    untyped-pattern --> tuple-pattern type-specifier-OPT
 
 
 
