@@ -19,16 +19,16 @@ Patterns
 
     pattern --> typed-pattern | untyped-pattern
 
-    typed-pattern --> variable-pattern type-specifier-OPT
-    typed-pattern --> expression-pattern type-specifier-OPT
-    typed-pattern --> tuple-pattern type-specifier-OPT
+    typed-pattern --> variable-pattern type-specifier
+    typed-pattern --> expression-pattern type-specifier
+    typed-pattern --> tuple-pattern type-specifier
 
     untyped-pattern --> any-pattern
     untyped-pattern --> is-pattern
-    untyped-pattern --> variable-pattern type-specifier-OPT
-    untyped-pattern --> expression-pattern type-specifier-OPT
     untyped-pattern --> enumerator-pattern
-    untyped-pattern --> tuple-pattern type-specifier-OPT
+    untyped-pattern --> variable-pattern
+    untyped-pattern --> expression-pattern
+    untyped-pattern --> tuple-pattern
 
 
 
