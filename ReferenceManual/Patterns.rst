@@ -45,6 +45,13 @@ Patterns
     The second is to make pattern --> untyped-pattern | typed-pattern.
     This has the advantage that we can use these more fined-grained categories elsewhere in the grammar.    
     
+    LangRef says that type annotations are "currently not allowed"
+    in case labels of switch statements --
+    is there an intention to support them in the future?
+    (If they might be supported later,
+    let's not go through lots of special gyrations
+    to write a grammar that forbids them.
+    A note in prose is probably good enough.)
 
 
 Any Pattern
