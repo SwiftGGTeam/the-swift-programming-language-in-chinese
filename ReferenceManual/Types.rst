@@ -27,43 +27,22 @@ Types
 
     Grammar of a type
     
-    type --> annotated-type | array-type | function-type | basic-type
+    type --> array-type | function-type | basic-type
 
 
-
-Annotated Type
---------------
-
-
-.. langref-grammar
-
-        type-annotation ::= attribute-list type
-
-
-
-.. syntax-grammar::
-
-    Grammar of an annotated type
-    
-    annotated-type --> attribute-sequence-OPT type
-
-.. NOTE
-
-   An annotated type is first and foremost a type,
-   it just happens to have an attribute list that can come before it.
-   Hence the preference for the name "annotated type" rather
-   than the LangRef name of "type annotation".
-   An type annotation would be first and foremost an annotation.
-
+.. NOTE: Removed "annotated-type" as a syntactic category,
+    because having it would allow productions that contain redundancy;
+    for example, it would allow "attribute-sequence attribute-sequence function-type".
+    Instead, we can simply replace it by its definition ("attribute-sequence-OPT type").
 
 Type Specifier
-~~~~~~~~~~~~~~
+--------------
 
 .. syntax-grammar::
 
     Grammar of a type specifier
 
-    type-specifier --> ``:`` annotated-type
+    type-specifier --> ``:`` attribute-sequence-OPT type
 
 
 Array Types
@@ -107,7 +86,7 @@ Function Type
 
     Grammar of a function type
 
-    function-type --> tuple-type ``->`` annotated-type
+    function-type --> tuple-type ``->`` attribute-sequence-OPT type
 
 
 
@@ -183,7 +162,7 @@ Tuple Types
     tuple-type --> ``(`` tuple-type-body-OPT ``)``
     tuple-type-body --> tuple-type-element-list ``...``-OPT
     tuple-type-element-list --> tuple-type-element | tuple-type-element ``,`` tuple-type-element-list
-    tuple-type-element --> annotated-type | element-name type-specifier
+    tuple-type-element --> attribute-sequence-OPT type | element-name type-specifier
 
 
 Optional Type

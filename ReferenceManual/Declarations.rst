@@ -203,7 +203,7 @@ Function Signatures
     
     function-signature --> function-arguments function-signature-result-OPT
     function-arguments --> tuple-patterns | selector-arguments
-    function-signature-result --> ``->`` type-annotation
+    function-signature-result --> ``->`` attribute-sequence-OPT type
     
     selector-arguments --> ``(`` tuple-pattern-element ``)`` selector-tuples
     selector-tuples --> selector-name ``(`` tuple-pattern-element ``)`` selector-tuples-OPT
