@@ -320,7 +320,7 @@ Structure Declarations
 
 .. syntax-grammar::
 
-    Grammar of a structure declaration
+   Grammar of a structure declaration
 
    struct-declaration --> attribute-sequence-OPT ``struct`` struct-name generic-parameters-OPT type-inheritance-list-OPT struct-body
    struct-name --> identifier
