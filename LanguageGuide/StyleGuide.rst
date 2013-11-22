@@ -1,5 +1,5 @@
-Style Guide
-===========
+Swift Style Guide
+=================
 
 This document defines a consistent and considered style for Swift code.
 This style should be used for all externally-facing code written by Apple.
@@ -9,15 +9,13 @@ to adopt and work with the language,
 by establishing a consistent and recognizable style within
 Apple's documentation, sample code, presentation slides, Xcode templates and code snippets.
 
-Where the language offers multiple possibilities for style and formatting,
-an easy-to-remember rule has been selected,
-with the following goals:
+The rules in this guide have been chosen with the following goals:
 
-* code readability
+* code readability and maintainability
 * compatibility with Xcode and other tools
 * ease of debugging
 * reduction of formatting busywork
-* ease of version control system integration
+* ease of understanding
 
 The Style Guide is currently a work in progress.
 Please send any comments and suggestions to Dave Addey, Developer Publications
@@ -30,7 +28,9 @@ Declaring Variables
 and ``Double`` for all floating-point numbers,
 unless specific sizes are needed for the task at hand
 (due to explicitly-sized data from an external source,
-or for performance, memory usage, or other optimization)::
+or for performance, memory usage, or other optimization).
+``Int`` should generally be used in preference to an unsigned type,
+even for numbers that are known to be non-negative::
 
     var meaningOfLife = 42        // yes - general integer inferred as Int
     var count: UInt8 = 17         // no - use of sized type is unnecessary here
@@ -38,12 +38,12 @@ or for performance, memory usage, or other optimization)::
 
 *Rationale:
 Choosing default numeric types means that everyday values are immediately interoperable in Swift code.
-It also matches the inferred types for numeric literals.*
+The default numeric types also match the inferred types for numeric literals.*
 
 *Conversely, using sized types when working with explicitly-sized external data
-(such as samples from an audio file, or 8-bit data from an Arduino board)
-helps to catch any accidental overflows when writing new values to the external source.
-It also implicitly documents the nature of the external data.*
+(such as samples from an audio file)
+helps to catch any accidental overflows when writing new values to the external source,
+and implicitly documents the nature of the external data.*
 
 When variables are initialized at the same time as they are declared,
 their type should be inferred (rather than explicitly typed) in variable declarations,
@@ -57,7 +57,9 @@ as long as the initializing value makes the type sufficiently clear::
 
 *Rationale:
 This keeps code as concise as possible,
-without any loss of type-safety.*
+without any loss of type-safety.
+The type is very often already explicitly written on the right-hand side of the ``=`` sign,
+as in the last example above.*
 
 If the inferred type may be open to doubt,
 or if the desired type is not the default inferred type from a literal,
@@ -70,7 +72,7 @@ it should be made explicit::
 Naming Conventions
 ------------------
 
-Types, protocols, typealiases, type parameters and enumeration member names
+Types, protocols, typealiases, type parameters and enumeration case names
 should always be written in ``UpperCamelCase``.
 Variable names and function names should always be written in ``lowerCamelCase``.
 This includes variable names and function names containing words and acronyms that would otherwise be capitalized.
@@ -86,23 +88,22 @@ Names can then be distinguished by capitalization, even if the code is not synta
 Note, however, that Cocoa names will still be imported into Swift with their existing capitalization.*
 
 Variable names should be human-readable, and should not use unnecessary abbreviation.
-Clarity is preferred over brevity::
-
-    var discountedPrice = 19.99 // yes
-    var priceFloat = 19.99      // no - includes a standard type as part of the name
-    var discPrice = 19.99       // no - unnecessary shortening of part of the name
-    var p = 19.99               // no - no context from single-character name
+Clarity is preferred over brevity.
 
 *Rationale:
-This follows the existing Cocoa idiom,
-and encourages readable code.*
+This follows the existing Cocoa idiom, and encourages readable code.*
 
-As a general rule, a variable's name should describe its *purpose*, rather than its type.
-Don't indicate the type name in the variable name unless it helps to clarify the variable's purpose.
+A variable's name should describe its *purpose*, rather than its type.
+Don't indicate the type name in the variable name unless it helps to clarify the variable's purpose::
+
+    var originalPrice = 19.99     // yes
+    var priceDouble = 19.99       // no - Double doesn't clarify the purpose
+    var origPrice = 19.99         // no - unnecessary shortening of the name
+    var p = 19.99                 // no - no context from single-character name
 
 One-character variable names should only be used where it is specifically appropriate due to context::
 
-    def drawAtPoint(x: Int, y: Int) {...}   // x and y OK due to coordinate context
+    func drawAtPoint(x: Int, y: Int) {...}   // OK due to coordinate context
 
 *Rationale:
 Descriptive variable names make code more readable.*
@@ -122,13 +123,9 @@ Colons after ``lowerCamelCase`` names should have a space after the colon, but n
 
     var rootNode: Node
 
-    def sayHello(personName: String, salutation: String) -> String {...}
+    func sayHello(personName: String, salutation: String) -> String {...}
     
     sayHello(personName: "Tim", salutation: "Howdy!")
-
-*Rationale:
-This follows Objective-C's selector-style use of colons for calling methods,
-and unifies the style for both calling and declaration.*
 
 Colons after ``UpperCamelCase`` names should have a space on *both* sides of the colon::
 
@@ -143,7 +140,7 @@ Colons after ``UpperCamelCase`` names should have a space on *both* sides of the
 
 *Rationale:
 This follows the tradition in other languages (including Objective-C)
-of using colons with spaces on either side for conformance declarations.*
+of using colons with spaces on either side for conformance declarations and inheritance.*
 
 Commas should always have a space after the comma, but not before::
 
@@ -151,27 +148,31 @@ Commas should always have a space after the comma, but not before::
         case Sunday = 1, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday
     }
     
-    def sayHello(personName: String, salutation: String) -> String {...}
+    func sayHello(personName: String, salutation: String) -> String {...}
 
 *Rationale:
 This follows the usage of commas as punctuation in the English language.*
 
-Single spaces should be used around binary operators,
-with no spaces between operands and parentheses::
+Binary and ternary operators should be separated from their operands with single spaces,
+with the exception of the range operator ``..`` (see below)::
 
     var a = (1 + 2) / 3                     // yes
     var a=(1+2)/3                           // no
+    var height = hasHeader ? 50 : 20        // yes
+
+Do not separate unary operators from their operands,
+or parentheses from the expressions they enclose::
+
+    var b = - a                             // no
+    var c = -a                              // yes
     var a = ( 1 + 2 ) / 3                   // no
-
-Single spaces should also be used around the parts of the ternary operator::
-
-    var rowHeight = hasHeader ? contentHeight + 50 : contentHeight + 20
+    var a = (1 + 2) / 3                     // yes
 
 *Rationale:
-Separating operands from their operators makes it easier to read the operation's purpose,
+Separating operands from their non-unary operators makes it easier to read the operation's purpose,
 and avoids unnecessarily dense code.*
 
-Ranges, however, should not have spaces between their end values and operator::
+Ranges should not have spaces between their end values and operator::
 
     for index in 0..10                  // yes
     for index in 0 .. 10                // no
@@ -179,14 +180,15 @@ Ranges, however, should not have spaces between their end values and operator::
 *Rationale:
 This approach makes the range feel like a single entity,
 as a combination of its end values and operator.
-Because the operator in this case is fixed to the baseline,
-and is already a familiar punctuation style for eliding values,
+Because the operator is fixed to the baseline,
+and is already a familiar notation for ranges,
 this does not lead to overly-dense code.*
 
-Braces
-------
+Braces and Parentheses
+----------------------
 
-Opening ``{`` braces should be placed on a new line if and only if they terminate a line that has been wrapped::
+Opening ``{`` braces should be placed on a new line if and only if they terminate a line that has been wrapped,
+and closing ``}`` braces should be given their own line::
 
     if enteredCorrectDoorCode && passedRetinaScan || hasValidDoorKey {
         // all fits on one line, so the brace accompanies that line
@@ -205,25 +207,41 @@ Any line terminated by an opening brace defines the root indentation level for t
 If the line is wrapped, the root indentation level becomes unclear.
 Placing the brace on a new line clarifies the root indentation level for the first line within the braces.*
 
+Closing ``)`` parentheses should be kept on the same line as the code preceding them::
+
+    var result = connection.retrieveWebPage(
+        atURL: "http://www.apple.com/", withTimeout: 30, method: "GET",
+        allowUserCancellation: false)
+   
 Vertical Whitespace
 -------------------
 
-The use of vertical whitespace is encouraged if it aids readability,
-such as within long ``class``, ``struct`` and ``protocol`` definitions::
+At least one blank line should be inserted between any pair of the following constructs:
+
+* functions
+* methods
+* contiguous blocks of of single-line ``var`` declarations
+* multi-line ``var`` declarations
+* ``enum`` declarations
+
+You are also encouraged to add vertical whitespace wherever it may improve readability,
+such as immediately after the opening brace of a
+``class``, ``struct`` or ``protocol`` declaration::
 
     class Shape : Rotatable, Scalable {
 
         var numberOfSides: Int
+        var origin: (Int, Int)
         
         init() {
             // statements
         }
         
-        def rotate(radians: Double) {
+        func rotate(radians: Double) {
             // statements
         }
 
-        def scale(scaleFactor: Double) {
+        func scale(scaleFactor: Double) {
             // statements
         }
 
@@ -242,11 +260,7 @@ Braces move the current indentation level four spaces to the right::
         }
     }
 
-    struct Animal {
-        var numberOfLegs: Int
-    }
-
-Statement introducers terminated by a colon (``case``, ``default``, ``get`` and ``set``),
+Statement introducers terminated by a colon (``case:``, ``default:``, ``get:`` and ``set:``),
 and the ``in`` closure statement introducer,
 should be aligned with the brace that ends the enclosing brace pair::
 
@@ -258,13 +272,16 @@ should be aligned with the brace that ends the enclosing brace pair::
     }
 
     class Circle : Shape {
+
         var radius: Float
+
         var circumference: Float {
         get:
             return radius * 2 * 3.14159
         set(aCircumference):
             radius = aCircumference / (2 * 3.14159)
         }
+
     }
 
 Line Length and Wrapping
@@ -273,7 +290,7 @@ Line Length and Wrapping
 It is often necessary to wrap code over multiple lines when writing for a fixed-width medium.
 The rules below define a consistent approach for line-wrapping in any medium.
 
-The appropriate line length to use for line wrapping will depend on the writing context.
+The appropriate line length to use for line wrapping depends on context.
 Writing code for a WWDC slide (c. 75 characters)
 is different from writing for PDF (c. 65 characters),
 which is different again from online documentation.
@@ -283,20 +300,19 @@ However, a single width should be selected and used throughout the entire work w
 If the work will be published to multiple media,
 the shortest matching line width for all media should be used throughout.
 
-Note that Xcode sample code projects should *not* use manual line-wrapping.
-However, specific line-wrapping rules may still be applied in sample code projects
-if they aid code readability in individual cases.
+Xcode sample code projects do not have to be wrapped to a fixed line width.
+However, line-wrapping should still be applied manually where it aids readability.
 
 *Rationale:
 Xcode windows do not have a fixed width.
 Even on a single machine,
 the available horizontal space varies when navigators and utilities are shown or hidden.
 The four-space indentation rule defined below matches Xcode's automatic line-wrapping behavior.
-Relying on Xcode's automatic wrapping therefore gives contextually-appropriate wrapping,
-regardless of the current window size.*
+Relying on Xcode's automatic wrapping can therefore give contextually-appropriate wrapping,
+based on the current window size.*
 
 Where content has to wrap,
-the wrapped lines should move the current indent level four spaces to the right for the second and subsequent wrapped lines.
+the second and subsequent wrapped lines should be indented by four additional spaces.
 Where the wrapped content is inside parentheses,
 the closing parenthesis should stay with the final wrapped line,
 rather than move to a new line::
@@ -306,37 +322,58 @@ rather than move to a new line::
         animationControllerForTransitionFromViewController: sourceViewController,
         toViewController: destinationViewController)
 
-Line Break Rules
-~~~~~~~~~~~~~~~~
+Line Breaking Rules
+~~~~~~~~~~~~~~~~~~~
 
-These rules define the correct points to insert line breaks in manually-wrapped code.
+Delimiters
+__________
 
-Functions
-_________
+Swift has four sets of paired delimiters:
+``[…]``, ``(…)``, ``{…}``, and ``<…>``.
+Where possible, delimiter pairs other than curly braces (``{…}``)
+should be kept together on a line::
 
-For all function definitions:
+    var totalHeight = defaultTopMargin + defaultHeaderHeight
+        + (titleHeight * numberOfTitles)
+        + ((individualCellHeight + cellPadding) * numberOfTableRows)
+        + defaultBottomMargin
 
-* A function name or selector name should be followed immediately by its opening parenthesis, with no intervening whitespace
-* If the return indicator ``->`` and its return type will not both fit on the same line, both should be moved to a new line
+A line break (or a comment and a line break) should be added after *any* opening delimiter
+whose closing partner does not fit on the same line
+(the opening delimeters are ``[``, ``(``, ``{`` and ``<``)::
 
-For tuple-style function definitions:
+  func retrieveWebPage(atURL: String, withTimeout: Double, method: String,
+      allowUserCancellation: Bool)               // no
 
-* Place a line break after the function's opening parenthesis
-* Place a line break before each ``name: type`` parameter that does not fit on the preceding line
+  func retrieveWebPage(
+      atURL: String, withTimeout: Double, method: String,
+      allowUserCancellation: Bool)               // yes
 
-For selector-style function definitions:
+Other Punctuation
+_________________
+  
+If a line break is required next to one of the following symbols,
+it should be inserted:
 
-* Place a line break before each ``selector(name: Type)`` parameter that does not fit on the preceding line
+* *before* the return indicator ``->``
+* *before* an operator symbol or ``=``
+* *before* a colon indicating conformance or inheritance
+* *after* a colon preceding the type of a var or function parameter
+* *after* a comma
 
-For all function calls:
-
-* Place a line break after the function's opening parenthesis
-* Place a line break before each ``name: value`` (or unnamed ``value``) argument that does not fit on the preceding line
+General Guidelines
+__________________ 
+  
+In general, prefer to break lines between, rather than within, syntactic units.
+In particular try to keep declaration fragments of the form ``name: type``
+(which includes function parameter declarations)
+and function selector fragments of the form ``selector(name: Type)``
+on a single line.
 
 For example, using tuple-style function syntax::
 
     class HTTPConnection {
-        def retrieveWebPage(
+        func retrieveWebPage(
             atURL: String, withTimeout: Double, method: String,
             allowUserCancellation: Bool)
             -> (source: String?, error: String?)
@@ -353,7 +390,7 @@ For example, using tuple-style function syntax::
 Using selector-style function syntax::
 
     class HTTPConnection {
-        def retrieveWebPageAtUrl(url: String) withTimeout(timeout: Double)
+        func retrieveWebPageAtUrl(url: String) withTimeout(timeout: Double)
             method(method: String)
             allowUserCancellation(allowUserCancellation: Bool)
             -> (source: String?, error: String?)
@@ -367,59 +404,58 @@ Using selector-style function syntax::
         "http://www.apple.com/", withTimeout: 30, method: "GET",
         allowUserCancellation: false)
 
-Expressions
-___________
+Optional Line Breaks
+____________________
 
-* Place a line break immediately before each binary operator that does not fit on the preceding line
-* Sub-expressions wrapped in parentheses may be moved to a new line as a unit, if this aids readability
+The rules above explain how code should be wrapped when it does not fit on a single line.
+However, these rules may also be applied at the programmer's discretion,
+if additional line breaks will help to improve readability.
 
-::
+Keep in mind that optional line breaks may also help when the *information* density is high,
+even if the textual density is not.
+The first line of this function is very information-dense::
 
-    var totalHeight = defaultTopMargin + defaultHeaderHeight
-        + (titleHeight * numberOfTitles)
-        + ((individualCellHeight + cellPadding) * numberOfTableRows)
-        + defaultBottomMargin
+    func existential<S: Sink>(base: S) -> SinkOf<S.Element> {
+        return EnumerableOf( { s.put($1) } )
+    }
 
-Tuples
-------
+A line break inserted before the return indicator helps the reader to digest the code in smaller pieces::
 
-Tuple instances based on a typealias should use initializer syntax,
-and may infer their tuple type from the typealias::
+    func existential<S: Sink>(base: S)
+        -> SinkOf<S.Element>
+    {
+        return EnumerableOf( { s.put($1) } )
+    }
 
-    typealias HTTPStatus = (Int, String)
-    var http304Status = HTTPStatus(304, "Not Modified")
-
-*Rationale:
-Initializer syntax is the natural way to initialize classes and structs,
-and is recommended here for consistency.
-This approach also aids clarity when inferring type,
-as the tuple type is the very first thing to be read after the equality operator.*
-
-Tuples are not intended to become complex data structures.
-If it ever becomes desirable to extend a tuple typealias beyond simple usage,
-a new struct type should be created and used instead.
+Be wary of adding too many optional line breaks, however.
+Code becomes hard to read if it is either too wide or too tall.
+Adding too many line breaks makes it hard to take in a substantial amount of code at once.
+Conversely, using too few line breaks removes valuable cues
+(particularly indentation cues)
+about the code's structure.
 
 Enumerations
 ------------
 
 Enumeration types and their elements should have capitalized singular names
 (e.g. ``Planet`` rather than ``Planets``),
-so that they read as part of a sentence when initializing a variable of that type.
-If an enum variable is initialized when it is declared,
-its type should be inferred by initializing it with a fully-qualified member of that enum::
+so that they read as part of a sentence when initializing a variable of that type::
 
     enum Planet {
         case Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune
     }
+
+When an enum variable is declared and initialized at once,
+it should be initialized it with a fully-qualified case for that enum::
+
     var nearestPlanet = Planet.Earth
 
 *Rationale:
-This enum syntax (*\ ``Planet.Earth``\ *) makes for highly readable enum members.
+This enum syntax (*\ ``Planet.Earth``\ *) makes for highly readable enum cases.
 Singular enum type names are consistent with other singular type names
 (*\ ``String``\ *,* ``Double`` *etc.)*
 
-Where an enum variable type is already declared or known,
-the enum type should be dropped from assignments::
+The enum type prefix should be dropped wherever it can be deduced from context::
 
     nearestPlanet = .Jupiter
     // yes - still reads as a sentence when nearestPlanet changes value
@@ -427,37 +463,37 @@ the enum type should be dropped from assignments::
 *Rationale:
 Dropping the enum type where it is clear from the context makes for shorter, more readable code.*
 
-Enumeration members should not duplicate the enumeration type within their name,
-or otherwise prefix the member names::
+Enumeration case names should not be unnecessarily adorned,
+either to indicate the enumeration type or otherwise::
 
     enum Planet {
+        // no - case names include the type name and an unnecessary prefix
         case kPlanetMercury, kPlanetVenus, kPlanetEarth, kPlanetMars,
             kPlanetJupiter, kPlanetSaturn, kPlanetUranus, kPlanetNeptune
-        // no - member names include duplication of type, and an unnecessary prefix
     }
 
 *Rationale:
-The enum members above lead to unnecessary duplication when written in full.*
+The enum cases above lead to unnecessary duplication when written in full.*
 ``Planet.Earth`` *is much more readable than* ``Planet.kPlanetEarth``\ *, say.
-This is also consistent with how we import Cocoa enum member names.*
+This is also consistent with how we import Cocoa enum case names.*
 
-Enumeration members should be listed on a single line where the list is short enough to fit,
+Enumeration cases should be listed on a single line where the list is short enough to fit,
 as long as they do not have raw values.
 This is also acceptable in the case where they have a raw value that is an automatically-incrementing integer.
-This approach is particularly appropriate if the enum members have a natural reading order::
+This approach is particularly appropriate if the enum cases have a natural reading order::
 
     enum Weekday : Int {
         case Sunday = 1, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday
     }
 
 *Rationale:
-Enum members without raw values or associated types can easily be scanned as a list when comma-separated.
+Enum cases without raw values or associated types can easily be scanned as a list when comma-separated.
 This is particularly true if they have a natural order,
 as with the days of the week shown above.*
 
 Enumerations with any other kind of raw values,
 and / or with associated value tuples,
-should list each member as a separate ``case`` statement on a new line::
+should be written with each case on its own line::
 
     enum ASCIIControlCharacter : Char {
         case Tab = '\t'
@@ -471,12 +507,12 @@ should list each member as a separate ``case`` statement on a new line::
 
 *Rationale:
 Enums with raw values or associated values are harder to scan-read as a list when comma-separated,
-due to the multiple components for each member's declaration.*
+due to the multiple components for each case's declaration.*
 
 Generics
 --------
 
-Generic types should not have any whitespace between the generic type and the following ``<``::
+Generic type names should be kept adjacent to their opening ``<``, with no intervening whitespace::
 
     var someStrings = Array<String>         // yes
     var someStrings = Array <String>        // no
@@ -502,58 +538,60 @@ Standard Library algorithms should always be used in preference to loop iteratio
     sequence.find(desiredElement)
 
 *Rationale:
-The Swift Standard Library is very closely integrated with the core language.
-Using the Standard Library algorithms in Apple code helps to encourage their adoption.*
+The standard library is already implemented, tested, and optimized.
+Don’t write the same logic yourself if you don’t have to.
+Also, an algorithm name like “find” is more indicative of what you’re doing than a raw loop is;
+it would likely save you a comment.*
 
 Conditional Statements
 ----------------------
 
-Value checks in ``if`` clauses should always put the value to be tested on the left,
-and the value to test against on the right::
+Comparisons between a computed value and a literal should always be written with
+the computed value on the left, and the literal on the right::
 
-    if valueToTest == 3 {...}           // yes
-    if 3 == valueToTest {...}           // no
+    if valueToTest == 3 {           // yes
+    }
+    if 3 == valueToTest {           // no
+    }
 
 *Rationale:
 This is the natural reading order for the check being performed.
-The alternative style is used in C to avoid confusion between* ``=`` and ``==``\ *,
+The alternative style is commonly used in C to make the compiler catch cases where* ``==`` *is written as* ``=``\ *,
 which is avoided in Swift by the fact that* ``=`` *does not return a value.*
 
-Functions
----------
+Functions and Methods
+---------------------
 
 A space should be inserted before and after the return indicator (``->``)::
 
-    def sayHello(personName: String, salutation: String) -> String {
+    func sayHello(personName: String, salutation: String) -> String {
         // statements
     }
 
-Spaces should not be placed between parentheses and parameter names or values::
+Don't separate parentheses surrounding parameters and arguments from their contents,
+except by a newline.::
 
     sayHello(personName: "Tim", salutation: "Howdy!")     // yes
     sayHello( personName: "Tim", salutation: "Howdy!" )   // no
 
-Class functions and instance functions should be referred to as ‘methods’ (rather than functions)
-within comments and descriptive prose.
+Functions should be referred to as ‘methods’ in comments and descriptive prose
+if they are declared within the braces of a ``class``, ``struct`` or ``enum`` body.
 
 *Rationale:
-Although all functions will be prefixed by the same* ``def`` *keyword,
+Although all functions will be prefixed by the same* ``func`` *keyword,
 we have a long history of referring to class and instance functions as ‘methods’.
 This is certainly true throughout our existing Cocoa documentation.
 Given that all of our existing developers will refer to these functions as ‘methods’,
 we should remain consistent with our exising approach.*
 
-Single-statement functions should always place their single statement on a new line,
+Single-statement functions should always be written with their single statement on a new line,
 for ease of readability and debuggability::
 
-    def sayHelloWorld() {
+    func sayHelloWorld() {
         println("hello, world")                         // yes
     }
-    def sayHelloWorld() { println("hello, world") }     // no
-
-*Rationale:
-In addition to improved readability,
-this approach means that single-line functions can have a breakpoint inserted inside the braces in Xcode.*
+    
+    func sayHelloWorld() { println("hello, world") }     // no
 
 Closures
 --------
@@ -576,8 +614,8 @@ Closure parameter types and return types may be inferred if they are clear from 
         return string1.uppercase < string2.uppercase
     }
 
-Trailing closures with shorthand (``$0``) parameter names may be used where all parameters are of the same type,
-and the closure considers their values relative to each other (as in sorting and comparison closures)::
+Trailing closures with shorthand (``$0``) parameter names may be used where the closure is short,
+and wouldn’t benefit from elaborated names::
 
     var sortedStrings = sort(strings) {
         return $0.uppercase < $1.uppercase
@@ -585,11 +623,12 @@ and the closure considers their values relative to each other (as in sorting and
 
 Single-statement closures may be written on a single line,
 with spaces inside the braces,
-if there is no loss of clarity::
+if there is no loss of clarity.
+Where this is done, the braces should be contained within the closure's parentheses::
 
-    var sortedStrings = sort(strings) { return $0 < $1 }
+    var sortedStrings = sort(strings, { $0 < $1 })
 
-Multi-line closures that are passed as keyword arguments should place a new line after the closure's opening brace::
+Multi-line closures should be written with a new line after the closure's opening brace::
 
     var session = NSURLSession.sharedSession()
     var downloadTask = session.downloadTaskWithURL(
@@ -601,27 +640,11 @@ Multi-line closures that are passed as keyword arguments should place a new line
             // statements
         })
 
-Methods with line-wrapped definitions,
-or with multiple closure parameters,
-should move each closure's parameter name onto a new line to improve readability::
-
-    viewController.transitionFromViewController(
-        fromViewController, toViewController: toViewController, duration: 1.0,
-        options: UIViewAnimationOptionLayoutSubviews,
-        animations: {
-            // a closure containing the changes to commit to the views
-        },
-        completion: {
-            (finished: Bool)
-        in
-            // a closure to be called when the animation completes
-        })
-
 Number Literals
 ---------------
 
 Underscores should be used in number literals wherever it increases readability.
-Their positioning should be based on US English number formatting::
+For base-10 numbers, these separators should appear on three-digit boundaries::
 
     // yes - thousand separators make this large number clearer to read
     var oneBillion = 1_000_000_000
@@ -634,7 +657,3 @@ Their positioning should be based on US English number formatting::
     
     // as does binary
     var upperBound = 0b1111_1111_1111_1111
-
-*Rationale:
-Given that we have the ability to use underscores,
-we should do so to aid clarity and readability.*
