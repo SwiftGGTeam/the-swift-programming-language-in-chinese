@@ -107,50 +107,6 @@ original LangRef grammar; delete the corresponding grammar from this document.
     right-binder ::= [ \r\n\t\)\]\},;:]
     any-identifier ::= identifier | operator
     dollarident ::= '$' id-continue+
-
-
-
-    
-    expr-binary ::= op-binary-or-ternary expr-unary expr-cast?
-    op-binary-or-ternary ::= operator-binary
-    op-binary-or-ternary ::= '='
-    op-binary-or-ternary ::= '?'-infix expr-sequence ':'
-    expr-cast ::= 'is' type
-    expr-cast ::= 'as' type
-    expr-unary   ::= operator-prefix* expr-postfix
-    expr-literal ::= integer_literal
-    expr-literal ::= floating_literal
-    expr-literal ::= character_literal
-    expr-literal ::= string_literal
-    expr-literal ::= '__FILE__'
-    expr-literal ::= '__LINE__'
-    expr-literal ::= '__COLUMN__'
-    expr-identifier ::= identifier generic-args?
-    expr-super ::= expr-super-method
-    expr-super ::= expr-super-subscript
-    expr-super ::= expr-super-constructor
-    expr-super-method ::= 'super' '.' expr-identifier
-    expr-super-subscript ::= 'super' '[' expr ']'
-    expr-super-constructor ::= 'super' '.' 'init'
-    expr-closure ::= '{' closure-signature? brace-item-list '}'
-    closure-signature ::= pattern-tuple func-signature-result? 'in'
-    closure-signature ::= identifier (',' identifier*) func-signature-result? 'in'
-    expr-anon-closure-arg ::= dollarident
-    expr-delayed-identifier ::= '.' identifier
-    expr-paren      ::= '(' ')'
-    expr-paren      ::= '(' expr-paren-element (',' expr-paren-element)* ')'
-    expr-paren-element ::= (identifier ':')? expr
-    expr-dot ::= expr-postfix '.' dollarident
-    expr-dot ::= expr-postfix '.' expr-identifier
-    expr-subscript ::= expr-postfix '[' expr ']'
-    expr-new        ::= 'new' type-identifier expr-new-bounds
-    expr-new-bounds ::= expr-new-bound
-    expr-new-bounds ::= expr-new-bounds expr-new-bound
-    expr-new-bound  ::= '[' expr? ']'
-    expr-call ::= expr-postfix expr-paren
-    expr-trailing-closure ::= expr-postfix expr-closure+
-    expr-optional ::= expr-postfix '?'-postfix
-    expr-force-value ::= expr-postfix '!'
  
     
     generic-params ::= '<' generic-param (',' generic-param)* where-clause? '>'
