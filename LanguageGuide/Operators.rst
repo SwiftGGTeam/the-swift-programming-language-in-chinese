@@ -411,7 +411,7 @@ For example:
 
 .. testcode:: bitwiseOperators
 
-    (swift) var initialBits : UInt8 = 0b00001111
+    (swift) var initialBits: UInt8 = 0b00001111
     // initialBits : UInt8 = 15
     (swift) var invertedBits = ~initialBits  // equals 11110000
     // invertedBits : UInt8 = 240
@@ -444,9 +444,9 @@ For example:
 
 .. testcode:: bitwiseOperators
 
-    (swift) var firstSixBits : UInt8 = 0b11111100
+    (swift) var firstSixBits: UInt8 = 0b11111100
     // firstSixBits : UInt8 = 252
-    (swift) var lastSixBits : UInt8  = 0b00111111
+    (swift) var lastSixBits: UInt8  = 0b00111111
     // lastSixBits : UInt8 = 63
     (swift) var middleFourBits = firstSixBits & lastSixBits  // equals 00111100
     // middleFourBits : UInt8 = 60
@@ -469,9 +469,9 @@ For example:
 
 .. testcode:: bitwiseOperators
 
-    (swift) var someBits : UInt8 = 0b10110010
+    (swift) var someBits: UInt8 = 0b10110010
     // someBits : UInt8 = 178
-    (swift) var moreBits : UInt8 = 0b01011110
+    (swift) var moreBits: UInt8 = 0b01011110
     // moreBits : UInt8 = 94
     (swift) var combinedbits = someBits | moreBits  // equals 11111110
     // combinedbits : UInt8 = 254
@@ -500,9 +500,9 @@ For example:
 
 .. testcode:: bitwiseOperators
 
-    (swift) var firstBits : UInt8 = 0b00010100
+    (swift) var firstBits: UInt8 = 0b00010100
     // firstBits : UInt8 = 20
-    (swift) var otherBits : UInt8 = 0b00000101
+    (swift) var otherBits: UInt8 = 0b00000101
     // otherBits : UInt8 = 5
     (swift) var outputBits = firstBits ^ otherBits  // equals 00010001
     // outputBits : UInt8 = 17
@@ -549,7 +549,7 @@ Here's how bit-shifting looks in Swift code:
 
 .. testcode:: bitwiseShiftOperators
 
-    (swift) var shiftBits : UInt8 = 4   // 00000100 in binary
+    (swift) var shiftBits: UInt8 = 4    // 00000100 in binary
     // shiftBits : UInt8 = 4
     (swift) shiftBits << 1              // 00001000
     // r0 : UInt8 = 8
@@ -845,8 +845,8 @@ It can be read as “not ``a``”, as seen in the following example:
     (swift) var allowedEntry = false
     // allowedEntry : Bool = false
     (swift) if !allowedEntry {
-                println("ACCESS DENIED")
-            }
+        println("ACCESS DENIED")
+    }
     >>> ACCESS DENIED
 
 The phrase ``if !allowedEntry`` can be read as “if not allowed entry”.

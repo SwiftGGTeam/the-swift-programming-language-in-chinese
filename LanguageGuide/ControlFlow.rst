@@ -523,7 +523,7 @@ for brevity:
 
     (swift) var numberSymbol = '三'   // Chinese symbol for the number 3
     // numberSymbol : Char = '三'
-    (swift) var integerValue : Int? = .None
+    (swift) var integerValue: Int? = .None
     // integerValue : Int? = <unprintable value>
     (swift) switch numberSymbol {
         case '1', '١', '一', '일':

@@ -83,7 +83,7 @@ to be explicit about the kind of variable you want to create:
 
 .. testcode:: declaringVariables
 
-    (swift) var b : String = "Hello"
+    (swift) var b: String = "Hello"
     // b : String = "Hello"
 
 The colon in the declaration means *“…that is a…”*,
@@ -374,9 +374,9 @@ you initialize a new number of the desired type with the existing value, like th
 
 .. testcode:: typeConversion
 
-    (swift) var twoThousand : UInt16 = 2000
+    (swift) var twoThousand: UInt16 = 2_000
     // twoThousand : UInt16 = 2000
-    (swift) var one : UInt8 = 1
+    (swift) var one: UInt8 = 1
     // one : UInt8 = 1
     (swift) var twoThousandAndOne = twoThousand + UInt16(one)
     // twoThousandAndOne : UInt16 = 2001
@@ -593,7 +593,7 @@ Because it's a type,
 
 .. testcode:: tuples
 
-    (swift) var http304Status : HTTPStatus = (statusCode: 304, description: "Not Modified")
+    (swift) var http304Status: HTTPStatus = (statusCode: 304, description: "Not Modified")
     // http304Status : HTTPStatus = (304, "Not Modified")
     
 This can be read as:
@@ -605,7 +605,7 @@ without needing to provide the element names:
 
 .. testcode:: tuples
 
-    (swift) var http500Error : HTTPStatus = (500, "Internal Server Error")
+    (swift) var http500Error: HTTPStatus = (500, "Internal Server Error")
     // http500Error : HTTPStatus = (500, "Internal Server Error")
 
 This can be read as:
