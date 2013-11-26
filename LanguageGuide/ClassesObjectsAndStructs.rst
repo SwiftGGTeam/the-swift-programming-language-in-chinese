@@ -21,6 +21,7 @@
     * ‘is’ to check for class membership
     * ‘as’ for casting
     * No 'self = [super init]' (assignment equates to void)
+    * @inout
 
 Classes and Structs
 ===================
@@ -54,7 +55,7 @@ Defining Classes and Structs
 ----------------------------
 
 Unlike other programming languages,
-Swift does not require you to create separate interface and implementation files for your custom data constructs.
+Swift does not require you to create separate interface and implementation files for your custom data structures.
 In Swift, you simply define a class or struct in a single file,
 and the external interface to that class or struct is automatically made available for other code to use.
 
@@ -78,14 +79,14 @@ Both place their entire definition within a pair of braces:
         var size: Size
     }
 
-Classes and structs can define *properties*.
+Classes and structs can both define *properties*.
 Properties are simply variables that are bundled up and stored as part of the class or struct.
 The example above defines a new struct called ``Size``,
 which has properties called ``width`` and ``height``,
 both of which are of type ``Double``.
 It also defines a new class called ``Rectangle``,
 which has a single property called ``size``,
-with a type of this new ``Size`` struct.
+with a type of the new ``Size`` struct.
 (Properties are described in more detail later in this chapter.)
 
 Note that whenever you define a new class or struct,
@@ -94,6 +95,10 @@ Custom classes and structs should be given ``UpperCamelCase`` names
 (such as ``Size`` and ``Rectangle``),
 to match the capitalization of standard Swift types
 (such as ``String``, ``Int`` and ``Bool``).
+
+.. TODO: note that you can set rect.size.width directly,
+   without having to set a new rect.size struct,
+   unlike in Objective-C.
 
 Class and Struct Instances
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -130,8 +135,6 @@ An *instance* of a class (such as ``someRectangle`` above) is traditionally know
 This terminology will be used from now on to refer to instances of classes.
 Wherever you see the word *object* below,
 it will refer to a single specific instance of a particular class.
-(If a second ``Rectangle`` called ``anotherRectangle`` was also initialized,
-it would be a different object to ``someRectangle``.)
 
 Instances of struct types are generally referred to simply as ‘structs’.
 The word *struct* will be used from now on to refer to struct *instances* (such as ``someSize``),
@@ -184,12 +187,12 @@ By Value and By Reference
 -------------------------
 
 Objects and structs have many things in common in Swift.
-However, they have one very important difference:
+However, they have one fundamental difference:
 
 * structs are passed by *value*
 * objects are passed by *reference*
 
-This difference is particularly important when deciding how to define the building blocks of your code.
+This difference is very important when deciding how to define the building blocks of your code.
 
 Structs Are Passed By Value
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -235,7 +238,100 @@ they are completely different structs.
 Objects Are Passed By Reference
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-[TODO]
+Objects are always passed by *reference* when they are assigned to a variable,
+or passed as an argument to a function.
+The exact same object is used, and no copying takes place.
+
+For example:
+
+.. testcode::
+
+    (swift) var square = Rectangle()
+    // square : Rectangle = <Rectangle instance>
+    (swift) square.size = Size(width: 1.0, height: 1.0)
+    (swift) println("The square's width is \(square.size.width)")
+    >>> The square's width is 1.0
+    (swift) var theSameSquare = square
+    // theSameSquare : Rectangle = <Rectangle instance>
+    (swift) theSameSquare.size.width = 3.0
+    (swift) theSameSquare.size.height = 3.0
+    (swift) println("The square's width is now \(theSameSquare.size.width)")
+    >>> The square's width is now 3.0
+    (swift) println("The square's width is now \(square.size.width)")
+    >>> The square's width is now 3.0
+
+This example declares a variable called ``square``,
+and sets it to refer to a new ``Rectangle`` object.
+The new ``Rectangle`` is given a size with a width and height of ``1.0``.
+
+A second variable is then declared, called ``theSameSquare``,
+which is set to refer to the same ``Rectangle`` already referred to by ``square``.
+Note that this doesn't create a new ``Rectangle`` object –
+rather, there are now two object variables referring to the same one object.
+
+The width and height of the ``Rectangle`` are then modified.
+Because ``theSameSquare`` refers to the same object as ``square``,
+the underlying width and height properties can be accessed via either ``square`` or ``theSameSquare`` –
+it doesn't make a difference which one is chosen, as they both refer to the same thing.
+Here, the width and height are accessed and changed via ``theSameSquare``
+(e.g. ``theSameSquare.size.width``).
+
+The final lines of this example print the current value of the ``Rectangle``'s width.
+As shown here, it doesn't matter whether you access the width via ``square`` or ``theSameSquare`` –
+the value of ``3.0`` from the underlying ``Rectangle`` is returned in both cases.
+
+Pointers
+________
+
+If you have experience with C, C++ or Objective-C,
+you may be familiar with the fact that they use *pointers* to refer to objects.
+Object variables in Swift are similar to pointers,
+but do not use the reference operator (``&``) or dereference operator (``*``)
+to differentiate between a pointer and the memory it points to.
+Indeed, Swift does not have a reference or dereference operator.
+Instead, an object variable in Swift is declared like any other variable,
+and the value it contains is always a reference to an object in memory.
+
+.. TODO: We need something here to say
+   "but don't worry, you can still do all of the stuff you're used to".
+
+.. TODO: Add a justification here to say why this is a good thing.
+
+Choosing Between Structs and Classes
+------------------------------------
+
+Structs and classes have many things in common.
+However, the fact that structs are always passed by value,
+and objects are always passed by reference,
+means that they are suited to different kinds of tasks.
+As you consider the data structures and functionality that you need for a project,
+you will need to decide whether each data structure should be a struct, or a class.
+
+As a general rule, you should only define a new struct type when:
+
+* the struct's primary purpose is to encapsulate a few relatively simple data values
+* the struct will not have particularly complex functionality
+  (although it may provide one or two convenience methods to work with its stored values)
+* it is reasonable to expect that the encapsulated values will be copied rather than referenced
+  when assigning or passing around an instance of that struct type
+* the values stored by the struct are basic types and / or other structs,
+  which would also be expected to be copied rather than referenced
+* there is no need to inherit behavior from an existing type
+
+Examples of good candidates for struct types include:
+
+* the size of a geometric shape
+  (perhaps encapsulating a ``width`` property and a ``height`` property,
+  both of type ``Double``)
+* a way to refer to ranges within a series
+  (perhaps encapsulating a ``start`` property and a ``length`` property,
+  both of type ``Int``)
+* a point in a 3D coordinate system
+  (perhaps encapsulating ``x``, ``y`` and ``z`` properties, each of type ``Double``)
+
+In all other cases, you should define a new class,
+and create objects as instances of that class, to be managed and passed by reference.
+In practice, this means that most custom data structures should be classes, not structs.
 
 .. refnote:: References
 
