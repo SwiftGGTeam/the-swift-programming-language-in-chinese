@@ -62,7 +62,7 @@ This makes it easy for the function to be called from elsewhere in your code in 
 
 .. testcode::
 
-    (swift) func sayHello(personName : String) -> String {
+    (swift) func sayHello(personName: String) -> String {
         var greeting = "Hello, " + personName + "!"
         return greeting
     }
@@ -95,7 +95,7 @@ to combine the message creation and ``return`` statement into one line:
 
 .. testcode::
 
-    (swift) func sayHelloAgain(personName : String) -> String {
+    (swift) func sayHelloAgain(personName: String) -> String {
         return "Hello again, " + personName + "!"
     }
     (swift) println(sayHelloAgain("Cheryl"))
@@ -137,7 +137,7 @@ and works out how far that coordinate is from the origin (0, 0) using Pythagoras
 
 .. testcode::
 
-    (swift) func distanceFromOrigin(x : Double, y : Double) -> Double {
+    (swift) func distanceFromOrigin(x: Double, y: Double) -> Double {
         return sqrt(Double(x * x + y * y))
     }
     (swift) println(distanceFromOrigin(3.0, 4.0))
@@ -158,11 +158,12 @@ Any type of value can be used as an input parameter for a function,
 if it is declared appropriately.
 For example, the distance function above can be rewritten to take a tuple of two ``Double`` values:
 
-.. QUESTION: Is my use of ‘any’ technically correct here? Is there some type that cannot be passed to a function?
+.. QUESTION: Is my use of ‘any’ technically correct here?
+   Is there some type that cannot be passed to a function?
 
 .. testcode::
 
-    (swift) func distanceFromOriginForPoint(point : (Double, Double)) -> Double {
+    (swift) func distanceFromOriginForPoint(point: (Double, Double)) -> Double {
         return sqrt(Double(point.0 * point.0 + point.1 * point.1))
     }
     (swift) var somePoint = (3.0, 4.0)
@@ -183,7 +184,9 @@ For example, the two ``Double`` elements above could be named ``x`` and ``y`` by
 
 .. testcode::
 
-    (swift) func distanceFromOriginForNamedPoint(point : (x : Double, y : Double)) -> Double {
+    (swift) func distanceFromOriginForNamedPoint(point: (x: Double, y: Double))
+        -> Double
+    {
         return sqrt(Double(point.x * point.x + point.y * point.y))
     }
     (swift) println(distanceFromOriginForNamedPoint(somePoint))
@@ -203,7 +206,7 @@ and also enables values to be passed in a different order to the original functi
 
 .. testcode::
 
-    (swift) func stringContainsCharacter(stringToSearch : String, characterToFind : Char) -> Bool {
+    (swift) func containsCharacter(stringToSearch: String, characterToFind: Char) -> Bool {
         for character in stringToSearch.chars {
             if character == characterToFind {
                 return true
@@ -211,7 +214,9 @@ and also enables values to be passed in a different order to the original functi
         }
         return false
     }
-    (swift) var containsASpace = stringContainsCharacter(characterToFind: ' ', stringToSearch: "This will return true")
+    (swift) var containsASpace = containsCharacter(
+        characterToFind: ' ',
+        stringToSearch: "This will return true")
     // containsASpace : Bool = true
 
 Here, the parameter values are passed in a different order when the function is actually called.
@@ -221,7 +226,7 @@ it is still clear which value should be used for which parameter.
 Note that if ``characterToFind`` is found quickly,
 this example returns ``true`` before the entire set of characters in ``stringToSearch`` has been checked.
 As soon as the first matching character is found,
-``stringContainsCharacter`` returns ``true``,
+``containsCharacter`` returns ``true``,
 and doesn't even bother to check the remaining characters.
 You can ``return`` control from a function at any time,
 and it will stop what it is doing immediately.
@@ -233,7 +238,7 @@ the passed parameters are assumed to be in the order they were originally declar
 
 .. testcode::
 
-    (swift) var containsAHyphen = stringContainsCharacter("This will return false", '-')
+    (swift) var containsAHyphen = containsCharacter("This will return false", '-')
     // containsAHyphen : Bool = false
 
 Default Parameter Values
@@ -245,7 +250,9 @@ it can be omitted when calling the function:
 
 .. testcode::
 
-    (swift) func joinTwoStrings(string1 : String, string2 : String, joiner : String = " ") -> String {
+    (swift) func joinTwoStrings(string1: String, string2: String, joiner: String = " ")
+        -> String
+    {
         return string1 + joiner + string2
     }
     (swift) joinTwoStrings("hello", "world", ":")
@@ -268,17 +275,19 @@ The ``joinTwoStrings`` function could have been written with ``joiner`` as the s
 
 .. testcode::
 
-    (swift) func joinTwoStringsVersion2(string1 : String, joiner : String = " ", string2 : String) -> String {
+    (swift) func joinTwoMoreStrings(string1: String, joiner: String = " ", string2: String)
+        -> String
+    {
         return string1 + joiner + string2
     }
-    (swift) joinTwoStringsVersion2("hello", ":", "world")
+    (swift) joinTwoMoreStrings("hello", ":", "world")
     // r2 : String = "hello:world"
 
 However, if you try and call this version of the function without passing in a value for ``joiner``,
 and without using named values,
 the code will not compile::
 
-    (swift) joinTwoStringsVersion2("hello", "world")           // this will cause an error
+    (swift) joinTwoMoreStrings("hello", "world")           // this will cause an error
 
 Because the values are not named in the function call,
 it looks as though you have only provided two (rather than three)
@@ -294,7 +303,7 @@ This problem can be avoided by naming the values when you call the function:
 
 .. testcode::
 
-    (swift) joinTwoStringsVersion2(string1: "hello", string2: "world")
+    (swift) joinTwoMoreStrings(string1: "hello", string2: "world")
     // r3 : String = "hello world"
 
 This tells Swift which parameters you want
@@ -307,7 +316,8 @@ it is best to place any parameters with default values at the end of a function 
 It is also advisable to name the values in your function calls whenever a function takes more than one parameter,
 to ensure that your intentions are clearly expressed in your code.
 
-.. QUESTION: how does this advice overlap with the principle of putting variadic parameters last, and also the principle of putting closure parameters last?
+.. QUESTION: how does this advice overlap with the principle of putting variadic parameters last,
+   and also the principle of putting closure parameters last?
 
 Non-Mandatory Parameters and Return Values
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -335,7 +345,7 @@ which prints its own ``String`` value rather than returning it:
 
 .. testcode::
 
-    (swift) func waveGoodbye(personName : String) {
+    (swift) func waveGoodbye(personName: String) {
         println("Goodbye, \(personName) 👋")
     }
     (swift) waveGoodbye("Dave")
@@ -356,11 +366,11 @@ The return value of a function can be ignored when it is called:
 
 .. testcode::
 
-    (swift) func printAndCount(stringToPrint : String) -> Int {
+    (swift) func printAndCount(stringToPrint: String) -> Int {
         println(stringToPrint)
         return stringToPrint.length
     }
-    (swift) func printWithoutCounting(stringToPrint : String) {
+    (swift) func printWithoutCounting(stringToPrint: String) {
         printAndCount(stringToPrint)
     }
     (swift) printAndCount("hello, world")
@@ -408,7 +418,9 @@ Here's an example of a function written with selector-style declaration:
 
 .. testcode::
 
-    (swift) func joinString(string1 : String) toString(string2 : String) withJoiner(joiner : String) -> String {
+    (swift) func joinString(string1: String) toString(string2: String)
+        withJoiner(joiner: String) -> String
+    {
         return string1 + joiner + string2
     }
     (swift) joinString("hello", toString: "world", withJoiner: ":")

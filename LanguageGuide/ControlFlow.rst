@@ -154,12 +154,11 @@ to iterate over their key-value pairs:
 
 .. testcode::
 
-    (swift) var numberOfLegs = ["spider" : 8, "ant" : 6, "cat" : 4, "bird" : 2]
-    // numberOfLegs : Dictionary<String, Int> = ["bird" : 2, "ant" : 6, "spider" : 8, "cat" : 4]
+    (swift) var numberOfLegs = ["spider" : 8, "ant" : 6, "cat" : 4]
+    // numberOfLegs : Dictionary<String, Int> = ["ant" : 6, "spider" : 8, "cat" : 4]
     (swift) for (key, value) in numberOfLegs {
         println("\(key)s have \(value) legs")
     }
-    >>> birds have 2 legs
     >>> ants have 6 legs
     >>> spiders have 8 legs
     >>> cats have 4 legs
@@ -168,7 +167,8 @@ Note that the items in the ``Dictionary`` are not iterated in the same order as 
 The contents of a ``Dictionary`` are inherently unordered,
 and iterating over them does not guarantee the order in which they will be retrieved.
 
-.. TODO: provide some advice on how to iterate over a Dictionary in order (perhaps sorted by key), using a predicate or array sort or some kind.
+.. TODO: provide some advice on how to iterate over a Dictionary in order
+   (perhaps sorted by key), using a predicate or array sort or some kind.
 
 The examples above use ``for x in y`` to iterate
 ranges, arrays, strings and dictionaries.
@@ -394,7 +394,7 @@ to see it in action::
     (swift) if personName == "" {
         println("You didn't enter your name. How can I say hello to you?")
     } else {
-        println("HelloToYou, \(personName)!")
+        println("Hello, \(personName)!")
     }
 
 This time, the keyboard's ``while`` loop has a very simple condition: ``while true``.
@@ -743,7 +743,8 @@ it calculates the point's distance from the origin using
         case (var x, var y) where x == -y:
             println("(\(x), \(y)) is on the line x == -y")
         case (var x, var y):
-            println("(\(x), \(y)) is \(sqrt(Double(x * x + y * y))) units from the origin")
+            var distanceFromOrigin = sqrt(Double(x * x + y * y))
+            println("(\(x), \(y)) is \(distanceFromOrigin) units from the origin")
     }
     >>> (1, -1) is on the line x == -y
 
