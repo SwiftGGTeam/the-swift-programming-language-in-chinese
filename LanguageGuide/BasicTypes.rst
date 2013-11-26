@@ -452,10 +452,10 @@ Boolean values are particularly useful when working with conditional statements 
 .. testcode:: booleans
 
     (swift) if turnipsAreDelicious {
-                println("Mmm, tasty turnips!")
-            } else {
-                println("Eww, turnips are horrible.")
-            }
+        println("Mmm, tasty turnips!")
+    } else {
+        println("Eww, turnips are horrible.")
+    }
     >>> Eww, turnips are horrible.
 
 Conditional statements are covered in more detail in :doc:`ControlFlow`.
@@ -466,15 +466,15 @@ You cannot, for example, say::
     (swift) var i = 1
     // i : Int = 1
     (swift) if i {
-                // do stuff
-            }
+        // do stuff
+    }
 
 …because ``i`` is not a ``Bool``.
 However, it is valid to say::
 
     (swift) if i == 1 {
-                // do stuff
-            }
+        // do stuff
+    }
     
 The result of the ``i == 1`` comparison is a ``Bool``,
 and so this second example passes the strict type-check.
@@ -680,11 +680,11 @@ and can be written as an enumeration using the ``enum`` keyword:
 .. testcode:: enums
 
     (swift) enum CompassPoint {
-                case North
-                case South
-                case East
-                case West
-            }
+        case North
+        case South
+        case East
+        case West
+    }
 
 The ``case`` keyword is used to indicate each new line of values.
 Multiple values can appear on a single line, separated by commas:
@@ -692,8 +692,8 @@ Multiple values can appear on a single line, separated by commas:
 .. testcode:: enums
 
     (swift) enum Planet {
-                case Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune
-            }
+        case Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune
+    }
 
 Unlike C and Objective-C,
 Swift enums are not assigned a default integer value when they are created.
@@ -738,15 +738,15 @@ Enumeration values can be checked with a ``switch`` statement:
 
     (swift) directionToHead = .South
     (swift) switch directionToHead {
-                case .North:
-                    println("Most planets have a north")
-                case .South:
-                    println("Watch out for penguins")
-                case .East:
-                    println("Where the sun rises")
-                case .West:
-                    println("Where the skies are blue")
-            }
+        case .North:
+            println("Most planets have a north")
+        case .South:
+            println("Watch out for penguins")
+        case .East:
+            println("Where the sun rises")
+        case .West:
+            println("Where the skies are blue")
+    }
     >>> Watch out for penguins
 
 ``switch`` statements use the ``case`` keyword to indicate each of the possible cases they will consider.
@@ -783,11 +783,11 @@ The ``default`` catch-all case should always appear last:
     (swift) var somePlanet = Planet.Earth
     // somePlanet : Planet = <unprintable value>
     (swift) switch somePlanet {
-                case .Earth:
-                    println("Mostly harmless")
-                default:
-                    println("Not a safe place for humans")
-            }
+        case .Earth:
+            println("Mostly harmless")
+        default:
+            println("Not a safe place for humans")
+    }
     >>> Mostly harmless
 
 ``switch`` statements are covered in more detail in :doc:`ControlFlow`.
@@ -829,9 +829,9 @@ In Swift, an enumeration to define product barcodes of either type might look li
 .. testcode:: enums
 
     (swift) enum Barcode {
-                case UPCA(Int, Int, Int)
-                case QRCode(String)
-            }
+        case UPCA(Int, Int, Int)
+        case QRCode(String)
+    }
 
 This can be read as:
 
@@ -875,11 +875,11 @@ This time, however, the associated values can be extracted as part of the ``swit
 .. testcode:: enums
 
     (swift) switch productBarcode {
-                case .UPCA(var numberSystem, var identifier, var check):
-                    println("This product has a UPC-A barcode with an associated tuple value of \(numberSystem), \(identifier), \(check).")
-                case .QRCode(var productCode):
-                    println("This product has a QR code barcode with an associated string value of \(productCode).")
-            }
+        case .UPCA(var numberSystem, var identifier, var check):
+            println("This product has a UPC-A barcode with an associated tuple value of \(numberSystem), \(identifier), \(check).")
+        case .QRCode(var productCode):
+            println("This product has a QR code barcode with an associated string value of \(productCode).")
+    }
     >>> This product has a QR code barcode with an associated string value of ABCDEFGHIJKLMNOP.
 
 These two calls to ``println()`` use a special syntax to insert the values of
@@ -907,10 +907,10 @@ Here's an example that stores raw ASCII values alongside named enumeration membe
 .. testcode:: enums
 
     (swift) enum ASCIIControlCharacter : Char {
-                case Tab = '\t'
-                case LineFeed = '\n'
-                case CarriageReturn = '\r'
-            }
+        case Tab = '\t'
+        case LineFeed = '\n'
+        case CarriageReturn = '\r'
+    }
 
 Here, the raw values for an ``enum`` called ``ASCIIControlCharacter``
 are declared to be of type ``Char`` (short for *single character*),
@@ -936,8 +936,8 @@ and uses raw integer values to represent their atomic numbers:
 .. testcode:: optionals
 
     (swift) enum ChemicalElement : Int {
-                case Hydrogen = 1, Helium, Lithium, Beryllium, Boron, Carbon, Nitrogen
-            }
+        case Hydrogen = 1, Helium, Lithium, Beryllium, Boron, Carbon, Nitrogen
+    }
 
 Auto-incrementation means that ``ChemicalElement.Helium`` will have a raw value of ``2``,
 and so on.
@@ -1027,17 +1027,17 @@ The exclamation mark effectively says
 .. testcode:: optionals
 
     (swift) if possibleElement {
-                switch possibleElement! {
-                    case .Hydrogen:
-                        println("A bit explodey")
-                    case .Helium:
-                        println("Like a friendly hydrogen")
-                    default:
-                        println("Some other element")
-                }
-            } else {
-                println("Not an element I know about")
-            }
+        switch possibleElement! {
+            case .Hydrogen:
+                println("A bit explodey")
+            case .Helium:
+                println("Like a friendly hydrogen")
+            default:
+                println("Some other element")
+        }
+    } else {
+        println("Not an element I know about")
+    }
     >>> Not an element I know about
 
 ``possibleElement`` was most recently set to an optional ``ChemicalElement`` for the atomic number of oxygen (``8``),

@@ -63,9 +63,9 @@ This makes it easy for the function to be called from elsewhere in your code in 
 .. testcode::
 
     (swift) func sayHello(personName : String) -> String {
-                var greeting = "Hello, " + personName + "!"
-                return greeting
-            }
+        var greeting = "Hello, " + personName + "!"
+        return greeting
+    }
     (swift) println(sayHello("Cheryl"))
     >>> Hello, Cheryl!
     (swift) println(sayHello("Dave"))
@@ -96,8 +96,8 @@ to combine the message creation and ``return`` statement into one line:
 .. testcode::
 
     (swift) func sayHelloAgain(personName : String) -> String {
-                return "Hello again, " + personName + "!"
-            }
+        return "Hello again, " + personName + "!"
+    }
     (swift) println(sayHelloAgain("Cheryl"))
     >>> Hello again, Cheryl!
 
@@ -138,8 +138,8 @@ and works out how far that coordinate is from the origin (0, 0) using Pythagoras
 .. testcode::
 
     (swift) func distanceFromOrigin(x : Double, y : Double) -> Double {
-                return sqrt(Double(x * x + y * y))
-            }
+        return sqrt(Double(x * x + y * y))
+    }
     (swift) println(distanceFromOrigin(3.0, 4.0))
     >>> 5.0
 
@@ -163,8 +163,8 @@ For example, the distance function above can be rewritten to take a tuple of two
 .. testcode::
 
     (swift) func distanceFromOriginForPoint(point : (Double, Double)) -> Double {
-                return sqrt(Double(point.0 * point.0 + point.1 * point.1))
-            }
+        return sqrt(Double(point.0 * point.0 + point.1 * point.1))
+    }
     (swift) var somePoint = (3.0, 4.0)
     // somePoint : (Double, Double) = (3.0, 4.0)
     (swift) println(distanceFromOriginForPoint(somePoint))
@@ -184,8 +184,8 @@ For example, the two ``Double`` elements above could be named ``x`` and ``y`` by
 .. testcode::
 
     (swift) func distanceFromOriginForNamedPoint(point : (x : Double, y : Double)) -> Double {
-                return sqrt(Double(point.x * point.x + point.y * point.y))
-            }
+        return sqrt(Double(point.x * point.x + point.y * point.y))
+    }
     (swift) println(distanceFromOriginForNamedPoint(somePoint))
     >>> 5.0
 
@@ -204,13 +204,13 @@ and also enables values to be passed in a different order to the original functi
 .. testcode::
 
     (swift) func stringContainsCharacter(stringToSearch : String, characterToFind : Char) -> Bool {
-                for character in stringToSearch.chars {
-                    if character == characterToFind {
-                        return true
-                    }
-                }
-                return false
+        for character in stringToSearch.chars {
+            if character == characterToFind {
+                return true
             }
+        }
+        return false
+    }
     (swift) var containsASpace = stringContainsCharacter(characterToFind: ' ', stringToSearch: "This will return true")
     // containsASpace : Bool = true
 
@@ -246,8 +246,8 @@ it can be omitted when calling the function:
 .. testcode::
 
     (swift) func joinTwoStrings(string1 : String, string2 : String, joiner : String = " ") -> String {
-                return string1 + joiner + string2
-            }
+        return string1 + joiner + string2
+    }
     (swift) joinTwoStrings("hello", "world", ":")
     // r0 : String = "hello:world"
     (swift) joinTwoStrings("hello", "world")
@@ -269,8 +269,8 @@ The ``joinTwoStrings`` function could have been written with ``joiner`` as the s
 .. testcode::
 
     (swift) func joinTwoStringsVersion2(string1 : String, joiner : String = " ", string2 : String) -> String {
-                return string1 + joiner + string2
-            }
+        return string1 + joiner + string2
+    }
     (swift) joinTwoStringsVersion2("hello", ":", "world")
     // r2 : String = "hello:world"
 
@@ -319,8 +319,8 @@ which always returns the same ``String`` message whenever it is called:
 .. testcode::
 
     (swift) func sayHelloWorld() -> String {
-                return "hello, world"
-            }
+        return "hello, world"
+    }
     (swift) println(sayHelloWorld())
     >>> hello, world
 
@@ -336,8 +336,8 @@ which prints its own ``String`` value rather than returning it:
 .. testcode::
 
     (swift) func waveGoodbye(personName : String) {
-                println("Goodbye, \(personName) 👋")
-            }
+        println("Goodbye, \(personName) 👋")
+    }
     (swift) waveGoodbye("Dave")
     >>> Goodbye, Dave 👋
 
@@ -357,12 +357,12 @@ The return value of a function can be ignored when it is called:
 .. testcode::
 
     (swift) func printAndCount(stringToPrint : String) -> Int {
-                println(stringToPrint)
-                return stringToPrint.length
-            }
+        println(stringToPrint)
+        return stringToPrint.length
+    }
     (swift) func printWithoutCounting(stringToPrint : String) {
-                printAndCount(stringToPrint)
-            }
+        printAndCount(stringToPrint)
+    }
     (swift) printAndCount("hello, world")
     >>> hello, world
     // r4 : Int = 12
@@ -409,8 +409,8 @@ Here's an example of a function written with selector-style declaration:
 .. testcode::
 
     (swift) func joinString(string1 : String) toString(string2 : String) withJoiner(joiner : String) -> String {
-                return string1 + joiner + string2
-            }
+        return string1 + joiner + string2
+    }
     (swift) joinString("hello", toString: "world", withJoiner: ":")
     // r5 : String = "hello:world"
 

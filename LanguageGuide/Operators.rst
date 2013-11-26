@@ -79,8 +79,8 @@ Unlike C and Objective-C, the assignment expression does not itself return a val
 The following statement is not valid::
 
     (swift) if x = y {
-                // do something now that x is equal to y
-            }
+        // do something now that x is equal to y
+    }
 
 This avoids errors where the assignment expression ``=`` is accidentally used
 in place of the equality comparison operator ``==``.
@@ -308,10 +308,10 @@ such as the ``if else`` statement:
     (swift) var name = "world";
     // name : String = "world"
     (swift) if name == "world" {
-                println("hello, world")
-            } else {
-                println("I'm sorry \(name), but I don't recognize you")
-            }
+        println("hello, world")
+    } else {
+        println("I'm sorry \(name), but I don't recognize you")
+    }
     >>> hello, world
 
 The ``if else`` statement is described in more detail in :doc:`ControlFlow`.
@@ -364,10 +364,10 @@ This is effectively shorthand for:
     (swift) var rowHeight = contentHeight
     // rowHeight : Int = 40
     (swift) if hasHeader {
-                rowHeight = rowHeight + 50
-            } else {
-                rowHeight = rowHeight + 20
-            }
+        rowHeight = rowHeight + 50
+    } else {
+        rowHeight = rowHeight + 20
+    }
     (swift) println("The row height is \(rowHeight) pixels.")
     >>> The row height is 90 pixels.
 
@@ -862,10 +862,10 @@ and only allows access if both values are ``true``:
     (swift) var passedRetinaScan = false
     // passedRetinaScan : Bool = false
     (swift) if enteredCorrectDoorCode && passedRetinaScan {
-                println("Welcome!")
-            } else {
-                println("ACCESS DENIED")
-            }
+        println("Welcome!")
+    } else {
+        println("ACCESS DENIED")
+    }
     >>> ACCESS DENIED
 
 If either value is ``false``,
@@ -890,10 +890,10 @@ For example:
     (swift) var knowsEmergencyOverridePassword = true
     // knowsEmergencyOverridePassword : Bool = true
     (swift) if hasValidDoorKey || knowsEmergencyOverridePassword {
-                println("Welcome!")
-            } else {
-                println("ACCESS DENIED")
-            }
+        println("Welcome!")
+    } else {
+        println("ACCESS DENIED")
+    }
     >>> Welcome!
 
 In this example,
@@ -917,10 +917,10 @@ For example:
 .. testcode:: logicalOperators
 
     (swift) if enteredCorrectDoorCode && passedRetinaScan || hasValidDoorKey || knowsEmergencyOverridePassword {
-                println("Welcome!")
-            } else {
-                println("ACCESS DENIED")
-            }
+        println("Welcome!")
+    } else {
+        println("ACCESS DENIED")
+    }
     >>> Welcome!
 
 This example uses multiple ``&&`` and ``||`` operators to create a longer compound expression.
@@ -1021,10 +1021,10 @@ it would be useful to add parentheses around the first part of the compound expr
 .. testcode:: logicalOperators
 
     (swift) if (enteredCorrectDoorCode && passedRetinaScan) || hasValidDoorKey || knowsEmergencyOverridePassword {
-                println("Welcome!")
-            } else {
-                println("ACCESS DENIED")
-            }
+        println("Welcome!")
+    } else {
+        println("ACCESS DENIED")
+    }
     >>> Welcome!
 
 The parentheses make it clear that the first two values are being considered as part of a separate possible state in the overall logic.
@@ -1052,8 +1052,8 @@ for counting up to (but not including) the length of a zero-based array:
     (swift) var count = names.count
     // count : Int = 4
     (swift) for i in 0..count {
-                println("Person \(i + 1) is called \(names[i])")
-            }
+        println("Person \(i + 1) is called \(names[i])")
+    }
     >>> Person 1 is called Anna
     >>> Person 2 is called Brian
     >>> Person 3 is called Christine

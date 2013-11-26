@@ -72,11 +72,11 @@ Both place their entire definition within a pair of braces:
 .. testcode::
 
     (swift) struct Size {
-                var width, height: Double
-            }
+        var width, height: Double
+    }
     (swift) class Rectangle {
-                var size: Size
-            }
+        var size: Size
+    }
 
 Classes and structs can define *properties*.
 Properties are simply variables that are bundled up and stored as part of the class or struct.
