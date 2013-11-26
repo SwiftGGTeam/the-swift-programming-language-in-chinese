@@ -87,7 +87,8 @@ in place of the equality comparison operator ``==``.
 By making ``if x = y`` invalid,
 Swift makes it much easier to avoid these kinds of errors in your code.
 
-.. TODO: Should we mention that x = y = z is also not valid? If so, is there a convincing argument as to why this is a good thing?
+.. TODO: Should we mention that x = y = z is also not valid?
+   If so, is there a convincing argument as to why this is a good thing?
 
 Arithmetic Operators
 --------------------
@@ -211,7 +212,9 @@ because it has the typical expected behavior of increasing ``i``,
 and then providing the result.
 (The same rules and advice apply for ``--i`` and ``i--``.)
 
-.. QUESTION: is this good advice (given the general prevalence of i++ in the world), and indeed is it even advice we need to bother giving (given that lots of people might disagree or not care)?
+.. QUESTION: is this good advice (given the general prevalence of i++ in the world),
+   and indeed is it even advice we need to bother giving
+   (given that lots of people might disagree or not care)?
 
 Unary Plus and Minus
 ~~~~~~~~~~~~~~~~~~~~
@@ -287,17 +290,17 @@ Each of the comparison operators returns a ``Bool`` value to indicate whether or
 
 .. testcode:: comparisonOperators
 
-    (swift) 1 == 1          // true, because 1 is equal to 1
+    (swift) 1 == 1
     // r0 : Bool = true
-    (swift) 2 != 1          // true, because 2 is not equal to 1
+    (swift) 2 != 1
     // r1 : Bool = true
-    (swift) 2 > 1           // true, because 2 is greater than 1
+    (swift) 2 > 1
     // r2 : Bool = true
-    (swift) 1 < 2           // true, because 1 is less than 2
+    (swift) 1 < 2
     // r3 : Bool = true
-    (swift) 1 >= 1          // true, because 1 is equal to 1, so 1 is therefore greater than or equal to 1
+    (swift) 1 >= 1
     // r4 : Bool = true
-    (swift) 2 <= 1          // false, because 2 is greater than 1, so 2 is not less than or equal to 1
+    (swift) 2 <= 1
     // r5 : Bool = false
 
 Comparison operators are often used in conditional statements,
@@ -316,7 +319,9 @@ such as the ``if else`` statement:
 
 The ``if else`` statement is described in more detail in :doc:`ControlFlow`.
 
-.. TODO: which types do these operate on by default? How do they work with strings? How about with tuples / with your own types?
+.. TODO: which types do these operate on by default?
+   How do they work with strings?
+   How about with tuples / with your own types?
 
 Ternary Comparison Operator
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -351,7 +356,9 @@ and 20 pixels taller if it doesn't:
     (swift) println("The row height is \(rowHeight) pixels.")
     >>> The row height is 90 pixels.
 
-.. TODO: the return type of rowHeight should be an Int, but it is an Int64 due to rdar://15238852 . This example should be updated once the issue is fixed.
+.. TODO: the return type of rowHeight should be an Int,
+   but it is an Int64 due to rdar://15238852.
+   This example should be updated once the issue is fixed.
 
 This is effectively shorthand for:
 
@@ -679,7 +686,8 @@ and is known as an *arithmetic shift*.
 
 Because of the special way that positive and negative numbers are stored,
 shifting either of them to the right has the effect of moving them closer to zero.
-Keeping the sign bit the same during this shift means that negative integers remain negative as their value moves closer to zero.
+Keeping the sign bit the same during this shift means that
+negative integers remain negative as their value moves closer to zero.
 
 Overflow Operators
 ------------------
@@ -702,7 +710,8 @@ Swift will throw an error:
 .. TODO: change the error text we detect here once overflowing provides an error message rather than just an assert.
 
 Throwing an error in these scenarios is much safer than allowing an outsized value to overflow.
-Providing error handling when values get too large or too small gives you much more flexibility when coding for boundary value conditions.
+Providing error handling when values get too large or too small
+gives you much more flexibility when coding for boundary value conditions.
 
 However, in the cases where you *do* want the value to overflow,
 you can opt in to this behavior rather than triggering an error.
@@ -817,7 +826,9 @@ Swift will throw an error:
 Integer division by zero is not a valid mathematical action,
 and so Swift throws an error rather than creating an invalid value.
 
-.. NOTE: currently, this testcode block must be the last in the overflowOperators group, as otherwise the stack trace crash from the division-by-zero will mean that subsequent blocks in the group won't get tested.
+.. NOTE: currently, this testcode block must be the last in the overflowOperators group,
+   as otherwise the stack trace crash from the division-by-zero will mean that
+   subsequent blocks in the group won't get tested.
 
 Logical Operators
 -----------------
@@ -880,7 +891,8 @@ Logical OR
 ~~~~~~~~~~
 
 The OR operator (``||``, i.e. two adjacent pipe characters)
-is used to create logical expressions where only *one* of the two values has to be ``true`` for the overall expression to be ``true``.
+is used to create logical expressions where only *one* of the two values has to be ``true``
+for the overall expression to be ``true``.
 For example:
 
 .. testcode:: logicalOperators
@@ -916,7 +928,9 @@ For example:
 
 .. testcode:: logicalOperators
 
-    (swift) if enteredCorrectDoorCode && passedRetinaScan || hasValidDoorKey || knowsEmergencyOverridePassword {
+    (swift) if enteredCorrectDoorCode && passedRetinaScan || hasValidDoorKey
+        || knowsEmergencyOverridePassword
+    {
         println("Welcome!")
     } else {
         println("ACCESS DENIED")
@@ -1020,7 +1034,9 @@ it would be useful to add parentheses around the first part of the compound expr
 
 .. testcode:: logicalOperators
 
-    (swift) if (enteredCorrectDoorCode && passedRetinaScan) || hasValidDoorKey || knowsEmergencyOverridePassword {
+    (swift) if (enteredCorrectDoorCode && passedRetinaScan) || hasValidDoorKey
+        || knowsEmergencyOverridePassword
+    {
         println("Welcome!")
     } else {
         println("ACCESS DENIED")
@@ -1065,7 +1081,9 @@ but ``0..count`` only counts as far as ``3``
 because it is a half-closed range.
 
 .. QUESTION: Should these appear here, or in Control Flow?
-.. NOTE: Ranges have handy functions (well, specifically IntGeneratorType and DoubleGeneratorType at present) such as reverse(), contains() and by() - where should these be mentioned?
+.. NOTE: Ranges have handy functions
+   (well, specifically IntGeneratorType and DoubleGeneratorType at present)
+   such as reverse(), contains() and by() - where should these be mentioned?
 
 .. refnote:: References
 

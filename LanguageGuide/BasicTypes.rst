@@ -876,11 +876,11 @@ This time, however, the associated values can be extracted as part of the ``swit
 
     (swift) switch productBarcode {
         case .UPCA(var numberSystem, var identifier, var check):
-            println("This product has a UPC-A barcode with an associated tuple value of \(numberSystem), \(identifier), \(check).")
+            println("UPC-A with value of \(numberSystem), \(identifier), \(check).")
         case .QRCode(var productCode):
-            println("This product has a QR code barcode with an associated string value of \(productCode).")
+            println("QR code with value of \(productCode).")
     }
-    >>> This product has a QR code barcode with an associated string value of ABCDEFGHIJKLMNOP.
+    >>> QR code barcode with value of ABCDEFGHIJKLMNOP.
 
 These two calls to ``println()`` use a special syntax to insert the values of
 ``numberSystem``, ``identifier``, ``check`` and ``productCode``
