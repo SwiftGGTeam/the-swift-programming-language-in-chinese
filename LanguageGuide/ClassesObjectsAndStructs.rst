@@ -290,12 +290,16 @@ but do not use the reference operator (``&``) or dereference operator (``*``)
 to differentiate between a pointer and the memory it points to.
 Indeed, Swift does not have a reference or dereference operator.
 Instead, an object variable in Swift is declared like any other variable,
-and the value it contains is always a reference to an object in memory.
+and the value it contains is always a reference to a particular object instance.
 
 .. TODO: We need something here to say
    "but don't worry, you can still do all of the stuff you're used to".
 
 .. TODO: Add a justification here to say why this is a good thing.
+
+.. TODO: Add a section about using the identity operator
+   to check if two reference variables point to the same instance.
+   This is currently blocked on rdar://problem/15566395 .
 
 Choosing Between Structs and Classes
 ------------------------------------
