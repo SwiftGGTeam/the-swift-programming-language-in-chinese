@@ -5,23 +5,25 @@
     * Structures
     * Instance variables
     * Getters and setters
-    * WillSet / DidSet
+    * willSet / didSet (these don't seem to exist)
     * Constructors and destructors
     * Designated initializers
     * Instance and class methods
     * Working with self and Self
     * Super
-    * Memory management
+    * Memory management via ARC
     * UnsafePointer?
     * Cast operators (?, !, b as D, b is D)
     * Type inference and discovery?
     * "Everything is a type"
-    * Stored vs computed variables
+    * Stored vs computed properties
     * === vs ==
     * ‘is’ to check for class membership
     * ‘as’ for casting
     * No 'self = [super init]' (assignment equates to void)
     * @inout
+    * value types and reference types
+    * subscript getters and setters
 
 Classes and Structs
 ===================
@@ -337,6 +339,120 @@ In all other cases, you should define a new class,
 and create objects as instances of that class, to be managed and passed by reference.
 In practice, this means that most custom data structures should be classes, not structs.
 
+Properties
+----------
+
+As mentioned above, classes and struct types can declare *properties*.
+Properties are used to store and pass around any values associated with a particular class or struct type.
+
+Stored Properties
+~~~~~~~~~~~~~~~~~
+
+In its simplest form, a property is just a variable
+whose value is stored with an object or struct:
+
+.. testcode::
+
+    (swift) struct HTTPStatus {
+        var statusCode: Int
+        var description: String
+    }
+    (swift) var http404Error = HTTPStatus(statusCode: 404, description: "Not Found")
+    // http404Error : HTTPStatus = HTTPStatus(404, "Not Found")
+    (swift) println("This error has a status code value of \(http404Error.statusCode)")
+    >>> This error has a status code value of 404
+
+This example defines a new struct type called ``HTTPStatus``.
+This struct type encapsulates a property called ``statusCode`` (which is of type ``Int``),
+and a property called ``description`` (which is of type ``String``).
+
+Having defined the struct type,
+it then creates a new struct based on this type, called ``http404Error``.
+This struct is initialized with a ``statusCode`` of ``404``,
+and a ``description`` of ``"Not Found"``.
+
+In this example,
+the ``Int`` and ``String`` values are both explicitly stored as part of the struct.
+They can be accessed and modified via dot syntax
+(such as ``println`` accessing of ``http404Error.statusCode``).
+
+Swift automatically provides *getter* and *setter methods* for stored properties,
+in a similar manner to synthesized getters and setters in Objective-C.
+You don't need to declare these getter and setter methods –
+they are automatically synthesized for you as part of the property declaration.
+These synthesized getter and setter methods are automatically used
+when you retrieve or set the stored property values.
+
+Computed Properties
+~~~~~~~~~~~~~~~~~~~
+
+Properties aren't restricted to simple stored values, however.
+Structs and classes can also define *computed* properties,
+which do not actually store a value:
+
+.. testcode::
+
+    (swift) struct Point {
+        var x, y: Double
+    }
+    (swift) struct Size {
+        var width, height: Double
+    }
+    (swift) struct Rect {
+        var origin: Point
+        var size: Size
+        var center: Point {
+            get:
+                var centerX = origin.x + (size.width / 2)
+                var centerY = origin.y + (size.height / 2)
+                return Point(centerX, centerY)
+            set(newCenter):
+                origin.x = newCenter.x - (size.width / 2)
+                origin.y = newCenter.y - (size.height / 2)
+        }
+    }
+    (swift) var square = Rect(origin: Point(0.0, 0.0), size: Size(10.0, 10.0))
+    // square : Rect = Rect(Point(0.0, 0.0), Size(10.0, 10.0))
+    (swift) var center = square.center
+    // center : Point = Point(5.0, 5.0)
+    (swift) square.center = Point(x: 15, y: 15)
+    (swift) println("square origin is now at (\(square.origin.x), \(square.origin.y))")
+    >>> square origin is now at (10.0, 10.0)
+
+This example defines three struct types:
+
+* ``Point``, which encapsulates an ``(x, y)`` co-ordinate;
+* ``Size``, which encapsulates a ``width`` and a ``height`` value; and
+* ``Rect``, which defines a rectangle in terms of an origin point and a size
+
+The ``Rect`` struct type also provides a computed property called ``center``.
+The current value of a ``Rect``'s center can always be determined from its current ``origin`` and ``size``,
+and so there is no need to actually store the center point as an explicit ``Point`` value.
+Instead, ``Rect`` defines custom getter and setter methods for a computed variable called ``center``,
+to enable you to work with the rectangle's ``center`` as if it were a real stored property.
+
+This example creates a new ``Rect`` instance called ``square``.
+``square`` is initialized with an origin point of ``(0, 0)``, and a width and height of ``10``.
+This is equivalent to the blue square in the diagram below.
+
+``square``'s ``center`` property is then accessed via dot syntax (``square.center``).
+This causes ``center``'s ``get:`` method to be called,
+to retrieve the current property value.
+Rather than returning an existing value,
+this actually calculates and returns a new ``Point`` to represent the center of the square.
+As can be seen above, this correctly returns a center point of ``(5, 5)``.
+
+The ``center`` property is then set to a new value of ``(15, 15)``.
+This moves the square up and to the right,
+to the new position shown by the orange square in the diagram below.
+Setting the ``center`` property actually calls ``center``'s ``set:`` method.
+This modifies the ``x`` and ``y`` values of the stored ``origin`` property,
+and moves the square to its new position.
+
+.. image:: ../images/computedProperties.png
+    :width: 400
+    :align: center
+
 .. refnote:: References
 
     * https://[Internal Staging Server]/docs/whitepaper/TypesAndValues.html#structures
@@ -351,3 +467,4 @@ In practice, this means that most custom data structures should be classes, not 
     * https://[Internal Staging Server]/docs/weak.html
     * https://[Internal Staging Server]/docs/LangRef.html#expr-cast
     * https://[Internal Staging Server]/docs/textformatting.html
+    * /include/swift/AST/Attr.def
