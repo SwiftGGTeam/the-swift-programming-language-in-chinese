@@ -17,6 +17,7 @@
     * Attributes (infix, resilience, inout, auto_closure, noreturn)
     * Typedefs for closure signatures to aid readability?
     * Metatypes and static functions on types
+    * Marking functions as transparent (and what this means)
 
 Functions and Closures
 ======================
@@ -429,15 +430,12 @@ Here's an example of a function written with selector-style declaration:
 
 
 .. variables can be set to functions, and then called e.g. var fork = g.fork; fork() .
-.. functions can be written in one of three forms: multiple parameters; selector-style; curried
-.. need to give a clear, Dave-understandable explanation of why currying is actually useful
 .. functions can be passed in as parameters, and can be returned as return values
 .. capturing / closing over variables (and what this means in practice)
 .. no need for __block; discuss memory safety
 .. functions are just a really special non-capturing version of closures
 .. closures can be named
 .. inout properties and a general discussion of byref / byvalue
-.. badger and mushroom example for repeating things different numbers of times
 .. pass a tuple as the entire set of arguments, as in var argTuple = (0, "one", '2'); x.foo:bar:bas:(argTuple)
 
 .. refnote:: References
@@ -451,3 +449,4 @@ Here's an example of a function written with selector-style declaration:
     * https://[Internal Staging Server]/docs/whitepaper/GuidedTour.html#functions
     * https://[Internal Staging Server]/docs/whitepaper/GuidedTour.html#closures
     * https://[Internal Staging Server]/docs/Expressions.html
+    * /test/Serialization/Inputs/def_transparent.swift (example of currying)
