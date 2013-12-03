@@ -72,7 +72,7 @@ Classes are introduced by the ``class`` keyword,
 and structs are introduced by the ``struct`` keyword.
 Both place their entire definition within a pair of braces:
 
-.. testcode::
+.. testcode:: classAndStructDefinitionSyntax
 
     (swift) struct Size {
         var width, height: Double
@@ -112,7 +112,7 @@ To do that, you need to create an *instance* of the class or struct.
 
 The syntax for creating instances is very similar for both structs and classes:
 
-.. testcode::
+.. testcode:: classAndStructDefinitionSyntax
 
     (swift) var someSize = Size()
     // someSize : Size = Size(0.0, 0.0)
@@ -147,7 +147,7 @@ Accessing Properties
 
 The properties of an object or struct can be accessed using *dot syntax*:
 
-.. testcode::
+.. testcode:: classAndStructDefinitionSyntax
 
     (swift) println("The width of someSize is \(someSize.width)")
     >>> The width of someSize is 0.0
@@ -155,7 +155,7 @@ The properties of an object or struct can be accessed using *dot syntax*:
 Dot syntax can also be used to drill down into properties which are themselves objects or structs,
 such as the ``width`` property of a ``Rectangle``'s ``size`` struct:
 
-.. testcode::
+.. testcode:: classAndStructDefinitionSyntax
 
     (swift) println("The width of someRectangle is \(someRectangle.size.width)")
     >>> The width of someRectangle is 0.0
@@ -167,7 +167,7 @@ All struct types provide an automatically-generated *default initializer*,
 which can be used to create new structs of that type.
 Initial values for properties in the struct can be passed to the default initializer by name:
 
-.. testcode::
+.. testcode:: classAndStructDefinitionSyntax
 
     (swift) var twoByTwo = Size(width: 2.0, height: 2.0)
     // twoByTwo : Size = Size(2.0, 2.0)
@@ -175,7 +175,7 @@ Initial values for properties in the struct can be passed to the default initial
 Initial values can also be provided without names,
 if they are listed in the same order that the properties are declared in the struct type's definition:
 
-.. testcode::
+.. testcode:: classAndStructDefinitionSyntax
 
     (swift) var fourByThree = Size(4.0, 3.0)
     // fourByThree : Size = Size(4.0, 3.0)
@@ -208,7 +208,7 @@ the *values* contained within the struct are passed around, not the struct itsel
 
 For example:
 
-.. testcode::
+.. testcode:: classAndStructDefinitionSyntax
 
     (swift) var iPhone4 = Size(width: 640.0, height: 960.0)
     // iPhone4 : Size = Size(640.0, 960.0)
@@ -246,7 +246,7 @@ The exact same object is used, and no copying takes place.
 
 For example:
 
-.. testcode::
+.. testcode:: classAndStructDefinitionSyntax
 
     (swift) var square = Rectangle()
     // square : Rectangle = <Rectangle instance>
@@ -351,7 +351,7 @@ Stored Properties
 In its simplest form, a property is just a variable
 whose value is stored with an object or struct:
 
-.. testcode::
+.. testcode:: storedAndComputedProperties
 
     (swift) struct HTTPStatus {
         var statusCode: Int
@@ -390,7 +390,7 @@ Properties aren't restricted to simple stored values, however.
 Structs and classes can also define *computed* properties,
 which do not actually store a value:
 
-.. testcode::
+.. testcode:: storedAndComputedProperties
 
     (swift) struct Point {
         var x, y: Double
