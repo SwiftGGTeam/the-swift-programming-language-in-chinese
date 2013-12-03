@@ -868,11 +868,11 @@ and only allows access if both values are ``true``:
 
 .. testcode:: logicalOperators
 
-    (swift) var enteredCorrectDoorCode = true
-    // enteredCorrectDoorCode : Bool = true
+    (swift) var enteredDoorCode = true
+    // enteredDoorCode : Bool = true
     (swift) var passedRetinaScan = false
     // passedRetinaScan : Bool = false
-    (swift) if enteredCorrectDoorCode && passedRetinaScan {
+    (swift) if enteredDoorCode && passedRetinaScan {
         println("Welcome!")
     } else {
         println("ACCESS DENIED")
@@ -897,11 +897,11 @@ For example:
 
 .. testcode:: logicalOperators
 
-    (swift) var hasValidDoorKey = false
-    // hasValidDoorKey : Bool = false
-    (swift) var knowsEmergencyOverridePassword = true
-    // knowsEmergencyOverridePassword : Bool = true
-    (swift) if hasValidDoorKey || knowsEmergencyOverridePassword {
+    (swift) var hasDoorKey = false
+    // hasDoorKey : Bool = false
+    (swift) var knowsOverridePassword = true
+    // knowsOverridePassword : Bool = true
+    (swift) if hasDoorKey || knowsOverridePassword {
         println("Welcome!")
     } else {
         println("ACCESS DENIED")
@@ -909,8 +909,8 @@ For example:
     >>> Welcome!
 
 In this example,
-the first ``Bool`` value (``hasValidDoorKey``) is ``false``,
-but the second value (``knowsEmergencyOverridePassword``) is ``true``.
+the first ``Bool`` value (``hasDoorKey``) is ``false``,
+but the second value (``knowsOverridePassword``) is ``true``.
 Because one value is ``true``,
 the overall expression also equates to ``true``,
 and access is allowed.
@@ -928,9 +928,7 @@ For example:
 
 .. testcode:: logicalOperators
 
-    (swift) if enteredCorrectDoorCode && passedRetinaScan || hasValidDoorKey
-        || knowsEmergencyOverridePassword
-    {
+    (swift) if enteredDoorCode && passedRetinaScan || hasDoorKey || knowsOverridePassword {
         println("Welcome!")
     } else {
         println("ACCESS DENIED")
@@ -1034,9 +1032,7 @@ it would be useful to add parentheses around the first part of the compound expr
 
 .. testcode:: logicalOperators
 
-    (swift) if (enteredCorrectDoorCode && passedRetinaScan) || hasValidDoorKey
-        || knowsEmergencyOverridePassword
-    {
+    (swift) if (enteredDoorCode && passedRetinaScan) || hasDoorKey || knowsOverridePassword {
         println("Welcome!")
     } else {
         println("ACCESS DENIED")

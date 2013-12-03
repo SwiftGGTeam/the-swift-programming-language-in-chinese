@@ -880,7 +880,7 @@ This time, however, the associated values can be extracted as part of the ``swit
         case .QRCode(var productCode):
             println("QR code with value of \(productCode).")
     }
-    >>> QR code barcode with value of ABCDEFGHIJKLMNOP.
+    >>> QR code with value of ABCDEFGHIJKLMNOP.
 
 These two calls to ``println()`` use a special syntax to insert the values of
 ``numberSystem``, ``identifier``, ``check`` and ``productCode``

@@ -185,9 +185,7 @@ For example, the two ``Double`` elements above could be named ``x`` and ``y`` by
 
 .. testcode::
 
-    (swift) func distanceFromOriginForNamedPoint(point: (x: Double, y: Double))
-        -> Double
-    {
+    (swift) func distanceFromOriginForNamedPoint(point: (x: Double, y: Double)) -> Double {
         return sqrt(Double(point.x * point.x + point.y * point.y))
     }
     (swift) println(distanceFromOriginForNamedPoint(somePoint))
@@ -251,9 +249,7 @@ it can be omitted when calling the function:
 
 .. testcode::
 
-    (swift) func joinTwoStrings(string1: String, string2: String, joiner: String = " ")
-        -> String
-    {
+    (swift) func joinTwoStrings(string1: String, string2: String, joiner: String = " ") -> String {
         return string1 + joiner + string2
     }
     (swift) joinTwoStrings("hello", "world", ":")
@@ -276,9 +272,7 @@ The ``joinTwoStrings`` function could have been written with ``joiner`` as the s
 
 .. testcode::
 
-    (swift) func joinTwoMoreStrings(string1: String, joiner: String = " ", string2: String)
-        -> String
-    {
+    (swift) func joinTwoMoreStrings(string1: String, joiner: String = " ", string2: String) -> String {
         return string1 + joiner + string2
     }
     (swift) joinTwoMoreStrings("hello", ":", "world")
@@ -419,9 +413,7 @@ Here's an example of a function written with selector-style declaration:
 
 .. testcode::
 
-    (swift) func joinString(string1: String) toString(string2: String)
-        withJoiner(joiner: String) -> String
-    {
+    (swift) func joinString(string1: String) toString(string2: String) withJoiner(joiner: String) -> String {
         return string1 + joiner + string2
     }
     (swift) joinString("hello", toString: "world", withJoiner: ":")
