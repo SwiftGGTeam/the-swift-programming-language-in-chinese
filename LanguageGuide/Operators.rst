@@ -940,10 +940,10 @@ Note that ``&&`` and ``||`` still only operate on two values,
 so this is actually three smaller expressions chained together.
 It can be read as:
 
-    “If we've entered the correct door code and passed the retina scan;
-    or if we have a valid door key;
-    or if we know the emergency override password;
-    then allow access.”
+If we've entered the correct door code and passed the retina scan;
+or if we have a valid door key;
+or if we know the emergency override password;
+then allow access.
 
 Based on the example values from earlier,
 the first two mini-expressions are ``false``,
@@ -967,9 +967,11 @@ Why does the following expression equal ``4``?
     (swift) 2 + 3 * 4 % 5
     // r0 : Int = 4
 
-Taken literally, you might expect this to read:
+Taken literally, you might expect this to read as follows:
 
-    2 plus 3 equals 5; 5 times 4 equals 20; 20 modulo 5 equals 0.
+* 2 plus 3 equals 5;
+* 5 times 4 equals 20;
+* 20 modulo 5 equals 0
 
 However, the actual answer is ``4``, not ``0``.
 This is due to the *priorities* and *associativity* of the operators used:

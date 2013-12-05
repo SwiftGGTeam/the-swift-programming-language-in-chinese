@@ -76,7 +76,7 @@ Here's a simple variable declaration:
     
 This can be read as:
 
-    Declare a variable called ``a``, and give it an initial value of ``1``.
+Declare a variable called ``a``, and give it an initial value of ``1``.
 
 Variable definitions can include a specific *type*,
 to be explicit about the kind of variable you want to create:
@@ -89,8 +89,8 @@ to be explicit about the kind of variable you want to create:
 The colon in the declaration means *“…that is a…”*,
 so this can be read as:
 
-    Declare a variable called ``b`` that is a ``String``,
-    and give it an initial value of ``"Hello"``.
+Declare a variable called ``b`` that is a ``String``,
+and give it an initial value of ``"Hello"``.
 
 You can use pretty much any character you like in a variable name,
 including `Unicode <http://en.wikipedia.org/wiki/Unicode>`_ characters:
@@ -531,10 +531,10 @@ You can also optionally name the elements in a tuple:
 
 This can be read as:
 
-    Declare a variable called ``http404Error``,
-    and set it to a tuple containing
-    (an element called ``statusCode`` that is ``404``,
-    and an element called ``description`` that is ``"Not Found"``).
+Declare a variable called ``http404Error``,
+and set it to a tuple containing
+(an element called ``statusCode`` that is ``404``,
+and an element called ``description`` that is ``"Not Found"``).
 
 Once you've done this,
 you can retrieve the element values by name,
@@ -568,10 +568,10 @@ Here's how to define a generic tuple type to describe any HTTP status code:
 
 This can be read as:
 
-    Define a ``typealias`` called ``HTTPStatus``,
-    and set it to the tuple type that has
-    (an element called ``statusCode`` that is an ``Int``,
-    and an element called ``description`` that is a ``String``).
+“Define a ``typealias`` called ``HTTPStatus``,
+and set it to the tuple type that has
+(an element called ``statusCode`` that is an ``Int``,
+and an element called ``description`` that is a ``String``).”
 
 Note that this ``typealias`` doesn't set a *value* for ``statusCode`` or ``description``.
 It's not actually creating a tuple for a specific status code –
@@ -598,7 +598,8 @@ Because it's a type,
     
 This can be read as:
 
-    Declare a variable called ``http304Status`` that is an ``HTTPStatus``. Initialize it with (a ``statusCode`` that is ``304``, and a ``description`` that is ``"Not Modified"``).
+Declare a variable called ``http304Status`` that is an ``HTTPStatus``.
+Initialize it with (a ``statusCode`` that is ``304``, and a ``description`` that is ``"Not Modified"``).
 
 ``HTTPStatus`` tuples can also be created in a shorter form,
 without needing to provide the element names:
@@ -610,10 +611,10 @@ without needing to provide the element names:
 
 This can be read as:
 
-    Declare a variable called ``http500Error`` that is an ``HTTPStatus``.
-    Initialize it with
-    (a first element value that is ``500``,
-    and a second element value that is ``"Internal Server Error"``).
+Declare a variable called ``http500Error`` that is an ``HTTPStatus``.
+Initialize it with
+(a first element value that is ``500``,
+and a second element value that is ``"Internal Server Error"``).
 
 This fits the signature of an ``HTTPStatus``
 (first element ``Int``, second element ``String``),
@@ -644,10 +645,10 @@ you can also create new ``HTTPStatus`` tuples using *initializer syntax*:
 
 This can be read as:
 
-    Declare a variable called ``http301Status``,
-    and set it to a new ``HTTPStatus`` initialized with
-    (a ``statusCode`` that is ``301``,
-    and a ``description`` that is ``"Moved Permanently"``).
+Declare a variable called ``http301Status``,
+and set it to a new ``HTTPStatus`` initialized with
+(a ``statusCode`` that is ``301``,
+and a ``description`` that is ``"Moved Permanently"``).
 
 Again, it is not essential to name the elements if they are provided in the same order as they were defined:
 
@@ -752,11 +753,11 @@ Enumeration values can be checked with a ``switch`` statement:
 ``switch`` statements use the ``case`` keyword to indicate each of the possible cases they will consider.
 You can read this as:
 
-    Consider the value of ``directionToHead``.
-    In the case where it equals ``.North``,
-    print ``"Most planets have a north"``.
-    In the case where it equals ``.South``,
-    print ``"Watch out for penguins"``.
+Consider the value of ``directionToHead``.
+In the case where it equals ``.North``,
+print ``"Most planets have a north"``.
+In the case where it equals ``.South``,
+print ``"Watch out for penguins"``.
 
 …and so on.
 
@@ -835,9 +836,9 @@ In Swift, an enumeration to define product barcodes of either type might look li
 
 This can be read as:
 
-    Declare an enumeration type called ``Barcode``,
-    that can take either a value of ``UPCA`` with an associated value of type (``Int``, ``Int``, ``Int``),
-    or a value of ``QRCode`` with an associated value of type ``String``.
+Declare an enumeration type called ``Barcode``,
+that can take either a value of ``UPCA`` with an associated value of type (``Int``, ``Int``, ``Int``),
+or a value of ``QRCode`` with an associated value of type ``String``.
 
 Note that this definition does not provide any actual ``Int`` or ``String`` values –
 it just defines the *type* of associated values that ``Barcode`` variables can store
