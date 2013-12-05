@@ -43,7 +43,7 @@ Both can:
 * conform to *protocols* to provide standard functionality of a certain type, and
 * be *extended* to expand their functionality beyond a default implementation
 
-(See the :doc:`ProtocolsAndExtensions` chapter for more information on protocols and extensions.)
+(Protocols and extensions are covered in detail in :doc:`ProtocolsAndExtensions`.)
 
 In addition, classes have several capabilities that structs do not:
 
