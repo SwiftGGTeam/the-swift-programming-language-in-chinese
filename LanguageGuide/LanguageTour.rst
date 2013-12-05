@@ -1029,7 +1029,7 @@ Swift supports generics through parameterized types. As an example, the standard
 .. testcode:: generics
 
     (swift) var names = Array<String>()
-    // names : Array<String> = Array<String>(ArrayImplementation<String>(UnsafePointer<String>(<unprintable value>), <unprintable value>))
+    // names : Array<String> = []
     (swift) names.append("William")
     (swift) names.append("Hilary")
     (swift) names.append("Carlton")
@@ -1077,7 +1077,10 @@ It's even safe in Swift to mix by-reference and value types if you use a protoco
     // bar : Bar = Bar()
     (swift) var workers = Array<Workable>()
     >>> P4REPL8Workable_
-    // workers : Array<Workable> = Array<Workable>(ArrayImplementation<Workable>(UnsafePointer<Workable>(<unprintable value>), <unprintable value>))
+    // workers : Array<Workable> = [P4REPL8Workable_
+    >>> P4REPL8Workable_
+    >>> P4REPL8Workable_
+    >>> ]
     (swift) workers.append(foo)
     >>> P4REPL8Workable_
     (swift) workers.append(bar)
