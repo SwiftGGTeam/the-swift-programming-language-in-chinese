@@ -183,7 +183,7 @@ As you saw in the earlier Objective-C example, Swift provides a for-each-style l
     >>> o
 
 
-.. note:: If you're wondering why/how this works, it's because the return value of ``String.chars`` adopts the ``Enumerable`` protocol. `Protocols`_ are covered later in this tour.
+.. note:: If you're wondering why/how this works, it's because the return value of ``String.chars`` adopts the ``Sequence`` protocol. `Protocols`_ are covered later in this tour.
 
 Also try the ``..`` operator, which generates a half-open enumerable range between two values:
 

@@ -173,12 +173,15 @@ and iterating over them does not guarantee the order in which they will be retri
 The examples above use ``for x in y`` to iterate
 ranges, arrays, strings and dictionaries.
 However, this syntax can be used to iterate *any* collection,
-as long as it conforms to the ``Enumerable`` protocol.
+as long as it conforms to the ``Sequence`` protocol.
 This can include your own classes and collection types.
-Protocols, including ``Enumerable``,
+Protocols, including ``Sequence``,
 are described in detail in :doc:`ProtocolsAndExtensions`.
 
-.. QUESTION: are there any plans for enums be Enumerable? If so, they might make for a good example. What would the syntax be if they did? 'for planet in Planet', or even just 'for Planet'?
+.. QUESTION: are there any plans for enums to conform to Sequence?
+   If so, they might make for a good example.
+   What would the syntax be if they did?
+   'for planet in Planet', or even just 'for Planet'?
 
 while and do while
 ~~~~~~~~~~~~~~~~~~
