@@ -21,7 +21,7 @@ Control Flow
 Loops
 -----
 
-for x in y
+For x in y
 ~~~~~~~~~~
 
 Swift provides a powerful way to iterate over collections of items, such as
@@ -183,15 +183,15 @@ are described in detail in :doc:`ProtocolsAndExtensions`.
    What would the syntax be if they did?
    'for planet in Planet', or even just 'for Planet'?
 
-while and do while
-~~~~~~~~~~~~~~~~~~
+While Loops
+~~~~~~~~~~~
 
 ``while`` loops perform a set of statements until a condition becomes ``false``.
 They are best used when the number of iterations is not known before the first iteration begins.
 Swift provides two variations of the loop,
 known as ``while`` and ``do while``.
 
-while
+While
 _____
 
 ``while`` loops start by considering a single condition.
@@ -251,7 +251,7 @@ The loop's condition is dependent on external forces that cannot be predicted.
 
 .. NOTE: this example cannot be run in the REPL, due to the fact that it is reliant on keyboard input. I have yet to come up with a better example where ‘while’ is the right kind of loop to use, however. (I'm trying to avoid any examples where the number of iterations is known at the start of the loop.)
 
-do while
+Do While
 ________
 
 The second variation of the ``while`` loop performs a single pass through the loop block first,
@@ -264,8 +264,8 @@ It then continues to repeat the loop until the condition is ``false``::
 
 .. TODO: come up with a good example for when you'd actually want to use a do while loop.
 
-for initialization; condition; increment
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C-Style For Loops
+~~~~~~~~~~~~~~~~~
 
 In addition to ``for x in y``,
 Swift also supports traditional ``for`` loops:
@@ -348,7 +348,7 @@ Loop Control Statements
 Loop control statements give a way to end the current loop iteration immediately.
 Swift has two loop control statements: ``continue``, and ``break``.
 
-continue
+Continue
 ________
 
 The ``continue`` statement tells a loop to stop what it is doing,
@@ -361,7 +361,7 @@ the incrementer will still be evaluated after calling ``continue``.
 The loop itself continues to work as normal;
 only code within the loop is skipped.
 
-break
+Break
 _____
 
 The ``break`` statement is similar to the ``continue`` statement,
@@ -435,7 +435,7 @@ the ``if else`` statement, and the ``switch`` statement.
 The ``if else`` statement is typically used to consider simple conditions with only a few possible outcomes.
 The ``switch`` statement is better suited to more complex conditions with multiple possible permutations.
 
-if else
+If Else
 ~~~~~~~
 
 In its simplest form,
@@ -510,7 +510,7 @@ In this example,
 the temperature is neither too cold nor too warm to trigger the conditions in the ``if else`` statement,
 and so no message is printed.
 
-switch
+Switch
 ~~~~~~
 
 The :doc:`BasicTypes` section showed how ``switch`` statements can be used to consider the values of an enumeration.
@@ -575,7 +575,7 @@ to provide a catch-all case for any characters that have not already been matche
 This also provides a handy opportunity to set the optional integer value to ``.None``,
 to indicate that no match was found.
 
-fallthrough
+Fallthrough
 ___________
 
 Unlike C,
@@ -711,7 +711,7 @@ the first matching ``case`` will always be used.
 The point (0, 0) would match ``case (0, 0)`` first,
 and so all other matching cases would be ignored.
 
-where
+Where
 _____
 
 ``case`` statements can check for additional conditions using the ``where`` clause.

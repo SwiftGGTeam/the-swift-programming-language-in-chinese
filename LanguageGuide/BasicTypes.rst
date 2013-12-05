@@ -176,8 +176,8 @@ you should always use ``Int``, ``Float`` or ``Double`` for code consistency and 
         You might use a ``Float16`` to read 16-bit audio samples,
         or a ``UInt8`` when working with raw 8-bit byte data, for example.
 
-min and max
-~~~~~~~~~~~
+Numeric Bounds
+~~~~~~~~~~~~~~
 
 The minimum and maximum values of each integer type can be accessed using its ``min`` and ``max`` properties:
 
@@ -253,7 +253,7 @@ Type inference means that Swift requires far fewer type declarations than langua
 Variables are still explicitly-typed,
 but much of the work of specifying their type is done for you.
 
-Number literal expressions
+Number Literal Expressions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Number literals can be expressed in several different ways:
@@ -730,8 +730,8 @@ The type of ``directionToHead`` is already known,
 and so we can drop the type when setting its value.
 This makes for highly readable code when working with explicitly-typed enumeration values.
 
-The ``switch`` statement
-~~~~~~~~~~~~~~~~~~~~~~~~
+The Switch Statement
+~~~~~~~~~~~~~~~~~~~~
 
 Enumeration values can be checked with a ``switch`` statement:
 
