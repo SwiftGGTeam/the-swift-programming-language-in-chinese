@@ -489,7 +489,7 @@ Enumerations with any other kind of raw values,
 and / or with associated value tuples,
 should be written with each case on its own line::
 
-    (swift) enum ASCIIControlCharacter : Char {
+    (swift) enum ASCIIControlCharacter : UnicodeScalar {
         case Tab = '\t'
         case LineFeed = '\n'
         case CarriageReturn = '\r'

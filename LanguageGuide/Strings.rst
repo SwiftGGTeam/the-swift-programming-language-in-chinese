@@ -51,7 +51,7 @@ String and Char Concatenation
 -----------------------------
 
 - concatenation via + and +=
-- char / string + string / char
+- UnicodeScalar / String + String / UnicodeScalar
 - string initializer syntax
 - string interpolation (describe how it is expanded)
 - expressions inside interpolation

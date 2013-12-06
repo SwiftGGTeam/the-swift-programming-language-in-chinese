@@ -115,15 +115,16 @@ The addition operator is also supported for ``String`` concatenation:
     (swift) "hello, " + "world"
     // r4 : String = "hello, world"
 
-…and two ``Char`` values, or one ``Char`` and one ``String``,
+…and two ``UnicodeScalar`` values,
+or one ``UnicodeScalar`` and one ``String``,
 can be added together via ``+`` to make a new ``String``:
 
 .. testcode:: arithmeticOperators
 
     (swift) var dog = '🐶'
-    // dog : Char = '🐶'
+    // dog : UnicodeScalar = '🐶'
     (swift) var cow = '🐮'
-    // cow : Char = '🐮'
+    // cow : UnicodeScalar = '🐮'
     (swift) var dogCow = dog + cow
     // dogCow : String = "🐶🐮"
 

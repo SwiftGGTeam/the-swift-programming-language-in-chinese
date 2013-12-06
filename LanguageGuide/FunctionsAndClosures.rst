@@ -205,7 +205,7 @@ and also enables values to be passed in a different order to the original functi
 
 .. testcode::
 
-    (swift) func containsCharacter(stringToSearch: String, characterToFind: Char) -> Bool {
+    (swift) func containsCharacter(stringToSearch: String, characterToFind: UnicodeScalar) -> Bool {
         for character in stringToSearch.chars {
             if character == characterToFind {
                 return true

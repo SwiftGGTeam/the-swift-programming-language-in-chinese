@@ -113,8 +113,8 @@ Lists can be iterated in reverse, using the ``reverse()`` function:
     >>> Goodbye, Alan!
 
 Swift's ``String`` type has a ``chars`` property,
-which provides the individual characters in the string as an ``Array`` of ``Char`` values
-(also known as an ‘``Array`` of type ``Char``’).
+which provides the individual characters in the string as an ``Array`` of ``UnicodeScalar`` values
+(also known as an ‘``Array`` of type ``UnicodeScalar``’).
 This can be used to iterate through the characters of a string in order.
 The following example takes a lowercase string,
 and removes all of its vowels and spaces to create a cryptic puzzle phrase for someone to try and guess:
@@ -136,9 +136,9 @@ and removes all of its vowels and spaces to create a cryptic puzzle phrase for s
     (swift) println(puzzleOutput)
     >>> grtmndsthnklk
 
-The ``letter`` variable is inferred to be of type ``Char``
-from the fact that it is iterating over an array of ``Char`` values.
-This is why the ``case`` statement compares ``letter`` against ``Char`` values
+The ``letter`` variable is inferred to be of type ``UnicodeScalar``
+from the fact that it is iterating over a sequence of ``UnicodeScalar`` values.
+This is why the ``case`` statement compares ``letter`` against ``UnicodeScalar`` values
 (with single quote marks)
 rather than ``String`` values.
 
@@ -212,11 +212,11 @@ For example::
     // keyboard : Keyboard = <_TtCSs8Keyboard instance>
     (swift) println("Please enter your name, then press return.")
     >>> Please enter your name, then press return.
-    (swift) var inputCharacter = Char(keyboard.read())
-    // inputCharacter : Char = 'a'
+    (swift) var inputCharacter = UnicodeScalar(keyboard.read())
+    // inputCharacter : UnicodeScalar = 'a'
     (swift) while inputCharacter != '\n' {
         personName += inputCharacter
-        inputCharacter = Char(keyboard.read())
+        inputCharacter = UnicodeScalar(keyboard.read())
     }
     (swift) if personName == "" {
         println("You didn't enter your name. How can I say hello to you?")
@@ -233,7 +233,7 @@ It then reads a key using the keyboard's ``read()`` method.
 This causes the program to pause and wait for a keystroke before continuing.
 The keystroke's value is returned as a ``UInt8`` value,
 containing the ASCII code of the key that was pressed.
-This is converted to a ``Char`` value,
+This is converted to a ``UnicodeScalar`` value,
 so that it can be appended to a ``String`` representing the person's name.
 
 This program continues to read in keystrokes until the user presses the return key.
@@ -384,7 +384,7 @@ to see it in action::
     (swift) println("Please enter your name, then press return.")
     >>> Please enter your name, then press return.
     (swift) while true {
-        var inputCharacter = Char(keyboard.read())
+        var inputCharacter = UnicodeScalar(keyboard.read())
         switch inputCharacter {
             case ' ':
                 continue
@@ -517,7 +517,7 @@ The :doc:`BasicTypes` section showed how ``switch`` statements can be used to co
 ``switch`` statements aren't just confined to enumerations, however –
 in Swift, they be used to match any type of value at all.
 
-The following example matches a ``Char``,
+The following example matches a ``UnicodeScalar``,
 and determines if it represents a number symbol in one of four languages.
 Multiple values are covered in a single ``case`` statement on one line,
 for brevity:
@@ -525,7 +525,7 @@ for brevity:
 .. testcode::
 
     (swift) var numberSymbol = '三'   // Chinese symbol for the number 3
-    // numberSymbol : Char = '三'
+    // numberSymbol : UnicodeScalar = '三'
     (swift) var integerValue: Int? = .None
     // integerValue : Int? = <unprintable value>
     (swift) switch numberSymbol {
@@ -569,7 +569,7 @@ which has been confirmed to exist by the previous line of code.
 
 ``switch`` statements must be exhaustive.
 This means that every possible input value must be matched by one of the cases in the ``switch`` statement.
-However, it is not practical to list every single possible ``Char`` value,
+However, it is not practical to list every single possible ``UnicodeScalar`` value,
 and so the ``default`` statement is used
 to provide a catch-all case for any characters that have not already been matched.
 This also provides a handy opportunity to set the optional integer value to ``.None``,

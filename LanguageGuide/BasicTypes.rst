@@ -907,19 +907,19 @@ Here's an example that stores raw ASCII values alongside named enumeration membe
 
 .. testcode:: enums
 
-    (swift) enum ASCIIControlCharacter : Char {
+    (swift) enum ASCIIControlCharacter : UnicodeScalar {
         case Tab = '\t'
         case LineFeed = '\n'
         case CarriageReturn = '\r'
     }
 
 Here, the raw values for an ``enum`` called ``ASCIIControlCharacter``
-are declared to be of type ``Char`` (short for *single character*),
-and are set to equal some of the more common ASCII control character values.
-Values of type ``Char`` are used to store single Unicode characters,
+are declared to be of type ``UnicodeScalar``,
+and are set to some of the more common ASCII control characters.
+Values of type ``UnicodeScalar`` are used to store single Unicode codepoints,
 and are marked up using single quote marks (``'``) rather than double quote marks (``"``),
 to distingush them from strings.
-(``Char`` values are described in more detail in :doc:`Strings`.)
+(``UnicodeScalar`` values are described in more detail in :doc:`Strings`.)
 
 Note that raw values are not the same as associated values.
 Raw values are set to pre-populated values when the ``enum`` is defined in your code,
