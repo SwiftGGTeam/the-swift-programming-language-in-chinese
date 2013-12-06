@@ -1,6 +1,8 @@
 Language Guide
 ==============
 
+Chapters that have not yet been written are indicated with an [x] after their name. These chapters will be added as soon as an initial draft is available.
+
 .. toctree::
     :maxdepth: 1
 
@@ -12,6 +14,5 @@ Language Guide
     ClassesObjectsAndStructs
     ProtocolsAndExtensions
     Generics
-    Modules
     StandardFunctions
     ObjectiveC
