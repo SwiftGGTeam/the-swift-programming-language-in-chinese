@@ -113,7 +113,7 @@ or private-use or invalid Unicode code points.
 Once you've declared a variable,
 you can't redeclare it again with the same name,
 but you can set the existing variable to another value of the same type.
-You can also print the value of a variable using the ``println()`` function,
+You can also print the value of a variable using the ``println`` function,
 to see its current value:
 
 .. testcode:: declaringVariables
@@ -176,20 +176,6 @@ you should always use ``Int``, ``Float`` or ``Double`` for code consistency and 
         You might use a ``Float16`` to read 16-bit audio samples,
         or a ``UInt8`` when working with raw 8-bit byte data, for example.
 
-Numeric Bounds
-~~~~~~~~~~~~~~
-
-The minimum and maximum values of each integer type can be accessed using its ``min`` and ``max`` properties:
-
-.. testcode:: declaringVariables
-
-    (swift) var minimumValue = UInt8.min
-    // minimumValue : UInt8 = 0
-    (swift) var maximumValue = UInt8.max
-    // maximumValue : UInt8 = 255
-
-Note that the ``min`` and ``max`` properties are also of the appropriate sized number type.
-
 Strong Typing and Type Inference
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -200,7 +186,7 @@ strong typing means that you can't accidentally pass it an integer by mistake.
 
 Because Swift is strongly-typed,
 it is able to perform *type checks* when compiling your code.
-Any mismatched types are flagged up as errors so that you can fix them.
+Any mismatched types are flagged as errors so that you can fix them.
 
 Type-checking helps to avoid accidental errors when working with different types of value.
 However, this doesn't mean that you have to define the type of every variable you use.
@@ -210,7 +196,9 @@ Type inference is the ability for a compiler to automatically deduce the type of
 just by examining the values you provide.
 
 For example: if you assign a :term:`literal value` of ``42`` to a variable,
-without saying what type it is:
+without saying what type it is,
+Swift will deduce that you want the variable to be an ``Int``,
+because you have initialized it with a number that looks like an integer:
 
 .. glossary::
 
@@ -218,24 +206,21 @@ without saying what type it is:
         A *literal value* is a one-off value that appears directly in your source code,
         such as ``42`` and ``3.14159`` in the examples below.
 
-
 .. testcode:: typeInference
 
     (swift) var meaningOfLife = 42
     // meaningOfLife : Int = 42
 
-…Swift will deduce that you want the variable to be an ``Int``,
-because you have initialized it with a number that looks like an integer.
-
-Likewise, if you don't specify a type for a floating-point literal:
+Likewise, if you don't specify a type for a floating-point literal,
+Swift assumes that you want to create a ``Double`` from the floating-point value:
 
 .. testcode:: typeInference
 
     (swift) var pi = 3.14159
     // pi : Double = 3.14159
 
-…Swift assumes that you want to create a ``Double`` from the value of ``3.14159``.
-(Note that Swift always chooses ``Double`` rather than ``Float`` when inferring the type of floating-point numbers.)
+Swift always chooses ``Double`` (rather than ``Float``)
+when inferring the type of floating-point numbers.
 
 If you combine integer and floating-point literals in an expression,
 a type of ``Double`` will be inferred from the context:
@@ -245,8 +230,8 @@ a type of ``Double`` will be inferred from the context:
     (swift) var anotherPi = 3 + 0.14159
     // anotherPi : Double = 3.14159
 
-Note that the literal value of ``3`` does not have an explicit type in and of itself,
-and the appropriate output type of ``Double`` is inferred
+The literal value of ``3`` does not have an explicit type in and of itself,
+and so an appropriate output type of ``Double`` is inferred
 from the presence of a floating-point literal as part of the addition.
 
 Type inference means that Swift requires far fewer type declarations than languages such as C or Objective-C.
@@ -324,7 +309,7 @@ All of these floating-point literals have a decimal value of ``12.5``:
 Number literals can contain extra formatting to make them easier to read.
 Both integers and floats can be padded with :term:`extra zeroes` on the beginning (so ``01234 == 1234``),
 and can contain underscores to help with readability.
-Neither type of formatting affects the underlying value of the literal.
+Neither type of formatting affects the underlying value of the literal:
 
 .. glossary::
 
@@ -332,8 +317,6 @@ Neither type of formatting affects the underlying value of the literal.
         In C, adding an extra zero to the beginning of an integer literal indicates that the literal is in octal notation.
         This isn't the case in Swift.
         Always add the ``0o`` prefix if your numbers are in octal notation.
-
-All of these literals are valid in Swift:
 
 .. testcode:: numberLiterals
 
@@ -344,7 +327,7 @@ All of these literals are valid in Swift:
     (swift) var justOverOneMillion = 1_000_000.000_000_1
     // justOverOneMillion : Double = 1e+06
 
-Note that Swift has printed the value of ``justOverOneMillion`` as ``1e+06``.
+In the example above, the value of ``justOverOneMillion`` has been printed as ``1e+06``.
 This is a short-form representation of its underlying ``Double`` value of ``1000000.0000001``.
 The actual value of ``justOverOneMillion`` still has all of the precision of the original.
 
@@ -370,7 +353,7 @@ because number literals do not have an explicit type in and of themselves.
 Their type is only inferred at the point that they are evaluated by the compiler.
 
 To convert from one number type to another,
-you initialize a new number of the desired type with the existing value, like this:
+you initialize a new number of the desired type with the existing value:
 
 .. testcode:: typeConversion
 
@@ -381,7 +364,7 @@ you initialize a new number of the desired type with the existing value, like th
     (swift) var twoThousandAndOne = twoThousand + UInt16(one)
     // twoThousandAndOne : UInt16 = 2001
 
-``twoThousand`` is a ``UInt16``, but ``one`` is a ``UInt8``.
+The variable ``twoThousand`` is a ``UInt16``, whereas ``one`` is a ``UInt8``.
 They cannot be added together directly,
 because they are not of the same type.
 Instead, this code calls ``UInt16(one)`` to create a new ``UInt16`` initialized with the value of ``one``,
@@ -398,8 +381,9 @@ Behind the scenes, ``UInt16`` has an initializer that accepts the ``UInt8`` type
 and so it knows how to make a new ``UInt16`` from an existing ``UInt8``.
 You can't just pass in any type, however –
 it has to be something that ``UInt16`` already knows how to convert.
-The :doc:`ProtocolsAndExtensions` chapter shows how to extend existing types to accept new types
-(including your own type definitions) as initializers.
+Extending existing types to accept new types
+(including your own type definitions) as initializers
+is covered in :doc:`ProtocolsAndExtensions`.
 
 .. TODO: add a note that this is not traditional type-casting, and perhaps include a forward reference to the objects chapter.
 
@@ -421,6 +405,22 @@ so that both sides of the addition are of the same type.
 .. TODO: the return type of pi here is inferred as Float64, but it should really be inferred as Double. This is due to rdar://15211554 . This code sample should be updated once the issue is fixed.
 
 .. NOTE: this section on explicit conversions could be included in the Operators section. I think it's more appropriate here, however, and helps to reinforce the ‘just use Int’ message.
+
+Numeric Bounds
+~~~~~~~~~~~~~~
+
+The minimum and maximum values of each integer type can be accessed using its ``min`` and ``max`` properties:
+
+.. testcode:: declaringVariables
+
+    (swift) var minimumValue = UInt8.min
+    // minimumValue : UInt8 = 0
+    (swift) var maximumValue = UInt8.max
+    // maximumValue : UInt8 = 255
+
+The values of these properties are of the appropriate sized number type
+(such as ``UInt8`` in the example above),
+and can therefore be used in expressions alongside other values of the same type.
 
 Booleans
 --------
