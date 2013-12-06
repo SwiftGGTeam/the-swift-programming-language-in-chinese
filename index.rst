@@ -20,7 +20,7 @@ Contents
     :maxdepth: 1
 
     Introduction
-    LanguageGuide/LanguageGuide
+    LanguageGuide/index
     ReferenceManual/ReferenceManual
 
 Internal Chapters
