@@ -158,8 +158,8 @@ to iterate over their key-value pairs:
 
     (swift) var numberOfLegs = ["spider" : 8, "ant" : 6, "cat" : 4]
     // numberOfLegs : Dictionary<String, Int> = ["ant" : 6, "spider" : 8, "cat" : 4]
-    (swift) for (key, value) in numberOfLegs {
-        println("\(key)s have \(value) legs")
+    (swift) for (animalName, legCount) in numberOfLegs {
+        println("\(animalName)s have \(legCount) legs")
     }
     >>> ants have 6 legs
     >>> spiders have 8 legs
@@ -171,6 +171,20 @@ and iterating over them does not guarantee the order in which they will be retri
 
 .. TODO: provide some advice on how to iterate over a Dictionary in order
    (perhaps sorted by key), using a predicate or array sort or some kind.
+
+The example above uses a ``(key, value)`` tuple to iterate over the values in a ``Dictionary``.
+You can also iterate over the items in the ``Dictionary`` directly.
+Every item in a ``Dictionary`` has a ``key`` property and a ``value`` property,
+which can be accessed via dot syntax:
+
+.. testcode::
+
+    (swift) for item in numberOfLegs {
+        println("\(item.key)s have \(item.value) legs")
+    }
+    >>> ants have 6 legs
+    >>> spiders have 8 legs
+    >>> cats have 4 legs
 
 The examples above use ``for x in y`` to iterate
 ranges, arrays, strings and dictionaries.
@@ -517,7 +531,7 @@ Switch
 
 The :doc:`BasicTypes` section showed how switch statements can be used to consider the values of an enumeration.
 Switch statements aren't just confined to enumerations, however –
-in Swift, they be used to match any type of value at all.
+in Swift, they can be used to match any type of value at all.
 
 The following example matches a ``UnicodeScalar``,
 and determines if it represents a number symbol in one of four languages.
