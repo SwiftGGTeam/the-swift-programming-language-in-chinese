@@ -51,8 +51,9 @@ This continues until the end of the range is reached.
 Because the range is half-open,
 its final value of ``5`` is not used.
 
-Note that the variable ``index`` does not have to be declared before it is used as part of this loop.
-It is implicitly declared simply by its inclusion in the loop declaration.
+The ``index`` variable does not have to be declared before it is used as part of this loop.
+It is implicitly declared simply by its inclusion in the loop declaration,
+without the need for a ``var`` declaration keyword.
 This does, however, mean that it only exists within the scope of the loop.
 If you want to check the value of ``index`` after the loop has completed,
 you must declare it as a variable in advance of its use in the loop.
@@ -82,9 +83,10 @@ by ``3``, ten times,
 using a half-open loop that starts with ``0`` and ends with ``9``.
 This calculation doesn't need to know the individual counter values each time through the loop –
 it simply needs to execute the loop the correct number of times.
-The underscore character ``_``,
-used in place of a loop variable,
-causes the individual values to be ignored.
+The underscore character ``_``
+(used in place of a loop variable)
+causes the individual values to be ignored,
+and does not provide access to the current value during each iteration of the loop.
 
 ``for x in y`` can also be used to iterate over the items in an array:
 
@@ -181,7 +183,7 @@ are described in detail in :doc:`ProtocolsAndExtensions`.
 .. QUESTION: are there any plans for enums to conform to Sequence?
    If so, they might make for a good example.
    What would the syntax be if they did?
-   'for planet in Planet', or even just 'for Planet'?
+   'for planet in Planet'?
 
 While Loops
 ~~~~~~~~~~~
@@ -247,7 +249,7 @@ and is printed if it exists.
 
 A while loop is appropriate in this case
 because the length of the input name is not known at the start of the while loop.
-The loop's condition is dependent on external forces that cannot be predicted.
+Instead, the loop is executed until a particular condition is satisfied.
 
 .. NOTE: this example cannot be run in the REPL, due to the fact that it is reliant on keyboard input. I have yet to come up with a better example where ‘while’ is the right kind of loop to use, however. (I'm trying to avoid any examples where the number of iterations is known at the start of the loop.)
 
@@ -288,7 +290,7 @@ The general form of this loop format is::
 Note that semicolons are used to separate the three parts of the for loop's definition,
 and that parentheses are not required.
 
-Here's how the loop is executed:
+The loop is executed as follows:
 
 1. When the loop is first entered,
    the *initialization* expression is evaluated once,
@@ -307,7 +309,7 @@ Here's how the loop is executed:
    execution returns to step 2,
    and the *condition* expression is evaluated again.
 
-This is effectively shorthand for::
+This is effectively shorthand for (and equivalent to)::
 
     <#initialization#>
     while <#condition#> {
@@ -473,7 +475,7 @@ As its name suggests, the if else statement can provide an alternative set of st
 
 One of of these two branches will always be executed.
 Because the temperature has increased to ``40`` degrees Fahrenheit,
-it is no longer cold enough to advise knitwear,
+it is no longer cold enough to advise wearing a scarf,
 and so the ``else`` branch is triggered instead.
 
 If else statements can be chained together,
@@ -524,18 +526,18 @@ for brevity:
 
 .. testcode::
 
-    (swift) var numberSymbol = '三'   // Chinese symbol for the number 3
+    (swift) var numberSymbol = '三'   // Simplified Chinese symbol for the number 3
     // numberSymbol : UnicodeScalar = '三'
     (swift) var integerValue: Int? = .None
     // integerValue : Int? = <unprintable value>
     (swift) switch numberSymbol {
-        case '1', '١', '一', '일':
+        case '1', '١', '一', '๑':
             integerValue = 1
-        case '2', '٢', '二', '이':
+        case '2', '٢', '二', '๒':
             integerValue = 2
-        case '3', '٣', '三', '셋':
+        case '3', '٣', '三', '๓':
             integerValue = 3
-        case '4', '٤', '四', '넷':
+        case '4', '٤', '四', '๔':
             integerValue = 4
         default:
             integerValue = .None
@@ -550,7 +552,7 @@ for brevity:
 .. TODO: The initialization of integerValue can be removed once the REPL supports uninitialized variables.
 
 This example checks ``numberSymbol`` to see if it is
-a Latin, Arabic, Chinese or Korean symbol for
+a Latin, Arabic, Chinese or Thai symbol for
 the numbers ``1`` to ``4``.
 If a match is found,
 it sets an optional ``Int?`` variable (``integerValue``) to the appropriate integer value.
@@ -562,15 +564,15 @@ otherwise, an error message is reported.
 
 Note that the value of ``integerValue`` has
 an exclamation mark on the end (``integerValue!``)
-when it is printed by ``println``.
+when it is printed by the ``println`` function.
 This tells Swift to retrieve and use the *actual* value stored inside the optional variable,
 which has been confirmed to exist by the previous line of code.
 (Optional values are described in more detail in :doc:`BasicTypes`.)
 
-``switch`` statements must be exhaustive.
-This means that every possible input value must be matched by one of the cases in the ``switch`` statement.
+Switch statements must be exhaustive.
+This means that every possible input value must be matched by one of the cases in the switch statement.
 However, it is not practical to list every single possible ``UnicodeScalar`` value,
-and so the ``default`` statement is used
+and so the ``default`` keyword is used
 to provide a catch-all case for any characters that have not already been matched.
 This also provides a handy opportunity to set the optional integer value to ``.None``,
 to indicate that no match was found.
@@ -729,7 +731,7 @@ on the green diagonal line where ``x == y``; or
 on the purple diagonal line where ``x == -y``.
 If none of these cases are true,
 it calculates the point's distance from the origin using
-`Pythagoras' theorem <http://en.wikipedia.org/wiki/Pythagorean_theorem>`_:
+`the Pythagorean theorem <http://en.wikipedia.org/wiki/Pythagorean_theorem>`_:
 
 .. testcode::
 
@@ -768,7 +770,7 @@ Once the temporary variables ``x`` and ``y`` have been declared,
 they can be used within the case statement's code block.
 Here, they are used as shorthand for printing the values via the ``println`` function.
 The final case statement also uses the variables
-to calculate the square root value needed for Pythagoras' theorem using the ``sqrt`` function.
+to calculate the distance from the origin.
 (The earlier case blocks printed the tuples' individual values
 using the shorthand syntax ``point.0`` and ``point.1`` instead,
 because they did not have the temporary variables to hand.)
