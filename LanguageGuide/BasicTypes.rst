@@ -108,7 +108,7 @@ Variable names cannot contain
 mathematical symbols, arrows, private-use (or invalid) Unicode code points,
 or line- and box-drawing characters.
 Variable names also cannot begin with a number
-(although they may include numbers elsewhere within the name).
+(although numbers may be included elsewhere within the name).
 
 Once you've declared a variable,
 you can't redeclare it again with the same name,
