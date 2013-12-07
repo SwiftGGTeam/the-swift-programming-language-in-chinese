@@ -500,10 +500,10 @@ Here's an example of a tuple:
 
 .. testcode:: tuples
 
-    (swift) var http200Status = (200, "OK")
-    // http200Status : (Int, String) = (200, "OK")
+    (swift) var http404Error = (404, "Not Found")
+    // http404Error : (Int, String) = (404, "Not Found")
 
-``(200, "OK")`` is a tuple that groups together an ``Int`` and a ``String`` to describe an :term:`HTTP status code`.
+``(404, "Not Found")`` is a tuple that groups together an ``Int`` and a ``String`` to describe an :term:`HTTP status code`.
 It could be described as “a tuple of type ``(Int, String)``”.
 
 .. glossary::
@@ -512,48 +512,23 @@ It could be described as “a tuple of type ``(Int, String)``”.
         When a web browser makes a request for a web page (such as http://www.apple.com),
         it connects to the server and asks for a specific page.
         The server sends back a response containing a *status code* that describes whether or not the request was successful.
-        Each status code has a number (such as ``200``) and a message (such as ``OK``),
+        Each status code has a number (such as ``404``) and a message (such as ``Not Found``),
         to describe the outcome of the request.
 
 You can create tuples from whatever permutation of types you like,
 and they can contain as many different types as you like.
 There's nothing stopping you from having
 a tuple of type ``(Int, Int, Int)``, or ``(String, Bool)``,
-or indeed any other combination you need.
+or indeed any other combination you require.
 
 You can access the individual element values in a tuple using index numbers starting at zero:
 
 .. testcode:: tuples
 
-    (swift) http200Status.0
-    // r0 : Int = 200
-    (swift) http200Status.1
-    // r1 : String = "OK"
-
-You can also optionally name the elements in a tuple:
-
-.. testcode:: tuples
-
-    (swift) var http404Error = (statusCode: 404, description: "Not Found")
-    // http404Error : (statusCode: Int, description: String) = (404, "Not Found")
-
-This can be read as:
-
-Declare a variable called ``http404Error``,
-and set it to a tuple containing
-(an element called ``statusCode`` that is ``404``,
-and an element called ``description`` that is ``"Not Found"``).
-
-Once you've done this,
-you can retrieve the element values by name,
-using dot syntax:
-
-.. testcode:: tuples
-
-    (swift) http404Error.statusCode
-    // r2 : Int = 404
-    (swift) http404Error.description
-    // r3 : String = "Not Found"
+    (swift) http404Error.0
+    // r0 : Int = 404
+    (swift) http404Error.1
+    // r1 : String = "Not Found"
 
 Tuples are particularly useful as the return values of functions.
 A function that tries to retrieve a web page might return this ``http404Error`` tuple
@@ -572,44 +547,28 @@ Here's how to define a generic tuple type to describe any HTTP status code:
 
 .. testcode:: tuples
 
-    (swift) typealias HTTPStatus = (statusCode: Int, description: String)
+    (swift) typealias HTTPStatus = (Int, String)
 
 This can be read as:
 
 “Define a ``typealias`` called ``HTTPStatus``,
-and set it to the tuple type that has
-(an element called ``statusCode`` that is an ``Int``,
-and an element called ``description`` that is a ``String``).”
+and set it to the tuple type (``Int``, ``String``).”
 
-Note that this type alias doesn't set a *value* for ``statusCode`` or ``description``.
-It's not actually creating a tuple for a specific status code –
-it's defining what *all* HTTP status codes look like.
-
-Note also that ``HTTPStatus`` has a capitalized name,
+``HTTPStatus`` has a capitalized name
 because it is a new *type* of tuple,
 rather than an instance of a particular tuple type.
 This is different from the variable name ``http404Error``,
 which starts with a lowercase letter,
 and capitalizes sub-words within the name.
 Type names should always be in ``UpperCamelCase``,
-and variables names should always be in ``lowerCamelCase``,
+and variable names should always be in ``lowerCamelCase``,
 for consistency and readability.
 
-Because it's a type,
+This new type alias doesn't set a value for the status code or description.
+It's not actually creating a tuple for a specific status code –
+rather, it's defining what *all* HTTP status codes look like.
+Because it is a fully-fledged type,
 ``HTTPStatus`` can be used to declare new tuple variables of that type:
-
-.. testcode:: tuples
-
-    (swift) var http304Status: HTTPStatus = (statusCode: 304, description: "Not Modified")
-    // http304Status : HTTPStatus = (304, "Not Modified")
-    
-This can be read as:
-
-Declare a variable called ``http304Status`` that is an ``HTTPStatus``.
-Initialize it with (a ``statusCode`` that is ``304``, and a ``description`` that is ``"Not Modified"``).
-
-``HTTPStatus`` tuples can also be created in a shorter form,
-without needing to provide the element names:
 
 .. testcode:: tuples
 
@@ -627,42 +586,23 @@ This fits the signature of an ``HTTPStatus``
 (first element ``Int``, second element ``String``),
 and so this initialization is allowed by the Swift type-checker.
 
-Because ``http500Error`` was defined as an ``HTTPStatus``,
-you can still access its elements by name,
-even though the names were not used to set the values:
-
-.. testcode:: tuples
-
-    (swift) http500Error.statusCode
-    // r4 : Int = 500
-    (swift) http500Error.description
-    // r5 : String = "Internal Server Error"
-
 Initializer Syntax
 ~~~~~~~~~~~~~~~~~~
 
-Tuple types defined by ``typealias`` are fully-fledged types in Swift.
 Because ``HTTPStatus`` is now a type,
-you can also create new ``HTTPStatus`` tuples using *initializer syntax*:
+you can create new ``HTTPStatus`` tuples using *initializer syntax*:
 
 .. testcode:: tuples
 
-    (swift) var http301Status = HTTPStatus(statusCode: 301, description: "Moved Permanently")
-    // http301Status : (statusCode: Int, description: String) = (301, "Moved Permanently")
+    (swift) var http301Status = HTTPStatus(301, "Moved Permanently")
+    // http301Status : (Int, String) = (301, "Moved Permanently")
 
 This can be read as:
 
 Declare a variable called ``http301Status``,
 and set it to a new ``HTTPStatus`` initialized with
-(a ``statusCode`` that is ``301``,
-and a ``description`` that is ``"Moved Permanently"``).
-
-Again, it is not essential to name the elements if they are provided in the same order as they were defined:
-
-.. testcode:: tuples
-
-    (swift) var http403Error = HTTPStatus(403, "Forbidden")
-    // http403Error : (statusCode: Int, description: String) = (403, "Forbidden")
+(a first value that is ``301``,
+and a second value that is ``"Moved Permanently"``).
 
 Initializer syntax is also used when creating struct and object instances,
 and is described in more detail in :doc:`ClassesObjectsAndStructs`.
