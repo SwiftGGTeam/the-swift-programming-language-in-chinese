@@ -750,7 +750,7 @@ Enumeration values can be checked with a ``switch`` statement:
     (swift) directionToHead = .South
     (swift) switch directionToHead {
         case .North:
-            println("Most planets have a north")
+            println("Lots of planets have a north")
         case .South:
             println("Watch out for penguins")
         case .East:
@@ -765,7 +765,7 @@ You can read this as:
 
 Consider the value of ``directionToHead``.
 In the case where it equals ``.North``,
-print ``"Most planets have a north"``.
+print ``"Lots of planets have a north"``.
 In the case where it equals ``.South``,
 print ``"Watch out for penguins"``.
 
