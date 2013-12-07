@@ -398,7 +398,7 @@ Bitwise NOT
 The bitwise NOT operator (``~``) inverts all of the bits in a number:
 
 .. image:: ../images/bitwiseNOT.png
-    :width: 302
+    :width: 570
     :align: center
 
 For example:
@@ -431,7 +431,7 @@ The bitwise AND operator (``&``) combines the bits of two numbers.
 It returns a new number whose bits are only set to ``1`` if the bits were equal to ``1`` in *both* input numbers:
 
 .. image:: ../images/bitwiseAND.png
-    :width: 302
+    :width: 570
     :align: center
 
 For example:
@@ -456,7 +456,7 @@ The bitwise OR operator (``|``) compares the bits of two numbers,
 and returns a new number whose bits are set to ``1`` if the bits were equal to ``1`` in *either* of the input numbers:
 
 .. image:: ../images/bitwiseOR.png
-    :width: 302
+    :width: 570
     :align: center
 
 For example:
@@ -482,7 +482,7 @@ and returns a new number whose bits are set to ``1`` if the bits are equal to ``
 but not if they are set to ``1`` in *both* of the input numbers:
 
 .. image:: ../images/bitwiseXOR.png
-    :width: 302
+    :width: 570
     :align: center
 
 For example:
