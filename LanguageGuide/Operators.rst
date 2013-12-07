@@ -797,10 +797,6 @@ The end result of the overflow and underflow behavior described above is that fo
 overflow always wraps around from the largest valid integer value back to the smallest,
 and underflow always wraps around from the smallest value to the largest.
 
-.. note::
-
-    The overflow operators should not be confused with the bitwise AND compound assignment operator, ``&=``.
-
 Division by zero
 ~~~~~~~~~~~~~~~~
 
