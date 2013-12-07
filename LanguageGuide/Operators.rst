@@ -511,8 +511,8 @@ move all of the bits in a number to the left or the right by a certain number of
 as per the rules defined below.
 
 Bitwise left and right shifts have the effect of multiplying (or dividing) an integer number by a factor of two.
-Shifting an integer's bits to the left by one position will double its value,
-whereas shifting it to the right by one position will halve its value.
+Shifting an integer's bits to the left by one position doubles its value,
+whereas shifting it to the right by one position halves its value.
 
 .. TODO: mention the caveats to this claim.
 
@@ -568,7 +568,7 @@ Bit-shifting can be used to encode and decode values within other data types:
     // blueComponent : UInt32 = 153
 
 This example uses a ``UInt32`` variable called ``pink`` to store a
-`Cascading Style Sheets <http://en.wikipedia.org/wiki/Cascading_Style_Sheets>`_ color value for the color pink.
+Cascading Style Sheets color value for the color pink.
 Here, the CSS color value ``#CC6699`` is written as ``0xCC6699`` in Swift's hexadecimal number representation.
 This color is then decomposed into its red (``CC``), green (``66``) and blue (``99``) components
 using the bitwise AND operator (``&``) and the right-hand bit-shift operator (``>>``).
@@ -686,12 +686,12 @@ negative integers remain negative as their value moves closer to zero.
 Overflow Operators
 ------------------
 
-Swift will throw an error if you try to insert a value into an integer variable that cannot hold that value.
+An error will be thrown if you try to insert a value into an integer variable that cannot hold that value.
 This gives extra safety when working with values that are too large or too small.
 
 For example, the ``Int16`` integer type can hold any signed value between ``-32768`` and ``32767``.
 If you try and set a variable of this type to a value outside of this range,
-Swift will throw an error:
+an error is thrown:
 
 .. testcode:: overflowOperatorsWillFailToOverflow
 
@@ -916,9 +916,7 @@ because it cannot change the outcome of the overall expression.
 Combining Logical Operators
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can combine multiple logical operators to create longer compound expressions,
-which are evaluated from left to right.
-For example:
+You can combine multiple logical operators to create longer compound expressions:
 
 .. testcode:: logicalOperators
 
@@ -961,7 +959,7 @@ Why does the following expression equal ``4``?
     (swift) 2 + 3 * 4 % 5
     // r0 : Int = 4
 
-Taken literally, you might expect this to read as follows:
+Taken strictly from left to right, you might expect this to read as follows:
 
 * 2 plus 3 equals 5;
 * 5 times 4 equals 20;
@@ -999,32 +997,33 @@ starting from their left:
     (swift) 2 + ((3 * 4) % 5)
     // r1 : Int = 4
 
-``(3 * 4)`` is ``12``, so this is actually:
+``(3 * 4)`` is ``12``, so this is equivalent to:
 
 .. testcode:: evaluationOrder
 
     (swift) 2 + (12 % 5)
     // r2 : Int = 4
 
-…and ``(12 % 5)`` is ``2``:
+``(12 % 5)`` is ``2``, so this is equivalent to:
 
 .. testcode:: evaluationOrder
 
     (swift) 2 + 2
     // r3 : Int = 4
 
-…which gives the eventual answer of ``4``.
+This gives the final answer of ``4``.
 
 A complete list of Swift operator priorities and associativity rules can be found in the :doc:`../ReferenceManual/ReferenceManual`.
 
 Explicit Parentheses
 ~~~~~~~~~~~~~~~~~~~~
 
-Priority and associativity mean that evaluation can always be tied down to one and only one possible order of calculation.
+Priority and associativity define exactly one order of calculation
+when multiple operators are used.
 However, it can sometimes be useful to include parentheses anyway,
 to make the intention of a complex expression easier to read.
 In the door access example above,
-it would be useful to add parentheses around the first part of the compound expression:
+it is useful to add parentheses around the first part of the compound expression:
 
 .. testcode:: logicalOperators
 
@@ -1035,11 +1034,12 @@ it would be useful to add parentheses around the first part of the compound expr
     }
     >>> Welcome!
 
-The parentheses make it clear that the first two values are being considered as part of a separate possible state in the overall logic.
+The parentheses make it clear that the first two values
+are being considered as part of a separate possible state in the overall logic.
 The output of the compound expression doesn't change,
 but the overall intention is clearer to the reader.
-Readability is always to be preferred over brevity,
-and parentheses should be used if they help to make your intentions clear.
+Readability is always preferred over brevity;
+use parentheses where they help to make your intentions clear.
 
 Range Operator
 --------------
