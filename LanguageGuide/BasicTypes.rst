@@ -468,7 +468,7 @@ Boolean values are particularly useful when working with conditional statements 
 
 Conditional statements are covered in more detail in :doc:`ControlFlow`.
 
-Swift's strict type-checking means that non-boolean values cannot be substituted for ``Bool``.
+Swift's strong type-checking means that non-boolean values cannot be substituted for ``Bool``.
 You cannot, for example, say::
 
     (swift) var i = 1
@@ -485,10 +485,10 @@ However, it is valid to say::
     }
     
 The result of the ``i == 1`` comparison is a ``Bool``,
-and so this second example passes the strict type-check.
+and so this second example passes the strong type-check.
 (Comparisons like ``i == 1`` are discussed in :doc:`Operators`.)
 
-As with other examples of strict typing in Swift,
+As with other examples of strong typing in Swift,
 this approach avoids accidental errors,
 and ensures that the intention of a particular section of code is always made clear.
 
