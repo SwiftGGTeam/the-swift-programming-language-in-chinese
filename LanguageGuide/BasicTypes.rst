@@ -397,7 +397,7 @@ Conversions between integer and floating-point variable types must also be made 
     (swift) var pi = Double(three) + pointOneFourOneFiveNine
     // pi : Float64 = 3.14159
 
-Here, the value of ``three`` is used to create a new ``Double``,
+Here, the value of the variable ``three`` is used to create a new ``Double``,
 so that both sides of the addition are of the same type.
 The addition would not be allowed without this conversion in place.
 
@@ -753,7 +753,7 @@ Enumeration values can be checked with a ``switch`` statement:
     }
     >>> Watch out for penguins
 
-``switch`` statements use the ``case`` keyword to indicate each of the possible cases they will consider.
+Switch statements use the ``case`` keyword to indicate each of the possible cases they will consider.
 You can read this as:
 
 Consider the value of ``directionToHead``.
@@ -764,23 +764,23 @@ print ``"Watch out for penguins"``.
 
 …and so on.
 
-Note that ``switch`` statements in Swift do not ‘fall through’ the bottom of each case and into the next one.
-Instead, the entire ``switch`` statement completes its execution as soon as the first matching case is completed.
+Note that switch statements in Swift do not ‘fall through’ the bottom of each case and into the next one.
+Instead, the entire switch statement completes its execution as soon as the first matching case is completed.
 This is different from C,
-which requires you to insert an explicit ``break`` statement at the end of every ``case`` to prevent fall-through.
+which requires you to insert an explicit ``break`` statement at the end of every case to prevent fall-through.
 Avoiding default fall-through means that Swift switch statements are
 much more concise and predictable than their counterparts in C.
 
-``switch`` statements must be exhaustive when working with ``enum`` values.
-If the ``case`` for ``.West`` had been omitted,
+Switch statements must be exhaustive when they consider an enum's members.
+If the case for ``.West`` had been omitted,
 this code would not compile,
-because it would not provide an exhaustive list of ``CompassPoint`` values.
+because it would not consider the complete list of ``CompassPoint`` members.
 Enforcing completeness ensures that cases are not accidentally missed or forgotten,
 and is part of Swift's goal of completeness and lack of ambiguity.
 
-When it is not appropriate to provide a ``case`` statement for every value,
-you can define a ``default`` catch-all case to cover any values that are not addressed explicitly.
-The ``default`` catch-all case should always appear last:
+When it is not appropriate to provide a case statement for every enum member,
+you can define a default catch-all case to cover any members that are not addressed explicitly.
+The default catch-all case should always appear last:
 
 .. testcode:: enums
 
@@ -794,7 +794,7 @@ The ``default`` catch-all case should always appear last:
     }
     >>> Mostly harmless
 
-``switch`` statements are covered in more detail in :doc:`ControlFlow`.
+Switch statements are covered in more detail in :doc:`ControlFlow`.
 
 Enumerations with Associated Values
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -873,8 +873,8 @@ Variables of type ``Barcode`` can store either a ``.UPCA`` or a ``.QRCode``
 (together with their associated values),
 but they can only store one or the other at a time.
 
-The different barcode types can be checked using a ``switch`` statement, as before.
-This time, however, the associated values can be extracted as part of the ``switch``:
+The different barcode types can be checked using a switch statement, as before.
+This time, however, the associated values can be extracted as part of the switch statement:
 
 .. testcode:: enums
 
@@ -886,7 +886,7 @@ This time, however, the associated values can be extracted as part of the ``swit
     }
     >>> QR code with value of ABCDEFGHIJKLMNOP.
 
-These two calls to ``println()`` use a special syntax to insert the values of
+These two calls to the ``println`` function use a special syntax to insert the values of
 ``numberSystem``, ``identifier``, ``check`` and ``productCode``
 into printed descriptions of the barcodes.
 This syntax is known as *string interpolation*,
@@ -916,22 +916,22 @@ Here's an example that stores raw ASCII values alongside named enumeration membe
         case CarriageReturn = '\r'
     }
 
-Here, the raw values for an ``enum`` called ``ASCIIControlCharacter``
+Here, the raw values for an enum called ``ASCIIControlCharacter``
 are declared to be of type ``UnicodeScalar``,
 and are set to some of the more common ASCII control characters.
-Values of type ``UnicodeScalar`` are used to store single Unicode codepoints,
+Values of type ``UnicodeScalar`` are used to store single Unicode scalar values,
 and are marked up using single quote marks (``'``) rather than double quote marks (``"``),
 to distingush them from strings.
 (``UnicodeScalar`` values are described in more detail in :doc:`Strings`.)
 
 Note that raw values are not the same as associated values.
-Raw values are set to pre-populated values when the ``enum`` is defined in your code,
+Raw values are set to pre-populated values when the enum is defined in your code,
 like the three ASCII codes above.
-Associated values are only set when you create a new variable based on one of the ``enum`` members.
+Associated values are only set when you create a new variable based on one of the enum members.
 
 Raw values can be
 strings, characters, or any of the integer or floating-point number types.
-Each raw value must be unique within its ``enum`` declaration.
+Each raw value must be unique within its enum declaration.
 When integers are used for raw values,
 they auto-increment if no value is specified for some of the enumeration members.
 The enumeration below defines the first seven chemical elements,
@@ -946,7 +946,7 @@ and uses raw integer values to represent their atomic numbers:
 Auto-incrementation means that ``ChemicalElement.Helium`` will have a raw value of ``2``,
 and so on.
 
-The raw value of an ``enum`` member can be accessed using its ``toRaw()`` method:
+The raw value of an enum member can be accessed using its ``toRaw`` method:
 
 .. testcode:: optionals
 
@@ -987,8 +987,8 @@ without the need for special constants or ``nil`` tests.
 Here's an example.
 The ``ChemicalElement`` enumeration above contains elements and raw atomic numbers
 for the first seven elements in the periodic table.
-In addition to their ``toRaw()`` method,
-enumerations also have a ``fromRaw()`` method.
+In addition to their ``toRaw`` method,
+enumerations also have a ``fromRaw`` method.
 This can be used to try and find a chemical element for a given atomic number:
 
 .. testcode:: optionals
@@ -1006,11 +1006,11 @@ so you might expect the following statement to fail:
     (swift) possibleElement = ChemicalElement.fromRaw(8)            // Oxygen
 
 However, it turns out that this is a perfectly valid statement.
-This is because ``fromRaw()`` returns an *optional*.
+This is because the ``fromRaw`` method returns an *optional*.
 If you look closely at the nitrogen example above,
 you'll see that ``possibleElement`` has an inferred type of ``ChemicalElement?``,
 not ``ChemicalElement``.
-Note the question mark at the end.
+Note the question mark at the end of the type.
 This indicates that the value of ``possibleElement`` is an *optional* ``ChemicalElement`` –
 it might contain *some* value of that type,
 or it might contain *no value at all*.

@@ -75,10 +75,10 @@ This makes it easy for the function to be called from elsewhere in your code in 
 The ``sayHello`` function is called by passing it a ``String`` value in parentheses,
 such as ``sayHello("Cheryl")``.
 Because ``sayHello`` returns a ``String``,
-it can be wrapped in a ``println()`` function to print that ``String`` and see its value,
-as shown above.
+it can be wrapped in a call to the ``println`` function
+to print that ``String`` and see its value, as shown above.
 
-``sayHello`` starts by declaring a new ``String`` variable called ``greeting``,
+The ``sayHello`` function starts by declaring a new ``String`` variable called ``greeting``,
 and setting it to a simple greeting message for ``personName``.
 This greeting is then passed back out of the function using the ``return`` keyword.
 As soon as ``return greeting`` is called,
@@ -86,13 +86,13 @@ the function finishes its execution,
 and passes back the current value of ``greeting``.
 
 Now that it has been defined as a function,
-``sayHello()`` can be called multiple times with different input values.
+``sayHello`` can be called multiple times with different input values.
 The example above shows what happens if it is called with an input value of ``"Cheryl"``,
 and an input value of ``"Dave"``.
 The function returns a tailored greeting in each case.
 
 The contents of this function could actually be simplified further,
-to combine the message creation and ``return`` statement into one line:
+to combine the message creation and the return statement into one line:
 
 .. testcode::
 
@@ -144,11 +144,11 @@ and works out how far that coordinate is from the origin (0, 0) using Pythagoras
     (swift) println(distanceFromOrigin(3.0, 4.0))
     >>> 5.0
 
-This example uses a square root function called ``sqrt()`` to help calculate Pythagoras' Theorem.
-``sqrt()`` is an always-available global math function provided ‘for free’ by Swift.
+This example uses a square root function called ``sqrt`` to help calculate Pythagoras' Theorem.
+``sqrt`` is an always-available global math function provided ‘for free’ by Swift.
 (There are quite a few others too, as described in :doc:`StandardFunctions`.)
 
-``sqrt()`` is defined to take a ``Double`` value as its only input parameter,
+The ``sqrt`` function is defined to take a ``Double`` value as its only input parameter,
 and to return the square root of that value as its output
 (also as a ``Double``).
 
@@ -227,10 +227,10 @@ this example returns ``true`` before the entire set of characters in ``stringToS
 As soon as the first matching character is found,
 ``containsCharacter`` returns ``true``,
 and doesn't even bother to check the remaining characters.
-You can ``return`` control from a function at any time,
+You can return control from a function at any time,
 and it will stop what it is doing immediately.
 In fact, this function will only return ``false`` if the entire set of characters in ``stringToSearch`` is exhausted,
-and the end of the ``for`` loop is reached.
+and the end of the for loop is reached.
 
 If parameter names are *not* provided when calling a method,
 the passed parameters are assumed to be in the order they were originally declared:
@@ -375,11 +375,11 @@ The return value of a function can be ignored when it is called:
     >>> hello, world
 
 The first function,
-``printAndCount()``,
+``printAndCount``,
 prints a string,
 and then returns its length as an ``Int``.
 The second function,
-``printWithoutCounting()``,
+``printWithoutCounting``,
 calls the first function,
 but ignores its returned value.
 When the second function is called,

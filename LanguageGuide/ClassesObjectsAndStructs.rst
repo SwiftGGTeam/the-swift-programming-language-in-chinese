@@ -383,7 +383,7 @@ and a ``description`` of ``"Not Found"``.
 In this example,
 the ``Int`` and ``String`` values are both explicitly stored as part of the struct.
 They can be accessed and modified via dot syntax
-(such as ``println`` accessing of ``http404Error.statusCode``).
+(such as ``http404Error.statusCode``).
 
 Swift automatically provides *getter* and *setter methods* for stored properties,
 in a similar manner to synthesized getters and setters in Objective-C.
@@ -441,10 +441,11 @@ Instead, ``Rect`` defines custom getter and setter methods for a computed variab
 to enable you to work with the rectangle's ``center`` as if it were a real stored property.
 
 This example creates a new ``Rect`` instance called ``square``.
-``square`` is initialized with an origin point of ``(0, 0)``, and a width and height of ``10``.
+The ``square`` variable is initialized with an origin point of ``(0, 0)``,
+and a width and height of ``10``.
 This is equivalent to the blue square in the diagram below.
 
-``square``'s ``center`` property is then accessed via dot syntax (``square.center``).
+The ``square`` variable's ``center`` property is then accessed via dot syntax (``square.center``).
 This causes ``center``'s ``get:`` method to be called,
 to retrieve the current property value.
 Rather than returning an existing value,
