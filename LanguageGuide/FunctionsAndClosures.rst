@@ -139,7 +139,7 @@ and works out how far that coordinate is from the origin (0, 0) using Pythagoras
 .. testcode::
 
     (swift) func distanceFromOrigin(x: Double, y: Double) -> Double {
-        return sqrt(Double(x * x + y * y))
+        return sqrt(x * x + y * y)
     }
     (swift) println(distanceFromOrigin(3.0, 4.0))
     >>> 5.0
@@ -165,7 +165,7 @@ For example, the distance function above can be rewritten to take a tuple of two
 .. testcode::
 
     (swift) func distanceFromOriginForPoint(point: (Double, Double)) -> Double {
-        return sqrt(Double(point.0 * point.0 + point.1 * point.1))
+        return sqrt(point.0 * point.0 + point.1 * point.1)
     }
     (swift) var somePoint = (3.0, 4.0)
     // somePoint : (Double, Double) = (3.0, 4.0)
@@ -186,7 +186,7 @@ For example, the two ``Double`` elements above could be named ``x`` and ``y`` by
 .. testcode::
 
     (swift) func distanceFromOriginForNamedPoint(point: (x: Double, y: Double)) -> Double {
-        return sqrt(Double(point.x * point.x + point.y * point.y))
+        return sqrt(point.x * point.x + point.y * point.y)
     }
     (swift) println(distanceFromOriginForNamedPoint(somePoint))
     >>> 5.0

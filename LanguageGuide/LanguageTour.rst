@@ -789,7 +789,7 @@ A protocol is an abstract description of behavior --- usually related functions 
 .. testcode:: protocols_and_extensions
 
     (swift) struct Point {
-              var x, y : Float
+              var x = 0.0, y = 0.0
             }
     (swift) protocol HitTestable {
                 func containsPoint(point : Point) -> Bool 
@@ -800,7 +800,7 @@ All named Swift types (i.e., classes, structs and enums, but not tuples), can ad
 .. testcode:: protocols_and_extensions
 
     (swift) struct Size {
-                var width, height : Float
+                var width = 0.0, height = 0.0
             }
     (swift) struct Rect : HitTestable {
                 var origin : Point = Point()

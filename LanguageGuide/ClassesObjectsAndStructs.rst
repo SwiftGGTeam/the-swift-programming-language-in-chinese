@@ -75,10 +75,10 @@ Both place their entire definition within a pair of braces:
 .. testcode:: classAndStructDefinitionSyntax
 
     (swift) struct Size {
-        var width, height: Double
+        var width = 0.0, height = 0.0
     }
     (swift) class Rectangle {
-        var size: Size
+        var size = Size()
     }
 
 Classes and structs can both define *properties*.
@@ -393,14 +393,14 @@ which do not actually store a value:
 .. testcode:: storedAndComputedProperties
 
     (swift) struct Point {
-        var x, y: Double
+        var x = 0.0, y = 0.0
     }
     (swift) struct Size {
-        var width, height: Double
+        var width = 0.0, height = 0.0
     }
     (swift) struct Rect {
-        var origin: Point
-        var size: Size
+        var origin = Point()
+        var size = Size()
         var center: Point {
             get:
                 var centerX = origin.x + (size.width / 2)
