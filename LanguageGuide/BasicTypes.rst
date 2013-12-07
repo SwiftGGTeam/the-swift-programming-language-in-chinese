@@ -166,15 +166,8 @@ Swift provides three standard number types:
 * ``Double``, which is the same as ``Float64``,
   and should be used when floating-point values need to be very large or particularly precise
 
-Unless you need to work with a :term:`specific size` of integer or floating-point number,
+Unless you need to work with a specific size of integer or floating-point number,
 you should always use ``Int``, ``Float`` or ``Double`` for code consistency and interoperability.
-
-.. glossary::
-
-    specific size
-        Certain tasks may require you to be more specific about the type of number that you need.
-        You might use a ``Float16`` to read 16-bit audio samples,
-        or a ``UInt8`` when working with raw 8-bit byte data, for example.
 
 Strong Typing and Type Inference
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
