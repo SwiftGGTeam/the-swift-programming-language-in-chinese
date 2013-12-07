@@ -104,12 +104,12 @@ including `Unicode <http://en.wikipedia.org/wiki/Unicode>`_ characters:
     (swift) var 🐶🐮 = "dogcow"
     // 🐶🐮 : String = "dogcow"
 
-Variable names can't start with a number,
-but they can contain numbers elsewhere in their name.
-They also can't contain
-mathematical symbols, arrows, line and box drawing characters,
-or private-use or invalid Unicode code points.
-    
+Variable names cannot contain
+mathematical symbols, arrows, private-use (or invalid) Unicode code points,
+or line- and box-drawing characters.
+Variable names also cannot begin with a number
+(although they may include numbers elsewhere within the name).
+
 Once you've declared a variable,
 you can't redeclare it again with the same name,
 but you can set the existing variable to another value of the same type.
@@ -231,19 +231,14 @@ Type inference means that Swift requires far fewer type declarations than langua
 Variables are still explicitly-typed,
 but much of the work of specifying their type is done for you.
 
-Number Literal Expressions
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+Numeric Literals
+~~~~~~~~~~~~~~~~
 
-Number literals can be expressed in several different ways:
-
-* Integer literals can be decimal (with no prefix),
-  :term:`binary` (with a ``0b`` prefix),
-  :term:`octal` (``0o``),
-  or :term:`hexadecimal` (``0x``)
-* Floating-point literals can be decimal (no prefix) or hexadecimal (``0x``),
-  and can have an optional :term:`exponent`
-  (indicated by an upper- or lower-case ``e`` for decimal floats,
-  and upper- or lower-case ``p`` for hexadecimal floats).
+Integer literals can be
+decimal (with no prefix);
+:term:`binary` (with a ``0b`` prefix);
+:term:`octal` (with a ``0o`` prefix);
+or :term:`hexadecimal` (with a ``0x`` prefix).
 
 .. glossary::
 
@@ -266,27 +261,36 @@ Number literals can be expressed in several different ways:
         In hexadecimal notation,
         ``9`` is ``0x9``, ``10`` is ``0xA``, ``15`` is ``0xF``, and ``16`` is ``0x10``.
 
-    exponent
-        Floating-point values with an exponent are of the form
-        ‘*[number]* shifted by *[exponent]* decimal places’ (such as ``1.25e2``).
-        All the exponent does is to shift the number right or left by that many decimal places.
-        Positive exponents move the number to the left;
-        negative exponents move it to the right.
-        So, ``1.25e2`` means ‘``1.25`` shifted ``2`` places to the left’ (aka ``125.0``),
-        and ``1.25e-2`` means ‘``1.25`` shifted ``2`` places to the right’ (aka ``0.0125``).
-
 All of these integer literals have a decimal value of ``17``:
 
 .. testcode:: numberLiterals
 
     (swift) var decimalInteger = 17
     // decimalInteger : Int = 17
-    (swift) var binaryInteger = 0b10001    // 17 in binary notation
+    (swift) var binaryInteger = 0b10001        // 17 in binary notation
     // binaryInteger : Int = 17
-    (swift) var octalInteger = 0o21        // 17 in octal notation
+    (swift) var octalInteger = 0o21            // 17 in octal notation
     // octalInteger : Int = 17
-    (swift) var hexadecimalInteger = 0x11  // 17 in hexadecimal notation
+    (swift) var hexadecimalInteger = 0x11      // 17 in hexadecimal notation
     // hexadecimalInteger : Int = 17
+
+Floating-point literals can be decimal (with no prefix),
+or hexadecimal (with a ``0x`` prefix).
+They can have an optional *exponent*,
+indicated by an upper- or lower-case ``e`` for decimal floats,
+or an upper- or lower-case ``p`` for hexadecimal floats.
+
+For decimal numbers with an exponent of ``exp``,
+the base number is multiplied by 10\ :superscript:`exp`:
+
+* ``1.25e2`` means 1.25 ⨉ 10\ :superscript:`2`, or ``125.0``
+* ``1.25e-2`` means 1.25 ⨉ 10\ :superscript:`-2`, or ``0.0125``
+
+For hexadecimal numbers with an exponent of ``exp``,
+the base number is multiplied by 2\ :superscript:`exp`:
+
+* ``0xFp2`` means 15 ⨉ 2\ :superscript:`2`, or ``60.0``
+* ``0xFp-2`` means 15 ⨉ 2\ :superscript:`-2`, or ``3.75``
 
 All of these floating-point literals have a decimal value of ``12.5``:
 
@@ -299,7 +303,7 @@ All of these floating-point literals have a decimal value of ``12.5``:
     (swift) var hexadecimalDouble = 0xC.8p0
     // hexadecimalDouble : Double = 12.5
 
-Number literals can contain extra formatting to make them easier to read.
+Numeric literals can contain extra formatting to make them easier to read.
 Both integers and floats can be padded with extra zeroes on the beginning (so ``01234 == 1234``),
 and can contain underscores to help with readability.
 Neither type of formatting affects the underlying value of the literal:
