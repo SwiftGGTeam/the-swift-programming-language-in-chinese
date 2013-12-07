@@ -83,12 +83,14 @@ Both place their entire definition within a pair of braces:
 
 Classes and structs can both define *properties*.
 Properties are simply variables that are bundled up and stored as part of the class or struct.
-The example above defines a new struct called ``Size``,
-which has properties called ``width`` and ``height``,
-both of which are of type ``Double``.
+The example above defines a new struct called ``Size``
+with properties called ``width`` and ``height``.
+These properties are inferred to be of type ``Double``
+by setting them to an initial floating-point value of ``0.0``.
 It also defines a new class called ``Rectangle``,
-which has a single property called ``size``,
-with a type of the new ``Size`` struct.
+which has a single property called ``size``.
+This property is initialized with a new ``Size`` struct instance,
+which infers a property type of ``Size``.
 (Properties are described in more detail later in this chapter.)
 
 Note that whenever you define a new class or struct,
@@ -126,9 +128,11 @@ This creates a new instance of the class or struct,
 with any properties initialized to their default values.
 In the example above,
 the ``width`` and ``height`` values of the ``Size`` struct have been automatically initialized to ``0.0``,
-which is the default value for a ``Double`` property.
+which was the default value provided by the ``Size`` struct's definition.
 
-.. TODO: add a note about inferring a variable's type when using initializer syntax.
+.. TODO: add more detail about inferring a variable's type when using initializer syntax.
+.. TODO: note that you can only use the default constructor if you provide default values
+   for all properties on a struct or class.
 
 Terminology
 ___________
@@ -184,6 +188,11 @@ Classes do not provide a default initializer, because [SOME_JUSTIFIABLE_REASON].
 The creation of custom initializers is described in more detail below.
 
 .. TODO: Include a justifiable reason.
+.. TODO: Clarify the difference between a default initializer and a memberwise initializer.
+   The thing being described above is actually a memberwise initializer.
+.. TODO: This whole section needs updating in light of the changes for definite initialization.
+   Both structs and classes will now only have a default initializer
+   if they provide default values for all of their properties.
 
 By Value and By Reference 
 -------------------------
