@@ -300,16 +300,9 @@ All of these floating-point literals have a decimal value of ``12.5``:
     // hexadecimalDouble : Double = 12.5
 
 Number literals can contain extra formatting to make them easier to read.
-Both integers and floats can be padded with :term:`extra zeroes` on the beginning (so ``01234 == 1234``),
+Both integers and floats can be padded with extra zeroes on the beginning (so ``01234 == 1234``),
 and can contain underscores to help with readability.
 Neither type of formatting affects the underlying value of the literal:
-
-.. glossary::
-
-    extra zeroes
-        In C, adding an extra zero to the beginning of an integer literal indicates that the literal is in octal notation.
-        This isn't the case in Swift.
-        Always add the ``0o`` prefix if your numbers are in octal notation.
 
 .. testcode:: numberLiterals
 
