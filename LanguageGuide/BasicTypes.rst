@@ -891,8 +891,9 @@ These two calls to the ``println`` function use a special syntax to insert the v
 into printed descriptions of the barcodes.
 This syntax is known as *string interpolation*,
 and is a handy way to create and print strings that contain the current values of variables.
-All you need to do is to include ``\(variableName)`` in a longer string,
-and the current value of ``variableName`` will be inserted in place when the string is printed.
+If you include ``\(variableName)`` in a longer string,
+the current value of ``variableName`` will be inserted in place
+when the string is printed by the ``println`` function.
 (String interpolation is covered in more detail in :doc:`Strings`.)
 
 .. TODO: Going by the Swift Language Reference Manual, it should be possible to name the members of the enum tuples above. However, this isn't currently working (see rdar://15238803). The example above should be updated if this is fixed.
@@ -943,7 +944,7 @@ and uses raw integer values to represent their atomic numbers:
         case Hydrogen = 1, Helium, Lithium, Beryllium, Boron, Carbon, Nitrogen
     }
 
-Auto-incrementation means that ``ChemicalElement.Helium`` will have a raw value of ``2``,
+Auto-incrementation means that ``ChemicalElement.Helium`` has a raw value of ``2``,
 and so on.
 
 The raw value of an enum member can be accessed using its ``toRaw`` method:
@@ -954,10 +955,14 @@ The raw value of an enum member can be accessed using its ``toRaw`` method:
     // atomicNumberOfCarbon : Int = 6
 
 The reverse is also true.
-Raw values can be used to look up their corresponding enumeration member –
-for example, to find ``ChemicalElement.Nitrogen`` from its raw value of ``7``.
-This is an example of one of Swift's most powerful features,
-known as *optionals*.
+In addition to their ``toRaw`` method,
+enumerations also have a ``fromRaw`` method,
+which can be used to try and find an enumeration member with a particular raw value.
+The ``fromRaw`` method could be used to find ``ChemicalElement.Nitrogen`` from its raw value of ``7``, say.
+
+However, not all possible ``Int`` values will find an enumeration member.
+The ``fromRaw`` method needs a way to indicate that an enumeration member could not be found.
+It does this using of one of Swift's most powerful features, known as *optionals*.
 
 Optionals
 ---------
@@ -979,7 +984,7 @@ However, this only works for objects – it doesn't work for
 structs, or basic C types, or enumeration values.
 For these types,
 Objective-C methods typically return a special value (such as ``NSNotFound``) to indicate the absence of a value.
-However, this assumes that the method's caller knows there is a special value to test for,
+This assumes that the method's caller knows there is a special value to test for,
 and remembers to check for it.
 Swift's optionals give a way to indicate the absence of a value for *any type at all*,
 without the need for special constants or ``nil`` tests.
@@ -987,9 +992,6 @@ without the need for special constants or ``nil`` tests.
 Here's an example.
 The ``ChemicalElement`` enumeration above contains elements and raw atomic numbers
 for the first seven elements in the periodic table.
-In addition to their ``toRaw`` method,
-enumerations also have a ``fromRaw`` method.
-This can be used to try and find a chemical element for a given atomic number:
 
 .. testcode:: optionals
 
@@ -1015,16 +1017,14 @@ This indicates that the value of ``possibleElement`` is an *optional* ``Chemical
 it might contain *some* value of that type,
 or it might contain *no value at all*.
 
-Optional values are a bit like `Schrödinger's cat <http://en.wikipedia.org/wiki/Schrödinger's_cat>`_.
-The cat might be alive, or it might be dead –
-the only way to find out is to look inside the box.
 An optional's value can be checked using an ``if`` statement,
 in a similar way to a ``Bool``.
 If an optional does have a value, it equates to ``true``;
 if it has no value at all, it equates to ``false``.
 
-When the optional *does* contain a value,
-the underlying value can accessed by adding an exclamation mark (``!``) to the end of the optional's name.
+Once you are sure that the optional *does* contain a value,
+you can access its underlying value
+by adding an exclamation mark (``!``) to the end of the optional's name.
 The exclamation mark effectively says
 “I know that this optional definitely has a value – please use it”:
 
