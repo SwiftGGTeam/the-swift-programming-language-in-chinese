@@ -380,10 +380,10 @@ The syntax seen above –
 ``SomeType(ofInitialValue)`` –
 is the default way to call the initializer of a Swift type,
 and to pass in an initial value.
-Behind the scenes, ``UInt16`` has an initializer that accepts the ``UInt8`` type,
-and so it knows how to make a new ``UInt16`` from an existing ``UInt8``.
-You can't just pass in any type, however –
-it has to be something that ``UInt16`` already knows how to convert.
+Behind the scenes, ``UInt16`` has an initializer that accepts a ``UInt8`` value,
+and so this initializer is used to make a new ``UInt16`` from an existing ``UInt8``.
+You can't just pass in *any* type here, however –
+it has to be a type for which ``UInt16`` provides an initializer.
 Extending existing types to accept new types
 (including your own type definitions) as initializers
 is covered in :doc:`ProtocolsAndExtensions`.
@@ -393,8 +393,7 @@ is covered in :doc:`ProtocolsAndExtensions`.
 Integer to Floating-Point Conversion
 ____________________________________
 
-The same is true for conversions between integer and floating-point variables.
-Conversions must be made explicit, as shown below:
+Conversions between integer and floating-point variable types must also be made explicit:
 
 .. testcode:: typeConversion
 
@@ -407,6 +406,7 @@ Conversions must be made explicit, as shown below:
 
 Here, the value of ``three`` is used to create a new ``Double``,
 so that both sides of the addition are of the same type.
+The addition would not be allowed without this conversion in place.
 
 The rules for numeric variables are different to the rules for number *literals* seen earlier –
 where the literal value ``3`` was added to the literal value ``0.14159`` –
@@ -566,11 +566,11 @@ each of a different type,
 the function is able to provide more useful information about its outcome
 than if it could only return a single value of a single type.
 
-Typealiases
-~~~~~~~~~~~
+Type Aliases
+~~~~~~~~~~~~
 
 If you find yourself using a particular type of tuple several times,
-you can define a ``typealias`` as shorthand for that tuple type.
+you can define a type alias as shorthand for that tuple type.
 Here's how to define a generic tuple type to describe any HTTP status code:
 
 .. testcode:: tuples
@@ -584,7 +584,7 @@ and set it to the tuple type that has
 (an element called ``statusCode`` that is an ``Int``,
 and an element called ``description`` that is a ``String``).”
 
-Note that this ``typealias`` doesn't set a *value* for ``statusCode`` or ``description``.
+Note that this type alias doesn't set a *value* for ``statusCode`` or ``description``.
 It's not actually creating a tuple for a specific status code –
 it's defining what *all* HTTP status codes look like.
 
@@ -594,10 +594,9 @@ rather than an instance of a particular tuple type.
 This is different from the variable name ``http404Error``,
 which starts with a lowercase letter,
 and capitalizes sub-words within the name.
-This approach –
-``CapitalizedWords`` for types,
-``lowercaseThenCapitalizedWords`` for variable names –
-is strongly encouraged for consistency and readability.
+Type names should always be in ``UpperCamelCase``,
+and variables names should always be in ``lowerCamelCase``,
+for consistency and readability.
 
 Because it's a type,
 ``HTTPStatus`` can be used to declare new tuple variables of that type:
