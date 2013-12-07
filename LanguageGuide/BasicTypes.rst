@@ -331,28 +331,36 @@ In the example above, the value of ``justOverOneMillion`` has been printed as ``
 This is a short-form representation of its underlying ``Double`` value of ``1000000.0000001``.
 The actual value of ``justOverOneMillion`` still has all of the precision of the original.
 
-Number Type Conversion
-~~~~~~~~~~~~~~~~~~~~~~
+Numeric Type Conversion
+~~~~~~~~~~~~~~~~~~~~~~~
 
-As mentioned above, you should use ``Int`` for all integers in your code,
-and ``Float`` or ``Double`` for all floating-point numbers,
-unless you have a specific reason not to do so.
-This ensures that numbers of a similar nature can be used together safely,
-and reserves the more specific number types for when the exact size and type is important.
+The ``Int`` type should be used for all general-purpose integer variables in your code,
+even if they are known to be non-negative.
+Using the default integer type in everyday situations means that
+integer variables are immediately interoperable in your code,
+and will match the inferred type for integer literal values.
 
-If you *do* need to use specific sizes,
-be aware that Swift does not allow implicit conversion between variables of different number types.
-You can't add a ``UInt8`` variable to a ``UInt16`` variable, for example.
-This avoids accidental errors when working with numbers of specific sizes,
-and means that number type conversion is something you choose to opt in to on a case-by-case basis.
-This helps to make type conversion intentions explicit in your code.
+Other integer types should only be used when they are are specifically needed for the task at hand,
+due to explicitly-sized data from an external source,
+or for performance, memory usage, or other optimization.
+Using explicitly-sized types in these situations
+helps to catch any accidental value overflows,
+and implicitly documents the nature of the data being used.
 
-Note that this is different to the rule for number *literals* seen earlier –
-where ``3`` was added to ``0.14159`` –
-because number literals do not have an explicit type in and of themselves.
-Their type is only inferred at the point that they are evaluated by the compiler.
+Integer Conversion
+__________________
 
-To convert from one number type to another,
+The range of numbers that can be stored in a numeric variable
+is different for each numeric type.
+An ``Int8`` variable can store numbers between ``-128`` and ``127``,
+whereas a ``UInt8`` variable can store numbers between ``0`` and ``255``.
+A value that can be stored in one numeric type
+cannot necessarily be stored in another numeric type.
+
+Because of this, numeric type conversion is something you must opt in to on a case-by-case basis.
+This avoids accidental errors, and helps to make type conversion intentions explicit in your code.
+
+To convert from one specific number type to another,
 you initialize a new number of the desired type with the existing value:
 
 .. testcode:: typeConversion
@@ -364,14 +372,16 @@ you initialize a new number of the desired type with the existing value:
     (swift) var twoThousandAndOne = twoThousand + UInt16(one)
     // twoThousandAndOne : UInt16 = 2001
 
-The variable ``twoThousand`` is a ``UInt16``, whereas ``one`` is a ``UInt8``.
+The variable ``twoThousand`` is a ``UInt16``,
+whereas the variable ``one`` is a ``UInt8``.
 They cannot be added together directly,
 because they are not of the same type.
 Instead, this code calls ``UInt16(one)`` to create a new ``UInt16`` initialized with the value of ``one``,
 and uses this value in place of the original.
 Because both sides of the addition are now of type ``UInt16``,
 the addition is allowed.
-(Note that the output variable, ``twoThousandAndOne``, is inferred to be a ``UInt16`` too.)
+The output variable (``twoThousandAndOne``) is inferred to be a ``UInt16``,
+because it is the sum of two ``UInt16`` values.
 
 The syntax seen above –
 ``SomeType(ofInitialValue)`` –
@@ -387,6 +397,9 @@ is covered in :doc:`ProtocolsAndExtensions`.
 
 .. TODO: add a note that this is not traditional type-casting, and perhaps include a forward reference to the objects chapter.
 
+Integer to Floating-Point Conversion
+____________________________________
+
 The same is true for conversions between integer and floating-point variables.
 Conversions must be made explicit, as shown below:
 
@@ -401,6 +414,11 @@ Conversions must be made explicit, as shown below:
 
 Here, the value of ``three`` is used to create a new ``Double``,
 so that both sides of the addition are of the same type.
+
+The rules for numeric variables are different to the rules for number *literals* seen earlier –
+where the literal value ``3`` was added to the literal value ``0.14159`` –
+because number literals do not have an explicit type in and of themselves.
+Their type is only inferred at the point that they are evaluated by the compiler.
 
 .. TODO: the return type of pi here is inferred as Float64, but it should really be inferred as Double. This is due to rdar://15211554 . This code sample should be updated once the issue is fixed.
 
