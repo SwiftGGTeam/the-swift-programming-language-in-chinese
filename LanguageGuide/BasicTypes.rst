@@ -169,6 +169,9 @@ Swift provides three standard number types:
 Unless you need to work with a specific size of integer or floating-point number,
 you should always use ``Int``, ``Float`` or ``Double`` for code consistency and interoperability.
 
+.. TODO: At some point, Int will change to become a typealias for Int32 or Int64
+   based on the current platform. This advice will need updating to match.
+
 Strong Typing and Type Inference
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
