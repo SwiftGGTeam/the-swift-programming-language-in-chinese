@@ -104,12 +104,12 @@ including `Unicode <http://en.wikipedia.org/wiki/Unicode>`_ characters:
     (swift) var 🐶🐮 = "dogcow"
     // 🐶🐮 : String = "dogcow"
 
-Variable names can't start with a number,
-but they can contain numbers elsewhere in their name.
-They also can't contain
-mathematical symbols, arrows, line and box drawing characters,
-or private-use or invalid Unicode code points.
-    
+Variable names cannot contain
+mathematical symbols, arrows, private-use (or invalid) Unicode code points,
+or line- and box-drawing characters.
+Variable names also cannot begin with a number
+(although numbers may be included elsewhere within the name).
+
 Once you've declared a variable,
 you can't redeclare it again with the same name,
 but you can set the existing variable to another value of the same type.
@@ -166,15 +166,11 @@ Swift provides three standard number types:
 * ``Double``, which is the same as ``Float64``,
   and should be used when floating-point values need to be very large or particularly precise
 
-Unless you need to work with a :term:`specific size` of integer or floating-point number,
+Unless you need to work with a specific size of integer or floating-point number,
 you should always use ``Int``, ``Float`` or ``Double`` for code consistency and interoperability.
 
-.. glossary::
-
-    specific size
-        Certain tasks may require you to be more specific about the type of number that you need.
-        You might use a ``Float16`` to read 16-bit audio samples,
-        or a ``UInt8`` when working with raw 8-bit byte data, for example.
+.. TODO: At some point, Int will change to become a typealias for Int32 or Int64
+   based on the current platform. This advice will need updating to match.
 
 Strong Typing and Type Inference
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -238,19 +234,14 @@ Type inference means that Swift requires far fewer type declarations than langua
 Variables are still explicitly-typed,
 but much of the work of specifying their type is done for you.
 
-Number Literal Expressions
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+Numeric Literals
+~~~~~~~~~~~~~~~~
 
-Number literals can be expressed in several different ways:
-
-* Integer literals can be decimal (with no prefix),
-  :term:`binary` (with a ``0b`` prefix),
-  :term:`octal` (``0o``),
-  or :term:`hexadecimal` (``0x``)
-* Floating-point literals can be decimal (no prefix) or hexadecimal (``0x``),
-  and can have an optional :term:`exponent`
-  (indicated by an upper- or lower-case ``e`` for decimal floats,
-  and upper- or lower-case ``p`` for hexadecimal floats).
+Integer literals can be
+decimal (with no prefix);
+:term:`binary` (with a ``0b`` prefix);
+:term:`octal` (with a ``0o`` prefix);
+or :term:`hexadecimal` (with a ``0x`` prefix).
 
 .. glossary::
 
@@ -273,27 +264,36 @@ Number literals can be expressed in several different ways:
         In hexadecimal notation,
         ``9`` is ``0x9``, ``10`` is ``0xA``, ``15`` is ``0xF``, and ``16`` is ``0x10``.
 
-    exponent
-        Floating-point values with an exponent are of the form
-        ‘*[number]* shifted by *[exponent]* decimal places’ (such as ``1.25e2``).
-        All the exponent does is to shift the number right or left by that many decimal places.
-        Positive exponents move the number to the left;
-        negative exponents move it to the right.
-        So, ``1.25e2`` means ‘``1.25`` shifted ``2`` places to the left’ (aka ``125.0``),
-        and ``1.25e-2`` means ‘``1.25`` shifted ``2`` places to the right’ (aka ``0.0125``).
-
 All of these integer literals have a decimal value of ``17``:
 
 .. testcode:: numberLiterals
 
     (swift) var decimalInteger = 17
     // decimalInteger : Int = 17
-    (swift) var binaryInteger = 0b10001    // 17 in binary notation
+    (swift) var binaryInteger = 0b10001        // 17 in binary notation
     // binaryInteger : Int = 17
-    (swift) var octalInteger = 0o21        // 17 in octal notation
+    (swift) var octalInteger = 0o21            // 17 in octal notation
     // octalInteger : Int = 17
-    (swift) var hexadecimalInteger = 0x11  // 17 in hexadecimal notation
+    (swift) var hexadecimalInteger = 0x11      // 17 in hexadecimal notation
     // hexadecimalInteger : Int = 17
+
+Floating-point literals can be decimal (with no prefix),
+or hexadecimal (with a ``0x`` prefix).
+They can have an optional *exponent*,
+indicated by an upper- or lower-case ``e`` for decimal floats,
+or an upper- or lower-case ``p`` for hexadecimal floats.
+
+For decimal numbers with an exponent of ``exp``,
+the base number is multiplied by 10\ :superscript:`exp`:
+
+* ``1.25e2`` means 1.25 ⨉ 10\ :superscript:`2`, or ``125.0``
+* ``1.25e-2`` means 1.25 ⨉ 10\ :superscript:`-2`, or ``0.0125``
+
+For hexadecimal numbers with an exponent of ``exp``,
+the base number is multiplied by 2\ :superscript:`exp`:
+
+* ``0xFp2`` means 15 ⨉ 2\ :superscript:`2`, or ``60.0``
+* ``0xFp-2`` means 15 ⨉ 2\ :superscript:`-2`, or ``3.75``
 
 All of these floating-point literals have a decimal value of ``12.5``:
 
@@ -306,17 +306,10 @@ All of these floating-point literals have a decimal value of ``12.5``:
     (swift) var hexadecimalDouble = 0xC.8p0
     // hexadecimalDouble : Double = 12.5
 
-Number literals can contain extra formatting to make them easier to read.
-Both integers and floats can be padded with :term:`extra zeroes` on the beginning (so ``01234 == 1234``),
+Numeric literals can contain extra formatting to make them easier to read.
+Both integers and floats can be padded with extra zeroes on the beginning (so ``01234 == 1234``),
 and can contain underscores to help with readability.
 Neither type of formatting affects the underlying value of the literal:
-
-.. glossary::
-
-    extra zeroes
-        In C, adding an extra zero to the beginning of an integer literal indicates that the literal is in octal notation.
-        This isn't the case in Swift.
-        Always add the ``0o`` prefix if your numbers are in octal notation.
 
 .. testcode:: numberLiterals
 
@@ -331,28 +324,36 @@ In the example above, the value of ``justOverOneMillion`` has been printed as ``
 This is a short-form representation of its underlying ``Double`` value of ``1000000.0000001``.
 The actual value of ``justOverOneMillion`` still has all of the precision of the original.
 
-Number Type Conversion
-~~~~~~~~~~~~~~~~~~~~~~
+Numeric Type Conversion
+~~~~~~~~~~~~~~~~~~~~~~~
 
-As mentioned above, you should use ``Int`` for all integers in your code,
-and ``Float`` or ``Double`` for all floating-point numbers,
-unless you have a specific reason not to do so.
-This ensures that numbers of a similar nature can be used together safely,
-and reserves the more specific number types for when the exact size and type is important.
+The ``Int`` type should be used for all general-purpose integer variables in your code,
+even if they are known to be non-negative.
+Using the default integer type in everyday situations means that
+integer variables are immediately interoperable in your code,
+and will match the inferred type for integer literal values.
 
-If you *do* need to use specific sizes,
-be aware that Swift does not allow implicit conversion between variables of different number types.
-You can't add a ``UInt8`` variable to a ``UInt16`` variable, for example.
-This avoids accidental errors when working with numbers of specific sizes,
-and means that number type conversion is something you choose to opt in to on a case-by-case basis.
-This helps to make type conversion intentions explicit in your code.
+Other integer types should only be used when they are are specifically needed for the task at hand,
+due to explicitly-sized data from an external source,
+or for performance, memory usage, or other optimization.
+Using explicitly-sized types in these situations
+helps to catch any accidental value overflows,
+and implicitly documents the nature of the data being used.
 
-Note that this is different to the rule for number *literals* seen earlier –
-where ``3`` was added to ``0.14159`` –
-because number literals do not have an explicit type in and of themselves.
-Their type is only inferred at the point that they are evaluated by the compiler.
+Integer Conversion
+__________________
 
-To convert from one number type to another,
+The range of numbers that can be stored in a numeric variable
+is different for each numeric type.
+An ``Int8`` variable can store numbers between ``-128`` and ``127``,
+whereas a ``UInt8`` variable can store numbers between ``0`` and ``255``.
+A value that can be stored in one numeric type
+cannot necessarily be stored in another numeric type.
+
+Because of this, numeric type conversion is something you must opt in to on a case-by-case basis.
+This avoids accidental errors, and helps to make type conversion intentions explicit in your code.
+
+To convert from one specific number type to another,
 you initialize a new number of the desired type with the existing value:
 
 .. testcode:: typeConversion
@@ -364,31 +365,35 @@ you initialize a new number of the desired type with the existing value:
     (swift) var twoThousandAndOne = twoThousand + UInt16(one)
     // twoThousandAndOne : UInt16 = 2001
 
-The variable ``twoThousand`` is a ``UInt16``, whereas ``one`` is a ``UInt8``.
+The variable ``twoThousand`` is a ``UInt16``,
+whereas the variable ``one`` is a ``UInt8``.
 They cannot be added together directly,
 because they are not of the same type.
 Instead, this code calls ``UInt16(one)`` to create a new ``UInt16`` initialized with the value of ``one``,
 and uses this value in place of the original.
 Because both sides of the addition are now of type ``UInt16``,
 the addition is allowed.
-(Note that the output variable, ``twoThousandAndOne``, is inferred to be a ``UInt16`` too.)
+The output variable (``twoThousandAndOne``) is inferred to be a ``UInt16``,
+because it is the sum of two ``UInt16`` values.
 
 The syntax seen above –
 ``SomeType(ofInitialValue)`` –
 is the default way to call the initializer of a Swift type,
 and to pass in an initial value.
-Behind the scenes, ``UInt16`` has an initializer that accepts the ``UInt8`` type,
-and so it knows how to make a new ``UInt16`` from an existing ``UInt8``.
-You can't just pass in any type, however –
-it has to be something that ``UInt16`` already knows how to convert.
+Behind the scenes, ``UInt16`` has an initializer that accepts a ``UInt8`` value,
+and so this initializer is used to make a new ``UInt16`` from an existing ``UInt8``.
+You can't just pass in *any* type here, however –
+it has to be a type for which ``UInt16`` provides an initializer.
 Extending existing types to accept new types
 (including your own type definitions) as initializers
 is covered in :doc:`ProtocolsAndExtensions`.
 
 .. TODO: add a note that this is not traditional type-casting, and perhaps include a forward reference to the objects chapter.
 
-The same is true for conversions between integer and floating-point variables.
-Conversions must be made explicit, as shown below:
+Integer to Floating-Point Conversion
+____________________________________
+
+Conversions between integer and floating-point variable types must also be made explicit:
 
 .. testcode:: typeConversion
 
@@ -399,8 +404,14 @@ Conversions must be made explicit, as shown below:
     (swift) var pi = Double(three) + pointOneFourOneFiveNine
     // pi : Float64 = 3.14159
 
-Here, the value of ``three`` is used to create a new ``Double``,
+Here, the value of the variable ``three`` is used to create a new ``Double``,
 so that both sides of the addition are of the same type.
+The addition would not be allowed without this conversion in place.
+
+The rules for numeric variables are different from the rules for numeric literals seen earlier –
+where the literal value ``3`` was added to the literal value ``0.14159`` –
+because number literals do not have an explicit type in and of themselves.
+Their type is only inferred at the point that they are evaluated by the compiler.
 
 .. TODO: the return type of pi here is inferred as Float64, but it should really be inferred as Double. This is due to rdar://15211554 . This code sample should be updated once the issue is fixed.
 
@@ -460,7 +471,7 @@ Boolean values are particularly useful when working with conditional statements 
 
 Conditional statements are covered in more detail in :doc:`ControlFlow`.
 
-Swift's strict type-checking means that non-boolean values cannot be substituted for ``Bool``.
+Swift's strong type-checking means that non-boolean values cannot be substituted for ``Bool``.
 You cannot, for example, say::
 
     (swift) var i = 1
@@ -477,10 +488,10 @@ However, it is valid to say::
     }
     
 The result of the ``i == 1`` comparison is a ``Bool``,
-and so this second example passes the strict type-check.
+and so this second example passes the strong type-check.
 (Comparisons like ``i == 1`` are discussed in :doc:`Operators`.)
 
-As with other examples of strict typing in Swift,
+As with other examples of strong typing in Swift,
 this approach avoids accidental errors,
 and ensures that the intention of a particular section of code is always made clear.
 
@@ -492,10 +503,10 @@ Here's an example of a tuple:
 
 .. testcode:: tuples
 
-    (swift) var http200Status = (200, "OK")
-    // http200Status : (Int, String) = (200, "OK")
+    (swift) var http404Error = (404, "Not Found")
+    // http404Error : (Int, String) = (404, "Not Found")
 
-``(200, "OK")`` is a tuple that groups together an ``Int`` and a ``String`` to describe an :term:`HTTP status code`.
+``(404, "Not Found")`` is a tuple that groups together an ``Int`` and a ``String`` to describe an :term:`HTTP status code`.
 It could be described as “a tuple of type ``(Int, String)``”.
 
 .. glossary::
@@ -504,48 +515,23 @@ It could be described as “a tuple of type ``(Int, String)``”.
         When a web browser makes a request for a web page (such as http://www.apple.com),
         it connects to the server and asks for a specific page.
         The server sends back a response containing a *status code* that describes whether or not the request was successful.
-        Each status code has a number (such as ``200``) and a message (such as ``OK``),
+        Each status code has a number (such as ``404``) and a message (such as ``Not Found``),
         to describe the outcome of the request.
 
 You can create tuples from whatever permutation of types you like,
 and they can contain as many different types as you like.
 There's nothing stopping you from having
 a tuple of type ``(Int, Int, Int)``, or ``(String, Bool)``,
-or indeed any other combination you need.
+or indeed any other combination you require.
 
 You can access the individual element values in a tuple using index numbers starting at zero:
 
 .. testcode:: tuples
 
-    (swift) http200Status.0
-    // r0 : Int = 200
-    (swift) http200Status.1
-    // r1 : String = "OK"
-
-You can also optionally name the elements in a tuple:
-
-.. testcode:: tuples
-
-    (swift) var http404Error = (statusCode: 404, description: "Not Found")
-    // http404Error : (statusCode: Int, description: String) = (404, "Not Found")
-
-This can be read as:
-
-Declare a variable called ``http404Error``,
-and set it to a tuple containing
-(an element called ``statusCode`` that is ``404``,
-and an element called ``description`` that is ``"Not Found"``).
-
-Once you've done this,
-you can retrieve the element values by name,
-using dot syntax:
-
-.. testcode:: tuples
-
-    (swift) http404Error.statusCode
-    // r2 : Int = 404
-    (swift) http404Error.description
-    // r3 : String = "Not Found"
+    (swift) http404Error.0
+    // r0 : Int = 404
+    (swift) http404Error.1
+    // r1 : String = "Not Found"
 
 Tuples are particularly useful as the return values of functions.
 A function that tries to retrieve a web page might return this ``http404Error`` tuple
@@ -555,54 +541,37 @@ each of a different type,
 the function is able to provide more useful information about its outcome
 than if it could only return a single value of a single type.
 
-Typealiases
-~~~~~~~~~~~
+Type Aliases
+~~~~~~~~~~~~
 
 If you find yourself using a particular type of tuple several times,
-you can define a ``typealias`` as shorthand for that tuple type.
+you can define a type alias as shorthand for that tuple type.
 Here's how to define a generic tuple type to describe any HTTP status code:
 
 .. testcode:: tuples
 
-    (swift) typealias HTTPStatus = (statusCode: Int, description: String)
+    (swift) typealias HTTPStatus = (Int, String)
 
 This can be read as:
 
 “Define a ``typealias`` called ``HTTPStatus``,
-and set it to the tuple type that has
-(an element called ``statusCode`` that is an ``Int``,
-and an element called ``description`` that is a ``String``).”
+and set it to the tuple type (``Int``, ``String``).”
 
-Note that this ``typealias`` doesn't set a *value* for ``statusCode`` or ``description``.
-It's not actually creating a tuple for a specific status code –
-it's defining what *all* HTTP status codes look like.
-
-Note also that ``HTTPStatus`` has a capitalized name,
+``HTTPStatus`` has a capitalized name
 because it is a new *type* of tuple,
 rather than an instance of a particular tuple type.
 This is different from the variable name ``http404Error``,
 which starts with a lowercase letter,
 and capitalizes sub-words within the name.
-This approach –
-``CapitalizedWords`` for types,
-``lowercaseThenCapitalizedWords`` for variable names –
-is strongly encouraged for consistency and readability.
+Type names should always be in ``UpperCamelCase``,
+and variable names should always be in ``lowerCamelCase``,
+for consistency and readability.
 
-Because it's a type,
+This new type alias doesn't set a value for the status code or description.
+It's not actually creating a tuple for a specific status code –
+rather, it's defining what *all* HTTP status codes look like.
+Because it is a fully-fledged type,
 ``HTTPStatus`` can be used to declare new tuple variables of that type:
-
-.. testcode:: tuples
-
-    (swift) var http304Status: HTTPStatus = (statusCode: 304, description: "Not Modified")
-    // http304Status : HTTPStatus = (304, "Not Modified")
-    
-This can be read as:
-
-Declare a variable called ``http304Status`` that is an ``HTTPStatus``.
-Initialize it with (a ``statusCode`` that is ``304``, and a ``description`` that is ``"Not Modified"``).
-
-``HTTPStatus`` tuples can also be created in a shorter form,
-without needing to provide the element names:
 
 .. testcode:: tuples
 
@@ -620,42 +589,23 @@ This fits the signature of an ``HTTPStatus``
 (first element ``Int``, second element ``String``),
 and so this initialization is allowed by the Swift type-checker.
 
-Because ``http500Error`` was defined as an ``HTTPStatus``,
-you can still access its elements by name,
-even though the names were not used to set the values:
-
-.. testcode:: tuples
-
-    (swift) http500Error.statusCode
-    // r4 : Int = 500
-    (swift) http500Error.description
-    // r5 : String = "Internal Server Error"
-
 Initializer Syntax
 ~~~~~~~~~~~~~~~~~~
 
-Tuple types defined by ``typealias`` are fully-fledged types in Swift.
 Because ``HTTPStatus`` is now a type,
-you can also create new ``HTTPStatus`` tuples using *initializer syntax*:
+you can create new ``HTTPStatus`` tuples using *initializer syntax*:
 
 .. testcode:: tuples
 
-    (swift) var http301Status = HTTPStatus(statusCode: 301, description: "Moved Permanently")
-    // http301Status : (statusCode: Int, description: String) = (301, "Moved Permanently")
+    (swift) var http301Status = HTTPStatus(301, "Moved Permanently")
+    // http301Status : (Int, String) = (301, "Moved Permanently")
 
 This can be read as:
 
 Declare a variable called ``http301Status``,
 and set it to a new ``HTTPStatus`` initialized with
-(a ``statusCode`` that is ``301``,
-and a ``description`` that is ``"Moved Permanently"``).
-
-Again, it is not essential to name the elements if they are provided in the same order as they were defined:
-
-.. testcode:: tuples
-
-    (swift) var http403Error = HTTPStatus(403, "Forbidden")
-    // http403Error : (statusCode: Int, description: String) = (403, "Forbidden")
+(a first value that is ``301``,
+and a second value that is ``"Moved Permanently"``).
 
 Initializer syntax is also used when creating struct and object instances,
 and is described in more detail in :doc:`ClassesObjectsAndStructs`.
@@ -740,7 +690,7 @@ Enumeration values can be checked with a ``switch`` statement:
     (swift) directionToHead = .South
     (swift) switch directionToHead {
         case .North:
-            println("Most planets have a north")
+            println("Lots of planets have a north")
         case .South:
             println("Watch out for penguins")
         case .East:
@@ -750,34 +700,34 @@ Enumeration values can be checked with a ``switch`` statement:
     }
     >>> Watch out for penguins
 
-``switch`` statements use the ``case`` keyword to indicate each of the possible cases they will consider.
+Switch statements use the ``case`` keyword to indicate each of the possible cases they will consider.
 You can read this as:
 
 Consider the value of ``directionToHead``.
 In the case where it equals ``.North``,
-print ``"Most planets have a north"``.
+print ``"Lots of planets have a north"``.
 In the case where it equals ``.South``,
 print ``"Watch out for penguins"``.
 
 …and so on.
 
-Note that ``switch`` statements in Swift do not ‘fall through’ the bottom of each case and into the next one.
-Instead, the entire ``switch`` statement completes its execution as soon as the first matching case is completed.
+Note that switch statements in Swift do not ‘fall through’ the bottom of each case and into the next one.
+Instead, the entire switch statement completes its execution as soon as the first matching case is completed.
 This is different from C,
-which requires you to insert an explicit ``break`` statement at the end of every ``case`` to prevent fall-through.
+which requires you to insert an explicit ``break`` statement at the end of every case to prevent fall-through.
 Avoiding default fall-through means that Swift switch statements are
 much more concise and predictable than their counterparts in C.
 
-``switch`` statements must be exhaustive when working with ``enum`` values.
-If the ``case`` for ``.West`` had been omitted,
+Switch statements must be exhaustive when they consider an enum's members.
+If the case for ``.West`` had been omitted,
 this code would not compile,
-because it would not provide an exhaustive list of ``CompassPoint`` values.
+because it would not consider the complete list of ``CompassPoint`` members.
 Enforcing completeness ensures that cases are not accidentally missed or forgotten,
 and is part of Swift's goal of completeness and lack of ambiguity.
 
-When it is not appropriate to provide a ``case`` statement for every value,
-you can define a ``default`` catch-all case to cover any values that are not addressed explicitly.
-The ``default`` catch-all case should always appear last:
+When it is not appropriate to provide a case statement for every enum member,
+you can define a default catch-all case to cover any members that are not addressed explicitly.
+The default catch-all case should always appear last:
 
 .. testcode:: enums
 
@@ -791,7 +741,7 @@ The ``default`` catch-all case should always appear last:
     }
     >>> Mostly harmless
 
-``switch`` statements are covered in more detail in :doc:`ControlFlow`.
+Switch statements are covered in more detail in :doc:`ControlFlow`.
 
 Enumerations with Associated Values
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -870,8 +820,8 @@ Variables of type ``Barcode`` can store either a ``.UPCA`` or a ``.QRCode``
 (together with their associated values),
 but they can only store one or the other at a time.
 
-The different barcode types can be checked using a ``switch`` statement, as before.
-This time, however, the associated values can be extracted as part of the ``switch``:
+The different barcode types can be checked using a switch statement, as before.
+This time, however, the associated values can be extracted as part of the switch statement:
 
 .. testcode:: enums
 
@@ -883,13 +833,14 @@ This time, however, the associated values can be extracted as part of the ``swit
     }
     >>> QR code with value of ABCDEFGHIJKLMNOP.
 
-These two calls to ``println()`` use a special syntax to insert the values of
+These two calls to the ``println`` function use a special syntax to insert the values of
 ``numberSystem``, ``identifier``, ``check`` and ``productCode``
 into printed descriptions of the barcodes.
 This syntax is known as *string interpolation*,
 and is a handy way to create and print strings that contain the current values of variables.
-All you need to do is to include ``\(variableName)`` in a longer string,
-and the current value of ``variableName`` will be inserted in place when the string is printed.
+If you include ``\(variableName)`` in a longer string,
+the current value of ``variableName`` will be inserted in place
+when the string is printed by the ``println`` function.
 (String interpolation is covered in more detail in :doc:`Strings`.)
 
 .. TODO: Going by the Swift Language Reference Manual, it should be possible to name the members of the enum tuples above. However, this isn't currently working (see rdar://15238803). The example above should be updated if this is fixed.
@@ -913,22 +864,22 @@ Here's an example that stores raw ASCII values alongside named enumeration membe
         case CarriageReturn = '\r'
     }
 
-Here, the raw values for an ``enum`` called ``ASCIIControlCharacter``
+Here, the raw values for an enum called ``ASCIIControlCharacter``
 are declared to be of type ``UnicodeScalar``,
 and are set to some of the more common ASCII control characters.
-Values of type ``UnicodeScalar`` are used to store single Unicode codepoints,
+Values of type ``UnicodeScalar`` are used to store single Unicode scalar values,
 and are marked up using single quote marks (``'``) rather than double quote marks (``"``),
 to distingush them from strings.
 (``UnicodeScalar`` values are described in more detail in :doc:`Strings`.)
 
 Note that raw values are not the same as associated values.
-Raw values are set to pre-populated values when the ``enum`` is defined in your code,
+Raw values are set to pre-populated values when the enum is defined in your code,
 like the three ASCII codes above.
-Associated values are only set when you create a new variable based on one of the ``enum`` members.
+Associated values are only set when you create a new variable based on one of the enum members.
 
 Raw values can be
 strings, characters, or any of the integer or floating-point number types.
-Each raw value must be unique within its ``enum`` declaration.
+Each raw value must be unique within its enum declaration.
 When integers are used for raw values,
 they auto-increment if no value is specified for some of the enumeration members.
 The enumeration below defines the first seven chemical elements,
@@ -940,10 +891,10 @@ and uses raw integer values to represent their atomic numbers:
         case Hydrogen = 1, Helium, Lithium, Beryllium, Boron, Carbon, Nitrogen
     }
 
-Auto-incrementation means that ``ChemicalElement.Helium`` will have a raw value of ``2``,
+Auto-incrementation means that ``ChemicalElement.Helium`` has a raw value of ``2``,
 and so on.
 
-The raw value of an ``enum`` member can be accessed using its ``toRaw()`` method:
+The raw value of an enum member can be accessed using its ``toRaw`` method:
 
 .. testcode:: optionals
 
@@ -951,10 +902,14 @@ The raw value of an ``enum`` member can be accessed using its ``toRaw()`` method
     // atomicNumberOfCarbon : Int = 6
 
 The reverse is also true.
-Raw values can be used to look up their corresponding enumeration member –
-for example, to find ``ChemicalElement.Nitrogen`` from its raw value of ``7``.
-This is an example of one of Swift's most powerful features,
-known as *optionals*.
+In addition to their ``toRaw`` method,
+enumerations also have a ``fromRaw`` method,
+which can be used to try and find an enumeration member with a particular raw value.
+The ``fromRaw`` method could be used to find ``ChemicalElement.Nitrogen`` from its raw value of ``7``, say.
+
+However, not all possible ``Int`` values will find an enumeration member.
+The ``fromRaw`` method needs a way to indicate that an enumeration member could not be found.
+It does this using of one of Swift's most powerful features, known as *optionals*.
 
 Optionals
 ---------
@@ -976,7 +931,7 @@ However, this only works for objects – it doesn't work for
 structs, or basic C types, or enumeration values.
 For these types,
 Objective-C methods typically return a special value (such as ``NSNotFound``) to indicate the absence of a value.
-However, this assumes that the method's caller knows there is a special value to test for,
+This assumes that the method's caller knows there is a special value to test for,
 and remembers to check for it.
 Swift's optionals give a way to indicate the absence of a value for *any type at all*,
 without the need for special constants or ``nil`` tests.
@@ -984,9 +939,6 @@ without the need for special constants or ``nil`` tests.
 Here's an example.
 The ``ChemicalElement`` enumeration above contains elements and raw atomic numbers
 for the first seven elements in the periodic table.
-In addition to their ``toRaw()`` method,
-enumerations also have a ``fromRaw()`` method.
-This can be used to try and find a chemical element for a given atomic number:
 
 .. testcode:: optionals
 
@@ -1003,25 +955,23 @@ so you might expect the following statement to fail:
     (swift) possibleElement = ChemicalElement.fromRaw(8)            // Oxygen
 
 However, it turns out that this is a perfectly valid statement.
-This is because ``fromRaw()`` returns an *optional*.
+This is because the ``fromRaw`` method returns an *optional*.
 If you look closely at the nitrogen example above,
 you'll see that ``possibleElement`` has an inferred type of ``ChemicalElement?``,
 not ``ChemicalElement``.
-Note the question mark at the end.
+Note the question mark at the end of the type.
 This indicates that the value of ``possibleElement`` is an *optional* ``ChemicalElement`` –
 it might contain *some* value of that type,
 or it might contain *no value at all*.
 
-Optional values are a bit like `Schrödinger's cat <http://en.wikipedia.org/wiki/Schrödinger's_cat>`_.
-The cat might be alive, or it might be dead –
-the only way to find out is to look inside the box.
 An optional's value can be checked using an ``if`` statement,
 in a similar way to a ``Bool``.
 If an optional does have a value, it equates to ``true``;
 if it has no value at all, it equates to ``false``.
 
-When the optional *does* contain a value,
-the underlying value can accessed by adding an exclamation mark (``!``) to the end of the optional's name.
+Once you are sure that the optional *does* contain a value,
+you can access its underlying value
+by adding an exclamation mark (``!``) to the end of the optional's name.
 The exclamation mark effectively says
 “I know that this optional definitely has a value – please use it”:
 

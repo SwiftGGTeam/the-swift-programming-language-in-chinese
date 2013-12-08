@@ -46,13 +46,14 @@ In this case, the loop only contains one statement,
 which prints an entry from the five-times-table for the current value of ``index``.
 Once the statement has been executed,
 the value of ``index`` is updated to contain the second value in the range (``2``),
-and the ``println`` statement is executed again.
+and the ``println`` function is called again.
 This continues until the end of the range is reached.
 Because the range is half-open,
 its final value of ``5`` is not used.
 
-Note that the variable ``index`` does not have to be declared before it is used as part of this loop.
-It is implicitly declared simply by its inclusion in the loop declaration.
+The ``index`` variable does not have to be declared before it is used as part of this loop.
+It is implicitly declared simply by its inclusion in the loop declaration,
+without the need for a ``var`` declaration keyword.
 This does, however, mean that it only exists within the scope of the loop.
 If you want to check the value of ``index`` after the loop has completed,
 you must declare it as a variable in advance of its use in the loop.
@@ -82,9 +83,10 @@ by ``3``, ten times,
 using a half-open loop that starts with ``0`` and ends with ``9``.
 This calculation doesn't need to know the individual counter values each time through the loop –
 it simply needs to execute the loop the correct number of times.
-The underscore character ``_``,
-used in place of a loop variable,
-causes the individual values to be ignored.
+The underscore character ``_``
+(used in place of a loop variable)
+causes the individual values to be ignored,
+and does not provide access to the current value during each iteration of the loop.
 
 ``for x in y`` can also be used to iterate over the items in an array:
 
@@ -100,7 +102,7 @@ causes the individual values to be ignored.
     >>> Hello, Carol!
     >>> Hello, Doug!
 
-Lists can be iterated in reverse, using the ``reverse()`` function:
+Lists can be iterated in reverse, using the ``reverse`` function:
 
 .. testcode::
 
@@ -138,14 +140,14 @@ and removes all of its vowels and spaces to create a cryptic puzzle phrase for s
 
 The ``letter`` variable is inferred to be of type ``UnicodeScalar``
 from the fact that it is iterating over a sequence of ``UnicodeScalar`` values.
-This is why the ``case`` statement compares ``letter`` against ``UnicodeScalar`` values
+This is why the case statement compares ``letter`` against ``UnicodeScalar`` values
 (with single quote marks)
 rather than ``String`` values.
 
-Note that the code above calls the ``continue`` statement whenever it matches a vowel or a space.
+Note that the code above calls the ``continue`` keywoprd whenever it matches a vowel or a space.
 ``continue`` is a special control flow keyword that causes the current iteration of the loop to end immediately
 and jump straight to the start of the next iteration.
-It enables the ``switch`` block to match (and ignore) just these six special characters,
+It enables the switch block to match (and ignore) just these six special characters,
 rather than having to match every character that should get printed.
 (The ``continue`` keyword is described in more detail later in this section.)
 
@@ -156,8 +158,8 @@ to iterate over their key-value pairs:
 
     (swift) var numberOfLegs = ["spider" : 8, "ant" : 6, "cat" : 4]
     // numberOfLegs : Dictionary<String, Int> = ["ant" : 6, "spider" : 8, "cat" : 4]
-    (swift) for (key, value) in numberOfLegs {
-        println("\(key)s have \(value) legs")
+    (swift) for (animalName, legCount) in numberOfLegs {
+        println("\(animalName)s have \(legCount) legs")
     }
     >>> ants have 6 legs
     >>> spiders have 8 legs
@@ -170,6 +172,20 @@ and iterating over them does not guarantee the order in which they will be retri
 .. TODO: provide some advice on how to iterate over a Dictionary in order
    (perhaps sorted by key), using a predicate or array sort or some kind.
 
+The example above uses a ``(key, value)`` tuple to iterate over the values in a ``Dictionary``.
+You can also iterate over the items in the ``Dictionary`` directly.
+Every item in a ``Dictionary`` has a ``key`` property and a ``value`` property,
+which can be accessed via dot syntax:
+
+.. testcode::
+
+    (swift) for item in numberOfLegs {
+        println("\(item.key)s have \(item.value) legs")
+    }
+    >>> ants have 6 legs
+    >>> spiders have 8 legs
+    >>> cats have 4 legs
+
 The examples above use ``for x in y`` to iterate
 ranges, arrays, strings and dictionaries.
 However, this syntax can be used to iterate *any* collection,
@@ -181,12 +197,12 @@ are described in detail in :doc:`ProtocolsAndExtensions`.
 .. QUESTION: are there any plans for enums to conform to Sequence?
    If so, they might make for a good example.
    What would the syntax be if they did?
-   'for planet in Planet', or even just 'for Planet'?
+   'for planet in Planet'?
 
 While Loops
 ~~~~~~~~~~~
 
-``while`` loops perform a set of statements until a condition becomes ``false``.
+While loops perform a set of statements until a condition becomes ``false``.
 They are best used when the number of iterations is not known before the first iteration begins.
 Swift provides two variations of the loop,
 known as ``while`` and ``do while``.
@@ -194,11 +210,11 @@ known as ``while`` and ``do while``.
 While
 _____
 
-``while`` loops start by considering a single condition.
+While loops start by considering a single condition.
 If the condition is ``true``,
 a set of statements is repeated until the condition becomes ``false``.
 
-``while`` loops have a general form of::
+While loops have a general form of::
 
     while <#condition equates to true#> {
         <#statements#>
@@ -229,7 +245,7 @@ and appends each character to a string.
 It does this using Swift's built-in ``Keyboard`` class,
 which reads keystrokes from an attached keyboard.
 The example creates a new ``Keyboard`` instance by calling its initializer method ``Keyboard()``.
-It then reads a key using the keyboard's ``read()`` method.
+It then reads a key using the keyboard's ``read`` method.
 This causes the program to pause and wait for a keystroke before continuing.
 The keystroke's value is returned as a ``UInt8`` value,
 containing the ASCII code of the key that was pressed.
@@ -245,16 +261,16 @@ The person's name is then validated
 (to ensure that they did not press the return key without entering a name),
 and is printed if it exists.
 
-A ``while`` loop is appropriate in this case
-because the length of the input name is not known at the start of the ``while`` loop.
-The loop's condition is dependent on external forces that cannot be predicted.
+A while loop is appropriate in this case
+because the length of the input name is not known at the start of the while loop.
+Instead, the loop is executed until a particular condition is satisfied.
 
 .. NOTE: this example cannot be run in the REPL, due to the fact that it is reliant on keyboard input. I have yet to come up with a better example where ‘while’ is the right kind of loop to use, however. (I'm trying to avoid any examples where the number of iterations is known at the start of the loop.)
 
 Do While
 ________
 
-The second variation of the ``while`` loop performs a single pass through the loop block first,
+The second variation of the while loop performs a single pass through the loop block first,
 *before* considering a condition.
 It then continues to repeat the loop until the condition is ``false``::
 
@@ -285,10 +301,10 @@ The general form of this loop format is::
         <#statements#>
     }
 
-Note that semicolons are used to separate the three parts of the ``for`` loop's definition,
+Note that semicolons are used to separate the three parts of the for loop's definition,
 and that parentheses are not required.
 
-Here's how the loop is executed:
+The loop is executed as follows:
 
 1. When the loop is first entered,
    the *initialization* expression is evaluated once,
@@ -296,7 +312,7 @@ Here's how the loop is executed:
 
 2. Next, the *condition* expression is evaluated.
    If it equates to ``false``, the loop ends,
-   and code execution continues after the ``for`` loop's closing brace (``}``).
+   and code execution continues after the for loop's closing brace (``}``).
    Otherwise, code execution continues by executing the *statements* inside the braces.
 
 3. After executing all of the *statements*,
@@ -307,7 +323,7 @@ Here's how the loop is executed:
    execution returns to step 2,
    and the *condition* expression is evaluated again.
 
-This is effectively shorthand for::
+This is effectively shorthand for (and equivalent to)::
 
     <#initialization#>
     while <#condition#> {
@@ -317,7 +333,7 @@ This is effectively shorthand for::
 
 Variables defined within the initialization expression
 (such as ``var index = 0``)
-are only valid within the scope of the ``for`` loop itself.
+are only valid within the scope of the for loop itself.
 If you want to retrieve the final value of ``index`` after the loop ends,
 you must declare ``index`` before the loop's scope begins:
 
@@ -356,21 +372,21 @@ and start again at the beginning of the next iteration through the loop.
 It gives a way to say “I am done with the current loop iteration”,
 without leaving the loop altogether.
 
-Note that in a ``for`` loop with an incrementer expression,
-the incrementer will still be evaluated after calling ``continue``.
+In a for loop with an incrementer expression,
+the incrementer will still be evaluated after calling the continue statement.
 The loop itself continues to work as normal;
 only code within the loop is skipped.
 
 Break
 _____
 
-The ``break`` statement is similar to the ``continue`` statement,
+The ``break`` statement is similar to the continue statement,
 except that it jumps out of the loop altogether,
 transferring control to the first line of code after the loop's closing brace (``}``).
 No further code from the current iteration of the loop is executed,
 and no further iterations of the loop are started.
 
-The following example shows ``continue`` and ``break`` in action.
+The following example shows the continue and break statements in action.
 This is an adapted version of the keyboard example from earlier.
 Unlike before, this version deliberately ignores any spaces in the person's name.
 Try entering your full name
@@ -400,26 +416,26 @@ to see it in action::
         println("Hello, \(personName)!")
     }
 
-This time, the keyboard's ``while`` loop has a very simple condition: ``while true``.
+This time, the keyboard's while loop has a very simple condition: ``while true``.
 This condition will *always* be true,
 and so this is effectively an infinite loop.
-The only way to end this loop is to ``break`` out of it from within.
+The only way to end this loop is to break out of it from within.
 
 Each time the loop runs,
 a new ``inputCharacter`` is read from the keyboard.
 If the character is a space,
-a ``continue`` statement is used to skip to the next loop iteration.
+a continue statement is used to skip to the next loop iteration.
 This effectively ignores the space altogether.
 If the character is a line break
 (meaning that the return key was pressed),
-a ``break`` statement is used to exit the loop immediately,
+a break statement is used to exit the loop immediately,
 jumping to the ``if personName == ""`` line after the loop.
 Otherwise, the new character is appended to the ``personName`` string as before.
 
-It is rare to need to use the ``break`` statement in general use.
+It is rare to need to use the break statement in general use.
 Normally, loops should end when their condition changes from ``true`` to ``false``,
-rather than when a ``break`` statement is encountered.
-If you find yourself needing to use ``break``,
+rather than when a break statement is encountered.
+If you find yourself needing to use break,
 it may be a sign that your loop's conditional check should be improved.
 
 Conditional Statements
@@ -433,7 +449,7 @@ To do this, you need to make parts of your code *conditional*.
 Swift provides two ways to add conditional branches to your code:
 the ``if else`` statement, and the ``switch`` statement.
 The ``if else`` statement is typically used to consider simple conditions with only a few possible outcomes.
-The ``switch`` statement is better suited to more complex conditions with multiple possible permutations.
+The switch statement is better suited to more complex conditions with multiple possible permutations.
 
 If Else
 ~~~~~~~
@@ -457,9 +473,9 @@ is less than or equal to 32 degrees
 (the freezing point of water).
 If it is, a message is printed.
 Otherwise, no message is printed,
-and code execution continues after the ``if`` statement's closing brace.
+and code execution continues after the if statement's closing brace.
 
-As its name suggests, the ``if else`` statement can provide an alternative set of statements for when the ``if`` condition is ``false``:
+As its name suggests, the if else statement can provide an alternative set of statements for when the ``if`` condition is ``false``:
 
 .. testcode::
 
@@ -473,10 +489,10 @@ As its name suggests, the ``if else`` statement can provide an alternative set o
 
 One of of these two branches will always be executed.
 Because the temperature has increased to ``40`` degrees Fahrenheit,
-it is no longer cold enough to advise knitwear,
+it is no longer cold enough to advise wearing a scarf,
 and so the ``else`` branch is triggered instead.
 
-Multiple ``if else`` statements can be chained together,
+If else statements can be chained together,
 to consider additional clauses:
 
 .. testcode::
@@ -507,35 +523,35 @@ The final ``else`` clause is optional, however, and can be excluded if the set o
     }
 
 In this example,
-the temperature is neither too cold nor too warm to trigger the conditions in the ``if else`` statement,
+the temperature is neither too cold nor too warm to trigger the ``if`` or ``else if`` conditions,
 and so no message is printed.
 
 Switch
 ~~~~~~
 
-The :doc:`BasicTypes` section showed how ``switch`` statements can be used to consider the values of an enumeration.
-``switch`` statements aren't just confined to enumerations, however –
-in Swift, they be used to match any type of value at all.
+The :doc:`BasicTypes` section showed how switch statements can be used to consider the values of an enumeration.
+Switch statements aren't just confined to enumerations, however –
+in Swift, they can be used to match any type of value at all.
 
 The following example matches a ``UnicodeScalar``,
 and determines if it represents a number symbol in one of four languages.
-Multiple values are covered in a single ``case`` statement on one line,
+Multiple values are covered in a single case statement on one line,
 for brevity:
 
 .. testcode::
 
-    (swift) var numberSymbol = '三'   // Chinese symbol for the number 3
+    (swift) var numberSymbol = '三'   // Simplified Chinese symbol for the number 3
     // numberSymbol : UnicodeScalar = '三'
     (swift) var integerValue: Int? = .None
     // integerValue : Int? = <unprintable value>
     (swift) switch numberSymbol {
-        case '1', '١', '一', '일':
+        case '1', '١', '一', '๑':
             integerValue = 1
-        case '2', '٢', '二', '이':
+        case '2', '٢', '二', '๒':
             integerValue = 2
-        case '3', '٣', '三', '셋':
+        case '3', '٣', '三', '๓':
             integerValue = 3
-        case '4', '٤', '四', '넷':
+        case '4', '٤', '四', '๔':
             integerValue = 4
         default:
             integerValue = .None
@@ -550,7 +566,7 @@ for brevity:
 .. TODO: The initialization of integerValue can be removed once the REPL supports uninitialized variables.
 
 This example checks ``numberSymbol`` to see if it is
-a Latin, Arabic, Chinese or Korean symbol for
+a Latin, Arabic, Chinese or Thai symbol for
 the numbers ``1`` to ``4``.
 If a match is found,
 it sets an optional ``Int?`` variable (``integerValue``) to the appropriate integer value.
@@ -562,15 +578,15 @@ otherwise, an error message is reported.
 
 Note that the value of ``integerValue`` has
 an exclamation mark on the end (``integerValue!``)
-when it is printed by ``println``.
+when it is printed by the ``println`` function.
 This tells Swift to retrieve and use the *actual* value stored inside the optional variable,
 which has been confirmed to exist by the previous line of code.
 (Optional values are described in more detail in :doc:`BasicTypes`.)
 
-``switch`` statements must be exhaustive.
-This means that every possible input value must be matched by one of the cases in the ``switch`` statement.
+Switch statements must be exhaustive.
+This means that every possible input value must be matched by one of the cases in the switch statement.
 However, it is not practical to list every single possible ``UnicodeScalar`` value,
-and so the ``default`` statement is used
+and so the ``default`` keyword is used
 to provide a catch-all case for any characters that have not already been matched.
 This also provides a handy opportunity to set the optional integer value to ``.None``,
 to indicate that no match was found.
@@ -579,13 +595,13 @@ Fallthrough
 ___________
 
 Unlike C,
-``switch`` statements in Swift do not ‘fall through’ the bottom of each case and into the next one.
+switch statements in Swift do not ‘fall through’ the bottom of each case and into the next one.
 This leads to shorter, clearer code,
 and avoids executing multiple cases by mistake.
 
 If you want to opt in to C-style fallthrough behavior,
 you can do so using the ``fallthrough`` keyword.
-The example below uses ``fallthrough`` to create a textual description of a number:
+The example below uses fallthrough to create a textual description of a number:
 
 .. testcode::
 
@@ -605,32 +621,32 @@ The example below uses ``fallthrough`` to create a textual description of a numb
 
 This example declares a new ``String`` variable called ``description``,
 and assigns it an initial value.
-The function then considers the value of ``integerToDescribe`` using a ``switch`` statement.
+The function then considers the value of ``integerToDescribe`` using a switch statement.
 If the the value of ``integerToDescribe`` is one of the prime numbers in the list,
 the function appends some text to the end of ``description``,
 to note that the number is prime.
-It then uses the ``fallthrough`` keyword to ‘fall into’ the ``default`` case as well.
-The ``default`` case adds some extra text onto the end of the description,
-and the ``switch`` statement is complete.
+It then uses the ``fallthrough`` keyword to ‘fall into’ the default case as well.
+The default case adds some extra text onto the end of the description,
+and the switch statement is complete.
 
 If the value value of ``integerToDescribe`` is *not* in the list of known prime numbers,
-it is not matched by the first ``case`` at all.
+it is not matched by the first case at all.
 There are no other specific cases,
-and so it ends up being matched by the catch-all ``default`` case.
+and so it ends up being matched by the catch-all default case.
 
-Once the ``switch`` statement is done,
-the number's description is printed using ``println``.
+Once the switch statement is done,
+the number's description is printed using the ``println`` function.
 In this example,
 the number ``5`` is correctly identified as being a prime number.
 
-Note that ``fallthrough`` does not check the ``case`` conditions for the block it falls into.
-It simply causes code execution to move directly to the statements inside the next ``case`` (or ``default``) block,
-as in C's standard ``switch`` behavior.
+Note that fallthrough does not check the case conditions for the block it falls into.
+It simply causes code execution to move directly to the statements inside the next case (or default block),
+as in C's standard switch statement behavior.
 
 Range Matching
 ______________
 
-Values in ``case`` statements can be checked for their inclusion in a range.
+Values in case statements can be checked for their inclusion in a range.
 This example uses number ranges
 to provide a natural-language count for numbers of any size:
 
@@ -669,7 +685,7 @@ to provide a natural-language count for numbers of any size:
 Tuples
 ______
 
-Multiple values can be tested in the same ``switch`` statement using tuples.
+Multiple values can be tested in the same switch statement using tuples.
 Each element of the tuple can be tested against a different value or range of values.
 Alternatively, the underscore (``_``) identifier can be used to match any possible value.
 
@@ -704,17 +720,17 @@ or outside of the box altogether.
     }
     >>> (1, 1) is inside the box
 
-Unlike C, Swift allows multiple ``case`` statements to consider the same value or values.
-In fact, the point (0, 0) could match all *four* of the ``case`` statements in this example.
+Unlike C, Swift allows multiple case statements to consider the same value or values.
+In fact, the point (0, 0) could match all *four* of the case statements in this example.
 However, if multiple matches are possible,
-the first matching ``case`` will always be used.
+the first matching case will always be used.
 The point (0, 0) would match ``case (0, 0)`` first,
 and so all other matching cases would be ignored.
 
 Where
 _____
 
-``case`` statements can check for additional conditions using the ``where`` clause.
+Case statements can check for additional conditions using the ``where`` clause.
 The example below takes an (x, y) point,
 and categorizes it on the following graph:
 
@@ -729,7 +745,7 @@ on the green diagonal line where ``x == y``; or
 on the purple diagonal line where ``x == -y``.
 If none of these cases are true,
 it calculates the point's distance from the origin using
-`Pythagoras' theorem <http://en.wikipedia.org/wiki/Pythagorean_theorem>`_:
+`the Pythagorean theorem <http://en.wikipedia.org/wiki/Pythagorean_theorem>`_:
 
 .. testcode::
 
@@ -751,11 +767,11 @@ it calculates the point's distance from the origin using
     }
     >>> (1, -1) is on the line x == -y
 
-The final three ``case`` statements declare placeholder variables ``x`` and ``y``,
+The final three case statements declare placeholder variables ``x`` and ``y``,
 which temporarily take on the two tuple values from ``point``.
 These variables can then be used as part of a ``where`` clause,
 to create a dynamic filter.
-The ``case`` statement will only match the current value of ``point``
+The case statement will only match the current value of ``point``
 if the ``where`` clause's condition equates to ``true`` for that value.
 
 Note that the x-axis and y-axis checks could have been written with a ``where`` clause too.
@@ -765,21 +781,21 @@ However, the original version is more concise,
 and is preferred when matching against a fixed value.
 
 Once the temporary variables ``x`` and ``y`` have been declared,
-they can be used within the ``case`` statement's code block.
-Here, they are used as shorthand for printing the values via ``println()``.
+they can be used within the case statement's code block.
+Here, they are used as shorthand for printing the values via the ``println`` function.
 The final case statement also uses the variables
-to calculate the square root (``sqrt()``) value needed for Pythagoras' theorem.
-(The earlier ``case`` blocks printed the tuples' individual values
+to calculate the distance from the origin.
+(The earlier case blocks printed the tuples' individual values
 using the shorthand syntax ``point.0`` and ``point.1`` instead,
 because they did not have the temporary variables to hand.)
 
-Note that this ``switch`` statement does not have a ``default`` case block.
-The final ``case`` block,
+Note that this switch statement does not have a default block.
+The final case block,
 ``case (var x, var y)``,
 declares two placeholder variables,
 but does *not* provide a ``where`` clause to filter them.
 As a result, it matches all possible remaining values,
-and a ``default`` block is not needed to make the ``switch`` statement exhaustive.
+and a default block is not needed to make the switch statement exhaustive.
 
 .. QUESTION: This example is not self-contained, in that it uses the same declared variable (point) as the previous example. This is primarily to keep the variable name readable within the println string interpolation. Is this okay? Should it be changed so that it is self-contained?
 .. QUESTION: These examples do not name their tuple elements, to avoid confusion between their likely element names of x and y, and the appropriate names for the where variables (also x and y). Is this the right approach, or should we be advising named tuple elements in all cases?

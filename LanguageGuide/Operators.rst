@@ -4,7 +4,6 @@
     * Arithmetic operators ✔︎
     * Operator precendence and associativity ✔︎
     * Relational and equality operators ✔︎
-    * === vs == ✔︎
     * Short-circuit nature of the logical operators && and || ✔︎
     * Expressions (kind of ✔︎)
     * The ternary operator ✔︎
@@ -14,10 +13,7 @@
 Operators
 =========
 
-.. TODO: check this against the complete list of operators nearer to release, to check for implementations for &&= and ||= , which currently have a priority but not an implementation.
-
-Swift supports all of the standard :term:`operators` from C,
-which are described in detail below.
+Swift supports all of the standard :term:`operators` from C.
 It also introduces new operators not found in other languages.
 In addition, you can define your own implementations of the standard operators –
 and create new ones –
@@ -115,7 +111,7 @@ The addition operator is also supported for ``String`` concatenation:
     (swift) "hello, " + "world"
     // r4 : String = "hello, world"
 
-…and two ``UnicodeScalar`` values,
+Two ``UnicodeScalar`` values,
 or one ``UnicodeScalar`` and one ``String``,
 can be added together via ``+`` to make a new ``String``:
 
@@ -140,7 +136,7 @@ For example:
     (swift) 9 % 4
     // r5 : Int = 1
 
-There are two ``4``\ 's in ``9``, with a remainder of ``1``,
+There are two 4's in 9, with a remainder of 1,
 so the modulo operator returns an ``Int`` value of ``1``.
 
 Unlike C and Objective-C,
@@ -151,7 +147,7 @@ Swift can also perform modulo operations on floating-point numbers:
     (swift) 8 % 2.5
     // r6 : Double = 0.5
 
-There are three ``2.5``\ 's in ``8``, with a remainder of ``0.5``,
+There are three 2.5's in 8, with a remainder of 0.5,
 so the modulo operator returns a ``Double`` value of ``0.5``.
 
 Integer Increment and Decrement
@@ -174,16 +170,12 @@ Each time you call ``++i``, the value of ``i`` is increased by ``1``.
 Essentially, ``++i`` is shorthand for saying ``i = i + 1``.
 Likewise, ``--i`` can be used as shorthand for ``i = i - 1``.
 
-There's an interesting twist, however.
-Both ``++`` and ``--`` can be used as a *prefix* operator, or as a *postfix* operator.
+``++`` and ``--`` can be used as *prefix* operators, or as *postfix* operators.
 ``++i`` and ``i++`` are both valid ways to increase the value of ``i`` by ``1``.
-
-The twist comes if you want to use ``++`` to increment a variable,
-while also finding out the value that it is incrementing.
-In this case, ``++i`` will increase the value *before* it is accessed,
-whereas ``i++`` will increase the value *after* it is accessed.
-
-Here's an example:
+However, ``++i`` increases the value of ``i`` *before* it is accessed,
+whereas ``i++`` increases the value *after* it is accessed.
+This is important if you are using ``++`` or ``--`` to modify a variable,
+while also finding out its value:
 
 .. testcode:: arithmeticOperators
 
@@ -209,7 +201,7 @@ but ``a`` now equals ``2``.
 
 Unless you need the specific behavior of ``i++``,
 it is recommended that you use ``++i`` in all cases,
-because it has the typical expected behavior of increasing ``i``,
+because it has the typical expected behavior of incrementing ``i``,
 and then providing the result.
 (The same rules and advice apply for ``--i`` and ``i--``.)
 
@@ -244,8 +236,8 @@ which simply returns the value it operates on, without any change:
     (swift) var alsoMinusSix = +minusSix
     // alsoMinusSix : Int = -6
 
-The unary plus operator may not actually do anything,
-but it helps to provide symmetry in your code when also using the unary minus operator.
+The unary plus operator doesn't actually do anything.
+However, it can be used to provide symmetry in your code when also using the unary minus operator.
 
 Compound Assignment Operators
 -----------------------------
@@ -262,7 +254,8 @@ One example is the *addition assignment* operator (``+=``):
     >>> a is now equal to 3
 
 The expression ``a += 2`` is shorthand for ``a = a + 2``.
-Effectively, the addition and the assignment are rolled into one operator that performs both tasks in one go.
+Effectively, the addition and the assignment are rolled into one operator
+that performs both tasks at the same time.
 
 A complete list of compound assignment operators can be found in the :doc:`../ReferenceManual/ReferenceManual`.
 
@@ -332,14 +325,14 @@ which takes the form ``question ? answer1 : answer2``.
 It provides a shorthand way to evaluate one of two expressions
 based on whether ``question`` is ``true`` or ``false``.
 If ``question`` is ``true``, it evaluates ``answer1``;
-if ``question`` is ``false``, it evaluates ``answer2``.
+otherwise, it evaluates ``answer2``.
 
 Effectively, it is shorthand for::
 
-    if (<#some input expression equates to true#>) {
-        <#return the result of evaluating expression 1#>
+    (swift) if question {
+        answer1
     } else {
-        <#return the result of evaluating expression 2#>
+        answer2
     }
 
 Here's an example, which calculates the pixel height for a table row.
@@ -352,7 +345,7 @@ and 20 pixels taller if it doesn't:
     // contentHeight : Int = 40
     (swift) var hasHeader = true
     // hasHeader : Bool = true
-    (swift) var rowHeight = hasHeader ? contentHeight + 50 : contentHeight + 20
+    (swift) var rowHeight = contentHeight + (hasHeader ? 50 : 20)
     // rowHeight : Int64 = 90
     (swift) println("The row height is \(rowHeight) pixels.")
     >>> The row height is 90 pixels.
@@ -361,7 +354,7 @@ and 20 pixels taller if it doesn't:
    but it is an Int64 due to rdar://15238852.
    This example should be updated once the issue is fixed.
 
-This is effectively shorthand for:
+This is shorthand for:
 
 .. testcode:: ternaryComparisonOperatorPart2
 
@@ -394,7 +387,7 @@ Bitwise operators enable you to manipulate the individual raw data bits within a
 They are often used in low-level programming,
 including graphics programming and device driver creation.
 They may also be useful when working with raw data from external sources,
-integrating with electronics kits such as Arduino hardware,
+integrating with electronics hardware,
 and when encoding and decoding data for communication via a custom protocol.
 
 Swift supports all of the bitwise operators found in C, as described below.
@@ -405,7 +398,7 @@ Bitwise NOT
 The bitwise NOT operator (``~``) inverts all of the bits in a number:
 
 .. image:: ../images/bitwiseNOT.png
-    :width: 302
+    :width: 570
     :align: center
 
 For example:
@@ -438,7 +431,7 @@ The bitwise AND operator (``&``) combines the bits of two numbers.
 It returns a new number whose bits are only set to ``1`` if the bits were equal to ``1`` in *both* input numbers:
 
 .. image:: ../images/bitwiseAND.png
-    :width: 302
+    :width: 570
     :align: center
 
 For example:
@@ -463,7 +456,7 @@ The bitwise OR operator (``|``) compares the bits of two numbers,
 and returns a new number whose bits are set to ``1`` if the bits were equal to ``1`` in *either* of the input numbers:
 
 .. image:: ../images/bitwiseOR.png
-    :width: 302
+    :width: 570
     :align: center
 
 For example:
@@ -489,7 +482,7 @@ and returns a new number whose bits are set to ``1`` if the bits are equal to ``
 but not if they are set to ``1`` in *both* of the input numbers:
 
 .. image:: ../images/bitwiseXOR.png
-    :width: 302
+    :width: 570
     :align: center
 
 For example:
@@ -518,8 +511,8 @@ move all of the bits in a number to the left or the right by a certain number of
 as per the rules defined below.
 
 Bitwise left and right shifts have the effect of multiplying (or dividing) an integer number by a factor of two.
-Shifting an integer's bits to the left by one position will double its value,
-whereas shifting it to the right by one position will halve its value.
+Shifting an integer's bits to the left by one position doubles its value,
+whereas shifting it to the right by one position halves its value.
 
 .. TODO: mention the caveats to this claim.
 
@@ -575,7 +568,7 @@ Bit-shifting can be used to encode and decode values within other data types:
     // blueComponent : UInt32 = 153
 
 This example uses a ``UInt32`` variable called ``pink`` to store a
-`Cascading Style Sheets <http://en.wikipedia.org/wiki/Cascading_Style_Sheets>`_ color value for the color pink.
+Cascading Style Sheets color value for the color pink.
 Here, the CSS color value ``#CC6699`` is written as ``0xCC6699`` in Swift's hexadecimal number representation.
 This color is then decomposed into its red (``CC``), green (``66``) and blue (``99``) components
 using the bitwise AND operator (``&``) and the right-hand bit-shift operator (``>>``).
@@ -693,12 +686,12 @@ negative integers remain negative as their value moves closer to zero.
 Overflow Operators
 ------------------
 
-Swift will throw an error if you try to insert a value into an integer variable that cannot hold that value.
+An error will be thrown if you try to insert a value into an integer variable that cannot hold that value.
 This gives extra safety when working with values that are too large or too small.
 
 For example, the ``Int16`` integer type can hold any signed value between ``-32768`` and ``32767``.
 If you try and set a variable of this type to a value outside of this range,
-Swift will throw an error:
+an error is thrown:
 
 .. testcode:: overflowOperatorsWillFailToOverflow
 
@@ -803,10 +796,6 @@ Here's the same thing in Swift code:
 The end result of the overflow and underflow behavior described above is that for both signed and unsigned integers,
 overflow always wraps around from the largest valid integer value back to the smallest,
 and underflow always wraps around from the smallest value to the largest.
-
-.. note::
-
-    The overflow operators should not be confused with the bitwise AND compound assignment operator, ``&=``.
 
 Division by zero
 ~~~~~~~~~~~~~~~~
@@ -923,9 +912,7 @@ because it cannot change the outcome of the overall expression.
 Combining Logical Operators
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can combine multiple logical operators to create longer compound expressions,
-which are evaluated from left to right.
-For example:
+You can combine multiple logical operators to create longer compound expressions:
 
 .. testcode:: logicalOperators
 
@@ -968,7 +955,7 @@ Why does the following expression equal ``4``?
     (swift) 2 + 3 * 4 % 5
     // r0 : Int = 4
 
-Taken literally, you might expect this to read as follows:
+Taken strictly from left to right, you might expect this to read as follows:
 
 * 2 plus 3 equals 5;
 * 5 times 4 equals 20;
@@ -1006,32 +993,33 @@ starting from their left:
     (swift) 2 + ((3 * 4) % 5)
     // r1 : Int = 4
 
-``(3 * 4)`` is ``12``, so this is actually:
+``(3 * 4)`` is ``12``, so this is equivalent to:
 
 .. testcode:: evaluationOrder
 
     (swift) 2 + (12 % 5)
     // r2 : Int = 4
 
-…and ``(12 % 5)`` is ``2``:
+``(12 % 5)`` is ``2``, so this is equivalent to:
 
 .. testcode:: evaluationOrder
 
     (swift) 2 + 2
     // r3 : Int = 4
 
-…which gives the eventual answer of ``4``.
+This gives the final answer of ``4``.
 
 A complete list of Swift operator priorities and associativity rules can be found in the :doc:`../ReferenceManual/ReferenceManual`.
 
 Explicit Parentheses
 ~~~~~~~~~~~~~~~~~~~~
 
-Priority and associativity mean that evaluation can always be tied down to one and only one possible order of calculation.
+Priority and associativity define exactly one order of calculation
+when multiple operators are used.
 However, it can sometimes be useful to include parentheses anyway,
 to make the intention of a complex expression easier to read.
 In the door access example above,
-it would be useful to add parentheses around the first part of the compound expression:
+it is useful to add parentheses around the first part of the compound expression:
 
 .. testcode:: logicalOperators
 
@@ -1042,11 +1030,12 @@ it would be useful to add parentheses around the first part of the compound expr
     }
     >>> Welcome!
 
-The parentheses make it clear that the first two values are being considered as part of a separate possible state in the overall logic.
+The parentheses make it clear that the first two values
+are being considered as part of a separate possible state in the overall logic.
 The output of the compound expression doesn't change,
 but the overall intention is clearer to the reader.
-Readability is always to be preferred over brevity,
-and parentheses should be used if they help to make your intentions clear.
+Readability is always preferred over brevity;
+use parentheses where they help to make your intentions clear.
 
 Range Operator
 --------------
