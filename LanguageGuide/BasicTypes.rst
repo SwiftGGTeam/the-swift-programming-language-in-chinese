@@ -408,7 +408,7 @@ Here, the value of the variable ``three`` is used to create a new ``Double``,
 so that both sides of the addition are of the same type.
 The addition would not be allowed without this conversion in place.
 
-The rules for numeric variables are different to the rules for number *literals* seen earlier –
+The rules for numeric variables are different from the rules for numeric literals seen earlier –
 where the literal value ``3`` was added to the literal value ``0.14159`` –
 because number literals do not have an explicit type in and of themselves.
 Their type is only inferred at the point that they are evaluated by the compiler.
