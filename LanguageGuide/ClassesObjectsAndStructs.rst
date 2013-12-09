@@ -463,6 +463,14 @@ and moves the square to its new position.
     :width: 400
     :align: center
 
+.. NOTE: getters and setters are also allowed for variables
+   that are not associated with a particular class or struct.
+   Where should this be mentioned?
+.. TODO: If the getter appears first, the "get:" label may be omitted (to be verified)
+.. TODO: If the setter's argument is omitted, it is assumed to be named "value" (to be verified)
+.. TODO: If a computed variable has a getter but no setter, it becomes a *read-only variable* (to be verified)
+.. TODO: Anything else from https://[Internal Staging Server]/docs/StoredAndComputedVariables.html
+
 .. refnote:: References
 
     * https://[Internal Staging Server]/docs/whitepaper/TypesAndValues.html#structures
