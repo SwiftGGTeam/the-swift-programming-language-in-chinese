@@ -137,8 +137,13 @@ Variable Declarations
     
 .. TODO:
 
-    TR: Follow up with the compiler team to get the correct grammar for the first var declaration
-    definition.
+    TR: Follow up with the compiler team to get the correct grammar for the first var declaration definition.
+    Which version of the grammar matches the first syntax outline?
+    The first option uses a pattern-initializer-list which doesn't allow typed patterns.
+    In our translated grammar, we no longer have a category "typed-pattern";
+    rather any pattern can have an optional trailing type specifier.
+    Is that still correct?
+    Are the type specifiers in the second line optional or mandatory?
 
 
 Typealias Declarations
