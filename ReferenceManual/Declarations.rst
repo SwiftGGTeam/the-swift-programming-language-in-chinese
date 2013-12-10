@@ -126,7 +126,7 @@ Variable Declarations
     variable-name --> identifier
     
     pattern-initializer-list --> pattern-initializer | pattern-initializer ``,`` pattern-initializer-list
-    pattern-initializer --> pattern initializer
+    pattern-initializer --> pattern initializer-OPT
     initializer --> ``=`` expression
     typed-pattern-list --> typed-pattern | typed-pattern ``,`` typed-pattern-list
     
