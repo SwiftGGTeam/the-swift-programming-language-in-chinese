@@ -257,6 +257,9 @@ Enumeration Declarations
     TR: Is raw-value-type the correct thing to put here?
     According to the grammar, it's an inheritance list,
     which can take a list of protocols.
+    If it could be a protocol, that wouldn't really be a "raw value".
+    However, it seems like it should be a non-protocol type:
+    the type of the raw values.
 
 .. langref-grammar
 
