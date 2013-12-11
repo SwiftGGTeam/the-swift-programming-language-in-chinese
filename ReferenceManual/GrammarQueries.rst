@@ -48,7 +48,6 @@ Variable Declarations
     Grammar of a variable declaration
 
     variable-declaration --> attribute-sequence-OPT ``var`` pattern-initializer-list
-    variable-declaration --> attribute-sequence-OPT ``var`` typed-pattern-list
     variable-declaration --> attribute-sequence-OPT ``var`` variable-name type-specifier code-block
     variable-declaration --> attribute-sequence-OPT ``var`` variable-name type-specifier getter-setter-block
     variable-name --> identifier
@@ -56,7 +55,6 @@ Variable Declarations
     pattern-initializer-list --> pattern-initializer | pattern-initializer ``,`` pattern-initializer-list
     pattern-initializer --> pattern initializer-OPT
     initializer --> ``=`` expression
-    typed-pattern-list --> typed-pattern | typed-pattern ``,`` typed-pattern-list
     
     getter-setter-block --> ``{`` getter setter-OPT ``}`` | ``{`` setter getter ``}``
     getter --> ``get`` ``:`` code-block-items-OPT
@@ -65,21 +63,20 @@ Variable Declarations
     
 .. TODO:
 
-    TR: Follow up with the compiler team to get the correct grammar for the first var declaration definition.
-    Which version of the grammar matches the first syntax outline?
-    The first option uses a pattern-initializer-list which doesn't allow typed patterns.
-    In our translated grammar, we no longer have a category "typed-pattern";
-    rather any pattern can have an optional trailing type specifier.
-    Is that still correct?
-    Are the type specifiers in the second line optional or mandatory?
+    TR: Are the type specifiers in the second and third lines optional or mandatory?
+    
+.. docnote:: Are the type specifiers in the second and third lines optional or mandatory?
 
-.. docnote:: What is the correct grammar for the first var declaration definition?    
-    Which version of the grammar matches the first syntax outline?
-    The first option uses a pattern-initializer-list which doesn't allow typed patterns.
-    In our translated grammar, we no longer have a category "typed-pattern";
-    rather any pattern can have an optional trailing type specifier.
-    Is that still correct?
-    Are the type specifiers in the third and fourth lines optional or mandatory?
+.. docnote:: Are attributes allowed before 'var' in a variable declaration?
+    Same question for other declarations (e.g., function, class, protocol, etc.).
+    See REPL error, below.
+
+::
+
+    (swift) @inout error : NSError? = .None
+    <REPL Input>:1:2: error: attribute can only be applied to types, not declarations
+    @inout error : NSError? = .None
+
 
 Function Declarations
 ~~~~~~~~~~~~~~~~~~~~~
@@ -145,9 +142,9 @@ Function Signatures
     Add elsewhere: tuple-patterns (tuple-patterns --> tuple-pattern | tuple-pattern tuple-patterns)
 
 .. docnote:: Tuple-pattern and "( tuple-pattern-element )" seem to allow
-    the same elements; how are they different? Maybe tuple-type and tuple-type-element is what is meant?
-    In any case, what's the difference between tuple-patterns/(tuple-pattern-element) and
-    tuple-type/tuple-type-element?
+    the same elements; how are they different?
+    Do we want to use tuple-pattern in function-arguments, given that it over-generates quite a lot?
+    Or do we want to create a new syntactic category that is a tuple-type with an optional default value?
 
 .. docnote:: Is the code-block-OPT really optional at the end of a function declaration? 
     What does it mean when you leave off the code-block?
