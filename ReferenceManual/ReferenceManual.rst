@@ -15,6 +15,7 @@ Reference Manual
 	Objects
 	Generics
 	SummaryOfTheGrammar
+	GrammarQueries
 	
 
 .. docnote:: To be included?
