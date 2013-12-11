@@ -33,39 +33,27 @@ Reserved Punctuation Tokens
 Reserved Keywords
 ~~~~~~~~~~~~~~~~~
 
-+----------------------------------------------+
-| *Keywords used in declarations and types*    |
-+---------------+--------------+---------------+
-| ``class``     | ``func``     | ``struct``    |
-+               +              +               + 
-| ``destructor``| ``metatype`` | ``subscript`` |
-+               +              +               +
-| ``extension`` | ``enum``     | ``typealias`` |
-+               +              +               +
-| ``import``    | ``protocol`` | ``var``       |
-+               +              +               +
-| ``init``      | ``static``   | ``where``     |
-+---------------+--------------+---------------+
-| *Keywords used in expressions*               |
-+---------------+--------------+---------------+
-| ``as``        | ``super``    | ``__COLUMN__``|
-+               +              +               + 
-| ``is``        | ``self``     | ``__FILE__``  |
-+               +              +               +
-| ``new``       | ``Self``     | ``__LINE``    |
-+---------------+--------------+---------------+
-| *Keywords used in statements*                |
-+---------------+--------------+---------------+
-| ``break``     | ``else``     | ``switch``    |
-+               +              +               + 
-| ``case``      | ``if``       | ``then``      |
-+               +              +               +
-| ``continue``  | ``in``       | ``while``     |
-+               +              +               +
-| ``default``   | ``for``      |               |
-+               +              +               +
-| ``do``        | ``return``   |               |
-+---------------+--------------+---------------+
+*Keywords used in declarations and types*:
+
+``class``      ``func``      ``struct``
+``destructor`` ``metatype``  ``subscript``
+``extension``  ``enum``      ``typealias``
+``import``     ``protocol``  ``var``
+``init``       ``static``    ``where``
+
+*Keywords used in expressions*:
+
+``as``         ``super``     ``__COLUMN__``
+``is``         ``self``      ``__FILE__``
+``new``        ``Self``      ``__LINE__``
+
+*Keywords used in statements*:
+
+``break``         ``else``     ``switch``
+``case``          ``if``       ``then``
+``continue``      ``in``       ``while``
+``default``       ``for``
+``do``            ``return``
 
 
 Constants
