@@ -530,6 +530,12 @@ Attribute Sequence Declarations
     attribute-list --> attribute | attribute ``,`` attribute-list
     attribute --> infix-attribute | resilience-attribute | in-out-attribute | auto-closure-attribute | no-return-attribute
 
+.. Note:
+
+   Our grammar doesn't have empty terminals (no epsilon)
+   so we need to make attribute-sequence actually contain something.
+   This means that instead of having "empty" as a possible expansion,
+   attribute-sequence always appears as -OPT.
 
 
 Infix Attributes
