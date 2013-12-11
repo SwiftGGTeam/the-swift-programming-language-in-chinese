@@ -35,6 +35,9 @@ Patterns
     or do you mean that patterns can be constrained to match against a type?
     Strictly speaking, should only values (and types) have a type?
 
+.. Note:
+   Patterns don't "have" a type in the same way that values have types.
+   Patterns match things of certain types.
 
 
 

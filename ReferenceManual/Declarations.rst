@@ -38,6 +38,9 @@ Declarations
     declaration --> variable-declaration
     declaration --> subscript-declaration
 
+.. Note: enum-element-declaration is only allowed inside an enum
+   declaration.
+
 
 Import Declarations
 -------------------
@@ -135,7 +138,15 @@ Variable Declarations
     setter --> ``set`` setter-name-OPT ``:`` code-block-items-OPT
     setter-name --> ``(`` identifier ``)``
     
+.. Notes: Type specifiers are required for computed properties -- those
+   types are not computed.
+
+   TODO: File a radar against the inout attribute for better REPL
+   mesasge.  INOUT attribute can only be applide to types, not to
+   declarations.
+
 .. TODO:
+
 
     TR: Follow up with the compiler team to get the correct grammar for the first var declaration definition.
     Which version of the grammar matches the first syntax outline?
@@ -223,13 +234,28 @@ Function Signatures
     <rdar://problem/13347488> Consider renaming "static" functions to "class" functions
     Also, selector-style syntax is still under discussion/development.
     
+    The overgeneration from tuple-patterns combined with some upcoming changes 
+    mean that we should just create a new syntactic category
+    for function arguments instead.
+
     TR: Discuss with compiler team: tuple-patterns and ``(`` tuple-pattern-element ``)`` seem to allow
     the same elements; how are they different? Maybe type-tuple and type-tuple-element is what is meant?
     In any case, what's the difference between tuple-patterns/``(`` tuple-pattern-element ``)`` and
     type-tuple/type-tuple-element?
     
     TR: Also, is the code-block-OPT really optional? What does it mean when you leave off the code-block?
+
+    Code block is optional in the context of a protocol.
+    Everywhere else, it's required.
+    We could refactor to have a separation between function definition/declaration.
+    There is also the low-level "asm name" FFI
+    which is a definition and declaration corner case.
+    Let's just deal with this difference in prose.
     
+    Selector style syntax is pretty stable at this point.
+    The only contentious issue recently has been the calling syntax.
+    Any changes will probably be fiddley little bits.
+
     Revised selector-name---can we come up with a better name for this?
     
     Add elsewhere: tuple-patterns (tuple-patterns --> tuple-pattern | tuple-pattern tuple-patterns)
@@ -251,6 +277,7 @@ Enumeration Declarations
     enum <#enumeration name#> : <#raw value type#> {
         case <#enumerator list 1#> = <#raw value 1#>
         case <#enumerator list 2#> = <#raw value 2#>
+    }
 
 .. TODO:
 
@@ -260,6 +287,16 @@ Enumeration Declarations
     If it could be a protocol, that wouldn't really be a "raw value".
     However, it seems like it should be a non-protocol type:
     the type of the raw values.
+
+    When there is a raw value type on an enum,
+    it indicates the low-level type like Int.
+    All of the raw values have to be of that type.
+    You can require protocol adoption,
+    by using a protocol type as the raw value type,
+    but you do need to make it be one of the types
+    that support = in order for you to specify the raw values.
+    Discuss this in prose.
+
 
 .. langref-grammar
 
@@ -278,9 +315,10 @@ Enumeration Declarations
     
     enum-element-declaration --> attribute-sequence-OPT ``case`` enumerator-list
     enumerator-list --> enumerator | enumerator ``,`` enumerator-list
-    enumerator --> identifier tuple-type-OPT enumerator-return-type-OPT
-    enumerator-return-type --> ``->`` type
+    enumerator --> identifier tuple-type-OPT
 
+
+.. Note: You can have other declarations like methods inside of an enum declaration.
 
 .. TODO:
 

@@ -60,17 +60,11 @@ Array Types
 
     Grammar of an array type
     
-    array-type --> basic-type | array-type ``[`` ``]`` | array-type ``[`` expression ``]``
+    array-type --> basic-type ``[`` ``]`` | array-type ``[`` ``]``
 
-.. TODO:
-
-    TR: Is it just an accident that this definition of array types
-    allows a basic type without any square brackets to be called an
-    "array", or is that for some reason?  Alex's guess is that it's
-    written this way just because it makes the recusive definition work:
-    you can keep adding square brackets by recursion,
-    and eventually hit a basic-type and stop recursing.
-
+.. Note: Writing it this way rather than as a basic type followed by
+   a list of []s -- that preserves grouping of the type as you recurse
+   down the tree.
 
 
 Function Type
@@ -176,12 +170,33 @@ Optional Type
 .. TODO:
 
     TR: Why is -postfix here? Does it just mean that '?' is a postfix operator.
+
+
     
 .. syntax-grammar::
 
     Grammar of an optional type
     
     optional-type --> basic-type ``?``
+
+
+.. Note:
+    The -postfix disambiguates between two terminals
+    which have the same text but which have different whitespace.
+
+    Compare:
+
+        bar?.doSomething()
+        foo ? 42 : 7
+
+    One way to explain this is to have two different terminals.
+
+    postfix-question --> ``?``
+    infix-question --> `` ? ``
+
+    Better -- explain in prose.
+    There must not be whitespace between the basic-type and the ?.
+
 
 
 

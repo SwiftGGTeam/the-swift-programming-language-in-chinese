@@ -76,6 +76,9 @@ Expressions
     basic-expression --> expression-sequence expression-cast-OPT
     expression-sequence --> unary-expression binary-expressions-OPT
     binary-expressions --> binary-expression binary-expressions-OPT
+
+.. Note: Let's play with making a unary expression require a unary operator
+   and then folding apart basic-expression.
     
 
 Primary Expressions
@@ -113,6 +116,10 @@ Primary Expressions
     of postfix-expression as one of its possible expansions.
     Removing one of these names would simplify the basic/primary/postfix naming situation.
 
+.. Note: One reason for breaking primary expressions out of postfix
+   expressions is for exposition -- it makes it easier to organize the
+   prose surrounding the production rules.
+
 
 
 Postfix Expressions
@@ -147,6 +154,8 @@ Postfix Expressions
     postfix-expression --> force-value-expression
 
 .. TODO: TR: What is a metatype-expression (it's not use or defined anywhere else).
+
+   metatype-expression --> postfix-expression ``.`` ``metatype``
 
 .. TODO: Also, come up with a better name for force-value-expression.
     
