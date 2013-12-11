@@ -35,26 +35,49 @@ Reserved Keywords
 
 *Keywords used in declarations and types*:
 
-``class``      ``func``      ``struct``
-``destructor`` ``metatype``  ``subscript``
-``extension``  ``enum``      ``typealias``
-``import``     ``protocol``  ``var``
-``init``       ``static``    ``where``
+``class``
+``destructor``
+``extension``
+``import``
+``init``
+``func``
+``metatype``
+``enum``
+``protocol``
+``static``
+``struct``
+``subscript``
+``typealias``
+``var``
+``where``
 
 *Keywords used in expressions*:
 
-``as``         ``super``     ``__COLUMN__``
-``is``         ``self``      ``__FILE__``
-``new``        ``Self``      ``__LINE__``
+``as``
+``is``
+``new``
+``super``
+``self``
+``Self``
+``__COLUMN__``
+``__FILE__``
+``__LINE__``
 
 *Keywords used in statements*:
 
-``break``         ``else``     ``switch``
-``case``          ``if``       ``then``
-``continue``      ``in``       ``while``
-``default``       ``for``
-``do``            ``return``
-
+``break``
+``case``
+``continue``
+``default``
+``do``
+``else``
+``if``
+``in``
+``for``
+``return``
+``switch``
+``then``
+``while``
 
 Constants
 ---------
