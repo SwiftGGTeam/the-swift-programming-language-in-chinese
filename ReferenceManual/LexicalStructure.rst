@@ -8,7 +8,33 @@ Lexical Structure
 Whitespace and Comments
 -----------------------
 
+.. langref-grammar
 
+    whitespace ::= ' '
+    whitespace ::= '\n'
+    whitespace ::= '\r'
+    whitespace ::= '\t'
+    whitespace ::= '\0'
+
+    comment    ::= //.*[\n\r]
+    comment    ::= /* .... */
+
+.. syntax-grammar::
+
+    Grammar of whitespace and comments
+
+    whitespace --> One of the following Unicode characters:
+    U+0000 (Null Character)
+    U+0009 (Horizontal Tab)
+    U+000A (New Line)
+    U+000D (Carriage Return)
+    U+0020 (Space)
+
+    comment --> ``//`` comment-line 
+
+    comment
+
+  
 Identifiers
 -----------
 

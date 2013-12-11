@@ -1,13 +1,6 @@
 When you start working on one of these, leave a .. langref-grammar comment that contains the
 original LangRef grammar; delete the corresponding grammar from this document.
 
-    whitespace ::= ' '
-    whitespace ::= '\n'
-    whitespace ::= '\r'
-    whitespace ::= '\t'
-    whitespace ::= '\0'
-    comment    ::= //.*[\n\r]
-    comment    ::= /* .... */
     punctuation ::= '('
     punctuation ::= ')'
     punctuation ::= '{'
