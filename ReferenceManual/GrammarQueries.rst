@@ -63,7 +63,10 @@ Variable Declarations
     
 .. TODO:
 
+
     TR: Are the type specifiers in the second and third lines optional or mandatory?
+    
+    FIXME: Make changes to the live grammar.
     
 .. docnote:: Are the type specifiers in the second and third lines optional or mandatory?
 
