@@ -19,20 +19,29 @@ Whitespace and Comments
     comment    ::= //.*[\n\r]
     comment    ::= /* .... */
 
+..
+    ** (Matches the * above, to fix RST syntax highlighting.)
+
 .. syntax-grammar::
 
     Grammar of whitespace and comments
 
-    whitespace --> One of the following Unicode characters:
-    U+0000 (Null Character)
-    U+0009 (Horizontal Tab)
-    U+000A (New Line)
-    U+000D (Carriage Return)
-    U+0020 (Space)
+    whitespace --> U+0000 (Null Character)
+    whitespace --> U+0009 (Horizontal Tab)
+    whitespace --> U+000A (New Line)
+    whitespace --> U+000D (Carriage Return)
+    whitespace --> U+0020 (Space)
 
-    comment --> ``//`` comment-line 
+    comment --> single-line-comment | multiline-comment
 
-    comment
+    single-line-comment --> ``//`` comment-text line-end
+    comment-text --> Any text except for line-end
+    line-end --> U+000A (New Line) | U+000D (Carriage Return)
+
+    multiline-comment --> ``/*`` multiline-comment-text ``*/``
+    multiline-comment-text --> Any text
+
+Multiline comments may be nested.
 
   
 Identifiers
