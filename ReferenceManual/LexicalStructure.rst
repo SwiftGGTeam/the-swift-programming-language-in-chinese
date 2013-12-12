@@ -8,7 +8,42 @@ Lexical Structure
 Whitespace and Comments
 -----------------------
 
+.. langref-grammar
 
+    whitespace ::= ' '
+    whitespace ::= '\n'
+    whitespace ::= '\r'
+    whitespace ::= '\t'
+    whitespace ::= '\0'
+
+    comment    ::= //.*[\n\r]
+    comment    ::= /* .... */
+
+..
+    ** (Matches the * above, to fix RST syntax highlighting.)
+
+.. syntax-grammar::
+
+    Grammar of whitespace and comments
+
+    whitespace --> U+0000 (Null Character)
+    whitespace --> U+0009 (Horizontal Tab)
+    whitespace --> U+000A (New Line)
+    whitespace --> U+000D (Carriage Return)
+    whitespace --> U+0020 (Space)
+
+    comment --> single-line-comment | multiline-comment
+
+    single-line-comment --> ``//`` comment-text line-end
+    comment-text --> Any text except for line-end
+    line-end --> U+000A (New Line) | U+000D (Carriage Return)
+
+    multiline-comment --> ``/*`` multiline-comment-text ``*/``
+    multiline-comment-text --> Any text
+
+Multiline comments may be nested.
+
+  
 Identifiers
 -----------
 
@@ -32,6 +67,46 @@ Reserved Punctuation Tokens
 
 Reserved Keywords
 ~~~~~~~~~~~~~~~~~
+
+.. langref-grammar:
+
+    keyword ::= 'class'
+    keyword ::= 'destructor'
+    keyword ::= 'extension'
+    keyword ::= 'import'
+    keyword ::= 'init'
+    keyword ::= 'def'
+    keyword ::= 'metatype'
+    keyword ::= 'enum'
+    keyword ::= 'protocol'
+    keyword ::= 'static'
+    keyword ::= 'struct'
+    keyword ::= 'subscript'
+    keyword ::= 'typealias'
+    keyword ::= 'var'
+    keyword ::= 'where'
+    keyword ::= 'break'
+    keyword ::= 'case'
+    keyword ::= 'continue'
+    keyword ::= 'default'
+    keyword ::= 'do'
+    keyword ::= 'else'
+    keyword ::= 'if'
+    keyword ::= 'in'
+    keyword ::= 'for'
+    keyword ::= 'return'
+    keyword ::= 'switch'
+    keyword ::= 'then'
+    keyword ::= 'while'
+    keyword ::= 'as'
+    keyword ::= 'is'
+    keyword ::= 'new'
+    keyword ::= 'super'
+    keyword ::= 'self'
+    keyword ::= 'Self'
+    keyword ::= '__COLUMN__'
+    keyword ::= '__FILE__'
+    keyword ::= '__LINE__'
 
 *Keywords used in declarations and types*:
 
@@ -62,6 +137,15 @@ Reserved Keywords
 ``__COLUMN__``
 ``__FILE__``
 ``__LINE__``
+
+.. TODO
+   
+   We have a variaty of keywords that appear twice -- once as
+   keywords and then again as literal text in the definition of
+   expression literals.  Let's see if we can't factor them out so one
+   terminal can appear in both places.  For example keyword-as or
+   keyword-FILE.  This issue holds for *all* keywords -- they appear as
+   literals on the right hand side of multiple definitions.
 
 *Keywords used in statements*:
 
