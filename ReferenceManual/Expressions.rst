@@ -14,13 +14,6 @@ Expressions
     expr-cast ::= 'as' type
 
 
-    expr-identifier ::= identifier generic-args?
-    expr-super ::= expr-super-method
-    expr-super ::= expr-super-subscript
-    expr-super ::= expr-super-constructor
-    expr-super-method ::= 'super' '.' expr-identifier
-    expr-super-subscript ::= 'super' '[' expr ']'
-    expr-super-constructor ::= 'super' '.' 'init'
     expr-closure ::= '{' closure-signature? brace-item-list '}'
     closure-signature ::= pattern-tuple func-signature-result? 'in'
     closure-signature ::= identifier (',' identifier*) func-signature-result? 'in'
@@ -112,6 +105,17 @@ Literal Expressions
 
 Named Expressions
 ~~~~~~~~~~~~~~~~~
+
+.. langref-grammar
+
+    expr-identifier ::= identifier generic-args?
+
+
+.. syntax-grammar::
+    
+    Grammar of a named expression
+    
+    named-expression --> identifier generic-arguments-OPT
 
 
 
