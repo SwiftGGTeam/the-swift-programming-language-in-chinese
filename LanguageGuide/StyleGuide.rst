@@ -32,9 +32,9 @@ or for performance, memory usage, or other optimization).
 ``Int`` should generally be used in preference to an unsigned type,
 even for numbers that are known to be non-negative::
 
-    var meaningOfLife = 42        // yes - general integer inferred as Int
-    var count: UInt8 = 17         // no - use of sized type is unnecessary here
-    var price: Double             // yes - general floating-point declared as Double
+    (swift) var meaningOfLife = 42        // yes - general integer inferred as Int
+    (swift) var count: UInt8 = 17         // no - use of sized type is unnecessary here
+    (swift) var price: Double             // yes - general floating-point declared as Double
 
 *Rationale:
 Choosing default numeric types means that everyday values are immediately interoperable in Swift code.
@@ -49,11 +49,11 @@ When variables are initialized at the same time as they are declared,
 their type should be inferred (rather than explicitly typed) in variable declarations,
 as long as the initializing value makes the type sufficiently clear::
 
-    var age = 38                            // clearly Int
-    var welcomeMessage = "hello, world"     // clearly String
-    var π = 3.14159                         // clearly Double
-    var hasHydratedContent = false          // clearly Bool
-    var rootNode = Node()                   // clearly Node
+    (swift) var age = 38                            // clearly Int
+    (swift) var welcomeMessage = "hello, world"     // clearly String
+    (swift) var π = 3.14159                         // clearly Double
+    (swift) var hasHydratedContent = false          // clearly Bool
+    (swift) var rootNode = Node()                   // clearly Node
 
 *Rationale:
 This keeps code as concise as possible,
@@ -65,7 +65,7 @@ If the inferred type may be open to doubt,
 or if the desired type is not the default inferred type from a literal,
 it should be made explicit::
 
-    var languageName: NSString = "Swift"
+    (swift) var languageName: NSString = "Swift"
     // the type declaration is needed here because NSString is not
     // the inferred type of a string literal
 
@@ -96,21 +96,21 @@ This follows the existing Cocoa idiom, and encourages readable code.*
 A variable's name should describe its *purpose*, rather than its type.
 Don't indicate the type name in the variable name unless it helps to clarify the variable's purpose::
 
-    var originalPrice = 19.99     // yes
-    var priceDouble = 19.99       // no - Double doesn't clarify the purpose
-    var origPrice = 19.99         // no - unnecessary shortening of the name
-    var p = 19.99                 // no - no context from single-character name
+    (swift) var originalPrice = 19.99     // yes
+    (swift) var priceDouble = 19.99       // no - Double doesn't clarify the purpose
+    (swift) var origPrice = 19.99         // no - unnecessary shortening of the name
+    (swift) var p = 19.99                 // no - no context from single-character name
 
 One-character variable names should only be used where it is specifically appropriate due to context::
 
-    func drawAtPoint(x: Int, y: Int) {...}   // OK due to coordinate context
+    (swift) func drawAtPoint(x: Int, y: Int) {...}   // OK due to coordinate context
 
 *Rationale:
 Descriptive variable names make code more readable.*
 
 One-character variable names can also be used for loop iteration variables::
 
-    for i = 0; i < 10; ++i {
+    (swift) for i = 0; i < 10; ++i {
         for j = 0; j < 15; ++j {
             ...
         }
@@ -121,22 +121,18 @@ Punctuation and Spacing
 
 Colons after ``lowerCamelCase`` names should have a space after the colon, but not before::
 
-    var rootNode: Node
-
-    func sayHello(personName: String, salutation: String) -> String {...}
-    
-    sayHello(personName: "Tim", salutation: "Howdy!")
+    (swift) var rootNode: Node
+    (swift) func sayHello(personName: String, salutation: String) -> String {...}
+    (swift) sayHello(personName: "Tim", salutation: "Howdy!")
 
 Colons after ``UpperCamelCase`` names should have a space on *both* sides of the colon::
 
-    class Quadrilateral : Shape {...}
-
-    class Shape : HitTestable {...}
-
-    enum Weekday : Int {...}
+    (swift) class Quadrilateral : Shape {...}
+    (swift) class Shape : HitTestable {...}
+    (swift) enum Weekday : Int {...}
     
     // a generic that takes any type that conforms to Stackable
-    struct Stack<Type : Stackable> {...}
+    (swift) struct Stack<Type : Stackable> {...}
 
 *Rationale:
 This follows the tradition in other languages (including Objective-C)
@@ -144,11 +140,10 @@ of using colons with spaces on either side for conformance declarations and inhe
 
 Commas should always have a space after the comma, but not before::
 
-    enum Weekday : Int {
+    (swift) enum Weekday : Int {
         case Sunday = 1, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday
     }
-    
-    func sayHello(personName: String, salutation: String) -> String {...}
+    (swift) func sayHello(personName: String, salutation: String) -> String {...}
 
 *Rationale:
 This follows the usage of commas as punctuation in the English language.*
@@ -156,17 +151,17 @@ This follows the usage of commas as punctuation in the English language.*
 Binary and ternary operators should be separated from their operands with single spaces,
 with the exception of the range operator ``..`` (see below)::
 
-    var a = (1 + 2) / 3                     // yes
-    var a=(1+2)/3                           // no
-    var height = hasHeader ? 50 : 20        // yes
+    (swift) var a = (1 + 2) / 3                     // yes
+    (swift) var a=(1+2)/3                           // no
+    (swift) var height = hasHeader ? 50 : 20        // yes
 
 Do not separate unary operators from their operands,
 or parentheses from the expressions they enclose::
 
-    var b = - a                             // no
-    var c = -a                              // yes
-    var a = ( 1 + 2 ) / 3                   // no
-    var a = (1 + 2) / 3                     // yes
+    (swift) var b = - a                             // no
+    (swift) var c = -a                              // yes
+    (swift) var a = ( 1 + 2 ) / 3                   // no
+    (swift) var a = (1 + 2) / 3                     // yes
 
 *Rationale:
 Separating operands from their non-unary operators makes it easier to read the operation's purpose,
@@ -174,8 +169,8 @@ and avoids unnecessarily dense code.*
 
 Ranges should not have spaces between their end values and operator::
 
-    for index in 0..10                  // yes
-    for index in 0 .. 10                // no
+    (swift) for index in 0..10                  // yes
+    (swift) for index in 0 .. 10                // no
 
 *Rationale:
 This approach makes the range feel like a single entity,
@@ -190,11 +185,10 @@ Braces and Parentheses
 Opening ``{`` braces should be placed on a new line if and only if they terminate a line that has been wrapped,
 and closing ``}`` braces should be given their own line::
 
-    if enteredCorrectDoorCode && passedRetinaScan || hasValidDoorKey {
+    (swift) if enteredCorrectDoorCode && passedRetinaScan || hasValidDoorKey {
         // all fits on one line, so the brace accompanies that line
     }
-
-    if enteredCorrectDoorCode && passedRetinaScan || hasValidDoorKey
+    (swift) if enteredCorrectDoorCode && passedRetinaScan || hasValidDoorKey
         || knowsEmergencyOverridePassword
     {
         // did not all fit on one line, so the line has been wrapped
@@ -209,7 +203,7 @@ Placing the brace on a new line clarifies the root indentation level for the fir
 
 Closing ``)`` parentheses should be kept on the same line as the code preceding them::
 
-    var result = connection.retrieveWebPage(
+    (swift) var result = connection.retrieveWebPage(
         atURL: "http://www.apple.com/", withTimeout: 30, method: "GET",
         allowUserCancellation: false)
    
@@ -228,7 +222,7 @@ You are also encouraged to add vertical whitespace wherever it may improve reada
 such as immediately after the opening brace of a
 ``class``, ``struct`` or ``protocol`` declaration::
 
-    class Shape : Rotatable, Scalable {
+    (swift) class Shape : Rotatable, Scalable {
 
         var numberOfSides: Int
         var origin: (Int, Int)
@@ -252,7 +246,7 @@ Indentation
 
 Braces move the current indentation level four spaces to the right::
 
-    for i in 1..10 {
+    (swift) for i in 1..10 {
         if i % 2 == 0 {
             println("\(i) is even")
         } else {
@@ -264,14 +258,14 @@ Statement introducers terminated by a colon (``case:``, ``default:``, ``get:`` a
 and the ``in`` closure statement introducer,
 should be aligned with the brace that ends the enclosing brace pair::
 
-    switch somePlanet {
+    (swift) switch somePlanet {
     case .Earth:
         println("Mostly harmless")
     default:
         println("Not safe for humans")
     }
 
-    class Circle : Shape {
+    (swift) class Circle : Shape {
 
         var radius: Float
 
@@ -317,7 +311,7 @@ Where the wrapped content is inside parentheses,
 the closing parenthesis should stay with the final wrapped line,
 rather than move to a new line::
 
-    var animationControllerToUse = delegate.tabBarController(
+    (swift) var animationControllerToUse = delegate.tabBarController(
         controller,
         animationControllerForTransitionFromViewController: sourceViewController,
         toViewController: destinationViewController)
@@ -333,7 +327,7 @@ Swift has four sets of paired delimiters:
 Where possible, delimiter pairs other than curly braces (``{…}``)
 should be kept together on a line::
 
-    var totalHeight = defaultTopMargin + defaultHeaderHeight
+    (swift) var totalHeight = defaultTopMargin + defaultHeaderHeight
         + (titleHeight * numberOfTitles)
         + ((individualCellHeight + cellPadding) * numberOfTableRows)
         + defaultBottomMargin
@@ -342,12 +336,12 @@ A line break (or a comment and a line break) should be added after *any* opening
 whose closing partner does not fit on the same line
 (the opening delimeters are ``[``, ``(``, ``{`` and ``<``)::
 
-  func retrieveWebPage(atURL: String, withTimeout: Double, method: String,
-      allowUserCancellation: Bool)               // no
+    (swift) func retrieveWebPage(atURL: String, withTimeout: Double, method: String,
+        allowUserCancellation: Bool)               // no
 
-  func retrieveWebPage(
-      atURL: String, withTimeout: Double, method: String,
-      allowUserCancellation: Bool)               // yes
+    (swift) func retrieveWebPage(
+        atURL: String, withTimeout: Double, method: String,
+        allowUserCancellation: Bool)               // yes
 
 Other Punctuation
 _________________
@@ -372,7 +366,7 @@ on a single line.
 
 For example, using tuple-style function syntax::
 
-    class HTTPConnection {
+    (swift) class HTTPConnection {
         func retrieveWebPage(
             atURL: String, withTimeout: Double, method: String,
             allowUserCancellation: Bool)
@@ -381,15 +375,15 @@ For example, using tuple-style function syntax::
             // statements
         }
     }
-    
-    var connection = HTTPConnection()
-    var result = connection.retrieveWebPage(
+
+    (swift) var connection = HTTPConnection()
+    (swift) var result = connection.retrieveWebPage(
         atURL: "http://www.apple.com/", withTimeout: 30, method: "GET",
         allowUserCancellation: false)
 
 Using selector-style function syntax::
 
-    class HTTPConnection {
+    (swift) class HTTPConnection {
         func retrieveWebPageAtUrl(url: String) withTimeout(timeout: Double)
             method(method: String)
             allowUserCancellation(allowUserCancellation: Bool)
@@ -398,9 +392,9 @@ Using selector-style function syntax::
             // statements
         }
     }
-    
-    var connection = HTTPConnection()
-    var result = connection.retrieveWebPageAtURL(
+
+    (swift) var connection = HTTPConnection()
+    (swift) var result = connection.retrieveWebPageAtURL(
         "http://www.apple.com/", withTimeout: 30, method: "GET",
         allowUserCancellation: false)
 
@@ -415,13 +409,13 @@ Keep in mind that optional line breaks may also help when the *information* dens
 even if the textual density is not.
 The first line of this function is very information-dense::
 
-    func existential<S: Sink>(base: S) -> SinkOf<S.Element> {
+    (swift) func existential<S: Sink>(base: S) -> SinkOf<S.Element> {
         return EnumerableOf( { s.put($1) } )
     }
 
 A line break inserted before the return indicator helps the reader to digest the code in smaller pieces::
 
-    func existential<S: Sink>(base: S)
+    (swift) func existential<S: Sink>(base: S)
         -> SinkOf<S.Element>
     {
         return EnumerableOf( { s.put($1) } )
@@ -441,14 +435,14 @@ Enumeration types and their elements should have capitalized singular names
 (e.g. ``Planet`` rather than ``Planets``),
 so that they read as part of a sentence when initializing a variable of that type::
 
-    enum Planet {
+    (swift) enum Planet {
         case Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune
     }
 
 When an enum variable is declared and initialized at once,
 it should be initialized it with a fully-qualified case for that enum::
 
-    var nearestPlanet = Planet.Earth
+    (swift) var nearestPlanet = Planet.Earth
 
 *Rationale:
 This enum syntax (*\ ``Planet.Earth``\ *) makes for highly readable enum cases.
@@ -457,7 +451,7 @@ Singular enum type names are consistent with other singular type names
 
 The enum type prefix should be dropped wherever it can be deduced from context::
 
-    nearestPlanet = .Jupiter
+    (swift) nearestPlanet = .Jupiter
     // yes - still reads as a sentence when nearestPlanet changes value
 
 *Rationale:
@@ -466,7 +460,7 @@ Dropping the enum type where it is clear from the context makes for shorter, mor
 Enumeration case names should not be unnecessarily adorned,
 either to indicate the enumeration type or otherwise::
 
-    enum Planet {
+    (swift) enum Planet {
         // no - case names include the type name and an unnecessary prefix
         case kPlanetMercury, kPlanetVenus, kPlanetEarth, kPlanetMars,
             kPlanetJupiter, kPlanetSaturn, kPlanetUranus, kPlanetNeptune
@@ -482,7 +476,7 @@ as long as they do not have raw values.
 This is also acceptable in the case where they have a raw value that is an automatically-incrementing integer.
 This approach is particularly appropriate if the enum cases have a natural reading order::
 
-    enum Weekday : Int {
+    (swift) enum Weekday : Int {
         case Sunday = 1, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday
     }
 
@@ -495,12 +489,12 @@ Enumerations with any other kind of raw values,
 and / or with associated value tuples,
 should be written with each case on its own line::
 
-    enum ASCIIControlCharacter : Char {
+    (swift) enum ASCIIControlCharacter : UnicodeScalar {
         case Tab = '\t'
         case LineFeed = '\n'
         case CarriageReturn = '\r'
     }
-    enum Barcode {
+    (swift) enum Barcode {
         case UPCA(Int, Int, Int)
         case QRCode(String)
     }
@@ -514,8 +508,8 @@ Generics
 
 Generic type names should be kept adjacent to their opening ``<``, with no intervening whitespace::
 
-    var someStrings = Array<String>         // yes
-    var someStrings = Array <String>        // no
+    (swift) var someStrings = Array<String>         // yes
+    (swift) var someStrings = Array <String>        // no
 
 *Rationale:
 Avoiding whitespace between the elements makes the compound type
@@ -527,7 +521,7 @@ Loops
 
 ``for x in y`` loops should be used in preference to C-style ``for`` loops wherever possible::
 
-    for node in rootNode.children {...}
+    (swift) for node in rootNode.children {...}
 
 *Rationale:*
 ``for x in y`` *is more readable and less error-prone than traditional C-style loops for iterating over a collection,
@@ -535,7 +529,7 @@ as it avoids off-by-one errors and other bounding-value mistakes.*
 
 Standard Library algorithms should always be used in preference to loop iteration where an appropriate algorithm exists::
 
-    sequence.find(desiredElement)
+    (swift) sequence.find(desiredElement)
 
 *Rationale:
 The standard library is already implemented, tested, and optimized.
@@ -549,9 +543,9 @@ Conditional Statements
 Comparisons between a computed value and a literal should always be written with
 the computed value on the left, and the literal on the right::
 
-    if valueToTest == 3 {           // yes
+    (swift) if valueToTest == 3 {           // yes
     }
-    if 3 == valueToTest {           // no
+    (swift) if 3 == valueToTest {           // no
     }
 
 *Rationale:
@@ -564,15 +558,15 @@ Functions and Methods
 
 A space should be inserted before and after the return indicator (``->``)::
 
-    func sayHello(personName: String, salutation: String) -> String {
+    (swift) func sayHello(personName: String, salutation: String) -> String {
         // statements
     }
 
 Don't separate parentheses surrounding parameters and arguments from their contents,
 except by a newline.::
 
-    sayHello(personName: "Tim", salutation: "Howdy!")     // yes
-    sayHello( personName: "Tim", salutation: "Howdy!" )   // no
+    (swift) sayHello(personName: "Tim", salutation: "Howdy!")     // yes
+    (swift) sayHello( personName: "Tim", salutation: "Howdy!" )   // no
 
 Functions should be referred to as ‘methods’ in comments and descriptive prose
 if they are declared within the braces of a ``class``, ``struct`` or ``enum`` body.
@@ -587,11 +581,11 @@ we should remain consistent with our exising approach.*
 Single-statement functions should always be written with their single statement on a new line,
 for ease of readability and debuggability::
 
-    func sayHelloWorld() {
+    (swift) func sayHelloWorld() {
         println("hello, world")                         // yes
     }
     
-    func sayHelloWorld() { println("hello, world") }     // no
+    (swift) func sayHelloWorld() { println("hello, world") }     // no
 
 Closures
 --------
@@ -600,15 +594,15 @@ Consider using a trailing closure when the closure performs the bulk of the work
 A good example is Grand Central Dispatch,
 which has a C-style API that suits trailing closures::
 
-    var someValue = 42
-    dispatch_async(someQueue) {
+    (swift) var someValue = 42
+    (swift) dispatch_async(someQueue) {
         println("Value is \(someValue)")
         someValue += 1
     }
 
 Closure parameter types and return types may be inferred if they are clear from the context::
 
-    var sortedStrings = sort(strings) {
+    (swift) var sortedStrings = sort(strings) {
         (string1, string2)
     in
         return string1.uppercase < string2.uppercase
@@ -617,7 +611,7 @@ Closure parameter types and return types may be inferred if they are clear from 
 Trailing closures with shorthand (``$0``) parameter names may be used where the closure is short,
 and wouldn’t benefit from elaborated names::
 
-    var sortedStrings = sort(strings) {
+    (swift) var sortedStrings = sort(strings) {
         return $0.uppercase < $1.uppercase
     }
 
@@ -626,12 +620,12 @@ with spaces inside the braces,
 if there is no loss of clarity.
 Where this is done, the braces should be contained within the closure's parentheses::
 
-    var sortedStrings = sort(strings, { $0 < $1 })
+    (swift) var sortedStrings = sort(strings, { $0 < $1 })
 
 Multi-line closures should be written with a new line after the closure's opening brace::
 
-    var session = NSURLSession.sharedSession()
-    var downloadTask = session.downloadTaskWithURL(
+    (swift) var session = NSURLSession.sharedSession()
+    (swift) var downloadTask = session.downloadTaskWithURL(
         url,
         completionHandler: {
             (url: NSURL, response: NSURLResponse, error: NSError)
@@ -647,13 +641,13 @@ Underscores should be used in number literals wherever it increases readability.
 For base-10 numbers, these separators should appear on three-digit boundaries::
 
     // yes - thousand separators make this large number clearer to read
-    var oneBillion = 1_000_000_000
+    (swift) var oneBillion = 1_000_000_000
     
     // no - not as clear
-    var oneBillion = 1000000000
+    (swift) var oneBillion = 1000000000
     
     // yes - hexadecimal has established grouping conventions into powers of two
-    var wordMax = 0x7FFF_FFFF_FFFF_FFFF
+    (swift) var wordMax = 0x7FFF_FFFF_FFFF_FFFF
     
     // as does binary
-    var upperBound = 0b1111_1111_1111_1111
+    (swift) var upperBound = 0b1111_1111_1111_1111

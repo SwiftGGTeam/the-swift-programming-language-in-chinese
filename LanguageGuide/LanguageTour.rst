@@ -183,7 +183,7 @@ As you saw in the earlier Objective-C example, Swift provides a for-each-style l
     >>> o
 
 
-.. note:: If you're wondering why/how this works, it's because the return value of ``String.chars`` adopts the ``Enumerable`` protocol. `Protocols`_ are covered later in this tour.
+.. note:: If you're wondering why/how this works, it's because the return value of ``String.chars`` adopts the ``Sequence`` protocol. `Protocols`_ are covered later in this tour.
 
 Also try the ``..`` operator, which generates a half-open enumerable range between two values:
 
@@ -789,7 +789,7 @@ A protocol is an abstract description of behavior --- usually related functions 
 .. testcode:: protocols_and_extensions
 
     (swift) struct Point {
-              var x, y : Float
+              var x = 0.0, y = 0.0
             }
     (swift) protocol HitTestable {
                 func containsPoint(point : Point) -> Bool 
@@ -800,7 +800,7 @@ All named Swift types (i.e., classes, structs and enums, but not tuples), can ad
 .. testcode:: protocols_and_extensions
 
     (swift) struct Size {
-                var width, height : Float
+                var width = 0.0, height = 0.0
             }
     (swift) struct Rect : HitTestable {
                 var origin : Point = Point()
@@ -1029,7 +1029,7 @@ Swift supports generics through parameterized types. As an example, the standard
 .. testcode:: generics
 
     (swift) var names = Array<String>()
-    // names : Array<String> = Array<String>(ArrayImplementation<String>(UnsafePointer<String>(<unprintable value>), <unprintable value>))
+    // names : Array<String> = []
     (swift) names.append("William")
     (swift) names.append("Hilary")
     (swift) names.append("Carlton")
@@ -1077,7 +1077,10 @@ It's even safe in Swift to mix by-reference and value types if you use a protoco
     // bar : Bar = Bar()
     (swift) var workers = Array<Workable>()
     >>> P4REPL8Workable_
-    // workers : Array<Workable> = Array<Workable>(ArrayImplementation<Workable>(UnsafePointer<Workable>(<unprintable value>), <unprintable value>))
+    // workers : Array<Workable> = [P4REPL8Workable_
+    >>> P4REPL8Workable_
+    >>> P4REPL8Workable_
+    >>> ]
     (swift) workers.append(foo)
     >>> P4REPL8Workable_
     (swift) workers.append(bar)
