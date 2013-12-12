@@ -37,6 +37,7 @@ Declarations
     declaration --> typealias-declaration
     declaration --> variable-declaration
     declaration --> subscript-declaration
+    declarations --> declaration declarations-OPT
 
 .. Note: enum-element-declaration is only allowed inside an enum
    declaration.
@@ -123,7 +124,6 @@ Variable Declarations
     Grammar of a variable declaration
 
     variable-declaration --> attribute-sequence-OPT ``var`` pattern-initializer-list
-    variable-declaration --> attribute-sequence-OPT ``var`` typed-pattern-list
     variable-declaration --> attribute-sequence-OPT ``var`` variable-name type-specifier code-block
     variable-declaration --> attribute-sequence-OPT ``var`` variable-name type-specifier getter-setter-block
     variable-name --> identifier
@@ -131,30 +131,18 @@ Variable Declarations
     pattern-initializer-list --> pattern-initializer | pattern-initializer ``,`` pattern-initializer-list
     pattern-initializer --> pattern initializer-OPT
     initializer --> ``=`` expression
-    typed-pattern-list --> typed-pattern | typed-pattern ``,`` typed-pattern-list
     
     getter-setter-block --> ``{`` getter setter-OPT ``}`` | ``{`` setter getter ``}``
     getter --> ``get`` ``:`` code-block-items-OPT
     setter --> ``set`` setter-name-OPT ``:`` code-block-items-OPT
     setter-name --> ``(`` identifier ``)``
     
-.. Notes: Type specifiers are required for computed properties -- those
-   types are not computed.
+.. Notes: Type specifiers are required for computed properties -- the
+   types of those properties are not computed/inferred.
 
-   TODO: File a radar against the inout attribute for better REPL
+.. TODO: File a radar against the inout attribute for better REPL
    mesasge.  INOUT attribute can only be applide to types, not to
    declarations.
-
-.. TODO:
-
-
-    TR: Follow up with the compiler team to get the correct grammar for the first var declaration definition.
-    Which version of the grammar matches the first syntax outline?
-    The first option uses a pattern-initializer-list which doesn't allow typed patterns.
-    In our translated grammar, we no longer have a category "typed-pattern";
-    rather any pattern can have an optional trailing type specifier.
-    Is that still correct?
-    Are the type specifiers in the second line optional or mandatory?
 
 
 Typealias Declarations
@@ -194,7 +182,8 @@ Function Declarations
 .. TODO:
 
     Discuss in prose: Variadic functions and the other permutations of function declarations.
-    Also, write a syntax-outline for selector-style functions, once these are nailed down.
+
+.. TODO: Write a syntax-outline for selector-style functions.
 
 Function Signatures
 ~~~~~~~~~~~~~~~~~~~
@@ -232,18 +221,11 @@ Function Signatures
     mark a class function, not a static function (in the proper sense). 
     This issue is being tracked by:
     <rdar://problem/13347488> Consider renaming "static" functions to "class" functions
-    Also, selector-style syntax is still under discussion/development.
-    
+
     The overgeneration from tuple-patterns combined with some upcoming changes 
     mean that we should just create a new syntactic category
-    for function arguments instead.
-
-    TR: Discuss with compiler team: tuple-patterns and ``(`` tuple-pattern-element ``)`` seem to allow
-    the same elements; how are they different? Maybe type-tuple and type-tuple-element is what is meant?
-    In any case, what's the difference between tuple-patterns/``(`` tuple-pattern-element ``)`` and
-    type-tuple/type-tuple-element?
-    
-    TR: Also, is the code-block-OPT really optional? What does it mean when you leave off the code-block?
+    for function arguments instead. 
+    We're going to hold off on doing this until they [compiler team] make their changes.
 
     Code block is optional in the context of a protocol.
     Everywhere else, it's required.
@@ -256,9 +238,7 @@ Function Signatures
     The only contentious issue recently has been the calling syntax.
     Any changes will probably be fiddley little bits.
 
-    Revised selector-name---can we come up with a better name for this?
-    
-    Add elsewhere: tuple-patterns (tuple-patterns --> tuple-pattern | tuple-pattern tuple-patterns)
+    Revise selector-name---can we come up with a better name for this?
 
 
 
@@ -281,13 +261,6 @@ Enumeration Declarations
 
 .. TODO:
 
-    TR: Is raw-value-type the correct thing to put here?
-    According to the grammar, it's an inheritance list,
-    which can take a list of protocols.
-    If it could be a protocol, that wouldn't really be a "raw value".
-    However, it seems like it should be a non-protocol type:
-    the type of the raw values.
-
     When there is a raw value type on an enum,
     it indicates the low-level type like Int.
     All of the raw values have to be of that type.
@@ -295,6 +268,7 @@ Enumeration Declarations
     by using a protocol type as the raw value type,
     but you do need to make it be one of the types
     that support = in order for you to specify the raw values.
+    You can have: <#raw value type, protocol conformance#>.
     Discuss this in prose.
 
 
@@ -305,6 +279,9 @@ Enumeration Declarations
     decl-enum-element ::= attribute-list 'case' enum-case (',' enum-case)*
     enum-case ::= identifier type-tuple? ('->' type)?
 
+.. Note: Per Doug and Ted, "('->' type)?" is not part of the grammar.
+    We removed it from our grammar, below.
+
 .. syntax-grammar::
 
     Grammar of an enumeration declaration
@@ -314,35 +291,13 @@ Enumeration Declarations
     enum-body --> ``{`` declarations-OPT ``}``
     
     enum-element-declaration --> attribute-sequence-OPT ``case`` enumerator-list
-    enumerator-list --> enumerator | enumerator ``,`` enumerator-list
+    enumerator-list --> enumerator raw-value-assignment-OPT | enumerator raw-value-assignment-OPT ``,`` enumerator-list
     enumerator --> identifier tuple-type-OPT
+    raw-value-assignment --> ``=`` raw-value-literal
+    raw-value-literal --> integer-literal | float-literal | character-literal | string-literal 
 
 
-.. Note: You can have other declarations like methods inside of an enum declaration.
-
-.. TODO:
-
-    Add elsewhere: declarations (declarations --> declaration declarations-OPT)
-    
-    TR: Is it really the case that you can have declarations other than enum-element-declaration
-    inside an enum-body? If not, we should replace enum-body with:
-    enum-body --> ``{`` enum-element-declarations-OPT ``}``.
-    
-    TR: Also, do we need to modify the grammar to allow for raw values?
-    
-    TR: Discuss with the compiler team: in the enum-case, ('->' type)? doesn't match what the REPL
-    expects: 
-    (swift) enum SomeInt {
-              case None
-              case One(Int) -> (Int)
-            }
-    <REPL Input>:3:16: error: consecutive declarations on a line must be separated by ';'
-      case One(Int) -> (Int)
-                   ^
-                   ;
-    <REPL Input>:3:17: error: expected declaration
-      case One(Int) -> (Int)
-
+.. Note: You can have other declarations like methods inside of an enum declaration (e.g., methods, etc.).
 
 
 Structure Declarations

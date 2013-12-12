@@ -149,7 +149,6 @@ Tuple Patterns
     pattern-tuple-element ::= pattern
     pattern-tuple-element ::= pattern '=' expr
 
-
 .. syntax-grammar::
 
     Grammar of a tuple pattern
@@ -158,4 +157,5 @@ Tuple Patterns
     tuple-pattern-body --> tuple-pattern-element-list ``...``-OPT
     tuple-pattern-element-list --> tuple-pattern-element | tuple-pattern-element ``,`` tuple-pattern-element-list
     tuple-pattern-element --> pattern | pattern-initializer
+    tuple-patterns --> tuple-pattern tuple-patterns-OPT
 

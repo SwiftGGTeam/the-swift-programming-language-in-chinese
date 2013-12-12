@@ -109,13 +109,6 @@ Primary Expressions
 
 .. TODO: Come up with a better name for delayed-identifier-expression.
 
-.. TODO:
-
-    TR: Why does primary-expression need to be separated out of postfix-expression?
-    The only place where primary-expression is used is in the first line
-    of postfix-expression as one of its possible expansions.
-    Removing one of these names would simplify the basic/primary/postfix naming situation.
-
 .. Note: One reason for breaking primary expressions out of postfix
    expressions is for exposition -- it makes it easier to organize the
    prose surrounding the production rules.
@@ -153,7 +146,7 @@ Postfix Expressions
     postfix-expression --> optional-expression
     postfix-expression --> force-value-expression
 
-.. TODO: TR: What is a metatype-expression (it's not use or defined anywhere else).
+.. TODO:
 
    metatype-expression --> postfix-expression ``.`` ``metatype``
 
