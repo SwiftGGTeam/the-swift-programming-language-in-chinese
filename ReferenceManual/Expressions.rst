@@ -13,13 +13,7 @@ Expressions
     expr-cast ::= 'is' type
     expr-cast ::= 'as' type
 
-    expr-literal ::= integer_literal
-    expr-literal ::= floating_literal
-    expr-literal ::= character_literal
-    expr-literal ::= string_literal
-    expr-literal ::= '__FILE__'
-    expr-literal ::= '__LINE__'
-    expr-literal ::= '__COLUMN__'
+
     expr-identifier ::= identifier generic-args?
     expr-super ::= expr-super-method
     expr-super ::= expr-super-subscript
@@ -93,6 +87,55 @@ Primary Expressions
    expressions is for exposition -- it makes it easier to organize the
    prose surrounding the production rules.
 
+
+Literal Expressions
+~~~~~~~~~~~~~~~~~~~
+
+.. langref-grammar
+
+    expr-literal ::= integer_literal
+    expr-literal ::= floating_literal
+    expr-literal ::= character_literal
+    expr-literal ::= string_literal
+    expr-literal ::= '__FILE__'
+    expr-literal ::= '__LINE__'
+    expr-literal ::= '__COLUMN__'
+
+
+.. syntax-grammar::
+    
+    Grammar of a literal expression
+    
+    literal-expression --> integer-literal | floating-literal | character-literal | string-literal
+    literal-expression --> ``__FILE__`` | ``__LINE__`` | ``__COLUMN__``
+
+
+Named Expressions
+~~~~~~~~~~~~~~~~~
+
+
+
+Super Expressions
+~~~~~~~~~~~~~~~~~
+
+
+
+Closure Expressions
+~~~~~~~~~~~~~~~~~~~
+
+
+Anonymous Closure Arguments
++++++++++++++++++++++++++++
+
+
+
+Parenthesized Expression
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+
+Delayed Identifier Expressions
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
 Postfix Expressions
