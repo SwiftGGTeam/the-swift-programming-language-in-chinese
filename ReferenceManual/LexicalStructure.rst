@@ -112,12 +112,13 @@ Reserved Keywords
 
 ``class``
 ``destructor``
+``enum``
 ``extension``
+``func``
 ``import``
 ``init``
-``func``
+``let``
 ``metatype``
-``enum``
 ``protocol``
 ``static``
 ``struct``
@@ -151,6 +152,9 @@ Reserved Keywords
    We can have this just be an informational table then,
    rather than an actual set of production rules.
    The same is true of punctuation, whitespace, and comments.
+   If possible, it would be great to generate these tables
+   by extracting the code-voice literals from production rules
+   rather than maintaining them by hand.
 
 *Keywords used in statements*:
 
