@@ -59,6 +59,46 @@ Reserved Punctuation Tokens
 Reserved Keywords
 ~~~~~~~~~~~~~~~~~
 
+.. langref-grammar:
+
+    keyword ::= 'class'
+    keyword ::= 'destructor'
+    keyword ::= 'extension'
+    keyword ::= 'import'
+    keyword ::= 'init'
+    keyword ::= 'def'
+    keyword ::= 'metatype'
+    keyword ::= 'enum'
+    keyword ::= 'protocol'
+    keyword ::= 'static'
+    keyword ::= 'struct'
+    keyword ::= 'subscript'
+    keyword ::= 'typealias'
+    keyword ::= 'var'
+    keyword ::= 'where'
+    keyword ::= 'break'
+    keyword ::= 'case'
+    keyword ::= 'continue'
+    keyword ::= 'default'
+    keyword ::= 'do'
+    keyword ::= 'else'
+    keyword ::= 'if'
+    keyword ::= 'in'
+    keyword ::= 'for'
+    keyword ::= 'return'
+    keyword ::= 'switch'
+    keyword ::= 'then'
+    keyword ::= 'while'
+    keyword ::= 'as'
+    keyword ::= 'is'
+    keyword ::= 'new'
+    keyword ::= 'super'
+    keyword ::= 'self'
+    keyword ::= 'Self'
+    keyword ::= '__COLUMN__'
+    keyword ::= '__FILE__'
+    keyword ::= '__LINE__'
+
 *Keywords used in declarations and types*:
 
 ``class``
