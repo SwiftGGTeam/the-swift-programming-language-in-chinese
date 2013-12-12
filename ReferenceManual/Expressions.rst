@@ -13,8 +13,6 @@ Expressions
     expr-cast ::= 'is' type
     expr-cast ::= 'as' type
 
-
-    expr-anon-closure-arg ::= dollarident
     expr-delayed-identifier ::= '.' identifier
     expr-paren      ::= '(' ')'
     expr-paren      ::= '(' expr-paren-element (',' expr-paren-element)* ')'
@@ -155,6 +153,8 @@ Closure Expressions
 
 .. syntax-grammar::
     
+    Grammar of a closure expression
+    
     closure-expression --> ``{`` closure-signature-OPT code-block-items ``}``
     
     closure-signature --> tuple-pattern function-signature-result-OPT ``in``
@@ -167,6 +167,19 @@ Closure Expressions
 Anonymous Closure Arguments
 +++++++++++++++++++++++++++
 
+
+.. langref-grammar
+    
+    expr-anon-closure-arg ::= dollarident
+
+
+.. syntax-grammar::
+    
+    Grammar of an anonymous closure argument
+    
+    anonymous-closure-argument --> dollar-identifier
+
+.. TODO: Come up with a better name than dollar-identifier.
 
 
 Parenthesized Expression
