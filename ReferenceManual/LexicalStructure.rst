@@ -138,6 +138,15 @@ Reserved Keywords
 ``__FILE__``
 ``__LINE__``
 
+.. TODO
+   
+   We have a variaty of keywords that appear twice -- once as
+   keywords and then again as literal text in the definition of
+   expression literals.  Let's see if we can't factor them out so one
+   terminal can appear in both places.  For example keyword-as or
+   keyword-FILE.  This issue holds for *all* keywords -- they appear as
+   literals on the right hand side of multiple definitions.
+
 *Keywords used in statements*:
 
 ``break``
