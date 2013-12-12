@@ -318,7 +318,7 @@ Enumeration Declarations
     enumerator --> enumerator-name tuple-type-OPT
     enumerator-name --> identifier
     raw-value-assignment --> ``=`` raw-value-literal
-    raw-value-literal --> integer-literal | float-literal | character-literal | string-literal 
+    raw-value-literal --> integer-literal | floating-point-literal | character-literal | string-literal 
 
 
 .. Note: You can have other declarations like methods inside of an enum declaration (e.g., methods, etc.).
