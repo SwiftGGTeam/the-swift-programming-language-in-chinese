@@ -146,6 +146,11 @@ Reserved Keywords
    terminal can appear in both places.  For example keyword-as or
    keyword-FILE.  This issue holds for *all* keywords -- they appear as
    literals on the right hand side of multiple definitions.
+   Note that 'keyword' is never used on the right hand of any other rule;
+   it's just a list of all keywords.
+   We can have this just be an informational table then,
+   rather than an actual set of production rules.
+   The same is true of punctuation, whitespace, and comments.
 
 *Keywords used in statements*:
 
