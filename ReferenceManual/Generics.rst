@@ -22,6 +22,40 @@ Generic Parameters
 
     same-type-requirement ::= type-identifier '==' type-identifier
 
+.. syntax-grammar::
+
+    Grammar of a generic parameter
+
+    generic-parameters-clause --> ``<`` generic-parameter-list requirement-clause-OPT ``>``
+    generic-parameter-list --> generic-parameter | generic-parameter ``,`` generic-parameters-OPT
+    generic-parameter --> identifier
+    generic-parameter --> identifier ``:`` type-identifier
+    generic-parameter --> identifier ``:`` type-composition
+
+    requirement-clause --> ``where`` requirement-list
+    requirement-list --> requirement | requirement ``,`` requirement-list
+    requirement --> conformance-requirement | same-type-requirement
+
+    conformance-requirement --> type-parameter ``:`` type-identifier
+    conformance-requirement --> type-parameter ``:`` type-composition
+    type-parameter --> type-identifier
+
+    same-type-requirement --> type-identifier ``==`` type-identifier
+
+.. TODO:
+
+    Elsewhere, generic-parameters-clause is just generic-parameters.
+    I avoided that term because below it there is a generic-parameters-list
+    which is more accurately the "list"
+    and in keepig with our naming conventions
+    generic-paramaters should just refer to one or more generic-parameter items
+    which never appears in the grammar.
+
+.. Question:
+    Does type-parameter make things any clearer?
+    I separated it out because the "Foo : Bar" isn't symmentric --
+    the thing on the left is the parameterized type
+    which must be of the concrete type that is the thing on the right.
 
 Generic Arguments
 -----------------
