@@ -119,9 +119,28 @@ Named Expressions
 
 
 
-Super Expressions
-~~~~~~~~~~~~~~~~~
+Superclass Expressions
+~~~~~~~~~~~~~~~~~~~~~~
 
+.. langref-grammar
+    
+    expr-super ::= expr-super-method
+    expr-super ::= expr-super-subscript
+    expr-super ::= expr-super-constructor
+    expr-super-method ::= 'super' '.' expr-identifier
+    expr-super-subscript ::= 'super' '[' expr ']'
+    expr-super-constructor ::= 'super' '.' 'init'
+
+
+.. syntax-grammar::
+    
+    Grammar of a superclass expression
+    
+    superclass-expression --> superclass-method-expression | superclass-subscript-expression | superclass-constructor-expression
+    
+    superclass-method-expression --> ``super`` ``.`` named-expression
+    superclass-subscript-expression --> ``super`` ``[`` expression ``]``
+    superclass-constructor-expression --> ``super`` ``.`` ``init``
 
 
 Closure Expressions
