@@ -17,6 +17,7 @@ Declarations
     decl ::= decl-struct
     decl ::= decl-typealias
     decl ::= decl-var
+    decl ::= decl-let
     decl ::= decl-subscript
 
 
@@ -24,18 +25,19 @@ Declarations
 
     Grammar of a declaration
     
+    declaration --> import-declaration
+    declaration --> variable-declaration
+    declaration --> let-declaration
+    declaration --> typealias-declaration
+    declaration --> function-declaration
+    declaration --> enum-declaration
+    declaration --> enum-element-declaration
+    declaration --> struct-declaration
     declaration --> class-declaration
+    declaration --> protocol-declaration
     declaration --> constructor-declaration
     declaration --> destructor-declaration
     declaration --> extension-declaration
-    declaration --> function-declaration
-    declaration --> import-declaration
-    declaration --> enum-declaration
-    declaration --> enum-element-declaration
-    declaration --> protocol-declaration
-    declaration --> struct-declaration
-    declaration --> typealias-declaration
-    declaration --> variable-declaration
     declaration --> subscript-declaration
     declarations --> declaration declarations-OPT
 
@@ -517,10 +519,10 @@ Subscript Declarations
     subscript-head --> attribute-sequence-OPT ``subscript`` tuple-pattern ``->`` type
 
 
+Attribute Sequences
+-------------------
 
-Attribute Sequence Declarations
--------------------------------
-
+.. TODO: TR: Get the latest list of attributes
 
 .. langref-grammar
 
