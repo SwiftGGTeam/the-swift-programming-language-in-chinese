@@ -6,13 +6,6 @@ Expressions
 .. langref-grammar
 
 
-    expr-binary ::= op-binary-or-ternary expr-unary expr-cast?
-    op-binary-or-ternary ::= operator-binary
-    op-binary-or-ternary ::= '='
-    op-binary-or-ternary ::= '?'-infix expr-sequence ':'
-    expr-cast ::= 'is' type
-    expr-cast ::= 'as' type
-
     expr-dot ::= expr-postfix '.' dollarident
     expr-dot ::= expr-postfix '.' expr-identifier
     expr-subscript ::= expr-postfix '[' expr ']'
@@ -38,6 +31,106 @@ Expressions
 .. Note: Let's play with making a unary expression require a unary operator
    and then folding apart basic-expression.
     
+
+Unary Operators
+---------------
+
+.. NOTE: We haven't quite decided whether unary expressions should come before or after postfix expressions.
+
+.. langref-grammar
+
+    expr-unary   ::= operator-prefix* expr-postfix
+    
+.. syntax-grammar::
+
+    Grammar of a unary expression
+    
+    unary-expression --> prefix-operators-OPT postfix-expression
+
+
+.. TODO: Give a list of the unary operators defined in the Swift stdlib.
+    Then give a cross-reference to the Swift stdlib for more details.
+
+
+Binary Operators
+----------------
+
+.. langref-grammar
+    
+    expr-binary ::= op-binary-or-ternary expr-unary expr-cast?  
+    op-binary-or-ternary ::= operator-binary
+    op-binary-or-ternary ::= '='
+    op-binary-or-ternary ::= '?'-infix expr-sequence ':'    
+
+
+.. syntax-grammar::
+    
+    Grammar of a binary expression
+    
+    binary-expression --> binary-operator unary-expression expression-cast-OPT
+    binary-expression --> assignment-operator unary-expression expression-cast-OPT
+    binary-expression --> conditional-operator unary-expression expression-cast-OPT
+    binary-expressions --> binary-expression binary-expressions-OPT
+
+
+.. TODO: Give a list of the binary operators defined in the Swift stdlib.
+    Then give a cross-reference to the Swift stdlib for more details.
+
+
+
+Builtin Binary Operators
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Assignment Operator
++++++++++++++++++++
+
+
+.. langref-grammar
+
+    op-binary-or-ternary ::= '='
+
+
+.. syntax-grammar::
+    
+    Grammar of an assignment operator
+    
+    assignment-operator --> ``=``
+
+
+
+Conditional Operator
+++++++++++++++++++++
+
+
+.. langref-grammar
+
+    op-binary-or-ternary ::= '?'-infix expr-sequence ':'
+
+
+.. syntax-grammar::
+    
+    Grammar of a conditional operator
+    
+    conditional-operator --> ``?`` expression-sequence ``:``
+
+.. TODO: Discuss in prose that '?' is being used as an infix operator in this context.
+    In additional, there must be whitespace on both sides of '?' and ':'.
+
+
+Type-Casting Operators
+++++++++++++++++++++++
+
+
+.. langref-grammar
+
+    expr-cast ::= 'is' type
+    expr-cast ::= 'as' type
+
+
+.. syntax-grammar::
+    
+    expression-cast --> ``is`` type | ``as`` type
+
 
 Primary Expressions
 -------------------
@@ -96,6 +189,12 @@ Literal Expressions
 
 Named Expressions
 ~~~~~~~~~~~~~~~~~
+
+
+Generic Disambiguation
+++++++++++++++++++++++
+
+
 
 .. langref-grammar
 
@@ -251,103 +350,31 @@ Postfix Expressions
 .. TODO: Also, come up with a better name for force-value-expression.
     
 
-Unary Operators
----------------
-
-.. NOTE: We haven't quite decided whether unary expressions should come before or after postfix expressions.
-
-.. langref-grammar
-
-    expr-unary   ::= operator-prefix* expr-postfix
-    
-.. syntax-grammar::
-
-    Grammar of a unary expression
-    
-    unary-expression --> prefix-operators-OPT postfix-expression
-
-.. TODO: Add the grammar for prefix-operators to Operators in Lexical Structure.
-
-.. TODO: Give a list of the unary operators defined in the Swift stdlib.
-    Then give a cross-reference to the Swift stdlib for more details.
-
-
-Binary Operators
-----------------
-
-Builtin Binary Operators
-------------------------
-
-Assignment Operator
-~~~~~~~~~~~~~~~~~~~
-
-Ternary Operator
-~~~~~~~~~~~~~~~~
-
-Cast Operators
-~~~~~~~~~~~~~~
-
-
-Unary Operators
----------------
-
-
-Literals
---------
-
-
-Identifiers
------------
-
-Generic Disambiguation
-~~~~~~~~~~~~~~~~~~~~~~
-
-
-Super
------
-
-
-Closure Expressions
--------------------
-
-
-Anonymous Closure Arguments
----------------------------
-
-
-Delayed Identifier Resolution
------------------------------
-
-
-Parenthesized Expressions
--------------------------
-
 
 Dot Expressions
----------------
+~~~~~~~~~~~~~~~
 
 
 Subscript Expressions
----------------------
+~~~~~~~~~~~~~~~~~~~~~
 
 
 New Expressions
----------------
+~~~~~~~~~~~~~~~
 
 
-Function Application
---------------------
-(Maybe call this section 'Function Calling' or something similar?)
+Function Call Expression
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-Trailing Closures
------------------
+Trailing Closure Expression
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
 Optional Chaining
------------------
+~~~~~~~~~~~~~~~~~
 
 
 Forcing an Expression's Value
------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

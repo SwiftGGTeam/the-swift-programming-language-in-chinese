@@ -55,7 +55,7 @@ Operators
 +++++++++
 
 
-.. langref-grammar:
+.. langref-grammar
 
     operator ::= [@/=-+*%<>!&|^~]+
     operator ::= \.\.
@@ -75,7 +75,7 @@ Operators
 
     any-identifier ::= identifier | operator
 
-.. syntax-grammar:
+.. syntax-grammar::
 
     operator --> operator-character operator-OPT
     operator --> ``..``
@@ -86,6 +86,7 @@ Operators
     binary-operater --> operator
     prefix-operator --> operator
     postfix-operator --> operator
+    postfix-operators --> postfix-operator postfix-operators-OPT
 
     any-identifier --> identifier | operator
 
