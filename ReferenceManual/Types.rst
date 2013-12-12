@@ -65,6 +65,10 @@ Array Types
 .. Note: Writing it this way rather than as a basic type followed by
    a list of []s -- that preserves grouping of the type as you recurse
    down the tree.
+   
+   Arrays of fixed size are not currently supported. 
+   As a result, we removed "type-array '[' expr ']'" from the grammar.
+   They may or may not be supported in the future.
 
 
 Function Type
