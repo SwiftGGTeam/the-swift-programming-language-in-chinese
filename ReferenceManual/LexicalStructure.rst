@@ -55,6 +55,98 @@ Operators
 +++++++++
 
 
+.. langref-grammar:
+
+    operator ::= [@/=-+*%<>!&|^~]+
+    operator ::= \.\.
+
+      Note: excludes '=', see [1]
+            excludes '->', see [2]
+            excludes unary '&', see [3]
+            excludes '//', '/*', and '*/', see [4]
+            '..' is an operator, not two '.'s.
+
+    operator-binary ::= operator
+    operator-prefix ::= operator
+    operator-postfix ::= operator
+
+    left-binder  ::= [ \r\n\t\(\[\{,;:]
+    right-binder ::= [ \r\n\t\)\]\},;:]
+
+    any-identifier ::= identifier | operator
+
+.. syntax-grammar:
+
+    operator --> operator-character operator-OPT
+    operator --> ``..``
+
+    operator-character --> One of the following characters:
+    @ / = - + * % < > ! & | ^ ~
+
+    binary-operater --> operator
+    prefix-operator --> operator
+    postfix-operator --> operator
+
+    any-identifier --> identifier | operator
+
+.. TODO: Move any-identifier.  It doesn't belong here -- it's not an operator.
+
+Operators that are followed by one of the following characters are *left bound*:
+
+    Space, Carriage Return, New Line, Horizontal Tab
+    ( [ { , ; :
+
+
+Operators that are preceded by one of the following characters are *right bound*:
+
+    Space, Carriage Return, New Line, Horizontal Tab
+    ) ] } , ; :
+
+Being right/left bound determines whether an operator is
+a prefix operator, a postfix operator, or a binary operator.
+Operators that are left bound and not right bound are postfix operators.
+Operators that are right bound and not left bound are prefix operators.
+Operators that are not bound, and operators that are right and left bound, are binary operators.
+
+Any operator immediately followed by a period (``.``)
+is not right bound if it is already left bound.
+This special case ensures that expressions like ``a@.b`` are parsed
+as ``(a@).b`` rather than ``(a) @ (.b)``.
+
+..  TR: What causes the ``@`` to be left bound here?
+    Langref says:
+    As an exception, an operator immediately followed by a dot ('.') is
+    only considered right-bound if not already left-bound. This allows a@.prop
+    to be parsed as (a@).prop rather than as a @ .prop.
+
+If the ``!`` or ``?`` operator is left bound, it is a postfix operator,
+regardless of whether it is right bound.
+To use the ``?`` operator as syntactic sugar for ``Optional``, it must be left bound;
+to use it in the ternary (``? :``) operator, it must not be left bound.
+
+The following character sequences are reserved punctuation and may not be used as operators: ::
+
+    = -> // /* */ ...  { } ( ) [ ] . , ; :
+
+The unary prefix operator ``&`` is reserved punctuation and may not be used as an operator.
+
+Operators with a leading ``<`` or ``>`` are split into two tokens:
+the leading ``<`` or ``>`` and the remainder of the token.
+The remainder may itself be split in the same way.
+This removes the need for disambiguating spaces between the closing ``>`` characters
+in nested protocols such as ``A<B<C>>`` --
+it parsed as ``A < B < C > >`` rather than as ``A < B < C >>`.
+
+.. langref
+    When parsing certain grammatical constructs that involve '<' and '>' (such
+    as protocol composition types), an operator with a leading '<' or '>' may
+    be split into two or more tokens: the leading '<' or '>' and the remainder
+    of the token, which may be an operator or punctuation token that may itself
+    be further split. This rule allows us to parse nested constructs such as
+    A<B<C>> without requiring spaces between the closing '>'s.
+
+
+
 Implementation Identifier Token
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -63,6 +155,8 @@ Reserved Punctuation and Keywords
 
 Reserved Punctuation Tokens
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. Note: Reserved punctuation is discussed under operators.
 
 
 Reserved Keywords
