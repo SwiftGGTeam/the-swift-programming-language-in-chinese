@@ -66,3 +66,11 @@ Generic Arguments
     generic-args ::= '<' generic-arg (',' generic-arg)* '>'
 
     generic-arg ::= type
+
+.. syntax-grammar::
+
+    Grammar of a generic argument
+
+    generic-argument-clause --> ``<`` generic-argument-list ``>``
+    generic-argument-list --> generic-argument | generic-argument ``,`` generic-argument-list
+    generic-argument --> type
