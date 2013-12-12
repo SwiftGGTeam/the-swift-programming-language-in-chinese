@@ -14,9 +14,7 @@ Expressions
     expr-cast ::= 'as' type
 
     expr-delayed-identifier ::= '.' identifier
-    expr-paren      ::= '(' ')'
-    expr-paren      ::= '(' expr-paren-element (',' expr-paren-element)* ')'
-    expr-paren-element ::= (identifier ':')? expr
+
     expr-dot ::= expr-postfix '.' dollarident
     expr-dot ::= expr-postfix '.' expr-identifier
     expr-subscript ::= expr-postfix '[' expr ']'
@@ -185,6 +183,21 @@ Anonymous Closure Arguments
 Parenthesized Expression
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
+
+.. langref-grammar
+    
+    expr-paren      ::= '(' ')'
+    expr-paren      ::= '(' expr-paren-element (',' expr-paren-element)* ')'
+    expr-paren-element ::= (identifier ':')? expr
+
+
+.. syntax-grammar::
+    
+    Grammar of a parenthesized expression
+    
+    parenthesized-expression --> ``(`` expression-element-list-OPT``)``
+    expression-element-list --> expression-element | expression-element ``,`` expression-element-list
+    expression-element --> expression | identifier ``:`` expression
 
 
 Delayed Identifier Expressions
