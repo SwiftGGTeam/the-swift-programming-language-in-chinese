@@ -14,9 +14,6 @@ Expressions
     expr-cast ::= 'as' type
 
 
-    expr-closure ::= '{' closure-signature? brace-item-list '}'
-    closure-signature ::= pattern-tuple func-signature-result? 'in'
-    closure-signature ::= identifier (',' identifier*) func-signature-result? 'in'
     expr-anon-closure-arg ::= dollarident
     expr-delayed-identifier ::= '.' identifier
     expr-paren      ::= '(' ')'
@@ -68,7 +65,7 @@ Primary Expressions
     
     primary-expression --> literal-expression
     primary-expression --> named-expression
-    primary-expression --> super-expression
+    primary-expression --> superclass-expression
     primary-expression --> closure-expression
     primary-expression --> anonymous-closure-argument
     primary-expression --> parenthesized-expression
@@ -145,6 +142,26 @@ Superclass Expressions
 
 Closure Expressions
 ~~~~~~~~~~~~~~~~~~~
+
+.. langref-grammar
+    
+    expr-closure ::= '{' closure-signature? brace-item-list '}'
+    closure-signature ::= pattern-tuple func-signature-result? 'in'
+    closure-signature ::= identifier (',' identifier*) func-signature-result? 'in'
+
+.. TR: A required brace-item-list doesn't seem correct. 
+    Rather, it should be brace-item*. Is this just a typo?
+    Another typo: The '*' should come after the paren in (',' identifier*).
+
+.. syntax-grammar::
+    
+    closure-expression --> ``{`` closure-signature-OPT code-block-items ``}``
+    
+    closure-signature --> tuple-pattern function-signature-result-OPT ``in``
+    closure-signature --> identifier-list function-signature-result-OPT ``in``
+
+.. TODO: Add grammar for identifier-list to Identifiers in Lexical Structure.
+    (identifier-list --> identifier | identifier ``,`` identifier-list)
 
 
 Anonymous Closure Arguments
