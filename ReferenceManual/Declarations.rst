@@ -145,6 +145,27 @@ Variable Declarations
    declarations.
 
 
+Let Declaration
+---------------
+
+.. syntax-outline::
+
+    let <#variable name#> : <#type#> = <#expression#>
+
+
+
+.. langref-grammar
+
+    decl-let    ::= attribute-list 'let' pattern initializer?  (',' pattern initializer?)*
+    initializer ::= '=' expr
+
+.. syntax-grammar::
+    
+    Grammar of a let declaration
+    
+    let-declaration --> attribute-sequence-OPT ``let`` pattern-initializer-list
+
+
 Typealias Declarations
 ----------------------
 
