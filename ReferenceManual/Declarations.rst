@@ -315,7 +315,8 @@ Enumeration Declarations
     
     enum-element-declaration --> attribute-sequence-OPT ``case`` enumerator-list
     enumerator-list --> enumerator raw-value-assignment-OPT | enumerator raw-value-assignment-OPT ``,`` enumerator-list
-    enumerator --> identifier tuple-type-OPT
+    enumerator --> enumerator-name tuple-type-OPT
+    enumerator-name --> identifier
     raw-value-assignment --> ``=`` raw-value-literal
     raw-value-literal --> integer-literal | float-literal | character-literal | string-literal 
 

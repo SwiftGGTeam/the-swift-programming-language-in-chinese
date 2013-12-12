@@ -13,8 +13,6 @@ Expressions
     expr-cast ::= 'is' type
     expr-cast ::= 'as' type
 
-    expr-delayed-identifier ::= '.' identifier
-
     expr-dot ::= expr-postfix '.' dollarident
     expr-dot ::= expr-postfix '.' expr-identifier
     expr-subscript ::= expr-postfix '[' expr ']'
@@ -162,8 +160,8 @@ Closure Expressions
     (identifier-list --> identifier | identifier ``,`` identifier-list)
 
 
-Anonymous Closure Arguments
-+++++++++++++++++++++++++++
+Anonymous Closure Argument
+++++++++++++++++++++++++++
 
 
 .. langref-grammar
@@ -180,8 +178,8 @@ Anonymous Closure Arguments
 .. TODO: Come up with a better name than dollar-identifier.
 
 
-Parenthesized Expression
-~~~~~~~~~~~~~~~~~~~~~~~~
+Parenthesized Expressions
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
 .. langref-grammar
@@ -200,8 +198,19 @@ Parenthesized Expression
     expression-element --> expression | identifier ``:`` expression
 
 
-Delayed Identifier Expressions
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Delayed Identifier Expression
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. langref-grammar
+    
+    expr-delayed-identifier ::= '.' identifier
+
+
+.. syntax-grammar::
+    
+    Grammar of a delayed identifier expression
+    
+    delayed-identifier-expression --> ``.`` enumerator-name
 
 
 Postfix Expressions
