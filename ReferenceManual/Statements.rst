@@ -14,7 +14,7 @@ Statements
 .. syntax-grammar::
 
     Grammar of a statement
-   
+
     statement --> semicolon-statement
     statement --> if-statement
     statement --> while-statement
@@ -23,6 +23,7 @@ Statements
     statement --> switch-statement
     statement --> control-transfer-statement
 
+
 Semicolon Statement
 -------------------
 
@@ -30,12 +31,12 @@ Semicolon Statement
 
     stmt-semicolon ::= ';'
 
-
 .. syntax-grammar::
 
     Grammar of a semicolon statement
-   
+
     semicolon-statement --> ``;``
+
 
 Looping Statements
 ------------------
@@ -57,7 +58,6 @@ C-Style For Statements
 
 where the parentheses are optional.
 
-
 .. langref-grammar
 
     stmt-for-c-style    ::= 'for'     stmt-for-c-style-init? ';' expr? ';' expr-basic?     brace-item-list
@@ -65,14 +65,13 @@ where the parentheses are optional.
     stmt-for-c-style-init ::= decl-var
     stmt-for-c-style-init ::= expr
 
-
 .. syntax-grammar::
 
     Grammar of a C-style for statement
-   
+
     c-style-for-statement --> ``for`` for-init-OPT ``;`` expression-OPT ``;`` basic-expression-OPT code-block
     c-style-for-statement --> ``for`` ``(`` for-init-OPT ``;`` expression-OPT ``;`` basic-expression-OPT ``)`` code-block
-   
+
     for-init --> variable-declaration | expression
 
 For-Each Statement
@@ -84,21 +83,19 @@ For-Each Statement
         <#code to execute#>
     }
 
-
 .. langref-grammar
 
     stmt-for-each ::= 'for' pattern 'in' expr-basic brace-item-list
 
-
 .. syntax-grammar::
 
     Grammar of a for-each statement
-   
+
     for-each-statement --> ``for`` pattern ``in`` basic-expression code-block
+
 
 While Statement
 ~~~~~~~~~~~~~~~
-
 
 A while statement has the following general form:
 
@@ -112,9 +109,8 @@ A while statement has the following general form:
 
     stmt-while ::= 'while' expr-basic brace-item-list
 
-
 .. syntax-grammar::
-  
+
     Grammar of a while statement
 
     while-statement --> ``while`` basic-expression  code-block
@@ -123,24 +119,22 @@ A while statement has the following general form:
 Do-While Statement
 ~~~~~~~~~~~~~~~~~~
 
-
 .. syntax-outline::
 
     do {
         <#code to execute#>
     } while <#condition#>
 
-
 .. langref-grammar
 
     stmt-do-while ::= 'do' brace-item-list 'while' expr
 
-
 .. syntax-grammar::
-  
+
     Grammar of a do-while statement
 
     do-while-statement --> ``do`` code-block ``while`` expression
+
 
 Branching Statements
 --------------------
@@ -161,7 +155,6 @@ The general format of an ``if`` statement is
 
 where the ``else`` part is optional.
 
-
 .. syntax-outline::
 
     if <#condition 1#> {
@@ -172,13 +165,11 @@ where the ``else`` part is optional.
         <#code to execute if both conditions are false#>
     }
 
-
 .. langref-grammar
 
     stmt-if      ::= 'if' expr-basic brace-item-list stmt-if-else?
     stmt-if-else ::= 'else' brace-item-list
     stmt-if-else ::= 'else' stmt-if
-
 
 .. syntax-grammar::
 
@@ -186,6 +177,7 @@ where the ``else`` part is optional.
 
     if-statement  --> ``if`` basic-expression code-block if-else-statement-OPT
     if-else-statement  --> ``else`` code-block | ``else`` if-statement
+
 
 Switch Statements
 ~~~~~~~~~~~~~~~~~
@@ -222,7 +214,7 @@ see “Switch” in the :doc:`../LanguageGuide/LanguageGuide`.
 A switch case may optionally contain a **guard expression**, which is introduced by the keyword ``where`` followed by an expression.
 Guard expressions are used to provide an additional condition before a case is considered matched to the control expression.
 If a guard expression is present, the block of code within the relevant case is executed only if
-the value of the control expression matches one of the patterns of the case and the guard expression evaluates to ``true``. 
+the value of the control expression matches one of the patterns of the case and the guard expression evaluates to ``true``.
 In the following example, for instance, a control expression matches the case::
 
     (swift) case (var x, var y) where x == y:
@@ -246,6 +238,7 @@ As a result, if multiple cases contain patterns that evaluate to the same value,
 and thus can match the value of the control expression,
 the program executes only the code within the first matching case in source order.
 
+
 Switch Statements Must Be Exhaustive
 ++++++++++++++++++++++++++++++++++++
 
@@ -253,6 +246,7 @@ In Swift, switch statements must be **exhaustive**---that is,
 every possible value of the control expression’s type must match the value of at least one pattern of a case.
 When this simply isn’t feasible (for instance, when the control expression’s type is ``Int``),
 you can include a default case to satisfy the requirement.
+
 
 Execution Does Not Fall Through Cases Implicitly
 ++++++++++++++++++++++++++++++++++++++++++++++++
@@ -264,7 +258,6 @@ explicitly include a fall-through statement, which simply consists of the keywor
 in the case from which you want execution to continue.
 For an example of how to use a fall-through statement in a switch statement,
 see “Fall Through” in the :doc:`../LanguageGuide/LanguageGuide`.
-
 
 .. langref-grammar
 
@@ -281,18 +274,19 @@ see “Fall Through” in the :doc:`../LanguageGuide/LanguageGuide`.
     switch-statement --> ``switch`` basic-expression ``{`` switch-cases-OPT ``}``
     switch-cases --> switch-case switch-cases-OPT
     switch-case --> case-labels code-block-items-OPT | default-label code-block-items-OPT
-   
+
     case-labels --> case-label case-labels-OPT
     case-label --> ``case`` pattern-list guard-clause-OPT ``:``
     default-label --> ``default:``
-  
+
     guard-clause --> ``where`` guard-expression
     guard-expression --> expression
- 
+
 .. TODO:
- 
+
      Add elsewhere: pattern-list, and possibly move guard-expression to the
      expressions chapter.
+
 
 Control Transfer Statements
 ---------------------------
@@ -308,11 +302,12 @@ Control Transfer Statements
 .. syntax-grammar::
 
     Grammar of a control transfer statement
-   
+
     control-transfer-statement --> break-statement
     control-transfer-statement --> continue-statement
     control-transfer-statement --> fallthrough-statement
     control-transfer-statement --> return-statement
+
 
 Break Statement
 ~~~~~~~~~~~~~~~
@@ -325,7 +320,7 @@ Break Statement
 .. syntax-grammar::
 
     Grammar of a break statement
-   
+
     break-statement --> ``break``
 
 
@@ -340,7 +335,7 @@ Continue Statement
 .. syntax-grammar::
 
     Grammar of a continue statement
-   
+
     continue-statement --> ``continue``
 
 
@@ -354,12 +349,11 @@ Fall-Through Statement
 .. syntax-grammar::
 
     Grammar of a fall-through statement
-   
+
     fallthrough-statement --> ``fallthrough``
 
 Return Statements
 ~~~~~~~~~~~~~~~~~
-
 
 .. langref-grammar
 
@@ -370,6 +364,5 @@ Return Statements
 .. syntax-grammar::
 
     Grammar of a return statement
-   
-    return-statement --> ``return`` | ``return`` expression
 
+    return-statement --> ``return`` | ``return`` expression

@@ -4,7 +4,6 @@ Lexical Structure
 .. TODO: write a brief intro to this chapter.
 
 
-
 Whitespace and Comments
 -----------------------
 
@@ -43,9 +42,10 @@ Whitespace and Comments
 
 Multiline comments may be nested.
 
-  
+
 Identifiers
 -----------
+
 
 Identifier Tokens
 ~~~~~~~~~~~~~~~~~
@@ -53,7 +53,6 @@ Identifier Tokens
 
 Operators
 +++++++++
-
 
 .. langref-grammar
 
@@ -147,12 +146,13 @@ it parsed as ``A < B < C > >`` rather than as ``A < B < C >>`.
     A<B<C>> without requiring spaces between the closing '>'s.
 
 
-
 Implementation Identifier Token
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+
 Reserved Punctuation and Keywords
 ---------------------------------
+
 
 Reserved Punctuation Tokens
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -235,7 +235,7 @@ Reserved Keywords
 ``__LINE__``
 
 .. TODO
-   
+
    We have a variaty of keywords that appear twice -- once as
    keywords and then again as literal text in the definition of
    expression literals.  Let's see if we can't factor them out so one
@@ -270,6 +270,7 @@ Reserved Keywords
 Constants
 ---------
 
+
 Integer Literals
 ~~~~~~~~~~~~~~~~
 
@@ -286,17 +287,17 @@ String Literals
 ~~~~~~~~~~~~~~~
 
 
-
 Translation Unit
 ----------------
 
 .. TODO:
 
     Better to describe this part of the grammar in prose.
-    
+
 .. langref-grammar
 
     translation-unit ::= brace-item*
+
 
 Code Blocks
 -----------
@@ -306,7 +307,6 @@ Code Blocks
     {
         <#code to execute#>
     }
-        
 
 .. langref-grammar
 
@@ -315,15 +315,10 @@ Code Blocks
     brace-item      ::= expr
     brace-item      ::= stmt
 
-
 .. syntax-grammar::
 
     Grammar of a code block
-   
+
     code-block --> ``{`` code-block-items-OPT ``}``
     code-block-items --> code-block-item code-block-items-OPT
     code-block-item --> declaration | expression | statement
-
-
-
-
