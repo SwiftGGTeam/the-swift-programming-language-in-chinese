@@ -19,13 +19,16 @@ Expressions
 
     Grammar of an expression
 
-    expression --> basic-expression | trailing-closure-expression expression-cast-OPT
-    basic-expression --> expression-sequence expression-cast-OPT
+    expression --> expression-sequence expression-cast-OPT
     expression-sequence --> unary-expression binary-expressions-OPT
-    binary-expressions --> binary-expression binary-expressions-OPT
 
 .. Note: Let's play with making a unary expression require a unary operator
    and then folding apart basic-expression.
+
+.. TR: A trailing-closure-expression seems to be allowed only in the context of function calling.
+    As a result, there's no need to have it at the top level of the expression grammar.
+    As a result, we can move it to the function-call-expression grammar
+    and remove basic-expression as a syntactic category. Is this change OK?
 
 
 Unary Operators
@@ -228,6 +231,7 @@ Closure Expressions
     Grammar of a closure expression
 
     closure-expression --> ``{`` closure-signature-OPT code-block-items ``}``
+    closure-expressions --> closure-expression closure-expressions-OPT
 
     closure-signature --> tuple-pattern function-signature-result-OPT ``in``
     closure-signature --> identifier-list function-signature-result-OPT ``in``
@@ -340,9 +344,16 @@ New Expressions
 Function Call Expression
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
+.. langref-grammar
 
-Trailing Closure Expression
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    expr-call ::= expr-postfix expr-paren
+
+.. syntax-grammar::
+
+    Grammar of a function call expression
+
+    function-call-expression --> postfix-expression parenthesized-expression trailing-closure-OPT
+    trailing-closure --> closure-expressions expression-cast-OPT
 
 
 Optional Chaining
