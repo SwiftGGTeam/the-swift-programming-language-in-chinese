@@ -143,8 +143,6 @@ Primary Expressions
     primary-expression --> parenthesized-expression
     primary-expression --> delayed-identifier-expression
 
-.. TODO: Come up with a better name for delayed-identifier-expression.
-
 .. Note: One reason for breaking primary expressions out of postfix
    expressions is for exposition -- it makes it easier to organize the
    prose surrounding the production rules.
@@ -287,6 +285,8 @@ Delayed Identifier Expression
     Grammar of a delayed identifier expression
 
     delayed-identifier-expression --> ``.`` enumerator-name
+
+.. TODO: Come up with a better name for delayed-identifier-expression.
 
 
 Postfix Expressions
