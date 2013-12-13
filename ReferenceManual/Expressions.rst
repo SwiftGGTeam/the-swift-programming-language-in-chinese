@@ -3,6 +3,13 @@ Expressions
 
 .. langref-grammar
 
+    expr          ::= expr-basic
+    expr          ::= expr-trailing-closure expr-cast?
+
+    expr-basic    ::= expr-sequence expr-cast?
+
+    expr-sequence ::= expr-unary expr-binary*
+
     expr-dot ::= expr-postfix '.' dollarident
     expr-dot ::= expr-postfix '.' expr-identifier
     expr-subscript ::= expr-postfix '[' expr ']'
@@ -73,6 +80,16 @@ Binary Operators
 .. TODO: Give a list of the binary operators defined in the Swift stdlib.
     Then give a cross-reference to the Swift stdlib for more details.
 
+.. TR: Strictly speaking, a binary-expression is not an actual expression;
+    rather, it is part of an expression
+    (the expression is well-formed when it's the continuation of a unary expression).
+    The same goes for expression-cast.
+    What's the reason behind formulating the grammar in this way?
+
+.. TODO: Depending on how strict we want to be with naming our syntactic categories,
+    and the answer to the tech review question above,
+    we may want to rename this to something like a binary-expression-clause,
+    because the current formulation (on it's own) doesn't produce a well-formed expression.
 
 Builtin Binary Operators
 ~~~~~~~~~~~~~~~~~~~~~~~~
