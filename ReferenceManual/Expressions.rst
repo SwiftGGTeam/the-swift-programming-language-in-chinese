@@ -29,9 +29,6 @@ Expressions
     expression --> expression-sequence expression-cast-OPT
     expression-sequence --> unary-expression binary-expressions-OPT
 
-.. Note: Let's play with making a unary expression require a unary operator
-   and then folding apart basic-expression.
-
 .. TR: A trailing-closure-expression seems to be allowed only in the context of function calling.
     As a result, there's no need to have it at the top level of the expression grammar.
     As a result, we can move it to the function-call-expression grammar

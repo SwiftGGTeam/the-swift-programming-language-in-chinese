@@ -69,8 +69,8 @@ where the parentheses are optional.
 
     Grammar of a C-style for statement
 
-    c-style-for-statement --> ``for`` for-init-OPT ``;`` expression-OPT ``;`` basic-expression-OPT code-block
-    c-style-for-statement --> ``for`` ``(`` for-init-OPT ``;`` expression-OPT ``;`` basic-expression-OPT ``)`` code-block
+    c-style-for-statement --> ``for`` for-init-OPT ``;`` expression-OPT ``;`` expression-OPT code-block
+    c-style-for-statement --> ``for`` ``(`` for-init-OPT ``;`` expression-OPT ``;`` expression-OPT ``)`` code-block
 
     for-init --> variable-declaration | expression
 
@@ -91,7 +91,7 @@ For-Each Statement
 
     Grammar of a for-each statement
 
-    for-each-statement --> ``for`` pattern ``in`` basic-expression code-block
+    for-each-statement --> ``for`` pattern ``in`` expression code-block
 
 
 While Statement
@@ -113,7 +113,7 @@ A while statement has the following general form:
 
     Grammar of a while statement
 
-    while-statement --> ``while`` basic-expression  code-block
+    while-statement --> ``while`` expression  code-block
 
 
 Do-While Statement
@@ -175,7 +175,7 @@ where the ``else`` part is optional.
 
     Grammar of an if statement
 
-    if-statement  --> ``if`` basic-expression code-block if-else-statement-OPT
+    if-statement  --> ``if`` expression code-block if-else-statement-OPT
     if-else-statement  --> ``else`` code-block | ``else`` if-statement
 
 
@@ -201,8 +201,7 @@ A switch statement has the following general form:
             <#code to execute#>
     }
 
-Because the control expression in a Swift switch statement is a *basic-expression*,
-the values of expressions your code can branch on is very flexible. For instance,
+The values of expressions your code can branch on is very flexible. For instance,
 in addition to the values of scalar types, such as ``Int`` and ``Char``,
 your code can branch on the values of any type, including floating point numbers, strings,
 tuples, instances of custom classes, and optionals.
@@ -271,7 +270,7 @@ see “Fall Through” in the :doc:`../LanguageGuide/LanguageGuide`.
 
     Grammar of a switch statement
 
-    switch-statement --> ``switch`` basic-expression ``{`` switch-cases-OPT ``}``
+    switch-statement --> ``switch`` expression ``{`` switch-cases-OPT ``}``
     switch-cases --> switch-case switch-cases-OPT
     switch-case --> case-labels code-block-items-OPT | default-label code-block-items-OPT
 
