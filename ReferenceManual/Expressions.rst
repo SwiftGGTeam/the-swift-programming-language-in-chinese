@@ -118,6 +118,8 @@ Type-Casting Operators
 
 .. syntax-grammar::
 
+    Grammar of an expression cast
+
     expression-cast --> ``is`` type | ``as`` type
 
 
