@@ -7,19 +7,14 @@ Generic Parameters
 .. langref-grammar
 
     generic-params ::= '<' generic-param (',' generic-param)* where-clause? '>'
-
     generic-param ::= identifier
     generic-param ::= identifier ':' type-identifier
     generic-param ::= identifier ':' type-composition
-
     where-clause ::= 'where' requirement (',' requirement) *
-
     requirement ::= conformance-requirement
                 ::= same-type-requirement
-
     conformance-requirement ::= type-identifier ':' type-identifier
     conformance-requirement ::= type-identifier ':' type-composition
-
     same-type-requirement ::= type-identifier '==' type-identifier
 
 .. syntax-grammar::
@@ -27,7 +22,7 @@ Generic Parameters
     Grammar of a generic parameter
 
     generic-parameters-clause --> ``<`` generic-parameter-list requirement-clause-OPT ``>``
-    generic-parameter-list --> generic-parameter | generic-parameter ``,`` generic-parameters-OPT
+    generic-parameter-list --> generic-parameter | generic-parameter ``,`` generic-parameter-list
     generic-parameter --> identifier
     generic-parameter --> identifier ``:`` type-identifier
     generic-parameter --> identifier ``:`` type-composition
@@ -57,14 +52,13 @@ Generic Parameters
     the thing on the left is the parameterized type
     which must be of the concrete type that is the thing on the right.
 
+
 Generic Arguments
 -----------------
-
 
 .. langref-grammar
 
     generic-args ::= '<' generic-arg (',' generic-arg)* '>'
-
     generic-arg ::= type
 
 .. syntax-grammar::
