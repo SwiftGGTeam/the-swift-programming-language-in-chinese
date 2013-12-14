@@ -287,7 +287,7 @@ Parenthesized Expressions
 
     Grammar of a parenthesized expression
 
-    parenthesized-expression --> ``(`` expression-element-list-OPT``)``
+    parenthesized-expression --> ``(`` expression-element-list-OPT ``)``
     expression-element-list --> expression-element | expression-element ``,`` expression-element-list
     expression-element --> expression | identifier ``:`` expression
 
