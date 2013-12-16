@@ -49,7 +49,7 @@ Generic Arguments
 
 .. syntax-grammar::
 
-    Grammar of a generic argument
+    Grammar of a generic argument clause
 
     generic-argument-clause --> ``<`` generic-argument-list ``>``
     generic-argument-list --> generic-argument | generic-argument ``,`` generic-argument-list
