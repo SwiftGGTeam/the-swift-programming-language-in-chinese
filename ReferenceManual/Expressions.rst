@@ -203,7 +203,7 @@ Generic Disambiguation
 
     Grammar of a named expression
 
-    named-expression --> identifier generic-arguments-OPT
+    named-expression --> identifier generic-argument-clause-OPT
 
 
 Superclass Expressions

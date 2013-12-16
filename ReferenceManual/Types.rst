@@ -114,7 +114,7 @@ Type Identifiers
 
     Grammar of a type identifier
 
-    type-identifier --> type-name generic-arguments-OPT | type-name generic-arguments-OPT ``.`` type-identifier
+    type-identifier --> type-name generic-argument-clause-OPT | type-name generic-argument-clause-OPT ``.`` type-identifier
     type-name --> identifier
 
 .. TODO:
@@ -125,8 +125,8 @@ Type Identifiers
 
     Grammar of a type identifier
 
-    type-identifier --> type-name generic-arguments-OPT
-    type-identifier --> type-name generic-arguments-OPT ``.`` type-identifier
+    type-identifier --> type-name generic-argument-clause-OPT
+    type-identifier --> type-name generic-argument-clause-OPT ``.`` type-identifier
     type-name --> identifier
 
 
