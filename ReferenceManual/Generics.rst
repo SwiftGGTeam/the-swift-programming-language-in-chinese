@@ -29,9 +29,8 @@ Generic Parameters
     requirement-list --> requirement | requirement ``,`` requirement-list
     requirement --> conformance-requirement | same-type-requirement
 
-    conformance-requirement --> type-parameter ``:`` type-identifier
-    conformance-requirement --> type-parameter ``:`` protocol-composition-type
-    type-parameter --> type-identifier
+    conformance-requirement --> type-identifier ``:`` type-identifier
+    conformance-requirement --> type-identifier ``:`` protocol-composition-type
     same-type-requirement --> type-identifier ``==`` type-identifier
 
 .. TODO:
