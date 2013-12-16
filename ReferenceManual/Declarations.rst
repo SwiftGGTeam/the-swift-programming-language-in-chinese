@@ -207,7 +207,7 @@ Function Signatures
 
     Grammar of a function declaration
 
-    function-declaration --> attribute-sequence-OPT ``func`` function-name generic-parameters-OPT function-signature code-block-OPT
+    function-declaration --> attribute-sequence-OPT ``func`` function-name generic-parameter-clause-OPT function-signature code-block-OPT
     function-name --> any-identifier
 
     function-signature --> function-arguments function-signature-result-OPT
@@ -288,7 +288,7 @@ Enumeration Declarations
 
     Grammar of an enumeration declaration
 
-    enum-declaration --> attribute-sequence-OPT ``enum`` enum-name generic-parameters-OPT type-inheritance-clause-OPT enum-body
+    enum-declaration --> attribute-sequence-OPT ``enum`` enum-name generic-parameter-clause-OPT type-inheritance-clause-OPT enum-body
     enum-name --> identifier
     enum-body --> ``{`` declarations-OPT ``}``
 
@@ -325,7 +325,7 @@ Structure Declarations
 
    Grammar of a structure declaration
 
-   struct-declaration --> attribute-sequence-OPT ``struct`` struct-name generic-parameters-OPT type-inheritance-clause-OPT struct-body
+   struct-declaration --> attribute-sequence-OPT ``struct`` struct-name generic-parameter-clause-OPT type-inheritance-clause-OPT struct-body
    struct-name --> identifier
    struct-body --> ``{`` declarations-OPT ``}``
 
@@ -348,7 +348,7 @@ Class Declarations
 
     Grammar of a class declaration
 
-    class-declaration --> attribute-sequence-OPT ``class`` class-name generic-parameters-OPT type-inheritance-clause-OPT class-body
+    class-declaration --> attribute-sequence-OPT ``class`` class-name generic-parameter-clause-OPT type-inheritance-clause-OPT class-body
     class-name --> identifier
     class-body --> ``{`` declarations-OPT ``}``
 
@@ -415,7 +415,7 @@ Constructor Declarations
 
     Grammar of a constructor declaration
 
-    constructor-declaration --> attribute-sequence-OPT ``init`` generic-parameters-OPT constructor-signature code-block
+    constructor-declaration --> attribute-sequence-OPT ``init`` generic-parameter-clause-OPT constructor-signature code-block
     constructor-signature --> tuple-pattern | identifier-or-any selector-arguments
 
 
