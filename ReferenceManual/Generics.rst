@@ -23,18 +23,15 @@ Generic Parameters
 
     generic-parameter-clause --> ``<`` generic-parameter-list requirement-clause-OPT ``>``
     generic-parameter-list --> generic-parameter | generic-parameter ``,`` generic-parameter-list
-    generic-parameter --> identifier
-    generic-parameter --> identifier ``:`` type-identifier
-    generic-parameter --> identifier ``:`` type-composition
+    generic-parameter --> type-name type-inheritance-clause-OPT | type-name ``:`` protocol-composition-type
 
     requirement-clause --> ``where`` requirement-list
     requirement-list --> requirement | requirement ``,`` requirement-list
     requirement --> conformance-requirement | same-type-requirement
 
     conformance-requirement --> type-parameter ``:`` type-identifier
-    conformance-requirement --> type-parameter ``:`` type-composition
+    conformance-requirement --> type-parameter ``:`` protocol-composition-type
     type-parameter --> type-identifier
-
     same-type-requirement --> type-identifier ``==`` type-identifier
 
 .. TODO:
