@@ -148,7 +148,7 @@ Primary Expressions
     Grammar of a primary expression
 
     primary-expression --> literal-expression
-    primary-expression --> named-expression
+    primary-expression --> identifier-expression
     primary-expression --> superclass-expression
     primary-expression --> closure-expression
     primary-expression --> anonymous-closure-argument
@@ -181,8 +181,8 @@ Literal Expressions
     literal-expression --> ``__FILE__`` | ``__LINE__`` | ``__COLUMN__``
 
 
-Named Expressions
-~~~~~~~~~~~~~~~~~
+Identifier Expressions
+~~~~~~~~~~~~~~~~~~~~~~
 
 
 Generic Disambiguation
@@ -194,9 +194,9 @@ Generic Disambiguation
 
 .. syntax-grammar::
 
-    Grammar of a named expression
+    Grammar of a identifier expression
 
-    named-expression --> identifier generic-argument-clause-OPT
+    identifier-expression --> identifier generic-argument-clause-OPT
 
 
 Superclass Expressions
@@ -217,7 +217,7 @@ Superclass Expressions
 
     superclass-expression --> superclass-method-expression | superclass-subscript-expression | superclass-constructor-expression
 
-    superclass-method-expression --> ``super`` ``.`` named-expression
+    superclass-method-expression --> ``super`` ``.`` identifier-expression
     superclass-subscript-expression --> ``super`` ``[`` expression ``]``
     superclass-constructor-expression --> ``super`` ``.`` ``init``
 
