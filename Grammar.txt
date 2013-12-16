@@ -40,12 +40,5 @@ original LangRef grammar; delete the corresponding grammar from this document.
     id-continue ::= id-start
     identifier-or-any ::= identifier
     identifier-or-any ::= '_'
-    operator ::= [@/=-+*%<>!&|^~]+
-    operator ::= \.\.
-    operator-binary ::= operator
-    operator-prefix ::= operator
-    operator-postfix ::= operator
-    left-binder  ::= [ \r\n\t\(\[\{,;:]
-    right-binder ::= [ \r\n\t\)\]\},;:]
-    any-identifier ::= identifier | operator
+
     dollarident ::= '$' id-continue+
