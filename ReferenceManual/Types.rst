@@ -235,6 +235,7 @@ Type Inheritance List
 
 .. syntax-grammar::
 
-    Grammar of a type inheritance list
+    Grammar of a type inheritance clause
 
+    type-inheritance-clause --> ':' type-inheritance-list
     type-inheritance-list --> type-identifier | type-identifier ``,`` type-inheritance-list

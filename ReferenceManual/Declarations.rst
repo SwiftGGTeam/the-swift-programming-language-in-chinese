@@ -171,7 +171,7 @@ Typealias Declarations
     Grammar of a typealias declaration
 
     typealias-declaration --> typealias-head ``=`` type
-    typealias-head --> ``typealias`` typealias-name type-inheritance-list-OPT
+    typealias-head --> ``typealias`` typealias-name type-inheritance-clause-OPT
     typealias-name --> identifier
 
 
@@ -288,7 +288,7 @@ Enumeration Declarations
 
     Grammar of an enumeration declaration
 
-    enum-declaration --> attribute-sequence-OPT ``enum`` enum-name generic-parameters-OPT type-inheritance-list-OPT enum-body
+    enum-declaration --> attribute-sequence-OPT ``enum`` enum-name generic-parameters-OPT type-inheritance-clause-OPT enum-body
     enum-name --> identifier
     enum-body --> ``{`` declarations-OPT ``}``
 
@@ -325,7 +325,7 @@ Structure Declarations
 
    Grammar of a structure declaration
 
-   struct-declaration --> attribute-sequence-OPT ``struct`` struct-name generic-parameters-OPT type-inheritance-list-OPT struct-body
+   struct-declaration --> attribute-sequence-OPT ``struct`` struct-name generic-parameters-OPT type-inheritance-clause-OPT struct-body
    struct-name --> identifier
    struct-body --> ``{`` declarations-OPT ``}``
 
@@ -348,7 +348,7 @@ Class Declarations
 
     Grammar of a class declaration
 
-    class-declaration --> attribute-sequence-OPT ``class`` class-name generic-parameters-OPT type-inheritance-list-OPT class-body
+    class-declaration --> attribute-sequence-OPT ``class`` class-name generic-parameters-OPT type-inheritance-clause-OPT class-body
     class-name --> identifier
     class-body --> ``{`` declarations-OPT ``}``
 
@@ -390,7 +390,7 @@ Typealias Protocol Elements
 
     Grammar of a protocol declaration
 
-    protocol-declaration --> attribute-sequence-OPT ``protocol`` protocol-name type-inheritance-list-OPT protocol-body
+    protocol-declaration --> attribute-sequence-OPT ``protocol`` protocol-name type-inheritance-clause-OPT protocol-body
     protocol-name --> identifier
     protocol-body --> ``{`` protocol-members-OPT ``}``
 
@@ -457,7 +457,7 @@ Extension Declarations
 
     Grammar of an extension declaration
 
-    extension-declaration --> ``extension`` type-identifier type-inheritance-list-OPT extension-body
+    extension-declaration --> ``extension`` type-identifier type-inheritance-clause-OPT extension-body
     extension-body --> ``{`` declarations-OPT ``}``
 
 
