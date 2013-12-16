@@ -10,10 +10,6 @@ Expressions
 
     expr-sequence ::= expr-unary expr-binary*
 
-    expr-new        ::= 'new' type-identifier expr-new-bounds
-    expr-new-bounds ::= expr-new-bound
-    expr-new-bounds ::= expr-new-bounds expr-new-bound
-    expr-new-bound  ::= '[' expr? ']'
     expr-call ::= expr-postfix expr-paren
     expr-trailing-closure ::= expr-postfix expr-closure+
     expr-optional ::= expr-postfix '?'-postfix
@@ -374,6 +370,22 @@ Subscript Expressions
 
 New Expressions
 ~~~~~~~~~~~~~~~
+
+.. langref-grammar
+
+    expr-new        ::= 'new' type-identifier expr-new-bounds
+    expr-new-bounds ::= expr-new-bound
+    expr-new-bounds ::= expr-new-bounds expr-new-bound
+    expr-new-bound  ::= '[' expr? ']'
+
+.. syntax-grammar::
+
+    new-expression --> ``new`` type-identifier new-expression-bounds
+    new-expression-bounds --> new-expression-bounds-OPT new-expression-bound
+    new-expression-bound --> ``[`` expression-OPT ``]``
+
+.. TODO: Come back and clean up this grammar.
+    Also, note that this is *explicitly* left-recursive.
 
 
 Function Call Expression
