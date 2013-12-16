@@ -10,7 +10,7 @@ Generic Parameters
     generic-param ::= identifier
     generic-param ::= identifier ':' type-identifier
     generic-param ::= identifier ':' type-composition
-    where-clause ::= 'where' requirement (',' requirement) *
+    where-clause ::= 'where' requirement (',' requirement)*
     requirement ::= conformance-requirement
                 ::= same-type-requirement
     conformance-requirement ::= type-identifier ':' type-identifier
