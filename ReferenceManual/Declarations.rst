@@ -460,10 +460,6 @@ Extension Declarations
     extension-declaration --> ``extension`` type-identifier type-inheritance-list-OPT extension-body
     extension-body --> ``{`` declarations-OPT ``}``
 
-.. TODO:
-
-     Add elsewhere: type-inheritance-list
-
 
 Subscript Declarations
 ----------------------
