@@ -124,6 +124,23 @@ regardless of whether it is right bound.
 To use the ``?`` operator as syntactic sugar for ``Optional``, it must be left bound;
 to use it in the ternary (``? :``) operator, it must not be left bound.
 
+.. langref-grammar
+
+    punctuation ::= '('
+    punctuation ::= ')'
+    punctuation ::= '{'
+    punctuation ::= '}'
+    punctuation ::= '['
+    punctuation ::= ']'
+    punctuation ::= '.'
+    punctuation ::= ','
+    punctuation ::= ';'
+    punctuation ::= ':'
+    punctuation ::= '='
+    punctuation ::= '->'
+    punctuation ::= '...'
+    punctuation ::= '&' // unary prefix operator
+
 The following character sequences are reserved punctuation and may not be used as operators: ::
 
     = -> // /* */ ...  { } ( ) [ ] . , ; :

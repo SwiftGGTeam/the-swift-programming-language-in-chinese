@@ -1,21 +1,6 @@
 When you start working on one of these, leave a .. langref-grammar comment that contains the
 original LangRef grammar; delete the corresponding grammar from this document.
 
-    punctuation ::= '('
-    punctuation ::= ')'
-    punctuation ::= '{'
-    punctuation ::= '}'
-    punctuation ::= '['
-    punctuation ::= ']'
-    punctuation ::= '.'
-    punctuation ::= ','
-    punctuation ::= ';'
-    punctuation ::= ':'
-    punctuation ::= '='
-    punctuation ::= '->'
-    punctuation ::= '...'
-    punctuation ::= '&' // unary prefix operator
-
     integer_literal ::= [0-9][0-9_]*
     integer_literal ::= 0x[0-9a-fA-F][0-9a-fA-F_]*
     integer_literal ::= 0o[0-7][0-7_]*
