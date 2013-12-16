@@ -46,6 +46,11 @@ Generic Parameters
     generic-paramaters should just refer to one or more generic-parameter items
     which never appears in the grammar.
 
+.. Note:
+    A conformance requirement can only have one type after the colon,
+    otherwise, you'd have a syntactic ambiguity
+    (a comma separated list types inside of a comma separated list of requirements).
+
 .. Question:
     Does type-parameter make things any clearer?
     I separated it out because the "Foo : Bar" isn't symmentric --
