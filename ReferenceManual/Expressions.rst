@@ -10,8 +10,6 @@ Expressions
 
     expr-sequence ::= expr-unary expr-binary*
 
-    expr-dot ::= expr-postfix '.' dollarident
-    expr-dot ::= expr-postfix '.' expr-identifier
     expr-subscript ::= expr-postfix '[' expr ']'
     expr-new        ::= 'new' type-identifier expr-new-bounds
     expr-new-bounds ::= expr-new-bound
@@ -347,6 +345,18 @@ Postfix Expressions
 
 Dot Expressions
 ~~~~~~~~~~~~~~~
+
+.. langref-grammar
+
+    expr-dot ::= expr-postfix '.' dollarident
+    expr-dot ::= expr-postfix '.' expr-identifier
+
+.. syntax-grammar::
+
+    Grammar of a dot expression
+    
+    dot-expression --> postfix-expression ``.`` dollar-identifier
+    dot-expression --> postfix-expression ``.`` named-expression
 
 
 Subscript Expressions
