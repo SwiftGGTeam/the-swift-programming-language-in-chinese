@@ -19,9 +19,9 @@ Generic Parameters
 
 .. syntax-grammar::
 
-    Grammar of a generic parameter
+    Grammar of a generic parameter clause
 
-    generic-parameters-clause --> ``<`` generic-parameter-list requirement-clause-OPT ``>``
+    generic-parameter-clause --> ``<`` generic-parameter-list requirement-clause-OPT ``>``
     generic-parameter-list --> generic-parameter | generic-parameter ``,`` generic-parameter-list
     generic-parameter --> identifier
     generic-parameter --> identifier ``:`` type-identifier
