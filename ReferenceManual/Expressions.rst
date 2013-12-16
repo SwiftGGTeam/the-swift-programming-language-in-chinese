@@ -10,7 +10,6 @@ Expressions
 
     expr-sequence ::= expr-unary expr-binary*
 
-    expr-subscript ::= expr-postfix '[' expr ']'
     expr-new        ::= 'new' type-identifier expr-new-bounds
     expr-new-bounds ::= expr-new-bound
     expr-new-bounds ::= expr-new-bounds expr-new-bound
@@ -361,6 +360,16 @@ Dot Expressions
 
 Subscript Expressions
 ~~~~~~~~~~~~~~~~~~~~~
+
+.. langref-grammar
+
+    expr-subscript ::= expr-postfix '[' expr ']'
+
+.. syntax-grammar::
+
+    Grammar of a subscript expression
+    
+    subscript-expression --> postfix-expression ``[`` expression ``]``
 
 
 New Expressions
