@@ -1,7 +1,7 @@
 Lexical Structure
 =================
 
-.. TODO: write a brief intro to this chapter.
+.. TODO: Write a brief intro to this chapter.
 
 
 Whitespace and Comments
@@ -174,7 +174,7 @@ Reserved Punctuation and Keywords
 Reserved Punctuation Tokens
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. Note: Reserved punctuation is discussed under operators.
+.. NOTE: Reserved punctuation is discussed under operators.
 
 
 Reserved Keywords
@@ -251,9 +251,7 @@ Reserved Keywords
 ``__FILE__``
 ``__LINE__``
 
-.. TODO
-
-   We have a variaty of keywords that appear twice -- once as
+.. TODO: We have a variaty of keywords that appear twice -- once as
    keywords and then again as literal text in the definition of
    expression literals.  Let's see if we can't factor them out so one
    terminal can appear in both places.  For example keyword-as or
@@ -307,9 +305,7 @@ String Literals
 Translation Unit
 ----------------
 
-.. TODO:
-
-    Better to describe this part of the grammar in prose.
+.. TODO: Better to describe this part of the grammar in prose.
 
 .. langref-grammar
 

@@ -38,7 +38,7 @@ Declarations
     declaration --> subscript-declaration
     declarations --> declaration declarations-OPT
 
-.. Note: enum-element-declaration is only allowed inside an enum
+.. NOTE: enum-element-declaration is only allowed inside an enum
    declaration.
 
 
@@ -91,9 +91,7 @@ Variable Declarations
         <#code to execute#>
     }
 
-.. TODO:
-
-    In prose: discuss that 'name' can also be a pattern in the first syntax-outline.
+.. TODO: In prose: discuss that 'name' can also be a pattern in the first syntax-outline.
     Also, discuss that when you only want to provide a getter, 'get:' is optional
     (as shown in the third form of the grammar).
 
@@ -127,7 +125,7 @@ Variable Declarations
     setter --> ``set`` setter-name-OPT ``:`` code-block-items-OPT
     setter-name --> ``(`` identifier ``)``
 
-.. Notes: Type specifiers are required for computed properties -- the
+.. NOTE: Type specifiers are required for computed properties -- the
    types of those properties are not computed/inferred.
 
 .. TODO: File a radar against the inout attribute for better REPL
@@ -184,9 +182,7 @@ Function Declarations
         <#code to execute#>
     }
 
-.. TODO:
-
-    Discuss in prose: Variadic functions and the other permutations of function declarations.
+.. TODO: Discuss in prose: Variadic functions and the other permutations of function declarations.
 
 .. TODO: Write a syntax-outline for selector-style functions.
 
@@ -218,31 +214,29 @@ Function Signatures
     selector-tuples --> selector-name ``(`` tuple-pattern-element ``)`` selector-tuples-OPT
     selector-name --> identifier-or-any
 
-.. TODO:
-
-    Revisit function-declaration; the ``static`` keyword may be renamed and/or made into an attribute.
+.. TODO: Revisit function-declaration; the ``static`` keyword may be renamed and/or made into an attribute.
     The reason is that ``static`` isn't the most appropriate term, because we're using it to
     mark a class function, not a static function (in the proper sense).
     This issue is being tracked by:
     <rdar://problem/13347488> Consider renaming "static" functions to "class" functions
 
-    The overgeneration from tuple-patterns combined with some upcoming changes
+.. TODO: The overgeneration from tuple-patterns combined with some upcoming changes
     mean that we should just create a new syntactic category
     for function arguments instead.
     We're going to hold off on doing this until they [compiler team] make their changes.
 
-    Code block is optional in the context of a protocol.
+.. TODO: Code block is optional in the context of a protocol.
     Everywhere else, it's required.
     We could refactor to have a separation between function definition/declaration.
     There is also the low-level "asm name" FFI
     which is a definition and declaration corner case.
     Let's just deal with this difference in prose.
 
-    Selector style syntax is pretty stable at this point.
+.. NOTE: Selector style syntax is pretty stable at this point.
     The only contentious issue recently has been the calling syntax.
     Any changes will probably be fiddley little bits.
 
-    Revise selector-name---can we come up with a better name for this?
+.. TODO: Revise selector-name---can we come up with a better name for this?
 
 
 Enumeration Declarations
@@ -262,9 +256,7 @@ Enumeration Declarations
         case <#enumerator list 2#> = <#raw value 2#>
     }
 
-.. TODO:
-
-    When there is a raw value type on an enum,
+.. TODO: Discuss in prose: When there is a raw value type on an enum,
     it indicates the low-level type like Int.
     All of the raw values have to be of that type.
     You can require protocol adoption,
@@ -272,7 +264,6 @@ Enumeration Declarations
     but you do need to make it be one of the types
     that support = in order for you to specify the raw values.
     You can have: <#raw value type, protocol conformance#>.
-    Discuss this in prose.
 
 .. langref-grammar
 
@@ -281,7 +272,7 @@ Enumeration Declarations
     decl-enum-element ::= attribute-list 'case' enum-case (',' enum-case)*
     enum-case ::= identifier type-tuple? ('->' type)?
 
-.. Note: Per Doug and Ted, "('->' type)?" is not part of the grammar.
+.. NOTE: Per Doug and Ted, "('->' type)?" is not part of the grammar.
     We removed it from our grammar, below.
 
 .. syntax-grammar::
@@ -299,7 +290,7 @@ Enumeration Declarations
     raw-value-assignment --> ``=`` raw-value-literal
     raw-value-literal --> integer-literal | floating-point-literal | character-literal | string-literal
 
-.. Note: You can have other declarations like methods inside of an enum declaration (e.g., methods, etc.).
+.. NOTE: You can have other declarations like methods inside of an enum declaration (e.g., methods, etc.).
 
 
 Structure Declarations
@@ -311,9 +302,7 @@ Structure Declarations
         <#declarations#>
     }
 
-.. TODO:
-
-    Member declarations and other declarations can appear in any order (we tested this).
+.. TODO: Member declarations and other declarations can appear in any order (we tested this).
     Stylistically, you probably want member declarations to come first.
 
 .. langref-grammar
@@ -401,9 +390,7 @@ Typealias Protocol Elements
 Constructor Declarations
 ------------------------
 
-.. TODO:
-
-    Add syntax-outline once selector syntax is nailed down.
+.. TODO: Add syntax-outline once selector syntax is nailed down.
 
 .. langref-grammar
 
@@ -512,7 +499,7 @@ Attribute Sequences
     attribute-list --> attribute | attribute ``,`` attribute-list
     attribute --> infix-attribute | resilience-attribute | in-out-attribute | auto-closure-attribute | no-return-attribute
 
-.. Note:
+.. NOTE:
 
    Our grammar doesn't have empty terminals (no epsilon)
    so we need to make attribute-sequence actually contain something.

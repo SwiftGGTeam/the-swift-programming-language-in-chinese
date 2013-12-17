@@ -151,7 +151,7 @@ Primary Expressions
     primary-expression --> parenthesized-expression
     primary-expression --> delayed-identifier-expression
 
-.. Note: One reason for breaking primary expressions out of postfix
+.. NOTE: One reason for breaking primary expressions out of postfix
    expressions is for exposition -- it makes it easier to organize the
    prose surrounding the production rules.
 
@@ -327,9 +327,7 @@ Postfix Expressions
     postfix-expression --> optional-expression
     postfix-expression --> force-value-expression
 
-.. TODO:
-
-   metatype-expression --> postfix-expression ``.`` ``metatype``
+.. TODO: metatype-expression --> postfix-expression ``.`` ``metatype``
 
 
 Dot Expressions
@@ -421,7 +419,7 @@ Optional Chaining
 
    optional-expression --> postfix-expression ``?``
 
-.. Note: The fact that ? must be postfix when it's used for Optional
+.. NOTE: The fact that ? must be postfix when it's used for Optional
    is in "Lexical Structure", under the discussion of left/right binding.
 
 .. TODO: Try to re-title.  It's about chaining of optional operators,

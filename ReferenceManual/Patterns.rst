@@ -26,7 +26,7 @@ Patterns
 
 
 
-.. TODO: In prose, we discuss the meaning of the explicit type.
+.. TODO: In prose, discuss the meaning of the explicit type.
     The optional type specifier contrains a pattern to
     match only values of the specified type.
 
@@ -35,8 +35,7 @@ Patterns
     or do you mean that patterns can be constrained to match against a type?
     Strictly speaking, should only values (and types) have a type?
 
-.. Note:
-   Patterns don't "have" a type in the same way that values have types.
+.. NOTE: Patterns don't "have" a type in the same way that values have types.
    Patterns match things of certain types.
 
 
@@ -71,9 +70,7 @@ Is Pattern
     is-pattern --> ``is`` type
 
 
-.. TODO:
-
-    Try to come up with a better name for "is pattern".
+.. TODO: Try to come up with a better name for "is pattern".
     Candidates:
     type-checking-pattern
 
@@ -91,9 +88,7 @@ Variable-Binding Patterns
 
     variable-binding-pattern --> ``var`` pattern
 
-.. NOTE:
-
-    We chose to call this "variable-binding pattern"
+.. NOTE: We chose to call this "variable-binding pattern"
     instead of "variable pattern",
     because it's a pattern that binds variables,
     not a pattern that varies.
