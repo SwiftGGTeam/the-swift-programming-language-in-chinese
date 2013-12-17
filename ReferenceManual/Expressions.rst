@@ -370,6 +370,8 @@ New Expression
 .. TODO: Come back and clean up this grammar.
     Also, note that this is *explicitly* left-recursive.
 
+.. TR: What use cases does the 'new' grammar apply to?
+
 
 Dot Expressions
 ~~~~~~~~~~~~~~~
