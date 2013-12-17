@@ -21,7 +21,7 @@ Contents
 
     Introduction
     LanguageGuide/index
-    ReferenceManual/ReferenceManual
+    ReferenceManual/index
 
 Internal Chapters
 =================
