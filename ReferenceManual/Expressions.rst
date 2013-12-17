@@ -10,7 +10,6 @@ Expressions
 
     expr-sequence ::= expr-unary expr-binary*
 
-    expr-force-value ::= expr-postfix '!'
 
 .. syntax-grammar::
 
@@ -332,8 +331,6 @@ Postfix Expressions
 
    metatype-expression --> postfix-expression ``.`` ``metatype``
 
-.. TODO: Also, come up with a better name for force-value-expression.
-
 
 Dot Expressions
 ~~~~~~~~~~~~~~~
@@ -419,3 +416,16 @@ Optional Chaining
 
 Forcing an Expression's Value
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. langref-grammar
+
+    expr-force-value ::= expr-postfix '!'
+
+.. syntax-grammar::
+
+    Grammar of a force-value expression
+
+    force-value-expression --> postfix-expression ``!``
+
+.. TODO: Also, come up with a better name for force-value-expression.
+
