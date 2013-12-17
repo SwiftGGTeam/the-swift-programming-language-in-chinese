@@ -327,8 +327,6 @@ Postfix Expressions
     postfix-expression --> optional-expression
     postfix-expression --> force-value-expression
 
-.. TODO: metatype-expression --> postfix-expression ``.`` ``metatype``
-
 
 Dot Expressions
 ~~~~~~~~~~~~~~~
@@ -344,6 +342,19 @@ Dot Expressions
     
     dot-expression --> postfix-expression ``.`` dollar-identifier
     dot-expression --> postfix-expression ``.`` named-expression
+
+
+Metatype Expression
+~~~~~~~~~~~~~~~~~~~
+
+.. NOTE: There is no definition for metatype-expression in the LangRef.
+    This was probably just an oversight, according to Ted and Doug.
+
+.. syntax-grammar::
+
+    Grammar of a metatype expression
+    
+    metatype-expression --> postfix-expression ``.`` ``metatype``
 
 
 Subscript Expressions
@@ -440,4 +451,3 @@ Forcing an Expression's Value
     force-value-expression --> postfix-expression ``!``
 
 .. TODO: Also, come up with a better name for force-value-expression.
-
