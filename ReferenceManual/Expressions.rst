@@ -10,8 +10,6 @@ Expressions
 
     expr-sequence ::= expr-unary expr-binary*
 
-    expr-call ::= expr-postfix expr-paren
-    expr-trailing-closure ::= expr-postfix expr-closure+
     expr-optional ::= expr-postfix '?'-postfix
     expr-force-value ::= expr-postfix '!'
 
@@ -394,6 +392,7 @@ Function Call Expression
 .. langref-grammar
 
     expr-call ::= expr-postfix expr-paren
+    expr-trailing-closure ::= expr-postfix expr-closure+
 
 .. syntax-grammar::
 
