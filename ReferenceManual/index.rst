@@ -13,8 +13,6 @@ Reference Manual
     Patterns
     Generics
     SummaryOfTheGrammar
-    GrammarQueries
-
 
 .. docnote:: To be included?
 
