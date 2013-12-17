@@ -190,7 +190,7 @@ Generic Disambiguation
 
 .. syntax-grammar::
 
-    Grammar of a identifier expression
+    Grammar of an identifier expression
 
     identifier-expression --> identifier generic-argument-clause-OPT
 
@@ -373,6 +373,8 @@ New Expressions
     expr-new-bound  ::= '[' expr? ']'
 
 .. syntax-grammar::
+
+    Grammar of a new expression
 
     new-expression --> ``new`` type-identifier new-expression-bounds
     new-expression-bounds --> new-expression-bounds-OPT new-expression-bound
