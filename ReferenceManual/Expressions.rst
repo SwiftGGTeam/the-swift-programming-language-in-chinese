@@ -10,7 +10,6 @@ Expressions
 
     expr-sequence ::= expr-unary expr-binary*
 
-    expr-optional ::= expr-postfix '?'-postfix
     expr-force-value ::= expr-postfix '!'
 
 .. syntax-grammar::
@@ -405,6 +404,18 @@ Function Call Expression
 Optional Chaining
 ~~~~~~~~~~~~~~~~~
 
+.. langref-grammar
+
+    expr-optional ::= expr-postfix '?'-postfix
+
+.. syntax-grammar::
+
+   Grammar of an optional expression
+
+   optional-expression --> postfix-expression ``?``
+
+.. Note: The fact that ? must be postfix when it's used for Optional
+   is in "Lexical Structure", under the discussion of left/right binding.
 
 Forcing an Expression's Value
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
