@@ -11,8 +11,6 @@ Reference Manual
 	Statements
 	Declarations
 	Patterns
-	Protocols
-	Objects
 	Generics
 	SummaryOfTheGrammar
 	GrammarQueries
