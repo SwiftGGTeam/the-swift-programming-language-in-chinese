@@ -257,7 +257,7 @@ The expression ``a += 2`` is shorthand for ``a = a + 2``.
 Effectively, the addition and the assignment are rolled into one operator
 that performs both tasks at the same time.
 
-A complete list of compound assignment operators can be found in the :doc:`../ReferenceManual/ReferenceManual`.
+A complete list of compound assignment operators can be found in the :doc:`../ReferenceManual/index`.
 
 Comparison Operators
 --------------------
@@ -1009,7 +1009,7 @@ starting from their left:
 
 This gives the final answer of ``4``.
 
-A complete list of Swift operator priorities and associativity rules can be found in the :doc:`../ReferenceManual/ReferenceManual`.
+A complete list of Swift operator priorities and associativity rules can be found in the :doc:`../ReferenceManual/index`.
 
 Explicit Parentheses
 ~~~~~~~~~~~~~~~~~~~~
