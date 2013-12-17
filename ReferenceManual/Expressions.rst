@@ -10,10 +10,6 @@ Expressions
 
     expr-sequence ::= expr-unary expr-binary*
 
-    expr-call ::= expr-postfix expr-paren
-    expr-trailing-closure ::= expr-postfix expr-closure+
-    expr-optional ::= expr-postfix '?'-postfix
-    expr-force-value ::= expr-postfix '!'
 
 .. syntax-grammar::
 
@@ -148,7 +144,7 @@ Primary Expressions
     Grammar of a primary expression
 
     primary-expression --> literal-expression
-    primary-expression --> named-expression
+    primary-expression --> identifier-expression
     primary-expression --> superclass-expression
     primary-expression --> closure-expression
     primary-expression --> anonymous-closure-argument
@@ -181,8 +177,8 @@ Literal Expressions
     literal-expression --> ``__FILE__`` | ``__LINE__`` | ``__COLUMN__``
 
 
-Named Expressions
-~~~~~~~~~~~~~~~~~
+Identifier Expressions
+~~~~~~~~~~~~~~~~~~~~~~
 
 
 Generic Disambiguation
@@ -194,9 +190,9 @@ Generic Disambiguation
 
 .. syntax-grammar::
 
-    Grammar of a named expression
+    Grammar of a identifier expression
 
-    named-expression --> identifier generic-argument-clause-OPT
+    identifier-expression --> identifier generic-argument-clause-OPT
 
 
 Superclass Expressions
@@ -217,7 +213,7 @@ Superclass Expressions
 
     superclass-expression --> superclass-method-expression | superclass-subscript-expression | superclass-constructor-expression
 
-    superclass-method-expression --> ``super`` ``.`` named-expression
+    superclass-method-expression --> ``super`` ``.`` identifier-expression
     superclass-subscript-expression --> ``super`` ``[`` expression ``]``
     superclass-constructor-expression --> ``super`` ``.`` ``init``
 
@@ -335,8 +331,6 @@ Postfix Expressions
 
    metatype-expression --> postfix-expression ``.`` ``metatype``
 
-.. TODO: Also, come up with a better name for force-value-expression.
-
 
 Dot Expressions
 ~~~~~~~~~~~~~~~
@@ -380,8 +374,6 @@ New Expressions
 
 .. syntax-grammar::
 
-    Grammar of a new expression
-
     new-expression --> ``new`` type-identifier new-expression-bounds
     new-expression-bounds --> new-expression-bounds-OPT new-expression-bound
     new-expression-bound --> ``[`` expression-OPT ``]``
@@ -396,6 +388,7 @@ Function Call Expression
 .. langref-grammar
 
     expr-call ::= expr-postfix expr-paren
+    expr-trailing-closure ::= expr-postfix expr-closure+
 
 .. syntax-grammar::
 
@@ -404,10 +397,47 @@ Function Call Expression
     function-call-expression --> postfix-expression parenthesized-expression trailing-closure-OPT
     trailing-closure --> closure-expressions expression-cast-OPT
 
+.. TR:
+    Confirm that putting the trailing closure here,
+    as part of the function call syntax,
+    rather than as part of the general syntax of an expression
+    is still correct.
+    Assuming that it's correct, it reduces overgeneration
+    and is easier to read.
+
 
 Optional Chaining
 ~~~~~~~~~~~~~~~~~
 
+.. langref-grammar
+
+    expr-optional ::= expr-postfix '?'-postfix
+
+.. syntax-grammar::
+
+   Grammar of an optional expression
+
+   optional-expression --> postfix-expression ``?``
+
+.. Note: The fact that ? must be postfix when it's used for Optional
+   is in "Lexical Structure", under the discussion of left/right binding.
+
+.. TODO: Try to re-title.  It's about chaining of optional operators,
+   not about the optional kind of chaining.
+
 
 Forcing an Expression's Value
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. langref-grammar
+
+    expr-force-value ::= expr-postfix '!'
+
+.. syntax-grammar::
+
+    Grammar of a force-value expression
+
+    force-value-expression --> postfix-expression ``!``
+
+.. TODO: Also, come up with a better name for force-value-expression.
+
