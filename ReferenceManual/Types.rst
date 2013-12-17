@@ -153,8 +153,6 @@ Optional Type
 
     type-optional ::= type-simple '?'-postfix
 
-.. TODO: TR: Why is -postfix here? Does it just mean that '?' is a postfix operator.
-
 .. syntax-grammar::
 
     Grammar of an optional type

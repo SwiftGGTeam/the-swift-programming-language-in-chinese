@@ -30,11 +30,6 @@ Patterns
     The optional type specifier contrains a pattern to
     match only values of the specified type.
 
-.. TODO: TR: Do you really mean that a pattern *has* a type,
-    as it says in the LangRef,
-    or do you mean that patterns can be constrained to match against a type?
-    Strictly speaking, should only values (and types) have a type?
-
 .. NOTE: Patterns don't "have" a type in the same way that values have types.
    Patterns match things of certain types.
 

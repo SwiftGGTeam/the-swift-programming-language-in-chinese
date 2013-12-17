@@ -177,12 +177,8 @@ Literal Expressions
     literal-expression --> ``__FILE__`` | ``__LINE__`` | ``__COLUMN__``
 
 
-Identifier Expressions
-~~~~~~~~~~~~~~~~~~~~~~
-
-
-Generic Disambiguation
-++++++++++++++++++++++
+Identifier Expression
+~~~~~~~~~~~~~~~~~~~~~
 
 .. langref-grammar
 
@@ -194,6 +190,8 @@ Generic Disambiguation
 
     identifier-expression --> identifier generic-argument-clause-OPT
 
+.. TODO: Discuss in prose: The LangRef has a subsection called 'Generic Disambiguation',
+    the contents of which may or may not need to appear here.
 
 Superclass Expressions
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -218,8 +216,8 @@ Superclass Expressions
     superclass-constructor-expression --> ``super`` ``.`` ``init``
 
 
-Closure Expressions
-~~~~~~~~~~~~~~~~~~~
+Closure Expression
+~~~~~~~~~~~~~~~~~~
 
 .. langref-grammar
 
@@ -262,25 +260,6 @@ Anonymous Closure Argument
 .. TODO: Come up with a better name than dollar-identifier.
 
 
-Parenthesized Expressions
-~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. langref-grammar
-
-    expr-paren      ::= '(' ')'
-    expr-paren      ::= '(' expr-paren-element (',' expr-paren-element)* ')'
-    expr-paren-element ::= (identifier ':')? expr
-
-
-.. syntax-grammar::
-
-    Grammar of a parenthesized expression
-
-    parenthesized-expression --> ``(`` expression-element-list-OPT ``)``
-    expression-element-list --> expression-element | expression-element ``,`` expression-element-list
-    expression-element --> expression | identifier ``:`` expression
-
-
 Delayed Identifier Expression
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -296,6 +275,25 @@ Delayed Identifier Expression
     delayed-identifier-expression --> ``.`` enumerator-name
 
 .. TODO: Come up with a better name for delayed-identifier-expression.
+
+
+Parenthesized Expression
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. langref-grammar
+
+    expr-paren      ::= '(' ')'
+    expr-paren      ::= '(' expr-paren-element (',' expr-paren-element)* ')'
+    expr-paren-element ::= (identifier ':')? expr
+
+
+.. syntax-grammar::
+
+    Grammar of a parenthesized expression
+
+    parenthesized-expression --> ``(`` expression-element-list-OPT ``)``
+    expression-element-list --> expression-element | expression-element ``,`` expression-element-list
+    expression-element --> expression | identifier ``:`` expression
 
 
 Postfix Expressions
@@ -319,13 +317,58 @@ Postfix Expressions
 
     postfix-expression --> primary-expression
     postfix-expression --> postfix-expression postfix-operator
+    postfix-expression --> function-call-expression
     postfix-expression --> new-expression
     postfix-expression --> dot-expression
     postfix-expression --> metatype-expression
     postfix-expression --> subscript-expression
-    postfix-expression --> function-call-expression
-    postfix-expression --> optional-expression
     postfix-expression --> force-value-expression
+    postfix-expression --> optional-expression
+
+
+Function Call Expressions
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. langref-grammar
+
+    expr-call ::= expr-postfix expr-paren
+    expr-trailing-closure ::= expr-postfix expr-closure+
+
+.. syntax-grammar::
+
+    Grammar of a function call expression
+
+    function-call-expression --> postfix-expression parenthesized-expression trailing-closure-OPT
+    trailing-closure --> closure-expressions expression-cast-OPT
+
+.. TR: Confirm that putting the trailing closure here,
+    as part of the function call syntax,
+    rather than as part of the general syntax of an expression
+    is still correct.
+    Assuming that it's correct, it reduces overgeneration
+    and is easier to read.
+
+
+New Expression
+~~~~~~~~~~~~~~
+
+.. langref-grammar
+
+    expr-new        ::= 'new' type-identifier expr-new-bounds
+    expr-new-bounds ::= expr-new-bound
+    expr-new-bounds ::= expr-new-bounds expr-new-bound
+    expr-new-bound  ::= '[' expr? ']'
+
+.. syntax-grammar::
+
+    Grammar of a new expression
+
+    new-expression --> ``new`` type-identifier new-expression-bounds
+    new-expression-bounds --> new-expression-bounds-OPT new-expression-bound
+    new-expression-bound --> ``[`` expression-OPT ``]``
+
+.. TODO: Come back and clean up this grammar.
+    Also, note that this is *explicitly* left-recursive.
 
 
 Dot Expressions
@@ -371,50 +414,20 @@ Subscript Expression
     subscript-expression --> postfix-expression ``[`` expression ``]``
 
 
-New Expression
-~~~~~~~~~~~~~~
+Forcing an Expression's Value
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. langref-grammar
 
-    expr-new        ::= 'new' type-identifier expr-new-bounds
-    expr-new-bounds ::= expr-new-bound
-    expr-new-bounds ::= expr-new-bounds expr-new-bound
-    expr-new-bound  ::= '[' expr? ']'
+    expr-force-value ::= expr-postfix '!'
 
 .. syntax-grammar::
 
-    Grammar of a new expression
+    Grammar of a force-value expression
 
-    new-expression --> ``new`` type-identifier new-expression-bounds
-    new-expression-bounds --> new-expression-bounds-OPT new-expression-bound
-    new-expression-bound --> ``[`` expression-OPT ``]``
+    force-value-expression --> postfix-expression ``!``
 
-.. TODO: Come back and clean up this grammar.
-    Also, note that this is *explicitly* left-recursive.
-
-
-Function Call Expressions
-~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. langref-grammar
-
-    expr-call ::= expr-postfix expr-paren
-    expr-trailing-closure ::= expr-postfix expr-closure+
-
-.. syntax-grammar::
-
-    Grammar of a function call expression
-
-    function-call-expression --> postfix-expression parenthesized-expression trailing-closure-OPT
-    trailing-closure --> closure-expressions expression-cast-OPT
-
-.. TR:
-    Confirm that putting the trailing closure here,
-    as part of the function call syntax,
-    rather than as part of the general syntax of an expression
-    is still correct.
-    Assuming that it's correct, it reduces overgeneration
-    and is easier to read.
+.. TODO: Also, come up with a better name for force-value-expression.
 
 
 Optional Chaining
@@ -435,19 +448,3 @@ Optional Chaining
 
 .. TODO: Try to re-title.  It's about chaining of optional operators,
    not about the optional kind of chaining.
-
-
-Forcing an Expression's Value
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. langref-grammar
-
-    expr-force-value ::= expr-postfix '!'
-
-.. syntax-grammar::
-
-    Grammar of a force-value expression
-
-    force-value-expression --> postfix-expression ``!``
-
-.. TODO: Also, come up with a better name for force-value-expression.
