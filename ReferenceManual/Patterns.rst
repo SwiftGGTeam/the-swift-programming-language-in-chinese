@@ -26,10 +26,10 @@ Patterns
 
 
 
-.. TODO: In prose, we discuss the meaning of the explicit type. 
+.. TODO: In prose, we discuss the meaning of the explicit type.
     The optional type specifier contrains a pattern to
     match only values of the specified type.
-    
+
 .. TODO: TR: Do you really mean that a pattern *has* a type,
     as it says in the LangRef,
     or do you mean that patterns can be constrained to match against a type?
@@ -40,29 +40,24 @@ Patterns
    Patterns match things of certain types.
 
 
-
 Any Pattern
 -----------
-
 
 .. langref-grammar
 
     pattern-any ::= '_'
 
-
 .. syntax-grammar::
 
     Grammar of an any pattern
-    
+
     any-pattern --> ``_``
 
 .. TODO: Try to come up with a better name for "any pattern".
 
 
-
 Is Pattern
 ----------
-
 
 .. langref-grammar
 
@@ -76,28 +71,24 @@ Is Pattern
     is-pattern --> ``is`` type
 
 
-.. TODO: 
+.. TODO:
 
     Try to come up with a better name for "is pattern".
     Candidates:
     type-checking-pattern
 
-    
-
 
 Variable-Binding Patterns
 -------------------------
-
 
 .. langref-grammar
 
     pattern-var ::= 'var' pattern
 
-
 .. syntax-grammar::
 
     Grammar of a variable-binding pattern
-    
+
     variable-binding-pattern --> ``var`` pattern
 
 .. NOTE:
@@ -116,9 +107,8 @@ Expression Patterns
 .. syntax-grammar::
 
     Grammar of an expression pattern
-    
-    expression-pattern --> expression
 
+    expression-pattern --> expression
 
 
 Enumerator Patterns
@@ -126,16 +116,14 @@ Enumerator Patterns
 
 An enumerator pattern matches an enumerator declared in an enumeration.
 
-
 .. langref-grammar
 
     pattern-enum-element ::= type-identifier? '.' identifier pattern-tuple?
 
-
 .. syntax-grammar::
 
     Grammar of an enumerator pattern
-    
+
     enumerator-pattern --> type-identifier-OPT ``.`` identifier tuple-pattern-OPT
 
 
@@ -152,10 +140,9 @@ Tuple Patterns
 .. syntax-grammar::
 
     Grammar of a tuple pattern
-    
+
     tuple-pattern --> ``(`` tuple-pattern-body-OPT ``)``
     tuple-pattern-body --> tuple-pattern-element-list ``...``-OPT
     tuple-pattern-element-list --> tuple-pattern-element | tuple-pattern-element ``,`` tuple-pattern-element-list
     tuple-pattern-element --> pattern | pattern-initializer
     tuple-patterns --> tuple-pattern tuple-patterns-OPT
-

@@ -2,7 +2,7 @@ Reference Manual
 ================
 
 .. toctree::
-	:maxdepth: 1
+    :maxdepth: 1
 
 	Introduction
 	LexicalStructure

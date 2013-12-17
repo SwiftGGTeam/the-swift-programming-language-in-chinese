@@ -1,17 +1,17 @@
 Grammar Queries
 ===============
 
+
 Declarations
 ------------
+
 
 Variable Declarations
 ~~~~~~~~~~~~~~~~~~~~~
 
-
 .. syntax-outline::
 
     var <#variable name#> : <#type#> = <#expression#>
-
 
 .. syntax-outline::
 
@@ -28,8 +28,6 @@ Variable Declarations
     Also, discuss that when you only want to provide a getter, 'get:' is optional
     (as shown in the third form of the grammar).
 
-
-
 .. langref-grammar
 
     decl-var        ::= attribute-list 'var' pattern initializer?  (',' pattern initializer?)*
@@ -42,7 +40,6 @@ Variable Declarations
     set             ::= 'set' set-name? ':' brace-item*
     set-name        ::= '(' identifier ')'
 
-
 .. syntax-grammar::
 
     Grammar of a variable declaration
@@ -51,23 +48,22 @@ Variable Declarations
     variable-declaration --> attribute-sequence-OPT ``var`` variable-name type-specifier code-block
     variable-declaration --> attribute-sequence-OPT ``var`` variable-name type-specifier getter-setter-block
     variable-name --> identifier
-    
+
     pattern-initializer-list --> pattern-initializer | pattern-initializer ``,`` pattern-initializer-list
     pattern-initializer --> pattern initializer-OPT
     initializer --> ``=`` expression
-    
+
     getter-setter-block --> ``{`` getter setter-OPT ``}`` | ``{`` setter getter ``}``
     getter --> ``get`` ``:`` code-block-items-OPT
     setter --> ``set`` setter-name-OPT ``:`` code-block-items-OPT
     setter-name --> ``(`` identifier ``)``
-    
+
 .. TODO:
 
-
     TR: Are the type specifiers in the second and third lines optional or mandatory?
-    
+
     FIXME: Make changes to the live grammar.
-    
+
 .. docnote:: Are the type specifiers in the second and third lines optional or mandatory?
 
 .. docnote:: Are attributes allowed before 'var' in a variable declaration?
@@ -98,7 +94,6 @@ Function Declarations
 Function Signatures
 +++++++++++++++++++
 
-
 .. langref-grammar
 
     decl-func        ::= attribute-list 'static'? 'func' any-identifier generic-params? func-signature brace-item-list?
@@ -110,38 +105,38 @@ Function Signatures
 
 
 .. syntax-grammar::
-    
+
     Grammar of a function declaration
-    
+
     function-declaration --> attribute-sequence-OPT ``func`` function-name generic-parameters-OPT function-signature code-block-OPT
     function-name --> any-identifier
-    
+
     function-signature --> function-arguments function-signature-result-OPT
     function-arguments --> tuple-patterns | selector-arguments
     function-signature-result --> ``->`` attribute-sequence-OPT type
-    
+
     selector-arguments --> ``(`` tuple-pattern-element ``)`` selector-tuples
     selector-tuples --> selector-name ``(`` tuple-pattern-element ``)`` selector-tuples-OPT
     selector-name --> identifier-or-any
-    
-.. TODO: 
+
+.. TODO:
 
     Revisit function-declaration; the ``static`` keyword may be renamed and/or made into an attribute.
-    The reason is that ``static`` isn't the most appropriate term, because we're using it to 
-    mark a class function, not a static function (in the proper sense). 
+    The reason is that ``static`` isn't the most appropriate term, because we're using it to
+    mark a class function, not a static function (in the proper sense).
     This issue is being tracked by:
     <rdar://problem/13347488> Consider renaming "static" functions to "class" functions
     Also, selector-style syntax is still under discussion/development.
-    
+
     TR: Discuss with compiler team: tuple-patterns and ``(`` tuple-pattern-element ``)`` seem to allow
     the same elements; how are they different? Maybe type-tuple and type-tuple-element is what is meant?
     In any case, what's the difference between tuple-patterns/``(`` tuple-pattern-element ``)`` and
     type-tuple/type-tuple-element?
-    
+
     TR: Also, is the code-block-OPT really optional? What does it mean when you leave off the code-block?
-    
+
     Revised selector-name---can we come up with a better name for this?
-    
+
     Add elsewhere: tuple-patterns (tuple-patterns --> tuple-pattern | tuple-pattern tuple-patterns)
 
 .. docnote:: Tuple-pattern and "( tuple-pattern-element )" seem to allow
@@ -149,13 +144,12 @@ Function Signatures
     Do we want to use tuple-pattern in function-arguments, given that it over-generates quite a lot?
     Or do we want to create a new syntactic category that is a tuple-type with an optional default value?
 
-.. docnote:: Is the code-block-OPT really optional at the end of a function declaration? 
+.. docnote:: Is the code-block-OPT really optional at the end of a function declaration?
     What does it mean when you leave off the code-block?
 
 .. docnote:: What's the current status of the 'static' keyword?
 
 .. docnote:: What's the current status of selector-style syntax for function declarations?
-
 
 
 Enumeration Declarations
@@ -190,7 +184,6 @@ Enumeration Declarations
     However, it seems like it should be a non-protocol type:
     the type of the raw values.
 
-
 .. langref-grammar
 
     decl-enum ::= attribute-list 'enum' identifier generic-params? inheritance? enum-body
@@ -201,11 +194,11 @@ Enumeration Declarations
 .. syntax-grammar::
 
     Grammar of an enumeration declaration
-    
+
     enum-declaration --> attribute-sequence-OPT ``enum`` enum-name generic-parameters-OPT type-inheritance-list-OPT enum-body
     enum-name --> identifier
     enum-body --> ``{`` declarations-OPT ``}``
-    
+
     enum-element-declaration --> attribute-sequence-OPT ``case`` enumerator-list
     enumerator-list --> enumerator | enumerator ``,`` enumerator-list
     enumerator --> identifier tuple-type-OPT enumerator-return-type-OPT
@@ -215,15 +208,15 @@ Enumeration Declarations
 .. TODO:
 
     Add elsewhere: declarations (declarations --> declaration declarations-OPT)
-    
+
     TR: Is it really the case that you can have declarations other than enum-element-declaration
     inside an enum-body? If not, we should replace enum-body with:
     enum-body --> ``{`` enum-element-declarations-OPT ``}``.
-    
+
     TR: Also, do we need to modify the grammar to allow for raw values?
-    
+
     TR: Discuss with the compiler team: in the enum-case, ('->' type)? doesn't match what the REPL
-    expects: 
+    expects:
     (swift) enum SomeInt {
               case None
               case One(Int) -> (Int)
@@ -279,7 +272,7 @@ Types
 .. syntax-grammar::
 
     Grammar of a type
-    
+
     type --> array-type | function-type | basic-type
 
 
@@ -312,7 +305,7 @@ Array Types
 .. syntax-grammar::
 
     Grammar of an array type
-    
+
     array-type --> basic-type | array-type ``[`` ``]`` | array-type ``[`` expression ``]``
 
 .. TODO:
@@ -364,7 +357,7 @@ Tuple Types
 .. syntax-grammar::
 
     Grammar of a tuple type
-    
+
     tuple-type --> ``(`` tuple-type-body-OPT ``)``
     tuple-type-body --> tuple-type-element-list ``...``-OPT
     tuple-type-element-list --> tuple-type-element | tuple-type-element ``,`` tuple-type-element-list
@@ -382,11 +375,11 @@ Optional Type
 .. TODO:
 
     TR: Why is -postfix here? Does it just mean that '?' is a postfix operator.
-    
+
 .. syntax-grammar::
 
     Grammar of an optional type
-    
+
     optional-type --> basic-type ``?``
 
 .. docnote:: Why is -postfix here? Does it just mean that '?' is a postfix operator.
@@ -417,7 +410,7 @@ Expressions
     expr-postfix  ::= expr-call
     expr-postfix  ::= expr-optional
     expr-force-value  ::= expr-force-value (typo in the langref; lhs should be expr-postfix)
-    
+
     expr-binary ::= op-binary-or-ternary expr-unary expr-cast?
     op-binary-or-ternary ::= operator-binary
     op-binary-or-ternary ::= '='
@@ -458,17 +451,17 @@ Expressions
     expr-trailing-closure ::= expr-postfix expr-closure+
     expr-optional ::= expr-postfix '?'-postfix
     expr-force-value ::= expr-postfix '!'
-    
+
 
 .. syntax-grammar::
 
     Grammar of an expression
-    
+
     expression --> basic-expression | trailing-closure-expression expression-cast-OPT
     basic-expression --> expression-sequence expression-cast-OPT
     expression-sequence --> unary-expression binary-expressions-OPT
     binary-expressions --> binary-expression binary-expressions-OPT
-    
+
 
 Primary Expressions
 ~~~~~~~~~~~~~~~~~~~
@@ -487,7 +480,7 @@ Primary Expressions
 .. syntax-grammar::
 
     Grammar of a primary expression
-    
+
     primary-expression --> literal-expression
     primary-expression --> named-expression
     primary-expression --> super-expression
@@ -531,7 +524,7 @@ Postfix Expressions
 .. syntax-grammar::
 
     Grammar of a postfix expression
-    
+
     postfix-expression --> primary-expression
     postfix-expression --> postfix-expression postfix-operator
     postfix-expression --> new-expression
@@ -576,17 +569,17 @@ Patterns
     pattern --> tuple-pattern type-specifier-OPT
 
 
-.. TODO: In prose, we discuss the meaning of the explicit type. 
+.. TODO: In prose, we discuss the meaning of the explicit type.
     The optional type specifier contrains a pattern to
     match only values of the specified type.
-    
+
 .. TODO: TR: Do you really mean that a pattern *has* a type,
     as it says in the LangRef,
     or do you mean that patterns can be constrained to match against a type?
     Strictly speaking, should only values (and types) have a type?
 
-.. docnote:: Do you really mean that a pattern *has* a type, as it says in the LangRef, 
-    or do you mean that patterns can be constrained to match against a type? 
+.. docnote:: Do you really mean that a pattern *has* a type, as it says in the LangRef,
+    or do you mean that patterns can be constrained to match against a type?
     Strictly speaking, should only values (and types) have a type?
 
 
@@ -604,9 +597,8 @@ Tuple Patterns
 .. syntax-grammar::
 
     Grammar of a tuple pattern
-    
+
     tuple-pattern --> ``(`` tuple-pattern-body-OPT ``)``
     tuple-pattern-body --> tuple-pattern-element-list ``...``-OPT
     tuple-pattern-element-list --> tuple-pattern-element | tuple-pattern-element ``,`` tuple-pattern-element-list
     tuple-pattern-element --> pattern | pattern-initializer
-

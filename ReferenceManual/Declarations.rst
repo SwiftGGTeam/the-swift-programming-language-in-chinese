@@ -1,8 +1,6 @@
 Declarations
 ============
 
-
-
 .. langref-grammar
 
     decl ::= decl-class
@@ -17,25 +15,26 @@ Declarations
     decl ::= decl-struct
     decl ::= decl-typealias
     decl ::= decl-var
+    decl ::= decl-let
     decl ::= decl-subscript
-
 
 .. syntax-grammar::
 
     Grammar of a declaration
-    
+
+    declaration --> import-declaration
+    declaration --> variable-declaration
+    declaration --> let-declaration
+    declaration --> typealias-declaration
+    declaration --> function-declaration
+    declaration --> enum-declaration
+    declaration --> enum-element-declaration
+    declaration --> struct-declaration
     declaration --> class-declaration
+    declaration --> protocol-declaration
     declaration --> constructor-declaration
     declaration --> destructor-declaration
     declaration --> extension-declaration
-    declaration --> function-declaration
-    declaration --> import-declaration
-    declaration --> enum-declaration
-    declaration --> enum-element-declaration
-    declaration --> protocol-declaration
-    declaration --> struct-declaration
-    declaration --> typealias-declaration
-    declaration --> variable-declaration
     declaration --> subscript-declaration
     declarations --> declaration declarations-OPT
 
@@ -50,12 +49,9 @@ Import Declarations
 
     import <#module#>
 
-
 .. syntax-outline::
 
     import <#import-kind#> <#module#>
-
-
 
 .. langref-grammar
 
@@ -69,13 +65,12 @@ Import Declarations
     import-kind ::= 'func'
     import-path ::= any-identifier ('.' any-identifier)*
 
-
 .. syntax-grammar::
 
     Grammar of an import declaration
-    
+
     import-declaration --> attribute-sequence-OPT ``import`` import-kind-OPT import-path
-    
+
     import-kind --> ``typealias`` | ``struct`` | ``class`` | ``enum`` | ``protocol`` | ``var`` | ``func``
     import-path --> any-identifier | any-identifier ``.`` import-path
 
@@ -83,11 +78,9 @@ Import Declarations
 Variable Declarations
 ---------------------
 
-
 .. syntax-outline::
 
     var <#variable name#> : <#type#> = <#expression#>
-
 
 .. syntax-outline::
 
@@ -104,8 +97,6 @@ Variable Declarations
     Also, discuss that when you only want to provide a getter, 'get:' is optional
     (as shown in the third form of the grammar).
 
-
-
 .. langref-grammar
 
     decl-var        ::= attribute-list 'var' pattern initializer?  (',' pattern initializer?)*
@@ -118,7 +109,6 @@ Variable Declarations
     set             ::= 'set' set-name? ':' brace-item*
     set-name        ::= '(' identifier ')'
 
-
 .. syntax-grammar::
 
     Grammar of a variable declaration
@@ -127,16 +117,16 @@ Variable Declarations
     variable-declaration --> attribute-sequence-OPT ``var`` variable-name type-specifier code-block
     variable-declaration --> attribute-sequence-OPT ``var`` variable-name type-specifier getter-setter-block
     variable-name --> identifier
-    
+
     pattern-initializer-list --> pattern-initializer | pattern-initializer ``,`` pattern-initializer-list
     pattern-initializer --> pattern initializer-OPT
     initializer --> ``=`` expression
-    
+
     getter-setter-block --> ``{`` getter setter-OPT ``}`` | ``{`` setter getter ``}``
     getter --> ``get`` ``:`` code-block-items-OPT
     setter --> ``set`` setter-name-OPT ``:`` code-block-items-OPT
     setter-name --> ``(`` identifier ``)``
-    
+
 .. Notes: Type specifiers are required for computed properties -- the
    types of those properties are not computed/inferred.
 
@@ -145,28 +135,43 @@ Variable Declarations
    declarations.
 
 
+Let Declaration
+---------------
+
+.. syntax-outline::
+
+    let <#variable name#> : <#type#> = <#expression#>
+
+.. langref-grammar
+
+    decl-let    ::= attribute-list 'let' pattern initializer?  (',' pattern initializer?)*
+    initializer ::= '=' expr
+
+.. syntax-grammar::
+
+    Grammar of a let declaration
+
+    let-declaration --> attribute-sequence-OPT ``let`` pattern-initializer-list
+
+
 Typealias Declarations
 ----------------------
-
 
 .. syntax-outline::
 
     typealias <#new type#> : <#adopted protocols#> = <#existing type#>
-
-
 
 .. langref-grammar
 
     decl-typealias ::= typealias-head '=' type
     typealias-head ::= 'typealias' identifier inheritance?
 
-    
 .. syntax-grammar::
 
     Grammar of a typealias declaration
 
     typealias-declaration --> typealias-head ``=`` type
-    typealias-head --> ``typealias`` typealias-name type-inheritance-list-OPT
+    typealias-head --> ``typealias`` typealias-name type-inheritance-clause-OPT
     typealias-name --> identifier
 
 
@@ -185,9 +190,9 @@ Function Declarations
 
 .. TODO: Write a syntax-outline for selector-style functions.
 
+
 Function Signatures
 ~~~~~~~~~~~~~~~~~~~
-
 
 .. langref-grammar
 
@@ -198,33 +203,32 @@ Function Signatures
     selector-tuple ::= '(' pattern-tuple-element ')' (identifier-or-any '(' pattern-tuple-element ')')+
     func-signature-result ::= '->' type-annotation
 
-
 .. syntax-grammar::
-    
+
     Grammar of a function declaration
-    
-    function-declaration --> attribute-sequence-OPT ``func`` function-name generic-parameters-OPT function-signature code-block-OPT
+
+    function-declaration --> attribute-sequence-OPT ``func`` function-name generic-parameter-clause-OPT function-signature code-block-OPT
     function-name --> any-identifier
-    
+
     function-signature --> function-arguments function-signature-result-OPT
     function-arguments --> tuple-patterns | selector-arguments
     function-signature-result --> ``->`` attribute-sequence-OPT type
-    
+
     selector-arguments --> ``(`` tuple-pattern-element ``)`` selector-tuples
     selector-tuples --> selector-name ``(`` tuple-pattern-element ``)`` selector-tuples-OPT
     selector-name --> identifier-or-any
-    
-.. TODO: 
+
+.. TODO:
 
     Revisit function-declaration; the ``static`` keyword may be renamed and/or made into an attribute.
-    The reason is that ``static`` isn't the most appropriate term, because we're using it to 
-    mark a class function, not a static function (in the proper sense). 
+    The reason is that ``static`` isn't the most appropriate term, because we're using it to
+    mark a class function, not a static function (in the proper sense).
     This issue is being tracked by:
     <rdar://problem/13347488> Consider renaming "static" functions to "class" functions
 
-    The overgeneration from tuple-patterns combined with some upcoming changes 
+    The overgeneration from tuple-patterns combined with some upcoming changes
     mean that we should just create a new syntactic category
-    for function arguments instead. 
+    for function arguments instead.
     We're going to hold off on doing this until they [compiler team] make their changes.
 
     Code block is optional in the context of a protocol.
@@ -233,13 +237,12 @@ Function Signatures
     There is also the low-level "asm name" FFI
     which is a definition and declaration corner case.
     Let's just deal with this difference in prose.
-    
+
     Selector style syntax is pretty stable at this point.
     The only contentious issue recently has been the calling syntax.
     Any changes will probably be fiddley little bits.
 
     Revise selector-name---can we come up with a better name for this?
-
 
 
 Enumeration Declarations
@@ -271,7 +274,6 @@ Enumeration Declarations
     You can have: <#raw value type, protocol conformance#>.
     Discuss this in prose.
 
-
 .. langref-grammar
 
     decl-enum ::= attribute-list 'enum' identifier generic-params? inheritance? enum-body
@@ -285,17 +287,17 @@ Enumeration Declarations
 .. syntax-grammar::
 
     Grammar of an enumeration declaration
-    
-    enum-declaration --> attribute-sequence-OPT ``enum`` enum-name generic-parameters-OPT type-inheritance-list-OPT enum-body
+
+    enum-declaration --> attribute-sequence-OPT ``enum`` enum-name generic-parameter-clause-OPT type-inheritance-clause-OPT enum-body
     enum-name --> identifier
     enum-body --> ``{`` declarations-OPT ``}``
-    
+
     enum-element-declaration --> attribute-sequence-OPT ``case`` enumerator-list
     enumerator-list --> enumerator raw-value-assignment-OPT | enumerator raw-value-assignment-OPT ``,`` enumerator-list
-    enumerator --> identifier tuple-type-OPT
+    enumerator --> enumerator-name tuple-type-OPT
+    enumerator-name --> identifier
     raw-value-assignment --> ``=`` raw-value-literal
-    raw-value-literal --> integer-literal | float-literal | character-literal | string-literal 
-
+    raw-value-literal --> integer-literal | floating-point-literal | character-literal | string-literal
 
 .. Note: You can have other declarations like methods inside of an enum declaration (e.g., methods, etc.).
 
@@ -323,7 +325,7 @@ Structure Declarations
 
    Grammar of a structure declaration
 
-   struct-declaration --> attribute-sequence-OPT ``struct`` struct-name generic-parameters-OPT type-inheritance-list-OPT struct-body
+   struct-declaration --> attribute-sequence-OPT ``struct`` struct-name generic-parameter-clause-OPT type-inheritance-clause-OPT struct-body
    struct-name --> identifier
    struct-body --> ``{`` declarations-OPT ``}``
 
@@ -346,7 +348,7 @@ Class Declarations
 
     Grammar of a class declaration
 
-    class-declaration --> attribute-sequence-OPT ``class`` class-name generic-parameters-OPT type-inheritance-list-OPT class-body
+    class-declaration --> attribute-sequence-OPT ``class`` class-name generic-parameter-clause-OPT type-inheritance-clause-OPT class-body
     class-name --> identifier
     class-body --> ``{`` declarations-OPT ``}``
 
@@ -360,18 +362,21 @@ Protocol Declarations
         <#protocol members#>
     }
 
+
 Function Protocol Elements
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 
 Variable Protocol Elements
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+
 Subscript Protocol Elements
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+
 Typealias Protocol Elements
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
 
 .. langref-grammar
 
@@ -381,18 +386,16 @@ Typealias Protocol Elements
     protocol-member ::= subscript-head
     protocol-member ::= typealias-head
 
-
 .. syntax-grammar::
 
     Grammar of a protocol declaration
 
-    protocol-declaration --> attribute-sequence-OPT ``protocol`` protocol-name type-inheritance-list-OPT protocol-body
+    protocol-declaration --> attribute-sequence-OPT ``protocol`` protocol-name type-inheritance-clause-OPT protocol-body
     protocol-name --> identifier
     protocol-body --> ``{`` protocol-members-OPT ``}``
-    
+
     protocol-members --> protocol-member protocol-members-OPT
     protocol-member --> variable-declaration | function-declaration | typealias-head | subscript-head
-
 
 
 Constructor Declarations
@@ -408,13 +411,13 @@ Constructor Declarations
     constructor-signature ::= pattern-tuple
     constructor-signature ::= identifier-or-any selector-tuple
 
-
 .. syntax-grammar::
 
     Grammar of a constructor declaration
 
-    constructor-declaration --> attribute-sequence-OPT ``init`` generic-parameters-OPT constructor-signature code-block
+    constructor-declaration --> attribute-sequence-OPT ``init`` generic-parameter-clause-OPT constructor-signature code-block
     constructor-signature --> tuple-pattern | identifier-or-any selector-arguments
+
 
 Destructor Declarations
 -----------------------
@@ -425,24 +428,20 @@ Destructor Declarations
         <#code to execute#>
     }
 
-
-
 .. langref-grammar
 
     decl-constructor ::= attribute-list 'destructor' '(' ')' brace-item-list
     NOTE: langref contains a typo here---should be 'decl-destructor'
 
-
 .. syntax-grammar::
 
     Grammar of a destructor declaration
-    
+
     destructor-declaration --> attribute-sequence-OPT ``destructor`` ``(`` ``)`` code-block
 
 
 Extension Declarations
 ----------------------
-
 
 .. syntax-outline::
 
@@ -450,27 +449,20 @@ Extension Declarations
         <#declarations#>
     }
 
-
 .. langref-grammar
 
     decl-extension ::= 'extension' type-identifier inheritance? '{' decl* '}'
 
-
 .. syntax-grammar::
 
     Grammar of an extension declaration
-    
-    extension-declaration --> ``extension`` type-identifier type-inheritance-list-OPT extension-body
-    extension-body --> ``{`` declarations-OPT ``}``
 
-.. TODO:
- 
-     Add elsewhere: type-inheritance-list
+    extension-declaration --> ``extension`` type-identifier type-inheritance-clause-OPT extension-body
+    extension-body --> ``{`` declarations-OPT ``}``
 
 
 Subscript Declarations
 ----------------------
-
 
 .. syntax-outline::
 
@@ -481,12 +473,10 @@ Subscript Declarations
         <#code to execute#>
     }
 
-
 .. langref-grammar
 
     decl-subscript ::= subscript-head '{' get-set '}'
     subscript-head ::= attribute-list 'subscript' pattern-tuple '->' type
-
 
 .. syntax-grammar::
 
@@ -496,10 +486,10 @@ Subscript Declarations
     subscript-head --> attribute-sequence-OPT ``subscript`` tuple-pattern ``->`` type
 
 
+Attribute Sequences
+-------------------
 
-Attribute Sequence Declarations
--------------------------------
-
+.. TODO: TR: Get the latest list of attributes
 
 .. langref-grammar
 
@@ -513,11 +503,10 @@ Attribute Sequence Declarations
     attribute      ::= attribute-auto_closure
     attribute      ::= attribute-noreturn
 
-
 .. syntax-grammar::
 
     Grammar of an attribute sequence
-    
+
     attribute-sequence --> attribute-clause attribute-sequence-OPT
     attribute-clause --> ``@`` attribute-list attribute-clause-OPT
     attribute-list --> attribute | attribute ``,`` attribute-list
@@ -533,7 +522,6 @@ Attribute Sequence Declarations
 
 Infix Attributes
 ~~~~~~~~~~~~~~~~
-
 
 .. langref-grammar
 
@@ -565,7 +553,7 @@ Resilience Attributes
 
     resilience-attribute --> ``resilient`` | ``fragile`` | ``born_fragile``
 
- 
+
 The In-Out Attribute
 ~~~~~~~~~~~~~~~~~~~~
 
@@ -596,7 +584,6 @@ The Auto-Closure Attribute
     auto-closure-attribute --> ``auto_closure``
 
 
-
 The No-Return Attribute
 ~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -610,5 +597,3 @@ The No-Return Attribute
     Grammar of a no-return attribute
 
     no-return-attribute --> ``noreturn``
-
-
