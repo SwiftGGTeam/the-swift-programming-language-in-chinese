@@ -203,7 +203,7 @@ Function Signatures
 
     Grammar of a function declaration
 
-    function-declaration --> attribute-sequence-OPT ``func`` function-name generic-parameter-clause-OPT function-signature code-block-OPT
+    function-declaration --> attribute-sequence-OPT ``static``-OPT ``func`` function-name generic-parameter-clause-OPT function-signature code-block-OPT
     function-name --> any-identifier
 
     function-signature --> function-arguments function-signature-result-OPT
