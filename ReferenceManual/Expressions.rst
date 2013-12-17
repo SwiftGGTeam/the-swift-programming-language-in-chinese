@@ -357,8 +357,8 @@ Metatype Expression
     metatype-expression --> postfix-expression ``.`` ``metatype``
 
 
-Subscript Expressions
-~~~~~~~~~~~~~~~~~~~~~
+Subscript Expression
+~~~~~~~~~~~~~~~~~~~~
 
 .. langref-grammar
 
@@ -371,8 +371,8 @@ Subscript Expressions
     subscript-expression --> postfix-expression ``[`` expression ``]``
 
 
-New Expressions
-~~~~~~~~~~~~~~~
+New Expression
+~~~~~~~~~~~~~~
 
 .. langref-grammar
 
@@ -393,8 +393,8 @@ New Expressions
     Also, note that this is *explicitly* left-recursive.
 
 
-Function Call Expression
-~~~~~~~~~~~~~~~~~~~~~~~~
+Function Call Expressions
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. langref-grammar
 
