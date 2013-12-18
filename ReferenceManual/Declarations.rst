@@ -51,7 +51,7 @@ Import Declarations
 
 .. syntax-outline::
 
-    import <#import-kind#> <#module#>
+    import <#import kind#> <#module#>
 
 .. langref-grammar
 
@@ -178,13 +178,59 @@ Function Declarations
 
 .. syntax-outline::
 
-    func <#function name#> (<#arguments#>) -> <#return type#> {
+    func <#function name#>(<#function parameters#>) -> <#return type#> {
+        <#code to execute#>
+    }
+
+.. syntax-outline::
+
+    func <#function name#>(
+         <#parameter name 1#>: <#parameter type 1#>, 
+         <#parameter name 2#>: <#parameter type 2#>) 
+         -> <#return type#> 
+    {
+        <#code to execute#>
+    }
+
+.. syntax-outline::
+
+    func <#selector name part 1#>(<#parameter name 1#>: <#parameter type 1#>) 
+         <#selector name part 2#>(<#parameter name 2#>: <#parameter type 2#>) 
+         -> <#return type#> 
+    {
+        <#code to execute#>
+    }
+    
+.. syntax-outline::
+
+    func <#selector keyword 1#>(<#parameter name 1#>: <#parameter type 1#>) 
+         <#selector keyword 2#>(<#parameter name 2#>: <#parameter type 2#>) 
+         -> <#return type#> 
+    {
+        <#code to execute#>
+    }
+
+.. syntax-outline::
+
+    func <#method keyword 1#>(<#parameter name 1#>: <#parameter type 1#>) 
+         <#method keyword 2#>(<#parameter name 2#>: <#parameter type 2#>) 
+         -> <#return type#> 
+    {
+        <#code to execute#>
+    }
+
+.. syntax-outline::
+
+    func <#signature keyword 1#>(<#parameter name 1#>: <#parameter type 1#>) 
+         <#signature keyword 2#>(<#parameter name 2#>: <#parameter type 2#>) 
+         -> <#return type#> 
+    {
         <#code to execute#>
     }
 
 .. TODO: Discuss in prose: Variadic functions and the other permutations of function declarations.
 
-.. TODO: Write a syntax-outline for selector-style functions.
+.. TODO: Decide on a syntax-outline for regular Swift functions and for selector-style functions.
 
 
 Function Signatures
@@ -206,11 +252,11 @@ Function Signatures
     function-declaration --> attribute-sequence-OPT ``static``-OPT ``func`` function-name generic-parameter-clause-OPT function-signature code-block-OPT
     function-name --> any-identifier
 
-    function-signature --> function-arguments function-signature-result-OPT
-    function-arguments --> tuple-patterns | selector-arguments
+    function-signature --> function-parameters function-signature-result-OPT
+    function-parameters --> tuple-patterns | selector-parameters
     function-signature-result --> ``->`` attribute-sequence-OPT type
 
-    selector-arguments --> ``(`` tuple-pattern-element ``)`` selector-tuples
+    selector-parameters --> ``(`` tuple-pattern-element ``)`` selector-tuples
     selector-tuples --> selector-name ``(`` tuple-pattern-element ``)`` selector-tuples-OPT
     selector-name --> identifier-or-any
 
