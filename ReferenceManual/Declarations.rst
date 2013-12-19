@@ -436,7 +436,22 @@ Typealias Protocol Elements
 Constructor Declarations
 ------------------------
 
-.. TODO: Add syntax-outline once selector syntax is nailed down.
+.. syntax-outline::
+
+    init(<#parameter name#>: <#parameter type#>) {
+        <#code to execute#>
+    }
+
+.. syntax-outline::
+
+    init <#selector keyword 1#>(<#parameter name 1#>: <#parameter type 1#>)
+         <#selector keyword 2#>(<#parameter name 2#>: <#parameter type 2#>)
+    }
+        <#code to execute#>
+    }
+
+.. TODO: Revisit the selector-style constructor syntax-outline
+    after we've nailed down the syntax-outline for selector-style function declarations.
 
 .. langref-grammar
 
@@ -449,7 +464,7 @@ Constructor Declarations
     Grammar of a constructor declaration
 
     constructor-declaration --> attribute-sequence-OPT ``init`` generic-parameter-clause-OPT constructor-signature code-block
-    constructor-signature --> tuple-pattern | identifier-or-any selector-arguments
+    constructor-signature --> tuple-pattern | selector-tuples
 
 
 Destructor Declarations
