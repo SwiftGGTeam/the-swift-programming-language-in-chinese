@@ -76,12 +76,14 @@ Variable-Binding Patterns
 .. langref-grammar
 
     pattern-var ::= 'var' pattern
+    pattern-var ::= 'let' pattern
 
 .. syntax-grammar::
 
     Grammar of a variable-binding pattern
 
     variable-binding-pattern --> ``var`` pattern
+    variable-binding-pattern --> ``let`` pattern
 
 .. NOTE: We chose to call this "variable-binding pattern"
     instead of "variable pattern",
