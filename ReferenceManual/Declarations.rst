@@ -508,6 +508,12 @@ Extension Declarations
     extension-declaration --> ``extension`` type-identifier type-inheritance-clause-OPT extension-body
     extension-body --> ``{`` declarations-OPT ``}``
 
+.. TODO: TR: What are the semantic rules associated with extending different types?
+    The LangRef says "'extension' declarations allow adding member declarations to existing types, 
+    even in other source files and modules. There are different semantic rules for each type that is extended.
+    enum, struct, and class declaration extensions. FIXME: Write this section."
+    What is the relevant, missing information?
+
 
 Subscript Declarations
 ----------------------
