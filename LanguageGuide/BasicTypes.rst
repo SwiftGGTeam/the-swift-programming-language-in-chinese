@@ -92,6 +92,13 @@ so this can be read as:
 Declare a variable called ``b`` that is a ``String``,
 and give it an initial value of ``"Hello"``.
 
+.. TODO: Update this section to mention let as well as var,
+   once let is available and ready for prime-time use.
+   Also update the rest of the Guide to use let
+   wherever and whenever mutability is not required,
+   and note that var is something you should really only opt in to
+   when you know that the variable's value should be allowed to mutate.
+
 You can use pretty much any character you like in a variable name,
 including `Unicode <http://en.wikipedia.org/wiki/Unicode>`_ characters:
 

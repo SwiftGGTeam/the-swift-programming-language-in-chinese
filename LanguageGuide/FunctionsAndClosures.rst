@@ -429,6 +429,7 @@ Here's an example of a function written with selector-style declaration:
 .. closures can be named
 .. inout properties and a general discussion of byref / byvalue
 .. pass a tuple as the entire set of arguments, as in var argTuple = (0, "one", '2'); x.foo:bar:bas:(argTuple)
+.. parameters are immutable by default, and do not implicitly create shadow variables
 
 .. refnote:: References
 
