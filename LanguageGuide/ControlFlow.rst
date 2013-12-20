@@ -727,6 +727,11 @@ the first matching case will always be used.
 The point (0, 0) would match ``case (0, 0)`` first,
 and so all other matching cases would be ignored.
 
+.. TODO: The type of a tuple can be used in a case statement to check for different types:
+   var x: Any = (1, 2)
+   switch x {
+   case is (Int, Int):
+
 Where
 _____
 
