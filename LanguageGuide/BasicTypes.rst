@@ -92,6 +92,13 @@ so this can be read as:
 Declare a variable called ``b`` that is a ``String``,
 and give it an initial value of ``"Hello"``.
 
+.. TODO: Update this section to mention let as well as var,
+   once let is available and ready for prime-time use.
+   Also update the rest of the Guide to use let
+   wherever and whenever mutability is not required,
+   and note that var is something you should really only opt in to
+   when you know that the variable's value should be allowed to mutate.
+
 You can use pretty much any character you like in a variable name,
 including `Unicode <http://en.wikipedia.org/wiki/Unicode>`_ characters:
 
@@ -140,7 +147,7 @@ in that an 8-bit unsigned integer is a ``UInt8``,
 a 128-bit signed integer is an ``Int128``,
 and a signed 64-bit floating-point number is a ``Float64``.
 Like all types in Swift, these basic numeric types have capitalized names.
-(A complete list of numeric types can be found in the :doc:`../ReferenceManual/ReferenceManual`.)
+(A complete list of numeric types can be found in the :doc:`../ReferenceManual/index`.)
 
 .. glossary::
 
