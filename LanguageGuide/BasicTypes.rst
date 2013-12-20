@@ -140,7 +140,7 @@ in that an 8-bit unsigned integer is a ``UInt8``,
 a 128-bit signed integer is an ``Int128``,
 and a signed 64-bit floating-point number is a ``Float64``.
 Like all types in Swift, these basic numeric types have capitalized names.
-(A complete list of numeric types can be found in the :doc:`../ReferenceManual/ReferenceManual`.)
+(A complete list of numeric types can be found in the :doc:`../ReferenceManual/index`.)
 
 .. glossary::
 
