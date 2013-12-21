@@ -78,7 +78,7 @@ This can be read as:
 
 Declare a variable called ``a``, and give it an initial value of ``1``.
 
-Variable definitions can include a specific *type*,
+Variable declarations can include a specific *type*,
 to be explicit about the kind of variable you want to create:
 
 .. testcode:: declaringVariables
