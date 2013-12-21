@@ -1076,35 +1076,16 @@ It's even safe in Swift to mix by-reference and value types if you use a protoco
     (swift) var bar = Bar()
     // bar : Bar = Bar()
     (swift) var workers = Array<Workable>()
-    >>> P4REPL8Workable_
-    // workers : Array<Workable> = [P4REPL8Workable_
-    >>> P4REPL8Workable_
-    >>> P4REPL8Workable_
-    >>> ]
+    // workers : Array<Workable> = []
     (swift) workers.append(foo)
-    >>> P4REPL8Workable_
     (swift) workers.append(bar)
-    >>> P4REPL8Workable_
     (swift) workers.append(42)
-    >>> P4REPL8Workable_
     (swift) for eachThing in workers {
               eachThing.work()
             }
-    >>> P4REPL8Workable_
-    >>> P4REPL8Workable_
-    >>> P4REPL8Workable_
-    >>> P4REPL8Workable_
     >>> A foo is working
-    >>> P4REPL8Workable_
-    >>> P4REPL8Workable_
-    >>> P4REPL8Workable_
     >>> A bar is working
-    >>> P4REPL8Workable_
-    >>> P4REPL8Workable_
-    >>> P4REPL8Workable_
     >>> An integer is working
-    >>> P4REPL8Workable_
-    >>> P4REPL8Workable_
 
 Swift makes it easy to create your own parameterized types, like this simple implementation of a stack class:
 
