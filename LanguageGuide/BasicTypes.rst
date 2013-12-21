@@ -530,7 +530,7 @@ You can create tuples from whatever permutation of types you like,
 and they can contain as many different types as you like.
 There's nothing stopping you from having
 a tuple of type ``(Int, Int, Int)``, or ``(String, Bool)``,
-or indeed any other combination you require.
+or indeed any other permutation you require.
 
 You can access the individual element values in a tuple using index numbers starting at zero:
 
