@@ -166,7 +166,7 @@ which can be accessed via dot syntax:
     >>> ants have 6 legs
     >>> cats have 4 legs
 
-Note that the items in the ``Dictionary`` are not iterated in the same order as they were inserted.
+Note that the items in the ``Dictionary`` may not be iterated in the same order as they were inserted.
 The contents of a ``Dictionary`` are inherently unordered,
 and iterating over them does not guarantee the order in which they will be retrieved.
 
