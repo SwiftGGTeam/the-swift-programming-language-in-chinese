@@ -286,7 +286,8 @@ All of these integer literals have a decimal value of ``17``:
 
 Floating-point literals can be decimal (with no prefix),
 or hexadecimal (with a ``0x`` prefix).
-They can have an optional *exponent*,
+The must always have a number (or hexadecimal number) on both sides of the decimal point.
+They can also have an optional *exponent*,
 indicated by an upper- or lower-case ``e`` for decimal floats,
 or an upper- or lower-case ``p`` for hexadecimal floats.
 
