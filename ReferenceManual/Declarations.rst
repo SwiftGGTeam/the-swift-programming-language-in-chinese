@@ -566,13 +566,21 @@ Attribute Sequences
     attribute-list --> attribute | attribute ``,`` attribute-list
     attribute --> infix-attribute | resilience-attribute | in-out-attribute | auto-closure-attribute | no-return-attribute
 
-.. NOTE:
-
-   Our grammar doesn't have empty terminals (no epsilon)
+.. NOTE: Our grammar doesn't have empty terminals (no epsilon)
    so we need to make attribute-sequence actually contain something.
    This means that instead of having "empty" as a possible expansion,
    attribute-sequence always appears as -OPT.
 
+.. TODO: TR: From looking at /swift/include/swift/AST/Attr.def,
+    there are ATTR(...), TYPE_ATTR(...), and IB_ATTR(...).
+    Assuming that TYPE_ATTR(...)s can be applied to types only,
+    what are the restrictions on plain ATTR(...)s? 
+    Are they restricted to declarations only?
+    (But, 'noreturn' is in both ATTR(...) and TYPE_ATTR(...); why?)
+    If attributes are neatly separated into mutually exclusive categories,
+    e.g., declaration attributes, type attributes, and IB attributes,
+    then we could could break down the attribute grammar accordingly.
+    
 
 Infix Attributes
 ~~~~~~~~~~~~~~~~
