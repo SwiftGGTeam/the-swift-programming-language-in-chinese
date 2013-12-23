@@ -595,9 +595,11 @@ Infix Attributes
 
     Grammar of an infix attribute
 
-    infix-attribute --> infix-head ``=`` integer-literal
-    infix-head --> ``infix`` | ``infix_left`` | ``infix_right``
+    infix-attribute --> ``infix``
 
+.. NOTE: There is now only one infix attribute ('infix'),
+    which no longer takes an assignment ('=' integer-literal).
+    Tested this in r11445 on 12/23/2013.
 
 Resilience Attributes
 ~~~~~~~~~~~~~~~~~~~~~
