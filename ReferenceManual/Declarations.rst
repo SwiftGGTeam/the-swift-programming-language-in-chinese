@@ -543,8 +543,6 @@ Subscript Declarations
 Attribute Sequences
 -------------------
 
-.. TODO: TR: Get the latest list of attributes
-
 .. langref-grammar
 
     attribute-list        ::= /*empty*/
@@ -581,6 +579,18 @@ Attribute Sequences
     e.g., declaration attributes, type attributes, and IB attributes,
     then we could could break down the attribute grammar accordingly.
     
+    The full list of current attributes is given by the following grammar:
+    
+    attribute --> One of the following:
+    ``auto_closure`` ``inout`` ``cc`` ``noreturn`` ``objc_block``
+    ``thin`` ``assignment`` ``class_protocol`` ``conversion`` ``exported``
+    ``infix`` ``mutating`` ``resilient`` ``fragile`` ``born_fragile``
+    ``asmname`` ``prefix`` ``postfix`` ``objc`` ``optional``
+    ``transparent`` ``unowned`` ``weak`` ``IBOutlet`` ``IBAction`` ``IBLiveView``
+    
+    We should decide if the 'Attribute Sequences' heading should be changed
+    to 'Attributes' and whether each attribute should have its own discussion in a subheading.
+
 
 Infix Attributes
 ~~~~~~~~~~~~~~~~
