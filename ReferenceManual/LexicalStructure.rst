@@ -51,8 +51,8 @@ Identifier Tokens
 ~~~~~~~~~~~~~~~~~
 
 
-Operators
-+++++++++
+Operator Identifiers
+~~~~~~~~~~~~~~~~~~~~
 
 .. langref-grammar
 
@@ -165,20 +165,6 @@ it is parsed as ``A < B < C > >`` rather than as ``A < B < C >>``.
     A<B<C>> without requiring spaces between the closing '>'s.
 
 
-Implementation Identifier Token
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-
-Reserved Punctuation and Keywords
----------------------------------
-
-
-Reserved Punctuation Tokens
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. NOTE: Reserved punctuation is discussed under operators.
-
-
 Reserved Keywords
 ~~~~~~~~~~~~~~~~~
 
@@ -283,6 +269,12 @@ Reserved Keywords
 ``switch``
 ``then``
 ``while``
+
+
+Implementation Identifier Token
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
 
 Constants
 ---------
