@@ -76,11 +76,13 @@ Operators
 
 .. syntax-grammar::
 
+	Grammar of operators
+
     operator --> operator-character operator-OPT
     operator --> ``..``
 
     operator-character --> One of the following characters:
-    @ / = - + * % < > ! & | ^ ~
+    ``@`` ``/`` ``=`` ``-`` ``+`` ``*`` ``%`` ``<`` ``>`` ``!`` ``&`` ``|`` ``^`` ``~``
 
     binary-operater --> operator
     prefix-operator --> operator
