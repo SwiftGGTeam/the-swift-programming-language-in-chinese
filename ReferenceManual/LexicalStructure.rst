@@ -96,13 +96,13 @@ Operators
 Operators that are followed by one of the following characters are *left bound*:
 
     Space, Carriage Return, New Line, Horizontal Tab
-    ( [ { , ; :
+    ``(`` ``[`` ``{`` ``,`` ``;`` ``:``
 
 
 Operators that are preceded by one of the following characters are *right bound*:
 
     Space, Carriage Return, New Line, Horizontal Tab
-    ) ] } , ; :
+    ``)`` ``]`` ``}`` ``,`` ``;`` ``:``
 
 Being right/left bound determines whether an operator is
 a prefix operator, a postfix operator, or a binary operator.
@@ -143,18 +143,18 @@ to use it in the ternary (``? :``) operator, it must not be left bound.
     punctuation ::= '...'
     punctuation ::= '&' // unary prefix operator
 
-The following character sequences are reserved punctuation and may not be used as operators: ::
+The following character sequences are reserved punctuation and may not be used as operators:
 
-    = -> // /* */ ...  { } ( ) [ ] . , ; :
+    ``=`` ``->`` ``//`` ``/*`` ``*/`` ``...`` ``{`` ``}`` ``(`` ``)`` ``[`` ``]`` ``.`` ``,`` ``;`` ``:``
 
-The unary prefix operator ``&`` is reserved punctuation and may not be used as an operator.
+The unary prefix operator ``&`` is also reserved punctuation and may not be used as an operator.
 
 Operators with a leading ``<`` or ``>`` are split into two tokens:
 the leading ``<`` or ``>`` and the remainder of the token.
 The remainder may itself be split in the same way.
 This removes the need for disambiguating spaces between the closing ``>`` characters
-in nested protocols such as ``A<B<C>>`` --
-it parsed as ``A < B < C > >`` rather than as ``A < B < C >>`.
+in nested protocols such as ``A<B<C>>``---
+it is parsed as ``A < B < C > >`` rather than as ``A < B < C >>``.
 
 .. langref
     When parsing certain grammatical constructs that involve '<' and '>' (such
