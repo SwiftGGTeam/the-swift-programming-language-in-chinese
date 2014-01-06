@@ -562,7 +562,11 @@ Attribute Sequences
     attribute-sequence --> attribute-clause attribute-sequence-OPT
     attribute-clause --> ``@`` attribute-list attribute-clause-OPT
     attribute-list --> attribute | attribute ``,`` attribute-list
-    attribute --> infix-attribute | resilience-attribute | in-out-attribute | auto-closure-attribute | no-return-attribute
+    attribute --> One of the following:
+    ``auto_closure`` ``inout`` ``cc`` ``noreturn`` ``objc_block`` ``thin`` ``assignment``
+    ``class_protocol`` ``conversion`` ``exported`` ``infix`` ``mutating`` ``resilient``
+    ``fragile`` ``born_fragile`` ``asmname`` ``prefix`` ``postfix`` ``objc`` ``optional``
+    ``transparent`` ``unowned`` ``weak`` ``IBOutlet`` ``IBAction`` ``IBLiveView``
 
 .. NOTE: Our grammar doesn't have empty terminals (no epsilon)
    so we need to make attribute-sequence actually contain something.
@@ -579,33 +583,18 @@ Attribute Sequences
     e.g., declaration attributes, type attributes, and IB attributes,
     then we could could break down the attribute grammar accordingly.
     
-    The full list of current attributes is given by the following grammar:
-    
-    attribute --> One of the following:
-    ``auto_closure`` ``inout`` ``cc`` ``noreturn`` ``objc_block``
-    ``thin`` ``assignment`` ``class_protocol`` ``conversion`` ``exported``
-    ``infix`` ``mutating`` ``resilient`` ``fragile`` ``born_fragile``
-    ``asmname`` ``prefix`` ``postfix`` ``objc`` ``optional``
-    ``transparent`` ``unowned`` ``weak`` ``IBOutlet`` ``IBAction`` ``IBLiveView``
-    
     We should decide if the 'Attribute Sequences' heading should be changed
     to 'Attributes' and whether each attribute should have its own discussion in a subheading.
 
 
-Infix Attributes
-~~~~~~~~~~~~~~~~
+Infix Attribute
+~~~~~~~~~~~~~~~
 
 .. langref-grammar
 
     attribute-infix ::= 'infix_left'  '=' integer_literal
     attribute-infix ::= 'infix_right' '=' integer_literal
     attribute-infix ::= 'infix        '=' integer_literal
-
-.. syntax-grammar::
-
-    Grammar of an infix attribute
-
-    infix-attribute --> ``infix``
 
 .. NOTE: There is now only one infix attribute ('infix'),
     which no longer takes an assignment ('=' integer-literal).
@@ -621,11 +610,7 @@ Resilience Attributes
     attribute-resilience ::= 'born_fragile'
 
 
-.. syntax-grammar::
-
-    Grammar of a resilience attribute
-
-    resilience-attribute --> ``resilient`` | ``fragile`` | ``born_fragile``
+Swift has three resilience attributes: ``resilient``, ``fragile``, and ``born_fragile``.
 
 
 The In-Out Attribute
@@ -636,13 +621,6 @@ The In-Out Attribute
     attribute-inout ::= 'inout'
 
 
-.. syntax-grammar::
-
-    Grammar of an in-out attribute
-
-    in-out-attribute --> ``inout``
-
-
 The Auto-Closure Attribute
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -651,23 +629,9 @@ The Auto-Closure Attribute
     attribute-auto_closure ::= 'auto_closure'
 
 
-.. syntax-grammar::
-
-    Grammar of an auto-closure attribute
-
-    auto-closure-attribute --> ``auto_closure``
-
-
 The No-Return Attribute
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 .. langref-grammar
 
     attribute-noreturn ::= 'noreturn'
-
-
-.. syntax-grammar::
-
-    Grammar of a no-return attribute
-
-    no-return-attribute --> ``noreturn``
