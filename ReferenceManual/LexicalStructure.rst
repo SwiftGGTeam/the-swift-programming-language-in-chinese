@@ -254,6 +254,14 @@ Reserved Keywords
    by extracting the code-voice literals from production rules
    rather than maintaining them by hand.
 
+.. TODO: TR: Are 'operator', 'associativity', and 'precedence' reserved keywords?
+	For instance, in operators.swift, we find the following example:
+	operator infix ++++ {
+		precedence 195
+  		associativity left
+	}
+	This example works just fine as of rev. 11445
+
 *Keywords used in statements*:
 
 ``break``
