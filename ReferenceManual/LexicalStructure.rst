@@ -168,7 +168,7 @@ it is parsed as ``A < B < C > >`` rather than as ``A < B < C >>``.
 Reserved Keywords
 ~~~~~~~~~~~~~~~~~
 
-.. langref-grammar:
+.. langref-grammar
 
     keyword ::= 'class'
     keyword ::= 'destructor'
@@ -274,6 +274,11 @@ Reserved Keywords
 Implementation Identifier Token
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+.. langref-grammar
+
+	dollarident ::= '$' id-continue+
+
+.. TODO: Translate dollar-identifier grammar after we've translated the identifier grammar.
 
 
 Constants
