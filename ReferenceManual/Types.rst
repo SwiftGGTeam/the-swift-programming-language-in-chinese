@@ -215,8 +215,8 @@ Metatype Type
     metatype-type --> basic-type ``.`` ``metatype``
 
 
-Type Inheritance List
----------------------
+Type Inheritance Clause
+-----------------------
 
 .. langref-grammar
 
@@ -226,5 +226,5 @@ Type Inheritance List
 
     Grammar of a type inheritance clause
 
-    type-inheritance-clause --> ':' type-inheritance-list
+    type-inheritance-clause --> ``:`` type-inheritance-list
     type-inheritance-list --> type-identifier | type-identifier ``,`` type-inheritance-list
