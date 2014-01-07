@@ -304,6 +304,7 @@ Postfix Expressions
     expr-postfix  ::= expr-primary
     expr-postfix  ::= expr-postfix operator-postfix
     expr-postfix  ::= expr-new
+    expr-postfix  ::= expr-init
     expr-postfix  ::= expr-dot
     expr-postfix  ::= expr-metatype
     expr-postfix  ::= expr-subscript
@@ -319,6 +320,7 @@ Postfix Expressions
     postfix-expression --> postfix-expression postfix-operator
     postfix-expression --> function-call-expression
     postfix-expression --> new-expression
+    postfix-expression --> initializer-expression
     postfix-expression --> dot-expression
     postfix-expression --> metatype-expression
     postfix-expression --> subscript-expression
@@ -371,6 +373,19 @@ New Expression
     Also, note that this is *explicitly* left-recursive.
 
 .. TR: What use cases does the 'new' grammar apply to?
+
+Initializer Expression
+~~~~~~~~~~~~~~~~~~~~~~
+
+.. langref-grammar
+
+    expr-init ::= expr-postfix '.' 'init'
+
+.. syntax-grammar::
+
+    Grammar of an initializer expression
+    
+    initializer-expression --> postfix-expression ``.`` ``init``
 
 
 Dot Expressions
