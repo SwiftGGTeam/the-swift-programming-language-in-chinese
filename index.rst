@@ -1,7 +1,7 @@
 Introduction
 ============
 
-Developer Publications are creating a new book called *The Swift Programming Language*, to help with the adoption of Swift. A first edition of the complete book will be made available at WWDC 2014. Until then, it is a living document, and will be updated as the language evolves. The latest work-in-progress version is accessible from the links below.
+Developer Publications is creating a new book called *The Swift Programming Language*, to help with the adoption of Swift. A first edition of the complete book will be made available at WWDC 2014. Until then, it is a living document, and will be updated as the language evolves. The latest work-in-progress version is accessible from the links below.
 
 Chapters that have not yet been written are indicated with an [x] after their name. These chapters will be added as soon as an initial draft is available.
 
