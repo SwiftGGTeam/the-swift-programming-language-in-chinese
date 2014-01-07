@@ -12,9 +12,7 @@ Reference Manual
     Declarations
     Patterns
     Generics
-    SummaryOfTheGrammar
-    GrammarQueries
-
+    zzSummaryOfTheGrammar
 
 .. docnote:: To be included?
 

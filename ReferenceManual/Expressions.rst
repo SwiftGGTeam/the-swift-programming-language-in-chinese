@@ -151,7 +151,7 @@ Primary Expressions
     primary-expression --> parenthesized-expression
     primary-expression --> delayed-identifier-expression
 
-.. Note: One reason for breaking primary expressions out of postfix
+.. NOTE: One reason for breaking primary expressions out of postfix
    expressions is for exposition -- it makes it easier to organize the
    prose surrounding the production rules.
 
@@ -177,12 +177,8 @@ Literal Expressions
     literal-expression --> ``__FILE__`` | ``__LINE__`` | ``__COLUMN__``
 
 
-Identifier Expressions
-~~~~~~~~~~~~~~~~~~~~~~
-
-
-Generic Disambiguation
-++++++++++++++++++++++
+Identifier Expression
+~~~~~~~~~~~~~~~~~~~~~
 
 .. langref-grammar
 
@@ -194,6 +190,8 @@ Generic Disambiguation
 
     identifier-expression --> identifier generic-argument-clause-OPT
 
+.. TODO: Discuss in prose: The LangRef has a subsection called 'Generic Disambiguation',
+    the contents of which may or may not need to appear here.
 
 Superclass Expressions
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -218,8 +216,8 @@ Superclass Expressions
     superclass-constructor-expression --> ``super`` ``.`` ``init``
 
 
-Closure Expressions
-~~~~~~~~~~~~~~~~~~~
+Closure Expression
+~~~~~~~~~~~~~~~~~~
 
 .. langref-grammar
 
@@ -262,25 +260,6 @@ Anonymous Closure Argument
 .. TODO: Come up with a better name than dollar-identifier.
 
 
-Parenthesized Expressions
-~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. langref-grammar
-
-    expr-paren      ::= '(' ')'
-    expr-paren      ::= '(' expr-paren-element (',' expr-paren-element)* ')'
-    expr-paren-element ::= (identifier ':')? expr
-
-
-.. syntax-grammar::
-
-    Grammar of a parenthesized expression
-
-    parenthesized-expression --> ``(`` expression-element-list-OPT ``)``
-    expression-element-list --> expression-element | expression-element ``,`` expression-element-list
-    expression-element --> expression | identifier ``:`` expression
-
-
 Delayed Identifier Expression
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -298,6 +277,25 @@ Delayed Identifier Expression
 .. TODO: Come up with a better name for delayed-identifier-expression.
 
 
+Parenthesized Expression
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. langref-grammar
+
+    expr-paren      ::= '(' ')'
+    expr-paren      ::= '(' expr-paren-element (',' expr-paren-element)* ')'
+    expr-paren-element ::= (identifier ':')? expr
+
+
+.. syntax-grammar::
+
+    Grammar of a parenthesized expression
+
+    parenthesized-expression --> ``(`` expression-element-list-OPT ``)``
+    expression-element-list --> expression-element | expression-element ``,`` expression-element-list
+    expression-element --> expression | identifier ``:`` expression
+
+
 Postfix Expressions
 -------------------
 
@@ -306,6 +304,7 @@ Postfix Expressions
     expr-postfix  ::= expr-primary
     expr-postfix  ::= expr-postfix operator-postfix
     expr-postfix  ::= expr-new
+    expr-postfix  ::= expr-init
     expr-postfix  ::= expr-dot
     expr-postfix  ::= expr-metatype
     expr-postfix  ::= expr-subscript
@@ -319,51 +318,41 @@ Postfix Expressions
 
     postfix-expression --> primary-expression
     postfix-expression --> postfix-expression postfix-operator
+    postfix-expression --> function-call-expression
     postfix-expression --> new-expression
+    postfix-expression --> initializer-expression
     postfix-expression --> dot-expression
     postfix-expression --> metatype-expression
     postfix-expression --> subscript-expression
-    postfix-expression --> function-call-expression
-    postfix-expression --> optional-expression
     postfix-expression --> force-value-expression
-
-.. TODO:
-
-   metatype-expression --> postfix-expression ``.`` ``metatype``
+    postfix-expression --> optional-expression
 
 
-Dot Expressions
-~~~~~~~~~~~~~~~
+Function Call Expressions
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. langref-grammar
 
-    expr-dot ::= expr-postfix '.' dollarident
-    expr-dot ::= expr-postfix '.' expr-identifier
+    expr-call ::= expr-postfix expr-paren
+    expr-trailing-closure ::= expr-postfix expr-closure+
 
 .. syntax-grammar::
 
-    Grammar of a dot expression
-    
-    dot-expression --> postfix-expression ``.`` dollar-identifier
-    dot-expression --> postfix-expression ``.`` named-expression
+    Grammar of a function call expression
+
+    function-call-expression --> postfix-expression parenthesized-expression trailing-closure-OPT
+    trailing-closure --> closure-expressions expression-cast-OPT
+
+.. TR: Confirm that putting the trailing closure here,
+    as part of the function call syntax,
+    rather than as part of the general syntax of an expression
+    is still correct.
+    Assuming that it's correct, it reduces overgeneration
+    and is easier to read.
 
 
-Subscript Expressions
-~~~~~~~~~~~~~~~~~~~~~
-
-.. langref-grammar
-
-    expr-subscript ::= expr-postfix '[' expr ']'
-
-.. syntax-grammar::
-
-    Grammar of a subscript expression
-    
-    subscript-expression --> postfix-expression ``[`` expression ``]``
-
-
-New Expressions
-~~~~~~~~~~~~~~~
+New Expression
+~~~~~~~~~~~~~~
 
 .. langref-grammar
 
@@ -383,49 +372,63 @@ New Expressions
 .. TODO: Come back and clean up this grammar.
     Also, note that this is *explicitly* left-recursive.
 
+.. TR: What use cases does the 'new' grammar apply to?
 
-Function Call Expression
-~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. langref-grammar
-
-    expr-call ::= expr-postfix expr-paren
-    expr-trailing-closure ::= expr-postfix expr-closure+
-
-.. syntax-grammar::
-
-    Grammar of a function call expression
-
-    function-call-expression --> postfix-expression parenthesized-expression trailing-closure-OPT
-    trailing-closure --> closure-expressions expression-cast-OPT
-
-.. TR:
-    Confirm that putting the trailing closure here,
-    as part of the function call syntax,
-    rather than as part of the general syntax of an expression
-    is still correct.
-    Assuming that it's correct, it reduces overgeneration
-    and is easier to read.
-
-
-Optional Chaining
-~~~~~~~~~~~~~~~~~
+Initializer Expression
+~~~~~~~~~~~~~~~~~~~~~~
 
 .. langref-grammar
 
-    expr-optional ::= expr-postfix '?'-postfix
+    expr-init ::= expr-postfix '.' 'init'
 
 .. syntax-grammar::
 
-   Grammar of an optional expression
+    Grammar of an initializer expression
+    
+    initializer-expression --> postfix-expression ``.`` ``init``
 
-   optional-expression --> postfix-expression ``?``
 
-.. Note: The fact that ? must be postfix when it's used for Optional
-   is in "Lexical Structure", under the discussion of left/right binding.
+Dot Expressions
+~~~~~~~~~~~~~~~
 
-.. TODO: Try to re-title.  It's about chaining of optional operators,
-   not about the optional kind of chaining.
+.. langref-grammar
+
+    expr-dot ::= expr-postfix '.' dollarident
+    expr-dot ::= expr-postfix '.' expr-identifier
+
+.. syntax-grammar::
+
+    Grammar of a dot expression
+    
+    dot-expression --> postfix-expression ``.`` dollar-identifier
+    dot-expression --> postfix-expression ``.`` named-expression
+
+
+Metatype Expression
+~~~~~~~~~~~~~~~~~~~
+
+.. NOTE: There is no definition for metatype-expression in the LangRef.
+    This was probably just an oversight, according to Ted and Doug.
+
+.. syntax-grammar::
+
+    Grammar of a metatype expression
+    
+    metatype-expression --> postfix-expression ``.`` ``metatype``
+
+
+Subscript Expression
+~~~~~~~~~~~~~~~~~~~~
+
+.. langref-grammar
+
+    expr-subscript ::= expr-postfix '[' expr ']'
+
+.. syntax-grammar::
+
+    Grammar of a subscript expression
+    
+    subscript-expression --> postfix-expression ``[`` expression ``]``
 
 
 Forcing an Expression's Value
@@ -443,3 +446,22 @@ Forcing an Expression's Value
 
 .. TODO: Also, come up with a better name for force-value-expression.
 
+
+Optional Chaining
+~~~~~~~~~~~~~~~~~
+
+.. langref-grammar
+
+    expr-optional ::= expr-postfix '?'-postfix
+
+.. syntax-grammar::
+
+   Grammar of an optional expression
+
+   optional-expression --> postfix-expression ``?``
+
+.. NOTE: The fact that ? must be postfix when it's used for Optional
+   is in "Lexical Structure", under the discussion of left/right binding.
+
+.. TODO: Try to re-title.  It's about chaining of optional operators,
+   not about the optional kind of chaining.

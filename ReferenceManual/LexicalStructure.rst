@@ -1,7 +1,7 @@
 Lexical Structure
 =================
 
-.. TODO: write a brief intro to this chapter.
+.. TODO: Write a brief intro to this chapter.
 
 
 Whitespace and Comments
@@ -51,8 +51,8 @@ Identifier Tokens
 ~~~~~~~~~~~~~~~~~
 
 
-Operators
-+++++++++
+Operator Identifiers
+~~~~~~~~~~~~~~~~~~~~
 
 .. langref-grammar
 
@@ -76,11 +76,13 @@ Operators
 
 .. syntax-grammar::
 
+	Grammar of operators
+
     operator --> operator-character operator-OPT
     operator --> ``..``
 
     operator-character --> One of the following characters:
-    @ / = - + * % < > ! & | ^ ~
+    ``@`` ``/`` ``=`` ``-`` ``+`` ``*`` ``%`` ``<`` ``>`` ``!`` ``&`` ``|`` ``^`` ``~``
 
     binary-operater --> operator
     prefix-operator --> operator
@@ -94,13 +96,13 @@ Operators
 Operators that are followed by one of the following characters are *left bound*:
 
     Space, Carriage Return, New Line, Horizontal Tab
-    ( [ { , ; :
+    ``(`` ``[`` ``{`` ``,`` ``;`` ``:``
 
 
 Operators that are preceded by one of the following characters are *right bound*:
 
     Space, Carriage Return, New Line, Horizontal Tab
-    ) ] } , ; :
+    ``)`` ``]`` ``}`` ``,`` ``;`` ``:``
 
 Being right/left bound determines whether an operator is
 a prefix operator, a postfix operator, or a binary operator.
@@ -141,18 +143,18 @@ to use it in the ternary (``? :``) operator, it must not be left bound.
     punctuation ::= '...'
     punctuation ::= '&' // unary prefix operator
 
-The following character sequences are reserved punctuation and may not be used as operators: ::
+The following character sequences are reserved punctuation and may not be used as operators:
 
-    = -> // /* */ ...  { } ( ) [ ] . , ; :
+    ``=`` ``->`` ``//`` ``/*`` ``*/`` ``...`` ``{`` ``}`` ``(`` ``)`` ``[`` ``]`` ``.`` ``,`` ``;`` ``:``
 
-The unary prefix operator ``&`` is reserved punctuation and may not be used as an operator.
+The unary prefix operator ``&`` is also reserved punctuation and may not be used as an operator.
 
 Operators with a leading ``<`` or ``>`` are split into two tokens:
 the leading ``<`` or ``>`` and the remainder of the token.
 The remainder may itself be split in the same way.
 This removes the need for disambiguating spaces between the closing ``>`` characters
-in nested protocols such as ``A<B<C>>`` --
-it parsed as ``A < B < C > >`` rather than as ``A < B < C >>`.
+in nested protocols such as ``A<B<C>>``---
+it is parsed as ``A < B < C > >`` rather than as ``A < B < C >>``.
 
 .. langref
     When parsing certain grammatical constructs that involve '<' and '>' (such
@@ -163,24 +165,10 @@ it parsed as ``A < B < C > >`` rather than as ``A < B < C >>`.
     A<B<C>> without requiring spaces between the closing '>'s.
 
 
-Implementation Identifier Token
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-
-Reserved Punctuation and Keywords
----------------------------------
-
-
-Reserved Punctuation Tokens
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. Note: Reserved punctuation is discussed under operators.
-
-
 Reserved Keywords
 ~~~~~~~~~~~~~~~~~
 
-.. langref-grammar:
+.. langref-grammar
 
     keyword ::= 'class'
     keyword ::= 'destructor'
@@ -251,9 +239,7 @@ Reserved Keywords
 ``__FILE__``
 ``__LINE__``
 
-.. TODO
-
-   We have a variaty of keywords that appear twice -- once as
+.. TODO: We have a variaty of keywords that appear twice -- once as
    keywords and then again as literal text in the definition of
    expression literals.  Let's see if we can't factor them out so one
    terminal can appear in both places.  For example keyword-as or
@@ -267,6 +253,14 @@ Reserved Keywords
    If possible, it would be great to generate these tables
    by extracting the code-voice literals from production rules
    rather than maintaining them by hand.
+
+.. TODO: TR: Are 'operator', 'associativity', and 'precedence' reserved keywords?
+	For instance, in operators.swift, we find the following example:
+	operator infix ++++ {
+		precedence 195
+  		associativity left
+	}
+	This example works just fine as of rev. 11445
 
 *Keywords used in statements*:
 
@@ -283,6 +277,17 @@ Reserved Keywords
 ``switch``
 ``then``
 ``while``
+
+
+Implementation Identifier Token
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. langref-grammar
+
+	dollarident ::= '$' id-continue+
+
+.. TODO: Translate dollar-identifier grammar after we've translated the identifier grammar.
+
 
 Constants
 ---------
@@ -307,9 +312,7 @@ String Literals
 Translation Unit
 ----------------
 
-.. TODO:
-
-    Better to describe this part of the grammar in prose.
+.. TODO: Better to describe this part of the grammar in prose.
 
 .. langref-grammar
 

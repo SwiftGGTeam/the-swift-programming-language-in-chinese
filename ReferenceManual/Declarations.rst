@@ -38,7 +38,7 @@ Declarations
     declaration --> subscript-declaration
     declarations --> declaration declarations-OPT
 
-.. Note: enum-element-declaration is only allowed inside an enum
+.. NOTE: enum-element-declaration is only allowed inside an enum
    declaration.
 
 
@@ -51,7 +51,7 @@ Import Declarations
 
 .. syntax-outline::
 
-    import <#import-kind#> <#module#>
+    import <#import kind#> <#module#>
 
 .. langref-grammar
 
@@ -91,9 +91,7 @@ Variable Declarations
         <#code to execute#>
     }
 
-.. TODO:
-
-    In prose: discuss that 'name' can also be a pattern in the first syntax-outline.
+.. TODO: In prose: discuss that 'name' can also be a pattern in the first syntax-outline.
     Also, discuss that when you only want to provide a getter, 'get:' is optional
     (as shown in the third form of the grammar).
 
@@ -127,7 +125,7 @@ Variable Declarations
     setter --> ``set`` setter-name-OPT ``:`` code-block-items-OPT
     setter-name --> ``(`` identifier ``)``
 
-.. Notes: Type specifiers are required for computed properties -- the
+.. NOTE: Type specifiers are required for computed properties -- the
    types of those properties are not computed/inferred.
 
 .. TODO: File a radar against the inout attribute for better REPL
@@ -180,15 +178,59 @@ Function Declarations
 
 .. syntax-outline::
 
-    func <#function name#> (<#arguments#>) -> <#return type#> {
+    func <#function name#>(<#function parameters#>) -> <#return type#> {
         <#code to execute#>
     }
 
-.. TODO:
+.. syntax-outline::
 
-    Discuss in prose: Variadic functions and the other permutations of function declarations.
+    func <#function name#>(
+         <#parameter name 1#>: <#parameter type 1#>, 
+         <#parameter name 2#>: <#parameter type 2#>) 
+         -> <#return type#> 
+    {
+        <#code to execute#>
+    }
 
-.. TODO: Write a syntax-outline for selector-style functions.
+.. syntax-outline::
+
+    func <#selector name part 1#>(<#parameter name 1#>: <#parameter type 1#>) 
+         <#selector name part 2#>(<#parameter name 2#>: <#parameter type 2#>) 
+         -> <#return type#> 
+    {
+        <#code to execute#>
+    }
+    
+.. syntax-outline::
+
+    func <#selector keyword 1#>(<#parameter name 1#>: <#parameter type 1#>) 
+         <#selector keyword 2#>(<#parameter name 2#>: <#parameter type 2#>) 
+         -> <#return type#> 
+    {
+        <#code to execute#>
+    }
+
+.. syntax-outline::
+
+    func <#method keyword 1#>(<#parameter name 1#>: <#parameter type 1#>) 
+         <#method keyword 2#>(<#parameter name 2#>: <#parameter type 2#>) 
+         -> <#return type#> 
+    {
+        <#code to execute#>
+    }
+
+.. syntax-outline::
+
+    func <#signature keyword 1#>(<#parameter name 1#>: <#parameter type 1#>) 
+         <#signature keyword 2#>(<#parameter name 2#>: <#parameter type 2#>) 
+         -> <#return type#> 
+    {
+        <#code to execute#>
+    }
+
+.. TODO: Discuss in prose: Variadic functions and the other permutations of function declarations.
+
+.. TODO: Decide on a syntax-outline for regular Swift functions and for selector-style functions.
 
 
 Function Signatures
@@ -207,42 +249,40 @@ Function Signatures
 
     Grammar of a function declaration
 
-    function-declaration --> attribute-sequence-OPT ``func`` function-name generic-parameter-clause-OPT function-signature code-block-OPT
+    function-declaration --> attribute-sequence-OPT ``static``-OPT ``func`` function-name generic-parameter-clause-OPT function-signature code-block-OPT
     function-name --> any-identifier
 
-    function-signature --> function-arguments function-signature-result-OPT
-    function-arguments --> tuple-patterns | selector-arguments
+    function-signature --> function-parameters function-signature-result-OPT
+    function-parameters --> tuple-patterns | selector-parameters
     function-signature-result --> ``->`` attribute-sequence-OPT type
 
-    selector-arguments --> ``(`` tuple-pattern-element ``)`` selector-tuples
+    selector-parameters --> ``(`` tuple-pattern-element ``)`` selector-tuples
     selector-tuples --> selector-name ``(`` tuple-pattern-element ``)`` selector-tuples-OPT
     selector-name --> identifier-or-any
 
-.. TODO:
-
-    Revisit function-declaration; the ``static`` keyword may be renamed and/or made into an attribute.
+.. TODO: Revisit function-declaration; the ``static`` keyword may be renamed and/or made into an attribute.
     The reason is that ``static`` isn't the most appropriate term, because we're using it to
     mark a class function, not a static function (in the proper sense).
     This issue is being tracked by:
     <rdar://problem/13347488> Consider renaming "static" functions to "class" functions
 
-    The overgeneration from tuple-patterns combined with some upcoming changes
+.. TODO: The overgeneration from tuple-patterns combined with some upcoming changes
     mean that we should just create a new syntactic category
     for function arguments instead.
     We're going to hold off on doing this until they [compiler team] make their changes.
 
-    Code block is optional in the context of a protocol.
+.. TODO: Code block is optional in the context of a protocol.
     Everywhere else, it's required.
     We could refactor to have a separation between function definition/declaration.
     There is also the low-level "asm name" FFI
     which is a definition and declaration corner case.
     Let's just deal with this difference in prose.
 
-    Selector style syntax is pretty stable at this point.
+.. NOTE: Selector style syntax is pretty stable at this point.
     The only contentious issue recently has been the calling syntax.
     Any changes will probably be fiddley little bits.
 
-    Revise selector-name---can we come up with a better name for this?
+.. TODO: Revise selector-name---can we come up with a better name for this?
 
 
 Enumeration Declarations
@@ -262,9 +302,7 @@ Enumeration Declarations
         case <#enumerator list 2#> = <#raw value 2#>
     }
 
-.. TODO:
-
-    When there is a raw value type on an enum,
+.. TODO: Discuss in prose: When there is a raw value type on an enum,
     it indicates the low-level type like Int.
     All of the raw values have to be of that type.
     You can require protocol adoption,
@@ -272,7 +310,6 @@ Enumeration Declarations
     but you do need to make it be one of the types
     that support = in order for you to specify the raw values.
     You can have: <#raw value type, protocol conformance#>.
-    Discuss this in prose.
 
 .. langref-grammar
 
@@ -281,7 +318,7 @@ Enumeration Declarations
     decl-enum-element ::= attribute-list 'case' enum-case (',' enum-case)*
     enum-case ::= identifier type-tuple? ('->' type)?
 
-.. Note: Per Doug and Ted, "('->' type)?" is not part of the grammar.
+.. NOTE: Per Doug and Ted, "('->' type)?" is not part of the grammar.
     We removed it from our grammar, below.
 
 .. syntax-grammar::
@@ -299,7 +336,7 @@ Enumeration Declarations
     raw-value-assignment --> ``=`` raw-value-literal
     raw-value-literal --> integer-literal | floating-point-literal | character-literal | string-literal
 
-.. Note: You can have other declarations like methods inside of an enum declaration (e.g., methods, etc.).
+.. NOTE: You can have other declarations like methods inside of an enum declaration (e.g., methods, etc.).
 
 
 Structure Declarations
@@ -311,9 +348,7 @@ Structure Declarations
         <#declarations#>
     }
 
-.. TODO:
-
-    Member declarations and other declarations can appear in any order (we tested this).
+.. TODO: Member declarations and other declarations can appear in any order (we tested this).
     Stylistically, you probably want member declarations to come first.
 
 .. langref-grammar
@@ -401,9 +436,22 @@ Typealias Protocol Elements
 Constructor Declarations
 ------------------------
 
-.. TODO:
+.. syntax-outline::
 
-    Add syntax-outline once selector syntax is nailed down.
+    init(<#parameter name#>: <#parameter type#>) {
+        <#code to execute#>
+    }
+
+.. syntax-outline::
+
+    init <#selector keyword 1#>(<#parameter name 1#>: <#parameter type 1#>)
+         <#selector keyword 2#>(<#parameter name 2#>: <#parameter type 2#>)
+    }
+        <#code to execute#>
+    }
+
+.. TODO: Revisit the selector-style constructor syntax-outline
+    after we've nailed down the syntax-outline for selector-style function declarations.
 
 .. langref-grammar
 
@@ -416,7 +464,7 @@ Constructor Declarations
     Grammar of a constructor declaration
 
     constructor-declaration --> attribute-sequence-OPT ``init`` generic-parameter-clause-OPT constructor-signature code-block
-    constructor-signature --> tuple-pattern | identifier-or-any selector-arguments
+    constructor-signature --> tuple-pattern | selector-tuples
 
 
 Destructor Declarations
@@ -460,6 +508,12 @@ Extension Declarations
     extension-declaration --> ``extension`` type-identifier type-inheritance-clause-OPT extension-body
     extension-body --> ``{`` declarations-OPT ``}``
 
+.. TODO: TR: What are the semantic rules associated with extending different types?
+    The LangRef says "'extension' declarations allow adding member declarations to existing types, 
+    even in other source files and modules. There are different semantic rules for each type that is extended.
+    enum, struct, and class declaration extensions. FIXME: Write this section."
+    What is the relevant, missing information?
+
 
 Subscript Declarations
 ----------------------
@@ -489,8 +543,6 @@ Subscript Declarations
 Attribute Sequences
 -------------------
 
-.. TODO: TR: Get the latest list of attributes
-
 .. langref-grammar
 
     attribute-list        ::= /*empty*/
@@ -510,18 +562,33 @@ Attribute Sequences
     attribute-sequence --> attribute-clause attribute-sequence-OPT
     attribute-clause --> ``@`` attribute-list attribute-clause-OPT
     attribute-list --> attribute | attribute ``,`` attribute-list
-    attribute --> infix-attribute | resilience-attribute | in-out-attribute | auto-closure-attribute | no-return-attribute
+    attribute --> One of the following:
+    ``auto_closure`` ``inout`` ``cc`` ``noreturn`` ``objc_block`` ``thin`` ``assignment``
+    ``class_protocol`` ``conversion`` ``exported`` ``infix`` ``mutating`` ``resilient``
+    ``fragile`` ``born_fragile`` ``asmname`` ``prefix`` ``postfix`` ``objc`` ``optional``
+    ``transparent`` ``unowned`` ``weak`` ``IBOutlet`` ``IBAction`` ``IBLiveView``
 
-.. Note:
-
-   Our grammar doesn't have empty terminals (no epsilon)
+.. NOTE: Our grammar doesn't have empty terminals (no epsilon)
    so we need to make attribute-sequence actually contain something.
    This means that instead of having "empty" as a possible expansion,
    attribute-sequence always appears as -OPT.
 
+.. TODO: TR: From looking at /swift/include/swift/AST/Attr.def,
+    there are ATTR(...), TYPE_ATTR(...), and IB_ATTR(...).
+    Assuming that TYPE_ATTR(...)s can be applied to types only,
+    what are the restrictions on plain ATTR(...)s? 
+    Are they restricted to declarations only?
+    (But, 'noreturn' is in both ATTR(...) and TYPE_ATTR(...); why?)
+    If attributes are neatly separated into mutually exclusive categories,
+    e.g., declaration attributes, type attributes, and IB attributes,
+    then we could could break down the attribute grammar accordingly.
+    
+    We should decide if the 'Attribute Sequences' heading should be changed
+    to 'Attributes' and whether each attribute should have its own discussion in a subheading.
 
-Infix Attributes
-~~~~~~~~~~~~~~~~
+
+Infix Attribute
+~~~~~~~~~~~~~~~
 
 .. langref-grammar
 
@@ -529,13 +596,9 @@ Infix Attributes
     attribute-infix ::= 'infix_right' '=' integer_literal
     attribute-infix ::= 'infix        '=' integer_literal
 
-.. syntax-grammar::
-
-    Grammar of an infix attribute
-
-    infix-attribute --> infix-head ``=`` integer-literal
-    infix-head --> ``infix`` | ``infix_left`` | ``infix_right``
-
+.. NOTE: There is now only one infix attribute ('infix'),
+    which no longer takes an assignment ('=' integer-literal).
+    Tested this in r11445 on 12/23/2013.
 
 Resilience Attributes
 ~~~~~~~~~~~~~~~~~~~~~
@@ -547,11 +610,7 @@ Resilience Attributes
     attribute-resilience ::= 'born_fragile'
 
 
-.. syntax-grammar::
-
-    Grammar of a resilience attribute
-
-    resilience-attribute --> ``resilient`` | ``fragile`` | ``born_fragile``
+Swift has three resilience attributes: ``resilient``, ``fragile``, and ``born_fragile``.
 
 
 The In-Out Attribute
@@ -562,13 +621,6 @@ The In-Out Attribute
     attribute-inout ::= 'inout'
 
 
-.. syntax-grammar::
-
-    Grammar of an in-out attribute
-
-    in-out-attribute --> ``inout``
-
-
 The Auto-Closure Attribute
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -577,23 +629,9 @@ The Auto-Closure Attribute
     attribute-auto_closure ::= 'auto_closure'
 
 
-.. syntax-grammar::
-
-    Grammar of an auto-closure attribute
-
-    auto-closure-attribute --> ``auto_closure``
-
-
 The No-Return Attribute
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 .. langref-grammar
 
     attribute-noreturn ::= 'noreturn'
-
-
-.. syntax-grammar::
-
-    Grammar of a no-return attribute
-
-    no-return-attribute --> ``noreturn``

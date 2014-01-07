@@ -281,9 +281,7 @@ see “Fall Through” in the :doc:`../LanguageGuide/index`.
     guard-clause --> ``where`` guard-expression
     guard-expression --> expression
 
-.. TODO:
-
-     Add elsewhere: pattern-list, and possibly move guard-expression to the
+.. TODO: Add elsewhere: pattern-list, and possibly move guard-expression to the
      expressions chapter.
 
 
