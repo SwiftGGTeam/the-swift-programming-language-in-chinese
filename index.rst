@@ -5,7 +5,7 @@ Developer Publications are creating a new book called *The Swift Programming Lan
 
 Chapters that have not yet been written are indicated with an [x] after their name. These chapters will be added as soon as an initial draft is available.
 
-Please send any comments on this book to Dave Addey (`dave.addey@apple.com <mailto:dave.addey@apple.com?subject=The%20Swift%20Programming%20Language%20book>`_), Senior Writer, Developer Publications.
+Please send any comments on this book to the Developer Publications Swift Discuss list (`Developer Publications-swift-discuss@group.apple.com <mailto:Developer Publications-swift-discuss@group.apple.com?subject=The%20Swift%20Programming%20Language%20book>`_).
 
 Contents
 ========
