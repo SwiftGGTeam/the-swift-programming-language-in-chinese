@@ -19,7 +19,7 @@ an arrow (⟶) is used to mark grammar productions and may be read as "can consi
 
 As an example, the grammar of a *getter-setter-block* is defined as follows:
 
-.. syntax-grammar::
+.. syntax-grammar:: omit
 
     Grammar of a getter setter block
 
