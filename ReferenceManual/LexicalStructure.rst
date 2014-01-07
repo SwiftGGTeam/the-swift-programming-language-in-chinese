@@ -3,6 +3,8 @@ Lexical Structure
 
 .. TODO: Write a brief intro to this chapter.
 
+[The content of this chapter is still being written.]
+
 
 Whitespace and Comments
 -----------------------
