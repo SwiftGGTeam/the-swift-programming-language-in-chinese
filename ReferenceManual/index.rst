@@ -13,10 +13,9 @@ These syntax outlines highlight the most common cases
 for developers who don't necessarily want to read the formal definitions.
 
 Most of the surrounding prose has not yet been written.
-For an example of a fully worked example
-that includes a syntax outline,
-followed by prose,
-followed by a formal grammatical definitions,
+For an example of what a section might look like,
+including a syntax outline, prose,
+and a formal grammatical definition,
 see the switch statement in :doc:`Statements`.
 
 The last chapter, :doc:`zzSummaryOfTheGrammar`
