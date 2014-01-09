@@ -216,7 +216,7 @@ If a guard expression is present, the block of code within the relevant case is 
 the value of the control expression matches one of the patterns of the case and the guard expression evaluates to ``true``.
 In the following example, for instance, a control expression matches the case::
 
-    (swift) case (var x, var y) where x == y:
+    case (var x, var y) where x == y:
 
 only if it is a tuple that contains two elements of the same value, such as ``(1, 1)``.
 As this example shows, patterns in a case may also bind variables using the keyword ``var``.
@@ -288,13 +288,19 @@ see “Fall Through” in the :doc:`../LanguageGuide/index`.
 Control Transfer Statements
 ---------------------------
 
+Control transfer statements can change the order in which code in your program is executed
+by unconditionally transferring program control from one piece of code to another.
+Swift has four control transfer statements: break statement, continue statement,
+fallthrough statement, and return statement.
+Each control transfer statement is discussed in detail below.
+
+
 .. langref-grammar
 
     stmt-control-transfer ::= stmt-return
     stmt-control-transfer ::= stmt-break
     stmt-control-transfer ::= stmt-continue
     stmt-control-transfer ::= stmt-fallthrough
-
 
 .. syntax-grammar::
 
