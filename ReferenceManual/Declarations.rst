@@ -168,9 +168,10 @@ Typealias Declarations
 
     Grammar of a typealias declaration
 
-    typealias-declaration --> typealias-head ``=`` type
+    typealias-declaration --> typealias-head typealias-assignment
     typealias-head --> ``typealias`` typealias-name type-inheritance-clause-OPT
     typealias-name --> identifier
+    typealias-assignment --> ``=`` type
 
 
 Function Declarations
@@ -185,45 +186,45 @@ Function Declarations
 .. syntax-outline::
 
     func <#function name#>(
-         <#parameter name 1#>: <#parameter type 1#>, 
-         <#parameter name 2#>: <#parameter type 2#>) 
-         -> <#return type#> 
+         <#parameter name 1#>: <#parameter type 1#>,
+         <#parameter name 2#>: <#parameter type 2#>)
+         -> <#return type#>
     {
         <#code to execute#>
     }
 
 .. syntax-outline::
 
-    func <#selector name part 1#>(<#parameter name 1#>: <#parameter type 1#>) 
-         <#selector name part 2#>(<#parameter name 2#>: <#parameter type 2#>) 
-         -> <#return type#> 
-    {
-        <#code to execute#>
-    }
-    
-.. syntax-outline::
-
-    func <#selector keyword 1#>(<#parameter name 1#>: <#parameter type 1#>) 
-         <#selector keyword 2#>(<#parameter name 2#>: <#parameter type 2#>) 
-         -> <#return type#> 
+    func <#selector name part 1#>(<#parameter name 1#>: <#parameter type 1#>)
+         <#selector name part 2#>(<#parameter name 2#>: <#parameter type 2#>)
+         -> <#return type#>
     {
         <#code to execute#>
     }
 
 .. syntax-outline::
 
-    func <#method keyword 1#>(<#parameter name 1#>: <#parameter type 1#>) 
-         <#method keyword 2#>(<#parameter name 2#>: <#parameter type 2#>) 
-         -> <#return type#> 
+    func <#selector keyword 1#>(<#parameter name 1#>: <#parameter type 1#>)
+         <#selector keyword 2#>(<#parameter name 2#>: <#parameter type 2#>)
+         -> <#return type#>
     {
         <#code to execute#>
     }
 
 .. syntax-outline::
 
-    func <#signature keyword 1#>(<#parameter name 1#>: <#parameter type 1#>) 
-         <#signature keyword 2#>(<#parameter name 2#>: <#parameter type 2#>) 
-         -> <#return type#> 
+    func <#method keyword 1#>(<#parameter name 1#>: <#parameter type 1#>)
+         <#method keyword 2#>(<#parameter name 2#>: <#parameter type 2#>)
+         -> <#return type#>
+    {
+        <#code to execute#>
+    }
+
+.. syntax-outline::
+
+    func <#signature keyword 1#>(<#parameter name 1#>: <#parameter type 1#>)
+         <#signature keyword 2#>(<#parameter name 2#>: <#parameter type 2#>)
+         -> <#return type#>
     {
         <#code to execute#>
     }
@@ -424,7 +425,7 @@ Typealias Protocol Elements
     protocol-body --> ``{`` protocol-members-OPT ``}``
 
     protocol-members --> protocol-member protocol-members-OPT
-    protocol-member --> variable-declaration | function-declaration | typealias-head | subscript-head
+    protocol-member --> variable-declaration | function-declaration | typealias-head typealias-assignment-OPT | subscript-head
 
 
 Constructor Declarations
@@ -503,7 +504,7 @@ Extension Declarations
     extension-body --> ``{`` declarations-OPT ``}``
 
 .. TODO: TR: What are the semantic rules associated with extending different types?
-    The LangRef says "'extension' declarations allow adding member declarations to existing types, 
+    The LangRef says "'extension' declarations allow adding member declarations to existing types,
     even in other source files and modules. There are different semantic rules for each type that is extended.
     enum, struct, and class declaration extensions. FIXME: Write this section."
     What is the relevant, missing information?
@@ -570,13 +571,13 @@ Attribute Sequences
 .. TODO: TR: From looking at /swift/include/swift/AST/Attr.def,
     there are ATTR(...), TYPE_ATTR(...), and IB_ATTR(...).
     Assuming that TYPE_ATTR(...)s can be applied to types only,
-    what are the restrictions on plain ATTR(...)s? 
+    what are the restrictions on plain ATTR(...)s?
     Are they restricted to declarations only?
     (But, 'noreturn' is in both ATTR(...) and TYPE_ATTR(...); why?)
     If attributes are neatly separated into mutually exclusive categories,
     e.g., declaration attributes, type attributes, and IB attributes,
     then we could could break down the attribute grammar accordingly.
-    
+
     We should decide if the 'Attribute Sequences' heading should be changed
     to 'Attributes' and whether each attribute should have its own discussion in a subheading.
 
