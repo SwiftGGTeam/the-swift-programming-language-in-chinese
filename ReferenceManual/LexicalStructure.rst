@@ -76,7 +76,7 @@ Operator Identifiers
 
 .. syntax-grammar::
 
-	Grammar of operators
+    Grammar of operators
 
     operator --> operator-character operator-OPT
     operator --> ``..``
@@ -255,12 +255,12 @@ Reserved Keywords
    rather than maintaining them by hand.
 
 .. TODO: TR: Are 'operator', 'associativity', and 'precedence' reserved keywords?
-	For instance, in operators.swift, we find the following example:
-	operator infix ++++ {
-		precedence 195
-  		associativity left
-	}
-	This example works just fine as of rev. 11445
+    For instance, in operators.swift, we find the following example:
+    operator infix ++++ {
+        precedence 195
+        associativity left
+    }
+    This example works just fine as of rev. 11445
 
 *Keywords used in statements*:
 
@@ -284,7 +284,7 @@ Implementation Identifier Token
 
 .. langref-grammar
 
-	dollarident ::= '$' id-continue+
+    dollarident ::= '$' id-continue+
 
 .. TODO: Translate dollar-identifier grammar after we've translated the identifier grammar.
 
