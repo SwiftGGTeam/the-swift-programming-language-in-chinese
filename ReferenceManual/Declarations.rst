@@ -97,7 +97,7 @@ Variable Declarations
 
 .. langref-grammar
 
-    decl-var        ::= attribute-list 'var' pattern initializer?  (',' pattern initializer?)*
+    decl-var        ::= attribute-list 'type'? 'var' pattern initializer?  (',' pattern initializer?)*
     decl-var        ::= attribute-list 'var' identifier ':' type-annotation brace-item-list
     decl-var        ::= attribute-list 'var' identifier ':' type-annotation '{' get-set '}'
     initializer     ::= '=' expr
@@ -111,7 +111,7 @@ Variable Declarations
 
     Grammar of a variable declaration
 
-    variable-declaration --> attribute-sequence-OPT ``var`` pattern-initializer-list
+    variable-declaration --> attribute-sequence-OPT ``type``-OPT ``var`` pattern-initializer-list
     variable-declaration --> attribute-sequence-OPT ``var`` variable-name type-specifier code-block
     variable-declaration --> attribute-sequence-OPT ``var`` variable-name type-specifier getter-setter-block
     variable-name --> identifier
@@ -127,6 +127,8 @@ Variable Declarations
 
 .. NOTE: Type specifiers are required for computed properties -- the
    types of those properties are not computed/inferred.
+
+.. TR: Why is 'type' restricted to variables declared accorded to the first variable-declaration grammar?
 
 .. TODO: File a radar against the inout attribute for better REPL
    mesasge.  INOUT attribute can only be applide to types, not to
