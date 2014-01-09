@@ -208,7 +208,7 @@ tuples, instances of custom classes, and optionals.
 The value of a control expression can even be pattern-matched to the value of a case in an enumeration
 and checked for inclusion in a specified range of values.
 For examples of how to use these various types of values in switch statements,
-see “Switch” in the :doc:`../LanguageGuide/index`.
+see “Switch” in the :doc:`../LanguageGuide/ControlFlow` chapter of the :doc:`../LanguageGuide/index`.
 
 A switch case may optionally contain a **guard expression**, which is introduced by the keyword ``where`` followed by an expression.
 Guard expressions are used to provide an additional condition before a case is considered matched to the control expression.
@@ -256,7 +256,7 @@ That said, if you want execution to continue from one case to the next,
 explicitly include a fall-through statement, which simply consists of the keyword ``fallthrough``,
 in the case from which you want execution to continue.
 For an example of how to use a fall-through statement in a switch statement,
-see “Fall Through” in the :doc:`../LanguageGuide/index`.
+see “Fallthrough” in the :doc:`../LanguageGuide/ControlFlow` chapter of the :doc:`../LanguageGuide/index`.
 
 .. langref-grammar
 
