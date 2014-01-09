@@ -214,12 +214,12 @@ A switch case may optionally contain a **guard expression**, which is introduced
 Guard expressions are used to provide an additional condition before a case is considered matched to the control expression.
 If a guard expression is present, the block of code within the relevant case is executed only if
 the value of the control expression matches one of the patterns of the case and the guard expression evaluates to ``true``.
-In the following example, for instance, a control expression matches the case::
+For instance, a control expression matches the case in the example below
+only if it is a tuple that contains two elements of the same value, such as ``(1, 1)``. ::
 
     (swift) case (var x, var y) where x == y:
 
-only if it is a tuple that contains two elements of the same value, such as ``(1, 1)``.
-As this example shows, patterns in a case may also bind variables using the keyword ``var``.
+As the above example shows, patterns in a case may also bind variables using the keyword ``var``.
 These variables can then be referenced in a corresponding guard expression
 and throughout the rest of the code within the scope of the case.
 That said, if the case contains multiple patterns that match the control expression,
