@@ -81,7 +81,7 @@ the program executes the conditional expression,
 the code block, and the increment expression.
 If the conditional expression evaluates to `true`,
 the program executes the code block and the increment expression,
-and then executes another loop.
+and then continues execution at the beginning of the next loop.
 Otherwise,
 the program does not execute the code block or the increment expression,
 and the program is finished executing the for statement.
@@ -101,11 +101,33 @@ and the program is finished executing the for statement.
 For-Each Statement
 ++++++++++++++++++
 
+For-each statements allow a block of code to be executed
+once for each item in a collection
+that conforms to the ``Sequence`` protocol.
+
+A for-each statement has the general form:
+
 .. syntax-outline::
 
     for <#item#> in <#collection#> {
         <#code to execute#>
     }
+
+The ``enumerate`` method is called on the **collection expression**
+to obtain a value of type ``Generator`` known as the generator.
+The program begins executing a loop
+by calling the ``next`` method on the generator.
+If the value returned is not ``None``,
+it is assigned to the **item pattern**,
+the program executes the code block,
+and then continues execution at the beginning of the next loop.
+Otherwise, the program does not perform assignmert or execute the code block,
+and it is finished executing the for-each statement.
+
+.. TR: Are the above method calls correct?
+   I've determined this information be looking at the declarations in the REPL
+   so there may be aspects we don't want to document
+   or want to describe differently.
 
 .. langref-grammar
 
