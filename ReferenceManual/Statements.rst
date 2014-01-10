@@ -41,14 +41,22 @@ Semicolon Statement
 Looping Statements
 ------------------
 
-
 For Statements
 ~~~~~~~~~~~~~~
 
+A for statement allows a block of code multiple to be execute times.
 
 C-Style For Statements
 ++++++++++++++++++++++
 
+C-style for statements allow a block of code to be executed repeatedly
+as long as a given condition holds true.
+
+..  This probably belongs in the Language Guide.
+    Typically, the initialization, condition, and increment,
+    are used to keep a local counter.
+
+A C-style for statement has the general form:
 
 .. syntax-outline::
 
@@ -64,6 +72,22 @@ where the parentheses are optional.
     stmt-for-c-style    ::= 'for' '(' stmt-for-c-style-init? ';' expr? ';' expr-basic? ')' brace-item-list
     stmt-for-c-style-init ::= decl-var
     stmt-for-c-style-init ::= expr
+
+A for statement is executed it two phases:
+the initialization and the loop.
+During initialization, the program evaluates the initialization expression.
+During the loop,
+the program executes the conditional expression,
+the code block, and the increment expression.
+If the conditional expression evaluates to `true`,
+the program executes the code block and the increment expression,
+and then executes another loop.
+Otherwise,
+the program does not execute the code block or the increment expression,
+and the program is finished executing the for statement.
+
+.. TODO: Document the scope of loop variables.
+   This applies to all loops, so it doesn't belong here.
 
 .. syntax-grammar::
 
