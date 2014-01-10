@@ -175,11 +175,23 @@ Otherwise, the program is finished executing the statement.
 Do-While Statement
 ~~~~~~~~~~~~~~~~~~
 
+Do-while statements allow a block of code to be executed one or more times,
+as long as a condition remains true.
+
+A do-while statement has the following general form:
+
 .. syntax-outline::
 
     do {
         <#code to execute#>
     } while <#condition#>
+
+When a do-while loop is executed,
+it begins by executing the code block,
+and then evaluates the conditional.
+If it evaluates to ``true``,
+the program continues execution at the beginning of the do-while statement.
+Otherwise, the program is finished executing the statement.
 
 .. langref-grammar
 
