@@ -44,7 +44,7 @@ Looping Statements
 For Statements
 ~~~~~~~~~~~~~~
 
-A for statement allows a block of code multiple to be execute times.
+A for statement allows a block of code to be executed multiple times.
 
 C-Style For Statements
 ++++++++++++++++++++++
