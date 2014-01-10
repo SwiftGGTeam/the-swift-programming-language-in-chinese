@@ -253,10 +253,16 @@ Execution Does Not Fall Through Cases Implicitly
 After the code within a matched case is finished executing, the program exits out of the switch statement.
 Program execution does not continue or "fall through" to the next case or default case.
 That said, if you want execution to continue from one case to the next,
-explicitly include a fall-through statement, which simply consists of the keyword ``fallthrough``,
+explicitly include a fallthrough statement, which simply consists of the keyword ``fallthrough``,
 in the case from which you want execution to continue.
 For an example of how to use a fall-through statement in a switch statement,
 see “Fallthrough” in the :doc:`../LanguageGuide/ControlFlow` chapter of the :doc:`../LanguageGuide/index`.
+
+Because execution does automatically continue from one case to the next,
+a break statement is not used to transfer control out of a switch statement after
+a matching case is executed.
+In fact, break and continue statements used in the context of a switch statement
+break and continue out of an enclosing loop statement only, not out of the switch statement itself.
 
 .. langref-grammar
 
@@ -315,10 +321,18 @@ Each control transfer statement is discussed in detail below.
 Break Statement
 ~~~~~~~~~~~~~~~
 
+A break statement consists simply of the ``break`` keyword
+and may occur only in the context of a loop statement
+(for statement, for-each statement, while statement, and do-while statement).
+A break statement ends program execution of the smallest enclosing loop statement in which it occurs.
+Program control is then transferred to the first line of code following the enclosing
+loop statement, if any.
+For an example of how to use a break statement in the context of a loop statement,
+see “Loop Control Statements” in the :doc:`../LanguageGuide/ControlFlow` chapter of the :doc:`../LanguageGuide/index`.
+
 .. langref-grammar
 
     stmt-break ::= 'break' (Note: the langref grammar contained a typo)
-
 
 .. syntax-grammar::
 
@@ -329,6 +343,23 @@ Break Statement
 
 Continue Statement
 ~~~~~~~~~~~~~~~~~~
+
+A continue statement consists of the ``continue`` keyword, and like a break statement,
+may occur only in the context of a loop statement
+(C-style for statement, for-each statement, while statement, and do-while statement).
+Unlike a break statement,
+a continue statement ends only the program execution of the *current iteration*
+of the smallest enclosing loop statement in which it occurs.
+Any remaining code in the body of the loop is not executed.
+Program control is then transferred to the controlling expression of the enclosing loop statement.
+
+In a C-style for loop,
+the increment expression is still evaluated after the continue statement is executed,
+because the increment expression is evaluated after the execution of the loop's body.
+
+For an example of how to use a continue statement in the context of a loop statement,
+see “Loop Control Statements”
+in the :doc:`../LanguageGuide/ControlFlow` chapter of the :doc:`../LanguageGuide/index`.
 
 .. langref-grammar
 
@@ -342,8 +373,8 @@ Continue Statement
     continue-statement --> ``continue``
 
 
-Fall-Through Statement
-~~~~~~~~~~~~~~~~~~~~~~
+Fallthrough Statement
+~~~~~~~~~~~~~~~~~~~~~
 
 .. langref-grammar
 
