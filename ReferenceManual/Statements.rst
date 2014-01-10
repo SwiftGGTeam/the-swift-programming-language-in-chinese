@@ -49,6 +49,9 @@ Swift has two for statements:
 a C-style for statement and a for-each statement.
 Each for statement is discussed in detail below.
 
+.. TODO: These need better names.
+   How about "incrementor style" and "collection style" for loops?
+
 C-Style For Statements
 ++++++++++++++++++++++
 
