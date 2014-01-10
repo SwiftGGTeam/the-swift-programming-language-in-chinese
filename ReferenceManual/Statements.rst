@@ -50,7 +50,8 @@ C-Style For Statements
 ++++++++++++++++++++++
 
 C-style for statements allow a block of code to be executed repeatedly
-as long as a given condition holds true.
+while incrementing a counter,
+as long as a condition remains true,
 
 ..  This probably belongs in the Language Guide.
     Typically, the initialization, condition, and increment,
@@ -79,12 +80,12 @@ During initialization, the program evaluates the initialization expression.
 During the loop,
 the program executes the conditional expression,
 the code block, and the increment expression.
-If the conditional expression evaluates to `true`,
+If the conditional expression evaluates to ``true``,
 the program executes the code block and the increment expression,
-and then continues execution at the beginning of the next loop.
+and then continues execution at the beginning of the loop.
 Otherwise,
 the program does not execute the code block or the increment expression,
-and the program is finished executing the for statement.
+and the program is finished executing the statement.
 
 .. TODO: Document the scope of loop variables.
    This applies to all loops, so it doesn't belong here.
@@ -120,9 +121,9 @@ by calling the ``next`` method on the generator.
 If the value returned is not ``None``,
 it is assigned to the **item pattern**,
 the program executes the code block,
-and then continues execution at the beginning of the next loop.
-Otherwise, the program does not perform assignmert or execute the code block,
-and it is finished executing the for-each statement.
+and then continues execution at the beginning of the loop.
+Otherwise, the program does not perform assignment or execute the code block,
+and it is finished executing the statement.
 
 .. TR: Are the above method calls correct?
    I've determined this information be looking at the declarations in the REPL
