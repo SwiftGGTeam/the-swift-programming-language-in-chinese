@@ -144,6 +144,9 @@ and it is finished executing the statement.
 While Statement
 ~~~~~~~~~~~~~~~
 
+While statements allow a block of code to be executed zero or more times,
+as long as a condition remains true.
+
 A while statement has the following general form:
 
 .. syntax-outline::
@@ -151,6 +154,12 @@ A while statement has the following general form:
     while <#condition#> {
         <#code to execute#>
     }
+
+When a while loop is executed,
+it begins by evaluating the conditional.
+If it evaluates to ``true``, the program executes the code block
+and then continues execution at the beginning of the while statement.
+Otherwise, the program is finished executing the statement.
 
 .. langref-grammar
 
