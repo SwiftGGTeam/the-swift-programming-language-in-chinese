@@ -179,11 +179,35 @@ Typealias Declarations
 Function Declarations
 ---------------------
 
+**[Query/Note: We are trying to decide which code-snippet-style syntax outlines to use
+for regular Swift-style function definitions and for selector-style method definitions.
+Below you'll find two alternatives for the former and four alternatives for the latter.
+We would like to pick one for regular functions and one for selector-style methods.
+Please send us your feedback!]**
+
+Most function and method definitions have the following general form:
+
+**[Regular function, alternative 1:
+This alternative is very simple and is based on the existing Xcode code snippet for C++ functions.
+The downside to this alternative is two-fold:
+first, the Swift-specific structure of the function parameters is completely hidden;
+second, we need to expose the structure of at least two parameters to visually distinguish
+regular functions and selector-style methods.]**
+
+
 .. syntax-outline::
 
     func <#function name#>(<#function parameters#>) -> <#return type#> {
         <#code to execute#>
     }
+
+**[Regular function, alternative 2:
+This alternative satisfies the problems noted with the first alternative.
+That said, it's a rather long (and ugly?) way to display the general form of a simple function definition
+(the signature no longer fits on a single line).
+We've considered abbreviating names, but we're trying to avoid that
+because it's inconsistent with the rest of the document (and with existing Xcode code snippets).]**
+
 
 .. syntax-outline::
 
@@ -195,6 +219,17 @@ Function Declarations
         <#code to execute#>
     }
 
+Swift also provides syntax for declaring and defining selector-style methods,
+such as those found in Objective-C. Definitions of selector-style methods have the
+following form:
+
+**[The following four alternatives deal with selector-style method definitions.
+The only difference between each of them is the name for each part of the selector.]**
+
+**[Selector-style, alternative 1:
+This alternative is descriptively pretty accurate but may also be a bit awkward.]**
+
+
 .. syntax-outline::
 
     func <#selector name part 1#>(<#parameter name 1#>: <#parameter type 1#>)
@@ -203,6 +238,12 @@ Function Declarations
     {
         <#code to execute#>
     }
+
+**[Selector-style, alternative 2:
+Although there is some precedent for calling each part of the selector a "keyword",
+doing so isn't quite accurate.
+The parts of the name of a method aren't keywords in the language (at least in the normal sense).]**
+
 
 .. syntax-outline::
 
@@ -213,6 +254,10 @@ Function Declarations
         <#code to execute#>
     }
 
+**[Selector-style, alternative 3:
+This alternative uses "method" instead of "selector", but still uses "keyword".]**
+
+
 .. syntax-outline::
 
     func <#method keyword 1#>(<#parameter name 1#>: <#parameter type 1#>)
@@ -221,6 +266,10 @@ Function Declarations
     {
         <#code to execute#>
     }
+
+**[Selector-style, alternative 4:
+This alternative uses "signature" instead of "method" or "selector", but still uses "keyword".]**
+
 
 .. syntax-outline::
 
