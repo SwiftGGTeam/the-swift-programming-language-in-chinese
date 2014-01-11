@@ -255,8 +255,7 @@ Program execution does not continue or "fall through" to the next case or defaul
 That said, if you want execution to continue from one case to the next,
 explicitly include a fallthrough statement, which simply consists of the keyword ``fallthrough``,
 in the case from which you want execution to continue.
-For an example of how to use a fall-through statement in a switch statement,
-see “Fallthrough” in the :doc:`../LanguageGuide/ControlFlow` chapter of the :doc:`../LanguageGuide/index`.
+For more information about the fallthrough statement, see "Fallthrough" below.
 
 Because execution does automatically continue from one case to the next,
 a break statement is not used to transfer control out of a switch statement after
@@ -376,15 +375,28 @@ in the :doc:`../LanguageGuide/ControlFlow` chapter of the :doc:`../LanguageGuide
 Fallthrough Statement
 ~~~~~~~~~~~~~~~~~~~~~
 
+A fallthrough statement consists of the ``fallthrough`` keyword
+and may occur only in a case block of a switch statement.
+A fallthrough statement causes program execution to continue
+from one case in a switch statement to the next case or, if present, to the default case.
+Program execution continues to the next case
+even if the patterns of the case label do not match the value of the switch statement's control expression.
+
+Fallthrough statements may not be used in the final case block of a switch statement.
+
+For an example of how to use a fallthrough statement in a switch statement,
+see “Fallthrough” in the :doc:`../LanguageGuide/ControlFlow` chapter of the :doc:`../LanguageGuide/index`.
+
 .. langref-grammar
 
     stmt-fallthrough ::= 'fallthrough'
 
 .. syntax-grammar::
 
-    Grammar of a fall-through statement
+    Grammar of a fallthrough statement
 
     fallthrough-statement --> ``fallthrough``
+
 
 Return Statements
 ~~~~~~~~~~~~~~~~~
