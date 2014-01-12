@@ -102,18 +102,6 @@ and does not provide access to the current value during each iteration of the lo
     >>> Hello, Carol!
     >>> Hello, Doug!
 
-Lists can be iterated in reverse, using the ``reverse`` function:
-
-.. testcode::
-
-    (swift) for name in reverse(names) {
-        println("Goodbye, \(name)!")
-    }
-    >>> Goodbye, Doug!
-    >>> Goodbye, Carol!
-    >>> Goodbye, Barbara!
-    >>> Goodbye, Alan!
-
 Swift's ``String`` type has a ``chars`` property,
 which provides the individual characters in the string as an ``Array`` of ``UnicodeScalar`` values
 (also known as an ‘``Array`` of type ``UnicodeScalar``’).
