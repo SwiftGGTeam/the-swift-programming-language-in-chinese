@@ -417,7 +417,7 @@ can be used only to return from a function or method that does not return a valu
 (that is, when the return type of the function or method is ``Void`` or ``()``).
 
 When a return statement is followed by an expression,
-the expression is evaluated and returned to the calling function or method.
+the value of the expression is returned to the calling function or method.
 If the value of the expression does not match the value of the return type
 declared in the function or method declaration,
 the expression's value is converted to the return type
