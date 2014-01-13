@@ -18,7 +18,6 @@
     * Typedefs for closure signatures to aid readability?
     * Metatypes and static functions on types
     * Marking functions as transparent (and what this means)
-    * Type functions
 
 Functions and Closures
 ======================

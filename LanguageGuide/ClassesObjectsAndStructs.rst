@@ -24,6 +24,7 @@
     * @inout
     * value types and reference types
     * subscript getters and setters
+    * Type functions and variables
 
 Classes and Structs
 ===================
