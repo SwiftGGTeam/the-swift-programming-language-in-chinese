@@ -401,16 +401,27 @@ see “Fallthrough” in the :doc:`../LanguageGuide/ControlFlow` chapter of the 
 Return Statements
 ~~~~~~~~~~~~~~~~~
 
+A return statement may occur only in the body of a function or method definition
+and causes program execution to return to the calling function or method.
+Program execution continues at the point immediately following the function or method call.
 
-
-.. syntax-outline::
-
-    return
+A return statement may consist only of the keyword ``return``,
+or it may consist of the keyword ``return`` followed by an expression, as shown below.
 
 .. syntax-outline::
 
     return <#expression#>
 
+A return statement that is not followed by an expression
+can be used only to return from a function or method that does not return a value
+(that is, when the return type of the function or method is ``Void`` or ``()``).
+
+When a return statement is followed by an expression,
+the expression is evaluated and returned to the calling function or method.
+If the value of the expression does not match the value of the return type
+declared in the function or method declaration,
+the expression's value is converted to the return type
+before it is returned to the calling function or method.
 
 .. langref-grammar
 
