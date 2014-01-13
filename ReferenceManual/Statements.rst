@@ -401,6 +401,17 @@ see “Fallthrough” in the :doc:`../LanguageGuide/ControlFlow` chapter of the 
 Return Statements
 ~~~~~~~~~~~~~~~~~
 
+
+
+.. syntax-outline::
+
+    return
+
+.. syntax-outline::
+
+    return <#expression#>
+
+
 .. langref-grammar
 
     stmt-return ::= 'return' expr
