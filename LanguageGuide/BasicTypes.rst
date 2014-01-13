@@ -139,12 +139,12 @@ Numbers
 Swift supports two fundamental types of number:
 :term:`integers`, and :term:`floating-point numbers`.
 Swift provides integers in :term:`signed and unsigned` forms at
-8, 16, 32, 64 and 128-bit sizes.
+8, 16, 32 and 64-bit sizes.
 It also provides signed floating-point numbers in
 32 and 64-bit sizes.
 These basic numeric types follow a similar naming convention to C,
 in that an 8-bit unsigned integer is a ``UInt8``,
-a 128-bit signed integer is an ``Int128``,
+a 32-bit signed integer is an ``Int32``,
 and a signed 64-bit floating-point number is a ``Float64``.
 Like all types in Swift, these basic numeric types have capitalized names.
 (A complete list of numeric types can be found in the :doc:`../ReferenceManual/index`.)
