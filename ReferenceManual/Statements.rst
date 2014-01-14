@@ -208,7 +208,7 @@ tuples, instances of custom classes, and optionals.
 The value of a control expression can even be pattern-matched to the value of a case in an enumeration
 and checked for inclusion in a specified range of values.
 For examples of how to use these various types of values in switch statements,
-see “Switch” in the :doc:`../LanguageGuide/index`.
+see “Switch” in the :doc:`../LanguageGuide/ControlFlow` chapter of the :doc:`../LanguageGuide/index`.
 
 A switch case may optionally contain a **guard expression**, which is introduced by the keyword ``where`` followed by an expression.
 Guard expressions are used to provide an additional condition before a case is considered matched to the control expression.
@@ -217,7 +217,7 @@ the value of the control expression matches one of the patterns of the case and 
 For instance, a control expression matches the case in the example below
 only if it is a tuple that contains two elements of the same value, such as ``(1, 1)``. ::
 
-    (swift) case (var x, var y) where x == y:
+    case (var x, var y) where x == y:
 
 As the above example shows, patterns in a case may also bind variables using the keyword ``var``.
 These variables can then be referenced in a corresponding guard expression
@@ -253,10 +253,15 @@ Execution Does Not Fall Through Cases Implicitly
 After the code within a matched case is finished executing, the program exits out of the switch statement.
 Program execution does not continue or "fall through" to the next case or default case.
 That said, if you want execution to continue from one case to the next,
-explicitly include a fall-through statement, which simply consists of the keyword ``fallthrough``,
+explicitly include a fallthrough statement, which simply consists of the keyword ``fallthrough``,
 in the case from which you want execution to continue.
-For an example of how to use a fall-through statement in a switch statement,
-see “Fall Through” in the :doc:`../LanguageGuide/index`.
+For more information about the fallthrough statement, see "Fallthrough" below.
+
+Because execution does automatically continue from one case to the next,
+a break statement is not used to transfer control out of a switch statement after
+a matching case is executed.
+In fact, break and continue statements used in the context of a switch statement
+break and continue out of an enclosing loop statement only, not out of the switch statement itself.
 
 .. langref-grammar
 
@@ -285,13 +290,19 @@ see “Fall Through” in the :doc:`../LanguageGuide/index`.
 Control Transfer Statements
 ---------------------------
 
+Control transfer statements can change the order in which code in your program is executed
+by unconditionally transferring program control from one piece of code to another.
+Swift has four control transfer statements: break statement, continue statement,
+fallthrough statement, and return statement.
+Each control transfer statement is discussed in detail below.
+
+
 .. langref-grammar
 
     stmt-control-transfer ::= stmt-return
     stmt-control-transfer ::= stmt-break
     stmt-control-transfer ::= stmt-continue
     stmt-control-transfer ::= stmt-fallthrough
-
 
 .. syntax-grammar::
 
@@ -306,10 +317,18 @@ Control Transfer Statements
 Break Statement
 ~~~~~~~~~~~~~~~
 
+A break statement consists simply of the ``break`` keyword
+and may occur only in the context of a loop statement
+(for statement, for-each statement, while statement, and do-while statement).
+A break statement ends program execution of the smallest enclosing loop statement in which it occurs.
+Program control is then transferred to the first line of code following the enclosing
+loop statement, if any.
+For an example of how to use a break statement in the context of a loop statement,
+see “Loop Control Statements” in the :doc:`../LanguageGuide/ControlFlow` chapter of the :doc:`../LanguageGuide/index`.
+
 .. langref-grammar
 
     stmt-break ::= 'break' (Note: the langref grammar contained a typo)
-
 
 .. syntax-grammar::
 
@@ -320,6 +339,23 @@ Break Statement
 
 Continue Statement
 ~~~~~~~~~~~~~~~~~~
+
+A continue statement consists of the ``continue`` keyword, and like a break statement,
+may occur only in the context of a loop statement
+(C-style for statement, for-each statement, while statement, and do-while statement).
+Unlike a break statement,
+a continue statement ends only the program execution of the *current iteration*
+of the smallest enclosing loop statement in which it occurs.
+Any remaining code in the body of the loop is not executed.
+Program control is then transferred to the controlling expression of the enclosing loop statement.
+
+In a C-style for loop,
+the increment expression is still evaluated after the continue statement is executed,
+because the increment expression is evaluated after the execution of the loop's body.
+
+For an example of how to use a continue statement in the context of a loop statement,
+see “Loop Control Statements”
+in the :doc:`../LanguageGuide/ControlFlow` chapter of the :doc:`../LanguageGuide/index`.
 
 .. langref-grammar
 
@@ -333,8 +369,20 @@ Continue Statement
     continue-statement --> ``continue``
 
 
-Fall-Through Statement
-~~~~~~~~~~~~~~~~~~~~~~
+Fallthrough Statement
+~~~~~~~~~~~~~~~~~~~~~
+
+A fallthrough statement consists of the ``fallthrough`` keyword
+and may occur only in a case block of a switch statement.
+A fallthrough statement causes program execution to continue
+from one case in a switch statement to the next case or, if present, to the default case.
+Program execution continues to the next case
+even if the patterns of the case label do not match the value of the switch statement's control expression.
+
+Fallthrough statements may not be used in the final case block of a switch statement.
+
+For an example of how to use a fallthrough statement in a switch statement,
+see “Fallthrough” in the :doc:`../LanguageGuide/ControlFlow` chapter of the :doc:`../LanguageGuide/index`.
 
 .. langref-grammar
 
@@ -342,12 +390,35 @@ Fall-Through Statement
 
 .. syntax-grammar::
 
-    Grammar of a fall-through statement
+    Grammar of a fallthrough statement
 
     fallthrough-statement --> ``fallthrough``
 
+
 Return Statements
 ~~~~~~~~~~~~~~~~~
+
+A return statement may occur only in the body of a function or method definition
+and causes program execution to return to the calling function or method.
+Program execution continues at the point immediately following the function or method call.
+
+A return statement may consist only of the keyword ``return``,
+or it may consist of the keyword ``return`` followed by an expression, as shown below.
+
+.. syntax-outline::
+
+    return <#expression#>
+
+A return statement that is not followed by an expression
+can be used only to return from a function or method that does not return a value
+(that is, when the return type of the function or method is ``Void`` or ``()``).
+
+When a return statement is followed by an expression,
+the value of the expression is returned to the calling function or method.
+If the value of the expression does not match the value of the return type
+declared in the function or method declaration,
+the expression's value is converted to the return type
+before it is returned to the calling function or method.
 
 .. langref-grammar
 
