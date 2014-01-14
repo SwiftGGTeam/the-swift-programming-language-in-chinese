@@ -238,7 +238,7 @@ Function Signatures
 
 .. langref-grammar
 
-    decl-func        ::= attribute-list 'static'? 'func' any-identifier generic-params? func-signature brace-item-list?
+    decl-func        ::= attribute-list 'type'? 'func' any-identifier generic-params? func-signature brace-item-list?
     func-signature ::= func-arguments func-signature-result?
     func-arguments ::= pattern-tuple+
     func-arguments ::= selector-tuple
@@ -249,7 +249,7 @@ Function Signatures
 
     Grammar of a function declaration
 
-    function-declaration --> attribute-sequence-OPT ``static``-OPT ``func`` function-name generic-parameter-clause-OPT function-signature code-block-OPT
+    function-declaration --> attribute-sequence-OPT ``type``-OPT ``func`` function-name generic-parameter-clause-OPT function-signature code-block-OPT
     function-name --> any-identifier
 
     function-signature --> function-parameters function-signature-result-OPT
@@ -259,12 +259,6 @@ Function Signatures
     selector-parameters --> ``(`` tuple-pattern-element ``)`` selector-tuples
     selector-tuples --> selector-name ``(`` tuple-pattern-element ``)`` selector-tuples-OPT
     selector-name --> identifier-or-any
-
-.. TODO: Revisit function-declaration; the ``static`` keyword may be renamed and/or made into an attribute.
-    The reason is that ``static`` isn't the most appropriate term, because we're using it to
-    mark a class function, not a static function (in the proper sense).
-    This issue is being tracked by:
-    <rdar://problem/13347488> Consider renaming "static" functions to "class" functions
 
 .. TODO: The overgeneration from tuple-patterns combined with some upcoming changes
     mean that we should just create a new syntactic category

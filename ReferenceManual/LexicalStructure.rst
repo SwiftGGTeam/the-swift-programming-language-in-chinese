@@ -179,7 +179,7 @@ Reserved Keywords
     keyword ::= 'metatype'
     keyword ::= 'enum'
     keyword ::= 'protocol'
-    keyword ::= 'static'
+    keyword ::= 'type'
     keyword ::= 'struct'
     keyword ::= 'subscript'
     keyword ::= 'typealias'
@@ -220,9 +220,9 @@ Reserved Keywords
 ``let``
 ``metatype``
 ``protocol``
-``static``
 ``struct``
 ``subscript``
+``type``
 ``typealias``
 ``var``
 ``where``
