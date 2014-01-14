@@ -809,9 +809,7 @@ Swift will throw an error:
     (swift) var x = 1
     // x : Int = 1
     (swift) var y = x / 0
-    !!! <REPL Input>:1:11: error: division by zero
-    !!! var y = x / 0
-    !!!           ^
+    xxx division by zero
  
 Integer division by zero is not a valid mathematical action,
 and so Swift throws an error rather than creating an invalid value.
@@ -819,6 +817,10 @@ and so Swift throws an error rather than creating an invalid value.
 .. NOTE: currently, this testcode block must be the last in the overflowOperators group,
    as otherwise the stack trace crash from the division-by-zero will mean that
    subsequent blocks in the group won't get tested.
+
+.. TODO: update this example code to check for a true error,
+   rather than a stack trace,
+   once rdar://15804939 has been fixed.
 
 Logical Operators
 -----------------
