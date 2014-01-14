@@ -97,7 +97,7 @@ Variable Declarations
 
 .. langref-grammar
 
-    decl-var        ::= attribute-list 'var' pattern initializer?  (',' pattern initializer?)*
+    decl-var        ::= attribute-list 'type'? 'var' pattern initializer?  (',' pattern initializer?)*
     decl-var        ::= attribute-list 'var' identifier ':' type-annotation brace-item-list
     decl-var        ::= attribute-list 'var' identifier ':' type-annotation '{' get-set '}'
     initializer     ::= '=' expr
@@ -111,7 +111,7 @@ Variable Declarations
 
     Grammar of a variable declaration
 
-    variable-declaration --> attribute-sequence-OPT ``var`` pattern-initializer-list
+    variable-declaration --> attribute-sequence-OPT ``type``-OPT ``var`` pattern-initializer-list
     variable-declaration --> attribute-sequence-OPT ``var`` variable-name type-specifier code-block
     variable-declaration --> attribute-sequence-OPT ``var`` variable-name type-specifier getter-setter-block
     variable-name --> identifier
@@ -127,6 +127,8 @@ Variable Declarations
 
 .. NOTE: Type specifiers are required for computed properties -- the
    types of those properties are not computed/inferred.
+
+.. TR: Why is 'type' restricted to variables declared using the first variable-declaration grammar?
 
 .. TODO: File a radar against the inout attribute for better REPL
    mesasge.  INOUT attribute can only be applide to types, not to
@@ -168,13 +170,30 @@ Typealias Declarations
 
     Grammar of a typealias declaration
 
-    typealias-declaration --> typealias-head ``=`` type
+    typealias-declaration --> typealias-head typealias-assignment
     typealias-head --> ``typealias`` typealias-name type-inheritance-clause-OPT
     typealias-name --> identifier
+    typealias-assignment --> ``=`` type
 
 
 Function Declarations
 ---------------------
+
+**[Query/Note: We are trying to decide which code-snippet-style syntax outlines to use
+for regular Swift-style function definitions and for selector-style method definitions.
+Below you'll find two alternatives for the former and four alternatives for the latter.
+We would like to pick one for regular functions and one for selector-style methods.
+Please send us your feedback!]**
+
+Most function and method definitions have the following general form:
+
+**[Regular function, alternative 1:
+This alternative is very simple and is based on the existing Xcode code snippet for C++ functions.
+The downside to this alternative is two-fold:
+first, the Swift-specific structure of the function parameters is completely hidden;
+second, we need to expose the structure of at least two parameters to visually distinguish
+regular functions and selector-style methods.]**
+
 
 .. syntax-outline::
 
@@ -182,48 +201,81 @@ Function Declarations
         <#code to execute#>
     }
 
+**[Regular function, alternative 2:
+This alternative satisfies the problems noted with the first alternative.
+That said, it's a rather long (and ugly?) way to display the general form of a simple function definition
+(the signature no longer fits on a single line).
+We've considered abbreviating names, but we're trying to avoid that
+because it's inconsistent with the rest of the document (and with existing Xcode code snippets).]**
+
+
 .. syntax-outline::
 
     func <#function name#>(
-         <#parameter name 1#>: <#parameter type 1#>, 
-         <#parameter name 2#>: <#parameter type 2#>) 
-         -> <#return type#> 
+         <#parameter name 1#>: <#parameter type 1#>,
+         <#parameter name 2#>: <#parameter type 2#>)
+         -> <#return type#>
     {
         <#code to execute#>
     }
 
-.. syntax-outline::
+Swift also provides syntax for declaring and defining selector-style methods,
+such as those found in Objective-C. Definitions of selector-style methods have the
+following form:
 
-    func <#selector name part 1#>(<#parameter name 1#>: <#parameter type 1#>) 
-         <#selector name part 2#>(<#parameter name 2#>: <#parameter type 2#>) 
-         -> <#return type#> 
-    {
-        <#code to execute#>
-    }
-    
-.. syntax-outline::
+**[The following four alternatives deal with selector-style method definitions.
+The only difference between each of them is the name for each part of the selector.]**
 
-    func <#selector keyword 1#>(<#parameter name 1#>: <#parameter type 1#>) 
-         <#selector keyword 2#>(<#parameter name 2#>: <#parameter type 2#>) 
-         -> <#return type#> 
-    {
-        <#code to execute#>
-    }
+**[Selector-style, alternative 1:
+This alternative is descriptively pretty accurate but may also be a bit awkward.]**
+
 
 .. syntax-outline::
 
-    func <#method keyword 1#>(<#parameter name 1#>: <#parameter type 1#>) 
-         <#method keyword 2#>(<#parameter name 2#>: <#parameter type 2#>) 
-         -> <#return type#> 
+    func <#selector name part 1#>(<#parameter name 1#>: <#parameter type 1#>)
+         <#selector name part 2#>(<#parameter name 2#>: <#parameter type 2#>)
+         -> <#return type#>
     {
         <#code to execute#>
     }
 
+**[Selector-style, alternative 2:
+Although there is some precedent for calling each part of the selector a "keyword",
+doing so isn't quite accurate.
+The parts of the name of a method aren't keywords in the language (at least in the normal sense).]**
+
+
 .. syntax-outline::
 
-    func <#signature keyword 1#>(<#parameter name 1#>: <#parameter type 1#>) 
-         <#signature keyword 2#>(<#parameter name 2#>: <#parameter type 2#>) 
-         -> <#return type#> 
+    func <#selector keyword 1#>(<#parameter name 1#>: <#parameter type 1#>)
+         <#selector keyword 2#>(<#parameter name 2#>: <#parameter type 2#>)
+         -> <#return type#>
+    {
+        <#code to execute#>
+    }
+
+**[Selector-style, alternative 3:
+This alternative uses "method" instead of "selector", but still uses "keyword".]**
+
+
+.. syntax-outline::
+
+    func <#method keyword 1#>(<#parameter name 1#>: <#parameter type 1#>)
+         <#method keyword 2#>(<#parameter name 2#>: <#parameter type 2#>)
+         -> <#return type#>
+    {
+        <#code to execute#>
+    }
+
+**[Selector-style, alternative 4:
+This alternative uses "signature" instead of "method" or "selector", but still uses "keyword".]**
+
+
+.. syntax-outline::
+
+    func <#signature keyword 1#>(<#parameter name 1#>: <#parameter type 1#>)
+         <#signature keyword 2#>(<#parameter name 2#>: <#parameter type 2#>)
+         -> <#return type#>
     {
         <#code to execute#>
     }
@@ -238,7 +290,7 @@ Function Signatures
 
 .. langref-grammar
 
-    decl-func        ::= attribute-list 'static'? 'func' any-identifier generic-params? func-signature brace-item-list?
+    decl-func        ::= attribute-list 'type'? 'func' any-identifier generic-params? func-signature brace-item-list?
     func-signature ::= func-arguments func-signature-result?
     func-arguments ::= pattern-tuple+
     func-arguments ::= selector-tuple
@@ -249,7 +301,7 @@ Function Signatures
 
     Grammar of a function declaration
 
-    function-declaration --> attribute-sequence-OPT ``static``-OPT ``func`` function-name generic-parameter-clause-OPT function-signature code-block-OPT
+    function-declaration --> attribute-sequence-OPT ``type``-OPT ``func`` function-name generic-parameter-clause-OPT function-signature code-block-OPT
     function-name --> any-identifier
 
     function-signature --> function-parameters function-signature-result-OPT
@@ -259,12 +311,6 @@ Function Signatures
     selector-parameters --> ``(`` tuple-pattern-element ``)`` selector-tuples
     selector-tuples --> selector-name ``(`` tuple-pattern-element ``)`` selector-tuples-OPT
     selector-name --> identifier-or-any
-
-.. TODO: Revisit function-declaration; the ``static`` keyword may be renamed and/or made into an attribute.
-    The reason is that ``static`` isn't the most appropriate term, because we're using it to
-    mark a class function, not a static function (in the proper sense).
-    This issue is being tracked by:
-    <rdar://problem/13347488> Consider renaming "static" functions to "class" functions
 
 .. TODO: The overgeneration from tuple-patterns combined with some upcoming changes
     mean that we should just create a new syntactic category
@@ -430,7 +476,7 @@ Typealias Protocol Elements
     protocol-body --> ``{`` protocol-members-OPT ``}``
 
     protocol-members --> protocol-member protocol-members-OPT
-    protocol-member --> variable-declaration | function-declaration | typealias-head | subscript-head
+    protocol-member --> variable-declaration | function-declaration | typealias-head typealias-assignment-OPT | subscript-head
 
 
 Constructor Declarations
@@ -509,7 +555,7 @@ Extension Declarations
     extension-body --> ``{`` declarations-OPT ``}``
 
 .. TODO: TR: What are the semantic rules associated with extending different types?
-    The LangRef says "'extension' declarations allow adding member declarations to existing types, 
+    The LangRef says "'extension' declarations allow adding member declarations to existing types,
     even in other source files and modules. There are different semantic rules for each type that is extended.
     enum, struct, and class declaration extensions. FIXME: Write this section."
     What is the relevant, missing information?
@@ -576,13 +622,13 @@ Attribute Sequences
 .. TODO: TR: From looking at /swift/include/swift/AST/Attr.def,
     there are ATTR(...), TYPE_ATTR(...), and IB_ATTR(...).
     Assuming that TYPE_ATTR(...)s can be applied to types only,
-    what are the restrictions on plain ATTR(...)s? 
+    what are the restrictions on plain ATTR(...)s?
     Are they restricted to declarations only?
     (But, 'noreturn' is in both ATTR(...) and TYPE_ATTR(...); why?)
     If attributes are neatly separated into mutually exclusive categories,
     e.g., declaration attributes, type attributes, and IB attributes,
     then we could could break down the attribute grammar accordingly.
-    
+
     We should decide if the 'Attribute Sequences' heading should be changed
     to 'Attributes' and whether each attribute should have its own discussion in a subheading.
 

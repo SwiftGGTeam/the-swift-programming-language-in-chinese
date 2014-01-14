@@ -3,8 +3,6 @@ Lexical Structure
 
 .. TODO: Write a brief intro to this chapter.
 
-[The content of this chapter is still being written.]
-
 
 Whitespace and Comments
 -----------------------
@@ -78,7 +76,7 @@ Operator Identifiers
 
 .. syntax-grammar::
 
-	Grammar of operators
+    Grammar of operators
 
     operator --> operator-character operator-OPT
     operator --> ``..``
@@ -181,7 +179,7 @@ Reserved Keywords
     keyword ::= 'metatype'
     keyword ::= 'enum'
     keyword ::= 'protocol'
-    keyword ::= 'static'
+    keyword ::= 'type'
     keyword ::= 'struct'
     keyword ::= 'subscript'
     keyword ::= 'typealias'
@@ -222,9 +220,9 @@ Reserved Keywords
 ``let``
 ``metatype``
 ``protocol``
-``static``
 ``struct``
 ``subscript``
+``type``
 ``typealias``
 ``var``
 ``where``
@@ -257,12 +255,12 @@ Reserved Keywords
    rather than maintaining them by hand.
 
 .. TODO: TR: Are 'operator', 'associativity', and 'precedence' reserved keywords?
-	For instance, in operators.swift, we find the following example:
-	operator infix ++++ {
-		precedence 195
-  		associativity left
-	}
-	This example works just fine as of rev. 11445
+    For instance, in operators.swift, we find the following example:
+    operator infix ++++ {
+        precedence 195
+        associativity left
+    }
+    This example works just fine as of rev. 11445
 
 *Keywords used in statements*:
 
@@ -281,12 +279,44 @@ Reserved Keywords
 ``while``
 
 
+Contextual Keywords
+~~~~~~~~~~~~~~~~~~~
+
+.. langref-grammar
+
+	get
+  	infix
+  	operator
+  	postfix
+ 	prefix
+  	set
+  	type
+
+*Contextual keywords*:
+
+``get``
+``set``
+``type``
+``operator``
+``prefix``
+``infix``
+``postfix``
+
+.. TODO: TR: Are 'associativity', 'precedence', 'left', 'right', 'none' contextual keywords?
+	For instance, in operators.swift, we find the following example:
+	operator infix ++++ {
+		precedence 195
+  		associativity left
+	}
+	This example works as of rev. 11445
+
+
 Implementation Identifier Token
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. langref-grammar
 
-	dollarident ::= '$' id-continue+
+    dollarident ::= '$' id-continue+
 
 .. TODO: Translate dollar-identifier grammar after we've translated the identifier grammar.
 
