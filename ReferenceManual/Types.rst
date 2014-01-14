@@ -1,9 +1,7 @@
 Types
 =====
 
-.. TODO:
-
-    TR: Discuss "fully-typed types" and "materializable types" in the intro paragraphs,
+.. TODO: Discuss "fully-typed types" and "materializable types" in the intro paragraphs,
     rather than in discrete sections. Also, try to come up with better terms for these,
     or just explain the concept without giving them explicit terms.
 
@@ -59,7 +57,7 @@ Array Types
 
     array-type --> basic-type ``[`` ``]`` | array-type ``[`` ``]``
 
-.. Note: Writing it this way rather than as a basic type followed by
+.. NOTE: Writing it this way rather than as a basic type followed by
    a list of []s -- that preserves grouping of the type as you recurse
    down the tree.
 
@@ -117,9 +115,7 @@ Type Identifiers
     type-identifier --> type-name generic-argument-clause-OPT | type-name generic-argument-clause-OPT ``.`` type-identifier
     type-name --> identifier
 
-.. TODO:
-
-    Decide on which one of these two grammars we want for type identifiers.
+.. TODO: Decide on which one of these two grammars we want for type identifiers.
 
 .. syntax-grammar::
 
@@ -157,18 +153,13 @@ Optional Type
 
     type-optional ::= type-simple '?'-postfix
 
-.. TODO:
-
-    TR: Why is -postfix here? Does it just mean that '?' is a postfix operator.
-
 .. syntax-grammar::
 
     Grammar of an optional type
 
     optional-type --> basic-type ``?``
 
-.. Note:
-    The -postfix disambiguates between two terminals
+.. NOTE: The -postfix disambiguates between two terminals
     which have the same text but which have different whitespace.
 
     Compare:
@@ -205,11 +196,9 @@ Protocol Composition Type
 Enumeration Types
 ~~~~~~~~~~~~~~~~~
 
-.. TODO:
-
-    There is no associated syntax for an enumeration type. Enumeration types are simple
-    created when an enumeration is declared using the syntax of an enumeration declaration.
-    Just discuss this in prose without a grammar box.
+.. TODO: Discuss in prose: There is no associated syntax for an enumeration type.
+    Enumeration types are simply created when an enumeration is declared
+    using the syntax of an enumeration declaration.
 
 
 Metatype Type
@@ -226,8 +215,8 @@ Metatype Type
     metatype-type --> basic-type ``.`` ``metatype``
 
 
-Type Inheritance List
----------------------
+Type Inheritance Clause
+-----------------------
 
 .. langref-grammar
 
@@ -237,5 +226,5 @@ Type Inheritance List
 
     Grammar of a type inheritance clause
 
-    type-inheritance-clause --> ':' type-inheritance-list
+    type-inheritance-clause --> ``:`` type-inheritance-list
     type-inheritance-list --> type-identifier | type-identifier ``,`` type-inheritance-list
