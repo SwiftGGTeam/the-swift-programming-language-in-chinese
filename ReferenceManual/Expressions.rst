@@ -384,7 +384,7 @@ Initializer Expression
 .. syntax-grammar::
 
     Grammar of an initializer expression
-    
+
     initializer-expression --> postfix-expression ``.`` ``init``
 
 
@@ -399,7 +399,7 @@ Dot Expressions
 .. syntax-grammar::
 
     Grammar of a dot expression
-    
+
     dot-expression --> postfix-expression ``.`` dollar-identifier
     dot-expression --> postfix-expression ``.`` named-expression
 
@@ -413,7 +413,7 @@ Metatype Expression
 .. syntax-grammar::
 
     Grammar of a metatype expression
-    
+
     metatype-expression --> postfix-expression ``.`` ``metatype``
 
 
@@ -427,7 +427,7 @@ Subscript Expression
 .. syntax-grammar::
 
     Grammar of a subscript expression
-    
+
     subscript-expression --> postfix-expression ``[`` expression ``]``
 
 

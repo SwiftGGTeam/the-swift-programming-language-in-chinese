@@ -102,18 +102,6 @@ and does not provide access to the current value during each iteration of the lo
     >>> Hello, Carol!
     >>> Hello, Doug!
 
-Lists can be iterated in reverse, using the ``reverse`` function:
-
-.. testcode::
-
-    (swift) for name in reverse(names) {
-        println("Goodbye, \(name)!")
-    }
-    >>> Goodbye, Doug!
-    >>> Goodbye, Carol!
-    >>> Goodbye, Barbara!
-    >>> Goodbye, Alan!
-
 Swift's ``String`` type has a ``chars`` property,
 which provides the individual characters in the string as an ``Array`` of ``UnicodeScalar`` values
 (also known as an ‘``Array`` of type ``UnicodeScalar``’).
@@ -151,40 +139,27 @@ It enables the switch block to match (and ignore) just these six special charact
 rather than having to match every character that should get printed.
 (The ``continue`` keyword is described in more detail later in this section.)
 
-Iteration can also be used with dictionaries,
-to iterate over their key-value pairs:
+Iteration can also be used to access the key-value pairs in a dictionary.
+Every item in a dictionary has a ``key`` property and a ``value`` property,
+which can be accessed via dot syntax:
 
 .. testcode::
 
     (swift) var numberOfLegs = ["spider" : 8, "ant" : 6, "cat" : 4]
-    // numberOfLegs : Dictionary<String, Int> = ["ant" : 6, "spider" : 8, "cat" : 4]
-    (swift) for (animalName, legCount) in numberOfLegs {
-        println("\(animalName)s have \(legCount) legs")
+    // numberOfLegs : Dictionary<String, Int> = Dictionary<String, Int>(1.33333, 3, <DictionaryBufferOwner<String, Int> instance>)
+    (swift) for item in numberOfLegs {
+        println("\(item.key)s have \(item.value) legs")
     }
-    >>> ants have 6 legs
     >>> spiders have 8 legs
+    >>> ants have 6 legs
     >>> cats have 4 legs
 
-Note that the items in the ``Dictionary`` are not iterated in the same order as they were inserted.
+Note that the items in the ``Dictionary`` may not be iterated in the same order as they were inserted.
 The contents of a ``Dictionary`` are inherently unordered,
 and iterating over them does not guarantee the order in which they will be retrieved.
 
 .. TODO: provide some advice on how to iterate over a Dictionary in order
    (perhaps sorted by key), using a predicate or array sort or some kind.
-
-The example above uses a ``(key, value)`` tuple to iterate over the values in a ``Dictionary``.
-You can also iterate over the items in the ``Dictionary`` directly.
-Every item in a ``Dictionary`` has a ``key`` property and a ``value`` property,
-which can be accessed via dot syntax:
-
-.. testcode::
-
-    (swift) for item in numberOfLegs {
-        println("\(item.key)s have \(item.value) legs")
-    }
-    >>> ants have 6 legs
-    >>> spiders have 8 legs
-    >>> cats have 4 legs
 
 The examples above use ``for x in y`` to iterate
 ranges, arrays, strings and dictionaries.

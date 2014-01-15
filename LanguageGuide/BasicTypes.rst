@@ -78,7 +78,7 @@ This can be read as:
 
 Declare a variable called ``a``, and give it an initial value of ``1``.
 
-Variable definitions can include a specific *type*,
+Variable declarations can include a specific *type*,
 to be explicit about the kind of variable you want to create:
 
 .. testcode:: declaringVariables
@@ -139,12 +139,12 @@ Numbers
 Swift supports two fundamental types of number:
 :term:`integers`, and :term:`floating-point numbers`.
 Swift provides integers in :term:`signed and unsigned` forms at
-8, 16, 32, 64 and 128-bit sizes.
+8, 16, 32 and 64-bit sizes.
 It also provides signed floating-point numbers in
 32 and 64-bit sizes.
 These basic numeric types follow a similar naming convention to C,
 in that an 8-bit unsigned integer is a ``UInt8``,
-a 128-bit signed integer is an ``Int128``,
+a 32-bit signed integer is an ``Int32``,
 and a signed 64-bit floating-point number is a ``Float64``.
 Like all types in Swift, these basic numeric types have capitalized names.
 (A complete list of numeric types can be found in the :doc:`../ReferenceManual/index`.)
@@ -286,7 +286,8 @@ All of these integer literals have a decimal value of ``17``:
 
 Floating-point literals can be decimal (with no prefix),
 or hexadecimal (with a ``0x`` prefix).
-They can have an optional *exponent*,
+The must always have a number (or hexadecimal number) on both sides of the decimal point.
+They can also have an optional *exponent*,
 indicated by an upper- or lower-case ``e`` for decimal floats,
 or an upper- or lower-case ``p`` for hexadecimal floats.
 
@@ -529,7 +530,7 @@ You can create tuples from whatever permutation of types you like,
 and they can contain as many different types as you like.
 There's nothing stopping you from having
 a tuple of type ``(Int, Int, Int)``, or ``(String, Bool)``,
-or indeed any other combination you require.
+or indeed any other permutation you require.
 
 You can access the individual element values in a tuple using index numbers starting at zero:
 

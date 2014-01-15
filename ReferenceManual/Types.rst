@@ -107,22 +107,11 @@ Type Identifiers
     type-identifier ::= type-identifier-component ('.' type-identifier-component)*
     type-identifier-component ::= identifier generic-args?
 
-
 .. syntax-grammar::
 
     Grammar of a type identifier
 
     type-identifier --> type-name generic-argument-clause-OPT | type-name generic-argument-clause-OPT ``.`` type-identifier
-    type-name --> identifier
-
-.. TODO: Decide on which one of these two grammars we want for type identifiers.
-
-.. syntax-grammar::
-
-    Grammar of a type identifier
-
-    type-identifier --> type-name generic-argument-clause-OPT
-    type-identifier --> type-name generic-argument-clause-OPT ``.`` type-identifier
     type-name --> identifier
 
 
