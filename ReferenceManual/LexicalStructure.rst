@@ -86,7 +86,7 @@ Operator Identifiers
     operator-character --> One of the following characters:
     ``@`` ``/`` ``=`` ``-`` ``+`` ``*`` ``%`` ``<`` ``>`` ``!`` ``&`` ``|`` ``^`` ``~``
 
-    binary-operater --> operator
+    binary-operator --> operator
     prefix-operator --> operator
     postfix-operator --> operator
     postfix-operators --> postfix-operator postfix-operators-OPT
