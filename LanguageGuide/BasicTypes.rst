@@ -76,7 +76,7 @@ Here's a simple variable declaration:
     
 This can be read as:
 
-Declare a variable called ``a``, and give it an initial value of ``1``.
+“Declare a variable called ``a``, and give it an initial value of ``1``.”
 
 Variable declarations can include a specific *type*,
 to be explicit about the kind of variable you want to create:
@@ -89,8 +89,8 @@ to be explicit about the kind of variable you want to create:
 The colon in the declaration means *“…that is a…”*,
 so this can be read as:
 
-Declare a variable called ``b`` that is a ``String``,
-and give it an initial value of ``"Hello"``.
+“Declare a variable called ``b`` that is a ``String``,
+and give it an initial value of ``"Hello"``.”
 
 .. TODO: Update this section to mention let as well as var,
    once let is available and ready for prime-time use.
@@ -588,10 +588,10 @@ Because it is a fully-fledged type,
 
 This can be read as:
 
-Declare a variable called ``http500Error`` that is an ``HTTPStatus``.
+“Declare a variable called ``http500Error`` that is an ``HTTPStatus``.
 Initialize it with
 (a first element value that is ``500``,
-and a second element value that is ``"Internal Server Error"``).
+and a second element value that is ``"Internal Server Error"``).”
 
 This fits the signature of an ``HTTPStatus``
 (first element ``Int``, second element ``String``),
@@ -610,10 +610,10 @@ you can create new ``HTTPStatus`` tuples using *initializer syntax*:
 
 This can be read as:
 
-Declare a variable called ``http301Status``,
+“Declare a variable called ``http301Status``,
 and set it to a new ``HTTPStatus`` initialized with
 (a first value that is ``301``,
-and a second value that is ``"Moved Permanently"``).
+and a second value that is ``"Moved Permanently"``).”
 
 Initializer syntax is also used when creating struct and object instances,
 and is described in more detail in :doc:`ClassesObjectsAndStructs`.
@@ -794,9 +794,9 @@ In Swift, an enumeration to define product barcodes of either type might look li
 
 This can be read as:
 
-Declare an enumeration type called ``Barcode``,
+“Declare an enumeration type called ``Barcode``,
 that can take either a value of ``UPCA`` with an associated value of type (``Int``, ``Int``, ``Int``),
-or a value of ``QRCode`` with an associated value of type ``String``.
+or a value of ``QRCode`` with an associated value of type ``String``.”
 
 Note that this definition does not provide any actual ``Int`` or ``String`` values –
 it just defines the *type* of associated values that ``Barcode`` variables can store
