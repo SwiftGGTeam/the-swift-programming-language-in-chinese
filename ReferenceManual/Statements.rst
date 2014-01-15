@@ -45,13 +45,16 @@ For Statements
 ~~~~~~~~~~~~~~
 
 A for statement allows a block of code to be executed multiple times.
+Swift has two for statements:
+a C-style for statement and a for-each statement.
+Each for statement is discussed in detail below.
 
 C-Style For Statements
 ++++++++++++++++++++++
 
 C-style for statements allow a block of code to be executed repeatedly
 while incrementing a counter,
-as long as a condition remains true,
+as long as a condition remains true.
 
 ..  This probably belongs in the Language Guide.
     Typically, the initialization, condition, and increment,
