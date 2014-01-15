@@ -43,7 +43,7 @@ Looping Statements
 
 Looping statements allow a block of code to be executed repeatedly,
 depending on the conditions specified in the loop.
-Code in the loop is executed in sequentially,
+All code inside the scope of the loop is executed (in order) on each iteration of the loop,
 unless a break statement or continue statement is encountered.
 Swift has four looping statements:
 C-style for statement, for-each statement, while statement, and do-while statement.
@@ -71,7 +71,7 @@ as long as a condition remains true.
     Typically, the initialization, condition, and increment,
     are used to keep a local counter.
 
-A C-style for statement has the general form:
+A C-style for statement has the general form, where the parentheses are optional:
 
 .. syntax-outline::
 
@@ -79,14 +79,8 @@ A C-style for statement has the general form:
         <#code to execute#>
     }
 
-where the parentheses are optional.
-
-.. langref-grammar
-
-    stmt-for-c-style    ::= 'for'     stmt-for-c-style-init? ';' expr? ';' expr-basic?     brace-item-list
-    stmt-for-c-style    ::= 'for' '(' stmt-for-c-style-init? ';' expr? ';' expr-basic? ')' brace-item-list
-    stmt-for-c-style-init ::= decl-var
-    stmt-for-c-style-init ::= expr
+Although the parentheses are optional,
+the opening and closing braces and the semicolons are required.
 
 A for statement is executed it two phases:
 the initialization and the loop.
@@ -104,6 +98,13 @@ and the program is finished executing the statement.
 .. TODO: Document the scope of loop variables.
    This applies to all loops, so it doesn't belong here.
 
+.. langref-grammar
+
+    stmt-for-c-style    ::= 'for'     stmt-for-c-style-init? ';' expr? ';' expr-basic?     brace-item-list
+    stmt-for-c-style    ::= 'for' '(' stmt-for-c-style-init? ';' expr? ';' expr-basic? ')' brace-item-list
+    stmt-for-c-style-init ::= decl-var
+    stmt-for-c-style-init ::= expr
+
 .. syntax-grammar::
 
     Grammar of a C-style for statement
@@ -112,6 +113,7 @@ and the program is finished executing the statement.
     c-style-for-statement --> ``for`` ``(`` for-init-OPT ``;`` expression-OPT ``;`` expression-OPT ``)`` code-block
 
     for-init --> variable-declaration | expression
+
 
 For-Each Statement
 ++++++++++++++++++
