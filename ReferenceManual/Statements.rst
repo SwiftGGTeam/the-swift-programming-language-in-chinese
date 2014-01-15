@@ -41,6 +41,14 @@ Semicolon Statement
 Looping Statements
 ------------------
 
+Looping statements allow a block of code to be executed repeatedly,
+depending on the conditions specified in the loop.
+Code in the loop is executed in sequentially,
+unless a break statement or continue statement is encountered.
+Swift has four looping statements:
+C-style for statement, for-each statement, while statement, and do-while statement.
+Each looping statement is discussed in detail below.
+
 For Statements
 ~~~~~~~~~~~~~~
 
