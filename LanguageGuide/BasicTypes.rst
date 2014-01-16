@@ -171,6 +171,8 @@ and is typically large enough for everyday integer values.
     However, this has yet to be implemented.
     In the meantime, ``Int`` is a typealias for ``Int64`` on both 32 and 64-bit platforms.
 
+.. TODO: Remove this admonition as per rdar://15612057 once rdar://15612767 is completed.
+
 Floating-Point Numbers
 ----------------------
 
