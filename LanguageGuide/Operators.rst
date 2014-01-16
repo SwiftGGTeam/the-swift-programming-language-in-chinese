@@ -187,7 +187,7 @@ Swift's remainder operator can also operate on floating-point numbers:
 .. testcode:: arithmeticOperators
 
     (swift) 8 % 2.5
-    // r6 : Double = 0.5
+    // r7 : Double = 0.5
 
 There are three 2.5's in 8, with a remainder of 0.5,
 so the remainder operator returns a ``Double`` value of ``0.5``.
@@ -208,9 +208,9 @@ For example:
     (swift) var i = 0
     // i : Int = 0
     (swift) ++i
-    // r7 : Int = 1
+    // r8 : Int = 1
     (swift) ++i
-    // r8 : Int = 2
+    // r9 : Int = 2
 
 Each time you call ``++i``, the value of ``i`` is increased by ``1``.
 Essentially, ``++i`` is shorthand for saying ``i = i + 1``.
