@@ -222,7 +222,7 @@ Here, the parameter values are passed in a different order when the function is 
 Because they are named,
 it is still clear which value should be used for which parameter.
 
-Note that if ``characterToFind`` is found quickly,
+If ``characterToFind`` is found quickly,
 this example returns ``true`` before the entire set of characters in ``stringToSearch`` has been checked.
 As soon as the first matching character is found,
 ``containsCharacter`` returns ``true``,
@@ -329,7 +329,7 @@ which always returns the same ``String`` message whenever it is called:
     (swift) println(sayHelloWorld())
     >>> hello, world
 
-Note that the function declaration still needs parentheses after the function's name,
+The function declaration still needs parentheses after the function's name,
 even though it does not take any parameters.
 It is also called with empty parentheses when used.
 

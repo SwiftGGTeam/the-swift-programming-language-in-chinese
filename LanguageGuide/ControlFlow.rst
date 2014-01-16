@@ -132,7 +132,7 @@ This is why the case statement compares ``letter`` against ``UnicodeScalar`` val
 (with single quote marks)
 rather than ``String`` values.
 
-Note that the code above calls the ``continue`` keyword whenever it matches a vowel or a space.
+The code above calls the ``continue`` keyword whenever it matches a vowel or a space.
 ``continue`` is a special control flow keyword that causes the current iteration of the loop to end immediately
 and jump straight to the start of the next iteration.
 It enables the switch block to match (and ignore) just these six special characters,
@@ -154,7 +154,7 @@ which can be accessed via dot syntax:
     >>> ants have 6 legs
     >>> cats have 4 legs
 
-Note that the items in the ``Dictionary`` may not be iterated in the same order as they were inserted.
+Items in a ``Dictionary`` may not necessarily be iterated in the same order as they were inserted.
 The contents of a ``Dictionary`` are inherently unordered,
 and iterating over them does not guarantee the order in which they will be retrieved.
 
@@ -276,8 +276,8 @@ The general form of this loop format is::
         <#statements#>
     }
 
-Note that semicolons are used to separate the three parts of the for loop's definition,
-and that parentheses are not required.
+Semicolons are used to separate the three parts of the loop's definition, as in C.
+However, unlike C, there is no need to add parentheses around each part of the loop's definition.
 
 The loop is executed as follows:
 
@@ -483,7 +483,7 @@ to consider additional clauses:
     >>> It's really warm. Don't forget to to wear sunscreen.
 
 Here, an additional ``if`` clause has been added to respond to particularly warm temperatures.
-Note that the final ``else`` clause still remains,
+The final ``else`` clause still remains,
 as a catch-all for temperatures that are neither too warm nor too cold.
 
 The final ``else`` clause is optional, however, and can be excluded if the set of conditions does not need to be complete:
@@ -614,7 +614,7 @@ the number's description is printed using the ``println`` function.
 In this example,
 the number ``5`` is correctly identified as being a prime number.
 
-Note that fallthrough does not check the case conditions for the block it falls into.
+Fallthrough does not check the case conditions for the block it falls into.
 It simply causes code execution to move directly to the statements inside the next case (or default block),
 as in C's standard switch statement behavior.
 
@@ -754,7 +754,7 @@ to create a dynamic filter.
 The case statement will only match the current value of ``point``
 if the ``where`` clause's condition equates to ``true`` for that value.
 
-Note that the x-axis and y-axis checks could have been written with a ``where`` clause too.
+The x-axis and y-axis checks could also have been written with a ``where`` clause.
 ``case (_, 0)`` could have been written as ``case (_, var y) where y == 0``,
 to match points on the x-axis.
 However, the original version is more concise,

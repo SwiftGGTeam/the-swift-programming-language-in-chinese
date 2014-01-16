@@ -223,7 +223,7 @@ The sign of a numeric value can be toggled using a prefixed ``-`` (known as *una
     (swift) var anotherMinusThree = -plusThree
     // anotherMinusThree : Int = -3
 
-Note that the unary minus operator ``-`` is prepended directly before the value it operates on,
+The unary minus operator ``-`` is prepended directly before the value it operates on,
 without any whitespace.
 
 There is a corresponding *unary plus* operator, ``+``,
@@ -926,7 +926,7 @@ You can combine multiple logical operators to create longer compound expressions
     >>> Welcome!
 
 This example uses multiple ``&&`` and ``||`` operators to create a longer compound expression.
-Note that ``&&`` and ``||`` still only operate on two values,
+However, the ``&&`` and ``||`` operators still only operate on two values,
 so this is actually three smaller expressions chained together.
 It can be read as:
 

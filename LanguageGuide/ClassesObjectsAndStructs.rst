@@ -94,7 +94,7 @@ This property is initialized with a new ``Size`` struct instance,
 which infers a property type of ``Size``.
 (Properties are described in more detail later in this chapter.)
 
-Note that whenever you define a new class or struct,
+Whenever you define a new class or struct,
 you are effectively defining a brand new Swift type.
 Custom classes and structs should be given ``UpperCamelCase`` names
 (such as ``Size`` and ``Rectangle``),
@@ -278,7 +278,7 @@ The new ``Rectangle`` is given a size with a width and height of ``1.0``.
 
 A second variable is then declared, called ``theSameSquare``,
 which is set to refer to the same ``Rectangle`` already referred to by ``square``.
-Note that this doesn't create a new ``Rectangle`` object –
+This doesn't create a new ``Rectangle`` object –
 rather, there are now two object variables referring to the same one object.
 
 The width and height of the ``Rectangle`` are then modified.

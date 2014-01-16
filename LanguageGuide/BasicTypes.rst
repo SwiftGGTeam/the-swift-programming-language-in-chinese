@@ -470,7 +470,7 @@ Values of type ``Bool`` can be either ``true`` or ``false``:
     (swift) var turnipsAreDelicious = false
     // turnipsAreDelicious : Bool = false
 
-Note that Swift has inferred the types of ``orangesAreOrange`` and ``turnipsAreDelicious``
+The types of ``orangesAreOrange`` and ``turnipsAreDelicious`` have been inferred
 from the fact that they were initialized with ``Bool`` values.
 As with ``Int`` and ``Double`` above,
 you don't need to declare variables as being ``Bool`` if you set them to ``true`` or ``false`` as soon as you create them.
@@ -685,7 +685,7 @@ so that they read as a sentence when declaring a variable of that type:
     (swift) var directionToHead = CompassPoint.West
     // directionToHead : CompassPoint = <unprintable value>
 
-Note that the type of ``directionToHead`` has been inferred
+The type of ``directionToHead`` has been inferred
 from the fact that it was initialized with one of the possible values of ``CompassPoint``.
 Once it is declared as being a ``CompassPoint``,
 it can be set to a different ``CompassPoint`` value using a shorter dot syntax:
@@ -729,7 +729,7 @@ print ``"Watch out for penguins"``.
 
 …and so on.
 
-Note that switch statements in Swift do not ‘fall through’ the bottom of each case and into the next one.
+Switch statements in Swift do not ‘fall through’ the bottom of each case and into the next one.
 Instead, the entire switch statement completes its execution as soon as the first matching case is completed.
 This is different from C,
 which requires you to insert an explicit ``break`` statement at the end of every case to prevent fall-through.
@@ -808,7 +808,7 @@ This can be read as:
 that can take either a value of ``UPCA`` with an associated value of type (``Int``, ``Int``, ``Int``),
 or a value of ``QRCode`` with an associated value of type ``String``.”
 
-Note that this definition does not provide any actual ``Int`` or ``String`` values –
+This definition does not provide any actual ``Int`` or ``String`` values –
 it just defines the *type* of associated values that ``Barcode`` variables can store
 when they are equal to ``Barcode.UPCA`` or ``Barcode.QRCode``.
 
@@ -822,7 +822,7 @@ as shown below:
 
 This creates a new variable called ``productBarcode``,
 and assigns it a value of ``Barcode.UPCA`` with an associated tuple value of ``(8, 8590951226, 3)``.
-(Note that the provided identifier value has an underscore within its integer literal –
+(The provided ‘identifier’ value has an underscore within its integer literal –
 ``85909_51226`` –
 to make it easier to read as a barcode.)
 
@@ -890,7 +890,7 @@ and are marked up using single quote marks (``'``) rather than double quote mark
 to distingush them from strings.
 (``UnicodeScalar`` values are described in more detail in :doc:`Strings`.)
 
-Note that raw values are not the same as associated values.
+Raw values are not the same as associated values.
 Raw values are set to pre-populated values when the enum is defined in your code,
 like the three ASCII codes above.
 Associated values are only set when you create a new variable based on one of the enum members.
