@@ -16,11 +16,8 @@ Statements
     Grammar of a statement
 
     statement --> semicolon-statement
-    statement --> if-statement
-    statement --> while-statement
-    statement --> c-style-for-statement
-    statement --> for-each-statement
-    statement --> switch-statement
+    statement --> looping-statement
+    statement --> branching-statement
     statement --> control-transfer-statement
 
 
@@ -48,6 +45,16 @@ unless a break statement or continue statement is encountered.
 Swift has four looping statements:
 C-style for statement, for-each statement, while statement, and do-while statement.
 Each looping statement is discussed in detail below.
+
+.. syntax-grammar::
+
+    Grammar of a looping statement
+
+    looping-statement --> c-style-for-statement
+    looping-statement --> for-each-statement
+    looping-statement --> while-statement
+    looping-statement --> do-while-statement
+
 
 For Statements
 ~~~~~~~~~~~~~~
@@ -222,6 +229,14 @@ Otherwise, the program is finished executing the statement.
 
 Branching Statements
 --------------------
+
+
+.. syntax-grammar::
+
+    Grammer of a branching statement
+
+    branching-statement --> if-statement
+    branching-statement --> switch-statement
 
 
 If Statements
