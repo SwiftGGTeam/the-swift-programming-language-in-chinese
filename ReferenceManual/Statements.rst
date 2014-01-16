@@ -89,18 +89,46 @@ A C-style for statement has the general form, where the parentheses are optional
 Although the parentheses are optional,
 the opening and closing braces and the semicolons are required.
 
-A for statement is executed it two phases:
-the initialization and the loop.
-During initialization, the program evaluates the initialization expression.
-During the loop,
-the program executes the conditional expression,
-the code block, and the increment expression.
-If the conditional expression evaluates to ``true``,
-the program executes the code block and the increment expression,
-and then continues execution at the beginning of the loop.
-Otherwise,
-the program does not execute the code block or the increment expression,
-and the program is finished executing the statement.
+A C-style for statement is executed as follows:
+
+1. The *initialization* expression is evaluated once only
+   and is usually used to declare and initialize any variables
+   that are needed for the remainder of the loop.
+
+2. Next, the *condition* expression is evaluated.
+   If it evaluates to ``true``,
+   the program executes the code inside the braces of the for statement,
+   and execution continues to step 3.
+   If it evaluates to ``false``,
+   the program does not execute the code block or the *increment* expression,
+   and the program is finished executing the for statement.
+
+3. After executing all of the code inside the braces of the for statement,
+   the *increment* expression is evaluated.
+   After it has been evaluated,
+   execution returns to step 2,
+   and the *condition* expression is evaluated again
+   to determine whether the loop should continue.
+
+Variables defined within the *initialization* expression
+are valid only within the scope of the for statement itself.
+
+The value of the *condition* expression must be of type ``Bool``,
+and therefore must evaluate to either ``true`` or ``false``.
+
+.. NOTE: Alternative prose describing for statement execution:
+    A for statement is executed it two phases:
+    the initialization and the loop.
+    During initialization, the program evaluates the initialization expression.
+    During the loop,
+    the program executes the conditional expression,
+    the code block, and the increment expression.
+    If the conditional expression evaluates to ``true``,
+    the program executes the code block and the increment expression,
+    and then continues execution at the beginning of the loop.
+    Otherwise,
+    the program does not execute the code block or the increment expression,
+    and the program is finished executing the statement.
 
 .. TODO: Document the scope of loop variables.
    This applies to all loops, so it doesn't belong here.
