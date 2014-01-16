@@ -124,23 +124,65 @@ can be added together via ``+`` to make a new ``String``:
     (swift) var dogCow = dog + cow
     // dogCow : String = "🐶🐮"
 
-Modulo Operator
-~~~~~~~~~~~~~~~
+Remainder Operator
+~~~~~~~~~~~~~~~~~~
 
-The *binary modulo operator*, ``a % b``,
-divides ``a`` by ``b``, and returns the remainder.
-For example:
+The *binary remainder operator*, ``a % b``,
+works out how many multiples of ``b`` will fit inside ``a``,
+and returns the value that is left over
+(known as the *remainder*).
+
+For example: to calculate ``9 % 4``,
+you first work out how many ``4``\ s will fit inside ``9``:
+
+.. image:: ../images/remainderInteger.png
+    :width: 349
+    :align: center
+
+You can fit two ``4``\ s inside ``9``, as this illustration shows.
+After doing so, there is a remainder of ``1`` left over (shown in orange).
+
+In Swift, this would be written as:
 
 .. testcode:: arithmeticOperators
 
     (swift) 9 % 4
     // r5 : Int = 1
 
-There are two 4's in 9, with a remainder of 1,
-so the modulo operator returns an ``Int`` value of ``1``.
+To determine the answer for ``a % b``,
+the ``%`` operator calculates the following equation,
+and returns ``remainder`` as its output:
+
+``a`` = (``b`` × ``some multiplier``) + ``remainder``
+
+…where ``some multiplier`` is the smallest number of multiples of ``b``
+that will fit inside ``a``.
+
+Plugging ``9`` and ``4`` into this equation gives:
+
+``9`` = (``4`` × ``2``) + ``1``
+
+The same method is applied when calculating the remainder for a negative value of ``a``:
+
+.. testcode:: arithmeticOperators
+
+    (swift) -9 % 4
+    // r6 : Int = -1
+
+Plugging ``-9`` and ``4`` into the equation gives:
+
+``-9`` = (``4`` × ``-2``) + ``-1``
+
+…giving a remainder value of ``-1``.
+
+The sign of ``b`` is ignored for negative values of ``b``.
+This means that ``a % b`` and ``a % -b`` will always give the same answer.
+
+Floating-Point Remainder Calculations
+_____________________________________
 
 Unlike C and Objective-C,
-Swift can also perform modulo operations on floating-point numbers:
+Swift's remainder operator can also operate on floating-point numbers:
 
 .. testcode:: arithmeticOperators
 
@@ -148,7 +190,11 @@ Swift can also perform modulo operations on floating-point numbers:
     // r6 : Double = 0.5
 
 There are three 2.5's in 8, with a remainder of 0.5,
-so the modulo operator returns a ``Double`` value of ``0.5``.
+so the remainder operator returns a ``Double`` value of ``0.5``.
+
+.. image:: ../images/remainderFloat.png
+    :width: 311
+    :align: center
 
 Integer Increment and Decrement
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
