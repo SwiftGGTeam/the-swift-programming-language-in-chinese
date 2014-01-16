@@ -143,6 +143,7 @@ These are followed by a ‘check‘ digit to verify that the code has been scann
 
 .. image:: ../images/barcode_UPC.png
     :height: 80
+    :align: center
 
 Other products are labelled with 2D barcodes in `QR code <http://en.wikipedia.org/wiki/QR_Code>`_ format,
 which can use any `ISO 8859-1 <http://en.wikipedia.org/wiki/ISO_8859-1>`_ character
@@ -150,6 +151,7 @@ and can encode a string up to 2,953 characters long:
 
 .. image:: ../images/barcode_QR.png
     :height: 80
+    :align: center
 
 It would be convenient for an inventory tracking system to be able to store UPC-A barcodes as a tuple of three integers,
 and QR code barcodes as a string of any length.

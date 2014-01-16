@@ -677,6 +677,7 @@ and categorizes it on the following graph:
 
 .. image:: ../images/coordinateGraphSimple.png
     :height: 250
+    :align: center
 
 It decides if the point is
 at the origin (0, 0);
@@ -724,6 +725,7 @@ and categorizes it on the following graph:
 
 .. image:: ../images/coordinateGraphComplex.png
     :height: 250
+    :align: center
 
 It decides if the point is
 at the origin (0, 0);
