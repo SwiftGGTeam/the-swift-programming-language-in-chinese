@@ -251,7 +251,8 @@ because it has the typical expected behavior of incrementing ``i``,
 and then providing the result.
 (The same rules and advice apply for ``--i`` and ``i--``.)
 
-.. QUESTION: is this good advice (given the general prevalence of i++ in the world),
+.. QUESTION: is this good advice
+   (given the general prevalence of i++ in the world),
    and indeed is it even advice we need to bother giving
    (given that lots of people might disagree or not care)?
 
@@ -645,7 +646,8 @@ which has a decimal value of ``153``.
     Why do the values of ``redComponent`` and ``greenComponent`` change?
     Why do you then get same value of ``153`` for all three components?
 
-.. QUESTION: I've used UInt32 values here, but this would also work with an inferred Int.
+.. QUESTION: I've used UInt32 values here,
+   but this would also work with an inferred Int.
    Which is a better example? (I've chosen not to use Int so far,
    as this section is about unsigned shifts.)
 
@@ -746,8 +748,10 @@ an error is thrown:
     (swift) potentialOverflow += 1                  // this will throw an error
     xxx overflow
 
-.. TODO: is "throw an error" the correct phrase to use here? It actually triggers an assertion, causing the REPL to crash.
-.. TODO: change the error text we detect here once overflowing provides an error message rather than just an assert.
+.. TODO: is "throw an error" the correct phrase to use here?
+   It actually triggers an assertion, causing the REPL to crash.
+.. TODO: change the error text we detect here
+   once overflowing provides an error message rather than just an assert.
 
 Throwing an error in these scenarios is much safer than allowing an outsized value to overflow.
 Providing error handling when values get too large or too small
@@ -989,8 +993,11 @@ so the overall compound expression still equates to ``true``.
 Priority and Associativity
 --------------------------
 
-.. NOTE: I've chosen to use ‘priority’ rather than ‘precedence’ here, because I think it's a clearer phrase to use.
-.. QUESTION: Could priority and associativity be made clear as part of the hypothetical ‘show invisibles’ feature, to show the invisible parentheses implied by priority and associativity?
+.. NOTE: I've chosen to use ‘priority’ rather than ‘precedence’ here,
+   because I think it's a clearer phrase to use.
+.. QUESTION: Could priority and associativity be made clear
+   as part of the hypothetical ‘show invisibles’ feature,
+   to show the invisible parentheses implied by priority and associativity?
 
 It is important to consider each operator's *priority* and *associativity* when working out how to calculate a compound expression.
 These two principles are used to work out the order in which an expression should be calculated.

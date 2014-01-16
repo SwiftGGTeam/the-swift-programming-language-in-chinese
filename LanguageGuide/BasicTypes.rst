@@ -54,7 +54,8 @@ These are introduced below, and are discussed in more detail in :doc:`Strings`.
 Declaring and Naming Variables
 ------------------------------
 
-.. QUESTION: Do we need to have introduced the REPL (or some other learning environment) before starting this section?
+.. QUESTION: Do we need to have introduced the REPL
+   (or some other learning environment) before starting this section?
 
 All variables in Swift must be declared before they are used.
 Here's a simple variable declaration:
@@ -121,7 +122,8 @@ to see its current value:
     (swift) println(friendlyWelcome)
     >>> 👋, 🌎
 
-.. NOTE: this is a deliberately simplistic description of what you can do with println(). It will be expanded later on.
+.. NOTE: this is a deliberately simplistic description of what you can do with println().
+   It will be expanded later on.
 
 Integers
 --------
@@ -396,7 +398,8 @@ Extending existing types to accept new types
 (including your own type definitions) as initializers
 is covered in :doc:`ProtocolsAndExtensions`.
 
-.. TODO: add a note that this is not traditional type-casting, and perhaps include a forward reference to the objects chapter.
+.. TODO: add a note that this is not traditional type-casting,
+   and perhaps include a forward reference to the objects chapter.
 
 Integer to Floating-Point Conversion
 ____________________________________
@@ -421,9 +424,14 @@ where the literal value ``3`` was added to the literal value ``0.14159`` –
 because number literals do not have an explicit type in and of themselves.
 Their type is only inferred at the point that they are evaluated by the compiler.
 
-.. TODO: the return type of pi here is inferred as Float64, but it should really be inferred as Double. This is due to rdar://15211554 . This code sample should be updated once the issue is fixed.
+.. TODO: the return type of pi here is inferred as Float64,
+   but it should really be inferred as Double.
+   This is due to rdar://15211554.
+   This code sample should be updated once the issue is fixed.
 
-.. NOTE: this section on explicit conversions could be included in the Operators section. I think it's more appropriate here, however, and helps to reinforce the ‘just use Int’ message.
+.. NOTE: this section on explicit conversions could be included in the Operators section.
+   I think it's more appropriate here, however,
+   and helps to reinforce the ‘just use Int’ message.
 
 Numeric Bounds
 ~~~~~~~~~~~~~~
@@ -618,7 +626,8 @@ and a second value that is ``"Moved Permanently"``).”
 Initializer syntax is also used when creating struct and object instances,
 and is described in more detail in :doc:`ClassesObjectsAndStructs`.
 
-.. QUESTION: Which is the preferred initialization syntax? Should we even give people the option?
+.. QUESTION: Which is the preferred initialization syntax?
+   Should we even give people the option?
 .. QUESTION: Is this too early to introduce the concept of the default initializer?
 
 Optionals

@@ -224,7 +224,10 @@ the current value of ``variableName`` will be inserted in place
 when the string is printed by the ``println`` function.
 (String interpolation is covered in more detail in :doc:`Strings`.)
 
-.. TODO: Going by the Swift Language Reference Manual, it should be possible to name the members of the enum tuples above. However, this isn't currently working (see rdar://15238803). The example above should be updated if this is fixed.
+.. TODO: Going by the Swift Language Reference Manual,
+   it should be possible to name the members of the enum tuples above.
+   However, this isn't currently working (see rdar://15238803).
+   The example above should be updated if this is fixed.
 
 Raw Values
 ~~~~~~~~~~

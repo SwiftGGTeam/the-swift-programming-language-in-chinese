@@ -240,7 +240,10 @@ A while loop is appropriate in this case
 because the length of the input name is not known at the start of the while loop.
 Instead, the loop is executed until a particular condition is satisfied.
 
-.. NOTE: this example cannot be run in the REPL, due to the fact that it is reliant on keyboard input. I have yet to come up with a better example where ‘while’ is the right kind of loop to use, however. (I'm trying to avoid any examples where the number of iterations is known at the start of the loop.)
+.. NOTE: this example cannot be run in the REPL,
+   due to the fact that it is reliant on keyboard input.
+   I have yet to come up with a better example where ‘while’ is the right kind of loop to use, however.
+   (I'm trying to avoid any examples where the number of iterations is known at the start of the loop.)
 
 Do While
 ________
@@ -325,7 +328,8 @@ you must declare ``index`` before the loop's scope begins:
     (swift) println("The loop statements were executed \(index) times")
     >>> The loop statements were executed 3 times
 
-.. TODO: We shouldn't need to initialize index to 0 on the first line of this example, but variables can't currently be used unitialized in the REPL.
+.. TODO: We shouldn't need to initialize index to 0 on the first line of this example,
+   but variables can't currently be used unitialized in the REPL.
 
 Note that the final value of ``index`` after completing this loop is ``3``, not ``2``.
 The last time the increment statement ``++index`` is called,
@@ -538,7 +542,8 @@ for brevity:
     }
     >>> The integer value of 三 is 3.
 
-.. TODO: The initialization of integerValue can be removed once the REPL supports uninitialized variables.
+.. TODO: The initialization of integerValue can be removed
+  once the REPL supports uninitialized variables.
 
 This example checks ``numberSymbol`` to see if it is
 a Latin, Arabic, Chinese or Thai symbol for
@@ -662,7 +667,8 @@ to provide a natural-language count for numbers of any size:
     (swift) println("There are \(naturalCount) \(countedThings).")
     >>> There are lots and lots of stars in the Milky Way.
 
-.. TODO: change these ranges to be closed ranges rather than half-closed ranges once rdar://14586400 is implemented.
+.. TODO: change these ranges to be closed ranges rather than half-closed ranges
+   once rdar://14586400 is implemented.
 .. TODO: remove the initializer for naturalCount once we can declare unitialized variables in the REPL.
 
 Tuples
@@ -787,8 +793,15 @@ but does *not* provide a ``where`` clause to filter them.
 As a result, it matches all possible remaining values,
 and a default block is not needed to make the switch statement exhaustive.
 
-.. QUESTION: This example is not self-contained, in that it uses the same declared variable (point) as the previous example. This is primarily to keep the variable name readable within the println string interpolation. Is this okay? Should it be changed so that it is self-contained?
-.. QUESTION: These examples do not name their tuple elements, to avoid confusion between their likely element names of x and y, and the appropriate names for the where variables (also x and y). Is this the right approach, or should we be advising named tuple elements in all cases?
+.. QUESTION: This example is not self-contained,
+   in that it uses the same declared variable (point) as the previous example.
+   This is primarily to keep the variable name readable within the println string interpolation.
+   Is this okay? Should it be changed so that it is self-contained?
+.. QUESTION: These examples do not name their tuple elements,
+   to avoid confusion between their likely element names of x and y,
+   and the appropriate names for the where variables (also x and y).
+   Is this the right approach,
+   or should we be advising named tuple elements in all cases?
 
 .. refnote:: References
 

@@ -311,7 +311,8 @@ it is best to place any parameters with default values at the end of a function 
 It is also advisable to name the values in your function calls whenever a function takes more than one parameter,
 to ensure that your intentions are clearly expressed in your code.
 
-.. QUESTION: how does this advice overlap with the principle of putting variadic parameters last,
+.. QUESTION: how does this advice overlap with
+   the principle of putting variadic parameters last,
    and also the principle of putting closure parameters last?
 
 Non-Mandatory Parameters and Return Values
