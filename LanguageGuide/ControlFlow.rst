@@ -504,9 +504,9 @@ and so no message is printed.
 Switch
 ~~~~~~
 
-The :doc:`BasicTypes` section showed how switch statements can be used to consider the values of an enumeration.
-Switch statements aren't just confined to enumerations, however –
-in Swift, they can be used to match any type of value at all.
+Switch statements consider several possible values of the same type,
+and execute different code depending on the value that is matched.
+They provide an alternative approach to the ``if else`` statement for responding to multiple states.
 
 The following example matches a ``UnicodeScalar``,
 and determines if it represents a number symbol in one of four languages.
@@ -560,8 +560,13 @@ which has been confirmed to exist by the previous line of code.
 
 Switch statements must be exhaustive.
 This means that every possible input value must be matched by one of the cases in the switch statement.
-However, it is not practical to list every single possible ``UnicodeScalar`` value,
-and so the ``default`` keyword is used
+If it is not appropriate to provide a case statement for every possible value,
+you can define a default catch-all case to cover any values that are not addressed explicitly.
+The default catch-all case should always appear last,
+as in the example above.
+
+It is not practical to list every single possible ``UnicodeScalar`` value,
+and so the ``default`` keyword is used here
 to provide a catch-all case for any characters that have not already been matched.
 This also provides a handy opportunity to set the optional integer value to ``.None``,
 to indicate that no match was found.
@@ -569,9 +574,12 @@ to indicate that no match was found.
 Fallthrough
 ___________
 
-Unlike C,
-switch statements in Swift do not ‘fall through’ the bottom of each case and into the next one.
-This leads to shorter, clearer code,
+Switch statements in Swift do not ‘fall through’ the bottom of each case and into the next one.
+Instead, the entire switch statement completes its execution as soon as the first matching case is completed.
+This is different from C,
+which requires you to insert an explicit ``break`` statement at the end of every case to prevent fall-through.
+Avoiding default fall-through means that Swift switch statements are
+much more concise and predictable than their counterparts in C,
 and avoids executing multiple cases by mistake.
 
 If you want to opt in to C-style fallthrough behavior,

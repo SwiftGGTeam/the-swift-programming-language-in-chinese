@@ -8,6 +8,7 @@ Language Guide
     Operators
     Strings
     ControlFlow
+    Enumerations
     FunctionsAndClosures
     ClassesObjectsAndStructs
     ProtocolsAndExtensions
