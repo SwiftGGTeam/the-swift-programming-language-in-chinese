@@ -132,7 +132,7 @@ This is why the case statement compares ``letter`` against ``UnicodeScalar`` val
 (with single quote marks)
 rather than ``String`` values.
 
-Note that the code above calls the ``continue`` keywoprd whenever it matches a vowel or a space.
+Note that the code above calls the ``continue`` keyword whenever it matches a vowel or a space.
 ``continue`` is a special control flow keyword that causes the current iteration of the loop to end immediately
 and jump straight to the start of the next iteration.
 It enables the switch block to match (and ignore) just these six special characters,
