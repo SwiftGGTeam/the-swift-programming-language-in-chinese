@@ -23,8 +23,7 @@ Patterns
     pattern --> expression-pattern type-specifier-OPT
     pattern --> enumerator-pattern
     pattern --> tuple-pattern type-specifier-OPT
-
-
+    pattern-list --> pattern | pattern ``,`` pattern-list
 
 .. TODO: In prose, discuss the meaning of the explicit type.
     The optional type specifier contrains a pattern to

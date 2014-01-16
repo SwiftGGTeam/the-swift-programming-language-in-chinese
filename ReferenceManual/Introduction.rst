@@ -1,6 +1,8 @@
 Introduction
 ============
 
+[The content of this chapter is still being written.]
+
 This part of the book describes the grammar of the Swift programming language.
 
 Notational Conventions
