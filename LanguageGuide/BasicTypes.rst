@@ -133,21 +133,15 @@ to see its current value:
 
 .. NOTE: this is a deliberately simplistic description of what you can do with println(). It will be expanded later on.
 
-Numbers
--------
+Integers
+--------
 
-Swift supports two fundamental types of number:
-:term:`integers`, and :term:`floating-point numbers`.
-Swift provides integers in :term:`signed and unsigned` forms at
+Swift provides :term:`integers` in :term:`signed and unsigned` forms at
 8, 16, 32 and 64-bit sizes.
-It also provides signed floating-point numbers in
-32 and 64-bit sizes.
-These basic numeric types follow a similar naming convention to C,
+These integers follow a similar naming convention to C,
 in that an 8-bit unsigned integer is a ``UInt8``,
-a 32-bit signed integer is an ``Int32``,
-and a signed 64-bit floating-point number is a ``Float64``.
-Like all types in Swift, these basic numeric types have capitalized names.
-(A complete list of numeric types can be found in the :doc:`../ReferenceManual/index`.)
+and a 32-bit signed integer is an ``Int32``.
+Like all types in Swift, these integer types have capitalized names.
 
 .. glossary::
 
@@ -155,29 +149,43 @@ Like all types in Swift, these basic numeric types have capitalized names.
         An integer is a whole number with no fractional component
         (such as ``42``, ``0`` and ``-23``).
 
-    floating-point numbers
-        A floating-point number (also known as a float) is a number with a fractional component
-        (such as ``3.14159``, ``0.1`` or ``-273.15``).
-
     signed and unsigned
         Signed values can be positive or negative.
         Unsigned values can only be positive.
 
-In most cases, there's no need to pick a specific size of integer or floating-point number to use in your code.
-Swift provides three standard number types:
+In most cases, there's no need to pick a specific size of integer to use in your code.
+Swift provides an additional integer type, ``Int``,
+which has the same size as the current platform's architecture:
 
-* ``Int``, which is the same as ``Int64``,
-  and should be used for general integer values
-* ``Float``, which is the same as ``Float32``,
-  and should be used when floating-point values do not require 64-bit precision
-* ``Double``, which is the same as ``Float64``,
+* On a 32-bit platform, ``Int`` is the same size as ``Int32``
+* On a 64-bit platform, ``Int`` is the same size as ``Int64``
+
+Unless you need to work with a specific size of integer,
+you should always use ``Int`` for code consistency and interoperability.
+Even on 32-bit platforms, ``Int`` can store any value between ``-2,147,483,648`` and ``2,147,483,647``,
+and is typically large enough for everyday integer values.
+
+.. admonition:: Note
+
+    Swift's ``Int`` type will have a platform-specific size, as described above.
+    However, this has yet to be implemented.
+    In the meantime, ``Int`` is a typealias for ``Int64`` on both 32 and 64-bit platforms.
+
+Floating-Point Numbers
+----------------------
+
+Swift provides two signed :term:`floating-point number` types:
+
+* ``Double``, which represents a 64-bit floating-point number,
   and should be used when floating-point values need to be very large or particularly precise
+* ``Float``, which represents a 32-bit floating point number,
+  and should be used when floating-point values do not require 64-bit precision
 
-Unless you need to work with a specific size of integer or floating-point number,
-you should always use ``Int``, ``Float`` or ``Double`` for code consistency and interoperability.
+.. glossary::
 
-.. TODO: At some point, Int will change to become a typealias for Int32 or Int64
-   based on the current platform. This advice will need updating to match.
+    floating-point number
+        A floating-point number (also known as a float) is a number with a fractional component
+        (such as ``3.14159``, ``0.1`` or ``-273.15``).
 
 Strong Typing and Type Inference
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
