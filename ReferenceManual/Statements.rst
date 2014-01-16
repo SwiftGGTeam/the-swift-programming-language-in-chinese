@@ -445,12 +445,11 @@ Break Statement
 ~~~~~~~~~~~~~~~
 
 A break statement consists simply of the ``break`` keyword
-and may occur only in the context of a loop statement
-(for statement, for-each statement, while statement, and do-while statement).
-A break statement ends program execution of the smallest enclosing loop statement in which it occurs.
+and may occur only in the context of a looping statement.
+A break statement ends program execution of the smallest enclosing looping statement in which it occurs.
 Program control is then transferred to the first line of code following the enclosing
-loop statement, if any.
-For an example of how to use a break statement in the context of a loop statement,
+looping statement, if any.
+For an example of how to use a break statement in the context of a looping statement,
 see “Loop Control Statements” in the :doc:`../LanguageGuide/ControlFlow` chapter of the :doc:`../LanguageGuide/index`.
 
 .. langref-grammar
@@ -468,19 +467,18 @@ Continue Statement
 ~~~~~~~~~~~~~~~~~~
 
 A continue statement consists of the ``continue`` keyword, and like a break statement,
-may occur only in the context of a loop statement
-(C-style for statement, for-each statement, while statement, and do-while statement).
+may occur only in the context of a looping statement.
 Unlike a break statement,
 a continue statement ends only the program execution of the *current iteration*
-of the smallest enclosing loop statement in which it occurs.
+of the smallest enclosing looping statement in which it occurs.
 Any remaining code in the body of the loop is not executed.
-Program control is then transferred to the controlling expression of the enclosing loop statement.
+Program control is then transferred to the controlling expression of the enclosing looping statement.
 
-In a C-style for loop,
+In a C-style for statement,
 the increment expression is still evaluated after the continue statement is executed,
 because the increment expression is evaluated after the execution of the loop's body.
 
-For an example of how to use a continue statement in the context of a loop statement,
+For an example of how to use a continue statement in the context of a looping statement,
 see “Loop Control Statements”
 in the :doc:`../LanguageGuide/ControlFlow` chapter of the :doc:`../LanguageGuide/index`.
 
