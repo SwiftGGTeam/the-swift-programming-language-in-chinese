@@ -147,7 +147,7 @@ and therefore must evaluate to either ``true`` or ``false``.
     c-style-for-statement --> ``for`` for-init-OPT ``;`` expression-OPT ``;`` expression-OPT code-block
     c-style-for-statement --> ``for`` ``(`` for-init-OPT ``;`` expression-OPT ``;`` expression-OPT ``)`` code-block
 
-    for-init --> variable-declaration | expression
+    for-init --> variable-declaration | expression-list
 
 
 For-Each Statement
