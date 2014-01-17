@@ -288,8 +288,8 @@ where the ``else`` part is optional.
 
     Grammar of an if statement
 
-    if-statement  --> ``if`` expression code-block if-else-statement-OPT
-    if-else-statement  --> ``else`` code-block | ``else`` if-statement
+    if-statement  --> ``if`` expression code-block else-statement-OPT
+    else-statement  --> ``else`` code-block | ``else`` if-statement
 
 
 Switch Statements
