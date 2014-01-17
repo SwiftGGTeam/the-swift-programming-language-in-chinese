@@ -122,15 +122,15 @@ you can define a default catch-all case to cover any members that are not addres
 
 Switch statements are covered in more detail in :doc:`ControlFlow`.
 
-Enumerations with Associated Values
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Associated Values
+~~~~~~~~~~~~~~~~~
 
 The examples above show how the members of an enumeration are
 a defined (and typed) value in their own right.
 You can set a named value to ``Planet.Earth``,
 and check for this value later.
 However, it can sometimes be useful for enumeration members to also store
-*associated* values of other types alongside their own.
+*associated values* of other types alongside their own.
 
 Swift enumerations can be defined to store an associated value of any given type,
 and this type can be different for each member of the enumeration if needed.
@@ -232,10 +232,10 @@ Raw Values
 ~~~~~~~~~~
 
 The barcode example above shows how members of an enumeration can declare that they store
-*associated* values of different types.
+associated values of different types.
 In addition to associated values,
 enumerations can also come pre-populated with default values (called *raw values*),
-which are all of the *same* type.
+which are all of the same type.
 
 Here's an example that stores raw ASCII values alongside named enumeration members:
 
@@ -252,7 +252,7 @@ are declared to be of type ``UnicodeScalar``,
 and are set to some of the more common ASCII control characters.
 (``UnicodeScalar`` values are described in more detail in :doc:`Strings`.)
 
-Noe that raw values are *not* the same as associated values.
+Note that raw values are *not* the same as associated values.
 Raw values are set to pre-populated values when the enum is first defined in your code,
 like the three ASCII codes above.
 Associated values are only set when you create a new constant or variable
