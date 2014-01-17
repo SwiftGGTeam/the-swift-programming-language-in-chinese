@@ -27,7 +27,7 @@ It also introduces new operators not found in other languages.
 In addition, you can define your own implementations of the standard operators –
 and create new ones –
 for any custom types you define.
-This process is covered in detail in :doc:`ClassesObjectsAndStructs`.
+This process is covered in detail in :doc:`ClassesAndStructs`.
 
 Operators are often referred to as *unary*, *binary* or *ternary*:
 
@@ -328,7 +328,7 @@ to check if values are identical:
 * Not identical to (``a !== b``)
 
 These *identity operators* are used to test if two object named values both refer to the same object instance.
-They are described in :doc:`ClassesObjectsAndStructs`.
+They are described in :doc:`ClassesAndStructs`.
 
 Each of the comparison operators returns a ``Bool`` value to indicate whether or not the statement is true:
 

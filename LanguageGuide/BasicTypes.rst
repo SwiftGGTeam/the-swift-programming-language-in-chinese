@@ -634,7 +634,7 @@ and set it to a new ``HTTPStatus`` initialized with
 and a second value that is ``"Moved Permanently"``).”
 
 Initializer syntax is also used when creating struct and object instances,
-and is described in more detail in :doc:`ClassesObjectsAndStructs`.
+and is described in more detail in :doc:`ClassesAndStructs`.
 
 .. QUESTION: Which is the preferred initialization syntax?
    Should we even give people the option?
