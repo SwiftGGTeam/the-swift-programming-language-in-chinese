@@ -169,22 +169,17 @@ and attempting to do so will result in an error:
 Integers
 --------
 
-Swift provides :term:`integers` in :term:`signed and unsigned` forms at
+*Integers* are whole numbers with no fractional component,
+such as ``42``, ``0`` and ``-23``.
+Integers are either *signed* (which means they can be positive or negative),
+or *unsigned* (which means they can only be positive).
+
+Swift provides integers in signed and unsigned forms at
 8, 16, 32 and 64-bit sizes.
 These integers follow a similar naming convention to C,
 in that an 8-bit unsigned integer is a ``UInt8``,
 and a 32-bit signed integer is an ``Int32``.
 Like all types in Swift, these integer types have capitalized names.
-
-.. glossary::
-
-    integers
-        An integer is a whole number with no fractional component
-        (such as ``42``, ``0`` and ``-23``).
-
-    signed and unsigned
-        Signed values can be positive or negative.
-        Unsigned values can only be positive.
 
 In most cases, there's no need to pick a specific size of integer to use in your code.
 Swift provides an additional integer type, ``Int``,
@@ -209,18 +204,15 @@ and is typically large enough for everyday integer values.
 Floating-Point Numbers
 ----------------------
 
-Swift provides two signed :term:`floating-point number` types:
+*Floating-point numbers* (also known as *floats*) are numbers with a fractional component,
+such as ``3.14159``, ``0.1`` and ``-273.15``.
+
+Swift provides two signed floating-point number types:
 
 * ``Double``, which represents a 64-bit floating-point number,
   and should be used when floating-point values need to be very large or particularly precise
 * ``Float``, which represents a 32-bit floating point number,
   and should be used when floating-point values do not require 64-bit precision
-
-.. glossary::
-
-    floating-point number
-        A floating-point number (also known as a float) is a number with a fractional component
-        (such as ``3.14159``, ``0.1`` or ``-273.15``).
 
 Strong Typing and Type Inference
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -235,22 +227,24 @@ it is able to perform *type checks* when compiling your code.
 Any mismatched types are flagged as errors so that you can fix them.
 
 Type-checking helps to avoid accidental errors when working with different types of value.
-However, this doesn't mean that you have to define the type of every named value you declare.
+However, this doesn't mean that you have to define the type of
+every constant and variable that you declare.
 If you don't specify the type of value you need,
 Swift will use *type inference* to work out the appropriate type.
 Type inference is the ability for a compiler to automatically deduce the type of a particular expression when it compiles your code,
 just by examining the values you provide.
 
-For example: if you assign a :term:`literal value` of ``42`` to a constant,
+Type inference is particularly useful
+when you declare a constant or variable with an initial value.
+This is often done by assigning a *literal value* (or *literal*)
+to the constant or variable at the point that you declare it.
+A literal value is a one-off value that appears directly in your source code,
+such as ``42`` and ``3.14159`` in the examples below.
+
+For example: if you assign a literal value of ``42`` to a new constant,
 without saying what type it is,
 Swift will deduce that you want the constant to be an ``Int``,
 because you have initialized it with a number that looks like an integer:
-
-.. glossary::
-
-    literal value
-        A *literal value* is a one-off value that appears directly in your source code,
-        such as ``42`` and ``3.14159`` in the examples below.
 
 .. testcode:: typeInference
 
@@ -258,7 +252,7 @@ because you have initialized it with a number that looks like an integer:
     // meaningOfLife : Int = 42
 
 Likewise, if you don't specify a type for a floating-point literal,
-Swift assumes that you want to create a ``Double`` from the floating-point value:
+Swift assumes that you want to create a ``Double``:
 
 .. testcode:: typeInference
 
@@ -287,32 +281,12 @@ but much of the work of specifying their type is done for you.
 Numeric Literals
 ~~~~~~~~~~~~~~~~
 
-Integer literals can be
-decimal (with no prefix);
-:term:`binary` (with a ``0b`` prefix);
-:term:`octal` (with a ``0o`` prefix);
-or :term:`hexadecimal` (with a ``0x`` prefix).
+Integer literals can be written as:
 
-.. glossary::
-
-    binary
-        Binary numbers are counted with two (rather than ten) basic units.
-        They only ever contain the numbers ``0`` and ``1``.
-        In binary notation,
-        ``1`` is ``0b1``, and ``2`` is ``0b10``.
-
-    octal
-        Octal numbers are counted with eight (rather than ten) basic values.
-        They only ever contain the numbers ``0`` to ``7``.
-        In octal notation,
-        ``7`` is ``0o7``, and ``8`` is ``0o10``.
-
-    hexadecimal
-        Hexadecimal numbers are counted with 16 (rather than ten) basic values.
-        They contain the numbers ``0`` to ``9``, plus the letters ``A`` through ``F``
-        (to represent base units with values of ``10`` through ``15``).
-        In hexadecimal notation,
-        ``9`` is ``0x9``, ``10`` is ``0xA``, ``15`` is ``0xF``, and ``16`` is ``0x10``.
+* a *decimal* number, with no prefix
+* a *binary* number, with a ``0b`` prefix
+* an *octal* number, with a ``0o`` prefix, or
+* a *hexadecimal* number, with a ``0x`` prefix
 
 All of these integer literals have a decimal value of ``17``:
 
@@ -494,14 +468,9 @@ and can therefore be used in expressions alongside other values of the same type
 Booleans
 --------
 
-Swift has a basic :term:`boolean` type, called ``Bool``.
-Values of type ``Bool`` can be either ``true`` or ``false``:
-
-.. glossary::
-
-    boolean
-        A data type is said to be ‘boolean’ if it can only ever have one of two values:
-        true or false.
+Swift has a basic *boolean* type, called ``Bool``.
+Booleans are a special kind of logical value,
+which can only ever be ``true`` or ``false``:
 
 .. testcode:: booleans
 
@@ -566,17 +535,14 @@ Here's an example of a tuple:
     (swift) let http404Error = (404, "Not Found")
     // http404Error : (Int, String) = (404, "Not Found")
 
-``(404, "Not Found")`` is a tuple that groups together an ``Int`` and a ``String`` to describe an :term:`HTTP status code`.
-It could be described as “a tuple of type ``(Int, String)``”.
+``(404, "Not Found")`` is a tuple that describes an *HTTP status code*.
+An HTTP status code is a special value returned by a web server whenever you request a web page.
+A status code of ``404 Not Found`` is returned if you request a web page that does not exist.
 
-.. glossary::
-
-    HTTP status code
-        When a web browser makes a request for a web page (such as http://www.apple.com),
-        it connects to the server and asks for a specific page.
-        The server sends back a response containing a *status code* that describes whether or not the request was successful.
-        Each status code has a number (such as ``404``) and a message (such as ``Not Found``),
-        to describe the outcome of the request.
+The ``(404, "Not Found")`` tuple groups together an ``Int`` and a ``String``
+to give the HTTP status code two separate values:
+a number, and a human-readable description.
+It can be described as “a tuple of type ``(Int, String)``”.
 
 You can create tuples from whatever permutation of types you like,
 and they can contain as many different types as you like.
@@ -605,8 +571,8 @@ Type Aliases
 ~~~~~~~~~~~~
 
 If you find yourself using a particular type of tuple several times,
-you can define a type alias as shorthand for that tuple type.
-Here's how to define a generic tuple type to describe any HTTP status code:
+you can define a *type alias* as shorthand for that tuple type.
+Here's how to define a generic tuple type alias to describe any HTTP status code:
 
 .. testcode:: tuples
 
@@ -624,7 +590,7 @@ This is different from the name ``http404Error``,
 which starts with a lowercase letter,
 and capitalizes sub-words within the name.
 Type names should always be in ``UpperCamelCase``,
-abd constant and variable names should always be in ``lowerCamelCase``,
+and constant and variable names should always be in ``lowerCamelCase``,
 for consistency and readability.
 
 This new type alias doesn't set a value for the status code or description.

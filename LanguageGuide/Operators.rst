@@ -13,23 +13,21 @@
 Operators
 =========
 
-Swift supports all of the standard :term:`operators` from C.
+An *operator* is a special symbol or phrase that is used to check or change values.
+A simple example is the *addition operator*, ``+``,
+which is used to add two numbers together (as in ``let i = 1 + 2``).
+More complex examples include the *logical AND operator* ``&&``
+(as in ``if enteredDoorCode && passedRetinaScan``),
+or the *integer increment operator* ``++i``,
+which gives a shorthand way to increase the value of ``i`` by ``1``.
+All of these operators are explained in more detail below.
+
+Swift supports all of the standard operators from C.
 It also introduces new operators not found in other languages.
 In addition, you can define your own implementations of the standard operators –
 and create new ones –
 for any custom types you define.
 This process is covered in detail in :doc:`ClassesObjectsAndStructs`.
-
-.. glossary ::
-
-    operators
-        An *operator* is a special symbol or phrase that is used to check or change values.
-        A simple example is the *addition* operator, ``+``,
-        which is used to add two numbers together (``var i = 2 + 3``).
-        More complex examples include comparison operators such as the *and* operator ``&&``
-        (``if someBoolValue && someOtherBoolValue {...}``),
-        or the *integer increment* operator ``++i``.
-        All of these are explained in more detail below.
 
 Operators are often referred to as *unary*, *binary* or *ternary*:
 
@@ -49,7 +47,7 @@ and its two operands are the values ``1`` and ``2``.
 Assignment Operator
 -------------------
 
-The assignment operator (``a = b``) updates the value of ``a`` with the value of ``b``:
+The *assignment operator* (``a = b``) updates the value of ``a`` with the value of ``b``:
 
 .. testcode:: assignmentOperator
 
@@ -89,9 +87,12 @@ Swift makes it much easier to avoid these kinds of errors in your code.
 Arithmetic Operators
 --------------------
 
-Swift supports the four standard mathematical operators –
-addition (``+``), subtraction (``-``), multiplication (``*``) and division (``/``) –
-for all number types:
+Swift supports the four standard *arithmetic operators* for all number types:
+
+* addition (``+``)
+* subtraction (``-``)
+* multiplication (``*``)
+* division (``/``)
 
 .. testcode:: arithmeticOperators
 
@@ -199,8 +200,9 @@ so the remainder operator returns a ``Double`` value of ``0.5``.
 Integer Increment and Decrement
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Like C, Swift provides ``++`` and ``--`` operators as shorthand
-for increasing or decreasing an integer variable by ``1``.
+Like C, Swift provides an *integer increment operator* (``++``)
+and an *integer decrement operator* (``--``)
+as a shorthand way to increase or decrease the value of an integer variable by ``1``.
 For example:
 
 .. testcode:: arithmeticOperators
@@ -259,21 +261,22 @@ and then providing the result.
 Unary Plus and Minus
 ~~~~~~~~~~~~~~~~~~~~
 
-The sign of a numeric value can be toggled using a prefixed ``-`` (known as *unary minus*):
+The sign of a numeric value can be toggled using a prefixed ``-``,
+known as the *unary minus operator*:
 
 .. testcode:: arithmeticOperators
 
-    (swift) let minusThree = -3
+    (swift) let three = 3
+    // three : Int = 3
+    (swift) let minusThree = -three
     // minusThree : Int = -3
-    (swift) let plusThree = -minusThree         // effectively "minus minus three"
+    (swift) let plusThree = -minusThree    // effectively "minus minus three"
     // plusThree : Int = 3
-    (swift) let anotherMinusThree = -plusThree
-    // anotherMinusThree : Int = -3
 
 The unary minus operator ``-`` is prepended directly before the value it operates on,
 without any whitespace.
 
-There is a corresponding *unary plus* operator, ``+``,
+There is a corresponding *unary plus operator*, ``+``,
 which simply returns the value it operates on, without any change:
 
 .. testcode:: arithmeticOperators
@@ -289,8 +292,8 @@ However, it can be used to provide symmetry in your code when also using the una
 Compound Assignment Operators
 -----------------------------
 
-Like C, Swift provides shorthand operators that combine *assignment* (``=``) with another operation.
-One example is the *addition assignment* operator (``+=``):
+Like C, Swift provides shorthand operators that combine assignment (``=``) with another operation.
+One example is the *addition assignment operator* (``+=``):
 
 .. testcode:: compoundAssignment
 
@@ -309,7 +312,7 @@ A complete list of compound assignment operators can be found in the :doc:`../Re
 Comparison Operators
 --------------------
 
-Swift supports all of the standard C comparison operators:
+Swift supports all of the standard C *comparison operators*:
 
 * Equal to (``a == b``)
 * Not equal to (``a != b``)
@@ -325,7 +328,7 @@ to check if values are identical:
 * Not identical to (``a !== b``)
 
 These *identity operators* are used to test if two object named values both refer to the same object instance.
-They are described in detail in :doc:`ClassesObjectsAndStructs`.
+They are described in :doc:`ClassesObjectsAndStructs`.
 
 Each of the comparison operators returns a ``Bool`` value to indicate whether or not the statement is true:
 
@@ -367,7 +370,7 @@ The ``if else`` statement is described in more detail in :doc:`ControlFlow`.
 Ternary Comparison Operator
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The ternary comparison operator is a special operator with three parts,
+The *ternary comparison operator* is a special operator with three parts,
 which takes the form ``question ? answer1 : answer2``.
 It provides a shorthand way to evaluate one of two expressions
 based on whether ``question`` is ``true`` or ``false``.
@@ -424,7 +427,8 @@ This is shorthand for:
    but in the second example, it's a variable (because it has to be).
    Is this okay?
 
-In this case, the ternary comparison operator provides an efficient shorthand for deciding which of two expressions to consider.
+In this case, the ternary comparison operator provides
+an efficient shorthand for deciding which of two expressions to consider.
 
 The ternary comparison operator should be used with care, however.
 It is very concise, but this conciseness can lead to hard-to-read code if over-used.
@@ -433,10 +437,10 @@ Avoid combining multiple instances of the ternary comparison operator into one c
 Bitwise Operators
 -----------------
 
-Bitwise operators enable you to manipulate the individual raw data bits within a data structure.
+*Bitwise operators* enable you to manipulate the individual raw data bits within a data structure.
 They are often used in low-level programming,
-including graphics programming and device driver creation.
-They may also be useful when working with raw data from external sources,
+such as graphics programming and device driver creation.
+They can also be useful when working with raw data from external sources,
 integrating with electronics hardware,
 and when encoding and decoding data for communication via a custom protocol.
 
@@ -445,7 +449,7 @@ Swift supports all of the bitwise operators found in C, as described below.
 Bitwise NOT
 ~~~~~~~~~~~
 
-The bitwise NOT operator (``~``) inverts all of the bits in a number:
+The *bitwise NOT operator* (``~``) inverts all of the bits in a number:
 
 .. image:: ../images/bitwiseNOT.png
     :width: 570
@@ -477,7 +481,7 @@ which is equal to an unsigned decimal value of ``240``.
 Bitwise AND
 ~~~~~~~~~~~
 
-The bitwise AND operator (``&``) combines the bits of two numbers.
+The *bitwise AND operator* (``&``) combines the bits of two numbers.
 It returns a new number whose bits are only set to ``1`` if the bits were equal to ``1`` in *both* input numbers:
 
 .. image:: ../images/bitwiseAND.png
@@ -502,7 +506,7 @@ which is equal to an unsigned decimal value of ``60``.
 Bitwise OR
 ~~~~~~~~~~
 
-The bitwise OR operator (``|``) compares the bits of two numbers,
+The *bitwise OR operator* (``|``) compares the bits of two numbers,
 and returns a new number whose bits are set to ``1`` if the bits were equal to ``1`` in *either* of the input numbers:
 
 .. image:: ../images/bitwiseOR.png
@@ -527,7 +531,7 @@ which equals an unsigned decimal of ``254``.
 Bitwise XOR
 ~~~~~~~~~~~
 
-The bitwise :term:`XOR` operator (``^``) compares the bits of two numbers,
+The *bitwise XOR operator* (``^``) compares the bits of two numbers,
 and returns a new number whose bits are set to ``1`` if the bits are equal to ``1`` in *either* of the input numbers,
 but not if they are set to ``1`` in *both* of the input numbers:
 
@@ -556,7 +560,7 @@ For example:
 Bitwise Left and Right Shifts
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The bitwise left shift operator (``<<``) and right shift operator (``>>``)
+The *bitwise left shift operator* (``<<``) and *bitwise right shift operator* (``>>``)
 move all of the bits in a number to the left or the right by a certain number of places,
 as per the rules defined below.
 
@@ -850,7 +854,7 @@ The end result of the overflow and underflow behavior described above is that fo
 overflow always wraps around from the largest valid integer value back to the smallest,
 and underflow always wraps around from the smallest value to the largest.
 
-Division by zero
+Division by Zero
 ~~~~~~~~~~~~~~~~
 
 If you divide a number by zero,
@@ -881,7 +885,7 @@ Logical Operators
 Logical NOT
 ~~~~~~~~~~~
 
-The NOT operator (``!a``) inverts a boolean value so that ``true`` becomes ``false``,
+The *logical NOT operator* (``!a``) inverts a boolean value so that ``true`` becomes ``false``,
 and ``false`` becomes ``true``.
 It can be read as “not ``a``”, as seen in the following example:
 
@@ -906,7 +910,7 @@ while avoiding double negatives or confusing logic statements.
 Logical AND
 ~~~~~~~~~~~
 
-The AND operator (``&&``) is used to create logical expressions
+The *logical AND operator* (``&&``) is used to create logical expressions
 where both values must be ``true`` for the overall expression to also be ``true``.
 
 This example considers two ``Bool`` values,
@@ -936,7 +940,7 @@ This is known as *short-circuit evaluation*.
 Logical OR
 ~~~~~~~~~~
 
-The OR operator (``||``, i.e. two adjacent pipe characters)
+The *logical OR operator* (``||``, i.e. two adjacent pipe characters)
 is used to create logical expressions where only *one* of the two values has to be ``true``
 for the overall expression to be ``true``.
 For example:
