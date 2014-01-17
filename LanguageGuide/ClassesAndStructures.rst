@@ -58,7 +58,7 @@ Defining Classes and Structures
 Unlike other programming languages,
 Swift does not require you to create separate interface and implementation files
 for your classes and structures.
-In Swift, you simply define a class or a structure in a single file,
+In Swift, you define a class or a structure in a single file,
 and the external interface to that class or structure is
 automatically made available for other code to use.
 
@@ -376,9 +376,9 @@ Properties
 Classes and structures can both declare *properties*.
 Properties are used to store and pass around any values associated with
 a particular object or struct.
-As with standard named values,
-properties can be either *constant properties*,
-or *variable properties*.
+
+.. TODO: Note that properties can be either constant or variable,
+   as with named values (let and var).
 
 Stored Properties
 ~~~~~~~~~~~~~~~~~
