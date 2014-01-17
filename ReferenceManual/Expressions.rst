@@ -17,6 +17,7 @@ Expressions
 
     expression --> expression-sequence expression-cast-OPT
     expression-sequence --> unary-expression binary-expressions-OPT
+    expression-list --> expression | expression ``,`` expression-list
 
 .. TR: A trailing-closure-expression seems to be allowed only in the context of function calling.
     As a result, there's no need to have it at the top level of the expression grammar.
