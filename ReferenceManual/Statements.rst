@@ -215,6 +215,9 @@ A while statement is executed as follows:
 2. The program executes the code inside the braces of the while statement,
    and execution returns to step 1.
 
+Because the value of the *condition* expression is evaluated before the code block is executed,
+the code block in a while statement may be executed zero or more times.
+
 The value of the *condition* expression must be of type ``Bool``,
 and therefore must evaluate to either ``true`` or ``false``.
 
