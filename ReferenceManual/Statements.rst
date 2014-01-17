@@ -195,7 +195,7 @@ and it is finished executing the statement.
 While Statement
 ~~~~~~~~~~~~~~~
 
-While statements allow a block of code to be executed zero or more times,
+While statements allow a block of code to be executed repeatedly,
 as long as a condition remains true.
 
 A while statement has the following general form:
@@ -206,9 +206,23 @@ A while statement has the following general form:
         <#code to execute#>
     }
 
-When a while loop is executed,
-it begins by evaluating the conditional.
-If it evaluates to ``true``, the program executes the code block
+A while statement is executed as follows:
+
+1. The *condition* expression is evaluated.
+   If it evaluates to ``true``, execution continues to step 2.
+   If it evaluates to ``false``, the program is finished executing the while statement.
+
+2. The program executes the code inside the braces of the while statement,
+   and execution returns to step 1.
+
+The value of the *condition* expression must be of type ``Bool``,
+and therefore must evaluate to either ``true`` or ``false``.
+
+
+When a while statement is executed,
+the *condition* expression is first evaluated.
+If the *condition* expression evaluates to ``true``,
+the program executes the code block
 and then continues execution at the beginning of the while statement.
 Otherwise, the program is finished executing the statement.
 
