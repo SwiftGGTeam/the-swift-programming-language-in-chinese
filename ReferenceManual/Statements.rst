@@ -15,24 +15,10 @@ Statements
 
     Grammar of a statement
 
-    statement --> semicolon-statement
     statement --> looping-statement
     statement --> branching-statement
     statement --> control-transfer-statement
-
-
-Semicolon Statement
--------------------
-
-.. langref-grammar
-
-    stmt-semicolon ::= ';'
-
-.. syntax-grammar::
-
-    Grammar of a semicolon statement
-
-    semicolon-statement --> ``;``
+    statement --> semicolon-statement
 
 
 Looping Statements
@@ -556,3 +542,21 @@ before it is returned to the calling function or method.
     Grammar of a return statement
 
     return-statement --> ``return`` | ``return`` expression
+
+
+Semicolon Statement
+-------------------
+
+A semicolon statement consists simply of the semicolon (``;``)
+and may be used to separate consecutive statements that appear on the same line.
+In Swift, statements are not required to end with a semicolon.
+
+.. langref-grammar
+
+    stmt-semicolon ::= ';'
+
+.. syntax-grammar::
+
+    Grammar of a semicolon statement
+
+    semicolon-statement --> ``;``
