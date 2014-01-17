@@ -87,7 +87,7 @@ Properties are named values that are bundled up and stored
 as part of the class or structure.
 (Properties are described in more detail later in this chapter.)
 
-The example above defines a new structure type called ``Size``,
+The example above defines a new structure called ``Size``,
 which has two variable properties called ``width`` and ``height``.
 These properties are inferred to be of type ``Double``
 by setting them to an initial floating-point value of ``0.0``.
@@ -96,9 +96,9 @@ which has a variable property called ``size``.
 This property is initialized with a new ``Size`` structure instance,
 which infers a property type of ``Size``.
 
-Whenever you define a new class or structure type,
+Whenever you define a new class or structure,
 you are effectively defining a brand new Swift type.
-Custom classes and structure types should be given ``UpperCamelCase`` names
+Custom classes and structures should be given ``UpperCamelCase`` names
 (such as ``Size`` and ``Rectangle``),
 to match the capitalization of standard Swift types
 (such as ``String``, ``Int`` and ``Bool``).
@@ -127,7 +127,7 @@ The syntax for creating instances is very similar for both structures and classe
 Structures and classes both use *initializer syntax* when creating new instances.
 The simplest form of initializer syntax uses the type name of the class or structure,
 followed by empty parentheses ``()``.
-This creates a new instance of the class or structure type,
+This creates a new instance of the class or structure,
 with any properties initialized to their default values.
 In the example above,
 the ``width`` and ``height`` values of the ``Size`` structure instance
@@ -147,10 +147,10 @@ This terminology will be used from now on to refer to instances of classes.
 Wherever you see the word *object* below,
 it will refer to a single specific instance of a particular class.
 
-Instances of structure types are generally referred to simply as *structs*.
+Instances of structures are generally referred to simply as *structs*.
 The word ‘struct’ will be used from now on to refer to structure instances
 (such as ``someSize``),
-and the phrase *structure* or *structure type* will be used to refer to their type
+and the word *structure* will be used to refer to their type
 (such as ``Size``).
 
 Accessing Properties
@@ -176,8 +176,8 @@ such as the ``width`` property of a ``Rectangle``'s ``size``:
 Default Structure Initializers
 ------------------------------
 
-All structure types provide an automatically-generated *default initializer*,
-which can be used to create new structure instances of that type.
+All structures provide an automatically-generated *default initializer*,
+which can be used to create new structs of that type.
 Initial values for the properties of the new struct
 can be passed to the default initializer by name:
 
@@ -187,7 +187,7 @@ can be passed to the default initializer by name:
     // twoByTwo : Size = Size(2.0, 2.0)
 
 Initial values can also be provided without names,
-if they are listed in the same order that the properties are declared in the structure type's definition:
+if they are listed in the same order that the properties are declared in the structure's definition:
 
 .. testcode:: classAndStructDefinitionSyntax
 
@@ -333,29 +333,29 @@ and the value it contains is always a reference to a particular object instance.
    to check if two reference named values point to the same instance.
    This is currently blocked on rdar://problem/15566395 .
 
-Choosing Between Classes and Structure Types
---------------------------------------------
+Choosing Between Classes and Structures
+---------------------------------------
 
-Classes and structure types have many things in common.
+Classes and structures have many things in common.
 However, the fact that structs are always passed by value,
 and objects are always passed by reference,
 means that they are suited to different kinds of tasks.
 As you consider the data constructs and functionality that you need for a project,
 you will need to decide whether each data construct should be
-defined as a class or as a structure type.
+defined as a class or as a structure.
 
-As a general rule, you should only define a new structure type when:
+As a general rule, you should only define a new structure when:
 
-* the structure type's primary purpose is to encapsulate a few relatively simple data values
-* the structure type will not have particularly complex functionality
+* the structure's primary purpose is to encapsulate a few relatively simple data values
+* the structure will not have particularly complex functionality
   (although it may provide one or two convenience methods to work with its stored values)
 * it is reasonable to expect that the encapsulated values will be copied rather than referenced
-  when assigning or passing around an instance of that structure type
-* the values stored by the structure type are basic types and / or other structure types,
+  when assigning or passing around an instance of that structure
+* the values stored by the structure are basic types and / or other structures,
   which would also be expected to be copied rather than referenced
 * there is no need to inherit properties or behavior from some other existing type
 
-Examples of good candidates for structure types include:
+Examples of good candidates for structures include:
 
 * the size of a geometric shape
   (perhaps encapsulating a ``width`` property and a ``height`` property,
@@ -370,12 +370,12 @@ In all other cases, you should define a class,
 and create objects as instances of that class,
 to be managed and passed by reference.
 In practice, this means that most custom data constructs should be classes,
-not structure types.
+not structures.
 
 Properties
 ----------
 
-Classes and structure types can both declare *properties*.
+Classes and structures can both declare *properties*.
 Properties are used to store and pass around any values associated with
 a particular object or struct.
 As with standard named values,
@@ -401,12 +401,12 @@ that is stored as part of an object or struct:
 
 .. TODO: Should the properties here be 'constant properties' declared via 'let'?
 
-This example defines a new structure type called ``HTTPStatus``.
-This structure type encapsulates a property called ``statusCode`` (which is of type ``Int``),
+This example defines a new structure called ``HTTPStatus``.
+This structure encapsulates a property called ``statusCode`` (which is of type ``Int``),
 and a property called ``description`` (which is of type ``String``).
 
-Having defined the structure type,
-the example creates a new struct based on this type, called ``http404Error``.
+Having defined the structure,
+the example creates a new struct based on this structure, called ``http404Error``.
 This struct is initialized with a ``statusCode`` of ``404``,
 and a ``description`` of ``"Not Found"``.
 
@@ -427,7 +427,7 @@ Computed Properties
 ~~~~~~~~~~~~~~~~~~~
 
 Properties aren't restricted to simple stored values, however.
-Classes and structure types can also define *computed* properties,
+Classes and structures can also define *computed* properties,
 which do not actually store a value:
 
 .. testcode:: storedAndComputedProperties
@@ -459,13 +459,13 @@ which do not actually store a value:
     (swift) println("square origin is now at (\(square.origin.x), \(square.origin.y))")
     >>> square origin is now at (10.0, 10.0)
 
-This example defines three structure types:
+This example defines three structures:
 
 * ``Point``, which encapsulates an ``(x, y)`` co-ordinate;
 * ``Size``, which encapsulates a ``width`` and a ``height`` value; and
 * ``Rect``, which defines a rectangle in terms of an origin point and a size
 
-The ``Rect`` structure type also provides a computed property called ``center``.
+The ``Rect`` structure also provides a computed property called ``center``.
 The current value of a ``Rect``'s center can always be determined from its current ``origin`` and ``size``,
 and so there is no need to actually store the center point as an explicit ``Point`` value.
 Instead, ``Rect`` defines custom getter and setter methods for a computed variable called ``center``,
