@@ -116,23 +116,6 @@ are valid only within the scope of the for statement itself.
 The value of the *condition* expression must be of type ``Bool``,
 and therefore must evaluate to either ``true`` or ``false``.
 
-.. NOTE: Alternative prose describing for statement execution:
-    A for statement is executed it two phases:
-    the initialization and the loop.
-    During initialization, the program evaluates the initialization expression.
-    During the loop,
-    the program executes the conditional expression,
-    the code block, and the increment expression.
-    If the conditional expression evaluates to ``true``,
-    the program executes the code block and the increment expression,
-    and then continues execution at the beginning of the loop.
-    Otherwise,
-    the program does not execute the code block or the increment expression,
-    and the program is finished executing the statement.
-
-.. TODO: Document the scope of loop variables.
-   This applies to all loops, so it doesn't belong here.
-
 .. langref-grammar
 
     stmt-for-c-style    ::= 'for'     stmt-for-c-style-init? ';' expr? ';' expr-basic?     brace-item-list
