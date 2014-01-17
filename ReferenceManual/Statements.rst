@@ -218,14 +218,6 @@ A while statement is executed as follows:
 The value of the *condition* expression must be of type ``Bool``,
 and therefore must evaluate to either ``true`` or ``false``.
 
-
-When a while statement is executed,
-the *condition* expression is first evaluated.
-If the *condition* expression evaluates to ``true``,
-the program executes the code block
-and then continues execution at the beginning of the while statement.
-Otherwise, the program is finished executing the statement.
-
 .. langref-grammar
 
     stmt-while ::= 'while' expr-basic brace-item-list
@@ -251,12 +243,20 @@ A do-while statement has the following general form:
         <#code to execute#>
     } while <#condition#>
 
-When a do-while loop is executed,
-it begins by executing the code block,
-and then evaluates the conditional.
-If it evaluates to ``true``,
-the program continues execution at the beginning of the do-while statement.
-Otherwise, the program is finished executing the statement.
+A do-while statement is executed as follows:
+
+1. The program executes the code inside the braces of the do-while statement,
+   and execution continues to step 2.
+
+1. The *condition* expression is evaluated.
+   If it evaluates to ``true``, execution returns to step 1.
+   If it evaluates to ``false``, the program is finished executing the do-while statement.
+
+Because the value of the *condition* expression is evaluated after the code block is executed,
+the code block in a do-while statement is executed at least once.
+
+The value of the *condition* expression must be of type ``Bool``,
+and therefore must evaluate to either ``true`` or ``false``.
 
 .. langref-grammar
 
