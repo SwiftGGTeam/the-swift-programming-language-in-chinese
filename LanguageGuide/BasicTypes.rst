@@ -33,7 +33,7 @@ Basic Types
 Swift provides several basic types for working with fundamental values.
 Some of these types will be familiar to C and Objective-C developers:
 
-* *numbers* (including integers and floating-point numbers), and
+* *numbers* (including integers and floating-point numbers)
 * *booleans* (for values that can only be true or false)
     
 Although these types may be familiar,
@@ -65,8 +65,8 @@ Swift provides two types of named values:
 * *constant named values*, also known as *constants*, and
 * *variable named values*, also known as *variables*
 
-As the names suggest, the value of a variable can change over time,
-whereas a constant has a fixed value that cannot be changed once it is set.
+A constant has a fixed value that cannot be changed once it is set,
+whereas a variable can be set to a different value in the future.
 
 All named values must be declared before they are used.
 Constants are declared using the ``let`` keyword,
@@ -88,9 +88,9 @@ and give it an initial value of ``10``.
 Then, declare a new variable called ``currentLoginAttempt``,
 and give it an initial value of ``0``.”
 
-Here, a constant is used for the maximum number of allowed login attempts,
+A constant is used for the maximum number of allowed login attempts,
 as this is a fixed maximum value that does not need to change.
-A variable is used for the ``currentLoginAttempt`` counter, however,
+A variable is used for the current login attempt counter, however,
 as this value needs to be incremented after each failed login attempt.
 
 If a named value in your code is not going to change,
