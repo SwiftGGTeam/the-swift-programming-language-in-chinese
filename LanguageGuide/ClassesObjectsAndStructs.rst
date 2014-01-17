@@ -50,7 +50,7 @@ In addition, classes have several capabilities that structs do not:
 
 * *inheritance*, which enables one class to inherit the characteristics of another;
 * *destructors*, which enable an instance of a class to tidy up after itself; and
-* *type casting*, which enables you to check and interpret the type of a class instance at runtime.
+* *type casting*, which enables you to check and interpret the type of a class instance at runtime
 
 All of these capabilities are described in more detail below.
 
@@ -83,16 +83,20 @@ Both place their entire definition within a pair of braces:
     }
 
 Classes and structs can both define *properties*.
-Properties are simply named values that are bundled up and stored as part of the class or struct.
-The example above defines a new struct called ``Size``
-with variable properties called ``width`` and ``height``.
+Properties are named values that are bundled up and stored as part of the class or struct.
+As with standard named values,
+properties can be either *constant properties*,
+or *variable properties*.
+(Properties are described in more detail later in this chapter.)
+
+The example above defines a new struct type called ``Size``,
+which has two variable properties called ``width`` and ``height``.
 These properties are inferred to be of type ``Double``
 by setting them to an initial floating-point value of ``0.0``.
-It also defines a new class called ``Rectangle``,
-which has a single property called ``size``.
+The example also defines a new class type called ``Rectangle``,
+which has a variable property called ``size``.
 This property is initialized with a new ``Size`` struct instance,
 which infers a property type of ``Size``.
-(Properties are described in more detail later in this chapter.)
 
 Whenever you define a new class or struct,
 you are effectively defining a brand new Swift type.
@@ -157,6 +161,7 @@ The properties of an object or struct can be accessed using *dot syntax*:
     (swift) println("The width of someSize is \(someSize.width)")
     >>> The width of someSize is 0.0
 
+``someSize.width`` refers to the ``width`` property of the ``someSize`` struct.
 Dot syntax can also be used to drill down into properties which are themselves objects or structs,
 such as the ``width`` property of a ``Rectangle``'s ``size`` struct:
 
@@ -212,7 +217,7 @@ Structs Are Passed By Value
 Structs are always *copied* when they are assigned to a new constant or variable,
 or passed as an argument to a function.
 Rather than using the existing struct, a new one is created,
-and the original struct's values are copied across to the new one.
+and the original struct's values are copied across to the new struct instance.
 This is what is meant by ‘passing a struct by value’ –
 the *values* contained within the struct are passed around, not the struct itself.
 
@@ -230,9 +235,9 @@ For example:
     (swift) println("The iPhone 4 screen is \(iPhone4.height) pixels high")
     >>> The iPhone 4 screen is 960.0 pixels high
 
-This example declares a variable called ``iPhone4``,
+This example declares a constant called ``iPhone4``,
 and sets it to a ``Size`` struct initialized with the pixel width and height of the iPhone 4's screen.
-It then declares a second variable, called ``iPhone5``,
+It then declares a variable called ``iPhone5``,
 and sets it to the current value of ``iPhone4``.
 Having done so, it amends the ``height`` property of the ``iPhone5`` struct to be
 the height of the iPhone 5's taller screen (``1136.0`` pixels).
@@ -244,8 +249,8 @@ However, the ``height`` property of the original ``iPhone4`` struct still has th
 When ``iPhone5`` was initialized with the current value of ``iPhone4``,
 the *values* stored in ``iPhone4`` were copied into the new ``iPhone5`` struct.
 The end result was two completely separate structs, which just happened to contain the same values.
-This is why setting the height of ``iPhone5`` to ``1136.0`` didn't affect ``iPhone4`` –
-they are completely different structs.
+This is why setting the height of ``iPhone5`` to ``1136.0``
+didn't affect the values stored in ``iPhone4``.
 
 Objects Are Passed By Reference
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -297,19 +302,18 @@ rather than variables.
 However, it is still possible to change ``square.size``,
 and to change ``theSameSquare.size.width``.
 This is allowed because
-the values of the ``square`` and ``theSameSquare`` constants do not actually change –
-it is only the values of the objects that ``square`` and ``theSameSquare`` *refer to*
+the values of the ``square`` and ``theSameSquare`` constants do not actually change.
+Rather, it is the properties of the ``Rectangle`` that ``square`` and ``theSameSquare`` *refer to*
 that are changed.
 
 Pointers
 ________
 
 If you have experience with C, C++ or Objective-C,
-you may be familiar with the fact that they use *pointers* to refer to objects.
-Object named values in Swift are similar to pointers,
+you may be familiar with the fact that these languages use *pointers* to refer to objects.
+Swift's object named values are similar to pointers,
 but do not use the reference operator (``&``) or dereference operator (``*``)
 to differentiate between a pointer and the memory it points to.
-Indeed, Swift does not have a reference or dereference operator.
 Instead, an object named value in Swift is declared like any other named value,
 and the value it contains is always a reference to a particular object instance.
 
@@ -330,7 +334,7 @@ However, the fact that structs are always passed by value,
 and objects are always passed by reference,
 means that they are suited to different kinds of tasks.
 As you consider the data structures and functionality that you need for a project,
-you will need to decide whether each data structure should be a struct, or a class.
+you will need to decide whether each data structure should be a struct or a class.
 
 As a general rule, you should only define a new struct type when:
 
@@ -341,7 +345,7 @@ As a general rule, you should only define a new struct type when:
   when assigning or passing around an instance of that struct type
 * the values stored by the struct are basic types and / or other structs,
   which would also be expected to be copied rather than referenced
-* there is no need to inherit behavior from an existing type
+* there is no need to inherit properties or behavior from some other existing type
 
 Examples of good candidates for struct types include:
 
@@ -354,21 +358,22 @@ Examples of good candidates for struct types include:
 * a point in a 3D coordinate system
   (perhaps encapsulating ``x``, ``y`` and ``z`` properties, each of type ``Double``)
 
-In all other cases, you should define a new class,
-and create objects as instances of that class, to be managed and passed by reference.
+In all other cases, you should define a class,
+and create objects as instances of that class,
+to be managed and passed by reference.
 In practice, this means that most custom data structures should be classes, not structs.
 
 Properties
 ----------
 
-As mentioned above, classes and struct types can declare *properties*.
+Classes and struct types can both declare *properties*.
 Properties are used to store and pass around any values associated with a particular class or struct type.
 
 Stored Properties
 ~~~~~~~~~~~~~~~~~
 
 In its simplest form, a property is just a named value
-whose value is stored with an object or struct:
+that is stored as part of an object or struct:
 
 .. testcode:: storedAndComputedProperties
 
@@ -388,7 +393,7 @@ This struct type encapsulates a property called ``statusCode`` (which is of type
 and a property called ``description`` (which is of type ``String``).
 
 Having defined the struct type,
-it then creates a new struct based on this type, called ``http404Error``.
+the example creates a new struct based on this type, called ``http404Error``.
 This struct is initialized with a ``statusCode`` of ``404``,
 and a ``description`` of ``"Not Found"``.
 
