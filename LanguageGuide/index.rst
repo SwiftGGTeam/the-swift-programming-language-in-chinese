@@ -10,7 +10,7 @@ Language Guide
     ControlFlow
     Enumerations
     FunctionsAndClosures
-    ClassesAndStructs
+    ClassesAndStructures
     ProtocolsAndExtensions
     Generics
     Modules
