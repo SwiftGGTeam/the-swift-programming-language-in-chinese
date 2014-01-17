@@ -53,7 +53,7 @@ The assignment operator (``a = b``) updates the value of ``a`` with the value of
 
 .. testcode:: assignmentOperator
 
-    (swift) var b = 10
+    (swift) let b = 10
     // b : Int = 10
     (swift) var a = 5
     // a : Int = 5
@@ -62,11 +62,11 @@ The assignment operator (``a = b``) updates the value of ``a`` with the value of
     >>> a is now 10
 
 If the right-hand side of the assignment is a tuple with multiple values,
-its elements can be decomposed into multiple variables at once:
+its elements can be decomposed into multiple named values at once:
 
 .. testcode:: assignmentOperator
 
-    (swift) var (x, y) = (1, 2)
+    (swift) let (x, y) = (1, 2)
     // (x, y) : (Int, Int) = (1, 2)
     (swift) println("x is \(x)")
     >>> x is 1
@@ -117,11 +117,11 @@ can be added together via ``+`` to make a new ``String``:
 
 .. testcode:: arithmeticOperators
 
-    (swift) var dog = '🐶'
+    (swift) let dog = '🐶'
     // dog : UnicodeScalar = '🐶'
-    (swift) var cow = '🐮'
+    (swift) let cow = '🐮'
     // cow : UnicodeScalar = '🐮'
-    (swift) var dogCow = dog + cow
+    (swift) let dogCow = dog + cow
     // dogCow : String = "🐶🐮"
 
 Remainder Operator
@@ -227,21 +227,21 @@ while also finding out its value:
 
     (swift) var a = 0
     // a : Int = 0
-    (swift) var b = ++a
+    (swift) let b = ++a
     // b : Int = 1
     (swift) println("a is now \(a)")
     >>> a is now 1
-    (swift) var c = a++
+    (swift) let c = a++
     // c : Int = 1
     (swift) println("a is now \(a)")
     >>> a is now 2
 
 In the example above,
-``var b = ++a`` sets ``b`` to the value of ``a``,
+``let b = ++a`` sets ``b`` to the value of ``a``,
 *after* it has been incremented.
 This is why both ``a`` and ``b`` are equal to ``1``.
 
-However, ``var c = a++`` sets ``c`` to the value of ``a`` *before* it is incremented.
+However, ``let c = a++`` sets ``c`` to the value of ``a`` *before* it is incremented.
 The result is that ``c`` gets the old value of ``1``,
 but ``a`` now equals ``2``.
 
@@ -263,11 +263,11 @@ The sign of a numeric value can be toggled using a prefixed ``-`` (known as *una
 
 .. testcode:: arithmeticOperators
 
-    (swift) var minusThree = -3
+    (swift) let minusThree = -3
     // minusThree : Int = -3
-    (swift) var plusThree = -minusThree         // effectively "minus minus three"
+    (swift) let plusThree = -minusThree         // effectively "minus minus three"
     // plusThree : Int = 3
-    (swift) var anotherMinusThree = -plusThree
+    (swift) let anotherMinusThree = -plusThree
     // anotherMinusThree : Int = -3
 
 The unary minus operator ``-`` is prepended directly before the value it operates on,
@@ -278,9 +278,9 @@ which simply returns the value it operates on, without any change:
 
 .. testcode:: arithmeticOperators
 
-    (swift) var minusSix = -6
+    (swift) let minusSix = -6
     // minusSix : Int = -6
-    (swift) var alsoMinusSix = +minusSix
+    (swift) let alsoMinusSix = +minusSix
     // alsoMinusSix : Int = -6
 
 The unary plus operator doesn't actually do anything.
@@ -324,7 +324,7 @@ to check if values are identical:
 * Identical to (``a === b``)
 * Not identical to (``a !== b``)
 
-These *identity operators* are used to test if two object variables both refer to the same object instance.
+These *identity operators* are used to test if two object named values both refer to the same object instance.
 They are described in detail in :doc:`ClassesObjectsAndStructs`.
 
 Each of the comparison operators returns a ``Bool`` value to indicate whether or not the statement is true:
@@ -349,7 +349,7 @@ such as the ``if else`` statement:
 
 .. testcode:: comparisonOperators
 
-    (swift) var name = "world";
+    (swift) let name = "world";
     // name : String = "world"
     (swift) if name == "world" {
         println("hello, world")
@@ -388,11 +388,11 @@ and 20 pixels taller if it doesn't:
 
 .. testcode:: ternaryComparisonOperatorPart1
 
-    (swift) var contentHeight = 40
+    (swift) let contentHeight = 40
     // contentHeight : Int = 40
-    (swift) var hasHeader = true
+    (swift) let hasHeader = true
     // hasHeader : Bool = true
-    (swift) var rowHeight = contentHeight + (hasHeader ? 50 : 20)
+    (swift) let rowHeight = contentHeight + (hasHeader ? 50 : 20)
     // rowHeight : Int64 = 90
     (swift) println("The row height is \(rowHeight) pixels.")
     >>> The row height is 90 pixels.
@@ -405,9 +405,9 @@ This is shorthand for:
 
 .. testcode:: ternaryComparisonOperatorPart2
 
-    (swift) var contentHeight = 40
+    (swift) let contentHeight = 40
     // contentHeight : Int = 40
-    (swift) var hasHeader = true
+    (swift) let hasHeader = true
     // hasHeader : Bool = true
     (swift) var rowHeight = contentHeight
     // rowHeight : Int = 40
@@ -420,6 +420,9 @@ This is shorthand for:
     >>> The row height is 90 pixels.
 
 .. TODO: leave rowHeight uninitialized once the REPL allows uninitialized variables?
+.. QUESTION: In the first example, rowHeight is a constant (because it can be),
+   but in the second example, it's a variable (because it has to be).
+   Is this okay?
 
 In this case, the ternary comparison operator provides an efficient shorthand for deciding which of two expressions to consider.
 
@@ -452,9 +455,9 @@ For example:
 
 .. testcode:: bitwiseOperators
 
-    (swift) var initialBits: UInt8 = 0b00001111
+    (swift) let initialBits: UInt8 = 0b00001111
     // initialBits : UInt8 = 15
-    (swift) var invertedBits = ~initialBits  // equals 11110000
+    (swift) let invertedBits = ~initialBits  // equals 11110000
     // invertedBits : UInt8 = 240
 
 ``UInt8`` integers have eight bits,
@@ -464,7 +467,7 @@ which has its first four bits set to ``0``,
 and its second four bits set to ``1``.
 This is equivalent to a decimal value of ``15``.
 
-The bitwise NOT operator is then used to create a new variable ``invertedBits``,
+The bitwise NOT operator is then used to create a new constant called ``invertedBits``,
 which is equal to ``initialBits``,
 but with all of the bits inverted.
 Zeroes become ones, and ones become zeroes.
@@ -485,11 +488,11 @@ For example:
 
 .. testcode:: bitwiseOperators
 
-    (swift) var firstSixBits: UInt8 = 0b11111100
+    (swift) let firstSixBits: UInt8 = 0b11111100
     // firstSixBits : UInt8 = 252
-    (swift) var lastSixBits: UInt8  = 0b00111111
+    (swift) let lastSixBits: UInt8  = 0b00111111
     // lastSixBits : UInt8 = 63
-    (swift) var middleFourBits = firstSixBits & lastSixBits  // equals 00111100
+    (swift) let middleFourBits = firstSixBits & lastSixBits  // equals 00111100
     // middleFourBits : UInt8 = 60
 
 The values of ``firstSixBits`` and ``lastSixBits`` both have their four middle bits equal to ``1``.
@@ -510,11 +513,11 @@ For example:
 
 .. testcode:: bitwiseOperators
 
-    (swift) var someBits: UInt8 = 0b10110010
+    (swift) let someBits: UInt8 = 0b10110010
     // someBits : UInt8 = 178
-    (swift) var moreBits: UInt8 = 0b01011110
+    (swift) let moreBits: UInt8 = 0b01011110
     // moreBits : UInt8 = 94
-    (swift) var combinedbits = someBits | moreBits  // equals 11111110
+    (swift) let combinedbits = someBits | moreBits  // equals 11111110
     // combinedbits : UInt8 = 254
 
 The values of ``someBits`` and ``moreBits`` have different bits set to ``1``.
@@ -541,11 +544,11 @@ For example:
 
 .. testcode:: bitwiseOperators
 
-    (swift) var firstBits: UInt8 = 0b00010100
+    (swift) let firstBits: UInt8 = 0b00010100
     // firstBits : UInt8 = 20
-    (swift) var otherBits: UInt8 = 0b00000101
+    (swift) let otherBits: UInt8 = 0b00000101
     // otherBits : UInt8 = 5
-    (swift) var outputBits = firstBits ^ otherBits  // equals 00010001
+    (swift) let outputBits = firstBits ^ otherBits  // equals 00010001
     // outputBits : UInt8 = 17
 
 .. TODO: Explain how this can be useful to toggle just a few bits in a bitfield.
@@ -590,7 +593,7 @@ Here's how bit-shifting looks in Swift code:
 
 .. testcode:: bitwiseShiftOperators
 
-    (swift) var shiftBits: UInt8 = 4    // 00000100 in binary
+    (swift) let shiftBits: UInt8 = 4    // 00000100 in binary
     // shiftBits : UInt8 = 4
     (swift) shiftBits << 1              // 00001000
     // r0 : UInt8 = 8
@@ -605,16 +608,16 @@ Bit-shifting can be used to encode and decode values within other data types:
 
 .. testcode:: bitwiseShiftOperators
 
-    (swift) var pink: UInt32 = 0xCC6699
+    (swift) let pink: UInt32 = 0xCC6699
     // pink : UInt32 = 13395609
-    (swift) var redComponent = (pink & 0xFF0000) >> 16
+    (swift) let redComponent = (pink & 0xFF0000) >> 16
     // redComponent : UInt32 = 204
-    (swift) var greenComponent = (pink & 0x00FF00) >> 8
+    (swift) let greenComponent = (pink & 0x00FF00) >> 8
     // greenComponent : UInt32 = 102
-    (swift) var blueComponent = pink & 0x0000FF
+    (swift) let blueComponent = pink & 0x0000FF
     // blueComponent : UInt32 = 153
 
-This example uses a ``UInt32`` variable called ``pink`` to store a
+This example uses a ``UInt32`` constant called ``pink`` to store a
 Cascading Style Sheets color value for the color pink.
 Here, the CSS color value ``#CC6699`` is written as ``0xCC6699`` in Swift's hexadecimal number representation.
 This color is then decomposed into its red (``CC``), green (``66``) and blue (``99``) components
@@ -734,11 +737,11 @@ negative integers remain negative as their value moves closer to zero.
 Overflow Operators
 ------------------
 
-An error will be thrown if you try to insert a value into an integer variable that cannot hold that value.
-This gives extra safety when working with values that are too large or too small.
+An error will be thrown if you try to insert a number into an integer named value that cannot hold that value.
+This gives extra safety when working with numbers that are too large or too small.
 
-For example, the ``Int16`` integer type can hold any signed value between ``-32768`` and ``32767``.
-If you try and set a variable of this type to a value outside of this range,
+For example, the ``Int16`` integer type can hold any signed integer number between ``-32768`` and ``32767``.
+If you try and set a ``UInt16`` named value to a number outside of this range,
 an error is thrown:
 
 .. testcode:: overflowOperatorsWillFailToOverflow
@@ -797,7 +800,7 @@ The value that remains within the bounds of the ``UInt8`` after the overflow add
 Value Underflow
 ~~~~~~~~~~~~~~~
 
-Numbers can also become too small to fit in their variable type's maximum bounds.
+Numbers can also become too small to fit in their type's maximum bounds.
 Here's an example.
 
 The *smallest* value that a UInt8 can hold is ``0`` (which is ``00000000`` in eight-bit binary form).
@@ -856,9 +859,9 @@ Swift will throw an error:
 
 .. testcode:: overflowOperatorsDivZeroError
 
-    (swift) var x = 1
+    (swift) let x = 1
     // x : Int = 1
-    (swift) var y = x / 0
+    (swift) let y = x / 0
     xxx division by zero
  
 Integer division by zero is not a valid mathematical action,
@@ -884,7 +887,7 @@ It can be read as “not ``a``”, as seen in the following example:
 
 .. testcode:: logicalOperators
 
-    (swift) var allowedEntry = false
+    (swift) let allowedEntry = false
     // allowedEntry : Bool = false
     (swift) if !allowedEntry {
         println("ACCESS DENIED")
@@ -896,7 +899,8 @@ The subsequent line is only executed if “not allowed entry” is true,
 i.e. if ``allowedEntry`` is ``false``.
 
 As in this example,
-careful choice of boolean variable names can help to keep code readable and concise,
+careful choice of boolean constant and variable names
+can help to keep code readable and concise,
 while avoiding double negatives or confusing logic statements.
 
 Logical AND
@@ -910,9 +914,9 @@ and only allows access if both values are ``true``:
 
 .. testcode:: logicalOperators
 
-    (swift) var enteredDoorCode = true
+    (swift) let enteredDoorCode = true
     // enteredDoorCode : Bool = true
-    (swift) var passedRetinaScan = false
+    (swift) let passedRetinaScan = false
     // passedRetinaScan : Bool = false
     (swift) if enteredDoorCode && passedRetinaScan {
         println("Welcome!")
@@ -939,9 +943,9 @@ For example:
 
 .. testcode:: logicalOperators
 
-    (swift) var hasDoorKey = false
+    (swift) let hasDoorKey = false
     // hasDoorKey : Bool = false
-    (swift) var knowsOverridePassword = true
+    (swift) let knowsOverridePassword = true
     // knowsOverridePassword : Bool = true
     (swift) if hasDoorKey || knowsOverridePassword {
         println("Welcome!")
@@ -1106,9 +1110,9 @@ for counting up to (but not including) the length of a zero-based array:
 
 .. testcode:: rangeOperators
 
-    (swift) var names = ["Anna", "Brian", "Christine", "Daniel"]
+    (swift) let names = ["Anna", "Brian", "Christine", "Daniel"]
     // names : String[] = ["Anna", "Brian", "Christine", "Daniel"]
-    (swift) var count = names.count
+    (swift) let count = names.count
     // count : Int = 4
     (swift) for i in 0..count {
         println("Person \(i + 1) is called \(names[i])")

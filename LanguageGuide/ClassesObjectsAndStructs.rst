@@ -83,9 +83,9 @@ Both place their entire definition within a pair of braces:
     }
 
 Classes and structs can both define *properties*.
-Properties are simply variables that are bundled up and stored as part of the class or struct.
+Properties are simply named values that are bundled up and stored as part of the class or struct.
 The example above defines a new struct called ``Size``
-with properties called ``width`` and ``height``.
+with variable properties called ``width`` and ``height``.
 These properties are inferred to be of type ``Double``
 by setting them to an initial floating-point value of ``0.0``.
 It also defines a new class called ``Rectangle``,
@@ -174,7 +174,7 @@ Initial values for properties in the struct can be passed to the default initial
 
 .. testcode:: classAndStructDefinitionSyntax
 
-    (swift) var twoByTwo = Size(width: 2.0, height: 2.0)
+    (swift) let twoByTwo = Size(width: 2.0, height: 2.0)
     // twoByTwo : Size = Size(2.0, 2.0)
 
 Initial values can also be provided without names,
@@ -182,7 +182,7 @@ if they are listed in the same order that the properties are declared in the str
 
 .. testcode:: classAndStructDefinitionSyntax
 
-    (swift) var fourByThree = Size(4.0, 3.0)
+    (swift) let fourByThree = Size(4.0, 3.0)
     // fourByThree : Size = Size(4.0, 3.0)
 
 Classes do not provide a default initializer, because [SOME_JUSTIFIABLE_REASON].
@@ -209,7 +209,7 @@ This difference is very important when deciding how to define the building block
 Structs Are Passed By Value
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Structs are always *copied* when they are assigned to a new variable
+Structs are always *copied* when they are assigned to a new constant or variable,
 or passed as an argument to a function.
 Rather than using the existing struct, a new one is created,
 and the original struct's values are copied across to the new one.
@@ -220,7 +220,7 @@ For example:
 
 .. testcode:: classAndStructDefinitionSyntax
 
-    (swift) var iPhone4 = Size(width: 640.0, height: 960.0)
+    (swift) let iPhone4 = Size(width: 640.0, height: 960.0)
     // iPhone4 : Size = Size(640.0, 960.0)
     (swift) var iPhone5 = iPhone4
     // iPhone5 : Size = Size(640.0, 960.0)
@@ -250,7 +250,7 @@ they are completely different structs.
 Objects Are Passed By Reference
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Objects are always passed by *reference* when they are assigned to a variable,
+Objects are always passed by *reference* when they are assigned to a new constant or variable,
 or passed as an argument to a function.
 The exact same object is used, and no copying takes place.
 
@@ -258,12 +258,12 @@ For example:
 
 .. testcode:: classAndStructDefinitionSyntax
 
-    (swift) var square = Rectangle()
+    (swift) let square = Rectangle()
     // square : Rectangle = <Rectangle instance>
     (swift) square.size = Size(width: 1.0, height: 1.0)
     (swift) println("The square's width is \(square.size.width)")
     >>> The square's width is 1.0
-    (swift) var theSameSquare = square
+    (swift) let theSameSquare = square
     // theSameSquare : Rectangle = <Rectangle instance>
     (swift) theSameSquare.size.width = 3.0
     (swift) theSameSquare.size.height = 3.0
@@ -292,16 +292,25 @@ The final lines of this example print the current value of the ``Rectangle``'s w
 As shown here, it doesn't matter whether you access the width via ``square`` or ``theSameSquare`` –
 the value of ``3.0`` from the underlying ``Rectangle`` is returned in both cases.
 
+Note that ``square`` and ``theSameSquare`` are declared as *constants*,
+rather than variables.
+However, it is still possible to change ``square.size``,
+and to change ``theSameSquare.size.width``.
+This is allowed because
+the values of the ``square`` and ``theSameSquare`` constants do not actually change –
+it is only the values of the objects that ``square`` and ``theSameSquare`` *refer to*
+that are changed.
+
 Pointers
 ________
 
 If you have experience with C, C++ or Objective-C,
 you may be familiar with the fact that they use *pointers* to refer to objects.
-Object variables in Swift are similar to pointers,
+Object named values in Swift are similar to pointers,
 but do not use the reference operator (``&``) or dereference operator (``*``)
 to differentiate between a pointer and the memory it points to.
 Indeed, Swift does not have a reference or dereference operator.
-Instead, an object variable in Swift is declared like any other variable,
+Instead, an object named value in Swift is declared like any other named value,
 and the value it contains is always a reference to a particular object instance.
 
 .. TODO: We need something here to say
@@ -310,7 +319,7 @@ and the value it contains is always a reference to a particular object instance.
 .. TODO: Add a justification here to say why this is a good thing.
 
 .. TODO: Add a section about using the identity operator
-   to check if two reference variables point to the same instance.
+   to check if two reference named values point to the same instance.
    This is currently blocked on rdar://problem/15566395 .
 
 Choosing Between Structs and Classes
@@ -358,7 +367,7 @@ Properties are used to store and pass around any values associated with a partic
 Stored Properties
 ~~~~~~~~~~~~~~~~~
 
-In its simplest form, a property is just a variable
+In its simplest form, a property is just a named value
 whose value is stored with an object or struct:
 
 .. testcode:: storedAndComputedProperties
@@ -367,10 +376,12 @@ whose value is stored with an object or struct:
         var statusCode: Int
         var description: String
     }
-    (swift) var http404Error = HTTPStatus(statusCode: 404, description: "Not Found")
+    (swift) let http404Error = HTTPStatus(statusCode: 404, description: "Not Found")
     // http404Error : HTTPStatus = HTTPStatus(404, "Not Found")
     (swift) println("This error has a status code value of \(http404Error.statusCode)")
     >>> This error has a status code value of 404
+
+.. TODO: Should the properties here be 'constant properties' declared via 'let'?
 
 This example defines a new struct type called ``HTTPStatus``.
 This struct type encapsulates a property called ``statusCode`` (which is of type ``Int``),
@@ -423,8 +434,8 @@ which do not actually store a value:
     }
     (swift) var square = Rect(origin: Point(0.0, 0.0), size: Size(10.0, 10.0))
     // square : Rect = Rect(Point(0.0, 0.0), Size(10.0, 10.0))
-    (swift) var center = square.center
-    // center : Point = Point(5.0, 5.0)
+    (swift) let initialCenter = square.center
+    // initialCenter : Point = Point(5.0, 5.0)
     (swift) square.center = Point(x: 15, y: 15)
     (swift) println("square origin is now at (\(square.origin.x), \(square.origin.y))")
     >>> square origin is now at (10.0, 10.0)
@@ -464,13 +475,17 @@ and moves the square to its new position.
     :width: 400
     :align: center
 
-.. NOTE: getters and setters are also allowed for variables
+.. NOTE: getters and setters are also allowed for named values
    that are not associated with a particular class or struct.
    Where should this be mentioned?
 .. TODO: If the getter appears first, the "get:" label may be omitted (to be verified)
 .. TODO: If the setter's argument is omitted, it is assumed to be named "value" (to be verified)
-.. TODO: If a computed variable has a getter but no setter, it becomes a *read-only variable* (to be verified)
+.. TODO: If a computed variable has a getter but no setter,
+   it becomes a *read-only variable* (to be verified) –
+   how does this overlap with constants?
 .. TODO: Anything else from https://[Internal Staging Server]/docs/StoredAndComputedVariables.html
+.. TODO: mention that all by-value properties of a constant struct are also constant
+.. TODO: what happens if one property of a constant struct is an object reference?
 
 .. refnote:: References
 

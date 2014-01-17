@@ -64,7 +64,7 @@ This makes it easy for the function to be called from elsewhere in your code in 
 .. testcode::
 
     (swift) func sayHello(personName: String) -> String {
-        var greeting = "Hello, " + personName + "!"
+        let greeting = "Hello, " + personName + "!"
         return greeting
     }
     (swift) println(sayHello("Cheryl"))
@@ -78,7 +78,7 @@ Because ``sayHello`` returns a ``String``,
 it can be wrapped in a call to the ``println`` function
 to print that ``String`` and see its value, as shown above.
 
-The ``sayHello`` function starts by declaring a new ``String`` variable called ``greeting``,
+The ``sayHello`` function starts by declaring a new ``String`` constant called ``greeting``,
 and setting it to a simple greeting message for ``personName``.
 This greeting is then passed back out of the function using the ``return`` keyword.
 As soon as ``return greeting`` is called,
@@ -213,7 +213,7 @@ and also enables values to be passed in a different order to the original functi
         }
         return false
     }
-    (swift) var containsASpace = containsCharacter(
+    (swift) let containsASpace = containsCharacter(
         characterToFind: ' ',
         stringToSearch: "This will return true")
     // containsASpace : Bool = true
@@ -237,7 +237,7 @@ the passed parameters are assumed to be in the order they were originally declar
 
 .. testcode::
 
-    (swift) var containsAHyphen = containsCharacter("This will return false", '-')
+    (swift) let containsAHyphen = containsCharacter("This will return false", '-')
     // containsAHyphen : Bool = false
 
 Default Parameter Values

@@ -47,7 +47,7 @@ As a result, their names
 (such as ``CompassPoint`` and ``Planet``)
 should start with a capital letter.
 ``enum`` types should have singular rather than plural names,
-so that they read as a sentence when declaring a variable of that type:
+so that they read as a sentence when declaring a named value of that type:
 
 .. testcode:: enums
 
@@ -110,7 +110,7 @@ you can define a default catch-all case to cover any members that are not addres
 
 .. testcode:: enums
 
-    (swift) var somePlanet = Planet.Earth
+    (swift) let somePlanet = Planet.Earth
     // somePlanet : Planet = <unprintable value>
     (swift) switch somePlanet {
         case .Earth:
@@ -125,14 +125,17 @@ Switch statements are covered in more detail in :doc:`ControlFlow`.
 Enumerations with Associated Values
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The examples above show how the members of an enumeration are a defined (and typed) value in their own right.
-You can set a variable to the value ``Planet.Earth``,
+The examples above show how the members of an enumeration are
+a defined (and typed) value in their own right.
+You can set a named value to ``Planet.Earth``,
 and check for this value later.
-However, it can sometimes be useful for enumeration members to also store *associated* values of other types alongside their own.
+However, it can sometimes be useful for enumeration members to also store
+*associated* values of other types alongside their own.
 
 Swift enumerations can be defined to store an associated value of any given type,
 and this type can be different for each member of the enumeration if needed.
-These kinds of variables are known as *tagged unions* or *variants* in other programming languages.
+These kinds of associated values are known as
+*tagged unions* or *variants* in other programming languages.
 
 For example: imagine an inventory tracking system that needs to track products using two different types of barcode.
 Some products are labelled with 1D barcodes in `UPC-A <http://en.wikipedia.org/wiki/Universal_Product_Code>`_ format,
@@ -172,7 +175,7 @@ that can take either a value of ``UPCA`` with an associated value of type (``Int
 or a value of ``QRCode`` with an associated value of type ``String``.”
 
 This definition does not provide any actual ``Int`` or ``String`` values –
-it just defines the *type* of associated values that ``Barcode`` variables can store
+it just defines the *type* of associated values that ``Barcode`` named values can store
 when they are equal to ``Barcode.UPCA`` or ``Barcode.QRCode``.
 
 New barcodes can then be created using either of these types,
@@ -197,7 +200,7 @@ The same product can be changed to have a different type of barcode:
 
 At this point,
 the original ``Barcode.UPCA`` and its integer values are replaced by the new ``Barcode.QRCode`` and its string value.
-Variables of type ``Barcode`` can store either a ``.UPCA`` or a ``.QRCode``
+Named values of type ``Barcode`` can store either a ``.UPCA`` or a ``.QRCode``
 (together with their associated values),
 but they can only store one or the other at a time.
 
@@ -218,9 +221,10 @@ These two calls to the ``println`` function use a special syntax to insert the v
 ``numberSystem``, ``identifier``, ``check`` and ``productCode``
 into printed descriptions of the barcodes.
 This syntax is known as *string interpolation*,
-and is a handy way to create and print strings that contain the current values of variables.
-If you include ``\(variableName)`` in a longer string,
-the current value of ``variableName`` will be inserted in place
+and is a handy way to create and print strings that contain
+the current values of constants and variables.
+If you include ``\(namedValue)`` in a longer string,
+the current value of ``namedValue`` will be inserted in place
 when the string is printed by the ``println`` function.
 (String interpolation is covered in more detail in :doc:`Strings`.)
 
@@ -256,7 +260,8 @@ and are set to some of the more common ASCII control characters.
 Noe that raw values are *not* the same as associated values.
 Raw values are set to pre-populated values when the enum is first defined in your code,
 like the three ASCII codes above.
-Associated values are only set when you create a new variable based on one of the enum members.
+Associated values are only set when you create a new constant or variable
+based on one of the enum members.
 
 Raw values can be
 strings, characters, or any of the integer or floating-point number types.
@@ -279,7 +284,7 @@ The raw value of an enum member can be accessed using its ``toRaw`` method:
 
 .. testcode:: optionals
 
-    (swift) var atomicNumberOfCarbon = ChemicalElement.Carbon.toRaw()
+    (swift) let atomicNumberOfCarbon = ChemicalElement.Carbon.toRaw()
     // atomicNumberOfCarbon : Int = 6
 
 The reverse is also true.

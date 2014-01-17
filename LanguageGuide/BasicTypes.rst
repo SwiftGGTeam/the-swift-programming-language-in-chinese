@@ -51,70 +51,98 @@ are discussed in more detail below.
 Swift also provides a powerful and flexible way to create and work with string and character types.
 These are introduced below, and are discussed in more detail in :doc:`Strings`.
 
-Declaring and Naming Variables
-------------------------------
+Named Values
+------------
 
 .. QUESTION: Do we need to have introduced the REPL
    (or some other learning environment) before starting this section?
 
-All variables in Swift must be declared before they are used.
-Here's a simple variable declaration:
+A *named value* is a way to store a particular value
+(such as the number ``42``, or the string ``"hello"``)
+and refer to it via a specific name in your code.
+Swift provides two types of named values:
 
-.. testcode:: declaringVariables
+* *constant named values*, also known as *constants*, and
+* *variable named values*, also known as *variables*
 
-    (swift) var a = 1
-    // a : Int = 1
-    
+As the names suggest, the value of a variable can change over time,
+whereas a constant has a fixed value that cannot be changed once it is set.
+
+All named values must be declared before they are used.
+Constants are declared using the ``let`` keyword,
+and variables are declared using the ``var`` keyword.
+Here's an example of how constants and variables could be used
+to track the number of login attempts a user has made:
+
+.. testcode:: namedValues
+
+    (swift) let maximumNumberOfLoginAttempts = 10
+    // maximumNumberOfLoginAttempts : Int = 10
+    (swift) var currentLoginAttempt = 0
+    // currentLoginAttempt : Int = 0
+
 This can be read as:
 
-“Declare a variable called ``a``, and give it an initial value of ``1``.”
+“Declare a new constant called ``maximumNumberOfLoginAttempts``,
+and give it an initial value of ``10``.
+Then, declare a new variable called ``currentLoginAttempt``,
+and give it an initial value of ``0``.”
 
-Variable declarations can include a specific *type*,
-to be explicit about the kind of variable you want to create:
+Here, a constant is used for the maximum number of allowed login attempts,
+as this is a fixed maximum value that does not need to change.
+A variable is used for the ``currentLoginAttempt`` counter, however,
+as this value needs to be incremented after each failed login attempt.
 
-.. testcode:: declaringVariables
+If a named value in your code is not going to change,
+it should always be declared as a constant with the ``let`` keyword.
+Variables should only be used for
+named values that need to be able to change their value.
 
-    (swift) var b: String = "Hello"
-    // b : String = "Hello"
+Named value declarations can include a specific *type*,
+to be explicit about the kind of named value you want to create:
+
+.. testcode:: namedValues
+
+    (swift) let welcomeMessage: String = "Hello"
+    // welcomeMessage : String = "Hello"
 
 The colon in the declaration means *“…that is a…”*,
 so this can be read as:
 
-“Declare a variable called ``b`` that is a ``String``,
-and give it an initial value of ``"Hello"``.”
+“Declare a constant called ``welcomeMessage`` that is a ``String``,
+and give it a value of ``"Hello"``.”
 
-.. TODO: Update this section to mention let as well as var,
-   once let is available and ready for prime-time use.
-   Also update the rest of the Guide to use let
+.. TODO: Update the rest of the Guide to use let
    wherever and whenever mutability is not required,
    and note that var is something you should really only opt in to
    when you know that the variable's value should be allowed to mutate.
 
-You can use pretty much any character you like in a variable name,
+You can use pretty much any character you like for constant and variable names,
 including `Unicode <http://en.wikipedia.org/wiki/Unicode>`_ characters:
 
-.. testcode:: declaringVariables
+.. testcode:: namedValues
 
-    (swift) var π = 3.14159
+    (swift) let π = 3.14159
     // π : Double = 3.14159
-    (swift) var 你好 = "你好世界"
+    (swift) let 你好 = "你好世界"
     // 你好 : String = "你好世界"
-    (swift) var 🐶🐮 = "dogcow"
+    (swift) let 🐶🐮 = "dogcow"
     // 🐶🐮 : String = "dogcow"
 
-Variable names cannot contain
+Constant and variable names cannot contain
 mathematical symbols, arrows, private-use (or invalid) Unicode code points,
 or line- and box-drawing characters.
-Variable names also cannot begin with a number
+They also cannot begin with a number
 (although numbers may be included elsewhere within the name).
-
-Once you've declared a variable,
+Once you've declared a named value,
 you can't redeclare it again with the same name,
-but you can set the existing variable to another value of the same type.
-You can also print the value of a variable using the ``println`` function,
+or change it from a constant to a variable (or vice versa).
+
+The value of an existing variable can be changed to another value of the same type.
+You can also print the value of any named value using the ``println`` function,
 to see its current value:
 
-.. testcode:: declaringVariables
+.. testcode:: namedValues
 
     (swift) var friendlyWelcome = "hello, world"
     // friendlyWelcome : String = "hello, world"
@@ -124,6 +152,19 @@ to see its current value:
 
 .. NOTE: this is a deliberately simplistic description of what you can do with println().
    It will be expanded later on.
+
+Unlike a variable, the value of a constant cannot be changed once it is set,
+and attempting to do so will result in an error:
+
+.. testcode:: namedValues
+
+    (swift) let languageName = "Swift"
+    // languageName : String = "Swift"
+    (swift) languageName = "Swift++"
+    !!! <REPL Input>:1:14: error: cannot assign to the result of this expression
+    !!! languageName = "Swift++"
+    !!! ~~~~~~~~~~~~ ^
+
 
 Integers
 --------
@@ -194,15 +235,15 @@ it is able to perform *type checks* when compiling your code.
 Any mismatched types are flagged as errors so that you can fix them.
 
 Type-checking helps to avoid accidental errors when working with different types of value.
-However, this doesn't mean that you have to define the type of every variable you use.
+However, this doesn't mean that you have to define the type of every named value you declare.
 If you don't specify the type of value you need,
 Swift will use *type inference* to work out the appropriate type.
 Type inference is the ability for a compiler to automatically deduce the type of a particular expression when it compiles your code,
 just by examining the values you provide.
 
-For example: if you assign a :term:`literal value` of ``42`` to a variable,
+For example: if you assign a :term:`literal value` of ``42`` to a constant,
 without saying what type it is,
-Swift will deduce that you want the variable to be an ``Int``,
+Swift will deduce that you want the constant to be an ``Int``,
 because you have initialized it with a number that looks like an integer:
 
 .. glossary::
@@ -213,7 +254,7 @@ because you have initialized it with a number that looks like an integer:
 
 .. testcode:: typeInference
 
-    (swift) var meaningOfLife = 42
+    (swift) let meaningOfLife = 42
     // meaningOfLife : Int = 42
 
 Likewise, if you don't specify a type for a floating-point literal,
@@ -221,7 +262,7 @@ Swift assumes that you want to create a ``Double`` from the floating-point value
 
 .. testcode:: typeInference
 
-    (swift) var pi = 3.14159
+    (swift) let pi = 3.14159
     // pi : Double = 3.14159
 
 Swift always chooses ``Double`` (rather than ``Float``)
@@ -232,7 +273,7 @@ a type of ``Double`` will be inferred from the context:
 
 .. testcode:: typeInference
 
-    (swift) var anotherPi = 3 + 0.14159
+    (swift) let anotherPi = 3 + 0.14159
     // anotherPi : Double = 3.14159
 
 The literal value of ``3`` does not have an explicit type in and of itself,
@@ -240,7 +281,7 @@ and so an appropriate output type of ``Double`` is inferred
 from the presence of a floating-point literal as part of the addition.
 
 Type inference means that Swift requires far fewer type declarations than languages such as C or Objective-C.
-Variables are still explicitly-typed,
+Named values are still explicitly-typed,
 but much of the work of specifying their type is done for you.
 
 Numeric Literals
@@ -337,10 +378,10 @@ The actual value of ``justOverOneMillion`` still has all of the precision of the
 Numeric Type Conversion
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-The ``Int`` type should be used for all general-purpose integer variables in your code,
+The ``Int`` type should be used for all general-purpose integer named values in your code,
 even if they are known to be non-negative.
 Using the default integer type in everyday situations means that
-integer variables are immediately interoperable in your code,
+integer named value are immediately interoperable in your code,
 and will match the inferred type for integer literal values.
 
 Other integer types should only be used when they are are specifically needed for the task at hand,
@@ -353,11 +394,11 @@ and implicitly documents the nature of the data being used.
 Integer Conversion
 __________________
 
-The range of numbers that can be stored in a numeric variable
+The range of numbers that can be stored in an integer named value
 is different for each numeric type.
-An ``Int8`` variable can store numbers between ``-128`` and ``127``,
-whereas a ``UInt8`` variable can store numbers between ``0`` and ``255``.
-A value that can be stored in one numeric type
+An ``Int8`` named value can store numbers between ``-128`` and ``127``,
+whereas a ``UInt8`` named value can store numbers between ``0`` and ``255``.
+A number that can be stored in one numeric type
 cannot necessarily be stored in another numeric type.
 
 Because of this, numeric type conversion is something you must opt in to on a case-by-case basis.
@@ -368,22 +409,22 @@ you initialize a new number of the desired type with the existing value:
 
 .. testcode:: typeConversion
 
-    (swift) var twoThousand: UInt16 = 2_000
+    (swift) let twoThousand: UInt16 = 2_000
     // twoThousand : UInt16 = 2000
-    (swift) var one: UInt8 = 1
+    (swift) let one: UInt8 = 1
     // one : UInt8 = 1
-    (swift) var twoThousandAndOne = twoThousand + UInt16(one)
+    (swift) let twoThousandAndOne = twoThousand + UInt16(one)
     // twoThousandAndOne : UInt16 = 2001
 
-The variable ``twoThousand`` is a ``UInt16``,
-whereas the variable ``one`` is a ``UInt8``.
+The constant ``twoThousand`` is a ``UInt16``,
+whereas the constant ``one`` is a ``UInt8``.
 They cannot be added together directly,
 because they are not of the same type.
 Instead, this code calls ``UInt16(one)`` to create a new ``UInt16`` initialized with the value of ``one``,
 and uses this value in place of the original.
 Because both sides of the addition are now of type ``UInt16``,
 the addition is allowed.
-The output variable (``twoThousandAndOne``) is inferred to be a ``UInt16``,
+The output constant (``twoThousandAndOne``) is inferred to be a ``UInt16``,
 because it is the sum of two ``UInt16`` values.
 
 The syntax seen above –
@@ -404,22 +445,23 @@ is covered in :doc:`ProtocolsAndExtensions`.
 Integer to Floating-Point Conversion
 ____________________________________
 
-Conversions between integer and floating-point variable types must also be made explicit:
+Conversions between integer and floating-point numeric types must also be made explicit:
 
 .. testcode:: typeConversion
 
-    (swift) var three = 3
+    (swift) let three = 3
     // three : Int = 3
-    (swift) var pointOneFourOneFiveNine = 0.14159
+    (swift) let pointOneFourOneFiveNine = 0.14159
     // pointOneFourOneFiveNine : Double = 0.14159
-    (swift) var pi = Double(three) + pointOneFourOneFiveNine
+    (swift) let pi = Double(three) + pointOneFourOneFiveNine
     // pi : Float64 = 3.14159
 
-Here, the value of the variable ``three`` is used to create a new ``Double``,
+Here, the value of the constant ``three`` is used to create a new ``Double``,
 so that both sides of the addition are of the same type.
 The addition would not be allowed without this conversion in place.
 
-The rules for numeric variables are different from the rules for numeric literals seen earlier –
+The rules for numeric named values are different from
+the rules for numeric literal values seen earlier –
 where the literal value ``3`` was added to the literal value ``0.14159`` –
 because number literals do not have an explicit type in and of themselves.
 Their type is only inferred at the point that they are evaluated by the compiler.
@@ -438,11 +480,11 @@ Numeric Bounds
 
 The minimum and maximum values of each integer type can be accessed using its ``min`` and ``max`` properties:
 
-.. testcode:: declaringVariables
+.. testcode:: namedValues
 
-    (swift) var minimumValue = UInt8.min
+    (swift) let minimumValue = UInt8.min
     // minimumValue : UInt8 = 0
-    (swift) var maximumValue = UInt8.max
+    (swift) let maximumValue = UInt8.max
     // maximumValue : UInt8 = 255
 
 The values of these properties are of the appropriate sized number type
@@ -463,16 +505,18 @@ Values of type ``Bool`` can be either ``true`` or ``false``:
 
 .. testcode:: booleans
 
-    (swift) var orangesAreOrange = true
+    (swift) let orangesAreOrange = true
     // orangesAreOrange : Bool = true
-    (swift) var turnipsAreDelicious = false
+    (swift) let turnipsAreDelicious = false
     // turnipsAreDelicious : Bool = false
 
 The types of ``orangesAreOrange`` and ``turnipsAreDelicious`` have been inferred
 from the fact that they were initialized with ``Bool`` values.
 As with ``Int`` and ``Double`` above,
-you don't need to declare variables as being ``Bool`` if you set them to ``true`` or ``false`` as soon as you create them.
-Type inference helps to make Swift code much more concise and readable when initializing variables with known values.
+you don't need to declare named values as being ``Bool``
+if you set them to ``true`` or ``false`` as soon as you create them.
+Type inference helps to make Swift code much more concise and readable
+when initializing named values with known types of value.
 
 Boolean values are particularly useful when working with conditional statements such as ``if else``:
 
@@ -490,7 +534,7 @@ Conditional statements such as ``if else`` are covered in more detail in :doc:`C
 Swift's strong type-checking means that non-boolean values cannot be substituted for ``Bool``.
 You cannot, for example, say::
 
-    (swift) var i = 1
+    (swift) let i = 1
     // i : Int = 1
     (swift) if i {
         // do stuff
@@ -519,7 +563,7 @@ Here's an example of a tuple:
 
 .. testcode:: tuples
 
-    (swift) var http404Error = (404, "Not Found")
+    (swift) let http404Error = (404, "Not Found")
     // http404Error : (Int, String) = (404, "Not Found")
 
 ``(404, "Not Found")`` is a tuple that groups together an ``Int`` and a ``String`` to describe an :term:`HTTP status code`.
@@ -576,27 +620,27 @@ and set it to the tuple type (``Int``, ``String``).”
 ``HTTPStatus`` has a capitalized name
 because it is a new *type* of tuple,
 rather than an instance of a particular tuple type.
-This is different from the variable name ``http404Error``,
+This is different from the name ``http404Error``,
 which starts with a lowercase letter,
 and capitalizes sub-words within the name.
 Type names should always be in ``UpperCamelCase``,
-and variable names should always be in ``lowerCamelCase``,
+abd constant and variable names should always be in ``lowerCamelCase``,
 for consistency and readability.
 
 This new type alias doesn't set a value for the status code or description.
 It's not actually creating a tuple for a specific status code –
 rather, it's defining what *all* HTTP status codes look like.
 Because it is a fully-fledged type,
-``HTTPStatus`` can be used to declare new tuple variables of that type:
+``HTTPStatus`` can be used to declare new named values of that type:
 
 .. testcode:: tuples
 
-    (swift) var http500Error: HTTPStatus = (500, "Internal Server Error")
+    (swift) let http500Error: HTTPStatus = (500, "Internal Server Error")
     // http500Error : HTTPStatus = (500, "Internal Server Error")
 
 This can be read as:
 
-“Declare a variable called ``http500Error`` that is an ``HTTPStatus``.
+“Declare a constant called ``http500Error`` that is an ``HTTPStatus``.
 Initialize it with
 (a first element value that is ``500``,
 and a second element value that is ``"Internal Server Error"``).”
@@ -613,12 +657,12 @@ you can create new ``HTTPStatus`` tuples using *initializer syntax*:
 
 .. testcode:: tuples
 
-    (swift) var http301Status = HTTPStatus(301, "Moved Permanently")
+    (swift) let http301Status = HTTPStatus(301, "Moved Permanently")
     // http301Status : (Int, String) = (301, "Moved Permanently")
 
 This can be read as:
 
-“Declare a variable called ``http301Status``,
+“Declare a constant called ``http301Status``,
 and set it to a new ``HTTPStatus`` initialized with
 (a first value that is ``301``,
 and a second value that is ``"Moved Permanently"``).”
@@ -666,13 +710,13 @@ The example below shows how to use ``toInt()`` to try and convert a ``String`` i
 
 .. testcode:: optionals
 
-    (swift) var possibleNumber = "123"
+    (swift) let possibleNumber = "123"
     // possibleNumber : String = "123"
-    (swift) var convertedNumber = possibleNumber.toInt()
+    (swift) let convertedNumber = possibleNumber.toInt()
     // convertedNumber : Int? = <unprintable value>
 
 ``convertedNumber`` has an inferred type of ``Int?``, not ``Int``.
-The question mark indicates that the value is an *optional* ``Int``,
+The question mark indicates that the value it contains is an *optional* ``Int``,
 meaning that it might contain *some* ``Int`` value,
 or it might contain *no value at all*.
 (It can't contain anything else, such as a ``Bool`` or a ``String`` –
