@@ -13,23 +13,21 @@
 Operators
 =========
 
-Swift supports all of the standard :term:`operators` from C.
+An *operator* is a special symbol or phrase that is used to check or change values.
+A simple example is the *addition operator*, ``+``,
+which is used to add two numbers together (as in ``let i = 1 + 2``).
+More complex examples include the *logical AND operator* ``&&``
+(as in ``if enteredDoorCode && passedRetinaScan``),
+or the *integer increment operator* ``++i``,
+which gives a shorthand way to increase the value of ``i`` by ``1``.
+All of these operators are explained in more detail below.
+
+Swift supports all of the standard operators from C.
 It also introduces new operators not found in other languages.
 In addition, you can define your own implementations of the standard operators –
 and create new ones –
 for any custom types you define.
-This process is covered in detail in :doc:`ClassesObjectsAndStructs`.
-
-.. glossary ::
-
-    operators
-        An *operator* is a special symbol or phrase that is used to check or change values.
-        A simple example is the *addition* operator, ``+``,
-        which is used to add two numbers together (``var i = 2 + 3``).
-        More complex examples include comparison operators such as the *and* operator ``&&``
-        (``if someBoolValue && someOtherBoolValue {...}``),
-        or the *integer increment* operator ``++i``.
-        All of these are explained in more detail below.
+This process is covered in detail in :doc:`ClassesAndStructures`.
 
 Operators are often referred to as *unary*, *binary* or *ternary*:
 
@@ -49,11 +47,11 @@ and its two operands are the values ``1`` and ``2``.
 Assignment Operator
 -------------------
 
-The assignment operator (``a = b``) updates the value of ``a`` with the value of ``b``:
+The *assignment operator* (``a = b``) updates the value of ``a`` with the value of ``b``:
 
 .. testcode:: assignmentOperator
 
-    (swift) var b = 10
+    (swift) let b = 10
     // b : Int = 10
     (swift) var a = 5
     // a : Int = 5
@@ -62,11 +60,11 @@ The assignment operator (``a = b``) updates the value of ``a`` with the value of
     >>> a is now 10
 
 If the right-hand side of the assignment is a tuple with multiple values,
-its elements can be decomposed into multiple variables at once:
+its elements can be decomposed into multiple named values at once:
 
 .. testcode:: assignmentOperator
 
-    (swift) var (x, y) = (1, 2)
+    (swift) let (x, y) = (1, 2)
     // (x, y) : (Int, Int) = (1, 2)
     (swift) println("x is \(x)")
     >>> x is 1
@@ -89,9 +87,12 @@ Swift makes it much easier to avoid these kinds of errors in your code.
 Arithmetic Operators
 --------------------
 
-Swift supports the four standard mathematical operators –
-addition (``+``), subtraction (``-``), multiplication (``*``) and division (``/``) –
-for all number types:
+Swift supports the four standard *arithmetic operators* for all number types:
+
+* addition (``+``)
+* subtraction (``-``)
+* multiplication (``*``)
+* division (``/``)
 
 .. testcode:: arithmeticOperators
 
@@ -117,44 +118,91 @@ can be added together via ``+`` to make a new ``String``:
 
 .. testcode:: arithmeticOperators
 
-    (swift) var dog = '🐶'
+    (swift) let dog = '🐶'
     // dog : UnicodeScalar = '🐶'
-    (swift) var cow = '🐮'
+    (swift) let cow = '🐮'
     // cow : UnicodeScalar = '🐮'
-    (swift) var dogCow = dog + cow
+    (swift) let dogCow = dog + cow
     // dogCow : String = "🐶🐮"
 
-Modulo Operator
-~~~~~~~~~~~~~~~
+Remainder Operator
+~~~~~~~~~~~~~~~~~~
 
-The *binary modulo operator*, ``a % b``,
-divides ``a`` by ``b``, and returns the remainder.
-For example:
+The *binary remainder operator*, ``a % b``,
+works out how many multiples of ``b`` will fit inside ``a``,
+and returns the value that is left over
+(known as the *remainder*).
+
+For example: to calculate ``9 % 4``,
+you first work out how many ``4``\ s will fit inside ``9``:
+
+.. image:: ../images/remainderInteger.png
+    :width: 349
+    :align: center
+
+You can fit two ``4``\ s inside ``9``, as this illustration shows.
+After doing so, there is a remainder of ``1`` left over (shown in orange).
+
+In Swift, this would be written as:
 
 .. testcode:: arithmeticOperators
 
     (swift) 9 % 4
     // r5 : Int = 1
 
-There are two 4's in 9, with a remainder of 1,
-so the modulo operator returns an ``Int`` value of ``1``.
+To determine the answer for ``a % b``,
+the ``%`` operator calculates the following equation,
+and returns ``remainder`` as its output:
+
+``a`` = (``b`` × ``some multiplier``) + ``remainder``
+
+…where ``some multiplier`` is the smallest number of multiples of ``b``
+that will fit inside ``a``.
+
+Plugging ``9`` and ``4`` into this equation gives:
+
+``9`` = (``4`` × ``2``) + ``1``
+
+The same method is applied when calculating the remainder for a negative value of ``a``:
+
+.. testcode:: arithmeticOperators
+
+    (swift) -9 % 4
+    // r6 : Int = -1
+
+Plugging ``-9`` and ``4`` into the equation gives:
+
+``-9`` = (``4`` × ``-2``) + ``-1``
+
+…giving a remainder value of ``-1``.
+
+The sign of ``b`` is ignored for negative values of ``b``.
+This means that ``a % b`` and ``a % -b`` will always give the same answer.
+
+Floating-Point Remainder Calculations
+_____________________________________
 
 Unlike C and Objective-C,
-Swift can also perform modulo operations on floating-point numbers:
+Swift's remainder operator can also operate on floating-point numbers:
 
 .. testcode:: arithmeticOperators
 
     (swift) 8 % 2.5
-    // r6 : Double = 0.5
+    // r7 : Double = 0.5
 
 There are three 2.5's in 8, with a remainder of 0.5,
-so the modulo operator returns a ``Double`` value of ``0.5``.
+so the remainder operator returns a ``Double`` value of ``0.5``.
+
+.. image:: ../images/remainderFloat.png
+    :width: 311
+    :align: center
 
 Integer Increment and Decrement
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Like C, Swift provides ``++`` and ``--`` operators as shorthand
-for increasing or decreasing an integer variable by ``1``.
+Like C, Swift provides an *integer increment operator* (``++``)
+and an *integer decrement operator* (``--``)
+as a shorthand way to increase or decrease the value of an integer variable by ``1``.
 For example:
 
 .. testcode:: arithmeticOperators
@@ -162,9 +210,9 @@ For example:
     (swift) var i = 0
     // i : Int = 0
     (swift) ++i
-    // r7 : Int = 1
+    // r8 : Int = 1
     (swift) ++i
-    // r8 : Int = 2
+    // r9 : Int = 2
 
 Each time you call ``++i``, the value of ``i`` is increased by ``1``.
 Essentially, ``++i`` is shorthand for saying ``i = i + 1``.
@@ -181,21 +229,21 @@ while also finding out its value:
 
     (swift) var a = 0
     // a : Int = 0
-    (swift) var b = ++a
+    (swift) let b = ++a
     // b : Int = 1
     (swift) println("a is now \(a)")
     >>> a is now 1
-    (swift) var c = a++
+    (swift) let c = a++
     // c : Int = 1
     (swift) println("a is now \(a)")
     >>> a is now 2
 
 In the example above,
-``var b = ++a`` sets ``b`` to the value of ``a``,
+``let b = ++a`` sets ``b`` to the value of ``a``,
 *after* it has been incremented.
 This is why both ``a`` and ``b`` are equal to ``1``.
 
-However, ``var c = a++`` sets ``c`` to the value of ``a`` *before* it is incremented.
+However, ``let c = a++`` sets ``c`` to the value of ``a`` *before* it is incremented.
 The result is that ``c`` gets the old value of ``1``,
 but ``a`` now equals ``2``.
 
@@ -205,35 +253,37 @@ because it has the typical expected behavior of incrementing ``i``,
 and then providing the result.
 (The same rules and advice apply for ``--i`` and ``i--``.)
 
-.. QUESTION: is this good advice (given the general prevalence of i++ in the world),
+.. QUESTION: is this good advice
+   (given the general prevalence of i++ in the world),
    and indeed is it even advice we need to bother giving
    (given that lots of people might disagree or not care)?
 
 Unary Plus and Minus
 ~~~~~~~~~~~~~~~~~~~~
 
-The sign of a numeric value can be toggled using a prefixed ``-`` (known as *unary minus*):
+The sign of a numeric value can be toggled using a prefixed ``-``,
+known as the *unary minus operator*:
 
 .. testcode:: arithmeticOperators
 
-    (swift) var minusThree = -3
+    (swift) let three = 3
+    // three : Int = 3
+    (swift) let minusThree = -three
     // minusThree : Int = -3
-    (swift) var plusThree = -minusThree         // effectively "minus minus three"
+    (swift) let plusThree = -minusThree    // effectively "minus minus three"
     // plusThree : Int = 3
-    (swift) var anotherMinusThree = -plusThree
-    // anotherMinusThree : Int = -3
 
-Note that the unary minus operator ``-`` is prepended directly before the value it operates on,
+The unary minus operator ``-`` is prepended directly before the value it operates on,
 without any whitespace.
 
-There is a corresponding *unary plus* operator, ``+``,
+There is a corresponding *unary plus operator*, ``+``,
 which simply returns the value it operates on, without any change:
 
 .. testcode:: arithmeticOperators
 
-    (swift) var minusSix = -6
+    (swift) let minusSix = -6
     // minusSix : Int = -6
-    (swift) var alsoMinusSix = +minusSix
+    (swift) let alsoMinusSix = +minusSix
     // alsoMinusSix : Int = -6
 
 The unary plus operator doesn't actually do anything.
@@ -242,8 +292,8 @@ However, it can be used to provide symmetry in your code when also using the una
 Compound Assignment Operators
 -----------------------------
 
-Like C, Swift provides shorthand operators that combine *assignment* (``=``) with another operation.
-One example is the *addition assignment* operator (``+=``):
+Like C, Swift provides shorthand operators that combine assignment (``=``) with another operation.
+One example is the *addition assignment operator* (``+=``):
 
 .. testcode:: compoundAssignment
 
@@ -262,7 +312,7 @@ A complete list of compound assignment operators can be found in the :doc:`../Re
 Comparison Operators
 --------------------
 
-Swift supports all of the standard C comparison operators:
+Swift supports all of the standard C *comparison operators*:
 
 * Equal to (``a == b``)
 * Not equal to (``a != b``)
@@ -277,8 +327,8 @@ to check if values are identical:
 * Identical to (``a === b``)
 * Not identical to (``a !== b``)
 
-These *identity operators* are used to test if two object variables both refer to the same object instance.
-They are described in detail in :doc:`ClassesObjectsAndStructs`.
+These *identity operators* are used to test if two object named values both refer to the same object instance.
+They are described in :doc:`ClassesAndStructures`.
 
 Each of the comparison operators returns a ``Bool`` value to indicate whether or not the statement is true:
 
@@ -302,7 +352,7 @@ such as the ``if else`` statement:
 
 .. testcode:: comparisonOperators
 
-    (swift) var name = "world";
+    (swift) let name = "world";
     // name : String = "world"
     (swift) if name == "world" {
         println("hello, world")
@@ -320,7 +370,7 @@ The ``if else`` statement is described in more detail in :doc:`ControlFlow`.
 Ternary Comparison Operator
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The ternary comparison operator is a special operator with three parts,
+The *ternary comparison operator* is a special operator with three parts,
 which takes the form ``question ? answer1 : answer2``.
 It provides a shorthand way to evaluate one of two expressions
 based on whether ``question`` is ``true`` or ``false``.
@@ -341,11 +391,11 @@ and 20 pixels taller if it doesn't:
 
 .. testcode:: ternaryComparisonOperatorPart1
 
-    (swift) var contentHeight = 40
+    (swift) let contentHeight = 40
     // contentHeight : Int = 40
-    (swift) var hasHeader = true
+    (swift) let hasHeader = true
     // hasHeader : Bool = true
-    (swift) var rowHeight = contentHeight + (hasHeader ? 50 : 20)
+    (swift) let rowHeight = contentHeight + (hasHeader ? 50 : 20)
     // rowHeight : Int64 = 90
     (swift) println("The row height is \(rowHeight) pixels.")
     >>> The row height is 90 pixels.
@@ -358,9 +408,9 @@ This is shorthand for:
 
 .. testcode:: ternaryComparisonOperatorPart2
 
-    (swift) var contentHeight = 40
+    (swift) let contentHeight = 40
     // contentHeight : Int = 40
-    (swift) var hasHeader = true
+    (swift) let hasHeader = true
     // hasHeader : Bool = true
     (swift) var rowHeight = contentHeight
     // rowHeight : Int = 40
@@ -373,8 +423,12 @@ This is shorthand for:
     >>> The row height is 90 pixels.
 
 .. TODO: leave rowHeight uninitialized once the REPL allows uninitialized variables?
+.. QUESTION: In the first example, rowHeight is a constant (because it can be),
+   but in the second example, it's a variable (because it has to be).
+   Is this okay?
 
-In this case, the ternary comparison operator provides an efficient shorthand for deciding which of two expressions to consider.
+In this case, the ternary comparison operator provides
+an efficient shorthand for deciding which of two expressions to consider.
 
 The ternary comparison operator should be used with care, however.
 It is very concise, but this conciseness can lead to hard-to-read code if over-used.
@@ -383,10 +437,10 @@ Avoid combining multiple instances of the ternary comparison operator into one c
 Bitwise Operators
 -----------------
 
-Bitwise operators enable you to manipulate the individual raw data bits within a data structure.
+*Bitwise operators* enable you to manipulate the individual raw data bits within a data structure.
 They are often used in low-level programming,
-including graphics programming and device driver creation.
-They may also be useful when working with raw data from external sources,
+such as graphics programming and device driver creation.
+They can also be useful when working with raw data from external sources,
 integrating with electronics hardware,
 and when encoding and decoding data for communication via a custom protocol.
 
@@ -395,7 +449,7 @@ Swift supports all of the bitwise operators found in C, as described below.
 Bitwise NOT
 ~~~~~~~~~~~
 
-The bitwise NOT operator (``~``) inverts all of the bits in a number:
+The *bitwise NOT operator* (``~``) inverts all of the bits in a number:
 
 .. image:: ../images/bitwiseNOT.png
     :width: 570
@@ -405,9 +459,9 @@ For example:
 
 .. testcode:: bitwiseOperators
 
-    (swift) var initialBits: UInt8 = 0b00001111
+    (swift) let initialBits: UInt8 = 0b00001111
     // initialBits : UInt8 = 15
-    (swift) var invertedBits = ~initialBits  // equals 11110000
+    (swift) let invertedBits = ~initialBits  // equals 11110000
     // invertedBits : UInt8 = 240
 
 ``UInt8`` integers have eight bits,
@@ -417,7 +471,7 @@ which has its first four bits set to ``0``,
 and its second four bits set to ``1``.
 This is equivalent to a decimal value of ``15``.
 
-The bitwise NOT operator is then used to create a new variable ``invertedBits``,
+The bitwise NOT operator is then used to create a new constant called ``invertedBits``,
 which is equal to ``initialBits``,
 but with all of the bits inverted.
 Zeroes become ones, and ones become zeroes.
@@ -427,7 +481,7 @@ which is equal to an unsigned decimal value of ``240``.
 Bitwise AND
 ~~~~~~~~~~~
 
-The bitwise AND operator (``&``) combines the bits of two numbers.
+The *bitwise AND operator* (``&``) combines the bits of two numbers.
 It returns a new number whose bits are only set to ``1`` if the bits were equal to ``1`` in *both* input numbers:
 
 .. image:: ../images/bitwiseAND.png
@@ -438,11 +492,11 @@ For example:
 
 .. testcode:: bitwiseOperators
 
-    (swift) var firstSixBits: UInt8 = 0b11111100
+    (swift) let firstSixBits: UInt8 = 0b11111100
     // firstSixBits : UInt8 = 252
-    (swift) var lastSixBits: UInt8  = 0b00111111
+    (swift) let lastSixBits: UInt8  = 0b00111111
     // lastSixBits : UInt8 = 63
-    (swift) var middleFourBits = firstSixBits & lastSixBits  // equals 00111100
+    (swift) let middleFourBits = firstSixBits & lastSixBits  // equals 00111100
     // middleFourBits : UInt8 = 60
 
 The values of ``firstSixBits`` and ``lastSixBits`` both have their four middle bits equal to ``1``.
@@ -452,7 +506,7 @@ which is equal to an unsigned decimal value of ``60``.
 Bitwise OR
 ~~~~~~~~~~
 
-The bitwise OR operator (``|``) compares the bits of two numbers,
+The *bitwise OR operator* (``|``) compares the bits of two numbers,
 and returns a new number whose bits are set to ``1`` if the bits were equal to ``1`` in *either* of the input numbers:
 
 .. image:: ../images/bitwiseOR.png
@@ -463,11 +517,11 @@ For example:
 
 .. testcode:: bitwiseOperators
 
-    (swift) var someBits: UInt8 = 0b10110010
+    (swift) let someBits: UInt8 = 0b10110010
     // someBits : UInt8 = 178
-    (swift) var moreBits: UInt8 = 0b01011110
+    (swift) let moreBits: UInt8 = 0b01011110
     // moreBits : UInt8 = 94
-    (swift) var combinedbits = someBits | moreBits  // equals 11111110
+    (swift) let combinedbits = someBits | moreBits  // equals 11111110
     // combinedbits : UInt8 = 254
 
 The values of ``someBits`` and ``moreBits`` have different bits set to ``1``.
@@ -477,7 +531,7 @@ which equals an unsigned decimal of ``254``.
 Bitwise XOR
 ~~~~~~~~~~~
 
-The bitwise :term:`XOR` operator (``^``) compares the bits of two numbers,
+The *bitwise XOR operator* (``^``) compares the bits of two numbers,
 and returns a new number whose bits are set to ``1`` if the bits are equal to ``1`` in *either* of the input numbers,
 but not if they are set to ``1`` in *both* of the input numbers:
 
@@ -494,11 +548,11 @@ For example:
 
 .. testcode:: bitwiseOperators
 
-    (swift) var firstBits: UInt8 = 0b00010100
+    (swift) let firstBits: UInt8 = 0b00010100
     // firstBits : UInt8 = 20
-    (swift) var otherBits: UInt8 = 0b00000101
+    (swift) let otherBits: UInt8 = 0b00000101
     // otherBits : UInt8 = 5
-    (swift) var outputBits = firstBits ^ otherBits  // equals 00010001
+    (swift) let outputBits = firstBits ^ otherBits  // equals 00010001
     // outputBits : UInt8 = 17
 
 .. TODO: Explain how this can be useful to toggle just a few bits in a bitfield.
@@ -506,7 +560,7 @@ For example:
 Bitwise Left and Right Shifts
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The bitwise left shift operator (``<<``) and right shift operator (``>>``)
+The *bitwise left shift operator* (``<<``) and *bitwise right shift operator* (``>>``)
 move all of the bits in a number to the left or the right by a certain number of places,
 as per the rules defined below.
 
@@ -543,7 +597,7 @@ Here's how bit-shifting looks in Swift code:
 
 .. testcode:: bitwiseShiftOperators
 
-    (swift) var shiftBits: UInt8 = 4    // 00000100 in binary
+    (swift) let shiftBits: UInt8 = 4    // 00000100 in binary
     // shiftBits : UInt8 = 4
     (swift) shiftBits << 1              // 00001000
     // r0 : UInt8 = 8
@@ -558,16 +612,16 @@ Bit-shifting can be used to encode and decode values within other data types:
 
 .. testcode:: bitwiseShiftOperators
 
-    (swift) var pink: UInt32 = 0xCC6699
+    (swift) let pink: UInt32 = 0xCC6699
     // pink : UInt32 = 13395609
-    (swift) var redComponent = (pink & 0xFF0000) >> 16
+    (swift) let redComponent = (pink & 0xFF0000) >> 16
     // redComponent : UInt32 = 204
-    (swift) var greenComponent = (pink & 0x00FF00) >> 8
+    (swift) let greenComponent = (pink & 0x00FF00) >> 8
     // greenComponent : UInt32 = 102
-    (swift) var blueComponent = pink & 0x0000FF
+    (swift) let blueComponent = pink & 0x0000FF
     // blueComponent : UInt32 = 153
 
-This example uses a ``UInt32`` variable called ``pink`` to store a
+This example uses a ``UInt32`` constant called ``pink`` to store a
 Cascading Style Sheets color value for the color pink.
 Here, the CSS color value ``#CC6699`` is written as ``0xCC6699`` in Swift's hexadecimal number representation.
 This color is then decomposed into its red (``CC``), green (``66``) and blue (``99``) components
@@ -599,7 +653,8 @@ which has a decimal value of ``153``.
     Why do the values of ``redComponent`` and ``greenComponent`` change?
     Why do you then get same value of ``153`` for all three components?
 
-.. QUESTION: I've used UInt32 values here, but this would also work with an inferred Int.
+.. QUESTION: I've used UInt32 values here,
+   but this would also work with an inferred Int.
    Which is a better example? (I've chosen not to use Int so far,
    as this section is about unsigned shifts.)
 
@@ -686,11 +741,11 @@ negative integers remain negative as their value moves closer to zero.
 Overflow Operators
 ------------------
 
-An error will be thrown if you try to insert a value into an integer variable that cannot hold that value.
-This gives extra safety when working with values that are too large or too small.
+An error will be thrown if you try to insert a number into an integer named value that cannot hold that value.
+This gives extra safety when working with numbers that are too large or too small.
 
-For example, the ``Int16`` integer type can hold any signed value between ``-32768`` and ``32767``.
-If you try and set a variable of this type to a value outside of this range,
+For example, the ``Int16`` integer type can hold any signed integer number between ``-32768`` and ``32767``.
+If you try and set a ``UInt16`` named value to a number outside of this range,
 an error is thrown:
 
 .. testcode:: overflowOperatorsWillFailToOverflow
@@ -700,8 +755,10 @@ an error is thrown:
     (swift) potentialOverflow += 1                  // this will throw an error
     xxx overflow
 
-.. TODO: is "throw an error" the correct phrase to use here? It actually triggers an assertion, causing the REPL to crash.
-.. TODO: change the error text we detect here once overflowing provides an error message rather than just an assert.
+.. TODO: is "throw an error" the correct phrase to use here?
+   It actually triggers an assertion, causing the REPL to crash.
+.. TODO: change the error text we detect here
+   once overflowing provides an error message rather than just an assert.
 
 Throwing an error in these scenarios is much safer than allowing an outsized value to overflow.
 Providing error handling when values get too large or too small
@@ -747,7 +804,7 @@ The value that remains within the bounds of the ``UInt8`` after the overflow add
 Value Underflow
 ~~~~~~~~~~~~~~~
 
-Numbers can also become too small to fit in their variable type's maximum bounds.
+Numbers can also become too small to fit in their type's maximum bounds.
 Here's an example.
 
 The *smallest* value that a UInt8 can hold is ``0`` (which is ``00000000`` in eight-bit binary form).
@@ -797,7 +854,7 @@ The end result of the overflow and underflow behavior described above is that fo
 overflow always wraps around from the largest valid integer value back to the smallest,
 and underflow always wraps around from the smallest value to the largest.
 
-Division by zero
+Division by Zero
 ~~~~~~~~~~~~~~~~
 
 If you divide a number by zero,
@@ -806,12 +863,10 @@ Swift will throw an error:
 
 .. testcode:: overflowOperatorsDivZeroError
 
-    (swift) var x = 1
+    (swift) let x = 1
     // x : Int = 1
-    (swift) var y = x / 0
-    !!! <REPL Input>:1:11: error: division by zero
-    !!! var y = x / 0
-    !!!           ^
+    (swift) let y = x / 0
+    xxx division by zero
  
 Integer division by zero is not a valid mathematical action,
 and so Swift throws an error rather than creating an invalid value.
@@ -820,19 +875,23 @@ and so Swift throws an error rather than creating an invalid value.
    as otherwise the stack trace crash from the division-by-zero will mean that
    subsequent blocks in the group won't get tested.
 
+.. TODO: update this example code to check for a true error,
+   rather than a stack trace,
+   once rdar://15804939 has been fixed.
+
 Logical Operators
 -----------------
 
 Logical NOT
 ~~~~~~~~~~~
 
-The NOT operator (``!a``) inverts a boolean value so that ``true`` becomes ``false``,
+The *logical NOT operator* (``!a``) inverts a boolean value so that ``true`` becomes ``false``,
 and ``false`` becomes ``true``.
 It can be read as “not ``a``”, as seen in the following example:
 
 .. testcode:: logicalOperators
 
-    (swift) var allowedEntry = false
+    (swift) let allowedEntry = false
     // allowedEntry : Bool = false
     (swift) if !allowedEntry {
         println("ACCESS DENIED")
@@ -844,13 +903,14 @@ The subsequent line is only executed if “not allowed entry” is true,
 i.e. if ``allowedEntry`` is ``false``.
 
 As in this example,
-careful choice of boolean variable names can help to keep code readable and concise,
+careful choice of boolean constant and variable names
+can help to keep code readable and concise,
 while avoiding double negatives or confusing logic statements.
 
 Logical AND
 ~~~~~~~~~~~
 
-The AND operator (``&&``) is used to create logical expressions
+The *logical AND operator* (``&&``) is used to create logical expressions
 where both values must be ``true`` for the overall expression to also be ``true``.
 
 This example considers two ``Bool`` values,
@@ -858,9 +918,9 @@ and only allows access if both values are ``true``:
 
 .. testcode:: logicalOperators
 
-    (swift) var enteredDoorCode = true
+    (swift) let enteredDoorCode = true
     // enteredDoorCode : Bool = true
-    (swift) var passedRetinaScan = false
+    (swift) let passedRetinaScan = false
     // passedRetinaScan : Bool = false
     (swift) if enteredDoorCode && passedRetinaScan {
         println("Welcome!")
@@ -880,16 +940,16 @@ This is known as *short-circuit evaluation*.
 Logical OR
 ~~~~~~~~~~
 
-The OR operator (``||``, i.e. two adjacent pipe characters)
+The *logical OR operator* (``||``, i.e. two adjacent pipe characters)
 is used to create logical expressions where only *one* of the two values has to be ``true``
 for the overall expression to be ``true``.
 For example:
 
 .. testcode:: logicalOperators
 
-    (swift) var hasDoorKey = false
+    (swift) let hasDoorKey = false
     // hasDoorKey : Bool = false
-    (swift) var knowsOverridePassword = true
+    (swift) let knowsOverridePassword = true
     // knowsOverridePassword : Bool = true
     (swift) if hasDoorKey || knowsOverridePassword {
         println("Welcome!")
@@ -924,7 +984,7 @@ You can combine multiple logical operators to create longer compound expressions
     >>> Welcome!
 
 This example uses multiple ``&&`` and ``||`` operators to create a longer compound expression.
-Note that ``&&`` and ``||`` still only operate on two values,
+However, the ``&&`` and ``||`` operators still only operate on two values,
 so this is actually three smaller expressions chained together.
 It can be read as:
 
@@ -941,8 +1001,11 @@ so the overall compound expression still equates to ``true``.
 Priority and Associativity
 --------------------------
 
-.. NOTE: I've chosen to use ‘priority’ rather than ‘precedence’ here, because I think it's a clearer phrase to use.
-.. QUESTION: Could priority and associativity be made clear as part of the hypothetical ‘show invisibles’ feature, to show the invisible parentheses implied by priority and associativity?
+.. NOTE: I've chosen to use ‘priority’ rather than ‘precedence’ here,
+   because I think it's a clearer phrase to use.
+.. QUESTION: Could priority and associativity be made clear
+   as part of the hypothetical ‘show invisibles’ feature,
+   to show the invisible parentheses implied by priority and associativity?
 
 It is important to consider each operator's *priority* and *associativity* when working out how to calculate a compound expression.
 These two principles are used to work out the order in which an expression should be calculated.
@@ -1051,9 +1114,9 @@ for counting up to (but not including) the length of a zero-based array:
 
 .. testcode:: rangeOperators
 
-    (swift) var names = ["Anna", "Brian", "Christine", "Daniel"]
+    (swift) let names = ["Anna", "Brian", "Christine", "Daniel"]
     // names : String[] = ["Anna", "Brian", "Christine", "Daniel"]
-    (swift) var count = names.count
+    (swift) let count = names.count
     // count : Int = 4
     (swift) for i in 0..count {
         println("Person \(i + 1) is called \(names[i])")
