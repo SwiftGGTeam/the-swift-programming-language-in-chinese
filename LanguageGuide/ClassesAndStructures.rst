@@ -194,10 +194,8 @@ if they are listed in the same order that the properties are declared in the str
     (swift) let fourByThree = Size(4.0, 3.0)
     // fourByThree : Size = Size(4.0, 3.0)
 
-Classes do not provide a default initializer, because [SOME_JUSTIFIABLE_REASON].
-The creation of custom initializers is described in more detail below.
-
-.. TODO: Include a justifiable reason.
+.. TODO: Include a justifiable reason for why classes do not provide a default initializer.
+.. TODO: Describe the creation of custom initializers.
 .. TODO: Clarify the difference between a default initializer and a memberwise initializer.
    The thing being described above is actually a memberwise initializer.
 .. TODO: This whole section needs updating in light of the changes for definite initialization.
