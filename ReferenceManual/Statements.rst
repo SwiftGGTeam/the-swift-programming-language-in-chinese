@@ -130,8 +130,11 @@ and therefore must evaluate to either ``true`` or ``false``.
     for-init --> variable-declaration | expression
 
 
-For-Each Statement
-++++++++++++++++++
+Collection-Based For Statement
+++++++++++++++++++++++++++++++
+
+.. Other rejected headings included range-based, enumerator-based,
+   container-based sequence-based and for-each.
 
 For-each statements allow a block of code to be executed
 once for each item in a collection
@@ -156,10 +159,16 @@ and then continues execution at the beginning of the loop.
 Otherwise, the program does not perform assignment or execute the code block,
 and it is finished executing the statement.
 
+
 .. TR: Are the above method calls correct?
    I've determined this information be looking at the declarations in the REPL
    so there may be aspects we don't want to document
    or want to describe differently.
+   Used swift-1.12 from Jan 9, 2014.
+   (Jan 20 - doesn't match today's REPL anymore.)
+
+.. TODO: Move this info to the stdlib reference as appropriate.
+
 
 .. langref-grammar
 
