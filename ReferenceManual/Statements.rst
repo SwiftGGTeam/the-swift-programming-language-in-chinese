@@ -27,7 +27,7 @@ Looping Statements
 Looping statements allow a block of code to be executed repeatedly,
 depending on the conditions specified in the loop.
 Swift has four looping statements:
-C-style for statement, for-each statement, while statement, and do-while statement.
+a for statement, a collection-based for statement, a while statement, and a do-while statement.
 Each looping statement is discussed in detail below.
 
 See also `Break Statement`_ and `Continue Statement`_.
@@ -36,31 +36,20 @@ See also `Break Statement`_ and `Continue Statement`_.
 
     Grammar of a looping statement
 
-    looping-statement --> c-style-for-statement
-    looping-statement --> for-each-statement
+    looping-statement --> for-statement
+    looping-statement --> collection-based-for-statement
     looping-statement --> while-statement
     looping-statement --> do-while-statement
 
 
-For Statements
-~~~~~~~~~~~~~~
+For Statement
+~~~~~~~~~~~~~
 
-A for statement allows a block of code to be executed multiple times.
-Swift has two for statements:
-a C-style for statement and a for-each statement.
-Each for statement is discussed in detail below.
-
-.. TODO: These need better names.
-   How about "incrementor style" and "collection style" for loops?
-
-For Statements
-++++++++++++++
-
-C-style for statements allow a block of code to be executed repeatedly
+A for statements allow a block of code to be executed repeatedly
 while incrementing a counter,
 as long as a condition remains true.
 
-A C-style for statement has the following general form:
+A for statement has the following general form:
 
 .. syntax-outline::
 
@@ -72,7 +61,7 @@ The parentheses around the initiazilation, condition, and increment are optional
 but the semicolon between them is required.
 The braces around the body of the loop are also required.
 
-A C-style for statement is executed as follows:
+A for statement is executed as follows:
 
 1. The *initialization* expression is evaluated once only
    and is usually used to declare and initialize any variables
@@ -108,10 +97,10 @@ and therefore must evaluate to either ``true`` or ``false``.
 
 .. syntax-grammar::
 
-    Grammar of a C-style for statement
+    Grammar of a for statement
 
-    c-style-for-statement --> ``for`` for-init-OPT ``;`` expression-OPT ``;`` expression-OPT code-block
-    c-style-for-statement --> ``for`` ``(`` for-init-OPT ``;`` expression-OPT ``;`` expression-OPT ``)`` code-block
+    for-statement --> ``for`` for-init-OPT ``;`` expression-OPT ``;`` expression-OPT code-block
+    for-statement --> ``for`` ``(`` for-init-OPT ``;`` expression-OPT ``;`` expression-OPT ``)`` code-block
 
     for-init --> variable-declaration | expression-list
 
@@ -122,11 +111,11 @@ Collection-Based For Statement
 .. Other rejected headings included range-based, enumerator-based,
    container-based sequence-based and for-each.
 
-For-each statements allow a block of code to be executed
+Collection-based for statements allow a block of code to be executed
 once for each item in a collection
 that conforms to the ``Sequence`` protocol.
 
-A for-each statement has the general form:
+A collection-based for statement has the general form:
 
 .. syntax-outline::
 
@@ -162,9 +151,9 @@ and it is finished executing the statement.
 
 .. syntax-grammar::
 
-    Grammar of a for-each statement
+    Grammar of a collection-based for statement
 
-    for-each-statement --> ``for`` pattern ``in`` expression code-block
+    collection-based-for-statement --> ``for`` pattern ``in`` expression code-block
 
 
 While Statement
@@ -527,7 +516,7 @@ of the innermost enclosing looping statement in which it occurs
 but does not stop execution of the looping statement.
 Program control is then transferred to the controlling expression of the enclosing looping statement.
 
-In a C-style for statement,
+In a for statement,
 the increment expression is still evaluated after the continue statement is executed,
 because the increment expression is evaluated after the execution of the loop's body.
 
