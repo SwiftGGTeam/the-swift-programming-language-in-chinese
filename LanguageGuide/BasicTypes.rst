@@ -161,7 +161,7 @@ and attempting to do so will result in an error:
     (swift) let languageName = "Swift"
     // languageName : String = "Swift"
     (swift) languageName = "Swift++"
-    !!! <REPL Input>:1:14: error: cannot assign to the result of this expression
+    !!! <REPL Input>:1:14: error: cannot assign to 'let' value 'languageName'
     !!! languageName = "Swift++"
     !!! ~~~~~~~~~~~~ ^
 
