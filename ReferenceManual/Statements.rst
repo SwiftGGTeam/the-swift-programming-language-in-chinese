@@ -197,7 +197,7 @@ A while statement has the following general form:
 
 When a while loop is executed,
 it begins by evaluating the conditional.
-If it evaluates to ``true``, the program executes the code block
+If the conditional evaluates to ``true``, the program executes the code block
 and then continues execution at the beginning of the while statement.
 Otherwise, the program is finished executing the statement.
 
@@ -229,7 +229,7 @@ A do-while statement has the following general form:
 When a do-while loop is executed,
 it begins by executing the code block,
 and then evaluates the conditional.
-If it evaluates to ``true``,
+If the conditional evaluates to ``true``,
 the program continues execution at the beginning of the do-while statement.
 Otherwise, the program is finished executing the statement.
 
