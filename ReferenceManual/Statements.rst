@@ -259,7 +259,7 @@ Branching Statements
 If Statements
 ~~~~~~~~~~~~~
 
-The general format of an ``if`` statement is
+The general format of an ``if`` statement is as follows:
 
 .. syntax-outline::
 
@@ -269,7 +269,7 @@ The general format of an ``if`` statement is
         <#code to execute if condition is false#>
     }
 
-where the ``else`` part is optional.
+The ``else`` part is optional.
 
 .. syntax-outline::
 
@@ -297,6 +297,9 @@ where the ``else`` part is optional.
 
 Switch Statements
 ~~~~~~~~~~~~~~~~~
+
+.. FIXME: "You can use" is a bit wordy.
+   We need to settle on a convention for starting each section.
 
 You can use a switch statement to execute certain blocks of code depending on the value of a
 **control expression**---the expression following the keyword ``switch``.
