@@ -436,9 +436,11 @@ Each control transfer statement is discussed in detail below.
 Break Statement
 ~~~~~~~~~~~~~~~
 
-A break statement consists simply of the ``break`` keyword
+A break statement consists of the ``break`` keyword
 and may occur only in the context of a looping statement.
-A break statement ends program execution of the smallest enclosing looping statement in which it occurs.
+A break statement ends program execution of the current iteration
+of the innermost enclosing looping statement in which it occurs
+and stops execution of the looping statement.
 Program control is then transferred to the first line of code following the enclosing
 looping statement, if any.
 For an example of how to use a break statement in the context of a looping statement,
@@ -458,12 +460,11 @@ see “Loop Control Statements” in the :doc:`../LanguageGuide/ControlFlow` cha
 Continue Statement
 ~~~~~~~~~~~~~~~~~~
 
-A continue statement consists of the ``continue`` keyword, and like a break statement,
-may occur only in the context of a looping statement.
-Unlike a break statement,
-a continue statement ends only the program execution of the *current iteration*
-of the smallest enclosing looping statement in which it occurs.
-Any remaining code in the body of the loop is not executed.
+A continue statement consists of the ``continue`` keyword
+and may occur only in the context of a looping statement.
+A continue statement ends program execution of the current iteration
+of the innermost enclosing looping statement in which it occurs
+but does not stop execution of the looping statement.
 Program control is then transferred to the controlling expression of the enclosing looping statement.
 
 In a C-style for statement,
