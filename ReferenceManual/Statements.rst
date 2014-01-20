@@ -40,11 +40,11 @@ Looping Statements
 
 Looping statements allow a block of code to be executed repeatedly,
 depending on the conditions specified in the loop.
-All code inside the scope of the loop is executed (in order) on each iteration of the loop,
-unless a break statement or continue statement is encountered.
 Swift has four looping statements:
 C-style for statement, for-each statement, while statement, and do-while statement.
 Each looping statement is discussed in detail below.
+
+See also `Break Statement`_ and `Continue Statement`_.
 
 .. syntax-grammar::
 
