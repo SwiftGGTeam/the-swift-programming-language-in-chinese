@@ -545,6 +545,10 @@ even if the patterns of the case label do not match the value of the switch stat
 A fallthrough statement can appear anywhere inside a switch statement,
 not just as the last statement of a case block,
 but it may not be used in the final case block.
+It also cannot transfer control into a case block
+whose pattern contains variable bindings.
+
+.. TODO: Need a decided-on name for "var" bindings.
 
 For an example of how to use a fallthrough statement in a switch statement,
 see “Fallthrough” in the :doc:`../LanguageGuide/ControlFlow` chapter of the :doc:`../LanguageGuide/index`.
