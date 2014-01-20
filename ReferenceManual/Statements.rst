@@ -493,11 +493,15 @@ Fallthrough Statement
 A fallthrough statement consists of the ``fallthrough`` keyword
 and may occur only in a case block of a switch statement.
 A fallthrough statement causes program execution to continue
-from one case in a switch statement to the next case or, if present, to the default case.
+from one case in a switch statement to the next case.
 Program execution continues to the next case
 even if the patterns of the case label do not match the value of the switch statement's control expression.
 
-Fallthrough statements may not be used in the final case block of a switch statement.
+
+
+A fallthrough statement can appear anywhere inside a switch statement,
+not just as the last statement of a case block,
+but it may not be used in the final case block.
 
 For an example of how to use a fallthrough statement in a switch statement,
 see “Fallthrough” in the :doc:`../LanguageGuide/ControlFlow` chapter of the :doc:`../LanguageGuide/index`.
@@ -537,6 +541,8 @@ If the value of the expression does not match the value of the return type
 declared in the function or method declaration,
 the expression's value is converted to the return type
 before it is returned to the calling function or method.
+
+.. FIXME Converted how?
 
 .. langref-grammar
 
