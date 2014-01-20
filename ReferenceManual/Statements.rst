@@ -26,11 +26,11 @@ Looping Statements
 
 Looping statements allow a block of code to be executed repeatedly,
 depending on the conditions specified in the loop.
-All code inside the scope of the loop is executed (in order) on each iteration of the loop,
-unless a break statement or continue statement is encountered.
 Swift has four looping statements:
 C-style for statement, for-each statement, while statement, and do-while statement.
 Each looping statement is discussed in detail below.
+
+See also `Break Statement`_ and `Continue Statement`_.
 
 .. syntax-grammar::
 
@@ -53,18 +53,14 @@ Each for statement is discussed in detail below.
 .. TODO: These need better names.
    How about "incrementor style" and "collection style" for loops?
 
-C-Style For Statements
-++++++++++++++++++++++
+For Statements
+++++++++++++++
 
 C-style for statements allow a block of code to be executed repeatedly
 while incrementing a counter,
 as long as a condition remains true.
 
-..  This probably belongs in the Language Guide.
-    Typically, the initialization, condition, and increment,
-    are used to keep a local counter.
-
-A C-style for statement has the general form, where the parentheses are optional:
+A C-style for statement has the following general form:
 
 .. syntax-outline::
 
@@ -72,8 +68,9 @@ A C-style for statement has the general form, where the parentheses are optional
         <#code to execute#>
     }
 
-Although the parentheses are optional,
-the opening and closing braces and the semicolons are required.
+The parentheses around the initiazilation, condition, and increment are optional,
+but the semicolon between them is required.
+The braces around the body of the loop are also required.
 
 A C-style for statement is executed as follows:
 
@@ -81,7 +78,7 @@ A C-style for statement is executed as follows:
    and is usually used to declare and initialize any variables
    that are needed for the remainder of the loop.
 
-2. Next, the *condition* expression is evaluated.
+2. The *condition* expression is evaluated.
    If it evaluates to ``true``,
    the program executes the code inside the braces of the for statement,
    and execution continues to step 3.
@@ -89,18 +86,18 @@ A C-style for statement is executed as follows:
    the program does not execute the code block or the *increment* expression,
    and the program is finished executing the for statement.
 
-3. After executing all of the code inside the braces of the for statement,
-   the *increment* expression is evaluated.
+3. The *increment* expression is evaluated.
    After it has been evaluated,
-   execution returns to step 2,
-   and the *condition* expression is evaluated again
-   to determine whether the loop should continue.
+   execution returns to step 2.
 
 Variables defined within the *initialization* expression
 are valid only within the scope of the for statement itself.
 
 The value of the *condition* expression must be of type ``Bool``,
 and therefore must evaluate to either ``true`` or ``false``.
+
+.. TODO: Document the scope of loop variables.
+   This applies to all loops, so it doesn't belong here.
 
 .. langref-grammar
 
@@ -119,8 +116,11 @@ and therefore must evaluate to either ``true`` or ``false``.
     for-init --> variable-declaration | expression-list
 
 
-For-Each Statement
-++++++++++++++++++
+Collection-Based For Statement
+++++++++++++++++++++++++++++++
+
+.. Other rejected headings included range-based, enumerator-based,
+   container-based sequence-based and for-each.
 
 For-each statements allow a block of code to be executed
 once for each item in a collection
@@ -145,10 +145,16 @@ and then continues execution at the beginning of the loop.
 Otherwise, the program does not perform assignment or execute the code block,
 and it is finished executing the statement.
 
+
 .. TR: Are the above method calls correct?
    I've determined this information be looking at the declarations in the REPL
    so there may be aspects we don't want to document
    or want to describe differently.
+   Used swift-1.12 from Jan 9, 2014.
+   (Jan 20 - doesn't match today's REPL anymore.)
+
+.. TODO: Move this info to the stdlib reference as appropriate.
+
 
 .. langref-grammar
 
@@ -256,7 +262,7 @@ Branching Statements
 If Statements
 ~~~~~~~~~~~~~
 
-The general format of an ``if`` statement is
+The general format of an ``if`` statement is as follows:
 
 .. syntax-outline::
 
@@ -266,7 +272,7 @@ The general format of an ``if`` statement is
         <#code to execute if condition is false#>
     }
 
-where the ``else`` part is optional.
+The ``else`` part is optional.
 
 .. syntax-outline::
 
@@ -294,6 +300,9 @@ where the ``else`` part is optional.
 
 Switch Statements
 ~~~~~~~~~~~~~~~~~
+
+.. FIXME: "You can use" is a bit wordy.
+   We need to settle on a convention for starting each section.
 
 You can use a switch statement to execute certain blocks of code depending on the value of a
 **control expression**---the expression following the keyword ``switch``.
@@ -430,9 +439,11 @@ Each control transfer statement is discussed in detail below.
 Break Statement
 ~~~~~~~~~~~~~~~
 
-A break statement consists simply of the ``break`` keyword
+A break statement consists of the ``break`` keyword
 and may occur only in the context of a looping statement.
-A break statement ends program execution of the smallest enclosing looping statement in which it occurs.
+A break statement ends program execution of the current iteration
+of the innermost enclosing looping statement in which it occurs
+and stops execution of the looping statement.
 Program control is then transferred to the first line of code following the enclosing
 looping statement, if any.
 For an example of how to use a break statement in the context of a looping statement,
@@ -452,12 +463,11 @@ see “Loop Control Statements” in the :doc:`../LanguageGuide/ControlFlow` cha
 Continue Statement
 ~~~~~~~~~~~~~~~~~~
 
-A continue statement consists of the ``continue`` keyword, and like a break statement,
-may occur only in the context of a looping statement.
-Unlike a break statement,
-a continue statement ends only the program execution of the *current iteration*
-of the smallest enclosing looping statement in which it occurs.
-Any remaining code in the body of the loop is not executed.
+A continue statement consists of the ``continue`` keyword
+and may occur only in the context of a looping statement.
+A continue statement ends program execution of the current iteration
+of the innermost enclosing looping statement in which it occurs
+but does not stop execution of the looping statement.
 Program control is then transferred to the controlling expression of the enclosing looping statement.
 
 In a C-style for statement,
@@ -486,11 +496,15 @@ Fallthrough Statement
 A fallthrough statement consists of the ``fallthrough`` keyword
 and may occur only in a case block of a switch statement.
 A fallthrough statement causes program execution to continue
-from one case in a switch statement to the next case or, if present, to the default case.
+from one case in a switch statement to the next case.
 Program execution continues to the next case
 even if the patterns of the case label do not match the value of the switch statement's control expression.
 
-Fallthrough statements may not be used in the final case block of a switch statement.
+
+
+A fallthrough statement can appear anywhere inside a switch statement,
+not just as the last statement of a case block,
+but it may not be used in the final case block.
 
 For an example of how to use a fallthrough statement in a switch statement,
 see “Fallthrough” in the :doc:`../LanguageGuide/ControlFlow` chapter of the :doc:`../LanguageGuide/index`.
@@ -530,6 +544,8 @@ If the value of the expression does not match the value of the return type
 declared in the function or method declaration,
 the expression's value is converted to the return type
 before it is returned to the calling function or method.
+
+.. FIXME Converted how?
 
 .. langref-grammar
 
