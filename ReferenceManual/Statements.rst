@@ -266,14 +266,6 @@ Branching Statements
 If Statement
 ~~~~~~~~~~~~
 
-Things to cover:
-- Two forms of the if statement:
-- Simple if statement is used for executing code only when a condition is true.
-- The optional else clause is used for executing code only when the *condition* expression
-of the nearest preceding if statement is false.
-- You can also chain if statements together:
-- Braces are required, but parentheses are not required around the *condition* expression.
-
 If statements are used for executing code based on the evaluation of one or more conditions.
 
 There are two basic forms of the if statement.
