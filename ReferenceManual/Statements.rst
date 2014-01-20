@@ -250,6 +250,10 @@ and therefore must evaluate to either ``true`` or ``false``.
 Branching Statements
 --------------------
 
+.. TODO: Should we consider changing the name of these kinds of statements to:
+    1. Conditional Statements (This is what Dave Addey calls them in the Lang. Guide)
+    2. Selection Statements (Found in K&R and elsewhere)
+    3. Conditional Branching Statements
 
 .. syntax-grammar::
 
@@ -259,10 +263,41 @@ Branching Statements
     branching-statement --> switch-statement
 
 
-If Statements
-~~~~~~~~~~~~~
+If Statement
+~~~~~~~~~~~~
 
-The general format of an ``if`` statement is as follows:
+Things to cover:
+- Two forms of the if statement:
+- Simple if statement is used for executing code only when a condition is true.
+- The optional else clause is used for executing code only when the *condition* expression
+of the nearest preceding if statement is false.
+- You can also chain if statements together:
+- Braces are required, but parentheses are not required around the *condition* expression.
+
+If statements are used for executing code based on the evaluation of one or more conditions.
+
+There are two basic forms of the if statement.
+In each form, the opening and closing braces are required.
+The parentheses around the conditional expression, however, are optional.
+
+The first form allows code to be executed only when a condition is true
+and has the following general form:
+
+.. syntax-outline::
+
+    if <#condition#> {
+        <#code to execute if condition is true#>
+    }
+
+When an if statement has the first form,
+the *condition* expression is evaluated and, if it evaluates to ``true``,
+the code inside the opening and closing braces of the if statement is executed.
+If it evaluates to ``false``, the program is finished executing the if statement.
+
+The second form of the if statement provides an additional *else clause* (introduced by the ``else`` keyword)
+and is used for executing one part of code when the condition is true
+and another part code when the same condition is false.
+When a single else clause is present, an if statement has the following form:
 
 .. syntax-outline::
 
@@ -272,7 +307,16 @@ The general format of an ``if`` statement is as follows:
         <#code to execute if condition is false#>
     }
 
-The ``else`` part is optional.
+When the optional else clause is present in an if statement,
+the *condition* expression is evaluated and, if it evaluates to ``true``,
+the code inside the opening and closing braces of the if statement is executed.
+If it evaluates to ``false``,
+the code inside the opening and closing braces of the else clause is executed instead.
+
+You can also add if statements to the end of else clauses
+when your program needs to execute code based on the result of testing more than one condition.
+An else clause is always associated with the last if statement that does not contain an ``else``.
+An if statement that is chained together in this way has the following form:
 
 .. syntax-outline::
 
@@ -284,6 +328,27 @@ The ``else`` part is optional.
         <#code to execute if both conditions are false#>
     }
 
+Here, execution proceeds as follows:
+
+1. The *condition 1* expression is evaluated.
+   If it evaluates to ``true``,
+   the code inside the opening and closing braces following *condition 1* is executed,
+   and the program is finished executing the if statement.
+   If it evaluates to ``false``, program execution continues to step 2.
+
+2. The *condition 2* expression is evaluated.
+   If it evaluates to ``true``,
+   the code inside the opening and closing braces following *condition 2* is executed,
+   and the program is finished executing the if statement.
+   If it evaluates to ``false``, program execution continues to step 3.
+
+3. The program executes the code inside the opening and closing braces following the else clause,
+   and the program is finished executing the if statement.
+   This code is executed only if all the conditional expressions following an ``if`` are false.
+
+The value of any conditional expression in an if statement must be of type ``Bool``,
+and therefore must evaluate to either ``true`` or ``false``.
+
 .. langref-grammar
 
     stmt-if      ::= 'if' expr-basic brace-item-list stmt-if-else?
@@ -294,8 +359,8 @@ The ``else`` part is optional.
 
     Grammar of an if statement
 
-    if-statement  --> ``if`` expression code-block else-statement-OPT
-    else-statement  --> ``else`` code-block | ``else`` if-statement
+    if-statement  --> ``if`` expression code-block else-clause-OPT
+    else-clause  --> ``else`` code-block | ``else`` if-statement
 
 
 Switch Statements
