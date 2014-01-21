@@ -56,16 +56,16 @@ It is implicitly declared simply by its inclusion in the loop declaration,
 without the need for a ``var`` declaration keyword.
 This does, however, mean that it only exists within the scope of the loop.
 If you want to check the value of ``index`` after the loop has completed,
-you must declare it as a variable in advance of its use in the loop.
+you must declare it in advance of its use in the loop.
 
 If you don't actually need each value from the range,
 you can ignore them using an underscore in place of a variable name:
 
 .. testcode::
 
-    (swift) var base = 3
+    (swift) let base = 3
     // base : Int = 3
-    (swift) var power = 10
+    (swift) let power = 10
     // power : Int = 10
     (swift) var answer = 1
     // answer : Int = 1
@@ -92,7 +92,7 @@ and does not provide access to the current value during each iteration of the lo
 
 .. testcode::
 
-    (swift) var names = ["Alan", "Barbara", "Carol", "Doug"]
+    (swift) let names = ["Alan", "Barbara", "Carol", "Doug"]
     // names : String[] = ["Alan", "Barbara", "Carol", "Doug"]
     (swift) for name in names {
         println("Hello, \(name)!")
@@ -111,7 +111,7 @@ and removes all of its vowels and spaces to create a cryptic puzzle phrase for s
 
 .. testcode::
 
-    (swift) var puzzleInput = "great minds think alike"
+    (swift) let puzzleInput = "great minds think alike"
     // puzzleInput : String = "great minds think alike"
     (swift) var puzzleOutput = ""
     // puzzleOutput : String = ""
@@ -126,13 +126,13 @@ and removes all of its vowels and spaces to create a cryptic puzzle phrase for s
     (swift) println(puzzleOutput)
     >>> grtmndsthnklk
 
-The ``letter`` variable is inferred to be of type ``UnicodeScalar``
+The ``letter`` constant is inferred to be of type ``UnicodeScalar``
 from the fact that it is iterating over a sequence of ``UnicodeScalar`` values.
 This is why the case statement compares ``letter`` against ``UnicodeScalar`` values
 (with single quote marks)
 rather than ``String`` values.
 
-Note that the code above calls the ``continue`` keywoprd whenever it matches a vowel or a space.
+The code above calls the ``continue`` keyword whenever it matches a vowel or a space.
 ``continue`` is a special control flow keyword that causes the current iteration of the loop to end immediately
 and jump straight to the start of the next iteration.
 It enables the switch block to match (and ignore) just these six special characters,
@@ -145,7 +145,7 @@ which can be accessed via dot syntax:
 
 .. testcode::
 
-    (swift) var numberOfLegs = ["spider" : 8, "ant" : 6, "cat" : 4]
+    (swift) let numberOfLegs = ["spider" : 8, "ant" : 6, "cat" : 4]
     // numberOfLegs : Dictionary<String, Int> = Dictionary<String, Int>(1.33333, 3, <DictionaryBufferOwner<String, Int> instance>)
     (swift) for item in numberOfLegs {
         println("\(item.key)s have \(item.value) legs")
@@ -154,7 +154,7 @@ which can be accessed via dot syntax:
     >>> ants have 6 legs
     >>> cats have 4 legs
 
-Note that the items in the ``Dictionary`` may not be iterated in the same order as they were inserted.
+Items in a ``Dictionary`` may not necessarily be iterated in the same order as they were inserted.
 The contents of a ``Dictionary`` are inherently unordered,
 and iterating over them does not guarantee the order in which they will be retrieved.
 
@@ -199,7 +199,7 @@ For example::
 
     (swift) var personName = ""
     // personName : String = ""
-    (swift) var keyboard = Keyboard()
+    (swift) let keyboard = Keyboard()
     // keyboard : Keyboard = <_TtCSs8Keyboard instance>
     (swift) println("Please enter your name, then press return.")
     >>> Please enter your name, then press return.
@@ -240,7 +240,10 @@ A while loop is appropriate in this case
 because the length of the input name is not known at the start of the while loop.
 Instead, the loop is executed until a particular condition is satisfied.
 
-.. NOTE: this example cannot be run in the REPL, due to the fact that it is reliant on keyboard input. I have yet to come up with a better example where ‘while’ is the right kind of loop to use, however. (I'm trying to avoid any examples where the number of iterations is known at the start of the loop.)
+.. NOTE: this example cannot be run in the REPL,
+   due to the fact that it is reliant on keyboard input.
+   I have yet to come up with a better example where ‘while’ is the right kind of loop to use, however.
+   (I'm trying to avoid any examples where the number of iterations is known at the start of the loop.)
 
 Do While
 ________
@@ -276,14 +279,14 @@ The general form of this loop format is::
         <#statements#>
     }
 
-Note that semicolons are used to separate the three parts of the for loop's definition,
-and that parentheses are not required.
+Semicolons are used to separate the three parts of the loop's definition, as in C.
+However, unlike C, there is no need to add parentheses around each part of the loop's definition.
 
 The loop is executed as follows:
 
 1. When the loop is first entered,
    the *initialization* expression is evaluated once,
-   to set up any variables or values that are needed for the loop.
+   to set up any named values that are needed for the loop.
 
 2. Next, the *condition* expression is evaluated.
    If it equates to ``false``, the loop ends,
@@ -306,7 +309,7 @@ This is effectively shorthand for (and equivalent to)::
         <#increment#>
     }
 
-Variables defined within the initialization expression
+Named values defined within the initialization expression
 (such as ``var index = 0``)
 are only valid within the scope of the for loop itself.
 If you want to retrieve the final value of ``index`` after the loop ends,
@@ -325,13 +328,19 @@ you must declare ``index`` before the loop's scope begins:
     (swift) println("The loop statements were executed \(index) times")
     >>> The loop statements were executed 3 times
 
-.. TODO: We shouldn't need to initialize index to 0 on the first line of this example, but variables can't currently be used unitialized in the REPL.
+.. TODO: We shouldn't need to initialize index to 0 on the first line of this example,
+   but variables can't currently be used unitialized in the REPL.
 
 Note that the final value of ``index`` after completing this loop is ``3``, not ``2``.
 The last time the increment statement ``++index`` is called,
 it sets ``index`` to ``3``,
 which causes ``index < 3`` to equate to ``false``,
 ending the loop.
+
+.. TODO: Need to mention that loop variables are immutable by default.
+.. QUESTION: Can you make a loop variable mutable –
+   and therefore influence loop execution, such as jumping ahead –
+   by prepending it with 'var'?
 
 Loop Control Statements
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -370,12 +379,12 @@ to see it in action::
 
     (swift) var personName = ""
     // personName : String = ""
-    (swift) var keyboard = Keyboard()
+    (swift) let keyboard = Keyboard()
     // keyboard : Keyboard = <_TtCSs8Keyboard instance>
     (swift) println("Please enter your name, then press return.")
     >>> Please enter your name, then press return.
     (swift) while true {
-        var inputCharacter = UnicodeScalar(keyboard.read())
+        let inputCharacter = UnicodeScalar(keyboard.read())
         switch inputCharacter {
             case ' ':
                 continue
@@ -483,7 +492,7 @@ to consider additional clauses:
     >>> It's really warm. Don't forget to to wear sunscreen.
 
 Here, an additional ``if`` clause has been added to respond to particularly warm temperatures.
-Note that the final ``else`` clause still remains,
+The final ``else`` clause still remains,
 as a catch-all for temperatures that are neither too warm nor too cold.
 
 The final ``else`` clause is optional, however, and can be excluded if the set of conditions does not need to be complete:
@@ -504,9 +513,9 @@ and so no message is printed.
 Switch
 ~~~~~~
 
-The :doc:`BasicTypes` section showed how switch statements can be used to consider the values of an enumeration.
-Switch statements aren't just confined to enumerations, however –
-in Swift, they can be used to match any type of value at all.
+Switch statements consider several possible values of the same type,
+and execute different code depending on the value that is matched.
+They provide an alternative approach to the ``if else`` statement for responding to multiple states.
 
 The following example matches a ``UnicodeScalar``,
 and determines if it represents a number symbol in one of four languages.
@@ -515,7 +524,7 @@ for brevity:
 
 .. testcode::
 
-    (swift) var numberSymbol = '三'   // Simplified Chinese symbol for the number 3
+    (swift) let numberSymbol = '三'   // Simplified Chinese symbol for the number 3
     // numberSymbol : UnicodeScalar = '三'
     (swift) var integerValue: Int? = .None
     // integerValue : Int? = <unprintable value>
@@ -538,7 +547,8 @@ for brevity:
     }
     >>> The integer value of 三 is 3.
 
-.. TODO: The initialization of integerValue can be removed once the REPL supports uninitialized variables.
+.. TODO: The initialization of integerValue can be removed
+  once the REPL supports uninitialized named values.
 
 This example checks ``numberSymbol`` to see if it is
 a Latin, Arabic, Chinese or Thai symbol for
@@ -560,8 +570,13 @@ which has been confirmed to exist by the previous line of code.
 
 Switch statements must be exhaustive.
 This means that every possible input value must be matched by one of the cases in the switch statement.
-However, it is not practical to list every single possible ``UnicodeScalar`` value,
-and so the ``default`` keyword is used
+If it is not appropriate to provide a case statement for every possible value,
+you can define a default catch-all case to cover any values that are not addressed explicitly.
+The default catch-all case should always appear last,
+as in the example above.
+
+It is not practical to list every single possible ``UnicodeScalar`` value,
+and so the ``default`` keyword is used here
 to provide a catch-all case for any characters that have not already been matched.
 This also provides a handy opportunity to set the optional integer value to ``.None``,
 to indicate that no match was found.
@@ -569,9 +584,12 @@ to indicate that no match was found.
 Fallthrough
 ___________
 
-Unlike C,
-switch statements in Swift do not ‘fall through’ the bottom of each case and into the next one.
-This leads to shorter, clearer code,
+Switch statements in Swift do not ‘fall through’ the bottom of each case and into the next one.
+Instead, the entire switch statement completes its execution as soon as the first matching case is completed.
+This is different from C,
+which requires you to insert an explicit ``break`` statement at the end of every case to prevent fall-through.
+Avoiding default fall-through means that Swift switch statements are
+much more concise and predictable than their counterparts in C,
 and avoids executing multiple cases by mistake.
 
 If you want to opt in to C-style fallthrough behavior,
@@ -580,7 +598,7 @@ The example below uses fallthrough to create a textual description of a number:
 
 .. testcode::
 
-    (swift) var integerToDescribe = 5
+    (swift) let integerToDescribe = 5
     // integerToDescribe : Int = 5
     (swift) var description = "The number \(integerToDescribe) is"
     // description : String = "The number 5 is"
@@ -614,7 +632,7 @@ the number's description is printed using the ``println`` function.
 In this example,
 the number ``5`` is correctly identified as being a prime number.
 
-Note that fallthrough does not check the case conditions for the block it falls into.
+Fallthrough does not check the case conditions for the block it falls into.
 It simply causes code execution to move directly to the statements inside the next case (or default block),
 as in C's standard switch statement behavior.
 
@@ -627,9 +645,9 @@ to provide a natural-language count for numbers of any size:
 
 .. testcode::
 
-    (swift) var count = 3_000_000_000_000
+    (swift) let count = 3_000_000_000_000
     // count : Int = 3000000000000
-    (swift) var countedThings = "stars in the Milky Way"
+    (swift) let countedThings = "stars in the Milky Way"
     // countedThings : String = "stars in the Milky Way"
     (swift) var naturalCount = ""
     // naturalCount : String = ""
@@ -654,7 +672,8 @@ to provide a natural-language count for numbers of any size:
     (swift) println("There are \(naturalCount) \(countedThings).")
     >>> There are lots and lots of stars in the Milky Way.
 
-.. TODO: change these ranges to be closed ranges rather than half-closed ranges once rdar://14586400 is implemented.
+.. TODO: change these ranges to be closed ranges rather than half-closed ranges
+   once rdar://14586400 is implemented.
 .. TODO: remove the initializer for naturalCount once we can declare unitialized variables in the REPL.
 
 Tuples
@@ -669,6 +688,7 @@ and categorizes it on the following graph:
 
 .. image:: ../images/coordinateGraphSimple.png
     :height: 250
+    :align: center
 
 It decides if the point is
 at the origin (0, 0);
@@ -716,6 +736,7 @@ and categorizes it on the following graph:
 
 .. image:: ../images/coordinateGraphComplex.png
     :height: 250
+    :align: center
 
 It decides if the point is
 at the origin (0, 0);
@@ -754,7 +775,7 @@ to create a dynamic filter.
 The case statement will only match the current value of ``point``
 if the ``where`` clause's condition equates to ``true`` for that value.
 
-Note that the x-axis and y-axis checks could have been written with a ``where`` clause too.
+The x-axis and y-axis checks could also have been written with a ``where`` clause.
 ``case (_, 0)`` could have been written as ``case (_, var y) where y == 0``,
 to match points on the x-axis.
 However, the original version is more concise,
@@ -777,8 +798,16 @@ but does *not* provide a ``where`` clause to filter them.
 As a result, it matches all possible remaining values,
 and a default block is not needed to make the switch statement exhaustive.
 
-.. QUESTION: This example is not self-contained, in that it uses the same declared variable (point) as the previous example. This is primarily to keep the variable name readable within the println string interpolation. Is this okay? Should it be changed so that it is self-contained?
-.. QUESTION: These examples do not name their tuple elements, to avoid confusion between their likely element names of x and y, and the appropriate names for the where variables (also x and y). Is this the right approach, or should we be advising named tuple elements in all cases?
+.. QUESTION: This example is not self-contained,
+   in that it uses the same declared variable (point) as the previous example.
+   This is primarily to keep the variable name readable within the println string interpolation.
+   Is this okay? Should it be changed so that it is self-contained?
+.. QUESTION: These examples do not name their tuple elements,
+   to avoid confusion between their likely element names of x and y,
+   and the appropriate names for the where variables (also x and y).
+   Is this the right approach,
+   or should we be advising named tuple elements in all cases?
+.. QUESTION: Should this now be (let x, let y)?
 
 .. refnote:: References
 

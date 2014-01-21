@@ -111,7 +111,9 @@ String Functions
 - hashValue
 - etc.
 
-.. QUESTION: how far should this go? if String becomes as fully-featured as NSString, this could be a long chapter.
+.. QUESTION: how far should this go?
+   If String becomes as fully-featured as NSString,
+   this could be a long chapter.
 
 .. refnote:: References
 

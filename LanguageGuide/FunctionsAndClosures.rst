@@ -64,7 +64,7 @@ This makes it easy for the function to be called from elsewhere in your code in 
 .. testcode::
 
     (swift) func sayHello(personName: String) -> String {
-        var greeting = "Hello, " + personName + "!"
+        let greeting = "Hello, " + personName + "!"
         return greeting
     }
     (swift) println(sayHello("Cheryl"))
@@ -78,7 +78,7 @@ Because ``sayHello`` returns a ``String``,
 it can be wrapped in a call to the ``println`` function
 to print that ``String`` and see its value, as shown above.
 
-The ``sayHello`` function starts by declaring a new ``String`` variable called ``greeting``,
+The ``sayHello`` function starts by declaring a new ``String`` constant called ``greeting``,
 and setting it to a simple greeting message for ``personName``.
 This greeting is then passed back out of the function using the ``return`` keyword.
 As soon as ``return greeting`` is called,
@@ -213,7 +213,7 @@ and also enables values to be passed in a different order to the original functi
         }
         return false
     }
-    (swift) var containsASpace = containsCharacter(
+    (swift) let containsASpace = containsCharacter(
         characterToFind: ' ',
         stringToSearch: "This will return true")
     // containsASpace : Bool = true
@@ -222,7 +222,7 @@ Here, the parameter values are passed in a different order when the function is 
 Because they are named,
 it is still clear which value should be used for which parameter.
 
-Note that if ``characterToFind`` is found quickly,
+If ``characterToFind`` is found quickly,
 this example returns ``true`` before the entire set of characters in ``stringToSearch`` has been checked.
 As soon as the first matching character is found,
 ``containsCharacter`` returns ``true``,
@@ -237,7 +237,7 @@ the passed parameters are assumed to be in the order they were originally declar
 
 .. testcode::
 
-    (swift) var containsAHyphen = containsCharacter("This will return false", '-')
+    (swift) let containsAHyphen = containsCharacter("This will return false", '-')
     // containsAHyphen : Bool = false
 
 Default Parameter Values
@@ -311,7 +311,8 @@ it is best to place any parameters with default values at the end of a function 
 It is also advisable to name the values in your function calls whenever a function takes more than one parameter,
 to ensure that your intentions are clearly expressed in your code.
 
-.. QUESTION: how does this advice overlap with the principle of putting variadic parameters last,
+.. QUESTION: how does this advice overlap with
+   the principle of putting variadic parameters last,
    and also the principle of putting closure parameters last?
 
 Non-Mandatory Parameters and Return Values
@@ -329,7 +330,7 @@ which always returns the same ``String`` message whenever it is called:
     (swift) println(sayHelloWorld())
     >>> hello, world
 
-Note that the function declaration still needs parentheses after the function's name,
+The function declaration still needs parentheses after the function's name,
 even though it does not take any parameters.
 It is also called with empty parentheses when used.
 
