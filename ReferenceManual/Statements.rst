@@ -15,37 +15,37 @@ Statements
 
     Grammar of a statement
 
-    statement --> looping-statement
-    statement --> branching-statement
+    statement --> loop-statement
+    statement --> branch-statement
     statement --> control-transfer-statement
     statement --> semicolon-statement
 
 
-Looping Statements
-------------------
+Loop Statements
+---------------
 
-Looping statements allow a block of code to be executed repeatedly,
+Loop statements allow a block of code to be executed repeatedly,
 depending on the conditions specified in the loop.
-Swift has four looping statements:
+Swift has four loop statements:
 a for statement, a collection-based for statement, a while statement, and a do-while statement.
-Each looping statement is discussed in detail below.
+Each loop statement is discussed in detail below.
 
 See also `Break Statement`_ and `Continue Statement`_.
 
 .. syntax-grammar::
 
-    Grammar of a looping statement
+    Grammar of a loop statement
 
-    looping-statement --> for-statement
-    looping-statement --> collection-based-for-statement
-    looping-statement --> while-statement
-    looping-statement --> do-while-statement
+    loop-statement --> for-statement
+    loop-statement --> collection-based-for-statement
+    loop-statement --> while-statement
+    loop-statement --> do-while-statement
 
 
 For Statement
 ~~~~~~~~~~~~~
 
-A for statements allow a block of code to be executed repeatedly
+A for statement allows a block of code to be executed repeatedly
 while incrementing a counter,
 as long as a condition remains true.
 
@@ -236,20 +236,15 @@ and therefore must evaluate to either ``true`` or ``false``.
     do-while-statement --> ``do`` code-block ``while`` expression
 
 
-Branching Statements
---------------------
-
-.. TODO: Should we consider changing the name of these kinds of statements to:
-    1. Conditional Statements (This is what Dave Addey calls them in the Lang. Guide)
-    2. Selection Statements (Found in K&R and elsewhere)
-    3. Conditional Branching Statements
+Branch Statements
+-----------------
 
 .. syntax-grammar::
 
-    Grammer of a branching statement
+    Grammer of a branch statement
 
-    branching-statement --> if-statement
-    branching-statement --> switch-statement
+    branch-statement --> if-statement
+    branch-statement --> switch-statement
 
 
 If Statement
@@ -259,7 +254,6 @@ If statements are used for executing code based on the evaluation of one or more
 
 There are two basic forms of the if statement.
 In each form, the opening and closing braces are required.
-The parentheses around the conditional expression, however, are optional.
 
 The first form allows code to be executed only when a condition is true
 and has the following general form:
@@ -486,13 +480,13 @@ Break Statement
 ~~~~~~~~~~~~~~~
 
 A break statement consists of the ``break`` keyword
-and may occur only in the context of a looping statement.
+and may occur only in the context of a loop statement.
 A break statement ends program execution of the current iteration
-of the innermost enclosing looping statement in which it occurs
-and stops execution of the looping statement.
+of the innermost enclosing loop statement in which it occurs
+and stops execution of the loop statement.
 Program control is then transferred to the first line of code following the enclosing
-looping statement, if any.
-For an example of how to use a break statement in the context of a looping statement,
+loop statement, if any.
+For an example of how to use a break statement in the context of a loop statement,
 see “Loop Control Statements” in the :doc:`../LanguageGuide/ControlFlow` chapter of the :doc:`../LanguageGuide/index`.
 
 .. langref-grammar
@@ -510,17 +504,17 @@ Continue Statement
 ~~~~~~~~~~~~~~~~~~
 
 A continue statement consists of the ``continue`` keyword
-and may occur only in the context of a looping statement.
+and may occur only in the context of a loop statement.
 A continue statement ends program execution of the current iteration
-of the innermost enclosing looping statement in which it occurs
-but does not stop execution of the looping statement.
-Program control is then transferred to the controlling expression of the enclosing looping statement.
+of the innermost enclosing loop statement in which it occurs
+but does not stop execution of the loop statement.
+Program control is then transferred to the controlling expression of the enclosing loop statement.
 
 In a for statement,
 the increment expression is still evaluated after the continue statement is executed,
 because the increment expression is evaluated after the execution of the loop's body.
 
-For an example of how to use a continue statement in the context of a looping statement,
+For an example of how to use a continue statement in the context of a loop statement,
 see “Loop Control Statements”
 in the :doc:`../LanguageGuide/ControlFlow` chapter of the :doc:`../LanguageGuide/index`.
 
