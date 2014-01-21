@@ -264,10 +264,10 @@ and has the following general form:
         <#code to execute if condition is true#>
     }
 
-When an if statement has the first form,
-the *condition* expression is evaluated and, if it evaluates to ``true``,
-the code inside the opening and closing braces of the if statement is executed.
-If it evaluates to ``false``, the program is finished executing the if statement.
+.. NOTE: Original prose: When an if statement has the first form,
+    the *condition* expression is evaluated and, if it evaluates to ``true``,
+    the code inside the opening and closing braces of the if statement is executed.
+    If it evaluates to ``false``, the program is finished executing the if statement.
 
 The second form of the if statement provides an additional *else clause* (introduced by the ``else`` keyword)
 and is used for executing one part of code when the condition is true
@@ -282,11 +282,11 @@ When a single else clause is present, an if statement has the following form:
         <#code to execute if condition is false#>
     }
 
-When the optional else clause is present in an if statement,
-the *condition* expression is evaluated and, if it evaluates to ``true``,
-the code inside the opening and closing braces of the if statement is executed.
-If it evaluates to ``false``,
-the code inside the opening and closing braces of the else clause is executed instead.
+.. NOTE: Original prose: When the optional else clause is present in an if statement,
+    the *condition* expression is evaluated and, if it evaluates to ``true``,
+    the code inside the opening and closing braces of the if statement is executed.
+    If it evaluates to ``false``,
+    the code inside the opening and closing braces of the else clause is executed instead.
 
 You can also add if statements to the end of else clauses
 when your program needs to execute code based on the result of testing more than one condition.
