@@ -1,6 +1,20 @@
 Statements
 ==========
 
+Swift provides several statements that are used to control the flow of execution in a program.
+There are three types of control flow statements in Swift:
+loop statements, branch statements, and control transfer statements.
+Each type of statement can be used in function bodies and in top-level code.
+
+Loop statements allow a block of code to be executed repeatedly,
+while branch statements allow a certain block of code to be executed
+only when certain conditions are met.
+Control transfer statements provide a way to alter the order in which code is executed.
+Each type of statement is described in detail below.
+
+.. TODO: Write the rest of this introduction
+    after we're settled on exactly what is considered a statement in Swift.
+
 .. langref-grammar
 
     stmt ::= stmt-semicolon
@@ -19,6 +33,16 @@ Statements
     statement --> branch-statement
     statement --> control-transfer-statement
     statement --> semicolon-statement
+
+.. TR: Are these the only things considered statements in Swift?
+    What about certain expressions and declarations?
+    In other languages,
+    the most common type of statements are expression statements---
+    that is, an expression followed by a semicolon.
+    These are usually function calls, assignments,
+    or a variable followed by the increment or decrement operator.
+    Similarly, in C++, for instance, there is the concept of a declaration statement.
+    Do we have analogs to these?
 
 
 Loop Statements
@@ -258,7 +282,7 @@ Each branch statement is discussed in detail below.
 If Statement
 ~~~~~~~~~~~~
 
-If statements are used for executing code based on the evaluation of one or more conditions.
+An if statement is used for executing code based on the evaluation of one or more conditions.
 
 There are two basic forms of the if statement.
 In each form, the opening and closing braces are required.
@@ -296,9 +320,8 @@ When a single else clause is present, an if statement has the following form:
     If it evaluates to ``false``,
     the code inside the opening and closing braces of the else clause is executed instead.
 
-You can also add if statements to the end of else clauses
-when your program needs to execute code based on the result of testing more than one condition.
-An else clause is always associated with the last if statement that does not contain an ``else``.
+The else clause of an if statement can contain another if statement
+when the program needs to execute code based on the result of testing more than one condition.
 An if statement that is chained together in this way has the following form:
 
 .. syntax-outline::
@@ -311,26 +334,10 @@ An if statement that is chained together in this way has the following form:
         <#code to execute if both conditions are false#>
     }
 
-Here, execution proceeds as follows:
-
-1. The *condition 1* expression is evaluated.
-   If it evaluates to ``true``,
-   the code inside the opening and closing braces following *condition 1* is executed,
-   and the program is finished executing the if statement.
-   If it evaluates to ``false``, program execution continues to step 2.
-
-2. The *condition 2* expression is evaluated.
-   If it evaluates to ``true``,
-   the code inside the opening and closing braces following *condition 2* is executed,
-   and the program is finished executing the if statement.
-   If it evaluates to ``false``, program execution continues to step 3.
-
-3. The program executes the code inside the opening and closing braces following the else clause,
-   and the program is finished executing the if statement.
-   This code is executed only if all the conditional expressions following an ``if`` are false.
-
 The value of any conditional expression in an if statement must be of type ``Bool``,
 and therefore must evaluate to either ``true`` or ``false``.
+
+.. TODO: Should we promote this last sentence (here and elsewhere) higher up in the chapter?
 
 .. langref-grammar
 
@@ -597,7 +604,7 @@ declared in the function or method declaration,
 the expression's value is converted to the return type
 before it is returned to the calling function or method.
 
-.. FIXME Converted how?
+.. TODO: TR: Converted how?
 
 .. langref-grammar
 
