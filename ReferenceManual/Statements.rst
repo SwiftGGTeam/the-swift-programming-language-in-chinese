@@ -30,7 +30,8 @@ Swift has four loop statements:
 the for statement, the collection-based for statement, the while statement, and the do-while statement.
 Each loop statement is discussed in detail below.
 
-See also `Break Statement`_ and `Continue Statement`_.
+Control flow in a loop statement can be changed by a break statement and a continue statement
+and is discussed in `Break Statement`_ and `Continue Statement`_ below.
 
 .. syntax-grammar::
 
