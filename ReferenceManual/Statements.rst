@@ -27,7 +27,7 @@ Loop Statements
 Loop statements allow a block of code to be executed repeatedly,
 depending on the conditions specified in the loop.
 Swift has four loop statements:
-a for statement, a collection-based for statement, a while statement, and a do-while statement.
+the for statement, the collection-based for statement, the while statement, and the do-while statement.
 Each loop statement is discussed in detail below.
 
 See also `Break Statement`_ and `Continue Statement`_.
@@ -238,6 +238,13 @@ and therefore must evaluate to either ``true`` or ``false``.
 
 Branch Statements
 -----------------
+
+Branch statements allow the program to execute certain parts of code
+depending the value of one or more conditions.
+The values of the conditions specified in a branch statement
+control how the program branches and, therefore, what block of code is executed.
+Swift has two branch statements: the if statement and the switch statement.
+Each branch statement is discussed in detail below.
 
 .. syntax-grammar::
 
