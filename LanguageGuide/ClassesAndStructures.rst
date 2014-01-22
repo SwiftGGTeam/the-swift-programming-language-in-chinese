@@ -103,10 +103,6 @@ Custom classes and structures should be given ``UpperCamelCase`` names
 to match the capitalization of standard Swift types
 (such as ``String``, ``Int`` and ``Bool``).
 
-.. TODO: note that you can set rect.size.width directly,
-   without having to set a new rect.size struct,
-   unlike in Objective-C.
-
 Class and Structure Instances
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -147,7 +143,7 @@ This terminology will be used from now on to refer to instances of classes.
 Wherever you see the word *object* below,
 it will refer to a single specific instance of a particular class.
 
-Instances of structures are generally referred to simply as *structs*.
+Instances of structures are generally referred to as *structs*.
 The word ‘struct’ will be used from now on to refer to structure instances
 (such as ``someSize``),
 and the word *structure* will be used to refer to their type
@@ -172,6 +168,17 @@ such as the ``width`` property of a ``Rectangle``'s ``size``:
 
     (swift) println("The width of someRectangle is \(someRectangle.size.width)")
     >>> The width of someRectangle is 0.0
+
+Unlike Objective-C,
+the values of sub-properties can also be set directly, regardless of their type.
+In the example below, ``someRectangle.size.width`` is set to a new value of ``2.0``,
+even though it is a sub-property of ``someRectangle.size``:
+
+.. testcode:: classAndStructDefinitionSyntax
+
+    (swift) someRectangle.size.width = 2.0
+    (swift) println("The width of someRectangle is now \(someRectangle.size.width)")
+    >>> The width of someRectangle is now 2.0
 
 Default Structure Initializers
 ------------------------------
@@ -400,8 +407,8 @@ that is stored as part of an object or struct:
 .. TODO: Should the properties here be 'constant properties' declared via 'let'?
 
 This example defines a new structure called ``HTTPStatus``.
-This structure encapsulates a property called ``statusCode`` (which is of type ``Int``),
-and a property called ``description`` (which is of type ``String``).
+This structure encapsulates a variable property called ``statusCode`` (which is of type ``Int``),
+and a variable property called ``description`` (which is of type ``String``).
 
 Having defined the structure,
 the example creates a new struct based on this structure, called ``http404Error``.
