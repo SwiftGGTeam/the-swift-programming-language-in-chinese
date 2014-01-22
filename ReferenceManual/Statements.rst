@@ -131,7 +131,7 @@ and therefore must evaluate to either ``true`` or ``false``.
 
 
 Collection-Based For Statement
-++++++++++++++++++++++++++++++
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. Other rejected headings included range-based, enumerator-based,
    container-based sequence-based and for-each.
