@@ -343,14 +343,18 @@ String Literals
 ~~~~~~~~~~~~~~~
 
 
-Translation Unit
-----------------
+Module Scope
+------------
 
 .. TODO: Better to describe this part of the grammar in prose.
 
+	Also, the LangRef has the heading 'Module-Scope Declarations',
+	and discusses it as part of Declaration.
+	This makes me wonder whether it belongs in the Declarations chapter.
+
 .. langref-grammar
 
-    translation-unit ::= brace-item*
+    top-level ::= brace-item*
 
 
 Code Blocks
