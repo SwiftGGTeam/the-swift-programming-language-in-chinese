@@ -1,6 +1,20 @@
 Statements
 ==========
 
+Swift provides several statements that are used to control the flow of execution in a program.
+There are three types of control flow statements in Swift:
+loop statements, branch statements, and control transfer statements.
+Each type of statement can be used in function bodies and in top-level code.
+
+Loop statements allow a block of code to be executed repeatedly,
+while branch statements allow a certain block of code to be executed
+only when certain conditions are met.
+Control transfer statements provide a way to alter the order in which code is executed.
+Each type of statement is described in detail below.
+
+.. TODO: Write the rest of this introduction
+    after we're settled on exactly what is considered a statement in Swift.
+
 .. langref-grammar
 
     stmt ::= stmt-semicolon
@@ -15,40 +29,52 @@ Statements
 
     Grammar of a statement
 
-    statement --> semicolon-statement
-    statement --> if-statement
-    statement --> while-statement
-    statement --> c-style-for-statement
-    statement --> for-each-statement
-    statement --> switch-statement
+    statement --> loop-statement
+    statement --> branch-statement
     statement --> control-transfer-statement
+    statement --> semicolon-statement
+
+.. TR: Are these the only things considered statements in Swift?
+    What about certain expressions and declarations?
+    In other languages,
+    the most common type of statements are expression statements---
+    that is, an expression followed by a semicolon.
+    These are usually function calls, assignments,
+    or a variable followed by the increment or decrement operator.
+    Similarly, in C++, for instance, there is the concept of a declaration statement.
+    Do we have analogs to these?
 
 
-Semicolon Statement
--------------------
+Loop Statements
+---------------
 
-.. langref-grammar
+Loop statements allow a block of code to be executed repeatedly,
+depending on the conditions specified in the loop.
+Swift has four loop statements:
+the for statement, the collection-based for statement, the while statement, and the do-while statement.
+Each loop statement is discussed in detail below.
 
-    stmt-semicolon ::= ';'
+Control flow in a loop statement can be changed by a break statement and a continue statement
+and is discussed in `Break Statement`_ and `Continue Statement`_ below.
 
 .. syntax-grammar::
 
-    Grammar of a semicolon statement
+    Grammar of a loop statement
 
-    semicolon-statement --> ``;``
-
-
-Looping Statements
-------------------
-
-
-For Statements
-~~~~~~~~~~~~~~
+    loop-statement --> for-statement
+    loop-statement --> collection-based-for-statement
+    loop-statement --> while-statement
+    loop-statement --> do-while-statement
 
 
-C-Style For Statements
-++++++++++++++++++++++
+For Statement
+~~~~~~~~~~~~~
 
+A for statement allows a block of code to be executed repeatedly
+while incrementing a counter,
+as long as a condition remains true.
+
+A for statement has the following general form:
 
 .. syntax-outline::
 
@@ -56,7 +82,36 @@ C-Style For Statements
         <#code to execute#>
     }
 
-where the parentheses are optional.
+The parentheses around the initiazilation, condition, and increment are optional,
+but the semicolon between them is required.
+The braces around the body of the loop are also required.
+
+A for statement is executed as follows:
+
+1. The *initialization* expression is evaluated once only
+   and is usually used to declare and initialize any variables
+   that are needed for the remainder of the loop.
+
+2. The *condition* expression is evaluated.
+   If it evaluates to ``true``,
+   the program executes the code inside the braces of the for statement,
+   and execution continues to step 3.
+   If it evaluates to ``false``,
+   the program does not execute the code block or the *increment* expression,
+   and the program is finished executing the for statement.
+
+3. The *increment* expression is evaluated.
+   After it has been evaluated,
+   execution returns to step 2.
+
+Variables defined within the *initialization* expression
+are valid only within the scope of the for statement itself.
+
+The value of the *condition* expression must be of type ``Bool``,
+and therefore must evaluate to either ``true`` or ``false``.
+
+.. TODO: Document the scope of loop variables.
+   This applies to all loops, so it doesn't belong here.
 
 .. langref-grammar
 
@@ -67,15 +122,25 @@ where the parentheses are optional.
 
 .. syntax-grammar::
 
-    Grammar of a C-style for statement
+    Grammar of a for statement
 
-    c-style-for-statement --> ``for`` for-init-OPT ``;`` expression-OPT ``;`` expression-OPT code-block
-    c-style-for-statement --> ``for`` ``(`` for-init-OPT ``;`` expression-OPT ``;`` expression-OPT ``)`` code-block
+    for-statement --> ``for`` for-init-OPT ``;`` expression-OPT ``;`` expression-OPT code-block
+    for-statement --> ``for`` ``(`` for-init-OPT ``;`` expression-OPT ``;`` expression-OPT ``)`` code-block
 
-    for-init --> variable-declaration | expression
+    for-init --> variable-declaration | expression-list
 
-For-Each Statement
-++++++++++++++++++
+
+Collection-Based For Statement
+++++++++++++++++++++++++++++++
+
+.. Other rejected headings included range-based, enumerator-based,
+   container-based sequence-based and for-each.
+
+Collection-based for statements allow a block of code to be executed
+once for each item in a collection
+that conforms to the ``Stream`` protocol.
+
+A collection-based for statement has the general form:
 
 .. syntax-outline::
 
@@ -83,19 +148,45 @@ For-Each Statement
         <#code to execute#>
     }
 
+The ``generate`` method is called on the *collection* expression
+to obtain a value of a stream type---that is,
+a type that conforms to the ``Stream`` protocol.
+The program begins executing a loop
+by calling the ``next`` method on the stream.
+If the value returned is not ``None``,
+it is assigned to the *item* pattern,
+the program executes the code block,
+and then continues execution at the beginning of the loop.
+Otherwise, the program does not perform assignment or execute the code block,
+and it is finished executing the statement.
+
+
+.. TR: Are the above method calls correct?
+   I've determined this information be looking at the declarations in the REPL
+   so there may be aspects we don't want to document
+   or want to describe differently.
+   Used swift-1.12 from Jan 9, 2014.
+   (Jan 20 - doesn't match today's REPL anymore.)
+
+.. TODO: Move this info to the stdlib reference as appropriate.
+
+
 .. langref-grammar
 
     stmt-for-each ::= 'for' pattern 'in' expr-basic brace-item-list
 
 .. syntax-grammar::
 
-    Grammar of a for-each statement
+    Grammar of a collection-based for statement
 
-    for-each-statement --> ``for`` pattern ``in`` expression code-block
+    collection-based-for-statement --> ``for`` pattern ``in`` expression code-block
 
 
 While Statement
 ~~~~~~~~~~~~~~~
+
+While statements allow a block of code to be executed repeatedly,
+as long as a condition remains true.
 
 A while statement has the following general form:
 
@@ -104,6 +195,21 @@ A while statement has the following general form:
     while <#condition#> {
         <#code to execute#>
     }
+
+A while statement is executed as follows:
+
+1. The *condition* expression is evaluated.
+   If it evaluates to ``true``, execution continues to step 2.
+   If it evaluates to ``false``, the program is finished executing the while statement.
+
+2. The program executes the code inside the braces of the while statement,
+   and execution returns to step 1.
+
+Because the value of the *condition* expression is evaluated before the code block is executed,
+the code block in a while statement may be executed zero or more times.
+
+The value of the *condition* expression must be of type ``Bool``,
+and therefore must evaluate to either ``true`` or ``false``.
 
 .. langref-grammar
 
@@ -119,11 +225,31 @@ A while statement has the following general form:
 Do-While Statement
 ~~~~~~~~~~~~~~~~~~
 
+Do-while statements allow a block of code to be executed one or more times,
+as long as a condition remains true.
+
+A do-while statement has the following general form:
+
 .. syntax-outline::
 
     do {
         <#code to execute#>
     } while <#condition#>
+
+A do-while statement is executed as follows:
+
+1. The program executes the code inside the braces of the do-while statement,
+   and execution continues to step 2.
+
+2. The *condition* expression is evaluated.
+   If it evaluates to ``true``, execution returns to step 1.
+   If it evaluates to ``false``, the program is finished executing the do-while statement.
+
+Because the value of the *condition* expression is evaluated after the code block is executed,
+the code block in a do-while statement is executed at least once.
+
+The value of the *condition* expression must be of type ``Bool``,
+and therefore must evaluate to either ``true`` or ``false``.
 
 .. langref-grammar
 
@@ -136,14 +262,50 @@ Do-While Statement
     do-while-statement --> ``do`` code-block ``while`` expression
 
 
-Branching Statements
---------------------
+Branch Statements
+-----------------
+
+Branch statements allow the program to execute certain parts of code
+depending the value of one or more conditions.
+The values of the conditions specified in a branch statement
+control how the program branches and, therefore, what block of code is executed.
+Swift has two branch statements: the if statement and the switch statement.
+Each branch statement is discussed in detail below.
+
+.. syntax-grammar::
+
+    Grammer of a branch statement
+
+    branch-statement --> if-statement
+    branch-statement --> switch-statement
 
 
-If Statements
-~~~~~~~~~~~~~
+If Statement
+~~~~~~~~~~~~
 
-The general format of an ``if`` statement is
+An if statement is used for executing code based on the evaluation of one or more conditions.
+
+There are two basic forms of the if statement.
+In each form, the opening and closing braces are required.
+
+The first form allows code to be executed only when a condition is true
+and has the following general form:
+
+.. syntax-outline::
+
+    if <#condition#> {
+        <#code to execute if condition is true#>
+    }
+
+.. NOTE: Original prose: When an if statement has the first form,
+    the *condition* expression is evaluated and, if it evaluates to ``true``,
+    the code inside the opening and closing braces of the if statement is executed.
+    If it evaluates to ``false``, the program is finished executing the if statement.
+
+The second form of the if statement provides an additional *else clause* (introduced by the ``else`` keyword)
+and is used for executing one part of code when the condition is true
+and another part code when the same condition is false.
+When a single else clause is present, an if statement has the following form:
 
 .. syntax-outline::
 
@@ -153,7 +315,15 @@ The general format of an ``if`` statement is
         <#code to execute if condition is false#>
     }
 
-where the ``else`` part is optional.
+.. NOTE: Original prose: When the optional else clause is present in an if statement,
+    the *condition* expression is evaluated and, if it evaluates to ``true``,
+    the code inside the opening and closing braces of the if statement is executed.
+    If it evaluates to ``false``,
+    the code inside the opening and closing braces of the else clause is executed instead.
+
+The else clause of an if statement can contain another if statement
+when the program needs to execute code based on the result of testing more than one condition.
+An if statement that is chained together in this way has the following form:
 
 .. syntax-outline::
 
@@ -165,6 +335,11 @@ where the ``else`` part is optional.
         <#code to execute if both conditions are false#>
     }
 
+The value of any conditional expression in an if statement must be of type ``Bool``,
+and therefore must evaluate to either ``true`` or ``false``.
+
+.. TODO: Should we promote this last sentence (here and elsewhere) higher up in the chapter?
+
 .. langref-grammar
 
     stmt-if      ::= 'if' expr-basic brace-item-list stmt-if-else?
@@ -175,12 +350,15 @@ where the ``else`` part is optional.
 
     Grammar of an if statement
 
-    if-statement  --> ``if`` expression code-block if-else-statement-OPT
-    if-else-statement  --> ``else`` code-block | ``else`` if-statement
+    if-statement  --> ``if`` expression code-block else-clause-OPT
+    else-clause  --> ``else`` code-block | ``else`` if-statement
 
 
 Switch Statements
 ~~~~~~~~~~~~~~~~~
+
+.. FIXME: "You can use" is a bit wordy.
+   We need to settle on a convention for starting each section.
 
 You can use a switch statement to execute certain blocks of code depending on the value of a
 **control expression**---the expression following the keyword ``switch``.
@@ -317,10 +495,11 @@ Each control transfer statement is discussed in detail below.
 Break Statement
 ~~~~~~~~~~~~~~~
 
-A break statement consists simply of the ``break`` keyword
-and may occur only in the context of a loop statement
-(for statement, for-each statement, while statement, and do-while statement).
-A break statement ends program execution of the smallest enclosing loop statement in which it occurs.
+A break statement consists of the ``break`` keyword
+and may occur only in the context of a loop statement.
+A break statement ends program execution of the current iteration
+of the innermost enclosing loop statement in which it occurs
+and stops execution of the loop statement.
 Program control is then transferred to the first line of code following the enclosing
 loop statement, if any.
 For an example of how to use a break statement in the context of a loop statement,
@@ -340,16 +519,14 @@ see “Loop Control Statements” in the :doc:`../LanguageGuide/ControlFlow` cha
 Continue Statement
 ~~~~~~~~~~~~~~~~~~
 
-A continue statement consists of the ``continue`` keyword, and like a break statement,
-may occur only in the context of a loop statement
-(C-style for statement, for-each statement, while statement, and do-while statement).
-Unlike a break statement,
-a continue statement ends only the program execution of the *current iteration*
-of the smallest enclosing loop statement in which it occurs.
-Any remaining code in the body of the loop is not executed.
+A continue statement consists of the ``continue`` keyword
+and may occur only in the context of a loop statement.
+A continue statement ends program execution of the current iteration
+of the innermost enclosing loop statement in which it occurs
+but does not stop execution of the loop statement.
 Program control is then transferred to the controlling expression of the enclosing loop statement.
 
-In a C-style for loop,
+In a for statement,
 the increment expression is still evaluated after the continue statement is executed,
 because the increment expression is evaluated after the execution of the loop's body.
 
@@ -375,11 +552,19 @@ Fallthrough Statement
 A fallthrough statement consists of the ``fallthrough`` keyword
 and may occur only in a case block of a switch statement.
 A fallthrough statement causes program execution to continue
-from one case in a switch statement to the next case or, if present, to the default case.
+from one case in a switch statement to the next case.
 Program execution continues to the next case
 even if the patterns of the case label do not match the value of the switch statement's control expression.
 
-Fallthrough statements may not be used in the final case block of a switch statement.
+
+
+A fallthrough statement can appear anywhere inside a switch statement,
+not just as the last statement of a case block,
+but it may not be used in the final case block.
+It also cannot transfer control into a case block
+whose pattern contains variable bindings.
+
+.. TODO: Need a decided-on name for "var" bindings.
 
 For an example of how to use a fallthrough statement in a switch statement,
 see “Fallthrough” in the :doc:`../LanguageGuide/ControlFlow` chapter of the :doc:`../LanguageGuide/index`.
@@ -420,6 +605,8 @@ declared in the function or method declaration,
 the expression's value is converted to the return type
 before it is returned to the calling function or method.
 
+.. TODO: TR: Converted how?
+
 .. langref-grammar
 
     stmt-return ::= 'return' expr
@@ -431,3 +618,21 @@ before it is returned to the calling function or method.
     Grammar of a return statement
 
     return-statement --> ``return`` | ``return`` expression
+
+
+Semicolon Statement
+-------------------
+
+A semicolon statement consists simply of the semicolon (``;``)
+and may be used to separate consecutive statements that appear on the same line.
+In Swift, statements are not required to end with a semicolon.
+
+.. langref-grammar
+
+    stmt-semicolon ::= ';'
+
+.. syntax-grammar::
+
+    Grammar of a semicolon statement
+
+    semicolon-statement --> ``;``

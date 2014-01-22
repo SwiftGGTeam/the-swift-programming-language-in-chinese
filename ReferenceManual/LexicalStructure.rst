@@ -3,6 +3,8 @@ Lexical Structure
 
 .. TODO: Write a brief intro to this chapter.
 
+[The content of this chapter is still being written.]
+
 
 Whitespace and Comments
 -----------------------
@@ -84,7 +86,7 @@ Operator Identifiers
     operator-character --> One of the following characters:
     ``@`` ``/`` ``=`` ``-`` ``+`` ``*`` ``%`` ``<`` ``>`` ``!`` ``&`` ``|`` ``^`` ``~``
 
-    binary-operater --> operator
+    binary-operator --> operator
     prefix-operator --> operator
     postfix-operator --> operator
     postfix-operators --> postfix-operator postfix-operators-OPT
