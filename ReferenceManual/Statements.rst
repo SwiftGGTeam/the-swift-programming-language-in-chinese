@@ -138,7 +138,7 @@ Collection-Based For Statement
 
 Collection-based for statements allow a block of code to be executed
 once for each item in a collection
-that conforms to the ``Sequence`` protocol.
+that conforms to the ``Stream`` protocol.
 
 A collection-based for statement has the general form:
 
@@ -148,12 +148,13 @@ A collection-based for statement has the general form:
         <#code to execute#>
     }
 
-The ``enumerate`` method is called on the **collection expression**
-to obtain a value of type ``Generator`` known as the generator.
+The ``generate`` method is called on the *collection* expression
+to obtain a value of a stream type---that is,
+a type that conforms to the ``Stream`` protocol.
 The program begins executing a loop
-by calling the ``next`` method on the generator.
+by calling the ``next`` method on the stream.
 If the value returned is not ``None``,
-it is assigned to the **item pattern**,
+it is assigned to the *item* pattern,
 the program executes the code block,
 and then continues execution at the beginning of the loop.
 Otherwise, the program does not perform assignment or execute the code block,
