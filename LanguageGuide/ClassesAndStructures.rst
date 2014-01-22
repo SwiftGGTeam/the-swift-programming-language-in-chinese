@@ -180,13 +180,13 @@ even though it is a sub-property of ``someRectangle.size``:
     (swift) println("The width of someRectangle is now \(someRectangle.size.width)")
     >>> The width of someRectangle is now 2.0
 
-Default Structure Initializers
-------------------------------
+Memberwise Structure Initializers
+---------------------------------
 
-All structures provide an automatically-generated *default initializer*,
-which can be used to create new structs of that type.
+All structures have an automatically-generated *memberwise initializer*,
+which can be used to initialise the member properties of new structs of that type.
 Initial values for the properties of the new struct
-can be passed to the default initializer by name:
+can be passed to the memberwise initializer by name:
 
 .. testcode:: classAndStructDefinitionSyntax
 
@@ -201,13 +201,10 @@ if they are listed in the same order that the properties are declared in the str
     (swift) let fourByThree = Size(4.0, 3.0)
     // fourByThree : Size = Size(4.0, 3.0)
 
-.. TODO: Include a justifiable reason for why classes do not provide a default initializer.
+.. TODO: Include a justifiable reason for why classes do not provide a memberwise initializer.
 .. TODO: Describe the creation of custom initializers.
-.. TODO: Clarify the difference between a default initializer and a memberwise initializer.
-   The thing being described above is actually a memberwise initializer.
 .. TODO: This whole section needs updating in light of the changes for definite initialization.
-   Both structs and classes will now only have a default initializer
-   if they provide default values for all of their properties.
+   Memberwise initializers will only exist if default values are provided for all properties.
 
 By Value and By Reference 
 -------------------------
