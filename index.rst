@@ -22,6 +22,9 @@ Change Log
 January 21 2014
 ~~~~~~~~~~~~~~~
 
+Language Guide
+++++++++++++++
+
 * Added the first few sections of a draft chapter about :doc:`LanguageGuide/ClassesAndStructures`
 * Enumerations have been extracted out of :doc:`LanguageGuide/BasicTypes` and given their own chapter called :doc:`LanguageGuide/Enumerations`
 * ``let`` constants have been added to :doc:`LanguageGuide/BasicTypes`
@@ -34,3 +37,9 @@ January 21 2014
 * The ``%`` operator is now correctly called a ‘remainder operator’ rather than a ‘modulo operator’ in :doc:`LanguageGuide/Operators`
 * Improved and expanded the description of the remainder operator in :doc:`LanguageGuide/Operators`, including a description of how it works with negative numbers
 * Other wording improvements throughout the Guide based on initial feedback
+
+Reference Manual
+++++++++++++++++
+
+* Added a rough draft of the :doc:`ReferenceManual/Statements` chapter.
+
