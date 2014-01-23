@@ -33,6 +33,8 @@ Whitespace and Comments
     whitespace --> U+000D (Carriage Return)
     whitespace --> U+0020 (Space)
 
+    whitespace --> U+0000 (Null Character) | U+0009 (Horizontal Tab) | U+000A (New Line) | U+000D (Carriage Return) | U+0020 (Space)
+
     comment --> single-line-comment | multiline-comment
 
     single-line-comment --> ``//`` comment-text line-end
