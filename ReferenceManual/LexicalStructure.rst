@@ -139,10 +139,13 @@ to use it in the ternary (``? :``) operator, it must not be left bound.
     punctuation ::= '...'
     punctuation ::= '&' // unary prefix operator
 
-The following character sequences are reserved punctuation and may not be used as operators:
+.. syntax-grammar::
 
-    ``=`` ``->`` ``//`` ``/*`` ``*/`` ``...`` ``{`` ``}`` ``(`` ``)`` ``[`` ``]`` ``.`` ``,`` ``;`` ``:``
+    Grammar of reserved punctuation
 
+    reserved-punctuation --> ``=`` | ``->`` | ``//`` | ``/*`` | ``*/`` | ``...`` | ``{`` | ``}`` | ``(`` | ``)`` | ``[`` | ``]`` | ``.`` | ``,`` | ``;`` | ``:``
+
+The character sequences in *reserved-punctuation* may not be used as operators.
 The unary prefix operator ``&`` is also reserved punctuation and may not be used as an operator.
 
 Operators with a leading ``<`` or ``>`` are split into two tokens:
