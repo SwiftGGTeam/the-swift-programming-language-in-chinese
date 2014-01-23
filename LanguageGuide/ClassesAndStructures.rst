@@ -485,20 +485,20 @@ which do not actually store a value:
         var origin = Point()
         var size = Size()
         var center: Point {
-            get:
-                var centerX = origin.x + (size.width / 2)
-                var centerY = origin.y + (size.height / 2)
-                return Point(centerX, centerY)
-            set(newCenter):
-                origin.x = newCenter.x - (size.width / 2)
-                origin.y = newCenter.y - (size.height / 2)
+        get:
+            var centerX = origin.x + (size.width / 2)
+            var centerY = origin.y + (size.height / 2)
+            return Point(centerX, centerY)
+        set(newCenter):
+            origin.x = newCenter.x - (size.width / 2)
+            origin.y = newCenter.y - (size.height / 2)
         }
     }
     (swift) var square = Rect(origin: Point(0.0, 0.0), size: Size(10.0, 10.0))
     // square : Rect = Rect(Point(0.0, 0.0), Size(10.0, 10.0))
     (swift) let initialCenter = square.center
     // initialCenter : Point = Point(5.0, 5.0)
-    (swift) square.center = Point(x: 15, y: 15)
+    (swift) square.center = Point(x: 15.0, y: 15.0)
     (swift) println("square origin is now at (\(square.origin.x), \(square.origin.y))")
     >>> square origin is now at (10.0, 10.0)
 
@@ -537,6 +537,42 @@ and moves the square to its new position.
     :width: 400
     :align: center
 
+Optional Getter and Setter Declarations
+_______________________________________
+
+If a computed property's getter is the first thing to be declared,
+the ``get:`` keyword can be dropped.
+Similarly, if a computed property's setter does not define a name for the new value to be set,
+the name is assumed to be ``value``:
+
+.. testcode:: storedAndComputedProperties
+
+    (swift) struct Line {
+        var start = Point()
+        var end = Point()
+        var center: Point {
+            var centerX = start.x + ((end.x - start.x) / 2)
+            var centerY = start.y + ((end.y - start.y) / 2)
+            return Point(centerX, centerY)
+        set:
+            var currentCenterX = start.x + ((end.x - start.x) / 2)
+            var currentCenterY = start.y + ((end.y - start.y) / 2)
+            var deltaX = value.x - currentCenterX
+            var deltaY = value.y - currentCenterY
+            start.x += deltaX
+            start.y += deltaY
+            end.x += deltaX
+            end.y += deltaY
+        }
+    }
+    (swift) var line = Line(start: Point(0.0, 0.0), end: Point(10.0, 10.0))
+    // line : Line = Line(Point(0.0, 0.0), Point(10.0, 10.0))
+    (swift) let initialCenter = line.center
+    // initialCenter : Point = Point(5.0, 5.0)
+    (swift) line.center = Point(x: 15.0, y: 15.0)
+    (swift) println("line start is now at (\(line.start.x), \(line.start.y))")
+    >>> line start is now at (10.0, 10.0)
+
 Read-Only Computed Properties
 _____________________________
 
@@ -550,7 +586,7 @@ The declaration of a read-only property can be simplified
 by removing the ``get:`` keyword.
 For example:
 
-.. testcode:: readOnlyComputedProperties
+.. testcode:: storedAndComputedProperties
 
     (swift) struct Cuboid {
         var width = 0.0, height = 0.0, depth = 0.0
