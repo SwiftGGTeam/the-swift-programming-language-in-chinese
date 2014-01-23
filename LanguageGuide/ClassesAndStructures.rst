@@ -217,6 +217,9 @@ However, they have one fundamental difference:
 
 This difference is very important when deciding how to define the building blocks of your code.
 
+.. TODO: this section needs updating to clarify that assignment is always like value semantics,
+   and it's only really possible to see the difference when looking at the properties of a type.
+
 Value Types
 ~~~~~~~~~~~
 
@@ -231,31 +234,6 @@ You've actually been using value types extensively throughout the previous chapt
 In fact, all of the basic types in Swift –
 integers, floating-point numbers, booleans, strings, enumerations, arrays and dictionaries –
 are value types.
-
-Here's an example of this copying behavior, using the basic ``String`` type:
-
-.. testcode:: classAndStructDefinitionSyntax
-
-    (swift) var someText = "hello"
-    // someText : String = "hello"
-    (swift) var copiedText = someText
-    // copiedText : String = "hello"
-    (swift) someText = "goodbye"
-    (swift) println("someText is now '\(someText)'")
-    >>> someText is now 'goodbye'
-    (swift) println("copiedText is still '\(copiedText)'")
-    >>> copiedText is still 'hello'
-
-When ``copiedText`` is set to the value of ``someText``,
-a *new copy* is made of the string ``hello``,
-and this new copy is stored in ``copiedText``.
-Although it has the same textual value,
-it is a completely different copy of that text.
-
-When ``someText`` is changed to a different value –
-in this case, when it is set to the string ``goodbye`` –
-the copy that was placed in ``copiedText`` is not affected.
-There is no connection between the values stored in ``someText`` and ``copiedText``.
 
 Swift structures are also value types.
 This means that any structs you create –
