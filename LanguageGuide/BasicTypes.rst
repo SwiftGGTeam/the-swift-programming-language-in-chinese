@@ -732,3 +732,12 @@ The exclamation mark effectively says
     * https://[Internal Staging Server]/docs/whitepaper/GuidedTour.html#tuples
     * https://[Internal Staging Server]/docs/literals.html
     * http://en.wikipedia.org/wiki/Operator_(computer_programming)
+
+
+
+hello
+
+A :query:`How do we fix this?` query.
+
+A :new-term:`new term` defines something that's new.
+
