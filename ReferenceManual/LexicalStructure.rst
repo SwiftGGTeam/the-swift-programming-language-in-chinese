@@ -84,8 +84,8 @@ Operator Identifiers
     left-bound-operator --> operator-characters left-binding-character
     right-bound-operator --> right-binding-charactor operator-characters
 
-    left-binding-character --> Space | CR | LF | HT | ``(`` | ``[`` | ``{`` | ``,`` | ``;`` | ``:``
-    right-binding-character --> Space | CR | LF | HT | ``)`` | ``]`` | ``}`` | ``,`` | ``;`` | ``:``
+    left-binding-character --> U+0020 (Space) | U+000D (Carriage Return) | U+000A (New Line) | U+0009 (Horizontal Tab) | ``(`` | ``[`` | ``{`` | ``,`` | ``;`` | ``:``
+    right-binding-character --> U+0020 (Space) | U+000D (Carriage Return) | U+000A (New Line) | U+0009 (Horizontal Tab) | ``)`` | ``]`` | ``}`` | ``,`` | ``;`` | ``:``
 
     operator-characters --> operator-character operator-characters-OPT
     operator-characters --> ``..``
@@ -99,9 +99,6 @@ Operator Identifiers
     any-identifier --> identifier | operator
 
 .. TODO: Move any-identifier.  It doesn't belong here -- it's not an operator.
-
-.. TODO: Use Unicode code points for Space etc. in definition of
-   left/right binding characters
 
 Left and/or right binding determines whether an operator is
 a prefix operator, a postfix operator, or a binary operator.
