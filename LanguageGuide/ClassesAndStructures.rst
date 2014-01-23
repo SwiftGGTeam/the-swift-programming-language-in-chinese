@@ -206,29 +206,63 @@ if they are listed in the same order that the properties are declared in the str
 .. TODO: This whole section needs updating in light of the changes for definite initialization.
    Memberwise initializers will only exist if default values are provided for all properties.
 
-By Value and By Reference 
--------------------------
+Value Types and Reference Types
+-------------------------------
 
-Objects and structs have many things in common in Swift.
+Classes and structures have many things in common in Swift.
 However, they have one fundamental difference:
 
-* structs are passed by *value*
-* objects are passed by *reference*
+* Structures define *value types*
+* Classes define *reference types*
 
 This difference is very important when deciding how to define the building blocks of your code.
 
-Structs Are Passed By Value
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Value Types
+~~~~~~~~~~~
 
-Structs are always *copied* when they are assigned to a new constant or variable,
-or passed as an argument to a function.
-Rather than using the existing struct, a new one is created,
-and the original struct's values are copied across to the new struct.
-This is what is meant by ‘passing a struct by value’ –
-the *values* contained within the struct are passed around,
-not the struct itself.
+.. TODO: Have I actually described what a 'type' is by this point?
+.. TODO: If this section is talking about value types, it needs to talk about enums too.
 
-For example:
+A *value type* is a type that is *copied*
+when it is assigned to a variable or constant,
+or when it is passed to a function.
+
+You've actually been using value types extensively throughout the previous chapters.
+In fact, all of the basic types in Swift –
+integers, floating-point numbers, booleans, strings, enumerations, arrays and dictionaries –
+are value types.
+
+Here's an example of this copying behavior, using the basic ``String`` type:
+
+.. testcode:: classAndStructDefinitionSyntax
+
+    (swift) var someText = "hello"
+    // someText : String = "hello"
+    (swift) var copiedText = someText
+    // copiedText : String = "hello"
+    (swift) someText = "goodbye"
+    (swift) println("someText is now '\(someText)'")
+    >>> someText is now 'goodbye'
+    (swift) println("copiedText is still '\(copiedText)'")
+    >>> copiedText is still 'hello'
+
+When ``copiedText`` is set to the value of ``someText``,
+a *new copy* is made of the string ``hello``,
+and this new copy is stored in ``copiedText``.
+Although it has the same textual value,
+it is a completely different copy of that text.
+
+When ``someText`` is changed to a different value –
+in this case, when it is set to the string ``goodbye`` –
+the copy that was placed in ``copiedText`` is not affected.
+There is no connection between the values stored in ``someText`` and ``copiedText``.
+
+Swift structures are also value types.
+This means that any structs you create –
+and any value types they have as properties –
+will always be copied when they are passed around.
+
+For example, using the ``Size`` structure from above:
 
 .. testcode:: classAndStructDefinitionSyntax
 
@@ -237,10 +271,10 @@ For example:
     (swift) var iPhone5 = iPhone4
     // iPhone5 : Size = Size(640.0, 960.0)
     (swift) iPhone5.height = 1136.0
-    (swift) println("The iPhone 5 screen is \(iPhone5.height) pixels high")
-    >>> The iPhone 5 screen is 1136.0 pixels high
-    (swift) println("The iPhone 4 screen is \(iPhone4.height) pixels high")
-    >>> The iPhone 4 screen is 960.0 pixels high
+    (swift) println("The iPhone 5 screen is now \(iPhone5.height) pixels high")
+    >>> The iPhone 5 screen is now 1136.0 pixels high
+    (swift) println("The iPhone 4 screen is still \(iPhone4.height) pixels high")
+    >>> The iPhone 4 screen is still 960.0 pixels high
 
 This example declares a constant called ``iPhone4``,
 and sets it to a ``Size`` struct initialized with
@@ -259,61 +293,68 @@ When ``iPhone5`` was initialized with the current value of ``iPhone4``,
 the *values* stored in ``iPhone4`` were copied into the new ``iPhone5`` struct.
 The end result was two completely separate structs, which just happened to contain the same values.
 This is why setting the height of ``iPhone5`` to ``1136.0``
-didn't affect the values stored in ``iPhone4``.
+doesn't affect the values stored in ``iPhone4``.
 
-Objects Are Passed By Reference
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. TODO: Should I give an example of passing a value type to a function here?
 
-Objects are always passed by *reference* when they are assigned to a new constant or variable,
-or passed as an argument to a function.
-The exact same object is used, and no copying takes place.
+Reference Types
+~~~~~~~~~~~~~~~
 
-For example:
+Unlike value types, a reference type is *not* copied when is assigned to a variable or constant,
+or when it is passed to a function.
+Rather than making a copy, a reference to the same existing instance of that type is used instead.
+
+.. TODO: This enables you to have multiple variables and constants
+   that all refer to the same one instance. 
+
+Classes are the only reference types in Swift.
+If you want to create a new type that is passed by reference rather than by value,
+you should define it as a class in your code.
+
+Here's an example, using the ``Rectangle`` class defined above:
 
 .. testcode:: classAndStructDefinitionSyntax
 
-    (swift) let square = Rectangle()
-    // square : Rectangle = <Rectangle instance>
-    (swift) square.size = Size(width: 1.0, height: 1.0)
-    (swift) println("The square's width is \(square.size.width)")
-    >>> The square's width is 1.0
-    (swift) let theSameSquare = square
-    // theSameSquare : Rectangle = <Rectangle instance>
-    (swift) theSameSquare.size.width = 3.0
-    (swift) theSameSquare.size.height = 3.0
-    (swift) println("The square's width is now \(theSameSquare.size.width)")
-    >>> The square's width is now 3.0
-    (swift) println("The square's width is now \(square.size.width)")
-    >>> The square's width is now 3.0
+    (swift) let rect = Rectangle()
+    // rect : Rectangle = <Rectangle instance>
+    (swift) rect.size = Size(width: 1.0, height: 1.0)
+    (swift) println("The rectangle's width is \(rect.size.width)")
+    >>> The rectangle's width is 1.0
+    (swift) let sameRect = rect
+    // sameRect : Rectangle = <Rectangle instance>
+    (swift) sameRect.size.width = 3.0
+    (swift) println("The rectangle's width is now \(sameRect.size.width)")
+    >>> The rectangle's width is now 3.0
+    (swift) println("The rectangle's width is now \(rect.size.width)")
+    >>> The rectangle's width is now 3.0
 
-This example declares a constant called ``square``,
+This example declares a new constant called ``rect``,
 and sets it to refer to a new ``Rectangle`` object.
-The new ``Rectangle`` is given a size with a width and height of ``1.0``.
+``rect`` is given an initial size with a width and height of ``1.0``.
 
-A second constant is then declared, called ``theSameSquare``,
-which is set to refer to the same ``Rectangle`` already referred to by ``square``.
-This doesn't create a new ``Rectangle`` object –
-rather, there are now two object constants referring to the same one object.
+A second constant is also declared, called ``sameRect``,
+and is set to refer to the same ``Rectangle`` already referred to by ``rect``.
+This *doesn't* copy ``rect``, or create a new ``Rectangle`` object –
+rather, there are now two object constants that refer to the same one underlying object.
 
-The width and height of the ``Rectangle`` are then modified.
-Because ``theSameSquare`` refers to the same object as ``square``,
-the underlying width and height properties can be accessed via either ``square`` or ``theSameSquare`` –
+The width of the rectangle is then modified.
+Because ``sameRect`` refers to the same object as ``rect``,
+the underlying width and height properties can be accessed via either ``rect`` or ``sameRect`` –
 it doesn't make a difference which one is chosen, as they both refer to the same thing.
-Here, the width and height are accessed and changed via ``theSameSquare``
-(e.g. ``theSameSquare.size.width``).
+Here, the width and height are accessed and changed via ``sameRect``
+(e.g. ``sameRect.size.width``).
 
-The final lines of this example print the current value of the ``Rectangle``'s width.
-As shown here, it doesn't matter whether you access the width via ``square`` or ``theSameSquare`` –
-the value of ``3.0`` from the underlying ``Rectangle`` is returned in both cases.
+The final lines of this example print the current value of the rectangle's width.
+As shown here, it doesn't matter whether you access the width via ``rect`` or ``sameRect`` –
+the updated value of ``3.0`` from the underlying rectangle is returned in both cases.
 
-Note that ``square`` and ``theSameSquare`` are declared as *constants*,
+Note that ``rect`` and ``sameRect`` are declared as *constants*,
 rather than variables.
-However, it is still possible to change ``square.size``,
-and to change ``theSameSquare.size.width``.
+However, it is still possible to change ``rect.size`` and ``sameRect.size.width``.
 This is allowed because
-the values of the ``square`` and ``theSameSquare`` constants do not actually change.
-Rather, it is the *properties* of the ``Rectangle`` that ``square`` and ``theSameSquare`` refer to
-that are changed, and not the actual reference to the ``Rectangle``.
+the values of the ``rect`` and ``sameRect`` constants themselves do not actually change.
+Rather, it is the properties of the *underlying* rectangle that are being changed,
+and not the values of the ``rect`` and ``sameRect`` references to that rectangle.
 
 Pointers
 ________
@@ -353,7 +394,7 @@ As a general rule, you should only define a new structure when:
   (although it may provide one or two convenience methods to work with its stored values)
 * it is reasonable to expect that the encapsulated values will be copied rather than referenced
   when assigning or passing around an instance of that structure
-* the values stored by the structure are basic types and / or other structures,
+* any properties stored by the structure are themselves value types,
   which would also be expected to be copied rather than referenced
 * there is no need to inherit properties or behavior from some other existing type
 
