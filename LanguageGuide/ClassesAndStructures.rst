@@ -541,49 +541,40 @@ Optional Getter and Setter Declarations
 _______________________________________
 
 If a computed property's getter is the first thing to be declared,
-the ``get:`` keyword can be dropped.
-Similarly, if a computed property's setter does not define a name for the new value to be set,
-the name is assumed to be ``value``:
+it can be written without the ``get:`` keyword.
+Similarly, if a computed property's setter does not define a name for the new value,
+the name defaults to ``value``.
+Here's an alternative version of the ``Rect`` structure from above,
+with both of these removed:
 
 .. testcode:: storedAndComputedProperties
 
-    (swift) struct Line {
-        var start = Point()
-        var end = Point()
+    (swift) struct AlternativeRect {
+        var origin = Point()
+        var size = Size()
         var center: Point {
-            var centerX = start.x + ((end.x - start.x) / 2)
-            var centerY = start.y + ((end.y - start.y) / 2)
+            var centerX = origin.x + (size.width / 2)
+            var centerY = origin.y + (size.height / 2)
             return Point(centerX, centerY)
         set:
-            var currentCenterX = start.x + ((end.x - start.x) / 2)
-            var currentCenterY = start.y + ((end.y - start.y) / 2)
-            var deltaX = value.x - currentCenterX
-            var deltaY = value.y - currentCenterY
-            start.x += deltaX
-            start.y += deltaY
-            end.x += deltaX
-            end.y += deltaY
+            origin.x = value.x - (size.width / 2)
+            origin.y = value.y - (size.height / 2)
         }
     }
-    (swift) var line = Line(start: Point(0.0, 0.0), end: Point(10.0, 10.0))
-    // line : Line = Line(Point(0.0, 0.0), Point(10.0, 10.0))
-    (swift) let initialLineCenter = line.center
-    // initialLineCenter : Point = Point(5.0, 5.0)
-    (swift) line.center = Point(x: 15.0, y: 15.0)
-    (swift) println("line start is now at (\(line.start.x), \(line.start.y))")
-    >>> line start is now at (10.0, 10.0)
 
 Read-Only Computed Properties
 _____________________________
 
 If a computed property has a getter but no setter,
 it becomes a *read-only computed property*.
-This enables you to define a computed property that will always return a value,
+This enables you to define a computed property that will always return a current value,
 and can be accessed via dot syntax,
 but which cannot be set to a different value by users of your class or structure.
 
-The declaration of a read-only property can be simplified
-by removing the ``get:`` keyword.
+As mentioned above,
+the declaration of computed properties –
+including read-only computed properties –
+can be simplified by removing the ``get:`` keyword.
 For example:
 
 .. testcode:: storedAndComputedProperties
@@ -609,13 +600,14 @@ should be used for a particular ``volume`` value.
 Nonetheless, it is useful for a ``Cuboid`` to provide a read-only computed property
 to enable the outside world to discover its current calculated volume.
 
-Note that read-only computed properties are not the same as constant properties.
-They do have some similarities, in that neither type of property
-can be set to a different value by external users of the class or structure.
-However, they differ considerably in the nature of what they can return.
-Constant properties cannot change their value once they are set during initialization,
-whereas read-only properties can return any value they like,
-and this value can change as other properties and conditions are modified.
+Read-only computed properties are not the same as constant properties.
+Neither can have its value set by external users of the class or structure,
+but they differ considerably in how their values are retrieved.
+Constant properties are assigned their own storage,
+and the contents of this storage cannot be changed to a different value
+once it has been set during initialization.
+Read-only computed properties do not have storage assigned to them,
+and can return any value they like at any time.
 
 .. TODO: make it explicit that we have constant and variable properties,
    and perhaps change the HTTPStatus example to use a class rather than a struct
