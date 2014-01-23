@@ -496,8 +496,8 @@ which do not actually store a value:
     }
     (swift) var square = Rect(origin: Point(0.0, 0.0), size: Size(10.0, 10.0))
     // square : Rect = Rect(Point(0.0, 0.0), Size(10.0, 10.0))
-    (swift) let initialCenter = square.center
-    // initialCenter : Point = Point(5.0, 5.0)
+    (swift) let initialSquareCenter = square.center
+    // initialSquareCenter : Point = Point(5.0, 5.0)
     (swift) square.center = Point(x: 15.0, y: 15.0)
     (swift) println("square origin is now at (\(square.origin.x), \(square.origin.y))")
     >>> square origin is now at (10.0, 10.0)
@@ -567,8 +567,8 @@ the name is assumed to be ``value``:
     }
     (swift) var line = Line(start: Point(0.0, 0.0), end: Point(10.0, 10.0))
     // line : Line = Line(Point(0.0, 0.0), Point(10.0, 10.0))
-    (swift) let initialCenter = line.center
-    // initialCenter : Point = Point(5.0, 5.0)
+    (swift) let initialLineCenter = line.center
+    // initialLineCenter : Point = Point(5.0, 5.0)
     (swift) line.center = Point(x: 15.0, y: 15.0)
     (swift) println("line start is now at (\(line.start.x), \(line.start.y))")
     >>> line start is now at (10.0, 10.0)
