@@ -83,8 +83,7 @@ Operator Identifiers
     operator --> operator-character operator-OPT
     operator --> ``..``
 
-    operator-character --> One of the following characters:
-    ``@`` ``/`` ``=`` ``-`` ``+`` ``*`` ``%`` ``<`` ``>`` ``!`` ``&`` ``|`` ``^`` ``~``
+    operator-character --> ``@`` | ``/`` | ``=`` | ``-`` | ``+`` | ``*`` | ``%`` | ``<`` | ``>`` | ``!`` | ``&`` | ``|`` | ``^`` | ``~``
 
     binary-operator --> operator
     prefix-operator --> operator
@@ -93,13 +92,21 @@ Operator Identifiers
 
     any-identifier --> identifier | operator
 
+.. Old version
+    operator-character --> One of the following characters:
+    ``@`` ``/`` ``=`` ``-`` ``+`` ``*`` ``%`` ``<`` ``>`` ``!`` ``&`` ``|`` ``^`` ``~``
+
 .. TODO: Move any-identifier.  It doesn't belong here -- it's not an operator.
+
+.. TODO: Pick one of the two definitions for operator-character.
+
+.. TODO: Change the markup around left/right binding.  This outputs as a
+   Note in [Tool S] which isn't right.
 
 Operators that are followed by one of the following characters are *left bound*:
 
     Space, Carriage Return, New Line, Horizontal Tab
     ``(`` ``[`` ``{`` ``,`` ``;`` ``:``
-
 
 Operators that are preceded by one of the following characters are *right bound*:
 
