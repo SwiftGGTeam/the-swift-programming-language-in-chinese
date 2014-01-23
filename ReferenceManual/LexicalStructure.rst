@@ -80,9 +80,15 @@ Operator Identifiers
 
     Grammar of operators
 
-    operator --> operator-character operator-OPT
-    operator --> ``..``
+    operator --> left-bound-operator | right-bound-operator
+    left-bound-operator --> operator-characters left-binding-character
+    right-bound-operator --> right-binding-charactor operator-characters
 
+    left-binding-character --> Space | CR | LF | HT | ``(`` | ``[`` | ``{`` | ``,`` | ``;`` | ``:``
+    right-binding-character --> Space | CR | LF | HT | ``)`` | ``]`` | ``}`` | ``,`` | ``;`` | ``:``
+
+    operator-characters --> operator-character operator-characters-OPT
+    operator-characters --> ``..``
     operator-character --> ``@`` | ``/`` | ``=`` | ``-`` | ``+`` | ``*`` | ``%`` | ``<`` | ``>`` | ``!`` | ``&`` | ``|`` | ``^`` | ``~``
 
     binary-operator --> operator
@@ -92,28 +98,12 @@ Operator Identifiers
 
     any-identifier --> identifier | operator
 
-.. Old version
-    operator-character --> One of the following characters:
-    ``@`` ``/`` ``=`` ``-`` ``+`` ``*`` ``%`` ``<`` ``>`` ``!`` ``&`` ``|`` ``^`` ``~``
-
 .. TODO: Move any-identifier.  It doesn't belong here -- it's not an operator.
 
-.. TODO: Pick one of the two definitions for operator-character.
+.. TODO: Use Unicode code points for Space etc. in definition of
+   left/right binding characters
 
-.. TODO: Change the markup around left/right binding.  This outputs as a
-   Note in [Tool S] which isn't right.
-
-Operators that are followed by one of the following characters are *left bound*:
-
-    Space, Carriage Return, New Line, Horizontal Tab
-    ``(`` ``[`` ``{`` ``,`` ``;`` ``:``
-
-Operators that are preceded by one of the following characters are *right bound*:
-
-    Space, Carriage Return, New Line, Horizontal Tab
-    ``)`` ``]`` ``}`` ``,`` ``;`` ``:``
-
-Being right/left bound determines whether an operator is
+Left and/or right binding determines whether an operator is
 a prefix operator, a postfix operator, or a binary operator.
 Operators that are left bound and not right bound are postfix operators.
 Operators that are right bound and not left bound are prefix operators.
