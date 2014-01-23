@@ -537,17 +537,63 @@ and moves the square to its new position.
     :width: 400
     :align: center
 
+Read-Only Computed Properties
+_____________________________
+
+If a computed property has a getter but no setter,
+it becomes a *read-only computed property*.
+This enables you to define a computed property that will always return a value,
+and can be accessed via dot syntax,
+but which cannot be set to a different value by users of your class or structure.
+
+The declaration of a read-only property can be simplified
+by removing the ``get:`` keyword.
+For example:
+
+.. testcode:: readOnlyComputedProperties
+
+    (swift) struct Cuboid {
+        var width = 0.0, height = 0.0, depth = 0.0
+        var volume: Double {
+            return width * height * depth
+        }
+    }
+    (swift) let fourByFiveByTwo = Cuboid(4.0, 5.0, 2.0)
+    // fourByFiveByTwo : Cuboid = Cuboid(4.0, 5.0, 2.0)
+    (swift) println("the volume of fourByFiveByTwo is \(fourByFiveByTwo.volume)")
+    >>> the volume of fourByFiveByTwo is 40.0
+
+This example defines a new structure called ``Cuboid``,
+which represents a 3D rectangular box with ``width``, ``height`` and ``depth`` properties.
+This structure also has a read-only calculated property called ``volume``,
+which calculates and returns the current volume of the cuboid.
+It doesn't make sense for ``volume`` to be settable,
+as it would be ambiguous as to which values of ``width``, ``height`` and ``depth``
+should be used for a particular ``volume`` value.
+Nonetheless, it is useful for a ``Cuboid`` to provide a read-only computed property
+to enable the outside world to discover its current calculated volume.
+
+Note that read-only computed properties are not the same as constant properties.
+They do have some similarities, in that neither type of property
+can be set to a different value by external users of the class or structure.
+However, they differ considerably in the nature of what they can return.
+Constant properties cannot change their value once they are set during initialization,
+whereas read-only properties can return any value they like,
+and this value can change as other properties and conditions are modified.
+
+.. TODO: make it explicit that we have constant and variable properties,
+   and perhaps change the HTTPStatus example to use a class rather than a struct
 .. NOTE: getters and setters are also allowed for named values
    that are not associated with a particular class or struct.
    Where should this be mentioned?
 .. TODO: If the getter appears first, the "get:" label may be omitted (to be verified)
 .. TODO: If the setter's argument is omitted, it is assumed to be named "value" (to be verified)
-.. TODO: If a computed variable has a getter but no setter,
-   it becomes a *read-only variable* (to be verified) –
-   how does this overlap with constants?
 .. TODO: Anything else from https://[Internal Staging Server]/docs/StoredAndComputedVariables.html
 .. TODO: mention that all by-value properties of a constant struct are also constant
 .. TODO: what happens if one property of a constant struct is an object reference?
+.. TODO: immutability of value type constants means that
+   their mutable properties are also immutable
+.. TODO: type variables, constants and methods
 
 .. refnote:: References
 
