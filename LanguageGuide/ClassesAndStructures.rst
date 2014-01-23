@@ -256,22 +256,32 @@ For example, using the ``Size`` structure from above:
 
 This example declares a constant called ``iPhone4``,
 and sets it to a ``Size`` struct initialized with
-the pixel width and height of the iPhone 4's screen.
+the width and height of the iPhone 4's screen
+(which is 640 pixel wide, and 960 pixels tall).
+
 It then declares a variable called ``iPhone5``,
 and sets it to the current value of ``iPhone4``.
-Having done so, it amends the ``height`` property of the ``iPhone5`` struct to be
-the height of the iPhone 5's taller screen (``1136.0`` pixels).
+Because ``Size`` is a structure,
+a new copy of the existing struct is made,
+and this new copy is assigned to ``iPhone5``.
+``iPhone4`` and ``iPhone5`` may currently have the same width and height,
+but they are two completely different structs behind the scenes.
+
+Next, the ``height`` property of the ``iPhone5`` struct is amended to be
+the height of the iPhone 5's taller screen (which is 1,136 pixels tall).
 
 The two calls to ``println`` at the end of this example show that
 the ``height`` property of ``iPhone5`` has indeed changed to be ``1136.0``.
 However, the ``height`` property of the original ``iPhone4`` struct
 still has the old value of ``960.0``.
 
-When ``iPhone5`` was initialized with the current value of ``iPhone4``,
-the *values* stored in ``iPhone4`` were copied into the new ``iPhone5`` struct.
-The end result was two completely separate structs, which just happened to contain the same values.
-This is why setting the height of ``iPhone5`` to ``1136.0``
-doesn't affect the values stored in ``iPhone4``.
+When ``iPhone5`` is given the current value of ``iPhone4``,
+the *values* stored in ``iPhone4`` are copied into the new ``iPhone5`` struct.
+The end result is two completely separate structs,
+which just happened to contain the same numeric values.
+Because they are separate structs,
+setting the height of ``iPhone5`` to ``1136.0``
+doesn't affect the height value stored in ``iPhone4``.
 
 .. TODO: Should I give an example of passing a value type to a function here?
 
@@ -280,14 +290,10 @@ Reference Types
 
 Unlike value types, a reference type is *not* copied when is assigned to a variable or constant,
 or when it is passed to a function.
-Rather than making a copy, a reference to the same existing instance of that type is used instead.
+Rather than making a copy, a *reference* to the same existing instance of that type is used instead.
 
 .. TODO: This enables you to have multiple variables and constants
    that all refer to the same one instance. 
-
-Classes are the only reference types in Swift.
-If you want to create a new type that is passed by reference rather than by value,
-you should define it as a class in your code.
 
 Here's an example, using the ``Rectangle`` class defined above:
 
@@ -308,16 +314,16 @@ Here's an example, using the ``Rectangle`` class defined above:
 
 This example declares a new constant called ``rect``,
 and sets it to refer to a new ``Rectangle`` object.
-``rect`` is given an initial size with a width and height of ``1.0``.
+The rectangle is given a size with a width and height of ``1.0``.
 
 A second constant is also declared, called ``sameRect``,
-and is set to refer to the same ``Rectangle`` already referred to by ``rect``.
+and is set to refer to the same rectangle already referred to by ``rect``.
 This *doesn't* copy ``rect``, or create a new ``Rectangle`` object –
-rather, there are now two object constants that refer to the same one underlying object.
+instead, there are now *two* constants that refer to the same one underlying object.
 
 The width of the rectangle is then modified.
 Because ``sameRect`` refers to the same object as ``rect``,
-the underlying width and height properties can be accessed via either ``rect`` or ``sameRect`` –
+the underlying ``width`` and ``height`` properties can be accessed via either ``rect`` or ``sameRect`` –
 it doesn't make a difference which one is chosen, as they both refer to the same thing.
 Here, the width and height are accessed and changed via ``sameRect``
 (e.g. ``sameRect.size.width``).
@@ -331,18 +337,29 @@ rather than variables.
 However, it is still possible to change ``rect.size`` and ``sameRect.size.width``.
 This is allowed because
 the values of the ``rect`` and ``sameRect`` constants themselves do not actually change.
-Rather, it is the properties of the *underlying* rectangle that are being changed,
-and not the values of the ``rect`` and ``sameRect`` references to that rectangle.
+``rect`` and ``sameRect`` do no themselves store the rectangle –
+instead, they both *refer* to a rectangle behind the scenes.
+The ``width`` property of the underlying rectangle is changed,
+not the values of the ``rect`` and ``sameRect`` references to that rectangle.
+
+.. TODO: Surely a rectangle is a good candidate for a structure, not a class…
+
+Classes are the only reference types in Swift.
+If you want to create a new type that is passed by reference rather than by value,
+you should define it as a class in your code.
+
+.. TODO: Why would you want to use reference types rather than value types?
 
 Pointers
 ________
 
 If you have experience with C, C++ or Objective-C,
 you may be familiar with the fact that these languages use *pointers* to refer to objects.
-Swift's object named values are similar to pointers,
+Variables, constants and properties that refer to an instance of a reference type
+are very similar to pointers in C-like languages,
 but do not use the reference operator (``&``) or dereference operator (``*``)
 to differentiate between a pointer and the memory it points to.
-Instead, an object named value in Swift is declared like any other named value,
+Instead, a reference type in Swift is declared like any other named value,
 and the value it contains is always a reference to a particular object instance.
 
 .. TODO: We need something here to say
