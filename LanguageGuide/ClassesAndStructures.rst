@@ -459,15 +459,15 @@ as part of each ``HTTPStatus`` struct.
 They can be accessed and modified via dot syntax
 (such as ``http404Error.statusCode``).
 
+Computed Properties
+~~~~~~~~~~~~~~~~~~~
+
 Swift automatically provides *getter* and *setter methods* for stored properties,
 in a similar manner to synthesized getters and setters in Objective-C.
 You don't need to declare these getter and setter methods –
 they are automatically synthesized for you as part of the property declaration.
 These synthesized getter and setter methods are automatically used
 when you retrieve or set the stored property values.
-
-Computed Properties
-~~~~~~~~~~~~~~~~~~~
 
 Properties aren't restricted to simple stored values, however.
 Classes and structures can also define *computed* properties,
