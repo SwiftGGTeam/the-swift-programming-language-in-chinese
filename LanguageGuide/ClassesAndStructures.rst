@@ -372,7 +372,7 @@ and the value it contains is always a reference to a particular object instance.
    This is currently blocked on rdar://problem/15566395 .
 
 Choosing Between Classes and Structures
----------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Classes and structures have many things in common.
 However, the fact that structs are always passed by value,
