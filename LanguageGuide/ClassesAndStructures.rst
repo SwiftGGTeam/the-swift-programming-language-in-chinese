@@ -515,7 +515,7 @@ and a width and height of ``10``.
 This is equivalent to the blue square in the diagram below.
 
 The ``square`` variable's ``center`` property is then accessed via dot syntax (``square.center``).
-This causes ``center``'s ``get:`` method to be called,
+This causes ``center``'s ``get`` method to be called,
 to retrieve the current property value.
 Rather than returning an existing value,
 this actually calculates and returns a new ``Point`` to represent the center of the square.
@@ -532,15 +532,16 @@ and moves the square to its new position.
     :width: 400
     :align: center
 
-Optional Getter and Setter Declarations
-_______________________________________
+Shorthand Getter and Setter Declarations
+________________________________________
 
-If a computed property's getter is the first thing to be declared,
-it can be written without the ``get:`` keyword.
-Similarly, if a computed property's setter does not define a name for the new value,
-the name defaults to ``value``.
-Here's an alternative version of the ``Rect`` structure from above,
-with both of these removed:
+A computed property's getter can be written without the ``get`` keyword
+if the getter comes before the setter.
+Additionally, if a computed property's setter does not define a name
+for the new value to be set,
+a default name of ``value`` is used.
+Here's an alternative version of the ``Rect`` structure,
+which takes advantage of these shorthand notations:
 
 .. testcode:: storedAndComputedProperties
 
@@ -560,17 +561,16 @@ with both of these removed:
 Read-Only Computed Properties
 _____________________________
 
-If a computed property has a getter but no setter,
-it becomes a *read-only computed property*.
-This enables you to define a computed property that will always return a current value,
+A computed property with a getter but no setter is known as a *read-only computed property*.
+Read-only computed properties enable you to
+define a property that will always return a value,
 and can be accessed via dot syntax,
 but which cannot be set to a different value by users of your class or structure.
 
 As mentioned above,
 the declaration of computed properties –
 including read-only computed properties –
-can be simplified by removing the ``get:`` keyword.
-For example:
+can be simplified by removing the ``get`` keyword:
 
 .. testcode:: storedAndComputedProperties
 
@@ -587,7 +587,7 @@ For example:
 
 This example defines a new structure called ``Cuboid``,
 which represents a 3D rectangular box with ``width``, ``height`` and ``depth`` properties.
-This structure also has a read-only calculated property called ``volume``,
+This structure also has a read-only computed property called ``volume``,
 which calculates and returns the current volume of the cuboid.
 It doesn't make sense for ``volume`` to be settable,
 as it would be ambiguous as to which values of ``width``, ``height`` and ``depth``
@@ -596,7 +596,8 @@ Nonetheless, it is useful for a ``Cuboid`` to provide a read-only computed prope
 to enable the outside world to discover its current calculated volume.
 
 Read-only computed properties are not the same as constant properties.
-Neither can have its value set by external users of the class or structure,
+They have some similarities,
+in that neither can have their value set by external users of the class or structure,
 but they differ considerably in how their values are retrieved.
 Constant properties are assigned their own storage,
 and the contents of this storage cannot be changed to a different value
@@ -609,8 +610,6 @@ and can return any value they like at any time.
 .. NOTE: getters and setters are also allowed for named values
    that are not associated with a particular class or struct.
    Where should this be mentioned?
-.. TODO: If the getter appears first, the "get:" label may be omitted (to be verified)
-.. TODO: If the setter's argument is omitted, it is assumed to be named "value" (to be verified)
 .. TODO: Anything else from https://[Internal Staging Server]/docs/StoredAndComputedVariables.html
 .. TODO: mention that all by-value properties of a constant struct are also constant
 .. TODO: what happens if one property of a constant struct is an object reference?
