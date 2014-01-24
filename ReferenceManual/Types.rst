@@ -1,6 +1,22 @@
 Types
 =====
 
+.. TODO: Things to discuss/cover in this chapter:
+    Meta types
+    Materializable Types
+    Fully-typed (or fully-specified) types (well-typed expressions)
+    Type inference behavior of Swift
+    Strong vs weak typing; static vs dynamic typing?
+    Type inheritance
+    Different kinds of types:
+        Builtin types
+        Standard Library basic types
+        Standard Library derived types
+        Language-provided types
+    Value types vs reference types?
+    Functions are first-class citizens in Swift?
+    Type attributes? (Some attributes apply to types only; some apply to declarations only)
+
 .. TODO: Discuss "fully-typed types" and "materializable types" in the intro paragraphs,
     rather than in discrete sections. Also, try to come up with better terms for these,
     or just explain the concept without giving them explicit terms.
