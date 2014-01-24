@@ -73,7 +73,30 @@ Classes are introduced by the ``class`` keyword,
 and structures are introduced by the ``struct`` keyword.
 Both place their entire definition within a pair of braces:
 
-.. testcode:: classAndStructDefinitionSyntax
+.. testcode:: classesAndStructs
+
+    (swift) class SomeClass {
+        /* class definition */
+    }
+    (swift) struct SomeStructure {
+        /* structure definition */
+    }
+
+Whenever you define a new class or structure,
+you are effectively defining a brand new Swift type.
+Custom classes and structures should be given ``UpperCamelCase`` names
+(such as ``SomeClass`` and ``SomeStructure`` here),
+to match the capitalization of standard Swift types
+(such as ``String``, ``Int`` and ``Bool``).
+
+Properties
+----------
+
+Classes and structures can both declare *properties*.
+Properties are named values that are bundled up and stored
+as part of the class or structure:
+
+.. testcode:: classesAndStructs
 
     (swift) struct Size {
         var width = 0.0, height = 0.0
@@ -82,26 +105,18 @@ Both place their entire definition within a pair of braces:
         var size = Size()
     }
 
-Classes and structures can both define *properties*.
-Properties are named values that are bundled up and stored
-as part of the class or structure.
-(Properties are described in more detail later in this chapter.)
-
 The example above defines a new structure called ``Size``,
-which has two variable properties called ``width`` and ``height``.
+with two variable properties called ``width`` and ``height``.
 These properties are inferred to be of type ``Double``
 by setting them to an initial floating-point value of ``0.0``.
+
 The example also defines a new class type called ``Rectangle``,
 which has a variable property called ``size``.
 This property is initialized with a new ``Size`` structure instance,
 which infers a property type of ``Size``.
 
-Whenever you define a new class or structure,
-you are effectively defining a brand new Swift type.
-Custom classes and structures should be given ``UpperCamelCase`` names
-(such as ``Size`` and ``Rectangle``),
-to match the capitalization of standard Swift types
-(such as ``String``, ``Int`` and ``Bool``).
+.. TODO: Note that properties can be either constant or variable,
+   as with named values (let and var).
 
 Class and Structure Instances
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -113,7 +128,7 @@ To do that, you need to create an *instance* of the class or structure.
 
 The syntax for creating instances is very similar for both structures and classes:
 
-.. testcode:: classAndStructDefinitionSyntax
+.. testcode:: classesAndStructs
 
     (swift) var someSize = Size()
     // someSize : Size = Size(0.0, 0.0)
@@ -129,6 +144,8 @@ In the example above,
 the ``width`` and ``height`` values of the ``Size`` structure instance
 have been automatically initialized to ``0.0``,
 which was the default value provided by the ``Size`` structure's definition.
+
+Class and structure initialization is described in more detail in `Initializers`_ below.
 
 .. TODO: add more detail about inferring a variable's type when using initializer syntax.
 .. TODO: note that you can only use the default constructor if you provide default values
@@ -150,11 +167,11 @@ and the word *structure* will be used to refer to their type
 (such as ``Size``).
 
 Accessing Properties
---------------------
+~~~~~~~~~~~~~~~~~~~~
 
 The properties of an object or struct can be accessed using *dot syntax*:
 
-.. testcode:: classAndStructDefinitionSyntax
+.. testcode:: classesAndStructs
 
     (swift) println("The width of someSize is \(someSize.width)")
     >>> The width of someSize is 0.0
@@ -164,7 +181,7 @@ Dot syntax can also be used to drill down into properties
 which are themselves objects or structs,
 such as the ``width`` property of a ``Rectangle``'s ``size``:
 
-.. testcode:: classAndStructDefinitionSyntax
+.. testcode:: classesAndStructs
 
     (swift) println("The width of someRectangle is \(someRectangle.size.width)")
     >>> The width of someRectangle is 0.0
@@ -174,21 +191,21 @@ the values of sub-properties can also be set directly, regardless of their type.
 In the example below, ``someRectangle.size.width`` is set to a new value of ``2.0``,
 even though it is a sub-property of ``someRectangle.size``:
 
-.. testcode:: classAndStructDefinitionSyntax
+.. testcode:: classesAndStructs
 
     (swift) someRectangle.size.width = 2.0
     (swift) println("The width of someRectangle is now \(someRectangle.size.width)")
     >>> The width of someRectangle is now 2.0
 
 Memberwise Structure Initializers
----------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 All structures have an automatically-generated *memberwise initializer*,
 which can be used to initialise the member properties of new structs of that type.
 Initial values for the properties of the new struct
 can be passed to the memberwise initializer by name:
 
-.. testcode:: classAndStructDefinitionSyntax
+.. testcode:: classesAndStructs
 
     (swift) let twoByTwo = Size(width: 2.0, height: 2.0)
     // twoByTwo : Size = Size(2.0, 2.0)
@@ -196,7 +213,7 @@ can be passed to the memberwise initializer by name:
 Initial values can also be provided without names,
 if they are listed in the same order that the properties are declared in the structure's definition:
 
-.. testcode:: classAndStructDefinitionSyntax
+.. testcode:: classesAndStructs
 
     (swift) let fourByThree = Size(4.0, 3.0)
     // fourByThree : Size = Size(4.0, 3.0)
@@ -205,6 +222,199 @@ if they are listed in the same order that the properties are declared in the str
 .. TODO: Describe the creation of custom initializers.
 .. TODO: This whole section needs updating in light of the changes for definite initialization.
    Memberwise initializers will only exist if default values are provided for all properties.
+
+Stored Properties
+~~~~~~~~~~~~~~~~~
+
+In its simplest form, a property is just a named value
+that is stored as part of an object or struct:
+
+.. testcode:: classesAndStructs
+
+    (swift) struct HTTPStatus {
+        var statusCode: Int
+        var description: String
+    }
+    (swift) let http404Error = HTTPStatus(statusCode: 404, description: "Not Found")
+    // http404Error : HTTPStatus = HTTPStatus(404, "Not Found")
+    (swift) println("This error has a status code value of \(http404Error.statusCode)")
+    >>> This error has a status code value of 404
+
+.. TODO: Should the properties here be 'constant properties' declared via 'let'?
+
+This example defines a new structure called ``HTTPStatus``.
+This structure encapsulates a variable property called ``statusCode`` (which is of type ``Int``),
+and a variable property called ``description`` (which is of type ``String``).
+
+Having defined the structure,
+the example creates a new struct based on this structure, called ``http404Error``.
+This struct is initialized with a ``statusCode`` of ``404``,
+and a ``description`` of ``"Not Found"``.
+
+In this example,
+the ``Int`` and ``String`` values are both stored properties
+that are explicitly stored as part of each ``HTTPStatus`` struct.
+They can be accessed and modified via dot syntax
+(such as ``http404Error.statusCode``).
+
+Computed Properties
+~~~~~~~~~~~~~~~~~~~
+
+Swift automatically provides *getter* and *setter methods* for stored properties,
+in a similar manner to synthesized getters and setters in Objective-C.
+You don't need to declare these getter and setter methods –
+they are automatically synthesized for you as part of the property declaration.
+These synthesized getter and setter methods are automatically used
+when you retrieve or set the stored property values.
+
+.. TODO: Update this para to talk more about the unification of properties and ivars,
+   rather than 'synthesized getters and setters'.
+   This should help to differentiate stored properties from computed properties.
+
+Properties aren't restricted to simple stored values, however.
+Classes and structures can also define *computed* properties,
+which do not actually store a value:
+
+.. testcode:: classesAndStructs
+
+    (swift) struct Point {
+        var x = 0.0, y = 0.0
+    }
+    (swift) struct Rect {
+        var origin = Point()
+        var size = Size()
+        var center: Point {
+        get:
+            var centerX = origin.x + (size.width / 2)
+            var centerY = origin.y + (size.height / 2)
+            return Point(centerX, centerY)
+        set(newCenter):
+            origin.x = newCenter.x - (size.width / 2)
+            origin.y = newCenter.y - (size.height / 2)
+        }
+    }
+    (swift) var square = Rect(origin: Point(0.0, 0.0), size: Size(10.0, 10.0))
+    // square : Rect = Rect(Point(0.0, 0.0), Size(10.0, 10.0))
+    (swift) let initialSquareCenter = square.center
+    // initialSquareCenter : Point = Point(5.0, 5.0)
+    (swift) square.center = Point(x: 15.0, y: 15.0)
+    (swift) println("square origin is now at (\(square.origin.x), \(square.origin.y))")
+    >>> square origin is now at (10.0, 10.0)
+
+This example uses the previously-defined ``Size`` structure,
+and defines two additional structures for working with geometric shapes:
+
+* ``Point``, which encapsulates an ``(x, y)`` co-ordinate
+* ``Rect``, which defines a rectangle in terms of an origin point and a size
+
+The ``Rect`` structure also provides a computed property called ``center``.
+The current value of a ``Rect``'s center can always be determined from its current ``origin`` and ``size``,
+and so there is no need to actually store the center point as an explicit ``Point`` value.
+Instead, ``Rect`` defines custom getter and setter methods for a computed variable called ``center``,
+to enable you to work with the rectangle's ``center`` as if it were a real stored property.
+
+This example creates a new ``Rect`` variable called ``square``.
+The ``square`` variable is initialized with an origin point of ``(0, 0)``,
+and a width and height of ``10``.
+This is equivalent to the blue square in the diagram below.
+
+The ``square`` variable's ``center`` property is then accessed via dot syntax (``square.center``).
+This causes ``center``'s ``get`` method to be called,
+to retrieve the current property value.
+Rather than returning an existing value,
+this actually calculates and returns a new ``Point`` to represent the center of the square.
+As can be seen above, this correctly returns a center point of ``(5, 5)``.
+
+The ``center`` property is then set to a new value of ``(15, 15)``.
+This moves the square up and to the right,
+to the new position shown by the orange square in the diagram below.
+Setting the ``center`` property actually calls ``center``'s ``set:`` method.
+This modifies the ``x`` and ``y`` values of the stored ``origin`` property,
+and moves the square to its new position.
+
+.. image:: ../images/computedProperties.png
+    :width: 400
+    :align: center
+
+Shorthand Getter and Setter Declarations
+________________________________________
+
+A computed property's getter can be written without the ``get`` keyword
+if the getter comes before the setter.
+Additionally, if a computed property's setter does not define a name
+for the new value to be set,
+a default name of ``value`` is used.
+Here's an alternative version of the ``Rect`` structure,
+which takes advantage of these shorthand notations:
+
+.. testcode:: classesAndStructs
+
+    (swift) struct AlternativeRect {
+        var origin = Point()
+        var size = Size()
+        var center: Point {
+            var centerX = origin.x + (size.width / 2)
+            var centerY = origin.y + (size.height / 2)
+            return Point(centerX, centerY)
+        set:
+            origin.x = value.x - (size.width / 2)
+            origin.y = value.y - (size.height / 2)
+        }
+    }
+
+Read-Only Computed Properties
+_____________________________
+
+A computed property with a getter but no setter is known as a *read-only computed property*.
+Read-only computed properties enable you to
+define a property that will always return a value,
+and can be accessed via dot syntax,
+but which cannot be set to a different value by users of your class or structure.
+
+As mentioned above,
+the declaration of computed properties –
+including read-only computed properties –
+can be simplified by removing the ``get`` keyword:
+
+.. testcode:: classesAndStructs
+
+    (swift) struct Cuboid {
+        var width = 0.0, height = 0.0, depth = 0.0
+        var volume: Double {
+            return width * height * depth
+        }
+    }
+    (swift) let fourByFiveByTwo = Cuboid(4.0, 5.0, 2.0)
+    // fourByFiveByTwo : Cuboid = Cuboid(4.0, 5.0, 2.0)
+    (swift) println("the volume of fourByFiveByTwo is \(fourByFiveByTwo.volume)")
+    >>> the volume of fourByFiveByTwo is 40.0
+
+This example defines a new structure called ``Cuboid``,
+which represents a 3D rectangular box with ``width``, ``height`` and ``depth`` properties.
+This structure also has a read-only computed property called ``volume``,
+which calculates and returns the current volume of the cuboid.
+It doesn't make sense for ``volume`` to be settable,
+as it would be ambiguous as to which values of ``width``, ``height`` and ``depth``
+should be used for a particular ``volume`` value.
+Nonetheless, it is useful for a ``Cuboid`` to provide a read-only computed property
+to enable the outside world to discover its current calculated volume.
+
+Read-only computed properties are not the same as constant properties.
+They have some similarities,
+in that neither can have their value set by external users of the class or structure,
+but they differ considerably in how their values are retrieved.
+Constant properties are assigned their own storage,
+and the contents of this storage cannot be changed to a different value
+once it has been set during initialization.
+Read-only computed properties do not have storage assigned to them,
+and can return any value they like at any time.
+
+.. TODO: make it explicit that we have constant and variable properties,
+   and perhaps change the HTTPStatus example to use a class rather than a struct
+.. NOTE: getters and setters are also allowed for named values
+   that are not associated with a particular class or struct.
+   Where should this be mentioned?
+.. TODO: Anything else from https://[Internal Staging Server]/docs/StoredAndComputedVariables.html
 
 Value Types and Reference Types
 -------------------------------
@@ -242,7 +452,7 @@ will always be copied when they are passed around.
 
 For example, using the ``Size`` structure from above:
 
-.. testcode:: classAndStructDefinitionSyntax
+.. testcode:: classesAndStructs
 
     (swift) let iPhone4 = Size(width: 640.0, height: 960.0)
     // iPhone4 : Size = Size(640.0, 960.0)
@@ -297,7 +507,7 @@ Rather than making a copy, a *reference* to the same existing instance of that t
 
 Here's an example, using the ``Rectangle`` class defined above:
 
-.. testcode:: classAndStructDefinitionSyntax
+.. testcode:: classesAndStructs
 
     (swift) let rect = Rectangle()
     // rect : Rectangle = <Rectangle instance>
@@ -410,212 +620,41 @@ to be managed and passed by reference.
 In practice, this means that most custom data constructs should be classes,
 not structures.
 
-Properties
-----------
+Methods
+-------
 
-Classes and structures can both declare *properties*.
-Properties are used to store and pass around any values associated with
-a particular object or struct.
+[to be written]
 
-.. TODO: Note that properties can be either constant or variable,
-   as with named values (let and var).
+Initializers
+------------
 
-Stored Properties
-~~~~~~~~~~~~~~~~~
+[to be written]
 
-In its simplest form, a property is just a named value
-that is stored as part of an object or struct:
+Type Properties and Methods
+---------------------------
 
-.. testcode:: storedAndComputedProperties
+[to be written]
 
-    (swift) struct HTTPStatus {
-        var statusCode: Int
-        var description: String
-    }
-    (swift) let http404Error = HTTPStatus(statusCode: 404, description: "Not Found")
-    // http404Error : HTTPStatus = HTTPStatus(404, "Not Found")
-    (swift) println("This error has a status code value of \(http404Error.statusCode)")
-    >>> This error has a status code value of 404
-
-.. TODO: Should the properties here be 'constant properties' declared via 'let'?
-
-This example defines a new structure called ``HTTPStatus``.
-This structure encapsulates a variable property called ``statusCode`` (which is of type ``Int``),
-and a variable property called ``description`` (which is of type ``String``).
-
-Having defined the structure,
-the example creates a new struct based on this structure, called ``http404Error``.
-This struct is initialized with a ``statusCode`` of ``404``,
-and a ``description`` of ``"Not Found"``.
-
-In this example,
-the ``Int`` and ``String`` values are both explicitly stored
-as part of each ``HTTPStatus`` struct.
-They can be accessed and modified via dot syntax
-(such as ``http404Error.statusCode``).
-
-Computed Properties
-~~~~~~~~~~~~~~~~~~~
-
-Swift automatically provides *getter* and *setter methods* for stored properties,
-in a similar manner to synthesized getters and setters in Objective-C.
-You don't need to declare these getter and setter methods –
-they are automatically synthesized for you as part of the property declaration.
-These synthesized getter and setter methods are automatically used
-when you retrieve or set the stored property values.
-
-Properties aren't restricted to simple stored values, however.
-Classes and structures can also define *computed* properties,
-which do not actually store a value:
-
-.. testcode:: storedAndComputedProperties
-
-    (swift) struct Point {
-        var x = 0.0, y = 0.0
-    }
-    (swift) struct Size {
-        var width = 0.0, height = 0.0
-    }
-    (swift) struct Rect {
-        var origin = Point()
-        var size = Size()
-        var center: Point {
-        get:
-            var centerX = origin.x + (size.width / 2)
-            var centerY = origin.y + (size.height / 2)
-            return Point(centerX, centerY)
-        set(newCenter):
-            origin.x = newCenter.x - (size.width / 2)
-            origin.y = newCenter.y - (size.height / 2)
-        }
-    }
-    (swift) var square = Rect(origin: Point(0.0, 0.0), size: Size(10.0, 10.0))
-    // square : Rect = Rect(Point(0.0, 0.0), Size(10.0, 10.0))
-    (swift) let initialSquareCenter = square.center
-    // initialSquareCenter : Point = Point(5.0, 5.0)
-    (swift) square.center = Point(x: 15.0, y: 15.0)
-    (swift) println("square origin is now at (\(square.origin.x), \(square.origin.y))")
-    >>> square origin is now at (10.0, 10.0)
-
-This example defines three structures:
-
-* ``Point``, which encapsulates an ``(x, y)`` co-ordinate;
-* ``Size``, which encapsulates a ``width`` and a ``height`` value; and
-* ``Rect``, which defines a rectangle in terms of an origin point and a size
-
-The ``Rect`` structure also provides a computed property called ``center``.
-The current value of a ``Rect``'s center can always be determined from its current ``origin`` and ``size``,
-and so there is no need to actually store the center point as an explicit ``Point`` value.
-Instead, ``Rect`` defines custom getter and setter methods for a computed variable called ``center``,
-to enable you to work with the rectangle's ``center`` as if it were a real stored property.
-
-This example creates a new ``Rect`` variable called ``square``.
-The ``square`` variable is initialized with an origin point of ``(0, 0)``,
-and a width and height of ``10``.
-This is equivalent to the blue square in the diagram below.
-
-The ``square`` variable's ``center`` property is then accessed via dot syntax (``square.center``).
-This causes ``center``'s ``get`` method to be called,
-to retrieve the current property value.
-Rather than returning an existing value,
-this actually calculates and returns a new ``Point`` to represent the center of the square.
-As can be seen above, this correctly returns a center point of ``(5, 5)``.
-
-The ``center`` property is then set to a new value of ``(15, 15)``.
-This moves the square up and to the right,
-to the new position shown by the orange square in the diagram below.
-Setting the ``center`` property actually calls ``center``'s ``set:`` method.
-This modifies the ``x`` and ``y`` values of the stored ``origin`` property,
-and moves the square to its new position.
-
-.. image:: ../images/computedProperties.png
-    :width: 400
-    :align: center
-
-Shorthand Getter and Setter Declarations
-________________________________________
-
-A computed property's getter can be written without the ``get`` keyword
-if the getter comes before the setter.
-Additionally, if a computed property's setter does not define a name
-for the new value to be set,
-a default name of ``value`` is used.
-Here's an alternative version of the ``Rect`` structure,
-which takes advantage of these shorthand notations:
-
-.. testcode:: storedAndComputedProperties
-
-    (swift) struct AlternativeRect {
-        var origin = Point()
-        var size = Size()
-        var center: Point {
-            var centerX = origin.x + (size.width / 2)
-            var centerY = origin.y + (size.height / 2)
-            return Point(centerX, centerY)
-        set:
-            origin.x = value.x - (size.width / 2)
-            origin.y = value.y - (size.height / 2)
-        }
-    }
-
-Read-Only Computed Properties
-_____________________________
-
-A computed property with a getter but no setter is known as a *read-only computed property*.
-Read-only computed properties enable you to
-define a property that will always return a value,
-and can be accessed via dot syntax,
-but which cannot be set to a different value by users of your class or structure.
-
-As mentioned above,
-the declaration of computed properties –
-including read-only computed properties –
-can be simplified by removing the ``get`` keyword:
-
-.. testcode:: storedAndComputedProperties
-
-    (swift) struct Cuboid {
-        var width = 0.0, height = 0.0, depth = 0.0
-        var volume: Double {
-            return width * height * depth
-        }
-    }
-    (swift) let fourByFiveByTwo = Cuboid(4.0, 5.0, 2.0)
-    // fourByFiveByTwo : Cuboid = Cuboid(4.0, 5.0, 2.0)
-    (swift) println("the volume of fourByFiveByTwo is \(fourByFiveByTwo.volume)")
-    >>> the volume of fourByFiveByTwo is 40.0
-
-This example defines a new structure called ``Cuboid``,
-which represents a 3D rectangular box with ``width``, ``height`` and ``depth`` properties.
-This structure also has a read-only computed property called ``volume``,
-which calculates and returns the current volume of the cuboid.
-It doesn't make sense for ``volume`` to be settable,
-as it would be ambiguous as to which values of ``width``, ``height`` and ``depth``
-should be used for a particular ``volume`` value.
-Nonetheless, it is useful for a ``Cuboid`` to provide a read-only computed property
-to enable the outside world to discover its current calculated volume.
-
-Read-only computed properties are not the same as constant properties.
-They have some similarities,
-in that neither can have their value set by external users of the class or structure,
-but they differ considerably in how their values are retrieved.
-Constant properties are assigned their own storage,
-and the contents of this storage cannot be changed to a different value
-once it has been set during initialization.
-Read-only computed properties do not have storage assigned to them,
-and can return any value they like at any time.
-
-.. TODO: make it explicit that we have constant and variable properties,
-   and perhaps change the HTTPStatus example to use a class rather than a struct
-.. NOTE: getters and setters are also allowed for named values
-   that are not associated with a particular class or struct.
-   Where should this be mentioned?
-.. TODO: Anything else from https://[Internal Staging Server]/docs/StoredAndComputedVariables.html
 .. TODO: mention that all by-value properties of a constant struct are also constant
 .. TODO: what happens if one property of a constant struct is an object reference?
 .. TODO: immutability of value type constants means that
    their mutable properties are also immutable
 .. TODO: type variables, constants and methods
+
+Inheritance
+-----------
+
+[to be written]
+
+Destructors
+-----------
+
+[to be written]
+
+Type Casting
+------------
+
+[to be written]
 
 .. refnote:: References
 
