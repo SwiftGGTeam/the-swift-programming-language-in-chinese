@@ -21,7 +21,56 @@ Types
     rather than in discrete sections. Also, try to come up with better terms for these,
     or just explain the concept without giving them explicit terms.
 
-    Also, discuss the concept of a "metatype" in the intro paragraphs.
+    Also, discuss the concept of a "meta type" in the metatype types section,
+    rather than in the intro paragraphs.
+
+Swift has a small collection of core datatypes that are built into the compiler.
+Most user-facing datatypes are defined by the Swift Standard Library
+or declared as user-defined types.
+
+.. TODO: TR: What are the core datatypes that are built into the compiler?
+    How many, if any, of these should we expose/document?
+
+.. TODO: TR: Should we make the usual distinction between simple or basic types and derived types?
+    If so, how should we spilt them up?
+    (E.g., typical basic types (Int, Double, String, etc.) are defined in the Standard Library;
+    derived types are defined here in the language (function types, tuple types, array types, etc.)
+    AND in the Standard Library (array, optional, dictionary, etc.),
+    with some overlap in the form of syntactic sugar ('?' for optional, [] for array)?)
+    The story here is not exactly clear.
+
+
+Fully-Typed Expressions and Types
+---------------------------------
+
+When an expression is specified to have a particular type, such as ``var x: Int``,
+it is a *fully-typed expression*.
+When an expression is not fully typed,
+its type must be inferred using information from the surrounding context.
+
+Types may also be fully typed.
+A type is *fully typed* when each of its component parts are fully typed;
+that is, when each component is either a fully-typed expression or a fully-typed type.
+
+.. TODO: TR: Why is this important information to know?
+    How does it relate to Swift's type inference behavior?
+
+Materializable Types
+--------------------
+
+A type may be *materializable*.
+
+.. TR:  What does "materializable" mean, exactly?
+
+A type is *not* materializable in either of the following two cases:
+
+    1. The type is annotated with an ``inout`` attribute.
+    2. The type is a tuple type that contains an element whose type is not materializable.
+
+In general, variables must have a materializable type.
+
+.. TR: Why must variables have a materializable type?
+    What about variables in function parameters?
 
 .. langref-grammar
 
@@ -58,7 +107,6 @@ Type Specifier
 
 Array Types
 -----------
-
 
 .. langref-grammar
 
@@ -208,6 +256,22 @@ Enumeration Types
 
 Metatype Type
 ~~~~~~~~~~~~~
+
+Each type has a corresponding meta type (with the same name as the type)
+that is injected into the standard name lookup scope when a type is declared.
+This allows access to *type functions* through dot syntax.
+
+.. TODO: TR: What is the 'standard name loopup scope'?
+    How does all of this make it possible to access a type function through dot syntax?
+
+The value of the meta type of a particular type is a reference to a global object that describes the type.
+Most meta types are singletons and, therefore, require no storage.
+That said, meta types associated with class types
+follow the same subtyping rules as their associated class types and, therefore, are not singletons.
+
+.. TODO: Most of the above is from the LangRef and needs to clarified and explained further.
+    I'm not sure what all of it means, however.
+    Alex, care to explain some, or should we escalate it to a TR?
 
 .. langref-grammar
 
