@@ -223,56 +223,15 @@ if they are listed in the same order that the properties are declared in the str
 .. TODO: This whole section needs updating in light of the changes for definite initialization.
    Memberwise initializers will only exist if default values are provided for all properties.
 
-Stored Properties
-~~~~~~~~~~~~~~~~~
+Stored and Computed Properties
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In its simplest form, a property is just a named value
-that is stored as part of an object or struct:
-
-.. testcode:: classesAndStructs
-
-    (swift) struct HTTPStatus {
-        var statusCode: Int
-        var description: String
-    }
-    (swift) let http404Error = HTTPStatus(statusCode: 404, description: "Not Found")
-    // http404Error : HTTPStatus = HTTPStatus(404, "Not Found")
-    (swift) println("This error has a status code value of \(http404Error.statusCode)")
-    >>> This error has a status code value of 404
-
-.. TODO: Should the properties here be 'constant properties' declared via 'let'?
-
-This example defines a new structure called ``HTTPStatus``.
-This structure encapsulates a variable property called ``statusCode`` (which is of type ``Int``),
-and a variable property called ``description`` (which is of type ``String``).
-
-Having defined the structure,
-the example creates a new struct based on this structure, called ``http404Error``.
-This struct is initialized with a ``statusCode`` of ``404``,
-and a ``description`` of ``"Not Found"``.
-
-In this example,
-the ``Int`` and ``String`` values are both stored properties
-that are explicitly stored as part of each ``HTTPStatus`` struct.
-They can be accessed and modified via dot syntax
-(such as ``http404Error.statusCode``).
-
-Computed Properties
-~~~~~~~~~~~~~~~~~~~
-
-Swift automatically provides *getter* and *setter methods* for stored properties,
-in a similar manner to synthesized getters and setters in Objective-C.
-You don't need to declare these getter and setter methods –
-they are automatically synthesized for you as part of the property declaration.
-These synthesized getter and setter methods are automatically used
-when you retrieve or set the stored property values.
-
-.. TODO: Update this para to talk more about the unification of properties and ivars,
-   rather than 'synthesized getters and setters'.
-   This should help to differentiate stored properties from computed properties.
+that is stored as part of an object or struct, as shown above.
+Properties of this kind are known as *stored properties*.
 
 Properties aren't restricted to simple stored values, however.
-Classes and structures can also define *computed* properties,
+Classes and structures can also define *computed properties*,
 which do not actually store a value:
 
 .. testcode:: classesAndStructs
