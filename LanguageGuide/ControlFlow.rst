@@ -802,11 +802,6 @@ and a default block is not needed to make the switch statement exhaustive.
    in that it uses the same declared variable (point) as the previous example.
    This is primarily to keep the variable name readable within the println string interpolation.
    Is this okay? Should it be changed so that it is self-contained?
-.. QUESTION: These examples do not name their tuple elements,
-   to avoid confusion between their likely element names of x and y,
-   and the appropriate names for the where variables (also x and y).
-   Is this the right approach,
-   or should we be advising named tuple elements in all cases?
 .. QUESTION: Should this now be (let x, let y)?
 
 .. refnote:: References
