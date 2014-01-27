@@ -115,9 +115,6 @@ which has a variable property called ``size``.
 This property is initialized with a new ``Size`` structure instance,
 which infers a property type of ``Size``.
 
-.. TODO: Note that properties can be either constant or variable,
-   as with named values (let and var).
-
 Class and Structure Instances
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -223,14 +220,25 @@ if they are listed in the same order that the properties are declared in the str
 .. TODO: This whole section needs updating in light of the changes for definite initialization.
    Memberwise initializers will only exist if default values are provided for all properties.
 
-Stored and Computed Properties
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Stored Properties
+~~~~~~~~~~~~~~~~~
 
 In its simplest form, a property is just a named value
 that is stored as part of an object or struct, as shown above.
 Properties of this kind are known as *stored properties*.
 
-Properties aren't restricted to simple stored values, however.
+Stored properties can be either *variable stored properties*
+(introduced by the ``var`` keyword, as in the examples above),
+or *constant stored properties* (introduced by the ``let`` keyword).
+Constant stored properties are very similar to constant named values,
+in that their value cannot be changed once it has been initialized.
+Constant property initialization must be completed by the time
+the object or struct is itself fully initialized.
+(Instance initialization is described in more detail in `Initializers`_ below.)
+
+Computed Properties
+~~~~~~~~~~~~~~~~~~~
+
 Classes and structures can also define *computed properties*,
 which do not actually store a value:
 
