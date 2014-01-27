@@ -33,6 +33,9 @@ Each type of statement is described in detail below.
     println(opt.getLogicValue())
     // true
 
+    What should conform to LogicValue is still being discussed.
+    See: <rdar://problem/15911498> Reconsider what conforms to LogicValue.
+
 .. langref-grammar
 
     stmt ::= stmt-semicolon
