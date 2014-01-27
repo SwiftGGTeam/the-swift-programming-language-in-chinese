@@ -368,6 +368,11 @@ once it has been set during initialization.
 Read-only computed properties do not have storage assigned to them,
 and can return any value they like at any time.
 
+Computed properties – including read-only computed properties –
+are always declared as variable properties (via the ``var`` introducer).
+The ``let`` introducer is only ever used for constant properties,
+to indicate that their value cannot be changed once it is set as part of instance initialization.
+
 .. TODO: make it explicit that we have constant and variable properties,
    and perhaps change the HTTPStatus example to use a class rather than a struct
 .. NOTE: getters and setters are also allowed for named values
