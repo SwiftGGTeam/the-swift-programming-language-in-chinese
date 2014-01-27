@@ -14,7 +14,7 @@ Types
         Standard Library derived types
         Language-provided types
     Value types vs reference types?
-    Functions are first-class citizens in Swift?
+    Functions are first-class citizens in Swift (but not polymorphic functions)?
     Type attributes? (Some attributes apply to types only; some apply to declarations only)
 
 .. TODO: Discuss "fully-typed types" and "materializable types" in the intro paragraphs,
@@ -24,12 +24,19 @@ Types
     Also, discuss the concept of a "meta type" in the metatype types section,
     rather than in the intro paragraphs.
 
-Swift has a small collection of core datatypes that are built into the compiler.
-Most user-facing datatypes are defined by the Swift Standard Library
-or declared as user-defined types.
+The Swift Standard Library defines a number of common basic datatypes,
+including those that represent integers, floating-point integers, unicode scalars,
+and strings, as well as datatypes that are derived from these,
+including those that represent arrays, dictionaries, and optional types.
 
-.. TODO: TR: What are the core datatypes that are built into the compiler?
-    How many, if any, of these should we expose/document?
+In addition to the types defined by the Swift Standard Library,
+there are also types defined by the Swift language itself.
+These include types that represent functions and tuples and,
+in the case of arrays and optionals,
+provide syntactic sugar for types defined in the Standard Library.
+
+This chapter discusses the types defined in the Swift language itself
+and describes the type inference behavior of Swift.
 
 .. TODO: TR: Should we make the usual distinction between simple or basic types and derived types?
     If so, how should we spilt them up?
@@ -39,11 +46,13 @@ or declared as user-defined types.
     with some overlap in the form of syntactic sugar ('?' for optional, [] for array)?)
     The story here is not exactly clear.
 
+Type Inference
+--------------
 
 Fully-Typed Expressions and Types
----------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-When an expression is specified to have a particular type, such as ``var x: Int``,
+When an expression is specified to have a particular type, such as ``var x : Int``,
 it is a *fully-typed expression*.
 When an expression is not fully typed,
 its type must be inferred using information from the surrounding context.
@@ -64,8 +73,8 @@ A type may be *materializable*.
 
 A type is *not* materializable in either of the following two cases:
 
-    1. The type is annotated with an ``inout`` attribute.
-    2. The type is a tuple type that contains an element whose type is not materializable.
+1. The type is annotated with an ``inout`` attribute.
+2. The type is a tuple type that contains an element whose type is not materializable.
 
 In general, variables must have a materializable type.
 
