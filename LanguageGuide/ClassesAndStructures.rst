@@ -375,6 +375,27 @@ and can return any value they like at any time.
    Where should this be mentioned?
 .. TODO: Anything else from https://[Internal Staging Server]/docs/StoredAndComputedVariables.html
 
+Properties and Instance Variables
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you have experience with Objective-C,
+you may be familiar with the fact that it provides two complementary ways
+to store values and references alongside objects.
+In addition to properties,
+Objective-C also has the concept of *instance variables*,
+which are used as a 'backing' store for the values stored in a property.
+
+Swift unifies these two separate concepts into a single unified property declaration.
+There is no longer a distinction between properties and instance variables,
+and the backing store for a property is not accessed directly.
+This avoids potential confusion around how the value is accessed in different contexts,
+and simplifies the property's declaration into a single, definite statement.
+All of the information about the property –
+including its name, type, and memory management characteristics –
+is defined in a single location as part of the class definition.
+
+.. TODO: How do I define whether my properties are strong- or weak-reference?
+
 Value Types and Reference Types
 -------------------------------
 
