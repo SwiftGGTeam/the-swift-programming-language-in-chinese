@@ -639,6 +639,8 @@ Inheritance
 
 [to be written]
 
+.. TODO: mention that methods can return DynamicSelf (a la instancetype)
+
 Destructors
 -----------
 
