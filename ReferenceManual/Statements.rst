@@ -15,6 +15,27 @@ Each type of statement is described in detail below.
 .. TODO: Write the rest of this introduction
     after we're settled on exactly what is considered a statement in Swift.
 
+.. TODO: Update this chapter to note that Optionals are allowed in boolean contexts
+    (e.g., in the conditional expression of a control flow statement).
+    In fact, so is any type that conforms to the LogicValue protocol
+    and implements the 'func getLogicValue() -> Bool' function.
+
+    For example, the following is allowed:
+
+    var opt: Int? = 1
+    if opt {
+        println(".Some")
+    }
+    // .Some
+
+    and
+
+    println(opt.getLogicValue())
+    // true
+
+    What should conform to LogicValue is still being discussed.
+    See: <rdar://problem/15911498> Reconsider what conforms to LogicValue.
+
 .. langref-grammar
 
     stmt ::= stmt-semicolon

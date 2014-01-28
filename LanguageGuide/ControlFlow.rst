@@ -758,42 +758,42 @@ it calculates the point's distance from the origin using
             println("(\(point.0), 0) is on the x-axis")
         case (0, _):
             println("(0, \(point.1)) is on the y-axis")
-        case (var x, var y) where x == y:
+        case (let x, let y) where x == y:
             println("(\(x), \(y)) is on the line x == y")
-        case (var x, var y) where x == -y:
+        case (let x, let y) where x == -y:
             println("(\(x), \(y)) is on the line x == -y")
-        case (var x, var y):
+        case (let x, let y):
             var distanceFromOrigin = sqrt(Double(x * x + y * y))
             println("(\(x), \(y)) is \(distanceFromOrigin) units from the origin")
     }
     >>> (1, -1) is on the line x == -y
 
-The final three case statements declare placeholder variables ``x`` and ``y``,
+The final three case statements declare placeholder constants ``x`` and ``y``,
 which temporarily take on the two tuple values from ``point``.
-These variables can then be used as part of a ``where`` clause,
+These constants can then be used as part of a ``where`` clause,
 to create a dynamic filter.
 The case statement will only match the current value of ``point``
 if the ``where`` clause's condition equates to ``true`` for that value.
 
 The x-axis and y-axis checks could also have been written with a ``where`` clause.
-``case (_, 0)`` could have been written as ``case (_, var y) where y == 0``,
+``case (_, 0)`` could have been written as ``case (_, let y) where y == 0``,
 to match points on the x-axis.
 However, the original version is more concise,
 and is preferred when matching against a fixed value.
 
-Once the temporary variables ``x`` and ``y`` have been declared,
+Once the temporary constants ``x`` and ``y`` have been declared,
 they can be used within the case statement's code block.
 Here, they are used as shorthand for printing the values via the ``println`` function.
-The final case statement also uses the variables
+The final case statement also uses the constants
 to calculate the distance from the origin.
 (The earlier case blocks printed the tuples' individual values
 using the shorthand syntax ``point.0`` and ``point.1`` instead,
-because they did not have the temporary variables to hand.)
+because they did not have the temporary constants to hand.)
 
 Note that this switch statement does not have a default block.
 The final case block,
-``case (var x, var y)``,
-declares two placeholder variables,
+``case (let x, let y)``,
+declares two placeholder constants,
 but does *not* provide a ``where`` clause to filter them.
 As a result, it matches all possible remaining values,
 and a default block is not needed to make the switch statement exhaustive.
@@ -802,12 +802,6 @@ and a default block is not needed to make the switch statement exhaustive.
    in that it uses the same declared variable (point) as the previous example.
    This is primarily to keep the variable name readable within the println string interpolation.
    Is this okay? Should it be changed so that it is self-contained?
-.. QUESTION: These examples do not name their tuple elements,
-   to avoid confusion between their likely element names of x and y,
-   and the appropriate names for the where variables (also x and y).
-   Is this the right approach,
-   or should we be advising named tuple elements in all cases?
-.. QUESTION: Should this now be (let x, let y)?
 
 .. refnote:: References
 

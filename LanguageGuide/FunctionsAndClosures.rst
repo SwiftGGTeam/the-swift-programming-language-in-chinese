@@ -179,23 +179,6 @@ This function can be passed any tuple of type ``(Double, Double)`` –
 such as ``(3.0, 4.0)`` in the example above –
 and it will happily calculate the distance for that tuple.
 
-The elements of an input tuple can be named by a function's declaration,
-even if the original tuple doesn't have named elements.
-For example, the two ``Double`` elements above could be named ``x`` and ``y`` by the function:
-
-.. testcode::
-
-    (swift) func distanceFromOriginForNamedPoint(point: (x: Double, y: Double)) -> Double {
-        return sqrt(point.x * point.x + point.y * point.y)
-    }
-    (swift) println(distanceFromOriginForNamedPoint(somePoint))
-    >>> 5.0
-
-``somePoint``'s elements were not named when the tuple was originally defined.
-However, ``distanceFromOriginForNamedPoint`` gives temporary names of ``x`` and ``y`` to the tuple values it receives,
-for use within the function.
-These names can then be used inside the function's opening and closing braces to calculate the square root value as before.
-
 Parameter Names
 ~~~~~~~~~~~~~~~
 

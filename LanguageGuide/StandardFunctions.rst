@@ -1,8 +1,7 @@
 .. docnote:: Subjects to be covered in this section
 
     * find()
-    * min()
-    * max()
+    * min() and max() - which take a variadic number of inputs
     * map()
     * swap()
     * sort()
