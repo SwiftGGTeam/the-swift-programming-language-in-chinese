@@ -345,6 +345,36 @@ Constants
 Integer Literals
 ~~~~~~~~~~~~~~~~
 
+.. langref-grammar
+
+    integer_literal ::= [0-9][0-9_]*
+    integer_literal ::= 0x[0-9a-fA-F][0-9a-fA-F_]*
+    integer_literal ::= 0o[0-7][0-7_]*
+    integer_literal ::= 0b[01][01_]*
+
+.. syntax-grammar::
+
+    Grammar of integer literals
+
+    integer-literal --> binary-integer-literal | octal-integer-literal | decimal-integer-literal-literal | hexedecimal-integer-literal
+
+    binary-integer-literal --> ``0b`` binary-digit binary-digits
+    octal-integer-literal --> ``0o`` octal-digit octal-digits
+    decimal-integer-literal --> decimal-digit decimal-digits
+    hexadecimal-integer-literal --> ``0x`` hexadecimal-digit hexadecimal-digits
+
+    binary-digits --> binary-digit binary-digits-OPT | ``_`` binary-digits-OPT
+    octal-digits --> octal-digit octal-digits-OPT | ``_`` octal-digits-OPT
+    decimal-digits --> decimal-digit decimal-digits-OPT | ``_`` decimal-digits-OPT
+    hexadecimal-digits --> hexadecimal-digit hexadecimal-digits-OPT | ``_`` hexadecimal-digits-OPT
+
+    binary-digit --> ``0`` | ``1``
+    octal-digit --> ``0`` | ``1`` | ``2`` | ``3`` | ``4`` | ``5`` | ``6`` | ``7``
+    decimal-digit --> ``0`` | ``1`` | ``2`` | ``3`` | ``4`` | ``5`` | ``6`` | ``7`` | ``8`` | ``9``
+    hexidecimal-digit --> decimal-digit | ``A`` | ``B`` | ``C`` | ``D`` | ``E`` | ``F`` | ``a`` | ``b`` | ``c`` | ``d`` | ``e`` | ``f``
+
+.. TODO: Definition of foo-digit foo-digits may belong elsewhere;
+   it's used in integer literals and floating point literals.
 
 Floating-Point Literals
 ~~~~~~~~~~~~~~~~~~~~~~~
