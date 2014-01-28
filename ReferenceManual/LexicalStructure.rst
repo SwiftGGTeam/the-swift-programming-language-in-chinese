@@ -341,6 +341,9 @@ Implementation Identifier Token
 Constants
 ---------
 
+.. LangRef calls these "literals".  What was our reason for deviating?
+
+.. Note: The grammar for literals is already in "Expressions".
 
 Integer Literals
 ~~~~~~~~~~~~~~~~
@@ -376,8 +379,36 @@ Integer Literals
 .. TODO: Definition of foo-digit foo-digits may belong elsewhere;
    it's used in integer literals and floating point literals.
 
+   Might be better to make foo-digits already include the restriction on
+   where the underscore can fall, for clearer naming.
+
+
 Floating-Point Literals
 ~~~~~~~~~~~~~~~~~~~~~~~
+
+.. langref-grammar
+
+    floating_literal ::= [0-9][0-9_]*\.[0-9][0-9_]*
+    floating_literal ::= [0-9][0-9_]*\.[0-9][0-9_]*[eE][+-]?[0-9][0-9_]*
+    floating_literal ::= [0-9][0-9_]*[eE][+-]?[0-9][0-9_]*
+    floating_literal ::= 0x[0-9A-Fa-f][0-9A-Fa-f_]*
+                           (\.[0-9A-Fa-f][0-9A-Fa-f_]*)?[pP][+-]?[0-9][0-9_]*
+
+.. syntax-grammar::
+
+   Grammar of floating-point literals
+
+   floating-point-literal --> decimal-digit decimal-digits floating-point-decimal-fraction-OPT floating-point-decimal-exponent-OPT
+   floating-point-literal --> ``0x`` hexadecimal-digit hexadecimal-digits floating-point-hexadecimal-fraction-OPT floating-point-hexadecimal-exponent-OPT
+
+   floating-point-decimal-fraction --> ``.`` decimal-digit decimal-digits-OPT
+   floating-point-decimal-exponent --> floating-point-e sign-OPT decimal-digit decimal-digits
+
+   floating-point-hexadecimal-fraction --> ``.`` hexadecimal-digit hexadecimal-digits-OPT
+   floating-point-hexadecimal-exponent --> floating-point-e sign-OPT hexadecimal-digit hexadecimal-digits
+
+   floating-point-e --> ``e`` | ``E``
+   sign --> ``+`` | ``-``
 
 
 Character Literals
