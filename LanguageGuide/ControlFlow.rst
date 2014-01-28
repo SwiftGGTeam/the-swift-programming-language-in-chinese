@@ -731,7 +731,7 @@ Where
 _____
 
 Case statements can check for additional conditions using the ``where`` clause.
-The example below takes an (x, y) point,
+The example below takes an (x, y) point expressed as a tuple of type ``(Int, Int)``,
 and categorizes it on the following graph:
 
 .. image:: ../images/coordinateGraphComplex.png
