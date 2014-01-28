@@ -11,7 +11,7 @@
 Enumerations
 ============
 
-Enumerations (also known as *enums*) are used to define multiple items of a similar type.
+*Enumerations* are used to define multiple items of a similar type.
 For example: the four main points of a compass are all of a similar type,
 and can be written as an enumeration using the ``enum`` keyword:
 
@@ -24,8 +24,8 @@ and can be written as an enumeration using the ``enum`` keyword:
         case West
     }
 
-The ``case`` keyword is used to indicate each new line of values.
-Multiple values can appear on a single line, separated by commas:
+The ``case`` keyword is used to indicate each new line of member values.
+Multiple member values can appear on a single line, separated by commas:
 
 .. testcode:: enums
 
@@ -34,12 +34,12 @@ Multiple values can appear on a single line, separated by commas:
     }
 
 Unlike C and Objective-C,
-Swift enums are not assigned a default integer value when they are created.
+Swift enumeration members are not assigned a default integer value when they are created.
 In the ``CompassPoints`` example above,
 ``North``, ``South``, ``East`` and ``West``
 do not implicitly equal
 ``0``, ``1``, ``2`` and ``3``.
-Instead, the different ``enum`` members are fully-fledged values in their own right,
+Instead, the different enumeration members are fully-fledged values in their own right,
 with an explicitly-defined type of ``CompassPoint``.
 
 Each ``enum`` definition effectively defines a brand new type.
@@ -98,14 +98,14 @@ print ``"Watch out for penguins"``.
 
 …and so on.
 
-Switch statements must be exhaustive when they consider an enum's members.
+Switch statements must be exhaustive when they consider an enumeration's members.
 If the case for ``.West`` had been omitted,
 this code would not compile,
 because it would not consider the complete list of ``CompassPoint`` members.
 Enforcing completeness ensures that cases are not accidentally missed or forgotten,
 and is part of Swift's goal of completeness and lack of ambiguity.
 
-When it is not appropriate to provide a case statement for every enum member,
+When it is not appropriate to provide a case statement for every enumeration member,
 you can define a default catch-all case to cover any members that are not addressed explicitly:
 
 .. testcode:: enums
@@ -137,8 +137,10 @@ and this type can be different for each member of the enumeration if needed.
 These kinds of associated values are known as
 *tagged unions* or *variants* in other programming languages.
 
-For example: imagine an inventory tracking system that needs to track products using two different types of barcode.
-Some products are labelled with 1D barcodes in `UPC-A <http://en.wikipedia.org/wiki/Universal_Product_Code>`_ format,
+For example: imagine an inventory tracking system that needs to
+track products using two different types of barcode.
+Some products are labelled with 1D barcodes
+in `UPC-A <http://en.wikipedia.org/wiki/Universal_Product_Code>`_ format,
 which uses the numbers ``0`` to ``9``.
 Each barcode has a ‘number system’ digit,
 followed by ten ‘identifier’ digits.
@@ -156,7 +158,8 @@ and can encode a string up to 2,953 characters long:
     :height: 80
     :align: center
 
-It would be convenient for an inventory tracking system to be able to store UPC-A barcodes as a tuple of three integers,
+It would be convenient for an inventory tracking system to be able to store UPC-A barcodes
+as a tuple of three integers,
 and QR code barcodes as a string of any length.
 
 In Swift, an enumeration to define product barcodes of either type might look like this:
@@ -199,7 +202,8 @@ The same product can be changed to have a different type of barcode:
     (swift) productBarcode = .QRCode("ABCDEFGHIJKLMNOP")
 
 At this point,
-the original ``Barcode.UPCA`` and its integer values are replaced by the new ``Barcode.QRCode`` and its string value.
+the original ``Barcode.UPCA`` and its integer values are replaced by
+the new ``Barcode.QRCode`` and its string value.
 Named values of type ``Barcode`` can store either a ``.UPCA`` or a ``.QRCode``
 (together with their associated values),
 but they can only store one or the other at a time.
@@ -228,13 +232,17 @@ the current value of ``namedValue`` will be inserted in place
 when the string is printed by the ``println`` function.
 (String interpolation is covered in more detail in :doc:`Strings`.)
 
+.. TODO: This mention of string interpolation should be removed.
+   It is only included here as a legacy from when enumerations were in Basic Types,
+   and had not yet been introduced by the subsequent Strings chapter.
+
 Raw Values
 ~~~~~~~~~~
 
 The barcode example above shows how members of an enumeration can declare that they store
 associated values of different types.
 In addition to associated values,
-enumerations can also come pre-populated with default values (called *raw values*),
+enumeration members can also come pre-populated with default values (called *raw values*),
 which are all of the same type.
 
 Here's an example that stores raw ASCII values alongside named enumeration members:
@@ -247,20 +255,20 @@ Here's an example that stores raw ASCII values alongside named enumeration membe
         case CarriageReturn = '\r'
     }
 
-Here, the raw values for an enum called ``ASCIIControlCharacter``
+Here, the raw values for an enumeration called ``ASCIIControlCharacter``
 are declared to be of type ``UnicodeScalar``,
 and are set to some of the more common ASCII control characters.
 (``UnicodeScalar`` values are described in more detail in :doc:`Strings`.)
 
 Note that raw values are *not* the same as associated values.
-Raw values are set to pre-populated values when the enum is first defined in your code,
+Raw values are set to pre-populated values when the enumeration is first defined in your code,
 like the three ASCII codes above.
 Associated values are only set when you create a new constant or variable
-based on one of the enum members.
+based on one of the enumeration's members.
 
 Raw values can be
 strings, characters, or any of the integer or floating-point number types.
-Each raw value must be unique within its enum declaration.
+Each raw value must be unique within its enumeration declaration.
 When integers are used for raw values,
 they auto-increment if no value is specified for some of the enumeration members.
 The enumeration below defines the first seven chemical elements,
@@ -275,7 +283,7 @@ and uses raw integer values to represent their atomic numbers:
 Auto-incrementation means that ``ChemicalElement.Helium`` has a raw value of ``2``,
 and so on.
 
-The raw value of an enum member can be accessed using its ``toRaw`` method:
+The raw value of an enumeration member can be accessed using its ``toRaw`` method:
 
 .. testcode:: optionals
 
