@@ -3,8 +3,13 @@ Lexical Structure
 
 .. TODO: Write a brief intro to this chapter.
 
-[The content of this chapter is still being written.]
-
+Tokens are parsed according using the principle of
+longest match (also known as "maximal munch").
+Text from the input is matched against the grammar
+by reading longer and longer portions
+until it no longer generates a valid token.
+The longest token that was matched is used
+and the process continues with the remaining inupt text.
 
 Whitespace and Comments
 -----------------------
@@ -42,7 +47,17 @@ Whitespace and Comments
     multiline-comment --> ``/*`` multiline-comment-text ``*/``
     multiline-comment-text --> Any text
 
-Multiline comments may be nested.
+Whitespace is used to separate tokens in the source file
+and as part of the context
+that determines whether an operator is a prefix or postfix
+(see `Operator Identifiers`_),
+but is otherwise ignored.
+
+Comments are treated as whitespace by the compiler.
+Multiline comments support nesting.
+
+.. TR: LangRef says comments are ignored *and* treated as whitespace.
+   Is there a difference?
 
 
 Identifiers
