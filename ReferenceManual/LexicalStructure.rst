@@ -376,10 +376,10 @@ Integer Literals
     decimal-digit --> ``0`` | ``1`` | ``2`` | ``3`` | ``4`` | ``5`` | ``6`` | ``7`` | ``8`` | ``9``
     hexidecimal-digit --> decimal-digit | ``A`` | ``B`` | ``C`` | ``D`` | ``E`` | ``F`` | ``a`` | ``b`` | ``c`` | ``d`` | ``e`` | ``f``
 
-    binary-digit-tail --> binary-digit | ``_``
-    octal-digit-tail --> octal-digit | ``_``
-    decimal-digit-tail --> decimal-digit | ``_``
-    hexadecimal-digit-tail --> hexadecimal-digit | ``_``
+    binary-digit-tail --> binary-digit binary-digit-tail-OPT | ``_`` binary-digit-tail-OPT
+    octal-digit-tail --> octal-digit octal-digit-tail-OPT | ``_`` octal-digit-tail-OPT
+    decimal-digit-tail --> decimal-digit decimal-digit-tail-OPT | ``_`` decimal-digit-tail-OPT
+    hexadecimal-digit-tail --> hexadecimal-digit hexadecimal-digit-tail-OPT | ``_``hexadecimal-digit-tail-OPT
 
 .. TR: This grammar matches the LangRef in permitting a trailing
    underscore, allowing things like 1_000_ to be matched.  Is that
