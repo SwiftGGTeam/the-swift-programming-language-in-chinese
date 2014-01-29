@@ -11,7 +11,8 @@ Being right/left bound determines whether an operator is
 a prefix operator, a postfix operator, or a binary operator.
 Operators that are left bound and not right bound are postfix operators.
 Operators that are right bound and not left bound are prefix operators.
-Operators that are not bound, and operators that are right and left bound, are binary operators.
+Operators that are not bound,
+and operators that are right and left bound, are binary operators.
 
 Any operator immediately followed by a period (``.``)
 is not right bound if it is already left bound.
@@ -52,15 +53,19 @@ provide syntactic sugar for types defined in the Standard Library.
 This chapter discusses the types defined in the Swift language itself
 and describes the type inference behavior of Swift.
 
-.. docnote:: Should we make the usual distinction between simple or basic types and derived types?
+.. docnote:: Should we make the usual distinction
+    between simple or basic types and derived types?
     ...
 
     If so, how should we spilt them up?
     For example,
-    typical basic types (``Int``, ``Double``, ``String``, etc.) are defined in the Standard Library;
-    derived types are defined here in the language (function types, tuple types, array types, etc.)
+    typical basic types (``Int``, ``Double``, ``String``, etc.)
+    are defined in the Standard Library;
+    derived types are defined here in the language
+    (function types, tuple types, array types, etc.)
     **AND** in the Standard Library (array, optional, dictionary, etc.),
-    with some overlap in the form of syntactic sugar (``?`` for optional, ``[ ]`` for array)?
+    with some overlap in the form of syntactic sugar
+    (``?`` for optional, ``[ ]`` for array)?
     (This is how I wrote the intro paragraph above.)
 
     The story here is not exactly clear.
@@ -88,7 +93,8 @@ and describes the type inference behavior of Swift.
 
 .. docnote:: Here is a list of things we were thinking about covering in this chapter.
     What do you think?
-    Are there some things that we should omit, or are there obvious things that we missed?
+    Are there some things that we should omit,
+    or are there obvious things that we missed?
     ...
 
     * Meta types
@@ -104,7 +110,8 @@ and describes the type inference behavior of Swift.
         * Language-provided types
     * Value types vs reference types?
     * Functions are first-class citizens in Swift (but not polymorphic functions)?
-    * Type attributes? (Some attributes apply to types only; some apply to declarations only)
+    * Type attributes?
+    (Some attributes apply to types only; some to declarations only)
 
 .. Don't talk about materializable types.
     This is tied to the inout attribute and will be going away.
@@ -172,14 +179,16 @@ and describes the type inference behavior of Swift.
 Fully-Typed Expressions and Types
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-When an expression is specified to have a particular type, such as ``var x : Int``,
+When an expression is specified to have a particular type,
+such as ``var x : Int``,
 it is a *fully-typed expression*.
 When an expression is not fully typed,
 its type must be inferred using information from the surrounding context.
 
 Types may also be fully typed.
 A type is *fully typed* when each of its component parts are fully typed;
-that is, when each component is either a fully-typed expression or a fully-typed type.
+that is,
+when each component is either a fully-typed expression or a fully-typed type.
 
 .. docnote:: LangRef says:
     "A type may be fully-typed. ...
@@ -188,17 +197,23 @@ that is, when each component is either a fully-typed expression or a fully-typed
 
         1. It is a function type whose result or input type is not fully-typed.
         2. It is a tuple type with an element that is not fully-typed.
-        A tuple element is fully-typed unless it has no explicit type (which is permitted for defaultable elements)
+        A tuple element is fully-typed unless it has no explicit type
+        (which is permitted for defaultable elements)
         or its explicit type is not fully-typed.
-        In other words, *a type is fully-typed unless it syntactically contains a tuple element with no explicit type annotation*.
+        In other words,
+        a type is fully-typed
+        unless it syntactically contains a tuple element with no explicit type annotation.
 
-    A type being 'fully-typed' informally means that the type is specified directly from its type annotation
+    A type being 'fully-typed' informally means that the type
+    is specified directly from its type annotation
     without needing contextual or other information to resolve its type."
 
     Does this mean:
 
-        1. A type T = (t, Int) is not fully typed because t is a type variable, not a concrete type;
-        2. A type T = (expr, b : Int) is not fully typed because expr is an expression with no type annotation?
+        1. A type T = (t, Int) is not fully typed
+           because t is a type variable, not a concrete type;
+        2. A type T = (expr, b : Int) is not fully typed
+           because expr is an expression with no type annotation?
 
 .. docnote:: Why is this important information to know?
     How does it relate to Swift's type inference behavior?
@@ -286,10 +301,12 @@ This allows access to *type functions* through dot syntax.
    TODO: Verify that the above is correct.
    I tried in out in the REPL today, and it doesn't seem to work.
 
-The value of the meta type of a particular type is a reference to a global object that describes the type.
+The value of the meta type of a particular type
+is a reference to a global object that describes the type.
 Most meta types are singletons and, therefore, require no storage.
 That said, meta types associated with class types
-follow the same subtyping rules as their associated class types and, therefore, are not singletons.
+follow the same subtyping rules as their associated class types and,
+therefore, are not singletons.
 
 .. docnote:: This is from the LangRef, and we're not clear about what it all means.
     Can you walk us through this?
@@ -325,7 +342,8 @@ Type Identifiers
 
     Grammar of a type identifier
 
-    type-identifier --> type-name generic-argument-clause-OPT | type-name generic-argument-clause-OPT ``.`` type-identifier
+    type-identifier --> type-name generic-argument-clause-OPT
+                        | type-name generic-argument-clause-OPT ``.`` type-identifier
     type-name --> identifier
 
 .. docnote:: The LangRef calls this section "Named Types" and says ...
@@ -362,19 +380,23 @@ Tuple Types
 
     tuple-type --> ``(`` tuple-type-body-OPT ``)``
     tuple-type-body --> tuple-type-element-list ``...``-OPT
-    tuple-type-element-list --> tuple-type-element | tuple-type-element ``,`` tuple-type-element-list
+    tuple-type-element-list --> tuple-type-element
+                                | tuple-type-element ``,`` tuple-type-element-list
     tuple-type-element --> attribute-sequence-OPT type | element-name type-specifier
     element-name --> identifier
 
-.. docnote:: What the relationship between tuple types and tuple patterns?
+.. docnote:: What's the relationship between tuple types and tuple patterns?
 
 .. A tuple pattern is always of tuple type.  There is a ton of
    grammatical overlap right now; some of that will be reduced when we
    get rid of named tuple elements.  A tuple type is a much simpler
    composition of simpler types.
 
-.. docnote:: The LangRef says that "there are special rules for converting an expression
-    to varargs tuple type?" What are they?
+.. docnote:: The LangRef says that ...
+
+    "there are special rules for converting an expression to varargs tuple type?"
+
+    What are they?
 
 .. The subtype conversion chapter will discuss that.  Keep the note so
    we don't forget about it, but a lot of it will be subsumed.
@@ -401,8 +423,8 @@ Expressions
     expression-sequence --> unary-expression binary-expressions-OPT
     expression-list --> expression | expression ``,`` expression-list
 
-.. docnote:: A trailing-closure-expression seems to be allowed only in the context of function calling.
-    ...
+.. docnote:: A trailing-closure-expression seems to be allowed only
+    in the context of function calling. ...
 
     As a result, there's no need to have it at the top level of the expression grammar.
     Therefore, we can move it to the function-call-expression grammar
@@ -431,7 +453,8 @@ Function Call Expressions
 
     Grammar of a function call expression
 
-    function-call-expression --> postfix-expression parenthesized-expression trailing-closure-OPT
+    function-call-expression --> postfix-expression parenthesized-expression
+                                    trailing-closure-OPT
     trailing-closure --> closure-expressions expression-cast-OPT
 
 .. docnote:: Follow up from note above about trailing closures. ...
@@ -514,7 +537,8 @@ Binary Operators
 .. TODO: Depending on how strict we want to be with naming our syntactic categories,
     and the answer to the tech review question above,
     we may want to rename this to something like a binary-expression-clause,
-    because the current formulation (on it's own) doesn't produce a well-formed expression.
+    because the current formulation
+    (on it's own) doesn't produce a well-formed expression.
 
 
 Closure Expression
@@ -532,7 +556,8 @@ Closure Expression
     | closure-signature ::= pattern-tuple func-signature-result? 'in'
     | closure-signature ::= identifier (',' identifier)* func-signature-result? 'in'
 
-    A required brace-item-list doesn't seem correct (brace-item-list ::= '{' brace-item* '}'),
+    A required brace-item-list doesn't seem correct
+    (brace-item-list ::= '{' brace-item* '}'),
     because it requires everything following the ``in`` to be enclosed in braces.
     Rather, it seems like it should be brace-item*. Is this just a typo?
 
@@ -590,7 +615,8 @@ New Expression
 Statements
 ----------
 
-Swift provides several statements that are used to control the flow of execution in a program.
+Swift provides several statements that
+are used to control the flow of execution in a program.
 There are three types of control flow statements in Swift:
 loop statements, branch statements, and control transfer statements.
 Each type of statement can be used in function bodies and in top-level code.
@@ -743,7 +769,8 @@ before it is returned to the calling function or method.
 
     The LangRef says:
 
-    "[The return statement] sets the return value by converting the specified expression result
+    "[The return statement] sets the return value
+    by converting the specified expression result
     (or '()' if none is specified) to the return type of the 'func'."
 
 .. See the chapter on type conversions.
@@ -784,26 +811,31 @@ Variable Declarations
 
 .. langref-grammar
 
-    decl-var        ::= attribute-list 'type'? 'var' pattern initializer?  (',' pattern initializer?)*
-    decl-var        ::= attribute-list 'var' identifier ':' type-annotation brace-item-list
-    decl-var        ::= attribute-list 'var' identifier ':' type-annotation '{' get-set '}'
-    initializer     ::= '=' expr
-    get-set         ::= get set?
-    get-set         ::= set get
-    get             ::= 'get:' brace-item*
-    set             ::= 'set' set-name? ':' brace-item*
-    set-name        ::= '(' identifier ')'
+    decl-var  ::= attribute-list 'type'? 'var' pattern initializer?
+                    (',' pattern initializer?)*
+    decl-var  ::= attribute-list 'var' identifier ':' type-annotation brace-item-list
+    decl-var  ::= attribute-list 'var' identifier ':' type-annotation '{' get-set '}'
+    initializer ::= '=' expr
+    get-set     ::= get set?
+    get-set     ::= set get
+    get         ::= 'get:' brace-item*
+    set         ::= 'set' set-name? ':' brace-item*
+    set-name    ::= '(' identifier ')'
 
 .. syntax-grammar::
 
     Grammar of a variable declaration
 
-    variable-declaration --> attribute-sequence-OPT ``type``-OPT ``var`` pattern-initializer-list
-    variable-declaration --> attribute-sequence-OPT ``var`` variable-name type-specifier code-block
-    variable-declaration --> attribute-sequence-OPT ``var`` variable-name type-specifier getter-setter-block
+    variable-declaration --> attribute-sequence-OPT ``type``-OPT ``var``
+                                pattern-initializer-list
+    variable-declaration --> attribute-sequence-OPT ``var`` variable-name type-specifier
+                                code-block
+    variable-declaration --> attribute-sequence-OPT ``var`` variable-name type-specifier
+                                getter-setter-block
     variable-name --> identifier
 
-    pattern-initializer-list --> pattern-initializer | pattern-initializer ``,`` pattern-initializer-list
+    pattern-initializer-list --> pattern-initializer
+                                 | pattern-initializer ``,`` pattern-initializer-list
     pattern-initializer --> pattern initializer-OPT
     initializer --> ``=`` expression
 
@@ -812,7 +844,8 @@ Variable Declarations
     setter --> ``set`` setter-name-OPT ``:`` code-block-items-OPT
     setter-name --> ``(`` identifier ``)``
 
-.. docnote:: Why is ``type`` restricted to variables declared using the first variable-declaration grammar?
+.. docnote:: Why is ``type`` restricted to variables declared
+    using the first variable-declaration grammar?
 
 .. This is a temporary compiler limitation.
     Eventually, ``type`` will be allowed for the other two forms of the grammar
@@ -836,14 +869,16 @@ Extension Declarations
 
     Grammar of an extension declaration
 
-    extension-declaration --> ``extension`` type-identifier type-inheritance-clause-OPT extension-body
+    extension-declaration --> ``extension`` type-identifier type-inheritance-clause-OPT
+                                    extension-body
     extension-body --> ``{`` declarations-OPT ``}``
 
 
 .. docnote:: The LangRef says ...
 
     "'extension' declarations allow adding member declarations to existing types,
-    even in other source files and modules. There are different semantic rules for each type that is extended.
+    even in other source files and modules.
+    There are different semantic rules for each type that is extended.
     enum, struct, and class declaration extensions.
 
     FIXME: Write this section."
@@ -909,7 +944,8 @@ Attribute Sequences
    Look at the following first:
    ``mutating`` ``objc weak`` ``unowned`` ``optional``
    ``class_protocol``, and the IB attributes.
-   The others should be omitted (at least for now) -- they're really only used in the standard library.
+   The others should be omitted (at least for now) --
+   they're really only used in the standard library.
 
 .. It's likely that inout will get folded into the function stuff.
    Resilience is totally pointless because we're not doing it for 1.0.
