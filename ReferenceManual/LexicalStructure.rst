@@ -418,6 +418,32 @@ Floating-Point Literals
 Character Literals
 ~~~~~~~~~~~~~~~~~~
 
+.. langref-grammar
+
+    character_literal ::= '[^'\\\n\r]|character_escape'
+    character_escape  ::= [\]0 [\][\] | [\]t | [\]n | [\]r | [\]" | [\]'
+    character_escape  ::= [\]x hex hex
+    character_escape  ::= [\]u hex hex hex hex
+    character_escape  ::= [\]U hex hex hex hex hex hex hex hex
+
+.. syntax-grammar::
+
+    Grammar of character literals
+
+    character-literal --> ``'`` quoted-character ``'``
+    quoted-character --> Any Unicode codepoint except: ``'`` ``\`` U+000A (New Line) U+000D (Carriage Return)
+    quoted-character --> ``\0`` | ``\\`` | ``\t`` | ``\n`` | ``\r`` | ``\"`` | ``\'``
+    quoted-character --> ``\x`` hexadecimal-digit hexadecimal-digit
+    quoted-character --> ``\u`` hexadecimal-digit hexadecimal-digit hexadecimal-digit hexadecimal-digit
+    quoted-character --> ``\U`` hexadecimal-digit hexadecimal-digit hexadecimal-digit hexadecimal-digit hexadecimal-digit hexadecimal-digit hexadecimal-digit hexadecimal-digit
+
+.. TR: Is the first definition of quoted-character strictly accurate?  For
+   example, can I have a Unicode combining diacritic mark between single quotes
+   and have it count as a character literal?  (Setting aside the fact that most
+   text editors probably won't render that well.)
+
+.. Note: Using "character" as a synonym for "Unicode codepoint" throughout.
+   That might be worth writing down.
 
 String Literals
 ~~~~~~~~~~~~~~~
