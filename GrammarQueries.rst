@@ -65,8 +65,8 @@ Operators that are not bound, and operators that are right and left bound, are b
 
 Any operator immediately followed by a period (``.``)
 is not right bound if it is already left bound.
-This special case ensures that expressions like ``a@.b`` are parsed
-as ``(a@).b`` rather than ``(a) @ (.b)``.
+This special case ensures that expressions like ``a!.b`` are parsed
+as ``(a!).b`` rather than ``(a) ! (.b)``.
 
 .. docnote:: What causes the ``@`` to be left bound here? ...
 
@@ -74,6 +74,9 @@ as ``(a@).b`` rather than ``(a) @ (.b)``.
     "As an exception, an operator immediately followed by a dot ('.') is
     only considered right-bound if not already left-bound. This allows a@.prop
     to be parsed as (a@).prop rather than as a @ .prop."
+
+.. No space on the left -> left bound; no space on the right ->
+   right bound.  Better to use ! rather than @.
 
 If the ``!`` or ``?`` operator is left bound, it is a postfix operator,
 regardless of whether it is right bound.
@@ -111,6 +114,26 @@ and describes the type inference behavior of Swift.
 
     The story here is not exactly clear.
 
+.. Don't like the term "derived" for types because it has other meanings
+   in the object oriented world.  Calling them "compound" types might be
+   better.  We also have "nominal" types -- types like struct, class,
+   enum, and protocol that have names -- which are in a sense the
+   primatives of the world.  Grammatically, nominal types are the
+   smallest; compound types likes tuples are language constructs that
+   don't actually have names, and type sugar that is just an alias for
+   some nominal type.  The problem is that most languages have primative
+   types so we expect them to appear here, but there really aren't any.
+   The things we think of as primatives -- integer charcter etc -- are
+   nominal types defined by the Standard Library.  (Under the hood, they
+   are actually built using things like structs.)
+
+.. The trick is to describe what's going on without exposing too much of
+   what's actually going on.
+
+.. It is important to expose the fact that unlike other languages,
+   things that you think of as primative types are actually structs.
+   This means for example that you can extend those types.
+
 .. docnote:: Here is a list of things we were thinking about covering in this chapter.
     What do you think?
     Are there some things that we should omit, or are there obvious things that we missed?
@@ -130,6 +153,52 @@ and describes the type inference behavior of Swift.
     * Value types vs reference types?
     * Functions are first-class citizens in Swift (but not polymorphic functions)?
     * Type attributes? (Some attributes apply to types only; some apply to declarations only)
+
+.. Don't talk about materializable types.
+
+.. Type inference behavior -- talk about how it happens at expression
+   level and list/describe the places where you can omit a type or part
+   of a type.  (For example, you can write ``var x = 10`` and it will
+   know that it's an Int.)
+
+.. Avoid talking about "strong" vs "weak" typing in favor of discussion
+   of type safety.  Much of that discussion belongs in the guide in
+   introductory materials -- once you have that information, the
+   decisions made here will just make sense.  It's a staticly typed
+   language with some dynamic features.  Again, the umbrella
+   static/dynamic discussion doesn't really belong in this document.
+   In the reference, tend towards describing actual behaviors that
+   involve type safety -- we shouldn't have a discussion of type safety
+   and how Swift does it here in the reference.
+
+.. Type inheritance will show up here because we need to say when it
+   makes sense and what can inherit what.  Bring it up as needed, don't
+   devote a lot of prose her to it.  Likewise with value/reference
+   types.
+
+.. Functions -- correct.
+
+.. Defining attributes -- some apply only to types and some only to
+   declarations.  Keep them together in the Declarations chapter because
+   there's some cross-over and shared information -- xref to it as
+   needed.  If needed, pull it out into its own chapter.  In some cases
+   (like @objc) we might actually want to scatter that information
+   throughout the book rather than gathering it all up into one long
+   section.
+
+.. Fully typed -- langref is trying to talk about fully-typed types.  In
+   (a, b : Int) the `b : Int` isn't actually a type annotation.  To get
+   a non-fully typed type you need to be in a pattern matching context
+   like `var (a : Int, b) = (1, 1.5)` where the second half of the tuple
+   hase some type variable instead of a fully typed type.  Likewise `var
+   a : Dictionary = ["A": 1]` where the type of a is inferred.  The way
+   you form an expression of tuple type like this is to do something
+   like `(t, 5)` or `(t, _) = (7, 2)` where the 5 or _ picks up type
+   from context.
+
+.. The reason for discussing fully typed types is directly related to
+   type inference -- types in a source must be fully typed (as defined
+   here) except in the contexts where type inference is allowed.
 
 
 Fully-Typed Expressions and Types
@@ -179,8 +248,21 @@ In general, variables must have a materializable type.
 
 .. docnote:: What does "materializable" mean, exactly?
 
+.. What it means is that you can create a valua in memory that
+   represents that type.  That's true of an integer or an object that is
+   an NSDictionary, but an inout is sort of just a reference to
+   something else that's up the stack.  You can have a pointer in memory
+   but it's not actually a thing.
+
 .. docnote:: Why must variables have a materializable type?
     What about variables in function parameters?
+
+.. This is getting killed, so don't spend time working on it.  The only
+   way to get a non-materializable type is to use @inout.  The only
+   place where that's even allowed is in a tuple that's part of a
+   function declaration.  The grammar is shifting and will prevent these
+   from showing up anywhere else in the language.  Suggest expunging
+   everything about materializable.
 
 .. langref-grammar
 
@@ -209,6 +291,29 @@ This allows access to *type functions* through dot syntax.
 .. docnote:: What is the 'standard name loopup scope'?
     How does all of this make it possible to access a type function through dot syntax?
 
+.. Just have a grammar approach, rather than saying "here is a magic
+   name which shows up in types" like it does now.  That doesn't even
+   make sense -- there isn't even lookup for functions.  You can just
+   take any type and get .metatype out of it.
+
+.. For example:
+
+   class X {
+    type func foo ()
+   }
+   var obj : X
+
+   You can't in Swift or Obj-C write obj.foo().  In Obj-C you write
+   [obj.class foo] -- you're getting the metatype of the item.  In Swift,
+   you write obj.metatype.foo().
+
+   var xm : X.metatype = obj.metatype
+
+   We use the term metatype because you can do this with things that
+   aren't objects -- they don't have classes.  At some point in the
+   future there will be more reflection -- for now the important part is
+   to say that this is how you get at the type/class functions.
+
 The value of the meta type of a particular type is a reference to a global object that describes the type.
 Most meta types are singletons and, therefore, require no storage.
 That said, meta types associated with class types
@@ -217,6 +322,10 @@ follow the same subtyping rules as their associated class types and, therefore, 
 .. docnote:: This is from the LangRef, and we're not clear about what it all means.
     Can you walk us through this?
     What else do developers need to know about metatype types?
+
+.. Mention of subtyping doesn't really make sense here.  Somewhere in
+   the reference there should be a chapter/section on subtyping and type
+   conversion.
 
 .. langref-grammar
 
@@ -252,6 +361,15 @@ Type Identifiers
 
     What does the "expand to one" part mean?
 
+.. Type name is actually a decent thing to call these.  No strong
+   preference either way.  This will change depending on how we end up
+   slicing the top-level structure -- if we call them nominal types,
+   this will change to match.
+
+   An identifier that refers to a type may refer to either a nominal
+   type or a type alias.  Nominal means that the name of the type is
+   significant -- the name of a type alias doesn't create something.
+
 
 Tuple Types
 ~~~~~~~~~~~
@@ -275,9 +393,16 @@ Tuple Types
 
 .. docnote:: What the relationship between tuple types and tuple patterns?
 
+.. A tuple pattern is always of tuple type.  There is a ton of
+   grammatical overlap right now; some of that will be reduced when we
+   get rid of named tuple elements.  A tuple type is a much simpler
+   composition of simpler types.
+
 .. docnote:: The LangRef says that "there are special rules for converting an expression
     to varargs tuple type?" What are they?
 
+.. The subtype conversion chapter will discuss that.  Keep the note so
+   we don't forget about it, but a lot of it will be subsumed.
 
 
 Expressions
@@ -349,6 +474,16 @@ Function Call Expressions
     | expr-call ::= expr-postfix expr-paren
     | expr-trailing-closure ::= expr-postfix expr-closure+
 
+.. We probably need to pull this back because of things like
+
+   [1, 2, 3].map {$0 * 2}
+        ==> [2, 4, 6]
+
+   The parens after map are optional.  You have [].map which is an
+   expression followed by a trailing closure -- it's not a call
+
+   Add a grammar production of function-call --> parens-OPT closure
+
 
 Binary Operators
 ~~~~~~~~~~~~~~~~
@@ -384,6 +519,23 @@ Binary Operators
 
     What's the reason behind formulating the grammar in this way?
 
+.. You have essentially expression sequences here, and within it are
+   parts of the expressions.  We're calling them "expressions" even
+   though they aren' what we ordinarily think of as expressions.  We
+   have this two-phase thing where we do the expression sequence parsing
+   which gives a rough parse tree.  Then after name binding we know
+   operator precedence and we do a second phase of parsing that builds
+   something that's a more traditional tree.
+
+.. You're going to care about this if you're adding new operators --
+   it's not a high priority.  We could probably loosely describe this
+   process by saying that the parser handles it as a flat list and then
+   applies the operator precedence to make a more typical parse tree.
+   At some point, we will probably have to document the syntax around
+   creating operators.  This may need to come up in the language guide
+   in respect to the spacing rules -- ``x + y * z`` is diffirent than
+   ``x + y* z``.
+
 .. TODO: Depending on how strict we want to be with naming our syntactic categories,
     and the answer to the tech review question above,
     we may want to rename this to something like a binary-expression-clause,
@@ -417,6 +569,8 @@ Closure Expression
         })
 
     because ``print(...)`` and ``return y < x`` aren't enclosed in braces.
+
+.. Yes, it's a typo.
 
 .. syntax-grammar::
 
@@ -454,6 +608,8 @@ New Expression
     Also, note that this is *explicitly* left-recursive.
 
 .. docnote:: What use-cases does the 'new' grammar apply to?
+
+.. These are going away -- apply minimal effort.
 
 
 Statements
@@ -507,6 +663,23 @@ Each type of statement is described in detail below.
 
     Do we have analogs to these?
 
+.. What you wrote down makes sense to Doug.  A brace item list should
+   just contain statements -- expressions and declarations can be kinds
+   of statements.
+
+.. The intent is that semicolon is not even a statement -- it's an
+   optional terminator used when multiple statements are on a single
+   line.  We should move away from having it as a statement -- it's an
+   optional token that can appear after any statement.
+
+.. Open question -- can you have semicolon after a control statement?
+   For example if () { ... }; ?
+
+.. The semicolon isn't required for the compiler -- we added a rule that
+   requires them to enforce a certain amount of readability.  The
+   compiler would be perfectly happy if you juts wrote your program on
+   one long line with no semicolons.
+
 
 Collection-Based For Statement
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -546,6 +719,13 @@ and it is finished executing the statement.
    I've determined this information be looking at the declarations in the REPL
    so there may be aspects we don't want to document
    or want to describe differently.
+
+.. Should be the Sequence protocol.  The generate() bit is correct, as
+   is the rest of it.  Consider calling this "Sequence-Based For
+   Statement" -- they've pretty much settled on  the difference between
+   Collection and Sequence.  A collection has some implication that
+   the collection could be iterated multiple times -- it could just be a
+   random number generator.
 
 
 .. langref-grammar
@@ -591,6 +771,7 @@ before it is returned to the calling function or method.
     "[The return statement] sets the return value by converting the specified expression result
     (or '()' if none is specified) to the return type of the 'func'."
 
+.. See the chapter on type conversions.
 
 .. langref-grammar
 
@@ -658,6 +839,8 @@ Variable Declarations
 
 .. docnote:: Why is ``type`` restricted to variables declared using the first variable-declaration grammar?
 
+.. This is a temporary compiler limitation.
+
 
 Extension Declarations
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -690,6 +873,9 @@ Extension Declarations
 
     What is the relevant, missing information?
     What are the semantic rules associated with extending different types?
+
+.. Yes, we do need this.  Defer for now and come back once they have
+   written down the rules themselves.
 
 Attribute Sequences
 ~~~~~~~~~~~~~~~~~~~
@@ -734,8 +920,21 @@ Attribute Sequences
     e.g., declaration attributes, type attributes, and IB attributes,
     then we could could break down the attribute grammar accordingly.
 
+.. The noreturn attribute can be specified on the declaration or on the
+   function type.  It seems like they are going to fall into mutually
+   exclusive buckets.
+
 .. docnote:: Which attributes should we focus on documenting,
     and where can we find information about each attribute?
+
+.. Many of these are probably not worth documenting for a while now.
+   Look at the following first: mutating objc weak unowned optional
+   class_protocol, and the IB attributes.  The others should be omitted
+   -- they're really only used in the standard library.
+
+.. It's likely than inout will get folded into the function stuff.
+   Resilience is totally pointless because we're not doing it for 1.0.
+   Leave them off entirely.
 
 Infix Attribute
 +++++++++++++++
