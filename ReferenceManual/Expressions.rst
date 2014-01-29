@@ -19,11 +19,6 @@ Expressions
     expression-sequence --> unary-expression binary-expressions-OPT
     expression-list --> expression | expression ``,`` expression-list
 
-.. TR: A trailing-closure-expression seems to be allowed only in the context of function calling.
-    As a result, there's no need to have it at the top level of the expression grammar.
-    As a result, we can move it to the function-call-expression grammar
-    and remove basic-expression as a syntactic category. Is this change OK?
-
 
 Unary Operators
 ---------------
@@ -342,15 +337,19 @@ Function Call Expressions
     Grammar of a function call expression
 
     function-call-expression --> postfix-expression parenthesized-expression trailing-closure-OPT
+    function-call-expression --> postfix-expression parenthesized-expression-OPT trailing-closure
     trailing-closure --> closure-expressions expression-cast-OPT
 
-.. TR: Confirm that putting the trailing closure here,
-    as part of the function call syntax,
-    rather than as part of the general syntax of an expression
-    is still correct.
-    Assuming that it's correct, it reduces overgeneration
-    and is easier to read.
+.. TR: Is it the case that you can have one or more expr-closure (i.e., expr-closure+)?
+    This doesn't seem right.
 
+.. NOTE: The following are three equivalent ways of doing the same thing:
+
+        [1, 2, 3].map {$0 * 2}
+        [1, 2, 3].map() {$0 * 2}
+        [1, 2, 3].map({$0 * 2})
+
+    TODO: Consider giving the above examples in prose.
 
 New Expression
 ~~~~~~~~~~~~~~
