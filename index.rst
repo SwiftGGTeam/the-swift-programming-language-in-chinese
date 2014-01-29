@@ -32,3 +32,4 @@ Internal Chapters
     ReplacementRules
     LanguageGuide/StyleGuide
     LanguageGuide/LanguageTour
+    GrammarQueries
