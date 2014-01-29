@@ -361,27 +361,31 @@ Integer Literals
 
     integer-literal --> binary-integer-literal | octal-integer-literal | decimal-integer-literal-literal | hexedecimal-integer-literal
 
-    binary-integer-literal --> ``0b`` binary-digit binary-digits
-    octal-integer-literal --> ``0o`` octal-digit octal-digits
-    decimal-integer-literal --> decimal-digit decimal-digits
-    hexadecimal-integer-literal --> ``0x`` hexadecimal-digit hexadecimal-digits
+    binary-integer-literal --> ``0b`` binary-digits
+    octal-integer-literal --> ``0o`` octal-digits
+    decimal-integer-literal --> decimal-digits
+    hexadecimal-integer-literal --> ``0x`` hexadecimal-digits
 
-    binary-digits --> binary-digit binary-digits-OPT | ``_`` binary-digits-OPT
-    octal-digits --> octal-digit octal-digits-OPT | ``_`` octal-digits-OPT
-    decimal-digits --> decimal-digit decimal-digits-OPT | ``_`` decimal-digits-OPT
-    hexadecimal-digits --> hexadecimal-digit hexadecimal-digits-OPT | ``_`` hexadecimal-digits-OPT
+    binary-digits --> binary-digit binary-digit-tail-OPT
+    octal-digits --> octal-digit octal-digit-tail-OPT
+    decimal-digits --> decimal-digit decimal-digit-tail-OPT
+    hexadecimal-digits --> hexadecimal-digit hexadecimal-digit-tail-OPT
 
     binary-digit --> ``0`` | ``1``
     octal-digit --> ``0`` | ``1`` | ``2`` | ``3`` | ``4`` | ``5`` | ``6`` | ``7``
     decimal-digit --> ``0`` | ``1`` | ``2`` | ``3`` | ``4`` | ``5`` | ``6`` | ``7`` | ``8`` | ``9``
     hexidecimal-digit --> decimal-digit | ``A`` | ``B`` | ``C`` | ``D`` | ``E`` | ``F`` | ``a`` | ``b`` | ``c`` | ``d`` | ``e`` | ``f``
 
-.. TODO: Definition of foo-digit foo-digits may belong elsewhere;
-   it's used in integer literals and floating point literals.
+    binary-digit-tail --> binary-digit | ``_``
+    octal-digit-tail --> octal-digit | ``_``
+    decimal-digit-tail --> decimal-digit | ``_``
+    hexadecimal-digit-tail --> hexadecimal-digit | ``_``
 
-   Might be better to make foo-digits already include the restriction on
-   where the underscore can fall, for clearer naming.
+.. TR: This grammar matches the LangRef in permitting a trailing
+   underscore, allowing things like 1_000_ to be matched.  Is that
+   desired?
 
+   (If not, change foo-digit-tail to read foo-digit | ``_`` foo-digit.)
 
 Floating-Point Literals
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -398,14 +402,14 @@ Floating-Point Literals
 
    Grammar of floating-point literals
 
-   floating-point-literal --> decimal-digit decimal-digits floating-point-decimal-fraction-OPT floating-point-decimal-exponent-OPT
-   floating-point-literal --> ``0x`` hexadecimal-digit hexadecimal-digits floating-point-hexadecimal-fraction-OPT floating-point-hexadecimal-exponent-OPT
+   floating-point-literal --> decimal-digits floating-point-decimal-fraction-OPT floating-point-decimal-exponent-OPT
+   floating-point-literal --> ``0x`` hexadecimal-digits floating-point-hexadecimal-fraction-OPT floating-point-hexadecimal-exponent-OPT
 
-   floating-point-decimal-fraction --> ``.`` decimal-digit decimal-digits-OPT
-   floating-point-decimal-exponent --> floating-point-e sign-OPT decimal-digit decimal-digits
+   floating-point-decimal-fraction --> ``.`` decimal-digits
+   floating-point-decimal-exponent --> floating-point-e sign-OPT decimal-digits
 
-   floating-point-hexadecimal-fraction --> ``.`` hexadecimal-digit hexadecimal-digits-OPT
-   floating-point-hexadecimal-exponent --> floating-point-e sign-OPT hexadecimal-digit hexadecimal-digits
+   floating-point-hexadecimal-fraction --> ``.`` hexadecimal-digits-OPT
+   floating-point-hexadecimal-exponent --> floating-point-e sign-OPT hexadecimal-digits
 
    floating-point-e --> ``e`` | ``E``
    sign --> ``+`` | ``-``
