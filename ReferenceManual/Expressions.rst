@@ -240,10 +240,6 @@ Closure Expression
     closure-signature --> tuple-pattern function-signature-result-OPT ``in``
     closure-signature --> identifier-list function-signature-result-OPT ``in``
 
-.. TODO: Add grammar for identifier-list to Identifiers in Lexical Structure.
-    (identifier-list --> identifier | identifier ``,`` identifier-list)
-
-
 Anonymous Closure Argument
 ++++++++++++++++++++++++++
 

@@ -67,6 +67,10 @@ Identifiers
 Identifier Tokens
 ~~~~~~~~~~~~~~~~~
 
+.. TODO: Add grammar for identifier-list to Identifiers (used in Closure Expressions).
+    identifier-list --> identifier | identifier ``,`` identifier-list
+
+
 
 Operator Identifiers
 ~~~~~~~~~~~~~~~~~~~~
