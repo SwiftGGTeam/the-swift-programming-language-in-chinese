@@ -206,6 +206,7 @@ Tuple Types
     tuple-type-body --> tuple-type-element-list ``...``-OPT
     tuple-type-element-list --> tuple-type-element | tuple-type-element ``,`` tuple-type-element-list
     tuple-type-element --> attribute-sequence-OPT type | element-name type-specifier
+    element-name --> identifier
 
 
 Optional Type
