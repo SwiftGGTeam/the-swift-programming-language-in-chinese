@@ -7,56 +7,6 @@ Lexical Structure
 Operator Identifiers
 ~~~~~~~~~~~~~~~~~~~~
 
-.. langref-grammar
-
-    operator ::= [@/=-+*%<>!&|^~]+
-    operator ::= \.\.
-
-      Note: excludes '=', see [1]
-            excludes '->', see [2]
-            excludes unary '&', see [3]
-            excludes '//', '/*', and '*/', see [4]
-            '..' is an operator, not two '.'s.
-
-    operator-binary ::= operator
-    operator-prefix ::= operator
-    operator-postfix ::= operator
-
-    left-binder  ::= [ \r\n\t\(\[\{,;:]
-    right-binder ::= [ \r\n\t\)\]\},;:]
-
-    any-identifier ::= identifier | operator
-
-.. syntax-grammar::
-
-    Grammar of operators
-
-    operator --> operator-character operator-OPT
-    operator --> ``..``
-
-    operator-character --> One of the following characters:
-    ``@`` ``/`` ``=`` ``-`` ``+`` ``*`` ``%`` ``<`` ``>`` ``!`` ``&`` ``|`` ``^`` ``~``
-
-    binary-operator --> operator
-    prefix-operator --> operator
-    postfix-operator --> operator
-    postfix-operators --> postfix-operator postfix-operators-OPT
-
-    any-identifier --> identifier | operator
-
-.. TODO: Move any-identifier.  It doesn't belong here -- it's not an operator.
-
-Operators that are followed by one of the following characters are *left bound*:
-
-    Space, Carriage Return, New Line, Horizontal Tab
-    ``(`` ``[`` ``{`` ``,`` ``;`` ``:``
-
-
-Operators that are preceded by one of the following characters are *right bound*:
-
-    Space, Carriage Return, New Line, Horizontal Tab
-    ``)`` ``]`` ``}`` ``,`` ``;`` ``:``
-
 Being right/left bound determines whether an operator is
 a prefix operator, a postfix operator, or a binary operator.
 Operators that are left bound and not right bound are postfix operators.
@@ -76,7 +26,8 @@ as ``(a!).b`` rather than ``(a) ! (.b)``.
     to be parsed as (a@).prop rather than as a @ .prop."
 
 .. No space on the left -> left bound; no space on the right ->
-   right bound.  Better to use ! rather than @.
+   right bound.  Better to use ! rather than @ (made this change above).
+   Talk about the general rule but give an example using !.
 
 If the ``!`` or ``?`` operator is left bound, it is a postfix operator,
 regardless of whether it is right bound.
@@ -133,6 +84,7 @@ and describes the type inference behavior of Swift.
 .. It is important to expose the fact that unlike other languages,
    things that you think of as primative types are actually structs.
    This means for example that you can extend those types.
+   This information should appear, in some form or other, in both parts of the book.
 
 .. docnote:: Here is a list of things we were thinking about covering in this chapter.
     What do you think?
@@ -155,11 +107,12 @@ and describes the type inference behavior of Swift.
     * Type attributes? (Some attributes apply to types only; some apply to declarations only)
 
 .. Don't talk about materializable types.
+    This is tied to the inout attribute and will be going away.
 
 .. Type inference behavior -- talk about how it happens at expression
    level and list/describe the places where you can omit a type or part
    of a type.  (For example, you can write ``var x = 10`` and it will
-   know that it's an Int.)
+   know that it's an Int.) Tied to the discussion on fully-typed types, below.
 
 .. Avoid talking about "strong" vs "weak" typing in favor of discussion
    of type safety.  Much of that discussion belongs in the guide in
@@ -173,10 +126,22 @@ and describes the type inference behavior of Swift.
 
 .. Type inheritance will show up here because we need to say when it
    makes sense and what can inherit what.  Bring it up as needed, don't
-   devote a lot of prose her to it.  Likewise with value/reference
-   types.
+   devote a lot of prose to it.  Likewise with value/reference
+   types. A full discussion of these topics should appear in the Language Guide.
 
-.. Functions -- correct.
+.. Functions -- correct. That is, functions are first-class citizens in Swift
+    (but not generic functions, i.e., not parametric polymorphic functions).
+    This means that monomorphic functions can be assigned to variables
+    and can be passed as arguments to other function.
+    As an example, the following three lines of code are OK::
+
+        func polymorphicF<T>(a: Int) -> T { return a }
+        func monomorphicF(a: Int) -> Int { return a }
+        var myMonomorphicF = monomorphicF
+
+    But, the following is not allowed::
+
+        var myPolymorphicF = polymorphicF
 
 .. Defining attributes -- some apply only to types and some only to
    declarations.  Keep them together in the Declarations chapter because
@@ -190,15 +155,18 @@ and describes the type inference behavior of Swift.
    (a, b : Int) the `b : Int` isn't actually a type annotation.  To get
    a non-fully typed type you need to be in a pattern matching context
    like `var (a : Int, b) = (1, 1.5)` where the second half of the tuple
-   hase some type variable instead of a fully typed type.  Likewise `var
+   has some type variable instead of a fully typed type.  Likewise `var
    a : Dictionary = ["A": 1]` where the type of a is inferred.  The way
    you form an expression of tuple type like this is to do something
-   like `(t, 5)` or `(t, _) = (7, 2)` where the 5 or _ picks up type
+   like `(t, 5)` or `(t, _) = (7, 2)` where the 5 or _ picks up the type
    from context.
 
 .. The reason for discussing fully typed types is directly related to
    type inference -- types in a source must be fully typed (as defined
    here) except in the contexts where type inference is allowed.
+
+   TODO: Email Doug for a list of rules or situations describing
+   when type-inference is allowed and when types must be fully typed.
 
 
 Fully-Typed Expressions and Types
@@ -235,6 +203,7 @@ that is, when each component is either a fully-typed expression or a fully-typed
 .. docnote:: Why is this important information to know?
     How does it relate to Swift's type inference behavior?
 
+
 Materializable Types
 ~~~~~~~~~~~~~~~~~~~~
 
@@ -248,9 +217,9 @@ In general, variables must have a materializable type.
 
 .. docnote:: What does "materializable" mean, exactly?
 
-.. What it means is that you can create a valua in memory that
+.. What it means is that you can create a value in memory that
    represents that type.  That's true of an integer or an object that is
-   an NSDictionary, but an inout is sort of just a reference to
+   an NSDictionary, but an inout type is sort of just a reference to
    something else that's up the stack.  You can have a pointer in memory
    but it's not actually a thing.
 
@@ -314,6 +283,9 @@ This allows access to *type functions* through dot syntax.
    future there will be more reflection -- for now the important part is
    to say that this is how you get at the type/class functions.
 
+   TODO: Verify that the above is correct.
+   I tried in out in the REPL today, and it doesn't seem to work.
+
 The value of the meta type of a particular type is a reference to a global object that describes the type.
 Most meta types are singletons and, therefore, require no storage.
 That said, meta types associated with class types
@@ -326,6 +298,9 @@ follow the same subtyping rules as their associated class types and, therefore, 
 .. Mention of subtyping doesn't really make sense here.  Somewhere in
    the reference there should be a chapter/section on subtyping and type
    conversion.
+
+.. TODO: Start planning a chapter on subtyping and type conversions.
+    Do we want/need this for WWDC or can it be pushed out to FCS?
 
 .. langref-grammar
 
@@ -532,7 +507,7 @@ Binary Operators
    process by saying that the parser handles it as a flat list and then
    applies the operator precedence to make a more typical parse tree.
    At some point, we will probably have to document the syntax around
-   creating operators.  This may need to come up in the language guide
+   creating operators.  This may need to be discussed in the Language Guide
    in respect to the spacing rules -- ``x + y * z`` is diffirent than
    ``x + y* z``.
 
@@ -673,7 +648,7 @@ Each type of statement is described in detail below.
    optional token that can appear after any statement.
 
 .. Open question -- can you have semicolon after a control statement?
-   For example if () { ... }; ?
+   For example if () { ... }; ? Answer: Yes, you can.
 
 .. The semicolon isn't required for the compiler -- we added a rule that
    requires them to enforce a certain amount of readability.  The
@@ -840,6 +815,8 @@ Variable Declarations
 .. docnote:: Why is ``type`` restricted to variables declared using the first variable-declaration grammar?
 
 .. This is a temporary compiler limitation.
+    Eventually, ``type`` will be allowed for the other two forms of the grammar
+    (those that declare variables with computed values).
 
 
 Extension Declarations
@@ -876,6 +853,7 @@ Extension Declarations
 
 .. Yes, we do need this.  Defer for now and come back once they have
    written down the rules themselves.
+   TODO: Email Doug et al. in a week or two to get the rules.
 
 Attribute Sequences
 ~~~~~~~~~~~~~~~~~~~
@@ -928,60 +906,11 @@ Attribute Sequences
     and where can we find information about each attribute?
 
 .. Many of these are probably not worth documenting for a while now.
-   Look at the following first: mutating objc weak unowned optional
-   class_protocol, and the IB attributes.  The others should be omitted
-   -- they're really only used in the standard library.
+   Look at the following first:
+   ``mutating`` ``objc weak`` ``unowned`` ``optional``
+   ``class_protocol``, and the IB attributes.
+   The others should be omitted (at least for now) -- they're really only used in the standard library.
 
-.. It's likely than inout will get folded into the function stuff.
+.. It's likely that inout will get folded into the function stuff.
    Resilience is totally pointless because we're not doing it for 1.0.
    Leave them off entirely.
-
-Infix Attribute
-+++++++++++++++
-
-.. langref-grammar
-
-    attribute-infix ::= 'infix_left'  '=' integer_literal
-    attribute-infix ::= 'infix_right' '=' integer_literal
-    attribute-infix ::= 'infix        '=' integer_literal
-
-.. NOTE: There is now only one infix attribute ('infix'),
-    which no longer takes an assignment ('=' integer-literal).
-    Tested this in r11445 on 12/23/2013.
-
-Resilience Attributes
-+++++++++++++++++++++
-
-.. langref-grammar
-
-    attribute-resilience ::= 'resilient'
-    attribute-resilience ::= 'fragile'
-    attribute-resilience ::= 'born_fragile'
-
-
-Swift has three resilience attributes: ``resilient``, ``fragile``, and ``born_fragile``.
-
-
-The In-Out Attribute
-++++++++++++++++++++
-
-.. langref-grammar
-
-    attribute-inout ::= 'inout'
-
-
-The Auto-Closure Attribute
-++++++++++++++++++++++++++
-
-.. langref-grammar
-
-    attribute-auto_closure ::= 'auto_closure'
-
-
-The No-Return Attribute
-+++++++++++++++++++++++
-
-.. langref-grammar
-
-    attribute-noreturn ::= 'noreturn'
-
