@@ -62,16 +62,23 @@ Binary Operators
 .. TODO: Give a list of the binary operators defined in the Swift stdlib.
     Then give a cross-reference to the Swift stdlib for more details.
 
-.. TR: Strictly speaking, a binary-expression is not an actual expression;
-    rather, it is part of an expression
-    (the expression is well-formed when it's the continuation of a unary expression).
-    The same goes for expression-cast.
-    What's the reason behind formulating the grammar in this way?
+.. NOTE: You have essentially expression sequences here, and within it are
+   parts of the expressions.  We're calling them "expressions" even
+   though they aren't what we ordinarily think of as expressions.  We
+   have this two-phase thing where we do the expression sequence parsing
+   which gives a rough parse tree.  Then after name binding we know
+   operator precedence and we do a second phase of parsing that builds
+   something that's a more traditional tree.
 
-.. TODO: Depending on how strict we want to be with naming our syntactic categories,
-    and the answer to the tech review question above,
-    we may want to rename this to something like a binary-expression-clause,
-    because the current formulation (on it's own) doesn't produce a well-formed expression.
+.. TODO: You're going to care about this if you're adding new operators --
+   it's not a high priority.  We could probably loosely describe this
+   process by saying that the parser handles it as a flat list and then
+   applies the operator precedence to make a more typical parse tree.
+   At some point, we will probably have to document the syntax around
+   creating operators.  This may need to be discussed in the Language Guide
+   in respect to the spacing rules -- ``x + y * z`` is diffirent than
+   ``x + y* z``.
+
 
 Builtin Binary Operators
 ~~~~~~~~~~~~~~~~~~~~~~~~
