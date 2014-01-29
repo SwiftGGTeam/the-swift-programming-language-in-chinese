@@ -193,14 +193,6 @@ you should always use ``Int`` for code consistency and interoperability.
 Even on 32-bit platforms, ``Int`` can store any value between ``-2,147,483,648`` and ``2,147,483,647``,
 and is typically large enough for everyday integer values.
 
-.. admonition:: Note
-
-    Swift's ``Int`` type will have a platform-specific size, as described above.
-    However, this has yet to be implemented.
-    In the meantime, ``Int`` is a typealias for ``Int64`` on both 32 and 64-bit platforms.
-
-.. TODO: Remove this admonition as per rdar://15612057 once rdar://15612767 is completed.
-
 Floating-Point Numbers
 ----------------------
 
