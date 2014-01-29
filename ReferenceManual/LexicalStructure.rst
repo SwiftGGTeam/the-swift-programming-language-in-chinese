@@ -448,6 +448,27 @@ Character Literals
 String Literals
 ~~~~~~~~~~~~~~~
 
+.. langref-grammar
+
+    string_literal   ::= ["]([^"\\\n\r]|character_escape|escape_expr)*["]
+    escape_expr      ::= [\]escape_expr_body
+    escape_expr_body ::= [(]escape_expr_body[)]
+    escape_expr_body ::= [^\n\r"()]
+
+.. syntax-grammar::
+
+    Grammar of string literals
+
+    string-literal --> ``"`` quoted-texts ``"``
+    quoted-texts --> quoted-text quoted-texts-OPT | ``\(`` interpolated-expression ``)`` quoted-texts-OPT
+    quoted-text --> Any text that does not contain ``"`` ``\`` U+000A (New Line) U+000D (Carriage Return)
+    interpolated-expression --> Any text that matches both expression and quoted-text
+
+.. TR: Paren balancing is required by the grammar of *expression* already, so I
+   omitted it in the rule above.
+
+.. TODO: Based on the above, it looks like the schema for grammar productions
+   needs to let prose contain references to literals and syntactic categories.
 
 Module Scope
 ------------
