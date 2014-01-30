@@ -57,6 +57,7 @@ and is used as a statement terminator when multiple statements appear on the sam
     statement --> loop-statement ;-OPT
     statement --> branch-statement ;-OPT
     statement --> control-transfer-statement ;-OPT
+    statements --> statement statements-OPT
 
 .. NOTE: Removed semicolon-statement as syntactic category,
     because, according to Doug, they're not really statements.
@@ -102,7 +103,7 @@ A for statement has the following general form:
 .. syntax-outline::
 
     for (<#initialization#>; <#condition#>; <#increment#>) {
-        <#code to execute#>
+        <#statements#>
     }
 
 The parentheses around the initiazilation, condition, and increment are optional,
@@ -168,7 +169,7 @@ A collection-based for statement has the general form:
 .. syntax-outline::
 
     for <#item#> in <#collection#> {
-        <#code to execute#>
+        <#statements#>
     }
 
 The ``generate`` method is called on the *collection* expression
@@ -214,7 +215,7 @@ A while statement has the following general form:
 .. syntax-outline::
 
     while <#condition#> {
-        <#code to execute#>
+        <#statements#>
     }
 
 A while statement is executed as follows:
@@ -254,7 +255,7 @@ A do-while statement has the following general form:
 .. syntax-outline::
 
     do {
-        <#code to execute#>
+        <#statements#>
     } while <#condition#>
 
 A do-while statement is executed as follows:
@@ -315,7 +316,7 @@ and has the following general form:
 .. syntax-outline::
 
     if <#condition#> {
-        <#code to execute if condition is true#>
+        <#statements#>
     }
 
 .. NOTE: Original prose: When an if statement has the first form,
@@ -331,9 +332,9 @@ When a single else clause is present, an if statement has the following form:
 .. syntax-outline::
 
     if <#condition#> {
-        <#code to execute if condition is true#>
+        <#statements to execute if condition is true#>
     } else {
-        <#code to execute if condition is false#>
+        <#statements to execute if condition is false#>
     }
 
 .. NOTE: Original prose: When the optional else clause is present in an if statement,
@@ -349,11 +350,11 @@ An if statement that is chained together in this way has the following form:
 .. syntax-outline::
 
     if <#condition 1#> {
-        <#code to execute if condition 1 is true#>
+        <#statements to execute if condition 1 is true#>
     } else if <#condition 2#> {
-        <#code to execute if condition 2 is true#>
+        <#statements to execute if condition 2 is true#>
     } else {
-        <#code to execute if both conditions are false#>
+        <#statements to execute if both conditions are false#>
     }
 
 The value of any conditional expression in an if statement must be of type ``Bool``,
@@ -393,11 +394,11 @@ A switch statement has the following general form:
 
     switch <#control expression#> {
         case <#pattern list 1#>:
-            <#code to execute#>
+            <#statements#>
         case <#pattern list 2#> where <#condition#>:
-            <#code to execute#>
+            <#statements#>
         default:
-            <#code to execute#>
+            <#statements#>
     }
 
 The values of expressions your code can branch on is very flexible. For instance,
@@ -477,7 +478,7 @@ break and continue out of an enclosing loop statement only, not out of the switc
 
     switch-statement --> ``switch`` expression ``{`` switch-cases-OPT ``}``
     switch-cases --> switch-case switch-cases-OPT
-    switch-case --> case-labels code-block-items-OPT | default-label code-block-items-OPT
+    switch-case --> case-labels statements-OPT | default-label statements-OPT
 
     case-labels --> case-label case-labels-OPT
     case-label --> ``case`` pattern-list guard-clause-OPT ``:``
