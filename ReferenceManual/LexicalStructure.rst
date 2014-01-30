@@ -445,13 +445,13 @@ a carriage return, or a line feed.
 These characters and other special characters can be included using *escape sequences*.
 The following escape sequences are supported:
 
-    * Null Character (``\0``)
-    * Backslash (``\\``)
-    * Horizontal Tab (``\t``)
-    * Line Feed (``\n``)
-    * Carriage Return (``\r``)
-    * Double Quote (``\"``)
-    * Single Quote (``\'``)
+* Null Character (``\0``)
+* Backslash (``\\``)
+* Horizontal Tab (``\t``)
+* Line Feed (``\n``)
+* Carriage Return (``\r``)
+* Double Quote (``\"``)
+* Single Quote (``\'``)
 
 .. The behavior of \n and \r is not the same as C.
    We specify exactly what those escapes mean.
@@ -459,10 +459,10 @@ The following escape sequences are supported:
    in text mode, \n maps to the platform's line separator
    which could be CR or LF or CRLF.
 
- Characters can also be escaped by ``\x`` followed by two hexadecimal digits,
- ``\u`` followed by four hexadecimal digits,
- or ``\U`` followed by eight hexadecimal digits.
- The digits in these escape codes identify a Unicode codepoint.
+Characters can also be escaped by ``\x`` followed by two hexadecimal digits,
+``\u`` followed by four hexadecimal digits,
+or ``\U`` followed by eight hexadecimal digits.
+The digits in these escape codes identify a Unicode codepoint.
 
 .. langref-grammar
 
