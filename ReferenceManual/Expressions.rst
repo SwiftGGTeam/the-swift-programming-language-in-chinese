@@ -224,13 +224,9 @@ Closure Expression
 
 .. langref-grammar
 
-    expr-closure ::= '{' closure-signature? brace-item-list '}'
+    expr-closure ::= '{' closure-signature? brace-item* '}'
     closure-signature ::= pattern-tuple func-signature-result? 'in'
-    closure-signature ::= identifier (',' identifier*) func-signature-result? 'in'
-
-.. TR: A required brace-item-list doesn't seem correct.
-    Rather, it should be brace-item*. Is this just a typo?
-    Another typo: The '*' should come after the paren in (',' identifier*).
+    closure-signature ::= identifier (',' identifier)* func-signature-result? 'in'
 
 .. syntax-grammar::
 
@@ -379,7 +375,10 @@ New Expression
 .. TODO: Come back and clean up this grammar.
     Also, note that this is *explicitly* left-recursive.
 
-.. TR: What use cases does the 'new' grammar apply to?
+.. NOTE: The 'new expression' is most likely going away completely.
+    Currently, its use is restricted to creating new arrays with an initial size.
+    Apply minimal effort to document it.
+
 
 Initializer Expression
 ~~~~~~~~~~~~~~~~~~~~~~
