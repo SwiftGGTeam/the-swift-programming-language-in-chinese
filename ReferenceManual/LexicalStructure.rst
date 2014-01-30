@@ -347,6 +347,13 @@ Implementation Identifier Token
 Literals
 --------
 
+.. TODO: For each kind of literal, there are several possible types that the value created could have.
+   Type inference determines which type is used.
+   If the list of possible types is fixed, it might be worth writing down.
+   But I seem to remember that it isn't set ahead of time,
+   rather that it's based on which types the value can be converted to.
+   This information may belong better in a chapter on type conversion.
+
 .. Note: The top-level grammar for literals is in "Expressions".
 
 Integer Literals
@@ -424,6 +431,33 @@ Floating-Point Literals
 Character Literals
 ~~~~~~~~~~~~~~~~~~
 
+A character literal is a single character surrounded by single quotes,
+with the following general form:
+
+.. syntax-outline::
+
+    '<# character #>'
+
+Character literals cannot contain
+an unescaped double quote (``'``),
+an unescaped backslash (``\``),
+a carriage return, or a line feed.
+These characters and other special characters can be included using *escape sequences*.
+The following escape sequences are supported:
+
+    * Null Character (``\0``)
+    * Backslash (``\\``)
+    * Horizontal Tab (``\t``)
+    * Line Feed (``\n``)
+    * Carriage Return (``\r``)
+    * Double Quote (``\"``)
+    * Single Quote (``\'``)
+ 
+ Characters can also be escaped by ``\x`` followed by two hexadecimal digits,
+ ``\u`` followed by four hexadecimal digits,
+ or ``\U`` followed by eight hexadecimal digits.
+ The digits in these escape codes identify a Unicode codepoint.
+
 .. langref-grammar
 
     character_literal ::= '[^'\\\n\r]|character_escape'
@@ -458,6 +492,38 @@ Character Literals
 
 String Literals
 ~~~~~~~~~~~~~~~
+
+A string literal is a sequence of characters surrounded by double quotes,
+with the following general form:
+
+.. syntax-outline::
+
+    "<# text #>"
+
+String literals cannot contain
+an unescaped double quote (``"``),
+an unescaped backslash (``\``),
+a carriage return, or a line feed.
+These characters and other special characters can be included using escapes.
+
+.. TODO: Same escapes supported here as with character literals.
+
+In addition to the escapes supported by character literals,
+the value of an expression can be inserted into a string
+by placing the expression in parentheses after a backslash (\).
+This expression must not contain
+an unescaped double quote ("),
+an unescaped backslash (\),
+a carriage return, or a line feed.
+
+.. The following all have the same value:
+
+   "1 2 3"
+   "1 2 \(3)"
+   "1 2 \(1 + 2)"
+   var x = 3; "1 2 \(x)"
+
+.. TR: Any context where string literals become implicitly null-terminated?
 
 .. langref-grammar
 
