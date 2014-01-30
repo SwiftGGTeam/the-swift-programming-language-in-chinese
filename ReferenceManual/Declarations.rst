@@ -128,11 +128,16 @@ Variable Declarations
 .. NOTE: Type specifiers are required for computed properties -- the
    types of those properties are not computed/inferred.
 
-.. TR: Why is 'type' restricted to variables declared using the first variable-declaration grammar?
+.. NOTE: 'type' is currently restricted to variables
+    declared using the first variable-declaration grammar.
+    This is a temporary compiler limitation.
+    Eventually, 'type' will be allowed for the other two forms of the grammar
+    (those that declare variable with computed values).
 
-.. TODO: File a radar against the inout attribute for better REPL
-   mesasge.  INOUT attribute can only be applide to types, not to
-   declarations.
+.. TODO: File a radar against the inout attribute for better REPL message.
+    The inout attribute can only be applide to types, not to declarations.
+    UPDATE 1/29/14: Hold off on this, because the grammar is going to be changing soon
+    to restrict where the inout attribute may appear.
 
 
 Let Declaration
