@@ -3,6 +3,8 @@ Lexical Structure
 
 .. TODO: Write a brief intro to this chapter.
 
+.. TODO: Revisit and polish the prose below
+
 Tokens are parsed using the principle of
 *longest match* (also known as "maximal munch").
 Text from the input is matched against the grammar
@@ -446,13 +448,13 @@ Character Literals
     escaped-character --> ``\u`` hexadecimal-digit hexadecimal-digit hexadecimal-digit hexadecimal-digit
     escaped-character --> ``\U`` hexadecimal-digit hexadecimal-digit hexadecimal-digit hexadecimal-digit hexadecimal-digit hexadecimal-digit hexadecimal-digit hexadecimal-digit
 
-.. TR: Is the first definition of quoted-character strictly accurate?  For
+.. TODO: Choose one of the above definitions for "does not contain".
+
+.. TR: Is the definition of quoted-character strictly accurate?  For
    example, can I have a Unicode combining diacritic mark between single quotes
    and have it count as a character literal?  (Setting aside the fact that most
    text editors probably won't render that well.)
 
-.. Note: Using "character" as a synonym for "Unicode codepoint" throughout.
-   That might be worth writing down.
 
 String Literals
 ~~~~~~~~~~~~~~~
@@ -480,6 +482,12 @@ String Literals
     quoted-text-exceptions --> ``"`` | ``\`` | U+000A (New Line) | U+000D (Carriage Return)
 
     interpolated-expression --> Any text that matches both expression and quoted-text
+
+.. TODO: Choose one of the above definitions for "does not contain".
+
+.. Quoted text resolves to a sequence of escaped characters by way of
+   the quoted-texts rule which allows repetition; no need to allow
+   repetition in the quoted-text/escaped-character rule too.
 
 .. TR: Paren balancing is required by the grammar of *expression* already, so I
    omitted it in the rule above.
