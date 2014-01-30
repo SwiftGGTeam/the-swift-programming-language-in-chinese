@@ -624,7 +624,8 @@ declared in the function or method declaration,
 the expression's value is converted to the return type
 before it is returned to the calling function or method.
 
-.. TODO: TR: Converted how?
+.. TODO: Discuss how the conversion takes place and what is allowed to be converted
+    in the (yet to be written) chapter on subtyping and type conversions.
 
 .. langref-grammar
 
