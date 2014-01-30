@@ -158,8 +158,8 @@ Collection-Based For Statement
    container-based sequence-based and for-each.
 
 Collection-based for statements allow a block of code to be executed
-once for each item in a collection
-that conforms to the ``Stream`` protocol.
+once for each item in a collection (or any type)
+that conforms to the ``Sequence`` protocol.
 
 A collection-based for statement has the general form:
 
@@ -182,12 +182,10 @@ Otherwise, the program does not perform assignment or execute the code block,
 and it is finished executing the statement.
 
 
-.. TR: Are the above method calls correct?
-   I've determined this information be looking at the declarations in the REPL
-   so there may be aspects we don't want to document
-   or want to describe differently.
-   Used swift-1.12 from Jan 9, 2014.
-   (Jan 20 - doesn't match today's REPL anymore.)
+.. TODO: Doug's remarks from 1/29/14 meeting:
+    Consider calling this sequence-based-for-statement,
+    because a collection has some implication that the collection
+    could be iterated multiple times---it could be a random number generator.
 
 .. TODO: Move this info to the stdlib reference as appropriate.
 
