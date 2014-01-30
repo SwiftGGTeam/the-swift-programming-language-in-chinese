@@ -40,6 +40,8 @@ Whitespace and Comments
     whitespace --> U+000D (Carriage Return)
     whitespace --> U+0020 (Space)
 
+    whitespace --> U+0000 (Null Character) | U+0009 (Horizontal Tab) | U+000A (New Line) | U+000D (Carriage Return) | U+0020 (Space)
+
     comment --> single-line-comment | multiline-comment
 
     single-line-comment --> ``//`` comment-text line-end
@@ -101,11 +103,16 @@ Operator Identifiers
 
     Grammar of operators
 
-    operator --> operator-character operator-OPT
-    operator --> ``..``
+    operator --> left-bound-operator | right-bound-operator
+    left-bound-operator --> operator-characters left-binding-character
+    right-bound-operator --> right-binding-charactor operator-characters
 
-    operator-character --> One of the following characters:
-    ``@`` ``/`` ``=`` ``-`` ``+`` ``*`` ``%`` ``<`` ``>`` ``!`` ``&`` ``|`` ``^`` ``~``
+    left-binding-character --> U+0020 (Space) | U+000D (Carriage Return) | U+000A (New Line) | U+0009 (Horizontal Tab) | ``(`` | ``[`` | ``{`` | ``,`` | ``;`` | ``:``
+    right-binding-character --> U+0020 (Space) | U+000D (Carriage Return) | U+000A (New Line) | U+0009 (Horizontal Tab) | ``)`` | ``]`` | ``}`` | ``,`` | ``;`` | ``:``
+
+    operator-characters --> operator-character operator-characters-OPT
+    operator-characters --> ``..``
+    operator-character --> ``@`` | ``/`` | ``=`` | ``-`` | ``+`` | ``*`` | ``%`` | ``<`` | ``>`` | ``!`` | ``&`` | ``|`` | ``^`` | ``~``
 
     binary-operator --> operator
     prefix-operator --> operator
@@ -116,18 +123,7 @@ Operator Identifiers
 
 .. TODO: Move any-identifier.  It doesn't belong here -- it's not an operator.
 
-Operators that are followed by one of the following characters are *left bound*:
-
-    Space, Carriage Return, Line Feed, Horizontal Tab
-    ``(`` ``[`` ``{`` ``,`` ``;`` ``:``
-
-
-Operators that are preceded by one of the following characters are *right bound*:
-
-    Space, Carriage Return, Line Feed, Horizontal Tab
-    ``)`` ``]`` ``}`` ``,`` ``;`` ``:``
-
-Being right/left bound determines whether an operator is
+Left and/or right binding determines whether an operator is
 a prefix operator, a postfix operator, or a binary operator.
 Operators that are left bound and not right bound are postfix operators.
 Operators that are right bound and not left bound are prefix operators.
@@ -166,10 +162,13 @@ to use it in the ternary (``? :``) operator, it must not be left bound.
     punctuation ::= '...'
     punctuation ::= '&' // unary prefix operator
 
-The following character sequences are reserved punctuation and may not be used as operators:
+.. syntax-grammar::
 
-    ``=`` ``->`` ``//`` ``/*`` ``*/`` ``...`` ``{`` ``}`` ``(`` ``)`` ``[`` ``]`` ``.`` ``,`` ``;`` ``:``
+    Grammar of reserved punctuation
 
+    reserved-punctuation --> ``=`` | ``->`` | ``//`` | ``/*`` | ``*/`` | ``...`` | ``{`` | ``}`` | ``(`` | ``)`` | ``[`` | ``]`` | ``.`` | ``,`` | ``;`` | ``:``
+
+The character sequences in *reserved-punctuation* may not be used as operators.
 The unary prefix operator ``&`` is also reserved punctuation and may not be used as an operator.
 
 Operators with a leading ``<`` or ``>`` are split into two tokens:
