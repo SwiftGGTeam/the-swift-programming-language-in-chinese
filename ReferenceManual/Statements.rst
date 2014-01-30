@@ -414,13 +414,14 @@ the value of the control expression matches one of the patterns of the case and 
 For instance, a control expression matches the case in the example below
 only if it is a tuple that contains two elements of the same value, such as ``(1, 1)``. ::
 
-    case (var x, var y) where x == y:
+    case let (x, y) where x == y:
 
-As the above example shows, patterns in a case may also bind variables using the keyword ``var``.
-These variables can then be referenced in a corresponding guard expression
+As the above example shows, patterns in a case may also bind constants
+using the keyword ``let`` (they may also bind variables using the keyword ``var``).
+These constants (or variables) variables can then be referenced in a corresponding guard expression
 and throughout the rest of the code within the scope of the case.
 That said, if the case contains multiple patterns that match the control expression,
-none of those patterns may contain variable bindings.
+none of those patterns may contain constant or variable bindings.
 
 Switch statements may also include a default case, introduced by the keyword ``default``.
 The code within a default case is executed only if no other cases match the control expression.
@@ -581,7 +582,7 @@ A fallthrough statement can appear anywhere inside a switch statement,
 not just as the last statement of a case block,
 but it may not be used in the final case block.
 It also cannot transfer control into a case block
-whose pattern contains variable bindings.
+whose pattern contains constant or variable bindings.
 
 .. TODO: Need a decided-on name for "var" bindings.
 
