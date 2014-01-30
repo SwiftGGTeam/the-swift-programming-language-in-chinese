@@ -342,12 +342,10 @@ Implementation Identifier Token
 .. TODO: Translate dollar-identifier grammar after we've translated the identifier grammar.
 
 
-Constants
----------
+Literals
+--------
 
-.. LangRef calls these "literals".  What was our reason for deviating?
-
-.. Note: The grammar for literals is already in "Expressions".
+.. Note: The top-level grammar for literals is in "Expressions".
 
 Integer Literals
 ~~~~~~~~~~~~~~~~
@@ -378,7 +376,9 @@ Integer Literals
     binary-digit --> ``0`` | ``1``
     octal-digit --> ``0`` | ``1`` | ``2`` | ``3`` | ``4`` | ``5`` | ``6`` | ``7``
     decimal-digit --> ``0`` | ``1`` | ``2`` | ``3`` | ``4`` | ``5`` | ``6`` | ``7`` | ``8`` | ``9``
-    hexidecimal-digit --> decimal-digit | ``A`` | ``B`` | ``C`` | ``D`` | ``E`` | ``F`` | ``a`` | ``b`` | ``c`` | ``d`` | ``e`` | ``f``
+    hexidecimal-digit --> decimal-digit
+    hexidecimal-digit --> ``A`` | ``B`` | ``C`` | ``D`` | ``E`` | ``F``
+    hexidecimal-digit --> ``a`` | ``b`` | ``c`` | ``d`` | ``e`` | ``f``
 
     binary-digit-tail --> binary-digit binary-digit-tail-OPT | ``_`` binary-digit-tail-OPT
     octal-digit-tail --> octal-digit octal-digit-tail-OPT | ``_`` octal-digit-tail-OPT
