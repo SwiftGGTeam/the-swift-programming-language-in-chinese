@@ -435,11 +435,16 @@ Character Literals
     Grammar of character literals
 
     character-literal --> ``'`` quoted-character ``'``
-    quoted-character --> Any Unicode codepoint except: ``'`` ``\`` U+000A (New Line) U+000D (Carriage Return)
-    quoted-character --> ``\0`` | ``\\`` | ``\t`` | ``\n`` | ``\r`` | ``\"`` | ``\'``
-    quoted-character --> ``\x`` hexadecimal-digit hexadecimal-digit
-    quoted-character --> ``\u`` hexadecimal-digit hexadecimal-digit hexadecimal-digit hexadecimal-digit
-    quoted-character --> ``\U`` hexadecimal-digit hexadecimal-digit hexadecimal-digit hexadecimal-digit hexadecimal-digit hexadecimal-digit hexadecimal-digit hexadecimal-digit
+    quoted-character --> escaped-character
+    quoted-character --> Any character except ``'`` ``\`` U+000A (New Line) U+000D (Carriage Return)
+
+    quoted-character --> Any character that does not match quoted-character-exceptions
+    quoted-character-exceptions -- ``'`` | ``\`` | U+000A (New Line) | U+000D (Carriage Return)
+
+    escaped-character --> ``\0`` | ``\\`` | ``\t`` | ``\n`` | ``\r`` | ``\"`` | ``\'``
+    escaped-character --> ``\x`` hexadecimal-digit hexadecimal-digit
+    escaped-character --> ``\u`` hexadecimal-digit hexadecimal-digit hexadecimal-digit hexadecimal-digit
+    escaped-character --> ``\U`` hexadecimal-digit hexadecimal-digit hexadecimal-digit hexadecimal-digit hexadecimal-digit hexadecimal-digit hexadecimal-digit hexadecimal-digit
 
 .. TR: Is the first definition of quoted-character strictly accurate?  For
    example, can I have a Unicode combining diacritic mark between single quotes
@@ -463,9 +468,17 @@ String Literals
 
     Grammar of string literals
 
-    string-literal --> ``"`` quoted-texts ``"``
-    quoted-texts --> quoted-text quoted-texts-OPT | ``\(`` interpolated-expression ``)`` quoted-texts-OPT
-    quoted-text --> Any text that does not contain ``"`` ``\`` U+000A (New Line) U+000D (Carriage Return)
+    string-literal --> ``"`` quoted-text ``"``
+
+    quoted-texts --> quoted-text-item quoted-text-OPT
+    quoted-text-item --> escaped-character
+    quoted-text-item --> ``\(`` interpolated-expression ``)``
+
+    quoted-text-item --> Any text that does not contain ``"`` ``\`` U+000A (New Line) U+000D (Carriage Return)
+
+    quoted-text-item --> Any text that does not contain a character from quoted-text-exceptions
+    quoted-text-exceptions --> ``"`` | ``\`` | U+000A (New Line) | U+000D (Carriage Return)
+
     interpolated-expression --> Any text that matches both expression and quoted-text
 
 .. TR: Paren balancing is required by the grammar of *expression* already, so I
