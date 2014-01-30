@@ -36,7 +36,7 @@ Whitespace and Comments
 
     whitespace --> U+0000 (Null Character)
     whitespace --> U+0009 (Horizontal Tab)
-    whitespace --> U+000A (New Line)
+    whitespace --> U+000A (Line Feed)
     whitespace --> U+000D (Carriage Return)
     whitespace --> U+0020 (Space)
 
@@ -44,7 +44,7 @@ Whitespace and Comments
 
     single-line-comment --> ``//`` comment-text line-end
     comment-text --> Any text except for line-end
-    line-end --> U+000A (New Line) | U+000D (Carriage Return)
+    line-end --> U+000A (Line Feed) | U+000D (Carriage Return)
 
     multiline-comment --> ``/*`` multiline-comment-text ``*/``
     multiline-comment-text --> Any text
@@ -118,13 +118,13 @@ Operator Identifiers
 
 Operators that are followed by one of the following characters are *left bound*:
 
-    Space, Carriage Return, New Line, Horizontal Tab
+    Space, Carriage Return, Line Feed, Horizontal Tab
     ``(`` ``[`` ``{`` ``,`` ``;`` ``:``
 
 
 Operators that are preceded by one of the following characters are *right bound*:
 
-    Space, Carriage Return, New Line, Horizontal Tab
+    Space, Carriage Return, Line Feed, Horizontal Tab
     ``)`` ``]`` ``}`` ``,`` ``;`` ``:``
 
 Being right/left bound determines whether an operator is
@@ -452,7 +452,7 @@ The following escape sequences are supported:
     * Carriage Return (``\r``)
     * Double Quote (``\"``)
     * Single Quote (``\'``)
- 
+
  Characters can also be escaped by ``\x`` followed by two hexadecimal digits,
  ``\u`` followed by four hexadecimal digits,
  or ``\U`` followed by eight hexadecimal digits.
@@ -472,10 +472,10 @@ The following escape sequences are supported:
 
     character-literal --> ``'`` quoted-character ``'``
     quoted-character --> escaped-character
-    quoted-character --> Any character except ``'`` ``\`` U+000A (New Line) U+000D (Carriage Return)
+    quoted-character --> Any character except ``'`` ``\`` U+000A (Line Feed) U+000D (Carriage Return)
 
     quoted-character --> Any character that does not match quoted-character-exceptions
-    quoted-character-exceptions -- ``'`` | ``\`` | U+000A (New Line) | U+000D (Carriage Return)
+    quoted-character-exceptions -- ``'`` | ``\`` | U+000A (Line Feed) | U+000D (Carriage Return)
 
     escaped-character --> ``\0`` | ``\\`` | ``\t`` | ``\n`` | ``\r`` | ``\"`` | ``\'``
     escaped-character --> ``\x`` hexadecimal-digit hexadecimal-digit
@@ -542,10 +542,10 @@ a carriage return, or a line feed.
     quoted-text-item --> escaped-character
     quoted-text-item --> ``\(`` interpolated-expression ``)``
 
-    quoted-text-item --> Any text that does not contain ``"`` ``\`` U+000A (New Line) U+000D (Carriage Return)
+    quoted-text-item --> Any text that does not contain ``"`` ``\`` U+000A (Line Feed) U+000D (Carriage Return)
 
     quoted-text-item --> Any text that does not contain a character from quoted-text-exceptions
-    quoted-text-exceptions --> ``"`` | ``\`` | U+000A (New Line) | U+000D (Carriage Return)
+    quoted-text-exceptions --> ``"`` | ``\`` | U+000A (Line Feed) | U+000D (Carriage Return)
 
     interpolated-expression --> Any text that matches both expression and quoted-text
 
