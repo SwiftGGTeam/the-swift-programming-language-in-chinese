@@ -453,6 +453,12 @@ The following escape sequences are supported:
     * Double Quote (``\"``)
     * Single Quote (``\'``)
 
+.. The behavior of \n and \r is not the same as C.
+   We specify exactly what those escapes mean.
+   The behavior on C is platform dependent --
+   in text mode, \n maps to the platform's line separator
+   which could be CR or LF or CRLF.
+
  Characters can also be escaped by ``\x`` followed by two hexadecimal digits,
  ``\u`` followed by four hexadecimal digits,
  or ``\U`` followed by eight hexadecimal digits.
