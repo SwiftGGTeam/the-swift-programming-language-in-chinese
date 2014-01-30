@@ -106,19 +106,19 @@ A for statement has the following general form:
         <#statements#>
     }
 
-The parentheses around the initiazilation, condition, and increment are optional,
-but the semicolon between them is required.
-The braces around the body of the loop are also required.
+The parentheses around the *initialization*, *condition*,
+and *increment* are optional, but the semicolon between them is required.
+The braces around the *statements* in the body of the loop are also required.
 
 A for statement is executed as follows:
 
-1. The *initialization* expression is evaluated once only
+1. The *initialization* is evaluated once only
    and is usually used to declare and initialize any variables
    that are needed for the remainder of the loop.
 
 2. The *condition* expression is evaluated.
    If it evaluates to ``true``,
-   the program executes the code inside the braces of the for statement,
+   the program executes the *statements* the braces of the for statement,
    and execution continues to step 3.
    If it evaluates to ``false``,
    the program does not execute the code block or the *increment* expression,
@@ -128,7 +128,7 @@ A for statement is executed as follows:
    After it has been evaluated,
    execution returns to step 2.
 
-Variables defined within the *initialization* expression
+Variables defined within the *initialization*
 are valid only within the scope of the for statement itself.
 
 The value of the *condition* expression must be of type ``Bool``,
@@ -179,9 +179,9 @@ The program begins executing a loop
 by calling the ``next`` method on the stream.
 If the value returned is not ``None``,
 it is assigned to the *item* pattern,
-the program executes the code block,
+the program executes the *statements*,
 and then continues execution at the beginning of the loop.
-Otherwise, the program does not perform assignment or execute the code block,
+Otherwise, the program does not perform assignment or execute the *statements*,
 and it is finished executing the statement.
 
 
@@ -207,7 +207,7 @@ and it is finished executing the statement.
 While Statement
 ~~~~~~~~~~~~~~~
 
-While statements allow a block of code to be executed repeatedly,
+A while statement allows a block of code to be executed repeatedly,
 as long as a condition remains true.
 
 A while statement has the following general form:
@@ -224,11 +224,11 @@ A while statement is executed as follows:
    If it evaluates to ``true``, execution continues to step 2.
    If it evaluates to ``false``, the program is finished executing the while statement.
 
-2. The program executes the code inside the braces of the while statement,
+2. The program executes the *statements* inside the braces of the while statement,
    and execution returns to step 1.
 
-Because the value of the *condition* expression is evaluated before the code block is executed,
-the code block in a while statement may be executed zero or more times.
+Because the value of the *condition* expression is evaluated before the *statements* are executed,
+the *statements* in a while statement may be executed zero or more times.
 
 The value of the *condition* expression must be of type ``Bool``,
 and therefore must evaluate to either ``true`` or ``false``.
@@ -247,7 +247,7 @@ and therefore must evaluate to either ``true`` or ``false``.
 Do-While Statement
 ~~~~~~~~~~~~~~~~~~
 
-Do-while statements allow a block of code to be executed one or more times,
+A do-while statement allows a block of code to be executed one or more times,
 as long as a condition remains true.
 
 A do-while statement has the following general form:
@@ -260,15 +260,15 @@ A do-while statement has the following general form:
 
 A do-while statement is executed as follows:
 
-1. The program executes the code inside the braces of the do-while statement,
+1. The program executes the *statements* inside the braces of the do-while statement,
    and execution continues to step 2.
 
 2. The *condition* expression is evaluated.
    If it evaluates to ``true``, execution returns to step 1.
    If it evaluates to ``false``, the program is finished executing the do-while statement.
 
-Because the value of the *condition* expression is evaluated after the code block is executed,
-the code block in a do-while statement is executed at least once.
+Because the value of the *condition* expression is evaluated after the *statements* are executed,
+the *statements* in a do-while statement are executed at least once.
 
 The value of the *condition* expression must be of type ``Bool``,
 and therefore must evaluate to either ``true`` or ``false``.
@@ -319,11 +319,6 @@ and has the following general form:
         <#statements#>
     }
 
-.. NOTE: Original prose: When an if statement has the first form,
-    the *condition* expression is evaluated and, if it evaluates to ``true``,
-    the code inside the opening and closing braces of the if statement is executed.
-    If it evaluates to ``false``, the program is finished executing the if statement.
-
 The second form of the if statement provides an additional *else clause* (introduced by the ``else`` keyword)
 and is used for executing one part of code when the condition is true
 and another part code when the same condition is false.
@@ -336,12 +331,6 @@ When a single else clause is present, an if statement has the following form:
     } else {
         <#statements to execute if condition is false#>
     }
-
-.. NOTE: Original prose: When the optional else clause is present in an if statement,
-    the *condition* expression is evaluated and, if it evaluates to ``true``,
-    the code inside the opening and closing braces of the if statement is executed.
-    If it evaluates to ``false``,
-    the code inside the opening and closing braces of the else clause is executed instead.
 
 The else clause of an if statement can contain another if statement
 when the program needs to execute code based on the result of testing more than one condition.
@@ -383,10 +372,11 @@ Switch Statements
    We need to settle on a convention for starting each section.
 
 You can use a switch statement to execute certain blocks of code depending on the value of a
-**control expression**---the expression following the keyword ``switch``.
-The control expression of the switch statement is evaluated and then compared with the patterns specified in each case.
-If a match is found, the program executes the code listed within the scope of that case,
-which may include declarations, expressions, and other statements.
+*control expression*---the expression following the keyword ``switch``.
+The control expression of the switch statement is evaluated
+and then compared with the patterns specified in each case.
+If a match is found,
+the program executes the statements listed within the scope of that case.
 
 A switch statement has the following general form:
 
@@ -402,18 +392,18 @@ A switch statement has the following general form:
     }
 
 The values of expressions your code can branch on is very flexible. For instance,
-in addition to the values of scalar types, such as ``Int`` and ``Char``,
+in addition to the values of scalar types, such as integers and characters,
 your code can branch on the values of any type, including floating point numbers, strings,
 tuples, instances of custom classes, and optionals.
-The value of a control expression can even be pattern-matched to the value of a case in an enumeration
+The value of the *control expression* can even be pattern-matched to the value of a case in an enumeration
 and checked for inclusion in a specified range of values.
 For examples of how to use these various types of values in switch statements,
 see “Switch” in the :doc:`../LanguageGuide/ControlFlow` chapter of the :doc:`../LanguageGuide/index`.
 
-A switch case may optionally contain a **guard expression**, which is introduced by the keyword ``where`` followed by an expression.
+A switch case may optionally contain a *guard expression*, which is introduced by the keyword ``where`` followed by an expression.
 Guard expressions are used to provide an additional condition before a case is considered matched to the control expression.
-If a guard expression is present, the block of code within the relevant case is executed only if
-the value of the control expression matches one of the patterns of the case and the guard expression evaluates to ``true``.
+If a guard expression is present, the statements within the relevant case are executed only if
+the value of the *control expression* matches one of the patterns of the case and the guard expression evaluates to ``true``.
 For instance, a control expression matches the case in the example below
 only if it is a tuple that contains two elements of the same value, such as ``(1, 1)``. ::
 
@@ -442,7 +432,7 @@ the program executes only the code within the first matching case in source orde
 Switch Statements Must Be Exhaustive
 ++++++++++++++++++++++++++++++++++++
 
-In Swift, switch statements must be **exhaustive**---that is,
+In Swift, switch statements must be *exhaustive*---that is,
 every possible value of the control expression’s type must match the value of at least one pattern of a case.
 When this simply isn’t feasible (for instance, when the control expression’s type is ``Int``),
 you can include a default case to satisfy the requirement.
@@ -578,8 +568,6 @@ A fallthrough statement causes program execution to continue
 from one case in a switch statement to the next case.
 Program execution continues to the next case
 even if the patterns of the case label do not match the value of the switch statement's control expression.
-
-
 
 A fallthrough statement can appear anywhere inside a switch statement,
 not just as the last statement of a case block,
