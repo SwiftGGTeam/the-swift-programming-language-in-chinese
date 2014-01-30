@@ -86,9 +86,9 @@ Variable Declarations
 
     var <#variable name#> : <#type#> {
     get:
-        <#code to execute#>
+        <#statements#>
     set(<#setter name#>):
-        <#code to execute#>
+        <#statements#>
     }
 
 .. TODO: In prose: discuss that 'name' can also be a pattern in the first syntax-outline.
@@ -121,8 +121,8 @@ Variable Declarations
     initializer --> ``=`` expression
 
     getter-setter-block --> ``{`` getter setter-OPT ``}`` | ``{`` setter getter ``}``
-    getter --> ``get`` ``:`` code-block-items-OPT
-    setter --> ``set`` setter-name-OPT ``:`` code-block-items-OPT
+    getter --> ``get`` ``:`` statements-OPT
+    setter --> ``set`` setter-name-OPT ``:`` statements-OPT
     setter-name --> ``(`` identifier ``)``
 
 .. NOTE: Type annotations are required for computed properties -- the
@@ -203,7 +203,7 @@ regular functions and selector-style methods.]**
 .. syntax-outline::
 
     func <#function name#>(<#function parameters#>) -> <#return type#> {
-        <#code to execute#>
+        <#statements#>
     }
 
 **[Regular function, alternative 2:
@@ -221,7 +221,7 @@ because it's inconsistent with the rest of the document (and with existing Xcode
          <#parameter name 2#>: <#parameter type 2#>)
          -> <#return type#>
     {
-        <#code to execute#>
+        <#statements#>
     }
 
 Swift also provides syntax for declaring and defining selector-style methods,
@@ -241,7 +241,7 @@ This alternative is descriptively pretty accurate but may also be a bit awkward.
          <#selector name part 2#>(<#parameter name 2#>: <#parameter type 2#>)
          -> <#return type#>
     {
-        <#code to execute#>
+        <#statements#>
     }
 
 **[Selector-style, alternative 2:
@@ -256,7 +256,7 @@ The parts of the name of a method aren't keywords in the language (at least in t
          <#selector keyword 2#>(<#parameter name 2#>: <#parameter type 2#>)
          -> <#return type#>
     {
-        <#code to execute#>
+        <#statements#>
     }
 
 **[Selector-style, alternative 3:
@@ -269,7 +269,7 @@ This alternative uses "method" instead of "selector", but still uses "keyword".]
          <#method keyword 2#>(<#parameter name 2#>: <#parameter type 2#>)
          -> <#return type#>
     {
-        <#code to execute#>
+        <#statements#>
     }
 
 **[Selector-style, alternative 4:
@@ -282,7 +282,7 @@ This alternative uses "signature" instead of "method" or "selector", but still u
          <#signature keyword 2#>(<#parameter name 2#>: <#parameter type 2#>)
          -> <#return type#>
     {
-        <#code to execute#>
+        <#statements#>
     }
 
 .. TODO: Discuss in prose: Variadic functions and the other permutations of function declarations.
@@ -490,7 +490,7 @@ Constructor Declarations
 .. syntax-outline::
 
     init(<#parameter name#>: <#parameter type#>) {
-        <#code to execute#>
+        <#statements#>
     }
 
 .. syntax-outline::
@@ -498,7 +498,7 @@ Constructor Declarations
     init <#selector keyword 1#>(<#parameter name 1#>: <#parameter type 1#>)
          <#selector keyword 2#>(<#parameter name 2#>: <#parameter type 2#>)
     }
-        <#code to execute#>
+        <#statements#>
     }
 
 .. TODO: Revisit the selector-style constructor syntax-outline
@@ -524,7 +524,7 @@ Destructor Declarations
 .. syntax-outline::
 
     destructor() {
-        <#code to execute#>
+        <#statements#>
     }
 
 .. langref-grammar
@@ -576,9 +576,9 @@ Subscript Declarations
 
     subscript (<#arguments#>) -> <#return type#> {
     get:
-        <#code to execute#>
+        <#statements#>
     set(<#setter name#>):
-        <#code to execute#>
+        <#statements#>
     }
 
 .. langref-grammar
