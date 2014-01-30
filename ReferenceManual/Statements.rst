@@ -1,19 +1,21 @@
 Statements
 ==========
 
-Swift provides several statements that are used to control the flow of execution in a program.
+In Swift, there are two kinds of statements: simple statements and control flow statements.
+Simple statement are the most common and consist of either an expression or a declaration.
+Control flow statements are used to control the flow of execution in a program.
 There are three types of control flow statements in Swift:
 loop statements, branch statements, and control transfer statements.
-Each type of statement can be used in function bodies and in top-level code.
 
 Loop statements allow a block of code to be executed repeatedly,
 while branch statements allow a certain block of code to be executed
 only when certain conditions are met.
 Control transfer statements provide a way to alter the order in which code is executed.
-Each type of statement is described in detail below.
+Each type of control flow statement is described in detail below.
 
-.. TODO: Write the rest of this introduction
-    after we're settled on exactly what is considered a statement in Swift.
+Each type of statement can be used in function bodies and in top-level code.
+A semicolon (``;``) may optionally appear after any statement
+and is used as a statement terminator when multiple statements appear on the same line.
 
 .. TODO: Update this chapter to note that Optionals are allowed in boolean contexts
     (e.g., in the conditional expression of a control flow statement).
@@ -50,20 +52,20 @@ Each type of statement is described in detail below.
 
     Grammar of a statement
 
-    statement --> loop-statement
-    statement --> branch-statement
-    statement --> control-transfer-statement
-    statement --> semicolon-statement
+    statement --> expression ;-OPT
+    statement --> declaration ;-OPT
+    statement --> loop-statement ;-OPT
+    statement --> branch-statement ;-OPT
+    statement --> control-transfer-statement ;-OPT
 
-.. TR: Are these the only things considered statements in Swift?
-    What about certain expressions and declarations?
-    In other languages,
-    the most common type of statements are expression statements---
-    that is, an expression followed by a semicolon.
-    These are usually function calls, assignments,
-    or a variable followed by the increment or decrement operator.
-    Similarly, in C++, for instance, there is the concept of a declaration statement.
-    Do we have analogs to these?
+.. NOTE: Removed semicolon-statement as syntactic category,
+    because, according to Doug, they're not really statements.
+    For example, you can't have
+        if foo { ; }
+    but you should be able to if it truly considered a statement.
+    The semicolon isn't even required for the compiler; we just added
+    rules that require them in some places to enforce a certain amount
+    of readability.
 
 
 Loop Statements
@@ -639,21 +641,3 @@ before it is returned to the calling function or method.
     Grammar of a return statement
 
     return-statement --> ``return`` | ``return`` expression
-
-
-Semicolon Statement
--------------------
-
-A semicolon statement consists simply of the semicolon (``;``)
-and may be used to separate consecutive statements that appear on the same line.
-In Swift, statements are not required to end with a semicolon.
-
-.. langref-grammar
-
-    stmt-semicolon ::= ';'
-
-.. syntax-grammar::
-
-    Grammar of a semicolon statement
-
-    semicolon-statement --> ``;``
