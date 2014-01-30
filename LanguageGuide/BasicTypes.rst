@@ -528,12 +528,14 @@ Tuples
 ------
 
 Tuples are a way to group together multiple values of various types.
+They provide a simple way to pass around multiple values as a single entity.
+
 Here's an example of a tuple:
 
 .. testcode:: tuples
 
-    (swift) let http404Error = (404, "Not Found")
-    // http404Error : (Int, String) = (404, "Not Found")
+    (swift) let statusCode = (404, "Not Found")
+    // statusCode : (Int, String) = (404, "Not Found")
 
 ``(404, "Not Found")`` is a tuple that describes an *HTTP status code*.
 An HTTP status code is a special value returned by a web server whenever you request a web page.
@@ -554,91 +556,27 @@ You can access the individual element values in a tuple using index numbers star
 
 .. testcode:: tuples
 
-    (swift) http404Error.0
+    (swift) statusCode.0
     // r0 : Int = 404
-    (swift) http404Error.1
+    (swift) statusCode.1
     // r1 : String = "Not Found"
 
 Tuples are particularly useful as the return values of functions.
-A function that tries to retrieve a web page might return this ``http404Error`` tuple
-if it is unable to find the requested page.
+A function that tries to retrieve a web page might return this ``(Int, String)`` tuple type
+to describe the success or failure of the page retrieval.
 By returning a tuple with two distinct values,
 each of a different type,
 the function is able to provide more useful information about its outcome
 than if it could only return a single value of a single type.
+Functions are described in detail in :doc:`FunctionsAndClosures`.
 
-Type Aliases
-~~~~~~~~~~~~
-
-If you find yourself using a particular type of tuple several times,
-you can define a *type alias* as shorthand for that tuple type.
-Here's how to define a generic tuple type alias to describe any HTTP status code:
-
-.. testcode:: tuples
-
-    (swift) typealias HTTPStatus = (Int, String)
-
-This can be read as:
-
-“Define a ``typealias`` called ``HTTPStatus``,
-and set it to the tuple type (``Int``, ``String``).”
-
-``HTTPStatus`` has a capitalized name
-because it is a new *type* of tuple,
-rather than an instance of a particular tuple type.
-This is different from the name ``http404Error``,
-which starts with a lowercase letter,
-and capitalizes sub-words within the name.
-Type names should always be in ``UpperCamelCase``,
-and constant and variable names should always be in ``lowerCamelCase``,
-for consistency and readability.
-
-This new type alias doesn't set a value for the status code or description.
-It's not actually creating a tuple for a specific status code –
-rather, it's defining what *all* HTTP status codes look like.
-Because it is a fully-fledged type,
-``HTTPStatus`` can be used to declare new named values of that type:
-
-.. testcode:: tuples
-
-    (swift) let http500Error: HTTPStatus = (500, "Internal Server Error")
-    // http500Error : HTTPStatus = (500, "Internal Server Error")
-
-This can be read as:
-
-“Declare a constant called ``http500Error`` that is an ``HTTPStatus``.
-Initialize it with
-(a first element value that is ``500``,
-and a second element value that is ``"Internal Server Error"``).”
-
-This fits the signature of an ``HTTPStatus``
-(first element ``Int``, second element ``String``),
-and so this initialization is allowed by the Swift type-checker.
-
-Initializer Syntax
-~~~~~~~~~~~~~~~~~~
-
-Because ``HTTPStatus`` is now a type,
-you can create new ``HTTPStatus`` tuples using *initializer syntax*:
-
-.. testcode:: tuples
-
-    (swift) let http301Status = HTTPStatus(301, "Moved Permanently")
-    // http301Status : (Int, String) = (301, "Moved Permanently")
-
-This can be read as:
-
-“Declare a constant called ``http301Status``,
-and set it to a new ``HTTPStatus`` initialized with
-(a first value that is ``301``,
-and a second value that is ``"Moved Permanently"``).”
-
-Initializer syntax is also used when creating struct and object instances,
-and is described in more detail in :doc:`ClassesAndStructures`.
-
-.. QUESTION: Which is the preferred initialization syntax?
-   Should we even give people the option?
-.. QUESTION: Is this too early to introduce the concept of the default initializer?
+Tuples are useful for temporary groups of related values.
+They are not suited to the creation of complex data structures.
+If your data structure would benefit from named member values,
+or is likely to persist beyond a temporary scope,
+it should be modeled as a *class* or *structure*,
+rather than as a tuple.
+Classes and structures are described in detail in :doc:`ClassesAndStructures`.
 
 Optionals
 ---------

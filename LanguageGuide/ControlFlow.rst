@@ -731,7 +731,7 @@ Where
 _____
 
 Case statements can check for additional conditions using the ``where`` clause.
-The example below takes an (x, y) point,
+The example below takes an (x, y) point expressed as a tuple of type ``(Int, Int)``,
 and categorizes it on the following graph:
 
 .. image:: ../images/coordinateGraphComplex.png
@@ -758,11 +758,11 @@ it calculates the point's distance from the origin using
             println("(\(point.0), 0) is on the x-axis")
         case (0, _):
             println("(0, \(point.1)) is on the y-axis")
-        case (let x, let y) where x == y:
+        case let (x, y) where x == y:
             println("(\(x), \(y)) is on the line x == y")
-        case (let x, let y) where x == -y:
+        case let (x, y) where x == -y:
             println("(\(x), \(y)) is on the line x == -y")
-        case (let x, let y):
+        case let (x, y):
             var distanceFromOrigin = sqrt(Double(x * x + y * y))
             println("(\(x), \(y)) is \(distanceFromOrigin) units from the origin")
     }
@@ -792,8 +792,8 @@ because they did not have the temporary constants to hand.)
 
 Note that this switch statement does not have a default block.
 The final case block,
-``case (let x, let y)``,
-declares two placeholder constants,
+``case let (x, y)``,
+declares a tuple of two placeholder constants,
 but does *not* provide a ``where`` clause to filter them.
 As a result, it matches all possible remaining values,
 and a default block is not needed to make the switch statement exhaustive.
