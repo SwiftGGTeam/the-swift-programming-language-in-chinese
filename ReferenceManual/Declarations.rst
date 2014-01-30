@@ -564,6 +564,9 @@ Extension Declarations
     even in other source files and modules. There are different semantic rules for each type that is extended.
     enum, struct, and class declaration extensions. FIXME: Write this section."
     What is the relevant, missing information?
+    What are the semantic rules associated with extending different types?
+
+    TODO: Email Doug et al. in a week or two (from 1/29/14) to get the rules.
 
 
 Subscript Declarations
