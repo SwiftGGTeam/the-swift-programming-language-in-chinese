@@ -26,7 +26,7 @@ Patterns
     pattern-list --> pattern | pattern ``,`` pattern-list
 
 .. TODO: In prose, discuss the meaning of the explicit type.
-    The optional type specifier contrains a pattern to
+    The optional type annotation contrains a pattern to
     match only values of the specified type.
 
 .. NOTE: Patterns don't "have" a type in the same way that values have types.

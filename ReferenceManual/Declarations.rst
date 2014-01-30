@@ -125,7 +125,7 @@ Variable Declarations
     setter --> ``set`` setter-name-OPT ``:`` code-block-items-OPT
     setter-name --> ``(`` identifier ``)``
 
-.. NOTE: Type specifiers are required for computed properties -- the
+.. NOTE: Type annotations are required for computed properties -- the
    types of those properties are not computed/inferred.
 
 .. NOTE: 'type' is currently restricted to variables
