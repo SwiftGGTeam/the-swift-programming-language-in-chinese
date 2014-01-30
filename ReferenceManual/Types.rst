@@ -132,16 +132,16 @@ that is, when each component is either a fully-typed expression or a fully-typed
     Instead, we can simply replace it by its definition ("attribute-sequence-OPT type").
 
 
-Type Specifier
---------------
+Type Annotation
+---------------
 
 .. syntax-grammar::
 
-    Grammar of a type specifier
+    Grammar of a type annotation
 
-    type-specifier --> ``:`` attribute-sequence-OPT type
+    type-annotation --> ``:`` attribute-sequence-OPT type
 
-.. TODO: Consider renaming this back to type-annotation,
+.. NOTE: Renamed this back to type-annotation (from type-specifier),
     because "type annotation" is the standard way of talking about
     decorating a value/expression (term) with type information.
 
@@ -262,7 +262,7 @@ Tuple Types
     tuple-type --> ``(`` tuple-type-body-OPT ``)``
     tuple-type-body --> tuple-type-element-list ``...``-OPT
     tuple-type-element-list --> tuple-type-element | tuple-type-element ``,`` tuple-type-element-list
-    tuple-type-element --> attribute-sequence-OPT type | element-name type-specifier
+    tuple-type-element --> attribute-sequence-OPT type | element-name type-annotation
     element-name --> identifier
 
 .. NOTE: Info from Doug about the relationship between tuple types and tuple patterns:
