@@ -2,15 +2,15 @@ Statements
 ==========
 
 In Swift, there are two kinds of statements: simple statements and control flow statements.
-Simple statement are the most common and consist of either an expression or a declaration.
+Simple statements are the most common and consist of either an expression or a declaration.
 Control flow statements are used to control the flow of execution in a program.
 There are three types of control flow statements in Swift:
 loop statements, branch statements, and control transfer statements.
 
 Loop statements allow a block of code to be executed repeatedly,
-while branch statements allow a certain block of code to be executed
-only when certain conditions are met.
-Control transfer statements provide a way to alter the order in which code is executed.
+branch statements allow a certain block of code to be executed
+only when certain conditions are met,
+and control transfer statements provide a way to alter the order in which code is executed.
 Each type of control flow statement is described in detail below.
 
 Each type of statement can be used in function bodies and in top-level code.
@@ -75,7 +75,8 @@ Loop Statements
 Loop statements allow a block of code to be executed repeatedly,
 depending on the conditions specified in the loop.
 Swift has four loop statements:
-the for statement, the collection-based for statement, the while statement, and the do-while statement.
+the for statement, the collection-based for statement, the while statement,
+and the do-while statement.
 Each loop statement is discussed in detail below.
 
 Control flow in a loop statement can be changed by a break statement and a continue statement
@@ -131,7 +132,7 @@ A for statement is executed as follows:
 Variables defined within the *initialization*
 are valid only within the scope of the for statement itself.
 
-The value of the *condition* expression must be of type ``Bool``,
+The value of the *condition* expression must be of type ``Bool``
 and therefore must evaluate to either ``true`` or ``false``.
 
 .. TODO: Document the scope of loop variables.
@@ -230,7 +231,7 @@ A while statement is executed as follows:
 Because the value of the *condition* expression is evaluated before the *statements* are executed,
 the *statements* in a while statement may be executed zero or more times.
 
-The value of the *condition* expression must be of type ``Bool``,
+The value of the *condition* expression must be of type ``Bool``
 and therefore must evaluate to either ``true`` or ``false``.
 
 .. langref-grammar
@@ -270,7 +271,7 @@ A do-while statement is executed as follows:
 Because the value of the *condition* expression is evaluated after the *statements* are executed,
 the *statements* in a do-while statement are executed at least once.
 
-The value of the *condition* expression must be of type ``Bool``,
+The value of the *condition* expression must be of type ``Bool``
 and therefore must evaluate to either ``true`` or ``false``.
 
 .. langref-grammar
@@ -346,7 +347,7 @@ An if statement that is chained together in this way has the following form:
         <#statements to execute if both conditions are false#>
     }
 
-The value of any conditional expression in an if statement must be of type ``Bool``,
+The value of any conditional expression in an if statement must be of type ``Bool``
 and therefore must evaluate to either ``true`` or ``false``.
 
 .. TODO: Should we promote this last sentence (here and elsewhere) higher up in the chapter?
@@ -441,14 +442,14 @@ you can include a default case to satisfy the requirement.
 Execution Does Not Fall Through Cases Implicitly
 ++++++++++++++++++++++++++++++++++++++++++++++++
 
-After the code within a matched case is finished executing, the program exits out of the switch statement.
+After the code within a matched case has finished executing, the program exits from the switch statement.
 Program execution does not continue or "fall through" to the next case or default case.
 That said, if you want execution to continue from one case to the next,
 explicitly include a fallthrough statement, which simply consists of the keyword ``fallthrough``,
 in the case from which you want execution to continue.
 For more information about the fallthrough statement, see "Fallthrough" below.
 
-Because execution does automatically continue from one case to the next,
+Because execution does not automatically continue from one case to the next,
 a break statement is not used to transfer control out of a switch statement after
 a matching case is executed.
 In fact, break and continue statements used in the context of a switch statement
@@ -598,16 +599,12 @@ A return statement may occur only in the body of a function or method definition
 and causes program execution to return to the calling function or method.
 Program execution continues at the point immediately following the function or method call.
 
-A return statement may consist only of the keyword ``return``,
+A return statement may consist of only the keyword ``return``,
 or it may consist of the keyword ``return`` followed by an expression, as shown below.
 
 .. syntax-outline::
 
     return <#expression#>
-
-A return statement that is not followed by an expression
-can be used only to return from a function or method that does not return a value
-(that is, when the return type of the function or method is ``Void`` or ``()``).
 
 When a return statement is followed by an expression,
 the value of the expression is returned to the calling function or method.
@@ -618,6 +615,10 @@ before it is returned to the calling function or method.
 
 .. TODO: Discuss how the conversion takes place and what is allowed to be converted
     in the (yet to be written) chapter on subtyping and type conversions.
+
+When a return statement is not followed by an expression,
+it can be used only to return from a function or method that does not return a value
+(that is, when the return type of the function or method is ``Void`` or ``()``).
 
 .. langref-grammar
 
