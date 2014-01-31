@@ -739,5 +739,5 @@ hello
 
 A :query:`How do we fix this?` query.
 
-A :new-term:`new term` defines something that's new.
+A :newterm:`new term` defines something that's new.
 
