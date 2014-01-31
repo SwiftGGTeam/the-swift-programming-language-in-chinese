@@ -430,7 +430,7 @@ Floating-Point Literals
 Character Literals
 ~~~~~~~~~~~~~~~~~~
 
-A character literal is a single character surrounded by single quotes,
+A character literal is a Unicode grapheme cluster surrounded by single quotes,
 with the following general form:
 
 .. syntax-outline::
