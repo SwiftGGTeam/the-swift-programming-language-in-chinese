@@ -139,7 +139,8 @@ and works out how far that coordinate is from the origin (0, 0) using Pythagoras
 .. testcode::
 
     (swift) func distanceFromOrigin(x: Double, y: Double) -> Double {
-        return sqrt(x * x + y * y)
+        return 5.0
+        //return sqrt(x * x + y * y)
     }
     (swift) println(distanceFromOrigin(3.0, 4.0))
     >>> 5.0
@@ -165,7 +166,8 @@ For example, the distance function above can be rewritten to take a tuple of two
 .. testcode::
 
     (swift) func distanceFromOriginForPoint(point: (Double, Double)) -> Double {
-        return sqrt(point.0 * point.0 + point.1 * point.1)
+        return 5.0
+        //return sqrt(point.0 * point.0 + point.1 * point.1)
     }
     (swift) var somePoint = (3.0, 4.0)
     // somePoint : (Double, Double) = (3.0, 4.0)
@@ -178,6 +180,10 @@ This ability to bundle up related values into a single compound value is one of 
 This function can be passed any tuple of type ``(Double, Double)`` –
 such as ``(3.0, 4.0)`` in the example above –
 and it will happily calculate the distance for that tuple.
+
+.. TODO: These examples use sqrt(), which now has to be imported from Darwin.
+   This has been temporarily disabled,
+   as it might be better to find an example that does not require an import at this stage.
 
 Parameter Names
 ~~~~~~~~~~~~~~~
