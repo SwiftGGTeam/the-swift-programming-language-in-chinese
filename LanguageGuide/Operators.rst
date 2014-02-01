@@ -396,13 +396,9 @@ and 20 pixels taller if it doesn't:
     (swift) let hasHeader = true
     // hasHeader : Bool = true
     (swift) let rowHeight = contentHeight + (hasHeader ? 50 : 20)
-    // rowHeight : Int64 = 90
+    // rowHeight : Int = 90
     (swift) println("The row height is \(rowHeight) pixels.")
     >>> The row height is 90 pixels.
-
-.. TODO: the return type of rowHeight should be an Int,
-   but it is an Int64 due to rdar://15238852.
-   This example should be updated once the issue is fixed.
 
 This is shorthand for:
 
