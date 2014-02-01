@@ -19,11 +19,6 @@ Expressions
     expression-sequence --> unary-expression binary-expressions-OPT
     expression-list --> expression | expression ``,`` expression-list
 
-.. TR: A trailing-closure-expression seems to be allowed only in the context of function calling.
-    As a result, there's no need to have it at the top level of the expression grammar.
-    As a result, we can move it to the function-call-expression grammar
-    and remove basic-expression as a syntactic category. Is this change OK?
-
 
 Unary Operators
 ---------------
@@ -67,16 +62,23 @@ Binary Operators
 .. TODO: Give a list of the binary operators defined in the Swift stdlib.
     Then give a cross-reference to the Swift stdlib for more details.
 
-.. TR: Strictly speaking, a binary-expression is not an actual expression;
-    rather, it is part of an expression
-    (the expression is well-formed when it's the continuation of a unary expression).
-    The same goes for expression-cast.
-    What's the reason behind formulating the grammar in this way?
+.. NOTE: You have essentially expression sequences here, and within it are
+   parts of the expressions.  We're calling them "expressions" even
+   though they aren't what we ordinarily think of as expressions.  We
+   have this two-phase thing where we do the expression sequence parsing
+   which gives a rough parse tree.  Then after name binding we know
+   operator precedence and we do a second phase of parsing that builds
+   something that's a more traditional tree.
 
-.. TODO: Depending on how strict we want to be with naming our syntactic categories,
-    and the answer to the tech review question above,
-    we may want to rename this to something like a binary-expression-clause,
-    because the current formulation (on it's own) doesn't produce a well-formed expression.
+.. TODO: You're going to care about this if you're adding new operators --
+   it's not a high priority.  We could probably loosely describe this
+   process by saying that the parser handles it as a flat list and then
+   applies the operator precedence to make a more typical parse tree.
+   At some point, we will probably have to document the syntax around
+   creating operators.  This may need to be discussed in the Language Guide
+   in respect to the spacing rules -- ``x + y * z`` is diffirent than
+   ``x + y* z``.
+
 
 Builtin Binary Operators
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -222,19 +224,15 @@ Closure Expression
 
 .. langref-grammar
 
-    expr-closure ::= '{' closure-signature? brace-item-list '}'
+    expr-closure ::= '{' closure-signature? brace-item* '}'
     closure-signature ::= pattern-tuple func-signature-result? 'in'
-    closure-signature ::= identifier (',' identifier*) func-signature-result? 'in'
-
-.. TR: A required brace-item-list doesn't seem correct.
-    Rather, it should be brace-item*. Is this just a typo?
-    Another typo: The '*' should come after the paren in (',' identifier*).
+    closure-signature ::= identifier (',' identifier)* func-signature-result? 'in'
 
 .. syntax-grammar::
 
     Grammar of a closure expression
 
-    closure-expression --> ``{`` closure-signature-OPT code-block-items ``}``
+    closure-expression --> ``{`` closure-signature-OPT statements ``}``
     closure-expressions --> closure-expression closure-expressions-OPT
 
     closure-signature --> tuple-pattern function-signature-result-OPT ``in``
@@ -342,15 +340,19 @@ Function Call Expressions
     Grammar of a function call expression
 
     function-call-expression --> postfix-expression parenthesized-expression trailing-closure-OPT
+    function-call-expression --> postfix-expression parenthesized-expression-OPT trailing-closure
     trailing-closure --> closure-expressions expression-cast-OPT
 
-.. TR: Confirm that putting the trailing closure here,
-    as part of the function call syntax,
-    rather than as part of the general syntax of an expression
-    is still correct.
-    Assuming that it's correct, it reduces overgeneration
-    and is easier to read.
+.. TR: Is it the case that you can have one or more expr-closure (i.e., expr-closure+)?
+    This doesn't seem right.
 
+.. NOTE: The following are three equivalent ways of doing the same thing:
+
+        [1, 2, 3].map {$0 * 2}
+        [1, 2, 3].map() {$0 * 2}
+        [1, 2, 3].map({$0 * 2})
+
+    TODO: Consider giving the above examples in prose.
 
 New Expression
 ~~~~~~~~~~~~~~
@@ -373,7 +375,10 @@ New Expression
 .. TODO: Come back and clean up this grammar.
     Also, note that this is *explicitly* left-recursive.
 
-.. TR: What use cases does the 'new' grammar apply to?
+.. NOTE: The 'new expression' is most likely going away completely.
+    Currently, its use is restricted to creating new arrays with an initial size.
+    Apply minimal effort to document it.
+
 
 Initializer Expression
 ~~~~~~~~~~~~~~~~~~~~~~

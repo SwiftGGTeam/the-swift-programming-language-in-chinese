@@ -86,9 +86,9 @@ Variable Declarations
 
     var <#variable name#> : <#type#> {
     get:
-        <#code to execute#>
+        <#statements#>
     set(<#setter name#>):
-        <#code to execute#>
+        <#statements#>
     }
 
 .. TODO: In prose: discuss that 'name' can also be a pattern in the first syntax-outline.
@@ -121,18 +121,23 @@ Variable Declarations
     initializer --> ``=`` expression
 
     getter-setter-block --> ``{`` getter setter-OPT ``}`` | ``{`` setter getter ``}``
-    getter --> ``get`` ``:`` code-block-items-OPT
-    setter --> ``set`` setter-name-OPT ``:`` code-block-items-OPT
+    getter --> ``get`` ``:`` statements-OPT
+    setter --> ``set`` setter-name-OPT ``:`` statements-OPT
     setter-name --> ``(`` identifier ``)``
 
 .. NOTE: Type specifiers are required for computed properties -- the
    types of those properties are not computed/inferred.
 
-.. TR: Why is 'type' restricted to variables declared using the first variable-declaration grammar?
+.. NOTE: 'type' is currently restricted to variables
+    declared using the first variable-declaration grammar.
+    This is a temporary compiler limitation.
+    Eventually, 'type' will be allowed for the other two forms of the grammar
+    (those that declare variable with computed values).
 
-.. TODO: File a radar against the inout attribute for better REPL
-   mesasge.  INOUT attribute can only be applide to types, not to
-   declarations.
+.. TODO: File a radar against the inout attribute for better REPL message.
+    The inout attribute can only be applide to types, not to declarations.
+    UPDATE 1/29/14: Hold off on this, because the grammar is going to be changing soon
+    to restrict where the inout attribute may appear.
 
 
 Let Declaration
@@ -198,7 +203,7 @@ regular functions and selector-style methods.]**
 .. syntax-outline::
 
     func <#function name#>(<#function parameters#>) -> <#return type#> {
-        <#code to execute#>
+        <#statements#>
     }
 
 **[Regular function, alternative 2:
@@ -216,7 +221,7 @@ because it's inconsistent with the rest of the document (and with existing Xcode
          <#parameter name 2#>: <#parameter type 2#>)
          -> <#return type#>
     {
-        <#code to execute#>
+        <#statements#>
     }
 
 Swift also provides syntax for declaring and defining selector-style methods,
@@ -236,7 +241,7 @@ This alternative is descriptively pretty accurate but may also be a bit awkward.
          <#selector name part 2#>(<#parameter name 2#>: <#parameter type 2#>)
          -> <#return type#>
     {
-        <#code to execute#>
+        <#statements#>
     }
 
 **[Selector-style, alternative 2:
@@ -251,7 +256,7 @@ The parts of the name of a method aren't keywords in the language (at least in t
          <#selector keyword 2#>(<#parameter name 2#>: <#parameter type 2#>)
          -> <#return type#>
     {
-        <#code to execute#>
+        <#statements#>
     }
 
 **[Selector-style, alternative 3:
@@ -264,7 +269,7 @@ This alternative uses "method" instead of "selector", but still uses "keyword".]
          <#method keyword 2#>(<#parameter name 2#>: <#parameter type 2#>)
          -> <#return type#>
     {
-        <#code to execute#>
+        <#statements#>
     }
 
 **[Selector-style, alternative 4:
@@ -277,7 +282,7 @@ This alternative uses "signature" instead of "method" or "selector", but still u
          <#signature keyword 2#>(<#parameter name 2#>: <#parameter type 2#>)
          -> <#return type#>
     {
-        <#code to execute#>
+        <#statements#>
     }
 
 .. TODO: Discuss in prose: Variadic functions and the other permutations of function declarations.
@@ -485,7 +490,7 @@ Constructor Declarations
 .. syntax-outline::
 
     init(<#parameter name#>: <#parameter type#>) {
-        <#code to execute#>
+        <#statements#>
     }
 
 .. syntax-outline::
@@ -493,7 +498,7 @@ Constructor Declarations
     init <#selector keyword 1#>(<#parameter name 1#>: <#parameter type 1#>)
          <#selector keyword 2#>(<#parameter name 2#>: <#parameter type 2#>)
     }
-        <#code to execute#>
+        <#statements#>
     }
 
 .. TODO: Revisit the selector-style constructor syntax-outline
@@ -519,7 +524,7 @@ Destructor Declarations
 .. syntax-outline::
 
     destructor() {
-        <#code to execute#>
+        <#statements#>
     }
 
 .. langref-grammar
@@ -559,6 +564,9 @@ Extension Declarations
     even in other source files and modules. There are different semantic rules for each type that is extended.
     enum, struct, and class declaration extensions. FIXME: Write this section."
     What is the relevant, missing information?
+    What are the semantic rules associated with extending different types?
+
+    TODO: Email Doug et al. in a week or two (from 1/29/14) to get the rules.
 
 
 Subscript Declarations
@@ -568,9 +576,9 @@ Subscript Declarations
 
     subscript (<#arguments#>) -> <#return type#> {
     get:
-        <#code to execute#>
+        <#statements#>
     set(<#setter name#>):
-        <#code to execute#>
+        <#statements#>
     }
 
 .. langref-grammar
@@ -586,8 +594,8 @@ Subscript Declarations
     subscript-head --> attribute-sequence-OPT ``subscript`` tuple-pattern ``->`` type
 
 
-Attribute Sequences
--------------------
+Attributes
+----------
 
 .. langref-grammar
 
@@ -608,76 +616,79 @@ Attribute Sequences
     attribute-sequence --> attribute-clause attribute-sequence-OPT
     attribute-clause --> ``@`` attribute-list attribute-clause-OPT
     attribute-list --> attribute | attribute ``,`` attribute-list
-    attribute --> One of the following:
-    ``auto_closure`` ``inout`` ``cc`` ``noreturn`` ``objc_block`` ``thin`` ``assignment``
-    ``class_protocol`` ``conversion`` ``exported`` ``infix`` ``mutating`` ``resilient``
-    ``fragile`` ``born_fragile`` ``asmname`` ``prefix`` ``postfix`` ``objc`` ``optional``
-    ``transparent`` ``unowned`` ``weak`` ``IBOutlet`` ``IBAction`` ``IBLiveView``
+    attribute --> declaration-attribute | interface-builder-attribute
 
 .. NOTE: Our grammar doesn't have empty terminals (no epsilon)
    so we need to make attribute-sequence actually contain something.
    This means that instead of having "empty" as a possible expansion,
    attribute-sequence always appears as -OPT.
 
-.. TODO: TR: From looking at /swift/include/swift/AST/Attr.def,
+.. TODO: From looking at /swift/include/swift/AST/Attr.def,
     there are ATTR(...), TYPE_ATTR(...), and IB_ATTR(...).
-    Assuming that TYPE_ATTR(...)s can be applied to types only,
-    what are the restrictions on plain ATTR(...)s?
-    Are they restricted to declarations only?
-    (But, 'noreturn' is in both ATTR(...) and TYPE_ATTR(...); why?)
-    If attributes are neatly separated into mutually exclusive categories,
+    TYPE_ATTR(...)s can be applied to types only,
+    and plain ATTR(...)s are restricted to declarations only.
+    That said, the 'noreturn' attribute can be specified on the declaration
+    or on the function type, and is thus in both both ATTR(...) and TYPE_ATTR(...).
+
+    Here's the current list (as of 1/20/2014):
+
+    Type Attributes:
+    ``auto_closure`` ``inout`` ``cc`` ``noreturn`` ``objc_block`` ``thin`` ``thick``
+    ``unchecked``
+    Declaration Attributes:
+    ``assignment`` ``class_protocol`` ``conversion`` ``exported`` ``infix`` ``mutating``
+    ``resilient`` ``fragile`` ``born_fragile`` ``asmname`` ``noreturn`` ``prefix``
+    ``postfix`` ``objc`` ``optional`` ``transparent`` ``unowned`` ``weak``
+    ``requires_stored_property_inits``
+    Interface Builder Attributes:
+    ``IBOutlet`` ``IBAction`` ``IBLiveView`` ``IBInspectable``
+
+    Because attributes are (almost) neatly separated into mutually exclusive categories,
     e.g., declaration attributes, type attributes, and IB attributes,
-    then we could could break down the attribute grammar accordingly.
+    then we can break down the attribute grammar accordingly.
+    We still need to decide the best way to do this.
+    Some possibilites are:
 
-    We should decide if the 'Attribute Sequences' heading should be changed
-    to 'Attributes' and whether each attribute should have its own discussion in a subheading.
+        1. Each of the three groups of attributes gets its own subsection.
+           Some attributes (e.g., 'objc') may require lots of explanation.
+        2. Create a whole new chapter on attributes.
 
+    Currently, we're leaning toward (1).
 
-Infix Attribute
-~~~~~~~~~~~~~~~
+    According to Doug (1/29/14), many of these attributes are not worth documenting
+    either in the near future or at all. We should really focus on the following first:
+    ``mutating``, ``objc``, ``weak``, ``unowned``, ``optional``, ``class_protocol``,
+    ``IBOutlet``, ``IBAction``, ``IBLiveView``, and ``IBInspectable``.
+    The rest should be omitted (at least for now)---they're really
+    only used in the Standard Library.
+    In addition, it's likely that inout will get folder into the function stuff,
+    and resilience is totally pointless (for now),
+    because we're not doing it for Swift 1.0. Leave both of them off entirely.
 
-.. langref-grammar
+    TR: None of the attributes Doug mentioned above are type attributes.
+    Are there any types attributes that we should bother documenting?
 
-    attribute-infix ::= 'infix_left'  '=' integer_literal
-    attribute-infix ::= 'infix_right' '=' integer_literal
-    attribute-infix ::= 'infix        '=' integer_literal
-
-.. NOTE: There is now only one infix attribute ('infix'),
-    which no longer takes an assignment ('=' integer-literal).
-    Tested this in r11445 on 12/23/2013.
-
-Resilience Attributes
-~~~~~~~~~~~~~~~~~~~~~
-
-.. langref-grammar
-
-    attribute-resilience ::= 'resilient'
-    attribute-resilience ::= 'fragile'
-    attribute-resilience ::= 'born_fragile'
-
-
-Swift has three resilience attributes: ``resilient``, ``fragile``, and ``born_fragile``.
+    TODO: For the attributes we are planning on documenting in the near future,
+    we need to get more information about their use and behavior.
+    Find out what we can from current documentation,
+    and email Doug or swift-dev for anything that's missing.
 
 
-The In-Out Attribute
-~~~~~~~~~~~~~~~~~~~~
+Declaration Attributes
+~~~~~~~~~~~~~~~~~~~~~~
 
-.. langref-grammar
+.. syntax-grammar::
 
-    attribute-inout ::= 'inout'
+    Grammar of a declaration attribute
 
-
-The Auto-Closure Attribute
-~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. langref-grammar
-
-    attribute-auto_closure ::= 'auto_closure'
+    declaration-attribute --> ``mutating`` | ``weak`` | ``unowned`` | ``optional`` | ``objc`` | ``class_protocol``
 
 
-The No-Return Attribute
-~~~~~~~~~~~~~~~~~~~~~~~
+Interface Builder Attributes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. langref-grammar
+.. syntax-grammar::
 
-    attribute-noreturn ::= 'noreturn'
+    Grammar of an interface builder attribute
+
+    interface-builder-attribute --> ``IBOutlet`` | ``IBAction`` | ``IBLiveView`` | ``IBInspectable``
