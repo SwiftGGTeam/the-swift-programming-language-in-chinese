@@ -742,8 +742,8 @@ It decides if the point is
 at the origin (0, 0);
 on the red x-axis;
 on the orange y-axis;
-on the green diagonal line where ``x == y``; or
-on the purple diagonal line where ``x == -y``,
+on the green diagonal line where ``x == y``;
+on the purple diagonal line where ``x == -y``;
 or none of the above.
 
 .. testcode::
