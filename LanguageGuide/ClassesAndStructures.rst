@@ -110,7 +110,7 @@ with two variable properties called ``width`` and ``height``.
 These properties are inferred to be of type ``Double``
 by setting them to an initial floating-point value of ``0.0``.
 
-The example also defines a new class type called ``Rectangle``,
+The example also defines a new class called ``Rectangle``,
 which has a variable property called ``size``.
 This property is initialized with a new ``Size`` structure instance,
 which infers a property type of ``Size``.
@@ -162,6 +162,13 @@ The word ‘struct’ will be used from now on to refer to structure instances
 (such as ``someSize``),
 and the word *structure* will be used to refer to their type
 (such as ``Size``).
+
+.. QUESTION: An alternative (and more consistent) approach would be
+   to use the word 'instance' to describe both objects and structs.
+   This would be more consistent between the two types,
+   and would avoid the confusion between 'structure' and 'struct'.
+   However, it would also avoid using the learnt terminology of 'object'.
+   Which is a better approach?
 
 Accessing Properties
 ~~~~~~~~~~~~~~~~~~~~
