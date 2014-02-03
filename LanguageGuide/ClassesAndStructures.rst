@@ -73,7 +73,7 @@ Classes are introduced by the ``class`` keyword,
 and structures are introduced by the ``struct`` keyword.
 Both place their entire definition within a pair of braces:
 
-.. testcode:: classesAndStructs
+.. testcode:: classesAndStructures
 
     (swift) class SomeClass {
         /* class definition */
@@ -96,7 +96,7 @@ Classes and structures can both declare *properties*.
 Properties are named values that are bundled up and stored
 as part of the class or structure:
 
-.. testcode:: classesAndStructs
+.. testcode:: classesAndStructures
 
     (swift) struct Size {
         var width = 0.0, height = 0.0
@@ -125,7 +125,7 @@ To do that, you need to create an *instance* of the class or structure.
 
 The syntax for creating instances is very similar for both structures and classes:
 
-.. testcode:: classesAndStructs
+.. testcode:: classesAndStructures
 
     (swift) var someSize = Size()
     // someSize : Size = Size(0.0, 0.0)
@@ -151,51 +151,38 @@ Class and structure initialization is described in more detail in `Initializatio
 Terminology
 ___________
 
-An *instance* of a class (such as ``someRectangle`` above)
+An instance of a class (such as ``someRectangle`` above)
 is traditionally known as an *object*.
-This terminology will be used from now on to refer to instances of classes.
-Wherever you see the word *object* below,
-it will refer to a single specific instance of a particular class.
-
-Instances of structures are generally referred to as *structs*.
-The word ‘struct’ will be used from now on to refer to structure instances
-(such as ``someSize``),
-and the word *structure* will be used to refer to their type
-(such as ``Size``).
-
-.. QUESTION: An alternative (and more consistent) approach would be
-   to use the word 'instance' to describe both objects and structs.
-   This would be more consistent between the two types,
-   and would avoid the confusion between 'structure' and 'struct'.
-   However, it would also avoid using the learnt terminology of 'object'.
-   Which is a better approach?
+However, Swift classes and structures are much closer in functionality than in other languages,
+and much of this chapter describes functionality that can apply to
+instances of *either* a class or a structure type.
+Because of this, the more general term *instance* is used below.
 
 Accessing Properties
 ~~~~~~~~~~~~~~~~~~~~
 
-The properties of an object or struct can be accessed using *dot syntax*:
+The properties of an instance can be accessed using *dot syntax*:
 
-.. testcode:: classesAndStructs
+.. testcode:: classesAndStructures
 
     (swift) println("The width of someSize is \(someSize.width)")
     >>> The width of someSize is 0.0
 
-``someSize.width`` refers to the ``width`` property of the ``someSize`` struct.
-Dot syntax can also be used to drill down into properties
-which are themselves objects or structs,
+``someSize.width`` refers to the ``width`` property of ``someSize``.
+Dot syntax can also be used to drill down into sub-properties
 such as the ``width`` property of a ``Rectangle``'s ``size``:
 
-.. testcode:: classesAndStructs
+.. testcode:: classesAndStructures
 
     (swift) println("The width of someRectangle is \(someRectangle.size.width)")
     >>> The width of someRectangle is 0.0
 
 Unlike Objective-C,
-the values of sub-properties can also be set directly, regardless of their type.
+the values of sub-properties can be set directly, regardless of their type.
 In the example below, ``someRectangle.size.width`` is set to a new value of ``2.0``,
 even though it is a sub-property of ``someRectangle.size``:
 
-.. testcode:: classesAndStructs
+.. testcode:: classesAndStructures
 
     (swift) someRectangle.size.width = 2.0
     (swift) println("The width of someRectangle is now \(someRectangle.size.width)")
@@ -205,11 +192,11 @@ Memberwise Structure Initializers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 All structures have an automatically-generated *memberwise initializer*,
-which can be used to initialise the member properties of new structs of that type.
-Initial values for the properties of the new struct
+which can be used to initialise the member properties of new structure instances.
+Initial values for the properties of the new instance
 can be passed to the memberwise initializer by name:
 
-.. testcode:: classesAndStructs
+.. testcode:: classesAndStructures
 
     (swift) let twoByTwo = Size(width: 2.0, height: 2.0)
     // twoByTwo : Size = Size(2.0, 2.0)
@@ -217,7 +204,7 @@ can be passed to the memberwise initializer by name:
 Initial values can also be provided without names,
 if they are listed in the same order that the properties are declared in the structure's definition:
 
-.. testcode:: classesAndStructs
+.. testcode:: classesAndStructures
 
     (swift) let fourByThree = Size(4.0, 3.0)
     // fourByThree : Size = Size(4.0, 3.0)
@@ -231,16 +218,17 @@ Stored Properties
 ~~~~~~~~~~~~~~~~~
 
 In its simplest form, a property is just a named value
-that is stored as part of an object or struct, as shown above.
+that is stored as part of an instance.
 Properties of this kind are known as *stored properties*.
-
 Stored properties can be either *variable stored properties*
 (introduced by the ``var`` keyword, as in the examples above),
 or *constant stored properties* (introduced by the ``let`` keyword).
+
 Constant stored properties are very similar to constant named values,
 in that their value cannot be changed once it has been initialized.
-Constant property initialization must be completed by the time
-the object or struct is itself fully initialized.
+Constant stored properties have slightly more flexibility, however,
+in that their value can be changed at any point until the instance they belong to
+has completed its initialization.
 (Instance initialization is described in more detail in `Initialization`_ below.)
 
 Computed Properties
@@ -249,7 +237,7 @@ Computed Properties
 Classes and structures can also define *computed properties*,
 which do not actually store a value:
 
-.. testcode:: classesAndStructs
+.. testcode:: classesAndStructures
 
     (swift) struct Point {
         var x = 0.0, y = 0.0
@@ -313,7 +301,7 @@ and moves the square to its new position.
 Shorthand Getter and Setter Declarations
 ________________________________________
 
-A computed property's getter can be written without the ``get`` keyword
+A computed property's getter can be written without the ``get`` keyword,
 if the getter comes before the setter.
 Additionally, if a computed property's setter does not define a name
 for the new value to be set,
@@ -321,7 +309,7 @@ a default name of ``value`` is used.
 Here's an alternative version of the ``Rect`` structure,
 which takes advantage of these shorthand notations:
 
-.. testcode:: classesAndStructs
+.. testcode:: classesAndStructures
 
     (swift) struct AlternativeRect {
         var origin = Point()
@@ -350,7 +338,7 @@ the declaration of computed properties –
 including read-only computed properties –
 can be simplified by removing the ``get`` keyword:
 
-.. testcode:: classesAndStructs
+.. testcode:: classesAndStructures
 
     (swift) struct Cuboid {
         var width = 0.0, height = 0.0, depth = 0.0
@@ -388,8 +376,6 @@ are always declared as variable properties (via the ``var`` introducer).
 The ``let`` introducer is only ever used for constant properties,
 to indicate that their value cannot be changed once it is set as part of instance initialization.
 
-.. TODO: make it explicit that we have constant and variable properties,
-   and perhaps change the HTTPStatus example to use a class rather than a struct
 .. NOTE: getters and setters are also allowed for named values
    that are not associated with a particular class or struct.
    Where should this be mentioned?
@@ -400,7 +386,7 @@ Properties and Instance Variables
 
 If you have experience with Objective-C,
 you may be familiar with the fact that it provides two complementary ways
-to store values and references alongside objects.
+to store values and references alongside instances of a class.
 In addition to properties,
 Objective-C also has the concept of *instance variables*,
 which are used as a 'backing' store for the values stored in a property.
@@ -446,13 +432,13 @@ integers, floating-point numbers, booleans, strings, enumerations, arrays and di
 are value types.
 
 Swift structures are also value types.
-This means that any structs you create –
+This means that any instances you create from your own structures –
 and any value types they have as properties –
 will always be copied when they are passed around.
 
 For example, using the ``Size`` structure from above:
 
-.. testcode:: classesAndStructs
+.. testcode:: classesAndStructures
 
     (swift) let iPhone4 = Size(width: 640.0, height: 960.0)
     // iPhone4 : Size = Size(640.0, 960.0)
@@ -465,31 +451,31 @@ For example, using the ``Size`` structure from above:
     >>> The iPhone 4 screen is still 960.0 pixels high
 
 This example declares a constant called ``iPhone4``,
-and sets it to a ``Size`` struct initialized with
+and sets it to a ``Size`` instance initialized with
 the width and height of the iPhone 4's screen
 (which is 640 pixel wide, and 960 pixels tall).
 
 It then declares a variable called ``iPhone5``,
 and sets it to the current value of ``iPhone4``.
 Because ``Size`` is a structure,
-a new copy of the existing struct is made,
+a new copy of the existing instance is made,
 and this new copy is assigned to ``iPhone5``.
 ``iPhone4`` and ``iPhone5`` may currently have the same width and height,
-but they are two completely different structs behind the scenes.
+but they are two completely different instances behind the scenes.
 
-Next, the ``height`` property of the ``iPhone5`` struct is amended to be
+Next, the ``height`` property of ``iPhone5`` is amended to be
 the height of the iPhone 5's taller screen (which is 1,136 pixels tall).
 
 The two calls to ``println`` at the end of this example show that
 the ``height`` property of ``iPhone5`` has indeed changed to be ``1136.0``.
-However, the ``height`` property of the original ``iPhone4`` struct
+However, the ``height`` property of the original ``iPhone4`` instance
 still has the old value of ``960.0``.
 
 When ``iPhone5`` is given the current value of ``iPhone4``,
-the *values* stored in ``iPhone4`` are copied into the new ``iPhone5`` struct.
-The end result is two completely separate structs,
-which just happened to contain the same numeric values.
-Because they are separate structs,
+the *values* stored in ``iPhone4`` are copied into the new ``iPhone5`` instance.
+The end result is two completely separate instances,
+which just happen to contain the same numeric values.
+Because they are separate instances,
 setting the height of ``iPhone5`` to ``1136.0``
 doesn't affect the height value stored in ``iPhone4``.
 
@@ -500,14 +486,14 @@ Reference Types
 
 Unlike value types, a reference type is *not* copied when is assigned to a variable or constant,
 or when it is passed to a function.
-Rather than making a copy, a *reference* to the same existing instance of that type is used instead.
+Rather than making a copy, a *reference* to the same existing instance is used instead.
 
 .. TODO: This enables you to have multiple variables and constants
    that all refer to the same one instance. 
 
 Here's an example, using the ``Rectangle`` class defined above:
 
-.. testcode:: classesAndStructs
+.. testcode:: classesAndStructures
 
     (swift) let rect = Rectangle()
     // rect : Rectangle = <Rectangle instance>
@@ -523,16 +509,16 @@ Here's an example, using the ``Rectangle`` class defined above:
     >>> The rectangle's width is now 3.0
 
 This example declares a new constant called ``rect``,
-and sets it to refer to a new ``Rectangle`` object.
+and sets it to refer to a new ``Rectangle`` instance.
 The rectangle is given a size with a width and height of ``1.0``.
 
 A second constant is also declared, called ``sameRect``,
 and is set to refer to the same rectangle already referred to by ``rect``.
-This *doesn't* copy ``rect``, or create a new ``Rectangle`` object –
-instead, there are now *two* constants that refer to the same one underlying object.
+This *doesn't* copy ``rect``, or create a new ``Rectangle`` instance –
+instead, there are now *two* constants that refer to the same one underlying instance.
 
 The width of the rectangle is then modified.
-Because ``sameRect`` refers to the same object as ``rect``,
+Because ``sameRect`` refers to the same instance as ``rect``,
 the underlying ``width`` and ``height`` properties can be accessed via either ``rect`` or ``sameRect`` –
 it doesn't make a difference which one is chosen, as they both refer to the same thing.
 Here, the width and height are accessed and changed via ``sameRect``
@@ -570,7 +556,7 @@ are very similar to pointers in C-like languages,
 but do not use the reference operator (``&``) or dereference operator (``*``)
 to differentiate between a pointer and the memory it points to.
 Instead, a reference type in Swift is declared like any other named value,
-and the value it contains is always a reference to a particular object instance.
+and the value it contains is always a reference to a particular instance of that type.
 
 .. TODO: We need something here to say
    "but don't worry, you can still do all of the stuff you're used to".
@@ -585,8 +571,8 @@ Choosing Between Classes and Structures
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Classes and structures have many things in common.
-However, the fact that structs are always passed by value,
-and objects are always passed by reference,
+However, the fact that structure instances are always passed by value,
+and class instances are always passed by reference,
 means that they are suited to different kinds of tasks.
 As you consider the data constructs and functionality that you need for a project,
 you will need to decide whether each data construct should be
@@ -614,8 +600,7 @@ Examples of good candidates for structures include:
 * a point in a 3D coordinate system
   (perhaps encapsulating ``x``, ``y`` and ``z`` properties, each of type ``Double``)
 
-In all other cases, you should define a class,
-and create objects as instances of that class,
+In all other cases, you should define a class, and create instances of that class,
 to be managed and passed by reference.
 In practice, this means that most custom data constructs should be classes,
 not structures.
@@ -694,7 +679,7 @@ which initializes the stored temperature value to ``32.0``
 Initializer methods always begin with ``init``,
 and do not require the ``func`` keyword before their name.
 Unlike Objective-C, Swift initializer methods do not return a value.
-Their primary role is to ensure that any new instances of a class or struct
+Their primary role is to ensure that new instances of that type
 are correctly initialized before they are used for the first time.
 
 As an alternative, this example could have been written
@@ -715,8 +700,8 @@ is the same in both cases.
 
 Swift provides a *default initializer* method implementation
 for any class or structure that does not provide at least one initializer method itself.
-The default initializer creates a new instance of the class or structure,
-with all of the instance properties set to their default values.
+The default initializer simply creates a new instance
+with all of its properties set to their default values.
 You don't have to declare that you want the default initializer to be implemented –
 it is available automatically for all classes and structures without their own initializer.
 
@@ -813,7 +798,7 @@ which uses a default ``title`` value of ``[untitled]`` if none is specified:
     }
 
 .. note::
-    The ``init withTitle()`` method refers to the object's ``title`` property as ``self.title``,
+    The ``init withTitle()`` method refers to the instance's ``title`` property as ``self.title``,
     rather than simply as ``title``.
     This is required to differentiate between the *variable property* called ``title``,
     and the *initializer method parameter* called  ``title``.
@@ -910,7 +895,7 @@ The curly braces after the parentheses define an empty code block for the method
     (swift)     init() {}
 
 Despite having an empty code block,
-this method still creates a new ``TextDocument`` object with a default title and text.
+this method still creates a new ``TextDocument`` instance with a default title and text.
 The default value of ``bodyText`` comes from the ``bodyText`` property declaration,
 and the default value of ``title`` comes from Swift inserting an implicit call to ``super.init()``
 at the end of this empty code block.
@@ -1027,8 +1012,8 @@ Type Properties and Methods
 
 [to be written]
 
-.. TODO: mention that all by-value properties of a constant struct are also constant
-.. TODO: what happens if one property of a constant struct is an object reference?
+.. TODO: mention that all by-value properties of a constant structure are also constant
+.. TODO: what happens if one property of a constant structure is an object reference?
 .. TODO: immutability of value type constants means that
    their mutable properties are also immutable
 .. TODO: type variables, constants and methods
