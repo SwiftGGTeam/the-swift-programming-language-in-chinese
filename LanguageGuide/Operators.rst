@@ -197,13 +197,13 @@ so the remainder operator returns a ``Double`` value of ``0.5``.
     :width: 311
     :align: center
 
-Integer Increment and Decrement
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Increment and Decrement
+~~~~~~~~~~~~~~~~~~~~~~~
 
-Like C, Swift provides an *integer increment operator* (``++``)
-and an *integer decrement operator* (``--``)
-as a shorthand way to increase or decrease the value of an integer variable by ``1``.
-For example:
+Like C, Swift provides an *increment operator* (``++``)
+and an *decrement operator* (``--``)
+as a shorthand way to increase or decrease the value of a numeric variable by ``1``.
+Unlike C, Swift's increment and decrement operators also work with floating-point numbers.
 
 .. testcode:: arithmeticOperators
 
