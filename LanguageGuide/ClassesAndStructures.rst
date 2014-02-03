@@ -754,7 +754,7 @@ with a value from a different temperature scale:
 The value of a constant ``let`` property can be modified at any point during initialization,
 as long as is is definitely set to a value by the time the initializer has finished:
 
-::
+.. testcode:: initialization
 
     (swift) struct Temperature {
         let storedValue: Double
@@ -778,9 +778,6 @@ as long as is is definitely set to a value by the time the initializer has finis
     // absoluteZero : Temperature = Temperature(-273.15, "C")
     (swift) println("Temperature is \(absoluteZero.toKelvin())°K")
     >>> Temperature is 0.0 °K
-
-.. FIXME: this code is not yet tested due to rdar://15962740,
-   which triggers an assert when setting a struct's constant property during init.
 
 .. TODO: This could do with a more elegant example.
 
