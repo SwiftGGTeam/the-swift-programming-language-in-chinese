@@ -1,8 +1,6 @@
 Expressions
 ===========
 
-This is a :newterm:`new term` which we will never define.  Ha!
-
 .. langref-grammar
 
     expr          ::= expr-basic
