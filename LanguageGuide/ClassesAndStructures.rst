@@ -1026,50 +1026,105 @@ Type Casting
 Enumerations
 ------------
 
-This chapter has talked primarily about classes and structures.
-However, some of the features described above are also available to enumeration types in Swift.
+Several of the features described above for classes and structures
+are also available to enumeration types in Swift:
 
-Computed Properties for Enumerations
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+* *initializer methods*, to provide a default enumeration member
+* *computed properties*, to provide additional information about the current enumeration member, and
+* *instance methods*, to provide utility functionality
 
-Enumerations can provide computed (but not stored) properties.
-These can be used to provide additional information about an enumeration member,
-such as whether they are part of a group of related values.
-For example:
+The example below shows all of these capabilities in action for a complex enumeration:
 
 .. testcode:: enumerationSpecialFeatures
 
-    (swift) enum CardSuit : UnicodeScalar {
-        case Spades = '♠', Hearts = '♡', Diamonds = '♢', Clubs = '♣'
-        var isRed: Bool {
+    (swift) enum TrainStatus {
+        case OnTime, Delayed(Int)
+        init() {
+            self = OnTime
+        }
+        var description: String {
             switch self {
-                case Hearts, Diamonds:
-                    return true
-                case Spades, Clubs:
-                    return false
+                case OnTime:
+                    return "on time"
+                case Delayed(var minutes):
+                    return "delayed by " + self.delayText(minutes)
+            }
+        }
+        func delayText(minutes: Int) -> String {
+            switch minutes {
+                case 1:
+                    return "1 minute"
+                case 2..60:
+                    return "\(minutes) minutes"
+                case 60..120:
+                    let extra = minutes - 60
+                    return "an hour and \(extra) minutes"
+                default:
+                    return "more than two hours"
             }
         }
     }
-    (swift) let someSuit = CardSuit.Hearts
-    // someSuit : CardSuit = <unprintable value>
-    (swift) if someSuit.isRed {
-        println("\(someSuit.toRaw()) is a red suit")
-    } else {
-        println("\(someSuit.toRaw()) is a black suit")
+    (swift) class Train {
+        var status = TrainStatus()
     }
-    >>> ♡ is a red suit
+    (swift) let train = Train()
+    // train : Train = <Train instance>
+    (swift) println("The train is \(train.status.description)")
+    >>> The train is on time
+    (swift) train.status = .Delayed(96)
+    (swift) println("The train is now \(train.status.description)")
+    >>> The train is now delayed by an hour and 36 minutes
 
-This example defines an enumeration called ``CardSuit``,
-which contains a member for each of the four suits in a standard pack of playing cards.
-Each suit is assigned the corresponding UnicodeScalar character for that suit as a raw value.
-``CardSuit`` also declares a Boolean read-only computed property called ``isRed``,
-which returns ``true`` for ``Hearts`` and ``Diamonds``,
-and ``false`` for ``Spades`` and ``Clubs``.
+This example defines an enumeration called ``TrainStatus``,
+to encapsulate the current live progress of a train during its journey.
+The enumeration has two possible states:
 
-A new constant, ``someSuit``, is initialized with the ``Hearts`` member value.
-Its ``isRed`` property returns ``true``,
-and the ``println`` call prints the raw ``UnicodeScalar`` value for ``Hearts``
-along with an indication of its color.
+* ``OnTime``, with no associated value, and
+* ``Delayed``, which stores an associated value of the number of minutes by which
+  the train is currently delayed
+
+The enumeration provides a basic initializer, ``init()``,
+which assumes that the train's state is ‘on time’.
+This is a reasonable default state for a train starting out on its journey
+if no other information is provided.
+The ``init()`` method uses the special ``self`` keyword to refer to
+the new instance of ``TrainStatus`` that is being created,
+and requests that it become an instance of the ``OnTime`` enumeration member.
+
+.. note::
+
+    Enumerations are the only types that can
+    specify a value for ``self`` in this way during initialization.
+    ``self = OnTime`` does not (strictly speaking)
+    create a new ‘instance’ of ``OnTime`` here.
+    Rather, it specifies that ``OnTime`` is the enumeration member to be used
+    when creating this new instance.
+    Classes and structures cannot assign to ``self`` in this way during initialization.
+
+``TrainStatus`` defines a read-only computed ``String`` property called ``description``,
+which provides a human-readable description based on the enumeration member type.
+``description`` makes use of a convenience method called ``delayText()``,
+which provides a text-based time description for an integer delay in minutes.
+It makes sense to implement ``delayText()`` as an instance method of ``TrainStatus``,
+as it provides supporting functionality for a specific ``TrainStatus`` task.
+
+The example also defines a ``Train`` class,
+with a variable ``status`` property of type ``TrainStatus``.
+The property's default value is set to a new ``TrainStatus`` instance,
+which will be initialized using the ``init()`` method from ``TrainStatus``.
+When a new instance of ``Train`` is created,
+its ``status`` property is therefore initialized to ``OnTime``, as shown above.
+Changing the ``status`` property to ``.Delayed(96)``
+causes the ``description`` computed property to return an updated message.
+
+.. admonition:: Experiment
+
+    Try creating a convenience initializer, ``init withDelay(delay: Int)``,
+    to give a way to initialize a new ``TrainStatus`` based on an initial delay.
+    It should perform a safety-check over the input value
+    in case it is passed a value of ``0`` minutes –
+    which would indicate that the train is ``OnTime``,
+    not ``Delayed`` by ``0`` minutes.
 
 .. refnote:: References
 
