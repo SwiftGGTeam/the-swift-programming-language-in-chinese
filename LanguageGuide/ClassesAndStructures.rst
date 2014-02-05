@@ -231,6 +231,85 @@ in that their value can be changed at any point until the instance they belong t
 has completed its initialization.
 (Instance initialization is described in more detail in `Initialization`_ below.)
 
+Stored Property Observers
+_________________________
+
+Stored property observers are a way to observe and respond to
+the setting of new values for a stored property.
+You can define an observer called ``willSet``
+(which is called just before the value is stored),
+and / or an observer called ``didSet``
+(which is called immediately after the new value is stored).
+
+If you implement a ``willSet`` observer,
+it will be passed the new property value as a constant parameter for you to check and use.
+The ``didSet`` observer is not passed the new property value,
+and can instead access the new value by checking the property directly.
+
+For example:
+
+.. testcode:: classesAndStructures
+
+    (swift) class VolumeGraph {
+        var clippedVolume = 0
+        let thresholdVolume = 10
+        var volume: Int {
+            willSet(newValue):
+                clippedVolume = min(newValue, thresholdVolume)
+            didSet:
+                var volumeIndicator: String = ""
+                for _ in 0..clippedVolume {
+                    volumeIndicator += '█'
+                }
+                for _ in clippedVolume..thresholdVolume {
+                    volumeIndicator += '▕'
+                }
+                for _ in thresholdVolume..volume {
+                    volumeIndicator += '▒'
+                }
+                println(volumeIndicator)
+        }
+        init() {
+            volume = 0
+        }
+    }
+    (swift) let graph = VolumeGraph()
+    // graph : VolumeGraph = <VolumeGraph instance>
+    (swift) graph.volume = 5
+    >>> █████▕▕▕▕▕
+    (swift) graph.volume = 11
+    >>> ██████████▒
+    (swift) graph.volume = 15
+    >>> ██████████▒▒▒▒▒
+
+.. QUESTION: This example doesn't *require* the setting of clippedVolume
+   to happen within willSet - it could just as easily be within didSet.
+   Does this matter? Is there a better example?
+
+This example defines a new class called ``VolumeGraph``,
+which is a text-based graph for displaying the volume level of an amplifier system.
+The volume level for the graph has a normal operational range of between ``0`` and ``10``.
+
+The ``VolumeGraph`` class declares an integer ``volume`` property.
+This is a stored property with ``willSet`` and ``didSet`` observers.
+It also declares a variable stored property called ``clippedVolume``
+(with an initial value of ``0``),
+and a constant stored property called ``thresholdVolume``
+(which sets the threshold volume at a level of ``10``).
+
+Whenever the graph's ``volume`` property is changed,
+the new value is compared to the ``thresholdVolume`` constant to see if it is too high.
+
+.. note::
+
+    The ``init()`` method in this example is required as a temporary measure
+    to provide an initial value for ``volume``,
+    as it is not yet possible to specify an initial value
+    as part of the property's declaration.
+    This is being tracked as rdar://problem/15920332.
+
+.. TODO: Remove this note once rdar://problem/15920332 is completed.
+
 Computed Properties
 ~~~~~~~~~~~~~~~~~~~
 
@@ -401,6 +480,9 @@ including its name, type, and memory management characteristics –
 is defined in a single location as part of the class definition.
 
 .. TODO: How do I define whether my properties are strong- or weak-reference?
+.. TODO: what happens if one property of a constant structure is an object reference?
+.. TODO: immutability of value type constants means that
+   their mutable properties are also immutable
 
 Value Types and Reference Types
 -------------------------------
@@ -1010,12 +1092,6 @@ Destructors
 Type Properties and Methods
 ---------------------------
 
-[to be written]
-
-.. TODO: mention that all by-value properties of a constant structure are also constant
-.. TODO: what happens if one property of a constant structure is an object reference?
-.. TODO: immutability of value type constants means that
-   their mutable properties are also immutable
 .. TODO: type variables, constants and methods
 
 Type Casting
