@@ -30,6 +30,21 @@ Whitespace and Comments
 ..
     ** (Matches the * above, to fix RST syntax highlighting.)
 
+Whitespace is used to separate tokens in the source file
+and as part of the context
+that determines whether an operator is a prefix or postfix
+(see `Operator Identifiers`_),
+but is otherwise ignored.
+
+Comments are treated as whitespace by the compiler.
+Single line comments continue until the end of the line.
+Multiline comments support nesting,
+but the ``/*`` and ``*/`` comment markers must be balanceed.
+
+.. TR: LangRef says comments are ignored *and* treated as whitespace.
+   Is there a difference?
+
+
 .. syntax-grammar::
 
     Grammar of whitespace and comments
@@ -42,26 +57,16 @@ Whitespace and Comments
 
     whitespace --> U+0000 (Null Character) | U+0009 (Horizontal Tab) | U+000A (New Line) | U+000D (Carriage Return) | U+0020 (Space)
 
+    whitespace --> U+0000 | U+0009 | U+000A | U+000D | U+0020
+
     comment --> single-line-comment | multiline-comment
 
     single-line-comment --> ``//`` comment-text line-end
-    comment-text --> Any text except for line-end
-    line-end --> U+000A (Line Feed) | U+000D (Carriage Return)
+    comment-text --> Any text
+    line-end --> U+000A | U+000D
 
     multiline-comment --> ``/*`` multiline-comment-text ``*/``
     multiline-comment-text --> Any text
-
-Whitespace is used to separate tokens in the source file
-and as part of the context
-that determines whether an operator is a prefix or postfix
-(see `Operator Identifiers`_),
-but is otherwise ignored.
-
-Comments are treated as whitespace by the compiler.
-Multiline comments support nesting.
-
-.. TR: LangRef says comments are ignored *and* treated as whitespace.
-   Is there a difference?
 
 
 Identifiers
