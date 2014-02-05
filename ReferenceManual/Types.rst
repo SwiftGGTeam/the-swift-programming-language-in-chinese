@@ -18,12 +18,6 @@ Types
         and what can inherit what. Bring it up as needed,
         but don't devote a lot of prose to it. Likewise for value vs reference types.
         A more general and thorough discussion belongs in the Language Guide.
-    Different kinds of types:
-        Standard Library nominal types
-        Standard Library types
-        Language-provided compound types (function type, tuple type)
-        Language-provided syntactic sugar for Standard Library nominal types
-        (``?`` and ``[ ]``)
     Type attributes? (Waiting to find out if should document any of these)
 
 .. NOTE: Don't mention materializability at all.
@@ -33,42 +27,40 @@ Types
     function declaration. The grammar is shifting and will prevent these
     from showing up anywhere else in the language.
 
-The Swift Standard Library defines a number of common basic datatypes,
-including those that represent integers, floating-point integers, unicode scalars,
-and strings, as well as datatypes that are derived from these,
-including those that represent arrays, dictionaries, and optional types.
+In Swift, there are two kinds of types: named types and compound types.
+A *named type* is a type that can be given a particular name when it is defined.
+Named types include instances of abstract data types, such as
+classes, structures, enumerations, and protocols.
+For example,
+instances of a user-defined class named ``Foo`` have the type ``Foo``.
+In addition to user-defined named types,
+the Swift Standard Library defines many commonly used named types,
+including those that represent arrays, dictionaries, and optionals.
 
-In addition to the types defined by the Swift Standard Library,
-there are also types defined by the Swift language itself.
-These include types that represent functions and tuples and,
-in the case of arrays and optionals,
-provide syntactic sugar for types defined in the Standard Library.
+What are normally considered primitive or basic data types in other languages,
+like those that represent numbers, characters, and strings,
+are actually named types,
+defined and implemented in the Swift Standard Library using structures.
+Because they are named types,
+you can extend their behavior to suit the needs of your program,
+using an extension declaration, discussed in [NEED A LINK].
+
+A *compound type* is a type without a name, defined in the Swift language itself.
+These includes types that represent functions and tuples.
+A compound type may contain named types and other compound types.
+For instance, the tuple type ``(Int, (Int, Int))`` contains two elements:
+the first is the named type ``Int``,
+and the second is another compound type ``(Int, Int)``.
+
+The Swift language has builtin, syntactical support ("syntactic sugar")
+for conveniently creating two commonly used generic, named types:
+``Array<T>`` and ``Optional<T>``.
+
+.. TODO: TR: What about language support for creating string and dictionary literals?
 
 This chapter discusses the types defined in the Swift language itself
 and describes the type inference behavior of Swift.
 
-.. NOTE: TODO: Greg doesn't like the term "derived" for types,
-    because it has other meanings in the object oriented world.
-    Calling them "compound" types might be better.
-
-    We also have "nominal" types -- types like struct, class, enum,
-    and protocol that have names -- which are in a sense the primitives of the world.
-    Grammatically, nominal types are the smallest;
-    compound types likes tuples are language constructs that don't actually have names,
-    and type sugar that is just an alias for some nominal type.
-    The problem is that most languages have primitive types
-    so we expect them to appear here, but there really aren't any.
-    The things we think of as primatives -- integer charcter etc -- are nominal types
-    defined by the Standard Library.
-    (Under the hood, they are actually built using things like structs.)
-
-    The trick is to describe what's going on
-    without exposing too much of what's actually going on.
-
-    It is important to expose the fact that unlike other languages,
-    things that you think of as primative types are actually structs.
-    This means for example that you can extend those types.
-    This information should appear, in some form or other, in both parts of the book.
 
 Type Inference
 --------------
