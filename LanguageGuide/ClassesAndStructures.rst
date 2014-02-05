@@ -1023,6 +1023,54 @@ Type Casting
 
 [to be written]
 
+Enumerations
+------------
+
+This chapter has talked primarily about classes and structures.
+However, some of the features described above are also available to enumeration types in Swift.
+
+Computed Properties for Enumerations
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Enumerations can provide computed (but not stored) properties.
+These can be used to provide additional information about an enumeration member,
+such as whether they are part of a group of related values.
+For example:
+
+.. testcode:: enumerationSpecialFeatures
+
+    (swift) enum CardSuit : UnicodeScalar {
+        case Spades = '♠', Hearts = '♡', Diamonds = '♢', Clubs = '♣'
+        var isRed: Bool {
+            switch self {
+                case Hearts, Diamonds:
+                    return true
+                case Spades, Clubs:
+                    return false
+            }
+        }
+    }
+    (swift) let someSuit = CardSuit.Hearts
+    // someSuit : CardSuit = <unprintable value>
+    (swift) if someSuit.isRed {
+        println("\(someSuit.toRaw()) is a red suit")
+    } else {
+        println("\(someSuit.toRaw()) is a black suit")
+    }
+    >>> ♡ is a red suit
+
+This example defines an enumeration called ``CardSuit``,
+which contains a member for each of the four suits in a standard pack of playing cards.
+Each suit is assigned the corresponding UnicodeScalar character for that suit as a raw value.
+``CardSuit`` also declares a Boolean read-only computed property called ``isRed``,
+which returns ``true`` for ``Hearts`` and ``Diamonds``,
+and ``false`` for ``Spades`` and ``Clubs``.
+
+A new constant, ``someSuit``, is initialized with the ``Hearts`` member value.
+Its ``isRed`` property returns ``true``,
+and the ``println`` call prints the raw ``UnicodeScalar`` value for ``Hearts``
+along with an indication of its color.
+
 .. refnote:: References
 
     * https://[Internal Staging Server]/docs/whitepaper/TypesAndValues.html#structures
