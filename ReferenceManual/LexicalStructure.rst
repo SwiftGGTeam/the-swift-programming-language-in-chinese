@@ -77,18 +77,23 @@ Operator Identifiers
 Operator identifiers are made up of one or more of the following characters:
 ``@``, ``/``, ``=``, ``-``, ``+``, ``*``, ``%``, ``<``, ``>``, ``!``,
 ``&``, ``|``, ``^``, ``~``.
+The operator identifiers
+``=``, ``->``, ``//``, ``/*``, ``*/``, ``...``,
+and the unary prefix operator ``&``
+are reserved for use as other punctuation.
 
-The following operator identifiers are reserved
-for use as other punctuation:
-``=``, ``->``, ``//``, ``/*``, ``*/``, ``...``.
-The unary prefix operator ``&`` is also reserved.
+.. TR: LangRef also says (){}[].,;: are reserved punctuation,
+   but those aren't valid operator characters anyway.
+   OK to omit here?
 
 Operators with a leading ``<`` or ``>`` are split into two tokens when parsing:
 the leading ``<`` or ``>`` and the remainder of the token.
-The remainder may itself be split in the same way.
+The remainder is parsed the same way and may be split again.
 This parsing rule removes the need for whitespace to disambiguate between the closing ``>`` characters
 in nested protocols such as ``A<B<C>>`` ---
 it is parsed as ``A < B < C > >`` rather than as ``A < B < C >>``.
+
+.. TR: Any special context you must be in for this <<>> rule to happen?
 
 To determine whether an operator is used as
 a prefix operator, a postfix operator, or a binary operator,
@@ -100,6 +105,7 @@ An operator is left bound if it is preceded by one of the following characters:
 Left and right binding effect the operator as follows:
 
 .. TR: Correct to say any whitespace, or it is specifically CR LF HT and SP?
+   That is, does NUL or a comment also count?
 
 ========== =========== ========
 Left Bound Right Bound Operator
@@ -111,11 +117,13 @@ Yes        Yes         Binary
 ========== =========== ========
 
 A left bound operator immediately followed by a period (``.``) is never right bound.
-This special case ensures that expressions like ``a!.b`` are parsed
-as ``(a!).b`` rather than ``(a) ! (.b)``.
+This special case ensures that postfix operators followed by a dot operator are parsed correctly ---
+for example, ``a@.b`` is parsed as as ``(a@).b`` rather than ``(a) @ (.b)``.
 
-If the ``!`` or ``?`` operator is left bound, it is a postfix operator,
-regardless of whether it is right bound.
+.. TR: Using @ again instead of ! above,
+   to avoid confusion between the above and below special cases.
+
+A left bound ``!`` or ``?`` operator is always a postfix operator.
 To use the ``?`` operator as syntactic sugar for ``Optional``, it must be left bound;
 to use it in the ternary (``? :``) operator, it must not be left bound.
 
