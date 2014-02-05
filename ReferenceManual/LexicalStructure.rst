@@ -74,10 +74,14 @@ Identifier Tokens
 Operator Identifiers
 ~~~~~~~~~~~~~~~~~~~~
 
-.. TODO Start with a discussion of what *can* be used as an opotaror.
+Operator identifiers are made up of one or more of the following characters:
+``@``, ``/``, ``=``, ``-``, ``+``, ``*``, ``%``, ``<``, ``>``, ``!``,
+``&``, ``|``, ``^``, ``~``.
 
-The character sequences in *reserved-punctuation* may not be used as operators.
-The unary prefix operator ``&`` is also reserved punctuation and may not be used as an operator.
+The following operator identifiers are reserved
+for use as other punctuation:
+``=``, ``->``, ``//``, ``/*``, ``*/``, ``...``.
+The unary prefix operator ``&`` is also reserved.
 
 Operators with a leading ``<`` or ``>`` are split into two tokens when parsing:
 the leading ``<`` or ``>`` and the remainder of the token.
@@ -86,33 +90,25 @@ This parsing rule removes the need for whitespace to disambiguate between the cl
 in nested protocols such as ``A<B<C>>`` ---
 it is parsed as ``A < B < C > >`` rather than as ``A < B < C >>``.
 
-.. langref
-    When parsing certain grammatical constructs that involve '<' and '>' (such
-    as protocol composition types), an operator with a leading '<' or '>' may
-    be split into two or more tokens: the leading '<' or '>' and the remainder
-    of the token, which may be an operator or punctuation token that may itself
-    be further split. This rule allows us to parse nested constructs such as
-    A<B<C>> without requiring spaces between the closing '>'s.
-
-Left and right binding determine whether an operator is
-a prefix operator, a postfix operator, or a binary operator.
+To determine whether an operator is used as
+a prefix operator, a postfix operator, or a binary operator,
+the parser looks at the characters before and after the operator.
 An operator is left bound if it is followed by one of the following characters:
-``(``, ``[``, ``{``, ``,``, ``;``, ``:``, or by a whitespace character.
+``(``, ``[``, ``{``, ``,``, ``;``, ``:``, or whitespace.
 An operator is left bound if it is preceded by one of the following characters:
-``)``, ``]``, ``}``, ``,``, ``;``, ``:``, or by a whitespace character.
-Left and right binding in turn determine
-whether the oporator is prefix, postfix, or binary, as follows:
+``)``, ``]``, ``}``, ``,``, ``;``, ``:``, or whitespace.
+Left and right binding effect the operator as follows:
 
-.. TR: Still correct to say any whitespace, or it is specifically CR LF HT and SP?
+.. TR: Correct to say any whitespace, or it is specifically CR LF HT and SP?
 
-========== =========== =============
-Left Bound Right Bound Operator Kind
-========== =========== =============
+========== =========== ========
+Left Bound Right Bound Operator
+========== =========== ========
 No         No          Binary
 Yes        No          Prefix
 No         Yes         Postfix
 Yes        Yes         Binary
-========== =========== =============
+========== =========== ========
 
 A left bound operator immediately followed by a period (``.``) is never right bound.
 This special case ensures that expressions like ``a!.b`` are parsed
@@ -166,9 +162,7 @@ to use it in the ternary (``? :``) operator, it must not be left bound.
 
     operator --> operator-character operator-OPT
     operator --> `..`
-
     operator-character --> ``@`` | ``/`` | ``=`` | ``-`` | ``+`` | ``*`` | ``%`` | ``<`` | ``>`` | ``!`` | ``&`` | ``|`` | ``^`` | ``~``
-    reserved-punctuation --> ``=`` | ``->`` | ``//`` | ``/*`` | ``*/`` | ``...`` | ``{`` | ``}`` | ``(`` | ``)`` | ``[`` | ``]`` | ``.`` | ``,`` | ``;`` | ``:``
 
     binary-operator --> operator
     prefix-operator --> operator
@@ -469,7 +463,7 @@ The digits in these escape codes identify a Unicode codepoint.
     quoted-character --> Any character except ``'`` ``\`` U+000A U+000D
 
     quoted-character --> Any character that does not match quoted-character-exceptions
-    quoted-character-exceptions -- ``'`` | ``\`` | U+000A | U+000D
+    quoted-character-exceptions --> ``'`` | ``\`` | U+000A | U+000D
 
     escaped-character --> ``\0`` | ``\\`` | ``\t`` | ``\n`` | ``\r`` | ``\"`` | ``\'``
     escaped-character --> ``\x`` hexadecimal-digit hexadecimal-digit
