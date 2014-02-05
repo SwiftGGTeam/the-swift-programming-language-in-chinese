@@ -27,8 +27,7 @@ Whitespace and Comments
     comment    ::= //.*[\n\r]
     comment    ::= /* .... */
 
-..
-    ** (Matches the * above, to fix RST syntax highlighting.)
+.. ** (Matches the * above, to fix RST syntax highlighting in VIM.)
 
 Whitespace is used to separate tokens in the source file
 and as part of the context
@@ -110,39 +109,30 @@ Operator Identifiers
 
     any-identifier --> identifier | operator
 
+    left-binding-character --> U+0020 | U+000D | U+000A | U+0009 | ``(`` | ``[`` | ``{`` | ``,`` | ``;`` | ``:``
+    right-binding-character --> U+0020 | U+000D | U+000A | U+0009 | ``)`` | ``]`` | ``}`` | ``,`` | ``;`` | ``:``
+
 .. TODO: Move any-identifier.  It doesn't belong here -- it's not an operator.
-
-.. TODO: The fact that an operator may be left and right bound,
-   and that the characters causing the binding are not part of the token,
-   means that it needs to be discussed in prose.
-
 
 Left and right binding determine whether an operator is
 a prefix operator, a postfix operator, or a binary operator.
-An operator followed by one of the following characters is left bound:
+An operator followed by a :ic:`left binding character` is left bound,
+and an operator preceded by a :ic:`right binding character` is right bound.
+Left and right binding in turn determine
+whether the oporator is prefix, postfix, or binary, as follows:
 
-left-binding-character --> U+0020 | U+000D | U+000A | U+0009 | ``(`` | ``[`` | ``{`` | ``,`` | ``;`` | ``:``
+========== =========== =============
+Left Bound Right Bound Operator Kind
+========== =========== =============
+No         No          Binary
+Yes        No          Prefix
+No         Yes         Postfix
+Yes        Yes         Binary
+========== =========== =============
 
-An operator followed by one of the following characters is right bound:
-
-right-binding-character --> U+0020 | U+000D | U+000A | U+0009 | ``)`` | ``]`` | ``}`` | ``,`` | ``;`` | ``:``
-
-Operators that are left bound and not right bound are postfix operators.
-Operators that are right bound and not left bound are prefix operators.
-Operators that are not bound, and operators that are right and left bound, are binary operators.
-
-.. ^-- make a table?
-
-Any left bound operator immediately followed by a period (``.``)
-is not considered right bound.
-This special case ensures that expressions like ``a@.b`` are parsed
-as ``(a@).b`` rather than ``(a) @ (.b)``.
-
-..  TR: What causes the ``@`` to be left bound here?
-    Langref says:
-    As an exception, an operator immediately followed by a dot ('.') is
-    only considered right-bound if not already left-bound. This allows a@.prop
-    to be parsed as (a@).prop rather than as a @ .prop.
+A left bound operator immediately followed by a period (``.``) is never right bound.
+This special case ensures that expressions like ``a!.b`` are parsed
+as ``(a!).b`` rather than ``(a) ! (.b)``.
 
 If the ``!`` or ``?`` operator is left bound, it is a postfix operator,
 regardless of whether it is right bound.
