@@ -79,11 +79,11 @@ Operator Identifiers
 The character sequences in *reserved-punctuation* may not be used as operators.
 The unary prefix operator ``&`` is also reserved punctuation and may not be used as an operator.
 
-Operators with a leading ``<`` or ``>`` are split into two tokens:
+Operators with a leading ``<`` or ``>`` are split into two tokens when parsing:
 the leading ``<`` or ``>`` and the remainder of the token.
 The remainder may itself be split in the same way.
-This removes the need for disambiguating spaces between the closing ``>`` characters
-in nested protocols such as ``A<B<C>>``---
+This parsing rule removes the need for whitespace to disambiguate between the closing ``>`` characters
+in nested protocols such as ``A<B<C>>`` ---
 it is parsed as ``A < B < C > >`` rather than as ``A < B < C >>``.
 
 .. langref
@@ -96,10 +96,14 @@ it is parsed as ``A < B < C > >`` rather than as ``A < B < C >>``.
 
 Left and right binding determine whether an operator is
 a prefix operator, a postfix operator, or a binary operator.
-An operator followed by a :ic:`left binding character` is left bound,
-and an operator preceded by a :ic:`right binding character` is right bound.
+An operator is left bound if it is followed by one of the following characters:
+``(``, ``[``, ``{``, ``,``, ``;``, ``:``, or by a whitespace character.
+An operator is left bound if it is preceded by one of the following characters:
+``)``, ``]``, ``}``, ``,``, ``;``, ``:``, or by a whitespace character.
 Left and right binding in turn determine
 whether the oporator is prefix, postfix, or binary, as follows:
+
+.. TR: Still correct to say any whitespace, or it is specifically CR LF HT and SP?
 
 ========== =========== =============
 Left Bound Right Bound Operator Kind
@@ -171,10 +175,6 @@ to use it in the ternary (``? :``) operator, it must not be left bound.
     postfix-operator --> operator
 
     any-identifier --> identifier | operator
-
-    left-binding-character --> U+0020 | U+000D | U+000A | U+0009 | ``(`` | ``[`` | ``{`` | ``,`` | ``;`` | ``:``
-    right-binding-character --> U+0020 | U+000D | U+000A | U+0009 | ``)`` | ``]`` | ``}`` | ``,`` | ``;`` | ``:``
-
 
 Reserved Keywords
 ~~~~~~~~~~~~~~~~~
