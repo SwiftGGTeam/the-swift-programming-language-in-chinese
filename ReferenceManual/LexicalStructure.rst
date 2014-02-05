@@ -74,45 +74,25 @@ Identifier Tokens
 Operator Identifiers
 ~~~~~~~~~~~~~~~~~~~~
 
-.. langref-grammar
+.. TODO Start with a discussion of what *can* be used as an opotaror.
 
-    operator ::= [@/=-+*%<>!&|^~]+
-    operator ::= \.\.
+The character sequences in *reserved-punctuation* may not be used as operators.
+The unary prefix operator ``&`` is also reserved punctuation and may not be used as an operator.
 
-      Note: excludes '=', see [1]
-            excludes '->', see [2]
-            excludes unary '&', see [3]
-            excludes '//', '/*', and '*/', see [4]
-            '..' is an operator, not two '.'s.
+Operators with a leading ``<`` or ``>`` are split into two tokens:
+the leading ``<`` or ``>`` and the remainder of the token.
+The remainder may itself be split in the same way.
+This removes the need for disambiguating spaces between the closing ``>`` characters
+in nested protocols such as ``A<B<C>>``---
+it is parsed as ``A < B < C > >`` rather than as ``A < B < C >>``.
 
-    operator-binary ::= operator
-    operator-prefix ::= operator
-    operator-postfix ::= operator
-
-    left-binder  ::= [ \r\n\t\(\[\{,;:]
-    right-binder ::= [ \r\n\t\)\]\},;:]
-
-    any-identifier ::= identifier | operator
-
-.. syntax-grammar::
-
-    Grammar of operators
-
-    operator --> operator-character operator-OPT
-    operator --> `..`
-
-    operator-character --> ``@`` | ``/`` | ``=`` | ``-`` | ``+`` | ``*`` | ``%`` | ``<`` | ``>`` | ``!`` | ``&`` | ``|`` | ``^`` | ``~``
-
-    binary-operator --> operator
-    prefix-operator --> operator
-    postfix-operator --> operator
-
-    any-identifier --> identifier | operator
-
-    left-binding-character --> U+0020 | U+000D | U+000A | U+0009 | ``(`` | ``[`` | ``{`` | ``,`` | ``;`` | ``:``
-    right-binding-character --> U+0020 | U+000D | U+000A | U+0009 | ``)`` | ``]`` | ``}`` | ``,`` | ``;`` | ``:``
-
-.. TODO: Move any-identifier.  It doesn't belong here -- it's not an operator.
+.. langref
+    When parsing certain grammatical constructs that involve '<' and '>' (such
+    as protocol composition types), an operator with a leading '<' or '>' may
+    be split into two or more tokens: the leading '<' or '>' and the remainder
+    of the token, which may be an operator or punctuation token that may itself
+    be further split. This rule allows us to parse nested constructs such as
+    A<B<C>> without requiring spaces between the closing '>'s.
 
 Left and right binding determine whether an operator is
 a prefix operator, a postfix operator, or a binary operator.
@@ -141,6 +121,26 @@ to use it in the ternary (``? :``) operator, it must not be left bound.
 
 .. langref-grammar
 
+    operator ::= [@/=-+*%<>!&|^~]+
+    operator ::= \.\.
+
+      Note: excludes '=', see [1]
+            excludes '->', see [2]
+            excludes unary '&', see [3]
+            excludes '//', '/*', and '*/', see [4]
+            '..' is an operator, not two '.'s.
+
+    operator-binary ::= operator
+    operator-prefix ::= operator
+    operator-postfix ::= operator
+
+    left-binder  ::= [ \r\n\t\(\[\{,;:]
+    right-binder ::= [ \r\n\t\)\]\},;:]
+
+    any-identifier ::= identifier | operator
+
+.. langref-grammar
+
     punctuation ::= '('
     punctuation ::= ')'
     punctuation ::= '{'
@@ -158,27 +158,22 @@ to use it in the ternary (``? :``) operator, it must not be left bound.
 
 .. syntax-grammar::
 
-    Grammar of reserved punctuation
+    Grammar of operators
 
+    operator --> operator-character operator-OPT
+    operator --> `..`
+
+    operator-character --> ``@`` | ``/`` | ``=`` | ``-`` | ``+`` | ``*`` | ``%`` | ``<`` | ``>`` | ``!`` | ``&`` | ``|`` | ``^`` | ``~``
     reserved-punctuation --> ``=`` | ``->`` | ``//`` | ``/*`` | ``*/`` | ``...`` | ``{`` | ``}`` | ``(`` | ``)`` | ``[`` | ``]`` | ``.`` | ``,`` | ``;`` | ``:``
 
-The character sequences in *reserved-punctuation* may not be used as operators.
-The unary prefix operator ``&`` is also reserved punctuation and may not be used as an operator.
+    binary-operator --> operator
+    prefix-operator --> operator
+    postfix-operator --> operator
 
-Operators with a leading ``<`` or ``>`` are split into two tokens:
-the leading ``<`` or ``>`` and the remainder of the token.
-The remainder may itself be split in the same way.
-This removes the need for disambiguating spaces between the closing ``>`` characters
-in nested protocols such as ``A<B<C>>``---
-it is parsed as ``A < B < C > >`` rather than as ``A < B < C >>``.
+    any-identifier --> identifier | operator
 
-.. langref
-    When parsing certain grammatical constructs that involve '<' and '>' (such
-    as protocol composition types), an operator with a leading '<' or '>' may
-    be split into two or more tokens: the leading '<' or '>' and the remainder
-    of the token, which may be an operator or punctuation token that may itself
-    be further split. This rule allows us to parse nested constructs such as
-    A<B<C>> without requiring spaces between the closing '>'s.
+    left-binding-character --> U+0020 | U+000D | U+000A | U+0009 | ``(`` | ``[`` | ``{`` | ``,`` | ``;`` | ``:``
+    right-binding-character --> U+0020 | U+000D | U+000A | U+0009 | ``)`` | ``]`` | ``}`` | ``,`` | ``;`` | ``:``
 
 
 Reserved Keywords
