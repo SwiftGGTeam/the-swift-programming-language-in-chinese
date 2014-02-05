@@ -43,22 +43,13 @@ but the ``/*`` and ``*/`` comment markers must be balanceed.
 
 .. TR: LangRef says comments are ignored *and* treated as whitespace.
    Is there a difference?
-
+   (TODO: If it's just whitespace, add `comment` to the end of `whitespace`.)
 
 .. syntax-grammar::
 
     Grammar of whitespace and comments
 
-    whitespace --> U+0000 (Null Character)
-    whitespace --> U+0009 (Horizontal Tab)
-    whitespace --> U+000A (Line Feed)
-    whitespace --> U+000D (Carriage Return)
-    whitespace --> U+0020 (Space)
-
-    whitespace --> U+0000 (Null Character) | U+0009 (Horizontal Tab) | U+000A (New Line) | U+000D (Carriage Return) | U+0020 (Space)
-
     whitespace --> U+0000 | U+0009 | U+000A | U+000D | U+0020
-
     comment --> single-line-comment | multiline-comment
 
     single-line-comment --> ``//`` comment-text line-end
