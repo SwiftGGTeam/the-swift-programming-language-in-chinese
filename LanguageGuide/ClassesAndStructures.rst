@@ -1117,6 +1117,10 @@ its ``status`` property is therefore initialized to ``OnTime``, as shown above.
 Changing the ``status`` property to ``.Delayed(96)``
 causes the ``description`` computed property to return an updated message.
 
+.. QUESTION: delayText doesn't actually need to be an instance method –
+   it could just as easily be a type method instead.
+   Should it be changed, and is there a better example for an instance method?
+
 .. admonition:: Experiment
 
     Try creating a convenience initializer, ``init withDelay(delay: Int)``,
