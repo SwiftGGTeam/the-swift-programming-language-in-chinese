@@ -99,16 +99,10 @@ Operator Identifiers
 
     Grammar of operators
 
-    operator --> left-bound-operator | right-bound-operator
-    left-bound-operator --> operator-characters left-binding-character
-    right-bound-operator --> right-binding-charactor operator-characters
+    operator --> operator-character operator-OPT
+    operator --> `..`
 
-    left-binding-character --> U+0020 | U+000D | U+000A | U+0009 | ``(`` | ``[`` | ``{`` | ``,`` | ``;`` | ``:``
-    right-binding-character --> U+0020 | U+000D | U+000A | U+0009 | ``)`` | ``]`` | ``}`` | ``,`` | ``;`` | ``:``
-
-    operator-characters --> operator-character operator-characters-OPT
-    operator-characters --> ``..``
-    operator-character --> ``@`` | ``/`` | ``=`` | ``-`` | ``+`` | ``*`` | ``%`` | ``<`` | ``>`` | ``!`` | ``&`` | ``|`` | ``^`` | ``~``
+    operator-characte --> ``@`` | ``/`` | ``=`` | ``-`` | ``+`` | ``*`` | ``%`` | ``<`` | ``>`` | ``!`` | ``&`` | ``|`` | ``^`` | ``~``
 
     binary-operator --> operator
     prefix-operator --> operator
@@ -119,14 +113,29 @@ Operator Identifiers
 
 .. TODO: Move any-identifier.  It doesn't belong here -- it's not an operator.
 
-Left and/or right binding determines whether an operator is
+.. TODO: The fact that an operator may be left and right bound,
+   and that the characters causing the binding are not part of the token,
+   means that it needs to be discussed in prose.
+
+
+Left and right binding determine whether an operator is
 a prefix operator, a postfix operator, or a binary operator.
+An operator followed by one of the following characters is left bound:
+
+left-binding-character --> U+0020 | U+000D | U+000A | U+0009 | ``(`` | ``[`` | ``{`` | ``,`` | ``;`` | ``:``
+
+An operator followed by one of the following characters is right bound:
+
+right-binding-character --> U+0020 | U+000D | U+000A | U+0009 | ``)`` | ``]`` | ``}`` | ``,`` | ``;`` | ``:``
+
 Operators that are left bound and not right bound are postfix operators.
 Operators that are right bound and not left bound are prefix operators.
 Operators that are not bound, and operators that are right and left bound, are binary operators.
 
-Any operator immediately followed by a period (``.``)
-is not right bound if it is already left bound.
+.. ^-- make a table?
+
+Any left bound operator immediately followed by a period (``.``)
+is not considered right bound.
 This special case ensures that expressions like ``a@.b`` are parsed
 as ``(a@).b`` rather than ``(a) @ (.b)``.
 
