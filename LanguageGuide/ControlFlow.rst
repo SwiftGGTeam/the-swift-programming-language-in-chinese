@@ -742,11 +742,9 @@ It decides if the point is
 at the origin (0, 0);
 on the red x-axis;
 on the orange y-axis;
-on the green diagonal line where ``x == y``; or
-on the purple diagonal line where ``x == -y``.
-If none of these cases are true,
-it calculates the point's distance from the origin using
-`the Pythagorean theorem <http://en.wikipedia.org/wiki/Pythagorean_theorem>`_:
+on the green diagonal line where ``x == y``;
+on the purple diagonal line where ``x == -y``;
+or none of the above.
 
 .. testcode::
 
@@ -763,8 +761,7 @@ it calculates the point's distance from the origin using
         case let (x, y) where x == -y:
             println("(\(x), \(y)) is on the line x == -y")
         case let (x, y):
-            var distanceFromOrigin = sqrt(Double(x * x + y * y))
-            println("(\(x), \(y)) is \(distanceFromOrigin) units from the origin")
+            println("(\(x), \(y)) is just some arbitrary point")
     }
     >>> (1, -1) is on the line x == -y
 

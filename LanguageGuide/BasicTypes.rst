@@ -193,14 +193,6 @@ you should always use ``Int`` for code consistency and interoperability.
 Even on 32-bit platforms, ``Int`` can store any value between ``-2,147,483,648`` and ``2,147,483,647``,
 and is typically large enough for everyday integer values.
 
-.. admonition:: Note
-
-    Swift's ``Int`` type will have a platform-specific size, as described above.
-    However, this has yet to be implemented.
-    In the meantime, ``Int`` is a typealias for ``Int64`` on both 32 and 64-bit platforms.
-
-.. TODO: Remove this admonition as per rdar://15612057 once rdar://15612767 is completed.
-
 Floating-Point Numbers
 ----------------------
 
@@ -214,15 +206,15 @@ Swift provides two signed floating-point number types:
 * ``Float``, which represents a 32-bit floating point number,
   and should be used when floating-point values do not require 64-bit precision
 
-Strong Typing and Type Inference
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Type Safety and Type Inference
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Swift is a *strongly-typed* language.
+Swift is a *type-safe* language.
 This means that it encourages you to be clear about the types of values and objects your code can work with.
 If some part of your code expects a string, for example,
-strong typing means that you can't accidentally pass it an integer by mistake.
+type safety means that you can't accidentally pass it an integer by mistake.
 
-Because Swift is strongly-typed,
+Because Swift is type safe,
 it is able to perform *type checks* when compiling your code.
 Any mismatched types are flagged as errors so that you can fix them.
 
@@ -500,7 +492,7 @@ Boolean values are particularly useful when working with conditional statements 
 
 Conditional statements such as ``if else`` are covered in more detail in :doc:`ControlFlow`.
 
-Swift's strong type-checking means that non-boolean values cannot be substituted for ``Bool``.
+Swift's type safety means that non-boolean values cannot be substituted for ``Bool``.
 You cannot, for example, say::
 
     (swift) let i = 1
@@ -517,10 +509,10 @@ However, it is valid to say::
     }
     
 The result of the ``i == 1`` comparison is a ``Bool``,
-and so this second example passes the strong type-check.
+and so this second example passes the type-check.
 (Comparisons like ``i == 1`` are discussed in :doc:`Operators`.)
 
-As with other examples of strong typing in Swift,
+As with other examples of type safety in Swift,
 this approach avoids accidental errors,
 and ensures that the intention of a particular section of code is always made clear.
 

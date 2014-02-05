@@ -73,7 +73,7 @@ Classes are introduced by the ``class`` keyword,
 and structures are introduced by the ``struct`` keyword.
 Both place their entire definition within a pair of braces:
 
-.. testcode:: classesAndStructs
+.. testcode:: classesAndStructures
 
     (swift) class SomeClass {
         /* class definition */
@@ -96,7 +96,7 @@ Classes and structures can both declare *properties*.
 Properties are named values that are bundled up and stored
 as part of the class or structure:
 
-.. testcode:: classesAndStructs
+.. testcode:: classesAndStructures
 
     (swift) struct Size {
         var width = 0.0, height = 0.0
@@ -110,7 +110,7 @@ with two variable properties called ``width`` and ``height``.
 These properties are inferred to be of type ``Double``
 by setting them to an initial floating-point value of ``0.0``.
 
-The example also defines a new class type called ``Rectangle``,
+The example also defines a new class called ``Rectangle``,
 which has a variable property called ``size``.
 This property is initialized with a new ``Size`` structure instance,
 which infers a property type of ``Size``.
@@ -125,7 +125,7 @@ To do that, you need to create an *instance* of the class or structure.
 
 The syntax for creating instances is very similar for both structures and classes:
 
-.. testcode:: classesAndStructs
+.. testcode:: classesAndStructures
 
     (swift) var someSize = Size()
     // someSize : Size = Size(0.0, 0.0)
@@ -142,7 +142,7 @@ the ``width`` and ``height`` values of the ``Size`` structure instance
 have been automatically initialized to ``0.0``,
 which was the default value provided by the ``Size`` structure's definition.
 
-Class and structure initialization is described in more detail in `Initializers`_ below.
+Class and structure initialization is described in more detail in `Initialization`_ below.
 
 .. TODO: add more detail about inferring a variable's type when using initializer syntax.
 .. TODO: note that you can only use the default constructor if you provide default values
@@ -151,44 +151,38 @@ Class and structure initialization is described in more detail in `Initializers`
 Terminology
 ___________
 
-An *instance* of a class (such as ``someRectangle`` above)
+An instance of a class (such as ``someRectangle`` above)
 is traditionally known as an *object*.
-This terminology will be used from now on to refer to instances of classes.
-Wherever you see the word *object* below,
-it will refer to a single specific instance of a particular class.
-
-Instances of structures are generally referred to as *structs*.
-The word ‘struct’ will be used from now on to refer to structure instances
-(such as ``someSize``),
-and the word *structure* will be used to refer to their type
-(such as ``Size``).
+However, Swift classes and structures are much closer in functionality than in other languages,
+and much of this chapter describes functionality that can apply to
+instances of *either* a class or a structure type.
+Because of this, the more general term *instance* is used below.
 
 Accessing Properties
 ~~~~~~~~~~~~~~~~~~~~
 
-The properties of an object or struct can be accessed using *dot syntax*:
+The properties of an instance can be accessed using *dot syntax*:
 
-.. testcode:: classesAndStructs
+.. testcode:: classesAndStructures
 
     (swift) println("The width of someSize is \(someSize.width)")
     >>> The width of someSize is 0.0
 
-``someSize.width`` refers to the ``width`` property of the ``someSize`` struct.
-Dot syntax can also be used to drill down into properties
-which are themselves objects or structs,
+``someSize.width`` refers to the ``width`` property of ``someSize``.
+Dot syntax can also be used to drill down into sub-properties
 such as the ``width`` property of a ``Rectangle``'s ``size``:
 
-.. testcode:: classesAndStructs
+.. testcode:: classesAndStructures
 
     (swift) println("The width of someRectangle is \(someRectangle.size.width)")
     >>> The width of someRectangle is 0.0
 
 Unlike Objective-C,
-the values of sub-properties can also be set directly, regardless of their type.
+the values of sub-properties can be set directly, regardless of their type.
 In the example below, ``someRectangle.size.width`` is set to a new value of ``2.0``,
 even though it is a sub-property of ``someRectangle.size``:
 
-.. testcode:: classesAndStructs
+.. testcode:: classesAndStructures
 
     (swift) someRectangle.size.width = 2.0
     (swift) println("The width of someRectangle is now \(someRectangle.size.width)")
@@ -198,11 +192,11 @@ Memberwise Structure Initializers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 All structures have an automatically-generated *memberwise initializer*,
-which can be used to initialise the member properties of new structs of that type.
-Initial values for the properties of the new struct
+which can be used to initialise the member properties of new structure instances.
+Initial values for the properties of the new instance
 can be passed to the memberwise initializer by name:
 
-.. testcode:: classesAndStructs
+.. testcode:: classesAndStructures
 
     (swift) let twoByTwo = Size(width: 2.0, height: 2.0)
     // twoByTwo : Size = Size(2.0, 2.0)
@@ -210,7 +204,7 @@ can be passed to the memberwise initializer by name:
 Initial values can also be provided without names,
 if they are listed in the same order that the properties are declared in the structure's definition:
 
-.. testcode:: classesAndStructs
+.. testcode:: classesAndStructures
 
     (swift) let fourByThree = Size(4.0, 3.0)
     // fourByThree : Size = Size(4.0, 3.0)
@@ -224,17 +218,18 @@ Stored Properties
 ~~~~~~~~~~~~~~~~~
 
 In its simplest form, a property is just a named value
-that is stored as part of an object or struct, as shown above.
+that is stored as part of an instance.
 Properties of this kind are known as *stored properties*.
-
 Stored properties can be either *variable stored properties*
 (introduced by the ``var`` keyword, as in the examples above),
 or *constant stored properties* (introduced by the ``let`` keyword).
+
 Constant stored properties are very similar to constant named values,
 in that their value cannot be changed once it has been initialized.
-Constant property initialization must be completed by the time
-the object or struct is itself fully initialized.
-(Instance initialization is described in more detail in `Initializers`_ below.)
+Constant stored properties have slightly more flexibility, however,
+in that their value can be changed at any point until the instance they belong to
+has completed its initialization.
+(Instance initialization is described in more detail in `Initialization`_ below.)
 
 Computed Properties
 ~~~~~~~~~~~~~~~~~~~
@@ -242,7 +237,7 @@ Computed Properties
 Classes and structures can also define *computed properties*,
 which do not actually store a value:
 
-.. testcode:: classesAndStructs
+.. testcode:: classesAndStructures
 
     (swift) struct Point {
         var x = 0.0, y = 0.0
@@ -306,7 +301,7 @@ and moves the square to its new position.
 Shorthand Getter and Setter Declarations
 ________________________________________
 
-A computed property's getter can be written without the ``get`` keyword
+A computed property's getter can be written without the ``get`` keyword,
 if the getter comes before the setter.
 Additionally, if a computed property's setter does not define a name
 for the new value to be set,
@@ -314,7 +309,7 @@ a default name of ``value`` is used.
 Here's an alternative version of the ``Rect`` structure,
 which takes advantage of these shorthand notations:
 
-.. testcode:: classesAndStructs
+.. testcode:: classesAndStructures
 
     (swift) struct AlternativeRect {
         var origin = Point()
@@ -343,7 +338,7 @@ the declaration of computed properties –
 including read-only computed properties –
 can be simplified by removing the ``get`` keyword:
 
-.. testcode:: classesAndStructs
+.. testcode:: classesAndStructures
 
     (swift) struct Cuboid {
         var width = 0.0, height = 0.0, depth = 0.0
@@ -381,8 +376,6 @@ are always declared as variable properties (via the ``var`` introducer).
 The ``let`` introducer is only ever used for constant properties,
 to indicate that their value cannot be changed once it is set as part of instance initialization.
 
-.. TODO: make it explicit that we have constant and variable properties,
-   and perhaps change the HTTPStatus example to use a class rather than a struct
 .. NOTE: getters and setters are also allowed for named values
    that are not associated with a particular class or struct.
    Where should this be mentioned?
@@ -393,7 +386,7 @@ Properties and Instance Variables
 
 If you have experience with Objective-C,
 you may be familiar with the fact that it provides two complementary ways
-to store values and references alongside objects.
+to store values and references alongside instances of a class.
 In addition to properties,
 Objective-C also has the concept of *instance variables*,
 which are used as a 'backing' store for the values stored in a property.
@@ -439,13 +432,13 @@ integers, floating-point numbers, booleans, strings, enumerations, arrays and di
 are value types.
 
 Swift structures are also value types.
-This means that any structs you create –
+This means that any instances you create from your own structures –
 and any value types they have as properties –
 will always be copied when they are passed around.
 
 For example, using the ``Size`` structure from above:
 
-.. testcode:: classesAndStructs
+.. testcode:: classesAndStructures
 
     (swift) let iPhone4 = Size(width: 640.0, height: 960.0)
     // iPhone4 : Size = Size(640.0, 960.0)
@@ -458,31 +451,31 @@ For example, using the ``Size`` structure from above:
     >>> The iPhone 4 screen is still 960.0 pixels high
 
 This example declares a constant called ``iPhone4``,
-and sets it to a ``Size`` struct initialized with
+and sets it to a ``Size`` instance initialized with
 the width and height of the iPhone 4's screen
 (which is 640 pixel wide, and 960 pixels tall).
 
 It then declares a variable called ``iPhone5``,
 and sets it to the current value of ``iPhone4``.
 Because ``Size`` is a structure,
-a new copy of the existing struct is made,
+a new copy of the existing instance is made,
 and this new copy is assigned to ``iPhone5``.
 ``iPhone4`` and ``iPhone5`` may currently have the same width and height,
-but they are two completely different structs behind the scenes.
+but they are two completely different instances behind the scenes.
 
-Next, the ``height`` property of the ``iPhone5`` struct is amended to be
+Next, the ``height`` property of ``iPhone5`` is amended to be
 the height of the iPhone 5's taller screen (which is 1,136 pixels tall).
 
 The two calls to ``println`` at the end of this example show that
 the ``height`` property of ``iPhone5`` has indeed changed to be ``1136.0``.
-However, the ``height`` property of the original ``iPhone4`` struct
+However, the ``height`` property of the original ``iPhone4`` instance
 still has the old value of ``960.0``.
 
 When ``iPhone5`` is given the current value of ``iPhone4``,
-the *values* stored in ``iPhone4`` are copied into the new ``iPhone5`` struct.
-The end result is two completely separate structs,
-which just happened to contain the same numeric values.
-Because they are separate structs,
+the *values* stored in ``iPhone4`` are copied into the new ``iPhone5`` instance.
+The end result is two completely separate instances,
+which just happen to contain the same numeric values.
+Because they are separate instances,
 setting the height of ``iPhone5`` to ``1136.0``
 doesn't affect the height value stored in ``iPhone4``.
 
@@ -493,14 +486,14 @@ Reference Types
 
 Unlike value types, a reference type is *not* copied when is assigned to a variable or constant,
 or when it is passed to a function.
-Rather than making a copy, a *reference* to the same existing instance of that type is used instead.
+Rather than making a copy, a *reference* to the same existing instance is used instead.
 
 .. TODO: This enables you to have multiple variables and constants
    that all refer to the same one instance. 
 
 Here's an example, using the ``Rectangle`` class defined above:
 
-.. testcode:: classesAndStructs
+.. testcode:: classesAndStructures
 
     (swift) let rect = Rectangle()
     // rect : Rectangle = <Rectangle instance>
@@ -516,16 +509,16 @@ Here's an example, using the ``Rectangle`` class defined above:
     >>> The rectangle's width is now 3.0
 
 This example declares a new constant called ``rect``,
-and sets it to refer to a new ``Rectangle`` object.
+and sets it to refer to a new ``Rectangle`` instance.
 The rectangle is given a size with a width and height of ``1.0``.
 
 A second constant is also declared, called ``sameRect``,
 and is set to refer to the same rectangle already referred to by ``rect``.
-This *doesn't* copy ``rect``, or create a new ``Rectangle`` object –
-instead, there are now *two* constants that refer to the same one underlying object.
+This *doesn't* copy ``rect``, or create a new ``Rectangle`` instance –
+instead, there are now *two* constants that refer to the same one underlying instance.
 
 The width of the rectangle is then modified.
-Because ``sameRect`` refers to the same object as ``rect``,
+Because ``sameRect`` refers to the same instance as ``rect``,
 the underlying ``width`` and ``height`` properties can be accessed via either ``rect`` or ``sameRect`` –
 it doesn't make a difference which one is chosen, as they both refer to the same thing.
 Here, the width and height are accessed and changed via ``sameRect``
@@ -563,7 +556,7 @@ are very similar to pointers in C-like languages,
 but do not use the reference operator (``&``) or dereference operator (``*``)
 to differentiate between a pointer and the memory it points to.
 Instead, a reference type in Swift is declared like any other named value,
-and the value it contains is always a reference to a particular object instance.
+and the value it contains is always a reference to a particular instance of that type.
 
 .. TODO: We need something here to say
    "but don't worry, you can still do all of the stuff you're used to".
@@ -578,8 +571,8 @@ Choosing Between Classes and Structures
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Classes and structures have many things in common.
-However, the fact that structs are always passed by value,
-and objects are always passed by reference,
+However, the fact that structure instances are always passed by value,
+and class instances are always passed by reference,
 means that they are suited to different kinds of tasks.
 As you consider the data constructs and functionality that you need for a project,
 you will need to decide whether each data construct should be
@@ -607,8 +600,7 @@ Examples of good candidates for structures include:
 * a point in a 3D coordinate system
   (perhaps encapsulating ``x``, ``y`` and ``z`` properties, each of type ``Double``)
 
-In all other cases, you should define a class,
-and create objects as instances of that class,
+In all other cases, you should define a class, and create instances of that class,
 to be managed and passed by reference.
 In practice, this means that most custom data constructs should be classes,
 not structures.
@@ -618,21 +610,12 @@ Methods
 
 [to be written]
 
-Initializers
-------------
-
-[to be written]
-
-Type Properties and Methods
----------------------------
-
-[to be written]
-
-.. TODO: mention that all by-value properties of a constant struct are also constant
-.. TODO: what happens if one property of a constant struct is an object reference?
-.. TODO: immutability of value type constants means that
-   their mutable properties are also immutable
-.. TODO: type variables, constants and methods
+.. TODO: mention that the only time you *need* to use self to refer to properties is
+   when a method parameter has the same name as a property.
+   You could fix this either by using self.propertyName,
+   or by changing the parameter name.
+   This is mentioned here, rather than in Initializer Methods below,
+   because it is a general principle for all methods when they access instance properties.
 
 Inheritance
 -----------
@@ -641,15 +624,507 @@ Inheritance
 
 .. TODO: mention that methods can return DynamicSelf (a la instancetype)
 
+Initialization
+--------------
+
+Classes and structures should always initialize their stored properties with initial values.
+There are two ways to provide initial values for your properties:
+
+1. Include an initial value as part of the property declaration
+   (as described in `Properties`_)
+2. Provide a value for the property within an *initializer method*
+
+.. note::
+    If you assign a default value to a property,
+    or set its initial value within an initializer method,
+    the value of that property is set directly, without calling any observers.
+    Any ``willSet`` or ``didSet`` methods that observe the setting of that property
+    will not be called at the point that it is initialized.
+
+.. QUESTION: is this the right place to mention this note?
+
+.. QUESTION: the same is also true for Obj-C KVO observers of the property.
+   Is it appropriate to mention that here?
+
+.. QUESTION: is this true once the instance is fully qualified within the initializer?
+   To put it another way, is property setting *always* direct in an init?
+   (I think the answer is yes.)
+
+Initializer Methods
+~~~~~~~~~~~~~~~~~~~
+
+*Initializer methods* are special methods that can be called when a new instance of your type is created.
+In its simplest form, an initializer method is just an instance method with no parameters,
+written using the ``init`` keyword:
+
+.. testcode:: initialization
+
+    (swift) struct Fahrenheit {
+        var temperature: Double
+        init() {
+            temperature = 32.0
+        }
+    }
+    (swift) var f = Fahrenheit()
+    // f : Fahrenheit = Fahrenheit(32.0)
+    (swift) println("The default temperature is \(f.temperature)° Fahrenheit")
+    >>> The default temperature is 32.0° Fahrenheit
+
+This example defines a new structure to store temperatures expressed in the Fahrenheit scale.
+The structure has one stored property, ``temperature``, which is of type ``Double``.
+The structure defines a single initializer method, ``init()``, with no parameters,
+which initializes the stored temperature value to ``32.0``
+(the freezing point of water when expressed in the Fahrenheit scale).
+
+Initializer methods always begin with ``init``,
+and do not require the ``func`` keyword before their name.
+Unlike Objective-C, Swift initializer methods do not return a value.
+Their primary role is to ensure that new instances of that type
+are correctly initialized before they are used for the first time.
+
+As an alternative, this example could have been written
+by providing a default value at the point that the property is declared:
+
+.. testcode:: initialization
+
+    (swift) struct AnotherFahrenheit {
+        var temperature: Double = 32.0
+    }
+
+If a property should always taken the same initial value,
+it is preferable to set this value as a default when the property is declared,
+as in the ``AnotherFahrenheit`` example.
+The end result –
+a default value of ``32.0`` for ``temperature`` when a new instance is created –
+is the same in both cases.
+
+Swift provides a *default initializer* method implementation
+for any class or structure that does not provide at least one initializer method itself.
+The default initializer simply creates a new instance
+with all of its properties set to their default values.
+You don't have to declare that you want the default initializer to be implemented –
+it is available automatically for all classes and structures without their own initializer.
+
+.. note::
+    The default initializer method for structures is provided in addition to the
+    `memberwise structure initializers`_ mentioned earlier in this chapter.
+    The default initializer and the memberwise initializer are only provided
+    if the structure does not define at least one custom initializer method itself.
+
+.. TODO: Add a justification?
+
+Initializer methods can take optional input parameters,
+to customize the initialization process.
+The following example defines a structure to store temperatures expressed in the Celsius scale.
+It implements two custom initializer methods,
+each of which initializes a new instance of the structure
+with a value from a different temperature scale:
+
+.. testcode:: initialization
+
+    (swift) struct Celsius {
+        var temperatureInCelsius: Double = 0.0
+        init withFahrenheit(fahrenheit: Double) {
+            temperatureInCelsius = (fahrenheit - 32.0) / 1.8
+        }
+        init withKelvin(kelvin: Double) {
+            temperatureInCelsius = kelvin + 273.15
+        }
+    }
+    (swift) var boilingPointOfWater = Celsius(withFahrenheit: 212.0)
+    // boilingPointOfWater : Celsius = Celsius(100.0)
+    (swift) var freezingPointOfWater = Celsius(withKelvin: -273.15)
+    // freezingPointOfWater : Celsius = Celsius(0.0)
+
+The value of a constant ``let`` property can be modified at any point during initialization,
+as long as is is definitely set to a value by the time the initializer has finished:
+
+.. testcode:: initialization
+
+    (swift) struct Temperature {
+        let storedValue: Double
+        let storedScale: String
+        init withValue(value: Double) inScale(scale: String) {
+            storedValue = value
+            storedScale = scale
+        }
+        func toKelvin() -> Double {
+            switch storedScale {
+                case "F": // Fahrenheit
+                    return (storedValue - 32.0) / 1.8
+                case "C": // Celsius
+                    return storedValue + 273.15
+                default:  // assume Kelvin otherwise
+                    return storedValue
+            }
+        }
+    }
+    (swift) var absoluteZero = Temperature(withValue: -273.15, inScale: "C")
+    // absoluteZero : Temperature = Temperature(-273.15, "C")
+    (swift) println("Temperature is \(absoluteZero.toKelvin())°K")
+    >>> Temperature is 0.0°K
+
+.. TODO: This could do with a more elegant example.
+
+Definite Initialization
+~~~~~~~~~~~~~~~~~~~~~~~
+
+If your class or structure provides one or more custom initializer methods,
+Swift checks these methods to make sure that all properties are fully initialized
+by the time each initializer method has done its job.
+This process is known as *definite initialization*,
+and helps to ensure that your instances are always valid before they are used.
+Swift will warn you at compile-time if your class or structure does not pass
+the definite initialization test.
+
+Initializer Delegation
+~~~~~~~~~~~~~~~~~~~~~~
+
+Initializers can delegate some or all of the task of initialization to
+other initializers within the same class or structure by calling ``self.init``.
+The code below defines a ``Document`` class,
+which uses a default ``title`` value of ``[untitled]`` if none is specified:
+
+.. testcode:: initialization
+
+    (swift) class Document {
+        var title: String
+        init withTitle(title: String) {
+            self.title = title
+        }
+        init() {
+            self.init(withTitle: "[untitled]")
+        }
+    }
+
+.. note::
+    The ``init withTitle()`` method refers to the instance's ``title`` property as ``self.title``,
+    rather than simply as ``title``.
+    This is required to differentiate between the *variable property* called ``title``,
+    and the *initializer method parameter* called  ``title``.
+    The ``self`` prefix would not be required if their names were different.
+    The use of ``self`` before the property name does not affect
+    the way in which the property is accessed or set –
+    it is purely used for disambiguation.
+
+This first example declares a new constant called ``thisBook``,
+and sets it to the result of calling ``init withTitle()`` for a specific title string:
+
+.. testcode:: initialization
+
+    (swift) let thisBook = Document(withTitle: "The Swift Programming Language")
+    // thisBook : Document = <Document instance>
+    (swift) println("This book is called '\(thisBook.title)'")
+    >>> This book is called 'The Swift Programming Language'
+
+This second example declares a new constant called ``someBook``,
+and sets it to the result of ``Document``'s basic ``init()`` method.
+This method delegates to the more detailed ``init withTitle()`` method,
+passing it a placeholder string value of ``[untitled]``:
+
+.. testcode:: initialization
+
+    (swift) let someBook = Document()
+    // someBook : Document = <Document instance>
+    (swift) println("Some unknown book is called '\(someBook.title)'")
+    >>> Some unknown book is called '[untitled]'
+
+Both of these initializer methods ensure that the value of ``title``
+is set to a valid string before the method ends.
+This means that the ``Document`` class passes the ‘definite initialization’ test mentioned above.
+
+Subclassing and Initialization
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Swift classes do not automatically inherit initializer methods from their parent classes.
+This behavior is different from Objective-C, where initializers are inherited by default.
+Swift's avoidance of automatic initializer inheritance ensures that
+subclasses are able to control exactly how they can be instantiated.
+
+To help with this,
+Swift inserts an implicit call to ``super.init()``
+at the end of any subclass initializer method
+that does not either call a superclass initializer itself,
+or hand off to a same-class initializer that ultimately calls a superclass initializer.
+This ensures that properties of the parent class
+(and so on up the chain)
+still get instantiated,
+even if an explicit superclass initializer is not called.
+
+The example below defines a new subclass of ``Document``, called ``TextDocument``.
+This subclass adds an additional string property called ``bodyText``,
+which is given a default value of ``[replace me]``.
+
+``TextDocument`` provides four ways for a new text document to be initialized:
+
+* ``init()``, passing in no specific values
+* ``init withTitle()``, passing in a specific title but no body text
+* ``init withText()``, passing in some specific body text but no title
+* ``init withTitle() text()``, passing in a specific title and body text
+
+Here's how it looks in Swift code:
+
+.. testcode:: initialization
+
+    (swift) class TextDocument : Document {
+
+        var bodyText: String = "[replace me]"
+
+        init() {}
+
+        init withTitle(title: String) {
+            super.init(withTitle: title)
+        }
+
+        init withText(text: String) {
+            bodyText = text
+        }
+
+        init withTitle(title: String) text(text: String) {
+            self.init(withTitle: title)
+            bodyText = text
+        }
+
+    }
+
+The first initializer method, ``init()``, takes no parameters at all.
+The curly braces after the parentheses define an empty code block for the method:
+
+::
+
+    (swift)     init() {}
+
+Despite having an empty code block,
+this method still creates a new ``TextDocument`` instance with a default title and text.
+The default value of ``bodyText`` comes from the ``bodyText`` property declaration,
+and the default value of ``title`` comes from Swift inserting an implicit call to ``super.init()``
+at the end of this empty code block.
+
+Here's how this initializer could be called:
+
+.. testcode:: initialization
+
+    (swift) let empty = TextDocument()
+    // empty : TextDocument = <TextDocument instance>
+    (swift) println("\(empty.title):\n\(empty.bodyText)")
+    >>> [untitled]:
+    >>> [replace me]
+
+``TextDocument`` does not actually do any custom initialization inside its empty ``init()`` method.
+However, it is still necessary to provide an empty definition
+in order to be able to call ``TextDocument()``.
+Because ``TextDocument`` defines its own initializers,
+it does not get a default initializer implementation for ``init()``.
+Providing an empty ``init()`` definition means that there is
+still an ``init()`` method to call when a new document is created via basic initializer syntax.
+
+The second initializer method, ``init withTitle()``,
+calls the superclass ``init withTitle()`` method from ``Document``,
+and passes in the new value of ``title``:
+
+::
+
+    (swift)     init withTitle(title: String) {
+            super.init(withTitle: title)
+        }
+
+As before, the value of ``bodyText`` comes from the property' default value.
+
+Here's how this initializer could be called:
+
+.. testcode:: initialization
+
+    (swift) let titled = TextDocument(withTitle: "Write something please")
+    // titled : TextDocument = <TextDocument instance>
+    (swift) println("\(titled.title):\n\(titled.bodyText)")
+    >>> Write something please:
+    >>> [replace me]
+
+The third initializer method, ``init withText()``,
+sets the ``bodyText`` property to a new ``text`` value:
+
+::
+
+    (swift)     init withText(text: String) {
+            bodyText = text
+        }
+
+Because it doesn't call a superclass initializer,
+Swift inserts an implicit ``super.init()`` call at the end of the method.
+This calls ``Document``'s ``init()`` method,
+which in turn calls ``Document``'s ``init withTitle()`` method
+and sets the same placeholder title as before.
+
+Here's how this initializer could be called:
+
+.. testcode:: initialization
+
+    (swift) let untitledPangram = TextDocument(
+        withText: "Amazingly few discotheques provide jukeboxes")
+    // untitledPangram : TextDocument = <TextDocument instance>
+    (swift) println("\(untitledPangram.title):\n\(untitledPangram.bodyText)")
+    >>> [untitled]:
+    >>> Amazingly few discotheques provide jukeboxes
+
+The final initializer method, ``init withTitle() text()``,
+starts by delegating across to ``TextDocument``'s own ``init withTitle()`` method.
+This in turn delegates up to ``Document``'s ``init withTitle()`` method.
+It then sets ``bodyText`` to the new ``text`` value.
+
+::
+
+    (swift)     init withTitle(title: String) text(text: String) {
+            self.init(withTitle: title)
+            bodyText = text
+        }
+
+There's no reason why ``TextDocument`` couldn't have called up to
+``Document``'s ``init withTitle()`` method directly.
+The decision to delegate to its *own* ``init withTitle()`` method is mainly a design choice.
+If ``TextDocument`` were to gain new functionality in the future –
+perhaps to insert and update the title at the start of the body text –
+then this functionality would typically be added in its own ``init withTitle()`` method.
+Delegating to its own implementation of the method,
+rather than straight up to the parent method,
+helps to plan for functionality changes in the future.
+
+Here's how this final initializer could be called:
+
+.. testcode:: initialization
+
+    (swift) let foxPangram = TextDocument(
+        withTitle: "Quick brown fox",
+        text: "The quick brown fox jumped over the lazy dog")
+    // foxPangram : TextDocument = <TextDocument instance>
+    (swift) println("\(foxPangram.title):\n\(foxPangram.bodyText)")
+    >>> Quick brown fox:
+    >>> The quick brown fox jumped over the lazy dog
+
+.. TODO: Illustrate how the order of things matters when inserting calls to super.init
+
 Destructors
 -----------
 
 [to be written]
 
+Type Properties and Methods
+---------------------------
+
+[to be written]
+
+.. TODO: mention that all by-value properties of a constant structure are also constant
+.. TODO: what happens if one property of a constant structure is an object reference?
+.. TODO: immutability of value type constants means that
+   their mutable properties are also immutable
+.. TODO: type variables, constants and methods
+
 Type Casting
 ------------
 
 [to be written]
+
+Enumerations
+------------
+
+Several of the features described above for classes and structures
+are also available to enumeration types in Swift:
+
+* *initializer methods*, to provide a default enumeration member
+* *computed properties*, to provide additional information about the current enumeration member, and
+* *instance methods*, to provide utility functionality
+
+The example below shows all of these capabilities in action for a complex enumeration:
+
+.. testcode:: enumerationSpecialFeatures
+
+    (swift) enum TrainStatus {
+        case OnTime, Delayed(Int)
+        init() {
+            self = OnTime
+        }
+        var description: String {
+            switch self {
+                case OnTime:
+                    return "on time"
+                case Delayed(var minutes):
+                    return "delayed by " + self.delayText(minutes)
+            }
+        }
+        func delayText(minutes: Int) -> String {
+            switch minutes {
+                case 1:
+                    return "1 minute"
+                case 2..60:
+                    return "\(minutes) minutes"
+                case 60..120:
+                    let extra = minutes - 60
+                    return "an hour and \(extra) minutes"
+                default:
+                    return "more than two hours"
+            }
+        }
+    }
+    (swift) class Train {
+        var status = TrainStatus()
+    }
+    (swift) let train = Train()
+    // train : Train = <Train instance>
+    (swift) println("The train is \(train.status.description)")
+    >>> The train is on time
+    (swift) train.status = .Delayed(96)
+    (swift) println("The train is now \(train.status.description)")
+    >>> The train is now delayed by an hour and 36 minutes
+
+This example defines an enumeration called ``TrainStatus``,
+to encapsulate the current live progress of a train during its journey.
+The enumeration has two possible states:
+
+* ``OnTime``, with no associated value, and
+* ``Delayed``, which stores an associated value of the number of minutes by which
+  the train is currently delayed
+
+The enumeration provides a basic initializer, ``init()``,
+which assumes that the train's state is ‘on time’.
+This is a reasonable default state for a train starting out on its journey
+if no other information is provided.
+The ``init()`` method uses the special ``self`` keyword to refer to
+the new instance of ``TrainStatus`` that is being created,
+and requests that it become an instance of the ``OnTime`` enumeration member.
+
+.. note::
+
+    Enumerations are the only types that can
+    specify a value for ``self`` in this way during initialization.
+    ``self = OnTime`` does not (strictly speaking)
+    create a new ‘instance’ of ``OnTime`` here.
+    Rather, it specifies that ``OnTime`` is the enumeration member to be used
+    when creating this new instance.
+    Classes and structures cannot assign to ``self`` in this way during initialization.
+
+``TrainStatus`` defines a read-only computed ``String`` property called ``description``,
+which provides a human-readable description based on the enumeration member type.
+``description`` makes use of a convenience method called ``delayText()``,
+which provides a text-based time description for an integer delay in minutes.
+It makes sense to implement ``delayText()`` as an instance method of ``TrainStatus``,
+as it provides supporting functionality for a specific ``TrainStatus`` task.
+
+The example also defines a ``Train`` class,
+with a variable ``status`` property of type ``TrainStatus``.
+The property's default value is set to a new ``TrainStatus`` instance,
+which will be initialized using the ``init()`` method from ``TrainStatus``.
+When a new instance of ``Train`` is created,
+its ``status`` property is therefore initialized to ``OnTime``, as shown above.
+Changing the ``status`` property to ``.Delayed(96)``
+causes the ``description`` computed property to return an updated message.
+
+.. admonition:: Experiment
+
+    Try creating a convenience initializer, ``init withDelay(delay: Int)``,
+    to give a way to initialize a new ``TrainStatus`` based on an initial delay.
+    It should perform a safety-check over the input value
+    in case it is passed a value of ``0`` minutes –
+    which would indicate that the train is ``OnTime``,
+    not ``Delayed`` by ``0`` minutes.
 
 .. refnote:: References
 

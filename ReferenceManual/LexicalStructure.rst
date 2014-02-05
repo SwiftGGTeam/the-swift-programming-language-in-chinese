@@ -575,7 +575,7 @@ Code Blocks
 .. syntax-outline::
 
     {
-        <#code to execute#>
+        <#statements#>
     }
 
 .. langref-grammar
@@ -589,6 +589,4 @@ Code Blocks
 
     Grammar of a code block
 
-    code-block --> ``{`` code-block-items-OPT ``}``
-    code-block-items --> code-block-item code-block-items-OPT
-    code-block-item --> declaration | expression | statement
+    code-block --> ``{`` statements-OPT ``}``

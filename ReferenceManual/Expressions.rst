@@ -232,7 +232,7 @@ Closure Expression
 
     Grammar of a closure expression
 
-    closure-expression --> ``{`` closure-signature-OPT code-block-items ``}``
+    closure-expression --> ``{`` closure-signature-OPT statements ``}``
     closure-expressions --> closure-expression closure-expressions-OPT
 
     closure-signature --> tuple-pattern function-signature-result-OPT ``in``
