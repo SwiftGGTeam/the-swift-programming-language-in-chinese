@@ -762,7 +762,7 @@ as long as is is definitely set to a value by the time the initializer has finis
     (swift) var absoluteZero = Temperature(withValue: -273.15, inScale: "C")
     // absoluteZero : Temperature = Temperature(-273.15, "C")
     (swift) println("Temperature is \(absoluteZero.toKelvin())°K")
-    >>> Temperature is 0.0 °K
+    >>> Temperature is 0.0°K
 
 .. TODO: This could do with a more elegant example.
 
