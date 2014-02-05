@@ -103,8 +103,8 @@ Operator Identifiers
     left-bound-operator --> operator-characters left-binding-character
     right-bound-operator --> right-binding-charactor operator-characters
 
-    left-binding-character --> U+0020 (Space) | U+000D (Carriage Return) | U+000A (New Line) | U+0009 (Horizontal Tab) | ``(`` | ``[`` | ``{`` | ``,`` | ``;`` | ``:``
-    right-binding-character --> U+0020 (Space) | U+000D (Carriage Return) | U+000A (New Line) | U+0009 (Horizontal Tab) | ``)`` | ``]`` | ``}`` | ``,`` | ``;`` | ``:``
+    left-binding-character --> U+0020 | U+000D | U+000A | U+0009 | ``(`` | ``[`` | ``{`` | ``,`` | ``;`` | ``:``
+    right-binding-character --> U+0020 | U+000D | U+000A | U+0009 | ``)`` | ``]`` | ``}`` | ``,`` | ``;`` | ``:``
 
     operator-characters --> operator-character operator-characters-OPT
     operator-characters --> ``..``
@@ -473,10 +473,10 @@ The digits in these escape codes identify a Unicode codepoint.
 
     character-literal --> ``'`` quoted-character ``'``
     quoted-character --> escaped-character
-    quoted-character --> Any character except ``'`` ``\`` U+000A (Line Feed) U+000D (Carriage Return)
+    quoted-character --> Any character except ``'`` ``\`` U+000A U+000D
 
     quoted-character --> Any character that does not match quoted-character-exceptions
-    quoted-character-exceptions -- ``'`` | ``\`` | U+000A (Line Feed) | U+000D (Carriage Return)
+    quoted-character-exceptions -- ``'`` | ``\`` | U+000A | U+000D
 
     escaped-character --> ``\0`` | ``\\`` | ``\t`` | ``\n`` | ``\r`` | ``\"`` | ``\'``
     escaped-character --> ``\x`` hexadecimal-digit hexadecimal-digit
@@ -543,10 +543,10 @@ a carriage return, or a line feed.
     quoted-text-item --> escaped-character
     quoted-text-item --> ``\(`` interpolated-expression ``)``
 
-    quoted-text-item --> Any text that does not contain ``"`` ``\`` U+000A (Line Feed) U+000D (Carriage Return)
+    quoted-text-item --> Any text that does not contain ``"`` ``\`` U+000A U+000D
 
     quoted-text-item --> Any text that does not contain a character from quoted-text-exceptions
-    quoted-text-exceptions --> ``"`` | ``\`` | U+000A (Line Feed) | U+000D (Carriage Return)
+    quoted-text-exceptions --> ``"`` | ``\`` | U+000A | U+000D
 
     interpolated-expression --> Any text that matches both expression and quoted-text
 
