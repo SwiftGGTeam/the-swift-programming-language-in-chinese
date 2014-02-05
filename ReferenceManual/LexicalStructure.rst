@@ -102,12 +102,11 @@ Operator Identifiers
     operator --> operator-character operator-OPT
     operator --> `..`
 
-    operator-characte --> ``@`` | ``/`` | ``=`` | ``-`` | ``+`` | ``*`` | ``%`` | ``<`` | ``>`` | ``!`` | ``&`` | ``|`` | ``^`` | ``~``
+    operator-character --> ``@`` | ``/`` | ``=`` | ``-`` | ``+`` | ``*`` | ``%`` | ``<`` | ``>`` | ``!`` | ``&`` | ``|`` | ``^`` | ``~``
 
     binary-operator --> operator
     prefix-operator --> operator
     postfix-operator --> operator
-    postfix-operators --> postfix-operator postfix-operators-OPT
 
     any-identifier --> identifier | operator
 
