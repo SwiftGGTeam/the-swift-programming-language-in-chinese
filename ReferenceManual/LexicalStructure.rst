@@ -349,6 +349,15 @@ Literals
 Integer Literals
 ~~~~~~~~~~~~~~~~
 
+Integer literals are made up of a series of digits 0 through 9,
+with optional underscores (``_``) between digits for readability.
+The underscores are ignored by the compiler.
+
+By default, integers are expressed in decimal;
+binary literals begin with ``0b``,
+octal literals begin with ``0x``,
+and hexadecimal literals begin with ``0x``.
+
 .. langref-grammar
 
     integer_literal ::= [0-9][0-9_]*
@@ -375,14 +384,14 @@ Integer Literals
     binary-digit --> ``0`` | ``1``
     octal-digit --> ``0`` | ``1`` | ``2`` | ``3`` | ``4`` | ``5`` | ``6`` | ``7``
     decimal-digit --> ``0`` | ``1`` | ``2`` | ``3`` | ``4`` | ``5`` | ``6`` | ``7`` | ``8`` | ``9``
-    hexidecimal-digit --> decimal-digit
+    hexidecimal-digit --> ``0`` | ``1`` | ``2`` | ``3`` | ``4`` | ``5`` | ``6`` | ``7`` | ``8`` | ``9``
     hexidecimal-digit --> ``A`` | ``B`` | ``C`` | ``D`` | ``E`` | ``F``
     hexidecimal-digit --> ``a`` | ``b`` | ``c`` | ``d`` | ``e`` | ``f``
 
     binary-digit-tail --> binary-digit binary-digit-tail-OPT | ``_`` binary-digit-tail-OPT
     octal-digit-tail --> octal-digit octal-digit-tail-OPT | ``_`` octal-digit-tail-OPT
     decimal-digit-tail --> decimal-digit decimal-digit-tail-OPT | ``_`` decimal-digit-tail-OPT
-    hexadecimal-digit-tail --> hexadecimal-digit hexadecimal-digit-tail-OPT | ``_``hexadecimal-digit-tail-OPT
+    hexadecimal-digit-tail --> hexadecimal-digit hexadecimal-digit-tail-OPT | ``_`` hexadecimal-digit-tail-OPT
 
 .. TR: This grammar matches the LangRef in permitting a trailing
    underscore, allowing things like 1_000_ to be matched.  Is that
