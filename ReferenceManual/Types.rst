@@ -46,7 +46,7 @@ you can extend their behavior to suit the needs of your program,
 using an extension declaration, discussed in [NEED A LINK].
 
 A *compound type* is a type without a name, defined in the Swift language itself.
-These includes types that represent functions and tuples.
+There are two compound types in the language: function types and tuple types.
 A compound type may contain named types and other compound types.
 For instance, the tuple type ``(Int, (Int, Int))`` contains two elements:
 the first is the named type ``Int``,
