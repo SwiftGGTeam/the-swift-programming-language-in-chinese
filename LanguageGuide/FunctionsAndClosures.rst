@@ -130,15 +130,15 @@ Multiple Input Parameters
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Functions can have multiple input parameters.
-This function takes a start and an end index for a range,
-and works out how long the range is:
+This function takes a start and an end index for a half-open range,
+and works out how many elements the range contains:
 
 .. testcode::
 
-    (swift) func rangeLength(startIndex: Int, endIndex: Int) -> Int {
+    (swift) func halfOpenRangeLength(startIndex: Int, endIndex: Int) -> Int {
         return endIndex - startIndex
     }
-    (swift) println(rangeLength(1, 10))
+    (swift) println(halfOpenRangeLength(1, 10))
     >>> 9
 
 Tuples As Input Parameters
@@ -153,12 +153,12 @@ For example, the range function above can be rewritten to take a tuple of two ``
 
 .. testcode::
 
-    (swift) func rangeLengthForRange(range: (Int, Int)) -> Int {
+    (swift) func halfOpenRangeLengthForRange(range: (Int, Int)) -> Int {
         return range.1 - range.0
     }
     (swift) var someRange = (1, 10)
     // someRange : (Int, Int) = (1, 10)
-    (swift) println(rangeLengthForRange(someRange))
+    (swift) println(halfOpenRangeLengthForRange(someRange))
     >>> 9
 
 Note that this function takes *one* input parameter, not two.
@@ -167,7 +167,7 @@ This ability to bundle up related values into a single compound value
 is one of the major benefits of tuples.
 This function can be passed any tuple of type ``(Int, Int)`` –
 such as ``(1, 10)`` in the example above –
-and it will calculate the range length for that tuple.
+and it will calculate the half-open range length for that tuple.
 
 Parameter Names
 ~~~~~~~~~~~~~~~
