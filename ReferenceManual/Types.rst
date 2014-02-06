@@ -155,6 +155,21 @@ in an expression must be accessible from type-checking one of its subexpressions
 Type Annotation
 ---------------
 
+A type annotation is used to explicitly specify the type of a variable or expression.
+Type annotations begin with a colon (``:``) and end with a type,
+as the following examples show::
+
+    let x : (Double, Double) = (3.14159, 2.71828)
+    func foo(a: Int) -> Int { /* ... */ }
+
+In the first example,
+the expression ``x`` is specified to have the type ``(Double, Double)``,
+which is a tuple type.
+In the second example,
+the parameter ``a`` to the function ``foo`` is specified to have the type ``Int``.
+
+Type annotations may contain an optional list of type attributes.
+
 .. syntax-grammar::
 
     Grammar of a type annotation
@@ -179,7 +194,7 @@ Array Type
 
     Grammar of an array type
 
-    array-type --> basic-type ``[`` ``]`` | array-type ``[`` ``]``
+    array-type --> type ``[`` ``]`` | array-type ``[`` ``]``
 
 .. NOTE: Writing it this way rather than as a basic type followed by
    a list of []s -- that preserves grouping of the type as you recurse
@@ -291,7 +306,7 @@ Optional Type
 
     Grammar of an optional type
 
-    optional-type --> basic-type ``?``
+    optional-type --> type ``?``
 
 .. NOTE: The -postfix disambiguates between two terminals
     which have the same text but which have different whitespace.
@@ -307,7 +322,7 @@ Optional Type
     infix-question --> `` ? ``
 
     Better -- explain in prose.
-    There must not be whitespace between the basic-type and the ?.
+    There must not be whitespace between the type and the ?.
 
 
 Protocol Composition Type
@@ -382,7 +397,7 @@ follow the same subtyping rules as their associated class types and, therefore, 
 
     Grammar of a metatype type
 
-    metatype-type --> basic-type ``.`` ``metatype``
+    metatype-type --> type ``.`` ``metatype``
 
 
 Type Inheritance Clause
