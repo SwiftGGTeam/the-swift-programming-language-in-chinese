@@ -38,6 +38,9 @@ and is used as a statement terminator when multiple statements appear on the sam
     What should conform to LogicValue is still being discussed.
     See: <rdar://problem/15911498> Reconsider what conforms to LogicValue.
 
+.. TODO: Related to the TODO above, update if and while/do-while statements
+    to allow conditional binding.
+
 .. langref-grammar
 
     stmt ::= stmt-semicolon
@@ -63,7 +66,7 @@ and is used as a statement terminator when multiple statements appear on the sam
     because, according to Doug, they're not really statements.
     For example, you can't have
         if foo { ; }
-    but you should be able to if it truly considered a statement.
+    but you should be able to if it's truly considered a statement.
     The semicolon isn't even required for the compiler; we just added
     rules that require them in some places to enforce a certain amount
     of readability.
