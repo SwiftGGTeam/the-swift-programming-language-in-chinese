@@ -144,7 +144,7 @@ in an expression must be accessible from type-checking one of its subexpressions
 
     Grammar of a type
 
-    type --> array-type | function-type | basic-type
+    type --> array-type | function-type | type-identifier | tuple-type | optional-type | protocol-composition-type | metatype-type
 
 .. NOTE: Removed "annotated-type" as a syntactic category,
     because having it would allow productions that contain redundancy;
@@ -165,8 +165,8 @@ Type Annotation
     because "type annotation" is the standard way of talking about
     decorating a value/expression (term) with type information.
 
-Array Types
------------
+Array Type
+----------
 
 .. langref-grammar
 
@@ -219,26 +219,8 @@ Function Type
         var myPolymorphicF = polymorphicF
 
 
-Basic Types
------------
-
-.. langref-grammar
-
-    type-simple ::= type-identifier
-    type-simple ::= type-tuple
-    type-simple ::= type-composition
-    type-simple ::= type-metatype
-    type-simple ::= type-optional
-
-.. syntax-grammar::
-
-    Grammar of a basic type
-
-    basic-type --> type-identifier | tuple-type | optional-type | protocol-composition-type | metatype-type
-
-
-Type Identifiers
-~~~~~~~~~~~~~~~~
+Type Identifier
+---------------
 
 .. langref-grammar
 
@@ -265,8 +247,8 @@ Type Identifiers
     significant---the name of a type alias doesn't create something.
 
 
-Tuple Types
-~~~~~~~~~~~
+Tuple Type
+----------
 
 .. langref-grammar
 
@@ -299,7 +281,7 @@ Tuple Types
 
 
 Optional Type
-~~~~~~~~~~~~~
+-------------
 
 .. langref-grammar
 
@@ -329,7 +311,7 @@ Optional Type
 
 
 Protocol Composition Type
-~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------
 
 .. langref-grammar
 
@@ -345,16 +327,8 @@ Protocol Composition Type
     protocol-identifier --> type-identifier
 
 
-Enumeration Types
-~~~~~~~~~~~~~~~~~
-
-.. TODO: Discuss in prose: There is no associated syntax for an enumeration type.
-    Enumeration types are simply created when an enumeration is declared
-    using the syntax of an enumeration declaration.
-
-
 Metatype Type
-~~~~~~~~~~~~~
+-------------
 
 Each type has a corresponding meta type (with the same name as the type)
 that is injected into the standard name lookup scope when a type is declared.
