@@ -107,11 +107,11 @@ to combine the message creation and the return statement into one line:
     Try calling this function with your own name.
     Once you've done that,
     see what happens if you change the message to a different greeting.
-    
+
     Try using this function to say hello to a friend instead.
     You could use an ``if else`` statement to make it reply with a special greeting when it recognizes your name,
     and a different greeting for everyone else.
-    
+
     What about if you pass in a second input parameter (also a ``String``),
     called ``birthdayType``?
     (You can separate multiple input parameters with a comma.)
@@ -119,7 +119,7 @@ to combine the message creation and the return statement into one line:
     such as ``12th`` or ``21st``.
     Can you make a function called ``sayHappyBirthday``,
     and use it to wish somebody called ``Peter`` a happy ``40th`` birthday?
-    
+
     For bonus points,
     make this new second parameter be an ``Int`` called ``age``
     (rather than a ``String`` called ``birthdayType``),
