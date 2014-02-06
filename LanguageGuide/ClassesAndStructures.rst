@@ -725,6 +725,11 @@ Methods
    This is mentioned here, rather than in Initializer Methods below,
    because it is a general principle for all methods when they access instance properties.
 
+Custom Operators
+----------------
+
+[to be written]
+
 Inheritance
 -----------
 
