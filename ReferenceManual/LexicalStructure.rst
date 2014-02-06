@@ -527,7 +527,7 @@ with the following general form:
 
 .. syntax-outline::
 
-    '<# character #>'
+    '<#character#>'
 
 Character literals cannot contain
 an unescaped double quote (``'``),
@@ -595,7 +595,7 @@ with the following general form:
 
 .. syntax-outline::
 
-    "<# text #>"
+    "<#text#>"
 
 String literals cannot contain
 an unescaped double quote (``"``),
