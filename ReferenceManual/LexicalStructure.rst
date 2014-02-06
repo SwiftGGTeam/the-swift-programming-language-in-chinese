@@ -104,7 +104,6 @@ digits and combining Unicode characters are also allowed.
     id-continue ::= [\u0300-\u036F\u1DC0-\u1DFF\u20D0-\u20FF\uFE20-\uFE2F]
     id-continue ::= id-start
 
-
 .. syntax-grammar::
 
     Grammar of an identifier
@@ -113,7 +112,7 @@ digits and combining Unicode characters are also allowed.
     identifier-list --> identifier | identifier ``,`` identifier-list
 
     identifier-head --> Upper case or lower case letter A through Z
-    identifier-head --> U+00A8 | U+00AA | U+00AD | U+00AF | U+00B2-U+00B5 | U+00B7-00BA
+    identifier-head --> U+00A8 | U+00AA | U+00AD | U+00AF | U+00B2-U+00B5 | U+00B7-U+00BA
     identifier-head --> U+00BC-U+00BE | U+00C0-U+00D6 | U+00D8-U+00F6 | U+00F8-U+00FF
     identifier-head --> U+0100-U+02FF | U+0370-U+167F | U+1681-U+180D | U+180F-U+1DBF
     identifier-head --> U+1E00-U+1FFF
@@ -121,7 +120,7 @@ digits and combining Unicode characters are also allowed.
     identifier-head --> U+2070-U+20CF | U+2100-U+218F | U+2460-U+24FF | U+2776-U+2793
     identifier-head --> U+2C00-U+2DFF | U+2E80-U+2FFF
     identifier-head --> U+3004-U+3007 | U+3021-U+302F | U+3031-U+303F | U+3040-U+D7FF
-    identifier-head --> U+F900-U+FD3D | U+FD40-U+FDCF | U+FDF0-U+FE1F | U+FE30-FE44
+    identifier-head --> U+F900-U+FD3D | U+FD40-U+FDCF | U+FDF0-U+FE1F | U+FE30-U+FE44
     identifier-head --> U+FE47-U+FFFD
 
     identifier-head --> U+10000-U+1FFFD | U+20000-U+2FFFD | U+30000-U+3FFFD | U+40000-U+4FFFD
