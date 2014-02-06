@@ -591,17 +591,18 @@ String literals cannot contain
 an unescaped double quote (``"``),
 an unescaped backslash (``\``),
 a carriage return, or a line feed.
-These characters and other special characters can be included using escapes.
+String literals support the same escapes as character literals.
+.. TODO link?
 
-.. TODO: Same escapes supported here as with character literals.
-
-In addition to the escapes supported by character literals,
-the value of an expression can be inserted into a string
+The value of an expression can be inserted into a string
 by placing the expression in parentheses after a backslash (\).
 This expression must not contain
 an unescaped double quote ("),
 an unescaped backslash (\),
 a carriage return, or a line feed.
+
+.. TR: How is the expression stringified?
+   Is there a protocol we can say it must conform to?
 
 .. The following all have the same value:
 
@@ -625,18 +626,10 @@ a carriage return, or a line feed.
 
     string-literal --> ``"`` quoted-text ``"``
 
-    quoted-texts --> quoted-text-item quoted-text-OPT
+    quoted-text --> quoted-text-item quoted-text-OPT
     quoted-text-item --> escaped-character
-    quoted-text-item --> ``\(`` interpolated-expression ``)``
-
-    quoted-text-item --> Any text that does not contain ``"`` ``\`` U+000A U+000D
-
-    quoted-text-item --> Any text that does not contain a character from quoted-text-exceptions
-    quoted-text-exceptions --> ``"`` | ``\`` | U+000A | U+000D
-
-    interpolated-expression --> Any text that matches both expression and quoted-text
-
-.. TODO: Choose one of the above definitions for "does not contain".
+    quoted-text-item --> ``\(`` expression ``)``
+    quoted-text-item --> Any text
 
 .. Quoted text resolves to a sequence of escaped characters by way of
    the quoted-texts rule which allows repetition; no need to allow
