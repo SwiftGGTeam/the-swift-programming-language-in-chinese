@@ -31,24 +31,24 @@ Classes and Structures
 
 Swift provides two different ways to define flexible, reusable constructs
 to use as the building blocks of your code.
-These are known as *classes* and *structures*.
+These are known as :newTerm:`classes` and :newTerm:`structures`.
 
 Classes and structures have many things in common in Swift.
 Both can:
 
-* declare *properties* to store values
-* define *methods* to provide functionality
-* define *initializers* to set up their initial state
-* conform to *protocols* to provide standard functionality of a certain type, and
-* be *extended* to expand their functionality beyond a default implementation
+* declare :newTerm:`properties` to store values
+* define :newTerm:`methods` to provide functionality
+* define :newTerm:`initializers` to set up their initial state
+* conform to :newTerm:`protocols` to provide standard functionality of a certain type, and
+* be :newTerm:`extended` to expand their functionality beyond a default implementation
 
 (Protocols and extensions are covered in detail in :doc:`ProtocolsAndExtensions`.)
 
 In addition, classes have several capabilities that structures do not:
 
-* *inheritance*, which enables one class to inherit the characteristics of another;
-* *destructors*, which enable an instance of a class to tidy up after itself; and
-* *type casting*, which enables you to check and interpret the type of a class instance at runtime
+* :newTerm:`inheritance`, which enables one class to inherit the characteristics of another;
+* :newTerm:`destructors`, which enable an instance of a class to tidy up after itself; and
+* :newTerm:`type casting`, which enables you to check and interpret the type of a class instance at runtime
 
 All of these capabilities are described in more detail below.
 
@@ -92,7 +92,7 @@ to match the capitalization of standard Swift types
 Properties
 ----------
 
-Classes and structures can both declare *properties*.
+Classes and structures can both declare :newTerm:`properties`.
 Properties are named values that are bundled up and stored
 as part of the class or structure:
 
@@ -121,7 +121,7 @@ Class and Structure Instances
 The ``Size`` structure definition, and the ``Rectangle`` class definition,
 only describe what a generic ``Size`` or ``Rectangle`` will look like.
 They do not in themselves describe a specific size or rectangle.
-To do that, you need to create an *instance* of the class or structure.
+To do that, you need to create an :newTerm:`instance` of the class or structure.
 
 The syntax for creating instances is very similar for both structures and classes:
 
@@ -132,7 +132,7 @@ The syntax for creating instances is very similar for both structures and classe
     (swift) var someRectangle = Rectangle()
     // someRectangle : Rectangle = <Rectangle instance>
 
-Structures and classes both use *initializer syntax* when creating new instances.
+Structures and classes both use :newTerm:`initializer syntax` when creating new instances.
 The simplest form of initializer syntax uses the type name of the class or structure,
 followed by empty parentheses ``()``.
 This creates a new instance of the class or structure,
@@ -152,16 +152,16 @@ Terminology
 ___________
 
 An instance of a class (such as ``someRectangle`` above)
-is traditionally known as an *object*.
+is traditionally known as an :newTerm:`object`.
 However, Swift classes and structures are much closer in functionality than in other languages,
 and much of this chapter describes functionality that can apply to
 instances of *either* a class or a structure type.
-Because of this, the more general term *instance* is used below.
+Because of this, the more general term :newTerm:`instance` is used below.
 
 Accessing Properties
 ~~~~~~~~~~~~~~~~~~~~
 
-The properties of an instance can be accessed using *dot syntax*:
+The properties of an instance can be accessed using :newTerm:`dot syntax`:
 
 .. testcode:: classesAndStructures
 
@@ -191,7 +191,7 @@ even though it is a sub-property of ``someRectangle.size``:
 Memberwise Structure Initializers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-All structures have an automatically-generated *memberwise initializer*,
+All structures have an automatically-generated :newTerm:`memberwise initializer`,
 which can be used to initialise the member properties of new structure instances.
 Initial values for the properties of the new instance
 can be passed to the memberwise initializer by name:
@@ -219,10 +219,10 @@ Stored Properties
 
 In its simplest form, a property is just a named value
 that is stored as part of an instance.
-Properties of this kind are known as *stored properties*.
-Stored properties can be either *variable stored properties*
+Properties of this kind are known as :newTerm:`stored properties`.
+Stored properties can be either :newTerm:`variable stored properties`
 (introduced by the ``var`` keyword, as in the examples above),
-or *constant stored properties* (introduced by the ``let`` keyword).
+or :newTerm:`constant stored properties` (introduced by the ``let`` keyword).
 
 Constant stored properties are very similar to constant named values,
 in that their value cannot be changed once it has been initialized.
@@ -234,7 +234,7 @@ has completed its initialization.
 Stored Property Observers
 _________________________
 
-Stored property observers are a way to observe and respond to
+:newTerm:`Stored property observers` are a way to observe and respond to
 the setting of new values for a stored property.
 You have the option to define either or both of these observers on a stored property:
 
@@ -244,7 +244,7 @@ You have the option to define either or both of these observers on a stored prop
 If you implement a ``willSet`` observer,
 it is passed the new property value as a constant parameter for you to check and use.
 The ``didSet`` observer is not passed the new property value,
-because it can access the new value directly as usual via the property's name.
+because it can access the new value as usual via the property's name.
 
 Here's an example of ``willSet`` and ``didSet`` in action:
 
@@ -317,12 +317,12 @@ a message is printed to indicate how many new steps have been taken.
 .. note::
 
     If you assign a different value to a property within its own ``willSet`` method,
-    your new value will be overwritten as soon as ``willSet`` finishes.
-    The property's value will always be set to the original new value once ``willSet`` completes,
+    your value will be overwritten as soon as ``willSet`` finishes.
+    The property's value will always be updated to the originally-intended value once ``willSet`` completes,
     regardless of what you do within the ``willSet`` method yourself.
 
     Conversely, if you assign a new value to a property within its own ``didSet`` method,
-    the new value that you assign will replace the one that was just set.
+    the new value that you assign *will* replace the one that was just set.
 
 .. note::
 
@@ -337,9 +337,9 @@ a message is printed to indicate how many new steps have been taken.
 Computed Properties
 ~~~~~~~~~~~~~~~~~~~
 
-Classes and structures can also define *computed properties*,
+Classes and structures can also define :newTerm:`computed properties`,
 which do not actually store a value.
-Instead, they provide a *getter method*, and an optional *setter method*,
+Instead, they provide a :newTerm:`getter method`, and an optional :newTerm:`setter method`,
 to retrieve and set other properties and values indirectly.
 
 .. testcode:: classesAndStructures
@@ -432,7 +432,7 @@ which takes advantage of these shorthand notations:
 Read-Only Computed Properties
 _____________________________
 
-A computed property with a getter but no setter is known as a *read-only computed property*.
+A computed property with a getter but no setter is known as a :newTerm:`read-only computed property`.
 Read-only computed properties enable you to
 define a property that will always return a value,
 and can be accessed via dot syntax,
@@ -493,7 +493,7 @@ If you have experience with Objective-C,
 you may be familiar with the fact that it provides two complementary ways
 to store values and references alongside instances of a class.
 In addition to properties,
-Objective-C also has the concept of *instance variables*,
+Objective-C also has the concept of :newTerm:`instance variables`,
 which are used as a 'backing' store for the values stored in a property.
 
 Swift unifies these two separate concepts into a single unified property declaration.
@@ -516,8 +516,8 @@ Value Types and Reference Types
 Classes and structures have many things in common in Swift.
 However, they have one fundamental difference:
 
-* Structures define *value types*
-* Classes define *reference types*
+* Structures define :newTerm:`value types`
+* Classes define :newTerm:`reference types`
 
 This difference is very important when deciding how to define the building blocks of your code.
 
@@ -530,7 +530,7 @@ Value Types
 .. TODO: Have I actually described what a 'type' is by this point?
 .. TODO: If this section is talking about value types, it needs to talk about enums too.
 
-A *value type* is a type that is *copied*
+A :newTerm:`value type` is a type that is *copied*
 when it is assigned to a variable or constant,
 or when it is passed to a function.
 
@@ -588,13 +588,14 @@ setting the height of ``iPhone5`` to ``1136.0``
 doesn't affect the height value stored in ``iPhone4``.
 
 .. TODO: Should I give an example of passing a value type to a function here?
+.. TODO: Note that strings, arrays etc. are not reference types in Swift
 
 Reference Types
 ~~~~~~~~~~~~~~~
 
-Unlike value types, a reference type is *not* copied when is assigned to a variable or constant,
+Unlike value types, a :newTerm:`reference type` is *not* copied when is assigned to a variable or constant,
 or when it is passed to a function.
-Rather than making a copy, a *reference* to the same existing instance is used instead.
+Rather than making a copy, a :newTerm:`reference` to the same existing instance is used instead.
 
 .. TODO: This enables you to have multiple variables and constants
    that all refer to the same one instance. 
@@ -658,7 +659,7 @@ Pointers
 ________
 
 If you have experience with C, C++ or Objective-C,
-you may be familiar with the fact that these languages use *pointers* to refer to objects.
+you may be familiar with the fact that these languages use :newTerm:`pointers` to refer to objects.
 Variables, constants and properties that refer to an instance of a reference type
 are very similar to pointers in C-like languages,
 but do not use the reference operator (``&``) or dereference operator (``*``)
@@ -674,6 +675,9 @@ and the value it contains is always a reference to a particular instance of that
 .. TODO: Add a section about using the identity operator
    to check if two reference named values point to the same instance.
    This is currently blocked on rdar://problem/15566395 .
+   
+.. TODO: Saying that we don't use the reference operator is actually untrue.
+   We use it at the call-site for inout function parameters.
 
 Choosing Between Classes and Structures
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -743,9 +747,9 @@ Initialization
 Classes and structures should always initialize their stored properties with initial values.
 There are two ways to provide initial values for your properties:
 
-1. Include an initial value as part of the property declaration
+1. Include an :newTerm:`initial value` as part of the property declaration
    (as described in `Properties`_)
-2. Provide a value for the property within an *initializer method*
+2. Provide a value for the property within an :newTerm:`initializer method`
 
 .. note::
     If you assign a default value to a property,
@@ -766,7 +770,8 @@ There are two ways to provide initial values for your properties:
 Initializer Methods
 ~~~~~~~~~~~~~~~~~~~
 
-*Initializer methods* are special methods that can be called when a new instance of your type is created.
+:newTerm:`Initializer methods` are special methods
+that can be called when a new instance of your type is created.
 In its simplest form, an initializer method is just an instance method with no parameters,
 written using the ``init`` keyword:
 
@@ -811,7 +816,7 @@ The end result –
 a default value of ``32.0`` for ``temperature`` when a new instance is created –
 is the same in both cases.
 
-Swift provides a *default initializer* method implementation
+Swift provides a :newTerm:`default initializer method` implementation
 for any class or structure that does not provide at least one initializer method itself.
 The default initializer simply creates a new instance
 with all of its properties set to their default values.
@@ -885,7 +890,7 @@ Definite Initialization
 If your class or structure provides one or more custom initializer methods,
 Swift checks these methods to make sure that all properties are fully initialized
 by the time each initializer method has done its job.
-This process is known as *definite initialization*,
+This process is known as :newTerm:`definite initialization`,
 and helps to ensure that your instances are always valid before they are used.
 Swift will warn you at compile-time if your class or structure does not pass
 the definite initialization test.
@@ -893,7 +898,7 @@ the definite initialization test.
 Initializer Delegation
 ~~~~~~~~~~~~~~~~~~~~~~
 
-Initializers can delegate some or all of the task of initialization to
+Initializers can :newTerm:`delegate` some or all of the task of initialization to
 other initializers within the same class or structure by calling ``self.init``.
 The code below defines a ``Document`` class,
 which uses a default ``title`` value of ``[untitled]`` if none is specified:
@@ -1123,7 +1128,7 @@ Destructors
 Type Properties and Methods
 ---------------------------
 
-.. TODO: type variables, constants and methods
+[to be written]
 
 Type Casting
 ------------
@@ -1136,9 +1141,11 @@ Enumerations
 Several of the features described above for classes and structures
 are also available to enumeration types in Swift:
 
-* *initializer methods*, to provide a default enumeration member
-* *computed properties*, to provide additional information about the current enumeration member, and
-* *instance methods*, to provide utility functionality
+* :newTerm:`initializer methods`, to provide a default enumeration member
+* :newTerm:`computed properties`, to provide additional information about the current enumeration member, and
+* :newTerm:`instance methods`, to provide utility functionality
+
+.. TODO: Should type methods and properties be added on to this list?
 
 The example below shows all of these capabilities in action for a complex enumeration:
 

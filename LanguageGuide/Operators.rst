@@ -13,12 +13,12 @@
 Operators
 =========
 
-An *operator* is a special symbol or phrase that is used to check or change values.
-A simple example is the *addition operator*, ``+``,
+An :newTerm:`operator` is a special symbol or phrase that is used to check or change values.
+A simple example is the addition operator, ``+``,
 which is used to add two numbers together (as in ``let i = 1 + 2``).
-More complex examples include the *logical AND operator* ``&&``
+More complex examples include the logical AND operator ``&&``
 (as in ``if enteredDoorCode && passedRetinaScan``),
-or the *integer increment operator* ``++i``,
+or the increment operator ``++i``,
 which gives a shorthand way to increase the value of ``i`` by ``1``.
 All of these operators are explained in more detail below.
 
@@ -29,25 +29,25 @@ and create new ones –
 for any custom types you define.
 This process is covered in detail in :doc:`ClassesAndStructures`.
 
-Operators are often referred to as *unary*, *binary* or *ternary*:
+Operators are often referred to as :newTerm:`unary`, :newTerm:`binary` or :newTerm:`ternary`:
 
 * Unary operators operate on a single target (such as ``-a``).
-  They are said to be *prefix* operators if they come before their target (such as ``!b``),
-  and *postfix* operators if they come after their target (such as ``i++``).
+  They are said to be :newTerm:`prefix` operators if they come before their target (such as ``!b``),
+  and :newTerm:`postfix` operators if they come after their target (such as ``i++``).
 * Binary operators operate on two targets (such as ``2 + 3``),
-  and are said to be *infix* because they appear inbetween their two targets.
+  and are said to be :newTerm:`infix` because they appear inbetween their two targets.
 * Ternary operators operate on three targets.
   Like C, Swift has just one ternary operator,
-  known as the *ternary comparison operator* (``a ? b : c``).
+  known as the ternary comparison operator (``a ? b : c``).
 
-The values that operators affect are known as *operands*.
+The values that operators affect are known as :newTerm:`operands`.
 In the expression ``1 + 2``, the ``+`` symbol is a binary operator,
 and its two operands are the values ``1`` and ``2``.
 
 Assignment Operator
 -------------------
 
-The *assignment operator* (``a = b``) updates the value of ``a`` with the value of ``b``:
+The :newTerm:`assignment operator` (``a = b``) updates the value of ``a`` with the value of ``b``:
 
 .. testcode:: assignmentOperator
 
@@ -83,11 +83,12 @@ Swift makes it much easier to avoid these kinds of errors in your code.
 
 .. TODO: Should we mention that x = y = z is also not valid?
    If so, is there a convincing argument as to why this is a good thing?
+.. TODO: Add a section about the new assignments bindings.
 
 Arithmetic Operators
 --------------------
 
-Swift supports the four standard *arithmetic operators* for all number types:
+Swift supports the four standard :newTerm:`arithmetic operators` for all number types:
 
 * addition (``+``)
 * subtraction (``-``)
@@ -128,10 +129,10 @@ can be added together via ``+`` to make a new ``String``:
 Remainder Operator
 ~~~~~~~~~~~~~~~~~~
 
-The *binary remainder operator*, ``a % b``,
+The :newTerm:`binary remainder operator`, ``a % b``,
 works out how many multiples of ``b`` will fit inside ``a``,
 and returns the value that is left over
-(known as the *remainder*).
+(known as the :newTerm:`remainder`).
 
 For example: to calculate ``9 % 4``,
 you first work out how many ``4``\ s will fit inside ``9``:
@@ -200,8 +201,8 @@ so the remainder operator returns a ``Double`` value of ``0.5``.
 Increment and Decrement
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-Like C, Swift provides an *increment operator* (``++``)
-and an *decrement operator* (``--``)
+Like C, Swift provides an :newTerm:`increment operator` (``++``)
+and an :newTerm:`decrement operator` (``--``)
 as a shorthand way to increase or decrease the value of a numeric variable by ``1``.
 Unlike C, Swift's increment and decrement operators also work with floating-point numbers.
 
@@ -218,7 +219,7 @@ Each time you call ``++i``, the value of ``i`` is increased by ``1``.
 Essentially, ``++i`` is shorthand for saying ``i = i + 1``.
 Likewise, ``--i`` can be used as shorthand for ``i = i - 1``.
 
-``++`` and ``--`` can be used as *prefix* operators, or as *postfix* operators.
+``++`` and ``--`` can be used as prefix operators, or as postfix operators.
 ``++i`` and ``i++`` are both valid ways to increase the value of ``i`` by ``1``.
 However, ``++i`` increases the value of ``i`` *before* it is accessed,
 whereas ``i++`` increases the value *after* it is accessed.
@@ -262,7 +263,7 @@ Unary Plus and Minus
 ~~~~~~~~~~~~~~~~~~~~
 
 The sign of a numeric value can be toggled using a prefixed ``-``,
-known as the *unary minus operator*:
+known as the :newTerm:`unary minus operator`:
 
 .. testcode:: arithmeticOperators
 
@@ -276,7 +277,7 @@ known as the *unary minus operator*:
 The unary minus operator ``-`` is prepended directly before the value it operates on,
 without any whitespace.
 
-There is a corresponding *unary plus operator*, ``+``,
+There is a corresponding :newTerm:`unary plus operator`, ``+``,
 which simply returns the value it operates on, without any change:
 
 .. testcode:: arithmeticOperators
@@ -292,8 +293,8 @@ However, it can be used to provide symmetry in your code when also using the una
 Compound Assignment Operators
 -----------------------------
 
-Like C, Swift provides shorthand operators that combine assignment (``=``) with another operation.
-One example is the *addition assignment operator* (``+=``):
+Like C, Swift provides :newTerm:`compound assignment operators` that combine assignment (``=``) with another operation.
+One example is the :newTerm:`addition assignment operator` (``+=``):
 
 .. testcode:: compoundAssignment
 
@@ -312,7 +313,7 @@ A complete list of compound assignment operators can be found in the :doc:`../Re
 Comparison Operators
 --------------------
 
-Swift supports all of the standard C *comparison operators*:
+Swift supports all of the standard C :newTerm:`comparison operators`:
 
 * Equal to (``a == b``)
 * Not equal to (``a != b``)
@@ -327,7 +328,7 @@ to check if values are identical:
 * Identical to (``a === b``)
 * Not identical to (``a !== b``)
 
-These *identity operators* are used to test if two object named values both refer to the same object instance.
+These :newTerm:`identity operators` are used to test if two object named values both refer to the same object instance.
 They are described in :doc:`ClassesAndStructures`.
 
 Each of the comparison operators returns a ``Bool`` value to indicate whether or not the statement is true:
@@ -370,7 +371,7 @@ The ``if else`` statement is described in more detail in :doc:`ControlFlow`.
 Ternary Comparison Operator
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The *ternary comparison operator* is a special operator with three parts,
+The :newTerm:`ternary comparison operator` is a special operator with three parts,
 which takes the form ``question ? answer1 : answer2``.
 It provides a shorthand way to evaluate one of two expressions
 based on whether ``question`` is ``true`` or ``false``.
@@ -433,7 +434,7 @@ Avoid combining multiple instances of the ternary comparison operator into one c
 Bitwise Operators
 -----------------
 
-*Bitwise operators* enable you to manipulate the individual raw data bits within a data structure.
+:newTerm:`Bitwise operators` enable you to manipulate the individual raw data bits within a data structure.
 They are often used in low-level programming,
 such as graphics programming and device driver creation.
 They can also be useful when working with raw data from external sources,
@@ -445,7 +446,7 @@ Swift supports all of the bitwise operators found in C, as described below.
 Bitwise NOT
 ~~~~~~~~~~~
 
-The *bitwise NOT operator* (``~``) inverts all of the bits in a number:
+The :newTerm:`bitwise NOT operator` (``~``) inverts all of the bits in a number:
 
 .. image:: ../images/bitwiseNOT.png
     :width: 570
@@ -477,7 +478,7 @@ which is equal to an unsigned decimal value of ``240``.
 Bitwise AND
 ~~~~~~~~~~~
 
-The *bitwise AND operator* (``&``) combines the bits of two numbers.
+The :newTerm:`bitwise AND operator` (``&``) combines the bits of two numbers.
 It returns a new number whose bits are only set to ``1`` if the bits were equal to ``1`` in *both* input numbers:
 
 .. image:: ../images/bitwiseAND.png
@@ -502,7 +503,7 @@ which is equal to an unsigned decimal value of ``60``.
 Bitwise OR
 ~~~~~~~~~~
 
-The *bitwise OR operator* (``|``) compares the bits of two numbers,
+The :newTerm:`bitwise OR operator` (``|``) compares the bits of two numbers,
 and returns a new number whose bits are set to ``1`` if the bits were equal to ``1`` in *either* of the input numbers:
 
 .. image:: ../images/bitwiseOR.png
@@ -527,7 +528,7 @@ which equals an unsigned decimal of ``254``.
 Bitwise XOR
 ~~~~~~~~~~~
 
-The *bitwise XOR operator* (``^``) compares the bits of two numbers,
+The :newTerm:`bitwise XOR operator` (``^``) compares the bits of two numbers,
 and returns a new number whose bits are set to ``1`` if the bits are equal to ``1`` in *either* of the input numbers,
 but not if they are set to ``1`` in *both* of the input numbers:
 
@@ -536,11 +537,6 @@ but not if they are set to ``1`` in *both* of the input numbers:
     :align: center
 
 For example:
-
-.. glossary::
-
-    XOR
-        XOR is read as ‘exclusive OR’.
 
 .. testcode:: bitwiseOperators
 
@@ -556,7 +552,7 @@ For example:
 Bitwise Left and Right Shifts
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The *bitwise left shift operator* (``<<``) and *bitwise right shift operator* (``>>``)
+The :newTerm:`bitwise left shift operator` (``<<``) and :newTerm:`bitwise right shift operator` (``>>``)
 move all of the bits in a number to the left or the right by a certain number of places,
 as per the rules defined below.
 
@@ -575,7 +571,7 @@ The bit-shifting behavior for unsigned integers is:
 * Any bits that fall off the edge of the integer's storage are discarded
 * Zeroes are inserted in the spaces left behind
 
-This approach is known as a *logical shift*.
+This approach is known as a :newTerm:`logical shift`.
 
 The illustration below shows the results of ``11111111 << 1``
 (which is ``11111111`` shifted to the left by ``1`` place),
@@ -662,11 +658,11 @@ due to the way that they are represented in binary.
 (The examples below are based on eight-bit signed integers for simplicity,
 but the same principles apply for signed integers of any size.)
 
-Signed integers use their first bit (known as the *sign bit*)
+Signed integers use their first bit (known as the :newTerm:`sign bit`)
 to indicate whether the integer is positive or negative.
 A sign bit of ``0`` means positive, and a sign bit of ``1`` means negative.
 
-The remaining bits (known as the *value bits*) are then used to store the actual value.
+The remaining bits (known as the :newTerm:`value bits`) are then used to store the actual value.
 Positive numbers are stored in exactly the same way as for unsigned integers,
 counting upwards from ``0``.
 Here's how the bits inside an ``Int8`` look for the number ``4``:
@@ -698,7 +694,7 @@ and the seven value bits actually have a binary value of ``124`` (which is ``128
     :width: 388
     :align: center
 
-The encoding used for negative numbers is known as a *two's complement* representation.
+The encoding used for negative numbers is known as a :newTerm:`two's complement` representation.
 It may seem an unusual way to represent negative numbers,
 but it has several advantages.
 
@@ -727,7 +723,7 @@ To achieve this, an extra rule is used when shifting signed integers to the righ
     :align: center
 
 This ensures that signed integers have the same sign after they are shifted to the right,
-and is known as an *arithmetic shift*.
+and is known as an :newTerm:`arithmetic shift`.
 
 Because of the special way that positive and negative numbers are stored,
 shifting either of them to the right has the effect of moving them closer to zero.
@@ -762,7 +758,7 @@ gives you much more flexibility when coding for boundary value conditions.
 
 However, in the cases where you *do* want the value to overflow,
 you can opt in to this behavior rather than triggering an error.
-Swift provides five arithmetic *overflow operators* that opt in to the overflow behavior for integer calculations.
+Swift provides five arithmetic :newTerm:`overflow operators` that opt in to the overflow behavior for integer calculations.
 These operators all begin with an ampersand (``&``):
 
 * Overflow addition (``&+``)
@@ -878,10 +874,12 @@ and so Swift throws an error rather than creating an invalid value.
 Logical Operators
 -----------------
 
+.. TODO: write an introduction to this section.
+
 Logical NOT
 ~~~~~~~~~~~
 
-The *logical NOT operator* (``!a``) inverts a boolean value so that ``true`` becomes ``false``,
+The :newTerm:`logical NOT operator` (``!a``) inverts a boolean value so that ``true`` becomes ``false``,
 and ``false`` becomes ``true``.
 It can be read as “not ``a``”, as seen in the following example:
 
@@ -906,7 +904,7 @@ while avoiding double negatives or confusing logic statements.
 Logical AND
 ~~~~~~~~~~~
 
-The *logical AND operator* (``&&``) is used to create logical expressions
+The :newTerm:`logical AND operator` (``&&``) is used to create logical expressions
 where both values must be ``true`` for the overall expression to also be ``true``.
 
 This example considers two ``Bool`` values,
@@ -936,7 +934,7 @@ This is known as *short-circuit evaluation*.
 Logical OR
 ~~~~~~~~~~
 
-The *logical OR operator* (``||``, i.e. two adjacent pipe characters)
+The :newTerm:`logical OR operator` (``||``, i.e. two adjacent pipe characters)
 is used to create logical expressions where only *one* of the two values has to be ``true``
 for the overall expression to be ``true``.
 For example:
@@ -1003,7 +1001,7 @@ Priority and Associativity
    as part of the hypothetical ‘show invisibles’ feature,
    to show the invisible parentheses implied by priority and associativity?
 
-It is important to consider each operator's *priority* and *associativity* when working out how to calculate a compound expression.
+It is important to consider each operator's :newTerm:`priority` and :newTerm:`associativity` when working out how to calculate a compound expression.
 These two principles are used to work out the order in which an expression should be calculated.
 
 Here's an example.
@@ -1021,13 +1019,13 @@ Taken strictly from left to right, you might expect this to read as follows:
 * 20 modulo 5 equals 0
 
 However, the actual answer is ``4``, not ``0``.
-This is due to the *priorities* and *associativity* of the operators used:
+This is due to the priorities and associativity of the operators used:
 
-* Operator *priority* (also known as *precedence*) means that
+* Operator :newTerm:`priority` (also known as :newTerm:`precedence`) means that
   some operators are given higher priority than others,
   and are calculated first.
 
-* Operator *associativity* defines how operators of the same priority are grouped together (or *associated*) –
+* Operator :newTerm:`associativity` defines how operators of the same priority are grouped together (or :newTerm:`associated`) –
   either grouped from the left, or grouped from the right.
   Think of it as meaning ‘they associate with the expression to their left’,
   or ‘they associate with the expression to their right’.
@@ -1042,7 +1040,7 @@ As a result, they are both evaluated before the addition is considered.
 
 However, multiplication and modulo happen to have the *same* priority as each other.
 To work out the exact evaluation order to use,
-we therefore need to also look at their *associativity*.
+we therefore need to also look at their associativity.
 Multiplication and modulo both associate with the expression to their left.
 You can think of this as adding implicit parentheses around these parts of the expression,
 starting from their left:
@@ -1099,11 +1097,11 @@ use parentheses where they help to make your intentions clear.
 Range Operator
 --------------
 
-Swift includes a *range operator*,
+Swift includes a :newTerm:`range operator`,
 which provides a shorthand way to express a range of values.
 The range operator ``a..b`` defines a range that runs from ``a`` to ``b``,
 but does not include ``b``.
-For this reason, it is said to be *half-closed*.
+For this reason, it is said to be :newTerm:`half-closed`.
 
 The range operator is particularly useful when working with zero-based lists,
 for counting up to (but not including) the length of a zero-based array:
