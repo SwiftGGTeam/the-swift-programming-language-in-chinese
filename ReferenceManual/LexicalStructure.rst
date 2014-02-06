@@ -66,13 +66,22 @@ Identifiers
 Identifier Tokens
 ~~~~~~~~~~~~~~~~~
 
-.. TODO: Add grammar for identifier-list to Identifiers (used in Closure Expressions).
-    identifier-list --> identifier | identifier ``,`` identifier-list
+Identifiers begin with
+an upper case or lower case letter A through Z,
+an underscore (``_``),
+a non-combining alphanumeric Unicode character
+in the Basic Multilingual Plane,
+or a valid code point outside the Basic Multilingual Plan
+that isn't in a Private Use Area.
+After the first character,
+digits and combining Unicode characters are also allowed.
 
 .. langref-grammar
 
     identifier ::= id-start id-continue*
     id-start ::= [A-Za-z_]
+
+    // BMP alphanum non-combining
     id-start ::= [\u00A8\u00AA\u00AD\u00AF\u00B2-\u00B5\u00B7-00BA]
     id-start ::= [\u00BC-\u00BE\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u00FF]
     id-start ::= [\u0100-\u02FF\u0370-\u167F\u1681-\u180D\u180F-\u1DBF]
@@ -83,13 +92,48 @@ Identifier Tokens
     id-start ::= [\u3004-\u3007\u3021-\u302F\u3031-\u303F\u3040-\uD7FF]
     id-start ::= [\uF900-\uFD3D\uFD40-\uFDCF\uFDF0-\uFE1F\uFE30-FE44]
     id-start ::= [\uFE47-\uFFFD]
+
+    // non-BMP non-PUA
     id-start ::= [\u10000-\u1FFFD\u20000-\u2FFFD\u30000-\u3FFFD\u40000-\u4FFFD]
     id-start ::= [\u50000-\u5FFFD\u60000-\u6FFFD\u70000-\u7FFFD\u80000-\u8FFFD]
     id-start ::= [\u90000-\u9FFFD\uA0000-\uAFFFD\uB0000-\uBFFFD\uC0000-\uCFFFD]
     id-start ::= [\uD0000-\uDFFFD\uE0000-\uEFFFD]
+
     id-continue ::= [0-9]
+    // combining
     id-continue ::= [\u0300-\u036F\u1DC0-\u1DFF\u20D0-\u20FF\uFE20-\uFE2F]
     id-continue ::= id-start
+
+
+.. syntax-grammar::
+
+    Grammar of an identifier
+
+    identifier --> identifier-head identifier-characters-OPT
+    identifier-list --> identifier | identifier ``,`` identifier-list
+
+    identifier-head --> Upper case or lower case letter A through Z
+    identifier-head --> U+00A8 | U+00AA | U+00AD | U+00AF | U+00B2-U+00B5 | U+00B7-00BA
+    identifier-head --> U+00BC-U+00BE | U+00C0-U+00D6 | U+00D8-U+00F6 | U+00F8-U+00FF
+    identifier-head --> U+0100-U+02FF | U+0370-U+167F | U+1681-U+180D | U+180F-U+1DBF
+    identifier-head --> U+1E00-U+1FFF
+    identifier-head --> U+200B-U+200D | U+202A-U+202E | U+203F-U+2040 | U+2054 | U+2060-U+206F
+    identifier-head --> U+2070-U+20CF | U+2100-U+218F | U+2460-U+24FF | U+2776-U+2793
+    identifier-head --> U+2C00-U+2DFF | U+2E80-U+2FFF
+    identifier-head --> U+3004-U+3007 | U+3021-U+302F | U+3031-U+303F | U+3040-U+D7FF
+    identifier-head --> U+F900-U+FD3D | U+FD40-U+FDCF | U+FDF0-U+FE1F | U+FE30-FE44
+    identifier-head --> U+FE47-U+FFFD
+
+    identifier-head --> U+10000-U+1FFFD | U+20000-U+2FFFD | U+30000-U+3FFFD | U+40000-U+4FFFD
+    identifier-head --> U+50000-U+5FFFD | U+60000-U+6FFFD | U+70000-U+7FFFD | U+80000-U+8FFFD
+    identifier-head --> U+90000-U+9FFFD | U+A0000-U+AFFFD | U+B0000-U+BFFFD | U+C0000-U+CFFFD
+    identifier-head --> U+D0000-U+DFFFD | U+E0000-U+EFFFD
+
+    identifier-characters --> identifier-character identifier-characters-OPT
+    identifier-character --> Digit 0 through 9
+    identifier-character --> identifier-head
+    identifier-character --> U+0300-U+036F | U+1DC0-U+1DFF | U+20D0-U+20FF | U+FE20-U+FE2F
+
 
 Operator Identifiers
 ~~~~~~~~~~~~~~~~~~~~
