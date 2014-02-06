@@ -349,14 +349,18 @@ Literals
 Integer Literals
 ~~~~~~~~~~~~~~~~
 
-Integer literals are made up of a series of digits 0 through 9,
+Integer literals are made up of a series of digits,
 with optional underscores (``_``) between digits for readability.
-The underscores are ignored by the compiler.
+Underscores are ignored by the compiler.
 
-By default, integers are expressed in decimal;
-binary literals begin with ``0b``,
+By default, integer literals are expressed in decimal;
+you can specify an alternate base using a prefix.
+Binary literals begin with ``0b``,
 octal literals begin with ``0x``,
 and hexadecimal literals begin with ``0x``.
+
+.. NOTE Negative integer literals are expressed using the unary minus operator.
+   There's no leading - on an integer literal.
 
 .. langref-grammar
 
@@ -384,9 +388,9 @@ and hexadecimal literals begin with ``0x``.
     binary-digit --> ``0`` | ``1``
     octal-digit --> ``0`` | ``1`` | ``2`` | ``3`` | ``4`` | ``5`` | ``6`` | ``7``
     decimal-digit --> ``0`` | ``1`` | ``2`` | ``3`` | ``4`` | ``5`` | ``6`` | ``7`` | ``8`` | ``9``
-    hexidecimal-digit --> ``0`` | ``1`` | ``2`` | ``3`` | ``4`` | ``5`` | ``6`` | ``7`` | ``8`` | ``9``
-    hexidecimal-digit --> ``A`` | ``B`` | ``C`` | ``D`` | ``E`` | ``F``
-    hexidecimal-digit --> ``a`` | ``b`` | ``c`` | ``d`` | ``e`` | ``f``
+    hexadecimal-digit --> ``0`` | ``1`` | ``2`` | ``3`` | ``4`` | ``5`` | ``6`` | ``7`` | ``8`` | ``9``
+    hexadecimal-digit --> ``A`` | ``B`` | ``C`` | ``D`` | ``E`` | ``F``
+    hexadecimal-digit --> ``a`` | ``b`` | ``c`` | ``d`` | ``e`` | ``f``
 
     binary-digit-tail --> binary-digit binary-digit-tail-OPT | ``_`` binary-digit-tail-OPT
     octal-digit-tail --> octal-digit octal-digit-tail-OPT | ``_`` octal-digit-tail-OPT
@@ -399,8 +403,29 @@ and hexadecimal literals begin with ``0x``.
 
    (If not, change foo-digit-tail to read foo-digit | ``_`` foo-digit.)
 
+.. Alternate approach -- formally describe a grammar that treats underscore as a digit,
+   and just let the prose restrict the places where it can appear.
+
 Floating-Point Literals
 ~~~~~~~~~~~~~~~~~~~~~~~
+
+Floating-point literals are made up three parts:
+an integer, a fraction, and an exponent.
+
+.. syntax-outline::
+
+   <#integer#>.<#fraction#>e<#exponent#>
+
+All three parts are made up of a series of digits,
+with optional underscores (``_``) between digits for readability.
+Underscores are ignored by the compiler.
+The fraction is separated by a decimal point (``.``).
+The exponent is separated by ``e`` or ``E``
+followed by an optional sign (``+`` or ``-``).
+Either the fraction or the exponent may be omitted.
+
+By default, floating-point literals are expressed in decimal;
+you can specify a hexadecimal literal using the ``0x`` prefix.
 
 .. langref-grammar
 
