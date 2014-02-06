@@ -152,7 +152,8 @@ are reserved for use as other punctuation.
 Operators with a leading ``<`` or ``>`` are split into two tokens when parsing:
 the leading ``<`` or ``>`` and the remainder of the token.
 The remainder is parsed the same way and may be split again.
-This parsing rule removes the need for whitespace to disambiguate between the closing ``>`` characters
+This parsing rule removes the need for whitespace
+to disambiguate between the closing ``>`` characters
 in nested protocols such as ``A<B<C>>`` ---
 it is parsed as ``A < B < C > >`` rather than as ``A < B < C >>``.
 
@@ -179,15 +180,18 @@ No         Yes         Postfix
 Yes        Yes         Binary
 ========== =========== ========
 
-A left bound operator immediately followed by a period (``.``) is never right bound.
-This special case ensures that postfix operators followed by a dot operator are parsed correctly ---
+A left bound operator immediately followed
+by a period (``.``) is never right bound.
+This special case ensures that postfix operators followed
+by a dot operator are parsed correctly ---
 for example, ``a@.b`` is parsed as as ``(a@).b`` rather than ``(a) @ (.b)``.
 
 .. TR: Using @ again instead of ! above,
    to avoid confusion between the above and below special cases.
 
 A left bound ``!`` or ``?`` operator is always a postfix operator.
-To use the ``?`` operator as syntactic sugar for ``Optional``, it must be left bound;
+To use the ``?`` operator as syntactic sugar for ``Optional``,
+it must be left bound;
 to use it in the ternary (``? :``) operator, it must not be left bound.
 
 .. langref-grammar
@@ -233,7 +237,9 @@ to use it in the ternary (``? :``) operator, it must not be left bound.
 
     operator --> operator-character operator-OPT
     operator --> `..`
-    operator-character --> ``@`` | ``/`` | ``=`` | ``-`` | ``+`` | ``*`` | ``%`` | ``<`` | ``>`` | ``!`` | ``&`` | ``|`` | ``^`` | ``~``
+    operator-character --> ``@`` | ``/`` | ``=`` | ``-`` | ``+`` 
+    operator-character --> ``*`` | ``%`` | ``<`` | ``>`` | ``!`` 
+    operator-character --> ``&`` | ``|`` | ``^`` | ``~``
 
     binary-operator --> operator
     prefix-operator --> operator
@@ -330,7 +336,7 @@ Reserved Keywords
    by extracting the code-voice literals from production rules
    rather than maintaining them by hand.
 
-.. TODO: TR: Are 'operator', 'associativity', and 'precedence' reserved keywords?
+.. TR: Are 'operator', 'associativity', and 'precedence' reserved keywords?
     For instance, in operators.swift, we find the following example:
     operator infix ++++ {
         precedence 195
@@ -378,7 +384,7 @@ Contextual Keywords
 ``infix``
 ``postfix``
 
-.. TODO: TR: Are 'associativity', 'precedence', 'left', 'right', 'none' contextual keywords?
+.. TR: Are 'associativity', 'precedence', 'left', 'right', 'none' contextual keywords?
 	For instance, in operators.swift, we find the following example:
 	operator infix ++++ {
 		precedence 195
@@ -404,7 +410,8 @@ Implementation Identifier Token
 Literals
 --------
 
-.. TODO: For each kind of literal, there are several possible types that the value created could have.
+.. TODO: For each kind of literal, there are several possible types
+   that the value created could have.
    Type inference determines which type is used.
    If the list of possible types is fixed, it might be worth writing down.
    But I seem to remember that it isn't set ahead of time,
@@ -440,7 +447,10 @@ and hexadecimal literals begin with ``0x``.
 
     Grammar of integer literals
 
-    integer-literal --> binary-integer-literal | octal-integer-literal | decimal-integer-literal-literal | hexedecimal-integer-literal
+    integer-literal --> binary-integer-literal
+    integer-literal --> octal-integer-literal
+    integer-literal --> decimal-integer-literal
+    integer-literal --> hexedecimal-integer-literal
 
     binary-integer-literal --> ``0b`` binary-digits
     octal-integer-literal --> ``0o`` octal-digits
@@ -533,7 +543,8 @@ Character literals cannot contain
 an unescaped double quote (``'``),
 an unescaped backslash (``\``),
 a carriage return, or a line feed.
-These characters and other special characters can be included using *escape sequences*.
+These characters and other special characters
+can be included using *escape sequences*.
 The following escape sequences are supported:
 
 * Null Character (``\0``)
