@@ -338,7 +338,9 @@ Computed Properties
 ~~~~~~~~~~~~~~~~~~~
 
 Classes and structures can also define *computed properties*,
-which do not actually store a value:
+which do not actually store a value.
+Instead, they provide a *getter method*, and an optional *setter method*,
+to retrieve and set other properties and values indirectly.
 
 .. testcode:: classesAndStructures
 
