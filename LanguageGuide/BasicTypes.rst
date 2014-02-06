@@ -33,8 +33,8 @@ Basic Types
 Swift provides several basic types for working with fundamental values.
 Some of these types will be familiar to C and Objective-C developers:
 
-* *numbers* (including integers and floating-point numbers)
-* *booleans* (for values that can only be true or false)
+* :newTerm:`numbers` (including integers and floating-point numbers)
+* :newTerm:`booleans` (for values that can only be true or false)
     
 Although these types may be familiar,
 Swift expands their capabilities beyond what is possible in other languages.
@@ -42,8 +42,8 @@ Swift expands their capabilities beyond what is possible in other languages.
 In addition to these simple types,
 Swift introduces some less familiar (but very powerful) advanced types:
 
-* arbitrary groups of values of different types (known as *tuples*)
-* types that can be either a known value or a missing value (known as *optionals*)
+* arbitrary groups of values of different types (known as :newTerm:`tuples`)
+* types that can be either a known value or a missing value (known as :newTerm:`optionals`)
 
 Each of these types, and the ways in which they can be used,
 are discussed in more detail below.
@@ -57,13 +57,13 @@ Named Values
 .. QUESTION: Do we need to have introduced the REPL
    (or some other learning environment) before starting this section?
 
-A *named value* is a way to store a particular value
+A :newTerm:`named value` is a way to store a particular value
 (such as the number ``42``, or the string ``"hello"``)
 and refer to it via a specific name in your code.
 Swift provides two types of named values:
 
-* *constant named values*, also known as *constants*, and
-* *variable named values*, also known as *variables*
+* :newTerm:`constant named values`, also known as :newTerm:`constants`, and
+* :newTerm:`variable named values`, also known as :newTerm:`variables`
 
 A constant has a fixed value that cannot be changed once it is set,
 whereas a variable can be set to a different value in the future.
@@ -169,10 +169,10 @@ and attempting to do so will result in an error:
 Integers
 --------
 
-*Integers* are whole numbers with no fractional component,
+:newTerm:`Integers` are whole numbers with no fractional component,
 such as ``42``, ``0`` and ``-23``.
-Integers are either *signed* (which means they can be positive or negative),
-or *unsigned* (which means they can only be positive).
+Integers are either :newTerm:`signed` (which means they can be positive or negative),
+or :newTerm:`unsigned` (which means they can only be positive).
 
 Swift provides integers in signed and unsigned forms at
 8, 16, 32 and 64-bit sizes.
@@ -193,18 +193,10 @@ you should always use ``Int`` for code consistency and interoperability.
 Even on 32-bit platforms, ``Int`` can store any value between ``-2,147,483,648`` and ``2,147,483,647``,
 and is typically large enough for everyday integer values.
 
-.. admonition:: Note
-
-    Swift's ``Int`` type will have a platform-specific size, as described above.
-    However, this has yet to be implemented.
-    In the meantime, ``Int`` is a typealias for ``Int64`` on both 32 and 64-bit platforms.
-
-.. TODO: Remove this admonition as per rdar://15612057 once rdar://15612767 is completed.
-
 Floating-Point Numbers
 ----------------------
 
-*Floating-point numbers* (also known as *floats*) are numbers with a fractional component,
+:newTerm:`Floating-point numbers` (also known as :newTerm:`floats`) are numbers with a fractional component,
 such as ``3.14159``, ``0.1`` and ``-273.15``.
 
 Swift provides two signed floating-point number types:
@@ -214,29 +206,29 @@ Swift provides two signed floating-point number types:
 * ``Float``, which represents a 32-bit floating point number,
   and should be used when floating-point values do not require 64-bit precision
 
-Strong Typing and Type Inference
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Type Safety and Type Inference
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Swift is a *strongly-typed* language.
+Swift is a :newTerm:`type-safe` language.
 This means that it encourages you to be clear about the types of values and objects your code can work with.
 If some part of your code expects a string, for example,
-strong typing means that you can't accidentally pass it an integer by mistake.
+type safety means that you can't accidentally pass it an integer by mistake.
 
-Because Swift is strongly-typed,
-it is able to perform *type checks* when compiling your code.
+Because Swift is type safe,
+it is able to perform :newTerm:`type checks` when compiling your code.
 Any mismatched types are flagged as errors so that you can fix them.
 
 Type-checking helps to avoid accidental errors when working with different types of value.
 However, this doesn't mean that you have to define the type of
 every constant and variable that you declare.
 If you don't specify the type of value you need,
-Swift will use *type inference* to work out the appropriate type.
+Swift will use :newTerm:`type inference` to work out the appropriate type.
 Type inference is the ability for a compiler to automatically deduce the type of a particular expression when it compiles your code,
 just by examining the values you provide.
 
 Type inference is particularly useful
 when you declare a constant or variable with an initial value.
-This is often done by assigning a *literal value* (or *literal*)
+This is often done by assigning a :newTerm:`literal value` (or :newTerm:`literal`)
 to the constant or variable at the point that you declare it.
 A literal value is a one-off value that appears directly in your source code,
 such as ``42`` and ``3.14159`` in the examples below.
@@ -283,10 +275,10 @@ Numeric Literals
 
 Integer literals can be written as:
 
-* a *decimal* number, with no prefix
-* a *binary* number, with a ``0b`` prefix
-* an *octal* number, with a ``0o`` prefix, or
-* a *hexadecimal* number, with a ``0x`` prefix
+* a :newTerm:`decimal` number, with no prefix
+* a :newTerm:`binary` number, with a ``0b`` prefix
+* an :newTerm:`octal` number, with a ``0o`` prefix, or
+* a :newTerm:`hexadecimal` number, with a ``0x`` prefix
 
 All of these integer literals have a decimal value of ``17``:
 
@@ -304,7 +296,7 @@ All of these integer literals have a decimal value of ``17``:
 Floating-point literals can be decimal (with no prefix),
 or hexadecimal (with a ``0x`` prefix).
 The must always have a number (or hexadecimal number) on both sides of the decimal point.
-They can also have an optional *exponent*,
+They can also have an optional :newTerm:`exponent`,
 indicated by an upper- or lower-case ``e`` for decimal floats,
 or an upper- or lower-case ``p`` for hexadecimal floats.
 
@@ -468,7 +460,7 @@ and can therefore be used in expressions alongside other values of the same type
 Booleans
 --------
 
-Swift has a basic *boolean* type, called ``Bool``.
+Swift has a basic :newTerm:`Boolean` type, called ``Bool``.
 Booleans are a special kind of logical value,
 which can only ever be ``true`` or ``false``:
 
@@ -500,7 +492,7 @@ Boolean values are particularly useful when working with conditional statements 
 
 Conditional statements such as ``if else`` are covered in more detail in :doc:`ControlFlow`.
 
-Swift's strong type-checking means that non-boolean values cannot be substituted for ``Bool``.
+Swift's type safety means that non-boolean values cannot be substituted for ``Bool``.
 You cannot, for example, say::
 
     (swift) let i = 1
@@ -517,17 +509,17 @@ However, it is valid to say::
     }
     
 The result of the ``i == 1`` comparison is a ``Bool``,
-and so this second example passes the strong type-check.
+and so this second example passes the type-check.
 (Comparisons like ``i == 1`` are discussed in :doc:`Operators`.)
 
-As with other examples of strong typing in Swift,
+As with other examples of type safety in Swift,
 this approach avoids accidental errors,
 and ensures that the intention of a particular section of code is always made clear.
 
 Tuples
 ------
 
-Tuples are a way to group together multiple values of various types.
+:newTerm:`Tuples` are a way to group together multiple values of various types.
 They provide a simple way to pass around multiple values as a single entity.
 
 Here's an example of a tuple:
@@ -574,14 +566,14 @@ Tuples are useful for temporary groups of related values.
 They are not suited to the creation of complex data structures.
 If your data structure would benefit from named member values,
 or is likely to persist beyond a temporary scope,
-it should be modeled as a *class* or *structure*,
+it should be modeled as a :newTerm:`class` or :newTerm:`structure`,
 rather than as a tuple.
 Classes and structures are described in detail in :doc:`ClassesAndStructures`.
 
 Optionals
 ---------
 
-Optionals are a way to handle missing values.
+:newTerm:`Optionals` are a way to handle missing values.
 They can be used to say:
 
 * There *is* a value, and it equals *x*

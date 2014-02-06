@@ -12,7 +12,7 @@ Enumerations
 ============
 
 *Enumerations* are used to define multiple items of a similar type.
-For example: the four main points of a compass are all of a similar type,
+For example, the four main points of a compass are all of a similar type,
 and can be written as an enumeration using the ``enum`` keyword:
 
 .. testcode:: enums
@@ -42,11 +42,11 @@ do not implicitly equal
 Instead, the different enumeration members are fully-fledged values in their own right,
 with an explicitly-defined type of ``CompassPoint``.
 
-Each ``enum`` definition effectively defines a brand new type.
+Each enumeration definition effectively defines a brand new type.
 As a result, their names
 (such as ``CompassPoint`` and ``Planet``)
 should start with a capital letter.
-``enum`` types should have singular rather than plural names,
+Enumeration types should have singular rather than plural names,
 so that they read as a sentence when declaring a named value of that type:
 
 .. testcode:: enums
@@ -87,26 +87,25 @@ Enumeration values can be checked with a ``switch`` statement:
     }
     >>> Watch out for penguins
 
-Switch statements use the ``case`` keyword to indicate each of the possible cases they will consider.
 You can read this as:
 
-Consider the value of ``directionToHead``.
+“Consider the value of ``directionToHead``.
 In the case where it equals ``.North``,
 print ``"Lots of planets have a north"``.
 In the case where it equals ``.South``,
-print ``"Watch out for penguins"``.
+print ``"Watch out for penguins"``.”
 
 …and so on.
 
-Switch statements must be exhaustive when they consider an enumeration's members.
-If the case for ``.West`` had been omitted,
+A ``switch`` statement must be exhaustive when considering an enumeration's members.
+If the ``case`` for ``.West`` had been omitted,
 this code would not compile,
 because it would not consider the complete list of ``CompassPoint`` members.
-Enforcing completeness ensures that cases are not accidentally missed or forgotten,
+Enforcing completeness ensures that enumeration members are not accidentally missed or forgotten,
 and is part of Swift's goal of completeness and lack of ambiguity.
 
-When it is not appropriate to provide a case statement for every enumeration member,
-you can define a default catch-all case to cover any members that are not addressed explicitly:
+When it is not appropriate to provide a ``case`` statement for every enumeration member,
+you can provide a ``default`` case to cover any members that are not addressed explicitly:
 
 .. testcode:: enums
 
@@ -120,7 +119,7 @@ you can define a default catch-all case to cover any members that are not addres
     }
     >>> Mostly harmless
 
-Switch statements are covered in more detail in :doc:`ControlFlow`.
+The full capabilties of ``switch`` statements are covered in more detail in :doc:`ControlFlow`.
 
 Associated Values
 ~~~~~~~~~~~~~~~~~
@@ -130,12 +129,12 @@ a defined (and typed) value in their own right.
 You can set a named value to ``Planet.Earth``,
 and check for this value later.
 However, it can sometimes be useful for enumeration members to also store
-*associated values* of other types alongside their own.
+:newTerm:`associated values` of other types alongside their own.
 
 Swift enumerations can be defined to store an associated value of any given type,
 and this type can be different for each member of the enumeration if needed.
 These kinds of associated values are known as
-*tagged unions* or *variants* in other programming languages.
+:newTerm:`tagged unions` or :newTerm:`variants` in other programming languages.
 
 For example: imagine an inventory tracking system that needs to
 track products using two different types of barcode.
@@ -224,7 +223,7 @@ This time, however, the associated values can be extracted as part of the switch
 These two calls to the ``println`` function use a special syntax to insert the values of
 ``numberSystem``, ``identifier``, ``check`` and ``productCode``
 into printed descriptions of the barcodes.
-This syntax is known as *string interpolation*,
+This syntax is known as :newTerm:`string interpolation`,
 and is a handy way to create and print strings that contain
 the current values of constants and variables.
 If you include ``\(namedValue)`` in a longer string,
@@ -242,7 +241,7 @@ Raw Values
 The barcode example above shows how members of an enumeration can declare that they store
 associated values of different types.
 In addition to associated values,
-enumeration members can also come pre-populated with default values (called *raw values*),
+enumeration members can also come pre-populated with default values (called :newTerm:`raw values`),
 which are all of the same type.
 
 Here's an example that stores raw ASCII values alongside named enumeration members:

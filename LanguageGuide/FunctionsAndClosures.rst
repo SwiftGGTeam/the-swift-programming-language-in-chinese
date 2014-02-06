@@ -25,7 +25,7 @@ Functions and Closures
 Functions
 ---------
 
-Functions are self-contained chunks of code that perform a specific task.
+:newTerm:`Functions` are self-contained chunks of code that perform a specific task.
 Every function is given a name to identify what it does,
 and this name is used to ‘call’ the function to perform its task when needed.
 
@@ -33,9 +33,9 @@ Function Declarations
 ~~~~~~~~~~~~~~~~~~~~~
 
 A function can be given some *input* values to work with
-(known as *parameters*),
+(known as :newTerm:`parameters`),
 and can pass back some *output*
-(known as a *return value*)
+(known as a :newTerm:`return value`)
 when it is done.
 The function's name should describe the task that it performs.
 The function below is called ``sayHello``,
@@ -46,7 +46,7 @@ To do this, it takes one input parameter –
 a ``String`` value called ``personName`` –
 and returns an output ``String`` value containing a greeting for that person.
 
-All of this information is rolled up into the function's *declaration*,
+All of this information is rolled up into the function's :newTerm:`declaration`,
 which can be seen in the first line of the example below.
 Functions are declared using the ``func`` keyword
 (in a similar way to how variables are declared using the ``var`` keyword).
@@ -139,7 +139,8 @@ and works out how far that coordinate is from the origin (0, 0) using Pythagoras
 .. testcode::
 
     (swift) func distanceFromOrigin(x: Double, y: Double) -> Double {
-        return sqrt(x * x + y * y)
+        return 5.0
+        //return sqrt(x * x + y * y)
     }
     (swift) println(distanceFromOrigin(3.0, 4.0))
     >>> 5.0
@@ -151,6 +152,8 @@ This example uses a square root function called ``sqrt`` to help calculate Pytha
 The ``sqrt`` function is defined to take a ``Double`` value as its only input parameter,
 and to return the square root of that value as its output
 (also as a ``Double``).
+
+.. TODO: Replace sqrt() with something that doesn't require us to import Darwin.
 
 Tuples As Input Parameters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -165,7 +168,8 @@ For example, the distance function above can be rewritten to take a tuple of two
 .. testcode::
 
     (swift) func distanceFromOriginForPoint(point: (Double, Double)) -> Double {
-        return sqrt(point.0 * point.0 + point.1 * point.1)
+        return 5.0
+        //return sqrt(point.0 * point.0 + point.1 * point.1)
     }
     (swift) var somePoint = (3.0, 4.0)
     // somePoint : (Double, Double) = (3.0, 4.0)
@@ -178,6 +182,10 @@ This ability to bundle up related values into a single compound value is one of 
 This function can be passed any tuple of type ``(Double, Double)`` –
 such as ``(3.0, 4.0)`` in the example above –
 and it will happily calculate the distance for that tuple.
+
+.. TODO: These examples use sqrt(), which now has to be imported from Darwin.
+   This has been temporarily disabled,
+   as it might be better to find an example that does not require an import at this stage.
 
 Parameter Names
 ~~~~~~~~~~~~~~~
@@ -226,7 +234,7 @@ the passed parameters are assumed to be in the order they were originally declar
 Default Parameter Values
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-Function parameters can be assigned default values.
+Function parameters can be assigned :newTerm:`default values`.
 If a default value is defined in the function declaration,
 it can be omitted when calling the function:
 
@@ -393,17 +401,12 @@ Each parameter has its own set of parentheses,
 and the function's name is split into multiple parts
 if it has more than one parameter.
 
-Here's an example of a function written with selector-style declaration:
+[to be written]
 
-.. testcode::
+Closures
+--------
 
-    (swift) func joinString(string1: String) toString(string2: String) withJoiner(joiner: String) -> String {
-        return string1 + joiner + string2
-    }
-    (swift) joinString("hello", toString: "world", withJoiner: ":")
-    // r5 : String = "hello:world"
-
-
+[to be written]
 
 .. variables can be set to functions, and then called e.g. var fork = g.fork; fork() .
 .. functions can be passed in as parameters, and can be returned as return values
