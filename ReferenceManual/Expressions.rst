@@ -252,9 +252,6 @@ Anonymous Closure Argument
 
     anonymous-closure-argument --> dollar-identifier
 
-.. TODO: Come up with a better name than dollar-identifier.
-
-
 Delayed Identifier Expression
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

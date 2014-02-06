@@ -394,7 +394,11 @@ Implementation Identifier Token
 
     dollarident ::= '$' id-continue+
 
-.. TODO: Translate dollar-identifier grammar after we've translated the identifier grammar.
+.. syntax-grammar::
+
+   dollar-identifier --> ``$`` identifier-characters
+
+.. TODO: Come up with a better name than dollar-identifier.
 
 
 Literals
