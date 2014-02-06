@@ -236,69 +236,93 @@ _________________________
 
 Stored property observers are a way to observe and respond to
 the setting of new values for a stored property.
-You can define an observer called ``willSet``
-(which is called just before the value is stored),
-and / or an observer called ``didSet``
-(which is called immediately after the new value is stored).
+You have the option to define either or both of these observers on a stored property:
+
+* ``willSet``, which is called just before the value is stored; and / or
+* ``didSet``, which is called immediately after the new value is stored
 
 If you implement a ``willSet`` observer,
-it will be passed the new property value as a constant parameter for you to check and use.
+it is passed the new property value as a constant parameter for you to check and use.
 The ``didSet`` observer is not passed the new property value,
-and can instead access the new value by checking the property directly.
+because it can access the new value directly as usual via the property's name.
 
-For example:
+Here's an example of ``willSet`` and ``didSet`` in action:
 
 .. testcode:: classesAndStructures
 
-    (swift) class VolumeGraph {
-        var clippedVolume = 0
-        let thresholdVolume = 10
-        var volume: Int {
-            willSet(newValue):
-                clippedVolume = min(newValue, thresholdVolume)
+    (swift) class StepCounter {
+        var previousTotalSteps = 0
+        var totalSteps: Int {
+            willSet(newStepCount):
+                previousTotalSteps = totalSteps
             didSet:
-                var volumeIndicator: String = ""
-                for _ in 0..clippedVolume {
-                    volumeIndicator += '█'
+                if totalSteps > previousTotalSteps  {
+                    println("Added \(totalSteps - previousTotalSteps) steps")
                 }
-                for _ in clippedVolume..thresholdVolume {
-                    volumeIndicator += '▕'
-                }
-                for _ in thresholdVolume..volume {
-                    volumeIndicator += '▒'
-                }
-                println(volumeIndicator)
         }
         init() {
-            volume = 0
+            totalSteps = 0
         }
     }
-    (swift) let graph = VolumeGraph()
-    // graph : VolumeGraph = <VolumeGraph instance>
-    (swift) graph.volume = 5
-    >>> █████▕▕▕▕▕
-    (swift) graph.volume = 11
-    >>> ██████████▒
-    (swift) graph.volume = 15
-    >>> ██████████▒▒▒▒▒
+    (swift) let stepCounter = StepCounter()
+    // stepCounter : StepCounter = <StepCounter instance>
+    (swift) stepCounter.totalSteps = 200
+    >>> Added 200 steps
+    (swift) stepCounter.totalSteps = 360
+    >>> Added 160 steps
+    (swift) stepCounter.totalSteps = 896
+    >>> Added 536 steps
 
-.. QUESTION: This example doesn't *require* the setting of clippedVolume
-   to happen within willSet - it could just as easily be within didSet.
-   Does this matter? Is there a better example?
+This example defines a new class called ``StepCounter``,
+which keeps track of the total number of steps that a person has taken while walking.
+This class might be used with input data from a pedometer or other step counter
+to keep track of a person's exercise during their daily routine.
 
-This example defines a new class called ``VolumeGraph``,
-which is a text-based graph for displaying the volume level of an amplifier system.
-The volume level for the graph has a normal operational range of between ``0`` and ``10``.
-
-The ``VolumeGraph`` class declares an integer ``volume`` property.
+The ``StepCounter`` class declares a ``totalSteps`` property of type ``Int``.
 This is a stored property with ``willSet`` and ``didSet`` observers.
-It also declares a variable stored property called ``clippedVolume``
-(with an initial value of ``0``),
-and a constant stored property called ``thresholdVolume``
-(which sets the threshold volume at a level of ``10``).
+The class also declares a variable stored property called ``previousTotalSteps``
+(which does not have any observers), and sets both properties to an initial value of ``0``.
 
-Whenever the graph's ``volume`` property is changed,
-the new value is compared to the ``thresholdVolume`` constant to see if it is too high.
+.. note::
+
+    ``willSet`` and ``didSet`` observers are not called when
+    a property is first initialized with its default or initial value.
+    They are only called when the property's value is set
+    outside of an initialization context.
+
+The ``willSet`` observer method for ``totalSteps`` is called
+whenever the property is assigned a new value.
+This is true even if the new value is the same as the current value.
+The stored value of ``totalSteps`` has not yet been updated by the time that ``willSet`` is called.
+
+This example takes advantage of the fact that ``totalSteps`` has not yet been updated,
+and copies the old value of ``totalSteps`` into the ``previousTotalSteps`` variable
+before the new value is assigned.
+
+The ``willSet`` observer method is always passed the upcoming new value of the property,
+and can use it to perform calculations during the ``willSet`` method if it wishes.
+You can specify any name you like for this parameter.
+In the example above, it has been named ‘``newTotalSteps``’,
+although the parameter is not actually used in this example.
+(If you leave out this parameter in your declaration of ``willSet``,
+it will still be made available to your code, with a default parameter name of ``value``.)
+
+Once the value of the ``totalSteps`` property has been updated,
+its ``didSet`` observer method is called.
+In this example, the ``didSet`` observer looks at the new value of ``totalSteps``,
+and compares it against the previous value.
+If the total number of steps has increased,
+a message is printed to indicate how many new steps have been taken.
+
+.. note::
+
+    If you assign a different value to a property within its own ``willSet`` method,
+    your new value will be overwritten as soon as ``willSet`` finishes.
+    The property's value will always be set to the original new value once ``willSet`` completes,
+    regardless of what you do within the ``willSet`` method yourself.
+
+    Conversely, if you assign a new value to a property within its own ``didSet`` method,
+    the new value that you assign will replace the one that was just set.
 
 .. note::
 
