@@ -112,62 +112,37 @@ Type annotations may contain an optional list of type attributes.
     because "type annotation" is the standard way of talking about
     decorating a value/expression (term) with type information.
 
-Array Type
-----------
-
-.. langref-grammar
-
-    type-array ::= type-simple
-    type-array ::= type-array '[' ']'
-    type-array ::= type-array '[' expr ']'
-
-
-.. syntax-grammar::
-
-    Grammar of an array type
-
-    array-type --> type ``[`` ``]`` | array-type ``[`` ``]``
-
-.. NOTE: Writing it this way rather than as a basic type followed by
-   a list of []s -- that preserves grouping of the type as you recurse
-   down the tree.
-
-   Arrays of fixed size are not currently supported.
-   As a result, we removed "type-array '[' expr ']'" from the grammar.
-   They may or may not be supported in the future.
-
-
-Function Type
--------------
-
-.. langref-grammar
-
-    type-function ::= type-tuple '->' type-annotation
-
-
-.. syntax-grammar::
-
-    Grammar of a function type
-
-    function-type --> tuple-type ``->`` attribute-sequence-OPT type
-
-.. NOTE: Functions are first-class citizens in Swift
-    (but not generic functions, i.e., not parametric polymorphic functions).
-    This means that monomorphic functions can be assigned to variables
-    and can be passed as arguments to other functions.
-    As an example, the following three lines of code are OK::
-
-        func polymorphicF<T>(a: Int) -> T { return a }
-        func monomorphicF(a: Int) -> Int { return a }
-        var myMonomorphicF = monomorphicF
-
-    But, the following is NOT allowed::
-
-        var myPolymorphicF = polymorphicF
-
 
 Type Identifier
 ---------------
+
+A type identifier refers to either a named type
+or a type alias of a named or compound type.
+
+Most of the time, a type identifier directly refers to a named type
+with the same name as the identifier.
+For example, ``Int`` is a type identifier that directly refers to the named type ``Int``,
+and the type identifier ``Dictionary<String, Int>`` directly refers
+to the named type ``Dictionary<String, Int>``.
+
+There are two cases where a type identifier does not refer to a type with the same name.
+The first case is when a type identifier refers to a type alias of a named or compound type.
+For instance, in the example below,
+the use of ``Point`` in the type annotation refers to the tuple type ``(Double, Double)``.
+::
+
+    typealias Point = (Double, Double)
+    let origin : Point = (0, 0)
+    // origin : Point = (0.0, 0.0)
+
+The second case is when a type identifier uses dot (``.``) syntax to refer to named types
+declared in other modules or nested within other types.
+For example, the type identifier in the following code references the (hypothetical)
+``List`` named type that is declared in the (hypothetical) ``NeatDataStructures`` module.
+::
+
+    let myList : List.NeatDataStructures = /* some initial value */
+
 
 .. langref-grammar
 
@@ -225,6 +200,60 @@ Tuple Type
     expression to varargs tuple type.
     The subtyping and type conversion chapter (proposed below in 'Metatype Types')
     should discuss these rules.
+
+
+Function Type
+-------------
+
+.. langref-grammar
+
+    type-function ::= type-tuple '->' type-annotation
+
+
+.. syntax-grammar::
+
+    Grammar of a function type
+
+    function-type --> tuple-type ``->`` attribute-sequence-OPT type
+
+.. NOTE: Functions are first-class citizens in Swift
+    (but not generic functions, i.e., not parametric polymorphic functions).
+    This means that monomorphic functions can be assigned to variables
+    and can be passed as arguments to other functions.
+    As an example, the following three lines of code are OK::
+
+        func polymorphicF<T>(a: Int) -> T { return a }
+        func monomorphicF(a: Int) -> Int { return a }
+        var myMonomorphicF = monomorphicF
+
+    But, the following is NOT allowed::
+
+        var myPolymorphicF = polymorphicF
+
+
+Array Type
+----------
+
+.. langref-grammar
+
+    type-array ::= type-simple
+    type-array ::= type-array '[' ']'
+    type-array ::= type-array '[' expr ']'
+
+
+.. syntax-grammar::
+
+    Grammar of an array type
+
+    array-type --> type ``[`` ``]`` | array-type ``[`` ``]``
+
+.. NOTE: Writing it this way rather than as a basic type followed by
+   a list of []s -- that preserves grouping of the type as you recurse
+   down the tree.
+
+   Arrays of fixed size are not currently supported.
+   As a result, we removed "type-array '[' expr ']'" from the grammar.
+   They may or may not be supported in the future.
 
 
 Optional Type
