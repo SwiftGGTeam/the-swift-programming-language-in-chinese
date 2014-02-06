@@ -356,6 +356,67 @@ A function with a declared return type must
 never allow control to fall out of the bottom of the function
 without returning a value.
 
+Constant and Variable Parameters
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Function parameters are :newTerm:`constants` by default.
+You cannot change the value of a function parameter
+from within the body of that function,
+and trying to do so will result in an error.
+This approach means that you can't accidentally change the value of a parameter
+and expect that change to be visible outside of the function.
+
+However, it can sometimes be useful for a function to have
+a variable copy of a parameter's value to work with.
+One approach would be to define a new variable yourself within the function,
+and copy the parameter's value in to it.
+To simplify this process, Swift enables you to specify
+one or more parameters as :newTerm:`variable parameters` instead.
+Variable parameters are made available as variables rather than constants,
+and give a new modifiable copy of the parameter's value for your function to work with.
+
+Variable parameters are declared by prefixing the parameter name with the keyword ``var``:
+
+.. testcode::
+
+    (swift) func alignRight(var string: String, length: Int, pad: UnicodeScalar) -> String {
+        let amountToPad = length - string.length
+        for _ in 0..amountToPad {
+            string = pad + string
+        }
+        return string
+    }
+    (swift) let originalString = "hello"
+    // originalString : String = "hello"
+    (swift) let paddedString = alignRight(originalString, 10, '-')
+    // paddedString : String = "-----hello"
+    (swift) println("The original string is still '\(originalString)'")
+    >>> The original string is still 'hello'
+
+This example declares a new function called ``alignRight``,
+which aligns an input string to the right-hand edge of a longer output string.
+Any space on the left is filled with a specified padding character.
+In this example, the string ``"hello"`` is converted to the string ``"-----hello"``.
+
+This function declares the input parameter ``string`` to be a variable parameter.
+This means that ``string`` is now available as a local variable,
+initialized with the passed-in string value,
+and can be manipulated within the body of the function.
+
+The function starts by working out how many characters need to be added to the left of the string
+in order to right-align it within the overall ``length``.
+This value is stored in a local constant called ``amountToPad``.
+The function then adds ``amountToPad`` copies of the ``pad`` character to the left of the existing string,
+and returns the result.
+It uses the ``string`` variable parameter for all of its string manipulation.
+
+.. note::
+
+    The changes you make to a variable parameter do not
+    persist beyond the end of each call to the function,
+    and are not visible outside of the function's body.
+    The variable parameter only exists for the lifetime of that function call.
+
 Selector-Style Function Declarations
 ------------------------------------
 
