@@ -9,7 +9,8 @@ Language Guide
     Strings
     ControlFlow
     Enumerations
-    FunctionsAndClosures
+    Functions
+    Closures
     ClassesAndStructures
     ProtocolsAndExtensions
     Generics

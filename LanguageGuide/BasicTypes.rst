@@ -560,7 +560,7 @@ By returning a tuple with two distinct values,
 each of a different type,
 the function is able to provide more useful information about its outcome
 than if it could only return a single value of a single type.
-Functions are described in detail in :doc:`FunctionsAndClosures`.
+Functions are described in detail in :doc:`Functions`.
 
 Tuples are useful for temporary groups of related values.
 They are not suited to the creation of complex data structures.

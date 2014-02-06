@@ -5,31 +5,19 @@
     * Setting variables to functions
     * Naming conventions
     * return statement
-    * Closures
-    * Trailing closures
     * Can only have one variadic parameter
-    * Nested closures
-    * Capturing values
-    * Different closure expression forms
-    * Anonymous closure arguments
-    * Thick and thin functions (?)
     * Attributes (infix, resilience, inout, auto_closure, noreturn)
-    * Typedefs for closure signatures to aid readability?
-    * Metatypes and static functions on types
     * Marking functions as transparent (and what this means)
 
-Functions and Closures
-======================
-
 Functions
----------
+=========
 
 :newTerm:`Functions` are self-contained chunks of code that perform a specific task.
 Every function is given a name to identify what it does,
 and this name is used to ‘call’ the function to perform its task when needed.
 
 Function Declarations
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 A function can be given some *input* values to work with
 (known as :newTerm:`parameters`),
@@ -369,7 +357,7 @@ never allow control to fall out of the bottom of the function
 without returning a value.
 
 Selector-Style Function Declarations
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------------
 
 Swift actually supports *two* different styles of function declaration.
 All of the examples so far have used the first style,
@@ -387,17 +375,9 @@ if it has more than one parameter.
 
 [to be written]
 
-Closures
---------
-
-[to be written]
-
 .. variables can be set to functions, and then called e.g. var fork = g.fork; fork() .
 .. functions can be passed in as parameters, and can be returned as return values
-.. capturing / closing over variables (and what this means in practice)
-.. no need for __block; discuss memory safety
 .. functions are just a really special non-capturing version of closures
-.. closures can be named
 .. inout properties and a general discussion of byref / byvalue
 .. pass a tuple as the entire set of arguments, as in var argTuple = (0, "one", '2'); x.foo:bar:bas:(argTuple)
 .. parameters are immutable by default, and do not implicitly create shadow variables
