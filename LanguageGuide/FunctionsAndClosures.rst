@@ -324,12 +324,14 @@ Because it does not need to return a value,
 the function's declaration does not include the return operator (``->``)
 or a return type.
 
-Strictly speaking, this function *does* still return a value,
-even though no return value is declared.
-Functions without a declared return type return a special value of type ``Void``.
-This is simply an empty tuple,
-i.e. a tuple with zero elements,
-which can be written as ``()``.
+.. note::
+
+    Strictly speaking, this function *does* still return a value,
+    even though no return value is declared.
+    Functions without a declared return type return a special value of type ``Void``.
+    This is simply an empty tuple,
+    i.e. a tuple with zero elements,
+    which can be written as ``()``.
 
 The return value of a function can be ignored when it is called:
 
