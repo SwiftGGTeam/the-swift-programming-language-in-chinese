@@ -3,7 +3,6 @@
     * Functions
     * Function signatures (including pattern matching)
     * Setting variables to functions
-    * init() functions for enums
     * Naming conventions
     * return statement
     * Closures
@@ -46,14 +45,12 @@ To do this, it takes one input parameter –
 a ``String`` value called ``personName`` –
 and returns an output ``String`` value containing a greeting for that person.
 
-All of this information is rolled up into the function's :newTerm:`declaration`,
-which can be seen in the first line of the example below.
-Functions are declared using the ``func`` keyword
-(in a similar way to how variables are declared using the ``var`` keyword).
+All of this information is rolled up into the function's :newTerm:`declaration`.
+Functions are declared using the ``func`` keyword.
 This example declares a function called ``sayHello`` that accepts a single parameter called ``personName``,
 which is of type ``String``.
 The function returns a ``String`` value when it is done,
-as indicated by the return operator ``->``
+as indicated by the :newTerm:`return operator` ``->``
 (a hyphen followed by a greater-than symbol).
 
 The declaration describes what the function does,
@@ -67,13 +64,13 @@ This makes it easy for the function to be called from elsewhere in your code in 
         let greeting = "Hello, " + personName + "!"
         return greeting
     }
-    (swift) println(sayHello("Cheryl"))
-    >>> Hello, Cheryl!
-    (swift) println(sayHello("Dave"))
-    >>> Hello, Dave!
+    (swift) println(sayHello("Anna"))
+    >>> Hello, Anna!
+    (swift) println(sayHello("Brian"))
+    >>> Hello, Brian!
 
 The ``sayHello`` function is called by passing it a ``String`` value in parentheses,
-such as ``sayHello("Cheryl")``.
+such as ``sayHello("Anna")``.
 Because ``sayHello`` returns a ``String``,
 it can be wrapped in a call to the ``println`` function
 to print that ``String`` and see its value, as shown above.
@@ -87,8 +84,8 @@ and passes back the current value of ``greeting``.
 
 Now that it has been defined as a function,
 ``sayHello`` can be called multiple times with different input values.
-The example above shows what happens if it is called with an input value of ``"Cheryl"``,
-and an input value of ``"Dave"``.
+The example above shows what happens if it is called with an input value of ``"Anna"``,
+and an input value of ``"Brian"``.
 The function returns a tailored greeting in each case.
 
 The contents of this function could actually be simplified further,
@@ -99,8 +96,8 @@ to combine the message creation and the return statement into one line:
     (swift) func sayHelloAgain(personName: String) -> String {
         return "Hello again, " + personName + "!"
     }
-    (swift) println(sayHelloAgain("Cheryl"))
-    >>> Hello again, Cheryl!
+    (swift) println(sayHelloAgain("Anna"))
+    >>> Hello again, Anna!
 
 .. admonition:: Experiment
 
@@ -133,59 +130,44 @@ Multiple Input Parameters
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Functions can have multiple input parameters.
-This function takes an x and y value for a coordinate,
-and works out how far that coordinate is from the origin (0, 0) using Pythagoras' Theorem:
+This function takes a start and an end index for a range,
+and works out how long the range is:
 
 .. testcode::
 
-    (swift) func distanceFromOrigin(x: Double, y: Double) -> Double {
-        return 5.0
-        //return sqrt(x * x + y * y)
+    (swift) func rangeLength(startIndex: Int, endIndex: Int) -> Int {
+        return endIndex - startIndex
     }
-    (swift) println(distanceFromOrigin(3.0, 4.0))
-    >>> 5.0
-
-This example uses a square root function called ``sqrt`` to help calculate Pythagoras' Theorem.
-``sqrt`` is an always-available global math function provided ‘for free’ by Swift.
-(There are quite a few others too, as described in :doc:`StandardFunctions`.)
-
-The ``sqrt`` function is defined to take a ``Double`` value as its only input parameter,
-and to return the square root of that value as its output
-(also as a ``Double``).
-
-.. TODO: Replace sqrt() with something that doesn't require us to import Darwin.
+    (swift) println(rangeLength(1, 10))
+    >>> 9
 
 Tuples As Input Parameters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Any type of value can be used as an input parameter for a function,
 if it is declared appropriately.
-For example, the distance function above can be rewritten to take a tuple of two ``Double`` values:
+For example, the range function above can be rewritten to take a tuple of two ``Int`` values:
 
 .. QUESTION: Is my use of ‘any’ technically correct here?
    Is there some type that cannot be passed to a function?
 
 .. testcode::
 
-    (swift) func distanceFromOriginForPoint(point: (Double, Double)) -> Double {
-        return 5.0
-        //return sqrt(point.0 * point.0 + point.1 * point.1)
+    (swift) func rangeLengthForRange(range: (Int, Int)) -> Int {
+        return range.1 - range.0
     }
-    (swift) var somePoint = (3.0, 4.0)
-    // somePoint : (Double, Double) = (3.0, 4.0)
-    (swift) println(distanceFromOriginForPoint(somePoint))
-    >>> 5.0
+    (swift) var someRange = (1, 10)
+    // someRange : (Int, Int) = (1, 10)
+    (swift) println(rangeLengthForRange(someRange))
+    >>> 9
 
 Note that this function takes *one* input parameter, not two.
-Its single input parameter is a tuple containing two ``Double`` values.
-This ability to bundle up related values into a single compound value is one of the major benefits of tuples.
-This function can be passed any tuple of type ``(Double, Double)`` –
-such as ``(3.0, 4.0)`` in the example above –
-and it will happily calculate the distance for that tuple.
-
-.. TODO: These examples use sqrt(), which now has to be imported from Darwin.
-   This has been temporarily disabled,
-   as it might be better to find an example that does not require an import at this stage.
+Its single input parameter is a tuple containing two ``Int`` values.
+This ability to bundle up related values into a single compound value
+is one of the major benefits of tuples.
+This function can be passed any tuple of type ``(Int, Int)`` –
+such as ``(1, 10)`` in the example above –
+and it will calculate the range length for that tuple.
 
 Parameter Names
 ~~~~~~~~~~~~~~~
