@@ -157,6 +157,48 @@ This function can be passed any tuple of type ``(Int, Int)`` –
 such as ``(1, 10)`` in the example above –
 and it will calculate the half-open range length for that tuple.
 
+Tuples as Return Values
+~~~~~~~~~~~~~~~~~~~~~~~
+
+Functions can also return a tuple as their return type.
+This enables a function to return a combination of values as part of one compound return:
+
+.. testcode::
+
+    (swift) func splitOnFirst(string: String, splitter: UnicodeScalar) -> (String, String?) {
+        for i in 0..string.length {
+            if string[i] == splitter {
+                return (string[0..i], string[i+1..string.length])
+            }
+        }
+        return (string, .None)
+    }
+
+This example defines a function called ``splitOnFirst``,
+which looks for a ``UnicodeScalar`` called ``splitter``
+within a ``String`` called ``string``.
+It returns a tuple of type ``(String, String?)``.
+This tuple will contain an initial ``String``,
+and an optional second ``String``,
+wrapped up together as a compound value inside a single tuple.
+
+If ``splitter`` is found,
+the tuple will contain two strings –
+a string made up of all of the characters from before the first instance of the splitter,
+and a string made up of all of the remaining characters.
+
+If ``splitter`` is *not* found,
+the tuple will contain the entire string as its first string value,
+and a value of ``.None`` in its second value to indicate that ``splitter`` was not found:
+
+.. testcode::
+
+    (swift) let helloWorld = splitOnFirst("hello world", ' ')
+    // helloWorld : (String, String?) = ("hello", <unprintable value>)
+    (swift) if helloWorld.1 {
+        println("The text from after the splitter is '\(helloWorld.1!)'")
+    }
+
 Parameter Names
 ~~~~~~~~~~~~~~~
 
