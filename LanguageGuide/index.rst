@@ -16,4 +16,3 @@ Language Guide
     Generics
     Modules
     StandardFunctions
-    ObjectiveC
