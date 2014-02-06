@@ -569,22 +569,12 @@ The digits in these escape codes identify a Unicode codepoint.
 
     character-literal --> ``'`` quoted-character ``'``
     quoted-character --> escaped-character
-    quoted-character --> Any character except ``'`` ``\`` U+000A U+000D
-
-    quoted-character --> Any character that does not match quoted-character-exceptions
-    quoted-character-exceptions --> ``'`` | ``\`` | U+000A | U+000D
+    quoted-character --> Any Unicode grapheme cluster except ``'`` ``\`` U+000A U+000D
 
     escaped-character --> ``\0`` | ``\\`` | ``\t`` | ``\n`` | ``\r`` | ``\"`` | ``\'``
     escaped-character --> ``\x`` hexadecimal-digit hexadecimal-digit
     escaped-character --> ``\u`` hexadecimal-digit hexadecimal-digit hexadecimal-digit hexadecimal-digit
     escaped-character --> ``\U`` hexadecimal-digit hexadecimal-digit hexadecimal-digit hexadecimal-digit hexadecimal-digit hexadecimal-digit hexadecimal-digit hexadecimal-digit
-
-.. TODO: Choose one of the above definitions for "does not contain".
-
-.. TR: Is the definition of quoted-character strictly accurate?  For
-   example, can I have a Unicode combining diacritic mark between single quotes
-   and have it count as a character literal?  (Setting aside the fact that most
-   text editors probably won't render that well.)
 
 
 String Literals
