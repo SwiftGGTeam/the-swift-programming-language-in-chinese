@@ -93,7 +93,7 @@ causes the numeric literal ``2.71828`` to have type ``Float`` instead of type ``
     var eFloat : Float = 2.71828
     // eFloat : Float = 2.71828
 
-Type inference in Swift operates at the level of an expression.
+Type inference in Swift operates at the level of a single expression or statement.
 This means that all of the information needed to infer an omitted type or part of a type
 in an expression must be accessible from type-checking one of its subexpressions.
 
