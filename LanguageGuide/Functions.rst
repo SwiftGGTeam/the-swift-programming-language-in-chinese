@@ -46,7 +46,7 @@ what it expects to receive,
 and what it will return when it is done.
 This makes it easy for the function to be called from elsewhere in your code in a clear and unambiguous way.
 
-.. testcode::
+.. testcode:: functionDeclaration
 
     (swift) func sayHello(personName: String) -> String {
         let greeting = "Hello, " + personName + "!"
@@ -79,7 +79,7 @@ The function returns a tailored greeting in each case.
 The contents of this function could actually be simplified further,
 to combine the message creation and the return statement into one line:
 
-.. testcode::
+.. testcode:: functionDeclaration
 
     (swift) func sayHelloAgain(personName: String) -> String {
         return "Hello again, " + personName + "!"
@@ -121,7 +121,7 @@ Functions can have multiple input parameters.
 This function takes a start and an end index for a half-open range,
 and works out how many elements the range contains:
 
-.. testcode::
+.. testcode:: functionParameters
 
     (swift) func halfOpenRangeLength(startIndex: Int, endIndex: Int) -> Int {
         return endIndex - startIndex
@@ -139,7 +139,7 @@ For example, the range function above can be rewritten to take a tuple of two ``
 .. QUESTION: Is my use of ‘any’ technically correct here?
    Is there some type that cannot be passed to a function?
 
-.. testcode::
+.. testcode:: functionParameters
 
     (swift) func halfOpenRangeLengthForRange(range: (Int, Int)) -> Int {
         return range.1 - range.0
@@ -163,7 +163,7 @@ Tuples as Return Values
 Functions can also return a tuple as their return type.
 This enables a function to return a combination of values as part of one compound return:
 
-.. testcode::
+.. testcode:: functionParameters
 
     (swift) func splitOnFirst(string: String, splitter: UnicodeScalar) -> (String, String?) {
         for i in 0..string.length {
@@ -191,13 +191,14 @@ If ``splitter`` is *not* found,
 the tuple will contain the entire string as its first string value,
 and a value of ``.None`` in its second value to indicate that ``splitter`` was not found:
 
-.. testcode::
+.. testcode:: functionParameters
 
     (swift) let helloWorld = splitOnFirst("hello world", ' ')
     // helloWorld : (String, String?) = ("hello", <unprintable value>)
     (swift) if helloWorld.1 {
         println("The text from after the splitter is '\(helloWorld.1!)'")
     }
+    >>> The text from after the splitter is 'world'
 
 Parameter Names
 ~~~~~~~~~~~~~~~
@@ -206,7 +207,7 @@ Values can be passed to a function using the parameter names from the function's
 This helps to make their purpose clear,
 and also enables values to be passed in a different order to the original function declaration.
 
-.. testcode::
+.. testcode:: functionParameters
 
     (swift) func containsCharacter(stringToSearch: String, characterToFind: UnicodeScalar) -> Bool {
         for character in stringToSearch.chars {
@@ -238,7 +239,7 @@ and the end of the for loop is reached.
 If parameter names are *not* provided when calling a method,
 the passed parameters are assumed to be in the order they were originally declared:
 
-.. testcode::
+.. testcode:: functionParameters
 
     (swift) let containsAHyphen = containsCharacter("This will return false", '-')
     // containsAHyphen : Bool = false
@@ -250,7 +251,7 @@ Function parameters can be assigned :newTerm:`default values`.
 If a default value is defined in the function declaration,
 it can be omitted when calling the function:
 
-.. testcode::
+.. testcode:: functionParameters
 
     (swift) func joinTwoStrings(string1: String, string2: String, joiner: String = " ") -> String {
         return string1 + joiner + string2
@@ -273,7 +274,7 @@ is used instead.
 It's important to choose an appropriate order for function parameters when working with default values.
 The ``joinTwoStrings`` function could have been written with ``joiner`` as the second (rather than third) parameter:
 
-.. testcode::
+.. testcode:: functionParameters
 
     (swift) func joinTwoMoreStrings(string1: String, joiner: String = " ", string2: String) -> String {
         return string1 + joiner + string2
@@ -299,7 +300,7 @@ and cannot find a value for the third parameter (``string2``).
 
 This problem can be avoided by naming the values when you call the function:
 
-.. testcode::
+.. testcode:: functionParameters
 
     (swift) joinTwoMoreStrings(string1: "hello", string2: "world")
     // r3 : String = "hello world"
@@ -325,7 +326,7 @@ Functions don't have to have input parameters.
 Here's a function with no input parameters,
 which always returns the same ``String`` message whenever it is called:
 
-.. testcode::
+.. testcode:: functionParameters
 
     (swift) func sayHelloWorld() -> String {
         return "hello, world"
@@ -342,7 +343,7 @@ Here's a version of the ``sayHello`` function,
 called ``waveGoodbye``,
 which prints its own ``String`` value rather than returning it:
 
-.. testcode::
+.. testcode:: functionParameters
 
     (swift) func waveGoodbye(personName: String) {
         println("Goodbye, \(personName) 👋")
@@ -365,7 +366,7 @@ or a return type.
 
 The return value of a function can be ignored when it is called:
 
-.. testcode::
+.. testcode:: functionParameters
 
     (swift) func printAndCount(stringToPrint: String) -> Int {
         println(stringToPrint)
@@ -419,7 +420,7 @@ and give a new modifiable copy of the parameter's value for your function to wor
 
 Variable parameters are declared by prefixing the parameter name with the keyword ``var``:
 
-.. testcode::
+.. testcode:: functionParameters
 
     (swift) func alignRight(var string: String, length: Int, pad: UnicodeScalar) -> String {
         let amountToPad = length - string.length
@@ -466,7 +467,7 @@ A :newTerm:`variadic parameter` is a parameter that accepts zero or more values 
 Variadic parameters give a way to cope with a varying number of input values.
 They are indicated by inserting three period characters (``...``) after their type declaration:
 
-.. testcode::
+.. testcode:: functionParameters
 
     (swift) func arithmeticMean(numbers: Double...) -> Double {
         var total: Double = 0
@@ -476,9 +477,9 @@ They are indicated by inserting three period characters (``...``) after their ty
         return total / Double(numbers.count)
     }
     (swift) arithmeticMean(1, 2, 3, 4, 5)
-    // r1 : Double = 3.0
+    // r5 : Double = 3.0
     (swift) arithmeticMean(3, 8, 19)
-    // r2 : Double = 10.0
+    // r6 : Double = 10.0
 
 This function calculates the :newTerm:`arithmetic mean`
 (also known as the :newTerm:`average`) for a list of numbers of any length.
