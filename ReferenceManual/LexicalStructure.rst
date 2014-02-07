@@ -28,7 +28,7 @@ but is otherwise ignored.
 Comments are treated as whitespace by the compiler.
 Single line comments continue until the end of the line.
 Multiline comments support nesting,
-but the ``/*`` and ``*/`` comment markers must be balanceed.
+but the ``/*`` and ``*/`` comment markers must be balanced.
 
 .. TR: LangRef says comments are ignored *and* treated as whitespace.
    Is there a difference?
@@ -45,8 +45,9 @@ but the ``/*`` and ``*/`` comment markers must be balanceed.
     comment-text --> Any text
     line-end --> U+000A | U+000D
 
-    multiline-comment --> ``/*`` multiline-comment-text ``*/``
-    multiline-comment-text --> Any text
+    multiline-comment --> ``/*`` multiline-comment-items ``*/``
+    multiline-comment-items --> multiline-comment-item multiline-comment-items-OPT
+    multiline-comment-item --> multiline-comment | comment-text
 
 
 Identifiers
@@ -56,12 +57,14 @@ Identifiers
 Identifier Tokens
 ~~~~~~~~~~~~~~~~~
 
+.. What's the difference between Identifier vs Identifier Token??
+
 Identifiers begin with
 an upper case or lower case letter A through Z,
 an underscore (``_``),
 a non-combining alphanumeric Unicode character
 in the Basic Multilingual Plane,
-or a valid code point outside the Basic Multilingual Plan
+or a character outside the Basic Multilingual Plan
 that isn't in a Private Use Area.
 After the first character,
 digits and combining Unicode characters are also allowed.
@@ -152,9 +155,9 @@ it is parsed as ``A < B < C > >`` rather than as ``A < B < C >>``.
 To determine whether an operator is used as
 a prefix operator, a postfix operator, or a binary operator,
 the parser looks at the characters before and after the operator.
-An operator is left bound if it is followed by one of the following characters:
+An operator is left bound if it is followed by
 ``(``, ``[``, ``{``, ``,``, ``;``, ``:``, or whitespace.
-An operator is left bound if it is preceded by one of the following characters:
+An operator is left bound if it is preceded by
 ``)``, ``]``, ``}``, ``,``, ``;``, ``:``, or whitespace.
 Left and right binding effect the operator as follows:
 
@@ -452,6 +455,11 @@ and hexadecimal literals begin with ``0x``.
     decimal-digits --> decimal-digit decimal-digit-tail-OPT
     hexadecimal-digits --> hexadecimal-digit hexadecimal-digit-tail-OPT
 
+    binary-digit --> Digit 0 or 1
+    octal-digit --> Digit 0 through 7
+    decimal-digit --> Digit 0 through 9
+    hexadecimal-digit --> Digit 0 through 9, a through z, or A through Z
+
     binary-digit --> ``0`` | ``1``
     octal-digit --> ``0`` | ``1`` | ``2`` | ``3`` | ``4`` | ``5`` | ``6`` | ``7``
     decimal-digit --> ``0`` | ``1`` | ``2`` | ``3`` | ``4`` | ``5`` | ``6`` | ``7`` | ``8`` | ``9``
@@ -464,11 +472,29 @@ and hexadecimal literals begin with ``0x``.
     decimal-digit-tail --> decimal-digit decimal-digit-tail-OPT | ``_`` decimal-digit-tail-OPT
     hexadecimal-digit-tail --> hexadecimal-digit hexadecimal-digit-tail-OPT | ``_`` hexadecimal-digit-tail-OPT
 
-.. TR: This grammar matches the LangRef in permitting a trailing
-   underscore, allowing things like 1_000_ to be matched.  Is that
-   desired?
+    binary-digit-tail --> ``_``-OPT binary-digit binary-digit-tail-OPT
+    octal-digit-tail --> ``_``-OPT octal-digit octal-digit-tail-OPT
+    decimal-digit-tail --> ``_``-OPT decimal-digit decimal-digit-tail-OPT
+    hexadecimal-digit-tail --> ``_``-OPT hexadecimal-digit hexadecimal-digit-tail-OPT
 
-   (If not, change foo-digit-tail to read foo-digit | ``_`` foo-digit.)
+
+
+    binary-digits --> binary-digit binary-digits-OPT
+    octal-digits --> octal-digit octal-digits-OPT
+    decimal-digits --> decimal-digit decimal-digits-OPT
+    hexadecimal-digits --> hexadecimal-digit hexadecimal-digits-OPT
+
+    binary-digit --> Digit 0 or 1, or underscore
+    octal-digit --> Digit 0 through 7, or underscore
+    decimal-digit --> Digit 0 through 9, or underscore
+    hexadecimal-digit --> Digit 0 through 9, a through f, A through F, or underscore
+
+.. TODO Pick one of the above ways of describing digits.
+
+.. TR: The prose and grammar above assume underscores go between digits.
+   Is there a reason to allow them at the end of a literal?
+   Java and Ruby both require underscores to be between digits.
+   Also, are adjacent underscores allowed?
 
 .. Alternate approach -- formally describe a grammar that treats underscore as a digit,
    and just let the prose restrict the places where it can appear.
@@ -593,7 +619,8 @@ an unescaped double quote (``"``),
 an unescaped backslash (``\``),
 a carriage return, or a line feed.
 String literals support the same escapes as character literals.
-.. TODO link?
+
+.. TODO Link?  Or maybe fold shared char/string and int/float info up a level?
 
 The value of an expression can be inserted into a string
 by placing the expression in parentheses after a backslash (\).
