@@ -141,7 +141,7 @@ For example, the type identifier in the following code references the (hypotheti
 ``List`` named type that is declared in the (hypothetical) ``NeatDataStructures`` module.
 ::
 
-    let myList : List.NeatDataStructures = /* some initial value */
+    let myList : NeatDataStructures.List = /* some initial value */
 
 
 .. langref-grammar
