@@ -20,8 +20,14 @@ Control Flow
 
 .. TODO: write a chapter introduction.
 
-Loops
------
+For Loops
+---------
+
+A ``for`` loop is used to iterate over multiple items in a range, sequence, collection or progression.
+Swift provides two types of ``for`` loop:
+
+* ``for``-``in``, and
+* ``for``-``condition``-``increment``
 
 For-In
 ~~~~~~
@@ -176,93 +182,6 @@ are described in detail in :doc:`ProtocolsAndExtensions`.
    What would the syntax be if they did?
    'for planet in Planet'?
 
-While Loops
-~~~~~~~~~~~
-
-A ``while`` loop performs a set of statements until a condition becomes ``false``.
-These kinds of loops are best used when
-the number of iterations is not known before the first iteration begins.
-Swift provides two variations of this loop,
-known as ``while`` and ``do``-``while``.
-
-While
-_____
-
-A ``while`` loop starts by considering a single condition.
-If the condition is ``true``,
-a set of statements is repeated until the condition becomes ``false``.
-
-The general form of a ``while`` loop is::
-
-    while <#condition equates to true#> {
-        <#statements#>
-    }
-
-For example::
-
-    (swift) var personName = ""
-    // personName : String = ""
-    (swift) let keyboard = Keyboard()
-    // keyboard : Keyboard = <_TtCSs8Keyboard instance>
-    (swift) println("Please enter your name, then press return.")
-    >>> Please enter your name, then press return.
-    (swift) var inputCharacter = UnicodeScalar(keyboard.read())
-    // inputCharacter : UnicodeScalar = 'a'
-    (swift) while inputCharacter != '\n' {
-        personName += inputCharacter
-        inputCharacter = UnicodeScalar(keyboard.read())
-    }
-    (swift) if personName == "" {
-        println("You didn't enter your name. How can I say hello to you?")
-    } else {
-        println("Hello, \(personName)!")
-    }
-
-This example reads input from the keyboard one character at a time,
-and appends each character to a string.
-It does this using Swift's built-in ``Keyboard`` class,
-which reads keystrokes from an attached keyboard.
-The example creates a new ``Keyboard`` instance by calling its initializer method ``Keyboard()``.
-It then reads a key using the keyboard's ``read`` method.
-This causes the program to pause and wait for a keystroke before continuing.
-The keystroke's value is returned as a ``UInt8`` value,
-containing the ASCII code of the key that was pressed.
-This is converted to a ``UnicodeScalar`` value,
-so that it can be appended to a ``String`` representing the person's name.
-
-This program continues to read in keystrokes until the user presses the return key.
-When they do so,
-the value of ``inputCharacter`` will be a line feed character (``\n``),
-causing ``while inputCharacter != '\n'`` to equate to ``false``,
-ending the loop.
-The person's name is then validated
-(to ensure that they did not press the return key without entering a name),
-and is printed if it exists.
-
-A ``while`` loop is appropriate in this case
-because the length of the input name is not known at the start of the ``while`` loop.
-Instead, the loop is executed until a particular condition is satisfied.
-
-.. NOTE: this example cannot be run in the REPL,
-   due to the fact that it is reliant on keyboard input.
-   I have yet to come up with a better example where ‘while’ is the right kind of loop to use, however.
-   (I'm trying to avoid any examples where the number of iterations is known at the start of the loop.)
-
-Do-While
-________
-
-The second variation of the ``while`` loop,
-known as the ``do``-``while`` loop,
-performs a single pass through the loop block first,
-*before* considering a condition.
-It then continues to repeat the loop until the condition is ``false``::
-
-    do {
-        <#statements#>
-    } while <#condition equates to true#>
-
-.. TODO: come up with a good example for when you'd actually want to use a do-while loop.
-
 For-Condition-Increment
 ~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -347,40 +266,31 @@ ending the loop.
    and therefore influence loop execution, such as jumping ahead –
    by prepending it with 'var'?
 
-Loop Control Statements
-~~~~~~~~~~~~~~~~~~~~~~~
+While Loops
+-----------
 
-:newTerm:`Loop control statements` give a way to end the current loop iteration immediately.
-Swift has two loop control statements: ``continue``, and ``break``.
+A ``while`` loop performs a set of statements until a condition becomes ``false``.
+These kinds of loops are best used when
+the number of iterations is not known before the first iteration begins.
+Swift provides two variations of this loop:
 
-Continue
-________
+* ``while``, and
+* ``do``-``while``
 
-The ``continue`` statement tells a loop to stop what it is doing,
-and start again at the beginning of the next iteration through the loop.
-It gives a way to say “I am done with the current loop iteration”,
-without leaving the loop altogether.
+While
+~~~~~
 
-In a ``for`` loop with an incrementer expression,
-the incrementer will still be evaluated after calling the ``continue`` statement.
-The loop itself continues to work as normal;
-only code within the loop is skipped.
+A ``while`` loop starts by considering a single condition.
+If the condition is ``true``,
+a set of statements is repeated until the condition becomes ``false``.
 
-Break
-_____
+The general form of a ``while`` loop is::
 
-The ``break`` statement is similar to the ``continue`` statement,
-except that it jumps out of the loop altogether,
-transferring control to the first line of code after the loop's closing brace (``}``).
-No further code from the current iteration of the loop is executed,
-and no further iterations of the loop are started.
+    while <#condition equates to true#> {
+        <#statements#>
+    }
 
-The following example shows the ``continue`` and ``break`` statements in action.
-This is an adapted version of the keyboard example from earlier.
-Unlike before, this version deliberately ignores any spaces in the person's name.
-Try entering your full name
-(rather than just your first name or given name)
-to see it in action::
+For example::
 
     (swift) var personName = ""
     // personName : String = ""
@@ -388,16 +298,11 @@ to see it in action::
     // keyboard : Keyboard = <_TtCSs8Keyboard instance>
     (swift) println("Please enter your name, then press return.")
     >>> Please enter your name, then press return.
-    (swift) while true {
-        let inputCharacter = UnicodeScalar(keyboard.read())
-        switch inputCharacter {
-            case ' ':
-                continue
-            case '\n':
-                break
-            default:
-                personName += inputCharacter
-        }
+    (swift) var inputCharacter = UnicodeScalar(keyboard.read())
+    // inputCharacter : UnicodeScalar = 'a'
+    (swift) while inputCharacter != '\n' {
+        personName += inputCharacter
+        inputCharacter = UnicodeScalar(keyboard.read())
     }
     (swift) if personName == "" {
         println("You didn't enter your name. How can I say hello to you?")
@@ -405,27 +310,50 @@ to see it in action::
         println("Hello, \(personName)!")
     }
 
-This time, the keyboard's ``while`` loop has a very simple condition: ``while true``.
-This condition will *always* be true,
-and so this is effectively an infinite loop.
-The only way to end this loop is to break out of it from within.
+This example reads input from the keyboard one character at a time,
+and appends each character to a string.
+It does this using Swift's built-in ``Keyboard`` class,
+which reads keystrokes from an attached keyboard.
+The example creates a new ``Keyboard`` instance by calling its initializer method ``Keyboard()``.
+It then reads a key using the keyboard's ``read`` method.
+This causes the program to pause and wait for a keystroke before continuing.
+The keystroke's value is returned as a ``UInt8`` value,
+containing the ASCII code of the key that was pressed.
+This is converted to a ``UnicodeScalar`` value,
+so that it can be appended to a ``String`` representing the person's name.
 
-Each time the loop runs,
-a new ``inputCharacter`` is read from the keyboard.
-If the character is a space,
-a ``continue`` statement is used to skip to the next loop iteration.
-This effectively ignores the space altogether.
-If the character is a line break
-(meaning that the return key was pressed),
-a ``break`` statement is used to exit the loop immediately,
-jumping to the ``if personName == ""`` line after the loop.
-Otherwise, the new character is appended to the ``personName`` string as before.
+This program continues to read in keystrokes until the user presses the return key.
+When they do so,
+the value of ``inputCharacter`` will be a line feed character (``\n``),
+causing ``while inputCharacter != '\n'`` to equate to ``false``,
+ending the loop.
+The person's name is then validated
+(to ensure that they did not press the return key without entering a name),
+and is printed if it exists.
 
-It is rare to need to use the ``break`` statement in general use.
-Normally, loops should end when their condition changes from ``true`` to ``false``,
-rather than when a ``break`` statement is encountered.
-If you find yourself needing to use ``break``,
-it may be a sign that your loop's conditional check should be improved.
+A ``while`` loop is appropriate in this case
+because the length of the input name is not known at the start of the ``while`` loop.
+Instead, the loop is executed until a particular condition is satisfied.
+
+.. NOTE: this example cannot be run in the REPL,
+   due to the fact that it is reliant on keyboard input.
+   I have yet to come up with a better example where ‘while’ is the right kind of loop to use, however.
+   (I'm trying to avoid any examples where the number of iterations is known at the start of the loop.)
+
+Do-While
+~~~~~~~~
+
+The second variation of the ``while`` loop,
+known as the ``do``-``while`` loop,
+performs a single pass through the loop block first,
+*before* considering a condition.
+It then continues to repeat the loop until the condition is ``false``::
+
+    do {
+        <#statements#>
+    } while <#condition equates to true#>
+
+.. TODO: come up with a good example for when you'd actually want to use a do-while loop.
 
 Conditional Statements
 ----------------------
@@ -436,7 +364,10 @@ or to display a message when some value becomes too high or too low.
 To do this, you need to make parts of your code :newTerm:`conditional`.
 
 Swift provides two ways to add conditional branches to your code:
-the ``if``-``else`` statement, and the ``switch`` statement.
+
+* ``if``-``else``, and
+* ``switch``
+
 The ``if``-``else`` statement is typically used to consider simple conditions with only a few possible outcomes.
 The ``switch`` statement is better suited to more complex conditions with multiple possible permutations.
 
@@ -590,61 +521,6 @@ and so a ``default`` case is used here
 to provide a catch-all case for any characters that have not already been matched.
 This also provides a handy opportunity to set the optional integer value to ``.None``,
 to indicate that no match was found.
-
-Fallthrough
-___________
-
-Switch statements in Swift do not fall through the bottom of each case and into the next one.
-Instead, the entire switch statement completes its execution as soon as the first matching case is completed.
-This is different from C,
-which requires you to insert an explicit ``break`` statement at the end of every ``case`` to prevent fall-through.
-Avoiding default fall-through means that Swift ``switch`` statements are
-much more concise and predictable than their counterparts in C,
-and avoids executing multiple ``case`` blocks by mistake.
-
-If you want to opt in to C-style fallthrough behavior,
-you can do so using the ``fallthrough`` keyword.
-The example below uses ``fallthrough`` to create a textual description of a number:
-
-.. testcode::
-
-    (swift) let integerToDescribe = 5
-    // integerToDescribe : Int = 5
-    (swift) var description = "The number \(integerToDescribe) is"
-    // description : String = "The number 5 is"
-    (swift) switch integerToDescribe {
-        case 2, 3, 5, 7, 11, 13, 17, 19:
-            description += " a prime number, and also"
-            fallthrough
-        default:
-            description += " an integer."
-    }
-    (swift) println(description)
-    >>> The number 5 is a prime number, and also an integer.
-
-This example declares a new ``String`` variable called ``description``,
-and assigns it an initial value.
-The function then considers the value of ``integerToDescribe`` using a ``switch`` statement.
-If the value of ``integerToDescribe`` is one of the prime numbers in the list,
-the function appends some text to the end of ``description``,
-to note that the number is prime.
-It then uses the ``fallthrough`` keyword to ‘fall into’ the ``default`` case as well.
-The ``default`` case adds some extra text onto the end of the description,
-and the ``switch`` statement is complete.
-
-If the value value of ``integerToDescribe`` is *not* in the list of known prime numbers,
-it is not matched by the first ``case`` statement at all.
-There are no other specific cases,
-and so it ends up being matched by the catch-all ``default`` case.
-
-Once the ``switch`` statement is done,
-the number's description is printed using the ``println`` function.
-In this example,
-the number ``5`` is correctly identified as being a prime number.
-
-Fallthrough does not check the ``case`` conditions for the block it falls into.
-It simply causes code execution to move directly to the statements inside the next ``case`` (or ``default``) block,
-as in C's standard ``switch`` statement behavior.
 
 Range Matching
 ______________
@@ -810,6 +686,146 @@ and a ``default`` block is not needed to make the ``switch`` statement exhaustiv
    in that it uses the same declared variable (point) as the previous example.
    This is primarily to keep the variable name readable within the println string interpolation.
    Is this okay? Should it be changed so that it is self-contained?
+
+Control Transfer Statements
+---------------------------
+
+:newTerm:`Control transfer statements` give a way to
+change the order in which your code is executed,
+by transferring control from one piece of code to another.
+Swift has four control transfer statements:
+
+* ``continue``
+* ``break``
+* ``fallthrough``, and
+* ``return``
+
+Unlike some languages,
+the ``return`` statement is only ever used with functions and closures in Swift.
+The ``return`` statement is described in :doc:`Functions`.
+
+Continue
+~~~~~~~~
+
+The ``continue`` statement tells a loop to stop what it is doing,
+and start again at the beginning of the next iteration through the loop.
+It gives a way to say “I am done with the current loop iteration”,
+without leaving the loop altogether.
+
+In a ``for`` loop with an incrementer expression,
+the incrementer will still be evaluated after calling the ``continue`` statement.
+The loop itself continues to work as normal;
+only code within the loop is skipped.
+
+Break
+~~~~~
+
+The ``break`` statement is similar to the ``continue`` statement,
+except that it jumps out of the loop altogether,
+transferring control to the first line of code after the loop's closing brace (``}``).
+No further code from the current iteration of the loop is executed,
+and no further iterations of the loop are started.
+
+The following example shows the ``continue`` and ``break`` statements in action.
+This is an adapted version of the keyboard example from earlier.
+Unlike before, this version deliberately ignores any spaces in the person's name.
+Try entering your full name
+(rather than just your first name or given name)
+to see it in action::
+
+    (swift) var personName = ""
+    // personName : String = ""
+    (swift) let keyboard = Keyboard()
+    // keyboard : Keyboard = <_TtCSs8Keyboard instance>
+    (swift) println("Please enter your name, then press return.")
+    >>> Please enter your name, then press return.
+    (swift) while true {
+        let inputCharacter = UnicodeScalar(keyboard.read())
+        switch inputCharacter {
+            case ' ':
+                continue
+            case '\n':
+                break
+            default:
+                personName += inputCharacter
+        }
+    }
+    (swift) if personName == "" {
+        println("You didn't enter your name. How can I say hello to you?")
+    } else {
+        println("Hello, \(personName)!")
+    }
+
+This time, the keyboard's ``while`` loop has a very simple condition: ``while true``.
+This condition will *always* be true,
+and so this is effectively an infinite loop.
+The only way to end this loop is to break out of it from within.
+
+Each time the loop runs,
+a new ``inputCharacter`` is read from the keyboard.
+If the character is a space,
+a ``continue`` statement is used to skip to the next loop iteration.
+This effectively ignores the space altogether.
+If the character is a line break
+(meaning that the return key was pressed),
+a ``break`` statement is used to exit the loop immediately,
+jumping to the ``if personName == ""`` line after the loop.
+Otherwise, the new character is appended to the ``personName`` string as before.
+
+Fallthrough
+~~~~~~~~~~~
+
+Switch statements in Swift do not fall through the bottom of each case and into the next one.
+Instead, the entire switch statement completes its execution as soon as the first matching case is completed.
+This is different from C,
+which requires you to insert an explicit ``break`` statement at the end of every ``case`` to prevent fall-through.
+Avoiding default fall-through means that Swift ``switch`` statements are
+much more concise and predictable than their counterparts in C,
+and avoids executing multiple ``case`` blocks by mistake.
+
+If you want to opt in to C-style fallthrough behavior,
+you can do so using the ``fallthrough`` keyword.
+The example below uses ``fallthrough`` to create a textual description of a number:
+
+.. testcode::
+
+    (swift) let integerToDescribe = 5
+    // integerToDescribe : Int = 5
+    (swift) var description = "The number \(integerToDescribe) is"
+    // description : String = "The number 5 is"
+    (swift) switch integerToDescribe {
+        case 2, 3, 5, 7, 11, 13, 17, 19:
+            description += " a prime number, and also"
+            fallthrough
+        default:
+            description += " an integer."
+    }
+    (swift) println(description)
+    >>> The number 5 is a prime number, and also an integer.
+
+This example declares a new ``String`` variable called ``description``,
+and assigns it an initial value.
+The function then considers the value of ``integerToDescribe`` using a ``switch`` statement.
+If the value of ``integerToDescribe`` is one of the prime numbers in the list,
+the function appends some text to the end of ``description``,
+to note that the number is prime.
+It then uses the ``fallthrough`` keyword to ‘fall into’ the ``default`` case as well.
+The ``default`` case adds some extra text onto the end of the description,
+and the ``switch`` statement is complete.
+
+If the value value of ``integerToDescribe`` is *not* in the list of known prime numbers,
+it is not matched by the first ``case`` statement at all.
+There are no other specific cases,
+and so it ends up being matched by the catch-all ``default`` case.
+
+Once the ``switch`` statement is done,
+the number's description is printed using the ``println`` function.
+In this example,
+the number ``5`` is correctly identified as being a prime number.
+
+Fallthrough does not check the ``case`` conditions for the block it falls into.
+It simply causes code execution to move directly to the statements inside the next ``case`` (or ``default``) block,
+as in C's standard ``switch`` statement behavior.
 
 .. refnote:: References
 
