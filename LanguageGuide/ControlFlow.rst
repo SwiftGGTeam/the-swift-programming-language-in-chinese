@@ -310,6 +310,9 @@ For example::
         println("Hello, \(personName)!")
     }
 
+.. TODO: This example cannot be auto-tested, as it is reliant on keyboard input.
+   It must be tested manually before this book is published.
+
 This example reads input from the keyboard one character at a time,
 and appends each character to a string.
 It does this using Swift's built-in ``Keyboard`` class,
@@ -755,6 +758,9 @@ to see it in action::
     } else {
         println("Hello, \(personName)!")
     }
+
+.. TODO: This example cannot be auto-tested, as it is reliant on keyboard input.
+   It must be tested manually before this book is published.
 
 This time, the keyboard's ``while`` loop has a very simple condition: ``while true``.
 This condition will *always* be true,
