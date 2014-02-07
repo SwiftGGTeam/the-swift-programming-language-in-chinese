@@ -486,6 +486,9 @@ This function calculates the :newTerm:`arithmetic mean`
 As shown in this example,
 a variadic parameter can be used with the ``for``-``in`` statement
 to iterate through the list of values represented by the parameter.
+Variadic parameters automatically conform to the ``Sequence`` protocol,
+and can be used anywhere that a ``Sequence`` is valid.
+(Protocols such as ``Sequence`` are covered in more detail in :doc:`ProtocolsAndExtensions`.)
 
 .. note::
 
