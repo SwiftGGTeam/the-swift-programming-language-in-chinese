@@ -22,8 +22,18 @@ or the increment operator ``++i``,
 which gives a shorthand way to increase the value of ``i`` by ``1``.
 All of these operators are explained in more detail below.
 
-Swift supports all of the standard operators from C.
-It also introduces new operators not found in other languages.
+Swift supports all of the standard operators from C,
+and improves several of their capabilities:
+
+* Assignment ``=`` does not return a value, to avoid common coding errors
+* Remainder ``%``, increment ``++`` and decrement ``--`` calculations
+  can be performed on floating-point numbers
+
+It also introduces new operators not found in other languages:
+
+* `Overflow operators`_ such as ``a &+ b``, to opt in to overflowing arithmetic behavior
+* A `range operator`_ ``a..b``, which gives a short-hand way to express a range of values
+
 In addition, you can define your own implementations of the standard operators –
 and create new ones –
 for any custom types you define.
