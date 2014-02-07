@@ -3,16 +3,6 @@ Lexical Structure
 
 .. TODO: Write a brief intro to this chapter.
 
-.. TODO: Revisit and polish the prose below
-
-Tokens are parsed using the principle of
-*longest match* (also known as "maximal munch").
-Text from the input is matched against the grammar
-by reading longer and longer portions
-until it no longer generates a valid token.
-The longest token that was matched is used,
-and the process continues with the remaining input text.
-
 Whitespace and Comments
 -----------------------
 

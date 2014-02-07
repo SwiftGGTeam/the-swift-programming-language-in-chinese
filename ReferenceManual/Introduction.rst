@@ -41,3 +41,8 @@ Swift has a strict separation between its phases of translation,
 and the compiler follows a conceptually simple design.
 
 .. TODO: Come up with a way to write this in a user-friendly way.
+
+When generating each token,
+the parser uses as much input text as possible,
+within the constraints of the grammar.
+This behavior is sometimes called *longest match* or *maximal munch*.
