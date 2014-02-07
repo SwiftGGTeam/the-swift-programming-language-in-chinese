@@ -263,8 +263,8 @@ It then continues to repeat the loop until the condition is ``false``::
 
 .. TODO: come up with a good example for when you'd actually want to use a do-while loop.
 
-For-Condition-Increment Loops
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+For-Condition-Increment
+~~~~~~~~~~~~~~~~~~~~~~~
 
 In addition to ``for``-``in`` loops,
 Swift also supports traditional C-style ``for`` loops with a condition and an incrementer:
