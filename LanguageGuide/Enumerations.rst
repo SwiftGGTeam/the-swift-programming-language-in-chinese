@@ -11,7 +11,7 @@
 Enumerations
 ============
 
-*Enumerations* are used to define multiple items of a similar type.
+:newTerm:`Enumerations` are used to define multiple items of a similar type.
 For example, the four main points of a compass are all of a similar type,
 and can be written as an enumeration using the ``enum`` keyword:
 
