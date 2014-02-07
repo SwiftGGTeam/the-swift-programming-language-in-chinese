@@ -278,6 +278,45 @@ Array Type
 Optional Type
 -------------
 
+The Swift language defines the postfix operator ``?`` as syntactic sugar for
+the named type ``Optional<T>``, which is defined in the Swift Standard Library.
+In other words, the following two declarations are equivalent::
+
+    let optionalInteger : Int?
+    let optionalInteger : Optional<Int>
+
+In both cases, the constant ``optionalInteger`` is declared to be an optional integer type.
+Note that no whitespace may appear between the type and the ``?`` operator.
+
+The type ``Optional<T>`` is an enumeration with two cases, ``None`` and ``Some(T)``,
+which are used to represent values that may or may not be present.
+Any type can be explicitly declared to be (or implicitly converted to) an optional type.
+When declaring an optional type,
+be sure to use parentheses to properly scope the ``?`` operator.
+As an example,
+to declare an optional array of integers, write the type annotation as ``(Int[])?``
+instead of ``Int[]?``.
+
+Optionals conform to the ``LogicValue`` protocol and therefore may occur in a boolean context.
+In that context,
+if an instance of an optional type ``T?`` contains any value of type ``T``
+(that is, it's value is ``Optional.Some(T)``),
+the optional type evaluates to ``true``. Otherwise, it evaluates to ``false``.
+
+If an instance of an optional type contains a value,
+you can access that value using the postfix operator ``!``, as shown below::
+
+    optionalInteger = 42
+    optionalInteger!
+    // 42
+
+It is important to note that attempting to unwrap an optional
+that has a value of ``Optional.None`` results in a runtime error.
+
+For examples that show how to use optional types,
+see "Optionals" in the in the :doc:`../LanguageGuide/BasicTypes` chapter.
+
+
 .. langref-grammar
 
     type-optional ::= type-simple '?'-postfix
