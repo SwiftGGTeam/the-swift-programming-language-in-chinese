@@ -270,6 +270,10 @@ Array Type
    As a result, we removed "type-array '[' expr ']'" from the grammar.
    They may or may not be supported in the future.
 
+.. TODO: Array types are in flux at the moment;
+    Joe has a proposal on the table, but no decision has been made.
+    Let's hold off on writing about these until they are nailed down.
+
 
 Optional Type
 -------------
