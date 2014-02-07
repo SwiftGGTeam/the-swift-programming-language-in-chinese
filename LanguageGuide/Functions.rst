@@ -459,6 +459,40 @@ It uses the ``string`` variable parameter for all of its string manipulation.
     and are not visible outside of the function's body.
     The variable parameter only exists for the lifetime of that function call.
 
+Variadic Parameters
+~~~~~~~~~~~~~~~~~~~
+
+A :newTerm:`variadic parameter` is a parameter that accepts zero or more values of a certain type.
+Variadic parameters give a way to cope with a varying number of input values.
+They are indicated by inserting three period characters (``...``) after their type declaration:
+
+.. testcode::
+
+    (swift) func arithmeticMean(numbers: Double...) -> Double {
+        var total: Double = 0
+        for number in numbers {
+            total += number
+        }
+        return total / Double(numbers.count)
+    }
+    (swift) arithmeticMean(1, 2, 3, 4, 5)
+    // r1 : Double = 3.0
+    (swift) arithmeticMean(3, 8, 19)
+    // r2 : Double = 10.0
+
+This function calculates the :newTerm:`arithmetic mean`
+(also known as the :newTerm:`average`) for a list of numbers of any length.
+
+As shown in this example,
+a variadic parameter can be used with the ``for``-``in`` statement
+to iterate through the list of values represented by the parameter.
+
+.. note::
+
+    A function may define at most one variadic parameter,
+    and it must always appear last in the parameters list,
+    to avoid ambiguity when calling the function with multiple parameters.
+
 Selector-Style Function Declarations
 ------------------------------------
 
