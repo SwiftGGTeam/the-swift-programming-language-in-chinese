@@ -1130,6 +1130,8 @@ Type Properties and Methods
 
 [to be written]
 
+.. see release notes from 2013-12-18 for a note about lazy initialization
+
 Type Casting
 ------------
 
