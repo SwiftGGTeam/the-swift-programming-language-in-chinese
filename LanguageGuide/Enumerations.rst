@@ -324,8 +324,8 @@ then the returned optional value will equal ``.None``:
     }
     >>> Not an element I know about
 
-Enumerations
-------------
+Properties and Methods
+----------------------
 
 Swift enumerations also support many of the features described in :doc:`ClassesAndStructures`:
 
