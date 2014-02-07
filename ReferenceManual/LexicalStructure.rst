@@ -159,19 +159,19 @@ An operator is left bound if it is followed by
 ``(``, ``[``, ``{``, ``,``, ``;``, ``:``, or whitespace.
 An operator is left bound if it is preceded by
 ``)``, ``]``, ``}``, ``,``, ``;``, ``:``, or whitespace.
-Left and right binding effect the operator as follows:
+Left and right binding determine the kind of operator as follows:
 
 .. TR: Correct to say any whitespace, or it is specifically CR LF HT and SP?
    That is, does NUL or a comment also count?
 
-========== =========== ========
-Left Bound Right Bound Operator
-========== =========== ========
+========== =========== ================
+Left Bound Right Bound Kind of Operator
+========== =========== ================
 No         No          Binary
 Yes        No          Prefix
 No         Yes         Postfix
 Yes        Yes         Binary
-========== =========== ========
+========== =========== ================
 
 A left bound operator immediately followed
 by a period (``.``) is never right bound.
@@ -476,8 +476,6 @@ and hexadecimal literals begin with ``0x``.
     octal-digit-tail --> ``_``-OPT octal-digit octal-digit-tail-OPT
     decimal-digit-tail --> ``_``-OPT decimal-digit decimal-digit-tail-OPT
     hexadecimal-digit-tail --> ``_``-OPT hexadecimal-digit hexadecimal-digit-tail-OPT
-
-
 
     binary-digits --> binary-digit binary-digits-OPT
     octal-digits --> octal-digit octal-digits-OPT
