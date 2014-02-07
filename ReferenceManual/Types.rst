@@ -201,6 +201,14 @@ Tuple Type
     The subtyping and type conversion chapter (proposed below in 'Metatype Types')
     should discuss these rules.
 
+.. TODO: Tuple types and function types are in flux at the moment.
+    Let's hold off on writing about these until they are nailed down.
+    There are a couple of questions here:
+    1. Are tuple types going to be allowed to contain named elements?
+    2. Are function parameter names going to be part of the function type?
+    3. Related to (1) and (2): Are tuple types going to used as the left-hand side
+       of a function type (as in the current grammar)?
+
 
 Function Type
 -------------
@@ -230,6 +238,13 @@ Function Type
 
         var myPolymorphicF = polymorphicF
 
+.. TODO: Tuple types and function types are in flux at the moment.
+    Let's hold off on writing about these until they are nailed down.
+    There are a couple of questions here:
+    1. Are tuple types going to be allowed to contain named elements?
+    2. Are function parameter names going to be part of the function type?
+    3. Related to (1) and (2): Are tuple types going to used as the left-hand side
+       of a function type (as in the current grammar)?
 
 Array Type
 ----------
