@@ -26,6 +26,7 @@
     * subscript getters and setters
     * Type functions and variables
     * Embedded classes and structures
+    * Bound functions
 
 Classes and Structures
 ======================
