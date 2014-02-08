@@ -723,51 +723,58 @@ Instance Methods
 ----------------
 
 :newTerm:`Instance methods` are functions that belong to instances of a particular class or structure.
-For example:
+They support the functionality of those instances,
+either by providing ways to access and modify its properties,
+or by providing useful functionality related to its purpose.
+
+Instance methods are written within the opening and closing braces of a class or structure,
+to indicate that they belong to that class or structure.
+They have implicit access to all of its other instance methods and properties.
+Instance methods can only be called on a specific instance of that class or structure.
+They cannot be called in isolation without an existing instance.
+
+Here's an example:
 
 .. testcode:: classesAndStructures
 
-    (swift) struct Person {
-        var givenName: String
-        var familyName: String
-        func westernOrder() -> String {
-            return "\(givenName) \(familyName)"
+    (swift) class Counter {
+        var count: Int = 0
+        func increment() {
+            count++
         }
-        func easternOrder() -> String {
-            return "\(familyName) \(givenName)"
+        func incrementBy(amount: Int) {
+            count += amount
+        }
+        func reset() {
+            count = 0
         }
     }
 
-This example defines a new structure to encapsulate information about a person.
-Every ``Person`` is assumed to have a ``givenName`` and a ``familyName``.
-The ``Person`` structure also defines two instance methods,
-``westernOrder()`` and ``easternOrder()``.
-These methods take no input parameters, and return a ``String`` in each case.
-The ``westernOrder()`` method provides a compound version of the person's name
-in ‘western order’, which is the order commonly used in much of the western world.
-Likwise, ``easternOrder()`` provides a version of the person's name in ‘eastern order’,
-as used in much of the eastern world.
+This example defines a simple ``Counter`` class,
+which keeps track of the number of times something has happened.
+It defines three instance methods:
 
-These methods can be used to retrieve and print the names of famous people
-in a culturally-appropriate format:
+* ``increment()``, which simply increments the counter by ``1``
+* ``incrementBy(amount: Int)``, which increments the counter by an arbitrary integer amount, and
+* ``reset()``, which resets the counter back to zero
+
+Instance methods are called using the same dot syntax as properties:
 
 .. testcode:: classesAndStructures
 
-    (swift) var musician = Person(givenName: "John", familyName: "Lennon")
-    // musician : Person = Person("John", "Lennon")
-    (swift) println("This person's western-order name is \(musician.westernOrder())")
-    >>> This person's western-order name is John Lennon
-    (swift) var baseballPlayer = Person(givenName: "Chan Ho", familyName: "Park")
-    // baseballPlayer : Person = Person("Chan Ho", "Park")
-    (swift) println("This person's eastern-order name is \(baseballPlayer.easternOrder())")
-    >>> This person's eastern-order name is Park Chan Ho
-
-.. TODO: mention that the only time you *need* to use self to refer to properties is
-   when a method parameter has the same name as a property.
-   You could fix this either by using self.propertyName,
-   or by changing the parameter name.
-   This is mentioned here, rather than in Initializer Methods below,
-   because it is a general principle for all methods when they access instance properties.
+    (swift) let counter = Counter()
+    // counter : Counter = <Counter instance>
+    (swift) println("Initial counter value is \(counter.count)")
+    >>> Initial counter value is 0
+    (swift) counter.increment()
+    (swift) println("Counter value is now \(counter.count)")
+    >>> Counter value is now 1
+    (swift) counter.incrementBy(5)
+    (swift) println("Counter value is now \(counter.count)")
+    >>> Counter value is now 6
+    (swift) counter.reset()
+    (swift) println("Counter value is now \(counter.count)")
+    >>> Counter value is now 0
 
 Initialization
 --------------
