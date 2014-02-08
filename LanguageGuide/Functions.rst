@@ -166,9 +166,9 @@ This enables a function to return a combination of values as part of one compoun
 .. testcode:: functionParameters
 
     (swift) func splitOnFirst(string: String, splitter: UnicodeScalar) -> (String, String?) {
-        for i in 0..string.length {
+        for i in 0...string.length {
             if string[i] == splitter {
-                return (string[0..i], string[i+1..string.length])
+                return (string[0...i], string[i+1...string.length])
             }
         }
         return (string, .None)
@@ -424,7 +424,7 @@ Variable parameters are declared by prefixing the parameter name with the keywor
 
     (swift) func alignRight(var string: String, length: Int, pad: UnicodeScalar) -> String {
         let amountToPad = length - string.length
-        for _ in 0..amountToPad {
+        for _ in 0...amountToPad {
             string = pad + string
         }
         return string

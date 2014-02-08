@@ -357,9 +357,9 @@ The example below shows all of these capabilities in action for a complex enumer
             switch minutes {
                 case 1:
                     return "1 minute"
-                case 2..60:
+                case 2...60:
                     return "\(minutes) minutes"
-                case 60..120:
+                case 60...120:
                     let extra = minutes - 60
                     return "an hour and \(extra) minutes"
                 default:

@@ -39,7 +39,7 @@ which prints the first few entries in the five-times-table:
 
 .. testcode::
 
-    (swift) for index in 1..5 {
+    (swift) for index in 1...5 {
         println("\(index) times 5 is \(index * 5)")
     }
     >>> 1 times 5 is 5
@@ -77,7 +77,7 @@ you can ignore them using an underscore in place of a variable name:
     // power : Int = 10
     (swift) var answer = 1
     // answer : Int = 1
-    (swift) for _ in 0..power {
+    (swift) for _ in 0...power {
         answer *= base
     }
     (swift) println("\(base) to the power of \(power) is \(answer)")
@@ -549,11 +549,11 @@ to provide a natural-language count for numbers of any size:
             naturalCount = "a couple of"
         case 3:
             naturalCount = "a few"
-        case 4..12:
+        case 4...12:
             naturalCount = "several"
-        case 12..100:
+        case 12...100:
             naturalCount = "dozens of"
-        case 100..1000:
+        case 100...1000:
             naturalCount = "hundreds of"
         default:
             naturalCount = "lots and lots of"
@@ -598,7 +598,7 @@ or outside of the box altogether.
             println("(\(point.0), 0) is on the x-axis")
         case (0, _):
             println("(0, \(point.1)) is on the y-axis")
-        case (-2..3, -2..3):
+        case (-2...3, -2...3):
             println("(\(point.0), \(point.1)) is inside the box")
         default:
             println("(\(point.0), \(point.1)) is outside of the box")

@@ -32,7 +32,7 @@ and improves several of their capabilities:
 It also introduces new operators not found in other languages:
 
 * `Overflow operators`_ such as ``a &+ b``, to opt in to overflowing arithmetic behavior
-* A `range operator`_ ``a..b``, which gives a short-hand way to express a range of values
+* A `range operator`_ ``a...b``, which gives a short-hand way to express a range of values
 
 In addition, you can define your own implementations of the standard operators –
 and create new ones –
@@ -1109,7 +1109,7 @@ Range Operator
 
 Swift includes a :newTerm:`range operator`,
 which provides a shorthand way to express a range of values.
-The range operator ``a..b`` defines a range that runs from ``a`` to ``b``,
+The range operator ``a...b`` defines a range that runs from ``a`` to ``b``,
 but does not include ``b``.
 For this reason, it is said to be :newTerm:`half-closed`.
 
@@ -1122,7 +1122,7 @@ for counting up to (but not including) the length of a zero-based array:
     // names : String[] = ["Anna", "Brian", "Christine", "Daniel"]
     (swift) let count = names.count
     // count : Int = 4
-    (swift) for i in 0..count {
+    (swift) for i in 0...count {
         println("Person \(i + 1) is called \(names[i])")
     }
     >>> Person 1 is called Anna
@@ -1131,7 +1131,7 @@ for counting up to (but not including) the length of a zero-based array:
     >>> Person 4 is called Daniel
 
 Note that the array contains ``4`` items,
-but ``0..count`` only counts as far as ``3``
+but ``0...count`` only counts as far as ``3``
 (the index of the last item in the array),
 because it is a half-closed range.
 
