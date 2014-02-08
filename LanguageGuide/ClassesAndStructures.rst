@@ -729,18 +729,6 @@ Methods
    This is mentioned here, rather than in Initializer Methods below,
    because it is a general principle for all methods when they access instance properties.
 
-Custom Operators
-----------------
-
-[to be written]
-
-Inheritance
------------
-
-[to be written]
-
-.. TODO: mention that methods can return DynamicSelf (a la instancetype)
-
 Initialization
 --------------
 
@@ -766,6 +754,8 @@ There are two ways to provide initial values for your properties:
 .. QUESTION: is this true once the instance is fully qualified within the initializer?
    To put it another way, is property setting *always* direct in an init?
    (I think the answer is yes.)
+
+.. TODO: mention that memory is automatically managed by ARC
 
 Initializer Methods
 ~~~~~~~~~~~~~~~~~~~
@@ -951,8 +941,135 @@ Both of these initializer methods ensure that the value of ``title``
 is set to a valid string before the method ends.
 This means that the ``Document`` class passes the ‘definite initialization’ test mentioned above.
 
-Subclassing and Initialization
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Inheritance
+-----------
+
+Classes can :newTerm:`inherit` the methods, properties and capabilities of other existing classes.
+Inheritance is one of the fundamental characteristics that differentiate classes
+from other types in Swift.
+
+Here's an example:
+
+.. testcode:: inheritance
+
+    (swift) class Vehicle {
+        var numberOfWheels = 0
+        var maxPassengers = 1
+        func description() -> String {
+            return "\(numberOfWheels) wheels and up to \(maxPassengers) passengers"
+        }
+    }
+
+This example starts by defining a ‘base’ class called ``Vehicle``.
+This base class declares two properties that are universal to all vehicles,
+and initializes them with suitable default values.
+(It is assumed that any vehicle can carry at least one passenger –
+it wouldn't be a very useful vehicle otherwise.)
+``Vehicle`` also defines a method called ``description()``,
+which returns a ``String`` description of its characteristics.
+
+The next example defines a second, more-specific class, called ``Bicycle``.
+This new class is based on the existing capabilities of ``Vehicle``.
+The ``Bicycle`` class is defined by placing the name of its base class – ``Vehicle``
+– after the name of the new class, separated by a colon. This can be read as:
+
+“Define a new class called ``Bicycle``, which inherits the characteristics of ``Vehicle``”:
+
+.. testcode:: inheritance
+
+    (swift) class Bicycle : Vehicle {
+        init() {
+            super.init()
+            numberOfWheels = 2
+        }
+    }
+
+In this example, ``Bicycle`` is said to be :newTerm:`subclassed` from ``Vehicle``, 
+and ``Vehicle`` is said to be the :newTerm:`superclass` of ``Bicycle``.
+The new ``Bicycle`` class automatically gains all of the characteristics of ``Vehicle``,
+and is able to tailor those characteristics (and add new ones) to suit its needs.
+
+.. note::
+
+    Swift classes do not inherit from a universal ‘base’ class.
+    Any classes you define without specifying a superclass
+    will automatically become base classes for you to build upon.
+
+The ``Bicycle`` class declares an initializer method, ``init()``,
+to set up its tailored characteristics.
+This initializer method first calls ``super.init()``,
+which calls the ``init()`` method for ``Bicycle``\ 's superclass, ``Vehicle``.
+
+Although ``Vehicle`` does not have an explicit initializer method itself,
+it still has an implicit default initializer method, as described in `Initialization`_ above.
+This call to ``super.init()`` triggers ``Vehicle``\ 's default initializer,
+and ensures that all of the inherited properties are initialized by ``Vehicle``
+before ``Bicycle`` tries to modify them.
+
+``Vehicle``'s default value of ``maxPassengers`` is already correct for a bicycle,
+and so it is not changed within ``Bicycle``'s initializer.
+The original value of ``numberOfWheels`` is not correct, however,
+and so it is replaced by a new value of ``2``.
+
+If you create an instance of ``Bicycle``, and print its description,
+you can see how its properties have been updated:
+
+.. testcode:: inheritance
+
+    (swift) let bicycle = Bicycle()
+    // bicycle : Bicycle = <Bicycle instance>
+    (swift) println("A bicycle has \(bicycle.description())")
+    >>> A bicycle has 2 wheels and up to 1 passengers
+
+.. TODO: work out how best to describe super.init() in light of the next section below.
+
+Subclasses can themselves be subclassed, as shown in the next example:
+
+.. testcode:: inheritance
+
+    (swift) class Tandem : Bicycle {
+        init() {
+            super.init()
+            maxPassengers = 2
+        }
+    }
+
+This example creates a subclass of ``Bicycle`` for a two-seater bicycle
+(known as a ‘tandem’).
+``Tandem`` inherits all of the characteristics of ``Bicycle``,
+which in turn inherits from ``Vehicle``.
+``Tandem`` doesn't change the number of wheels – it's still a bicycle, after all –
+but it does update ``maxPassengers`` to have the correct value for a tandem.
+
+.. note::
+
+    Subclasses are only allowed to modify
+    *variable* properties of superclasses during initialization.
+    Inherited constant properties may not be modified by subclasses.
+
+Again, if you create an instance of ``Tandem``, and print its description,
+you can see how its properties have been updated:
+
+.. testcode:: inheritance
+
+    (swift) let tandem = Tandem()
+    // tandem : Tandem = <Tandem instance>
+    (swift) println("A tandem has \(tandem.description())")
+    >>> A tandem has 2 wheels and up to 2 passengers
+
+Note that the ``description()`` method has also been inherited
+by ``Bicycle`` and ``Tandem``.
+Instance methods of a class are inherited by any and all subclasses of that class.
+
+.. QUESTION: Should I mention that you can subclass from NSObject?
+
+Overriding Instance Properties And Methods
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+[to be written]
+
+Subclassing and Initializer Delegation
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Swift classes do not automatically inherit initializer methods from their parent classes.
 This behavior is different from Objective-C, where initializers are inherited by default.
@@ -1120,6 +1237,18 @@ Here's how this final initializer could be called:
 
 .. TODO: Illustrate how the order of things matters when inserting calls to super.init
 
+Dynamic Return Types
+~~~~~~~~~~~~~~~~~~~~
+
+[to be written]
+
+.. TODO: mention that methods can return DynamicSelf (a la instancetype)
+
+Type Coercion
+~~~~~~~~~~~~~
+
+[to be written]
+
 Destructors
 -----------
 
@@ -1132,8 +1261,8 @@ Type Properties and Methods
 
 .. see release notes from 2013-12-18 for a note about lazy initialization
 
-Type Coercion
--------------
+Custom Operators
+----------------
 
 [to be written]
 
