@@ -719,10 +719,48 @@ to be managed and passed by reference.
 In practice, this means that most custom data constructs should be classes,
 not structures.
 
-Methods
--------
+Instance Methods
+----------------
 
-[to be written]
+:newTerm:`Instance methods` are functions that belong to instances of a particular class or structure.
+For example:
+
+.. testcode:: classesAndStructures
+
+    (swift) struct Person {
+        var givenName: String
+        var familyName: String
+        func westernOrder() -> String {
+            return "\(givenName) \(familyName)"
+        }
+        func easternOrder() -> String {
+            return "\(familyName) \(givenName)"
+        }
+    }
+
+This example defines a new structure to encapsulate information about a person.
+Every ``Person`` is assumed to have a ``givenName`` and a ``familyName``.
+The ``Person`` structure also defines two instance methods,
+``westernOrder()`` and ``easternOrder()``.
+These methods take no input parameters, and return a ``String`` in each case.
+The ``westernOrder()`` method provides a compound version of the person's name
+in ‘western order’, which is the order commonly used in much of the western world.
+Likwise, ``easternOrder()`` provides a version of the person's name in ‘eastern order’,
+as used in much of the eastern world.
+
+These methods can be used to retrieve and print the names of famous people
+in a culturally-appropriate format:
+
+.. testcode:: classesAndStructures
+
+    (swift) var musician = Person(givenName: "John", familyName: "Lennon")
+    // musician : Person = Person("John", "Lennon")
+    (swift) println("This person's western-order name is \(musician.westernOrder())")
+    >>> This person's western-order name is John Lennon
+    (swift) var baseballPlayer = Person(givenName: "Chan Ho", familyName: "Park")
+    // baseballPlayer : Person = Person("Chan Ho", "Park")
+    (swift) println("This person's eastern-order name is \(baseballPlayer.easternOrder())")
+    >>> This person's eastern-order name is Park Chan Ho
 
 .. TODO: mention that the only time you *need* to use self to refer to properties is
    when a method parameter has the same name as a property.
