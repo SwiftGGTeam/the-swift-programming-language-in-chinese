@@ -20,8 +20,19 @@ Expressions
     expression-list --> expression | expression ``,`` expression-list
 
 
-Unary Operators
----------------
+Prefix Operators
+----------------
+
+Prefix operators take one argument,
+the expression that follows them.
+
+.. Postfix operators are discussed under postfix-expression/postfix-operator.
+   This section used to be called "Unary Operators" but it really only covers prefixes.
+
+.. Alternately, call these prefix expressions?
+   The nonterminal name 'unary-expression' is misleading
+   because it only directly includes prefixes.
+   Postfixes like foo++ or foo? are also unary.
 
 .. NOTE: We haven't quite decided whether unary expressions should come before or after postfix expressions.
 
