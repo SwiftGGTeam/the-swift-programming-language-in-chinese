@@ -328,7 +328,7 @@ a message is printed to indicate how many new steps have been taken.
 .. note::
 
     The ``init()`` method in this example is required as a temporary measure
-    to provide an initial value for ``volume``,
+    to provide an initial value for ``totalSteps``,
     as it is not yet possible to specify an initial value
     as part of the property's declaration.
     This is being tracked as rdar://problem/15920332.
