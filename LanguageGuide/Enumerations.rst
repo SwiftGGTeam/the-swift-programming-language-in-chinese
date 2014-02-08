@@ -7,6 +7,7 @@
     * Enum default / unknown values?
     * Enum delayed identifier resolution
     * Option sets
+    * Enum special capabilities such as embeddability, type properties etc.
 
 Enumerations
 ============

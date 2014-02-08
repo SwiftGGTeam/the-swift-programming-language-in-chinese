@@ -5,7 +5,7 @@
     * Structures
     * Instance variables
     * Getters and setters
-    * willSet / didSet (these don't seem to exist)
+    * willSet / didSet
     * Constructors and destructors
     * Designated initializers
     * Instance and class methods
@@ -25,6 +25,7 @@
     * value types and reference types
     * subscript getters and setters
     * Type functions and variables
+    * Embedded classes and structures
 
 Classes and Structures
 ======================
