@@ -436,47 +436,47 @@ causes the ``description`` computed property to return an updated message.
 Embedded Types
 --------------
 
-Some enumerations are created purely to support a specific class or structure's functionality.
+Enumerations are often created to support a specific class or structure's functionality.
 Similarly, it can sometimes be convenient to define utility classes and structures
 purely for use within the context of a more complex type.
-Swift provides a way to define :newTerm:`embedded types`,
-which enable you to embed supporting enumerations, classes and structures
-within the definition of the type they support.
+To achieve this, Swift provides a way to define :newTerm:`embedded types`.
+Embedded types enable you to embed enumerations, classes and structures within the definition
+of the type they support.
 
-Types are embedded within other types simply by nesting their definition
-within the braces of the type they support:
+Types are embedded by nesting their definition within the braces of the type they support.
+Types can be nested to as many levels as are required:
 
 .. testcode:: embeddedTypes
 
     (swift) struct BlackjackCard {
-        enum CardSuit : UnicodeScalar {
+        enum Suit : UnicodeScalar {
             case Spades = '♠', Hearts = '♡', Diamonds = '♢', Clubs = '♣'
         }
-        enum CardType : String {
-            case One = "1", Two = "2", Three = "3", Four = "4", Five = "5"
-            case Six = "6", Seven = "7", Eight = "8", Nine = "9", Ten = "10"
+        enum Rank : String {
+            case Two = "2", Three = "3", Four = "4", Five = "5", Six = "6"
+            case Seven = "7", Eight = "8", Nine = "9", Ten = "10"
             case Jack = "Jack", Queen = "Queen", King = "King", Ace = "Ace"
-            struct CardValues {
+            struct Values {
                 let firstValue: Int
                 let secondValue: Int?
             }
-            var values: CardValues {
+            var values: Values {
                 switch self {
                     case .Ace:
-                        return CardValues(1, 11)
+                        return Values(1, 11)
                     case .Jack, .Queen, .King:
-                        return CardValues(10, .None)
+                        return Values(10, .None)
                     default:
-                        return CardValues(self.toRaw().toInt()!, .None)
+                        return Values(self.toRaw().toInt()!, .None)
                 }
             }
         }
-        let cardType: CardType
-        let cardSuit: CardSuit
+        let rank: Rank
+        let suit: Suit
         var description: String {
-            var output = "the \(cardType.toRaw()) of \(cardSuit.toRaw())"
-            output += " is worth \(cardType.values.firstValue)"
-            if let secondValue = cardType.values.secondValue {
+            var output = "the \(rank.toRaw()) of \(suit.toRaw())"
+            output += " is worth \(rank.values.firstValue)"
+            if let secondValue = rank.values.secondValue {
                 output += " or \(secondValue)"
             }
             return output
@@ -487,7 +487,62 @@ within the braces of the type they support:
     (swift) println("Blackjack value: \(theAceOfSpades.description)")
     >>> Blackjack value: the Ace of ♠ is worth 1 or 11
 
-.. TODO: write a description of this example.
+This example defines a playing card for use in the game of Blackjack.
+One notable feature of Blackjack is that the Ace card has a value of
+either one or eleven. This characteristic is encapsulated in the logic above.
+
+The ``BlackjackCard`` structure defines two embedded enumerations:
+
+* ``Suit``, which describes the four common playing card suits,
+  together with a raw ``UnicodeScalar`` value to represent their symbol
+* ``Rank``, which describes the thirteen possible playing card ranks,
+  together with a raw ``String`` value to represent their name
+
+The ``Rank`` enumeration defines a further embedded structure of its own, called ``Values``.
+This structure encapsulates the fact that most cards have one value,
+but the Ace card has two values.
+The ``Values`` structure defines two properties to represent this:
+
+* ``firstValue``, of type ``Int``
+* ``secondValue``, of type ``Int?``, i.e. “optional ``Int``”
+
+``Rank`` also defines a computed property, ``values``,
+which returns an instance of the ``Values`` structure.
+This computed property considers the rank of the card,
+and initializes a new ``Values`` instance with appropriate values based on its rank.
+It uses special values for ``Jack``, ``Queen``, ``King`` and ``Ace``.
+For the numeric cards, it converts the rank's raw ``String`` value into an ``Int?``
+using ``String``'s ``toInt()`` method.
+Because every numeric card value is known to definitely convert to an ``Int``,
+the value of this optional ``Int`` is accessed via an exclamation mark (``!``)
+without being checked, and is used as the first value of the ``Values`` structure.
+
+The ``BlackjackCard`` structure itself is pretty simple.
+It actually only has two properties – ``rank``, and ``suit``.
+It also defines a computed property called ``description``,
+which uses the values stored in ``rank`` and ``suit`` to build
+a textual description of the card.
+The ``description`` property uses optional binding to check if there is
+a second value to display, and inserts addition description detail if so.
+
+Because ``BlackjackCard`` is a structure with no custom initializer methods,
+it is given an implicit default memberwise initializer method.
+This is used to initialize a new constant called ``theAceOfSpades``.
+Even though ``Rank`` and ``Suit`` are embedded within ``BlackjackCard``,
+their type can still be inferred from the context,
+and so the initialization of this instance is able to refer to the enumeration members
+by their member names (``.Ace`` and ``.Spades``) alone.
+
+Embedded types can also be used outside of their definition context,
+by prefixing their name with the name of the type they are embedded within:
+
+.. testcode:: embeddedTypes
+
+    (swift) let heartsSymbol = BlackjackCard.Suit.Hearts.toRaw()
+    // heartsSymbol : UnicodeScalar = '♡'
+
+This enables the names of ``Suit``, ``Rank`` and ``Values`` to be kept deliberately short,
+because their names are naturally qualified by the context in which they are defined.
 
 .. QUESTION: I'm using the word 'type' extensively in this section.
    Is this the right thing to do?
