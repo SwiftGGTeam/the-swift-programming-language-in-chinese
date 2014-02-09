@@ -726,6 +726,7 @@ Instance Methods
 They support the functionality of those instances,
 either by providing ways to access and modify its properties,
 or by providing useful functionality related to its purpose.
+They can be written in either function-style syntax or selector-style syntax.
 
 Instance methods are written within the opening and closing braces of a class or structure,
 to indicate that they belong to that class or structure.
