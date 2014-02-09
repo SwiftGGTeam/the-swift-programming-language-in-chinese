@@ -452,14 +452,14 @@ within the braces of the type they support:
         enum CardSuit : UnicodeScalar {
             case Spades = '♠', Hearts = '♡', Diamonds = '♢', Clubs = '♣'
         }
-        struct CardValues {
-            let firstValue: Int
-            let secondValue: Int?
-        }
         enum CardType : String {
             case One = "1", Two = "2", Three = "3", Four = "4", Five = "5"
             case Six = "6", Seven = "7", Eight = "8", Nine = "9", Ten = "10"
             case Jack = "Jack", Queen = "Queen", King = "King", Ace = "Ace"
+            struct CardValues {
+                let firstValue: Int
+                let secondValue: Int?
+            }
             var values: CardValues {
                 switch self {
                     case .Ace:
