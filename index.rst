@@ -39,7 +39,7 @@ Language Guide
 * First draft of a few sections of the :doc:`LanguageGuide/Functions` chapter
 * :doc:`LanguageGuide/Functions` and :doc:`LanguageGuide/Closures` are now separate chapters
 * :doc:`LanguageGuide/ClassesAndStructures` now uses the term ‘instances’ to refer to both objects and structs
-* New section about variable binding (``if let x = someOptional``)  in :doc:`LanguageGuide/ControlFlow` 
+* New section about optional binding (``if let x = someOptional``)  in :doc:`LanguageGuide/ControlFlow` 
 * Added a new example for :doc:`LanguageGuide/Enumerations`, showing how they can use initializers, computed properties and instance methods 
 * Added a section about embedded types to the :doc:`LanguageGuide/Enumerations` chapter, although it applies to classes and structures too
 * Refer to ‘type safety’ rather than ‘strong typing’
