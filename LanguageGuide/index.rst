@@ -10,9 +10,10 @@ Chapters that have not yet been written are indicated with an [x] after their na
     Operators
     Strings
     ControlFlow
-    Enumerations
-    FunctionsAndClosures
+    Functions
+    Closures
     ClassesAndStructures
+    Enumerations
     ProtocolsAndExtensions
     Generics
     StandardFunctions
