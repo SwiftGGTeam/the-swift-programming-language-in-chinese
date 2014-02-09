@@ -17,4 +17,3 @@ Chapters that have not yet been written are indicated with an [x] after their na
     ProtocolsAndExtensions
     Generics
     StandardFunctions
-    ObjectiveC
