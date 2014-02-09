@@ -433,6 +433,66 @@ causes the ``description`` computed property to return an updated message.
     which would indicate that the train is ``OnTime``,
     not ``Delayed`` by ``0`` minutes.
 
+Embedded Types
+--------------
+
+Some enumerations are created purely to support a specific class or structure's functionality.
+Similarly, it can sometimes be convenient to define utility classes and structures
+purely for use within the context of a more complex type.
+Swift provides a way to define :newTerm:`embedded types`,
+which enable you to embed supporting enumerations, classes and structures
+within the definition of the type they support.
+
+Types are embedded within other types simply by nesting their definition
+within the braces of the type they support:
+
+.. testcode:: embeddedTypes
+
+    (swift) struct BlackjackCard {
+        enum CardSuit : UnicodeScalar {
+            case Spades = '♠', Hearts = '♡', Diamonds = '♢', Clubs = '♣'
+        }
+        struct CardValues {
+            let firstValue: Int
+            let secondValue: Int?
+        }
+        enum CardType : String {
+            case One = "1", Two = "2", Three = "3", Four = "4", Five = "5"
+            case Six = "6", Seven = "7", Eight = "8", Nine = "9", Ten = "10"
+            case Jack = "Jack", Queen = "Queen", King = "King", Ace = "Ace"
+            var values: CardValues {
+                switch self {
+                    case .Ace:
+                        return CardValues(1, 11)
+                    case .Jack, .Queen, .King:
+                        return CardValues(10, .None)
+                    default:
+                        return CardValues(self.toRaw().toInt()!, .None)
+                }
+            }
+        }
+        let cardType: CardType
+        let cardSuit: CardSuit
+        var description: String {
+            var output = "the \(cardType.toRaw()) of \(cardSuit.toRaw())"
+            output += " is worth \(cardType.values.firstValue)"
+            if let secondValue = cardType.values.secondValue {
+                output += " or \(secondValue)"
+            }
+            return output
+        }
+    }
+    (swift) let theAceOfSpades = BlackjackCard(.Ace, .Spades)
+    // theAceOfSpades : BlackjackCard = BlackjackCard(<unprintable value>, <unprintable value>)
+    (swift) println("Blackjack value: \(theAceOfSpades.description)")
+    >>> Blackjack value: the Ace of ♠ is worth 1 or 11
+
+.. TODO: write a description of this example.
+
+.. QUESTION: I'm using the word 'type' extensively in this section.
+   Is this the right thing to do?
+   Have I qualified what a 'type' is clearly enough by this point in the book?
+
 .. refnote:: References
 
     * https://[Internal Staging Server]/docs/whitepaper/TypesAndValues.html#enumerations ✔︎
