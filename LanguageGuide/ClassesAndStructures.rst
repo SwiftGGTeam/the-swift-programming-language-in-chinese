@@ -254,16 +254,13 @@ Here's an example of ``willSet`` and ``didSet`` in action:
 
     (swift) class StepCounter {
         var previousTotalSteps = 0
-        var totalSteps: Int {
+        var totalSteps: Int = 0 {
             willSet(newStepCount):
                 previousTotalSteps = totalSteps
             didSet:
                 if totalSteps > previousTotalSteps  {
                     println("Added \(totalSteps - previousTotalSteps) steps")
                 }
-        }
-        init() {
-            totalSteps = 0
         }
     }
     (swift) let stepCounter = StepCounter()
@@ -325,16 +322,6 @@ a message is printed to indicate how many new steps have been taken.
 
     Conversely, if you assign a new value to a property within its own ``didSet`` method,
     the new value that you assign *will* replace the one that was just set.
-
-.. note::
-
-    The ``init()`` method in this example is required as a temporary measure
-    to provide an initial value for ``totalSteps``,
-    as it is not yet possible to specify an initial value
-    as part of the property's declaration.
-    This is being tracked as rdar://problem/15920332.
-
-.. TODO: Remove this note once rdar://problem/15920332 is completed.
 
 Computed Properties
 ~~~~~~~~~~~~~~~~~~~
