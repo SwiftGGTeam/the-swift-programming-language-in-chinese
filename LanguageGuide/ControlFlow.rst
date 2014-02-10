@@ -20,6 +20,8 @@ Control Flow
 
 .. TODO: write a chapter introduction.
 
+.. _ControlFlow_ForLoops:
+
 For Loops
 ---------
 
@@ -28,6 +30,8 @@ Swift provides two types of ``for`` loop:
 
 * ``for``-``in``, and
 * ``for``-``condition``-``increment``
+
+.. _ControlFlow_ForIn:
 
 For-In
 ~~~~~~
@@ -182,6 +186,8 @@ are described in detail in :doc:`ProtocolsAndExtensions`.
    What would the syntax be if they did?
    'for planet in Planet'?
 
+.. _ControlFlow_ForConditionIncrement:
+
 For-Condition-Increment
 ~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -266,6 +272,8 @@ ending the loop.
    and therefore influence loop execution, such as jumping ahead –
    by prepending it with 'var'?
 
+.. _ControlFlow_WhileLoops:
+
 While Loops
 -----------
 
@@ -276,6 +284,8 @@ Swift provides two variations of this loop:
 
 * ``while``, and
 * ``do``-``while``
+
+.. _ControlFlow_While:
 
 While
 ~~~~~
@@ -343,6 +353,8 @@ Instead, the loop is executed until a particular condition is satisfied.
    I have yet to come up with a better example where ‘while’ is the right kind of loop to use, however.
    (I'm trying to avoid any examples where the number of iterations is known at the start of the loop.)
 
+.. _ControlFlow_DoWhile:
+
 Do-While
 ~~~~~~~~
 
@@ -357,6 +369,8 @@ It then continues to repeat the loop until the condition is ``false``::
     } while <#condition equates to true#>
 
 .. TODO: come up with a good example for when you'd actually want to use a do-while loop.
+
+.. _ControlFlow_ConditionalStatements:
 
 Conditional Statements
 ----------------------
@@ -373,6 +387,8 @@ Swift provides two ways to add conditional branches to your code:
 
 The ``if``-``else`` statement is typically used to consider simple conditions with only a few possible outcomes.
 The ``switch`` statement is better suited to more complex conditions with multiple possible permutations.
+
+.. _ControlFlow_IfElse:
 
 If-Else
 ~~~~~~~
@@ -448,6 +464,8 @@ The final ``else`` clause is optional, however, and can be excluded if the set o
 In this example,
 the temperature is neither too cold nor too warm to trigger the ``if`` or ``else if`` conditions,
 and so no message is printed.
+
+.. _ControlFlow_Switch:
 
 Switch
 ~~~~~~
@@ -525,6 +543,8 @@ to provide a catch-all case for any characters that have not already been matche
 This also provides a handy opportunity to set the optional integer value to ``.None``,
 to indicate that no match was found.
 
+.. _ControlFlow_RangeMatching:
+
 Range Matching
 ______________
 
@@ -565,6 +585,8 @@ to provide a natural-language count for numbers of any size:
    once rdar://14586400 is implemented.
 .. TODO: remove the initializer for naturalCount once we can declare unitialized variables in the REPL.
 .. TODO: Add a description for this example.
+
+.. _ControlFlow_Tuples:
 
 Tuples
 ______
@@ -616,6 +638,8 @@ and so all other matching ``case`` and ``default`` statements would be ignored.
    var x: Any = (1, 2)
    switch x {
    case is (Int, Int):
+
+.. _ControlFlow_Where:
 
 Where
 _____
@@ -690,6 +714,8 @@ and a ``default`` block is not needed to make the ``switch`` statement exhaustiv
    This is primarily to keep the variable name readable within the println string interpolation.
    Is this okay? Should it be changed so that it is self-contained?
 
+.. _ControlFlow_OptionalBinding:
+
 Optional Binding
 ----------------
 
@@ -747,6 +773,8 @@ would be made available as a variable rather than a constant.
 
 .. TODO add an example for 'while'.
 
+.. _ControlFlow_ControlTransferStatements:
+
 Control Transfer Statements
 ---------------------------
 
@@ -764,6 +792,8 @@ Unlike some languages,
 the ``return`` statement is only ever used with functions and closures in Swift.
 The ``return`` statement is described in :doc:`Functions`.
 
+.. _ControlFlow_Continue:
+
 Continue
 ~~~~~~~~
 
@@ -776,6 +806,8 @@ In a ``for`` loop with an incrementer expression,
 the incrementer will still be evaluated after calling the ``continue`` statement.
 The loop itself continues to work as normal;
 only code within the loop is skipped.
+
+.. _ControlFlow_Break:
 
 Break
 ~~~~~
@@ -834,6 +866,8 @@ If the character is a line break
 a ``break`` statement is used to exit the loop immediately,
 jumping to the ``if personName == ""`` line after the loop.
 Otherwise, the new character is appended to the ``personName`` string as before.
+
+.. _ControlFlow_Fallthrough:
 
 Fallthrough
 ~~~~~~~~~~~

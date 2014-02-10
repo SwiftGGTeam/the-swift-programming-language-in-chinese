@@ -54,6 +54,8 @@ In addition, classes have several capabilities that structures do not:
 
 All of these capabilities are described in more detail below.
 
+.. _ClassesAndStructures_DefiningClassesAndStructures:
+
 Defining Classes and Structures
 -------------------------------
 
@@ -66,6 +68,8 @@ automatically made available for other code to use.
 
 .. TODO: add a note here about public and private interfaces,
    once we know how these will be declared in Swift.
+
+.. _ClassesAndStructures_DefinitionSyntax:
 
 Definition Syntax
 ~~~~~~~~~~~~~~~~~
@@ -90,6 +94,8 @@ Custom classes and structures should be given ``UpperCamelCase`` names
 (such as ``SomeClass`` and ``SomeStructure`` here),
 to match the capitalization of standard Swift types
 (such as ``String``, ``Int`` and ``Bool``).
+
+.. _ClassesAndStructures_Properties:
 
 Properties
 ----------
@@ -116,6 +122,8 @@ The example also defines a new class called ``Rectangle``,
 which has a variable property called ``size``.
 This property is initialized with a new ``Size`` structure instance,
 which infers a property type of ``Size``.
+
+.. _ClassesAndStructures_ClassAndStructureInstances:
 
 Class and Structure Instances
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -150,6 +158,8 @@ Class and structure initialization is described in more detail in `Initializatio
 .. TODO: note that you can only use the default constructor if you provide default values
    for all properties on a structure or class.
 
+.. _ClassesAndStructures_Terminology:
+
 Terminology
 ___________
 
@@ -159,6 +169,8 @@ However, Swift classes and structures are much closer in functionality than in o
 and much of this chapter describes functionality that can apply to
 instances of *either* a class or a structure type.
 Because of this, the more general term :newTerm:`instance` is used below.
+
+.. _ClassesAndStructures_AccessingProperties:
 
 Accessing Properties
 ~~~~~~~~~~~~~~~~~~~~
@@ -190,6 +202,8 @@ even though it is a sub-property of ``someRectangle.size``:
     (swift) println("The width of someRectangle is now \(someRectangle.size.width)")
     >>> The width of someRectangle is now 2.0
 
+.. _ClassesAndStructures_MemberwiseStructureInitializers:
+
 Memberwise Structure Initializers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -216,6 +230,8 @@ if they are listed in the same order that the properties are declared in the str
 .. TODO: This whole section needs updating in light of the changes for definite initialization.
    Memberwise initializers will only exist if default values are provided for all properties.
 
+.. _ClassesAndStructures_StoredProperties:
+
 Stored Properties
 ~~~~~~~~~~~~~~~~~
 
@@ -232,6 +248,8 @@ Constant stored properties have slightly more flexibility, however,
 in that their value can be changed at any point until the instance they belong to
 has completed its initialization.
 (Instance initialization is described in more detail in `Initialization`_ below.)
+
+.. _ClassesAndStructures_StoredPropertyObservers:
 
 Stored Property Observers
 _________________________
@@ -323,6 +341,8 @@ a message is printed to indicate how many new steps have been taken.
     Conversely, if you assign a new value to a property within its own ``didSet`` method,
     the new value that you assign *will* replace the one that was just set.
 
+.. _ClassesAndStructures_ComputedProperties:
+
 Computed Properties
 ~~~~~~~~~~~~~~~~~~~
 
@@ -392,6 +412,8 @@ and moves the square to its new position.
     :width: 400
     :align: center
 
+.. _ClassesAndStructures_ShorthandGetterAndSetterDeclarations:
+
 Shorthand Getter and Setter Declarations
 ________________________________________
 
@@ -417,6 +439,8 @@ which takes advantage of these shorthand notations:
             origin.y = value.y - (size.height / 2)
         }
     }
+
+.. _ClassesAndStructures_ReadOnlyComputedProperties:
 
 Read-Only Computed Properties
 _____________________________
@@ -475,6 +499,8 @@ to indicate that their value cannot be changed once it is set as part of instanc
    Where should this be mentioned?
 .. TODO: Anything else from https://[Internal Staging Server]/docs/StoredAndComputedVariables.html
 
+.. _ClassesAndStructures_PropertiesAndInstanceVariables:
+
 Properties and Instance Variables
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -499,6 +525,8 @@ is defined in a single location as part of the class definition.
 .. TODO: immutability of value type constants means that
    their mutable properties are also immutable
 
+.. _ClassesAndStructures_ValueTypesAndReferenceTypes:
+
 Value Types and Reference Types
 -------------------------------
 
@@ -512,6 +540,8 @@ This difference is very important when deciding how to define the building block
 
 .. TODO: this section needs updating to clarify that assignment is always like value semantics,
    and it's only really possible to see the difference when looking at the properties of a type.
+
+.. _ClassesAndStructures_ValueTypes:
 
 Value Types
 ~~~~~~~~~~~
@@ -579,6 +609,8 @@ doesn't affect the height value stored in ``iPhone4``.
 .. TODO: Should I give an example of passing a value type to a function here?
 .. TODO: Note that strings, arrays etc. are not reference types in Swift
 
+.. _ClassesAndStructures_ReferenceTypes:
+
 Reference Types
 ~~~~~~~~~~~~~~~
 
@@ -644,6 +676,8 @@ you should define it as a class in your code.
 
 .. TODO: Why would you want to use reference types rather than value types?
 
+.. _ClassesAndStructures_Pointers:
+
 Pointers
 ________
 
@@ -667,6 +701,8 @@ and the value it contains is always a reference to a particular instance of that
    
 .. TODO: Saying that we don't use the reference operator is actually untrue.
    We use it at the call-site for inout function parameters.
+
+.. _ClassesAndStructures_ChoosingBetweenClassesAndStructures:
 
 Choosing Between Classes and Structures
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -705,6 +741,8 @@ In all other cases, you should define a class, and create instances of that clas
 to be managed and passed by reference.
 In practice, this means that most custom data constructs should be classes,
 not structures.
+
+.. _ClassesAndStructures_InstanceMethods:
 
 Instance Methods
 ----------------
@@ -764,6 +802,8 @@ Instance methods are called using the same dot syntax as properties:
     (swift) println("Counter value is now \(counter.count)")
     >>> Counter value is now 0
 
+.. _ClassesAndStructures_Initialization:
+
 Initialization
 --------------
 
@@ -791,6 +831,8 @@ There are two ways to provide initial values for your properties:
    (I think the answer is yes.)
 
 .. TODO: mention that memory is automatically managed by ARC
+
+.. _ClassesAndStructures_InitializerMethods:
 
 Initializer Methods
 ~~~~~~~~~~~~~~~~~~~
@@ -909,6 +951,8 @@ as long as is is definitely set to a value by the time the initializer has finis
 
 .. TODO: This could do with a more elegant example.
 
+.. _ClassesAndStructures_DefiniteInitialization:
+
 Definite Initialization
 ~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -919,6 +963,8 @@ This process is known as :newTerm:`definite initialization`,
 and helps to ensure that your instances are always valid before they are used.
 Swift will warn you at compile-time if your class or structure does not pass
 the definite initialization test.
+
+.. _ClassesAndStructures_InitializerDelegation:
 
 Initializer Delegation
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -975,6 +1021,8 @@ passing it a placeholder string value of ``[untitled]``:
 Both of these initializer methods ensure that the value of ``title``
 is set to a valid string before the method ends.
 This means that the ``Document`` class passes the ‘definite initialization’ test mentioned above.
+
+.. _ClassesAndStructures_Inheritance:
 
 Inheritance
 -----------
@@ -1098,10 +1146,14 @@ Instance methods of a class are inherited by any and all subclasses of that clas
 
 .. QUESTION: Should I mention that you can subclass from NSObject?
 
+.. _ClassesAndStructures_OverridingInstancePropertiesAndMethods:
+
 Overriding Instance Properties And Methods
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 [to be written]
+
+.. _ClassesAndStructures_SubclassingAndInitializerDelegation:
 
 Subclassing and Initializer Delegation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1272,6 +1324,8 @@ Here's how this final initializer could be called:
 
 .. TODO: Illustrate how the order of things matters when inserting calls to super.init
 
+.. _ClassesAndStructures_DynamicReturnTypes:
+
 Dynamic Return Types
 ~~~~~~~~~~~~~~~~~~~~
 
@@ -1279,15 +1333,21 @@ Dynamic Return Types
 
 .. TODO: mention that methods can return DynamicSelf (a la instancetype)
 
+.. _ClassesAndStructures_TypeCoercion:
+
 Type Coercion
 ~~~~~~~~~~~~~
 
 [to be written]
 
+.. _ClassesAndStructures_Destructors:
+
 Destructors
 -----------
 
 [to be written]
+
+.. _ClassesAndStructures_TypePropertiesAndMethods:
 
 Type Properties and Methods
 ---------------------------
@@ -1295,6 +1355,8 @@ Type Properties and Methods
 [to be written]
 
 .. see release notes from 2013-12-18 for a note about lazy initialization
+
+.. _ClassesAndStructures_CustomOperators:
 
 Custom Operators
 ----------------

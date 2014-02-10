@@ -68,6 +68,8 @@ The type of ``directionToHead`` is already known,
 and so we can drop the type when setting its value.
 This makes for highly readable code when working with explicitly-typed enumeration values.
 
+.. _Enumerations_ConsideringEnumerationValuesWithASwitchStatement:
+
 Considering Enumeration Values with a Switch Statement
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -121,6 +123,8 @@ you can provide a ``default`` case to cover any members that are not addressed e
     >>> Mostly harmless
 
 The full capabilties of ``switch`` statements are covered in more detail in :doc:`ControlFlow`.
+
+.. _Enumerations_AssociatedValues:
 
 Associated Values
 ~~~~~~~~~~~~~~~~~
@@ -236,6 +240,8 @@ when the string is printed by the ``println`` function.
    It is only included here as a legacy from when enumerations were in Basic Types,
    and had not yet been introduced by the subsequent Strings chapter.
 
+.. _Enumerations_RawValues:
+
 Raw Values
 ~~~~~~~~~~
 
@@ -324,6 +330,8 @@ then the returned optional value will equal ``.None``:
         println("Not an element I know about")
     }
     >>> Not an element I know about
+
+.. _Enumerations_PropertiesAndMethods:
 
 Properties and Methods
 ----------------------
@@ -432,6 +440,8 @@ causes the ``description`` computed property to return an updated message.
     in case it is passed a value of ``0`` minutes –
     which would indicate that the train is ``OnTime``,
     not ``Delayed`` by ``0`` minutes.
+
+.. _Enumerations_EmbeddedTypes:
 
 Embedded Types
 --------------
