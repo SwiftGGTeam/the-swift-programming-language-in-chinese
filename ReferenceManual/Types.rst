@@ -43,7 +43,7 @@ are actually named types,
 defined and implemented in the Swift Standard Library using structures.
 Because they are named types,
 you can extend their behavior to suit the needs of your program,
-using an extension declaration, discussed in [NEED A LINK].
+using an extension declaration, discussed in :doc:`../LanguageGuide/ProtocolsAndExtensions`.
 
 A *compound type* is a type without a name, defined in the Swift language itself.
 There are two compound types in the language: function types and tuple types.
@@ -320,7 +320,7 @@ It is important to note that attempting to unwrap an optional
 that has a value of ``Optional.None`` results in a runtime error.
 
 For examples that show how to use optional types,
-see :ref:`BasicTypes_Optionals` in the in the :doc:`../LanguageGuide/BasicTypes` chapter.
+see :ref:`BasicTypes_Optionals`.
 
 
 .. langref-grammar
@@ -482,6 +482,31 @@ Metatype Type
 
 Type Inheritance Clause
 -----------------------
+
+A type inheritance clause is used to specify what class and protocols a named type
+inherits from and conforms to. A type inheritance clause begins with a colon (``:``),
+followed by a comma-separated list of type identifiers.
+
+Class types may inherit from a single superclass and conform to any number of protocols.
+When defining a class,
+the name of the superclass must appear first in the list of type identifiers,
+followed by any number of protocols the class must conform to.
+If the class does not inherit from another class,
+the list may begin with a protocol instead.
+For an extended discussion and several examples of class inheritance,
+see :ref:`ClassesAndStructures_Inheritance`.
+
+Other named types may only inherit or conform to a list of protocols.
+Protocol types may inherit from any number of other protocols.
+When a protocol type inherits from other protocols,
+the set of requirements from those other protocols are aggregated together,
+and any type that inherits from the current protocol must conform to all of those requirements.
+
+A type inheritance clause in an enumeration definition may be either a list of protocols,
+or in the case of an enumeration that assigns raw values to its members,
+a single, named type that specifies the type of those raw values.
+For an example of an enumeration definition that uses a type inheritance clause
+to specify the type of its raw values, see :ref:`Enumerations_RawValues`.
 
 .. langref-grammar
 
