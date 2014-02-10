@@ -8,11 +8,11 @@ Language Guide
     Operators
     Strings
     ControlFlow
-    Enumerations
-    FunctionsAndClosures
+    Functions
+    Closures
     ClassesAndStructures
+    Enumerations
     ProtocolsAndExtensions
     Generics
     Modules
     StandardFunctions
-    ObjectiveC

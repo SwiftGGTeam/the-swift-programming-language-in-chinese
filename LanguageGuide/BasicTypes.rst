@@ -51,6 +51,8 @@ are discussed in more detail below.
 Swift also provides a powerful and flexible way to create and work with string and character types.
 These are introduced below, and are discussed in more detail in :doc:`Strings`.
 
+.. _BasicTypes_NamedValues:
+
 Named Values
 ------------
 
@@ -118,7 +120,7 @@ and give it a value of ``"Hello"``.”
    when you know that the variable's value should be allowed to mutate.
 
 You can use pretty much any character you like for constant and variable names,
-including `Unicode <http://en.wikipedia.org/wiki/Unicode>`_ characters:
+including Unicode characters:
 
 .. testcode:: namedValues
 
@@ -166,6 +168,8 @@ and attempting to do so will result in an error:
     !!! ~~~~~~~~~~~~ ^
 
 
+.. _BasicTypes_Integers:
+
 Integers
 --------
 
@@ -193,6 +197,8 @@ you should always use ``Int`` for code consistency and interoperability.
 Even on 32-bit platforms, ``Int`` can store any value between ``-2,147,483,648`` and ``2,147,483,647``,
 and is typically large enough for everyday integer values.
 
+.. _BasicTypes_FloatingPointNumbers:
+
 Floating-Point Numbers
 ----------------------
 
@@ -205,6 +211,8 @@ Swift provides two signed floating-point number types:
   and should be used when floating-point values need to be very large or particularly precise
 * ``Float``, which represents a 32-bit floating point number,
   and should be used when floating-point values do not require 64-bit precision
+
+.. _BasicTypes_TypeSafetyAndTypeInference:
 
 Type Safety and Type Inference
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -269,6 +277,8 @@ from the presence of a floating-point literal as part of the addition.
 Type inference means that Swift requires far fewer type declarations than languages such as C or Objective-C.
 Named values are still explicitly-typed,
 but much of the work of specifying their type is done for you.
+
+.. _BasicTypes_NumericLiterals:
 
 Numeric Literals
 ~~~~~~~~~~~~~~~~
@@ -341,6 +351,8 @@ In the example above, the value of ``justOverOneMillion`` has been printed as ``
 This is a short-form representation of its underlying ``Double`` value of ``1000000.0000001``.
 The actual value of ``justOverOneMillion`` still has all of the precision of the original.
 
+.. _BasicTypes_NumericTypeConversion:
+
 Numeric Type Conversion
 ~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -356,6 +368,8 @@ or for performance, memory usage, or other optimization.
 Using explicitly-sized types in these situations
 helps to catch any accidental value overflows,
 and implicitly documents the nature of the data being used.
+
+.. _BasicTypes_IntegerConversion:
 
 Integer Conversion
 __________________
@@ -408,6 +422,8 @@ is covered in :doc:`ProtocolsAndExtensions`.
 .. TODO: add a note that this is not traditional type-casting,
    and perhaps include a forward reference to the objects chapter.
 
+.. _BasicTypes_IntegerToFloatingPointConversion:
+
 Integer to Floating-Point Conversion
 ____________________________________
 
@@ -441,6 +457,8 @@ Their type is only inferred at the point that they are evaluated by the compiler
    I think it's more appropriate here, however,
    and helps to reinforce the ‘just use Int’ message.
 
+.. _BasicTypes_NumericBounds:
+
 Numeric Bounds
 ~~~~~~~~~~~~~~
 
@@ -456,6 +474,8 @@ The minimum and maximum values of each integer type can be accessed using its ``
 The values of these properties are of the appropriate sized number type
 (such as ``UInt8`` in the example above),
 and can therefore be used in expressions alongside other values of the same type.
+
+.. _BasicTypes_Booleans:
 
 Booleans
 --------
@@ -516,6 +536,8 @@ As with other examples of type safety in Swift,
 this approach avoids accidental errors,
 and ensures that the intention of a particular section of code is always made clear.
 
+.. _BasicTypes_Tuples:
+
 Tuples
 ------
 
@@ -560,7 +582,7 @@ By returning a tuple with two distinct values,
 each of a different type,
 the function is able to provide more useful information about its outcome
 than if it could only return a single value of a single type.
-Functions are described in detail in :doc:`FunctionsAndClosures`.
+Functions are described in detail in :doc:`Functions`.
 
 Tuples are useful for temporary groups of related values.
 They are not suited to the creation of complex data structures.
@@ -569,6 +591,8 @@ or is likely to persist beyond a temporary scope,
 it should be modeled as a :newTerm:`class` or :newTerm:`structure`,
 rather than as a tuple.
 Classes and structures are described in detail in :doc:`ClassesAndStructures`.
+
+.. _BasicTypes_Optionals:
 
 Optionals
 ---------
