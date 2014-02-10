@@ -407,7 +407,7 @@ It only executes a set of statements if that condition is ``true``:
     >>> It's very cold. Consider wearing a scarf.
 
 This example checks to see if the temperature
-(expressed using the `Fahrenheit <http://en.wikipedia.org/wiki/Fahrenheit>`_ scale)
+(expressed using the Fahrenheit scale)
 is less than or equal to 32 degrees
 (the freezing point of water).
 If it is, a message is printed.

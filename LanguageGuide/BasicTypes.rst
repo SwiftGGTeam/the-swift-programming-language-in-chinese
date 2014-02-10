@@ -120,7 +120,7 @@ and give it a value of ``"Hello"``.”
    when you know that the variable's value should be allowed to mutate.
 
 You can use pretty much any character you like for constant and variable names,
-including `Unicode <http://en.wikipedia.org/wiki/Unicode>`_ characters:
+including Unicode characters:
 
 .. testcode:: namedValues
 

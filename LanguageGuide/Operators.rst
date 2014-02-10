@@ -869,7 +869,7 @@ Here's how that looks in Swift code:
     >>> willUnderflow is now 255
 
 A similar underflow happens for signed integers.
-As described under `Bitwise Left and Right Shifts`_,
+As described under :ref:`Operators_BitwiseLeftAndRightShifts`,
 all subtraction for signed integers is performed as straight binary subtraction,
 with the sign bit included as part of the numbers being subtracted.
 The smallest number that an ``Int8`` can hold is ``-128``,

@@ -152,7 +152,7 @@ the ``width`` and ``height`` values of the ``Size`` structure instance
 have been automatically initialized to ``0.0``,
 which was the default value provided by the ``Size`` structure's definition.
 
-Class and structure initialization is described in more detail in `Initialization`_ below.
+Class and structure initialization is described in more detail in :ref:`ClassesAndStructures_Initialization`.
 
 .. TODO: add more detail about inferring a variable's type when using initializer syntax.
 .. TODO: note that you can only use the default constructor if you provide default values
@@ -247,7 +247,7 @@ in that their value cannot be changed once it has been initialized.
 Constant stored properties have slightly more flexibility, however,
 in that their value can be changed at any point until the instance they belong to
 has completed its initialization.
-(Instance initialization is described in more detail in `Initialization`_ below.)
+(Instance initialization is described in more detail in :ref:`ClassesAndStructures_Initialization`.)
 
 .. _ClassesAndStructures_StoredPropertyObservers:
 
@@ -811,7 +811,7 @@ Classes and structures should always initialize their stored properties with ini
 There are two ways to provide initial values for your properties:
 
 1. Include an :newTerm:`initial value` as part of the property declaration
-   (as described in `Properties`_)
+   (as described in :ref:`ClassesAndStructures_Properties`)
 2. Provide a value for the property within an :newTerm:`initializer method`
 
 .. note::
@@ -892,7 +892,7 @@ it is available automatically for all classes and structures without their own i
 
 .. note::
     The default initializer method for structures is provided in addition to the
-    `memberwise structure initializers`_ mentioned earlier in this chapter.
+    :ref:`ClassesAndStructures_MemberwiseStructureInitializers` mentioned earlier in this chapter.
     The default initializer and the memberwise initializer are only provided
     if the structure does not define at least one custom initializer method itself.
 
@@ -1084,7 +1084,8 @@ This initializer method first calls ``super.init()``,
 which calls the ``init()`` method for ``Bicycle``\ 's superclass, ``Vehicle``.
 
 Although ``Vehicle`` does not have an explicit initializer method itself,
-it still has an implicit default initializer method, as described in `Initialization`_ above.
+it still has an implicit default initializer method,
+as described in :ref:`ClassesAndStructures_InitializerMethods`.
 This call to ``super.init()`` triggers ``Vehicle``\ 's default initializer,
 and ensures that all of the inherited properties are initialized by ``Vehicle``
 before ``Bicycle`` tries to modify them.
