@@ -45,9 +45,23 @@ Declarations
 Import Declarations
 -------------------
 
+.. TODO: It seems odd to call these declarations -- they don't declare anything.
+   Directive or statement feels a little more appropriate,
+   although statement might not be strictly correct.
+   LangRef uses both "import declaration" and "directive".
+
+Import declarations let you access symbols
+that are declared outside the current file.
+The basic form imports the entire module;
+it consists of the ``import`` keyword followed by a module name:
+
 .. syntax-outline::
 
     import <#module#>
+
+Providing more detail limits the number of symbols that are imported
+to a specific submodule,
+or even to a specific declaration.
 
 .. syntax-outline::
 
