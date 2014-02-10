@@ -16,6 +16,8 @@ Functions
 Every function is given a name to identify what it does,
 and this name is used to ‘call’ the function to perform its task when needed.
 
+.. _Functions_FunctionDeclarations:
+
 Function Declarations
 ---------------------
 
@@ -114,6 +116,8 @@ to combine the message creation and the return statement into one line:
     on the end.
     Can you get it to work for any value of ``age``?
 
+.. _Functions_MultipleInputParameters:
+
 Multiple Input Parameters
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -129,7 +133,9 @@ and works out how many elements the range contains:
     (swift) println(halfOpenRangeLength(1, 10))
     >>> 9
 
-Tuples As Input Parameters
+.. _Functions_TuplesAsInputParameters:
+
+Tuples as Input Parameters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Any type of value can be used as an input parameter for a function,
@@ -156,6 +162,8 @@ is one of the major benefits of tuples.
 This function can be passed any tuple of type ``(Int, Int)`` –
 such as ``(1, 10)`` in the example above –
 and it will calculate the half-open range length for that tuple.
+
+.. _Functions_TuplesAsReturnValues:
 
 Tuples as Return Values
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -200,6 +208,8 @@ and a value of ``.None`` in its second value to indicate that ``splitter`` was n
     }
     >>> The text from after the splitter is 'world'
 
+.. _Functions_ParameterNames:
+
 Parameter Names
 ~~~~~~~~~~~~~~~
 
@@ -243,6 +253,8 @@ the passed parameters are assumed to be in the order they were originally declar
 
     (swift) let containsAHyphen = containsCharacter("This will return false", '-')
     // containsAHyphen : Bool = false
+
+.. _Functions_DefaultParameterValues:
 
 Default Parameter Values
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -318,6 +330,8 @@ to ensure that your intentions are clearly expressed in your code.
 .. QUESTION: how does this advice overlap with
    the principle of putting variadic parameters last,
    and also the principle of putting closure parameters last?
+
+.. _Functions_NonMandatoryParametersAndReturnValues:
 
 Non-Mandatory Parameters and Return Values
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -399,6 +413,8 @@ A function with a declared return type must
 never allow control to fall out of the bottom of the function
 without returning a value.
 
+.. _Functions_ConstantAndVariableParameters:
+
 Constant and Variable Parameters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -460,6 +476,8 @@ It uses the ``string`` variable parameter for all of its string manipulation.
     and are not visible outside of the function's body.
     The variable parameter only exists for the lifetime of that function call.
 
+.. _Functions_VariadicParameters:
+
 Variadic Parameters
 ~~~~~~~~~~~~~~~~~~~
 
@@ -496,6 +514,8 @@ and can be used anywhere that a ``Sequence`` is valid.
     A function may define at most one variadic parameter,
     and it must always appear last in the parameters list,
     to avoid ambiguity when calling the function with multiple parameters.
+
+.. _Functions_SelectorStyleFunctionDeclarations:
 
 Selector-Style Function Declarations
 ------------------------------------

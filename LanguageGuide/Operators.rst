@@ -54,6 +54,8 @@ The values that operators affect are known as :newTerm:`operands`.
 In the expression ``1 + 2``, the ``+`` symbol is a binary operator,
 and its two operands are the values ``1`` and ``2``.
 
+.. _Operators_AssignmentOperator:
+
 Assignment Operator
 -------------------
 
@@ -95,6 +97,8 @@ Swift makes it much easier to avoid these kinds of errors in your code.
    If so, is there a convincing argument as to why this is a good thing?
 .. TODO: Add a section about the new assignments bindings.
 
+.. _Operators_ArithmeticOperators:
+
 Arithmetic Operators
 --------------------
 
@@ -135,6 +139,8 @@ can be added together via ``+`` to make a new ``String``:
     // cow : UnicodeScalar = '🐮'
     (swift) let dogCow = dog + cow
     // dogCow : String = "🐶🐮"
+
+.. _Operators_RemainderOperator:
 
 Remainder Operator
 ~~~~~~~~~~~~~~~~~~
@@ -190,6 +196,8 @@ Plugging ``-9`` and ``4`` into the equation gives:
 The sign of ``b`` is ignored for negative values of ``b``.
 This means that ``a % b`` and ``a % -b`` will always give the same answer.
 
+.. _Operators_FloatingPointRemainderCalculations:
+
 Floating-Point Remainder Calculations
 _____________________________________
 
@@ -208,8 +216,10 @@ so the remainder operator returns a ``Double`` value of ``0.5``.
     :width: 311
     :align: center
 
-Increment and Decrement
-~~~~~~~~~~~~~~~~~~~~~~~
+.. _Operators_IncrementAndDecrementOperators:
+
+Increment and Decrement Operators
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Like C, Swift provides an :newTerm:`increment operator` (``++``)
 and an :newTerm:`decrement operator` (``--``)
@@ -269,8 +279,10 @@ and then providing the result.
    and indeed is it even advice we need to bother giving
    (given that lots of people might disagree or not care)?
 
-Unary Plus and Minus
-~~~~~~~~~~~~~~~~~~~~
+.. _Operators_UnaryPlusAndMinusOperators:
+
+Unary Plus and Minus Operators
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The sign of a numeric value can be toggled using a prefixed ``-``,
 known as the :newTerm:`unary minus operator`:
@@ -300,6 +312,8 @@ which simply returns the value it operates on, without any change:
 The unary plus operator doesn't actually do anything.
 However, it can be used to provide symmetry in your code when also using the unary minus operator.
 
+.. _Operators_CompoundAssignmentOperators:
+
 Compound Assignment Operators
 -----------------------------
 
@@ -319,6 +333,8 @@ Effectively, the addition and the assignment are rolled into one operator
 that performs both tasks at the same time.
 
 A complete list of compound assignment operators can be found in the :doc:`../ReferenceManual/index`.
+
+.. _Operators_ComparisonOperators:
 
 Comparison Operators
 --------------------
@@ -377,6 +393,8 @@ The ``if else`` statement is described in more detail in :doc:`ControlFlow`.
 .. TODO: which types do these operate on by default?
    How do they work with strings?
    How about with tuples / with your own types?
+
+.. _Operators_TernaryComparisonOperators:
 
 Ternary Comparison Operator
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -441,6 +459,8 @@ The ternary comparison operator should be used with care, however.
 It is very concise, but this conciseness can lead to hard-to-read code if over-used.
 Avoid combining multiple instances of the ternary comparison operator into one compound statement.
 
+.. _Operators_BitwiseOperators:
+
 Bitwise Operators
 -----------------
 
@@ -453,8 +473,10 @@ and when encoding and decoding data for communication via a custom protocol.
 
 Swift supports all of the bitwise operators found in C, as described below.
 
-Bitwise NOT
-~~~~~~~~~~~
+.. _Operators_BitwiseNOTOperator:
+
+Bitwise NOT Operator
+~~~~~~~~~~~~~~~~~~~~
 
 The :newTerm:`bitwise NOT operator` (``~``) inverts all of the bits in a number:
 
@@ -485,8 +507,10 @@ Zeroes become ones, and ones become zeroes.
 This gives a new value of ``11110000``,
 which is equal to an unsigned decimal value of ``240``.
 
-Bitwise AND
-~~~~~~~~~~~
+.. _Operators_BitwiseANDOperator:
+
+Bitwise AND Operator
+~~~~~~~~~~~~~~~~~~~~
 
 The :newTerm:`bitwise AND operator` (``&``) combines the bits of two numbers.
 It returns a new number whose bits are only set to ``1`` if the bits were equal to ``1`` in *both* input numbers:
@@ -510,8 +534,10 @@ The values of ``firstSixBits`` and ``lastSixBits`` both have their four middle b
 The bitwise AND operator combines them to make the number ``00111100``,
 which is equal to an unsigned decimal value of ``60``.
 
-Bitwise OR
-~~~~~~~~~~
+.. _Operators_BitwiseOROperator:
+
+Bitwise OR Operator
+~~~~~~~~~~~~~~~~~~~
 
 The :newTerm:`bitwise OR operator` (``|``) compares the bits of two numbers,
 and returns a new number whose bits are set to ``1`` if the bits were equal to ``1`` in *either* of the input numbers:
@@ -535,8 +561,10 @@ The values of ``someBits`` and ``moreBits`` have different bits set to ``1``.
 The bitwise OR operator combines them to make the number ``11111110``,
 which equals an unsigned decimal of ``254``.
 
-Bitwise XOR
-~~~~~~~~~~~
+.. _Operators_BitwiseXOROperator:
+
+Bitwise XOR Operator
+~~~~~~~~~~~~~~~~~~~~
 
 The :newTerm:`bitwise XOR operator` (``^``) compares the bits of two numbers,
 and returns a new number whose bits are set to ``1`` if the bits are equal to ``1`` in *either* of the input numbers,
@@ -559,6 +587,8 @@ For example:
 
 .. TODO: Explain how this can be useful to toggle just a few bits in a bitfield.
 
+.. _Operators_BitwiseLeftAndRightShifts:
+
 Bitwise Left and Right Shifts
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -571,6 +601,8 @@ Shifting an integer's bits to the left by one position doubles its value,
 whereas shifting it to the right by one position halves its value.
 
 .. TODO: mention the caveats to this claim.
+
+.. _Operators_ShiftingBehaviorForUnsignedIntegers:
 
 Shifting Behavior For Unsigned Integers
 _______________________________________
@@ -660,6 +692,8 @@ which has a decimal value of ``153``.
    Which is a better example? (I've chosen not to use Int so far,
    as this section is about unsigned shifts.)
 
+.. _Operators_ShiftingBehaviorForSignedIntegers:
+
 Shifting Behavior For Signed Integers
 _____________________________________
 
@@ -740,6 +774,8 @@ shifting either of them to the right has the effect of moving them closer to zer
 Keeping the sign bit the same during this shift means that
 negative integers remain negative as their value moves closer to zero.
 
+.. _Operators_OverflowOperators:
+
 Overflow Operators
 ------------------
 
@@ -777,6 +813,8 @@ These operators all begin with an ampersand (``&``):
 * Overflow division (``&/``)
 * Overflow modulo (``&%``)
 
+.. _Operators_ValueOverflow:
+
 Value Overflow
 ~~~~~~~~~~~~~~
 
@@ -802,6 +840,8 @@ The value that remains within the bounds of the ``UInt8`` after the overflow add
 .. image:: ../images/overflowAddition.png
     :width: 390
     :align: center
+
+.. _Operators_ValueUnderflow:
 
 Value Underflow
 ~~~~~~~~~~~~~~~
@@ -829,7 +869,7 @@ Here's how that looks in Swift code:
     >>> willUnderflow is now 255
 
 A similar underflow happens for signed integers.
-As described under `Bitwise Left and Right Shifts`_,
+As described under :ref:`Operators_BitwiseLeftAndRightShifts`,
 all subtraction for signed integers is performed as straight binary subtraction,
 with the sign bit included as part of the numbers being subtracted.
 The smallest number that an ``Int8`` can hold is ``-128``,
@@ -856,6 +896,8 @@ The end result of the overflow and underflow behavior described above is that fo
 overflow always wraps around from the largest valid integer value back to the smallest,
 and underflow always wraps around from the smallest value to the largest.
 
+.. _Operators_DivisionByZero:
+
 Division by Zero
 ~~~~~~~~~~~~~~~~
 
@@ -881,13 +923,17 @@ and so Swift throws an error rather than creating an invalid value.
    rather than a stack trace,
    once rdar://15804939 has been fixed.
 
+.. _Operators_LogicalOperators:
+
 Logical Operators
 -----------------
 
 .. TODO: write an introduction to this section.
 
-Logical NOT
-~~~~~~~~~~~
+.. _Operators_LogicalNOTOperator:
+
+Logical NOT Operator
+~~~~~~~~~~~~~~~~~~~~
 
 The :newTerm:`logical NOT operator` (``!a``) inverts a boolean value so that ``true`` becomes ``false``,
 and ``false`` becomes ``true``.
@@ -911,8 +957,10 @@ careful choice of boolean constant and variable names
 can help to keep code readable and concise,
 while avoiding double negatives or confusing logic statements.
 
-Logical AND
-~~~~~~~~~~~
+.. _Operators_LogicalANDOperator:
+
+Logical AND Operator
+~~~~~~~~~~~~~~~~~~~~
 
 The :newTerm:`logical AND operator` (``&&``) is used to create logical expressions
 where both values must be ``true`` for the overall expression to also be ``true``.
@@ -941,8 +989,10 @@ the second value won't even be checked,
 because it can't possibly make the overall expression equal ``true``.
 This is known as *short-circuit evaluation*.
 
-Logical OR
-~~~~~~~~~~
+.. _Operators_LogicalOROperator:
+
+Logical OR Operator
+~~~~~~~~~~~~~~~~~~~
 
 The :newTerm:`logical OR operator` (``||``, i.e. two adjacent pipe characters)
 is used to create logical expressions where only *one* of the two values has to be ``true``
@@ -973,6 +1023,8 @@ Note that if the left-hand side of an OR expression is ``true``,
 the right-hand side will not be evaluated,
 because it cannot change the outcome of the overall expression.
 
+.. _Operators_CombiningLogicalOperators:
+
 Combining Logical Operators
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -1001,6 +1053,8 @@ Based on the example values from earlier,
 the first two mini-expressions are ``false``,
 but we know the emergency override password,
 so the overall compound expression still equates to ``true``.
+
+.. _Operators_PriorityAndAssociativity:
 
 Priority and Associativity
 --------------------------
@@ -1078,6 +1132,8 @@ This gives the final answer of ``4``.
 
 A complete list of Swift operator priorities and associativity rules can be found in the :doc:`../ReferenceManual/index`.
 
+.. _Operators_Explicit Parentheses:
+
 Explicit Parentheses
 ~~~~~~~~~~~~~~~~~~~~
 
@@ -1103,6 +1159,8 @@ The output of the compound expression doesn't change,
 but the overall intention is clearer to the reader.
 Readability is always preferred over brevity;
 use parentheses where they help to make your intentions clear.
+
+.. _Operators_RangeOperator:
 
 Range Operator
 --------------
