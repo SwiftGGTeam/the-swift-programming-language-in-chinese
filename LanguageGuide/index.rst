@@ -14,5 +14,4 @@ Language Guide
     Enumerations
     ProtocolsAndExtensions
     Generics
-    Modules
     StandardFunctions
