@@ -203,8 +203,8 @@ and a value of ``.None`` in its second value to indicate that ``splitter`` was n
 
     (swift) let helloWorld = splitOnFirst("hello world", ' ')
     // helloWorld : (String, String?) = ("hello", <unprintable value>)
-    (swift) if helloWorld.1 {
-        println("The text from after the splitter is '\(helloWorld.1!)'")
+    (swift) if let secondPart = helloWorld.1 {
+        println("The text from after the splitter is '\(secondPart)'")
     }
     >>> The text from after the splitter is 'world'
 
