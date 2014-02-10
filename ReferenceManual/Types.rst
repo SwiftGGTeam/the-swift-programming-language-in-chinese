@@ -172,6 +172,8 @@ For example, the type identifier in the following code references the (hypotheti
 Tuple Type
 ----------
 
+[to be written]
+
 .. langref-grammar
 
     type-tuple ::= '(' type-tuple-body? ')'
@@ -213,6 +215,8 @@ Tuple Type
 Function Type
 -------------
 
+[to be written]
+
 .. langref-grammar
 
     type-function ::= type-tuple '->' type-annotation
@@ -248,6 +252,8 @@ Function Type
 
 Array Type
 ----------
+
+[to be written]
 
 .. langref-grammar
 
@@ -314,7 +320,7 @@ It is important to note that attempting to unwrap an optional
 that has a value of ``Optional.None`` results in a runtime error.
 
 For examples that show how to use optional types,
-see "Optionals" in the in the :doc:`../LanguageGuide/BasicTypes` chapter.
+see :ref:`BasicTypes_Optionals` in the in the :doc:`../LanguageGuide/BasicTypes` chapter.
 
 
 .. langref-grammar
@@ -347,6 +353,30 @@ see "Optionals" in the in the :doc:`../LanguageGuide/BasicTypes` chapter.
 Protocol Composition Type
 -------------------------
 
+A protocol composition type describes a type that conforms to each protocol
+in a list of specified protocols.
+Protocol composition types may be used in type annotations and in generic parameters.
+
+Protocol composition types have the following form:
+
+.. syntax-outline::
+
+    protocol<<#Protocol 1#>, <#Protocol 2#>>
+
+A protocol composition type allows you to specify a value whose type conforms to the requirements
+of multiple protocols without having to explicitly define a new, named protocol
+that inherits from each protocol you want the type to conform to.
+For example,
+specifying a protocol composition type ``protocol<ProtocolA, ProtocolB, ProtocolC>`` is
+effectively the same as defining a new protocol ``ProtocolD``
+that inherits from ``ProtocolA``, ``ProtocolB``, and ``ProtocolC``,
+but without having to introduce a new name.
+
+Each item in a protocol composition list
+must be either the name of protocol or a typealias of a protocol composition type.
+If the list is empty, it specifies the empty protocol composition type,
+which every type conforms to.
+
 .. langref-grammar
 
     type-composition ::= 'protocol' '<' type-composition-list? '>'
@@ -364,9 +394,45 @@ Protocol Composition Type
 Metatype Type
 -------------
 
-Each type has a corresponding meta type (with the same name as the type)
-that is injected into the standard name lookup scope when a type is declared.
-This allows access to *type functions* through dot syntax.
+[to be written]
+
+.. TR: How do metatypes types work?
+    What information is important to convey in this section?
+    Would it be helpful to include a diagram here?
+
+.. TR: Metatype types don't seem to working quite right.
+    For example, any time I try to invoke ``.metatype`` on a class or instance of a class,
+    I get the following error: "error: expected member name following '.'"
+    Some examples:
+
+    (swift) class X {
+          type func foo(a: Int) -> Int {
+            return 10
+          }
+        }
+    (swift) var x = X()
+    // x : X = <X instance>
+    (swift) x.foo(1)
+    <REPL Input>:1:1: error: 'X' does not have a member named 'foo'
+    x.foo(1)
+    ^ ~~~
+    (swift) X.foo(1)
+    // r0 : Int = 10
+    (swift) x.metatype.foo(1)
+    <REPL Input>:1:3: error: expected member name following '.'
+    x.metatype.foo(1)
+      ^
+    (swift) X.metatype.foo(1)
+    <REPL Input>:1:3: error: expected member name following '.'
+    X.metatype.foo(1)
+      ^
+    (swift) X
+    // r1 : X.metatype = <unprintable value>
+
+    But this works:
+    typealias AnyX = X.metatype
+
+    Let's hold off on writing this until we figure out what's going on.
 
 .. TODO: Rewrite this section, using the following notes from our meeting with Doug.
     Just have a grammar approach, rather than saying "here is a magic
@@ -394,13 +460,8 @@ This allows access to *type functions* through dot syntax.
     TODO: Verify that the above is correct.
     I tried in out in the REPL today, and it doesn't seem to work.
 
-
-The value of the meta type of a particular type is a reference to a global object that describes the type.
-Most meta types are singletons and, therefore, require no storage.
-That said, meta types associated with class types
-follow the same subtyping rules as their associated class types and, therefore, are not singletons.
-
-.. TODO: Most of the above is from the LangRef, and according to Doug,
+.. TODO: Most of the info from the LangRef is, according to Doug,
+    out of date and/or not applicable. For example,
     mention of subtyping doesn't really make sense here.
     Somewhere in the reference there should be a chapter/section
     on subtyping and type conversion.
