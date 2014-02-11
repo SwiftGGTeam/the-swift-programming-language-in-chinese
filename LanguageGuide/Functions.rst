@@ -520,21 +520,103 @@ and can be used anywhere that a ``Sequence`` is valid.
 Selector-Style Function Declarations
 ------------------------------------
 
-Swift actually supports *two* different styles of function declaration.
-All of the examples so far have used the first style,
-known as *function-style* declaration.
-This follows the C approach
-of putting all of the parameters inside one set of parentheses
+All of the examples so far have used a declaration syntax known as
+:newTerm:`function-style declaration`.
+This follows the C approach of
+putting all of the parameters inside one set of parentheses
 immediately after the function name.
 
-The second style,
-known as *selector-style* declaration,
-follows a similar style to Objective-C messaging.
-Each parameter has its own set of parentheses,
-and the function's name is split into multiple parts
-if it has more than one parameter.
+In addition to function-style declarations,
+Swift also supports a second declaration syntax known as
+:newTerm:`selector-style declaration`.
+This syntax follows a similar style to Objective-C messaging.
+The function name is written as a series of separate :newTerm:`selector parts`.
+Each selector part has a corresponding parameter name and type,
+and has its own set of parentheses when declared.
 
-[to be written]
+Here's how the string-joining function from above could be written
+as a selector-style declaration:
+
+.. testcode:: selectorStyle
+
+    (swift) func joinString(string1: String) toString(string2: String)
+        withJoiner(joiner: String = " ") -> String
+    {
+        return string1 + joiner + string2
+    }
+
+``joinString``, ``toString`` and ``withJoiner`` are the selector parts;
+``string1``, ``string2`` and ``joiner`` are the parameter names;
+and all three parameters have a type of ``String``.
+
+.. note::
+
+    The parameter names are not used when calling the function.
+    They are only used within the function's declaration.
+
+Selector-style syntax lends itself to expressive function declarations,
+which can be written and read as sentences for ease of comprehension.
+The use of prepositions such as ‘to’ and ‘with’ is not mandatory,
+but is encouraged where it aids readability.
+
+Selector-style functions are called by placing the first selector part
+outside a set of parentheses, and their second and subsequent selector parts
+inside the parentheses, separated by commas.
+Each selector part within the parentheses is separated from its parameter value
+by a colon:
+
+.. testcode:: selectorStyle
+
+    (swift) joinString("hello", toString: "world", withJoiner: ":")
+    // r0 : String = "hello:world"
+
+As before, any parameters with default values can be excluded when the function is called:
+
+.. testcode:: selectorStyle
+
+    (swift) joinString("hello", toString: "world")
+    // r1 : String = "hello world"
+
+If a parameter name is omitted from a selector-style declaration,
+the parameter is automatically given the same name as its selector part:
+
+.. testcode:: selectorStyle
+
+    (swift) func columnize(String) backwards(Bool) -> String {
+        var output = ""
+        for character in columnize.chars {
+            if backwards {
+                output = character + '\n' + output
+            } else {
+                output += character + '\n'
+            }
+        }
+        return output
+    }
+    (swift) print(columnize("abc", backwards: true))
+    >>> c
+    >>> b
+    >>> a
+
+This example takes an input string,
+and prints each of its characters on a separate line in a column.
+The first selector part, ``columnize``,
+is also used as the name of the string to be converted into a column.
+Likewise, the second selector part, ``backwards``,
+is also used as the name of the Boolean indicator of whether the string
+should be converted into a column of characters in reverse order.
+
+Note that this example calls ``print()`` rather than ``println()``
+to print its output, as the ``output`` string already has a line break
+at the end of the returned string.
+
+.. TODO: Default values for elided selector-style parameters do not currently work.
+   This is tracked as rdar://16030644.
+
+.. TODO: It is not currently possible to use variadic parameters with selector-style declarations,
+   but this is an intended addition as part of the revision of selector-style syntax.
+   This is tracked as rdar://16030076, and this section should be updated
+   once it is implemented.
 
 .. variables can be set to functions, and then called e.g. var fork = g.fork; fork() .
 .. functions can be passed in as parameters, and can be returned as return values
