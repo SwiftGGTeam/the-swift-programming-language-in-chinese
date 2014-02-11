@@ -59,13 +59,18 @@ it consists of the ``import`` keyword followed by a module name:
 
     import <#module#>
 
-Providing more detail limits the number of symbols that are imported
-to a specific submodule,
-or even to a specific declaration.
+Providing more detail limits what symbols are imported ---
+it can specify a specific submodule,
+or it can specify a specific declaration within a module or submodule.
+When this detailed form is used,
+only the imported symbol
+(and not the module that declares it)
+is made available in the current scope.
 
 .. syntax-outline::
 
     import <#import kind#> <#module#>
+    import <#module#>.<#submodule#>
 
 .. langref-grammar
 
