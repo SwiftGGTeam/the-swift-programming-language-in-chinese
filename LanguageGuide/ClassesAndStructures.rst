@@ -333,13 +333,8 @@ a message is printed to indicate how many new steps have been taken.
 
 .. note::
 
-    If you assign a different value to a property within its own ``willSet`` method,
-    your value will be overwritten as soon as ``willSet`` finishes.
-    The property's value will always be updated to the originally-intended value once ``willSet`` completes,
-    regardless of what you do within the ``willSet`` method yourself.
-
-    Conversely, if you assign a new value to a property within its own ``didSet`` method,
-    the new value that you assign *will* replace the one that was just set.
+    If you assign a value to a property within its own ``didSet`` method,
+    the new value that you assign will replace the one that was just set.
 
 .. _ClassesAndStructures_ComputedProperties:
 
