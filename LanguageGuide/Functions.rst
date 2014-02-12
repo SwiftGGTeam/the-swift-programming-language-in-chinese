@@ -578,11 +578,12 @@ As before, any parameters with default values can be excluded when the function 
     // r1 : String = "hello world"
 
 If a parameter name is omitted from a selector-style declaration,
-the parameter is automatically given the same name as its selector part:
+the parameter is automatically given the same name as its selector part.
+Default values are still allowed:
 
 .. testcode:: selectorStyle
 
-    (swift) func columnize(String) backwards(Bool) -> String {
+    (swift) func columnize(String) backwards(Bool = false) -> String {
         var output = ""
         for character in columnize.chars {
             if backwards {
@@ -593,6 +594,10 @@ the parameter is automatically given the same name as its selector part:
         }
         return output
     }
+    (swift) print(columnize("abc"))
+    >>> a
+    >>> b
+    >>> c
     (swift) print(columnize("abc", backwards: true))
     >>> c
     >>> b
@@ -609,9 +614,6 @@ should be converted into a column of characters in reverse order.
 Note that this example calls ``print()`` rather than ``println()``
 to print its output, as the ``output`` string already has a line break
 at the end of the returned string.
-
-.. TODO: Default values for elided selector-style parameters do not currently work.
-   This is tracked as rdar://16030644.
 
 .. TODO: It is not currently possible to use variadic parameters with selector-style declarations,
    but this is an intended addition as part of the revision of selector-style syntax.
