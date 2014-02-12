@@ -6,6 +6,27 @@ Lexical Structure
 Whitespace and Comments
 -----------------------
 
+Whitespace is used to separate tokens in the source file
+and as part of the context
+that determines whether an operator is a prefix or postfix
+(see `Operator Identifiers`_),
+but is otherwise ignored.
+The following characters are considered whitespace:
+null (U+0000),
+horizontal tab (U+0009),
+line feed (U+000A),
+carriage return (U+000D),
+and space (U+0020).
+
+Comments are treated as whitespace by the compiler.
+Single line comments continue until the end of the line.
+Multiline comments support nesting,
+but the ``/*`` and ``*/`` comment markers must be balanced.
+
+.. TR: LangRef says comments are ignored *and* treated as whitespace.
+   Is there a difference?
+   (TODO: If it's just whitespace, add `comment` to the end of `whitespace`.)
+
 .. langref-grammar
 
     whitespace ::= ' '
@@ -19,36 +40,9 @@ Whitespace and Comments
 
 .. ** (Matches the * above, to fix RST syntax highlighting in VIM.)
 
-Whitespace is used to separate tokens in the source file
-and as part of the context
-that determines whether an operator is a prefix or postfix
-(see `Operator Identifiers`_),
-but is otherwise ignored.
-
-Comments are treated as whitespace by the compiler.
-Single line comments continue until the end of the line.
-Multiline comments support nesting,
-but the ``/*`` and ``*/`` comment markers must be balanced.
-
-.. TR: LangRef says comments are ignored *and* treated as whitespace.
-   Is there a difference?
-   (TODO: If it's just whitespace, add `comment` to the end of `whitespace`.)
-
-.. syntax-grammar::
-
-    Grammar of whitespace and comments
-
-    whitespace --> U+0000 | U+0009 | U+000A | U+000D | U+0020
-    comment --> single-line-comment | multiline-comment
-
-    single-line-comment --> ``//`` comment-text line-end
-    comment-text --> Any text
-    line-end --> U+000A | U+000D
-
-    multiline-comment --> ``/*`` multiline-comment-items ``*/``
-    multiline-comment-items --> multiline-comment-item multiline-comment-items-OPT
-    multiline-comment-item --> multiline-comment | comment-text
-
+.. No formal grammar.
+   No other syntactic category refers to this one,
+   and the prose is sufficient to define it completely.
 
 Identifiers
 -----------
