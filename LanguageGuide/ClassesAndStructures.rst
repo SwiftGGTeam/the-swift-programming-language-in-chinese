@@ -1034,7 +1034,7 @@ Here's an example:
         var numberOfWheels = 0
         var maxPassengers = 1
         func description() -> String {
-            return "\(numberOfWheels) wheels and up to \(maxPassengers) passengers"
+            return "\(numberOfWheels) wheels; up to \(maxPassengers) passengers"
         }
     }
 
@@ -1097,8 +1097,8 @@ you can see how its properties have been updated:
 
     (swift) let bicycle = Bicycle()
     // bicycle : Bicycle = <Bicycle instance>
-    (swift) println("A bicycle has \(bicycle.description())")
-    >>> A bicycle has 2 wheels and up to 1 passengers
+    (swift) println("Bicycle: \(bicycle.description())")
+    >>> Bicycle: 2 wheels; up to 1 passengers
 
 .. TODO: work out how best to describe super.init() in light of the next section below.
 
@@ -1133,8 +1133,8 @@ you can see how its properties have been updated:
 
     (swift) let tandem = Tandem()
     // tandem : Tandem = <Tandem instance>
-    (swift) println("A tandem has \(tandem.description())")
-    >>> A tandem has 2 wheels and up to 2 passengers
+    (swift) println("Tandem: \(tandem.description())")
+    >>> Tandem: 2 wheels; up to 2 passengers
 
 Note that the ``description()`` method has also been inherited
 by ``Bicycle`` and ``Tandem``.
@@ -1142,12 +1142,60 @@ Instance methods of a class are inherited by any and all subclasses of that clas
 
 .. QUESTION: Should I mention that you can subclass from NSObject?
 
-.. _ClassesAndStructures_OverridingInstancePropertiesAndMethods:
+.. _ClassesAndStructures_OverridingInstanceMethods:
 
-Overriding Instance Properties And Methods
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Overriding Instance Methods
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-[to be written]
+A subclass can provide its own custom implementation of instance methods
+that it would otherwise inherit from a superclass.
+This is known as :newTerm:`overriding` the methods.
+For example:
+
+.. testcode:: inheritance
+
+    (swift) class Car : Vehicle {
+        var isConvertible: Bool = false
+        init() {
+            super.init()
+            maxPassengers = 5
+            numberOfWheels = 4
+        }
+        func description() -> String {
+            return super.description() + "; "
+                + (isConvertible ? "convertible" : "not convertible")
+        }
+    }
+    (swift) var car = Car()
+    // car : Car = <Car instance>
+    (swift) println("Car: \(car.description())")
+    >>> Car: 4 wheels; up to 5 passengers; not convertible
+
+This example declares a new subclass of ``Vehicle``, called ``Car``.
+``Car`` declares a new Boolean property called ``isConvertible``,
+in addition to the properties it inherits from ``Vehicle``.
+This property defaults to ``false``, as most cars are not convertibles.
+``Car`` also has a custom initializer method,
+which sets the maximum number of passengers to ``5``,
+and the default number of wheels to ``4``.
+
+``Car`` then overrides its inherited ``description()`` method.
+It does this by declaring a function with the same definition as the one it inherits.
+Rather than providing a completely custom implementation of ``description()``,
+it actually starts by calling ``super.description()`` to retrieve
+the description provided by its superclass.
+It then appends some additional information onto the end,
+and returns the complete description.
+
+.. TODO: provide more information about function signatures,
+   and what does / does not make them unique.
+   For example, the parameter names do not have to match
+   in order for a function to override a similar signature in its parent.
+   (This is true for both of the function declaration syntaxes.)
+
+.. note::
+
+    Overriding of properties is not yet implemented.
 
 .. _ClassesAndStructures_SubclassingAndInitializerDelegation:
 
