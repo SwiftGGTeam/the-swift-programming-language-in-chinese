@@ -214,7 +214,7 @@ can be passed to the memberwise initializer by name:
 
 .. testcode:: classesAndStructures
 
-    (swift) let twoByTwo = Size(width: 2.0, height: 2.0)
+    (swift) val twoByTwo = Size(width: 2.0, height: 2.0)
     // twoByTwo : Size = Size(2.0, 2.0)
 
 Initial values can also be provided without names,
@@ -222,7 +222,7 @@ if they are listed in the same order that the properties are declared in the str
 
 .. testcode:: classesAndStructures
 
-    (swift) let fourByThree = Size(4.0, 3.0)
+    (swift) val fourByThree = Size(4.0, 3.0)
     // fourByThree : Size = Size(4.0, 3.0)
 
 .. TODO: Include a justifiable reason for why classes do not provide a memberwise initializer.
@@ -240,7 +240,7 @@ that is stored as part of an instance.
 Properties of this kind are known as :newTerm:`stored properties`.
 Stored properties can be either :newTerm:`variable stored properties`
 (introduced by the ``var`` keyword, as in the examples above),
-or :newTerm:`constant stored properties` (introduced by the ``let`` keyword).
+or :newTerm:`constant stored properties` (introduced by the ``val`` keyword).
 
 Constant stored properties are very similar to constant named values,
 in that their value cannot be changed once it has been initialized.
@@ -281,7 +281,7 @@ Here's an example of ``willSet`` and ``didSet`` in action:
                 }
         }
     }
-    (swift) let stepCounter = StepCounter()
+    (swift) val stepCounter = StepCounter()
     // stepCounter : StepCounter = <StepCounter instance>
     (swift) stepCounter.totalSteps = 200
     >>> Added 200 steps
@@ -366,7 +366,7 @@ to retrieve and set other properties and values indirectly.
     }
     (swift) var square = Rect(origin: Point(0.0, 0.0), size: Size(10.0, 10.0))
     // square : Rect = Rect(Point(0.0, 0.0), Size(10.0, 10.0))
-    (swift) let initialSquareCenter = square.center
+    (swift) val initialSquareCenter = square.center
     // initialSquareCenter : Point = Point(5.0, 5.0)
     (swift) square.center = Point(x: 15.0, y: 15.0)
     (swift) println("square origin is now at (\(square.origin.x), \(square.origin.y))")
@@ -459,7 +459,7 @@ can be simplified by removing the ``get`` keyword:
             return width * height * depth
         }
     }
-    (swift) let fourByFiveByTwo = Cuboid(4.0, 5.0, 2.0)
+    (swift) val fourByFiveByTwo = Cuboid(4.0, 5.0, 2.0)
     // fourByFiveByTwo : Cuboid = Cuboid(4.0, 5.0, 2.0)
     (swift) println("the volume of fourByFiveByTwo is \(fourByFiveByTwo.volume)")
     >>> the volume of fourByFiveByTwo is 40.0
@@ -486,7 +486,7 @@ and can return any value they like at any time.
 
 Computed properties – including read-only computed properties –
 are always declared as variable properties (via the ``var`` introducer).
-The ``let`` introducer is only ever used for constant properties,
+The ``val`` introducer is only ever used for constant properties,
 to indicate that their value cannot be changed once it is set as part of instance initialization.
 
 .. NOTE: getters and setters are also allowed for named values
@@ -562,7 +562,7 @@ For example, using the ``Size`` structure from above:
 
 .. testcode:: classesAndStructures
 
-    (swift) let iPhone4 = Size(width: 640.0, height: 960.0)
+    (swift) val iPhone4 = Size(width: 640.0, height: 960.0)
     // iPhone4 : Size = Size(640.0, 960.0)
     (swift) var iPhone5 = iPhone4
     // iPhone5 : Size = Size(640.0, 960.0)
@@ -620,12 +620,12 @@ Here's an example, using the ``Rectangle`` class defined above:
 
 .. testcode:: classesAndStructures
 
-    (swift) let rect = Rectangle()
+    (swift) val rect = Rectangle()
     // rect : Rectangle = <Rectangle instance>
     (swift) rect.size = Size(width: 1.0, height: 1.0)
     (swift) println("The rectangle's width is \(rect.size.width)")
     >>> The rectangle's width is 1.0
-    (swift) let sameRect = rect
+    (swift) val sameRect = rect
     // sameRect : Rectangle = <Rectangle instance>
     (swift) sameRect.size.width = 3.0
     (swift) println("The rectangle's width is now \(sameRect.size.width)")
@@ -783,7 +783,7 @@ Instance methods are called using the same dot syntax as properties:
 
 .. testcode:: classesAndStructures
 
-    (swift) let counter = Counter()
+    (swift) val counter = Counter()
     // counter : Counter = <Counter instance>
     (swift) println("Initial counter value is \(counter.count)")
     >>> Initial counter value is 0
@@ -916,14 +916,14 @@ with a value from a different temperature scale:
     (swift) var freezingPointOfWater = Celsius(withKelvin: -273.15)
     // freezingPointOfWater : Celsius = Celsius(0.0)
 
-The value of a constant ``let`` property can be modified at any point during initialization,
+The value of a constant ``val`` property can be modified at any point during initialization,
 as long as is is definitely set to a value by the time the initializer has finished:
 
 .. testcode:: initialization
 
     (swift) struct Temperature {
-        let storedValue: Double
-        let storedScale: String
+        val storedValue: Double
+        val storedScale: String
         init withValue(value: Double) inScale(scale: String) {
             storedValue = value
             storedScale = scale
@@ -996,7 +996,7 @@ and sets it to the result of calling ``init withTitle()`` for a specific title s
 
 .. testcode:: initialization
 
-    (swift) let thisBook = Document(withTitle: "The Swift Programming Language")
+    (swift) val thisBook = Document(withTitle: "The Swift Programming Language")
     // thisBook : Document = <Document instance>
     (swift) println("This book is called '\(thisBook.title)'")
     >>> This book is called 'The Swift Programming Language'
@@ -1008,7 +1008,7 @@ passing it a placeholder string value of ``[untitled]``:
 
 .. testcode:: initialization
 
-    (swift) let someBook = Document()
+    (swift) val someBook = Document()
     // someBook : Document = <Document instance>
     (swift) println("Some unknown book is called '\(someBook.title)'")
     >>> Some unknown book is called '[untitled]'
@@ -1095,7 +1095,7 @@ you can see how its properties have been updated:
 
 .. testcode:: inheritance
 
-    (swift) let bicycle = Bicycle()
+    (swift) val bicycle = Bicycle()
     // bicycle : Bicycle = <Bicycle instance>
     (swift) println("Bicycle: \(bicycle.description())")
     >>> Bicycle: 2 wheels; up to 1 passengers
@@ -1131,7 +1131,7 @@ you can see how its properties have been updated:
 
 .. testcode:: inheritance
 
-    (swift) let tandem = Tandem()
+    (swift) val tandem = Tandem()
     // tandem : Tandem = <Tandem instance>
     (swift) println("Tandem: \(tandem.description())")
     >>> Tandem: 2 wheels; up to 2 passengers
@@ -1270,7 +1270,7 @@ Here's how this initializer could be called:
 
 .. testcode:: initialization
 
-    (swift) let empty = TextDocument()
+    (swift) val empty = TextDocument()
     // empty : TextDocument = <TextDocument instance>
     (swift) println("\(empty.title):\n\(empty.bodyText)")
     >>> [untitled]:
@@ -1300,7 +1300,7 @@ Here's how this initializer could be called:
 
 .. testcode:: initialization
 
-    (swift) let titled = TextDocument(withTitle: "Write something please")
+    (swift) val titled = TextDocument(withTitle: "Write something please")
     // titled : TextDocument = <TextDocument instance>
     (swift) println("\(titled.title):\n\(titled.bodyText)")
     >>> Write something please:
@@ -1325,7 +1325,7 @@ Here's how this initializer could be called:
 
 .. testcode:: initialization
 
-    (swift) let untitledPangram = TextDocument(
+    (swift) val untitledPangram = TextDocument(
         withText: "Amazingly few discotheques provide jukeboxes")
     // untitledPangram : TextDocument = <TextDocument instance>
     (swift) println("\(untitledPangram.title):\n\(untitledPangram.bodyText)")
@@ -1358,7 +1358,7 @@ Here's how this final initializer could be called:
 
 .. testcode:: initialization
 
-    (swift) let foxPangram = TextDocument(
+    (swift) val foxPangram = TextDocument(
         withTitle: "Quick brown fox",
         text: "The quick brown fox jumped over the lazy dog")
     // foxPangram : TextDocument = <TextDocument instance>
