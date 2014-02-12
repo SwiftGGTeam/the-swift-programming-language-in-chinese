@@ -23,9 +23,10 @@ Single line comments continue until the end of the line.
 Multiline comments support nesting,
 but the ``/*`` and ``*/`` comment markers must be balanced.
 
+.. TODO: Make sure we have an example of nested comments in the guide.
+
 .. TR: LangRef says comments are ignored *and* treated as whitespace.
    Is there a difference?
-   (TODO: If it's just whitespace, add `comment` to the end of `whitespace`.)
 
 .. langref-grammar
 
