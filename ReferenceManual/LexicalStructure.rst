@@ -48,12 +48,6 @@ but the ``/*`` and ``*/`` comment markers must be balanced.
 Identifiers
 -----------
 
-
-Identifier Tokens
-~~~~~~~~~~~~~~~~~
-
-.. What's the difference between Identifier vs Identifier Token??
-
 Identifiers begin with
 an upper case or lower case letter A through Z,
 an underscore (``_``),
@@ -63,6 +57,10 @@ or a character outside the Basic Multilingual Plan
 that isn't in a Private Use Area.
 After the first character,
 digits and combining Unicode characters are also allowed.
+
+.. TODO: Describe dollar-identifier.
+
+.. TR: Is it actually id-continue* or should it just be digits?
 
 .. langref-grammar
 
@@ -91,6 +89,8 @@ digits and combining Unicode characters are also allowed.
     // combining
     id-continue ::= [\u0300-\u036F\u1DC0-\u1DFF\u20D0-\u20FF\uFE20-\uFE2F]
     id-continue ::= id-start
+
+    dollarident ::= '$' id-continue+
 
 .. syntax-grammar::
 
@@ -121,14 +121,21 @@ digits and combining Unicode characters are also allowed.
     identifier-character --> identifier-head
     identifier-character --> U+0300-U+036F | U+1DC0-U+1DFF | U+20D0-U+20FF | U+FE20-U+FE2F
 
+    dollar-identifier --> ``$`` identifier-characters
 
-Operator Identifiers
-~~~~~~~~~~~~~~~~~~~~
+.. TODO: Come up with a better name than dollar-identifier.
 
-Operator identifiers are made up of one or more of the following characters:
+
+
+
+
+Operators
+---------
+
+Operators are made up of one or more of the following characters:
 ``@``, ``/``, ``=``, ``-``, ``+``, ``*``, ``%``, ``<``, ``>``, ``!``,
 ``&``, ``|``, ``^``, ``~``.
-The operator identifiers
+The operators
 ``=``, ``->``, ``//``, ``/*``, ``*/``, ``...``,
 and the unary prefix operator ``&``
 are reserved for use as other punctuation.
@@ -234,6 +241,15 @@ to use it in the ternary (``? :``) operator, it must not be left bound.
     postfix-operator --> operator
 
     any-identifier --> identifier | operator
+
+
+Reserved Words
+--------------
+
+.. TODO: This shouldn't stay a top-level head.
+
+.. TODO: Check with Jeanne about how to format this list.
+   As a table?  As a multi-column list?  Etc.
 
 Reserved Keywords
 ~~~~~~~~~~~~~~~~~
@@ -379,20 +395,6 @@ Contextual Keywords
   		associativity left
 	}
 	This example works as of rev. 11445
-
-
-Implementation Identifier Token
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. langref-grammar
-
-    dollarident ::= '$' id-continue+
-
-.. syntax-grammar::
-
-   dollar-identifier --> ``$`` identifier-characters
-
-.. TODO: Come up with a better name than dollar-identifier.
 
 
 Literals
