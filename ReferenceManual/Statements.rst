@@ -385,7 +385,7 @@ and checked for inclusion in a specified range of values.
 For examples of how to use these various types of values in ``switch`` statements,
 see :ref:`ControlFlow_Switch` in the :doc:`../LanguageGuide/ControlFlow` chapter.
 
-A ``switch`` case may optionally contain a *guard expression*,
+A ``switch`` case may optionally contain a :newTerm:`guard expression`,
 which is introduced by the keyword ``where`` followed by an expression.
 Guard expressions are used to provide an additional condition
 before a case is considered matched to the *control expression*.
@@ -422,7 +422,7 @@ the program executes only the code within the first matching case in source orde
 Switch Statements Must Be Exhaustive
 ++++++++++++++++++++++++++++++++++++
 
-In Swift, ``switch`` statements must be *exhaustive*---that is,
+In Swift, ``switch`` statements must be :newTerm:`exhaustive`---that is,
 every possible value of the control expression’s type
 must match the value of at least one pattern of a case.
 When this simply isn’t feasible
