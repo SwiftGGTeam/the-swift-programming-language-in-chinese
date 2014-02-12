@@ -17,30 +17,6 @@ Each type of statement can be used in function bodies and in top-level code.
 A semicolon (``;``) may optionally appear after any statement
 and is used as a statement terminator when multiple statements appear on the same line.
 
-.. TODO: Update this chapter to note that Optionals are allowed in boolean contexts
-    (e.g., in the conditional expression of a control flow statement).
-    In fact, so is any type that conforms to the LogicValue protocol
-    and implements the 'func getLogicValue() -> Bool' function.
-
-    For example, the following is allowed:
-
-    var opt: Int? = 1
-    if opt {
-        println(".Some")
-    }
-    // .Some
-
-    and
-
-    println(opt.getLogicValue())
-    // true
-
-    What should conform to LogicValue is still being discussed.
-    See: <rdar://problem/15911498> Reconsider what conforms to LogicValue.
-
-.. TODO: Related to the TODO above, update if and while/do-while statements
-    to allow conditional binding.
-
 .. langref-grammar
 
     stmt ::= stmt-semicolon
@@ -134,8 +110,8 @@ A ``for`` statement is executed as follows:
 Variables defined within the *initialization*
 are valid only within the scope of the for statement itself.
 
-The value of the *condition* expression must be of type ``Bool``
-and therefore must evaluate to either ``true`` or ``false``.
+The value of the *condition* expression must have a type that conforms to
+the ``LogicValue`` protocol.
 
 .. TODO: Document the scope of loop variables.
    This applies to all loops, so it doesn't belong here.
@@ -187,14 +163,12 @@ and then continues execution at the beginning of the loop.
 Otherwise, the program does not perform assignment or execute the *statements*,
 and it is finished executing the collection-based ``for`` statement.
 
-
 .. TODO: Doug's remarks from 1/29/14 meeting:
     Consider calling this sequence-based-for-statement,
     because a collection has some implication that the collection
     could be iterated multiple times---it could be a random number generator.
 
 .. TODO: Move this info to the stdlib reference as appropriate.
-
 
 .. langref-grammar
 
@@ -223,18 +197,19 @@ A ``while`` statement has the following form:
 
 A ``while`` statement is executed as follows:
 
-1. The *condition* expression is evaluated.
+1. The *condition* is evaluated.
 
    If ``true``, execution continues to step 2.
    If ``false``, the program is finished executing the ``while`` statement.
 
 2. The program executes the *statements*, and execution returns to step 1.
 
-Because the value of the *condition* expression is evaluated before the *statements* are executed,
+Because the value of the *condition* is evaluated before the *statements* are executed,
 the *statements* in a ``while`` statement may be executed zero or more times.
 
-The value of the *condition* expression must be of type ``Bool``
-and therefore must evaluate to either ``true`` or ``false``.
+The value of the *condition* must have a type that conforms to
+the ``LogicValue`` protocol. The condition may also be an optional binding declaration,
+as discussed in :ref:`ControlFlow_OptionalBinding`.
 
 .. langref-grammar
 
@@ -244,7 +219,8 @@ and therefore must evaluate to either ``true`` or ``false``.
 
     Grammar of a while statement
 
-    while-statement --> ``while`` expression  code-block
+    while-statement --> ``while`` while-condition  code-block
+    while-condition --> expression | declaration
 
 
 Do-While Statement
@@ -266,16 +242,17 @@ A ``do``-``while`` statement is executed as follows:
 1. The program executes the *statements*,
    and execution continues to step 2.
 
-2. The *condition* expression is evaluated.
+2. The *condition* is evaluated.
 
    If ``true``, execution returns to step 1.
    If ``false``, the program is finished executing the ``do``-``while`` statement.
 
-Because the value of the *condition* expression is evaluated after the *statements* are executed,
+Because the value of the *condition* is evaluated after the *statements* are executed,
 the *statements* in a ``do``-``while`` statement are executed at least once.
 
-The value of the *condition* expression must be of type ``Bool``
-and therefore must evaluate to either ``true`` or ``false``.
+The value of the *condition* must have a type that conforms to
+the ``LogicValue`` protocol. The condition may also be an optional binding declaration,
+as discussed in :ref:`ControlFlow_OptionalBinding`.
 
 .. langref-grammar
 
@@ -285,7 +262,7 @@ and therefore must evaluate to either ``true`` or ``false``.
 
     Grammar of a do-while statement
 
-    do-while-statement --> ``do`` code-block ``while`` expression
+    do-while-statement --> ``do`` code-block ``while`` while-condition
 
 
 Branch Statements
@@ -351,8 +328,9 @@ An ``if`` statement chained together in this way has the following form:
         <#statements to execute if both conditions are false#>
     }
 
-The value of any conditional expression in an ``if`` statement must be of type ``Bool``
-and therefore must evaluate to either ``true`` or ``false``.
+The value of any condition in an ``if`` statement must have a type that conforms to
+the ``LogicValue`` protocol. The condition may also be an optional binding declaration,
+as discussed in :ref:`ControlFlow_OptionalBinding`.
 
 .. TODO: Should we promote this last sentence (here and elsewhere) higher up in the chapter?
 
@@ -366,7 +344,8 @@ and therefore must evaluate to either ``true`` or ``false``.
 
     Grammar of an if statement
 
-    if-statement  --> ``if`` expression code-block else-clause-OPT
+    if-statement  --> ``if`` if-condition code-block else-clause-OPT
+    if-condition --> expression | declaration
     else-clause  --> ``else`` code-block | ``else`` if-statement
 
 
@@ -552,7 +531,7 @@ and occurs only in the context of a loop statement.
 A ``continue`` statement ends program execution of the current iteration
 of the innermost enclosing loop statement in which it occurs
 but does not stop execution of the loop statement.
-Program control is then transferred to the controlling expression
+Program control is then transferred to the condition
 of the enclosing loop statement.
 
 In a ``for`` statement,
