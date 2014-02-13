@@ -112,8 +112,8 @@ Variable Declarations
     Grammar of a variable declaration
 
     variable-declaration --> attribute-sequence-OPT ``type``-OPT ``var`` pattern-initializer-list
-    variable-declaration --> attribute-sequence-OPT ``var`` variable-name type-specifier code-block
-    variable-declaration --> attribute-sequence-OPT ``var`` variable-name type-specifier getter-setter-block
+    variable-declaration --> attribute-sequence-OPT ``var`` variable-name type-annotation code-block
+    variable-declaration --> attribute-sequence-OPT ``var`` variable-name type-annotation getter-setter-block
     variable-name --> identifier
 
     pattern-initializer-list --> pattern-initializer | pattern-initializer ``,`` pattern-initializer-list
@@ -125,7 +125,7 @@ Variable Declarations
     setter --> ``set`` setter-name-OPT ``:`` statements-OPT
     setter-name --> ``(`` identifier ``)``
 
-.. NOTE: Type specifiers are required for computed properties -- the
+.. NOTE: Type annotations are required for computed properties -- the
    types of those properties are not computed/inferred.
 
 .. NOTE: 'type' is currently restricted to variables
