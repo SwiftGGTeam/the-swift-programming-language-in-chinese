@@ -1609,7 +1609,7 @@ rather than adding ``Point(1.0, 1.0)``:
 .. testcode:: customOperators
 
     (swift) var toBeDoubled = Point(1.0, 4.0)
-    // toDouble : Point = Point(1.0, 4.0)
+    // toBeDoubled : Point = Point(1.0, 4.0)
     (swift) val afterDoubling = +++toBeDoubled
     // afterDoubling : Point = Point(2.0, 8.0)
     (swift) println("toBeDoubled is now (\(toBeDoubled.x), \(toBeDoubled.y))")
