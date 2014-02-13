@@ -19,7 +19,7 @@ Contents
 Change Log
 ----------
 
-February 10 2014
+February 12 2014
 ~~~~~~~~~~~~~~~~
 
 Language Guide
@@ -35,9 +35,11 @@ Language Guide
     * :ref:`ClassesAndStructures_InstanceMethods`
     * :ref:`ClassesAndStructures_Initialization`
     * :ref:`ClassesAndStructures_Inheritance`
+    * :ref:`ClassesAndStructures_OperatorFunctions`
 
-* :doc:`LanguageGuide/ClassesAndStructures` now uses :ref:`‘instances’ <ClassesAndStructures_Terminology>` to refer to both objects and structs
 * First draft of a few sections of the :doc:`LanguageGuide/Functions` chapter
+* ``let`` has been changed to ``val`` throughout the Language Guide
+* :doc:`LanguageGuide/ClassesAndStructures` now uses :ref:`‘instances’ <ClassesAndStructures_Terminology>` to refer to both objects and structs
 * :doc:`LanguageGuide/Functions` and :doc:`LanguageGuide/Closures` are now separate chapters
 * New section about :ref:`ControlFlow_OptionalBinding` (``if let x = someOptional``)  in :doc:`LanguageGuide/ControlFlow` 
 * Added :ref:`a new Enumerations example <Enumerations_PropertiesAndMethods>`, showing how they can use initializers, computed properties and instance methods 
