@@ -1054,18 +1054,16 @@ the first two mini-expressions are ``false``,
 but we know the emergency override password,
 so the overall compound expression still equates to ``true``.
 
-.. _Operators_PriorityAndAssociativity:
+.. _Operators_PrecedenceAndAssociativity:
 
-Priority and Associativity
---------------------------
+Precedence and Associativity
+----------------------------
 
-.. NOTE: I've chosen to use ‘priority’ rather than ‘precedence’ here,
-   because I think it's a clearer phrase to use.
-.. QUESTION: Could priority and associativity be made clear
+.. QUESTION: Could precedence and associativity be made clear
    as part of the hypothetical ‘show invisibles’ feature,
-   to show the invisible parentheses implied by priority and associativity?
+   to show the invisible parentheses implied by precedence and associativity?
 
-It is important to consider each operator's :newTerm:`priority` and :newTerm:`associativity` when working out how to calculate a compound expression.
+It is important to consider each operator's :newTerm:`precedence` and :newTerm:`associativity` when working out how to calculate a compound expression.
 These two principles are used to work out the order in which an expression should be calculated.
 
 Here's an example.
@@ -1085,24 +1083,25 @@ Taken strictly from left to right, you might expect this to read as follows:
 However, the actual answer is ``4``, not ``0``.
 This is due to the priorities and associativity of the operators used:
 
-* Operator :newTerm:`priority` (also known as :newTerm:`precedence`) means that
-  some operators are given higher priority than others,
+* Operator :newTerm:`precedence` (also known as :newTerm:`priority`) means that
+  some operators are given more precedence than others,
   and are calculated first.
 
-* Operator :newTerm:`associativity` defines how operators of the same priority are grouped together (or :newTerm:`associated`) –
+* Operator :newTerm:`associativity` defines how operators of the same precedence
+  are grouped together (or :newTerm:`associated`) –
   either grouped from the left, or grouped from the right.
   Think of it as meaning ‘they associate with the expression to their left’,
   or ‘they associate with the expression to their right’.
 
 Here's how the actual evaluation order is calculated for the example above.
-Priority is considered first.
-Higher-priority operators are evaluated before lower-priority ones.
+Precedence is considered first.
+Higher-precedence operators are evaluated before lower-precedence ones.
 In Swift, as in C,
 the multiplication operator (``*``) and the modulo operator (``%``)
-have a higher priority than the addition operator (``+``).
+have a higher precedence than the addition operator (``+``).
 As a result, they are both evaluated before the addition is considered.
 
-However, multiplication and modulo happen to have the *same* priority as each other.
+However, multiplication and modulo happen to have the *same* precedence as each other.
 To work out the exact evaluation order to use,
 we therefore need to also look at their associativity.
 Multiplication and modulo both associate with the expression to their left.
@@ -1130,14 +1129,16 @@ starting from their left:
 
 This gives the final answer of ``4``.
 
-A complete list of Swift operator priorities and associativity rules can be found in the :doc:`../ReferenceManual/index`.
+A complete list of Swift operator precedences and associativity rules can be found in the :doc:`../ReferenceManual/index`.
+
+.. TODO: update this link to go to the specific section of the Reference Manual.
 
 .. _Operators_Explicit Parentheses:
 
 Explicit Parentheses
 ~~~~~~~~~~~~~~~~~~~~
 
-Priority and associativity define exactly one order of calculation
+Precedence and associativity define exactly one order of calculation
 when multiple operators are used.
 However, it can sometimes be useful to include parentheses anyway,
 to make the intention of a complex expression easier to read.

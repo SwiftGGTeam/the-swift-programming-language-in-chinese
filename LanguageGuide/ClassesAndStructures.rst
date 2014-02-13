@@ -1554,6 +1554,12 @@ and returns the result.
     (swift) println("toIncrement is now (\(toIncrement.x), \(toIncrement.y))")
     >>> toIncrement is now (4.0, 5.0)
 
+.. note::
+
+    It is not possible to overload the default assignment operator (``=``).
+    Only the compound assignment operators may be overloaded.
+    Similarly, the ternary operator (``a ? b : c``) may not be overloaded.
+
 .. QUESTION: some of the standard operators (such as equation and comparison)
    are implemented as part of a protocol (such as Equatable and Comparable).
    You don't seem to need to declare conformance to these protocols
@@ -1563,6 +1569,100 @@ and returns the result.
 .. QUESTION: Should I mention @transparent in the Operator Functions section?
    All of the stdlib operators (e.g. for fixed- and floating-point numbers)
    are declared as @transparent…
+
+.. _ClassesAndStructures_CustomOperators:
+
+Custom Operators
+~~~~~~~~~~~~~~~~
+
+You can define your own :newTerm:`custom operators` in addition to
+the standard operators provided by Swift.
+Custom operators can be defined using the characters ``/ = - + * % < > ! & | ^ ~ .`` only.
+
+New operators are declared using the ``operator`` keyword,
+and can be declared as ``prefix``, ``infix`` or ``postfix``:
+
+.. testcode:: customOperators
+
+    (swift) operator prefix +++ {}
+
+This example defines a new prefix operator called ``+++``.
+This operator does not have an existing meaning in Swift,
+and so it will be given its own custom meaning in the specific context of
+working with ``Point`` instances. For the purposes of this example,
+``+++`` will be treated as a new ‘prefix doubling incrementer’ operator.
+It will double the ``x`` and ``y`` values of a ``Point`` instance,
+by adding the point to itself via assignment:
+
+.. testcode:: customOperators
+
+    (swift) @prefix @assignment func +++ (inout rhs: Point) -> Point {
+        rhs += rhs
+        return rhs
+    }
+
+The implementation of ``+++`` is very similar to
+the implementation of ``++`` for ``Point``,
+except that this operator function adds the point to itself,
+rather than adding ``Point(1.0, 1.0)``:
+
+.. testcode:: customOperators
+
+    (swift) var toBeDoubled = Point(1.0, 4.0)
+    // toDouble : Point = Point(1.0, 4.0)
+    (swift) val afterDoubling = +++toBeDoubled
+    // afterDoubling : Point = Point(2.0, 8.0)
+    (swift) println("toBeDoubled is now (\(toBeDoubled.x), \(toBeDoubled.y))")
+    >>> toBeDoubled is now (2.0, 8.0)
+
+Custom ``infix`` operators may also specify a :newTerm:`precedence`
+and an :newTerm:`associativity`.
+(See :ref:`Operators_PrecedenceAndAssociativity` for an explanation of
+how these two characteristics affect an infix operator's interaction
+with other infix operators.)
+
+The possible values for ``associativity`` are ``left``, ``right`` or ``none``.
+Left-associative operators associate to the left if written next
+to other left-associative operators of the same precedence.
+Similarly, right-associative operators associate to the right if written
+next to other right-associative operators of the same precedence.
+Non-associative operators cannot be written next to
+other operators with the same precedence.
+
+The ``associativity`` value defaults to ``none`` if it is not specified.
+Similarly, ``precedence`` defaults to a value of ``100`` if it is not specified.
+
+The following example defines a new custom ``infix`` operator called ``+-``,
+with ``left`` associativity, and a precedence of ``140``:
+
+.. testcode:: customOperators
+
+    (swift) operator infix +- { associativity left precedence 140 }
+    (swift) func +- (lhs: Point, rhs: Point) -> Point {
+        return Point(lhs.x + rhs.x, lhs.y - rhs.y)
+    }
+    (swift) val firstPoint = Point(1.0, 2.0)
+    // firstPoint : Point = Point(1.0, 2.0)
+    (swift) val secondPoint = Point(3.0, 4.0)
+    // secondPoint : Point = Point(3.0, 4.0)
+    (swift) val plusMinusPoint = firstPoint +- secondPoint
+    // plusMinusPoint : Point = Point(4.0, -2.0)
+
+This operator adds together the ``x`` values of two points,
+and subtracts the ``y`` value of the second point from the first.
+Because it is in essence an ‘additive’ operator,
+it has been given the same associativity and precedence values
+(``left`` and ``140``)
+as default additive infix operators such as ``+`` and ``-``.
+(A complete list of the default Swift operator precedence
+and associativity settings can be found in the :doc:`../ReferenceManual/index`.)
+
+.. TODO: update this link to go to the specific section of the Reference Manual.
+
+.. TODO: Custom operator declarations cannot be written over multiple lines in the REPL.
+   This is being tracked as rdar://16061044.
+   If this Radar is fixed, the operator declaration above should be split over multiple lines
+   for consistency with the rest of the code.
 
 .. refnote:: References
 
