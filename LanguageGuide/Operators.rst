@@ -15,7 +15,7 @@ Operators
 
 An :newTerm:`operator` is a special symbol or phrase that is used to check or change values.
 A simple example is the addition operator, ``+``,
-which is used to add two numbers together (as in ``let i = 1 + 2``).
+which is used to add two numbers together (as in ``val i = 1 + 2``).
 More complex examples include the logical AND operator ``&&``
 (as in ``if enteredDoorCode && passedRetinaScan``),
 or the increment operator ``++i``,
@@ -63,7 +63,7 @@ The :newTerm:`assignment operator` (``a = b``) updates the value of ``a`` with t
 
 .. testcode:: assignmentOperator
 
-    (swift) let b = 10
+    (swift) val b = 10
     // b : Int = 10
     (swift) var a = 5
     // a : Int = 5
@@ -76,7 +76,7 @@ its elements can be decomposed into multiple named values at once:
 
 .. testcode:: assignmentOperator
 
-    (swift) let (x, y) = (1, 2)
+    (swift) val (x, y) = (1, 2)
     // (x, y) : (Int, Int) = (1, 2)
     (swift) println("x is \(x)")
     >>> x is 1
@@ -133,11 +133,11 @@ can be added together via ``+`` to make a new ``String``:
 
 .. testcode:: arithmeticOperators
 
-    (swift) let dog = '🐶'
+    (swift) val dog = '🐶'
     // dog : UnicodeScalar = '🐶'
-    (swift) let cow = '🐮'
+    (swift) val cow = '🐮'
     // cow : UnicodeScalar = '🐮'
-    (swift) let dogCow = dog + cow
+    (swift) val dogCow = dog + cow
     // dogCow : String = "🐶🐮"
 
 .. _Operators_RemainderOperator:
@@ -250,21 +250,21 @@ while also finding out its value:
 
     (swift) var a = 0
     // a : Int = 0
-    (swift) let b = ++a
+    (swift) val b = ++a
     // b : Int = 1
     (swift) println("a is now \(a)")
     >>> a is now 1
-    (swift) let c = a++
+    (swift) val c = a++
     // c : Int = 1
     (swift) println("a is now \(a)")
     >>> a is now 2
 
 In the example above,
-``let b = ++a`` sets ``b`` to the value of ``a``,
+``val b = ++a`` sets ``b`` to the value of ``a``,
 *after* it has been incremented.
 This is why both ``a`` and ``b`` are equal to ``1``.
 
-However, ``let c = a++`` sets ``c`` to the value of ``a`` *before* it is incremented.
+However, ``val c = a++`` sets ``c`` to the value of ``a`` *before* it is incremented.
 The result is that ``c`` gets the old value of ``1``,
 but ``a`` now equals ``2``.
 
@@ -289,11 +289,11 @@ known as the :newTerm:`unary minus operator`:
 
 .. testcode:: arithmeticOperators
 
-    (swift) let three = 3
+    (swift) val three = 3
     // three : Int = 3
-    (swift) let minusThree = -three
+    (swift) val minusThree = -three
     // minusThree : Int = -3
-    (swift) let plusThree = -minusThree    // effectively "minus minus three"
+    (swift) val plusThree = -minusThree    // effectively "minus minus three"
     // plusThree : Int = 3
 
 The unary minus operator ``-`` is prepended directly before the value it operates on,
@@ -304,9 +304,9 @@ which simply returns the value it operates on, without any change:
 
 .. testcode:: arithmeticOperators
 
-    (swift) let minusSix = -6
+    (swift) val minusSix = -6
     // minusSix : Int = -6
-    (swift) let alsoMinusSix = +minusSix
+    (swift) val alsoMinusSix = +minusSix
     // alsoMinusSix : Int = -6
 
 The unary plus operator doesn't actually do anything.
@@ -379,7 +379,7 @@ such as the ``if else`` statement:
 
 .. testcode:: comparisonOperators
 
-    (swift) let name = "world";
+    (swift) val name = "world";
     // name : String = "world"
     (swift) if name == "world" {
         println("hello, world")
@@ -420,11 +420,11 @@ and 20 pixels taller if it doesn't:
 
 .. testcode:: ternaryComparisonOperatorPart1
 
-    (swift) let contentHeight = 40
+    (swift) val contentHeight = 40
     // contentHeight : Int = 40
-    (swift) let hasHeader = true
+    (swift) val hasHeader = true
     // hasHeader : Bool = true
-    (swift) let rowHeight = contentHeight + (hasHeader ? 50 : 20)
+    (swift) val rowHeight = contentHeight + (hasHeader ? 50 : 20)
     // rowHeight : Int = 90
     (swift) println("The row height is \(rowHeight) pixels.")
     >>> The row height is 90 pixels.
@@ -433,9 +433,9 @@ This is shorthand for:
 
 .. testcode:: ternaryComparisonOperatorPart2
 
-    (swift) let contentHeight = 40
+    (swift) val contentHeight = 40
     // contentHeight : Int = 40
-    (swift) let hasHeader = true
+    (swift) val hasHeader = true
     // hasHeader : Bool = true
     (swift) var rowHeight = contentHeight
     // rowHeight : Int = 40
@@ -488,9 +488,9 @@ For example:
 
 .. testcode:: bitwiseOperators
 
-    (swift) let initialBits: UInt8 = 0b00001111
+    (swift) val initialBits: UInt8 = 0b00001111
     // initialBits : UInt8 = 15
-    (swift) let invertedBits = ~initialBits  // equals 11110000
+    (swift) val invertedBits = ~initialBits  // equals 11110000
     // invertedBits : UInt8 = 240
 
 ``UInt8`` integers have eight bits,
@@ -523,11 +523,11 @@ For example:
 
 .. testcode:: bitwiseOperators
 
-    (swift) let firstSixBits: UInt8 = 0b11111100
+    (swift) val firstSixBits: UInt8 = 0b11111100
     // firstSixBits : UInt8 = 252
-    (swift) let lastSixBits: UInt8  = 0b00111111
+    (swift) val lastSixBits: UInt8  = 0b00111111
     // lastSixBits : UInt8 = 63
-    (swift) let middleFourBits = firstSixBits & lastSixBits  // equals 00111100
+    (swift) val middleFourBits = firstSixBits & lastSixBits  // equals 00111100
     // middleFourBits : UInt8 = 60
 
 The values of ``firstSixBits`` and ``lastSixBits`` both have their four middle bits equal to ``1``.
@@ -550,11 +550,11 @@ For example:
 
 .. testcode:: bitwiseOperators
 
-    (swift) let someBits: UInt8 = 0b10110010
+    (swift) val someBits: UInt8 = 0b10110010
     // someBits : UInt8 = 178
-    (swift) let moreBits: UInt8 = 0b01011110
+    (swift) val moreBits: UInt8 = 0b01011110
     // moreBits : UInt8 = 94
-    (swift) let combinedbits = someBits | moreBits  // equals 11111110
+    (swift) val combinedbits = someBits | moreBits  // equals 11111110
     // combinedbits : UInt8 = 254
 
 The values of ``someBits`` and ``moreBits`` have different bits set to ``1``.
@@ -578,11 +578,11 @@ For example:
 
 .. testcode:: bitwiseOperators
 
-    (swift) let firstBits: UInt8 = 0b00010100
+    (swift) val firstBits: UInt8 = 0b00010100
     // firstBits : UInt8 = 20
-    (swift) let otherBits: UInt8 = 0b00000101
+    (swift) val otherBits: UInt8 = 0b00000101
     // otherBits : UInt8 = 5
-    (swift) let outputBits = firstBits ^ otherBits  // equals 00010001
+    (swift) val outputBits = firstBits ^ otherBits  // equals 00010001
     // outputBits : UInt8 = 17
 
 .. TODO: Explain how this can be useful to toggle just a few bits in a bitfield.
@@ -631,7 +631,7 @@ Here's how bit-shifting looks in Swift code:
 
 .. testcode:: bitwiseShiftOperators
 
-    (swift) let shiftBits: UInt8 = 4    // 00000100 in binary
+    (swift) val shiftBits: UInt8 = 4    // 00000100 in binary
     // shiftBits : UInt8 = 4
     (swift) shiftBits << 1              // 00001000
     // r0 : UInt8 = 8
@@ -646,13 +646,13 @@ Bit-shifting can be used to encode and decode values within other data types:
 
 .. testcode:: bitwiseShiftOperators
 
-    (swift) let pink: UInt32 = 0xCC6699
+    (swift) val pink: UInt32 = 0xCC6699
     // pink : UInt32 = 13395609
-    (swift) let redComponent = (pink & 0xFF0000) >> 16
+    (swift) val redComponent = (pink & 0xFF0000) >> 16
     // redComponent : UInt32 = 204
-    (swift) let greenComponent = (pink & 0x00FF00) >> 8
+    (swift) val greenComponent = (pink & 0x00FF00) >> 8
     // greenComponent : UInt32 = 102
-    (swift) let blueComponent = pink & 0x0000FF
+    (swift) val blueComponent = pink & 0x0000FF
     // blueComponent : UInt32 = 153
 
 This example uses a ``UInt32`` constant called ``pink`` to store a
@@ -907,9 +907,9 @@ Swift will throw an error:
 
 .. testcode:: overflowOperatorsDivZeroError
 
-    (swift) let x = 1
+    (swift) val x = 1
     // x : Int = 1
-    (swift) let y = x / 0
+    (swift) val y = x / 0
     xxx division by zero
  
 Integer division by zero is not a valid mathematical action,
@@ -941,7 +941,7 @@ It can be read as “not ``a``”, as seen in the following example:
 
 .. testcode:: logicalOperators
 
-    (swift) let allowedEntry = false
+    (swift) val allowedEntry = false
     // allowedEntry : Bool = false
     (swift) if !allowedEntry {
         println("ACCESS DENIED")
@@ -970,9 +970,9 @@ and only allows access if both values are ``true``:
 
 .. testcode:: logicalOperators
 
-    (swift) let enteredDoorCode = true
+    (swift) val enteredDoorCode = true
     // enteredDoorCode : Bool = true
-    (swift) let passedRetinaScan = false
+    (swift) val passedRetinaScan = false
     // passedRetinaScan : Bool = false
     (swift) if enteredDoorCode && passedRetinaScan {
         println("Welcome!")
@@ -1001,9 +1001,9 @@ For example:
 
 .. testcode:: logicalOperators
 
-    (swift) let hasDoorKey = false
+    (swift) val hasDoorKey = false
     // hasDoorKey : Bool = false
-    (swift) let knowsOverridePassword = true
+    (swift) val knowsOverridePassword = true
     // knowsOverridePassword : Bool = true
     (swift) if hasDoorKey || knowsOverridePassword {
         println("Welcome!")
@@ -1176,9 +1176,9 @@ for counting up to (but not including) the length of a zero-based array:
 
 .. testcode:: rangeOperators
 
-    (swift) let names = ["Anna", "Brian", "Christine", "Daniel"]
+    (swift) val names = ["Anna", "Brian", "Christine", "Daniel"]
     // names : String[] = ["Anna", "Brian", "Christine", "Daniel"]
-    (swift) let count = names.count
+    (swift) val count = names.count
     // count : Int = 4
     (swift) for i in 0...count {
         println("Person \(i + 1) is called \(names[i])")

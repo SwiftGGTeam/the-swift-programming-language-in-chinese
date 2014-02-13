@@ -75,9 +75,9 @@ you can ignore them using an underscore in place of a variable name:
 
 .. testcode::
 
-    (swift) let base = 3
+    (swift) val base = 3
     // base : Int = 3
-    (swift) let power = 10
+    (swift) val power = 10
     // power : Int = 10
     (swift) var answer = 1
     // answer : Int = 1
@@ -104,7 +104,7 @@ A ``for``-``in`` loop can also be used to iterate over the items in an array:
 
 .. testcode::
 
-    (swift) let names = ["Alan", "Barbara", "Carol", "Doug"]
+    (swift) val names = ["Alan", "Barbara", "Carol", "Doug"]
     // names : String[] = ["Alan", "Barbara", "Carol", "Doug"]
     (swift) for name in names {
         println("Hello, \(name)!")
@@ -123,7 +123,7 @@ and removes all of its vowels and spaces to create a cryptic puzzle phrase for s
 
 .. testcode::
 
-    (swift) let puzzleInput = "great minds think alike"
+    (swift) val puzzleInput = "great minds think alike"
     // puzzleInput : String = "great minds think alike"
     (swift) var puzzleOutput = ""
     // puzzleOutput : String = ""
@@ -157,7 +157,7 @@ which can be accessed via dot syntax:
 
 .. testcode::
 
-    (swift) let numberOfLegs = ["spider" : 8, "ant" : 6, "cat" : 4]
+    (swift) val numberOfLegs = ["spider" : 8, "ant" : 6, "cat" : 4]
     // numberOfLegs : Dictionary<String, Int> = Dictionary<String, Int>(1.33333, 3, <DictionaryBufferOwner<String, Int> instance>)
     (swift) for item in numberOfLegs {
         println("\(item.key)s have \(item.value) legs")
@@ -304,7 +304,7 @@ For example::
 
     (swift) var personName = ""
     // personName : String = ""
-    (swift) let keyboard = Keyboard()
+    (swift) val keyboard = Keyboard()
     // keyboard : Keyboard = <_TtCSs8Keyboard instance>
     (swift) println("Please enter your name, then press return.")
     >>> Please enter your name, then press return.
@@ -485,7 +485,7 @@ for brevity:
 
 .. testcode::
 
-    (swift) let numberSymbol = '三'   // Simplified Chinese symbol for the number 3
+    (swift) val numberSymbol = '三'   // Simplified Chinese symbol for the number 3
     // numberSymbol : UnicodeScalar = '三'
     (swift) var integerValue: Int? = .None
     // integerValue : Int? = <unprintable value>
@@ -554,9 +554,9 @@ to provide a natural-language count for numbers of any size:
 
 .. testcode::
 
-    (swift) let count = 3_000_000_000_000
+    (swift) val count = 3_000_000_000_000
     // count : Int = 3000000000000
-    (swift) let countedThings = "stars in the Milky Way"
+    (swift) val countedThings = "stars in the Milky Way"
     // countedThings : String = "stars in the Milky Way"
     (swift) var naturalCount = ""
     // naturalCount : String = ""
@@ -670,11 +670,11 @@ or none of the above.
             println("(\(point.0), 0) is on the x-axis")
         case (0, _):
             println("(0, \(point.1)) is on the y-axis")
-        case let (x, y) where x == y:
+        case val (x, y) where x == y:
             println("(\(x), \(y)) is on the line x == y")
-        case let (x, y) where x == -y:
+        case val (x, y) where x == -y:
             println("(\(x), \(y)) is on the line x == -y")
-        case let (x, y):
+        case val (x, y):
             println("(\(x), \(y)) is just some arbitrary point")
     }
     >>> (1, -1) is on the line x == -y
@@ -687,7 +687,7 @@ The ``case`` statement will only match the current value of ``point``
 if the ``where`` clause's condition equates to ``true`` for that value.
 
 The x-axis and y-axis checks could also have been written with a ``where`` clause.
-``case (_, 0)`` could have been written as ``case (_, let y) where y == 0``,
+``case (_, 0)`` could have been written as ``case (_, val y) where y == 0``,
 to match points on the x-axis.
 However, the original version is more concise,
 and is preferred when matching against a fixed value.
@@ -703,7 +703,7 @@ because they did not have the temporary constants to hand.)
 
 Note that this ``switch`` statement does not have a ``default`` block.
 The final ``case`` block,
-``case let (x, y)``,
+``case val (x, y)``,
 declares a tuple of two placeholder constants,
 but does *not* provide a ``where`` clause to filter them.
 As a result, it matches all possible remaining values,
@@ -728,9 +728,9 @@ For example:
 
 .. testcode::
 
-    (swift) let possibleNumber = "123"
+    (swift) val possibleNumber = "123"
     // possibleNumber : String = "123"
-    (swift) if let convertedNumber = possibleNumber.toInt() {
+    (swift) if val convertedNumber = possibleNumber.toInt() {
         println("'\(possibleNumber)' has the integer value \(convertedNumber)")
     } else {
         println("'\(possibleNumber)' could not be converted to a number")
@@ -743,7 +743,7 @@ It then prints a message to indicate if the conversion was successful.
 (``toInt()`` returns an *optional* ``Int``,
 which only contains an ``Int`` if the conversion is succesful.)
 
-``if let convertedNumber = possibleNumber.toInt()`` can be read as:
+``if val convertedNumber = possibleNumber.toInt()`` can be read as:
 
 “If the optional returned by ``possibleNumber.toInt()`` contains a value,
 set a new constant called ``convertedNumber`` to the value contained in the optional.”
@@ -827,12 +827,12 @@ to see it in action::
 
     (swift) var personName = ""
     // personName : String = ""
-    (swift) let keyboard = Keyboard()
+    (swift) val keyboard = Keyboard()
     // keyboard : Keyboard = <_TtCSs8Keyboard instance>
     (swift) println("Please enter your name, then press return.")
     >>> Please enter your name, then press return.
     (swift) while true {
-        let inputCharacter = UnicodeScalar(keyboard.read())
+        val inputCharacter = UnicodeScalar(keyboard.read())
         switch inputCharacter {
             case ' ':
                 continue
@@ -886,7 +886,7 @@ The example below uses ``fallthrough`` to create a textual description of a numb
 
 .. testcode::
 
-    (swift) let integerToDescribe = 5
+    (swift) val integerToDescribe = 5
     // integerToDescribe : Int = 5
     (swift) var description = "The number \(integerToDescribe) is"
     // description : String = "The number 5 is"

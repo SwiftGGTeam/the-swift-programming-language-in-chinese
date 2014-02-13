@@ -214,7 +214,7 @@ can be passed to the memberwise initializer by name:
 
 .. testcode:: classesAndStructures
 
-    (swift) let twoByTwo = Size(width: 2.0, height: 2.0)
+    (swift) val twoByTwo = Size(width: 2.0, height: 2.0)
     // twoByTwo : Size = Size(2.0, 2.0)
 
 Initial values can also be provided without names,
@@ -222,7 +222,7 @@ if they are listed in the same order that the properties are declared in the str
 
 .. testcode:: classesAndStructures
 
-    (swift) let fourByThree = Size(4.0, 3.0)
+    (swift) val fourByThree = Size(4.0, 3.0)
     // fourByThree : Size = Size(4.0, 3.0)
 
 .. TODO: Include a justifiable reason for why classes do not provide a memberwise initializer.
@@ -240,7 +240,7 @@ that is stored as part of an instance.
 Properties of this kind are known as :newTerm:`stored properties`.
 Stored properties can be either :newTerm:`variable stored properties`
 (introduced by the ``var`` keyword, as in the examples above),
-or :newTerm:`constant stored properties` (introduced by the ``let`` keyword).
+or :newTerm:`constant stored properties` (introduced by the ``val`` keyword).
 
 Constant stored properties are very similar to constant named values,
 in that their value cannot be changed once it has been initialized.
@@ -281,7 +281,7 @@ Here's an example of ``willSet`` and ``didSet`` in action:
                 }
         }
     }
-    (swift) let stepCounter = StepCounter()
+    (swift) val stepCounter = StepCounter()
     // stepCounter : StepCounter = <StepCounter instance>
     (swift) stepCounter.totalSteps = 200
     >>> Added 200 steps
@@ -333,13 +333,8 @@ a message is printed to indicate how many new steps have been taken.
 
 .. note::
 
-    If you assign a different value to a property within its own ``willSet`` method,
-    your value will be overwritten as soon as ``willSet`` finishes.
-    The property's value will always be updated to the originally-intended value once ``willSet`` completes,
-    regardless of what you do within the ``willSet`` method yourself.
-
-    Conversely, if you assign a new value to a property within its own ``didSet`` method,
-    the new value that you assign *will* replace the one that was just set.
+    If you assign a value to a property within its own ``didSet`` method,
+    the new value that you assign will replace the one that was just set.
 
 .. _ClassesAndStructures_ComputedProperties:
 
@@ -371,7 +366,7 @@ to retrieve and set other properties and values indirectly.
     }
     (swift) var square = Rect(origin: Point(0.0, 0.0), size: Size(10.0, 10.0))
     // square : Rect = Rect(Point(0.0, 0.0), Size(10.0, 10.0))
-    (swift) let initialSquareCenter = square.center
+    (swift) val initialSquareCenter = square.center
     // initialSquareCenter : Point = Point(5.0, 5.0)
     (swift) square.center = Point(x: 15.0, y: 15.0)
     (swift) println("square origin is now at (\(square.origin.x), \(square.origin.y))")
@@ -464,7 +459,7 @@ can be simplified by removing the ``get`` keyword:
             return width * height * depth
         }
     }
-    (swift) let fourByFiveByTwo = Cuboid(4.0, 5.0, 2.0)
+    (swift) val fourByFiveByTwo = Cuboid(4.0, 5.0, 2.0)
     // fourByFiveByTwo : Cuboid = Cuboid(4.0, 5.0, 2.0)
     (swift) println("the volume of fourByFiveByTwo is \(fourByFiveByTwo.volume)")
     >>> the volume of fourByFiveByTwo is 40.0
@@ -491,7 +486,7 @@ and can return any value they like at any time.
 
 Computed properties – including read-only computed properties –
 are always declared as variable properties (via the ``var`` introducer).
-The ``let`` introducer is only ever used for constant properties,
+The ``val`` introducer is only ever used for constant properties,
 to indicate that their value cannot be changed once it is set as part of instance initialization.
 
 .. NOTE: getters and setters are also allowed for named values
@@ -567,7 +562,7 @@ For example, using the ``Size`` structure from above:
 
 .. testcode:: classesAndStructures
 
-    (swift) let iPhone4 = Size(width: 640.0, height: 960.0)
+    (swift) val iPhone4 = Size(width: 640.0, height: 960.0)
     // iPhone4 : Size = Size(640.0, 960.0)
     (swift) var iPhone5 = iPhone4
     // iPhone5 : Size = Size(640.0, 960.0)
@@ -625,12 +620,12 @@ Here's an example, using the ``Rectangle`` class defined above:
 
 .. testcode:: classesAndStructures
 
-    (swift) let rect = Rectangle()
+    (swift) val rect = Rectangle()
     // rect : Rectangle = <Rectangle instance>
     (swift) rect.size = Size(width: 1.0, height: 1.0)
     (swift) println("The rectangle's width is \(rect.size.width)")
     >>> The rectangle's width is 1.0
-    (swift) let sameRect = rect
+    (swift) val sameRect = rect
     // sameRect : Rectangle = <Rectangle instance>
     (swift) sameRect.size.width = 3.0
     (swift) println("The rectangle's width is now \(sameRect.size.width)")
@@ -788,7 +783,7 @@ Instance methods are called using the same dot syntax as properties:
 
 .. testcode:: classesAndStructures
 
-    (swift) let counter = Counter()
+    (swift) val counter = Counter()
     // counter : Counter = <Counter instance>
     (swift) println("Initial counter value is \(counter.count)")
     >>> Initial counter value is 0
@@ -921,14 +916,14 @@ with a value from a different temperature scale:
     (swift) var freezingPointOfWater = Celsius(withKelvin: -273.15)
     // freezingPointOfWater : Celsius = Celsius(0.0)
 
-The value of a constant ``let`` property can be modified at any point during initialization,
+The value of a constant ``val`` property can be modified at any point during initialization,
 as long as is is definitely set to a value by the time the initializer has finished:
 
 .. testcode:: initialization
 
     (swift) struct Temperature {
-        let storedValue: Double
-        let storedScale: String
+        val storedValue: Double
+        val storedScale: String
         init withValue(value: Double) inScale(scale: String) {
             storedValue = value
             storedScale = scale
@@ -1001,7 +996,7 @@ and sets it to the result of calling ``init withTitle()`` for a specific title s
 
 .. testcode:: initialization
 
-    (swift) let thisBook = Document(withTitle: "The Swift Programming Language")
+    (swift) val thisBook = Document(withTitle: "The Swift Programming Language")
     // thisBook : Document = <Document instance>
     (swift) println("This book is called '\(thisBook.title)'")
     >>> This book is called 'The Swift Programming Language'
@@ -1013,7 +1008,7 @@ passing it a placeholder string value of ``[untitled]``:
 
 .. testcode:: initialization
 
-    (swift) let someBook = Document()
+    (swift) val someBook = Document()
     // someBook : Document = <Document instance>
     (swift) println("Some unknown book is called '\(someBook.title)'")
     >>> Some unknown book is called '[untitled]'
@@ -1039,7 +1034,7 @@ Here's an example:
         var numberOfWheels = 0
         var maxPassengers = 1
         func description() -> String {
-            return "\(numberOfWheels) wheels and up to \(maxPassengers) passengers"
+            return "\(numberOfWheels) wheels; up to \(maxPassengers) passengers"
         }
     }
 
@@ -1100,10 +1095,10 @@ you can see how its properties have been updated:
 
 .. testcode:: inheritance
 
-    (swift) let bicycle = Bicycle()
+    (swift) val bicycle = Bicycle()
     // bicycle : Bicycle = <Bicycle instance>
-    (swift) println("A bicycle has \(bicycle.description())")
-    >>> A bicycle has 2 wheels and up to 1 passengers
+    (swift) println("Bicycle: \(bicycle.description())")
+    >>> Bicycle: 2 wheels; up to 1 passengers
 
 .. TODO: work out how best to describe super.init() in light of the next section below.
 
@@ -1136,10 +1131,10 @@ you can see how its properties have been updated:
 
 .. testcode:: inheritance
 
-    (swift) let tandem = Tandem()
+    (swift) val tandem = Tandem()
     // tandem : Tandem = <Tandem instance>
-    (swift) println("A tandem has \(tandem.description())")
-    >>> A tandem has 2 wheels and up to 2 passengers
+    (swift) println("Tandem: \(tandem.description())")
+    >>> Tandem: 2 wheels; up to 2 passengers
 
 Note that the ``description()`` method has also been inherited
 by ``Bicycle`` and ``Tandem``.
@@ -1147,12 +1142,60 @@ Instance methods of a class are inherited by any and all subclasses of that clas
 
 .. QUESTION: Should I mention that you can subclass from NSObject?
 
-.. _ClassesAndStructures_OverridingInstancePropertiesAndMethods:
+.. _ClassesAndStructures_OverridingInstanceMethods:
 
-Overriding Instance Properties And Methods
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Overriding Instance Methods
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-[to be written]
+A subclass can provide its own custom implementation of instance methods
+that it would otherwise inherit from a superclass.
+This is known as :newTerm:`overriding` the methods.
+For example:
+
+.. testcode:: inheritance
+
+    (swift) class Car : Vehicle {
+        var isConvertible: Bool = false
+        init() {
+            super.init()
+            maxPassengers = 5
+            numberOfWheels = 4
+        }
+        func description() -> String {
+            return super.description() + "; "
+                + (isConvertible ? "convertible" : "not convertible")
+        }
+    }
+    (swift) var car = Car()
+    // car : Car = <Car instance>
+    (swift) println("Car: \(car.description())")
+    >>> Car: 4 wheels; up to 5 passengers; not convertible
+
+This example declares a new subclass of ``Vehicle``, called ``Car``.
+``Car`` declares a new Boolean property called ``isConvertible``,
+in addition to the properties it inherits from ``Vehicle``.
+This property defaults to ``false``, as most cars are not convertibles.
+``Car`` also has a custom initializer method,
+which sets the maximum number of passengers to ``5``,
+and the default number of wheels to ``4``.
+
+``Car`` then overrides its inherited ``description()`` method.
+It does this by declaring a function with the same definition as the one it inherits.
+Rather than providing a completely custom implementation of ``description()``,
+it actually starts by calling ``super.description()`` to retrieve
+the description provided by its superclass.
+It then appends some additional information onto the end,
+and returns the complete description.
+
+.. TODO: provide more information about function signatures,
+   and what does / does not make them unique.
+   For example, the parameter names do not have to match
+   in order for a function to override a similar signature in its parent.
+   (This is true for both of the function declaration syntaxes.)
+
+.. note::
+
+    Overriding of properties is not yet implemented.
 
 .. _ClassesAndStructures_SubclassingAndInitializerDelegation:
 
@@ -1227,7 +1270,7 @@ Here's how this initializer could be called:
 
 .. testcode:: initialization
 
-    (swift) let empty = TextDocument()
+    (swift) val empty = TextDocument()
     // empty : TextDocument = <TextDocument instance>
     (swift) println("\(empty.title):\n\(empty.bodyText)")
     >>> [untitled]:
@@ -1257,7 +1300,7 @@ Here's how this initializer could be called:
 
 .. testcode:: initialization
 
-    (swift) let titled = TextDocument(withTitle: "Write something please")
+    (swift) val titled = TextDocument(withTitle: "Write something please")
     // titled : TextDocument = <TextDocument instance>
     (swift) println("\(titled.title):\n\(titled.bodyText)")
     >>> Write something please:
@@ -1282,7 +1325,7 @@ Here's how this initializer could be called:
 
 .. testcode:: initialization
 
-    (swift) let untitledPangram = TextDocument(
+    (swift) val untitledPangram = TextDocument(
         withText: "Amazingly few discotheques provide jukeboxes")
     // untitledPangram : TextDocument = <TextDocument instance>
     (swift) println("\(untitledPangram.title):\n\(untitledPangram.bodyText)")
@@ -1315,7 +1358,7 @@ Here's how this final initializer could be called:
 
 .. testcode:: initialization
 
-    (swift) let foxPangram = TextDocument(
+    (swift) val foxPangram = TextDocument(
         withTitle: "Quick brown fox",
         text: "The quick brown fox jumped over the lazy dog")
     // foxPangram : TextDocument = <TextDocument instance>
@@ -1359,10 +1402,163 @@ Type Properties and Methods
 
 .. _ClassesAndStructures_CustomOperators:
 
-Custom Operators
-----------------
+Operator Functions
+------------------
 
-[to be written]
+Classes and structures can provide their own implementations of existing :doc:`operators <Operators>`.
+This is known as :newTerm:`overloading` the existing operators.
+
+.. testcode:: customOperators
+
+    (swift) struct Point {
+        var x = 0.0, y = 0.0
+    }
+    (swift) func + (lhs: Point, rhs: Point) -> Point {
+        return Point(lhs.x + rhs.x, lhs.y + rhs.y)
+    }
+
+This example shows how a structure can provide a custom implementation of the
+:ref:`arithmetic addition operator <Operators_ArithmeticOperators>` (``+``).
+It starts by defining a ``Point`` structure for an ``(x, y)`` coordinate.
+This is followed by a definition of an :newTerm:`operator function`
+to add together instances of the ``Point`` structure.
+
+The operator function is defined as a global function called ``+``,
+which takes two input parameters of type ``Point``,
+and returns a single output value, also of type ``Point``.
+In this implementation, the input parameters have been named ``lhs`` and ``rhs``
+to represent the ``Point`` instances that will be on
+the left-hand side and right-hand side of the ``+`` operator.
+The function returns a new ``Point``, whose ``x`` and ``y`` properties are
+initialized with the sum of the ``x`` and ``y`` properties from
+the two ``Point`` instances that are being added together.
+
+The function is defined globally, rather than as a method on the ``Point`` structure,
+so that it can be used as an infix operator between existing ``Point`` instances:
+
+.. testcode:: customOperators
+
+    (swift) val point = Point(1.0, 2.0)
+    // point : Point = Point(1.0, 2.0)
+    (swift) val anotherPoint = Point(3.0, 4.0)
+    // anotherPoint : Point = Point(3.0, 4.0)
+    (swift) val combinedPoint = point + anotherPoint
+    // combinedPoint : Point = Point(4.0, 6.0)
+
+Prefix and Postfix Operators
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The arithmethic addition operator (``+``) shown above is a :newTerm:`binary operator`.
+Binary operators operate on two targets (such as ``2 + 3``),
+and are said to be :newTerm:`infix` because they appear inbetween their two targets.
+
+Classes and structures can also provide implementations of the standard :newTerm:`unary operators`.
+Unary operators operate on a single target,
+and are said to be :newTerm:`prefix` if they come before their target (such as ``-a``),
+and :newTerm:`postfix` operators if they come after their target (such as ``i++``).
+
+Implementations of prefix unary operators are indicated via the ``@prefix`` attribute.
+Likewise, postfix unary operators are indicated via the ``@postfix`` attribute.
+The attribute is written before the ``func`` keyword when declaring the operator function:
+
+.. testcode:: customOperators
+
+    (swift) @prefix func - (rhs: Point) -> Point {
+        return Point(-rhs.x, -rhs.y)
+    }
+
+This example implements the :ref:`unary minus operator <Operators_UnaryPlusAndMinusOperators>`
+(``-a``) for ``Point`` instances.
+The unary minus operator is a prefix operator,
+and so this function has to be qualified with the ``@prefix`` attribute.
+
+For simple numeric values, the unary minus operator just converts
+positive numbers into their negative equivalent, and vice versa.
+The corresponding implementation for ``Point`` instances
+performs this operation on both the ``x`` and ``y`` properties:
+
+.. testcode:: customOperators
+
+    (swift) val positive = Point(3.0, 4.0)
+    // positive : Point = Point(3.0, 4.0)
+    (swift) val negative = -positive
+    // negative : Point = Point(-3.0, -4.0)
+    (swift) val alsoPositive = -negative
+    // alsoPositive : Point = Point(3.0, 4.0)
+
+.. QUESTION: is this the first time I will have introduced attributes?
+   If so, do they need more qualification?
+
+Compound Assignment Operators
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+:ref:`Compound assignment operators <Operators_CompoundAssignmentOperators>`
+combine assignment (``=``) with another operation.
+One example is the addition assignment operator (``+=``).
+This combines addition and assignment into a single operation.
+Operator functions that implement compound assignment must be qualified with
+the ``@assignment`` attribute.
+They must also mark their left-hand input parameter as ``inout``,
+as its value will be modified directly from within the operator function:
+
+.. testcode:: customOperators
+
+    (swift) @assignment func += (inout lhs: Point, rhs: Point) {
+        lhs = lhs + rhs
+    }
+
+This example implements an addition assignment operator function for ``Point`` instances.
+Because an addition operator has already been defined above,
+there is no need to reimplement the addition process again here.
+Instead, this function takes advantage of the existing addition operator function,
+and uses it to set the left-hand value to itself plus the right-hand value:
+
+.. testcode:: customOperators
+
+    (swift) var original = Point(1.0, 2.0)
+    // original : Point = Point(1.0, 2.0)
+    (swift) val pointToAdd = Point(3.0, 4.0)
+    // pointToAdd : Point = Point(3.0, 4.0)
+    (swift) original += pointToAdd
+    (swift) println("original is now (\(original.x), \(original.y))")
+    >>> original is now (4.0, 6.0)
+
+The ``@assignment`` attribute can be combined with
+either the ``@prefix`` or ``@postfix`` attribute,
+as in this implementation of the
+:ref:`prefix increment operator <Operators_IncrementAndDecrementOperators>` (``++a``)
+for ``Point`` instances:
+
+.. testcode:: customOperators
+
+    (swift) @prefix @assignment func ++ (inout rhs: Point) -> Point {
+        rhs += Point(1.0, 1.0)
+        return rhs
+    }
+
+This operator function takes advantage of the addition assignment operator defined above.
+It adds a ``Point`` with ``x`` and ``y`` values of ``1.0``
+to the ``Point`` on which it is called,
+and returns the result.
+
+.. testcode:: customOperators
+
+    (swift) var toIncrement = Point(3.0, 4.0)
+    // toIncrement : Point = Point(3.0, 4.0)
+    (swift) val afterIncrement = ++toIncrement
+    // afterIncrement : Point = Point(4.0, 5.0)
+    (swift) println("toIncrement is now (\(toIncrement.x), \(toIncrement.y))")
+    >>> toIncrement is now (4.0, 5.0)
+
+.. QUESTION: some of the standard operators (such as equation and comparison)
+   are implemented as part of a protocol (such as Equatable and Comparable).
+   You don't seem to need to declare conformance to these protocols
+   in order to implement the operator functions, however.
+   Is that correct? Can you get != for free after implementing == , for example?
+
+.. QUESTION: Should I mention @transparent in the Operator Functions section?
+   All of the stdlib operators (e.g. for fixed- and floating-point numbers)
+   are declared as @transparent…
 
 .. refnote:: References
 

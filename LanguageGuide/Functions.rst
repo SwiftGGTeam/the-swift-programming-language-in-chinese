@@ -51,7 +51,7 @@ This makes it easy for the function to be called from elsewhere in your code in 
 .. testcode:: functionDeclaration
 
     (swift) func sayHello(personName: String) -> String {
-        let greeting = "Hello, " + personName + "!"
+        val greeting = "Hello, " + personName + "!"
         return greeting
     }
     (swift) println(sayHello("Anna"))
@@ -94,11 +94,11 @@ to combine the message creation and the return statement into one line:
     Try calling this function with your own name.
     Once you've done that,
     see what happens if you change the message to a different greeting.
-    
+
     Try using this function to say hello to a friend instead.
     You could use an ``if else`` statement to make it reply with a special greeting when it recognizes your name,
     and a different greeting for everyone else.
-    
+
     What about if you pass in a second input parameter (also a ``String``),
     called ``birthdayType``?
     (You can separate multiple input parameters with a comma.)
@@ -106,7 +106,7 @@ to combine the message creation and the return statement into one line:
     such as ``12th`` or ``21st``.
     Can you make a function called ``sayHappyBirthday``,
     and use it to wish somebody called ``Peter`` a happy ``40th`` birthday?
-    
+
     For bonus points,
     make this new second parameter be an ``Int`` called ``age``
     (rather than a ``String`` called ``birthdayType``),
@@ -201,9 +201,9 @@ and a value of ``.None`` in its second value to indicate that ``splitter`` was n
 
 .. testcode:: functionParameters
 
-    (swift) let helloWorld = splitOnFirst("hello world", ' ')
+    (swift) val helloWorld = splitOnFirst("hello world", ' ')
     // helloWorld : (String, String?) = ("hello", <unprintable value>)
-    (swift) if let secondPart = helloWorld.1 {
+    (swift) if val secondPart = helloWorld.1 {
         println("The text from after the splitter is '\(secondPart)'")
     }
     >>> The text from after the splitter is 'world'
@@ -227,7 +227,7 @@ and also enables values to be passed in a different order to the original functi
         }
         return false
     }
-    (swift) let containsASpace = containsCharacter(
+    (swift) val containsASpace = containsCharacter(
         characterToFind: ' ',
         stringToSearch: "This will return true")
     // containsASpace : Bool = true
@@ -251,7 +251,7 @@ the passed parameters are assumed to be in the order they were originally declar
 
 .. testcode:: functionParameters
 
-    (swift) let containsAHyphen = containsCharacter("This will return false", '-')
+    (swift) val containsAHyphen = containsCharacter("This will return false", '-')
     // containsAHyphen : Bool = false
 
 .. _Functions_DefaultParameterValues:
@@ -439,15 +439,15 @@ Variable parameters are declared by prefixing the parameter name with the keywor
 .. testcode:: functionParameters
 
     (swift) func alignRight(var string: String, length: Int, pad: UnicodeScalar) -> String {
-        let amountToPad = length - string.length
+        val amountToPad = length - string.length
         for _ in 0...amountToPad {
             string = pad + string
         }
         return string
     }
-    (swift) let originalString = "hello"
+    (swift) val originalString = "hello"
     // originalString : String = "hello"
-    (swift) let paddedString = alignRight(originalString, 10, '-')
+    (swift) val paddedString = alignRight(originalString, 10, '-')
     // paddedString : String = "-----hello"
     (swift) println("The original string is still '\(originalString)'")
     >>> The original string is still 'hello'
@@ -578,11 +578,12 @@ As before, any parameters with default values can be excluded when the function 
     // r1 : String = "hello world"
 
 If a parameter name is omitted from a selector-style declaration,
-the parameter is automatically given the same name as its selector part:
+the parameter is automatically given the same name as its selector part.
+Default values are still allowed:
 
 .. testcode:: selectorStyle
 
-    (swift) func columnize(String) backwards(Bool) -> String {
+    (swift) func columnize(String) backwards(Bool = false) -> String {
         var output = ""
         for character in columnize.chars {
             if backwards {
@@ -593,6 +594,10 @@ the parameter is automatically given the same name as its selector part:
         }
         return output
     }
+    (swift) print(columnize("abc"))
+    >>> a
+    >>> b
+    >>> c
     (swift) print(columnize("abc", backwards: true))
     >>> c
     >>> b
@@ -609,9 +614,6 @@ should be converted into a column of characters in reverse order.
 Note that this example calls ``print()`` rather than ``println()``
 to print its output, as the ``output`` string already has a line break
 at the end of the returned string.
-
-.. TODO: Default values for elided selector-style parameters do not currently work.
-   This is tracked as rdar://16030644.
 
 .. TODO: It is not currently possible to use variadic parameters with selector-style declarations,
    but this is an intended addition as part of the revision of selector-style syntax.
