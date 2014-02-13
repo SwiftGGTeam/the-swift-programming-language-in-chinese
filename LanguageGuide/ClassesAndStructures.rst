@@ -1402,10 +1402,163 @@ Type Properties and Methods
 
 .. _ClassesAndStructures_CustomOperators:
 
-Custom Operators
-----------------
+Operator Functions
+------------------
 
-[to be written]
+Classes and structures can provide their own implementations of existing :doc:`operators <Operators>`.
+This is known as :newTerm:`overloading` the existing operators.
+
+.. testcode:: customOperators
+
+    (swift) struct Point {
+        var x = 0.0, y = 0.0
+    }
+    (swift) func + (lhs: Point, rhs: Point) -> Point {
+        return Point(lhs.x + rhs.x, lhs.y + rhs.y)
+    }
+
+This example shows how a structure can provide a custom implementation of the
+:ref:`arithmetic addition operator <Operators_ArithmeticOperators>` (``+``).
+It starts by defining a ``Point`` structure for an ``(x, y)`` coordinate.
+This is followed by a definition of an :newTerm:`operator function`
+to add together instances of the ``Point`` structure.
+
+The operator function is defined as a global function called ``+``,
+which takes two input parameters of type ``Point``,
+and returns a single output value, also of type ``Point``.
+In this implementation, the input parameters have been named ``lhs`` and ``rhs``
+to represent the ``Point`` instances that will be on
+the left-hand side and right-hand side of the ``+`` operator.
+The function returns a new ``Point``, whose ``x`` and ``y`` properties are
+initialized with the sum of the ``x`` and ``y`` properties from
+the two ``Point`` instances that are being added together.
+
+The function is defined globally, rather than as a method on the ``Point`` structure,
+so that it can be used as an infix operator between existing ``Point`` instances:
+
+.. testcode:: customOperators
+
+    (swift) val point = Point(1.0, 2.0)
+    // point : Point = Point(1.0, 2.0)
+    (swift) val anotherPoint = Point(3.0, 4.0)
+    // anotherPoint : Point = Point(3.0, 4.0)
+    (swift) val combinedPoint = point + anotherPoint
+    // combinedPoint : Point = Point(4.0, 6.0)
+
+Prefix and Postfix Operators
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The arithmethic addition operator (``+``) shown above is a :newTerm:`binary operator`.
+Binary operators operate on two targets (such as ``2 + 3``),
+and are said to be :newTerm:`infix` because they appear inbetween their two targets.
+
+Classes and structures can also provide implementations of the standard :newTerm:`unary operators`.
+Unary operators operate on a single target,
+and are said to be :newTerm:`prefix` if they come before their target (such as ``-a``),
+and :newTerm:`postfix` operators if they come after their target (such as ``i++``).
+
+Implementations of prefix unary operators are indicated via the ``@prefix`` attribute.
+Likewise, postfix unary operators are indicated via the ``@postfix`` attribute.
+The attribute is written before the ``func`` keyword when declaring the operator function:
+
+.. testcode:: customOperators
+
+    (swift) @prefix func - (rhs: Point) -> Point {
+        return Point(-rhs.x, -rhs.y)
+    }
+
+This example implements the :ref:`unary minus operator <Operators_UnaryPlusAndMinusOperators>`
+(``-a``) for ``Point`` instances.
+The unary minus operator is a prefix operator,
+and so this function has to be qualified with the ``@prefix`` attribute.
+
+For simple numeric values, the unary minus operator just converts
+positive numbers into their negative equivalent, and vice versa.
+The corresponding implementation for ``Point`` instances
+performs this operation on both the ``x`` and ``y`` properties:
+
+.. testcode:: customOperators
+
+    (swift) val positive = Point(3.0, 4.0)
+    // positive : Point = Point(3.0, 4.0)
+    (swift) val negative = -positive
+    // negative : Point = Point(-3.0, -4.0)
+    (swift) val alsoPositive = -negative
+    // alsoPositive : Point = Point(3.0, 4.0)
+
+.. QUESTION: is this the first time I will have introduced attributes?
+   If so, do they need more qualification?
+
+Compound Assignment Operators
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+:ref:`Compound assignment operators <Operators_CompoundAssignmentOperators>`
+combine assignment (``=``) with another operation.
+One example is the addition assignment operator (``+=``).
+This combines addition and assignment into a single operation.
+Operator functions that implement compound assignment must be qualified with
+the ``@assignment`` attribute.
+They must also mark their left-hand input parameter as ``inout``,
+as its value will be modified directly from within the operator function:
+
+.. testcode:: customOperators
+
+    (swift) @assignment func += (inout lhs: Point, rhs: Point) {
+        lhs = lhs + rhs
+    }
+
+This example implements an addition assignment operator function for ``Point`` instances.
+Because an addition operator has already been defined above,
+there is no need to reimplement the addition process again here.
+Instead, this function takes advantage of the existing addition operator function,
+and uses it to set the left-hand value to itself plus the right-hand value:
+
+.. testcode:: customOperators
+
+    (swift) var original = Point(1.0, 2.0)
+    // original : Point = Point(1.0, 2.0)
+    (swift) val pointToAdd = Point(3.0, 4.0)
+    // pointToAdd : Point = Point(3.0, 4.0)
+    (swift) original += pointToAdd
+    (swift) println("original is now (\(original.x), \(original.y))")
+    >>> original is now (4.0, 6.0)
+
+The ``@assignment`` attribute can be combined with
+either the ``@prefix`` or ``@postfix`` attribute,
+as in this implementation of the
+:ref:`prefix increment operator <Operators_IncrementAndDecrementOperators>` (``++a``)
+for ``Point`` instances:
+
+.. testcode:: customOperators
+
+    (swift) @prefix @assignment func ++ (inout rhs: Point) -> Point {
+        rhs += Point(1.0, 1.0)
+        return rhs
+    }
+
+This operator function takes advantage of the addition assignment operator defined above.
+It adds a ``Point`` with ``x`` and ``y`` values of ``1.0``
+to the ``Point`` on which it is called,
+and returns the result.
+
+.. testcode:: customOperators
+
+    (swift) var toIncrement = Point(3.0, 4.0)
+    // toIncrement : Point = Point(3.0, 4.0)
+    (swift) val afterIncrement = ++toIncrement
+    // afterIncrement : Point = Point(4.0, 5.0)
+    (swift) println("toIncrement is now (\(toIncrement.x), \(toIncrement.y))")
+    >>> toIncrement is now (4.0, 5.0)
+
+.. QUESTION: some of the standard operators (such as equation and comparison)
+   are implemented as part of a protocol (such as Equatable and Comparable).
+   You don't seem to need to declare conformance to these protocols
+   in order to implement the operator functions, however.
+   Is that correct? Can you get != for free after implementing == , for example?
+
+.. QUESTION: Should I mention @transparent in the Operator Functions section?
+   All of the stdlib operators (e.g. for fixed- and floating-point numbers)
+   are declared as @transparent…
 
 .. refnote:: References
 
