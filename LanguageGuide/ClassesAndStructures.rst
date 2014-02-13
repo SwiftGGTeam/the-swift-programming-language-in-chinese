@@ -1400,7 +1400,7 @@ Type Properties and Methods
 
 .. see release notes from 2013-12-18 for a note about lazy initialization
 
-.. _ClassesAndStructures_CustomOperators:
+.. _ClassesAndStructures_OperatorFunctions:
 
 Operator Functions
 ------------------
@@ -1445,6 +1445,8 @@ so that it can be used as an infix operator between existing ``Point`` instances
     (swift) val combinedPoint = point + anotherPoint
     // combinedPoint : Point = Point(4.0, 6.0)
 
+.. _ClassesAndStructures_PrefixAndPostfixOperators:
+
 Prefix and Postfix Operators
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -1488,6 +1490,8 @@ performs this operation on both the ``x`` and ``y`` properties:
 
 .. QUESTION: is this the first time I will have introduced attributes?
    If so, do they need more qualification?
+
+.. _ClassesAndStructures_CompoundAssignmentOperators:
 
 Compound Assignment Operators
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
