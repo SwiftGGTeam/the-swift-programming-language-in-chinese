@@ -28,16 +28,17 @@ Types
     from showing up anywhere else in the language.
 
 In Swift, there are two kinds of types: named types and compound types.
-A *named type* is a type that can be given a particular name when it is defined.
-Named types include instances of abstract data types, such as
-classes, structures, enumerations, and protocols.
+A :newTerm:`named type` is a type that can be given a particular name when it is defined.
+Named types include classes, structures, enumerations, and protocols.
 For example,
-instances of a user-defined class named ``Foo`` have the type ``Foo``.
+instances of a user-defined class named ``MyClass`` have the type ``MyClass``.
 In addition to user-defined named types,
 the Swift Standard Library defines many commonly used named types,
-including those that represent arrays, dictionaries, and optionals.
+including those that represent arrays, dictionaries, and optional values.
 
-What are normally considered primitive or basic data types in other languages,
+.. TODO: Discuss with Jeanne: What do we call instances of the "Optional" type?
+
+Data types that are normally considered basic or primitive in other languages,
 like those that represent numbers, characters, and strings,
 are actually named types,
 defined and implemented in the Swift Standard Library using structures.
@@ -45,18 +46,14 @@ Because they are named types,
 you can extend their behavior to suit the needs of your program,
 using an extension declaration, discussed in :doc:`../LanguageGuide/ProtocolsAndExtensions`.
 
-A *compound type* is a type without a name, defined in the Swift language itself.
-There are two compound types in the language: function types and tuple types.
+A :newTerm:`compound type` is a type without a name, defined in the Swift language itself.
+There are two compound types: function types and tuple types.
 A compound type may contain named types and other compound types.
 For instance, the tuple type ``(Int, (Int, Int))`` contains two elements:
 the first is the named type ``Int``,
 and the second is another compound type ``(Int, Int)``.
 
-The Swift language has builtin, syntactical support ("syntactic sugar")
-for conveniently creating two commonly used generic, named types:
-``Array<T>`` and ``Optional<T>``.
-
-.. TODO: TR: What about language support for creating string and dictionary literals?
+.. TODO: TR: What about language support (syntactic sugar) for creating dictionary literals?
 
 This chapter discusses the types defined in the Swift language itself
 and describes the type inference behavior of Swift.
@@ -78,16 +75,11 @@ and describes the type inference behavior of Swift.
 
     type --> array-type | function-type | type-identifier | tuple-type | optional-type | protocol-composition-type | metatype-type
 
-.. NOTE: Removed "annotated-type" as a syntactic category,
-    because having it would allow productions that contain redundancy;
-    for example, it would allow "attribute-sequence attribute-sequence function-type".
-    Instead, we can simply replace it by its definition ("attribute-sequence-OPT type").
-
 
 Type Annotation
 ---------------
 
-A type annotation is used to explicitly specify the type of a variable or expression.
+A type annotation explicitly specifies the type of a variable or expression.
 Type annotations begin with a colon (``:``) and end with a type,
 as the following examples show::
 
@@ -95,12 +87,11 @@ as the following examples show::
     func foo(a: Int) -> Int { /* ... */ }
 
 In the first example,
-the expression ``x`` is specified to have the type ``(Double, Double)``,
-which is a tuple type.
+the expression ``x`` is specified to have the tuple type ``(Double, Double)``.
 In the second example,
 the parameter ``a`` to the function ``foo`` is specified to have the type ``Int``.
 
-Type annotations may contain an optional list of type attributes.
+Type annotations may contain an optional list of type attributes before the type.
 
 .. syntax-grammar::
 
@@ -137,12 +128,11 @@ the use of ``Point`` in the type annotation refers to the tuple type ``(Double, 
 
 The second case is when a type identifier uses dot (``.``) syntax to refer to named types
 declared in other modules or nested within other types.
-For example, the type identifier in the following code references the (hypothetical)
-``List`` named type that is declared in the (hypothetical) ``NeatDataStructures`` module.
+For example, the type identifier in the following code references the named type ``MyType``
+that is declared in the ``ExampleModule`` module.
 ::
 
-    let myList : NeatDataStructures.List = /* some initial value */
-
+    var someValue : ExampleModule.MyType
 
 .. langref-grammar
 
@@ -156,23 +146,10 @@ For example, the type identifier in the following code references the (hypotheti
     type-identifier --> type-name generic-argument-clause-OPT | type-name generic-argument-clause-OPT ``.`` type-identifier
     type-name --> identifier
 
-.. TODO: Write this section based on the info from Doug below:
-    Type name is actually a decent thing to call these (or at least to call the section).
-    Doug has no strong preference either way.
-    This may change depending on how we end up slicing the top-level structure---
-    if we call them nominal types, this may change to match.
-
-    The LangRef prose of this section is very much out of date.
-    Use this info instead:
-    An identifier that refers to a type may refer to
-    either a nominal type or a type alias. Nominal means that the name of the type is
-    significant---the name of a type alias doesn't create something.
-
 
 Tuple Type
 ----------
 
-[to be written]
 
 .. langref-grammar
 
@@ -215,7 +192,6 @@ Tuple Type
 Function Type
 -------------
 
-[to be written]
 
 .. langref-grammar
 
@@ -228,8 +204,8 @@ Function Type
 
     function-type --> tuple-type ``->`` attribute-sequence-OPT type
 
-.. NOTE: Functions are first-class citizens in Swift
-    (but not generic functions, i.e., not parametric polymorphic functions).
+.. NOTE: Functions are first-class citizens in Swift,
+    except for generic functions, i.e., parametric polymorphic functions.
     This means that monomorphic functions can be assigned to variables
     and can be passed as arguments to other functions.
     As an example, the following three lines of code are OK::
@@ -253,7 +229,6 @@ Function Type
 Array Type
 ----------
 
-[to be written]
 
 .. langref-grammar
 
@@ -291,7 +266,8 @@ In other words, the following two declarations are equivalent::
     let optionalInteger : Int?
     let optionalInteger : Optional<Int>
 
-In both cases, the constant ``optionalInteger`` is declared to be an optional integer type.
+In both cases, the constant ``optionalInteger``
+is declared to have the type of an optional integer.
 Note that no whitespace may appear between the type and the ``?`` operator.
 
 The type ``Optional<T>`` is an enumeration with two cases, ``None`` and ``Some(T)``,
@@ -300,8 +276,8 @@ Any type can be explicitly declared to be (or implicitly converted to) an option
 When declaring an optional type,
 be sure to use parentheses to properly scope the ``?`` operator.
 As an example,
-to declare an optional array of integers, write the type annotation as ``(Int[])?``
-instead of ``Int[]?``.
+to declare an optional array of integers, write the type annotation as ``(Int[])?``;
+writing ``Int[]?`` produces an error.
 
 Optionals conform to the ``LogicValue`` protocol and therefore may occur in a boolean context.
 In that context,
@@ -316,7 +292,7 @@ you can access that value using the postfix operator ``!``, as shown below::
     optionalInteger!
     // 42
 
-It is important to note that attempting to unwrap an optional
+Unwrap an optional
 that has a value of ``Optional.None`` results in a runtime error.
 
 For examples that show how to use optional types,
@@ -327,27 +303,14 @@ see :ref:`BasicTypes_Optionals`.
 
     type-optional ::= type-simple '?'-postfix
 
+.. NOTE: The -postfix disambiguates between two terminals
+    which have the same text but which have different whitespace.
+
 .. syntax-grammar::
 
     Grammar of an optional type
 
     optional-type --> type ``?``
-
-.. NOTE: The -postfix disambiguates between two terminals
-    which have the same text but which have different whitespace.
-
-    Compare:
-
-        bar?.doSomething()
-        foo ? 42 : 7
-
-    One way to explain this is to have two different terminals.
-
-    postfix-question --> ``?``
-    infix-question --> `` ? ``
-
-    Better -- explain in prose.
-    There must not be whitespace between the type and the ?.
 
 
 Protocol Composition Type
@@ -373,7 +336,7 @@ that inherits from ``ProtocolA``, ``ProtocolB``, and ``ProtocolC``,
 but without having to introduce a new name.
 
 Each item in a protocol composition list
-must be either the name of protocol or a typealias of a protocol composition type.
+must be either the name of protocol or a type alias of a protocol composition type.
 If the list is empty, it specifies the empty protocol composition type,
 which every type conforms to.
 
@@ -394,7 +357,6 @@ which every type conforms to.
 Metatype Type
 -------------
 
-[to be written]
 
 .. TR: How do metatypes types work?
     What information is important to convey in this section?
@@ -483,7 +445,8 @@ Metatype Type
 Type Inheritance Clause
 -----------------------
 
-A type inheritance clause is used to specify what class and protocols a named type
+A type inheritance clause is used to specify what class a named type inherits from
+and what protocols a named type conforms to.
 inherits from and conforms to. A type inheritance clause begins with a colon (``:``),
 followed by a comma-separated list of type identifiers.
 
@@ -530,10 +493,10 @@ Swift uses type inference extensively,
 allowing you to omit the type or part of the type of many variables and expressions in your code.
 For example,
 instead of writing ``var x : Int = 0``, you can omit the type completely and simply write ``var x = 0``---
-the compiler will correctly infer that ``x`` names a value of type ``Int``.
+the compiler correctly infers that ``x`` names a value of type ``Int``.
 Similarly, you can omit part of a type when the full type can be inferred from context.
 For instance, if you write ``let dict : Dictionary = ["A": 1]``,
-the compiler will infer that ``dict`` has the type ``Dictionary<String, Int>``.
+the compiler infers that ``dict`` has the type ``Dictionary<String, Int>``.
 
 In both of the examples above,
 the type information is passed up from the leaves of the expression tree to its root.
@@ -553,7 +516,8 @@ causes the numeric literal ``2.71828`` to have type ``Float`` instead of type ``
 
 Type inference in Swift operates at the level of a single expression or statement.
 This means that all of the information needed to infer an omitted type or part of a type
-in an expression must be accessible from type-checking one of its subexpressions.
+in an expression must be accessible from type-checking
+the expression or one of its subexpressions.
 
 .. TODO: Need an example to illustrate this (of something that you can't do).
 
