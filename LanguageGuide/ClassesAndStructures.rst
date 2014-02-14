@@ -1376,6 +1376,7 @@ Dynamic Return Types
 [to be written]
 
 .. TODO: mention that methods can return DynamicSelf (a la instancetype)
+.. TODO: include the several tricks seen in swift/test/decl/func/dynamic_self.swift
 
 .. _ClassesAndStructures_TypeCasting:
 
