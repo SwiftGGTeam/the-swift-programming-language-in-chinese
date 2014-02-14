@@ -343,6 +343,8 @@ Swift enumerations also support many of the features described in :doc:`ClassesA
 * :newTerm:`instance methods`, to provide utility functionality
 
 .. TODO: Should type methods and properties be added on to this list?
+.. TODO: How about subscriptability? It's allowed, but would it ever actually be useful?
+.. TODO: Likewise custom operator implementations. This could definitely be useful.
 
 The example below shows all of these capabilities in action for a complex enumeration:
 
