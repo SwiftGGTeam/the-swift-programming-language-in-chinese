@@ -9,7 +9,7 @@ Whitespace and Comments
 Whitespace is used to separate tokens in the source file
 and as part of the context
 that determines whether an operator is a prefix or postfix
-(see `Operator Identifiers`_),
+(see :ref:`Lexical_Operator`),
 but is otherwise ignored.
 The following characters are considered whitespace:
 null (U+0000),
@@ -128,6 +128,8 @@ digits and combining Unicode characters are also allowed.
 
 
 
+
+.. _Lexical_Operator:
 
 Operators
 ---------
