@@ -50,7 +50,7 @@ In addition, classes have several capabilities that structures do not:
 
 * :newTerm:`inheritance`, which enables one class to inherit the characteristics of another;
 * :newTerm:`destructors`, which enable an instance of a class to tidy up after itself; and
-* :newTerm:`type coercion`, which enables you to check and interpret the type of a class instance at runtime
+* :newTerm:`type casting`, which enables you to check and interpret the type of a class instance at runtime
 
 All of these capabilities are described in more detail below.
 
@@ -1377,20 +1377,20 @@ Dynamic Return Types
 
 .. TODO: mention that methods can return DynamicSelf (a la instancetype)
 
-.. _ClassesAndStructures_TypeCoercion:
+.. _ClassesAndStructures_TypeCasting:
 
-Type Coercion
--------------
+Type Casting
+------------
 
 It is sometimes necessary to check the specific class of an instance
 in order to decide how it should be used.
 It can also be necessary to treat a specific instance as if it is a particular type of class,
 even if it is actually a subclass of that class.
-Both of these tasks are achieved using :newTerm:`type coercion`.
+Both of these tasks are achieved using :newTerm:`type casting`.
 
-For example:
+Here's an example:
 
-.. testcode:: typeCoercion
+.. testcode:: typeCasting
 
     (swift) class MediaItem {
         var name: String
@@ -1431,7 +1431,7 @@ Because ``Movie`` and ``Song`` are both subclasses of ``MediaItem``,
 they can be used wherever a ``MediaItem`` can be used.
 For example:
 
-.. testcode:: typeCoercion
+.. testcode:: typeCasting
 
     (swift) var library = Array<MediaItem>()
     // library : Array<MediaItem> = []
@@ -1463,7 +1463,7 @@ Checking Type
 You can check whether an instance is of a certain type by using the ``is`` keyword.
 For example:
 
-.. testcode:: typeCoercion
+.. testcode:: typeCasting
 
     (swift) var movieCount = 0
     // movieCount : Int = 0
@@ -1489,14 +1489,14 @@ Similarly, ``if mediaItem is Song`` checks to see if the item is a ``Song`` inst
 At the end of the ``for``-``in`` loop, the values of ``movieCount`` and ``songCount``
 contain a count of how many ``MediaItem`` instances were found of each type.
 
-.. _ClassesAndStructures_CoercingToASpecificType:
+.. _ClassesAndStructures_CastingToASpecificType:
 
-Coercing To A Specific Type
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Casting To A Specific Type
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 [to be written]
 
-.. TODO: coercion also needs to be mentioned in the context of protocol conformance.
+.. TODO: casting also needs to be mentioned in the context of protocol conformance.
 
 .. _ClassesAndStructures_Destructors:
 
