@@ -515,6 +515,8 @@ Either the fraction or the exponent may be omitted.
 
 By default, floating-point literals are expressed in decimal;
 you can specify a hexadecimal literal using the ``0x`` prefix.
+The exponent of a hexadecimal literal
+is separated by a ``p`` or a ``P``.
 
 .. langref-grammar
 
@@ -535,9 +537,10 @@ you can specify a hexadecimal literal using the ``0x`` prefix.
    floating-point-decimal-exponent --> floating-point-e sign-OPT decimal-digits
 
    floating-point-hexadecimal-fraction --> ``.`` hexadecimal-digits-OPT
-   floating-point-hexadecimal-exponent --> floating-point-e sign-OPT hexadecimal-digits
+   floating-point-hexadecimal-exponent --> floating-point-p sign-OPT hexadecimal-digits
 
    floating-point-e --> ``e`` | ``E``
+   floating-point-p --> ``p`` | ``P``
    sign --> ``+`` | ``-``
 
 
