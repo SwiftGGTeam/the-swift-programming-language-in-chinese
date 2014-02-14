@@ -153,42 +153,57 @@ to disambiguate between the closing ``>`` characters
 in nested protocols such as ``A<B<C>>`` ---
 it is parsed as ``A < B < C > >`` rather than as ``A < B < C >>``.
 
+.. TODO: Lead with the problem above,
+   use that to motivate the solution.
+
+.. TODO: Brian points out that this is probably a *lexing* rule,
+   not a parsing rule.
+
 .. TR: Any special context you must be in for this <<>> rule to happen?
+
+.. TR: With this rule in effect, how is >> ever parsed as a bit shift
+   and not two greater-than operators?
 
 To determine whether an operator is used as
 a prefix operator, a postfix operator, or a binary operator,
 the parser looks at the characters before and after the operator.
-An operator is left bound if it is followed by
-``(``, ``[``, ``{``, ``,``, ``;``, ``:``, or whitespace.
-An operator is left bound if it is preceded by
-``)``, ``]``, ``}``, ``,``, ``;``, ``:``, or whitespace.
-Left and right binding determine the kind of operator as follows:
 
-.. TR: Correct to say any whitespace, or it is specifically CR LF HT and SP?
-   That is, does NUL or a comment also count?
+.. Right bound - whitespace after
+   Left bound - whitespace before
 
-========== =========== ================
-Left Bound Right Bound Kind of Operator
-========== =========== ================
-No         No          Binary
-Yes        No          Prefix
-No         Yes         Postfix
-Yes        Yes         Binary
-========== =========== ================
+=================   =================   ================
+Whitespace Before   Whitespace After    Kind of Operator
+=================   =================   ================
+No                  No                  Binary
+Yes                 No                  Prefix
+No                  Yes                 Postfix
+Yes                 Yes                 Binary
+=================   =================   ================
 
-A left bound operator immediately followed
-by a period (``.``) is never right bound.
-This special case ensures that postfix operators followed
-by a dot operator are parsed correctly ---
-for example, ``a@.b`` is parsed as as ``(a@).b`` rather than ``(a) @ (.b)``.
+For the purposes of this rule,
+the characters ``(``, ``[``, and ``{`` before an operator,
+the characters ``)``, ``]``, and ``}`` after an operator,
+and the characters ``,``, ``;``, and ``:``
+are also considered whitespace.
+
+An operator with no whitespace before it and a dot (``.``) after it
+is treated as a postfix operator.
+For example, ``a@.b`` is parsed as as ``a@ . b`` rather than ``a @ .b``.
 
 .. TR: Using @ again instead of ! above,
-   to avoid confusion between the above and below special cases.
+   to avoid confusion between the special case about dots (above)
+   and the special case about bang (below).
+   My discussion of this rule is rather different
+   than what's in LangRef.
+   Let's make sure it's still true.
 
-A left bound ``!`` or ``?`` operator is always a postfix operator.
-To use the ``?`` operator as syntactic sugar for ``Optional``,
-it must be left bound;
-to use it in the ternary (``? :``) operator, it must not be left bound.
+If the ``!`` or ``?`` operator has no whitespace before it,
+it is a postfix operator,
+regardless of whether it has whitespace after it.
+To use the ``?`` operator as a syntactic sugar for ``Optional``,
+it must not have whitespace before it.
+To use it in the conditional (``? :``) operator,
+it must have whitespace before and after it.
 
 .. langref-grammar
 
