@@ -420,15 +420,21 @@ They may also be used as identifiers.
 Literals
 --------
 
-.. TODO: For each kind of literal, there are several possible types
-   that the value created could have.
-   Type inference determines which type is used.
-   If the list of possible types is fixed, it might be worth writing down.
-   But I seem to remember that it isn't set ahead of time,
-   rather that it's based on which types the value can be converted to.
-   This information may belong better in a chapter on type conversion.
+The type of a literal is determined by how it is used.
+Any type constructor whose argument matches the literal's default type
+can be used implicitly to convert the literal to the needed type.
+For example, an integer literal is converted to a floating-point type
+in the expression ``5 + 3.1``;
+this is equivalent to ``Double(5) + Double(3.1)``.
 
-.. Note: The top-level grammar for literals is in "Expressions".
+.. Something like this...
+    Integer - Int
+    Floating-point - Double
+    Character - Char
+    String - String
+    Dictionary, Array, ... ?
+
+.. Note: The grammar for "literal-expression" is in "Expressions".
 
 Integer Literals
 ~~~~~~~~~~~~~~~~
