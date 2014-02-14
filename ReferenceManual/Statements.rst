@@ -352,9 +352,6 @@ as discussed in :ref:`ControlFlow_OptionalBinding`.
 Switch Statement
 ~~~~~~~~~~~~~~~~
 
-.. FIXME: "You can use" is a bit wordy.
-   We need to settle on a convention for starting each section.
-
 A ``switch`` statement allows certain blocks of code to be executed
 depending on the value of a control expression.
 
@@ -422,7 +419,7 @@ the program executes only the code within the first matching case in source orde
 Switch Statements Must Be Exhaustive
 ++++++++++++++++++++++++++++++++++++
 
-In Swift, ``switch`` statements must be :newTerm:`exhaustive`---that is,
+In Swift,
 every possible value of the control expression’s type
 must match the value of at least one pattern of a case.
 When this simply isn’t feasible
@@ -466,7 +463,7 @@ not out of the ``switch`` statement itself.
     switch-case --> case-labels statements-OPT | default-label statements-OPT
 
     case-labels --> case-label case-labels-OPT
-    case-label --> case pattern-list guard-clause-OPT ``:``
+    case-label --> ``case`` pattern-list guard-clause-OPT ``:``
     default-label --> ``default:``
 
     guard-clause --> ``where`` guard-expression
