@@ -225,6 +225,10 @@ it must have whitespace before and after it.
 
     any-identifier ::= identifier | operator
 
+.. TODO: The syntactic category 'any-identifier' is only used
+   in function definitions and import declarations.
+   Expand it in those places, and delete this syntactic category.
+
 .. langref-grammar
 
     punctuation ::= '('
