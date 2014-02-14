@@ -97,6 +97,7 @@ These names are valid identifiers within the scope of the closure.
     Grammar of an identifier
 
     identifier --> identifier-head identifier-characters-OPT
+    identifier --> implicit-parameter-name
     identifier-list --> identifier | identifier ``,`` identifier-list
 
     identifier-head --> Upper case or lower case letter A through Z
@@ -121,11 +122,10 @@ These names are valid identifiers within the scope of the closure.
     identifier-character --> identifier-head
     identifier-character --> U+0300-U+036F | U+1DC0-U+1DFF | U+20D0-U+20FF | U+FE20-U+FE2F
 
-    dollar-identifier --> ``$`` identifier-characters
+    implicit-parameter-name --> ``$`` identifier-characters
 
-.. TODO: Come up with a better name than dollar-identifier.
-
-.. TR: Is it actually identifier-characters or should it just be digits?
+.. TR: Should implicit-parameter-name really allow any character
+   after the $ sign, or is it limited to 0-9?
 
 
 .. _Lexical_Operator:
