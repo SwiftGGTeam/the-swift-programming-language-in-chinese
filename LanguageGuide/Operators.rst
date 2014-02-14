@@ -787,7 +787,7 @@ an error is thrown:
 
 .. testcode:: overflowOperatorsWillFailToOverflow
 
-    (swift) var potentialOverflow = Int16.max()
+    (swift) var potentialOverflow = Int16.max
     // potentialOverflow : Int16 = 32767
     (swift) potentialOverflow += 1                  // this will throw an error
     xxx overflow
