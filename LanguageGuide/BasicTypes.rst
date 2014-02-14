@@ -413,8 +413,8 @@ Behind the scenes, ``UInt16`` has an initializer that accepts a ``UInt8`` value,
 and so this initializer is used to make a new ``UInt16`` from an existing ``UInt8``.
 You can't just pass in *any* type here, however –
 it has to be a type for which ``UInt16`` provides an initializer.
-Extending existing types to accept new types
-(including your own type definitions) as initializers
+Extending existing types to provide initializers that accept new types
+(including your own type definitions)
 is covered in :doc:`ProtocolsAndExtensions`.
 
 .. TODO: add a note that this is not traditional type-casting,
