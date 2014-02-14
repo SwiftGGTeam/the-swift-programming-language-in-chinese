@@ -1670,7 +1670,7 @@ and returns the result.
 
     It is not possible to overload the default assignment operator (``=``).
     Only the compound assignment operators may be overloaded.
-    Similarly, the ternary operator (``a ? b : c``) may not be overloaded.
+    Similarly, the ternary conditional operator (``a ? b : c``) may not be overloaded.
 
 .. QUESTION: some of the standard operators (such as equation and comparison)
    are implemented as part of a protocol (such as Equatable and Comparable).

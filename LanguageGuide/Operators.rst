@@ -6,7 +6,7 @@
     * Relational and equality operators ✔︎
     * Short-circuit nature of the logical operators && and || ✔︎
     * Expressions (kind of ✔︎)
-    * The ternary operator ✔︎
+    * The ternary conditional operator ✔︎
     * range operators ✔︎
     * The comma operator
 
@@ -47,7 +47,7 @@ Operators are often referred to as :newTerm:`unary`, :newTerm:`binary` or :newTe
   and are said to be :newTerm:`infix` because they appear inbetween their two targets.
 * Ternary operators operate on three targets.
   Like C, Swift has just one ternary operator,
-  known as the ternary comparison operator (``a ? b : c``).
+  known as the ternary conditional operator (``a ? b : c``).
 
 The values that operators affect are known as :newTerm:`operands`.
 In the expression ``1 + 2``, the ``+`` symbol is a binary operator,
@@ -393,12 +393,12 @@ The ``if else`` statement is described in more detail in :doc:`ControlFlow`.
    How do they work with strings?
    How about with tuples / with your own types?
 
-.. _Operators_TernaryComparisonOperators:
+.. _Operators_TernaryConditionalOperator:
 
-Ternary Comparison Operator
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Ternary Conditional Operator
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The :newTerm:`ternary comparison operator` is a special operator with three parts,
+The :newTerm:`ternary conditional operator` is a special operator with three parts,
 which takes the form ``question ? answer1 : answer2``.
 It provides a shorthand way to evaluate one of two expressions
 based on whether ``question`` is ``true`` or ``false``.
@@ -417,7 +417,7 @@ Here's an example, which calculates the pixel height for a table row.
 The row should be 50 pixels taller than the content if it has a header,
 and 20 pixels taller if it doesn't:
 
-.. testcode:: ternaryComparisonOperatorPart1
+.. testcode:: ternaryConditionalOperatorPart1
 
     (swift) val contentHeight = 40
     // contentHeight : Int = 40
@@ -430,7 +430,7 @@ and 20 pixels taller if it doesn't:
 
 This is shorthand for:
 
-.. testcode:: ternaryComparisonOperatorPart2
+.. testcode:: ternaryConditionalOperatorPart2
 
     (swift) val contentHeight = 40
     // contentHeight : Int = 40
@@ -451,12 +451,12 @@ This is shorthand for:
    but in the second example, it's a variable (because it has to be).
    Is this okay?
 
-In this case, the ternary comparison operator provides
+In this case, the ternary conditional operator provides
 an efficient shorthand for deciding which of two expressions to consider.
 
-The ternary comparison operator should be used with care, however.
+The ternary conditional operator should be used with care, however.
 It is very concise, but this conciseness can lead to hard-to-read code if over-used.
-Avoid combining multiple instances of the ternary comparison operator into one compound statement.
+Avoid combining multiple instances of the ternary conditional operator into one compound statement.
 
 .. _Operators_BitwiseOperators:
 
