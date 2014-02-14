@@ -259,16 +259,13 @@ it must have whitespace before and after it.
     any-identifier --> identifier | operator
 
 
-Reserved Words
---------------
+Keywords
+--------
 
-.. TODO: This shouldn't stay a top-level head.
+The following keywords are reserved and may not be used as identifiers.
 
 .. TODO: Check with Jeanne about how to format this list.
    As a table?  As a multi-column list?  Etc.
-
-Reserved Keywords
-~~~~~~~~~~~~~~~~~
 
 .. langref-grammar
 
@@ -381,8 +378,13 @@ Reserved Keywords
 ``while``
 
 
-Contextual Keywords
-~~~~~~~~~~~~~~~~~~~
+In addition,
+the following keywords are used in particular contexts.
+They may also be used as identifiers.
+
+.. TODO I think these are all used in function declarations.
+   If there's a specific context we can give,
+   let's say that instead of just "particular contexts".
 
 .. langref-grammar
 
@@ -393,8 +395,6 @@ Contextual Keywords
  	prefix
   	set
   	type
-
-*Contextual keywords*:
 
 ``get``
 ``set``
