@@ -1445,13 +1445,15 @@ This example declares and initializes a new empty array called ``library``,
 which is declared as an ``Array`` of type ``MediaItem``.
 The example then appends some ``Movie`` and ``Song`` instances to the library.
 A ``Movie`` or a ``Song`` is also a ``MediaItem``,
-and so they are allowed to be added to this ``MediaItem`` typed array.
+and so an instance of either class can be added to an array
+that is typed to accept ``MediaItem`` instances.
 
 .. note::
 
-    The ``withName:`` selector has been left out of each of these initializer calls for brevity.
+    The ``withName:`` selector has been left out of each of these initializer calls, for brevity.
     ``Movie`` and ``Song``'s initializers both have their ``name`` value as the first parameter,
-    and it is clear from the context that this is the initializer to use.
+    and it is clear from the context that this is the initializer to use,
+    so this does not cause any ambiguity in this particular example.
 
 .. _ClassesAndStructures_CheckingType:
 
