@@ -1384,8 +1384,8 @@ Type Casting
 
 It is sometimes necessary to check the specific class of an instance
 in order to decide how it should be used.
-It can also be necessary to treat a specific instance as if it is a particular type of class,
-even if it is actually a subclass of that class.
+It can also be necessary to treat a specific instance as if it is a different
+superclass or subclass from its own class hierarchy.
 Both of these tasks are achieved using :newTerm:`type casting`.
 
 Here's an example:
@@ -1421,14 +1421,14 @@ and an ``init withName()`` initializer method.
 (It is assumed that all media items, including all movies and songs, will have a name.)
 
 The example also defines two subclasses of ``MediaItem``.
-One of these, ``Movie``, encapsulates additional information about a movie or film.
+The first subclass, ``Movie``, encapsulates additional information about a movie or film.
 It adds a ``director`` property on top of the base ``MediaItem`` class,
 with a corresponding initializer method.
-The other subclass, ``Song``, adds an ``artist`` property and initializer
+The second subclass, ``Song``, adds an ``artist`` property and initializer
 on top of the base class.
 
 Because ``Movie`` and ``Song`` are both subclasses of ``MediaItem``,
-they can be used wherever a ``MediaItem`` can be used.
+their instances can be used wherever a ``MediaItem`` instance can be used.
 For example:
 
 .. testcode:: typeCasting
@@ -1443,25 +1443,25 @@ For example:
 
 This example declares and initializes a new empty array called ``library``,
 which is declared as an ``Array`` of type ``MediaItem``.
-The example then appends some ``Movie`` and ``Song`` instances to the library.
+This means that it can only accept instances that are of type ``MediaItem``.
+
+The example then appends some ``Movie`` and ``Song`` instances to the ``library`` array.
 A ``Movie`` or a ``Song`` is also a ``MediaItem``,
-and so an instance of either class can be added to an array
-that is typed to accept ``MediaItem`` instances.
+and so an instance of either class can be added to the array.
 
 .. note::
 
     The ``withName:`` selector has been left out of each of these initializer calls, for brevity.
     ``Movie`` and ``Song``'s initializers both have their ``name`` value as the first parameter,
-    and it is clear from the context that this is the initializer to use,
-    so this does not cause any ambiguity in this particular example.
+    and it is clear from the context that this is the correct initializer to use.
+    As a result, leaving out the ``withName:`` selector does not cause any ambiguity.
 
 .. _ClassesAndStructures_CheckingType:
 
 Checking Type
 ~~~~~~~~~~~~~
 
-You can check whether an instance is of a certain type by using the ``is`` keyword.
-For example:
+You can check whether an instance is of a certain type by using the ``is`` operator:
 
 .. testcode:: typeCasting
 
@@ -1469,32 +1469,92 @@ For example:
     // movieCount : Int = 0
     (swift) var songCount = 0
     // songCount : Int = 0
-    (swift) for mediaItem in library {
-        if mediaItem is Movie {
+    (swift) for item in library {
+        if item is Movie {
             ++movieCount
-        } else if mediaItem is Song {
+        } else if item is Song {
             ++songCount
         }
     }
     (swift) println("Media library contains \(movieCount) movies and \(songCount) songs")
     >>> Media library contains 2 movies and 3 songs
 
-This example iterates through the items in the ``library`` array.
-On each pass, the ``for``-``in`` loop sets the ``mediaItem`` constant
-to be the next ``MediaItem`` in the array.
+This example iterates through all of the items in the ``library`` array.
+On each pass, the ``for``-``in`` loop sets the ``item`` constant
+to the next ``MediaItem`` in the array.
 
-The ``if mediaItem is Movie`` statement returns ``true`` if the current ``MediaItem``
-is actually an instance of the ``Movie`` type, and returns ``false`` if it is not.
-Similarly, ``if mediaItem is Song`` checks to see if the item is a ``Song`` instance.
+``if item is Movie`` returns ``true`` if the current ``MediaItem``
+is an instance of the ``Movie`` type, and ``false`` if it is not.
+Similarly, ``if item is Song`` checks to see if the item is a ``Song`` instance.
 At the end of the ``for``-``in`` loop, the values of ``movieCount`` and ``songCount``
 contain a count of how many ``MediaItem`` instances were found of each type.
 
-.. _ClassesAndStructures_CastingToASpecificType:
+.. QUESTION: is it correct to refer to 'is' and 'as' as 'operators'?
+   Or is there some better name we could use?
 
-Casting To A Specific Type
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. _ClassesAndStructures_Downcasting:
 
-[to be written]
+Downcasting
+~~~~~~~~~~~
+
+A named value of a certain class type may actually refer to
+a subclass instance behind the scenes. Where this is the case,
+you can try and :newTerm:`downcast` to the subclass using the ``as`` operator:
+
+.. testcode:: typeCasting
+
+    (swift) for item in library {
+        if val movie = item as Movie {
+            println("Movie: '\(movie.name)', dir. \(movie.director)")
+        } else if val song = item as Song {
+            println("Song: '\(song.name)', by \(song.artist)")
+        }
+    }
+    >>> Movie: 'Casablanca', dir. Michael Curtiz
+    >>> Song: 'Blue Suede Shoes', by Elvis Presley
+    >>> Movie: 'Citizen Kane', dir. Orson Welles
+    >>> Song: 'The One And Only', by Chesney Hawkes
+    >>> Song: 'Never Gonna Give You Up', by Rick Astley
+
+This example iterates over each ``MediaItem`` in ``library``,
+and prints an appropriate description for each one.
+To do this, it needs to access each item as if it is a true ``Movie`` or ``Song``,
+and not just a generic ``MediaItem``.
+This is necessary in order for it to be able to access
+the ``director`` or ``artist`` property for use in the description.
+
+The example starts by trying to downcast the current ``item`` as a ``Movie``.
+Because ``item`` is a ``MediaItem`` instance, it's possible that it *might* be a ``Movie``;
+equally, it's also possible that it might a ``Song``,
+or even just a base ``MediaItem``.
+Because of this uncertainty, the ``as`` operator returns an *optional* value
+when attempting to downcast to a subclass type.
+The result of ``item as Movie`` is of type ``Movie?``, or ‘optional ``Movie``’.
+
+Downcasting to ``Movie`` will fail when trying to downcast
+the two ``Song`` instances in the library array.
+To cope with this, the example above uses :ref:`optional binding <ControlFlow_OptionalBinding>`
+to check whether the optional ``Movie`` actually contains a value
+(i.e. to find out whether the downcast succeeded.)
+This optional binding is written ‘``if val movie = item as Movie``’,
+which can be read as:
+
+“Try and access ``item`` as a ``Movie``.
+If this is successful,
+set a new temporary constant called ``movie`` to
+the value stored in the returned ``Movie?`` optional.”
+
+If the downcasting succeeds, the properties of ``movie`` are then used
+to print a description for that ``Movie`` instance, including the name of its ``director``.
+A similar principle is used to check for ``Song`` instances,
+and to print an appropriate description (including ``artist`` name)
+whenever a ``Song`` is found in the library.
+
+.. note::
+
+    Casting does not actually *convert* the instance, or change its values.
+    The underlying instance remains the same; it is just treated and accessed
+    as an instance of the type to which it has been cast.
 
 .. TODO: casting also needs to be mentioned in the context of protocol conformance.
 
