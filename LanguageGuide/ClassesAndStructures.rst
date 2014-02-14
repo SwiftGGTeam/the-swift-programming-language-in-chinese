@@ -1380,9 +1380,120 @@ Dynamic Return Types
 .. _ClassesAndStructures_TypeCoercion:
 
 Type Coercion
+-------------
+
+It is sometimes necessary to check the specific class of an instance
+in order to decide how it should be used.
+It can also be necessary to treat a specific instance as if it is a particular type of class,
+even if it is actually a subclass of that class.
+Both of these tasks are achieved using :newTerm:`type coercion`.
+
+For example:
+
+.. testcode:: typeCoercion
+
+    (swift) class MediaItem {
+        var name: String
+        init withName(name: String) {
+            self.name = name
+        }
+    }
+    (swift) class Movie : MediaItem {
+        var director: String
+        init withName(name: String) director(director: String) {
+            self.director = director
+            super.init(withName: name)
+        }
+    }
+    (swift) class Song : MediaItem {
+        var artist: String
+        init withName(name: String) artist(artist: String) {
+            self.artist = artist
+            super.init(withName: name)
+        }
+    }
+
+This example defines a new base class called ``MediaItem``.
+This class provides basic functionality for any kind of item that might appear
+in a digital media library.
+Specifically, it declares a ``name`` property of type ``String``,
+and an ``init withName()`` initializer method.
+(It is assumed that all media items, including all movies and songs, will have a name.)
+
+The example also defines two subclasses of ``MediaItem``.
+One of these, ``Movie``, encapsulates additional information about a movie or film.
+It adds a ``director`` property on top of the base ``MediaItem`` class,
+with a corresponding initializer method.
+The other subclass, ``Song``, adds an ``artist`` property and initializer
+on top of the base class.
+
+Because ``Movie`` and ``Song`` are both subclasses of ``MediaItem``,
+they can be used wherever a ``MediaItem`` can be used.
+For example:
+
+.. testcode:: typeCoercion
+
+    (swift) var library = Array<MediaItem>()
+    (swift) library.append(Movie("Casablanca", director: "Michael Curtiz"))
+    (swift) library.append(Song("Blue Suede Shoes", artist: "Elvis Presley"))
+    (swift) library.append(Movie("Citizen Kane", director: "Orson Welles"))
+    (swift) library.append(Song("The One And Only", artist: "Chesney Hawkes"))
+    (swift) library.append(Song("Never Gonna Give You Up", artist: "Rick Astley"))
+
+This example declares and initializes a new empty array called ``library``,
+which is declared as an ``Array`` of type ``MediaItem``.
+The example then appends some ``Movie`` and ``Song`` instances to the library.
+A ``Movie`` or a ``Song`` is also a ``MediaItem``,
+and so they are allowed to be added to this ``MediaItem`` typed array.
+
+.. note::
+
+    The ``withName:`` selector has been left out of each of these initializer calls for brevity.
+    ``Movie`` and ``Song``'s initializers both have their ``name`` value as the first parameter,
+    and it is clear from the context that this is the initializer to use.
+
+.. _ClassesAndStructures_CheckingType:
+
+Checking Type
 ~~~~~~~~~~~~~
 
+You can check whether an instance is of a certain type by using the ``is`` keyword.
+For example:
+
+.. testcode:: typeCoercion
+
+    (swift) var movieCount = 0
+    // movieCount : Int = 0
+    (swift) var songCount = 0
+    // songCount : Int = 0
+    (swift) for mediaItem in library {
+        if mediaItem is Movie {
+            ++movieCount
+        } else if mediaItem is Song {
+            ++songCount
+        }
+    }
+    (swift) println("Media library contains \(movieCount) movies and \(songCount) songs")
+    >>> Media library contains 2 movies and 3 songs
+
+This example iterates through the items in the ``library`` array.
+On each pass, the ``for``-``in`` loop sets the ``mediaItem`` constant
+to be the next ``MediaItem`` in the array.
+
+The ``if mediaItem is Movie`` statement returns ``true`` if the current ``MediaItem``
+is actually an instance of the ``Movie`` type, and returns ``false`` if it is not.
+Similarly, ``if mediaItem is Song`` checks to see if the item is a ``Song`` instance.
+At the end of the ``for``-``in`` loop, the values of ``movieCount`` and ``songCount``
+contain a count of how many ``MediaItem`` instances were found of each type.
+
+.. _ClassesAndStructures_CoercingToASpecificType:
+
+Coercing To A Specific Type
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 [to be written]
+
+.. TODO: coercion also needs to be mentioned in the context of protocol conformance.
 
 .. _ClassesAndStructures_Destructors:
 
