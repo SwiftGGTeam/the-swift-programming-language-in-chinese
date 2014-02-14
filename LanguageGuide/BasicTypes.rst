@@ -292,13 +292,13 @@ All of these integer literals have a decimal value of ``17``:
 
 .. testcode:: numberLiterals
 
-    (swift) var decimalInteger = 17
+    (swift) val decimalInteger = 17
     // decimalInteger : Int = 17
-    (swift) var binaryInteger = 0b10001        // 17 in binary notation
+    (swift) val binaryInteger = 0b10001        // 17 in binary notation
     // binaryInteger : Int = 17
-    (swift) var octalInteger = 0o21            // 17 in octal notation
+    (swift) val octalInteger = 0o21            // 17 in octal notation
     // octalInteger : Int = 17
-    (swift) var hexadecimalInteger = 0x11      // 17 in hexadecimal notation
+    (swift) val hexadecimalInteger = 0x11      // 17 in hexadecimal notation
     // hexadecimalInteger : Int = 17
 
 Floating-point literals can be decimal (with no prefix),
@@ -324,11 +324,11 @@ All of these floating-point literals have a decimal value of ``12.5``:
 
 .. testcode:: numberLiterals
 
-    (swift) var decimalDouble = 12.5
+    (swift) val decimalDouble = 12.5
     // decimalDouble : Double = 12.5
-    (swift) var exponentDouble = 1.25e1
+    (swift) val exponentDouble = 1.25e1
     // exponentDouble : Double = 12.5
-    (swift) var hexadecimalDouble = 0xC.8p0
+    (swift) val hexadecimalDouble = 0xC.8p0
     // hexadecimalDouble : Double = 12.5
 
 Numeric literals can contain extra formatting to make them easier to read.
@@ -338,11 +338,11 @@ Neither type of formatting affects the underlying value of the literal:
 
 .. testcode:: numberLiterals
 
-    (swift) var paddedDouble = 000123.456
+    (swift) val paddedDouble = 000123.456
     // paddedDouble : Double = 123.456
-    (swift) var oneMillion = 1_000_000
+    (swift) val oneMillion = 1_000_000
     // oneMillion : Int = 1000000
-    (swift) var justOverOneMillion = 1_000_000.000_000_1
+    (swift) val justOverOneMillion = 1_000_000.000_000_1
     // justOverOneMillion : Double = 1e+06
 
 In the example above, the value of ``justOverOneMillion`` has been printed as ``1e+06``.
