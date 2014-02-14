@@ -58,9 +58,9 @@ that isn't in a Private Use Area.
 After the first character,
 digits and combining Unicode characters are also allowed.
 
-.. TODO: Describe dollar-identifier.
-
-.. TR: Is it actually id-continue* or should it just be digits?
+In the context of a closure with no explicit parameter names,
+the parameters are implicitly named ``$0``, ``$1``, and so on.
+These names are valid identifiers within the scope of the closure.
 
 .. langref-grammar
 
@@ -125,8 +125,7 @@ digits and combining Unicode characters are also allowed.
 
 .. TODO: Come up with a better name than dollar-identifier.
 
-
-
+.. TR: Is it actually identifier-characters or should it just be digits?
 
 
 .. _Lexical_Operator:
