@@ -26,6 +26,7 @@
     * Type functions and variables
     * Embedded classes and structures
     * Bound functions
+    * @conversion functions for converting between types
 
 Classes and Structures
 ======================
