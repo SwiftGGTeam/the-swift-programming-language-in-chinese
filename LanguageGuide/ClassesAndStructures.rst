@@ -1434,6 +1434,7 @@ For example:
 .. testcode:: typeCoercion
 
     (swift) var library = Array<MediaItem>()
+    // library : Array<MediaItem> = []
     (swift) library.append(Movie("Casablanca", director: "Michael Curtiz"))
     (swift) library.append(Song("Blue Suede Shoes", artist: "Elvis Presley"))
     (swift) library.append(Movie("Citizen Kane", director: "Orson Welles"))
