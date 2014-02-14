@@ -71,7 +71,7 @@ If you want to check the value of ``index`` after the loop has completed,
 you must declare it in advance of its use in the loop.
 
 If you don't actually need each value from the range,
-you can ignore them using an underscore in place of a variable name:
+you can ignore the values using an underscore in place of a variable name:
 
 .. testcode::
 
@@ -100,7 +100,7 @@ The underscore character ``_``
 causes the individual values to be ignored,
 and does not provide access to the current value during each iteration of the loop.
 
-A ``for``-``in`` loop can also be used to iterate over the items in an array:
+A ``for``-``in`` loop can be used to iterate over the items in an array:
 
 .. testcode::
 
@@ -117,39 +117,18 @@ A ``for``-``in`` loop can also be used to iterate over the items in an array:
 Swift's ``String`` type has a ``chars`` property,
 which provides the individual characters in the string as an ``Array`` of ``UnicodeScalar`` values
 (also known as an ‘``Array`` of type ``UnicodeScalar``’).
-This can be used to iterate through the characters of a string in order.
-The following example takes a lowercase string,
-and removes all of its vowels and spaces to create a cryptic puzzle phrase for someone to try and guess:
+This can be used to iterate through the characters of a string in order:
 
 .. testcode::
 
-    (swift) val puzzleInput = "great minds think alike"
-    // puzzleInput : String = "great minds think alike"
-    (swift) var puzzleOutput = ""
-    // puzzleOutput : String = ""
-    (swift) for letter in puzzleInput.chars {
-        switch letter {
-            case 'a', 'e', 'i', 'o', 'u', ' ':
-                continue
-            default:
-                puzzleOutput += letter
-        }
+    (swift) for scalar in "Hello".chars {
+        println(scalar)
     }
-    (swift) println(puzzleOutput)
-    >>> grtmndsthnklk
-
-The ``letter`` constant is inferred to be of type ``UnicodeScalar``
-from the fact that it is iterating over a sequence of ``UnicodeScalar`` values.
-This is why the case statement compares ``letter`` against ``UnicodeScalar`` values
-(with single quote marks)
-rather than ``String`` values.
-
-The code above calls the ``continue`` keyword whenever it matches a vowel or a space.
-``continue`` is a special control flow keyword that causes the current iteration of the loop to end immediately
-and jump straight to the start of the next iteration.
-It enables the switch block to match (and ignore) just these six special characters,
-rather than having to match every character that should get printed.
-(The ``continue`` keyword is described in more detail later in this section.)
+    >>> H
+    >>> e
+    >>> l
+    >>> l
+    >>> o
 
 Iteration can also be used to access the key-value pairs in a dictionary.
 Every item in a dictionary has a ``key`` property and a ``value`` property,
@@ -802,10 +781,43 @@ and start again at the beginning of the next iteration through the loop.
 It gives a way to say “I am done with the current loop iteration”,
 without leaving the loop altogether.
 
-In a ``for`` loop with an incrementer expression,
-the incrementer will still be evaluated after calling the ``continue`` statement.
-The loop itself continues to work as normal;
-only code within the loop is skipped.
+.. note::
+
+    In a ``for``-``condition``-``increment`` loop,
+    the incrementer will still be evaluated after calling the ``continue`` statement.
+    The loop itself continues to work as normal;
+    only code within the loop's body is skipped.
+
+The following example takes a lowercase string,
+and removes all of its vowels and spaces to create a cryptic puzzle phrase for someone to try and guess:
+
+.. testcode::
+
+    (swift) val puzzleInput = "great minds think alike"
+    // puzzleInput : String = "great minds think alike"
+    (swift) var puzzleOutput = ""
+    // puzzleOutput : String = ""
+    (swift) for letter in puzzleInput.chars {
+        switch letter {
+            case 'a', 'e', 'i', 'o', 'u', ' ':
+                continue
+            default:
+                puzzleOutput += letter
+        }
+    }
+    (swift) println(puzzleOutput)
+    >>> grtmndsthnklk
+
+The ``letter`` constant is inferred to be of type ``UnicodeScalar``
+from the fact that it is iterating over a sequence of ``UnicodeScalar`` values.
+This is why the case statement compares ``letter`` against ``UnicodeScalar`` values
+(with single quote marks) rather than ``String`` values.
+
+The code above calls the ``continue`` keyword whenever it matches a vowel or a space.
+This causes the current iteration of the loop to end immediately,
+and jump straight to the start of the next iteration.
+It enables the switch block to match (and ignore) just these six special characters,
+rather than having to match every character that should get printed.
 
 .. _ControlFlow_Break:
 
