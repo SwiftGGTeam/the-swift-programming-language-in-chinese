@@ -40,10 +40,10 @@ Both can:
 * declare :newTerm:`properties` to store values
 * define :newTerm:`methods` to provide functionality
 * define :newTerm:`initializers` to set up their initial state
-* conform to :newTerm:`protocols` to provide standard functionality of a certain type, and
-* be :newTerm:`extended` to expand their functionality beyond a default implementation
+* be :newTerm:`extended` to expand their functionality beyond a default implementation, and
+* conform to :newTerm:`protocols` to provide standard functionality of a certain type
 
-(Protocols and extensions are covered in detail in :doc:`ProtocolsAndExtensions`.)
+Extensions are covered in the :doc:`Extensions` chapter, and protocols are covered in the :doc:`Protocols` chapter.
 
 In addition, classes have several capabilities that structures do not:
 

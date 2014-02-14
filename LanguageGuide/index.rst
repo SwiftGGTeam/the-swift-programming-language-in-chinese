@@ -12,6 +12,7 @@ Language Guide
     Closures
     ClassesAndStructures
     Enumerations
-    ProtocolsAndExtensions
+    Extensions
+    Protocols
     Generics
     StandardFunctions
