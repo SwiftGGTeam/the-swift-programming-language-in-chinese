@@ -23,7 +23,6 @@
     * No 'self = [super init]' (assignment equates to void)
     * @inout
     * value types and reference types
-    * subscript getters and setters
     * Type functions and variables
     * Embedded classes and structures
     * Bound functions

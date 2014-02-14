@@ -6,6 +6,12 @@
     * Typing of generics
     * Working with subscripts
     * Creating one's own generics
+    * Subscript getters and setters
+
+.. NOTE: subscript is not really a Generics-specific subject,
+   but I think it's more useful if we introduce it in this chapter
+   rather than in the Classes and Structures chapter,
+   as you're more likely to use it when working with your own generic types.
 
 Generics
 ========
