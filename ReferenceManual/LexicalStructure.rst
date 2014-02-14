@@ -440,14 +440,20 @@ Integer Literals
 ~~~~~~~~~~~~~~~~
 
 Integer literals are made up of a series of digits,
-with optional underscores (``_``) between digits for readability.
-Underscores are ignored by the compiler.
+with optional underscores (``_``) between digits.
+The underscores are for readability and are ignored.
 
 By default, integer literals are expressed in decimal;
 you can specify an alternate base using a prefix.
 Binary literals begin with ``0b``,
 octal literals begin with ``0x``,
 and hexadecimal literals begin with ``0x``.
+
+Decimal literals contain the digits ``0`` through ``9``.
+Binary literals contain ``0`` and ``1``,
+octal literals contain ``0`` through ``7``,
+and hexadecimal literals contain ``0`` through ``9``
+as well as ``A`` through ``F`` in upper or lower case.
 
 .. NOTE Negative integer literals are expressed using the unary minus operator.
    There's no leading - on an integer literal.
@@ -481,14 +487,7 @@ and hexadecimal literals begin with ``0x``.
     binary-digit --> Digit 0 or 1
     octal-digit --> Digit 0 through 7
     decimal-digit --> Digit 0 through 9
-    hexadecimal-digit --> Digit 0 through 9, a through z, or A through Z
-
-    binary-digit --> ``0`` | ``1``
-    octal-digit --> ``0`` | ``1`` | ``2`` | ``3`` | ``4`` | ``5`` | ``6`` | ``7``
-    decimal-digit --> ``0`` | ``1`` | ``2`` | ``3`` | ``4`` | ``5`` | ``6`` | ``7`` | ``8`` | ``9``
-    hexadecimal-digit --> ``0`` | ``1`` | ``2`` | ``3`` | ``4`` | ``5`` | ``6`` | ``7`` | ``8`` | ``9``
-    hexadecimal-digit --> ``A`` | ``B`` | ``C`` | ``D`` | ``E`` | ``F``
-    hexadecimal-digit --> ``a`` | ``b`` | ``c`` | ``d`` | ``e`` | ``f``
+    hexadecimal-digit --> Digit 0 through 9, a through f, or A through F
 
     binary-digit-tail --> binary-digit binary-digit-tail-OPT | ``_`` binary-digit-tail-OPT
     octal-digit-tail --> octal-digit octal-digit-tail-OPT | ``_`` octal-digit-tail-OPT
@@ -510,6 +509,9 @@ and hexadecimal literals begin with ``0x``.
     decimal-digit --> Digit 0 through 9, or underscore
     hexadecimal-digit --> Digit 0 through 9, a through f, A through F, or underscore
 
+.. TODO: Brian suggests describing this grammar in prose only.
+   This syntactic category is used elsewhere though.
+
 .. TODO Pick one of the above ways of describing digits.
 
 .. TR: The prose and grammar above assume underscores go between digits.
@@ -530,9 +532,9 @@ an integer, a fraction, and an exponent.
 
    <#integer#>.<#fraction#>e<#exponent#>
 
-All three parts are made up of a series of digits,
-with optional underscores (``_``) between digits for readability.
-Underscores are ignored by the compiler.
+All three parts are made up of a series of digits ``0`` through ``9``,
+with optional underscores (``_``) between digits.
+The underscores are for readability and are ignored.
 The fraction is separated by a decimal point (``.``).
 The exponent is separated by ``e`` or ``E``
 followed by an optional sign (``+`` or ``-``).
