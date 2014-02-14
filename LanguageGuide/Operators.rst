@@ -26,8 +26,7 @@ Swift supports all of the standard operators from C,
 and improves several of their capabilities:
 
 * Assignment ``=`` does not return a value, to avoid common coding errors
-* Remainder ``%``, increment ``++`` and decrement ``--`` calculations
-  can be performed on floating-point numbers
+* Remainder ``%`` calculations can be performed on floating-point numbers
 
 It also introduces new operators not found in other languages:
 
@@ -224,7 +223,7 @@ Increment and Decrement Operators
 Like C, Swift provides an :newTerm:`increment operator` (``++``)
 and an :newTerm:`decrement operator` (``--``)
 as a shorthand way to increase or decrease the value of a numeric variable by ``1``.
-Unlike C, Swift's increment and decrement operators also work with floating-point numbers.
+These operators can be used with named values of any integer or floating-point type.
 
 .. testcode:: arithmeticOperators
 
