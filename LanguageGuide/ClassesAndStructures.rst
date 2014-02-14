@@ -1497,8 +1497,8 @@ contain a count of how many ``MediaItem`` instances were found of each type.
 Downcasting
 ~~~~~~~~~~~
 
-A named value of a certain class type may actually refer to
-a subclass instance behind the scenes. Where this is the case,
+A constant or variable of a certain class type may actually refer to
+an instance of a subclass behind the scenes. Where this is the case,
 you can try and :newTerm:`downcast` to the subclass using the ``as`` operator:
 
 .. testcode:: typeCasting
@@ -1552,11 +1552,16 @@ whenever a ``Song`` is found in the library.
 
 .. note::
 
-    Casting does not actually *convert* the instance, or change its values.
+    Casting does not actually modify the instance, or change its values.
     The underlying instance remains the same; it is just treated and accessed
     as an instance of the type to which it has been cast.
 
 .. TODO: casting also needs to be mentioned in the context of protocol conformance.
+
+.. QUESTION: should I mention upcasting here?
+   I can't think of an example where it's useful.
+   However, it does display different behavior from downcasting,
+   in that upcasting always works, and so it doesn't return an optional.
 
 .. _ClassesAndStructures_Destructors:
 
