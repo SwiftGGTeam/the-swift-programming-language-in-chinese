@@ -436,7 +436,7 @@ this is equivalent to ``Double(5) + Double(3.1)``.
 
 .. Note: The grammar for "literal-expression" is in "Expressions".
 
-Integer Literals
+Numeric Literals
 ~~~~~~~~~~~~~~~~
 
 Integer literals are made up of a series of digits,
@@ -522,9 +522,6 @@ as well as ``A`` through ``F`` in upper or lower case.
 .. Alternate approach -- formally describe a grammar that treats underscore as a digit,
    and just let the prose restrict the places where it can appear.
 
-Floating-Point Literals
-~~~~~~~~~~~~~~~~~~~~~~~
-
 Floating-point literals are made up three parts:
 an integer, a fraction, and an exponent.
 
@@ -571,8 +568,8 @@ is separated by a ``p`` or a ``P``.
    sign --> ``+`` | ``-``
 
 
-Character Literals
-~~~~~~~~~~~~~~~~~~
+Textual Literals
+~~~~~~~~~~~~~~~~~
 
 A character literal is a Unicode grapheme cluster surrounded by single quotes,
 with the following general form:
@@ -629,9 +626,6 @@ The digits in these escape codes identify a Unicode codepoint.
     escaped-character --> ``\u`` hexadecimal-digit hexadecimal-digit hexadecimal-digit hexadecimal-digit
     escaped-character --> ``\U`` hexadecimal-digit hexadecimal-digit hexadecimal-digit hexadecimal-digit hexadecimal-digit hexadecimal-digit hexadecimal-digit hexadecimal-digit
 
-
-String Literals
-~~~~~~~~~~~~~~~
 
 A string literal is a sequence of characters surrounded by double quotes,
 with the following general form:
