@@ -677,6 +677,10 @@ Module Scope
 
     top-level ::= brace-item*
 
+.. syntax-grammar::
+
+   top-level --> statements
+
 
 Code Blocks
 -----------
