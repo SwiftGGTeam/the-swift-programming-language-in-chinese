@@ -667,6 +667,8 @@ For example, all the following have the same value: ::
 Module Scope
 ------------
 
+.. TODO
+
 .. TODO: Better to describe this part of the grammar in prose.
 
 	Also, the LangRef has the heading 'Module-Scope Declarations',
@@ -684,6 +686,8 @@ Module Scope
 
 Code Blocks
 -----------
+
+.. TODO
 
 .. syntax-outline::
 
