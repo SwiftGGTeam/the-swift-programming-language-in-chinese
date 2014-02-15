@@ -176,7 +176,7 @@ Literal Expressions
 
     Grammar of a literal expression
 
-    literal-expression --> integer-literal | floating-point-literal | character-literal | string-literal
+    literal-expression --> integer-literal | floating-point-literal | textual-literal
     literal-expression --> ``__FILE__`` | ``__LINE__`` | ``__COLUMN__``
 
 

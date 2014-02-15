@@ -605,28 +605,6 @@ Characters can also be escaped by ``\x`` followed by two hexadecimal digits,
 or ``\U`` followed by eight hexadecimal digits.
 The digits in these escape codes identify a Unicode codepoint.
 
-.. langref-grammar
-
-    character_literal ::= '[^'\\\n\r]|character_escape'
-    character_escape  ::= [\]0 [\][\] | [\]t | [\]n | [\]r | [\]" | [\]'
-    character_escape  ::= [\]x hex hex
-    character_escape  ::= [\]u hex hex hex hex
-    character_escape  ::= [\]U hex hex hex hex hex hex hex hex
-
-.. syntax-grammar::
-
-    Grammar of character literals
-
-    character-literal --> ``'`` quoted-character ``'``
-    quoted-character --> escaped-character
-    quoted-character --> Any Unicode grapheme cluster except ``'`` ``\`` U+000A U+000D
-
-    escaped-character --> ``\0`` | ``\\`` | ``\t`` | ``\n`` | ``\r`` | ``\"`` | ``\'``
-    escaped-character --> ``\x`` hexadecimal-digit hexadecimal-digit
-    escaped-character --> ``\u`` hexadecimal-digit hexadecimal-digit hexadecimal-digit hexadecimal-digit
-    escaped-character --> ``\U`` hexadecimal-digit hexadecimal-digit hexadecimal-digit hexadecimal-digit hexadecimal-digit hexadecimal-digit hexadecimal-digit hexadecimal-digit
-
-
 A string literal is a sequence of characters surrounded by double quotes,
 with the following general form:
 
@@ -664,6 +642,12 @@ a carriage return, or a line feed.
 
 .. langref-grammar
 
+    character_literal ::= '[^'\\\n\r]|character_escape'
+    character_escape  ::= [\]0 [\][\] | [\]t | [\]n | [\]r | [\]" | [\]'
+    character_escape  ::= [\]x hex hex
+    character_escape  ::= [\]u hex hex hex hex
+    character_escape  ::= [\]U hex hex hex hex hex hex hex hex
+
     string_literal   ::= ["]([^"\\\n\r]|character_escape|escape_expr)*["]
     escape_expr      ::= [\]escape_expr_body
     escape_expr_body ::= [(]escape_expr_body[)]
@@ -671,14 +655,24 @@ a carriage return, or a line feed.
 
 .. syntax-grammar::
 
-    Grammar of string literals
+    Grammar of textual literals
+
+    textual-literal --> character-literal | string-literal
+
+    character-literal --> ``'`` quoted-character ``'``
+    quoted-character --> escaped-character
+    quoted-character --> Any Unicode grapheme cluster except ``'`` ``\`` U+000A U+000D
 
     string-literal --> ``"`` quoted-text ``"``
-
     quoted-text --> quoted-text-item quoted-text-OPT
     quoted-text-item --> escaped-character
     quoted-text-item --> ``\(`` expression ``)``
     quoted-text-item --> Any text
+
+    escaped-character --> ``\0`` | ``\\`` | ``\t`` | ``\n`` | ``\r`` | ``\"`` | ``\'``
+    escaped-character --> ``\x`` hexadecimal-digit hexadecimal-digit
+    escaped-character --> ``\u`` hexadecimal-digit hexadecimal-digit hexadecimal-digit hexadecimal-digit
+    escaped-character --> ``\U`` hexadecimal-digit hexadecimal-digit hexadecimal-digit hexadecimal-digit hexadecimal-digit hexadecimal-digit hexadecimal-digit hexadecimal-digit
 
 .. Quoted text resolves to a sequence of escaped characters by way of
    the quoted-texts rule which allows repetition; no need to allow
