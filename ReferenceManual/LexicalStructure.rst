@@ -439,11 +439,30 @@ this is equivalent to ``Double(5) + Double(3.1)``.
 Numeric Literals
 ~~~~~~~~~~~~~~~~
 
-Integer literals are made up of a series of digits,
-with optional underscores (``_``) between digits.
-The underscores are for readability and are ignored.
+Numeric literals are made up three parts:
+an integer, a fraction, and an exponent.
 
-By default, integer literals are expressed in decimal;
+.. syntax-outline::
+
+   <#integer#>.<#fraction#>e<#exponent#>
+
+All three parts are made up of a series of digits.
+Underscores (``_``) for readability between digits
+are allowed but ignored.
+The fraction is separated by a dot (``.``).
+The exponent is separated by ``e`` or ``E`` for decimal literals
+and by ``p`` or ``P`` for hexadecimal literals,
+followed by an optional sign (``+`` or ``-``).
+
+.. TR: The prose assumes underscores only belong between digits.
+   Is there a reason to allow them at the end of a literal?
+   Java and Ruby both require underscores to be between digits.
+   Also, are adjacent underscores meant to be allowed, like 5__000?
+   (REPL supports them as of swift-1.21 but it seems odd.)
+   Formal grammar treats underscore as a digit for simplicity,
+   leaving the prose to restrict where it can actually appear.
+
+By default, numeric literals are expressed in decimal;
 you can specify an alternate base using a prefix.
 Binary literals begin with ``0b``,
 octal literals begin with ``0x``,
@@ -455,38 +474,22 @@ octal literals contain ``0`` through ``7``,
 and hexadecimal literals contain ``0`` through ``9``
 as well as ``A`` through ``F`` in upper or lower case.
 
+There are several valid forms:
+
+* Binary, octal, or hexadecimal literal with no fraction or exponent
+* Decimal literal with an optional fraction and optional exponent
+* Hexadecimal literal with an optional a fraction and a required exponent
+
+If a fraction or exponent is specified,
+the literal's type is ``Double``;
+otherwise it is ``Int``.
+
 .. NOTE Negative integer literals are expressed using the unary minus operator.
    There's no leading - on an integer literal.
 
-.. TR: The prose assumes underscores only belong between digits.
-   Is there a reason to allow them at the end of a literal?
-   Java and Ruby both require underscores to be between digits.
-   Also, are adjacent underscores meant to be allowed, like 5__000?
-   (REPL supports them as of swift-1.21 but it seems odd.)
-   Formal grammar treats underscore as a digit for simplicity,
-   leaving the prose to restrict where it can actually appear.
-
-Floating-point literals are made up three parts:
-an integer, a fraction, and an exponent.
-
-.. syntax-outline::
-
-   <#integer#>.<#fraction#>e<#exponent#>
-
-All three parts are made up of a series of digits ``0`` through ``9``,
-with optional underscores (``_``) between digits.
-The underscores are for readability and are ignored.
-The fraction is separated by a decimal point (``.``).
-The exponent is separated by ``e`` or ``E``
-followed by an optional sign (``+`` or ``-``).
-Either the fraction or the exponent may be omitted;
-if both are omitted,
-it becomes an integer literal instead.
-
-By default, floating-point literals are expressed in decimal;
-you can specify a hexadecimal literal using the ``0x`` prefix.
-The exponent of a hexadecimal literal
-is separated by a ``p`` or a ``P``.
+.. TR: Why are these rules so complex?
+   Why not allow all combinations --
+   optional fraction and optional exponent in any base?
 
 .. langref-grammar
 
@@ -518,7 +521,7 @@ is separated by a ``p`` or a ``P``.
     hexadecimal-integer-literal --> ``0x`` hexadecimal-digits
 
     floating-point-literal --> decimal-digits floating-point-decimal-fraction-OPT floating-point-decimal-exponent-OPT
-    floating-point-literal --> ``0x`` hexadecimal-digits floating-point-hexadecimal-fraction-OPT floating-point-hexadecimal-exponent-OPT
+    floating-point-literal --> ``0x`` hexadecimal-digits floating-point-hexadecimal-fraction-OPT floating-point-hexadecimal-exponent
 
     floating-point-decimal-fraction --> ``.`` decimal-digits
     floating-point-decimal-exponent --> floating-point-e sign-OPT decimal-digits
@@ -598,7 +601,7 @@ The digits in these escape codes identify a Unicode codepoint.
 
 The value of an expression can be inserted into a string literal
 by placing the expression in parentheses after a backslash (\).
-This expression must not contain
+The interpolated expression must not contain
 an unescaped double quote ("),
 an unescaped backslash (\),
 a carriage return, or a line feed.
@@ -651,6 +654,8 @@ For example, all the following have the same value: ::
     escaped-character --> ``\x`` hexadecimal-digit hexadecimal-digit
     escaped-character --> ``\u`` hexadecimal-digit hexadecimal-digit hexadecimal-digit hexadecimal-digit
     escaped-character --> ``\U`` hexadecimal-digit hexadecimal-digit hexadecimal-digit hexadecimal-digit hexadecimal-digit hexadecimal-digit hexadecimal-digit hexadecimal-digit
+
+.. TODO: Brian doesn't like the use of "except" above.
 
 .. Quoted text resolves to a sequence of escaped characters by way of
    the quoted-texts rule which allows repetition; no need to allow
