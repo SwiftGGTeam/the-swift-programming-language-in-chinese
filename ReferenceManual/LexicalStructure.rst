@@ -571,7 +571,7 @@ is separated by a ``p`` or a ``P``.
 Textual Literals
 ~~~~~~~~~~~~~~~~~
 
-A character literal is a Unicode grapheme cluster surrounded by single quotes,
+A character literal is a single character surrounded by single quotes,
 with the following general form:
 
 .. syntax-outline::
@@ -579,7 +579,7 @@ with the following general form:
     '<#character#>'
 
 Character literals cannot contain
-an unescaped double quote (``'``),
+an unescaped single quote (``'``),
 an unescaped backslash (``\``),
 a carriage return, or a line feed.
 These characters and other special characters
@@ -640,8 +640,6 @@ an unescaped backslash (``\``),
 a carriage return, or a line feed.
 String literals support the same escapes as character literals.
 
-.. TODO Link?  Or maybe fold shared char/string and int/float info up a level?
-
 The value of an expression can be inserted into a string
 by placing the expression in parentheses after a backslash (\).
 This expression must not contain
@@ -651,6 +649,8 @@ a carriage return, or a line feed.
 
 .. TR: How is the expression stringified?
    Is there a protocol we can say it must conform to?
+   Either that, or there needs to be a constructor
+   on String that accepts its type.
 
 .. The following all have the same value:
 
@@ -660,6 +660,7 @@ a carriage return, or a line feed.
    var x = 3; "1 2 \(x)"
 
 .. TR: Any context where string literals become implicitly null-terminated?
+   That is, is their type always String or could it be char* or NSString?
 
 .. langref-grammar
 
@@ -685,9 +686,6 @@ a carriage return, or a line feed.
 
 .. TR: Paren balancing is required by the grammar of *expression* already, so I
    omitted it in the rule above.
-
-.. TODO: Based on the above, it looks like the schema for grammar productions
-   needs to let prose contain references to literals and syntactic categories.
 
 Module Scope
 ------------
