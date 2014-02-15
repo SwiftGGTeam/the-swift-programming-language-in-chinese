@@ -1747,6 +1747,8 @@ and returns the result.
    You don't seem to need to declare conformance to these protocols
    in order to implement the operator functions, however.
    Is that correct? Can you get != for free after implementing == , for example?
+   UPDATE: going by rdar://14011860, we don't currently have a way for a protocol
+   like Equatable to provide a default implementation of != if you implement ==
 
 .. QUESTION: Should I mention @transparent in the Operator Functions section?
    All of the stdlib operators (e.g. for fixed- and floating-point numbers)
