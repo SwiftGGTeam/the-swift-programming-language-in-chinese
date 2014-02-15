@@ -458,69 +458,13 @@ as well as ``A`` through ``F`` in upper or lower case.
 .. NOTE Negative integer literals are expressed using the unary minus operator.
    There's no leading - on an integer literal.
 
-.. langref-grammar
-
-    integer_literal ::= [0-9][0-9_]*
-    integer_literal ::= 0x[0-9a-fA-F][0-9a-fA-F_]*
-    integer_literal ::= 0o[0-7][0-7_]*
-    integer_literal ::= 0b[01][01_]*
-
-.. syntax-grammar::
-
-    Grammar of integer literals
-
-    integer-literal --> binary-integer-literal
-    integer-literal --> octal-integer-literal
-    integer-literal --> decimal-integer-literal
-    integer-literal --> hexedecimal-integer-literal
-
-    binary-integer-literal --> ``0b`` binary-digits
-    octal-integer-literal --> ``0o`` octal-digits
-    decimal-integer-literal --> decimal-digits
-    hexadecimal-integer-literal --> ``0x`` hexadecimal-digits
-
-    binary-digits --> binary-digit binary-digit-tail-OPT
-    octal-digits --> octal-digit octal-digit-tail-OPT
-    decimal-digits --> decimal-digit decimal-digit-tail-OPT
-    hexadecimal-digits --> hexadecimal-digit hexadecimal-digit-tail-OPT
-
-    binary-digit --> Digit 0 or 1
-    octal-digit --> Digit 0 through 7
-    decimal-digit --> Digit 0 through 9
-    hexadecimal-digit --> Digit 0 through 9, a through f, or A through F
-
-    binary-digit-tail --> binary-digit binary-digit-tail-OPT | ``_`` binary-digit-tail-OPT
-    octal-digit-tail --> octal-digit octal-digit-tail-OPT | ``_`` octal-digit-tail-OPT
-    decimal-digit-tail --> decimal-digit decimal-digit-tail-OPT | ``_`` decimal-digit-tail-OPT
-    hexadecimal-digit-tail --> hexadecimal-digit hexadecimal-digit-tail-OPT | ``_`` hexadecimal-digit-tail-OPT
-
-    binary-digit-tail --> ``_``-OPT binary-digit binary-digit-tail-OPT
-    octal-digit-tail --> ``_``-OPT octal-digit octal-digit-tail-OPT
-    decimal-digit-tail --> ``_``-OPT decimal-digit decimal-digit-tail-OPT
-    hexadecimal-digit-tail --> ``_``-OPT hexadecimal-digit hexadecimal-digit-tail-OPT
-
-    binary-digits --> binary-digit binary-digits-OPT
-    octal-digits --> octal-digit octal-digits-OPT
-    decimal-digits --> decimal-digit decimal-digits-OPT
-    hexadecimal-digits --> hexadecimal-digit hexadecimal-digits-OPT
-
-    binary-digit --> Digit 0 or 1, or underscore
-    octal-digit --> Digit 0 through 7, or underscore
-    decimal-digit --> Digit 0 through 9, or underscore
-    hexadecimal-digit --> Digit 0 through 9, a through f, A through F, or underscore
-
-.. TODO: Brian suggests describing this grammar in prose only.
-   This syntactic category is used elsewhere though.
-
-.. TODO Pick one of the above ways of describing digits.
-
-.. TR: The prose and grammar above assume underscores go between digits.
+.. TR: The prose assumes underscores only belong between digits.
    Is there a reason to allow them at the end of a literal?
    Java and Ruby both require underscores to be between digits.
-   Also, are adjacent underscores allowed?
-
-.. Alternate approach -- formally describe a grammar that treats underscore as a digit,
-   and just let the prose restrict the places where it can appear.
+   Also, are adjacent underscores meant to be allowed, like 5__000?
+   (REPL supports them as of swift-1.21 but it seems odd.)
+   Formal grammar treats underscore as a digit for simplicity,
+   leaving the prose to restrict where it can actually appear.
 
 Floating-point literals are made up three parts:
 an integer, a fraction, and an exponent.
@@ -535,7 +479,9 @@ The underscores are for readability and are ignored.
 The fraction is separated by a decimal point (``.``).
 The exponent is separated by ``e`` or ``E``
 followed by an optional sign (``+`` or ``-``).
-Either the fraction or the exponent may be omitted.
+Either the fraction or the exponent may be omitted;
+if both are omitted,
+it becomes an integer literal instead.
 
 By default, floating-point literals are expressed in decimal;
 you can specify a hexadecimal literal using the ``0x`` prefix.
@@ -543,6 +489,11 @@ The exponent of a hexadecimal literal
 is separated by a ``p`` or a ``P``.
 
 .. langref-grammar
+
+    integer_literal ::= [0-9][0-9_]*
+    integer_literal ::= 0x[0-9a-fA-F][0-9a-fA-F_]*
+    integer_literal ::= 0o[0-7][0-7_]*
+    integer_literal ::= 0b[01][01_]*
 
     floating_literal ::= [0-9][0-9_]*\.[0-9][0-9_]*
     floating_literal ::= [0-9][0-9_]*\.[0-9][0-9_]*[eE][+-]?[0-9][0-9_]*
@@ -552,20 +503,42 @@ is separated by a ``p`` or a ``P``.
 
 .. syntax-grammar::
 
-   Grammar of floating-point literals
+    Grammar of numeric literals
 
-   floating-point-literal --> decimal-digits floating-point-decimal-fraction-OPT floating-point-decimal-exponent-OPT
-   floating-point-literal --> ``0x`` hexadecimal-digits floating-point-hexadecimal-fraction-OPT floating-point-hexadecimal-exponent-OPT
+    numeric-literal --> integer-literal | floating-point-literal
 
-   floating-point-decimal-fraction --> ``.`` decimal-digits
-   floating-point-decimal-exponent --> floating-point-e sign-OPT decimal-digits
+    integer-literal --> binary-integer-literal
+    integer-literal --> octal-integer-literal
+    integer-literal --> decimal-integer-literal
+    integer-literal --> hexedecimal-integer-literal
 
-   floating-point-hexadecimal-fraction --> ``.`` hexadecimal-digits-OPT
-   floating-point-hexadecimal-exponent --> floating-point-p sign-OPT hexadecimal-digits
+    binary-integer-literal --> ``0b`` binary-digits
+    octal-integer-literal --> ``0o`` octal-digits
+    decimal-integer-literal --> decimal-digits
+    hexadecimal-integer-literal --> ``0x`` hexadecimal-digits
 
-   floating-point-e --> ``e`` | ``E``
-   floating-point-p --> ``p`` | ``P``
-   sign --> ``+`` | ``-``
+    floating-point-literal --> decimal-digits floating-point-decimal-fraction-OPT floating-point-decimal-exponent-OPT
+    floating-point-literal --> ``0x`` hexadecimal-digits floating-point-hexadecimal-fraction-OPT floating-point-hexadecimal-exponent-OPT
+
+    floating-point-decimal-fraction --> ``.`` decimal-digits
+    floating-point-decimal-exponent --> floating-point-e sign-OPT decimal-digits
+
+    floating-point-hexadecimal-fraction --> ``.`` hexadecimal-digits-OPT
+    floating-point-hexadecimal-exponent --> floating-point-p sign-OPT hexadecimal-digits
+
+    binary-digits --> binary-digit binary-digits-OPT
+    octal-digits --> octal-digit octal-digits-OPT
+    decimal-digits --> decimal-digit decimal-digits-OPT
+    hexadecimal-digits --> hexadecimal-digit hexadecimal-digits-OPT
+
+    binary-digit --> Digit 0 or 1, or underscore
+    octal-digit --> Digit 0 through 7, or underscore
+    decimal-digit --> Digit 0 through 9, or underscore
+    hexadecimal-digit --> Digit 0 through 9, a through f, A through F, or underscore
+
+    floating-point-e --> ``e`` | ``E``
+    floating-point-p --> ``p`` | ``P``
+    sign --> ``+`` | ``-``
 
 
 Textual Literals
