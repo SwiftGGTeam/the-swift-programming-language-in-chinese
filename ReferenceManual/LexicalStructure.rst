@@ -571,6 +571,11 @@ is separated by a ``p`` or a ``P``.
 Textual Literals
 ~~~~~~~~~~~~~~~~~
 
+.. TODO: Or "Text Literals"?
+
+There are two kinds of textual literals:
+single character literals and string literals.
+
 A character literal is a single character surrounded by single quotes,
 with the following general form:
 
@@ -582,9 +587,22 @@ Character literals cannot contain
 an unescaped single quote (``'``),
 an unescaped backslash (``\``),
 a carriage return, or a line feed.
-These characters and other special characters
-can be included using *escape sequences*.
-The following escape sequences are supported:
+
+A string literal is a sequence of characters surrounded by double quotes,
+with the following general form:
+
+.. syntax-outline::
+
+    "<#text#>"
+
+String literals cannot contain
+an unescaped double quote (``"``),
+an unescaped backslash (``\``),
+a carriage return, or a line feed.
+
+Special characters
+can be included in character and string literals
+using the following escape sequences:
 
 * Null Character (``\0``)
 * Backslash (``\\``)
@@ -605,20 +623,7 @@ Characters can also be escaped by ``\x`` followed by two hexadecimal digits,
 or ``\U`` followed by eight hexadecimal digits.
 The digits in these escape codes identify a Unicode codepoint.
 
-A string literal is a sequence of characters surrounded by double quotes,
-with the following general form:
-
-.. syntax-outline::
-
-    "<#text#>"
-
-String literals cannot contain
-an unescaped double quote (``"``),
-an unescaped backslash (``\``),
-a carriage return, or a line feed.
-String literals support the same escapes as character literals.
-
-The value of an expression can be inserted into a string
+The value of an expression can be inserted into a string literal
 by placing the expression in parentheses after a backslash (\).
 This expression must not contain
 an unescaped double quote ("),
@@ -630,7 +635,7 @@ a carriage return, or a line feed.
    Either that, or there needs to be a constructor
    on String that accepts its type.
 
-.. The following all have the same value:
+For example, all the following have the same value: ::
 
    "1 2 3"
    "1 2 \(3)"
