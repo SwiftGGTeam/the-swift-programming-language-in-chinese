@@ -158,13 +158,9 @@ and attempting to do so will result in an error:
     (swift) val languageName = "Swift"
     // languageName : String = "Swift"
     (swift) languageName = "Swift++"
-    !!! <REPL Input>:1:14: error: cannot assign to 'let' value 'languageName'
+    !!! <REPL Input>:1:14: error: cannot assign to 'val' value 'languageName'
     !!! languageName = "Swift++"
     !!! ~~~~~~~~~~~~ ^
-
-.. TODO: this REPL error message says 'let' rather than 'val'.
-   The example above should be modified when it changes,
-   or a Radar should be filed about the error if it doesn't change.
 
 .. _BasicTypes_Integers:
 
