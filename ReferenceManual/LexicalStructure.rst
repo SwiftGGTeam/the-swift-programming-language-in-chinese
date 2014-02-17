@@ -420,19 +420,23 @@ They may also be used as identifiers.
 Literals
 --------
 
-The type of a literal is determined by how it is used.
-Any type constructor whose argument matches the literal's default type
-can be used implicitly to convert the literal to the needed type.
-For example, an integer literal is converted to a floating-point type
-in the expression ``5 + 3.1``;
-this is equivalent to ``Double(5) + Double(3.1)``.
+.. TODO: intro text
 
-.. Something like this...
-    Integer - Int
-    Floating-point - Double
-    Character - Char
-    String - String
-    Dictionary, Array, ... ?
+.. TR: Is the design here that integers can be turned into doubles,
+   but everything else has to use an explicit constructor
+   if the literal's type doesn't match the variable's type?
+
+   class Example { init(x : Int) {} }
+   var a = Example(10)   // works
+   var b : Example = 10  // fails
+
+   var x = Double(10)    // works
+   var y : Double = 10   // works
+
+   var s1 = String('x')  // works
+   var s2 : String = 'x' // fails
+   var s3 = "x"          // works
+   s1 == s3              -> true
 
 .. Note: The grammar for "literal-expression" is in "Expressions".
 
@@ -617,6 +621,11 @@ For example, all the following have the same value: ::
    "1 2 \(3)"
    "1 2 \(1 + 2)"
    var x = 3; "1 2 \(x)"
+
+Character literals are of type of ``UnicodeScalar``.
+String literals are of type ``String``.
+
+.. TR: Is UnicodeScalar the final name for that type?
 
 .. TR: Any context where string literals become implicitly null-terminated?
    That is, is their type always String or could it be char* or NSString?
