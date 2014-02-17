@@ -252,7 +252,7 @@ it must have whitespace before and after it.
     Grammar of operators
 
     operator --> operator-character operator-OPT
-    operator --> `..`
+    operator --> ``..``
     operator-character --> ``@`` | ``/`` | ``=`` | ``-`` | ``+`` 
     operator-character --> ``*`` | ``%`` | ``<`` | ``>`` | ``!`` 
     operator-character --> ``&`` | ``|`` | ``^`` | ``~``
