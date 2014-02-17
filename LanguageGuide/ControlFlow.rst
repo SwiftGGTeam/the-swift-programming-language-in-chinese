@@ -158,7 +158,7 @@ However, this syntax can be used to iterate *any* collection,
 as long as it conforms to the ``Sequence`` protocol.
 This can include your own classes and collection types.
 Protocols, including ``Sequence``,
-are described in detail in :doc:`ProtocolsAndExtensions`.
+are described in detail in :doc:`Protocols`.
 
 .. QUESTION: are there any plans for enums to conform to Sequence?
    If so, they might make for a good example.

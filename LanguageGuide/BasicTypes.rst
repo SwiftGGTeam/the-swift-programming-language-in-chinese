@@ -411,7 +411,7 @@ You can't just pass in *any* type here, however –
 it has to be a type for which ``UInt16`` provides an initializer.
 Extending existing types to provide initializers that accept new types
 (including your own type definitions)
-is covered in :doc:`ProtocolsAndExtensions`.
+is covered in :doc:`Extensions`.
 
 .. TODO: add a note that this is not traditional type-casting,
    and perhaps include a forward reference to the objects chapter.
