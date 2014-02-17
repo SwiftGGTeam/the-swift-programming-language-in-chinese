@@ -382,7 +382,6 @@ The following keywords are reserved and may not be used as identifiers.
 ``then``
 ``while``
 
-
 In addition,
 the following keywords are used in particular contexts.
 They may also be used as identifiers.
@@ -444,8 +443,9 @@ Literals
 Numeric Literals
 ~~~~~~~~~~~~~~~~
 
-Numeric literals are made up three parts:
-an integer, a fraction, and an exponent.
+Numeric literals are made up of
+an integer, a fraction, and an exponent,
+with the folowing form:
 
 .. syntax-outline::
 
