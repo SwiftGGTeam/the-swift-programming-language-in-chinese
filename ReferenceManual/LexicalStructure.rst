@@ -557,7 +557,7 @@ There are two kinds of textual literals:
 single character literals and string literals.
 
 A character literal is a single character surrounded by single quotes,
-with the following general form:
+with the folowing form:
 
 .. syntax-outline::
 
@@ -569,7 +569,7 @@ an unescaped backslash (``\``),
 a carriage return, or a line feed.
 
 A string literal is a sequence of characters surrounded by double quotes,
-with the following general form:
+with the folowing form:
 
 .. syntax-outline::
 
