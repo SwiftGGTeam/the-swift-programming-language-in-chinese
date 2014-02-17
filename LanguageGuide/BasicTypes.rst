@@ -636,7 +636,7 @@ or it might contain *no value at all*.
 (It can't contain anything else, such as a ``Bool`` or a ``String`` –
 it's either an ``Int``, or it's nothing at all.)
 
-You can use an ``if else`` statement to find out whether or not an optional contains a value.
+You can use an ``if``-``else`` statement to find out whether or not an optional contains a value.
 If an optional does have a value, it equates to ``true``;
 if it has no value at all, it equates to ``false``.
 
@@ -654,6 +654,13 @@ The exclamation mark effectively says
         println("The string could not be converted into an integer")
     }
     >>> 123
+
+``if``-``else`` statements are described in more detail in :doc:`ControlFlow`.
+
+.. note::
+
+    Trying to use ``!`` to access a non-existent optional value will trigger
+    an unrecoverable runtime error.
 
 .. TODO: Add a section about arrays and dictionaries once their design is more tied down.
 
