@@ -697,13 +697,19 @@ Module Scope
 Code Blocks
 -----------
 
-.. TODO
+A code block is used by a variety of control structures
+to group statements together.
+It has the following form:
 
 .. syntax-outline::
 
     {
         <#statements#>
     }
+
+The statements inside a code block are executed in order.
+
+.. TODO: Discuss scope.  I assume a code block creates a new scope?
 
 .. langref-grammar
 
