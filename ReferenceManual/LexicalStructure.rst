@@ -19,9 +19,10 @@ carriage return (U+000D),
 and space (U+0020).
 
 Comments are treated as whitespace by the compiler.
-Single line comments continue until the end of the line.
-Multiline comments support nesting,
-but the ``/*`` and ``*/`` comment markers must be balanced.
+Single line comments begin with `//`
+and continue until the end of the line.
+Multiline comments begin with ``/*`` and end with ``*/``.
+Nesting is allowed, but the comment markers must be balanced.
 
 .. TODO: Make sure we have an example of nested comments in the guide.
 
