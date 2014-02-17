@@ -445,7 +445,7 @@ Numeric Literals
 
 Numeric literals are made up of
 an integer, a fraction, and an exponent,
-with the folowing form:
+with the following form:
 
 .. syntax-outline::
 
@@ -558,7 +558,7 @@ There are two kinds of textual literals:
 single character literals and string literals.
 
 A character literal is a single character surrounded by single quotes,
-with the folowing form:
+with the following form:
 
 .. syntax-outline::
 
@@ -570,7 +570,7 @@ an unescaped backslash (``\``),
 a carriage return, or a line feed.
 
 A string literal is a sequence of characters surrounded by double quotes,
-with the folowing form:
+with the following form:
 
 .. syntax-outline::
 
