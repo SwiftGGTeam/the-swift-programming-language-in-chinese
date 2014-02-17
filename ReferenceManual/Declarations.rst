@@ -15,7 +15,7 @@ Declarations
     decl ::= decl-struct
     decl ::= decl-typealias
     decl ::= decl-var
-    decl ::= decl-let
+    decl ::= decl-val
     decl ::= decl-subscript
 
 .. syntax-grammar::
@@ -24,7 +24,7 @@ Declarations
 
     declaration --> import-declaration
     declaration --> variable-declaration
-    declaration --> let-declaration
+    declaration --> value-declaration
     declaration --> typealias-declaration
     declaration --> function-declaration
     declaration --> enum-declaration
@@ -136,23 +136,23 @@ Variable Declarations
     (those that declare variable with computed values).
 
 
-Let Declaration
----------------
+Value Declaration
+-----------------
 
 .. syntax-outline::
 
-    let <#variable name#> : <#type#> = <#expression#>
+    val <#variable name#> : <#type#> = <#expression#>
 
 .. langref-grammar
 
-    decl-let    ::= attribute-list 'let' pattern initializer?  (',' pattern initializer?)*
+    decl-let    ::= attribute-list 'val' pattern initializer?  (',' pattern initializer?)*
     initializer ::= '=' expr
 
 .. syntax-grammar::
 
-    Grammar of a let declaration
+    Grammar of a value declaration
 
-    let-declaration --> attribute-sequence-OPT ``let`` pattern-initializer-list
+    value-declaration --> attribute-sequence-OPT ``val`` pattern-initializer-list
 
 
 Typealias Declarations

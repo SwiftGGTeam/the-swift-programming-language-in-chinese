@@ -392,10 +392,10 @@ matches one of the patterns of the case and the guard expression evaluates to ``
 For instance, a *control expression* matches the case in the example below
 only if it is a tuple that contains two elements of the same value, such as ``(1, 1)``. ::
 
-    case let (x, y) where x == y:
+    case val (x, y) where x == y:
 
 As the above example shows, patterns in a case may also bind constants
-using the keyword ``let`` (they may also bind variables using the keyword ``var``).
+using the keyword ``val`` (they may also bind variables using the keyword ``var``).
 These constants (or variables) can then be referenced in a corresponding guard expression
 and throughout the rest of the code within the scope of the case.
 That said, if the case contains multiple patterns that match the control expression,
