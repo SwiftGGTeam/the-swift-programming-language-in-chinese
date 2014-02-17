@@ -6,7 +6,7 @@
     * Relational and equality operators ✔︎
     * Short-circuit nature of the logical operators && and || ✔︎
     * Expressions (kind of ✔︎)
-    * The ternary operator ✔︎
+    * The ternary conditional operator ✔︎
     * range operators ✔︎
     * The comma operator
 
@@ -15,7 +15,7 @@ Operators
 
 An :newTerm:`operator` is a special symbol or phrase that is used to check or change values.
 A simple example is the addition operator, ``+``,
-which is used to add two numbers together (as in ``let i = 1 + 2``).
+which is used to add two numbers together (as in ``val i = 1 + 2``).
 More complex examples include the logical AND operator ``&&``
 (as in ``if enteredDoorCode && passedRetinaScan``),
 or the increment operator ``++i``,
@@ -26,8 +26,7 @@ Swift supports all of the standard operators from C,
 and improves several of their capabilities:
 
 * Assignment ``=`` does not return a value, to avoid common coding errors
-* Remainder ``%``, increment ``++`` and decrement ``--`` calculations
-  can be performed on floating-point numbers
+* Remainder ``%`` calculations can be performed on floating-point numbers
 
 It also introduces new operators not found in other languages:
 
@@ -48,7 +47,7 @@ Operators are often referred to as :newTerm:`unary`, :newTerm:`binary` or :newTe
   and are said to be :newTerm:`infix` because they appear inbetween their two targets.
 * Ternary operators operate on three targets.
   Like C, Swift has just one ternary operator,
-  known as the ternary comparison operator (``a ? b : c``).
+  known as the ternary conditional operator (``a ? b : c``).
 
 The values that operators affect are known as :newTerm:`operands`.
 In the expression ``1 + 2``, the ``+`` symbol is a binary operator,
@@ -63,7 +62,7 @@ The :newTerm:`assignment operator` (``a = b``) updates the value of ``a`` with t
 
 .. testcode:: assignmentOperator
 
-    (swift) let b = 10
+    (swift) val b = 10
     // b : Int = 10
     (swift) var a = 5
     // a : Int = 5
@@ -76,7 +75,7 @@ its elements can be decomposed into multiple named values at once:
 
 .. testcode:: assignmentOperator
 
-    (swift) let (x, y) = (1, 2)
+    (swift) val (x, y) = (1, 2)
     // (x, y) : (Int, Int) = (1, 2)
     (swift) println("x is \(x)")
     >>> x is 1
@@ -133,11 +132,11 @@ can be added together via ``+`` to make a new ``String``:
 
 .. testcode:: arithmeticOperators
 
-    (swift) let dog = '🐶'
+    (swift) val dog = '🐶'
     // dog : UnicodeScalar = '🐶'
-    (swift) let cow = '🐮'
+    (swift) val cow = '🐮'
     // cow : UnicodeScalar = '🐮'
-    (swift) let dogCow = dog + cow
+    (swift) val dogCow = dog + cow
     // dogCow : String = "🐶🐮"
 
 .. _Operators_RemainderOperator:
@@ -224,7 +223,7 @@ Increment and Decrement Operators
 Like C, Swift provides an :newTerm:`increment operator` (``++``)
 and an :newTerm:`decrement operator` (``--``)
 as a shorthand way to increase or decrease the value of a numeric variable by ``1``.
-Unlike C, Swift's increment and decrement operators also work with floating-point numbers.
+These operators can be used with named values of any integer or floating-point type.
 
 .. testcode:: arithmeticOperators
 
@@ -250,21 +249,21 @@ while also finding out its value:
 
     (swift) var a = 0
     // a : Int = 0
-    (swift) let b = ++a
+    (swift) val b = ++a
     // b : Int = 1
     (swift) println("a is now \(a)")
     >>> a is now 1
-    (swift) let c = a++
+    (swift) val c = a++
     // c : Int = 1
     (swift) println("a is now \(a)")
     >>> a is now 2
 
 In the example above,
-``let b = ++a`` sets ``b`` to the value of ``a``,
+``val b = ++a`` sets ``b`` to the value of ``a``,
 *after* it has been incremented.
 This is why both ``a`` and ``b`` are equal to ``1``.
 
-However, ``let c = a++`` sets ``c`` to the value of ``a`` *before* it is incremented.
+However, ``val c = a++`` sets ``c`` to the value of ``a`` *before* it is incremented.
 The result is that ``c`` gets the old value of ``1``,
 but ``a`` now equals ``2``.
 
@@ -289,11 +288,11 @@ known as the :newTerm:`unary minus operator`:
 
 .. testcode:: arithmeticOperators
 
-    (swift) let three = 3
+    (swift) val three = 3
     // three : Int = 3
-    (swift) let minusThree = -three
+    (swift) val minusThree = -three
     // minusThree : Int = -3
-    (swift) let plusThree = -minusThree    // effectively "minus minus three"
+    (swift) val plusThree = -minusThree    // effectively "minus minus three"
     // plusThree : Int = 3
 
 The unary minus operator ``-`` is prepended directly before the value it operates on,
@@ -304,9 +303,9 @@ which simply returns the value it operates on, without any change:
 
 .. testcode:: arithmeticOperators
 
-    (swift) let minusSix = -6
+    (swift) val minusSix = -6
     // minusSix : Int = -6
-    (swift) let alsoMinusSix = +minusSix
+    (swift) val alsoMinusSix = +minusSix
     // alsoMinusSix : Int = -6
 
 The unary plus operator doesn't actually do anything.
@@ -379,7 +378,7 @@ such as the ``if else`` statement:
 
 .. testcode:: comparisonOperators
 
-    (swift) let name = "world";
+    (swift) val name = "world";
     // name : String = "world"
     (swift) if name == "world" {
         println("hello, world")
@@ -394,12 +393,12 @@ The ``if else`` statement is described in more detail in :doc:`ControlFlow`.
    How do they work with strings?
    How about with tuples / with your own types?
 
-.. _Operators_TernaryComparisonOperators:
+.. _Operators_TernaryConditionalOperator:
 
-Ternary Comparison Operator
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Ternary Conditional Operator
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The :newTerm:`ternary comparison operator` is a special operator with three parts,
+The :newTerm:`ternary conditional operator` is a special operator with three parts,
 which takes the form ``question ? answer1 : answer2``.
 It provides a shorthand way to evaluate one of two expressions
 based on whether ``question`` is ``true`` or ``false``.
@@ -418,24 +417,24 @@ Here's an example, which calculates the pixel height for a table row.
 The row should be 50 pixels taller than the content if it has a header,
 and 20 pixels taller if it doesn't:
 
-.. testcode:: ternaryComparisonOperatorPart1
+.. testcode:: ternaryConditionalOperatorPart1
 
-    (swift) let contentHeight = 40
+    (swift) val contentHeight = 40
     // contentHeight : Int = 40
-    (swift) let hasHeader = true
+    (swift) val hasHeader = true
     // hasHeader : Bool = true
-    (swift) let rowHeight = contentHeight + (hasHeader ? 50 : 20)
+    (swift) val rowHeight = contentHeight + (hasHeader ? 50 : 20)
     // rowHeight : Int = 90
     (swift) println("The row height is \(rowHeight) pixels.")
     >>> The row height is 90 pixels.
 
 This is shorthand for:
 
-.. testcode:: ternaryComparisonOperatorPart2
+.. testcode:: ternaryConditionalOperatorPart2
 
-    (swift) let contentHeight = 40
+    (swift) val contentHeight = 40
     // contentHeight : Int = 40
-    (swift) let hasHeader = true
+    (swift) val hasHeader = true
     // hasHeader : Bool = true
     (swift) var rowHeight = contentHeight
     // rowHeight : Int = 40
@@ -452,12 +451,12 @@ This is shorthand for:
    but in the second example, it's a variable (because it has to be).
    Is this okay?
 
-In this case, the ternary comparison operator provides
+In this case, the ternary conditional operator provides
 an efficient shorthand for deciding which of two expressions to consider.
 
-The ternary comparison operator should be used with care, however.
+The ternary conditional operator should be used with care, however.
 It is very concise, but this conciseness can lead to hard-to-read code if over-used.
-Avoid combining multiple instances of the ternary comparison operator into one compound statement.
+Avoid combining multiple instances of the ternary conditional operator into one compound statement.
 
 .. _Operators_BitwiseOperators:
 
@@ -488,9 +487,9 @@ For example:
 
 .. testcode:: bitwiseOperators
 
-    (swift) let initialBits: UInt8 = 0b00001111
+    (swift) val initialBits: UInt8 = 0b00001111
     // initialBits : UInt8 = 15
-    (swift) let invertedBits = ~initialBits  // equals 11110000
+    (swift) val invertedBits = ~initialBits  // equals 11110000
     // invertedBits : UInt8 = 240
 
 ``UInt8`` integers have eight bits,
@@ -523,11 +522,11 @@ For example:
 
 .. testcode:: bitwiseOperators
 
-    (swift) let firstSixBits: UInt8 = 0b11111100
+    (swift) val firstSixBits: UInt8 = 0b11111100
     // firstSixBits : UInt8 = 252
-    (swift) let lastSixBits: UInt8  = 0b00111111
+    (swift) val lastSixBits: UInt8  = 0b00111111
     // lastSixBits : UInt8 = 63
-    (swift) let middleFourBits = firstSixBits & lastSixBits  // equals 00111100
+    (swift) val middleFourBits = firstSixBits & lastSixBits  // equals 00111100
     // middleFourBits : UInt8 = 60
 
 The values of ``firstSixBits`` and ``lastSixBits`` both have their four middle bits equal to ``1``.
@@ -550,11 +549,11 @@ For example:
 
 .. testcode:: bitwiseOperators
 
-    (swift) let someBits: UInt8 = 0b10110010
+    (swift) val someBits: UInt8 = 0b10110010
     // someBits : UInt8 = 178
-    (swift) let moreBits: UInt8 = 0b01011110
+    (swift) val moreBits: UInt8 = 0b01011110
     // moreBits : UInt8 = 94
-    (swift) let combinedbits = someBits | moreBits  // equals 11111110
+    (swift) val combinedbits = someBits | moreBits  // equals 11111110
     // combinedbits : UInt8 = 254
 
 The values of ``someBits`` and ``moreBits`` have different bits set to ``1``.
@@ -578,11 +577,11 @@ For example:
 
 .. testcode:: bitwiseOperators
 
-    (swift) let firstBits: UInt8 = 0b00010100
+    (swift) val firstBits: UInt8 = 0b00010100
     // firstBits : UInt8 = 20
-    (swift) let otherBits: UInt8 = 0b00000101
+    (swift) val otherBits: UInt8 = 0b00000101
     // otherBits : UInt8 = 5
-    (swift) let outputBits = firstBits ^ otherBits  // equals 00010001
+    (swift) val outputBits = firstBits ^ otherBits  // equals 00010001
     // outputBits : UInt8 = 17
 
 .. TODO: Explain how this can be useful to toggle just a few bits in a bitfield.
@@ -631,7 +630,7 @@ Here's how bit-shifting looks in Swift code:
 
 .. testcode:: bitwiseShiftOperators
 
-    (swift) let shiftBits: UInt8 = 4    // 00000100 in binary
+    (swift) val shiftBits: UInt8 = 4    // 00000100 in binary
     // shiftBits : UInt8 = 4
     (swift) shiftBits << 1              // 00001000
     // r0 : UInt8 = 8
@@ -646,13 +645,13 @@ Bit-shifting can be used to encode and decode values within other data types:
 
 .. testcode:: bitwiseShiftOperators
 
-    (swift) let pink: UInt32 = 0xCC6699
+    (swift) val pink: UInt32 = 0xCC6699
     // pink : UInt32 = 13395609
-    (swift) let redComponent = (pink & 0xFF0000) >> 16
+    (swift) val redComponent = (pink & 0xFF0000) >> 16
     // redComponent : UInt32 = 204
-    (swift) let greenComponent = (pink & 0x00FF00) >> 8
+    (swift) val greenComponent = (pink & 0x00FF00) >> 8
     // greenComponent : UInt32 = 102
-    (swift) let blueComponent = pink & 0x0000FF
+    (swift) val blueComponent = pink & 0x0000FF
     // blueComponent : UInt32 = 153
 
 This example uses a ``UInt32`` constant called ``pink`` to store a
@@ -788,7 +787,7 @@ an error is thrown:
 
 .. testcode:: overflowOperatorsWillFailToOverflow
 
-    (swift) var potentialOverflow = Int16.max()
+    (swift) var potentialOverflow = Int16.max
     // potentialOverflow : Int16 = 32767
     (swift) potentialOverflow += 1                  // this will throw an error
     xxx overflow
@@ -907,9 +906,9 @@ Swift will throw an error:
 
 .. testcode:: overflowOperatorsDivZeroError
 
-    (swift) let x = 1
+    (swift) val x = 1
     // x : Int = 1
-    (swift) let y = x / 0
+    (swift) val y = x / 0
     xxx division by zero
  
 Integer division by zero is not a valid mathematical action,
@@ -941,7 +940,7 @@ It can be read as “not ``a``”, as seen in the following example:
 
 .. testcode:: logicalOperators
 
-    (swift) let allowedEntry = false
+    (swift) val allowedEntry = false
     // allowedEntry : Bool = false
     (swift) if !allowedEntry {
         println("ACCESS DENIED")
@@ -970,9 +969,9 @@ and only allows access if both values are ``true``:
 
 .. testcode:: logicalOperators
 
-    (swift) let enteredDoorCode = true
+    (swift) val enteredDoorCode = true
     // enteredDoorCode : Bool = true
-    (swift) let passedRetinaScan = false
+    (swift) val passedRetinaScan = false
     // passedRetinaScan : Bool = false
     (swift) if enteredDoorCode && passedRetinaScan {
         println("Welcome!")
@@ -1001,9 +1000,9 @@ For example:
 
 .. testcode:: logicalOperators
 
-    (swift) let hasDoorKey = false
+    (swift) val hasDoorKey = false
     // hasDoorKey : Bool = false
-    (swift) let knowsOverridePassword = true
+    (swift) val knowsOverridePassword = true
     // knowsOverridePassword : Bool = true
     (swift) if hasDoorKey || knowsOverridePassword {
         println("Welcome!")
@@ -1054,18 +1053,16 @@ the first two mini-expressions are ``false``,
 but we know the emergency override password,
 so the overall compound expression still equates to ``true``.
 
-.. _Operators_PriorityAndAssociativity:
+.. _Operators_PrecedenceAndAssociativity:
 
-Priority and Associativity
---------------------------
+Precedence and Associativity
+----------------------------
 
-.. NOTE: I've chosen to use ‘priority’ rather than ‘precedence’ here,
-   because I think it's a clearer phrase to use.
-.. QUESTION: Could priority and associativity be made clear
+.. QUESTION: Could precedence and associativity be made clear
    as part of the hypothetical ‘show invisibles’ feature,
-   to show the invisible parentheses implied by priority and associativity?
+   to show the invisible parentheses implied by precedence and associativity?
 
-It is important to consider each operator's :newTerm:`priority` and :newTerm:`associativity` when working out how to calculate a compound expression.
+It is important to consider each operator's :newTerm:`precedence` and :newTerm:`associativity` when working out how to calculate a compound expression.
 These two principles are used to work out the order in which an expression should be calculated.
 
 Here's an example.
@@ -1085,24 +1082,25 @@ Taken strictly from left to right, you might expect this to read as follows:
 However, the actual answer is ``4``, not ``0``.
 This is due to the priorities and associativity of the operators used:
 
-* Operator :newTerm:`priority` (also known as :newTerm:`precedence`) means that
-  some operators are given higher priority than others,
+* Operator :newTerm:`precedence` (also known as :newTerm:`priority`) means that
+  some operators are given more precedence than others,
   and are calculated first.
 
-* Operator :newTerm:`associativity` defines how operators of the same priority are grouped together (or :newTerm:`associated`) –
+* Operator :newTerm:`associativity` defines how operators of the same precedence
+  are grouped together (or :newTerm:`associated`) –
   either grouped from the left, or grouped from the right.
   Think of it as meaning ‘they associate with the expression to their left’,
   or ‘they associate with the expression to their right’.
 
 Here's how the actual evaluation order is calculated for the example above.
-Priority is considered first.
-Higher-priority operators are evaluated before lower-priority ones.
+Precedence is considered first.
+Higher-precedence operators are evaluated before lower-precedence ones.
 In Swift, as in C,
 the multiplication operator (``*``) and the modulo operator (``%``)
-have a higher priority than the addition operator (``+``).
+have a higher precedence than the addition operator (``+``).
 As a result, they are both evaluated before the addition is considered.
 
-However, multiplication and modulo happen to have the *same* priority as each other.
+However, multiplication and modulo happen to have the *same* precedence as each other.
 To work out the exact evaluation order to use,
 we therefore need to also look at their associativity.
 Multiplication and modulo both associate with the expression to their left.
@@ -1130,14 +1128,16 @@ starting from their left:
 
 This gives the final answer of ``4``.
 
-A complete list of Swift operator priorities and associativity rules can be found in the :doc:`../ReferenceManual/index`.
+A complete list of Swift operator precedences and associativity rules can be found in the :doc:`../ReferenceManual/index`.
+
+.. TODO: update this link to go to the specific section of the Reference Manual.
 
 .. _Operators_Explicit Parentheses:
 
 Explicit Parentheses
 ~~~~~~~~~~~~~~~~~~~~
 
-Priority and associativity define exactly one order of calculation
+Precedence and associativity define exactly one order of calculation
 when multiple operators are used.
 However, it can sometimes be useful to include parentheses anyway,
 to make the intention of a complex expression easier to read.
@@ -1176,9 +1176,9 @@ for counting up to (but not including) the length of a zero-based array:
 
 .. testcode:: rangeOperators
 
-    (swift) let names = ["Anna", "Brian", "Christine", "Daniel"]
+    (swift) val names = ["Anna", "Brian", "Christine", "Daniel"]
     // names : String[] = ["Anna", "Brian", "Christine", "Daniel"]
-    (swift) let count = names.count
+    (swift) val count = names.count
     // count : Int = 4
     (swift) for i in 0...count {
         println("Person \(i + 1) is called \(names[i])")

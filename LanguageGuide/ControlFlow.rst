@@ -71,13 +71,13 @@ If you want to check the value of ``index`` after the loop has completed,
 you must declare it in advance of its use in the loop.
 
 If you don't actually need each value from the range,
-you can ignore them using an underscore in place of a variable name:
+you can ignore the values using an underscore in place of a variable name:
 
 .. testcode::
 
-    (swift) let base = 3
+    (swift) val base = 3
     // base : Int = 3
-    (swift) let power = 10
+    (swift) val power = 10
     // power : Int = 10
     (swift) var answer = 1
     // answer : Int = 1
@@ -100,11 +100,11 @@ The underscore character ``_``
 causes the individual values to be ignored,
 and does not provide access to the current value during each iteration of the loop.
 
-A ``for``-``in`` loop can also be used to iterate over the items in an array:
+A ``for``-``in`` loop can be used to iterate over the items in an array:
 
 .. testcode::
 
-    (swift) let names = ["Alan", "Barbara", "Carol", "Doug"]
+    (swift) val names = ["Alan", "Barbara", "Carol", "Doug"]
     // names : String[] = ["Alan", "Barbara", "Carol", "Doug"]
     (swift) for name in names {
         println("Hello, \(name)!")
@@ -117,39 +117,18 @@ A ``for``-``in`` loop can also be used to iterate over the items in an array:
 Swift's ``String`` type has a ``chars`` property,
 which provides the individual characters in the string as an ``Array`` of ``UnicodeScalar`` values
 (also known as an ‘``Array`` of type ``UnicodeScalar``’).
-This can be used to iterate through the characters of a string in order.
-The following example takes a lowercase string,
-and removes all of its vowels and spaces to create a cryptic puzzle phrase for someone to try and guess:
+This can be used to iterate through the characters of a string in order:
 
 .. testcode::
 
-    (swift) let puzzleInput = "great minds think alike"
-    // puzzleInput : String = "great minds think alike"
-    (swift) var puzzleOutput = ""
-    // puzzleOutput : String = ""
-    (swift) for letter in puzzleInput.chars {
-        switch letter {
-            case 'a', 'e', 'i', 'o', 'u', ' ':
-                continue
-            default:
-                puzzleOutput += letter
-        }
+    (swift) for scalar in "Hello".chars {
+        println(scalar)
     }
-    (swift) println(puzzleOutput)
-    >>> grtmndsthnklk
-
-The ``letter`` constant is inferred to be of type ``UnicodeScalar``
-from the fact that it is iterating over a sequence of ``UnicodeScalar`` values.
-This is why the case statement compares ``letter`` against ``UnicodeScalar`` values
-(with single quote marks)
-rather than ``String`` values.
-
-The code above calls the ``continue`` keyword whenever it matches a vowel or a space.
-``continue`` is a special control flow keyword that causes the current iteration of the loop to end immediately
-and jump straight to the start of the next iteration.
-It enables the switch block to match (and ignore) just these six special characters,
-rather than having to match every character that should get printed.
-(The ``continue`` keyword is described in more detail later in this section.)
+    >>> H
+    >>> e
+    >>> l
+    >>> l
+    >>> o
 
 Iteration can also be used to access the key-value pairs in a dictionary.
 Every item in a dictionary has a ``key`` property and a ``value`` property,
@@ -157,7 +136,7 @@ which can be accessed via dot syntax:
 
 .. testcode::
 
-    (swift) let numberOfLegs = ["spider" : 8, "ant" : 6, "cat" : 4]
+    (swift) val numberOfLegs = ["spider" : 8, "ant" : 6, "cat" : 4]
     // numberOfLegs : Dictionary<String, Int> = Dictionary<String, Int>(1.33333, 3, <DictionaryBufferOwner<String, Int> instance>)
     (swift) for item in numberOfLegs {
         println("\(item.key)s have \(item.value) legs")
@@ -304,7 +283,7 @@ For example::
 
     (swift) var personName = ""
     // personName : String = ""
-    (swift) let keyboard = Keyboard()
+    (swift) val keyboard = Keyboard()
     // keyboard : Keyboard = <_TtCSs8Keyboard instance>
     (swift) println("Please enter your name, then press return.")
     >>> Please enter your name, then press return.
@@ -485,7 +464,7 @@ for brevity:
 
 .. testcode::
 
-    (swift) let numberSymbol = '三'   // Simplified Chinese symbol for the number 3
+    (swift) val numberSymbol = '三'   // Simplified Chinese symbol for the number 3
     // numberSymbol : UnicodeScalar = '三'
     (swift) var integerValue: Int? = .None
     // integerValue : Int? = <unprintable value>
@@ -554,9 +533,9 @@ to provide a natural-language count for numbers of any size:
 
 .. testcode::
 
-    (swift) let count = 3_000_000_000_000
+    (swift) val count = 3_000_000_000_000
     // count : Int = 3000000000000
-    (swift) let countedThings = "stars in the Milky Way"
+    (swift) val countedThings = "stars in the Milky Way"
     // countedThings : String = "stars in the Milky Way"
     (swift) var naturalCount = ""
     // naturalCount : String = ""
@@ -670,11 +649,11 @@ or none of the above.
             println("(\(point.0), 0) is on the x-axis")
         case (0, _):
             println("(0, \(point.1)) is on the y-axis")
-        case let (x, y) where x == y:
+        case val (x, y) where x == y:
             println("(\(x), \(y)) is on the line x == y")
-        case let (x, y) where x == -y:
+        case val (x, y) where x == -y:
             println("(\(x), \(y)) is on the line x == -y")
-        case let (x, y):
+        case val (x, y):
             println("(\(x), \(y)) is just some arbitrary point")
     }
     >>> (1, -1) is on the line x == -y
@@ -687,7 +666,7 @@ The ``case`` statement will only match the current value of ``point``
 if the ``where`` clause's condition equates to ``true`` for that value.
 
 The x-axis and y-axis checks could also have been written with a ``where`` clause.
-``case (_, 0)`` could have been written as ``case (_, let y) where y == 0``,
+``case (_, 0)`` could have been written as ``case (_, val y) where y == 0``,
 to match points on the x-axis.
 However, the original version is more concise,
 and is preferred when matching against a fixed value.
@@ -703,7 +682,7 @@ because they did not have the temporary constants to hand.)
 
 Note that this ``switch`` statement does not have a ``default`` block.
 The final ``case`` block,
-``case let (x, y)``,
+``case val (x, y)``,
 declares a tuple of two placeholder constants,
 but does *not* provide a ``where`` clause to filter them.
 As a result, it matches all possible remaining values,
@@ -728,9 +707,9 @@ For example:
 
 .. testcode::
 
-    (swift) let possibleNumber = "123"
+    (swift) val possibleNumber = "123"
     // possibleNumber : String = "123"
-    (swift) if let convertedNumber = possibleNumber.toInt() {
+    (swift) if val convertedNumber = possibleNumber.toInt() {
         println("'\(possibleNumber)' has the integer value \(convertedNumber)")
     } else {
         println("'\(possibleNumber)' could not be converted to a number")
@@ -743,7 +722,7 @@ It then prints a message to indicate if the conversion was successful.
 (``toInt()`` returns an *optional* ``Int``,
 which only contains an ``Int`` if the conversion is succesful.)
 
-``if let convertedNumber = possibleNumber.toInt()`` can be read as:
+``if val convertedNumber = possibleNumber.toInt()`` can be read as:
 
 “If the optional returned by ``possibleNumber.toInt()`` contains a value,
 set a new constant called ``convertedNumber`` to the value contained in the optional.”
@@ -802,10 +781,43 @@ and start again at the beginning of the next iteration through the loop.
 It gives a way to say “I am done with the current loop iteration”,
 without leaving the loop altogether.
 
-In a ``for`` loop with an incrementer expression,
-the incrementer will still be evaluated after calling the ``continue`` statement.
-The loop itself continues to work as normal;
-only code within the loop is skipped.
+.. note::
+
+    In a ``for``-``condition``-``increment`` loop,
+    the incrementer will still be evaluated after calling the ``continue`` statement.
+    The loop itself continues to work as normal;
+    only code within the loop's body is skipped.
+
+The following example takes a lowercase string,
+and removes all of its vowels and spaces to create a cryptic puzzle phrase for someone to try and guess:
+
+.. testcode::
+
+    (swift) val puzzleInput = "great minds think alike"
+    // puzzleInput : String = "great minds think alike"
+    (swift) var puzzleOutput = ""
+    // puzzleOutput : String = ""
+    (swift) for letter in puzzleInput.chars {
+        switch letter {
+            case 'a', 'e', 'i', 'o', 'u', ' ':
+                continue
+            default:
+                puzzleOutput += letter
+        }
+    }
+    (swift) println(puzzleOutput)
+    >>> grtmndsthnklk
+
+The ``letter`` constant is inferred to be of type ``UnicodeScalar``
+from the fact that it is iterating over a sequence of ``UnicodeScalar`` values.
+This is why the case statement compares ``letter`` against ``UnicodeScalar`` values
+(with single quote marks) rather than ``String`` values.
+
+The code above calls the ``continue`` keyword whenever it matches a vowel or a space.
+This causes the current iteration of the loop to end immediately,
+and jump straight to the start of the next iteration.
+It enables the switch block to match (and ignore) just these six special characters,
+rather than having to match every character that should get printed.
 
 .. _ControlFlow_Break:
 
@@ -827,12 +839,12 @@ to see it in action::
 
     (swift) var personName = ""
     // personName : String = ""
-    (swift) let keyboard = Keyboard()
+    (swift) val keyboard = Keyboard()
     // keyboard : Keyboard = <_TtCSs8Keyboard instance>
     (swift) println("Please enter your name, then press return.")
     >>> Please enter your name, then press return.
     (swift) while true {
-        let inputCharacter = UnicodeScalar(keyboard.read())
+        val inputCharacter = UnicodeScalar(keyboard.read())
         switch inputCharacter {
             case ' ':
                 continue
@@ -886,7 +898,7 @@ The example below uses ``fallthrough`` to create a textual description of a numb
 
 .. testcode::
 
-    (swift) let integerToDescribe = 5
+    (swift) val integerToDescribe = 5
     // integerToDescribe : Int = 5
     (swift) var description = "The number \(integerToDescribe) is"
     // description : String = "The number 5 is"

@@ -112,7 +112,7 @@ you can provide a ``default`` case to cover any members that are not addressed e
 
 .. testcode:: enums
 
-    (swift) let somePlanet = Planet.Earth
+    (swift) val somePlanet = Planet.Earth
     // somePlanet : Planet = <unprintable value>
     (swift) switch somePlanet {
         case .Earth:
@@ -293,7 +293,7 @@ The raw value of an enumeration member can be accessed using its ``toRaw`` metho
 
 .. testcode:: optionals
 
-    (swift) let atomicNumberOfCarbon = ChemicalElement.Carbon.toRaw()
+    (swift) val atomicNumberOfCarbon = ChemicalElement.Carbon.toRaw()
     // atomicNumberOfCarbon : Int = 6
 
 The reverse is also true.
@@ -343,6 +343,8 @@ Swift enumerations also support many of the features described in :doc:`ClassesA
 * :newTerm:`instance methods`, to provide utility functionality
 
 .. TODO: Should type methods and properties be added on to this list?
+.. TODO: How about subscriptability? It's allowed, but would it ever actually be useful?
+.. TODO: Likewise custom operator implementations. This could definitely be useful.
 
 The example below shows all of these capabilities in action for a complex enumeration:
 
@@ -368,7 +370,7 @@ The example below shows all of these capabilities in action for a complex enumer
                 case 2...60:
                     return "\(minutes) minutes"
                 case 60...120:
-                    let extra = minutes - 60
+                    val extra = minutes - 60
                     return "an hour and \(extra) minutes"
                 default:
                     return "more than two hours"
@@ -378,7 +380,7 @@ The example below shows all of these capabilities in action for a complex enumer
     (swift) class Train {
         var status = TrainStatus()
     }
-    (swift) let train = Train()
+    (swift) val train = Train()
     // train : Train = <Train instance>
     (swift) println("The train is \(train.status.description)")
     >>> The train is on time
@@ -467,8 +469,8 @@ Types can be nested to as many levels as are required:
             case Seven = "7", Eight = "8", Nine = "9", Ten = "10"
             case Jack = "Jack", Queen = "Queen", King = "King", Ace = "Ace"
             struct Values {
-                let firstValue: Int
-                let secondValue: Int?
+                val firstValue: Int
+                val secondValue: Int?
             }
             var values: Values {
                 switch self {
@@ -481,18 +483,18 @@ Types can be nested to as many levels as are required:
                 }
             }
         }
-        let rank: Rank
-        let suit: Suit
+        val rank: Rank
+        val suit: Suit
         var description: String {
             var output = "the \(rank.toRaw()) of \(suit.toRaw())"
             output += " is worth \(rank.values.firstValue)"
-            if let secondValue = rank.values.secondValue {
+            if val secondValue = rank.values.secondValue {
                 output += " or \(secondValue)"
             }
             return output
         }
     }
-    (swift) let theAceOfSpades = BlackjackCard(.Ace, .Spades)
+    (swift) val theAceOfSpades = BlackjackCard(.Ace, .Spades)
     // theAceOfSpades : BlackjackCard = BlackjackCard(<unprintable value>, <unprintable value>)
     (swift) println("Blackjack value: \(theAceOfSpades.description)")
     >>> Blackjack value: the Ace of ♠ is worth 1 or 11
@@ -548,7 +550,7 @@ by prefixing their name with the name of the type they are embedded within:
 
 .. testcode:: embeddedTypes
 
-    (swift) let heartsSymbol = BlackjackCard.Suit.Hearts.toRaw()
+    (swift) val heartsSymbol = BlackjackCard.Suit.Hearts.toRaw()
     // heartsSymbol : UnicodeScalar = '♡'
 
 This enables the names of ``Suit``, ``Rank`` and ``Values`` to be kept deliberately short,

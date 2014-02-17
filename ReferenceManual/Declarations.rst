@@ -15,7 +15,7 @@ Declarations
     decl ::= decl-struct
     decl ::= decl-typealias
     decl ::= decl-var
-    decl ::= decl-let
+    decl ::= decl-val
     decl ::= decl-subscript
 
 .. syntax-grammar::
@@ -24,7 +24,7 @@ Declarations
 
     declaration --> import-declaration
     declaration --> variable-declaration
-    declaration --> let-declaration
+    declaration --> value-declaration
     declaration --> typealias-declaration
     declaration --> function-declaration
     declaration --> enum-declaration
@@ -130,9 +130,10 @@ Variable Declarations
 
     Grammar of a variable declaration
 
-    variable-declaration --> attribute-sequence-OPT ``type``-OPT ``var`` pattern-initializer-list
-    variable-declaration --> attribute-sequence-OPT ``var`` variable-name type-specifier code-block
-    variable-declaration --> attribute-sequence-OPT ``var`` variable-name type-specifier getter-setter-block
+    variable-declaration --> attribute-sequence-OPT variable-specifier-OPT ``var`` pattern-initializer-list
+    variable-declaration --> attribute-sequence-OPT ``var`` variable-name type-annotation code-block
+    variable-declaration --> attribute-sequence-OPT ``var`` variable-name type-annotation getter-setter-block
+    variable-specifier --> ``static`` | ``class``
     variable-name --> identifier
 
     pattern-initializer-list --> pattern-initializer | pattern-initializer ``,`` pattern-initializer-list
@@ -144,38 +145,33 @@ Variable Declarations
     setter --> ``set`` setter-name-OPT ``:`` statements-OPT
     setter-name --> ``(`` identifier ``)``
 
-.. NOTE: Type specifiers are required for computed properties -- the
+.. NOTE: Type annotations are required for computed properties -- the
    types of those properties are not computed/inferred.
 
-.. NOTE: 'type' is currently restricted to variables
+.. NOTE: The variable-specifier is currently restricted to variables
     declared using the first variable-declaration grammar.
     This is a temporary compiler limitation.
-    Eventually, 'type' will be allowed for the other two forms of the grammar
+    Eventually, variable-specifier will be allowed for the other two forms of the grammar
     (those that declare variable with computed values).
 
-.. TODO: File a radar against the inout attribute for better REPL message.
-    The inout attribute can only be applide to types, not to declarations.
-    UPDATE 1/29/14: Hold off on this, because the grammar is going to be changing soon
-    to restrict where the inout attribute may appear.
 
-
-Let Declaration
----------------
+Value Declaration
+-----------------
 
 .. syntax-outline::
 
-    let <#variable name#> : <#type#> = <#expression#>
+    val <#variable name#> : <#type#> = <#expression#>
 
 .. langref-grammar
 
-    decl-let    ::= attribute-list 'let' pattern initializer?  (',' pattern initializer?)*
+    decl-let    ::= attribute-list 'val' pattern initializer?  (',' pattern initializer?)*
     initializer ::= '=' expr
 
 .. syntax-grammar::
 
-    Grammar of a let declaration
+    Grammar of a value declaration
 
-    let-declaration --> attribute-sequence-OPT ``let`` pattern-initializer-list
+    value-declaration --> attribute-sequence-OPT ``val`` pattern-initializer-list
 
 
 Typealias Declarations
@@ -325,7 +321,8 @@ Function Signatures
 
     Grammar of a function declaration
 
-    function-declaration --> attribute-sequence-OPT ``type``-OPT ``func`` function-name generic-parameter-clause-OPT function-signature code-block-OPT
+    function-declaration --> attribute-sequence-OPT function-specifier-OPT ``func`` function-name generic-parameter-clause-OPT function-signature code-block-OPT
+    function-specifier --> ``static`` | ``class``
     function-name --> any-identifier
 
     function-signature --> function-parameters function-signature-result-OPT
