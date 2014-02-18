@@ -3,6 +3,57 @@ Lexical Structure
 
 .. TODO: Write a brief intro to this chapter.
 
+Module Scope
+------------
+
+.. TODO
+
+.. TODO: Better to describe this part of the grammar in prose.
+
+	Also, the LangRef has the heading 'Module-Scope Declarations',
+	and discusses it as part of Declaration.
+	This makes me wonder whether it belongs in the Declarations chapter.
+
+.. langref-grammar
+
+    top-level ::= brace-item*
+
+.. syntax-grammar::
+
+   top-level --> statements
+
+
+Code Blocks
+-----------
+
+A code block is used by a variety of control structures
+to group statements together.
+It has the following form:
+
+.. syntax-outline::
+
+    {
+        <#statements#>
+    }
+
+The statements inside a code block are executed in order.
+
+.. TODO: Discuss scope.  I assume a code block creates a new scope?
+
+.. TODO: This section doesn't feel like it belongs in this chapter.
+
+.. langref-grammar
+
+    brace-item-list ::= '{' brace-item* '}'
+    brace-item      ::= decl
+    brace-item      ::= expr
+    brace-item      ::= stmt
+
+.. syntax-grammar::
+
+    Grammar of a code block
+
+    code-block --> ``{`` statements-OPT ``}``
 Whitespace and Comments
 -----------------------
 
@@ -125,144 +176,8 @@ These names are valid identifiers within the scope of the closure.
 
     implicit-parameter-name --> ``$`` identifier-characters
 
-.. TR: Should implicit-parameter-name really allow any character
-   after the $ sign, or is it limited to 0-9?
-
 
 .. _Lexical_Operator:
-
-Operators
----------
-
-Operators are made up of one or more of the following characters:
-``@``, ``/``, ``=``, ``-``, ``+``, ``*``, ``%``, ``<``, ``>``, ``!``,
-``&``, ``|``, ``^``, ``~``.
-The operators
-``=``, ``->``, ``//``, ``/*``, ``*/``, ``...``,
-and the unary prefix operator ``&``
-are reserved for use as other punctuation.
-
-.. TR: LangRef also says (){}[].,;: are reserved punctuation,
-   but those aren't valid operator characters anyway.
-   OK to omit here?
-
-Operators with a leading ``<`` or ``>`` are split into two tokens when parsing:
-the leading ``<`` or ``>`` and the remainder of the token.
-The remainder is parsed the same way and may be split again.
-This parsing rule removes the need for whitespace
-to disambiguate between the closing ``>`` characters
-in nested protocols such as ``A<B<C>>`` ---
-it is parsed as ``A < B < C > >`` rather than as ``A < B < C >>``.
-
-.. TODO: Lead with the problem above,
-   use that to motivate the solution.
-
-.. TODO: Brian points out that this is probably a *lexing* rule,
-   not a parsing rule.
-
-.. TR: Any special context you must be in for this <<>> rule to happen?
-
-.. TR: With this rule in effect, how is >> ever parsed as a bit shift
-   and not two greater-than operators?
-
-To determine whether an operator is used as
-a prefix operator, a postfix operator, or a binary operator,
-the parser looks at the characters before and after the operator.
-
-.. Right bound - whitespace after
-   Left bound - whitespace before
-
-=================   =================   ================
-Whitespace Before   Whitespace After    Kind of Operator
-=================   =================   ================
-No                  No                  Binary
-Yes                 No                  Prefix
-No                  Yes                 Postfix
-Yes                 Yes                 Binary
-=================   =================   ================
-
-For the purposes of this rule,
-the characters ``(``, ``[``, and ``{`` before an operator,
-the characters ``)``, ``]``, and ``}`` after an operator,
-and the characters ``,``, ``;``, and ``:``
-are also considered whitespace.
-
-An operator with no whitespace before it and a dot (``.``) after it
-is treated as a postfix operator.
-For example, ``a@.b`` is parsed as as ``a@ . b`` rather than ``a @ .b``.
-
-.. TR: Using @ again instead of ! above,
-   to avoid confusion between the special case about dots (above)
-   and the special case about bang (below).
-   My discussion of this rule is rather different
-   than what's in LangRef.
-   Let's make sure it's still true.
-
-If the ``!`` or ``?`` operator has no whitespace before it,
-it is a postfix operator,
-regardless of whether it has whitespace after it.
-To use the ``?`` operator as a syntactic sugar for ``Optional``,
-it must not have whitespace before it.
-To use it in the conditional (``? :``) operator,
-it must have whitespace before and after it.
-
-.. langref-grammar
-
-    operator ::= [@/=-+*%<>!&|^~]+
-    operator ::= \.\.
-
-      Note: excludes '=', see [1]
-            excludes '->', see [2]
-            excludes unary '&', see [3]
-            excludes '//', '/*', and '*/', see [4]
-            '..' is an operator, not two '.'s.
-
-    operator-binary ::= operator
-    operator-prefix ::= operator
-    operator-postfix ::= operator
-
-    left-binder  ::= [ \r\n\t\(\[\{,;:]
-    right-binder ::= [ \r\n\t\)\]\},;:]
-
-    any-identifier ::= identifier | operator
-
-.. TODO: The syntactic category 'any-identifier' is only used
-   in function definitions and import declarations.
-   Expand it in those places, and delete this syntactic category.
-
-.. langref-grammar
-
-    punctuation ::= '('
-    punctuation ::= ')'
-    punctuation ::= '{'
-    punctuation ::= '}'
-    punctuation ::= '['
-    punctuation ::= ']'
-    punctuation ::= '.'
-    punctuation ::= ','
-    punctuation ::= ';'
-    punctuation ::= ':'
-    punctuation ::= '='
-    punctuation ::= '->'
-    punctuation ::= '...'
-    punctuation ::= '&' // unary prefix operator
-
-.. syntax-grammar::
-
-    Grammar of operators
-
-    operator --> operator-character operator-OPT
-    operator --> ``..``
-    operator-character --> ``@`` | ``/`` | ``=`` | ``-`` | ``+`` 
-    operator-character --> ``*`` | ``%`` | ``<`` | ``>`` | ``!`` 
-    operator-character --> ``&`` | ``|`` | ``^`` | ``~``
-
-    binary-operator --> operator
-    prefix-operator --> operator
-    postfix-operator --> operator
-
-    any-identifier --> identifier | operator
-
 
 Keywords
 --------
@@ -674,52 +589,136 @@ String literals are of type ``String``.
 .. TR: Paren balancing is required by the grammar of *expression* already, so I
    omitted it in the rule above.
 
-Module Scope
-------------
+Operators
+---------
 
-.. TODO
+Operators are made up of one or more of the following characters:
+``@``, ``/``, ``=``, ``-``, ``+``, ``*``, ``%``, ``<``, ``>``, ``!``,
+``&``, ``|``, ``^``, ``~``.
+The operators
+``=``, ``->``, ``//``, ``/*``, ``*/``, ``...``,
+and the unary prefix operator ``&``
+are reserved for use as other punctuation.
 
-.. TODO: Better to describe this part of the grammar in prose.
+.. TR: LangRef also says (){}[].,;: are reserved punctuation,
+   but those aren't valid operator characters anyway.
+   OK to omit here?
 
-	Also, the LangRef has the heading 'Module-Scope Declarations',
-	and discusses it as part of Declaration.
-	This makes me wonder whether it belongs in the Declarations chapter.
+Operators with a leading ``<`` or ``>`` are split into two tokens when parsing:
+the leading ``<`` or ``>`` and the remainder of the token.
+The remainder is parsed the same way and may be split again.
+This parsing rule removes the need for whitespace
+to disambiguate between the closing ``>`` characters
+in nested protocols such as ``A<B<C>>`` ---
+it is parsed as ``A < B < C > >`` rather than as ``A < B < C >>``.
+
+.. TODO: Lead with the problem above,
+   use that to motivate the solution.
+
+.. TODO: Brian points out that this is probably a *lexing* rule,
+   not a parsing rule.
+
+.. TR: Any special context you must be in for this <<>> rule to happen?
+
+.. TR: With this rule in effect, how is >> ever parsed as a bit shift
+   and not two greater-than operators?
+
+To determine whether an operator is used as
+a prefix operator, a postfix operator, or a binary operator,
+the parser looks at the characters before and after the operator.
+
+.. Right bound - whitespace after
+   Left bound - whitespace before
+
+=================   =================   ================
+Whitespace Before   Whitespace After    Kind of Operator
+=================   =================   ================
+No                  No                  Binary
+Yes                 No                  Prefix
+No                  Yes                 Postfix
+Yes                 Yes                 Binary
+=================   =================   ================
+
+For the purposes of this rule,
+the characters ``(``, ``[``, and ``{`` before an operator,
+the characters ``)``, ``]``, and ``}`` after an operator,
+and the characters ``,``, ``;``, and ``:``
+are also considered whitespace.
+
+An operator with no whitespace before it and a dot (``.``) after it
+is treated as a postfix operator.
+For example, ``a@.b`` is parsed as as ``a@ . b`` rather than ``a @ .b``.
+
+.. TR: Using @ again instead of ! above,
+   to avoid confusion between the special case about dots (above)
+   and the special case about bang (below).
+   My discussion of this rule is rather different
+   than what's in LangRef.
+   Let's make sure it's still true.
+
+If the ``!`` or ``?`` operator has no whitespace before it,
+it is a postfix operator,
+regardless of whether it has whitespace after it.
+To use the ``?`` operator as a syntactic sugar for ``Optional``,
+it must not have whitespace before it.
+To use it in the conditional (``? :``) operator,
+it must have whitespace before and after it.
 
 .. langref-grammar
 
-    top-level ::= brace-item*
+    operator ::= [@/=-+*%<>!&|^~]+
+    operator ::= \.\.
 
-.. syntax-grammar::
+      Note: excludes '=', see [1]
+            excludes '->', see [2]
+            excludes unary '&', see [3]
+            excludes '//', '/*', and '*/', see [4]
+            '..' is an operator, not two '.'s.
 
-   top-level --> statements
+    operator-binary ::= operator
+    operator-prefix ::= operator
+    operator-postfix ::= operator
 
+    left-binder  ::= [ \r\n\t\(\[\{,;:]
+    right-binder ::= [ \r\n\t\)\]\},;:]
 
-Code Blocks
------------
+    any-identifier ::= identifier | operator
 
-A code block is used by a variety of control structures
-to group statements together.
-It has the following form:
-
-.. syntax-outline::
-
-    {
-        <#statements#>
-    }
-
-The statements inside a code block are executed in order.
-
-.. TODO: Discuss scope.  I assume a code block creates a new scope?
+.. TODO: The syntactic category 'any-identifier' is only used
+   in function definitions and import declarations.
+   Expand it in those places, and delete this syntactic category.
 
 .. langref-grammar
 
-    brace-item-list ::= '{' brace-item* '}'
-    brace-item      ::= decl
-    brace-item      ::= expr
-    brace-item      ::= stmt
+    punctuation ::= '('
+    punctuation ::= ')'
+    punctuation ::= '{'
+    punctuation ::= '}'
+    punctuation ::= '['
+    punctuation ::= ']'
+    punctuation ::= '.'
+    punctuation ::= ','
+    punctuation ::= ';'
+    punctuation ::= ':'
+    punctuation ::= '='
+    punctuation ::= '->'
+    punctuation ::= '...'
+    punctuation ::= '&' // unary prefix operator
 
 .. syntax-grammar::
 
-    Grammar of a code block
+    Grammar of operators
 
-    code-block --> ``{`` statements-OPT ``}``
+    operator --> operator-character operator-OPT
+    operator --> ``..``
+    operator-character --> ``@`` | ``/`` | ``=`` | ``-`` | ``+`` 
+    operator-character --> ``*`` | ``%`` | ``<`` | ``>`` | ``!`` 
+    operator-character --> ``&`` | ``|`` | ``^`` | ``~``
+
+    binary-operator --> operator
+    prefix-operator --> operator
+    postfix-operator --> operator
+
+    any-identifier --> identifier | operator
+
+
