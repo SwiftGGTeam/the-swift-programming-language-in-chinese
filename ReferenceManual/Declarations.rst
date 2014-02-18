@@ -42,8 +42,8 @@ Declarations
    declaration.
 
 
-Import Declarations
--------------------
+Import Declaration
+------------------
 
 .. TODO: It seems odd to call these declarations -- they don't declare anything.
    Directive or statement feels a little more appropriate,
@@ -94,8 +94,8 @@ is made available in the current scope.
     import-path --> any-identifier | any-identifier ``.`` import-path
 
 
-Variable Declarations
----------------------
+Variable Declaration
+--------------------
 
 .. syntax-outline::
 
@@ -174,8 +174,8 @@ Value Declaration
     value-declaration --> attribute-sequence-OPT ``val`` pattern-initializer-list
 
 
-Typealias Declarations
-----------------------
+Typealias Declaration
+---------------------
 
 .. syntax-outline::
 
@@ -196,8 +196,8 @@ Typealias Declarations
     typealias-assignment --> ``=`` type
 
 
-Function Declarations
----------------------
+Function Declaration
+--------------------
 
 **[Query/Note: We are trying to decide which code-snippet-style syntax outlines to use
 for regular Swift-style function definitions and for selector-style method definitions.
@@ -305,8 +305,8 @@ This alternative uses "signature" instead of "method" or "selector", but still u
 .. TODO: Decide on a syntax-outline for regular Swift functions and for selector-style functions.
 
 
-Function Signatures
-~~~~~~~~~~~~~~~~~~~
+Function Signature
+~~~~~~~~~~~~~~~~~~
 
 .. langref-grammar
 
@@ -352,8 +352,8 @@ Function Signatures
 .. TODO: Revise selector-name---can we come up with a better name for this?
 
 
-Enumeration Declarations
-------------------------
+Enumeration Declaration
+-----------------------
 
 .. syntax-outline::
 
@@ -406,8 +406,8 @@ Enumeration Declarations
 .. NOTE: You can have other declarations like methods inside of an enum declaration (e.g., methods, etc.).
 
 
-Structure Declarations
-----------------------
+Structure Declaration
+---------------------
 
 A structure declaration introduces a named, structure type into your program.
 Structure declarations begin with the keyword ``struct`` and have the following form:
@@ -464,8 +464,8 @@ variables or constants, or when passed as arguments to a function call.
    struct-body --> ``{`` declarations-OPT ``}``
 
 
-Class Declarations
-------------------
+Class Declaration
+-----------------
 
 .. syntax-outline::
 
@@ -487,8 +487,8 @@ Class Declarations
     class-body --> ``{`` declarations-OPT ``}``
 
 
-Protocol Declarations
----------------------
+Protocol Declaration
+--------------------
 
 .. syntax-outline::
 
@@ -532,8 +532,8 @@ Typealias Protocol Elements
     protocol-member --> variable-declaration | function-declaration | typealias-head typealias-assignment-OPT | subscript-head
 
 
-Initializer Declarations
-------------------------
+Initializer Declaration
+-----------------------
 
 .. syntax-outline::
 
@@ -566,8 +566,8 @@ Initializer Declarations
     initializer-signature --> tuple-pattern | selector-tuples
 
 
-Destructor Declarations
------------------------
+Destructor Declaration
+----------------------
 
 .. syntax-outline::
 
@@ -587,8 +587,8 @@ Destructor Declarations
     destructor-declaration --> attribute-sequence-OPT ``destructor`` ``(`` ``)`` code-block
 
 
-Extension Declarations
-----------------------
+Extension Declaration
+---------------------
 
 .. syntax-outline::
 
@@ -617,8 +617,8 @@ Extension Declarations
     TODO: Email Doug et al. in a week or two (from 1/29/14) to get the rules.
 
 
-Subscript Declarations
-----------------------
+Subscript Declaration
+---------------------
 
 .. syntax-outline::
 
