@@ -131,9 +131,11 @@ mathematical symbols, arrows, private-use (or invalid) Unicode code points,
 or line- and box-drawing characters.
 They also cannot begin with a number
 (although numbers may be included elsewhere within the name).
-Once you've declared a named value,
+
+Once you've declared a named value of a certain type,
 you can't redeclare it again with the same name,
-or change it from a constant to a variable (or vice versa).
+or set it to store values of a different type.
+You also can't change it from a constant to a variable (or vice versa).
 
 The value of an existing variable can be changed to another value of the same type.
 You can also print the value of any named value using the ``println`` function,
