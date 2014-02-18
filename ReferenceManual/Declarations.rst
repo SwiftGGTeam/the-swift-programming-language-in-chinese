@@ -32,7 +32,7 @@ Declarations
     declaration --> struct-declaration
     declaration --> class-declaration
     declaration --> protocol-declaration
-    declaration --> constructor-declaration
+    declaration --> initializer-declaration
     declaration --> destructor-declaration
     declaration --> extension-declaration
     declaration --> subscript-declaration
@@ -532,7 +532,7 @@ Typealias Protocol Elements
     protocol-member --> variable-declaration | function-declaration | typealias-head typealias-assignment-OPT | subscript-head
 
 
-Constructor Declarations
+Initializer Declarations
 ------------------------
 
 .. syntax-outline::
@@ -549,7 +549,7 @@ Constructor Declarations
         <#statements#>
     }
 
-.. TODO: Revisit the selector-style constructor syntax-outline
+.. TODO: Revisit the selector-style initializer syntax-outline
     after we've nailed down the syntax-outline for selector-style function declarations.
 
 .. langref-grammar
@@ -560,10 +560,10 @@ Constructor Declarations
 
 .. syntax-grammar::
 
-    Grammar of a constructor declaration
+    Grammar of an initializer declaration
 
-    constructor-declaration --> attribute-sequence-OPT ``init`` generic-parameter-clause-OPT constructor-signature code-block
-    constructor-signature --> tuple-pattern | selector-tuples
+    initializer-declaration --> attribute-sequence-OPT ``init`` generic-parameter-clause-OPT initializer-signature code-block
+    initializer-signature --> tuple-pattern | selector-tuples
 
 
 Destructor Declarations
