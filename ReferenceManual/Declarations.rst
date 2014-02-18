@@ -409,11 +409,50 @@ Enumeration Declarations
 Structure Declarations
 ----------------------
 
+A structure declaration introduces a named, structure type into your program.
+Structure declarations begin with the keyword ``struct`` and have the following form:
+
 .. syntax-outline::
 
     struct <#structure name#> : <#adopted protocols#> {
         <#declarations#>
     }
+
+The body of a structure may contain zero or more *declarations*.
+These *declarations* may include both stored and computed properties,
+static properties, instance methods, static methods, initializer methods,
+type aliases, and even other structure declarations.
+Structure declarations may not contain destructor declarations.
+For a discussion and several examples of structures
+that include these kind of declarations,
+see :doc:`../LanguageGuide/ClassesAndStructures`.
+
+Structure types may adopt any number of protocols,
+but may not inherit from classes, enumerations, or other structures.
+Structure types may also be extended.
+
+There are three ways create an instance of a previously declared structure:
+
+1. Call one of the initializer methods declared within the structure,
+   as described in :ref:`ClassesAndStructures_InitializerMethods`.
+2. If no initializer methods are declared,
+   call the structure's memberwise initializer method,
+   as described in :ref:`ClassesAndStructures_MemberwiseStructureInitializers`.
+3. If no initializer methods are declared,
+   and all properties of the structure declaration were given initial values,
+   call the structure's default initialization method,
+   as described in :ref:`ClassesAndStructures_InitializerMethods`.
+
+Properties of a structure instance may be accessed using dot (``.``) syntax.
+
+Structures are value types; instances of a structure are copied when assigned to
+variables or constants, or when passed as arguments to a function call.
+
+.. Structs are value types.
+    They may not contain destructor methods
+    Access their properties using dot syntax
+    Stored (non-computed) properties declare members with storage in the struct.
+    Other declarations act like they would in an extension of a struct. (What does this mean?)
 
 .. TODO: Member declarations and other declarations can appear in any order (we tested this).
     Stylistically, you probably want member declarations to come first.
