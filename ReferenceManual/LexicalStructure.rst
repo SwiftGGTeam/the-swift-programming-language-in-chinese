@@ -34,21 +34,14 @@ which are used to define the rest of the language.
 Module Scope
 ------------
 
-.. TODO
-
-.. TODO: Better to describe this part of the grammar in prose.
-
-	Also, the LangRef has the heading 'Module-Scope Declarations',
-	and discusses it as part of Declaration.
-	This makes me wonder whether it belongs in the Declarations chapter.
+The top level scope of a Swift source file
+consists of a series of statements.
 
 .. langref-grammar
 
     top-level ::= brace-item*
 
-.. syntax-grammar::
-
-   top-level --> statements
+.. No formal grammar.
 
 
 Code Blocks
@@ -82,6 +75,8 @@ The statements inside a code block are executed in order.
     Grammar of a code block
 
     code-block --> ``{`` statements-OPT ``}``
+
+
 Whitespace and Comments
 -----------------------
 
@@ -124,6 +119,7 @@ Nesting is allowed, but the comment markers must be balanced.
 .. No formal grammar.
    No other syntactic category refers to this one,
    and the prose is sufficient to define it completely.
+
 
 Identifiers
 -----------
@@ -383,6 +379,7 @@ Literals
 
 .. Note: The grammar for "literal-expression" is in "Expressions".
 
+
 Numeric Literals
 ~~~~~~~~~~~~~~~~
 
@@ -617,6 +614,7 @@ String literals are of type ``String``.
 .. TR: Paren balancing is required by the grammar of *expression* already, so I
    omitted it in the rule above.
 
+
 Operators
 ---------
 
@@ -748,5 +746,3 @@ it must have whitespace before and after it.
     postfix-operator --> operator
 
     any-identifier --> identifier | operator
-
-
