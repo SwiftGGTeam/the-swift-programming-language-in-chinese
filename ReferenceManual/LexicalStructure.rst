@@ -59,8 +59,8 @@ that isn't in a Private Use Area.
 After the first character,
 digits and combining Unicode characters are also allowed.
 
-In the context of a closure with no explicit parameter names,
-the parameters are implicitly named ``$0``, ``$1``, and so on.
+Inside a closure with no explicit parameter names,
+the parameters are implicitly named ``$0``, ``$1``, ``$2``, and so on.
 These names are valid identifiers within the scope of the closure.
 
 .. langref-grammar
@@ -343,7 +343,7 @@ The following keywords are reserved and may not be used as identifiers.
 ``__FILE__``
 ``__LINE__``
 
-.. TODO: We have a variaty of keywords that appear twice -- once as
+.. TODO: We have a variety of keywords that appear twice -- once as
    keywords and then again as literal text in the definition of
    expression literals.  Let's see if we can't factor them out so one
    terminal can appear in both places.  For example keyword-as or
@@ -452,10 +452,10 @@ with the following form:
    <#integer#>.<#fraction#>e<#exponent#>
 
 All three parts are made up of a series of digits.
-Underscores (``_``) for readability between digits
-are allowed but ignored.
-The fraction is separated by a dot (``.``).
-The exponent is separated by ``e`` or ``E`` for decimal literals
+Underscores (``_``) are allowed between digits for readability,
+but are ignored.
+The fraction is separated by a dot (``.``) before it.
+The exponent is separated by ``e`` or ``E`` before it for decimal literals
 and by ``p`` or ``P`` for hexadecimal literals,
 followed by an optional sign (``+`` or ``-``).
 
@@ -518,7 +518,7 @@ otherwise it is ``Int``.
     integer-literal --> binary-integer-literal
     integer-literal --> octal-integer-literal
     integer-literal --> decimal-integer-literal
-    integer-literal --> hexedecimal-integer-literal
+    integer-literal --> hexadecimal-integer-literal
 
     binary-integer-literal --> ``0b`` binary-digits
     octal-integer-literal --> ``0o`` octal-digits
