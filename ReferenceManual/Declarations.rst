@@ -448,14 +448,7 @@ Properties of a structure instance may be accessed using dot (``.``) syntax.
 Structures are value types; instances of a structure are copied when assigned to
 variables or constants, or when passed as arguments to a function call.
 
-.. Structs are value types.
-    They may not contain destructor methods
-    Access their properties using dot syntax
-    Stored (non-computed) properties declare members with storage in the struct.
-    Other declarations act like they would in an extension of a struct. (What does this mean?)
-
-.. TODO: Member declarations and other declarations can appear in any order (we tested this).
-    Stylistically, you probably want member declarations to come first.
+.. TODO: Discuss generic parameter clause in the context of a struct?
 
 .. langref-grammar
 
