@@ -1,7 +1,35 @@
 Lexical Structure
 =================
 
-.. TODO: Write a brief intro to this chapter.
+A Swift program is translated from source code in several phases.
+
+The first phase translates sequences of characters into tokens.
+When generating each token,
+the longest possible substring from the input text is used,
+within the constraints of the grammar.
+This behavior is referred to as *longest match* or *maximal munch*.
+
+The second phase arranges tokens into a tree structure,
+according to the grammar.
+
+The third phase transforms expressions
+from a list of subexpressions and operators
+into a tree structure,
+according to the precedence defined for the operators.
+
+.. TODO: Use a bullet/number list above?
+
+.. TODO: LangRef says
+    Swift has a strict separation between its phases of translation,
+    and the compiler follows a conceptually simple design.
+
+.. TR: Is the above discussion correct,
+   and at an appropriate level of detail?
+
+This chapter describes
+the lowest-level building blocks of the language,
+which are used to define the rest of the language.
+
 
 Module Scope
 ------------
