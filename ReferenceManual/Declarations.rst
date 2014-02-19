@@ -421,8 +421,8 @@ Structure declarations begin with the keyword ``struct`` and have the following 
 The body of a structure may contain zero or more *declarations*.
 These *declarations* may include both stored and computed properties,
 static properties, instance methods, static methods, initializer methods,
-type aliases, and even other structure declarations.
-Structure declarations may not contain destructor declarations.
+type aliases, and even other structure, class, and enumeration declarations.
+Structure declarations may not contain destructor or protocol declarations.
 For a discussion and several examples of structures
 that include these kind of declarations,
 see :doc:`../LanguageGuide/ClassesAndStructures`.
