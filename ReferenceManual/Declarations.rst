@@ -467,11 +467,26 @@ variables or constants, or when passed as arguments to a function call.
 Class Declaration
 -----------------
 
+A class declaration introduces a named, class type into your program.
+Class declarations begin with the keyword ``class`` and have the following form:
+
 .. syntax-outline::
 
     class <#class name#> : <#superclass>, <#adopted protocols#> {
         <#declarations#>
     }
+
+.. Classes support single inheritance;
+    a parent class must be listed as the first in the type-inheritance-clause.
+    Class properties and methods are members of the class itself.
+    Class and instance members (properties and methods) may be overridden by a subclass
+    (and use dynamic dispatch).
+    The only way to create a new instance of a class is to call one of the class's
+    initializers. What about default class initializers?
+    Initializers are not inherited by subclasses.
+    Destructors allowed only in class declarations.
+    Accessing overridden members of the base class: ``super.baseClassMember``
+    Discuss generic parameter clause in the context of a struct?
 
 .. langref-grammar
 
