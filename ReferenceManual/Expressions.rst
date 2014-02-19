@@ -176,7 +176,7 @@ Literal Expressions
 
     Grammar of a literal expression
 
-    literal-expression --> integer-literal | floating-point-literal | character-literal | string-literal
+    literal-expression --> numeric-literal | textual-literal
     literal-expression --> ``__FILE__`` | ``__LINE__`` | ``__COLUMN__``
 
 
@@ -238,10 +238,6 @@ Closure Expression
     closure-signature --> tuple-pattern function-signature-result-OPT ``in``
     closure-signature --> identifier-list function-signature-result-OPT ``in``
 
-.. TODO: Add grammar for identifier-list to Identifiers in Lexical Structure.
-    (identifier-list --> identifier | identifier ``,`` identifier-list)
-
-
 Anonymous Closure Argument
 ++++++++++++++++++++++++++
 
@@ -255,9 +251,6 @@ Anonymous Closure Argument
     Grammar of an anonymous closure argument
 
     anonymous-closure-argument --> dollar-identifier
-
-.. TODO: Come up with a better name than dollar-identifier.
-
 
 Delayed Identifier Expression
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
