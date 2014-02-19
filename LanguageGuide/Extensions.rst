@@ -4,6 +4,7 @@
     * Start by extending an existing thing to have something it didn't
     * Continue by extending String to have an initializer for something it doesn't by default
     * Making a type ``Printable`` / nicely ``DebugPrintable`` (inc. guidelines for format)
+    * Extensions can extend existing types to add protocol conformance
 
 Extensions
 ==========
