@@ -336,6 +336,8 @@ a message is printed to indicate how many new steps have been taken.
     If you assign a value to a property within its own ``didSet`` method,
     the new value that you assign will replace the one that was just set.
 
+.. TODO: mention that this also works for global / local variables
+
 .. _ClassesAndStructures_ComputedProperties:
 
 Computed Properties
