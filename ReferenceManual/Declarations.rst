@@ -181,9 +181,20 @@ Value Declaration
 Typealias Declaration
 ---------------------
 
+A type alias declaration introduces a named alias of an existing type into your program.
+Type alias declarations begin with the keyword ``typealias`` and have the following form:
+
 .. syntax-outline::
 
-    typealias <#new type#> : <#adopted protocols#> = <#existing type#>
+    typealias <#name#> = <#existing type#>
+
+After a type alias is declared, the aliased *name* may be used
+instead of the *existing type* everywhere in your program.
+The *existing type* may be a named type or a compound type.
+Type aliases do not create new types;
+they simply allow a name to refer to an existing type.
+
+See also :ref:`Declarations_TypealiasProtocolElements`.
 
 .. langref-grammar
 
@@ -195,9 +206,22 @@ Typealias Declaration
     Grammar of a typealias declaration
 
     typealias-declaration --> typealias-head typealias-assignment
+    typealias-head --> ``typealias`` typealias-name
+    typealias-name --> identifier
+    typealias-assignment --> ``=`` type
+
+.. Old grammar:
+    typealias-declaration --> typealias-head typealias-assignment
     typealias-head --> ``typealias`` typealias-name type-inheritance-clause-OPT
     typealias-name --> identifier
     typealias-assignment --> ``=`` type
+
+.. TR: Are type aliases allowed to contain a type-inheritance-clause?
+    Currently, this doesn't work, and it seems as though it shouldn't work.
+    Doesn't it only make sense to specify protocol conformance requirements
+    in the context of an associated typealias (declared as protocol member)?
+    I modified the grammar under the assumption that they are not allowed.
+
 
 .. _Declarations_FunctionDeclaration:
 
@@ -611,7 +635,10 @@ Typealias Protocol Elements
     protocol-body --> ``{`` protocol-members-OPT ``}``
 
     protocol-members --> protocol-member protocol-members-OPT
-    protocol-member --> variable-declaration | function-declaration | typealias-head typealias-assignment-OPT | subscript-head
+    protocol-member --> variable-declaration | function-declaration | associated-typealias | subscript-head
+    associated-typealias --> typealias-head type-inheritance-clause-OPT typealias-assignment-OPT
+
+.. TR: Can protocols declare constant properties as well?
 
 .. _Declarations_InitializerDeclaration:
 
