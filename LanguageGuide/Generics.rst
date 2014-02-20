@@ -13,6 +13,8 @@
    rather than in the Classes and Structures chapter,
    as you're more likely to use it when working with your own generic types.
 
+.. NOTE: you can subscript on any type, including a range (IntGeneratorType)
+
 Generics
 ========
 
