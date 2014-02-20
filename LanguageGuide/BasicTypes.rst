@@ -86,7 +86,7 @@ to track the number of login attempts a user has made:
 This can be read as:
 
 “Declare a new constant called ``maximumNumberOfLoginAttempts``,
-and give it an initial value of ``10``.
+and give it a value of ``10``.
 Then, declare a new variable called ``currentLoginAttempt``,
 and give it an initial value of ``0``.”
 
