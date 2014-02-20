@@ -41,9 +41,10 @@ Declarations
 .. NOTE: enum-element-declaration is only allowed inside an enum
    declaration.
 
+.. _Declarations_ImportDeclaration:
 
-Import Declarations
--------------------
+Import Declaration
+------------------
 
 .. syntax-outline::
 
@@ -74,9 +75,10 @@ Import Declarations
     import-kind --> ``typealias`` | ``struct`` | ``class`` | ``enum`` | ``protocol`` | ``var`` | ``func``
     import-path --> any-identifier | any-identifier ``.`` import-path
 
+.. _Declarations_VariableDeclaration:
 
-Variable Declarations
----------------------
+Variable Declaration
+--------------------
 
 .. syntax-outline::
 
@@ -135,6 +137,7 @@ Variable Declarations
     Eventually, variable-specifier will be allowed for the other two forms of the grammar
     (those that declare variable with computed values).
 
+.. _Declarations_ValueDeclaration:
 
 Value Declaration
 -----------------
@@ -154,9 +157,10 @@ Value Declaration
 
     value-declaration --> attribute-sequence-OPT ``val`` pattern-initializer-list
 
+.. _Declarations_TypealiasDeclaration:
 
-Typealias Declarations
-----------------------
+Typealias Declaration
+---------------------
 
 .. syntax-outline::
 
@@ -176,9 +180,10 @@ Typealias Declarations
     typealias-name --> identifier
     typealias-assignment --> ``=`` type
 
+.. _Declarations_FunctionDeclaration:
 
-Function Declarations
----------------------
+Function Declaration
+--------------------
 
 **[Query/Note: We are trying to decide which code-snippet-style syntax outlines to use
 for regular Swift-style function definitions and for selector-style method definitions.
@@ -285,9 +290,10 @@ This alternative uses "signature" instead of "method" or "selector", but still u
 
 .. TODO: Decide on a syntax-outline for regular Swift functions and for selector-style functions.
 
+.. _Declarations_FunctionSignature:
 
-Function Signatures
-~~~~~~~~~~~~~~~~~~~
+Function Signature
+~~~~~~~~~~~~~~~~~~
 
 .. langref-grammar
 
@@ -332,9 +338,10 @@ Function Signatures
 
 .. TODO: Revise selector-name---can we come up with a better name for this?
 
+.. _Declarations_EnumerationDeclaration:
 
-Enumeration Declarations
-------------------------
+Enumeration Declaration
+-----------------------
 
 .. syntax-outline::
 
@@ -389,9 +396,10 @@ Enumeration Declarations
 .. TODO: raw-value-literal has the exact same definition as literal-expression.
    Suggest combining them.
 
+.. _Declarations_StructureDeclaration:
 
-Structure Declarations
-----------------------
+Structure Declaration
+---------------------
 
 .. syntax-outline::
 
@@ -415,9 +423,10 @@ Structure Declarations
    struct-name --> identifier
    struct-body --> ``{`` declarations-OPT ``}``
 
+.. _Declarations_ClassDeclaration:
 
-Class Declarations
-------------------
+Class Declaration
+-----------------
 
 .. syntax-outline::
 
@@ -438,9 +447,10 @@ Class Declarations
     class-name --> identifier
     class-body --> ``{`` declarations-OPT ``}``
 
+.. _Declarations_ProtocolDeclaration:
 
-Protocol Declarations
----------------------
+Protocol Declaration
+--------------------
 
 .. syntax-outline::
 
@@ -448,18 +458,22 @@ Protocol Declarations
         <#protocol members#>
     }
 
+.. _Declarations_FunctionProtocolElements:
 
 Function Protocol Elements
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+.. _Declarations_VariableProtocolElements:
 
 Variable Protocol Elements
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+.. _Declarations_SubscriptProtocolElements:
 
 Subscript Protocol Elements
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+.. _Declarations_TypealiasProtocolElements:
 
 Typealias Protocol Elements
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -483,9 +497,10 @@ Typealias Protocol Elements
     protocol-members --> protocol-member protocol-members-OPT
     protocol-member --> variable-declaration | function-declaration | typealias-head typealias-assignment-OPT | subscript-head
 
+.. _Declarations_InitializerDeclaration:
 
-Constructor Declarations
-------------------------
+Initializer Declaration
+-----------------------
 
 .. syntax-outline::
 
@@ -517,9 +532,10 @@ Constructor Declarations
     constructor-declaration --> attribute-sequence-OPT ``init`` generic-parameter-clause-OPT constructor-signature code-block
     constructor-signature --> tuple-pattern | selector-tuples
 
+.. _Declarations_DestructorDeclaration:
 
-Destructor Declarations
------------------------
+Destructor Declaration
+----------------------
 
 .. syntax-outline::
 
@@ -538,9 +554,10 @@ Destructor Declarations
 
     destructor-declaration --> attribute-sequence-OPT ``destructor`` ``(`` ``)`` code-block
 
+.. _Declarations_ExtensionDeclaration:
 
-Extension Declarations
-----------------------
+Extension Declaration
+---------------------
 
 .. syntax-outline::
 
@@ -568,9 +585,10 @@ Extension Declarations
 
     TODO: Email Doug et al. in a week or two (from 1/29/14) to get the rules.
 
+.. _Declarations_SubscriptDeclaration:
 
-Subscript Declarations
-----------------------
+Subscript Declaration
+---------------------
 
 .. syntax-outline::
 
@@ -593,6 +611,7 @@ Subscript Declarations
     subscript-declaration --> subscript-head getter-setter-block
     subscript-head --> attribute-sequence-OPT ``subscript`` tuple-pattern ``->`` type
 
+.. _Declarations_Attributes:
 
 Attributes
 ----------
@@ -673,6 +692,7 @@ Attributes
     Find out what we can from current documentation,
     and email Doug or swift-dev for anything that's missing.
 
+.. _Declarations_DeclarationAttributes:
 
 Declaration Attributes
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -683,6 +703,7 @@ Declaration Attributes
 
     declaration-attribute --> ``mutating`` | ``weak`` | ``unowned`` | ``optional`` | ``objc`` | ``class_protocol``
 
+.. _Declarations_InterfaceBuilderAttributes:
 
 Interface Builder Attributes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~

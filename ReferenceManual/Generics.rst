@@ -1,8 +1,10 @@
 Generics
 ========
 
-Generic Parameters
-------------------
+.. _Generics_GenericParameterClause:
+
+Generic Parameter Clause
+------------------------
 
 .. langref-grammar
 
@@ -37,9 +39,10 @@ Generic Parameters
     otherwise, you'd have a syntactic ambiguity
     (a comma separated list types inside of a comma separated list of requirements).
 
+.. _Generics_GenericArgumentClause:
 
-Generic Arguments
------------------
+Generic Argument Clause
+-----------------------
 
 .. langref-grammar
 

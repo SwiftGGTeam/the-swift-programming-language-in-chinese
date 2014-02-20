@@ -5,6 +5,8 @@ Introduction
 
 This part of the book describes the grammar of the Swift programming language.
 
+.. _Introduction_NotationalConventions:
+
 Notational Conventions
 ----------------------
 
