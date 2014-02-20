@@ -19,6 +19,7 @@ Expressions
     expression-sequence --> unary-expression binary-expressions-OPT
     expression-list --> expression | expression ``,`` expression-list
 
+.. _Expressions_UnaryOperators:
 
 Unary Operators
 ---------------
@@ -39,6 +40,7 @@ Unary Operators
 .. TODO: Give a list of the unary operators defined in the Swift stdlib.
     Then give a cross-reference to the Swift stdlib for more details.
 
+.. _Expressions_BinaryOperators:
 
 Binary Operators
 ----------------
@@ -79,9 +81,12 @@ Binary Operators
    in respect to the spacing rules -- ``x + y * z`` is diffirent than
    ``x + y* z``.
 
+.. _Expressions_Built-InBinaryOperators:
 
-Builtin Binary Operators
-~~~~~~~~~~~~~~~~~~~~~~~~
+Built-In Binary Operators
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. _Expressions_AssignmentOperator:
 
 Assignment Operator
 +++++++++++++++++++
@@ -96,6 +101,7 @@ Assignment Operator
 
     assignment-operator --> ``=``
 
+.. _Expressions_ConditionalOperator:
 
 Conditional Operator
 ++++++++++++++++++++
@@ -113,6 +119,7 @@ Conditional Operator
 .. TODO: Discuss in prose that '?' is being used as an infix operator in this context.
     In additional, there must be whitespace on both sides of '?' and ':'.
 
+.. _Expressions_Type-CastingOperators:
 
 Type-Casting Operators
 ++++++++++++++++++++++
@@ -128,6 +135,7 @@ Type-Casting Operators
 
     expression-cast --> ``is`` type | ``as`` type
 
+.. _Expressions_PrimaryExpressions:
 
 Primary Expressions
 -------------------
@@ -158,9 +166,10 @@ Primary Expressions
    expressions is for exposition -- it makes it easier to organize the
    prose surrounding the production rules.
 
+.. _Expressions_LiteralExpression:
 
-Literal Expressions
-~~~~~~~~~~~~~~~~~~~
+Literal Expression
+~~~~~~~~~~~~~~~~~~
 
 .. langref-grammar
 
@@ -179,6 +188,7 @@ Literal Expressions
     literal-expression --> numeric-literal | textual-literal
     literal-expression --> ``__FILE__`` | ``__LINE__`` | ``__COLUMN__``
 
+.. _Expressions_IdentifierExpression:
 
 Identifier Expression
 ~~~~~~~~~~~~~~~~~~~~~
@@ -196,8 +206,10 @@ Identifier Expression
 .. TODO: Discuss in prose: The LangRef has a subsection called 'Generic Disambiguation',
     the contents of which may or may not need to appear here.
 
-Superclass Expressions
-~~~~~~~~~~~~~~~~~~~~~~
+.. _Expressions_SuperclassExpression:
+
+Superclass Expression
+~~~~~~~~~~~~~~~~~~~~~
 
 .. langref-grammar
 
@@ -218,6 +230,7 @@ Superclass Expressions
     superclass-subscript-expression --> ``super`` ``[`` expression ``]``
     superclass-constructor-expression --> ``super`` ``.`` ``init``
 
+.. _Expressions_ClosureExpression:
 
 Closure Expression
 ~~~~~~~~~~~~~~~~~~
@@ -238,6 +251,8 @@ Closure Expression
     closure-signature --> tuple-pattern function-signature-result-OPT ``in``
     closure-signature --> identifier-list function-signature-result-OPT ``in``
 
+.. _Expressions_AnonymousClosureArgument:
+
 Anonymous Closure Argument
 ++++++++++++++++++++++++++
 
@@ -251,6 +266,8 @@ Anonymous Closure Argument
     Grammar of an anonymous closure argument
 
     anonymous-closure-argument --> dollar-identifier
+
+.. _Expressions_DelayedIdentifierExpression:
 
 Delayed Identifier Expression
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -268,6 +285,7 @@ Delayed Identifier Expression
 
 .. TODO: Come up with a better name for delayed-identifier-expression.
 
+.. _Expressions_ParenthesizedExpression:
 
 Parenthesized Expression
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -287,6 +305,7 @@ Parenthesized Expression
     expression-element-list --> expression-element | expression-element ``,`` expression-element-list
     expression-element --> expression | identifier ``:`` expression
 
+.. _Expressions_PostfixExpressions:
 
 Postfix Expressions
 -------------------
@@ -319,9 +338,10 @@ Postfix Expressions
     postfix-expression --> force-value-expression
     postfix-expression --> optional-expression
 
+.. _Expressions_FunctionCallExpression:
 
-Function Call Expressions
-~~~~~~~~~~~~~~~~~~~~~~~~~
+Function Call Expression
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. langref-grammar
 
@@ -346,6 +366,8 @@ Function Call Expressions
         [1, 2, 3].map({$0 * 2})
 
     TODO: Consider giving the above examples in prose.
+
+.. _Expressions_NewExpression:
 
 New Expression
 ~~~~~~~~~~~~~~
@@ -372,6 +394,7 @@ New Expression
     Currently, its use is restricted to creating new arrays with an initial size.
     Apply minimal effort to document it.
 
+.. _Expressions_InitializerExpression:
 
 Initializer Expression
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -386,9 +409,10 @@ Initializer Expression
 
     initializer-expression --> postfix-expression ``.`` ``init``
 
+.. _Expressions_DotExpression:
 
-Dot Expressions
-~~~~~~~~~~~~~~~
+Dot Expression
+~~~~~~~~~~~~~~
 
 .. langref-grammar
 
@@ -402,6 +426,7 @@ Dot Expressions
     dot-expression --> postfix-expression ``.`` dollar-identifier
     dot-expression --> postfix-expression ``.`` named-expression
 
+.. _Expressions_MetatypeExpression:
 
 Metatype Expression
 ~~~~~~~~~~~~~~~~~~~
@@ -415,6 +440,9 @@ Metatype Expression
 
     metatype-expression --> postfix-expression ``.`` ``metatype``
 
+.. TR: Is this going away?
+
+.. _Expressions_SubscriptExpression:
 
 Subscript Expression
 ~~~~~~~~~~~~~~~~~~~~
@@ -444,6 +472,7 @@ Forcing an Expression's Value
     force-value-expression --> postfix-expression ``!``
 
 .. TODO: Also, come up with a better name for force-value-expression.
+    Possibly call it "unwrapped-expression"?
 
 
 Optional Chaining

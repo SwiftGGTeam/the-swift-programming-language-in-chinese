@@ -75,6 +75,7 @@ and describes the type inference behavior of Swift.
 
     type --> array-type | function-type | type-identifier | tuple-type | optional-type | protocol-composition-type | metatype-type
 
+.. _Types_TypeAnnotation:
 
 Type Annotation
 ---------------
@@ -103,6 +104,7 @@ Type annotations may contain an optional list of type attributes before the type
     because "type annotation" is the standard way of talking about
     decorating a value/expression (term) with type information.
 
+.. _Types_TypeIdentifier:
 
 Type Identifier
 ---------------
@@ -146,6 +148,7 @@ that is declared in the ``ExampleModule`` module.
     type-identifier --> type-name generic-argument-clause-OPT | type-name generic-argument-clause-OPT ``.`` type-identifier
     type-name --> identifier
 
+.. _Types_TupleType:
 
 Tuple Type
 ----------
@@ -188,6 +191,7 @@ Tuple Type
     3. Related to (1) and (2): Are tuple types going to used as the left-hand side
        of a function type (as in the current grammar)?
 
+.. _Types_FunctionType:
 
 Function Type
 -------------
@@ -226,6 +230,8 @@ Function Type
     3. Related to (1) and (2): Are tuple types going to used as the left-hand side
        of a function type (as in the current grammar)?
 
+.. _Types_ArrayType:
+
 Array Type
 ----------
 
@@ -255,6 +261,7 @@ Array Type
     Joe has a proposal on the table, but no decision has been made.
     Let's hold off on writing about these until they are nailed down.
 
+.. _Types_FunctionType:
 
 Optional Type
 -------------
@@ -312,6 +319,7 @@ see :ref:`BasicTypes_Optionals`.
 
     optional-type --> type ``?``
 
+.. _Types_ProtocolCompositionType:
 
 Protocol Composition Type
 -------------------------
@@ -353,6 +361,7 @@ which every type conforms to.
     protocol-identifier-list --> protocol-identifier | protocol-identifier ``,`` protocol-identifier-list
     protocol-identifier --> type-identifier
 
+.. _Types_MetatypeType:
 
 Metatype Type
 -------------
@@ -441,6 +450,7 @@ Metatype Type
 
     metatype-type --> type ``.`` ``metatype``
 
+.. _Types_TypeInheritanceClause:
 
 Type Inheritance Clause
 -----------------------
@@ -482,6 +492,7 @@ to specify the type of its raw values, see :ref:`Enumerations_RawValues`.
     type-inheritance-clause --> ``:`` type-inheritance-list
     type-inheritance-list --> type-identifier | type-identifier ``,`` type-inheritance-list
 
+.. _Types_TypeInference:
 
 Type Inference
 --------------

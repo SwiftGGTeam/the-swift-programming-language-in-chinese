@@ -41,6 +41,7 @@ Declarations
 .. NOTE: enum-element-declaration is only allowed inside an enum
    declaration.
 
+.. _Declarations_ImportDeclaration:
 
 Import Declaration
 ------------------
@@ -93,6 +94,7 @@ is made available in the current scope.
     import-kind --> ``typealias`` | ``struct`` | ``class`` | ``enum`` | ``protocol`` | ``var`` | ``func``
     import-path --> any-identifier | any-identifier ``.`` import-path
 
+.. _Declarations_VariableDeclaration:
 
 Variable Declaration
 --------------------
@@ -154,6 +156,7 @@ Variable Declaration
     Eventually, variable-specifier will be allowed for the other two forms of the grammar
     (those that declare variable with computed values).
 
+.. _Declarations_ValueDeclaration:
 
 Value Declaration
 -----------------
@@ -173,6 +176,7 @@ Value Declaration
 
     value-declaration --> attribute-sequence-OPT ``val`` pattern-initializer-list
 
+.. _Declarations_TypealiasDeclaration:
 
 Typealias Declaration
 ---------------------
@@ -195,6 +199,7 @@ Typealias Declaration
     typealias-name --> identifier
     typealias-assignment --> ``=`` type
 
+.. _Declarations_FunctionDeclaration:
 
 Function Declaration
 --------------------
@@ -304,6 +309,7 @@ This alternative uses "signature" instead of "method" or "selector", but still u
 
 .. TODO: Decide on a syntax-outline for regular Swift functions and for selector-style functions.
 
+.. _Declarations_FunctionSignature:
 
 Function Signature
 ~~~~~~~~~~~~~~~~~~
@@ -351,6 +357,7 @@ Function Signature
 
 .. TODO: Revise selector-name---can we come up with a better name for this?
 
+.. _Declarations_EnumerationDeclaration:
 
 Enumeration Declaration
 -----------------------
@@ -408,6 +415,7 @@ Enumeration Declaration
 .. TODO: raw-value-literal has the exact same definition as literal-expression.
    Suggest combining them.
 
+.. _Declarations_StructureDeclaration:
 
 Structure Declaration
 ---------------------
@@ -472,6 +480,7 @@ see :ref:`ClassesAndStructures_ValueTypesAndReferenceTypes`.
    struct-name --> identifier
    struct-body --> ``{`` declarations-OPT ``}``
 
+.. _Declarations_ClassDeclaration:
 
 Class Declaration
 -----------------
@@ -554,6 +563,7 @@ see :ref:`ClassesAndStructures_ValueTypesAndReferenceTypes`.
     class-name --> identifier
     class-body --> ``{`` declarations-OPT ``}``
 
+.. _Declarations_ProtocolDeclaration:
 
 Protocol Declaration
 --------------------
@@ -564,18 +574,22 @@ Protocol Declaration
         <#protocol members#>
     }
 
+.. _Declarations_FunctionProtocolElements:
 
 Function Protocol Elements
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+.. _Declarations_VariableProtocolElements:
 
 Variable Protocol Elements
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+.. _Declarations_SubscriptProtocolElements:
 
 Subscript Protocol Elements
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+.. _Declarations_TypealiasProtocolElements:
 
 Typealias Protocol Elements
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -599,6 +613,7 @@ Typealias Protocol Elements
     protocol-members --> protocol-member protocol-members-OPT
     protocol-member --> variable-declaration | function-declaration | typealias-head typealias-assignment-OPT | subscript-head
 
+.. _Declarations_InitializerDeclaration:
 
 Initializer Declaration
 -----------------------
@@ -633,6 +648,7 @@ Initializer Declaration
     initializer-declaration --> attribute-sequence-OPT ``init`` generic-parameter-clause-OPT initializer-signature code-block
     initializer-signature --> tuple-pattern | selector-tuples
 
+.. _Declarations_DestructorDeclaration:
 
 Destructor Declaration
 ----------------------
@@ -654,6 +670,7 @@ Destructor Declaration
 
     destructor-declaration --> attribute-sequence-OPT ``destructor`` ``(`` ``)`` code-block
 
+.. _Declarations_ExtensionDeclaration:
 
 Extension Declaration
 ---------------------
@@ -684,6 +701,7 @@ Extension Declaration
 
     TODO: Email Doug et al. in a week or two (from 1/29/14) to get the rules.
 
+.. _Declarations_SubscriptDeclaration:
 
 Subscript Declaration
 ---------------------
@@ -709,6 +727,7 @@ Subscript Declaration
     subscript-declaration --> subscript-head getter-setter-block
     subscript-head --> attribute-sequence-OPT ``subscript`` tuple-pattern ``->`` type
 
+.. _Declarations_Attributes:
 
 Attributes
 ----------
@@ -789,6 +808,7 @@ Attributes
     Find out what we can from current documentation,
     and email Doug or swift-dev for anything that's missing.
 
+.. _Declarations_DeclarationAttributes:
 
 Declaration Attributes
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -799,6 +819,7 @@ Declaration Attributes
 
     declaration-attribute --> ``mutating`` | ``weak`` | ``unowned`` | ``optional`` | ``objc`` | ``class_protocol``
 
+.. _Declarations_InterfaceBuilderAttributes:
 
 Interface Builder Attributes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~

@@ -32,6 +32,7 @@ Patterns
 .. NOTE: Patterns don't "have" a type in the same way that values have types.
    Patterns match things of certain types.
 
+.. _Patterns_AnyPattern:
 
 Any Pattern
 -----------
@@ -48,6 +49,7 @@ Any Pattern
 
 .. TODO: Try to come up with a better name for "any pattern".
 
+.. _Patterns_IsPattern:
 
 Is Pattern
 ----------
@@ -68,9 +70,10 @@ Is Pattern
     Candidates:
     type-checking-pattern
 
+.. _Patterns_Variable-BindingPattern:
 
-Variable-Binding Patterns
--------------------------
+Variable-Binding Pattern
+------------------------
 
 .. langref-grammar
 
@@ -90,9 +93,10 @@ Variable-Binding Patterns
     not a pattern that varies.
     "Variable pattern" is ambiguous between those two meanings.
 
+.. _Patterns_ExpressionPattern:
 
-Expression Patterns
--------------------
+Expression Pattern
+------------------
 
 
 .. syntax-grammar::
@@ -101,9 +105,10 @@ Expression Patterns
 
     expression-pattern --> expression
 
+.. _Patterns_EnumeratorPattern:
 
-Enumerator Patterns
--------------------
+Enumerator Pattern
+------------------
 
 An enumerator pattern matches an enumerator declared in an enumeration.
 
@@ -117,9 +122,10 @@ An enumerator pattern matches an enumerator declared in an enumeration.
 
     enumerator-pattern --> type-identifier-OPT ``.`` identifier tuple-pattern-OPT
 
+.. _Patterns_TuplePattern:
 
-Tuple Patterns
---------------
+Tuple Pattern
+-------------
 
 .. langref-grammar
 

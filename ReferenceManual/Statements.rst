@@ -47,6 +47,7 @@ and is used as a statement terminator when multiple statements appear on the sam
     rules that require them in some places to enforce a certain amount
     of readability.
 
+.. _Statements_LoopStatements:
 
 Loop Statements
 ---------------
@@ -58,7 +59,7 @@ a ``for`` statement, a collection-based ``for`` statement, a ``while`` statement
 and a ``do``-``while`` statement.
 
 Control flow in a loop statement can be changed by a break statement and a continue statement
-and is discussed in `Break Statement`_ and `Continue Statement`_ below.
+and is discussed in :ref:`Statements_BreakStatement` and :ref:`Statements_ContinueStatement` below.
 
 .. syntax-grammar::
 
@@ -69,6 +70,7 @@ and is discussed in `Break Statement`_ and `Continue Statement`_ below.
     loop-statement --> while-statement
     loop-statement --> do-while-statement
 
+.. _Statements_ForStatement:
 
 For Statement
 ~~~~~~~~~~~~~
@@ -132,6 +134,7 @@ the ``LogicValue`` protocol.
 
     for-init --> variable-declaration | expression-list
 
+.. _Statements_CollectionBasedForStatement:
 
 Collection-Based For Statement
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -180,6 +183,7 @@ and it is finished executing the collection-based ``for`` statement.
 
     collection-based-for-statement --> ``for`` pattern ``in`` expression code-block
 
+.. _Statements_WhileStatement:
 
 While Statement
 ~~~~~~~~~~~~~~~
@@ -222,6 +226,7 @@ as discussed in :ref:`ControlFlow_OptionalBinding`.
     while-statement --> ``while`` while-condition  code-block
     while-condition --> expression | declaration
 
+.. _Statements_Do-WhileStatement:
 
 Do-While Statement
 ~~~~~~~~~~~~~~~~~~
@@ -264,6 +269,7 @@ as discussed in :ref:`ControlFlow_OptionalBinding`.
 
     do-while-statement --> ``do`` code-block ``while`` while-condition
 
+.. _Statements_BranchStatements:
 
 Branch Statements
 -----------------
@@ -281,6 +287,7 @@ Swift has two branch statements: an ``if`` statement and a ``switch`` statement.
     branch-statement --> if-statement
     branch-statement --> switch-statement
 
+.. _Statements_IfStatement:
 
 If Statement
 ~~~~~~~~~~~~
@@ -348,6 +355,7 @@ as discussed in :ref:`ControlFlow_OptionalBinding`.
     if-condition --> expression | declaration
     else-clause  --> ``else`` code-block | ``else`` if-statement
 
+.. _Statements_SwitchStatement:
 
 Switch Statement
 ~~~~~~~~~~~~~~~~
@@ -415,6 +423,7 @@ As a result, if multiple cases contain patterns that evaluate to the same value,
 and thus can match the value of the control expression,
 the program executes only the code within the first matching case in source order.
 
+.. _Statements_SwitchStatementsMustBeExhaustive:
 
 Switch Statements Must Be Exhaustive
 ++++++++++++++++++++++++++++++++++++
@@ -426,6 +435,7 @@ When this simply isn’t feasible
 (for instance, when the control expression’s type is ``Int``),
 you can include a default case to satisfy the requirement.
 
+.. _Statements_ExecutionDoesNotFallThroughCasesImplicitly:
 
 Execution Does Not Fall Through Cases Implicitly
 ++++++++++++++++++++++++++++++++++++++++++++++++
@@ -437,7 +447,8 @@ That said, if you want execution to continue from one case to the next,
 explicitly include a ``fallthrough`` statement,
 which simply consists of the keyword ``fallthrough``,
 in the case from which you want execution to continue.
-For more information about the ``fallthrough`` statement, see `Fallthrough Statement`_ below.
+For more information about the ``fallthrough`` statement,
+see :ref:`Statements_FallthroughStatement` below.
 
 Because execution does not automatically continue from one case to the next,
 a ``break`` statement is not used to transfer control out of a ``switch`` statement after
@@ -469,6 +480,7 @@ not out of the ``switch`` statement itself.
     guard-clause --> ``where`` guard-expression
     guard-expression --> expression
 
+.. _Statements_ControlTransferStatements:
 
 Control Transfer Statements
 ---------------------------
@@ -494,6 +506,7 @@ a ``fallthrough`` statement, and a ``return`` statement.
     control-transfer-statement --> fallthrough-statement
     control-transfer-statement --> return-statement
 
+.. _Statements_BreakStatement:
 
 Break Statement
 ~~~~~~~~~~~~~~~
@@ -519,6 +532,7 @@ in the :doc:`../LanguageGuide/ControlFlow` chapter.
 
     break-statement --> ``break``
 
+.. _Statements_ContinueStatement:
 
 Continue Statement
 ~~~~~~~~~~~~~~~~~~
@@ -550,6 +564,7 @@ in the :doc:`../LanguageGuide/ControlFlow` chapter.
 
     continue-statement --> ``continue``
 
+.. _Statements_FallthroughStatement:
 
 Fallthrough Statement
 ~~~~~~~~~~~~~~~~~~~~~
@@ -584,6 +599,7 @@ in the :doc:`../LanguageGuide/ControlFlow` chapter.
 
     fallthrough-statement --> ``fallthrough``
 
+.. _Statements_ReturnStatement:
 
 Return Statement
 ~~~~~~~~~~~~~~~~

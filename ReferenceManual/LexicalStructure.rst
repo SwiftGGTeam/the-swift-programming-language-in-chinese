@@ -30,6 +30,7 @@ This chapter describes
 the lowest-level building blocks of the language,
 which are used to define the rest of the language.
 
+.. _LexicalStructure_ModuleScope:
 
 Module Scope
 ------------
@@ -43,6 +44,7 @@ consists of a series of statements.
 
 .. No formal grammar.
 
+.. _LexicalStructure_CodeBlocks:
 
 Code Blocks
 -----------
@@ -76,6 +78,7 @@ The statements inside a code block are executed in order.
 
     code-block --> ``{`` statements-OPT ``}``
 
+.. _LexicalStructure_WhitespaceAndComments:
 
 Whitespace and Comments
 -----------------------
@@ -120,6 +123,7 @@ Nesting is allowed, but the comment markers must be balanced.
    No other syntactic category refers to this one,
    and the prose is sufficient to define it completely.
 
+.. _LexicalStructure_Identifiers:
 
 Identifiers
 -----------
@@ -201,7 +205,7 @@ These names are valid identifiers within the scope of the closure.
     implicit-parameter-name --> ``$`` identifier-characters
 
 
-.. _Lexical_Operator:
+.. _LexicalStructure_Keywords:
 
 Keywords
 --------
@@ -355,6 +359,7 @@ They may also be used as identifiers.
 	}
 	This example works as of rev. 11445
 
+.. _LexicalStructure_Literals:
 
 Literals
 --------
@@ -379,6 +384,7 @@ Literals
 
 .. Note: The grammar for "literal-expression" is in "Expressions".
 
+.. _LexicalStructure_NumericLiterals:
 
 Numeric Literals
 ~~~~~~~~~~~~~~~~
@@ -488,6 +494,7 @@ otherwise it is ``Int``.
     floating-point-p --> ``p`` | ``P``
     sign --> ``+`` | ``-``
 
+.. _LexicalStructure_TextualLiterals:
 
 Textual Literals
 ~~~~~~~~~~~~~~~~~
@@ -614,6 +621,7 @@ String literals are of type ``String``.
 .. TR: Paren balancing is required by the grammar of *expression* already, so I
    omitted it in the rule above.
 
+.. _LexicalStructure_Operators:
 
 Operators
 ---------
@@ -737,8 +745,8 @@ it must have whitespace before and after it.
 
     operator --> operator-character operator-OPT
     operator --> ``..``
-    operator-character --> ``@`` | ``/`` | ``=`` | ``-`` | ``+`` 
-    operator-character --> ``*`` | ``%`` | ``<`` | ``>`` | ``!`` 
+    operator-character --> ``@`` | ``/`` | ``=`` | ``-`` | ``+``
+    operator-character --> ``*`` | ``%`` | ``<`` | ``>`` | ``!``
     operator-character --> ``&`` | ``|`` | ``^`` | ``~``
 
     binary-operator --> operator
