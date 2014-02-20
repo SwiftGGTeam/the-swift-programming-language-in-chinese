@@ -1569,7 +1569,7 @@ whenever a ``Song`` is found in the library.
    However, it does display different behavior from downcasting,
    in that upcasting always works, and so it doesn't return an optional.
 
-.. _ClassesAndStructures_Destructors:
+.. _ClassesAndStructures_TypePropertiesAndMethods:
 
 Type Properties and Methods
 ---------------------------
@@ -1578,7 +1578,7 @@ Type Properties and Methods
 
 .. see release notes from 2013-12-18 for a note about lazy initialization
 
-.. _ClassesAndStructures_OperatorFunctions:
+.. _ClassesAndStructures_Destructors:
 
 Destructor Methods
 ------------------
@@ -1729,7 +1729,7 @@ and its coins are returned to the bank.
     This example will be amended to use type properties and methods for ``Bank``
     once type properties have been implemented for classes.
 
-.. _ClassesAndStructures_TypePropertiesAndMethods:
+.. _ClassesAndStructures_OperatorFunctions:
 
 Operator Functions
 ------------------
