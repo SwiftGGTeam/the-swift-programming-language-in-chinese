@@ -184,7 +184,7 @@ The properties of an instance can be accessed using :newTerm:`dot syntax`:
 
 ``someSize.width`` refers to the ``width`` property of ``someSize``.
 Dot syntax can also be used to drill down into sub-properties
-such as the ``width`` property of a ``Rectangle``'s ``size``:
+such as the ``width`` property in the ``size`` property of a ``Rectangle``:
 
 .. testcode:: classesAndStructures
 
@@ -381,7 +381,7 @@ and defines two additional structures for working with geometric shapes:
 * ``Rect``, which defines a rectangle in terms of an origin point and a size
 
 The ``Rect`` structure also provides a computed property called ``center``.
-The current value of a ``Rect``'s center can always be determined from its current ``origin`` and ``size``,
+The current center position of a ``Rect`` can always be determined from its ``origin`` and ``size``,
 and so there is no need to actually store the center point as an explicit ``Point`` value.
 Instead, ``Rect`` defines custom getter and setter methods for a computed variable called ``center``,
 to enable you to work with the rectangle's ``center`` as if it were a real stored property.
@@ -392,7 +392,7 @@ and a width and height of ``10``.
 This is equivalent to the blue square in the diagram below.
 
 The ``square`` variable's ``center`` property is then accessed via dot syntax (``square.center``).
-This causes ``center``'s ``get`` method to be called,
+This causes the ``get`` method for ``center`` to be called,
 to retrieve the current property value.
 Rather than returning an existing value,
 this actually calculates and returns a new ``Point`` to represent the center of the square.
@@ -401,7 +401,7 @@ As can be seen above, this correctly returns a center point of ``(5, 5)``.
 The ``center`` property is then set to a new value of ``(15, 15)``.
 This moves the square up and to the right,
 to the new position shown by the orange square in the diagram below.
-Setting the ``center`` property actually calls ``center``'s ``set:`` method.
+Setting the ``center`` property actually calls the ``set:`` method for ``center``.
 This modifies the ``x`` and ``y`` values of the stored ``origin`` property,
 and moves the square to its new position.
 
@@ -1004,7 +1004,7 @@ and sets it to the result of calling ``init withTitle()`` for a specific title s
     >>> This book is called 'The Swift Programming Language'
 
 This second example declares a new constant called ``someBook``,
-and sets it to the result of ``Document``'s basic ``init()`` method.
+and sets it to the result of the basic ``init()`` method for ``Document``.
 This method delegates to the more detailed ``init withTitle()`` method,
 passing it a placeholder string value of ``[untitled]``:
 
@@ -1087,8 +1087,8 @@ This call to ``super.init()`` triggers ``Vehicle``\ 's default initializer,
 and ensures that all of the inherited properties are initialized by ``Vehicle``
 before ``Bicycle`` tries to modify them.
 
-``Vehicle``'s default value of ``maxPassengers`` is already correct for a bicycle,
-and so it is not changed within ``Bicycle``'s initializer.
+The default value of ``maxPassengers`` provided by ``Vehicle`` is already correct for a bicycle,
+and so it is not changed within the initializer method for ``Bicycle``.
 The original value of ``numberOfWheels`` is not correct, however,
 and so it is replaced by a new value of ``2``.
 
@@ -1296,7 +1296,7 @@ and passes in the new value of ``title``:
             super.init(withTitle: title)
         }
 
-As before, the value of ``bodyText`` comes from the property' default value.
+As before, the value of ``bodyText`` comes from the property's default value.
 
 Here's how this initializer could be called:
 
@@ -1319,8 +1319,8 @@ sets the ``bodyText`` property to a new ``text`` value:
 
 Because it doesn't call a superclass initializer,
 Swift inserts an implicit ``super.init()`` call at the end of the method.
-This calls ``Document``'s ``init()`` method,
-which in turn calls ``Document``'s ``init withTitle()`` method
+This calls the ``init()`` method of the ``Document`` class,
+which in turn calls the ``init withTitle()`` method of the ``Document`` class
 and sets the same placeholder title as before.
 
 Here's how this initializer could be called:
@@ -1335,8 +1335,9 @@ Here's how this initializer could be called:
     >>> Amazingly few discotheques provide jukeboxes
 
 The final initializer method, ``init withTitle() text()``,
-starts by delegating across to ``TextDocument``'s own ``init withTitle()`` method.
-This in turn delegates up to ``Document``'s ``init withTitle()`` method.
+starts by delegating across to the ``init withTitle()`` method
+provided by ``TextDocument`` itself.
+This in turn delegates up to the ``init withTitle()`` method of the superclass (``Document``).
 It then sets ``bodyText`` to the new ``text`` value.
 
 ::
@@ -1347,7 +1348,7 @@ It then sets ``bodyText`` to the new ``text`` value.
         }
 
 There's no reason why ``TextDocument`` couldn't have called up to
-``Document``'s ``init withTitle()`` method directly.
+the ``init withTitle()`` method of ``Document`` directly.
 The decision to delegate to its *own* ``init withTitle()`` method is mainly a design choice.
 If ``TextDocument`` were to gain new functionality in the future –
 perhaps to insert and update the title at the start of the body text –
@@ -1390,6 +1391,8 @@ in order to decide how it should be used.
 It can also be necessary to treat a specific instance as if it is a different
 superclass or subclass from its own class hierarchy.
 Both of these tasks are achieved using :newTerm:`type casting`.
+
+.. TODO: the wording of this para is unclear in its use of pronouns.
 
 Here's an example:
 
@@ -1455,7 +1458,7 @@ and so an instance of either class can be added to the array.
 .. note::
 
     The ``withName:`` selector has been left out of each of these initializer calls, for brevity.
-    ``Movie`` and ``Song``'s initializers both have their ``name`` value as the first parameter,
+    The initializers for ``Movie`` and ``Song`` both have their ``name`` value as the first parameter,
     and it is clear from the context that this is the correct initializer to use.
     As a result, leaving out the ``withName:`` selector does not cause any ambiguity.
 
@@ -1486,9 +1489,9 @@ This example iterates through all of the items in the ``library`` array.
 On each pass, the ``for``-``in`` loop sets the ``item`` constant
 to the next ``MediaItem`` in the array.
 
-``if item is Movie`` returns ``true`` if the current ``MediaItem``
+``item is Movie`` returns ``true`` if the current ``MediaItem``
 is an instance of the ``Movie`` type, and ``false`` if it is not.
-Similarly, ``if item is Song`` checks to see if the item is a ``Song`` instance.
+Similarly, ``item is Song`` checks to see if the item is a ``Song`` instance.
 At the end of the ``for``-``in`` loop, the values of ``movieCount`` and ``songCount``
 contain a count of how many ``MediaItem`` instances were found of each type.
 
