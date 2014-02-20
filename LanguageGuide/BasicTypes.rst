@@ -588,6 +588,20 @@ it should be modeled as a :newTerm:`class` or :newTerm:`structure`,
 rather than as a tuple.
 Classes and structures are described in detail in :doc:`ClassesAndStructures`.
 
+.. _BasicTypes_Arrays:
+
+Arrays
+------
+
+[to be written]
+
+.. _BasicTypes_Dictionaries:
+
+Dictionaries
+------------
+
+[to be written]
+
 .. _BasicTypes_Optionals:
 
 Optionals
