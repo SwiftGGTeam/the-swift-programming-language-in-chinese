@@ -1571,13 +1571,6 @@ whenever a ``Song`` is found in the library.
 
 .. _ClassesAndStructures_Destructors:
 
-Destructors
------------
-
-[to be written]
-
-.. _ClassesAndStructures_TypePropertiesAndMethods:
-
 Type Properties and Methods
 ---------------------------
 
@@ -1586,6 +1579,157 @@ Type Properties and Methods
 .. see release notes from 2013-12-18 for a note about lazy initialization
 
 .. _ClassesAndStructures_OperatorFunctions:
+
+Destructor Methods
+------------------
+
+A :newTerm:`destructor method` is a special instance method that is called when a class instance is destroyed.
+Destructor methods are written with the ``destructor`` keyword,
+in a similar way to how intializers are written with the ``init`` keyword.
+Destructor methods are only available to class types.
+
+Swift automatically destroys your instances when they are no longer needed, to free up resources.
+Swift handles the memory management of your class instances for you via
+:newTerm:`automatic reference counting` (known as :newTerm:`ARC`),
+and so there is normally no need to perform any clean-up when your instances are destroyed.
+However, there may be times when you are working with your own resources,
+and need to perform some additional clean-up yourself.
+For example, if you create a custom class to open a file and write some data to it,
+you might need to close the file when the class instance is destroyed.
+
+Class definitions can have at most one destructor method per class.
+The method does not take any parameters, and is called automatically when an instance is destroyed.
+Superclass destructors are automatically inherited by their subclasses,
+and the superclass destructor is called automatically at the end of a subclass destructor implementation.
+You are not allowed to call ``super.destructor()`` yourself.
+
+Destructor methods are still able to access the properties of the instance they are called on.
+This means that your destructor can modify its behavior based on properties of the current instance,
+such as discovering the file name of a file that needs to be closed.
+
+Here's an example of ``destructor`` in action.
+This example defines two new classes, ``Bank`` and ``Player``, for a simple game.
+The ``Bank`` class manages a limited collection of 10,000 coins:
+
+.. testcode:: destructor
+
+    (swift) class Bank {
+        var coinsInBank: Int = 10_000
+        func vendCoins(var numberOfCoinsToVend: Int) -> Int {
+            numberOfCoinsToVend = min(numberOfCoinsToVend, coinsInBank)
+            coinsInBank -= numberOfCoinsToVend
+            return numberOfCoinsToVend
+        }
+        func receiveCoins(coins: Int) {
+            coinsInBank += coins
+        }
+    }
+
+``Bank`` keeps track of the current number of coins it holds via its ``coinsInBank`` property.
+It also offers two methods – ``vendCoins()`` and ``receiveCoins()`` –
+to handle the distribution and collection of coins.
+
+``vendCoins()`` checks that there are enough coins in the bank before handing them out.
+If there are not enough coins, it returns a smaller number than the number that was requested
+(and may even return zero if there are no coins left in the bank at all).
+It declares ``numberOfCoinsToVend`` as a :ref:`variable parameter <Functions_ConstantAndVariableParameters>`,
+so that the number can be modified within the method's body
+without needing to declare a new variable.
+
+The ``receiveCoins()`` method simply adds the received number of coins back into the bank's coin store.
+
+The ``Player`` class describes a player in the game.
+Each player has a certain number of coins stored in their purse at any time.
+This is represented by the player's ``coinsInPurse`` property:
+
+.. testcode:: destructor
+
+    (swift) class Player {
+        var coinsInPurse: Int
+        val bank: Bank
+        init withBank(bank: Bank) {
+            self.bank = bank
+            coinsInPurse = bank.vendCoins(100)
+        }
+        func winCoins(coins: Int) {
+            coinsInPurse += bank.vendCoins(coins)
+        }
+        destructor() {
+            bank.receiveCoins(coinsInPurse)
+        }
+    }
+
+Each ``Player`` instance is initialized with a ``Bank`` instance,
+and keeps a reference to that bank for future use.
+The player is also given a starting allowance of 100 coins from the bank
+during initialization (or fewer than 100, if not enough are available).
+
+The ``Player`` class defines a ``winCoins()`` method,
+which tries to retrieve a certain number of coins from the bank
+and add them to the player's purse. The ``Player`` class also implements a ``destructor`` method.
+This method is called whenever a ``Player`` instance is destroyed.
+Here, the ``destructor`` method simply returns all of the player's coins to the bank.
+
+Here's how that looks in action:
+
+.. testcode:: destructor
+
+    (swift) val bankOfSwiftLand = Bank()
+    // bankOfSwiftLand : Bank = <Bank instance>
+    (swift) var playerOne: Player? = Player(withBank: bankOfSwiftLand)
+    // playerOne : Player? = <unprintable value>
+    (swift) println("A new player has joined the game with \(playerOne!.coinsInPurse) coins")
+    >>> A new player has joined the game with 100 coins
+    (swift) println("There are now \(bankOfSwiftLand.coinsInBank) coins left in the bank")
+    >>> There are now 9900 coins left in the bank
+
+A new ``Bank`` is created, and is used to initialize a new ``Player`` instance.
+This ``Player`` instance is stored in an optional ``Player`` variable called ``playerOne``.
+An optional variable is used because players can leave the game at any point.
+Using an optional gives a way to keep track of whether there is currently a player in the game.
+Because ``playerOne`` is an optional, it is qualified with an exclamation mark (``!``)
+when its ``coinsInPurse`` property is accessed to print its default number of coins.
+
+.. testcode:: destructor
+
+    (swift) playerOne!.winCoins(2_000)
+    (swift) println("Player one won 2000 coins & now has \(playerOne!.coinsInPurse) coins")
+    >>> Player one won 2000 coins & now has 2100 coins
+    (swift) println("The bank now only has \(bankOfSwiftLand.coinsInBank) coins left")
+    >>> The bank now only has 7900 coins left
+
+Here, the player has won 2,000 coins.
+Their purse now contains 2,100 coins,
+and the bank only has 7,900 coins left.
+
+.. testcode:: destructor
+
+    (swift) playerOne = .None
+    (swift) println("Player one has left the game")
+    >>> Player one has left the game
+    (swift) println("The bank now has \(bankOfSwiftLand.coinsInBank) coins")
+    >>> The bank now has 10000 coins
+
+The player has now left the game.
+This is indicated by setting the optional ``playerOne`` variable to ``.None``,
+meaning ‘no ``Player`` instance’.
+At the point that this happens, the ``Player`` instance referenced by
+the ``playerOne`` variable is destroyed.
+No other properties or variables are still referring to it,
+and so it can be destroyed in order to free up the resources it was using.
+When this happens, its ``destructor`` method is called,
+and its coins are returned to the bank.
+
+.. TODO: switch this to use a class property on the Player class for the bank,
+   or class properties and methods on Bank itself,
+   once we have support for class-level properties.
+
+.. note::
+
+    This example will be amended to use type properties and methods for ``Bank``
+    once type properties have been implemented for classes.
+
+.. _ClassesAndStructures_TypePropertiesAndMethods:
 
 Operator Functions
 ------------------
