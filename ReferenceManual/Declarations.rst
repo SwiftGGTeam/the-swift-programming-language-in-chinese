@@ -420,7 +420,7 @@ Structure declarations begin with the keyword ``struct`` and have the following 
 
 The body of a structure may contain zero or more *declarations*.
 These *declarations* may include both stored and computed properties,
-static properties, instance methods, static methods, initializer methods,
+static properties, instance methods, static methods, initializers,
 type aliases, and even other structure, class, and enumeration declarations.
 Structure declarations may not contain destructor or protocol declarations.
 For a discussion and several examples of structures
@@ -433,14 +433,14 @@ Structure types may also be extended.
 
 There are three ways create an instance of a previously declared structure:
 
-1. Call one of the initializer methods declared within the structure,
+1. Call one of the initializers declared within the structure,
    as described in :ref:`ClassesAndStructures_InitializerMethods`.
-2. If no initializer methods are declared,
-   call the structure's memberwise initializer method,
+2. If no initializers are declared,
+   call the structure's memberwise initializer,
    as described in :ref:`ClassesAndStructures_MemberwiseStructureInitializers`.
-3. If no initializer methods are declared,
+3. If no initializers are declared,
    and all properties of the structure declaration were given initial values,
-   call the structure's default initialization method,
+   call the structure's default initializer,
    as described in :ref:`ClassesAndStructures_InitializerMethods`.
 
 The process of initializing a structure's declared properties
@@ -484,7 +484,7 @@ Class declarations begin with the keyword ``class`` and have the following form:
 
 The body of a class may contain zero or more *declarations*.
 These *declarations* may include both stored and computed properties,
-class properties, instance methods, class methods, initializer methods,
+class properties, instance methods, class methods, initializers,
 a single destructor method, type aliases,
 and even other class, structure, and enumeration declarations.
 Class declarations may not contain protocol declarations.
@@ -501,7 +501,7 @@ the base class, initializers declared in the *superclass* are not.
 Swift classes do not inherit from a universal base class.
 
 Properties, methods, and initializers of a superclass may be overridden.
-That said, an initializer method must call one of its superclass's
+That said, an initializer must call one of its superclass's
 initializers before overriding any of the superclass's properties.
 
 Any initializer that does not explicitly call a superclass's initializer
@@ -518,11 +518,11 @@ Class types may also be extended.
 
 There are two ways create an instance of a previously declared class:
 
-1. Call one of the initializer methods declared within the class,
+1. Call one of the initializers declared within the class,
    as described in :ref:`ClassesAndStructures_InitializerMethods`.
-2. If no initializer methods are declared,
+2. If no initializers are declared,
    and all properties of the class declaration were given initial values,
-   call the class's default initialization method,
+   call the class's default initializer,
    as described in :ref:`ClassesAndStructures_InitializerMethods`.
 
 The process of initializing a class's declared properties
