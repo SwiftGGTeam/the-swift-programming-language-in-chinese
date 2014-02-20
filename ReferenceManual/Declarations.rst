@@ -443,10 +443,16 @@ There are three ways create an instance of a previously declared structure:
    call the structure's default initialization method,
    as described in :ref:`ClassesAndStructures_InitializerMethods`.
 
-Properties of a structure instance may be accessed using dot (``.``) syntax.
+The process of initializing a structure's declared properties
+is described in :ref:`ClassesAndStructures_Initialization`.
+
+Properties of a structure instance may be accessed using dot (``.``) syntax,
+as described in :ref:`ClassesAndStructures_AccessingProperties`.
 
 Structures are value types; instances of a structure are copied when assigned to
 variables or constants, or when passed as arguments to a function call.
+For information about value types,
+see :ref:`ClassesAndStructures_ValueTypesAndReferenceTypes`.
 
 .. TODO: Discuss generic parameter clause in the context of a struct?
 
@@ -476,17 +482,61 @@ Class declarations begin with the keyword ``class`` and have the following form:
         <#declarations#>
     }
 
-.. Classes support single inheritance;
-    a parent class must be listed as the first in the type-inheritance-clause.
-    Class properties and methods are members of the class itself.
-    Class and instance members (properties and methods) may be overridden by a subclass
-    (and use dynamic dispatch).
-    The only way to create a new instance of a class is to call one of the class's
-    initializers. What about default class initializers?
-    Initializers are not inherited by subclasses.
-    Destructors allowed only in class declarations.
-    Accessing overridden members of the base class: ``super.baseClassMember``
-    Discuss generic parameter clause in the context of a struct?
+The body of a class may contain zero or more *declarations*.
+These *declarations* may include both stored and computed properties,
+class properties, instance methods, class methods, initializer methods,
+a single destructor method, type aliases,
+and even other class, structure, and enumeration declarations.
+Class declarations may not contain protocol declarations.
+For a discussion and several examples of classes
+that include these kind of declarations,
+see :doc:`../LanguageGuide/ClassesAndStructures`.
+
+Class types may inherit from only one parent class, its *superclass*,
+but may adopt any number of protocols.
+The *superclass* must appear first in the **type-inheritance-clause**,
+followed by any *adopted protocols*.
+Although properties and methods declared in the *superclass* are inherited by
+the base class, initializers declared in the *superclass* are not.
+Swift classes do not inherit from a universal base class.
+
+Properties, methods, and initializers of a superclass may be overridden.
+That said, an initializer method must call one of its superclass's
+initializers before overriding any of the superclass's properties.
+
+Any initializer that does not explicitly call a superclass's initializer
+(or that does not call another initializer that ultimately calls a superclass's initializer)
+receives an implicit call to the superclass's default initializer
+(that is,
+a call to ``super.init()`` is implicitly inserted at the end of the initializer's declaration).
+For an extended discussion and an example of this behavior,
+see :ref:`ClassesAndStructures_SubclassingAndInitializerDelegation`.
+
+.. TODO: Need a way to refer to grammatical categories (see type-inheritance-clause, above).
+
+Class types may also be extended.
+
+There are two ways create an instance of a previously declared class:
+
+1. Call one of the initializer methods declared within the class,
+   as described in :ref:`ClassesAndStructures_InitializerMethods`.
+2. If no initializer methods are declared,
+   and all properties of the class declaration were given initial values,
+   call the class's default initialization method,
+   as described in :ref:`ClassesAndStructures_InitializerMethods`.
+
+The process of initializing a class's declared properties
+is described in :ref:`ClassesAndStructures_Initialization`.
+
+Properties of a class instance may be accessed using dot (``.``) syntax,
+as described in :ref:`ClassesAndStructures_AccessingProperties`.
+
+Classes are reference types; instances of a class are referred to, rather than copied,
+when assigned to variables or constants, or when passed as arguments to a function call.
+For information about reference types,
+see :ref:`ClassesAndStructures_ValueTypesAndReferenceTypes`.
+
+.. TODO: Discuss generic parameter clause in the context of a class?
 
 .. langref-grammar
 
