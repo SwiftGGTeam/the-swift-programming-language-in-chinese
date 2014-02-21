@@ -626,15 +626,15 @@ Here's an example, using the ``Rectangle`` class defined above:
     (swift) val rect = Rectangle()
     // rect : Rectangle = <Rectangle instance>
     (swift) rect.size = Size(width: 1.0, height: 1.0)
-    (swift) println("The rectangle's width is \(rect.size.width)")
-    >>> The rectangle's width is 1.0
+    (swift) println("The rectangle's initial width is \(rect.size.width)")
+    >>> The rectangle's initial width is 1.0
     (swift) val sameRect = rect
     // sameRect : Rectangle = <Rectangle instance>
     (swift) sameRect.size.width = 3.0
-    (swift) println("The rectangle's width is now \(sameRect.size.width)")
-    >>> The rectangle's width is now 3.0
-    (swift) println("The rectangle's width is now \(rect.size.width)")
-    >>> The rectangle's width is now 3.0
+    (swift) println("The rectangle's width via sameRect is now \(sameRect.size.width)")
+    >>> The rectangle's width via sameRect is now 3.0
+    (swift) println("The rectangle's width via rect is also \(rect.size.width)")
+    >>> The rectangle's width via rect is also 3.0
 
 This example declares a new constant called ``rect``,
 and sets it to refer to a new ``Rectangle`` instance.
