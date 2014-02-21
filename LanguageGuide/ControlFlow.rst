@@ -306,7 +306,7 @@ This example reads input from the keyboard one character at a time,
 and appends each character to a string.
 It does this using Swift's built-in ``Keyboard`` class,
 which reads keystrokes from an attached keyboard.
-The example creates a new ``Keyboard`` instance by calling its initializer method ``Keyboard()``.
+The example creates a new ``Keyboard`` instance by calling its initializer ``Keyboard()``.
 It then reads a key using the keyboard's ``read`` method.
 This causes the program to pause and wait for a keystroke before continuing.
 The keystroke's value is returned as a ``UInt8`` value,

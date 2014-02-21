@@ -810,11 +810,11 @@ There are two ways to provide initial values for your properties:
 
 1. Include an :newTerm:`initial value` as part of the property declaration
    (as described in :ref:`ClassesAndStructures_Properties`)
-2. Provide a value for the property within an :newTerm:`initializer method`
+2. Provide a value for the property within an :newTerm:`initializer`
 
 .. note::
     If you assign a default value to a property,
-    or set its initial value within an initializer method,
+    or set its initial value within an initializer,
     the value of that property is set directly, without calling any observers.
 
 .. QUESTION: is this the right place to mention this note?
@@ -828,14 +828,14 @@ There are two ways to provide initial values for your properties:
 
 .. TODO: mention that memory is automatically managed by ARC
 
-.. _ClassesAndStructures_InitializerMethods:
+.. _ClassesAndStructures_Initializers:
 
-Initializer Methods
-~~~~~~~~~~~~~~~~~~~
+Initializers
+~~~~~~~~~~~~
 
-:newTerm:`Initializer methods` are special methods
+:newTerm:`Initializers` are special methods
 that can be called when a new instance of your type is created.
-In its simplest form, an initializer method is just an instance method with no parameters,
+In its simplest form, an initializer is just an instance method with no parameters,
 written using the ``init`` keyword:
 
 .. testcode:: initialization
@@ -853,13 +853,12 @@ written using the ``init`` keyword:
 
 This example defines a new structure to store temperatures expressed in the Fahrenheit scale.
 The structure has one stored property, ``temperature``, which is of type ``Double``.
-The structure defines a single initializer method, ``init()``, with no parameters,
+The structure defines a single initializer, ``init()``, with no parameters,
 which initializes the stored temperature value to ``32.0``
 (the freezing point of water when expressed in the Fahrenheit scale).
 
-Initializer methods always begin with ``init``,
-and do not require the ``func`` keyword before their name.
-Unlike Objective-C, Swift initializer methods do not return a value.
+Initializers always begin with ``init``.
+Unlike Objective-C, Swift initializers do not return a value.
 Their primary role is to ensure that new instances of that type
 are correctly initialized before they are used for the first time.
 
@@ -879,25 +878,25 @@ The end result –
 a default value of ``32.0`` for ``temperature`` when a new instance is created –
 is the same in both cases.
 
-Swift provides a :newTerm:`default initializer method` implementation
-for any class or structure that does not provide at least one initializer method itself.
+Swift provides a :newTerm:`default initializer` implementation
+for any class or structure that does not provide at least one initializer itself.
 The default initializer simply creates a new instance
 with all of its properties set to their default values.
 You don't have to declare that you want the default initializer to be implemented –
 it is available automatically for all classes and structures without their own initializer.
 
 .. note::
-    The default initializer method for structures is provided in addition to the
+    The default initializer for structures is provided in addition to the
     :ref:`ClassesAndStructures_MemberwiseStructureInitializers` mentioned earlier in this chapter.
     The default initializer and the memberwise initializer are only provided
-    if the structure does not define at least one custom initializer method itself.
+    if the structure does not define at least one custom initializer itself.
 
 .. TODO: Add a justification?
 
-Initializer methods can take optional input parameters,
+Initializers can take optional input parameters,
 to customize the initialization process.
 The following example defines a structure to store temperatures expressed in the Celsius scale.
-It implements two custom initializer methods,
+It implements two custom initializers,
 each of which initializes a new instance of the structure
 with a value from a different temperature scale:
 
@@ -952,9 +951,9 @@ as long as is is definitely set to a value by the time the initializer has finis
 Definite Initialization
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-If your class or structure provides one or more custom initializer methods,
+If your class or structure provides one or more custom initializers,
 Swift checks these methods to make sure that all properties are fully initialized
-by the time each initializer method has done its job.
+by the time each initializer has done its job.
 This process is known as :newTerm:`definite initialization`,
 and helps to ensure that your instances are always valid before they are used.
 Swift will warn you at compile-time if your class or structure does not pass
@@ -986,7 +985,7 @@ which uses a default ``title`` value of ``[untitled]`` if none is specified:
     The ``init withTitle()`` method refers to the instance's ``title`` property as ``self.title``,
     rather than simply as ``title``.
     This is required to differentiate between the *variable property* called ``title``,
-    and the *initializer method parameter* called  ``title``.
+    and the *initializer parameter* called ``title``.
     The ``self`` prefix would not be required if their names were different.
     The use of ``self`` before the property name does not affect
     the way in which the property is accessed or set –
@@ -1014,8 +1013,8 @@ passing it a placeholder string value of ``[untitled]``:
     (swift) println("Some unknown book is called '\(someBook.title)'")
     >>> Some unknown book is called '[untitled]'
 
-Both of these initializer methods ensure that the value of ``title``
-is set to a valid string before the method ends.
+Both of these initializers ensure that the value of ``title``
+is set to a valid string before the initializer ends.
 This means that the ``Document`` class passes the ‘definite initialization’ test mentioned above.
 
 .. _ClassesAndStructures_Inheritance:
@@ -1074,20 +1073,20 @@ and is able to tailor those characteristics (and add new ones) to suit its needs
     Any classes you define without specifying a superclass
     will automatically become base classes for you to build upon.
 
-The ``Bicycle`` class declares an initializer method, ``init()``,
+The ``Bicycle`` class declares an initializer called ``init()``
 to set up its tailored characteristics.
-This initializer method first calls ``super.init()``,
+This initializer first calls ``super.init()``,
 which calls the ``init()`` method for ``Bicycle``\ 's superclass, ``Vehicle``.
 
-Although ``Vehicle`` does not have an explicit initializer method itself,
-it still has an implicit default initializer method,
-as described in :ref:`ClassesAndStructures_InitializerMethods`.
+Although ``Vehicle`` does not have an explicit initializer itself,
+it still has an implicit default initializer,
+as described in :ref:`ClassesAndStructures_Initializers`.
 This call to ``super.init()`` triggers ``Vehicle``\ 's default initializer,
 and ensures that all of the inherited properties are initialized by ``Vehicle``
 before ``Bicycle`` tries to modify them.
 
 The default value of ``maxPassengers`` provided by ``Vehicle`` is already correct for a bicycle,
-and so it is not changed within the initializer method for ``Bicycle``.
+and so it is not changed within the initializer for ``Bicycle``.
 The original value of ``numberOfWheels`` is not correct, however,
 and so it is replaced by a new value of ``2``.
 
@@ -1176,7 +1175,7 @@ This example declares a new subclass of ``Vehicle``, called ``Car``.
 ``Car`` declares a new Boolean property called ``isConvertible``,
 in addition to the properties it inherits from ``Vehicle``.
 This property defaults to ``false``, as most cars are not convertibles.
-``Car`` also has a custom initializer method,
+``Car`` also has a custom initializer,
 which sets the maximum number of passengers to ``5``,
 and the default number of wheels to ``4``.
 
@@ -1203,14 +1202,14 @@ and returns the complete description.
 Subclassing and Initializer Delegation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Swift classes do not automatically inherit initializer methods from their parent classes.
+Swift classes do not automatically inherit initializers from their parent classes.
 This behavior is different from Objective-C, where initializers are inherited by default.
 Swift's avoidance of automatic initializer inheritance ensures that
 subclasses are able to control exactly how they can be instantiated.
 
 To help with this,
 Swift inserts an implicit call to ``super.init()``
-at the end of any subclass initializer method
+at the end of any subclass initializer
 that does not either call a superclass initializer itself,
 or hand off to a same-class initializer that ultimately calls a superclass initializer.
 This ensures that properties of the parent class
@@ -1254,7 +1253,7 @@ Here's how it looks in Swift code:
 
     }
 
-The first initializer method, ``init()``, takes no parameters at all.
+The first initializer, ``init()``, takes no parameters at all.
 The curly braces after the parentheses define an empty code block for the method:
 
 ::
@@ -1285,7 +1284,7 @@ it does not get a default initializer implementation for ``init()``.
 Providing an empty ``init()`` definition means that there is
 still an ``init()`` method to call when a new document is created via basic initializer syntax.
 
-The second initializer method, ``init withTitle()``,
+The second initializer, ``init withTitle()``,
 calls the superclass ``init withTitle()`` method from ``Document``,
 and passes in the new value of ``title``:
 
@@ -1307,7 +1306,7 @@ Here's how this initializer could be called:
     >>> Write something please:
     >>> [replace me]
 
-The third initializer method, ``init withText()``,
+The third initializer, ``init withText()``,
 sets the ``bodyText`` property to a new ``text`` value:
 
 ::
@@ -1333,7 +1332,7 @@ Here's how this initializer could be called:
     >>> [untitled]:
     >>> Amazingly few discotheques provide jukeboxes
 
-The final initializer method, ``init withTitle() text()``,
+The final initializer, ``init withTitle() text()``,
 starts by delegating across to the ``init withTitle()`` method
 provided by ``TextDocument`` itself.
 This in turn delegates up to the ``init withTitle()`` method of the superclass (``Document``).
@@ -1422,13 +1421,13 @@ This example defines a new base class called ``MediaItem``.
 This class provides basic functionality for any kind of item that might appear
 in a digital media library.
 Specifically, it declares a ``name`` property of type ``String``,
-and an ``init withName()`` initializer method.
+and an ``init withName()`` initializer.
 (It is assumed that all media items, including all movies and songs, will have a name.)
 
 The example also defines two subclasses of ``MediaItem``.
 The first subclass, ``Movie``, encapsulates additional information about a movie or film.
 It adds a ``director`` property on top of the base ``MediaItem`` class,
-with a corresponding initializer method.
+with a corresponding initializer.
 The second subclass, ``Song``, adds an ``artist`` property and initializer
 on top of the base class.
 

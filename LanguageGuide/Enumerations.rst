@@ -338,7 +338,7 @@ Properties and Methods
 
 Swift enumerations also support many of the features described in :doc:`ClassesAndStructures`:
 
-* :newTerm:`initializer methods`, to provide a default enumeration member
+* :newTerm:`initializers`, to provide a default enumeration member
 * :newTerm:`computed properties`, to provide additional information about the current enumeration member, and
 * :newTerm:`instance methods`, to provide utility functionality
 
@@ -537,8 +537,9 @@ a textual description of the card.
 The ``description`` property uses optional binding to check if there is
 a second value to display, and inserts addition description detail if so.
 
-Because ``BlackjackCard`` is a structure with no custom initializer methods,
-it is given an implicit default memberwise initializer method.
+Because ``BlackjackCard`` is a structure with no custom initializers,
+it is given an implicit
+:ref:`memberwise initializer <ClassesAndStructures_MemberwiseStructureInitializers>`.
 This is used to initialize a new constant called ``theAceOfSpades``.
 Even though ``Rank`` and ``Suit`` are embedded within ``BlackjackCard``,
 their type can still be inferred from the context,
