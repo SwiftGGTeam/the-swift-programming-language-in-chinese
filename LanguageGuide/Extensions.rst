@@ -70,6 +70,30 @@ to provide basic support for working with distance units:
 Initializers
 ------------
 
+Extensions can be used to add new initializers to existing types.
+This enables you to extend the basic ``String`` type
+to be constructable with an instance of your own custom types,
+for use with string interpolation:
+
+.. TODO: make this reference to string interpolation be a link to
+   the appropriate section of the Strings and Characters section once it is written.
+
+.. testcode:: extendingComputedProperties
+
+    (swift) struct Point {
+        var x = 0.0, y = 0.0
+    }
+    (swift) extension String {
+        init(point: Point) {
+            self = "(\(point.x), \(point.y))"
+        }
+    }
+    (swift) val somePoint = Point(3.0, 5.0)
+    // somePoint : Point = Point(3.0, 5.0)
+    (swift) println("The point is at \(somePoint)")
+    >>> The point's description is (3.0, 5.0)
+    
+
 .. construct a String with your own type for easy string interpolation
 
 Instance Methods
