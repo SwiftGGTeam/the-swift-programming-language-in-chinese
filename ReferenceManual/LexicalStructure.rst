@@ -557,11 +557,8 @@ The interpolated expression must not contain
 an unescaped double quote ("),
 an unescaped backslash (\),
 a carriage return, or a line feed.
-
-.. TR: How is the expression stringified?
-   Is there a protocol we can say it must conform to?
-   Either that, or there needs to be a constructor
-   on String that accepts its type.
+The expression must evaluate to a type that
+has a corresponding ``String`` initializer.
 
 For example, all the following have the same value: ::
 
