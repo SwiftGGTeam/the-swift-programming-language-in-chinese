@@ -246,8 +246,8 @@ or :newTerm:`constant stored properties` (introduced by the ``val`` keyword).
 Constant stored properties are very similar to constant named values,
 in that their value cannot be changed once it has been initialized.
 Constant stored properties have slightly more flexibility, however,
-in that their value can be changed at any point until the instance they belong to
-has completed its initialization.
+in that their value can be changed at any point until the initializer for the class
+they belong to has completed its initialization.
 (Instance initialization is described in more detail in :ref:`ClassesAndStructures_Initialization`.)
 
 .. _ClassesAndStructures_StoredPropertyObservers:
