@@ -98,7 +98,7 @@ so ``123456789[0]`` returns ``9``, whereas ``123456789[1]`` returns ``8``, and s
             for _ in 0...digitIndex {
                 decimalBase *= 10
             }
-            return (self / decimalBase) - ((self / (decimalBase * 10)) * 10)
+            return (self / decimalBase) % 10
         }
     }
     (swift) 123456789[0]
