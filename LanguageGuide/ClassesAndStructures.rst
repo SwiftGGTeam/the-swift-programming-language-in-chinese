@@ -27,6 +27,7 @@
     * Embedded classes and structures
     * Bound functions
     * @conversion functions for converting between types
+    * Subscript getters and setters
 
 Classes and Structures
 ======================
@@ -1993,6 +1994,15 @@ and associativity settings can be found in the :doc:`../ReferenceManual/index`.)
    This is being tracked as rdar://16061044.
    If this Radar is fixed, the operator declaration above should be split over multiple lines
    for consistency with the rest of the code.
+
+.. _ClassesAndStructures_Subscripting:
+
+Subscripting
+------------
+
+[to be written]
+
+.. NOTE: you can subscript on any type, including a range (IntGeneratorType)
 
 .. refnote:: References
 
