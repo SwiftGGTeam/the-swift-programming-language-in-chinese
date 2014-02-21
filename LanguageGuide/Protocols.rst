@@ -39,7 +39,6 @@ Here's an example:
     // ironMan : Person = <Person instance>
     (swift) println("\(ironMan.name)'s full name is \(ironMan.fullName)")
     >>> Robert Downey's full name is Robert Downey Jr.
-
     (swift) class Ship : FullyNamed {
         var prefix: String?
         var name: String
@@ -53,6 +52,7 @@ Here's an example:
         }
     }
     (swift) var starship = Ship(withName: "Enterprise", prefix: "USS")
+    // starship : Ship = <Ship instance>
 
 Declaring a Protocol
 --------------------
