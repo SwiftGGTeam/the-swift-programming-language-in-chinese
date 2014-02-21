@@ -308,7 +308,7 @@ The class also declares a variable stored property called ``previousTotalSteps``
     They are only called when the property's value is set
     outside of an initialization context.
 
-The ``willSet`` observer method for ``totalSteps`` is called
+The ``willSet`` observer for ``totalSteps`` is called
 whenever the property is assigned a new value.
 This is true even if the new value is the same as the current value.
 The stored value of ``totalSteps`` has not yet been updated by the time that ``willSet`` is called.
@@ -317,16 +317,16 @@ This example takes advantage of the fact that ``totalSteps`` has not yet been up
 and copies the old value of ``totalSteps`` into the ``previousTotalSteps`` variable
 before the new value is assigned.
 
-The ``willSet`` observer method is always passed the upcoming new value of the property,
-and can use it to perform calculations during the ``willSet`` method if it wishes.
+The ``willSet`` observer is always passed the upcoming new value of the property,
+and can use it to perform calculations if it wishes.
 You can specify any name you like for this parameter.
 In the example above, it has been named ‘``newTotalSteps``’,
 although the parameter is not actually used in this example.
-(If you leave out this parameter in your declaration of ``willSet``,
+(If you leave out this parameter in your implementation of ``willSet``,
 it will still be made available to your code, with a default parameter name of ``value``.)
 
 Once the value of the ``totalSteps`` property has been updated,
-its ``didSet`` observer method is called.
+its ``didSet`` observer is called.
 In this example, the ``didSet`` observer looks at the new value of ``totalSteps``,
 and compares it against the previous value.
 If the total number of steps has increased,
@@ -816,8 +816,6 @@ There are two ways to provide initial values for your properties:
     If you assign a default value to a property,
     or set its initial value within an initializer method,
     the value of that property is set directly, without calling any observers.
-    Any ``willSet`` or ``didSet`` methods that observe the setting of that property
-    will not be called at the point that it is initialized.
 
 .. QUESTION: is this the right place to mention this note?
 
