@@ -557,8 +557,8 @@ The interpolated expression must not contain
 an unescaped double quote ("),
 an unescaped backslash (\),
 a carriage return, or a line feed.
-The expression must evaluate to a type that
-has a corresponding ``String`` initializer.
+The expression must evaluate to a value of a type
+that the ``String`` class has an initializer for.
 
 For example, all the following have the same value: ::
 
