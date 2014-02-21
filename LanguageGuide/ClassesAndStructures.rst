@@ -349,6 +349,10 @@ which do not actually store a value.
 Instead, they provide a :newTerm:`getter method`, and an optional :newTerm:`setter method`,
 to retrieve and set other properties and values indirectly.
 
+.. QUESTION: should this be 'getter method' and 'setter method', or just 'getter' and 'setter'?
+   If we're not calling initializers, destructors and observers 'methods',
+   maybe we shouldn't do so here either?
+
 .. testcode:: classesAndStructures
 
     (swift) struct Point {
