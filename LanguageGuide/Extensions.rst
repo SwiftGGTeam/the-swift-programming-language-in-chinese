@@ -14,17 +14,15 @@ class, structure or enumeration,
 even if you do not have access to the source code for the existing type.
 Extensions are similar to Objective-C categories, but have many more capabilities.
 
-Extensions can add:
+Extensions can:
 
-* computed properties
-* initializers
-* instance methods
-* type methods
-* computed type properties
-* subscripting, and
-* embedded types
+* add computed properties and computed type properties
+* define instance methods and type methods
+* provide new initializers
+* implement subscripting
+* define and use new embedded types
 
-In addition, extensions can use the capabilities listed above to
+In addition, extensions can use these capabilities to
 make an existing type conform to a protocol.
 This process is covered in the :doc:`Protocols` chapter.
 
@@ -38,7 +36,8 @@ This process is covered in the :doc:`Protocols` chapter.
 Computed Properties
 -------------------
 
-Extensions can add new computed properties to existing types.
+Extensions can add new :ref:`computed properties <ClassesAndStructures_ComputedProperties>`
+to existing types.
 This example adds five new computed properties to Swift's built-in ``Double`` type,
 to provide basic support for working with distance units:
 
@@ -59,21 +58,55 @@ to provide basic support for working with distance units:
     // threeFeet : Double = 0.9144
     (swift) println("Three feet is \(threeFeet) meters")
     >>> Three feet is 0.9144 meters
+
+These computed properties give a way to express that a ``Double`` value
+should be considered as a certain unit of length.
+Although they are implemented as computed properties,
+they can be accessed via dot syntax,
+which gives a neat way to append them onto a number to perform distance conversions.
+
+In this example, a ``Double`` value of ``1.0`` is considered to represent ‘one meter’.
+This is why the ``m`` computed property returns ``self`` –
+the expression ``1.m`` is considered to calculate a ``Double`` value of ``1.0``.
+
+Other units require some conversion to be expressed as a value measured in meters.
+One kilometer is the same as 1,000 meters,
+so the ``km`` computed property multiplies the value by ``1_000.00``
+to convert into a number expressed in meters.
+Similarly, there are 3.28024 feet in a meter,
+and so the ``ft`` computed property divides the underlying ``Double`` value
+by ``3.28024``, to convert it from feet to meters.
+
+These computed properties are read-only,
+and so they have been expressed in
+:ref:`shorthand syntax <ClassesAndStructures_ShorthandGetterAndSetterDeclarations>` for brevity.
+Their return value is inferred to be of type ``Double``,
+and can be used within mathematical calculations wherever a ``Double`` is accepted:
+
+.. testcode:: extendingComputedProperties
+
     (swift) var aMarathon = 42.km + 195.m
     // aMarathon : Double = 42195.0
     (swift) println("A marathon is \(aMarathon) meters long")
     >>> A marathon is 42195.0 meters long
 
-.. …but not stored properties
-.. …and you can't add observers to an existing property of any type
+.. note::
+
+    Extensions can add new computed properties,
+    but they cannot add :ref:`stored properties <ClassesAndStructures_StoredProperties>`,
+    or add :ref:`stored property observers <ClassesAndStructures_StoredPropertyObservers>`
+    to existing stored properties.
 
 Initializers
 ------------
 
-Extensions can be used to add new initializers to existing types.
-This enables you to extend the basic ``String`` type
-to be constructable with an instance of your own custom types,
-for use with string interpolation:
+Extensions can add new :ref:`initializers <ClassesAndStructures_Initializers>` to existing types.
+This enables you to extend other types to accept
+your own custom types as initializer parameters.
+
+This approach can be used to extend the basic ``String`` type
+to accept an instance of your own custom type as an initializer parameter,
+for use with string interpolation.
 
 .. TODO: make this reference to string interpolation be a link to
    the appropriate section of the Strings and Characters section once it is written.
@@ -90,12 +123,45 @@ for use with string interpolation:
     }
     (swift) val somePoint = Point(3.0, 5.0)
     // somePoint : Point = Point(3.0, 5.0)
-    (swift) println("The point is at \(somePoint)")
-    >>> The point's description is (3.0, 5.0)
+    (swift) val pointDescription = String(somePoint)
+    // pointDescription : String = "(3.0, 5.0)"
+
+This example defines a new structure called ``Point`` to represent an ``(x, y)`` co-ordinate.
+It also extends ``String`` to add a new initializer implementation,
+which accepts a single ``Point`` instance as an initialization parameter.
+The initializer's implementation creates a string containing the two point values
+expressed within parentheses with a comma and a space between them –
+which in this case gives a string value of ``"(3.0, 5.0)"``.
+
+The new initializer can now be used to construct a ``String`` using initializer syntax
+by passing in a point, such as with ``String(somePoint)`` above.
+
+Now that a ``String`` can be initialized with a ``Point``,
+you can use ``Point`` instances within string interpolation syntax
+to incorporate their values as part of a longer string:
+
+.. testcode:: extendingComputedProperties
+
+    (swift) val anotherPoint = Point(-2.0, 6.0)
+    // anotherPoint : Point = Point(-2.0, 6.0)
+    (swift) println("anotherPoint's value is \(anotherPoint)")
+    >>> anotherPoint's value is (-2.0, 6.0)
+
+Whenever string interpolation discovers an instance of a certain type,
+it checks to see if ``String`` has an initializer that accepts instances of that type.
+In this case, it successfully finds a ``String`` initializer that accepts ``Point`` instances;
+creates a new ``String`` using the initializer;
+and inserts this new string into the interpolated string.
+
+.. note::
+
+    Defining multiple initializers for a given type,
+    and choosing which one to use based on the type of parameter passed to the initializer,
+    is known as :newTerm:`initializer overloading`.
+
+.. QUESTION: You can use 'self' in this way for structs and enums.
+   How might you do this kind of construction for a class?
     
-
-.. construct a String with your own type for easy string interpolation
-
 Instance Methods
 ----------------
 
@@ -108,7 +174,8 @@ Computed Type Properties
 Subscripting
 ------------
 
-Extensions can add new forms of subscripting to an existing type.
+Extensions can add new forms of :ref:`subscripting <ClassesAndStructures_Subscripting>`
+to an existing type.
 This example adds an integer subscript operator to Swift's built-in ``Int`` type.
 This subscript operator ``[n]`` returns the decimal digit ``n`` places in
 from the right of the number,
