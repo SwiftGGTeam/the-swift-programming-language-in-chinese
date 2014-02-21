@@ -1062,7 +1062,7 @@ The ``Bicycle`` class is defined by placing the name of its base class – ``Veh
         }
     }
 
-In this example, ``Bicycle`` is said to be :newTerm:`subclassed` from ``Vehicle``, 
+In this example, ``Bicycle`` is said to be a :newTerm:`subclass` of ``Vehicle``, 
 and ``Vehicle`` is said to be the :newTerm:`superclass` of ``Bicycle``.
 The new ``Bicycle`` class automatically gains all of the characteristics of ``Vehicle``,
 and is able to tailor those characteristics (and add new ones) to suit its needs.
