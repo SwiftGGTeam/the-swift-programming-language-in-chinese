@@ -30,5 +30,4 @@ Internal Chapters
     :maxdepth: 1
 
     ReplacementRules
-    LanguageGuide/StyleGuide
     LanguageGuide/LanguageTour
