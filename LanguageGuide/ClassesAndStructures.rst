@@ -916,6 +916,8 @@ with a value from a different temperature scale:
     (swift) var freezingPointOfWater = Celsius(withKelvin: -273.15)
     // freezingPointOfWater : Celsius = Celsius(0.0)
 
+.. TODO: mention that initializers can be written in either function syntax.
+
 The value of a constant ``val`` property can be modified at any point during initialization,
 as long as is is definitely set to a value by the time the initializer has finished:
 
