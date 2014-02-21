@@ -1578,13 +1578,13 @@ Type Properties and Methods
 
 .. _ClassesAndStructures_Destructors:
 
-Destructor Methods
-------------------
+Destructors
+-----------
 
-A :newTerm:`destructor method` is a special instance method that is called when a class instance is destroyed.
-Destructor methods are written with the ``destructor`` keyword,
+A :newTerm:`destructor` is a special instance method that is called when a class instance is destroyed.
+Destructors are written with the ``destructor`` keyword,
 in a similar way to how intializers are written with the ``init`` keyword.
-Destructor methods are only available on class types.
+Destructors are only available on class types.
 
 Swift automatically destroys your instances when they are no longer needed, to free up resources.
 Swift handles the memory management of your class instances for you via
@@ -1595,13 +1595,13 @@ and need to perform some additional clean-up yourself.
 For example, if you create a custom class to open a file and write some data to it,
 you might need to close the file when the class instance is destroyed.
 
-Class definitions can have at most one destructor method per class.
+Class definitions can have at most one destructor per class.
 The method does not take any parameters, and is called automatically when an instance is destroyed.
 Superclass destructors are automatically inherited by their subclasses,
 and the superclass destructor is called automatically at the end of a subclass destructor implementation.
 You are not allowed to call ``super.destructor()`` yourself.
 
-Destructor methods are still able to access the properties of the instance they are called on.
+Destructors are still able to access the properties of the instance they are called on.
 This means that your destructor can modify its behavior based on properties of the current instance,
 such as discovering the file name of a file that needs to be closed.
 
@@ -1667,9 +1667,9 @@ some specified number of coins from the bank during initialization
 The ``Player`` class defines a ``winCoins()`` method,
 which tries to retrieve a certain number of coins from the bank
 and add them to the player's purse.
-The ``Player`` class also implements a ``destructor`` method.
-This method is called whenever a ``Player`` instance is destroyed.
-Here, the ``destructor`` method simply returns all of the player's coins to the bank.
+The ``Player`` class also implements a ``destructor``,
+which is called whenever a ``Player`` instance is destroyed.
+Here, the ``destructor`` simply returns all of the player's coins to the bank.
 
 Here's how that looks in action:
 
@@ -1718,7 +1718,7 @@ At the point that this happens, the ``Player`` instance referenced by
 the ``playerOne`` variable is destroyed.
 No other properties or variables are still referring to it,
 and so it can be destroyed in order to free up the resources it was using.
-When this happens, its ``destructor`` method is called,
+When this happens, its ``destructor`` is called,
 and its coins are returned to the bank.
 
 .. TODO: switch Bank to be a class rather than a structure
