@@ -138,9 +138,9 @@ The syntax for creating instances is very similar for both structures and classe
 
 .. testcode:: classesAndStructures
 
-    (swift) var someSize = Size()
+    (swift) val someSize = Size()
     // someSize : Size = Size(0.0, 0.0)
-    (swift) var someRectangle = Rectangle()
+    (swift) val someRectangle = Rectangle()
     // someRectangle : Rectangle = <Rectangle instance>
 
 Structures and classes both use :newTerm:`initializer syntax` when creating new instances.
