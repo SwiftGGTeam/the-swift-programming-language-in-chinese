@@ -91,10 +91,14 @@ Both place their entire definition within a pair of braces:
 
 Whenever you define a new class or structure,
 you are effectively defining a brand new Swift type.
-Custom classes and structures should be given ``UpperCamelCase`` names
+Types should be given ``UpperCamelCase`` names
 (such as ``SomeClass`` and ``SomeStructure`` here),
 to match the capitalization of standard Swift types
-(such as ``String``, ``Int`` and ``Bool``).
+(such as ``String``, ``Int``, and ``Bool``).
+Named values, functions, and methods should always be given
+``lowerCamelCase`` names
+(such as ``numberOfInterations``, ``allowedEntry``, and ``contentHeight``)
+to differentiate them from type names.
 
 .. _ClassesAndStructures_Properties:
 
