@@ -264,13 +264,13 @@ The following keywords are reserved and may not be used as identifiers.
 ``func``
 ``import``
 ``init``
-``let``
 ``metatype``
 ``protocol``
 ``struct``
 ``subscript``
 ``type``
 ``typealias``
+``val``
 ``var``
 ``where``
 
@@ -350,6 +350,8 @@ They may also be used as identifiers.
 ``prefix``
 ``infix``
 ``postfix``
+``inout``
+``mutating``
 
 .. TR: Are 'associativity', 'precedence', 'left', 'right', 'none' contextual keywords?
 	For instance, in operators.swift, we find the following example:
