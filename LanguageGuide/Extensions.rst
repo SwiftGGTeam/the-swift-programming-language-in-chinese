@@ -41,7 +41,7 @@ to existing types.
 This example adds five new computed properties to Swift's built-in ``Double`` type,
 to provide basic support for working with distance units:
 
-.. testcode:: extendingComputedProperties
+.. testcode:: extensionsComputedProperties
 
     (swift) extension Double {
         var km: Double { return self * 1_000.00 }
@@ -83,7 +83,7 @@ and so they have been expressed in
 Their return value is inferred to be of type ``Double``,
 and can be used within mathematical calculations wherever a ``Double`` is accepted:
 
-.. testcode:: extendingComputedProperties
+.. testcode:: extensionsComputedProperties
 
     (swift) var aMarathon = 42.km + 195.m
     // aMarathon : Double = 42195.0
@@ -104,6 +104,12 @@ Extensions can add new :ref:`initializers <ClassesAndStructures_Initializers>` t
 This enables you to extend other types to accept
 your own custom types as initializer parameters.
 
+.. note::
+
+    Extensions can add new initializers to classes, but they cannot add
+    a :ref:`destructor <ClassesAndStructures_Destructors>`.
+    Destructors must always be provided by the original class implementation.
+
 This approach can be used to extend the basic ``String`` type
 to accept an instance of your own custom type as an initializer parameter,
 for use with string interpolation.
@@ -111,7 +117,7 @@ for use with string interpolation.
 .. TODO: make this reference to string interpolation be a link to
    the appropriate section of the Strings and Characters section once it is written.
 
-.. testcode:: extendingComputedProperties
+.. testcode:: extensionsInitializers
 
     (swift) struct Point {
         var x = 0.0, y = 0.0
@@ -140,30 +146,86 @@ Now that a ``String`` can be initialized with a ``Point``,
 you can use ``Point`` instances within string interpolation syntax
 to incorporate their values as part of a longer string:
 
-.. testcode:: extendingComputedProperties
+.. testcode:: extensionsInitializers
 
     (swift) val anotherPoint = Point(-2.0, 6.0)
     // anotherPoint : Point = Point(-2.0, 6.0)
     (swift) println("anotherPoint's value is \(anotherPoint)")
     >>> anotherPoint's value is (-2.0, 6.0)
 
-Whenever string interpolation discovers an instance of a certain type,
+Whenever string interpolation discovers an instance in the string,
 it checks to see if ``String`` has an initializer that accepts instances of that type.
 In this case, it successfully finds a ``String`` initializer that accepts ``Point`` instances;
 creates a new ``String`` using the initializer;
 and inserts this new string into the interpolated string.
+(Defining multiple initializers,
+and choosing which one to use based on the type of parameter passed to the initializer,
+is known as :newTerm:`initializer overloading`.)
 
 .. note::
 
-    Defining multiple initializers for a given type,
-    and choosing which one to use based on the type of parameter passed to the initializer,
-    is known as :newTerm:`initializer overloading`.
+    If you provide a new initializer via an extension,
+    you are still responsible for making sure that each instance is fully initialized
+    once the initializer has completed, as described in
+    :ref:`ClassesAndStructures_DefiniteInitialization`.
+    Depending on the type you are extending, you may need to
+    :ref:`delegate to another initializer <ClassesAndStructures_InitializerDelegation>` or
+    :ref:`call a superclass initializer <ClassesAndStructures_SubclassingAndInitializerDelegation>`
+    at the end of your own initializer,
+    to ensure that all instance properties are fully initialized.
 
 .. QUESTION: You can use 'self' in this way for structs and enums.
    How might you do this kind of construction for a class?
     
 Instance Methods
 ----------------
+
+Extensions can add new :ref:`instance methods <ClassesAndStructures_InstanceMethods>`
+to an existing type:
+
+.. testcode:: extensionsInstanceMethods
+
+    (swift) extension String {
+        func toSpooky() -> String {
+            var i = 0
+            var spookyVersion = ""
+            for scalar in self.chars {
+                spookyVersion += i % 2 == 0 ? scalar.uppercase : scalar.lowercase
+                ++i
+            }
+            return spookyVersion
+        }
+    }
+
+This example adds a new ``String`` instance method called ``toSpooky()``.
+This new method is now available to any instances of ``String``.
+The method returns a spookier version of the original string,
+by converting odd-numbered characters to uppercase,
+and even-numbered characters to lowercase:
+
+.. testcode:: extensionsInstanceMethods
+
+    (swift) val notVerySpooky = "woooooooooooo, i am a ghost!"
+    // notVerySpooky : String = "woooooooooooo, i am a ghost!"
+    (swift) val considerablyMoreSpooky = notVerySpooky.toSpooky()
+    // considerablyMoreSpooky : String = "WoOoOoOoOoOoO, i aM A GhOsT!"
+
+Instance methods added via an extension can also modify the instance itself:
+
+.. testcode:: extensionsInstanceMethods
+
+    (swift) extension Int {
+        mutating func shiftRight(numberOfDecimalPlaces: Int) {
+            for _ in 0...numberOfDecimalPlaces {
+                self /= 10
+            }
+        }
+    }
+    (swift) var someInt = 123_456
+    // someInt : Int = 123456
+    (swift) someInt.shiftRight(3)
+    (swift) println("someInt is now \(someInt)")
+    >>> someInt is now 123
 
 Type Methods
 ------------
@@ -179,9 +241,14 @@ to an existing type.
 This example adds an integer subscript operator to Swift's built-in ``Int`` type.
 This subscript operator ``[n]`` returns the decimal digit ``n`` places in
 from the right of the number,
-so ``123456789[0]`` returns ``9``, whereas ``123456789[1]`` returns ``8``, and so on:
+so:
 
-.. testcode:: extendingComputedProperties
+* ``123456789[0]`` returns ``9``
+* ``123456789[1]`` returns ``8``
+
+…and so on:
+
+.. testcode:: extensionsSubscripting
 
     (swift) extension Int {
         subscript(digitIndex: Int) -> Int {
