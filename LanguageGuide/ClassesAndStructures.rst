@@ -874,7 +874,7 @@ ____________________________________
 For class instance methods, the ``self`` parameter is a *reference* to the instance,
 and can be used to retrieve and set its properties:
 
-.. testcode:: self
+.. testcode:: selfClasses
 
     (swift) class BankAccount {
         var balance: Double = 0.0
@@ -909,7 +909,7 @@ You can opt in to this behavior by placing the ``mutating`` keyword before the `
 ‘Mutating’ in this context means ‘making a change’, much as it does in English –
 effectively, the method is ‘mutating’ the ``Point`` instance:
 
-.. testcode:: self
+.. testcode:: selfStructures
 
     (swift) struct Point {
         var x = 0.0, y = 0.0
