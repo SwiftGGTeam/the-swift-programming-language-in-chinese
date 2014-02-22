@@ -137,6 +137,9 @@ Variable Declaration
     Eventually, variable-specifier will be allowed for the other two forms of the grammar
     (those that declare variable with computed values).
 
+.. TODO: Update the grammar for getter/setters/didSet/willSet.
+    See: <rdar://problem/15966905> [Craig feedback] Consider "juxtaposed" brace enclosed property syntax
+
 .. _Declarations_ValueDeclaration:
 
 Value Declaration
