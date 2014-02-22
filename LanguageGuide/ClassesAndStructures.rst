@@ -97,7 +97,7 @@ to match the capitalization of standard Swift types
 (such as ``String``, ``Int``, and ``Bool``).
 Named values, functions, and methods should always be given
 ``lowerCamelCase`` names
-(such as ``numberOfInterations``, ``allowedEntry``, and ``contentHeight``)
+(such as ``allowedEntry`` and ``contentHeight``)
 to differentiate them from type names.
 
 .. _ClassesAndStructures_Properties:
