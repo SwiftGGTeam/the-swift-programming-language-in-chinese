@@ -2,22 +2,6 @@ Types
 =====
 
 .. TODO: Things to discuss/cover in this chapter:
-    Type inference behavior of Swift (see notes below in 'Type Inference')
-    Fully-typed (or fully-specified) types (see notes below in 'Fully-Typed Types')
-    Type safety; static and dynamic typing:
-        Avoid talking about "strong" vs "weak" typing
-        in favor of a discussion of type safety.
-        Much of that discussion belongs in the Language Guide in introductory material---
-        once you have that information, the brief discussions here will just make sense.
-        Swift is a statically typed language with some dynamic features. But, again,
-        the static/dynamic discussion doesn't really belong in the Reference Manual.
-        In the Reference Manual,
-        tend toward describing actual behaviors that involve type safety.
-    Type inheritance:
-        It will show up here because we need to say when it makes sense
-        and what can inherit what. Bring it up as needed,
-        but don't devote a lot of prose to it. Likewise for value vs reference types.
-        A more general and thorough discussion belongs in the Language Guide.
     Type attributes? (Waiting to find out if should document any of these)
 
 .. NOTE: Don't mention materializability at all.
@@ -100,9 +84,6 @@ Type annotations may contain an optional list of type attributes before the type
 
     type-annotation --> ``:`` attribute-sequence-OPT type
 
-.. NOTE: Renamed this back to type-annotation (from type-specifier),
-    because "type annotation" is the standard way of talking about
-    decorating a value/expression (term) with type information.
 
 .. _Types_TypeIdentifier:
 
@@ -153,6 +134,7 @@ that is declared in the ``ExampleModule`` module.
 Tuple Type
 ----------
 
+.. write-me:: Waiting for design decisions from compiler team. See notes below.
 
 .. langref-grammar
 
@@ -196,6 +178,7 @@ Tuple Type
 Function Type
 -------------
 
+.. write-me:: Waiting for design decisions from compiler team. See notes below.
 
 .. langref-grammar
 
@@ -235,6 +218,7 @@ Function Type
 Array Type
 ----------
 
+.. write-me:: Waiting for design decisions from compiler team. See notes below.
 
 .. langref-grammar
 
@@ -260,6 +244,7 @@ Array Type
 .. TODO: Array types are in flux at the moment;
     Joe has a proposal on the table, but no decision has been made.
     Let's hold off on writing about these until they are nailed down.
+    Update: [Contributor 5711] is now DRI for rewriting/implementing Arrays.
 
 .. _Types_FunctionType:
 
@@ -270,10 +255,10 @@ The Swift language defines the postfix operator ``?`` as syntactic sugar for
 the named type ``Optional<T>``, which is defined in the Swift Standard Library.
 In other words, the following two declarations are equivalent::
 
-    let optionalInteger : Int?
-    let optionalInteger : Optional<Int>
+    var optionalInteger : Int?
+    var optionalInteger : Optional<Int>
 
-In both cases, the constant ``optionalInteger``
+In both cases, the variable ``optionalInteger``
 is declared to have the type of an optional integer.
 Note that no whitespace may appear between the type and the ``?`` operator.
 
@@ -299,7 +284,7 @@ you can access that value using the postfix operator ``!``, as shown below::
     optionalInteger!
     // 42
 
-Unwrap an optional
+Unwrapping an optional
 that has a value of ``Optional.None`` results in a runtime error.
 
 For examples that show how to use optional types,
@@ -366,6 +351,7 @@ which every type conforms to.
 Metatype Type
 -------------
 
+.. write-me:: Waiting for design decisions from compiler team. See notes below.
 
 .. TR: How do metatypes types work?
     What information is important to convey in this section?
