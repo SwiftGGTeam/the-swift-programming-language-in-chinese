@@ -804,6 +804,130 @@ Instance methods are called using the same dot syntax as properties:
     (swift) println("Counter value is now \(counter.count)")
     >>> Counter value is now 0
 
+.. _ClassesAndStructures_Self:
+
+Self
+~~~~
+
+Every instance method has an extra implicit parameter called ``self``,
+which is made available to the method without having to be declared.
+The implicit ``self`` parameter refers to the instance on which the method is called.
+
+It's almost as if the ``increment()`` method from above had been written like this:
+
+::
+
+    func increment(self: Counter) {
+        self.count++
+    }
+
+In practice, you don't actually write the ``self: TypeName`` parameter in your code –
+instead, ``self`` is automatically made available to any method you define:
+
+::
+
+    func increment() {
+        self.count++
+    }
+
+Even though it has an implicit ``self`` parameter available,
+the ``Counter`` class above has chosen *not* to use ``self.count``
+to refer to its ``count`` property within its instance methods
+Because there are no other named values called ``count`` within each method's body,
+the ``self.`` prefix can be dropped, as it is clear that ``count`` can only mean the instance property.
+Instead, ``count`` is written in a shorter form, without the ``self.`` prefix:
+
+::
+
+    func increment() {
+        count++
+    }
+
+Here, ``count`` still means ‘the ``count`` property of the implicit ``self`` parameter’ –
+it just doesn't have to be written out long-hand if the meaning is unambiguous.
+
+The implicit ``self`` parameter can be useful when
+a method parameter conflicts with the name of an instance property.
+Here, the ``self`` prefix is used to disambiguate between a method parameter called ``x``,
+and an instance property that is also called ``x``:
+
+.. testcode:: self
+
+    (swift) struct Point {
+        var x = 0.0, y = 0.0
+        func isToTheRightOfX(x: Double) -> Bool {
+            return self.x > x
+        }
+    }
+    (swift) var somePoint = Point(4.0, 5.0)
+    // somePoint : Point = Point(4.0, 5.0)
+    (swift) if somePoint.isToTheRightOfX(1.0) {
+        println("This point is to the right of the line where x == 1.0")
+    }
+    >>> This point is to the right of the line where x == 1.0
+
+.. _ClassesAndStructures_SelfClasses:
+
+Using Self in Class Instance Methods
+____________________________________
+
+For class instance methods, the ``self`` parameter is a *reference* to the instance,
+and can be used to retrieve and set its properties:
+
+.. testcode:: self
+
+    (swift) class BankAccount {
+        var balance: Double = 0.0
+        func depositMoney(amount: Double) {
+            self.balance += amount
+        }
+    }
+    (swift) val savingsAccount = BankAccount()
+    // savingsAccount : BankAccount = <BankAccount instance>
+    (swift) savingsAccount.depositMoney(100.00)
+    (swift) println("The savings account now contains $\(savingsAccount.balance)")
+    >>> The savings account now contains $100.0
+
+This example could have been written with ``balance += amount``
+rather than ``self.balance += amount``.
+The use of ``self.balance`` is primarily to illustrate that
+the ``self`` parameter is available within the ``depositMoney()`` method.
+
+.. _ClassesAndStructures_SelfStructures:
+
+Using Self in Structure Instance Methods
+________________________________________
+
+For structure instance methods, ``self`` is actually a *copy* of the structure instance
+as of when the method was called.
+This means that you can use ``self`` to read property values for the structure instance,
+but not to set the properties to a new value.
+
+If your structure instance needs to modify its own properties within a method,
+it can request to receive a writeable copy in the implicit ``self`` parameter.
+You can opt in to this behavior by placing the ``mutating`` keyword before the ``func`` keyword.
+‘Mutating’ in this context means ‘making a change’, much as it does in English –
+effectively, the method is ‘mutating’ the ``Point`` instance:
+
+.. testcode:: self
+
+    (swift) struct Point {
+        var x = 0.0, y = 0.0
+        mutating func moveBy(deltaX: Double, deltaY: Double) {
+            x += deltaX
+            y += deltaY
+        }
+    }
+    (swift) var somePoint = Point(1.0, 1.0)
+    // somePoint : Point = Point(1.0, 1.0)
+    (swift) somePoint.moveBy(2.0, 3.0)
+    (swift) println("The point is now at (\(somePoint.x), \(somePoint.y))")
+    >>> The point is now at (3.0, 4.0)
+
+As soon as the ``moveBy()`` method has finished executing,
+any changes it has made to the writeable copy of the implicit ``self`` parameter
+are written back to the ``Point`` instance, overwriting the previous values.
+
 .. _ClassesAndStructures_Initialization:
 
 Initialization
@@ -986,16 +1110,6 @@ which uses a default ``title`` value of ``[untitled]`` if none is specified:
             self.init(withTitle: "[untitled]")
         }
     }
-
-.. note::
-    The ``init withTitle()`` method refers to the instance's ``title`` property as ``self.title``,
-    rather than simply as ``title``.
-    This is required to differentiate between the *variable property* called ``title``,
-    and the *initializer parameter* called ``title``.
-    The ``self`` prefix would not be required if their names were different.
-    The use of ``self`` before the property name does not affect
-    the way in which the property is accessed or set –
-    it is purely used for disambiguation.
 
 This first example declares a new constant called ``thisBook``,
 and sets it to the result of calling ``init withTitle()`` for a specific title string:
