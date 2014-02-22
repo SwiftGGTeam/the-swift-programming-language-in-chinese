@@ -156,7 +156,7 @@ A collection-based ``for`` statement has the following form:
 
 The ``generate`` method is called on the *collection* expression
 to obtain a value of a stream type---that is,
-a type that conforms to the ``Stream`` protocol.
+a type that conforms to the ``Generator`` protocol.
 The program begins executing a loop
 by calling the ``next`` method on the stream.
 If the value returned is not ``None``,

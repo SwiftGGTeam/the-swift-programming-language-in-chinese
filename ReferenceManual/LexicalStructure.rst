@@ -264,13 +264,13 @@ The following keywords are reserved and may not be used as identifiers.
 ``func``
 ``import``
 ``init``
-``let``
 ``metatype``
 ``protocol``
 ``struct``
 ``subscript``
 ``type``
 ``typealias``
+``val``
 ``var``
 ``where``
 
@@ -350,6 +350,8 @@ They may also be used as identifiers.
 ``prefix``
 ``infix``
 ``postfix``
+``inout``
+``mutating``
 
 .. TR: Are 'associativity', 'precedence', 'left', 'right', 'none' contextual keywords?
 	For instance, in operators.swift, we find the following example:
@@ -557,11 +559,8 @@ The interpolated expression must not contain
 an unescaped double quote ("),
 an unescaped backslash (\),
 a carriage return, or a line feed.
-
-.. TR: How is the expression stringified?
-   Is there a protocol we can say it must conform to?
-   Either that, or there needs to be a constructor
-   on String that accepts its type.
+The expression must evaluate to a value of a type
+that the ``String`` class has an initializer for.
 
 For example, all the following have the same value: ::
 
