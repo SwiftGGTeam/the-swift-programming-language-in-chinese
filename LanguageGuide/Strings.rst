@@ -66,7 +66,7 @@ String Printing
 String Subscripting
 -------------------
 
-- length (vs byteLength)
+- count
 - accessing characters by subscript (and what this means)
 - chars vs bytes and a discussion of encoding
 - substrings via ranges e.g. [2..5]

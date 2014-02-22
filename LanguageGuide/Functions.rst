@@ -174,9 +174,9 @@ This enables a function to return a combination of values as part of one compoun
 .. testcode:: functionParameters
 
     (swift) func splitOnFirst(string: String, splitter: UnicodeScalar) -> (String, String?) {
-        for i in 0...string.length {
+        for i in 0...string.count {
             if string[i] == splitter {
-                return (string[0...i], string[i+1...string.length])
+                return (string[0...i], string[i+1...string.count])
             }
         }
         return (string, .None)
@@ -384,7 +384,7 @@ The return value of a function can be ignored when it is called:
 
     (swift) func printAndCount(stringToPrint: String) -> Int {
         println(stringToPrint)
-        return stringToPrint.length
+        return stringToPrint.count
     }
     (swift) func printWithoutCounting(stringToPrint: String) {
         printAndCount(stringToPrint)
@@ -398,7 +398,7 @@ The return value of a function can be ignored when it is called:
 The first function,
 ``printAndCount``,
 prints a string,
-and then returns its length as an ``Int``.
+and then returns its character count as an ``Int``.
 The second function,
 ``printWithoutCounting``,
 calls the first function,
@@ -438,8 +438,8 @@ Variable parameters are declared by prefixing the parameter name with the keywor
 
 .. testcode:: functionParameters
 
-    (swift) func alignRight(var string: String, length: Int, pad: UnicodeScalar) -> String {
-        val amountToPad = length - string.length
+    (swift) func alignRight(var string: String, count: Int, pad: UnicodeScalar) -> String {
+        val amountToPad = count - string.count
         for _ in 0...amountToPad {
             string = pad + string
         }
@@ -463,7 +463,7 @@ initialized with the passed-in string value,
 and can be manipulated within the body of the function.
 
 The function starts by working out how many characters need to be added to the left of the string
-in order to right-align it within the overall ``length``.
+in order to right-align it within the overall ``count`` of the string's length.
 This value is stored in a local constant called ``amountToPad``.
 The function then adds ``amountToPad`` copies of the ``pad`` character to the left of the existing string,
 and returns the result.
