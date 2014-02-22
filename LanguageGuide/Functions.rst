@@ -14,7 +14,7 @@ Functions
 
 :newTerm:`Functions` are self-contained chunks of code that perform a specific task.
 Every function is given a name to identify what it does,
-and this name is used to ‘call’ the function to perform its task when needed.
+and this name is used to “call” the function to perform its task when needed.
 
 .. _Functions_FunctionDeclarations:
 
@@ -142,7 +142,7 @@ Any type of value can be used as an input parameter for a function,
 if it is declared appropriately.
 For example, the range function above can be rewritten to take a tuple of two ``Int`` values:
 
-.. QUESTION: Is my use of ‘any’ technically correct here?
+.. QUESTION: Is my use of “any” technically correct here?
    Is there some type that cannot be passed to a function?
 
 .. testcode:: functionParameters
@@ -556,7 +556,7 @@ and all three parameters have a type of ``String``.
 
 Selector-style syntax lends itself to expressive function declarations,
 which can be written and read as sentences for ease of comprehension.
-The use of prepositions such as ‘to’ and ‘with’ is not mandatory,
+The use of prepositions such as “to” and “with” is not mandatory,
 but is encouraged where it aids readability.
 
 Selector-style functions are called by placing the first selector part

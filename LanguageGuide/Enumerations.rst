@@ -146,9 +146,9 @@ track products using two different types of barcode.
 Some products are labelled with 1D barcodes
 in `UPC-A <http://en.wikipedia.org/wiki/Universal_Product_Code>`_ format,
 which uses the numbers ``0`` to ``9``.
-Each barcode has a ‘number system’ digit,
-followed by ten ‘identifier’ digits.
-These are followed by a ‘check‘ digit to verify that the code has been scanned correctly:
+Each barcode has a “number system” digit,
+followed by ten “identifier” digits.
+These are followed by a “check” digit to verify that the code has been scanned correctly:
 
 .. image:: ../images/barcode_UPC.png
     :height: 80
@@ -195,7 +195,7 @@ as shown below:
 
 This creates a new variable called ``productBarcode``,
 and assigns it a value of ``Barcode.UPCA`` with an associated tuple value of ``(8, 8590951226, 3)``.
-(The provided ‘identifier’ value has an underscore within its integer literal –
+(The provided “identifier” value has an underscore within its integer literal –
 ``85909_51226`` –
 to make it easier to read as a barcode.)
 
@@ -397,7 +397,7 @@ The enumeration has two possible states:
   the train is currently delayed
 
 The enumeration provides a basic initializer, ``init()``,
-which assumes that the train's state is ‘on time’.
+which assumes that the train's state is “on time”.
 This is a reasonable default state for a train starting out on its journey
 if no other information is provided.
 The ``init()`` method uses the special ``self`` keyword to refer to
@@ -409,7 +409,7 @@ and requests that it become an instance of the ``OnTime`` enumeration member.
     Enumerations are the only types that can
     specify a value for ``self`` in this way during initialization.
     ``self = OnTime`` does not (strictly speaking)
-    create a new ‘instance’ of ``OnTime`` here.
+    create a new “instance” of ``OnTime`` here.
     Rather, it specifies that ``OnTime`` is the enumeration member to be used
     when creating this new instance.
     Classes and structures cannot assign to ``self`` in this way during initialization.

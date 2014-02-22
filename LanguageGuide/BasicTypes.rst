@@ -7,7 +7,7 @@
     * …but not… var m, n = 2
     * Naming conventions ✔︎
     * Integer types ✔︎
-    * Floating point types ✔︎
+    * Floating-point types ✔︎
     * infinity and -infinity
     * Bool ✔︎
     * Void
@@ -33,8 +33,8 @@ Basic Types
 Swift provides several basic types for working with fundamental values.
 Some of these types will be familiar to C and Objective-C developers:
 
-* :newTerm:`numbers` (including integers and floating-point numbers)
-* :newTerm:`booleans` (for values that can only be true or false)
+* :newTerm:`Numbers` (including integers and floating-point numbers)
+* :newTerm:`Booleans` (for values that can only be true or false)
     
 Although these types may be familiar,
 Swift expands their capabilities beyond what is possible in other languages.
@@ -61,7 +61,7 @@ Named Values
 
 A :newTerm:`named value` is a way to store a particular value
 (such as the number ``42``, or the string ``"hello"``)
-and refer to it via a specific name in your code.
+and refer to it with a specific name in your code.
 Swift provides two types of named values:
 
 * :newTerm:`constant named values`, also known as :newTerm:`constants`, and
@@ -91,9 +91,9 @@ Then, declare a new variable called ``currentLoginAttempt``,
 and give it an initial value of ``0``.”
 
 A constant is used for the maximum number of allowed login attempts,
-as this is a fixed maximum value that does not need to change.
+because that maximum value never changes.
 A variable is used for the current login attempt counter, however,
-as this value needs to be incremented after each failed login attempt.
+because this value must be incremented after each failed login attempt.
 
 If a named value in your code is not going to change,
 it should always be declared as a constant with the ``val`` keyword.
@@ -108,13 +108,13 @@ to be explicit about the kind of named value you want to create:
     (swift) val welcomeMessage: String = "Hello"
     // welcomeMessage : String = "Hello"
 
-The colon in the declaration means *“…that is a…”*,
+The colon in the declaration means *“…that is a…,”*
 so this can be read as:
 
-“Declare a constant called ``welcomeMessage`` that is a ``String``,
+“Declare a constant called ``welcomeMessage`` that is of type ``String``,
 and give it a value of ``"Hello"``.”
 
-You can use pretty much any character you like for constant and variable names,
+You can use almost any character you like for constant and variable names,
 including Unicode characters:
 
 .. testcode:: namedValues
@@ -170,23 +170,23 @@ Integers
 --------
 
 :newTerm:`Integers` are whole numbers with no fractional component,
-such as ``42``, ``0`` and ``-23``.
+such as ``42``, ``0``, and ``-23``.
 Integers are either :newTerm:`signed` (which means they can be positive or negative),
 or :newTerm:`unsigned` (which means they can only be positive).
 
-Swift provides integers in signed and unsigned forms at
-8, 16, 32 and 64-bit sizes.
-These integers follow a similar naming convention to C,
-in that an 8-bit unsigned integer is a ``UInt8``,
-and a 32-bit signed integer is an ``Int32``.
+Swift provides integers in signed and unsigned forms in sizes of
+8, 16, 32, and 64 bits.
+These integers follow a naming convention similar to C,
+in that an 8-bit unsigned integer is of type ``UInt8``,
+and a 32-bit signed integer is of type ``Int32``.
 Like all types in Swift, these integer types have capitalized names.
 
 In most cases, there's no need to pick a specific size of integer to use in your code.
 Swift provides an additional integer type, ``Int``,
 which has the same size as the current platform's architecture:
 
-* On a 32-bit platform, ``Int`` is the same size as ``Int32``
-* On a 64-bit platform, ``Int`` is the same size as ``Int64``
+* On a 32-bit platform, ``Int`` is the same size as ``Int32``.
+* On a 64-bit platform, ``Int`` is the same size as ``Int64``.
 
 Unless you need to work with a specific size of integer,
 you should always use ``Int`` for code consistency and interoperability.
@@ -205,7 +205,7 @@ Swift provides two signed floating-point number types:
 
 * ``Double``, which represents a 64-bit floating-point number,
   and should be used when floating-point values need to be very large or particularly precise
-* ``Float``, which represents a 32-bit floating point number,
+* ``Float``, which represents a 32-bit floating-point number,
   and should be used when floating-point values do not require 64-bit precision
 
 .. _BasicTypes_TypeSafetyAndTypeInference:
@@ -213,16 +213,16 @@ Swift provides two signed floating-point number types:
 Type Safety and Type Inference
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Swift is a :newTerm:`type-safe` language.
+Swift is a :newTerm:`type safe` language.
 This means that it encourages you to be clear about the types of values and objects your code can work with.
-If some part of your code expects a string, for example,
+If some part of your code expects a string,
 type safety means that you can't accidentally pass it an integer by mistake.
 
 Because Swift is type safe,
-it is able to perform :newTerm:`type checks` when compiling your code.
+it performs :newTerm:`type checks` when compiling your code.
 Any mismatched types are flagged as errors so that you can fix them.
 
-Type-checking helps to avoid accidental errors when working with different types of value.
+Type-checking helps to avoid accidental errors when you're working with different types of values.
 However, this doesn't mean that you have to define the type of
 every constant and variable that you declare.
 If you don't specify the type of value you need,
@@ -237,9 +237,9 @@ to the constant or variable at the point that you declare it.
 A literal value is a one-off value that appears directly in your source code,
 such as ``42`` and ``3.14159`` in the examples below.
 
-For example: if you assign a literal value of ``42`` to a new constant,
+For example, if you assign a literal value of ``42`` to a new constant
 without saying what type it is,
-Swift will deduce that you want the constant to be an ``Int``,
+Swift infers that you want the constant to be an ``Int``,
 because you have initialized it with a number that looks like an integer:
 
 .. testcode:: typeInference
@@ -266,7 +266,7 @@ a type of ``Double`` will be inferred from the context:
     (swift) val anotherPi = 3 + 0.14159
     // anotherPi : Double = 3.14159
 
-The literal value of ``3`` does not have an explicit type in and of itself,
+The literal value of ``3`` has no explicit type in and of itself,
 and so an appropriate output type of ``Double`` is inferred
 from the presence of a floating-point literal as part of the addition.
 
@@ -279,12 +279,12 @@ but much of the work of specifying their type is done for you.
 Numeric Literals
 ~~~~~~~~~~~~~~~~
 
-Integer literals can be written as:
+Integer literals can be written as any of the following:
 
-* a :newTerm:`decimal` number, with no prefix
-* a :newTerm:`binary` number, with a ``0b`` prefix
-* an :newTerm:`octal` number, with a ``0o`` prefix, or
-* a :newTerm:`hexadecimal` number, with a ``0x`` prefix
+* A :newTerm:`decimal` number, with no prefix
+* A :newTerm:`binary` number, with a ``0b`` prefix
+* An :newTerm:`octal` number, with a ``0o`` prefix
+* A :newTerm:`hexadecimal` number, with a ``0x`` prefix
 
 All of these integer literals have a decimal value of ``17``:
 
@@ -301,10 +301,10 @@ All of these integer literals have a decimal value of ``17``:
 
 Floating-point literals can be decimal (with no prefix),
 or hexadecimal (with a ``0x`` prefix).
-The must always have a number (or hexadecimal number) on both sides of the decimal point.
+They must always have a number (or hexadecimal number) on both sides of the decimal point.
 They can also have an optional :newTerm:`exponent`,
-indicated by an upper- or lower-case ``e`` for decimal floats,
-or an upper- or lower-case ``p`` for hexadecimal floats.
+indicated by an upper- or lowercase ``e`` for decimal floats,
+or an upper- or lowercase ``p`` for hexadecimal floats.
 
 For decimal numbers with an exponent of ``exp``,
 the base number is multiplied by 10\ :superscript:`exp`:
@@ -330,7 +330,7 @@ All of these floating-point literals have a decimal value of ``12.5``:
     // hexadecimalDouble : Double = 12.5
 
 Numeric literals can contain extra formatting to make them easier to read.
-Both integers and floats can be padded with extra zeroes on the beginning,
+Both integers and floats can be padded with extra zeroes at the beginning,
 and can contain underscores to help with readability.
 Neither type of formatting affects the underlying value of the literal:
 
@@ -353,12 +353,12 @@ Numeric Type Conversion
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 The ``Int`` type should be used for all general-purpose integer named values in your code,
-even if they are known to be non-negative.
+even if they are known to be nonnegative.
 Using the default integer type in everyday situations means that
-integer named value are immediately interoperable in your code,
+integer named values are immediately interoperable in your code
 and will match the inferred type for integer literal values.
 
-Other integer types should only be used when they are are specifically needed for the task at hand,
+Other integer types should be used only when they are are specifically needed for the task at hand,
 due to explicitly-sized data from an external source,
 or for performance, memory usage, or other optimization.
 Using explicitly-sized types in these situations
@@ -377,8 +377,10 @@ whereas a ``UInt8`` named value can store numbers between ``0`` and ``255``.
 A number that can be stored in one numeric type
 cannot necessarily be stored in another numeric type.
 
-Because of this, numeric type conversion is something you must opt in to on a case-by-case basis.
-This avoids accidental errors, and helps to make type conversion intentions explicit in your code.
+Because of these differences,
+numeric type conversion is something you must opt in to on a case-by-case basis.
+This avoids accidental errors
+and helps to make type conversion intentions explicit in your code.
 
 To convert from one specific number type to another,
 you initialize a new number of the desired type with the existing value:
@@ -392,21 +394,21 @@ you initialize a new number of the desired type with the existing value:
     (swift) val twoThousandAndOne = twoThousand + UInt16(one)
     // twoThousandAndOne : UInt16 = 2001
 
-The constant ``twoThousand`` is a ``UInt16``,
-whereas the constant ``one`` is a ``UInt8``.
+The constant ``twoThousand`` is of type ``UInt16``,
+whereas the constant ``one`` is of type ``UInt8``.
 They cannot be added together directly,
 because they are not of the same type.
 Instead, this code calls ``UInt16(one)`` to create a new ``UInt16`` initialized with the value of ``one``,
 and uses this value in place of the original.
 Because both sides of the addition are now of type ``UInt16``,
 the addition is allowed.
-The output constant (``twoThousandAndOne``) is inferred to be a ``UInt16``,
+The output constant (``twoThousandAndOne``) is inferred to be of type ``UInt16``,
 because it is the sum of two ``UInt16`` values.
 
-The syntax seen above –
+The syntax above –
 ``SomeType(ofInitialValue)`` –
-is the default way to call the initializer of a Swift type,
-and to pass in an initial value.
+is the default way to call the initializer of a Swift type
+and pass in an initial value.
 Behind the scenes, ``UInt16`` has an initializer that accepts a ``UInt8`` value,
 and so this initializer is used to make a new ``UInt16`` from an existing ``UInt8``.
 You can't just pass in *any* type here, however –
@@ -436,13 +438,13 @@ Conversions between integer and floating-point numeric types must also be made e
 
 Here, the value of the constant ``three`` is used to create a new ``Double``,
 so that both sides of the addition are of the same type.
-The addition would not be allowed without this conversion in place.
+Without this conversion in place, the addition would not be allowed.
 
 The rules for numeric named values are different from
 the rules for numeric literal values seen earlier –
 where the literal value ``3`` was added to the literal value ``0.14159`` –
 because number literals do not have an explicit type in and of themselves.
-Their type is only inferred at the point that they are evaluated by the compiler.
+Their type is inferred only at the point that they are evaluated by the compiler.
 
 .. TODO: the return type of pi here is inferred as Float64,
    but it should really be inferred as Double.
@@ -451,7 +453,7 @@ Their type is only inferred at the point that they are evaluated by the compiler
 
 .. NOTE: this section on explicit conversions could be included in the Operators section.
    I think it's more appropriate here, however,
-   and helps to reinforce the ‘just use Int’ message.
+   and helps to reinforce the “just use Int” message.
 
 .. _BasicTypes_NumericBounds:
 
@@ -468,7 +470,7 @@ The minimum and maximum values of each integer type can be accessed using its ``
     // maximumValue : UInt8 = 255
 
 The values of these properties are of the appropriate sized number type
-(such as ``UInt8`` in the example above),
+(such as ``UInt8`` in the example above)
 and can therefore be used in expressions alongside other values of the same type.
 
 .. _BasicTypes_Booleans:
@@ -477,8 +479,8 @@ Booleans
 --------
 
 Swift has a basic :newTerm:`Boolean` type, called ``Bool``.
-Booleans are a special kind of logical value,
-which can only ever be ``true`` or ``false``:
+Boolean values are referred to as :newTerm:`logical`,
+because they can only ever be ``true`` or ``false``:
 
 .. testcode:: booleans
 
@@ -490,10 +492,10 @@ which can only ever be ``true`` or ``false``:
 The types of ``orangesAreOrange`` and ``turnipsAreDelicious`` have been inferred
 from the fact that they were initialized with ``Bool`` values.
 As with ``Int`` and ``Double`` above,
-you don't need to declare named values as being ``Bool``
+you don't need to declare named values as ``Bool``
 if you set them to ``true`` or ``false`` as soon as you create them.
 Type inference helps to make Swift code much more concise and readable
-when initializing named values with known types of value.
+when initializing named values with other values whose type is already known.
 
 Boolean values are particularly useful when working with conditional statements such as ``if else``:
 
@@ -517,14 +519,14 @@ You cannot, for example, say::
         // do stuff
     }
 
-…because ``i`` is not a ``Bool``.
+…because ``i`` is not of type ``Bool``.
 However, it is valid to say::
 
     (swift) if i == 1 {
         // do stuff
     }
     
-The result of the ``i == 1`` comparison is a ``Bool``,
+The result of the ``i == 1`` comparison is of type ``Bool``,
 and so this second example passes the type-check.
 (Comparisons like ``i == 1`` are discussed in :doc:`Operators`.)
 
@@ -549,7 +551,7 @@ Here's an example of a tuple:
 
 ``(404, "Not Found")`` is a tuple that describes an *HTTP status code*.
 An HTTP status code is a special value returned by a web server whenever you request a web page.
-A status code of ``404 Not Found`` is returned if you request a web page that does not exist.
+A status code of ``404 Not Found`` is returned if you request a webpage that doesn't exist.
 
 The ``(404, "Not Found")`` tuple groups together an ``Int`` and a ``String``
 to give the HTTP status code two separate values:
@@ -576,7 +578,7 @@ A function that tries to retrieve a web page might return this ``(Int, String)``
 to describe the success or failure of the page retrieval.
 By returning a tuple with two distinct values,
 each of a different type,
-the function is able to provide more useful information about its outcome
+the function can provide more useful information about its outcome
 than if it could only return a single value of a single type.
 Functions are described in detail in :doc:`Functions`.
 
@@ -619,7 +621,7 @@ They can be used to say:
 This concept doesn't exist in C or Objective-C.
 The nearest thing in Objective-C is
 the ability to return ``nil`` from a method that would otherwise return an object,
-with ``nil`` meaning ‘the absence of a valid object’.
+with ``nil`` meaning “the absence of a valid object”.
 However, this only works for objects – it doesn't work for
 structs, or basic C types, or enumeration values.
 For these types,
@@ -632,11 +634,11 @@ without the need for special constants or ``nil`` tests.
 Here's an example.
 Swift's ``String`` type has a function called ``toInt()``,
 which trys to convert a ``String`` value into an ``Int`` value.
-However, it is not possible to convert every possible string into an integer.
+However, it's not possible to convert every possible string into an integer.
 The string ``"123"`` can be converted into the numeric value ``123``,
 but the string ``"hello, world"`` does not have an obvious numeric value to convert to.
 
-The example below shows how to use ``toInt()`` to try and convert a ``String`` into an ``Int``:
+The example below shows how to use ``toInt()`` to try to convert a ``String`` into an ``Int``:
 
 .. testcode:: optionals
 
@@ -649,17 +651,17 @@ The example below shows how to use ``toInt()`` to try and convert a ``String`` i
 The question mark indicates that the value it contains is an *optional* ``Int``,
 meaning that it might contain *some* ``Int`` value,
 or it might contain *no value at all*.
-(It can't contain anything else, such as a ``Bool`` or a ``String`` –
+(It can't contain anything else, such as a ``Bool`` value or a ``String`` value –
 it's either an ``Int``, or it's nothing at all.)
 
 You can use an ``if``-``else`` statement to find out whether or not an optional contains a value.
 If an optional does have a value, it equates to ``true``;
 if it has no value at all, it equates to ``false``.
 
-Once you are sure that the optional *does* contain a value,
+Once you're sure that the optional *does* contain a value,
 you can access its underlying value
 by adding an exclamation mark (``!``) to the end of the optional's name.
-The exclamation mark effectively says
+The exclamation mark effectively says,
 “I know that this optional definitely has a value – please use it”.
 
 .. testcode:: optionals

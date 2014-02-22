@@ -14,7 +14,7 @@ Operators
 =========
 
 An :newTerm:`operator` is a special symbol or phrase that is used to check or change values.
-A simple example is the addition operator, ``+``,
+A simple example is the addition operator (``+``)
 which is used to add two numbers together (as in ``val i = 1 + 2``).
 More complex examples include the logical AND operator ``&&``
 (as in ``if enteredDoorCode && passedRetinaScan``),
@@ -38,7 +38,7 @@ and create new ones –
 for any custom types you define.
 This process is covered in detail in :doc:`ClassesAndStructures`.
 
-Operators are often referred to as :newTerm:`unary`, :newTerm:`binary` or :newTerm:`ternary`:
+Operators are often referred to as :newTerm:`unary`, :newTerm:`binary`, or :newTerm:`ternary`:
 
 * Unary operators operate on a single target (such as ``-a``).
   They are said to be :newTerm:`prefix` operators if they come before their target (such as ``!b``),
@@ -50,7 +50,7 @@ Operators are often referred to as :newTerm:`unary`, :newTerm:`binary` or :newTe
   known as the ternary conditional operator (``a ? b : c``).
 
 The values that operators affect are known as :newTerm:`operands`.
-In the expression ``1 + 2``, the ``+`` symbol is a binary operator,
+In the expression ``1 + 2``, the ``+`` symbol is a binary operator
 and its two operands are the values ``1`` and ``2``.
 
 .. _Operators_AssignmentOperator:
@@ -80,15 +80,15 @@ its elements can be decomposed into multiple named values at once:
     (swift) println("x is \(x)")
     >>> x is 1
 
-Unlike C and Objective-C, the assignment expression does not itself return a value.
+Unlike C and Objective-C, the assignment operator does not itself return a value.
 The following statement is not valid::
 
     (swift) if x = y {
         // do something now that x is equal to y
     }
 
-This avoids errors where the assignment expression ``=`` is accidentally used
-in place of the equality comparison operator ``==``.
+This avoids the assignment operator (``=``) being used by accident
+when the equality comparison operator (``==``) is actually intended.
 By making ``if x = y`` invalid,
 Swift makes it much easier to avoid these kinds of errors in your code.
 
@@ -127,8 +127,8 @@ The addition operator is also supported for ``String`` concatenation:
     // r4 : String = "hello, world"
 
 Two ``UnicodeScalar`` values,
-or one ``UnicodeScalar`` and one ``String``,
-can be added together via ``+`` to make a new ``String``:
+or one ``UnicodeScalar`` value and one ``String`` value,
+can be added together to make a new ``String`` value:
 
 .. testcode:: arithmeticOperators
 
@@ -144,8 +144,8 @@ can be added together via ``+`` to make a new ``String``:
 Remainder Operator
 ~~~~~~~~~~~~~~~~~~
 
-The :newTerm:`binary remainder operator`, ``a % b``,
-works out how many multiples of ``b`` will fit inside ``a``,
+The :newTerm:`binary remainder operator` (``a % b``)
+works out how many multiples of ``b`` will fit inside ``a``
 and returns the value that is left over
 (known as the :newTerm:`remainder`).
 
@@ -175,7 +175,7 @@ and returns ``remainder`` as its output:
 …where ``some multiplier`` is the smallest number of multiples of ``b``
 that will fit inside ``a``.
 
-Plugging ``9`` and ``4`` into this equation gives:
+Inserting ``9`` and ``4`` into this equation gives:
 
 ``9`` = (``4`` × ``2``) + ``1``
 
@@ -193,7 +193,7 @@ Plugging ``-9`` and ``4`` into the equation gives:
 …giving a remainder value of ``-1``.
 
 The sign of ``b`` is ignored for negative values of ``b``.
-This means that ``a % b`` and ``a % -b`` will always give the same answer.
+This means that ``a % b`` and ``a % -b`` always give the same answer.
 
 .. _Operators_FloatingPointRemainderCalculations:
 
@@ -208,7 +208,7 @@ Swift's remainder operator can also operate on floating-point numbers:
     (swift) 8 % 2.5
     // r7 : Double = 0.5
 
-There are three 2.5's in 8, with a remainder of 0.5,
+``8`` divided by ``2.5`` equals ``3``, with a remainder of ``0.5``,
 so the remainder operator returns a ``Double`` value of ``0.5``.
 
 .. image:: ../images/remainderFloat.png
@@ -238,11 +238,11 @@ Each time you call ``++i``, the value of ``i`` is increased by ``1``.
 Essentially, ``++i`` is shorthand for saying ``i = i + 1``.
 Likewise, ``--i`` can be used as shorthand for ``i = i - 1``.
 
-``++`` and ``--`` can be used as prefix operators, or as postfix operators.
+``++`` and ``--`` can be used as prefix operators or as postfix operators.
 ``++i`` and ``i++`` are both valid ways to increase the value of ``i`` by ``1``.
 However, ``++i`` increases the value of ``i`` *before* it is accessed,
 whereas ``i++`` increases the value *after* it is accessed.
-This is important if you are using ``++`` or ``--`` to modify a variable,
+This is important if you are using ``++`` or ``--`` to modify a variable
 while also finding out its value:
 
 .. testcode:: arithmeticOperators
@@ -269,7 +269,7 @@ but ``a`` now equals ``2``.
 
 Unless you need the specific behavior of ``i++``,
 it is recommended that you use ``++i`` in all cases,
-because it has the typical expected behavior of incrementing ``i``,
+because it has the typical expected behavior of incrementing ``i``
 and then providing the result.
 (The same rules and advice apply for ``--i`` and ``i--``.)
 
@@ -277,6 +277,8 @@ and then providing the result.
    (given the general prevalence of i++ in the world),
    and indeed is it even advice we need to bother giving
    (given that lots of people might disagree or not care)?
+
+.. QUESTION: if so, have I followed this advice throughout the book?
 
 .. _Operators_UnaryPlusAndMinusOperators:
 
@@ -295,10 +297,10 @@ known as the :newTerm:`unary minus operator`:
     (swift) val plusThree = -minusThree    // effectively "minus minus three"
     // plusThree : Int = 3
 
-The unary minus operator ``-`` is prepended directly before the value it operates on,
+The unary minus operator (``-``) is prepended directly before the value it operates on,
 without any whitespace.
 
-There is a corresponding :newTerm:`unary plus operator`, ``+``,
+There is a corresponding :newTerm:`unary plus operator` (``+``)
 which simply returns the value it operates on, without any change:
 
 .. testcode:: arithmeticOperators
@@ -309,7 +311,7 @@ which simply returns the value it operates on, without any change:
     // alsoMinusSix : Int = -6
 
 The unary plus operator doesn't actually do anything.
-However, it can be used to provide symmetry in your code when also using the unary minus operator.
+However, it can be used to provide symmetry in your code when you're also using the unary minus operator.
 
 .. _Operators_CompoundAssignmentOperators:
 
@@ -328,7 +330,7 @@ One example is the :newTerm:`addition assignment operator` (``+=``):
     >>> a is now equal to 3
 
 The expression ``a += 2`` is shorthand for ``a = a + 2``.
-Effectively, the addition and the assignment are rolled into one operator
+Effectively, the addition and the assignment are combined into one operator
 that performs both tasks at the same time.
 
 A complete list of compound assignment operators can be found in the :doc:`../ReferenceManual/index`.
@@ -348,7 +350,7 @@ Swift supports all of the standard C :newTerm:`comparison operators`:
 * Less than or equal to (``a <= b``)
 
 Swift supports two additional comparison operators,
-to check if values are identical:
+to check whether values are identical:
 
 * Identical to (``a === b``)
 * Not identical to (``a !== b``)
@@ -401,8 +403,8 @@ Ternary Conditional Operator
 The :newTerm:`ternary conditional operator` is a special operator with three parts,
 which takes the form ``question ? answer1 : answer2``.
 It provides a shorthand way to evaluate one of two expressions
-based on whether ``question`` is ``true`` or ``false``.
-If ``question`` is ``true``, it evaluates ``answer1``;
+based on whether ``question`` is true or false.
+If ``question`` is true, it evaluates ``answer1``;
 otherwise, it evaluates ``answer2``.
 
 Effectively, it is shorthand for::
@@ -455,7 +457,7 @@ In this case, the ternary conditional operator provides
 an efficient shorthand for deciding which of two expressions to consider.
 
 The ternary conditional operator should be used with care, however.
-It is very concise, but this conciseness can lead to hard-to-read code if over-used.
+It is very concise, but this conciseness can lead to hard-to-read code if overused.
 Avoid combining multiple instances of the ternary conditional operator into one compound statement.
 
 .. _Operators_BitwiseOperators:
@@ -512,7 +514,7 @@ Bitwise AND Operator
 ~~~~~~~~~~~~~~~~~~~~
 
 The :newTerm:`bitwise AND operator` (``&``) combines the bits of two numbers.
-It returns a new number whose bits are only set to ``1`` if the bits were equal to ``1`` in *both* input numbers:
+It returns a new number whose bits are set to ``1`` only if the bits were equal to ``1`` in *both* input numbers:
 
 .. image:: ../images/bitwiseAND.png
     :width: 570
@@ -593,7 +595,7 @@ Bitwise Left and Right Shifts
 
 The :newTerm:`bitwise left shift operator` (``<<``) and :newTerm:`bitwise right shift operator` (``>>``)
 move all of the bits in a number to the left or the right by a certain number of places,
-as per the rules defined below.
+according to the rules defined below.
 
 Bitwise left and right shifts have the effect of multiplying (or dividing) an integer number by a factor of two.
 Shifting an integer's bits to the left by one position doubles its value,
@@ -603,14 +605,14 @@ whereas shifting it to the right by one position halves its value.
 
 .. _Operators_ShiftingBehaviorForUnsignedIntegers:
 
-Shifting Behavior For Unsigned Integers
+Shifting Behavior for Unsigned Integers
 _______________________________________
 
-The bit-shifting behavior for unsigned integers is:
+The bit-shifting behavior for unsigned integers is as follows:
 
-* Existing bits are moved to the left or right by the requested number of places
-* Any bits that fall off the edge of the integer's storage are discarded
-* Zeroes are inserted in the spaces left behind
+1. Existing bits are moved to the left or right by the requested number of places.
+2. Any bits that fall off the edge of the integer's storage are discarded.
+3. Zeroes are inserted in the spaces left behind.
 
 This approach is known as a :newTerm:`logical shift`.
 
@@ -618,15 +620,15 @@ The illustration below shows the results of ``11111111 << 1``
 (which is ``11111111`` shifted to the left by ``1`` place),
 and ``11111111 >> 1``
 (which is ``11111111`` shifted to the right by ``1`` place).
-Blue numbers have been shifted;
-grey numbers have been discarded;
+Blue numbers have been shifted,
+gray numbers have been discarded,
 and orange zeroes have been inserted:
 
 .. image:: ../images/bitshiftUnsigned.png
     :width: 639
     :align: center
 
-Here's how bit-shifting looks in Swift code:
+Here's how bit shifting looks in Swift code:
 
 .. testcode:: bitwiseShiftOperators
 
@@ -641,7 +643,7 @@ Here's how bit-shifting looks in Swift code:
     (swift) shiftBits >> 2              // 00000001
     // r3 : UInt8 = 1
 
-Bit-shifting can be used to encode and decode values within other data types:
+Bit shifting can be used to encode and decode values within other data types:
 
 .. testcode:: bitwiseShiftOperators
 
@@ -658,11 +660,11 @@ This example uses a ``UInt32`` constant called ``pink`` to store a
 Cascading Style Sheets color value for the color pink.
 Here, the CSS color value ``#CC6699`` is written as ``0xCC6699`` in Swift's hexadecimal number representation.
 This color is then decomposed into its red (``CC``), green (``66``) and blue (``99``) components
-using the bitwise AND operator (``&``) and the right-hand bit-shift operator (``>>``).
+using the bitwise AND operator (``&``) and the bitwise right shift operator (``>>``).
 
 The red component is obtained by performing a bitwise AND between the numbers ``0xCC6699`` and ``0xFF0000``.
-The zeroes in ``0xFF0000`` effectively ‘mask’ the second and third bytes of ``0xCC6699``,
-causing the ``6699`` to be ignored, and leaving ``0xCC0000`` as the result.
+The zeroes in ``0xFF0000`` effectively “mask” the second and third bytes of ``0xCC6699``,
+causing the ``6699`` to be ignored and leaving ``0xCC0000`` as the result.
 
 This number is then shifted 16 places to the right (``>> 16``).
 Each pair of characters in a hexadecimal number uses 8 bits,
@@ -693,12 +695,12 @@ which has a decimal value of ``153``.
 
 .. _Operators_ShiftingBehaviorForSignedIntegers:
 
-Shifting Behavior For Signed Integers
+Shifting Behavior for Signed Integers
 _____________________________________
 
 The shifting behavior is slightly more involved for signed integers,
 due to the way that they are represented in binary.
-(The examples below are based on eight-bit signed integers for simplicity,
+(The examples below are based on 8-bit signed integers for simplicity,
 but the same principles apply for signed integers of any size.)
 
 Signed integers use their first bit (known as the :newTerm:`sign bit`)
@@ -714,7 +716,7 @@ Here's how the bits inside an ``Int8`` look for the number ``4``:
     :width: 388
     :align: center
 
-The sign bit is ``0`` (meaning ‘positive’),
+The sign bit is ``0`` (meaning “positive”),
 and the seven value bits are just the number ``4``,
 written in binary notation.
 
@@ -730,7 +732,7 @@ Here's how the bits inside an ``Int8`` look for the number ``-4``:
     :width: 388
     :align: center
 
-This time, the sign bit is ``1`` (meaning ‘negative’),
+This time, the sign bit is ``1`` (meaning “negative”),
 and the seven value bits actually have a binary value of ``124`` (which is ``128 - 4``):
 
 .. image:: ../images/bitshiftSignedMinusFourValue.png
@@ -759,7 +761,7 @@ To achieve this, an extra rule is used when shifting signed integers to the righ
 * When shifting to the right,
   apply the same rules as for unsigned integers,
   but fill any empty bits on the left with the *sign bit*,
-  rather than with a zero
+  rather than with a zero.
 
 .. image:: ../images/bitshiftSigned.png
     :width: 639
@@ -818,7 +820,7 @@ Value Overflow
 ~~~~~~~~~~~~~~
 
 Here's an example of what happens when an unsigned value is allowed to overflow,
-using the overflow addition operator ``&+``:
+using the overflow addition operator (``&+``):
 
 .. testcode:: overflowOperatorsWillOverflow
 
@@ -830,7 +832,7 @@ using the overflow addition operator ``&+``:
 
 Here, the variable ``willOverflow`` is initialized with the largest value a ``UInt8`` can hold
 (``255``, or ``11111111`` in binary).
-It is then incremented by ``1`` using the overflow addition operator, ``&+``.
+It is then incremented by ``1`` using the overflow addition operator (``&+``).
 This pushes its binary representation just over the size that a ``UInt8`` can hold,
 causing it to overflow beyond its bounds,
 as shown in the diagram below.
@@ -1059,7 +1061,7 @@ Precedence and Associativity
 ----------------------------
 
 .. QUESTION: Could precedence and associativity be made clear
-   as part of the hypothetical ‘show invisibles’ feature,
+   as part of the hypothetical “show invisibles” feature,
    to show the invisible parentheses implied by precedence and associativity?
 
 It is important to consider each operator's :newTerm:`precedence` and :newTerm:`associativity` when working out how to calculate a compound expression.
@@ -1089,8 +1091,8 @@ This is due to the priorities and associativity of the operators used:
 * Operator :newTerm:`associativity` defines how operators of the same precedence
   are grouped together (or :newTerm:`associated`) –
   either grouped from the left, or grouped from the right.
-  Think of it as meaning ‘they associate with the expression to their left’,
-  or ‘they associate with the expression to their right’.
+  Think of it as meaning “they associate with the expression to their left”,
+  or “they associate with the expression to their right”.
 
 Here's how the actual evaluation order is calculated for the example above.
 Precedence is considered first.
@@ -1188,7 +1190,7 @@ for counting up to (but not including) the length of a zero-based array:
     >>> Person 3 is called Christine
     >>> Person 4 is called Daniel
 
-Note that the array contains ``4`` items,
+Note that the array contains four items,
 but ``0...count`` only counts as far as ``3``
 (the index of the last item in the array),
 because it is a half-closed range.

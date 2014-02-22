@@ -18,9 +18,9 @@
     * "Everything is a type"
     * Stored vs computed properties
     * === vs ==
-    * ‘is’ to check for class membership
-    * ‘as’ for casting
-    * No 'self = [super init]' (assignment equates to void)
+    * “is” to check for class membership
+    * “as” for casting
+    * No “self = [super init]” (assignment equates to void)
     * @inout
     * value types and reference types
     * Type functions and variables
@@ -324,7 +324,7 @@ before the new value is assigned.
 The ``willSet`` observer is always passed the upcoming new value of the property,
 and can use it to perform calculations if it wishes.
 You can specify any name you like for this parameter.
-In the example above, it has been named ‘``newTotalSteps``’,
+In the example above, it has been named “``newTotalSteps``”,
 although the parameter is not actually used in this example.
 (If you leave out this parameter in your implementation of ``willSet``,
 it will still be made available to your code, with a default parameter name of ``value``.)
@@ -847,7 +847,7 @@ Instead, ``count`` is written in a shorter form, without the ``self.`` prefix:
         count++
     }
 
-Here, ``count`` still means ‘the ``count`` property of the implicit ``self`` parameter’ –
+Here, ``count`` still means “the ``count`` property of the implicit ``self`` parameter” –
 it just doesn't have to be written out long-hand if the meaning is unambiguous.
 
 The implicit ``self`` parameter can be useful when
@@ -910,8 +910,8 @@ but not to set the properties to a new value.
 If your structure instance needs to modify its own properties within a method,
 it can request to receive a writeable copy in the implicit ``self`` parameter.
 You can opt in to this behavior by placing the ``mutating`` keyword before the ``func`` keyword.
-‘Mutating’ in this context means ‘making a change’, much as it does in English –
-effectively, the method is ‘mutating’ the ``Point`` instance:
+“Mutating” in this context means “making a change”, much as it does in English –
+effectively, the method is “mutating” the ``Point`` instance:
 
 .. testcode:: selfStructures
 
@@ -1139,7 +1139,7 @@ passing it a placeholder string value of ``[untitled]``:
 
 Both of these initializers ensure that the value of ``title``
 is set to a valid string before the initializer ends.
-This means that the ``Document`` class passes the ‘definite initialization’ test mentioned above.
+This means that the ``Document`` class passes the definite initialization test mentioned above.
 
 .. _ClassesAndStructures_Inheritance:
 
@@ -1162,7 +1162,7 @@ Here's an example:
         }
     }
 
-This example starts by defining a ‘base’ class called ``Vehicle``.
+This example starts by defining a “base” class called ``Vehicle``.
 This base class declares two properties that are universal to all vehicles,
 and initializes them with suitable default values.
 (It is assumed that any vehicle can carry at least one passenger –
@@ -1193,7 +1193,7 @@ and is able to tailor those characteristics (and add new ones) to suit its needs
 
 .. note::
 
-    Swift classes do not inherit from a universal ‘base’ class.
+    Swift classes do not inherit from a universal “base” class.
     Any classes you define without specifying a superclass
     will automatically become base classes for you to build upon.
 
@@ -1238,7 +1238,7 @@ Subclasses can themselves be subclassed, as shown in the next example:
     }
 
 This example creates a subclass of ``Bicycle`` for a two-seater bicycle
-(known as a ‘tandem’).
+(known as a “tandem”).
 ``Tandem`` inherits all of the characteristics of ``Bicycle``,
 which in turn inherits from ``Vehicle``.
 ``Tandem`` doesn't change the number of wheels – it's still a bicycle, after all –
@@ -1657,14 +1657,14 @@ equally, it's also possible that it might a ``Song``,
 or even just a base ``MediaItem``.
 Because of this uncertainty, the ``as`` operator returns an *optional* value
 when attempting to downcast to a subclass type.
-The result of ``item as Movie`` is of type ``Movie?``, or ‘optional ``Movie``’.
+The result of ``item as Movie`` is of type ``Movie?``, or “optional ``Movie``”.
 
 Downcasting to ``Movie`` will fail when trying to downcast
 the two ``Song`` instances in the library array.
 To cope with this, the example above uses :ref:`optional binding <ControlFlow_OptionalBinding>`
 to check whether the optional ``Movie`` actually contains a value
 (i.e. to find out whether the downcast succeeded.)
-This optional binding is written ‘``if val movie = item as Movie``’,
+This optional binding is written “``if val movie = item as Movie``”,
 which can be read as:
 
 “Try and access ``item`` as a ``Movie``.
@@ -1837,7 +1837,7 @@ and the bank only has 7,900 coins left.
 
 The player has now left the game.
 This is indicated by setting the optional ``playerOne`` variable to ``.None``,
-meaning ‘no ``Player`` instance’.
+meaning “no ``Player`` instance”.
 At the point that this happens, the ``Player`` instance referenced by
 the ``playerOne`` variable is destroyed.
 No other properties or variables are still referring to it,
@@ -2042,7 +2042,7 @@ This example defines a new prefix operator called ``+++``.
 This operator does not have an existing meaning in Swift,
 and so it will be given its own custom meaning in the specific context of
 working with ``Point`` instances. For the purposes of this example,
-``+++`` will be treated as a new ‘prefix doubling incrementer’ operator.
+``+++`` will be treated as a new “prefix doubling incrementer” operator.
 It will double the ``x`` and ``y`` values of a ``Point`` instance,
 by adding the point to itself via assignment:
 
@@ -2102,7 +2102,7 @@ with ``left`` associativity, and a precedence of ``140``:
 
 This operator adds together the ``x`` values of two points,
 and subtracts the ``y`` value of the second point from the first.
-Because it is in essence an ‘additive’ operator,
+Because it is in essence an “additive” operator,
 it has been given the same associativity and precedence values
 (``left`` and ``140``)
 as default additive infix operators such as ``+`` and ``-``.

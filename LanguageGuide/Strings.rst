@@ -6,7 +6,7 @@
     * String interpolation
     * printf() and string formatting
     * Regular Expressions (when implemented)
-    * ‘Raw’ string literals (if / when implemented)
+    * “Raw” string literals (if / when implemented)
     * ``OutputStream`` ?
     * How to do a few NSString-like things?
 

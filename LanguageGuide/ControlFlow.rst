@@ -116,7 +116,7 @@ A ``for``-``in`` loop can be used to iterate over the items in an array:
 
 Swift's ``String`` type has a ``chars`` property,
 which provides the individual characters in the string as an ``Array`` of ``UnicodeScalar`` values
-(also known as an ‘``Array`` of type ``UnicodeScalar``’).
+(also known as an “``Array`` of type ``UnicodeScalar``”).
 This can be used to iterate through the characters of a string in order:
 
 .. testcode::
@@ -329,7 +329,7 @@ Instead, the loop is executed until a particular condition is satisfied.
 
 .. NOTE: this example cannot be run in the REPL,
    due to the fact that it is reliant on keyboard input.
-   I have yet to come up with a better example where ‘while’ is the right kind of loop to use, however.
+   I have yet to come up with a better example where “while” is the right kind of loop to use, however.
    (I'm trying to avoid any examples where the number of iterations is known at the start of the loop.)
 
 .. _ControlFlow_DoWhile:
@@ -496,7 +496,7 @@ the numbers ``1`` to ``4``.
 If a match is found,
 it sets an optional ``Int?`` variable (``integerValue``) to the appropriate integer value.
 If the symbol is not recognized,
-the optional ``Int?`` is set to a value of ``.None``, meaning ‘no value’.
+the optional ``Int?`` is set to a value of ``.None``, meaning “no value”.
 Finally, it checks to see if a value was found.
 If it was, the output value is printed;
 otherwise, an error message is reported.
@@ -918,7 +918,7 @@ The function then considers the value of ``integerToDescribe`` using a ``switch`
 If the value of ``integerToDescribe`` is one of the prime numbers in the list,
 the function appends some text to the end of ``description``,
 to note that the number is prime.
-It then uses the ``fallthrough`` keyword to ‘fall into’ the ``default`` case as well.
+It then uses the ``fallthrough`` keyword to “fall into” the ``default`` case as well.
 The ``default`` case adds some extra text onto the end of the description,
 and the ``switch`` statement is complete.
 

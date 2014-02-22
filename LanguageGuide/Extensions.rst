@@ -65,7 +65,7 @@ Although they are implemented as computed properties,
 they can be accessed via dot syntax,
 which gives a neat way to append them onto a number to perform distance conversions.
 
-In this example, a ``Double`` value of ``1.0`` is considered to represent ‘one meter’.
+In this example, a ``Double`` value of ``1.0`` is considered to represent “one meter”.
 This is why the ``m`` computed property returns ``self`` –
 the expression ``1.m`` is considered to calculate a ``Double`` value of ``1.0``.
 
