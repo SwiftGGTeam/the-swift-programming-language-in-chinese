@@ -368,8 +368,8 @@ to retrieve and set other properties and values indirectly.
         var size = Size()
         var center: Point {
             get {
-                var centerX = origin.x + (size.width / 2)
-                var centerY = origin.y + (size.height / 2)
+                val centerX = origin.x + (size.width / 2)
+                val centerY = origin.y + (size.height / 2)
                 return Point(centerX, centerY)
             } set(newCenter) {
                 origin.x = newCenter.x - (size.width / 2)
@@ -437,8 +437,8 @@ which takes advantage of this shorthand notation:
         var size = Size()
         var center: Point {
             get {
-                var centerX = origin.x + (size.width / 2)
-                var centerY = origin.y + (size.height / 2)
+                val centerX = origin.x + (size.width / 2)
+                val centerY = origin.y + (size.height / 2)
                 return Point(centerX, centerY)
             } set {
                 origin.x = value.x - (size.width / 2)
@@ -863,7 +863,7 @@ and an instance property that is also called ``x``:
             return self.x > x
         }
     }
-    (swift) var somePoint = Point(4.0, 5.0)
+    (swift) val somePoint = Point(4.0, 5.0)
     // somePoint : Point = Point(4.0, 5.0)
     (swift) if somePoint.isToTheRightOfX(1.0) {
         println("This point is to the right of the line where x == 1.0")

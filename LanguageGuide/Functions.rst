@@ -150,7 +150,7 @@ For example, the range function above can be rewritten to take a tuple of two ``
     (swift) func halfOpenRangeLengthForRange(range: (Int, Int)) -> Int {
         return range.1 - range.0
     }
-    (swift) var someRange = (1, 10)
+    (swift) val someRange = (1, 10)
     // someRange : (Int, Int) = (1, 10)
     (swift) println(halfOpenRangeLengthForRange(someRange))
     >>> 9
@@ -174,7 +174,7 @@ This enables a function to return a combination of values as part of one compoun
 .. testcode:: functionParameters
 
     (swift) func splitOnFirst(string: String, splitter: UnicodeScalar) -> (String, String?) {
-        var size = string.size()
+        val size = string.size()
         for i in 0...size {
             if string[i] == splitter {
                 return (string[0...i], string[i+1...size])
