@@ -278,12 +278,13 @@ Here's an example of ``willSet`` and ``didSet`` in action:
     (swift) class StepCounter {
         var previousTotalSteps = 0
         var totalSteps: Int = 0 {
-            willSet(newStepCount):
+            willSet(newStepCount) {
                 previousTotalSteps = totalSteps
-            didSet:
+            } didSet {
                 if totalSteps > previousTotalSteps  {
                     println("Added \(totalSteps - previousTotalSteps) steps")
                 }
+            }
         }
     }
     (swift) val stepCounter = StepCounter()
@@ -366,13 +367,14 @@ to retrieve and set other properties and values indirectly.
         var origin = Point()
         var size = Size()
         var center: Point {
-        get:
-            var centerX = origin.x + (size.width / 2)
-            var centerY = origin.y + (size.height / 2)
-            return Point(centerX, centerY)
-        set(newCenter):
-            origin.x = newCenter.x - (size.width / 2)
-            origin.y = newCenter.y - (size.height / 2)
+            get {
+                var centerX = origin.x + (size.width / 2)
+                var centerY = origin.y + (size.height / 2)
+                return Point(centerX, centerY)
+            } set(newCenter) {
+                origin.x = newCenter.x - (size.width / 2)
+                origin.y = newCenter.y - (size.height / 2)
+            }
         }
     }
     (swift) var square = Rect(origin: Point(0.0, 0.0), size: Size(10.0, 10.0))
@@ -401,7 +403,7 @@ and a width and height of ``10``.
 This is equivalent to the blue square in the diagram below.
 
 The ``square`` variable's ``center`` property is then accessed via dot syntax (``square.center``).
-This causes the ``get`` method for ``center`` to be called,
+This causes the getter for ``center`` to be called,
 to retrieve the current property value.
 Rather than returning an existing value,
 this actually calculates and returns a new ``Point`` to represent the center of the square.
@@ -410,26 +412,23 @@ As can be seen above, this correctly returns a center point of ``(5, 5)``.
 The ``center`` property is then set to a new value of ``(15, 15)``.
 This moves the square up and to the right,
 to the new position shown by the orange square in the diagram below.
-Setting the ``center`` property actually calls the ``set:`` method for ``center``.
-This modifies the ``x`` and ``y`` values of the stored ``origin`` property,
+Setting the ``center`` property calls the setter for ``center``,
+which modifies the ``x`` and ``y`` values of the stored ``origin`` property,
 and moves the square to its new position.
 
 .. image:: ../images/computedProperties.png
     :width: 400
     :align: center
 
-.. _ClassesAndStructures_ShorthandGetterAndSetterDeclarations:
+.. _ClassesAndStructures_ShorthandSetterDeclaration:
 
-Shorthand Getter and Setter Declarations
-________________________________________
+Shorthand Setter Declaration
+____________________________
 
-A computed property's getter can be written without the ``get`` keyword,
-if the getter comes before the setter.
-Additionally, if a computed property's setter does not define a name
-for the new value to be set,
+If a computed property's setter does not define a name for the new value to be set,
 a default name of ``value`` is used.
 Here's an alternative version of the ``Rect`` structure,
-which takes advantage of these shorthand notations:
+which takes advantage of this shorthand notation:
 
 .. testcode:: classesAndStructures
 
@@ -437,12 +436,14 @@ which takes advantage of these shorthand notations:
         var origin = Point()
         var size = Size()
         var center: Point {
-            var centerX = origin.x + (size.width / 2)
-            var centerY = origin.y + (size.height / 2)
-            return Point(centerX, centerY)
-        set:
-            origin.x = value.x - (size.width / 2)
-            origin.y = value.y - (size.height / 2)
+            get {
+                var centerX = origin.x + (size.width / 2)
+                var centerY = origin.y + (size.height / 2)
+                return Point(centerX, centerY)
+            } set {
+                origin.x = value.x - (size.width / 2)
+                origin.y = value.y - (size.height / 2)
+            }
         }
     }
 
@@ -457,10 +458,8 @@ define a property that will always return a value,
 and can be accessed via dot syntax,
 but which cannot be set to a different value by users of your class or structure.
 
-As mentioned above,
-the declaration of computed properties –
-including read-only computed properties –
-can be simplified by removing the ``get`` keyword:
+The declaration of a read-only computed property can be simplified
+by removing the ``get`` keyword:
 
 .. testcode:: classesAndStructures
 
@@ -503,6 +502,7 @@ to indicate that their value cannot be changed once it is set as part of instanc
 .. NOTE: getters and setters are also allowed for named values
    that are not associated with a particular class or struct.
    Where should this be mentioned?
+   
 .. TODO: Anything else from https://[Internal Staging Server]/docs/StoredAndComputedVariables.html
 
 .. _ClassesAndStructures_PropertiesAndInstanceVariables:

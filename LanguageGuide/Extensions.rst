@@ -77,9 +77,8 @@ Similarly, there are 3.28024 feet in a meter,
 and so the ``ft`` computed property divides the underlying ``Double`` value
 by ``3.28024``, to convert it from feet to meters.
 
-These computed properties are read-only,
-and so they have been expressed in
-:ref:`shorthand syntax <ClassesAndStructures_ShorthandGetterAndSetterDeclarations>` for brevity.
+These properties are :ref:`read-only computed properties <ClassesAndStructures_ReadOnlyComputedProperties>`,
+and so they have been expressed without the ``get`` keyword, for brevity.
 Their return value is inferred to be of type ``Double``,
 and can be used within mathematical calculations wherever a ``Double`` is accepted:
 
