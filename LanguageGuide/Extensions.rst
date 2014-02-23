@@ -50,11 +50,11 @@ to provide basic support for working with distance units:
         var mm: Double { return self / 1_000.00 }
         var ft: Double { return self / 3.28084 }
     }
-    (swift) var oneInch = 25.4.mm
+    (swift) val oneInch = 25.4.mm
     // oneInch : Double = 0.0254
     (swift) println("One inch is \(oneInch) meters")
     >>> One inch is 0.0254 meters
-    (swift) var threeFeet = 3.ft
+    (swift) val threeFeet = 3.ft
     // threeFeet : Double = 0.9144
     (swift) println("Three feet is \(threeFeet) meters")
     >>> Three feet is 0.9144 meters
@@ -84,7 +84,7 @@ and can be used within mathematical calculations wherever a ``Double`` is accept
 
 .. testcode:: extensionsComputedProperties
 
-    (swift) var aMarathon = 42.km + 195.m
+    (swift) val aMarathon = 42.km + 195.m
     // aMarathon : Double = 42195.0
     (swift) println("A marathon is \(aMarathon) meters long")
     >>> A marathon is 42195.0 meters long
