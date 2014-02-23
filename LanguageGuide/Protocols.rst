@@ -31,8 +31,7 @@ Here's an example:
             self.suffix = suffix
         }
         var fullName: String {
-            get:
-                return name + (suffix ? " " + suffix! : "")
+            return name + (suffix ? " " + suffix! : "")
         }
     }
     (swift) var ironMan = Person(withName: "Robert Downey", suffix: "Jr.")
@@ -47,8 +46,7 @@ Here's an example:
             self.prefix = prefix
         }
         var fullName: String {
-            get:
-                return (prefix ? prefix! + " " : "") + name
+            return (prefix ? prefix! + " " : "") + name
         }
     }
     (swift) var starship = Ship(withName: "Enterprise", prefix: "USS")
