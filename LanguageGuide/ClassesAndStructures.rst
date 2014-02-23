@@ -280,7 +280,8 @@ Here's an example of ``willSet`` and ``didSet`` in action:
         var totalSteps: Int = 0 {
             willSet(newStepCount) {
                 previousTotalSteps = totalSteps
-            } didSet {
+            }
+            didSet {
                 if totalSteps > previousTotalSteps  {
                     println("Added \(totalSteps - previousTotalSteps) steps")
                 }
@@ -371,7 +372,8 @@ to retrieve and set other properties and values indirectly.
                 val centerX = origin.x + (size.width / 2)
                 val centerY = origin.y + (size.height / 2)
                 return Point(centerX, centerY)
-            } set(newCenter) {
+            }
+            set(newCenter) {
                 origin.x = newCenter.x - (size.width / 2)
                 origin.y = newCenter.y - (size.height / 2)
             }
@@ -440,7 +442,8 @@ which takes advantage of this shorthand notation:
                 val centerX = origin.x + (size.width / 2)
                 val centerY = origin.y + (size.height / 2)
                 return Point(centerX, centerY)
-            } set {
+            }
+            set {
                 origin.x = value.x - (size.width / 2)
                 origin.y = value.y - (size.height / 2)
             }
