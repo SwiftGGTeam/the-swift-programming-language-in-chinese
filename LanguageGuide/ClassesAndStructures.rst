@@ -884,7 +884,7 @@ and can be used to retrieve and set its properties:
 .. testcode:: selfClasses
 
     (swift) class BankAccount {
-        var balance: Double = 0.0
+        var balance = 0.0
         func depositMoney(amount: Double) {
             self.balance += amount
         }
