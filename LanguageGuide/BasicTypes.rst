@@ -547,6 +547,20 @@ As with other examples of type safety in Swift,
 this approach avoids accidental errors,
 and ensures that the intention of a particular section of code is always made clear.
 
+.. _BasicTypes_Arrays:
+
+Arrays
+------
+
+[to be written]
+
+.. _BasicTypes_Dictionaries:
+
+Dictionaries
+------------
+
+[to be written]
+
 .. _BasicTypes_Tuples:
 
 Tuples
@@ -602,20 +616,6 @@ or is likely to persist beyond a temporary scope,
 it should be modeled as a :newTerm:`class` or :newTerm:`structure`,
 rather than as a tuple.
 Classes and structures are described in detail in :doc:`ClassesAndStructures`.
-
-.. _BasicTypes_Arrays:
-
-Arrays
-------
-
-[to be written]
-
-.. _BasicTypes_Dictionaries:
-
-Dictionaries
-------------
-
-[to be written]
 
 .. _BasicTypes_Optionals:
 
