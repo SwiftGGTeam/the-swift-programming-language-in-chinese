@@ -460,6 +460,44 @@ The ternary conditional operator should be used with care, however.
 It is very concise, but this conciseness can lead to hard-to-read code if overused.
 Avoid combining multiple instances of the ternary conditional operator into one compound statement.
 
+.. _Operators_RangeOperator:
+
+Range Operator
+--------------
+
+Swift includes a :newTerm:`range operator`,
+which provides a shorthand way to express a range of values.
+The range operator ``a...b`` defines a range that runs from ``a`` to ``b``,
+but does not include ``b``.
+For this reason, it is said to be :newTerm:`half-closed`.
+
+The range operator is particularly useful when working with zero-based lists,
+for counting up to (but not including) the length of a zero-based array:
+
+.. testcode:: rangeOperators
+
+    (swift) val names = ["Anna", "Brian", "Christine", "Daniel"]
+    // names : String[] = ["Anna", "Brian", "Christine", "Daniel"]
+    (swift) val count = names.count
+    // count : Int = 4
+    (swift) for i in 0...count {
+        println("Person \(i + 1) is called \(names[i])")
+    }
+    >>> Person 1 is called Anna
+    >>> Person 2 is called Brian
+    >>> Person 3 is called Christine
+    >>> Person 4 is called Daniel
+
+Note that the array contains four items,
+but ``0...count`` only counts as far as ``3``
+(the index of the last item in the array),
+because it is a half-closed range.
+
+.. QUESTION: Should these appear here, or in Control Flow?
+.. NOTE: Ranges have handy functions
+   (well, specifically IntGeneratorType and DoubleGeneratorType at present)
+   such as reverse(), contains() and by() - where should these be mentioned?
+
 .. _Operators_BitwiseOperators:
 
 Bitwise Operators
@@ -1172,44 +1210,6 @@ The output of the compound expression doesn't change,
 but the overall intention is clearer to the reader.
 Readability is always preferred over brevity;
 use parentheses where they help to make your intentions clear.
-
-.. _Operators_RangeOperator:
-
-Range Operator
---------------
-
-Swift includes a :newTerm:`range operator`,
-which provides a shorthand way to express a range of values.
-The range operator ``a...b`` defines a range that runs from ``a`` to ``b``,
-but does not include ``b``.
-For this reason, it is said to be :newTerm:`half-closed`.
-
-The range operator is particularly useful when working with zero-based lists,
-for counting up to (but not including) the length of a zero-based array:
-
-.. testcode:: rangeOperators
-
-    (swift) val names = ["Anna", "Brian", "Christine", "Daniel"]
-    // names : String[] = ["Anna", "Brian", "Christine", "Daniel"]
-    (swift) val count = names.count
-    // count : Int = 4
-    (swift) for i in 0...count {
-        println("Person \(i + 1) is called \(names[i])")
-    }
-    >>> Person 1 is called Anna
-    >>> Person 2 is called Brian
-    >>> Person 3 is called Christine
-    >>> Person 4 is called Daniel
-
-Note that the array contains four items,
-but ``0...count`` only counts as far as ``3``
-(the index of the last item in the array),
-because it is a half-closed range.
-
-.. QUESTION: Should these appear here, or in Control Flow?
-.. NOTE: Ranges have handy functions
-   (well, specifically IntGeneratorType and DoubleGeneratorType at present)
-   such as reverse(), contains() and by() - where should these be mentioned?
 
 .. refnote:: References
 
