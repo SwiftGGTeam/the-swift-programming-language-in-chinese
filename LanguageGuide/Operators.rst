@@ -398,7 +398,7 @@ The ``if else`` statement is described in more detail in :doc:`ControlFlow`.
 .. _Operators_TernaryConditionalOperator:
 
 Ternary Conditional Operator
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------
 
 The :newTerm:`ternary conditional operator` is a special operator with three parts,
 which takes the form ``question ? answer1 : answer2``.
