@@ -70,7 +70,7 @@ The :newTerm:`assignment operator` (``a = b``) updates the value of ``a`` with t
     (swift) println("a is now \(a)")
     >>> a is now 10
 
-If the right-hand side of the assignment is a tuple with multiple values,
+If the right side of the assignment is a tuple with multiple values,
 its elements can be decomposed into multiple named values at once:
 
 .. testcode:: assignmentOperator
@@ -172,7 +172,7 @@ and returns ``remainder`` as its output:
 
 ``a`` = (``b`` × ``some multiplier``) + ``remainder``
 
-…where ``some multiplier`` is the smallest number of multiples of ``b``
+where ``some multiplier`` is the smallest number of multiples of ``b``
 that will fit inside ``a``.
 
 Inserting ``9`` and ``4`` into this equation gives:
@@ -186,11 +186,11 @@ The same method is applied when calculating the remainder for a negative value o
     (swift) -9 % 4
     // r6 : Int = -1
 
-Plugging ``-9`` and ``4`` into the equation gives:
+Inserting ``-9`` and ``4`` into the equation gives:
 
 ``-9`` = (``4`` × ``-2``) + ``-1``
 
-…giving a remainder value of ``-1``.
+giving a remainder value of ``-1``.
 
 The sign of ``b`` is ignored for negative values of ``b``.
 This means that ``a % b`` and ``a % -b`` always give the same answer.
@@ -200,7 +200,7 @@ This means that ``a % b`` and ``a % -b`` always give the same answer.
 Floating-Point Remainder Calculations
 _____________________________________
 
-Unlike C and Objective-C,
+Unlike the remainder operator in C and Objective-C,
 Swift's remainder operator can also operate on floating-point numbers:
 
 .. testcode:: arithmeticOperators
@@ -208,7 +208,7 @@ Swift's remainder operator can also operate on floating-point numbers:
     (swift) 8 % 2.5
     // r7 : Double = 0.5
 
-``8`` divided by ``2.5`` equals ``3``, with a remainder of ``0.5``,
+In this example, ``8`` divided by ``2.5`` equals ``3``, with a remainder of ``0.5``,
 so the remainder operator returns a ``Double`` value of ``0.5``.
 
 .. image:: ../images/remainderFloat.png
@@ -568,8 +568,12 @@ Bitwise XOR Operator
 ~~~~~~~~~~~~~~~~~~~~
 
 The :newTerm:`bitwise XOR operator` (``^``) compares the bits of two numbers,
-and returns a new number whose bits are set to ``1`` if the bits are equal to ``1`` in *either* of the input numbers,
-but not if they are set to ``1`` in *both* of the input numbers:
+and returns a new number based on the following rules:
+
+* If a bit is equal to ``1`` in  *either* of the input numbers,
+  but not in *both* of the input numbers,
+  then it should be set to ``1`` in the output number.
+* Otherwise, the bit should be set to ``0``.
 
 .. image:: ../images/bitwiseXOR.png
     :width: 570
@@ -587,6 +591,10 @@ For example:
     // outputBits : UInt8 = 17
 
 .. TODO: Explain how this can be useful to toggle just a few bits in a bitfield.
+
+.. note::
+
+    “XOR” is pronounced “exclusive OR”.
 
 .. _Operators_BitwiseLeftAndRightShifts:
 
@@ -662,7 +670,8 @@ Here, the CSS color value ``#CC6699`` is written as ``0xCC6699`` in Swift's hexa
 This color is then decomposed into its red (``CC``), green (``66``) and blue (``99``) components
 using the bitwise AND operator (``&``) and the bitwise right shift operator (``>>``).
 
-The red component is obtained by performing a bitwise AND between the numbers ``0xCC6699`` and ``0xFF0000``.
+The red component is obtained by performing a bitwise AND
+between the numbers ``0xCC6699`` and ``0xFF0000``.
 The zeroes in ``0xFF0000`` effectively “mask” the second and third bytes of ``0xCC6699``,
 causing the ``6699`` to be ignored and leaving ``0xCC0000`` as the result.
 
@@ -671,13 +680,15 @@ Each pair of characters in a hexadecimal number uses 8 bits,
 so a move 16 places to the right will convert ``0xCC0000`` into ``0x0000CC``.
 This is the same as ``0xCC``, which has a decimal value of ``204``.
 
-Similarly, the green component is obtained by ANDing ``0xCC6699`` with ``0x00FF00``,
-which gives an output of ``0x006600``.
-This is then shifted eight places to the right,
+Similarly, the green component is obtained by performing a bitwise AND
+between the numbers ``0xCC6699`` and ``0x00FF00``,
+which gives an output value of ``0x006600``.
+This output value is then shifted eight places to the right,
 giving a a value of ``0x66``, which has a decimal value of ``102``.
 
-Finally, the blue component is obtained by ANDing ``0xCC6699`` with ``0x0000FF``,
-which gives an output of ``0x000099``.
+Finally, the blue component is obtained by performing a bitwise AND
+between the numbers ``0xCC6699`` and ``0x0000FF``,
+which gives an output value of ``0x000099``.
 There's no need to shift this to the right,
 as ``0x000099`` already equals ``0x99``,
 which has a decimal value of ``153``.
@@ -936,7 +947,7 @@ Logical Operators
 Logical NOT Operator
 ~~~~~~~~~~~~~~~~~~~~
 
-The :newTerm:`logical NOT operator` (``!a``) inverts a boolean value so that ``true`` becomes ``false``,
+The :newTerm:`logical NOT operator` (``!a``) inverts a Boolean value so that ``true`` becomes ``false``,
 and ``false`` becomes ``true``.
 It can be read as “not ``a``”, as seen in the following example:
 
@@ -954,7 +965,7 @@ The subsequent line is only executed if “not allowed entry” is true,
 i.e. if ``allowedEntry`` is ``false``.
 
 As in this example,
-careful choice of boolean constant and variable names
+careful choice of Boolean constant and variable names
 can help to keep code readable and concise,
 while avoiding double negatives or confusing logic statements.
 

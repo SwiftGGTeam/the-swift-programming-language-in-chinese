@@ -62,9 +62,15 @@ Named Values
 .. QUESTION: Do we need to have introduced the REPL
    (or some other learning environment) before starting this section?
 
-A :newTerm:`named value` is a way to store a particular value
+Before describing the types themselves,
+it is important to understand how they are used to create new values
+and to refer to these values in your code.
+This section introduces the concept of :newTerm:`named values`,
+which give a way to store and pass around specific values by name.
+
+A named value is a way to store a particular value
 (such as the number ``42``, or the string ``"hello"``)
-and refer to it with a specific name in your code.
+and refer to it with a name of your choosing.
 Swift provides two types of named values:
 
 * :newTerm:`constant named values`, also known as :newTerm:`constants`, and
@@ -111,11 +117,14 @@ to be explicit about the kind of named value you want to create:
     (swift) val welcomeMessage: String = "Hello"
     // welcomeMessage : String = "Hello"
 
-The colon in the declaration means *“…that is a…,”*
+The colon in the declaration means *“…of type…,”*
 so this can be read as:
 
 “Declare a constant called ``welcomeMessage`` that is of type ``String``,
 and give it a value of ``"Hello"``.”
+
+The phrase “of type ``String``” means “can store any ``String`` value”.
+Think of it as meaning “the type of thing” (or “the kind of thing”) that can be stored.
 
 You can use almost any character you like for constant and variable names,
 including Unicode characters:
@@ -141,8 +150,7 @@ or set it to store values of a different type.
 You also can't change it from a constant to a variable (or vice versa).
 
 The value of an existing variable can be changed to another value of the same type.
-You can also print the value of any named value using the ``println`` function,
-to see its current value:
+You can also print the value of any named value by using the ``println`` function:
 
 .. testcode:: namedValues
 
@@ -154,6 +162,10 @@ to see its current value:
 
 .. NOTE: this is a deliberately simplistic description of what you can do with println().
    It will be expanded later on.
+
+.. QUESTION: is this *too* simplistic?
+   Strictly speaking, you can't print the value of *any* named value –
+   you can only print values of types for which String has a constructor.
 
 Unlike a variable, the value of a constant cannot be changed once it is set,
 and attempting to do so will result in an error:
@@ -173,7 +185,7 @@ Integers
 --------
 
 :newTerm:`Integers` are whole numbers with no fractional component,
-such as ``42``, ``0``, and ``-23``.
+such as ``42`` and ``-23``.
 Integers are either :newTerm:`signed` (which means they can be positive or negative),
 or :newTerm:`unsigned` (which means they can only be positive).
 
@@ -237,8 +249,8 @@ Type inference is particularly useful
 when you declare a constant or variable with an initial value.
 This is often done by assigning a :newTerm:`literal value` (or :newTerm:`literal`)
 to the constant or variable at the point that you declare it.
-A literal value is a one-off value that appears directly in your source code,
-such as ``42`` and ``3.14159`` in the examples below.
+(A literal value is a one-off value that appears directly in your source code,
+such as ``42`` and ``3.14159`` in the examples below.)
 
 For example, if you assign a literal value of ``42`` to a new constant
 without saying what type it is,
@@ -333,7 +345,7 @@ All of these floating-point literals have a decimal value of ``12.5``:
     // hexadecimalDouble : Double = 12.5
 
 Numeric literals can contain extra formatting to make them easier to read.
-Both integers and floats can be padded with extra zeroes at the beginning,
+Both integers and floats can be padded with extra zeroes at the beginning
 and can contain underscores to help with readability.
 Neither type of formatting affects the underlying value of the literal:
 
@@ -365,7 +377,7 @@ Other integer types should be used only when they are are specifically needed fo
 due to explicitly-sized data from an external source,
 or for performance, memory usage, or other optimization.
 Using explicitly-sized types in these situations
-helps to catch any accidental value overflows,
+helps to catch any accidental value overflows
 and implicitly documents the nature of the data being used.
 
 .. _BasicTypes_IntegerConversion:
@@ -382,7 +394,7 @@ cannot necessarily be stored in another numeric type.
 
 Because of these differences,
 numeric type conversion is something you must opt in to on a case-by-case basis.
-This avoids accidental errors
+This opt-in approach avoids accidental errors
 and helps to make type conversion intentions explicit in your code.
 
 To convert from one specific number type to another,
@@ -408,9 +420,7 @@ the addition is allowed.
 The output constant (``twoThousandAndOne``) is inferred to be of type ``UInt16``,
 because it is the sum of two ``UInt16`` values.
 
-The syntax above –
-``SomeType(ofInitialValue)`` –
-is the default way to call the initializer of a Swift type
+``SomeType(ofInitialValue)`` is the default way to call the initializer of a Swift type
 and pass in an initial value.
 Behind the scenes, ``UInt16`` has an initializer that accepts a ``UInt8`` value,
 and so this initializer is used to make a new ``UInt16`` from an existing ``UInt8``.
@@ -439,7 +449,7 @@ Conversions between integer and floating-point numeric types must also be made e
     (swift) val pi = Double(three) + pointOneFourOneFiveNine
     // pi : Float64 = 3.14159
 
-Here, the value of the constant ``three`` is used to create a new ``Double``,
+Here, the value of the constant ``three`` is used to create a new value of type ``Double``,
 so that both sides of the addition are of the same type.
 Without this conversion in place, the addition would not be allowed.
 
@@ -513,7 +523,7 @@ Boolean values are particularly useful when working with conditional statements 
 
 Conditional statements such as ``if else`` are covered in more detail in :doc:`ControlFlow`.
 
-Swift's type safety means that non-boolean values cannot be substituted for ``Bool``.
+Swift's type safety means that non-Boolean values cannot be substituted for ``Bool``.
 You cannot, for example, say::
 
     (swift) val i = 1
@@ -636,7 +646,7 @@ without the need for special constants or ``nil`` tests.
 
 Here's an example.
 Swift's ``String`` type has a function called ``toInt()``,
-which trys to convert a ``String`` value into an ``Int`` value.
+which tries to convert a ``String`` value into an ``Int`` value.
 However, it's not possible to convert every possible string into an integer.
 The string ``"123"`` can be converted into the numeric value ``123``,
 but the string ``"hello, world"`` does not have an obvious numeric value to convert to.

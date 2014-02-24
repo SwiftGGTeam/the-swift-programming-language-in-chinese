@@ -564,7 +564,7 @@ or when it is passed to a function.
 
 You've actually been using value types extensively throughout the previous chapters.
 In fact, all of the basic types in Swift –
-integers, floating-point numbers, booleans, strings, enumerations, arrays and dictionaries –
+integers, floating-point numbers, Booleans, strings, enumerations, arrays and dictionaries –
 are value types.
 
 Swift structures are also value types.
