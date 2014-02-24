@@ -35,7 +35,10 @@ Some of these types will be familiar to C and Objective-C developers:
 
 * :newTerm:`Numbers` (including integers and floating-point numbers)
 * :newTerm:`Booleans` (for values that can only be true or false)
-    
+* :newTerm:`Arrays` (for ordered lists of values)
+* :newTerm:`Dictionaries` (for collections of values that can be referenced
+  and looked up via an unique identifier or “key”)
+
 Although these types may be familiar,
 Swift expands their capabilities beyond what is possible in other languages.
 
