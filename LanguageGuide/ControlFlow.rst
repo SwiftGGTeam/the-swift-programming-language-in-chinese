@@ -18,7 +18,14 @@
 Control Flow
 ============
 
-.. TODO: write a chapter introduction.
+Swift provides several different ways to structure and control the flow of your code's execution.
+These include:
+
+* :newTerm:`Loops`, which perform a task multiple times
+* :newTerm:`Conditional statements`,
+  which execute different branches of code based on certain conditions
+* :newTerm:`Control transfer statements`,
+  which immediately transfer the flow of execution to another point in your code
 
 .. _ControlFlow_ForLoops:
 
