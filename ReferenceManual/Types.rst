@@ -28,7 +28,8 @@ are actually named types,
 defined and implemented in the Swift Standard Library using structures.
 Because they are named types,
 you can extend their behavior to suit the needs of your program,
-using an extension declaration, discussed in :doc:`../LanguageGuide/ProtocolsAndExtensions`.
+using an extension declaration,
+discussed in :doc:`../LanguageGuide/Extensions` and :ref:`Declarations_ExtensionDeclaration`.
 
 A :newTerm:`compound type` is a type without a name, defined in the Swift language itself.
 There are two compound types: function types and tuple types.
