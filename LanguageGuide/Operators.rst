@@ -25,13 +25,15 @@ All of these operators are explained in more detail below.
 Swift supports all of the standard operators from C,
 and improves several of their capabilities:
 
-* Assignment ``=`` does not return a value, to avoid common coding errors
-* Remainder ``%`` calculations can be performed on floating-point numbers
+* Assignment (``=``) does not return a value, to avoid common coding errors
+* Remainder (``%``) calculations can be performed on floating-point numbers
 
 It also introduces new operators not found in other languages:
 
-* `Overflow operators`_ such as ``a &+ b``, to opt in to overflowing arithmetic behavior
-* A `range operator`_ ``a...b``, which gives a short-hand way to express a range of values
+* :ref:`Range operators <Operators_RangeOperators>`
+  ``a..b`` and ``a...b``, which give a short-hand way to express a range of values
+* :ref:`Overflow operators <Operators_OverflowOperators>`
+  such as ``a &+ b``, to opt in to overflowing arithmetic behavior
 
 In addition, you can define your own implementations of the standard operators –
 and create new ones –
@@ -460,19 +462,54 @@ The ternary conditional operator should be used with care, however.
 It is very concise, but this conciseness can lead to hard-to-read code if overused.
 Avoid combining multiple instances of the ternary conditional operator into one compound statement.
 
-.. _Operators_RangeOperator:
+.. _Operators_RangeOperators:
 
-Range Operator
---------------
+Range Operators
+---------------
 
-Swift includes a :newTerm:`range operator`,
-which provides a shorthand way to express a range of values.
-The range operator ``a...b`` defines a range that runs from ``a`` to ``b``,
+Swift includes two :newTerm:`range operators`,
+which provide shorthand ways to express a range of values.
+
+.. _Operators_ClosedRangeOperator:
+
+Closed Range Operator
+~~~~~~~~~~~~~~~~~~~~~
+
+The :newTerm:`closed range operator` (``a..b``)
+defines a range that runs from ``a`` to ``b``,
+and includes the values ``a`` and ``b``.
+
+The closed range operator is useful when iterating over a range
+in which you want all of the values to be used,
+such as with a ``for``-``in`` loop:
+
+.. testcode:: rangeOperators
+
+    (swift) for index in 1..5 {
+        println("\(index) times 5 is \(index * 5)")
+    }
+    >>> 1 times 5 is 5
+    >>> 2 times 5 is 10
+    >>> 3 times 5 is 15
+    >>> 4 times 5 is 20
+    >>> 5 times 5 is 25
+
+``for``-``in`` loops are described in more detail in :doc:`ControlFlow`.
+
+.. _Operators_HalfClosedRangeOperator:
+
+Half-Closed Range Operator
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The :newTerm:`half-closed range operator` (``a...b``)
+defines a range that runs from ``a`` to ``b``,
 but does not include ``b``.
-For this reason, it is said to be :newTerm:`half-closed`.
+It is said to be :newTerm:`half-closed`
+because it contains its first value, but not its final value.
 
-The range operator is particularly useful when working with zero-based lists,
-for counting up to (but not including) the length of a zero-based array:
+Half-closed ranges are particularly useful when working with
+zero-based lists such as arrays,
+where it is useful to count up to (but not including) the length of the list:
 
 .. testcode:: rangeOperators
 
@@ -492,11 +529,6 @@ Note that the array contains four items,
 but ``0...count`` only counts as far as ``3``
 (the index of the last item in the array),
 because it is a half-closed range.
-
-.. QUESTION: Should these appear here, or in Control Flow?
-.. NOTE: Ranges have handy functions
-   (well, specifically IntGeneratorType and DoubleGeneratorType at present)
-   such as reverse(), contains() and by() - where should these be mentioned?
 
 .. _Operators_BitwiseOperators:
 

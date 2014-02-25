@@ -50,15 +50,17 @@ which prints the first few entries in the five-times-table:
 
 .. testcode::
 
-    (swift) for index in 1...5 {
+    (swift) for index in 1..5 {
         println("\(index) times 5 is \(index * 5)")
     }
     >>> 1 times 5 is 5
     >>> 2 times 5 is 10
     >>> 3 times 5 is 15
     >>> 4 times 5 is 20
+    >>> 5 times 5 is 25
 
-Here, the collection of items being iterated is a half-open range of numbers from ``1`` to ``5``.
+Here, the collection of items being iterated is a
+:ref:`closed range <Operators_ClosedRangeOperator>` of numbers from ``1`` to ``5``.
 The value of ``index`` is set to the first number in the range (``1``),
 and the statements inside the loop are executed.
 In this case, the loop only contains one statement,
@@ -67,8 +69,6 @@ Once the statement has been executed,
 the value of ``index`` is updated to contain the second value in the range (``2``),
 and the ``println`` function is called again.
 This continues until the end of the range is reached.
-Because the range is half-open,
-its final value of ``5`` is not used.
 
 The ``index`` variable does not have to be declared before it is used as part of this loop.
 It is implicitly declared simply by its inclusion in the loop declaration,
