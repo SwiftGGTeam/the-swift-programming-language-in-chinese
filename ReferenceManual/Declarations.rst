@@ -517,7 +517,7 @@ Class declarations begin with the keyword ``class`` and have the following form:
 
 .. syntax-outline::
 
-    class <#class name#> : <#superclass>, <#adopted protocols#> {
+    class <#class name#> : <#superclass#>, <#adopted protocols#> {
         <#declarations#>
     }
 
@@ -705,11 +705,37 @@ Destructor Declaration
 Extension Declaration
 ---------------------
 
+An extension declaration allows you to extend the behavior of existing
+class, structure, and enumeration types.
+Extension declarations begin with the keyword ``extension`` and have the following form:
+
 .. syntax-outline::
 
     extension <#type#> : <#adopted protocols#> {
         <#declarations#>
     }
+
+The body of an extension declaration may contain zero or more *declarations*.
+These *declarations* may include computed properties, computed static and class properties,
+instance methods, static and class methods, initializers, subscript declarations,
+and even class, structure, and enumeration declarations.
+Extension declarations may not contain destructor or protocol declarations,
+store properties, stored property observers, or other extension declarations.
+For a discussion and several examples of extensions that include these kind of declarations,
+see :doc:`../LanguageGuide/Extensions`.
+
+Extension declarations may add protocol conformance to an existing
+class, structure, and enumeration type in the *adopted protocols*.
+Extension declarations may not add class inheritance to an existing class,
+and therefore the **type-inheritance-clause** may contain only a list of protocols.
+
+Properties, methods, and initializers of an existing type
+may not be overridden in an extension of that type.
+
+Extension declarations may contain initializer declarations. That said,
+if the type you're extending is defined in another module,
+an initializer declaration must delegate to an initializer already defined in that module
+to ensure members of that type are properly initialized.
 
 .. langref-grammar
 
