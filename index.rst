@@ -33,6 +33,7 @@ Language Guide
 * Re-ordered the :doc:`LanguageGuide/ControlFlow` chapter
 * ``String`` no longer has a ``length`` property
 * :doc:`LanguageGuide/Extensions` and :doc:`LanguageGuide/Protocols` are now separate chapters (but are not yet written)
+* We no longer refer to getters, setters, observers and initializers as “methods”
 * Placeholder sections for Arrays and Dictionaries (but no content as yet) in :doc:`LanguageGuide/BasicTypes`
 * Editorial changes and improvements throughout the *Guide*
 
