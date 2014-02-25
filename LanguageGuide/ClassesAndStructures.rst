@@ -352,12 +352,8 @@ Computed Properties
 
 Classes and structures can also define :newTerm:`computed properties`,
 which do not actually store a value.
-Instead, they provide a :newTerm:`getter method`, and an optional :newTerm:`setter method`,
+Instead, they provide a :newTerm:`getter`, and an optional :newTerm:`setter`,
 to retrieve and set other properties and values indirectly.
-
-.. QUESTION: should this be 'getter method' and 'setter method', or just 'getter' and 'setter'?
-   If we're not calling initializers, destructors and observers 'methods',
-   maybe we shouldn't do so here either?
 
 .. testcode:: classesAndStructures
 
@@ -396,7 +392,7 @@ and defines two additional structures for working with geometric shapes:
 The ``Rect`` structure also provides a computed property called ``center``.
 The current center position of a ``Rect`` can always be determined from its ``origin`` and ``size``,
 and so there is no need to actually store the center point as an explicit ``Point`` value.
-Instead, ``Rect`` defines custom getter and setter methods for a computed variable called ``center``,
+Instead, ``Rect`` defines a custom getter and setter for a computed variable called ``center``,
 to enable you to work with the rectangle's ``center`` as if it were a real stored property.
 
 This example creates a new ``Rect`` variable called ``square``.
