@@ -14,6 +14,7 @@ Chapters that have not yet been written are indicated with an [x] after their na
     Closures
     ClassesAndStructures
     Enumerations
-    ProtocolsAndExtensions
+    Extensions
+    Protocols
     Generics
     StandardFunctions
