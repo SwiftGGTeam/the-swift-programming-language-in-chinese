@@ -19,6 +19,23 @@ Contents
 Change Log
 ----------
 
+February 25 2014
+~~~~~~~~~~~~~~~~
+
+Language Guide
+++++++++++++++
+
+* New section on :ref:`ClassesAndStructures_TypeCasting`
+* New section on :ref:`ClassesAndStructures_Destructors`
+* New section on :ref:`self <ClassesAndStructures_Self>` and ``mutating`` structure methods
+* :ref:`ClassesAndStructures_StoredPropertyObservers` and :ref:`ClassesAndStructures_ComputedProperties` now all use curly braces
+* Information about the :ref:`Operators_ClosedRangeOperator` (``..``) 
+* Re-ordered the :doc:`LanguageGuide/ControlFlow` chapter
+* ``String`` no longer has a ``length`` property
+* :doc:`LanguageGuide/Extensions` and :doc:`LanguageGuide/Protocols` are now separate chapters (but are not yet written)
+* Placeholder sections for Arrays and Dictionaries (but no content as yet) in :doc:`LanguageGuide/BasicTypes`
+* Editorial changes and improvements throughout the *Guide*
+
 February 12 2014
 ~~~~~~~~~~~~~~~~
 
