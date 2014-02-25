@@ -94,6 +94,32 @@ is made available in the current scope.
     import-kind --> ``typealias`` | ``struct`` | ``class`` | ``enum`` | ``protocol`` | ``var`` | ``func``
     import-path --> any-identifier | any-identifier ``.`` import-path
 
+
+.. _Declarations_ValueDeclaration:
+
+Value Declaration
+-----------------
+
+.. syntax-outline::
+
+    val <#variable name#> : <#type#> = <#expression#>
+
+.. langref-grammar
+
+    decl-let    ::= attribute-list 'val' pattern initializer?  (',' pattern initializer?)*
+    initializer ::= '=' expr
+
+.. syntax-grammar::
+
+    Grammar of a value declaration
+
+    value-declaration --> attribute-sequence-OPT ``val`` pattern-initializer-list
+
+    pattern-initializer-list --> pattern-initializer | pattern-initializer ``,`` pattern-initializer-list
+    pattern-initializer --> pattern initializer-OPT
+    initializer --> ``=`` expression
+
+
 .. _Declarations_VariableDeclaration:
 
 Variable Declaration
@@ -138,10 +164,6 @@ Variable Declaration
     variable-specifier --> ``static`` | ``class``
     variable-name --> identifier
 
-    pattern-initializer-list --> pattern-initializer | pattern-initializer ``,`` pattern-initializer-list
-    pattern-initializer --> pattern initializer-OPT
-    initializer --> ``=`` expression
-
     getter-setter-block --> ``{`` getter setter-OPT ``}`` | ``{`` setter getter ``}``
     getter --> ``get`` ``:`` statements-OPT
     setter --> ``set`` setter-name-OPT ``:`` statements-OPT
@@ -158,26 +180,6 @@ Variable Declaration
 
 .. TODO: Update the grammar for getter/setters/didSet/willSet.
     See: <rdar://problem/15966905> [Craig feedback] Consider "juxtaposed" brace enclosed property syntax
-
-.. _Declarations_ValueDeclaration:
-
-Value Declaration
------------------
-
-.. syntax-outline::
-
-    val <#variable name#> : <#type#> = <#expression#>
-
-.. langref-grammar
-
-    decl-let    ::= attribute-list 'val' pattern initializer?  (',' pattern initializer?)*
-    initializer ::= '=' expr
-
-.. syntax-grammar::
-
-    Grammar of a value declaration
-
-    value-declaration --> attribute-sequence-OPT ``val`` pattern-initializer-list
 
 .. _Declarations_TypealiasDeclaration:
 
@@ -736,6 +738,17 @@ Extension declarations may contain initializer declarations. That said,
 if the type you're extending is defined in another module,
 an initializer declaration must delegate to an initializer already defined in that module
 to ensure members of that type are properly initialized.
+
+.. TODO: TR: Verify that this is indeed the correct about initializers.
+    For example, the Language Guide says:
+    "If you provide a new initializer via an extension,
+    you are still responsible for making sure that each instance is fully initialized
+    once the initializer has completed, as described in
+    :ref:`ClassesAndStructures_DefiniteInitialization`.
+    Depending on the type you are extending, you may need to
+    delegate to another initializer or call a superclass initializer
+    at the end of your own initializer,
+    to ensure that all instance properties are fully initialized."
 
 .. langref-grammar
 
