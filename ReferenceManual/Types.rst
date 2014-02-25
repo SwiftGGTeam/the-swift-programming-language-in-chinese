@@ -2,22 +2,6 @@ Types
 =====
 
 .. TODO: Things to discuss/cover in this chapter:
-    Type inference behavior of Swift (see notes below in 'Type Inference')
-    Fully-typed (or fully-specified) types (see notes below in 'Fully-Typed Types')
-    Type safety; static and dynamic typing:
-        Avoid talking about "strong" vs "weak" typing
-        in favor of a discussion of type safety.
-        Much of that discussion belongs in the Language Guide in introductory material---
-        once you have that information, the brief discussions here will just make sense.
-        Swift is a statically typed language with some dynamic features. But, again,
-        the static/dynamic discussion doesn't really belong in the Reference Manual.
-        In the Reference Manual,
-        tend toward describing actual behaviors that involve type safety.
-    Type inheritance:
-        It will show up here because we need to say when it makes sense
-        and what can inherit what. Bring it up as needed,
-        but don't devote a lot of prose to it. Likewise for value vs reference types.
-        A more general and thorough discussion belongs in the Language Guide.
     Type attributes? (Waiting to find out if should document any of these)
 
 .. NOTE: Don't mention materializability at all.
@@ -44,7 +28,8 @@ are actually named types,
 defined and implemented in the Swift Standard Library using structures.
 Because they are named types,
 you can extend their behavior to suit the needs of your program,
-using an extension declaration, discussed in :doc:`../LanguageGuide/ProtocolsAndExtensions`.
+using an extension declaration,
+discussed in :doc:`../LanguageGuide/Extensions` and :ref:`Declarations_ExtensionDeclaration`.
 
 A :newTerm:`compound type` is a type without a name, defined in the Swift language itself.
 There are two compound types: function types and tuple types.
@@ -75,6 +60,7 @@ and describes the type inference behavior of Swift.
 
     type --> array-type | function-type | type-identifier | tuple-type | optional-type | protocol-composition-type | metatype-type
 
+.. _Types_TypeAnnotation:
 
 Type Annotation
 ---------------
@@ -99,10 +85,8 @@ Type annotations may contain an optional list of type attributes before the type
 
     type-annotation --> ``:`` attribute-sequence-OPT type
 
-.. NOTE: Renamed this back to type-annotation (from type-specifier),
-    because "type annotation" is the standard way of talking about
-    decorating a value/expression (term) with type information.
 
+.. _Types_TypeIdentifier:
 
 Type Identifier
 ---------------
@@ -146,10 +130,12 @@ that is declared in the ``ExampleModule`` module.
     type-identifier --> type-name generic-argument-clause-OPT | type-name generic-argument-clause-OPT ``.`` type-identifier
     type-name --> identifier
 
+.. _Types_TupleType:
 
 Tuple Type
 ----------
 
+.. write-me:: Waiting for design decisions from compiler team. See notes below.
 
 .. langref-grammar
 
@@ -188,10 +174,12 @@ Tuple Type
     3. Related to (1) and (2): Are tuple types going to used as the left-hand side
        of a function type (as in the current grammar)?
 
+.. _Types_FunctionType:
 
 Function Type
 -------------
 
+.. write-me:: Waiting for design decisions from compiler team. See notes below.
 
 .. langref-grammar
 
@@ -226,9 +214,12 @@ Function Type
     3. Related to (1) and (2): Are tuple types going to used as the left-hand side
        of a function type (as in the current grammar)?
 
+.. _Types_ArrayType:
+
 Array Type
 ----------
 
+.. write-me:: Waiting for design decisions from compiler team. See notes below.
 
 .. langref-grammar
 
@@ -254,7 +245,9 @@ Array Type
 .. TODO: Array types are in flux at the moment;
     Joe has a proposal on the table, but no decision has been made.
     Let's hold off on writing about these until they are nailed down.
+    Update: [Contributor 5711] is now DRI for rewriting/implementing Arrays.
 
+.. _Types_FunctionType:
 
 Optional Type
 -------------
@@ -263,10 +256,10 @@ The Swift language defines the postfix operator ``?`` as syntactic sugar for
 the named type ``Optional<T>``, which is defined in the Swift Standard Library.
 In other words, the following two declarations are equivalent::
 
-    let optionalInteger : Int?
-    let optionalInteger : Optional<Int>
+    var optionalInteger : Int?
+    var optionalInteger : Optional<Int>
 
-In both cases, the constant ``optionalInteger``
+In both cases, the variable ``optionalInteger``
 is declared to have the type of an optional integer.
 Note that no whitespace may appear between the type and the ``?`` operator.
 
@@ -292,7 +285,7 @@ you can access that value using the postfix operator ``!``, as shown below::
     optionalInteger!
     // 42
 
-Unwrap an optional
+Unwrapping an optional
 that has a value of ``Optional.None`` results in a runtime error.
 
 For examples that show how to use optional types,
@@ -312,6 +305,7 @@ see :ref:`BasicTypes_Optionals`.
 
     optional-type --> type ``?``
 
+.. _Types_ProtocolCompositionType:
 
 Protocol Composition Type
 -------------------------
@@ -353,10 +347,12 @@ which every type conforms to.
     protocol-identifier-list --> protocol-identifier | protocol-identifier ``,`` protocol-identifier-list
     protocol-identifier --> type-identifier
 
+.. _Types_MetatypeType:
 
 Metatype Type
 -------------
 
+.. write-me:: Waiting for design decisions from compiler team. See notes below.
 
 .. TR: How do metatypes types work?
     What information is important to convey in this section?
@@ -441,6 +437,7 @@ Metatype Type
 
     metatype-type --> type ``.`` ``metatype``
 
+.. _Types_TypeInheritanceClause:
 
 Type Inheritance Clause
 -----------------------
@@ -482,6 +479,7 @@ to specify the type of its raw values, see :ref:`Enumerations_RawValues`.
     type-inheritance-clause --> ``:`` type-inheritance-list
     type-inheritance-list --> type-identifier | type-identifier ``,`` type-inheritance-list
 
+.. _Types_TypeInference:
 
 Type Inference
 --------------
