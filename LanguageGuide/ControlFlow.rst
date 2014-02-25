@@ -18,7 +18,14 @@
 Control Flow
 ============
 
-.. TODO: write a chapter introduction.
+Swift provides several different ways to structure and control the flow of your code's execution.
+These include:
+
+* :newTerm:`Loops`, which perform a task multiple times
+* :newTerm:`Conditional statements`,
+  which execute different branches of code based on certain conditions
+* :newTerm:`Control transfer statements`,
+  which immediately transfer the flow of execution to another point in your code
 
 .. _ControlFlow_ForLoops:
 
@@ -43,15 +50,17 @@ which prints the first few entries in the five-times-table:
 
 .. testcode::
 
-    (swift) for index in 1...5 {
+    (swift) for index in 1..5 {
         println("\(index) times 5 is \(index * 5)")
     }
     >>> 1 times 5 is 5
     >>> 2 times 5 is 10
     >>> 3 times 5 is 15
     >>> 4 times 5 is 20
+    >>> 5 times 5 is 25
 
-Here, the collection of items being iterated is a half-open range of numbers from ``1`` to ``5``.
+Here, the collection of items being iterated is a
+:ref:`closed range <Operators_ClosedRangeOperator>` of numbers from ``1`` to ``5``.
 The value of ``index`` is set to the first number in the range (``1``),
 and the statements inside the loop are executed.
 In this case, the loop only contains one statement,
@@ -60,8 +69,6 @@ Once the statement has been executed,
 the value of ``index`` is updated to contain the second value in the range (``2``),
 and the ``println`` function is called again.
 This continues until the end of the range is reached.
-Because the range is half-open,
-its final value of ``5`` is not used.
 
 The ``index`` variable does not have to be declared before it is used as part of this loop.
 It is implicitly declared simply by its inclusion in the loop declaration,
@@ -71,7 +78,7 @@ If you want to check the value of ``index`` after the loop has completed,
 you must declare it in advance of its use in the loop.
 
 If you don't actually need each value from the range,
-you can ignore them using an underscore in place of a variable name:
+you can ignore the values using an underscore in place of a variable name:
 
 .. testcode::
 
@@ -100,7 +107,7 @@ The underscore character ``_``
 causes the individual values to be ignored,
 and does not provide access to the current value during each iteration of the loop.
 
-A ``for``-``in`` loop can also be used to iterate over the items in an array:
+A ``for``-``in`` loop can be used to iterate over the items in an array:
 
 .. testcode::
 
@@ -116,40 +123,19 @@ A ``for``-``in`` loop can also be used to iterate over the items in an array:
 
 Swift's ``String`` type has a ``chars`` property,
 which provides the individual characters in the string as an ``Array`` of ``UnicodeScalar`` values
-(also known as an ‘``Array`` of type ``UnicodeScalar``’).
-This can be used to iterate through the characters of a string in order.
-The following example takes a lowercase string,
-and removes all of its vowels and spaces to create a cryptic puzzle phrase for someone to try and guess:
+(also known as an “``Array`` of type ``UnicodeScalar``”).
+This can be used to iterate through the characters of a string in order:
 
 .. testcode::
 
-    (swift) val puzzleInput = "great minds think alike"
-    // puzzleInput : String = "great minds think alike"
-    (swift) var puzzleOutput = ""
-    // puzzleOutput : String = ""
-    (swift) for letter in puzzleInput.chars {
-        switch letter {
-            case 'a', 'e', 'i', 'o', 'u', ' ':
-                continue
-            default:
-                puzzleOutput += letter
-        }
+    (swift) for scalar in "Hello".chars {
+        println(scalar)
     }
-    (swift) println(puzzleOutput)
-    >>> grtmndsthnklk
-
-The ``letter`` constant is inferred to be of type ``UnicodeScalar``
-from the fact that it is iterating over a sequence of ``UnicodeScalar`` values.
-This is why the case statement compares ``letter`` against ``UnicodeScalar`` values
-(with single quote marks)
-rather than ``String`` values.
-
-The code above calls the ``continue`` keyword whenever it matches a vowel or a space.
-``continue`` is a special control flow keyword that causes the current iteration of the loop to end immediately
-and jump straight to the start of the next iteration.
-It enables the switch block to match (and ignore) just these six special characters,
-rather than having to match every character that should get printed.
-(The ``continue`` keyword is described in more detail later in this section.)
+    >>> H
+    >>> e
+    >>> l
+    >>> l
+    >>> o
 
 Iteration can also be used to access the key-value pairs in a dictionary.
 Every item in a dictionary has a ``key`` property and a ``value`` property,
@@ -179,7 +165,7 @@ However, this syntax can be used to iterate *any* collection,
 as long as it conforms to the ``Sequence`` protocol.
 This can include your own classes and collection types.
 Protocols, including ``Sequence``,
-are described in detail in :doc:`ProtocolsAndExtensions`.
+are described in detail in :doc:`Protocols`.
 
 .. QUESTION: are there any plans for enums to conform to Sequence?
    If so, they might make for a good example.
@@ -327,7 +313,7 @@ This example reads input from the keyboard one character at a time,
 and appends each character to a string.
 It does this using Swift's built-in ``Keyboard`` class,
 which reads keystrokes from an attached keyboard.
-The example creates a new ``Keyboard`` instance by calling its initializer method ``Keyboard()``.
+The example creates a new ``Keyboard`` instance by calling its initializer ``Keyboard()``.
 It then reads a key using the keyboard's ``read`` method.
 This causes the program to pause and wait for a keystroke before continuing.
 The keystroke's value is returned as a ``UInt8`` value,
@@ -350,7 +336,7 @@ Instead, the loop is executed until a particular condition is satisfied.
 
 .. NOTE: this example cannot be run in the REPL,
    due to the fact that it is reliant on keyboard input.
-   I have yet to come up with a better example where ‘while’ is the right kind of loop to use, however.
+   I have yet to come up with a better example where “while” is the right kind of loop to use, however.
    (I'm trying to avoid any examples where the number of iterations is known at the start of the loop.)
 
 .. _ControlFlow_DoWhile:
@@ -517,7 +503,7 @@ the numbers ``1`` to ``4``.
 If a match is found,
 it sets an optional ``Int?`` variable (``integerValue``) to the appropriate integer value.
 If the symbol is not recognized,
-the optional ``Int?`` is set to a value of ``.None``, meaning ‘no value’.
+the optional ``Int?`` is set to a value of ``.None``, meaning “no value”.
 Finally, it checks to see if a value was found.
 If it was, the output value is printed;
 otherwise, an error message is reported.
@@ -802,10 +788,43 @@ and start again at the beginning of the next iteration through the loop.
 It gives a way to say “I am done with the current loop iteration”,
 without leaving the loop altogether.
 
-In a ``for`` loop with an incrementer expression,
-the incrementer will still be evaluated after calling the ``continue`` statement.
-The loop itself continues to work as normal;
-only code within the loop is skipped.
+.. note::
+
+    In a ``for``-``condition``-``increment`` loop,
+    the incrementer will still be evaluated after calling the ``continue`` statement.
+    The loop itself continues to work as normal;
+    only code within the loop's body is skipped.
+
+The following example takes a lowercase string,
+and removes all of its vowels and spaces to create a cryptic puzzle phrase for someone to try and guess:
+
+.. testcode::
+
+    (swift) val puzzleInput = "great minds think alike"
+    // puzzleInput : String = "great minds think alike"
+    (swift) var puzzleOutput = ""
+    // puzzleOutput : String = ""
+    (swift) for letter in puzzleInput.chars {
+        switch letter {
+            case 'a', 'e', 'i', 'o', 'u', ' ':
+                continue
+            default:
+                puzzleOutput += letter
+        }
+    }
+    (swift) println(puzzleOutput)
+    >>> grtmndsthnklk
+
+The ``letter`` constant is inferred to be of type ``UnicodeScalar``
+from the fact that it is iterating over a sequence of ``UnicodeScalar`` values.
+This is why the case statement compares ``letter`` against ``UnicodeScalar`` values
+(with single quote marks) rather than ``String`` values.
+
+The code above calls the ``continue`` keyword whenever it matches a vowel or a space.
+This causes the current iteration of the loop to end immediately,
+and jump straight to the start of the next iteration.
+It enables the switch block to match (and ignore) just these six special characters,
+rather than having to match every character that should get printed.
 
 .. _ControlFlow_Break:
 
@@ -906,7 +925,7 @@ The function then considers the value of ``integerToDescribe`` using a ``switch`
 If the value of ``integerToDescribe`` is one of the prime numbers in the list,
 the function appends some text to the end of ``description``,
 to note that the number is prime.
-It then uses the ``fallthrough`` keyword to ‘fall into’ the ``default`` case as well.
+It then uses the ``fallthrough`` keyword to “fall into” the ``default`` case as well.
 The ``default`` case adds some extra text onto the end of the description,
 and the ``switch`` statement is complete.
 

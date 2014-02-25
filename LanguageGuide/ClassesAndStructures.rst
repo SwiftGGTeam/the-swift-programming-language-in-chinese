@@ -18,15 +18,16 @@
     * "Everything is a type"
     * Stored vs computed properties
     * === vs ==
-    * ‘is’ to check for class membership
-    * ‘as’ for casting
-    * No 'self = [super init]' (assignment equates to void)
+    * “is” to check for class membership
+    * “as” for casting
+    * No “self = [super init]” (assignment equates to void)
     * @inout
     * value types and reference types
-    * subscript getters and setters
     * Type functions and variables
     * Embedded classes and structures
     * Bound functions
+    * @conversion functions for converting between types
+    * Subscript getters and setters
 
 Classes and Structures
 ======================
@@ -44,13 +45,13 @@ Both can:
 * conform to :newTerm:`protocols` to provide standard functionality of a certain type, and
 * be :newTerm:`extended` to expand their functionality beyond a default implementation
 
-(Protocols and extensions are covered in detail in :doc:`ProtocolsAndExtensions`.)
+Protocols are covered in the :doc:`Protocols` chapter, and extensions are covered in the :doc:`Extensions` chapter.
 
 In addition, classes have several capabilities that structures do not:
 
 * :newTerm:`inheritance`, which enables one class to inherit the characteristics of another;
 * :newTerm:`destructors`, which enable an instance of a class to tidy up after itself; and
-* :newTerm:`type coercion`, which enables you to check and interpret the type of a class instance at runtime
+* :newTerm:`type casting`, which enables you to check and interpret the type of a class instance at runtime
 
 All of these capabilities are described in more detail below.
 
@@ -90,10 +91,14 @@ Both place their entire definition within a pair of braces:
 
 Whenever you define a new class or structure,
 you are effectively defining a brand new Swift type.
-Custom classes and structures should be given ``UpperCamelCase`` names
+Types should be given ``UpperCamelCase`` names
 (such as ``SomeClass`` and ``SomeStructure`` here),
 to match the capitalization of standard Swift types
-(such as ``String``, ``Int`` and ``Bool``).
+(such as ``String``, ``Int``, and ``Bool``).
+Named values, functions, and methods should always be given
+``lowerCamelCase`` names
+(such as ``allowedEntry`` and ``contentHeight``)
+to differentiate them from type names.
 
 .. _ClassesAndStructures_Properties:
 
@@ -137,9 +142,9 @@ The syntax for creating instances is very similar for both structures and classe
 
 .. testcode:: classesAndStructures
 
-    (swift) var someSize = Size()
+    (swift) val someSize = Size()
     // someSize : Size = Size(0.0, 0.0)
-    (swift) var someRectangle = Rectangle()
+    (swift) val someRectangle = Rectangle()
     // someRectangle : Rectangle = <Rectangle instance>
 
 Structures and classes both use :newTerm:`initializer syntax` when creating new instances.
@@ -184,7 +189,7 @@ The properties of an instance can be accessed using :newTerm:`dot syntax`:
 
 ``someSize.width`` refers to the ``width`` property of ``someSize``.
 Dot syntax can also be used to drill down into sub-properties
-such as the ``width`` property of a ``Rectangle``'s ``size``:
+such as the ``width`` property in the ``size`` property of a ``Rectangle``:
 
 .. testcode:: classesAndStructures
 
@@ -245,8 +250,8 @@ or :newTerm:`constant stored properties` (introduced by the ``val`` keyword).
 Constant stored properties are very similar to constant named values,
 in that their value cannot be changed once it has been initialized.
 Constant stored properties have slightly more flexibility, however,
-in that their value can be changed at any point until the instance they belong to
-has completed its initialization.
+in that their value can be changed at any point until the initializer for the class
+they belong to has completed its initialization.
 (Instance initialization is described in more detail in :ref:`ClassesAndStructures_Initialization`.)
 
 .. _ClassesAndStructures_StoredPropertyObservers:
@@ -273,12 +278,14 @@ Here's an example of ``willSet`` and ``didSet`` in action:
     (swift) class StepCounter {
         var previousTotalSteps = 0
         var totalSteps: Int = 0 {
-            willSet(newStepCount):
+            willSet(newStepCount) {
                 previousTotalSteps = totalSteps
-            didSet:
+            }
+            didSet {
                 if totalSteps > previousTotalSteps  {
                     println("Added \(totalSteps - previousTotalSteps) steps")
                 }
+            }
         }
     }
     (swift) val stepCounter = StepCounter()
@@ -307,7 +314,7 @@ The class also declares a variable stored property called ``previousTotalSteps``
     They are only called when the property's value is set
     outside of an initialization context.
 
-The ``willSet`` observer method for ``totalSteps`` is called
+The ``willSet`` observer for ``totalSteps`` is called
 whenever the property is assigned a new value.
 This is true even if the new value is the same as the current value.
 The stored value of ``totalSteps`` has not yet been updated by the time that ``willSet`` is called.
@@ -316,16 +323,16 @@ This example takes advantage of the fact that ``totalSteps`` has not yet been up
 and copies the old value of ``totalSteps`` into the ``previousTotalSteps`` variable
 before the new value is assigned.
 
-The ``willSet`` observer method is always passed the upcoming new value of the property,
-and can use it to perform calculations during the ``willSet`` method if it wishes.
+The ``willSet`` observer is always passed the upcoming new value of the property,
+and can use it to perform calculations if it wishes.
 You can specify any name you like for this parameter.
-In the example above, it has been named ‘``newTotalSteps``’,
+In the example above, it has been named “``newTotalSteps``”,
 although the parameter is not actually used in this example.
-(If you leave out this parameter in your declaration of ``willSet``,
+(If you leave out this parameter in your implementation of ``willSet``,
 it will still be made available to your code, with a default parameter name of ``value``.)
 
 Once the value of the ``totalSteps`` property has been updated,
-its ``didSet`` observer method is called.
+its ``didSet`` observer is called.
 In this example, the ``didSet`` observer looks at the new value of ``totalSteps``,
 and compares it against the previous value.
 If the total number of steps has increased,
@@ -333,8 +340,10 @@ a message is printed to indicate how many new steps have been taken.
 
 .. note::
 
-    If you assign a value to a property within its own ``didSet`` method,
+    If you assign a value to a property within its own ``didSet`` observer,
     the new value that you assign will replace the one that was just set.
+
+.. TODO: mention that this also works for global / local variables
 
 .. _ClassesAndStructures_ComputedProperties:
 
@@ -346,6 +355,10 @@ which do not actually store a value.
 Instead, they provide a :newTerm:`getter method`, and an optional :newTerm:`setter method`,
 to retrieve and set other properties and values indirectly.
 
+.. QUESTION: should this be 'getter method' and 'setter method', or just 'getter' and 'setter'?
+   If we're not calling initializers, destructors and observers 'methods',
+   maybe we shouldn't do so here either?
+
 .. testcode:: classesAndStructures
 
     (swift) struct Point {
@@ -355,13 +368,15 @@ to retrieve and set other properties and values indirectly.
         var origin = Point()
         var size = Size()
         var center: Point {
-        get:
-            var centerX = origin.x + (size.width / 2)
-            var centerY = origin.y + (size.height / 2)
-            return Point(centerX, centerY)
-        set(newCenter):
-            origin.x = newCenter.x - (size.width / 2)
-            origin.y = newCenter.y - (size.height / 2)
+            get {
+                val centerX = origin.x + (size.width / 2)
+                val centerY = origin.y + (size.height / 2)
+                return Point(centerX, centerY)
+            }
+            set(newCenter) {
+                origin.x = newCenter.x - (size.width / 2)
+                origin.y = newCenter.y - (size.height / 2)
+            }
         }
     }
     (swift) var square = Rect(origin: Point(0.0, 0.0), size: Size(10.0, 10.0))
@@ -379,7 +394,7 @@ and defines two additional structures for working with geometric shapes:
 * ``Rect``, which defines a rectangle in terms of an origin point and a size
 
 The ``Rect`` structure also provides a computed property called ``center``.
-The current value of a ``Rect``'s center can always be determined from its current ``origin`` and ``size``,
+The current center position of a ``Rect`` can always be determined from its ``origin`` and ``size``,
 and so there is no need to actually store the center point as an explicit ``Point`` value.
 Instead, ``Rect`` defines custom getter and setter methods for a computed variable called ``center``,
 to enable you to work with the rectangle's ``center`` as if it were a real stored property.
@@ -390,7 +405,7 @@ and a width and height of ``10``.
 This is equivalent to the blue square in the diagram below.
 
 The ``square`` variable's ``center`` property is then accessed via dot syntax (``square.center``).
-This causes ``center``'s ``get`` method to be called,
+This causes the getter for ``center`` to be called,
 to retrieve the current property value.
 Rather than returning an existing value,
 this actually calculates and returns a new ``Point`` to represent the center of the square.
@@ -399,26 +414,23 @@ As can be seen above, this correctly returns a center point of ``(5, 5)``.
 The ``center`` property is then set to a new value of ``(15, 15)``.
 This moves the square up and to the right,
 to the new position shown by the orange square in the diagram below.
-Setting the ``center`` property actually calls ``center``'s ``set:`` method.
-This modifies the ``x`` and ``y`` values of the stored ``origin`` property,
+Setting the ``center`` property calls the setter for ``center``,
+which modifies the ``x`` and ``y`` values of the stored ``origin`` property,
 and moves the square to its new position.
 
 .. image:: ../images/computedProperties.png
     :width: 400
     :align: center
 
-.. _ClassesAndStructures_ShorthandGetterAndSetterDeclarations:
+.. _ClassesAndStructures_ShorthandSetterDeclaration:
 
-Shorthand Getter and Setter Declarations
-________________________________________
+Shorthand Setter Declaration
+____________________________
 
-A computed property's getter can be written without the ``get`` keyword,
-if the getter comes before the setter.
-Additionally, if a computed property's setter does not define a name
-for the new value to be set,
+If a computed property's setter does not define a name for the new value to be set,
 a default name of ``value`` is used.
 Here's an alternative version of the ``Rect`` structure,
-which takes advantage of these shorthand notations:
+which takes advantage of this shorthand notation:
 
 .. testcode:: classesAndStructures
 
@@ -426,12 +438,15 @@ which takes advantage of these shorthand notations:
         var origin = Point()
         var size = Size()
         var center: Point {
-            var centerX = origin.x + (size.width / 2)
-            var centerY = origin.y + (size.height / 2)
-            return Point(centerX, centerY)
-        set:
-            origin.x = value.x - (size.width / 2)
-            origin.y = value.y - (size.height / 2)
+            get {
+                val centerX = origin.x + (size.width / 2)
+                val centerY = origin.y + (size.height / 2)
+                return Point(centerX, centerY)
+            }
+            set {
+                origin.x = value.x - (size.width / 2)
+                origin.y = value.y - (size.height / 2)
+            }
         }
     }
 
@@ -446,10 +461,8 @@ define a property that will always return a value,
 and can be accessed via dot syntax,
 but which cannot be set to a different value by users of your class or structure.
 
-As mentioned above,
-the declaration of computed properties –
-including read-only computed properties –
-can be simplified by removing the ``get`` keyword:
+The declaration of a read-only computed property can be simplified
+by removing the ``get`` keyword:
 
 .. testcode:: classesAndStructures
 
@@ -492,6 +505,7 @@ to indicate that their value cannot be changed once it is set as part of instanc
 .. NOTE: getters and setters are also allowed for named values
    that are not associated with a particular class or struct.
    Where should this be mentioned?
+   
 .. TODO: Anything else from https://[Internal Staging Server]/docs/StoredAndComputedVariables.html
 
 .. _ClassesAndStructures_PropertiesAndInstanceVariables:
@@ -550,7 +564,7 @@ or when it is passed to a function.
 
 You've actually been using value types extensively throughout the previous chapters.
 In fact, all of the basic types in Swift –
-integers, floating-point numbers, booleans, strings, enumerations, arrays and dictionaries –
+integers, floating-point numbers, Booleans, strings, enumerations, arrays and dictionaries –
 are value types.
 
 Swift structures are also value types.
@@ -623,15 +637,15 @@ Here's an example, using the ``Rectangle`` class defined above:
     (swift) val rect = Rectangle()
     // rect : Rectangle = <Rectangle instance>
     (swift) rect.size = Size(width: 1.0, height: 1.0)
-    (swift) println("The rectangle's width is \(rect.size.width)")
-    >>> The rectangle's width is 1.0
+    (swift) println("The rectangle's initial width is \(rect.size.width)")
+    >>> The rectangle's initial width is 1.0
     (swift) val sameRect = rect
     // sameRect : Rectangle = <Rectangle instance>
     (swift) sameRect.size.width = 3.0
-    (swift) println("The rectangle's width is now \(sameRect.size.width)")
-    >>> The rectangle's width is now 3.0
-    (swift) println("The rectangle's width is now \(rect.size.width)")
-    >>> The rectangle's width is now 3.0
+    (swift) println("The rectangle's width via sameRect is now \(sameRect.size.width)")
+    >>> The rectangle's width via sameRect is now 3.0
+    (swift) println("The rectangle's width via rect is also \(rect.size.width)")
+    >>> The rectangle's width via rect is also 3.0
 
 This example declares a new constant called ``rect``,
 and sets it to refer to a new ``Rectangle`` instance.
@@ -797,6 +811,130 @@ Instance methods are called using the same dot syntax as properties:
     (swift) println("Counter value is now \(counter.count)")
     >>> Counter value is now 0
 
+.. _ClassesAndStructures_Self:
+
+Self
+~~~~
+
+Every instance method has an extra implicit parameter called ``self``,
+which is made available to the method without having to be declared.
+The implicit ``self`` parameter refers to the instance on which the method is called.
+
+It's almost as if the ``increment()`` method from above had been written like this:
+
+::
+
+    func increment(self: Counter) {
+        self.count++
+    }
+
+In practice, you don't actually write the ``self: TypeName`` parameter in your code –
+instead, ``self`` is automatically made available to any method you define:
+
+::
+
+    func increment() {
+        self.count++
+    }
+
+Even though it has an implicit ``self`` parameter available,
+the ``Counter`` class above has chosen *not* to use ``self.count``
+to refer to its ``count`` property within its instance methods
+Because there are no other named values called ``count`` within each method's body,
+the ``self.`` prefix can be dropped, as it is clear that ``count`` can only mean the instance property.
+Instead, ``count`` is written in a shorter form, without the ``self.`` prefix:
+
+::
+
+    func increment() {
+        count++
+    }
+
+Here, ``count`` still means “the ``count`` property of the implicit ``self`` parameter” –
+it just doesn't have to be written out long-hand if the meaning is unambiguous.
+
+The implicit ``self`` parameter can be useful when
+a method parameter conflicts with the name of an instance property.
+Here, the ``self`` prefix is used to disambiguate between a method parameter called ``x``,
+and an instance property that is also called ``x``:
+
+.. testcode:: self
+
+    (swift) struct Point {
+        var x = 0.0, y = 0.0
+        func isToTheRightOfX(x: Double) -> Bool {
+            return self.x > x
+        }
+    }
+    (swift) val somePoint = Point(4.0, 5.0)
+    // somePoint : Point = Point(4.0, 5.0)
+    (swift) if somePoint.isToTheRightOfX(1.0) {
+        println("This point is to the right of the line where x == 1.0")
+    }
+    >>> This point is to the right of the line where x == 1.0
+
+.. _ClassesAndStructures_SelfClasses:
+
+Using Self in Class Instance Methods
+____________________________________
+
+For class instance methods, the ``self`` parameter is a *reference* to the instance,
+and can be used to retrieve and set its properties:
+
+.. testcode:: selfClasses
+
+    (swift) class BankAccount {
+        var balance = 0.0
+        func depositMoney(amount: Double) {
+            self.balance += amount
+        }
+    }
+    (swift) val savingsAccount = BankAccount()
+    // savingsAccount : BankAccount = <BankAccount instance>
+    (swift) savingsAccount.depositMoney(100.00)
+    (swift) println("The savings account now contains $\(savingsAccount.balance)")
+    >>> The savings account now contains $100.0
+
+This example could have been written with ``balance += amount``
+rather than ``self.balance += amount``.
+The use of ``self.balance`` is primarily to illustrate that
+the ``self`` parameter is available within the ``depositMoney()`` method.
+
+.. _ClassesAndStructures_SelfStructures:
+
+Using Self in Structure Instance Methods
+________________________________________
+
+For structure instance methods, ``self`` is actually a *copy* of the structure instance
+as of when the method was called.
+This means that you can use ``self`` to read property values for the structure instance,
+but not to set the properties to a new value.
+
+If your structure instance needs to modify its own properties within a method,
+it can request to receive a writeable copy in the implicit ``self`` parameter.
+You can opt in to this behavior by placing the ``mutating`` keyword before the ``func`` keyword.
+“Mutating” in this context means “making a change”, much as it does in English –
+effectively, the method is “mutating” the ``Point`` instance:
+
+.. testcode:: selfStructures
+
+    (swift) struct Point {
+        var x = 0.0, y = 0.0
+        mutating func moveBy(deltaX: Double, deltaY: Double) {
+            x += deltaX
+            y += deltaY
+        }
+    }
+    (swift) var somePoint = Point(1.0, 1.0)
+    // somePoint : Point = Point(1.0, 1.0)
+    (swift) somePoint.moveBy(2.0, 3.0)
+    (swift) println("The point is now at (\(somePoint.x), \(somePoint.y))")
+    >>> The point is now at (3.0, 4.0)
+
+As soon as the ``moveBy()`` method has finished executing,
+any changes it has made to the writeable copy of the implicit ``self`` parameter
+are written back to the ``Point`` instance, overwriting the previous values.
+
 .. _ClassesAndStructures_Initialization:
 
 Initialization
@@ -807,14 +945,12 @@ There are two ways to provide initial values for your properties:
 
 1. Include an :newTerm:`initial value` as part of the property declaration
    (as described in :ref:`ClassesAndStructures_Properties`)
-2. Provide a value for the property within an :newTerm:`initializer method`
+2. Provide a value for the property within an :newTerm:`initializer`
 
 .. note::
     If you assign a default value to a property,
-    or set its initial value within an initializer method,
+    or set its initial value within an initializer,
     the value of that property is set directly, without calling any observers.
-    Any ``willSet`` or ``didSet`` methods that observe the setting of that property
-    will not be called at the point that it is initialized.
 
 .. QUESTION: is this the right place to mention this note?
 
@@ -827,14 +963,14 @@ There are two ways to provide initial values for your properties:
 
 .. TODO: mention that memory is automatically managed by ARC
 
-.. _ClassesAndStructures_InitializerMethods:
+.. _ClassesAndStructures_Initializers:
 
-Initializer Methods
-~~~~~~~~~~~~~~~~~~~
+Initializers
+~~~~~~~~~~~~
 
-:newTerm:`Initializer methods` are special methods
+:newTerm:`Initializers` are special methods
 that can be called when a new instance of your type is created.
-In its simplest form, an initializer method is just an instance method with no parameters,
+In its simplest form, an initializer is just an instance method with no parameters,
 written using the ``init`` keyword:
 
 .. testcode:: initialization
@@ -852,13 +988,12 @@ written using the ``init`` keyword:
 
 This example defines a new structure to store temperatures expressed in the Fahrenheit scale.
 The structure has one stored property, ``temperature``, which is of type ``Double``.
-The structure defines a single initializer method, ``init()``, with no parameters,
+The structure defines a single initializer, ``init()``, with no parameters,
 which initializes the stored temperature value to ``32.0``
 (the freezing point of water when expressed in the Fahrenheit scale).
 
-Initializer methods always begin with ``init``,
-and do not require the ``func`` keyword before their name.
-Unlike Objective-C, Swift initializer methods do not return a value.
+Initializers always begin with ``init``.
+Unlike Objective-C, Swift initializers do not return a value.
 Their primary role is to ensure that new instances of that type
 are correctly initialized before they are used for the first time.
 
@@ -878,25 +1013,25 @@ The end result –
 a default value of ``32.0`` for ``temperature`` when a new instance is created –
 is the same in both cases.
 
-Swift provides a :newTerm:`default initializer method` implementation
-for any class or structure that does not provide at least one initializer method itself.
+Swift provides a :newTerm:`default initializer` implementation
+for any class or structure that does not provide at least one initializer itself.
 The default initializer simply creates a new instance
 with all of its properties set to their default values.
 You don't have to declare that you want the default initializer to be implemented –
 it is available automatically for all classes and structures without their own initializer.
 
 .. note::
-    The default initializer method for structures is provided in addition to the
+    The default initializer for structures is provided in addition to the
     :ref:`ClassesAndStructures_MemberwiseStructureInitializers` mentioned earlier in this chapter.
     The default initializer and the memberwise initializer are only provided
-    if the structure does not define at least one custom initializer method itself.
+    if the structure does not define at least one custom initializer itself.
 
 .. TODO: Add a justification?
 
-Initializer methods can take optional input parameters,
+Initializers can take optional input parameters,
 to customize the initialization process.
 The following example defines a structure to store temperatures expressed in the Celsius scale.
-It implements two custom initializer methods,
+It implements two custom initializers,
 each of which initializes a new instance of the structure
 with a value from a different temperature scale:
 
@@ -915,6 +1050,8 @@ with a value from a different temperature scale:
     // boilingPointOfWater : Celsius = Celsius(100.0)
     (swift) var freezingPointOfWater = Celsius(withKelvin: -273.15)
     // freezingPointOfWater : Celsius = Celsius(0.0)
+
+.. TODO: mention that initializers can be written in either function syntax.
 
 The value of a constant ``val`` property can be modified at any point during initialization,
 as long as is is definitely set to a value by the time the initializer has finished:
@@ -951,9 +1088,9 @@ as long as is is definitely set to a value by the time the initializer has finis
 Definite Initialization
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-If your class or structure provides one or more custom initializer methods,
+If your class or structure provides one or more custom initializers,
 Swift checks these methods to make sure that all properties are fully initialized
-by the time each initializer method has done its job.
+by the time each initializer has done its job.
 This process is known as :newTerm:`definite initialization`,
 and helps to ensure that your instances are always valid before they are used.
 Swift will warn you at compile-time if your class or structure does not pass
@@ -981,16 +1118,6 @@ which uses a default ``title`` value of ``[untitled]`` if none is specified:
         }
     }
 
-.. note::
-    The ``init withTitle()`` method refers to the instance's ``title`` property as ``self.title``,
-    rather than simply as ``title``.
-    This is required to differentiate between the *variable property* called ``title``,
-    and the *initializer method parameter* called  ``title``.
-    The ``self`` prefix would not be required if their names were different.
-    The use of ``self`` before the property name does not affect
-    the way in which the property is accessed or set –
-    it is purely used for disambiguation.
-
 This first example declares a new constant called ``thisBook``,
 and sets it to the result of calling ``init withTitle()`` for a specific title string:
 
@@ -1002,7 +1129,7 @@ and sets it to the result of calling ``init withTitle()`` for a specific title s
     >>> This book is called 'The Swift Programming Language'
 
 This second example declares a new constant called ``someBook``,
-and sets it to the result of ``Document``'s basic ``init()`` method.
+and sets it to the result of the basic ``init()`` method for ``Document``.
 This method delegates to the more detailed ``init withTitle()`` method,
 passing it a placeholder string value of ``[untitled]``:
 
@@ -1013,9 +1140,9 @@ passing it a placeholder string value of ``[untitled]``:
     (swift) println("Some unknown book is called '\(someBook.title)'")
     >>> Some unknown book is called '[untitled]'
 
-Both of these initializer methods ensure that the value of ``title``
-is set to a valid string before the method ends.
-This means that the ``Document`` class passes the ‘definite initialization’ test mentioned above.
+Both of these initializers ensure that the value of ``title``
+is set to a valid string before the initializer ends.
+This means that the ``Document`` class passes the definite initialization test mentioned above.
 
 .. _ClassesAndStructures_Inheritance:
 
@@ -1038,7 +1165,7 @@ Here's an example:
         }
     }
 
-This example starts by defining a ‘base’ class called ``Vehicle``.
+This example starts by defining a “base” class called ``Vehicle``.
 This base class declares two properties that are universal to all vehicles,
 and initializes them with suitable default values.
 (It is assumed that any vehicle can carry at least one passenger –
@@ -1062,31 +1189,31 @@ The ``Bicycle`` class is defined by placing the name of its base class – ``Veh
         }
     }
 
-In this example, ``Bicycle`` is said to be :newTerm:`subclassed` from ``Vehicle``, 
+In this example, ``Bicycle`` is said to be a :newTerm:`subclass` of ``Vehicle``, 
 and ``Vehicle`` is said to be the :newTerm:`superclass` of ``Bicycle``.
 The new ``Bicycle`` class automatically gains all of the characteristics of ``Vehicle``,
 and is able to tailor those characteristics (and add new ones) to suit its needs.
 
 .. note::
 
-    Swift classes do not inherit from a universal ‘base’ class.
+    Swift classes do not inherit from a universal “base” class.
     Any classes you define without specifying a superclass
     will automatically become base classes for you to build upon.
 
-The ``Bicycle`` class declares an initializer method, ``init()``,
+The ``Bicycle`` class declares an initializer called ``init()``
 to set up its tailored characteristics.
-This initializer method first calls ``super.init()``,
+This initializer first calls ``super.init()``,
 which calls the ``init()`` method for ``Bicycle``\ 's superclass, ``Vehicle``.
 
-Although ``Vehicle`` does not have an explicit initializer method itself,
-it still has an implicit default initializer method,
-as described in :ref:`ClassesAndStructures_InitializerMethods`.
+Although ``Vehicle`` does not have an explicit initializer itself,
+it still has an implicit default initializer,
+as described in :ref:`ClassesAndStructures_Initializers`.
 This call to ``super.init()`` triggers ``Vehicle``\ 's default initializer,
 and ensures that all of the inherited properties are initialized by ``Vehicle``
 before ``Bicycle`` tries to modify them.
 
-``Vehicle``'s default value of ``maxPassengers`` is already correct for a bicycle,
-and so it is not changed within ``Bicycle``'s initializer.
+The default value of ``maxPassengers`` provided by ``Vehicle`` is already correct for a bicycle,
+and so it is not changed within the initializer for ``Bicycle``.
 The original value of ``numberOfWheels`` is not correct, however,
 and so it is replaced by a new value of ``2``.
 
@@ -1114,7 +1241,7 @@ Subclasses can themselves be subclassed, as shown in the next example:
     }
 
 This example creates a subclass of ``Bicycle`` for a two-seater bicycle
-(known as a ‘tandem’).
+(known as a “tandem”).
 ``Tandem`` inherits all of the characteristics of ``Bicycle``,
 which in turn inherits from ``Vehicle``.
 ``Tandem`` doesn't change the number of wheels – it's still a bicycle, after all –
@@ -1175,7 +1302,7 @@ This example declares a new subclass of ``Vehicle``, called ``Car``.
 ``Car`` declares a new Boolean property called ``isConvertible``,
 in addition to the properties it inherits from ``Vehicle``.
 This property defaults to ``false``, as most cars are not convertibles.
-``Car`` also has a custom initializer method,
+``Car`` also has a custom initializer,
 which sets the maximum number of passengers to ``5``,
 and the default number of wheels to ``4``.
 
@@ -1202,14 +1329,14 @@ and returns the complete description.
 Subclassing and Initializer Delegation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Swift classes do not automatically inherit initializer methods from their parent classes.
+Swift classes do not automatically inherit initializers from their parent classes.
 This behavior is different from Objective-C, where initializers are inherited by default.
 Swift's avoidance of automatic initializer inheritance ensures that
 subclasses are able to control exactly how they can be instantiated.
 
 To help with this,
 Swift inserts an implicit call to ``super.init()``
-at the end of any subclass initializer method
+at the end of any subclass initializer
 that does not either call a superclass initializer itself,
 or hand off to a same-class initializer that ultimately calls a superclass initializer.
 This ensures that properties of the parent class
@@ -1253,7 +1380,7 @@ Here's how it looks in Swift code:
 
     }
 
-The first initializer method, ``init()``, takes no parameters at all.
+The first initializer, ``init()``, takes no parameters at all.
 The curly braces after the parentheses define an empty code block for the method:
 
 ::
@@ -1284,7 +1411,7 @@ it does not get a default initializer implementation for ``init()``.
 Providing an empty ``init()`` definition means that there is
 still an ``init()`` method to call when a new document is created via basic initializer syntax.
 
-The second initializer method, ``init withTitle()``,
+The second initializer, ``init withTitle()``,
 calls the superclass ``init withTitle()`` method from ``Document``,
 and passes in the new value of ``title``:
 
@@ -1294,7 +1421,7 @@ and passes in the new value of ``title``:
             super.init(withTitle: title)
         }
 
-As before, the value of ``bodyText`` comes from the property' default value.
+As before, the value of ``bodyText`` comes from the property's default value.
 
 Here's how this initializer could be called:
 
@@ -1306,7 +1433,7 @@ Here's how this initializer could be called:
     >>> Write something please:
     >>> [replace me]
 
-The third initializer method, ``init withText()``,
+The third initializer, ``init withText()``,
 sets the ``bodyText`` property to a new ``text`` value:
 
 ::
@@ -1317,8 +1444,8 @@ sets the ``bodyText`` property to a new ``text`` value:
 
 Because it doesn't call a superclass initializer,
 Swift inserts an implicit ``super.init()`` call at the end of the method.
-This calls ``Document``'s ``init()`` method,
-which in turn calls ``Document``'s ``init withTitle()`` method
+This calls the ``init()`` method of the ``Document`` class,
+which in turn calls the ``init withTitle()`` method of the ``Document`` class
 and sets the same placeholder title as before.
 
 Here's how this initializer could be called:
@@ -1332,9 +1459,10 @@ Here's how this initializer could be called:
     >>> [untitled]:
     >>> Amazingly few discotheques provide jukeboxes
 
-The final initializer method, ``init withTitle() text()``,
-starts by delegating across to ``TextDocument``'s own ``init withTitle()`` method.
-This in turn delegates up to ``Document``'s ``init withTitle()`` method.
+The final initializer, ``init withTitle() text()``,
+starts by delegating across to the ``init withTitle()`` method
+provided by ``TextDocument`` itself.
+This in turn delegates up to the ``init withTitle()`` method of the superclass (``Document``).
 It then sets ``bodyText`` to the new ``text`` value.
 
 ::
@@ -1345,7 +1473,7 @@ It then sets ``bodyText`` to the new ``text`` value.
         }
 
 There's no reason why ``TextDocument`` couldn't have called up to
-``Document``'s ``init withTitle()`` method directly.
+the ``init withTitle()`` method of ``Document`` directly.
 The decision to delegate to its *own* ``init withTitle()`` method is mainly a design choice.
 If ``TextDocument`` were to gain new functionality in the future –
 perhaps to insert and update the title at the start of the body text –
@@ -1376,20 +1504,195 @@ Dynamic Return Types
 [to be written]
 
 .. TODO: mention that methods can return DynamicSelf (a la instancetype)
+.. TODO: include the several tricks seen in swift/test/decl/func/dynamic_self.swift
 
-.. _ClassesAndStructures_TypeCoercion:
+.. _ClassesAndStructures_TypeCasting:
 
-Type Coercion
+Type Casting
+------------
+
+It is sometimes necessary to check the specific class of an instance
+in order to decide how it should be used.
+It can also be necessary to treat a specific instance as if it is a different
+superclass or subclass from its own class hierarchy.
+Both of these tasks are achieved using :newTerm:`type casting`.
+
+.. TODO: the wording of this para is unclear in its use of pronouns.
+
+Here's an example:
+
+.. testcode:: typeCasting
+
+    (swift) class MediaItem {
+        var name: String
+        init withName(name: String) {
+            self.name = name
+        }
+    }
+    (swift) class Movie : MediaItem {
+        var director: String
+        init withName(name: String) director(director: String) {
+            self.director = director
+            super.init(withName: name)
+        }
+    }
+    (swift) class Song : MediaItem {
+        var artist: String
+        init withName(name: String) artist(artist: String) {
+            self.artist = artist
+            super.init(withName: name)
+        }
+    }
+
+This example defines a new base class called ``MediaItem``.
+This class provides basic functionality for any kind of item that might appear
+in a digital media library.
+Specifically, it declares a ``name`` property of type ``String``,
+and an ``init withName()`` initializer.
+(It is assumed that all media items, including all movies and songs, will have a name.)
+
+The example also defines two subclasses of ``MediaItem``.
+The first subclass, ``Movie``, encapsulates additional information about a movie or film.
+It adds a ``director`` property on top of the base ``MediaItem`` class,
+with a corresponding initializer.
+The second subclass, ``Song``, adds an ``artist`` property and initializer
+on top of the base class.
+
+Because ``Movie`` and ``Song`` are both subclasses of ``MediaItem``,
+their instances can be used wherever a ``MediaItem`` instance can be used.
+For example:
+
+.. testcode:: typeCasting
+
+    (swift) var library = Array<MediaItem>()
+    // library : Array<MediaItem> = []
+    (swift) library.append(Movie("Casablanca", director: "Michael Curtiz"))
+    (swift) library.append(Song("Blue Suede Shoes", artist: "Elvis Presley"))
+    (swift) library.append(Movie("Citizen Kane", director: "Orson Welles"))
+    (swift) library.append(Song("The One And Only", artist: "Chesney Hawkes"))
+    (swift) library.append(Song("Never Gonna Give You Up", artist: "Rick Astley"))
+
+This example declares and initializes a new empty array called ``library``,
+which is declared as an ``Array`` of type ``MediaItem``.
+This means that it can only accept instances that are of type ``MediaItem``.
+
+The example then appends some ``Movie`` and ``Song`` instances to the ``library`` array.
+A ``Movie`` or a ``Song`` is also a ``MediaItem``,
+and so an instance of either class can be added to the array.
+
+.. note::
+
+    The ``withName:`` selector has been left out of each of these initializer calls, for brevity.
+    The initializers for ``Movie`` and ``Song`` both have their ``name`` value as the first parameter,
+    and it is clear from the context that this is the correct initializer to use.
+    As a result, leaving out the ``withName:`` selector does not cause any ambiguity.
+
+.. _ClassesAndStructures_CheckingType:
+
+Checking Type
 ~~~~~~~~~~~~~
 
-[to be written]
+You can check whether an instance is of a certain type by using the ``is`` operator:
 
-.. _ClassesAndStructures_Destructors:
+.. testcode:: typeCasting
 
-Destructors
------------
+    (swift) var movieCount = 0
+    // movieCount : Int = 0
+    (swift) var songCount = 0
+    // songCount : Int = 0
+    (swift) for item in library {
+        if item is Movie {
+            ++movieCount
+        } else if item is Song {
+            ++songCount
+        }
+    }
+    (swift) println("Media library contains \(movieCount) movies and \(songCount) songs")
+    >>> Media library contains 2 movies and 3 songs
 
-[to be written]
+This example iterates through all of the items in the ``library`` array.
+On each pass, the ``for``-``in`` loop sets the ``item`` constant
+to the next ``MediaItem`` in the array.
+
+``item is Movie`` returns ``true`` if the current ``MediaItem``
+is an instance of the ``Movie`` type, and ``false`` if it is not.
+Similarly, ``item is Song`` checks to see if the item is a ``Song`` instance.
+At the end of the ``for``-``in`` loop, the values of ``movieCount`` and ``songCount``
+contain a count of how many ``MediaItem`` instances were found of each type.
+
+.. QUESTION: is it correct to refer to 'is' and 'as' as 'operators'?
+   Or is there some better name we could use?
+
+.. _ClassesAndStructures_Downcasting:
+
+Downcasting
+~~~~~~~~~~~
+
+A constant or variable of a certain class type may actually refer to
+an instance of a subclass behind the scenes. Where this is the case,
+you can try and :newTerm:`downcast` to the subclass using the ``as`` operator:
+
+.. testcode:: typeCasting
+
+    (swift) for item in library {
+        if val movie = item as Movie {
+            println("Movie: '\(movie.name)', dir. \(movie.director)")
+        } else if val song = item as Song {
+            println("Song: '\(song.name)', by \(song.artist)")
+        }
+    }
+    >>> Movie: 'Casablanca', dir. Michael Curtiz
+    >>> Song: 'Blue Suede Shoes', by Elvis Presley
+    >>> Movie: 'Citizen Kane', dir. Orson Welles
+    >>> Song: 'The One And Only', by Chesney Hawkes
+    >>> Song: 'Never Gonna Give You Up', by Rick Astley
+
+This example iterates over each ``MediaItem`` in ``library``,
+and prints an appropriate description for each one.
+To do this, it needs to access each item as if it is a true ``Movie`` or ``Song``,
+and not just a generic ``MediaItem``.
+This is necessary in order for it to be able to access
+the ``director`` or ``artist`` property for use in the description.
+
+The example starts by trying to downcast the current ``item`` as a ``Movie``.
+Because ``item`` is a ``MediaItem`` instance, it's possible that it *might* be a ``Movie``;
+equally, it's also possible that it might a ``Song``,
+or even just a base ``MediaItem``.
+Because of this uncertainty, the ``as`` operator returns an *optional* value
+when attempting to downcast to a subclass type.
+The result of ``item as Movie`` is of type ``Movie?``, or “optional ``Movie``”.
+
+Downcasting to ``Movie`` will fail when trying to downcast
+the two ``Song`` instances in the library array.
+To cope with this, the example above uses :ref:`optional binding <ControlFlow_OptionalBinding>`
+to check whether the optional ``Movie`` actually contains a value
+(i.e. to find out whether the downcast succeeded.)
+This optional binding is written “``if val movie = item as Movie``”,
+which can be read as:
+
+“Try and access ``item`` as a ``Movie``.
+If this is successful,
+set a new temporary constant called ``movie`` to
+the value stored in the returned ``Movie?`` optional.”
+
+If the downcasting succeeds, the properties of ``movie`` are then used
+to print a description for that ``Movie`` instance, including the name of its ``director``.
+A similar principle is used to check for ``Song`` instances,
+and to print an appropriate description (including ``artist`` name)
+whenever a ``Song`` is found in the library.
+
+.. note::
+
+    Casting does not actually modify the instance, or change its values.
+    The underlying instance remains the same; it is just treated and accessed
+    as an instance of the type to which it has been cast.
+
+.. TODO: casting also needs to be mentioned in the context of protocol conformance.
+
+.. QUESTION: should I mention upcasting here?
+   I can't think of an example where it's useful.
+   However, it does display different behavior from downcasting,
+   in that upcasting always works, and so it doesn't return an optional.
 
 .. _ClassesAndStructures_TypePropertiesAndMethods:
 
@@ -1399,6 +1702,154 @@ Type Properties and Methods
 [to be written]
 
 .. see release notes from 2013-12-18 for a note about lazy initialization
+
+.. _ClassesAndStructures_Destructors:
+
+Destructors
+-----------
+
+A :newTerm:`destructor` is a special instance method that is called when a class instance is destroyed.
+Destructors are written with the ``destructor`` keyword,
+in a similar way to how intializers are written with the ``init`` keyword.
+Destructors are only available on class types.
+
+Swift automatically destroys your instances when they are no longer needed, to free up resources.
+Swift handles the memory management of your class instances for you via
+:newTerm:`automatic reference counting` (known as :newTerm:`ARC`),
+and so there is normally no need to perform any clean-up when your instances are destroyed.
+However, there may be times when you are working with your own resources,
+and need to perform some additional clean-up yourself.
+For example, if you create a custom class to open a file and write some data to it,
+you might need to close the file when the class instance is destroyed.
+
+Class definitions can have at most one destructor per class.
+The method does not take any parameters, and is called automatically when an instance is destroyed.
+Superclass destructors are automatically inherited by their subclasses,
+and the superclass destructor is called automatically at the end of a subclass destructor implementation.
+You are not allowed to call ``super.destructor()`` yourself.
+
+Destructors are still able to access the properties of the instance they are called on.
+This means that your destructor can modify its behavior based on properties of the current instance,
+such as discovering the file name of a file that needs to be closed.
+
+Here's an example of ``destructor`` in action.
+This example defines two new types, ``Bank`` and ``Player``, for a simple game.
+The ``Bank`` structure manages a made-up currency,
+which can never have more than 10,000 coins in circulation.
+There can only ever be one ``Bank`` in the game,
+and so the ``Bank`` is implemented as a structure with static properties and methods
+to store and manage its current state:
+
+.. testcode:: destructor
+
+    (swift) struct Bank {
+        static var coinsInBank = 10_000
+        static func vendCoins(var numberOfCoinsToVend: Int) -> Int {
+            numberOfCoinsToVend = min(numberOfCoinsToVend, coinsInBank)
+            coinsInBank -= numberOfCoinsToVend
+            return numberOfCoinsToVend
+        }
+        static func receiveCoins(coins: Int) {
+            coinsInBank += coins
+        }
+    }
+
+``Bank`` keeps track of the current number of coins it holds via its ``coinsInBank`` property.
+It also offers two methods – ``vendCoins()`` and ``receiveCoins()`` –
+to handle the distribution and collection of coins.
+
+``vendCoins()`` checks that there are enough coins in the bank before handing any out.
+If there are not enough coins, it returns a smaller number than the number that was requested
+(and may even return zero if there are no coins left in the bank at all).
+It declares ``numberOfCoinsToVend`` as a :ref:`variable parameter <Functions_ConstantAndVariableParameters>`,
+so that the number can be modified within the method's body
+without needing to declare a new variable.
+It returns an integer value to indicate the actual number of coins that were vended.
+
+The ``receiveCoins()`` method simply adds the received number of coins back into the bank's coin store.
+
+The ``Player`` class describes a player in the game.
+Each player has a certain number of coins stored in their purse at any time.
+This is represented by the player's ``coinsInPurse`` property:
+
+.. testcode:: destructor
+
+    (swift) class Player {
+        var coinsInPurse: Int
+        init withCoins(coins: Int) {
+            coinsInPurse = Bank.vendCoins(coins)
+        }
+        func winCoins(coins: Int) {
+            coinsInPurse += Bank.vendCoins(coins)
+        }
+        destructor() {
+            Bank.receiveCoins(coinsInPurse)
+        }
+    }
+
+Each ``Player`` instance is initialized with a starting allowance of
+some specified number of coins from the bank during initialization
+(although it may receive fewer than that number, if not enough are available).
+
+The ``Player`` class defines a ``winCoins()`` method,
+which tries to retrieve a certain number of coins from the bank
+and add them to the player's purse.
+The ``Player`` class also implements a ``destructor``,
+which is called whenever a ``Player`` instance is destroyed.
+Here, the ``destructor`` simply returns all of the player's coins to the bank.
+
+Here's how that looks in action:
+
+.. testcode:: destructor
+
+    (swift) var playerOne: Player? = Player(withCoins: 100)
+    // playerOne : Player? = <unprintable value>
+    (swift) println("A new player has joined the game with \(playerOne!.coinsInPurse) coins")
+    >>> A new player has joined the game with 100 coins
+    (swift) println("There are now \(Bank.coinsInBank) coins left in the bank")
+    >>> There are now 9900 coins left in the bank
+
+A new ``Player`` instance is created, with a request for 100 coins if they are available.
+This ``Player`` instance is stored in an optional ``Player`` variable called ``playerOne``.
+An optional variable is used here, because players can leave the game at any point.
+Using an optional gives a way to keep track of whether there is currently a player in the game.
+
+Because ``playerOne`` is an optional, it is qualified with an exclamation mark (``!``)
+when its ``coinsInPurse`` property is accessed to print its default number of coins,
+and whenever its ``winCoins()`` method is called:
+
+.. testcode:: destructor
+
+    (swift) playerOne!.winCoins(2_000)
+    (swift) println("PlayerOne won 2000 coins & now has \(playerOne!.coinsInPurse) coins")
+    >>> PlayerOne won 2000 coins & now has 2100 coins
+    (swift) println("The bank now only has \(Bank.coinsInBank) coins left")
+    >>> The bank now only has 7900 coins left
+
+Here, the player has won 2,000 coins.
+Their purse now contains 2,100 coins,
+and the bank only has 7,900 coins left.
+
+.. testcode:: destructor
+
+    (swift) playerOne = .None
+    (swift) println("PlayerOne has left the game")
+    >>> PlayerOne has left the game
+    (swift) println("The bank now has \(Bank.coinsInBank) coins")
+    >>> The bank now has 10000 coins
+
+The player has now left the game.
+This is indicated by setting the optional ``playerOne`` variable to ``.None``,
+meaning “no ``Player`` instance”.
+At the point that this happens, the ``Player`` instance referenced by
+the ``playerOne`` variable is destroyed.
+No other properties or variables are still referring to it,
+and so it can be destroyed in order to free up the resources it was using.
+When this happens, its ``destructor`` is called,
+and its coins are returned to the bank.
+
+.. TODO: switch Bank to be a class rather than a structure
+   once we have support for class-level properties.
 
 .. _ClassesAndStructures_OperatorFunctions:
 
@@ -1554,15 +2005,128 @@ and returns the result.
     (swift) println("toIncrement is now (\(toIncrement.x), \(toIncrement.y))")
     >>> toIncrement is now (4.0, 5.0)
 
+.. note::
+
+    It is not possible to overload the default
+    :ref:`assignment operator <Operators_AssignmentOperator>` (``=``).
+    Only the compound assignment operators may be overloaded.
+    Similarly, the :ref:`ternary conditional operator <Operators_TernaryConditionalOperator>`
+    (``a ? b : c``) may not be overloaded.
+
 .. QUESTION: some of the standard operators (such as equation and comparison)
    are implemented as part of a protocol (such as Equatable and Comparable).
    You don't seem to need to declare conformance to these protocols
    in order to implement the operator functions, however.
    Is that correct? Can you get != for free after implementing == , for example?
+   UPDATE: going by rdar://14011860, we don't currently have a way for a protocol
+   like Equatable to provide a default implementation of != if you implement ==
 
 .. QUESTION: Should I mention @transparent in the Operator Functions section?
    All of the stdlib operators (e.g. for fixed- and floating-point numbers)
    are declared as @transparent…
+
+.. _ClassesAndStructures_CustomOperators:
+
+Custom Operators
+~~~~~~~~~~~~~~~~
+
+You can define your own :newTerm:`custom operators` in addition to
+the standard operators provided by Swift.
+Custom operators can be defined using the characters ``/ = - + * % < > ! & | ^ ~ .`` only.
+
+New operators are declared using the ``operator`` keyword,
+and can be declared as ``prefix``, ``infix`` or ``postfix``:
+
+.. testcode:: customOperators
+
+    (swift) operator prefix +++ {}
+
+This example defines a new prefix operator called ``+++``.
+This operator does not have an existing meaning in Swift,
+and so it will be given its own custom meaning in the specific context of
+working with ``Point`` instances. For the purposes of this example,
+``+++`` will be treated as a new “prefix doubling incrementer” operator.
+It will double the ``x`` and ``y`` values of a ``Point`` instance,
+by adding the point to itself via assignment:
+
+.. testcode:: customOperators
+
+    (swift) @prefix @assignment func +++ (inout rhs: Point) -> Point {
+        rhs += rhs
+        return rhs
+    }
+
+The implementation of ``+++`` is very similar to
+the implementation of ``++`` for ``Point``,
+except that this operator function adds the point to itself,
+rather than adding ``Point(1.0, 1.0)``:
+
+.. testcode:: customOperators
+
+    (swift) var toBeDoubled = Point(1.0, 4.0)
+    // toBeDoubled : Point = Point(1.0, 4.0)
+    (swift) val afterDoubling = +++toBeDoubled
+    // afterDoubling : Point = Point(2.0, 8.0)
+    (swift) println("toBeDoubled is now (\(toBeDoubled.x), \(toBeDoubled.y))")
+    >>> toBeDoubled is now (2.0, 8.0)
+
+Custom ``infix`` operators may also specify a :newTerm:`precedence`
+and an :newTerm:`associativity`.
+(See :ref:`Operators_PrecedenceAndAssociativity` for an explanation of
+how these two characteristics affect an infix operator's interaction
+with other infix operators.)
+
+The possible values for ``associativity`` are ``left``, ``right`` or ``none``.
+Left-associative operators associate to the left if written next
+to other left-associative operators of the same precedence.
+Similarly, right-associative operators associate to the right if written
+next to other right-associative operators of the same precedence.
+Non-associative operators cannot be written next to
+other operators with the same precedence.
+
+The ``associativity`` value defaults to ``none`` if it is not specified.
+Similarly, ``precedence`` defaults to a value of ``100`` if it is not specified.
+
+The following example defines a new custom ``infix`` operator called ``+-``,
+with ``left`` associativity, and a precedence of ``140``:
+
+.. testcode:: customOperators
+
+    (swift) operator infix +- { associativity left precedence 140 }
+    (swift) func +- (lhs: Point, rhs: Point) -> Point {
+        return Point(lhs.x + rhs.x, lhs.y - rhs.y)
+    }
+    (swift) val firstPoint = Point(1.0, 2.0)
+    // firstPoint : Point = Point(1.0, 2.0)
+    (swift) val secondPoint = Point(3.0, 4.0)
+    // secondPoint : Point = Point(3.0, 4.0)
+    (swift) val plusMinusPoint = firstPoint +- secondPoint
+    // plusMinusPoint : Point = Point(4.0, -2.0)
+
+This operator adds together the ``x`` values of two points,
+and subtracts the ``y`` value of the second point from the first.
+Because it is in essence an “additive” operator,
+it has been given the same associativity and precedence values
+(``left`` and ``140``)
+as default additive infix operators such as ``+`` and ``-``.
+(A complete list of the default Swift operator precedence
+and associativity settings can be found in the :doc:`../ReferenceManual/index`.)
+
+.. TODO: update this link to go to the specific section of the Reference Manual.
+
+.. TODO: Custom operator declarations cannot be written over multiple lines in the REPL.
+   This is being tracked as rdar://16061044.
+   If this Radar is fixed, the operator declaration above should be split over multiple lines
+   for consistency with the rest of the code.
+
+.. _ClassesAndStructures_Subscripting:
+
+Subscripting
+------------
+
+[to be written]
+
+.. NOTE: you can subscript on any type, including a range (IntGeneratorType)
 
 .. refnote:: References
 

@@ -14,7 +14,7 @@ Functions
 
 :newTerm:`Functions` are self-contained chunks of code that perform a specific task.
 Every function is given a name to identify what it does,
-and this name is used to ‘call’ the function to perform its task when needed.
+and this name is used to “call” the function to perform its task when needed.
 
 .. _Functions_FunctionDeclarations:
 
@@ -142,7 +142,7 @@ Any type of value can be used as an input parameter for a function,
 if it is declared appropriately.
 For example, the range function above can be rewritten to take a tuple of two ``Int`` values:
 
-.. QUESTION: Is my use of ‘any’ technically correct here?
+.. QUESTION: Is my use of “any” technically correct here?
    Is there some type that cannot be passed to a function?
 
 .. testcode:: functionParameters
@@ -150,7 +150,7 @@ For example, the range function above can be rewritten to take a tuple of two ``
     (swift) func halfOpenRangeLengthForRange(range: (Int, Int)) -> Int {
         return range.1 - range.0
     }
-    (swift) var someRange = (1, 10)
+    (swift) val someRange = (1, 10)
     // someRange : (Int, Int) = (1, 10)
     (swift) println(halfOpenRangeLengthForRange(someRange))
     >>> 9
@@ -174,9 +174,10 @@ This enables a function to return a combination of values as part of one compoun
 .. testcode:: functionParameters
 
     (swift) func splitOnFirst(string: String, splitter: UnicodeScalar) -> (String, String?) {
-        for i in 0...string.length {
+        val size = string.size()
+        for i in 0...size {
             if string[i] == splitter {
-                return (string[0...i], string[i+1...string.length])
+                return (string[0...i], string[i+1...size])
             }
         }
         return (string, .None)
@@ -384,7 +385,7 @@ The return value of a function can be ignored when it is called:
 
     (swift) func printAndCount(stringToPrint: String) -> Int {
         println(stringToPrint)
-        return stringToPrint.length
+        return stringToPrint.size()
     }
     (swift) func printWithoutCounting(stringToPrint: String) {
         printAndCount(stringToPrint)
@@ -398,7 +399,7 @@ The return value of a function can be ignored when it is called:
 The first function,
 ``printAndCount``,
 prints a string,
-and then returns its length as an ``Int``.
+and then returns its character count as an ``Int``.
 The second function,
 ``printWithoutCounting``,
 calls the first function,
@@ -438,8 +439,8 @@ Variable parameters are declared by prefixing the parameter name with the keywor
 
 .. testcode:: functionParameters
 
-    (swift) func alignRight(var string: String, length: Int, pad: UnicodeScalar) -> String {
-        val amountToPad = length - string.length
+    (swift) func alignRight(var string: String, count: Int, pad: UnicodeScalar) -> String {
+        val amountToPad = count - string.size()
         for _ in 0...amountToPad {
             string = pad + string
         }
@@ -462,8 +463,8 @@ This means that ``string`` is now available as a local variable,
 initialized with the passed-in string value,
 and can be manipulated within the body of the function.
 
-The function starts by working out how many characters need to be added to the left of the string
-in order to right-align it within the overall ``length``.
+The function starts by working out how many characters need to be added to the left of ``string``
+in order to right-align it within the overall string.
 This value is stored in a local constant called ``amountToPad``.
 The function then adds ``amountToPad`` copies of the ``pad`` character to the left of the existing string,
 and returns the result.
@@ -507,7 +508,7 @@ a variadic parameter can be used with the ``for``-``in`` statement
 to iterate through the list of values represented by the parameter.
 Variadic parameters automatically conform to the ``Sequence`` protocol,
 and can be used anywhere that a ``Sequence`` is valid.
-(Protocols such as ``Sequence`` are covered in more detail in :doc:`ProtocolsAndExtensions`.)
+(Protocols such as ``Sequence`` are covered in more detail in :doc:`Protocols`.)
 
 .. note::
 
@@ -556,7 +557,7 @@ and all three parameters have a type of ``String``.
 
 Selector-style syntax lends itself to expressive function declarations,
 which can be written and read as sentences for ease of comprehension.
-The use of prepositions such as ‘to’ and ‘with’ is not mandatory,
+The use of prepositions such as “to” and “with” is not mandatory,
 but is encouraged where it aids readability.
 
 Selector-style functions are called by placing the first selector part

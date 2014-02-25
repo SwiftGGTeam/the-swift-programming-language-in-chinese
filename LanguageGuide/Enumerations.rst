@@ -146,9 +146,9 @@ track products using two different types of barcode.
 Some products are labelled with 1D barcodes
 in `UPC-A <http://en.wikipedia.org/wiki/Universal_Product_Code>`_ format,
 which uses the numbers ``0`` to ``9``.
-Each barcode has a ‘number system’ digit,
-followed by ten ‘identifier’ digits.
-These are followed by a ‘check‘ digit to verify that the code has been scanned correctly:
+Each barcode has a “number system” digit,
+followed by ten “identifier” digits.
+These are followed by a “check” digit to verify that the code has been scanned correctly:
 
 .. image:: ../images/barcode_UPC.png
     :height: 80
@@ -195,7 +195,7 @@ as shown below:
 
 This creates a new variable called ``productBarcode``,
 and assigns it a value of ``Barcode.UPCA`` with an associated tuple value of ``(8, 8590951226, 3)``.
-(The provided ‘identifier’ value has an underscore within its integer literal –
+(The provided “identifier” value has an underscore within its integer literal –
 ``85909_51226`` –
 to make it easier to read as a barcode.)
 
@@ -338,11 +338,13 @@ Properties and Methods
 
 Swift enumerations also support many of the features described in :doc:`ClassesAndStructures`:
 
-* :newTerm:`initializer methods`, to provide a default enumeration member
+* :newTerm:`initializers`, to provide a default enumeration member
 * :newTerm:`computed properties`, to provide additional information about the current enumeration member, and
 * :newTerm:`instance methods`, to provide utility functionality
 
 .. TODO: Should type methods and properties be added on to this list?
+.. TODO: How about subscriptability? It's allowed, but would it ever actually be useful?
+.. TODO: Likewise custom operator implementations. This could definitely be useful.
 
 The example below shows all of these capabilities in action for a complex enumeration:
 
@@ -395,7 +397,7 @@ The enumeration has two possible states:
   the train is currently delayed
 
 The enumeration provides a basic initializer, ``init()``,
-which assumes that the train's state is ‘on time’.
+which assumes that the train's state is “on time”.
 This is a reasonable default state for a train starting out on its journey
 if no other information is provided.
 The ``init()`` method uses the special ``self`` keyword to refer to
@@ -407,7 +409,7 @@ and requests that it become an instance of the ``OnTime`` enumeration member.
     Enumerations are the only types that can
     specify a value for ``self`` in this way during initialization.
     ``self = OnTime`` does not (strictly speaking)
-    create a new ‘instance’ of ``OnTime`` here.
+    create a new “instance” of ``OnTime`` here.
     Rather, it specifies that ``OnTime`` is the enumeration member to be used
     when creating this new instance.
     Classes and structures cannot assign to ``self`` in this way during initialization.
@@ -535,8 +537,9 @@ a textual description of the card.
 The ``description`` property uses optional binding to check if there is
 a second value to display, and inserts addition description detail if so.
 
-Because ``BlackjackCard`` is a structure with no custom initializer methods,
-it is given an implicit default memberwise initializer method.
+Because ``BlackjackCard`` is a structure with no custom initializers,
+it is given an implicit
+:ref:`memberwise initializer <ClassesAndStructures_MemberwiseStructureInitializers>`.
 This is used to initialize a new constant called ``theAceOfSpades``.
 Even though ``Rank`` and ``Suit`` are embedded within ``BlackjackCard``,
 their type can still be inferred from the context,
