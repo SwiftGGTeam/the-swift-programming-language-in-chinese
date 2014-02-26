@@ -18,7 +18,16 @@
 Control Flow
 ============
 
-.. TODO: write a chapter introduction.
+Swift provides several different ways to structure and control the flow of your code's execution.
+These include:
+
+* :newTerm:`Loops`, which perform a task multiple times
+* :newTerm:`Conditional statements`,
+  which execute different branches of code based on certain conditions
+* :newTerm:`Control transfer statements`,
+  which immediately transfer the flow of execution to another point in your code
+
+.. _ControlFlow_ForLoops:
 
 For Loops
 ---------
@@ -28,6 +37,8 @@ Swift provides two types of ``for`` loop:
 
 * ``for``-``in``, and
 * ``for``-``condition``-``increment``
+
+.. _ControlFlow_ForIn:
 
 For-In
 ~~~~~~
@@ -46,8 +57,10 @@ which prints the first few entries in the five-times-table:
     >>> 2 times 5 is 10
     >>> 3 times 5 is 15
     >>> 4 times 5 is 20
+    >>> 5 times 5 is 25
 
-Here, the collection of items being iterated is a half-open range of numbers from ``1`` to ``5``.
+Here, the collection of items being iterated is a
+:ref:`closed range <Operators_ClosedRangeOperator>` of numbers from ``1`` to ``5``.
 The value of ``index`` is set to the first number in the range (``1``),
 and the statements inside the loop are executed.
 In this case, the loop only contains one statement,
@@ -56,8 +69,6 @@ Once the statement has been executed,
 the value of ``index`` is updated to contain the second value in the range (``2``),
 and the ``println`` function is called again.
 This continues until the end of the range is reached.
-Because the range is half-open,
-its final value of ``5`` is not used.
 
 The ``index`` variable does not have to be declared before it is used as part of this loop.
 It is implicitly declared simply by its inclusion in the loop declaration,
@@ -67,17 +78,17 @@ If you want to check the value of ``index`` after the loop has completed,
 you must declare it in advance of its use in the loop.
 
 If you don't actually need each value from the range,
-you can ignore them using an underscore in place of a variable name:
+you can ignore the values using an underscore in place of a variable name:
 
 .. testcode::
 
-    (swift) let base = 3
+    (swift) val base = 3
     // base : Int = 3
-    (swift) let power = 10
+    (swift) val power = 10
     // power : Int = 10
     (swift) var answer = 1
     // answer : Int = 1
-    (swift) for _ in 0..power {
+    (swift) for _ in 0...power {
         answer *= base
     }
     (swift) println("\(base) to the power of \(power) is \(answer)")
@@ -96,11 +107,11 @@ The underscore character ``_``
 causes the individual values to be ignored,
 and does not provide access to the current value during each iteration of the loop.
 
-A ``for``-``in`` loop can also be used to iterate over the items in an array:
+A ``for``-``in`` loop can be used to iterate over the items in an array:
 
 .. testcode::
 
-    (swift) let names = ["Alan", "Barbara", "Carol", "Doug"]
+    (swift) val names = ["Alan", "Barbara", "Carol", "Doug"]
     // names : String[] = ["Alan", "Barbara", "Carol", "Doug"]
     (swift) for name in names {
         println("Hello, \(name)!")
@@ -112,40 +123,19 @@ A ``for``-``in`` loop can also be used to iterate over the items in an array:
 
 Swift's ``String`` type has a ``chars`` property,
 which provides the individual characters in the string as an ``Array`` of ``UnicodeScalar`` values
-(also known as an ‘``Array`` of type ``UnicodeScalar``’).
-This can be used to iterate through the characters of a string in order.
-The following example takes a lowercase string,
-and removes all of its vowels and spaces to create a cryptic puzzle phrase for someone to try and guess:
+(also known as an “``Array`` of type ``UnicodeScalar``”).
+This can be used to iterate through the characters of a string in order:
 
 .. testcode::
 
-    (swift) let puzzleInput = "great minds think alike"
-    // puzzleInput : String = "great minds think alike"
-    (swift) var puzzleOutput = ""
-    // puzzleOutput : String = ""
-    (swift) for letter in puzzleInput.chars {
-        switch letter {
-            case 'a', 'e', 'i', 'o', 'u', ' ':
-                continue
-            default:
-                puzzleOutput += letter
-        }
+    (swift) for scalar in "Hello".chars {
+        println(scalar)
     }
-    (swift) println(puzzleOutput)
-    >>> grtmndsthnklk
-
-The ``letter`` constant is inferred to be of type ``UnicodeScalar``
-from the fact that it is iterating over a sequence of ``UnicodeScalar`` values.
-This is why the case statement compares ``letter`` against ``UnicodeScalar`` values
-(with single quote marks)
-rather than ``String`` values.
-
-The code above calls the ``continue`` keyword whenever it matches a vowel or a space.
-``continue`` is a special control flow keyword that causes the current iteration of the loop to end immediately
-and jump straight to the start of the next iteration.
-It enables the switch block to match (and ignore) just these six special characters,
-rather than having to match every character that should get printed.
-(The ``continue`` keyword is described in more detail later in this section.)
+    >>> H
+    >>> e
+    >>> l
+    >>> l
+    >>> o
 
 Iteration can also be used to access the key-value pairs in a dictionary.
 Every item in a dictionary has a ``key`` property and a ``value`` property,
@@ -153,7 +143,7 @@ which can be accessed via dot syntax:
 
 .. testcode::
 
-    (swift) let numberOfLegs = ["spider" : 8, "ant" : 6, "cat" : 4]
+    (swift) val numberOfLegs = ["spider" : 8, "ant" : 6, "cat" : 4]
     // numberOfLegs : Dictionary<String, Int> = Dictionary<String, Int>(1.33333, 3, <DictionaryBufferOwner<String, Int> instance>)
     (swift) for item in numberOfLegs {
         println("\(item.key)s have \(item.value) legs")
@@ -175,12 +165,14 @@ However, this syntax can be used to iterate *any* collection,
 as long as it conforms to the ``Sequence`` protocol.
 This can include your own classes and collection types.
 Protocols, including ``Sequence``,
-are described in detail in :doc:`ProtocolsAndExtensions`.
+are described in detail in :doc:`Protocols`.
 
 .. QUESTION: are there any plans for enums to conform to Sequence?
    If so, they might make for a good example.
    What would the syntax be if they did?
    'for planet in Planet'?
+
+.. _ControlFlow_ForConditionIncrement:
 
 For-Condition-Increment
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -266,6 +258,8 @@ ending the loop.
    and therefore influence loop execution, such as jumping ahead –
    by prepending it with 'var'?
 
+.. _ControlFlow_WhileLoops:
+
 While Loops
 -----------
 
@@ -276,6 +270,8 @@ Swift provides two variations of this loop:
 
 * ``while``, and
 * ``do``-``while``
+
+.. _ControlFlow_While:
 
 While
 ~~~~~
@@ -294,7 +290,7 @@ For example::
 
     (swift) var personName = ""
     // personName : String = ""
-    (swift) let keyboard = Keyboard()
+    (swift) val keyboard = Keyboard()
     // keyboard : Keyboard = <_TtCSs8Keyboard instance>
     (swift) println("Please enter your name, then press return.")
     >>> Please enter your name, then press return.
@@ -310,11 +306,14 @@ For example::
         println("Hello, \(personName)!")
     }
 
+.. TODO: This example cannot be auto-tested, as it is reliant on keyboard input.
+   It must be tested manually before this book is published.
+
 This example reads input from the keyboard one character at a time,
 and appends each character to a string.
 It does this using Swift's built-in ``Keyboard`` class,
 which reads keystrokes from an attached keyboard.
-The example creates a new ``Keyboard`` instance by calling its initializer method ``Keyboard()``.
+The example creates a new ``Keyboard`` instance by calling its initializer ``Keyboard()``.
 It then reads a key using the keyboard's ``read`` method.
 This causes the program to pause and wait for a keystroke before continuing.
 The keystroke's value is returned as a ``UInt8`` value,
@@ -337,8 +336,10 @@ Instead, the loop is executed until a particular condition is satisfied.
 
 .. NOTE: this example cannot be run in the REPL,
    due to the fact that it is reliant on keyboard input.
-   I have yet to come up with a better example where ‘while’ is the right kind of loop to use, however.
+   I have yet to come up with a better example where “while” is the right kind of loop to use, however.
    (I'm trying to avoid any examples where the number of iterations is known at the start of the loop.)
+
+.. _ControlFlow_DoWhile:
 
 Do-While
 ~~~~~~~~
@@ -355,6 +356,8 @@ It then continues to repeat the loop until the condition is ``false``::
 
 .. TODO: come up with a good example for when you'd actually want to use a do-while loop.
 
+.. _ControlFlow_ConditionalStatements:
+
 Conditional Statements
 ----------------------
 
@@ -370,6 +373,8 @@ Swift provides two ways to add conditional branches to your code:
 
 The ``if``-``else`` statement is typically used to consider simple conditions with only a few possible outcomes.
 The ``switch`` statement is better suited to more complex conditions with multiple possible permutations.
+
+.. _ControlFlow_IfElse:
 
 If-Else
 ~~~~~~~
@@ -388,7 +393,7 @@ It only executes a set of statements if that condition is ``true``:
     >>> It's very cold. Consider wearing a scarf.
 
 This example checks to see if the temperature
-(expressed using the `Fahrenheit <http://en.wikipedia.org/wiki/Fahrenheit>`_ scale)
+(expressed using the Fahrenheit scale)
 is less than or equal to 32 degrees
 (the freezing point of water).
 If it is, a message is printed.
@@ -446,6 +451,8 @@ In this example,
 the temperature is neither too cold nor too warm to trigger the ``if`` or ``else if`` conditions,
 and so no message is printed.
 
+.. _ControlFlow_Switch:
+
 Switch
 ~~~~~~
 
@@ -464,7 +471,7 @@ for brevity:
 
 .. testcode::
 
-    (swift) let numberSymbol = '三'   // Simplified Chinese symbol for the number 3
+    (swift) val numberSymbol = '三'   // Simplified Chinese symbol for the number 3
     // numberSymbol : UnicodeScalar = '三'
     (swift) var integerValue: Int? = .None
     // integerValue : Int? = <unprintable value>
@@ -496,7 +503,7 @@ the numbers ``1`` to ``4``.
 If a match is found,
 it sets an optional ``Int?`` variable (``integerValue``) to the appropriate integer value.
 If the symbol is not recognized,
-the optional ``Int?`` is set to a value of ``.None``, meaning ‘no value’.
+the optional ``Int?`` is set to a value of ``.None``, meaning “no value”.
 Finally, it checks to see if a value was found.
 If it was, the output value is printed;
 otherwise, an error message is reported.
@@ -522,6 +529,8 @@ to provide a catch-all case for any characters that have not already been matche
 This also provides a handy opportunity to set the optional integer value to ``.None``,
 to indicate that no match was found.
 
+.. _ControlFlow_RangeMatching:
+
 Range Matching
 ______________
 
@@ -531,9 +540,9 @@ to provide a natural-language count for numbers of any size:
 
 .. testcode::
 
-    (swift) let count = 3_000_000_000_000
+    (swift) val count = 3_000_000_000_000
     // count : Int = 3000000000000
-    (swift) let countedThings = "stars in the Milky Way"
+    (swift) val countedThings = "stars in the Milky Way"
     // countedThings : String = "stars in the Milky Way"
     (swift) var naturalCount = ""
     // naturalCount : String = ""
@@ -546,11 +555,11 @@ to provide a natural-language count for numbers of any size:
             naturalCount = "a couple of"
         case 3:
             naturalCount = "a few"
-        case 4..12:
+        case 4...12:
             naturalCount = "several"
-        case 12..100:
+        case 12...100:
             naturalCount = "dozens of"
-        case 100..1000:
+        case 100...1000:
             naturalCount = "hundreds of"
         default:
             naturalCount = "lots and lots of"
@@ -562,6 +571,8 @@ to provide a natural-language count for numbers of any size:
    once rdar://14586400 is implemented.
 .. TODO: remove the initializer for naturalCount once we can declare unitialized variables in the REPL.
 .. TODO: Add a description for this example.
+
+.. _ControlFlow_Tuples:
 
 Tuples
 ______
@@ -595,7 +606,7 @@ or outside of the box altogether.
             println("(\(point.0), 0) is on the x-axis")
         case (0, _):
             println("(0, \(point.1)) is on the y-axis")
-        case (-2..3, -2..3):
+        case (-2...3, -2...3):
             println("(\(point.0), \(point.1)) is inside the box")
         default:
             println("(\(point.0), \(point.1)) is outside of the box")
@@ -613,6 +624,8 @@ and so all other matching ``case`` and ``default`` statements would be ignored.
    var x: Any = (1, 2)
    switch x {
    case is (Int, Int):
+
+.. _ControlFlow_Where:
 
 Where
 _____
@@ -643,11 +656,11 @@ or none of the above.
             println("(\(point.0), 0) is on the x-axis")
         case (0, _):
             println("(0, \(point.1)) is on the y-axis")
-        case let (x, y) where x == y:
+        case val (x, y) where x == y:
             println("(\(x), \(y)) is on the line x == y")
-        case let (x, y) where x == -y:
+        case val (x, y) where x == -y:
             println("(\(x), \(y)) is on the line x == -y")
-        case let (x, y):
+        case val (x, y):
             println("(\(x), \(y)) is just some arbitrary point")
     }
     >>> (1, -1) is on the line x == -y
@@ -660,7 +673,7 @@ The ``case`` statement will only match the current value of ``point``
 if the ``where`` clause's condition equates to ``true`` for that value.
 
 The x-axis and y-axis checks could also have been written with a ``where`` clause.
-``case (_, 0)`` could have been written as ``case (_, let y) where y == 0``,
+``case (_, 0)`` could have been written as ``case (_, val y) where y == 0``,
 to match points on the x-axis.
 However, the original version is more concise,
 and is preferred when matching against a fixed value.
@@ -676,7 +689,7 @@ because they did not have the temporary constants to hand.)
 
 Note that this ``switch`` statement does not have a ``default`` block.
 The final ``case`` block,
-``case let (x, y)``,
+``case val (x, y)``,
 declares a tuple of two placeholder constants,
 but does *not* provide a ``where`` clause to filter them.
 As a result, it matches all possible remaining values,
@@ -686,6 +699,67 @@ and a ``default`` block is not needed to make the ``switch`` statement exhaustiv
    in that it uses the same declared variable (point) as the previous example.
    This is primarily to keep the variable name readable within the println string interpolation.
    Is this okay? Should it be changed so that it is self-contained?
+
+.. _ControlFlow_OptionalBinding:
+
+Optional Binding
+----------------
+
+:newTerm:`Optional binding` is a convenient way to find out if an optional contains a value,
+and to make that value available if it exists.
+Optional bindings can be used with ``if``-``else`` and ``while`` statements
+to simplify and shorten the unwrapping of optionals.
+
+For example:
+
+.. testcode::
+
+    (swift) val possibleNumber = "123"
+    // possibleNumber : String = "123"
+    (swift) if val convertedNumber = possibleNumber.toInt() {
+        println("'\(possibleNumber)' has the integer value \(convertedNumber)")
+    } else {
+        println("'\(possibleNumber)' could not be converted to a number")
+    }
+    >>> '123' has the integer value 123
+
+This example uses ``String``\ 's ``toInt()`` function
+to try and convert the string ``"123"`` into an ``Int``.
+It then prints a message to indicate if the conversion was successful.
+(``toInt()`` returns an *optional* ``Int``,
+which only contains an ``Int`` if the conversion is succesful.)
+
+``if val convertedNumber = possibleNumber.toInt()`` can be read as:
+
+“If the optional returned by ``possibleNumber.toInt()`` contains a value,
+set a new constant called ``convertedNumber`` to the value contained in the optional.”
+
+If the conversion is successful,
+the ``convertedNumber`` constant becomes available for use within
+the first branch of the ``if``-``else`` statement.
+It has already been initialized with the value contained *within* the optional,
+and so there is no need to use the ``!`` suffix to access its value.
+In this example, ``convertedNumber`` is simply used to print the result of the conversion.
+
+You can use both constants and variables with optional binding.
+If you wanted to manipulate the value of ``convertedNumber``
+within the first block of the ``if``-``else`` statement,
+you could write ``if var convertedNumber`` instead,
+and the value contained within the optional
+would be made available as a variable rather than a constant.
+
+.. note::
+
+    Constants or variables created via optional binding
+    are only available within the code block following their creation,
+    as in the first branch of the ``if``-``else`` statement above.
+    If you want to work with the optional's value outside of this code block,
+    you should declare a constant or variable yourself
+    before the ``if``-``else`` statement begins.
+
+.. TODO add an example for 'while'.
+
+.. _ControlFlow_ControlTransferStatements:
 
 Control Transfer Statements
 ---------------------------
@@ -704,6 +778,8 @@ Unlike some languages,
 the ``return`` statement is only ever used with functions and closures in Swift.
 The ``return`` statement is described in :doc:`Functions`.
 
+.. _ControlFlow_Continue:
+
 Continue
 ~~~~~~~~
 
@@ -712,10 +788,45 @@ and start again at the beginning of the next iteration through the loop.
 It gives a way to say “I am done with the current loop iteration”,
 without leaving the loop altogether.
 
-In a ``for`` loop with an incrementer expression,
-the incrementer will still be evaluated after calling the ``continue`` statement.
-The loop itself continues to work as normal;
-only code within the loop is skipped.
+.. note::
+
+    In a ``for``-``condition``-``increment`` loop,
+    the incrementer will still be evaluated after calling the ``continue`` statement.
+    The loop itself continues to work as normal;
+    only code within the loop's body is skipped.
+
+The following example takes a lowercase string,
+and removes all of its vowels and spaces to create a cryptic puzzle phrase for someone to try and guess:
+
+.. testcode::
+
+    (swift) val puzzleInput = "great minds think alike"
+    // puzzleInput : String = "great minds think alike"
+    (swift) var puzzleOutput = ""
+    // puzzleOutput : String = ""
+    (swift) for letter in puzzleInput.chars {
+        switch letter {
+            case 'a', 'e', 'i', 'o', 'u', ' ':
+                continue
+            default:
+                puzzleOutput += letter
+        }
+    }
+    (swift) println(puzzleOutput)
+    >>> grtmndsthnklk
+
+The ``letter`` constant is inferred to be of type ``UnicodeScalar``
+from the fact that it is iterating over a sequence of ``UnicodeScalar`` values.
+This is why the case statement compares ``letter`` against ``UnicodeScalar`` values
+(with single quote marks) rather than ``String`` values.
+
+The code above calls the ``continue`` keyword whenever it matches a vowel or a space.
+This causes the current iteration of the loop to end immediately,
+and jump straight to the start of the next iteration.
+It enables the switch block to match (and ignore) just these six special characters,
+rather than having to match every character that should get printed.
+
+.. _ControlFlow_Break:
 
 Break
 ~~~~~
@@ -735,12 +846,12 @@ to see it in action::
 
     (swift) var personName = ""
     // personName : String = ""
-    (swift) let keyboard = Keyboard()
+    (swift) val keyboard = Keyboard()
     // keyboard : Keyboard = <_TtCSs8Keyboard instance>
     (swift) println("Please enter your name, then press return.")
     >>> Please enter your name, then press return.
     (swift) while true {
-        let inputCharacter = UnicodeScalar(keyboard.read())
+        val inputCharacter = UnicodeScalar(keyboard.read())
         switch inputCharacter {
             case ' ':
                 continue
@@ -755,6 +866,9 @@ to see it in action::
     } else {
         println("Hello, \(personName)!")
     }
+
+.. TODO: This example cannot be auto-tested, as it is reliant on keyboard input.
+   It must be tested manually before this book is published.
 
 This time, the keyboard's ``while`` loop has a very simple condition: ``while true``.
 This condition will *always* be true,
@@ -771,6 +885,8 @@ If the character is a line break
 a ``break`` statement is used to exit the loop immediately,
 jumping to the ``if personName == ""`` line after the loop.
 Otherwise, the new character is appended to the ``personName`` string as before.
+
+.. _ControlFlow_Fallthrough:
 
 Fallthrough
 ~~~~~~~~~~~
@@ -789,7 +905,7 @@ The example below uses ``fallthrough`` to create a textual description of a numb
 
 .. testcode::
 
-    (swift) let integerToDescribe = 5
+    (swift) val integerToDescribe = 5
     // integerToDescribe : Int = 5
     (swift) var description = "The number \(integerToDescribe) is"
     // description : String = "The number 5 is"
@@ -809,7 +925,7 @@ The function then considers the value of ``integerToDescribe`` using a ``switch`
 If the value of ``integerToDescribe`` is one of the prime numbers in the list,
 the function appends some text to the end of ``description``,
 to note that the number is prime.
-It then uses the ``fallthrough`` keyword to ‘fall into’ the ``default`` case as well.
+It then uses the ``fallthrough`` keyword to “fall into” the ``default`` case as well.
 The ``default`` case adds some extra text onto the end of the description,
 and the ``switch`` statement is complete.
 

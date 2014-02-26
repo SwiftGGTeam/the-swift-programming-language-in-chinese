@@ -7,6 +7,7 @@
     * Enum default / unknown values?
     * Enum delayed identifier resolution
     * Option sets
+    * Enum special capabilities such as embeddability, type properties etc.
 
 Enumerations
 ============
@@ -67,6 +68,8 @@ The type of ``directionToHead`` is already known,
 and so we can drop the type when setting its value.
 This makes for highly readable code when working with explicitly-typed enumeration values.
 
+.. _Enumerations_ConsideringEnumerationValuesWithASwitchStatement:
+
 Considering Enumeration Values with a Switch Statement
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -109,7 +112,7 @@ you can provide a ``default`` case to cover any members that are not addressed e
 
 .. testcode:: enums
 
-    (swift) let somePlanet = Planet.Earth
+    (swift) val somePlanet = Planet.Earth
     // somePlanet : Planet = <unprintable value>
     (swift) switch somePlanet {
         case .Earth:
@@ -120,6 +123,8 @@ you can provide a ``default`` case to cover any members that are not addressed e
     >>> Mostly harmless
 
 The full capabilties of ``switch`` statements are covered in more detail in :doc:`ControlFlow`.
+
+.. _Enumerations_AssociatedValues:
 
 Associated Values
 ~~~~~~~~~~~~~~~~~
@@ -141,9 +146,9 @@ track products using two different types of barcode.
 Some products are labelled with 1D barcodes
 in `UPC-A <http://en.wikipedia.org/wiki/Universal_Product_Code>`_ format,
 which uses the numbers ``0`` to ``9``.
-Each barcode has a ‘number system’ digit,
-followed by ten ‘identifier’ digits.
-These are followed by a ‘check‘ digit to verify that the code has been scanned correctly:
+Each barcode has a “number system” digit,
+followed by ten “identifier” digits.
+These are followed by a “check” digit to verify that the code has been scanned correctly:
 
 .. image:: ../images/barcode_UPC.png
     :height: 80
@@ -190,7 +195,7 @@ as shown below:
 
 This creates a new variable called ``productBarcode``,
 and assigns it a value of ``Barcode.UPCA`` with an associated tuple value of ``(8, 8590951226, 3)``.
-(The provided ‘identifier’ value has an underscore within its integer literal –
+(The provided “identifier” value has an underscore within its integer literal –
 ``85909_51226`` –
 to make it easier to read as a barcode.)
 
@@ -234,6 +239,8 @@ when the string is printed by the ``println`` function.
 .. TODO: This mention of string interpolation should be removed.
    It is only included here as a legacy from when enumerations were in Basic Types,
    and had not yet been introduced by the subsequent Strings chapter.
+
+.. _Enumerations_RawValues:
 
 Raw Values
 ~~~~~~~~~~
@@ -286,7 +293,7 @@ The raw value of an enumeration member can be accessed using its ``toRaw`` metho
 
 .. testcode:: optionals
 
-    (swift) let atomicNumberOfCarbon = ChemicalElement.Carbon.toRaw()
+    (swift) val atomicNumberOfCarbon = ChemicalElement.Carbon.toRaw()
     // atomicNumberOfCarbon : Int = 6
 
 The reverse is also true.
@@ -323,6 +330,236 @@ then the returned optional value will equal ``.None``:
         println("Not an element I know about")
     }
     >>> Not an element I know about
+
+.. _Enumerations_PropertiesAndMethods:
+
+Properties and Methods
+----------------------
+
+Swift enumerations also support many of the features described in :doc:`ClassesAndStructures`:
+
+* :newTerm:`initializers`, to provide a default enumeration member
+* :newTerm:`computed properties`, to provide additional information about the current enumeration member, and
+* :newTerm:`instance methods`, to provide utility functionality
+
+.. TODO: Should type methods and properties be added on to this list?
+.. TODO: How about subscriptability? It's allowed, but would it ever actually be useful?
+.. TODO: Likewise custom operator implementations. This could definitely be useful.
+
+The example below shows all of these capabilities in action for a complex enumeration:
+
+.. testcode:: enumerationSpecialFeatures
+
+    (swift) enum TrainStatus {
+        case OnTime, Delayed(Int)
+        init() {
+            self = OnTime
+        }
+        var description: String {
+            switch self {
+                case OnTime:
+                    return "on time"
+                case Delayed(var minutes):
+                    return "delayed by " + self.delayText(minutes)
+            }
+        }
+        func delayText(minutes: Int) -> String {
+            switch minutes {
+                case 1:
+                    return "1 minute"
+                case 2...60:
+                    return "\(minutes) minutes"
+                case 60...120:
+                    val extra = minutes - 60
+                    return "an hour and \(extra) minutes"
+                default:
+                    return "more than two hours"
+            }
+        }
+    }
+    (swift) class Train {
+        var status = TrainStatus()
+    }
+    (swift) val train = Train()
+    // train : Train = <Train instance>
+    (swift) println("The train is \(train.status.description)")
+    >>> The train is on time
+    (swift) train.status = .Delayed(96)
+    (swift) println("The train is now \(train.status.description)")
+    >>> The train is now delayed by an hour and 36 minutes
+
+This example defines an enumeration called ``TrainStatus``,
+to encapsulate the current live progress of a train during its journey.
+The enumeration has two possible states:
+
+* ``OnTime``, with no associated value, and
+* ``Delayed``, which stores an associated value of the number of minutes by which
+  the train is currently delayed
+
+The enumeration provides a basic initializer, ``init()``,
+which assumes that the train's state is “on time”.
+This is a reasonable default state for a train starting out on its journey
+if no other information is provided.
+The ``init()`` method uses the special ``self`` keyword to refer to
+the new instance of ``TrainStatus`` that is being created,
+and requests that it become an instance of the ``OnTime`` enumeration member.
+
+.. note::
+
+    Enumerations are the only types that can
+    specify a value for ``self`` in this way during initialization.
+    ``self = OnTime`` does not (strictly speaking)
+    create a new “instance” of ``OnTime`` here.
+    Rather, it specifies that ``OnTime`` is the enumeration member to be used
+    when creating this new instance.
+    Classes and structures cannot assign to ``self`` in this way during initialization.
+
+``TrainStatus`` defines a read-only computed ``String`` property called ``description``,
+which provides a human-readable description based on the enumeration member type.
+``description`` makes use of a convenience method called ``delayText()``,
+which provides a text-based time description for an integer delay in minutes.
+It makes sense to implement ``delayText()`` as an instance method of ``TrainStatus``,
+as it provides supporting functionality for a specific ``TrainStatus`` task.
+
+The example also defines a ``Train`` class,
+with a variable ``status`` property of type ``TrainStatus``.
+The property's default value is set to a new ``TrainStatus`` instance,
+which will be initialized using the ``init()`` method from ``TrainStatus``.
+When a new instance of ``Train`` is created,
+its ``status`` property is therefore initialized to ``OnTime``, as shown above.
+Changing the ``status`` property to ``.Delayed(96)``
+causes the ``description`` computed property to return an updated message.
+
+.. QUESTION: delayText doesn't actually need to be an instance method –
+   it could just as easily be a type method instead.
+   Should it be changed, and is there a better example for an instance method?
+
+.. admonition:: Experiment
+
+    Try creating a convenience initializer, ``init withDelay(delay: Int)``,
+    to give a way to initialize a new ``TrainStatus`` based on an initial delay.
+    It should perform a safety-check over the input value
+    in case it is passed a value of ``0`` minutes –
+    which would indicate that the train is ``OnTime``,
+    not ``Delayed`` by ``0`` minutes.
+
+.. _Enumerations_EmbeddedTypes:
+
+Embedded Types
+--------------
+
+Enumerations are often created to support a specific class or structure's functionality.
+Similarly, it can sometimes be convenient to define utility classes and structures
+purely for use within the context of a more complex type.
+To achieve this, Swift provides a way to define :newTerm:`embedded types`.
+Embedded types enable you to embed enumerations, classes and structures within the definition
+of the type they support.
+
+Types are embedded by nesting their definition within the braces of the type they support.
+Types can be nested to as many levels as are required:
+
+.. testcode:: embeddedTypes
+
+    (swift) struct BlackjackCard {
+        enum Suit : UnicodeScalar {
+            case Spades = '♠', Hearts = '♡', Diamonds = '♢', Clubs = '♣'
+        }
+        enum Rank : String {
+            case Two = "2", Three = "3", Four = "4", Five = "5", Six = "6"
+            case Seven = "7", Eight = "8", Nine = "9", Ten = "10"
+            case Jack = "Jack", Queen = "Queen", King = "King", Ace = "Ace"
+            struct Values {
+                val firstValue: Int
+                val secondValue: Int?
+            }
+            var values: Values {
+                switch self {
+                    case .Ace:
+                        return Values(1, 11)
+                    case .Jack, .Queen, .King:
+                        return Values(10, .None)
+                    default:
+                        return Values(self.toRaw().toInt()!, .None)
+                }
+            }
+        }
+        val rank: Rank
+        val suit: Suit
+        var description: String {
+            var output = "the \(rank.toRaw()) of \(suit.toRaw())"
+            output += " is worth \(rank.values.firstValue)"
+            if val secondValue = rank.values.secondValue {
+                output += " or \(secondValue)"
+            }
+            return output
+        }
+    }
+    (swift) val theAceOfSpades = BlackjackCard(.Ace, .Spades)
+    // theAceOfSpades : BlackjackCard = BlackjackCard(<unprintable value>, <unprintable value>)
+    (swift) println("Blackjack value: \(theAceOfSpades.description)")
+    >>> Blackjack value: the Ace of ♠ is worth 1 or 11
+
+This example defines a playing card for use in the game of Blackjack.
+One notable feature of Blackjack is that the Ace card has a value of
+either one or eleven. This characteristic is encapsulated in the logic above.
+
+The ``BlackjackCard`` structure defines two embedded enumerations:
+
+* ``Suit``, which describes the four common playing card suits,
+  together with a raw ``UnicodeScalar`` value to represent their symbol
+* ``Rank``, which describes the thirteen possible playing card ranks,
+  together with a raw ``String`` value to represent their name
+
+The ``Rank`` enumeration defines a further embedded structure of its own, called ``Values``.
+This structure encapsulates the fact that most cards have one value,
+but the Ace card has two values.
+The ``Values`` structure defines two properties to represent this:
+
+* ``firstValue``, of type ``Int``
+* ``secondValue``, of type ``Int?``, i.e. “optional ``Int``”
+
+``Rank`` also defines a computed property, ``values``,
+which returns an instance of the ``Values`` structure.
+This computed property considers the rank of the card,
+and initializes a new ``Values`` instance with appropriate values based on its rank.
+It uses special values for ``Jack``, ``Queen``, ``King`` and ``Ace``.
+For the numeric cards, it converts the rank's raw ``String`` value into an ``Int?``
+using ``String``'s ``toInt()`` method.
+Because every numeric card value is known to definitely convert to an ``Int``,
+the value of this optional ``Int`` is accessed via an exclamation mark (``!``)
+without being checked, and is used as the first value of the ``Values`` structure.
+
+The ``BlackjackCard`` structure itself is pretty simple.
+It actually only has two properties – ``rank``, and ``suit``.
+It also defines a computed property called ``description``,
+which uses the values stored in ``rank`` and ``suit`` to build
+a textual description of the card.
+The ``description`` property uses optional binding to check if there is
+a second value to display, and inserts addition description detail if so.
+
+Because ``BlackjackCard`` is a structure with no custom initializers,
+it is given an implicit
+:ref:`memberwise initializer <ClassesAndStructures_MemberwiseStructureInitializers>`.
+This is used to initialize a new constant called ``theAceOfSpades``.
+Even though ``Rank`` and ``Suit`` are embedded within ``BlackjackCard``,
+their type can still be inferred from the context,
+and so the initialization of this instance is able to refer to the enumeration members
+by their member names (``.Ace`` and ``.Spades``) alone.
+
+Embedded types can also be used outside of their definition context,
+by prefixing their name with the name of the type they are embedded within:
+
+.. testcode:: embeddedTypes
+
+    (swift) val heartsSymbol = BlackjackCard.Suit.Hearts.toRaw()
+    // heartsSymbol : UnicodeScalar = '♡'
+
+This enables the names of ``Suit``, ``Rank`` and ``Values`` to be kept deliberately short,
+because their names are naturally qualified by the context in which they are defined.
+
+.. QUESTION: I'm using the word 'type' extensively in this section.
+   Is this the right thing to do?
+   Have I qualified what a 'type' is clearly enough by this point in the book?
 
 .. refnote:: References
 

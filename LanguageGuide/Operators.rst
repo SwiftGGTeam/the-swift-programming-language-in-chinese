@@ -6,7 +6,7 @@
     * Relational and equality operators ✔︎
     * Short-circuit nature of the logical operators && and || ✔︎
     * Expressions (kind of ✔︎)
-    * The ternary operator ✔︎
+    * The ternary conditional operator ✔︎
     * range operators ✔︎
     * The comma operator
 
@@ -14,22 +14,33 @@ Operators
 =========
 
 An :newTerm:`operator` is a special symbol or phrase that is used to check or change values.
-A simple example is the addition operator, ``+``,
-which is used to add two numbers together (as in ``let i = 1 + 2``).
+A simple example is the addition operator (``+``)
+which is used to add two numbers together (as in ``val i = 1 + 2``).
 More complex examples include the logical AND operator ``&&``
 (as in ``if enteredDoorCode && passedRetinaScan``),
 or the increment operator ``++i``,
 which gives a shorthand way to increase the value of ``i`` by ``1``.
 All of these operators are explained in more detail below.
 
-Swift supports all of the standard operators from C.
-It also introduces new operators not found in other languages.
+Swift supports all of the standard operators from C,
+and improves several of their capabilities:
+
+* Assignment (``=``) does not return a value, to avoid common coding errors
+* Remainder (``%``) calculations can be performed on floating-point numbers
+
+It also introduces new operators not found in other languages:
+
+* :ref:`Range operators <Operators_RangeOperators>`
+  ``a..b`` and ``a...b``, which give a short-hand way to express a range of values
+* :ref:`Overflow operators <Operators_OverflowOperators>`
+  such as ``a &+ b``, to opt in to overflowing arithmetic behavior
+
 In addition, you can define your own implementations of the standard operators –
 and create new ones –
 for any custom types you define.
 This process is covered in detail in :doc:`ClassesAndStructures`.
 
-Operators are often referred to as :newTerm:`unary`, :newTerm:`binary` or :newTerm:`ternary`:
+Operators are often referred to as :newTerm:`unary`, :newTerm:`binary`, or :newTerm:`ternary`:
 
 * Unary operators operate on a single target (such as ``-a``).
   They are said to be :newTerm:`prefix` operators if they come before their target (such as ``!b``),
@@ -38,11 +49,13 @@ Operators are often referred to as :newTerm:`unary`, :newTerm:`binary` or :newTe
   and are said to be :newTerm:`infix` because they appear inbetween their two targets.
 * Ternary operators operate on three targets.
   Like C, Swift has just one ternary operator,
-  known as the ternary comparison operator (``a ? b : c``).
+  known as the ternary conditional operator (``a ? b : c``).
 
 The values that operators affect are known as :newTerm:`operands`.
-In the expression ``1 + 2``, the ``+`` symbol is a binary operator,
+In the expression ``1 + 2``, the ``+`` symbol is a binary operator
 and its two operands are the values ``1`` and ``2``.
+
+.. _Operators_AssignmentOperator:
 
 Assignment Operator
 -------------------
@@ -51,7 +64,7 @@ The :newTerm:`assignment operator` (``a = b``) updates the value of ``a`` with t
 
 .. testcode:: assignmentOperator
 
-    (swift) let b = 10
+    (swift) val b = 10
     // b : Int = 10
     (swift) var a = 5
     // a : Int = 5
@@ -59,31 +72,33 @@ The :newTerm:`assignment operator` (``a = b``) updates the value of ``a`` with t
     (swift) println("a is now \(a)")
     >>> a is now 10
 
-If the right-hand side of the assignment is a tuple with multiple values,
+If the right side of the assignment is a tuple with multiple values,
 its elements can be decomposed into multiple named values at once:
 
 .. testcode:: assignmentOperator
 
-    (swift) let (x, y) = (1, 2)
+    (swift) val (x, y) = (1, 2)
     // (x, y) : (Int, Int) = (1, 2)
     (swift) println("x is \(x)")
     >>> x is 1
 
-Unlike C and Objective-C, the assignment expression does not itself return a value.
+Unlike C and Objective-C, the assignment operator does not itself return a value.
 The following statement is not valid::
 
     (swift) if x = y {
         // do something now that x is equal to y
     }
 
-This avoids errors where the assignment expression ``=`` is accidentally used
-in place of the equality comparison operator ``==``.
+This avoids the assignment operator (``=``) being used by accident
+when the equality comparison operator (``==``) is actually intended.
 By making ``if x = y`` invalid,
 Swift makes it much easier to avoid these kinds of errors in your code.
 
 .. TODO: Should we mention that x = y = z is also not valid?
    If so, is there a convincing argument as to why this is a good thing?
 .. TODO: Add a section about the new assignments bindings.
+
+.. _Operators_ArithmeticOperators:
 
 Arithmetic Operators
 --------------------
@@ -114,23 +129,25 @@ The addition operator is also supported for ``String`` concatenation:
     // r4 : String = "hello, world"
 
 Two ``UnicodeScalar`` values,
-or one ``UnicodeScalar`` and one ``String``,
-can be added together via ``+`` to make a new ``String``:
+or one ``UnicodeScalar`` value and one ``String`` value,
+can be added together to make a new ``String`` value:
 
 .. testcode:: arithmeticOperators
 
-    (swift) let dog = '🐶'
+    (swift) val dog = '🐶'
     // dog : UnicodeScalar = '🐶'
-    (swift) let cow = '🐮'
+    (swift) val cow = '🐮'
     // cow : UnicodeScalar = '🐮'
-    (swift) let dogCow = dog + cow
+    (swift) val dogCow = dog + cow
     // dogCow : String = "🐶🐮"
+
+.. _Operators_RemainderOperator:
 
 Remainder Operator
 ~~~~~~~~~~~~~~~~~~
 
-The :newTerm:`binary remainder operator`, ``a % b``,
-works out how many multiples of ``b`` will fit inside ``a``,
+The :newTerm:`binary remainder operator` (``a % b``)
+works out how many multiples of ``b`` will fit inside ``a``
 and returns the value that is left over
 (known as the :newTerm:`remainder`).
 
@@ -157,10 +174,10 @@ and returns ``remainder`` as its output:
 
 ``a`` = (``b`` × ``some multiplier``) + ``remainder``
 
-…where ``some multiplier`` is the smallest number of multiples of ``b``
+where ``some multiplier`` is the smallest number of multiples of ``b``
 that will fit inside ``a``.
 
-Plugging ``9`` and ``4`` into this equation gives:
+Inserting ``9`` and ``4`` into this equation gives:
 
 ``9`` = (``4`` × ``2``) + ``1``
 
@@ -171,19 +188,21 @@ The same method is applied when calculating the remainder for a negative value o
     (swift) -9 % 4
     // r6 : Int = -1
 
-Plugging ``-9`` and ``4`` into the equation gives:
+Inserting ``-9`` and ``4`` into the equation gives:
 
 ``-9`` = (``4`` × ``-2``) + ``-1``
 
-…giving a remainder value of ``-1``.
+giving a remainder value of ``-1``.
 
 The sign of ``b`` is ignored for negative values of ``b``.
-This means that ``a % b`` and ``a % -b`` will always give the same answer.
+This means that ``a % b`` and ``a % -b`` always give the same answer.
+
+.. _Operators_FloatingPointRemainderCalculations:
 
 Floating-Point Remainder Calculations
 _____________________________________
 
-Unlike C and Objective-C,
+Unlike the remainder operator in C and Objective-C,
 Swift's remainder operator can also operate on floating-point numbers:
 
 .. testcode:: arithmeticOperators
@@ -191,20 +210,22 @@ Swift's remainder operator can also operate on floating-point numbers:
     (swift) 8 % 2.5
     // r7 : Double = 0.5
 
-There are three 2.5's in 8, with a remainder of 0.5,
+In this example, ``8`` divided by ``2.5`` equals ``3``, with a remainder of ``0.5``,
 so the remainder operator returns a ``Double`` value of ``0.5``.
 
 .. image:: ../images/remainderFloat.png
     :width: 311
     :align: center
 
-Increment and Decrement
-~~~~~~~~~~~~~~~~~~~~~~~
+.. _Operators_IncrementAndDecrementOperators:
+
+Increment and Decrement Operators
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Like C, Swift provides an :newTerm:`increment operator` (``++``)
 and an :newTerm:`decrement operator` (``--``)
 as a shorthand way to increase or decrease the value of a numeric variable by ``1``.
-Unlike C, Swift's increment and decrement operators also work with floating-point numbers.
+These operators can be used with named values of any integer or floating-point type.
 
 .. testcode:: arithmeticOperators
 
@@ -219,38 +240,38 @@ Each time you call ``++i``, the value of ``i`` is increased by ``1``.
 Essentially, ``++i`` is shorthand for saying ``i = i + 1``.
 Likewise, ``--i`` can be used as shorthand for ``i = i - 1``.
 
-``++`` and ``--`` can be used as prefix operators, or as postfix operators.
+``++`` and ``--`` can be used as prefix operators or as postfix operators.
 ``++i`` and ``i++`` are both valid ways to increase the value of ``i`` by ``1``.
 However, ``++i`` increases the value of ``i`` *before* it is accessed,
 whereas ``i++`` increases the value *after* it is accessed.
-This is important if you are using ``++`` or ``--`` to modify a variable,
+This is important if you are using ``++`` or ``--`` to modify a variable
 while also finding out its value:
 
 .. testcode:: arithmeticOperators
 
     (swift) var a = 0
     // a : Int = 0
-    (swift) let b = ++a
+    (swift) val b = ++a
     // b : Int = 1
     (swift) println("a is now \(a)")
     >>> a is now 1
-    (swift) let c = a++
+    (swift) val c = a++
     // c : Int = 1
     (swift) println("a is now \(a)")
     >>> a is now 2
 
 In the example above,
-``let b = ++a`` sets ``b`` to the value of ``a``,
+``val b = ++a`` sets ``b`` to the value of ``a``,
 *after* it has been incremented.
 This is why both ``a`` and ``b`` are equal to ``1``.
 
-However, ``let c = a++`` sets ``c`` to the value of ``a`` *before* it is incremented.
+However, ``val c = a++`` sets ``c`` to the value of ``a`` *before* it is incremented.
 The result is that ``c`` gets the old value of ``1``,
 but ``a`` now equals ``2``.
 
 Unless you need the specific behavior of ``i++``,
 it is recommended that you use ``++i`` in all cases,
-because it has the typical expected behavior of incrementing ``i``,
+because it has the typical expected behavior of incrementing ``i``
 and then providing the result.
 (The same rules and advice apply for ``--i`` and ``i--``.)
 
@@ -259,36 +280,42 @@ and then providing the result.
    and indeed is it even advice we need to bother giving
    (given that lots of people might disagree or not care)?
 
-Unary Plus and Minus
-~~~~~~~~~~~~~~~~~~~~
+.. QUESTION: if so, have I followed this advice throughout the book?
+
+.. _Operators_UnaryPlusAndMinusOperators:
+
+Unary Plus and Minus Operators
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The sign of a numeric value can be toggled using a prefixed ``-``,
 known as the :newTerm:`unary minus operator`:
 
 .. testcode:: arithmeticOperators
 
-    (swift) let three = 3
+    (swift) val three = 3
     // three : Int = 3
-    (swift) let minusThree = -three
+    (swift) val minusThree = -three
     // minusThree : Int = -3
-    (swift) let plusThree = -minusThree    // effectively "minus minus three"
+    (swift) val plusThree = -minusThree    // effectively "minus minus three"
     // plusThree : Int = 3
 
-The unary minus operator ``-`` is prepended directly before the value it operates on,
+The unary minus operator (``-``) is prepended directly before the value it operates on,
 without any whitespace.
 
-There is a corresponding :newTerm:`unary plus operator`, ``+``,
+There is a corresponding :newTerm:`unary plus operator` (``+``)
 which simply returns the value it operates on, without any change:
 
 .. testcode:: arithmeticOperators
 
-    (swift) let minusSix = -6
+    (swift) val minusSix = -6
     // minusSix : Int = -6
-    (swift) let alsoMinusSix = +minusSix
+    (swift) val alsoMinusSix = +minusSix
     // alsoMinusSix : Int = -6
 
 The unary plus operator doesn't actually do anything.
-However, it can be used to provide symmetry in your code when also using the unary minus operator.
+However, it can be used to provide symmetry in your code when you're also using the unary minus operator.
+
+.. _Operators_CompoundAssignmentOperators:
 
 Compound Assignment Operators
 -----------------------------
@@ -305,10 +332,12 @@ One example is the :newTerm:`addition assignment operator` (``+=``):
     >>> a is now equal to 3
 
 The expression ``a += 2`` is shorthand for ``a = a + 2``.
-Effectively, the addition and the assignment are rolled into one operator
+Effectively, the addition and the assignment are combined into one operator
 that performs both tasks at the same time.
 
 A complete list of compound assignment operators can be found in the :doc:`../ReferenceManual/index`.
+
+.. _Operators_ComparisonOperators:
 
 Comparison Operators
 --------------------
@@ -323,7 +352,7 @@ Swift supports all of the standard C :newTerm:`comparison operators`:
 * Less than or equal to (``a <= b``)
 
 Swift supports two additional comparison operators,
-to check if values are identical:
+to check whether values are identical:
 
 * Identical to (``a === b``)
 * Not identical to (``a !== b``)
@@ -353,7 +382,7 @@ such as the ``if else`` statement:
 
 .. testcode:: comparisonOperators
 
-    (swift) let name = "world";
+    (swift) val name = "world";
     // name : String = "world"
     (swift) if name == "world" {
         println("hello, world")
@@ -368,14 +397,16 @@ The ``if else`` statement is described in more detail in :doc:`ControlFlow`.
    How do they work with strings?
    How about with tuples / with your own types?
 
-Ternary Comparison Operator
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. _Operators_TernaryConditionalOperator:
 
-The :newTerm:`ternary comparison operator` is a special operator with three parts,
+Ternary Conditional Operator
+----------------------------
+
+The :newTerm:`ternary conditional operator` is a special operator with three parts,
 which takes the form ``question ? answer1 : answer2``.
 It provides a shorthand way to evaluate one of two expressions
-based on whether ``question`` is ``true`` or ``false``.
-If ``question`` is ``true``, it evaluates ``answer1``;
+based on whether ``question`` is true or false.
+If ``question`` is true, it evaluates ``answer1``;
 otherwise, it evaluates ``answer2``.
 
 Effectively, it is shorthand for::
@@ -390,24 +421,24 @@ Here's an example, which calculates the pixel height for a table row.
 The row should be 50 pixels taller than the content if it has a header,
 and 20 pixels taller if it doesn't:
 
-.. testcode:: ternaryComparisonOperatorPart1
+.. testcode:: ternaryConditionalOperatorPart1
 
-    (swift) let contentHeight = 40
+    (swift) val contentHeight = 40
     // contentHeight : Int = 40
-    (swift) let hasHeader = true
+    (swift) val hasHeader = true
     // hasHeader : Bool = true
-    (swift) let rowHeight = contentHeight + (hasHeader ? 50 : 20)
+    (swift) val rowHeight = contentHeight + (hasHeader ? 50 : 20)
     // rowHeight : Int = 90
     (swift) println("The row height is \(rowHeight) pixels.")
     >>> The row height is 90 pixels.
 
 This is shorthand for:
 
-.. testcode:: ternaryComparisonOperatorPart2
+.. testcode:: ternaryConditionalOperatorPart2
 
-    (swift) let contentHeight = 40
+    (swift) val contentHeight = 40
     // contentHeight : Int = 40
-    (swift) let hasHeader = true
+    (swift) val hasHeader = true
     // hasHeader : Bool = true
     (swift) var rowHeight = contentHeight
     // rowHeight : Int = 40
@@ -424,12 +455,82 @@ This is shorthand for:
    but in the second example, it's a variable (because it has to be).
    Is this okay?
 
-In this case, the ternary comparison operator provides
+In this case, the ternary conditional operator provides
 an efficient shorthand for deciding which of two expressions to consider.
 
-The ternary comparison operator should be used with care, however.
-It is very concise, but this conciseness can lead to hard-to-read code if over-used.
-Avoid combining multiple instances of the ternary comparison operator into one compound statement.
+The ternary conditional operator should be used with care, however.
+It is very concise, but this conciseness can lead to hard-to-read code if overused.
+Avoid combining multiple instances of the ternary conditional operator into one compound statement.
+
+.. _Operators_RangeOperators:
+
+Range Operators
+---------------
+
+Swift includes two :newTerm:`range operators`,
+which provide shorthand ways to express a range of values.
+
+.. _Operators_ClosedRangeOperator:
+
+Closed Range Operator
+~~~~~~~~~~~~~~~~~~~~~
+
+The :newTerm:`closed range operator` (``a..b``)
+defines a range that runs from ``a`` to ``b``,
+and includes the values ``a`` and ``b``.
+
+The closed range operator is useful when iterating over a range
+in which you want all of the values to be used,
+such as with a ``for``-``in`` loop:
+
+.. testcode:: rangeOperators
+
+    (swift) for index in 1..5 {
+        println("\(index) times 5 is \(index * 5)")
+    }
+    >>> 1 times 5 is 5
+    >>> 2 times 5 is 10
+    >>> 3 times 5 is 15
+    >>> 4 times 5 is 20
+    >>> 5 times 5 is 25
+
+``for``-``in`` loops are described in more detail in :doc:`ControlFlow`.
+
+.. _Operators_HalfClosedRangeOperator:
+
+Half-Closed Range Operator
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The :newTerm:`half-closed range operator` (``a...b``)
+defines a range that runs from ``a`` to ``b``,
+but does not include ``b``.
+It is said to be :newTerm:`half-closed`
+because it contains its first value, but not its final value.
+
+Half-closed ranges are particularly useful when working with
+zero-based lists such as arrays,
+where it is useful to count up to (but not including) the length of the list:
+
+.. testcode:: rangeOperators
+
+    (swift) val names = ["Anna", "Brian", "Christine", "Daniel"]
+    // names : String[] = ["Anna", "Brian", "Christine", "Daniel"]
+    (swift) val count = names.count
+    // count : Int = 4
+    (swift) for i in 0...count {
+        println("Person \(i + 1) is called \(names[i])")
+    }
+    >>> Person 1 is called Anna
+    >>> Person 2 is called Brian
+    >>> Person 3 is called Christine
+    >>> Person 4 is called Daniel
+
+Note that the array contains four items,
+but ``0...count`` only counts as far as ``3``
+(the index of the last item in the array),
+because it is a half-closed range.
+
+.. _Operators_BitwiseOperators:
 
 Bitwise Operators
 -----------------
@@ -443,8 +544,10 @@ and when encoding and decoding data for communication via a custom protocol.
 
 Swift supports all of the bitwise operators found in C, as described below.
 
-Bitwise NOT
-~~~~~~~~~~~
+.. _Operators_BitwiseNOTOperator:
+
+Bitwise NOT Operator
+~~~~~~~~~~~~~~~~~~~~
 
 The :newTerm:`bitwise NOT operator` (``~``) inverts all of the bits in a number:
 
@@ -456,9 +559,9 @@ For example:
 
 .. testcode:: bitwiseOperators
 
-    (swift) let initialBits: UInt8 = 0b00001111
+    (swift) val initialBits: UInt8 = 0b00001111
     // initialBits : UInt8 = 15
-    (swift) let invertedBits = ~initialBits  // equals 11110000
+    (swift) val invertedBits = ~initialBits  // equals 11110000
     // invertedBits : UInt8 = 240
 
 ``UInt8`` integers have eight bits,
@@ -475,11 +578,13 @@ Zeroes become ones, and ones become zeroes.
 This gives a new value of ``11110000``,
 which is equal to an unsigned decimal value of ``240``.
 
-Bitwise AND
-~~~~~~~~~~~
+.. _Operators_BitwiseANDOperator:
+
+Bitwise AND Operator
+~~~~~~~~~~~~~~~~~~~~
 
 The :newTerm:`bitwise AND operator` (``&``) combines the bits of two numbers.
-It returns a new number whose bits are only set to ``1`` if the bits were equal to ``1`` in *both* input numbers:
+It returns a new number whose bits are set to ``1`` only if the bits were equal to ``1`` in *both* input numbers:
 
 .. image:: ../images/bitwiseAND.png
     :width: 570
@@ -489,19 +594,21 @@ For example:
 
 .. testcode:: bitwiseOperators
 
-    (swift) let firstSixBits: UInt8 = 0b11111100
+    (swift) val firstSixBits: UInt8 = 0b11111100
     // firstSixBits : UInt8 = 252
-    (swift) let lastSixBits: UInt8  = 0b00111111
+    (swift) val lastSixBits: UInt8  = 0b00111111
     // lastSixBits : UInt8 = 63
-    (swift) let middleFourBits = firstSixBits & lastSixBits  // equals 00111100
+    (swift) val middleFourBits = firstSixBits & lastSixBits  // equals 00111100
     // middleFourBits : UInt8 = 60
 
 The values of ``firstSixBits`` and ``lastSixBits`` both have their four middle bits equal to ``1``.
 The bitwise AND operator combines them to make the number ``00111100``,
 which is equal to an unsigned decimal value of ``60``.
 
-Bitwise OR
-~~~~~~~~~~
+.. _Operators_BitwiseOROperator:
+
+Bitwise OR Operator
+~~~~~~~~~~~~~~~~~~~
 
 The :newTerm:`bitwise OR operator` (``|``) compares the bits of two numbers,
 and returns a new number whose bits are set to ``1`` if the bits were equal to ``1`` in *either* of the input numbers:
@@ -514,23 +621,29 @@ For example:
 
 .. testcode:: bitwiseOperators
 
-    (swift) let someBits: UInt8 = 0b10110010
+    (swift) val someBits: UInt8 = 0b10110010
     // someBits : UInt8 = 178
-    (swift) let moreBits: UInt8 = 0b01011110
+    (swift) val moreBits: UInt8 = 0b01011110
     // moreBits : UInt8 = 94
-    (swift) let combinedbits = someBits | moreBits  // equals 11111110
+    (swift) val combinedbits = someBits | moreBits  // equals 11111110
     // combinedbits : UInt8 = 254
 
 The values of ``someBits`` and ``moreBits`` have different bits set to ``1``.
 The bitwise OR operator combines them to make the number ``11111110``,
 which equals an unsigned decimal of ``254``.
 
-Bitwise XOR
-~~~~~~~~~~~
+.. _Operators_BitwiseXOROperator:
+
+Bitwise XOR Operator
+~~~~~~~~~~~~~~~~~~~~
 
 The :newTerm:`bitwise XOR operator` (``^``) compares the bits of two numbers,
-and returns a new number whose bits are set to ``1`` if the bits are equal to ``1`` in *either* of the input numbers,
-but not if they are set to ``1`` in *both* of the input numbers:
+and returns a new number based on the following rules:
+
+* If a bit is equal to ``1`` in  *either* of the input numbers,
+  but not in *both* of the input numbers,
+  then it should be set to ``1`` in the output number.
+* Otherwise, the bit should be set to ``0``.
 
 .. image:: ../images/bitwiseXOR.png
     :width: 570
@@ -540,21 +653,27 @@ For example:
 
 .. testcode:: bitwiseOperators
 
-    (swift) let firstBits: UInt8 = 0b00010100
+    (swift) val firstBits: UInt8 = 0b00010100
     // firstBits : UInt8 = 20
-    (swift) let otherBits: UInt8 = 0b00000101
+    (swift) val otherBits: UInt8 = 0b00000101
     // otherBits : UInt8 = 5
-    (swift) let outputBits = firstBits ^ otherBits  // equals 00010001
+    (swift) val outputBits = firstBits ^ otherBits  // equals 00010001
     // outputBits : UInt8 = 17
 
 .. TODO: Explain how this can be useful to toggle just a few bits in a bitfield.
+
+.. note::
+
+    “XOR” is pronounced “exclusive OR”.
+
+.. _Operators_BitwiseLeftAndRightShifts:
 
 Bitwise Left and Right Shifts
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The :newTerm:`bitwise left shift operator` (``<<``) and :newTerm:`bitwise right shift operator` (``>>``)
 move all of the bits in a number to the left or the right by a certain number of places,
-as per the rules defined below.
+according to the rules defined below.
 
 Bitwise left and right shifts have the effect of multiplying (or dividing) an integer number by a factor of two.
 Shifting an integer's bits to the left by one position doubles its value,
@@ -562,14 +681,16 @@ whereas shifting it to the right by one position halves its value.
 
 .. TODO: mention the caveats to this claim.
 
-Shifting Behavior For Unsigned Integers
+.. _Operators_ShiftingBehaviorForUnsignedIntegers:
+
+Shifting Behavior for Unsigned Integers
 _______________________________________
 
-The bit-shifting behavior for unsigned integers is:
+The bit-shifting behavior for unsigned integers is as follows:
 
-* Existing bits are moved to the left or right by the requested number of places
-* Any bits that fall off the edge of the integer's storage are discarded
-* Zeroes are inserted in the spaces left behind
+1. Existing bits are moved to the left or right by the requested number of places.
+2. Any bits that fall off the edge of the integer's storage are discarded.
+3. Zeroes are inserted in the spaces left behind.
 
 This approach is known as a :newTerm:`logical shift`.
 
@@ -577,19 +698,19 @@ The illustration below shows the results of ``11111111 << 1``
 (which is ``11111111`` shifted to the left by ``1`` place),
 and ``11111111 >> 1``
 (which is ``11111111`` shifted to the right by ``1`` place).
-Blue numbers have been shifted;
-grey numbers have been discarded;
+Blue numbers have been shifted,
+gray numbers have been discarded,
 and orange zeroes have been inserted:
 
 .. image:: ../images/bitshiftUnsigned.png
     :width: 639
     :align: center
 
-Here's how bit-shifting looks in Swift code:
+Here's how bit shifting looks in Swift code:
 
 .. testcode:: bitwiseShiftOperators
 
-    (swift) let shiftBits: UInt8 = 4    // 00000100 in binary
+    (swift) val shiftBits: UInt8 = 4    // 00000100 in binary
     // shiftBits : UInt8 = 4
     (swift) shiftBits << 1              // 00001000
     // r0 : UInt8 = 8
@@ -600,41 +721,44 @@ Here's how bit-shifting looks in Swift code:
     (swift) shiftBits >> 2              // 00000001
     // r3 : UInt8 = 1
 
-Bit-shifting can be used to encode and decode values within other data types:
+Bit shifting can be used to encode and decode values within other data types:
 
 .. testcode:: bitwiseShiftOperators
 
-    (swift) let pink: UInt32 = 0xCC6699
+    (swift) val pink: UInt32 = 0xCC6699
     // pink : UInt32 = 13395609
-    (swift) let redComponent = (pink & 0xFF0000) >> 16
+    (swift) val redComponent = (pink & 0xFF0000) >> 16
     // redComponent : UInt32 = 204
-    (swift) let greenComponent = (pink & 0x00FF00) >> 8
+    (swift) val greenComponent = (pink & 0x00FF00) >> 8
     // greenComponent : UInt32 = 102
-    (swift) let blueComponent = pink & 0x0000FF
+    (swift) val blueComponent = pink & 0x0000FF
     // blueComponent : UInt32 = 153
 
 This example uses a ``UInt32`` constant called ``pink`` to store a
 Cascading Style Sheets color value for the color pink.
 Here, the CSS color value ``#CC6699`` is written as ``0xCC6699`` in Swift's hexadecimal number representation.
 This color is then decomposed into its red (``CC``), green (``66``) and blue (``99``) components
-using the bitwise AND operator (``&``) and the right-hand bit-shift operator (``>>``).
+using the bitwise AND operator (``&``) and the bitwise right shift operator (``>>``).
 
-The red component is obtained by performing a bitwise AND between the numbers ``0xCC6699`` and ``0xFF0000``.
-The zeroes in ``0xFF0000`` effectively ‘mask’ the second and third bytes of ``0xCC6699``,
-causing the ``6699`` to be ignored, and leaving ``0xCC0000`` as the result.
+The red component is obtained by performing a bitwise AND
+between the numbers ``0xCC6699`` and ``0xFF0000``.
+The zeroes in ``0xFF0000`` effectively “mask” the second and third bytes of ``0xCC6699``,
+causing the ``6699`` to be ignored and leaving ``0xCC0000`` as the result.
 
 This number is then shifted 16 places to the right (``>> 16``).
 Each pair of characters in a hexadecimal number uses 8 bits,
 so a move 16 places to the right will convert ``0xCC0000`` into ``0x0000CC``.
 This is the same as ``0xCC``, which has a decimal value of ``204``.
 
-Similarly, the green component is obtained by ANDing ``0xCC6699`` with ``0x00FF00``,
-which gives an output of ``0x006600``.
-This is then shifted eight places to the right,
+Similarly, the green component is obtained by performing a bitwise AND
+between the numbers ``0xCC6699`` and ``0x00FF00``,
+which gives an output value of ``0x006600``.
+This output value is then shifted eight places to the right,
 giving a a value of ``0x66``, which has a decimal value of ``102``.
 
-Finally, the blue component is obtained by ANDing ``0xCC6699`` with ``0x0000FF``,
-which gives an output of ``0x000099``.
+Finally, the blue component is obtained by performing a bitwise AND
+between the numbers ``0xCC6699`` and ``0x0000FF``,
+which gives an output value of ``0x000099``.
 There's no need to shift this to the right,
 as ``0x000099`` already equals ``0x99``,
 which has a decimal value of ``153``.
@@ -650,12 +774,14 @@ which has a decimal value of ``153``.
    Which is a better example? (I've chosen not to use Int so far,
    as this section is about unsigned shifts.)
 
-Shifting Behavior For Signed Integers
+.. _Operators_ShiftingBehaviorForSignedIntegers:
+
+Shifting Behavior for Signed Integers
 _____________________________________
 
 The shifting behavior is slightly more involved for signed integers,
 due to the way that they are represented in binary.
-(The examples below are based on eight-bit signed integers for simplicity,
+(The examples below are based on 8-bit signed integers for simplicity,
 but the same principles apply for signed integers of any size.)
 
 Signed integers use their first bit (known as the :newTerm:`sign bit`)
@@ -671,7 +797,7 @@ Here's how the bits inside an ``Int8`` look for the number ``4``:
     :width: 388
     :align: center
 
-The sign bit is ``0`` (meaning ‘positive’),
+The sign bit is ``0`` (meaning “positive”),
 and the seven value bits are just the number ``4``,
 written in binary notation.
 
@@ -687,7 +813,7 @@ Here's how the bits inside an ``Int8`` look for the number ``-4``:
     :width: 388
     :align: center
 
-This time, the sign bit is ``1`` (meaning ‘negative’),
+This time, the sign bit is ``1`` (meaning “negative”),
 and the seven value bits actually have a binary value of ``124`` (which is ``128 - 4``):
 
 .. image:: ../images/bitshiftSignedMinusFourValue.png
@@ -716,7 +842,7 @@ To achieve this, an extra rule is used when shifting signed integers to the righ
 * When shifting to the right,
   apply the same rules as for unsigned integers,
   but fill any empty bits on the left with the *sign bit*,
-  rather than with a zero
+  rather than with a zero.
 
 .. image:: ../images/bitshiftSigned.png
     :width: 639
@@ -730,6 +856,8 @@ shifting either of them to the right has the effect of moving them closer to zer
 Keeping the sign bit the same during this shift means that
 negative integers remain negative as their value moves closer to zero.
 
+.. _Operators_OverflowOperators:
+
 Overflow Operators
 ------------------
 
@@ -742,7 +870,7 @@ an error is thrown:
 
 .. testcode:: overflowOperatorsWillFailToOverflow
 
-    (swift) var potentialOverflow = Int16.max()
+    (swift) var potentialOverflow = Int16.max
     // potentialOverflow : Int16 = 32767
     (swift) potentialOverflow += 1                  // this will throw an error
     xxx overflow
@@ -767,11 +895,13 @@ These operators all begin with an ampersand (``&``):
 * Overflow division (``&/``)
 * Overflow modulo (``&%``)
 
+.. _Operators_ValueOverflow:
+
 Value Overflow
 ~~~~~~~~~~~~~~
 
 Here's an example of what happens when an unsigned value is allowed to overflow,
-using the overflow addition operator ``&+``:
+using the overflow addition operator (``&+``):
 
 .. testcode:: overflowOperatorsWillOverflow
 
@@ -783,7 +913,7 @@ using the overflow addition operator ``&+``:
 
 Here, the variable ``willOverflow`` is initialized with the largest value a ``UInt8`` can hold
 (``255``, or ``11111111`` in binary).
-It is then incremented by ``1`` using the overflow addition operator, ``&+``.
+It is then incremented by ``1`` using the overflow addition operator (``&+``).
 This pushes its binary representation just over the size that a ``UInt8`` can hold,
 causing it to overflow beyond its bounds,
 as shown in the diagram below.
@@ -792,6 +922,8 @@ The value that remains within the bounds of the ``UInt8`` after the overflow add
 .. image:: ../images/overflowAddition.png
     :width: 390
     :align: center
+
+.. _Operators_ValueUnderflow:
 
 Value Underflow
 ~~~~~~~~~~~~~~~
@@ -819,7 +951,7 @@ Here's how that looks in Swift code:
     >>> willUnderflow is now 255
 
 A similar underflow happens for signed integers.
-As described under `Bitwise Left and Right Shifts`_,
+As described under :ref:`Operators_BitwiseLeftAndRightShifts`,
 all subtraction for signed integers is performed as straight binary subtraction,
 with the sign bit included as part of the numbers being subtracted.
 The smallest number that an ``Int8`` can hold is ``-128``,
@@ -846,6 +978,8 @@ The end result of the overflow and underflow behavior described above is that fo
 overflow always wraps around from the largest valid integer value back to the smallest,
 and underflow always wraps around from the smallest value to the largest.
 
+.. _Operators_DivisionByZero:
+
 Division by Zero
 ~~~~~~~~~~~~~~~~
 
@@ -855,9 +989,9 @@ Swift will throw an error:
 
 .. testcode:: overflowOperatorsDivZeroError
 
-    (swift) let x = 1
+    (swift) val x = 1
     // x : Int = 1
-    (swift) let y = x / 0
+    (swift) val y = x / 0
     xxx division by zero
  
 Integer division by zero is not a valid mathematical action,
@@ -871,21 +1005,25 @@ and so Swift throws an error rather than creating an invalid value.
    rather than a stack trace,
    once rdar://15804939 has been fixed.
 
+.. _Operators_LogicalOperators:
+
 Logical Operators
 -----------------
 
 .. TODO: write an introduction to this section.
 
-Logical NOT
-~~~~~~~~~~~
+.. _Operators_LogicalNOTOperator:
 
-The :newTerm:`logical NOT operator` (``!a``) inverts a boolean value so that ``true`` becomes ``false``,
+Logical NOT Operator
+~~~~~~~~~~~~~~~~~~~~
+
+The :newTerm:`logical NOT operator` (``!a``) inverts a Boolean value so that ``true`` becomes ``false``,
 and ``false`` becomes ``true``.
 It can be read as “not ``a``”, as seen in the following example:
 
 .. testcode:: logicalOperators
 
-    (swift) let allowedEntry = false
+    (swift) val allowedEntry = false
     // allowedEntry : Bool = false
     (swift) if !allowedEntry {
         println("ACCESS DENIED")
@@ -897,12 +1035,14 @@ The subsequent line is only executed if “not allowed entry” is true,
 i.e. if ``allowedEntry`` is ``false``.
 
 As in this example,
-careful choice of boolean constant and variable names
+careful choice of Boolean constant and variable names
 can help to keep code readable and concise,
 while avoiding double negatives or confusing logic statements.
 
-Logical AND
-~~~~~~~~~~~
+.. _Operators_LogicalANDOperator:
+
+Logical AND Operator
+~~~~~~~~~~~~~~~~~~~~
 
 The :newTerm:`logical AND operator` (``&&``) is used to create logical expressions
 where both values must be ``true`` for the overall expression to also be ``true``.
@@ -912,9 +1052,9 @@ and only allows access if both values are ``true``:
 
 .. testcode:: logicalOperators
 
-    (swift) let enteredDoorCode = true
+    (swift) val enteredDoorCode = true
     // enteredDoorCode : Bool = true
-    (swift) let passedRetinaScan = false
+    (swift) val passedRetinaScan = false
     // passedRetinaScan : Bool = false
     (swift) if enteredDoorCode && passedRetinaScan {
         println("Welcome!")
@@ -931,8 +1071,10 @@ the second value won't even be checked,
 because it can't possibly make the overall expression equal ``true``.
 This is known as *short-circuit evaluation*.
 
-Logical OR
-~~~~~~~~~~
+.. _Operators_LogicalOROperator:
+
+Logical OR Operator
+~~~~~~~~~~~~~~~~~~~
 
 The :newTerm:`logical OR operator` (``||``, i.e. two adjacent pipe characters)
 is used to create logical expressions where only *one* of the two values has to be ``true``
@@ -941,9 +1083,9 @@ For example:
 
 .. testcode:: logicalOperators
 
-    (swift) let hasDoorKey = false
+    (swift) val hasDoorKey = false
     // hasDoorKey : Bool = false
-    (swift) let knowsOverridePassword = true
+    (swift) val knowsOverridePassword = true
     // knowsOverridePassword : Bool = true
     (swift) if hasDoorKey || knowsOverridePassword {
         println("Welcome!")
@@ -962,6 +1104,8 @@ and access is allowed.
 Note that if the left-hand side of an OR expression is ``true``,
 the right-hand side will not be evaluated,
 because it cannot change the outcome of the overall expression.
+
+.. _Operators_CombiningLogicalOperators:
 
 Combining Logical Operators
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -992,16 +1136,16 @@ the first two mini-expressions are ``false``,
 but we know the emergency override password,
 so the overall compound expression still equates to ``true``.
 
-Priority and Associativity
---------------------------
+.. _Operators_PrecedenceAndAssociativity:
 
-.. NOTE: I've chosen to use ‘priority’ rather than ‘precedence’ here,
-   because I think it's a clearer phrase to use.
-.. QUESTION: Could priority and associativity be made clear
-   as part of the hypothetical ‘show invisibles’ feature,
-   to show the invisible parentheses implied by priority and associativity?
+Precedence and Associativity
+----------------------------
 
-It is important to consider each operator's :newTerm:`priority` and :newTerm:`associativity` when working out how to calculate a compound expression.
+.. QUESTION: Could precedence and associativity be made clear
+   as part of the hypothetical “show invisibles” feature,
+   to show the invisible parentheses implied by precedence and associativity?
+
+It is important to consider each operator's :newTerm:`precedence` and :newTerm:`associativity` when working out how to calculate a compound expression.
 These two principles are used to work out the order in which an expression should be calculated.
 
 Here's an example.
@@ -1021,24 +1165,25 @@ Taken strictly from left to right, you might expect this to read as follows:
 However, the actual answer is ``4``, not ``0``.
 This is due to the priorities and associativity of the operators used:
 
-* Operator :newTerm:`priority` (also known as :newTerm:`precedence`) means that
-  some operators are given higher priority than others,
+* Operator :newTerm:`precedence` (also known as :newTerm:`priority`) means that
+  some operators are given more precedence than others,
   and are calculated first.
 
-* Operator :newTerm:`associativity` defines how operators of the same priority are grouped together (or :newTerm:`associated`) –
+* Operator :newTerm:`associativity` defines how operators of the same precedence
+  are grouped together (or :newTerm:`associated`) –
   either grouped from the left, or grouped from the right.
-  Think of it as meaning ‘they associate with the expression to their left’,
-  or ‘they associate with the expression to their right’.
+  Think of it as meaning “they associate with the expression to their left”,
+  or “they associate with the expression to their right”.
 
 Here's how the actual evaluation order is calculated for the example above.
-Priority is considered first.
-Higher-priority operators are evaluated before lower-priority ones.
+Precedence is considered first.
+Higher-precedence operators are evaluated before lower-precedence ones.
 In Swift, as in C,
 the multiplication operator (``*``) and the modulo operator (``%``)
-have a higher priority than the addition operator (``+``).
+have a higher precedence than the addition operator (``+``).
 As a result, they are both evaluated before the addition is considered.
 
-However, multiplication and modulo happen to have the *same* priority as each other.
+However, multiplication and modulo happen to have the *same* precedence as each other.
 To work out the exact evaluation order to use,
 we therefore need to also look at their associativity.
 Multiplication and modulo both associate with the expression to their left.
@@ -1066,12 +1211,16 @@ starting from their left:
 
 This gives the final answer of ``4``.
 
-A complete list of Swift operator priorities and associativity rules can be found in the :doc:`../ReferenceManual/index`.
+A complete list of Swift operator precedences and associativity rules can be found in the :doc:`../ReferenceManual/index`.
+
+.. TODO: update this link to go to the specific section of the Reference Manual.
+
+.. _Operators_Explicit Parentheses:
 
 Explicit Parentheses
 ~~~~~~~~~~~~~~~~~~~~
 
-Priority and associativity define exactly one order of calculation
+Precedence and associativity define exactly one order of calculation
 when multiple operators are used.
 However, it can sometimes be useful to include parentheses anyway,
 to make the intention of a complex expression easier to read.
@@ -1093,42 +1242,6 @@ The output of the compound expression doesn't change,
 but the overall intention is clearer to the reader.
 Readability is always preferred over brevity;
 use parentheses where they help to make your intentions clear.
-
-Range Operator
---------------
-
-Swift includes a :newTerm:`range operator`,
-which provides a shorthand way to express a range of values.
-The range operator ``a..b`` defines a range that runs from ``a`` to ``b``,
-but does not include ``b``.
-For this reason, it is said to be :newTerm:`half-closed`.
-
-The range operator is particularly useful when working with zero-based lists,
-for counting up to (but not including) the length of a zero-based array:
-
-.. testcode:: rangeOperators
-
-    (swift) let names = ["Anna", "Brian", "Christine", "Daniel"]
-    // names : String[] = ["Anna", "Brian", "Christine", "Daniel"]
-    (swift) let count = names.count
-    // count : Int = 4
-    (swift) for i in 0..count {
-        println("Person \(i + 1) is called \(names[i])")
-    }
-    >>> Person 1 is called Anna
-    >>> Person 2 is called Brian
-    >>> Person 3 is called Christine
-    >>> Person 4 is called Daniel
-
-Note that the array contains ``4`` items,
-but ``0..count`` only counts as far as ``3``
-(the index of the last item in the array),
-because it is a half-closed range.
-
-.. QUESTION: Should these appear here, or in Control Flow?
-.. NOTE: Ranges have handy functions
-   (well, specifically IntGeneratorType and DoubleGeneratorType at present)
-   such as reverse(), contains() and by() - where should these be mentioned?
 
 .. refnote:: References
 

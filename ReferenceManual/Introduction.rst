@@ -1,9 +1,11 @@
 Introduction
 ============
 
-[The content of this chapter is still being written.]
-
 This part of the book describes the grammar of the Swift programming language.
+
+.. write-me::
+
+.. _Introduction_NotationalConventions:
 
 Notational Conventions
 ----------------------
@@ -32,12 +34,3 @@ followed by an optional *setter*, enclosed in braces,
 *or* a *setter* followed by a *getter*, enclosed in braces.
 
 .. TODO: Describe the notation and conventions found throughout the reference manual.
-
-
-Phases of Translation
----------------------
-
-Swift has a strict separation between its phases of translation,
-and the compiler follows a conceptually simple design.
-
-.. TODO: Come up with a way to write this in a user-friendly way.

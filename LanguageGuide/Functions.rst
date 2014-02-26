@@ -14,7 +14,9 @@ Functions
 
 :newTerm:`Functions` are self-contained chunks of code that perform a specific task.
 Every function is given a name to identify what it does,
-and this name is used to ‘call’ the function to perform its task when needed.
+and this name is used to “call” the function to perform its task when needed.
+
+.. _Functions_FunctionDeclarations:
 
 Function Declarations
 ---------------------
@@ -49,7 +51,7 @@ This makes it easy for the function to be called from elsewhere in your code in 
 .. testcode:: functionDeclaration
 
     (swift) func sayHello(personName: String) -> String {
-        let greeting = "Hello, " + personName + "!"
+        val greeting = "Hello, " + personName + "!"
         return greeting
     }
     (swift) println(sayHello("Anna"))
@@ -92,11 +94,11 @@ to combine the message creation and the return statement into one line:
     Try calling this function with your own name.
     Once you've done that,
     see what happens if you change the message to a different greeting.
-    
+
     Try using this function to say hello to a friend instead.
     You could use an ``if else`` statement to make it reply with a special greeting when it recognizes your name,
     and a different greeting for everyone else.
-    
+
     What about if you pass in a second input parameter (also a ``String``),
     called ``birthdayType``?
     (You can separate multiple input parameters with a comma.)
@@ -104,7 +106,7 @@ to combine the message creation and the return statement into one line:
     such as ``12th`` or ``21st``.
     Can you make a function called ``sayHappyBirthday``,
     and use it to wish somebody called ``Peter`` a happy ``40th`` birthday?
-    
+
     For bonus points,
     make this new second parameter be an ``Int`` called ``age``
     (rather than a ``String`` called ``birthdayType``),
@@ -113,6 +115,8 @@ to combine the message creation and the return statement into one line:
     (as in ``1st``, ``2nd``, ``3rd`` or ``4th``)
     on the end.
     Can you get it to work for any value of ``age``?
+
+.. _Functions_MultipleInputParameters:
 
 Multiple Input Parameters
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -129,14 +133,16 @@ and works out how many elements the range contains:
     (swift) println(halfOpenRangeLength(1, 10))
     >>> 9
 
-Tuples As Input Parameters
+.. _Functions_TuplesAsInputParameters:
+
+Tuples as Input Parameters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Any type of value can be used as an input parameter for a function,
 if it is declared appropriately.
 For example, the range function above can be rewritten to take a tuple of two ``Int`` values:
 
-.. QUESTION: Is my use of ‘any’ technically correct here?
+.. QUESTION: Is my use of “any” technically correct here?
    Is there some type that cannot be passed to a function?
 
 .. testcode:: functionParameters
@@ -144,7 +150,7 @@ For example, the range function above can be rewritten to take a tuple of two ``
     (swift) func halfOpenRangeLengthForRange(range: (Int, Int)) -> Int {
         return range.1 - range.0
     }
-    (swift) var someRange = (1, 10)
+    (swift) val someRange = (1, 10)
     // someRange : (Int, Int) = (1, 10)
     (swift) println(halfOpenRangeLengthForRange(someRange))
     >>> 9
@@ -157,6 +163,8 @@ This function can be passed any tuple of type ``(Int, Int)`` –
 such as ``(1, 10)`` in the example above –
 and it will calculate the half-open range length for that tuple.
 
+.. _Functions_TuplesAsReturnValues:
+
 Tuples as Return Values
 ~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -166,9 +174,10 @@ This enables a function to return a combination of values as part of one compoun
 .. testcode:: functionParameters
 
     (swift) func splitOnFirst(string: String, splitter: UnicodeScalar) -> (String, String?) {
-        for i in 0..string.length {
+        val size = string.size()
+        for i in 0...size {
             if string[i] == splitter {
-                return (string[0..i], string[i+1..string.length])
+                return (string[0...i], string[i+1...size])
             }
         }
         return (string, .None)
@@ -193,12 +202,14 @@ and a value of ``.None`` in its second value to indicate that ``splitter`` was n
 
 .. testcode:: functionParameters
 
-    (swift) let helloWorld = splitOnFirst("hello world", ' ')
+    (swift) val helloWorld = splitOnFirst("hello world", ' ')
     // helloWorld : (String, String?) = ("hello", <unprintable value>)
-    (swift) if helloWorld.1 {
-        println("The text from after the splitter is '\(helloWorld.1!)'")
+    (swift) if val secondPart = helloWorld.1 {
+        println("The text from after the splitter is '\(secondPart)'")
     }
     >>> The text from after the splitter is 'world'
+
+.. _Functions_ParameterNames:
 
 Parameter Names
 ~~~~~~~~~~~~~~~
@@ -217,7 +228,7 @@ and also enables values to be passed in a different order to the original functi
         }
         return false
     }
-    (swift) let containsASpace = containsCharacter(
+    (swift) val containsASpace = containsCharacter(
         characterToFind: ' ',
         stringToSearch: "This will return true")
     // containsASpace : Bool = true
@@ -241,8 +252,10 @@ the passed parameters are assumed to be in the order they were originally declar
 
 .. testcode:: functionParameters
 
-    (swift) let containsAHyphen = containsCharacter("This will return false", '-')
+    (swift) val containsAHyphen = containsCharacter("This will return false", '-')
     // containsAHyphen : Bool = false
+
+.. _Functions_DefaultParameterValues:
 
 Default Parameter Values
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -319,6 +332,8 @@ to ensure that your intentions are clearly expressed in your code.
    the principle of putting variadic parameters last,
    and also the principle of putting closure parameters last?
 
+.. _Functions_NonMandatoryParametersAndReturnValues:
+
 Non-Mandatory Parameters and Return Values
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -370,7 +385,7 @@ The return value of a function can be ignored when it is called:
 
     (swift) func printAndCount(stringToPrint: String) -> Int {
         println(stringToPrint)
-        return stringToPrint.length
+        return stringToPrint.size()
     }
     (swift) func printWithoutCounting(stringToPrint: String) {
         printAndCount(stringToPrint)
@@ -384,7 +399,7 @@ The return value of a function can be ignored when it is called:
 The first function,
 ``printAndCount``,
 prints a string,
-and then returns its length as an ``Int``.
+and then returns its character count as an ``Int``.
 The second function,
 ``printWithoutCounting``,
 calls the first function,
@@ -398,6 +413,8 @@ but a function that says it will return a value must always do so.
 A function with a declared return type must
 never allow control to fall out of the bottom of the function
 without returning a value.
+
+.. _Functions_ConstantAndVariableParameters:
 
 Constant and Variable Parameters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -422,16 +439,16 @@ Variable parameters are declared by prefixing the parameter name with the keywor
 
 .. testcode:: functionParameters
 
-    (swift) func alignRight(var string: String, length: Int, pad: UnicodeScalar) -> String {
-        let amountToPad = length - string.length
-        for _ in 0..amountToPad {
+    (swift) func alignRight(var string: String, count: Int, pad: UnicodeScalar) -> String {
+        val amountToPad = count - string.size()
+        for _ in 0...amountToPad {
             string = pad + string
         }
         return string
     }
-    (swift) let originalString = "hello"
+    (swift) val originalString = "hello"
     // originalString : String = "hello"
-    (swift) let paddedString = alignRight(originalString, 10, '-')
+    (swift) val paddedString = alignRight(originalString, 10, '-')
     // paddedString : String = "-----hello"
     (swift) println("The original string is still '\(originalString)'")
     >>> The original string is still 'hello'
@@ -446,8 +463,8 @@ This means that ``string`` is now available as a local variable,
 initialized with the passed-in string value,
 and can be manipulated within the body of the function.
 
-The function starts by working out how many characters need to be added to the left of the string
-in order to right-align it within the overall ``length``.
+The function starts by working out how many characters need to be added to the left of ``string``
+in order to right-align it within the overall string.
 This value is stored in a local constant called ``amountToPad``.
 The function then adds ``amountToPad`` copies of the ``pad`` character to the left of the existing string,
 and returns the result.
@@ -459,6 +476,8 @@ It uses the ``string`` variable parameter for all of its string manipulation.
     persist beyond the end of each call to the function,
     and are not visible outside of the function's body.
     The variable parameter only exists for the lifetime of that function call.
+
+.. _Functions_VariadicParameters:
 
 Variadic Parameters
 ~~~~~~~~~~~~~~~~~~~
@@ -489,7 +508,7 @@ a variadic parameter can be used with the ``for``-``in`` statement
 to iterate through the list of values represented by the parameter.
 Variadic parameters automatically conform to the ``Sequence`` protocol,
 and can be used anywhere that a ``Sequence`` is valid.
-(Protocols such as ``Sequence`` are covered in more detail in :doc:`ProtocolsAndExtensions`.)
+(Protocols such as ``Sequence`` are covered in more detail in :doc:`Protocols`.)
 
 .. note::
 
@@ -497,31 +516,116 @@ and can be used anywhere that a ``Sequence`` is valid.
     and it must always appear last in the parameters list,
     to avoid ambiguity when calling the function with multiple parameters.
 
+.. _Functions_SelectorStyleFunctionDeclarations:
+
 Selector-Style Function Declarations
 ------------------------------------
 
-Swift actually supports *two* different styles of function declaration.
-All of the examples so far have used the first style,
-known as *function-style* declaration.
-This follows the C approach
-of putting all of the parameters inside one set of parentheses
+All of the examples so far have used a declaration syntax known as
+:newTerm:`function-style declaration`.
+This follows the C approach of
+putting all of the parameters inside one set of parentheses
 immediately after the function name.
 
-The second style,
-known as *selector-style* declaration,
-follows a similar style to Objective-C messaging.
-Each parameter has its own set of parentheses,
-and the function's name is split into multiple parts
-if it has more than one parameter.
+In addition to function-style declarations,
+Swift also supports a second declaration syntax known as
+:newTerm:`selector-style declaration`.
+This syntax follows a similar style to Objective-C messaging.
+The function name is written as a series of separate :newTerm:`selector parts`.
+Each selector part has a corresponding parameter name and type,
+and has its own set of parentheses when declared.
 
-[to be written]
+Here's how the string-joining function from above could be written
+as a selector-style declaration:
+
+.. testcode:: selectorStyle
+
+    (swift) func joinString(string1: String) toString(string2: String)
+        withJoiner(joiner: String = " ") -> String
+    {
+        return string1 + joiner + string2
+    }
+
+``joinString``, ``toString`` and ``withJoiner`` are the selector parts;
+``string1``, ``string2`` and ``joiner`` are the parameter names;
+and all three parameters have a type of ``String``.
+
+.. note::
+
+    The parameter names are not used when calling the function.
+    They are only used within the function's declaration.
+
+Selector-style syntax lends itself to expressive function declarations,
+which can be written and read as sentences for ease of comprehension.
+The use of prepositions such as “to” and “with” is not mandatory,
+but is encouraged where it aids readability.
+
+Selector-style functions are called by placing the first selector part
+outside a set of parentheses, and their second and subsequent selector parts
+inside the parentheses, separated by commas.
+Each selector part within the parentheses is separated from its parameter value
+by a colon:
+
+.. testcode:: selectorStyle
+
+    (swift) joinString("hello", toString: "world", withJoiner: ":")
+    // r0 : String = "hello:world"
+
+As before, any parameters with default values can be excluded when the function is called:
+
+.. testcode:: selectorStyle
+
+    (swift) joinString("hello", toString: "world")
+    // r1 : String = "hello world"
+
+If a parameter name is omitted from a selector-style declaration,
+the parameter is automatically given the same name as its selector part.
+Default values are still allowed:
+
+.. testcode:: selectorStyle
+
+    (swift) func columnize(String) backwards(Bool = false) -> String {
+        var output = ""
+        for character in columnize.chars {
+            if backwards {
+                output = character + '\n' + output
+            } else {
+                output += character + '\n'
+            }
+        }
+        return output
+    }
+    (swift) print(columnize("abc"))
+    >>> a
+    >>> b
+    >>> c
+    (swift) print(columnize("abc", backwards: true))
+    >>> c
+    >>> b
+    >>> a
+
+This example takes an input string,
+and prints each of its characters on a separate line in a column.
+The first selector part, ``columnize``,
+is also used as the name of the string to be converted into a column.
+Likewise, the second selector part, ``backwards``,
+is also used as the name of the Boolean indicator of whether the string
+should be converted into a column of characters in reverse order.
+
+Note that this example calls ``print()`` rather than ``println()``
+to print its output, as the ``output`` string already has a line break
+at the end of the returned string.
+
+.. TODO: It is not currently possible to use variadic parameters with selector-style declarations,
+   but this is an intended addition as part of the revision of selector-style syntax.
+   This is tracked as rdar://16030076, and this section should be updated
+   once it is implemented.
 
 .. variables can be set to functions, and then called e.g. var fork = g.fork; fork() .
 .. functions can be passed in as parameters, and can be returned as return values
 .. functions are just a really special non-capturing version of closures
 .. inout properties and a general discussion of byref / byvalue
 .. pass a tuple as the entire set of arguments, as in var argTuple = (0, "one", '2'); x.foo:bar:bas:(argTuple)
-.. parameters are immutable by default, and do not implicitly create shadow variables
 
 .. refnote:: References
 
