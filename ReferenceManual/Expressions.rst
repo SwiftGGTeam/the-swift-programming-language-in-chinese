@@ -129,6 +129,10 @@ If the *condition* evaluates to ``true``,
 the conditional operator evaluates to the value of the first expression.
 Otherwise, it evaluates to the value of the second expression.
 
+.. The REPL v1-28 allows nesting such as true ? false ? 10 : 20 : 2
+   which parses as true ? (false ? 10 : 20) : 2 -- the parens are optional --
+   but that's a really bad idea if you want your code to be readable.
+
 .. langref-grammar
 
     op-binary-or-ternary ::= '?'-infix expr-sequence ':'
@@ -138,9 +142,6 @@ Otherwise, it evaluates to the value of the second expression.
     Grammar of a conditional operator
 
     conditional-operator --> ``?`` expression-sequence ``:``
-
-.. TODO: Discuss in prose that '?' is being used as an infix operator in this context.
-    In additional, there must be whitespace on both sides of '?' and ':'.
 
 .. _Expressions_Type-CastingOperators:
 
