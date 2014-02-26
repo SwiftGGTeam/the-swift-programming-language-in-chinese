@@ -50,7 +50,7 @@ Protocols are covered in the :doc:`Protocols` chapter, and extensions are covere
 In addition, classes have several capabilities that structures do not:
 
 * :newTerm:`inheritance`, which enables one class to inherit the characteristics of another;
-* :newTerm:`deinitializers`, which enable an instance of a class to tidy up after itself; and
+* :newTerm:`deinitializers`, which enable an instance of a class to clean up after itself; and
 * :newTerm:`type casting`, which enables you to check and interpret the type of a class instance at runtime
 
 All of these capabilities are described in more detail below.
