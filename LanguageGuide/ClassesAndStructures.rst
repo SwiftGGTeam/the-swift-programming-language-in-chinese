@@ -1719,7 +1719,7 @@ For example, if you create a custom class to open a file and write some data to 
 you might need to close the file when the class instance is destroyed.
 
 Class definitions can have at most one destructor per class.
-The method does not take any parameters, and is called automatically when an instance is destroyed.
+The destructor does not take any parameters, and is called automatically when an instance is destroyed.
 Superclass destructors are automatically inherited by their subclasses,
 and the superclass destructor is called automatically at the end of a subclass destructor implementation.
 You are not allowed to call ``super.destructor()`` yourself.
