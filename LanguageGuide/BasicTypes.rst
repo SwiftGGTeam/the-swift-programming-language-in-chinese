@@ -198,6 +198,11 @@ in that an 8-bit unsigned integer is of type ``UInt8``,
 and a 32-bit signed integer is of type ``Int32``.
 Like all types in Swift, these integer types have capitalized names.
 
+.. _BasicTypes_Int:
+
+Int
+~~~
+
 In most cases, there's no need to pick a specific size of integer to use in your code.
 Swift provides an additional integer type, ``Int``,
 which has the same size as the current platform's architecture:
@@ -228,7 +233,7 @@ Swift provides two signed floating-point number types:
 .. _BasicTypes_TypeSafetyAndTypeInference:
 
 Type Safety and Type Inference
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------
 
 Swift is a :newTerm:`type safe` language.
 This means that it encourages you to be clear about the types of values and objects your code can work with.
@@ -294,7 +299,7 @@ from the presence of a floating-point literal as part of the addition.
 .. _BasicTypes_NumericLiterals:
 
 Numeric Literals
-~~~~~~~~~~~~~~~~
+----------------
 
 Integer literals can be written as any of the following:
 
@@ -367,7 +372,7 @@ The actual value of ``justOverOneMillion`` still has all of the precision of the
 .. _BasicTypes_NumericTypeConversion:
 
 Numeric Type Conversion
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 The ``Int`` type should be used for all general-purpose integer named values in your code,
 even if they are known to be nonnegative.
@@ -382,10 +387,28 @@ Using explicitly-sized types in these situations
 helps to catch any accidental value overflows
 and implicitly documents the nature of the data being used.
 
+.. _BasicTypes_IntegerBounds:
+
+Integer Bounds
+~~~~~~~~~~~~~~
+
+The minimum and maximum values of each integer type can be accessed using its ``min`` and ``max`` properties:
+
+.. testcode:: namedValues
+
+    (swift) let minimumValue = UInt8.min
+    // minimumValue : UInt8 = 0
+    (swift) let maximumValue = UInt8.max
+    // maximumValue : UInt8 = 255
+
+The values of these properties are of the appropriate sized number type
+(such as ``UInt8`` in the example above)
+and can therefore be used in expressions alongside other values of the same type.
+
 .. _BasicTypes_IntegerConversion:
 
 Integer Conversion
-__________________
+~~~~~~~~~~~~~~~~~~
 
 The range of numbers that can be stored in an integer named value
 is different for each numeric type.
@@ -438,7 +461,7 @@ is covered in :doc:`Extensions`.
 .. _BasicTypes_IntegerToFloatingPointConversion:
 
 Integer to Floating-Point Conversion
-____________________________________
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Conversions between integer and floating-point numeric types must also be made explicit:
 
@@ -469,24 +492,6 @@ Their type is inferred only at the point that they are evaluated by the compiler
 .. NOTE: this section on explicit conversions could be included in the Operators section.
    I think it's more appropriate here, however,
    and helps to reinforce the “just use Int” message.
-
-.. _BasicTypes_NumericBounds:
-
-Numeric Bounds
-~~~~~~~~~~~~~~
-
-The minimum and maximum values of each integer type can be accessed using its ``min`` and ``max`` properties:
-
-.. testcode:: namedValues
-
-    (swift) let minimumValue = UInt8.min
-    // minimumValue : UInt8 = 0
-    (swift) let maximumValue = UInt8.max
-    // maximumValue : UInt8 = 255
-
-The values of these properties are of the appropriate sized number type
-(such as ``UInt8`` in the example above)
-and can therefore be used in expressions alongside other values of the same type.
 
 .. _BasicTypes_Booleans:
 
