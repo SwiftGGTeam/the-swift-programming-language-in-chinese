@@ -174,6 +174,64 @@ Otherwise, it evaluates to the value of the second expression.
 Type-Casting Operators
 ++++++++++++++++++++++
 
+.. TODO: The "is" operator isn't really a type *cast*
+   it's more of a type *check*.
+   Try to tweak this heading.
+
+There are two type-casting operators,
+the ``is`` operator and the ``as`` operator.
+They have the following form:
+
+.. syntax-outline::
+
+   <#variable#> as <#type>
+   <#variable#> is <#type>
+
+The ``is`` operator checks at runtime
+whether the value of its left-hand argument
+has the type specified by its right-hand argument
+or one of its subtypes.
+If so, it returns ``true``; otherwise, it returs ``false``.
+
+The ``as`` operator converts the value of its left-hand argument
+to be of the type specified by its right-hand argument.
+If it is guaranteed the value can be converted to the type,
+the value returned is of the specified type;
+otherwise, the value returned is an optional type.
+In the case of an optional type,
+the cast operator returns ``.None`` if the runtime cast fails.
+For example: ::
+
+    let x = SomeType()
+
+    let y = x as SomeSuperType()
+    // The type of y is SomeSuperType because casting to a supertype always succeeds.
+
+    let z = x as AnotherType()
+    // The type of z is AnotherType? because the cast could fail at runtime.
+
+.. TODO: List the exact rules for when a type cast
+   is guaranteed to suceed.
+
+.. TODO: Contrast explicit "as" casts with implicit casts
+   that happen because of a function call or type annotation.
+
+.. [Contributor 6004] wrote on Feb 24, 2014 in swift-discuss@group.apple.com
+
+    If the compiler isn't sure whether the coercion will succeed, it gives
+    you a 'Foo?' instead—an Optional Foo.
+
+    someNSResponder as NSWindow
+    disks.objectAtIndex(row) as SKDisk
+
+    However, both function calls and variable type annotations provide the same
+    sort of type context as an explicit coercion using "as", so the most
+    concise way to write this is as follows:
+
+    var aDisk: SKDisk = disks.objectAtIndex(row)!
+    useDisk(disks.objectAtIndex(row)!)
+
+
 .. langref-grammar
 
     expr-cast ::= 'is' type
