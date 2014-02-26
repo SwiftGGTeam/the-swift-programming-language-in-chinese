@@ -736,11 +736,33 @@ Initializer Declaration
 Deinitializer Declaration
 -------------------------
 
+A deinitializer declaration declares a deinitializer for a class type.
+Deinitializers are special instance methods that take no parameters
+and have the following form:
+
 .. syntax-outline::
 
     deinit() {
         <#statements#>
     }
+
+A deinitializer is called automatically when there are no longer any references
+to a class object, just before the class object is destroyed.
+They can be declared only in the body of a class declaration---
+but not in an extension of a class---
+and each class can have at most one.
+
+A subclass inherits its superclass's deinitializer,
+which is implicitly called just before the subclass object is destroyed.
+The subclass object is not destroyed until all deinitializers in its inheritance chain
+have finished executing. As a result,
+deinitializers in that inheritance chain can access the properties of the subclass object.
+
+Deinitializers are not called directly.
+
+For an example of how to use a deinitializer in a class declaration,
+see :ref:`ClassesAndStructures_Deinitializers`.
+
 
 .. langref-grammar
 
