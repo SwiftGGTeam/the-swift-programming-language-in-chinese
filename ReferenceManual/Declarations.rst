@@ -755,8 +755,7 @@ and each class can have at most one.
 A subclass inherits its superclass's deinitializer,
 which is implicitly called just before the subclass object is destroyed.
 The subclass object is not destroyed until all deinitializers in its inheritance chain
-have finished executing. As a result,
-deinitializers in that inheritance chain can access the properties of the subclass object.
+have finished executing.
 
 Deinitializers are not called directly.
 
