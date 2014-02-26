@@ -15,7 +15,7 @@ Declarations
     decl ::= decl-struct
     decl ::= decl-typealias
     decl ::= decl-var
-    decl ::= decl-val
+    decl ::= decl-let
     decl ::= decl-subscript
 
 .. syntax-grammar::
@@ -24,7 +24,7 @@ Declarations
 
     declaration --> import-declaration
     declaration --> variable-declaration
-    declaration --> value-declaration
+    declaration --> let-declaration
     declaration --> typealias-declaration
     declaration --> function-declaration
     declaration --> enum-declaration
@@ -230,6 +230,7 @@ Variable Declaration
 
 .. TODO: Update the grammar for getter/setters/didSet/willSet.
     See: <rdar://problem/15966905> [Craig feedback] Consider "juxtaposed" brace enclosed property syntax
+
 
 .. _Declarations_TypealiasDeclaration:
 

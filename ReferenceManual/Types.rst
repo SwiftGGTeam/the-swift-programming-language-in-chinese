@@ -507,9 +507,9 @@ In the following example, for instance,
 the explicit type annotation (``: Float``) on the constant ``eFloat``
 causes the numeric literal ``2.71828`` to have type ``Float`` instead of type ``Double``.::
 
-    val e = 2.71828
+    let e = 2.71828
     // e : Double = 2.71828
-    val eFloat : Float = 2.71828
+    let eFloat : Float = 2.71828
     // eFloat : Float = 2.71828
 
 Type inference in Swift operates at the level of a single expression or statement.

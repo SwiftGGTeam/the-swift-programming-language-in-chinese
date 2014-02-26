@@ -258,19 +258,20 @@ The following keywords are reserved and may not be used as identifiers.
 *Keywords used in declarations and types*:
 
 ``class``
-``destructor``
+``deinit``
 ``enum``
 ``extension``
 ``func``
 ``import``
 ``init``
+``let``
 ``metatype``
 ``protocol``
+``static``
 ``struct``
 ``subscript``
 ``type``
 ``typealias``
-``val``
 ``var``
 ``where``
 
@@ -301,14 +302,6 @@ The following keywords are reserved and may not be used as identifiers.
    by extracting the code-voice literals from production rules
    rather than maintaining them by hand.
 
-.. TR: Are 'operator', 'associativity', and 'precedence' reserved keywords?
-    For instance, in operators.swift, we find the following example:
-    operator infix ++++ {
-        precedence 195
-        associativity left
-    }
-    This example works just fine as of rev. 11445
-
 *Keywords used in statements*:
 
 ``break``
@@ -322,14 +315,13 @@ The following keywords are reserved and may not be used as identifiers.
 ``for``
 ``return``
 ``switch``
-``then``
 ``while``
 
 In addition,
 the following keywords are used in particular contexts.
 They may also be used as identifiers.
 
-.. TODO I think these are all used in function declarations.
+.. TODO: I think these are all used in function declarations.
    If there's a specific context we can give,
    let's say that instead of just "particular contexts".
 
@@ -345,21 +337,17 @@ They may also be used as identifiers.
 
 ``get``
 ``set``
-``type``
+``inout``
+``mutating``
 ``operator``
 ``prefix``
 ``infix``
 ``postfix``
-``inout``
-``mutating``
-
-.. TR: Are 'associativity', 'precedence', 'left', 'right', 'none' contextual keywords?
-	For instance, in operators.swift, we find the following example:
-	operator infix ++++ {
-		precedence 195
-  		associativity left
-	}
-	This example works as of rev. 11445
+``associativity``
+``precedence``
+``left``
+``right``
+``none``
 
 .. _LexicalStructure_Literals:
 
