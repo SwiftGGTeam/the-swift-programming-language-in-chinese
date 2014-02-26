@@ -965,9 +965,8 @@ There are two ways to initialize properties:
 Initializers
 ~~~~~~~~~~~~
 
-:newTerm:`Initializers` are special methods
-that can be called when a new instance of your type is created.
-In its simplest form, an initializer is just an instance method with no parameters,
+:newTerm:`Initializers` are called when a new instance of your type is created.
+In its simplest form, an initializer is like an instance method with no parameters,
 written using the ``init`` keyword:
 
 .. testcode:: initialization
@@ -1705,8 +1704,7 @@ Type Properties and Methods
 Deinitializers
 --------------
 
-A :newTerm:`deinitializer` is a special instance method that is called
-just before a class instance is destroyed.
+A :newTerm:`deinitializer` is called just before a class instance is destroyed.
 Deinitializers are written with the ``deinit`` keyword,
 in a similar way to how intializers are written with the ``init`` keyword.
 Deinitializers are only available on class types.
@@ -1727,9 +1725,13 @@ and the superclass deinitializer is called automatically at the end of
 a subclass deinitializer implementation.
 You are not allowed to call ``super.deinit()`` yourself.
 
-Deinitializers are still able to access the properties of the instance they are called on.
-This means that your deinitializer can modify its behavior based on properties of the current instance,
-such as discovering the file name of a file that needs to be closed.
+.. TODO: note that this is true even if your subclass doesn't actually provide
+   an explicit deinitializer itself.
+
+Because the instance has not yet been destroyed,
+a deinitializer can access all of the properties of the instance it is called on,
+and can modify its behavior based on those properties
+(such as looking up the name of a file that needs to be closed).
 
 Here's an example of ``deinit`` in action.
 This example defines two new types, ``Bank`` and ``Player``, for a simple game.
