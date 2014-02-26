@@ -310,7 +310,7 @@ The class also declares a variable stored property called ``previousTotalSteps``
 .. note::
 
     ``willSet`` and ``didSet`` observers are not called when
-    a property is first initialized with its default or initial value.
+    a property is first initialized.
     They are only called when the property's value is set
     outside of an initialization context.
 
@@ -936,10 +936,11 @@ are written back to the ``Point`` instance, overwriting the previous values.
 Initialization
 --------------
 
-Classes and structures should always initialize their stored properties with initial values.
-There are two ways to provide initial values for your properties:
+Classes and structures must always set their stored properties
+to an appropriate initial value by the time that an instance is created.
+There are two ways to initialize properties:
 
-1. Include an :newTerm:`initial value` as part of the property declaration
+1. Provide an :newTerm:`initial value` as part of the property declaration
    (as described in :ref:`ClassesAndStructures_Properties`)
 2. Provide a value for the property within an :newTerm:`initializer`
 
