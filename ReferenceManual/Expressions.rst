@@ -117,6 +117,18 @@ Assignment Operator
 Conditional Operator
 ++++++++++++++++++++
 
+The conditional operator evaluates to one of two given values
+based on the value of a condition;
+it has the following form:
+
+.. syntax-outline::
+
+   <#condition#> ? <#expression to evaluate if true#> : <#expression to evalate if false#>
+
+If the *condition* evaluates to ``true``,
+the conditional operator evaluates to the value of the first expression.
+Otherwise, it evaluates to the value of the second expression.
+
 .. langref-grammar
 
     op-binary-or-ternary ::= '?'-infix expr-sequence ':'
