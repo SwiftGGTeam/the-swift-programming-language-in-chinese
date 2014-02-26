@@ -29,13 +29,23 @@ Language Guide
 * New section on :ref:`ClassesAndStructures_Destructors`
 * New section on :ref:`self <ClassesAndStructures_Self>` and ``mutating`` structure methods
 * :ref:`ClassesAndStructures_StoredPropertyObservers` and :ref:`ClassesAndStructures_ComputedProperties` now all use curly braces
-* Information about the :ref:`Operators_ClosedRangeOperator` (``..``) 
+* Information about the :ref:`Operators_ClosedRangeOperator` (``..``)
 * Re-ordered the :doc:`LanguageGuide/ControlFlow` chapter
 * ``String`` no longer has a ``length`` property
 * :doc:`LanguageGuide/Extensions` and :doc:`LanguageGuide/Protocols` are now separate chapters (but are not yet written)
 * We no longer refer to getters, setters, observers and initializers as “methods”
 * Placeholder sections for Arrays and Dictionaries (but no content as yet) in :doc:`LanguageGuide/BasicTypes`
 * Editorial changes and improvements throughout the *Guide*
+
+Reference Manual
+++++++++++++++++
+
+* Updated the :doc:`ReferenceManual/Statements` chapter to account for optional binding in ``if`` and ``while`` statements.
+  Also simplified the grammar by making expressions and declarations be kinds of statements.
+  This chapter has now has an editorial pass.
+* Added a draft of the :doc:`ReferenceManual/LexicalStructure` chapter.
+* Added a draft of the :doc:`ReferenceManual/Types` chapter.
+  There are still a few placeholder sections in this chapter.
 
 February 12 2014
 ~~~~~~~~~~~~~~~~
@@ -47,7 +57,7 @@ Language Guide
     * :ref:`Constant and Variable Properties <ClassesAndStructures_StoredProperties>`
     * :ref:`ClassesAndStructures_StoredPropertyObservers` (``willSet`` and ``didSet``)
     * :ref:`ClassesAndStructures_ComputedProperties`
-    * :ref:`ClassesAndStructures_ShorthandGetterAndSetterDeclarations`
+    * :ref:`ClassesAndStructures_ShorthandSetterDeclaration`
     * :ref:`ClassesAndStructures_ReadOnlyComputedProperties`
     * :ref:`ClassesAndStructures_PropertiesAndInstanceVariables`
     * :ref:`ClassesAndStructures_InstanceMethods`
@@ -59,8 +69,8 @@ Language Guide
 * ``let`` has been changed to ``val`` throughout the Language Guide
 * :doc:`LanguageGuide/ClassesAndStructures` now uses :ref:`‘instances’ <ClassesAndStructures_Terminology>` to refer to both objects and structs
 * :doc:`LanguageGuide/Functions` and :doc:`LanguageGuide/Closures` are now separate chapters
-* New section about :ref:`ControlFlow_OptionalBinding` (``if let x = someOptional``)  in :doc:`LanguageGuide/ControlFlow` 
-* Added :ref:`a new Enumerations example <Enumerations_PropertiesAndMethods>`, showing how they can use initializers, computed properties and instance methods 
+* New section about :ref:`ControlFlow_OptionalBinding` (``if let x = someOptional``)  in :doc:`LanguageGuide/ControlFlow`
+* Added :ref:`a new Enumerations example <Enumerations_PropertiesAndMethods>`, showing how they can use initializers, computed properties and instance methods
 * Added a section about :ref:`Enumerations_EmbeddedTypes` to the :doc:`LanguageGuide/Enumerations` chapter, although it applies to classes and structures too
 * Refer to :ref:`BasicTypes_TypeSafetyAndTypeInference` rather than ‘strong typing’ in :doc:`LanguageGuide/BasicTypes`
 * :ref:`Operators_IncrementAndDecrementOperators` now work with floating-point numbers
