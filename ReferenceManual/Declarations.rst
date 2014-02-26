@@ -5,7 +5,7 @@ Declarations
 
     decl ::= decl-class
     decl ::= decl-constructor
-    decl ::= decl-destructor
+    decl ::= decl-deinitializer
     decl ::= decl-extension
     decl ::= decl-func
     decl ::= decl-import
@@ -33,7 +33,7 @@ Declarations
     declaration --> class-declaration
     declaration --> protocol-declaration
     declaration --> initializer-declaration
-    declaration --> destructor-declaration
+    declaration --> deinitializer-declaration
     declaration --> extension-declaration
     declaration --> subscript-declaration
     declarations --> declaration declarations-OPT
@@ -731,27 +731,27 @@ Initializer Declaration
     initializer-declaration --> attribute-sequence-OPT ``init`` generic-parameter-clause-OPT initializer-signature code-block
     initializer-signature --> tuple-pattern | selector-tuples
 
-.. _Declarations_DestructorDeclaration:
+.. _Declarations_DeinitializerDeclaration:
 
-Destructor Declaration
-----------------------
+Deinitializer Declaration
+-------------------------
 
 .. syntax-outline::
 
-    destructor() {
+    deinit() {
         <#statements#>
     }
 
 .. langref-grammar
 
-    decl-constructor ::= attribute-list 'destructor' '(' ')' brace-item-list
-    NOTE: langref contains a typo here---should be 'decl-destructor'
+    decl-de ::= attribute-list 'deinit' '(' ')' brace-item-list
+    NOTE: langref contains a typo here---should be 'decl-deinitializer'
 
 .. syntax-grammar::
 
-    Grammar of a destructor declaration
+    Grammar of a deinitializer declaration
 
-    destructor-declaration --> attribute-sequence-OPT ``destructor`` ``(`` ``)`` code-block
+    deinitializer-declaration --> attribute-sequence-OPT ``deinit`` ``(`` ``)`` code-block
 
 .. _Declarations_ExtensionDeclaration:
 
