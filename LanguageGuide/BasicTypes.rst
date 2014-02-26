@@ -43,7 +43,7 @@ Although these types may be familiar,
 Swift expands their capabilities beyond what is possible in other languages.
 
 In addition to these simple types,
-Swift introduces some less familiar (but very powerful) advanced types:
+Swift incorporates some less familiar (but very powerful) advanced types:
 
 * arbitrary groups of values of different types (known as :newTerm:`tuples`)
 * types that can be either a known value or a missing value (known as :newTerm:`optionals`)
@@ -99,9 +99,9 @@ and give it a value of ``10``.
 Then, declare a new variable called ``currentLoginAttempt``,
 and give it an initial value of ``0``.”
 
-A constant is used for the maximum number of allowed login attempts,
+The maximum number of allowed login attempts is declared as a constant,
 because that maximum value never changes.
-A variable is used for the current login attempt counter, however,
+The current login attempt counter is declared as a variable, however,
 because this value must be incremented after each failed login attempt.
 
 If a named value in your code is not going to change,
@@ -245,6 +245,10 @@ Swift will use :newTerm:`type inference` to work out the appropriate type.
 Type inference is the ability for a compiler to automatically deduce the type of a particular expression when it compiles your code,
 just by examining the values you provide.
 
+Type inference means that Swift requires far fewer type declarations than languages such as C or Objective-C.
+Named values are still explicitly-typed,
+but much of the work of specifying their type is done for you.
+
 Type inference is particularly useful
 when you declare a constant or variable with an initial value.
 This is often done by assigning a :newTerm:`literal value` (or :newTerm:`literal`)
@@ -284,10 +288,6 @@ a type of ``Double`` will be inferred from the context:
 The literal value of ``3`` has no explicit type in and of itself,
 and so an appropriate output type of ``Double`` is inferred
 from the presence of a floating-point literal as part of the addition.
-
-Type inference means that Swift requires far fewer type declarations than languages such as C or Objective-C.
-Named values are still explicitly-typed,
-but much of the work of specifying their type is done for you.
 
 .. _BasicTypes_NumericLiterals:
 
