@@ -835,7 +835,7 @@ instead, ``self`` is automatically made available to any method you define:
 
 Even though it has an implicit ``self`` parameter available,
 the ``Counter`` class above has chosen *not* to use ``self.count``
-to refer to its ``count`` property within its instance methods
+to refer to its ``count`` property within its instance methods.
 Because there are no other named values called ``count`` within each method's body,
 the ``self.`` prefix can be dropped, as it is clear that ``count`` can only mean the instance property.
 Instead, ``count`` is written in a shorter form, without the ``self.`` prefix:
