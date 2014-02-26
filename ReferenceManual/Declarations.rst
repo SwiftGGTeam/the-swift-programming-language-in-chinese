@@ -737,8 +737,7 @@ Deinitializer Declaration
 -------------------------
 
 A deinitializer declaration declares a deinitializer for a class type.
-Deinitializers are special instance methods that take no parameters
-and have the following form:
+Deinitializers take no parameters and have the following form:
 
 .. syntax-outline::
 
