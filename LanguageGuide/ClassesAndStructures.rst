@@ -142,9 +142,9 @@ The syntax for creating instances is very similar for both structures and classe
 
 .. testcode:: classesAndStructures
 
-    (swift) val someSize = Size()
+    (swift) let someSize = Size()
     // someSize : Size = Size(0.0, 0.0)
-    (swift) val someRectangle = Rectangle()
+    (swift) let someRectangle = Rectangle()
     // someRectangle : Rectangle = <Rectangle instance>
 
 Structures and classes both use :newTerm:`initializer syntax` when creating new instances.
@@ -219,7 +219,7 @@ can be passed to the memberwise initializer by name:
 
 .. testcode:: classesAndStructures
 
-    (swift) val twoByTwo = Size(width: 2.0, height: 2.0)
+    (swift) let twoByTwo = Size(width: 2.0, height: 2.0)
     // twoByTwo : Size = Size(2.0, 2.0)
 
 Initial values can also be provided without names,
@@ -227,7 +227,7 @@ if they are listed in the same order that the properties are declared in the str
 
 .. testcode:: classesAndStructures
 
-    (swift) val fourByThree = Size(4.0, 3.0)
+    (swift) let fourByThree = Size(4.0, 3.0)
     // fourByThree : Size = Size(4.0, 3.0)
 
 .. TODO: Include a justifiable reason for why classes do not provide a memberwise initializer.
@@ -245,7 +245,7 @@ that is stored as part of an instance.
 Properties of this kind are known as :newTerm:`stored properties`.
 Stored properties can be either :newTerm:`variable stored properties`
 (introduced by the ``var`` keyword, as in the examples above),
-or :newTerm:`constant stored properties` (introduced by the ``val`` keyword).
+or :newTerm:`constant stored properties` (introduced by the ``let`` keyword).
 
 Constant stored properties are very similar to constant named values,
 in that their value cannot be changed once it has been initialized.
@@ -288,7 +288,7 @@ Here's an example of ``willSet`` and ``didSet`` in action:
             }
         }
     }
-    (swift) val stepCounter = StepCounter()
+    (swift) let stepCounter = StepCounter()
     // stepCounter : StepCounter = <StepCounter instance>
     (swift) stepCounter.totalSteps = 200
     >>> Added 200 steps
@@ -365,8 +365,8 @@ to retrieve and set other properties and values indirectly.
         var size = Size()
         var center: Point {
             get {
-                val centerX = origin.x + (size.width / 2)
-                val centerY = origin.y + (size.height / 2)
+                let centerX = origin.x + (size.width / 2)
+                let centerY = origin.y + (size.height / 2)
                 return Point(centerX, centerY)
             }
             set(newCenter) {
@@ -377,7 +377,7 @@ to retrieve and set other properties and values indirectly.
     }
     (swift) var square = Rect(origin: Point(0.0, 0.0), size: Size(10.0, 10.0))
     // square : Rect = Rect(Point(0.0, 0.0), Size(10.0, 10.0))
-    (swift) val initialSquareCenter = square.center
+    (swift) let initialSquareCenter = square.center
     // initialSquareCenter : Point = Point(5.0, 5.0)
     (swift) square.center = Point(x: 15.0, y: 15.0)
     (swift) println("square origin is now at (\(square.origin.x), \(square.origin.y))")
@@ -435,8 +435,8 @@ which takes advantage of this shorthand notation:
         var size = Size()
         var center: Point {
             get {
-                val centerX = origin.x + (size.width / 2)
-                val centerY = origin.y + (size.height / 2)
+                let centerX = origin.x + (size.width / 2)
+                let centerY = origin.y + (size.height / 2)
                 return Point(centerX, centerY)
             }
             set {
@@ -468,7 +468,7 @@ by removing the ``get`` keyword:
             return width * height * depth
         }
     }
-    (swift) val fourByFiveByTwo = Cuboid(4.0, 5.0, 2.0)
+    (swift) let fourByFiveByTwo = Cuboid(4.0, 5.0, 2.0)
     // fourByFiveByTwo : Cuboid = Cuboid(4.0, 5.0, 2.0)
     (swift) println("the volume of fourByFiveByTwo is \(fourByFiveByTwo.volume)")
     >>> the volume of fourByFiveByTwo is 40.0
@@ -495,7 +495,7 @@ and can return any value they like at any time.
 
 Computed properties – including read-only computed properties –
 are always declared as variable properties (via the ``var`` introducer).
-The ``val`` introducer is only ever used for constant properties,
+The ``let`` introducer is only ever used for constant properties,
 to indicate that their value cannot be changed once it is set as part of instance initialization.
 
 .. NOTE: getters and setters are also allowed for named values
@@ -572,7 +572,7 @@ For example, using the ``Size`` structure from above:
 
 .. testcode:: classesAndStructures
 
-    (swift) val iPhone4 = Size(width: 640.0, height: 960.0)
+    (swift) let iPhone4 = Size(width: 640.0, height: 960.0)
     // iPhone4 : Size = Size(640.0, 960.0)
     (swift) var iPhone5 = iPhone4
     // iPhone5 : Size = Size(640.0, 960.0)
@@ -630,12 +630,12 @@ Here's an example, using the ``Rectangle`` class defined above:
 
 .. testcode:: classesAndStructures
 
-    (swift) val rect = Rectangle()
+    (swift) let rect = Rectangle()
     // rect : Rectangle = <Rectangle instance>
     (swift) rect.size = Size(width: 1.0, height: 1.0)
     (swift) println("The rectangle's initial width is \(rect.size.width)")
     >>> The rectangle's initial width is 1.0
-    (swift) val sameRect = rect
+    (swift) let sameRect = rect
     // sameRect : Rectangle = <Rectangle instance>
     (swift) sameRect.size.width = 3.0
     (swift) println("The rectangle's width via sameRect is now \(sameRect.size.width)")
@@ -793,7 +793,7 @@ Instance methods are called using the same dot syntax as properties:
 
 .. testcode:: classesAndStructures
 
-    (swift) val counter = Counter()
+    (swift) let counter = Counter()
     // counter : Counter = <Counter instance>
     (swift) println("Initial counter value is \(counter.count)")
     >>> Initial counter value is 0
@@ -862,7 +862,7 @@ and an instance property that is also called ``x``:
             return self.x > x
         }
     }
-    (swift) val somePoint = Point(4.0, 5.0)
+    (swift) let somePoint = Point(4.0, 5.0)
     // somePoint : Point = Point(4.0, 5.0)
     (swift) if somePoint.isToTheRightOfX(1.0) {
         println("This point is to the right of the line where x == 1.0")
@@ -885,7 +885,7 @@ and can be used to retrieve and set its properties:
             self.balance += amount
         }
     }
-    (swift) val savingsAccount = BankAccount()
+    (swift) let savingsAccount = BankAccount()
     // savingsAccount : BankAccount = <BankAccount instance>
     (swift) savingsAccount.depositMoney(100.00)
     (swift) println("The savings account now contains $\(savingsAccount.balance)")
@@ -1050,14 +1050,14 @@ with a value from a different temperature scale:
 
 .. TODO: mention that initializers can be written in either function syntax.
 
-The value of a constant ``val`` property can be modified at any point during initialization,
+The value of a constant ``let`` property can be modified at any point during initialization,
 as long as is is definitely set to a value by the time the initializer has finished:
 
 .. testcode:: initialization
 
     (swift) struct Temperature {
-        val storedValue: Double
-        val storedScale: String
+        let storedValue: Double
+        let storedScale: String
         init withValue(value: Double) inScale(scale: String) {
             storedValue = value
             storedScale = scale
@@ -1120,7 +1120,7 @@ and sets it to the result of calling ``init withTitle()`` for a specific title s
 
 .. testcode:: initialization
 
-    (swift) val thisBook = Document(withTitle: "The Swift Programming Language")
+    (swift) let thisBook = Document(withTitle: "The Swift Programming Language")
     // thisBook : Document = <Document instance>
     (swift) println("This book is called '\(thisBook.title)'")
     >>> This book is called 'The Swift Programming Language'
@@ -1132,7 +1132,7 @@ passing it a placeholder string value of ``[untitled]``:
 
 .. testcode:: initialization
 
-    (swift) val someBook = Document()
+    (swift) let someBook = Document()
     // someBook : Document = <Document instance>
     (swift) println("Some unknown book is called '\(someBook.title)'")
     >>> Some unknown book is called '[untitled]'
@@ -1219,7 +1219,7 @@ you can see how its properties have been updated:
 
 .. testcode:: inheritance
 
-    (swift) val bicycle = Bicycle()
+    (swift) let bicycle = Bicycle()
     // bicycle : Bicycle = <Bicycle instance>
     (swift) println("Bicycle: \(bicycle.description())")
     >>> Bicycle: 2 wheels; up to 1 passengers
@@ -1255,7 +1255,7 @@ you can see how its properties have been updated:
 
 .. testcode:: inheritance
 
-    (swift) val tandem = Tandem()
+    (swift) let tandem = Tandem()
     // tandem : Tandem = <Tandem instance>
     (swift) println("Tandem: \(tandem.description())")
     >>> Tandem: 2 wheels; up to 2 passengers
@@ -1394,7 +1394,7 @@ Here's how this initializer could be called:
 
 .. testcode:: initialization
 
-    (swift) val empty = TextDocument()
+    (swift) let empty = TextDocument()
     // empty : TextDocument = <TextDocument instance>
     (swift) println("\(empty.title):\n\(empty.bodyText)")
     >>> [untitled]:
@@ -1424,7 +1424,7 @@ Here's how this initializer could be called:
 
 .. testcode:: initialization
 
-    (swift) val titled = TextDocument(withTitle: "Write something please")
+    (swift) let titled = TextDocument(withTitle: "Write something please")
     // titled : TextDocument = <TextDocument instance>
     (swift) println("\(titled.title):\n\(titled.bodyText)")
     >>> Write something please:
@@ -1449,7 +1449,7 @@ Here's how this initializer could be called:
 
 .. testcode:: initialization
 
-    (swift) val untitledPangram = TextDocument(
+    (swift) let untitledPangram = TextDocument(
         withText: "Amazingly few discotheques provide jukeboxes")
     // untitledPangram : TextDocument = <TextDocument instance>
     (swift) println("\(untitledPangram.title):\n\(untitledPangram.bodyText)")
@@ -1483,7 +1483,7 @@ Here's how this final initializer could be called:
 
 .. testcode:: initialization
 
-    (swift) val foxPangram = TextDocument(
+    (swift) let foxPangram = TextDocument(
         withTitle: "Quick brown fox",
         text: "The quick brown fox jumped over the lazy dog")
     // foxPangram : TextDocument = <TextDocument instance>
@@ -1632,9 +1632,9 @@ you can try and :newTerm:`downcast` to the subclass using the ``as`` operator:
 .. testcode:: typeCasting
 
     (swift) for item in library {
-        if val movie = item as Movie {
+        if let movie = item as Movie {
             println("Movie: '\(movie.name)', dir. \(movie.director)")
-        } else if val song = item as Song {
+        } else if let song = item as Song {
             println("Song: '\(song.name)', by \(song.artist)")
         }
     }
@@ -1664,7 +1664,7 @@ the two ``Song`` instances in the library array.
 To cope with this, the example above uses :ref:`optional binding <ControlFlow_OptionalBinding>`
 to check whether the optional ``Movie`` actually contains a value
 (i.e. to find out whether the downcast succeeded.)
-This optional binding is written “``if val movie = item as Movie``”,
+This optional binding is written “``if let movie = item as Movie``”,
 which can be read as:
 
 “Try and access ``item`` as a ``Movie``.
@@ -1888,11 +1888,11 @@ so that it can be used as an infix operator between existing ``Point`` instances
 
 .. testcode:: customOperators
 
-    (swift) val point = Point(1.0, 2.0)
+    (swift) let point = Point(1.0, 2.0)
     // point : Point = Point(1.0, 2.0)
-    (swift) val anotherPoint = Point(3.0, 4.0)
+    (swift) let anotherPoint = Point(3.0, 4.0)
     // anotherPoint : Point = Point(3.0, 4.0)
-    (swift) val combinedPoint = point + anotherPoint
+    (swift) let combinedPoint = point + anotherPoint
     // combinedPoint : Point = Point(4.0, 6.0)
 
 .. _ClassesAndStructures_PrefixAndPostfixOperators:
@@ -1931,11 +1931,11 @@ performs this operation on both the ``x`` and ``y`` properties:
 
 .. testcode:: customOperators
 
-    (swift) val positive = Point(3.0, 4.0)
+    (swift) let positive = Point(3.0, 4.0)
     // positive : Point = Point(3.0, 4.0)
-    (swift) val negative = -positive
+    (swift) let negative = -positive
     // negative : Point = Point(-3.0, -4.0)
-    (swift) val alsoPositive = -negative
+    (swift) let alsoPositive = -negative
     // alsoPositive : Point = Point(3.0, 4.0)
 
 .. QUESTION: is this the first time I will have introduced attributes?
@@ -1971,7 +1971,7 @@ and uses it to set the left-hand value to itself plus the right-hand value:
 
     (swift) var original = Point(1.0, 2.0)
     // original : Point = Point(1.0, 2.0)
-    (swift) val pointToAdd = Point(3.0, 4.0)
+    (swift) let pointToAdd = Point(3.0, 4.0)
     // pointToAdd : Point = Point(3.0, 4.0)
     (swift) original += pointToAdd
     (swift) println("original is now (\(original.x), \(original.y))")
@@ -1999,7 +1999,7 @@ and returns the result.
 
     (swift) var toIncrement = Point(3.0, 4.0)
     // toIncrement : Point = Point(3.0, 4.0)
-    (swift) val afterIncrement = ++toIncrement
+    (swift) let afterIncrement = ++toIncrement
     // afterIncrement : Point = Point(4.0, 5.0)
     (swift) println("toIncrement is now (\(toIncrement.x), \(toIncrement.y))")
     >>> toIncrement is now (4.0, 5.0)
@@ -2064,7 +2064,7 @@ rather than adding ``Point(1.0, 1.0)``:
 
     (swift) var toBeDoubled = Point(1.0, 4.0)
     // toBeDoubled : Point = Point(1.0, 4.0)
-    (swift) val afterDoubling = +++toBeDoubled
+    (swift) let afterDoubling = +++toBeDoubled
     // afterDoubling : Point = Point(2.0, 8.0)
     (swift) println("toBeDoubled is now (\(toBeDoubled.x), \(toBeDoubled.y))")
     >>> toBeDoubled is now (2.0, 8.0)
@@ -2095,11 +2095,11 @@ with ``left`` associativity, and a precedence of ``140``:
     (swift) func +- (lhs: Point, rhs: Point) -> Point {
         return Point(lhs.x + rhs.x, lhs.y - rhs.y)
     }
-    (swift) val firstPoint = Point(1.0, 2.0)
+    (swift) let firstPoint = Point(1.0, 2.0)
     // firstPoint : Point = Point(1.0, 2.0)
-    (swift) val secondPoint = Point(3.0, 4.0)
+    (swift) let secondPoint = Point(3.0, 4.0)
     // secondPoint : Point = Point(3.0, 4.0)
-    (swift) val plusMinusPoint = firstPoint +- secondPoint
+    (swift) let plusMinusPoint = firstPoint +- secondPoint
     // plusMinusPoint : Point = Point(4.0, -2.0)
 
 This operator adds together the ``x`` values of two points,
