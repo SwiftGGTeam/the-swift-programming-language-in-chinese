@@ -50,7 +50,7 @@ Protocols are covered in the :doc:`Protocols` chapter, and extensions are covere
 In addition, classes have several capabilities that structures do not:
 
 * :newTerm:`inheritance`, which enables one class to inherit the characteristics of another;
-* :newTerm:`destructors`, which enable an instance of a class to tidy up after itself; and
+* :newTerm:`deinitializers`, which enable an instance of a class to tidy up after itself; and
 * :newTerm:`type casting`, which enables you to check and interpret the type of a class instance at runtime
 
 All of these capabilities are described in more detail below.
@@ -1700,36 +1700,38 @@ Type Properties and Methods
 
 .. see release notes from 2013-12-18 for a note about lazy initialization
 
-.. _ClassesAndStructures_Destructors:
+.. _ClassesAndStructures_Deinitializers:
 
-Destructors
------------
+Deinitializers
+--------------
 
-A :newTerm:`destructor` is a special instance method that is called when a class instance is destroyed.
-Destructors are written with the ``destructor`` keyword,
+A :newTerm:`deinitializer` is a special instance method that is called
+just before a class instance is destroyed.
+Deinitializers are written with the ``deinit`` keyword,
 in a similar way to how intializers are written with the ``init`` keyword.
-Destructors are only available on class types.
+Deinitializers are only available on class types.
 
 Swift automatically destroys your instances when they are no longer needed, to free up resources.
 Swift handles the memory management of your class instances for you via
 :newTerm:`automatic reference counting` (known as :newTerm:`ARC`),
 and so there is normally no need to perform any clean-up when your instances are destroyed.
 However, there may be times when you are working with your own resources,
-and need to perform some additional clean-up yourself.
+and need to perform some additional clean-up yourself before the instance is destroyed.
 For example, if you create a custom class to open a file and write some data to it,
-you might need to close the file when the class instance is destroyed.
+you might need to close the file before the class instance disappears.
 
-Class definitions can have at most one destructor per class.
-The destructor does not take any parameters, and is called automatically when an instance is destroyed.
-Superclass destructors are automatically inherited by their subclasses,
-and the superclass destructor is called automatically at the end of a subclass destructor implementation.
-You are not allowed to call ``super.destructor()`` yourself.
+Class definitions can have at most one deinitializer per class.
+The deinitializer does not take any parameters, and is called automatically.
+Superclass deinitializers are inherited by their subclasses,
+and the superclass deinitializer is called automatically at the end of
+a subclass deinitializer implementation.
+You are not allowed to call ``super.deinit()`` yourself.
 
-Destructors are still able to access the properties of the instance they are called on.
-This means that your destructor can modify its behavior based on properties of the current instance,
+Deinitializers are still able to access the properties of the instance they are called on.
+This means that your deinitializer can modify its behavior based on properties of the current instance,
 such as discovering the file name of a file that needs to be closed.
 
-Here's an example of ``destructor`` in action.
+Here's an example of ``deinit`` in action.
 This example defines two new types, ``Bank`` and ``Player``, for a simple game.
 The ``Bank`` structure manages a made-up currency,
 which can never have more than 10,000 coins in circulation.
@@ -1737,7 +1739,7 @@ There can only ever be one ``Bank`` in the game,
 and so the ``Bank`` is implemented as a structure with static properties and methods
 to store and manage its current state:
 
-.. testcode:: destructor
+.. testcode:: deinitializer
 
     (swift) struct Bank {
         static var coinsInBank = 10_000
@@ -1769,7 +1771,7 @@ The ``Player`` class describes a player in the game.
 Each player has a certain number of coins stored in their purse at any time.
 This is represented by the player's ``coinsInPurse`` property:
 
-.. testcode:: destructor
+.. testcode:: deinitializer
 
     (swift) class Player {
         var coinsInPurse: Int
@@ -1779,7 +1781,7 @@ This is represented by the player's ``coinsInPurse`` property:
         func winCoins(coins: Int) {
             coinsInPurse += Bank.vendCoins(coins)
         }
-        destructor() {
+        deinit() {
             Bank.receiveCoins(coinsInPurse)
         }
     }
@@ -1791,13 +1793,13 @@ some specified number of coins from the bank during initialization
 The ``Player`` class defines a ``winCoins()`` method,
 which tries to retrieve a certain number of coins from the bank
 and add them to the player's purse.
-The ``Player`` class also implements a ``destructor``,
-which is called whenever a ``Player`` instance is destroyed.
-Here, the ``destructor`` simply returns all of the player's coins to the bank.
+The ``Player`` class also implements a deinitializer,
+which is called just before a ``Player`` instance is destroyed.
+Here, the deinitializer simply returns all of the player's coins to the bank.
 
 Here's how that looks in action:
 
-.. testcode:: destructor
+.. testcode:: deinitializer
 
     (swift) var playerOne: Player? = Player(withCoins: 100)
     // playerOne : Player? = <unprintable value>
@@ -1815,7 +1817,7 @@ Because ``playerOne`` is an optional, it is qualified with an exclamation mark (
 when its ``coinsInPurse`` property is accessed to print its default number of coins,
 and whenever its ``winCoins()`` method is called:
 
-.. testcode:: destructor
+.. testcode:: deinitializer
 
     (swift) playerOne!.winCoins(2_000)
     (swift) println("PlayerOne won 2000 coins & now has \(playerOne!.coinsInPurse) coins")
@@ -1827,7 +1829,7 @@ Here, the player has won 2,000 coins.
 Their purse now contains 2,100 coins,
 and the bank only has 7,900 coins left.
 
-.. testcode:: destructor
+.. testcode:: deinitializer
 
     (swift) playerOne = .None
     (swift) println("PlayerOne has left the game")
@@ -1842,7 +1844,7 @@ At the point that this happens, the ``Player`` instance referenced by
 the ``playerOne`` variable is destroyed.
 No other properties or variables are still referring to it,
 and so it can be destroyed in order to free up the resources it was using.
-When this happens, its ``destructor`` is called,
+Just before this happens, its deinitializer is called,
 and its coins are returned to the bank.
 
 .. TODO: switch Bank to be a class rather than a structure

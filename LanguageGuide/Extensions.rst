@@ -106,8 +106,8 @@ your own custom types as initializer parameters.
 .. note::
 
     Extensions can add new initializers to classes, but they cannot add
-    a :ref:`destructor <ClassesAndStructures_Destructors>`.
-    Destructors must always be provided by the original class implementation.
+    a :ref:`deinitializer <ClassesAndStructures_Deinitializers>`.
+    Deinitializers must always be provided by the original class implementation.
 
 This approach can be used to extend the basic ``String`` type
 to accept an instance of your own custom type as an initializer parameter,
