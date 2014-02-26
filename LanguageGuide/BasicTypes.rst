@@ -110,7 +110,7 @@ Variables should only be used for
 named values that need to be able to change their value.
 
 Named value declarations can include a specific *type*,
-to be explicit about the kind of named value you want to create:
+to be explicit about the kind of values they can store:
 
 .. testcode:: namedValues
 
@@ -149,8 +149,8 @@ you can't redeclare it again with the same name,
 or set it to store values of a different type.
 You also can't change it from a constant to a variable (or vice versa).
 
-The value of an existing variable can be changed to another value of the same type.
-You can also print the value of any named value by using the ``println`` function:
+The value of an existing variable can be changed to another value of a compatible type.
+You can also print the value of a named value by using the ``println`` function:
 
 .. testcode:: namedValues
 
@@ -186,8 +186,8 @@ Integers
 
 :newTerm:`Integers` are whole numbers with no fractional component,
 such as ``42`` and ``-23``.
-Integers are either :newTerm:`signed` (which means they can be positive or negative),
-or :newTerm:`unsigned` (which means they can only be positive).
+Integers are either :newTerm:`signed` (which means they can be positive, zero or negative),
+or :newTerm:`unsigned` (which means they can only be positive or zero).
 
 Swift provides integers in signed and unsigned forms in sizes of
 8, 16, 32, and 64 bits.
@@ -206,14 +206,14 @@ which has the same size as the current platform's architecture:
 Unless you need to work with a specific size of integer,
 you should always use ``Int`` for code consistency and interoperability.
 Even on 32-bit platforms, ``Int`` can store any value between ``-2,147,483,648`` and ``2,147,483,647``,
-and is typically large enough for everyday integer values.
+and is large enough for many integer ranges.
 
 .. _BasicTypes_FloatingPointNumbers:
 
 Floating-Point Numbers
 ----------------------
 
-:newTerm:`Floating-point numbers` (also known as :newTerm:`floats`) are numbers with a fractional component,
+:newTerm:`Floating-point numbers` are numbers with a fractional component,
 such as ``3.14159``, ``0.1`` and ``-273.15``.
 
 Swift provides two signed floating-point number types:
