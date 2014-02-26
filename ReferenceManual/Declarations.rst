@@ -244,9 +244,9 @@ Type alias declarations begin with the keyword ``typealias`` and have the follow
 
     typealias <#name#> = <#existing type#>
 
-After a type alias is declared, the aliased *name* may be used
+After a type alias is declared, the aliased *name* can be used
 instead of the *existing type* everywhere in your program.
-The *existing type* may be a named type or a compound type.
+The *existing type* can be a named type or a compound type.
 Type aliases do not create new types;
 they simply allow a name to refer to an existing type.
 
@@ -509,18 +509,18 @@ Structure declarations begin with the keyword ``struct`` and have the following 
         <#declarations#>
     }
 
-The body of a structure may contain zero or more *declarations*.
-These *declarations* may include both stored and computed properties,
+The body of a structure contains zero or more *declarations*.
+These *declarations* can include both stored and computed properties,
 static properties, instance methods, static methods, initializers,
 type aliases, and even other structure, class, and enumeration declarations.
-Structure declarations may not contain destructor or protocol declarations.
+Structure declarations can't contain destructor or protocol declarations.
 For a discussion and several examples of structures
 that include these kind of declarations,
 see :doc:`../LanguageGuide/ClassesAndStructures`.
 
-Structure types may adopt any number of protocols,
-but may not inherit from classes, enumerations, or other structures.
-Structure types may also be extended.
+Structure types can adopt any number of protocols,
+but can't inherit from classes, enumerations, or other structures.
+Structure types can also be extended.
 
 There are three ways create an instance of a previously declared structure:
 
@@ -537,7 +537,7 @@ There are three ways create an instance of a previously declared structure:
 The process of initializing a structure's declared properties
 is described in :ref:`ClassesAndStructures_Initialization`.
 
-Properties of a structure instance may be accessed using dot (``.``) syntax,
+Properties of a structure instance can be accessed using dot (``.``) syntax,
 as described in :ref:`ClassesAndStructures_AccessingProperties`.
 
 Structures are value types; instances of a structure are copied when assigned to
@@ -574,25 +574,25 @@ Class declarations begin with the keyword ``class`` and have the following form:
         <#declarations#>
     }
 
-The body of a class may contain zero or more *declarations*.
-These *declarations* may include both stored and computed properties,
+The body of a class contains zero or more *declarations*.
+These *declarations* can include both stored and computed properties,
 class properties, instance methods, class methods, initializers,
 a single destructor method, type aliases,
 and even other class, structure, and enumeration declarations.
-Class declarations may not contain protocol declarations.
+Class declarations can't contain protocol declarations.
 For a discussion and several examples of classes
 that include these kind of declarations,
 see :doc:`../LanguageGuide/ClassesAndStructures`.
 
-Class types may inherit from only one parent class, its *superclass*,
-but may adopt any number of protocols.
-The *superclass* must appear first in the **type-inheritance-clause**,
+Class types can inherit from only one parent class, its *superclass*,
+but can adopt any number of protocols.
+The *superclass* appears first in the **type-inheritance-clause**,
 followed by any *adopted protocols*.
 Although properties and methods declared in the *superclass* are inherited by
 the base class, initializers declared in the *superclass* are not.
 Swift classes do not inherit from a universal base class.
 
-Properties, methods, and initializers of a superclass may be overridden.
+Properties, methods, and initializers of a superclass can be overridden.
 That said, an initializer must call one of its superclass's
 initializers before overriding any of the superclass's properties.
 
@@ -606,7 +606,7 @@ see :ref:`ClassesAndStructures_SubclassingAndInitializerDelegation`.
 
 .. TODO: Need a way to refer to grammatical categories (see type-inheritance-clause, above).
 
-Class types may also be extended.
+Class types can also be extended.
 
 There are two ways create an instance of a previously declared class:
 
@@ -768,24 +768,25 @@ Extension declarations begin with the keyword ``extension`` and have the followi
         <#declarations#>
     }
 
-The body of an extension declaration may contain zero or more *declarations*.
-These *declarations* may include computed properties, computed static and class properties,
+The body of an extension declaration contains zero or more *declarations*.
+These *declarations* can include computed properties, computed static and class properties,
 instance methods, static and class methods, initializers, subscript declarations,
 and even class, structure, and enumeration declarations.
-Extension declarations may not contain destructor or protocol declarations,
+Extension declarations can't contain destructor or protocol declarations,
 store properties, stored property observers, or other extension declarations.
 For a discussion and several examples of extensions that include these kind of declarations,
 see :doc:`../LanguageGuide/Extensions`.
 
-Extension declarations may add protocol conformance to an existing
+Extension declarations can add protocol conformance to an existing
 class, structure, and enumeration type in the *adopted protocols*.
-Extension declarations may not add class inheritance to an existing class,
-and therefore the **type-inheritance-clause** may contain only a list of protocols.
+Extension declarations can't add class inheritance to an existing class,
+and therefore the **type-inheritance-clause** in an extension declaration
+contains only a list of protocols.
 
 Properties, methods, and initializers of an existing type
-may not be overridden in an extension of that type.
+can't be overridden in an extension of that type.
 
-Extension declarations may contain initializer declarations. That said,
+Extension declarations can contain initializer declarations. That said,
 if the type you're extending is defined in another module,
 an initializer declaration must delegate to an initializer already defined in that module
 to ensure members of that type are properly initialized.
