@@ -6,7 +6,7 @@
     * String interpolation
     * printf() and string formatting
     * Regular Expressions (when implemented)
-    * ‘Raw’ string literals (if / when implemented)
+    * “Raw” string literals (if / when implemented)
     * ``OutputStream`` ?
     * How to do a few NSString-like things?
 
@@ -66,7 +66,7 @@ String Printing
 String Subscripting
 -------------------
 
-- length (vs byteLength)
+- length, count or size()?
 - accessing characters by subscript (and what this means)
 - chars vs bytes and a discussion of encoding
 - substrings via ranges e.g. [2..5]

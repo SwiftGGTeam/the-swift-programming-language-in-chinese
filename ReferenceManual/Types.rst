@@ -28,7 +28,8 @@ are actually named types,
 defined and implemented in the Swift Standard Library using structures.
 Because they are named types,
 you can extend their behavior to suit the needs of your program,
-using an extension declaration, discussed in :doc:`../LanguageGuide/Extensions`.
+using an extension declaration,
+discussed in :doc:`../LanguageGuide/Extensions` and :ref:`Declarations_ExtensionDeclaration`.
 
 A :newTerm:`compound type` is a type without a name, defined in the Swift language itself.
 There are two compound types: function types and tuple types.
@@ -503,12 +504,12 @@ and then passing this type information up to the root (the variable ``x``).
 
 In Swift, type information may also flow in the opposite direction---from the root down to the leaves.
 In the following example, for instance,
-the explicit type annotation (``: Float``) on the variable ``eFloat``
+the explicit type annotation (``: Float``) on the constant ``eFloat``
 causes the numeric literal ``2.71828`` to have type ``Float`` instead of type ``Double``.::
 
-    var e = 2.71828
+    val e = 2.71828
     // e : Double = 2.71828
-    var eFloat : Float = 2.71828
+    val eFloat : Float = 2.71828
     // eFloat : Float = 2.71828
 
 Type inference in Swift operates at the level of a single expression or statement.
