@@ -23,8 +23,8 @@ Declarations
     Grammar of a declaration
 
     declaration --> import-declaration
+    declaration --> constant-declaration
     declaration --> variable-declaration
-    declaration --> let-declaration
     declaration --> typealias-declaration
     declaration --> function-declaration
     declaration --> enum-declaration
@@ -95,39 +95,39 @@ is made available in the current scope.
     import-path --> any-identifier | any-identifier ``.`` import-path
 
 
-.. _Declarations_ValueDeclaration:
+.. _Declarations_ConstantDeclaration:
 
-Value Declaration
------------------
+Constant Declaration
+--------------------
 
-A value declaration introduces a constant named value into your program.
-Value declarations begin with keyword ``val`` and have the following form:
+A constant declaration introduces a constant named value into your program.
+Constant declarations begin with keyword ``let`` and have the following form:
 
 .. syntax-outline::
 
-    val <#constant name#> : <#type#> = <#expression#>
+    let <#constant name#> : <#type#> = <#expression#>
 
-Value declarations define an immutable binding between the *constant name*
+A constant declaration defines an immutable binding between the *constant name*
 and the value of the initializer *expression*;
 after the value of a constant is set, it cannot be changed.
 That said, if a constant is initialized with a class object,
 the object itself may change,
 but the binding between the constant name and the object it refers to may not.
 
-When a value declaration is declared at global scope,
+When a constant is declared at global scope,
 it must be initialized with a value.
-When a value declaration occurs in the context of a class, structure,
+When a constant declaration occurs in the context of a class, structure,
 or protocol declaration, it is considered a constant named property,
 as described in :ref:`ClassesAndStructures_StoredProperties`.
-Value declarations may not be computed properties and therefore may not have getters
+Constant declarations are not computed properties and therefore do not have getters
 or setters.
 
-If the *constant name* of a value declaration is a tuple pattern,
+If the *constant name* of a constant declaration is a tuple pattern,
 the name of each item in the tuple is bound to the corresponding value
 in the initializer *expression*.
 ::
 
-    val (firstNumber, secondNumber) = (10, 42)
+    let (firstNumber, secondNumber) = (10, 42)
     // (firstNumber, secondNumber) : (Int, Int) = (10, 42)
 
 In this example,
@@ -140,11 +140,11 @@ Both constants may now be used independently::
     secondNumber
     // secondNumber : Int = 42
 
-The type annotation (``:`` *type*) is optional in a value declaration
+The type annotation (``:`` *type*) is optional in a constant declaration
 when the type of the *constant name* may be inferred,
 as described in :ref:`Types_TypeInference`.
 
-For more information about value declarations and for guidance about when to use them,
+For more information about constant declarations and for guidance about when to use them,
 see :ref:`BasicTypes_NamedValues`.
 
 .. langref-grammar
@@ -156,16 +156,16 @@ see :ref:`BasicTypes_NamedValues`.
 
     Grammar of a value declaration
 
-    value-declaration --> attribute-sequence-OPT value-specifier-OPT ``val`` pattern-initializer-list
+    constant-declaration --> attribute-sequence-OPT constant-specifier-OPT ``let`` pattern-initializer-list
     value-specifier -->  ``static`` | ``class``
 
     pattern-initializer-list --> pattern-initializer | pattern-initializer ``,`` pattern-initializer-list
     pattern-initializer --> pattern initializer-OPT
     initializer --> ``=`` expression
 
-.. TODO: TR: Come up with a better name than "value-specifier",
+.. TODO: TR: Come up with a better name than "constant-specifier",
     because otherwise we have lots of different names for the same choice
-    (e.g., value-specifier, variable-specifier, function-specifier).
+    (e.g., constant-specifier, variable-specifier, function-specifier).
     Maybe "type-level-specifier"? But what happens when we do get *real* static functions?
 
 .. TODO: Write about class and static constants.
