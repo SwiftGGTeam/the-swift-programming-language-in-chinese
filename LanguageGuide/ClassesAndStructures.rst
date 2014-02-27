@@ -1270,9 +1270,22 @@ Instance methods of a class are inherited by any and all subclasses of that clas
 Overriding Instance Methods
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-A subclass can provide its own custom implementation of instance methods
+A subclass can provide its own custom implementation of an instance method
 that it would otherwise inherit from a superclass.
-This is known as :newTerm:`overriding` the methods.
+This is known as :newTerm:`overriding` the method.
+
+If you define a subclass method that overrides a superclass method,
+you must prefix the overriding method definition with the ``@override`` attribute.
+This makes it clear that you intended to provide an override,
+and did not just accidentally provide a method with
+the same name, parameter types and return type by mistake.
+(Accidentally overriding a method can cause unexpected behavior,
+and method overriding without the ``@override`` attribute is
+diagnosed as an error when your code is compiled.)
+
+.. QUESTION: have I introduced the concept of "attributes" by this point?
+   If not, when / where should I do so?
+
 For example:
 
 .. testcode:: inheritance
@@ -1284,7 +1297,7 @@ For example:
             maxPassengers = 5
             numberOfWheels = 4
         }
-        func description() -> String {
+        @override func description() -> String {
             return super.description() + "; "
                 + (isConvertible ? "convertible" : "not convertible")
         }
@@ -1303,7 +1316,9 @@ which sets the maximum number of passengers to ``5``,
 and the default number of wheels to ``4``.
 
 ``Car`` then overrides its inherited ``description()`` method.
-It does this by declaring a function with the same definition as the one it inherits.
+It does this by defining a function with the same declaration as
+the one it would otherwise inherit,
+prefixed by the ``@override`` attribute.
 Rather than providing a completely custom implementation of ``description()``,
 it actually starts by calling ``super.description()`` to retrieve
 the description provided by its superclass.
