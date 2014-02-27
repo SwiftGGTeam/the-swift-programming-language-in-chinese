@@ -1901,40 +1901,50 @@ This is known as :newTerm:`overloading` the existing operators.
 
 .. testcode:: customOperators
 
-    (swift) struct Point {
+    (swift) struct Vector2D {
         var x = 0.0, y = 0.0
     }
-    (swift) func + (lhs: Point, rhs: Point) -> Point {
-        return Point(lhs.x + rhs.x, lhs.y + rhs.y)
+    (swift) func + (lhs: Vector2D, rhs: Vector2D) -> Vector2D {
+        return Vector2D(lhs.x + rhs.x, lhs.y + rhs.y)
     }
 
-This example shows how a structure can provide a custom implementation of the
-:ref:`arithmetic addition operator <Operators_ArithmeticOperators>` (``+``).
-It starts by defining a ``Point`` structure for an ``(x, y)`` coordinate.
+This example shows how to provide an implementation of the
+:ref:`arithmetic addition operator <Operators_ArithmeticOperators>` (``+``)
+for a custom structure.
+The example starts by defining a ``Vector2D`` structure for
+a two-dimensional position vector ``(x, y)``.
 This is followed by a definition of an :newTerm:`operator function`
-to add together instances of the ``Point`` structure.
+to add together instances of the ``Vector2D`` structure.
 
 The operator function is defined as a global function called ``+``,
-which takes two input parameters of type ``Point``,
-and returns a single output value, also of type ``Point``.
+which takes two input parameters of type ``Vector2D``,
+and returns a single output value, also of type ``Vector2D``.
 In this implementation, the input parameters have been named ``lhs`` and ``rhs``
-to represent the ``Point`` instances that will be on
+to represent the ``Vector2D`` instances that will be on
 the left-hand side and right-hand side of the ``+`` operator.
-The function returns a new ``Point``, whose ``x`` and ``y`` properties are
+The function returns a new ``Vector2D`` instance,
+whose ``x`` and ``y`` properties are
 initialized with the sum of the ``x`` and ``y`` properties from
-the two ``Point`` instances that are being added together.
+the two ``Vector2D`` instances that are being added together.
 
-The function is defined globally, rather than as a method on the ``Point`` structure,
-so that it can be used as an infix operator between existing ``Point`` instances:
+The function is defined globally, rather than as a method on the ``Vector2D`` structure,
+so that it can be used as an infix operator between existing ``Vector2D`` instances:
 
 .. testcode:: customOperators
 
-    (swift) let point = Point(1.0, 2.0)
-    // point : Point = Point(1.0, 2.0)
-    (swift) let anotherPoint = Point(3.0, 4.0)
-    // anotherPoint : Point = Point(3.0, 4.0)
-    (swift) let combinedPoint = point + anotherPoint
-    // combinedPoint : Point = Point(4.0, 6.0)
+    (swift) let vector = Vector2D(3.0, 1.0)
+    // vector : Vector2D = Vector2D(3.0, 1.0)
+    (swift) let anotherVector = Vector2D(2.0, 4.0)
+    // anotherVector : Vector2D = Vector2D(2.0, 4.0)
+    (swift) let combinedVector = vector + anotherVector
+    // combinedVector : Vector2D = Vector2D(5.0, 5.0)
+
+This example adds together the vectors ``(3.0, 1.0)`` and ``(2.0, 4.0)``
+to make the vector ``(5.0, 5.0)``, as illustrated below.
+
+.. image:: ../images/vectorAddition.png
+    :width: 400
+    :align: center
 
 .. _ClassesAndStructures_PrefixAndPostfixOperators:
 
@@ -1956,28 +1966,28 @@ The attribute is written before the ``func`` keyword when declaring the operator
 
 .. testcode:: customOperators
 
-    (swift) @prefix func - (rhs: Point) -> Point {
-        return Point(-rhs.x, -rhs.y)
+    (swift) @prefix func - (rhs: Vector2D) -> Vector2D {
+        return Vector2D(-rhs.x, -rhs.y)
     }
 
 This example implements the :ref:`unary minus operator <Operators_UnaryPlusAndMinusOperators>`
-(``-a``) for ``Point`` instances.
+(``-a``) for ``Vector2D`` instances.
 The unary minus operator is a prefix operator,
 and so this function has to be qualified with the ``@prefix`` attribute.
 
 For simple numeric values, the unary minus operator just converts
 positive numbers into their negative equivalent, and vice versa.
-The corresponding implementation for ``Point`` instances
+The corresponding implementation for ``Vector2D`` instances
 performs this operation on both the ``x`` and ``y`` properties:
 
 .. testcode:: customOperators
 
-    (swift) let positive = Point(3.0, 4.0)
-    // positive : Point = Point(3.0, 4.0)
+    (swift) let positive = Vector2D(3.0, 4.0)
+    // positive : Vector2D = Vector2D(3.0, 4.0)
     (swift) let negative = -positive
-    // negative : Point = Point(-3.0, -4.0)
+    // negative : Vector2D = Vector2D(-3.0, -4.0)
     (swift) let alsoPositive = -negative
-    // alsoPositive : Point = Point(3.0, 4.0)
+    // alsoPositive : Vector2D = Vector2D(3.0, 4.0)
 
 .. QUESTION: is this the first time I will have introduced attributes?
    If so, do they need more qualification?
@@ -1998,11 +2008,11 @@ as its value will be modified directly from within the operator function:
 
 .. testcode:: customOperators
 
-    (swift) @assignment func += (inout lhs: Point, rhs: Point) {
+    (swift) @assignment func += (inout lhs: Vector2D, rhs: Vector2D) {
         lhs = lhs + rhs
     }
 
-This example implements an addition assignment operator function for ``Point`` instances.
+This example implements an addition assignment operator function for ``Vector2D`` instances.
 Because an addition operator has already been defined above,
 there is no need to reimplement the addition process again here.
 Instead, this function takes advantage of the existing addition operator function,
@@ -2010,11 +2020,11 @@ and uses it to set the left-hand value to itself plus the right-hand value:
 
 .. testcode:: customOperators
 
-    (swift) var original = Point(1.0, 2.0)
-    // original : Point = Point(1.0, 2.0)
-    (swift) let pointToAdd = Point(3.0, 4.0)
-    // pointToAdd : Point = Point(3.0, 4.0)
-    (swift) original += pointToAdd
+    (swift) var original = Vector2D(1.0, 2.0)
+    // original : Vector2D = Vector2D(1.0, 2.0)
+    (swift) let vectorToAdd = Vector2D(3.0, 4.0)
+    // vectorToAdd : Vector2D = Vector2D(3.0, 4.0)
+    (swift) original += vectorToAdd
     (swift) println("original is now (\(original.x), \(original.y))")
     >>> original is now (4.0, 6.0)
 
@@ -2022,26 +2032,26 @@ The ``@assignment`` attribute can be combined with
 either the ``@prefix`` or ``@postfix`` attribute,
 as in this implementation of the
 :ref:`prefix increment operator <Operators_IncrementAndDecrementOperators>` (``++a``)
-for ``Point`` instances:
+for ``Vector2D`` instances:
 
 .. testcode:: customOperators
 
-    (swift) @prefix @assignment func ++ (inout rhs: Point) -> Point {
-        rhs += Point(1.0, 1.0)
+    (swift) @prefix @assignment func ++ (inout rhs: Vector2D) -> Vector2D {
+        rhs += Vector2D(1.0, 1.0)
         return rhs
     }
 
 This operator function takes advantage of the addition assignment operator defined above.
-It adds a ``Point`` with ``x`` and ``y`` values of ``1.0``
-to the ``Point`` on which it is called,
+It adds a ``Vector2D`` with ``x`` and ``y`` values of ``1.0``
+to the ``Vector2D`` on which it is called,
 and returns the result.
 
 .. testcode:: customOperators
 
-    (swift) var toIncrement = Point(3.0, 4.0)
-    // toIncrement : Point = Point(3.0, 4.0)
+    (swift) var toIncrement = Vector2D(3.0, 4.0)
+    // toIncrement : Vector2D = Vector2D(3.0, 4.0)
     (swift) let afterIncrement = ++toIncrement
-    // afterIncrement : Point = Point(4.0, 5.0)
+    // afterIncrement : Vector2D = Vector2D(4.0, 5.0)
     (swift) println("toIncrement is now (\(toIncrement.x), \(toIncrement.y))")
     >>> toIncrement is now (4.0, 5.0)
 
@@ -2074,7 +2084,7 @@ You can define your own :newTerm:`custom operators` in addition to
 the standard operators provided by Swift.
 Custom operators can be defined using the characters ``/ = - + * % < > ! & | ^ ~ .`` only.
 
-New operators are declared using the ``operator`` keyword,
+New operators are declared at a global level using the ``operator`` keyword,
 and can be declared as ``prefix``, ``infix`` or ``postfix``:
 
 .. testcode:: customOperators
@@ -2084,29 +2094,29 @@ and can be declared as ``prefix``, ``infix`` or ``postfix``:
 This example defines a new prefix operator called ``+++``.
 This operator does not have an existing meaning in Swift,
 and so it will be given its own custom meaning in the specific context of
-working with ``Point`` instances. For the purposes of this example,
+working with ``Vector2D`` instances. For the purposes of this example,
 ``+++`` will be treated as a new “prefix doubling incrementer” operator.
-It will double the ``x`` and ``y`` values of a ``Point`` instance,
-by adding the point to itself via assignment:
+It will double the ``x`` and ``y`` values of a ``Vector2D`` instance,
+by adding the vector to itself via assignment:
 
 .. testcode:: customOperators
 
-    (swift) @prefix @assignment func +++ (inout rhs: Point) -> Point {
+    (swift) @prefix @assignment func +++ (inout rhs: Vector2D) -> Vector2D {
         rhs += rhs
         return rhs
     }
 
-The implementation of ``+++`` is very similar to
-the implementation of ``++`` for ``Point``,
-except that this operator function adds the point to itself,
-rather than adding ``Point(1.0, 1.0)``:
+This implementation of ``+++`` is very similar to
+the implementation of ``++`` for ``Vector2D``,
+except that this operator function adds the vector to itself,
+rather than adding ``Vector2D(1.0, 1.0)``:
 
 .. testcode:: customOperators
 
-    (swift) var toBeDoubled = Point(1.0, 4.0)
-    // toBeDoubled : Point = Point(1.0, 4.0)
+    (swift) var toBeDoubled = Vector2D(1.0, 4.0)
+    // toBeDoubled : Vector2D = Vector2D(1.0, 4.0)
     (swift) let afterDoubling = +++toBeDoubled
-    // afterDoubling : Point = Point(2.0, 8.0)
+    // afterDoubling : Vector2D = Vector2D(2.0, 8.0)
     (swift) println("toBeDoubled is now (\(toBeDoubled.x), \(toBeDoubled.y))")
     >>> toBeDoubled is now (2.0, 8.0)
 
@@ -2133,18 +2143,18 @@ with ``left`` associativity, and a precedence of ``140``:
 .. testcode:: customOperators
 
     (swift) operator infix +- { associativity left precedence 140 }
-    (swift) func +- (lhs: Point, rhs: Point) -> Point {
-        return Point(lhs.x + rhs.x, lhs.y - rhs.y)
+    (swift) func +- (lhs: Vector2D, rhs: Vector2D) -> Vector2D {
+        return Vector2D(lhs.x + rhs.x, lhs.y - rhs.y)
     }
-    (swift) let firstPoint = Point(1.0, 2.0)
-    // firstPoint : Point = Point(1.0, 2.0)
-    (swift) let secondPoint = Point(3.0, 4.0)
-    // secondPoint : Point = Point(3.0, 4.0)
-    (swift) let plusMinusPoint = firstPoint +- secondPoint
-    // plusMinusPoint : Point = Point(4.0, -2.0)
+    (swift) let firstVector = Vector2D(1.0, 2.0)
+    // firstVector : Vector2D = Vector2D(1.0, 2.0)
+    (swift) let secondVector = Vector2D(3.0, 4.0)
+    // secondVector : Vector2D = Vector2D(3.0, 4.0)
+    (swift) let plusMinusVector = firstVector +- secondVector
+    // plusMinusVector : Vector2D = Vector2D(4.0, -2.0)
 
-This operator adds together the ``x`` values of two points,
-and subtracts the ``y`` value of the second point from the first.
+This operator adds together the ``x`` values of two vectors,
+and subtracts the ``y`` value of the second vector from the first.
 Because it is in essence an “additive” operator,
 it has been given the same associativity and precedence values
 (``left`` and ``140``)
