@@ -1709,21 +1709,33 @@ Deinitializers are written with the ``deinit`` keyword,
 in a similar way to how intializers are written with the ``init`` keyword.
 Deinitializers are only available on class types.
 
-Swift automatically destroys your instances when they are no longer needed, to free up resources.
-Swift handles the memory management of your class instances for you via
+Swift automatically destroys your instances when they are no longer needed,
+to free up resources.
+Swift handles the memory management of instances via
 :newTerm:`automatic reference counting` (known as :newTerm:`ARC`),
 and so there is normally no need to perform any clean-up when your instances are destroyed.
 However, there may be times when you are working with your own resources,
-and need to perform some additional clean-up yourself before the instance is destroyed.
+and need to perform some additional clean-up yourself.
 For example, if you create a custom class to open a file and write some data to it,
-you might need to close the file before the class instance disappears.
+you might need to close the file before the class instance is destroyed.
 
 Class definitions can have at most one deinitializer per class.
-The deinitializer does not take any parameters, and is called automatically.
+The deinitializer does not take any parameters,
+and is written without parentheses:
+
+::
+
+    (swift) deinit {
+        // perform the deinitialization
+    }
+
+Deinitializers are called automatically, just before instance destruction takes place.
+You are not allowed to call ``super.deinit`` yourself.
 Superclass deinitializers are inherited by their subclasses,
 and the superclass deinitializer is called automatically at the end of
 a subclass deinitializer implementation.
-You are not allowed to call ``super.deinit()`` yourself.
+Superclass deinitializers are always called,
+even if a subclass does not provide its own deinitializer.
 
 .. TODO: note that this is true even if your subclass doesn't actually provide
    an explicit deinitializer itself.
@@ -1783,7 +1795,7 @@ This is represented by the player's ``coinsInPurse`` property:
         func winCoins(coins: Int) {
             coinsInPurse += Bank.vendCoins(coins)
         }
-        deinit() {
+        deinit {
             Bank.receiveCoins(coinsInPurse)
         }
     }
