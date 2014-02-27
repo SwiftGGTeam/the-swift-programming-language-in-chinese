@@ -874,15 +874,17 @@ and an instance property that is also called ``x``:
 Using Self in Class Instance Methods
 ____________________________________
 
-For class instance methods, the ``self`` parameter is a *reference* to the instance,
-and can be used to retrieve and set its properties:
+For class instance methods, the ``self`` parameter is a read-only reference
+to the instance on which the method is called.
+Although the reference is read-only, any variable properties of
+the instance it refers to can be modified as normal:
 
 .. testcode:: selfClasses
 
     (swift) class BankAccount {
         var balance = 0.0
         func depositMoney(amount: Double) {
-            self.balance += amount
+            balance += amount
         }
     }
     (swift) let savingsAccount = BankAccount()
@@ -891,26 +893,28 @@ and can be used to retrieve and set its properties:
     (swift) println("The savings account now contains $\(savingsAccount.balance)")
     >>> The savings account now contains $100.0
 
-This example could have been written with ``balance += amount``
-rather than ``self.balance += amount``.
-The use of ``self.balance`` is primarily to illustrate that
-the ``self`` parameter is available within the ``depositMoney()`` method.
+Here, the ``depositMoney()`` instance method modifies
+the ``balance`` variable property by adding ``amount`` to it.
+
+This example could have been written with ``self.balance += amount``
+rather than ``balance += amount``.
+However, the use of the ``self`` prefix is not required,
+as there is no ambiguity as to what ``balance`` refers to.
 
 .. _ClassesAndStructures_SelfStructures:
 
 Using Self in Structure Instance Methods
 ________________________________________
 
-For structure instance methods, ``self`` is actually a *copy* of the structure instance
-as of when the method was called.
-This means that you can use ``self`` to read property values for the structure instance,
-but not to set the properties to a new value.
+For structure instance methods, the ``self`` parameter is
+a read-only copy of the structure instance, and its properties cannot be modified.
 
-If your structure instance needs to modify its own properties within a method,
-it can request to receive a writeable copy in the implicit ``self`` parameter.
-You can opt in to this behavior by placing the ``mutating`` keyword before the ``func`` keyword.
-“Mutating” in this context means “making a change”, much as it does in English –
-effectively, the method is “mutating” the ``Point`` instance:
+If your structure instance needs to modify its properties within a method,
+you can request to receive a writeable ``self`` parameter instead.
+You can opt in to this behavior by placing the ``mutating`` keyword
+before the ``func`` keyword for that method.
+The method is then able to “mutate” (i.e. “change”)
+the properties of the structure instance:
 
 .. testcode:: selfStructures
 
@@ -927,9 +931,14 @@ effectively, the method is “mutating” the ``Point`` instance:
     (swift) println("The point is now at (\(somePoint.x), \(somePoint.y))")
     >>> The point is now at (3.0, 4.0)
 
-As soon as the ``moveBy()`` method has finished executing,
-any changes it has made to the writeable copy of the implicit ``self`` parameter
-are written back to the ``Point`` instance, overwriting the previous values.
+The ``Point`` structure above defines a ``moveBy()`` method,
+which moves a ``Point`` instance by a certain amount.
+Instead of returning a new point,
+this method actually modifies the point on which it is called.
+The ``mutating`` keyword has been added to its definition
+to enable it to modify the variable properties of the implicit ``self`` parameter.
+As above, it does not need to explicitly refer to ``self``,
+and can use ``x`` and ``y`` as shorthand for ``self.x`` and ``self.y``.
 
 .. _ClassesAndStructures_Initialization:
 
