@@ -33,6 +33,8 @@ This process is covered in the :doc:`Protocols` chapter.
 
 .. QUESTION: What are the rules for overloading via extensions?
 
+.. _Extensions_ComputedProperties:
+
 Computed Properties
 -------------------
 
@@ -95,6 +97,8 @@ and can be used within mathematical calculations wherever a ``Double`` is accept
     but they cannot add :ref:`stored properties <ClassesAndStructures_StoredProperties>`,
     or add :ref:`stored property observers <ClassesAndStructures_StoredPropertyObservers>`
     to existing stored properties.
+
+.. _Extensions_Initializers:
 
 Initializers
 ------------
@@ -175,7 +179,9 @@ is known as :newTerm:`initializer overloading`.)
 
 .. QUESTION: You can use 'self' in this way for structs and enums.
    How might you do this kind of construction for a class?
-    
+
+.. _Extensions_InstanceMethods:
+
 Instance Methods
 ----------------
 
@@ -204,12 +210,20 @@ and even-numbered characters to lowercase:
 
 .. testcode:: extensionsInstanceMethods
 
-    (swift) let notVerySpooky = "woooooooooooo, i am a ghost!"
-    // notVerySpooky : String = "woooooooooooo, i am a ghost!"
-    (swift) let considerablyMoreSpooky = notVerySpooky.toSpooky()
-    // considerablyMoreSpooky : String = "WoOoOoOoOoOoO, i aM A GhOsT!"
+    (swift) let boring = "woooooooooooo, i am a ghost!"
+    // boring : String = "woooooooooooo, i am a ghost!"
+    (swift) let spooky = boring.toSpooky()
+    // spooky : String = "WoOoOoOoOoOoO, i aM A GhOsT!"
 
-Instance methods added via an extension can also modify the instance itself:
+.. _Extensions_MutatingInstanceMethods:
+
+Mutating Instance Methods
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Instance methods added via an extension can also modify (or *mutate*) the instance itself.
+Structure and enumeration methods that modify ``self`` or its properties
+must mark the instance method as ``mutating``,
+just like mutating methods from an original implementation:
 
 .. testcode:: extensionsInstanceMethods
 
@@ -226,11 +240,31 @@ Instance methods added via an extension can also modify the instance itself:
     (swift) println("someInt is now \(someInt)")
     >>> someInt is now 123
 
+This example adds a ``shiftRight()`` method to instances of ``Int``.
+This method is similar to the
+:ref:`bitwise right shift operator <Operators_BitwiseLeftAndRightShifts>`,
+but it performs a decimal shift, rather than a binary shift.
+
+The method shifts an ``Int`` to the right by ``numberOfDecimalPlaces``.
+It does this by diving the ``Int`` by ten, ``numberOfDecimalPlaces`` times.
+Because ``Int`` instances can only store whole numbers,
+and do not have a fractional component,
+the number is rounded down to the nearest whole number each time the division takes place.
+Calling ``shiftRight(3)`` on an integer variable containing the number ``123456``
+shifts the number to the right by three decimal places
+and changes the variable to have a value of ``123``, as seen above.
+
+.. _Extensions_TypeMethods:
+
 Type Methods
 ------------
 
+.. _Extensions_ComputedTypeProperties:
+
 Computed Type Properties
 ------------------------
+
+.. _Extensions_Subscripting:
 
 Subscripting
 ------------
@@ -268,6 +302,10 @@ so:
     // r3 : Int = 1
     (swift) 123456789[9]
     // r4 : Int = 0
+
+.. TODO: provide an explanation of this example
+
+.. _Extensions_EmbeddedTypes:
 
 Embedded Types
 --------------
