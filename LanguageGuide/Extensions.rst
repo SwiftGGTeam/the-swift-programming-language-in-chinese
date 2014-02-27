@@ -50,11 +50,11 @@ to provide basic support for working with distance units:
         var mm: Double { return self / 1_000.00 }
         var ft: Double { return self / 3.28084 }
     }
-    (swift) val oneInch = 25.4.mm
+    (swift) let oneInch = 25.4.mm
     // oneInch : Double = 0.0254
     (swift) println("One inch is \(oneInch) meters")
     >>> One inch is 0.0254 meters
-    (swift) val threeFeet = 3.ft
+    (swift) let threeFeet = 3.ft
     // threeFeet : Double = 0.9144
     (swift) println("Three feet is \(threeFeet) meters")
     >>> Three feet is 0.9144 meters
@@ -84,7 +84,7 @@ and can be used within mathematical calculations wherever a ``Double`` is accept
 
 .. testcode:: extensionsComputedProperties
 
-    (swift) val aMarathon = 42.km + 195.m
+    (swift) let aMarathon = 42.km + 195.m
     // aMarathon : Double = 42195.0
     (swift) println("A marathon is \(aMarathon) meters long")
     >>> A marathon is 42195.0 meters long
@@ -106,8 +106,8 @@ your own custom types as initializer parameters.
 .. note::
 
     Extensions can add new initializers to classes, but they cannot add
-    a :ref:`destructor <ClassesAndStructures_Destructors>`.
-    Destructors must always be provided by the original class implementation.
+    a :ref:`deinitializer <ClassesAndStructures_Deinitializers>`.
+    Deinitializers must always be provided by the original class implementation.
 
 This approach can be used to extend the basic ``String`` type
 to accept an instance of your own custom type as an initializer parameter,
@@ -126,9 +126,9 @@ for use with string interpolation.
             self = "(\(point.x), \(point.y))"
         }
     }
-    (swift) val somePoint = Point(3.0, 5.0)
+    (swift) let somePoint = Point(3.0, 5.0)
     // somePoint : Point = Point(3.0, 5.0)
-    (swift) val pointDescription = String(somePoint)
+    (swift) let pointDescription = String(somePoint)
     // pointDescription : String = "(3.0, 5.0)"
 
 This example defines a new structure called ``Point`` to represent an ``(x, y)`` co-ordinate.
@@ -147,7 +147,7 @@ to incorporate their values as part of a longer string:
 
 .. testcode:: extensionsInitializers
 
-    (swift) val anotherPoint = Point(-2.0, 6.0)
+    (swift) let anotherPoint = Point(-2.0, 6.0)
     // anotherPoint : Point = Point(-2.0, 6.0)
     (swift) println("anotherPoint's value is \(anotherPoint)")
     >>> anotherPoint's value is (-2.0, 6.0)
@@ -204,9 +204,9 @@ and even-numbered characters to lowercase:
 
 .. testcode:: extensionsInstanceMethods
 
-    (swift) val notVerySpooky = "woooooooooooo, i am a ghost!"
+    (swift) let notVerySpooky = "woooooooooooo, i am a ghost!"
     // notVerySpooky : String = "woooooooooooo, i am a ghost!"
-    (swift) val considerablyMoreSpooky = notVerySpooky.toSpooky()
+    (swift) let considerablyMoreSpooky = notVerySpooky.toSpooky()
     // considerablyMoreSpooky : String = "WoOoOoOoOoOoO, i aM A GhOsT!"
 
 Instance methods added via an extension can also modify the instance itself:

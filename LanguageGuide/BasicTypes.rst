@@ -43,7 +43,7 @@ Although these types may be familiar,
 Swift expands their capabilities beyond what is possible in other languages.
 
 In addition to these simple types,
-Swift introduces some less familiar (but very powerful) advanced types:
+Swift incorporates some less familiar (but very powerful) advanced types:
 
 * arbitrary groups of values of different types (known as :newTerm:`tuples`)
 * types that can be either a known value or a missing value (known as :newTerm:`optionals`)
@@ -80,14 +80,14 @@ A constant has a fixed value that cannot be changed once it is set,
 whereas a variable can be set to a different value in the future.
 
 All named values must be declared before they are used.
-Constants are declared using the ``val`` keyword,
+Constants are declared using the ``let`` keyword,
 and variables are declared using the ``var`` keyword.
 Here's an example of how constants and variables could be used
 to track the number of login attempts a user has made:
 
 .. testcode:: namedValues
 
-    (swift) val maximumNumberOfLoginAttempts = 10
+    (swift) let maximumNumberOfLoginAttempts = 10
     // maximumNumberOfLoginAttempts : Int = 10
     (swift) var currentLoginAttempt = 0
     // currentLoginAttempt : Int = 0
@@ -99,22 +99,22 @@ and give it a value of ``10``.
 Then, declare a new variable called ``currentLoginAttempt``,
 and give it an initial value of ``0``.”
 
-A constant is used for the maximum number of allowed login attempts,
+The maximum number of allowed login attempts is declared as a constant,
 because that maximum value never changes.
-A variable is used for the current login attempt counter, however,
+The current login attempt counter is declared as a variable, however,
 because this value must be incremented after each failed login attempt.
 
 If a named value in your code is not going to change,
-it should always be declared as a constant with the ``val`` keyword.
+it should always be declared as a constant with the ``let`` keyword.
 Variables should only be used for
 named values that need to be able to change their value.
 
 Named value declarations can include a specific *type*,
-to be explicit about the kind of named value you want to create:
+to be explicit about the kind of values they can store:
 
 .. testcode:: namedValues
 
-    (swift) val welcomeMessage: String = "Hello"
+    (swift) let welcomeMessage: String = "Hello"
     // welcomeMessage : String = "Hello"
 
 The colon in the declaration means *“…of type…,”*
@@ -131,11 +131,11 @@ including Unicode characters:
 
 .. testcode:: namedValues
 
-    (swift) val π = 3.14159
+    (swift) let π = 3.14159
     // π : Double = 3.14159
-    (swift) val 你好 = "你好世界"
+    (swift) let 你好 = "你好世界"
     // 你好 : String = "你好世界"
-    (swift) val 🐶🐮 = "dogcow"
+    (swift) let 🐶🐮 = "dogcow"
     // 🐶🐮 : String = "dogcow"
 
 Constant and variable names cannot contain
@@ -149,8 +149,8 @@ you can't redeclare it again with the same name,
 or set it to store values of a different type.
 You also can't change it from a constant to a variable (or vice versa).
 
-The value of an existing variable can be changed to another value of the same type.
-You can also print the value of any named value by using the ``println`` function:
+The value of an existing variable can be changed to another value of a compatible type.
+You can also print the value of a named value by using the ``println`` function:
 
 .. testcode:: namedValues
 
@@ -172,10 +172,10 @@ and attempting to do so will result in an error:
 
 .. testcode:: namedValues
 
-    (swift) val languageName = "Swift"
+    (swift) let languageName = "Swift"
     // languageName : String = "Swift"
     (swift) languageName = "Swift++"
-    !!! <REPL Input>:1:14: error: cannot assign to 'val' value 'languageName'
+    !!! <REPL Input>:1:14: error: cannot assign to 'let' value 'languageName'
     !!! languageName = "Swift++"
     !!! ~~~~~~~~~~~~ ^
 
@@ -186,8 +186,8 @@ Integers
 
 :newTerm:`Integers` are whole numbers with no fractional component,
 such as ``42`` and ``-23``.
-Integers are either :newTerm:`signed` (which means they can be positive or negative),
-or :newTerm:`unsigned` (which means they can only be positive).
+Integers are either :newTerm:`signed` (which means they can be positive, zero or negative),
+or :newTerm:`unsigned` (which means they can only be positive or zero).
 
 Swift provides integers in signed and unsigned forms in sizes of
 8, 16, 32, and 64 bits.
@@ -195,6 +195,11 @@ These integers follow a naming convention similar to C,
 in that an 8-bit unsigned integer is of type ``UInt8``,
 and a 32-bit signed integer is of type ``Int32``.
 Like all types in Swift, these integer types have capitalized names.
+
+.. _BasicTypes_Int:
+
+Int
+~~~
 
 In most cases, there's no need to pick a specific size of integer to use in your code.
 Swift provides an additional integer type, ``Int``,
@@ -206,14 +211,14 @@ which has the same size as the current platform's architecture:
 Unless you need to work with a specific size of integer,
 you should always use ``Int`` for code consistency and interoperability.
 Even on 32-bit platforms, ``Int`` can store any value between ``-2,147,483,648`` and ``2,147,483,647``,
-and is typically large enough for everyday integer values.
+and is large enough for many integer ranges.
 
 .. _BasicTypes_FloatingPointNumbers:
 
 Floating-Point Numbers
 ----------------------
 
-:newTerm:`Floating-point numbers` (also known as :newTerm:`floats`) are numbers with a fractional component,
+:newTerm:`Floating-point numbers` are numbers with a fractional component,
 such as ``3.14159``, ``0.1`` and ``-273.15``.
 
 Swift provides two signed floating-point number types:
@@ -226,7 +231,7 @@ Swift provides two signed floating-point number types:
 .. _BasicTypes_TypeSafetyAndTypeInference:
 
 Type Safety and Type Inference
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------
 
 Swift is a :newTerm:`type safe` language.
 This means that it encourages you to be clear about the types of values and objects your code can work with.
@@ -245,6 +250,10 @@ Swift will use :newTerm:`type inference` to work out the appropriate type.
 Type inference is the ability for a compiler to automatically deduce the type of a particular expression when it compiles your code,
 just by examining the values you provide.
 
+Type inference means that Swift requires far fewer type declarations than languages such as C or Objective-C.
+Named values are still explicitly-typed,
+but much of the work of specifying their type is done for you.
+
 Type inference is particularly useful
 when you declare a constant or variable with an initial value.
 This is often done by assigning a :newTerm:`literal value` (or :newTerm:`literal`)
@@ -259,7 +268,7 @@ because you have initialized it with a number that looks like an integer:
 
 .. testcode:: typeInference
 
-    (swift) val meaningOfLife = 42
+    (swift) let meaningOfLife = 42
     // meaningOfLife : Int = 42
 
 Likewise, if you don't specify a type for a floating-point literal,
@@ -267,7 +276,7 @@ Swift assumes that you want to create a ``Double``:
 
 .. testcode:: typeInference
 
-    (swift) val pi = 3.14159
+    (swift) let pi = 3.14159
     // pi : Double = 3.14159
 
 Swift always chooses ``Double`` (rather than ``Float``)
@@ -278,21 +287,17 @@ a type of ``Double`` will be inferred from the context:
 
 .. testcode:: typeInference
 
-    (swift) val anotherPi = 3 + 0.14159
+    (swift) let anotherPi = 3 + 0.14159
     // anotherPi : Double = 3.14159
 
 The literal value of ``3`` has no explicit type in and of itself,
 and so an appropriate output type of ``Double`` is inferred
 from the presence of a floating-point literal as part of the addition.
 
-Type inference means that Swift requires far fewer type declarations than languages such as C or Objective-C.
-Named values are still explicitly-typed,
-but much of the work of specifying their type is done for you.
-
 .. _BasicTypes_NumericLiterals:
 
 Numeric Literals
-~~~~~~~~~~~~~~~~
+----------------
 
 Integer literals can be written as any of the following:
 
@@ -305,13 +310,13 @@ All of these integer literals have a decimal value of ``17``:
 
 .. testcode:: numberLiterals
 
-    (swift) val decimalInteger = 17
+    (swift) let decimalInteger = 17
     // decimalInteger : Int = 17
-    (swift) val binaryInteger = 0b10001        // 17 in binary notation
+    (swift) let binaryInteger = 0b10001        // 17 in binary notation
     // binaryInteger : Int = 17
-    (swift) val octalInteger = 0o21            // 17 in octal notation
+    (swift) let octalInteger = 0o21            // 17 in octal notation
     // octalInteger : Int = 17
-    (swift) val hexadecimalInteger = 0x11      // 17 in hexadecimal notation
+    (swift) let hexadecimalInteger = 0x11      // 17 in hexadecimal notation
     // hexadecimalInteger : Int = 17
 
 Floating-point literals can be decimal (with no prefix),
@@ -337,11 +342,11 @@ All of these floating-point literals have a decimal value of ``12.5``:
 
 .. testcode:: numberLiterals
 
-    (swift) val decimalDouble = 12.5
+    (swift) let decimalDouble = 12.5
     // decimalDouble : Double = 12.5
-    (swift) val exponentDouble = 1.25e1
+    (swift) let exponentDouble = 1.25e1
     // exponentDouble : Double = 12.5
-    (swift) val hexadecimalDouble = 0xC.8p0
+    (swift) let hexadecimalDouble = 0xC.8p0
     // hexadecimalDouble : Double = 12.5
 
 Numeric literals can contain extra formatting to make them easier to read.
@@ -351,11 +356,11 @@ Neither type of formatting affects the underlying value of the literal:
 
 .. testcode:: numberLiterals
 
-    (swift) val paddedDouble = 000123.456
+    (swift) let paddedDouble = 000123.456
     // paddedDouble : Double = 123.456
-    (swift) val oneMillion = 1_000_000
+    (swift) let oneMillion = 1_000_000
     // oneMillion : Int = 1000000
-    (swift) val justOverOneMillion = 1_000_000.000_000_1
+    (swift) let justOverOneMillion = 1_000_000.000_000_1
     // justOverOneMillion : Double = 1e+06
 
 In the example above, the value of ``justOverOneMillion`` has been printed as ``1e+06``.
@@ -365,7 +370,7 @@ The actual value of ``justOverOneMillion`` still has all of the precision of the
 .. _BasicTypes_NumericTypeConversion:
 
 Numeric Type Conversion
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 The ``Int`` type should be used for all general-purpose integer named values in your code,
 even if they are known to be nonnegative.
@@ -380,10 +385,28 @@ Using explicitly-sized types in these situations
 helps to catch any accidental value overflows
 and implicitly documents the nature of the data being used.
 
+.. _BasicTypes_IntegerBounds:
+
+Integer Bounds
+~~~~~~~~~~~~~~
+
+The minimum and maximum values of each integer type can be accessed using its ``min`` and ``max`` properties:
+
+.. testcode:: namedValues
+
+    (swift) let minimumValue = UInt8.min
+    // minimumValue : UInt8 = 0
+    (swift) let maximumValue = UInt8.max
+    // maximumValue : UInt8 = 255
+
+The values of these properties are of the appropriate sized number type
+(such as ``UInt8`` in the example above)
+and can therefore be used in expressions alongside other values of the same type.
+
 .. _BasicTypes_IntegerConversion:
 
 Integer Conversion
-__________________
+~~~~~~~~~~~~~~~~~~
 
 The range of numbers that can be stored in an integer named value
 is different for each numeric type.
@@ -402,11 +425,11 @@ you initialize a new number of the desired type with the existing value:
 
 .. testcode:: typeConversion
 
-    (swift) val twoThousand: UInt16 = 2_000
+    (swift) let twoThousand: UInt16 = 2_000
     // twoThousand : UInt16 = 2000
-    (swift) val one: UInt8 = 1
+    (swift) let one: UInt8 = 1
     // one : UInt8 = 1
-    (swift) val twoThousandAndOne = twoThousand + UInt16(one)
+    (swift) let twoThousandAndOne = twoThousand + UInt16(one)
     // twoThousandAndOne : UInt16 = 2001
 
 The constant ``twoThousand`` is of type ``UInt16``,
@@ -436,17 +459,17 @@ is covered in :doc:`Extensions`.
 .. _BasicTypes_IntegerToFloatingPointConversion:
 
 Integer to Floating-Point Conversion
-____________________________________
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Conversions between integer and floating-point numeric types must also be made explicit:
 
 .. testcode:: typeConversion
 
-    (swift) val three = 3
+    (swift) let three = 3
     // three : Int = 3
-    (swift) val pointOneFourOneFiveNine = 0.14159
+    (swift) let pointOneFourOneFiveNine = 0.14159
     // pointOneFourOneFiveNine : Double = 0.14159
-    (swift) val pi = Double(three) + pointOneFourOneFiveNine
+    (swift) let pi = Double(three) + pointOneFourOneFiveNine
     // pi : Float64 = 3.14159
 
 Here, the value of the constant ``three`` is used to create a new value of type ``Double``,
@@ -468,24 +491,6 @@ Their type is inferred only at the point that they are evaluated by the compiler
    I think it's more appropriate here, however,
    and helps to reinforce the “just use Int” message.
 
-.. _BasicTypes_NumericBounds:
-
-Numeric Bounds
-~~~~~~~~~~~~~~
-
-The minimum and maximum values of each integer type can be accessed using its ``min`` and ``max`` properties:
-
-.. testcode:: namedValues
-
-    (swift) val minimumValue = UInt8.min
-    // minimumValue : UInt8 = 0
-    (swift) val maximumValue = UInt8.max
-    // maximumValue : UInt8 = 255
-
-The values of these properties are of the appropriate sized number type
-(such as ``UInt8`` in the example above)
-and can therefore be used in expressions alongside other values of the same type.
-
 .. _BasicTypes_Booleans:
 
 Booleans
@@ -497,9 +502,9 @@ because they can only ever be ``true`` or ``false``:
 
 .. testcode:: booleans
 
-    (swift) val orangesAreOrange = true
+    (swift) let orangesAreOrange = true
     // orangesAreOrange : Bool = true
-    (swift) val turnipsAreDelicious = false
+    (swift) let turnipsAreDelicious = false
     // turnipsAreDelicious : Bool = false
 
 The types of ``orangesAreOrange`` and ``turnipsAreDelicious`` have been inferred
@@ -526,7 +531,7 @@ Conditional statements such as ``if else`` are covered in more detail in :doc:`C
 Swift's type safety means that non-Boolean values cannot be substituted for ``Bool``.
 You cannot, for example, say::
 
-    (swift) val i = 1
+    (swift) let i = 1
     // i : Int = 1
     (swift) if i {
         // do stuff
@@ -573,7 +578,7 @@ Here's an example of a tuple:
 
 .. testcode:: tuples
 
-    (swift) val statusCode = (404, "Not Found")
+    (swift) let statusCode = (404, "Not Found")
     // statusCode : (Int, String) = (404, "Not Found")
 
 ``(404, "Not Found")`` is a tuple that describes an *HTTP status code*.
@@ -655,9 +660,9 @@ The example below shows how to use ``toInt()`` to try to convert a ``String`` in
 
 .. testcode:: optionals
 
-    (swift) val possibleNumber = "123"
+    (swift) let possibleNumber = "123"
     // possibleNumber : String = "123"
-    (swift) val convertedNumber = possibleNumber.toInt()
+    (swift) let convertedNumber = possibleNumber.toInt()
     // convertedNumber : Int? = <unprintable value>
 
 ``convertedNumber`` has an inferred type of ``Int?``, not ``Int``.

@@ -51,7 +51,7 @@ This makes it easy for the function to be called from elsewhere in your code in 
 .. testcode:: functionDeclaration
 
     (swift) func sayHello(personName: String) -> String {
-        val greeting = "Hello, " + personName + "!"
+        let greeting = "Hello, " + personName + "!"
         return greeting
     }
     (swift) println(sayHello("Anna"))
@@ -150,7 +150,7 @@ For example, the range function above can be rewritten to take a tuple of two ``
     (swift) func halfOpenRangeLengthForRange(range: (Int, Int)) -> Int {
         return range.1 - range.0
     }
-    (swift) val someRange = (1, 10)
+    (swift) let someRange = (1, 10)
     // someRange : (Int, Int) = (1, 10)
     (swift) println(halfOpenRangeLengthForRange(someRange))
     >>> 9
@@ -174,7 +174,7 @@ This enables a function to return a combination of values as part of one compoun
 .. testcode:: functionParameters
 
     (swift) func splitOnFirst(string: String, splitter: UnicodeScalar) -> (String, String?) {
-        val size = string.size()
+        let size = string.size()
         for i in 0...size {
             if string[i] == splitter {
                 return (string[0...i], string[i+1...size])
@@ -202,9 +202,9 @@ and a value of ``.None`` in its second value to indicate that ``splitter`` was n
 
 .. testcode:: functionParameters
 
-    (swift) val helloWorld = splitOnFirst("hello world", ' ')
+    (swift) let helloWorld = splitOnFirst("hello world", ' ')
     // helloWorld : (String, String?) = ("hello", <unprintable value>)
-    (swift) if val secondPart = helloWorld.1 {
+    (swift) if let secondPart = helloWorld.1 {
         println("The text from after the splitter is '\(secondPart)'")
     }
     >>> The text from after the splitter is 'world'
@@ -228,7 +228,7 @@ and also enables values to be passed in a different order to the original functi
         }
         return false
     }
-    (swift) val containsASpace = containsCharacter(
+    (swift) let containsASpace = containsCharacter(
         characterToFind: ' ',
         stringToSearch: "This will return true")
     // containsASpace : Bool = true
@@ -252,7 +252,7 @@ the passed parameters are assumed to be in the order they were originally declar
 
 .. testcode:: functionParameters
 
-    (swift) val containsAHyphen = containsCharacter("This will return false", '-')
+    (swift) let containsAHyphen = containsCharacter("This will return false", '-')
     // containsAHyphen : Bool = false
 
 .. _Functions_DefaultParameterValues:
@@ -440,15 +440,15 @@ Variable parameters are declared by prefixing the parameter name with the keywor
 .. testcode:: functionParameters
 
     (swift) func alignRight(var string: String, count: Int, pad: UnicodeScalar) -> String {
-        val amountToPad = count - string.size()
+        let amountToPad = count - string.size()
         for _ in 0...amountToPad {
             string = pad + string
         }
         return string
     }
-    (swift) val originalString = "hello"
+    (swift) let originalString = "hello"
     // originalString : String = "hello"
-    (swift) val paddedString = alignRight(originalString, 10, '-')
+    (swift) let paddedString = alignRight(originalString, 10, '-')
     // paddedString : String = "-----hello"
     (swift) println("The original string is still '\(originalString)'")
     >>> The original string is still 'hello'
