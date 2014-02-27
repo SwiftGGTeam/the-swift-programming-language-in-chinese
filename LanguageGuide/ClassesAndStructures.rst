@@ -1700,6 +1700,9 @@ whenever a ``Song`` is found in the library.
 
 .. TODO: casting also needs to be mentioned in the context of protocol conformance.
 
+.. TODO: talk about the use of "as" outside of an "if" statement sense,
+   once rdar://16063985 is fixed.
+
 .. QUESTION: should I mention upcasting here?
    I can't think of an example where it's useful.
    However, it does display different behavior from downcasting,
