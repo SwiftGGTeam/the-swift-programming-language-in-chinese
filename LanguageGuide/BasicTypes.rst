@@ -175,11 +175,9 @@ and attempting to do so will result in an error:
     (swift) let languageName = "Swift"
     // languageName : String = "Swift"
     (swift) languageName = "Swift++"
-    !!! <REPL Input>:1:14: error: cannot assign to 'val' value 'languageName'
+    !!! <REPL Input>:1:14: error: cannot assign to 'let' value 'languageName'
     !!! languageName = "Swift++"
     !!! ~~~~~~~~~~~~ ^
-
-.. TODO: Change 'val' to 'let' when the error message changes
 
 .. _BasicTypes_Integers:
 
