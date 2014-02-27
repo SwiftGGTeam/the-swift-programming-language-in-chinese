@@ -243,7 +243,7 @@ just like mutating methods from an original implementation:
 This example adds a ``shiftRight()`` method to instances of ``Int``.
 This method is similar to the
 :ref:`bitwise right shift operator <Operators_BitwiseLeftAndRightShifts>`,
-but it performs a decimal shift, rather than a binary shift.
+except that it shifts by powers of ten, rather than powers of two.
 
 The method shifts an ``Int`` to the right by ``numberOfDecimalPlaces``.
 It does this by diving the ``Int`` by ten, ``numberOfDecimalPlaces`` times.
@@ -251,18 +251,22 @@ Because ``Int`` instances can only store whole numbers,
 and do not have a fractional component,
 the number is rounded down to the nearest whole number each time the division takes place.
 Calling ``shiftRight(3)`` on an integer variable containing the number ``123456``
-shifts the number to the right by three decimal places
-and changes the variable to have a value of ``123``, as seen above.
+shifts the number to the right by three decimal places,
+and changes the variable to have a value of ``123``.
+
+.. _Extensions_ComputedTypeProperties:
+
+Computed Type Properties
+------------------------
+
+[to be written]
 
 .. _Extensions_TypeMethods:
 
 Type Methods
 ------------
 
-.. _Extensions_ComputedTypeProperties:
-
-Computed Type Properties
-------------------------
+[to be written]
 
 .. _Extensions_Subscripting:
 
@@ -309,6 +313,77 @@ so:
 
 Embedded Types
 --------------
+
+Extensions can add new :ref:`embedded types <Enumerations_EmbeddedTypes>`
+to existing classes, structures and enumerations:
+
+.. testcode:: extensionsEmbeddedTypes
+
+    (swift) extension UnicodeScalar {
+        enum Kind {
+            case Vowel, Consonant, Other
+        }
+        var kind: Kind {
+            switch self.lowercase {
+                case 'a', 'e', 'i', 'o', 'u':
+                    return .Vowel
+                case 'b', 'c', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'm',
+                     'n', 'p', 'q', 'r', 's', 't', 'v', 'w', 'x', 'y', 'z':
+                    return .Consonant
+                default:
+                    return .Other
+            }
+        }
+    }
+
+This example adds a new embedded enumeration to ``UnicodeScalar``.
+This enumeration, called ``Kind``,
+gives a way to express the kind of letter that a particular scalar represents.
+Specifically, it expresses whether the scalar is
+a vowel or a consonant in a standard Latin script
+(without taking into account accents or regional variations),
+or whether it is some other kind of scalar.
+
+This example also adds a new computed instance property to ``UnicodeScalar``,
+called ``kind``, which returns the appropriate ``Kind`` enumeration member for that scalar.
+
+The embedded enumeration can now be used with ``UnicodeScalar`` values:
+
+.. testcode:: extensionsEmbeddedTypes
+
+    (swift) func printLetterKinds(word: String) {
+        println("'\(word)' is made up of the following kinds of letters:")
+        for scalar in word.chars {
+            switch scalar.kind {
+                case .Vowel:
+                    print("vowel ")
+                case .Consonant:
+                    print("consonant ")
+                case .Other:
+                    print("other ")
+            }
+        }
+        print("\n")
+    }
+    (swift) printLetterKinds("Hello")
+    >>> 'Hello' is made up of the following kinds of letters:
+    >>> consonant vowel consonant consonant vowel
+
+This function, ``printLetterKinds()``,
+takes an input ``String`` value and iterates over its characters.
+For each scalar, it considers the ``kind`` computed property for that scalar,
+and prints an appropriate description of that kind.
+The ``printLetterKinds()`` function can then be called
+to print the kinds of letters in an entire word,
+as shown here for the word ``"Hello"``.
+
+.. note::
+
+    ``scalar.kind`` is already known to be of type ``UnicodeScalar.Kind``.
+    Because of this, all of the ``UnicodeScalar.Kind`` member values
+    can be written in short-hand form inside the ``switch`` statement,
+    such as ``.Vowel`` rather than ``UnicodeScalar.Kind.Vowel``.
+
 
 .. refnote:: References
 
