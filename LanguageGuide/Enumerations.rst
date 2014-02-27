@@ -400,19 +400,14 @@ The enumeration provides a basic initializer, ``init()``,
 which assumes that the train's state is “on time”.
 This is a reasonable default state for a train starting out on its journey
 if no other information is provided.
-The ``init()`` method uses the special ``self`` keyword to refer to
-the new instance of ``TrainStatus`` that is being created,
-and requests that it become an instance of the ``OnTime`` enumeration member.
+The ``init()`` method uses the ``self`` keyword to assign
+an instance of the ``OnTime`` enumeration member to
+the new instance of ``TrainStatus`` that is being created.
 
 .. note::
 
-    Enumerations are the only types that can
-    specify a value for ``self`` in this way during initialization.
-    ``self = OnTime`` does not (strictly speaking)
-    create a new “instance” of ``OnTime`` here.
-    Rather, it specifies that ``OnTime`` is the enumeration member to be used
-    when creating this new instance.
-    Classes and structures cannot assign to ``self`` in this way during initialization.
+    Enumerations and structures can assign a value to ``self`` during initialization,
+    but classes cannot.
 
 ``TrainStatus`` defines a read-only computed ``String`` property called ``description``,
 which provides a human-readable description based on the enumeration member type.
