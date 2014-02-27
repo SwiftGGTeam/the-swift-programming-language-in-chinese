@@ -504,12 +504,12 @@ and then passing this type information up to the root (the variable ``x``).
 
 In Swift, type information may also flow in the opposite direction---from the root down to the leaves.
 In the following example, for instance,
-the explicit type annotation (``: Float``) on the variable ``eFloat``
+the explicit type annotation (``: Float``) on the constant ``eFloat``
 causes the numeric literal ``2.71828`` to have type ``Float`` instead of type ``Double``.::
 
-    var e = 2.71828
+    let e = 2.71828
     // e : Double = 2.71828
-    var eFloat : Float = 2.71828
+    let eFloat : Float = 2.71828
     // eFloat : Float = 2.71828
 
 Type inference in Swift operates at the level of a single expression or statement.

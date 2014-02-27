@@ -5,7 +5,7 @@ Declarations
 
     decl ::= decl-class
     decl ::= decl-constructor
-    decl ::= decl-destructor
+    decl ::= decl-deinitializer
     decl ::= decl-extension
     decl ::= decl-func
     decl ::= decl-import
@@ -15,7 +15,7 @@ Declarations
     decl ::= decl-struct
     decl ::= decl-typealias
     decl ::= decl-var
-    decl ::= decl-val
+    decl ::= decl-let
     decl ::= decl-subscript
 
 .. syntax-grammar::
@@ -24,7 +24,7 @@ Declarations
 
     declaration --> import-declaration
     declaration --> variable-declaration
-    declaration --> value-declaration
+    declaration --> let-declaration
     declaration --> typealias-declaration
     declaration --> function-declaration
     declaration --> enum-declaration
@@ -33,7 +33,7 @@ Declarations
     declaration --> class-declaration
     declaration --> protocol-declaration
     declaration --> constructor-declaration
-    declaration --> destructor-declaration
+    declaration --> deinitializer-declaration
     declaration --> extension-declaration
     declaration --> subscript-declaration
     declarations --> declaration declarations-OPT
@@ -140,25 +140,25 @@ Variable Declaration
 .. TODO: Update the grammar for getter/setters/didSet/willSet.
     See: <rdar://problem/15966905> [Craig feedback] Consider "juxtaposed" brace enclosed property syntax
 
-.. _Declarations_ValueDeclaration:
+.. _Declarations_LetDeclaration:
 
-Value Declaration
------------------
+Let Declaration
+---------------
 
 .. syntax-outline::
 
-    val <#variable name#> : <#type#> = <#expression#>
+    let <#variable name#> : <#type#> = <#expression#>
 
 .. langref-grammar
 
-    decl-let    ::= attribute-list 'val' pattern initializer?  (',' pattern initializer?)*
+    decl-let    ::= attribute-list 'let' pattern initializer?  (',' pattern initializer?)*
     initializer ::= '=' expr
 
 .. syntax-grammar::
 
-    Grammar of a value declaration
+    Grammar of a let declaration
 
-    value-declaration --> attribute-sequence-OPT ``val`` pattern-initializer-list
+    let-declaration --> attribute-sequence-OPT ``let`` pattern-initializer-list
 
 .. _Declarations_TypealiasDeclaration:
 
@@ -535,27 +535,27 @@ Initializer Declaration
     constructor-declaration --> attribute-sequence-OPT ``init`` generic-parameter-clause-OPT constructor-signature code-block
     constructor-signature --> tuple-pattern | selector-tuples
 
-.. _Declarations_DestructorDeclaration:
+.. _Declarations_DeinitializerDeclaration:
 
-Destructor Declaration
-----------------------
+Deinitializer Declaration
+-------------------------
 
 .. syntax-outline::
 
-    destructor() {
+    deinit() {
         <#statements#>
     }
 
 .. langref-grammar
 
-    decl-constructor ::= attribute-list 'destructor' '(' ')' brace-item-list
-    NOTE: langref contains a typo here---should be 'decl-destructor'
+    decl-de ::= attribute-list 'deinit' '(' ')' brace-item-list
+    NOTE: langref contains a typo here---should be 'decl-deinitializer'
 
 .. syntax-grammar::
 
-    Grammar of a destructor declaration
+    Grammar of a deinitializer declaration
 
-    destructor-declaration --> attribute-sequence-OPT ``destructor`` ``(`` ``)`` code-block
+    deinitializer-declaration --> attribute-sequence-OPT ``deinit`` ``(`` ``)`` code-block
 
 .. _Declarations_ExtensionDeclaration:
 
