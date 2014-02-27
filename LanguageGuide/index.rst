@@ -17,4 +17,3 @@ Chapters that have not yet been written are indicated with an [x] after their na
     Extensions
     Protocols
     Generics
-    StandardFunctions
