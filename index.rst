@@ -19,6 +19,22 @@ Contents
 Change Log
 ----------
 
+February 27 2014
+~~~~~~~~~~~~~~~~
+
+Language Guide
+++++++++++++++
+
+* ``val`` is once again ``let``
+* Destructors are now :ref:`ClassesAndStructures_Deinitializers`,
+  and have an improved and expanded description
+* Added information about the new :ref:`@override attribute <ClassesAndStructures_OverridingInstanceMethods>`
+* Improved descriptions for :ref:`the implicit self parameter <ClassesAndStructures_Self>`
+* The :ref:`ClassesAndStructures_OperatorFunctions` section of :doc:`LanguageGuide/ClassesAndStructures`
+  now uses a Vector2D structure instead of a Point
+* Clarified that structures can also assign to ``self`` within an initializer
+* Editorial changes and improvements throughout, as ever
+
 February 25 2014
 ~~~~~~~~~~~~~~~~
 
