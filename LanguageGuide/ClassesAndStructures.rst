@@ -50,7 +50,7 @@ Protocols are covered in the :doc:`Protocols` chapter, and extensions are covere
 In addition, classes have several capabilities that structures do not:
 
 * :newTerm:`inheritance`, which enables one class to inherit the characteristics of another;
-* :newTerm:`destructors`, which enable an instance of a class to tidy up after itself; and
+* :newTerm:`deinitializers`, which enable an instance of a class to clean up after itself; and
 * :newTerm:`type casting`, which enables you to check and interpret the type of a class instance at runtime
 
 All of these capabilities are described in more detail below.
@@ -142,9 +142,9 @@ The syntax for creating instances is very similar for both structures and classe
 
 .. testcode:: classesAndStructures
 
-    (swift) val someSize = Size()
+    (swift) let someSize = Size()
     // someSize : Size = Size(0.0, 0.0)
-    (swift) val someRectangle = Rectangle()
+    (swift) let someRectangle = Rectangle()
     // someRectangle : Rectangle = <Rectangle instance>
 
 Structures and classes both use :newTerm:`initializer syntax` when creating new instances.
@@ -219,7 +219,7 @@ can be passed to the memberwise initializer by name:
 
 .. testcode:: classesAndStructures
 
-    (swift) val twoByTwo = Size(width: 2.0, height: 2.0)
+    (swift) let twoByTwo = Size(width: 2.0, height: 2.0)
     // twoByTwo : Size = Size(2.0, 2.0)
 
 Initial values can also be provided without names,
@@ -227,7 +227,7 @@ if they are listed in the same order that the properties are declared in the str
 
 .. testcode:: classesAndStructures
 
-    (swift) val fourByThree = Size(4.0, 3.0)
+    (swift) let fourByThree = Size(4.0, 3.0)
     // fourByThree : Size = Size(4.0, 3.0)
 
 .. TODO: Include a justifiable reason for why classes do not provide a memberwise initializer.
@@ -245,7 +245,7 @@ that is stored as part of an instance.
 Properties of this kind are known as :newTerm:`stored properties`.
 Stored properties can be either :newTerm:`variable stored properties`
 (introduced by the ``var`` keyword, as in the examples above),
-or :newTerm:`constant stored properties` (introduced by the ``val`` keyword).
+or :newTerm:`constant stored properties` (introduced by the ``let`` keyword).
 
 Constant stored properties are very similar to constant named values,
 in that their value cannot be changed once it has been initialized.
@@ -288,7 +288,7 @@ Here's an example of ``willSet`` and ``didSet`` in action:
             }
         }
     }
-    (swift) val stepCounter = StepCounter()
+    (swift) let stepCounter = StepCounter()
     // stepCounter : StepCounter = <StepCounter instance>
     (swift) stepCounter.totalSteps = 200
     >>> Added 200 steps
@@ -310,7 +310,7 @@ The class also declares a variable stored property called ``previousTotalSteps``
 .. note::
 
     ``willSet`` and ``didSet`` observers are not called when
-    a property is first initialized with its default or initial value.
+    a property is first initialized.
     They are only called when the property's value is set
     outside of an initialization context.
 
@@ -365,8 +365,8 @@ to retrieve and set other properties and values indirectly.
         var size = Size()
         var center: Point {
             get {
-                val centerX = origin.x + (size.width / 2)
-                val centerY = origin.y + (size.height / 2)
+                let centerX = origin.x + (size.width / 2)
+                let centerY = origin.y + (size.height / 2)
                 return Point(centerX, centerY)
             }
             set(newCenter) {
@@ -377,7 +377,7 @@ to retrieve and set other properties and values indirectly.
     }
     (swift) var square = Rect(origin: Point(0.0, 0.0), size: Size(10.0, 10.0))
     // square : Rect = Rect(Point(0.0, 0.0), Size(10.0, 10.0))
-    (swift) val initialSquareCenter = square.center
+    (swift) let initialSquareCenter = square.center
     // initialSquareCenter : Point = Point(5.0, 5.0)
     (swift) square.center = Point(x: 15.0, y: 15.0)
     (swift) println("square origin is now at (\(square.origin.x), \(square.origin.y))")
@@ -435,8 +435,8 @@ which takes advantage of this shorthand notation:
         var size = Size()
         var center: Point {
             get {
-                val centerX = origin.x + (size.width / 2)
-                val centerY = origin.y + (size.height / 2)
+                let centerX = origin.x + (size.width / 2)
+                let centerY = origin.y + (size.height / 2)
                 return Point(centerX, centerY)
             }
             set {
@@ -468,7 +468,7 @@ by removing the ``get`` keyword:
             return width * height * depth
         }
     }
-    (swift) val fourByFiveByTwo = Cuboid(4.0, 5.0, 2.0)
+    (swift) let fourByFiveByTwo = Cuboid(4.0, 5.0, 2.0)
     // fourByFiveByTwo : Cuboid = Cuboid(4.0, 5.0, 2.0)
     (swift) println("the volume of fourByFiveByTwo is \(fourByFiveByTwo.volume)")
     >>> the volume of fourByFiveByTwo is 40.0
@@ -495,7 +495,7 @@ and can return any value they like at any time.
 
 Computed properties – including read-only computed properties –
 are always declared as variable properties (via the ``var`` introducer).
-The ``val`` introducer is only ever used for constant properties,
+The ``let`` introducer is only ever used for constant properties,
 to indicate that their value cannot be changed once it is set as part of instance initialization.
 
 .. NOTE: getters and setters are also allowed for named values
@@ -572,7 +572,7 @@ For example, using the ``Size`` structure from above:
 
 .. testcode:: classesAndStructures
 
-    (swift) val iPhone4 = Size(width: 640.0, height: 960.0)
+    (swift) let iPhone4 = Size(width: 640.0, height: 960.0)
     // iPhone4 : Size = Size(640.0, 960.0)
     (swift) var iPhone5 = iPhone4
     // iPhone5 : Size = Size(640.0, 960.0)
@@ -630,12 +630,12 @@ Here's an example, using the ``Rectangle`` class defined above:
 
 .. testcode:: classesAndStructures
 
-    (swift) val rect = Rectangle()
+    (swift) let rect = Rectangle()
     // rect : Rectangle = <Rectangle instance>
     (swift) rect.size = Size(width: 1.0, height: 1.0)
     (swift) println("The rectangle's initial width is \(rect.size.width)")
     >>> The rectangle's initial width is 1.0
-    (swift) val sameRect = rect
+    (swift) let sameRect = rect
     // sameRect : Rectangle = <Rectangle instance>
     (swift) sameRect.size.width = 3.0
     (swift) println("The rectangle's width via sameRect is now \(sameRect.size.width)")
@@ -793,7 +793,7 @@ Instance methods are called using the same dot syntax as properties:
 
 .. testcode:: classesAndStructures
 
-    (swift) val counter = Counter()
+    (swift) let counter = Counter()
     // counter : Counter = <Counter instance>
     (swift) println("Initial counter value is \(counter.count)")
     >>> Initial counter value is 0
@@ -835,7 +835,7 @@ instead, ``self`` is automatically made available to any method you define:
 
 Even though it has an implicit ``self`` parameter available,
 the ``Counter`` class above has chosen *not* to use ``self.count``
-to refer to its ``count`` property within its instance methods
+to refer to its ``count`` property within its instance methods.
 Because there are no other named values called ``count`` within each method's body,
 the ``self.`` prefix can be dropped, as it is clear that ``count`` can only mean the instance property.
 Instead, ``count`` is written in a shorter form, without the ``self.`` prefix:
@@ -862,7 +862,7 @@ and an instance property that is also called ``x``:
             return self.x > x
         }
     }
-    (swift) val somePoint = Point(4.0, 5.0)
+    (swift) let somePoint = Point(4.0, 5.0)
     // somePoint : Point = Point(4.0, 5.0)
     (swift) if somePoint.isToTheRightOfX(1.0) {
         println("This point is to the right of the line where x == 1.0")
@@ -874,43 +874,47 @@ and an instance property that is also called ``x``:
 Using Self in Class Instance Methods
 ____________________________________
 
-For class instance methods, the ``self`` parameter is a *reference* to the instance,
-and can be used to retrieve and set its properties:
+For class instance methods, the ``self`` parameter is a read-only reference
+to the instance on which the method is called.
+Although the reference is read-only, any variable properties of
+the instance it refers to can be modified as normal:
 
 .. testcode:: selfClasses
 
     (swift) class BankAccount {
         var balance = 0.0
         func depositMoney(amount: Double) {
-            self.balance += amount
+            balance += amount
         }
     }
-    (swift) val savingsAccount = BankAccount()
+    (swift) let savingsAccount = BankAccount()
     // savingsAccount : BankAccount = <BankAccount instance>
     (swift) savingsAccount.depositMoney(100.00)
     (swift) println("The savings account now contains $\(savingsAccount.balance)")
     >>> The savings account now contains $100.0
 
-This example could have been written with ``balance += amount``
-rather than ``self.balance += amount``.
-The use of ``self.balance`` is primarily to illustrate that
-the ``self`` parameter is available within the ``depositMoney()`` method.
+Here, the ``depositMoney()`` instance method modifies
+the ``balance`` variable property by adding ``amount`` to it.
+
+This example could have been written with ``self.balance += amount``
+rather than ``balance += amount``.
+However, the use of the ``self`` prefix is not required,
+as there is no ambiguity as to what ``balance`` refers to.
 
 .. _ClassesAndStructures_SelfStructures:
 
 Using Self in Structure Instance Methods
 ________________________________________
 
-For structure instance methods, ``self`` is actually a *copy* of the structure instance
-as of when the method was called.
-This means that you can use ``self`` to read property values for the structure instance,
-but not to set the properties to a new value.
+For structure instance methods, the ``self`` parameter is
+a read-only copy of the structure instance, and its properties cannot be modified.
 
-If your structure instance needs to modify its own properties within a method,
-it can request to receive a writeable copy in the implicit ``self`` parameter.
-You can opt in to this behavior by placing the ``mutating`` keyword before the ``func`` keyword.
-“Mutating” in this context means “making a change”, much as it does in English –
-effectively, the method is “mutating” the ``Point`` instance:
+If your structure instance needs to modify its properties within a method,
+you can request to receive a writeable ``self`` parameter instead.
+You can opt in to this behavior by placing the ``mutating`` keyword
+before the ``func`` keyword for that method.
+The method is then able to “mutate” (i.e. “change”)
+the properties of the structure instance:
 
 .. testcode:: selfStructures
 
@@ -927,19 +931,25 @@ effectively, the method is “mutating” the ``Point`` instance:
     (swift) println("The point is now at (\(somePoint.x), \(somePoint.y))")
     >>> The point is now at (3.0, 4.0)
 
-As soon as the ``moveBy()`` method has finished executing,
-any changes it has made to the writeable copy of the implicit ``self`` parameter
-are written back to the ``Point`` instance, overwriting the previous values.
+The ``Point`` structure above defines a ``moveBy()`` method,
+which moves a ``Point`` instance by a certain amount.
+Instead of returning a new point,
+this method actually modifies the point on which it is called.
+The ``mutating`` keyword has been added to its definition
+to enable it to modify the variable properties of the implicit ``self`` parameter.
+As above, it does not need to explicitly refer to ``self``,
+and can use ``x`` and ``y`` as shorthand for ``self.x`` and ``self.y``.
 
 .. _ClassesAndStructures_Initialization:
 
 Initialization
 --------------
 
-Classes and structures should always initialize their stored properties with initial values.
-There are two ways to provide initial values for your properties:
+Classes and structures must always set their stored properties
+to an appropriate initial value by the time that an instance is created.
+There are two ways to initialize properties:
 
-1. Include an :newTerm:`initial value` as part of the property declaration
+1. Provide an :newTerm:`initial value` as part of the property declaration
    (as described in :ref:`ClassesAndStructures_Properties`)
 2. Provide a value for the property within an :newTerm:`initializer`
 
@@ -964,9 +974,8 @@ There are two ways to provide initial values for your properties:
 Initializers
 ~~~~~~~~~~~~
 
-:newTerm:`Initializers` are special methods
-that can be called when a new instance of your type is created.
-In its simplest form, an initializer is just an instance method with no parameters,
+:newTerm:`Initializers` are called when a new instance of your type is created.
+In its simplest form, an initializer is like an instance method with no parameters,
 written using the ``init`` keyword:
 
 .. testcode:: initialization
@@ -1049,14 +1058,14 @@ with a value from a different temperature scale:
 
 .. TODO: mention that initializers can be written in either function syntax.
 
-The value of a constant ``val`` property can be modified at any point during initialization,
+The value of a constant ``let`` property can be modified at any point during initialization,
 as long as is is definitely set to a value by the time the initializer has finished:
 
 .. testcode:: initialization
 
     (swift) struct Temperature {
-        val storedValue: Double
-        val storedScale: String
+        let storedValue: Double
+        let storedScale: String
         init withValue(value: Double) inScale(scale: String) {
             storedValue = value
             storedScale = scale
@@ -1119,7 +1128,7 @@ and sets it to the result of calling ``init withTitle()`` for a specific title s
 
 .. testcode:: initialization
 
-    (swift) val thisBook = Document(withTitle: "The Swift Programming Language")
+    (swift) let thisBook = Document(withTitle: "The Swift Programming Language")
     // thisBook : Document = <Document instance>
     (swift) println("This book is called '\(thisBook.title)'")
     >>> This book is called 'The Swift Programming Language'
@@ -1131,7 +1140,7 @@ passing it a placeholder string value of ``[untitled]``:
 
 .. testcode:: initialization
 
-    (swift) val someBook = Document()
+    (swift) let someBook = Document()
     // someBook : Document = <Document instance>
     (swift) println("Some unknown book is called '\(someBook.title)'")
     >>> Some unknown book is called '[untitled]'
@@ -1218,7 +1227,7 @@ you can see how its properties have been updated:
 
 .. testcode:: inheritance
 
-    (swift) val bicycle = Bicycle()
+    (swift) let bicycle = Bicycle()
     // bicycle : Bicycle = <Bicycle instance>
     (swift) println("Bicycle: \(bicycle.description())")
     >>> Bicycle: 2 wheels; up to 1 passengers
@@ -1254,7 +1263,7 @@ you can see how its properties have been updated:
 
 .. testcode:: inheritance
 
-    (swift) val tandem = Tandem()
+    (swift) let tandem = Tandem()
     // tandem : Tandem = <Tandem instance>
     (swift) println("Tandem: \(tandem.description())")
     >>> Tandem: 2 wheels; up to 2 passengers
@@ -1270,9 +1279,22 @@ Instance methods of a class are inherited by any and all subclasses of that clas
 Overriding Instance Methods
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-A subclass can provide its own custom implementation of instance methods
+A subclass can provide its own custom implementation of an instance method
 that it would otherwise inherit from a superclass.
-This is known as :newTerm:`overriding` the methods.
+This is known as :newTerm:`overriding` the method.
+
+If you define a subclass method that overrides a superclass method,
+you must prefix the overriding method definition with the ``@override`` attribute.
+This makes it clear that you intended to provide an override,
+and did not just accidentally provide a method with
+the same name, parameter types and return type by mistake.
+(Accidentally overriding a method can cause unexpected behavior,
+and method overriding without the ``@override`` attribute is
+diagnosed as an error when your code is compiled.)
+
+.. QUESTION: have I introduced the concept of "attributes" by this point?
+   If not, when / where should I do so?
+
 For example:
 
 .. testcode:: inheritance
@@ -1284,7 +1306,7 @@ For example:
             maxPassengers = 5
             numberOfWheels = 4
         }
-        func description() -> String {
+        @override func description() -> String {
             return super.description() + "; "
                 + (isConvertible ? "convertible" : "not convertible")
         }
@@ -1303,7 +1325,9 @@ which sets the maximum number of passengers to ``5``,
 and the default number of wheels to ``4``.
 
 ``Car`` then overrides its inherited ``description()`` method.
-It does this by declaring a function with the same definition as the one it inherits.
+It does this by defining a function with the same declaration as
+the one it would otherwise inherit,
+prefixed by the ``@override`` attribute.
 Rather than providing a completely custom implementation of ``description()``,
 it actually starts by calling ``super.description()`` to retrieve
 the description provided by its superclass.
@@ -1393,7 +1417,7 @@ Here's how this initializer could be called:
 
 .. testcode:: initialization
 
-    (swift) val empty = TextDocument()
+    (swift) let empty = TextDocument()
     // empty : TextDocument = <TextDocument instance>
     (swift) println("\(empty.title):\n\(empty.bodyText)")
     >>> [untitled]:
@@ -1423,7 +1447,7 @@ Here's how this initializer could be called:
 
 .. testcode:: initialization
 
-    (swift) val titled = TextDocument(withTitle: "Write something please")
+    (swift) let titled = TextDocument(withTitle: "Write something please")
     // titled : TextDocument = <TextDocument instance>
     (swift) println("\(titled.title):\n\(titled.bodyText)")
     >>> Write something please:
@@ -1448,7 +1472,7 @@ Here's how this initializer could be called:
 
 .. testcode:: initialization
 
-    (swift) val untitledPangram = TextDocument(
+    (swift) let untitledPangram = TextDocument(
         withText: "Amazingly few discotheques provide jukeboxes")
     // untitledPangram : TextDocument = <TextDocument instance>
     (swift) println("\(untitledPangram.title):\n\(untitledPangram.bodyText)")
@@ -1482,7 +1506,7 @@ Here's how this final initializer could be called:
 
 .. testcode:: initialization
 
-    (swift) val foxPangram = TextDocument(
+    (swift) let foxPangram = TextDocument(
         withTitle: "Quick brown fox",
         text: "The quick brown fox jumped over the lazy dog")
     // foxPangram : TextDocument = <TextDocument instance>
@@ -1631,9 +1655,9 @@ you can try and :newTerm:`downcast` to the subclass using the ``as`` operator:
 .. testcode:: typeCasting
 
     (swift) for item in library {
-        if val movie = item as Movie {
+        if let movie = item as Movie {
             println("Movie: '\(movie.name)', dir. \(movie.director)")
-        } else if val song = item as Song {
+        } else if let song = item as Song {
             println("Song: '\(song.name)', by \(song.artist)")
         }
     }
@@ -1663,7 +1687,7 @@ the two ``Song`` instances in the library array.
 To cope with this, the example above uses :ref:`optional binding <ControlFlow_OptionalBinding>`
 to check whether the optional ``Movie`` actually contains a value
 (i.e. to find out whether the downcast succeeded.)
-This optional binding is written “``if val movie = item as Movie``”,
+This optional binding is written “``if let movie = item as Movie``”,
 which can be read as:
 
 “Try and access ``item`` as a ``Movie``.
@@ -1685,6 +1709,9 @@ whenever a ``Song`` is found in the library.
 
 .. TODO: casting also needs to be mentioned in the context of protocol conformance.
 
+.. TODO: talk about the use of "as" outside of an "if" statement sense,
+   once rdar://16063985 is fixed.
+
 .. QUESTION: should I mention upcasting here?
    I can't think of an example where it's useful.
    However, it does display different behavior from downcasting,
@@ -1699,36 +1726,53 @@ Type Properties and Methods
 
 .. see release notes from 2013-12-18 for a note about lazy initialization
 
-.. _ClassesAndStructures_Destructors:
+.. _ClassesAndStructures_Deinitializers:
 
-Destructors
------------
+Deinitializers
+--------------
 
-A :newTerm:`destructor` is a special instance method that is called when a class instance is destroyed.
-Destructors are written with the ``destructor`` keyword,
+A :newTerm:`deinitializer` is called just before a class instance is destroyed.
+Deinitializers are written with the ``deinit`` keyword,
 in a similar way to how intializers are written with the ``init`` keyword.
-Destructors are only available on class types.
+Deinitializers are only available on class types.
 
-Swift automatically destroys your instances when they are no longer needed, to free up resources.
-Swift handles the memory management of your class instances for you via
+Swift automatically destroys your instances when they are no longer needed,
+to free up resources.
+Swift handles the memory management of instances via
 :newTerm:`automatic reference counting` (known as :newTerm:`ARC`),
 and so there is normally no need to perform any clean-up when your instances are destroyed.
 However, there may be times when you are working with your own resources,
 and need to perform some additional clean-up yourself.
 For example, if you create a custom class to open a file and write some data to it,
-you might need to close the file when the class instance is destroyed.
+you might need to close the file before the class instance is destroyed.
 
-Class definitions can have at most one destructor per class.
-The method does not take any parameters, and is called automatically when an instance is destroyed.
-Superclass destructors are automatically inherited by their subclasses,
-and the superclass destructor is called automatically at the end of a subclass destructor implementation.
-You are not allowed to call ``super.destructor()`` yourself.
+Class definitions can have at most one deinitializer per class.
+The deinitializer does not take any parameters,
+and is written without parentheses:
 
-Destructors are still able to access the properties of the instance they are called on.
-This means that your destructor can modify its behavior based on properties of the current instance,
-such as discovering the file name of a file that needs to be closed.
+::
 
-Here's an example of ``destructor`` in action.
+    (swift) deinit {
+        // perform the deinitialization
+    }
+
+Deinitializers are called automatically, just before instance destruction takes place.
+You are not allowed to call ``super.deinit`` yourself.
+Superclass deinitializers are inherited by their subclasses,
+and the superclass deinitializer is called automatically at the end of
+a subclass deinitializer implementation.
+Superclass deinitializers are always called,
+even if a subclass does not provide its own deinitializer.
+
+.. TODO: note that this is true even if your subclass doesn't actually provide
+   an explicit deinitializer itself.
+
+Because the instance has not yet been destroyed,
+a deinitializer can access all of the properties of the instance it is called on,
+and can modify its behavior based on those properties
+(such as looking up the name of a file that needs to be closed).
+
+Here's an example of ``deinit`` in action.
 This example defines two new types, ``Bank`` and ``Player``, for a simple game.
 The ``Bank`` structure manages a made-up currency,
 which can never have more than 10,000 coins in circulation.
@@ -1736,7 +1780,7 @@ There can only ever be one ``Bank`` in the game,
 and so the ``Bank`` is implemented as a structure with static properties and methods
 to store and manage its current state:
 
-.. testcode:: destructor
+.. testcode:: deinitializer
 
     (swift) struct Bank {
         static var coinsInBank = 10_000
@@ -1768,7 +1812,7 @@ The ``Player`` class describes a player in the game.
 Each player has a certain number of coins stored in their purse at any time.
 This is represented by the player's ``coinsInPurse`` property:
 
-.. testcode:: destructor
+.. testcode:: deinitializer
 
     (swift) class Player {
         var coinsInPurse: Int
@@ -1778,7 +1822,7 @@ This is represented by the player's ``coinsInPurse`` property:
         func winCoins(coins: Int) {
             coinsInPurse += Bank.vendCoins(coins)
         }
-        destructor() {
+        deinit {
             Bank.receiveCoins(coinsInPurse)
         }
     }
@@ -1790,13 +1834,13 @@ some specified number of coins from the bank during initialization
 The ``Player`` class defines a ``winCoins()`` method,
 which tries to retrieve a certain number of coins from the bank
 and add them to the player's purse.
-The ``Player`` class also implements a ``destructor``,
-which is called whenever a ``Player`` instance is destroyed.
-Here, the ``destructor`` simply returns all of the player's coins to the bank.
+The ``Player`` class also implements a deinitializer,
+which is called just before a ``Player`` instance is destroyed.
+Here, the deinitializer simply returns all of the player's coins to the bank.
 
 Here's how that looks in action:
 
-.. testcode:: destructor
+.. testcode:: deinitializer
 
     (swift) var playerOne: Player? = Player(withCoins: 100)
     // playerOne : Player? = <unprintable value>
@@ -1814,7 +1858,7 @@ Because ``playerOne`` is an optional, it is qualified with an exclamation mark (
 when its ``coinsInPurse`` property is accessed to print its default number of coins,
 and whenever its ``winCoins()`` method is called:
 
-.. testcode:: destructor
+.. testcode:: deinitializer
 
     (swift) playerOne!.winCoins(2_000)
     (swift) println("PlayerOne won 2000 coins & now has \(playerOne!.coinsInPurse) coins")
@@ -1826,7 +1870,7 @@ Here, the player has won 2,000 coins.
 Their purse now contains 2,100 coins,
 and the bank only has 7,900 coins left.
 
-.. testcode:: destructor
+.. testcode:: deinitializer
 
     (swift) playerOne = .None
     (swift) println("PlayerOne has left the game")
@@ -1841,7 +1885,7 @@ At the point that this happens, the ``Player`` instance referenced by
 the ``playerOne`` variable is destroyed.
 No other properties or variables are still referring to it,
 and so it can be destroyed in order to free up the resources it was using.
-When this happens, its ``destructor`` is called,
+Just before this happens, its deinitializer is called,
 and its coins are returned to the bank.
 
 .. TODO: switch Bank to be a class rather than a structure
@@ -1857,40 +1901,50 @@ This is known as :newTerm:`overloading` the existing operators.
 
 .. testcode:: customOperators
 
-    (swift) struct Point {
+    (swift) struct Vector2D {
         var x = 0.0, y = 0.0
     }
-    (swift) func + (lhs: Point, rhs: Point) -> Point {
-        return Point(lhs.x + rhs.x, lhs.y + rhs.y)
+    (swift) func + (lhs: Vector2D, rhs: Vector2D) -> Vector2D {
+        return Vector2D(lhs.x + rhs.x, lhs.y + rhs.y)
     }
 
-This example shows how a structure can provide a custom implementation of the
-:ref:`arithmetic addition operator <Operators_ArithmeticOperators>` (``+``).
-It starts by defining a ``Point`` structure for an ``(x, y)`` coordinate.
+This example shows how to provide an implementation of the
+:ref:`arithmetic addition operator <Operators_ArithmeticOperators>` (``+``)
+for a custom structure.
+The example starts by defining a ``Vector2D`` structure for
+a two-dimensional position vector ``(x, y)``.
 This is followed by a definition of an :newTerm:`operator function`
-to add together instances of the ``Point`` structure.
+to add together instances of the ``Vector2D`` structure.
 
 The operator function is defined as a global function called ``+``,
-which takes two input parameters of type ``Point``,
-and returns a single output value, also of type ``Point``.
+which takes two input parameters of type ``Vector2D``,
+and returns a single output value, also of type ``Vector2D``.
 In this implementation, the input parameters have been named ``lhs`` and ``rhs``
-to represent the ``Point`` instances that will be on
+to represent the ``Vector2D`` instances that will be on
 the left-hand side and right-hand side of the ``+`` operator.
-The function returns a new ``Point``, whose ``x`` and ``y`` properties are
+The function returns a new ``Vector2D`` instance,
+whose ``x`` and ``y`` properties are
 initialized with the sum of the ``x`` and ``y`` properties from
-the two ``Point`` instances that are being added together.
+the two ``Vector2D`` instances that are being added together.
 
-The function is defined globally, rather than as a method on the ``Point`` structure,
-so that it can be used as an infix operator between existing ``Point`` instances:
+The function is defined globally, rather than as a method on the ``Vector2D`` structure,
+so that it can be used as an infix operator between existing ``Vector2D`` instances:
 
 .. testcode:: customOperators
 
-    (swift) val point = Point(1.0, 2.0)
-    // point : Point = Point(1.0, 2.0)
-    (swift) val anotherPoint = Point(3.0, 4.0)
-    // anotherPoint : Point = Point(3.0, 4.0)
-    (swift) val combinedPoint = point + anotherPoint
-    // combinedPoint : Point = Point(4.0, 6.0)
+    (swift) let vector = Vector2D(3.0, 1.0)
+    // vector : Vector2D = Vector2D(3.0, 1.0)
+    (swift) let anotherVector = Vector2D(2.0, 4.0)
+    // anotherVector : Vector2D = Vector2D(2.0, 4.0)
+    (swift) let combinedVector = vector + anotherVector
+    // combinedVector : Vector2D = Vector2D(5.0, 5.0)
+
+This example adds together the vectors ``(3.0, 1.0)`` and ``(2.0, 4.0)``
+to make the vector ``(5.0, 5.0)``, as illustrated below.
+
+.. image:: ../images/vectorAddition.png
+    :width: 400
+    :align: center
 
 .. _ClassesAndStructures_PrefixAndPostfixOperators:
 
@@ -1912,28 +1966,28 @@ The attribute is written before the ``func`` keyword when declaring the operator
 
 .. testcode:: customOperators
 
-    (swift) @prefix func - (rhs: Point) -> Point {
-        return Point(-rhs.x, -rhs.y)
+    (swift) @prefix func - (rhs: Vector2D) -> Vector2D {
+        return Vector2D(-rhs.x, -rhs.y)
     }
 
 This example implements the :ref:`unary minus operator <Operators_UnaryPlusAndMinusOperators>`
-(``-a``) for ``Point`` instances.
+(``-a``) for ``Vector2D`` instances.
 The unary minus operator is a prefix operator,
 and so this function has to be qualified with the ``@prefix`` attribute.
 
 For simple numeric values, the unary minus operator just converts
 positive numbers into their negative equivalent, and vice versa.
-The corresponding implementation for ``Point`` instances
+The corresponding implementation for ``Vector2D`` instances
 performs this operation on both the ``x`` and ``y`` properties:
 
 .. testcode:: customOperators
 
-    (swift) val positive = Point(3.0, 4.0)
-    // positive : Point = Point(3.0, 4.0)
-    (swift) val negative = -positive
-    // negative : Point = Point(-3.0, -4.0)
-    (swift) val alsoPositive = -negative
-    // alsoPositive : Point = Point(3.0, 4.0)
+    (swift) let positive = Vector2D(3.0, 4.0)
+    // positive : Vector2D = Vector2D(3.0, 4.0)
+    (swift) let negative = -positive
+    // negative : Vector2D = Vector2D(-3.0, -4.0)
+    (swift) let alsoPositive = -negative
+    // alsoPositive : Vector2D = Vector2D(3.0, 4.0)
 
 .. QUESTION: is this the first time I will have introduced attributes?
    If so, do they need more qualification?
@@ -1954,11 +2008,11 @@ as its value will be modified directly from within the operator function:
 
 .. testcode:: customOperators
 
-    (swift) @assignment func += (inout lhs: Point, rhs: Point) {
+    (swift) @assignment func += (inout lhs: Vector2D, rhs: Vector2D) {
         lhs = lhs + rhs
     }
 
-This example implements an addition assignment operator function for ``Point`` instances.
+This example implements an addition assignment operator function for ``Vector2D`` instances.
 Because an addition operator has already been defined above,
 there is no need to reimplement the addition process again here.
 Instead, this function takes advantage of the existing addition operator function,
@@ -1966,11 +2020,11 @@ and uses it to set the left-hand value to itself plus the right-hand value:
 
 .. testcode:: customOperators
 
-    (swift) var original = Point(1.0, 2.0)
-    // original : Point = Point(1.0, 2.0)
-    (swift) val pointToAdd = Point(3.0, 4.0)
-    // pointToAdd : Point = Point(3.0, 4.0)
-    (swift) original += pointToAdd
+    (swift) var original = Vector2D(1.0, 2.0)
+    // original : Vector2D = Vector2D(1.0, 2.0)
+    (swift) let vectorToAdd = Vector2D(3.0, 4.0)
+    // vectorToAdd : Vector2D = Vector2D(3.0, 4.0)
+    (swift) original += vectorToAdd
     (swift) println("original is now (\(original.x), \(original.y))")
     >>> original is now (4.0, 6.0)
 
@@ -1978,26 +2032,26 @@ The ``@assignment`` attribute can be combined with
 either the ``@prefix`` or ``@postfix`` attribute,
 as in this implementation of the
 :ref:`prefix increment operator <Operators_IncrementAndDecrementOperators>` (``++a``)
-for ``Point`` instances:
+for ``Vector2D`` instances:
 
 .. testcode:: customOperators
 
-    (swift) @prefix @assignment func ++ (inout rhs: Point) -> Point {
-        rhs += Point(1.0, 1.0)
+    (swift) @prefix @assignment func ++ (inout rhs: Vector2D) -> Vector2D {
+        rhs += Vector2D(1.0, 1.0)
         return rhs
     }
 
 This operator function takes advantage of the addition assignment operator defined above.
-It adds a ``Point`` with ``x`` and ``y`` values of ``1.0``
-to the ``Point`` on which it is called,
+It adds a ``Vector2D`` with ``x`` and ``y`` values of ``1.0``
+to the ``Vector2D`` on which it is called,
 and returns the result.
 
 .. testcode:: customOperators
 
-    (swift) var toIncrement = Point(3.0, 4.0)
-    // toIncrement : Point = Point(3.0, 4.0)
-    (swift) val afterIncrement = ++toIncrement
-    // afterIncrement : Point = Point(4.0, 5.0)
+    (swift) var toIncrement = Vector2D(3.0, 4.0)
+    // toIncrement : Vector2D = Vector2D(3.0, 4.0)
+    (swift) let afterIncrement = ++toIncrement
+    // afterIncrement : Vector2D = Vector2D(4.0, 5.0)
     (swift) println("toIncrement is now (\(toIncrement.x), \(toIncrement.y))")
     >>> toIncrement is now (4.0, 5.0)
 
@@ -2030,7 +2084,7 @@ You can define your own :newTerm:`custom operators` in addition to
 the standard operators provided by Swift.
 Custom operators can be defined using the characters ``/ = - + * % < > ! & | ^ ~ .`` only.
 
-New operators are declared using the ``operator`` keyword,
+New operators are declared at a global level using the ``operator`` keyword,
 and can be declared as ``prefix``, ``infix`` or ``postfix``:
 
 .. testcode:: customOperators
@@ -2040,29 +2094,29 @@ and can be declared as ``prefix``, ``infix`` or ``postfix``:
 This example defines a new prefix operator called ``+++``.
 This operator does not have an existing meaning in Swift,
 and so it will be given its own custom meaning in the specific context of
-working with ``Point`` instances. For the purposes of this example,
+working with ``Vector2D`` instances. For the purposes of this example,
 ``+++`` will be treated as a new “prefix doubling incrementer” operator.
-It will double the ``x`` and ``y`` values of a ``Point`` instance,
-by adding the point to itself via assignment:
+It will double the ``x`` and ``y`` values of a ``Vector2D`` instance,
+by adding the vector to itself via assignment:
 
 .. testcode:: customOperators
 
-    (swift) @prefix @assignment func +++ (inout rhs: Point) -> Point {
+    (swift) @prefix @assignment func +++ (inout rhs: Vector2D) -> Vector2D {
         rhs += rhs
         return rhs
     }
 
-The implementation of ``+++`` is very similar to
-the implementation of ``++`` for ``Point``,
-except that this operator function adds the point to itself,
-rather than adding ``Point(1.0, 1.0)``:
+This implementation of ``+++`` is very similar to
+the implementation of ``++`` for ``Vector2D``,
+except that this operator function adds the vector to itself,
+rather than adding ``Vector2D(1.0, 1.0)``:
 
 .. testcode:: customOperators
 
-    (swift) var toBeDoubled = Point(1.0, 4.0)
-    // toBeDoubled : Point = Point(1.0, 4.0)
-    (swift) val afterDoubling = +++toBeDoubled
-    // afterDoubling : Point = Point(2.0, 8.0)
+    (swift) var toBeDoubled = Vector2D(1.0, 4.0)
+    // toBeDoubled : Vector2D = Vector2D(1.0, 4.0)
+    (swift) let afterDoubling = +++toBeDoubled
+    // afterDoubling : Vector2D = Vector2D(2.0, 8.0)
     (swift) println("toBeDoubled is now (\(toBeDoubled.x), \(toBeDoubled.y))")
     >>> toBeDoubled is now (2.0, 8.0)
 
@@ -2089,18 +2143,18 @@ with ``left`` associativity, and a precedence of ``140``:
 .. testcode:: customOperators
 
     (swift) operator infix +- { associativity left precedence 140 }
-    (swift) func +- (lhs: Point, rhs: Point) -> Point {
-        return Point(lhs.x + rhs.x, lhs.y - rhs.y)
+    (swift) func +- (lhs: Vector2D, rhs: Vector2D) -> Vector2D {
+        return Vector2D(lhs.x + rhs.x, lhs.y - rhs.y)
     }
-    (swift) val firstPoint = Point(1.0, 2.0)
-    // firstPoint : Point = Point(1.0, 2.0)
-    (swift) val secondPoint = Point(3.0, 4.0)
-    // secondPoint : Point = Point(3.0, 4.0)
-    (swift) val plusMinusPoint = firstPoint +- secondPoint
-    // plusMinusPoint : Point = Point(4.0, -2.0)
+    (swift) let firstVector = Vector2D(1.0, 2.0)
+    // firstVector : Vector2D = Vector2D(1.0, 2.0)
+    (swift) let secondVector = Vector2D(3.0, 4.0)
+    // secondVector : Vector2D = Vector2D(3.0, 4.0)
+    (swift) let plusMinusVector = firstVector +- secondVector
+    // plusMinusVector : Vector2D = Vector2D(4.0, -2.0)
 
-This operator adds together the ``x`` values of two points,
-and subtracts the ``y`` value of the second point from the first.
+This operator adds together the ``x`` values of two vectors,
+and subtracts the ``y`` value of the second vector from the first.
 Because it is in essence an “additive” operator,
 it has been given the same associativity and precedence values
 (``left`` and ``140``)
