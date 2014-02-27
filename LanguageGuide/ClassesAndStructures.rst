@@ -1712,6 +1712,10 @@ whenever a ``Song`` is found in the library.
 .. TODO: talk about the use of "as" outside of an "if" statement sense,
    once rdar://16063985 is fixed.
 
+.. TODO: this section needs to address the question of "a named value having a type"
+   as distinct from "a class instance having a type".
+   This is also relevant in a protocol context.
+
 .. QUESTION: should I mention upcasting here?
    I can't think of an example where it's useful.
    However, it does display different behavior from downcasting,
@@ -1725,6 +1729,9 @@ Type Properties and Methods
 [to be written]
 
 .. see release notes from 2013-12-18 for a note about lazy initialization
+.. mention that type methods can access type properties (and other type methods?)
+   without needing to reference the type's name,
+   as they also get an implicit ``self`` parameter.
 
 .. _ClassesAndStructures_Deinitializers:
 
