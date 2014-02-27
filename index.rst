@@ -25,6 +25,7 @@ February 27 2014
 Language Guide
 ++++++++++++++
 
+* First draft of a nearly-complete chapter on :doc:`LanguageGuide/Extensions`.
 * ``val`` is once again ``let``
 * Destructors are now :ref:`ClassesAndStructures_Deinitializers`,
   and have an improved and expanded description
