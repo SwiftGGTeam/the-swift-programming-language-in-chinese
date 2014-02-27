@@ -247,7 +247,7 @@ Array Type
     Let's hold off on writing about these until they are nailed down.
     Update: [Contributor 5711] is now DRI for rewriting/implementing Arrays.
 
-.. _Types_FunctionType:
+.. _Types_OptionalType:
 
 Optional Type
 -------------
