@@ -741,7 +741,7 @@ Deinitializers take no parameters and have the following form:
 
 .. syntax-outline::
 
-    deinit() {
+    deinit {
         <#statements#>
     }
 
@@ -764,14 +764,15 @@ see :ref:`ClassesAndStructures_Deinitializers`.
 
 .. langref-grammar
 
-    decl-de ::= attribute-list 'deinit' '(' ')' brace-item-list
+    decl-de ::= attribute-list 'deinit' brace-item-list
     NOTE: langref contains a typo here---should be 'decl-deinitializer'
 
 .. syntax-grammar::
 
     Grammar of a deinitializer declaration
 
-    deinitializer-declaration --> attribute-sequence-OPT ``deinit`` ``(`` ``)`` code-block
+    deinitializer-declaration --> attribute-sequence-OPT ``deinit`` code-block
+
 
 .. _Declarations_ExtensionDeclaration:
 
