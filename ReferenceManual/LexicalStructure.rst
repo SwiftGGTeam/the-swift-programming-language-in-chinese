@@ -413,30 +413,23 @@ By default, floating-point literals are expressed in decimal (with no prefix),
 but they can also be expressed in hexadecimal (with a ``0x`` prefix).
 
 Decimal floating-point literals consist of a sequence of decimal digits
-followed by a decimal fraction. The decimal fraction consists of a decimal point (``.``),
+followed by either a decimal fraction, a decimal exponent, or both.
+The decimal fraction consists of a decimal point (``.``),
 followed by a sequence of decimal digits.
-
-Hexadecimal floating-point literals consist of a ``0x`` prefix,
-followed by a hexadecimal fraction. The hexadecimal fraction consists of a decimal point,
-followed by a sequence of hexadecimal digits.
-
-Floating-point literals can also include an optionally signed exponent,
-which is prefixed by an upper- or lowercase ``e`` for decimal floating points
-or an upper- or lowercase ``p`` for hexadecimal floating points.
-When an exponent is specified,
-the decimal fraction is optional.
-
-For decimal floating points,
-the exponent is a sequence of decimal digits that indicates
-what power of 10 the value preceding the ``e`` or ``E`` is multiplied by.
+The exponent consists of an uppercase or lowercase ``e`` prefix
+followed by sequence of decimal digits that indicates
+what power of 10 the value preceding the ``e`` is multiplied by.
 For example, ``1.25e2`` represents 1.25 ⨉ 10\ :superscript:`2`,
 which evaluates to ``125.0``.
 Similarly, ``1.25e-2`` represents 1.25 ⨉ 10\ :superscript:`-2`,
 which evaluates to ``0.0125``.
 
-For hexadecimal floating points,
-the exponent is a sequence of decimal digits that indicates
-what power of 2 the value preceding the ``p`` or ``P`` is multiplied by.
+Hexadecimal floating-point literals consist of a ``0x`` prefix,
+followed by an optional hexadecimal fraction,
+followed by a hexadecimal exponent.
+The exponent consists of an uppercase or lowercase ``p`` prefix
+followed by sequence of decimal digits that indicates
+what power of 2 the value preceding the ``p`` is multiplied by.
 For example, ``0xFp2`` represents 15 ⨉ 2\ :superscript:`2`,
 which evaluates to ``60``.
 Similarly, ``0xFp-2`` represents 15 ⨉ 2\ :superscript:`-2`,
