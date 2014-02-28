@@ -89,7 +89,7 @@ is made available in the current scope.
 
     Grammar of an import declaration
 
-    import-declaration --> attribute-sequence-OPT ``import`` import-kind-OPT import-path
+    import-declaration --> attribute-list-OPT ``import`` import-kind-OPT import-path
 
     import-kind --> ``typealias`` | ``struct`` | ``class`` | ``enum`` | ``protocol`` | ``var`` | ``func``
     import-path --> any-identifier | any-identifier ``.`` import-path
@@ -156,7 +156,7 @@ see :ref:`BasicTypes_NamedValues`.
 
     Grammar of a value declaration
 
-    constant-declaration --> attribute-sequence-OPT constant-specifier-OPT ``let`` pattern-initializer-list
+    constant-declaration --> attribute-list-OPT constant-specifier-OPT ``let`` pattern-initializer-list
     value-specifier -->  ``static`` | ``class``
 
     pattern-initializer-list --> pattern-initializer | pattern-initializer ``,`` pattern-initializer-list
@@ -208,9 +208,9 @@ Variable Declaration
 
     Grammar of a variable declaration
 
-    variable-declaration --> attribute-sequence-OPT variable-specifier-OPT ``var`` pattern-initializer-list
-    variable-declaration --> attribute-sequence-OPT ``var`` variable-name type-annotation code-block
-    variable-declaration --> attribute-sequence-OPT ``var`` variable-name type-annotation getter-setter-block
+    variable-declaration --> attribute-list-OPT variable-specifier-OPT ``var`` pattern-initializer-list
+    variable-declaration --> attribute-list-OPT ``var`` variable-name type-annotation code-block
+    variable-declaration --> attribute-list-OPT ``var`` variable-name type-annotation getter-setter-block
     variable-specifier --> ``static`` | ``class``
     variable-name --> identifier
 
@@ -407,13 +407,13 @@ Function Signature
 
     Grammar of a function declaration
 
-    function-declaration --> attribute-sequence-OPT function-specifier-OPT ``func`` function-name generic-parameter-clause-OPT function-signature code-block-OPT
+    function-declaration --> attribute-list-OPT function-specifier-OPT ``func`` function-name generic-parameter-clause-OPT function-signature code-block-OPT
     function-specifier --> ``static`` | ``class``
     function-name --> any-identifier
 
     function-signature --> function-parameters function-signature-result-OPT
     function-parameters --> tuple-patterns | selector-parameters
-    function-signature-result --> ``->`` attribute-sequence-OPT type
+    function-signature-result --> ``->`` attribute-list-OPT type
 
     selector-parameters --> ``(`` tuple-pattern-element ``)`` selector-tuples
     selector-tuples --> selector-name ``(`` tuple-pattern-element ``)`` selector-tuples-OPT
@@ -479,11 +479,11 @@ Enumeration Declaration
 
     Grammar of an enumeration declaration
 
-    enum-declaration --> attribute-sequence-OPT ``enum`` enum-name generic-parameter-clause-OPT type-inheritance-clause-OPT enum-body
+    enum-declaration --> attribute-list-OPT ``enum`` enum-name generic-parameter-clause-OPT type-inheritance-clause-OPT enum-body
     enum-name --> identifier
     enum-body --> ``{`` declarations-OPT ``}``
 
-    enum-element-declaration --> attribute-sequence-OPT ``case`` enumerator-list
+    enum-element-declaration --> attribute-list-OPT ``case`` enumerator-list
     enumerator-list --> enumerator raw-value-assignment-OPT | enumerator raw-value-assignment-OPT ``,`` enumerator-list
     enumerator --> enumerator-name tuple-type-OPT
     enumerator-name --> identifier
@@ -556,7 +556,7 @@ see :ref:`ClassesAndStructures_ValueTypesAndReferenceTypes`.
 
    Grammar of a structure declaration
 
-   struct-declaration --> attribute-sequence-OPT ``struct`` struct-name generic-parameter-clause-OPT type-inheritance-clause-OPT struct-body
+   struct-declaration --> attribute-list-OPT ``struct`` struct-name generic-parameter-clause-OPT type-inheritance-clause-OPT struct-body
    struct-name --> identifier
    struct-body --> ``{`` declarations-OPT ``}``
 
@@ -639,7 +639,7 @@ see :ref:`ClassesAndStructures_ValueTypesAndReferenceTypes`.
 
     Grammar of a class declaration
 
-    class-declaration --> attribute-sequence-OPT ``class`` class-name generic-parameter-clause-OPT type-inheritance-clause-OPT class-body
+    class-declaration --> attribute-list-OPT ``class`` class-name generic-parameter-clause-OPT type-inheritance-clause-OPT class-body
     class-name --> identifier
     class-body --> ``{`` declarations-OPT ``}``
 
@@ -686,7 +686,7 @@ Typealias Protocol Elements
 
     Grammar of a protocol declaration
 
-    protocol-declaration --> attribute-sequence-OPT ``protocol`` protocol-name type-inheritance-clause-OPT protocol-body
+    protocol-declaration --> attribute-list-OPT ``protocol`` protocol-name type-inheritance-clause-OPT protocol-body
     protocol-name --> identifier
     protocol-body --> ``{`` protocol-members-OPT ``}``
 
@@ -728,7 +728,7 @@ Initializer Declaration
 
     Grammar of an initializer declaration
 
-    initializer-declaration --> attribute-sequence-OPT ``init`` generic-parameter-clause-OPT initializer-signature code-block
+    initializer-declaration --> attribute-list-OPT ``init`` generic-parameter-clause-OPT initializer-signature code-block
     initializer-signature --> tuple-pattern | selector-tuples
 
 .. _Declarations_DeinitializerDeclaration:
@@ -771,7 +771,7 @@ see :ref:`ClassesAndStructures_Deinitializers`.
 
     Grammar of a deinitializer declaration
 
-    deinitializer-declaration --> attribute-sequence-OPT ``deinit`` code-block
+    deinitializer-declaration --> attribute-list-OPT ``deinit`` code-block
 
 
 .. _Declarations_ExtensionDeclaration:
@@ -867,7 +867,7 @@ Subscript Declaration
     Grammar of a subscript declaration
 
     subscript-declaration --> subscript-head getter-setter-block
-    subscript-head --> attribute-sequence-OPT ``subscript`` tuple-pattern ``->`` type
+    subscript-head --> attribute-list-OPT ``subscript`` tuple-pattern ``->`` type
 
 .. _Declarations_Attributes:
 
@@ -888,21 +888,15 @@ Attributes
 
 .. syntax-grammar::
 
-    Grammar of an attribute sequence
+    Grammar of an attribute list
 
-    attribute-sequence --> attribute-clause attribute-sequence-OPT
-    attribute-clause --> ``@`` attribute-list attribute-clause-OPT
-    attribute-list --> attribute | attribute ``,`` attribute-list
+    attribute-list --> ``@`` attribute | ``@`` attribute ``,``-OPT attribute-list
     attribute --> declaration-attribute | interface-builder-attribute
 
 .. NOTE: Our grammar doesn't have empty terminals (no epsilon)
-   so we need to make attribute-sequence actually contain something.
+   so we need to make attribute-list actually contain something.
    This means that instead of having "empty" as a possible expansion,
-   attribute-sequence always appears as -OPT.
-
-.. TODO: This grammar needs updating.
-    Currently, it allows "@attribute1, attribute2, @attribute3",
-    which is not correct. Each attribute must be prefixed with '@'.
+   attribute-list always appears as -OPT.
 
 .. TODO: From looking at /swift/include/swift/AST/Attr.def,
     there are ATTR(...), TYPE_ATTR(...), and IB_ATTR(...).
