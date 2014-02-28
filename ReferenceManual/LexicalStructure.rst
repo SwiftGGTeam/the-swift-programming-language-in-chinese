@@ -346,7 +346,8 @@ and hexadecimal literals contain ``0`` through ``9``
 as well as ``A`` through ``F`` in upper or lower case.
 
 Negative integers are expressed by applying the unary minus operator (``-``)
-to an integer literal, as in ``-42``. Strictly speaking, ``-42`` is an expression,
+to an integer literal, as in ``-42``.
+Strictly speaking, ``-42`` is an expression,
 not an integer literal.
 
 Underscores (``_``) are allowed between digits for readability,
@@ -633,6 +634,47 @@ are reserved for use as other punctuation.
    but those aren't valid operator characters anyway.
    OK to omit here?
 
+The characters before and after an operator are used to determine
+whether an operator is used as a prefix operator, a postfix operator,
+or a binary/infix operator.
+
+.. Right bound - whitespace after
+   Left bound - whitespace before
+
+=================   =================   ================  =======
+Whitespace Before   Whitespace After    Kind of Operator  Example
+=================   =================   ================  =======
+No                  No                  Binary/Infix      ``a+b``
+Yes                 No                  Prefix            ``a +b``
+No                  Yes                 Postfix           ``a+ b``
+Yes                 Yes                 Binary/Infix      ``a + b``
+=================   =================   ================  =======
+
+For the purposes of this rule,
+the characters ``(``, ``[``, and ``{`` before an operator,
+the characters ``)``, ``]``, and ``}`` after an operator,
+and the characters ``,``, ``;``, and ``:``
+are also considered whitespace.
+
+An operator with no whitespace before it and a dot (``.``) after it
+is treated as a postfix operator.
+For example, ``a++.b`` is treated as ``a++ . b`` rather than ``a ++ .b``.
+
+.. TR: Using ++ instead of ! above,
+   to avoid confusion between the special case about dots (above)
+   and the special case about bang (below).
+   My discussion of this rule is rather different
+   than what's in LangRef.
+   Let's make sure it's still true.
+
+If the ``!`` or ``?`` operator has no whitespace before it,
+it is a postfix operator,
+regardless of whether it has whitespace after it.
+To use the ``?`` operator as a syntactic sugar for ``Optional``,
+it must not have whitespace before it.
+To use it in the conditional (``? :``) operator,
+it must have whitespace before and after it.
+
 Operators with a leading ``<`` or ``>`` are split into two tokens when parsing:
 the leading ``<`` or ``>`` and the remainder of the token.
 The remainder is parsed the same way and may be split again.
@@ -651,50 +693,6 @@ it is parsed as ``A < B < C > >`` rather than as ``A < B < C >>``.
 
 .. TR: With this rule in effect, how is >> ever parsed as a bit shift
    and not two greater-than operators?
-
-The characters before and after an operator are used to determine
-whether an operator is used as a prefix operator, a postfix operator,
-or a binary/infix operator.
-
-.. Right bound - whitespace after
-   Left bound - whitespace before
-
-=================   =================   ================  =======
-Whitespace Before   Whitespace After    Kind of Operator  Example
-=================   =================   ================  =======
-No                  No                  Binary/Infix      ``a+b``
-Yes                 No                  Prefix            ``(-a)``
-No                  Yes                 Postfix           ``a++;``
-Yes                 Yes                 Binary/Infix      ``a + b``
-=================   =================   ================  =======
-
-For the purposes of this rule,
-the characters ``(``, ``[``, and ``{`` before an operator,
-the characters ``)``, ``]``, and ``}`` after an operator,
-and the characters ``,``, ``;``, and ``:``
-are also considered whitespace.
-
-An operator with no whitespace before it and a dot (``.``) after it
-is treated as a postfix operator.
-For example, ``a@.b`` is parsed as as ``a@ . b`` rather than ``a @ .b``.
-
-.. TR: Using @ again instead of ! above,
-   to avoid confusion between the special case about dots (above)
-   and the special case about bang (below).
-   My discussion of this rule is rather different
-   than what's in LangRef.
-   Let's make sure it's still true.
-
-   Alex: This is still confusing. "@" is not an operator;
-   it's simply reserved punctuation that has special meaning.
-
-If the ``!`` or ``?`` operator has no whitespace before it,
-it is a postfix operator,
-regardless of whether it has whitespace after it.
-To use the ``?`` operator as a syntactic sugar for ``Optional``,
-it must not have whitespace before it.
-To use it in the conditional (``? :``) operator,
-it must have whitespace before and after it.
 
 .. langref-grammar
 
