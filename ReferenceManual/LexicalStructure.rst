@@ -51,8 +51,8 @@ Multiline comments begin with ``/*`` and end with ``*/``.
 Nesting is allowed, but the comment markers must be balanced.
 
 .. TODO: Make sure we have an example of nested comments in the guide.
-	Dave will include a discussion of comments (including nested comments),
-	but he isn't sure exactly where yet.
+    Dave will include a discussion of comments (including nested comments),
+    but he isn't sure exactly where yet.
 
 .. TR: LangRef says comments are ignored *and* treated as whitespace.
    Is there a difference?
@@ -265,13 +265,13 @@ Outside of those contexts, they may be used as identifiers.
 
 .. langref-grammar
 
-	get
-  	infix
-  	operator
-  	postfix
- 	prefix
-  	set
-  	type
+    get
+    infix
+    operator
+    postfix
+    prefix
+    set
+    type
 
 ``associativity``
 ``get``
@@ -296,17 +296,17 @@ A :newTerm:`literal` is the source code representation of a value of an
 integer, floating-point, character, or string type.
 Here are some examples of literals::
 
-	42 // Integer literal
-	3.14159 // Floating-point literal
-	'a' // Character literal
-	"Hello, world!" // String literal
+    42 // Integer literal
+    3.14159 // Floating-point literal
+    'a' // Character literal
+    "Hello, world!" // String literal
 
 
 .. syntax-grammar::
 
-	Grammar of a literal
+    Grammar of a literal
 
-	literal --> integer-literal | floating-point-literal | character-literal | string-literal
+    literal --> integer-literal | floating-point-literal | character-literal | string-literal
 
 .. TR: Is the design here that integers can be turned into doubles,
    but everything else has to use an explicit constructor
@@ -380,25 +380,25 @@ as described in :ref:`BasicTypes_Integers`.
     integer-literal --> binary-literal | octal-literal | decimal-literal | hexadecimal-literal
 
     binary-literal --> ``0b`` binary-digit binary-literal-characters-OPT
-	binary-digit --> Digit 0 or 1
-	binary-literal-character --> binary-digit | ``_``
-	binary-literal-characters --> binary-literal-character binary-literal-characters-OPT
+    binary-digit --> Digit 0 or 1
+    binary-literal-character --> binary-digit | ``_``
+    binary-literal-characters --> binary-literal-character binary-literal-characters-OPT
 
     octal-literal --> ``0o`` octal-digit octal-literal-characters-OPT
-	octal-digit --> Digit 0 through 7
-	octal-literal-character --> octal-digit | ``_``
-	octal-literal-characters --> octal-literal-character octal-literal-characters-OPT
+    octal-digit --> Digit 0 through 7
+    octal-literal-character --> octal-digit | ``_``
+    octal-literal-characters --> octal-literal-character octal-literal-characters-OPT
 
     decimal-literal --> decimal-digit decimal-literal-characters-OPT
-	decimal-digit --> Digit 0 through 9
-	decimal-digits --> decimal-digit decimal-digits-OPT
-	decimal-literal-character --> decimal-digit | ``_``
-	decimal-literal-characters --> decimal-literal-character decimal-literal-characters-OPT
+    decimal-digit --> Digit 0 through 9
+    decimal-digits --> decimal-digit decimal-digits-OPT
+    decimal-literal-character --> decimal-digit | ``_``
+    decimal-literal-characters --> decimal-literal-character decimal-literal-characters-OPT
 
     hexadecimal-literal --> ``0x`` hexadecimal-digit hexadecimal-literal-characters-OPT
-	hexadecimal-digit --> Digit 0 through 9, a through f, or A through F
-	hexadecimal-literal-character --> hexadecimal-digit | ``_``
-	hexadecimal-literal-characters --> hexadecimal-literal-character hexadecimal-literal-characters-OPT
+    hexadecimal-digit --> Digit 0 through 9, a through f, or A through F
+    hexadecimal-literal-character --> hexadecimal-digit | ``_``
+    hexadecimal-literal-characters --> hexadecimal-literal-character hexadecimal-literal-characters-OPT
 
 
 .. _LexicalStructure_Floating-PointLiterals:
@@ -470,7 +470,7 @@ which represents a 32-bit floating-point number.
 
 .. syntax-grammar::
 
-	Grammar of a floating-point literal
+    Grammar of a floating-point literal
 
     floating-point-literal --> decimal-literal decimal-fraction-OPT decimal-exponent-OPT
     floating-point-literal --> hexadecimal-literal hexadecimal-fraction-OPT hexadecimal-exponent
@@ -602,7 +602,7 @@ String literals are of type ``String``.
     escaped-character --> ``\U`` hexadecimal-digit hexadecimal-digit hexadecimal-digit hexadecimal-digit hexadecimal-digit hexadecimal-digit hexadecimal-digit hexadecimal-digit
 
 .. Changed 'Any text' to 'quoted-character', as I believe this amounts to the same thing.
-	Tim didn't like 'Any text', and I agree---it's a big vague.
+    Tim didn't like 'Any text', and I agree---it's a big vague.
 
 .. Quoted text resolves to a sequence of escaped characters by way of
    the quoted-texts rule which allows repetition; no need to allow
@@ -612,9 +612,9 @@ String literals are of type ``String``.
    omitted it in the rule above.
 
 .. TODO: The rules for characters and strings are still in flux,
-	so we'll probably need to circle back to this section later.
-	I'm still going to submit it to Jeanne in its current form,
-	while letting her know that it's not final.
+    so we'll probably need to circle back to this section later.
+    I'm still going to submit it to Jeanne in its current form,
+    while letting her know that it's not final.
 
 .. _LexicalStructure_Operators:
 
@@ -662,10 +662,10 @@ or a binary/infix operator.
 =================   =================   ================  =======
 Whitespace Before   Whitespace After    Kind of Operator  Example
 =================   =================   ================  =======
-No                  No                  Binary/Infix	  ``a+b``
-Yes                 No                  Prefix			  ``(-a)``
-No                  Yes                 Postfix			  ``a++;``
-Yes                 Yes                 Binary/Infix	  ``a + b``
+No                  No                  Binary/Infix      ``a+b``
+Yes                 No                  Prefix            ``(-a)``
+No                  Yes                 Postfix           ``a++;``
+Yes                 Yes                 Binary/Infix      ``a + b``
 =================   =================   ================  =======
 
 For the purposes of this rule,
