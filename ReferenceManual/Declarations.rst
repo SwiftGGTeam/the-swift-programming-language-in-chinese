@@ -900,6 +900,10 @@ Attributes
    This means that instead of having "empty" as a possible expansion,
    attribute-sequence always appears as -OPT.
 
+.. TODO: This grammar needs updating.
+    Currently, it allows "@attribute1, attribute2, @attribute3",
+    which is not correct. Each attribute must be prefixed with '@'.
+
 .. TODO: From looking at /swift/include/swift/AST/Attr.def,
     there are ATTR(...), TYPE_ATTR(...), and IB_ATTR(...).
     TYPE_ATTR(...)s can be applied to types only,
