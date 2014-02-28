@@ -19,7 +19,7 @@ Extensions can:
 * add computed properties and computed type properties
 * define instance methods and type methods
 * provide new initializers
-* implement subscripting
+* define subscripts
 * define and use new embedded types
 
 In addition, extensions can use these capabilities to
@@ -268,15 +268,15 @@ Type Methods
 
 [to be written]
 
-.. _Extensions_Subscripting:
+.. _Extensions_Subscripts:
 
-Subscripting
-------------
+Subscripts
+----------
 
-Extensions can add new forms of :ref:`subscripting <ClassesAndStructures_Subscripting>`
+Extensions can add new :ref:`subscripts <ClassesAndStructures_Subscripts>`
 to an existing type.
-This example adds an integer subscript operator to Swift's built-in ``Int`` type.
-This subscript operator ``[n]`` returns the decimal digit ``n`` places in
+This example adds an integer subscript to Swift's built-in ``Int`` type.
+This subscript ``[n]`` returns the decimal digit ``n`` places in
 from the right of the number,
 so:
 
@@ -285,7 +285,7 @@ so:
 
 …and so on:
 
-.. testcode:: extensionsSubscripting
+.. testcode:: extensionsSubscripts
 
     (swift) extension Int {
         subscript(digitIndex: Int) -> Int {

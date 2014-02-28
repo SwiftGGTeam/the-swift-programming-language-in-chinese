@@ -2176,12 +2176,103 @@ and associativity settings can be found in the :doc:`../ReferenceManual/index`.)
    If this Radar is fixed, the operator declaration above should be split over multiple lines
    for consistency with the rest of the code.
 
-.. _ClassesAndStructures_Subscripting:
+.. _ClassesAndStructures_Subscripts:
 
-Subscripting
-------------
+Subscripts
+----------
 
-[to be written]
+Classes and structures can define :newTerm:`subscripts`,
+which enable instances of that class or structure to be queried via one or more
+values in square braces after the instance name.
+This is similar to the way in which the elements in an array
+can be accessed as ``someArray[n]``.
+
+Subscripts are written with the special ``subscript`` keyword,
+without a ``func`` prefix, in a similar way to how initializers are written
+with the special ``init`` keyword.
+
+Subscripts can be read-write or read-only,
+and this behavior is communicated in the same way as for computed properties.
+A read-only subscript is similar to a computed property with only a getter,
+and so the ``get`` keyword can be dropped:
+
+.. testcode:: subscripts
+
+    (swift) class FibonacciGenerator {
+        subscript(n: Int) -> Int {
+            var i = 1, j = 0
+            var temp: Int
+            for k in 1...n+1 {
+                temp = i + j
+                i = j
+                j = temp
+            }
+            return j
+        }
+    }
+    (swift) var fibonacci = FibonacciGenerator()
+    // fibonacci : FibonacciGenerator = <FibonacciGenerator instance>
+    (swift) println("The sixth number in the Fibonacci sequence is \(fibonacci[6])")
+    >>> The sixth number in the Fibonacci sequence is 8
+
+Multiple Subscript Dimensions
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Subscripts can take any number of input parameters,
+and these input parameters can be of any type.
+While it is most common for a subscript to take a single parameter,
+there is nothing stopping you from requiring multiple parameters
+if it is appropriate for your type.
+
+.. testcode:: subscripts
+
+    (swift) struct Matrix {
+        var rows: Int, columns: Int
+        var grid = Array<Array<Double>>()
+        init withRows(rows: Int) columns(Int) {
+            self.rows = rows
+            self.columns = columns
+            for _ in 0...rows {
+                var row = Array<Double>()
+                for _ in 0...columns {
+                    row.append(0.0)
+                }
+                grid.append(row)
+            }
+        }
+        subscript(row: Int, column: Int) -> Double? {
+            get {
+                if row > rows || column > columns { return .None }
+                return grid[row][column]
+            }
+            set {
+                if value && row < rows && column < columns {
+                    grid[row][column] = value!
+                }
+            }
+        }
+        var description: String {
+            var output = "Matrix:"
+            for row in 0...rows {
+                output += "\n["
+                var first = true
+                for column in 0...columns {
+                    if !first { output += ", " }
+                    output += String(grid[row][column])
+                    first = false
+                }
+                output += "]"
+            }
+            return output
+        }
+    }
+    (swift) var matrix = Matrix(withRows: 2, columns: 2)
+    // matrix : Matrix = Matrix(2, 2, [[0.0, 0.0], [0.0, 0.0]])
+    (swift) matrix[0, 0] = 1
+    (swift) println(matrix.description)
+    >>> Matrix:
+    >>> [1.0, 0.0]
+    >>> [0.0, 0.0]
 
 .. NOTE: you can subscript on any type, including a range (IntGeneratorType)
 
