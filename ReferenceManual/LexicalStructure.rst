@@ -19,10 +19,6 @@ according to the precedence defined for the operators.
 
 .. TODO: Use a bullet/number list above?
 
-.. TODO: LangRef says
-    Swift has a strict separation between its phases of translation,
-    and the compiler follows a conceptually simple design.
-
 .. TR: Is the above discussion correct,
    and at an appropriate level of detail?
 
@@ -30,53 +26,6 @@ This chapter describes
 the lowest-level building blocks of the language,
 which are used to define the rest of the language.
 
-.. _LexicalStructure_ModuleScope:
-
-Module Scope
-------------
-
-The top level scope of a Swift source file
-consists of a series of statements.
-
-.. langref-grammar
-
-    top-level ::= brace-item*
-
-.. No formal grammar.
-
-.. _LexicalStructure_CodeBlocks:
-
-Code Blocks
------------
-
-A code block is used by a variety of control structures
-to group statements together.
-It has the following form:
-
-.. syntax-outline::
-
-    {
-        <#statements#>
-    }
-
-The statements inside a code block are executed in order.
-
-.. TODO: Discuss scope.  I assume a code block creates a new scope?
-
-.. TODO: This section doesn't feel like it belongs in this chapter.
-
-.. langref-grammar
-
-    brace-item-list ::= '{' brace-item* '}'
-    brace-item      ::= decl
-    brace-item      ::= expr
-    brace-item      ::= stmt
-
-.. syntax-grammar::
-
-    Grammar of a code block
-
-    code-block --> ``{`` statements-OPT ``}``
 
 .. _LexicalStructure_WhitespaceAndComments:
 
@@ -89,11 +38,11 @@ that determines whether an operator is a prefix or postfix
 (see :ref:`Lexical_Operator`),
 but is otherwise ignored.
 The following characters are considered whitespace:
-null (U+0000),
-horizontal tab (U+0009),
+space (U+0020),
 line feed (U+000A),
 carriage return (U+000D),
-and space (U+0020).
+horizontal tab (U+0009),
+and null (U+0000).
 
 Comments are treated as whitespace by the compiler.
 Single line comments begin with `//`
@@ -102,6 +51,8 @@ Multiline comments begin with ``/*`` and end with ``*/``.
 Nesting is allowed, but the comment markers must be balanced.
 
 .. TODO: Make sure we have an example of nested comments in the guide.
+	Dave will include a discussion of comments (including nested comments),
+	but he isn't sure exactly where yet.
 
 .. TR: LangRef says comments are ignored *and* treated as whitespace.
    Is there a difference?
@@ -197,12 +148,12 @@ These names are valid identifiers within the scope of the closure.
     identifier-head --> U+90000-U+9FFFD | U+A0000-U+AFFFD | U+B0000-U+BFFFD | U+C0000-U+CFFFD
     identifier-head --> U+D0000-U+DFFFD | U+E0000-U+EFFFD
 
-    identifier-characters --> identifier-character identifier-characters-OPT
     identifier-character --> Digit 0 through 9
     identifier-character --> identifier-head
     identifier-character --> U+0300-U+036F | U+1DC0-U+1DFF | U+20D0-U+20FF | U+FE20-U+FE2F
+    identifier-characters --> identifier-character identifier-characters-OPT
 
-    implicit-parameter-name --> ``$`` identifier-characters
+    implicit-parameter-name --> ``$`` decimal-digits
 
 
 .. _LexicalStructure_Keywords:
@@ -265,12 +216,12 @@ The following keywords are reserved and may not be used as identifiers.
 ``import``
 ``init``
 ``let``
-``metatype``
 ``protocol``
 ``static``
 ``struct``
 ``subscript``
 ``type``
+``Type``
 ``typealias``
 ``var``
 ``where``
@@ -287,20 +238,11 @@ The following keywords are reserved and may not be used as identifiers.
 ``__FILE__``
 ``__LINE__``
 
-.. TODO: We have a variety of keywords that appear twice -- once as
-   keywords and then again as literal text in the definition of
-   expression literals.  Let's see if we can't factor them out so one
-   terminal can appear in both places.  For example keyword-as or
-   keyword-FILE.  This issue holds for *all* keywords -- they appear as
-   literals on the right hand side of multiple definitions.
-   Note that 'keyword' is never used on the right hand of any other rule;
-   it's just a list of all keywords.
-   We can have this just be an informational table then,
-   rather than an actual set of production rules.
-   The same is true of punctuation, whitespace, and comments.
-   If possible, it would be great to generate these tables
+.. TODO: If possible, it would be great to generate these tables
    by extracting the code-voice literals from production rules
    rather than maintaining them by hand.
+   This won't work because not all keywords appear on the right
+   side of a grammar production (e.g., __FILE__, self, Self).
 
 *Keywords used in statements*:
 
@@ -319,11 +261,7 @@ The following keywords are reserved and may not be used as identifiers.
 
 In addition,
 the following keywords are used in particular contexts.
-They may also be used as identifiers.
-
-.. TODO: I think these are all used in function declarations.
-   If there's a specific context we can give,
-   let's say that instead of just "particular contexts".
+Outside of those contexts, they may be used as identifiers.
 
 .. langref-grammar
 
@@ -335,26 +273,40 @@ They may also be used as identifiers.
   	set
   	type
 
-``get``
-``set``
-``inout``
-``mutating``
-``operator``
-``prefix``
-``infix``
-``postfix``
 ``associativity``
-``precedence``
+``get``
+``infix``
+``inout``
 ``left``
-``right``
+``mutating``
 ``none``
+``operator``
+``postfix``
+``precedence``
+``prefix``
+``right``
+``set``
 
 .. _LexicalStructure_Literals:
 
 Literals
 --------
 
-.. TODO: intro text
+A :newTerm:`literal` is the source code representation of a value of an
+integer, floating-point, character, or string type.
+Here are some examples of literals::
+
+	42 // Integer literal
+	3.14159 // Floating-point literal
+	'a' // Character literal
+	"Hello, world!" // String literal
+
+
+.. syntax-grammar::
+
+	Grammar of a literal
+
+	literal --> integer-literal | floating-point-literal | character-literal | string-literal
 
 .. TR: Is the design here that integers can be turned into doubles,
    but everything else has to use an explicit constructor
@@ -374,36 +326,14 @@ Literals
 
 .. Note: The grammar for "literal-expression" is in "Expressions".
 
-.. _LexicalStructure_NumericLiterals:
+.. _LexicalStructure_IntegerLiterals:
 
-Numeric Literals
+Integer Literals
 ~~~~~~~~~~~~~~~~
 
-Numeric literals are made up of
-an integer, a fraction, and an exponent,
-with the following form:
+Integer literals represent integer values of unspecified precision.
 
-.. syntax-outline::
-
-   <#integer#>.<#fraction#>e<#exponent#>
-
-All three parts are made up of a series of digits.
-Underscores (``_``) are allowed between digits for readability,
-but are ignored.
-The fraction is separated by a dot (``.``) before it.
-The exponent is separated by ``e`` or ``E`` before it for decimal literals
-and by ``p`` or ``P`` for hexadecimal literals,
-followed by an optional sign (``+`` or ``-``).
-
-.. TR: The prose assumes underscores only belong between digits.
-   Is there a reason to allow them at the end of a literal?
-   Java and Ruby both require underscores to be between digits.
-   Also, are adjacent underscores meant to be allowed, like 5__000?
-   (REPL supports them as of swift-1.21 but it seems odd.)
-   Formal grammar treats underscore as a digit for simplicity,
-   leaving the prose to restrict where it can actually appear.
-
-By default, numeric literals are expressed in decimal;
+By default, integer literals are expressed in decimal;
 you can specify an alternate base using a prefix.
 Binary literals begin with ``0b``,
 octal literals begin with ``0x``,
@@ -415,22 +345,26 @@ octal literals contain ``0`` through ``7``,
 and hexadecimal literals contain ``0`` through ``9``
 as well as ``A`` through ``F`` in upper or lower case.
 
-There are several valid forms:
+Negative integers are expressed by applying the unary minus operator (``-``)
+to an integer literal, as in ``-42``. Strictly speaking, ``-42`` is an expression,
+not an integer literal.
 
-* Binary, octal, or hexadecimal literal with no fraction or exponent
-* Decimal literal with an optional fraction and optional exponent
-* Hexadecimal literal with an optional a fraction and a required exponent
+Underscores (``_``) are allowed between digits for readability,
+but are ignored and therefore don't affect the value of the literal.
+Integer literals can begin with leading zeros (``0``),
+but are likewise ignored and don't affect the base or value of the literal.
 
-If a fraction or exponent is specified,
-the literal's type is ``Double``;
-otherwise it is ``Int``.
+Unless otherwise specified,
+the default type of an integer literal is the Swift Standard Library type ``Int``.
+The Swift Standard Library also defines types for various sizes of
+signed and unsigned integers,
+as described in :ref:`BasicTypes_Integers`.
 
-.. NOTE Negative integer literals are expressed using the unary minus operator.
-   There's no leading - on an integer literal.
-
-.. TR: Why are these rules so complex?
-   Why not allow all combinations --
-   optional fraction and optional exponent in any base?
+.. TR: The prose assumes underscores only belong between digits.
+   Is there a reason to allow them at the end of a literal?
+   Java and Ruby both require underscores to be between digits.
+   Also, are adjacent underscores meant to be allowed, like 5__000?
+   (REPL supports them as of swift-1.21 but it seems odd.)
 
 .. langref-grammar
 
@@ -439,50 +373,118 @@ otherwise it is ``Int``.
     integer_literal ::= 0o[0-7][0-7_]*
     integer_literal ::= 0b[01][01_]*
 
+.. syntax-grammar::
+
+    Grammar of an integer literal
+
+    integer-literal --> binary-literal | octal-literal | decimal-literal | hexadecimal-literal
+
+    binary-literal --> ``0b`` binary-digit binary-literal-characters-OPT
+	binary-digit --> Digit 0 or 1
+	binary-literal-character --> binary-digit | ``_``
+	binary-literal-characters --> binary-literal-character binary-literal-characters-OPT
+
+    octal-literal --> ``0o`` octal-digit octal-literal-characters-OPT
+	octal-digit --> Digit 0 through 7
+	octal-literal-character --> octal-digit | ``_``
+	octal-literal-characters --> octal-literal-character octal-literal-characters-OPT
+
+    decimal-literal --> decimal-digit decimal-literal-characters-OPT
+	decimal-digit --> Digit 0 through 9
+	decimal-digits --> decimal-digit decimal-digits-OPT
+	decimal-literal-character --> decimal-digit | ``_``
+	decimal-literal-characters --> decimal-literal-character decimal-literal-characters-OPT
+
+    hexadecimal-literal --> ``0x`` hexadecimal-digit hexadecimal-literal-characters-OPT
+	hexadecimal-digit --> Digit 0 through 9, a through f, or A through F
+	hexadecimal-literal-character --> hexadecimal-digit | ``_``
+	hexadecimal-literal-characters --> hexadecimal-literal-character hexadecimal-literal-characters-OPT
+
+
+.. _LexicalStructure_Floating-PointLiterals:
+
+Floating-Point Literals
+~~~~~~~~~~~~~~~~~~~~~~~
+
+Floating-point literals represent floating-point values of unspecified precision.
+
+By default, floating-point literals are expressed in decimal (with no prefix),
+but they can also be expressed in hexadecimal (with a ``0x`` prefix).
+
+Decimal floating-point literals consist of a sequence of decimal digits
+followed by a decimal fraction. The decimal fraction consists of a decimal point (``.``),
+followed by a sequence of decimal digits.
+
+Hexadecimal floating-point literals consist of a ``0x`` prefix,
+followed by a hexadecimal fraction. The hexadecimal fraction consists of a decimal point,
+followed by a sequence of hexadecimal digits.
+
+Floating-point literals can also include an optionally signed exponent,
+which is prefixed by an upper- or lowercase ``e`` for decimal floating points
+or an upper- or lowercase ``p`` for hexadecimal floating points.
+When an exponent is specified,
+the decimal fraction is optional.
+
+For decimal floating points,
+the exponent is a sequence of decimal digits that indicates
+what power of 10 the value preceding the ``e`` or ``E`` is multiplied by.
+For example, ``1.25e2`` represents 1.25 ⨉ 10\ :superscript:`2`,
+which evaluates to ``125.0``.
+Similarly, ``1.25e-2`` represents 1.25 ⨉ 10\ :superscript:`-2`,
+which evaluates to ``0.0125``.
+
+For hexadecimal floating points,
+the exponent is a sequence of decimal digits that indicates
+what power of 2 the value preceding the ``p`` or ``P`` is multiplied by.
+For example, ``0xFp2`` represents 15 ⨉ 2\ :superscript:`2`,
+which evaluates to ``60``.
+Similarly, ``0xFp-2`` represents 15 ⨉ 2\ :superscript:`-2`,
+which evaluates to ``3.75``.
+
+As with integer literals, negative floating-points are expressed
+by applying the unary minus operator (``-``)
+to a floating-point literal.
+
+Underscores (``_``) are allowed between digits for readability,
+but are ignored and therefore don't affect the value of the literal.
+Floating-point literals can begin with leading zeros (``0``),
+but are likewise ignored and don't affect the base or value of the literal.
+
+Unless otherwise specified,
+the default type of a floating-point literal is the Swift Standard Library type ``Double``,
+which represents a 64-bit floating-point number.
+The Swift Standard Library also defines a ``Float`` type,
+which represents a 32-bit floating-point number.
+
+.. langref-grammar
+
     floating_literal ::= [0-9][0-9_]*\.[0-9][0-9_]*
     floating_literal ::= [0-9][0-9_]*\.[0-9][0-9_]*[eE][+-]?[0-9][0-9_]*
     floating_literal ::= [0-9][0-9_]*[eE][+-]?[0-9][0-9_]*
     floating_literal ::= 0x[0-9A-Fa-f][0-9A-Fa-f_]*
                            (\.[0-9A-Fa-f][0-9A-Fa-f_]*)?[pP][+-]?[0-9][0-9_]*
 
+.. TR: Why are these rules so complex?
+   Why not allow all combinations --
+   optional fraction and optional exponent in any base?
+
 .. syntax-grammar::
 
-    Grammar of numeric literals
+	Grammar of a floating-point literal
 
-    numeric-literal --> integer-literal | floating-point-literal
+    floating-point-literal --> decimal-literal decimal-fraction-OPT decimal-exponent-OPT
+    floating-point-literal --> hexadecimal-literal hexadecimal-fraction-OPT hexadecimal-exponent
 
-    integer-literal --> binary-integer-literal
-    integer-literal --> octal-integer-literal
-    integer-literal --> decimal-integer-literal
-    integer-literal --> hexadecimal-integer-literal
+    decimal-fraction --> ``.`` decimal-literal
+    decimal-exponent --> floating-point-e sign-OPT decimal-literal
 
-    binary-integer-literal --> ``0b`` binary-digits
-    octal-integer-literal --> ``0o`` octal-digits
-    decimal-integer-literal --> decimal-digits
-    hexadecimal-integer-literal --> ``0x`` hexadecimal-digits
-
-    floating-point-literal --> decimal-digits floating-point-decimal-fraction-OPT floating-point-decimal-exponent-OPT
-    floating-point-literal --> ``0x`` hexadecimal-digits floating-point-hexadecimal-fraction-OPT floating-point-hexadecimal-exponent
-
-    floating-point-decimal-fraction --> ``.`` decimal-digits
-    floating-point-decimal-exponent --> floating-point-e sign-OPT decimal-digits
-
-    floating-point-hexadecimal-fraction --> ``.`` hexadecimal-digits-OPT
-    floating-point-hexadecimal-exponent --> floating-point-p sign-OPT hexadecimal-digits
-
-    binary-digits --> binary-digit binary-digits-OPT
-    octal-digits --> octal-digit octal-digits-OPT
-    decimal-digits --> decimal-digit decimal-digits-OPT
-    hexadecimal-digits --> hexadecimal-digit hexadecimal-digits-OPT
-
-    binary-digit --> Digit 0 or 1, or underscore
-    octal-digit --> Digit 0 through 7, or underscore
-    decimal-digit --> Digit 0 through 9, or underscore
-    hexadecimal-digit --> Digit 0 through 9, a through f, A through F, or underscore
+    hexadecimal-fraction --> ``.`` hexadecimal-literal-OPT
+    hexadecimal-exponent --> floating-point-p sign-OPT hexadecimal-literal
 
     floating-point-e --> ``e`` | ``E``
     floating-point-p --> ``p`` | ``P``
     sign --> ``+`` | ``-``
+
 
 .. _LexicalStructure_TextualLiterals:
 
@@ -592,14 +594,15 @@ String literals are of type ``String``.
     quoted-text --> quoted-text-item quoted-text-OPT
     quoted-text-item --> escaped-character
     quoted-text-item --> ``\(`` expression ``)``
-    quoted-text-item --> Any text
+    quoted-text-item --> quoted-character
 
     escaped-character --> ``\0`` | ``\\`` | ``\t`` | ``\n`` | ``\r`` | ``\"`` | ``\'``
     escaped-character --> ``\x`` hexadecimal-digit hexadecimal-digit
     escaped-character --> ``\u`` hexadecimal-digit hexadecimal-digit hexadecimal-digit hexadecimal-digit
     escaped-character --> ``\U`` hexadecimal-digit hexadecimal-digit hexadecimal-digit hexadecimal-digit hexadecimal-digit hexadecimal-digit hexadecimal-digit hexadecimal-digit
 
-.. TODO: Brian doesn't like the use of "except" above.
+.. Changed 'Any text' to 'quoted-character', as I believe this amounts to the same thing.
+	Tim didn't like 'Any text', and I agree---it's a big vague.
 
 .. Quoted text resolves to a sequence of escaped characters by way of
    the quoted-texts rule which allows repetition; no need to allow
@@ -608,16 +611,21 @@ String literals are of type ``String``.
 .. TR: Paren balancing is required by the grammar of *expression* already, so I
    omitted it in the rule above.
 
+.. TODO: The rules for characters and strings are still in flux,
+	so we'll probably need to circle back to this section later.
+	I'm still going to submit it to Jeanne in its current form,
+	while letting her know that it's not final.
+
 .. _LexicalStructure_Operators:
 
 Operators
 ---------
 
 Operators are made up of one or more of the following characters:
-``@``, ``/``, ``=``, ``-``, ``+``, ``*``, ``%``, ``<``, ``>``, ``!``,
+``/``, ``=``, ``-``, ``+``, ``*``, ``%``, ``<``, ``>``, ``!``,
 ``&``, ``|``, ``^``, ``~``.
 The operators
-``=``, ``->``, ``//``, ``/*``, ``*/``, ``...``,
+``@``, ``=``, ``->``, ``//``, ``/*``, ``*/``, ``...``, ``..``,
 and the unary prefix operator ``&``
 are reserved for use as other punctuation.
 
@@ -644,21 +652,21 @@ it is parsed as ``A < B < C > >`` rather than as ``A < B < C >>``.
 .. TR: With this rule in effect, how is >> ever parsed as a bit shift
    and not two greater-than operators?
 
-To determine whether an operator is used as
-a prefix operator, a postfix operator, or a binary operator,
-the parser looks at the characters before and after the operator.
+The characters before and after an operator are used to determine
+whether an operator is used as a prefix operator, a postfix operator,
+or a binary/infix operator.
 
 .. Right bound - whitespace after
    Left bound - whitespace before
 
-=================   =================   ================
-Whitespace Before   Whitespace After    Kind of Operator
-=================   =================   ================
-No                  No                  Binary
-Yes                 No                  Prefix
-No                  Yes                 Postfix
-Yes                 Yes                 Binary
-=================   =================   ================
+=================   =================   ================  =======
+Whitespace Before   Whitespace After    Kind of Operator  Example
+=================   =================   ================  =======
+No                  No                  Binary/Infix	  ``a+b``
+Yes                 No                  Prefix			  ``(-a)``
+No                  Yes                 Postfix			  ``a++;``
+Yes                 Yes                 Binary/Infix	  ``a + b``
+=================   =================   ================  =======
 
 For the purposes of this rule,
 the characters ``(``, ``[``, and ``{`` before an operator,
@@ -677,6 +685,9 @@ For example, ``a@.b`` is parsed as as ``a@ . b`` rather than ``a @ .b``.
    than what's in LangRef.
    Let's make sure it's still true.
 
+   Alex: This is still confusing. "@" is not an operator;
+   it's simply reserved punctuation that has special meaning.
+
 If the ``!`` or ``?`` operator has no whitespace before it,
 it is a postfix operator,
 regardless of whether it has whitespace after it.
@@ -687,14 +698,13 @@ it must have whitespace before and after it.
 
 .. langref-grammar
 
-    operator ::= [@/=-+*%<>!&|^~]+
-    operator ::= \.\.
+    operator ::= [/=-+*%<>!&|^~]+
+    operator ::= \.+
 
       Note: excludes '=', see [1]
             excludes '->', see [2]
             excludes unary '&', see [3]
             excludes '//', '/*', and '*/', see [4]
-            '..' is an operator, not two '.'s.
 
     operator-binary ::= operator
     operator-prefix ::= operator
@@ -732,9 +742,9 @@ it must have whitespace before and after it.
 
     operator --> operator-character operator-OPT
     operator --> ``..``
-    operator-character --> ``@`` | ``/`` | ``=`` | ``-`` | ``+``
-    operator-character --> ``*`` | ``%`` | ``<`` | ``>`` | ``!``
-    operator-character --> ``&`` | ``|`` | ``^`` | ``~``
+    operator-character --> ``/`` | ``=`` | ``-`` | ``+`` | ``!``
+    operator-character --> ``*`` | ``%`` | ``<`` | ``>`` | ``&``
+    operator-character --> ``|`` | ``^`` | ``~``
 
     binary-operator --> operator
     prefix-operator --> operator

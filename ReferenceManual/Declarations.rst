@@ -41,6 +41,55 @@ Declarations
 .. NOTE: enum-element-declaration is only allowed inside an enum
    declaration.
 
+.. _LexicalStructure_ModuleScope:
+
+Module Scope
+------------
+
+The top level scope of a Swift source file
+consists of a series of statements.
+
+.. langref-grammar
+
+    top-level ::= brace-item*
+
+.. No formal grammar.
+
+.. _LexicalStructure_CodeBlocks:
+
+Code Blocks
+-----------
+
+A code block is used by a variety of declarations and control structures
+to group statements together.
+It has the following form:
+
+.. syntax-outline::
+
+    {
+        <#statements#>
+    }
+
+The statements inside a code block are executed in order.
+
+.. TODO: Discuss scope.  I assume a code block creates a new scope?
+
+.. TODO: This section doesn't feel like it belongs in this chapter.
+
+.. langref-grammar
+
+    brace-item-list ::= '{' brace-item* '}'
+    brace-item      ::= decl
+    brace-item      ::= expr
+    brace-item      ::= stmt
+
+.. syntax-grammar::
+
+    Grammar of a code block
+
+    code-block --> ``{`` statements-OPT ``}``
+
+
 .. _Declarations_ImportDeclaration:
 
 Import Declaration
