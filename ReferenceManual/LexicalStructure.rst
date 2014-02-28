@@ -1,31 +1,20 @@
 Lexical Structure
 =================
 
-A Swift program is translated from source code in several phases.
+The lexical structure of Swift describes what sequence of characters
+form valid tokens of the language.
+These valid tokens form the lowest-level building blocks of the language
+and are used to describe the rest of the language in subsequent chapters.
 
-The first phase translates sequences of characters into tokens.
-When generating each token,
-the longest possible substring from the input text is used,
-within the constraints of the grammar.
-This behavior is referred to as *longest match* or *maximal munch*.
+In most cases, tokens are generated from the characters of a Swift source file
+by considering the longest possible substring from the input text,
+within the constraints of the grammar that are specified below.
+This behavior is referred to as :newTerm:`longest match`
+or :newTerm:`maximal munch`.
 
-The second phase arranges tokens into a tree structure,
-according to the grammar.
-
-The third phase transforms expressions
-from a list of subexpressions and operators
-into a tree structure,
-according to the precedence defined for the operators.
-
-.. TODO: Use a bullet/number list above?
-
-.. TR: Is the above discussion correct,
-   and at an appropriate level of detail?
-
-This chapter describes
-the lowest-level building blocks of the language,
-which are used to define the rest of the language.
-
+.. TR: Is this correct? I say "in most cases",
+	because of how ``>>`` is split in certain constructs,
+	as described below in the discussion of operators.
 
 .. _LexicalStructure_WhitespaceAndComments:
 
@@ -238,12 +227,6 @@ The following keywords are reserved and may not be used as identifiers.
 ``__FILE__``
 ``__LINE__``
 
-.. TODO: If possible, it would be great to generate these tables
-   by extracting the code-voice literals from production rules
-   rather than maintaining them by hand.
-   This won't work because not all keywords appear on the right
-   side of a grammar production (e.g., __FILE__, self, Self).
-
 *Keywords used in statements*:
 
 ``break``
@@ -287,6 +270,7 @@ Outside of those contexts, they may be used as identifiers.
 ``right``
 ``set``
 
+
 .. _LexicalStructure_Literals:
 
 Literals
@@ -327,6 +311,7 @@ Here are some examples of literals::
 .. Note: The grammar for "literal-expression" is in "Expressions".
 
 .. _LexicalStructure_IntegerLiterals:
+
 
 Integer Literals
 ~~~~~~~~~~~~~~~~
@@ -414,7 +399,7 @@ but they can also be expressed in hexadecimal (with a ``0x`` prefix).
 
 Decimal floating-point literals consist of a sequence of decimal digits
 followed by either a decimal fraction, a decimal exponent, or both.
-The decimal fraction consists of a decimal point (``.``),
+The decimal fraction consists of a decimal point (``.``)
 followed by a sequence of decimal digits.
 The exponent consists of an uppercase or lowercase ``e`` prefix
 followed by sequence of decimal digits that indicates
@@ -427,6 +412,8 @@ which evaluates to ``0.0125``.
 Hexadecimal floating-point literals consist of a ``0x`` prefix,
 followed by an optional hexadecimal fraction,
 followed by a hexadecimal exponent.
+The hexadecimal fraction consists of a decimal point
+followed by a sequence of hexadecimal digits.
 The exponent consists of an uppercase or lowercase ``p`` prefix
 followed by sequence of decimal digits that indicates
 what power of 2 the value preceding the ``p`` is multiplied by.
@@ -435,7 +422,7 @@ which evaluates to ``60``.
 Similarly, ``0xFp-2`` represents 15 ⨉ 2\ :superscript:`-2`,
 which evaluates to ``3.75``.
 
-As with integer literals, negative floating-points are expressed
+As with integer literals, negative floating-point numbers are expressed
 by applying the unary minus operator (``-``)
 to a floating-point literal.
 
@@ -507,7 +494,7 @@ with the following form:
 
 .. syntax-outline::
 
-    "<#text#>"
+    "<#characters#>"
 
 String literals cannot contain
 an unescaped double quote (``"``),
@@ -595,9 +582,6 @@ String literals are of type ``String``.
     escaped-character --> ``\u`` hexadecimal-digit hexadecimal-digit hexadecimal-digit hexadecimal-digit
     escaped-character --> ``\U`` hexadecimal-digit hexadecimal-digit hexadecimal-digit hexadecimal-digit hexadecimal-digit hexadecimal-digit hexadecimal-digit hexadecimal-digit
 
-.. Changed 'Any text' to 'quoted-character', as I believe this amounts to the same thing.
-    Tim didn't like 'Any text', and I agree---it's a big vague.
-
 .. Quoted text resolves to a sequence of escaped characters by way of
    the quoted-texts rule which allows repetition; no need to allow
    repetition in the quoted-text/escaped-character rule too.
@@ -610,48 +594,83 @@ String literals are of type ``String``.
     I'm still going to submit it to Jeanne in its current form,
     while letting her know that it's not final.
 
+
 .. _LexicalStructure_Operators:
 
 Operators
 ---------
 
+The Swift Standard Library defines a number of operators for your use,
+many of which are discussed in :doc:`../LanguageGuide/Operators`.
+The present section describes what characters can be used as operators.
+
 Operators are made up of one or more of the following characters:
 ``/``, ``=``, ``-``, ``+``, ``*``, ``%``, ``<``, ``>``, ``!``,
-``&``, ``|``, ``^``, ``~``.
-The operators
-``@``, ``=``, ``->``, ``//``, ``/*``, ``*/``, ``...``, ``..``,
-and the unary prefix operator ``&``
-are reserved for use as other punctuation.
+``&``, ``|``, ``^``, ``~``, and ``.``.
+That said, the tokens
+``=``, ``->``, ``//``, ``/*``, ``*/``, ``.``,
+and the unary prefix operator ``&`` are reserved.
+These tokens can't be overloaded nor can they be used to define custom operators.
 
 .. TR: LangRef also says (){}[].,;: are reserved punctuation,
    but those aren't valid operator characters anyway.
    OK to omit here?
 
-The characters before and after an operator are used to determine
+The whitespace around an operator is used to determine
 whether an operator is used as a prefix operator, a postfix operator,
-or a binary/infix operator.
+or a binary operator. This behavior is summarized in the following rules:
 
-.. Right bound - whitespace after
-   Left bound - whitespace before
+* If an operator has whitespace around both sides or around neither side,
+  it is treated as a binary operator.
+  As an example, the ``+`` operator in ``a+b`` and ``a + b`` is treated as a binary operator.
+* If an operator has whitespace on the left side only,
+  it is treated as a prefix unary operator.
+  As an example, the ``++`` operator in ``a ++b`` is treated as a prefix unary operator.
+* If an operator has whitespace on the right side only,
+  it is treated as a postfix unary operator.
+  As an example, the ``++`` operator in ``a++ b`` is treated as a postfix unary operator.
+* If an operator has no whitespace on the left but is followed immediately by a dot (``.``),
+  it is treated as a postfix unary operator.
+  As an example, the  ``++`` operator in ``a++.b`` is treated as a postfix unary operator
+  (``a++ . b`` rather than ``a ++ .b``).
 
-=================   =================   ================  =======
-Whitespace Before   Whitespace After    Kind of Operator  Example
-=================   =================   ================  =======
-No                  No                  Binary/Infix      ``a+b``
-Yes                 No                  Prefix            ``a +b``
-No                  Yes                 Postfix           ``a+ b``
-Yes                 Yes                 Binary/Infix      ``a + b``
-=================   =================   ================  =======
-
-For the purposes of this rule,
+For the purposes of these rules,
 the characters ``(``, ``[``, and ``{`` before an operator,
 the characters ``)``, ``]``, and ``}`` after an operator,
 and the characters ``,``, ``;``, and ``:``
 are also considered whitespace.
 
-An operator with no whitespace before it and a dot (``.``) after it
-is treated as a postfix operator.
-For example, ``a++.b`` is treated as ``a++ . b`` rather than ``a ++ .b``.
+There is one caveat to the rules above.
+If the ``!`` or ``?`` operator has no whitespace on the left,
+it is treated as a postfix operator,
+regardless of whether it has whitespace on the right.
+To use the ``?`` operator as syntactic sugar for the ``Optional`` type,
+it must not have whitespace on the left.
+To use it in the conditional (``? :``) operator,
+it must have whitespace around both sides.
+
+.. Right bound - whitespace after
+   Left bound - whitespace before
+
+.. NOTE: LangRef says that an operator is prefix if it is right-bound
+	but not left-bound, and that an operator is postfix if it is left-bound
+	but not right-bound. This is incorrect; the opposite is actually true.
+	That is, an operator is postifx if it is right-bound and not left-bound,
+	and an operator is prefix if it is left-bound but not right bound.
+
+.. Old-content:
+	=================   =================   ================  =======
+	Whitespace Before   Whitespace After    Kind of Operator  Example
+	=================   =================   ================  =======
+	No                  No                  Binary            ``a+b``
+	Yes                 No                  Prefix            ``a +b``
+	No                  Yes                 Postfix           ``a+ b``
+	Yes                 Yes                 Binary            ``a + b``
+	=================   =================   ================  =======
+
+	An operator with no whitespace before it and a dot (``.``) after it
+	is treated as a postfix operator.
+	For example, ``a++.b`` is treated as ``a++ . b`` rather than ``a ++ .b``.
 
 .. TR: Using ++ instead of ! above,
    to avoid confusion between the special case about dots (above)
@@ -660,32 +679,28 @@ For example, ``a++.b`` is treated as ``a++ . b`` rather than ``a ++ .b``.
    than what's in LangRef.
    Let's make sure it's still true.
 
-If the ``!`` or ``?`` operator has no whitespace before it,
-it is a postfix operator,
-regardless of whether it has whitespace after it.
-To use the ``?`` operator as a syntactic sugar for ``Optional``,
-it must not have whitespace before it.
-To use it in the conditional (``? :``) operator,
-it must have whitespace before and after it.
-
-Operators with a leading ``<`` or ``>`` are split into two tokens when parsing:
-the leading ``<`` or ``>`` and the remainder of the token.
-The remainder is parsed the same way and may be split again.
-This parsing rule removes the need for whitespace
-to disambiguate between the closing ``>`` characters
-in nested protocols such as ``A<B<C>>`` ---
-it is parsed as ``A < B < C > >`` rather than as ``A < B < C >>``.
+In certain constructs, operators with a leading ``<`` or ``>``
+may be split into two or more tokens. The remainder is treated the same way
+and may be split again. As a result, there is no need to use whitespace
+to disambiguate between the closing ``>`` characters in constructs like
+``Dictionary<String, Array<Int>>``.
+In this example, the closing ``>`` characters are not treated as a single token
+that may then be misinterpreted as a bit shift ``>>`` operator.
 
 .. TODO: Lead with the problem above,
    use that to motivate the solution.
-
-.. TODO: Brian points out that this is probably a *lexing* rule,
-   not a parsing rule.
 
 .. TR: Any special context you must be in for this <<>> rule to happen?
 
 .. TR: With this rule in effect, how is >> ever parsed as a bit shift
    and not two greater-than operators?
+   Alex, I think that the rule is contextual;
+   it only applies in certain grammatical constructs.
+
+To learn how to define new, custom operators,
+see :ref:`ClassesAndStructures_CustomOperators`.
+To learn how to overload existing operators,
+see :ref:`ClassesAndStructures_OperatorFunctions`.
 
 .. langref-grammar
 
@@ -706,10 +721,6 @@ it is parsed as ``A < B < C > >`` rather than as ``A < B < C >>``.
 
     any-identifier ::= identifier | operator
 
-.. TODO: The syntactic category 'any-identifier' is only used
-   in function definitions and import declarations.
-   Expand it in those places, and delete this syntactic category.
-
 .. langref-grammar
 
     punctuation ::= '('
@@ -724,21 +735,19 @@ it is parsed as ``A < B < C > >`` rather than as ``A < B < C >>``.
     punctuation ::= ':'
     punctuation ::= '='
     punctuation ::= '->'
-    punctuation ::= '...'
     punctuation ::= '&' // unary prefix operator
+
+.. TR: LangRef doesn't mention '?' as reserved, but it behaves as if it is.
 
 .. syntax-grammar::
 
     Grammar of operators
 
     operator --> operator-character operator-OPT
-    operator --> ``..``
-    operator-character --> ``/`` | ``=`` | ``-`` | ``+`` | ``!``
-    operator-character --> ``*`` | ``%`` | ``<`` | ``>`` | ``&``
-    operator-character --> ``|`` | ``^`` | ``~``
+    operator-character --> ``/`` | ``=`` | ``-`` | ``+`` | ``!`` | ``*`` | ``%`` | ``<`` | ``>`` | ``&`` | ``|`` | ``^`` | ``~`` | ``.``
 
     binary-operator --> operator
     prefix-operator --> operator
     postfix-operator --> operator
 
-    any-identifier --> identifier | operator
+.. TR: Is this grammar still correct?

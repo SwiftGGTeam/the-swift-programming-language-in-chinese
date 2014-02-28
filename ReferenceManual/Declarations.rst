@@ -122,7 +122,8 @@ Import Declaration
     import-declaration --> attribute-sequence-OPT ``import`` import-kind-OPT import-path
 
     import-kind --> ``typealias`` | ``struct`` | ``class`` | ``enum`` | ``protocol`` | ``var`` | ``func``
-    import-path --> any-identifier | any-identifier ``.`` import-path
+    import-path --> import-path-identifier | import-path-identifier ``.`` import-path
+    import-path-identifier --> identifier | operator
 
 .. _Declarations_VariableDeclaration:
 
@@ -362,7 +363,7 @@ Function Signature
 
     function-declaration --> attribute-sequence-OPT function-specifier-OPT ``func`` function-name generic-parameter-clause-OPT function-signature code-block-OPT
     function-specifier --> ``static`` | ``class``
-    function-name --> any-identifier
+    function-name --> identifier | operator
 
     function-signature --> function-parameters function-signature-result-OPT
     function-parameters --> tuple-patterns | selector-parameters
@@ -370,7 +371,7 @@ Function Signature
 
     selector-parameters --> ``(`` tuple-pattern-element ``)`` selector-tuples
     selector-tuples --> selector-name ``(`` tuple-pattern-element ``)`` selector-tuples-OPT
-    selector-name --> identifier-or-any
+    selector-name --> identifier | operator
 
 .. TODO: The overgeneration from tuple-patterns combined with some upcoming changes
     mean that we should just create a new syntactic category
