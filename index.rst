@@ -19,6 +19,15 @@ Contents
 Change Log
 ----------
 
+February 28 2014
+~~~~~~~~~~~~~~~~
+
+Reference Manual
+++++++++++++++++
+
+* Substantial updates to the :doc:`ReferenceManual/LexicalStructure` chapter.
+  Most sections of this chapter have been improved, both in prose and in formal grammar.
+
 February 27 2014
 ~~~~~~~~~~~~~~~~
 
