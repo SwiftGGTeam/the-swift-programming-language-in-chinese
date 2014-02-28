@@ -588,7 +588,7 @@ String literals are of type ``String``.
     quoted-text --> quoted-text-item quoted-text-OPT
     quoted-text-item --> escaped-character
     quoted-text-item --> ``\(`` expression ``)``
-    quoted-text-item --> quoted-character
+    quoted-text-item --> Any Unicode grapheme cluster except ``"`` ``\`` U+000A U+000D
 
     escaped-character --> ``\0`` | ``\\`` | ``\t`` | ``\n`` | ``\r`` | ``\"`` | ``\'``
     escaped-character --> ``\x`` hexadecimal-digit hexadecimal-digit
