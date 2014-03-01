@@ -20,7 +20,7 @@ Extensions can:
 * define instance methods and type methods
 * provide new initializers
 * define subscripts
-* define and use new embedded types
+* define and use new nested types
 
 In addition, extensions can use these capabilities to
 make an existing type conform to a protocol.
@@ -309,15 +309,15 @@ so:
 
 .. TODO: provide an explanation of this example
 
-.. _Extensions_EmbeddedTypes:
+.. _Extensions_NestedTypes:
 
-Embedded Types
---------------
+Nested Types
+------------
 
-Extensions can add new :ref:`embedded types <Enumerations_EmbeddedTypes>`
+Extensions can add new :ref:`nested types <Enumerations_NestedTypes>`
 to existing classes, structures and enumerations:
 
-.. testcode:: extensionsEmbeddedTypes
+.. testcode:: extensionsNestedTypes
 
     (swift) extension UnicodeScalar {
         enum Kind {
@@ -336,7 +336,7 @@ to existing classes, structures and enumerations:
         }
     }
 
-This example adds a new embedded enumeration to ``UnicodeScalar``.
+This example adds a new nested enumeration to ``UnicodeScalar``.
 This enumeration, called ``Kind``,
 gives a way to express the kind of letter that a particular scalar represents.
 Specifically, it expresses whether the scalar is
@@ -347,9 +347,9 @@ or whether it is some other kind of scalar.
 This example also adds a new computed instance property to ``UnicodeScalar``,
 called ``kind``, which returns the appropriate ``Kind`` enumeration member for that scalar.
 
-The embedded enumeration can now be used with ``UnicodeScalar`` values:
+The nested enumeration can now be used with ``UnicodeScalar`` values:
 
-.. testcode:: extensionsEmbeddedTypes
+.. testcode:: extensionsNestedTypes
 
     (swift) func printLetterKinds(word: String) {
         println("'\(word)' is made up of the following kinds of letters:")

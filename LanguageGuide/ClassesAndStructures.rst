@@ -24,7 +24,7 @@
     * @inout
     * value types and reference types
     * Type functions and variables
-    * Embedded classes and structures
+    * Nested classes and structures
     * Bound functions
     * @conversion functions for converting between types
     * Subscript getters and setters

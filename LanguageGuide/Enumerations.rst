@@ -438,22 +438,22 @@ causes the ``description`` computed property to return an updated message.
     which would indicate that the train is ``OnTime``,
     not ``Delayed`` by ``0`` minutes.
 
-.. _Enumerations_EmbeddedTypes:
+.. _Enumerations_NestedTypes:
 
-Embedded Types
---------------
+Nested Types
+------------
 
 Enumerations are often created to support a specific class or structure's functionality.
 Similarly, it can sometimes be convenient to define utility classes and structures
 purely for use within the context of a more complex type.
-To achieve this, Swift provides a way to define :newTerm:`embedded types`.
-Embedded types enable you to embed enumerations, classes and structures within the definition
-of the type they support.
+To achieve this, Swift provides a way to define :newTerm:`nested types`.
+Nested types enable you to nest supporting enumerations, classes and structures
+within the definition of the type they support.
 
-Types are embedded by nesting their definition within the braces of the type they support.
+The definition for a nested type is written within the braces of the type it supports.
 Types can be nested to as many levels as are required:
 
-.. testcode:: embeddedTypes
+.. testcode:: nestedTypes
 
     (swift) struct BlackjackCard {
         enum Suit : UnicodeScalar {
@@ -498,14 +498,14 @@ This example defines a playing card for use in the game of Blackjack.
 One notable feature of Blackjack is that the Ace card has a value of
 either one or eleven. This characteristic is encapsulated in the logic above.
 
-The ``BlackjackCard`` structure defines two embedded enumerations:
+The ``BlackjackCard`` structure defines two nested enumerations:
 
 * ``Suit``, which describes the four common playing card suits,
   together with a raw ``UnicodeScalar`` value to represent their symbol
 * ``Rank``, which describes the thirteen possible playing card ranks,
   together with a raw ``String`` value to represent their name
 
-The ``Rank`` enumeration defines a further embedded structure of its own, called ``Values``.
+The ``Rank`` enumeration defines a further nested structure of its own, called ``Values``.
 This structure encapsulates the fact that most cards have one value,
 but the Ace card has two values.
 The ``Values`` structure defines two properties to represent this:
@@ -536,15 +536,15 @@ Because ``BlackjackCard`` is a structure with no custom initializers,
 it is given an implicit
 :ref:`memberwise initializer <ClassesAndStructures_MemberwiseStructureInitializers>`.
 This is used to initialize a new constant called ``theAceOfSpades``.
-Even though ``Rank`` and ``Suit`` are embedded within ``BlackjackCard``,
+Even though ``Rank`` and ``Suit`` are nested within ``BlackjackCard``,
 their type can still be inferred from the context,
 and so the initialization of this instance is able to refer to the enumeration members
 by their member names (``.Ace`` and ``.Spades``) alone.
 
-Embedded types can also be used outside of their definition context,
-by prefixing their name with the name of the type they are embedded within:
+Nested types can also be used outside of their definition context,
+by prefixing their name with the name of the type they are nested within:
 
-.. testcode:: embeddedTypes
+.. testcode:: nestedTypes
 
     (swift) let heartsSymbol = BlackjackCard.Suit.Hearts.toRaw()
     // heartsSymbol : UnicodeScalar = '♡'
