@@ -684,8 +684,6 @@ and is preferred when matching against a fixed value.
 Once the temporary constants ``x`` and ``y`` have been declared,
 they can be used within the ``case`` statement's code block.
 Here, they are used as shorthand for printing the values via the ``println`` function.
-The final ``case`` statement also uses the constants
-to calculate the distance from the origin.
 (The earlier ``case`` blocks printed the tuples' individual values
 using the shorthand syntax ``point.0`` and ``point.1`` instead,
 because they did not have the temporary constants to hand.)
