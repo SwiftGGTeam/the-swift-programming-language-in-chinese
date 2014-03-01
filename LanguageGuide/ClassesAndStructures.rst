@@ -2216,6 +2216,8 @@ The type of ``newValue`` is the same as the return value of the subscript.
 As with computed properties, you can choose not to write the setter's ``(newValue)`` parameter,
 and a default parameter called ``value`` will be provided to your setter
 if you do not provide one yourself.
+A subscript setter's ``value`` parameter always has the same type as
+the return type of the subscript's getter.
 
 As with read-only computed properties,
 the ``get`` keyword can be dropped for read-only subscripts:
@@ -2416,9 +2418,9 @@ separated by a comma:
     (swift) matrix[1, 0] = 3.2
 
 These two statements call the subscript's setter to set
-a value of ``1.5`` in its top right position
+a value of ``1.5`` in the top right position of the matrix
 (where ``row`` is ``0`` and ``column`` is ``1``),
-and ``3.2`` in its bottom left position
+and ``3.2`` in the bottom left position
 (where ``row`` is ``1`` and ``column`` is ``0``):
 
 .. image:: ../images/subscriptMatrix02.png
@@ -2426,8 +2428,6 @@ and ``3.2`` in its bottom left position
     :align: center
 
 The subscript's setter has an implicit ``value`` parameter of type ``Double?``.
-(A subscript setter's ``value`` parameter always has the same type as
-the return type of the subscript's getter.)
 The ``value`` parameter contains the new value to set for that row and column,
 and is checked by the subscript's setter:
 
