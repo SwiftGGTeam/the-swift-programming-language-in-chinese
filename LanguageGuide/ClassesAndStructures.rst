@@ -1019,7 +1019,9 @@ a default value of ``32.0`` for ``temperature`` when a new instance is created â
 is the same in both cases.
 
 Swift provides a :newTerm:`default initializer` implementation
-for any class or structure that does not provide at least one initializer itself.
+for any class or structure that does not provide at least one initializer itself,
+if all of the properties declared by that class or structure are assigned
+default values as part of their property declaration.
 The default initializer simply creates a new instance
 with all of its properties set to their default values.
 You don't have to declare that you want the default initializer to be implemented â€“
