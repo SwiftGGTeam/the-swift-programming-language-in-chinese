@@ -257,6 +257,7 @@ Outside of those contexts, they may be used as identifiers.
     type
 
 ``associativity``
+``didSet``
 ``get``
 ``infix``
 ``inout``
@@ -269,6 +270,7 @@ Outside of those contexts, they may be used as identifiers.
 ``prefix``
 ``right``
 ``set``
+``willSet``
 
 
 .. _LexicalStructure_Literals:
@@ -321,7 +323,7 @@ Integer literals represent integer values of unspecified precision.
 By default, integer literals are expressed in decimal;
 you can specify an alternate base using a prefix.
 Binary literals begin with ``0b``,
-octal literals begin with ``0x``,
+octal literals begin with ``0o``,
 and hexadecimal literals begin with ``0x``.
 
 Decimal literals contain the digits ``0`` through ``9``.
@@ -525,10 +527,10 @@ or ``\U`` followed by eight hexadecimal digits.
 The digits in these escape codes identify a Unicode codepoint.
 
 The value of an expression can be inserted into a string literal
-by placing the expression in parentheses after a backslash (\).
+by placing the expression in parentheses after a backslash (``\``).
 The interpolated expression must not contain
-an unescaped double quote ("),
-an unescaped backslash (\),
+an unescaped double quote (``"``),
+an unescaped backslash (``\``),
 a carriage return, or a line feed.
 The expression must evaluate to a value of a type
 that the ``String`` class has an initializer for.
