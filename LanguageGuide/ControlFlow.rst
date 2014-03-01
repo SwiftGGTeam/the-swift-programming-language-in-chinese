@@ -558,11 +558,11 @@ to provide a natural-language count for numbers of any size:
             naturalCount = "a couple of"
         case 3:
             naturalCount = "a few"
-        case 4...12:
+        case 4..11:
             naturalCount = "several"
-        case 12...100:
+        case 12..99:
             naturalCount = "dozens of"
-        case 100...1000:
+        case 100..999:
             naturalCount = "hundreds of"
         default:
             naturalCount = "lots and lots of"
@@ -609,7 +609,7 @@ or outside of the box altogether.
             println("(\(point.0), 0) is on the x-axis")
         case (0, _):
             println("(0, \(point.1)) is on the y-axis")
-        case (-2...3, -2...3):
+        case (-2..2, -2..2):
             println("(\(point.0), \(point.1)) is inside the box")
         default:
             println("(\(point.0), \(point.1)) is outside of the box")

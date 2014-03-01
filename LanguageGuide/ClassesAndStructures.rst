@@ -2238,7 +2238,7 @@ Here's an example of a read-only subscript implementation:
         subscript(n: Int) -> Int {
             var i = 1, j = 0
             var temp: Int
-            for k in 1...n+1 {
+            for k in 1..n {
                 temp = i + j
                 i = j
                 j = temp
