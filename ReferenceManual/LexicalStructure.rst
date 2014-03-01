@@ -332,10 +332,8 @@ octal literals contain ``0`` through ``7``,
 and hexadecimal literals contain ``0`` through ``9``
 as well as ``A`` through ``F`` in upper or lower case.
 
-Negative integers are expressed by applying the unary minus operator (``-``)
+Negative integers literals are expressed by prepending a minus sign (``-``)
 to an integer literal, as in ``-42``.
-Strictly speaking, ``-42`` is an expression,
-not an integer literal.
 
 Underscores (``_``) are allowed between digits for readability,
 but are ignored and therefore don't affect the value of the literal.
@@ -356,16 +354,24 @@ as described in :ref:`BasicTypes_Integers`.
 
 .. langref-grammar
 
-    integer_literal ::= [0-9][0-9_]*
-    integer_literal ::= 0x[0-9a-fA-F][0-9a-fA-F_]*
-    integer_literal ::= 0o[0-7][0-7_]*
-    integer_literal ::= 0b[01][01_]*
+    integer_literal ::= -?[0-9][0-9_]*
+    integer_literal ::= -?0x[0-9a-fA-F][0-9a-fA-F_]*
+    integer_literal ::= -?0o[0-7][0-7_]*
+    integer_literal ::= -?0b[01][01_]*
+
+.. NOTE: Updated the langref-grammer to reflect [Contributor 7746]' comment in
+	<rdar://problem/15181997> Teach the compiler about a concept of negative integer literals.
+	This feels very strange from a grammatical point of view.
+	Updated the syntax-grammar below as well.
 
 .. syntax-grammar::
 
     Grammar of an integer literal
 
-    integer-literal --> binary-literal | octal-literal | decimal-literal | hexadecimal-literal
+    integer-literal --> negative-sign-OPT binary-literal
+	integer-literal --> negative-sign-OPT octal-literal
+	integer-literal --> negative-sign-OPT decimal-literal
+	integer-literal --> negative-sign-OPT hexadecimal-literal
 
     binary-literal --> ``0b`` binary-digit binary-literal-characters-OPT
     binary-digit --> Digit 0 or 1
@@ -387,6 +393,8 @@ as described in :ref:`BasicTypes_Integers`.
     hexadecimal-digit --> Digit 0 through 9, a through f, or A through F
     hexadecimal-literal-character --> hexadecimal-digit | ``_``
     hexadecimal-literal-characters --> hexadecimal-literal-character hexadecimal-literal-characters-OPT
+
+	negative-sign --> ``-``
 
 
 .. _LexicalStructure_Floating-PointLiterals:
@@ -424,9 +432,10 @@ which evaluates to ``60``.
 Similarly, ``0xFp-2`` represents 15 ⨉ 2\ :superscript:`-2`,
 which evaluates to ``3.75``.
 
-As with integer literals, negative floating-point numbers are expressed
+Unlike with integer literals, negative floating-point numbers are expressed
 by applying the unary minus operator (``-``)
-to a floating-point literal.
+to a floating-point literal, as in ``-42.0``. The result is an expression,
+not a floating-point integer literal.
 
 Underscores (``_``) are allowed between digits for readability,
 but are ignored and therefore don't affect the value of the literal.
