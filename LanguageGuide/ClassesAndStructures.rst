@@ -2327,78 +2327,73 @@ Where they do so, the overriding definition must be prefixed by the ``@override`
 as with overriding instance methods.
 
 While it is most common for a subscript to take a single parameter,
-there is nothing stopping you from requiring multiple parameters
+you can also define a subscript with multiple parameters
 if it is appropriate for your type:
 
 .. testcode:: subscripts
 
     (swift) struct Matrix {
         var rows: Int, columns: Int
-        var grid = Array<Array<Double>>()
+        var grid = Array<Double>()
         init withRows(rows: Int) columns(Int) {
             self.rows = rows
             self.columns = columns
-            for _ in 0...rows {
-                var row = Array<Double>()
-                for _ in 0...columns {
-                    row.append(0.0)
-                }
-                grid.append(row)
+            for _ in 0...(rows * columns) {
+                grid.append(0.0)
             }
         }
         subscript(row: Int, column: Int) -> Double? {
             get {
-                if row >= rows || column >= columns { return .None }
-                return grid[row][column]
+                if row >= rows || column >= columns {
+                    return .None
+                }
+                return grid[(row * columns) + column]
             }
             set {
                 if value && row < rows && column < columns {
-                    grid[row][column] = value!
+                    grid[(row * columns) + column] = value!
                 }
             }
         }
     }
 
+.. TODO: Investigate switching this over to use the shorter “Double[]” syntax
+   once I know more about Arrays and how their syntax works.
+
 This example defines a ``Matrix`` structure,
 which represents a two-dimensional matrix of ``Double`` values.
-``Matrix`` provides an initializer to create a new matrix with
-a user-specified number of rows and columns,
-and initializes that matrix with zeroes at each point:
+``Matrix`` provides an initializer that takes two parameters called ``rows`` and ``columns``,
+and creates an array that is large enough to store ``rows * columns`` values of type ``Double``.
+Each position in the matrix is given an initial value of ``0.0``:
 
 .. testcode:: subscripts
 
     (swift) var matrix = Matrix(withRows: 2, columns: 2)
-    // matrix : Matrix = Matrix(2, 2, [[0.0, 0.0], [0.0, 0.0]])
+    // matrix : Matrix = Matrix(2, 2, [0.0, 0.0, 0.0, 0.0])
 
-The new matrix has been set with zeroes in each of its four positions by default:
+The ``grid`` array is effectively a flattened version of the matrix,
+as read from top left to bottom right:
 
 .. image:: ../images/subscriptMatrix01.png
-    :width: 300
+    :width: 488
     :align: center
 
-Values in the matrix can be set by passing row and column values into the subscript,
-separated by a comma:
-
-.. testcode:: subscripts
-
-    (swift) matrix[0, 1] = 1.5
-    (swift) matrix[1, 0] = 3.2
-
-The matrix now has a value of ``1.5`` in its top right position
-(where ``row`` is ``0`` and ``column`` is ``1``),
-and ``3.2`` in its bottom left position
-(where ``row`` is ``1`` and ``column`` is ``0``):
-
-.. image:: ../images/subscriptMatrix02.png
-    :width: 300
-    :align: center
-
-The ``Matrix`` subscript returns a type of ``Double?``, or “optional ``Double``”.
+The ``Matrix`` subscript has a return type of ``Double?``, or “optional ``Double``”.
 This is to cope with the fact that you might request a value outside of
 the bounds of the matrix.
-The subscript's getter checks to see if the requested ``row`` or ``column``
-is outside of the bounds of the matrix, and returns a value of ``.None``
-if either are out of bounds:
+To cope with this,
+the subscript's getter checks to see if the requested ``row`` or ``column``
+is outside of the bounds of the matrix:
+
+::
+
+    (swift) if row >= rows || column >= columns {
+        return .None
+    }
+    return grid[(row * columns) + column]
+
+A value of ``.None`` is returned if you try and access
+a subscript that is outside of the matrix bounds:
 
 .. testcode:: subscripts
 
@@ -2409,39 +2404,44 @@ if either are out of bounds:
     }
     >>> The matrix is not big enough to hold a value at [2, 2]
 
-The ``Matrix`` structure stores its values in a property called ``grid``.
-This property has an interesting type – ``Array<Array<Double>>``.
-This describes an ``Array`` that stores “``Array``\ s of type ``Double``”,
-To put it another way, ``grid`` is “an array of arrays”.
+Otherwise, the subscript's getter returns
+the appropriate value from the ``grid`` array.
 
-The outer array has two values – ``grid[0]`` and ``grid[1]`` –
-each of which stores an array for a single row in the grid:
+Values in the matrix can be set by passing row and column values into the subscript,
+separated by a comma:
 
-.. image:: ../images/subscriptMatrix03.png
+.. testcode:: subscripts
+
+    (swift) matrix[0, 1] = 1.5
+    (swift) matrix[1, 0] = 3.2
+
+These two statements call the subscript's setter to set
+a value of ``1.5`` in its top right position
+(where ``row`` is ``0`` and ``column`` is ``1``),
+and ``3.2`` in its bottom left position
+(where ``row`` is ``1`` and ``column`` is ``0``):
+
+.. image:: ../images/subscriptMatrix02.png
     :width: 300
     :align: center
 
-Here's how that looks in Swift code:
+The subscript's setter has an implicit ``value`` parameter of type ``Double?``.
+(A subscript setter's ``value`` parameter always has the same type as
+the return type of the subscript's getter.)
+The ``value`` parameter contains the new value to set for that row and column,
+and is checked by the subscript's setter:
 
-.. testcode:: subscripts
+::
 
-    (swift) let firstRow = matrix.grid[0]
-    // firstRow : Array<Double> = [0.0, 1.5]
-    (swift) let secondRow = matrix.grid[1]
-    // secondRow : Array<Double> = [3.2, 0.0]
+    (swift) if value && row < rows && column < columns {
+        grid[(row * columns) + column] = value!
+    }
 
-``matrix.grid[0]`` is itself an array,
-and so it follows that the second item in that array can be accessed
-at ``matrix.grid[0][1]``:
-
-.. testcode:: subscripts
-
-    (swift) let topRightValue = matrix.grid[0][1]
-    // topRightValue : Double = 1.5
-
-The getter and setter for the ``Matrix`` subscript use this approach
-to access and set a particular value in the grid, such as in the getter's
-``return grid[row][column]`` statement.
+The setter checks to see if ``value`` is not equal to ``.None``,
+and also checks to make sure that the ``row`` and ``column`` values are valid.
+If all of these things are true,
+it sets the appropriate entry in the ``grid`` array to
+the value stored in the ``value`` optional.
 
 .. refnote:: References
 
