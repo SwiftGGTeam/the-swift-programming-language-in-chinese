@@ -199,7 +199,8 @@ The general form of this loop format is::
     }
 
 Semicolons are used to separate the three parts of the loop's definition, as in C.
-However, unlike C, there is no need to add parentheses around each part of the loop's definition.
+However, unlike C, there is no need to add parentheses around
+the entire “initialization; condition; increment” block.
 
 The loop is executed as follows:
 
