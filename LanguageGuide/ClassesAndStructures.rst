@@ -2282,7 +2282,7 @@ and so the ``FibonacciGenerator`` class provides a one-based subscript in this c
 Subscript Usage
 ~~~~~~~~~~~~~~~
 
-As the ``FibonacciGenerator`` example shows,
+As the one-based ``FibonacciGenerator`` subscript shows,
 the exact meaning of “subscript” depends upon the context in which it is used.
 Subscripts are typically used as a convenient shorthand for accessing
 the member elements in a collection, list, or sequence.
@@ -2348,7 +2348,7 @@ if it is appropriate for your type:
         }
         subscript(row: Int, column: Int) -> Double? {
             get {
-                if row > rows || column > columns { return .None }
+                if row >= rows || column >= columns { return .None }
                 return grid[row][column]
             }
             set {
@@ -2358,11 +2358,90 @@ if it is appropriate for your type:
             }
         }
     }
+
+This example defines a ``Matrix`` structure,
+which represents a two-dimensional matrix of ``Double`` values.
+``Matrix`` provides an initializer to create a new matrix with
+a user-specified number of rows and columns,
+and initializes that matrix with zeroes at each point:
+
+.. testcode:: subscripts
+
     (swift) var matrix = Matrix(withRows: 2, columns: 2)
     // matrix : Matrix = Matrix(2, 2, [[0.0, 0.0], [0.0, 0.0]])
-    (swift) matrix[0, 0] = 1
 
-.. NOTE: you can subscript on any type, including a range (IntGeneratorType)
+The new matrix has been set with zeroes in each of its four positions by default:
+
+.. image:: ../images/subscriptMatrix01.png
+    :width: 300
+    :align: center
+
+Values in the matrix can be set by passing row and column values into the subscript,
+separated by a comma:
+
+.. testcode:: subscripts
+
+    (swift) matrix[0, 1] = 1.5
+    (swift) matrix[1, 0] = 3.2
+
+The matrix now has a value of ``1.5`` in its top right position
+(where ``row`` is ``0`` and ``column`` is ``1``),
+and ``3.2`` in its bottom left position
+(where ``row`` is ``1`` and ``column`` is ``0``):
+
+.. image:: ../images/subscriptMatrix02.png
+    :width: 300
+    :align: center
+
+The ``Matrix`` subscript returns a type of ``Double?``, or “optional ``Double``”.
+This is to cope with the fact that you might request a value outside of
+the bounds of the matrix.
+The subscript's getter checks to see if the requested ``row`` or ``column``
+is outside of the bounds of the matrix, and returns a value of ``.None``
+if either are out of bounds:
+
+.. testcode:: subscripts
+
+    (swift) if let someValue = matrix[2, 2] {
+        println("The matrix has a value of \(someValue) at [2, 2]")
+    } else {
+        println("The matrix is not big enough to hold a value at [2, 2]")
+    }
+    >>> The matrix is not big enough to hold a value at [2, 2]
+
+The ``Matrix`` structure stores its values in a property called ``grid``.
+This property has an interesting type – ``Array<Array<Double>>``.
+This describes an ``Array`` that stores “``Array``\ s of type ``Double``”,
+To put it another way, ``grid`` is “an array of arrays”.
+
+The outer array has two values – ``grid[0]`` and ``grid[1]`` –
+each of which stores an array for a single row in the grid:
+
+.. image:: ../images/subscriptMatrix03.png
+    :width: 300
+    :align: center
+
+Here's how that looks in Swift code:
+
+.. testcode:: subscripts
+
+    (swift) let firstRow = matrix.grid[0]
+    // firstRow : Array<Double> = [0.0, 1.5]
+    (swift) let secondRow = matrix.grid[1]
+    // secondRow : Array<Double> = [3.2, 0.0]
+
+``matrix.grid[0]`` is itself an array,
+and so it follows that the second item in that array can be accessed
+at ``matrix.grid[0][1]``:
+
+.. testcode:: subscripts
+
+    (swift) let topRightValue = matrix.grid[0][1]
+    // topRightValue : Double = 1.5
+
+The getter and setter for the ``Matrix`` subscript use this approach
+to access and set a particular value in the grid, such as in the getter's
+``return grid[row][column]`` statement.
 
 .. refnote:: References
 
