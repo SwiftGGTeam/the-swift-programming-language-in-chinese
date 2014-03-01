@@ -33,6 +33,8 @@ This process is covered in the :doc:`Protocols` chapter.
 
 .. QUESTION: What are the rules for overloading via extensions?
 
+.. _Extensions_ComputedProperties:
+
 Computed Properties
 -------------------
 
@@ -50,11 +52,11 @@ to provide basic support for working with distance units:
         var mm: Double { return self / 1_000.00 }
         var ft: Double { return self / 3.28084 }
     }
-    (swift) val oneInch = 25.4.mm
+    (swift) let oneInch = 25.4.mm
     // oneInch : Double = 0.0254
     (swift) println("One inch is \(oneInch) meters")
     >>> One inch is 0.0254 meters
-    (swift) val threeFeet = 3.ft
+    (swift) let threeFeet = 3.ft
     // threeFeet : Double = 0.9144
     (swift) println("Three feet is \(threeFeet) meters")
     >>> Three feet is 0.9144 meters
@@ -84,7 +86,7 @@ and can be used within mathematical calculations wherever a ``Double`` is accept
 
 .. testcode:: extensionsComputedProperties
 
-    (swift) val aMarathon = 42.km + 195.m
+    (swift) let aMarathon = 42.km + 195.m
     // aMarathon : Double = 42195.0
     (swift) println("A marathon is \(aMarathon) meters long")
     >>> A marathon is 42195.0 meters long
@@ -96,6 +98,8 @@ and can be used within mathematical calculations wherever a ``Double`` is accept
     or add :ref:`stored property observers <ClassesAndStructures_StoredPropertyObservers>`
     to existing stored properties.
 
+.. _Extensions_Initializers:
+
 Initializers
 ------------
 
@@ -106,8 +110,8 @@ your own custom types as initializer parameters.
 .. note::
 
     Extensions can add new initializers to classes, but they cannot add
-    a :ref:`destructor <ClassesAndStructures_Destructors>`.
-    Destructors must always be provided by the original class implementation.
+    a :ref:`deinitializer <ClassesAndStructures_Deinitializers>`.
+    Deinitializers must always be provided by the original class implementation.
 
 This approach can be used to extend the basic ``String`` type
 to accept an instance of your own custom type as an initializer parameter,
@@ -126,9 +130,9 @@ for use with string interpolation.
             self = "(\(point.x), \(point.y))"
         }
     }
-    (swift) val somePoint = Point(3.0, 5.0)
+    (swift) let somePoint = Point(3.0, 5.0)
     // somePoint : Point = Point(3.0, 5.0)
-    (swift) val pointDescription = String(somePoint)
+    (swift) let pointDescription = String(somePoint)
     // pointDescription : String = "(3.0, 5.0)"
 
 This example defines a new structure called ``Point`` to represent an ``(x, y)`` co-ordinate.
@@ -147,7 +151,7 @@ to incorporate their values as part of a longer string:
 
 .. testcode:: extensionsInitializers
 
-    (swift) val anotherPoint = Point(-2.0, 6.0)
+    (swift) let anotherPoint = Point(-2.0, 6.0)
     // anotherPoint : Point = Point(-2.0, 6.0)
     (swift) println("anotherPoint's value is \(anotherPoint)")
     >>> anotherPoint's value is (-2.0, 6.0)
@@ -175,7 +179,9 @@ is known as :newTerm:`initializer overloading`.)
 
 .. QUESTION: You can use 'self' in this way for structs and enums.
    How might you do this kind of construction for a class?
-    
+
+.. _Extensions_InstanceMethods:
+
 Instance Methods
 ----------------
 
@@ -204,12 +210,20 @@ and even-numbered characters to lowercase:
 
 .. testcode:: extensionsInstanceMethods
 
-    (swift) val notVerySpooky = "woooooooooooo, i am a ghost!"
-    // notVerySpooky : String = "woooooooooooo, i am a ghost!"
-    (swift) val considerablyMoreSpooky = notVerySpooky.toSpooky()
-    // considerablyMoreSpooky : String = "WoOoOoOoOoOoO, i aM A GhOsT!"
+    (swift) let boring = "woooooooooooo, i am a ghost!"
+    // boring : String = "woooooooooooo, i am a ghost!"
+    (swift) let spooky = boring.toSpooky()
+    // spooky : String = "WoOoOoOoOoOoO, i aM A GhOsT!"
 
-Instance methods added via an extension can also modify the instance itself:
+.. _Extensions_MutatingInstanceMethods:
+
+Mutating Instance Methods
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Instance methods added via an extension can also modify (or *mutate*) the instance itself.
+Structure and enumeration methods that modify ``self`` or its properties
+must mark the instance method as ``mutating``,
+just like mutating methods from an original implementation:
 
 .. testcode:: extensionsInstanceMethods
 
@@ -226,11 +240,35 @@ Instance methods added via an extension can also modify the instance itself:
     (swift) println("someInt is now \(someInt)")
     >>> someInt is now 123
 
-Type Methods
-------------
+This example adds a ``shiftRight()`` method to instances of ``Int``.
+This method is similar to the
+:ref:`bitwise right shift operator <Operators_BitwiseLeftAndRightShifts>`,
+except that it shifts by powers of ten, rather than powers of two.
+
+The method shifts an ``Int`` to the right by ``numberOfDecimalPlaces``.
+It does this by diving the ``Int`` by ten, ``numberOfDecimalPlaces`` times.
+Because ``Int`` instances can only store whole numbers,
+and do not have a fractional component,
+the number is rounded down to the nearest whole number each time the division takes place.
+Calling ``shiftRight(3)`` on an integer variable containing the number ``123456``
+shifts the number to the right by three decimal places,
+and changes the variable to have a value of ``123``.
+
+.. _Extensions_ComputedTypeProperties:
 
 Computed Type Properties
 ------------------------
+
+[to be written]
+
+.. _Extensions_TypeMethods:
+
+Type Methods
+------------
+
+[to be written]
+
+.. _Extensions_Subscripting:
 
 Subscripting
 ------------
@@ -269,8 +307,83 @@ so:
     (swift) 123456789[9]
     // r4 : Int = 0
 
+.. TODO: provide an explanation of this example
+
+.. _Extensions_EmbeddedTypes:
+
 Embedded Types
 --------------
+
+Extensions can add new :ref:`embedded types <Enumerations_EmbeddedTypes>`
+to existing classes, structures and enumerations:
+
+.. testcode:: extensionsEmbeddedTypes
+
+    (swift) extension UnicodeScalar {
+        enum Kind {
+            case Vowel, Consonant, Other
+        }
+        var kind: Kind {
+            switch self.lowercase {
+                case 'a', 'e', 'i', 'o', 'u':
+                    return .Vowel
+                case 'b', 'c', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'm',
+                     'n', 'p', 'q', 'r', 's', 't', 'v', 'w', 'x', 'y', 'z':
+                    return .Consonant
+                default:
+                    return .Other
+            }
+        }
+    }
+
+This example adds a new embedded enumeration to ``UnicodeScalar``.
+This enumeration, called ``Kind``,
+gives a way to express the kind of letter that a particular scalar represents.
+Specifically, it expresses whether the scalar is
+a vowel or a consonant in a standard Latin script
+(without taking into account accents or regional variations),
+or whether it is some other kind of scalar.
+
+This example also adds a new computed instance property to ``UnicodeScalar``,
+called ``kind``, which returns the appropriate ``Kind`` enumeration member for that scalar.
+
+The embedded enumeration can now be used with ``UnicodeScalar`` values:
+
+.. testcode:: extensionsEmbeddedTypes
+
+    (swift) func printLetterKinds(word: String) {
+        println("'\(word)' is made up of the following kinds of letters:")
+        for scalar in word.chars {
+            switch scalar.kind {
+                case .Vowel:
+                    print("vowel ")
+                case .Consonant:
+                    print("consonant ")
+                case .Other:
+                    print("other ")
+            }
+        }
+        print("\n")
+    }
+    (swift) printLetterKinds("Hello")
+    >>> 'Hello' is made up of the following kinds of letters:
+    >>> consonant vowel consonant consonant vowel
+
+This function, ``printLetterKinds()``,
+takes an input ``String`` value and iterates over its characters.
+For each scalar, it considers the ``kind`` computed property for that scalar,
+and prints an appropriate description of that kind.
+The ``printLetterKinds()`` function can then be called
+to print the kinds of letters in an entire word,
+as shown here for the word ``"Hello"``.
+
+.. note::
+
+    ``scalar.kind`` is already known to be of type ``UnicodeScalar.Kind``.
+    Because of this, all of the ``UnicodeScalar.Kind`` member values
+    can be written in short-hand form inside the ``switch`` statement,
+    such as ``.Vowel`` rather than ``UnicodeScalar.Kind.Vowel``.
+
 
 .. refnote:: References
 

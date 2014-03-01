@@ -185,8 +185,7 @@ Literal Expression
 
     Grammar of a literal expression
 
-    literal-expression --> numeric-literal | textual-literal
-    literal-expression --> ``__FILE__`` | ``__LINE__`` | ``__COLUMN__``
+    literal-expression --> literal | ``__FILE__`` | ``__LINE__`` | ``__COLUMN__``
 
 .. _Expressions_IdentifierExpression:
 

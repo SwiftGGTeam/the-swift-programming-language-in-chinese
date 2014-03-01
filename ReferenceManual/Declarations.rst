@@ -41,6 +41,55 @@ Declarations
 .. NOTE: enum-element-declaration is only allowed inside an enum
    declaration.
 
+.. _LexicalStructure_ModuleScope:
+
+Module Scope
+------------
+
+The top level scope of a Swift source file
+consists of a series of statements.
+
+.. langref-grammar
+
+    top-level ::= brace-item*
+
+.. No formal grammar.
+
+.. _LexicalStructure_CodeBlocks:
+
+Code Blocks
+-----------
+
+A code block is used by a variety of declarations and control structures
+to group statements together.
+It has the following form:
+
+.. syntax-outline::
+
+    {
+        <#statements#>
+    }
+
+The statements inside a code block are executed in order.
+
+.. TODO: Discuss scope.  I assume a code block creates a new scope?
+
+.. TODO: This section doesn't feel like it belongs in this chapter.
+
+.. langref-grammar
+
+    brace-item-list ::= '{' brace-item* '}'
+    brace-item      ::= decl
+    brace-item      ::= expr
+    brace-item      ::= stmt
+
+.. syntax-grammar::
+
+    Grammar of a code block
+
+    code-block --> ``{`` statements-OPT ``}``
+
+
 .. _Declarations_ImportDeclaration:
 
 Import Declaration
@@ -92,7 +141,8 @@ is made available in the current scope.
     import-declaration --> attribute-list-OPT ``import`` import-kind-OPT import-path
 
     import-kind --> ``typealias`` | ``struct`` | ``class`` | ``enum`` | ``protocol`` | ``var`` | ``func``
-    import-path --> any-identifier | any-identifier ``.`` import-path
+    import-path --> import-path-identifier | import-path-identifier ``.`` import-path
+    import-path-identifier --> identifier | operator
 
 
 .. _Declarations_ConstantDeclaration:
@@ -409,7 +459,7 @@ Function Signature
 
     function-declaration --> attribute-list-OPT function-specifier-OPT ``func`` function-name generic-parameter-clause-OPT function-signature code-block-OPT
     function-specifier --> ``static`` | ``class``
-    function-name --> any-identifier
+    function-name --> identifier | operator
 
     function-signature --> function-parameters function-signature-result-OPT
     function-parameters --> tuple-patterns | selector-parameters
@@ -417,7 +467,7 @@ Function Signature
 
     selector-parameters --> ``(`` tuple-pattern-element ``)`` selector-tuples
     selector-tuples --> selector-name ``(`` tuple-pattern-element ``)`` selector-tuples-OPT
-    selector-name --> identifier-or-any
+    selector-name --> identifier | operator
 
 .. TODO: The overgeneration from tuple-patterns combined with some upcoming changes
     mean that we should just create a new syntactic category
