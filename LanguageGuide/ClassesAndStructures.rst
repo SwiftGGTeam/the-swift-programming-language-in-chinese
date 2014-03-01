@@ -1098,7 +1098,7 @@ Swift checks these methods to make sure that all properties are fully initialize
 by the time each initializer has done its job.
 This process is known as :newTerm:`definite initialization`,
 and helps to ensure that your instances are always valid before they are used.
-Swift will warn you at compile-time if your class or structure does not pass
+Swift will report an error at compile-time if your class or structure does not pass
 the definite initialization test.
 
 .. _ClassesAndStructures_InitializerDelegation:
