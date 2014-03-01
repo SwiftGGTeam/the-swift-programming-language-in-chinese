@@ -172,6 +172,9 @@ are described in detail in :doc:`Protocols`.
    What would the syntax be if they did?
    'for planet in Planet'?
 
+.. TODO: for (index, object) in enumerate(collection)
+   and also for i in indices(collection) { collection[i] }
+
 .. _ControlFlow_ForConditionIncrement:
 
 For-Condition-Increment
