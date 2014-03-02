@@ -1113,7 +1113,7 @@ other initializers within the same class or structure by calling ``self.init``.
 The code below defines a ``Document`` class,
 which uses a default ``title`` value of ``[untitled]`` if none is specified:
 
-.. testcode:: initialization
+.. testcode:: initializerDelegation
 
     (swift) class Document {
         var title: String
@@ -1128,7 +1128,7 @@ which uses a default ``title`` value of ``[untitled]`` if none is specified:
 This first example declares a new constant called ``thisBook``,
 and sets it to the result of calling ``init withTitle()`` for a specific title string:
 
-.. testcode:: initialization
+.. testcode:: initializerDelegation
 
     (swift) let thisBook = Document(withTitle: "The Swift Programming Language")
     // thisBook : Document = <Document instance>
@@ -1140,7 +1140,7 @@ and sets it to the result of the basic ``init()`` method for ``Document``.
 This method delegates to the more detailed ``init withTitle()`` method,
 passing it a placeholder string value of ``[untitled]``:
 
-.. testcode:: initialization
+.. testcode:: initializerDelegation
 
     (swift) let someBook = Document()
     // someBook : Document = <Document instance>
@@ -1379,7 +1379,7 @@ which is given a default value of ``[replace me]``.
 
 Here's how it looks in Swift code:
 
-.. testcode:: initialization
+.. testcode:: initializerDelegation
 
     (swift) class TextDocument : Document {
 
@@ -1417,7 +1417,7 @@ at the end of this empty code block.
 
 Here's how this initializer could be called:
 
-.. testcode:: initialization
+.. testcode:: initializerDelegation
 
     (swift) let empty = TextDocument()
     // empty : TextDocument = <TextDocument instance>
@@ -1447,7 +1447,7 @@ As before, the value of ``bodyText`` comes from the property's default value.
 
 Here's how this initializer could be called:
 
-.. testcode:: initialization
+.. testcode:: initializerDelegation
 
     (swift) let titled = TextDocument(withTitle: "Write something please")
     // titled : TextDocument = <TextDocument instance>
@@ -1472,7 +1472,7 @@ and sets the same placeholder title as before.
 
 Here's how this initializer could be called:
 
-.. testcode:: initialization
+.. testcode:: initializerDelegation
 
     (swift) let untitledPangram = TextDocument(
         withText: "Amazingly few discotheques provide jukeboxes")
@@ -1506,7 +1506,7 @@ helps to plan for functionality changes in the future.
 
 Here's how this final initializer could be called:
 
-.. testcode:: initialization
+.. testcode:: initializerDelegation
 
     (swift) let foxPangram = TextDocument(
         withTitle: "Quick brown fox",
