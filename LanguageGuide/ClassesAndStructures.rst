@@ -1295,6 +1295,12 @@ the same name, parameter types and return type by mistake.
 and method overriding without the ``@override`` attribute is
 diagnosed as an error when your code is compiled.)
 
+In addition, the ``@override`` attribute prompts the Swift compiler
+to check that the superclass has a method declaration that matches
+the one you have provided.
+This helps to ensure that your overriding method definition is correct,
+and has not used an incorrect name, type or parameter order by mistake.
+
 .. QUESTION: have I introduced the concept of "attributes" by this point?
    If not, when / where should I do so?
 
