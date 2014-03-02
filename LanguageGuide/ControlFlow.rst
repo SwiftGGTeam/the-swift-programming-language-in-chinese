@@ -464,6 +464,15 @@ A ``switch`` statement considers several possible values of the same type,
 and executes different code depending on the value that is matched.
 It provides an alternative approach to the ``if``-``else`` statement for responding to multiple states.
 
+.. note::
+
+    Unlike C and Objective-C, ``switch`` statements in Swift do not
+    fall through the bottom of each case and into the next one by default.
+    Instead, the entire ``switch`` statement completes its execution
+    as soon as the first matching ``case`` statement is completed.
+    This difference in behaviour is described in more detail in
+    the :ref:`ControlFlow_Fallthrough` section later in this chapter.
+
 .. TODO: have I actually described how case statements work by this point?
    They were previously described in the enumerations section of Basic Types,
    which appeared before this section, but has now been moved.
