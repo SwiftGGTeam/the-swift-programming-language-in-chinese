@@ -463,10 +463,10 @@ is covered in :doc:`Extensions`.
 .. TODO: add a note that this is not traditional type-casting,
    and perhaps include a forward reference to the objects chapter.
 
-.. _BasicTypes_IntegerToFloatingPointConversion:
+.. _BasicTypes_IntegerAndFloatingPointConversion:
 
-Integer to Floating-Point Conversion
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Integer and Floating-Point Conversion
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Conversions between integer and floating-point numeric types must also be made explicit:
 
@@ -483,16 +483,34 @@ Here, the value of the constant ``three`` is used to create a new value of type 
 so that both sides of the addition are of the same type.
 Without this conversion in place, the addition would not be allowed.
 
-The rules for numeric named values are different from
-the rules for numeric literal values seen earlier –
-where the literal value ``3`` was added to the literal value ``0.14159`` –
-because number literals do not have an explicit type in and of themselves.
-Their type is inferred only at the point that they are evaluated by the compiler.
-
 .. TODO: the return type of pi here is inferred as Float64,
    but it should really be inferred as Double.
    This is due to rdar://15211554.
    This code sample should be updated once the issue is fixed.
+
+The reverse is also true for floating-point to integer conversion,
+in that an integer type can be initialized with a ``Double`` or ``Float`` value:
+
+.. testcode:: typeConversion
+
+    (swift) let integerPi = Int(pi)
+    // integerPi : Int = 3
+
+Floating-point values are always rounded towards zero
+when used to initialize a new integer value in this way.
+
+.. TODO: negative floating-point numbers cause an overflow when used
+   to initialize an unsigned integer type.
+   This has been filed as rdar://problem/16206455,
+   and this section may need updating based on the outcome of that Radar.
+
+.. note::
+
+    The rules for combining numeric named values are different to
+    the rules for numeric literals.
+    The literal value ``3`` can be added directly to the literal value ``0.14159``,
+    because number literals do not have an explicit type in and of themselves.
+    Their type is inferred only at the point that they are evaluated by the compiler.
 
 .. NOTE: this section on explicit conversions could be included in the Operators section.
    I think it's more appropriate here, however,
