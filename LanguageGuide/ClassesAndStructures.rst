@@ -1156,8 +1156,9 @@ This means that the ``Document`` class passes the definite initialization test m
 Inheritance
 -----------
 
-Classes can :newTerm:`inherit` the methods, properties and capabilities of other existing classes.
-Inheritance is one of the fundamental characteristics that differentiate classes
+Classes can :newTerm:`inherit` methods, properties and other characteristics
+from existing classes.
+Inheritance is one of the fundamental behaviors that differentiate classes
 from other types in Swift.
 
 Here's an example:
