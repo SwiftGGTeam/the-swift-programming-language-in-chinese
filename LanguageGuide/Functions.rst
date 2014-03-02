@@ -289,9 +289,9 @@ it can be omitted when calling the function:
         return string1 + joiner + string2
     }
     (swift) joinTwoStrings("hello", "world", ":")
-    // r0 : String = "hello:world"
+    // r1 : String = "hello:world"
     (swift) joinTwoStrings("hello", "world")
-    // r1 : String = "hello world"
+    // r2 : String = "hello world"
 
 This function joins two strings together.
 If a value for ``joiner`` is provided,
@@ -312,7 +312,7 @@ The ``joinTwoStrings`` function could have been written with ``joiner`` as the s
         return string1 + joiner + string2
     }
     (swift) joinTwoMoreStrings("hello", ":", "world")
-    // r2 : String = "hello:world"
+    // r3 : String = "hello:world"
 
 However, if you try and call this version of the function without passing in a value for ``joiner``,
 and without using named values,
@@ -335,7 +335,7 @@ This problem can be avoided by naming the values when you call the function:
 .. testcode:: functionParameters
 
     (swift) joinTwoMoreStrings(string1: "hello", string2: "world")
-    // r3 : String = "hello world"
+    // r4 : String = "hello world"
 
 This tells Swift which parameters you want
 the values of "hello" and "world" to be used for,
@@ -411,7 +411,7 @@ The return value of a function can be ignored when it is called:
     }
     (swift) printAndCount("hello, world")
     >>> hello, world
-    // r4 : Int = 12
+    // r5 : Int = 12
     (swift) printWithoutCounting("hello, world")
     >>> hello, world
 
@@ -515,9 +515,9 @@ They are indicated by inserting three period characters (``...``) after their ty
         return total / Double(numbers.count)
     }
     (swift) arithmeticMean(1, 2, 3, 4, 5)
-    // r5 : Double = 3.0
+    // r6 : Double = 3.0
     (swift) arithmeticMean(3, 8, 19)
-    // r6 : Double = 10.0
+    // r7 : Double = 10.0
 
 This function calculates the :newTerm:`arithmetic mean`
 (also known as the :newTerm:`average`) for a list of numbers of any length.
@@ -603,7 +603,7 @@ the selector parts may be provided in any order:
 .. testcode:: selectorStyle
 
     (swift) joinString("hello", withJoiner: "-", toString: "world")
-    // r1 : String = "hello-world"
+    // r2 : String = "hello-world"
 
 If a parameter name is omitted from a selector-style declaration,
 the parameter is automatically given the same name as its selector part.
