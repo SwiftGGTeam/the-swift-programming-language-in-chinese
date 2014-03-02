@@ -163,6 +163,9 @@ This function can be passed any tuple of type ``(Int, Int)`` –
 such as ``(1, 10)`` in the example above –
 and it will calculate the half-open range length for that tuple.
 
+.. TODO: mention that you can pass a tuple as the entire set of arguments,
+   as in var argTuple = (0, "one", '2'); x.foo:bar:bas:(argTuple)
+
 .. _Functions_TuplesAsReturnValues:
 
 Tuples as Return Values
@@ -648,11 +651,42 @@ at the end of the returned string.
    This is tracked as rdar://16030076, and this section should be updated
    once it is implemented.
 
-.. variables can be set to functions, and then called e.g. var fork = g.fork; fork() .
-.. functions can be passed in as parameters, and can be returned as return values
-.. functions are just a really special non-capturing version of closures
+Inout Parameters
+----------------
+
+[to be written]
+
 .. inout properties and a general discussion of byref / byvalue
-.. pass a tuple as the entire set of arguments, as in var argTuple = (0, "one", '2'); x.foo:bar:bas:(argTuple)
+
+Functions as Parameters and Return Types
+----------------------------------------
+
+[to be written]
+
+.. functions can be passed in as parameters, and can be returned as return values
+
+Function Binding
+----------------
+
+[to be written]
+
+.. variables can be bound to functions, and then called e.g. var fork = g.fork; fork() .
+.. functions are reference types
+.. you can get a function that refers to a method, either with or without the 'self' argument already being bound:
+.. class C {
+..     func foo(x: Int) -> Float { ... }
+.. }
+.. var c = C()
+.. var boundFunc = c.foo 	// a function with type (Int) -> Float
+.. var unboundFunc = C.foo // a function with type (C) -> (Int) -> Float
+
+Curried Functions
+-----------------
+
+[to be written]
+
+.. function currying syntax 
+.. partial application
 
 .. refnote:: References
 
