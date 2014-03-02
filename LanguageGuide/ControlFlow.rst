@@ -579,7 +579,8 @@ Multiple values can be tested in the same ``switch`` statement using tuples.
 Each element of the tuple can be tested against a different value or range of values.
 Alternatively, the underscore (``_``) identifier can be used to match any possible value.
 
-This example takes an (x, y) point,
+The example below takes an (x, y) point,
+expressed as a simple tuple of type ``(Int, Int)``,
 and categorizes it on the following graph:
 
 .. image:: ../images/coordinateGraphSimple.png
@@ -595,19 +596,19 @@ or outside of the box altogether.
 
 .. testcode::
 
-    (swift) var point = (1, 1)
-    // point : (Int, Int) = (1, 1)
-    (swift) switch point {
+    (swift) let somePoint = (1, 1)
+    // somePoint : (Int, Int) = (1, 1)
+    (swift) switch somePoint {
         case (0, 0):
             println("(0, 0) is at the origin")
         case (_, 0):
-            println("(\(point.0), 0) is on the x-axis")
+            println("(\(somePoint.0), 0) is on the x-axis")
         case (0, _):
-            println("(0, \(point.1)) is on the y-axis")
+            println("(0, \(somePoint.1)) is on the y-axis")
         case (-2..2, -2..2):
-            println("(\(point.0), \(point.1)) is inside the box")
+            println("(\(somePoint.0), \(somePoint.1)) is inside the box")
         default:
-            println("(\(point.0), \(point.1)) is outside of the box")
+            println("(\(somePoint.0), \(somePoint.1)) is outside of the box")
     }
     >>> (1, 1) is inside the box
 
@@ -623,37 +624,86 @@ and so all other matching ``case`` and ``default`` statements would be ignored.
    switch x {
    case is (Int, Int):
 
+.. _ControlFlow_NamedValueBindings:
+
+Named Value Bindings
+____________________
+
+A ``case`` statement can bind the value or values it matches to temporary constants or variables,
+for use in the body of the ``case`` statement.
+This is known as :newTerm:`named value binding`,
+because the values are “bound” to temporary named values within the ``case`` statement's code block.
+
+Again, the example below takes an (x, y) point,
+expressed as a tuple of type ``(Int, Int)``,
+and categorizes it on the following graph:
+
+.. image:: ../images/coordinateGraphMedium.png
+    :height: 250
+    :align: center
+
+It decides if the point is
+on the red x-axis;
+on the orange y-axis;
+or somewhere else.
+
+.. testcode::
+
+    (swift) let anotherPoint = (2, 0)
+    // anotherPoint : (Int, Int) = (2, 0)
+    (swift) switch anotherPoint {
+        case (let x, 0):
+            println("on the x-axis with an x value of \(x)")
+        case (0, let y):
+            println("on the y-axis with a y value of \(y)")
+        case let (x, y):
+            println("somewhere else at (\(x), \(y))")
+    }
+    >>> on the x-axis with an x value of 2
+
+The three ``case`` statements declare placeholder constants ``x`` and ``y``,
+which temporarily take on one or both of the tuple values from ``anotherPoint``.
+The first case statement, ``case (let x, 0)``,
+will match any point with a ``y`` value of ``0``,
+and will assign the point's ``x`` value to the temporary constant ``x``.
+Similarly, the second case statement, ``case (0, let y)``,
+will match any point with an ``x`` value of ``0``,
+and will assign the point's ``y`` value to the temporary constant ``y``.
+
+Once the temporary constants have been declared,
+they can be used within the ``case`` statement's code block.
+Here, they are used as shorthand for printing the values via the ``println`` function.
+
+Note that this ``switch`` statement does not have a ``default`` block.
+The final ``case`` block,
+``case let (x, y)``,
+declares a tuple of two placeholder constants that can match any value.
+As a result, it matches all possible remaining values,
+and a ``default`` block is not needed to make the ``switch`` statement exhaustive.
+
 .. _ControlFlow_Where:
 
 Where
 _____
 
 A ``case`` statement can check for additional conditions using the ``where`` clause.
-The example below takes an (x, y) point expressed as a tuple of type ``(Int, Int)``,
-and categorizes it on the following graph:
+
+The example below categorizes an (x, y) point on the following graph:
 
 .. image:: ../images/coordinateGraphComplex.png
     :height: 250
     :align: center
 
 It decides if the point is
-at the origin (0, 0);
-on the red x-axis;
-on the orange y-axis;
 on the green diagonal line where ``x == y``;
 on the purple diagonal line where ``x == -y``;
 or none of the above.
 
 .. testcode::
 
-    (swift) point = (1, -1)
-    (swift) switch point {
-        case (0, 0):
-            println("(0, 0) is at the origin")
-        case (_, 0):
-            println("(\(point.0), 0) is on the x-axis")
-        case (0, _):
-            println("(0, \(point.1)) is on the y-axis")
+    (swift) let yetAnotherPoint = (1, -1)
+    // yetAnotherPoint : (Int, Int) = (1, -1)
+    (swift) switch yetAnotherPoint {
         case let (x, y) where x == y:
             println("(\(x), \(y)) is on the line x == y")
         case let (x, y) where x == -y:
@@ -663,38 +713,15 @@ or none of the above.
     }
     >>> (1, -1) is on the line x == -y
 
-The final three ``case`` statements declare placeholder constants ``x`` and ``y``,
+The three ``case`` statements declare placeholder constants ``x`` and ``y``,
 which temporarily take on the two tuple values from ``point``.
-These constants can then be used as part of a ``where`` clause,
+Here, these constants are used as part of a ``where`` clause,
 to create a dynamic filter.
 The ``case`` statement will only match the current value of ``point``
 if the ``where`` clause's condition equates to ``true`` for that value.
 
-The x-axis and y-axis checks could also have been written with a ``where`` clause.
-``case (_, 0)`` could have been written as ``case (_, let y) where y == 0``,
-to match points on the x-axis.
-However, the original version is more concise,
-and is preferred when matching against a fixed value.
-
-Once the temporary constants ``x`` and ``y`` have been declared,
-they can be used within the ``case`` statement's code block.
-Here, they are used as shorthand for printing the values via the ``println`` function.
-(The earlier ``case`` blocks printed the tuples' individual values
-using the shorthand syntax ``point.0`` and ``point.1`` instead,
-because they did not have the temporary constants to hand.)
-
-Note that this ``switch`` statement does not have a ``default`` block.
-The final ``case`` block,
-``case let (x, y)``,
-declares a tuple of two placeholder constants,
-but does *not* provide a ``where`` clause to filter them.
-As a result, it matches all possible remaining values,
-and a ``default`` block is not needed to make the ``switch`` statement exhaustive.
-
-.. QUESTION: This example is not self-contained,
-   in that it uses the same declared variable (point) as the previous example.
-   This is primarily to keep the variable name readable within the println string interpolation.
-   Is this okay? Should it be changed so that it is self-contained?
+As in the previous example, the final ``case`` block matches all possible remaining values,
+and so a ``default`` block is not needed to make the ``switch`` statement exhaustive.
 
 .. _ControlFlow_ControlTransferStatements:
 
