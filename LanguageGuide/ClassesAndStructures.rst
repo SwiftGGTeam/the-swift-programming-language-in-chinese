@@ -1686,7 +1686,7 @@ The result of ``item as Movie`` is of type ``Movie?``, or “optional ``Movie``�
 
 Downcasting to ``Movie`` will fail when trying to downcast
 the two ``Song`` instances in the library array.
-To cope with this, the example above uses :ref:`optional binding <ControlFlow_OptionalBinding>`
+To cope with this, the example above uses :ref:`optional binding <BasicTypes_OptionalBinding>`
 to check whether the optional ``Movie`` actually contains a value
 (i.e. to find out whether the downcast succeeded.)
 This optional binding is written “``if let movie = item as Movie``”,

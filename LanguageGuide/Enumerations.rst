@@ -330,7 +330,7 @@ then the returned optional value will equal ``.None``:
     }
     >>> Not an element I know about
 
-This example uses :ref:`optional binding <ControlFlow_OptionalBinding>`
+This example uses :ref:`optional binding <BasicTypes_OptionalBinding>`
 to try and access an element with a raw value of ``8``.
 ``if let element = ChemicalElement.fromRaw(8)`` retrieves an optional ``ChemicalElement``,
 and sets ``element`` to the contents of that optional if it can be retrieved.

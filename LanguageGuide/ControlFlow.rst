@@ -455,65 +455,6 @@ In this example,
 the temperature is neither too cold nor too warm to trigger the ``if`` or ``else if`` conditions,
 and so no message is printed.
 
-.. _ControlFlow_OptionalBinding:
-
-Optional Binding
-~~~~~~~~~~~~~~~~
-
-:newTerm:`Optional binding` is a convenient way to find out if an optional contains a value,
-and to make that value available if it exists.
-Optional bindings can be used with ``if``-``else`` and ``while`` statements
-to simplify and shorten the unwrapping of optionals.
-
-For example:
-
-.. testcode::
-
-    (swift) let possibleNumber = "123"
-    // possibleNumber : String = "123"
-    (swift) if let convertedNumber = possibleNumber.toInt() {
-        println("'\(possibleNumber)' has the integer value \(convertedNumber)")
-    } else {
-        println("'\(possibleNumber)' could not be converted to a number")
-    }
-    >>> '123' has the integer value 123
-
-This example uses ``String``\ 's ``toInt()`` function
-to try and convert the string ``"123"`` into an ``Int``.
-It then prints a message to indicate if the conversion was successful.
-(``toInt()`` returns an *optional* ``Int``,
-which only contains an ``Int`` if the conversion is succesful.)
-
-``if let convertedNumber = possibleNumber.toInt()`` can be read as:
-
-“If the optional returned by ``possibleNumber.toInt()`` contains a value,
-set a new constant called ``convertedNumber`` to the value contained in the optional.”
-
-If the conversion is successful,
-the ``convertedNumber`` constant becomes available for use within
-the first branch of the ``if``-``else`` statement.
-It has already been initialized with the value contained *within* the optional,
-and so there is no need to use the ``!`` suffix to access its value.
-In this example, ``convertedNumber`` is simply used to print the result of the conversion.
-
-You can use both constants and variables with optional binding.
-If you wanted to manipulate the value of ``convertedNumber``
-within the first block of the ``if``-``else`` statement,
-you could write ``if var convertedNumber`` instead,
-and the value contained within the optional
-would be made available as a variable rather than a constant.
-
-.. note::
-
-    Constants or variables created via optional binding
-    are only available within the code block following their creation,
-    as in the first branch of the ``if``-``else`` statement above.
-    If you want to work with the optional's value outside of this code block,
-    you should declare a constant or variable yourself
-    before the ``if``-``else`` statement begins.
-
-.. TODO add an example for 'while'.
-
 .. _ControlFlow_Switch:
 
 Switch
@@ -568,7 +509,7 @@ it sets an optional ``Int?`` variable (``integerValue``) to the appropriate inte
 If the symbol is not recognized,
 the optional ``Int?`` is set to a value of ``.None``, meaning “no value”.
 Finally, it checks to see if a value was found,
-using an :ref:`optional binding <ControlFlow_OptionalBinding>`.
+using an :ref:`optional binding <BasicTypes_OptionalBinding>`.
 If it was, the output value is printed;
 otherwise, an error message is reported.
 

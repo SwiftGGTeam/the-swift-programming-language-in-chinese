@@ -685,11 +685,11 @@ The exclamation mark effectively says,
 .. testcode:: optionals
 
     (swift) if convertedNumber {
-        println(convertedNumber!)
+        println("'\(possibleNumber)' has an integer value of \(convertedNumber!)")
     } else {
-        println("The string could not be converted into an integer")
+        println("'\(possibleNumber)' could not be converted to an integer")
     }
-    >>> 123
+    >>> '123' has an integer value of 123
 
 ``if``-``else`` statements are described in more detail in :doc:`ControlFlow`.
 
@@ -697,6 +697,66 @@ The exclamation mark effectively says,
 
     Trying to use ``!`` to access a non-existent optional value will trigger
     an unrecoverable runtime error.
+
+Optional Binding
+~~~~~~~~~~~~~~~~
+
+:newTerm:`Optional binding` is a convenient way to find out if an optional contains a value,
+and to make that value available if it exists.
+Optional binding can be used with ``if``-``else`` and ``while`` statements
+to simplify and shorten the unwrapping of a value contained within an optional.
+(``if``-``else`` and ``while`` statements are described in more detail in :doc:`ControlFlow`.)
+
+Optional bindings for the ``if``-``else`` statement are written in the following form:
+
+::
+
+    (swift) if let <#newNamedValue#> = <#someOptional#> {
+        <#statements#>
+    }
+
+The example from above can be can be rewritten to use optional binding:
+
+.. testcode:: optionals
+
+    (swift) if let actualNumber = possibleNumber.toInt() {
+        println("'\(possibleNumber)' has an integer value of \(actualNumber)")
+    } else {
+        println("'\(possibleNumber)' could not be converted to an integer")
+    }
+    >>> '123' has an integer value of 123
+
+As before, this example uses the ``toInt()`` function from ``String``
+to try and convert ``"123"`` into an ``Int``.
+It then prints a message to indicate if the conversion was successful.
+
+``if let actualNumber = possibleNumber.toInt()`` can be read as:
+
+“If the optional returned by ``possibleNumber.toInt()`` contains a value,
+set a new constant called ``actualNumber`` to the value contained in the optional.”
+
+If the conversion is successful,
+the ``actualNumber`` constant becomes available for use within
+the first branch of the ``if``-``else`` statement.
+It has already been initialized with the value contained *within* the optional,
+and so there is no need to use the ``!`` suffix to access its value.
+In this example, ``actualNumber`` is simply used to print the result of the conversion.
+
+You can use both constants and variables with optional binding.
+If you wanted to manipulate the value of ``actualNumber``
+within the first block of the ``if``-``else`` statement,
+you could write ``if var actualNumber`` instead,
+and the value contained within the optional
+would be made available as a variable rather than a constant.
+
+.. note::
+
+    Constants or variables created via optional binding
+    are only available within the code block following their creation,
+    as in the first branch of the ``if``-``else`` statement above.
+    If you want to work with the optional's value outside of this code block,
+    you should declare a constant or variable yourself
+    before the ``if``-``else`` statement begins.
 
 .. TODO: Add a section about arrays and dictionaries once their design is more tied down.
 
