@@ -219,14 +219,21 @@ Floating-Point Numbers
 ----------------------
 
 :newTerm:`Floating-point numbers` are numbers with a fractional component,
-such as ``3.14159``, ``0.1`` and ``-273.15``.
+such as ``3.14159``, ``0.1``, and ``-273.15``.
 
+Floating-point types can represent a much wider range of values than integer types,
+and can store numbers that are much larger or smaller than can be stored in an ``Int``.
 Swift provides two signed floating-point number types:
 
 * ``Double``, which represents a 64-bit floating-point number,
   and should be used when floating-point values need to be very large or particularly precise
 * ``Float``, which represents a 32-bit floating-point number,
   and should be used when floating-point values do not require 64-bit precision
+
+``Double`` has a precision of at least 15 digits,
+whereas the precision of ``Float`` can be as little as 6 digits.
+The appropriate floating-point type to use will depend on the nature and range of
+values you need to work with in your code.
 
 .. _BasicTypes_TypeSafetyAndTypeInference:
 
