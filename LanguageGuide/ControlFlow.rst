@@ -691,6 +691,15 @@ declares a tuple of two placeholder constants that can match any value.
 As a result, it matches all possible remaining values,
 and a ``default`` block is not needed to make the ``switch`` statement exhaustive.
 
+In the example above,
+the temporary named values ``x`` and ``y`` have been declared as constants
+via the ``let`` keyword, because there is no need to modify their values
+within the body of the ``case`` statement.
+However, they could have been declared as variables instead, via the ``var`` keyword.
+If this had been the case, a temporary variable would have been created
+and initialized with the appropriate value.
+Any changes to that variable would only have an effect within the body of the ``case`` statement.
+
 .. _ControlFlow_Where:
 
 Where
