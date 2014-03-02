@@ -597,6 +597,14 @@ As before, any parameters with default values can be excluded when the function 
     (swift) joinString("hello", toString: "world")
     // r1 : String = "hello world"
 
+With the exception of the first selector part,
+the selector parts may be provided in any order:
+
+.. testcode:: selectorStyle
+
+    (swift) joinString("hello", withJoiner: "-", toString: "world")
+    // r1 : String = "hello-world"
+
 If a parameter name is omitted from a selector-style declaration,
 the parameter is automatically given the same name as its selector part.
 Default values are still allowed:
