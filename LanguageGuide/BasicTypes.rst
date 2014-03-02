@@ -523,7 +523,9 @@ Booleans
 
 Swift has a basic :newTerm:`Boolean` type, called ``Bool``.
 Boolean values are referred to as :newTerm:`logical`,
-because they can only ever be ``true`` or ``false``:
+because they can only ever be true or false.
+To represent this fact, Swift provides two Boolean literal values,
+``true`` and ``false``:
 
 .. testcode:: booleans
 
@@ -532,8 +534,9 @@ because they can only ever be ``true`` or ``false``:
     (swift) let turnipsAreDelicious = false
     // turnipsAreDelicious : Bool = false
 
-The types of ``orangesAreOrange`` and ``turnipsAreDelicious`` have been inferred
-from the fact that they were initialized with ``Bool`` values.
+The types of ``orangesAreOrange`` and ``turnipsAreDelicious``
+have been inferred as ``Bool`` from the fact that
+they were initialized with Boolean literal values.
 As with ``Int`` and ``Double`` above,
 you don't need to declare named values as ``Bool``
 if you set them to ``true`` or ``false`` as soon as you create them.
