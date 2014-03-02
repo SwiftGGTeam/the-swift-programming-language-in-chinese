@@ -615,8 +615,8 @@ Here's an example of a tuple:
 
 .. testcode:: tuples
 
-    (swift) let statusCode = (404, "Not Found")
-    // statusCode : (Int, String) = (404, "Not Found")
+    (swift) let httpStatus = (404, "Not Found")
+    // httpStatus : (Int, String) = (404, "Not Found")
 
 ``(404, "Not Found")`` is a tuple that describes an *HTTP status code*.
 An HTTP status code is a special value returned by a web server whenever you request a web page.
@@ -637,10 +637,23 @@ You can access the individual element values in a tuple using index numbers star
 
 .. testcode:: tuples
 
-    (swift) statusCode.0
+    (swift) httpStatus.0
     // r0 : Int = 404
-    (swift) statusCode.1
+    (swift) httpStatus.1
     // r1 : String = "Not Found"
+
+As an alternative,
+you can :newTerm:`decompose` a tuple's contents into separate named values,
+which can then be used as normal:
+
+.. testcode:: tuples
+
+    (swift) let (statusCode, statusMessage) = httpStatus
+    // (statusCode, statusMessage) : (Int, String) = (404, "Not Found")
+    (swift) println("The status code is '\(statusCode)'")
+    >>> The status code is '404'
+    (swift) println("The status message is '\(statusMessage)'")
+    >>> The status message is 'Not Found'
 
 Tuples are particularly useful as the return values of functions.
 A function that tries to retrieve a web page might return this ``(Int, String)`` tuple type
