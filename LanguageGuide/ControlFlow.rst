@@ -505,20 +505,13 @@ This example checks ``numberSymbol`` to see if it is
 a Latin, Arabic, Chinese or Thai symbol for
 the numbers ``1`` to ``4``.
 If a match is found,
-it sets an optional ``Int?`` variable (``integerValue``) to the appropriate integer value.
+it sets an optional ``Int?`` variable (``possibleIntegerValue``) to the appropriate integer value.
 If the symbol is not recognized,
 the optional ``Int?`` is set to a value of ``.None``, meaning “no value”.
 Finally, it checks to see if a value was found,
 using an :ref:`optional binding <BasicTypes_OptionalBinding>`.
 If it was, the output value is printed;
 otherwise, an error message is reported.
-
-Note that the value of ``integerValue`` has
-an exclamation mark on the end (``integerValue!``)
-when it is printed by the ``println`` function.
-This tells Swift to retrieve and use the *actual* value stored inside the optional variable,
-which has been confirmed to exist by the previous line of code.
-(Optional values are described in more detail in :doc:`BasicTypes`.)
 
 Every ``switch`` statement must be exhaustive.
 This means that every possible input value must be matched by
