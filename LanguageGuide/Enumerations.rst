@@ -316,9 +316,8 @@ then the returned optional value will equal ``.None``:
 
 .. testcode:: optionals
 
-    (swift) possibleElement = ChemicalElement.fromRaw(8)            // Oxygen
-    (swift) if possibleElement {
-        switch possibleElement! {
+    (swift) if let element = ChemicalElement.fromRaw(8) {
+        switch element {
             case .Hydrogen:
                 println("A bit explodey")
             case .Helium:
@@ -330,6 +329,13 @@ then the returned optional value will equal ``.None``:
         println("Not an element I know about")
     }
     >>> Not an element I know about
+
+This example uses :ref:`optional binding <ControlFlow_OptionalBinding>`
+to try and access an element with a raw value of ``8``.
+``if let element = ChemicalElement.fromRaw(8)`` retrieves an optional ``ChemicalElement``,
+and sets ``element`` to the contents of that optional if it can be retrieved.
+In this case, it is not possible to retrieve an element for ``8``,
+and so the ``else`` branch is executed instead.
 
 .. _Enumerations_PropertiesAndMethods:
 
