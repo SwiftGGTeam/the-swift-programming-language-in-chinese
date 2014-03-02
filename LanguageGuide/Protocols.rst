@@ -59,6 +59,8 @@ Conforming to a Protocol
 ------------------------
 
 .. Declaring protocol conformance (and the overlap of this with subclass declaration)
+.. Show how to make a custom type conform to LogicValue or some other protocol
+.. LogicValue certainly needs to be mentioned in here somewhere
 
 Naming of Protocols
 -------------------

@@ -543,7 +543,8 @@ if you set them to ``true`` or ``false`` as soon as you create them.
 Type inference helps to make Swift code much more concise and readable
 when initializing named values with other values whose type is already known.
 
-Boolean values are particularly useful when working with conditional statements such as ``if``-``else``:
+Boolean values are particularly useful when working with conditional statements
+such as the ``if``-``else`` statement:
 
 .. testcode:: booleans
 
@@ -579,6 +580,14 @@ and so this second example passes the type-check.
 As with other examples of type safety in Swift,
 this approach avoids accidental errors,
 and ensures that the intention of a particular section of code is always made clear.
+
+.. note::
+
+    Strictly speaking, an ``if``-``else`` statement's condition expression
+    can be of any type that conforms to the ``LogicValue`` protocol.
+    ``Bool`` is one example of this, but there are others,
+    such as :ref:`BasicTypes_Optionals` below.
+    The ``LogicValue`` protocol is described in more detail in :doc:`Protocols`.
 
 .. _BasicTypes_Arrays:
 
