@@ -698,6 +698,8 @@ The exclamation mark effectively says,
     Trying to use ``!`` to access a non-existent optional value will trigger
     an unrecoverable runtime error.
 
+.. _BasicTypes_OptionalBinding:
+
 Optional Binding
 ~~~~~~~~~~~~~~~~
 
