@@ -209,6 +209,25 @@ and a value of ``.None`` in its second value to indicate that ``splitter`` was n
     }
     >>> The text from after the splitter is 'world'
 
+Alternatively, you can decompose the tuple into multiple named values
+as part of the function return value assignment:
+
+.. testcode:: functionParameters
+
+    (swift) let (first, possibleSecond) = splitOnFirst("hello world", ' ')
+    // (first, possibleSecond) : (String, String?) = ("hello", <unprintable value>)
+    (swift) if let second = possibleSecond {
+        println("The text from after the splitter is '\(second)'")
+    }
+    >>> The text from after the splitter is 'world'
+
+This example sets two constants called ``first`` and ``possibleSecond``
+to equal the two output values stored in the ``splitOnFirst()`` function's
+return tuple value.
+These two constants can then be used independently of each other,
+as shown here to unwrap the value stored in the optional second tuple value
+via :ref:`optional binding <BasicTypes_OptionalBinding>`.
+
 .. _Functions_ParameterNames:
 
 Parameter Names
