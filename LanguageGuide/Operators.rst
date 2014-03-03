@@ -643,7 +643,8 @@ Bitwise OR Operator
 ~~~~~~~~~~~~~~~~~~~
 
 The :newTerm:`bitwise OR operator` (``|``) compares the bits of two numbers,
-and returns a new number whose bits are set to ``1`` if the bits were equal to ``1`` in *either* of the input numbers:
+and returns a new number whose bits are set to ``1``
+if the bits were equal to ``1`` in *either* of the input numbers:
 
 .. image:: ../images/bitwiseOR.png
     :width: 570
@@ -670,12 +671,8 @@ Bitwise XOR Operator
 ~~~~~~~~~~~~~~~~~~~~
 
 The :newTerm:`bitwise XOR operator` (``^``) compares the bits of two numbers,
-and returns a new number based on the following rules:
-
-* If a bit is equal to ``1`` in  *either* of the input numbers,
-  but not in *both* of the input numbers,
-  then it should be set to ``1`` in the output number.
-* Otherwise, the bit should be set to ``0``.
+and returns a new number whose bits are set to ``1`` where the input bits are different,
+and ``0`` where the input bits are the same:
 
 .. image:: ../images/bitwiseXOR.png
     :width: 570
