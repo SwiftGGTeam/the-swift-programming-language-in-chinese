@@ -747,6 +747,10 @@ to be managed and passed by reference.
 In practice, this means that most custom data constructs should be classes,
 not structures.
 
+.. TODO: what is the "Object" type
+   (as defined in /swift/stdlib/core/Object.swift),
+   and should it be mentioned herein?
+
 .. _ClassesAndStructures_InstanceMethods:
 
 Instance Methods
