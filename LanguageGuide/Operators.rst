@@ -30,7 +30,7 @@ and improves several of their capabilities:
 * Arithmetic operators (``+``, ``-``, ``*``, ``/``, ``%`` etc.)
   detect value overflow, eliminating a category of common coding errors
 
-It also introduces new operators not found in other languages:
+It also provides expressive operators that make development easier or more explicit:
 
 * :ref:`Range operators <Operators_RangeOperators>`
   ``a..b`` and ``a...b``, which give a short-hand way to express a range of values
