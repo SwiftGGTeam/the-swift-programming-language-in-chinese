@@ -1086,8 +1086,15 @@ while avoiding double negatives or confusing logic statements.
 Logical AND Operator
 ~~~~~~~~~~~~~~~~~~~~
 
-The :newTerm:`logical AND operator` (``&&``) is used to create logical expressions
+The :newTerm:`logical AND operator` (``a && b``) is used to create logical expressions
 where both values must be ``true`` for the overall expression to also be ``true``.
+
+If either value is ``false``,
+the overall expression will also be ``false``.
+In fact, if the *first* value is ``false``,
+the second value won't even be evaluated,
+because it can't possibly make the overall expression equate to ``true``.
+This is known as :newTerm:`short-circuit evaluation`.
 
 This example considers two ``Bool`` values,
 and only allows access if both values are ``true``:
@@ -1105,22 +1112,22 @@ and only allows access if both values are ``true``:
     }
     >>> ACCESS DENIED
 
-If either value is ``false``,
-the overall expression will also be ``false``,
-as shown above.
-In fact, if the *first* value is false,
-the second value won't even be checked,
-because it can't possibly make the overall expression equal ``true``.
-This is known as *short-circuit evaluation*.
-
 .. _Operators_LogicalOROperator:
 
 Logical OR Operator
 ~~~~~~~~~~~~~~~~~~~
 
-The :newTerm:`logical OR operator` (``||``, i.e. two adjacent pipe characters)
+The :newTerm:`logical OR operator`
+(``a || b``, i.e. an infix operator made from two adjacent pipe characters)
 is used to create logical expressions where only *one* of the two values has to be ``true``
 for the overall expression to be ``true``.
+
+Like the Logical AND operator above,
+the Logical OR operator uses short-circuit evaluation when considering its expressions.
+If the left-hand side of a Logical OR expression is ``true``,
+the right-hand side will not be evaluated,
+because it cannot change the outcome of the overall expression.
+
 For example:
 
 .. testcode:: logicalOperators
@@ -1142,10 +1149,6 @@ but the second value (``knowsOverridePassword``) is ``true``.
 Because one value is ``true``,
 the overall expression also equates to ``true``,
 and access is allowed.
-
-Note that if the left-hand side of an OR expression is ``true``,
-the right-hand side will not be evaluated,
-because it cannot change the outcome of the overall expression.
 
 .. _Operators_CombiningLogicalOperators:
 
