@@ -420,9 +420,21 @@ is different for each numeric type.
 An ``Int8`` named value can store numbers between ``-128`` and ``127``,
 whereas a ``UInt8`` named value can store numbers between ``0`` and ``255``.
 A number that can be stored in one numeric type
-cannot necessarily be stored in another numeric type.
+cannot necessarily be stored in another numeric type,
+and trying to do so is reported as an error:
 
-Because of these differences,
+.. testcode:: namedValuesOverflowError
+
+    (swift) let cannotBeNegative: UInt8 = -1
+    !!! <REPL Input>:1:31: error: integer literal overflows when stored into 'UInt8'
+    !!! let cannotBeNegative: UInt8 = -1
+    !!!                               ^
+    (swift) let tooBig: Int8 = Int8.max + 1
+    !!! <REPL Input>:1:29: error: arithmetic operation '127 + 1' (on type 'Int8') results in an overflow
+    !!! let tooBig: Int8 = Int8.max + 1
+    !!!                             ^
+
+Because of this,
 numeric type conversion is something you must opt in to on a case-by-case basis.
 This opt-in approach avoids accidental errors
 and helps to make type conversion intentions explicit in your code.
