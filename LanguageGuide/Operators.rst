@@ -1230,6 +1230,14 @@ This gives the final answer of ``4``.
 
 A complete list of Swift operator precedences and associativity rules can be found in the :doc:`../ReferenceManual/index`.
 
+.. note::
+
+    Swift's operator precedences and associativity rules are simpler and more predictable
+    than those found in C and Objective-C.
+    However, this does mean that they are not the same as in C-based languages.
+    Be careful to ensure that operator interactions still behave in the way you intend
+    when porting existing code to Swift.
+
 .. TODO: update this link to go to the specific section of the Reference Manual.
 
 .. _Operators_Explicit Parentheses:
