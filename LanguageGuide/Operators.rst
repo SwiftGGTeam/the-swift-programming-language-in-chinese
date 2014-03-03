@@ -45,8 +45,10 @@ This process is covered in detail in :doc:`ClassesAndStructures`.
 Operators are often referred to as :newTerm:`unary`, :newTerm:`binary`, or :newTerm:`ternary`:
 
 * Unary operators operate on a single target (such as ``-a``).
-  They are said to be :newTerm:`prefix` operators if they come before their target (such as ``!b``),
-  and :newTerm:`postfix` operators if they come after their target (such as ``i++``).
+  They are said to be :newTerm:`prefix` operators if they appear
+  immediately before their target (such as ``!b``),
+  and :newTerm:`postfix` operators if they appear
+  immediately after their target (such as ``i++``).
 * Binary operators operate on two targets (such as ``2 + 3``),
   and are said to be :newTerm:`infix` because they appear inbetween their two targets.
 * Ternary operators operate on three targets.
@@ -557,7 +559,9 @@ The :newTerm:`bitwise NOT operator` (``~``) inverts all of the bits in a number:
     :width: 570
     :align: center
 
-For example:
+The bitwise NOT operator is a prefix operator,
+and appears immediately before the value it operates on,
+without any whitespace:
 
 .. testcode:: bitwiseOperators
 
@@ -1021,6 +1025,10 @@ Logical NOT Operator
 
 The :newTerm:`logical NOT operator` (``!a``) inverts a Boolean value so that ``true`` becomes ``false``,
 and ``false`` becomes ``true``.
+
+The logical NOT operator is a prefix operator,
+and appears immediately before the value it operates on,
+without any whitespace.
 It can be read as “not ``a``”, as seen in the following example:
 
 .. testcode:: logicalOperators
