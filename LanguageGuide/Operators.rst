@@ -410,8 +410,8 @@ The :newTerm:`ternary conditional operator` is a special operator with three par
 which takes the form ``question ? answer1 : answer2``.
 It provides a shorthand way to evaluate one of two expressions
 based on whether ``question`` is true or false.
-If ``question`` is true, it evaluates ``answer1``;
-otherwise, it evaluates ``answer2``.
+If ``question`` is true, it evaluates ``answer1`` and returns its value;
+otherwise, it evaluates ``answer2`` and returns its value.
 
 Effectively, it is shorthand for::
 
@@ -454,14 +454,14 @@ This is shorthand for:
     (swift) println("The row height is \(rowHeight) pixels.")
     >>> The row height is 90 pixels.
 
+The shorthand version is more concise,
+and removes the need for ``rowHeight`` to be a variable named value
+rather than a constant named value.
+
 .. TODO: leave rowHeight uninitialized once the REPL allows uninitialized variables?
-.. QUESTION: In the first example, rowHeight is a constant (because it can be),
-   but in the second example, it's a variable (because it has to be).
-   Is this okay?
 
-In this case, the ternary conditional operator provides
+The ternary conditional operator provides
 an efficient shorthand for deciding which of two expressions to consider.
-
 The ternary conditional operator should be used with care, however.
 It is very concise, but this conciseness can lead to hard-to-read code if overused.
 Avoid combining multiple instances of the ternary conditional operator into one compound statement.
