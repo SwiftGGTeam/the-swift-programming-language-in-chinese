@@ -594,14 +594,14 @@ and ensures that the intention of a particular section of code is always made cl
 Arrays
 ------
 
-[to be written]
+.. write-me::
 
 .. _BasicTypes_Dictionaries:
 
 Dictionaries
 ------------
 
-[to be written]
+.. write-me::
 
 .. _BasicTypes_Tuples:
 

@@ -10,6 +10,8 @@
 Generics
 ========
 
+.. write-me::
+
 .. refnote:: References
 
     * https://[Internal Staging Server]/docs/whitepaper/GuidedTour.html#generics

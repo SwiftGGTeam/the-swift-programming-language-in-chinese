@@ -259,14 +259,14 @@ and changes the variable to have a value of ``123``.
 Computed Type Properties
 ------------------------
 
-[to be written]
+.. write-me::
 
 .. _Extensions_TypeMethods:
 
 Type Methods
 ------------
 
-[to be written]
+.. write-me::
 
 .. _Extensions_Subscripts:
 

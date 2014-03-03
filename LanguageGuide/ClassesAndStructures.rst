@@ -1530,7 +1530,7 @@ Here's how this final initializer could be called:
 Dynamic Return Types
 ~~~~~~~~~~~~~~~~~~~~
 
-[to be written]
+.. write-me::
 
 .. TODO: mention that methods can return DynamicSelf (a la instancetype)
 .. TODO: include the several tricks seen in swift/test/decl/func/dynamic_self.swift
@@ -1735,7 +1735,7 @@ whenever a ``Song`` is found in the library.
 Type Properties and Methods
 ---------------------------
 
-[to be written]
+.. write-me::
 
 .. see release notes from 2013-12-18 for a note about lazy initialization
 .. mention that type methods can access type properties (and other type methods?)
