@@ -178,7 +178,7 @@ and returns ``remainder`` as its output:
 
 ``a`` = (``b`` × ``some multiplier``) + ``remainder``
 
-where ``some multiplier`` is the smallest number of multiples of ``b``
+where ``some multiplier`` is the largest number of multiples of ``b``
 that will fit inside ``a``.
 
 Inserting ``9`` and ``4`` into this equation gives:
