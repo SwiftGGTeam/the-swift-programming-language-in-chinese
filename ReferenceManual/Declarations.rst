@@ -232,42 +232,95 @@ Variable Declaration
 .. syntax-outline::
 
     var <#variable name#> : <#type#> {
-    get:
-        <#statements#>
-    set(<#setter name#>):
-        <#statements#>
+        get {
+            <#statements#>
+        }
+        set(<#setter name#>) {
+            <#statements#>
+        }
     }
+
+.. syntax-outline::
+
+    var <#variable name#> : <#type#> {
+        willSet(<#setter name#>) {
+            <#statements#>
+        }
+        didSet {
+            <#statements#>
+        }
+    }
+
+.. syntax-outline::
+
+    var <#variable name#> : <#type#> { get set }
 
 .. TODO: In prose: discuss that 'name' can also be a pattern in the first syntax-outline.
     Also, discuss that when you only want to provide a getter, 'get:' is optional
     (as shown in the third form of the grammar).
 
 .. langref-grammar
+    decl-var-head  ::= attribute-list ('static' | 'class')? 'var'
 
-    decl-var        ::= attribute-list 'type'? 'var' pattern initializer?  (',' pattern initializer?)*
-    decl-var        ::= attribute-list 'var' identifier ':' type-annotation brace-item-list
-    decl-var        ::= attribute-list 'var' identifier ':' type-annotation '{' get-set '}'
-    initializer     ::= '=' expr
-    get-set         ::= get set?
-    get-set         ::= set get
-    get             ::= 'get:' brace-item*
-    set             ::= 'set' set-name? ':' brace-item*
-    set-name        ::= '(' identifier ')'
+    decl-var       ::= decl-var-head pattern initializer?  (',' pattern initializer?)*
+
+    // 'get' is implicit in this syntax.
+    decl-var       ::= decl-var-head identifier ':' type-annotation brace-item-list
+
+    decl-var       ::= decl-var-head identifier ':' type-annotation '{' get-set '}'
+
+    decl-var       ::= decl-var-head identifier ':' type-annotation initializer? '{' willset-didset '}'
+
+    // For use in protocols.
+    decl-var       ::= decl-var-head identifier ':' type-annotation '{' get-set-kw '}'
+
+    get-set        ::= get set?
+    get-set        ::= set get
+
+    get            ::= attribute-list 'get' brace-item-list
+    set            ::= attribute-list 'set' set-name? brace-item-list
+    set-name       ::= '(' identifier ')'
+
+    willset-didset ::= willset didset?
+    willset-didset ::= didset willset?
+
+    willset        ::= attribute-list 'willSet' set-name? brace-item-list
+    didset         ::= attribute-list 'didSet' brace-item-list
+
+    get-kw         ::= attribute-list 'get'
+    set-kw         ::= attribute-list 'set'
+    get-set-kw     ::= get-kw set-kw?
+    get-set-kw     ::= set-kw get-kw
 
 .. syntax-grammar::
 
     Grammar of a variable declaration
 
-    variable-declaration --> attribute-list-OPT variable-specifier-OPT ``var`` pattern-initializer-list
-    variable-declaration --> attribute-list-OPT ``var`` variable-name type-annotation code-block
-    variable-declaration --> attribute-list-OPT ``var`` variable-name type-annotation getter-setter-block
+    variable-declaration --> variable-declaration-head pattern-initializer-list
+    variable-declaration --> variable-declaration-head variable-name type-annotation code-block
+    variable-declaration --> variable-declaration-head variable-name type-annotation getter-setter-block
+    variable-declaration --> variable-declaration-head variable-name type-annotation getter-setter-keyword-block
+    variable-declaration --> variable-declaration-head variable-name type-annotation initializer-OPT willSet-didSet-block
+
+    variable-declaration-head --> attribute-list-OPT variable-specifier-OPT ``var``
     variable-specifier --> ``static`` | ``class``
     variable-name --> identifier
 
-    getter-setter-block --> ``{`` getter setter-OPT ``}`` | ``{`` setter getter ``}``
-    getter --> ``get`` ``:`` statements-OPT
-    setter --> ``set`` setter-name-OPT ``:`` statements-OPT
+    getter-setter-block --> ``{`` getter-clause setter-clause-OPT ``}``
+    getter-setter-block --> ``{`` setter-clause getter-clause ``}``
+    getter-clause --> attribute-list-OPT ``get`` code-block
+    setter-clause --> attribute-list-OPT ``set`` setter-name-OPT code-block
     setter-name --> ``(`` identifier ``)``
+
+    getter-setter-keyword-block --> ``{`` getter-keyword-clause setter-keyword-clause-OPT ``}``
+    getter-setter-keyword-block --> ``{`` setter-keyword-clause getter-keyword-clause ``}``
+    getter-keyword-clause --> attribute-list-OPT ``get``
+    setter-keyword-clause --> attribute-list-OPT ``set``
+
+    willSet-didSet-block --> ``{`` willSet-clause didSet-clause-OPT ``}``
+    willSet-didSet-block --> ``{`` didSet-clause willSet-clause ``}``
+    willSet-clause --> attribute-list-OPT ``willSet`` setter-name-OPT code-block
+    didSet-clause --> attribute-list-OPT ``didSet`` code-block
 
 .. NOTE: Type annotations are required for computed properties -- the
    types of those properties are not computed/inferred.
