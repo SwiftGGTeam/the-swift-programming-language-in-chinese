@@ -27,6 +27,8 @@ and improves several of their capabilities:
 
 * Assignment (``=``) does not return a value, to avoid common coding errors
 * Remainder (``%``) calculations can be performed on floating-point numbers
+* Arithmetic operators (``+``, ``-``, ``*``, ``/``, ``%`` etc.)
+  detect value overflow, eliminating a category of common coding errors
 
 It also introduces new operators not found in other languages:
 
