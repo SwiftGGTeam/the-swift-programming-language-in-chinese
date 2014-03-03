@@ -253,8 +253,17 @@ Likewise, ``--i`` can be used as shorthand for ``i = i - 1``.
 
 ``++`` and ``--`` can be used as prefix operators or as postfix operators.
 ``++i`` and ``i++`` are both valid ways to increase the value of ``i`` by ``1``.
-However, ``++i`` increases the value of ``i`` *before* it is accessed,
-whereas ``i++`` increases the value *after* it is accessed.
+
+Note that these operators modify ``i``, and also return a value.
+If you only want to increment or decrement the value stored in ``i``,
+you can choose to ignore the returned value.
+However, if you *do* use the returned value,
+it will be different based on whether you used the prefix or postfix
+version of the operator:
+
+* ``++i`` and ``--i`` modify ``i``, and return the *new* value
+* ``i++`` and ``i--`` modify ``i``, and return the *old* value
+
 This is important if you are using ``++`` or ``--`` to modify a variable
 while also finding out its value:
 
@@ -281,10 +290,9 @@ The result is that ``c`` gets the old value of ``1``,
 but ``a`` now equals ``2``.
 
 Unless you need the specific behavior of ``i++``,
-it is recommended that you use ``++i`` in all cases,
-because it has the typical expected behavior of incrementing ``i``
-and then providing the result.
-(The same rules and advice apply for ``--i`` and ``i--``.)
+it is recommended that you use ``++i`` and ``--i`` in all cases,
+because they have the typical expected behavior of modifying ``i``
+and then returning the result.
 
 .. QUESTION: is this good advice
    (given the general prevalence of i++ in the world),
