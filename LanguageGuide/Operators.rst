@@ -989,7 +989,7 @@ and underflow always wraps around from the smallest value to the largest.
 Division by Zero
 ~~~~~~~~~~~~~~~~
 
-If you divide a number by zero (i / 0),
+Normally, if you divide a number by zero (i / 0),
 or try to calculate remainder by zero (i % 0),
 Swift will throw an error:
 
@@ -1000,8 +1000,15 @@ Swift will throw an error:
     (swift) let y = x / 0
     xxx division by zero
  
-Integer division by zero is not a valid mathematical action,
-and so Swift throws an error rather than creating an invalid value.
+However, the overflow versions of these operators (``&/`` and ``&%``)
+return a value of zero if you divide by zero:
+
+.. testcode:: overflowOperatorsAllowedDivZero
+
+    (swift) let x = 1
+    // x : Int = 1
+    (swift) let y = x &/ 0
+    // y : Int = 0
 
 .. NOTE: currently, this testcode block must be the last in the overflowOperators group,
    as otherwise the stack trace crash from the division-by-zero will mean that
