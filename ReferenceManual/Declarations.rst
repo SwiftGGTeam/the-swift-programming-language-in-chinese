@@ -953,23 +953,38 @@ Subscript Declaration
 
 .. syntax-outline::
 
-    subscript (<#arguments#>) -> <#return type#> {
-    get:
-        <#statements#>
-    set(<#setter name#>):
-        <#statements#>
+    subscript (<#parameters#>) -> <#return type#> {
+        get {
+            <#statements#>
+        }
+        set(<#setter name#>) {
+            <#statements#>
+        }
     }
 
-.. langref-grammar
+.. syntax-outline::
 
+    subscript (<#parameters#>) -> <#return type#> { get set }
+
+
+.. langref-grammar
     decl-subscript ::= subscript-head '{' get-set '}'
+
+    // 'get' is implicit in this syntax.
+    decl-subscript ::= subscript-head brace-item-list
+
+    // For use in protocols.
+    decl-subscript ::= subscript-head '{' get-set-kw '}'
+
     subscript-head ::= attribute-list 'subscript' pattern-tuple '->' type
 
 .. syntax-grammar::
 
     Grammar of a subscript declaration
 
+    subscript-declaration --> subscript-head code-block
     subscript-declaration --> subscript-head getter-setter-block
+    subscript-declaration --> subscript-head getter-setter-keyword-block
     subscript-head --> attribute-list-OPT ``subscript`` tuple-pattern ``->`` type
 
 .. _Declarations_Attributes:
