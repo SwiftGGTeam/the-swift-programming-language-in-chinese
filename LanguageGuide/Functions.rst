@@ -229,7 +229,7 @@ to equal the two output values stored in the ``splitOnFirst()`` function's
 return tuple value.
 These two constants can then be used independently of each other,
 as shown here to unwrap the value stored in the optional second tuple value
-via :ref:`optional binding <BasicTypes_OptionalBinding>`.
+via :ref:`BasicTypes_OptionalBinding`.
 
 .. _Functions_ParameterNames:
 

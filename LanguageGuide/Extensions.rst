@@ -38,7 +38,7 @@ This process is covered in the :doc:`Protocols` chapter.
 Computed Properties
 -------------------
 
-Extensions can add new :ref:`computed properties <ClassesAndStructures_ComputedProperties>`
+Extensions can add new :ref:`ClassesAndStructures_ComputedProperties`
 to existing types.
 This example adds five new computed properties to Swift's built-in ``Double`` type,
 to provide basic support for working with distance units:
@@ -79,7 +79,7 @@ Similarly, there are 3.28024 feet in a meter,
 and so the ``ft`` computed property divides the underlying ``Double`` value
 by ``3.28024``, to convert it from feet to meters.
 
-These properties are :ref:`read-only computed properties <ClassesAndStructures_ReadOnlyComputedProperties>`,
+These properties are :ref:`ClassesAndStructures_ReadOnlyComputedProperties`,
 and so they have been expressed without the ``get`` keyword, for brevity.
 Their return value is inferred to be of type ``Double``,
 and can be used within mathematical calculations wherever a ``Double`` is accepted:
@@ -94,8 +94,8 @@ and can be used within mathematical calculations wherever a ``Double`` is accept
 .. note::
 
     Extensions can add new computed properties,
-    but they cannot add :ref:`stored properties <ClassesAndStructures_StoredProperties>`,
-    or add :ref:`stored property observers <ClassesAndStructures_StoredPropertyObservers>`
+    but they cannot add :ref:`ClassesAndStructures_StoredProperties`,
+    or add :ref:`ClassesAndStructures_StoredPropertyObservers`
     to existing stored properties.
 
 .. _Extensions_Initializers:
@@ -103,14 +103,14 @@ and can be used within mathematical calculations wherever a ``Double`` is accept
 Initializers
 ------------
 
-Extensions can add new :ref:`initializers <ClassesAndStructures_Initializers>` to existing types.
+Extensions can add new :ref:`ClassesAndStructures_Initializers` to existing types.
 This enables you to extend other types to accept
 your own custom types as initializer parameters.
 
 .. note::
 
     Extensions can add new initializers to classes, but they cannot add
-    a :ref:`deinitializer <ClassesAndStructures_Deinitializers>`.
+    :ref:`ClassesAndStructures_Deinitializers`.
     Deinitializers must always be provided by the original class implementation.
 
 This approach can be used to extend the basic ``String`` type
@@ -172,9 +172,10 @@ is known as :newTerm:`initializer overloading`.)
     once the initializer has completed, as described in
     :ref:`ClassesAndStructures_DefiniteInitialization`.
     Depending on the type you are extending, you may need to
-    :ref:`delegate to another initializer <ClassesAndStructures_InitializerDelegation>` or
-    :ref:`call a superclass initializer <ClassesAndStructures_SubclassingAndInitializerDelegation>`
-    at the end of your own initializer,
+    delegate to another initializer
+    (as described in :ref:`ClassesAndStructures_InitializerDelegation`),
+    or call a superclass initializer
+    (as described in :ref:`ClassesAndStructures_SubclassingAndInitializerDelegation`),
     to ensure that all instance properties are fully initialized.
 
 .. QUESTION: You can use 'self' in this way for structs and enums.
@@ -185,7 +186,7 @@ is known as :newTerm:`initializer overloading`.)
 Instance Methods
 ----------------
 
-Extensions can add new :ref:`instance methods <ClassesAndStructures_InstanceMethods>`
+Extensions can add new :ref:`ClassesAndStructures_InstanceMethods`
 to an existing type:
 
 .. testcode:: extensionsInstanceMethods
@@ -242,7 +243,8 @@ just like mutating methods from an original implementation:
 
 This example adds a ``shiftRight()`` method to instances of ``Int``.
 This method is similar to the
-:ref:`bitwise right shift operator <Operators_BitwiseLeftAndRightShifts>`,
+bitwise right shift operator
+(as described in :ref:`Operators_BitwiseLeftAndRightShifts`),
 except that it shifts by powers of ten, rather than powers of two.
 
 The method shifts an ``Int`` to the right by ``numberOfDecimalPlaces``.
@@ -273,7 +275,7 @@ Type Methods
 Subscripts
 ----------
 
-Extensions can add new :ref:`subscripts <ClassesAndStructures_Subscripts>`
+Extensions can add new :ref:`ClassesAndStructures_Subscripts`
 to an existing type.
 This example adds an integer subscript to Swift's built-in ``Int`` type.
 This subscript ``[n]`` returns the decimal digit ``n`` places in
@@ -314,7 +316,7 @@ so:
 Nested Types
 ------------
 
-Extensions can add new :ref:`nested types <Enumerations_NestedTypes>`
+Extensions can add new :ref:`Enumerations_NestedTypes`
 to existing classes, structures and enumerations:
 
 .. testcode:: extensionsNestedTypes

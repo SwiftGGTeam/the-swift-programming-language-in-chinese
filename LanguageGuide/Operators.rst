@@ -32,9 +32,9 @@ and improves several of their capabilities:
 
 It also provides expressive operators that make development easier or more explicit:
 
-* :ref:`Range operators <Operators_RangeOperators>`
+* :ref:`Operators_RangeOperators`
   ``a..b`` and ``a...b``, which give a short-hand way to express a range of values
-* :ref:`Overflow operators <Operators_OverflowOperators>`
+* :ref:`Operators_OverflowOperators`
   such as ``a &+ b``, to opt in to overflowing arithmetic behavior
 
 In addition, you can define your own implementations of the standard operators –
@@ -286,10 +286,10 @@ and then providing the result.
 
 .. QUESTION: if so, have I followed this advice throughout the book?
 
-.. _Operators_UnaryPlusAndMinusOperators:
+.. _Operators_UnaryMinusOperator:
 
-Unary Plus and Minus Operators
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Unary Minus Operator
+~~~~~~~~~~~~~~~~~~~~
 
 The sign of a numeric value can be toggled using a prefixed ``-``,
 known as the :newTerm:`unary minus operator`:
@@ -306,8 +306,13 @@ known as the :newTerm:`unary minus operator`:
 The unary minus operator (``-``) is prepended directly before the value it operates on,
 without any whitespace.
 
-There is a corresponding :newTerm:`unary plus operator` (``+``)
-which simply returns the value it operates on, without any change:
+.. _Operators_UnaryPlusOperator:
+
+Unary Plus Operator
+~~~~~~~~~~~~~~~~~~~
+
+The :newTerm:`unary plus operator` (``+``) simply returns
+the value it operates on, without any change:
 
 .. testcode:: arithmeticOperators
 
@@ -317,7 +322,8 @@ which simply returns the value it operates on, without any change:
     // alsoMinusSix : Int = -6
 
 The unary plus operator doesn't actually do anything.
-However, it can be used to provide symmetry in your code when you're also using the unary minus operator.
+However, it can be used to provide symmetry in your code
+when used alongside the unary minus operator.
 
 .. _Operators_CompoundAssignmentOperators:
 
