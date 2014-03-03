@@ -145,6 +145,13 @@ can be added together to make a new ``String`` value:
     (swift) let dogCow = dog + cow
     // dogCow : String = "🐶🐮"
 
+.. TODO: revisit this example based on whether single quotes
+   continue to return a UnicodeScalar,
+   and in light of where we end up with characters vs scalars.
+   This also raises the question of my use of the name 'scalar'
+   when using for-in to iterate over someString.chars.
+   I've used 'scalar' several times throughout the book.
+
 .. _Operators_RemainderOperator:
 
 Remainder Operator
