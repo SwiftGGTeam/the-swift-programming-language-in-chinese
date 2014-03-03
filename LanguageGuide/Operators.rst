@@ -360,6 +360,12 @@ The expression ``a += 2`` is shorthand for ``a = a + 2``.
 Effectively, the addition and the assignment are combined into one operator
 that performs both tasks at the same time.
 
+.. note::
+
+    The compound assignment operators do not return a value.
+    You cannot write ``let b = a += 2``, for example.
+    This behavior is different from the increment and decrement operators mentioned above.
+
 A complete list of compound assignment operators can be found in the :doc:`../ReferenceManual/index`.
 
 .. _Operators_ComparisonOperators:
