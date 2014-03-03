@@ -913,9 +913,11 @@ Throwing an error in these scenarios is much safer than allowing an outsized val
 Providing error handling when values get too large or too small
 gives you much more flexibility when coding for boundary value conditions.
 
-However, in the cases where you *do* want the value to overflow,
+However, in the cases where you specifically want an overflow condition
+to truncate the number of available bits,
 you can opt in to this behavior rather than triggering an error.
-Swift provides five arithmetic :newTerm:`overflow operators` that opt in to the overflow behavior for integer calculations.
+Swift provides five arithmetic :newTerm:`overflow operators` that opt in to
+the overflow behavior for integer calculations.
 These operators all begin with an ampersand (``&``):
 
 * Overflow addition (``&+``)
