@@ -1016,37 +1016,62 @@ Attributes
    This means that instead of having "empty" as a possible expansion,
    attribute-list always appears as -OPT.
 
-.. TODO: From looking at /swift/include/swift/AST/Attr.def,
-    there are ATTR(...), TYPE_ATTR(...), and IB_ATTR(...).
-    TYPE_ATTR(...)s can be applied to types only,
-    and plain ATTR(...)s are restricted to declarations only.
-    That said, the 'noreturn' attribute can be specified on the declaration
-    or on the function type, and is thus in both both ATTR(...) and TYPE_ATTR(...).
+..  Here's the current list (as of 3/3/2014):
 
-    Here's the current list (as of 1/20/2014):
+        // Type attributes
+    TYPE_ATTR(auto_closure)
+    TYPE_ATTR(cc)
+    TYPE_ATTR(noreturn)
+    TYPE_ATTR(objc_block)
+    TYPE_ATTR(thin)
+    TYPE_ATTR(thick)
+    TYPE_ATTR(unchecked)
 
-    Type Attributes:
-    ``auto_closure`` ``inout`` ``cc`` ``noreturn`` ``objc_block`` ``thin`` ``thick``
-    ``unchecked``
-    Declaration Attributes:
-    ``assignment`` ``class_protocol`` ``conversion`` ``exported`` ``infix`` ``mutating``
-    ``resilient`` ``fragile`` ``born_fragile`` ``asmname`` ``noreturn`` ``prefix``
-    ``postfix`` ``objc`` ``optional`` ``transparent`` ``unowned`` ``weak``
-    ``requires_stored_property_inits``
-    Interface Builder Attributes:
-    ``IBOutlet`` ``IBAction`` ``IBLiveView`` ``IBInspectable``
+    // SIL-specific attributes
+    TYPE_ATTR(sil_self)
+    TYPE_ATTR(local_storage)
+    TYPE_ATTR(sil_unowned)
+    TYPE_ATTR(sil_weak)
+    TYPE_ATTR(out)
+    TYPE_ATTR(in)
+    TYPE_ATTR(inout)
+    TYPE_ATTR(owned)
+    TYPE_ATTR(guaranteed)
+    TYPE_ATTR(autoreleased)
+    TYPE_ATTR(callee_owned)
+    TYPE_ATTR(callee_guaranteed)
+    TYPE_ATTR(objc_metatype)
+    TYPE_ATTR(opened)
 
-    Because attributes are (almost) neatly separated into mutually exclusive categories,
-    e.g., declaration attributes, type attributes, and IB attributes,
-    then we can break down the attribute grammar accordingly.
-    We still need to decide the best way to do this.
-    Some possibilites are:
+    ATTR(abstract)
+    ATTR(assignment)
+    ATTR(class_protocol)
+    ATTR(conversion)
+    ATTR(exported)
+    ATTR(infix)
+    ATTR(mutating)
+    ATTR(resilient)
+    ATTR(fragile)
+    ATTR(born_fragile)
+    ATTR(asmname)
+    ATTR(noreturn)
+    ATTR(prefix)
+    ATTR(postfix)
+    ATTR(objc)
+    ATTR(optional)
+    ATTR(override)
+    ATTR(transparent)
+    ATTR(unowned)
+    ATTR(weak)
+    ATTR(requires_stored_property_inits)
 
-        1. Each of the three groups of attributes gets its own subsection.
-           Some attributes (e.g., 'objc') may require lots of explanation.
-        2. Create a whole new chapter on attributes.
+    IB_ATTR(IBOutlet)
+    IB_ATTR(IBAction)
+    IB_ATTR(IBDesignable)
+    IB_ATTR(IBInspectable)
 
-    Currently, we're leaning toward (1).
+    // "Virtual" attributes can not be spelled in the source code.
+    VIRTUAL_ATTR(raw_doc_comment)
 
     According to Doug (1/29/14), many of these attributes are not worth documenting
     either in the near future or at all. We should really focus on the following first:
@@ -1075,7 +1100,8 @@ Declaration Attributes
 
     Grammar of a declaration attribute
 
-    declaration-attribute --> ``mutating`` | ``weak`` | ``unowned`` | ``optional`` | ``objc`` | ``class_protocol``
+    declaration-attribute --> ``abstract`` | ``assignment`` | ``class_protocol`` | ``infix`` | ``mutating`` | ``objc`` | ``optional`` | ``override`` | ``postfix`` | ``prefix`` | ``unowned`` | ``weak``
+
 
 .. _Declarations_InterfaceBuilderAttributes:
 
@@ -1086,4 +1112,4 @@ Interface Builder Attributes
 
     Grammar of an interface builder attribute
 
-    interface-builder-attribute --> ``IBOutlet`` | ``IBAction`` | ``IBLiveView`` | ``IBInspectable``
+    interface-builder-attribute -->  ``IBAction`` | ``IBDesignable`` | ``IBInspectable`` | ``IBOutlet``
