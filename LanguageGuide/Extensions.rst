@@ -19,8 +19,8 @@ Extensions can:
 * add computed properties and computed type properties
 * define instance methods and type methods
 * provide new initializers
-* implement subscripting
-* define and use new embedded types
+* define subscripts
+* define and use new nested types
 
 In addition, extensions can use these capabilities to
 make an existing type conform to a protocol.
@@ -268,15 +268,15 @@ Type Methods
 
 [to be written]
 
-.. _Extensions_Subscripting:
+.. _Extensions_Subscripts:
 
-Subscripting
-------------
+Subscripts
+----------
 
-Extensions can add new forms of :ref:`subscripting <ClassesAndStructures_Subscripting>`
+Extensions can add new :ref:`subscripts <ClassesAndStructures_Subscripts>`
 to an existing type.
-This example adds an integer subscript operator to Swift's built-in ``Int`` type.
-This subscript operator ``[n]`` returns the decimal digit ``n`` places in
+This example adds an integer subscript to Swift's built-in ``Int`` type.
+This subscript ``[n]`` returns the decimal digit ``n`` places in
 from the right of the number,
 so:
 
@@ -285,7 +285,7 @@ so:
 
 …and so on:
 
-.. testcode:: extensionsSubscripting
+.. testcode:: extensionsSubscripts
 
     (swift) extension Int {
         subscript(digitIndex: Int) -> Int {
@@ -309,15 +309,15 @@ so:
 
 .. TODO: provide an explanation of this example
 
-.. _Extensions_EmbeddedTypes:
+.. _Extensions_NestedTypes:
 
-Embedded Types
---------------
+Nested Types
+------------
 
-Extensions can add new :ref:`embedded types <Enumerations_EmbeddedTypes>`
+Extensions can add new :ref:`nested types <Enumerations_NestedTypes>`
 to existing classes, structures and enumerations:
 
-.. testcode:: extensionsEmbeddedTypes
+.. testcode:: extensionsNestedTypes
 
     (swift) extension UnicodeScalar {
         enum Kind {
@@ -336,7 +336,7 @@ to existing classes, structures and enumerations:
         }
     }
 
-This example adds a new embedded enumeration to ``UnicodeScalar``.
+This example adds a new nested enumeration to ``UnicodeScalar``.
 This enumeration, called ``Kind``,
 gives a way to express the kind of letter that a particular scalar represents.
 Specifically, it expresses whether the scalar is
@@ -347,9 +347,9 @@ or whether it is some other kind of scalar.
 This example also adds a new computed instance property to ``UnicodeScalar``,
 called ``kind``, which returns the appropriate ``Kind`` enumeration member for that scalar.
 
-The embedded enumeration can now be used with ``UnicodeScalar`` values:
+The nested enumeration can now be used with ``UnicodeScalar`` values:
 
-.. testcode:: extensionsEmbeddedTypes
+.. testcode:: extensionsNestedTypes
 
     (swift) func printLetterKinds(word: String) {
         println("'\(word)' is made up of the following kinds of letters:")

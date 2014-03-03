@@ -59,6 +59,8 @@ Conforming to a Protocol
 ------------------------
 
 .. Declaring protocol conformance (and the overlap of this with subclass declaration)
+.. Show how to make a custom type conform to LogicValue or some other protocol
+.. LogicValue certainly needs to be mentioned in here somewhere
 
 Naming of Protocols
 -------------------
@@ -109,7 +111,7 @@ Using Protocols
 .. Functions can have parameters that are 'anything that implements some protocol'
 .. …or 'some multiple protocols'
 .. protocol<P1, P2> syntax for "something that conforms to multiple protocols"
-.. Protocols can't be embedded, but embedded types can implement protocols
+.. Protocols can't be nested, but nested types can implement protocols
 
 Associated Types
 ----------------

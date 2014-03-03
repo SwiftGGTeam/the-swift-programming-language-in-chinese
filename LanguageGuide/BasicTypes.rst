@@ -219,14 +219,21 @@ Floating-Point Numbers
 ----------------------
 
 :newTerm:`Floating-point numbers` are numbers with a fractional component,
-such as ``3.14159``, ``0.1`` and ``-273.15``.
+such as ``3.14159``, ``0.1``, and ``-273.15``.
 
+Floating-point types can represent a much wider range of values than integer types,
+and can store numbers that are much larger or smaller than can be stored in an ``Int``.
 Swift provides two signed floating-point number types:
 
 * ``Double``, which represents a 64-bit floating-point number,
   and should be used when floating-point values need to be very large or particularly precise
 * ``Float``, which represents a 32-bit floating-point number,
   and should be used when floating-point values do not require 64-bit precision
+
+``Double`` has a precision of at least 15 digits,
+whereas the precision of ``Float`` can be as little as 6 digits.
+The appropriate floating-point type to use will depend on the nature and range of
+values you need to work with in your code.
 
 .. _BasicTypes_TypeSafetyAndTypeInference:
 
@@ -456,10 +463,10 @@ is covered in :doc:`Extensions`.
 .. TODO: add a note that this is not traditional type-casting,
    and perhaps include a forward reference to the objects chapter.
 
-.. _BasicTypes_IntegerToFloatingPointConversion:
+.. _BasicTypes_IntegerAndFloatingPointConversion:
 
-Integer to Floating-Point Conversion
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Integer and Floating-Point Conversion
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Conversions between integer and floating-point numeric types must also be made explicit:
 
@@ -476,16 +483,34 @@ Here, the value of the constant ``three`` is used to create a new value of type 
 so that both sides of the addition are of the same type.
 Without this conversion in place, the addition would not be allowed.
 
-The rules for numeric named values are different from
-the rules for numeric literal values seen earlier –
-where the literal value ``3`` was added to the literal value ``0.14159`` –
-because number literals do not have an explicit type in and of themselves.
-Their type is inferred only at the point that they are evaluated by the compiler.
-
 .. TODO: the return type of pi here is inferred as Float64,
    but it should really be inferred as Double.
    This is due to rdar://15211554.
    This code sample should be updated once the issue is fixed.
+
+The reverse is also true for floating-point to integer conversion,
+in that an integer type can be initialized with a ``Double`` or ``Float`` value:
+
+.. testcode:: typeConversion
+
+    (swift) let integerPi = Int(pi)
+    // integerPi : Int = 3
+
+Floating-point values are always rounded towards zero
+when used to initialize a new integer value in this way.
+
+.. TODO: negative floating-point numbers cause an overflow when used
+   to initialize an unsigned integer type.
+   This has been filed as rdar://problem/16206455,
+   and this section may need updating based on the outcome of that Radar.
+
+.. note::
+
+    The rules for combining numeric named values are different to
+    the rules for numeric literals.
+    The literal value ``3`` can be added directly to the literal value ``0.14159``,
+    because number literals do not have an explicit type in and of themselves.
+    Their type is inferred only at the point that they are evaluated by the compiler.
 
 .. NOTE: this section on explicit conversions could be included in the Operators section.
    I think it's more appropriate here, however,
@@ -498,7 +523,9 @@ Booleans
 
 Swift has a basic :newTerm:`Boolean` type, called ``Bool``.
 Boolean values are referred to as :newTerm:`logical`,
-because they can only ever be ``true`` or ``false``:
+because they can only ever be true or false.
+To represent this fact, Swift provides two Boolean literal values,
+``true`` and ``false``:
 
 .. testcode:: booleans
 
@@ -507,15 +534,17 @@ because they can only ever be ``true`` or ``false``:
     (swift) let turnipsAreDelicious = false
     // turnipsAreDelicious : Bool = false
 
-The types of ``orangesAreOrange`` and ``turnipsAreDelicious`` have been inferred
-from the fact that they were initialized with ``Bool`` values.
+The types of ``orangesAreOrange`` and ``turnipsAreDelicious``
+have been inferred as ``Bool`` from the fact that
+they were initialized with Boolean literal values.
 As with ``Int`` and ``Double`` above,
 you don't need to declare named values as ``Bool``
 if you set them to ``true`` or ``false`` as soon as you create them.
 Type inference helps to make Swift code much more concise and readable
 when initializing named values with other values whose type is already known.
 
-Boolean values are particularly useful when working with conditional statements such as ``if else``:
+Boolean values are particularly useful when working with conditional statements
+such as the ``if``-``else`` statement:
 
 .. testcode:: booleans
 
@@ -526,7 +555,7 @@ Boolean values are particularly useful when working with conditional statements 
     }
     >>> Eww, turnips are horrible.
 
-Conditional statements such as ``if else`` are covered in more detail in :doc:`ControlFlow`.
+Conditional statements such as ``if``-``else`` are covered in more detail in :doc:`ControlFlow`.
 
 Swift's type safety means that non-Boolean values cannot be substituted for ``Bool``.
 You cannot, for example, say::
@@ -551,6 +580,14 @@ and so this second example passes the type-check.
 As with other examples of type safety in Swift,
 this approach avoids accidental errors,
 and ensures that the intention of a particular section of code is always made clear.
+
+.. note::
+
+    Strictly speaking, an ``if``-``else`` statement's condition expression
+    can be of any type that conforms to the ``LogicValue`` protocol.
+    ``Bool`` is one example of this, but there are others,
+    such as :ref:`BasicTypes_Optionals` below.
+    The ``LogicValue`` protocol is described in more detail in :doc:`Protocols`.
 
 .. _BasicTypes_Arrays:
 
@@ -578,8 +615,8 @@ Here's an example of a tuple:
 
 .. testcode:: tuples
 
-    (swift) let statusCode = (404, "Not Found")
-    // statusCode : (Int, String) = (404, "Not Found")
+    (swift) let httpStatus = (404, "Not Found")
+    // httpStatus : (Int, String) = (404, "Not Found")
 
 ``(404, "Not Found")`` is a tuple that describes an *HTTP status code*.
 An HTTP status code is a special value returned by a web server whenever you request a web page.
@@ -600,10 +637,23 @@ You can access the individual element values in a tuple using index numbers star
 
 .. testcode:: tuples
 
-    (swift) statusCode.0
+    (swift) httpStatus.0
     // r0 : Int = 404
-    (swift) statusCode.1
+    (swift) httpStatus.1
     // r1 : String = "Not Found"
+
+As an alternative,
+you can :newTerm:`decompose` a tuple's contents into separate named values,
+which can then be used as normal:
+
+.. testcode:: tuples
+
+    (swift) let (statusCode, statusMessage) = httpStatus
+    // (statusCode, statusMessage) : (Int, String) = (404, "Not Found")
+    (swift) println("The status code is '\(statusCode)'")
+    >>> The status code is '404'
+    (swift) println("The status message is '\(statusMessage)'")
+    >>> The status message is 'Not Found'
 
 Tuples are particularly useful as the return values of functions.
 A function that tries to retrieve a web page might return this ``(Int, String)`` tuple type
@@ -685,11 +735,11 @@ The exclamation mark effectively says,
 .. testcode:: optionals
 
     (swift) if convertedNumber {
-        println(convertedNumber!)
+        println("'\(possibleNumber)' has an integer value of \(convertedNumber!)")
     } else {
-        println("The string could not be converted into an integer")
+        println("'\(possibleNumber)' could not be converted to an integer")
     }
-    >>> 123
+    >>> '123' has an integer value of 123
 
 ``if``-``else`` statements are described in more detail in :doc:`ControlFlow`.
 
@@ -697,6 +747,68 @@ The exclamation mark effectively says,
 
     Trying to use ``!`` to access a non-existent optional value will trigger
     an unrecoverable runtime error.
+
+.. _BasicTypes_OptionalBinding:
+
+Optional Binding
+~~~~~~~~~~~~~~~~
+
+:newTerm:`Optional binding` is a convenient way to find out if an optional contains a value,
+and to make that value available if it exists.
+Optional binding can be used with ``if``-``else`` and ``while`` statements
+to simplify and shorten the unwrapping of a value contained within an optional.
+(``if``-``else`` and ``while`` statements are described in more detail in :doc:`ControlFlow`.)
+
+Optional bindings for the ``if``-``else`` statement are written in the following form:
+
+::
+
+    (swift) if let <#newNamedValue#> = <#someOptional#> {
+        <#statements#>
+    }
+
+The example from above can be can be rewritten to use optional binding:
+
+.. testcode:: optionals
+
+    (swift) if let actualNumber = possibleNumber.toInt() {
+        println("'\(possibleNumber)' has an integer value of \(actualNumber)")
+    } else {
+        println("'\(possibleNumber)' could not be converted to an integer")
+    }
+    >>> '123' has an integer value of 123
+
+As before, this example uses the ``toInt()`` function from ``String``
+to try and convert ``"123"`` into an ``Int``.
+It then prints a message to indicate if the conversion was successful.
+
+``if let actualNumber = possibleNumber.toInt()`` can be read as:
+
+“If the optional returned by ``possibleNumber.toInt()`` contains a value,
+set a new constant called ``actualNumber`` to the value contained in the optional.”
+
+If the conversion is successful,
+the ``actualNumber`` constant becomes available for use within
+the first branch of the ``if``-``else`` statement.
+It has already been initialized with the value contained *within* the optional,
+and so there is no need to use the ``!`` suffix to access its value.
+In this example, ``actualNumber`` is simply used to print the result of the conversion.
+
+You can use both constants and variables with optional binding.
+If you wanted to manipulate the value of ``actualNumber``
+within the first block of the ``if``-``else`` statement,
+you could write ``if var actualNumber`` instead,
+and the value contained within the optional
+would be made available as a variable rather than a constant.
+
+.. note::
+
+    Constants or variables created via optional binding
+    are only available within the code block following their creation,
+    as in the first branch of the ``if``-``else`` statement above.
+    If you want to work with the optional's value outside of this code block,
+    you should declare a constant or variable yourself
+    before the ``if``-``else`` statement begins.
 
 .. TODO: Add a section about arrays and dictionaries once their design is more tied down.
 

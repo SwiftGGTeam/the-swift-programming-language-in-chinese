@@ -163,6 +163,9 @@ This function can be passed any tuple of type ``(Int, Int)`` –
 such as ``(1, 10)`` in the example above –
 and it will calculate the half-open range length for that tuple.
 
+.. TODO: mention that you can pass a tuple as the entire set of arguments,
+   as in var argTuple = (0, "one", '2'); x.foo:bar:bas:(argTuple)
+
 .. _Functions_TuplesAsReturnValues:
 
 Tuples as Return Values
@@ -208,6 +211,25 @@ and a value of ``.None`` in its second value to indicate that ``splitter`` was n
         println("The text from after the splitter is '\(secondPart)'")
     }
     >>> The text from after the splitter is 'world'
+
+Alternatively, you can decompose the tuple into multiple named values
+as part of the function return value assignment:
+
+.. testcode:: functionParameters
+
+    (swift) let (first, possibleSecond) = splitOnFirst("hello world", ' ')
+    // (first, possibleSecond) : (String, String?) = ("hello", <unprintable value>)
+    (swift) if let second = possibleSecond {
+        println("The text from after the splitter is '\(second)'")
+    }
+    >>> The text from after the splitter is 'world'
+
+This example sets two constants called ``first`` and ``possibleSecond``
+to equal the two output values stored in the ``splitOnFirst()`` function's
+return tuple value.
+These two constants can then be used independently of each other,
+as shown here to unwrap the value stored in the optional second tuple value
+via :ref:`optional binding <BasicTypes_OptionalBinding>`.
 
 .. _Functions_ParameterNames:
 
@@ -270,9 +292,9 @@ it can be omitted when calling the function:
         return string1 + joiner + string2
     }
     (swift) joinTwoStrings("hello", "world", ":")
-    // r0 : String = "hello:world"
+    // r1 : String = "hello:world"
     (swift) joinTwoStrings("hello", "world")
-    // r1 : String = "hello world"
+    // r2 : String = "hello world"
 
 This function joins two strings together.
 If a value for ``joiner`` is provided,
@@ -293,7 +315,7 @@ The ``joinTwoStrings`` function could have been written with ``joiner`` as the s
         return string1 + joiner + string2
     }
     (swift) joinTwoMoreStrings("hello", ":", "world")
-    // r2 : String = "hello:world"
+    // r3 : String = "hello:world"
 
 However, if you try and call this version of the function without passing in a value for ``joiner``,
 and without using named values,
@@ -316,7 +338,7 @@ This problem can be avoided by naming the values when you call the function:
 .. testcode:: functionParameters
 
     (swift) joinTwoMoreStrings(string1: "hello", string2: "world")
-    // r3 : String = "hello world"
+    // r4 : String = "hello world"
 
 This tells Swift which parameters you want
 the values of "hello" and "world" to be used for,
@@ -392,7 +414,7 @@ The return value of a function can be ignored when it is called:
     }
     (swift) printAndCount("hello, world")
     >>> hello, world
-    // r4 : Int = 12
+    // r5 : Int = 12
     (swift) printWithoutCounting("hello, world")
     >>> hello, world
 
@@ -496,9 +518,9 @@ They are indicated by inserting three period characters (``...``) after their ty
         return total / Double(numbers.count)
     }
     (swift) arithmeticMean(1, 2, 3, 4, 5)
-    // r5 : Double = 3.0
+    // r6 : Double = 3.0
     (swift) arithmeticMean(3, 8, 19)
-    // r6 : Double = 10.0
+    // r7 : Double = 10.0
 
 This function calculates the :newTerm:`arithmetic mean`
 (also known as the :newTerm:`average`) for a list of numbers of any length.
@@ -578,6 +600,14 @@ As before, any parameters with default values can be excluded when the function 
     (swift) joinString("hello", toString: "world")
     // r1 : String = "hello world"
 
+With the exception of the first selector part,
+the selector parts may be provided in any order:
+
+.. testcode:: selectorStyle
+
+    (swift) joinString("hello", withJoiner: "-", toString: "world")
+    // r2 : String = "hello-world"
+
 If a parameter name is omitted from a selector-style declaration,
 the parameter is automatically given the same name as its selector part.
 Default values are still allowed:
@@ -621,11 +651,42 @@ at the end of the returned string.
    This is tracked as rdar://16030076, and this section should be updated
    once it is implemented.
 
-.. variables can be set to functions, and then called e.g. var fork = g.fork; fork() .
-.. functions can be passed in as parameters, and can be returned as return values
-.. functions are just a really special non-capturing version of closures
+Inout Parameters
+----------------
+
+[to be written]
+
 .. inout properties and a general discussion of byref / byvalue
-.. pass a tuple as the entire set of arguments, as in var argTuple = (0, "one", '2'); x.foo:bar:bas:(argTuple)
+
+Functions as Parameters and Return Types
+----------------------------------------
+
+[to be written]
+
+.. functions can be passed in as parameters, and can be returned as return values
+
+Function Binding
+----------------
+
+[to be written]
+
+.. variables can be bound to functions, and then called e.g. var fork = g.fork; fork() .
+.. functions are reference types
+.. you can get a function that refers to a method, either with or without the 'self' argument already being bound:
+.. class C {
+..     func foo(x: Int) -> Float { ... }
+.. }
+.. var c = C()
+.. var boundFunc = c.foo 	// a function with type (Int) -> Float
+.. var unboundFunc = C.foo // a function with type (C) -> (Int) -> Float
+
+Curried Functions
+-----------------
+
+[to be written]
+
+.. function currying syntax 
+.. partial application
 
 .. refnote:: References
 
