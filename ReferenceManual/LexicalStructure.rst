@@ -1,7 +1,7 @@
 Lexical Structure
 =================
 
-The lexical structure of Swift describes what sequence of characters
+The :newTerm:`lexical structure` of Swift describes what sequence of characters
 form valid tokens of the language.
 These valid tokens form the lowest-level building blocks of the language
 and are used to describe the rest of the language in subsequent chapters.
@@ -21,10 +21,9 @@ or :newTerm:`maximal munch`.
 Whitespace and Comments
 -----------------------
 
-Whitespace is used to separate tokens in the source file
-and as part of the context
-that determines whether an operator is a prefix or postfix
-(see :ref:`Lexical_Operator`),
+Whitespace has two uses: to separate tokens in the source file
+and to help determine whether an operator is a prefix or postfix
+(see :ref:`LexicalStructure_Operators`),
 but is otherwise ignored.
 The following characters are considered whitespace:
 space (U+0020),
@@ -68,10 +67,10 @@ Nesting is allowed, but the comment markers must be balanced.
 Identifiers
 -----------
 
-Identifiers begin with
+:newTerm:`Identifiers` begin with
 an upper case or lower case letter A through Z,
 an underscore (``_``),
-a non-combining alphanumeric Unicode character
+a noncombining alphanumeric Unicode character
 in the Basic Multilingual Plane,
 or a character outside the Basic Multilingual Plan
 that isn't in a Private Use Area.
@@ -120,7 +119,7 @@ These names are valid identifiers within the scope of the closure.
     identifier --> implicit-parameter-name
     identifier-list --> identifier | identifier ``,`` identifier-list
 
-    identifier-head --> Upper case or lower case letter A through Z
+    identifier-head --> Upper- or lowercase letter A through Z
     identifier-head --> U+00A8 | U+00AA | U+00AD | U+00AF | U+00B2-U+00B5 | U+00B7-U+00BA
     identifier-head --> U+00BC-U+00BE | U+00C0-U+00D6 | U+00D8-U+00F6 | U+00F8-U+00FF
     identifier-head --> U+0100-U+02FF | U+0370-U+167F | U+1681-U+180D | U+180F-U+1DBF
@@ -318,8 +317,7 @@ Here are some examples of literals::
 Integer Literals
 ~~~~~~~~~~~~~~~~
 
-Integer literals represent integer values of unspecified precision.
-
+:newTerm:`Integer literals` represent integer values of unspecified precision.
 By default, integer literals are expressed in decimal;
 you can specify an alternate base using a prefix.
 Binary literals begin with ``0b``,
@@ -330,7 +328,7 @@ Decimal literals contain the digits ``0`` through ``9``.
 Binary literals contain ``0`` and ``1``,
 octal literals contain ``0`` through ``7``,
 and hexadecimal literals contain ``0`` through ``9``
-as well as ``A`` through ``F`` in upper or lower case.
+as well as ``A`` through ``F`` in upper- or lowercase.
 
 Negative integers literals are expressed by prepending a minus sign (``-``)
 to an integer literal, as in ``-42``.
@@ -402,7 +400,7 @@ as described in :ref:`BasicTypes_Integers`.
 Floating-Point Literals
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-Floating-point literals represent floating-point values of unspecified precision.
+:newTerm:`Floating-point literals` represent floating-point values of unspecified precision.
 
 By default, floating-point literals are expressed in decimal (with no prefix),
 but they can also be expressed in hexadecimal (with a ``0x`` prefix).
@@ -411,7 +409,7 @@ Decimal floating-point literals consist of a sequence of decimal digits
 followed by either a decimal fraction, a decimal exponent, or both.
 The decimal fraction consists of a decimal point (``.``)
 followed by a sequence of decimal digits.
-The exponent consists of an uppercase or lowercase ``e`` prefix
+The exponent consists of an upper- or lowercase ``e`` prefix
 followed by sequence of decimal digits that indicates
 what power of 10 the value preceding the ``e`` is multiplied by.
 For example, ``1.25e2`` represents 1.25 ⨉ 10\ :superscript:`2`,
@@ -424,7 +422,7 @@ followed by an optional hexadecimal fraction,
 followed by a hexadecimal exponent.
 The hexadecimal fraction consists of a decimal point
 followed by a sequence of hexadecimal digits.
-The exponent consists of an uppercase or lowercase ``p`` prefix
+The exponent consists of an upper- or lowercase ``p`` prefix
 followed by sequence of decimal digits that indicates
 what power of 2 the value preceding the ``p`` is multiplied by.
 For example, ``0xFp2`` represents 15 ⨉ 2\ :superscript:`2`,
@@ -613,15 +611,15 @@ Operators
 
 The Swift Standard Library defines a number of operators for your use,
 many of which are discussed in :doc:`../LanguageGuide/Operators`.
-The present section describes what characters can be used as operators.
+The present section describes which characters can be used as operators.
 
 Operators are made up of one or more of the following characters:
-``/``, ``=``, ``-``, ``+``, ``*``, ``%``, ``<``, ``>``, ``!``,
+``/``, ``=``, ``-``, ``+``, ``!``, ``*``, ``%``, ``<``, ``>``,
 ``&``, ``|``, ``^``, ``~``, and ``.``.
 That said, the tokens
 ``=``, ``->``, ``//``, ``/*``, ``*/``, ``.``,
 and the unary prefix operator ``&`` are reserved.
-These tokens can't be overloaded nor can they be used to define custom operators.
+These tokens can't be overloaded, nor can they be used to define custom operators.
 
 .. TR: LangRef also says (){}[].,;: are reserved punctuation,
    but those aren't valid operator characters anyway.
