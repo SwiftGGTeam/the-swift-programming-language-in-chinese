@@ -570,17 +570,25 @@ such as the ``if``-``else`` statement:
 Conditional statements such as ``if``-``else`` are covered in more detail in :doc:`ControlFlow`.
 
 Swift's type safety means that non-Boolean values cannot be substituted for ``Bool``.
-You cannot, for example, say::
+The following example will produce an error:
+
+.. testcode:: booleansNotLogicValue
 
     (swift) let i = 1
     // i : Int = 1
     (swift) if i {
         // do stuff
     }
+    !!! <REPL Input>:1:4: error: type 'Int' does not conform to protocol 'LogicValue'
+    !!! if i {
+    !!!    ^
 
-…because ``i`` is not of type ``Bool``.
-However, it is valid to say::
+However, it is valid to say:
 
+.. testcode:: booleansIsLogicValue
+
+    (swift) let i = 1
+    // i : Int = 1
     (swift) if i == 1 {
         // do stuff
     }
@@ -597,9 +605,13 @@ and ensures that the intention of a particular section of code is always made cl
 
     Strictly speaking, an ``if``-``else`` statement's condition expression
     can be of any type that conforms to the ``LogicValue`` protocol.
-    ``Bool`` is one example of this, but there are others,
-    such as :ref:`BasicTypes_Optionals` below.
+    ``Bool`` is one example of a type that conforms to this protocol,
+    but there are others, such as :ref:`BasicTypes_Optionals` below.
     The ``LogicValue`` protocol is described in more detail in :doc:`Protocols`.
+
+.. TODO: I'm not quite happy with this yet.
+   Introducing the LogicValue protocol at this early stage is a bit overkill.
+   I'd like to revisit this if time permits, and maybe move this to Control Flow.
 
 .. _BasicTypes_Arrays:
 
