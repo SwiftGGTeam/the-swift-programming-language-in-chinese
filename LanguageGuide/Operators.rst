@@ -382,11 +382,10 @@ Swift supports all of the standard C :newTerm:`comparison operators`:
 * Greater than or equal to (``a >= b``)
 * Less than or equal to (``a <= b``)
 
-Swift supports two additional comparison operators,
-to check whether values are identical:
-
-* Identical to (``a === b``)
-* Not identical to (``a !== b``)
+.. TODO: we don't currently have identity and non-identity operators outside of Cocoa.
+   It's been decided that these will be called === and !===,
+   but they don't exist at present for Swift-pure classes.
+   They should be added to this section if and when they are implemented.
 
 These :newTerm:`identity operators` are used to test if two object named values both refer to the same object instance.
 They are described in :doc:`ClassesAndStructures`.
