@@ -112,7 +112,7 @@ you can provide a ``default`` case to cover any members that are not addressed e
 
 .. testcode:: enums
 
-    (swift) val somePlanet = Planet.Earth
+    (swift) let somePlanet = Planet.Earth
     // somePlanet : Planet = <unprintable value>
     (swift) switch somePlanet {
         case .Earth:
@@ -293,7 +293,7 @@ The raw value of an enumeration member can be accessed using its ``toRaw`` metho
 
 .. testcode:: optionals
 
-    (swift) val atomicNumberOfCarbon = ChemicalElement.Carbon.toRaw()
+    (swift) let atomicNumberOfCarbon = ChemicalElement.Carbon.toRaw()
     // atomicNumberOfCarbon : Int = 6
 
 The reverse is also true.
@@ -316,9 +316,8 @@ then the returned optional value will equal ``.None``:
 
 .. testcode:: optionals
 
-    (swift) possibleElement = ChemicalElement.fromRaw(8)            // Oxygen
-    (swift) if possibleElement {
-        switch possibleElement! {
+    (swift) if let element = ChemicalElement.fromRaw(8) {
+        switch element {
             case .Hydrogen:
                 println("A bit explodey")
             case .Helium:
@@ -330,6 +329,13 @@ then the returned optional value will equal ``.None``:
         println("Not an element I know about")
     }
     >>> Not an element I know about
+
+This example uses :ref:`optional binding <BasicTypes_OptionalBinding>`
+to try and access an element with a raw value of ``8``.
+``if let element = ChemicalElement.fromRaw(8)`` retrieves an optional ``ChemicalElement``,
+and sets ``element`` to the contents of that optional if it can be retrieved.
+In this case, it is not possible to retrieve an element for ``8``,
+and so the ``else`` branch is executed instead.
 
 .. _Enumerations_PropertiesAndMethods:
 
@@ -367,10 +373,10 @@ The example below shows all of these capabilities in action for a complex enumer
             switch minutes {
                 case 1:
                     return "1 minute"
-                case 2...60:
+                case 2..59:
                     return "\(minutes) minutes"
-                case 60...120:
-                    val extra = minutes - 60
+                case 60..119:
+                    let extra = minutes - 60
                     return "an hour and \(extra) minutes"
                 default:
                     return "more than two hours"
@@ -380,7 +386,7 @@ The example below shows all of these capabilities in action for a complex enumer
     (swift) class Train {
         var status = TrainStatus()
     }
-    (swift) val train = Train()
+    (swift) let train = Train()
     // train : Train = <Train instance>
     (swift) println("The train is \(train.status.description)")
     >>> The train is on time
@@ -400,19 +406,14 @@ The enumeration provides a basic initializer, ``init()``,
 which assumes that the train's state is “on time”.
 This is a reasonable default state for a train starting out on its journey
 if no other information is provided.
-The ``init()`` method uses the special ``self`` keyword to refer to
-the new instance of ``TrainStatus`` that is being created,
-and requests that it become an instance of the ``OnTime`` enumeration member.
+The ``init()`` method uses the ``self`` keyword to assign
+an instance of the ``OnTime`` enumeration member to
+the new instance of ``TrainStatus`` that is being created.
 
 .. note::
 
-    Enumerations are the only types that can
-    specify a value for ``self`` in this way during initialization.
-    ``self = OnTime`` does not (strictly speaking)
-    create a new “instance” of ``OnTime`` here.
-    Rather, it specifies that ``OnTime`` is the enumeration member to be used
-    when creating this new instance.
-    Classes and structures cannot assign to ``self`` in this way during initialization.
+    Enumerations and structures can assign a value to ``self`` during initialization,
+    but classes cannot.
 
 ``TrainStatus`` defines a read-only computed ``String`` property called ``description``,
 which provides a human-readable description based on the enumeration member type.
@@ -443,22 +444,22 @@ causes the ``description`` computed property to return an updated message.
     which would indicate that the train is ``OnTime``,
     not ``Delayed`` by ``0`` minutes.
 
-.. _Enumerations_EmbeddedTypes:
+.. _Enumerations_NestedTypes:
 
-Embedded Types
---------------
+Nested Types
+------------
 
 Enumerations are often created to support a specific class or structure's functionality.
 Similarly, it can sometimes be convenient to define utility classes and structures
 purely for use within the context of a more complex type.
-To achieve this, Swift provides a way to define :newTerm:`embedded types`.
-Embedded types enable you to embed enumerations, classes and structures within the definition
-of the type they support.
+To achieve this, Swift provides a way to define :newTerm:`nested types`.
+Nested types enable you to nest supporting enumerations, classes and structures
+within the definition of the type they support.
 
-Types are embedded by nesting their definition within the braces of the type they support.
+The definition for a nested type is written within the braces of the type it supports.
 Types can be nested to as many levels as are required:
 
-.. testcode:: embeddedTypes
+.. testcode:: nestedTypes
 
     (swift) struct BlackjackCard {
         enum Suit : UnicodeScalar {
@@ -469,8 +470,8 @@ Types can be nested to as many levels as are required:
             case Seven = "7", Eight = "8", Nine = "9", Ten = "10"
             case Jack = "Jack", Queen = "Queen", King = "King", Ace = "Ace"
             struct Values {
-                val firstValue: Int
-                val secondValue: Int?
+                let firstValue: Int
+                let secondValue: Int?
             }
             var values: Values {
                 switch self {
@@ -483,18 +484,18 @@ Types can be nested to as many levels as are required:
                 }
             }
         }
-        val rank: Rank
-        val suit: Suit
+        let rank: Rank
+        let suit: Suit
         var description: String {
             var output = "the \(rank.toRaw()) of \(suit.toRaw())"
             output += " is worth \(rank.values.firstValue)"
-            if val secondValue = rank.values.secondValue {
+            if let secondValue = rank.values.secondValue {
                 output += " or \(secondValue)"
             }
             return output
         }
     }
-    (swift) val theAceOfSpades = BlackjackCard(.Ace, .Spades)
+    (swift) let theAceOfSpades = BlackjackCard(.Ace, .Spades)
     // theAceOfSpades : BlackjackCard = BlackjackCard(<unprintable value>, <unprintable value>)
     (swift) println("Blackjack value: \(theAceOfSpades.description)")
     >>> Blackjack value: the Ace of ♠ is worth 1 or 11
@@ -503,14 +504,14 @@ This example defines a playing card for use in the game of Blackjack.
 One notable feature of Blackjack is that the Ace card has a value of
 either one or eleven. This characteristic is encapsulated in the logic above.
 
-The ``BlackjackCard`` structure defines two embedded enumerations:
+The ``BlackjackCard`` structure defines two nested enumerations:
 
 * ``Suit``, which describes the four common playing card suits,
   together with a raw ``UnicodeScalar`` value to represent their symbol
 * ``Rank``, which describes the thirteen possible playing card ranks,
   together with a raw ``String`` value to represent their name
 
-The ``Rank`` enumeration defines a further embedded structure of its own, called ``Values``.
+The ``Rank`` enumeration defines a further nested structure of its own, called ``Values``.
 This structure encapsulates the fact that most cards have one value,
 but the Ace card has two values.
 The ``Values`` structure defines two properties to represent this:
@@ -541,17 +542,17 @@ Because ``BlackjackCard`` is a structure with no custom initializers,
 it is given an implicit
 :ref:`memberwise initializer <ClassesAndStructures_MemberwiseStructureInitializers>`.
 This is used to initialize a new constant called ``theAceOfSpades``.
-Even though ``Rank`` and ``Suit`` are embedded within ``BlackjackCard``,
+Even though ``Rank`` and ``Suit`` are nested within ``BlackjackCard``,
 their type can still be inferred from the context,
 and so the initialization of this instance is able to refer to the enumeration members
 by their member names (``.Ace`` and ``.Spades``) alone.
 
-Embedded types can also be used outside of their definition context,
-by prefixing their name with the name of the type they are embedded within:
+Nested types can also be used outside of their definition context,
+by prefixing their name with the name of the type they are nested within:
 
-.. testcode:: embeddedTypes
+.. testcode:: nestedTypes
 
-    (swift) val heartsSymbol = BlackjackCard.Suit.Hearts.toRaw()
+    (swift) let heartsSymbol = BlackjackCard.Suit.Hearts.toRaw()
     // heartsSymbol : UnicodeScalar = '♡'
 
 This enables the names of ``Suit``, ``Rank`` and ``Values`` to be kept deliberately short,

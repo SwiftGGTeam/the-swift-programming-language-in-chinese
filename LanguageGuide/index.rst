@@ -15,4 +15,3 @@ Language Guide
     Extensions
     Protocols
     Generics
-    StandardFunctions

@@ -5,7 +5,7 @@ Declarations
 
     decl ::= decl-class
     decl ::= decl-constructor
-    decl ::= decl-destructor
+    decl ::= decl-deinitializer
     decl ::= decl-extension
     decl ::= decl-func
     decl ::= decl-import
@@ -15,7 +15,7 @@ Declarations
     decl ::= decl-struct
     decl ::= decl-typealias
     decl ::= decl-var
-    decl ::= decl-val
+    decl ::= decl-let
     decl ::= decl-subscript
 
 .. syntax-grammar::
@@ -24,7 +24,7 @@ Declarations
 
     declaration --> import-declaration
     declaration --> variable-declaration
-    declaration --> value-declaration
+    declaration --> let-declaration
     declaration --> typealias-declaration
     declaration --> function-declaration
     declaration --> enum-declaration
@@ -33,13 +33,62 @@ Declarations
     declaration --> class-declaration
     declaration --> protocol-declaration
     declaration --> constructor-declaration
-    declaration --> destructor-declaration
+    declaration --> deinitializer-declaration
     declaration --> extension-declaration
     declaration --> subscript-declaration
     declarations --> declaration declarations-OPT
 
 .. NOTE: enum-element-declaration is only allowed inside an enum
    declaration.
+
+.. _LexicalStructure_ModuleScope:
+
+Module Scope
+------------
+
+The top level scope of a Swift source file
+consists of a series of statements.
+
+.. langref-grammar
+
+    top-level ::= brace-item*
+
+.. No formal grammar.
+
+.. _LexicalStructure_CodeBlocks:
+
+Code Blocks
+-----------
+
+A code block is used by a variety of declarations and control structures
+to group statements together.
+It has the following form:
+
+.. syntax-outline::
+
+    {
+        <#statements#>
+    }
+
+The statements inside a code block are executed in order.
+
+.. TODO: Discuss scope.  I assume a code block creates a new scope?
+
+.. TODO: This section doesn't feel like it belongs in this chapter.
+
+.. langref-grammar
+
+    brace-item-list ::= '{' brace-item* '}'
+    brace-item      ::= decl
+    brace-item      ::= expr
+    brace-item      ::= stmt
+
+.. syntax-grammar::
+
+    Grammar of a code block
+
+    code-block --> ``{`` statements-OPT ``}``
+
 
 .. _Declarations_ImportDeclaration:
 
@@ -73,7 +122,8 @@ Import Declaration
     import-declaration --> attribute-sequence-OPT ``import`` import-kind-OPT import-path
 
     import-kind --> ``typealias`` | ``struct`` | ``class`` | ``enum`` | ``protocol`` | ``var`` | ``func``
-    import-path --> any-identifier | any-identifier ``.`` import-path
+    import-path --> import-path-identifier | import-path-identifier ``.`` import-path
+    import-path-identifier --> identifier | operator
 
 .. _Declarations_VariableDeclaration:
 
@@ -140,25 +190,25 @@ Variable Declaration
 .. TODO: Update the grammar for getter/setters/didSet/willSet.
     See: <rdar://problem/15966905> [Craig feedback] Consider "juxtaposed" brace enclosed property syntax
 
-.. _Declarations_ValueDeclaration:
+.. _Declarations_LetDeclaration:
 
-Value Declaration
------------------
+Let Declaration
+---------------
 
 .. syntax-outline::
 
-    val <#variable name#> : <#type#> = <#expression#>
+    let <#variable name#> : <#type#> = <#expression#>
 
 .. langref-grammar
 
-    decl-let    ::= attribute-list 'val' pattern initializer?  (',' pattern initializer?)*
+    decl-let    ::= attribute-list 'let' pattern initializer?  (',' pattern initializer?)*
     initializer ::= '=' expr
 
 .. syntax-grammar::
 
-    Grammar of a value declaration
+    Grammar of a let declaration
 
-    value-declaration --> attribute-sequence-OPT ``val`` pattern-initializer-list
+    let-declaration --> attribute-sequence-OPT ``let`` pattern-initializer-list
 
 .. _Declarations_TypealiasDeclaration:
 
@@ -313,7 +363,7 @@ Function Signature
 
     function-declaration --> attribute-sequence-OPT function-specifier-OPT ``func`` function-name generic-parameter-clause-OPT function-signature code-block-OPT
     function-specifier --> ``static`` | ``class``
-    function-name --> any-identifier
+    function-name --> identifier | operator
 
     function-signature --> function-parameters function-signature-result-OPT
     function-parameters --> tuple-patterns | selector-parameters
@@ -321,7 +371,7 @@ Function Signature
 
     selector-parameters --> ``(`` tuple-pattern-element ``)`` selector-tuples
     selector-tuples --> selector-name ``(`` tuple-pattern-element ``)`` selector-tuples-OPT
-    selector-name --> identifier-or-any
+    selector-name --> identifier | operator
 
 .. TODO: The overgeneration from tuple-patterns combined with some upcoming changes
     mean that we should just create a new syntactic category
@@ -535,27 +585,27 @@ Initializer Declaration
     constructor-declaration --> attribute-sequence-OPT ``init`` generic-parameter-clause-OPT constructor-signature code-block
     constructor-signature --> tuple-pattern | selector-tuples
 
-.. _Declarations_DestructorDeclaration:
+.. _Declarations_DeinitializerDeclaration:
 
-Destructor Declaration
-----------------------
+Deinitializer Declaration
+-------------------------
 
 .. syntax-outline::
 
-    destructor() {
+    deinit() {
         <#statements#>
     }
 
 .. langref-grammar
 
-    decl-constructor ::= attribute-list 'destructor' '(' ')' brace-item-list
-    NOTE: langref contains a typo here---should be 'decl-destructor'
+    decl-de ::= attribute-list 'deinit' '(' ')' brace-item-list
+    NOTE: langref contains a typo here---should be 'decl-deinitializer'
 
 .. syntax-grammar::
 
-    Grammar of a destructor declaration
+    Grammar of a deinitializer declaration
 
-    destructor-declaration --> attribute-sequence-OPT ``destructor`` ``(`` ``)`` code-block
+    deinitializer-declaration --> attribute-sequence-OPT ``deinit`` ``(`` ``)`` code-block
 
 .. _Declarations_ExtensionDeclaration:
 
