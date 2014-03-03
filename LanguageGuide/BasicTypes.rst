@@ -577,7 +577,7 @@ The following example will produce an error:
     (swift) let i = 1
     // i : Int = 1
     (swift) if i {
-        // do stuff
+        println("This will report an error rather than compiling")
     }
     !!! <REPL Input>:1:4: error: type 'Int' does not conform to protocol 'LogicValue'
     !!! if i {
@@ -590,9 +590,10 @@ However, it is valid to say:
     (swift) let i = 1
     // i : Int = 1
     (swift) if i == 1 {
-        // do stuff
+        println("This is allowed")
     }
-    
+    >>> This is allowed
+
 The result of the ``i == 1`` comparison is of type ``Bool``,
 and so this second example passes the type-check.
 (Comparisons like ``i == 1`` are discussed in :doc:`Operators`.)
