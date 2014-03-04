@@ -109,7 +109,7 @@ it should always be declared as a constant with the ``let`` keyword.
 Variables should only be used for
 named values that need to be able to change their value.
 
-Named value declarations can include a specific *type*,
+Named value declarations can include a specific :newTerm:`type`,
 to be explicit about the kind of values they can store:
 
 .. testcode:: namedValues
@@ -149,17 +149,23 @@ you can't redeclare it again with the same name,
 or set it to store values of a different type.
 You also can't change it from a constant to a variable (or vice versa).
 
-The value of an existing variable can be changed to another value of a compatible type.
-You can also print the value of a named value by using the ``println`` function:
+The value of an existing variable can be changed to another value of a compatible type:
 
 .. testcode:: namedValues
 
     (swift) var friendlyWelcome = "hello, world"
     <<< // friendlyWelcome : String = "hello, world"
+    (swift) // friendlyWelcome is "hello, world"
     (swift) friendlyWelcome = "👋, 🌎"
+    (swift) // friendlyWelcome is now "👋, 🌎"
+
+You can also print the value of a named value by using the ``println`` function:
+
+.. testcode:: namedValues
+
     (swift) println(friendlyWelcome)
     >>> 👋, 🌎
-    (swift) // friendlyWelcome is now "👋, 🌎"
+    (swift) // this will print "👋, 🌎"
 
 .. NOTE: this is a deliberately simplistic description of what you can do with println().
    It will be expanded later on.
@@ -176,8 +182,7 @@ and attempting to do so will result in an error:
     (swift) let languageName = "Swift"
     <<< // languageName : String = "Swift"
     (swift) languageName = "Swift++"
-    (swift) /* this will result in a compilation error –
-    languageName is a constant, and cannot be changed */
+    (swift) // this will result in an error – languageName cannot be changed
     !!! <REPL Input>:1:14: error: cannot assign to 'let' value 'languageName'
     !!! languageName = "Swift++"
     !!! ~~~~~~~~~~~~ ^
@@ -440,8 +445,8 @@ and trying to do so is reported as an error:
     !!! <REPL Input>:1:29: error: arithmetic operation '127 + 1' (on type 'Int8') results in an overflow
     !!! let tooBig: Int8 = Int8.max + 1
     !!!                             ^
-    (swift) /* Int8 cannot store a number larger than its maximum value,
-    and so this will also report an error */
+    (swift) // Int8 cannot store a number larger than its maximum value,
+    // and so this will also report an error
 
 Because of this,
 numeric type conversion is something you must opt in to on a case-by-case basis.
@@ -589,7 +594,7 @@ The following example will produce an error:
     (swift) let i = 1
     <<< // i : Int = 1
     (swift) if i {
-        // this example will report an error rather than compiling
+        // this example will not compile, and will report an error
     }
     !!! <REPL Input>:1:4: error: type 'Int' does not conform to protocol 'LogicValue'
     !!! if i {
@@ -674,23 +679,27 @@ You can access the individual element values in a tuple using index numbers star
 
 .. testcode:: tuples
 
-    (swift) httpStatus.0
-    <<< // r0 : Int = 404
-    (swift) httpStatus.1
-    <<< // r1 : String = "Not Found"
+    (swift) println("The status code is \(httpStatus.0)")
+    >>> The status code is 404
+    (swift) // this will print "The status code is 404"
+    (swift) println("The status message is \(httpStatus.1)")
+    >>> The status message is Not Found
+    (swift) // this will print "The status message is Not Found"
 
 As an alternative,
 you can :newTerm:`decompose` a tuple's contents into separate named values,
 which can then be used as normal:
 
-.. testcode:: tuples
+.. testcode:: tupleDecompositiomn
 
     (swift) let (statusCode, statusMessage) = httpStatus
     <<< // (statusCode, statusMessage) : (Int, String) = (404, "Not Found")
-    (swift) println("The status code is '\(statusCode)'")
-    >>> The status code is '404'
-    (swift) println("The status message is '\(statusMessage)'")
-    >>> The status message is 'Not Found'
+    (swift) println("The status code is \(statusCode)")
+    >>> The status code is 404
+    (swift) // this will also print "The status code is 404"
+    (swift) println("The status message is \(statusMessage)")
+    >>> The status message is Not Found
+    (swift) // this will also print "The status message is Not Found"
 
 Tuples are particularly useful as the return values of functions.
 A function that tries to retrieve a web page might return this ``(Int, String)`` tuple type
@@ -723,27 +732,29 @@ They can be used to say:
 
 * There *isn't* a value at all
 
-This concept doesn't exist in C or Objective-C.
-The nearest thing in Objective-C is
-the ability to return ``nil`` from a method that would otherwise return an object,
-with ``nil`` meaning “the absence of a valid object”.
-However, this only works for objects – it doesn't work for
-structs, or basic C types, or enumeration values.
-For these types,
-Objective-C methods typically return a special value (such as ``NSNotFound``) to indicate the absence of a value.
-This assumes that the method's caller knows there is a special value to test for,
-and remembers to check for it.
-Swift's optionals give a way to indicate the absence of a value for *any type at all*,
-without the need for special constants or ``nil`` tests.
+.. note::
+
+    This concept doesn't exist in C or Objective-C.
+    The nearest thing in Objective-C is
+    the ability to return ``nil`` from a method that would otherwise return an object,
+    with ``nil`` meaning “the absence of a valid object”.
+    However, this only works for objects – it doesn't work for
+    structs, or basic C types, or enumeration values.
+    For these types,
+    Objective-C methods typically return a special value (such as ``NSNotFound``) to indicate the absence of a value.
+    This assumes that the method's caller knows there is a special value to test for,
+    and remembers to check for it.
+    Swift's optionals give a way to indicate the absence of a value for *any type at all*,
+    without the need for special constants or ``nil`` tests.
 
 Here's an example.
-Swift's ``String`` type has a function called ``toInt()``,
+Swift's ``String`` type has a method called ``toInt()``,
 which tries to convert a ``String`` value into an ``Int`` value.
-However, it's not possible to convert every possible string into an integer.
+However, not every string can be converted into an integer.
 The string ``"123"`` can be converted into the numeric value ``123``,
 but the string ``"hello, world"`` does not have an obvious numeric value to convert to.
 
-The example below shows how to use ``toInt()`` to try to convert a ``String`` into an ``Int``:
+The example below shows how to use ``toInt()`` to try and convert a ``String`` into an ``Int``:
 
 .. testcode:: optionals
 
@@ -751,9 +762,12 @@ The example below shows how to use ``toInt()`` to try to convert a ``String`` in
     <<< // possibleNumber : String = "123"
     (swift) let convertedNumber = possibleNumber.toInt()
     <<< // convertedNumber : Int? = <unprintable value>
+    (swift) // convertedNumber is inferred to be of type "Int?", or "optional Int"
 
-``convertedNumber`` has an inferred type of ``Int?``, not ``Int``.
-The question mark indicates that the value it contains is an *optional* ``Int``,
+Because the ``toInt()`` method might fail,
+it returns an *optional* ``Int``, rather than an ``Int``.
+An optional ``Int`` is written as ``Int?``, not ``Int``.
+The question mark indicates that the value it contains is optional,
 meaning that it might contain *some* ``Int`` value,
 or it might contain *no value at all*.
 (It can't contain anything else, such as a ``Bool`` value or a ``String`` value –
@@ -772,11 +786,12 @@ The exclamation mark effectively says,
 .. testcode:: optionals
 
     (swift) if convertedNumber {
-        println("'\(possibleNumber)' has an integer value of \(convertedNumber!)")
+        println("\(possibleNumber) has an integer value of \(convertedNumber!)")
     } else {
-        println("'\(possibleNumber)' could not be converted to an integer")
+        println("\(possibleNumber) could not be converted to an integer")
     }
-    >>> '123' has an integer value of 123
+    >>> 123 has an integer value of 123
+    (swift) // this will print "123 has an integer value of 123"
 
 ``if``-``else`` statements are described in more detail in :doc:`ControlFlow`.
 
@@ -809,19 +824,20 @@ The example from above can be can be rewritten to use optional binding:
 .. testcode:: optionals
 
     (swift) if let actualNumber = possibleNumber.toInt() {
-        println("'\(possibleNumber)' has an integer value of \(actualNumber)")
+        println("\(possibleNumber) has an integer value of \(actualNumber)")
     } else {
-        println("'\(possibleNumber)' could not be converted to an integer")
+        println("\(possibleNumber) could not be converted to an integer")
     }
-    >>> '123' has an integer value of 123
+    >>> 123 has an integer value of 123
+    (swift) // this will also print "123 has an integer value of 123"
 
-As before, this example uses the ``toInt()`` function from ``String``
+As before, this example uses the ``toInt()`` method from ``String``
 to try and convert ``"123"`` into an ``Int``.
 It then prints a message to indicate if the conversion was successful.
 
 ``if let actualNumber = possibleNumber.toInt()`` can be read as:
 
-“If the optional returned by ``possibleNumber.toInt()`` contains a value,
+“If the optional ``Int`` returned by ``possibleNumber.toInt()`` contains a value,
 set a new constant called ``actualNumber`` to the value contained in the optional.”
 
 If the conversion is successful,
