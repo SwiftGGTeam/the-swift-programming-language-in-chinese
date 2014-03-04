@@ -893,7 +893,7 @@ These operators all begin with an ampersand (``&``):
 * Overflow subtraction (``&-``)
 * Overflow multiplication (``&*``)
 * Overflow division (``&/``)
-* Overflow modulo (``&%``)
+* Overflow remainder (``&%``)
 
 .. _Operators_ValueOverflow:
 
@@ -983,8 +983,8 @@ and underflow always wraps around from the smallest value to the largest.
 Division by Zero
 ~~~~~~~~~~~~~~~~
 
-If you divide a number by zero,
-or try to calculate modulo zero,
+If you divide a number by zero (i / 0),
+or try to calculate remainder by zero (i % 0),
 Swift will throw an error:
 
 .. testcode:: overflowOperatorsDivZeroError
@@ -1160,7 +1160,7 @@ Taken strictly from left to right, you might expect this to read as follows:
 
 * 2 plus 3 equals 5;
 * 5 times 4 equals 20;
-* 20 modulo 5 equals 0
+* 20 remainder 5 equals 0
 
 However, the actual answer is ``4``, not ``0``.
 This is due to the priorities and associativity of the operators used:
@@ -1179,14 +1179,14 @@ Here's how the actual evaluation order is calculated for the example above.
 Precedence is considered first.
 Higher-precedence operators are evaluated before lower-precedence ones.
 In Swift, as in C,
-the multiplication operator (``*``) and the modulo operator (``%``)
+the multiplication operator (``*``) and the remainder operator (``%``)
 have a higher precedence than the addition operator (``+``).
 As a result, they are both evaluated before the addition is considered.
 
-However, multiplication and modulo happen to have the *same* precedence as each other.
+However, multiplication and remainder happen to have the *same* precedence as each other.
 To work out the exact evaluation order to use,
 we therefore need to also look at their associativity.
-Multiplication and modulo both associate with the expression to their left.
+Multiplication and remainder both associate with the expression to their left.
 You can think of this as adding implicit parentheses around these parts of the expression,
 starting from their left:
 

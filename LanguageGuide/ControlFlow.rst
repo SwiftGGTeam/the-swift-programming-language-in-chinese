@@ -172,6 +172,9 @@ are described in detail in :doc:`Protocols`.
    What would the syntax be if they did?
    'for planet in Planet'?
 
+.. TODO: for (index, object) in enumerate(collection)
+   and also for i in indices(collection) { collection[i] }
+
 .. _ControlFlow_ForConditionIncrement:
 
 For-Condition-Increment
@@ -196,7 +199,8 @@ The general form of this loop format is::
     }
 
 Semicolons are used to separate the three parts of the loop's definition, as in C.
-However, unlike C, there is no need to add parentheses around each part of the loop's definition.
+However, unlike C, there is no need to add parentheses around
+the entire “initialization; condition; increment” block.
 
 The loop is executed as follows:
 
@@ -460,6 +464,16 @@ A ``switch`` statement considers several possible values of the same type,
 and executes different code depending on the value that is matched.
 It provides an alternative approach to the ``if``-``else`` statement for responding to multiple states.
 
+.. note::
+
+    Unlike C and Objective-C, ``switch`` statements in Swift do not
+    fall through the bottom of each case and into the next one by default.
+    Instead, the entire ``switch`` statement completes its execution
+    as soon as the first matching ``case`` statement is completed,
+    without requiring an explicit ``break`` statement.
+    This difference in behaviour is described in more detail in
+    the :ref:`ControlFlow_Fallthrough` section later in this chapter.
+
 .. TODO: have I actually described how case statements work by this point?
    They were previously described in the enumerations section of Basic Types,
    which appeared before this section, but has now been moved.
@@ -473,22 +487,22 @@ for brevity:
 
     (swift) let numberSymbol = '三'   // Simplified Chinese symbol for the number 3
     // numberSymbol : UnicodeScalar = '三'
-    (swift) var integerValue: Int? = .None
-    // integerValue : Int? = <unprintable value>
+    (swift) var possibleIntegerValue: Int? = .None
+    // possibleIntegerValue : Int? = <unprintable value>
     (swift) switch numberSymbol {
         case '1', '١', '一', '๑':
-            integerValue = 1
+            possibleIntegerValue = 1
         case '2', '٢', '二', '๒':
-            integerValue = 2
+            possibleIntegerValue = 2
         case '3', '٣', '三', '๓':
-            integerValue = 3
+            possibleIntegerValue = 3
         case '4', '٤', '四', '๔':
-            integerValue = 4
+            possibleIntegerValue = 4
         default:
-            integerValue = .None
+            possibleIntegerValue = .None
     }
-    (swift) if integerValue {
-        println("The integer value of \(numberSymbol) is \(integerValue!).")
+    (swift) if let integerValue = possibleIntegerValue {
+        println("The integer value of \(numberSymbol) is \(integerValue).")
     } else {
         println("An integer value could not be found for \(numberSymbol).")
     }
@@ -501,19 +515,13 @@ This example checks ``numberSymbol`` to see if it is
 a Latin, Arabic, Chinese or Thai symbol for
 the numbers ``1`` to ``4``.
 If a match is found,
-it sets an optional ``Int?`` variable (``integerValue``) to the appropriate integer value.
+it sets an optional ``Int?`` variable (``possibleIntegerValue``) to the appropriate integer value.
 If the symbol is not recognized,
 the optional ``Int?`` is set to a value of ``.None``, meaning “no value”.
-Finally, it checks to see if a value was found.
+Finally, it checks to see if a value was found,
+using an :ref:`optional binding <BasicTypes_OptionalBinding>`.
 If it was, the output value is printed;
 otherwise, an error message is reported.
-
-Note that the value of ``integerValue`` has
-an exclamation mark on the end (``integerValue!``)
-when it is printed by the ``println`` function.
-This tells Swift to retrieve and use the *actual* value stored inside the optional variable,
-which has been confirmed to exist by the previous line of code.
-(Optional values are described in more detail in :doc:`BasicTypes`.)
 
 Every ``switch`` statement must be exhaustive.
 This means that every possible input value must be matched by
@@ -555,11 +563,11 @@ to provide a natural-language count for numbers of any size:
             naturalCount = "a couple of"
         case 3:
             naturalCount = "a few"
-        case 4...12:
+        case 4..11:
             naturalCount = "several"
-        case 12...100:
+        case 12..99:
             naturalCount = "dozens of"
-        case 100...1000:
+        case 100..999:
             naturalCount = "hundreds of"
         default:
             naturalCount = "lots and lots of"
@@ -581,7 +589,8 @@ Multiple values can be tested in the same ``switch`` statement using tuples.
 Each element of the tuple can be tested against a different value or range of values.
 Alternatively, the underscore (``_``) identifier can be used to match any possible value.
 
-This example takes an (x, y) point,
+The example below takes an (x, y) point,
+expressed as a simple tuple of type ``(Int, Int)``,
 and categorizes it on the following graph:
 
 .. image:: ../images/coordinateGraphSimple.png
@@ -597,19 +606,19 @@ or outside of the box altogether.
 
 .. testcode::
 
-    (swift) var point = (1, 1)
-    // point : (Int, Int) = (1, 1)
-    (swift) switch point {
+    (swift) let somePoint = (1, 1)
+    // somePoint : (Int, Int) = (1, 1)
+    (swift) switch somePoint {
         case (0, 0):
             println("(0, 0) is at the origin")
         case (_, 0):
-            println("(\(point.0), 0) is on the x-axis")
+            println("(\(somePoint.0), 0) is on the x-axis")
         case (0, _):
-            println("(0, \(point.1)) is on the y-axis")
-        case (-2...3, -2...3):
-            println("(\(point.0), \(point.1)) is inside the box")
+            println("(0, \(somePoint.1)) is on the y-axis")
+        case (-2..2, -2..2):
+            println("(\(somePoint.0), \(somePoint.1)) is inside the box")
         default:
-            println("(\(point.0), \(point.1)) is outside of the box")
+            println("(\(somePoint.0), \(somePoint.1)) is outside of the box")
     }
     >>> (1, 1) is inside the box
 
@@ -625,37 +634,95 @@ and so all other matching ``case`` and ``default`` statements would be ignored.
    switch x {
    case is (Int, Int):
 
+.. _ControlFlow_NamedValueBindings:
+
+Named Value Bindings
+____________________
+
+A ``case`` statement can bind the value or values it matches to temporary constants or variables,
+for use in the body of the ``case`` statement.
+This is known as :newTerm:`named value binding`,
+because the values are “bound” to temporary named values within the ``case`` statement's code block.
+
+Again, the example below takes an (x, y) point,
+expressed as a tuple of type ``(Int, Int)``,
+and categorizes it on the following graph:
+
+.. image:: ../images/coordinateGraphMedium.png
+    :height: 250
+    :align: center
+
+It decides if the point is
+on the red x-axis;
+on the orange y-axis;
+or somewhere else.
+
+.. testcode::
+
+    (swift) let anotherPoint = (2, 0)
+    // anotherPoint : (Int, Int) = (2, 0)
+    (swift) switch anotherPoint {
+        case (let x, 0):
+            println("on the x-axis with an x value of \(x)")
+        case (0, let y):
+            println("on the y-axis with a y value of \(y)")
+        case let (x, y):
+            println("somewhere else at (\(x), \(y))")
+    }
+    >>> on the x-axis with an x value of 2
+
+The three ``case`` statements declare placeholder constants ``x`` and ``y``,
+which temporarily take on one or both of the tuple values from ``anotherPoint``.
+The first case statement, ``case (let x, 0)``,
+will match any point with a ``y`` value of ``0``,
+and will assign the point's ``x`` value to the temporary constant ``x``.
+Similarly, the second case statement, ``case (0, let y)``,
+will match any point with an ``x`` value of ``0``,
+and will assign the point's ``y`` value to the temporary constant ``y``.
+
+Once the temporary constants have been declared,
+they can be used within the ``case`` statement's code block.
+Here, they are used as shorthand for printing the values via the ``println`` function.
+
+Note that this ``switch`` statement does not have a ``default`` block.
+The final ``case`` block,
+``case let (x, y)``,
+declares a tuple of two placeholder constants that can match any value.
+As a result, it matches all possible remaining values,
+and a ``default`` block is not needed to make the ``switch`` statement exhaustive.
+
+In the example above,
+the temporary named values ``x`` and ``y`` have been declared as constants
+via the ``let`` keyword, because there is no need to modify their values
+within the body of the ``case`` statement.
+However, they could have been declared as variables instead, via the ``var`` keyword.
+If this had been the case, a temporary variable would have been created
+and initialized with the appropriate value.
+Any changes to that variable would only have an effect within the body of the ``case`` statement.
+
 .. _ControlFlow_Where:
 
 Where
 _____
 
 A ``case`` statement can check for additional conditions using the ``where`` clause.
-The example below takes an (x, y) point expressed as a tuple of type ``(Int, Int)``,
-and categorizes it on the following graph:
+
+The example below categorizes an (x, y) point on the following graph:
 
 .. image:: ../images/coordinateGraphComplex.png
     :height: 250
     :align: center
 
 It decides if the point is
-at the origin (0, 0);
-on the red x-axis;
-on the orange y-axis;
 on the green diagonal line where ``x == y``;
 on the purple diagonal line where ``x == -y``;
 or none of the above.
 
 .. testcode::
 
-    (swift) point = (1, -1)
-    (swift) switch point {
-        case (0, 0):
-            println("(0, 0) is at the origin")
-        case (_, 0):
-            println("(\(point.0), 0) is on the x-axis")
-        case (0, _):
-            println("(0, \(point.1)) is on the y-axis")
+    (swift) let yetAnotherPoint = (1, -1)
+    // yetAnotherPoint : (Int, Int) = (1, -1)
+    (swift) switch yetAnotherPoint {
         case let (x, y) where x == y:
             println("(\(x), \(y)) is on the line x == y")
         case let (x, y) where x == -y:
@@ -665,99 +732,15 @@ or none of the above.
     }
     >>> (1, -1) is on the line x == -y
 
-The final three ``case`` statements declare placeholder constants ``x`` and ``y``,
+The three ``case`` statements declare placeholder constants ``x`` and ``y``,
 which temporarily take on the two tuple values from ``point``.
-These constants can then be used as part of a ``where`` clause,
+Here, these constants are used as part of a ``where`` clause,
 to create a dynamic filter.
 The ``case`` statement will only match the current value of ``point``
 if the ``where`` clause's condition equates to ``true`` for that value.
 
-The x-axis and y-axis checks could also have been written with a ``where`` clause.
-``case (_, 0)`` could have been written as ``case (_, let y) where y == 0``,
-to match points on the x-axis.
-However, the original version is more concise,
-and is preferred when matching against a fixed value.
-
-Once the temporary constants ``x`` and ``y`` have been declared,
-they can be used within the ``case`` statement's code block.
-Here, they are used as shorthand for printing the values via the ``println`` function.
-The final ``case`` statement also uses the constants
-to calculate the distance from the origin.
-(The earlier ``case`` blocks printed the tuples' individual values
-using the shorthand syntax ``point.0`` and ``point.1`` instead,
-because they did not have the temporary constants to hand.)
-
-Note that this ``switch`` statement does not have a ``default`` block.
-The final ``case`` block,
-``case let (x, y)``,
-declares a tuple of two placeholder constants,
-but does *not* provide a ``where`` clause to filter them.
-As a result, it matches all possible remaining values,
-and a ``default`` block is not needed to make the ``switch`` statement exhaustive.
-
-.. QUESTION: This example is not self-contained,
-   in that it uses the same declared variable (point) as the previous example.
-   This is primarily to keep the variable name readable within the println string interpolation.
-   Is this okay? Should it be changed so that it is self-contained?
-
-.. _ControlFlow_OptionalBinding:
-
-Optional Binding
-----------------
-
-:newTerm:`Optional binding` is a convenient way to find out if an optional contains a value,
-and to make that value available if it exists.
-Optional bindings can be used with ``if``-``else`` and ``while`` statements
-to simplify and shorten the unwrapping of optionals.
-
-For example:
-
-.. testcode::
-
-    (swift) let possibleNumber = "123"
-    // possibleNumber : String = "123"
-    (swift) if let convertedNumber = possibleNumber.toInt() {
-        println("'\(possibleNumber)' has the integer value \(convertedNumber)")
-    } else {
-        println("'\(possibleNumber)' could not be converted to a number")
-    }
-    >>> '123' has the integer value 123
-
-This example uses ``String``\ 's ``toInt()`` function
-to try and convert the string ``"123"`` into an ``Int``.
-It then prints a message to indicate if the conversion was successful.
-(``toInt()`` returns an *optional* ``Int``,
-which only contains an ``Int`` if the conversion is succesful.)
-
-``if let convertedNumber = possibleNumber.toInt()`` can be read as:
-
-“If the optional returned by ``possibleNumber.toInt()`` contains a value,
-set a new constant called ``convertedNumber`` to the value contained in the optional.”
-
-If the conversion is successful,
-the ``convertedNumber`` constant becomes available for use within
-the first branch of the ``if``-``else`` statement.
-It has already been initialized with the value contained *within* the optional,
-and so there is no need to use the ``!`` suffix to access its value.
-In this example, ``convertedNumber`` is simply used to print the result of the conversion.
-
-You can use both constants and variables with optional binding.
-If you wanted to manipulate the value of ``convertedNumber``
-within the first block of the ``if``-``else`` statement,
-you could write ``if var convertedNumber`` instead,
-and the value contained within the optional
-would be made available as a variable rather than a constant.
-
-.. note::
-
-    Constants or variables created via optional binding
-    are only available within the code block following their creation,
-    as in the first branch of the ``if``-``else`` statement above.
-    If you want to work with the optional's value outside of this code block,
-    you should declare a constant or variable yourself
-    before the ``if``-``else`` statement begins.
-
-.. TODO add an example for 'while'.
+As in the previous example, the final ``case`` block matches all possible remaining values,
+and so a ``default`` block is not needed to make the ``switch`` statement exhaustive.
 
 .. _ControlFlow_ControlTransferStatements:
 

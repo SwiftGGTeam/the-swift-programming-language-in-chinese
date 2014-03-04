@@ -24,7 +24,7 @@
     * @inout
     * value types and reference types
     * Type functions and variables
-    * Embedded classes and structures
+    * Nested classes and structures
     * Bound functions
     * @conversion functions for converting between types
     * Subscript getters and setters
@@ -1019,7 +1019,9 @@ a default value of ``32.0`` for ``temperature`` when a new instance is created �
 is the same in both cases.
 
 Swift provides a :newTerm:`default initializer` implementation
-for any class or structure that does not provide at least one initializer itself.
+for any class or structure that does not provide at least one initializer itself,
+if all of the properties declared by that class or structure are assigned
+default values as part of their property declaration.
 The default initializer simply creates a new instance
 with all of its properties set to their default values.
 You don't have to declare that you want the default initializer to be implemented –
@@ -1098,7 +1100,7 @@ Swift checks these methods to make sure that all properties are fully initialize
 by the time each initializer has done its job.
 This process is known as :newTerm:`definite initialization`,
 and helps to ensure that your instances are always valid before they are used.
-Swift will warn you at compile-time if your class or structure does not pass
+Swift will report an error at compile-time if your class or structure does not pass
 the definite initialization test.
 
 .. _ClassesAndStructures_InitializerDelegation:
@@ -1111,7 +1113,7 @@ other initializers within the same class or structure by calling ``self.init``.
 The code below defines a ``Document`` class,
 which uses a default ``title`` value of ``[untitled]`` if none is specified:
 
-.. testcode:: initialization
+.. testcode:: initializerDelegation
 
     (swift) class Document {
         var title: String
@@ -1126,7 +1128,7 @@ which uses a default ``title`` value of ``[untitled]`` if none is specified:
 This first example declares a new constant called ``thisBook``,
 and sets it to the result of calling ``init withTitle()`` for a specific title string:
 
-.. testcode:: initialization
+.. testcode:: initializerDelegation
 
     (swift) let thisBook = Document(withTitle: "The Swift Programming Language")
     // thisBook : Document = <Document instance>
@@ -1138,7 +1140,7 @@ and sets it to the result of the basic ``init()`` method for ``Document``.
 This method delegates to the more detailed ``init withTitle()`` method,
 passing it a placeholder string value of ``[untitled]``:
 
-.. testcode:: initialization
+.. testcode:: initializerDelegation
 
     (swift) let someBook = Document()
     // someBook : Document = <Document instance>
@@ -1154,8 +1156,9 @@ This means that the ``Document`` class passes the definite initialization test m
 Inheritance
 -----------
 
-Classes can :newTerm:`inherit` the methods, properties and capabilities of other existing classes.
-Inheritance is one of the fundamental characteristics that differentiate classes
+Classes can :newTerm:`inherit` methods, properties and other characteristics
+from existing classes.
+Inheritance is one of the fundamental behaviors that differentiate classes
 from other types in Swift.
 
 Here's an example:
@@ -1292,6 +1295,12 @@ the same name, parameter types and return type by mistake.
 and method overriding without the ``@override`` attribute is
 diagnosed as an error when your code is compiled.)
 
+In addition, the ``@override`` attribute prompts the Swift compiler
+to check that the superclass has a method declaration that matches
+the one you have provided.
+This helps to ensure that your overriding method definition is correct,
+and has not used an incorrect name, type or parameter order by mistake.
+
 .. QUESTION: have I introduced the concept of "attributes" by this point?
    If not, when / where should I do so?
 
@@ -1377,7 +1386,7 @@ which is given a default value of ``[replace me]``.
 
 Here's how it looks in Swift code:
 
-.. testcode:: initialization
+.. testcode:: initializerDelegation
 
     (swift) class TextDocument : Document {
 
@@ -1415,7 +1424,7 @@ at the end of this empty code block.
 
 Here's how this initializer could be called:
 
-.. testcode:: initialization
+.. testcode:: initializerDelegation
 
     (swift) let empty = TextDocument()
     // empty : TextDocument = <TextDocument instance>
@@ -1445,7 +1454,7 @@ As before, the value of ``bodyText`` comes from the property's default value.
 
 Here's how this initializer could be called:
 
-.. testcode:: initialization
+.. testcode:: initializerDelegation
 
     (swift) let titled = TextDocument(withTitle: "Write something please")
     // titled : TextDocument = <TextDocument instance>
@@ -1470,7 +1479,7 @@ and sets the same placeholder title as before.
 
 Here's how this initializer could be called:
 
-.. testcode:: initialization
+.. testcode:: initializerDelegation
 
     (swift) let untitledPangram = TextDocument(
         withText: "Amazingly few discotheques provide jukeboxes")
@@ -1504,7 +1513,7 @@ helps to plan for functionality changes in the future.
 
 Here's how this final initializer could be called:
 
-.. testcode:: initialization
+.. testcode:: initializerDelegation
 
     (swift) let foxPangram = TextDocument(
         withTitle: "Quick brown fox",
@@ -1684,7 +1693,7 @@ The result of ``item as Movie`` is of type ``Movie?``, or “optional ``Movie``�
 
 Downcasting to ``Movie`` will fail when trying to downcast
 the two ``Song`` instances in the library array.
-To cope with this, the example above uses :ref:`optional binding <ControlFlow_OptionalBinding>`
+To cope with this, the example above uses :ref:`optional binding <BasicTypes_OptionalBinding>`
 to check whether the optional ``Movie`` actually contains a value
 (i.e. to find out whether the downcast succeeded.)
 This optional binding is written “``if let movie = item as Movie``”,
@@ -2176,14 +2185,272 @@ and associativity settings can be found in the :doc:`../ReferenceManual/index`.)
    If this Radar is fixed, the operator declaration above should be split over multiple lines
    for consistency with the rest of the code.
 
-.. _ClassesAndStructures_Subscripting:
+.. _ClassesAndStructures_Subscripts:
 
-Subscripting
-------------
+Subscripts
+----------
 
-[to be written]
+Classes and structures can define :newTerm:`subscripts`,
+which enable instances of that class or structure to be queried via one or more
+values in square braces after the instance name.
+This is similar to the way in which the elements in an ``Array`` instance
+can be accessed as ``someArray[n]``,
+and elements in a ``Dictionary`` instance can be accessed as
+``someDictionary[key]``.
 
-.. NOTE: you can subscript on any type, including a range (IntGeneratorType)
+Subscript Syntax
+~~~~~~~~~~~~~~~~
+
+Subscripts are written with the ``subscript`` keyword, without a ``func`` prefix,
+in a similar way to how initializers are written with the ``init`` keyword.
+Susbcripts specify one or more input parameters and a return type,
+in the same way as normal instance methods.
+
+Subscripts can be read-write or read-only,
+and this behavior is communicated via a getter and setter
+in the same way as for computed properties:
+
+::
+
+    (swift) subscript(n: Int) -> Int {
+        get {
+            // return an appropriate susbcript value here
+        }
+        set(newValue) {
+            // perform a suitable setting action here
+        }
+    }
+
+The type of ``newValue`` is the same as the return value of the subscript.
+As with computed properties, you can choose not to write the setter's ``(newValue)`` parameter,
+and a default parameter called ``value`` will be provided to your setter
+if you do not provide one yourself.
+A subscript setter's ``value`` parameter always has the same type as
+the return type of the subscript's getter.
+
+As with read-only computed properties,
+the ``get`` keyword can be dropped for read-only subscripts:
+
+::
+
+    (swift) subscript(n: Int) -> Int {
+        // return an appropriate subscript value here
+    }
+
+Here's an example of a read-only subscript implementation:
+
+.. testcode:: subscripts
+
+    (swift) class FibonacciGenerator {
+        subscript(n: Int) -> Int {
+            var i = 1, j = 0
+            var temp: Int
+            for k in 1..n {
+                temp = i + j
+                i = j
+                j = temp
+            }
+            return j
+        }
+    }
+    (swift) var fibonacci = FibonacciGenerator()
+    // fibonacci : FibonacciGenerator = <FibonacciGenerator instance>
+    (swift) println("The sixth number in the Fibonacci sequence is \(fibonacci[7])")
+    >>> The sixth number in the Fibonacci sequence is 13
+
+This example defines a ``FibonacciGenerator`` class to
+generate numbers from the :newTerm:`Fibonacci sequence`.
+The Fibonacci sequence is a mathematical sequence of numbers in which the next number is
+the sum of the two numbers before it:
+
+``1``, ``1``, ``2``, ``3``, ``5``, ``8``, ``13``, ``21``, ``34``, ``55``, ``89``, ``144``, …
+
+Instances of the ``FibonacciGenerator`` class have a single read-only subscript,
+which takes a single parameter ``n`` of type ``Int``,
+and returns an ``Int`` value for the ``n``\ th number in the sequence.
+The seventh number in the sequence can be accessed as
+``fibonacci[7]``, which returns an integer value of ``13``.
+
+The Fibonacci sequence is generated by a fixed mathematical rule.
+It is therefore not appropriate to set ``fibonacci[7]`` to a new value.
+This is why the subscript for ``FibonacciGenerator`` is defined as a read-only subscript.
+
+.. QUESTION: This isn't a particularly efficient subscript,
+   given that it needs to generate the entire sequence each time.
+   The math inside the subscript's body is also a little unclear,
+   and may scare off someone who is not from a math background.
+   Is there a better self-contained example we could use?
+
+In this example, the subscript is said to be :newTerm:`one-based`.
+This means that the first number in the sequence is accessed as ``fibonacci[1]``.
+Many subscripts (such as the subscripts used with Swift's ``Array`` type)
+are :newTerm:`zero-based`,
+which means that the first value they provide is accessed as ``someInstance[0]``,
+not ``someInstance[1]``.
+However, the Fibonacci sequence is most commonly accessed as a one-based sequence,
+and so the ``FibonacciGenerator`` class provides a one-based subscript in this case.
+
+Subscript Usage
+~~~~~~~~~~~~~~~
+
+As the one-based ``FibonacciGenerator`` subscript shows,
+the exact meaning of “subscript” depends upon the context in which it is used.
+Subscripts are typically used as a convenient shorthand for accessing
+the member elements in a collection, list, or sequence.
+You are free to implement subscripts in the most appropriate way for
+your particular class or structure's functionality.
+
+For example, Swift's ``Dictionary`` collection type implements a subscript to provide
+access to the values stored in a ``Dictionary`` instance
+by passing in a key of the appropriate type within subscript braces:
+
+.. testcode:: subscripts
+
+    (swift) let numberOfLegs = ["spider" : 8, "ant" : 6, "cat" : 4]
+    // numberOfLegs : Dictionary<String, Int> = Dictionary<String, Int>(1.33333, 3, <DictionaryBufferOwner<String, Int> instance>)
+    (swift) let spiderLegs = numberOfLegs["spider"]
+    // spiderLegs : Int = 8
+
+This ``Dictionary`` instance is of type ``Dictionary<String, Int>``.
+This means that it has keys of type ``String``,
+and values of type ``Int``.
+Its subscript implementation therefore expects to be passed a ``String`` key,
+and returns the corresponding ``Int`` value for that key.
+
+.. _ClassesAndStructures_MultipleSubscriptDimensions:
+
+Subscript Options
+~~~~~~~~~~~~~~~~~
+
+Subscripts can take any number of input parameters,
+and these input parameters can be of any type.
+Subscripts can also return any type, including optional types.
+
+A class or structure can provide as many subscript implementations as it needs,
+and the appropriate subscript to be used will be inferred based on
+the types of the value or values that are contained within the subscript braces
+at the point that the subscript is used.
+This definition of multiple subscripts is known as :newTerm:`subscript overloading`.
+
+Subscript definitions on classes may override a subscript implementation
+provided by their superclass.
+Where they do so, the overriding definition must be prefixed by the ``@override`` attribute,
+as with overriding instance methods.
+
+While it is most common for a subscript to take a single parameter,
+you can also define a subscript with multiple parameters
+if it is appropriate for your type:
+
+.. testcode:: subscripts
+
+    (swift) struct Matrix {
+        var rows: Int, columns: Int
+        var grid = Array<Double>()
+        init withRows(rows: Int) columns(Int) {
+            self.rows = rows
+            self.columns = columns
+            for _ in 0...(rows * columns) {
+                grid.append(0.0)
+            }
+        }
+        subscript(row: Int, column: Int) -> Double? {
+            get {
+                if row >= rows || column >= columns {
+                    return .None
+                }
+                return grid[(row * columns) + column]
+            }
+            set {
+                if value && row < rows && column < columns {
+                    grid[(row * columns) + column] = value!
+                }
+            }
+        }
+    }
+
+.. TODO: Investigate switching this over to use the shorter “Double[]” syntax
+   once I know more about Arrays and how their syntax works.
+
+This example defines a ``Matrix`` structure,
+which represents a two-dimensional matrix of ``Double`` values.
+``Matrix`` provides an initializer that takes two parameters called ``rows`` and ``columns``,
+and creates an array that is large enough to store ``rows * columns`` values of type ``Double``.
+Each position in the matrix is given an initial value of ``0.0``:
+
+.. testcode:: subscripts
+
+    (swift) var matrix = Matrix(withRows: 2, columns: 2)
+    // matrix : Matrix = Matrix(2, 2, [0.0, 0.0, 0.0, 0.0])
+
+The ``grid`` array is effectively a flattened version of the matrix,
+as read from top left to bottom right:
+
+.. image:: ../images/subscriptMatrix01.png
+    :width: 488
+    :align: center
+
+The ``Matrix`` subscript has a return type of ``Double?``, or “optional ``Double``”.
+This is to cope with the fact that you might request a value outside of
+the bounds of the matrix.
+To cope with this,
+the subscript's getter checks to see if the requested ``row`` or ``column``
+is outside of the bounds of the matrix:
+
+::
+
+    (swift) if row >= rows || column >= columns {
+        return .None
+    }
+    return grid[(row * columns) + column]
+
+A value of ``.None`` is returned if you try and access
+a subscript that is outside of the matrix bounds:
+
+.. testcode:: subscripts
+
+    (swift) if let someValue = matrix[2, 2] {
+        println("The matrix has a value of \(someValue) at [2, 2]")
+    } else {
+        println("The matrix is not big enough to hold a value at [2, 2]")
+    }
+    >>> The matrix is not big enough to hold a value at [2, 2]
+
+Otherwise, the subscript's getter returns
+the appropriate value from the ``grid`` array.
+
+Values in the matrix can be set by passing row and column values into the subscript,
+separated by a comma:
+
+.. testcode:: subscripts
+
+    (swift) matrix[0, 1] = 1.5
+    (swift) matrix[1, 0] = 3.2
+
+These two statements call the subscript's setter to set
+a value of ``1.5`` in the top right position of the matrix
+(where ``row`` is ``0`` and ``column`` is ``1``),
+and ``3.2`` in the bottom left position
+(where ``row`` is ``1`` and ``column`` is ``0``):
+
+.. image:: ../images/subscriptMatrix02.png
+    :width: 300
+    :align: center
+
+The subscript's setter has an implicit ``value`` parameter of type ``Double?``.
+The ``value`` parameter contains the new value to set for that row and column,
+and is checked by the subscript's setter:
+
+::
+
+    (swift) if value && row < rows && column < columns {
+        grid[(row * columns) + column] = value!
+    }
+
+The setter checks to see if ``value`` is not equal to ``.None``,
+and also checks to make sure that the ``row`` and ``column`` values are valid.
+If all of these things are true,
+it sets the appropriate entry in the ``grid`` array to
+the value stored in the ``value`` optional.
 
 .. refnote:: References
 
