@@ -53,11 +53,11 @@ to provide basic support for working with distance units:
         var ft: Double { return self / 3.28084 }
     }
     (swift) let oneInch = 25.4.mm
-    // oneInch : Double = 0.0254
+    <<< // oneInch : Double = 0.0254
     (swift) println("One inch is \(oneInch) meters")
     >>> One inch is 0.0254 meters
     (swift) let threeFeet = 3.ft
-    // threeFeet : Double = 0.9144
+    <<< // threeFeet : Double = 0.9144
     (swift) println("Three feet is \(threeFeet) meters")
     >>> Three feet is 0.9144 meters
 
@@ -87,7 +87,7 @@ and can be used within mathematical calculations wherever a ``Double`` is accept
 .. testcode:: extensionsComputedProperties
 
     (swift) let aMarathon = 42.km + 195.m
-    // aMarathon : Double = 42195.0
+    <<< // aMarathon : Double = 42195.0
     (swift) println("A marathon is \(aMarathon) meters long")
     >>> A marathon is 42195.0 meters long
 
@@ -131,9 +131,9 @@ for use with string interpolation.
         }
     }
     (swift) let somePoint = Point(3.0, 5.0)
-    // somePoint : Point = Point(3.0, 5.0)
+    <<< // somePoint : Point = Point(3.0, 5.0)
     (swift) let pointDescription = String(somePoint)
-    // pointDescription : String = "(3.0, 5.0)"
+    <<< // pointDescription : String = "(3.0, 5.0)"
 
 This example defines a new structure called ``Point`` to represent an ``(x, y)`` co-ordinate.
 It also extends ``String`` to add a new initializer implementation,
@@ -152,7 +152,7 @@ to incorporate their values as part of a longer string:
 .. testcode:: extensionsInitializers
 
     (swift) let anotherPoint = Point(-2.0, 6.0)
-    // anotherPoint : Point = Point(-2.0, 6.0)
+    <<< // anotherPoint : Point = Point(-2.0, 6.0)
     (swift) println("anotherPoint's value is \(anotherPoint)")
     >>> anotherPoint's value is (-2.0, 6.0)
 
@@ -212,9 +212,9 @@ and even-numbered characters to lowercase:
 .. testcode:: extensionsInstanceMethods
 
     (swift) let boring = "woooooooooooo, i am a ghost!"
-    // boring : String = "woooooooooooo, i am a ghost!"
+    <<< // boring : String = "woooooooooooo, i am a ghost!"
     (swift) let spooky = boring.toSpooky()
-    // spooky : String = "WoOoOoOoOoOoO, i aM A GhOsT!"
+    <<< // spooky : String = "WoOoOoOoOoOoO, i aM A GhOsT!"
 
 .. _Extensions_MutatingInstanceMethods:
 
@@ -236,7 +236,7 @@ just like mutating methods from an original implementation:
         }
     }
     (swift) var someInt = 123_456
-    // someInt : Int = 123456
+    <<< // someInt : Int = 123456
     (swift) someInt.shiftRight(3)
     (swift) println("someInt is now \(someInt)")
     >>> someInt is now 123
@@ -299,15 +299,15 @@ so:
         }
     }
     (swift) 123456789[0]
-    // r0 : Int = 9
+    <<< // r0 : Int = 9
     (swift) 123456789[1]
-    // r1 : Int = 8
+    <<< // r1 : Int = 8
     (swift) 123456789[2]
-    // r2 : Int = 7
+    <<< // r2 : Int = 7
     (swift) 123456789[8]
-    // r3 : Int = 1
+    <<< // r3 : Int = 1
     (swift) 123456789[9]
-    // r4 : Int = 0
+    <<< // r4 : Int = 0
 
 .. TODO: provide an explanation of this example
 

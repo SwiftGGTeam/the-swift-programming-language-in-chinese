@@ -84,11 +84,11 @@ you can ignore the values using an underscore in place of a variable name:
 .. testcode::
 
     (swift) let base = 3
-    // base : Int = 3
+    <<< // base : Int = 3
     (swift) let power = 10
-    // power : Int = 10
+    <<< // power : Int = 10
     (swift) var answer = 1
-    // answer : Int = 1
+    <<< // answer : Int = 1
     (swift) for _ in 0...power {
         answer *= base
     }
@@ -113,7 +113,7 @@ A ``for``-``in`` loop can be used to iterate over the items in an array:
 .. testcode::
 
     (swift) let names = ["Alan", "Barbara", "Carol", "Doug"]
-    // names : String[] = ["Alan", "Barbara", "Carol", "Doug"]
+    <<< // names : String[] = ["Alan", "Barbara", "Carol", "Doug"]
     (swift) for name in names {
         println("Hello, \(name)!")
     }
@@ -145,7 +145,7 @@ which can be accessed via dot syntax:
 .. testcode::
 
     (swift) let numberOfLegs = ["spider" : 8, "ant" : 6, "cat" : 4]
-    // numberOfLegs : Dictionary<String, Int> = Dictionary<String, Int>(1.33333, 3, <DictionaryBufferOwner<String, Int> instance>)
+    <<< // numberOfLegs : Dictionary<String, Int> = Dictionary<String, Int>(1.33333, 3, <DictionaryBufferOwner<String, Int> instance>)
     (swift) for item in numberOfLegs {
         println("\(item.key)s have \(item.value) legs")
     }
@@ -239,7 +239,7 @@ you must declare ``index`` before the loop's scope begins:
 .. testcode::
 
     (swift) var index = 0
-    // index : Int = 0
+    <<< // index : Int = 0
     (swift) for index = 0; index < 3; ++index {
         println("index is \(index)")
     }
@@ -294,13 +294,13 @@ The general form of a ``while`` loop is::
 For example::
 
     (swift) var personName = ""
-    // personName : String = ""
+    <<< // personName : String = ""
     (swift) let keyboard = Keyboard()
-    // keyboard : Keyboard = <_TtCSs8Keyboard instance>
+    <<< // keyboard : Keyboard = <_TtCSs8Keyboard instance>
     (swift) println("Please enter your name, then press return.")
     >>> Please enter your name, then press return.
     (swift) var inputCharacter = UnicodeScalar(keyboard.read())
-    // inputCharacter : UnicodeScalar = 'a'
+    <<< // inputCharacter : UnicodeScalar = 'a'
     (swift) while inputCharacter != '\n' {
         personName += inputCharacter
         inputCharacter = UnicodeScalar(keyboard.read())
@@ -391,7 +391,7 @@ It only executes a set of statements if that condition is ``true``:
 .. testcode::
 
     (swift) var temperatureInFahrenheit = 30
-    // temperatureInFahrenheit : Int = 30
+    <<< // temperatureInFahrenheit : Int = 30
     (swift) if temperatureInFahrenheit <= 32 {
         println("It's very cold. Consider wearing a scarf.")
     }
@@ -487,9 +487,9 @@ for brevity:
 .. testcode::
 
     (swift) let numberSymbol = '三'   // Simplified Chinese symbol for the number 3
-    // numberSymbol : UnicodeScalar = '三'
+    <<< // numberSymbol : UnicodeScalar = '三'
     (swift) var possibleIntegerValue: Int? = .None
-    // possibleIntegerValue : Int? = <unprintable value>
+    <<< // possibleIntegerValue : Int? = <unprintable value>
     (swift) switch numberSymbol {
         case '1', '١', '一', '๑':
             possibleIntegerValue = 1
@@ -550,11 +550,11 @@ to provide a natural-language count for numbers of any size:
 .. testcode::
 
     (swift) let count = 3_000_000_000_000
-    // count : Int = 3000000000000
+    <<< // count : Int = 3000000000000
     (swift) let countedThings = "stars in the Milky Way"
-    // countedThings : String = "stars in the Milky Way"
+    <<< // countedThings : String = "stars in the Milky Way"
     (swift) var naturalCount = ""
-    // naturalCount : String = ""
+    <<< // naturalCount : String = ""
     (swift) switch count {
         case 0:
             naturalCount = "no"
@@ -608,7 +608,7 @@ or outside of the box altogether.
 .. testcode::
 
     (swift) let somePoint = (1, 1)
-    // somePoint : (Int, Int) = (1, 1)
+    <<< // somePoint : (Int, Int) = (1, 1)
     (swift) switch somePoint {
         case (0, 0):
             println("(0, 0) is at the origin")
@@ -661,7 +661,7 @@ or somewhere else.
 .. testcode::
 
     (swift) let anotherPoint = (2, 0)
-    // anotherPoint : (Int, Int) = (2, 0)
+    <<< // anotherPoint : (Int, Int) = (2, 0)
     (swift) switch anotherPoint {
         case (let x, 0):
             println("on the x-axis with an x value of \(x)")
@@ -722,7 +722,7 @@ or none of the above.
 .. testcode::
 
     (swift) let yetAnotherPoint = (1, -1)
-    // yetAnotherPoint : (Int, Int) = (1, -1)
+    <<< // yetAnotherPoint : (Int, Int) = (1, -1)
     (swift) switch yetAnotherPoint {
         case let (x, y) where x == y:
             println("(\(x), \(y)) is on the line x == y")
@@ -785,9 +785,9 @@ and removes all of its vowels and spaces to create a cryptic puzzle phrase for s
 .. testcode::
 
     (swift) let puzzleInput = "great minds think alike"
-    // puzzleInput : String = "great minds think alike"
+    <<< // puzzleInput : String = "great minds think alike"
     (swift) var puzzleOutput = ""
-    // puzzleOutput : String = ""
+    <<< // puzzleOutput : String = ""
     (swift) for letter in puzzleInput.chars {
         switch letter {
             case 'a', 'e', 'i', 'o', 'u', ' ':
@@ -829,9 +829,9 @@ Try entering your full name
 to see it in action::
 
     (swift) var personName = ""
-    // personName : String = ""
+    <<< // personName : String = ""
     (swift) let keyboard = Keyboard()
-    // keyboard : Keyboard = <_TtCSs8Keyboard instance>
+    <<< // keyboard : Keyboard = <_TtCSs8Keyboard instance>
     (swift) println("Please enter your name, then press return.")
     >>> Please enter your name, then press return.
     (swift) while true {
@@ -890,9 +890,9 @@ The example below uses ``fallthrough`` to create a textual description of a numb
 .. testcode::
 
     (swift) let integerToDescribe = 5
-    // integerToDescribe : Int = 5
+    <<< // integerToDescribe : Int = 5
     (swift) var description = "The number \(integerToDescribe) is"
-    // description : String = "The number 5 is"
+    <<< // description : String = "The number 5 is"
     (swift) switch integerToDescribe {
         case 2, 3, 5, 7, 11, 13, 17, 19:
             description += " a prime number, and also"

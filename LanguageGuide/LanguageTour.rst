@@ -65,7 +65,7 @@ Let's start by declaring a variable ``a`` of type ``Int`` with an initial value 
 ::
 
     (swift) var a : Int = 42
-    // a : Int = 42
+    <<< // a : Int = 42
 
 Note that ``Int`` is capitalized. Swift follows the Objective-C naming convention consistently for all type names, including built-in types like ``Int`` and ``String``.
 
@@ -74,27 +74,27 @@ As mentioned earlier, you can omit the type and it will be inferred automaticall
 ::
 
     (swift) var b = 10
-    // b : Int = 10
+    <<< // b : Int = 10
 
 Variables can also be named using non-English letters:
 
 ::
 
     (swift) var 你好 = "你好世界"
-    // 你好 : String = "你好世界"
+    <<< // 你好 : String = "你好世界"
     (swift) var π = 3.14159
-    // π : Double = 3.14159
+    <<< // π : Double = 3.14159
 
 The standard operators work as expected (note that Swift relies on consistent spacing around operators; see Statements and Expressions for the rationale):
 
 ::
 
     (swift) var c = a + b
-    // c : Int = 52
+    <<< // c : Int = 52
     (swift) c - b * a
-    // r0 : Int = -368
+    <<< // r0 : Int = -368
     (swift) sin(π/2)
-    // r1 : Double = 1.0
+    <<< // r1 : Double = 1.0
 
 Tuples
 ~~~~~~
@@ -104,16 +104,16 @@ As well as simple value types, Swift also supports tuple types for ordered lists
 ::
 
     (swift) var t = (100, 200, 300)
-    // t : (Int, Int, Int) = (100, 200, 300)
+    <<< // t : (Int, Int, Int) = (100, 200, 300)
     (swift) t.0 + t.1 + t.2
-    // r2 : Int = 600
+    <<< // r2 : Int = 600
 
 In this case, ``t`` is a 3-element tuple with integer values. A tuple can also have elements with different types:
 
 ::
 
     (swift) var u = (1, "hello", 3.14159)
-    // u : (Int, String, Double) = (1, "hello", 3.14159)
+    <<< // u : (Int, String, Double) = (1, "hello", 3.14159)
     (swift) println(u.1)
     >>> hello
     (swift) println(u.2)
@@ -124,32 +124,32 @@ Tuples are useful in a variety of situations; Swift uses them as the foundation 
 ::
 
     (swift) var (v, w, x) = u
-    // (v, w, x) : (Int, String, Double) = (1, "hello", 3.14159)
+    <<< // (v, w, x) : (Int, String, Double) = (1, "hello", 3.14159)
     (swift) v
-    // v : Int = 1
+    <<< // v : Int = 1
     (swift) w
-    // w : String = "hello"
+    <<< // w : String = "hello"
     (swift) x
-    // x : Double = 3.14159
+    <<< // x : Double = 3.14159
 
 Alternatively, you can name the elements in a tuple:
 
 ::
 
     (swift) var y = (foo: 1, bar: "hello", baz: 3.14159)
-    // y : (foo: Int, bar: String, baz: Double) = (1, "hello", 3.14159)
+    <<< // y : (foo: Int, bar: String, baz: Double) = (1, "hello", 3.14159)
 
 to make it even easier to extract or change the values:
 
 ::
 
     (swift) y.foo
-    // r4 : Int = 1
+    <<< // r4 : Int = 1
     (swift) y.baz
-    // r5 : Double = 3.14159
+    <<< // r5 : Double = 3.14159
     (swift) y.bar = "bye"
     (swift) y
-    // y : (foo: Int, bar: String, baz: Double) = (1, "bye", 3.14159)
+    <<< // y : (foo: Int, bar: String, baz: Double) = (1, "bye", 3.14159)
 
 This is particularly useful with multiple return values (described below).
 
@@ -203,7 +203,7 @@ As before, there's no need to provide a type for the loop variable because it ca
 ::
 
     (swift) b..a
-    // r6 : IntGeneratorType = 10..42
+    <<< // r6 : IntGeneratorType = 10..42
 
 The b..a syntax also works great with ``NSRange``, providing natural and elegant syntax for many common idioms.
 
@@ -212,7 +212,7 @@ Some enumerable types use a tuple rather than a single loop variable. If you ite
 ::
 
     (swift) var dict = ["first" : 1, "second" : 2, "third" : 3]
-    // dict : Dictionary<String, Int> = ["third" : 3, "second" : 2, "first" : 1]
+    <<< // dict : Dictionary<String, Int> = ["third" : 3, "second" : 2, "first" : 1]
     (swift) for (key, value) in dict {
                 println("Key: '\(key)', Value: \(value)")
             }
@@ -235,7 +235,7 @@ As with variable declaration syntax, Swift function declarations follow the natu
                 }
             }
     (swift) fibonacci(10)
-    // r0 : Int = 89
+    <<< // r0 : Int = 89
 
 Argument names are part of the signature, so you can specify each parameter by name when calling the function, either for clarity, or to supply parameters in a different order:
 
@@ -246,9 +246,9 @@ Argument names are part of the signature, so you can specify each parameter by n
                 return numerator / denominator
             }
     (swift) divideTwoNumbers(4, 5)
-    // r1 : Float = 0.8
+    <<< // r1 : Float = 0.8
     (swift) divideTwoNumbers(denominator: 5, numerator: 4)
-    // r2 : Float = 0.8
+    <<< // r2 : Float = 0.8
 
 And, in the same way that you can assign a value as part of a variable declaration, you can also specify a default value for an argument:
 
@@ -278,7 +278,7 @@ Since you name the elements in any tuple, these features work together to make i
                 return (3.49, 3.59, 3.69)
             }
     (swift) fetchBetterGasPrices().midgrade
-    // r3 : Float = 3.59
+    <<< // r3 : Float = 3.59
 
 Functions can also be defined to take variable argument lists:
 
@@ -292,9 +292,9 @@ Functions can also be defined to take variable argument lists:
                 return sum
             }
     (swift) addAllTheInts()
-    // r4 : Int = 0
+    <<< // r4 : Int = 0
     (swift) addAllTheInts(42, 597, 12)
-    // r5 : Int = 651
+    <<< // r5 : Int = 651
 
 Variable argument lists act like an array of the element type within the function body.  Compared to C, Swift variable argument lists are type safe, and much more convenient to use.
 
@@ -546,7 +546,7 @@ You create an instance with function call syntax (referred to as initialization 
 ::
 
     (swift) var blob = Shape()
-    // blob : Shape = <Shape instance>
+    <<< // blob : Shape = <Shape instance>
 
 and memory is managed automatically for you using ARC (Automatic Reference Counting) for great performance and maximum compatibility with our frameworks.
 
@@ -565,7 +565,7 @@ Instance variables can be accessed via the ``.`` operator:
 ::
 
     (swift) var square = Quadrilateral()
-    // square : Quadrilateral = <Quadrilateral instance>
+    <<< // square : Quadrilateral = <Quadrilateral instance>
     (swift) println("A square has \(square.numberOfSides) sides.")
     >>> A square has 4 sides.
 
@@ -586,13 +586,13 @@ Variables declared in a class are properties. By default, they have implicit get
                 }
             }
     (swift) var circle = Circle()
-    // circle : Circle = <Circle instance>
+    <<< // circle : Circle = <Circle instance>
     (swift) circle.radius = 5
     (swift) circle.circumference
-    // r0 : Float = 31.4159
+    <<< // r0 : Float = 31.4159
     (swift) circle.circumference = 62.8318
     (swift) circle.radius
-    // r1 : Float = 10.0
+    <<< // r1 : Float = 10.0
 
 Notice that there are no asterisks in any of the variable declarations for objects::
  
@@ -612,7 +612,7 @@ This is one of the primary safety features --- **Swift does not require you to m
 
     (swift) enlarge(circle)
     (swift) circle.radius
-    // r2 : Float = 20.0
+    <<< // r2 : Float = 20.0
 
 The compiler manages the necessary mechanisms to safely pass the object by reference.  However, because we use ARC, the programmer is still responsible for reasoning about and breaking cycles (e.g. with weak pointers).
 
@@ -650,17 +650,17 @@ Because Swift is statically-typed, the compiler always knows whether a type is p
 ::
 
     (swift) var myPoint = Point(50, 200)
-    // myPoint : Point = Point(50.0, 200.0)
+    <<< // myPoint : Point = Point(50.0, 200.0)
     (swift) myPoint.moveToTheRightBy(200)
     (swift) myPoint
-    // myPoint : Point = Point(250.0, 200.0)
+    <<< // myPoint : Point = Point(250.0, 200.0)
 
 Note that it's not necessary to include the initializer implementation shown for ``Point``, because a default initializer is automatically provided to set the values:
 
 ::
 
     (swift) var size = Size(50, 100)
-    // size : Size = Size(50.0, 100.0)
+    <<< // size : Size = Size(50.0, 100.0)
 
 Strings
 -------
@@ -672,24 +672,24 @@ Swift string literals use double-quote marks, like this:
 ::
 
     (swift) var firstWord = "Hello"
-    // firstWord : String = "Hello"
+    <<< // firstWord : String = "Hello"
 
 The standard operators are supported for string concatenation:
 
 ::
 
     (swift) var message = firstWord + ", world"
-    // message : String = "Hello, world"
+    <<< // message : String = "Hello, world"
     (swift) message += "!"
     (swift) message
-    // message : String = "Hello, world!"
+    <<< // message : String = "Hello, world!"
 
 and you can refer to a substring, or slice, using a character range:
 
 ::
 
     (swift) var name = message[7..12]
-    // name : String = "world"
+    <<< // name : String = "world"
 
 Swift strings are immutable, which means we can make string slicing extremely efficient in terms of memory and processor cycles. Rather than having to copy the substring characters to a new memory location, the slice simply refers to a sub-range from the original string:
 
@@ -702,7 +702,7 @@ Continuing with the theme of efficiency, Swift strings are encoded internally as
 ::
 
     (swift) var emoji = "🙉😈😄👏"
-    // emoji : String = "🙉😈😄👏"
+    <<< // emoji : String = "🙉😈😄👏"
     (swift) for eachChar in emoji.chars {
                 println(eachChar)
             }
@@ -711,14 +711,14 @@ Continuing with the theme of efficiency, Swift strings are encoded internally as
     >>> 😄
     >>> 👏
     (swift) emoji.length
-    // r0 : Int = 4
+    <<< // r0 : Int = 4
 
 You can also iterate by lines:
 
 ::
 
     (swift) var multiline = "Once upon a time\nThe end"
-    // multiline : String = "Once upon a time\nThe end"
+    <<< // multiline : String = "Once upon a time\nThe end"
     (swift) for eachLine in multiline.lines {
                 println(eachLine)
             }
@@ -730,7 +730,7 @@ You can also iterate by lines:
 ::
 
     (swift) var singleEmoji = "🙉"
-    // singleEmoji : String = "🙉" 
+    <<< // singleEmoji : String = "🙉" 
     (swift) for eachByte in singleEmoji.bytes {
                 println(Int64(eachByte))
             }
@@ -747,32 +747,32 @@ You've already seen various ways to create a Swift string, including concatenati
 ::
 
     (swift) var message = "Hello" + ", world" + "!"
-    // message : String = "Hello, world!"
+    <<< // message : String = "Hello, world!"
 
 If you need to append string representations of other types, you can create a Swift string from a value:
 
 ::
 
     (swift) var someValue = 42
-    // someValue : Int = 42
+    <<< // someValue : Int = 42
     (swift) var magic = "The magic number is: " + String(someValue) + "!"
-    // magic : String = "The magic number is: 42!"
+    <<< // magic : String = "The magic number is: 42!"
 
 Interpolating values into strings is such a common task, however, that Swift provides an alternative, more readable syntax:
 
 ::
 
     (swift) var blackMagic = "The magic number is: \(someValue)!"
-    // blackMagic : String = "The magic number is: 42!"
+    <<< // blackMagic : String = "The magic number is: 42!"
 
 You can also use this syntax to interpolate the values of arbitrary expressions:
 
 ::
 
     (swift) var luckyForSome = 13
-    // luckyForSome : Int = 13
+    <<< // luckyForSome : Int = 13
     (swift) var addMessage = "Adding \(luckyForSome) to \(someValue) gives \(luckyForSome + someValue)"
-    // addMessage : String = "Adding 13 to 42 gives 55"
+    <<< // addMessage : String = "Adding 13 to 42 gives 55"
 
 Rather than requiring you to think about how best to format a value every time you want to insert it into a string, it's up to the developer of the original type to provide an implementation for the string conversion. This involves adding a suitable initializer to the Swift ``String`` type through the use of an extension, as discussed later in this tour (see Extensions_).
 
@@ -820,13 +820,13 @@ You can use a protocol in a variable declaration to indicate the variable has so
 ::
 
     (swift) var rect = Rect(Point(0.0, 0.0), Size(2.0, 2.0))
-    // rect : Rect = Rect(Point(0.0, 0.0), Size(2.0, 2.0))
+    <<< // rect : Rect = Rect(Point(0.0, 0.0), Size(2.0, 2.0))
     (swift) var testableThing : HitTestable = rect
-    // testableThing : HitTestable = <unprintable value>
+    <<< // testableThing : HitTestable = <unprintable value>
     (swift) var hitPoint = Point(4.0, 5.0)
-    // hitPoint : Point = Point(4.0, 5.0)
+    <<< // hitPoint : Point = Point(4.0, 5.0)
     (swift) testableThing.containsPoint(hitPoint)
-    // r0 : Bool = false
+    <<< // r0 : Bool = false
 
 and Swift ensures that you can only call functions or access properties that are defined as part of the protocol:
 
@@ -878,7 +878,7 @@ to make it easy to convert your own classes or structures into strings, either b
 ::
 
     (swift) String(hitPoint)
-    // r1 : String = "{4.0, 5.0}"
+    <<< // r1 : String = "{4.0, 5.0}"
 
 or implicitly with Swift's interpolation syntax:
 
@@ -897,11 +897,11 @@ You can also use an extension to add protocol conformance to an existing class o
                 }
             }
     (swift) var someOtherPoint = Point(5.0, 10.0)
-    // someOtherPoint : Point = Point(5.0, 10.0)
+    <<< // someOtherPoint : Point = Point(5.0, 10.0)
     (swift) hitPoint.containsPoint(someOtherPoint)
-    // r2 : Bool = false
+    <<< // r2 : Bool = false
     (swift) hitPoint.containsPoint(hitPoint)
-    // r3 : Bool = true
+    <<< // r3 : Bool = true
 
 This is particularly important for "retroactive modeling", which is important
 when you make two libraries work together, when you cannot change their code.
@@ -914,12 +914,12 @@ A closure is just a function without a name. As an example, the ``sort()`` libra
 ::
 
     (swift) var strings = ["Hello", "Bye", "Good day"]
-    // strings : String[] = ["Hello", "Bye", "Good day"]
+    <<< // strings : String[] = ["Hello", "Bye", "Good day"]
     (swift) var sortedStrings = sort(strings, {
                 (lhs : String, rhs : String) -> Bool in
                 return lhs.uppercase < rhs.uppercase
             })
-    // sortedStrings : String[] = ["Bye", "Good day", "Hello"]
+    <<< // sortedStrings : String[] = ["Bye", "Good day", "Hello"]
     (swift) for eachString in sortedStrings {
                 println(eachString)
             }
@@ -959,7 +959,7 @@ Closures can also capture any variable from the local scope:
 ::
 
     (swift) var uppercase = true
-    // uppercase : Bool = true
+    <<< // uppercase : Bool = true
     (swift) sortedStrings = sort(strings, { (x, y) in 
                     if uppercase {
                         x = x.uppercase
@@ -1029,7 +1029,7 @@ Swift supports generics through parameterized types. As an example, the standard
 ::
 
     (swift) var names = Array<String>()
-    // names : Array<String> = []
+    <<< // names : Array<String> = []
     (swift) names.append("William")
     (swift) names.append("Hilary")
     (swift) names.append("Carlton")
@@ -1072,11 +1072,11 @@ It's even safe in Swift to mix by-reference and value types if you use a protoco
                 }
             }
     (swift) var foo = Foo()
-    // foo : Foo = <Foo instance>
+    <<< // foo : Foo = <Foo instance>
     (swift) var bar = Bar()
-    // bar : Bar = Bar()
+    <<< // bar : Bar = Bar()
     (swift) var workers = Array<Workable>()
-    // workers : Array<Workable> = []
+    <<< // workers : Array<Workable> = []
     (swift) workers.append(foo)
     (swift) workers.append(bar)
     (swift) workers.append(42)
@@ -1112,21 +1112,21 @@ As with a Swift ``Array``, this generic ``Stack`` class is unrestricted, which m
 ::
 
     (swift) var intStack = Stack<Int>()
-    // intStack : Stack<Int> = <Stack<Int> instance>
+    <<< // intStack : Stack<Int> = <Stack<Int> instance>
     (swift) intStack.push(1)
     (swift) intStack.push(5)
     (swift) intStack.pop()
-    // r0 : Int = 5
+    <<< // r0 : Int = 5
     (swift) intStack.pop()
-    // r1 : Int = 1
+    <<< // r1 : Int = 1
     (swift) var stringStack = Stack<String>()
-    // stringStack : Stack<String> = <Stack<String> instance>
+    <<< // stringStack : Stack<String> = <Stack<String> instance>
     (swift) stringStack.push("bye")
     (swift) stringStack.push("hello")
     (swift) stringStack.pop()
-    // r2 : String = "hello"
+    <<< // r2 : String = "hello"
     (swift) stringStack.pop()
-    // r3 : String = "bye"
+    <<< // r3 : String = "bye"
 
 Definining a type or algorithm to take any type means that you only have access to basic operations that all types support, like copyability.
 
@@ -1178,9 +1178,9 @@ Test this with an array of integers:
 ::
 
     (swift) var integers = [1,2,3,4,5]
-    // integers : Int[] = [1, 2, 3, 4, 5]
+    <<< // integers : Int[] = [1, 2, 3, 4, 5]
     (swift) findIndexOf(integers, 4)
-    // r4 : Int = 3
+    <<< // r4 : Int = 3
 
 Note: the Swift standard library already includes a ``find()`` function, as well as other useful generic functions like ``min()``, ``max()``, ``map()``, ``swap()``, and the ``sort()`` function described earlier in the Closures section.
 
@@ -1209,11 +1209,11 @@ Cocoa module (which is built directly from Cocoa.h)::
 You can create an instance of a Cocoa class just like any other class::
 
     (swift) var array = NSMutableArray()
-    // array : NSMutableArray = [
-    // 
-    // ]
+    <<< // array : NSMutableArray = [
+    <<< // 
+    <<< // ]
     (swift) var date = NSDate()
-    // date : NSDate = 2013-02-27 20:17:39 +0000
+    <<< // date : NSDate = 2013-02-27 20:17:39 +0000
 
 As you would expect, simple things like type inference work great with Cocoa
 types.  The REPL even knows to use the output of the ``description()`` method
@@ -1224,11 +1224,11 @@ calling simple methods on them::
 
     (swift) array.addObject(date)
     (swift) array.count()
-    // NSUInteger = 1
+    <<< // NSUInteger = 1
     (swift) array
-    // array : NSMutableArray = (
-    //     "2013-02-27 20:17:39 +0000"
-    // )
+    <<< // array : NSMutableArray = (
+    <<< //     "2013-02-27 20:17:39 +0000"
+    <<< // )
 
 You can also use Swift's literal syntax to create Cocoa arrays and dictionaries,
 if there is a contextual type (as in a function call or explicitly typed
@@ -1236,16 +1236,16 @@ local variable) to indicate that you want an NSArray instead of a basic language
 array::
 
     (swift) var stringArray : NSArray = ["This", "is", "awesome!"]
-    // stringArray : NSArray = [
-    //   "This",
-    //   "is",
-    //   "awesome!"
-    // ]
+    <<< // stringArray : NSArray = [
+    <<< //   "This",
+    <<< //   "is",
+    <<< //   "awesome!"
+    <<< // ]
 
 Swift's builtin ``String`` and ``NSString`` work great together, so everything "just works". Try building a string from the components in the array::
 
     (swift) var string = stringArray.componentsJoinedByString(" ")
-    // string : String = This is awesome!
+    <<< // string : String = This is awesome!
 
 You can even use Swift's interpolation syntax::
 
@@ -1254,15 +1254,15 @@ You can even use Swift's interpolation syntax::
               mutableString.appendString("\nNumber \(index)")
             }
     (swift) mutableString
-    // mutableString : NSMutableString = 
-    // Number 1
-    // Number 2
-    // Number 3
+    <<< // mutableString : NSMutableString = 
+    <<< // Number 1
+    <<< // Number 2
+    <<< // Number 3
 
 You can initialize Objective-C objects using ``initWith...`` methods by supplying initializer arguments::
 
     (swift) var number = NSNumber(true)
-    // number : NSNumber = 1
+    <<< // number : NSNumber = 1
 
 Because Swift uses the standard Objective-C object model, you can extend a class
 written in Objective-C with a Swift extension (which just defines a "category"
@@ -1276,7 +1276,7 @@ in Objective-C parlance)::
             }
     (swift) string = "       trim me       "
     (swift) string.stringByTrimmingWhitespace()
-    // NSString = trim me
+    <<< // NSString = trim me
     
 and you can even extend non-class Objective-C types, like structures::
 
@@ -1286,9 +1286,9 @@ and you can even extend non-class Objective-C types, like structures::
               }
             } 
     (swift) var rect = NSRect(4,5,200,400)
-    // rect : NSRect = NSRect(CGPoint(4.0, 5.0), CGSize(200.0, 400.0))
+    <<< // rect : NSRect = NSRect(CGPoint(4.0, 5.0), CGSize(200.0, 400.0))
     (swift) rect.area()
-    // CGFloat = 80000.0
+    <<< // CGFloat = 80000.0
 
 If you do this, the extensions are not visible to Objective-C code, because it
 has no way to model this.  It is extremely useful in Swift code though.
@@ -1300,17 +1300,17 @@ Invoking Objective-C Selectors
 When invoking an Objective-C selector that takes one argument (or no arguments), you simply use the Swift function call syntax::
 
     (swift) string.uppercaseString()
-    // NSString =        TRIM ME       
+    <<< // NSString =        TRIM ME       
 
 For selectors that take more than one argument, you have a variety of options. In situations where there is only one possible selector for a given set of arguments, just supply them in order::
 
     (swift) string.rangeOfString("m", NSBackwardsSearch)
-    // NSRange = NSRange(12, 1)
+    <<< // NSRange = NSRange(12, 1)
 
 If there are multiple possible selectors, or if you prefer to be explicit, you can name the arguments::
 
     (swift) string.rangeOfString("m", options:NSBackwardsSearch)
-    // NSRange = NSRange(12, 1)
+    <<< // NSRange = NSRange(12, 1)
 
 
 AppKit Magic
@@ -1319,13 +1319,13 @@ AppKit Magic
 You're not just limited to working with Foundation classes in the REPL. When importing Cocoa, the REPL sets up a run loop for you, so you can also test AppKit classes, like ``NSWindow``::
     
     (swift) var frame = NSRect(200, 200, 700, 400)
-    // frame : NSRect = NSRect(CGPoint(200.0, 200.0), CGSize(700.0, 400.0))
+    <<< // frame : NSRect = NSRect(CGPoint(200.0, 200.0), CGSize(700.0, 400.0))
     (swift) var mask = Int(NSTitledWindowMask|NSClosableWindowMask|NSResizableWindowMask)
-    // mask : Int64 = 11
+    <<< // mask : Int64 = 11
     (swift) var backing = NSBackingStoreType(NSBackingStoreBuffered)
-    // backing : Int64 = 2
+    <<< // backing : Int64 = 2
     (swift) var window = NSWindow(withContentRect:frame, styleMask:mask, backing:backing, defer:false)
-    // window : NSWindow = <NSWindow: 0x3fb3cefa3dfe>
+    <<< // window : NSWindow = <NSWindow: 0x3fb3cefa3dfe>
     (swift) window.setReleasedWhenClosed(false)
     (swift) window.makeKeyAndOrderFront(nil)
 
@@ -1338,9 +1338,9 @@ You can then use the REPL to change property values and see the window update im
 This provides a fantastic learning experience for developers new to Cocoa. Add a text field and watch how its appearance changes as you set each property::
 
     (swift) var field = NSTextField(NSRect(150, 200, 400, 50))
-    // field : NSTextField = <NSTextField: 0x7fca58fad540>
+    <<< // field : NSTextField = <NSTextField: 0x7fca58fad540>
     (swift) var content = window.contentView() as! NSView
-    // content : NSView = <NSView: 0x7fca5041dc90>
+    <<< // content : NSView = <NSView: 0x7fca5041dc90>
     (swift) content.addSubview(field)
     (swift) field.setStringValue("Hello, world!")
     (swift) field.setEditable(false)
@@ -1353,7 +1353,7 @@ This provides a fantastic learning experience for developers new to Cocoa. Add a
 Next add a button and create an instance of a Swift class to act as the target::
 
     (swift) var button = NSButton(NSRect(300, 50, 100, 25))
-    // button : NSButton = <NSButton: 0x7fdd81578224>
+    <<< // button : NSButton = <NSButton: 0x7fdd81578224>
     (swift) content.addSubview(button)
     (swift) button.setBezelStyle(NSRoundedBezelStyle)
     (swift) class Delegate : NSObject {
@@ -1362,7 +1362,7 @@ Next add a button and create an instance of a Swift class to act as the target::
               }
             }
     (swift) var delegate = Delegate()
-    // delegate : Delegate = <Delegate: 0x7fdd82433d3>
+    <<< // delegate : Delegate = <Delegate: 0x7fdd82433d3>
     (swift) button.setTarget(delegate)
     (swift) button.setAction("doSomething:")
 

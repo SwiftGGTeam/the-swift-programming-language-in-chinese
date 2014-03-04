@@ -143,9 +143,9 @@ The syntax for creating instances is very similar for both structures and classe
 .. testcode:: classesAndStructures
 
     (swift) let someSize = Size()
-    // someSize : Size = Size(0.0, 0.0)
+    <<< // someSize : Size = Size(0.0, 0.0)
     (swift) let someRectangle = Rectangle()
-    // someRectangle : Rectangle = <Rectangle instance>
+    <<< // someRectangle : Rectangle = <Rectangle instance>
 
 Structures and classes both use :newTerm:`initializer syntax` when creating new instances.
 The simplest form of initializer syntax uses the type name of the class or structure,
@@ -220,7 +220,7 @@ can be passed to the memberwise initializer by name:
 .. testcode:: classesAndStructures
 
     (swift) let twoByTwo = Size(width: 2.0, height: 2.0)
-    // twoByTwo : Size = Size(2.0, 2.0)
+    <<< // twoByTwo : Size = Size(2.0, 2.0)
 
 Initial values can also be provided without names,
 if they are listed in the same order that the properties are declared in the structure's definition:
@@ -228,7 +228,7 @@ if they are listed in the same order that the properties are declared in the str
 .. testcode:: classesAndStructures
 
     (swift) let fourByThree = Size(4.0, 3.0)
-    // fourByThree : Size = Size(4.0, 3.0)
+    <<< // fourByThree : Size = Size(4.0, 3.0)
 
 .. TODO: Include a justifiable reason for why classes do not provide a memberwise initializer.
 .. TODO: Describe the creation of custom initializers.
@@ -289,7 +289,7 @@ Here's an example of ``willSet`` and ``didSet`` in action:
         }
     }
     (swift) let stepCounter = StepCounter()
-    // stepCounter : StepCounter = <StepCounter instance>
+    <<< // stepCounter : StepCounter = <StepCounter instance>
     (swift) stepCounter.totalSteps = 200
     >>> Added 200 steps
     (swift) stepCounter.totalSteps = 360
@@ -376,9 +376,9 @@ to retrieve and set other properties and values indirectly.
         }
     }
     (swift) var square = Rect(origin: Point(0.0, 0.0), size: Size(10.0, 10.0))
-    // square : Rect = Rect(Point(0.0, 0.0), Size(10.0, 10.0))
+    <<< // square : Rect = Rect(Point(0.0, 0.0), Size(10.0, 10.0))
     (swift) let initialSquareCenter = square.center
-    // initialSquareCenter : Point = Point(5.0, 5.0)
+    <<< // initialSquareCenter : Point = Point(5.0, 5.0)
     (swift) square.center = Point(x: 15.0, y: 15.0)
     (swift) println("square origin is now at (\(square.origin.x), \(square.origin.y))")
     >>> square origin is now at (10.0, 10.0)
@@ -469,7 +469,7 @@ by removing the ``get`` keyword:
         }
     }
     (swift) let fourByFiveByTwo = Cuboid(4.0, 5.0, 2.0)
-    // fourByFiveByTwo : Cuboid = Cuboid(4.0, 5.0, 2.0)
+    <<< // fourByFiveByTwo : Cuboid = Cuboid(4.0, 5.0, 2.0)
     (swift) println("the volume of fourByFiveByTwo is \(fourByFiveByTwo.volume)")
     >>> the volume of fourByFiveByTwo is 40.0
 
@@ -573,9 +573,9 @@ For example, using the ``Size`` structure from above:
 .. testcode:: classesAndStructures
 
     (swift) let iPhone4 = Size(width: 640.0, height: 960.0)
-    // iPhone4 : Size = Size(640.0, 960.0)
+    <<< // iPhone4 : Size = Size(640.0, 960.0)
     (swift) var iPhone5 = iPhone4
-    // iPhone5 : Size = Size(640.0, 960.0)
+    <<< // iPhone5 : Size = Size(640.0, 960.0)
     (swift) iPhone5.height = 1136.0
     (swift) println("The iPhone 5 screen is now \(iPhone5.height) pixels high")
     >>> The iPhone 5 screen is now 1136.0 pixels high
@@ -631,12 +631,12 @@ Here's an example, using the ``Rectangle`` class defined above:
 .. testcode:: classesAndStructures
 
     (swift) let rect = Rectangle()
-    // rect : Rectangle = <Rectangle instance>
+    <<< // rect : Rectangle = <Rectangle instance>
     (swift) rect.size = Size(width: 1.0, height: 1.0)
     (swift) println("The rectangle's initial width is \(rect.size.width)")
     >>> The rectangle's initial width is 1.0
     (swift) let sameRect = rect
-    // sameRect : Rectangle = <Rectangle instance>
+    <<< // sameRect : Rectangle = <Rectangle instance>
     (swift) sameRect.size.width = 3.0
     (swift) println("The rectangle's width via sameRect is now \(sameRect.size.width)")
     >>> The rectangle's width via sameRect is now 3.0
@@ -798,7 +798,7 @@ Instance methods are called using the same dot syntax as properties:
 .. testcode:: classesAndStructures
 
     (swift) let counter = Counter()
-    // counter : Counter = <Counter instance>
+    <<< // counter : Counter = <Counter instance>
     (swift) println("Initial counter value is \(counter.count)")
     >>> Initial counter value is 0
     (swift) counter.increment()
@@ -867,7 +867,7 @@ and an instance property that is also called ``x``:
         }
     }
     (swift) let somePoint = Point(4.0, 5.0)
-    // somePoint : Point = Point(4.0, 5.0)
+    <<< // somePoint : Point = Point(4.0, 5.0)
     (swift) if somePoint.isToTheRightOfX(1.0) {
         println("This point is to the right of the line where x == 1.0")
     }
@@ -892,7 +892,7 @@ the instance it refers to can be modified as normal:
         }
     }
     (swift) let savingsAccount = BankAccount()
-    // savingsAccount : BankAccount = <BankAccount instance>
+    <<< // savingsAccount : BankAccount = <BankAccount instance>
     (swift) savingsAccount.depositMoney(100.00)
     (swift) println("The savings account now contains $\(savingsAccount.balance)")
     >>> The savings account now contains $100.0
@@ -930,7 +930,7 @@ the properties of the structure instance:
         }
     }
     (swift) var somePoint = Point(1.0, 1.0)
-    // somePoint : Point = Point(1.0, 1.0)
+    <<< // somePoint : Point = Point(1.0, 1.0)
     (swift) somePoint.moveBy(2.0, 3.0)
     (swift) println("The point is now at (\(somePoint.x), \(somePoint.y))")
     >>> The point is now at (3.0, 4.0)
@@ -991,7 +991,7 @@ written using the ``init`` keyword:
         }
     }
     (swift) var f = Fahrenheit()
-    // f : Fahrenheit = Fahrenheit(32.0)
+    <<< // f : Fahrenheit = Fahrenheit(32.0)
     (swift) println("The default temperature is \(f.temperature)° Fahrenheit")
     >>> The default temperature is 32.0° Fahrenheit
 
@@ -1058,9 +1058,9 @@ with a value from a different temperature scale:
         }
     }
     (swift) var boilingPointOfWater = Celsius(withFahrenheit: 212.0)
-    // boilingPointOfWater : Celsius = Celsius(100.0)
+    <<< // boilingPointOfWater : Celsius = Celsius(100.0)
     (swift) var freezingPointOfWater = Celsius(withKelvin: -273.15)
-    // freezingPointOfWater : Celsius = Celsius(0.0)
+    <<< // freezingPointOfWater : Celsius = Celsius(0.0)
 
 .. TODO: mention that initializers can be written in either function syntax.
 
@@ -1088,7 +1088,7 @@ as long as is is definitely set to a value by the time the initializer has finis
         }
     }
     (swift) var absoluteZero = Temperature(withValue: -273.15, inScale: "C")
-    // absoluteZero : Temperature = Temperature(-273.15, "C")
+    <<< // absoluteZero : Temperature = Temperature(-273.15, "C")
     (swift) println("Temperature is \(absoluteZero.toKelvin())°K")
     >>> Temperature is 0.0°K
 
@@ -1135,7 +1135,7 @@ and sets it to the result of calling ``init withTitle()`` for a specific title s
 .. testcode:: initializerDelegation
 
     (swift) let thisBook = Document(withTitle: "The Swift Programming Language")
-    // thisBook : Document = <Document instance>
+    <<< // thisBook : Document = <Document instance>
     (swift) println("This book is called '\(thisBook.title)'")
     >>> This book is called 'The Swift Programming Language'
 
@@ -1147,7 +1147,7 @@ passing it a placeholder string value of ``[untitled]``:
 .. testcode:: initializerDelegation
 
     (swift) let someBook = Document()
-    // someBook : Document = <Document instance>
+    <<< // someBook : Document = <Document instance>
     (swift) println("Some unknown book is called '\(someBook.title)'")
     >>> Some unknown book is called '[untitled]'
 
@@ -1235,7 +1235,7 @@ you can see how its properties have been updated:
 .. testcode:: inheritance
 
     (swift) let bicycle = Bicycle()
-    // bicycle : Bicycle = <Bicycle instance>
+    <<< // bicycle : Bicycle = <Bicycle instance>
     (swift) println("Bicycle: \(bicycle.description())")
     >>> Bicycle: 2 wheels; up to 1 passengers
 
@@ -1271,7 +1271,7 @@ you can see how its properties have been updated:
 .. testcode:: inheritance
 
     (swift) let tandem = Tandem()
-    // tandem : Tandem = <Tandem instance>
+    <<< // tandem : Tandem = <Tandem instance>
     (swift) println("Tandem: \(tandem.description())")
     >>> Tandem: 2 wheels; up to 2 passengers
 
@@ -1325,7 +1325,7 @@ For example:
         }
     }
     (swift) var car = Car()
-    // car : Car = <Car instance>
+    <<< // car : Car = <Car instance>
     (swift) println("Car: \(car.description())")
     >>> Car: 4 wheels; up to 5 passengers; not convertible
 
@@ -1431,7 +1431,7 @@ Here's how this initializer could be called:
 .. testcode:: initializerDelegation
 
     (swift) let empty = TextDocument()
-    // empty : TextDocument = <TextDocument instance>
+    <<< // empty : TextDocument = <TextDocument instance>
     (swift) println("\(empty.title):\n\(empty.bodyText)")
     >>> [untitled]:
     >>> [replace me]
@@ -1461,7 +1461,7 @@ Here's how this initializer could be called:
 .. testcode:: initializerDelegation
 
     (swift) let titled = TextDocument(withTitle: "Write something please")
-    // titled : TextDocument = <TextDocument instance>
+    <<< // titled : TextDocument = <TextDocument instance>
     (swift) println("\(titled.title):\n\(titled.bodyText)")
     >>> Write something please:
     >>> [replace me]
@@ -1487,7 +1487,7 @@ Here's how this initializer could be called:
 
     (swift) let untitledPangram = TextDocument(
         withText: "Amazingly few discotheques provide jukeboxes")
-    // untitledPangram : TextDocument = <TextDocument instance>
+    <<< // untitledPangram : TextDocument = <TextDocument instance>
     (swift) println("\(untitledPangram.title):\n\(untitledPangram.bodyText)")
     >>> [untitled]:
     >>> Amazingly few discotheques provide jukeboxes
@@ -1522,7 +1522,7 @@ Here's how this final initializer could be called:
     (swift) let foxPangram = TextDocument(
         withTitle: "Quick brown fox",
         text: "The quick brown fox jumped over the lazy dog")
-    // foxPangram : TextDocument = <TextDocument instance>
+    <<< // foxPangram : TextDocument = <TextDocument instance>
     (swift) println("\(foxPangram.title):\n\(foxPangram.bodyText)")
     >>> Quick brown fox:
     >>> The quick brown fox jumped over the lazy dog
@@ -1598,7 +1598,7 @@ For example:
 .. testcode:: typeCasting
 
     (swift) var library = Array<MediaItem>()
-    // library : Array<MediaItem> = []
+    <<< // library : Array<MediaItem> = []
     (swift) library.append(Movie("Casablanca", director: "Michael Curtiz"))
     (swift) library.append(Song("Blue Suede Shoes", artist: "Elvis Presley"))
     (swift) library.append(Movie("Citizen Kane", director: "Orson Welles"))
@@ -1630,9 +1630,9 @@ You can check whether an instance is of a certain type by using the ``is`` opera
 .. testcode:: typeCasting
 
     (swift) var movieCount = 0
-    // movieCount : Int = 0
+    <<< // movieCount : Int = 0
     (swift) var songCount = 0
-    // songCount : Int = 0
+    <<< // songCount : Int = 0
     (swift) for item in library {
         if item is Movie {
             ++movieCount
@@ -1863,7 +1863,7 @@ Here's how that looks in action:
 .. testcode:: deinitializer
 
     (swift) var playerOne: Player? = Player(withCoins: 100)
-    // playerOne : Player? = <unprintable value>
+    <<< // playerOne : Player? = <unprintable value>
     (swift) println("A new player has joined the game with \(playerOne!.coinsInPurse) coins")
     >>> A new player has joined the game with 100 coins
     (swift) println("There are now \(Bank.coinsInBank) coins left in the bank")
@@ -1952,11 +1952,11 @@ so that it can be used as an infix operator between existing ``Vector2D`` instan
 .. testcode:: customOperators
 
     (swift) let vector = Vector2D(3.0, 1.0)
-    // vector : Vector2D = Vector2D(3.0, 1.0)
+    <<< // vector : Vector2D = Vector2D(3.0, 1.0)
     (swift) let anotherVector = Vector2D(2.0, 4.0)
-    // anotherVector : Vector2D = Vector2D(2.0, 4.0)
+    <<< // anotherVector : Vector2D = Vector2D(2.0, 4.0)
     (swift) let combinedVector = vector + anotherVector
-    // combinedVector : Vector2D = Vector2D(5.0, 5.0)
+    <<< // combinedVector : Vector2D = Vector2D(5.0, 5.0)
 
 This example adds together the vectors ``(3.0, 1.0)`` and ``(2.0, 4.0)``
 to make the vector ``(5.0, 5.0)``, as illustrated below.
@@ -2002,11 +2002,11 @@ performs this operation on both the ``x`` and ``y`` properties:
 .. testcode:: customOperators
 
     (swift) let positive = Vector2D(3.0, 4.0)
-    // positive : Vector2D = Vector2D(3.0, 4.0)
+    <<< // positive : Vector2D = Vector2D(3.0, 4.0)
     (swift) let negative = -positive
-    // negative : Vector2D = Vector2D(-3.0, -4.0)
+    <<< // negative : Vector2D = Vector2D(-3.0, -4.0)
     (swift) let alsoPositive = -negative
-    // alsoPositive : Vector2D = Vector2D(3.0, 4.0)
+    <<< // alsoPositive : Vector2D = Vector2D(3.0, 4.0)
 
 .. QUESTION: is this the first time I will have introduced attributes?
    If so, do they need more qualification?
@@ -2040,9 +2040,9 @@ and uses it to set the left-hand value to itself plus the right-hand value:
 .. testcode:: customOperators
 
     (swift) var original = Vector2D(1.0, 2.0)
-    // original : Vector2D = Vector2D(1.0, 2.0)
+    <<< // original : Vector2D = Vector2D(1.0, 2.0)
     (swift) let vectorToAdd = Vector2D(3.0, 4.0)
-    // vectorToAdd : Vector2D = Vector2D(3.0, 4.0)
+    <<< // vectorToAdd : Vector2D = Vector2D(3.0, 4.0)
     (swift) original += vectorToAdd
     (swift) println("original is now (\(original.x), \(original.y))")
     >>> original is now (4.0, 6.0)
@@ -2067,9 +2067,9 @@ and returns the result.
 .. testcode:: customOperators
 
     (swift) var toIncrement = Vector2D(3.0, 4.0)
-    // toIncrement : Vector2D = Vector2D(3.0, 4.0)
+    <<< // toIncrement : Vector2D = Vector2D(3.0, 4.0)
     (swift) let afterIncrement = ++toIncrement
-    // afterIncrement : Vector2D = Vector2D(4.0, 5.0)
+    <<< // afterIncrement : Vector2D = Vector2D(4.0, 5.0)
     (swift) println("toIncrement is now (\(toIncrement.x), \(toIncrement.y))")
     >>> toIncrement is now (4.0, 5.0)
 
@@ -2132,9 +2132,9 @@ rather than adding ``Vector2D(1.0, 1.0)``:
 .. testcode:: customOperators
 
     (swift) var toBeDoubled = Vector2D(1.0, 4.0)
-    // toBeDoubled : Vector2D = Vector2D(1.0, 4.0)
+    <<< // toBeDoubled : Vector2D = Vector2D(1.0, 4.0)
     (swift) let afterDoubling = +++toBeDoubled
-    // afterDoubling : Vector2D = Vector2D(2.0, 8.0)
+    <<< // afterDoubling : Vector2D = Vector2D(2.0, 8.0)
     (swift) println("toBeDoubled is now (\(toBeDoubled.x), \(toBeDoubled.y))")
     >>> toBeDoubled is now (2.0, 8.0)
 
@@ -2165,11 +2165,11 @@ with ``left`` associativity, and a precedence of ``140``:
         return Vector2D(lhs.x + rhs.x, lhs.y - rhs.y)
     }
     (swift) let firstVector = Vector2D(1.0, 2.0)
-    // firstVector : Vector2D = Vector2D(1.0, 2.0)
+    <<< // firstVector : Vector2D = Vector2D(1.0, 2.0)
     (swift) let secondVector = Vector2D(3.0, 4.0)
-    // secondVector : Vector2D = Vector2D(3.0, 4.0)
+    <<< // secondVector : Vector2D = Vector2D(3.0, 4.0)
     (swift) let plusMinusVector = firstVector +- secondVector
-    // plusMinusVector : Vector2D = Vector2D(4.0, -2.0)
+    <<< // plusMinusVector : Vector2D = Vector2D(4.0, -2.0)
 
 This operator adds together the ``x`` values of two vectors,
 and subtracts the ``y`` value of the second vector from the first.
@@ -2256,7 +2256,7 @@ Here's an example of a read-only subscript implementation:
         }
     }
     (swift) var fibonacci = FibonacciGenerator()
-    // fibonacci : FibonacciGenerator = <FibonacciGenerator instance>
+    <<< // fibonacci : FibonacciGenerator = <FibonacciGenerator instance>
     (swift) println("The sixth number in the Fibonacci sequence is \(fibonacci[7])")
     >>> The sixth number in the Fibonacci sequence is 13
 
@@ -2309,9 +2309,9 @@ by passing in a key of the appropriate type within subscript braces:
 .. testcode:: subscripts
 
     (swift) let numberOfLegs = ["spider" : 8, "ant" : 6, "cat" : 4]
-    // numberOfLegs : Dictionary<String, Int> = Dictionary<String, Int>(1.33333, 3, <DictionaryBufferOwner<String, Int> instance>)
+    <<< // numberOfLegs : Dictionary<String, Int> = Dictionary<String, Int>(1.33333, 3, <DictionaryBufferOwner<String, Int> instance>)
     (swift) let spiderLegs = numberOfLegs["spider"]
-    // spiderLegs : Int = 8
+    <<< // spiderLegs : Int = 8
 
 This ``Dictionary`` instance is of type ``Dictionary<String, Int>``.
 This means that it has keys of type ``String``,
@@ -2382,7 +2382,7 @@ Each position in the matrix is given an initial value of ``0.0``:
 .. testcode:: subscripts
 
     (swift) var matrix = Matrix(withRows: 2, columns: 2)
-    // matrix : Matrix = Matrix(2, 2, [0.0, 0.0, 0.0, 0.0])
+    <<< // matrix : Matrix = Matrix(2, 2, [0.0, 0.0, 0.0, 0.0])
 
 The ``grid`` array is effectively a flattened version of the matrix,
 as read from top left to bottom right:

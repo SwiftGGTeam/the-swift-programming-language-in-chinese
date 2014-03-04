@@ -151,7 +151,7 @@ For example, the range function above can be rewritten to take a tuple of two ``
         return range.1 - range.0
     }
     (swift) let someRange = (1, 10)
-    // someRange : (Int, Int) = (1, 10)
+    <<< // someRange : (Int, Int) = (1, 10)
     (swift) println(halfOpenRangeLengthForRange(someRange))
     >>> 9
 
@@ -206,7 +206,7 @@ and a value of ``.None`` in its second value to indicate that ``splitter`` was n
 .. testcode:: functionParameters
 
     (swift) let helloWorld = splitOnFirst("hello world", ' ')
-    // helloWorld : (String, String?) = ("hello", <unprintable value>)
+    <<< // helloWorld : (String, String?) = ("hello", <unprintable value>)
     (swift) if let secondPart = helloWorld.1 {
         println("The text from after the splitter is '\(secondPart)'")
     }
@@ -218,7 +218,7 @@ as part of the function return value assignment:
 .. testcode:: functionParameters
 
     (swift) let (first, possibleSecond) = splitOnFirst("hello world", ' ')
-    // (first, possibleSecond) : (String, String?) = ("hello", <unprintable value>)
+    <<< // (first, possibleSecond) : (String, String?) = ("hello", <unprintable value>)
     (swift) if let second = possibleSecond {
         println("The text from after the splitter is '\(second)'")
     }
@@ -253,7 +253,7 @@ and also enables values to be passed in a different order to the original functi
     (swift) let containsASpace = containsCharacter(
         characterToFind: ' ',
         stringToSearch: "This will return true")
-    // containsASpace : Bool = true
+    <<< // containsASpace : Bool = true
 
 Here, the parameter values are passed in a different order when the function is actually called.
 Because they are named,
@@ -275,7 +275,7 @@ the passed parameters are assumed to be in the order they were originally declar
 .. testcode:: functionParameters
 
     (swift) let containsAHyphen = containsCharacter("This will return false", '-')
-    // containsAHyphen : Bool = false
+    <<< // containsAHyphen : Bool = false
 
 .. _Functions_DefaultParameterValues:
 
@@ -292,9 +292,9 @@ it can be omitted when calling the function:
         return string1 + joiner + string2
     }
     (swift) joinTwoStrings("hello", "world", ":")
-    // r1 : String = "hello:world"
+    <<< // r1 : String = "hello:world"
     (swift) joinTwoStrings("hello", "world")
-    // r2 : String = "hello world"
+    <<< // r2 : String = "hello world"
 
 This function joins two strings together.
 If a value for ``joiner`` is provided,
@@ -315,7 +315,7 @@ The ``joinTwoStrings`` function could have been written with ``joiner`` as the s
         return string1 + joiner + string2
     }
     (swift) joinTwoMoreStrings("hello", ":", "world")
-    // r3 : String = "hello:world"
+    <<< // r3 : String = "hello:world"
 
 However, if you try and call this version of the function without passing in a value for ``joiner``,
 and without using named values,
@@ -338,7 +338,7 @@ This problem can be avoided by naming the values when you call the function:
 .. testcode:: functionParameters
 
     (swift) joinTwoMoreStrings(string1: "hello", string2: "world")
-    // r4 : String = "hello world"
+    <<< // r4 : String = "hello world"
 
 This tells Swift which parameters you want
 the values of "hello" and "world" to be used for,
@@ -414,7 +414,7 @@ The return value of a function can be ignored when it is called:
     }
     (swift) printAndCount("hello, world")
     >>> hello, world
-    // r5 : Int = 12
+    <<< // r5 : Int = 12
     (swift) printWithoutCounting("hello, world")
     >>> hello, world
 
@@ -469,9 +469,9 @@ Variable parameters are declared by prefixing the parameter name with the keywor
         return string
     }
     (swift) let originalString = "hello"
-    // originalString : String = "hello"
+    <<< // originalString : String = "hello"
     (swift) let paddedString = alignRight(originalString, 10, '-')
-    // paddedString : String = "-----hello"
+    <<< // paddedString : String = "-----hello"
     (swift) println("The original string is still '\(originalString)'")
     >>> The original string is still 'hello'
 
@@ -518,9 +518,9 @@ They are indicated by inserting three period characters (``...``) after their ty
         return total / Double(numbers.count)
     }
     (swift) arithmeticMean(1, 2, 3, 4, 5)
-    // r6 : Double = 3.0
+    <<< // r6 : Double = 3.0
     (swift) arithmeticMean(3, 8, 19)
-    // r7 : Double = 10.0
+    <<< // r7 : Double = 10.0
 
 This function calculates the :newTerm:`arithmetic mean`
 (also known as the :newTerm:`average`) for a list of numbers of any length.
@@ -591,14 +591,14 @@ by a colon:
 .. testcode:: selectorStyle
 
     (swift) joinString("hello", toString: "world", withJoiner: ":")
-    // r0 : String = "hello:world"
+    <<< // r0 : String = "hello:world"
 
 As before, any parameters with default values can be excluded when the function is called:
 
 .. testcode:: selectorStyle
 
     (swift) joinString("hello", toString: "world")
-    // r1 : String = "hello world"
+    <<< // r1 : String = "hello world"
 
 With the exception of the first selector part,
 the selector parts may be provided in any order:
@@ -606,7 +606,7 @@ the selector parts may be provided in any order:
 .. testcode:: selectorStyle
 
     (swift) joinString("hello", withJoiner: "-", toString: "world")
-    // r2 : String = "hello-world"
+    <<< // r2 : String = "hello-world"
 
 If a parameter name is omitted from a selector-style declaration,
 the parameter is automatically given the same name as its selector part.

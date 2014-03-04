@@ -88,9 +88,9 @@ to track the number of login attempts a user has made:
 .. testcode:: namedValues
 
     (swift) let maximumNumberOfLoginAttempts = 10
-    // maximumNumberOfLoginAttempts : Int = 10
+    <<< // maximumNumberOfLoginAttempts : Int = 10
     (swift) var currentLoginAttempt = 0
-    // currentLoginAttempt : Int = 0
+    <<< // currentLoginAttempt : Int = 0
 
 This can be read as:
 
@@ -115,7 +115,7 @@ to be explicit about the kind of values they can store:
 .. testcode:: namedValues
 
     (swift) let welcomeMessage: String = "Hello"
-    // welcomeMessage : String = "Hello"
+    <<< // welcomeMessage : String = "Hello"
 
 The colon in the declaration means *“…of type…,”*
 so this can be read as:
@@ -132,11 +132,11 @@ including Unicode characters:
 .. testcode:: namedValues
 
     (swift) let π = 3.14159
-    // π : Double = 3.14159
+    <<< // π : Double = 3.14159
     (swift) let 你好 = "你好世界"
-    // 你好 : String = "你好世界"
+    <<< // 你好 : String = "你好世界"
     (swift) let 🐶🐮 = "dogcow"
-    // 🐶🐮 : String = "dogcow"
+    <<< // 🐶🐮 : String = "dogcow"
 
 Constant and variable names cannot contain
 mathematical symbols, arrows, private-use (or invalid) Unicode code points,
@@ -155,10 +155,11 @@ You can also print the value of a named value by using the ``println`` function:
 .. testcode:: namedValues
 
     (swift) var friendlyWelcome = "hello, world"
-    // friendlyWelcome : String = "hello, world"
+    <<< // friendlyWelcome : String = "hello, world"
     (swift) friendlyWelcome = "👋, 🌎"
     (swift) println(friendlyWelcome)
     >>> 👋, 🌎
+    (swift) // friendlyWelcome is now "👋, 🌎"
 
 .. NOTE: this is a deliberately simplistic description of what you can do with println().
    It will be expanded later on.
@@ -173,8 +174,10 @@ and attempting to do so will result in an error:
 .. testcode:: namedValues
 
     (swift) let languageName = "Swift"
-    // languageName : String = "Swift"
+    <<< // languageName : String = "Swift"
     (swift) languageName = "Swift++"
+    (swift) /* this will result in a compilation error –
+    languageName is a constant, and cannot be changed */
     !!! <REPL Input>:1:14: error: cannot assign to 'let' value 'languageName'
     !!! languageName = "Swift++"
     !!! ~~~~~~~~~~~~ ^
@@ -276,7 +279,8 @@ because you have initialized it with a number that looks like an integer:
 .. testcode:: typeInference
 
     (swift) let meaningOfLife = 42
-    // meaningOfLife : Int = 42
+    <<< // meaningOfLife : Int = 42
+    (swift) // meaningOfLife is inferred to be of type Int
 
 Likewise, if you don't specify a type for a floating-point literal,
 Swift assumes that you want to create a ``Double``:
@@ -284,7 +288,8 @@ Swift assumes that you want to create a ``Double``:
 .. testcode:: typeInference
 
     (swift) let pi = 3.14159
-    // pi : Double = 3.14159
+    <<< // pi : Double = 3.14159
+    (swift) // pi is inferred to be of type Double
 
 Swift always chooses ``Double`` (rather than ``Float``)
 when inferring the type of floating-point numbers.
@@ -295,7 +300,8 @@ a type of ``Double`` will be inferred from the context:
 .. testcode:: typeInference
 
     (swift) let anotherPi = 3 + 0.14159
-    // anotherPi : Double = 3.14159
+    <<< // anotherPi : Double = 3.14159
+    (swift) // anotherPi is also inferred to be of type Double
 
 The literal value of ``3`` has no explicit type in and of itself,
 and so an appropriate output type of ``Double`` is inferred
@@ -318,13 +324,13 @@ All of these integer literals have a decimal value of ``17``:
 .. testcode:: numberLiterals
 
     (swift) let decimalInteger = 17
-    // decimalInteger : Int = 17
+    <<< // decimalInteger : Int = 17
     (swift) let binaryInteger = 0b10001        // 17 in binary notation
-    // binaryInteger : Int = 17
+    <<< // binaryInteger : Int = 17
     (swift) let octalInteger = 0o21            // 17 in octal notation
-    // octalInteger : Int = 17
+    <<< // octalInteger : Int = 17
     (swift) let hexadecimalInteger = 0x11      // 17 in hexadecimal notation
-    // hexadecimalInteger : Int = 17
+    <<< // hexadecimalInteger : Int = 17
 
 Floating-point literals can be decimal (with no prefix),
 or hexadecimal (with a ``0x`` prefix).
@@ -350,11 +356,11 @@ All of these floating-point literals have a decimal value of ``12.5``:
 .. testcode:: numberLiterals
 
     (swift) let decimalDouble = 12.5
-    // decimalDouble : Double = 12.5
+    <<< // decimalDouble : Double = 12.5
     (swift) let exponentDouble = 1.25e1
-    // exponentDouble : Double = 12.5
+    <<< // exponentDouble : Double = 12.5
     (swift) let hexadecimalDouble = 0xC.8p0
-    // hexadecimalDouble : Double = 12.5
+    <<< // hexadecimalDouble : Double = 12.5
 
 Numeric literals can contain extra formatting to make them easier to read.
 Both integers and floats can be padded with extra zeroes at the beginning
@@ -364,11 +370,11 @@ Neither type of formatting affects the underlying value of the literal:
 .. testcode:: numberLiterals
 
     (swift) let paddedDouble = 000123.456
-    // paddedDouble : Double = 123.456
+    <<< // paddedDouble : Double = 123.456
     (swift) let oneMillion = 1_000_000
-    // oneMillion : Int = 1000000
+    <<< // oneMillion : Int = 1000000
     (swift) let justOverOneMillion = 1_000_000.000_000_1
-    // justOverOneMillion : Double = 1e+06
+    <<< // justOverOneMillion : Double = 1e+06
 
 In the example above, the value of ``justOverOneMillion`` has been printed as ``1e+06``.
 This is a short-form representation of its underlying ``Double`` value of ``1000000.0000001``.
@@ -401,10 +407,10 @@ The minimum and maximum values of each integer type can be accessed using its ``
 
 .. testcode:: namedValues
 
-    (swift) let minimumValue = UInt8.min
-    // minimumValue : UInt8 = 0
-    (swift) let maximumValue = UInt8.max
-    // maximumValue : UInt8 = 255
+    (swift) let minValue = UInt8.min  // minValue is now equal to 0, and is of type UInt8
+    <<< // minValue : UInt8 = 0
+    (swift) let maxValue = UInt8.max  // maxValue is now equal to 255, and is of type UInt8
+    <<< // maxValue : UInt8 = 255
 
 The values of these properties are of the appropriate sized number type
 (such as ``UInt8`` in the example above)
@@ -429,10 +435,13 @@ and trying to do so is reported as an error:
     !!! <REPL Input>:1:31: error: integer literal overflows when stored into 'UInt8'
     !!! let cannotBeNegative: UInt8 = -1
     !!!                               ^
+    (swift) // UInt8 cannot store negative numbers, and so this will report an error
     (swift) let tooBig: Int8 = Int8.max + 1
     !!! <REPL Input>:1:29: error: arithmetic operation '127 + 1' (on type 'Int8') results in an overflow
     !!! let tooBig: Int8 = Int8.max + 1
     !!!                             ^
+    (swift) /* Int8 cannot store a number larger than its maximum value,
+    and so this will also report an error */
 
 Because of this,
 numeric type conversion is something you must opt in to on a case-by-case basis.
@@ -445,11 +454,11 @@ you initialize a new number of the desired type with the existing value:
 .. testcode:: typeConversion
 
     (swift) let twoThousand: UInt16 = 2_000
-    // twoThousand : UInt16 = 2000
+    <<< // twoThousand : UInt16 = 2000
     (swift) let one: UInt8 = 1
-    // one : UInt8 = 1
+    <<< // one : UInt8 = 1
     (swift) let twoThousandAndOne = twoThousand + UInt16(one)
-    // twoThousandAndOne : UInt16 = 2001
+    <<< // twoThousandAndOne : UInt16 = 2001
 
 The constant ``twoThousand`` is of type ``UInt16``,
 whereas the constant ``one`` is of type ``UInt8``.
@@ -485,11 +494,12 @@ Conversions between integer and floating-point numeric types must also be made e
 .. testcode:: typeConversion
 
     (swift) let three = 3
-    // three : Int = 3
+    <<< // three : Int = 3
     (swift) let pointOneFourOneFiveNine = 0.14159
-    // pointOneFourOneFiveNine : Double = 0.14159
+    <<< // pointOneFourOneFiveNine : Double = 0.14159
     (swift) let pi = Double(three) + pointOneFourOneFiveNine
-    // pi : Float64 = 3.14159
+    <<< // pi : Float64 = 3.14159
+    (swift) // pi now equals 3.14159, and is inferred to be of type Double
 
 Here, the value of the constant ``three`` is used to create a new value of type ``Double``,
 so that both sides of the addition are of the same type.
@@ -506,7 +516,8 @@ in that an integer type can be initialized with a ``Double`` or ``Float`` value:
 .. testcode:: typeConversion
 
     (swift) let integerPi = Int(pi)
-    // integerPi : Int = 3
+    <<< // integerPi : Int = 3
+    (swift) // integerPi now equals 3, and is inferred to be of type Int
 
 Floating-point values are always rounded towards zero
 when used to initialize a new integer value in this way.
@@ -542,9 +553,9 @@ To represent this fact, Swift provides two Boolean literal values,
 .. testcode:: booleans
 
     (swift) let orangesAreOrange = true
-    // orangesAreOrange : Bool = true
+    <<< // orangesAreOrange : Bool = true
     (swift) let turnipsAreDelicious = false
-    // turnipsAreDelicious : Bool = false
+    <<< // turnipsAreDelicious : Bool = false
 
 The types of ``orangesAreOrange`` and ``turnipsAreDelicious``
 have been inferred as ``Bool`` from the fact that
@@ -566,6 +577,7 @@ such as the ``if``-``else`` statement:
         println("Eww, turnips are horrible.")
     }
     >>> Eww, turnips are horrible.
+    (swift) // this will print "Eww, turnips are horrible."
 
 Conditional statements such as ``if``-``else`` are covered in more detail in :doc:`ControlFlow`.
 
@@ -575,9 +587,9 @@ The following example will produce an error:
 .. testcode:: booleansNotLogicValue
 
     (swift) let i = 1
-    // i : Int = 1
+    <<< // i : Int = 1
     (swift) if i {
-        println("This will report an error rather than compiling")
+        // this example will report an error rather than compiling
     }
     !!! <REPL Input>:1:4: error: type 'Int' does not conform to protocol 'LogicValue'
     !!! if i {
@@ -588,11 +600,10 @@ However, it is valid to say:
 .. testcode:: booleansIsLogicValue
 
     (swift) let i = 1
-    // i : Int = 1
+    <<< // i : Int = 1
     (swift) if i == 1 {
-        println("This is allowed")
+        // this example will compile successfully
     }
-    >>> This is allowed
 
 The result of the ``i == 1`` comparison is of type ``Bool``,
 and so this second example passes the type-check.
@@ -641,7 +652,8 @@ Here's an example of a tuple:
 .. testcode:: tuples
 
     (swift) let httpStatus = (404, "Not Found")
-    // httpStatus : (Int, String) = (404, "Not Found")
+    <<< // httpStatus : (Int, String) = (404, "Not Found")
+    (swift) // httpStatus: (Int, String) = (404, "Not Found")
 
 ``(404, "Not Found")`` is a tuple that describes an *HTTP status code*.
 An HTTP status code is a special value returned by a web server whenever you request a web page.
@@ -663,9 +675,9 @@ You can access the individual element values in a tuple using index numbers star
 .. testcode:: tuples
 
     (swift) httpStatus.0
-    // r0 : Int = 404
+    <<< // r0 : Int = 404
     (swift) httpStatus.1
-    // r1 : String = "Not Found"
+    <<< // r1 : String = "Not Found"
 
 As an alternative,
 you can :newTerm:`decompose` a tuple's contents into separate named values,
@@ -674,7 +686,7 @@ which can then be used as normal:
 .. testcode:: tuples
 
     (swift) let (statusCode, statusMessage) = httpStatus
-    // (statusCode, statusMessage) : (Int, String) = (404, "Not Found")
+    <<< // (statusCode, statusMessage) : (Int, String) = (404, "Not Found")
     (swift) println("The status code is '\(statusCode)'")
     >>> The status code is '404'
     (swift) println("The status message is '\(statusMessage)'")
@@ -736,9 +748,9 @@ The example below shows how to use ``toInt()`` to try to convert a ``String`` in
 .. testcode:: optionals
 
     (swift) let possibleNumber = "123"
-    // possibleNumber : String = "123"
+    <<< // possibleNumber : String = "123"
     (swift) let convertedNumber = possibleNumber.toInt()
-    // convertedNumber : Int? = <unprintable value>
+    <<< // convertedNumber : Int? = <unprintable value>
 
 ``convertedNumber`` has an inferred type of ``Int?``, not ``Int``.
 The question mark indicates that the value it contains is an *optional* ``Int``,
