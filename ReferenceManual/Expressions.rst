@@ -48,9 +48,6 @@ the expression that follows them.
     unary-expression --> prefix-operators-OPT postfix-expression
 
 
-.. TODO: Give a list of the unary operators defined in the Swift stdlib.
-    Then give a cross-reference to the Swift stdlib for more details.
-
 .. _Expressions_BinaryOperators:
 
 Binary Operators
@@ -98,6 +95,9 @@ Built-In Binary Operators
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. _Expressions_AssignmentOperator:
+
+.. TODO: Give a list of the unary operators defined in the Swift stdlib.
+    Then give a cross-reference to the Swift stdlib for more details.
 
 Assignment Operator
 +++++++++++++++++++
