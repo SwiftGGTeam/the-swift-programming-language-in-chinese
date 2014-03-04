@@ -690,7 +690,7 @@ As an alternative,
 you can :newTerm:`decompose` a tuple's contents into separate named values,
 which can then be used as normal:
 
-.. testcode:: tupleDecompositiomn
+.. testcode:: tuples
 
     (swift) let (statusCode, statusMessage) = httpStatus
     <<< // (statusCode, statusMessage) : (Int, String) = (404, "Not Found")
