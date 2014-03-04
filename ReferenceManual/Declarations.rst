@@ -60,7 +60,7 @@ consists of a series of statements.
 Code Blocks
 -----------
 
-A code block is used by a variety of declarations and control structures
+A :newTerm:`code block` is used by a variety of declarations and control structures
 to group statements together.
 It has the following form:
 
@@ -100,7 +100,7 @@ Import Declaration
    although statement might not be strictly correct.
    LangRef uses both "import declaration" and "directive".
 
-Import declarations let you access symbols
+An :newTerm:`import declaration` lets you access symbols
 that are declared outside the current file.
 The basic form imports the entire module;
 it consists of the ``import`` keyword followed by a module name:
@@ -150,8 +150,8 @@ is made available in the current scope.
 Constant Declaration
 --------------------
 
-A constant declaration introduces a constant named value into your program.
-Constant declarations begin with keyword ``let`` and have the following form:
+A :newTerm:`constant declaration` introduces a constant named value into your program.
+Constant declarations are declared using the keyword ``let`` and have the following form:
 
 .. syntax-outline::
 
@@ -162,13 +162,12 @@ and the value of the initializer *expression*;
 after the value of a constant is set, it cannot be changed.
 That said, if a constant is initialized with a class object,
 the object itself may change,
-but the binding between the constant name and the object it refers to may not.
+but the binding between the constant name and the object it refers to can't.
 
 When a constant is declared at global scope,
 it must be initialized with a value.
 When a constant declaration occurs in the context of a class, structure,
-or protocol declaration, it is considered a constant named property,
-as described in :ref:`ClassesAndStructures_StoredProperties`.
+or protocol declaration, it is considered a :newTerm:`constant named property`.
 Constant declarations are not computed properties and therefore do not have getters
 or setters.
 
@@ -194,8 +193,8 @@ The type annotation (``:`` *type*) is optional in a constant declaration
 when the type of the *constant name* may be inferred,
 as described in :ref:`Types_TypeInference`.
 
-For more information about constant declarations and for guidance about when to use them,
-see :ref:`BasicTypes_NamedValues`.
+For more information about constants and for guidance about when to use them,
+see :ref:`BasicTypes_NamedValues` and :ref:`ClassesAndStructures_StoredProperties`.
 
 .. langref-grammar
 
@@ -225,9 +224,94 @@ see :ref:`BasicTypes_NamedValues`.
 Variable Declaration
 --------------------
 
+A :newTerm:`variable declaration` introduces a variable, named value into your program
+and is declared using the keyword ``var``
+
+Variable declarations have several forms which are used to declare different kinds
+of named, mutable values,
+including stored and computed values and properties,
+and stored value and property observers.
+The appropriate form to use depends on two things:
+the scope at which it is declared and the kind of variable you intend to declare.
+
+The first form is used to declare a stored value or property
+and has the following form:
+
 .. syntax-outline::
 
     var <#variable name#> : <#type#> = <#expression#>
+
+This form of a variable declaration can be defined at global scope, the local scope
+of a function, or in the context of a class, structure, protocol, or extension declaration.
+When a variable declaration of this form is declared at global scope or the local
+scope of a function, it is referred to as a :newTerm:`stored named value`.
+When it is declared in the context of a class,
+structure, protocol, or extension declaration,
+it is referred to as a :newTerm:`variable stored property`.
+
+The initializer *expression* can't be present in a protocol declaration,
+but it all other contexts, the initializer *expression* is optional.
+That said, if no initializer *expression* is present,
+the variable declaration must include an explicit type annotation (``:`` *type*).
+
+As with constant declarations,
+if the *variable name* is a tuple pattern,
+the name of each item in the tuple is bound to the corresponding value
+in the initializer *expression*.
+
+As their names suggest, the value of a stored named value or a variable stored property
+is stored in memory.
+
+You can also declare a stored value or property with ``willSet`` and ``didSet`` observers.
+A stored value or property declared with observers has the following form:
+
+.. syntax-outline::
+
+    var <#variable name#> : <#type#> = <#expression#> {
+        willSet(<#setter name#>) {
+            <#statements#>
+        }
+        didSet {
+            <#statements#>
+        }
+    }
+
+This form of a variable declaration can be defined at global scope, the local scope
+of a function, or in the context of a class or structure declaration.
+When a variable declaration of this form is declared at global scope or the local
+scope of a function, the observers are referred to as :newTerm:`stored named value observers`.
+When it is declared in the context of a class or structure declaration,
+the observers are referred to as :newTerm:`stored property observers`.
+
+The initializer *expression* is optional in the context of a class or structure declaration,
+but required elsewhere. The type annotation is required in all variable declarations that
+include observers, regardless of the context in which they are declared.
+
+The ``willSet`` and ``didSet`` observers provide a way to observe (and to respond appropriately)
+when the value of a stored value or property is being set.
+The observers are not called when the value or property
+is first initialized.
+Instead, they are called only when the value is set outside of an initialization context.
+
+A ``willSet`` observer is called just before the value of the variable or property
+is set. The new value is passed to the ``willSet`` observer as a constant,
+and therefore it can't be changed in the implementation of the ``willSet`` clause.
+
+The *setter name* and enclosing parentheses in the ``willSet`` clause is optional.
+If you provide a setter name,
+it is used as the name of the parameter to the ``willSet`` observer.
+If you do not provide a setter name,
+the default parameter name to the ``willSet`` observer is ``value``.
+
+The ``didSet`` observer is called immediately after the new value is set.
+No parameters are passed to the ``didSet`` observer when it is called.
+The ``didSet`` clause is optional.
+
+For more information and to see an example of how to use stored property observers,
+see :ref:`ClassesAndStructures_StoredPropertyObservers`.
+
+The next form is used to declare a computed value or property
+and has the following form:
 
 .. syntax-outline::
 
@@ -240,24 +324,45 @@ Variable Declaration
         }
     }
 
-.. syntax-outline::
+This form of a variable declaration can be defined at global scope, the local scope
+of a function, or in the context of a class, structure, or extension declaration.
+When a variable declaration of this form is declared at global scope or the local
+scope of a function, it is referred to as a :newTerm:`computed named value`.
+When it is declared in the context of a class,
+structure, or extension declaration,
+it is referred to as a :newTerm:`computed property`.
 
-    var <#variable name#> : <#type#> {
-        willSet(<#setter name#>) {
-            <#statements#>
-        }
-        didSet {
-            <#statements#>
-        }
-    }
+The getter is used to read the value,
+and the setter is used to write the value.
+The setter clause is optional,
+and when only a getter is needed, you can omit both clauses and simply
+return the requested value directly,
+as described in :ref:`ClassesAndStructures_ReadOnlyComputedProperties`.
+That said, if you provide a setter clause, you must also provide a getter clause.
+
+The *setter name* and enclosing parentheses is optional.
+If you provide a setter name, it is used as the name of the parameter to the setter.
+If you do not provide a setter name, the default parameter name to the setter is ``value``,
+as described in :ref:`ClassesAndStructures_ShorthandSetterDeclaration`.
+
+Unlike stored named values and variable stored properties,
+the value of a computed named value or a computed property is not stored in memory.
+
+For more information and to see examples of computed properties,
+see :ref:`ClassesAndStructures_ComputedProperties`.
+
+You can also declare computed properties in the context of a protocol declaration.
+These computed properties have the following form:
 
 .. syntax-outline::
 
     var <#variable name#> : <#type#> { get set }
 
-.. TODO: In prose: discuss that 'name' can also be a pattern in the first syntax-outline.
-    Also, discuss that when you only want to provide a getter, 'get:' is optional
-    (as shown in the third form of the grammar).
+Computed properties in protocols only declare the getter and setter requirements for types
+that conform to the protocol. As a result, you don't implement the getter or setter
+directly in the protocol in which it is declared.
+
+As with other computed properties, the setter clause is optional.
 
 .. langref-grammar
     decl-var-head  ::= attribute-list ('static' | 'class')? 'var'
@@ -325,22 +430,13 @@ Variable Declaration
 .. NOTE: Type annotations are required for computed properties -- the
    types of those properties are not computed/inferred.
 
-.. NOTE: The variable-specifier is currently restricted to variables
-    declared using the first variable-declaration grammar.
-    This is a temporary compiler limitation.
-    Eventually, variable-specifier will be allowed for the other two forms of the grammar
-    (those that declare variable with computed values).
-
-.. TODO: Update the grammar for getter/setters/didSet/willSet.
-    See: <rdar://problem/15966905> [Craig feedback] Consider "juxtaposed" brace enclosed property syntax
-
 
 .. _Declarations_TypealiasDeclaration:
 
 Typealias Declaration
 ---------------------
 
-A type alias declaration introduces a named alias of an existing type into your program.
+A :newTerm:`type alias declaration` introduces a named alias of an existing type into your program.
 Type alias declarations begin with the keyword ``typealias`` and have the following form:
 
 .. syntax-outline::
@@ -603,7 +699,7 @@ Enumeration Declaration
 Structure Declaration
 ---------------------
 
-A structure declaration introduces a named, structure type into your program.
+A :newTerm:`structure declaration` introduces a named, structure type into your program.
 Structure declarations begin with the keyword ``struct`` and have the following form:
 
 .. syntax-outline::
@@ -668,7 +764,7 @@ see :ref:`ClassesAndStructures_ValueTypesAndReferenceTypes`.
 Class Declaration
 -----------------
 
-A class declaration introduces a named, class type into your program.
+A :newTerm:`class declaration` introduces a named, class type into your program.
 Class declarations begin with the keyword ``class`` and have the following form:
 
 .. syntax-outline::
@@ -839,7 +935,7 @@ Initializer Declaration
 Deinitializer Declaration
 -------------------------
 
-A deinitializer declaration declares a deinitializer for a class type.
+A :newTerm:`deinitializer declaration` declares a deinitializer for a class type.
 Deinitializers take no parameters and have the following form:
 
 .. syntax-outline::
@@ -882,7 +978,7 @@ see :ref:`ClassesAndStructures_Deinitializers`.
 Extension Declaration
 ---------------------
 
-An extension declaration allows you to extend the behavior of existing
+An :newTerm:`extension declaration` allows you to extend the behavior of existing
 class, structure, and enumeration types.
 Extension declarations begin with the keyword ``extension`` and have the following form:
 
