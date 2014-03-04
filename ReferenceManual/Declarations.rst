@@ -945,14 +945,14 @@ Deinitializers take no parameters and have the following form:
     }
 
 A deinitializer is called automatically when there are no longer any references
-to a class object, just before the class object is destroyed.
+to a class object, just before the class object is deallocated.
 They can be declared only in the body of a class declaration---
 but not in an extension of a class---
 and each class can have at most one.
 
 A subclass inherits its superclass's deinitializer,
-which is implicitly called just before the subclass object is destroyed.
-The subclass object is not destroyed until all deinitializers in its inheritance chain
+which is implicitly called just before the subclass object is deallocated.
+The subclass object is not deallocated until all deinitializers in its inheritance chain
 have finished executing.
 
 Deinitializers are not called directly.
