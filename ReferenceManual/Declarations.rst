@@ -1,6 +1,8 @@
 Declarations
 ============
 
+.. write-me::
+
 .. langref-grammar
 
     decl ::= decl-class
@@ -41,6 +43,7 @@ Declarations
 .. NOTE: enum-element-declaration is only allowed inside an enum
    declaration.
 
+
 .. _LexicalStructure_ModuleScope:
 
 Module Scope
@@ -49,11 +52,20 @@ Module Scope
 The top level scope of a Swift source file
 consists of a series of statements.
 
+.. TODO: Need to add more to this section.
+
+.. TR: What exactly is "module scope"?
+    Is it the scope of a *single* Swift source file?
+    The way it's currently written here and in LangRef
+    makes it seem like module scope is the same as the scope
+    of a single Swift source file.
+
 .. langref-grammar
 
     top-level ::= brace-item*
 
 .. No formal grammar.
+
 
 .. _LexicalStructure_CodeBlocks:
 
@@ -121,6 +133,8 @@ is made available in the current scope.
 
     import <#import kind#> <#module#>
     import <#module#>.<#submodule#>
+
+.. TODO: Need to add more to this section.
 
 .. langref-grammar
 
@@ -196,6 +210,8 @@ as described in :ref:`Types_TypeInference`.
 For more information about constants and for guidance about when to use them,
 see :ref:`BasicTypes_NamedValues` and :ref:`ClassesAndStructures_StoredProperties`.
 
+.. TODO: Need to discuss class and static constant properties.
+
 .. langref-grammar
 
     decl-let    ::= attribute-list 'val' pattern initializer?  (',' pattern initializer?)*
@@ -218,6 +234,7 @@ see :ref:`BasicTypes_NamedValues` and :ref:`ClassesAndStructures_StoredPropertie
     Maybe "type-level-specifier"? But what happens when we do get *real* static functions?
 
 .. TODO: Write about class and static constants.
+
 
 .. _Declarations_VariableDeclaration:
 
@@ -364,6 +381,8 @@ directly in the protocol in which it is declared.
 
 As with other computed properties, the setter clause is optional.
 
+.. TODO: Need to discuss class and static variable properties.
+
 .. langref-grammar
     decl-var-head  ::= attribute-list ('static' | 'class')? 'var'
 
@@ -483,6 +502,8 @@ See also :ref:`Declarations_TypealiasProtocolElements`.
 Function Declaration
 --------------------
 
+.. write-me:: Waiting for design decisions from compiler team.
+
 **[Query/Note: We are trying to decide which code-snippet-style syntax outlines to use
 for regular Swift-style function definitions and for selector-style method definitions.
 Below you'll find two alternatives for the former and four alternatives for the latter.
@@ -588,10 +609,13 @@ This alternative uses "signature" instead of "method" or "selector", but still u
 
 .. TODO: Decide on a syntax-outline for regular Swift functions and for selector-style functions.
 
+
 .. _Declarations_FunctionSignature:
 
 Function Signature
 ~~~~~~~~~~~~~~~~~~
+
+.. write-me:: Waiting for design decisions from compiler team.
 
 .. langref-grammar
 
@@ -635,6 +659,7 @@ Function Signature
     Any changes will probably be fiddley little bits.
 
 .. TODO: Revise selector-name---can we come up with a better name for this?
+
 
 .. _Declarations_EnumerationDeclaration:
 
@@ -693,6 +718,7 @@ Enumeration Declaration
 
 .. TODO: raw-value-literal has the exact same definition as literal-expression.
    Suggest combining them.
+
 
 .. _Declarations_StructureDeclaration:
 
@@ -758,6 +784,7 @@ see :ref:`ClassesAndStructures_ValueTypesAndReferenceTypes`.
    struct-declaration --> attribute-list-OPT ``struct`` struct-name generic-parameter-clause-OPT type-inheritance-clause-OPT struct-body
    struct-name --> identifier
    struct-body --> ``{`` declarations-OPT ``}``
+
 
 .. _Declarations_ClassDeclaration:
 
@@ -842,6 +869,7 @@ see :ref:`ClassesAndStructures_ValueTypesAndReferenceTypes`.
     class-name --> identifier
     class-body --> ``{`` declarations-OPT ``}``
 
+
 .. _Declarations_ProtocolDeclaration:
 
 Protocol Declaration
@@ -853,20 +881,24 @@ Protocol Declaration
         <#protocol members#>
     }
 
+
 .. _Declarations_FunctionProtocolElements:
 
 Function Protocol Elements
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 
 .. _Declarations_VariableProtocolElements:
 
 Variable Protocol Elements
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+
 .. _Declarations_SubscriptProtocolElements:
 
 Subscript Protocol Elements
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 
 .. _Declarations_TypealiasProtocolElements:
 
@@ -894,6 +926,7 @@ Typealias Protocol Elements
     associated-typealias --> typealias-head type-inheritance-clause-OPT typealias-assignment-OPT
 
 .. TR: Can protocols declare constant properties as well?
+
 
 .. _Declarations_InitializerDeclaration:
 
@@ -929,6 +962,7 @@ Initializer Declaration
 
     initializer-declaration --> attribute-list-OPT ``init`` generic-parameter-clause-OPT initializer-signature code-block
     initializer-signature --> tuple-pattern | selector-tuples
+
 
 .. _Declarations_DeinitializerDeclaration:
 
@@ -972,8 +1006,8 @@ see :ref:`ClassesAndStructures_Deinitializers`.
 
     deinitializer-declaration --> attribute-list-OPT ``deinit`` code-block
 
-
 .. _Declarations_ExtensionDeclaration:
+
 
 Extension Declaration
 ---------------------
@@ -1042,6 +1076,7 @@ to ensure members of that type are properly initialized.
 
     TODO: Email Doug et al. in a week or two (from 1/29/14) to get the rules.
 
+
 .. _Declarations_SubscriptDeclaration:
 
 Subscript Declaration
@@ -1082,6 +1117,7 @@ Subscript Declaration
     subscript-declaration --> subscript-head getter-setter-block
     subscript-declaration --> subscript-head getter-setter-keyword-block
     subscript-head --> attribute-list-OPT ``subscript`` tuple-pattern ``->`` type
+
 
 .. _Declarations_Attributes:
 
@@ -1186,6 +1222,7 @@ Attributes
     we need to get more information about their use and behavior.
     Find out what we can from current documentation,
     and email Doug or swift-dev for anything that's missing.
+
 
 .. _Declarations_DeclarationAttributes:
 
