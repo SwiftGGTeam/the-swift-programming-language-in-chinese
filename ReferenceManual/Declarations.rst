@@ -43,6 +43,12 @@ Declarations
 .. NOTE: enum-element-declaration is only allowed inside an enum
    declaration.
 
+.. TR: How should the grammar be changed to accomodate the ability to define
+    an operator using the ``operator`` contextual keyword?
+    Currently, I don't see how it's allowed by the grammar.
+    It seems most natural to have a new declaration, operator-declaration
+    (or something similar). If so, what's the right definition?
+
 
 .. _LexicalStructure_ModuleScope:
 
