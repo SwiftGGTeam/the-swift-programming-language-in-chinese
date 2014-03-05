@@ -99,7 +99,7 @@ Built-In Binary Operators
 Assignment Operator
 +++++++++++++++++++
 
-Assignment uses the ``=`` operator
+An assignment uses the ``=`` operator
 in the following form:
 
 .. syntax-outline::
@@ -283,7 +283,7 @@ Primary Expressions
 Literal Expression
 ~~~~~~~~~~~~~~~~~~
 
-A literal expression consists of
+A :newTerm:`literal expression` consists of
 either an ordinary literal (such as a string or a number)
 or one of the following special literals:
 
@@ -294,6 +294,9 @@ Literal         Type    Value
 ``__LINE__``    Int     The line number on which it appears
 ``__COLUMN__``  Int     The column number in which it begins
 ==============  ======  ========================================
+
+.. TR: Confirm these types are expected.
+   This is what I get at the REPL.
 
 .. langref-grammar
 
