@@ -295,9 +295,6 @@ Literal         Type    Value
 ``__COLUMN__``  Int     The column number in which it begins
 ==============  ======  ========================================
 
-.. TR: Confirm these types are expected.
-   This is what I get at the REPL.
-
 .. langref-grammar
 
     expr-literal ::= integer_literal
