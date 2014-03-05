@@ -16,26 +16,18 @@ Expressions
     Grammar of an expression
 
     expression --> expression-sequence expression-cast-OPT
-    expression-sequence --> unary-expression binary-expressions-OPT
+    expression-sequence --> prefix-expression binary-expressions-OPT
     expression-list --> expression | expression ``,`` expression-list
 
 .. _Expressions_UnaryOperators:
 
-Prefix Operators
+Prefix Expressions
 ----------------
 
+Prefix expressions are formed by combining
+a prefix operator with another expression.
 Prefix operators take one argument,
 the expression that follows them.
-
-.. Postfix operators are discussed under postfix-expression/postfix-operator.
-   This section used to be called "Unary Operators" but it really only covers prefixes.
-
-.. Alternately, call these prefix expressions?
-   The nonterminal name 'unary-expression' is misleading
-   because it only directly includes prefixes.
-   Postfixes like foo++ or foo? are also unary.
-
-.. NOTE: We haven't quite decided whether unary expressions should come before or after postfix expressions.
 
 .. langref-grammar
 
@@ -45,7 +37,8 @@ the expression that follows them.
 
     Grammar of a unary expression
 
-    unary-expression --> prefix-operators-OPT postfix-expression
+    prefix-expression --> prefix-operators-OPT postfix-expression
+    prefix-operators --> prefix-operator prefix-operators-OPT
 
 
 .. _Expressions_BinaryOperators:
@@ -64,9 +57,9 @@ Binary Operators
 
     Grammar of a binary expression
 
-    binary-expression --> binary-operator unary-expression expression-cast-OPT
-    binary-expression --> assignment-operator unary-expression expression-cast-OPT
-    binary-expression --> conditional-operator unary-expression expression-cast-OPT
+    binary-expression --> binary-operator prefix-expression expression-cast-OPT
+    binary-expression --> assignment-operator prefix-expression expression-cast-OPT
+    binary-expression --> conditional-operator prefix-expression expression-cast-OPT
     binary-expressions --> binary-expression binary-expressions-OPT
 
 .. TODO: Give a list of the binary operators defined in the Swift stdlib.
