@@ -646,7 +646,12 @@ Function Signature
 
     selector-parameters --> ``(`` tuple-pattern-element ``)`` selector-tuples
     selector-tuples --> selector-name ``(`` tuple-pattern-element ``)`` selector-tuples-OPT
-    selector-name --> identifier | operator
+    selector-name --> identifier
+
+.. TODO: Verify that the selector-name is just an identifier,
+    because the LangRef grammar has it as an identifier-or-any
+    (i.e., identifier | ``_``). I don't see this category in the identifiers
+    chapter anymore, so we just need to make sure it's still correct.
 
 .. TODO: The overgeneration from tuple-patterns combined with some upcoming changes
     mean that we should just create a new syntactic category
