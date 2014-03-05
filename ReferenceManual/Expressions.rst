@@ -248,6 +248,10 @@ For example: ::
 Primary Expressions
 -------------------
 
+.. The most common expression type
+   Used to build up more complex expressions
+   Not made up of sub-expressions
+
 .. langref-grammar
 
     expr-primary  ::= expr-literal
