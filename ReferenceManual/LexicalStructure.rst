@@ -77,9 +77,9 @@ that isn't in a Private Use Area.
 After the first character,
 digits and combining Unicode characters are also allowed.
 
-Inside a closure with no explicit parameter names,
-the parameters are implicitly named ``$0``, ``$1``, ``$2``, and so on.
-These names are valid identifiers within the scope of the closure.
+.. TR: Is dollar-identifier really allowed as an identifier?
+   We use it to define anonymous-closure-argument (an expression)
+   and the tail end of a foo.$0 style dot expression.
 
 .. langref-grammar
 
@@ -116,7 +116,7 @@ These names are valid identifiers within the scope of the closure.
     Grammar of an identifier
 
     identifier --> identifier-head identifier-characters-OPT
-    identifier --> implicit-parameter-name
+    identifier --> dollar-identifier
     identifier-list --> identifier | identifier ``,`` identifier-list
 
     identifier-head --> Upper- or lowercase letter A through Z
@@ -141,7 +141,7 @@ These names are valid identifiers within the scope of the closure.
     identifier-character --> U+0300-U+036F | U+1DC0-U+1DFF | U+20D0-U+20FF | U+FE20-U+FE2F
     identifier-characters --> identifier-character identifier-characters-OPT
 
-    implicit-parameter-name --> ``$`` decimal-digits
+    dollar-identifier --> ``$`` decimal-digits
 
 
 .. _LexicalStructure_Keywords:

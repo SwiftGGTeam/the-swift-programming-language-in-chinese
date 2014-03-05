@@ -413,6 +413,10 @@ Closure Expression
 Anonymous Closure Argument
 ++++++++++++++++++++++++++
 
+Inside a closure with no explicit parameter names,
+the parameters are implicitly named ``$0``, ``$1``, ``$2``, and so on.
+These names are valid identifiers within the scope of the closure.
+
 .. langref-grammar
 
     expr-anon-closure-arg ::= dollarident
