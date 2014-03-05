@@ -1140,11 +1140,18 @@ Operator Declaration
 
 .. syntax-outline::
 
-    operator <#fixity#> <#operator name#> {
+    operator infix <#operator name#> {
         precedence <#precedence level#>
         associativity <#associativity#>
     }
 
+.. syntax-outline::
+
+    operator prefix <#operator name#> {}
+
+.. syntax-outline::
+
+    operator postfix <#operator name#> {}
 
 .. TR: What do the current precedence levels (0—255) mean?
     How you we discuss them in the prose.
@@ -1153,27 +1160,39 @@ Operator Declaration
     "Swift has simplified precedence levels when compared with C.
     From highest to lowest:
 
-    "exponentiative:" <<, >>
-    "multiplicative:" *, /, %, &
-    "additive:" +, -, |, ^
-    "comparative:" ==, !=, <, <=, >=, >
-    "conjunctive:" &&
-    "disjunctive:" ||
+    "exponentiative:" <<, >>  (associativity none, precedence 160)
+    "multiplicative:" *, /, %, & (associativity left, precedence 150)
+    "additive:" +, -, |, ^ (associativity left, precedence 140)
+    "comparative:" ==, !=, <, <=, >=, > (associativity none, precedence 130)
+    "conjunctive:" && (associativity left, precedence 120)
+    "disjunctive:" || (associativity none, precedence 110)"
+
+    Also, from Policy.swift:
+    "compound (assignment):" *=, /=, %=, +=, -=, <<=, >>=, &=, ^=,
+    |=, &&=, ||= (associativity right, precedence 90)
+    "=" is hardcoded as if it had associativity right, precedence 90
+    "as" and "is" are hardcoded as if they had associativity none, precedence 95
+    "? :" is hardcoded as if it had associativity right, precedence 100
 
     Should we be using these instead of the raw precedence level values?
 
+    Also, infix operators that are declared without specifying a precedence
+    associativity are initialized with the default operator attribues
+    "precedence 100" and "associativity none".
 
 .. syntax-grammar::
 
     Grammar of an operator declaration
 
-    operator-declaration --> ``operator`` fixity operator ``{`` operator-attributes-OPT ``}``
+    operator-declaration --> prefix-operator-declaration | postfix-operator-declaration | infix-operator-declaration
 
-    fixity --> ``infix`` | ``prefix`` | ``postfix``
+    prefix-operator-declaration --> ``operator`` ``prefix`` operator ``{`` ``}``
+    postfix-operator-declaration --> ``operator`` ``postfix`` operator ``{`` ``}``
+    infix-operator-declaration --> ``operator`` ``infix`` operator ``{`` infix-operator-attributes-OPT ``}``
 
-    operator-attributes --> precedence-clause-OPT associativity-clause-OPT
+    infix-operator-attributes --> precedence-clause-OPT associativity-clause-OPT
     precedence-clause --> ``precedence`` precedence-level
-    precedence-level --> Digit 0 through 255
+    precedence-level --> 0 through 255
     associativity-clause --> ``associativity`` associativity
     associativity --> ``left`` | ``right`` | ``none``
 
