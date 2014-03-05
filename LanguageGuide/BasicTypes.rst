@@ -155,9 +155,9 @@ The value of an existing variable can be changed to another value of a compatibl
 
     --> var friendlyWelcome = "hello, world"
     <-- // friendlyWelcome : String = "hello, world"
-    --> // friendlyWelcome is "hello, world"
+    /// friendlyWelcome is "hello, world"
     --> friendlyWelcome = "👋, 🌎"
-    --> // friendlyWelcome is now "👋, 🌎"
+    /// friendlyWelcome is now "👋, 🌎"
 
 You can also print the value of a named value by using the ``println`` function:
 
@@ -165,7 +165,7 @@ You can also print the value of a named value by using the ``println`` function:
 
     --> println(friendlyWelcome)
     <<< 👋, 🌎
-    --> // this will print "👋, 🌎"
+    /// this will print "👋, 🌎"
 
 .. NOTE: this is a deliberately simplistic description of what you can do with println().
    It will be expanded later on.
@@ -182,7 +182,7 @@ and attempting to do so will result in an error:
     --> let languageName = "Swift"
     <-- // languageName : String = "Swift"
     --> languageName = "Swift++"
-    --> // this will result in an error – languageName cannot be changed
+    /// this will result in an error – languageName cannot be changed
     !!! <REPL Input>:1:14: error: cannot assign to 'let' value 'languageName'
     !!! languageName = "Swift++"
     !!! ~~~~~~~~~~~~ ^
@@ -285,7 +285,7 @@ because you have initialized it with a number that looks like an integer:
 
     --> let meaningOfLife = 42
     <-- // meaningOfLife : Int = 42
-    --> // meaningOfLife is inferred to be of type Int
+    /// meaningOfLife is inferred to be of type Int
 
 Likewise, if you don't specify a type for a floating-point literal,
 Swift assumes that you want to create a ``Double``:
@@ -294,7 +294,7 @@ Swift assumes that you want to create a ``Double``:
 
     --> let pi = 3.14159
     <-- // pi : Double = 3.14159
-    --> // pi is inferred to be of type Double
+    /// pi is inferred to be of type Double
 
 Swift always chooses ``Double`` (rather than ``Float``)
 when inferring the type of floating-point numbers.
@@ -306,7 +306,7 @@ a type of ``Double`` will be inferred from the context:
 
     --> let anotherPi = 3 + 0.14159
     <-- // anotherPi : Double = 3.14159
-    --> // anotherPi is also inferred to be of type Double
+    /// anotherPi is also inferred to be of type Double
 
 The literal value of ``3`` has no explicit type in and of itself,
 and so an appropriate output type of ``Double`` is inferred
@@ -440,13 +440,13 @@ and trying to do so is reported as an error:
     !!! <REPL Input>:1:31: error: integer literal overflows when stored into 'UInt8'
     !!! let cannotBeNegative: UInt8 = -1
     !!!                               ^
-    --> // UInt8 cannot store negative numbers, and so this will report an error
+    /// UInt8 cannot store negative numbers, and so this will report an error
     --> let tooBig: Int8 = Int8.max + 1
     !!! <REPL Input>:1:29: error: arithmetic operation '127 + 1' (on type 'Int8') results in an overflow
     !!! let tooBig: Int8 = Int8.max + 1
     !!!                             ^
-    --> // Int8 cannot store a number larger than its maximum value,
-    // and so this will also report an error
+    /// Int8 cannot store a number larger than its maximum value,
+    /// and so this will also report an error
 
 Because of this,
 numeric type conversion is something you must opt in to on a case-by-case basis.
@@ -504,7 +504,7 @@ Conversions between integer and floating-point numeric types must also be made e
     <-- // pointOneFourOneFiveNine : Double = 0.14159
     --> let pi = Double(three) + pointOneFourOneFiveNine
     <-- // pi : Float64 = 3.14159
-    --> // pi now equals 3.14159, and is inferred to be of type Double
+    /// pi now equals 3.14159, and is inferred to be of type Double
 
 Here, the value of the constant ``three`` is used to create a new value of type ``Double``,
 so that both sides of the addition are of the same type.
@@ -522,7 +522,7 @@ in that an integer type can be initialized with a ``Double`` or ``Float`` value:
 
     --> let integerPi = Int(pi)
     <-- // integerPi : Int = 3
-    --> // integerPi now equals 3, and is inferred to be of type Int
+    /// integerPi now equals 3, and is inferred to be of type Int
 
 Floating-point values are always rounded towards zero
 when used to initialize a new integer value in this way.
@@ -582,7 +582,7 @@ such as the ``if``-``else`` statement:
         println("Eww, turnips are horrible.")
     }
     <<< Eww, turnips are horrible.
-    --> // this will print "Eww, turnips are horrible."
+    /// this will print "Eww, turnips are horrible."
 
 Conditional statements such as ``if``-``else`` are covered in more detail in :doc:`ControlFlow`.
 
@@ -658,7 +658,7 @@ Here's an example of a tuple:
 
     --> let httpStatus = (404, "Not Found")
     <-- // httpStatus : (Int, String) = (404, "Not Found")
-    --> // httpStatus is of type (Int, String), and equals (404, "Not Found")
+    /// httpStatus is of type (Int, String), and equals (404, "Not Found")
 
 ``(404, "Not Found")`` is a tuple that describes an *HTTP status code*.
 An HTTP status code is a special value returned by a web server whenever you request a web page.
@@ -681,10 +681,10 @@ You can access the individual element values in a tuple using index numbers star
 
     --> println("The status code is \(httpStatus.0)")
     <<< The status code is 404
-    --> // this will print "The status code is 404"
+    /// this will print "The status code is 404"
     --> println("The status message is \(httpStatus.1)")
     <<< The status message is Not Found
-    --> // this will print "The status message is Not Found"
+    /// this will print "The status message is Not Found"
 
 As an alternative,
 you can :newTerm:`decompose` a tuple's contents into separate named values,
@@ -696,10 +696,10 @@ which can then be used as normal:
     <-- // (statusCode, statusMessage) : (Int, String) = (404, "Not Found")
     --> println("The status code is \(statusCode)")
     <<< The status code is 404
-    --> // this will also print "The status code is 404"
+    /// this will also print "The status code is 404"
     --> println("The status message is \(statusMessage)")
     <<< The status message is Not Found
-    --> // this will also print "The status message is Not Found"
+    /// this will also print "The status message is Not Found"
 
 Tuples are particularly useful as the return values of functions.
 A function that tries to retrieve a web page might return this ``(Int, String)`` tuple type
@@ -762,7 +762,7 @@ The example below shows how to use ``toInt()`` to try and convert a ``String`` i
     <-- // possibleNumber : String = "123"
     --> let convertedNumber = possibleNumber.toInt()
     <-- // convertedNumber : Int? = <unprintable value>
-    --> // convertedNumber is inferred to be of type "Int?", or "optional Int"
+    /// convertedNumber is inferred to be of type "Int?", or "optional Int"
 
 Because the ``toInt()`` method might fail,
 it returns an *optional* ``Int``, rather than an ``Int``.
@@ -791,7 +791,7 @@ The exclamation mark effectively says,
         println("\(possibleNumber) could not be converted to an integer")
     }
     <<< 123 has an integer value of 123
-    --> // this will print "123 has an integer value of 123"
+    /// this will print "123 has an integer value of 123"
 
 ``if``-``else`` statements are described in more detail in :doc:`ControlFlow`.
 
@@ -829,7 +829,7 @@ The example from above can be can be rewritten to use optional binding:
         println("\(possibleNumber) could not be converted to an integer")
     }
     <<< 123 has an integer value of 123
-    --> // this will also print "123 has an integer value of 123"
+    /// this will also print "123 has an integer value of 123"
 
 As before, this example uses the ``toInt()`` method from ``String``
 to try and convert ``"123"`` into an ``Int``.
