@@ -747,6 +747,10 @@ to be managed and passed by reference.
 In practice, this means that most custom data constructs should be classes,
 not structures.
 
+.. TODO: what is the "Object" type
+   (as defined in /swift/stdlib/core/Object.swift),
+   and should it be mentioned herein?
+
 .. _ClassesAndStructures_InstanceMethods:
 
 Instance Methods
@@ -1530,7 +1534,7 @@ Here's how this final initializer could be called:
 Dynamic Return Types
 ~~~~~~~~~~~~~~~~~~~~
 
-[to be written]
+.. write-me::
 
 .. TODO: mention that methods can return DynamicSelf (a la instancetype)
 .. TODO: include the several tricks seen in swift/test/decl/func/dynamic_self.swift
@@ -1693,7 +1697,7 @@ The result of ``item as Movie`` is of type ``Movie?``, or “optional ``Movie``�
 
 Downcasting to ``Movie`` will fail when trying to downcast
 the two ``Song`` instances in the library array.
-To cope with this, the example above uses :ref:`optional binding <BasicTypes_OptionalBinding>`
+To cope with this, the example above uses :ref:`BasicTypes_OptionalBinding`
 to check whether the optional ``Movie`` actually contains a value
 (i.e. to find out whether the downcast succeeded.)
 This optional binding is written “``if let movie = item as Movie``”,
@@ -1735,7 +1739,7 @@ whenever a ``Song`` is found in the library.
 Type Properties and Methods
 ---------------------------
 
-[to be written]
+.. write-me::
 
 .. see release notes from 2013-12-18 for a note about lazy initialization
 .. mention that type methods can access type properties (and other type methods?)
@@ -1817,7 +1821,7 @@ to handle the distribution and collection of coins.
 ``vendCoins()`` checks that there are enough coins in the bank before handing any out.
 If there are not enough coins, it returns a smaller number than the number that was requested
 (and may even return zero if there are no coins left in the bank at all).
-It declares ``numberOfCoinsToVend`` as a :ref:`variable parameter <Functions_ConstantAndVariableParameters>`,
+It declares ``numberOfCoinsToVend`` as a variable parameter,
 so that the number can be modified within the method's body
 without needing to declare a new variable.
 It returns an integer value to indicate the actual number of coins that were vended.
@@ -1925,8 +1929,7 @@ This is known as :newTerm:`overloading` the existing operators.
     }
 
 This example shows how to provide an implementation of the
-:ref:`arithmetic addition operator <Operators_ArithmeticOperators>` (``+``)
-for a custom structure.
+arithmetic addition operator (``+``) for a custom structure.
 The example starts by defining a ``Vector2D`` structure for
 a two-dimensional position vector ``(x, y)``.
 This is followed by a definition of an :newTerm:`operator function`
@@ -1986,7 +1989,7 @@ The attribute is written before the ``func`` keyword when declaring the operator
         return Vector2D(-rhs.x, -rhs.y)
     }
 
-This example implements the :ref:`unary minus operator <Operators_UnaryPlusAndMinusOperators>`
+This example implements the :ref:`Operators_UnaryMinusOperator`
 (``-a``) for ``Vector2D`` instances.
 The unary minus operator is a prefix operator,
 and so this function has to be qualified with the ``@prefix`` attribute.
@@ -2013,7 +2016,7 @@ performs this operation on both the ``x`` and ``y`` properties:
 Compound Assignment Operators
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-:ref:`Compound assignment operators <Operators_CompoundAssignmentOperators>`
+:ref:`Operators_CompoundAssignmentOperators`
 combine assignment (``=``) with another operation.
 One example is the addition assignment operator (``+=``).
 This combines addition and assignment into a single operation.
@@ -2046,8 +2049,7 @@ and uses it to set the left-hand value to itself plus the right-hand value:
 
 The ``@assignment`` attribute can be combined with
 either the ``@prefix`` or ``@postfix`` attribute,
-as in this implementation of the
-:ref:`prefix increment operator <Operators_IncrementAndDecrementOperators>` (``++a``)
+as in this implementation of the prefix increment operator (``++a``)
 for ``Vector2D`` instances:
 
 .. testcode:: customOperators
@@ -2074,9 +2076,9 @@ and returns the result.
 .. note::
 
     It is not possible to overload the default
-    :ref:`assignment operator <Operators_AssignmentOperator>` (``=``).
+    :ref:`Operators_AssignmentOperator` (``=``).
     Only the compound assignment operators may be overloaded.
-    Similarly, the :ref:`ternary conditional operator <Operators_TernaryConditionalOperator>`
+    Similarly, the :ref:`Operators_TernaryConditionalOperator`
     (``a ? b : c``) may not be overloaded.
 
 .. QUESTION: some of the standard operators (such as equation and comparison)

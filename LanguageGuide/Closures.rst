@@ -12,7 +12,7 @@
 Closures
 ========
 
-[to be written]
+.. write-me::
 
 .. capturing / closing over variables (and what this means in practice)
 .. no need for __block; discuss memory safety

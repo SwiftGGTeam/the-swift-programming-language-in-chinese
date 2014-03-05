@@ -60,7 +60,8 @@ which prints the first few entries in the five-times-table:
     >>> 5 times 5 is 25
 
 Here, the collection of items being iterated is a
-:ref:`closed range <Operators_ClosedRangeOperator>` of numbers from ``1`` to ``5``.
+closed range of numbers from ``1`` to ``5`` inclusive,
+as indicated by the use of the :ref:`Operators_ClosedRangeOperator` (``..``).
 The value of ``index`` is set to the first number in the range (``1``),
 and the statements inside the loop are executed.
 In this case, the loop only contains one statement,
@@ -519,7 +520,7 @@ it sets an optional ``Int?`` variable (``possibleIntegerValue``) to the appropri
 If the symbol is not recognized,
 the optional ``Int?`` is set to a value of ``.None``, meaning “no value”.
 Finally, it checks to see if a value was found,
-using an :ref:`optional binding <BasicTypes_OptionalBinding>`.
+using an :ref:`BasicTypes_OptionalBinding`.
 If it was, the output value is printed;
 otherwise, an error message is reported.
 

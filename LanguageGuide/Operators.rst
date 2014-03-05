@@ -27,12 +27,14 @@ and improves several of their capabilities:
 
 * Assignment (``=``) does not return a value, to avoid common coding errors
 * Remainder (``%``) calculations can be performed on floating-point numbers
+* Arithmetic operators (``+``, ``-``, ``*``, ``/``, ``%`` etc.)
+  detect value overflow, eliminating a category of common coding errors
 
-It also introduces new operators not found in other languages:
+It also provides expressive operators that make development easier or more explicit:
 
-* :ref:`Range operators <Operators_RangeOperators>`
+* :ref:`Operators_RangeOperators`
   ``a..b`` and ``a...b``, which give a short-hand way to express a range of values
-* :ref:`Overflow operators <Operators_OverflowOperators>`
+* :ref:`Operators_OverflowOperators`
   such as ``a &+ b``, to opt in to overflowing arithmetic behavior
 
 In addition, you can define your own implementations of the standard operators –
@@ -43,8 +45,10 @@ This process is covered in detail in :doc:`ClassesAndStructures`.
 Operators are often referred to as :newTerm:`unary`, :newTerm:`binary`, or :newTerm:`ternary`:
 
 * Unary operators operate on a single target (such as ``-a``).
-  They are said to be :newTerm:`prefix` operators if they come before their target (such as ``!b``),
-  and :newTerm:`postfix` operators if they come after their target (such as ``i++``).
+  They are said to be :newTerm:`prefix` operators if they appear
+  immediately before their target (such as ``!b``),
+  and :newTerm:`postfix` operators if they appear
+  immediately after their target (such as ``i++``).
 * Binary operators operate on two targets (such as ``2 + 3``),
   and are said to be :newTerm:`infix` because they appear inbetween their two targets.
 * Ternary operators operate on three targets.
@@ -141,6 +145,13 @@ can be added together to make a new ``String`` value:
     (swift) let dogCow = dog + cow
     // dogCow : String = "🐶🐮"
 
+.. TODO: revisit this example based on whether single quotes
+   continue to return a UnicodeScalar,
+   and in light of where we end up with characters vs scalars.
+   This also raises the question of my use of the name 'scalar'
+   when using for-in to iterate over someString.chars.
+   I've used 'scalar' several times throughout the book.
+
 .. _Operators_RemainderOperator:
 
 Remainder Operator
@@ -174,7 +185,7 @@ and returns ``remainder`` as its output:
 
 ``a`` = (``b`` × ``some multiplier``) + ``remainder``
 
-where ``some multiplier`` is the smallest number of multiples of ``b``
+where ``some multiplier`` is the largest number of multiples of ``b``
 that will fit inside ``a``.
 
 Inserting ``9`` and ``4`` into this equation gives:
@@ -242,8 +253,17 @@ Likewise, ``--i`` can be used as shorthand for ``i = i - 1``.
 
 ``++`` and ``--`` can be used as prefix operators or as postfix operators.
 ``++i`` and ``i++`` are both valid ways to increase the value of ``i`` by ``1``.
-However, ``++i`` increases the value of ``i`` *before* it is accessed,
-whereas ``i++`` increases the value *after* it is accessed.
+
+Note that these operators modify ``i``, and also return a value.
+If you only want to increment or decrement the value stored in ``i``,
+you can choose to ignore the returned value.
+However, if you *do* use the returned value,
+it will be different based on whether you used the prefix or postfix
+version of the operator:
+
+* ``++i`` and ``--i`` modify ``i``, and return the *new* value
+* ``i++`` and ``i--`` modify ``i``, and return the *old* value
+
 This is important if you are using ``++`` or ``--`` to modify a variable
 while also finding out its value:
 
@@ -270,10 +290,9 @@ The result is that ``c`` gets the old value of ``1``,
 but ``a`` now equals ``2``.
 
 Unless you need the specific behavior of ``i++``,
-it is recommended that you use ``++i`` in all cases,
-because it has the typical expected behavior of incrementing ``i``
-and then providing the result.
-(The same rules and advice apply for ``--i`` and ``i--``.)
+it is recommended that you use ``++i`` and ``--i`` in all cases,
+because they have the typical expected behavior of modifying ``i``
+and then returning the result.
 
 .. QUESTION: is this good advice
    (given the general prevalence of i++ in the world),
@@ -282,10 +301,10 @@ and then providing the result.
 
 .. QUESTION: if so, have I followed this advice throughout the book?
 
-.. _Operators_UnaryPlusAndMinusOperators:
+.. _Operators_UnaryMinusOperator:
 
-Unary Plus and Minus Operators
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Unary Minus Operator
+~~~~~~~~~~~~~~~~~~~~
 
 The sign of a numeric value can be toggled using a prefixed ``-``,
 known as the :newTerm:`unary minus operator`:
@@ -302,8 +321,13 @@ known as the :newTerm:`unary minus operator`:
 The unary minus operator (``-``) is prepended directly before the value it operates on,
 without any whitespace.
 
-There is a corresponding :newTerm:`unary plus operator` (``+``)
-which simply returns the value it operates on, without any change:
+.. _Operators_UnaryPlusOperator:
+
+Unary Plus Operator
+~~~~~~~~~~~~~~~~~~~
+
+The :newTerm:`unary plus operator` (``+``) simply returns
+the value it operates on, without any change:
 
 .. testcode:: arithmeticOperators
 
@@ -313,7 +337,8 @@ which simply returns the value it operates on, without any change:
     // alsoMinusSix : Int = -6
 
 The unary plus operator doesn't actually do anything.
-However, it can be used to provide symmetry in your code when you're also using the unary minus operator.
+However, it can be used to provide symmetry in your code
+when used alongside the unary minus operator.
 
 .. _Operators_CompoundAssignmentOperators:
 
@@ -335,6 +360,12 @@ The expression ``a += 2`` is shorthand for ``a = a + 2``.
 Effectively, the addition and the assignment are combined into one operator
 that performs both tasks at the same time.
 
+.. note::
+
+    The compound assignment operators do not return a value.
+    You cannot write ``let b = a += 2``, for example.
+    This behavior is different from the increment and decrement operators mentioned above.
+
 A complete list of compound assignment operators can be found in the :doc:`../ReferenceManual/index`.
 
 .. _Operators_ComparisonOperators:
@@ -351,11 +382,10 @@ Swift supports all of the standard C :newTerm:`comparison operators`:
 * Greater than or equal to (``a >= b``)
 * Less than or equal to (``a <= b``)
 
-Swift supports two additional comparison operators,
-to check whether values are identical:
-
-* Identical to (``a === b``)
-* Not identical to (``a !== b``)
+.. TODO: we don't currently have identity and non-identity operators outside of Cocoa.
+   It's been decided that these will be called === and !===,
+   but they don't exist at present for Swift-pure classes.
+   They should be added to this section if and when they are implemented.
 
 These :newTerm:`identity operators` are used to test if two object named values both refer to the same object instance.
 They are described in :doc:`ClassesAndStructures`.
@@ -406,8 +436,8 @@ The :newTerm:`ternary conditional operator` is a special operator with three par
 which takes the form ``question ? answer1 : answer2``.
 It provides a shorthand way to evaluate one of two expressions
 based on whether ``question`` is true or false.
-If ``question`` is true, it evaluates ``answer1``;
-otherwise, it evaluates ``answer2``.
+If ``question`` is true, it evaluates ``answer1`` and returns its value;
+otherwise, it evaluates ``answer2`` and returns its value.
 
 Effectively, it is shorthand for::
 
@@ -450,14 +480,14 @@ This is shorthand for:
     (swift) println("The row height is \(rowHeight) pixels.")
     >>> The row height is 90 pixels.
 
+The shorthand version is more concise,
+and removes the need for ``rowHeight`` to be a variable named value
+rather than a constant named value.
+
 .. TODO: leave rowHeight uninitialized once the REPL allows uninitialized variables?
-.. QUESTION: In the first example, rowHeight is a constant (because it can be),
-   but in the second example, it's a variable (because it has to be).
-   Is this okay?
 
-In this case, the ternary conditional operator provides
+The ternary conditional operator provides
 an efficient shorthand for deciding which of two expressions to consider.
-
 The ternary conditional operator should be used with care, however.
 It is very concise, but this conciseness can lead to hard-to-read code if overused.
 Avoid combining multiple instances of the ternary conditional operator into one compound statement.
@@ -555,7 +585,9 @@ The :newTerm:`bitwise NOT operator` (``~``) inverts all of the bits in a number:
     :width: 570
     :align: center
 
-For example:
+The bitwise NOT operator is a prefix operator,
+and appears immediately before the value it operates on,
+without any whitespace:
 
 .. testcode:: bitwiseOperators
 
@@ -611,7 +643,8 @@ Bitwise OR Operator
 ~~~~~~~~~~~~~~~~~~~
 
 The :newTerm:`bitwise OR operator` (``|``) compares the bits of two numbers,
-and returns a new number whose bits are set to ``1`` if the bits were equal to ``1`` in *either* of the input numbers:
+and returns a new number whose bits are set to ``1``
+if the bits were equal to ``1`` in *either* of the input numbers:
 
 .. image:: ../images/bitwiseOR.png
     :width: 570
@@ -638,12 +671,8 @@ Bitwise XOR Operator
 ~~~~~~~~~~~~~~~~~~~~
 
 The :newTerm:`bitwise XOR operator` (``^``) compares the bits of two numbers,
-and returns a new number based on the following rules:
-
-* If a bit is equal to ``1`` in  *either* of the input numbers,
-  but not in *both* of the input numbers,
-  then it should be set to ``1`` in the output number.
-* Otherwise, the bit should be set to ``0``.
+and returns a new number whose bits are set to ``1`` where the input bits are different,
+and ``0`` where the input bits are the same:
 
 .. image:: ../images/bitwiseXOR.png
     :width: 570
@@ -884,9 +913,11 @@ Throwing an error in these scenarios is much safer than allowing an outsized val
 Providing error handling when values get too large or too small
 gives you much more flexibility when coding for boundary value conditions.
 
-However, in the cases where you *do* want the value to overflow,
+However, in the cases where you specifically want an overflow condition
+to truncate the number of available bits,
 you can opt in to this behavior rather than triggering an error.
-Swift provides five arithmetic :newTerm:`overflow operators` that opt in to the overflow behavior for integer calculations.
+Swift provides five arithmetic :newTerm:`overflow operators` that opt in to
+the overflow behavior for integer calculations.
 These operators all begin with an ampersand (``&``):
 
 * Overflow addition (``&+``)
@@ -983,7 +1014,7 @@ and underflow always wraps around from the smallest value to the largest.
 Division by Zero
 ~~~~~~~~~~~~~~~~
 
-If you divide a number by zero (i / 0),
+Normally, if you divide a number by zero (i / 0),
 or try to calculate remainder by zero (i % 0),
 Swift will throw an error:
 
@@ -994,8 +1025,15 @@ Swift will throw an error:
     (swift) let y = x / 0
     xxx division by zero
  
-Integer division by zero is not a valid mathematical action,
-and so Swift throws an error rather than creating an invalid value.
+However, the overflow versions of these operators (``&/`` and ``&%``)
+return a value of zero if you divide by zero:
+
+.. testcode:: overflowOperatorsAllowedDivZero
+
+    (swift) let x = 1
+    // x : Int = 1
+    (swift) let y = x &/ 0
+    // y : Int = 0
 
 .. NOTE: currently, this testcode block must be the last in the overflowOperators group,
    as otherwise the stack trace crash from the division-by-zero will mean that
@@ -1019,6 +1057,10 @@ Logical NOT Operator
 
 The :newTerm:`logical NOT operator` (``!a``) inverts a Boolean value so that ``true`` becomes ``false``,
 and ``false`` becomes ``true``.
+
+The logical NOT operator is a prefix operator,
+and appears immediately before the value it operates on,
+without any whitespace.
 It can be read as “not ``a``”, as seen in the following example:
 
 .. testcode:: logicalOperators
@@ -1044,8 +1086,15 @@ while avoiding double negatives or confusing logic statements.
 Logical AND Operator
 ~~~~~~~~~~~~~~~~~~~~
 
-The :newTerm:`logical AND operator` (``&&``) is used to create logical expressions
+The :newTerm:`logical AND operator` (``a && b``) is used to create logical expressions
 where both values must be ``true`` for the overall expression to also be ``true``.
+
+If either value is ``false``,
+the overall expression will also be ``false``.
+In fact, if the *first* value is ``false``,
+the second value won't even be evaluated,
+because it can't possibly make the overall expression equate to ``true``.
+This is known as :newTerm:`short-circuit evaluation`.
 
 This example considers two ``Bool`` values,
 and only allows access if both values are ``true``:
@@ -1063,22 +1112,22 @@ and only allows access if both values are ``true``:
     }
     >>> ACCESS DENIED
 
-If either value is ``false``,
-the overall expression will also be ``false``,
-as shown above.
-In fact, if the *first* value is false,
-the second value won't even be checked,
-because it can't possibly make the overall expression equal ``true``.
-This is known as *short-circuit evaluation*.
-
 .. _Operators_LogicalOROperator:
 
 Logical OR Operator
 ~~~~~~~~~~~~~~~~~~~
 
-The :newTerm:`logical OR operator` (``||``, i.e. two adjacent pipe characters)
+The :newTerm:`logical OR operator`
+(``a || b``, i.e. an infix operator made from two adjacent pipe characters)
 is used to create logical expressions where only *one* of the two values has to be ``true``
 for the overall expression to be ``true``.
+
+Like the Logical AND operator above,
+the Logical OR operator uses short-circuit evaluation when considering its expressions.
+If the left-hand side of a Logical OR expression is ``true``,
+the right-hand side will not be evaluated,
+because it cannot change the outcome of the overall expression.
+
 For example:
 
 .. testcode:: logicalOperators
@@ -1100,10 +1149,6 @@ but the second value (``knowsOverridePassword``) is ``true``.
 Because one value is ``true``,
 the overall expression also equates to ``true``,
 and access is allowed.
-
-Note that if the left-hand side of an OR expression is ``true``,
-the right-hand side will not be evaluated,
-because it cannot change the outcome of the overall expression.
 
 .. _Operators_CombiningLogicalOperators:
 
@@ -1212,6 +1257,14 @@ starting from their left:
 This gives the final answer of ``4``.
 
 A complete list of Swift operator precedences and associativity rules can be found in the :doc:`../ReferenceManual/index`.
+
+.. note::
+
+    Swift's operator precedences and associativity rules are simpler and more predictable
+    than those found in C and Objective-C.
+    However, this does mean that they are not the same as in C-based languages.
+    Be careful to ensure that operator interactions still behave in the way you intend
+    when porting existing code to Swift.
 
 .. TODO: update this link to go to the specific section of the Reference Manual.
 

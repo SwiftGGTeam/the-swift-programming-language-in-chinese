@@ -229,7 +229,7 @@ to equal the two output values stored in the ``splitOnFirst()`` function's
 return tuple value.
 These two constants can then be used independently of each other,
 as shown here to unwrap the value stored in the optional second tuple value
-via :ref:`optional binding <BasicTypes_OptionalBinding>`.
+via :ref:`BasicTypes_OptionalBinding`.
 
 .. _Functions_ParameterNames:
 
@@ -654,21 +654,21 @@ at the end of the returned string.
 Inout Parameters
 ----------------
 
-[to be written]
+.. write-me::
 
 .. inout properties and a general discussion of byref / byvalue
 
 Functions as Parameters and Return Types
 ----------------------------------------
 
-[to be written]
+.. write-me::
 
 .. functions can be passed in as parameters, and can be returned as return values
 
 Function Binding
 ----------------
 
-[to be written]
+.. write-me::
 
 .. variables can be bound to functions, and then called e.g. var fork = g.fork; fork() .
 .. functions are reference types
@@ -683,7 +683,7 @@ Function Binding
 Curried Functions
 -----------------
 
-[to be written]
+.. write-me::
 
 .. function currying syntax 
 .. partial application

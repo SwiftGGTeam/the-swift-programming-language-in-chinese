@@ -330,7 +330,7 @@ then the returned optional value will equal ``.None``:
     }
     >>> Not an element I know about
 
-This example uses :ref:`optional binding <BasicTypes_OptionalBinding>`
+This example uses :ref:`BasicTypes_OptionalBinding`
 to try and access an element with a raw value of ``8``.
 ``if let element = ChemicalElement.fromRaw(8)`` retrieves an optional ``ChemicalElement``,
 and sets ``element`` to the contents of that optional if it can be retrieved.
@@ -539,8 +539,8 @@ The ``description`` property uses optional binding to check if there is
 a second value to display, and inserts addition description detail if so.
 
 Because ``BlackjackCard`` is a structure with no custom initializers,
-it is given an implicit
-:ref:`memberwise initializer <ClassesAndStructures_MemberwiseStructureInitializers>`.
+it has an implicit memberwise initializer
+(as described in :ref:`ClassesAndStructures_MemberwiseStructureInitializers`).
 This is used to initialize a new constant called ``theAceOfSpades``.
 Even though ``Rank`` and ``Suit`` are nested within ``BlackjackCard``,
 their type can still be inferred from the context,

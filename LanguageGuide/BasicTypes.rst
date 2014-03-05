@@ -420,9 +420,21 @@ is different for each numeric type.
 An ``Int8`` named value can store numbers between ``-128`` and ``127``,
 whereas a ``UInt8`` named value can store numbers between ``0`` and ``255``.
 A number that can be stored in one numeric type
-cannot necessarily be stored in another numeric type.
+cannot necessarily be stored in another numeric type,
+and trying to do so is reported as an error:
 
-Because of these differences,
+.. testcode:: namedValuesOverflowError
+
+    (swift) let cannotBeNegative: UInt8 = -1
+    !!! <REPL Input>:1:31: error: integer literal overflows when stored into 'UInt8'
+    !!! let cannotBeNegative: UInt8 = -1
+    !!!                               ^
+    (swift) let tooBig: Int8 = Int8.max + 1
+    !!! <REPL Input>:1:29: error: arithmetic operation '127 + 1' (on type 'Int8') results in an overflow
+    !!! let tooBig: Int8 = Int8.max + 1
+    !!!                             ^
+
+Because of this,
 numeric type conversion is something you must opt in to on a case-by-case basis.
 This opt-in approach avoids accidental errors
 and helps to make type conversion intentions explicit in your code.
@@ -558,21 +570,30 @@ such as the ``if``-``else`` statement:
 Conditional statements such as ``if``-``else`` are covered in more detail in :doc:`ControlFlow`.
 
 Swift's type safety means that non-Boolean values cannot be substituted for ``Bool``.
-You cannot, for example, say::
+The following example will produce an error:
+
+.. testcode:: booleansNotLogicValue
 
     (swift) let i = 1
     // i : Int = 1
     (swift) if i {
-        // do stuff
+        println("This will report an error rather than compiling")
     }
+    !!! <REPL Input>:1:4: error: type 'Int' does not conform to protocol 'LogicValue'
+    !!! if i {
+    !!!    ^
 
-…because ``i`` is not of type ``Bool``.
-However, it is valid to say::
+However, it is valid to say:
 
+.. testcode:: booleansIsLogicValue
+
+    (swift) let i = 1
+    // i : Int = 1
     (swift) if i == 1 {
-        // do stuff
+        println("This is allowed")
     }
-    
+    >>> This is allowed
+
 The result of the ``i == 1`` comparison is of type ``Bool``,
 and so this second example passes the type-check.
 (Comparisons like ``i == 1`` are discussed in :doc:`Operators`.)
@@ -585,23 +606,27 @@ and ensures that the intention of a particular section of code is always made cl
 
     Strictly speaking, an ``if``-``else`` statement's condition expression
     can be of any type that conforms to the ``LogicValue`` protocol.
-    ``Bool`` is one example of this, but there are others,
-    such as :ref:`BasicTypes_Optionals` below.
+    ``Bool`` is one example of a type that conforms to this protocol,
+    but there are others, such as :ref:`BasicTypes_Optionals` below.
     The ``LogicValue`` protocol is described in more detail in :doc:`Protocols`.
+
+.. TODO: I'm not quite happy with this yet.
+   Introducing the LogicValue protocol at this early stage is a bit overkill.
+   I'd like to revisit this if time permits, and maybe move this to Control Flow.
 
 .. _BasicTypes_Arrays:
 
 Arrays
 ------
 
-[to be written]
+.. write-me::
 
 .. _BasicTypes_Dictionaries:
 
 Dictionaries
 ------------
 
-[to be written]
+.. write-me::
 
 .. _BasicTypes_Tuples:
 

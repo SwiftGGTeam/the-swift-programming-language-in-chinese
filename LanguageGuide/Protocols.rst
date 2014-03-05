@@ -55,8 +55,12 @@ Here's an example:
 Declaring a Protocol
 --------------------
 
+.. write-me::
+
 Conforming to a Protocol
 ------------------------
+
+.. write-me::
 
 .. Declaring protocol conformance (and the overlap of this with subclass declaration)
 .. Show how to make a custom type conform to LogicValue or some other protocol
@@ -65,10 +69,14 @@ Conforming to a Protocol
 Naming of Protocols
 -------------------
 
+.. write-me::
+
 .. Some advice on how protocols should be named
 
 Instance Methods
 ----------------
+
+.. write-me::
 
 .. Protocols can declare instance methods
 .. Methods can have variadic parameters
@@ -79,11 +87,15 @@ Instance Methods
 Properties
 ----------
 
+.. write-me::
+
 .. Protocols can declare stored properties, but can't provide default values
 .. Protocols can declare computed instance properties, and specify their access constraints
 
 Class and Static Methods and Properties
 ---------------------------------------
+
+.. write-me::
 
 .. Protocols can provide class (and static) functions and properties
    (although rdar://14620454 and rdar://15242744).
@@ -91,21 +103,29 @@ Class and Static Methods and Properties
 Operators
 ---------
 
+.. write-me::
+
 .. Protocols can require the implementation of operators (though assignment operators are broken)
 .. Likewise for requiring custom operators
 
 Subscript
 ---------
 
+.. write-me::
+
 .. Subscript requirements (but it's broken at the moment)
 
 Protocol Inheritance
 --------------------
 
+.. write-me::
+
 .. Protocols can inherit from other protocols
 
 Using Protocols
 ---------------
+
+.. write-me::
 
 .. Using a protocol as the type for a variable, function parameter, return type etc.
 .. Functions can have parameters that are 'anything that implements some protocol'
@@ -116,11 +136,15 @@ Using Protocols
 Associated Types
 ----------------
 
+.. write-me::
+
 .. Associated typealiases
 .. …with default types
 
 Optional Requirements
 ---------------------
+
+.. write-me::
 
 .. Non-mandatory protocol requirements via @optional
 .. Checking for optional implementations via optional binding and closures
@@ -128,10 +152,14 @@ Optional Requirements
 DynamicSelf
 -----------
 
+.. write-me::
+
 .. Self and DynamicSelf
 
 TBC
 ---
+
+.. write-me::
 
 .. Class-only protocols
 .. @obj-c protocols
