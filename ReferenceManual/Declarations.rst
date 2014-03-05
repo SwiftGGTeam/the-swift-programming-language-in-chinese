@@ -722,13 +722,9 @@ Enumeration Declaration
     enumerator-list --> enumerator raw-value-assignment-OPT | enumerator raw-value-assignment-OPT ``,`` enumerator-list
     enumerator --> enumerator-name tuple-type-OPT
     enumerator-name --> identifier
-    raw-value-assignment --> ``=`` raw-value-literal
-    raw-value-literal --> numeric-literal | textual-literal
+    raw-value-assignment --> ``=`` literal
 
 .. NOTE: You can have other declarations like methods inside of an enum declaration (e.g., methods, etc.).
-
-.. TODO: raw-value-literal has the exact same definition as literal-expression.
-   Suggest combining them.
 
 
 .. _Declarations_StructureDeclaration:
