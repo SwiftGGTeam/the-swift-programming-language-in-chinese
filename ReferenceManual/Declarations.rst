@@ -1138,6 +1138,31 @@ Subscript Declaration
 Operator Declaration
 --------------------
 
+.. syntax-outline::
+
+    operator <#fixity#> <#operator name#> {
+        precedence <#precedence level#>
+        associativity <#associativity#>
+    }
+
+
+.. TR: What do the current precedence levels (0—255) mean?
+    How you we discuss them in the prose.
+
+    The current LangRef says:
+    "Swift has simplified precedence levels when compared with C.
+    From highest to lowest:
+
+    "exponentiative:" <<, >>
+    "multiplicative:" *, /, %, &
+    "additive:" +, -, |, ^
+    "comparative:" ==, !=, <, <=, >=, >
+    "conjunctive:" &&
+    "disjunctive:" ||
+
+    Should we be using these instead of the raw precedence level values?
+
+
 .. syntax-grammar::
 
     Grammar of an operator declaration
