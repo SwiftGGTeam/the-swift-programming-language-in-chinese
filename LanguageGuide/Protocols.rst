@@ -20,10 +20,10 @@ Here's an example:
 
 .. testcode:: protocols
 
-    (swift) protocol FullyNamed {
+    --> protocol FullyNamed {
         var fullName: String { get }
     }
-    (swift) class Person : FullyNamed {
+    --> class Person : FullyNamed {
         var name: String
         var suffix: String?
         init withName(name: String) suffix(String? = .None) {
@@ -34,11 +34,11 @@ Here's an example:
             return name + (suffix ? " " + suffix! : "")
         }
     }
-    (swift) var ironMan = Person(withName: "Robert Downey", suffix: "Jr.")
-    <<< // ironMan : Person = <Person instance>
-    (swift) println("\(ironMan.name)'s full name is \(ironMan.fullName)")
-    >>> Robert Downey's full name is Robert Downey Jr.
-    (swift) class Ship : FullyNamed {
+    --> var ironMan = Person(withName: "Robert Downey", suffix: "Jr.")
+    <-- // ironMan : Person = <Person instance>
+    --> println("\(ironMan.name)'s full name is \(ironMan.fullName)")
+    <<< Robert Downey's full name is Robert Downey Jr.
+    --> class Ship : FullyNamed {
         var prefix: String?
         var name: String
         init withName(name: String) prefix(String? = .None) {
@@ -49,8 +49,8 @@ Here's an example:
             return (prefix ? prefix! + " " : "") + name
         }
     }
-    (swift) var starship = Ship(withName: "Enterprise", prefix: "USS")
-    <<< // starship : Ship = <Ship instance>
+    --> var starship = Ship(withName: "Enterprise", prefix: "USS")
+    <-- // starship : Ship = <Ship instance>
 
 Declaring a Protocol
 --------------------

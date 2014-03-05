@@ -50,14 +50,14 @@ which prints the first few entries in the five-times-table:
 
 .. testcode::
 
-    (swift) for index in 1..5 {
+    --> for index in 1..5 {
         println("\(index) times 5 is \(index * 5)")
     }
-    >>> 1 times 5 is 5
-    >>> 2 times 5 is 10
-    >>> 3 times 5 is 15
-    >>> 4 times 5 is 20
-    >>> 5 times 5 is 25
+    <<< 1 times 5 is 5
+    <<< 2 times 5 is 10
+    <<< 3 times 5 is 15
+    <<< 4 times 5 is 20
+    <<< 5 times 5 is 25
 
 Here, the collection of items being iterated is a
 closed range of numbers from ``1`` to ``5`` inclusive,
@@ -83,17 +83,17 @@ you can ignore the values using an underscore in place of a variable name:
 
 .. testcode::
 
-    (swift) let base = 3
-    <<< // base : Int = 3
-    (swift) let power = 10
-    <<< // power : Int = 10
-    (swift) var answer = 1
-    <<< // answer : Int = 1
-    (swift) for _ in 0...power {
+    --> let base = 3
+    <-- // base : Int = 3
+    --> let power = 10
+    <-- // power : Int = 10
+    --> var answer = 1
+    <-- // answer : Int = 1
+    --> for _ in 0...power {
         answer *= base
     }
-    (swift) println("\(base) to the power of \(power) is \(answer)")
-    >>> 3 to the power of 10 is 59049
+    --> println("\(base) to the power of \(power) is \(answer)")
+    <<< 3 to the power of 10 is 59049
 
 This example calculates the value of one number to the power of another
 (in this case, ``3`` to the power of ``10``).
@@ -112,15 +112,15 @@ A ``for``-``in`` loop can be used to iterate over the items in an array:
 
 .. testcode::
 
-    (swift) let names = ["Alan", "Barbara", "Carol", "Doug"]
-    <<< // names : String[] = ["Alan", "Barbara", "Carol", "Doug"]
-    (swift) for name in names {
+    --> let names = ["Alan", "Barbara", "Carol", "Doug"]
+    <-- // names : String[] = ["Alan", "Barbara", "Carol", "Doug"]
+    --> for name in names {
         println("Hello, \(name)!")
     }
-    >>> Hello, Alan!
-    >>> Hello, Barbara!
-    >>> Hello, Carol!
-    >>> Hello, Doug!
+    <<< Hello, Alan!
+    <<< Hello, Barbara!
+    <<< Hello, Carol!
+    <<< Hello, Doug!
 
 Swift's ``String`` type has a ``chars`` property,
 which provides the individual characters in the string as an ``Array`` of ``UnicodeScalar`` values
@@ -129,14 +129,14 @@ This can be used to iterate through the characters of a string in order:
 
 .. testcode::
 
-    (swift) for scalar in "Hello".chars {
+    --> for scalar in "Hello".chars {
         println(scalar)
     }
-    >>> H
-    >>> e
-    >>> l
-    >>> l
-    >>> o
+    <<< H
+    <<< e
+    <<< l
+    <<< l
+    <<< o
 
 Iteration can also be used to access the key-value pairs in a dictionary.
 Every item in a dictionary has a ``key`` property and a ``value`` property,
@@ -144,14 +144,14 @@ which can be accessed via dot syntax:
 
 .. testcode::
 
-    (swift) let numberOfLegs = ["spider" : 8, "ant" : 6, "cat" : 4]
-    <<< // numberOfLegs : Dictionary<String, Int> = Dictionary<String, Int>(1.33333, 3, <DictionaryBufferOwner<String, Int> instance>)
-    (swift) for item in numberOfLegs {
+    --> let numberOfLegs = ["spider" : 8, "ant" : 6, "cat" : 4]
+    <-- // numberOfLegs : Dictionary<String, Int> = Dictionary<String, Int>(1.33333, 3, <DictionaryBufferOwner<String, Int> instance>)
+    --> for item in numberOfLegs {
         println("\(item.key)s have \(item.value) legs")
     }
-    >>> spiders have 8 legs
-    >>> ants have 6 legs
-    >>> cats have 4 legs
+    <<< spiders have 8 legs
+    <<< ants have 6 legs
+    <<< cats have 4 legs
 
 Items in a ``Dictionary`` may not necessarily be iterated in the same order as they were inserted.
 The contents of a ``Dictionary`` are inherently unordered,
@@ -186,12 +186,12 @@ Swift also supports traditional C-style ``for`` loops with a condition and an in
 
 .. testcode::
 
-    (swift) for var index = 0; index < 3; ++index {
+    --> for var index = 0; index < 3; ++index {
         println("index is \(index)")
     }
-    >>> index is 0
-    >>> index is 1
-    >>> index is 2
+    <<< index is 0
+    <<< index is 1
+    <<< index is 2
 
 The general form of this loop format is::
 
@@ -238,16 +238,16 @@ you must declare ``index`` before the loop's scope begins:
 
 .. testcode::
 
-    (swift) var index = 0
-    <<< // index : Int = 0
-    (swift) for index = 0; index < 3; ++index {
+    --> var index = 0
+    <-- // index : Int = 0
+    --> for index = 0; index < 3; ++index {
         println("index is \(index)")
     }
-    >>> index is 0
-    >>> index is 1
-    >>> index is 2
-    (swift) println("The loop statements were executed \(index) times")
-    >>> The loop statements were executed 3 times
+    <<< index is 0
+    <<< index is 1
+    <<< index is 2
+    --> println("The loop statements were executed \(index) times")
+    <<< The loop statements were executed 3 times
 
 .. TODO: We shouldn't need to initialize index to 0 on the first line of this example,
    but variables can't currently be used unitialized in the REPL.
@@ -293,19 +293,19 @@ The general form of a ``while`` loop is::
 
 For example::
 
-    (swift) var personName = ""
-    <<< // personName : String = ""
-    (swift) let keyboard = Keyboard()
-    <<< // keyboard : Keyboard = <_TtCSs8Keyboard instance>
-    (swift) println("Please enter your name, then press return.")
-    >>> Please enter your name, then press return.
-    (swift) var inputCharacter = UnicodeScalar(keyboard.read())
-    <<< // inputCharacter : UnicodeScalar = 'a'
-    (swift) while inputCharacter != '\n' {
+    --> var personName = ""
+    <-- // personName : String = ""
+    --> let keyboard = Keyboard()
+    <-- // keyboard : Keyboard = <_TtCSs8Keyboard instance>
+    --> println("Please enter your name, then press return.")
+    <<< Please enter your name, then press return.
+    --> var inputCharacter = UnicodeScalar(keyboard.read())
+    <-- // inputCharacter : UnicodeScalar = 'a'
+    --> while inputCharacter != '\n' {
         personName += inputCharacter
         inputCharacter = UnicodeScalar(keyboard.read())
     }
-    (swift) if personName == "" {
+    --> if personName == "" {
         println("You didn't enter your name. How can I say hello to you?")
     } else {
         println("Hello, \(personName)!")
@@ -390,12 +390,12 @@ It only executes a set of statements if that condition is ``true``:
 
 .. testcode::
 
-    (swift) var temperatureInFahrenheit = 30
-    <<< // temperatureInFahrenheit : Int = 30
-    (swift) if temperatureInFahrenheit <= 32 {
+    --> var temperatureInFahrenheit = 30
+    <-- // temperatureInFahrenheit : Int = 30
+    --> if temperatureInFahrenheit <= 32 {
         println("It's very cold. Consider wearing a scarf.")
     }
-    >>> It's very cold. Consider wearing a scarf.
+    <<< It's very cold. Consider wearing a scarf.
 
 This example checks to see if the temperature
 (expressed using the Fahrenheit scale)
@@ -409,13 +409,13 @@ As its name suggests, the ``if``-``else`` statement can provide an alternative s
 
 .. testcode::
 
-    (swift) temperatureInFahrenheit = 40
-    (swift) if temperatureInFahrenheit <= 32 {
+    --> temperatureInFahrenheit = 40
+    --> if temperatureInFahrenheit <= 32 {
         println("It's very cold. Consider wearing a scarf.")
     } else {
         println("It's not that cold. Wear a t-shirt.")
     }
-    >>> It's not that cold. Wear a t-shirt.
+    <<< It's not that cold. Wear a t-shirt.
 
 One of of these two branches will always be executed.
 Because the temperature has increased to ``40`` degrees Fahrenheit,
@@ -427,15 +427,15 @@ to consider additional clauses:
 
 .. testcode::
 
-    (swift) temperatureInFahrenheit = 90
-    (swift) if temperatureInFahrenheit <= 32 {
+    --> temperatureInFahrenheit = 90
+    --> if temperatureInFahrenheit <= 32 {
         println("It's very cold. Consider wearing a scarf.")
     } else if temperatureInFahrenheit >= 86 {
         println("It's really warm. Don't forget to to wear sunscreen.")
     } else {
         println("It's not that cold. Wear a t-shirt.")
     }
-    >>> It's really warm. Don't forget to to wear sunscreen.
+    <<< It's really warm. Don't forget to to wear sunscreen.
 
 Here, an additional ``if`` clause has been added to respond to particularly warm temperatures.
 The final ``else`` clause still remains,
@@ -445,8 +445,8 @@ The final ``else`` clause is optional, however, and can be excluded if the set o
 
 .. testcode::
 
-    (swift) temperatureInFahrenheit = 72
-    (swift) if temperatureInFahrenheit <= 32 {
+    --> temperatureInFahrenheit = 72
+    --> if temperatureInFahrenheit <= 32 {
         println("It's very cold. Consider wearing a scarf.")
     } else if temperatureInFahrenheit >= 86 {
         println("It's really warm. Don't forget to to wear sunscreen.")
@@ -486,11 +486,11 @@ for brevity:
 
 .. testcode::
 
-    (swift) let numberSymbol = '三'   // Simplified Chinese symbol for the number 3
-    <<< // numberSymbol : UnicodeScalar = '三'
-    (swift) var possibleIntegerValue: Int? = .None
-    <<< // possibleIntegerValue : Int? = <unprintable value>
-    (swift) switch numberSymbol {
+    --> let numberSymbol = '三'   // Simplified Chinese symbol for the number 3
+    <-- // numberSymbol : UnicodeScalar = '三'
+    --> var possibleIntegerValue: Int? = .None
+    <-- // possibleIntegerValue : Int? = <unprintable value>
+    --> switch numberSymbol {
         case '1', '١', '一', '๑':
             possibleIntegerValue = 1
         case '2', '٢', '二', '๒':
@@ -502,12 +502,12 @@ for brevity:
         default:
             possibleIntegerValue = .None
     }
-    (swift) if let integerValue = possibleIntegerValue {
+    --> if let integerValue = possibleIntegerValue {
         println("The integer value of \(numberSymbol) is \(integerValue).")
     } else {
         println("An integer value could not be found for \(numberSymbol).")
     }
-    >>> The integer value of 三 is 3.
+    <<< The integer value of 三 is 3.
 
 .. TODO: The initialization of integerValue can be removed
   once the REPL supports uninitialized named values.
@@ -549,13 +549,13 @@ to provide a natural-language count for numbers of any size:
 
 .. testcode::
 
-    (swift) let count = 3_000_000_000_000
-    <<< // count : Int = 3000000000000
-    (swift) let countedThings = "stars in the Milky Way"
-    <<< // countedThings : String = "stars in the Milky Way"
-    (swift) var naturalCount = ""
-    <<< // naturalCount : String = ""
-    (swift) switch count {
+    --> let count = 3_000_000_000_000
+    <-- // count : Int = 3000000000000
+    --> let countedThings = "stars in the Milky Way"
+    <-- // countedThings : String = "stars in the Milky Way"
+    --> var naturalCount = ""
+    <-- // naturalCount : String = ""
+    --> switch count {
         case 0:
             naturalCount = "no"
         case 1:
@@ -573,8 +573,8 @@ to provide a natural-language count for numbers of any size:
         default:
             naturalCount = "lots and lots of"
     }
-    (swift) println("There are \(naturalCount) \(countedThings).")
-    >>> There are lots and lots of stars in the Milky Way.
+    --> println("There are \(naturalCount) \(countedThings).")
+    <<< There are lots and lots of stars in the Milky Way.
 
 .. TODO: change these ranges to be closed ranges rather than half-closed ranges
    once rdar://14586400 is implemented.
@@ -607,9 +607,9 @@ or outside of the box altogether.
 
 .. testcode::
 
-    (swift) let somePoint = (1, 1)
-    <<< // somePoint : (Int, Int) = (1, 1)
-    (swift) switch somePoint {
+    --> let somePoint = (1, 1)
+    <-- // somePoint : (Int, Int) = (1, 1)
+    --> switch somePoint {
         case (0, 0):
             println("(0, 0) is at the origin")
         case (_, 0):
@@ -621,7 +621,7 @@ or outside of the box altogether.
         default:
             println("(\(somePoint.0), \(somePoint.1)) is outside of the box")
     }
-    >>> (1, 1) is inside the box
+    <<< (1, 1) is inside the box
 
 Unlike C, Swift allows multiple ``case`` statements to consider the same value or values.
 In fact, the point (0, 0) could match all *four* of the ``case`` statements in this example.
@@ -660,9 +660,9 @@ or somewhere else.
 
 .. testcode::
 
-    (swift) let anotherPoint = (2, 0)
-    <<< // anotherPoint : (Int, Int) = (2, 0)
-    (swift) switch anotherPoint {
+    --> let anotherPoint = (2, 0)
+    <-- // anotherPoint : (Int, Int) = (2, 0)
+    --> switch anotherPoint {
         case (let x, 0):
             println("on the x-axis with an x value of \(x)")
         case (0, let y):
@@ -670,7 +670,7 @@ or somewhere else.
         case let (x, y):
             println("somewhere else at (\(x), \(y))")
     }
-    >>> on the x-axis with an x value of 2
+    <<< on the x-axis with an x value of 2
 
 The three ``case`` statements declare placeholder constants ``x`` and ``y``,
 which temporarily take on one or both of the tuple values from ``anotherPoint``.
@@ -721,9 +721,9 @@ or none of the above.
 
 .. testcode::
 
-    (swift) let yetAnotherPoint = (1, -1)
-    <<< // yetAnotherPoint : (Int, Int) = (1, -1)
-    (swift) switch yetAnotherPoint {
+    --> let yetAnotherPoint = (1, -1)
+    <-- // yetAnotherPoint : (Int, Int) = (1, -1)
+    --> switch yetAnotherPoint {
         case let (x, y) where x == y:
             println("(\(x), \(y)) is on the line x == y")
         case let (x, y) where x == -y:
@@ -731,7 +731,7 @@ or none of the above.
         case let (x, y):
             println("(\(x), \(y)) is just some arbitrary point")
     }
-    >>> (1, -1) is on the line x == -y
+    <<< (1, -1) is on the line x == -y
 
 The three ``case`` statements declare placeholder constants ``x`` and ``y``,
 which temporarily take on the two tuple values from ``point``.
@@ -784,11 +784,11 @@ and removes all of its vowels and spaces to create a cryptic puzzle phrase for s
 
 .. testcode::
 
-    (swift) let puzzleInput = "great minds think alike"
-    <<< // puzzleInput : String = "great minds think alike"
-    (swift) var puzzleOutput = ""
-    <<< // puzzleOutput : String = ""
-    (swift) for letter in puzzleInput.chars {
+    --> let puzzleInput = "great minds think alike"
+    <-- // puzzleInput : String = "great minds think alike"
+    --> var puzzleOutput = ""
+    <-- // puzzleOutput : String = ""
+    --> for letter in puzzleInput.chars {
         switch letter {
             case 'a', 'e', 'i', 'o', 'u', ' ':
                 continue
@@ -796,8 +796,8 @@ and removes all of its vowels and spaces to create a cryptic puzzle phrase for s
                 puzzleOutput += letter
         }
     }
-    (swift) println(puzzleOutput)
-    >>> grtmndsthnklk
+    --> println(puzzleOutput)
+    <<< grtmndsthnklk
 
 The ``letter`` constant is inferred to be of type ``UnicodeScalar``
 from the fact that it is iterating over a sequence of ``UnicodeScalar`` values.
@@ -828,13 +828,13 @@ Try entering your full name
 (rather than just your first name or given name)
 to see it in action::
 
-    (swift) var personName = ""
-    <<< // personName : String = ""
-    (swift) let keyboard = Keyboard()
-    <<< // keyboard : Keyboard = <_TtCSs8Keyboard instance>
-    (swift) println("Please enter your name, then press return.")
-    >>> Please enter your name, then press return.
-    (swift) while true {
+    --> var personName = ""
+    <-- // personName : String = ""
+    --> let keyboard = Keyboard()
+    <-- // keyboard : Keyboard = <_TtCSs8Keyboard instance>
+    --> println("Please enter your name, then press return.")
+    <<< Please enter your name, then press return.
+    --> while true {
         let inputCharacter = UnicodeScalar(keyboard.read())
         switch inputCharacter {
             case ' ':
@@ -845,7 +845,7 @@ to see it in action::
                 personName += inputCharacter
         }
     }
-    (swift) if personName == "" {
+    --> if personName == "" {
         println("You didn't enter your name. How can I say hello to you?")
     } else {
         println("Hello, \(personName)!")
@@ -889,19 +889,19 @@ The example below uses ``fallthrough`` to create a textual description of a numb
 
 .. testcode::
 
-    (swift) let integerToDescribe = 5
-    <<< // integerToDescribe : Int = 5
-    (swift) var description = "The number \(integerToDescribe) is"
-    <<< // description : String = "The number 5 is"
-    (swift) switch integerToDescribe {
+    --> let integerToDescribe = 5
+    <-- // integerToDescribe : Int = 5
+    --> var description = "The number \(integerToDescribe) is"
+    <-- // description : String = "The number 5 is"
+    --> switch integerToDescribe {
         case 2, 3, 5, 7, 11, 13, 17, 19:
             description += " a prime number, and also"
             fallthrough
         default:
             description += " an integer."
     }
-    (swift) println(description)
-    >>> The number 5 is a prime number, and also an integer.
+    --> println(description)
+    <<< The number 5 is a prime number, and also an integer.
 
 This example declares a new ``String`` variable called ``description``,
 and assigns it an initial value.
