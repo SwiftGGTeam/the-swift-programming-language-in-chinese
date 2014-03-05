@@ -528,10 +528,10 @@ using the following escape sequences:
    in text mode, \n maps to the platform's line separator
    which could be CR or LF or CRLF.
 
-Characters can also be expressed by ``\x`` followed by two hexadecimal digits,
+Characters can also be escaped by ``\x`` followed by two hexadecimal digits,
 ``\u`` followed by four hexadecimal digits,
 or ``\U`` followed by eight hexadecimal digits.
-The digits in these escape sequences identify a Unicode codepoint.
+The digits in these escape codes identify a Unicode codepoint.
 
 The value of an expression can be inserted into a string literal
 by placing the expression in parentheses after a backslash (``\``).
