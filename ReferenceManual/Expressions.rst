@@ -43,8 +43,12 @@ the expression that follows them.
 
 .. _Expressions_BinaryOperators:
 
-Binary Operators
-----------------
+Infix Expressions
+-----------------
+
+Infix expressions are formed by combining
+an infix operator with the expressions that it takes
+as its arguments.
 
 .. langref-grammar
 
