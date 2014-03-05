@@ -658,7 +658,7 @@ Here's an example of a tuple:
 
     (swift) let httpStatus = (404, "Not Found")
     <<< // httpStatus : (Int, String) = (404, "Not Found")
-    (swift) // httpStatus: (Int, String) = (404, "Not Found")
+    (swift) // httpStatus is of type (Int, String), and equals (404, "Not Found")
 
 ``(404, "Not Found")`` is a tuple that describes an *HTTP status code*.
 An HTTP status code is a special value returned by a web server whenever you request a web page.
@@ -815,7 +815,7 @@ Optional bindings for the ``if``-``else`` statement are written in the following
 
 ::
 
-    (swift) if let <#newNamedValue#> = <#someOptional#> {
+    if let <#newNamedValue#> = <#someOptional#> {
         <#statements#>
     }
 
