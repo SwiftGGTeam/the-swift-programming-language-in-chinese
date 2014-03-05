@@ -99,27 +99,26 @@ Built-In Binary Operators
 Assignment Operator
 +++++++++++++++++++
 
-An assignment uses the ``=`` operator
-in the following form:
+The :newTerm:`assigment operator`
+updates the value of variables
+and sets the value of constants.
+It has the following form:
 
 .. syntax-outline::
 
    <#name#> = <#value#>
 
-The expression on the right of the ``=`` is evaluated
-and the variable or constant on the left
-is set to that value.
-
-.. TODO: Is this terminology of "named values" too strict/functional?
+The expression on the right of the ``=`` is evaluated,
+and the resulting value is assigned to the item on the left.
 
 If the left side consists of a tuple,
 the value of the right side must be a tuple
 with the same number of elements.
 Items in the right-hand tuple
-is assigned to the corresponding items in the left-hand tuple.
+are assigned to the corresponding items in the left-hand tuple.
 For example: ::
 
-    // Swap a and b.
+    // Sets and swaps the value of a and b.
     var (a, b) = (1, 2)
     (a, b) = (b, a)
 
