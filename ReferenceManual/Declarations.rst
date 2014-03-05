@@ -637,7 +637,7 @@ Function Signature
 
     Grammar of a function declaration
 
-    function-declaration --> attribute-list-OPT function-specifier-OPT ``func`` function-name generic-parameter-clause-OPT function-signature code-block-OPT
+    function-declaration --> attribute-list-OPT function-specifier-OPT ``mutating``-OPT ``func`` function-name generic-parameter-clause-OPT function-signature code-block-OPT
     function-specifier --> ``static`` | ``class``
     function-name --> identifier | operator
 
@@ -648,6 +648,9 @@ Function Signature
     selector-parameters --> ``(`` tuple-pattern-element ``)`` selector-tuples
     selector-tuples --> selector-name ``(`` tuple-pattern-element ``)`` selector-tuples-OPT
     selector-name --> identifier
+
+.. NOTE: Added the optional ``mutating`` modifier,
+    based on the grammar found in ParseDecl.cpp.
 
 .. TODO: Verify that the selector-name is just an identifier,
     because the LangRef grammar has it as an identifier-or-any
