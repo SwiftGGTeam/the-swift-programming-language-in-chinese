@@ -21,34 +21,34 @@ Here's an example:
 .. testcode:: protocols
 
     --> protocol FullyNamed {
-        var fullName: String { get }
-    }
+            var fullName: String { get }
+        }
     --> class Person : FullyNamed {
-        var name: String
-        var suffix: String?
-        init withName(name: String) suffix(String? = .None) {
-            self.name = name
-            self.suffix = suffix
+            var name: String
+            var suffix: String?
+            init withName(name: String) suffix(String? = .None) {
+                self.name = name
+                self.suffix = suffix
+            }
+            var fullName: String {
+                return name + (suffix ? " " + suffix! : "")
+            }
         }
-        var fullName: String {
-            return name + (suffix ? " " + suffix! : "")
-        }
-    }
     --> var ironMan = Person(withName: "Robert Downey", suffix: "Jr.")
     <-- // ironMan : Person = <Person instance>
     --> println("\(ironMan.name)'s full name is \(ironMan.fullName)")
     <<< Robert Downey's full name is Robert Downey Jr.
     --> class Ship : FullyNamed {
-        var prefix: String?
-        var name: String
-        init withName(name: String) prefix(String? = .None) {
-            self.name = name
-            self.prefix = prefix
+            var prefix: String?
+            var name: String
+            init withName(name: String) prefix(String? = .None) {
+                self.name = name
+                self.prefix = prefix
+            }
+            var fullName: String {
+                return (prefix ? prefix! + " " : "") + name
+            }
         }
-        var fullName: String {
-            return (prefix ? prefix! + " " : "") + name
-        }
-    }
     --> var starship = Ship(withName: "Enterprise", prefix: "USS")
     <-- // starship : Ship = <Ship instance>
 

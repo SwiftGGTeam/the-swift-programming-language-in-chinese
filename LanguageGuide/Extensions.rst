@@ -46,12 +46,12 @@ to provide basic support for working with distance units:
 .. testcode:: extensionsComputedProperties
 
     --> extension Double {
-        var km: Double { return self * 1_000.00 }
-        var m: Double { return self }
-        var cm: Double { return self / 100.00 }
-        var mm: Double { return self / 1_000.00 }
-        var ft: Double { return self / 3.28084 }
-    }
+            var km: Double { return self * 1_000.00 }
+            var m: Double { return self }
+            var cm: Double { return self / 100.00 }
+            var mm: Double { return self / 1_000.00 }
+            var ft: Double { return self / 3.28084 }
+        }
     --> let oneInch = 25.4.mm
     <-- // oneInch : Double = 0.0254
     --> println("One inch is \(oneInch) meters")
@@ -123,13 +123,13 @@ for use with string interpolation.
 .. testcode:: extensionsInitializers
 
     --> struct Point {
-        var x = 0.0, y = 0.0
-    }
-    --> extension String {
-        init(point: Point) {
-            self = "(\(point.x), \(point.y))"
+            var x = 0.0, y = 0.0
         }
-    }
+    --> extension String {
+            init(point: Point) {
+                self = "(\(point.x), \(point.y))"
+            }
+        }
     --> let somePoint = Point(3.0, 5.0)
     <-- // somePoint : Point = Point(3.0, 5.0)
     --> let pointDescription = String(somePoint)
@@ -192,16 +192,16 @@ to an existing type:
 .. testcode:: extensionsInstanceMethods
 
     --> extension String {
-        func toSpooky() -> String {
-            var i = 0
-            var spookyVersion = ""
-            for scalar in self.chars {
-                spookyVersion += i % 2 == 0 ? scalar.uppercase : scalar.lowercase
-                ++i
+            func toSpooky() -> String {
+                var i = 0
+                var spookyVersion = ""
+                for scalar in self.chars {
+                    spookyVersion += i % 2 == 0 ? scalar.uppercase : scalar.lowercase
+                    ++i
+                }
+                return spookyVersion
             }
-            return spookyVersion
         }
-    }
 
 This example adds a new ``String`` instance method called ``toSpooky()``.
 This new method is now available to any instances of ``String``.
@@ -229,12 +229,12 @@ just like mutating methods from an original implementation:
 .. testcode:: extensionsInstanceMethods
 
     --> extension Int {
-        mutating func shiftRight(numberOfDecimalPlaces: Int) {
-            for _ in 0...numberOfDecimalPlaces {
-                self /= 10
+            mutating func shiftRight(numberOfDecimalPlaces: Int) {
+                for _ in 0...numberOfDecimalPlaces {
+                    self /= 10
+                }
             }
         }
-    }
     --> var someInt = 123_456
     <-- // someInt : Int = 123456
     --> someInt.shiftRight(3)
@@ -290,14 +290,14 @@ so:
 .. testcode:: extensionsSubscripts
 
     --> extension Int {
-        subscript(digitIndex: Int) -> Int {
-            var decimalBase = 1
-            for _ in 0...digitIndex {
-                decimalBase *= 10
+            subscript(digitIndex: Int) -> Int {
+                var decimalBase = 1
+                for _ in 0...digitIndex {
+                    decimalBase *= 10
+                }
+                return (self / decimalBase) % 10
             }
-            return (self / decimalBase) % 10
         }
-    }
     --> 123456789[0]
     <-- // r0 : Int = 9
     --> 123456789[1]
@@ -322,21 +322,21 @@ to existing classes, structures and enumerations:
 .. testcode:: extensionsNestedTypes
 
     --> extension UnicodeScalar {
-        enum Kind {
-            case Vowel, Consonant, Other
-        }
-        var kind: Kind {
-            switch self.lowercase {
-                case 'a', 'e', 'i', 'o', 'u':
-                    return .Vowel
-                case 'b', 'c', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'm',
-                     'n', 'p', 'q', 'r', 's', 't', 'v', 'w', 'x', 'y', 'z':
-                    return .Consonant
-                default:
-                    return .Other
+            enum Kind {
+                case Vowel, Consonant, Other
+            }
+            var kind: Kind {
+                switch self.lowercase {
+                    case 'a', 'e', 'i', 'o', 'u':
+                        return .Vowel
+                    case 'b', 'c', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'm',
+                         'n', 'p', 'q', 'r', 's', 't', 'v', 'w', 'x', 'y', 'z':
+                        return .Consonant
+                    default:
+                        return .Other
+                }
             }
         }
-    }
 
 This example adds a new nested enumeration to ``UnicodeScalar``.
 This enumeration, called ``Kind``,
@@ -354,19 +354,19 @@ The nested enumeration can now be used with ``UnicodeScalar`` values:
 .. testcode:: extensionsNestedTypes
 
     --> func printLetterKinds(word: String) {
-        println("'\(word)' is made up of the following kinds of letters:")
-        for scalar in word.chars {
-            switch scalar.kind {
-                case .Vowel:
-                    print("vowel ")
-                case .Consonant:
-                    print("consonant ")
-                case .Other:
-                    print("other ")
+            println("'\(word)' is made up of the following kinds of letters:")
+            for scalar in word.chars {
+                switch scalar.kind {
+                    case .Vowel:
+                        print("vowel ")
+                    case .Consonant:
+                        print("consonant ")
+                    case .Other:
+                        print("other ")
+                }
             }
+            print("\n")
         }
-        print("\n")
-    }
     --> printLetterKinds("Hello")
     <<< 'Hello' is made up of the following kinds of letters:
     <<< consonant vowel consonant consonant vowel

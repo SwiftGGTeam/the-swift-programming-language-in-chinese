@@ -1099,8 +1099,8 @@ It can be read as “not ``a``”, as seen in the following example:
     --> let allowedEntry = false
     <-- // allowedEntry : Bool = false
     --> if !allowedEntry {
-        println("ACCESS DENIED")
-    }
+            println("ACCESS DENIED")
+        }
     <<< ACCESS DENIED
     /// this will print "ACCESS DENIED"
 
@@ -1138,10 +1138,10 @@ and only allows access if both values are ``true``:
     --> let passedRetinaScan = false
     <-- // passedRetinaScan : Bool = false
     --> if enteredDoorCode && passedRetinaScan {
-        println("Welcome!")
-    } else {
-        println("ACCESS DENIED")
-    }
+            println("Welcome!")
+        } else {
+            println("ACCESS DENIED")
+        }
     <<< ACCESS DENIED
     /// this will print "ACCESS DENIED"
 
@@ -1170,10 +1170,10 @@ For example:
     --> let knowsOverridePassword = true
     <-- // knowsOverridePassword : Bool = true
     --> if hasDoorKey || knowsOverridePassword {
-        println("Welcome!")
-    } else {
-        println("ACCESS DENIED")
-    }
+            println("Welcome!")
+        } else {
+            println("ACCESS DENIED")
+        }
     <<< Welcome!
     /// this will print "Welcome!"
 
@@ -1194,10 +1194,10 @@ You can combine multiple logical operators to create longer compound expressions
 .. testcode:: logicalOperators
 
     --> if enteredDoorCode && passedRetinaScan || hasDoorKey || knowsOverridePassword {
-        println("Welcome!")
-    } else {
-        println("ACCESS DENIED")
-    }
+            println("Welcome!")
+        } else {
+            println("ACCESS DENIED")
+        }
     <<< Welcome!
     /// this will print "Welcome!"
 
@@ -1319,10 +1319,10 @@ it is useful to add parentheses around the first part of the compound expression
 .. testcode:: logicalOperators
 
     --> if (enteredDoorCode && passedRetinaScan) || hasDoorKey || knowsOverridePassword {
-        println("Welcome!")
-    } else {
-        println("ACCESS DENIED")
-    }
+            println("Welcome!")
+        } else {
+            println("ACCESS DENIED")
+        }
     <<< Welcome!
     /// this will print "Welcome!"
 

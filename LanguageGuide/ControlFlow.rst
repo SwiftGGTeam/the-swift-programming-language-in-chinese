@@ -51,8 +51,8 @@ which prints the first few entries in the five-times-table:
 .. testcode::
 
     --> for index in 1..5 {
-        println("\(index) times 5 is \(index * 5)")
-    }
+            println("\(index) times 5 is \(index * 5)")
+        }
     <<< 1 times 5 is 5
     <<< 2 times 5 is 10
     <<< 3 times 5 is 15
@@ -90,8 +90,8 @@ you can ignore the values using an underscore in place of a variable name:
     --> var answer = 1
     <-- // answer : Int = 1
     --> for _ in 0...power {
-        answer *= base
-    }
+            answer *= base
+        }
     --> println("\(base) to the power of \(power) is \(answer)")
     <<< 3 to the power of 10 is 59049
 
@@ -115,8 +115,8 @@ A ``for``-``in`` loop can be used to iterate over the items in an array:
     --> let names = ["Alan", "Barbara", "Carol", "Doug"]
     <-- // names : String[] = ["Alan", "Barbara", "Carol", "Doug"]
     --> for name in names {
-        println("Hello, \(name)!")
-    }
+            println("Hello, \(name)!")
+        }
     <<< Hello, Alan!
     <<< Hello, Barbara!
     <<< Hello, Carol!
@@ -130,8 +130,8 @@ This can be used to iterate through the characters of a string in order:
 .. testcode::
 
     --> for scalar in "Hello".chars {
-        println(scalar)
-    }
+            println(scalar)
+        }
     <<< H
     <<< e
     <<< l
@@ -147,8 +147,8 @@ which can be accessed via dot syntax:
     --> let numberOfLegs = ["spider" : 8, "ant" : 6, "cat" : 4]
     <-- // numberOfLegs : Dictionary<String, Int> = Dictionary<String, Int>(1.33333, 3, <DictionaryBufferOwner<String, Int> instance>)
     --> for item in numberOfLegs {
-        println("\(item.key)s have \(item.value) legs")
-    }
+            println("\(item.key)s have \(item.value) legs")
+        }
     <<< spiders have 8 legs
     <<< ants have 6 legs
     <<< cats have 4 legs
@@ -187,13 +187,15 @@ Swift also supports traditional C-style ``for`` loops with a condition and an in
 .. testcode::
 
     --> for var index = 0; index < 3; ++index {
-        println("index is \(index)")
-    }
+            println("index is \(index)")
+        }
     <<< index is 0
     <<< index is 1
     <<< index is 2
 
-The general form of this loop format is::
+The general form of this loop format is:
+
+::
 
     for <#initialization#>; <#condition#>; <#increment#> {
         <#statements#>
@@ -222,7 +224,9 @@ The loop is executed as follows:
    execution returns to step 2,
    and the condition expression is evaluated again.
 
-This is effectively shorthand for (and equivalent to)::
+This is effectively shorthand for (and equivalent to):
+
+::
 
     <#initialization#>
     while <#condition#> {
@@ -241,8 +245,8 @@ you must declare ``index`` before the loop's scope begins:
     --> var index = 0
     <-- // index : Int = 0
     --> for index = 0; index < 3; ++index {
-        println("index is \(index)")
-    }
+            println("index is \(index)")
+        }
     <<< index is 0
     <<< index is 1
     <<< index is 2
@@ -285,13 +289,17 @@ A ``while`` loop starts by considering a single condition.
 If the condition is ``true``,
 a set of statements is repeated until the condition becomes ``false``.
 
-The general form of a ``while`` loop is::
+The general form of a ``while`` loop is:
+
+::
 
     while <#condition equates to true#> {
         <#statements#>
     }
 
-For example::
+For example:
+
+::
 
     --> var personName = ""
     <-- // personName : String = ""
@@ -302,14 +310,14 @@ For example::
     --> var inputCharacter = UnicodeScalar(keyboard.read())
     <-- // inputCharacter : UnicodeScalar = 'a'
     --> while inputCharacter != '\n' {
-        personName += inputCharacter
-        inputCharacter = UnicodeScalar(keyboard.read())
-    }
+            personName += inputCharacter
+            inputCharacter = UnicodeScalar(keyboard.read())
+        }
     --> if personName == "" {
-        println("You didn't enter your name. How can I say hello to you?")
-    } else {
-        println("Hello, \(personName)!")
-    }
+            println("You didn't enter your name. How can I say hello to you?")
+        } else {
+            println("Hello, \(personName)!")
+        }
 
 .. TODO: This example cannot be auto-tested, as it is reliant on keyboard input.
    It must be tested manually before this book is published.
@@ -353,7 +361,9 @@ The second variation of the ``while`` loop,
 known as the ``do``-``while`` loop,
 performs a single pass through the loop block first,
 *before* considering a condition.
-It then continues to repeat the loop until the condition is ``false``::
+It then continues to repeat the loop until the condition is ``false``:
+
+::
 
     do {
         <#statements#>
@@ -393,8 +403,8 @@ It only executes a set of statements if that condition is ``true``:
     --> var temperatureInFahrenheit = 30
     <-- // temperatureInFahrenheit : Int = 30
     --> if temperatureInFahrenheit <= 32 {
-        println("It's very cold. Consider wearing a scarf.")
-    }
+            println("It's very cold. Consider wearing a scarf.")
+        }
     <<< It's very cold. Consider wearing a scarf.
 
 This example checks to see if the temperature
@@ -411,10 +421,10 @@ As its name suggests, the ``if``-``else`` statement can provide an alternative s
 
     --> temperatureInFahrenheit = 40
     --> if temperatureInFahrenheit <= 32 {
-        println("It's very cold. Consider wearing a scarf.")
-    } else {
-        println("It's not that cold. Wear a t-shirt.")
-    }
+            println("It's very cold. Consider wearing a scarf.")
+        } else {
+            println("It's not that cold. Wear a t-shirt.")
+        }
     <<< It's not that cold. Wear a t-shirt.
 
 One of of these two branches will always be executed.
@@ -429,12 +439,12 @@ to consider additional clauses:
 
     --> temperatureInFahrenheit = 90
     --> if temperatureInFahrenheit <= 32 {
-        println("It's very cold. Consider wearing a scarf.")
-    } else if temperatureInFahrenheit >= 86 {
-        println("It's really warm. Don't forget to to wear sunscreen.")
-    } else {
-        println("It's not that cold. Wear a t-shirt.")
-    }
+            println("It's very cold. Consider wearing a scarf.")
+        } else if temperatureInFahrenheit >= 86 {
+            println("It's really warm. Don't forget to to wear sunscreen.")
+        } else {
+            println("It's not that cold. Wear a t-shirt.")
+        }
     <<< It's really warm. Don't forget to to wear sunscreen.
 
 Here, an additional ``if`` clause has been added to respond to particularly warm temperatures.
@@ -447,10 +457,10 @@ The final ``else`` clause is optional, however, and can be excluded if the set o
 
     --> temperatureInFahrenheit = 72
     --> if temperatureInFahrenheit <= 32 {
-        println("It's very cold. Consider wearing a scarf.")
-    } else if temperatureInFahrenheit >= 86 {
-        println("It's really warm. Don't forget to to wear sunscreen.")
-    }
+            println("It's very cold. Consider wearing a scarf.")
+        } else if temperatureInFahrenheit >= 86 {
+            println("It's really warm. Don't forget to to wear sunscreen.")
+        }
 
 In this example,
 the temperature is neither too cold nor too warm to trigger the ``if`` or ``else if`` conditions,
@@ -491,22 +501,22 @@ for brevity:
     --> var possibleIntegerValue: Int? = .None
     <-- // possibleIntegerValue : Int? = <unprintable value>
     --> switch numberSymbol {
-        case '1', '١', '一', '๑':
-            possibleIntegerValue = 1
-        case '2', '٢', '二', '๒':
-            possibleIntegerValue = 2
-        case '3', '٣', '三', '๓':
-            possibleIntegerValue = 3
-        case '4', '٤', '四', '๔':
-            possibleIntegerValue = 4
-        default:
-            possibleIntegerValue = .None
-    }
+            case '1', '١', '一', '๑':
+                possibleIntegerValue = 1
+            case '2', '٢', '二', '๒':
+                possibleIntegerValue = 2
+            case '3', '٣', '三', '๓':
+                possibleIntegerValue = 3
+            case '4', '٤', '四', '๔':
+                possibleIntegerValue = 4
+            default:
+                possibleIntegerValue = .None
+        }
     --> if let integerValue = possibleIntegerValue {
-        println("The integer value of \(numberSymbol) is \(integerValue).")
-    } else {
-        println("An integer value could not be found for \(numberSymbol).")
-    }
+            println("The integer value of \(numberSymbol) is \(integerValue).")
+        } else {
+            println("An integer value could not be found for \(numberSymbol).")
+        }
     <<< The integer value of 三 is 3.
 
 .. TODO: The initialization of integerValue can be removed
@@ -556,23 +566,23 @@ to provide a natural-language count for numbers of any size:
     --> var naturalCount = ""
     <-- // naturalCount : String = ""
     --> switch count {
-        case 0:
-            naturalCount = "no"
-        case 1:
-            naturalCount = "one"
-        case 2:
-            naturalCount = "a couple of"
-        case 3:
-            naturalCount = "a few"
-        case 4..11:
-            naturalCount = "several"
-        case 12..99:
-            naturalCount = "dozens of"
-        case 100..999:
-            naturalCount = "hundreds of"
-        default:
-            naturalCount = "lots and lots of"
-    }
+            case 0:
+                naturalCount = "no"
+            case 1:
+                naturalCount = "one"
+            case 2:
+                naturalCount = "a couple of"
+            case 3:
+                naturalCount = "a few"
+            case 4..11:
+                naturalCount = "several"
+            case 12..99:
+                naturalCount = "dozens of"
+            case 100..999:
+                naturalCount = "hundreds of"
+            default:
+                naturalCount = "lots and lots of"
+        }
     --> println("There are \(naturalCount) \(countedThings).")
     <<< There are lots and lots of stars in the Milky Way.
 
@@ -610,17 +620,17 @@ or outside of the box altogether.
     --> let somePoint = (1, 1)
     <-- // somePoint : (Int, Int) = (1, 1)
     --> switch somePoint {
-        case (0, 0):
-            println("(0, 0) is at the origin")
-        case (_, 0):
-            println("(\(somePoint.0), 0) is on the x-axis")
-        case (0, _):
-            println("(0, \(somePoint.1)) is on the y-axis")
-        case (-2..2, -2..2):
-            println("(\(somePoint.0), \(somePoint.1)) is inside the box")
-        default:
-            println("(\(somePoint.0), \(somePoint.1)) is outside of the box")
-    }
+            case (0, 0):
+                println("(0, 0) is at the origin")
+            case (_, 0):
+                println("(\(somePoint.0), 0) is on the x-axis")
+            case (0, _):
+                println("(0, \(somePoint.1)) is on the y-axis")
+            case (-2..2, -2..2):
+                println("(\(somePoint.0), \(somePoint.1)) is inside the box")
+            default:
+                println("(\(somePoint.0), \(somePoint.1)) is outside of the box")
+        }
     <<< (1, 1) is inside the box
 
 Unlike C, Swift allows multiple ``case`` statements to consider the same value or values.
@@ -663,13 +673,13 @@ or somewhere else.
     --> let anotherPoint = (2, 0)
     <-- // anotherPoint : (Int, Int) = (2, 0)
     --> switch anotherPoint {
-        case (let x, 0):
-            println("on the x-axis with an x value of \(x)")
-        case (0, let y):
-            println("on the y-axis with a y value of \(y)")
-        case let (x, y):
-            println("somewhere else at (\(x), \(y))")
-    }
+            case (let x, 0):
+                println("on the x-axis with an x value of \(x)")
+            case (0, let y):
+                println("on the y-axis with a y value of \(y)")
+            case let (x, y):
+                println("somewhere else at (\(x), \(y))")
+        }
     <<< on the x-axis with an x value of 2
 
 The three ``case`` statements declare placeholder constants ``x`` and ``y``,
@@ -724,13 +734,13 @@ or none of the above.
     --> let yetAnotherPoint = (1, -1)
     <-- // yetAnotherPoint : (Int, Int) = (1, -1)
     --> switch yetAnotherPoint {
-        case let (x, y) where x == y:
-            println("(\(x), \(y)) is on the line x == y")
-        case let (x, y) where x == -y:
-            println("(\(x), \(y)) is on the line x == -y")
-        case let (x, y):
-            println("(\(x), \(y)) is just some arbitrary point")
-    }
+            case let (x, y) where x == y:
+                println("(\(x), \(y)) is on the line x == y")
+            case let (x, y) where x == -y:
+                println("(\(x), \(y)) is on the line x == -y")
+            case let (x, y):
+                println("(\(x), \(y)) is just some arbitrary point")
+        }
     <<< (1, -1) is on the line x == -y
 
 The three ``case`` statements declare placeholder constants ``x`` and ``y``,
@@ -789,13 +799,13 @@ and removes all of its vowels and spaces to create a cryptic puzzle phrase for s
     --> var puzzleOutput = ""
     <-- // puzzleOutput : String = ""
     --> for letter in puzzleInput.chars {
-        switch letter {
-            case 'a', 'e', 'i', 'o', 'u', ' ':
-                continue
-            default:
-                puzzleOutput += letter
+            switch letter {
+                case 'a', 'e', 'i', 'o', 'u', ' ':
+                    continue
+                default:
+                    puzzleOutput += letter
+            }
         }
-    }
     --> println(puzzleOutput)
     <<< grtmndsthnklk
 
@@ -835,21 +845,21 @@ to see it in action::
     --> println("Please enter your name, then press return.")
     <<< Please enter your name, then press return.
     --> while true {
-        let inputCharacter = UnicodeScalar(keyboard.read())
-        switch inputCharacter {
-            case ' ':
-                continue
-            case '\n':
-                break
-            default:
-                personName += inputCharacter
+            let inputCharacter = UnicodeScalar(keyboard.read())
+            switch inputCharacter {
+                case ' ':
+                    continue
+                case '\n':
+                    break
+                default:
+                    personName += inputCharacter
+            }
         }
-    }
     --> if personName == "" {
-        println("You didn't enter your name. How can I say hello to you?")
-    } else {
-        println("Hello, \(personName)!")
-    }
+            println("You didn't enter your name. How can I say hello to you?")
+        } else {
+            println("Hello, \(personName)!")
+        }
 
 .. TODO: This example cannot be auto-tested, as it is reliant on keyboard input.
    It must be tested manually before this book is published.
@@ -894,12 +904,12 @@ The example below uses ``fallthrough`` to create a textual description of a numb
     --> var description = "The number \(integerToDescribe) is"
     <-- // description : String = "The number 5 is"
     --> switch integerToDescribe {
-        case 2, 3, 5, 7, 11, 13, 17, 19:
-            description += " a prime number, and also"
-            fallthrough
-        default:
-            description += " an integer."
-    }
+            case 2, 3, 5, 7, 11, 13, 17, 19:
+                description += " a prime number, and also"
+                fallthrough
+            default:
+                description += " an integer."
+        }
     --> println(description)
     <<< The number 5 is a prime number, and also an integer.
 

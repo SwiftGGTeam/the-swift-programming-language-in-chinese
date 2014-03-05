@@ -51,9 +51,9 @@ This makes it easy for the function to be called from elsewhere in your code in 
 .. testcode:: functionDeclaration
 
     --> func sayHello(personName: String) -> String {
-        let greeting = "Hello, " + personName + "!"
-        return greeting
-    }
+            let greeting = "Hello, " + personName + "!"
+            return greeting
+        }
     --> println(sayHello("Anna"))
     <<< Hello, Anna!
     --> println(sayHello("Brian"))
@@ -84,8 +84,8 @@ to combine the message creation and the return statement into one line:
 .. testcode:: functionDeclaration
 
     --> func sayHelloAgain(personName: String) -> String {
-        return "Hello again, " + personName + "!"
-    }
+            return "Hello again, " + personName + "!"
+        }
     --> println(sayHelloAgain("Anna"))
     <<< Hello again, Anna!
 
@@ -128,8 +128,8 @@ and works out how many elements the range contains:
 .. testcode:: functionParameters
 
     --> func halfOpenRangeLength(startIndex: Int, endIndex: Int) -> Int {
-        return endIndex - startIndex
-    }
+            return endIndex - startIndex
+        }
     --> println(halfOpenRangeLength(1, 10))
     <<< 9
 
@@ -148,8 +148,8 @@ For example, the range function above can be rewritten to take a tuple of two ``
 .. testcode:: functionParameters
 
     --> func halfOpenRangeLengthForRange(range: (Int, Int)) -> Int {
-        return range.1 - range.0
-    }
+            return range.1 - range.0
+        }
     --> let someRange = (1, 10)
     <-- // someRange : (Int, Int) = (1, 10)
     --> println(halfOpenRangeLengthForRange(someRange))
@@ -177,14 +177,14 @@ This enables a function to return a combination of values as part of one compoun
 .. testcode:: functionParameters
 
     --> func splitOnFirst(string: String, splitter: UnicodeScalar) -> (String, String?) {
-        let size = string.size()
-        for i in 0...size {
-            if string[i] == splitter {
-                return (string[0...i], string[i+1...size])
+            let size = string.size()
+            for i in 0...size {
+                if string[i] == splitter {
+                    return (string[0...i], string[i+1...size])
+                }
             }
+            return (string, .None)
         }
-        return (string, .None)
-    }
 
 This example defines a function called ``splitOnFirst``,
 which looks for a ``UnicodeScalar`` called ``splitter``
@@ -208,8 +208,8 @@ and a value of ``.None`` in its second value to indicate that ``splitter`` was n
     --> let helloWorld = splitOnFirst("hello world", ' ')
     <-- // helloWorld : (String, String?) = ("hello", <unprintable value>)
     --> if let secondPart = helloWorld.1 {
-        println("The text from after the splitter is '\(secondPart)'")
-    }
+            println("The text from after the splitter is '\(secondPart)'")
+        }
     <<< The text from after the splitter is 'world'
 
 Alternatively, you can decompose the tuple into multiple named values
@@ -220,8 +220,8 @@ as part of the function return value assignment:
     --> let (first, possibleSecond) = splitOnFirst("hello world", ' ')
     <-- // (first, possibleSecond) : (String, String?) = ("hello", <unprintable value>)
     --> if let second = possibleSecond {
-        println("The text from after the splitter is '\(second)'")
-    }
+            println("The text from after the splitter is '\(second)'")
+        }
     <<< The text from after the splitter is 'world'
 
 This example sets two constants called ``first`` and ``possibleSecond``
@@ -243,16 +243,16 @@ and also enables values to be passed in a different order to the original functi
 .. testcode:: functionParameters
 
     --> func containsCharacter(stringToSearch: String, characterToFind: UnicodeScalar) -> Bool {
-        for character in stringToSearch.chars {
-            if character == characterToFind {
-                return true
+            for character in stringToSearch.chars {
+                if character == characterToFind {
+                    return true
+                }
             }
+            return false
         }
-        return false
-    }
     --> let containsASpace = containsCharacter(
-        characterToFind: ' ',
-        stringToSearch: "This will return true")
+            characterToFind: ' ',
+            stringToSearch: "This will return true")
     <-- // containsASpace : Bool = true
 
 Here, the parameter values are passed in a different order when the function is actually called.
@@ -289,8 +289,8 @@ it can be omitted when calling the function:
 .. testcode:: functionParameters
 
     --> func joinTwoStrings(string1: String, string2: String, joiner: String = " ") -> String {
-        return string1 + joiner + string2
-    }
+            return string1 + joiner + string2
+        }
     --> joinTwoStrings("hello", "world", ":")
     <-- // r1 : String = "hello:world"
     --> joinTwoStrings("hello", "world")
@@ -312,8 +312,8 @@ The ``joinTwoStrings`` function could have been written with ``joiner`` as the s
 .. testcode:: functionParameters
 
     --> func joinTwoMoreStrings(string1: String, joiner: String = " ", string2: String) -> String {
-        return string1 + joiner + string2
-    }
+            return string1 + joiner + string2
+        }
     --> joinTwoMoreStrings("hello", ":", "world")
     <-- // r3 : String = "hello:world"
 
@@ -366,8 +366,8 @@ which always returns the same ``String`` message whenever it is called:
 .. testcode:: functionParameters
 
     --> func sayHelloWorld() -> String {
-        return "hello, world"
-    }
+            return "hello, world"
+        }
     --> println(sayHelloWorld())
     <<< hello, world
 
@@ -383,8 +383,8 @@ which prints its own ``String`` value rather than returning it:
 .. testcode:: functionParameters
 
     --> func waveGoodbye(personName: String) {
-        println("Goodbye, \(personName) 👋")
-    }
+            println("Goodbye, \(personName) 👋")
+        }
     --> waveGoodbye("Dave")
     <<< Goodbye, Dave 👋
 
@@ -406,12 +406,12 @@ The return value of a function can be ignored when it is called:
 .. testcode:: functionParameters
 
     --> func printAndCount(stringToPrint: String) -> Int {
-        println(stringToPrint)
-        return stringToPrint.size()
-    }
+            println(stringToPrint)
+            return stringToPrint.size()
+        }
     --> func printWithoutCounting(stringToPrint: String) {
-        printAndCount(stringToPrint)
-    }
+            printAndCount(stringToPrint)
+        }
     --> printAndCount("hello, world")
     <<< hello, world
     <-- // r5 : Int = 12
@@ -462,12 +462,12 @@ Variable parameters are declared by prefixing the parameter name with the keywor
 .. testcode:: functionParameters
 
     --> func alignRight(var string: String, count: Int, pad: UnicodeScalar) -> String {
-        let amountToPad = count - string.size()
-        for _ in 0...amountToPad {
-            string = pad + string
+            let amountToPad = count - string.size()
+            for _ in 0...amountToPad {
+                string = pad + string
+            }
+            return string
         }
-        return string
-    }
     --> let originalString = "hello"
     <-- // originalString : String = "hello"
     --> let paddedString = alignRight(originalString, 10, '-')
@@ -511,12 +511,12 @@ They are indicated by inserting three period characters (``...``) after their ty
 .. testcode:: functionParameters
 
     --> func arithmeticMean(numbers: Double...) -> Double {
-        var total: Double = 0
-        for number in numbers {
-            total += number
+            var total: Double = 0
+            for number in numbers {
+                total += number
+            }
+            return total / Double(numbers.count)
         }
-        return total / Double(numbers.count)
-    }
     --> arithmeticMean(1, 2, 3, 4, 5)
     <-- // r6 : Double = 3.0
     --> arithmeticMean(3, 8, 19)
@@ -563,10 +563,10 @@ as a selector-style declaration:
 .. testcode:: selectorStyle
 
     --> func joinString(string1: String) toString(string2: String)
-        withJoiner(joiner: String = " ") -> String
-    {
-        return string1 + joiner + string2
-    }
+            withJoiner(joiner: String = " ") -> String
+        {
+            return string1 + joiner + string2
+        }
 
 ``joinString``, ``toString`` and ``withJoiner`` are the selector parts;
 ``string1``, ``string2`` and ``joiner`` are the parameter names;
@@ -615,16 +615,16 @@ Default values are still allowed:
 .. testcode:: selectorStyle
 
     --> func columnize(String) backwards(Bool = false) -> String {
-        var output = ""
-        for character in columnize.chars {
-            if backwards {
-                output = character + '\n' + output
-            } else {
-                output += character + '\n'
+            var output = ""
+            for character in columnize.chars {
+                if backwards {
+                    output = character + '\n' + output
+                } else {
+                    output += character + '\n'
+                }
             }
+            return output
         }
-        return output
-    }
     --> print(columnize("abc"))
     <<< a
     <<< b
