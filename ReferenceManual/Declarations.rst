@@ -38,10 +38,13 @@ Declarations
     declaration --> deinitializer-declaration
     declaration --> extension-declaration
     declaration --> subscript-declaration
+    declaration --> operator-declaration
     declarations --> declaration declarations-OPT
 
 .. NOTE: enum-element-declaration is only allowed inside an enum
    declaration.
+
+.. NOTE: Added 'operator-declaration' based on ParseDecl.cpp.
 
 .. TR: How should the grammar be changed to accomodate the ability to define
     an operator using the ``operator`` contextual keyword?
@@ -1128,6 +1131,29 @@ Subscript Declaration
     subscript-declaration --> subscript-head getter-setter-block
     subscript-declaration --> subscript-head getter-setter-keyword-block
     subscript-head --> attribute-list-OPT ``subscript`` tuple-pattern ``->`` type
+
+
+.. _Declarations_OperatorDeclaration:
+
+Operator Declaration
+--------------------
+
+.. syntax-grammar::
+
+    Grammar of an operator declaration
+
+    operator-declaration --> ``operator`` fixity operator ``{`` operator-attributes-OPT ``}``
+
+    fixity --> ``infix`` | ``prefix`` | ``postfix``
+
+    operator-attributes --> precedence-clause-OPT associativity-clause-OPT
+    precedence-clause --> ``precedence`` precedence-level
+    precedence-level --> Digit 0 through 255
+    associativity-clause --> ``associativity`` associativity
+    associativity --> ``left`` | ``right`` | ``none``
+
+.. TR: I added this grammar from looking at ParseDecl.cpp and from trying
+    to various permutations in the REPL. Is this a correct grammar?
 
 
 .. _Declarations_Attributes:
