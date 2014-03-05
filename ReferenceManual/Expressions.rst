@@ -388,11 +388,54 @@ as part of the subclass's initializer.
 Closure Expression
 ~~~~~~~~~~~~~~~~~~
 
+A :newTerm:`closure expression` creates a closure,
+also known as a *lambda* or an *anonymous function*.
+Like function declarations,
+closures contain statements which they execute,
+and they can capture values from their enclosing scope.
+.. values --> variables and constants
+Unlike function declarations,
+the return type and parameter types can be omitted.
+The omitted type information is inferred
+from the context in which the closure is used.
+
+A closure that consists of only a single expression
+is understood to return the value of that expression.
+In this special case,
+type information from the expression
+is used to infer omitted parameter or return types.
+
+A closure may also omit names for its parameters.
+Its parameters are then implicitly named
+``$`` followed by their position:
+``$0``, ``$1``, ``$2``, and so on.
+
+Omitting types and parameter names allows closures
+to be used with a very brief syntax when needed.
+All of the following examples have the same behavior
+when called with two integers: ::
+
+    // Full function declaration, for comparison
+    func a (x : Int, y : Int) {
+        let result = x + y
+        return result
+    }
+
+    b = { (x : Int, y : Int) -> Int in
+        let result = x + y
+        return x + y
+    }
+
+    c = { (x, y) in x + y }
+
+    d = { $0 + $1 }
+
 .. langref-grammar
 
     expr-closure ::= '{' closure-signature? brace-item* '}'
     closure-signature ::= pattern-tuple func-signature-result? 'in'
     closure-signature ::= identifier (',' identifier)* func-signature-result? 'in'
+    expr-anon-closure-arg ::= dollarident
 
 .. syntax-grammar::
 
@@ -404,25 +447,8 @@ Closure Expression
     closure-signature --> tuple-pattern function-signature-result-OPT ``in``
     closure-signature --> identifier-list function-signature-result-OPT ``in``
 
-.. _Expressions_AnonymousClosureArgument:
-
-Anonymous Closure Argument
-++++++++++++++++++++++++++
-
-Inside a closure with no explicit parameter names,
-the parameters are implicitly named ``$0``, ``$1``, ``$2``, and so on.
-These names are valid identifiers within the scope of the closure.
-
-.. langref-grammar
-
-    expr-anon-closure-arg ::= dollarident
-
-
-.. syntax-grammar::
-
-    Grammar of an anonymous closure argument
-
     anonymous-closure-argument --> dollar-identifier
+
 
 .. _Expressions_DelayedIdentifierExpression:
 
