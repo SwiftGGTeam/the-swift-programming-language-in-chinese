@@ -337,6 +337,37 @@ Identifier Expression
 Superclass Expression
 ~~~~~~~~~~~~~~~~~~~~~
 
+A :newTerm:`superclass expression` lets a class
+interact with its superclass.
+It has one of the following forms:
+
+.. syntax-outline::
+
+   super.<#method name#>
+   super[<#subscript index#>]
+   super.init
+
+The first form is understood as a method of the superclass.
+This allows a subclass to call the superclass's
+implementation of a method that it overrides.
+
+.. TR: Can the method name be a property name too?
+   Or, because of property/ivar unification,
+   are properties on super already available on self?
+   What about properties with setters/getters --
+   would super.foo let me use the setters/getters
+   that are implemented in the superclass
+   as part of the subclasses implementation?
+
+The second form is understood as a call
+to the superclass's subscript method.
+This allows a subclass to use its superclass's support for subscripting
+in the subclass's support for subscripting.
+
+The third form is understood as the superclass's initializer.
+This allows a subclass to call the initializer of its superclass
+as part of the subclass's initializer.
+
 .. langref-grammar
 
     expr-super ::= expr-super-method
