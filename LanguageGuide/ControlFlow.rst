@@ -58,6 +58,12 @@ which prints the first few entries in the five-times-table:
     <<< 3 times 5 is 15
     <<< 4 times 5 is 20
     <<< 5 times 5 is 25
+    /// this will print…
+    /// 1 times 5 is 5
+    /// 2 times 5 is 10
+    /// 3 times 5 is 15
+    /// 4 times 5 is 20
+    /// 5 times 5 is 25
 
 Here, the collection of items being iterated is a
 closed range of numbers from ``1`` to ``5`` inclusive,
@@ -94,6 +100,7 @@ you can ignore the values using an underscore in place of a variable name:
         }
     --> println("\(base) to the power of \(power) is \(answer)")
     <<< 3 to the power of 10 is 59049
+    /// this will print "3 to the power of 10 is 59049"
 
 This example calculates the value of one number to the power of another
 (in this case, ``3`` to the power of ``10``).
@@ -112,15 +119,20 @@ A ``for``-``in`` loop can be used to iterate over the items in an array:
 
 .. testcode::
 
-    --> let names = ["Alan", "Barbara", "Carol", "Doug"]
-    <-- // names : String[] = ["Alan", "Barbara", "Carol", "Doug"]
+    --> let names = ["Anna", "Brian", "Christine", "Daniel"]
+    <-- // names : String[] = ["Anna", "Brian", "Christine", "Daniel"]
     --> for name in names {
             println("Hello, \(name)!")
         }
-    <<< Hello, Alan!
-    <<< Hello, Barbara!
-    <<< Hello, Carol!
-    <<< Hello, Doug!
+    <<< Hello, Anna!
+    <<< Hello, Brian!
+    <<< Hello, Christine!
+    <<< Hello, Daniel!
+    /// this will print…
+    /// Hello, Anna!
+    /// Hello, Brian!
+    /// Hello, Christine!
+    /// Hello, Daniel!
 
 Swift's ``String`` type has a ``chars`` property,
 which provides the individual characters in the string as an ``Array`` of ``UnicodeScalar`` values
@@ -137,6 +149,12 @@ This can be used to iterate through the characters of a string in order:
     <<< l
     <<< l
     <<< o
+    /// this will print…
+    /// H
+    /// e
+    /// l
+    /// l
+    /// o
 
 Iteration can also be used to access the key-value pairs in a dictionary.
 Every item in a dictionary has a ``key`` property and a ``value`` property,
@@ -152,6 +170,10 @@ which can be accessed via dot syntax:
     <<< spiders have 8 legs
     <<< ants have 6 legs
     <<< cats have 4 legs
+    /// this will print…
+    /// spiders have 8 legs
+    /// ants have 6 legs
+    /// cats have 4 legs
 
 Items in a ``Dictionary`` may not necessarily be iterated in the same order as they were inserted.
 The contents of a ``Dictionary`` are inherently unordered,
@@ -192,6 +214,10 @@ Swift also supports traditional C-style ``for`` loops with a condition and an in
     <<< index is 0
     <<< index is 1
     <<< index is 2
+    /// this will print…
+    /// index is 0
+    /// index is 1
+    /// index is 2
 
 The general form of this loop format is:
 
