@@ -99,15 +99,15 @@ Built-In Binary Operators
 Assignment Operator
 +++++++++++++++++++
 
-Assignment names a value using the general form:
+Assignment uses the ``=`` operator
+in the following form:
 
 .. syntax-outline::
 
    <#name#> = <#value#>
 
 The expression on the right of the ``=`` is evaluated
-and the value of the named value on the left
-(a variable or constant)
+and the variable or constant on the left
 is set to that value.
 
 .. TODO: Is this terminology of "named values" too strict/functional?
@@ -115,8 +115,8 @@ is set to that value.
 If the left side consists of a tuple,
 the value of the right side must be a tuple
 with the same number of elements.
-Each item in the right-hand tuple
-is assigned to the corresponding item in the left-hand tuple.
+Items in the right-hand tuple
+is assigned to the corresponding items in the left-hand tuple.
 For example: ::
 
     // Swap a and b.
