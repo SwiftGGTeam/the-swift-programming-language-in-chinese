@@ -146,11 +146,14 @@ it has the following form:
 
 .. syntax-outline::
 
-   <#condition#> ? <#expression to evaluate if true#> : <#expression to evalate if false#>
+   <#condition#> ? <#expression used if true#> : <#expression used if false#>
 
 If the *condition* evaluates to ``true``,
-the conditional operator evaluates to the value of the first expression.
-Otherwise, it evaluates to the value of the second expression.
+the conditional operator evaluates the first expression
+and returns its value.
+Otherwise, it evaluates the second expression
+and returns its value.
+The unused expression is not evaluated.
 
 .. The REPL v1-28 allows nesting such as true ? false ? 10 : 20 : 2
    which parses as true ? (false ? 10 : 20) : 2 -- the parens are optional --
