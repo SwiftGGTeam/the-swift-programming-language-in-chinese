@@ -75,7 +75,7 @@ The :newTerm:`assignment operator` (``a = b``) updates the value of ``a`` with t
     --> a = b
     >>> println("a is now \(a)")
     <<< a is now 10
-    --> // a is now equal to 10
+    /// a is now equal to 10
 
 If the right side of the assignment is a tuple with multiple values,
 its elements can be decomposed into multiple named values at once:
@@ -88,7 +88,7 @@ its elements can be decomposed into multiple named values at once:
     <<< x is 1
     >>> println("y is \(y)")
     <<< y is 2
-    --> // x is now equal to 1, and y is now equal to 2
+    /// x is now equal to 1, and y is now equal to 2
 
 Unlike C and Objective-C, the assignment operator does not itself return a value.
 The following statement is not valid:
@@ -279,12 +279,12 @@ while also finding out its value:
     <-- // b : Int = 1
     >>> println("a is now \(a)")
     <<< a is now 1
-    --> // a and b are now both equal to 1
+    /// a and b are now both equal to 1
     --> let c = a++
     <-- // c : Int = 1
     >>> println("a is now \(a)")
     <<< a is now 2
-    --> // a is now equal to 2, but c has been set to the pre-increment value of 1
+    /// a is now equal to 2, but c has been set to the pre-increment value of 1
 
 In the example above,
 ``let b = ++a`` sets ``b`` to the value of ``a``,
@@ -426,7 +426,7 @@ such as the ``if else`` statement:
         println("I'm sorry \(name), but I don't recognize you")
     }
     <<< hello, world
-    --> // this will print "hello, world", because name is equal to "world"
+    /// this will print "hello, world", because name is equal to "world"
 
 The ``if else`` statement is described in more detail in :doc:`ControlFlow`.
 
@@ -470,7 +470,7 @@ and 20 pixels taller if it doesn't:
     <-- // rowHeight : Int = 90
     >>> println("The row height is \(rowHeight) pixels.")
     <<< The row height is 90 pixels.
-    --> // rowHeight is now equal to 90
+    /// rowHeight is now equal to 90
 
 This is shorthand for:
 
@@ -489,7 +489,7 @@ This is shorthand for:
     }
     >>> println("The row height is \(rowHeight) pixels.")
     <<< The row height is 90 pixels.
-    --> // rowHeight is now equal to 90
+    /// rowHeight is now equal to 90
 
 The shorthand version is more concise,
 and removes the need for ``rowHeight`` to be a variable named value
@@ -534,12 +534,12 @@ such as with a ``for``-``in`` loop:
     <<< 3 times 5 is 15
     <<< 4 times 5 is 20
     <<< 5 times 5 is 25
-    --> // this will print…
-    --> // 1 times 5 is 5
-    --> // 2 times 5 is 10
-    --> // 3 times 5 is 15
-    --> // 4 times 5 is 20
-    --> // 5 times 5 is 25
+    /// this will print…
+    /// 1 times 5 is 5
+    /// 2 times 5 is 10
+    /// 3 times 5 is 15
+    /// 4 times 5 is 20
+    /// 5 times 5 is 25
 
 ``for``-``in`` loops are described in more detail in :doc:`ControlFlow`.
 
@@ -571,11 +571,11 @@ where it is useful to count up to (but not including) the length of the list:
     <<< Person 2 is called Brian
     <<< Person 3 is called Christine
     <<< Person 4 is called Daniel
-    --> // this will print…
-    --> // Person 1 is called Anna
-    --> // Person 2 is called Brian
-    --> // Person 3 is called Christine
-    --> // Person 4 is called Daniel
+    /// this will print…
+    /// Person 1 is called Anna
+    /// Person 2 is called Brian
+    /// Person 3 is called Christine
+    /// Person 4 is called Daniel
 
 Note that the array contains four items,
 but ``0...count`` only counts as far as ``3``
@@ -960,11 +960,11 @@ using the overflow addition operator (``&+``):
 
     --> var willOverflow = UInt8.max
     <-- // willOverflow : UInt8 = 255
-    --> // willOverflow equals 255, which is the largest value a UInt8 can hold
+    /// willOverflow equals 255, which is the largest value a UInt8 can hold
     --> willOverflow = willOverflow &+ 1
     >>> println("willOverflow is now \(willOverflow)")
     <<< willOverflow is now 0
-    --> // willOverflow is now equal to 0
+    /// willOverflow is now equal to 0
 
 Here, the variable ``willOverflow`` is initialized with the largest value a ``UInt8`` can hold
 (``255``, or ``11111111`` in binary).
@@ -1001,11 +1001,11 @@ Here's how that looks in Swift code:
 
     --> var willUnderflow = UInt8.min
     <-- // willUnderflow : UInt8 = 0
-    --> // willUnderflow equals 0, which is the smallest value a UInt8 can hold
+    /// willUnderflow equals 0, which is the smallest value a UInt8 can hold
     --> willUnderflow = willUnderflow &- 1
     >>> println("willUnderflow is now \(willUnderflow)")
     <<< willUnderflow is now 255
-    --> // willOverflow is now equal to 255
+    /// willOverflow is now equal to 255
 
 A similar underflow happens for signed integers.
 As described under :ref:`Operators_BitwiseLeftAndRightShifts`,
@@ -1027,11 +1027,11 @@ Here's the same thing in Swift code:
 
     --> var signedUnderflow = Int8.min
     <-- // signedUnderflow : Int8 = -128
-    --> // signedUnderflow equals -128, which is the smallest value an Int8 can hold
+    /// signedUnderflow equals -128, which is the smallest value an Int8 can hold
     --> signedUnderflow = signedUnderflow &- 1
     >>> println("signedUnderflow is now \(signedUnderflow)")
     <<< signedUnderflow is now 127
-    --> // signedUnderflow is now equal to 127
+    /// signedUnderflow is now equal to 127
 
 The end result of the overflow and underflow behavior described above is that for both signed and unsigned integers,
 overflow always wraps around from the largest valid integer value back to the smallest,
@@ -1052,7 +1052,7 @@ Swift will throw an error:
     <-- // x : Int = 1
     --> let y = x / 0
     xxx division by zero
-    --> // this will cause an error
+    /// this will cause an error
  
 However, the overflow versions of these operators (``&/`` and ``&%``)
 return a value of zero if you divide by zero:
@@ -1061,10 +1061,10 @@ return a value of zero if you divide by zero:
 
     --> let x = 1
     <-- // x : Int = 1
-    --> // x is now equal to 1
+    /// x is now equal to 1
     --> let y = x &/ 0
     <-- // y : Int = 0
-    --> // y is now equal to 0
+    /// y is now equal to 0
 
 .. NOTE: currently, this testcode block must be the last in the overflowOperators group,
    as otherwise the stack trace crash from the division-by-zero will mean that
@@ -1102,7 +1102,7 @@ It can be read as “not ``a``”, as seen in the following example:
         println("ACCESS DENIED")
     }
     <<< ACCESS DENIED
-    --> // this will print "ACCESS DENIED"
+    /// this will print "ACCESS DENIED"
 
 The phrase ``if !allowedEntry`` can be read as “if not allowed entry”.
 The subsequent line is only executed if “not allowed entry” is true,
@@ -1143,7 +1143,7 @@ and only allows access if both values are ``true``:
         println("ACCESS DENIED")
     }
     <<< ACCESS DENIED
-    --> // this will print "ACCESS DENIED"
+    /// this will print "ACCESS DENIED"
 
 .. _Operators_LogicalOROperator:
 
@@ -1175,7 +1175,7 @@ For example:
         println("ACCESS DENIED")
     }
     <<< Welcome!
-    --> // this will print "Welcome!"
+    /// this will print "Welcome!"
 
 In this example,
 the first ``Bool`` value (``hasDoorKey``) is ``false``,
@@ -1199,7 +1199,7 @@ You can combine multiple logical operators to create longer compound expressions
         println("ACCESS DENIED")
     }
     <<< Welcome!
-    --> // this will print "Welcome!"
+    /// this will print "Welcome!"
 
 This example uses multiple ``&&`` and ``||`` operators to create a longer compound expression.
 However, the ``&&`` and ``||`` operators still only operate on two values,
@@ -1235,7 +1235,7 @@ Why does the following expression equal ``4``?
 
     --> 2 + 3 * 4 % 5
     <-- // r0 : Int = 4
-    --> // this equals 4
+    /// this equals 4
 
 Taken strictly from left to right, you might expect this to read as follows:
 
@@ -1324,7 +1324,7 @@ it is useful to add parentheses around the first part of the compound expression
         println("ACCESS DENIED")
     }
     <<< Welcome!
-    --> // this will print "Welcome!"
+    /// this will print "Welcome!"
 
 The parentheses make it clear that the first two values
 are being considered as part of a separate possible state in the overall logic.
