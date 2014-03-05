@@ -225,10 +225,10 @@ see :ref:`BasicTypes_NamedValues` and :ref:`ClassesAndStructures_StoredPropertie
 
 .. syntax-grammar::
 
-    Grammar of a value declaration
+    Grammar of a constant declaration
 
     constant-declaration --> attribute-list-OPT constant-specifier-OPT ``let`` pattern-initializer-list
-    value-specifier -->  ``static`` | ``class``
+    constant-specifier -->  ``static`` | ``class``
 
     pattern-initializer-list --> pattern-initializer | pattern-initializer ``,`` pattern-initializer-list
     pattern-initializer --> pattern initializer-OPT
