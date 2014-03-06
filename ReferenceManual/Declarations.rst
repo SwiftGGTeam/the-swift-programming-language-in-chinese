@@ -252,7 +252,7 @@ Variable Declaration
 --------------------
 
 A :newTerm:`variable declaration` introduces a variable, named value into your program
-and is declared using the keyword ``var``
+and is declared using the keyword ``var``.
 
 Variable declarations have several forms which are used to declare different kinds
 of named, mutable values,
@@ -1138,6 +1138,25 @@ Subscript Declaration
 Operator Declaration
 --------------------
 
+An :newTerm:`operator declaration` introduces a new infix, prefix,
+or postfix operator into your program
+and is declared using the contextual keyword ``operator``.
+
+Swift allows you to declare operators of three different fixities:
+infix, prefix, and postfix.
+The :newTerm:`fixity` of an operator specifies the relative position of an operator
+to its operands.
+
+There are three basic forms of an operator declaration,
+one for each fixity.
+The fixity of the operator is specified by including the contextual keyword
+``infix``, ``prefix``, or ``postfix`` between ``operator`` and the name of the operator.
+In each form, the name of the operator can contain only the operator characters
+defined in :ref:`LexicalStructure_Operators`.
+
+The first form is used to declare a new infix operator
+and has the following form:
+
 .. syntax-outline::
 
     operator infix <#operator name#> {
@@ -1145,13 +1164,66 @@ Operator Declaration
         associativity <#associativity#>
     }
 
+An :newTerm:`infix operator` is a binary operator that is written between its two operands,
+such as the familiar addition operator (``+``) is in the expression ``1 + 2``.
+
+Infix operators can optionally specify a precedence, associativity, or both.
+
+The :newTerm:`precedence` of an operator specifies how tightly an operator
+binds to its operands in the absence of grouping parentheses.
+The precedence of an operator is specified by writing the contextual keyword ``precedence``
+followed by the *precedence level*.
+The *precedence level* can be any whole number (decimal integer) from 0 to 255;
+unlike decimal integer literals, it can't contain any underscore characters.
+Although the precedence level is a specific number,
+it is significant only relative to another operator.
+That is, when two operators compete with each other for their operands,
+such as in the expression ``2 + 3 * 5``, the operator with the higher precedence level
+binds more tightly to its operands.
+
+The :newTerm:`associativity` of an operator specifies how a sequence of operators
+with the same precedence level are grouped together in the absence of grouping parentheses.
+The associativity of an operator is specified by writing the contextual keyword ``associativity``
+followed by the *associativity*.
+The *associativity* is specified using one of contextual keywords ``left``, ``right``,
+or ``none``. Operators that are left-associative group left-to-right. For example,
+the subtraction operator (``-``) is left-associative,
+and therefore the expression ``4 - 5 + 6`` is grouped as ``(4 - 5) - 6``
+and evaluates to ``-7``. Operators that are right-associative group right-to-left,
+and operators that are specified with an associativity of ``none`` don't associate at all.
+Nonassociative operators of the same precedence level can't appear adjacent to each to other.
+For example, ``1 < 2 < 3`` is not a valid expression.
+
+Infix operators that are declared without specifying a precedence or associativity are
+initialized with a precedence level of 100 and an associativity of ``none``.
+
+The second form is used to declare a new prefix operator and has the following form:
+
 .. syntax-outline::
 
     operator prefix <#operator name#> {}
 
+A :newTerm:`prefix operator` is a unary operator that is written immediately before its operand,
+such as the prefix increment operator (``++``) is in the expression ``++i``.
+
+Prefix operators declarations don't specify a precedence level.
+Prefix operators are nonassociative.
+
+.. TR: Do all prefix operators default to the same precedence level? If so, what is it?
+
+The third form is used to declare a new postfix operator and has the following form:
+
 .. syntax-outline::
 
     operator postfix <#operator name#> {}
+
+A :newTerm:`postfix operator` is a unary operator that is written immediately after its operand,
+such as the postfix increment operator (``++``) is in the expression ``i++``.
+
+As with prefix operators, postfix operator declarations don't specify a precedence level.
+Postfix operators are nonassociative.
+
+.. TR: Do all postfix operators default to the same precedence level? If so, what is it?
 
 .. TR: What do the current precedence levels (0—255) mean?
     How you we discuss them in the prose.
