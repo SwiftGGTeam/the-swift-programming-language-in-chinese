@@ -22,7 +22,7 @@ Expressions
 .. _Expressions_UnaryOperators:
 
 Prefix Expressions
-----------------
+------------------
 
 Prefix expressions are formed by combining
 a prefix operator with another expression.
