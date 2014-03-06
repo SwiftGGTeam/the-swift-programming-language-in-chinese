@@ -46,12 +46,6 @@ Declarations
 
 .. NOTE: Added 'operator-declaration' based on ParseDecl.cpp.
 
-.. TR: How should the grammar be changed to accomodate the ability to define
-    an operator using the ``operator`` contextual keyword?
-    Currently, I don't see how it's allowed by the grammar.
-    It seems most natural to have a new declaration, operator-declaration
-    (or something similar). If so, what's the right definition?
-
 
 .. _LexicalStructure_ModuleScope:
 
@@ -1222,6 +1216,19 @@ such as the postfix increment operator (``++``) is in the expression ``i++``.
 
 As with prefix operators, postfix operator declarations don't specify a precedence level.
 Postfix operators are nonassociative.
+
+After declaring a new operator,
+you need to implement it by declaring a function that has the same name as the operator.
+To see an example of how to create and implement a new operator,
+see :ref:`ClassesAndStructures_CustomOperators`.
+
+.. TODO: Should we give describe the most common stdlib operators somewhere?
+    If so, the description should include the fixity, precedence, and associativity
+    of each operator. Maybe a table would be best?
+    The Langauge Guide currently says:
+    "(A complete list of the default Swift operator precedence and associativity
+    settings can be found in the :doc:`../ReferenceManual/index`.)"
+    Aside: I'm not sure "settings" is the best word here. Maybe "values"?
 
 .. TR: Do all postfix operators default to the same precedence level? If so, what is it?
 
