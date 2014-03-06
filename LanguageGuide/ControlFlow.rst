@@ -58,7 +58,7 @@ which prints the first few entries in the five-times-table:
     <<< 3 times 5 is 15
     <<< 4 times 5 is 20
     <<< 5 times 5 is 25
-    /// this will print…
+    /// prints:
     /// 1 times 5 is 5
     /// 2 times 5 is 10
     /// 3 times 5 is 15
@@ -100,7 +100,7 @@ you can ignore the values using an underscore in place of a variable name:
         }
     --> println("\(base) to the power of \(power) is \(answer)")
     <<< 3 to the power of 10 is 59049
-    /// this will print "3 to the power of 10 is 59049"
+    /// prints "3 to the power of 10 is 59049"
 
 This example calculates the value of one number to the power of another
 (in this case, ``3`` to the power of ``10``).
@@ -119,20 +119,20 @@ A ``for``-``in`` loop can be used to iterate over the items in an array:
 
 .. testcode::
 
-    --> let names = ["Anna", "Brian", "Christine", "Daniel"]
-    <-- // names : String[] = ["Anna", "Brian", "Christine", "Daniel"]
+    --> let names = ["Anna", "Alex", "Brian", "Jack"]
+    <-- // names : String[] = ["Anna", "Alex", "Brian", "Jack"]
     --> for name in names {
             println("Hello, \(name)!")
         }
     <<< Hello, Anna!
+    <<< Hello, Alex!
     <<< Hello, Brian!
-    <<< Hello, Christine!
-    <<< Hello, Daniel!
-    /// this will print…
+    <<< Hello, Jack!
+    /// prints:
     /// Hello, Anna!
+    /// Hello, Alex!
     /// Hello, Brian!
-    /// Hello, Christine!
-    /// Hello, Daniel!
+    /// Hello, Jack!
 
 Swift's ``String`` type has a ``chars`` property,
 which provides the individual characters in the string as an ``Array`` of ``UnicodeScalar`` values
@@ -149,7 +149,7 @@ This can be used to iterate through the characters of a string in order:
     <<< l
     <<< l
     <<< o
-    /// this will print…
+    /// prints:
     /// H
     /// e
     /// l
@@ -170,7 +170,7 @@ which can be accessed via dot syntax:
     <<< spiders have 8 legs
     <<< ants have 6 legs
     <<< cats have 4 legs
-    /// this will print…
+    /// prints:
     /// spiders have 8 legs
     /// ants have 6 legs
     /// cats have 4 legs
@@ -214,7 +214,7 @@ Swift also supports traditional C-style ``for`` loops with a condition and an in
     <<< index is 0
     <<< index is 1
     <<< index is 2
-    /// this will print…
+    /// prints:
     /// index is 0
     /// index is 1
     /// index is 2
@@ -278,6 +278,7 @@ you must declare ``index`` before the loop's scope begins:
     <<< index is 2
     --> println("The loop statements were executed \(index) times")
     <<< The loop statements were executed 3 times
+    /// prints "The loop statements were executed 3 times"
 
 .. TODO: We shouldn't need to initialize index to 0 on the first line of this example,
    but variables can't currently be used unitialized in the REPL.
@@ -545,6 +546,7 @@ It only executes a set of statements if that condition is ``true``:
             println("It's very cold. Consider wearing a scarf.")
         }
     <<< It's very cold. Consider wearing a scarf.
+    /// prints "It's very cold. Consider wearing a scarf."
 
 This example checks to see if the temperature
 (expressed using the Fahrenheit scale)
@@ -565,6 +567,7 @@ As its name suggests, the ``if``-``else`` statement can provide an alternative s
             println("It's not that cold. Wear a t-shirt.")
         }
     <<< It's not that cold. Wear a t-shirt.
+    /// prints "It's not that cold. Wear a t-shirt."
 
 One of of these two branches will always be executed.
 Because the temperature has increased to ``40`` degrees Fahrenheit,
@@ -585,6 +588,7 @@ to consider additional clauses:
             println("It's not that cold. Wear a t-shirt.")
         }
     <<< It's really warm. Don't forget to to wear sunscreen.
+    /// prints "It's really warm. Don't forget to to wear sunscreen."
 
 Here, an additional ``if`` clause has been added to respond to particularly warm temperatures.
 The final ``else`` clause still remains,
@@ -657,6 +661,7 @@ for brevity:
             println("An integer value could not be found for \(numberSymbol).")
         }
     <<< The integer value of 三 is 3.
+    /// prints "The integer value of 三 is 3."
 
 .. TODO: The initialization of integerValue can be removed
   once the REPL supports uninitialized named values.
@@ -707,26 +712,23 @@ to provide a natural-language count for numbers of any size:
     --> switch count {
             case 0:
                 naturalCount = "no"
-            case 1:
-                naturalCount = "one"
-            case 2:
-                naturalCount = "a couple of"
-            case 3:
+            case 1..3:
                 naturalCount = "a few"
-            case 4..11:
+            case 4..9:
                 naturalCount = "several"
-            case 12..99:
-                naturalCount = "dozens of"
+            case 10..99:
+                naturalCount = "tens of"
             case 100..999:
                 naturalCount = "hundreds of"
+            case 1000..999_999:
+                naturalCount = "thousands of"
             default:
-                naturalCount = "lots and lots of"
+                naturalCount = "millions and millions of"
         }
     --> println("There are \(naturalCount) \(countedThings).")
-    <<< There are lots and lots of stars in the Milky Way.
+    <<< There are millions and millions of stars in the Milky Way.
+    /// prints "There are millions and millions of stars in the Milky Way."
 
-.. TODO: change these ranges to be closed ranges rather than half-closed ranges
-   once rdar://14586400 is implemented.
 .. TODO: remove the initializer for naturalCount once we can declare unitialized variables in the REPL.
 .. TODO: Add a description for this example.
 
@@ -771,6 +773,7 @@ or outside of the box altogether.
                 println("(\(somePoint.0), \(somePoint.1)) is outside of the box")
         }
     <<< (1, 1) is inside the box
+    /// prints "(1, 1) is inside the box"
 
 Unlike C, Swift allows multiple ``case`` statements to consider the same value or values.
 In fact, the point (0, 0) could match all *four* of the ``case`` statements in this example.
@@ -820,6 +823,7 @@ or somewhere else.
                 println("somewhere else at (\(x), \(y))")
         }
     <<< on the x-axis with an x value of 2
+    /// prints "on the x-axis with an x value of 2"
 
 The three ``case`` statements declare placeholder constants ``x`` and ``y``,
 which temporarily take on one or both of the tuple values from ``anotherPoint``.
@@ -881,6 +885,7 @@ or none of the above.
                 println("(\(x), \(y)) is just some arbitrary point")
         }
     <<< (1, -1) is on the line x == -y
+    /// prints "(1, -1) is on the line x == -y"
 
 The three ``case`` statements declare placeholder constants ``x`` and ``y``,
 which temporarily take on the two tuple values from ``point``.
@@ -947,7 +952,7 @@ and removes all of its vowels and spaces to create a cryptic puzzle phrase for s
         }
     --> println(puzzleOutput)
     <<< grtmndsthnklk
-    /// this will print "grtmndsthnklk"
+    /// prints "grtmndsthnklk"
 
 The ``letter`` constant is inferred to be of type ``UnicodeScalar``
 from the fact that it is iterating over a sequence of ``UnicodeScalar`` values.
@@ -971,8 +976,9 @@ transferring control to the first line of code after the loop's closing brace (`
 No further code from the current iteration of the loop is executed,
 and no further iterations of the loop are started.
 
-The following example shows the ``continue`` and ``break`` statements in action.
-This is an adapted version of the snakes and ladders example from earlier.
+The following example shows the ``continue`` and ``break`` statements in action
+for an adapted version of the Snakes and Ladders game.
+
 This time around, the game has an extra rule:
 
 * To win, you must land *exactly* on square 25
@@ -1031,7 +1037,7 @@ to reflect the fact that you must land exactly on square 25:
 The die is rolled at the start of each loop.
 Rather than moving the player immediately,
 a ``switch`` statement is used to consider the result of the move,
-*if* it is allowed to take the place:
+and to work out if should be allowed to take the place:
 
 * If the die roll will move the player onto the final square,
   the game is effectively over.
@@ -1042,7 +1048,7 @@ a ``switch`` statement is used to consider the result of the move,
   To indicate this, the ``continue`` statement ends the current loop iteration,
   and begins the next iteration of the loop.
 * In all other cases, the die roll is cosidered to be a valid move.
-  The player moves forward by that many squares,
+  The player moves forward by ``dieRoll`` squares,
   and the game logic checks for any snakes and ladders.
   The loop then ends, and control returns to the ``while`` condition
   to decide if another turn is required.
@@ -1079,6 +1085,7 @@ The example below uses ``fallthrough`` to create a textual description of a numb
         }
     --> println(description)
     <<< The number 5 is a prime number, and also an integer.
+    /// prints "The number 5 is a prime number, and also an integer."
 
 This example declares a new ``String`` variable called ``description``,
 and assigns it an initial value.
