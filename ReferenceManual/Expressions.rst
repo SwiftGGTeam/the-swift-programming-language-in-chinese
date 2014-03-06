@@ -99,23 +99,21 @@ Built-In Binary Operators
 Assignment Operator
 +++++++++++++++++++
 
-The :newTerm:`assigment operator`
-updates the value of variables
-and sets the value of constants.
+The :newTerm:`assigment operator` updates the value of variables.
 It has the following form:
 
 .. syntax-outline::
 
-   <#name#> = <#value#>
+   <#variable name#> = <#value#>
 
-The expression on the right of the ``=`` is evaluated,
-and the resulting value is assigned to the item on the left.
+The value of the variable on the left of the ``=``
+is set to the value obtained by evaluating the expression on the right.
 
 If the left side consists of a tuple,
 the value of the right side must be a tuple
 with the same number of elements.
-Items in the right-hand tuple
-are assigned to the corresponding items in the left-hand tuple.
+The values of the right-hand tuple
+are assigned to the corresponding variables in the left-hand tuple.
 For example: ::
 
     // Sets and swaps the value of a and b.
