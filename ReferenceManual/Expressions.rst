@@ -574,16 +574,15 @@ Function Call Expression
     function-call-expression --> postfix-expression parenthesized-expression-OPT trailing-closure
     trailing-closure --> closure-expressions expression-cast-OPT
 
-.. TR: Is it the case that you can have one or more expr-closure (i.e., expr-closure+)?
-    This doesn't seem right.
+.. Multiple trailing closures in LangRef is an error,
+   per [Contributor 6004] 2014-03-04 email.
 
-.. NOTE: The following are three equivalent ways of doing the same thing:
+For example, the following function calls are equivalent: ::
 
-        [1, 2, 3].map {$0 * 2}
-        [1, 2, 3].map() {$0 * 2}
-        [1, 2, 3].map({$0 * 2})
+    [1, 2, 3].map {$0 * 2}
+    [1, 2, 3].map() {$0 * 2}
+    [1, 2, 3].map({$0 * 2})
 
-    TODO: Consider giving the above examples in prose.
 
 .. _Expressions_NewExpression:
 
