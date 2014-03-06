@@ -501,6 +501,21 @@ have the same behavior: ::
 Parenthesized Expression
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
+A :newTerm:`parenthesized expression` consists of
+a comma-separated list of expressions surrounded by paretheses.
+Each expression in it may have an optional identifier before it,
+set off by a colon (``:``).
+It has the following form:
+
+.. syntax-outline::
+
+   (<#identifier#>: <#expression#>, <#identifier#>: <#expression#>)
+
+.. TR: Is this still correct?
+   There's been a lot of flux around these recently,
+   partly as a side effect of changes to the grammar
+   for method/function declarations.
+
 .. langref-grammar
 
     expr-paren      ::= '(' ')'
