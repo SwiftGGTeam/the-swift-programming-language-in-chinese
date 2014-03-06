@@ -453,6 +453,10 @@ when called with two integers: ::
 Implicit Enumerator Expression
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+.. TODO: [Contributor 6004] noted that these can be used for arbitrary member expressions
+   on a type, not just the enumerators of an enumeration.  Need to update
+   prose, title, and grammar.
+
 An :newTerm:`implicit enumerator expression`
 is undestood one of the values of an enumeration
 without explicitly specifying the enumation.
