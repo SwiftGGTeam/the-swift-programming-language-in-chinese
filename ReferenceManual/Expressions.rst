@@ -271,7 +271,7 @@ Primary Expressions
     primary-expression --> closure-expression
     primary-expression --> anonymous-closure-argument
     primary-expression --> parenthesized-expression
-    primary-expression --> delayed-identifier-expression
+    primary-expression --> implicit-enumerator-expression
 
 .. NOTE: One reason for breaking primary expressions out of postfix
    expressions is for exposition -- it makes it easier to organize the
@@ -494,9 +494,7 @@ have the same behavior: ::
 
     Grammar of a delayed identifier expression
 
-    delayed-identifier-expression --> ``.`` enumerator-name
-
-.. TODO: Come up with a better name for delayed-identifier-expression.
+    implicit-enumerator-expression --> ``.`` enumerator-name
 
 .. _Expressions_ParenthesizedExpression:
 
