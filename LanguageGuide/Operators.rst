@@ -88,7 +88,7 @@ its elements can be decomposed into multiple named values at once:
     <<< x is 1
     >>> println("y is \(y)")
     <<< y is 2
-    /// x is now equal to 1, and y is now equal to 2
+    /// x is equal to 1, and y is equal to 2
 
 Unlike C and Objective-C, the assignment operator does not itself return a value.
 The following statement is not valid:
@@ -148,7 +148,7 @@ can be added together to make a new ``String`` value:
     <-- // dog : UnicodeScalar = '🐶'
     --> let cow = '🐮'
     <-- // cow : UnicodeScalar = '🐮'
-    --> let dogCow = dog + cow    // dogCow is now equal to "🐶🐮"
+    --> let dogCow = dog + cow    // dogCow is equal to "🐶🐮"
     <-- // dogCow : String = "🐶🐮"
 
 .. TODO: revisit this example based on whether single quotes
@@ -414,21 +414,21 @@ Each of the comparison operators returns a ``Bool`` value to indicate whether or
     <-- // r5 : Bool = false
 
 Comparison operators are often used in conditional statements,
-such as the ``if else`` statement:
+such as the ``if``-``else`` statement:
 
 .. testcode:: comparisonOperators
 
     --> let name = "world";
     <-- // name : String = "world"
     --> if name == "world" {
-        println("hello, world")
-    } else {
-        println("I'm sorry \(name), but I don't recognize you")
-    }
+            println("hello, world")
+        } else {
+            println("I'm sorry \(name), but I don't recognize you")
+        }
     <<< hello, world
-    /// this will print "hello, world", because name is equal to "world"
+    /// prints "hello, world", because name is indeed equal to "world"
 
-The ``if else`` statement is described in more detail in :doc:`ControlFlow`.
+The ``if``-``else`` statement is described in more detail in :doc:`ControlFlow`.
 
 .. TODO: which types do these operate on by default?
    How do they work with strings?
@@ -470,7 +470,7 @@ and 20 pixels taller if it doesn't:
     <-- // rowHeight : Int = 90
     >>> println("The row height is \(rowHeight) pixels.")
     <<< The row height is 90 pixels.
-    /// rowHeight is now equal to 90
+    /// rowHeight is equal to 90
 
 This is shorthand for:
 
@@ -483,13 +483,13 @@ This is shorthand for:
     --> var rowHeight = contentHeight
     <-- // rowHeight : Int = 40
     --> if hasHeader {
-        rowHeight = rowHeight + 50
-    } else {
-        rowHeight = rowHeight + 20
-    }
+            rowHeight = rowHeight + 50
+        } else {
+            rowHeight = rowHeight + 20
+        }
     >>> println("The row height is \(rowHeight) pixels.")
     <<< The row height is 90 pixels.
-    /// rowHeight is now equal to 90
+    /// rowHeight is equal to 90
 
 The shorthand version is more concise,
 and removes the need for ``rowHeight`` to be a variable named value
@@ -527,14 +527,14 @@ such as with a ``for``-``in`` loop:
 .. testcode:: rangeOperators
 
     --> for index in 1..5 {
-        println("\(index) times 5 is \(index * 5)")
-    }
+            println("\(index) times 5 is \(index * 5)")
+        }
     <<< 1 times 5 is 5
     <<< 2 times 5 is 10
     <<< 3 times 5 is 15
     <<< 4 times 5 is 20
     <<< 5 times 5 is 25
-    /// this will print…
+    /// prints:
     /// 1 times 5 is 5
     /// 2 times 5 is 10
     /// 3 times 5 is 15
@@ -560,22 +560,22 @@ where it is useful to count up to (but not including) the length of the list:
 
 .. testcode:: rangeOperators
 
-    --> let names = ["Anna", "Brian", "Christine", "Daniel"]
-    <-- // names : String[] = ["Anna", "Brian", "Christine", "Daniel"]
+    --> let names = ["Anna", "Alex", "Brian", "Jack"]
+    <-- // names : String[] = ["Anna", "Alex", "Brian", "Jack"]
     --> let count = names.count
     <-- // count : Int = 4
     --> for i in 0...count {
-        println("Person \(i + 1) is called \(names[i])")
-    }
+            println("Person \(i + 1) is called \(names[i])")
+        }
     <<< Person 1 is called Anna
-    <<< Person 2 is called Brian
-    <<< Person 3 is called Christine
-    <<< Person 4 is called Daniel
-    /// this will print…
+    <<< Person 2 is called Alex
+    <<< Person 3 is called Brian
+    <<< Person 4 is called Jack
+    /// prints:
     /// Person 1 is called Anna
-    /// Person 2 is called Brian
-    /// Person 3 is called Christine
-    /// Person 4 is called Daniel
+    /// Person 2 is called Alex
+    /// Person 3 is called Brian
+    /// Person 4 is called Jack
 
 Note that the array contains four items,
 but ``0...count`` only counts as far as ``3``
@@ -780,11 +780,11 @@ Bit shifting can be used to encode and decode values within other data types:
 
     --> let pink: UInt32 = 0xCC6699
     <-- // pink : UInt32 = 13395609
-    --> let redComponent = (pink & 0xFF0000) >> 16     // redComponent now equals 204
+    --> let redComponent = (pink & 0xFF0000) >> 16     // redComponent is 0xCC, or 204
     <-- // redComponent : UInt32 = 204
-    --> let greenComponent = (pink & 0x00FF00) >> 8    // greenComponent now equals 102
+    --> let greenComponent = (pink & 0x00FF00) >> 8    // greenComponent is 0x66, or 102
     <-- // greenComponent : UInt32 = 102
-    --> let blueComponent = pink & 0x0000FF            // blueComponent now equals 153
+    --> let blueComponent = pink & 0x0000FF            // blueComponent is 0x99, or 153
     <-- // blueComponent : UInt32 = 153
 
 This example uses a ``UInt32`` constant called ``pink`` to store a
@@ -1042,9 +1042,9 @@ and underflow always wraps around from the smallest value to the largest.
 Division by Zero
 ~~~~~~~~~~~~~~~~
 
-Normally, if you divide a number by zero (i / 0),
-or try to calculate remainder by zero (i % 0),
-Swift will throw an error:
+Dividing a number by zero (``i / 0``),
+or trying to calculate remainder by zero (``i % 0``),
+will cause an error:
 
 .. testcode:: overflowOperatorsDivZeroError
 
@@ -1052,7 +1052,7 @@ Swift will throw an error:
     <-- // x : Int = 1
     --> let y = x / 0
     xxx division by zero
-    /// this will cause an error
+    /// this causes an error
  
 However, the overflow versions of these operators (``&/`` and ``&%``)
 return a value of zero if you divide by zero:
@@ -1061,10 +1061,9 @@ return a value of zero if you divide by zero:
 
     --> let x = 1
     <-- // x : Int = 1
-    /// x is now equal to 1
     --> let y = x &/ 0
     <-- // y : Int = 0
-    /// y is now equal to 0
+    /// y is equal to 0
 
 .. NOTE: currently, this testcode block must be the last in the overflowOperators group,
    as otherwise the stack trace crash from the division-by-zero will mean that
@@ -1102,7 +1101,7 @@ It can be read as “not ``a``”, as seen in the following example:
             println("ACCESS DENIED")
         }
     <<< ACCESS DENIED
-    /// this will print "ACCESS DENIED"
+    /// prints "ACCESS DENIED"
 
 The phrase ``if !allowedEntry`` can be read as “if not allowed entry”.
 The subsequent line is only executed if “not allowed entry” is true,
@@ -1143,7 +1142,7 @@ and only allows access if both values are ``true``:
             println("ACCESS DENIED")
         }
     <<< ACCESS DENIED
-    /// this will print "ACCESS DENIED"
+    /// prints "ACCESS DENIED"
 
 .. _Operators_LogicalOROperator:
 
@@ -1175,7 +1174,7 @@ For example:
             println("ACCESS DENIED")
         }
     <<< Welcome!
-    /// this will print "Welcome!"
+    /// prints "Welcome!"
 
 In this example,
 the first ``Bool`` value (``hasDoorKey``) is ``false``,
@@ -1199,7 +1198,7 @@ You can combine multiple logical operators to create longer compound expressions
             println("ACCESS DENIED")
         }
     <<< Welcome!
-    /// this will print "Welcome!"
+    /// prints "Welcome!"
 
 This example uses multiple ``&&`` and ``||`` operators to create a longer compound expression.
 However, the ``&&`` and ``||`` operators still only operate on two values,
@@ -1324,7 +1323,7 @@ it is useful to add parentheses around the first part of the compound expression
             println("ACCESS DENIED")
         }
     <<< Welcome!
-    /// this will print "Welcome!"
+    /// prints "Welcome!"
 
 The parentheses make it clear that the first two values
 are being considered as part of a separate possible state in the overall logic.

@@ -165,7 +165,7 @@ You can also print the value of a named value by using the ``println`` function:
 
     --> println(friendlyWelcome)
     <<< 👋, 🌎
-    /// this will print "👋, 🌎"
+    /// prints "👋, 🌎"
 
 .. NOTE: this is a deliberately simplistic description of what you can do with println().
    It will be expanded later on.
@@ -412,9 +412,9 @@ The minimum and maximum values of each integer type can be accessed using its ``
 
 .. testcode:: namedValues
 
-    --> let minValue = UInt8.min  // minValue is now equal to 0, and is of type UInt8
+    --> let minValue = UInt8.min  // minValue is equal to 0, and is of type UInt8
     <-- // minValue : UInt8 = 0
-    --> let maxValue = UInt8.max  // maxValue is now equal to 255, and is of type UInt8
+    --> let maxValue = UInt8.max  // maxValue is equal to 255, and is of type UInt8
     <-- // maxValue : UInt8 = 255
 
 The values of these properties are of the appropriate sized number type
@@ -504,7 +504,7 @@ Conversions between integer and floating-point numeric types must also be made e
     <-- // pointOneFourOneFiveNine : Double = 0.14159
     --> let pi = Double(three) + pointOneFourOneFiveNine
     <-- // pi : Float64 = 3.14159
-    /// pi now equals 3.14159, and is inferred to be of type Double
+    /// pi equals 3.14159, and is inferred to be of type Double
 
 Here, the value of the constant ``three`` is used to create a new value of type ``Double``,
 so that both sides of the addition are of the same type.
@@ -522,7 +522,7 @@ in that an integer type can be initialized with a ``Double`` or ``Float`` value:
 
     --> let integerPi = Int(pi)
     <-- // integerPi : Int = 3
-    /// integerPi now equals 3, and is inferred to be of type Int
+    /// integerPi equals 3, and is inferred to be of type Int
 
 Floating-point values are always rounded towards zero
 when used to initialize a new integer value in this way.
@@ -577,12 +577,12 @@ such as the ``if``-``else`` statement:
 .. testcode:: booleans
 
     --> if turnipsAreDelicious {
-        println("Mmm, tasty turnips!")
-    } else {
-        println("Eww, turnips are horrible.")
-    }
+            println("Mmm, tasty turnips!")
+        } else {
+            println("Eww, turnips are horrible.")
+        }
     <<< Eww, turnips are horrible.
-    /// this will print "Eww, turnips are horrible."
+    /// prints "Eww, turnips are horrible."
 
 Conditional statements such as ``if``-``else`` are covered in more detail in :doc:`ControlFlow`.
 
@@ -594,8 +594,8 @@ The following example will produce an error:
     --> let i = 1
     <-- // i : Int = 1
     --> if i {
-        // this example will not compile, and will report an error
-    }
+            // this example will not compile, and will report an error
+        }
     !!! <REPL Input>:1:4: error: type 'Int' does not conform to protocol 'LogicValue'
     !!! if i {
     !!!    ^
@@ -607,8 +607,8 @@ However, it is valid to say:
     --> let i = 1
     <-- // i : Int = 1
     --> if i == 1 {
-        // this example will compile successfully
-    }
+            // this example will compile successfully
+        }
 
 The result of the ``i == 1`` comparison is of type ``Bool``,
 and so this second example passes the type-check.
@@ -681,10 +681,10 @@ You can access the individual element values in a tuple using index numbers star
 
     --> println("The status code is \(httpStatus.0)")
     <<< The status code is 404
-    /// this will print "The status code is 404"
+    /// prints "The status code is 404"
     --> println("The status message is \(httpStatus.1)")
     <<< The status message is Not Found
-    /// this will print "The status message is Not Found"
+    /// prints "The status message is Not Found"
 
 As an alternative,
 you can :newTerm:`decompose` a tuple's contents into separate named values,
@@ -696,10 +696,10 @@ which can then be used as normal:
     <-- // (statusCode, statusMessage) : (Int, String) = (404, "Not Found")
     --> println("The status code is \(statusCode)")
     <<< The status code is 404
-    /// this will also print "The status code is 404"
+    /// prints "The status code is 404"
     --> println("The status message is \(statusMessage)")
     <<< The status message is Not Found
-    /// this will also print "The status message is Not Found"
+    /// prints "The status message is Not Found"
 
 Tuples are particularly useful as the return values of functions.
 A function that tries to retrieve a web page might return this ``(Int, String)`` tuple type
@@ -786,12 +786,12 @@ The exclamation mark effectively says,
 .. testcode:: optionals
 
     --> if convertedNumber {
-        println("\(possibleNumber) has an integer value of \(convertedNumber!)")
-    } else {
-        println("\(possibleNumber) could not be converted to an integer")
-    }
+            println("\(possibleNumber) has an integer value of \(convertedNumber!)")
+        } else {
+            println("\(possibleNumber) could not be converted to an integer")
+        }
     <<< 123 has an integer value of 123
-    /// this will print "123 has an integer value of 123"
+    /// prints "123 has an integer value of 123"
 
 ``if``-``else`` statements are described in more detail in :doc:`ControlFlow`.
 
@@ -824,12 +824,12 @@ The example from above can be can be rewritten to use optional binding:
 .. testcode:: optionals
 
     --> if let actualNumber = possibleNumber.toInt() {
-        println("\(possibleNumber) has an integer value of \(actualNumber)")
-    } else {
-        println("\(possibleNumber) could not be converted to an integer")
-    }
+            println("\(possibleNumber) has an integer value of \(actualNumber)")
+        } else {
+            println("\(possibleNumber) could not be converted to an integer")
+        }
     <<< 123 has an integer value of 123
-    /// this will also print "123 has an integer value of 123"
+    /// this also prints "123 has an integer value of 123"
 
 As before, this example uses the ``toInt()`` method from ``String``
 to try and convert ``"123"`` into an ``Int``.
