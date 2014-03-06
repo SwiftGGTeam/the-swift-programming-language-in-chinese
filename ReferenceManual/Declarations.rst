@@ -1090,6 +1090,8 @@ to ensure members of that type are properly initialized.
 Subscript Declaration
 ---------------------
 
+
+
 .. syntax-outline::
 
     subscript (<#parameters#>) -> <#return type#> {
@@ -1301,7 +1303,7 @@ Attributes
     Grammar of an attribute list
 
     attribute-list --> ``@`` attribute | ``@`` attribute ``,``-OPT attribute-list
-    attribute --> declaration-attribute | interface-builder-attribute
+    attribute --> declaration-attribute | type-attribute | interface-builder-attribute
 
 .. NOTE: Our grammar doesn't have empty terminals (no epsilon)
    so we need to make attribute-list actually contain something.
@@ -1394,6 +1396,18 @@ Declaration Attributes
     Grammar of a declaration attribute
 
     declaration-attribute --> ``abstract`` | ``assignment`` | ``class_protocol`` | ``infix`` | ``mutating`` | ``objc`` | ``optional`` | ``override`` | ``postfix`` | ``prefix`` | ``unowned`` | ``weak``
+
+
+.. _Declarations_TypeAttributes:
+
+Type Attributes
+~~~~~~~~~~~~~~~
+
+.. syntax-grammar::
+
+    Grammar of a type attribute
+
+    type-attribute --> ``unchecked``
 
 
 .. _Declarations_InterfaceBuilderAttributes:
