@@ -764,14 +764,14 @@ Structure types can also be extended.
 There are three ways create an instance of a previously declared structure:
 
 1. Call one of the initializers declared within the structure,
-   as described in :ref:`ClassesAndStructures_InitializerMethods`.
+   as described in :ref:`ClassesAndStructures_Initializers`.
 2. If no initializers are declared,
    call the structure's memberwise initializer,
    as described in :ref:`ClassesAndStructures_MemberwiseStructureInitializers`.
 3. If no initializers are declared,
    and all properties of the structure declaration were given initial values,
    call the structure's default initializer,
-   as described in :ref:`ClassesAndStructures_InitializerMethods`.
+   as described in :ref:`ClassesAndStructures_Initializers`.
 
 The process of initializing a structure's declared properties
 is described in :ref:`ClassesAndStructures_Initialization`.
@@ -851,11 +851,11 @@ Class types can also be extended.
 There are two ways create an instance of a previously declared class:
 
 1. Call one of the initializers declared within the class,
-   as described in :ref:`ClassesAndStructures_InitializerMethods`.
+   as described in :ref:`ClassesAndStructures_Initializers`.
 2. If no initializers are declared,
    and all properties of the class declaration were given initial values,
    call the class's default initializer,
-   as described in :ref:`ClassesAndStructures_InitializerMethods`.
+   as described in :ref:`ClassesAndStructures_Initializers`.
 
 The process of initializing a class's declared properties
 is described in :ref:`ClassesAndStructures_Initialization`.
