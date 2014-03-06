@@ -269,7 +269,7 @@ Primary Expressions
     primary-expression --> closure-expression
     primary-expression --> anonymous-closure-argument
     primary-expression --> parenthesized-expression
-    primary-expression --> implicit-enumerator-expression
+    primary-expression --> implicit-member-expression
 
 .. NOTE: One reason for breaking primary expressions out of postfix
    expressions is for exposition -- it makes it easier to organize the
@@ -450,46 +450,29 @@ when called with two integers: ::
 
 .. _Expressions_DelayedIdentifierExpression:
 
-Implicit Enumerator Expression
+Implicit Member Expression
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. TODO: [Contributor 6004] noted that these can be used for arbitrary member expressions
-   on a type, not just the enumerators of an enumeration.  Need to update
-   prose, title, and grammar.
-
-An :newTerm:`implicit enumerator expression`
-is undestood one of the values of an enumeration
-without explicitly specifying the enumation.
-It must be used in a context where type inference
-can determine the implied enumeration,
-and has the following form:
+An :newTerm:`implicit member expression`
+is an abbreviated way to access a member of a type,
+such as an enumerator or a class method,
+in a context where type inference
+can determine the implied type.
+It has the following form:
 
 .. syntax-outline::
 
-   .<#enumerator name#>
+   .<#member name#>
 
-.. TODO: Use something other than a switch statement,
-   so that people don't get the incorrect idea
-   that this behavior only works after a case label.
-
-For example, the following ``switch`` statements
-have the same behavior: ::
+For example, the following pairs of assignments are equivalent: ::
 
     var x : ExampleEnumeration
+    x = ExampleEnumeration.SomeValue
+    x = .SomeValue
 
-    switch x {
-        case ExampleEnumeration.FirstValue:
-            println("First value")
-        case ExampleEnumeration.SecondValue:
-            println("Second value")
-    }
-
-    switch x {
-        case .FirstValue:
-            println("First value")
-        case .SecondValue:
-            println("Second value")
-    }
+    var y : ExampleClass
+    y = .someClassMethod()
+    y = ExampleClass.someClassMethod()
 
 .. langref-grammar
 
@@ -498,9 +481,9 @@ have the same behavior: ::
 
 .. syntax-grammar::
 
-    Grammar of a delayed identifier expression
+    Grammar of a implicit member expression
 
-    implicit-enumerator-expression --> ``.`` enumerator-name
+    implicit-member-expression --> ``.`` identifier
 
 .. _Expressions_ParenthesizedExpression:
 
