@@ -1310,7 +1310,7 @@ Attributes
    This means that instead of having "empty" as a possible expansion,
    attribute-list always appears as -OPT.
 
-..  Here's the current list (as of 3/3/2014):
+..  Here's the current list (as of 3/6/2014):
 
         // Type attributes
     TYPE_ATTR(auto_closure)
@@ -1321,23 +1321,6 @@ Attributes
     TYPE_ATTR(thick)
     TYPE_ATTR(unchecked)
 
-    // SIL-specific attributes
-    TYPE_ATTR(sil_self)
-    TYPE_ATTR(local_storage)
-    TYPE_ATTR(sil_unowned)
-    TYPE_ATTR(sil_weak)
-    TYPE_ATTR(out)
-    TYPE_ATTR(in)
-    TYPE_ATTR(inout)
-    TYPE_ATTR(owned)
-    TYPE_ATTR(guaranteed)
-    TYPE_ATTR(autoreleased)
-    TYPE_ATTR(callee_owned)
-    TYPE_ATTR(callee_guaranteed)
-    TYPE_ATTR(objc_metatype)
-    TYPE_ATTR(opened)
-
-    ATTR(abstract)
     ATTR(assignment)
     ATTR(class_protocol)
     ATTR(conversion)
@@ -1354,6 +1337,7 @@ Attributes
     ATTR(objc)
     ATTR(optional)
     ATTR(override)
+    ATTR(required)
     ATTR(transparent)
     ATTR(unowned)
     ATTR(weak)
@@ -1395,7 +1379,7 @@ Declaration Attributes
 
     Grammar of a declaration attribute
 
-    declaration-attribute --> ``abstract`` | ``assignment`` | ``class_protocol`` | ``infix`` | ``mutating`` | ``objc`` | ``optional`` | ``override`` | ``postfix`` | ``prefix`` | ``unowned`` | ``weak``
+    declaration-attribute --> ``assignment`` | ``class_protocol`` | ``infix`` | ``mutating`` | ``objc`` | ``optional`` | ``override`` | ``postfix`` | ``prefix`` | ``required`` | ``unowned`` | ``weak``
 
 
 .. _Declarations_TypeAttributes:
