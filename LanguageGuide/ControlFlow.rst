@@ -323,60 +323,117 @@ The general form of a ``while`` loop is:
         <#statements#>
     }
 
-For example:
+This example plays a simple game of Snakes and Ladders using the board shown below.
+(Snakes and Ladders is known as “Chutes and Ladders” in North America.)
 
-::
+.. image:: ../images/snakesAndLadders.png
+    :height: 250
+    :align: center
 
-    --> var personName = ""
-    <-- // personName : String = ""
-    --> let keyboard = Keyboard()
-    <-- // keyboard : Keyboard = <_TtCSs8Keyboard instance>
-    --> println("Please enter your name, then press return.")
-    <<< Please enter your name, then press return.
-    --> var inputCharacter = UnicodeScalar(keyboard.read())
-    <-- // inputCharacter : UnicodeScalar = 'a'
-    --> while inputCharacter != '\n' {
-            personName += inputCharacter
-            inputCharacter = UnicodeScalar(keyboard.read())
+The rules of the game are as follows:
+
+* The board has 25 squares, and the aim is to land on or beyond square 25
+* Each turn, you roll a six-sided die and move by that number of squares
+* If your turn ends at the bottom of a ladder, you move up that ladder
+* If your turn ends at the head of a snake, you move down that snake
+
+The game board is represented by an ``Array`` of type ``Int``.
+Its size is based on a constant called ``finalSquare``,
+which is used to initialize the array,
+and also to check for a win condition later in the example.
+The board is actually initialized with 26 zeroes, not 25 –
+one each at indices ``0`` through ``25`` inclusive:
+
+.. testcode:: snakesAndLadders1
+
+    --> let finalSquare = 25
+    <-- // finalSquare : Int = 25
+    --> var board = Array<Int>()
+    <-- // board : Array<Int> = []
+    --> for _ in 0..finalSquare { board.append(0) }
+
+Some squares are then set to have more specific values for the snakes and ladders.
+Squares with a ladder base have a positive number to move you up the board,
+whereas squares with a snake head have a negative number to move you back down the board:
+
+.. testcode:: snakesAndLadders1
+
+    --> board[03] = +08; board[06] = +11; board[09] = +09; board[10] = +02
+    --> board[14] = -10; board[19] = -11; board[22] = -02; board[24] = -08
+
+Square 3 contains the bottom of a ladder that moves you up to square 11.
+To represent this, ``board[03]`` is equal to ``+08``,
+which is equivalent to an integer value of ``8``
+(the difference between ``3`` and ``11``).
+The unary plus operator (``+i``) has been used for balance with
+the unary minus operator (``-i``),
+and numbers lower than ``10`` have been padded with zeros
+so that all of the board definitions align.
+(Neither of these stylistic tweaks are strictly necessary,
+but they lead to neater code.)
+
+The player's starting square is “square zero”,
+which is just off the bottom left-hand corner of the board.
+The first die roll will always move the player on to the board:
+
+.. testcode:: snakesAndLadders1
+
+    --> var square = 0
+    <-- // square : Int = 0
+    --> var dieRoll = 0
+    <-- // dieRoll : Int = 0
+    --> while square < finalSquare {
+            // roll the die
+            if ++dieRoll == 7 { dieRoll = 1 }
+            // move by the rolled amount
+            square += dieRoll
+            if square < board.count {
+                // if we're still on the board, move up or down for a snake or a ladder
+                square += board[square]
+            }
         }
-    --> if personName == "" {
-            println("You didn't enter your name. How can I say hello to you?")
-        } else {
-            println("Hello, \(personName)!")
-        }
+    --> println("Game over!")
+    <<< Game over!
 
-.. TODO: This example cannot be auto-tested, as it is reliant on keyboard input.
-   It must be tested manually before this book is published.
+This example uses a very simple approach to die-rolling.
+Instead of using a random number generator,
+it starts with a ``dieRoll`` value of ``0``.
+Each time through the ``while`` loop,
+``dieRoll`` is incremented with the prefix increment operator (++i),
+and then checked to see if it has become too large.
+The return value of ``++dieRoll`` is equal to
+the value of ``dieRoll`` *after* it has been incremented.
+Whenever this return value equals ``7``,
+the die roll has become too large, and is reset to a value of ``1``.
+This gives a sequence of ``dieRoll`` values that is always
+``1``, ``2``, ``3``, ``4``, ``5``, ``6``, ``1``, ``2`` and so on.
 
-This example reads input from the keyboard one character at a time,
-and appends each character to a string.
-It does this using Swift's built-in ``Keyboard`` class,
-which reads keystrokes from an attached keyboard.
-The example creates a new ``Keyboard`` instance by calling its initializer ``Keyboard()``.
-It then reads a key using the keyboard's ``read`` method.
-This causes the program to pause and wait for a keystroke before continuing.
-The keystroke's value is returned as a ``UInt8`` value,
-containing the ASCII code of the key that was pressed.
-This is converted to a ``UnicodeScalar`` value,
-so that it can be appended to a ``String`` representing the person's name.
+After rolling the die, the player moves forward by ``dieRoll`` squares.
+The next step is to check for any snakes or ladders,
+by looking at the value contained in ``board[square]``.
+However, it's possible that the die roll may have moved the player beyond square 25.
+If ``square`` is now equal to ``26``, say,
+then this would cause the code to try and check the value of ``board[26]``.
+This is beyond the upper bounds of the ``board`` array,
+and would result in an error.
 
-This program continues to read in keystrokes until the user presses the return key.
-When they do so,
-the value of ``inputCharacter`` will be a line feed character (``\n``),
-causing ``while inputCharacter != '\n'`` to equate to ``false``,
-ending the loop.
-The person's name is then validated
-(to ensure that they did not press the return key without entering a name),
-and is printed if it exists.
+To cope with this,
+the code checks that the player is still on the board,
+before looking for any snakes and ladders.
+It does this by making sure that ``square`` is less than the array's ``count`` property
+before trying to access ``board[square]``.
+If the player *is* still on the board,
+their current position is modified by the value of any snakes or ladders
+on the square they have landed on.
+
+The current ``while`` loop execution then ends,
+and the loop's condition is checked to see if the loop should be executed again.
+If the player has moved on or beyond square number ``25``,
+the loop's condition equates to ``false``, and the game ends.
 
 A ``while`` loop is appropriate in this case
-because the length of the input name is not known at the start of the ``while`` loop.
+because the length of the game is not clear at the start of the ``while`` loop.
 Instead, the loop is executed until a particular condition is satisfied.
-
-.. NOTE: this example cannot be run in the REPL,
-   due to the fact that it is reliant on keyboard input.
-   I have yet to come up with a better example where “while” is the right kind of loop to use, however.
-   (I'm trying to avoid any examples where the number of iterations is known at the start of the loop.)
 
 .. _ControlFlow_DoWhile:
 
@@ -386,8 +443,10 @@ Do-While
 The second variation of the ``while`` loop,
 known as the ``do``-``while`` loop,
 performs a single pass through the loop block first,
-*before* considering a condition.
-It then continues to repeat the loop until the condition is ``false``:
+*before* considering the loop's condition.
+It then continues to repeat the loop until the condition is ``false``.
+
+The general form of a ``do``-``while`` loop is:
 
 ::
 
@@ -395,7 +454,61 @@ It then continues to repeat the loop until the condition is ``false``:
         <#statements#>
     } while <#condition equates to true#>
 
-.. TODO: come up with a good example for when you'd actually want to use a do-while loop.
+Here's the snakes and ladders example again,
+written as a ``do``-``while`` loop rather than a ``while`` loop.
+The values of ``finalSquare``, ``board``, ``square``, and ``dieRoll``
+are initialized in exactly the same way as before:
+
+.. testcode:: snakesAndLadders2
+
+    --> let finalSquare = 25
+    <-- // finalSquare : Int = 25
+    --> var board = Array<Int>()
+    <-- // board : Array<Int> = []
+    --> for _ in 0..finalSquare { board.append(0) }
+    --> board[03] = +08; board[06] = +11; board[09] = +09; board[10] = +02
+    --> board[14] = -10; board[19] = -11; board[22] = -02; board[24] = -08
+    --> var square = 0
+    <-- // square : Int = 0
+    --> var dieRoll = 0
+    <-- // dieRoll : Int = 0
+
+In this version of the game,
+the *first* action in the loop is to check for a ladder or a snake.
+None of the ladders on the board will take the player straight to square 25,
+and so it is not possible to win the game by moving up a ladder.
+This makes it safe to check for a snake or a ladder as the first action in the loop.
+
+At the start of the game, the player will be on “square zero”,
+and so ``board[square]`` will always equal ``0``,
+and will have no effect:
+
+.. testcode:: snakesAndLadders2
+
+    --> do {
+            // move up or down for a snake or ladder
+            square += board[square]
+            // roll the die
+            if ++dieRoll == 7 { dieRoll = 1 }
+            // move by the rolled amount
+            square += dieRoll
+    --> } while square < finalSquare
+    --> println("Game over!")
+    <<< Game over!
+
+After checking for snakes and ladders, the die is rolled,
+and the player is moved forward by ``dieRoll`` squares as before.
+The current loop execution then ends.
+
+The loop's condition (``while square < finalSquare``) is the same as before,
+but this time it is not evaluated until the *end* of the first run through the loop.
+The structure of the ``do``-``while`` loop is actually better suited to this game
+than the ``while`` loop in the previous example.
+In the ``do``-``while`` loop above,
+``square += board[square]`` will always be executed *immediately after*
+the loop's ``while`` condition has checked that ``square`` is still on the board.
+This removes the need for the array bounds check
+seen in the earlier version of the game.
 
 .. _ControlFlow_ConditionalStatements:
 
@@ -834,6 +947,7 @@ and removes all of its vowels and spaces to create a cryptic puzzle phrase for s
         }
     --> println(puzzleOutput)
     <<< grtmndsthnklk
+    /// this will print "grtmndsthnklk"
 
 The ``letter`` constant is inferred to be of type ``UnicodeScalar``
 from the fact that it is iterating over a sequence of ``UnicodeScalar`` values.
@@ -858,53 +972,80 @@ No further code from the current iteration of the loop is executed,
 and no further iterations of the loop are started.
 
 The following example shows the ``continue`` and ``break`` statements in action.
-This is an adapted version of the keyboard example from earlier.
-Unlike before, this version deliberately ignores any spaces in the person's name.
-Try entering your full name
-(rather than just your first name or given name)
-to see it in action::
+This is an adapted version of the snakes and ladders example from earlier.
+This time around, the game has an extra rule:
 
-    --> var personName = ""
-    <-- // personName : String = ""
-    --> let keyboard = Keyboard()
-    <-- // keyboard : Keyboard = <_TtCSs8Keyboard instance>
-    --> println("Please enter your name, then press return.")
-    <<< Please enter your name, then press return.
-    --> while true {
-            let inputCharacter = UnicodeScalar(keyboard.read())
-            switch inputCharacter {
-                case ' ':
-                    continue
-                case '\n':
+* To win, you must land *exactly* on square 25
+
+If a particular die roll would take you beyond square 25,
+you must roll again until you roll the exact number needed to land on square 25.
+
+The game board is the same as before:
+
+.. image:: ../images/snakesAndLadders.png
+    :height: 250
+    :align: center
+
+The values of ``finalSquare``, ``board``, ``square``, and ``dieRoll``
+are initialized in the same way as before:
+
+.. testcode:: snakesAndLadders3
+
+    --> let finalSquare = 25
+    <-- // finalSquare : Int = 25
+    --> var board = Array<Int>()
+    <-- // board : Array<Int> = []
+    --> for _ in 0..finalSquare { board.append(0) }
+    --> board[03] = +08; board[06] = +11; board[09] = +09; board[10] = +02
+    --> board[14] = -10; board[19] = -11; board[22] = -02; board[24] = -08
+    --> var square = 0
+    <-- // square : Int = 0
+    --> var dieRoll = 0
+    <-- // dieRoll : Int = 0
+
+This version of the game uses a ``while`` loop and a ``switch`` statement
+to implement the game's logic.
+The ``while`` loop's condition is ``while square != finalSquare``,
+to reflect the fact that you must land exactly on square 25:
+
+.. testcode:: snakesAndLadders3
+
+    --> while square != finalSquare {
+            if ++dieRoll == 7 { dieRoll = 1 }
+            switch square + dieRoll {
+                case finalSquare:
+                    // dieRoll will move us to the final square, so the game is over
                     break
+                case let newSquare where newSquare > finalSquare:
+                    // dieRoll will move us beyond the final square, so roll again
+                    continue
                 default:
-                    personName += inputCharacter
+                    // this is a valid move, so find out its effect
+                    square += dieRoll
+                    square += board[square]
             }
         }
-    --> if personName == "" {
-            println("You didn't enter your name. How can I say hello to you?")
-        } else {
-            println("Hello, \(personName)!")
-        }
+    --> println("Game over!")
+    <<< Game over!
 
-.. TODO: This example cannot be auto-tested, as it is reliant on keyboard input.
-   It must be tested manually before this book is published.
+The die is rolled at the start of each loop.
+Rather than moving the player immediately,
+a ``switch`` statement is used to consider the result of the move,
+*if* it is allowed to take the place:
 
-This time, the keyboard's ``while`` loop has a very simple condition: ``while true``.
-This condition will *always* be true,
-and so this is effectively an infinite loop.
-The only way to end this loop is to break out of it from within.
-
-Each time the loop runs,
-a new ``inputCharacter`` is read from the keyboard.
-If the character is a space,
-a ``continue`` statement is used to skip to the next loop iteration.
-This effectively ignores the space altogether.
-If the character is a line break
-(meaning that the return key was pressed),
-a ``break`` statement is used to exit the loop immediately,
-jumping to the ``if personName == ""`` line after the loop.
-Otherwise, the new character is appended to the ``personName`` string as before.
+* If the die roll will move the player onto the final square,
+  the game is effectively over.
+  To indicate this, the ``break`` statement transfers control to
+  the first line of code outside of the loop, which ends the game.
+* If the die roll will move the player *beyond* the final square,
+  the move is considered invalid, and the player needs to roll again.
+  To indicate this, the ``continue`` statement ends the current loop iteration,
+  and begins the next iteration of the loop.
+* In all other cases, the die roll is cosidered to be a valid move.
+  The player moves forward by that many squares,
+  and the game logic checks for any snakes and ladders.
+  The loop then ends, and control returns to the ``while`` condition
+  to decide if another turn is required.
 
 .. _ControlFlow_Fallthrough:
 
