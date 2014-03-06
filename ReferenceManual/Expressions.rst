@@ -466,6 +466,10 @@ and has the following form:
 
    .<#enumerator name#>
 
+.. TODO: Use something other than a switch statement,
+   so that people don't get the incorrect idea
+   that this behavior only works after a case label.
+
 For example, the following ``switch`` statements
 have the same behavior: ::
 
@@ -535,6 +539,9 @@ It has the following form:
 
 Postfix Expressions
 -------------------
+
+.. Formed by putting a postfix operator or postfix-operator-like suffix
+   after an expression.
 
 .. langref-grammar
 
@@ -660,6 +667,8 @@ Metatype Expression
 .. NOTE: There is no definition for metatype-expression in the LangRef.
     This was probably just an oversight, according to Ted and Doug.
 
+.. I think this changed to .type recently.
+
 .. syntax-grammar::
 
     Grammar of a metatype expression
@@ -703,6 +712,9 @@ Forcing an Expression's Value
 
 Optional Chaining
 ~~~~~~~~~~~~~~~~~
+
+.. TODO: Better title.
+   Something like "unwrapping optional values" might work.
 
 .. langref-grammar
 
