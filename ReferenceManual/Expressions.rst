@@ -605,6 +605,19 @@ Function Call Expression
 New Expression
 ~~~~~~~~~~~~~~
 
+A :newTerm:`new expression` allocates and initializes an array
+of a given type and dimension,
+in the following form:
+
+.. syntax-outline:
+
+   new <#type#>[<#size#>]
+
+It consists of the keyword ``new``,
+followed by a type identifier,
+followed by one or more expressions in square brackets (``[`` and ``]``)
+which specify the initial dimensions of the array.
+
 .. langref-grammar
 
     expr-new        ::= 'new' type-identifier expr-new-bounds
