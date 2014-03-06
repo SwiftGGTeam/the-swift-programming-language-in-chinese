@@ -568,7 +568,7 @@ Postfix Expressions
     postfix-expression --> dot-expression
     postfix-expression --> metatype-expression
     postfix-expression --> subscript-expression
-    postfix-expression --> force-value-expression
+    postfix-expression --> forced-expression
     postfix-expression --> optional-expression
 
 .. _Expressions_FunctionCallExpression:
@@ -704,10 +704,7 @@ Forcing an Expression's Value
 
     Grammar of a force-value expression
 
-    force-value-expression --> postfix-expression ``!``
-
-.. TODO: Also, come up with a better name for force-value-expression.
-    Possibly call it "unwrapped-expression"?
+    forced-expression --> postfix-expression ``!``
 
 
 Optional Chaining
