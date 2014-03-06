@@ -452,8 +452,38 @@ when called with two integers: ::
 
 .. _Expressions_DelayedIdentifierExpression:
 
-Delayed Identifier Expression
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Implicit Enumerator Expression
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+An :newTerm:`implicit enumerator expression`
+is undestood one of the values of an enumeration
+without explicitly specifying the enumation.
+It must be used in a context where type inference
+can determine the implied enumeration,
+and has the following form:
+
+.. syntax-outline::
+
+   .<#enumerator name#>
+
+For example, the following ``switch`` statements
+have the same behavior: ::
+
+    var x : ExampleEnumeration
+
+    switch x {
+        case ExampleEnumeration.FirstValue:
+            println("First value")
+        case ExampleEnumeration.SecondValue:
+            println("Second value")
+    }
+
+    switch x {
+        case .FirstValue:
+            println("First value")
+        case .SecondValue:
+            println("Second value")
+    }
 
 .. langref-grammar
 
