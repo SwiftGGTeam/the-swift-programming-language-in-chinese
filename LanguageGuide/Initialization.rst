@@ -3,6 +3,9 @@ Initialization
 
 .. _ClassesAndStructures_MemberwiseStructureInitializers:
 
+.. TODO: mention that structures and enums can assign a value to self during initialization,
+   but classes cannot.
+
 Memberwise Structure Initializers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
