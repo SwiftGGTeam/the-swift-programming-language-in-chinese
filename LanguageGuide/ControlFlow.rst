@@ -297,8 +297,9 @@ The general form of a ``while`` loop is:
         <#statements#>
     }
 
-This example plays a simple game of Snakes and Ladders using the board shown below.
-(Snakes and Ladders is known as “Chutes and Ladders” in North America.)
+This example plays a simple game of *Snakes and Ladders*
+(also known as *Chutes and Ladders*)
+using the board shown below.
 
 .. image:: ../images/snakesAndLadders.png
     :height: 250
@@ -460,7 +461,7 @@ The general form of a ``do``-``while`` loop is:
         <#statements#>
     } while <#condition equates to true#>
 
-Here's the snakes and ladders example again,
+Here's the *Snakes and Ladders* example again,
 written as a ``do``-``while`` loop rather than a ``while`` loop.
 The values of ``finalSquare``, ``board``, ``square``, and ``dieRoll``
 are initialized in exactly the same way as before:
@@ -1006,7 +1007,7 @@ No further code from the current iteration of the loop is executed,
 and no further iterations of the loop are started.
 
 The following example shows the ``continue`` and ``break`` statements in action
-for an adapted version of the Snakes and Ladders game.
+for an adapted version of the *Snakes and Ladders* game.
 
 This time around, the game has an extra rule:
 
