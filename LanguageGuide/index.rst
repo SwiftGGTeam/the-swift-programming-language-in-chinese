@@ -5,7 +5,7 @@ Language Guide
     :maxdepth: 1
 
     BasicTypes
-    Operators
+    BasicOperators
     Strings
     ControlFlow
     Functions
@@ -15,3 +15,4 @@ Language Guide
     Extensions
     Protocols
     Generics
+    AdvancedOperators
