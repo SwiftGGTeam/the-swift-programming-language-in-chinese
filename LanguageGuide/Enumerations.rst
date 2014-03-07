@@ -31,10 +31,10 @@ In addition, enumerations can:
   (as described in :doc:`Methods`)
 * define :newTerm:`initializers` to provide an initial member value
   (as described in :doc:`Initialization`)
-* conform to :newTerm:`protocols` to provide standard functionality of a certain type
-  (as described in :doc:`Protocols`)
 * be :newTerm:`extended` to expand their functionality beyond their original implementation
   (as described in :doc:`Extensions`)
+* conform to :newTerm:`protocols` to provide standard functionality of a certain type
+  (as described in :doc:`Protocols`)
 
 Enumeration Syntax
 ------------------
