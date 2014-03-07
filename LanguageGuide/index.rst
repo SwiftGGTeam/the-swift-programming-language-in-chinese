@@ -14,8 +14,7 @@ Language Guide
     CustomTypes
     Properties
     Methods
-    Initialization
-    Inheritance
+    InitializationAndInheritance
     Extensions
     Protocols
     Generics
