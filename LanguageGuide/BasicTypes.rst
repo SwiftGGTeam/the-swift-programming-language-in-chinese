@@ -164,8 +164,7 @@ You can also print the value of a named value by using the ``println`` function:
 .. testcode:: namedValues
 
     --> println(friendlyWelcome)
-    <<< 👋, 🌎
-    /// prints "👋, 🌎"
+    <// 👋, 🌎
 
 .. NOTE: this is a deliberately simplistic description of what you can do with println().
    It will be expanded later on.
@@ -581,8 +580,7 @@ such as the ``if``-``else`` statement:
         } else {
             println("Eww, turnips are horrible.")
         }
-    <<< Eww, turnips are horrible.
-    /// prints "Eww, turnips are horrible."
+    <// Eww, turnips are horrible.
 
 Conditional statements such as ``if``-``else`` are covered in more detail in :doc:`ControlFlow`.
 
@@ -680,11 +678,9 @@ You can access the individual element values in a tuple using index numbers star
 .. testcode:: tuples
 
     --> println("The status code is \(httpStatus.0)")
-    <<< The status code is 404
-    /// prints "The status code is 404"
+    <// The status code is 404
     --> println("The status message is \(httpStatus.1)")
-    <<< The status message is Not Found
-    /// prints "The status message is Not Found"
+    <// The status message is Not Found
 
 As an alternative,
 you can :newTerm:`decompose` a tuple's contents into separate named values,
@@ -695,11 +691,9 @@ which can then be used as normal:
     --> let (statusCode, statusMessage) = httpStatus
     <-- // (statusCode, statusMessage) : (Int, String) = (404, "Not Found")
     --> println("The status code is \(statusCode)")
-    <<< The status code is 404
-    /// prints "The status code is 404"
+    <// The status code is 404
     --> println("The status message is \(statusMessage)")
-    <<< The status message is Not Found
-    /// prints "The status message is Not Found"
+    <// The status message is Not Found
 
 Tuples are particularly useful as the return values of functions.
 A function that tries to retrieve a web page might return this ``(Int, String)`` tuple type
@@ -790,8 +784,7 @@ The exclamation mark effectively says,
         } else {
             println("\(possibleNumber) could not be converted to an integer")
         }
-    <<< 123 has an integer value of 123
-    /// prints "123 has an integer value of 123"
+    <// 123 has an integer value of 123
 
 ``if``-``else`` statements are described in more detail in :doc:`ControlFlow`.
 

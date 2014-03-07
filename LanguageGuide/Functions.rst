@@ -55,11 +55,9 @@ This makes it easy for the function to be called from elsewhere in your code in 
             return greeting
         }
     --> println(sayHello("Anna"))
-    <<< Hello, Anna!
-    /// prints "Hello, Anna!"
+    <// Hello, Anna!
     --> println(sayHello("Brian"))
-    <<< Hello, Brian!
-    /// prints "Hello, Brian!"
+    <// Hello, Brian!
 
 The ``sayHello`` function is called by passing it a ``String`` value in parentheses,
 such as ``sayHello("Anna")``.
@@ -89,8 +87,7 @@ to combine the message creation and the return statement into one line:
             return "Hello again, " + personName + "!"
         }
     --> println(sayHelloAgain("Anna"))
-    <<< Hello again, Anna!
-    /// prints "Hello again, Anna!"
+    <// Hello again, Anna!
 
 .. admonition:: Experiment
 
@@ -134,8 +131,7 @@ and works out how many elements the range contains:
             return endIndex - startIndex
         }
     --> println(halfOpenRangeLength(1, 10))
-    <<< 9
-    /// prints "9"
+    <// 9
 
 .. _Functions_TuplesAsInputParameters:
 
@@ -215,8 +211,7 @@ and a value of ``.None`` in its second value to indicate that ``splitter`` was n
     --> if let secondPart = helloWorld.1 {
             println("The text from after the splitter is '\(secondPart)'")
         }
-    <<< The text from after the splitter is 'world'
-    /// prints "The text from after the splitter is 'world'"
+    <// The text from after the splitter is 'world'
 
 Alternatively, you can decompose the tuple into multiple named values
 as part of the function return value assignment:
@@ -340,7 +335,7 @@ the code will not compile:
 
     --> joinTwoMoreStrings("hello", "world")    // this will report an error
     !!! <REPL Input>:1:19: error: tuple types '($T1, $T2)' and '(string1: String, joiner: String, string2: String)' have a different number of elements (2 vs. 3)
-    !!! joinTwoMoreStrings("hello", "world")
+    !!! joinTwoMoreStrings("hello", "world")    // this will report an error
     !!!                   ^
 
 Because the values are not named in the function call,
@@ -390,8 +385,7 @@ which always returns the same ``String`` message whenever it is called:
             return "hello, world"
         }
     --> println(sayHelloWorld())
-    <<< hello, world
-    /// prints "hello, world"
+    <// hello, world
 
 The function declaration still needs parentheses after the function's name,
 even though it does not take any parameters.
@@ -408,8 +402,7 @@ which prints its own ``String`` value rather than returning it:
             println("Goodbye, \(personName) 👋")
         }
     --> waveGoodbye("Dave")
-    <<< Goodbye, Dave 👋
-    /// prints "Goodbye, Dave 👋"
+    <// Goodbye, Dave 👋
 
 Because it does not need to return a value,
 the function's declaration does not include the return operator (``->``)
@@ -499,8 +492,7 @@ Variable parameters are declared by prefixing the parameter name with the keywor
     <-- // paddedString : String = "-----hello"
     /// paddedString is equal to "-----hello"
     --> println("The original string is still '\(originalString)'")
-    <<< The original string is still 'hello'
-    /// prints "The original string is still 'hello'"
+    <// The original string is still 'hello'
 
 This example declares a new function called ``alignRight``,
 which aligns an input string to the right-hand edge of a longer output string.

@@ -83,10 +83,10 @@ Both place their entire definition within a pair of braces:
 .. testcode:: classesAndStructures
 
     --> class SomeClass {
-            /* class definition */
+            // class definition goes here
         }
     --> struct SomeStructure {
-            /* structure definition */
+            // structure definition goes here
         }
 
 Whenever you define a new class or structure,
@@ -185,7 +185,7 @@ The properties of an instance can be accessed using :newTerm:`dot syntax`:
 .. testcode:: classesAndStructures
 
     --> println("The width of someSize is \(someSize.width)")
-    <<< The width of someSize is 0.0
+    <// The width of someSize is 0.0
 
 ``someSize.width`` refers to the ``width`` property of ``someSize``.
 Dot syntax can also be used to drill down into sub-properties
@@ -194,7 +194,7 @@ such as the ``width`` property in the ``size`` property of a ``Rectangle``:
 .. testcode:: classesAndStructures
 
     --> println("The width of someRectangle is \(someRectangle.size.width)")
-    <<< The width of someRectangle is 0.0
+    <// The width of someRectangle is 0.0
 
 Unlike Objective-C,
 the values of sub-properties can be set directly, regardless of their type.
@@ -205,7 +205,7 @@ even though it is a sub-property of ``someRectangle.size``:
 
     --> someRectangle.size.width = 2.0
     --> println("The width of someRectangle is now \(someRectangle.size.width)")
-    <<< The width of someRectangle is now 2.0
+    <// The width of someRectangle is now 2.0
 
 .. _ClassesAndStructures_MemberwiseStructureInitializers:
 
@@ -291,11 +291,11 @@ Here's an example of ``willSet`` and ``didSet`` in action:
     --> let stepCounter = StepCounter()
     <-- // stepCounter : StepCounter = <StepCounter instance>
     --> stepCounter.totalSteps = 200
-    <<< Added 200 steps
+    <// Added 200 steps
     --> stepCounter.totalSteps = 360
-    <<< Added 160 steps
+    <// Added 160 steps
     --> stepCounter.totalSteps = 896
-    <<< Added 536 steps
+    <// Added 536 steps
 
 This example defines a new class called ``StepCounter``,
 which keeps track of the total number of steps that a person has taken while walking.
@@ -381,7 +381,7 @@ to retrieve and set other properties and values indirectly.
     <-- // initialSquareCenter : Point = Point(5.0, 5.0)
     --> square.center = Point(x: 15.0, y: 15.0)
     --> println("square origin is now at (\(square.origin.x), \(square.origin.y))")
-    <<< square origin is now at (10.0, 10.0)
+    <// square origin is now at (10.0, 10.0)
 
 This example uses the previously-defined ``Size`` structure,
 and defines two additional structures for working with geometric shapes:
@@ -457,6 +457,14 @@ define a property that will always return a value,
 and can be accessed via dot syntax,
 but which cannot be set to a different value by users of your class or structure.
 
+.. note::
+
+    Computed properties – including read-only computed properties –
+    are always declared as variable properties with the ``var`` keyword.
+    The ``let`` keyword is only ever used for constant properties,
+    to indicate that their value cannot be changed once it is set
+    as part of instance initialization.
+
 The declaration of a read-only computed property can be simplified
 by removing the ``get`` keyword:
 
@@ -471,7 +479,7 @@ by removing the ``get`` keyword:
     --> let fourByFiveByTwo = Cuboid(4.0, 5.0, 2.0)
     <-- // fourByFiveByTwo : Cuboid = Cuboid(4.0, 5.0, 2.0)
     --> println("the volume of fourByFiveByTwo is \(fourByFiveByTwo.volume)")
-    <<< the volume of fourByFiveByTwo is 40.0
+    <// the volume of fourByFiveByTwo is 40.0
 
 This example defines a new structure called ``Cuboid``,
 which represents a 3D rectangular box with ``width``, ``height`` and ``depth`` properties.
@@ -483,20 +491,17 @@ should be used for a particular ``volume`` value.
 Nonetheless, it is useful for a ``Cuboid`` to provide a read-only computed property
 to enable the outside world to discover its current calculated volume.
 
-Read-only computed properties are not the same as constant properties.
-They have some similarities,
-in that neither can have their value set by external users of the class or structure,
-but they differ considerably in how their values are retrieved.
-Constant properties are assigned their own storage,
-and the contents of this storage cannot be changed to a different value
-once it has been set during initialization.
-Read-only computed properties do not have storage assigned to them,
-and can return any value they like at any time.
+.. note::
 
-Computed properties – including read-only computed properties –
-are always declared as variable properties (via the ``var`` introducer).
-The ``let`` introducer is only ever used for constant properties,
-to indicate that their value cannot be changed once it is set as part of instance initialization.
+    Read-only computed properties are not the same as constant properties.
+    They have some similarities,
+    in that neither can have their value set by external users of the class or structure,
+    but they differ considerably in how their values are retrieved.
+    Constant properties are assigned their own storage,
+    and the contents of this storage cannot be changed to a different value
+    once it has been set during initialization.
+    Read-only computed properties do not have storage assigned to them,
+    and can return any value they like at any time.
 
 .. NOTE: getters and setters are also allowed for named values
    that are not associated with a particular class or struct.
@@ -578,9 +583,9 @@ For example, using the ``Size`` structure from above:
     <-- // iPhone5 : Size = Size(640.0, 960.0)
     --> iPhone5.height = 1136.0
     --> println("The iPhone 5 screen is now \(iPhone5.height) pixels high")
-    <<< The iPhone 5 screen is now 1136.0 pixels high
+    <// The iPhone 5 screen is now 1136.0 pixels high
     --> println("The iPhone 4 screen is still \(iPhone4.height) pixels high")
-    <<< The iPhone 4 screen is still 960.0 pixels high
+    <// The iPhone 4 screen is still 960.0 pixels high
 
 This example declares a constant called ``iPhone4``,
 and sets it to a ``Size`` instance initialized with
@@ -634,14 +639,14 @@ Here's an example, using the ``Rectangle`` class defined above:
     <-- // rect : Rectangle = <Rectangle instance>
     --> rect.size = Size(width: 1.0, height: 1.0)
     --> println("The rectangle's initial width is \(rect.size.width)")
-    <<< The rectangle's initial width is 1.0
+    <// The rectangle's initial width is 1.0
     --> let sameRect = rect
     <-- // sameRect : Rectangle = <Rectangle instance>
     --> sameRect.size.width = 3.0
     --> println("The rectangle's width via sameRect is now \(sameRect.size.width)")
-    <<< The rectangle's width via sameRect is now 3.0
+    <// The rectangle's width via sameRect is now 3.0
     --> println("The rectangle's width via rect is also \(rect.size.width)")
-    <<< The rectangle's width via rect is also 3.0
+    <// The rectangle's width via rect is also 3.0
 
 This example declares a new constant called ``rect``,
 and sets it to refer to a new ``Rectangle`` instance.

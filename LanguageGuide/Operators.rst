@@ -1100,8 +1100,7 @@ It can be read as “not ``a``”, as seen in the following example:
     --> if !allowedEntry {
             println("ACCESS DENIED")
         }
-    <<< ACCESS DENIED
-    /// prints "ACCESS DENIED"
+    <// ACCESS DENIED
 
 The phrase ``if !allowedEntry`` can be read as “if not allowed entry”.
 The subsequent line is only executed if “not allowed entry” is true,
@@ -1141,8 +1140,7 @@ and only allows access if both values are ``true``:
         } else {
             println("ACCESS DENIED")
         }
-    <<< ACCESS DENIED
-    /// prints "ACCESS DENIED"
+    <// ACCESS DENIED
 
 .. _Operators_LogicalOROperator:
 
@@ -1173,8 +1171,7 @@ For example:
         } else {
             println("ACCESS DENIED")
         }
-    <<< Welcome!
-    /// prints "Welcome!"
+    <// Welcome!
 
 In this example,
 the first ``Bool`` value (``hasDoorKey``) is ``false``,
@@ -1197,8 +1194,7 @@ You can combine multiple logical operators to create longer compound expressions
         } else {
             println("ACCESS DENIED")
         }
-    <<< Welcome!
-    /// prints "Welcome!"
+    <// Welcome!
 
 This example uses multiple ``&&`` and ``||`` operators to create a longer compound expression.
 However, the ``&&`` and ``||`` operators still only operate on two values,
@@ -1322,8 +1318,7 @@ it is useful to add parentheses around the first part of the compound expression
         } else {
             println("ACCESS DENIED")
         }
-    <<< Welcome!
-    /// prints "Welcome!"
+    <// Welcome!
 
 The parentheses make it clear that the first two values
 are being considered as part of a separate possible state in the overall logic.

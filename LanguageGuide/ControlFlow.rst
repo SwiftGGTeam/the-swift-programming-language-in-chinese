@@ -99,8 +99,7 @@ you can ignore the values using an underscore in place of a variable name:
             answer *= base
         }
     --> println("\(base) to the power of \(power) is \(answer)")
-    <<< 3 to the power of 10 is 59049
-    /// prints "3 to the power of 10 is 59049"
+    <// 3 to the power of 10 is 59049
 
 This example calculates the value of one number to the power of another
 (in this case, ``3`` to the power of ``10``).
@@ -277,8 +276,7 @@ you must declare ``index`` before the loop's scope begins:
     <<< index is 1
     <<< index is 2
     --> println("The loop statements were executed \(index) times")
-    <<< The loop statements were executed 3 times
-    /// prints "The loop statements were executed 3 times"
+    <// The loop statements were executed 3 times
 
 .. TODO: We shouldn't need to initialize index to 0 on the first line of this example,
    but variables can't currently be used unitialized in the REPL.
@@ -545,8 +543,7 @@ It only executes a set of statements if that condition is ``true``:
     --> if temperatureInFahrenheit <= 32 {
             println("It's very cold. Consider wearing a scarf.")
         }
-    <<< It's very cold. Consider wearing a scarf.
-    /// prints "It's very cold. Consider wearing a scarf."
+    <// It's very cold. Consider wearing a scarf.
 
 This example checks to see if the temperature
 (expressed using the Fahrenheit scale)
@@ -566,8 +563,7 @@ As its name suggests, the ``if``-``else`` statement can provide an alternative s
         } else {
             println("It's not that cold. Wear a t-shirt.")
         }
-    <<< It's not that cold. Wear a t-shirt.
-    /// prints "It's not that cold. Wear a t-shirt."
+    <// It's not that cold. Wear a t-shirt.
 
 One of of these two branches will always be executed.
 Because the temperature has increased to ``40`` degrees Fahrenheit,
@@ -587,8 +583,7 @@ to consider additional clauses:
         } else {
             println("It's not that cold. Wear a t-shirt.")
         }
-    <<< It's really warm. Don't forget to to wear sunscreen.
-    /// prints "It's really warm. Don't forget to to wear sunscreen."
+    <// It's really warm. Don't forget to to wear sunscreen.
 
 Here, an additional ``if`` clause has been added to respond to particularly warm temperatures.
 The final ``else`` clause still remains,
@@ -660,8 +655,7 @@ for brevity:
         } else {
             println("An integer value could not be found for \(numberSymbol).")
         }
-    <<< The integer value of 三 is 3.
-    /// prints "The integer value of 三 is 3."
+    <// The integer value of 三 is 3.
 
 .. TODO: The initialization of integerValue can be removed
   once the REPL supports uninitialized named values.
@@ -726,8 +720,7 @@ to provide a natural-language count for numbers of any size:
                 naturalCount = "millions and millions of"
         }
     --> println("There are \(naturalCount) \(countedThings).")
-    <<< There are millions and millions of stars in the Milky Way.
-    /// prints "There are millions and millions of stars in the Milky Way."
+    <// There are millions and millions of stars in the Milky Way.
 
 .. TODO: remove the initializer for naturalCount once we can declare unitialized variables in the REPL.
 .. TODO: Add a description for this example.
@@ -772,8 +765,7 @@ or outside of the box altogether.
             default:
                 println("(\(somePoint.0), \(somePoint.1)) is outside of the box")
         }
-    <<< (1, 1) is inside the box
-    /// prints "(1, 1) is inside the box"
+    <// (1, 1) is inside the box
 
 Unlike C, Swift allows multiple ``case`` statements to consider the same value or values.
 In fact, the point (0, 0) could match all *four* of the ``case`` statements in this example.
@@ -822,8 +814,7 @@ or somewhere else.
             case let (x, y):
                 println("somewhere else at (\(x), \(y))")
         }
-    <<< on the x-axis with an x value of 2
-    /// prints "on the x-axis with an x value of 2"
+    <// on the x-axis with an x value of 2
 
 The three ``case`` statements declare placeholder constants ``x`` and ``y``,
 which temporarily take on one or both of the tuple values from ``anotherPoint``.
@@ -884,8 +875,7 @@ or none of the above.
             case let (x, y):
                 println("(\(x), \(y)) is just some arbitrary point")
         }
-    <<< (1, -1) is on the line x == -y
-    /// prints "(1, -1) is on the line x == -y"
+    <// (1, -1) is on the line x == -y
 
 The three ``case`` statements declare placeholder constants ``x`` and ``y``,
 which temporarily take on the two tuple values from ``point``.
@@ -951,8 +941,7 @@ and removes all of its vowels and spaces to create a cryptic puzzle phrase for s
             }
         }
     --> println(puzzleOutput)
-    <<< grtmndsthnklk
-    /// prints "grtmndsthnklk"
+    <// grtmndsthnklk
 
 The ``letter`` constant is inferred to be of type ``UnicodeScalar``
 from the fact that it is iterating over a sequence of ``UnicodeScalar`` values.
@@ -1084,8 +1073,7 @@ The example below uses ``fallthrough`` to create a textual description of a numb
                 description += " an integer."
         }
     --> println(description)
-    <<< The number 5 is a prime number, and also an integer.
-    /// prints "The number 5 is a prime number, and also an integer."
+    <// The number 5 is a prime number, and also an integer.
 
 This example declares a new ``String`` variable called ``description``,
 and assigns it an initial value.
