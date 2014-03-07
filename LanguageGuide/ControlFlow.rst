@@ -53,17 +53,11 @@ which prints the first few entries in the five-times-table:
     --> for index in 1..5 {
             println("\(index) times 5 is \(index * 5)")
         }
-    <<< 1 times 5 is 5
-    <<< 2 times 5 is 10
-    <<< 3 times 5 is 15
-    <<< 4 times 5 is 20
-    <<< 5 times 5 is 25
-    /// prints:
-    /// 1 times 5 is 5
-    /// 2 times 5 is 10
-    /// 3 times 5 is 15
-    /// 4 times 5 is 20
-    /// 5 times 5 is 25
+    <-/ 1 times 5 is 5
+    <-/ 2 times 5 is 10
+    <-/ 3 times 5 is 15
+    <-/ 4 times 5 is 20
+    <-/ 5 times 5 is 25
 
 Here, the collection of items being iterated is a
 closed range of numbers from ``1`` to ``5`` inclusive,
@@ -90,16 +84,16 @@ you can ignore the values using an underscore in place of a variable name:
 .. testcode::
 
     --> let base = 3
-    <-- // base : Int = 3
+    <<< // base : Int = 3
     --> let power = 10
-    <-- // power : Int = 10
+    <<< // power : Int = 10
     --> var answer = 1
-    <-- // answer : Int = 1
+    <<< // answer : Int = 1
     --> for _ in 0...power {
             answer *= base
         }
     --> println("\(base) to the power of \(power) is \(answer)")
-    <// 3 to the power of 10 is 59049
+    <-- 3 to the power of 10 is 59049
 
 This example calculates the value of one number to the power of another
 (in this case, ``3`` to the power of ``10``).
@@ -119,19 +113,14 @@ A ``for``-``in`` loop can be used to iterate over the items in an array:
 .. testcode::
 
     --> let names = ["Anna", "Alex", "Brian", "Jack"]
-    <-- // names : String[] = ["Anna", "Alex", "Brian", "Jack"]
+    <<< // names : String[] = ["Anna", "Alex", "Brian", "Jack"]
     --> for name in names {
             println("Hello, \(name)!")
         }
-    <<< Hello, Anna!
-    <<< Hello, Alex!
-    <<< Hello, Brian!
-    <<< Hello, Jack!
-    /// prints:
-    /// Hello, Anna!
-    /// Hello, Alex!
-    /// Hello, Brian!
-    /// Hello, Jack!
+    <-/ Hello, Anna!
+    <-/ Hello, Alex!
+    <-/ Hello, Brian!
+    <-/ Hello, Jack!
 
 Swift's ``String`` type has a ``chars`` property,
 which provides the individual characters in the string as an ``Array`` of ``UnicodeScalar`` values
@@ -143,17 +132,11 @@ This can be used to iterate through the characters of a string in order:
     --> for scalar in "Hello".chars {
             println(scalar)
         }
-    <<< H
-    <<< e
-    <<< l
-    <<< l
-    <<< o
-    /// prints:
-    /// H
-    /// e
-    /// l
-    /// l
-    /// o
+    <-/ H
+    <-/ e
+    <-/ l
+    <-/ l
+    <-/ o
 
 Iteration can also be used to access the key-value pairs in a dictionary.
 Every item in a dictionary has a ``key`` property and a ``value`` property,
@@ -162,17 +145,13 @@ which can be accessed via dot syntax:
 .. testcode::
 
     --> let numberOfLegs = ["spider" : 8, "ant" : 6, "cat" : 4]
-    <-- // numberOfLegs : Dictionary<String, Int> = Dictionary<String, Int>(1.33333, 3, <DictionaryBufferOwner<String, Int> instance>)
+    <<< // numberOfLegs : Dictionary<String, Int> = Dictionary<String, Int>(1.33333, 3, <DictionaryBufferOwner<String, Int> instance>)
     --> for item in numberOfLegs {
             println("\(item.key)s have \(item.value) legs")
         }
-    <<< spiders have 8 legs
-    <<< ants have 6 legs
-    <<< cats have 4 legs
-    /// prints:
-    /// spiders have 8 legs
-    /// ants have 6 legs
-    /// cats have 4 legs
+    <-/ spiders have 8 legs
+    <-/ ants have 6 legs
+    <-/ cats have 4 legs
 
 Items in a ``Dictionary`` may not necessarily be iterated in the same order as they were inserted.
 The contents of a ``Dictionary`` are inherently unordered,
@@ -210,13 +189,9 @@ Swift also supports traditional C-style ``for`` loops with a condition and an in
     --> for var index = 0; index < 3; ++index {
             println("index is \(index)")
         }
-    <<< index is 0
-    <<< index is 1
-    <<< index is 2
-    /// prints:
-    /// index is 0
-    /// index is 1
-    /// index is 2
+    <-/ index is 0
+    <-/ index is 1
+    <-/ index is 2
 
 The general form of this loop format is:
 
@@ -268,15 +243,15 @@ you must declare ``index`` before the loop's scope begins:
 .. testcode::
 
     --> var index = 0
-    <-- // index : Int = 0
+    <<< // index : Int = 0
     --> for index = 0; index < 3; ++index {
             println("index is \(index)")
         }
-    <<< index is 0
-    <<< index is 1
-    <<< index is 2
+    <-/ index is 0
+    <-/ index is 1
+    <-/ index is 2
     --> println("The loop statements were executed \(index) times")
-    <// The loop statements were executed 3 times
+    <-- The loop statements were executed 3 times
 
 .. TODO: We shouldn't need to initialize index to 0 on the first line of this example,
    but variables can't currently be used unitialized in the REPL.
@@ -346,9 +321,9 @@ one each at indices ``0`` through ``25`` inclusive:
 .. testcode:: snakesAndLadders1
 
     --> let finalSquare = 25
-    <-- // finalSquare : Int = 25
+    <<< // finalSquare : Int = 25
     --> var board = Array<Int>()
-    <-- // board : Array<Int> = []
+    <<< // board : Array<Int> = []
     --> for _ in 0..finalSquare { board.append(0) }
 
 Some squares are then set to have more specific values for the snakes and ladders.
@@ -378,20 +353,52 @@ The first die roll will always move the player on to the board:
 .. testcode:: snakesAndLadders1
 
     --> var square = 0
-    <-- // square : Int = 0
+    <<< // square : Int = 0
     --> var dieRoll = 0
-    <-- // dieRoll : Int = 0
+    <<< // dieRoll : Int = 0
     --> while square < finalSquare {
             // roll the die
             if ++dieRoll == 7 { dieRoll = 1 }
+    >>>     println("dieRoll is \(dieRoll)")
             // move by the rolled amount
             square += dieRoll
+    >>>     println("after dieRoll, square is \(square)")
             if square < board.count {
                 // if we're still on the board, move up or down for a snake or a ladder
                 square += board[square]
+    >>>         println("after snakes or ladders, square is \(square)")
             }
         }
     --> println("Game over!")
+    <<< dieRoll is 1
+    <<< after dieRoll, square is 1
+    <<< after snakes or ladders, square is 1
+    <<< dieRoll is 2
+    <<< after dieRoll, square is 3
+    <<< after snakes or ladders, square is 11
+    <<< dieRoll is 3
+    <<< after dieRoll, square is 14
+    <<< after snakes or ladders, square is 4
+    <<< dieRoll is 4
+    <<< after dieRoll, square is 8
+    <<< after snakes or ladders, square is 8
+    <<< dieRoll is 5
+    <<< after dieRoll, square is 13
+    <<< after snakes or ladders, square is 13
+    <<< dieRoll is 6
+    <<< after dieRoll, square is 19
+    <<< after snakes or ladders, square is 8
+    <<< dieRoll is 1
+    <<< after dieRoll, square is 9
+    <<< after snakes or ladders, square is 18
+    <<< dieRoll is 2
+    <<< after dieRoll, square is 20
+    <<< after snakes or ladders, square is 20
+    <<< dieRoll is 3
+    <<< after dieRoll, square is 23
+    <<< after snakes or ladders, square is 23
+    <<< dieRoll is 4
+    <<< after dieRoll, square is 27
     <<< Game over!
 
 This example uses a very simple approach to die-rolling.
@@ -461,16 +468,16 @@ are initialized in exactly the same way as before:
 .. testcode:: snakesAndLadders2
 
     --> let finalSquare = 25
-    <-- // finalSquare : Int = 25
+    <<< // finalSquare : Int = 25
     --> var board = Array<Int>()
-    <-- // board : Array<Int> = []
+    <<< // board : Array<Int> = []
     --> for _ in 0..finalSquare { board.append(0) }
     --> board[03] = +08; board[06] = +11; board[09] = +09; board[10] = +02
     --> board[14] = -10; board[19] = -11; board[22] = -02; board[24] = -08
     --> var square = 0
-    <-- // square : Int = 0
+    <<< // square : Int = 0
     --> var dieRoll = 0
-    <-- // dieRoll : Int = 0
+    <<< // dieRoll : Int = 0
 
 In this version of the game,
 the *first* action in the loop is to check for a ladder or a snake.
@@ -487,12 +494,45 @@ and will have no effect:
     --> do {
             // move up or down for a snake or ladder
             square += board[square]
+    >>>        println("after snakes or ladders, square is \(square)")
             // roll the die
             if ++dieRoll == 7 { dieRoll = 1 }
+    >>>     println("dieRoll is \(dieRoll)")
             // move by the rolled amount
             square += dieRoll
+    >>>     println("after dieRoll, square is \(square)")
     --> } while square < finalSquare
     --> println("Game over!")
+    <<< after snakes or ladders, square is 0
+    <<< dieRoll is 1
+    <<< after dieRoll, square is 1
+    <<< after snakes or ladders, square is 1
+    <<< dieRoll is 2
+    <<< after dieRoll, square is 3
+    <<< after snakes or ladders, square is 11
+    <<< dieRoll is 3
+    <<< after dieRoll, square is 14
+    <<< after snakes or ladders, square is 4
+    <<< dieRoll is 4
+    <<< after dieRoll, square is 8
+    <<< after snakes or ladders, square is 8
+    <<< dieRoll is 5
+    <<< after dieRoll, square is 13
+    <<< after snakes or ladders, square is 13
+    <<< dieRoll is 6
+    <<< after dieRoll, square is 19
+    <<< after snakes or ladders, square is 8
+    <<< dieRoll is 1
+    <<< after dieRoll, square is 9
+    <<< after snakes or ladders, square is 18
+    <<< dieRoll is 2
+    <<< after dieRoll, square is 20
+    <<< after snakes or ladders, square is 20
+    <<< dieRoll is 3
+    <<< after dieRoll, square is 23
+    <<< after snakes or ladders, square is 23
+    <<< dieRoll is 4
+    <<< after dieRoll, square is 27
     <<< Game over!
 
 After checking for snakes and ladders, the die is rolled,
@@ -539,11 +579,11 @@ It only executes a set of statements if that condition is ``true``:
 .. testcode::
 
     --> var temperatureInFahrenheit = 30
-    <-- // temperatureInFahrenheit : Int = 30
+    <<< // temperatureInFahrenheit : Int = 30
     --> if temperatureInFahrenheit <= 32 {
             println("It's very cold. Consider wearing a scarf.")
         }
-    <// It's very cold. Consider wearing a scarf.
+    <-- It's very cold. Consider wearing a scarf.
 
 This example checks to see if the temperature
 (expressed using the Fahrenheit scale)
@@ -563,7 +603,7 @@ As its name suggests, the ``if``-``else`` statement can provide an alternative s
         } else {
             println("It's not that cold. Wear a t-shirt.")
         }
-    <// It's not that cold. Wear a t-shirt.
+    <-- It's not that cold. Wear a t-shirt.
 
 One of of these two branches will always be executed.
 Because the temperature has increased to ``40`` degrees Fahrenheit,
@@ -583,7 +623,7 @@ to consider additional clauses:
         } else {
             println("It's not that cold. Wear a t-shirt.")
         }
-    <// It's really warm. Don't forget to to wear sunscreen.
+    <-- It's really warm. Don't forget to to wear sunscreen.
 
 Here, an additional ``if`` clause has been added to respond to particularly warm temperatures.
 The final ``else`` clause still remains,
@@ -635,9 +675,9 @@ for brevity:
 .. testcode::
 
     --> let numberSymbol = '三'   // Simplified Chinese symbol for the number 3
-    <-- // numberSymbol : UnicodeScalar = '三'
+    <<< // numberSymbol : UnicodeScalar = '三'
     --> var possibleIntegerValue: Int? = .None
-    <-- // possibleIntegerValue : Int? = <unprintable value>
+    <<< // possibleIntegerValue : Int? = <unprintable value>
     --> switch numberSymbol {
             case '1', '١', '一', '๑':
                 possibleIntegerValue = 1
@@ -655,7 +695,7 @@ for brevity:
         } else {
             println("An integer value could not be found for \(numberSymbol).")
         }
-    <// The integer value of 三 is 3.
+    <-- The integer value of 三 is 3.
 
 .. TODO: The initialization of integerValue can be removed
   once the REPL supports uninitialized named values.
@@ -698,11 +738,11 @@ to provide a natural-language count for numbers of any size:
 .. testcode::
 
     --> let count = 3_000_000_000_000
-    <-- // count : Int = 3000000000000
+    <<< // count : Int = 3000000000000
     --> let countedThings = "stars in the Milky Way"
-    <-- // countedThings : String = "stars in the Milky Way"
+    <<< // countedThings : String = "stars in the Milky Way"
     --> var naturalCount = ""
-    <-- // naturalCount : String = ""
+    <<< // naturalCount : String = ""
     --> switch count {
             case 0:
                 naturalCount = "no"
@@ -720,7 +760,7 @@ to provide a natural-language count for numbers of any size:
                 naturalCount = "millions and millions of"
         }
     --> println("There are \(naturalCount) \(countedThings).")
-    <// There are millions and millions of stars in the Milky Way.
+    <-- There are millions and millions of stars in the Milky Way.
 
 .. TODO: remove the initializer for naturalCount once we can declare unitialized variables in the REPL.
 .. TODO: Add a description for this example.
@@ -752,7 +792,7 @@ or outside of the box altogether.
 .. testcode::
 
     --> let somePoint = (1, 1)
-    <-- // somePoint : (Int, Int) = (1, 1)
+    <<< // somePoint : (Int, Int) = (1, 1)
     --> switch somePoint {
             case (0, 0):
                 println("(0, 0) is at the origin")
@@ -765,7 +805,7 @@ or outside of the box altogether.
             default:
                 println("(\(somePoint.0), \(somePoint.1)) is outside of the box")
         }
-    <// (1, 1) is inside the box
+    <-- (1, 1) is inside the box
 
 Unlike C, Swift allows multiple ``case`` statements to consider the same value or values.
 In fact, the point (0, 0) could match all *four* of the ``case`` statements in this example.
@@ -805,7 +845,7 @@ or somewhere else.
 .. testcode::
 
     --> let anotherPoint = (2, 0)
-    <-- // anotherPoint : (Int, Int) = (2, 0)
+    <<< // anotherPoint : (Int, Int) = (2, 0)
     --> switch anotherPoint {
             case (let x, 0):
                 println("on the x-axis with an x value of \(x)")
@@ -814,7 +854,7 @@ or somewhere else.
             case let (x, y):
                 println("somewhere else at (\(x), \(y))")
         }
-    <// on the x-axis with an x value of 2
+    <-- on the x-axis with an x value of 2
 
 The three ``case`` statements declare placeholder constants ``x`` and ``y``,
 which temporarily take on one or both of the tuple values from ``anotherPoint``.
@@ -866,7 +906,7 @@ or none of the above.
 .. testcode::
 
     --> let yetAnotherPoint = (1, -1)
-    <-- // yetAnotherPoint : (Int, Int) = (1, -1)
+    <<< // yetAnotherPoint : (Int, Int) = (1, -1)
     --> switch yetAnotherPoint {
             case let (x, y) where x == y:
                 println("(\(x), \(y)) is on the line x == y")
@@ -875,7 +915,7 @@ or none of the above.
             case let (x, y):
                 println("(\(x), \(y)) is just some arbitrary point")
         }
-    <// (1, -1) is on the line x == -y
+    <-- (1, -1) is on the line x == -y
 
 The three ``case`` statements declare placeholder constants ``x`` and ``y``,
 which temporarily take on the two tuple values from ``point``.
@@ -929,9 +969,9 @@ and removes all of its vowels and spaces to create a cryptic puzzle phrase for s
 .. testcode::
 
     --> let puzzleInput = "great minds think alike"
-    <-- // puzzleInput : String = "great minds think alike"
+    <<< // puzzleInput : String = "great minds think alike"
     --> var puzzleOutput = ""
-    <-- // puzzleOutput : String = ""
+    <<< // puzzleOutput : String = ""
     --> for letter in puzzleInput.chars {
             switch letter {
                 case 'a', 'e', 'i', 'o', 'u', ' ':
@@ -941,7 +981,7 @@ and removes all of its vowels and spaces to create a cryptic puzzle phrase for s
             }
         }
     --> println(puzzleOutput)
-    <// grtmndsthnklk
+    <-- grtmndsthnklk
 
 The ``letter`` constant is inferred to be of type ``UnicodeScalar``
 from the fact that it is iterating over a sequence of ``UnicodeScalar`` values.
@@ -987,16 +1027,16 @@ are initialized in the same way as before:
 .. testcode:: snakesAndLadders3
 
     --> let finalSquare = 25
-    <-- // finalSquare : Int = 25
+    <<< // finalSquare : Int = 25
     --> var board = Array<Int>()
-    <-- // board : Array<Int> = []
+    <<< // board : Array<Int> = []
     --> for _ in 0..finalSquare { board.append(0) }
     --> board[03] = +08; board[06] = +11; board[09] = +09; board[10] = +02
     --> board[14] = -10; board[19] = -11; board[22] = -02; board[24] = -08
     --> var square = 0
-    <-- // square : Int = 0
+    <<< // square : Int = 0
     --> var dieRoll = 0
-    <-- // dieRoll : Int = 0
+    <<< // dieRoll : Int = 0
 
 This version of the game uses a ``while`` loop and a ``switch`` statement
 to implement the game's logic.
@@ -1007,20 +1047,69 @@ to reflect the fact that you must land exactly on square 25:
 
     --> while square != finalSquare {
             if ++dieRoll == 7 { dieRoll = 1 }
+    >>>     println("dieRoll is \(dieRoll)")
             switch square + dieRoll {
                 case finalSquare:
                     // dieRoll will move us to the final square, so the game is over
+    >>>             println("finalSquare, game is over")
                     break
                 case let newSquare where newSquare > finalSquare:
                     // dieRoll will move us beyond the final square, so roll again
+    >>>             println("move too far, roll again")
                     continue
                 default:
                     // this is a valid move, so find out its effect
                     square += dieRoll
+    >>>             println("after dieRoll, square is \(square)")
                     square += board[square]
+    >>>             println("after snakes or ladders, square is \(square)")
             }
         }
     --> println("Game over!")
+    <<< dieRoll is 1
+    <<< after dieRoll, square is 1
+    <<< after snakes or ladders, square is 1
+    <<< dieRoll is 2
+    <<< after dieRoll, square is 3
+    <<< after snakes or ladders, square is 11
+    <<< dieRoll is 3
+    <<< after dieRoll, square is 14
+    <<< after snakes or ladders, square is 4
+    <<< dieRoll is 4
+    <<< after dieRoll, square is 8
+    <<< after snakes or ladders, square is 8
+    <<< dieRoll is 5
+    <<< after dieRoll, square is 13
+    <<< after snakes or ladders, square is 13
+    <<< dieRoll is 6
+    <<< after dieRoll, square is 19
+    <<< after snakes or ladders, square is 8
+    <<< dieRoll is 1
+    <<< after dieRoll, square is 9
+    <<< after snakes or ladders, square is 18
+    <<< dieRoll is 2
+    <<< after dieRoll, square is 20
+    <<< after snakes or ladders, square is 20
+    <<< dieRoll is 3
+    <<< after dieRoll, square is 23
+    <<< after snakes or ladders, square is 23
+    <<< dieRoll is 4
+    <<< move too far, roll again
+    <<< dieRoll is 5
+    <<< move too far, roll again
+    <<< dieRoll is 6
+    <<< move too far, roll again
+    <<< dieRoll is 1
+    <<< after dieRoll, square is 24
+    <<< after snakes or ladders, square is 16
+    <<< dieRoll is 2
+    <<< after dieRoll, square is 18
+    <<< after snakes or ladders, square is 18
+    <<< dieRoll is 3
+    <<< after dieRoll, square is 21
+    <<< after snakes or ladders, square is 21
+    <<< dieRoll is 4
+    <<< finalSquare, game is over
     <<< Game over!
 
 The die is rolled at the start of each loop.
@@ -1062,9 +1151,9 @@ The example below uses ``fallthrough`` to create a textual description of a numb
 .. testcode::
 
     --> let integerToDescribe = 5
-    <-- // integerToDescribe : Int = 5
+    <<< // integerToDescribe : Int = 5
     --> var description = "The number \(integerToDescribe) is"
-    <-- // description : String = "The number 5 is"
+    <<< // description : String = "The number 5 is"
     --> switch integerToDescribe {
             case 2, 3, 5, 7, 11, 13, 17, 19:
                 description += " a prime number, and also"
@@ -1073,7 +1162,7 @@ The example below uses ``fallthrough`` to create a textual description of a numb
                 description += " an integer."
         }
     --> println(description)
-    <// The number 5 is a prime number, and also an integer.
+    <-- The number 5 is a prime number, and also an integer.
 
 This example declares a new ``String`` variable called ``description``,
 and assigns it an initial value.

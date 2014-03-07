@@ -53,7 +53,7 @@ so that they read as a sentence when declaring a named value of that type:
 .. testcode:: enums
 
     --> var directionToHead = CompassPoint.West
-    <-- // directionToHead : CompassPoint = <unprintable value>
+    <<< // directionToHead : CompassPoint = <unprintable value>
 
 The type of ``directionToHead`` has been inferred
 from the fact that it was initialized with one of the possible values of ``CompassPoint``.
@@ -113,7 +113,7 @@ you can provide a ``default`` case to cover any members that are not addressed e
 .. testcode:: enums
 
     --> let somePlanet = Planet.Earth
-    <-- // somePlanet : Planet = <unprintable value>
+    <<< // somePlanet : Planet = <unprintable value>
     --> switch somePlanet {
             case .Earth:
                 println("Mostly harmless")
@@ -191,7 +191,7 @@ as shown below:
 .. testcode:: enums
 
     --> var productBarcode = Barcode.UPCA(8, 85909_51226, 3)
-    <-- // productBarcode : Barcode = <unprintable value>
+    <<< // productBarcode : Barcode = <unprintable value>
 
 This creates a new variable called ``productBarcode``,
 and assigns it a value of ``Barcode.UPCA`` with an associated tuple value of ``(8, 8590951226, 3)``.
@@ -294,7 +294,7 @@ The raw value of an enumeration member can be accessed using its ``toRaw`` metho
 .. testcode:: optionals
 
     --> let atomicNumberOfCarbon = ChemicalElement.Carbon.toRaw()
-    <-- // atomicNumberOfCarbon : Int = 6
+    <<< // atomicNumberOfCarbon : Int = 6
 
 The reverse is also true.
 In addition to a ``toRaw`` method,
@@ -305,7 +305,7 @@ The ``fromRaw`` method could be used to find ``ChemicalElement.Nitrogen`` from i
 .. testcode:: optionals
 
     --> var possibleElement = ChemicalElement.fromRaw(7)        // Nitrogen
-    <-- // possibleElement : ChemicalElement? = <unprintable value>
+    <<< // possibleElement : ChemicalElement? = <unprintable value>
 
 Not all possible ``Int`` values will find a matching chemical element, however.
 Because of this, the ``fromRaw`` method returns an *optional* enumeration member.
@@ -387,7 +387,7 @@ The example below shows all of these capabilities in action for a complex enumer
             var status = TrainStatus()
         }
     --> let train = Train()
-    <-- // train : Train = <Train instance>
+    <<< // train : Train = <Train instance>
     --> println("The train is \(train.status.description)")
     <<< The train is on time
     --> train.status = .Delayed(96)
@@ -496,7 +496,7 @@ Types can be nested to as many levels as are required:
             }
         }
     --> let theAceOfSpades = BlackjackCard(.Ace, .Spades)
-    <-- // theAceOfSpades : BlackjackCard = BlackjackCard(<unprintable value>, <unprintable value>)
+    <<< // theAceOfSpades : BlackjackCard = BlackjackCard(<unprintable value>, <unprintable value>)
     --> println("Blackjack value: \(theAceOfSpades.description)")
     <<< Blackjack value: the Ace of ♠ is worth 1 or 11
 
@@ -553,7 +553,7 @@ by prefixing their name with the name of the type they are nested within:
 .. testcode:: nestedTypes
 
     --> let heartsSymbol = BlackjackCard.Suit.Hearts.toRaw()
-    <-- // heartsSymbol : UnicodeScalar = '♡'
+    <<< // heartsSymbol : UnicodeScalar = '♡'
 
 This enables the names of ``Suit``, ``Rank`` and ``Values`` to be kept deliberately short,
 because their names are naturally qualified by the context in which they are defined.

@@ -69,13 +69,12 @@ The :newTerm:`assignment operator` (``a = b``) updates the value of ``a`` with t
 .. testcode:: assignmentOperator
 
     --> let b = 10
-    <-- // b : Int = 10
+    <<< // b : Int = 10
     --> var a = 5
-    <-- // a : Int = 5
+    <<< // a : Int = 5
     --> a = b
-    >>> println("a is now \(a)")
-    <<< a is now 10
-    /// a is now equal to 10
+    /-> a is now equal to \(a)
+    <-/ a is now equal to 10
 
 If the right side of the assignment is a tuple with multiple values,
 its elements can be decomposed into multiple named values at once:
@@ -83,12 +82,9 @@ its elements can be decomposed into multiple named values at once:
 .. testcode:: assignmentOperator
 
     --> let (x, y) = (1, 2)
-    <-- // (x, y) : (Int, Int) = (1, 2)
-    >>> println("x is \(x)")
-    <<< x is 1
-    >>> println("y is \(y)")
-    <<< y is 2
-    /// x is equal to 1, and y is equal to 2
+    <<< // (x, y) : (Int, Int) = (1, 2)
+    /-> x is equal to \(x), and y is equal to \(y)
+    <-/ x is equal to 1, and y is equal to 2
 
 Unlike C and Objective-C, the assignment operator does not itself return a value.
 The following statement is not valid:
@@ -123,20 +119,20 @@ Swift supports the four standard :newTerm:`arithmetic operators` for all number 
 .. testcode:: arithmeticOperators
 
     --> 1 + 2         // equals 3
-    <-- // r0 : Int = 3
+    <<< // r0 : Int = 3
     --> 5 - 3         // equals 2
-    <-- // r1 : Int = 2
+    <<< // r1 : Int = 2
     --> 2 * 3         // equals 6
-    <-- // r2 : Int = 6
+    <<< // r2 : Int = 6
     --> 10.0 / 2.5    // equals 4.0
-    <-- // r3 : Double = 4.0
+    <<< // r3 : Double = 4.0
 
 The addition operator is also supported for ``String`` concatenation:
 
 .. testcode:: arithmeticOperators
 
     --> "hello, " + "world"       // equals "hello, world"
-    <-- // r4 : String = "hello, world"
+    <<< // r4 : String = "hello, world"
 
 Two ``UnicodeScalar`` values,
 or one ``UnicodeScalar`` value and one ``String`` value,
@@ -145,11 +141,13 @@ can be added together to make a new ``String`` value:
 .. testcode:: arithmeticOperators
 
     --> let dog = '🐶'
-    <-- // dog : UnicodeScalar = '🐶'
+    <<< // dog : UnicodeScalar = '🐶'
     --> let cow = '🐮'
-    <-- // cow : UnicodeScalar = '🐮'
-    --> let dogCow = dog + cow    // dogCow is equal to "🐶🐮"
-    <-- // dogCow : String = "🐶🐮"
+    <<< // cow : UnicodeScalar = '🐮'
+    --> let dogCow = dog + cow
+    <<< // dogCow : String = "🐶🐮"
+    /-> dogCow is equal to \"🐶🐮\"
+    <-/ dogCow is equal to "🐶🐮"
 
 .. TODO: revisit this example based on whether single quotes
    continue to return a UnicodeScalar,
@@ -183,7 +181,7 @@ In Swift, this would be written as:
 .. testcode:: arithmeticOperators
 
     --> 9 % 4     // equals 1
-    <-- // r5 : Int = 1
+    <<< // r5 : Int = 1
 
 To determine the answer for ``a % b``,
 the ``%`` operator calculates the following equation,
@@ -203,7 +201,7 @@ The same method is applied when calculating the remainder for a negative value o
 .. testcode:: arithmeticOperators
 
     --> -9 % 4    // equals -1
-    <-- // r6 : Int = -1
+    <<< // r6 : Int = -1
 
 Inserting ``-9`` and ``4`` into the equation gives:
 
@@ -225,7 +223,7 @@ Swift's remainder operator can also operate on floating-point numbers:
 .. testcode:: arithmeticOperators
 
     --> 8 % 2.5   // equals 0.5
-    <-- // r7 : Double = 0.5
+    <<< // r7 : Double = 0.5
 
 In this example, ``8`` divided by ``2.5`` equals ``3``, with a remainder of ``0.5``,
 so the remainder operator returns a ``Double`` value of ``0.5``.
@@ -247,9 +245,9 @@ These operators can be used with named values of any integer or floating-point t
 .. testcode:: arithmeticOperators
 
     --> var i = 0
-    <-- // i : Int = 0
+    <<< // i : Int = 0
     --> ++i        // i now equals 1
-    <-- // r8 : Int = 1
+    <<< // r8 : Int = 1
 
 Each time you call ``++i``, the value of ``i`` is increased by ``1``.
 Essentially, ``++i`` is shorthand for saying ``i = i + 1``.
@@ -274,17 +272,15 @@ while also finding out its value:
 .. testcode:: arithmeticOperators
 
     --> var a = 0
-    <-- // a : Int = 0
+    <<< // a : Int = 0
     --> let b = ++a
-    <-- // b : Int = 1
-    >>> println("a is now \(a)")
-    <<< a is now 1
-    /// a and b are now both equal to 1
+    <<< // b : Int = 1
+    /-> a and b are now both equal to \(a)
+    <-/ a and b are now both equal to 1
     --> let c = a++
-    <-- // c : Int = 1
-    >>> println("a is now \(a)")
-    <<< a is now 2
-    /// a is now equal to 2, but c has been set to the pre-increment value of 1
+    <<< // c : Int = 1
+    /-> a is now equal to \(a), but c has been set to the pre-increment value of \(c)
+    <-/ a is now equal to 2, but c has been set to the pre-increment value of 1
 
 In the example above,
 ``let b = ++a`` sets ``b`` to the value of ``a``,
@@ -318,11 +314,11 @@ known as the :newTerm:`unary minus operator`:
 .. testcode:: arithmeticOperators
 
     --> let three = 3
-    <-- // three : Int = 3
+    <<< // three : Int = 3
     --> let minusThree = -three        // minusThree equals -3
-    <-- // minusThree : Int = -3
+    <<< // minusThree : Int = -3
     --> let plusThree = -minusThree    // plusThree equals 3, or "minus minus three"
-    <-- // plusThree : Int = 3
+    <<< // plusThree : Int = 3
 
 The unary minus operator (``-``) is prepended directly before the value it operates on,
 without any whitespace.
@@ -338,9 +334,9 @@ the value it operates on, without any change:
 .. testcode:: arithmeticOperators
 
     --> let minusSix = -6
-    <-- // minusSix : Int = -6
+    <<< // minusSix : Int = -6
     --> let alsoMinusSix = +minusSix   // alsoMinusSix equals -6
-    <-- // alsoMinusSix : Int = -6
+    <<< // alsoMinusSix : Int = -6
 
 The unary plus operator doesn't actually do anything.
 However, it can be used to provide symmetry in your code
@@ -357,10 +353,10 @@ One example is the :newTerm:`addition assignment operator` (``+=``):
 .. testcode:: compoundAssignment
 
     --> var a = 1
-    <-- // a : Int = 1
-    --> a += 2     // a is now equal to 3
-    >>> println("a is now equal to \(a)")
-    <<< a is now equal to 3
+    <<< // a : Int = 1
+    --> a += 2
+    /-> a is now equal to \(a)
+    <-/ a is now equal to 3
 
 The expression ``a += 2`` is shorthand for ``a = a + 2``.
 Effectively, the addition and the assignment are combined into one operator
@@ -401,17 +397,17 @@ Each of the comparison operators returns a ``Bool`` value to indicate whether or
 .. testcode:: comparisonOperators
 
     --> 1 == 1    // true, because 1 is equal to 1
-    <-- // r0 : Bool = true
+    <<< // r0 : Bool = true
     --> 2 != 1    // true, because 2 is not equal to 1
-    <-- // r1 : Bool = true
+    <<< // r1 : Bool = true
     --> 2 > 1     // true, because 2 is greater than 1
-    <-- // r2 : Bool = true
+    <<< // r2 : Bool = true
     --> 1 < 2     // true, because 1 is less than 2
-    <-- // r3 : Bool = true
+    <<< // r3 : Bool = true
     --> 1 >= 1    // true, because 1 is greater than or equal to 1
-    <-- // r4 : Bool = true
+    <<< // r4 : Bool = true
     --> 2 <= 1    // false, because 2 is not less than or equal to 1
-    <-- // r5 : Bool = false
+    <<< // r5 : Bool = false
 
 Comparison operators are often used in conditional statements,
 such as the ``if``-``else`` statement:
@@ -419,7 +415,7 @@ such as the ``if``-``else`` statement:
 .. testcode:: comparisonOperators
 
     --> let name = "world";
-    <-- // name : String = "world"
+    <<< // name : String = "world"
     --> if name == "world" {
             println("hello, world")
         } else {
@@ -463,33 +459,31 @@ and 20 pixels taller if it doesn't:
 .. testcode:: ternaryConditionalOperatorPart1
 
     --> let contentHeight = 40
-    <-- // contentHeight : Int = 40
+    <<< // contentHeight : Int = 40
     --> let hasHeader = true
-    <-- // hasHeader : Bool = true
+    <<< // hasHeader : Bool = true
     --> let rowHeight = contentHeight + (hasHeader ? 50 : 20)
-    <-- // rowHeight : Int = 90
-    >>> println("The row height is \(rowHeight) pixels.")
-    <<< The row height is 90 pixels.
-    /// rowHeight is equal to 90
+    <<< // rowHeight : Int = 90
+    /-> rowHeight is equal to \(rowHeight)
+    <-/ rowHeight is equal to 90
 
 This is shorthand for:
 
 .. testcode:: ternaryConditionalOperatorPart2
 
     --> let contentHeight = 40
-    <-- // contentHeight : Int = 40
+    <<< // contentHeight : Int = 40
     --> let hasHeader = true
-    <-- // hasHeader : Bool = true
+    <<< // hasHeader : Bool = true
     --> var rowHeight = contentHeight
-    <-- // rowHeight : Int = 40
+    <<< // rowHeight : Int = 40
     --> if hasHeader {
             rowHeight = rowHeight + 50
         } else {
             rowHeight = rowHeight + 20
         }
-    >>> println("The row height is \(rowHeight) pixels.")
-    <<< The row height is 90 pixels.
-    /// rowHeight is equal to 90
+    /-> rowHeight is equal to \(rowHeight)
+    <-/ rowHeight is equal to 90
 
 The shorthand version is more concise,
 and removes the need for ``rowHeight`` to be a variable named value
@@ -529,17 +523,11 @@ such as with a ``for``-``in`` loop:
     --> for index in 1..5 {
             println("\(index) times 5 is \(index * 5)")
         }
-    <<< 1 times 5 is 5
-    <<< 2 times 5 is 10
-    <<< 3 times 5 is 15
-    <<< 4 times 5 is 20
-    <<< 5 times 5 is 25
-    /// prints:
-    /// 1 times 5 is 5
-    /// 2 times 5 is 10
-    /// 3 times 5 is 15
-    /// 4 times 5 is 20
-    /// 5 times 5 is 25
+    <-/ 1 times 5 is 5
+    <-/ 2 times 5 is 10
+    <-/ 3 times 5 is 15
+    <-/ 4 times 5 is 20
+    <-/ 5 times 5 is 25
 
 ``for``-``in`` loops are described in more detail in :doc:`ControlFlow`.
 
@@ -561,21 +549,16 @@ where it is useful to count up to (but not including) the length of the list:
 .. testcode:: rangeOperators
 
     --> let names = ["Anna", "Alex", "Brian", "Jack"]
-    <-- // names : String[] = ["Anna", "Alex", "Brian", "Jack"]
+    <<< // names : String[] = ["Anna", "Alex", "Brian", "Jack"]
     --> let count = names.count
-    <-- // count : Int = 4
+    <<< // count : Int = 4
     --> for i in 0...count {
             println("Person \(i + 1) is called \(names[i])")
         }
-    <<< Person 1 is called Anna
-    <<< Person 2 is called Alex
-    <<< Person 3 is called Brian
-    <<< Person 4 is called Jack
-    /// prints:
-    /// Person 1 is called Anna
-    /// Person 2 is called Alex
-    /// Person 3 is called Brian
-    /// Person 4 is called Jack
+    <-/ Person 1 is called Anna
+    <-/ Person 2 is called Alex
+    <-/ Person 3 is called Brian
+    <-/ Person 4 is called Jack
 
 Note that the array contains four items,
 but ``0...count`` only counts as far as ``3``
@@ -614,9 +597,9 @@ without any whitespace:
 .. testcode:: bitwiseOperators
 
     --> let initialBits: UInt8 = 0b00001111
-    <-- // initialBits : UInt8 = 15
+    <<< // initialBits : UInt8 = 15
     --> let invertedBits = ~initialBits  // equals 11110000
-    <-- // invertedBits : UInt8 = 240
+    <<< // invertedBits : UInt8 = 240
 
 ``UInt8`` integers have eight bits,
 and can store any value between ``0`` and ``255``.
@@ -649,11 +632,11 @@ For example:
 .. testcode:: bitwiseOperators
 
     --> let firstSixBits: UInt8 = 0b11111100
-    <-- // firstSixBits : UInt8 = 252
+    <<< // firstSixBits : UInt8 = 252
     --> let lastSixBits: UInt8  = 0b00111111
-    <-- // lastSixBits : UInt8 = 63
+    <<< // lastSixBits : UInt8 = 63
     --> let middleFourBits = firstSixBits & lastSixBits  // equals 00111100
-    <-- // middleFourBits : UInt8 = 60
+    <<< // middleFourBits : UInt8 = 60
 
 The values of ``firstSixBits`` and ``lastSixBits`` both have their four middle bits equal to ``1``.
 The bitwise AND operator combines them to make the number ``00111100``,
@@ -677,11 +660,11 @@ For example:
 .. testcode:: bitwiseOperators
 
     --> let someBits: UInt8 = 0b10110010
-    <-- // someBits : UInt8 = 178
+    <<< // someBits : UInt8 = 178
     --> let moreBits: UInt8 = 0b01011110
-    <-- // moreBits : UInt8 = 94
+    <<< // moreBits : UInt8 = 94
     --> let combinedbits = someBits | moreBits  // equals 11111110
-    <-- // combinedbits : UInt8 = 254
+    <<< // combinedbits : UInt8 = 254
 
 The values of ``someBits`` and ``moreBits`` have different bits set to ``1``.
 The bitwise OR operator combines them to make the number ``11111110``,
@@ -705,11 +688,11 @@ For example:
 .. testcode:: bitwiseOperators
 
     --> let firstBits: UInt8 = 0b00010100
-    <-- // firstBits : UInt8 = 20
+    <<< // firstBits : UInt8 = 20
     --> let otherBits: UInt8 = 0b00000101
-    <-- // otherBits : UInt8 = 5
+    <<< // otherBits : UInt8 = 5
     --> let outputBits = firstBits ^ otherBits  // equals 00010001
-    <-- // outputBits : UInt8 = 17
+    <<< // outputBits : UInt8 = 17
 
 .. TODO: Explain how this can be useful to toggle just a few bits in a bitfield.
 
@@ -762,30 +745,30 @@ Here's how bit shifting looks in Swift code:
 .. testcode:: bitwiseShiftOperators
 
     --> let shiftBits: UInt8 = 4    // 00000100 in binary
-    <-- // shiftBits : UInt8 = 4
+    <<< // shiftBits : UInt8 = 4
     --> shiftBits << 1              // 00001000
-    <-- // r0 : UInt8 = 8
+    <<< // r0 : UInt8 = 8
     --> shiftBits << 2              // 00010000
-    <-- // r1 : UInt8 = 16
+    <<< // r1 : UInt8 = 16
     --> shiftBits << 5              // 10000000
-    <-- // r2 : UInt8 = 128
+    <<< // r2 : UInt8 = 128
     --> shiftBits << 6              // 00000000
-    <-- // r3 : UInt8 = 0
+    <<< // r3 : UInt8 = 0
     --> shiftBits >> 2              // 00000001
-    <-- // r4 : UInt8 = 1
+    <<< // r4 : UInt8 = 1
 
 Bit shifting can be used to encode and decode values within other data types:
 
 .. testcode:: bitwiseShiftOperators
 
     --> let pink: UInt32 = 0xCC6699
-    <-- // pink : UInt32 = 13395609
+    <<< // pink : UInt32 = 13395609
     --> let redComponent = (pink & 0xFF0000) >> 16     // redComponent is 0xCC, or 204
-    <-- // redComponent : UInt32 = 204
+    <<< // redComponent : UInt32 = 204
     --> let greenComponent = (pink & 0x00FF00) >> 8    // greenComponent is 0x66, or 102
-    <-- // greenComponent : UInt32 = 102
+    <<< // greenComponent : UInt32 = 102
     --> let blueComponent = pink & 0x0000FF            // blueComponent is 0x99, or 153
-    <-- // blueComponent : UInt32 = 153
+    <<< // blueComponent : UInt32 = 153
 
 This example uses a ``UInt32`` constant called ``pink`` to store a
 Cascading Style Sheets color value for the color pink.
@@ -924,7 +907,7 @@ an error is thrown:
 .. testcode:: overflowOperatorsWillFailToOverflow
 
     --> var potentialOverflow = Int16.max
-    <-- // potentialOverflow : Int16 = 32767
+    <<< // potentialOverflow : Int16 = 32767
     --> potentialOverflow += 1                  // this will trigger an error
     xxx overflow
 
@@ -959,12 +942,12 @@ using the overflow addition operator (``&+``):
 .. testcode:: overflowOperatorsWillOverflow
 
     --> var willOverflow = UInt8.max
-    <-- // willOverflow : UInt8 = 255
-    /// willOverflow equals 255, which is the largest value a UInt8 can hold
+    <<< // willOverflow : UInt8 = 255
+    /-> willOverflow equals \(willOverflow), which is the largest value a UInt8 can hold
+    <-/ willOverflow equals 255, which is the largest value a UInt8 can hold
     --> willOverflow = willOverflow &+ 1
-    >>> println("willOverflow is now \(willOverflow)")
-    <<< willOverflow is now 0
-    /// willOverflow is now equal to 0
+    /-> willOverflow is now equal to \(willOverflow)
+    <-/ willOverflow is now equal to 0
 
 Here, the variable ``willOverflow`` is initialized with the largest value a ``UInt8`` can hold
 (``255``, or ``11111111`` in binary).
@@ -1000,12 +983,12 @@ Here's how that looks in Swift code:
 .. testcode:: overflowOperatorsWillUnderflow
 
     --> var willUnderflow = UInt8.min
-    <-- // willUnderflow : UInt8 = 0
-    /// willUnderflow equals 0, which is the smallest value a UInt8 can hold
+    <<< // willUnderflow : UInt8 = 0
+    /-> willUnderflow equals \(willUnderflow), which is the smallest value a UInt8 can hold
+    <-/ willUnderflow equals 0, which is the smallest value a UInt8 can hold
     --> willUnderflow = willUnderflow &- 1
-    >>> println("willUnderflow is now \(willUnderflow)")
-    <<< willUnderflow is now 255
-    /// willOverflow is now equal to 255
+    /-> willUnderflow is now equal to \(willUnderflow)
+    <-/ willUnderflow is now equal to 255
 
 A similar underflow happens for signed integers.
 As described under :ref:`Operators_BitwiseLeftAndRightShifts`,
@@ -1026,12 +1009,12 @@ Here's the same thing in Swift code:
 .. testcode:: overflowOperatorsWillUnderflow
 
     --> var signedUnderflow = Int8.min
-    <-- // signedUnderflow : Int8 = -128
-    /// signedUnderflow equals -128, which is the smallest value an Int8 can hold
+    <<< // signedUnderflow : Int8 = -128
+    /-> signedUnderflow equals \(signedUnderflow), which is the smallest value an Int8 can hold
+    <-/ signedUnderflow equals -128, which is the smallest value an Int8 can hold
     --> signedUnderflow = signedUnderflow &- 1
-    >>> println("signedUnderflow is now \(signedUnderflow)")
-    <<< signedUnderflow is now 127
-    /// signedUnderflow is now equal to 127
+    /-> signedUnderflow is now equal to \(signedUnderflow)
+    <-/ signedUnderflow is now equal to 127
 
 The end result of the overflow and underflow behavior described above is that for both signed and unsigned integers,
 overflow always wraps around from the largest valid integer value back to the smallest,
@@ -1049,7 +1032,7 @@ will cause an error:
 .. testcode:: overflowOperatorsDivZeroError
 
     --> let x = 1
-    <-- // x : Int = 1
+    <<< // x : Int = 1
     --> let y = x / 0
     xxx division by zero
     /// this causes an error
@@ -1060,10 +1043,11 @@ return a value of zero if you divide by zero:
 .. testcode:: overflowOperatorsAllowedDivZero
 
     --> let x = 1
-    <-- // x : Int = 1
+    <<< // x : Int = 1
     --> let y = x &/ 0
-    <-- // y : Int = 0
-    /// y is equal to 0
+    <<< // y : Int = 0
+    /-> y is equal to \(y)
+    <-/ y is equal to 0
 
 .. NOTE: currently, this testcode block must be the last in the overflowOperators group,
    as otherwise the stack trace crash from the division-by-zero will mean that
@@ -1096,11 +1080,11 @@ It can be read as “not ``a``”, as seen in the following example:
 .. testcode:: logicalOperators
 
     --> let allowedEntry = false
-    <-- // allowedEntry : Bool = false
+    <<< // allowedEntry : Bool = false
     --> if !allowedEntry {
             println("ACCESS DENIED")
         }
-    <// ACCESS DENIED
+    <-- ACCESS DENIED
 
 The phrase ``if !allowedEntry`` can be read as “if not allowed entry”.
 The subsequent line is only executed if “not allowed entry” is true,
@@ -1132,15 +1116,15 @@ and only allows access if both values are ``true``:
 .. testcode:: logicalOperators
 
     --> let enteredDoorCode = true
-    <-- // enteredDoorCode : Bool = true
+    <<< // enteredDoorCode : Bool = true
     --> let passedRetinaScan = false
-    <-- // passedRetinaScan : Bool = false
+    <<< // passedRetinaScan : Bool = false
     --> if enteredDoorCode && passedRetinaScan {
             println("Welcome!")
         } else {
             println("ACCESS DENIED")
         }
-    <// ACCESS DENIED
+    <-- ACCESS DENIED
 
 .. _Operators_LogicalOROperator:
 
@@ -1163,15 +1147,15 @@ For example:
 .. testcode:: logicalOperators
 
     --> let hasDoorKey = false
-    <-- // hasDoorKey : Bool = false
+    <<< // hasDoorKey : Bool = false
     --> let knowsOverridePassword = true
-    <-- // knowsOverridePassword : Bool = true
+    <<< // knowsOverridePassword : Bool = true
     --> if hasDoorKey || knowsOverridePassword {
             println("Welcome!")
         } else {
             println("ACCESS DENIED")
         }
-    <// Welcome!
+    <-- Welcome!
 
 In this example,
 the first ``Bool`` value (``hasDoorKey``) is ``false``,
@@ -1194,7 +1178,7 @@ You can combine multiple logical operators to create longer compound expressions
         } else {
             println("ACCESS DENIED")
         }
-    <// Welcome!
+    <-- Welcome!
 
 This example uses multiple ``&&`` and ``||`` operators to create a longer compound expression.
 However, the ``&&`` and ``||`` operators still only operate on two values,
@@ -1229,8 +1213,9 @@ Why does the following expression equal ``4``?
 .. testcode:: evaluationOrder
 
     --> 2 + 3 * 4 % 5
-    <-- // r0 : Int = 4
-    /// this equals 4
+    <<< // r0 : Int = 4
+    /-> this equals \(2 + 3 * 4 % 5)
+    <-/ this equals 4
 
 Taken strictly from left to right, you might expect this to read as follows:
 
@@ -1269,21 +1254,21 @@ starting from their left:
 .. testcode:: evaluationOrder
 
     --> 2 + ((3 * 4) % 5)
-    <-- // r1 : Int = 4
+    <<< // r1 : Int = 4
 
 ``(3 * 4)`` is ``12``, so this is equivalent to:
 
 .. testcode:: evaluationOrder
 
     --> 2 + (12 % 5)
-    <-- // r2 : Int = 4
+    <<< // r2 : Int = 4
 
 ``(12 % 5)`` is ``2``, so this is equivalent to:
 
 .. testcode:: evaluationOrder
 
     --> 2 + 2
-    <-- // r3 : Int = 4
+    <<< // r3 : Int = 4
 
 This gives the final answer of ``4``.
 
@@ -1318,7 +1303,7 @@ it is useful to add parentheses around the first part of the compound expression
         } else {
             println("ACCESS DENIED")
         }
-    <// Welcome!
+    <-- Welcome!
 
 The parentheses make it clear that the first two values
 are being considered as part of a separate possible state in the overall logic.

@@ -88,9 +88,9 @@ to track the number of login attempts a user has made:
 .. testcode:: namedValues
 
     --> let maximumNumberOfLoginAttempts = 10
-    <-- // maximumNumberOfLoginAttempts : Int = 10
+    <<< // maximumNumberOfLoginAttempts : Int = 10
     --> var currentLoginAttempt = 0
-    <-- // currentLoginAttempt : Int = 0
+    <<< // currentLoginAttempt : Int = 0
 
 This can be read as:
 
@@ -115,7 +115,7 @@ to be explicit about the kind of values they can store:
 .. testcode:: namedValues
 
     --> let welcomeMessage: String = "Hello"
-    <-- // welcomeMessage : String = "Hello"
+    <<< // welcomeMessage : String = "Hello"
 
 The colon in the declaration means *“…of type…,”*
 so this can be read as:
@@ -132,11 +132,11 @@ including Unicode characters:
 .. testcode:: namedValues
 
     --> let π = 3.14159
-    <-- // π : Double = 3.14159
+    <<< // π : Double = 3.14159
     --> let 你好 = "你好世界"
-    <-- // 你好 : String = "你好世界"
+    <<< // 你好 : String = "你好世界"
     --> let 🐶🐮 = "dogcow"
-    <-- // 🐶🐮 : String = "dogcow"
+    <<< // 🐶🐮 : String = "dogcow"
 
 Constant and variable names cannot contain
 mathematical symbols, arrows, private-use (or invalid) Unicode code points,
@@ -154,17 +154,19 @@ The value of an existing variable can be changed to another value of a compatibl
 .. testcode:: namedValues
 
     --> var friendlyWelcome = "hello, world"
-    <-- // friendlyWelcome : String = "hello, world"
-    /// friendlyWelcome is "hello, world"
+    <<< // friendlyWelcome : String = "hello, world"
+    /-> friendlyWelcome is \"\(friendlyWelcome)\"
+    <-/ friendlyWelcome is "hello, world"
     --> friendlyWelcome = "👋, 🌎"
-    /// friendlyWelcome is now "👋, 🌎"
+    /-> friendlyWelcome is now \"\(friendlyWelcome)\"
+    <-/ friendlyWelcome is now "👋, 🌎"
 
 You can also print the value of a named value by using the ``println`` function:
 
 .. testcode:: namedValues
 
     --> println(friendlyWelcome)
-    <// 👋, 🌎
+    <-- 👋, 🌎
 
 .. NOTE: this is a deliberately simplistic description of what you can do with println().
    It will be expanded later on.
@@ -179,7 +181,7 @@ and attempting to do so will result in an error:
 .. testcode:: namedValues
 
     --> let languageName = "Swift"
-    <-- // languageName : String = "Swift"
+    <<< // languageName : String = "Swift"
     --> languageName = "Swift++"
     /// this will result in an error – languageName cannot be changed
     !!! <REPL Input>:1:14: error: cannot assign to 'let' value 'languageName'
@@ -283,7 +285,7 @@ because you have initialized it with a number that looks like an integer:
 .. testcode:: typeInference
 
     --> let meaningOfLife = 42
-    <-- // meaningOfLife : Int = 42
+    <<< // meaningOfLife : Int = 42
     /// meaningOfLife is inferred to be of type Int
 
 Likewise, if you don't specify a type for a floating-point literal,
@@ -292,7 +294,7 @@ Swift assumes that you want to create a ``Double``:
 .. testcode:: typeInference
 
     --> let pi = 3.14159
-    <-- // pi : Double = 3.14159
+    <<< // pi : Double = 3.14159
     /// pi is inferred to be of type Double
 
 Swift always chooses ``Double`` (rather than ``Float``)
@@ -304,7 +306,7 @@ a type of ``Double`` will be inferred from the context:
 .. testcode:: typeInference
 
     --> let anotherPi = 3 + 0.14159
-    <-- // anotherPi : Double = 3.14159
+    <<< // anotherPi : Double = 3.14159
     /// anotherPi is also inferred to be of type Double
 
 The literal value of ``3`` has no explicit type in and of itself,
@@ -328,13 +330,13 @@ All of these integer literals have a decimal value of ``17``:
 .. testcode:: numberLiterals
 
     --> let decimalInteger = 17
-    <-- // decimalInteger : Int = 17
+    <<< // decimalInteger : Int = 17
     --> let binaryInteger = 0b10001        // 17 in binary notation
-    <-- // binaryInteger : Int = 17
+    <<< // binaryInteger : Int = 17
     --> let octalInteger = 0o21            // 17 in octal notation
-    <-- // octalInteger : Int = 17
+    <<< // octalInteger : Int = 17
     --> let hexadecimalInteger = 0x11      // 17 in hexadecimal notation
-    <-- // hexadecimalInteger : Int = 17
+    <<< // hexadecimalInteger : Int = 17
 
 Floating-point literals can be decimal (with no prefix),
 or hexadecimal (with a ``0x`` prefix).
@@ -360,11 +362,11 @@ All of these floating-point literals have a decimal value of ``12.5``:
 .. testcode:: numberLiterals
 
     --> let decimalDouble = 12.5
-    <-- // decimalDouble : Double = 12.5
+    <<< // decimalDouble : Double = 12.5
     --> let exponentDouble = 1.25e1
-    <-- // exponentDouble : Double = 12.5
+    <<< // exponentDouble : Double = 12.5
     --> let hexadecimalDouble = 0xC.8p0
-    <-- // hexadecimalDouble : Double = 12.5
+    <<< // hexadecimalDouble : Double = 12.5
 
 Numeric literals can contain extra formatting to make them easier to read.
 Both integers and floats can be padded with extra zeroes at the beginning
@@ -374,11 +376,11 @@ Neither type of formatting affects the underlying value of the literal:
 .. testcode:: numberLiterals
 
     --> let paddedDouble = 000123.456
-    <-- // paddedDouble : Double = 123.456
+    <<< // paddedDouble : Double = 123.456
     --> let oneMillion = 1_000_000
-    <-- // oneMillion : Int = 1000000
+    <<< // oneMillion : Int = 1000000
     --> let justOverOneMillion = 1_000_000.000_000_1
-    <-- // justOverOneMillion : Double = 1e+06
+    <<< // justOverOneMillion : Double = 1e+06
 
 In the example above, the value of ``justOverOneMillion`` has been printed as ``1e+06``.
 This is a short-form representation of its underlying ``Double`` value of ``1000000.0000001``.
@@ -412,9 +414,9 @@ The minimum and maximum values of each integer type can be accessed using its ``
 .. testcode:: namedValues
 
     --> let minValue = UInt8.min  // minValue is equal to 0, and is of type UInt8
-    <-- // minValue : UInt8 = 0
+    <<< // minValue : UInt8 = 0
     --> let maxValue = UInt8.max  // maxValue is equal to 255, and is of type UInt8
-    <-- // maxValue : UInt8 = 255
+    <<< // maxValue : UInt8 = 255
 
 The values of these properties are of the appropriate sized number type
 (such as ``UInt8`` in the example above)
@@ -458,11 +460,11 @@ you initialize a new number of the desired type with the existing value:
 .. testcode:: typeConversion
 
     --> let twoThousand: UInt16 = 2_000
-    <-- // twoThousand : UInt16 = 2000
+    <<< // twoThousand : UInt16 = 2000
     --> let one: UInt8 = 1
-    <-- // one : UInt8 = 1
+    <<< // one : UInt8 = 1
     --> let twoThousandAndOne = twoThousand + UInt16(one)
-    <-- // twoThousandAndOne : UInt16 = 2001
+    <<< // twoThousandAndOne : UInt16 = 2001
 
 The constant ``twoThousand`` is of type ``UInt16``,
 whereas the constant ``one`` is of type ``UInt8``.
@@ -498,12 +500,13 @@ Conversions between integer and floating-point numeric types must also be made e
 .. testcode:: typeConversion
 
     --> let three = 3
-    <-- // three : Int = 3
+    <<< // three : Int = 3
     --> let pointOneFourOneFiveNine = 0.14159
-    <-- // pointOneFourOneFiveNine : Double = 0.14159
+    <<< // pointOneFourOneFiveNine : Double = 0.14159
     --> let pi = Double(three) + pointOneFourOneFiveNine
-    <-- // pi : Float64 = 3.14159
-    /// pi equals 3.14159, and is inferred to be of type Double
+    <<< // pi : Float64 = 3.14159
+    /-> pi equals \(pi), and is inferred to be of type Double
+    <-/ pi equals 3.14159, and is inferred to be of type Double
 
 Here, the value of the constant ``three`` is used to create a new value of type ``Double``,
 so that both sides of the addition are of the same type.
@@ -520,8 +523,9 @@ in that an integer type can be initialized with a ``Double`` or ``Float`` value:
 .. testcode:: typeConversion
 
     --> let integerPi = Int(pi)
-    <-- // integerPi : Int = 3
-    /// integerPi equals 3, and is inferred to be of type Int
+    <<< // integerPi : Int = 3
+    /-> integerPi equals \(integerPi), and is inferred to be of type Int
+    <-/ integerPi equals 3, and is inferred to be of type Int
 
 Floating-point values are always rounded towards zero
 when used to initialize a new integer value in this way.
@@ -557,9 +561,9 @@ To represent this fact, Swift provides two Boolean literal values,
 .. testcode:: booleans
 
     --> let orangesAreOrange = true
-    <-- // orangesAreOrange : Bool = true
+    <<< // orangesAreOrange : Bool = true
     --> let turnipsAreDelicious = false
-    <-- // turnipsAreDelicious : Bool = false
+    <<< // turnipsAreDelicious : Bool = false
 
 The types of ``orangesAreOrange`` and ``turnipsAreDelicious``
 have been inferred as ``Bool`` from the fact that
@@ -580,7 +584,7 @@ such as the ``if``-``else`` statement:
         } else {
             println("Eww, turnips are horrible.")
         }
-    <// Eww, turnips are horrible.
+    <-- Eww, turnips are horrible.
 
 Conditional statements such as ``if``-``else`` are covered in more detail in :doc:`ControlFlow`.
 
@@ -590,7 +594,7 @@ The following example will produce an error:
 .. testcode:: booleansNotLogicValue
 
     --> let i = 1
-    <-- // i : Int = 1
+    <<< // i : Int = 1
     --> if i {
             // this example will not compile, and will report an error
         }
@@ -603,7 +607,7 @@ However, it is valid to say:
 .. testcode:: booleansIsLogicValue
 
     --> let i = 1
-    <-- // i : Int = 1
+    <<< // i : Int = 1
     --> if i == 1 {
             // this example will compile successfully
         }
@@ -655,8 +659,9 @@ Here's an example of a tuple:
 .. testcode:: tuples
 
     --> let httpStatus = (404, "Not Found")
-    <-- // httpStatus : (Int, String) = (404, "Not Found")
-    /// httpStatus is of type (Int, String), and equals (404, "Not Found")
+    <<< // httpStatus : (Int, String) = (404, "Not Found")
+    /-> httpStatus is of type (Int, String), and equals (\(httpStatus.0), \"\(httpStatus.1)\")
+    <-/ httpStatus is of type (Int, String), and equals (404, "Not Found")
 
 ``(404, "Not Found")`` is a tuple that describes an *HTTP status code*.
 An HTTP status code is a special value returned by a web server whenever you request a web page.
@@ -678,9 +683,9 @@ You can access the individual element values in a tuple using index numbers star
 .. testcode:: tuples
 
     --> println("The status code is \(httpStatus.0)")
-    <// The status code is 404
+    <-- The status code is 404
     --> println("The status message is \(httpStatus.1)")
-    <// The status message is Not Found
+    <-- The status message is Not Found
 
 As an alternative,
 you can :newTerm:`decompose` a tuple's contents into separate named values,
@@ -689,11 +694,11 @@ which can then be used as normal:
 .. testcode:: tuples
 
     --> let (statusCode, statusMessage) = httpStatus
-    <-- // (statusCode, statusMessage) : (Int, String) = (404, "Not Found")
+    <<< // (statusCode, statusMessage) : (Int, String) = (404, "Not Found")
     --> println("The status code is \(statusCode)")
-    <// The status code is 404
+    <-- The status code is 404
     --> println("The status message is \(statusMessage)")
-    <// The status message is Not Found
+    <-- The status message is Not Found
 
 Tuples are particularly useful as the return values of functions.
 A function that tries to retrieve a web page might return this ``(Int, String)`` tuple type
@@ -753,9 +758,9 @@ The example below shows how to use ``toInt()`` to try and convert a ``String`` i
 .. testcode:: optionals
 
     --> let possibleNumber = "123"
-    <-- // possibleNumber : String = "123"
+    <<< // possibleNumber : String = "123"
     --> let convertedNumber = possibleNumber.toInt()
-    <-- // convertedNumber : Int? = <unprintable value>
+    <<< // convertedNumber : Int? = <unprintable value>
     /// convertedNumber is inferred to be of type "Int?", or "optional Int"
 
 Because the ``toInt()`` method might fail,
@@ -784,7 +789,7 @@ The exclamation mark effectively says,
         } else {
             println("\(possibleNumber) could not be converted to an integer")
         }
-    <// 123 has an integer value of 123
+    <-- 123 has an integer value of 123
 
 ``if``-``else`` statements are described in more detail in :doc:`ControlFlow`.
 
@@ -821,8 +826,7 @@ The example from above can be can be rewritten to use optional binding:
         } else {
             println("\(possibleNumber) could not be converted to an integer")
         }
-    <<< 123 has an integer value of 123
-    /// this also prints "123 has an integer value of 123"
+    <-- 123 has an integer value of 123
 
 As before, this example uses the ``toInt()`` method from ``String``
 to try and convert ``"123"`` into an ``Int``.

@@ -55,9 +55,9 @@ This makes it easy for the function to be called from elsewhere in your code in 
             return greeting
         }
     --> println(sayHello("Anna"))
-    <// Hello, Anna!
+    <-- Hello, Anna!
     --> println(sayHello("Brian"))
-    <// Hello, Brian!
+    <-- Hello, Brian!
 
 The ``sayHello`` function is called by passing it a ``String`` value in parentheses,
 such as ``sayHello("Anna")``.
@@ -87,7 +87,7 @@ to combine the message creation and the return statement into one line:
             return "Hello again, " + personName + "!"
         }
     --> println(sayHelloAgain("Anna"))
-    <// Hello again, Anna!
+    <-- Hello again, Anna!
 
 .. admonition:: Experiment
 
@@ -131,7 +131,7 @@ and works out how many elements the range contains:
             return endIndex - startIndex
         }
     --> println(halfOpenRangeLength(1, 10))
-    <// 9
+    <-- 9
 
 .. _Functions_TuplesAsInputParameters:
 
@@ -151,10 +151,9 @@ For example, the range function above can be rewritten to take a tuple of two ``
             return range.1 - range.0
         }
     --> let someRange = (1, 10)
-    <-- // someRange : (Int, Int) = (1, 10)
+    <<< // someRange : (Int, Int) = (1, 10)
     --> println(halfOpenRangeLengthForRange(someRange))
-    <<< 9
-    /// this also prints "9"
+    <-- 9
 
 Note that this function takes *one* input parameter, not two.
 Its single input parameter is a tuple containing two ``Int`` values.
@@ -207,11 +206,11 @@ and a value of ``.None`` in its second value to indicate that ``splitter`` was n
 .. testcode:: functionParameters
 
     --> let helloWorld = splitOnFirst("hello world", ' ')
-    <-- // helloWorld : (String, String?) = ("hello", <unprintable value>)
+    <<< // helloWorld : (String, String?) = ("hello", <unprintable value>)
     --> if let secondPart = helloWorld.1 {
             println("The text from after the splitter is '\(secondPart)'")
         }
-    <// The text from after the splitter is 'world'
+    <-- The text from after the splitter is 'world'
 
 Alternatively, you can decompose the tuple into multiple named values
 as part of the function return value assignment:
@@ -219,12 +218,11 @@ as part of the function return value assignment:
 .. testcode:: functionParameters
 
     --> let (first, possibleSecond) = splitOnFirst("hello world", ' ')
-    <-- // (first, possibleSecond) : (String, String?) = ("hello", <unprintable value>)
+    <<< // (first, possibleSecond) : (String, String?) = ("hello", <unprintable value>)
     --> if let second = possibleSecond {
             println("The text from after the splitter is '\(second)'")
         }
-    <<< The text from after the splitter is 'world'
-    /// this also prints "The text from after the splitter is 'world'"
+    <-- The text from after the splitter is 'world'
 
 This example sets two constants called ``first`` and ``possibleSecond``
 to equal the two output values stored in the ``splitOnFirst()`` function's
@@ -255,8 +253,9 @@ and also enables values to be passed in a different order to the original functi
     --> let containsASpace = containsCharacter(
             characterToFind: ' ',
             stringToSearch: "This will return true")
-    <-- // containsASpace : Bool = true
-    /// containsASpace equals true, because stringToSearch contains a space
+    <<< // containsASpace : Bool = true
+    /-> containsASpace equals \(containsASpace), because stringToSearch contains a space
+    <-/ containsASpace equals true, because stringToSearch contains a space
 
 Here, the parameter values are passed in a different order when the function is actually called.
 Because they are named,
@@ -278,8 +277,9 @@ the passed parameters are assumed to be in the order they were originally declar
 .. testcode:: functionParameters
 
     --> let containsAHyphen = containsCharacter("This will return false", '-')
-    <-- // containsAHyphen : Bool = false
-    /// containsAHyphen equals false, because the string does not contain a hyphen
+    <<< // containsAHyphen : Bool = false
+    /-> containsAHyphen equals \(containsAHyphen), because the string does not contain a hyphen
+    <-/ containsAHyphen equals false, because the string does not contain a hyphen
 
 .. _Functions_DefaultParameterValues:
 
@@ -296,11 +296,13 @@ it can be omitted when calling the function:
             return string1 + joiner + string2
         }
     --> joinTwoStrings("hello", "world", ":")
-    <-- // r1 : String = "hello:world"
-    /// returns "hello:world"
+    <<< // r1 : String = "hello:world"
+    /-> returns \"\(r1)\"
+    <-/ returns "hello:world"
     --> joinTwoStrings("hello", "world")
-    <-- // r2 : String = "hello world"
-    /// returns "hello world"
+    <<< // r2 : String = "hello world"
+    /-> returns \"\(r2)\"
+    <-/ returns "hello world"
 
 This function joins two strings together.
 If a value for ``joiner`` is provided,
@@ -321,8 +323,9 @@ The ``joinTwoStrings`` function could have been written with ``joiner`` as the s
             return string1 + joiner + string2
         }
     --> joinTwoMoreStrings("hello", ":", "world")
-    <-- // r3 : String = "hello:world"
-    /// this also returns "hello:world"
+    <<< // r3 : String = "hello:world"
+    /-> this also returns \"\(r3)\"
+    <-/ this also returns "hello:world"
 
 .. TODO: the first line of this example is too long,
    and needs to be wrapped in line with the Style Guide
@@ -353,8 +356,9 @@ This problem can be avoided by naming the values when you call the function:
 .. testcode:: functionParameters
 
     --> joinTwoMoreStrings(string1: "hello", string2: "world")
-    <-- // r4 : String = "hello world"
-    /// returns "hello world"
+    <<< // r4 : String = "hello world"
+    /-> returns \"\(r4)\"
+    <-/ returns "hello world"
 
 This tells Swift which parameters you want
 the values of "hello" and "world" to be used for,
@@ -385,7 +389,7 @@ which always returns the same ``String`` message whenever it is called:
             return "hello, world"
         }
     --> println(sayHelloWorld())
-    <// hello, world
+    <-- hello, world
 
 The function declaration still needs parentheses after the function's name,
 even though it does not take any parameters.
@@ -402,7 +406,7 @@ which prints its own ``String`` value rather than returning it:
             println("Goodbye, \(personName) 👋")
         }
     --> waveGoodbye("Dave")
-    <// Goodbye, Dave 👋
+    <-- Goodbye, Dave 👋
 
 Because it does not need to return a value,
 the function's declaration does not include the return operator (``->``)
@@ -431,7 +435,7 @@ The return value of a function can be ignored when it is called:
     --> printAndCount("hello, world")
     <<< hello, world
     /// prints "hello, world" and returns a value of 12
-    <-- // r5 : Int = 12
+    <<< // r5 : Int = 12
     --> printWithoutCounting("hello, world")
     <<< hello, world
     /// prints "hello, world" but does not return a value
@@ -487,12 +491,13 @@ Variable parameters are declared by prefixing the parameter name with the keywor
             return string
         }
     --> let originalString = "hello"
-    <-- // originalString : String = "hello"
+    <<< // originalString : String = "hello"
     --> let paddedString = alignRight(originalString, 10, '-')
-    <-- // paddedString : String = "-----hello"
-    /// paddedString is equal to "-----hello"
-    --> println("The original string is still '\(originalString)'")
-    <// The original string is still 'hello'
+    <<< // paddedString : String = "-----hello"
+    /-> paddedString is equal to \"\(paddedString)\"
+    <-/ paddedString is equal to "-----hello"
+    /-> originalString is still equal to \"\(originalString)\"
+    <-/ originalString is still equal to "hello"
 
 This example declares a new function called ``alignRight``,
 which aligns an input string to the right-hand edge of a longer output string.
@@ -540,11 +545,13 @@ This example calculates the :newTerm:`arithmetic mean`
             return total / Double(numbers.count)
         }
     --> arithmeticMean(1, 2, 3, 4, 5)
-    <-- // r6 : Double = 3.0
-    /// returns 3.0, which is the arithmetic mean of these five numbers
+    <<< // r6 : Double = 3.0
+    /-> returns \(r6), which is the arithmetic mean of these five numbers
+    <-/ returns 3.0, which is the arithmetic mean of these five numbers
     --> arithmeticMean(3, 8, 19)
-    <-- // r7 : Double = 10.0
-    /// returns 10.0, which is the arithmetic mean of these three numbers
+    <<< // r7 : Double = 10.0
+    /-> returns \(r7), which is the arithmetic mean of these three numbers
+    <-/ returns 10.0, which is the arithmetic mean of these three numbers
 
 As shown in this example,
 a variadic parameter can be used with the ``for``-``in`` statement
@@ -617,16 +624,18 @@ by a colon:
 .. testcode:: selectorStyle
 
     --> joinString("hello", toString: "world", withJoiner: ":")
-    <-- // r0 : String = "hello:world"
-    /// returns "hello:world"
+    <<< // r0 : String = "hello:world"
+    /-> returns \"\(r0)\"
+    <-/ returns "hello:world"
 
 As before, any parameters with default values can be excluded when the function is called:
 
 .. testcode:: selectorStyle
 
     --> joinString("hello", toString: "world")
-    <-- // r1 : String = "hello world"
-    /// returns "hello world"
+    <<< // r1 : String = "hello world"
+    /-> returns \"\(r1)\"
+    <-/ returns "hello world"
 
 With the exception of the first selector part,
 the selector parts may be provided in any order:
@@ -634,8 +643,9 @@ the selector parts may be provided in any order:
 .. testcode:: selectorStyle
 
     --> joinString("hello", withJoiner: "-", toString: "world")
-    <-- // r2 : String = "hello-world"
-    /// returns "hello-world"
+    <<< // r2 : String = "hello-world"
+    /-> returns \"\(r2)\"
+    <-/ returns "hello-world"
 
 .. _Functions_AutomaticParameterNames:
 
@@ -660,21 +670,13 @@ Default values are still allowed:
             return output
         }
     --> print(columnize("abc"))
-    <<< a
-    <<< b
-    <<< c
-    /// prints:
-    /// a
-    /// b
-    /// c
+    <-/ a
+    <-/ b
+    <-/ c
     --> print(columnize("abc", backwards: true))
-    <<< c
-    <<< b
-    <<< a
-    /// prints:
-    /// c
-    /// b
-    /// a
+    <-/ c
+    <-/ b
+    <-/ a
 
 This example takes an input string,
 and prints each of its characters on a separate line in a column.

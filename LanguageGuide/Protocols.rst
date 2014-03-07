@@ -35,7 +35,7 @@ Here's an example:
             }
         }
     --> var ironMan = Person(withName: "Robert Downey", suffix: "Jr.")
-    <-- // ironMan : Person = <Person instance>
+    <<< // ironMan : Person = <Person instance>
     --> println("\(ironMan.name)'s full name is \(ironMan.fullName)")
     <<< Robert Downey's full name is Robert Downey Jr.
     --> class Ship : FullyNamed {
@@ -50,7 +50,7 @@ Here's an example:
             }
         }
     --> var starship = Ship(withName: "Enterprise", prefix: "USS")
-    <-- // starship : Ship = <Ship instance>
+    <<< // starship : Ship = <Ship instance>
 
 Declaring a Protocol
 --------------------
