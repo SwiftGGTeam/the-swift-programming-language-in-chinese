@@ -32,28 +32,36 @@
 Custom Types
 ============
 
-Swift provides two different ways to define flexible, reusable constructs
-to use as the building blocks of your code.
-These are known as :newTerm:`classes` and :newTerm:`structures`.
+Enumerations, as introduced in the previous chapter,
+give a way to define your own custom types to work with lists of values.
+Enumerations are particularly suited to representing a fixed set of values of a similar type.
+
+Swift provides two additional ways to define custom data types.
+These are known as :newTerm:`classes` and :newTerm:`structures`,
+and can be used to create general-purpose, flexible constructs
+to use as the building blocks of your program's code.
 
 Classes and structures have many things in common in Swift.
 Both can:
 
 * declare :newTerm:`properties` to store values
+  (as described in :doc:`Properties`)
 * define :newTerm:`methods` to provide functionality
+  (as described in :doc:`Methods`)
 * define :newTerm:`initializers` to set up their initial state
-* conform to :newTerm:`protocols` to provide standard functionality of a certain type, and
+  (as described in :doc:`InitializationAndInheritance`)
 * be :newTerm:`extended` to expand their functionality beyond a default implementation
+  (as described in :doc:`Extensions`)
+* conform to :newTerm:`protocols` to provide standard functionality of a certain type, and
+  (as described in :doc:`Protocols`)
 
-Protocols are covered in the :doc:`Protocols` chapter, and extensions are covered in the :doc:`Extensions` chapter.
+In addition, classes have several capabilities that structures and enumerations do not:
 
-In addition, classes have several capabilities that structures do not:
-
-* :newTerm:`inheritance`, which enables one class to inherit the characteristics of another;
-* :newTerm:`deinitializers`, which enable an instance of a class to clean up after itself; and
+* :newTerm:`inheritance`, which enables one class to inherit the characteristics of another
+* :newTerm:`deinitializers`, which enable an instance of a class to clean up after itself
 * :newTerm:`type casting`, which enables you to check and interpret the type of a class instance at runtime
 
-All of these capabilities are described in more detail below.
+All of these additional capabilities are described in :doc:`InitializationAndInheritance`.
 
 .. _ClassesAndStructures_DefiningClassesAndStructures:
 
@@ -62,7 +70,7 @@ Defining Classes and Structures
 
 Unlike other programming languages,
 Swift does not require you to create separate interface and implementation files
-for your classes and structures.
+for your custom types.
 In Swift, you define a class or a structure in a single file,
 and the external interface to that class or structure is
 automatically made available for other code to use.
@@ -80,7 +88,7 @@ Classes are introduced by the ``class`` keyword,
 and structures are introduced by the ``struct`` keyword.
 Both place their entire definition within a pair of braces:
 
-.. testcode:: classesAndStructures
+.. testcode:: customTypes
 
     --> class SomeClass {
             // class definition goes here
@@ -89,44 +97,41 @@ Both place their entire definition within a pair of braces:
             // structure definition goes here
         }
 
-Whenever you define a new class or structure,
-you are effectively defining a brand new Swift type.
-Types should be given ``UpperCamelCase`` names
-(such as ``SomeClass`` and ``SomeStructure`` here),
-to match the capitalization of standard Swift types
-(such as ``String``, ``Int``, and ``Bool``).
-Named values, functions, and methods should always be given
-``lowerCamelCase`` names
-(such as ``allowedEntry`` and ``contentHeight``)
-to differentiate them from type names.
+.. note::
 
-.. _ClassesAndStructures_Properties:
+    Whenever you define a new class or structure,
+    you are effectively defining a brand new Swift type.
+    Types should be given ``UpperCamelCase`` names
+    (such as ``SomeClass`` and ``SomeStructure`` here),
+    to match the capitalization of standard Swift types
+    (such as ``String``, ``Int``, and ``Bool``).
+    Named values, functions, and methods should always be given
+    ``lowerCamelCase`` names
+    (such as ``allowedEntry`` and ``contentHeight``)
+    to differentiate them from type names.
 
-Properties
-----------
+Here's an example of a structure definition and a class definition:
 
-.. HACK: this is currently duplicated in Properties.
-
-Classes and structures can both declare :newTerm:`properties`.
-Properties are named values that are bundled up and stored
-as part of the class or structure:
-
-.. testcode:: classesAndStructures
+.. testcode:: customTypes
 
     --> struct Size {
-            var width = 0.0, height = 0.0
+            var width = 0.0
+            var height = 0.0
         }
     --> class Rectangle {
             var size = Size()
         }
 
 The example above defines a new structure called ``Size``,
-with two variable properties called ``width`` and ``height``.
-These properties are inferred to be of type ``Double``
+with two :newTerm:`variable stored properties` called ``width`` and ``height``.
+Stored properties are named values that are bundled up and stored
+as part of the class or structure,
+and are described in detail in :doc:`Properties`.
+These two properties are inferred to be of type ``Double``
 by setting them to an initial floating-point value of ``0.0``.
 
 The example also defines a new class called ``Rectangle``,
-which has a variable property called ``size``.
+which has a variable stored property called ``size``.
 This property is initialized with a new ``Size`` structure instance,
 which infers a property type of ``Size``.
 
@@ -136,13 +141,16 @@ Class and Structure Instances
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The ``Size`` structure definition, and the ``Rectangle`` class definition,
-only describe what a generic ``Size`` or ``Rectangle`` will look like.
+only describe what a ``Size`` or ``Rectangle`` will look like.
 They do not in themselves describe a specific size or rectangle.
 To do that, you need to create an :newTerm:`instance` of the class or structure.
 
+.. QUESTION: this isn't strictly true.
+   You could argue that the Size structure definition describes a size of (0, 0).
+
 The syntax for creating instances is very similar for both structures and classes:
 
-.. testcode:: classesAndStructures
+.. testcode:: customTypes
 
     --> let someSize = Size()
     <<< // someSize : Size = Size(0.0, 0.0)
@@ -150,16 +158,16 @@ The syntax for creating instances is very similar for both structures and classe
     <<< // someRectangle : Rectangle = <Rectangle instance>
 
 Structures and classes both use :newTerm:`initializer syntax` when creating new instances.
-The simplest form of initializer syntax uses the type name of the class or structure,
-followed by empty parentheses ``()``.
+The simplest form of initializer syntax uses the type name of the class or structure
+followed by empty parentheses, such as ``Size()`` or ``Rectangle()``.
 This creates a new instance of the class or structure,
 with any properties initialized to their default values.
 In the example above,
 the ``width`` and ``height`` values of the ``Size`` structure instance
 have been automatically initialized to ``0.0``,
 which was the default value provided by the ``Size`` structure's definition.
-
-Class and structure initialization is described in more detail in :ref:`ClassesAndStructures_Initialization`.
+(Class and structure initialization is described in more detail
+in :doc:`InitializationAndInheritance`.)
 
 .. TODO: add more detail about inferring a variable's type when using initializer syntax.
 .. TODO: note that you can only use the default constructor if you provide default values
@@ -170,7 +178,7 @@ Class and structure initialization is described in more detail in :ref:`ClassesA
 Terminology
 ___________
 
-An instance of a class (such as ``someRectangle`` above)
+An instance of a *class* (such as ``someRectangle`` above)
 is traditionally known as an :newTerm:`object`.
 However, Swift classes and structures are much closer in functionality than in other languages,
 and much of this chapter describes functionality that can apply to
@@ -186,26 +194,23 @@ Accessing Properties
 
 The properties of an instance can be accessed using :newTerm:`dot syntax`:
 
-.. testcode:: classesAndStructures
+.. testcode:: customTypes
 
     --> println("The width of someSize is \(someSize.width)")
     <-- The width of someSize is 0.0
 
 ``someSize.width`` refers to the ``width`` property of ``someSize``.
-Dot syntax can also be used to drill down into sub-properties
+Dot syntax can be used to drill down into sub-properties
 such as the ``width`` property in the ``size`` property of a ``Rectangle``:
 
-.. testcode:: classesAndStructures
+.. testcode:: customTypes
 
     --> println("The width of someRectangle is \(someRectangle.size.width)")
     <-- The width of someRectangle is 0.0
 
-Unlike Objective-C,
-the values of sub-properties can be set directly, regardless of their type.
-In the example below, ``someRectangle.size.width`` is set to a new value of ``2.0``,
-even though it is a sub-property of ``someRectangle.size``:
+Dot syntax can also be used to assign a new value to a variable property:
 
-.. testcode:: classesAndStructures
+.. testcode:: customTypes
 
     --> someRectangle.size.width = 2.0
     --> println("The width of someRectangle is now \(someRectangle.size.width)")
@@ -219,11 +224,11 @@ Memberwise Structure Initializers
 .. HACK: this is currently duplicated in Initialization.
 
 All structures have an automatically-generated :newTerm:`memberwise initializer`,
-which can be used to initialise the member properties of new structure instances.
+which can be used to initialise the properties of new structure instances.
 Initial values for the properties of the new instance
 can be passed to the memberwise initializer by name:
 
-.. testcode:: classesAndStructures
+.. testcode:: customTypes
 
     --> let twoByTwo = Size(width: 2.0, height: 2.0)
     <<< // twoByTwo : Size = Size(2.0, 2.0)
@@ -231,7 +236,7 @@ can be passed to the memberwise initializer by name:
 Initial values can also be provided without names,
 if they are listed in the same order that the properties are declared in the structure's definition:
 
-.. testcode:: classesAndStructures
+.. testcode:: customTypes
 
     --> let fourByThree = Size(4.0, 3.0)
     <<< // fourByThree : Size = Size(4.0, 3.0)
@@ -241,16 +246,20 @@ if they are listed in the same order that the properties are declared in the str
 .. TODO: This whole section needs updating in light of the changes for definite initialization.
    Memberwise initializers will only exist if default values are provided for all properties.
 
+Unlike structures, class instances do not receive a default memberwise initializer.
+(Initializers are described in more detail in :doc:`InitializationAndInheritance`.)
+
 .. _ClassesAndStructures_ValueTypesAndReferenceTypes:
 
 Value Types and Reference Types
 -------------------------------
 
-Classes and structures have many things in common in Swift.
-However, they have one fundamental difference:
+Classes, structures and enumerations have many things in common in Swift.
+All three can work with properties, methods, initializers, extensions, and protocols.
+However, there is one fundamental difference:
 
-* Structures define :newTerm:`value types`
-* Classes define :newTerm:`reference types`
+* Structures and enumerations are :newTerm:`value types`
+* Classes are :newTerm:`reference types`
 
 This difference is very important when deciding how to define the building blocks of your code.
 
@@ -271,17 +280,17 @@ or when it is passed to a function.
 
 You've actually been using value types extensively throughout the previous chapters.
 In fact, all of the basic types in Swift –
-integers, floating-point numbers, Booleans, strings, enumerations, arrays and dictionaries –
+integers, floating-point numbers, Booleans, strings, arrays and dictionaries –
 are value types.
 
-Swift structures are also value types.
-This means that any instances you create from your own structures –
+Swift structures and enumerations are also value types.
+This means that any instances you create –
 and any value types they have as properties –
 will always be copied when they are passed around.
 
 For example, using the ``Size`` structure from above:
 
-.. testcode:: classesAndStructures
+.. testcode:: customTypes
 
     --> let iPhone4 = Size(width: 640.0, height: 960.0)
     <<< // iPhone4 : Size = Size(640.0, 960.0)
@@ -322,15 +331,37 @@ Because they are separate instances,
 setting the height of ``iPhone5`` to ``1136.0``
 doesn't affect the height value stored in ``iPhone4``.
 
+The same behavior applies to enumerations:
+
+.. testcode:: customTypes
+
+    --> enum CompassPoint {
+            case North, South, East, West
+        }
+    --> var currentDirection = CompassPoint.West
+    <<< // currentDirection : CompassPoint = <unprintable value>
+    --> let rememberedDirection = currentDirection
+    <<< // rememberedDirection : CompassPoint = <unprintable value>
+    --> currentDirection = .East
+    --> if rememberedDirection == .West {
+            println("The remembered direction is still .West")
+        }
+    <-- The remembered direction is still .West
+
+When ``rememberedDirection`` is assigned the value of ``currentDirection``,
+it is actually set to a copy of that value.
+Changing the value of ``currentDirection`` thereafter does not affect
+the copy of the original value that was stored in ``rememberedDirection``.
+
 .. TODO: Should I give an example of passing a value type to a function here?
-.. TODO: Note that strings, arrays etc. are not reference types in Swift
 
 .. _ClassesAndStructures_ReferenceTypes:
 
 Reference Types
 ~~~~~~~~~~~~~~~
 
-Unlike value types, a :newTerm:`reference type` is *not* copied when is assigned to a variable or constant,
+Unlike value types, an instance of a :newTerm:`reference type` is *not* copied
+when is assigned to a variable or constant,
 or when it is passed to a function.
 Rather than making a copy, a :newTerm:`reference` to the same existing instance is used instead.
 
@@ -339,7 +370,7 @@ Rather than making a copy, a :newTerm:`reference` to the same existing instance 
 
 Here's an example, using the ``Rectangle`` class defined above:
 
-.. testcode:: classesAndStructures
+.. testcode:: customTypes
 
     --> let rect = Rectangle()
     <<< // rect : Rectangle = <Rectangle instance>
@@ -384,13 +415,15 @@ instead, they both *refer* to a rectangle behind the scenes.
 The ``width`` property of the underlying rectangle is changed,
 not the values of the ``rect`` and ``sameRect`` references to that rectangle.
 
-.. TODO: Surely a rectangle is a good candidate for a structure, not a class…
+.. TODO: Surely a rectangle is a good candidate for a structure, not a class,
+   and indeed I say as much below.
 
 Classes are the only reference types in Swift.
 If you want to create a new type that is passed by reference rather than by value,
 you should define it as a class in your code.
 
-.. TODO: Why would you want to use reference types rather than value types?
+.. QUESTION: This isn't strictly true. Functions are reference types too.
+   Does this matter for the point I'm making here?
 
 .. _ClassesAndStructures_Pointers:
 
@@ -423,13 +456,24 @@ and the value it contains is always a reference to a particular instance of that
 Choosing Between Classes and Structures
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Classes and structures have many things in common.
-However, the fact that structure instances are always passed by value,
-and class instances are always passed by reference,
+Classes and structures have many things in common,
+and both can be used to define custom data types to use as
+the building blocks of your program's code.
+
+However, the fact that structure instances are always passed by *value*,
+and class instances are always passed by *reference*,
 means that they are suited to different kinds of tasks.
 As you consider the data constructs and functionality that you need for a project,
 you will need to decide whether each data construct should be
 defined as a class or as a structure.
+
+.. note::
+
+    Enumerations have many useful features in Swift,
+    but are not really suited to creating general-purpose data types
+    in the same way as classes and structures.
+    Enumerations should only be used when you need the specific capabilities
+    that they offer.
 
 As a general rule, you should only define a new structure when:
 
@@ -461,6 +505,8 @@ not structures.
 .. TODO: talk about "AnyObject",
    and how it can be used as a type for a named value that can hold
    an instance of any object type (including Cocoa classes).
+
+.. QUESTION: what's the deal with tuples and reference types / value types?
 
 .. _Enumerations_NestedTypes:
 
