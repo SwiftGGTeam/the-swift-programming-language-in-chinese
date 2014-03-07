@@ -81,6 +81,25 @@ Inside a closure with no explicit parameter names,
 the parameters are implicitly named ``$0``, ``$1``, ``$2``, and so on.
 These names are valid identifiers within the scope of the closure.
 
+.. TR: How should the grammar change to accomodate using backticks
+	around identifiers that clash with keywords?
+
+	From the release notes on 3/5/14:
+	Values whose names clash with Swift keywords, such as Cocoa methods or
+ 	properties named "class", "protocol", "type", etc., can now be defined and
+ 	accessed by wrapping reserved keywords in backticks to suppress their builtin
+	meaning:
+
+   	let `class` = 0
+   	let `type` = 1
+   	let `protocol` = 2
+   	println(`class`)
+   	println(`type`)
+   	println(`protocol`)
+
+   	func foo(Int) `class`(Int) {}
+   	foo(0, `class`: 1)
+
 .. langref-grammar
 
     identifier ::= id-start id-continue*
