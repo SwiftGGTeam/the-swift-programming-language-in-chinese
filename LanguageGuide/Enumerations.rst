@@ -71,7 +71,7 @@ This makes for highly readable code when working with explicitly-typed enumerati
 .. _Enumerations_ConsideringEnumerationValuesWithASwitchStatement:
 
 Considering Enumeration Values with a Switch Statement
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------------------------------
 
 Enumeration values can be checked with a ``switch`` statement:
 
@@ -88,7 +88,7 @@ Enumeration values can be checked with a ``switch`` statement:
             case .West:
                 println("Where the skies are blue")
         }
-    <<< Watch out for penguins
+    <-- Watch out for penguins
 
 You can read this as:
 
@@ -120,14 +120,14 @@ you can provide a ``default`` case to cover any members that are not addressed e
             default:
                 println("Not a safe place for humans")
         }
-    <<< Mostly harmless
+    <-- Mostly harmless
 
 The full capabilties of ``switch`` statements are covered in more detail in :doc:`ControlFlow`.
 
 .. _Enumerations_AssociatedValues:
 
 Associated Values
-~~~~~~~~~~~~~~~~~
+-----------------
 
 The examples above show how the members of an enumeration are
 a defined (and typed) value in their own right.
@@ -223,7 +223,7 @@ This time, however, the associated values can be extracted as part of the switch
             case .QRCode(var productCode):
                 println("QR code with value of \(productCode).")
         }
-    <<< QR code with value of ABCDEFGHIJKLMNOP.
+    <-- QR code with value of ABCDEFGHIJKLMNOP.
 
 These two calls to the ``println`` function use a special syntax to insert the values of
 ``numberSystem``, ``identifier``, ``check`` and ``productCode``
@@ -243,7 +243,7 @@ when the string is printed by the ``println`` function.
 .. _Enumerations_RawValues:
 
 Raw Values
-~~~~~~~~~~
+----------
 
 The barcode example above shows how members of an enumeration can declare that they store
 associated values of different types.
@@ -295,6 +295,8 @@ The raw value of an enumeration member can be accessed using its ``toRaw`` metho
 
     --> let atomicNumberOfCarbon = ChemicalElement.Carbon.toRaw()
     <<< // atomicNumberOfCarbon : Int = 6
+    /-> atomicNumberOfCarbon is \(atomicNumberOfCarbon)
+    <-/ atomicNumberOfCarbon is 6
 
 The reverse is also true.
 In addition to a ``toRaw`` method,
@@ -306,6 +308,7 @@ The ``fromRaw`` method could be used to find ``ChemicalElement.Nitrogen`` from i
 
     --> var possibleElement = ChemicalElement.fromRaw(7)        // Nitrogen
     <<< // possibleElement : ChemicalElement? = <unprintable value>
+    /// possibleElement is ChemicalElement.Nitrogen
 
 Not all possible ``Int`` values will find a matching chemical element, however.
 Because of this, the ``fromRaw`` method returns an *optional* enumeration member.
@@ -328,7 +331,7 @@ then the returned optional value will equal ``.None``:
         } else {
             println("Not an element I know about")
         }
-    <<< Not an element I know about
+    <-- Not an element I know about
 
 This example uses :ref:`BasicTypes_OptionalBinding`
 to try and access an element with a raw value of ``8``.
@@ -377,7 +380,7 @@ The example below shows all of these capabilities in action for a complex enumer
                         return "\(minutes) minutes"
                     case 60..119:
                         let extra = minutes - 60
-                        return "an hour and \(extra) minutes"
+                        return "1 hour and \(extra) minutes"
                     default:
                         return "more than two hours"
                 }
@@ -389,10 +392,10 @@ The example below shows all of these capabilities in action for a complex enumer
     --> let train = Train()
     <<< // train : Train = <Train instance>
     --> println("The train is \(train.status.description)")
-    <<< The train is on time
+    <-- The train is on time
     --> train.status = .Delayed(96)
     --> println("The train is now \(train.status.description)")
-    <<< The train is now delayed by an hour and 36 minutes
+    <-- The train is now delayed by 1 hour and 36 minutes
 
 This example defines an enumeration called ``TrainStatus``,
 to encapsulate the current live progress of a train during its journey.
@@ -498,7 +501,7 @@ Types can be nested to as many levels as are required:
     --> let theAceOfSpades = BlackjackCard(.Ace, .Spades)
     <<< // theAceOfSpades : BlackjackCard = BlackjackCard(<unprintable value>, <unprintable value>)
     --> println("Blackjack value: \(theAceOfSpades.description)")
-    <<< Blackjack value: the Ace of ♠ is worth 1 or 11
+    <-- Blackjack value: the Ace of ♠ is worth 1 or 11
 
 This example defines a playing card for use in the game of Blackjack.
 One notable feature of Blackjack is that the Ace card has a value of
@@ -547,15 +550,23 @@ their type can still be inferred from the context,
 and so the initialization of this instance is able to refer to the enumeration members
 by their member names (``.Ace`` and ``.Spades``) alone.
 
-Nested types can also be used outside of their definition context,
-by prefixing their name with the name of the type they are nested within:
+.. _Enumerations_ReferringToNestedTypes:
+
+Referring to Nested Types
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+A nested type can be used outside of its definition context,
+by prefixing its name with the name of the type it is nested within:
 
 .. testcode:: nestedTypes
 
     --> let heartsSymbol = BlackjackCard.Suit.Hearts.toRaw()
     <<< // heartsSymbol : UnicodeScalar = '♡'
+    /-> heartsSymbol is '\(heartsSymbol)'
+    <-/ heartsSymbol is '♡'
 
-This enables the names of ``Suit``, ``Rank`` and ``Values`` to be kept deliberately short,
+For the example above, 
+this enables the names of ``Suit``, ``Rank`` and ``Values`` to be kept deliberately short,
 because their names are naturally qualified by the context in which they are defined.
 
 .. QUESTION: I'm using the word 'type' extensively in this section.
