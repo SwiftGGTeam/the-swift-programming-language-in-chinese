@@ -82,12 +82,12 @@ Both place their entire definition within a pair of braces:
 
 .. testcode:: classesAndStructures
 
-    (swift) class SomeClass {
-        /* class definition */
-    }
-    (swift) struct SomeStructure {
-        /* structure definition */
-    }
+    --> class SomeClass {
+            // class definition goes here
+        }
+    --> struct SomeStructure {
+            // structure definition goes here
+        }
 
 Whenever you define a new class or structure,
 you are effectively defining a brand new Swift type.
@@ -111,12 +111,12 @@ as part of the class or structure:
 
 .. testcode:: classesAndStructures
 
-    (swift) struct Size {
-        var width = 0.0, height = 0.0
-    }
-    (swift) class Rectangle {
-        var size = Size()
-    }
+    --> struct Size {
+            var width = 0.0, height = 0.0
+        }
+    --> class Rectangle {
+            var size = Size()
+        }
 
 The example above defines a new structure called ``Size``,
 with two variable properties called ``width`` and ``height``.
@@ -142,10 +142,10 @@ The syntax for creating instances is very similar for both structures and classe
 
 .. testcode:: classesAndStructures
 
-    (swift) let someSize = Size()
-    // someSize : Size = Size(0.0, 0.0)
-    (swift) let someRectangle = Rectangle()
-    // someRectangle : Rectangle = <Rectangle instance>
+    --> let someSize = Size()
+    <<< // someSize : Size = Size(0.0, 0.0)
+    --> let someRectangle = Rectangle()
+    <<< // someRectangle : Rectangle = <Rectangle instance>
 
 Structures and classes both use :newTerm:`initializer syntax` when creating new instances.
 The simplest form of initializer syntax uses the type name of the class or structure,
@@ -184,8 +184,8 @@ The properties of an instance can be accessed using :newTerm:`dot syntax`:
 
 .. testcode:: classesAndStructures
 
-    (swift) println("The width of someSize is \(someSize.width)")
-    >>> The width of someSize is 0.0
+    --> println("The width of someSize is \(someSize.width)")
+    <-- The width of someSize is 0.0
 
 ``someSize.width`` refers to the ``width`` property of ``someSize``.
 Dot syntax can also be used to drill down into sub-properties
@@ -193,8 +193,8 @@ such as the ``width`` property in the ``size`` property of a ``Rectangle``:
 
 .. testcode:: classesAndStructures
 
-    (swift) println("The width of someRectangle is \(someRectangle.size.width)")
-    >>> The width of someRectangle is 0.0
+    --> println("The width of someRectangle is \(someRectangle.size.width)")
+    <-- The width of someRectangle is 0.0
 
 Unlike Objective-C,
 the values of sub-properties can be set directly, regardless of their type.
@@ -203,9 +203,9 @@ even though it is a sub-property of ``someRectangle.size``:
 
 .. testcode:: classesAndStructures
 
-    (swift) someRectangle.size.width = 2.0
-    (swift) println("The width of someRectangle is now \(someRectangle.size.width)")
-    >>> The width of someRectangle is now 2.0
+    --> someRectangle.size.width = 2.0
+    --> println("The width of someRectangle is now \(someRectangle.size.width)")
+    <-- The width of someRectangle is now 2.0
 
 .. _ClassesAndStructures_MemberwiseStructureInitializers:
 
@@ -219,16 +219,16 @@ can be passed to the memberwise initializer by name:
 
 .. testcode:: classesAndStructures
 
-    (swift) let twoByTwo = Size(width: 2.0, height: 2.0)
-    // twoByTwo : Size = Size(2.0, 2.0)
+    --> let twoByTwo = Size(width: 2.0, height: 2.0)
+    <<< // twoByTwo : Size = Size(2.0, 2.0)
 
 Initial values can also be provided without names,
 if they are listed in the same order that the properties are declared in the structure's definition:
 
 .. testcode:: classesAndStructures
 
-    (swift) let fourByThree = Size(4.0, 3.0)
-    // fourByThree : Size = Size(4.0, 3.0)
+    --> let fourByThree = Size(4.0, 3.0)
+    <<< // fourByThree : Size = Size(4.0, 3.0)
 
 .. TODO: Include a justifiable reason for why classes do not provide a memberwise initializer.
 .. TODO: Describe the creation of custom initializers.
@@ -275,27 +275,27 @@ Here's an example of ``willSet`` and ``didSet`` in action:
 
 .. testcode:: classesAndStructures
 
-    (swift) class StepCounter {
-        var previousTotalSteps = 0
-        var totalSteps: Int = 0 {
-            willSet(newStepCount) {
-                previousTotalSteps = totalSteps
-            }
-            didSet {
-                if totalSteps > previousTotalSteps  {
-                    println("Added \(totalSteps - previousTotalSteps) steps")
+    --> class StepCounter {
+            var previousTotalSteps = 0
+            var totalSteps: Int = 0 {
+                willSet(newStepCount) {
+                    previousTotalSteps = totalSteps
+                }
+                didSet {
+                    if totalSteps > previousTotalSteps  {
+                        println("Added \(totalSteps - previousTotalSteps) steps")
+                    }
                 }
             }
         }
-    }
-    (swift) let stepCounter = StepCounter()
-    // stepCounter : StepCounter = <StepCounter instance>
-    (swift) stepCounter.totalSteps = 200
-    >>> Added 200 steps
-    (swift) stepCounter.totalSteps = 360
-    >>> Added 160 steps
-    (swift) stepCounter.totalSteps = 896
-    >>> Added 536 steps
+    --> let stepCounter = StepCounter()
+    <<< // stepCounter : StepCounter = <StepCounter instance>
+    --> stepCounter.totalSteps = 200
+    <-- Added 200 steps
+    --> stepCounter.totalSteps = 360
+    <-- Added 160 steps
+    --> stepCounter.totalSteps = 896
+    <-- Added 536 steps
 
 This example defines a new class called ``StepCounter``,
 which keeps track of the total number of steps that a person has taken while walking.
@@ -357,31 +357,31 @@ to retrieve and set other properties and values indirectly.
 
 .. testcode:: classesAndStructures
 
-    (swift) struct Point {
-        var x = 0.0, y = 0.0
-    }
-    (swift) struct Rect {
-        var origin = Point()
-        var size = Size()
-        var center: Point {
-            get {
-                let centerX = origin.x + (size.width / 2)
-                let centerY = origin.y + (size.height / 2)
-                return Point(centerX, centerY)
-            }
-            set(newCenter) {
-                origin.x = newCenter.x - (size.width / 2)
-                origin.y = newCenter.y - (size.height / 2)
+    --> struct Point {
+            var x = 0.0, y = 0.0
+        }
+    --> struct Rect {
+            var origin = Point()
+            var size = Size()
+            var center: Point {
+                get {
+                    let centerX = origin.x + (size.width / 2)
+                    let centerY = origin.y + (size.height / 2)
+                    return Point(centerX, centerY)
+                }
+                set(newCenter) {
+                    origin.x = newCenter.x - (size.width / 2)
+                    origin.y = newCenter.y - (size.height / 2)
+                }
             }
         }
-    }
-    (swift) var square = Rect(origin: Point(0.0, 0.0), size: Size(10.0, 10.0))
-    // square : Rect = Rect(Point(0.0, 0.0), Size(10.0, 10.0))
-    (swift) let initialSquareCenter = square.center
-    // initialSquareCenter : Point = Point(5.0, 5.0)
-    (swift) square.center = Point(x: 15.0, y: 15.0)
-    (swift) println("square origin is now at (\(square.origin.x), \(square.origin.y))")
-    >>> square origin is now at (10.0, 10.0)
+    --> var square = Rect(origin: Point(0.0, 0.0), size: Size(10.0, 10.0))
+    <<< // square : Rect = Rect(Point(0.0, 0.0), Size(10.0, 10.0))
+    --> let initialSquareCenter = square.center
+    <<< // initialSquareCenter : Point = Point(5.0, 5.0)
+    --> square.center = Point(x: 15.0, y: 15.0)
+    --> println("square.origin is now at (\(square.origin.x), \(square.origin.y))")
+    <-- square.origin is now at (10.0, 10.0)
 
 This example uses the previously-defined ``Size`` structure,
 and defines two additional structures for working with geometric shapes:
@@ -430,21 +430,21 @@ which takes advantage of this shorthand notation:
 
 .. testcode:: classesAndStructures
 
-    (swift) struct AlternativeRect {
-        var origin = Point()
-        var size = Size()
-        var center: Point {
-            get {
-                let centerX = origin.x + (size.width / 2)
-                let centerY = origin.y + (size.height / 2)
-                return Point(centerX, centerY)
-            }
-            set {
-                origin.x = value.x - (size.width / 2)
-                origin.y = value.y - (size.height / 2)
+    --> struct AlternativeRect {
+            var origin = Point()
+            var size = Size()
+            var center: Point {
+                get {
+                    let centerX = origin.x + (size.width / 2)
+                    let centerY = origin.y + (size.height / 2)
+                    return Point(centerX, centerY)
+                }
+                set {
+                    origin.x = value.x - (size.width / 2)
+                    origin.y = value.y - (size.height / 2)
+                }
             }
         }
-    }
 
 .. _ClassesAndStructures_ReadOnlyComputedProperties:
 
@@ -457,21 +457,29 @@ define a property that will always return a value,
 and can be accessed via dot syntax,
 but which cannot be set to a different value by users of your class or structure.
 
+.. note::
+
+    Computed properties – including read-only computed properties –
+    are always declared as variable properties with the ``var`` keyword.
+    The ``let`` keyword is only ever used for constant properties,
+    to indicate that their value cannot be changed once it is set
+    as part of instance initialization.
+
 The declaration of a read-only computed property can be simplified
 by removing the ``get`` keyword:
 
 .. testcode:: classesAndStructures
 
-    (swift) struct Cuboid {
-        var width = 0.0, height = 0.0, depth = 0.0
-        var volume: Double {
-            return width * height * depth
+    --> struct Cuboid {
+            var width = 0.0, height = 0.0, depth = 0.0
+            var volume: Double {
+                return width * height * depth
+            }
         }
-    }
-    (swift) let fourByFiveByTwo = Cuboid(4.0, 5.0, 2.0)
-    // fourByFiveByTwo : Cuboid = Cuboid(4.0, 5.0, 2.0)
-    (swift) println("the volume of fourByFiveByTwo is \(fourByFiveByTwo.volume)")
-    >>> the volume of fourByFiveByTwo is 40.0
+    --> let fourByFiveByTwo = Cuboid(4.0, 5.0, 2.0)
+    <<< // fourByFiveByTwo : Cuboid = Cuboid(4.0, 5.0, 2.0)
+    --> println("the volume of fourByFiveByTwo is \(fourByFiveByTwo.volume)")
+    <-- the volume of fourByFiveByTwo is 40.0
 
 This example defines a new structure called ``Cuboid``,
 which represents a 3D rectangular box with ``width``, ``height`` and ``depth`` properties.
@@ -483,20 +491,17 @@ should be used for a particular ``volume`` value.
 Nonetheless, it is useful for a ``Cuboid`` to provide a read-only computed property
 to enable the outside world to discover its current calculated volume.
 
-Read-only computed properties are not the same as constant properties.
-They have some similarities,
-in that neither can have their value set by external users of the class or structure,
-but they differ considerably in how their values are retrieved.
-Constant properties are assigned their own storage,
-and the contents of this storage cannot be changed to a different value
-once it has been set during initialization.
-Read-only computed properties do not have storage assigned to them,
-and can return any value they like at any time.
+.. note::
 
-Computed properties – including read-only computed properties –
-are always declared as variable properties (via the ``var`` introducer).
-The ``let`` introducer is only ever used for constant properties,
-to indicate that their value cannot be changed once it is set as part of instance initialization.
+    Read-only computed properties are not the same as constant properties.
+    They have some similarities,
+    in that neither can have their value set by external users of the class or structure,
+    but they differ considerably in how their values are retrieved.
+    Constant properties are assigned their own storage,
+    and the contents of this storage cannot be changed to a different value
+    once it has been set during initialization.
+    Read-only computed properties do not have storage assigned to them,
+    and can return any value they like at any time.
 
 .. NOTE: getters and setters are also allowed for named values
    that are not associated with a particular class or struct.
@@ -572,15 +577,15 @@ For example, using the ``Size`` structure from above:
 
 .. testcode:: classesAndStructures
 
-    (swift) let iPhone4 = Size(width: 640.0, height: 960.0)
-    // iPhone4 : Size = Size(640.0, 960.0)
-    (swift) var iPhone5 = iPhone4
-    // iPhone5 : Size = Size(640.0, 960.0)
-    (swift) iPhone5.height = 1136.0
-    (swift) println("The iPhone 5 screen is now \(iPhone5.height) pixels high")
-    >>> The iPhone 5 screen is now 1136.0 pixels high
-    (swift) println("The iPhone 4 screen is still \(iPhone4.height) pixels high")
-    >>> The iPhone 4 screen is still 960.0 pixels high
+    --> let iPhone4 = Size(width: 640.0, height: 960.0)
+    <<< // iPhone4 : Size = Size(640.0, 960.0)
+    --> var iPhone5 = iPhone4
+    <<< // iPhone5 : Size = Size(640.0, 960.0)
+    --> iPhone5.height = 1136.0
+    --> println("The iPhone 5 screen is now \(iPhone5.height) pixels high")
+    <-- The iPhone 5 screen is now 1136.0 pixels high
+    --> println("The iPhone 4 screen is still \(iPhone4.height) pixels high")
+    <-- The iPhone 4 screen is still 960.0 pixels high
 
 This example declares a constant called ``iPhone4``,
 and sets it to a ``Size`` instance initialized with
@@ -630,18 +635,18 @@ Here's an example, using the ``Rectangle`` class defined above:
 
 .. testcode:: classesAndStructures
 
-    (swift) let rect = Rectangle()
-    // rect : Rectangle = <Rectangle instance>
-    (swift) rect.size = Size(width: 1.0, height: 1.0)
-    (swift) println("The rectangle's initial width is \(rect.size.width)")
-    >>> The rectangle's initial width is 1.0
-    (swift) let sameRect = rect
-    // sameRect : Rectangle = <Rectangle instance>
-    (swift) sameRect.size.width = 3.0
-    (swift) println("The rectangle's width via sameRect is now \(sameRect.size.width)")
-    >>> The rectangle's width via sameRect is now 3.0
-    (swift) println("The rectangle's width via rect is also \(rect.size.width)")
-    >>> The rectangle's width via rect is also 3.0
+    --> let rect = Rectangle()
+    <<< // rect : Rectangle = <Rectangle instance>
+    --> rect.size = Size(width: 1.0, height: 1.0)
+    --> println("The rectangle's initial width is \(rect.size.width)")
+    <-- The rectangle's initial width is 1.0
+    --> let sameRect = rect
+    <<< // sameRect : Rectangle = <Rectangle instance>
+    --> sameRect.size.width = 3.0
+    --> println("The rectangle's width via sameRect is now \(sameRect.size.width)")
+    <-- The rectangle's width via sameRect is now 3.0
+    --> println("The rectangle's width via rect is also \(rect.size.width)")
+    <-- The rectangle's width via rect is also 3.0
 
 This example declares a new constant called ``rect``,
 and sets it to refer to a new ``Rectangle`` instance.
@@ -747,9 +752,9 @@ to be managed and passed by reference.
 In practice, this means that most custom data constructs should be classes,
 not structures.
 
-.. TODO: what is the "Object" type
-   (as defined in /swift/stdlib/core/Object.swift),
-   and should it be mentioned herein?
+.. TODO: talk about "AnyObject",
+   and how it can be used as a type for a named value that can hold
+   an instance of any object type (including Cocoa classes).
 
 .. _ClassesAndStructures_InstanceMethods:
 
@@ -772,18 +777,18 @@ Here's an example:
 
 .. testcode:: classesAndStructures
 
-    (swift) class Counter {
-        var count: Int = 0
-        func increment() {
-            count++
+    --> class Counter {
+            var count: Int = 0
+            func increment() {
+                count++
+            }
+            func incrementBy(amount: Int) {
+                count += amount
+            }
+            func reset() {
+                count = 0
+            }
         }
-        func incrementBy(amount: Int) {
-            count += amount
-        }
-        func reset() {
-            count = 0
-        }
-    }
 
 This example defines a simple ``Counter`` class,
 which keeps track of the number of times something has happened.
@@ -797,19 +802,19 @@ Instance methods are called using the same dot syntax as properties:
 
 .. testcode:: classesAndStructures
 
-    (swift) let counter = Counter()
-    // counter : Counter = <Counter instance>
-    (swift) println("Initial counter value is \(counter.count)")
-    >>> Initial counter value is 0
-    (swift) counter.increment()
-    (swift) println("Counter value is now \(counter.count)")
-    >>> Counter value is now 1
-    (swift) counter.incrementBy(5)
-    (swift) println("Counter value is now \(counter.count)")
-    >>> Counter value is now 6
-    (swift) counter.reset()
-    (swift) println("Counter value is now \(counter.count)")
-    >>> Counter value is now 0
+    --> let counter = Counter()
+    <<< // counter : Counter = <Counter instance>
+    /-> initial counter value is \(counter.count)
+    <-/ initial counter value is 0
+    --> counter.increment()
+    /-> counter value is now \(counter.count)
+    <-/ counter value is now 1
+    --> counter.incrementBy(5)
+    /-> counter value is now \(counter.count)
+    <-/ counter value is now 6
+    --> counter.reset()
+    /-> counter value is now \(counter.count)
+    <-/ counter value is now 0
 
 .. _ClassesAndStructures_Self:
 
@@ -860,18 +865,18 @@ and an instance property that is also called ``x``:
 
 .. testcode:: self
 
-    (swift) struct Point {
-        var x = 0.0, y = 0.0
-        func isToTheRightOfX(x: Double) -> Bool {
-            return self.x > x
+    --> struct Point {
+            var x = 0.0, y = 0.0
+            func isToTheRightOfX(x: Double) -> Bool {
+                return self.x > x
+            }
         }
-    }
-    (swift) let somePoint = Point(4.0, 5.0)
-    // somePoint : Point = Point(4.0, 5.0)
-    (swift) if somePoint.isToTheRightOfX(1.0) {
-        println("This point is to the right of the line where x == 1.0")
-    }
-    >>> This point is to the right of the line where x == 1.0
+    --> let somePoint = Point(4.0, 5.0)
+    <<< // somePoint : Point = Point(4.0, 5.0)
+    --> if somePoint.isToTheRightOfX(1.0) {
+            println("This point is to the right of the line where x == 1.0")
+        }
+    <-- This point is to the right of the line where x == 1.0
 
 .. _ClassesAndStructures_SelfClasses:
 
@@ -885,17 +890,17 @@ the instance it refers to can be modified as normal:
 
 .. testcode:: selfClasses
 
-    (swift) class BankAccount {
-        var balance = 0.0
-        func depositMoney(amount: Double) {
-            balance += amount
+    --> class BankAccount {
+            var balance = 0.0
+            func depositMoney(amount: Double) {
+                balance += amount
+            }
         }
-    }
-    (swift) let savingsAccount = BankAccount()
-    // savingsAccount : BankAccount = <BankAccount instance>
-    (swift) savingsAccount.depositMoney(100.00)
-    (swift) println("The savings account now contains $\(savingsAccount.balance)")
-    >>> The savings account now contains $100.0
+    --> let savingsAccount = BankAccount()
+    <<< // savingsAccount : BankAccount = <BankAccount instance>
+    --> savingsAccount.depositMoney(100.00)
+    --> println("The savings account now contains $\(savingsAccount.balance)")
+    <-- The savings account now contains $100.0
 
 Here, the ``depositMoney()`` instance method modifies
 the ``balance`` variable property by adding ``amount`` to it.
@@ -922,18 +927,18 @@ the properties of the structure instance:
 
 .. testcode:: selfStructures
 
-    (swift) struct Point {
-        var x = 0.0, y = 0.0
-        mutating func moveBy(deltaX: Double, deltaY: Double) {
-            x += deltaX
-            y += deltaY
+    --> struct Point {
+            var x = 0.0, y = 0.0
+            mutating func moveBy(deltaX: Double, deltaY: Double) {
+                x += deltaX
+                y += deltaY
+            }
         }
-    }
-    (swift) var somePoint = Point(1.0, 1.0)
-    // somePoint : Point = Point(1.0, 1.0)
-    (swift) somePoint.moveBy(2.0, 3.0)
-    (swift) println("The point is now at (\(somePoint.x), \(somePoint.y))")
-    >>> The point is now at (3.0, 4.0)
+    --> var somePoint = Point(1.0, 1.0)
+    <<< // somePoint : Point = Point(1.0, 1.0)
+    --> somePoint.moveBy(2.0, 3.0)
+    --> println("The point is now at (\(somePoint.x), \(somePoint.y))")
+    <-- The point is now at (3.0, 4.0)
 
 The ``Point`` structure above defines a ``moveBy()`` method,
 which moves a ``Point`` instance by a certain amount.
@@ -984,16 +989,16 @@ written using the ``init`` keyword:
 
 .. testcode:: initialization
 
-    (swift) struct Fahrenheit {
-        var temperature: Double
-        init() {
-            temperature = 32.0
+    --> struct Fahrenheit {
+            var temperature: Double
+            init() {
+                temperature = 32.0
+            }
         }
-    }
-    (swift) var f = Fahrenheit()
-    // f : Fahrenheit = Fahrenheit(32.0)
-    (swift) println("The default temperature is \(f.temperature)° Fahrenheit")
-    >>> The default temperature is 32.0° Fahrenheit
+    --> var f = Fahrenheit()
+    <<< // f : Fahrenheit = Fahrenheit(32.0)
+    --> println("The default temperature is \(f.temperature)° Fahrenheit")
+    <-- The default temperature is 32.0° Fahrenheit
 
 This example defines a new structure to store temperatures expressed in the Fahrenheit scale.
 The structure has one stored property, ``temperature``, which is of type ``Double``.
@@ -1011,9 +1016,9 @@ by providing a default value at the point that the property is declared:
 
 .. testcode:: initialization
 
-    (swift) struct AnotherFahrenheit {
-        var temperature: Double = 32.0
-    }
+    --> struct AnotherFahrenheit {
+            var temperature: Double = 32.0
+        }
 
 If a property should always taken the same initial value,
 it is preferable to set this value as a default when the property is declared,
@@ -1048,19 +1053,23 @@ with a value from a different temperature scale:
 
 .. testcode:: initialization
 
-    (swift) struct Celsius {
-        var temperatureInCelsius: Double = 0.0
-        init withFahrenheit(fahrenheit: Double) {
-            temperatureInCelsius = (fahrenheit - 32.0) / 1.8
+    --> struct Celsius {
+            var temperatureInCelsius: Double = 0.0
+            init withFahrenheit(fahrenheit: Double) {
+                temperatureInCelsius = (fahrenheit - 32.0) / 1.8
+            }
+            init withKelvin(kelvin: Double) {
+                temperatureInCelsius = kelvin + 273.15
+            }
         }
-        init withKelvin(kelvin: Double) {
-            temperatureInCelsius = kelvin + 273.15
-        }
-    }
-    (swift) var boilingPointOfWater = Celsius(withFahrenheit: 212.0)
-    // boilingPointOfWater : Celsius = Celsius(100.0)
-    (swift) var freezingPointOfWater = Celsius(withKelvin: -273.15)
-    // freezingPointOfWater : Celsius = Celsius(0.0)
+    --> var boilingPointOfWater = Celsius(withFahrenheit: 212.0)
+    <<< // boilingPointOfWater : Celsius = Celsius(100.0)
+    /-> boilingPointOfWater.temperatureInCelsius is \(boilingPointOfWater.temperatureInCelsius)
+    <-/ boilingPointOfWater.temperatureInCelsius is 100.0
+    --> var freezingPointOfWater = Celsius(withKelvin: -273.15)
+    <<< // freezingPointOfWater : Celsius = Celsius(0.0)
+    /-> freezingPointOfWater.temperatureInCelsius is \(freezingPointOfWater.temperatureInCelsius)
+    <-/ freezingPointOfWater.temperatureInCelsius is 0.0
 
 .. TODO: mention that initializers can be written in either function syntax.
 
@@ -1069,28 +1078,28 @@ as long as is is definitely set to a value by the time the initializer has finis
 
 .. testcode:: initialization
 
-    (swift) struct Temperature {
-        let storedValue: Double
-        let storedScale: String
-        init withValue(value: Double) inScale(scale: String) {
-            storedValue = value
-            storedScale = scale
-        }
-        func toKelvin() -> Double {
-            switch storedScale {
-                case "F": // Fahrenheit
-                    return (storedValue - 32.0) / 1.8
-                case "C": // Celsius
-                    return storedValue + 273.15
-                default:  // assume Kelvin otherwise
-                    return storedValue
+    --> struct Temperature {
+            let storedValue: Double
+            let storedScale: String
+            init withValue(value: Double) inScale(scale: String) {
+                storedValue = value
+                storedScale = scale
+            }
+            func toKelvin() -> Double {
+                switch storedScale {
+                    case "F": // Fahrenheit
+                        return (storedValue - 32.0) / 1.8
+                    case "C": // Celsius
+                        return storedValue + 273.15
+                    default:  // assume Kelvin otherwise
+                        return storedValue
+                }
             }
         }
-    }
-    (swift) var absoluteZero = Temperature(withValue: -273.15, inScale: "C")
-    // absoluteZero : Temperature = Temperature(-273.15, "C")
-    (swift) println("Temperature is \(absoluteZero.toKelvin())°K")
-    >>> Temperature is 0.0°K
+    --> var absoluteZero = Temperature(withValue: -273.15, inScale: "C")
+    <<< // absoluteZero : Temperature = Temperature(-273.15, "C")
+    --> println("Temperature is \(absoluteZero.toKelvin())°K")
+    <-- Temperature is 0.0°K
 
 .. TODO: This could do with a more elegant example.
 
@@ -1119,25 +1128,25 @@ which uses a default ``title`` value of ``[untitled]`` if none is specified:
 
 .. testcode:: initializerDelegation
 
-    (swift) class Document {
-        var title: String
-        init withTitle(title: String) {
-            self.title = title
+    --> class Document {
+            var title: String
+            init withTitle(title: String) {
+                self.title = title
+            }
+            init() {
+                self.init(withTitle: "[untitled]")
+            }
         }
-        init() {
-            self.init(withTitle: "[untitled]")
-        }
-    }
 
 This first example declares a new constant called ``thisBook``,
 and sets it to the result of calling ``init withTitle()`` for a specific title string:
 
 .. testcode:: initializerDelegation
 
-    (swift) let thisBook = Document(withTitle: "The Swift Programming Language")
-    // thisBook : Document = <Document instance>
-    (swift) println("This book is called '\(thisBook.title)'")
-    >>> This book is called 'The Swift Programming Language'
+    --> let thisBook = Document(withTitle: "The Swift Programming Language")
+    <<< // thisBook : Document = <Document instance>
+    --> println("This book is called '\(thisBook.title)'")
+    <-- This book is called 'The Swift Programming Language'
 
 This second example declares a new constant called ``someBook``,
 and sets it to the result of the basic ``init()`` method for ``Document``.
@@ -1146,10 +1155,10 @@ passing it a placeholder string value of ``[untitled]``:
 
 .. testcode:: initializerDelegation
 
-    (swift) let someBook = Document()
-    // someBook : Document = <Document instance>
-    (swift) println("Some unknown book is called '\(someBook.title)'")
-    >>> Some unknown book is called '[untitled]'
+    --> let someBook = Document()
+    <<< // someBook : Document = <Document instance>
+    --> println("Some unknown book is called '\(someBook.title)'")
+    <-- Some unknown book is called '[untitled]'
 
 Both of these initializers ensure that the value of ``title``
 is set to a valid string before the initializer ends.
@@ -1169,13 +1178,13 @@ Here's an example:
 
 .. testcode:: inheritance
 
-    (swift) class Vehicle {
-        var numberOfWheels = 0
-        var maxPassengers = 1
-        func description() -> String {
-            return "\(numberOfWheels) wheels; up to \(maxPassengers) passengers"
+    --> class Vehicle {
+            var numberOfWheels = 0
+            var maxPassengers = 1
+            func description() -> String {
+                return "\(numberOfWheels) wheels; up to \(maxPassengers) passengers"
+            }
         }
-    }
 
 This example starts by defining a “base” class called ``Vehicle``.
 This base class declares two properties that are universal to all vehicles,
@@ -1194,12 +1203,12 @@ The ``Bicycle`` class is defined by placing the name of its base class – ``Veh
 
 .. testcode:: inheritance
 
-    (swift) class Bicycle : Vehicle {
-        init() {
-            super.init()
-            numberOfWheels = 2
+    --> class Bicycle : Vehicle {
+            init() {
+                super.init()
+                numberOfWheels = 2
+            }
         }
-    }
 
 In this example, ``Bicycle`` is said to be a :newTerm:`subclass` of ``Vehicle``, 
 and ``Vehicle`` is said to be the :newTerm:`superclass` of ``Bicycle``.
@@ -1234,10 +1243,10 @@ you can see how its properties have been updated:
 
 .. testcode:: inheritance
 
-    (swift) let bicycle = Bicycle()
-    // bicycle : Bicycle = <Bicycle instance>
-    (swift) println("Bicycle: \(bicycle.description())")
-    >>> Bicycle: 2 wheels; up to 1 passengers
+    --> let bicycle = Bicycle()
+    <<< // bicycle : Bicycle = <Bicycle instance>
+    --> println("Bicycle: \(bicycle.description())")
+    <-- Bicycle: 2 wheels; up to 1 passengers
 
 .. TODO: work out how best to describe super.init() in light of the next section below.
 
@@ -1245,12 +1254,12 @@ Subclasses can themselves be subclassed, as shown in the next example:
 
 .. testcode:: inheritance
 
-    (swift) class Tandem : Bicycle {
-        init() {
-            super.init()
-            maxPassengers = 2
+    --> class Tandem : Bicycle {
+            init() {
+                super.init()
+                maxPassengers = 2
+            }
         }
-    }
 
 This example creates a subclass of ``Bicycle`` for a two-seater bicycle
 (known as a “tandem”).
@@ -1270,10 +1279,10 @@ you can see how its properties have been updated:
 
 .. testcode:: inheritance
 
-    (swift) let tandem = Tandem()
-    // tandem : Tandem = <Tandem instance>
-    (swift) println("Tandem: \(tandem.description())")
-    >>> Tandem: 2 wheels; up to 2 passengers
+    --> let tandem = Tandem()
+    <<< // tandem : Tandem = <Tandem instance>
+    --> println("Tandem: \(tandem.description())")
+    <-- Tandem: 2 wheels; up to 2 passengers
 
 Note that the ``description()`` method has also been inherited
 by ``Bicycle`` and ``Tandem``.
@@ -1312,22 +1321,22 @@ For example:
 
 .. testcode:: inheritance
 
-    (swift) class Car : Vehicle {
-        var isConvertible: Bool = false
-        init() {
-            super.init()
-            maxPassengers = 5
-            numberOfWheels = 4
+    --> class Car : Vehicle {
+            var isConvertible: Bool = false
+            init() {
+                super.init()
+                maxPassengers = 5
+                numberOfWheels = 4
+            }
+            @override func description() -> String {
+                return super.description() + "; "
+                    + (isConvertible ? "convertible" : "not convertible")
+            }
         }
-        @override func description() -> String {
-            return super.description() + "; "
-                + (isConvertible ? "convertible" : "not convertible")
-        }
-    }
-    (swift) var car = Car()
-    // car : Car = <Car instance>
-    (swift) println("Car: \(car.description())")
-    >>> Car: 4 wheels; up to 5 passengers; not convertible
+    --> var car = Car()
+    <<< // car : Car = <Car instance>
+    --> println("Car: \(car.description())")
+    <-- Car: 4 wheels; up to 5 passengers; not convertible
 
 This example declares a new subclass of ``Vehicle``, called ``Car``.
 ``Car`` declares a new Boolean property called ``isConvertible``,
@@ -1392,33 +1401,33 @@ Here's how it looks in Swift code:
 
 .. testcode:: initializerDelegation
 
-    (swift) class TextDocument : Document {
+    --> class TextDocument : Document {
 
-        var bodyText: String = "[replace me]"
+            var bodyText: String = "[replace me]"
 
-        init() {}
+            init() {}
 
-        init withTitle(title: String) {
-            super.init(withTitle: title)
+            init withTitle(title: String) {
+                super.init(withTitle: title)
+            }
+
+            init withText(text: String) {
+                bodyText = text
+            }
+
+            init withTitle(title: String) text(text: String) {
+                self.init(withTitle: title)
+                bodyText = text
+            }
+
         }
-
-        init withText(text: String) {
-            bodyText = text
-        }
-
-        init withTitle(title: String) text(text: String) {
-            self.init(withTitle: title)
-            bodyText = text
-        }
-
-    }
 
 The first initializer, ``init()``, takes no parameters at all.
 The curly braces after the parentheses define an empty code block for the method:
 
 ::
 
-    (swift)     init() {}
+    init() {}
 
 Despite having an empty code block,
 this method still creates a new ``TextDocument`` instance with a default title and text.
@@ -1430,11 +1439,11 @@ Here's how this initializer could be called:
 
 .. testcode:: initializerDelegation
 
-    (swift) let empty = TextDocument()
-    // empty : TextDocument = <TextDocument instance>
-    (swift) println("\(empty.title):\n\(empty.bodyText)")
-    >>> [untitled]:
-    >>> [replace me]
+    --> let empty = TextDocument()
+    <<< // empty : TextDocument = <TextDocument instance>
+    --> println("\(empty.title):\n\(empty.bodyText)")
+    <-/ [untitled]:
+    <-/ [replace me]
 
 ``TextDocument`` does not actually do any custom initialization inside its empty ``init()`` method.
 However, it is still necessary to provide an empty definition
@@ -1450,9 +1459,9 @@ and passes in the new value of ``title``:
 
 ::
 
-    (swift)     init withTitle(title: String) {
-            super.init(withTitle: title)
-        }
+    init withTitle(title: String) {
+        super.init(withTitle: title)
+    }
 
 As before, the value of ``bodyText`` comes from the property's default value.
 
@@ -1460,20 +1469,20 @@ Here's how this initializer could be called:
 
 .. testcode:: initializerDelegation
 
-    (swift) let titled = TextDocument(withTitle: "Write something please")
-    // titled : TextDocument = <TextDocument instance>
-    (swift) println("\(titled.title):\n\(titled.bodyText)")
-    >>> Write something please:
-    >>> [replace me]
+    --> let titled = TextDocument(withTitle: "Write something please")
+    <<< // titled : TextDocument = <TextDocument instance>
+    --> println("\(titled.title):\n\(titled.bodyText)")
+    <-/ Write something please:
+    <-/ [replace me]
 
 The third initializer, ``init withText()``,
 sets the ``bodyText`` property to a new ``text`` value:
 
 ::
 
-    (swift)     init withText(text: String) {
-            bodyText = text
-        }
+    init withText(text: String) {
+        bodyText = text
+    }
 
 Because it doesn't call a superclass initializer,
 Swift inserts an implicit ``super.init()`` call at the end of the method.
@@ -1485,12 +1494,12 @@ Here's how this initializer could be called:
 
 .. testcode:: initializerDelegation
 
-    (swift) let untitledPangram = TextDocument(
+    --> let untitledPangram = TextDocument(
         withText: "Amazingly few discotheques provide jukeboxes")
-    // untitledPangram : TextDocument = <TextDocument instance>
-    (swift) println("\(untitledPangram.title):\n\(untitledPangram.bodyText)")
-    >>> [untitled]:
-    >>> Amazingly few discotheques provide jukeboxes
+    <<< // untitledPangram : TextDocument = <TextDocument instance>
+    --> println("\(untitledPangram.title):\n\(untitledPangram.bodyText)")
+    <-/ [untitled]:
+    <-/ Amazingly few discotheques provide jukeboxes
 
 The final initializer, ``init withTitle() text()``,
 starts by delegating across to the ``init withTitle()`` method
@@ -1500,10 +1509,10 @@ It then sets ``bodyText`` to the new ``text`` value.
 
 ::
 
-    (swift)     init withTitle(title: String) text(text: String) {
-            self.init(withTitle: title)
-            bodyText = text
-        }
+    init withTitle(title: String) text(text: String) {
+        self.init(withTitle: title)
+        bodyText = text
+    }
 
 There's no reason why ``TextDocument`` couldn't have called up to
 the ``init withTitle()`` method of ``Document`` directly.
@@ -1519,13 +1528,13 @@ Here's how this final initializer could be called:
 
 .. testcode:: initializerDelegation
 
-    (swift) let foxPangram = TextDocument(
-        withTitle: "Quick brown fox",
-        text: "The quick brown fox jumped over the lazy dog")
-    // foxPangram : TextDocument = <TextDocument instance>
-    (swift) println("\(foxPangram.title):\n\(foxPangram.bodyText)")
-    >>> Quick brown fox:
-    >>> The quick brown fox jumped over the lazy dog
+    --> let foxPangram = TextDocument(
+            withTitle: "Quick brown fox",
+            text: "The quick brown fox jumped over the lazy dog")
+    <<< // foxPangram : TextDocument = <TextDocument instance>
+    --> println("\(foxPangram.title):\n\(foxPangram.bodyText)")
+    <-/ Quick brown fox:
+    <-/ The quick brown fox jumped over the lazy dog
 
 .. TODO: Illustrate how the order of things matters when inserting calls to super.init
 
@@ -1552,64 +1561,68 @@ Both of these tasks are achieved using :newTerm:`type casting`.
 
 .. TODO: the wording of this para is unclear in its use of pronouns.
 
-Here's an example:
+The next few code snippets define three classes,
+and an array containing instances of those classes,
+for use in an example of type casting.
 
-.. testcode:: typeCasting
-
-    (swift) class MediaItem {
-        var name: String
-        init withName(name: String) {
-            self.name = name
-        }
-    }
-    (swift) class Movie : MediaItem {
-        var director: String
-        init withName(name: String) director(director: String) {
-            self.director = director
-            super.init(withName: name)
-        }
-    }
-    (swift) class Song : MediaItem {
-        var artist: String
-        init withName(name: String) artist(artist: String) {
-            self.artist = artist
-            super.init(withName: name)
-        }
-    }
-
-This example defines a new base class called ``MediaItem``.
+The first snippet defines a new base class called ``MediaItem``.
 This class provides basic functionality for any kind of item that might appear
 in a digital media library.
 Specifically, it declares a ``name`` property of type ``String``,
 and an ``init withName()`` initializer.
 (It is assumed that all media items, including all movies and songs, will have a name.)
 
-The example also defines two subclasses of ``MediaItem``.
+.. testcode:: typeCasting
+
+    --> class MediaItem {
+            var name: String
+            init withName(name: String) {
+                self.name = name
+            }
+        }
+
+The next snippet defines two subclasses of ``MediaItem``.
 The first subclass, ``Movie``, encapsulates additional information about a movie or film.
 It adds a ``director`` property on top of the base ``MediaItem`` class,
 with a corresponding initializer.
 The second subclass, ``Song``, adds an ``artist`` property and initializer
-on top of the base class.
-
-Because ``Movie`` and ``Song`` are both subclasses of ``MediaItem``,
-their instances can be used wherever a ``MediaItem`` instance can be used.
-For example:
+on top of the base class:
 
 .. testcode:: typeCasting
 
-    (swift) var library = Array<MediaItem>()
-    // library : Array<MediaItem> = []
-    (swift) library.append(Movie("Casablanca", director: "Michael Curtiz"))
-    (swift) library.append(Song("Blue Suede Shoes", artist: "Elvis Presley"))
-    (swift) library.append(Movie("Citizen Kane", director: "Orson Welles"))
-    (swift) library.append(Song("The One And Only", artist: "Chesney Hawkes"))
-    (swift) library.append(Song("Never Gonna Give You Up", artist: "Rick Astley"))
+    --> class Movie : MediaItem {
+            var director: String
+            init withName(name: String) director(director: String) {
+                self.director = director
+                super.init(withName: name)
+            }
+        }
+    --> class Song : MediaItem {
+            var artist: String
+            init withName(name: String) artist(artist: String) {
+                self.artist = artist
+                super.init(withName: name)
+            }
+        }
 
-This example declares and initializes a new empty array called ``library``,
+Because ``Movie`` and ``Song`` are both subclasses of ``MediaItem``,
+their instances can be used wherever a ``MediaItem`` instance can be used:
+
+.. testcode:: typeCasting
+
+    --> var library = Array<MediaItem>()
+    <<< // library : Array<MediaItem> = []
+    --> library.append(Movie("Casablanca", director: "Michael Curtiz"))
+    --> library.append(Song("Blue Suede Shoes", artist: "Elvis Presley"))
+    --> library.append(Movie("Citizen Kane", director: "Orson Welles"))
+    --> library.append(Song("The One And Only", artist: "Chesney Hawkes"))
+    --> library.append(Song("Never Gonna Give You Up", artist: "Rick Astley"))
+
+The snippet above declares and initializes a new empty array called ``library``,
 which is declared as an ``Array`` of type ``MediaItem``.
 This means that it can only accept instances that are of type ``MediaItem``.
 
-The example then appends some ``Movie`` and ``Song`` instances to the ``library`` array.
+The snippet then appends some ``Movie`` and ``Song`` instances to the ``library`` array.
 A ``Movie`` or a ``Song`` is also a ``MediaItem``,
 and so an instance of either class can be added to the array.
 
@@ -1629,19 +1642,19 @@ You can check whether an instance is of a certain type by using the ``is`` opera
 
 .. testcode:: typeCasting
 
-    (swift) var movieCount = 0
-    // movieCount : Int = 0
-    (swift) var songCount = 0
-    // songCount : Int = 0
-    (swift) for item in library {
-        if item is Movie {
-            ++movieCount
-        } else if item is Song {
-            ++songCount
+    --> var movieCount = 0
+    <<< // movieCount : Int = 0
+    --> var songCount = 0
+    <<< // songCount : Int = 0
+    --> for item in library {
+            if item is Movie {
+                ++movieCount
+            } else if item is Song {
+                ++songCount
+            }
         }
-    }
-    (swift) println("Media library contains \(movieCount) movies and \(songCount) songs")
-    >>> Media library contains 2 movies and 3 songs
+    --> println("Media library contains \(movieCount) movies and \(songCount) songs")
+    <-- Media library contains 2 movies and 3 songs
 
 This example iterates through all of the items in the ``library`` array.
 On each pass, the ``for``-``in`` loop sets the ``item`` constant
@@ -1667,18 +1680,18 @@ you can try and :newTerm:`downcast` to the subclass using the ``as`` operator:
 
 .. testcode:: typeCasting
 
-    (swift) for item in library {
-        if let movie = item as Movie {
-            println("Movie: '\(movie.name)', dir. \(movie.director)")
-        } else if let song = item as Song {
-            println("Song: '\(song.name)', by \(song.artist)")
+    --> for item in library {
+            if let movie = item as Movie {
+                println("Movie: '\(movie.name)', dir. \(movie.director)")
+            } else if let song = item as Song {
+                println("Song: '\(song.name)', by \(song.artist)")
+            }
         }
-    }
-    >>> Movie: 'Casablanca', dir. Michael Curtiz
-    >>> Song: 'Blue Suede Shoes', by Elvis Presley
-    >>> Movie: 'Citizen Kane', dir. Orson Welles
-    >>> Song: 'The One And Only', by Chesney Hawkes
-    >>> Song: 'Never Gonna Give You Up', by Rick Astley
+    <-/ Movie: 'Casablanca', dir. Michael Curtiz
+    <-/ Song: 'Blue Suede Shoes', by Elvis Presley
+    <-/ Movie: 'Citizen Kane', dir. Orson Welles
+    <-/ Song: 'The One And Only', by Chesney Hawkes
+    <-/ Song: 'Never Gonna Give You Up', by Rick Astley
 
 This example iterates over each ``MediaItem`` in ``library``,
 and prints an appropriate description for each one.
@@ -1772,7 +1785,7 @@ and is written without parentheses:
 
 ::
 
-    (swift) deinit {
+    deinit {
         // perform the deinitialization
     }
 
@@ -1802,17 +1815,17 @@ to store and manage its current state:
 
 .. testcode:: deinitializer
 
-    (swift) struct Bank {
-        static var coinsInBank = 10_000
-        static func vendCoins(var numberOfCoinsToVend: Int) -> Int {
-            numberOfCoinsToVend = min(numberOfCoinsToVend, coinsInBank)
-            coinsInBank -= numberOfCoinsToVend
-            return numberOfCoinsToVend
+    --> struct Bank {
+            static var coinsInBank = 10_000
+            static func vendCoins(var numberOfCoinsToVend: Int) -> Int {
+                numberOfCoinsToVend = min(numberOfCoinsToVend, coinsInBank)
+                coinsInBank -= numberOfCoinsToVend
+                return numberOfCoinsToVend
+            }
+            static func receiveCoins(coins: Int) {
+                coinsInBank += coins
+            }
         }
-        static func receiveCoins(coins: Int) {
-            coinsInBank += coins
-        }
-    }
 
 ``Bank`` keeps track of the current number of coins it holds via its ``coinsInBank`` property.
 It also offers two methods – ``vendCoins()`` and ``receiveCoins()`` –
@@ -1834,18 +1847,18 @@ This is represented by the player's ``coinsInPurse`` property:
 
 .. testcode:: deinitializer
 
-    (swift) class Player {
-        var coinsInPurse: Int
-        init withCoins(coins: Int) {
-            coinsInPurse = Bank.vendCoins(coins)
+    --> class Player {
+            var coinsInPurse: Int
+            init withCoins(coins: Int) {
+                coinsInPurse = Bank.vendCoins(coins)
+            }
+            func winCoins(coins: Int) {
+                coinsInPurse += Bank.vendCoins(coins)
+            }
+            deinit {
+                Bank.receiveCoins(coinsInPurse)
+            }
         }
-        func winCoins(coins: Int) {
-            coinsInPurse += Bank.vendCoins(coins)
-        }
-        deinit {
-            Bank.receiveCoins(coinsInPurse)
-        }
-    }
 
 Each ``Player`` instance is initialized with a starting allowance of
 some specified number of coins from the bank during initialization
@@ -1862,12 +1875,12 @@ Here's how that looks in action:
 
 .. testcode:: deinitializer
 
-    (swift) var playerOne: Player? = Player(withCoins: 100)
-    // playerOne : Player? = <unprintable value>
-    (swift) println("A new player has joined the game with \(playerOne!.coinsInPurse) coins")
-    >>> A new player has joined the game with 100 coins
-    (swift) println("There are now \(Bank.coinsInBank) coins left in the bank")
-    >>> There are now 9900 coins left in the bank
+    --> var playerOne: Player? = Player(withCoins: 100)
+    <<< // playerOne : Player? = <unprintable value>
+    --> println("A new player has joined the game with \(playerOne!.coinsInPurse) coins")
+    <-- A new player has joined the game with 100 coins
+    --> println("There are now \(Bank.coinsInBank) coins left in the bank")
+    <-- There are now 9900 coins left in the bank
 
 A new ``Player`` instance is created, with a request for 100 coins if they are available.
 This ``Player`` instance is stored in an optional ``Player`` variable called ``playerOne``.
@@ -1880,11 +1893,11 @@ and whenever its ``winCoins()`` method is called:
 
 .. testcode:: deinitializer
 
-    (swift) playerOne!.winCoins(2_000)
-    (swift) println("PlayerOne won 2000 coins & now has \(playerOne!.coinsInPurse) coins")
-    >>> PlayerOne won 2000 coins & now has 2100 coins
-    (swift) println("The bank now only has \(Bank.coinsInBank) coins left")
-    >>> The bank now only has 7900 coins left
+    --> playerOne!.winCoins(2_000)
+    --> println("PlayerOne won 2000 coins & now has \(playerOne!.coinsInPurse) coins")
+    <-- PlayerOne won 2000 coins & now has 2100 coins
+    --> println("The bank now only has \(Bank.coinsInBank) coins left")
+    <-- The bank now only has 7900 coins left
 
 Here, the player has won 2,000 coins.
 Their purse now contains 2,100 coins,
@@ -1892,11 +1905,11 @@ and the bank only has 7,900 coins left.
 
 .. testcode:: deinitializer
 
-    (swift) playerOne = .None
-    (swift) println("PlayerOne has left the game")
-    >>> PlayerOne has left the game
-    (swift) println("The bank now has \(Bank.coinsInBank) coins")
-    >>> The bank now has 10000 coins
+    --> playerOne = .None
+    --> println("PlayerOne has left the game")
+    <-- PlayerOne has left the game
+    --> println("The bank now has \(Bank.coinsInBank) coins")
+    <-- The bank now has 10000 coins
 
 The player has now left the game.
 This is indicated by setting the optional ``playerOne`` variable to ``.None``,
@@ -1921,12 +1934,12 @@ This is known as :newTerm:`overloading` the existing operators.
 
 .. testcode:: customOperators
 
-    (swift) struct Vector2D {
-        var x = 0.0, y = 0.0
-    }
-    (swift) func + (lhs: Vector2D, rhs: Vector2D) -> Vector2D {
-        return Vector2D(lhs.x + rhs.x, lhs.y + rhs.y)
-    }
+    --> struct Vector2D {
+            var x = 0.0, y = 0.0
+        }
+    --> func + (lhs: Vector2D, rhs: Vector2D) -> Vector2D {
+            return Vector2D(lhs.x + rhs.x, lhs.y + rhs.y)
+        }
 
 This example shows how to provide an implementation of the
 arithmetic addition operator (``+``) for a custom structure.
@@ -1951,12 +1964,14 @@ so that it can be used as an infix operator between existing ``Vector2D`` instan
 
 .. testcode:: customOperators
 
-    (swift) let vector = Vector2D(3.0, 1.0)
-    // vector : Vector2D = Vector2D(3.0, 1.0)
-    (swift) let anotherVector = Vector2D(2.0, 4.0)
-    // anotherVector : Vector2D = Vector2D(2.0, 4.0)
-    (swift) let combinedVector = vector + anotherVector
-    // combinedVector : Vector2D = Vector2D(5.0, 5.0)
+    --> let vector = Vector2D(3.0, 1.0)
+    <<< // vector : Vector2D = Vector2D(3.0, 1.0)
+    --> let anotherVector = Vector2D(2.0, 4.0)
+    <<< // anotherVector : Vector2D = Vector2D(2.0, 4.0)
+    --> let combinedVector = vector + anotherVector
+    <<< // combinedVector : Vector2D = Vector2D(5.0, 5.0)
+    /-> combinedVector is a Vector2D instance with values of (\(combinedVector.x), \(combinedVector.y))
+    <-/ combinedVector is a Vector2D instance with values of (5.0, 5.0)
 
 This example adds together the vectors ``(3.0, 1.0)`` and ``(2.0, 4.0)``
 to make the vector ``(5.0, 5.0)``, as illustrated below.
@@ -1985,9 +2000,9 @@ The attribute is written before the ``func`` keyword when declaring the operator
 
 .. testcode:: customOperators
 
-    (swift) @prefix func - (rhs: Vector2D) -> Vector2D {
-        return Vector2D(-rhs.x, -rhs.y)
-    }
+    --> @prefix func - (rhs: Vector2D) -> Vector2D {
+            return Vector2D(-rhs.x, -rhs.y)
+        }
 
 This example implements the :ref:`Operators_UnaryMinusOperator`
 (``-a``) for ``Vector2D`` instances.
@@ -2001,12 +2016,16 @@ performs this operation on both the ``x`` and ``y`` properties:
 
 .. testcode:: customOperators
 
-    (swift) let positive = Vector2D(3.0, 4.0)
-    // positive : Vector2D = Vector2D(3.0, 4.0)
-    (swift) let negative = -positive
-    // negative : Vector2D = Vector2D(-3.0, -4.0)
-    (swift) let alsoPositive = -negative
-    // alsoPositive : Vector2D = Vector2D(3.0, 4.0)
+    --> let positive = Vector2D(3.0, 4.0)
+    <<< // positive : Vector2D = Vector2D(3.0, 4.0)
+    --> let negative = -positive
+    <<< // negative : Vector2D = Vector2D(-3.0, -4.0)
+    /-> negative is a Vector2D instance with values of (\(negative.x), \(negative.y))
+    <-/ negative is a Vector2D instance with values of (-3.0, -4.0)
+    --> let alsoPositive = -negative
+    <<< // alsoPositive : Vector2D = Vector2D(3.0, 4.0)
+    /-> alsoPositive is a Vector2D instance with values of (\(alsoPositive.x), \(alsoPositive.y))
+    <-/ alsoPositive is a Vector2D instance with values of (3.0, 4.0)
 
 .. QUESTION: is this the first time I will have introduced attributes?
    If so, do they need more qualification?
@@ -2027,9 +2046,9 @@ as its value will be modified directly from within the operator function:
 
 .. testcode:: customOperators
 
-    (swift) @assignment func += (inout lhs: Vector2D, rhs: Vector2D) {
-        lhs = lhs + rhs
-    }
+    --> @assignment func += (inout lhs: Vector2D, rhs: Vector2D) {
+            lhs = lhs + rhs
+        }
 
 This example implements an addition assignment operator function for ``Vector2D`` instances.
 Because an addition operator has already been defined above,
@@ -2039,13 +2058,13 @@ and uses it to set the left-hand value to itself plus the right-hand value:
 
 .. testcode:: customOperators
 
-    (swift) var original = Vector2D(1.0, 2.0)
-    // original : Vector2D = Vector2D(1.0, 2.0)
-    (swift) let vectorToAdd = Vector2D(3.0, 4.0)
-    // vectorToAdd : Vector2D = Vector2D(3.0, 4.0)
-    (swift) original += vectorToAdd
-    (swift) println("original is now (\(original.x), \(original.y))")
-    >>> original is now (4.0, 6.0)
+    --> var original = Vector2D(1.0, 2.0)
+    <<< // original : Vector2D = Vector2D(1.0, 2.0)
+    --> let vectorToAdd = Vector2D(3.0, 4.0)
+    <<< // vectorToAdd : Vector2D = Vector2D(3.0, 4.0)
+    --> original += vectorToAdd
+    /-> original now has values of (\(original.x), \(original.y))
+    <-/ original now has values of (4.0, 6.0)
 
 The ``@assignment`` attribute can be combined with
 either the ``@prefix`` or ``@postfix`` attribute,
@@ -2054,10 +2073,10 @@ for ``Vector2D`` instances:
 
 .. testcode:: customOperators
 
-    (swift) @prefix @assignment func ++ (inout rhs: Vector2D) -> Vector2D {
-        rhs += Vector2D(1.0, 1.0)
-        return rhs
-    }
+    --> @prefix @assignment func ++ (inout rhs: Vector2D) -> Vector2D {
+            rhs += Vector2D(1.0, 1.0)
+            return rhs
+        }
 
 This operator function takes advantage of the addition assignment operator defined above.
 It adds a ``Vector2D`` with ``x`` and ``y`` values of ``1.0``
@@ -2066,12 +2085,14 @@ and returns the result.
 
 .. testcode:: customOperators
 
-    (swift) var toIncrement = Vector2D(3.0, 4.0)
-    // toIncrement : Vector2D = Vector2D(3.0, 4.0)
-    (swift) let afterIncrement = ++toIncrement
-    // afterIncrement : Vector2D = Vector2D(4.0, 5.0)
-    (swift) println("toIncrement is now (\(toIncrement.x), \(toIncrement.y))")
-    >>> toIncrement is now (4.0, 5.0)
+    --> var toIncrement = Vector2D(3.0, 4.0)
+    <<< // toIncrement : Vector2D = Vector2D(3.0, 4.0)
+    --> let afterIncrement = ++toIncrement
+    <<< // afterIncrement : Vector2D = Vector2D(4.0, 5.0)
+    /-> toIncrement now has values of (\(toIncrement.x), \(toIncrement.y))
+    <-/ toIncrement now has values of (4.0, 5.0)
+    /-> afterIncrement also has values of (\(afterIncrement.x), \(afterIncrement.y))
+    <-/ afterIncrement also has values of (4.0, 5.0)
 
 .. note::
 
@@ -2107,7 +2128,7 @@ and can be declared as ``prefix``, ``infix`` or ``postfix``:
 
 .. testcode:: customOperators
 
-    (swift) operator prefix +++ {}
+    --> operator prefix +++ {}
 
 This example defines a new prefix operator called ``+++``.
 This operator does not have an existing meaning in Swift,
@@ -2119,10 +2140,10 @@ by adding the vector to itself via assignment:
 
 .. testcode:: customOperators
 
-    (swift) @prefix @assignment func +++ (inout rhs: Vector2D) -> Vector2D {
-        rhs += rhs
-        return rhs
-    }
+    --> @prefix @assignment func +++ (inout rhs: Vector2D) -> Vector2D {
+            rhs += rhs
+            return rhs
+        }
 
 This implementation of ``+++`` is very similar to
 the implementation of ``++`` for ``Vector2D``,
@@ -2131,12 +2152,14 @@ rather than adding ``Vector2D(1.0, 1.0)``:
 
 .. testcode:: customOperators
 
-    (swift) var toBeDoubled = Vector2D(1.0, 4.0)
-    // toBeDoubled : Vector2D = Vector2D(1.0, 4.0)
-    (swift) let afterDoubling = +++toBeDoubled
-    // afterDoubling : Vector2D = Vector2D(2.0, 8.0)
-    (swift) println("toBeDoubled is now (\(toBeDoubled.x), \(toBeDoubled.y))")
-    >>> toBeDoubled is now (2.0, 8.0)
+    --> var toBeDoubled = Vector2D(1.0, 4.0)
+    <<< // toBeDoubled : Vector2D = Vector2D(1.0, 4.0)
+    --> let afterDoubling = +++toBeDoubled
+    <<< // afterDoubling : Vector2D = Vector2D(2.0, 8.0)
+    /-> toBeDoubled now has values of (\(toBeDoubled.x), \(toBeDoubled.y))
+    <-/ toBeDoubled now has values of (2.0, 8.0)
+    /-> afterDoubling also has values of (\(afterDoubling.x), \(afterDoubling.y))
+    <-/ afterDoubling also has values of (2.0, 8.0)
 
 Custom ``infix`` operators may also specify a :newTerm:`precedence`
 and an :newTerm:`associativity`.
@@ -2160,16 +2183,18 @@ with ``left`` associativity, and a precedence of ``140``:
 
 .. testcode:: customOperators
 
-    (swift) operator infix +- { associativity left precedence 140 }
-    (swift) func +- (lhs: Vector2D, rhs: Vector2D) -> Vector2D {
-        return Vector2D(lhs.x + rhs.x, lhs.y - rhs.y)
-    }
-    (swift) let firstVector = Vector2D(1.0, 2.0)
-    // firstVector : Vector2D = Vector2D(1.0, 2.0)
-    (swift) let secondVector = Vector2D(3.0, 4.0)
-    // secondVector : Vector2D = Vector2D(3.0, 4.0)
-    (swift) let plusMinusVector = firstVector +- secondVector
-    // plusMinusVector : Vector2D = Vector2D(4.0, -2.0)
+    --> operator infix +- { associativity left precedence 140 }
+    --> func +- (lhs: Vector2D, rhs: Vector2D) -> Vector2D {
+            return Vector2D(lhs.x + rhs.x, lhs.y - rhs.y)
+        }
+    --> let firstVector = Vector2D(1.0, 2.0)
+    <<< // firstVector : Vector2D = Vector2D(1.0, 2.0)
+    --> let secondVector = Vector2D(3.0, 4.0)
+    <<< // secondVector : Vector2D = Vector2D(3.0, 4.0)
+    --> let plusMinusVector = firstVector +- secondVector
+    <<< // plusMinusVector : Vector2D = Vector2D(4.0, -2.0)
+    /-> plusMinusVector is a Vector2D instance with values of (\(plusMinusVector.x), \(plusMinusVector.y))
+    <-/ plusMinusVector is a Vector2D instance with values of (4.0, -2.0)
 
 This operator adds together the ``x`` values of two vectors,
 and subtracts the ``y`` value of the second vector from the first.
@@ -2214,7 +2239,7 @@ in the same way as for computed properties:
 
 ::
 
-    (swift) subscript(n: Int) -> Int {
+    subscript(n: Int) -> Int {
         get {
             // return an appropriate susbcript value here
         }
@@ -2235,7 +2260,7 @@ the ``get`` keyword can be dropped for read-only subscripts:
 
 ::
 
-    (swift) subscript(n: Int) -> Int {
+    subscript(n: Int) -> Int {
         // return an appropriate subscript value here
     }
 
@@ -2243,22 +2268,22 @@ Here's an example of a read-only subscript implementation:
 
 .. testcode:: subscripts
 
-    (swift) class FibonacciGenerator {
-        subscript(n: Int) -> Int {
-            var i = 1, j = 0
-            var temp: Int
-            for k in 1..n {
-                temp = i + j
-                i = j
-                j = temp
+    --> class FibonacciGenerator {
+            subscript(n: Int) -> Int {
+                var i = 1, j = 0
+                var temp: Int
+                for k in 1..n {
+                    temp = i + j
+                    i = j
+                    j = temp
+                }
+                return j
             }
-            return j
         }
-    }
-    (swift) var fibonacci = FibonacciGenerator()
-    // fibonacci : FibonacciGenerator = <FibonacciGenerator instance>
-    (swift) println("The sixth number in the Fibonacci sequence is \(fibonacci[7])")
-    >>> The sixth number in the Fibonacci sequence is 13
+    --> var fibonacci = FibonacciGenerator()
+    <<< // fibonacci : FibonacciGenerator = <FibonacciGenerator instance>
+    --> println("The seventh number in the Fibonacci sequence is \(fibonacci[7])")
+    <-- The seventh number in the Fibonacci sequence is 13
 
 This example defines a ``FibonacciGenerator`` class to
 generate numbers from the :newTerm:`Fibonacci sequence`.
@@ -2308,10 +2333,12 @@ by passing in a key of the appropriate type within subscript braces:
 
 .. testcode:: subscripts
 
-    (swift) let numberOfLegs = ["spider" : 8, "ant" : 6, "cat" : 4]
-    // numberOfLegs : Dictionary<String, Int> = Dictionary<String, Int>(1.33333, 3, <DictionaryBufferOwner<String, Int> instance>)
-    (swift) let spiderLegs = numberOfLegs["spider"]
-    // spiderLegs : Int = 8
+    --> let numberOfLegs = ["spider" : 8, "ant" : 6, "cat" : 4]
+    <<< // numberOfLegs : Dictionary<String, Int> = Dictionary<String, Int>(1.33333, 3, <DictionaryBufferOwner<String, Int> instance>)
+    --> let spiderLegs = numberOfLegs["spider"]
+    <<< // spiderLegs : Int = 8
+    /-> spiderLegs is equal to \(spiderLegs)
+    <-/ spiderLegs is equal to 8
 
 This ``Dictionary`` instance is of type ``Dictionary<String, Int>``.
 This means that it has keys of type ``String``,
@@ -2345,30 +2372,30 @@ if it is appropriate for your type:
 
 .. testcode:: subscripts
 
-    (swift) struct Matrix {
-        var rows: Int, columns: Int
-        var grid = Array<Double>()
-        init withRows(rows: Int) columns(Int) {
-            self.rows = rows
-            self.columns = columns
-            for _ in 0...(rows * columns) {
-                grid.append(0.0)
-            }
-        }
-        subscript(row: Int, column: Int) -> Double? {
-            get {
-                if row >= rows || column >= columns {
-                    return .None
-                }
-                return grid[(row * columns) + column]
-            }
-            set {
-                if value && row < rows && column < columns {
-                    grid[(row * columns) + column] = value!
+    --> struct Matrix {
+            var rows: Int, columns: Int
+            var grid = Array<Double>()
+            init withRows(rows: Int) columns(Int) {
+                self.rows = rows
+                self.columns = columns
+                for _ in 0...(rows * columns) {
+                    grid.append(0.0)
                 }
             }
+            subscript(row: Int, column: Int) -> Double? {
+                get {
+                    if row >= rows || column >= columns {
+                        return .None
+                    }
+                    return grid[(row * columns) + column]
+                }
+                set {
+                    if value && row < rows && column < columns {
+                        grid[(row * columns) + column] = value!
+                    }
+                }
+            }
         }
-    }
 
 .. TODO: Investigate switching this over to use the shorter “Double[]” syntax
    once I know more about Arrays and how their syntax works.
@@ -2381,8 +2408,8 @@ Each position in the matrix is given an initial value of ``0.0``:
 
 .. testcode:: subscripts
 
-    (swift) var matrix = Matrix(withRows: 2, columns: 2)
-    // matrix : Matrix = Matrix(2, 2, [0.0, 0.0, 0.0, 0.0])
+    --> var matrix = Matrix(withRows: 2, columns: 2)
+    <<< // matrix : Matrix = Matrix(2, 2, [0.0, 0.0, 0.0, 0.0])
 
 The ``grid`` array is effectively a flattened version of the matrix,
 as read from top left to bottom right:
@@ -2400,7 +2427,7 @@ is outside of the bounds of the matrix:
 
 ::
 
-    (swift) if row >= rows || column >= columns {
+    if row >= rows || column >= columns {
         return .None
     }
     return grid[(row * columns) + column]
@@ -2410,12 +2437,12 @@ a subscript that is outside of the matrix bounds:
 
 .. testcode:: subscripts
 
-    (swift) if let someValue = matrix[2, 2] {
-        println("The matrix has a value of \(someValue) at [2, 2]")
-    } else {
-        println("The matrix is not big enough to hold a value at [2, 2]")
-    }
-    >>> The matrix is not big enough to hold a value at [2, 2]
+    --> if let someValue = matrix[2, 2] {
+            println("The matrix has a value of \(someValue) at [2, 2]")
+        } else {
+            println("The matrix is not big enough to hold a value at [2, 2]")
+        }
+    <-- The matrix is not big enough to hold a value at [2, 2]
 
 Otherwise, the subscript's getter returns
 the appropriate value from the ``grid`` array.
@@ -2425,8 +2452,8 @@ separated by a comma:
 
 .. testcode:: subscripts
 
-    (swift) matrix[0, 1] = 1.5
-    (swift) matrix[1, 0] = 3.2
+    --> matrix[0, 1] = 1.5
+    --> matrix[1, 0] = 3.2
 
 These two statements call the subscript's setter to set
 a value of ``1.5`` in the top right position of the matrix
@@ -2444,7 +2471,7 @@ and is checked by the subscript's setter:
 
 ::
 
-    (swift) if value && row < rows && column < columns {
+    if value && row < rows && column < columns {
         grid[(row * columns) + column] = value!
     }
 

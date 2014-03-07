@@ -18,21 +18,21 @@ and can be written as an enumeration using the ``enum`` keyword:
 
 .. testcode:: enums
 
-    (swift) enum CompassPoint {
-        case North
-        case South
-        case East
-        case West
-    }
+    --> enum CompassPoint {
+            case North
+            case South
+            case East
+            case West
+        }
 
 The ``case`` keyword is used to indicate each new line of member values.
 Multiple member values can appear on a single line, separated by commas:
 
 .. testcode:: enums
 
-    (swift) enum Planet {
-        case Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune
-    }
+    --> enum Planet {
+            case Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune
+        }
 
 Unlike C and Objective-C,
 Swift enumeration members are not assigned a default integer value when they are created.
@@ -52,8 +52,8 @@ so that they read as a sentence when declaring a named value of that type:
 
 .. testcode:: enums
 
-    (swift) var directionToHead = CompassPoint.West
-    // directionToHead : CompassPoint = <unprintable value>
+    --> var directionToHead = CompassPoint.West
+    <<< // directionToHead : CompassPoint = <unprintable value>
 
 The type of ``directionToHead`` has been inferred
 from the fact that it was initialized with one of the possible values of ``CompassPoint``.
@@ -62,7 +62,7 @@ it can be set to a different ``CompassPoint`` value using a shorter dot syntax:
 
 .. testcode:: enums
 
-    (swift) directionToHead = .East
+    --> directionToHead = .East
 
 The type of ``directionToHead`` is already known,
 and so we can drop the type when setting its value.
@@ -71,24 +71,24 @@ This makes for highly readable code when working with explicitly-typed enumerati
 .. _Enumerations_ConsideringEnumerationValuesWithASwitchStatement:
 
 Considering Enumeration Values with a Switch Statement
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------------------------------
 
 Enumeration values can be checked with a ``switch`` statement:
 
 .. testcode:: enums
 
-    (swift) directionToHead = .South
-    (swift) switch directionToHead {
-        case .North:
-            println("Lots of planets have a north")
-        case .South:
-            println("Watch out for penguins")
-        case .East:
-            println("Where the sun rises")
-        case .West:
-            println("Where the skies are blue")
-    }
-    >>> Watch out for penguins
+    --> directionToHead = .South
+    --> switch directionToHead {
+            case .North:
+                println("Lots of planets have a north")
+            case .South:
+                println("Watch out for penguins")
+            case .East:
+                println("Where the sun rises")
+            case .West:
+                println("Where the skies are blue")
+        }
+    <-- Watch out for penguins
 
 You can read this as:
 
@@ -112,22 +112,22 @@ you can provide a ``default`` case to cover any members that are not addressed e
 
 .. testcode:: enums
 
-    (swift) let somePlanet = Planet.Earth
-    // somePlanet : Planet = <unprintable value>
-    (swift) switch somePlanet {
-        case .Earth:
-            println("Mostly harmless")
-        default:
-            println("Not a safe place for humans")
-    }
-    >>> Mostly harmless
+    --> let somePlanet = Planet.Earth
+    <<< // somePlanet : Planet = <unprintable value>
+    --> switch somePlanet {
+            case .Earth:
+                println("Mostly harmless")
+            default:
+                println("Not a safe place for humans")
+        }
+    <-- Mostly harmless
 
 The full capabilties of ``switch`` statements are covered in more detail in :doc:`ControlFlow`.
 
 .. _Enumerations_AssociatedValues:
 
 Associated Values
-~~~~~~~~~~~~~~~~~
+-----------------
 
 The examples above show how the members of an enumeration are
 a defined (and typed) value in their own right.
@@ -170,10 +170,10 @@ In Swift, an enumeration to define product barcodes of either type might look li
 
 .. testcode:: enums
 
-    (swift) enum Barcode {
-        case UPCA(Int, Int, Int)
-        case QRCode(String)
-    }
+    --> enum Barcode {
+            case UPCA(Int, Int, Int)
+            case QRCode(String)
+        }
 
 This can be read as:
 
@@ -190,8 +190,8 @@ as shown below:
 
 .. testcode:: enums
 
-    (swift) var productBarcode = Barcode.UPCA(8, 85909_51226, 3)
-    // productBarcode : Barcode = <unprintable value>
+    --> var productBarcode = Barcode.UPCA(8, 85909_51226, 3)
+    <<< // productBarcode : Barcode = <unprintable value>
 
 This creates a new variable called ``productBarcode``,
 and assigns it a value of ``Barcode.UPCA`` with an associated tuple value of ``(8, 8590951226, 3)``.
@@ -203,7 +203,7 @@ The same product can be changed to have a different type of barcode:
 
 .. testcode:: enums
 
-    (swift) productBarcode = .QRCode("ABCDEFGHIJKLMNOP")
+    --> productBarcode = .QRCode("ABCDEFGHIJKLMNOP")
 
 At this point,
 the original ``Barcode.UPCA`` and its integer values are replaced by
@@ -217,13 +217,13 @@ This time, however, the associated values can be extracted as part of the switch
 
 .. testcode:: enums
 
-    (swift) switch productBarcode {
-        case .UPCA(var numberSystem, var identifier, var check):
-            println("UPC-A with value of \(numberSystem), \(identifier), \(check).")
-        case .QRCode(var productCode):
-            println("QR code with value of \(productCode).")
-    }
-    >>> QR code with value of ABCDEFGHIJKLMNOP.
+    --> switch productBarcode {
+            case .UPCA(var numberSystem, var identifier, var check):
+                println("UPC-A with value of \(numberSystem), \(identifier), \(check).")
+            case .QRCode(var productCode):
+                println("QR code with value of \(productCode).")
+        }
+    <-- QR code with value of ABCDEFGHIJKLMNOP.
 
 These two calls to the ``println`` function use a special syntax to insert the values of
 ``numberSystem``, ``identifier``, ``check`` and ``productCode``
@@ -243,7 +243,7 @@ when the string is printed by the ``println`` function.
 .. _Enumerations_RawValues:
 
 Raw Values
-~~~~~~~~~~
+----------
 
 The barcode example above shows how members of an enumeration can declare that they store
 associated values of different types.
@@ -255,11 +255,11 @@ Here's an example that stores raw ASCII values alongside named enumeration membe
 
 .. testcode:: enums
 
-    (swift) enum ASCIIControlCharacter : UnicodeScalar {
-        case Tab = '\t'
-        case LineFeed = '\n'
-        case CarriageReturn = '\r'
-    }
+    --> enum ASCIIControlCharacter : UnicodeScalar {
+            case Tab = '\t'
+            case LineFeed = '\n'
+            case CarriageReturn = '\r'
+        }
 
 Here, the raw values for an enumeration called ``ASCIIControlCharacter``
 are declared to be of type ``UnicodeScalar``,
@@ -282,9 +282,9 @@ and uses raw integer values to represent their atomic numbers:
 
 .. testcode:: optionals
 
-    (swift) enum ChemicalElement : Int {
-        case Hydrogen = 1, Helium, Lithium, Beryllium, Boron, Carbon, Nitrogen
-    }
+    --> enum ChemicalElement : Int {
+            case Hydrogen = 1, Helium, Lithium, Beryllium, Boron, Carbon, Nitrogen
+        }
 
 Auto-incrementation means that ``ChemicalElement.Helium`` has a raw value of ``2``,
 and so on.
@@ -293,8 +293,10 @@ The raw value of an enumeration member can be accessed using its ``toRaw`` metho
 
 .. testcode:: optionals
 
-    (swift) let atomicNumberOfCarbon = ChemicalElement.Carbon.toRaw()
-    // atomicNumberOfCarbon : Int = 6
+    --> let atomicNumberOfCarbon = ChemicalElement.Carbon.toRaw()
+    <<< // atomicNumberOfCarbon : Int = 6
+    /-> atomicNumberOfCarbon is \(atomicNumberOfCarbon)
+    <-/ atomicNumberOfCarbon is 6
 
 The reverse is also true.
 In addition to a ``toRaw`` method,
@@ -304,8 +306,9 @@ The ``fromRaw`` method could be used to find ``ChemicalElement.Nitrogen`` from i
 
 .. testcode:: optionals
 
-    (swift) var possibleElement = ChemicalElement.fromRaw(7)        // Nitrogen
-    // possibleElement : ChemicalElement? = <unprintable value>
+    --> var possibleElement = ChemicalElement.fromRaw(7)        // Nitrogen
+    <<< // possibleElement : ChemicalElement? = <unprintable value>
+    /// possibleElement is ChemicalElement.Nitrogen
 
 Not all possible ``Int`` values will find a matching chemical element, however.
 Because of this, the ``fromRaw`` method returns an *optional* enumeration member.
@@ -316,19 +319,19 @@ then the returned optional value will equal ``.None``:
 
 .. testcode:: optionals
 
-    (swift) if let element = ChemicalElement.fromRaw(8) {
-        switch element {
-            case .Hydrogen:
-                println("A bit explodey")
-            case .Helium:
-                println("Like a friendly hydrogen")
-            default:
-                println("Some other element")
+    --> if let element = ChemicalElement.fromRaw(8) {
+            switch element {
+                case .Hydrogen:
+                    println("A bit explodey")
+                case .Helium:
+                    println("Like a friendly hydrogen")
+                default:
+                    println("Some other element")
+            }
+        } else {
+            println("Not an element I know about")
         }
-    } else {
-        println("Not an element I know about")
-    }
-    >>> Not an element I know about
+    <-- Not an element I know about
 
 This example uses :ref:`BasicTypes_OptionalBinding`
 to try and access an element with a raw value of ``8``.
@@ -356,43 +359,43 @@ The example below shows all of these capabilities in action for a complex enumer
 
 .. testcode:: enumerationSpecialFeatures
 
-    (swift) enum TrainStatus {
-        case OnTime, Delayed(Int)
-        init() {
-            self = OnTime
-        }
-        var description: String {
-            switch self {
-                case OnTime:
-                    return "on time"
-                case Delayed(var minutes):
-                    return "delayed by " + self.delayText(minutes)
+    --> enum TrainStatus {
+            case OnTime, Delayed(Int)
+            init() {
+                self = OnTime
+            }
+            var description: String {
+                switch self {
+                    case OnTime:
+                        return "on time"
+                    case Delayed(var minutes):
+                        return "delayed by " + self.delayText(minutes)
+                }
+            }
+            func delayText(minutes: Int) -> String {
+                switch minutes {
+                    case 1:
+                        return "1 minute"
+                    case 2..59:
+                        return "\(minutes) minutes"
+                    case 60..119:
+                        let extra = minutes - 60
+                        return "1 hour and \(extra) minutes"
+                    default:
+                        return "more than two hours"
+                }
             }
         }
-        func delayText(minutes: Int) -> String {
-            switch minutes {
-                case 1:
-                    return "1 minute"
-                case 2..59:
-                    return "\(minutes) minutes"
-                case 60..119:
-                    let extra = minutes - 60
-                    return "an hour and \(extra) minutes"
-                default:
-                    return "more than two hours"
-            }
+    --> class Train {
+            var status = TrainStatus()
         }
-    }
-    (swift) class Train {
-        var status = TrainStatus()
-    }
-    (swift) let train = Train()
-    // train : Train = <Train instance>
-    (swift) println("The train is \(train.status.description)")
-    >>> The train is on time
-    (swift) train.status = .Delayed(96)
-    (swift) println("The train is now \(train.status.description)")
-    >>> The train is now delayed by an hour and 36 minutes
+    --> let train = Train()
+    <<< // train : Train = <Train instance>
+    --> println("The train is \(train.status.description)")
+    <-- The train is on time
+    --> train.status = .Delayed(96)
+    --> println("The train is now \(train.status.description)")
+    <-- The train is now delayed by 1 hour and 36 minutes
 
 This example defines an enumeration called ``TrainStatus``,
 to encapsulate the current live progress of a train during its journey.
@@ -461,44 +464,44 @@ Types can be nested to as many levels as are required:
 
 .. testcode:: nestedTypes
 
-    (swift) struct BlackjackCard {
-        enum Suit : UnicodeScalar {
-            case Spades = '♠', Hearts = '♡', Diamonds = '♢', Clubs = '♣'
-        }
-        enum Rank : String {
-            case Two = "2", Three = "3", Four = "4", Five = "5", Six = "6"
-            case Seven = "7", Eight = "8", Nine = "9", Ten = "10"
-            case Jack = "Jack", Queen = "Queen", King = "King", Ace = "Ace"
-            struct Values {
-                let firstValue: Int
-                let secondValue: Int?
+    --> struct BlackjackCard {
+            enum Suit : UnicodeScalar {
+                case Spades = '♠', Hearts = '♡', Diamonds = '♢', Clubs = '♣'
             }
-            var values: Values {
-                switch self {
-                    case .Ace:
-                        return Values(1, 11)
-                    case .Jack, .Queen, .King:
-                        return Values(10, .None)
-                    default:
-                        return Values(self.toRaw().toInt()!, .None)
+            enum Rank : String {
+                case Two = "2", Three = "3", Four = "4", Five = "5", Six = "6"
+                case Seven = "7", Eight = "8", Nine = "9", Ten = "10"
+                case Jack = "Jack", Queen = "Queen", King = "King", Ace = "Ace"
+                struct Values {
+                    let firstValue: Int
+                    let secondValue: Int?
+                }
+                var values: Values {
+                    switch self {
+                        case .Ace:
+                            return Values(1, 11)
+                        case .Jack, .Queen, .King:
+                            return Values(10, .None)
+                        default:
+                            return Values(self.toRaw().toInt()!, .None)
+                    }
                 }
             }
-        }
-        let rank: Rank
-        let suit: Suit
-        var description: String {
-            var output = "the \(rank.toRaw()) of \(suit.toRaw())"
-            output += " is worth \(rank.values.firstValue)"
-            if let secondValue = rank.values.secondValue {
-                output += " or \(secondValue)"
+            let rank: Rank
+            let suit: Suit
+            var description: String {
+                var output = "the \(rank.toRaw()) of \(suit.toRaw())"
+                output += " is worth \(rank.values.firstValue)"
+                if let secondValue = rank.values.secondValue {
+                    output += " or \(secondValue)"
+                }
+                return output
             }
-            return output
         }
-    }
-    (swift) let theAceOfSpades = BlackjackCard(.Ace, .Spades)
-    // theAceOfSpades : BlackjackCard = BlackjackCard(<unprintable value>, <unprintable value>)
-    (swift) println("Blackjack value: \(theAceOfSpades.description)")
-    >>> Blackjack value: the Ace of ♠ is worth 1 or 11
+    --> let theAceOfSpades = BlackjackCard(.Ace, .Spades)
+    <<< // theAceOfSpades : BlackjackCard = BlackjackCard(<unprintable value>, <unprintable value>)
+    --> println("Blackjack value: \(theAceOfSpades.description)")
+    <-- Blackjack value: the Ace of ♠ is worth 1 or 11
 
 This example defines a playing card for use in the game of Blackjack.
 One notable feature of Blackjack is that the Ace card has a value of
@@ -547,15 +550,23 @@ their type can still be inferred from the context,
 and so the initialization of this instance is able to refer to the enumeration members
 by their member names (``.Ace`` and ``.Spades``) alone.
 
-Nested types can also be used outside of their definition context,
-by prefixing their name with the name of the type they are nested within:
+.. _Enumerations_ReferringToNestedTypes:
+
+Referring to Nested Types
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+A nested type can be used outside of its definition context,
+by prefixing its name with the name of the type it is nested within:
 
 .. testcode:: nestedTypes
 
-    (swift) let heartsSymbol = BlackjackCard.Suit.Hearts.toRaw()
-    // heartsSymbol : UnicodeScalar = '♡'
+    --> let heartsSymbol = BlackjackCard.Suit.Hearts.toRaw()
+    <<< // heartsSymbol : UnicodeScalar = '♡'
+    /-> heartsSymbol is '\(heartsSymbol)'
+    <-/ heartsSymbol is '♡'
 
-This enables the names of ``Suit``, ``Rank`` and ``Values`` to be kept deliberately short,
+For the example above, 
+this enables the names of ``Suit``, ``Rank`` and ``Values`` to be kept deliberately short,
 because their names are naturally qualified by the context in which they are defined.
 
 .. QUESTION: I'm using the word 'type' extensively in this section.
