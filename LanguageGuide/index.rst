@@ -10,8 +10,12 @@ Language Guide
     ControlFlow
     Functions
     Closures
-    ClassesAndStructures
     Enumerations
+    CustomTypes
+    Properties
+    Methods
+    Initialization
+    Inheritance
     Extensions
     Protocols
     Generics

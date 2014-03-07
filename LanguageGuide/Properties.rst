@@ -1,0 +1,378 @@
+Properties
+==========
+
+.. _ClassesAndStructures_Properties:
+
+Properties
+----------
+
+.. HACK: this is currently duplicated in CustomTypes.
+
+Classes and structures can both declare :newTerm:`properties`.
+Properties are named values that are bundled up and stored
+as part of the class or structure:
+
+.. testcode:: classesAndStructures
+
+    --> struct Size {
+            var width = 0.0, height = 0.0
+        }
+    --> class Rectangle {
+            var size = Size()
+        }
+
+The example above defines a new structure called ``Size``,
+with two variable properties called ``width`` and ``height``.
+These properties are inferred to be of type ``Double``
+by setting them to an initial floating-point value of ``0.0``.
+
+The example also defines a new class called ``Rectangle``,
+which has a variable property called ``size``.
+This property is initialized with a new ``Size`` structure instance,
+which infers a property type of ``Size``.
+
+.. _ClassesAndStructures_AccessingProperties:
+
+Accessing Properties
+~~~~~~~~~~~~~~~~~~~~
+
+.. HACK: this is currently duplicated in CustomTypes.
+
+The properties of an instance can be accessed using :newTerm:`dot syntax`:
+
+.. testcode:: classesAndStructures
+
+    --> println("The width of someSize is \(someSize.width)")
+    <-- The width of someSize is 0.0
+
+``someSize.width`` refers to the ``width`` property of ``someSize``.
+Dot syntax can also be used to drill down into sub-properties
+such as the ``width`` property in the ``size`` property of a ``Rectangle``:
+
+.. testcode:: classesAndStructures
+
+    --> println("The width of someRectangle is \(someRectangle.size.width)")
+    <-- The width of someRectangle is 0.0
+
+Unlike Objective-C,
+the values of sub-properties can be set directly, regardless of their type.
+In the example below, ``someRectangle.size.width`` is set to a new value of ``2.0``,
+even though it is a sub-property of ``someRectangle.size``:
+
+.. testcode:: classesAndStructures
+
+    --> someRectangle.size.width = 2.0
+    --> println("The width of someRectangle is now \(someRectangle.size.width)")
+    <-- The width of someRectangle is now 2.0
+
+.. _ClassesAndStructures_StoredProperties:
+
+Stored Properties
+~~~~~~~~~~~~~~~~~
+
+In its simplest form, a property is just a named value
+that is stored as part of an instance.
+Properties of this kind are known as :newTerm:`stored properties`.
+Stored properties can be either :newTerm:`variable stored properties`
+(introduced by the ``var`` keyword, as in the examples above),
+or :newTerm:`constant stored properties` (introduced by the ``let`` keyword).
+
+Constant stored properties are very similar to constant named values,
+in that their value cannot be changed once it has been initialized.
+Constant stored properties have slightly more flexibility, however,
+in that their value can be changed at any point until the initializer for the class
+they belong to has completed its initialization.
+(Instance initialization is described in more detail in :ref:`ClassesAndStructures_Initialization`.)
+
+.. _ClassesAndStructures_StoredPropertyObservers:
+
+Stored Property Observers
+_________________________
+
+:newTerm:`Stored property observers` are a way to observe and respond to
+the setting of new values for a stored property.
+You have the option to define either or both of these observers on a stored property:
+
+* ``willSet``, which is called just before the value is stored; and / or
+* ``didSet``, which is called immediately after the new value is stored
+
+If you implement a ``willSet`` observer,
+it is passed the new property value as a constant parameter for you to check and use.
+The ``didSet`` observer is not passed the new property value,
+because it can access the new value as usual via the property's name.
+
+Here's an example of ``willSet`` and ``didSet`` in action:
+
+.. testcode:: classesAndStructures
+
+    --> class StepCounter {
+            var previousTotalSteps = 0
+            var totalSteps: Int = 0 {
+                willSet(newStepCount) {
+                    previousTotalSteps = totalSteps
+                }
+                didSet {
+                    if totalSteps > previousTotalSteps  {
+                        println("Added \(totalSteps - previousTotalSteps) steps")
+                    }
+                }
+            }
+        }
+    --> let stepCounter = StepCounter()
+    <<< // stepCounter : StepCounter = <StepCounter instance>
+    --> stepCounter.totalSteps = 200
+    <-- Added 200 steps
+    --> stepCounter.totalSteps = 360
+    <-- Added 160 steps
+    --> stepCounter.totalSteps = 896
+    <-- Added 536 steps
+
+This example defines a new class called ``StepCounter``,
+which keeps track of the total number of steps that a person has taken while walking.
+This class might be used with input data from a pedometer or other step counter
+to keep track of a person's exercise during their daily routine.
+
+The ``StepCounter`` class declares a ``totalSteps`` property of type ``Int``.
+This is a stored property with ``willSet`` and ``didSet`` observers.
+The class also declares a variable stored property called ``previousTotalSteps``
+(which does not have any observers), and sets both properties to an initial value of ``0``.
+
+.. note::
+
+    ``willSet`` and ``didSet`` observers are not called when
+    a property is first initialized.
+    They are only called when the property's value is set
+    outside of an initialization context.
+
+The ``willSet`` observer for ``totalSteps`` is called
+whenever the property is assigned a new value.
+This is true even if the new value is the same as the current value.
+The stored value of ``totalSteps`` has not yet been updated by the time that ``willSet`` is called.
+
+This example takes advantage of the fact that ``totalSteps`` has not yet been updated,
+and copies the old value of ``totalSteps`` into the ``previousTotalSteps`` variable
+before the new value is assigned.
+
+The ``willSet`` observer is always passed the upcoming new value of the property,
+and can use it to perform calculations if it wishes.
+You can specify any name you like for this parameter.
+In the example above, it has been named “``newTotalSteps``”,
+although the parameter is not actually used in this example.
+(If you leave out this parameter in your implementation of ``willSet``,
+it will still be made available to your code, with a default parameter name of ``value``.)
+
+Once the value of the ``totalSteps`` property has been updated,
+its ``didSet`` observer is called.
+In this example, the ``didSet`` observer looks at the new value of ``totalSteps``,
+and compares it against the previous value.
+If the total number of steps has increased,
+a message is printed to indicate how many new steps have been taken.
+
+.. note::
+
+    If you assign a value to a property within its own ``didSet`` observer,
+    the new value that you assign will replace the one that was just set.
+
+.. TODO: mention that this also works for global / local variables
+
+.. _ClassesAndStructures_ComputedProperties:
+
+Computed Properties
+~~~~~~~~~~~~~~~~~~~
+
+Classes and structures can also define :newTerm:`computed properties`,
+which do not actually store a value.
+Instead, they provide a :newTerm:`getter`, and an optional :newTerm:`setter`,
+to retrieve and set other properties and values indirectly.
+
+.. testcode:: classesAndStructures
+
+    --> struct Point {
+            var x = 0.0, y = 0.0
+        }
+    --> struct Rect {
+            var origin = Point()
+            var size = Size()
+            var center: Point {
+                get {
+                    let centerX = origin.x + (size.width / 2)
+                    let centerY = origin.y + (size.height / 2)
+                    return Point(centerX, centerY)
+                }
+                set(newCenter) {
+                    origin.x = newCenter.x - (size.width / 2)
+                    origin.y = newCenter.y - (size.height / 2)
+                }
+            }
+        }
+    --> var square = Rect(origin: Point(0.0, 0.0), size: Size(10.0, 10.0))
+    <<< // square : Rect = Rect(Point(0.0, 0.0), Size(10.0, 10.0))
+    --> let initialSquareCenter = square.center
+    <<< // initialSquareCenter : Point = Point(5.0, 5.0)
+    --> square.center = Point(x: 15.0, y: 15.0)
+    --> println("square.origin is now at (\(square.origin.x), \(square.origin.y))")
+    <-- square.origin is now at (10.0, 10.0)
+
+This example uses the previously-defined ``Size`` structure,
+and defines two additional structures for working with geometric shapes:
+
+* ``Point``, which encapsulates an ``(x, y)`` co-ordinate
+* ``Rect``, which defines a rectangle in terms of an origin point and a size
+
+The ``Rect`` structure also provides a computed property called ``center``.
+The current center position of a ``Rect`` can always be determined from its ``origin`` and ``size``,
+and so there is no need to actually store the center point as an explicit ``Point`` value.
+Instead, ``Rect`` defines a custom getter and setter for a computed variable called ``center``,
+to enable you to work with the rectangle's ``center`` as if it were a real stored property.
+
+This example creates a new ``Rect`` variable called ``square``.
+The ``square`` variable is initialized with an origin point of ``(0, 0)``,
+and a width and height of ``10``.
+This is equivalent to the blue square in the diagram below.
+
+The ``square`` variable's ``center`` property is then accessed via dot syntax (``square.center``).
+This causes the getter for ``center`` to be called,
+to retrieve the current property value.
+Rather than returning an existing value,
+this actually calculates and returns a new ``Point`` to represent the center of the square.
+As can be seen above, this correctly returns a center point of ``(5, 5)``.
+
+The ``center`` property is then set to a new value of ``(15, 15)``.
+This moves the square up and to the right,
+to the new position shown by the orange square in the diagram below.
+Setting the ``center`` property calls the setter for ``center``,
+which modifies the ``x`` and ``y`` values of the stored ``origin`` property,
+and moves the square to its new position.
+
+.. image:: ../images/computedProperties.png
+    :width: 400
+    :align: center
+
+.. _ClassesAndStructures_ShorthandSetterDeclaration:
+
+Shorthand Setter Declaration
+____________________________
+
+If a computed property's setter does not define a name for the new value to be set,
+a default name of ``value`` is used.
+Here's an alternative version of the ``Rect`` structure,
+which takes advantage of this shorthand notation:
+
+.. testcode:: classesAndStructures
+
+    --> struct AlternativeRect {
+            var origin = Point()
+            var size = Size()
+            var center: Point {
+                get {
+                    let centerX = origin.x + (size.width / 2)
+                    let centerY = origin.y + (size.height / 2)
+                    return Point(centerX, centerY)
+                }
+                set {
+                    origin.x = value.x - (size.width / 2)
+                    origin.y = value.y - (size.height / 2)
+                }
+            }
+        }
+
+.. _ClassesAndStructures_ReadOnlyComputedProperties:
+
+Read-Only Computed Properties
+_____________________________
+
+A computed property with a getter but no setter is known as a :newTerm:`read-only computed property`.
+Read-only computed properties enable you to
+define a property that will always return a value,
+and can be accessed via dot syntax,
+but which cannot be set to a different value by users of your class or structure.
+
+.. note::
+
+    Computed properties – including read-only computed properties –
+    are always declared as variable properties with the ``var`` keyword.
+    The ``let`` keyword is only ever used for constant properties,
+    to indicate that their value cannot be changed once it is set
+    as part of instance initialization.
+
+The declaration of a read-only computed property can be simplified
+by removing the ``get`` keyword:
+
+.. testcode:: classesAndStructures
+
+    --> struct Cuboid {
+            var width = 0.0, height = 0.0, depth = 0.0
+            var volume: Double {
+                return width * height * depth
+            }
+        }
+    --> let fourByFiveByTwo = Cuboid(4.0, 5.0, 2.0)
+    <<< // fourByFiveByTwo : Cuboid = Cuboid(4.0, 5.0, 2.0)
+    --> println("the volume of fourByFiveByTwo is \(fourByFiveByTwo.volume)")
+    <-- the volume of fourByFiveByTwo is 40.0
+
+This example defines a new structure called ``Cuboid``,
+which represents a 3D rectangular box with ``width``, ``height`` and ``depth`` properties.
+This structure also has a read-only computed property called ``volume``,
+which calculates and returns the current volume of the cuboid.
+It doesn't make sense for ``volume`` to be settable,
+as it would be ambiguous as to which values of ``width``, ``height`` and ``depth``
+should be used for a particular ``volume`` value.
+Nonetheless, it is useful for a ``Cuboid`` to provide a read-only computed property
+to enable the outside world to discover its current calculated volume.
+
+.. note::
+
+    Read-only computed properties are not the same as constant properties.
+    They have some similarities,
+    in that neither can have their value set by external users of the class or structure,
+    but they differ considerably in how their values are retrieved.
+    Constant properties are assigned their own storage,
+    and the contents of this storage cannot be changed to a different value
+    once it has been set during initialization.
+    Read-only computed properties do not have storage assigned to them,
+    and can return any value they like at any time.
+
+.. NOTE: getters and setters are also allowed for named values
+   that are not associated with a particular class or struct.
+   Where should this be mentioned?
+   
+.. TODO: Anything else from https://[Internal Staging Server]/docs/StoredAndComputedVariables.html
+
+.. _ClassesAndStructures_PropertiesAndInstanceVariables:
+
+Properties and Instance Variables
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you have experience with Objective-C,
+you may be familiar with the fact that it provides two complementary ways
+to store values and references alongside instances of a class.
+In addition to properties,
+Objective-C also has the concept of :newTerm:`instance variables`,
+which are used as a 'backing' store for the values stored in a property.
+
+Swift unifies these two separate concepts into a single unified property declaration.
+There is no longer a distinction between properties and instance variables,
+and the backing store for a property is not accessed directly.
+This avoids potential confusion around how the value is accessed in different contexts,
+and simplifies the property's declaration into a single, definite statement.
+All of the information about the property –
+including its name, type, and memory management characteristics –
+is defined in a single location as part of the class definition.
+
+.. TODO: How do I define whether my properties are strong- or weak-reference?
+.. TODO: what happens if one property of a constant structure is an object reference?
+.. TODO: immutability of value type constants means that
+   their mutable properties are also immutable
+
+.. _ClassesAndStructures_TypePropertiesAndMethods:
+
+Type Properties
+---------------
+
+.. write-me::
+
+.. see release notes from 2013-12-18 for a note about lazy initialization
+.. mention that type methods can access type properties (and other type methods?)
+   without needing to reference the type's name,
+   as they also get an implicit ``self`` parameter.

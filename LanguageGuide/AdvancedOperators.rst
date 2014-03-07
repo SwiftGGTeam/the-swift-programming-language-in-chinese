@@ -609,3 +609,291 @@ The output of the compound expression doesn't change,
 but the overall intention is clearer to the reader.
 Readability is always preferred over brevity;
 use parentheses where they help to make your intentions clear.
+
+.. _ClassesAndStructures_OperatorFunctions:
+
+Operator Functions
+------------------
+
+Classes and structures can provide their own implementations of existing :doc:`operators <Operators>`.
+This is known as :newTerm:`overloading` the existing operators.
+
+.. testcode:: customOperators
+
+    --> struct Vector2D {
+            var x = 0.0, y = 0.0
+        }
+    --> func + (lhs: Vector2D, rhs: Vector2D) -> Vector2D {
+            return Vector2D(lhs.x + rhs.x, lhs.y + rhs.y)
+        }
+
+This example shows how to provide an implementation of the
+arithmetic addition operator (``+``) for a custom structure.
+The example starts by defining a ``Vector2D`` structure for
+a two-dimensional position vector ``(x, y)``.
+This is followed by a definition of an :newTerm:`operator function`
+to add together instances of the ``Vector2D`` structure.
+
+The operator function is defined as a global function called ``+``,
+which takes two input parameters of type ``Vector2D``,
+and returns a single output value, also of type ``Vector2D``.
+In this implementation, the input parameters have been named ``lhs`` and ``rhs``
+to represent the ``Vector2D`` instances that will be on
+the left-hand side and right-hand side of the ``+`` operator.
+The function returns a new ``Vector2D`` instance,
+whose ``x`` and ``y`` properties are
+initialized with the sum of the ``x`` and ``y`` properties from
+the two ``Vector2D`` instances that are being added together.
+
+The function is defined globally, rather than as a method on the ``Vector2D`` structure,
+so that it can be used as an infix operator between existing ``Vector2D`` instances:
+
+.. testcode:: customOperators
+
+    --> let vector = Vector2D(3.0, 1.0)
+    <<< // vector : Vector2D = Vector2D(3.0, 1.0)
+    --> let anotherVector = Vector2D(2.0, 4.0)
+    <<< // anotherVector : Vector2D = Vector2D(2.0, 4.0)
+    --> let combinedVector = vector + anotherVector
+    <<< // combinedVector : Vector2D = Vector2D(5.0, 5.0)
+    /-> combinedVector is a Vector2D instance with values of (\(combinedVector.x), \(combinedVector.y))
+    <-/ combinedVector is a Vector2D instance with values of (5.0, 5.0)
+
+This example adds together the vectors ``(3.0, 1.0)`` and ``(2.0, 4.0)``
+to make the vector ``(5.0, 5.0)``, as illustrated below.
+
+.. image:: ../images/vectorAddition.png
+    :width: 400
+    :align: center
+
+.. _ClassesAndStructures_PrefixAndPostfixOperators:
+
+Prefix and Postfix Operators
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The arithmethic addition operator (``+``) shown above is a :newTerm:`binary operator`.
+Binary operators operate on two targets (such as ``2 + 3``),
+and are said to be :newTerm:`infix` because they appear inbetween their two targets.
+
+Classes and structures can also provide implementations of the standard :newTerm:`unary operators`.
+Unary operators operate on a single target,
+and are said to be :newTerm:`prefix` if they come before their target (such as ``-a``),
+and :newTerm:`postfix` operators if they come after their target (such as ``i++``).
+
+Implementations of prefix unary operators are indicated via the ``@prefix`` attribute.
+Likewise, postfix unary operators are indicated via the ``@postfix`` attribute.
+The attribute is written before the ``func`` keyword when declaring the operator function:
+
+.. testcode:: customOperators
+
+    --> @prefix func - (rhs: Vector2D) -> Vector2D {
+            return Vector2D(-rhs.x, -rhs.y)
+        }
+
+This example implements the :ref:`Operators_UnaryMinusOperator`
+(``-a``) for ``Vector2D`` instances.
+The unary minus operator is a prefix operator,
+and so this function has to be qualified with the ``@prefix`` attribute.
+
+For simple numeric values, the unary minus operator just converts
+positive numbers into their negative equivalent, and vice versa.
+The corresponding implementation for ``Vector2D`` instances
+performs this operation on both the ``x`` and ``y`` properties:
+
+.. testcode:: customOperators
+
+    --> let positive = Vector2D(3.0, 4.0)
+    <<< // positive : Vector2D = Vector2D(3.0, 4.0)
+    --> let negative = -positive
+    <<< // negative : Vector2D = Vector2D(-3.0, -4.0)
+    /-> negative is a Vector2D instance with values of (\(negative.x), \(negative.y))
+    <-/ negative is a Vector2D instance with values of (-3.0, -4.0)
+    --> let alsoPositive = -negative
+    <<< // alsoPositive : Vector2D = Vector2D(3.0, 4.0)
+    /-> alsoPositive is a Vector2D instance with values of (\(alsoPositive.x), \(alsoPositive.y))
+    <-/ alsoPositive is a Vector2D instance with values of (3.0, 4.0)
+
+.. QUESTION: is this the first time I will have introduced attributes?
+   If so, do they need more qualification?
+
+.. _ClassesAndStructures_CompoundAssignmentOperators:
+
+Compound Assignment Operators
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+:ref:`Operators_CompoundAssignmentOperators`
+combine assignment (``=``) with another operation.
+One example is the addition assignment operator (``+=``).
+This combines addition and assignment into a single operation.
+Operator functions that implement compound assignment must be qualified with
+the ``@assignment`` attribute.
+They must also mark their left-hand input parameter as ``inout``,
+as its value will be modified directly from within the operator function:
+
+.. testcode:: customOperators
+
+    --> @assignment func += (inout lhs: Vector2D, rhs: Vector2D) {
+            lhs = lhs + rhs
+        }
+
+This example implements an addition assignment operator function for ``Vector2D`` instances.
+Because an addition operator has already been defined above,
+there is no need to reimplement the addition process again here.
+Instead, this function takes advantage of the existing addition operator function,
+and uses it to set the left-hand value to itself plus the right-hand value:
+
+.. testcode:: customOperators
+
+    --> var original = Vector2D(1.0, 2.0)
+    <<< // original : Vector2D = Vector2D(1.0, 2.0)
+    --> let vectorToAdd = Vector2D(3.0, 4.0)
+    <<< // vectorToAdd : Vector2D = Vector2D(3.0, 4.0)
+    --> original += vectorToAdd
+    /-> original now has values of (\(original.x), \(original.y))
+    <-/ original now has values of (4.0, 6.0)
+
+The ``@assignment`` attribute can be combined with
+either the ``@prefix`` or ``@postfix`` attribute,
+as in this implementation of the prefix increment operator (``++a``)
+for ``Vector2D`` instances:
+
+.. testcode:: customOperators
+
+    --> @prefix @assignment func ++ (inout rhs: Vector2D) -> Vector2D {
+            rhs += Vector2D(1.0, 1.0)
+            return rhs
+        }
+
+This operator function takes advantage of the addition assignment operator defined above.
+It adds a ``Vector2D`` with ``x`` and ``y`` values of ``1.0``
+to the ``Vector2D`` on which it is called,
+and returns the result.
+
+.. testcode:: customOperators
+
+    --> var toIncrement = Vector2D(3.0, 4.0)
+    <<< // toIncrement : Vector2D = Vector2D(3.0, 4.0)
+    --> let afterIncrement = ++toIncrement
+    <<< // afterIncrement : Vector2D = Vector2D(4.0, 5.0)
+    /-> toIncrement now has values of (\(toIncrement.x), \(toIncrement.y))
+    <-/ toIncrement now has values of (4.0, 5.0)
+    /-> afterIncrement also has values of (\(afterIncrement.x), \(afterIncrement.y))
+    <-/ afterIncrement also has values of (4.0, 5.0)
+
+.. note::
+
+    It is not possible to overload the default
+    :ref:`Operators_AssignmentOperator` (``=``).
+    Only the compound assignment operators may be overloaded.
+    Similarly, the :ref:`Operators_TernaryConditionalOperator`
+    (``a ? b : c``) may not be overloaded.
+
+.. QUESTION: some of the standard operators (such as equation and comparison)
+   are implemented as part of a protocol (such as Equatable and Comparable).
+   You don't seem to need to declare conformance to these protocols
+   in order to implement the operator functions, however.
+   Is that correct? Can you get != for free after implementing == , for example?
+   UPDATE: going by rdar://14011860, we don't currently have a way for a protocol
+   like Equatable to provide a default implementation of != if you implement ==
+
+.. QUESTION: Should I mention @transparent in the Operator Functions section?
+   All of the stdlib operators (e.g. for fixed- and floating-point numbers)
+   are declared as @transparent…
+
+.. _ClassesAndStructures_CustomOperators:
+
+Custom Operators
+~~~~~~~~~~~~~~~~
+
+You can define your own :newTerm:`custom operators` in addition to
+the standard operators provided by Swift.
+Custom operators can be defined using the characters ``/ = - + * % < > ! & | ^ ~ .`` only.
+
+New operators are declared at a global level using the ``operator`` keyword,
+and can be declared as ``prefix``, ``infix`` or ``postfix``:
+
+.. testcode:: customOperators
+
+    --> operator prefix +++ {}
+
+This example defines a new prefix operator called ``+++``.
+This operator does not have an existing meaning in Swift,
+and so it will be given its own custom meaning in the specific context of
+working with ``Vector2D`` instances. For the purposes of this example,
+``+++`` will be treated as a new “prefix doubling incrementer” operator.
+It will double the ``x`` and ``y`` values of a ``Vector2D`` instance,
+by adding the vector to itself via assignment:
+
+.. testcode:: customOperators
+
+    --> @prefix @assignment func +++ (inout rhs: Vector2D) -> Vector2D {
+            rhs += rhs
+            return rhs
+        }
+
+This implementation of ``+++`` is very similar to
+the implementation of ``++`` for ``Vector2D``,
+except that this operator function adds the vector to itself,
+rather than adding ``Vector2D(1.0, 1.0)``:
+
+.. testcode:: customOperators
+
+    --> var toBeDoubled = Vector2D(1.0, 4.0)
+    <<< // toBeDoubled : Vector2D = Vector2D(1.0, 4.0)
+    --> let afterDoubling = +++toBeDoubled
+    <<< // afterDoubling : Vector2D = Vector2D(2.0, 8.0)
+    /-> toBeDoubled now has values of (\(toBeDoubled.x), \(toBeDoubled.y))
+    <-/ toBeDoubled now has values of (2.0, 8.0)
+    /-> afterDoubling also has values of (\(afterDoubling.x), \(afterDoubling.y))
+    <-/ afterDoubling also has values of (2.0, 8.0)
+
+Custom ``infix`` operators may also specify a :newTerm:`precedence`
+and an :newTerm:`associativity`.
+(See :ref:`Operators_PrecedenceAndAssociativity` for an explanation of
+how these two characteristics affect an infix operator's interaction
+with other infix operators.)
+
+The possible values for ``associativity`` are ``left``, ``right`` or ``none``.
+Left-associative operators associate to the left if written next
+to other left-associative operators of the same precedence.
+Similarly, right-associative operators associate to the right if written
+next to other right-associative operators of the same precedence.
+Non-associative operators cannot be written next to
+other operators with the same precedence.
+
+The ``associativity`` value defaults to ``none`` if it is not specified.
+Similarly, ``precedence`` defaults to a value of ``100`` if it is not specified.
+
+The following example defines a new custom ``infix`` operator called ``+-``,
+with ``left`` associativity, and a precedence of ``140``:
+
+.. testcode:: customOperators
+
+    --> operator infix +- { associativity left precedence 140 }
+    --> func +- (lhs: Vector2D, rhs: Vector2D) -> Vector2D {
+            return Vector2D(lhs.x + rhs.x, lhs.y - rhs.y)
+        }
+    --> let firstVector = Vector2D(1.0, 2.0)
+    <<< // firstVector : Vector2D = Vector2D(1.0, 2.0)
+    --> let secondVector = Vector2D(3.0, 4.0)
+    <<< // secondVector : Vector2D = Vector2D(3.0, 4.0)
+    --> let plusMinusVector = firstVector +- secondVector
+    <<< // plusMinusVector : Vector2D = Vector2D(4.0, -2.0)
+    /-> plusMinusVector is a Vector2D instance with values of (\(plusMinusVector.x), \(plusMinusVector.y))
+    <-/ plusMinusVector is a Vector2D instance with values of (4.0, -2.0)
+
+This operator adds together the ``x`` values of two vectors,
+and subtracts the ``y`` value of the second vector from the first.
+Because it is in essence an “additive” operator,
+it has been given the same associativity and precedence values
+(``left`` and ``140``)
+as default additive infix operators such as ``+`` and ``-``.
+(A complete list of the default Swift operator precedence
+and associativity settings can be found in the :doc:`../ReferenceManual/index`.)
+
+.. TODO: update this link to go to the specific section of the Reference Manual.
+
+.. TODO: Custom operator declarations cannot be written over multiple lines in the REPL.
+   This is being tracked as rdar://16061044.
+   If this Radar is fixed, the operator declaration above should be split over multiple lines
+   for consistency with the rest of the code.
