@@ -804,17 +804,17 @@ Instance methods are called using the same dot syntax as properties:
 
     --> let counter = Counter()
     <<< // counter : Counter = <Counter instance>
-    /-> Initial counter value is \(counter.count)
-    <-/ Initial counter value is 0
+    /-> initial counter value is \(counter.count)
+    <-/ initial counter value is 0
     --> counter.increment()
-    /-> Counter value is now \(counter.count)
-    <-/ Counter value is now 1
+    /-> counter value is now \(counter.count)
+    <-/ counter value is now 1
     --> counter.incrementBy(5)
-    /-> Counter value is now \(counter.count)
-    <-/ Counter value is now 6
+    /-> counter value is now \(counter.count)
+    <-/ counter value is now 6
     --> counter.reset()
-    /-> Counter value is now \(counter.count)
-    <-/ Counter value is now 0
+    /-> counter value is now \(counter.count)
+    <-/ counter value is now 0
 
 .. _ClassesAndStructures_Self:
 
@@ -1427,7 +1427,7 @@ The curly braces after the parentheses define an empty code block for the method
 
 ::
 
-    -->     init() {}
+    init() {}
 
 Despite having an empty code block,
 this method still creates a new ``TextDocument`` instance with a default title and text.
@@ -1459,9 +1459,9 @@ and passes in the new value of ``title``:
 
 ::
 
-    -->     init withTitle(title: String) {
-            super.init(withTitle: title)
-        }
+    init withTitle(title: String) {
+        super.init(withTitle: title)
+    }
 
 As before, the value of ``bodyText`` comes from the property's default value.
 
@@ -1472,17 +1472,17 @@ Here's how this initializer could be called:
     --> let titled = TextDocument(withTitle: "Write something please")
     <<< // titled : TextDocument = <TextDocument instance>
     --> println("\(titled.title):\n\(titled.bodyText)")
-    <<< Write something please:
-    <<< [replace me]
+    <-/ Write something please:
+    <-/ [replace me]
 
 The third initializer, ``init withText()``,
 sets the ``bodyText`` property to a new ``text`` value:
 
 ::
 
-    -->     init withText(text: String) {
-            bodyText = text
-        }
+    init withText(text: String) {
+        bodyText = text
+    }
 
 Because it doesn't call a superclass initializer,
 Swift inserts an implicit ``super.init()`` call at the end of the method.
@@ -1498,8 +1498,8 @@ Here's how this initializer could be called:
         withText: "Amazingly few discotheques provide jukeboxes")
     <<< // untitledPangram : TextDocument = <TextDocument instance>
     --> println("\(untitledPangram.title):\n\(untitledPangram.bodyText)")
-    <<< [untitled]:
-    <<< Amazingly few discotheques provide jukeboxes
+    <-/ [untitled]:
+    <-/ Amazingly few discotheques provide jukeboxes
 
 The final initializer, ``init withTitle() text()``,
 starts by delegating across to the ``init withTitle()`` method
@@ -1509,10 +1509,10 @@ It then sets ``bodyText`` to the new ``text`` value.
 
 ::
 
-    -->     init withTitle(title: String) text(text: String) {
-            self.init(withTitle: title)
-            bodyText = text
-        }
+    init withTitle(title: String) text(text: String) {
+        self.init(withTitle: title)
+        bodyText = text
+    }
 
 There's no reason why ``TextDocument`` couldn't have called up to
 the ``init withTitle()`` method of ``Document`` directly.
@@ -1533,8 +1533,8 @@ Here's how this final initializer could be called:
             text: "The quick brown fox jumped over the lazy dog")
     <<< // foxPangram : TextDocument = <TextDocument instance>
     --> println("\(foxPangram.title):\n\(foxPangram.bodyText)")
-    <<< Quick brown fox:
-    <<< The quick brown fox jumped over the lazy dog
+    <-/ Quick brown fox:
+    <-/ The quick brown fox jumped over the lazy dog
 
 .. TODO: Illustrate how the order of things matters when inserting calls to super.init
 
@@ -1561,7 +1561,16 @@ Both of these tasks are achieved using :newTerm:`type casting`.
 
 .. TODO: the wording of this para is unclear in its use of pronouns.
 
-Here's an example:
+The next few code snippets define three classes,
+and an array containing instances of those classes,
+for use in an example of type casting.
+
+The first snippet defines a new base class called ``MediaItem``.
+This class provides basic functionality for any kind of item that might appear
+in a digital media library.
+Specifically, it declares a ``name`` property of type ``String``,
+and an ``init withName()`` initializer.
+(It is assumed that all media items, including all movies and songs, will have a name.)
 
 .. testcode:: typeCasting
 
@@ -1571,6 +1580,16 @@ Here's an example:
                 self.name = name
             }
         }
+
+The next snippet defines two subclasses of ``MediaItem``.
+The first subclass, ``Movie``, encapsulates additional information about a movie or film.
+It adds a ``director`` property on top of the base ``MediaItem`` class,
+with a corresponding initializer.
+The second subclass, ``Song``, adds an ``artist`` property and initializer
+on top of the base class:
+
+.. testcode:: typeCasting
+
     --> class Movie : MediaItem {
             var director: String
             init withName(name: String) director(director: String) {
@@ -1586,23 +1605,8 @@ Here's an example:
             }
         }
 
-This example defines a new base class called ``MediaItem``.
-This class provides basic functionality for any kind of item that might appear
-in a digital media library.
-Specifically, it declares a ``name`` property of type ``String``,
-and an ``init withName()`` initializer.
-(It is assumed that all media items, including all movies and songs, will have a name.)
-
-The example also defines two subclasses of ``MediaItem``.
-The first subclass, ``Movie``, encapsulates additional information about a movie or film.
-It adds a ``director`` property on top of the base ``MediaItem`` class,
-with a corresponding initializer.
-The second subclass, ``Song``, adds an ``artist`` property and initializer
-on top of the base class.
-
 Because ``Movie`` and ``Song`` are both subclasses of ``MediaItem``,
-their instances can be used wherever a ``MediaItem`` instance can be used.
-For example:
+their instances can be used wherever a ``MediaItem`` instance can be used:
 
 .. testcode:: typeCasting
 
@@ -1614,11 +1618,11 @@ For example:
     --> library.append(Song("The One And Only", artist: "Chesney Hawkes"))
     --> library.append(Song("Never Gonna Give You Up", artist: "Rick Astley"))
 
-This example declares and initializes a new empty array called ``library``,
+The snippet above declares and initializes a new empty array called ``library``,
 which is declared as an ``Array`` of type ``MediaItem``.
 This means that it can only accept instances that are of type ``MediaItem``.
 
-The example then appends some ``Movie`` and ``Song`` instances to the ``library`` array.
+The snippet then appends some ``Movie`` and ``Song`` instances to the ``library`` array.
 A ``Movie`` or a ``Song`` is also a ``MediaItem``,
 and so an instance of either class can be added to the array.
 
@@ -1650,7 +1654,7 @@ You can check whether an instance is of a certain type by using the ``is`` opera
             }
         }
     --> println("Media library contains \(movieCount) movies and \(songCount) songs")
-    <<< Media library contains 2 movies and 3 songs
+    <-- Media library contains 2 movies and 3 songs
 
 This example iterates through all of the items in the ``library`` array.
 On each pass, the ``for``-``in`` loop sets the ``item`` constant
@@ -1683,11 +1687,11 @@ you can try and :newTerm:`downcast` to the subclass using the ``as`` operator:
                 println("Song: '\(song.name)', by \(song.artist)")
             }
         }
-    <<< Movie: 'Casablanca', dir. Michael Curtiz
-    <<< Song: 'Blue Suede Shoes', by Elvis Presley
-    <<< Movie: 'Citizen Kane', dir. Orson Welles
-    <<< Song: 'The One And Only', by Chesney Hawkes
-    <<< Song: 'Never Gonna Give You Up', by Rick Astley
+    <-/ Movie: 'Casablanca', dir. Michael Curtiz
+    <-/ Song: 'Blue Suede Shoes', by Elvis Presley
+    <-/ Movie: 'Citizen Kane', dir. Orson Welles
+    <-/ Song: 'The One And Only', by Chesney Hawkes
+    <-/ Song: 'Never Gonna Give You Up', by Rick Astley
 
 This example iterates over each ``MediaItem`` in ``library``,
 and prints an appropriate description for each one.
@@ -1874,9 +1878,9 @@ Here's how that looks in action:
     --> var playerOne: Player? = Player(withCoins: 100)
     <<< // playerOne : Player? = <unprintable value>
     --> println("A new player has joined the game with \(playerOne!.coinsInPurse) coins")
-    <<< A new player has joined the game with 100 coins
+    <-- A new player has joined the game with 100 coins
     --> println("There are now \(Bank.coinsInBank) coins left in the bank")
-    <<< There are now 9900 coins left in the bank
+    <-- There are now 9900 coins left in the bank
 
 A new ``Player`` instance is created, with a request for 100 coins if they are available.
 This ``Player`` instance is stored in an optional ``Player`` variable called ``playerOne``.
@@ -1891,9 +1895,9 @@ and whenever its ``winCoins()`` method is called:
 
     --> playerOne!.winCoins(2_000)
     --> println("PlayerOne won 2000 coins & now has \(playerOne!.coinsInPurse) coins")
-    <<< PlayerOne won 2000 coins & now has 2100 coins
+    <-- PlayerOne won 2000 coins & now has 2100 coins
     --> println("The bank now only has \(Bank.coinsInBank) coins left")
-    <<< The bank now only has 7900 coins left
+    <-- The bank now only has 7900 coins left
 
 Here, the player has won 2,000 coins.
 Their purse now contains 2,100 coins,
@@ -1903,9 +1907,9 @@ and the bank only has 7,900 coins left.
 
     --> playerOne = .None
     --> println("PlayerOne has left the game")
-    <<< PlayerOne has left the game
+    <-- PlayerOne has left the game
     --> println("The bank now has \(Bank.coinsInBank) coins")
-    <<< The bank now has 10000 coins
+    <-- The bank now has 10000 coins
 
 The player has now left the game.
 This is indicated by setting the optional ``playerOne`` variable to ``.None``,
@@ -1966,6 +1970,8 @@ so that it can be used as an infix operator between existing ``Vector2D`` instan
     <<< // anotherVector : Vector2D = Vector2D(2.0, 4.0)
     --> let combinedVector = vector + anotherVector
     <<< // combinedVector : Vector2D = Vector2D(5.0, 5.0)
+    /-> combinedVector is a Vector2D instance with values of (\(combinedVector.x), \(combinedVector.y))
+    <-/ combinedVector is a Vector2D instance with values of (5.0, 5.0)
 
 This example adds together the vectors ``(3.0, 1.0)`` and ``(2.0, 4.0)``
 to make the vector ``(5.0, 5.0)``, as illustrated below.
@@ -2014,8 +2020,12 @@ performs this operation on both the ``x`` and ``y`` properties:
     <<< // positive : Vector2D = Vector2D(3.0, 4.0)
     --> let negative = -positive
     <<< // negative : Vector2D = Vector2D(-3.0, -4.0)
+    /-> negative is a Vector2D instance with values of (\(negative.x), \(negative.y))
+    <-/ negative is a Vector2D instance with values of (-3.0, -4.0)
     --> let alsoPositive = -negative
     <<< // alsoPositive : Vector2D = Vector2D(3.0, 4.0)
+    /-> alsoPositive is a Vector2D instance with values of (\(alsoPositive.x), \(alsoPositive.y))
+    <-/ alsoPositive is a Vector2D instance with values of (3.0, 4.0)
 
 .. QUESTION: is this the first time I will have introduced attributes?
    If so, do they need more qualification?
@@ -2053,8 +2063,8 @@ and uses it to set the left-hand value to itself plus the right-hand value:
     --> let vectorToAdd = Vector2D(3.0, 4.0)
     <<< // vectorToAdd : Vector2D = Vector2D(3.0, 4.0)
     --> original += vectorToAdd
-    --> println("original is now (\(original.x), \(original.y))")
-    <<< original is now (4.0, 6.0)
+    /-> original now has values of (\(original.x), \(original.y))
+    <-/ original now has values of (4.0, 6.0)
 
 The ``@assignment`` attribute can be combined with
 either the ``@prefix`` or ``@postfix`` attribute,
@@ -2064,9 +2074,9 @@ for ``Vector2D`` instances:
 .. testcode:: customOperators
 
     --> @prefix @assignment func ++ (inout rhs: Vector2D) -> Vector2D {
-        rhs += Vector2D(1.0, 1.0)
-        return rhs
-    }
+            rhs += Vector2D(1.0, 1.0)
+            return rhs
+        }
 
 This operator function takes advantage of the addition assignment operator defined above.
 It adds a ``Vector2D`` with ``x`` and ``y`` values of ``1.0``
@@ -2079,8 +2089,10 @@ and returns the result.
     <<< // toIncrement : Vector2D = Vector2D(3.0, 4.0)
     --> let afterIncrement = ++toIncrement
     <<< // afterIncrement : Vector2D = Vector2D(4.0, 5.0)
-    --> println("toIncrement is now (\(toIncrement.x), \(toIncrement.y))")
-    <<< toIncrement is now (4.0, 5.0)
+    /-> toIncrement now has values of (\(toIncrement.x), \(toIncrement.y))
+    <-/ toIncrement now has values of (4.0, 5.0)
+    /-> afterIncrement also has values of (\(afterIncrement.x), \(afterIncrement.y))
+    <-/ afterIncrement also has values of (4.0, 5.0)
 
 .. note::
 
@@ -2144,8 +2156,10 @@ rather than adding ``Vector2D(1.0, 1.0)``:
     <<< // toBeDoubled : Vector2D = Vector2D(1.0, 4.0)
     --> let afterDoubling = +++toBeDoubled
     <<< // afterDoubling : Vector2D = Vector2D(2.0, 8.0)
-    --> println("toBeDoubled is now (\(toBeDoubled.x), \(toBeDoubled.y))")
-    <<< toBeDoubled is now (2.0, 8.0)
+    /-> toBeDoubled now has values of (\(toBeDoubled.x), \(toBeDoubled.y))
+    <-/ toBeDoubled now has values of (2.0, 8.0)
+    /-> afterDoubling also has values of (\(afterDoubling.x), \(afterDoubling.y))
+    <-/ afterDoubling also has values of (2.0, 8.0)
 
 Custom ``infix`` operators may also specify a :newTerm:`precedence`
 and an :newTerm:`associativity`.
@@ -2179,6 +2193,8 @@ with ``left`` associativity, and a precedence of ``140``:
     <<< // secondVector : Vector2D = Vector2D(3.0, 4.0)
     --> let plusMinusVector = firstVector +- secondVector
     <<< // plusMinusVector : Vector2D = Vector2D(4.0, -2.0)
+    /-> plusMinusVector is a Vector2D instance with values of (\(plusMinusVector.x), \(plusMinusVector.y))
+    <-/ plusMinusVector is a Vector2D instance with values of (4.0, -2.0)
 
 This operator adds together the ``x`` values of two vectors,
 and subtracts the ``y`` value of the second vector from the first.
@@ -2223,14 +2239,14 @@ in the same way as for computed properties:
 
 ::
 
-    --> subscript(n: Int) -> Int {
-            get {
-                // return an appropriate susbcript value here
-            }
-            set(newValue) {
-                // perform a suitable setting action here
-            }
+    subscript(n: Int) -> Int {
+        get {
+            // return an appropriate susbcript value here
         }
+        set(newValue) {
+            // perform a suitable setting action here
+        }
+    }
 
 The type of ``newValue`` is the same as the return value of the subscript.
 As with computed properties, you can choose not to write the setter's ``(newValue)`` parameter,
@@ -2244,9 +2260,9 @@ the ``get`` keyword can be dropped for read-only subscripts:
 
 ::
 
-    --> subscript(n: Int) -> Int {
-            // return an appropriate subscript value here
-        }
+    subscript(n: Int) -> Int {
+        // return an appropriate subscript value here
+    }
 
 Here's an example of a read-only subscript implementation:
 
@@ -2266,8 +2282,8 @@ Here's an example of a read-only subscript implementation:
         }
     --> var fibonacci = FibonacciGenerator()
     <<< // fibonacci : FibonacciGenerator = <FibonacciGenerator instance>
-    --> println("The sixth number in the Fibonacci sequence is \(fibonacci[7])")
-    <<< The sixth number in the Fibonacci sequence is 13
+    --> println("The seventh number in the Fibonacci sequence is \(fibonacci[7])")
+    <-- The seventh number in the Fibonacci sequence is 13
 
 This example defines a ``FibonacciGenerator`` class to
 generate numbers from the :newTerm:`Fibonacci sequence`.
@@ -2321,6 +2337,8 @@ by passing in a key of the appropriate type within subscript braces:
     <<< // numberOfLegs : Dictionary<String, Int> = Dictionary<String, Int>(1.33333, 3, <DictionaryBufferOwner<String, Int> instance>)
     --> let spiderLegs = numberOfLegs["spider"]
     <<< // spiderLegs : Int = 8
+    /-> spiderLegs is equal to \(spiderLegs)
+    <-/ spiderLegs is equal to 8
 
 This ``Dictionary`` instance is of type ``Dictionary<String, Int>``.
 This means that it has keys of type ``String``,
@@ -2409,9 +2427,9 @@ is outside of the bounds of the matrix:
 
 ::
 
-    --> if row >= rows || column >= columns {
-            return .None
-        }
+    if row >= rows || column >= columns {
+        return .None
+    }
     return grid[(row * columns) + column]
 
 A value of ``.None`` is returned if you try and access
@@ -2424,7 +2442,7 @@ a subscript that is outside of the matrix bounds:
         } else {
             println("The matrix is not big enough to hold a value at [2, 2]")
         }
-    <<< The matrix is not big enough to hold a value at [2, 2]
+    <-- The matrix is not big enough to hold a value at [2, 2]
 
 Otherwise, the subscript's getter returns
 the appropriate value from the ``grid`` array.
@@ -2453,9 +2471,9 @@ and is checked by the subscript's setter:
 
 ::
 
-    --> if value && row < rows && column < columns {
-            grid[(row * columns) + column] = value!
-        }
+    if value && row < rows && column < columns {
+        grid[(row * columns) + column] = value!
+    }
 
 The setter checks to see if ``value`` is not equal to ``.None``,
 and also checks to make sure that the ``row`` and ``column`` values are valid.
