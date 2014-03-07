@@ -12,9 +12,43 @@
 Enumerations
 ============
 
-:newTerm:`Enumerations` are used to define multiple items of a similar type.
-For example, the four main points of a compass are all of a similar type,
-and can be written as an enumeration using the ``enum`` keyword:
+:newTerm:`Enumerations` are a way to define multiple values of a similar type,
+and to work with those values in a type-safe way within your code.
+
+Enumerations in Swift are much more flexible than their counterparts in C and Objective-C.
+Swift enumerations can:
+
+* store :newTerm:`associated values` of any type along with each member value
+* provide :newTerm:`raw values` for each enumeration member
+
+These capabilities are described in detail within this chapter.
+
+In addition, enumerations can:
+
+* declare :newTerm:`computed properties` to provide additional information about their values
+  (as described in :doc:`Properties`)
+* define :newTerm:`methods` to provide functionality related to the values they represent
+  (as described in :doc:`Methods`)
+* define :newTerm:`initializers` to provide an initial member value
+  (as described in :doc:`Initialization`)
+* conform to :newTerm:`protocols` to provide standard functionality of a certain type
+  (as described in :doc:`Protocols`)
+* be :newTerm:`extended` to expand their functionality beyond their original implementation
+  (as described in :doc:`Extensions`)
+
+Enumeration Syntax
+------------------
+
+Enumerations are introduced by the ``enum`` keyword,
+and place their entire definition within a pair of braces:
+
+.. testcode:: enums
+
+    --> enum SomeEnumeration {
+            // enumeration definition goes here
+        }
+
+Here's an example for the four main points of a compass:
 
 .. testcode:: enums
 
@@ -25,7 +59,12 @@ and can be written as an enumeration using the ``enum`` keyword:
             case West
         }
 
-The ``case`` keyword is used to indicate each new line of member values.
+The values defined in an enumeration
+(such as ``North``, ``South``, ``East``, and ``West``)
+are known as the :newTerm:`member values` (or :newTerm:`members`) of that enumeration.
+The ``case`` keyword is used to indicate that a new line of member values
+is about to be defined.
+
 Multiple member values can appear on a single line, separated by commas:
 
 .. testcode:: enums
@@ -34,14 +73,16 @@ Multiple member values can appear on a single line, separated by commas:
             case Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune
         }
 
-Unlike C and Objective-C,
-Swift enumeration members are not assigned a default integer value when they are created.
-In the ``CompassPoints`` example above,
-``North``, ``South``, ``East`` and ``West``
-do not implicitly equal
-``0``, ``1``, ``2`` and ``3``.
-Instead, the different enumeration members are fully-fledged values in their own right,
-with an explicitly-defined type of ``CompassPoint``.
+.. note::
+
+    Unlike C and Objective-C,
+    Swift enumeration members are not assigned a default integer value when they are created.
+    In the ``CompassPoints`` example above,
+    ``North``, ``South``, ``East`` and ``West``
+    do not implicitly equal
+    ``0``, ``1``, ``2`` and ``3``.
+    Instead, the different enumeration members are fully-fledged values in their own right,
+    with an explicitly-defined type of ``CompassPoint``.
 
 Each enumeration definition effectively defines a brand new type.
 As a result, their names
@@ -121,8 +162,6 @@ you can provide a ``default`` case to cover any members that are not addressed e
                 println("Not a safe place for humans")
         }
     <-- Mostly harmless
-
-The full capabilties of ``switch`` statements are covered in more detail in :doc:`ControlFlow`.
 
 .. _Enumerations_AssociatedValues:
 

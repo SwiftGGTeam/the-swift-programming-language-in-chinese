@@ -33,6 +33,8 @@ This process is covered in the :doc:`Protocols` chapter.
 
 .. QUESTION: What are the rules for overloading via extensions?
 
+.. TODO: Talk about extending enumerations to have additional member values
+
 .. _Extensions_ComputedProperties:
 
 Computed Properties
