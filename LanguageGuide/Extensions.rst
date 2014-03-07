@@ -55,11 +55,11 @@ to provide basic support for working with distance units:
     --> let oneInch = 25.4.mm
     <<< // oneInch : Double = 0.0254
     --> println("One inch is \(oneInch) meters")
-    <<< One inch is 0.0254 meters
+    <-- One inch is 0.0254 meters
     --> let threeFeet = 3.ft
     <<< // threeFeet : Double = 0.9144
     --> println("Three feet is \(threeFeet) meters")
-    <<< Three feet is 0.9144 meters
+    <-- Three feet is 0.9144 meters
 
 These computed properties give a way to express that a ``Double`` value
 should be considered as a certain unit of length.
@@ -89,7 +89,7 @@ and can be used within mathematical calculations wherever a ``Double`` is accept
     --> let aMarathon = 42.km + 195.m
     <<< // aMarathon : Double = 42195.0
     --> println("A marathon is \(aMarathon) meters long")
-    <<< A marathon is 42195.0 meters long
+    <-- A marathon is 42195.0 meters long
 
 .. note::
 
@@ -134,6 +134,8 @@ for use with string interpolation.
     <<< // somePoint : Point = Point(3.0, 5.0)
     --> let pointDescription = String(somePoint)
     <<< // pointDescription : String = "(3.0, 5.0)"
+    /-> pointDescription is \"\(pointDescription)\"
+    <-/ pointDescription is "(3.0, 5.0)"
 
 This example defines a new structure called ``Point`` to represent an ``(x, y)`` co-ordinate.
 It also extends ``String`` to add a new initializer implementation,
@@ -154,7 +156,7 @@ to incorporate their values as part of a longer string:
     --> let anotherPoint = Point(-2.0, 6.0)
     <<< // anotherPoint : Point = Point(-2.0, 6.0)
     --> println("anotherPoint's value is \(anotherPoint)")
-    <<< anotherPoint's value is (-2.0, 6.0)
+    <-- anotherPoint's value is (-2.0, 6.0)
 
 Whenever string interpolation discovers an instance in the string,
 it checks to see if ``String`` has an initializer that accepts instances of that type.
@@ -215,6 +217,8 @@ and even-numbered characters to lowercase:
     <<< // boring : String = "woooooooooooo, i am a ghost!"
     --> let spooky = boring.toSpooky()
     <<< // spooky : String = "WoOoOoOoOoOoO, i aM A GhOsT!"
+    /-> \"\(spooky)\"
+    <-/ "WoOoOoOoOoOoO, i aM A GhOsT!"
 
 .. _Extensions_MutatingInstanceMethods:
 
@@ -238,8 +242,8 @@ just like mutating methods from an original implementation:
     --> var someInt = 123_456
     <<< // someInt : Int = 123456
     --> someInt.shiftRight(3)
-    --> println("someInt is now \(someInt)")
-    <<< someInt is now 123
+    /-> someInt is now \(someInt)
+    <-/ someInt is now 123
 
 This example adds a ``shiftRight()`` method to instances of ``Int``.
 This method is similar to the
@@ -298,16 +302,35 @@ so:
                 return (self / decimalBase) % 10
             }
         }
-    --> 123456789[0]
-    <<< // r0 : Int = 9
-    --> 123456789[1]
-    <<< // r1 : Int = 8
-    --> 123456789[2]
-    <<< // r2 : Int = 7
-    --> 123456789[8]
-    <<< // r3 : Int = 1
-    --> 123456789[9]
+    --> 746381295[0]
+    <<< // r0 : Int = 5
+    /-> returns \(r0)
+    <-/ returns 5
+    --> 746381295[1]
+    <<< // r1 : Int = 9
+    /-> returns \(r1)
+    <-/ returns 9
+    --> 746381295[2]
+    <<< // r2 : Int = 2
+    /-> returns \(r2)
+    <-/ returns 2
+    --> 746381295[8]
+    <<< // r3 : Int = 7
+    /-> returns \(r3)
+    <-/ returns 7
+
+If the ``Int`` value does not have enough digits for the requested index,
+the subscript implementation will return ``0``,
+as if the number had been padded with zeroes to the left:
+
+.. testcode:: extensionsSubscripts
+
+    --> 746381295[9]
     <<< // r4 : Int = 0
+    /-> returns \(r4), as if you had requested:
+    <-/ returns 0, as if you had requested:
+    --> 0746381295[9]
+    <<< // r5 : Int = 0
 
 .. TODO: provide an explanation of this example
 
@@ -368,8 +391,8 @@ The nested enumeration can now be used with ``UnicodeScalar`` values:
             print("\n")
         }
     --> printLetterKinds("Hello")
-    <<< 'Hello' is made up of the following kinds of letters:
-    <<< consonant vowel consonant consonant vowel
+    <-/ 'Hello' is made up of the following kinds of letters:
+    <-/ consonant vowel consonant consonant vowel
 
 This function, ``printLetterKinds()``,
 takes an input ``String`` value and iterates over its characters.
