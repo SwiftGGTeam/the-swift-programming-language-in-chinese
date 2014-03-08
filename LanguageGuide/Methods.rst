@@ -194,6 +194,46 @@ to enable it to modify the variable properties of the implicit ``self`` paramete
 As above, it does not need to explicitly refer to ``self``,
 and can use ``x`` and ``y`` as shorthand for ``self.x`` and ``self.y``.
 
+.. _ClassesAndStructures_SelfEnumerations:
+
+Using Self in Enumeration Instance Methods
+__________________________________________
+
+The ``self`` parameter of an enumeration instance method
+is a read-only copy of the enumeration member,
+and cannot be modified.
+This is similar to the behavior for structure instance methods seen above.
+
+Enumeration instance methods can request to receive a writeable ``self`` parameter
+by placing the ``mutating`` keyword before the ``func`` keyword for that method:
+
+.. testcode:: selfEnumerations
+
+    --> enum TriStateLightSwitch {
+            case Off, Low, High
+            mutating func next() {
+                switch self {
+                    case Off:
+                        self = Low
+                    case Low:
+                        self = High
+                    case High:
+                        self = Off
+                }
+            }
+        }
+    --> var ovenLight = TriStateLightSwitch.Low
+    <<< // ovenLight : TriStateLightSwitch = <unprintable value>
+    --> ovenLight.next()
+    /// ovenLight is now equal to .High
+    --> ovenLight.next()
+    /// ovenLight is now equal to .Off
+
+This example defines an enumeration for a three-state light switch.
+The light switch cycles between three different power states
+(``Off``, ``Low`` and ``High``)
+every time that its ``next()`` method is called.
+
 .. _ClassesAndStructures_TypePropertiesAndMethods:
 
 Type Methods
