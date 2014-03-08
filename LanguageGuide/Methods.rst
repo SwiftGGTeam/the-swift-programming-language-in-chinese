@@ -194,6 +194,9 @@ to enable it to modify the variable properties of the implicit ``self`` paramete
 As above, it does not need to explicitly refer to ``self``,
 and can use ``x`` and ``y`` as shorthand for ``self.x`` and ``self.y``.
 
+.. TODO: Mention that you can't use mutating methods on
+   constant instances of a structure.
+
 .. _ClassesAndStructures_SelfEnumerations:
 
 Using Self in Enumeration Instance Methods
