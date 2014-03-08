@@ -582,34 +582,6 @@ A complete list of Swift operator precedences and associativity rules can be fou
 
 .. TODO: update this link to go to the specific section of the Reference Manual.
 
-.. _Operators_Explicit Parentheses:
-
-Explicit Parentheses
-~~~~~~~~~~~~~~~~~~~~
-
-Precedence and associativity define exactly one order of calculation
-when multiple operators are used.
-However, it can sometimes be useful to include parentheses anyway,
-to make the intention of a complex expression easier to read.
-In the door access example above,
-it is useful to add parentheses around the first part of the compound expression:
-
-.. testcode:: logicalOperators
-
-    --> if (enteredDoorCode && passedRetinaScan) || hasDoorKey || knowsOverridePassword {
-            println("Welcome!")
-        } else {
-            println("ACCESS DENIED")
-        }
-    <-- Welcome!
-
-The parentheses make it clear that the first two values
-are being considered as part of a separate possible state in the overall logic.
-The output of the compound expression doesn't change,
-but the overall intention is clearer to the reader.
-Readability is always preferred over brevity;
-use parentheses where they help to make your intentions clear.
-
 .. _ClassesAndStructures_OperatorFunctions:
 
 Operator Functions

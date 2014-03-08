@@ -690,3 +690,30 @@ Based on the example values from earlier,
 the first two mini-expressions are ``false``,
 but we know the emergency override password,
 so the overall compound expression still equates to ``true``.
+
+.. _Operators_Explicit Parentheses:
+
+Explicit Parentheses
+~~~~~~~~~~~~~~~~~~~~
+
+It can sometimes be useful to include parentheses when they are not strictly needed,
+to make the intention of a complex expression easier to read.
+In the door access example above,
+it is useful to add parentheses around the first part of the compound expression
+to make its intent explicit:
+
+.. testcode:: logicalOperators
+
+    --> if (enteredDoorCode && passedRetinaScan) || hasDoorKey || knowsOverridePassword {
+            println("Welcome!")
+        } else {
+            println("ACCESS DENIED")
+        }
+    <-- Welcome!
+
+The parentheses make it clear that the first two values
+are being considered as part of a separate possible state in the overall logic.
+The output of the compound expression doesn't change,
+but the overall intention is clearer to the reader.
+Readability is always preferred over brevity;
+use parentheses where they help to make your intentions clear.
