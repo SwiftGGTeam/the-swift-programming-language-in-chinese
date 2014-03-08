@@ -41,7 +41,7 @@ or :newTerm:`constant stored properties` (introduced by the ``let`` keyword):
             let max: Int
         }
     --> var countToThree = Count(current: 0, max: 3)
-    <<< // countToThree : Count = <Counter instance>
+    <<< // countToThree : Count = Count(0, 3)
     --> for _ in countToThree.current...countToThree.max {
             println(++countToThree.current)
         }
@@ -111,7 +111,7 @@ because it can access the new value as usual by using the property's name.
 
 Here's an example of ``willSet`` and ``didSet`` in action:
 
-.. testcode:: classesAndStructures
+.. testcode:: storedProperties
 
     --> class StepCounter {
             var previousTotalSteps = 0
