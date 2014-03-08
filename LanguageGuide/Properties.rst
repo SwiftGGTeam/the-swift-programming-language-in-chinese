@@ -1,6 +1,8 @@
 Properties
 ==========
 
+.. TODO: research and write up the story for @weak
+
 :newTerm:`Properties` are a way to associate multiple values with a particular
 class, structure or enumeration.
 They take one of two forms:

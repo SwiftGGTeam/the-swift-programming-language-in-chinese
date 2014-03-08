@@ -6,7 +6,7 @@
     * Capturing values
     * Different closure expression forms
     * Anonymous closure arguments
-    * Attributes (infix, resilience, inout, auto_closure, noreturn)
+    * Attributes (infix, resilience, inout, auto_closure, noreturn, weak)
     * Typedefs for closure signatures to aid readability
 
 Closures
