@@ -185,6 +185,8 @@ a message is printed to indicate how many new steps have been taken.
 
 .. TODO: mention that this also works for global / local variables
 
+.. TODO: update this example now that didSet gets an implicit "oldValue" parameter.
+
 .. _ClassesAndStructures_ComputedProperties:
 
 Computed Properties
