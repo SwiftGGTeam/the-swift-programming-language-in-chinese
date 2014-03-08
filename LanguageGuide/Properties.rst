@@ -350,6 +350,9 @@ to enable the outside world to discover its current calculated volume.
    
 .. TODO: Anything else from https://[Internal Staging Server]/docs/StoredAndComputedVariables.html
 
+.. TODO: Add an example of a computed property for an enumeration
+   (now that the Enumerations chapter no longer has an example of this itself).
+
 .. _ClassesAndStructures_TypePropertiesAndMethods:
 
 Type Properties
