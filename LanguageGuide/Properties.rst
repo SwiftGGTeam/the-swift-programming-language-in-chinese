@@ -1,93 +1,101 @@
 Properties
 ==========
 
-.. _ClassesAndStructures_Properties:
+:newTerm:`Properties` are a way to associate multiple values with a particular
+class, structure or enumeration.
+They take one of two forms:
 
-Properties
-----------
+* :newTerm:`Stored properties`, which store a constant or named value alongside an instance
+* :newTerm:`Computed properties`, which calculate (rather than store) a value
 
-.. HACK: this is currently duplicated in CustomTypes.
+Stored and computed properties are usually associated with instances of a particular type.
+However, they can also be associated with the type itself.
+These kinds of properties are known as :newTerm:`type properties`,
+and are described in more detail below.
 
-Classes and structures can both declare :newTerm:`properties`.
-Properties are named values that are bundled up and stored
-as part of the class or structure:
+.. note::
 
-.. testcode:: classesAndStructures
+    Computed properties can be provided by classes, structures and enumerations.
+    Stored properties can only be provided by classes and structures.
 
-    --> struct Size {
-            var width = 0.0, height = 0.0
-        }
-    --> class Rectangle {
-            var size = Size()
-        }
-
-The example above defines a new structure called ``Size``,
-with two variable properties called ``width`` and ``height``.
-These properties are inferred to be of type ``Double``
-by setting them to an initial floating-point value of ``0.0``.
-
-The example also defines a new class called ``Rectangle``,
-which has a variable property called ``size``.
-This property is initialized with a new ``Size`` structure instance,
-which infers a property type of ``Size``.
-
-.. _ClassesAndStructures_AccessingProperties:
-
-Accessing Properties
-~~~~~~~~~~~~~~~~~~~~
-
-.. HACK: this is currently duplicated in CustomTypes.
-
-The properties of an instance can be accessed using :newTerm:`dot syntax`:
-
-.. testcode:: classesAndStructures
-
-    --> println("The width of someSize is \(someSize.width)")
-    <-- The width of someSize is 0.0
-
-``someSize.width`` refers to the ``width`` property of ``someSize``.
-Dot syntax can also be used to drill down into sub-properties
-such as the ``width`` property in the ``size`` property of a ``Rectangle``:
-
-.. testcode:: classesAndStructures
-
-    --> println("The width of someRectangle is \(someRectangle.size.width)")
-    <-- The width of someRectangle is 0.0
-
-Unlike Objective-C,
-the values of sub-properties can be set directly, regardless of their type.
-In the example below, ``someRectangle.size.width`` is set to a new value of ``2.0``,
-even though it is a sub-property of ``someRectangle.size``:
-
-.. testcode:: classesAndStructures
-
-    --> someRectangle.size.width = 2.0
-    --> println("The width of someRectangle is now \(someRectangle.size.width)")
-    <-- The width of someRectangle is now 2.0
+.. QUESTION: should I mention dot syntax again?
+   I introduced it in Custom Types out of necessity,
+   but maybe it should be mentioned here too.
 
 .. _ClassesAndStructures_StoredProperties:
 
 Stored Properties
-~~~~~~~~~~~~~~~~~
+-----------------
 
 In its simplest form, a property is just a named value
-that is stored as part of an instance.
+that is stored alongside an instance of a particular class or structure.
 Properties of this kind are known as :newTerm:`stored properties`.
-Stored properties can be either :newTerm:`variable stored properties`
-(introduced by the ``var`` keyword, as in the examples above),
-or :newTerm:`constant stored properties` (introduced by the ``let`` keyword).
+Stored properties can be either
+:newTerm:`variable stored properties` (introduced by the ``var`` keyword),
+or :newTerm:`constant stored properties` (introduced by the ``let`` keyword):
+
+.. testcode:: storedProperties
+
+    --> struct Count {
+            var current: Int
+            let max: Int
+        }
+    --> var countToThree = Count(current: 0, max: 3)
+    <<< // countToThree : Count = <Counter instance>
+    --> for _ in countToThree.current...countToThree.max {
+            println(++countToThree.current)
+        }
+    <-/ 1
+    <-/ 2
+    <-/ 3
+
+This example defines a simple ``Count`` structure for keeping track of a counter.
+Instances of ``Count`` have a variable stored property called ``current``,
+and a constant stored property called ``max``.
+In the example above, ``max`` is initialized when the new counter is created,
+and cannot be changed thereafter, because it is a constant property.
+
+The example uses a ``for``-``in`` loop to iterate over a half-closed range
+that runs from the counter's ``current`` property value
+to the counter's ``max`` property value.
+Each time through the loop, the ``current`` property is incremented,
+and the result is printed.
 
 Constant stored properties are very similar to constant named values,
 in that their value cannot be changed once it has been initialized.
 Constant stored properties have slightly more flexibility, however,
-in that their value can be changed at any point until the initializer for the class
-they belong to has completed its initialization.
-(Instance initialization is described in more detail in :ref:`ClassesAndStructures_Initialization`.)
+in that their value can be changed at any point until the initializer for
+the class or structure they belong to has completed its initialization.
+(Instance initialization is described in more detail in :doc:`InitializationAndInheritance`.)
+
+Stored Properties and Instance Variables
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you have experience with Objective-C,
+you may be familiar with the fact that it provides *two* ways
+to store values and references alongside instances of a class.
+In addition to properties,
+Objective-C also has the concept of :newTerm:`instance variables`,
+which are used as a 'backing' store for the values stored in a property.
+
+Swift unifies these two separate concepts into a single unified property declaration.
+There is no longer a distinction between properties and instance variables,
+and the backing store for a property is not accessed directly.
+This avoids potential confusion around how the value is accessed in different contexts,
+and simplifies the property's declaration into a single, definitive statement.
+All of the information about the property –
+including its name, type, and memory management characteristics –
+is defined in a single location as part of the type's definition.
+
+.. TODO: How do I define whether my properties are strong- or weak-reference?
+.. TODO: what happens if one property of a constant structure is an object reference?
+.. TODO: immutability of value type constants means that
+   their mutable properties are also immutable
 
 .. _ClassesAndStructures_StoredPropertyObservers:
 
 Stored Property Observers
-_________________________
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :newTerm:`Stored property observers` are a way to observe and respond to
 the setting of new values for a stored property.
@@ -99,7 +107,7 @@ You have the option to define either or both of these observers on a stored prop
 If you implement a ``willSet`` observer,
 it is passed the new property value as a constant parameter for you to check and use.
 The ``didSet`` observer is not passed the new property value,
-because it can access the new value as usual via the property's name.
+because it can access the new value as usual by using the property's name.
 
 Here's an example of ``willSet`` and ``didSet`` in action:
 
@@ -178,17 +186,20 @@ a message is printed to indicate how many new steps have been taken.
 .. _ClassesAndStructures_ComputedProperties:
 
 Computed Properties
-~~~~~~~~~~~~~~~~~~~
+-------------------
 
 Classes and structures can also define :newTerm:`computed properties`,
 which do not actually store a value.
 Instead, they provide a :newTerm:`getter`, and an optional :newTerm:`setter`,
 to retrieve and set other properties and values indirectly.
 
-.. testcode:: classesAndStructures
+.. testcode:: computedProperties
 
     --> struct Point {
             var x = 0.0, y = 0.0
+        }
+    --> struct Size {
+            var width = 0.0, height = 0.0
         }
     --> struct Rect {
             var origin = Point()
@@ -213,10 +224,10 @@ to retrieve and set other properties and values indirectly.
     --> println("square.origin is now at (\(square.origin.x), \(square.origin.y))")
     <-- square.origin is now at (10.0, 10.0)
 
-This example uses the previously-defined ``Size`` structure,
-and defines two additional structures for working with geometric shapes:
+This example defines three structures for working with geometric shapes:
 
 * ``Point``, which encapsulates an ``(x, y)`` co-ordinate
+* ``Size``, which encapsulates a ``width`` and a ``height``
 * ``Rect``, which defines a rectangle in terms of an origin point and a size
 
 The ``Rect`` structure also provides a computed property called ``center``.
@@ -251,14 +262,14 @@ and moves the square to its new position.
 .. _ClassesAndStructures_ShorthandSetterDeclaration:
 
 Shorthand Setter Declaration
-____________________________
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If a computed property's setter does not define a name for the new value to be set,
 a default name of ``value`` is used.
 Here's an alternative version of the ``Rect`` structure,
 which takes advantage of this shorthand notation:
 
-.. testcode:: classesAndStructures
+.. testcode:: computedProperties
 
     --> struct AlternativeRect {
             var origin = Point()
@@ -279,7 +290,7 @@ which takes advantage of this shorthand notation:
 .. _ClassesAndStructures_ReadOnlyComputedProperties:
 
 Read-Only Computed Properties
-_____________________________
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 A computed property with a getter but no setter is known as a :newTerm:`read-only computed property`.
 Read-only computed properties enable you to
@@ -298,7 +309,7 @@ but which cannot be set to a different value by users of your class or structure
 The declaration of a read-only computed property can be simplified
 by removing the ``get`` keyword:
 
-.. testcode:: classesAndStructures
+.. testcode:: computedProperties
 
     --> struct Cuboid {
             var width = 0.0, height = 0.0, depth = 0.0
@@ -338,32 +349,6 @@ to enable the outside world to discover its current calculated volume.
    Where should this be mentioned?
    
 .. TODO: Anything else from https://[Internal Staging Server]/docs/StoredAndComputedVariables.html
-
-.. _ClassesAndStructures_PropertiesAndInstanceVariables:
-
-Properties and Instance Variables
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-If you have experience with Objective-C,
-you may be familiar with the fact that it provides two complementary ways
-to store values and references alongside instances of a class.
-In addition to properties,
-Objective-C also has the concept of :newTerm:`instance variables`,
-which are used as a 'backing' store for the values stored in a property.
-
-Swift unifies these two separate concepts into a single unified property declaration.
-There is no longer a distinction between properties and instance variables,
-and the backing store for a property is not accessed directly.
-This avoids potential confusion around how the value is accessed in different contexts,
-and simplifies the property's declaration into a single, definite statement.
-All of the information about the property –
-including its name, type, and memory management characteristics –
-is defined in a single location as part of the class definition.
-
-.. TODO: How do I define whether my properties are strong- or weak-reference?
-.. TODO: what happens if one property of a constant structure is an object reference?
-.. TODO: immutability of value type constants means that
-   their mutable properties are also immutable
 
 .. _ClassesAndStructures_TypePropertiesAndMethods:
 
