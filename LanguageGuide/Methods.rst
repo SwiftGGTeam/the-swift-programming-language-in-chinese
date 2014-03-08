@@ -262,12 +262,12 @@ and elements in a ``Dictionary`` instance can be accessed as
 Subscript Syntax
 ~~~~~~~~~~~~~~~~
 
-Subscripts are written with the ``subscript`` keyword, without a ``func`` prefix,
-in a similar way to how initializers are written with the ``init`` keyword.
-Susbcripts specify one or more input parameters and a return type,
-in the same way as normal instance methods.
+Subscripts are written with the ``subscript`` keyword, without a ``func`` prefix.
+Their syntax is similar to both instance method syntax and computed property syntax.
 
-Subscripts can be read-write or read-only,
+They specify one or more input parameters and a return type,
+in the same way as normal instance methods.
+However, subscripts can be read-write or read-only,
 and this behavior is communicated via a getter and setter
 in the same way as for computed properties:
 
@@ -283,7 +283,7 @@ in the same way as for computed properties:
     }
 
 The type of ``newValue`` is the same as the return value of the subscript.
-As with computed properties, you can choose not to write the setter's ``(newValue)`` parameter,
+As with computed properties, you can choose not to specify the setter's ``(newValue)`` parameter,
 and a default parameter called ``value`` will be provided to your setter
 if you do not provide one yourself.
 A subscript setter's ``value`` parameter always has the same type as
