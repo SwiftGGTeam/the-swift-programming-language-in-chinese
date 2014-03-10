@@ -8,7 +8,9 @@ More complex examples include the logical AND operator ``&&``
 (as in ``if enteredDoorCode && passedRetinaScan``),
 or the increment operator ``++i``,
 which gives a shorthand way to increase the value of ``i`` by ``1``.
-All of these operators are explained in more detail below.
+
+All of the most common operators are described in this chapter.
+Swift's more advanced operators are described in :doc:`AdvancedOperators`.
 
 Swift supports all of the standard operators from C,
 and improves several of their capabilities:
@@ -16,19 +18,26 @@ and improves several of their capabilities:
 * Assignment (``=``) does not return a value, to avoid common coding errors
 * Remainder (``%``) calculations can be performed on floating-point numbers
 * Arithmetic operators (``+``, ``-``, ``*``, ``/``, ``%`` etc.)
-  detect value overflow, eliminating a category of common coding errors
+  detect and disallow value overflow,
+  eliminating a category of common coding errors
 
-It also provides expressive operators that make development easier or more explicit:
+You can choose to opt in to value overflow behavior
+by using Swift's :newTerm:`overflow operators` (such as ``a &+ b``).
+Overflow operators are described in :doc:`AdvancedOperators`.
 
-* :ref:`Operators_RangeOperators`
-  ``a..b`` and ``a...b``, which give a short-hand way to express a range of values
-* :ref:`Operators_OverflowOperators`
-  such as ``a &+ b``, to opt in to overflowing arithmetic behavior
+Swift also provides two :ref:`BasicOperators_RangeOperators`
+(``a..b`` and ``a...b``),
+which give a short-hand way to express a range of values.
 
-In addition, you can define your own implementations of the standard operators –
-and create new ones –
+You can define your own implementations of the standard operators –
+and create new operators with custom functionality –
 for any custom types you define.
 This process is covered in detail in :doc:`AdvancedOperators`.
+
+.. _BasicOperators_Terminology:
+
+Terminology
+-----------
 
 Operators are often referred to as :newTerm:`unary`, :newTerm:`binary`, or :newTerm:`ternary`:
 
@@ -41,7 +50,7 @@ Operators are often referred to as :newTerm:`unary`, :newTerm:`binary`, or :newT
   and are said to be :newTerm:`infix` because they appear inbetween their two targets.
 * Ternary operators operate on three targets.
   Like C, Swift has just one ternary operator,
-  known as the ternary conditional operator (``a ? b : c``).
+  known as the :newTerm:`ternary conditional operator` (``a ? b : c``).
 
 The values that operators affect are known as :newTerm:`operands`.
 In the expression ``1 + 2``, the ``+`` symbol is a binary operator
