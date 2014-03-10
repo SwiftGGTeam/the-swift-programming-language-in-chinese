@@ -695,6 +695,8 @@ at the end of the returned string.
    This is tracked as rdar://16030076, and this section should be updated
    once it is implemented.
 
+.. _Functions_InoutParameters:
+
 Inout Parameters
 ----------------
 
@@ -702,12 +704,16 @@ Inout Parameters
 
 .. inout properties and a general discussion of byref / byvalue
 
+.. _Functions_FunctionsAsParametersAndReturnTypes:
+
 Functions as Parameters and Return Types
 ----------------------------------------
 
 .. write-me::
 
 .. functions can be passed in as parameters, and can be returned as return values
+
+.. _Functions_FunctionBinding:
 
 Function Binding
 ----------------
@@ -723,6 +729,8 @@ Function Binding
 .. var c = C()
 .. var boundFunc = c.foo 	// a function with type (Int) -> Float
 .. var unboundFunc = C.foo // a function with type (C) -> (Int) -> Float
+
+.. _Functions_CurriedFunctions:
 
 Curried Functions
 -----------------

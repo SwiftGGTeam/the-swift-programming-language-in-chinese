@@ -36,6 +36,8 @@ In addition, enumerations can:
 * conform to :newTerm:`protocols` to provide standard functionality of a certain type
   (as described in :doc:`Protocols`)
 
+.. _Enumerations_EnumerationSyntax:
+
 Enumeration Syntax
 ------------------
 

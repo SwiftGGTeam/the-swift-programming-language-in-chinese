@@ -614,7 +614,7 @@ However, it is valid to say:
 
 The result of the ``i == 1`` comparison is of type ``Bool``,
 and so this second example passes the type-check.
-(Comparisons like ``i == 1`` are discussed in :doc:`Operators`.)
+(Comparisons like ``i == 1`` are discussed in :doc:`BasicOperators`.)
 
 As with other examples of type safety in Swift,
 this approach avoids accidental errors,
@@ -715,7 +715,7 @@ If your data structure would benefit from named member values,
 or is likely to persist beyond a temporary scope,
 it should be modeled as a :newTerm:`class` or :newTerm:`structure`,
 rather than as a tuple.
-Classes and structures are described in detail in :doc:`ClassesAndStructures`.
+Classes and structures are described in detail in :doc:`CustomTypes`.
 
 .. _BasicTypes_Optionals:
 

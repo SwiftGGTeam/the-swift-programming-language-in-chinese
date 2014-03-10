@@ -1,7 +1,9 @@
 Advanced Operators
 ==================
 
-.. _Operators_BitwiseOperators:
+.. write-me::
+
+.. _AdvancedOperators_BitwiseOperators:
 
 Bitwise Operators
 -----------------
@@ -15,7 +17,7 @@ and when encoding and decoding data for communication via a custom protocol.
 
 Swift supports all of the bitwise operators found in C, as described below.
 
-.. _Operators_BitwiseNOTOperator:
+.. _AdvancedOperators_BitwiseNOTOperator:
 
 Bitwise NOT Operator
 ~~~~~~~~~~~~~~~~~~~~
@@ -51,7 +53,7 @@ Zeroes become ones, and ones become zeroes.
 This gives a new value of ``11110000``,
 which is equal to an unsigned decimal value of ``240``.
 
-.. _Operators_BitwiseANDOperator:
+.. _AdvancedOperators_BitwiseANDOperator:
 
 Bitwise AND Operator
 ~~~~~~~~~~~~~~~~~~~~
@@ -78,7 +80,7 @@ The values of ``firstSixBits`` and ``lastSixBits`` both have their four middle b
 The bitwise AND operator combines them to make the number ``00111100``,
 which is equal to an unsigned decimal value of ``60``.
 
-.. _Operators_BitwiseOROperator:
+.. _AdvancedOperators_BitwiseOROperator:
 
 Bitwise OR Operator
 ~~~~~~~~~~~~~~~~~~~
@@ -106,7 +108,7 @@ The values of ``someBits`` and ``moreBits`` have different bits set to ``1``.
 The bitwise OR operator combines them to make the number ``11111110``,
 which equals an unsigned decimal of ``254``.
 
-.. _Operators_BitwiseXOROperator:
+.. _AdvancedOperators_BitwiseXOROperator:
 
 Bitwise XOR Operator
 ~~~~~~~~~~~~~~~~~~~~
@@ -136,7 +138,7 @@ For example:
 
     “XOR” is pronounced “exclusive OR”.
 
-.. _Operators_BitwiseLeftAndRightShifts:
+.. _AdvancedOperators_BitwiseLeftAndRightShifts:
 
 Bitwise Left and Right Shifts
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -151,7 +153,7 @@ whereas shifting it to the right by one position halves its value.
 
 .. TODO: mention the caveats to this claim.
 
-.. _Operators_ShiftingBehaviorForUnsignedIntegers:
+.. _AdvancedOperators_ShiftingBehaviorForUnsignedIntegers:
 
 Shifting Behavior for Unsigned Integers
 _______________________________________
@@ -246,7 +248,7 @@ which has a decimal value of ``153``.
    Which is a better example? (I've chosen not to use Int so far,
    as this section is about unsigned shifts.)
 
-.. _Operators_ShiftingBehaviorForSignedIntegers:
+.. _AdvancedOperators_ShiftingBehaviorForSignedIntegers:
 
 Shifting Behavior for Signed Integers
 _____________________________________
@@ -328,7 +330,7 @@ shifting either of them to the right has the effect of moving them closer to zer
 Keeping the sign bit the same during this shift means that
 negative integers remain negative as their value moves closer to zero.
 
-.. _Operators_OverflowOperators:
+.. _AdvancedOperators_OverflowOperators:
 
 Overflow Operators
 ------------------
@@ -367,7 +369,7 @@ These operators all begin with an ampersand (``&``):
 * Overflow division (``&/``)
 * Overflow remainder (``&%``)
 
-.. _Operators_ValueOverflow:
+.. _AdvancedOperators_ValueOverflow:
 
 Value Overflow
 ~~~~~~~~~~~~~~
@@ -397,7 +399,7 @@ The value that remains within the bounds of the ``UInt8`` after the overflow add
     :width: 390
     :align: center
 
-.. _Operators_ValueUnderflow:
+.. _AdvancedOperators_ValueUnderflow:
 
 Value Underflow
 ~~~~~~~~~~~~~~~
@@ -427,7 +429,7 @@ Here's how that looks in Swift code:
     <-/ willUnderflow is now equal to 255
 
 A similar underflow happens for signed integers.
-As described under :ref:`Operators_BitwiseLeftAndRightShifts`,
+As described under :ref:`AdvancedOperators_BitwiseLeftAndRightShifts`,
 all subtraction for signed integers is performed as straight binary subtraction,
 with the sign bit included as part of the numbers being subtracted.
 The smallest number that an ``Int8`` can hold is ``-128``,
@@ -456,7 +458,7 @@ The end result of the overflow and underflow behavior described above is that fo
 overflow always wraps around from the largest valid integer value back to the smallest,
 and underflow always wraps around from the smallest value to the largest.
 
-.. _Operators_DivisionByZero:
+.. _AdvancedOperators_DivisionByZero:
 
 Division by Zero
 ~~~~~~~~~~~~~~~~
@@ -493,7 +495,7 @@ return a value of zero if you divide by zero:
    rather than a stack trace,
    once rdar://15804939 has been fixed.
 
-.. _Operators_PrecedenceAndAssociativity:
+.. _AdvancedOperators_PrecedenceAndAssociativity:
 
 Precedence and Associativity
 ----------------------------
@@ -582,12 +584,12 @@ A complete list of Swift operator precedences and associativity rules can be fou
 
 .. TODO: update this link to go to the specific section of the Reference Manual.
 
-.. _ClassesAndStructures_OperatorFunctions:
+.. _AdvancedOperators_OperatorFunctions:
 
 Operator Functions
 ------------------
 
-Classes and structures can provide their own implementations of existing :doc:`operators <Operators>`.
+Classes and structures can provide their own implementations of existing operators.
 This is known as :newTerm:`overloading` the existing operators.
 
 .. testcode:: customOperators
@@ -638,7 +640,7 @@ to make the vector ``(5.0, 5.0)``, as illustrated below.
     :width: 400
     :align: center
 
-.. _ClassesAndStructures_PrefixAndPostfixOperators:
+.. _AdvancedOperators_PrefixAndPostfixOperators:
 
 Prefix and Postfix Operators
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -662,7 +664,7 @@ The attribute is written before the ``func`` keyword when declaring the operator
             return Vector2D(-rhs.x, -rhs.y)
         }
 
-This example implements the :ref:`Operators_UnaryMinusOperator`
+This example implements the :ref:`BasicOperators_UnaryMinusOperator`
 (``-a``) for ``Vector2D`` instances.
 The unary minus operator is a prefix operator,
 and so this function has to be qualified with the ``@prefix`` attribute.
@@ -688,12 +690,12 @@ performs this operation on both the ``x`` and ``y`` properties:
 .. QUESTION: is this the first time I will have introduced attributes?
    If so, do they need more qualification?
 
-.. _ClassesAndStructures_CompoundAssignmentOperators:
+.. _AdvancedOperators_CompoundAssignmentOperators:
 
 Compound Assignment Operators
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-:ref:`Operators_CompoundAssignmentOperators`
+:ref:`BasicOperators_CompoundAssignmentOperators`
 combine assignment (``=``) with another operation.
 One example is the addition assignment operator (``+=``).
 This combines addition and assignment into a single operation.
@@ -755,9 +757,9 @@ and returns the result.
 .. note::
 
     It is not possible to overload the default
-    :ref:`Operators_AssignmentOperator` (``=``).
+    :ref:`BasicOperators_AssignmentOperator` (``=``).
     Only the compound assignment operators may be overloaded.
-    Similarly, the :ref:`Operators_TernaryConditionalOperator`
+    Similarly, the :ref:`BasicOperators_TernaryConditionalOperator`
     (``a ? b : c``) may not be overloaded.
 
 .. QUESTION: some of the standard operators (such as equation and comparison)
@@ -772,7 +774,7 @@ and returns the result.
    All of the stdlib operators (e.g. for fixed- and floating-point numbers)
    are declared as @transparent…
 
-.. _ClassesAndStructures_CustomOperators:
+.. _AdvancedOperators_CustomOperators:
 
 Custom Operators
 ~~~~~~~~~~~~~~~~
@@ -821,7 +823,7 @@ rather than adding ``Vector2D(1.0, 1.0)``:
 
 Custom ``infix`` operators may also specify a :newTerm:`precedence`
 and an :newTerm:`associativity`.
-(See :ref:`Operators_PrecedenceAndAssociativity` for an explanation of
+(See :ref:`AdvancedOperators_PrecedenceAndAssociativity` for an explanation of
 how these two characteristics affect an infix operator's interaction
 with other infix operators.)
 

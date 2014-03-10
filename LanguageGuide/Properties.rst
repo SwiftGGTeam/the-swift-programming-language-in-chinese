@@ -24,7 +24,7 @@ and are described in more detail below.
    I introduced it in Custom Types out of necessity,
    but maybe it should be mentioned here too.
 
-.. _ClassesAndStructures_StoredProperties:
+.. _Properties_StoredProperties:
 
 Stored Properties
 -----------------
@@ -70,6 +70,8 @@ in that their value can be changed at any point until the initializer for
 the class or structure they belong to has completed its initialization.
 (Instance initialization is described in more detail in :doc:`InitializationAndInheritance`.)
 
+.. _Properties_StoredPropertiesAndInstanceVariables:
+
 Stored Properties and Instance Variables
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -94,7 +96,7 @@ is defined in a single location as part of the type's definition.
 .. TODO: immutability of value type constants means that
    their mutable properties are also immutable
 
-.. _ClassesAndStructures_StoredPropertyObservers:
+.. _Properties_StoredPropertyObservers:
 
 Stored Property Observers
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -186,7 +188,7 @@ and the default name of ``oldValue`` is used instead.
 
 .. TODO: mention that this also works for global / local variables
 
-.. _ClassesAndStructures_ComputedProperties:
+.. _Properties_ComputedProperties:
 
 Computed Properties
 -------------------
@@ -262,7 +264,7 @@ and moves the square to its new position.
     :width: 400
     :align: center
 
-.. _ClassesAndStructures_ShorthandSetterDeclaration:
+.. _Properties_ShorthandSetterDeclaration:
 
 Shorthand Setter Declaration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -290,7 +292,7 @@ which takes advantage of this shorthand notation:
             }
         }
 
-.. _ClassesAndStructures_ReadOnlyComputedProperties:
+.. _Properties_ReadOnlyComputedProperties:
 
 Read-Only Computed Properties
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -356,7 +358,7 @@ to enable the outside world to discover its current calculated volume.
 .. TODO: Add an example of a computed property for an enumeration
    (now that the Enumerations chapter no longer has an example of this itself).
 
-.. _ClassesAndStructures_TypePropertiesAndMethods:
+.. _Properties_TypeProperties:
 
 Type Properties
 ---------------

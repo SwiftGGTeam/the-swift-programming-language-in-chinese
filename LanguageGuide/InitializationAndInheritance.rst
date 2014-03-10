@@ -1,15 +1,15 @@
 Initialization and Inheritance
 ==============================
 
-.. _ClassesAndStructures_MemberwiseStructureInitializers:
-
-.. TODO: mention that structures and enums can assign a value to self during initialization,
-   but classes cannot.
+.. _InitializationAndInheritance_MemberwiseStructureInitializers:
 
 Memberwise Structure Initializers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. HACK: this is currently duplicated in CustomTypes.
+
+.. TODO: mention that structures and enums can assign a value to self during initialization,
+   but classes cannot.
 
 All structures have an automatically-generated :newTerm:`memberwise initializer`,
 which can be used to initialise the member properties of new structure instances.
@@ -37,7 +37,7 @@ if they are listed in the same order that the properties are declared in the str
 .. TODO: This whole section needs updating in light of the changes for definite initialization.
    Memberwise initializers will only exist if default values are provided for all properties.
 
-.. _ClassesAndStructures_Initialization:
+.. _InitializationAndInheritance_Initialization:
 
 Initialization
 --------------
@@ -47,7 +47,7 @@ to an appropriate initial value by the time that an instance is created.
 There are two ways to initialize properties:
 
 1. Provide an :newTerm:`initial value` as part of the property declaration
-   (as described in :ref:`ClassesAndStructures_Properties`)
+   (as described in :doc:`Properties`)
 2. Provide a value for the property within an :newTerm:`initializer`
 
 .. note::
@@ -66,7 +66,7 @@ There are two ways to initialize properties:
 
 .. TODO: mention that memory is automatically managed by ARC
 
-.. _ClassesAndStructures_Initializers:
+.. _InitializationAndInheritance_Initializers:
 
 Initializers
 ~~~~~~~~~~~~
@@ -126,7 +126,7 @@ it is available automatically for all classes and structures without their own i
 
 .. note::
     The default initializer for structures is provided in addition to the
-    :ref:`ClassesAndStructures_MemberwiseStructureInitializers` mentioned earlier in this chapter.
+    :ref:`InitializationAndInheritance_MemberwiseStructureInitializers` mentioned earlier in this chapter.
     The default initializer and the memberwise initializer are only provided
     if the structure does not define at least one custom initializer itself.
 
@@ -191,7 +191,7 @@ as long as is is definitely set to a value by the time the initializer has finis
 
 .. TODO: This could do with a more elegant example.
 
-.. _ClassesAndStructures_DefiniteInitialization:
+.. _InitializationAndInheritance_DefiniteInitialization:
 
 Definite Initialization
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -204,7 +204,7 @@ and helps to ensure that your instances are always valid before they are used.
 Swift will report an error at compile-time if your class or structure does not pass
 the definite initialization test.
 
-.. _ClassesAndStructures_InitializerDelegation:
+.. _InitializationAndInheritance_InitializerDelegation:
 
 Initializer Delegation
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -252,7 +252,7 @@ Both of these initializers ensure that the value of ``title``
 is set to a valid string before the initializer ends.
 This means that the ``Document`` class passes the definite initialization test mentioned above.
 
-.. _ClassesAndStructures_Deinitializers:
+.. _InitializationAndInheritance_Deinitializers:
 
 Deinitializers
 --------------
@@ -417,7 +417,7 @@ and its coins are returned to the bank.
 .. TODO: switch Bank to be a class rather than a structure
    once we have support for class-level properties.
 
-.. _ClassesAndStructures_Inheritance:
+.. _InitializationAndInheritance_Inheritance:
 
 Inheritance
 -----------
@@ -481,7 +481,7 @@ which calls the ``init()`` method for ``Bicycle``\ 's superclass, ``Vehicle``.
 
 Although ``Vehicle`` does not have an explicit initializer itself,
 it still has an implicit default initializer,
-as described in :ref:`ClassesAndStructures_Initializers`.
+as described in :ref:`InitializationAndInheritance_Initializers`.
 This call to ``super.init()`` triggers ``Vehicle``\ 's default initializer,
 and ensures that all of the inherited properties are initialized by ``Vehicle``
 before ``Bicycle`` tries to modify them.
@@ -543,7 +543,7 @@ Instance methods of a class are inherited by any and all subclasses of that clas
 
 .. QUESTION: Should I mention that you can subclass from NSObject?
 
-.. _ClassesAndStructures_OverridingInstanceMethods:
+.. _InitializationAndInheritance_OverridingInstanceMethods:
 
 Overriding Instance Methods
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -619,7 +619,7 @@ and returns the complete description.
 
     Overriding of properties is not yet implemented.
 
-.. _ClassesAndStructures_SubclassingAndInitializerDelegation:
+.. _InitializationAndInheritance_SubclassingAndInitializerDelegation:
 
 Subclassing and Initializer Delegation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -791,7 +791,7 @@ Here's how this final initializer could be called:
 
 .. TODO: Illustrate how the order of things matters when inserting calls to super.init
 
-.. _ClassesAndStructures_DynamicReturnTypes:
+.. _InitializationAndInheritance_DynamicReturnTypes:
 
 Dynamic Return Types
 ~~~~~~~~~~~~~~~~~~~~
@@ -801,7 +801,7 @@ Dynamic Return Types
 .. TODO: mention that methods can return DynamicSelf (a la instancetype)
 .. TODO: include the several tricks seen in swift/test/decl/func/dynamic_self.swift
 
-.. _ClassesAndStructures_TypeCasting:
+.. _InitializationAndInheritance_TypeCasting:
 
 Type Casting
 ------------
@@ -886,7 +886,7 @@ and so an instance of either class can be added to the array.
     and it is clear from the context that this is the correct initializer to use.
     As a result, leaving out the ``withName:`` selector does not cause any ambiguity.
 
-.. _ClassesAndStructures_CheckingType:
+.. _InitializationAndInheritance_CheckingType:
 
 Checking Type
 ~~~~~~~~~~~~~
@@ -922,7 +922,7 @@ contain a count of how many ``MediaItem`` instances were found of each type.
 .. QUESTION: is it correct to refer to 'is' and 'as' as 'operators'?
    Or is there some better name we could use?
 
-.. _ClassesAndStructures_Downcasting:
+.. _InitializationAndInheritance_Downcasting:
 
 Downcasting
 ~~~~~~~~~~~

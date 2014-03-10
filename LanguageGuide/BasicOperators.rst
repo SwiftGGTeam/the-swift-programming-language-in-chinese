@@ -56,7 +56,7 @@ The values that operators affect are known as :newTerm:`operands`.
 In the expression ``1 + 2``, the ``+`` symbol is a binary operator
 and its two operands are the values ``1`` and ``2``.
 
-.. _Operators_AssignmentOperator:
+.. _BasicOperators_AssignmentOperator:
 
 Assignment Operator
 -------------------
@@ -101,7 +101,7 @@ Swift makes it much easier to avoid these kinds of errors in your code.
    If so, is there a convincing argument as to why this is a good thing?
 .. TODO: Add a section about the new assignments bindings.
 
-.. _Operators_ArithmeticOperators:
+.. _BasicOperators_ArithmeticOperators:
 
 Arithmetic Operators
 --------------------
@@ -153,7 +153,7 @@ can be added together to make a new ``String`` value:
    when using for-in to iterate over someString.chars.
    I've used 'scalar' several times throughout the book.
 
-.. _Operators_RemainderOperator:
+.. _BasicOperators_RemainderOperator:
 
 Remainder Operator
 ~~~~~~~~~~~~~~~~~~
@@ -209,7 +209,7 @@ giving a remainder value of ``-1``.
 The sign of ``b`` is ignored for negative values of ``b``.
 This means that ``a % b`` and ``a % -b`` always give the same answer.
 
-.. _Operators_FloatingPointRemainderCalculations:
+.. _BasicOperators_FloatingPointRemainderCalculations:
 
 Floating-Point Remainder Calculations
 _____________________________________
@@ -229,7 +229,7 @@ so the remainder operator returns a ``Double`` value of ``0.5``.
     :width: 311
     :align: center
 
-.. _Operators_IncrementAndDecrementOperators:
+.. _BasicOperators_IncrementAndDecrementOperators:
 
 Increment and Decrement Operators
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -300,7 +300,7 @@ and then returning the result.
 
 .. QUESTION: if so, have I followed this advice throughout the book?
 
-.. _Operators_UnaryMinusOperator:
+.. _BasicOperators_UnaryMinusOperator:
 
 Unary Minus Operator
 ~~~~~~~~~~~~~~~~~~~~
@@ -320,7 +320,7 @@ known as the :newTerm:`unary minus operator`:
 The unary minus operator (``-``) is prepended directly before the value it operates on,
 without any whitespace.
 
-.. _Operators_UnaryPlusOperator:
+.. _BasicOperators_UnaryPlusOperator:
 
 Unary Plus Operator
 ~~~~~~~~~~~~~~~~~~~
@@ -339,7 +339,7 @@ The unary plus operator doesn't actually do anything.
 However, it can be used to provide symmetry in your code
 when used alongside the unary minus operator.
 
-.. _Operators_CompoundAssignmentOperators:
+.. _BasicOperators_CompoundAssignmentOperators:
 
 Compound Assignment Operators
 -----------------------------
@@ -367,7 +367,7 @@ that performs both tasks at the same time.
 
 A complete list of compound assignment operators can be found in the :doc:`../ReferenceManual/index`.
 
-.. _Operators_ComparisonOperators:
+.. _BasicOperators_ComparisonOperators:
 
 Comparison Operators
 --------------------
@@ -387,7 +387,7 @@ Swift supports all of the standard C :newTerm:`comparison operators`:
    They should be added to this section if and when they are implemented.
 
 These :newTerm:`identity operators` are used to test if two object named values both refer to the same object instance.
-They are described in :doc:`ClassesAndStructures`.
+They are described under :ref:`CustomTypes_IdentityOperators` in the :doc:`CustomTypes` chapter.
 
 Each of the comparison operators returns a ``Bool`` value to indicate whether or not the statement is true:
 
@@ -427,7 +427,7 @@ The ``if``-``else`` statement is described in more detail in :doc:`ControlFlow`.
    How do they work with strings?
    How about with tuples / with your own types?
 
-.. _Operators_TernaryConditionalOperator:
+.. _BasicOperators_TernaryConditionalOperator:
 
 Ternary Conditional Operator
 ----------------------------
@@ -494,7 +494,7 @@ The ternary conditional operator should be used with care, however.
 It is very concise, but this conciseness can lead to hard-to-read code if overused.
 Avoid combining multiple instances of the ternary conditional operator into one compound statement.
 
-.. _Operators_RangeOperators:
+.. _BasicOperators_RangeOperators:
 
 Range Operators
 ---------------
@@ -502,7 +502,7 @@ Range Operators
 Swift includes two :newTerm:`range operators`,
 which provide shorthand ways to express a range of values.
 
-.. _Operators_ClosedRangeOperator:
+.. _BasicOperators_ClosedRangeOperator:
 
 Closed Range Operator
 ~~~~~~~~~~~~~~~~~~~~~
@@ -528,7 +528,7 @@ such as with a ``for``-``in`` loop:
 
 ``for``-``in`` loops are described in more detail in :doc:`ControlFlow`.
 
-.. _Operators_HalfClosedRangeOperator:
+.. _BasicOperators_HalfClosedRangeOperator:
 
 Half-Closed Range Operator
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -562,14 +562,16 @@ but ``0...count`` only counts as far as ``3``
 (the index of the last item in the array),
 because it is a half-closed range.
 
-.. _Operators_LogicalOperators:
+.. _BasicOperators_LogicalOperators:
 
 Logical Operators
 -----------------
 
+.. write-me::
+
 .. TODO: write an introduction to this section.
 
-.. _Operators_LogicalNOTOperator:
+.. _BasicOperators_LogicalNOTOperator:
 
 Logical NOT Operator
 ~~~~~~~~~~~~~~~~~~~~
@@ -600,7 +602,7 @@ careful choice of Boolean constant and variable names
 can help to keep code readable and concise,
 while avoiding double negatives or confusing logic statements.
 
-.. _Operators_LogicalANDOperator:
+.. _BasicOperators_LogicalANDOperator:
 
 Logical AND Operator
 ~~~~~~~~~~~~~~~~~~~~
@@ -631,7 +633,7 @@ and only allows access if both values are ``true``:
         }
     <-- ACCESS DENIED
 
-.. _Operators_LogicalOROperator:
+.. _BasicOperators_LogicalOROperator:
 
 Logical OR Operator
 ~~~~~~~~~~~~~~~~~~~
@@ -669,7 +671,7 @@ Because one value is ``true``,
 the overall expression also equates to ``true``,
 and access is allowed.
 
-.. _Operators_CombiningLogicalOperators:
+.. _BasicOperators_CombiningLogicalOperators:
 
 Combining Logical Operators
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -700,7 +702,7 @@ the first two mini-expressions are ``false``,
 but we know the emergency override password,
 so the overall compound expression still equates to ``true``.
 
-.. _Operators_Explicit Parentheses:
+.. _BasicOperators_Explicit Parentheses:
 
 Explicit Parentheses
 ~~~~~~~~~~~~~~~~~~~~

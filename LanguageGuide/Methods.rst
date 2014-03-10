@@ -3,7 +3,7 @@ Methods
 
 .. write-me::
 
-.. _ClassesAndStructures_InstanceMethods:
+.. _Methods_InstanceMethods:
 
 Instance Methods
 ----------------
@@ -63,7 +63,7 @@ Instance methods are called using the same dot syntax as properties:
     /-> counter value is now \(counter.count)
     <-/ counter value is now 0
 
-.. _ClassesAndStructures_Self:
+.. _Methods_Self:
 
 Self
 ~~~~
@@ -125,7 +125,7 @@ and an instance property that is also called ``x``:
         }
     <-- This point is to the right of the line where x == 1.0
 
-.. _ClassesAndStructures_SelfClasses:
+.. _Methods_SelfClasses:
 
 Using Self in Class Instance Methods
 ____________________________________
@@ -157,7 +157,7 @@ rather than ``balance += amount``.
 However, the use of the ``self`` prefix is not required,
 as there is no ambiguity as to what ``balance`` refers to.
 
-.. _ClassesAndStructures_SelfStructures:
+.. _Methods_SelfStructures:
 
 Using Self in Structure Instance Methods
 ________________________________________
@@ -199,7 +199,7 @@ and can use ``x`` and ``y`` as shorthand for ``self.x`` and ``self.y``.
 .. TODO: Mention that you can't use mutating methods on
    constant instances of a structure.
 
-.. _ClassesAndStructures_SelfEnumerations:
+.. _Methods_SelfEnumerations:
 
 Using Self in Enumeration Instance Methods
 __________________________________________
@@ -240,7 +240,7 @@ The switch cycles between three different power states
 (``Off``, ``Low`` and ``High``)
 every time that its ``next()`` method is called.
 
-.. _ClassesAndStructures_TypePropertiesAndMethods:
+.. _Methods_TypeMethods:
 
 Type Methods
 ------------
@@ -252,10 +252,15 @@ Type Methods
    without needing to reference the type's name,
    as they also get an implicit ``self`` parameter.
 
-.. _ClassesAndStructures_Subscripts:
+.. _Methods_Subscripts:
 
 Subscripts
 ----------
+
+.. QUESTION: is "Methods" the right place for subscripts?
+   [Contributor 7746] suggested putting them in Properties.
+   Thing is, they're a bit like a method (parameters, return type)
+   and a bit like a computed property (getter, setter)…
 
 Classes and structures can define :newTerm:`subscripts`,
 which enable instances of that class or structure to be queried via one or more
@@ -264,6 +269,8 @@ This is similar to the way in which the elements in an ``Array`` instance
 can be accessed as ``someArray[n]``,
 and elements in a ``Dictionary`` instance can be accessed as
 ``someDictionary[key]``.
+
+.. _Methods_SubscriptSyntax:
 
 Subscript Syntax
 ~~~~~~~~~~~~~~~~
@@ -357,6 +364,8 @@ not ``someInstance[1]``.
 However, the Fibonacci sequence is most commonly accessed as a one-based sequence,
 and so the ``FibonacciGenerator`` class provides a one-based subscript in this case.
 
+.. _Methods_SubscriptUsage:
+
 Subscript Usage
 ~~~~~~~~~~~~~~~
 
@@ -386,7 +395,7 @@ and values of type ``Int``.
 Its subscript implementation therefore expects to be passed a ``String`` key,
 and returns the corresponding ``Int`` value for that key.
 
-.. _ClassesAndStructures_MultipleSubscriptDimensions:
+.. _Methods_SubscriptOptions:
 
 Subscript Options
 ~~~~~~~~~~~~~~~~~

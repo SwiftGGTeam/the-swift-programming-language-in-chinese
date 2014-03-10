@@ -63,7 +63,7 @@ In addition, classes have several capabilities that structures and enumerations 
 
 All of these additional capabilities are described in :doc:`InitializationAndInheritance`.
 
-.. _ClassesAndStructures_DefiningClassesAndStructures:
+.. _CustomTypes_DefiningClassesAndStructures:
 
 Defining Classes and Structures
 -------------------------------
@@ -78,7 +78,7 @@ automatically made available for other code to use.
 .. TODO: add a note here about public and private interfaces,
    once we know how these will be declared in Swift.
 
-.. _ClassesAndStructures_DefinitionSyntax:
+.. _CustomTypes_DefinitionSyntax:
 
 Definition Syntax
 ~~~~~~~~~~~~~~~~~
@@ -135,7 +135,7 @@ which has a variable stored property called ``size``.
 This property is initialized with a new ``Size`` structure instance,
 which infers a property type of ``Size``.
 
-.. _ClassesAndStructures_ClassAndStructureInstances:
+.. _CustomTypes_ClassAndStructureInstances:
 
 Class and Structure Instances
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -173,7 +173,7 @@ in :doc:`InitializationAndInheritance`.)
 .. TODO: note that you can only use the default constructor if you provide default values
    for all properties on a structure or class.
 
-.. _ClassesAndStructures_Terminology:
+.. _CustomTypes_Terminology:
 
 Terminology
 ___________
@@ -185,12 +185,10 @@ and much of this chapter describes functionality that can apply to
 instances of *either* a class or a structure type.
 Because of this, the more general term :newTerm:`instance` is used below.
 
-.. _ClassesAndStructures_AccessingProperties:
+.. _CustomTypes_AccessingProperties:
 
 Accessing Properties
 ~~~~~~~~~~~~~~~~~~~~
-
-.. HACK: this is currently duplicated in Properties.
 
 The properties of an instance can be accessed using :newTerm:`dot syntax`:
 
@@ -216,7 +214,7 @@ Dot syntax can also be used to assign a new value to a variable property:
     --> println("The width of someRectangle is now \(someRectangle.size.width)")
     <-- The width of someRectangle is now 2.0
 
-.. _ClassesAndStructures_MemberwiseStructureInitializers:
+.. _CustomTypes_MemberwiseStructureInitializers:
 
 Memberwise Structure Initializers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -249,7 +247,7 @@ if they are listed in the same order that the properties are declared in the str
 Unlike structures, class instances do not receive a default memberwise initializer.
 (Initializers are described in more detail in :doc:`InitializationAndInheritance`.)
 
-.. _ClassesAndStructures_ValueTypesAndReferenceTypes:
+.. _CustomTypes_ValueTypesAndReferenceTypes:
 
 Value Types and Reference Types
 -------------------------------
@@ -266,13 +264,12 @@ This difference is very important when deciding how to define the building block
 .. TODO: this section needs updating to clarify that assignment is always like value semantics,
    and it's only really possible to see the difference when looking at the properties of a type.
 
-.. _ClassesAndStructures_ValueTypes:
+.. _CustomTypes_ValueTypes:
 
 Value Types
 ~~~~~~~~~~~
 
 .. TODO: Have I actually described what a 'type' is by this point?
-.. TODO: If this section is talking about value types, it needs to talk about enums too.
 
 A :newTerm:`value type` is a type that is *copied*
 when it is assigned to a variable or constant,
@@ -284,7 +281,7 @@ integers, floating-point numbers, Booleans, strings, arrays and dictionaries –
 are value types.
 
 Swift structures and enumerations are also value types.
-This means that any instances you create –
+This means that any structure and enumeration instances you create –
 and any value types they have as properties –
 will always be copied when they are passed around.
 
@@ -355,7 +352,7 @@ the copy of the original value that was stored in ``rememberedDirection``.
 
 .. TODO: Should I give an example of passing a value type to a function here?
 
-.. _ClassesAndStructures_ReferenceTypes:
+.. _CustomTypes_ReferenceTypes:
 
 Reference Types
 ~~~~~~~~~~~~~~~
@@ -425,7 +422,7 @@ you should define it as a class in your code.
 .. QUESTION: This isn't strictly true. Functions are reference types too.
    Does this matter for the point I'm making here?
 
-.. _ClassesAndStructures_Pointers:
+.. _CustomTypes_Pointers:
 
 Pointers
 ________
@@ -451,7 +448,7 @@ and the value it contains is always a reference to a particular instance of that
 .. TODO: Saying that we don't use the reference operator is actually untrue.
    We use it at the call-site for inout function parameters.
 
-.. _ClassesAndStructures_ChoosingBetweenClassesAndStructures:
+.. _CustomTypes_ChoosingBetweenClassesAndStructures:
 
 Choosing Between Classes and Structures
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -508,7 +505,20 @@ not structures.
 
 .. QUESTION: what's the deal with tuples and reference types / value types?
 
-.. _Enumerations_NestedTypes:
+.. _CustomTypes_IdentityOperators:
+
+Identity Operators
+------------------
+
+.. This will cover === and !===,
+   which I've decided should be covered alongside the reference / value discussion
+   rather than in either of the Operators chapters.
+
+.. QUESTION: is this the right choice?
+
+.. write-me::
+
+.. _CustomTypes_NestedTypes:
 
 Nested Types
 ------------
@@ -550,14 +560,18 @@ Their types are defined by two nested enumerations:
 
 Because ``PlayingCard`` is a structure with no custom initializers,
 it has an implicit memberwise initializer
-(as described in :ref:`ClassesAndStructures_MemberwiseStructureInitializers`).
+(as described in :ref:`CustomTypes_MemberwiseStructureInitializers`).
 This is used to initialize a new constant called ``theAceOfSpades``.
 Even though ``Rank`` and ``Suit`` are nested within ``PlayingCard``,
 their type can still be inferred from the context,
 and so the initialization of this instance is able to refer to the enumeration members
 by their member names (``.Ace`` and ``.Spades``) alone.
 
-.. _Enumerations_ReferringToNestedTypes:
+.. QUESTION: should the "Memberwise Structure Initializers" link in this paragraph
+   go to the short introduction of the subject in this chapter,
+   or should it go to somewhere in the Initializers chapter?
+
+.. _CustomTypes_ReferringToNestedTypes:
 
 Referring to Nested Types
 ~~~~~~~~~~~~~~~~~~~~~~~~~
