@@ -280,7 +280,7 @@ which are all of the same type.
 
 Here's an example that stores raw ASCII values alongside named enumeration members:
 
-.. testcode:: enums
+.. testcode:: rawValues
 
     --> enum ASCIIControlCharacter : UnicodeScalar {
             case Tab = '\t'
@@ -304,68 +304,64 @@ strings, characters, or any of the integer or floating-point number types.
 Each raw value must be unique within its enumeration declaration.
 When integers are used for raw values,
 they auto-increment if no value is specified for some of the enumeration members.
-The enumeration below defines the first seven chemical elements,
-and uses raw integer values to represent their atomic numbers:
 
-.. testcode:: optionals
+The enumeration below is a refinement of the earlier ``Planet`` enumeration,
+with raw integer values to represent each planet's order from the sun:
 
-    --> enum ChemicalElement : Int {
-            case Hydrogen = 1, Helium, Lithium, Beryllium, Boron, Carbon, Nitrogen
+.. testcode:: rawValues
+
+    --> enum Planet : Int {
+            case Mercury = 1, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune
         }
 
-Auto-incrementation means that ``ChemicalElement.Helium`` has a raw value of ``2``,
-and so on.
+Auto-incrementation means that ``Planet.Venus`` has a raw value of ``2``, and so on.
 
 The raw value of an enumeration member can be accessed using its ``toRaw`` method:
 
-.. testcode:: optionals
+.. testcode:: rawValues
 
-    --> let atomicNumberOfCarbon = ChemicalElement.Carbon.toRaw()
-    <<< // atomicNumberOfCarbon : Int = 6
-    /-> atomicNumberOfCarbon is \(atomicNumberOfCarbon)
-    <-/ atomicNumberOfCarbon is 6
+    --> let earthsOrder = Planet.Earth.toRaw()
+    <<< // earthsOrder : Int = 3
+    /-> earthsOrder is \(earthsOrder)
+    <-/ earthsOrder is 3
 
-The reverse is also true.
-In addition to a ``toRaw`` method,
-enumerations also have a ``fromRaw`` method,
+Enumerations also have a ``fromRaw`` method,
 which can be used to try and find an enumeration member with a particular raw value.
-The ``fromRaw`` method could be used to find ``ChemicalElement.Nitrogen`` from its raw value of ``7``, say.
+The ``fromRaw`` method could be used to find Uranus from its raw value of ``7``, say:
 
-.. testcode:: optionals
+.. testcode:: rawValues
 
-    --> var possibleElement = ChemicalElement.fromRaw(7)        // Nitrogen
-    <<< // possibleElement : ChemicalElement? = <unprintable value>
-    /// possibleElement is ChemicalElement.Nitrogen
+    --> let possiblePlanet = Planet.fromRaw(7)
+    <<< // possiblePlanet : Planet? = <unprintable value>
+    /// possiblePlanet is of type Planet? and equals Planet.Uranus
 
-Not all possible ``Int`` values will find a matching chemical element, however.
+Not all possible ``Int`` values will find a matching planet, however.
 Because of this, the ``fromRaw`` method returns an *optional* enumeration member.
+In the example above, ``possiblePlanet`` is of type ``Planet?``,
+or “optional ``Planet``.”
 
-If you try and find an enumeration member with an atomic number of ``8`` (for oxygen),
-then the returned optional value will equal ``.None``:
+If you try and find a Planet with a position of ``9``,
+the optional ``Planet`` value returned by ``fromRaw()`` will equal ``.None``:
 
-.. testcode:: optionals
+.. testcode:: rawValues
 
-    --> if let element = ChemicalElement.fromRaw(8) {
-            switch element {
-                case .Hydrogen:
-                    println("A bit explodey")
-                case .Helium:
-                    println("Like a friendly hydrogen")
+    --> let positionToFind = 9
+    <<< // positionToFind : Int = 9
+    --> if let somePlanet = Planet.fromRaw(positionToFind) {
+            switch somePlanet {
+                case .Earth:
+                    println("Mostly harmless")
                 default:
-                    println("Some other element")
+                    println("Not a safe place for humans")
             }
         } else {
-            println("Not an element I know about")
+            println("There isn't a planet at position \(positionToFind)")
         }
-    <-- Not an element I know about
+    <-- There isn't a planet at position 9
 
 This example uses :ref:`BasicTypes_OptionalBinding`
-to try and access an element with a raw value of ``8``.
-``if let element = ChemicalElement.fromRaw(8)`` retrieves an optional ``ChemicalElement``,
-and sets ``element`` to the contents of that optional if it can be retrieved.
-In this case, it is not possible to retrieve an element for ``8``,
+to try and access a planet with a raw value of ``9``.
+The statement ``if let somePlanet = Planet.fromRaw(9)`` retrieves an optional ``Planet``,
+and sets ``somePlanet`` to the contents of that optional if it can be retrieved.
+In this case, it is not possible to retrieve a planet with a position of ``9``,
 and so the ``else`` branch is executed instead.
-
-.. TODO: there's probably a better subject for this,
-   where the set of things can be completely enumerated in the book,
-   thereby making more sense of the unfindable number.
