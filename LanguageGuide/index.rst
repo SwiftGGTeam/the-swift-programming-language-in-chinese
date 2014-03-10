@@ -16,6 +16,7 @@ Language Guide
     Methods
     Inheritance
     Initialization
+    TypeCasting
     Extensions
     Protocols
     Generics
