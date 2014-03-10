@@ -335,24 +335,28 @@ negative integers remain negative as their value moves closer to zero.
 Overflow Operators
 ------------------
 
-An error will be thrown if you try to insert a number into an integer named value that cannot hold that value.
+An error will be caused if you try to insert a number into an integer named value
+that cannot hold that value.
 This gives extra safety when working with numbers that are too large or too small.
 
 For example, the ``Int16`` integer type can hold any signed integer number between ``-32768`` and ``32767``.
-If you try and set a ``UInt16`` named value to a number outside of this range,
-an error is thrown:
+Trying to set a ``UInt16`` named value to a number outside of this range
+will cause an error:
 
 .. testcode:: overflowOperatorsWillFailToOverflow
 
     --> var potentialOverflow = Int16.max
     <<< // potentialOverflow : Int16 = 32767
-    --> potentialOverflow += 1                  // this will trigger an error
+    /-> potentialOverflow equals \(potentialOverflow), which is the largest value an Int16 can hold
+    <-/ potentialOverflow equals 32767, which is the largest value an Int16 can hold
+    --> potentialOverflow += 1
     xxx overflow
+    /// this causes an error
 
 .. TODO: change the error text we detect here
    once overflowing provides an error message rather than just an assert.
 
-Throwing an error in these scenarios is much safer than allowing an outsized value to overflow.
+Triggering an error in these scenarios is much safer than allowing an outsized value to overflow.
 Providing error handling when values get too large or too small
 gives you much more flexibility when coding for boundary value conditions.
 
