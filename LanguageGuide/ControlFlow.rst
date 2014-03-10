@@ -61,7 +61,7 @@ which prints the first few entries in the five-times-table:
 
 Here, the collection of items being iterated is a
 closed range of numbers from ``1`` to ``5`` inclusive,
-as indicated by the use of the :ref:`Operators_ClosedRangeOperator` (``..``).
+as indicated by the use of the :ref:`BasicOperators_ClosedRangeOperator` (``..``).
 The value of ``index`` is set to the first number in the range (``1``),
 and the statements inside the loop are executed.
 In this case, the loop only contains one statement,
