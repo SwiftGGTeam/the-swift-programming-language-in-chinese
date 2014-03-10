@@ -77,28 +77,16 @@ that isn't in a Private Use Area.
 After the first character,
 digits and combining Unicode characters are also allowed.
 
+To use a reserved word as an identifier,
+put a backtick (:literal:`\``) before and after it.
+for example, ``class`` is not a valid identifier,
+but :literal:`\`\`class\`\`` is valid.
+
+.. `` backticks to fix VIM syntax highlighting after the escaped ones confused it
+
 Inside a closure with no explicit parameter names,
 the parameters are implicitly named ``$0``, ``$1``, ``$2``, and so on.
 These names are valid identifiers within the scope of the closure.
-
-.. TR: How should the grammar change to accomodate using backticks
-	around identifiers that clash with keywords?
-
-	From the release notes on 3/5/14:
-	Values whose names clash with Swift keywords, such as Cocoa methods or
- 	properties named "class", "protocol", "type", etc., can now be defined and
- 	accessed by wrapping reserved keywords in backticks to suppress their builtin
-	meaning:
-
-   	let `class` = 0
-   	let `type` = 1
-   	let `protocol` = 2
-   	println(`class`)
-   	println(`type`)
-   	println(`protocol`)
-
-   	func foo(Int) `class`(Int) {}
-   	foo(0, `class`: 1)
 
 .. langref-grammar
 
@@ -135,6 +123,7 @@ These names are valid identifiers within the scope of the closure.
     Grammar of an identifier
 
     identifier --> identifier-head identifier-characters-OPT
+    identifier --> ````` identifier-head identifier-characters-OPT `````
     identifier --> implicit-parameter-name
     identifier-list --> identifier | identifier ``,`` identifier-list
 
