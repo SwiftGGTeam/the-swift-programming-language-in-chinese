@@ -105,14 +105,14 @@ and can be used within mathematical calculations wherever a ``Double`` is accept
 Initializers
 ------------
 
-Extensions can add new :ref:`InitializationAndInheritance_Initializers` to existing types.
+Extensions can add new :ref:`Initialization_Initializers` to existing types.
 This enables you to extend other types to accept
 your own custom types as initializer parameters.
 
 .. note::
 
     Extensions can add new initializers to classes, but they cannot add
-    :ref:`InitializationAndInheritance_Deinitializers`.
+    :ref:`Initialization_Deinitializers`.
     Deinitializers must always be provided by the original class implementation.
 
 This approach can be used to extend the basic ``String`` type
@@ -174,12 +174,12 @@ is known as :newTerm:`initializer overloading`.)
     If you provide a new initializer via an extension,
     you are still responsible for making sure that each instance is fully initialized
     once the initializer has completed, as described in
-    :ref:`InitializationAndInheritance_DefiniteInitialization`.
+    :ref:`Initialization_DefiniteInitialization`.
     Depending on the type you are extending, you may need to
     delegate to another initializer
-    (as described in :ref:`InitializationAndInheritance_InitializerDelegation`),
+    (as described in :ref:`Initialization_InitializerDelegation`),
     or call a superclass initializer
-    (as described in :ref:`InitializationAndInheritance_SubclassingAndInitializerDelegation`),
+    (as described in :ref:`Initialization_SubclassingAndInitializerDelegation`),
     to ensure that all instance properties are fully initialized.
 
 .. QUESTION: You can use 'self' in this way for structs and enums.

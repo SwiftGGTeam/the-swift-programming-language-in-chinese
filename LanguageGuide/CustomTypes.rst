@@ -49,7 +49,7 @@ Both can:
 * define :newTerm:`methods` to provide functionality
   (as described in :doc:`Methods`)
 * define :newTerm:`initializers` to set up their initial state
-  (as described in :doc:`InitializationAndInheritance`)
+  (as described in :doc:`Initialization`)
 * be :newTerm:`extended` to expand their functionality beyond a default implementation
   (as described in :doc:`Extensions`)
 * conform to :newTerm:`protocols` to provide standard functionality of a certain type, and
@@ -58,10 +58,11 @@ Both can:
 In addition, classes have several capabilities that structures and enumerations do not:
 
 * :newTerm:`inheritance`, which enables one class to inherit the characteristics of another
-* :newTerm:`deinitializers`, which enable an instance of a class to clean up after itself
+  (as described in :doc:`Inheritance`)
 * :newTerm:`type casting`, which enables you to check and interpret the type of a class instance at runtime
-
-All of these additional capabilities are described in :doc:`InitializationAndInheritance`.
+  (as described in :doc:`Inheritance`)
+* :newTerm:`deinitializers`, which enable an instance of a class to clean up after itself
+  (as described in :doc:`Initialization`)
 
 .. _CustomTypes_DefiningClassesAndStructures:
 
@@ -167,7 +168,7 @@ the ``width`` and ``height`` values of the ``Size`` structure instance
 have been automatically initialized to ``0.0``,
 which was the default value provided by the ``Size`` structure's definition.
 (Class and structure initialization is described in more detail
-in :doc:`InitializationAndInheritance`.)
+in :doc:`Initialization`.)
 
 .. TODO: add more detail about inferring a variable's type when using initializer syntax.
 .. TODO: note that you can only use the default constructor if you provide default values
@@ -245,7 +246,7 @@ if they are listed in the same order that the properties are declared in the str
    Memberwise initializers will only exist if default values are provided for all properties.
 
 Unlike structures, class instances do not receive a default memberwise initializer.
-(Initializers are described in more detail in :doc:`InitializationAndInheritance`.)
+(Initializers are described in more detail in :doc:`Initialization`.)
 
 .. _CustomTypes_ValueTypesAndReferenceTypes:
 

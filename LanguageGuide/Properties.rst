@@ -68,7 +68,7 @@ in that their value cannot be changed once it has been initialized.
 Constant stored properties have slightly more flexibility, however,
 in that their value can be changed at any point until the initializer for
 the class or structure they belong to has completed its initialization.
-(Instance initialization is described in more detail in :doc:`InitializationAndInheritance`.)
+(Instance initialization is described in more detail in :doc:`Initialization`.)
 
 .. _Properties_StoredPropertiesAndInstanceVariables:
 

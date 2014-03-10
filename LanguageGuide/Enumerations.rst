@@ -30,7 +30,7 @@ In addition, enumerations can:
 * define :newTerm:`methods` to provide functionality related to the values they represent
   (as described in :doc:`Methods`)
 * define :newTerm:`initializers` to provide an initial member value
-  (as described in :doc:`InitializationAndInheritance`)
+  (as described in :doc:`Initialization`)
 * be :newTerm:`extended` to expand their functionality beyond their original implementation
   (as described in :doc:`Extensions`)
 * conform to :newTerm:`protocols` to provide standard functionality of a certain type
