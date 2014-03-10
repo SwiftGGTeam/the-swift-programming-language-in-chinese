@@ -1090,7 +1090,9 @@ to ensure members of that type are properly initialized.
 Subscript Declaration
 ---------------------
 
-
+A :newTerm:`subscript` declaration allows you to add subscripting support for objects
+of a particular type. Subscript declarations are declared using the keyword ``subscript``
+and have the following form:
 
 .. syntax-outline::
 
@@ -1103,10 +1105,48 @@ Subscript Declaration
         }
     }
 
+Subscript declarations can appear only in the context of a class, structure,
+enumeration, extension, or protocol declaration.
+
+Subscript declarations are typically used to provide a convenient syntax
+for accessing the elements in a collection, list, or sequence.
+
+The *parameters* specify one or more indicies used to access elements of the corresponding type
+in a subscript expression (for example, the ``i`` in the expression ``object[i]``).
+Although the indicies used to access the elements can be of any type,
+each parameter must include a type annotation to specify the type of each index.
+The *return type* specifies the type of the element being accessed.
+
+As with computed properties,
+subscript declarations provide support for reading and writing the value of the accessed elements.
+The getter is used to read the value,
+and the setter is used to write the value.
+The setter clause is optional,
+and when only a getter is needed, you can omit both clauses and simply
+return the requested value directly.
+That said, if you provide a setter clause, you must also provide a getter clause.
+
+The *setter name* and enclosing parentheses is optional.
+If you provide a setter name, it is used as the name of the parameter to the setter.
+If you do not provide a setter name, the default parameter name to the setter is ``value``.
+That type of the *setter name* must be the same as the *return type*.
+
+.. TODO: Add information about overloading and overriding here.
+
+You can also declare subscripts in the context of a protocol declaration.
+These subscript declarations have the following form:
+
 .. syntax-outline::
 
     subscript (<#parameters#>) -> <#return type#> { get set }
 
+Subscript declarations in protocols only declare the getter and setter
+requirements for types that conform to the protocol.
+As a result, you don’t implement the getter or setter directly in the protocol in which it is declared.
+As with computed properties, the setter clause is optional.
+
+For more information about subscripting and to see examples of subscript declarations,
+see :ref:`Methods_Subscripts`.
 
 .. langref-grammar
     decl-subscript ::= subscript-head '{' get-set '}'
