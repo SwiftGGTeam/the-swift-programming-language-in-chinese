@@ -11,25 +11,75 @@ Here's an example:
 .. testcode:: inheritance
 
     --> class Vehicle {
-            var numberOfWheels = 0
-            var maxPassengers = 1
+            var numberOfWheels: Int
+            var maxPassengers: Int
             func description() -> String {
                 return "\(numberOfWheels) wheels; up to \(maxPassengers) passengers"
+            }
+            init() {
+                numberOfWheels = 0
+                maxPassengers = 1
             }
         }
 
 This example starts by defining a “base” class called ``Vehicle``.
-This base class declares two properties that are universal to all vehicles,
-and initializes them with suitable default values.
+This base class declares two properties
+(``numberOfWheels`` and ``maxPassengers``)
+that are universal to all vehicles.
+These properties are used by a method called ``description()``,
+which returns a ``String`` description of the vehicle's characteristics.
+
+.. QUESTION: this example doesn't really need an initializer.
+   I could just as easily set the values as part of the property declaration.
+   However, I'd then need to explain all about default initializers,
+   and I don't really want to do that in this chapter.
+   Is this the right approach?
+   Should I mention the alternative (set at declaration) as well?
+
+The ``Vehicle`` class also defines an :newTerm:`initializer`
+to set up its properties.
+Initializers are described in detail in :doc:`Initialization`,
+but a brief introduction is required here in order to illustrate
+how inherited properties can be modified.
+
+Initializers are special methods that are called whenever a new instance of a type is created.
+Initializers prepare each new instance for use,
+and ensure that all of the instance's properties have valid initial values.
+
+In its simplest form, an initializer is like an instance method with no parameters,
+written using the ``init`` keyword:
+
+::
+
+    init() {
+        // perform some initialization here
+    }
+
+This simple initializer is called whenever a new instance is created
+via :newTerm:`initialization syntax`
+(written as ``TypeName`` followed by empty parentheses):
+
+.. testcode:: inheritance
+
+    --> let someVehicle = Vehicle()
+    <<< // someVehicle : Vehicle = <Vehicle instance>
+
+The initializer for ``Vehicle`` sets some initial property values
+(``numberOfWheels = 0`` and ``maxPassengers = 1``)
+for an arbitrary vehicle.
 (It is assumed that any vehicle can carry at least one passenger –
 it wouldn't be a very useful vehicle otherwise.)
-``Vehicle`` also defines a method called ``description()``,
-which returns a ``String`` description of its characteristics.
 
-The next example defines a second, more-specific class, called ``Bicycle``.
+The ``Vehicle`` class defines common characteristics for an arbitrary vehicle,
+but is not much use in itself.
+To make it more useful,
+it needs to be refined to describe more specific kinds of vehicle.
+
+The next example defines a second, more specific vehicle called ``Bicycle``.
 This new class is based on the existing capabilities of ``Vehicle``.
-The ``Bicycle`` class is defined by placing the name of its base class – ``Vehicle``
-– after the name of the new class, separated by a colon. This can be read as:
+This is indicated by placing the name of the class it builds upon (``Vehicle``)
+after its own name (``Bicycle``), separated by a colon.
+This can be read as:
 
 “Define a new class called ``Bicycle``, which inherits the characteristics of ``Vehicle``”:
 
@@ -42,33 +92,22 @@ The ``Bicycle`` class is defined by placing the name of its base class – ``Veh
             }
         }
 
-In this example, ``Bicycle`` is said to be a :newTerm:`subclass` of ``Vehicle``, 
+``Bicycle`` is said to be a :newTerm:`subclass` of ``Vehicle``, 
 and ``Vehicle`` is said to be the :newTerm:`superclass` of ``Bicycle``.
 The new ``Bicycle`` class automatically gains all of the characteristics of ``Vehicle``,
 and is able to tailor those characteristics (and add new ones) to suit its needs.
 
-.. note::
-
-    Swift classes do not inherit from a universal “base” class.
-    Any classes you define without specifying a superclass
-    will automatically become base classes for you to build upon.
-
-The ``Bicycle`` class declares an initializer called ``init()``
+The ``Bicycle`` class also declares an initializer
 to set up its tailored characteristics.
-This initializer first calls ``super.init()``,
-which calls the ``init()`` method for ``Bicycle``\ 's superclass, ``Vehicle``.
-
-Although ``Vehicle`` does not have an explicit initializer itself,
-it still has an implicit default initializer,
-as described in :ref:`Initialization_Initializers`.
-This call to ``super.init()`` triggers ``Vehicle``\ 's default initializer,
+The initializer for ``Bicycle`` starts by calling ``super.init()``.
+This calls the initializer for ``Bicycle``\ 's superclass, ``Vehicle``,
 and ensures that all of the inherited properties are initialized by ``Vehicle``
 before ``Bicycle`` tries to modify them.
 
 The default value of ``maxPassengers`` provided by ``Vehicle`` is already correct for a bicycle,
 and so it is not changed within the initializer for ``Bicycle``.
 The original value of ``numberOfWheels`` is not correct, however,
-and so it is replaced by a new value of ``2``.
+and is replaced with a new value of ``2``.
 
 If you create an instance of ``Bicycle``, and print its description,
 you can see how its properties have been updated:
@@ -82,7 +121,7 @@ you can see how its properties have been updated:
 
 .. TODO: work out how best to describe super.init() in light of the next section below.
 
-Subclasses can themselves be subclassed, as shown in the next example:
+Subclasses can themselves be subclassed:
 
 .. testcode:: inheritance
 
@@ -120,6 +159,12 @@ Note that the ``description()`` method has also been inherited
 by ``Bicycle`` and ``Tandem``.
 Instance methods of a class are inherited by any and all subclasses of that class.
 
+.. note::
+
+    Swift classes do not inherit from a universal “base” class.
+    Any classes you define without specifying a superclass
+    will automatically become base classes for you to build upon.
+
 .. QUESTION: Should I mention that you can subclass from NSObject?
 
 .. _Inheritance_OverridingInstanceMethods:
@@ -154,7 +199,7 @@ For example:
 .. testcode:: inheritance
 
     --> class Car : Vehicle {
-            var isConvertible: Bool = false
+            var isConvertible = false
             init() {
                 super.init()
                 maxPassengers = 5
@@ -165,10 +210,6 @@ For example:
                     + (isConvertible ? "convertible" : "not convertible")
             }
         }
-    --> var car = Car()
-    <<< // car : Car = <Car instance>
-    --> println("Car: \(car.description())")
-    <-- Car: 4 wheels; up to 5 passengers; not convertible
 
 This example declares a new subclass of ``Vehicle``, called ``Car``.
 ``Car`` declares a new Boolean property called ``isConvertible``,
@@ -188,6 +229,17 @@ the description provided by its superclass.
 It then appends some additional information onto the end,
 and returns the complete description.
 
+If you create a new instance of ``Car``,
+and print the output of its ``description()`` method,
+you can see that the description has indeed changed:
+
+.. testcode:: inheritance
+
+    --> var car = Car()
+    <<< // car : Car = <Car instance>
+    --> println("Car: \(car.description())")
+    <-- Car: 4 wheels; up to 5 passengers; not convertible
+
 .. TODO: provide more information about function signatures,
    and what does / does not make them unique.
    For example, the parameter names do not have to match
@@ -197,6 +249,8 @@ and returns the complete description.
 .. note::
 
     Overriding of properties is not yet implemented.
+
+.. TODO: remove or improve this note if property overriding is not implemented for 1.0.
 
 .. _Inheritance_TypeCasting:
 
