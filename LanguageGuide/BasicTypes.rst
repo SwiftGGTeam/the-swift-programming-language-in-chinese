@@ -161,20 +161,6 @@ The value of an existing variable can be changed to another value of a compatibl
     /-> friendlyWelcome is now \"\(friendlyWelcome)\"
     <-/ friendlyWelcome is now "👋, 🌎"
 
-You can also print the value of a named value by using the ``println`` function:
-
-.. testcode:: namedValues
-
-    --> println(friendlyWelcome)
-    <-- 👋, 🌎
-
-.. NOTE: this is a deliberately simplistic description of what you can do with println().
-   It will be expanded later on.
-
-.. QUESTION: is this *too* simplistic?
-   Strictly speaking, you can't print the value of *any* named value –
-   you can only print values of types for which String has a constructor.
-
 Unlike a variable, the value of a constant cannot be changed once it is set,
 and attempting to do so will result in an error:
 
@@ -187,6 +173,67 @@ and attempting to do so will result in an error:
     !!! <REPL Input>:1:14: error: cannot assign to 'let' value 'languageName'
     !!! languageName = "Swift++"
     !!! ~~~~~~~~~~~~ ^
+
+.. _BasicTypes_PrintingNamedValues:
+
+Printing Named Values
+~~~~~~~~~~~~~~~~~~~~~
+
+The current value of a constant or variable can be printed with the ``println()`` function:
+
+.. testcode:: namedValues
+
+    --> println(friendlyWelcome)
+    <-- 👋, 🌎
+
+``println()`` is a special global function that prints a value,
+followed by a line break, to an appropriate output.
+If you are working in Xcode, for example,
+``println()`` will print its output in Xcode's “console” pane.
+(A second function, ``print()``, performs the same task
+without appending a line break to the end of the value to be printed.)
+
+.. QUESTION: have I referred to Xcode's console correctly here?
+   Should I mention other output streams, such as the REPL / playgrounds?
+
+.. NOTE: this is a deliberately simplistic description of what you can do with println().
+   It will be expanded later on.
+
+.. QUESTION: is this *too* simplistic?
+   Strictly speaking, you can't print the value of *any* named value –
+   you can only print values of types for which String has a constructor.
+
+The ``println()`` function will print any ``String`` value you pass to it:
+
+.. testcode:: namedValues
+
+    --> println("This is a string")
+    <-- This is a string
+
+.. _BasicTypes_StringInterpolation:
+
+String Interpolation
+____________________
+
+The ``println()`` function can be used to print more complex logging messages,
+in a similar manner to Cocoa's ``NSLog()`` function.
+These messages can include the current values of constants and variables.
+
+Swift uses :newTerm:`string interpolation` to include named values
+as part of a longer string.
+String interpolation gives a way to include a constant or variable's name
+as a placeholder in a string,
+and to prompt Swift to replace it with the current value of that constant or variable.
+The constant or variable's name should be wrapped by parentheses,
+and escaped with a backslash before the opening parenthesis:
+
+.. testcode:: namedValues
+
+    --> println("The current value of friendlyWelcome is \(friendlyWelcome)")
+    <-- The current value of friendlyWelcome is 👋, 🌎
+
+.. TODO: this still doesn't talk about all of the things that string interpolation can do.
+   It should still be covered in more detail in the Strings and Characters chapter.
 
 .. _BasicTypes_Integers:
 
