@@ -4,7 +4,7 @@ Initialization and Inheritance
 .. _InitializationAndInheritance_MemberwiseStructureInitializers:
 
 Memberwise Structure Initializers
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------------
 
 .. HACK: this is currently duplicated in CustomTypes.
 
