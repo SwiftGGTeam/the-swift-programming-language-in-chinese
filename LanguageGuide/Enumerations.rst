@@ -12,7 +12,7 @@
 Enumerations
 ============
 
-:newTerm:`Enumerations` are a way to define multiple values of a similar type,
+:newTerm:`Enumerations` are a way to define multiple related values of a similar kind,
 and to work with those values in a type-safe way within your code.
 
 Enumerations in Swift are much more flexible than their counterparts in C and Objective-C.
@@ -67,14 +67,6 @@ are known as the :newTerm:`member values` (or :newTerm:`members`) of that enumer
 The ``case`` keyword is used to indicate that a new line of member values
 is about to be defined.
 
-Multiple member values can appear on a single line, separated by commas:
-
-.. testcode:: enums
-
-    --> enum Planet {
-            case Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune
-        }
-
 .. note::
 
     Unlike C and Objective-C,
@@ -85,6 +77,14 @@ Multiple member values can appear on a single line, separated by commas:
     ``0``, ``1``, ``2`` and ``3``.
     Instead, the different enumeration members are fully-fledged values in their own right,
     with an explicitly-defined type of ``CompassPoint``.
+
+Multiple member values can appear on a single line, separated by commas:
+
+.. testcode:: enums
+
+    --> enum Planet {
+            case Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune
+        }
 
 Each enumeration definition effectively defines a brand new type.
 As a result, their names
@@ -259,27 +259,12 @@ This time, however, the associated values can be extracted as part of the switch
 .. testcode:: enums
 
     --> switch productBarcode {
-            case .UPCA(var numberSystem, var identifier, var check):
+            case .UPCA(let numberSystem, let identifier, let check):
                 println("UPC-A with value of \(numberSystem), \(identifier), \(check).")
-            case .QRCode(var productCode):
+            case .QRCode(let productCode):
                 println("QR code with value of \(productCode).")
         }
     <-- QR code with value of ABCDEFGHIJKLMNOP.
-
-These two calls to the ``println`` function use a special syntax to insert the values of
-``numberSystem``, ``identifier``, ``check`` and ``productCode``
-into printed descriptions of the barcodes.
-This syntax is known as :newTerm:`string interpolation`,
-and is a handy way to create and print strings that contain
-the current values of constants and variables.
-If you include ``\(namedValue)`` in a longer string,
-the current value of ``namedValue`` will be inserted in place
-when the string is printed by the ``println`` function.
-(String interpolation is covered in more detail in :doc:`Strings`.)
-
-.. TODO: This mention of string interpolation should be removed.
-   It is only included here as a legacy from when enumerations were in Basic Types,
-   and had not yet been introduced by the subsequent Strings chapter.
 
 .. _Enumerations_RawValues:
 
