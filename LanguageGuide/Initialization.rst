@@ -3,47 +3,6 @@ Initialization
 
 .. write-me::
 
-.. _Initialization_MemberwiseStructureInitializers:
-
-Memberwise Structure Initializers
----------------------------------
-
-.. HACK: this is currently duplicated in CustomTypes.
-
-.. TODO: mention that structures and enums can assign a value to self during initialization,
-   but classes cannot.
-
-All structures have an automatically-generated :newTerm:`memberwise initializer`,
-which can be used to initialise the member properties of new structure instances.
-Initial values for the properties of the new instance
-can be passed to the memberwise initializer by name:
-
-.. testcode:: classesAndStructures
-
-    --> struct Size {
-            var width = 0.0, height = 0.0
-        }
-    --> let twoByTwo = Size(width: 2.0, height: 2.0)
-    <<< // twoByTwo : Size = Size(2.0, 2.0)
-
-Initial values can also be provided without names,
-if they are listed in the same order that the properties are declared in the structure's definition:
-
-.. testcode:: classesAndStructures
-
-    --> let fourByThree = Size(4.0, 3.0)
-    <<< // fourByThree : Size = Size(4.0, 3.0)
-
-.. TODO: Include a justifiable reason for why classes do not provide a memberwise initializer.
-.. TODO: Describe the creation of custom initializers.
-.. TODO: This whole section needs updating in light of the changes for definite initialization.
-   Memberwise initializers will only exist if default values are provided for all properties.
-
-.. _Initialization_Initialization:
-
-Initialization
---------------
-
 Classes and structures must always set their stored properties
 to an appropriate initial value by the time that an instance is created.
 There are two ways to initialize properties:
@@ -53,9 +12,10 @@ There are two ways to initialize properties:
 2. Provide a value for the property within an :newTerm:`initializer`
 
 .. note::
-    If you assign a default value to a property,
+    If you assign a default value to a stored property,
     or set its initial value within an initializer,
-    the value of that property is set directly, without calling any observers.
+    the value of that property is set directly,
+    without calling any stored property observers.
 
 .. QUESTION: is this the right place to mention this note?
 
@@ -71,7 +31,7 @@ There are two ways to initialize properties:
 .. _Initialization_Initializers:
 
 Initializers
-~~~~~~~~~~~~
+------------
 
 :newTerm:`Initializers` are called when a new instance of your type is created.
 In its simplest form, an initializer is like an instance method with no parameters,
@@ -117,6 +77,9 @@ The end result –
 a default value of ``32.0`` for ``temperature`` when a new instance is created –
 is the same in both cases.
 
+Default Initializers
+--------------------
+
 Swift provides a :newTerm:`default initializer` implementation
 for any class or structure that does not provide at least one initializer itself,
 if all of the properties declared by that class or structure are assigned
@@ -126,13 +89,43 @@ with all of its properties set to their default values.
 You don't have to declare that you want the default initializer to be implemented –
 it is available automatically for all classes and structures without their own initializer.
 
-.. note::
-    The default initializer for structures is provided in addition to the
-    :ref:`Initialization_MemberwiseStructureInitializers` mentioned earlier in this chapter.
-    The default initializer and the memberwise initializer are only provided
-    if the structure does not define at least one custom initializer itself.
+.. TODO: show an example.
 
-.. TODO: Add a justification?
+.. _Initialization_MemberwiseStructureInitializers:
+
+Memberwise Structure Initializers
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. HACK: this is currently duplicated in CustomTypes.
+
+.. TODO: mention that structures and enums can assign a value to self during initialization,
+   but classes cannot.
+
+All structures have an automatically-generated :newTerm:`memberwise initializer`,
+which can be used to initialise the member properties of new structure instances.
+Initial values for the properties of the new instance
+can be passed to the memberwise initializer by name:
+
+.. testcode:: classesAndStructures
+
+    --> struct Size {
+            var width = 0.0, height = 0.0
+        }
+    --> let twoByTwo = Size(width: 2.0, height: 2.0)
+    <<< // twoByTwo : Size = Size(2.0, 2.0)
+
+Initial values can also be provided without names,
+if they are listed in the same order that the properties are declared in the structure's definition:
+
+.. testcode:: classesAndStructures
+
+    --> let fourByThree = Size(4.0, 3.0)
+    <<< // fourByThree : Size = Size(4.0, 3.0)
+
+.. TODO: Include a justifiable reason for why classes do not provide a memberwise initializer.
+
+Initializer Parameters
+----------------------
 
 Initializers can take optional input parameters,
 to customize the initialization process.
@@ -193,23 +186,10 @@ as long as is is definitely set to a value by the time the initializer has finis
 
 .. TODO: This could do with a more elegant example.
 
-.. _Initialization_DefiniteInitialization:
-
-Definite Initialization
-~~~~~~~~~~~~~~~~~~~~~~~
-
-If your class or structure provides one or more custom initializers,
-Swift checks these methods to make sure that all properties are fully initialized
-by the time each initializer has done its job.
-This process is known as :newTerm:`definite initialization`,
-and helps to ensure that your instances are always valid before they are used.
-Swift will report an error at compile-time if your class or structure does not pass
-the definite initialization test.
-
 .. _Initialization_InitializerDelegation:
 
 Initializer Delegation
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 Initializers can :newTerm:`delegate` some or all of the task of initialization to
 other initializers within the same class or structure by calling ``self.init``.
@@ -429,7 +409,7 @@ Here's how this final initializer could be called:
 .. _Initialization_DynamicReturnTypes:
 
 Dynamic Return Types
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 .. write-me::
 
