@@ -1,6 +1,8 @@
 Methods
 =======
 
+.. write-me::
+
 .. _ClassesAndStructures_InstanceMethods:
 
 Instance Methods
@@ -208,11 +210,12 @@ and cannot be modified.
 This is similar to the behavior for structure instance methods seen above.
 
 Enumeration instance methods can request to receive a writeable ``self`` parameter
-by placing the ``mutating`` keyword before the ``func`` keyword for that method:
+by placing the ``mutating`` keyword before the ``func`` keyword for that method.
+Mutating methods can set ``self`` to a different member from the same enumeration:
 
 .. testcode:: selfEnumerations
 
-    --> enum TriStateLightSwitch {
+    --> enum TriStateSwitch {
             case Off, Low, High
             mutating func next() {
                 switch self {
@@ -225,15 +228,15 @@ by placing the ``mutating`` keyword before the ``func`` keyword for that method:
                 }
             }
         }
-    --> var ovenLight = TriStateLightSwitch.Low
-    <<< // ovenLight : TriStateLightSwitch = <unprintable value>
+    --> var ovenLight = TriStateSwitch.Low
+    <<< // ovenLight : TriStateSwitch = <unprintable value>
     --> ovenLight.next()
     /// ovenLight is now equal to .High
     --> ovenLight.next()
     /// ovenLight is now equal to .Off
 
-This example defines an enumeration for a three-state light switch.
-The light switch cycles between three different power states
+This example defines an enumeration for a three-state switch.
+The switch cycles between three different power states
 (``Off``, ``Low`` and ``High``)
 every time that its ``next()`` method is called.
 
