@@ -5,13 +5,19 @@ Language Guide
     :maxdepth: 1
 
     BasicTypes
-    Operators
+    BasicOperators
     Strings
     ControlFlow
     Functions
     Closures
-    ClassesAndStructures
     Enumerations
+    CustomTypes
+    Properties
+    Methods
+    Inheritance
+    Initialization
+    TypeCasting
     Extensions
     Protocols
     Generics
+    AdvancedOperators

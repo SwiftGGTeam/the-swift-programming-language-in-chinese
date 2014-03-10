@@ -20,37 +20,39 @@ Here's an example:
 
 .. testcode:: protocols
 
-    (swift) protocol FullyNamed {
-        var fullName: String { get }
-    }
-    (swift) class Person : FullyNamed {
-        var name: String
-        var suffix: String?
-        init withName(name: String) suffix(String? = .None) {
-            self.name = name
-            self.suffix = suffix
+    --> protocol FullyNamed {
+            var fullName: String { get }
         }
-        var fullName: String {
-            return name + (suffix ? " " + suffix! : "")
+    --> class Person : FullyNamed {
+            var name: String
+            var suffix: String?
+            init withName(name: String) suffix(String? = .None) {
+                self.name = name
+                self.suffix = suffix
+            }
+            var fullName: String {
+                return name + (suffix ? " " + suffix! : "")
+            }
         }
-    }
-    (swift) var ironMan = Person(withName: "Robert Downey", suffix: "Jr.")
-    // ironMan : Person = <Person instance>
-    (swift) println("\(ironMan.name)'s full name is \(ironMan.fullName)")
-    >>> Robert Downey's full name is Robert Downey Jr.
-    (swift) class Ship : FullyNamed {
-        var prefix: String?
-        var name: String
-        init withName(name: String) prefix(String? = .None) {
-            self.name = name
-            self.prefix = prefix
+    --> var ironMan = Person(withName: "Robert Downey", suffix: "Jr.")
+    <<< // ironMan : Person = <Person instance>
+    --> println("\(ironMan.name)'s full name is \(ironMan.fullName)")
+    <-- Robert Downey's full name is Robert Downey Jr.
+    --> class Ship : FullyNamed {
+            var prefix: String?
+            var name: String
+            init withName(name: String) prefix(String? = .None) {
+                self.name = name
+                self.prefix = prefix
+            }
+            var fullName: String {
+                return (prefix ? prefix! + " " : "") + name
+            }
         }
-        var fullName: String {
-            return (prefix ? prefix! + " " : "") + name
-        }
-    }
-    (swift) var starship = Ship(withName: "Enterprise", prefix: "USS")
-    // starship : Ship = <Ship instance>
+    --> var starship = Ship(withName: "Enterprise", prefix: "USS")
+    <<< // starship : Ship = <Ship instance>
+    --> println("The \(starship.name)'s full name is \(starship.fullName)")
+    <-- The Enterprise's full name is USS Enterprise
 
 Declaring a Protocol
 --------------------
