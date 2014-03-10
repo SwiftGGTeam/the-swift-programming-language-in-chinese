@@ -43,6 +43,8 @@ The function returns a ``String`` value when it is done,
 as indicated by the :newTerm:`return operator` ``->``
 (a hyphen followed by a greater-than symbol).
 
+.. TODO: revisit this introduction to make it slightly less academic and formal.
+
 The declaration describes what the function does,
 what it expects to receive,
 and what it will return when it is done.
@@ -367,17 +369,18 @@ using the default value of ``joiner`` as before.
 
 As a general rule,
 it is best to place any parameters with default values at the end of a function declaration.
-It is also advisable to name the values in your function calls whenever a function takes more than one parameter,
-to ensure that your intentions are clearly expressed in your code.
+It is also advisable to name the values in your function calls
+whenever a function takes more than one parameter, if it aids readability.
+This helps to ensure that your intentions are clearly expressed in your code.
 
 .. QUESTION: how does this advice overlap with
    the principle of putting variadic parameters last,
    and also the principle of putting closure parameters last?
 
-.. _Functions_NonMandatoryParametersAndReturnValues:
+.. _Functions_FunctionsWithoutParametersAndReturnValues:
 
-Non-Mandatory Parameters and Return Values
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Functions Without Parameters and Return Values
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Functions don't have to have input parameters.
 Here's a function with no input parameters,

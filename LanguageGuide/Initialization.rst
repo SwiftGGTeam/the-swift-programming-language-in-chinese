@@ -124,10 +124,12 @@ if they are listed in the same order that the properties are declared in the str
 
 .. TODO: Include a justifiable reason for why classes do not provide a memberwise initializer.
 
-Initializer Parameters
-----------------------
+.. _Initialization_InitializerInputParameters:
 
-Initializers can take optional input parameters,
+Initializer Input Parameters
+----------------------------
+
+Initializers can also take :newTerm:`input parameters`,
 to customize the initialization process.
 The following example defines a structure to store temperatures expressed in the Celsius scale.
 It implements two custom initializers,
@@ -576,7 +578,7 @@ and the bank only has 7,900 coins left.
 
 The player has now left the game.
 This is indicated by setting the optional ``playerOne`` variable to ``.None``,
-meaning “no ``Player`` instance”.
+meaning “no ``Player`` instance.”
 At the point that this happens, the ``Player`` instance referenced by
 the ``playerOne`` variable is destroyed.
 No other properties or variables are still referring to it,

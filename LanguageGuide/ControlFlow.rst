@@ -71,12 +71,15 @@ the value of ``index`` is updated to contain the second value in the range (``2`
 and the ``println`` function is called again.
 This continues until the end of the range is reached.
 
-The ``index`` variable does not have to be declared before it is used as part of this loop.
+``index`` is a constant named value whose value is automatically set for you
+at the start of each iteration of the loop.
+As such, it does not have to be declared before it is used.
 It is implicitly declared simply by its inclusion in the loop declaration,
-without the need for a ``var`` declaration keyword.
+without the need for a ``let`` declaration keyword.
 This does, however, mean that it only exists within the scope of the loop.
 If you want to check the value of ``index`` after the loop has completed,
-you must declare it in advance of its use in the loop.
+or work with its value as a variable rather than a constant,
+you must declare it yourself in advance of its use in the loop.
 
 If you don't actually need each value from the range,
 you can ignore the values using an underscore in place of a variable name:
@@ -565,8 +568,12 @@ Swift provides two ways to add conditional branches to your code:
 * ``if``-``else``, and
 * ``switch``
 
-The ``if``-``else`` statement is typically used to consider simple conditions with only a few possible outcomes.
-The ``switch`` statement is better suited to more complex conditions with multiple possible permutations.
+The ``if``-``else`` statement is typically used to
+consider simple conditions with only a few possible outcomes.
+The ``switch`` statement is better suited to
+more complex conditions with multiple possible permutations,
+and / or situations where pattern-matching can help to select
+an appropriate code branch to execute.
 
 .. _ControlFlow_IfElse:
 
@@ -592,9 +599,10 @@ is less than or equal to 32 degrees
 (the freezing point of water).
 If it is, a message is printed.
 Otherwise, no message is printed,
-and code execution continues after the if statement's closing brace.
+and code execution continues after the ``if`` statement's closing brace.
 
-As its name suggests, the ``if``-``else`` statement can provide an alternative set of statements for when the ``if`` condition is ``false``:
+As its name suggests, the ``if``-``else`` statement can provide
+an alternative set of statements when the ``if`` condition is ``false``:
 
 .. testcode::
 
@@ -1175,7 +1183,7 @@ It then uses the ``fallthrough`` keyword to “fall into” the ``default`` case
 The ``default`` case adds some extra text onto the end of the description,
 and the ``switch`` statement is complete.
 
-If the value value of ``integerToDescribe`` is *not* in the list of known prime numbers,
+If the value of ``integerToDescribe`` is *not* in the list of known prime numbers,
 it is not matched by the first ``case`` statement at all.
 There are no other specific cases,
 and so it ends up being matched by the catch-all ``default`` case.

@@ -123,7 +123,7 @@ so this can be read as:
 “Declare a constant called ``welcomeMessage`` that is of type ``String``,
 and give it a value of ``"Hello"``.”
 
-The phrase “of type ``String``” means “can store any ``String`` value”.
+The phrase “of type ``String``” means “can store any ``String`` value.”
 Think of it as meaning “the type of thing” (or “the kind of thing”) that can be stored.
 
 You can use almost any character you like for constant and variable names,
@@ -404,16 +404,16 @@ the base number is multiplied by 2\ :superscript:`exp`:
 * ``0xFp2`` means 15 ⨉ 2\ :superscript:`2`, or ``60.0``
 * ``0xFp-2`` means 15 ⨉ 2\ :superscript:`-2`, or ``3.75``
 
-All of these floating-point literals have a decimal value of ``12.5``:
+All of these floating-point literals have a decimal value of ``12.1875``:
 
 .. testcode:: numberLiterals
 
-    --> let decimalDouble = 12.5
-    <<< // decimalDouble : Double = 12.5
-    --> let exponentDouble = 1.25e1
-    <<< // exponentDouble : Double = 12.5
-    --> let hexadecimalDouble = 0xC.8p0
-    <<< // hexadecimalDouble : Double = 12.5
+    --> let decimalDouble = 12.1875
+    <<< // decimalDouble : Double = 12.1875
+    --> let exponentDouble = 1.21875e1
+    <<< // exponentDouble : Double = 12.1875
+    --> let hexadecimalDouble = 0xC.3p0
+    <<< // hexadecimalDouble : Double = 12.1875
 
 Numeric literals can contain extra formatting to make them easier to read.
 Both integers and floats can be padded with extra zeroes at the beginning
@@ -429,10 +429,6 @@ Neither type of formatting affects the underlying value of the literal:
     --> let justOverOneMillion = 1_000_000.000_000_1
     <<< // justOverOneMillion : Double = 1e+06
 
-In the example above, the value of ``justOverOneMillion`` has been printed as ``1e+06``.
-This is a short-form representation of its underlying ``Double`` value of ``1000000.0000001``.
-The actual value of ``justOverOneMillion`` still has all of the precision of the original.
-
 .. _BasicTypes_NumericTypeConversion:
 
 Numeric Type Conversion
@@ -446,7 +442,7 @@ and will match the inferred type for integer literal values.
 
 Other integer types should be used only when they are are specifically needed for the task at hand,
 due to explicitly-sized data from an external source,
-or for performance, memory usage, or other optimization.
+or for performance, memory usage, or other necessary optimization.
 Using explicitly-sized types in these situations
 helps to catch any accidental value overflows
 and implicitly documents the nature of the data being used.
@@ -762,7 +758,7 @@ If your data structure would benefit from named member values,
 or is likely to persist beyond a temporary scope,
 it should be modeled as a :newTerm:`class` or :newTerm:`structure`,
 rather than as a tuple.
-Classes and structures are described in detail in :doc:`CustomTypes`.
+These are described in detail in :doc:`CustomTypes`.
 
 .. _BasicTypes_Optionals:
 
@@ -783,12 +779,12 @@ They can be used to say:
     This concept doesn't exist in C or Objective-C.
     The nearest thing in Objective-C is
     the ability to return ``nil`` from a method that would otherwise return an object,
-    with ``nil`` meaning “the absence of a valid object”.
+    with ``nil`` meaning “the absence of a valid object.”
     However, this only works for objects – it doesn't work for
     structs, or basic C types, or enumeration values.
     For these types,
     Objective-C methods typically return a special value (such as ``NSNotFound``) to indicate the absence of a value.
-    This assumes that the method's caller knows there is a special value to test for,
+    This assumes that the method's caller knows there is a special value to test against,
     and remembers to check for it.
     Swift's optionals give a way to indicate the absence of a value for *any type at all*,
     without the need for special constants or ``nil`` tests.
@@ -827,7 +823,7 @@ Once you're sure that the optional *does* contain a value,
 you can access its underlying value
 by adding an exclamation mark (``!``) to the end of the optional's name.
 The exclamation mark effectively says,
-“I know that this optional definitely has a value – please use it”.
+“I know that this optional definitely has a value – please use it.”
 
 .. testcode:: optionals
 

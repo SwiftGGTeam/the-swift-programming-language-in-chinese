@@ -82,7 +82,7 @@ In addition to properties,
 Objective-C also has the concept of :newTerm:`instance variables`,
 which are used as a 'backing' store for the values stored in a property.
 
-Swift unifies these two separate concepts into a single unified property declaration.
+Swift unifies these two separate concepts into a single property declaration.
 There is no longer a distinction between properties and instance variables,
 and the backing store for a property is not accessed directly.
 This avoids potential confusion around how the value is accessed in different contexts,

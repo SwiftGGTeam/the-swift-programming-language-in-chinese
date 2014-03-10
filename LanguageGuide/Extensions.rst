@@ -200,7 +200,7 @@ to an existing type:
                 var i = 0
                 var spookyVersion = ""
                 for scalar in self.chars {
-                    spookyVersion += i % 2 == 0 ? scalar.uppercase : scalar.lowercase
+                    spookyVersion += (i % 2 == 0) ? scalar.uppercase : scalar.lowercase
                     ++i
                 }
                 return spookyVersion

@@ -86,7 +86,7 @@ Multiple member values can appear on a single line, separated by commas:
             case Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune
         }
 
-Each enumeration definition effectively defines a brand new type.
+Each enumeration definition defines a brand new type.
 As a result, their names
 (such as ``CompassPoint`` and ``Planet``)
 should start with a capital letter.
@@ -143,7 +143,8 @@ print ``"Watch out for penguins"``.”
 
 …and so on.
 
-A ``switch`` statement must be exhaustive when considering an enumeration's members.
+As described in :doc:`ControlFlow`,
+a ``switch`` statement must be exhaustive when considering an enumeration's members.
 If the ``case`` for ``.West`` had been omitted,
 this code would not compile,
 because it would not consider the complete list of ``CompassPoint`` members.
@@ -338,7 +339,6 @@ The ``fromRaw`` method could be used to find ``ChemicalElement.Nitrogen`` from i
 
 Not all possible ``Int`` values will find a matching chemical element, however.
 Because of this, the ``fromRaw`` method returns an *optional* enumeration member.
-(Optional values are described in more detail in :doc:`BasicTypes`.)
 
 If you try and find an enumeration member with an atomic number of ``8`` (for oxygen),
 then the returned optional value will equal ``.None``:
@@ -365,3 +365,7 @@ to try and access an element with a raw value of ``8``.
 and sets ``element`` to the contents of that optional if it can be retrieved.
 In this case, it is not possible to retrieve an element for ``8``,
 and so the ``else`` branch is executed instead.
+
+.. TODO: there's probably a better subject for this,
+   where the set of things can be completely enumerated in the book,
+   thereby making more sense of the unfindable number.
