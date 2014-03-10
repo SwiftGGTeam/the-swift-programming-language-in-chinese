@@ -95,7 +95,7 @@ The following statement is not valid:
 This avoids the assignment operator (``=``) being used by accident
 when the equality comparison operator (``==``) is actually intended.
 By making ``if x = y`` invalid,
-Swift helps you to to avoid these kinds of errors in your code.
+Swift helps you to avoid these kinds of errors in your code.
 
 .. TODO: Should we mention that x = y = z is also not valid?
    If so, is there a convincing argument as to why this is a good thing?
