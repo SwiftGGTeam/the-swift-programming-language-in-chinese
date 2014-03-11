@@ -212,7 +212,7 @@ when the type of the *constant name* may be inferred,
 as described in :ref:`Types_TypeInference`.
 
 For more information about constants and for guidance about when to use them,
-see :ref:`BasicTypes_NamedValues` and :ref:`ClassesAndStructures_StoredProperties`.
+see :ref:`BasicTypes_NamedValues` and :ref:`Properties_StoredProperties`.
 
 .. TODO: Need to discuss class and static constant properties.
 
@@ -329,7 +329,7 @@ No parameters are passed to the ``didSet`` observer when it is called.
 The ``didSet`` clause is optional.
 
 For more information and to see an example of how to use stored property observers,
-see :ref:`ClassesAndStructures_StoredPropertyObservers`.
+see :ref:`Properties_StoredPropertyObservers`.
 
 The next form is used to declare a computed value or property
 and has the following form:
@@ -358,19 +358,19 @@ and the setter is used to write the value.
 The setter clause is optional,
 and when only a getter is needed, you can omit both clauses and simply
 return the requested value directly,
-as described in :ref:`ClassesAndStructures_ReadOnlyComputedProperties`.
+as described in :ref:`Properties_ReadOnlyComputedProperties`.
 That said, if you provide a setter clause, you must also provide a getter clause.
 
 The *setter name* and enclosing parentheses is optional.
 If you provide a setter name, it is used as the name of the parameter to the setter.
 If you do not provide a setter name, the default parameter name to the setter is ``value``,
-as described in :ref:`ClassesAndStructures_ShorthandSetterDeclaration`.
+as described in :ref:`Properties_ShorthandSetterDeclaration`.
 
 Unlike stored named values and variable stored properties,
 the value of a computed named value or a computed property is not stored in memory.
 
 For more information and to see examples of computed properties,
-see :ref:`ClassesAndStructures_ComputedProperties`.
+see :ref:`Properties_ComputedProperties`.
 
 You can also declare computed properties in the context of a protocol declaration.
 These computed properties have the following form:
@@ -749,7 +749,7 @@ type aliases, and even other structure, class, and enumeration declarations.
 Structure declarations can't contain destructor or protocol declarations.
 For a discussion and several examples of structures
 that include these kind of declarations,
-see :doc:`../LanguageGuide/ClassesAndStructures`.
+see :doc:`../LanguageGuide/CustomTypes`.
 
 Structure types can adopt any number of protocols,
 but can't inherit from classes, enumerations, or other structures.
@@ -758,25 +758,25 @@ Structure types can also be extended.
 There are three ways create an instance of a previously declared structure:
 
 1. Call one of the initializers declared within the structure,
-   as described in :ref:`ClassesAndStructures_Initializers`.
+   as described in :ref:`Initialization_Initializers`.
 2. If no initializers are declared,
    call the structure's memberwise initializer,
-   as described in :ref:`ClassesAndStructures_MemberwiseStructureInitializers`.
+   as described in :ref:`Initialization_MemberwiseStructureInitializers`.
 3. If no initializers are declared,
    and all properties of the structure declaration were given initial values,
    call the structure's default initializer,
-   as described in :ref:`ClassesAndStructures_Initializers`.
+   as described in :ref:`Initialization_DefaultInitializers`.
 
 The process of initializing a structure's declared properties
-is described in :ref:`ClassesAndStructures_Initialization`.
+is described in :doc:`../LanguageGuide/Initialization`.
 
 Properties of a structure instance can be accessed using dot (``.``) syntax,
-as described in :ref:`ClassesAndStructures_AccessingProperties`.
+as described in :ref:`CustomTypes_AccessingProperties`.
 
 Structures are value types; instances of a structure are copied when assigned to
 variables or constants, or when passed as arguments to a function call.
 For information about value types,
-see :ref:`ClassesAndStructures_ValueTypesAndReferenceTypes`.
+see :ref:`CustomTypes_ValueTypesAndReferenceTypes`.
 
 .. TODO: Discuss generic parameter clause in the context of a struct?
 
@@ -816,7 +816,7 @@ and even other class, structure, and enumeration declarations.
 Class declarations can't contain protocol declarations.
 For a discussion and several examples of classes
 that include these kind of declarations,
-see :doc:`../LanguageGuide/ClassesAndStructures`.
+see :doc:`../LanguageGuide/CustomTypes`.
 
 Class types can inherit from only one parent class, its *superclass*,
 but can adopt any number of protocols.
@@ -836,7 +836,7 @@ receives an implicit call to the superclass's default initializer
 (that is,
 a call to ``super.init()`` is implicitly inserted at the end of the initializer's declaration).
 For an extended discussion and an example of this behavior,
-see :ref:`ClassesAndStructures_SubclassingAndInitializerDelegation`.
+see :ref:`Initialization_SubclassingAndInitializerDelegation`.
 
 .. TODO: Need a way to refer to grammatical categories (see type-inheritance-clause, above).
 
@@ -845,22 +845,22 @@ Class types can also be extended.
 There are two ways create an instance of a previously declared class:
 
 1. Call one of the initializers declared within the class,
-   as described in :ref:`ClassesAndStructures_Initializers`.
+   as described in :ref:`Initialization_Initializers`.
 2. If no initializers are declared,
    and all properties of the class declaration were given initial values,
    call the class's default initializer,
-   as described in :ref:`ClassesAndStructures_Initializers`.
+   as described in :ref:`Initialization_DefaultInitializers`.
 
 The process of initializing a class's declared properties
-is described in :ref:`ClassesAndStructures_Initialization`.
+is described in :doc:`../LanguageGuide/Initialization`.
 
 Properties of a class instance may be accessed using dot (``.``) syntax,
-as described in :ref:`ClassesAndStructures_AccessingProperties`.
+as described in :ref:`CustomTypes_AccessingProperties`.
 
 Classes are reference types; instances of a class are referred to, rather than copied,
 when assigned to variables or constants, or when passed as arguments to a function call.
 For information about reference types,
-see :ref:`ClassesAndStructures_ValueTypesAndReferenceTypes`.
+see :ref:`CustomTypes_ValueTypesAndReferenceTypes`.
 
 .. TODO: Discuss generic parameter clause in the context of a class?
 
@@ -1000,7 +1000,7 @@ have finished executing.
 Deinitializers are not called directly.
 
 For an example of how to use a deinitializer in a class declaration,
-see :ref:`ClassesAndStructures_Deinitializers`.
+see :ref:`Initialization_Deinitializers`.
 
 
 .. langref-grammar
@@ -1265,7 +1265,7 @@ Postfix operators are nonassociative.
 After declaring a new operator,
 you need to implement it by declaring a function that has the same name as the operator.
 To see an example of how to create and implement a new operator,
-see :ref:`ClassesAndStructures_CustomOperators`.
+see :ref:`AdvancedOperators_CustomOperators`.
 
 .. TODO: Should we give describe the most common stdlib operators somewhere?
     If so, the description should include the fixity, precedence, and associativity
