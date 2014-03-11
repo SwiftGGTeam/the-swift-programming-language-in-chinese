@@ -16,16 +16,16 @@ Expressions
     Grammar of an expression
 
     expression --> expression-sequence expression-cast-OPT
-    expression-sequence --> prefix-expression binary-expressions-OPT
+    expression-sequence --> unary-expression binary-expressions-OPT
     expression-list --> expression | expression ``,`` expression-list
 
 .. _Expressions_UnaryOperators:
 
-Prefix Expressions
-------------------
+Unary Expressions
+-----------------
 
-Prefix expressions are formed by combining
-a prefix operator with another expression.
+Unary expressions are formed by combining
+an optional prefix operator with an expression.
 Prefix operators take one argument,
 the expression that follows them.
 
@@ -37,14 +37,14 @@ the expression that follows them.
 
     Grammar of a unary expression
 
-    prefix-expression --> prefix-operators-OPT postfix-expression
+    unary-expression --> prefix-operators-OPT postfix-expression
     prefix-operators --> prefix-operator prefix-operators-OPT
 
 
 .. _Expressions_BinaryOperators:
 
-Infix Expressions
------------------
+Binary Expressions
+------------------
 
 Infix expressions are formed by combining
 an infix operator with the expressions that it takes
@@ -61,9 +61,9 @@ as its arguments.
 
     Grammar of a binary expression
 
-    binary-expression --> binary-operator prefix-expression expression-cast-OPT
-    binary-expression --> assignment-operator prefix-expression expression-cast-OPT
-    binary-expression --> conditional-operator prefix-expression expression-cast-OPT
+    binary-expression --> binary-operator unary-expression expression-cast-OPT
+    binary-expression --> assignment-operator unary-expression expression-cast-OPT
+    binary-expression --> conditional-operator unary-expression expression-cast-OPT
     binary-expressions --> binary-expression binary-expressions-OPT
 
 .. TODO: Give a list of the binary operators defined in the Swift stdlib.
@@ -95,6 +95,10 @@ Built-In Binary Operators
 
 .. TODO: Give a list of the unary operators defined in the Swift stdlib.
     Then give a cross-reference to the Swift stdlib for more details.
+    Table of operator, meaning, precedence, and associativity.
+    Only the most commonly used ones?
+    We can discuss them in some detail now, knowing that it could migrate
+    to a proper Standar Library Reference book later.
 
 Assignment Operator
 +++++++++++++++++++
