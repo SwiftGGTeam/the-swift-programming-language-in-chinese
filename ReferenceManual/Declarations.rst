@@ -157,11 +157,10 @@ is made available in the current scope.
 
     import-declaration --> attribute-list-OPT ``import`` import-kind-OPT import-path
 
-    import-kind --> ``type`` | ``struct`` | ``class`` | ``enum`` | ``protocol`` | ``var`` | ``func``
+    import-kind --> ``typealias`` | ``struct`` | ``class`` | ``enum`` | ``protocol`` | ``var`` | ``func``
     import-path --> import-path-identifier | import-path-identifier ``.`` import-path
     import-path-identifier --> identifier | operator
 
-.. NOTE: Changed ``typealias`` to ``type`` per [Contributor 6004]'s feedback on 3/4/14.
 
 .. _Declarations_ConstantDeclaration:
 
