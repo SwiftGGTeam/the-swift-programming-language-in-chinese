@@ -86,13 +86,6 @@ as its arguments.
    in respect to the spacing rules -- ``x + y * z`` is diffirent than
    ``x + y* z``.
 
-.. _Expressions_Built-InBinaryOperators:
-
-Built-In Binary Operators
-~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. _Expressions_AssignmentOperator:
-
 .. TODO: Give a list of the unary operators defined in the Swift stdlib.
     Then give a cross-reference to the Swift stdlib for more details.
     Table of operator, meaning, precedence, and associativity.
@@ -101,7 +94,7 @@ Built-In Binary Operators
     to a proper Standar Library Reference book later.
 
 Assignment Operator
-+++++++++++++++++++
+~~~~~~~~~~~~~~~~~~~
 
 The :newTerm:`assigment operator` updates the value of variables.
 It has the following form:
@@ -139,7 +132,7 @@ The assignment operator does not return any value.
 .. _Expressions_ConditionalOperator:
 
 Conditional Operator
-++++++++++++++++++++
+~~~~~~~~~~~~~~~~~~~~
 
 The conditional operator evaluates to one of two given values
 based on the value of a condition;
@@ -172,14 +165,10 @@ The unused expression is not evaluated.
 
 .. _Expressions_Type-CastingOperators:
 
-Type-Casting Operators
-++++++++++++++++++++++
+Type-Checking Operators
+~~~~~~~~~~~~~~~~~~~~~~~
 
-.. TODO: The "is" operator isn't really a type *cast*
-   it's more of a type *check*.
-   Try to tweak this heading.
-
-There are two type-casting operators,
+There are two type-checking operators,
 the ``is`` operator and the ``as`` operator.
 They have the following form:
 
