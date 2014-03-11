@@ -628,11 +628,11 @@ to consider additional clauses:
     --> if temperatureInFahrenheit <= 32 {
             println("It's very cold. Consider wearing a scarf.")
         } else if temperatureInFahrenheit >= 86 {
-            println("It's really warm. Don't forget to to wear sunscreen.")
+            println("It's really warm. Don't forget to wear sunscreen.")
         } else {
             println("It's not that cold. Wear a t-shirt.")
         }
-    <-- It's really warm. Don't forget to to wear sunscreen.
+    <-- It's really warm. Don't forget to wear sunscreen.
 
 Here, an additional ``if`` clause has been added to respond to particularly warm temperatures.
 The final ``else`` clause still remains,
@@ -646,7 +646,7 @@ The final ``else`` clause is optional, however, and can be excluded if the set o
     --> if temperatureInFahrenheit <= 32 {
             println("It's very cold. Consider wearing a scarf.")
         } else if temperatureInFahrenheit >= 86 {
-            println("It's really warm. Don't forget to to wear sunscreen.")
+            println("It's really warm. Don't forget to wear sunscreen.")
         }
 
 In this example,
