@@ -19,6 +19,8 @@ Expressions
     expression-sequence --> unary-expression binary-expressions-OPT
     expression-list --> expression | expression ``,`` expression-list
 
+.. TODO Maybe call expression-sequence operator-sequence-expression?
+
 .. _Expressions_UnaryOperators:
 
 Unary Expressions
@@ -333,6 +335,8 @@ Identifier Expression
 
     identifier-expression --> identifier generic-argument-clause-OPT
 
+.. TODO: [Contributor 6004] notes: Arbitrary identifiers cannot have generic arguments, only those in a type context. (We do have to do some magic to determine what might be a type context.)
+
 .. TODO: Discuss in prose: The LangRef has a subsection called 'Generic Disambiguation',
     the contents of which may or may not need to appear here.
 
@@ -584,8 +588,10 @@ Function Call Expression
     function-call-expression --> postfix-expression parenthesized-expression-OPT trailing-closure
     trailing-closure --> closure-expressions expression-cast-OPT
 
-.. Multiple trailing closures in LangRef is an error,
+.. TODO Multiple trailing closures in LangRef is an error,
    per [Contributor 6004] 2014-03-04 email.
+
+.. TODO Why is there an optional cast after the trailing closure?
 
 For example, the following function calls are equivalent: ::
 
