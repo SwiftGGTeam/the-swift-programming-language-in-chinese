@@ -183,22 +183,39 @@ has the type specified by its right-hand argument
 or one of its subtypes.
 If so, it returns ``true``; otherwise, it returs ``false``.
 
-The ``as`` operator converts the value of its left-hand argument
-to be of the type specified by its right-hand argument.
-If it is guaranteed the value can be converted to the type,
+The ``as`` operator explicitly specifies that the value of its left-hand argument
+should be understood to be of the type specified by its right-hand argument.
+If it is guaranteed the value is of that type
+or that it can be converted to the type,
 the value returned is of the specified type;
 otherwise, the value returned is an optional type.
 In the case of an optional type,
-the cast operator returns ``.None`` if the runtime cast fails.
+the cast operator returns ``.None`` if the runtime type conversion fails.
 For example: ::
 
+    class SomeType : SomeSuperType {}
     let x = SomeType()
 
-    let y = x as SomeSuperType()
-    // The type of y is SomeSuperType because casting to a supertype always succeeds.
+    let y = x as SomeSuperType
+    // The type of y is SomeSuperType because conversion to a supertype always succeeds.
 
-    let z = x as AnotherType()
+    let z = x as AnotherType
     // The type of z is AnotherType? because the cast could fail at runtime.
+
+Specifying a type with ``as`` provides the same type context
+to the compiler as a function call and a variable type annotation.
+For example, the following examples
+are equivalent to the ones above: ::
+
+    let y : SomeSuperType = x
+    let z : AnotherType? = x
+
+Likewise, being passed as an function parameter: ::
+
+    func f (a : SomeSuperType) -> SomeSuperType { /* ... */ }
+    f(x)  // Because of the type of f(), x is treated as SomeSuperType.
+
+.. TODO: Some of the above detail and example belongs in the guide.
 
 .. TODO: List the exact rules for when a type cast
    is guaranteed to suceed.
