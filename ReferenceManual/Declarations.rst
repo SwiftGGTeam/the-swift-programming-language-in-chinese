@@ -1131,7 +1131,10 @@ If you provide a setter name, it is used as the name of the parameter to the set
 If you do not provide a setter name, the default parameter name to the setter is ``value``.
 That type of the *setter name* must be the same as the *return type*.
 
-.. TODO: Add information about overloading and overriding here.
+You can overload a subscript declaration in the type in which it is declared,
+as long as the *parameters* or the *return* type differ from the one you're overloading.
+You can also override a subscript declaration inherited from a superclass. When you do so,
+you must mark the overridden subscript declaration with an ``override`` attribute (``@override``).
 
 You can also declare subscripts in the context of a protocol declaration.
 These subscript declarations have the following form:
