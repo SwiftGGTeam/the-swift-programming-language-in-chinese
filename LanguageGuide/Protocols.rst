@@ -14,7 +14,7 @@ methods, properties, and other requirements
 that suit a particular task or piece of functionality.
 The protocol doesn't actually provide an implementation for any of these requirements –
 it only describes what an implementation will look like.
-The protocol can then adopted by a class, structure or enumeration
+The protocol can then be adopted by a class, structure or enumeration
 to provide an actual implementation of those requirements.
 Any type that satisfies the requirements of a protocol is said to
 :newTerm:`conform` to that protocol.
