@@ -52,7 +52,7 @@ Both can:
   (as described in :doc:`Initialization`)
 * be :newTerm:`extended` to expand their functionality beyond a default implementation
   (as described in :doc:`Extensions`)
-* conform to :newTerm:`protocols` to provide standard functionality of a certain type, and
+* conform to :newTerm:`protocols` to provide standard functionality of a certain type
   (as described in :doc:`Protocols`)
 
 In addition, classes have several capabilities that structures and enumerations do not:
