@@ -620,7 +620,8 @@ Operators
 ---------
 
 The Swift Standard Library defines a number of operators for your use,
-many of which are discussed in :doc:`../LanguageGuide/Operators`.
+many of which are discussed in :doc:`../LanguageGuide/BasicOperators`
+and :doc:`../LanguageGuide/AdvancedOperators`.
 The present section describes which characters can be used as operators.
 
 Operators are made up of one or more of the following characters:
@@ -717,9 +718,9 @@ that may then be misinterpreted as a bit shift ``>>`` operator.
    it only applies in certain grammatical constructs.
 
 To learn how to define new, custom operators,
-see :ref:`ClassesAndStructures_CustomOperators` and :ref:`Declarations_OperatorDeclaration`.
+see :ref:`AdvancedOperators_CustomOperators` and :ref:`Declarations_OperatorDeclaration`.
 To learn how to overload existing operators,
-see :ref:`ClassesAndStructures_OperatorFunctions`.
+see :ref:`AdvancedOperators_OperatorFunctions`.
 
 .. langref-grammar
 

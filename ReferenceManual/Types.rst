@@ -454,7 +454,7 @@ followed by any number of protocols the class must conform to.
 If the class does not inherit from another class,
 the list may begin with a protocol instead.
 For an extended discussion and several examples of class inheritance,
-see :ref:`ClassesAndStructures_Inheritance`.
+see :doc:`../LanguageGuide/Inheritance`.
 
 Other named types may only inherit from or conform to a list of protocols.
 Protocol types may inherit from any number of other protocols.
