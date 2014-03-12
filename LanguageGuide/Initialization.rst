@@ -3,6 +3,13 @@ Initialization
 
 .. write-me::
 
+.. note::
+    This chapter is awaiting a rewrite in light of recent structural changes
+    to the overall document, and also in light of recent changes to
+    the way in which initializer delegation works.
+
+.. TODO: Remove this note following the rewrite.
+
 Classes and structures must always set their stored properties
 to an appropriate initial value by the time that an instance is created.
 There are two ways to initialize properties:
