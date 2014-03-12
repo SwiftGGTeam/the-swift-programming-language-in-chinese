@@ -213,7 +213,7 @@ the *statements* in a ``while`` statement may be executed zero or more times.
 
 The value of the *condition* must have a type that conforms to
 the ``LogicValue`` protocol. The condition may also be an optional binding declaration,
-as discussed in :ref:`ControlFlow_OptionalBinding`.
+as discussed in :ref:`BasicTypes_OptionalBinding`.
 
 .. langref-grammar
 
@@ -257,7 +257,7 @@ the *statements* in a ``do``-``while`` statement are executed at least once.
 
 The value of the *condition* must have a type that conforms to
 the ``LogicValue`` protocol. The condition may also be an optional binding declaration,
-as discussed in :ref:`ControlFlow_OptionalBinding`.
+as discussed in :ref:`BasicTypes_OptionalBinding`.
 
 .. langref-grammar
 
@@ -337,7 +337,7 @@ An ``if`` statement chained together in this way has the following form:
 
 The value of any condition in an ``if`` statement must have a type that conforms to
 the ``LogicValue`` protocol. The condition may also be an optional binding declaration,
-as discussed in :ref:`ControlFlow_OptionalBinding`.
+as discussed in :ref:`BasicTypes_OptionalBinding`.
 
 .. TODO: Should we promote this last sentence (here and elsewhere) higher up in the chapter?
 
@@ -400,10 +400,10 @@ matches one of the patterns of the case and the guard expression evaluates to ``
 For instance, a *control expression* matches the case in the example below
 only if it is a tuple that contains two elements of the same value, such as ``(1, 1)``. ::
 
-    case val (x, y) where x == y:
+    case let (x, y) where x == y:
 
 As the above example shows, patterns in a case may also bind constants
-using the keyword ``val`` (they may also bind variables using the keyword ``var``).
+using the keyword ``let`` (they may also bind variables using the keyword ``var``).
 These constants (or variables) can then be referenced in a corresponding guard expression
 and throughout the rest of the code within the scope of the case.
 That said, if the case contains multiple patterns that match the control expression,

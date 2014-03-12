@@ -1,7 +1,7 @@
 Lexical Structure
 =================
 
-The lexical structure of Swift describes what sequence of characters
+The :newTerm:`lexical structure` of Swift describes what sequence of characters
 form valid tokens of the language.
 These valid tokens form the lowest-level building blocks of the language
 and are used to describe the rest of the language in subsequent chapters.
@@ -21,10 +21,9 @@ or :newTerm:`maximal munch`.
 Whitespace and Comments
 -----------------------
 
-Whitespace is used to separate tokens in the source file
-and as part of the context
-that determines whether an operator is a prefix or postfix
-(see :ref:`Lexical_Operator`),
+Whitespace has two uses: to separate tokens in the source file
+and to help determine whether an operator is a prefix or postfix
+(see :ref:`LexicalStructure_Operators`),
 but is otherwise ignored.
 The following characters are considered whitespace:
 space (U+0020),
@@ -68,15 +67,24 @@ Nesting is allowed, but the comment markers must be balanced.
 Identifiers
 -----------
 
-Identifiers begin with
+:newTerm:`Identifiers` begin with
 an upper case or lower case letter A through Z,
 an underscore (``_``),
-a non-combining alphanumeric Unicode character
+a noncombining alphanumeric Unicode character
 in the Basic Multilingual Plane,
 or a character outside the Basic Multilingual Plan
 that isn't in a Private Use Area.
 After the first character,
 digits and combining Unicode characters are also allowed.
+
+To use a reserved word as an identifier,
+put a backtick (:literal:`\``) before and after it.
+For example, ``class`` is not a valid identifier,
+but :literal:`\`class\`` is valid.
+The backticks are not considered part of the identifier;
+:literal:`\`x\`` and ``x`` have the same meaning.
+
+.. `` backticks to fix VIM syntax highlighting after the escaped ones confused it
 
 Inside a closure with no explicit parameter names,
 the parameters are implicitly named ``$0``, ``$1``, ``$2``, and so on.
@@ -117,29 +125,30 @@ These names are valid identifiers within the scope of the closure.
     Grammar of an identifier
 
     identifier --> identifier-head identifier-characters-OPT
+    identifier --> ````` identifier-head identifier-characters-OPT `````
     identifier --> implicit-parameter-name
     identifier-list --> identifier | identifier ``,`` identifier-list
 
-    identifier-head --> Upper case or lower case letter A through Z
-    identifier-head --> U+00A8 | U+00AA | U+00AD | U+00AF | U+00B2-U+00B5 | U+00B7-U+00BA
-    identifier-head --> U+00BC-U+00BE | U+00C0-U+00D6 | U+00D8-U+00F6 | U+00F8-U+00FF
-    identifier-head --> U+0100-U+02FF | U+0370-U+167F | U+1681-U+180D | U+180F-U+1DBF
-    identifier-head --> U+1E00-U+1FFF
-    identifier-head --> U+200B-U+200D | U+202A-U+202E | U+203F-U+2040 | U+2054 | U+2060-U+206F
-    identifier-head --> U+2070-U+20CF | U+2100-U+218F | U+2460-U+24FF | U+2776-U+2793
-    identifier-head --> U+2C00-U+2DFF | U+2E80-U+2FFF
-    identifier-head --> U+3004-U+3007 | U+3021-U+302F | U+3031-U+303F | U+3040-U+D7FF
-    identifier-head --> U+F900-U+FD3D | U+FD40-U+FDCF | U+FDF0-U+FE1F | U+FE30-U+FE44
-    identifier-head --> U+FE47-U+FFFD
+    identifier-head --> Upper- or lowercase letter A through Z
+    identifier-head --> U+00A8 | U+00AA | U+00AD | U+00AF | U+00B2--U+00B5 | U+00B7--U+00BA
+    identifier-head --> U+00BC--U+00BE | U+00C0--U+00D6 | U+00D8--U+00F6 | U+00F8--U+00FF
+    identifier-head --> U+0100--U+02FF | U+0370--U+167F | U+1681--U+180D | U+180F--U+1DBF
+    identifier-head --> U+1E00--U+1FFF
+    identifier-head --> U+200B--U+200D | U+202A--U+202E | U+203F--U+2040 | U+2054 | U+2060--U+206F
+    identifier-head --> U+2070--U+20CF | U+2100--U+218F | U+2460--U+24FF | U+2776--U+2793
+    identifier-head --> U+2C00--U+2DFF | U+2E80--U+2FFF
+    identifier-head --> U+3004--U+3007 | U+3021--U+302F | U+3031--U+303F | U+3040--U+D7FF
+    identifier-head --> U+F900--U+FD3D | U+FD40--U+FDCF | U+FDF0--U+FE1F | U+FE30--U+FE44
+    identifier-head --> U+FE47--U+FFFD
 
-    identifier-head --> U+10000-U+1FFFD | U+20000-U+2FFFD | U+30000-U+3FFFD | U+40000-U+4FFFD
-    identifier-head --> U+50000-U+5FFFD | U+60000-U+6FFFD | U+70000-U+7FFFD | U+80000-U+8FFFD
-    identifier-head --> U+90000-U+9FFFD | U+A0000-U+AFFFD | U+B0000-U+BFFFD | U+C0000-U+CFFFD
-    identifier-head --> U+D0000-U+DFFFD | U+E0000-U+EFFFD
+    identifier-head --> U+10000--U+1FFFD | U+20000--U+2FFFD | U+30000--U+3FFFD | U+40000--U+4FFFD
+    identifier-head --> U+50000--U+5FFFD | U+60000--U+6FFFD | U+70000--U+7FFFD | U+80000--U+8FFFD
+    identifier-head --> U+90000--U+9FFFD | U+A0000--U+AFFFD | U+B0000--U+BFFFD | U+C0000--U+CFFFD
+    identifier-head --> U+D0000--U+DFFFD | U+E0000--U+EFFFD
 
     identifier-character --> Digit 0 through 9
     identifier-character --> identifier-head
-    identifier-character --> U+0300-U+036F | U+1DC0-U+1DFF | U+20D0-U+20FF | U+FE20-U+FE2F
+    identifier-character --> U+0300--U+036F | U+1DC0--U+1DFF | U+20D0--U+20FF | U+FE20--U+FE2F
     identifier-characters --> identifier-character identifier-characters-OPT
 
     implicit-parameter-name --> ``$`` decimal-digits
@@ -151,9 +160,6 @@ Keywords
 --------
 
 The following keywords are reserved and may not be used as identifiers.
-
-.. TODO: Check with Jeanne about how to format this list.
-   As a table?  As a multi-column list?  Etc.
 
 .. langref-grammar
 
@@ -195,7 +201,10 @@ The following keywords are reserved and may not be used as identifiers.
     keyword ::= '__FILE__'
     keyword ::= '__LINE__'
 
-*Keywords used in declarations and types*:
+.. NOTE: The LangRef is out of date for keywords. The list of current keywords
+	is defined in the file: swift/inclue/swift/Parse/Tokens.def
+
+*Keywords used in declarations*:
 
 ``class``
 ``deinit``
@@ -209,23 +218,8 @@ The following keywords are reserved and may not be used as identifiers.
 ``static``
 ``struct``
 ``subscript``
-``type``
-``Type``
 ``typealias``
 ``var``
-``where``
-
-*Keywords used in expressions*:
-
-``as``
-``is``
-``new``
-``super``
-``self``
-``Self``
-``__COLUMN__``
-``__FILE__``
-``__LINE__``
 
 *Keywords used in statements*:
 
@@ -235,12 +229,31 @@ The following keywords are reserved and may not be used as identifiers.
 ``default``
 ``do``
 ``else``
+``fallthrough``
 ``if``
 ``in``
 ``for``
 ``return``
 ``switch``
+``where``
 ``while``
+
+*Keywords used in expressions and types*:
+
+``as``
+``dynamicType``
+``is``
+``new``
+``super``
+``self``
+``Self``
+``Type``
+``unowned``
+``weak``
+``__COLUMN__``
+``__FILE__``
+``__FUNCTION__``
+``__LINE__``
 
 In addition,
 the following keywords are used in particular contexts.
@@ -318,8 +331,7 @@ Here are some examples of literals::
 Integer Literals
 ~~~~~~~~~~~~~~~~
 
-Integer literals represent integer values of unspecified precision.
-
+:newTerm:`Integer literals` represent integer values of unspecified precision.
 By default, integer literals are expressed in decimal;
 you can specify an alternate base using a prefix.
 Binary literals begin with ``0b``,
@@ -330,12 +342,10 @@ Decimal literals contain the digits ``0`` through ``9``.
 Binary literals contain ``0`` and ``1``,
 octal literals contain ``0`` through ``7``,
 and hexadecimal literals contain ``0`` through ``9``
-as well as ``A`` through ``F`` in upper or lower case.
+as well as ``A`` through ``F`` in upper- or lowercase.
 
-Negative integers are expressed by applying the unary minus operator (``-``)
+Negative integers literals are expressed by prepending a minus sign (``-``)
 to an integer literal, as in ``-42``.
-Strictly speaking, ``-42`` is an expression,
-not an integer literal.
 
 Underscores (``_``) are allowed between digits for readability,
 but are ignored and therefore don't affect the value of the literal.
@@ -356,16 +366,24 @@ as described in :ref:`BasicTypes_Integers`.
 
 .. langref-grammar
 
-    integer_literal ::= [0-9][0-9_]*
-    integer_literal ::= 0x[0-9a-fA-F][0-9a-fA-F_]*
-    integer_literal ::= 0o[0-7][0-7_]*
-    integer_literal ::= 0b[01][01_]*
+    integer_literal ::= -?[0-9][0-9_]*
+    integer_literal ::= -?0x[0-9a-fA-F][0-9a-fA-F_]*
+    integer_literal ::= -?0o[0-7][0-7_]*
+    integer_literal ::= -?0b[01][01_]*
+
+.. NOTE: Updated the langref-grammer to reflect [Contributor 7746]' comment in
+	<rdar://problem/15181997> Teach the compiler about a concept of negative integer literals.
+	This feels very strange from a grammatical point of view.
+	Updated the syntax-grammar below as well.
 
 .. syntax-grammar::
 
     Grammar of an integer literal
 
-    integer-literal --> binary-literal | octal-literal | decimal-literal | hexadecimal-literal
+    integer-literal --> negative-sign-OPT binary-literal
+	integer-literal --> negative-sign-OPT octal-literal
+	integer-literal --> negative-sign-OPT decimal-literal
+	integer-literal --> negative-sign-OPT hexadecimal-literal
 
     binary-literal --> ``0b`` binary-digit binary-literal-characters-OPT
     binary-digit --> Digit 0 or 1
@@ -388,13 +406,15 @@ as described in :ref:`BasicTypes_Integers`.
     hexadecimal-literal-character --> hexadecimal-digit | ``_``
     hexadecimal-literal-characters --> hexadecimal-literal-character hexadecimal-literal-characters-OPT
 
+	negative-sign --> ``-``
+
 
 .. _LexicalStructure_Floating-PointLiterals:
 
 Floating-Point Literals
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-Floating-point literals represent floating-point values of unspecified precision.
+:newTerm:`Floating-point literals` represent floating-point values of unspecified precision.
 
 By default, floating-point literals are expressed in decimal (with no prefix),
 but they can also be expressed in hexadecimal (with a ``0x`` prefix).
@@ -403,7 +423,7 @@ Decimal floating-point literals consist of a sequence of decimal digits
 followed by either a decimal fraction, a decimal exponent, or both.
 The decimal fraction consists of a decimal point (``.``)
 followed by a sequence of decimal digits.
-The exponent consists of an uppercase or lowercase ``e`` prefix
+The exponent consists of an upper- or lowercase ``e`` prefix
 followed by sequence of decimal digits that indicates
 what power of 10 the value preceding the ``e`` is multiplied by.
 For example, ``1.25e2`` represents 1.25 ⨉ 10\ :superscript:`2`,
@@ -416,7 +436,7 @@ followed by an optional hexadecimal fraction,
 followed by a hexadecimal exponent.
 The hexadecimal fraction consists of a decimal point
 followed by a sequence of hexadecimal digits.
-The exponent consists of an uppercase or lowercase ``p`` prefix
+The exponent consists of an upper- or lowercase ``p`` prefix
 followed by sequence of decimal digits that indicates
 what power of 2 the value preceding the ``p`` is multiplied by.
 For example, ``0xFp2`` represents 15 ⨉ 2\ :superscript:`2`,
@@ -424,9 +444,10 @@ which evaluates to ``60``.
 Similarly, ``0xFp-2`` represents 15 ⨉ 2\ :superscript:`-2`,
 which evaluates to ``3.75``.
 
-As with integer literals, negative floating-point numbers are expressed
+Unlike with integer literals, negative floating-point numbers are expressed
 by applying the unary minus operator (``-``)
-to a floating-point literal.
+to a floating-point literal, as in ``-42.0``. The result is an expression,
+not a floating-point integer literal.
 
 Underscores (``_``) are allowed between digits for readability,
 but are ignored and therefore don't affect the value of the literal.
@@ -603,16 +624,17 @@ Operators
 ---------
 
 The Swift Standard Library defines a number of operators for your use,
-many of which are discussed in :doc:`../LanguageGuide/Operators`.
-The present section describes what characters can be used as operators.
+many of which are discussed in :doc:`../LanguageGuide/BasicOperators`
+and :doc:`../LanguageGuide/AdvancedOperators`.
+The present section describes which characters can be used as operators.
 
 Operators are made up of one or more of the following characters:
-``/``, ``=``, ``-``, ``+``, ``*``, ``%``, ``<``, ``>``, ``!``,
+``/``, ``=``, ``-``, ``+``, ``!``, ``*``, ``%``, ``<``, ``>``,
 ``&``, ``|``, ``^``, ``~``, and ``.``.
 That said, the tokens
 ``=``, ``->``, ``//``, ``/*``, ``*/``, ``.``,
 and the unary prefix operator ``&`` are reserved.
-These tokens can't be overloaded nor can they be used to define custom operators.
+These tokens can't be overloaded, nor can they be used to define custom operators.
 
 .. TR: LangRef also says (){}[].,;: are reserved punctuation,
    but those aren't valid operator characters anyway.
@@ -700,9 +722,9 @@ that may then be misinterpreted as a bit shift ``>>`` operator.
    it only applies in certain grammatical constructs.
 
 To learn how to define new, custom operators,
-see :ref:`ClassesAndStructures_CustomOperators`.
+see :ref:`AdvancedOperators_CustomOperators` and :ref:`Declarations_OperatorDeclaration`.
 To learn how to overload existing operators,
-see :ref:`ClassesAndStructures_OperatorFunctions`.
+see :ref:`AdvancedOperators_OperatorFunctions`.
 
 .. langref-grammar
 

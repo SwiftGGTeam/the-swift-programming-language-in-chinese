@@ -22,8 +22,8 @@ including those that represent arrays, dictionaries, and optional values.
 
 .. TODO: Discuss with Jeanne: What do we call instances of the "Optional" type?
 
-Data types that are normally considered basic or primitive in other languages,
-like those that represent numbers, characters, and strings,
+Data types that are normally considered basic or primitive in other languages---
+those that represent numbers, characters, and strings---
 are actually named types,
 defined and implemented in the Swift Standard Library using structures.
 Because they are named types,
@@ -35,7 +35,7 @@ A :newTerm:`compound type` is a type without a name, defined in the Swift langua
 There are two compound types: function types and tuple types.
 A compound type may contain named types and other compound types.
 For instance, the tuple type ``(Int, (Int, Int))`` contains two elements:
-the first is the named type ``Int``,
+The first is the named type ``Int``,
 and the second is another compound type ``(Int, Int)``.
 
 .. TODO: TR: What about language support (syntactic sugar) for creating dictionary literals?
@@ -65,7 +65,7 @@ and describes the type inference behavior of Swift.
 Type Annotation
 ---------------
 
-A type annotation explicitly specifies the type of a variable or expression.
+A :newTerm:`type annotation` explicitly specifies the type of a variable or expression.
 Type annotations begin with a colon (``:``) and end with a type,
 as the following examples show::
 
@@ -83,7 +83,7 @@ Type annotations may contain an optional list of type attributes before the type
 
     Grammar of a type annotation
 
-    type-annotation --> ``:`` attribute-sequence-OPT type
+    type-annotation --> ``:`` attribute-list-OPT type
 
 
 .. _Types_TypeIdentifier:
@@ -100,8 +100,8 @@ For example, ``Int`` is a type identifier that directly refers to the named type
 and the type identifier ``Dictionary<String, Int>`` directly refers
 to the named type ``Dictionary<String, Int>``.
 
-There are two cases where a type identifier does not refer to a type with the same name.
-The first case is when a type identifier refers to a type alias of a named or compound type.
+There are two cases in which a type identifier does not refer to a type with the same name.
+In the first case, a type identifier refers to a type alias of a named or compound type.
 For instance, in the example below,
 the use of ``Point`` in the type annotation refers to the tuple type ``(Double, Double)``.
 ::
@@ -110,7 +110,7 @@ the use of ``Point`` in the type annotation refers to the tuple type ``(Double, 
     let origin : Point = (0, 0)
     // origin : Point = (0.0, 0.0)
 
-The second case is when a type identifier uses dot (``.``) syntax to refer to named types
+In the second case, a type identifier uses dot (``.``) syntax to refer to named types
 declared in other modules or nested within other types.
 For example, the type identifier in the following code references the named type ``MyType``
 that is declared in the ``ExampleModule`` module.
@@ -151,7 +151,7 @@ Tuple Type
     tuple-type --> ``(`` tuple-type-body-OPT ``)``
     tuple-type-body --> tuple-type-element-list ``...``-OPT
     tuple-type-element-list --> tuple-type-element | tuple-type-element ``,`` tuple-type-element-list
-    tuple-type-element --> attribute-sequence-OPT type | element-name type-annotation
+    tuple-type-element --> attribute-list-OPT type | element-name type-annotation
     element-name --> identifier
 
 .. NOTE: Info from Doug about the relationship between tuple types and tuple patterns:
@@ -190,7 +190,7 @@ Function Type
 
     Grammar of a function type
 
-    function-type --> tuple-type ``->`` attribute-sequence-OPT type
+    function-type --> tuple-type ``->`` attribute-list-OPT type
 
 .. NOTE: Functions are first-class citizens in Swift,
     except for generic functions, i.e., parametric polymorphic functions.
@@ -247,7 +247,7 @@ Array Type
     Let's hold off on writing about these until they are nailed down.
     Update: [Contributor 5711] is now DRI for rewriting/implementing Arrays.
 
-.. _Types_FunctionType:
+.. _Types_OptionalType:
 
 Optional Type
 -------------
@@ -272,7 +272,7 @@ As an example,
 to declare an optional array of integers, write the type annotation as ``(Int[])?``;
 writing ``Int[]?`` produces an error.
 
-Optionals conform to the ``LogicValue`` protocol and therefore may occur in a boolean context.
+Optionals conform to the ``LogicValue`` protocol and therefore may occur in a Boolean context.
 In that context,
 if an instance of an optional type ``T?`` contains any value of type ``T``
 (that is, it's value is ``Optional.Some(T)``),
@@ -442,9 +442,9 @@ Metatype Type
 Type Inheritance Clause
 -----------------------
 
-A type inheritance clause is used to specify what class a named type inherits from
-and what protocols a named type conforms to.
-inherits from and conforms to. A type inheritance clause begins with a colon (``:``),
+A type inheritance clause is used to specify which class a named type inherits from
+and which protocols a named type conforms to.
+A type inheritance clause begins with a colon (``:``),
 followed by a comma-separated list of type identifiers.
 
 Class types may inherit from a single superclass and conform to any number of protocols.
@@ -454,9 +454,9 @@ followed by any number of protocols the class must conform to.
 If the class does not inherit from another class,
 the list may begin with a protocol instead.
 For an extended discussion and several examples of class inheritance,
-see :ref:`ClassesAndStructures_Inheritance`.
+see :doc:`../LanguageGuide/Inheritance`.
 
-Other named types may only inherit or conform to a list of protocols.
+Other named types may only inherit from or conform to a list of protocols.
 Protocol types may inherit from any number of other protocols.
 When a protocol type inherits from other protocols,
 the set of requirements from those other protocols are aggregated together,
@@ -502,14 +502,14 @@ That is,
 the type of ``x`` in ``var x : Int = 0`` is inferred by first checking the type of ``0``
 and then passing this type information up to the root (the variable ``x``).
 
-In Swift, type information may also flow in the opposite direction---from the root down to the leaves.
+In Swift, type information can also flow in the opposite direction---from the root down to the leaves.
 In the following example, for instance,
 the explicit type annotation (``: Float``) on the constant ``eFloat``
 causes the numeric literal ``2.71828`` to have type ``Float`` instead of type ``Double``.::
 
-    val e = 2.71828
+    let e = 2.71828
     // e : Double = 2.71828
-    val eFloat : Float = 2.71828
+    let eFloat : Float = 2.71828
     // eFloat : Float = 2.71828
 
 Type inference in Swift operates at the level of a single expression or statement.
