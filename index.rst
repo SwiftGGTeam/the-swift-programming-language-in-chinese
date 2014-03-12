@@ -53,6 +53,14 @@ Language Guide
 * Updates to bring code examples in line with this week's Swift release
 * Lots of editorial and technical improvements based on reader feedback (thank you!)
 
+Reference Manual
+++++++++++++++++
+
+* Minor formal grammar updates to the :doc:`ReferenceManual/LexicalStructure` chapter.
+* **NOTE:** The grammar in the :doc:`ReferenceManual/Declarations` and :doc:`ReferenceManual/Expressions`
+  chapters are out of date. They will updated shortly.
+
+
 February 28 2014
 ~~~~~~~~~~~~~~~~
 
