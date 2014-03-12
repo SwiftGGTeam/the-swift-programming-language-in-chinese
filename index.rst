@@ -25,7 +25,7 @@ March 12 2014
 Language Guide
 ++++++++++++++
 
-* The first half of a chapter on :doc:`LanguageGuide/Protocols`
+* Added the first half of a chapter on :doc:`LanguageGuide/Protocols`
 * Epic refactoring of the old Classes and Structures chapter into new chapters called
   :doc:`LanguageGuide/CustomTypes`, :doc:`LanguageGuide/Properties`, :doc:`LanguageGuide/Methods`,
   :doc:`LanguageGuide/Inheritance`, :doc:`LanguageGuide/Initialization`
@@ -58,7 +58,7 @@ Reference Manual
 
 * Minor formal grammar updates to the :doc:`ReferenceManual/LexicalStructure` chapter.
 * **NOTE:** The grammar in the :doc:`ReferenceManual/Declarations` and :doc:`ReferenceManual/Expressions`
-  chapters are out of date. They will updated shortly.
+  chapters are out of date. They will be updated shortly.
 
 
 February 28 2014
