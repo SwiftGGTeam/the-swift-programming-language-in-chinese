@@ -12,17 +12,18 @@ Protocols
 A :newTerm:`protocol` defines a blueprint or template set of
 methods, properties, and other requirements
 that suit a particular task or piece of functionality.
-The protocol doesn't actually provide an *implementation* for any of these requirements –
+The protocol doesn't actually provide an implementation for any of these requirements –
 it only describes what an implementation will look like.
 The protocol can then adopted by a class, structure or enumeration
 to provide an actual implementation of those requirements.
-
 Any type that satisfies the requirements of a protocol is said to
 :newTerm:`conform` to that protocol.
 
 Protocols can require that conforming types have specific
 instance properties, instance methods, type properties, type methods,
 initializers, operators, and subscripts.
+
+.. _Protocols_ProtocolSyntax:
 
 Protocol Syntax
 ---------------
@@ -35,7 +36,7 @@ Protocols are defined in a very similar way to classes, structures and enumerati
         // protocol definition goes here
     }
 
-Custom types declare that they implement a particular protocol
+Custom types can declare that they implement a particular protocol
 by placing the protocol's name after the type's name,
 separated by a colon, as part of their own definition:
 
@@ -57,6 +58,8 @@ Multiple protocols can also be listed, separated by commas:
         // class definition goes here
     }
 
+.. _Protocols_InstanceProperties:
+
 Instance Properties
 -------------------
 
@@ -71,15 +74,12 @@ The protocol also specifies whether each property must be either:
 * gettable *and* settable, or
 * gettable
 
-If a protocol requires a property to be both gettable and settable,
+If a protocol requires a property to be gettable and settable,
 that property requirement cannot be fulfilled by
-a constant stored property or a read-only computed property,
-because neither of these are settable.
-
+a constant stored property or a read-only computed property.
 If the protocol only requires a property to be gettable,
-the requirement can be satisfied by any kind of property.
-The property does not have to be settable,
-although it is perfectly valid for it to also be settable
+the requirement can be satisfied by any kind of property,
+and it is perfectly valid for it to also be settable
 if this is useful for your own code.
 
 Property requirements are always declared as variable properties,
@@ -160,6 +160,8 @@ and prepends it on to the beginning of ``name`` to create a full name for the st
 
 .. TODO: add some advice on how protocols should be named
 
+.. _Protocols_InstanceMethods:
+
 Instance Methods
 ----------------
 
@@ -221,8 +223,10 @@ a :newTerm:`linear congruential generator`:
     --> println("And another one: \(generator.random())")
     <-- And another one: 0.729024
 
-Using Protocols as Parameter and Named Value Types
---------------------------------------------------
+.. _Protocols_UsingProtocolsAsTypes:
+
+Using Protocols as Types
+------------------------
 
 Protocols do not actually implement any functionality themselves.
 Nonetheless, any protocol you create will become a fully-fledged type for use in your code.
@@ -311,6 +315,8 @@ with a ``LinearCongruentialGenerator`` instance as its random number generator:
     <-/ Random dice roll is 4
     <-/ Random dice roll is 5
     <-/ Random dice roll is 4
+
+.. _Protocols_Delegates:
 
 Delegates
 ---------
@@ -530,8 +536,8 @@ Protocol Composition
 
 .. protocol<P1, P2> syntax for protocol conformance aka "something that conforms to multiple protocols"
 
-Checking Protocol Conformance
------------------------------
+Checking for Protocol Conformance
+---------------------------------
 
 .. write-me::
 
@@ -548,10 +554,8 @@ Optional Requirements
 .. Checking for (and calling) optional implementations via optional binding and closures
 .. all dependent on the implementation of rdar://16101161
 
-TBC
----
-
-.. write-me::
+.. Other things to be included:
+.. ----------------------------
 
 .. Class-only protocols
 .. @obj-c protocols
