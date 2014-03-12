@@ -84,6 +84,8 @@ The end result –
 a default value of ``32.0`` for ``temperature`` when a new instance is created –
 is the same in both cases.
 
+.. _Initialization_DefaultInitializers:
+
 Default Initializers
 --------------------
 

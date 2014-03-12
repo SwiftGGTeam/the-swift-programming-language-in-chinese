@@ -77,28 +77,18 @@ that isn't in a Private Use Area.
 After the first character,
 digits and combining Unicode characters are also allowed.
 
+To use a reserved word as an identifier,
+put a backtick (:literal:`\``) before and after it.
+For example, ``class`` is not a valid identifier,
+but :literal:`\`class\`` is valid.
+The backticks are not considered part of the identifier;
+:literal:`\`x\`` and ``x`` have the same meaning.
+
+.. `` backticks to fix VIM syntax highlighting after the escaped ones confused it
+
 Inside a closure with no explicit parameter names,
 the parameters are implicitly named ``$0``, ``$1``, ``$2``, and so on.
 These names are valid identifiers within the scope of the closure.
-
-.. TR: How should the grammar change to accomodate using backticks
-	around identifiers that clash with keywords?
-
-	From the release notes on 3/5/14:
-	Values whose names clash with Swift keywords, such as Cocoa methods or
- 	properties named "class", "protocol", "type", etc., can now be defined and
- 	accessed by wrapping reserved keywords in backticks to suppress their builtin
-	meaning:
-
-   	let `class` = 0
-   	let `type` = 1
-   	let `protocol` = 2
-   	println(`class`)
-   	println(`type`)
-   	println(`protocol`)
-
-   	func foo(Int) `class`(Int) {}
-   	foo(0, `class`: 1)
 
 .. langref-grammar
 
@@ -135,6 +125,7 @@ These names are valid identifiers within the scope of the closure.
     Grammar of an identifier
 
     identifier --> identifier-head identifier-characters-OPT
+    identifier --> ````` identifier-head identifier-characters-OPT `````
     identifier --> implicit-parameter-name
     identifier-list --> identifier | identifier ``,`` identifier-list
 
@@ -169,9 +160,6 @@ Keywords
 --------
 
 The following keywords are reserved and may not be used as identifiers.
-
-.. TODO: Check with Jeanne about how to format this list.
-   As a table?  As a multi-column list?  Etc.
 
 .. langref-grammar
 
@@ -213,7 +201,10 @@ The following keywords are reserved and may not be used as identifiers.
     keyword ::= '__FILE__'
     keyword ::= '__LINE__'
 
-*Keywords used in declarations and types*:
+.. NOTE: The LangRef is out of date for keywords. The list of current keywords
+	is defined in the file: swift/inclue/swift/Parse/Tokens.def
+
+*Keywords used in declarations*:
 
 ``class``
 ``deinit``
@@ -227,23 +218,8 @@ The following keywords are reserved and may not be used as identifiers.
 ``static``
 ``struct``
 ``subscript``
-``type``
-``Type``
 ``typealias``
 ``var``
-``where``
-
-*Keywords used in expressions*:
-
-``as``
-``is``
-``new``
-``super``
-``self``
-``Self``
-``__COLUMN__``
-``__FILE__``
-``__LINE__``
 
 *Keywords used in statements*:
 
@@ -253,12 +229,31 @@ The following keywords are reserved and may not be used as identifiers.
 ``default``
 ``do``
 ``else``
+``fallthrough``
 ``if``
 ``in``
 ``for``
 ``return``
 ``switch``
+``where``
 ``while``
+
+*Keywords used in expressions and types*:
+
+``as``
+``dynamicType``
+``is``
+``new``
+``super``
+``self``
+``Self``
+``Type``
+``unowned``
+``weak``
+``__COLUMN__``
+``__FILE__``
+``__FUNCTION__``
+``__LINE__``
 
 In addition,
 the following keywords are used in particular contexts.
@@ -629,7 +624,8 @@ Operators
 ---------
 
 The Swift Standard Library defines a number of operators for your use,
-many of which are discussed in :doc:`../LanguageGuide/Operators`.
+many of which are discussed in :doc:`../LanguageGuide/BasicOperators`
+and :doc:`../LanguageGuide/AdvancedOperators`.
 The present section describes which characters can be used as operators.
 
 Operators are made up of one or more of the following characters:
@@ -726,9 +722,9 @@ that may then be misinterpreted as a bit shift ``>>`` operator.
    it only applies in certain grammatical constructs.
 
 To learn how to define new, custom operators,
-see :ref:`ClassesAndStructures_CustomOperators` and :ref:`Declarations_OperatorDeclaration`.
+see :ref:`AdvancedOperators_CustomOperators` and :ref:`Declarations_OperatorDeclaration`.
 To learn how to overload existing operators,
-see :ref:`ClassesAndStructures_OperatorFunctions`.
+see :ref:`AdvancedOperators_OperatorFunctions`.
 
 .. langref-grammar
 
