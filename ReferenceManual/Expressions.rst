@@ -583,6 +583,47 @@ Postfix Expressions
 Function Call Expression
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
+:newTerm:`Function-style calls` calls consist of a function
+followed by its arguments in parenthesis.
+Arguments are separated by commas
+and support optional lables.
+They have the following form
+(showing a function that takes no arguments,
+one that takes a single argument,
+and one that takes three arguments):
+
+.. syntax-outline::
+
+    <#function>()
+    <#function>(<#argument#>)
+    <#function>(<#argument 1#>, <#argument 2#>, <#argument 3#>)
+
+The function portion of the function call expression
+can be any expression whose value is of a functional type
+(
+
+A function call expression can include a :newTerm:`trailing closure`
+in the form of a closure expression immediately after the parenthesis.
+The trailing closure is understood as an additional argument to the function,
+added after the last parenthesized argument.
+The following function calls are equivalent: ::
+
+    exampleFunction(x, {$0 == 13})
+    exampleFunction(x) {$0 == 13}
+
+The parentheses can be omitted
+when calling a function that takes only one argument: ::
+
+    myData.process() {$0 * 2}
+    myData.process {$0 * 2}
+
+:Term:`Selector-style function calls` consist of a function
+followed by interleaved parts of its selector and its argements.
+
+.. TODO: Skipping for now until the selector call syntax settles down
+
+.. write-me ::
+
 .. langref-grammar
 
     expr-call ::= expr-postfix expr-paren
@@ -598,13 +639,6 @@ Function Call Expression
 
 .. Multiple trailing closures in LangRef is an error,
    per [Contributor 6004] 2014-03-04 email.
-
-
-For example, the following function calls are equivalent: ::
-
-    [1, 2, 3].map {$0 * 2}
-    [1, 2, 3].map() {$0 * 2}
-    [1, 2, 3].map({$0 * 2})
 
 
 .. _Expressions_NewExpression:
