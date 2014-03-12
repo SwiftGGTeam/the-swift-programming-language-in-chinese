@@ -19,6 +19,40 @@ Contents
 Change Log
 ----------
 
+March 12 2014
+~~~~~~~~~~~~~
+
+Language Guide
+++++++++++++++
+
+* The first half of a chapter on :doc:`LanguageGuide/Protocols`
+* Epic refactoring of the old Classes and Structures chapter into new chapters called
+  :doc:`LanguageGuide/CustomTypes`, :doc:`LanguageGuide/Properties`, :doc:`LanguageGuide/Methods`,
+  :doc:`LanguageGuide/Inheritance`, :doc:`LanguageGuide/Initialization`
+  and :doc:`LanguageGuide/TypeCasting`, and moved the :doc:`LanguageGuide/Enumerations` chapter
+  to appear before all of the above
+* **NOTE:** The :doc:`LanguageGuide/Initialization` chapter is out of date with
+  recent Swift changes to how initialization works, and needs a substantial rewrite
+* Split the old Operators chapter into two new chapters called
+  :doc:`LanguageGuide/BasicOperators` and :doc:`LanguageGuide/AdvancedOperators`,
+  and moved the Advanced chapter to the back of the book
+* Reworked several other chapters to fit with the new overall structure
+* Moved away from an explicit REPL-like presentation of code examples,
+  and added in hand-written comments instead
+* New section on :ref:`Methods_Subscripts`
+* New section about mutating ``self`` in :ref:`enumeration instance methods <Methods_SelfEnumerations>`
+* New sections about :ref:`BasicTypes_PrintingNamedValues`
+  and :ref:`BasicTypes_StringInterpolation` in Basic Types
+* Improved examples for :ref:`ControlFlow_While` and :ref:`ControlFlow_Break`,
+  and a new example for :ref:`ControlFlow_DoWhile`
+* Embedded Types are now referred to as :ref:`CustomTypes_NestedTypes`,
+  and their example has been simplified
+* Moved :ref:`BasicTypes_OptionalBinding` into the :doc:`LanguageGuide/BasicTypes` chapter,
+  and adopted it for several more examples throughout the book
+* :ref:`didSet <Properties_StoredPropertyObservers>` now has an ``oldValue`` parameter
+* Updates to bring code examples in line with this week's Swift release
+* Lots of editorial and technical improvements based on reader feedback (thank you!)
+
 February 28 2014
 ~~~~~~~~~~~~~~~~
 
@@ -36,11 +70,11 @@ Language Guide
 
 * First draft of a nearly-complete chapter on :doc:`LanguageGuide/Extensions`
 * ``val`` is once again ``let``
-* Destructors are now :ref:`ClassesAndStructures_Deinitializers`,
+* Destructors are now :ref:`Initialization_Deinitializers`,
   and have an improved and expanded description
-* Added information about the new :ref:`@override attribute <ClassesAndStructures_OverridingInstanceMethods>`
-* Improved descriptions for :ref:`the implicit self parameter <ClassesAndStructures_Self>`
-* The :ref:`ClassesAndStructures_OperatorFunctions` section of :doc:`LanguageGuide/ClassesAndStructures`
+* Added information about the new :ref:`@override attribute <Inheritance_OverridingInstanceMethods>`
+* Improved descriptions for :ref:`the implicit self parameter <Methods_TheSelfParameter>`
+* The :ref:`AdvancedOperators_OperatorFunctions` section
   now uses a Vector2D structure instead of a Point
 * Clarified that structures can also assign to ``self`` within an initializer
 * Editorial changes and improvements throughout, as ever
@@ -51,11 +85,11 @@ February 25 2014
 Language Guide
 ++++++++++++++
 
-* New section on :ref:`ClassesAndStructures_TypeCasting`
-* New section on :ref:`ClassesAndStructures_Destructors`
-* New section on :ref:`self <ClassesAndStructures_Self>` and ``mutating`` structure methods
-* :ref:`ClassesAndStructures_StoredPropertyObservers` and :ref:`ClassesAndStructures_ComputedProperties` now all use curly braces
-* Information about the :ref:`Operators_ClosedRangeOperator` (``..``)
+* New section on :doc:`LanguageGuide/TypeCasting`
+* New section on :ref:`Initialization_Deinitializers`
+* New section on :ref:`self <Methods_TheSelfParameter>` and ``mutating`` structure methods
+* :ref:`Properties_StoredPropertyObservers` and :ref:`Properties_ComputedProperties` now all use curly braces
+* Information about the :ref:`BasicOperators_ClosedRangeOperator` (``..``)
 * Re-ordered the :doc:`LanguageGuide/ControlFlow` chapter
 * ``String`` no longer has a ``length`` property
 * :doc:`LanguageGuide/Extensions` and :doc:`LanguageGuide/Protocols` are now separate chapters (but are not yet written)
@@ -72,63 +106,3 @@ Reference Manual
 * Added a draft of the :doc:`ReferenceManual/LexicalStructure` chapter.
 * Added a draft of the :doc:`ReferenceManual/Types` chapter.
   There are still a few placeholder sections in this chapter.
-
-February 12 2014
-~~~~~~~~~~~~~~~~
-
-Language Guide
-++++++++++++++
-
-+ Updated and rewritten much of the :doc:`LanguageGuide/ClassesAndStructures` chapter, including a :ref:`revised description of value and reference types <ClassesAndStructures_ValueTypesAndReferenceTypes>`, and new sections on:
-    * :ref:`Constant and Variable Properties <ClassesAndStructures_StoredProperties>`
-    * :ref:`ClassesAndStructures_StoredPropertyObservers` (``willSet`` and ``didSet``)
-    * :ref:`ClassesAndStructures_ComputedProperties`
-    * :ref:`ClassesAndStructures_ShorthandSetterDeclaration`
-    * :ref:`ClassesAndStructures_ReadOnlyComputedProperties`
-    * :ref:`ClassesAndStructures_PropertiesAndInstanceVariables`
-    * :ref:`ClassesAndStructures_InstanceMethods`
-    * :ref:`ClassesAndStructures_Initialization`
-    * :ref:`ClassesAndStructures_Inheritance`
-    * :ref:`ClassesAndStructures_OperatorFunctions`
-
-* First draft of a few sections of the :doc:`LanguageGuide/Functions` chapter
-* ``let`` has been changed to ``val`` throughout the Language Guide
-* :doc:`LanguageGuide/ClassesAndStructures` now uses :ref:`‘instances’ <ClassesAndStructures_Terminology>` to refer to both objects and structs
-* :doc:`LanguageGuide/Functions` and :doc:`LanguageGuide/Closures` are now separate chapters
-* New section about :ref:`ControlFlow_OptionalBinding` (``if let x = someOptional``)  in :doc:`LanguageGuide/ControlFlow`
-* Added :ref:`a new Enumerations example <Enumerations_PropertiesAndMethods>`, showing how they can use initializers, computed properties and instance methods
-* Added a section about :ref:`Enumerations_EmbeddedTypes` to the :doc:`LanguageGuide/Enumerations` chapter, although it applies to classes and structures too
-* Refer to :ref:`BasicTypes_TypeSafetyAndTypeInference` rather than ‘strong typing’ in :doc:`LanguageGuide/BasicTypes`
-* :ref:`Operators_IncrementAndDecrementOperators` now work with floating-point numbers
-* The half-closed :ref:`Operators_RangeOperator` is now ``...`` rather than ``..``
-* Removed the description of tuple typealiases and initializer syntax, and removed all remaining mentions of named tuple values
-* Moved over to using constants in the :ref:`ControlFlow_Where` example in :doc:`LanguageGuide/ControlFlow`
-* ``Int`` is now word-sized; removed the corresponding note in :doc:`LanguageGuide/BasicTypes`
-* Re-ordered the :doc:`LanguageGuide/ControlFlow` chapter to move :ref:`ControlFlow_ControlTransferStatements` to their own section at the end of the document
-* Removed the (empty) *Interacting With Objective-C and Cocoa* chapter, as this will now be covered in a separate document
-* Consistency improvements around wording and new term definitions throughout the Guide
-
-January 21 2014
-~~~~~~~~~~~~~~~
-
-Language Guide
-++++++++++++++
-
-* Added the first few sections of a draft chapter about :doc:`LanguageGuide/ClassesAndStructures`
-* Enumerations have been extracted out of :doc:`LanguageGuide/BasicTypes` and given their own chapter called :doc:`LanguageGuide/Enumerations`
-* ``let`` constants have been added to :doc:`LanguageGuide/BasicTypes`
-* The ‘Declaring and Naming Variables’ section of :doc:`LanguageGuide/BasicTypes` is now called ‘Named Values’, and talks about both ``let`` constants and ``var`` variables
-* Most mentions of ‘variables’ have been changed to talk about ‘named values’
-* Most ``var`` declarations have become ``let`` declarations
-* Removed mention of the ``reverse()`` function from :doc:`LanguageGuide/ControlFlow`, as it is no longer available
-* Removed ``Int128`` and ``UInt128`` from :doc:`LanguageGuide/BasicTypes`, as they don't actually exist
-* Removed mention of ``Float32`` and ``Float64``, and standardized on ``Float`` and ``Double``
-* The ``%`` operator is now correctly called a ‘remainder operator’ rather than a ‘modulo operator’ in :doc:`LanguageGuide/Operators`
-* Improved and expanded the description of the remainder operator in :doc:`LanguageGuide/Operators`, including a description of how it works with negative numbers
-* Other wording improvements throughout the Guide based on initial feedback
-
-Reference Manual
-++++++++++++++++
-
-* Added a rough draft of the :doc:`ReferenceManual/Statements` chapter.
-

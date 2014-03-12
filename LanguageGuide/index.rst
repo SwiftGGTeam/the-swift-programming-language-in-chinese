@@ -7,13 +7,19 @@ Chapters that have not yet been written are indicated with an [x] after their na
     :maxdepth: 1
 
     BasicTypes
-    Operators
+    BasicOperators
     Strings
     ControlFlow
     Functions
     Closures
-    ClassesAndStructures
     Enumerations
+    CustomTypes
+    Properties
+    Methods
+    Inheritance
+    Initialization
+    TypeCasting
     Extensions
     Protocols
     Generics
+    AdvancedOperators
