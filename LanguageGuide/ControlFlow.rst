@@ -311,7 +311,7 @@ using the board shown below.
 The rules of the game are as follows:
 
 * The board has 25 squares, and the aim is to land on or beyond square 25
-* Each turn, you roll a six-sided die and move by that number of squares
+* Each turn, you roll a six-sided dice and move by that number of squares
 * If your turn ends at the bottom of a ladder, you move up that ladder
 * If your turn ends at the head of a snake, you move down that snake
 
@@ -352,21 +352,21 @@ but they lead to neater code.)
 
 The player's starting square is “square zero”,
 which is just off the bottom left-hand corner of the board.
-The first die roll will always move the player on to the board:
+The first dice roll will always move the player on to the board:
 
 .. testcode:: snakesAndLadders1
 
     --> var square = 0
     <<< // square : Int = 0
-    --> var dieRoll = 0
-    <<< // dieRoll : Int = 0
+    --> var diceRoll = 0
+    <<< // diceRoll : Int = 0
     --> while square < finalSquare {
-            // roll the die
-            if ++dieRoll == 7 { dieRoll = 1 }
-    >>>     println("dieRoll is \(dieRoll)")
+            // roll the dice
+            if ++diceRoll == 7 { diceRoll = 1 }
+    >>>     println("diceRoll is \(diceRoll)")
             // move by the rolled amount
-            square += dieRoll
-    >>>     println("after dieRoll, square is \(square)")
+            square += diceRoll
+    >>>     println("after diceRoll, square is \(square)")
             if square < board.count {
                 // if we're still on the board, move up or down for a snake or a ladder
                 square += board[square]
@@ -374,54 +374,54 @@ The first die roll will always move the player on to the board:
             }
         }
     --> println("Game over!")
-    <<< dieRoll is 1
-    <<< after dieRoll, square is 1
+    <<< diceRoll is 1
+    <<< after diceRoll, square is 1
     <<< after snakes or ladders, square is 1
-    <<< dieRoll is 2
-    <<< after dieRoll, square is 3
+    <<< diceRoll is 2
+    <<< after diceRoll, square is 3
     <<< after snakes or ladders, square is 11
-    <<< dieRoll is 3
-    <<< after dieRoll, square is 14
+    <<< diceRoll is 3
+    <<< after diceRoll, square is 14
     <<< after snakes or ladders, square is 4
-    <<< dieRoll is 4
-    <<< after dieRoll, square is 8
+    <<< diceRoll is 4
+    <<< after diceRoll, square is 8
     <<< after snakes or ladders, square is 8
-    <<< dieRoll is 5
-    <<< after dieRoll, square is 13
+    <<< diceRoll is 5
+    <<< after diceRoll, square is 13
     <<< after snakes or ladders, square is 13
-    <<< dieRoll is 6
-    <<< after dieRoll, square is 19
+    <<< diceRoll is 6
+    <<< after diceRoll, square is 19
     <<< after snakes or ladders, square is 8
-    <<< dieRoll is 1
-    <<< after dieRoll, square is 9
+    <<< diceRoll is 1
+    <<< after diceRoll, square is 9
     <<< after snakes or ladders, square is 18
-    <<< dieRoll is 2
-    <<< after dieRoll, square is 20
+    <<< diceRoll is 2
+    <<< after diceRoll, square is 20
     <<< after snakes or ladders, square is 20
-    <<< dieRoll is 3
-    <<< after dieRoll, square is 23
+    <<< diceRoll is 3
+    <<< after diceRoll, square is 23
     <<< after snakes or ladders, square is 23
-    <<< dieRoll is 4
-    <<< after dieRoll, square is 27
+    <<< diceRoll is 4
+    <<< after diceRoll, square is 27
     <<< Game over!
 
-This example uses a very simple approach to die-rolling.
+This example uses a very simple approach to dice-rolling.
 Instead of using a random number generator,
-it starts with a ``dieRoll`` value of ``0``.
+it starts with a ``diceRoll`` value of ``0``.
 Each time through the ``while`` loop,
-``dieRoll`` is incremented with the prefix increment operator (++i),
+``diceRoll`` is incremented with the prefix increment operator (++i),
 and then checked to see if it has become too large.
-The return value of ``++dieRoll`` is equal to
-the value of ``dieRoll`` *after* it has been incremented.
+The return value of ``++diceRoll`` is equal to
+the value of ``diceRoll`` *after* it has been incremented.
 Whenever this return value equals ``7``,
-the die roll has become too large, and is reset to a value of ``1``.
-This gives a sequence of ``dieRoll`` values that is always
+the dice roll has become too large, and is reset to a value of ``1``.
+This gives a sequence of ``diceRoll`` values that is always
 ``1``, ``2``, ``3``, ``4``, ``5``, ``6``, ``1``, ``2`` and so on.
 
-After rolling the die, the player moves forward by ``dieRoll`` squares.
+After rolling the dice, the player moves forward by ``diceRoll`` squares.
 The next step is to check for any snakes or ladders,
 by looking at the value contained in ``board[square]``.
-However, it's possible that the die roll may have moved the player beyond square 25.
+However, it's possible that the dice roll may have moved the player beyond square 25.
 If ``square`` is now equal to ``26``, say,
 then this would cause the code to try and check the value of ``board[26]``.
 This is beyond the upper bounds of the ``board`` array,
@@ -466,7 +466,7 @@ The general form of a ``do``-``while`` loop is:
 
 Here's the *Snakes and Ladders* example again,
 written as a ``do``-``while`` loop rather than a ``while`` loop.
-The values of ``finalSquare``, ``board``, ``square``, and ``dieRoll``
+The values of ``finalSquare``, ``board``, ``square``, and ``diceRoll``
 are initialized in exactly the same way as before:
 
 .. testcode:: snakesAndLadders2
@@ -480,8 +480,8 @@ are initialized in exactly the same way as before:
     --> board[14] = -10; board[19] = -11; board[22] = -02; board[24] = -08
     --> var square = 0
     <<< // square : Int = 0
-    --> var dieRoll = 0
-    <<< // dieRoll : Int = 0
+    --> var diceRoll = 0
+    <<< // diceRoll : Int = 0
 
 In this version of the game,
 the *first* action in the loop is to check for a ladder or a snake.
@@ -499,48 +499,48 @@ and will have no effect:
             // move up or down for a snake or ladder
             square += board[square]
     >>>        println("after snakes or ladders, square is \(square)")
-            // roll the die
-            if ++dieRoll == 7 { dieRoll = 1 }
-    >>>     println("dieRoll is \(dieRoll)")
+            // roll the dice
+            if ++diceRoll == 7 { diceRoll = 1 }
+    >>>     println("diceRoll is \(diceRoll)")
             // move by the rolled amount
-            square += dieRoll
-    >>>     println("after dieRoll, square is \(square)")
+            square += diceRoll
+    >>>     println("after diceRoll, square is \(square)")
     --> } while square < finalSquare
     --> println("Game over!")
     <<< after snakes or ladders, square is 0
-    <<< dieRoll is 1
-    <<< after dieRoll, square is 1
+    <<< diceRoll is 1
+    <<< after diceRoll, square is 1
     <<< after snakes or ladders, square is 1
-    <<< dieRoll is 2
-    <<< after dieRoll, square is 3
+    <<< diceRoll is 2
+    <<< after diceRoll, square is 3
     <<< after snakes or ladders, square is 11
-    <<< dieRoll is 3
-    <<< after dieRoll, square is 14
+    <<< diceRoll is 3
+    <<< after diceRoll, square is 14
     <<< after snakes or ladders, square is 4
-    <<< dieRoll is 4
-    <<< after dieRoll, square is 8
+    <<< diceRoll is 4
+    <<< after diceRoll, square is 8
     <<< after snakes or ladders, square is 8
-    <<< dieRoll is 5
-    <<< after dieRoll, square is 13
+    <<< diceRoll is 5
+    <<< after diceRoll, square is 13
     <<< after snakes or ladders, square is 13
-    <<< dieRoll is 6
-    <<< after dieRoll, square is 19
+    <<< diceRoll is 6
+    <<< after diceRoll, square is 19
     <<< after snakes or ladders, square is 8
-    <<< dieRoll is 1
-    <<< after dieRoll, square is 9
+    <<< diceRoll is 1
+    <<< after diceRoll, square is 9
     <<< after snakes or ladders, square is 18
-    <<< dieRoll is 2
-    <<< after dieRoll, square is 20
+    <<< diceRoll is 2
+    <<< after diceRoll, square is 20
     <<< after snakes or ladders, square is 20
-    <<< dieRoll is 3
-    <<< after dieRoll, square is 23
+    <<< diceRoll is 3
+    <<< after diceRoll, square is 23
     <<< after snakes or ladders, square is 23
-    <<< dieRoll is 4
-    <<< after dieRoll, square is 27
+    <<< diceRoll is 4
+    <<< after diceRoll, square is 27
     <<< Game over!
 
-After checking for snakes and ladders, the die is rolled,
-and the player is moved forward by ``dieRoll`` squares as before.
+After checking for snakes and ladders, the dice is rolled,
+and the player is moved forward by ``diceRoll`` squares as before.
 The current loop execution then ends.
 
 The loop's condition (``while square < finalSquare``) is the same as before,
@@ -1021,7 +1021,7 @@ This time around, the game has an extra rule:
 
 * To win, you must land *exactly* on square 25
 
-If a particular die roll would take you beyond square 25,
+If a particular dice roll would take you beyond square 25,
 you must roll again until you roll the exact number needed to land on square 25.
 
 The game board is the same as before:
@@ -1030,7 +1030,7 @@ The game board is the same as before:
     :height: 250
     :align: center
 
-The values of ``finalSquare``, ``board``, ``square``, and ``dieRoll``
+The values of ``finalSquare``, ``board``, ``square``, and ``diceRoll``
 are initialized in the same way as before:
 
 .. testcode:: snakesAndLadders3
@@ -1044,8 +1044,8 @@ are initialized in the same way as before:
     --> board[14] = -10; board[19] = -11; board[22] = -02; board[24] = -08
     --> var square = 0
     <<< // square : Int = 0
-    --> var dieRoll = 0
-    <<< // dieRoll : Int = 0
+    --> var diceRoll = 0
+    <<< // diceRoll : Int = 0
 
 This version of the game uses a ``while`` loop and a ``switch`` statement
 to implement the game's logic.
@@ -1055,87 +1055,87 @@ to reflect the fact that you must land exactly on square 25:
 .. testcode:: snakesAndLadders3
 
     --> while square != finalSquare {
-            if ++dieRoll == 7 { dieRoll = 1 }
-    >>>     println("dieRoll is \(dieRoll)")
-            switch square + dieRoll {
+            if ++diceRoll == 7 { diceRoll = 1 }
+    >>>     println("diceRoll is \(diceRoll)")
+            switch square + diceRoll {
                 case finalSquare:
-                    // dieRoll will move us to the final square, so the game is over
+                    // diceRoll will move us to the final square, so the game is over
     >>>             println("finalSquare, game is over")
                     break
                 case let newSquare where newSquare > finalSquare:
-                    // dieRoll will move us beyond the final square, so roll again
+                    // diceRoll will move us beyond the final square, so roll again
     >>>             println("move too far, roll again")
                     continue
                 default:
                     // this is a valid move, so find out its effect
-                    square += dieRoll
-    >>>             println("after dieRoll, square is \(square)")
+                    square += diceRoll
+    >>>             println("after diceRoll, square is \(square)")
                     square += board[square]
     >>>             println("after snakes or ladders, square is \(square)")
             }
         }
     --> println("Game over!")
-    <<< dieRoll is 1
-    <<< after dieRoll, square is 1
+    <<< diceRoll is 1
+    <<< after diceRoll, square is 1
     <<< after snakes or ladders, square is 1
-    <<< dieRoll is 2
-    <<< after dieRoll, square is 3
+    <<< diceRoll is 2
+    <<< after diceRoll, square is 3
     <<< after snakes or ladders, square is 11
-    <<< dieRoll is 3
-    <<< after dieRoll, square is 14
+    <<< diceRoll is 3
+    <<< after diceRoll, square is 14
     <<< after snakes or ladders, square is 4
-    <<< dieRoll is 4
-    <<< after dieRoll, square is 8
+    <<< diceRoll is 4
+    <<< after diceRoll, square is 8
     <<< after snakes or ladders, square is 8
-    <<< dieRoll is 5
-    <<< after dieRoll, square is 13
+    <<< diceRoll is 5
+    <<< after diceRoll, square is 13
     <<< after snakes or ladders, square is 13
-    <<< dieRoll is 6
-    <<< after dieRoll, square is 19
+    <<< diceRoll is 6
+    <<< after diceRoll, square is 19
     <<< after snakes or ladders, square is 8
-    <<< dieRoll is 1
-    <<< after dieRoll, square is 9
+    <<< diceRoll is 1
+    <<< after diceRoll, square is 9
     <<< after snakes or ladders, square is 18
-    <<< dieRoll is 2
-    <<< after dieRoll, square is 20
+    <<< diceRoll is 2
+    <<< after diceRoll, square is 20
     <<< after snakes or ladders, square is 20
-    <<< dieRoll is 3
-    <<< after dieRoll, square is 23
+    <<< diceRoll is 3
+    <<< after diceRoll, square is 23
     <<< after snakes or ladders, square is 23
-    <<< dieRoll is 4
+    <<< diceRoll is 4
     <<< move too far, roll again
-    <<< dieRoll is 5
+    <<< diceRoll is 5
     <<< move too far, roll again
-    <<< dieRoll is 6
+    <<< diceRoll is 6
     <<< move too far, roll again
-    <<< dieRoll is 1
-    <<< after dieRoll, square is 24
+    <<< diceRoll is 1
+    <<< after diceRoll, square is 24
     <<< after snakes or ladders, square is 16
-    <<< dieRoll is 2
-    <<< after dieRoll, square is 18
+    <<< diceRoll is 2
+    <<< after diceRoll, square is 18
     <<< after snakes or ladders, square is 18
-    <<< dieRoll is 3
-    <<< after dieRoll, square is 21
+    <<< diceRoll is 3
+    <<< after diceRoll, square is 21
     <<< after snakes or ladders, square is 21
-    <<< dieRoll is 4
+    <<< diceRoll is 4
     <<< finalSquare, game is over
     <<< Game over!
 
-The die is rolled at the start of each loop.
+The dice is rolled at the start of each loop.
 Rather than moving the player immediately,
 a ``switch`` statement is used to consider the result of the move,
 and to work out if should be allowed to take the place:
 
-* If the die roll will move the player onto the final square,
+* If the dice roll will move the player onto the final square,
   the game is effectively over.
   To indicate this, the ``break`` statement transfers control to
   the first line of code outside of the loop, which ends the game.
-* If the die roll will move the player *beyond* the final square,
+* If the dice roll will move the player *beyond* the final square,
   the move is considered invalid, and the player needs to roll again.
   To indicate this, the ``continue`` statement ends the current loop iteration,
   and begins the next iteration of the loop.
-* In all other cases, the die roll is cosidered to be a valid move.
-  The player moves forward by ``dieRoll`` squares,
+* In all other cases, the dice roll is cosidered to be a valid move.
+  The player moves forward by ``diceRoll`` squares,
   and the game logic checks for any snakes and ladders.
   The loop then ends, and control returns to the ``while`` condition
   to decide if another turn is required.
