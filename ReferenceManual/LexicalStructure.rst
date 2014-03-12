@@ -79,8 +79,10 @@ digits and combining Unicode characters are also allowed.
 
 To use a reserved word as an identifier,
 put a backtick (:literal:`\``) before and after it.
-for example, ``class`` is not a valid identifier,
-but :literal:`\`\`class\`\`` is valid.
+For example, ``class`` is not a valid identifier,
+but :literal:`\`class\`` is valid.
+The backticks are not considered part of the identifier;
+:literal:`\`x\`` and ``x`` have the same meaning.
 
 .. `` backticks to fix VIM syntax highlighting after the escaped ones confused it
 
