@@ -40,6 +40,14 @@ Operators
    where you know that two things are definitely of the same type.
    Perhaps mention it here, but don't actually show an example?
 
+Subscripts
+----------
+
+.. write-me::
+
+.. Protocols can require conforming types to provide specific subscripts
+
+
 .. refnote:: References
 
     * https://[Internal Staging Server]/docs/whitepaper/GuidedTour.html#generics

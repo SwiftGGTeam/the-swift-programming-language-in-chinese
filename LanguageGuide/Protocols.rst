@@ -507,13 +507,6 @@ Class and Static Methods and Properties
 .. Protocols can provide class (and static) functions and properties
    (although rdar://14620454 and rdar://15242744).
 
-Subscripts
-----------
-
-.. write-me::
-
-.. Subscript requirements (but it's broken at the moment)
-
 Adding Protocol Conformance With Extensions
 -------------------------------------------
 
