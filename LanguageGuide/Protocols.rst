@@ -158,35 +158,134 @@ Each ``Starship`` class instance stores a mandatory ``name``, and an optional ``
 The ``fullName`` property uses the ``prefix`` value if it exists,
 and prepends it on to the beginning of ``name`` to create a full name for the starship.
 
-.. Some advice on how protocols should be named
-
-Conforming to a Protocol
-------------------------
-
-.. write-me::
-
-.. Declaring protocol conformance (and the overlap of this with subclass declaration)
-.. Show how to make a custom type conform to LogicValue or some other protocol
-   …although this requires everything from below to be in place
-.. LogicValue certainly needs to be mentioned in here somewhere
-.. Ideally illustrate this with a delegate-style protocol too
-
-Adding Protocol Conformance With Extensions
--------------------------------------------
-
-.. write-me::
-
-.. Extensions can make an existing type conform to a protocol
+.. TODO: add some advice on how protocols should be named
 
 Instance Methods
 ----------------
 
-.. write-me::
+Protocols can require specific instance methods to be implemented by conforming types.
+These methods are written as part of the protocol's definition
+in exactly the same way as for a normal instance method definition,
+but without curly braces or a method body.
 
-.. Protocols can declare instance methods
-.. Methods can have variadic parameters
-.. No default implementations of protocol methods
-.. Method properties can't (yet) have default values specified in the protocol
+For example:
+
+.. testcode:: protocols
+
+    --> protocol RandomNumberGenerator {
+            func random() -> Double
+        }
+
+This protocol, ``RandomNumberGenerator``, requires any conforming type
+to have an instance method called ``random()``,
+which returns a ``Double`` value whenever it is called.
+(Although it is not specified as part of the protocol,
+it is assumed that this value will be
+a random floating-point number between ``0.0`` and ``1.0`` inclusive.)
+
+.. QUESTION: should I *make* this range be part of the protocol?
+
+The ``RandomNumberGenerator`` protocol does not make any assumptions
+about how each random number will be generated –
+it just requires that any generator provides a standard way
+to generate a new random number.
+
+Here's an implementation of a class that conforms to
+the ``RandomNumberGenerator`` protocol.
+This class implements a pseudorandom number generator algorithm known as
+a :newTerm:`linear congruential generator`:
+
+.. testcode:: protocols
+
+    --> class LinearCongruentialGenerator : RandomNumberGenerator {
+            var lastRandom = 42.0
+            let m = 139968.0
+            let a = 3877.0
+            let c = 29573.0
+            func random() -> Double {
+                lastRandom = ((lastRandom * a + c) % m)
+                return lastRandom / m
+            }
+        }
+    --> let generator = LinearCongruentialGenerator()
+    <<< // generator : LinearCongruentialGenerator = <LinearCongruentialGenerator instance>
+    --> println("Here's a random number: \(generator.random())")
+    <-- Here's a random number: 0.37465
+    --> println("Look - there's another one: \(generator.random())")
+    <-- Look - there's another one: 0.729024
+
+Using Protocols as Parameter and Named Value Types
+--------------------------------------------------
+
+Protocols do not actually implement any functionality themselves.
+Nonetheless, any protocol you define still creates a new fully-fledged type.
+Because it is a fully-fledged type,
+a protocol can be used in many places where standard types are allowed.
+
+For example,
+a protocol can be specified as the type of a parameter for
+a function, method, or initializer,
+or as the type of a named value or property.
+
+.. TODO: what else should be on this list? And should it actually be complete?
+
+.. testcode:: protocols
+
+    --> struct Die {
+            let sides: Int
+            let generator: RandomNumberGenerator
+            init withSides(sides: Int) generator(RandomNumberGenerator) {
+                self.sides = sides
+                self.generator = generator
+            }
+            func roll() -> Int {
+                return 1 + Int(generator.random() * Double(sides))
+            }
+        }
+
+.. testcode:: protocols
+
+    --> var d6 = Die(withSides: 6, generator: LinearCongruentialGenerator())
+    <<< // d6 : Die = <Die instance>
+    --> for _ in 1..10 {
+            println("Random die roll is \(d6.roll())")
+        }
+    <-/ Random die roll is 3
+    <-/ Random die roll is 5
+    <-/ Random die roll is 4
+    <-/ Random die roll is 5
+    <-/ Random die roll is 4
+    <-/ Random die roll is 1
+    <-/ Random die roll is 4
+    <-/ Random die roll is 2
+    <-/ Random die roll is 1
+    <-/ Random die roll is 4
+
+.. testcode:: protocols
+
+    --> let finalSquare = 25
+    <<< // finalSquare : Int = 25
+    --> var board = Array<Int>()
+    <<< // board : Array<Int> = []
+    --> for _ in 0..finalSquare { board.append(0) }
+    --> board[03] = +08; board[06] = +11; board[09] = +09; board[10] = +02
+    --> board[14] = -10; board[19] = -11; board[22] = -02; board[24] = -08
+    --> var square = 0
+    <<< // square : Int = 0
+    --> do {
+            square += board[square]
+            square += d6.roll()
+    --> } while square < finalSquare
+
+.. note::
+
+    A protocol cannot specify default values for the parameters of the methods it requires.
+
+.. Idea: the next part of this chapter could be to define a "didRoll" protocol,
+   and to use an extension to add it to the Die shown above.
+   I could then use this to implement a turn-counter for the game.
+   Or, make the game into a class, and implement game-watching logic.
+   Bingo!
 
 Initializers
 ------------
@@ -215,12 +314,19 @@ Operators
    where you know that two things are definitely of the same type.
    Perhaps mention it here, but don't actually show an example?
 
-Subscript
----------
+Subscripts
+----------
 
 .. write-me::
 
 .. Subscript requirements (but it's broken at the moment)
+
+Adding Protocol Conformance With Extensions
+-------------------------------------------
+
+.. write-me::
+
+.. Extensions can make an existing type conform to a protocol
 
 Protocol Inheritance
 --------------------
@@ -229,6 +335,13 @@ Protocol Inheritance
 
 .. Protocols can inherit from other protocols
 .. Perhaps use a Printable and FancyPrintable kind of example
+
+Protocol Composition
+--------------------
+
+.. write-me::
+
+.. protocol<P1, P2> syntax for protocol conformance aka "something that conforms to multiple protocols"
 
 Checking Protocol Conformance
 -----------------------------
@@ -245,7 +358,6 @@ Using Protocols
 .. Using a protocol as the type for a variable, function parameter, return type etc.
 .. Functions can have parameters that are 'anything that implements some protocol'
 .. …or 'some multiple protocols'
-.. protocol<P1, P2> syntax for protocol conformance aka "something that conforms to multiple protocols"
 .. accessing protocol methods, properties etc. through a named value that is *just* of protocol type
 .. Protocols can't be nested, but nested types can implement protocols
 
@@ -267,6 +379,9 @@ TBC
 .. @obj-c protocols
 .. Curried functions in protocols
 .. Standard-library protocols such as Sequence, Equatable etc.?
+.. Show how to make a custom type conform to LogicValue or some other protocol
+.. LogicValue certainly needs to be mentioned in here somewhere
+.. Show a protocol being used by an enumeration
 
 .. refnote:: References
 
