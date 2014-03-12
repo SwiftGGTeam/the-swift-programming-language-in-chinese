@@ -83,7 +83,7 @@ Type annotations may contain an optional list of type attributes before the type
 
     Grammar of a type annotation
 
-    type-annotation --> ``:`` attribute-sequence-OPT type
+    type-annotation --> ``:`` attribute-list-OPT type
 
 
 .. _Types_TypeIdentifier:
@@ -151,7 +151,7 @@ Tuple Type
     tuple-type --> ``(`` tuple-type-body-OPT ``)``
     tuple-type-body --> tuple-type-element-list ``...``-OPT
     tuple-type-element-list --> tuple-type-element | tuple-type-element ``,`` tuple-type-element-list
-    tuple-type-element --> attribute-sequence-OPT type | element-name type-annotation
+    tuple-type-element --> attribute-list-OPT type | element-name type-annotation
     element-name --> identifier
 
 .. NOTE: Info from Doug about the relationship between tuple types and tuple patterns:
@@ -190,7 +190,7 @@ Function Type
 
     Grammar of a function type
 
-    function-type --> tuple-type ``->`` attribute-sequence-OPT type
+    function-type --> tuple-type ``->`` attribute-list-OPT type
 
 .. NOTE: Functions are first-class citizens in Swift,
     except for generic functions, i.e., parametric polymorphic functions.
