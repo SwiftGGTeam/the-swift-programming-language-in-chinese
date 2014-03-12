@@ -161,9 +161,6 @@ Keywords
 
 The following keywords are reserved and may not be used as identifiers.
 
-.. TODO: Check with Jeanne about how to format this list.
-   As a table?  As a multi-column list?  Etc.
-
 .. langref-grammar
 
     keyword ::= 'class'
@@ -204,7 +201,10 @@ The following keywords are reserved and may not be used as identifiers.
     keyword ::= '__FILE__'
     keyword ::= '__LINE__'
 
-*Keywords used in declarations and types*:
+.. NOTE: The LangRef is out of date for keywords. The list of current keywords
+	is defined in the file: swift/inclue/swift/Parse/Tokens.def
+
+*Keywords used in declarations*:
 
 ``class``
 ``deinit``
@@ -218,23 +218,8 @@ The following keywords are reserved and may not be used as identifiers.
 ``static``
 ``struct``
 ``subscript``
-``type``
-``Type``
 ``typealias``
 ``var``
-``where``
-
-*Keywords used in expressions*:
-
-``as``
-``is``
-``new``
-``super``
-``self``
-``Self``
-``__COLUMN__``
-``__FILE__``
-``__LINE__``
 
 *Keywords used in statements*:
 
@@ -244,12 +229,31 @@ The following keywords are reserved and may not be used as identifiers.
 ``default``
 ``do``
 ``else``
+``fallthrough``
 ``if``
 ``in``
 ``for``
 ``return``
 ``switch``
+``where``
 ``while``
+
+*Keywords used in expressions and types*:
+
+``as``
+``dynamicType``
+``is``
+``new``
+``super``
+``self``
+``Self``
+``Type``
+``unowned``
+``weak``
+``__COLUMN__``
+``__FILE__``
+``__FUNCTION__``
+``__LINE__``
 
 In addition,
 the following keywords are used in particular contexts.
