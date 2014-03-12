@@ -594,12 +594,11 @@ Function Call Expression
 
     function-call-expression --> postfix-expression parenthesized-expression trailing-closure-OPT
     function-call-expression --> postfix-expression parenthesized-expression-OPT trailing-closure
-    trailing-closure --> closure-expressions expression-cast-OPT
+    trailing-closure --> closure-expressions
 
-.. TODO Multiple trailing closures in LangRef is an error,
+.. Multiple trailing closures in LangRef is an error,
    per [Contributor 6004] 2014-03-04 email.
 
-.. TODO Why is there an optional cast after the trailing closure?
 
 For example, the following function calls are equivalent: ::
 
