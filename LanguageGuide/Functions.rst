@@ -694,9 +694,11 @@ to print its output, as the ``output`` string already has a line break
 at the end of the returned string.
 
 .. TODO: It is not currently possible to use variadic parameters with selector-style declarations,
-   but this is an intended addition as part of the revision of selector-style syntax.
+   but this may be added as part of the revision of selector-style syntax.
    This is tracked as rdar://16030076, and this section should be updated
    once it is implemented.
+   In the meantime, I have chosen not to mention it either way,
+   as Joe wasn't sure whether this would make it in for their March deadline.
 
 .. _Functions_InoutParameters:
 
