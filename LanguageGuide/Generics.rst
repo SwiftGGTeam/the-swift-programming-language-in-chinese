@@ -29,6 +29,16 @@ Self with a capital S
 
 .. Self as the dynamic type of the current type
 
+Operators
+---------
+
+.. write-me::
+
+.. Protocols can require the implementation of operators (though assignment operators are broken)
+.. Likewise for requiring custom operators
+.. However, Doug thought that this might be better covered by Generics,
+   where you know that two things are definitely of the same type.
+   Perhaps mention it here, but don't actually show an example?
 
 .. refnote:: References
 
