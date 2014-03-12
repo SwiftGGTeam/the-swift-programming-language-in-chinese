@@ -10,6 +10,8 @@ Initialization
 
 .. TODO: Remove this note following the rewrite.
 
+.. TODO: this chapter seems to have lost its "definite initialization" section.
+
 Classes and structures must always set their stored properties
 to an appropriate initial value by the time that an instance is created.
 There are two ways to initialize properties:
