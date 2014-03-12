@@ -64,7 +64,7 @@ A protocol can require any conforming type to provide
 an instance property with a particular name and type.
 The protocol doesn't specify whether the property is
 a stored property or a computed property –
-it just specifies the property name and type.
+it just specifies the required property name and type.
 
 The protocol also specifies whether each property must be either:
 
@@ -118,6 +118,7 @@ the ``FullyNamed`` protocol:
             var fullName: String
         }
     --> let john = Person(fullName: "John Appleseed")
+    <<< // john : Person = Person("John Appleseed")
     /-> john.fullName is \"\(john.fullName)\"
     <-/ john.fullName is "John Appleseed"
 
@@ -148,7 +149,7 @@ Here's a more complex class, which also conforms to the ``FullyNamed`` protocol:
             }
         }
     --> var ncc1701 = Starship(withName: "Enterprise", prefix: "USS")
-    <<< // ncc1701 : Starship = <Ship instance>
+    <<< // ncc1701 : Starship = <Starship instance>
     /-> ncc1701.fullName is \"\(ncc1701.fullName)\"
     <-/ ncc1701.fullName is "USS Enterprise"
 
