@@ -510,24 +510,83 @@ Class and Static Methods and Properties
 Adding Protocol Conformance With Extensions
 -------------------------------------------
 
-.. write-me::
+An existing type can be extended to conform to a new protocol,
+even if you do not have access to the source code for the existing type.
+This is achieved by using :doc:`Extensions`.
+Extensions give a way to add new properties, methods, initializers and subscripts
+to an existing type,
+and are therefore able to add any of the requirements that a protocol may demand
+on to an existing type.
 
-.. Extensions can make an existing type conform to a protocol
+For example:
+
+.. testcode:: protocols
+
+    --> protocol TextRepresentable {
+            func asText() -> String
+        }
+
+This protocol, called ``TextRepresentable``, can be implemented by
+any type that has a way to be represented as text.
+This might be a description of itself, or a text version of its current state.
+
+The ``Dice`` class from earlier can be easily extended to conform to ``TextRepresentable``:
+
+.. testcode:: protocols
+
+    --> extension Dice : TextRepresentable {
+            func asText() -> String {
+                return "A \(sides)-sided dice"
+            }
+        }
+
+This extensions declares the new protocol conformance in exactly the same way
+as if ``Dice`` had provided it in its original implementation.
+The protocol name is provided after the type name, separated by a colon,
+and an implementation of all of the requirements of the protocol
+is provided within the extension's curly braces.
+
+Any ``Dice`` instance can now be treated as ``TextRepresentable``:
+
+.. testcode:: protocols
+
+    --> let d12: TextRepresentable = Dice(withSides: 12, generator: LinearCongruentialGenerator())
+    --> println(d12.asText())
+
+Declaring Existing Conformance
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If a type already happens to satisfy all of the requirements of a protocol,
+but has not yet declared itself as conforming to that protocol,
+it can be declared to conform by using an empty extension:
+
+.. testcode:: protocols
+
+    --> struct Hamster {
+            var name: String
+            func asText() -> String {
+                return "A hamster called \(name)"
+            }
+        }
+    --> extension Hamster : TextRepresentable {}
+    --> var simon: TextRepresentable = Hamster(name: "Simon")
+    <<< // simon : TextRepresentable = <unprintable value>
+    --> println(simon.asText())
+    <-- A hamster called Simon
+
+.. note::
+
+    Types do not automatically conform to a protocol just by satisfying its requirements.
+    They must always explicitly declare their conformance as shown above.
 
 Protocol Inheritance
 --------------------
 
-.. write-me::
+Protocols can :newTerm:`inherit` from other protocols,
+to add further requirements on top of those from an existing protocol.
 
 .. Protocols can inherit from other protocols
 .. Perhaps use a Printable and FancyPrintable kind of example
-
-Protocol Composition
---------------------
-
-.. write-me::
-
-.. protocol<P1, P2> syntax for protocol conformance aka "something that conforms to multiple protocols"
 
 Checking for Protocol Conformance
 ---------------------------------
@@ -537,6 +596,13 @@ Checking for Protocol Conformance
 .. is and as
 .. Perhaps follow on from the Printable and FancyPrintable example
    to check for conformance and call the appropriate print method
+
+Protocol Composition
+--------------------
+
+.. write-me::
+
+.. protocol<P1, P2> syntax for protocol conformance aka "something that conforms to multiple protocols"
 
 Optional Requirements
 ---------------------
