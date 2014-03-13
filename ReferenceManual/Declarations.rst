@@ -30,7 +30,6 @@ Declarations
     declaration --> typealias-declaration
     declaration --> function-declaration
     declaration --> enum-declaration
-    declaration --> enum-member-declaration
     declaration --> struct-declaration
     declaration --> class-declaration
     declaration --> protocol-declaration
@@ -41,8 +40,7 @@ Declarations
     declaration --> operator-declaration
     declarations --> declaration declarations-OPT
 
-.. NOTE: enum-element-declaration is only allowed inside an enum
-   declaration.
+.. NOTE: Removed enum-member-declaration, because we don't need it anymore.
 
 .. NOTE: Added 'operator-declaration' based on ParseDecl.cpp.
 
