@@ -686,6 +686,20 @@ which specify the initial dimensions of the array.
 Initializer Expression
 ~~~~~~~~~~~~~~~~~~~~~~
 
+An :newTerm:`initializer expression` is understood
+as a reference to the class's initializer.
+It has the following form:
+
+.. syntax-outline::
+
+    <#instance of a class#>.init
+
+The value of this expression is a function
+which can be called,
+set as the value of a variable,
+and so on,
+just as with any other function.
+
 .. langref-grammar
 
     expr-init ::= expr-postfix '.' 'init'
