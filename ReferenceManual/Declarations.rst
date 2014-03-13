@@ -30,7 +30,7 @@ Declarations
     declaration --> typealias-declaration
     declaration --> function-declaration
     declaration --> enum-declaration
-    declaration --> enum-element-declaration
+    declaration --> enum-member-declaration
     declaration --> struct-declaration
     declaration --> class-declaration
     declaration --> protocol-declaration
@@ -677,12 +677,34 @@ Function Signature
 Enumeration Declaration
 -----------------------
 
+A :newTerm:`enumeration declaration` introduces a named, enumeration type into your program.
+
+Enumeration declarations have two basic forms and are declared using the keyword ``enum``.
+
+The first form allows you to declare an enumeration type that contains
+enumerators of any type, each of which can contain associated values
+and has the following form:
+
 .. syntax-outline::
 
     enum <#enumeration name#> {
+        <#declarations#>
         case <#enumerator list 1#>
         case <#enumerator list 2#>(<#associated value type#>)
     }
+
+Enumerations declared in this form are known as :newTerm:`discriminated unions`
+in other programming languages.
+
+The body of an enumeration contains zero or more *declarations*
+and enumeration member declarations.
+These *declarations* can include computed properties,
+instance methods, initializers, and enumeration member declarations.
+In this form, enumerators consist the keyword ``case``
+followed by a list of
+
+The second form allow you to declare an enumeration type that contains
+enumerators of the same basic type and has the following form:
 
 .. syntax-outline::
 
@@ -714,17 +736,49 @@ Enumeration Declaration
 
     Grammar of an enumeration declaration
 
+    enum-declaration --> attribute-list-OPT raw-value-style-enum | attribute-list-OPT union-style-enum
+
+    raw-value-style-enum --> enum-name generic-parameter-clause-OPT type-inheritance-clause raw-value-style-enum-body
+    raw-value-style-enum-body --> ``{`` declarations-OPT raw-value-style-enum-members ``}``
+    raw-value-style-enum-members --> raw-value-style-enum-member raw-value-style-enum-members-OPT
+    raw-value-style-enum-member --> attribute-list-OPT raw-value-style-enumerator-list
+    raw-value-style-enumerator-list --> raw-value-style-enumerator | raw-value-style-enumerator ``,`` raw-value-style-enumerator-list
+    raw-value-style-enumerator --> identifier raw-value-assignment-OPT
+    raw-value-assignment --> ``=`` literal
+    enum-name --> identifier
+
+    union-style-enum --> enum-name generic-parameter-clause-OPT union-style-enum-body
+    union-style-enum-body --> ``{`` declarations-OPT union-style-enum-members-OPT ``}``
+    union-style-enum-members --> union-style-enum-member union-style-enum-members-OPT
+    union-style-enum-member --> attribute-list-OPT union-style-enumerator-list
+    union-style-enumerator-list --> union-style-enumerator | union-style-enumerator ``,`` union-style-enumerator-list
+    union-style-enumerator --> identifier tuple-type-OPT
+
+.. NOTE: The two types of enums are sufficiently different enough to warrant separating
+    the grammar accordingly. ([Contributor 6004] pointed this out in his email.)
+    I'm not sure I'm happy with the names I've chosen for two kinds of enums,
+    so please let me know if you can think of better names!
+    I chose union-style-enum, because this kind of enum behaves like a discriminated union,
+    not like an ordinary enum type. They are a kind of "sum" type in the language
+    of ADTs (Algebraic Data Types). Functional languages, like F# for example,
+    actually have both types (discriminated unions and enumeration types),
+    because they behave differently. I'm not sure why we've blended them together,
+    especially given that they have distinct syntactic declaration requirements
+    and they behave differently.
+
+.. old-grammar
+    Grammar of an enumeration declaration
+
     enum-declaration --> attribute-list-OPT ``enum`` enum-name generic-parameter-clause-OPT type-inheritance-clause-OPT enum-body
     enum-name --> identifier
     enum-body --> ``{`` declarations-OPT ``}``
 
-    enum-element-declaration --> attribute-list-OPT ``case`` enumerator-list
+    enum-member-declaration --> attribute-list-OPT ``case`` enumerator-list
     enumerator-list --> enumerator raw-value-assignment-OPT | enumerator raw-value-assignment-OPT ``,`` enumerator-list
     enumerator --> enumerator-name tuple-type-OPT
     enumerator-name --> identifier
     raw-value-assignment --> ``=`` literal
 
-.. NOTE: You can have other declarations like methods inside of an enum declaration (e.g., methods, etc.).
 
 
 .. _Declarations_StructureDeclaration:
