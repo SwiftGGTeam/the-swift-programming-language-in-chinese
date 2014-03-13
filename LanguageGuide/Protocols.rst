@@ -681,7 +681,7 @@ The ``SnakesAndLadders`` class can be extended to conform to ``PrettyTextReprese
                         case let ladder where ladder > 0:
                             output += "👍 "
                         case let snake where snake < 0:
-                            output += "🐍 ︎"
+                            output += "🐍 "
                         default:
                             output += "🆓 "
                     }
@@ -689,6 +689,7 @@ The ``SnakesAndLadders`` class can be extended to conform to ``PrettyTextReprese
                 return output
             }
         }
+
 
 This extension declares conformance to ``PrettyTextRepresentable``,
 and provides an implementation of the ``asPrettyText()`` method
@@ -715,7 +716,7 @@ of any ``SnakesAndLadders`` instance:
 
     --> println(game.asPrettyText())
     <-/ A game of Snakes and Ladders with 25 squares:
-    <-/ 🆓 🆓 👍 🆓 🆓 👍 🆓 🆓 👍 👍 🆓 🆓 🆓 🐍 ︎🆓 🆓 🆓 🆓 🐍 ︎🆓 🆓 🐍 ︎🆓 🐍 ︎🆓 
+    <-/ 🆓 🆓 👍 🆓 🆓 👍 🆓 🆓 👍 👍 🆓 🆓 🆓 🐍 🆓 🆓 🆓 🆓 🐍 🆓 🆓 🐍 🆓 🐍 🆓 
 
 Checking for Protocol Conformance
 ---------------------------------
