@@ -441,8 +441,8 @@ if it is appropriate for your type:
                     return grid[(row * columns) + column]
                 }
                 set {
-                    if value && row < rows && column < columns {
-                        grid[(row * columns) + column] = value!
+                    if newValue && row < rows && column < columns {
+                        grid[(row * columns) + column] = newValue!
                     }
                 }
             }
