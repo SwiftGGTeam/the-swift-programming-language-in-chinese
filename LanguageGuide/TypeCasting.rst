@@ -81,6 +81,9 @@ and so an instance of either class can be added to the array.
     and it is clear from the context that this is the correct initializer to use.
     As a result, leaving out the ``withName:`` selector does not cause any ambiguity.
 
+.. TODO: change this section to use shorter array initialization syntax
+   if it is added to the language in time.
+
 .. _TypeCasting_CheckingType:
 
 Checking Type

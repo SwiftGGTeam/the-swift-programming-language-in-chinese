@@ -13,13 +13,13 @@ All of the most common operators are described in this chapter.
 Swift's more advanced operators are described in :doc:`AdvancedOperators`.
 
 Swift supports all of the standard operators from C,
-and improves several of their capabilities:
+and improves several of their capabilities
+to eliminate common coding errors:
 
-* Assignment (``=``) does not return a value, to avoid common coding errors
 * Remainder (``%``) calculations can be performed on floating-point numbers
+* Assignment (``=``) does not return a value
 * Arithmetic operators (``+``, ``-``, ``*``, ``/``, ``%`` etc.)
-  detect and disallow value overflow,
-  eliminating a category of common coding errors
+  detect and disallow value overflow
 
 You can choose to opt in to value overflow behavior
 by using Swift's :newTerm:`overflow operators` (such as ``a &+ b``).
@@ -95,7 +95,7 @@ The following statement is not valid:
 This avoids the assignment operator (``=``) being used by accident
 when the equality comparison operator (``==``) is actually intended.
 By making ``if x = y`` invalid,
-Swift makes it much easier to avoid these kinds of errors in your code.
+Swift helps you to avoid these kinds of errors in your code.
 
 .. TODO: Should we mention that x = y = z is also not valid?
    If so, is there a convincing argument as to why this is a good thing?
@@ -593,7 +593,7 @@ It can be read as “not ``a``”, as seen in the following example:
         }
     <-- ACCESS DENIED
 
-The phrase ``if !allowedEntry`` can be read as “if not allowed entry”.
+The phrase ``if !allowedEntry`` can be read as “if not allowed entry.”
 The subsequent line is only executed if “not allowed entry” is true,
 i.e. if ``allowedEntry`` is ``false``.
 

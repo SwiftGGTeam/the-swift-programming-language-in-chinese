@@ -8,16 +8,16 @@ Methods
 Instance Methods
 ----------------
 
-:newTerm:`Instance methods` are functions that belong to instances of a particular class or structure.
+:newTerm:`Instance methods` are functions that belong to instances of
+a particular class, structure or enumeration.
 They support the functionality of those instances,
 either by providing ways to access and modify their properties,
 or by providing useful functionality related to their purpose.
 Instance methods can be written in either function-style syntax or selector-style syntax.
 
-Instance methods are written within the opening and closing braces of a class or structure,
-to indicate that they belong to that class or structure.
-They have implicit access to all of its other instance methods and properties.
-Instance methods can only be called on a specific instance of that class or structure.
+Instance methods are written within the opening and closing braces of the type they belong to.
+They have implicit access to all of the other instance methods and properties of that type.
+Instance methods can only be called on a specific instance of that type.
 They cannot be called in isolation without an existing instance.
 
 Here's an example:
@@ -63,16 +63,17 @@ Instance methods are called using the same dot syntax as properties:
     /-> counter value is now \(counter.count)
     <-/ counter value is now 0
 
-.. _Methods_Self:
+.. _Methods_TheSelfParameter:
 
-Self
-~~~~
+The “self” Parameter
+~~~~~~~~~~~~~~~~~~~~
 
 Every instance method has an extra implicit parameter called ``self``,
 which is made available to the method without having to be declared.
 The implicit ``self`` parameter refers to the instance on which the method is called.
 
-It's almost as if the ``increment()`` method from above had been written like this:
+It's almost as if the ``increment()`` method from above had been written
+as a stand-alone function like this:
 
 ::
 
@@ -93,7 +94,8 @@ Even though it has an implicit ``self`` parameter available,
 the ``Counter`` class above has chosen *not* to use ``self.count``
 to refer to its ``count`` property within its instance methods.
 Because there are no other named values called ``count`` within each method's body,
-the ``self.`` prefix can be dropped, as it is clear that ``count`` can only mean the instance property.
+the ``self.`` prefix can be dropped,
+because it is clear that ``count`` can only mean the instance property.
 Instead, ``count`` is written in a shorter form, without the ``self.`` prefix:
 
 ::
@@ -127,8 +129,8 @@ and an instance property that is also called ``x``:
 
 .. _Methods_SelfClasses:
 
-Using Self in Class Instance Methods
-____________________________________
+Using “self” in Class Instance Methods
+______________________________________
 
 For class instance methods, the ``self`` parameter is a read-only reference
 to the instance on which the method is called.
@@ -159,8 +161,8 @@ as there is no ambiguity as to what ``balance`` refers to.
 
 .. _Methods_SelfStructures:
 
-Using Self in Structure Instance Methods
-________________________________________
+Using “self” in Structure Instance Methods
+__________________________________________
 
 For structure instance methods, the ``self`` parameter is
 a read-only copy of the structure instance, and its properties cannot be modified.
@@ -201,8 +203,8 @@ and can use ``x`` and ``y`` as shorthand for ``self.x`` and ``self.y``.
 
 .. _Methods_SelfEnumerations:
 
-Using Self in Enumeration Instance Methods
-__________________________________________
+Using “self” in Enumeration Instance Methods
+____________________________________________
 
 The ``self`` parameter of an enumeration instance method
 is a read-only copy of the enumeration member,
@@ -264,7 +266,7 @@ Subscripts
 
 Classes and structures can define :newTerm:`subscripts`,
 which enable instances of that class or structure to be queried via one or more
-values in square braces after the instance name.
+values in square brackets after the instance name.
 This is similar to the way in which the elements in an ``Array`` instance
 can be accessed as ``someArray[n]``,
 and elements in a ``Dictionary`` instance can be accessed as
@@ -472,7 +474,7 @@ This is to cope with the fact that you might request a value outside of
 the bounds of the matrix.
 To cope with this,
 the subscript's getter checks to see if the requested ``row`` or ``column``
-is outside of the bounds of the matrix:
+is outside the bounds of the matrix:
 
 ::
 

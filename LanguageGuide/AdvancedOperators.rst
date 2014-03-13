@@ -113,7 +113,8 @@ which equals an unsigned decimal of ``254``.
 Bitwise XOR Operator
 ~~~~~~~~~~~~~~~~~~~~
 
-The :newTerm:`bitwise XOR operator` (``^``) compares the bits of two numbers,
+The :newTerm:`bitwise XOR operator`, or “exclusive OR operator” (``^``),
+compares the bits of two numbers,
 and returns a new number whose bits are set to ``1`` where the input bits are different,
 and ``0`` where the input bits are the same:
 
@@ -133,10 +134,6 @@ For example:
     <<< // outputBits : UInt8 = 17
 
 .. TODO: Explain how this can be useful to toggle just a few bits in a bitfield.
-
-.. note::
-
-    “XOR” is pronounced “exclusive OR”.
 
 .. _AdvancedOperators_BitwiseLeftAndRightShifts:
 
@@ -537,8 +534,8 @@ This is due to the priorities and associativity of the operators used:
 * Operator :newTerm:`associativity` defines how operators of the same precedence
   are grouped together (or :newTerm:`associated`) –
   either grouped from the left, or grouped from the right.
-  Think of it as meaning “they associate with the expression to their left”,
-  or “they associate with the expression to their right”.
+  Think of it as meaning “they associate with the expression to their left,”
+  or “they associate with the expression to their right.”
 
 Here's how the actual evaluation order is calculated for the example above.
 Precedence is considered first.
@@ -550,7 +547,7 @@ As a result, they are both evaluated before the addition is considered.
 
 However, multiplication and remainder happen to have the *same* precedence as each other.
 To work out the exact evaluation order to use,
-we therefore need to also look at their associativity.
+we therefore also need to look at their associativity.
 Multiplication and remainder both associate with the expression to their left.
 You can think of this as adding implicit parentheses around these parts of the expression,
 starting from their left:
@@ -601,12 +598,12 @@ This is known as :newTerm:`overloading` the existing operators.
     --> struct Vector2D {
             var x = 0.0, y = 0.0
         }
-    --> func + (lhs: Vector2D, rhs: Vector2D) -> Vector2D {
+    --> @infix func + (lhs: Vector2D, rhs: Vector2D) -> Vector2D {
             return Vector2D(lhs.x + rhs.x, lhs.y + rhs.y)
         }
 
 This example shows how to provide an implementation of the
-arithmetic addition operator (``+``) for a custom structure.
+infix arithmetic addition operator (``+``) for a custom structure.
 The example starts by defining a ``Vector2D`` structure for
 a two-dimensional position vector ``(x, y)``.
 This is followed by a definition of an :newTerm:`operator function`
@@ -615,6 +612,15 @@ to add together instances of the ``Vector2D`` structure.
 The operator function is defined as a global function called ``+``,
 which takes two input parameters of type ``Vector2D``,
 and returns a single output value, also of type ``Vector2D``.
+Implementations of infix operators are indicated via the ``@infix`` attribute,
+which is written before the ``func`` keyword when declaring the operator function.
+
+.. QUESTION: You can actually elide the @infix attribute for infix operator functions.
+   However, I've chosen to include it (and not mention that it can be elided)
+   for consistency with @prefix and @postfix below,
+   and for clarity of intent.
+   Is this the right choice?
+
 In this implementation, the input parameters have been named ``lhs`` and ``rhs``
 to represent the ``Vector2D`` instances that will be on
 the left-hand side and right-hand side of the ``+`` operator.
@@ -824,6 +830,11 @@ rather than adding ``Vector2D(1.0, 1.0)``:
     <-/ toBeDoubled now has values of (2.0, 8.0)
     /-> afterDoubling also has values of (\(afterDoubling.x), \(afterDoubling.y))
     <-/ afterDoubling also has values of (2.0, 8.0)
+
+.. _AdvancedOperators_CustomPrecedenceAndAssociativity:
+
+Custom Precedence and Associativity
+___________________________________
 
 Custom ``infix`` operators may also specify a :newTerm:`precedence`
 and an :newTerm:`associativity`.

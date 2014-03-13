@@ -82,7 +82,7 @@ In addition to properties,
 Objective-C also has the concept of :newTerm:`instance variables`,
 which are used as a 'backing' store for the values stored in a property.
 
-Swift unifies these two separate concepts into a single unified property declaration.
+Swift unifies these two separate concepts into a single property declaration.
 There is no longer a distinction between properties and instance variables,
 and the backing store for a property is not accessed directly.
 This avoids potential confusion around how the value is accessed in different contexts,
@@ -270,7 +270,7 @@ Shorthand Setter Declaration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If a computed property's setter does not define a name for the new value to be set,
-a default name of ``value`` is used.
+a default name of ``newValue`` is used.
 Here's an alternative version of the ``Rect`` structure,
 which takes advantage of this shorthand notation:
 
@@ -286,8 +286,8 @@ which takes advantage of this shorthand notation:
                     return Point(centerX, centerY)
                 }
                 set {
-                    origin.x = value.x - (size.width / 2)
-                    origin.y = value.y - (size.height / 2)
+                    origin.x = newValue.x - (size.width / 2)
+                    origin.y = newValue.y - (size.height / 2)
                 }
             }
         }

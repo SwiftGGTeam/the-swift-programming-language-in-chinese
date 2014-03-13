@@ -52,7 +52,7 @@ Both can:
   (as described in :doc:`Initialization`)
 * be :newTerm:`extended` to expand their functionality beyond a default implementation
   (as described in :doc:`Extensions`)
-* conform to :newTerm:`protocols` to provide standard functionality of a certain type, and
+* conform to :newTerm:`protocols` to provide standard functionality of a certain type
   (as described in :doc:`Protocols`)
 
 In addition, classes have several capabilities that structures and enumerations do not:
@@ -359,7 +359,7 @@ Reference Types
 ~~~~~~~~~~~~~~~
 
 Unlike value types, an instance of a :newTerm:`reference type` is *not* copied
-when is assigned to a variable or constant,
+when it is assigned to a variable or constant,
 or when it is passed to a function.
 Rather than making a copy, a :newTerm:`reference` to the same existing instance is used instead.
 
@@ -408,7 +408,7 @@ rather than variables.
 However, it is still possible to change ``rect.size`` and ``sameRect.size.width``.
 This is allowed because
 the values of the ``rect`` and ``sameRect`` constants themselves do not actually change.
-``rect`` and ``sameRect`` do no themselves store the rectangle –
+``rect`` and ``sameRect`` do not themselves store the rectangle –
 instead, they both *refer* to a rectangle behind the scenes.
 The ``width`` property of the underlying rectangle is changed,
 not the values of the ``rect`` and ``sameRect`` references to that rectangle.
@@ -505,6 +505,10 @@ not structures.
    an instance of any object type (including Cocoa classes).
 
 .. QUESTION: what's the deal with tuples and reference types / value types?
+
+.. TODO: Tim has suggested using Window as a good example here –
+   its location is a structure, but it doesn't make sense for Window
+   to be a value type, as it is not copied when passed around.
 
 .. _CustomTypes_IdentityOperators:
 

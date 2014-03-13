@@ -119,8 +119,6 @@ you can see how its properties have been updated:
     --> println("Bicycle: \(bicycle.description())")
     <-- Bicycle: 2 wheels; up to 1 passengers
 
-.. TODO: work out how best to describe super.init() in light of the next section below.
-
 Subclasses can themselves be subclassed:
 
 .. testcode:: inheritance
@@ -189,7 +187,7 @@ In addition, the ``@override`` attribute prompts the Swift compiler
 to check that the superclass has a method declaration that matches
 the one you have provided.
 This helps to ensure that your overriding method definition is correct,
-and has not used an incorrect name, type or parameter order by mistake.
+and has not used an incorrect name, type, or parameter order by mistake.
 
 .. QUESTION: have I introduced the concept of "attributes" by this point?
    If not, when / where should I do so?
