@@ -744,7 +744,7 @@ For example: ::
 
     Grammar of a dot expression
 
-    dot-expression --> postfix-expression ``.`` dollar-identifier
+    dot-expression --> postfix-expression ``.`` decimal-digit
     dot-expression --> postfix-expression ``.`` named-expression
 
 .. _Expressions_MetatypeExpression:
