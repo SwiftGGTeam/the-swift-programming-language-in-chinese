@@ -1,6 +1,10 @@
 Expressions
 ===========
 
+.. writeme::
+
+.. TODO: Intro prose goes here.
+
 .. langref-grammar
 
     expr          ::= expr-basic
@@ -48,9 +52,13 @@ the expression that follows them.
 Binary Expressions
 ------------------
 
-Infix expressions are formed by combining
-an infix operator with the expressions that it takes
+Binary expressions are formed by combining
+an infix binary operator with the expressions that it takes
 as its arguments.
+
+.. writeme::
+
+.. TODO: More intro prose goes here.
 
 .. langref-grammar
 
@@ -256,6 +264,10 @@ Likewise, being passed as an function parameter: ::
 
 Primary Expressions
 -------------------
+
+.. writeme::
+
+.. TODO: Intro prose goes here.
 
 .. The most common expression type
    Used to build up more complex expressions
@@ -546,6 +558,10 @@ It has the following form:
 
 Postfix Expressions
 -------------------
+
+.. writeme::
+
+.. TODO: Intro prose goes here.
 
 .. Formed by putting a postfix operator or postfix-operator-like suffix
    after an expression.
