@@ -715,6 +715,26 @@ just as with any other function.
 Dot Expression
 ~~~~~~~~~~~~~~
 
+A :newTerm:`dot expression` allows access
+to the members of a class, structure, enumerator, or module.
+It consists of a period (``.``) between the item
+and the identifier of its member.
+
+.. TR: Is this list exhaustive?  Or are there other things that can use dots?
+
+.. syntax-grammar::
+
+   <#expression#>.<#member name#>
+
+The members of a tuple
+are implictly named using integers in the order they appear,
+beginning with zero.
+For example: ::
+
+    var t = (10, 20, 30)
+    t.0 = t.1
+    // Now t is (20, 20, 30)
+
 .. langref-grammar
 
     expr-dot ::= expr-postfix '.' dollarident
