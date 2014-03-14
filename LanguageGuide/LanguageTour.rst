@@ -1,138 +1,219 @@
 A Tour of the Swift Language
 ============================
 
-So what does Swift look like? History suggests that we start with "Hello, world":
+So what does Swift look like? History suggests that we start with "hello, world":
 
 .. testcode::
 
-    --> print("Hello, world!")
-    <-- Hello, world!
+    --> print("hello, world")
+    <<< hello, world
 
 The syntax should look familiar to any C or Objective-C developer,
-but it's important to note that this single line of code represents a complete program.
+but it's important to note that this single line of code represents a complete Swift program.
 
 Swift is designed as a *batteries included* language.
 This means it's easy for beginners to get started
 without having to type additional lines of boilerplate code just to get a simple example to compile.
-There's no need to ``#import`` any standard library files for basic types like ``String``
-or functions like ``print``,
+There's no need to ``#import`` any standard library files
+for basic types like ``String`` or functions like ``print()``,
 and the first statement declared at global scope is implicitly treated as the initial entry point,
 which means there's no need for a ``main()`` function declaration.
 
-You'll learn more about Swift syntax as you work through this guided tutorial,
+You'll learn more about Swift syntax as you work through this guided tour,
 but it's worth emphasizing upfront some of the guiding design principles behind Swift –
 that code should be **safe**, **consistent**, and **clear**.
 
-Declarations and Basic Syntax
------------------------------
+All of the subjects covered in this tour are explained in detail later in this book.
+Don't worry if you don't understand all of the examples in the tour –
+every code example shown below is explained in full in one of the subsequent chapters.
 
-In addition to the primary goals like safety and performance,
-Swift was also designed with consistency and clarity in mind.
+Getting To Grips With The Basics
+--------------------------------
+
+Swift is designed with consistency and clarity in mind.
 Wherever possible, the syntax follows the natural language order of expressing something.
-A variable declaration reads as *"declare a variable called X of type Y with initial value Z"*.
+For example, Swift's variable declarations read as:
 
-Let's start by declaring a variable ``a`` of type ``Int`` with an initial value of ``42``:
+“Declare a variable called ``name``, of type ``X``, with an initial value of ``y``”.
 
-.. testcode:: declaration
-
-    --> var a: Int = 42
-    <<< // a : Int = 42
-
-Note that ``Int`` is capitalized.
-Swift follows the Objective-C naming convention consistently for all type names,
-including built-in types like ``Int`` and ``String``.
-
-As mentioned earlier,
-you can omit the type and it will be inferred automatically from the assigned value:
+Here's how that looks in Swift code:
 
 .. testcode:: declaration
 
-    --> var b = 10
-    <<< // b : Int = 10
+    --> var welcomeMessage: String = "hello"
+    <<< // welcomeMessage : String = "hello"
 
-Variables can also be named using non-English letters:
+The colon means *“of type”*, so this can be read as:
+
+“Declare a variable called ``welcomeMessage``, of type ``String``,
+with an initial value of ``"hello"``.”
+
+Swift provides many common data types, including
+
+* ``Int``, for signed integer values such as ``42`` and ``-23``
+* ``Float`` and ``Double``, for signed floating-point values such as
+  ``3.14159`` and ``-273.15``
+* ``String``, for working with text values such as ``"hello"``
+* ``Bool``, for logic values that can be ``true`` or ``false``
+
+Type Safety and Type Inference
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Swift is a :newTerm:`type safe` language.
+If some part of your code expects a ``String``,
+type safety means that you can't accidentally pass it an ``Int`` by mistake.
+
+However, this doesn't mean that you have to write an explicit type
+every time you declare something.
+If you don't specify a type,
+Swift uses :newTerm:`type inference` to work out the appropriate type to use
+when you assign an initial value:
 
 .. testcode:: declaration
 
-    --> var 你好 = "你好世界"
-    <<< // 你好 : String = "你好世界"
-    --> var π = 3.14159
+    --> var a = 2                    // a is inferred to be of type Int
+    <<< // a : Int = 2
+    --> var turnipsAreTasty = false  // turnipsAreTasty is inferred to be of type Bool
+    <<< // turnipsAreTasty : Bool = false
+
+Constants and Variables
+~~~~~~~~~~~~~~~~~~~~~~~
+
+.. TODO: should I mention that constants are more common in Swift than elsewhere?
+
+Constants are introduced by the word ``let``,
+and variables are introduced by the word ``var``.
+You can use almost any character you like for their names,
+including Unicode characters:
+
+.. testcode:: declaration
+
+    --> let π = 3.14159              // π is inferred to be of type Double
     <<< // π : Double = 3.14159
+    --> let 🐶🐮 = "dogcow"          // 🐶🐮 is inferred to be of type String
+    <<< // 🐶🐮 : String = "dogcow"
 
-The standard operators work as expected
-(note that Swift relies on consistent spacing around operators;
-see Statements and Expressions for the rationale):
+All of the standard operators from C and Objective-C work as expected:
 
 .. testcode:: declaration
 
-    --> var c = a + b
-    <<< // c : Int = 52
-    --> c - b * a
-    <<< // r0 : Int = -368
-    --> π / 2
-    <<< // r1 : Double = 1.57079
+    --> let b = a + 3                // b is set to an Int value of 5
+    <<< // b : Int = 5
+    --> let c = a * b                // c is set to an Int value of 10
+    <<< // c : Int = 10
+    --> let piOverTwo = π / 2        // piOverTwo is set to a Double value of 1.57079
+    <<< // piOverTwo : Double = 1.57079
+
+Comments
+~~~~~~~~
+
+As you may have noticed from the examples above…
+
+::
+
+    // …single-line comments begin with two forward-slashes, like in C.
+
+You can also write multi-line comments…
+
+::
+
+    /* …which start with a forward-slash followed by an asterisk,
+       and end with an asterisk followed by a forward-slash, also like C. */
+
+Unlike C, multi-line comments can also be nested:
+
+::
+
+    /* This is done by starting a new block of comments,
+        /* then starting another new block inside of the first block.
+        The second block is then closed… */
+    …followed by the original block. */
+
+.. TODO: These multiline comments can't be tested by swifttest,
+   because they aren't supported by the REPL.
+   They should be tested manually before release.
+
+Printing Values
+~~~~~~~~~~~~~~~
+
+The value of a constant or variable can be printed with the ``println()`` function:
+
+.. testcode:: declaration
+
+    --> println(welcomeMessage)
+    <-- hello
+
+``println()`` is a global function that prints a ``String`` value,
+followed by a line break, to an appropriate output such as Xcode's console pane
+(in a similar way to Cocoa's ``NSLog()`` function).
+A second function, ``print()``, performs the same task
+without appending a line break to the end of the value to be printed.
+
+In addition to ``String`` values,
+``print()`` and ``println()`` will also print any non-``String`` type,
+as long as that type can be used to make a new ``String``.
+All of Swift's basic types can be be used in this way by default,
+and you can extend ``String`` to be constructable from your own custom types
+so that they can be printed too.
+
+String Interpolation
+~~~~~~~~~~~~~~~~~~~~
+
+Swift uses :newTerm:`string interpolation` to insert values into longer strings.
+String interpolation gives a way to include a constant or variable's name
+as a placeholder in a string,
+and to prompt Swift to replace it with the current value of that constant or variable.
+The constant or variable's name should be wrapped by parentheses,
+and escaped with a backslash before the opening parenthesis:
+
+.. testcode:: declaration
+
+    --> println("The value of π is \(π)")
+    <-- The value of π is 3.14159
 
 Tuples
 ~~~~~~
 
-As well as simple value types,
-Swift also supports tuple types for ordered lists of elements.
-The elements may be accessed with constant numeric indices:
+In addition to the simple value types described above,
+Swift also supports :newTerm:`tuple` types as
+a way to group together multiple values of the same or different types:
 
 .. testcode:: tuples
 
-    --> var t = (100, 200, 300)
-    <<< // t : (Int, Int, Int) = (100, 200, 300)
-    --> t.0 + t.1 + t.2
-    <<< // r0 : Int = 600
+    --> let httpStatus = (404, "Not Found")
+    <<< // httpStatus : (Int, String) = (404, "Not Found")
 
-In this case, ``t`` is a 3-element tuple with integer values.
-A tuple can also have elements with different types:
+The ``(404, "Not Found")`` tuple groups together an ``Int`` and a ``String``
+to describe an HTTP status code with two separate values:
+a status code, and a human-readable message.
+It can be described as “a tuple of type ``(Int, String)``”.
 
-.. testcode:: tuples
-
-    --> var u = (1, "hello", 3.14159)
-    <<< // u : (Int, String, Double) = (1, "hello", 3.14159)
-    --> println(u.1)
-    <<< hello
-    --> println(u.2)
-    <<< 3.14159
-
-Tuples are useful in a variety of situations;
-Swift uses them as the foundation for passing arguments and returning values, for example.
-You can extract the elements into individual values:
+You can create tuples from any permutation of types you like.
+Their element values can be accessed with index numbers starting at zero,
+using dot syntax:
 
 .. testcode:: tuples
 
-    --> var (v, w, x) = u
-    <<< // (v, w, x) : (Int, String, Double) = (1, "hello", 3.14159)
-    --> v
-    <<< // v : Int = 1
-    --> w
-    <<< // w : String = "hello"
-    --> x
-    <<< // x : Double = 3.14159
+    --> println("The status code is \(httpStatus.0)")
+    <-- The status code is 404
+    --> println("The status message is \(httpStatus.1)")
+    <-- The status message is Not Found
 
-Alternatively, you can name the elements in a tuple:
+As an alternative,
+you can :newTerm:`decompose` a tuple's contents into separate constants or variables,
+which can then be used as normal:
 
 .. testcode:: tuples
 
-    --> var y = (foo: 1, bar: "hello", baz: 3.14159)
-    <<< // y : (foo: Int, bar: String, baz: Double) = (1, "hello", 3.14159)
+    --> let (statusCode, statusMessage) = httpStatus
+    <<< // (statusCode, statusMessage) : (Int, String) = (404, "Not Found")
+    --> println("The status code is \(statusCode)")
+    <-- The status code is 404
+    --> println("The status message is \(statusMessage)")
+    <-- The status message is Not Found
 
-to make it even easier to extract or change the values:
-
-.. testcode:: tuples
-
-    --> y.foo
-    <<< // r2 : Int = 1
-    --> y.baz
-    <<< // r3 : Double = 3.14159
-    --> y.bar = "bye"
-    --> y
-    <<< // y : (foo: Int, bar: String, baz: Double) = (1, "bye", 3.14159)
-
-This is particularly useful with multiple return values (described below).
+Tuples are particularly useful as the return values of functions (described below),
+to enable a function to return more than one value to its caller.
 
 Branching and Looping
 ~~~~~~~~~~~~~~~~~~~~~
@@ -152,11 +233,6 @@ so a typical branch looks like this:
             println("it's just a number")
         }
     <<< it's magic
-
-The ``println()`` function is an alternative to ``print()``
-that automatically inserts a final ``\n`` newline.
-It is not so useful when you're working with a string literal like this,
-but is very handy when working with string variables or non-string values.
 
 Swift provides a for-each-style loop to make it easy to iterate over the contents of a collection.
 To test this, try iterating over the characters in a string, like this:
@@ -630,7 +706,8 @@ Notice that there are no asterisks in any of the variable declarations for objec
 
 .. testcode:: classes
 
-    --> var circle = Circle()
+    --> var anotherCircle = Circle()
+    <<< // anotherCircle : Circle = <Circle instance>
 
 This is one of the primary safety features –
 **Swift does not require you to manipulate and manage direct pointers to memory**.
@@ -773,58 +850,6 @@ You can also iterate by lines:
         }
     <<< Once upon a time
     <<< The end
-
-String Interpolation
-~~~~~~~~~~~~~~~~~~~~
-
-You've already seen various ways to create a Swift string,
-including concatenating substrings using ``+``:
-
-.. testcode:: stringInterpolation
-
-    --> var hello = "Hello" + ", world" + "!"
-    <<< // hello : String = "Hello, world!"
-
-If you need to append string representations of other types,
-you can create a Swift string from a value:
-
-.. testcode:: stringInterpolation
-
-    --> var someValue = 42
-    <<< // someValue : Int = 42
-    --> var magic = "The magic number is: " + String(someValue) + "!"
-    <<< // magic : String = "The magic number is: 42!"
-
-Interpolating values into strings is such a common task, however,
-that Swift provides an alternative, more readable syntax:
-
-.. testcode:: stringInterpolation
-
-    --> var blackMagic = "The magic number is: \(someValue)!"
-    <<< // blackMagic : String = "The magic number is: 42!"
-
-You can also use this syntax to interpolate the values of arbitrary expressions:
-
-.. testcode:: stringInterpolation
-
-    --> var luckyForSome = 13
-    <<< // luckyForSome : Int = 13
-    --> var addMessage = "Adding \(luckyForSome) to \(someValue) gives \(luckyForSome + someValue)"
-    <<< // addMessage : String = "Adding 13 to 42 gives 55"
-
-Rather than requiring you to think about how best to format a value
-every time you want to insert it into a string,
-it's up to the developer of the original type to provide an implementation for the string conversion.
-This involves adding a suitable initializer to the Swift ``String`` type through the use of an extension,
-as discussed later in this tour (see Extensions_).
-
-For more power and flexibility,
-the Swift standard library also provides a type-safe ``printf()`` function:
-
-.. testcode:: printf
-
-    --> printf("Take %v and sell it for $%.2v\n", 42, 3.14159)
-    <-- Take 42 and sell it for $3.14159
 
 Protocols
 ---------
