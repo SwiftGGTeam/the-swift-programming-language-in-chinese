@@ -241,9 +241,8 @@ if they are listed in the same order that the properties are declared in the str
     <<< // fourByThree : Size = Size(4.0, 3.0)
 
 .. TODO: Include a justifiable reason for why classes do not provide a memberwise initializer.
-.. TODO: Describe the creation of custom initializers.
-.. TODO: This whole section needs updating in light of the changes for definite initialization.
-   Memberwise initializers will only exist if default values are provided for all properties.
+.. TODO: According to rdar://15670604, we may end up with one for classes as well.
+   However, I can't find a Radar tracking this directly.
 
 Unlike structures, class instances do not receive a default memberwise initializer.
 (Initializers are described in more detail in :doc:`Initialization`.)

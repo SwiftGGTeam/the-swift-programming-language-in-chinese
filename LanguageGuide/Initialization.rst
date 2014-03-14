@@ -134,6 +134,8 @@ if they are listed in the same order that the properties are declared in the str
     <<< // fourByThree : Size = Size(4.0, 3.0)
 
 .. TODO: Include a justifiable reason for why classes do not provide a memberwise initializer.
+.. TODO: According to rdar://15670604, we may end up with one for classes as well.
+   However, I can't find a Radar tracking this directly.
 
 .. _Initialization_InitializerInputParameters:
 
