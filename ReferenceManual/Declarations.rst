@@ -680,26 +680,26 @@ A :newTerm:`enumeration declaration` introduces a named, enumeration type into y
 Enumeration declarations have two basic forms and are declared using the keyword ``enum``.
 
 The first form allows you to declare an enumeration type that contains
-enumerators of any type, each of which can contain associated values
-and has the following form:
+values---called :newTerm:`enumerators`---of any type and has the following form:
 
 .. syntax-outline::
 
     enum <#enumeration name#> {
-        <#declarations#>
-        case <#enumerator list 1#>
-        case <#enumerator list 2#>(<#associated value type#>)
+        case <#enumerator 1#>
+        case <#enumerator 2#>(<#associated value types#>)
     }
 
-Enumerations declared in this form are known as :newTerm:`discriminated unions`
+Enumerations declared in this form are sometimes called :newTerm:`discriminated unions`
 in other programming languages.
 
-The body of an enumeration contains zero or more *declarations*
-and enumeration member declarations.
-These *declarations* can include computed properties,
-instance methods, initializers, and enumeration member declarations.
-In this form, enumerators consist the keyword ``case``
-followed by a list of
+In this form, each case block consists of the keyword ``case``
+followed by one or more enumerators, separated by commas.
+The name of each enumerator must be unique.
+Each enumerator can also specify that it stores values of a given type.
+These types are specified in the *associated value types* tuple,
+immediately following the enumerator.
+For more information and to see examples of enumerators with associated value types,
+see :ref:`Enumerations_AssociatedValues`.
 
 The second form allow you to declare an enumeration type that contains
 enumerators of the same basic type and has the following form:
@@ -707,18 +707,72 @@ enumerators of the same basic type and has the following form:
 .. syntax-outline::
 
     enum <#enumeration name#> : <#raw value type#> {
-        case <#enumerator list 1#> = <#raw value 1#>
-        case <#enumerator list 2#> = <#raw value 2#>
+        case <#enumerator 1#> = <#raw value 1#>
+        case <#enumerator 2#> = <#raw value 2#>
     }
 
-.. TODO: Discuss in prose: When there is a raw value type on an enum,
-    it indicates the low-level type like Int.
-    All of the raw values have to be of that type.
-    You can require protocol adoption,
+In this form, each case block consists of the keyword ``case``,
+followed by one or more enumerators, separated by commas.
+Unlike the enumerators in the first form, each enumerator has an underlying
+value, called a :newTerm:`raw value`, of the basic same type.
+The type of these values is specified in the *raw value type* and must represent a literal
+integer, floating-point number, character, or string.
+
+Each enumerator must have a unique name and be assigned a unique raw value.
+If the raw value type is specified as ``Int``
+and you don't assign a value to the enumerators explicitly,
+they are implicitly assigned the values ``0``, ``1``, ``2``, and so on.
+Each unassigned enumerator of type ``Int`` is implicitly assigned a raw value
+that is automatically incremented from the raw value of the previous enumerator,
+beginning at ``0``.
+
+::
+
+    enum exampleEnum : Int {
+        case A, B, C = 5, D
+    }
+
+In the above example, the value of ``exampleEnum.A`` is ``0`` and the value of
+``exampleEnum.B`` is ``1``. And because the value of ``exampleEnum.C`` is
+explicitly set to ``5``, the value of ``exampleEnum.D`` is automatically incremented
+from ``5`` and is therefore ``6``.
+
+The raw value of an enumerator can be accessed by calling its ``toRaw`` method,
+as in ``exampleEnum.B.toRaw()``.
+You can also use a raw value to find a corresponding enumerator, if there is one,
+by calling the ``fromRaw`` method, which returns an optional enumerator.
+For more information and to see examples of enumerators with raw value types,
+see :ref:`Enumerations_RawValues`.
+
+The body of an enumeration declared using either form can also contain zero or more declarations,
+including computed properties,
+instance methods, static methods, initializers, type aliases,
+and even other enumeration, structure, and class declarations.
+Enumeration declarations can't contain destructor or protocol declarations.
+
+Unlike with classes and structures,
+enumeration types do not have an implicitly provided default initializer;
+all initializers must be declared explicitly. In the body of an initializer
+declaration, you must assign one of the enumerators to ``self``.
+
+To reference the enumerators of an enumeration type, use dot (``.``) syntax,
+as in ``EnumerationType.Enumerator``. When the enumeration type can be inferred
+from context, you can omit it (the dot is still required),
+as described in :ref:`Enumerations_EnumerationSyntax`
+and :ref:`Expressions_DelayedIdentifierExpression`.
+
+To check the values of enumerators, use a ``switch`` statement,
+as shown in :ref:`Enumerations_ConsideringEnumerationValuesWithASwitchStatement`.
+The enumeration type is pattern-matched against the enumerator patterns in the case blocks
+of the ``switch`` statement, as described in :ref:`Patterns_EnumeratorPattern`.
+
+.. TODO: Note that you can require protocol adoption,
     by using a protocol type as the raw value type,
     but you do need to make it be one of the types
     that support = in order for you to specify the raw values.
     You can have: <#raw value type, protocol conformance#>.
+    UPDATE: You can only have one raw value type specified.
+    I changed the grammar to be more restrictive in light of this.
 
 .. langref-grammar
 
@@ -734,28 +788,28 @@ enumerators of the same basic type and has the following form:
 
     Grammar of an enumeration declaration
 
-    enum-declaration --> attribute-list-OPT raw-value-style-enum | attribute-list-OPT union-style-enum
+    enum-declaration --> attribute-list-OPT union-style-enum | attribute-list-OPT raw-value-style-enum
 
-    raw-value-style-enum --> enum-name generic-parameter-clause-OPT type-inheritance-clause raw-value-style-enum-body
+    union-style-enum --> enum-name generic-parameter-clause-OPT union-style-enum-body
+    union-style-enum-body --> ``{`` declarations-OPT union-style-enum-members-OPT ``}``
+    union-style-enum-members --> union-style-enum-member union-style-enum-members-OPT
+    union-style-enum-member --> attribute-list-OPT ``case`` union-style-enumerator-list
+    union-style-enumerator-list --> union-style-enumerator | union-style-enumerator ``,`` union-style-enumerator-list
+    union-style-enumerator --> identifier tuple-type-OPT
+
+    raw-value-style-enum --> enum-name generic-parameter-clause-OPT ``:`` type-identifer raw-value-style-enum-body
     raw-value-style-enum-body --> ``{`` declarations-OPT raw-value-style-enum-members ``}``
     raw-value-style-enum-members --> raw-value-style-enum-member raw-value-style-enum-members-OPT
-    raw-value-style-enum-member --> attribute-list-OPT raw-value-style-enumerator-list
+    raw-value-style-enum-member --> attribute-list-OPT ``case`` raw-value-style-enumerator-list
     raw-value-style-enumerator-list --> raw-value-style-enumerator | raw-value-style-enumerator ``,`` raw-value-style-enumerator-list
     raw-value-style-enumerator --> identifier raw-value-assignment-OPT
     raw-value-assignment --> ``=`` literal
     enum-name --> identifier
 
-    union-style-enum --> enum-name generic-parameter-clause-OPT union-style-enum-body
-    union-style-enum-body --> ``{`` declarations-OPT union-style-enum-members-OPT ``}``
-    union-style-enum-members --> union-style-enum-member union-style-enum-members-OPT
-    union-style-enum-member --> attribute-list-OPT union-style-enumerator-list
-    union-style-enumerator-list --> union-style-enumerator | union-style-enumerator ``,`` union-style-enumerator-list
-    union-style-enumerator --> identifier tuple-type-OPT
-
 .. NOTE: The two types of enums are sufficiently different enough to warrant separating
     the grammar accordingly. ([Contributor 6004] pointed this out in his email.)
     I'm not sure I'm happy with the names I've chosen for two kinds of enums,
-    so please let me know if you can think of better names!
+    so please let me know if you can think of better names (Tim and Dave are OK with them)!
     I chose union-style-enum, because this kind of enum behaves like a discriminated union,
     not like an ordinary enum type. They are a kind of "sum" type in the language
     of ADTs (Algebraic Data Types). Functional languages, like F# for example,
