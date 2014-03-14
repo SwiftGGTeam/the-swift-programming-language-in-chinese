@@ -540,7 +540,7 @@ It is said to be :newTerm:`half-closed`
 because it contains its first value, but not its final value.
 
 Half-closed ranges are particularly useful when working with
-zero-based lists such as arrays,
+zero-based lists such as :ref:`ArraysAndDictionaries_Arrays`,
 where it is useful to count up to (but not including) the length of the list:
 
 .. testcode:: rangeOperators

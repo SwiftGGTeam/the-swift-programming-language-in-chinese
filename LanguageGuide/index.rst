@@ -7,6 +7,7 @@ Language Guide
     BasicTypes
     BasicOperators
     Strings
+    ArraysAndDictionaries
     ControlFlow
     Functions
     Closures
