@@ -270,8 +270,7 @@ Also try the ``..`` operator, which generates a closed enumerable range between 
     <-/ 14
 
 As before, there's no need to provide a type for the loop variable
-because it can be inferred from the elements in the range,
-which is itself of type ``IntGeneratorType``:
+because it can be inferred from the elements in the range:
 
 .. testcode:: controlFlow
 
