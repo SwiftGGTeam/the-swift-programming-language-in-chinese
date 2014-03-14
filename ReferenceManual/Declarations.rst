@@ -728,17 +728,17 @@ beginning at ``0``.
 
 ::
 
-    enum exampleEnum : Int {
+    enum ExampleEnum : Int {
         case A, B, C = 5, D
     }
 
-In the above example, the value of ``exampleEnum.A`` is ``0`` and the value of
-``exampleEnum.B`` is ``1``. And because the value of ``exampleEnum.C`` is
-explicitly set to ``5``, the value of ``exampleEnum.D`` is automatically incremented
+In the above example, the value of ``ExampleEnum.A`` is ``0`` and the value of
+``ExampleEnum.B`` is ``1``. And because the value of ``ExampleEnum.C`` is
+explicitly set to ``5``, the value of ``ExampleEnum.D`` is automatically incremented
 from ``5`` and is therefore ``6``.
 
 The raw value of an enumerator can be accessed by calling its ``toRaw`` method,
-as in ``exampleEnum.B.toRaw()``.
+as in ``ExampleEnum.B.toRaw()``.
 You can also use a raw value to find a corresponding enumerator, if there is one,
 by calling the ``fromRaw`` method, which returns an optional enumerator.
 For more information and to see examples of enumerators with raw value types,
