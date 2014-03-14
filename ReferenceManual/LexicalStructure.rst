@@ -289,17 +289,21 @@ A :newTerm:`literal` is the source code representation of a value of an
 integer, floating-point, character, or string type.
 The following are examples of literals: ::
 
-    42              // Integer literal
-    3.14159         // Floating-point literal
-    'a'             // Character literal
-    "Hello, world!" // String literal
+    42                  // Integer literal
+    3.14159             // Floating-point literal
+    'a'                 // Character literal
+    "Hello, world!"     // String literal
+    [1, 2, 3]           // Array literal
+    ['x': 10, 'y': 20]  // Dictionary literal
 
 
 .. syntax-grammar::
 
     Grammar of a literal
 
-    literal --> integer-literal | floating-point-literal | character-literal | string-literal
+    literal --> integer-literal | floating-point-literal
+    literal --> character-literal | string-literal
+    literal --> array-literal | dictionary-literal
 
 .. TR: Is the design here that integers can be turned into doubles,
    but everything else has to use an explicit constructor
@@ -618,6 +622,30 @@ String literals are of type ``String``.
     so we'll probably need to circle back to this section later.
     I'm still going to submit it to Jeanne in its current form,
     while letting her know that it's not final.
+
+Array Literals
+~~~~~~~~~~~~~~
+
+.. write-me::
+
+.. syntax-grammar::
+
+    array-literal --> ``[`` array-literal-items-OPT ``]``
+	array-literal-items --> array-literal-item ``,``-OPT | array-literal-item ``,`` array-literal-items
+	array-literal-item --> expression
+
+
+Dictionary Literals
+~~~~~~~~~~~~~~~~~~~
+
+.. write-me::
+
+.. syntax-grammar::
+
+	dictionary-literal --> ``[`` dictionary-literal-items ``]`` | empty-dictionary-literal
+	empty-dictionary-literal --> ``[`` ``:`` ``]``
+	dictionary-literal-items --> dictionary-literal-item ``,``-OPT | dictionary-literal-item ``,`` dictionary-literal-items
+	dictionary-literal-item --> expression ``:`` expression
 
 
 .. _LexicalStructure_Operators:
