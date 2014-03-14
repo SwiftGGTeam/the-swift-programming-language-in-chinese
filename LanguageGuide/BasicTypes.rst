@@ -16,7 +16,6 @@
     * A brief mention of characters and strings
     * Tuples ✔︎
     * Varargs tuples
-    * Typealiases ✔︎
     * Type inference ✔︎
     * Type casting through type initializers ✔︎
     * Arrays

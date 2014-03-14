@@ -534,7 +534,7 @@ and types can be nested to as many levels as are required.
 
 For example:
 
-.. testcode:: nestedTypes
+.. testcode:: nestedTypesAndTypeAlias
 
     --> struct PlayingCard {
             let rank: Rank
@@ -583,7 +583,7 @@ Referring to Nested Types
 A nested type can be used outside of its definition context,
 by prefixing its name with the name of the type it is nested within:
 
-.. testcode:: nestedTypes
+.. testcode:: nestedTypesAndTypeAlias
 
     --> let heartsSymbol = PlayingCard.Suit.Hearts.toRaw()
     <<< // heartsSymbol : UnicodeScalar = '♡'
@@ -593,3 +593,31 @@ by prefixing its name with the name of the type it is nested within:
 For the example above, 
 this enables the names of ``Suit`` and ``Rank`` to be kept short,
 because their names are naturally qualified by the context in which they are defined.
+
+Type Aliases
+------------
+
+:newTerm:`Type aliases` are a way to define an alternative name
+(or :newTerm:`alias`) for an existing type.
+Type aliases are declared with the ``typealias`` keyword:
+
+.. testcode:: nestedTypesAndTypeAlias
+
+    --> typealias BlackjackCard = PlayingCard
+
+Type aliases can be useful when you want to refer to an existing type
+by a name that is contextually more appropriate.
+Once you have declared a type alias,
+you can use the alias anywhere you might use the original name:
+
+.. testcode:: nestedTypesAndTypeAlias
+
+    --> let theQueenOfHearts = BlackjackCard(.Queen, .Hearts)
+    <<< // theQueenOfHearts : PlayingCard = PlayingCard(<unprintable value>, <unprintable value>)
+
+.. note::
+
+    Type aliases do not actually define a new type in Swift.
+    They are just an alternative name for an existing type.
+    In the example above,
+    ``theQueenOfHearts`` is of type ``PlayingCard``, not ``BlackjackCard``.
