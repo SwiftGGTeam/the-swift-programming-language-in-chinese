@@ -23,7 +23,10 @@ Expressions
     expression-sequence --> unary-expression binary-expressions-OPT
     expression-list --> expression | expression ``,`` expression-list
 
-.. TODO Maybe call expression-sequence operator-sequence-expression?
+.. TODO: Maybe call expression-sequence operator-sequence-expression?
+
+.. The middle part of ?: uses 'expression-sequence'
+   which is why we need to keep that part separate from expression.
 
 .. _Expressions_UnaryOperators:
 
@@ -34,6 +37,9 @@ Unary expressions are formed by combining
 an optional prefix operator with an expression.
 Prefix operators take one argument,
 the expression that follows them.
+
+.. TR: As of r14954, ParsExpr.cpp also has expr-discard
+   which consists of an underscore (_).  What is that for?
 
 .. langref-grammar
 
@@ -371,21 +377,17 @@ It has one of the following forms:
 
 .. syntax-outline::
 
-   super.<#method name#>
+   super.<#member name#>
    super[<#subscript index#>]
    super.init
 
-The first form is understood as a method of the superclass.
+The first form is understood as a member of the superclass.
 This allows a subclass to call the superclass's
-implementation of a method that it overrides.
+implementation of a method that it overrides,
+to get and set propertiess defined by its superclass,
+and to access its superclass's implementation of getters and setters.
 
-.. TR: Can the method name be a property name too?
-   Or, because of property/ivar unification,
-   are properties on super already available on self?
-   What about properties with setters/getters --
-   would super.foo let me use the setters/getters
-   that are implemented in the superclass
-   as part of the subclasses implementation?
+.. TR: Confirm the above about properties.
 
 The second form is understood as a call
 to the superclass's subscript method.
@@ -395,6 +397,10 @@ in the subclass's support for subscripting.
 The third form is understood as the superclass's initializer.
 This allows a subclass to call the initializer of its superclass
 as part of the subclass's initializer.
+
+.. TR: ParseExpr.cpp as of r14954 has a second form of expr-super
+   where super.init is followed by 'identifier' and 'expr-call-suffix'
+   What is this for?  What does it mean?
 
 .. langref-grammar
 
@@ -654,6 +660,7 @@ followed by interleaved parts of its selector and its argements.
     trailing-closure --> closure-expressions
 
 .. Multiple trailing closures in LangRef is an error,
+   and so is the trailing typecast,
    per [Contributor 6004] 2014-03-04 email.
 
 
