@@ -1,7 +1,3 @@
-.. docnote:: Placeholder tour
-
-    The tour below is the whitepaper's Guided Tour. It has yet to be adapted / rewritten / replaced for use in the book, but in the absence of a new Tour, it's a good starting point for now.
-
 A Tour of the Swift Language
 ============================
 
@@ -9,19 +5,31 @@ So what does Swift look like? History suggests that we start with "Hello, world"
 
 .. testcode::
 
-    --> println("Hello, world!")
+    --> print("Hello, world!")
     <-- Hello, world!
 
-The syntax should look familiar to any C or Objective-C developer, but it's important to note that this single line of code represents a complete program.
+The syntax should look familiar to any C or Objective-C developer,
+but it's important to note that this single line of code represents a complete program.
 
-Swift is designed as a *batteries included* language. This means it's easy for beginners to get started without having to type additional lines of boilerplate code just to get a simple example to compile. There's no need to ``#import`` any standard library files for basic types like ``String`` or operations like ``print``, and the first statement declared at global scope is implicitly treated as the initial entry point, which means there's no need for a ``main()`` function declaration.
+Swift is designed as a *batteries included* language.
+This means it's easy for beginners to get started
+without having to type additional lines of boilerplate code just to get a simple example to compile.
+There's no need to ``#import`` any standard library files for basic types like ``String``
+or functions like ``print``,
+and the first statement declared at global scope is implicitly treated as the initial entry point,
+which means there's no need for a ``main()`` function declaration.
 
-You'll learn more about Swift syntax and interaction with Objective-C and Cocoa as you work through this guided tutorial, but it's worth emphasizing upfront some of the guiding design principles behind Swift---that code should be **safe**, **consistent**, and **clear**.
+You'll learn more about Swift syntax as you work through this guided tutorial,
+but it's worth emphasizing upfront some of the guiding design principles behind Swift –
+that code should be **safe**, **consistent**, and **clear**.
 
 Declarations and Basic Syntax
 -----------------------------
 
-In addition to the primary goals like safety and performance, Swift was also designed with consistency and clarity in mind. Wherever possible, the syntax follows the natural language order of expressing something. A variable declaration reads as *"declare a variable called X of type Y with initial value Z"*.
+In addition to the primary goals like safety and performance,
+Swift was also designed with consistency and clarity in mind.
+Wherever possible, the syntax follows the natural language order of expressing something.
+A variable declaration reads as *"declare a variable called X of type Y with initial value Z"*.
 
 Let's start by declaring a variable ``a`` of type ``Int`` with an initial value of ``42``:
 
@@ -30,9 +38,12 @@ Let's start by declaring a variable ``a`` of type ``Int`` with an initial value 
     --> var a: Int = 42
     <<< // a : Int = 42
 
-Note that ``Int`` is capitalized. Swift follows the Objective-C naming convention consistently for all type names, including built-in types like ``Int`` and ``String``.
+Note that ``Int`` is capitalized.
+Swift follows the Objective-C naming convention consistently for all type names,
+including built-in types like ``Int`` and ``String``.
 
-As mentioned earlier, you can omit the type and it will be inferred automatically from the assigned value:
+As mentioned earlier,
+you can omit the type and it will be inferred automatically from the assigned value:
 
 .. testcode:: declaration
 
@@ -48,7 +59,9 @@ Variables can also be named using non-English letters:
     --> var π = 3.14159
     <<< // π : Double = 3.14159
 
-The standard operators work as expected (note that Swift relies on consistent spacing around operators; see Statements and Expressions for the rationale):
+The standard operators work as expected
+(note that Swift relies on consistent spacing around operators;
+see Statements and Expressions for the rationale):
 
 .. testcode:: declaration
 
@@ -62,7 +75,9 @@ The standard operators work as expected (note that Swift relies on consistent sp
 Tuples
 ~~~~~~
 
-As well as simple value types, Swift also supports tuple types for ordered lists of elements.  The elements may be accessed with constant numeric indices:
+As well as simple value types,
+Swift also supports tuple types for ordered lists of elements.
+The elements may be accessed with constant numeric indices:
 
 .. testcode:: tuples
 
@@ -71,7 +86,8 @@ As well as simple value types, Swift also supports tuple types for ordered lists
     --> t.0 + t.1 + t.2
     <<< // r0 : Int = 600
 
-In this case, ``t`` is a 3-element tuple with integer values. A tuple can also have elements with different types:
+In this case, ``t`` is a 3-element tuple with integer values.
+A tuple can also have elements with different types:
 
 .. testcode:: tuples
 
@@ -82,7 +98,9 @@ In this case, ``t`` is a 3-element tuple with integer values. A tuple can also h
     --> println(u.2)
     <<< 3.14159
 
-Tuples are useful in a variety of situations; Swift uses them as the foundation for passing arguments and returning values, for example. You can extract the elements into individual values:
+Tuples are useful in a variety of situations;
+Swift uses them as the foundation for passing arguments and returning values, for example.
+You can extract the elements into individual values:
 
 .. testcode:: tuples
 
@@ -119,7 +137,10 @@ This is particularly useful with multiple return values (described below).
 Branching and Looping
 ~~~~~~~~~~~~~~~~~~~~~
 
-Swift supports the usual conditional and flow control statements. Parentheses are optional around conditions, but braces are required to avoid ambiguity issues like the dangling else problem, so a typical branch looks like this:
+Swift supports the usual conditional and flow control statements.
+Parentheses are optional around conditions,
+but braces are required to avoid ambiguity issues like the dangling else problem,
+so a typical branch looks like this:
 
 .. testcode:: controlFlow
 
@@ -132,9 +153,13 @@ Swift supports the usual conditional and flow control statements. Parentheses ar
         }
     <<< it's magic
 
-The ``println()`` function is an alternative to ``print()`` that automatically inserts a final ``\n`` newline.  It is not so useful when you're working with a string literal like this, but is very handy when working with string variables or non-string values.
+The ``println()`` function is an alternative to ``print()``
+that automatically inserts a final ``\n`` newline.
+It is not so useful when you're working with a string literal like this,
+but is very handy when working with string variables or non-string values.
 
-As you saw in the earlier Objective-C example, Swift provides a for-each-style loop to make it easy to iterate over the contents of a collection. To test this, try iterating over the characters in a string, like this:
+Swift provides a for-each-style loop to make it easy to iterate over the contents of a collection.
+To test this, try iterating over the characters in a string, like this:
 
 .. testcode:: controlFlow
 
@@ -148,7 +173,10 @@ As you saw in the earlier Objective-C example, Swift provides a for-each-style l
     <<< o
 
 
-.. note:: If you're wondering why/how this works, it's because the return value of ``String.chars`` adopts the ``Sequence`` protocol. `Protocols`_ are covered later in this tour.
+.. note::
+    If you're wondering why/how this works,
+    it's because the return value of ``String.chars`` adopts the ``Sequence`` protocol.
+    `Protocols`_ are covered later in this tour.
 
 Also try the ``..`` operator, which generates a closed enumerable range between two values:
 
@@ -165,14 +193,17 @@ Also try the ``..`` operator, which generates a closed enumerable range between 
     <-/ 13
     <-/ 14
 
-As before, there's no need to provide a type for the loop variable because it can be inferred from the elements in the range, which is itself of type ``IntGeneratorType``:
+As before, there's no need to provide a type for the loop variable
+because it can be inferred from the elements in the range,
+which is itself of type ``IntGeneratorType``:
 
 .. testcode:: controlFlow
 
     --> b..a
     <<< // r0 : Range<Int> = Range<Int>(10, 43)
 
-The b..a syntax also works great with ``NSRange``, providing natural and elegant syntax for many common idioms.
+The b..a syntax also works great with ``NSRange``,
+providing natural and elegant syntax for many common idioms.
 
 Some enumerable types use a tuple rather than a single loop variable.
 If you iterate over a Swift ``Dictionary``, for example,
@@ -192,7 +223,12 @@ you have access to each key and value through a tuple pair:
 Functions
 ~~~~~~~~~
 
-As with variable declaration syntax, Swift function declarations follow the natural language order of "declare a function X, which takes arguments Y, and returns Z." Continuing the theme of consistency, Swift function argument syntax follows the syntactic pattern of a variable declaration, where the colon means "of type":
+As with variable declaration syntax,
+Swift function declarations follow the natural language order of
+"declare a function X, which takes arguments Y, and returns Z."
+Continuing the theme of consistency,
+Swift function argument syntax follows the syntactic pattern of a variable declaration,
+where the colon means "of type":
 
 .. testcode:: functions
 
@@ -206,7 +242,9 @@ As with variable declaration syntax, Swift function declarations follow the natu
     --> fibonacci(10)
     <<< // r0 : Int = 89
 
-Argument names are part of the signature, so you can specify each parameter by name when calling the function, either for clarity, or to supply parameters in a different order:
+Argument names are part of the signature,
+so you can specify each parameter by name when calling the function,
+either for clarity, or to supply parameters in a different order:
 
 .. testcode:: functions
 
@@ -219,7 +257,8 @@ Argument names are part of the signature, so you can specify each parameter by n
     --> divideTwoNumbers(denominator: 5, numerator: 4)
     <<< // r2 : Double = 0.8
 
-And, in the same way that you can assign a value as part of a variable declaration, you can also specify a default value for an argument:
+And, in the same way that you can assign a value as part of a variable declaration,
+you can also specify a default value for an argument:
 
 .. testcode:: functions
 
@@ -231,7 +270,9 @@ And, in the same way that you can assign a value as part of a variable declarati
     --> sayHello()
     <<< Hello, World!
 
-If you omit the return type, as with this ``sayHello()`` function, the default is Void. To return multiple values from a function, just return a multi-element tuple:
+If you omit the return type, as with this ``sayHello()`` function,
+the default is Void.
+To return multiple values from a function, just return a multi-element tuple:
 
 .. testcode:: functions
 
@@ -239,7 +280,8 @@ If you omit the return type, as with this ``sayHello()`` function, the default i
             return (3.59, 3.69, 3.79)
         }
 
-Since you name the elements in any tuple, these features work together to make it easier to query the values:
+Since you name the elements in any tuple,
+these features work together to make it easier to query the values:
 
 .. testcode:: functions
 
@@ -265,7 +307,8 @@ Functions can also be defined to take variable argument lists:
     --> addAllTheInts(42, 597, 12)
     <<< // r5 : Int = 651
 
-Variable argument lists act like an array of the element type within the function body.  Compared to C, Swift variable argument lists are type safe, and much more convenient to use.
+Variable argument lists act like an array of the element type within the function body.
+Compared to C, Swift variable argument lists are type safe, and much more convenient to use.
 
 Pattern Matching
 ~~~~~~~~~~~~~~~~
@@ -285,7 +328,13 @@ Swift supports a switch statement superficially similar to the one in C:
         }
     <<< prime
 
-Note that, unlike C, cases do not implicitly fallthrough to their neighboring statement, so you don't need to "break" out of cases. Consecutive case labels all apply to the next block of statements, and the block ends with the next case, default, or closing brace, at which point control moves out of the switch. You can however explicitly continue execution using the "fallthrough" statement if that's what you want:
+Note that, unlike C, cases do not implicitly fallthrough to their neighboring statement,
+so you don't need to "break" out of cases.
+Consecutive case labels all apply to the next block of statements,
+and the block ends with the next case, default, or closing brace,
+at which point control moves out of the switch.
+You can however explicitly continue execution using the "fallthrough" statement
+if that's what you want:
 
 .. testcode:: switch
 
@@ -316,7 +365,8 @@ As shorthand, you can also specify multiple values in a single case separated by
     <<< prime
     <<< integer
 
-Swift's switch is considerably more powerful than C's. For one thing, it can be used with non-integer types:
+Swift's switch is considerably more powerful than C's.
+For one thing, it can be used with non-integer types:
 
 .. testcode:: switch
 
@@ -366,9 +416,9 @@ Values can also be tested for inclusion in a range:
     --> println("There are \(naturalCount(1024)) bytes in a kilobyte!")
     <<< There are thousands of bytes in a kilobyte!
 
-Multiple values can be tested at once in the same switch using tuples. Each
-element of a tuple may be individually tested against a literal value, a range,
-or ignored using the special ``_`` identifier:
+Multiple values can be tested at once in the same switch using tuples.
+Each element of a tuple may be individually tested against
+a literal value, a range, or ignored using the special ``_`` identifier:
 
 .. testcode:: switch
 
@@ -397,9 +447,9 @@ or ignored using the special ``_`` identifier:
     --> classifyPoint(-5, 50)
     <<< far from the origin
 
-Variables can be bound to individual tuple elements, which then
-become available in the scope of the following case. Additional conditions for
-a case may be tested using a ``where`` expression:
+Variables can be bound to individual tuple elements,
+which then become available in the scope of the following case.
+Additional conditions for a case may be tested using a ``where`` expression:
 
 .. testcode:: switch
 
@@ -431,8 +481,9 @@ a case may be tested using a ``where`` expression:
 Enums
 ~~~~~
 
-Swift supports ``enum`` types. Values of the enum are introduced with the
-``case`` keyword, and are scoped inside the enum type:
+Swift supports ``enum`` types.
+Values of the enum are introduced with the ``case`` keyword,
+and are scoped inside the enum type:
 
 .. testcode:: enums
 
@@ -442,8 +493,8 @@ Swift supports ``enum`` types. Values of the enum are introduced with the
     --> var color = Color.Green
     <-- // color : Color = <unprintable value>
 
-The type name can also be inferred from context if a case is referenced by a
-leading dot:
+The type name can also be inferred from context
+if a case is referenced by a leading dot:
 
 .. testcode:: enums
 
@@ -451,8 +502,9 @@ leading dot:
     --> color
     <-- // color : Color = <unprintable value>
 
-Enum values can be used in ``switch`` statements, including in patterns. The
-compiler enforces exhaustiveness (which you can silence by adding a ``default``):
+Enum values can be used in ``switch`` statements,
+including in patterns.
+The compiler enforces exhaustiveness (which you can silence by adding a ``default``):
 
 .. testcode:: enums
 
@@ -490,7 +542,7 @@ This data can then be pattern-matched and accessed when the case itself is match
                     var dx = tx - fx
                     var dy = ty - fy
                     return -1.0 // sqrt is no longer in the core Swift library
-                    //return sqrt(Double(dx*dx) + Double(dy*dy))
+                    //return sqrt(Double(dx * dx) + Double(dy * dy))
             }
         }
     --> pathLength(.Point(219, 0))
@@ -509,7 +561,8 @@ As you might expect, the ``class`` keyword is used to declare a new Swift class:
             var numberOfSides: Int = 0
         }
 
-Note that there's no need for a Swift class to inherit from any base class.  Of course, it is still fine to inherit from ``NSObject`` if you would like to get its methods.
+Note that there's no need for a Swift class to inherit from any base class.
+Of course, it is still fine to inherit from ``NSObject`` if you would like to get its methods.
 
 You create an instance with function call syntax (referred to as initialization syntax):
 
@@ -518,9 +571,11 @@ You create an instance with function call syntax (referred to as initialization 
     --> var blob = Shape()
     <<< // blob : Shape = <Shape instance>
 
-and memory is managed automatically for you using ARC (Automatic Reference Counting) for great performance and maximum compatibility with our frameworks.
+and memory is managed automatically for you using ARC (Automatic Reference Counting)
+for great performance and maximum compatibility with our frameworks.
 
-When you create subclasses, you use the familiar colon ``:`` to indicate the inherited type:
+When you create subclasses,
+you use the familiar colon ``:`` to indicate the inherited type:
 
 .. testcode:: classes
 
@@ -540,7 +595,10 @@ Instance variables can be accessed via the ``.`` operator:
     --> println("A square has \(square.numberOfSides) sides.")
     <<< A square has 4 sides.
 
-Variables declared in a class are properties. By default, they have implicit getters and setters that access an underlying (unnamed) instance variable, but you can also specify a custom getter and/or setter:
+Variables declared in a class are properties.
+By default, they have implicit getters and setters that access
+an underlying (unnamed) instance variable,
+but you can also specify a custom getter and/or setter:
 
 .. testcode:: classes
 
@@ -568,13 +626,15 @@ Variables declared in a class are properties. By default, they have implicit get
     --> circle.radius
     <<< // r1 : Double = 10.0
 
-Notice that there are no asterisks in any of the variable declarations for objects::
+Notice that there are no asterisks in any of the variable declarations for objects:
 
 .. testcode:: classes
 
     --> var circle = Circle()
 
-This is one of the primary safety features --- **Swift does not require you to manipulate and manage direct pointers to memory**. It means you can define a function that takes an argument like this:
+This is one of the primary safety features –
+**Swift does not require you to manipulate and manage direct pointers to memory**.
+It means you can define a function that takes an argument like this:
 
 .. testcode:: classes
 
@@ -590,13 +650,16 @@ This is one of the primary safety features --- **Swift does not require you to m
     --> circle.radius
     <<< // r2 : Double = 20.0
 
-The compiler manages the necessary mechanisms to safely pass the object by reference.  However, because we use ARC, the programmer is still responsible for reasoning about and breaking cycles (e.g. with weak pointers).
-
+The compiler manages the necessary mechanisms to safely pass the object by reference.
+However, because we use ARC, the programmer is still responsible for
+reasoning about and breaking cycles (e.g. with weak pointers).
 
 Structures
 ~~~~~~~~~~
 
-For types that should be passed by value (i.e., by copying it), like graphics coordinates or sizes, you can create a ``struct``:
+For types that should be passed by value (i.e., by copying it),
+like graphics coordinates or sizes,
+you can create a ``struct``:
 
 .. testcode:: structures
 
@@ -604,7 +667,10 @@ For types that should be passed by value (i.e., by copying it), like graphics co
             var width, height : Double
         }
 
-Unlike other languages, Swift structures aren't limited just to holding values, they can also have functions and initializers, as well as adopt protocols and be extended (as described later in this tour):
+Unlike other languages,
+Swift structures aren't limited just to holding values,
+they can also have functions and initializers,
+as well as adopt protocols and be extended (as described later in this tour):
 
 .. testcode:: structures
 
@@ -615,7 +681,9 @@ Unlike other languages, Swift structures aren't limited just to holding values, 
             }
         }
 
-Because Swift is statically-typed, the compiler always knows whether a type is passed by-value or by-reference so there's no need for any differences in syntax:
+Because Swift is statically-typed,
+the compiler always knows whether a type is passed by-value or by-reference
+so there's no need for any differences in syntax:
 
 .. testcode:: structures
 
@@ -625,7 +693,8 @@ Because Swift is statically-typed, the compiler always knows whether a type is p
     --> myPoint
     <<< // myPoint : Point = Point(250.0, 200.0)
 
-Note that it's not necessary to include the initializer implementation shown for ``Point``, because a default initializer is automatically provided to set the values:
+Note that it's not necessary to include the initializer implementation shown for ``Point``,
+because a default initializer is automatically provided to set the values:
 
 .. testcode:: structures
 
@@ -635,7 +704,11 @@ Note that it's not necessary to include the initializer implementation shown for
 Strings
 -------
 
-Because strings are such a common and essential part of any codebase, they are built right into Swift as a native datatype.  Swift strings are designed with natural and expressive syntax, to be fast and memory efficient, and to maintain transparent interoperation with Cocoa APIs and ``NSString``.
+Because strings are such a common and essential part of any codebase,
+they are built right into Swift as a native datatype.
+Swift strings are designed with natural and expressive syntax,
+to be fast and memory efficient,
+and to maintain transparent interoperation with Cocoa APIs and ``NSString``.
 
 Swift string literals use double-quote marks, like this:
 
@@ -661,13 +734,21 @@ and you can refer to a substring, or slice, using a character range:
     --> var name = message[7..12]
     <<< // name : String = "world!"
 
-Swift strings are immutable, which means we can make string slicing extremely efficient in terms of memory and processor cycles. Rather than having to copy the substring characters to a new memory location, the slice simply refers to a sub-range from the original string:
+Swift strings are immutable,
+which means we can make string slicing extremely efficient in terms of memory and processor cycles.
+Rather than having to copy the substring characters to a new memory location,
+the slice simply refers to a sub-range from the original string:
 
 .. image:: /images/swiftStringAndSlice.png
    :width: 30em
    :align: center
 
-Continuing with the theme of efficiency, Swift strings are encoded internally as UTF-8, keeping storage compact. When iterating over the characters in a string, Swift decodes UTF-8 on the fly to produce a sequence of ``Char`` values (each of which holds a UTF-32 codepoint), making it easy to work with multi-byte characters, for example:
+Continuing with the theme of efficiency,
+Swift strings are encoded internally as UTF-8, keeping storage compact.
+When iterating over the characters in a string,
+Swift decodes UTF-8 on the fly to produce a sequence of ``Char`` values
+(each of which holds a UTF-32 codepoint),
+making it easy to work with multi-byte characters, for example:
 
 .. testcode:: strings
 
@@ -696,14 +777,16 @@ You can also iterate by lines:
 String Interpolation
 ~~~~~~~~~~~~~~~~~~~~
 
-You've already seen various ways to create a Swift string, including concatenating substrings using ``+``:
+You've already seen various ways to create a Swift string,
+including concatenating substrings using ``+``:
 
 .. testcode:: stringInterpolation
 
     --> var hello = "Hello" + ", world" + "!"
     <<< // hello : String = "Hello, world!"
 
-If you need to append string representations of other types, you can create a Swift string from a value:
+If you need to append string representations of other types,
+you can create a Swift string from a value:
 
 .. testcode:: stringInterpolation
 
@@ -712,7 +795,8 @@ If you need to append string representations of other types, you can create a Sw
     --> var magic = "The magic number is: " + String(someValue) + "!"
     <<< // magic : String = "The magic number is: 42!"
 
-Interpolating values into strings is such a common task, however, that Swift provides an alternative, more readable syntax:
+Interpolating values into strings is such a common task, however,
+that Swift provides an alternative, more readable syntax:
 
 .. testcode:: stringInterpolation
 
@@ -728,9 +812,14 @@ You can also use this syntax to interpolate the values of arbitrary expressions:
     --> var addMessage = "Adding \(luckyForSome) to \(someValue) gives \(luckyForSome + someValue)"
     <<< // addMessage : String = "Adding 13 to 42 gives 55"
 
-Rather than requiring you to think about how best to format a value every time you want to insert it into a string, it's up to the developer of the original type to provide an implementation for the string conversion. This involves adding a suitable initializer to the Swift ``String`` type through the use of an extension, as discussed later in this tour (see Extensions_).
+Rather than requiring you to think about how best to format a value
+every time you want to insert it into a string,
+it's up to the developer of the original type to provide an implementation for the string conversion.
+This involves adding a suitable initializer to the Swift ``String`` type through the use of an extension,
+as discussed later in this tour (see Extensions_).
 
-For more power and flexibility, the Swift standard library also provides a type-safe ``printf()`` function:
+For more power and flexibility,
+the Swift standard library also provides a type-safe ``printf()`` function:
 
 .. testcode:: printf
 
@@ -740,7 +829,9 @@ For more power and flexibility, the Swift standard library also provides a type-
 Protocols
 ---------
 
-A protocol is an abstract description of behavior --- usually related functions and/or properties --- that can be adopted by one or more types:
+A protocol is an abstract description of behavior –
+usually related functions and/or properties –
+that can be adopted by one or more types:
 
 .. testcode:: protocolsAndExtensions
 
@@ -754,7 +845,9 @@ A protocol is an abstract description of behavior --- usually related functions 
             func containsPoint(point: Point) -> Bool
         }
 
-All named Swift types (i.e., classes, structs and enums, but not tuples), can adopt protocols and implement the required behavior:
+All named Swift types
+(i.e., classes, structs and enums, but not tuples),
+can adopt protocols and implement the required behavior:
 
 .. testcode:: protocolsAndExtensions
 
@@ -766,9 +859,13 @@ All named Swift types (i.e., classes, structs and enums, but not tuples), can ad
             }
         }
 
-The ``: HitTestable`` syntax in this structure declaration indicates conformance to the protocol. As with all other ``:`` use in Swift, you can read the colon as *is a*, so *"a Rect is a HitTestable type"*.  
+The ``: HitTestable`` syntax in this structure declaration indicates conformance to the protocol.
+As with all other ``:`` use in Swift,
+you can read the colon as *is a*, so *"a Rect is a HitTestable type"*.  
 
-You can use a protocol in a variable declaration to indicate the variable has some unknown, dynamic type that conforms to that protocol. If you do, you can only assign a value if its type conforms to the protocol:
+You can use a protocol in a variable declaration to indicate the variable has
+some unknown, dynamic type that conforms to that protocol.
+If you do, you can only assign a value if its type conforms to the protocol:
 
 .. testcode:: protocolsAndExtensions
 
@@ -781,7 +878,8 @@ You can use a protocol in a variable declaration to indicate the variable has so
     --> testableThing.containsPoint(hitPoint)
     <<< // r0 : Bool = false
 
-and Swift ensures that you can only call functions or access properties that are defined as part of the protocol:
+and Swift ensures that you can only call functions or access properties
+that are defined as part of the protocol:
 
 .. testcode:: protocolsAndExtensions
 
@@ -822,7 +920,9 @@ This example uses a variable argument list and returns an optional value
 Extensions
 ----------
 
-An extension allows you to add functions or properties to an existing class or structure. As described earlier, you might use an extension to add suitable initializers to the Swift ``String`` class:
+An extension allows you to add functions or properties to an existing class or structure.
+As described earlier,
+you might use an extension to add suitable initializers to the Swift ``String`` class:
 
 .. testcode:: protocolsAndExtensions
 
@@ -832,7 +932,8 @@ An extension allows you to add functions or properties to an existing class or s
             }
         }
 
-to make it easy to convert your own classes or structures into strings, either by constructing a ``String`` explicitly:
+to make it easy to convert your own classes or structures into strings,
+either by constructing a ``String`` explicitly:
 
 .. testcode:: protocolsAndExtensions
 
@@ -868,7 +969,9 @@ when you make two libraries work together, when you cannot change their code.
 Closures
 --------
 
-A closure is just a function without a name. As an example, the ``sort()`` library function takes an array of strings and sorts them using a comparison closure:
+A closure is just a function without a name.
+As an example, the ``sort()`` library function takes an array of strings
+and sorts them using a comparison closure:
 
 .. testcode:: closures
 
@@ -895,9 +998,12 @@ The closure in this example is described in curly braces:
         return lhs.uppercase < rhs.uppercase
     }
 
-The parentheses denote the parameters of the closure, followed by the
-return type, then "in" to separate the signature of the closure from
-its body. As you've already seen throughout this tour, the types in a Swift expression can be omitted if they can be inferred from the context. In this case, the parameter and return types can be inferred, so aren't necessary:
+The parentheses denote the parameters of the closure,
+followed by the return type,
+then "in" to separate the signature of the closure from its body.
+As you've already seen throughout this tour,
+the types in a Swift expression can be omitted if they can be inferred from the context.
+In this case, the parameter and return types can be inferred, so aren't necessary:
 
 .. testcode:: closures
 
@@ -905,9 +1011,9 @@ its body. As you've already seen throughout this tour, the types in a Swift expr
             return lhs.uppercase < rhs.uppercase
         })
 
-One can also omit the names of the parameters, using the positional
-placeholders ``$0``, ``$1``, and so on. The ``return`` can also be
-omitted from single-expression closures, as in:
+One can also omit the names of the parameters,
+using the positional placeholders ``$0``, ``$1``, and so on.
+The ``return`` can also be omitted from single-expression closures, as in:
 
 .. testcode:: closures
 
@@ -929,7 +1035,13 @@ Closures can also capture any variable from the local scope:
             }
         )
 
-Note that if a closure captures a value, Swift automatically manages the storage of the original variable such that you can change the value from within the closure without the need for any keywords on the original declaration. Internally, Swift also makes sure that if the closure outlives the scope of the original variable declaration, everything still "just works":
+Note that if a closure captures a value,
+Swift automatically manages the storage of the original variable
+such that you can change the value from within the closure without the need for
+any keywords on the original declaration.
+Internally, Swift also makes sure that if the closure outlives
+the scope of the original variable declaration,
+everything still "just works":
 
 ::
 
@@ -940,8 +1052,8 @@ Note that if a closure captures a value, Swift automatically manages the storage
         someValue += 1
     })
 
-Closures are typically the last argument to a function. In such cases,
-one can place the closure outside of the parentheses:
+Closures are typically the last argument to a function.
+In such cases, one can place the closure outside of the parentheses:
 
 ::
 
@@ -952,9 +1064,10 @@ one can place the closure outside of the parentheses:
         someValue += 1
     }
     
-For longer closures, cases where the same function will be re-used
-several times, or cases where you want a descriptive name to show up in a stack
-trace, you may prefer to use a local function instead:
+For longer closures,
+cases where the same function will be re-used several times,
+or cases where you want a descriptive name to show up in a stack trace,
+you may prefer to use a local function instead:
 
 .. testcode:: closures
 
@@ -985,7 +1098,9 @@ with a colon ``:`` "is a," followed by the function arguments and return type:
 Generics
 --------
 
-Swift supports generics through parameterized types. As an example, the standard library includes the ``Array`` class, which makes it easy to work with typed collections (though it is important to note that the entire standard library is at best a strawman design right now):
+Swift supports generics through parameterized types.
+As an example, the standard library includes the ``Array`` class,
+which makes it easy to work with typed collections:
 
 .. testcode:: generics
 
@@ -995,9 +1110,12 @@ Swift supports generics through parameterized types. As an example, the standard
     --> names.append("Hilary")
     --> names.append("Carlton")
 
-This array can only be used with ``String`` elements; you'll get an error if you attempt to insert anything else, like an integer.
+This array can only be used with ``String`` elements;
+you'll get an error if you attempt to insert anything else, like an integer.
 
-Swift generics offer transparent support for both class and value types without the need for boxing. This means you can work with a collection of integer values, for example, in exactly the same way as you would work with a collection of objects:
+Swift generics offer transparent support for both class and value types without the need for boxing.
+This means you can work with a collection of integer values, for example,
+in exactly the same way as you would work with a collection of objects:
 
 .. testcode:: generics
 
@@ -1014,7 +1132,8 @@ Swift generics offer transparent support for both class and value types without 
     --> testCollection.append(Test())
     --> testCollection.append(Test())
 
-It's even safe in Swift to mix by-reference and value types if you use a protocol for a parameterized type declaration:
+It's even safe in Swift to mix by-reference and value types
+if you use a protocol for a parameterized type declaration:
 
 .. testcode:: generics
 
@@ -1052,7 +1171,8 @@ It's even safe in Swift to mix by-reference and value types if you use a protoco
     <<< A bar is working
     <<< An integer is working
 
-Swift makes it easy to create your own parameterized types, like this simple implementation of a stack class:
+Swift makes it easy to create your own parameterized types,
+like this simple implementation of a stack class:
 
 .. testcode:: generics
 
@@ -1072,7 +1192,9 @@ Swift makes it easy to create your own parameterized types, like this simple imp
             }
         }
 
-As with a Swift ``Array``, this generic ``Stack`` class is unrestricted, which means you can create an instance of the class to hold any first class type, including value and by-reference types:
+As with a Swift ``Array``, this generic ``Stack`` class is unrestricted,
+which means you can create an instance of the class to hold any first class type,
+including value and by-reference types:
 
 .. testcode:: generics
 
@@ -1093,9 +1215,13 @@ As with a Swift ``Array``, this generic ``Stack`` class is unrestricted, which m
     --> stringStack.pop()
     <<< // r3 : String = "bye"
 
-Definining a type or algorithm to take any type means that you only have access to basic operations that all types support, like copyability.
+Definining a type or algorithm to take any type means that
+you only have access to basic operations that all types support, like copyability.
 
-In order to use more specific behavior, you need to indicate which behavior the data structure requires. If you require a ``work()`` function, for example, just indicate that that the type should conform to the ``Workable`` protocol:
+In order to use more specific behavior,
+you need to indicate which behavior the data structure requires.
+If you require a ``work()`` function, for example,
+just indicate that that the type should conform to the ``Workable`` protocol:
 
 .. testcode:: generics
 
@@ -1108,7 +1234,10 @@ In order to use more specific behavior, you need to indicate which behavior the 
             }
         }
 
-Once you have generic data structures, you'll likely need to be able to implement generic algorithms to act on them. As an example, first consider a trivial non-generic function to find the index of a string in an array of strings:
+Once you have generic data structures,
+you'll likely need to be able to implement generic algorithms to act on them.
+As an example, first consider a trivial non-generic function to find
+the index of a string in an array of strings:
 
 .. testcode:: generics
 
@@ -1121,9 +1250,12 @@ Once you have generic data structures, you'll likely need to be able to implemen
             return -1
         }
 
-Without generics, you'd need to write an identical function for each type you wanted to support---``findIndexOfInt()``, ``findIndexOfDouble``, etc.
+Without generics,
+you'd need to write an identical function for each type you wanted to support –
+``findIndexOfInt()``, ``findIndexOfDouble``, etc.
 
-Swift makes it easy to write a generic version, which works with any element that supports an equality test:
+Swift makes it easy to write a generic version,
+which works with any element that supports an equality test:
 
 .. testcode:: generics
 
@@ -1147,4 +1279,7 @@ Test this with an array of integers:
     --> findIndexOf(integers, 4)
     <<< // r4 : Int = 3
 
-Note: the Swift standard library already includes a ``find()`` function, as well as other useful generic functions like ``min()``, ``max()``, ``map()``, ``swap()``, and the ``sort()`` function described earlier in the Closures section.
+Note: the Swift standard library already includes a ``find()`` function,
+as well as other useful generic functions like
+``min()``, ``max()``, ``map()``, ``swap()``,
+and the ``sort()`` function described earlier in the Closures section.
