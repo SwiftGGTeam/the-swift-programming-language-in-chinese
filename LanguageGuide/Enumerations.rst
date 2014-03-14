@@ -180,8 +180,9 @@ However, it can sometimes be useful for enumeration members to also store
 
 Swift enumerations can be defined to store an associated value of any given type,
 and this type can be different for each member of the enumeration if needed.
-These kinds of associated values are known as
-:newTerm:`tagged unions` or :newTerm:`variants` in other programming languages.
+Enumerations similar to these are known as
+:newTerm:`discriminated unions`, :newTerm:`tagged unions` or :newTerm:`variants`
+in other programming languages.
 
 For example: imagine an inventory tracking system that needs to
 track products using two different types of barcode.
