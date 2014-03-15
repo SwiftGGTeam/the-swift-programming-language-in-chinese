@@ -17,7 +17,7 @@ Swift provides two special types for working with collections of values:
 Mutability of Collections
 -------------------------
 
-Swift's two collection types give a way to store multiple values in a single collection.
+Arrays and dictionaries are ways to store multiple values together in a single collection.
 If you create an array or a dictionary, and assign it to a *variable* named value,
 the collection that is created will be :newTerm:`mutable`.
 This means that you will be able to change (or :newTerm:`mutate`) the collection
