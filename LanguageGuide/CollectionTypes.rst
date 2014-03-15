@@ -222,6 +222,8 @@ because it was set to the output of an ``Array<Int>`` initializer.
    This is defined in Array.swift.
    Likewise I'm holding off writing about it until NewArray lands.
 .. TODO: talk about what it means to say that Array x == Array y
+.. TODO: Mention that [] can be used as an empty array literal
+   if the context gives enough type information.
 
 .. _ArraysAndDictionaries_Dictionaries:
 
@@ -452,6 +454,8 @@ You can remove a key-value pair from the dictionary by using the ``deleteKey()``
 .. TODO: write about itemsAsArray() -> Element[]
 .. TODO: Mention that "==" will consider two dictionaries to be the same
    if they have the same count, and every element in lhs is also in rhs
+.. TODO: Mention that [:] can be used as an empty dictionary literal
+   if the context gives enough type information.
 
 .. note::
 
