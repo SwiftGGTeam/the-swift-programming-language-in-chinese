@@ -7,9 +7,6 @@ Swift provides two special types for working with collections of values:
 * :newTerm:`Dictionaries`, for collections of values that can be referenced
   and looked up via an unique identifier or “key”
 
-.. TODO: mention somewhere (either here or in Custom Types)
-   that arrays and dictionaries are value types rather than reference types,
-   and demonstrate what that means.
 .. TODO: should I mention about bridging to NSArray / NSDictionary?
    Dictionary is not yet bridged to NSDictionary –
    the work for this is in rdar://16014066,
@@ -36,7 +33,18 @@ It is good practice to create immutable collections
 in all cases where the collection does not need to change.
 This enables the Swift compiler to optimize the performance of the collection.
 
-.. QUESTION: do we want to make an explicit point about choosing immutablility by default?
+.. QUESTION: do we *want* to make this explicit point about choosing
+   immutablility by default for collection types?
+
+.. note::
+
+    Swift's ``Array`` and ``Dictionary`` are
+    *value types*, not *reference types*.
+    This means that they are copied rather than referenced
+    when they are assigned to a named value or passed to a function.
+    This is different from the behavior of Cocoa's ``NSArray`` and ``NSDictionary`` classes.
+    The difference between value types and reference types is covered in detail
+    in the :ref:`CustomTypes_ValueTypesAndReferenceTypes` section of :doc:`CustomTypes`.
 
 .. _ArraysAndDictionaries_Arrays:
 

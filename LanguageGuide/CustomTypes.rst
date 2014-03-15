@@ -422,6 +422,10 @@ you should define it as a class in your code.
 .. QUESTION: This isn't strictly true. Functions are reference types too.
    Does this matter for the point I'm making here?
 
+.. TODO: reiterate here that arrays and dictionaries are value types rather than reference types,
+   and demonstrate what that means for the values they store
+   when they themselves are value types or reference types.
+
 .. _CustomTypes_Pointers:
 
 Pointers
