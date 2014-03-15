@@ -7,7 +7,7 @@ Language Guide
     BasicTypes
     BasicOperators
     Strings
-    ArraysAndDictionaries
+    CollectionTypes
     ControlFlow
     Functions
     Closures

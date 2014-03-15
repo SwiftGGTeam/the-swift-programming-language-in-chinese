@@ -46,7 +46,18 @@ Subscripts
 .. write-me::
 
 .. Protocols can require conforming types to provide specific subscripts
+.. These typically return a value of type T, which is why I've moved this here
 
+Collections
+-----------
+
+.. Explain that Array<T> and Dictionary<T, U> are actually generics
+.. Describe how to create a Stack<T> as an example of custom collections
+
+Generic Enumerations
+--------------------
+
+.. Describe how Optional<T> actually works
 
 .. refnote:: References
 

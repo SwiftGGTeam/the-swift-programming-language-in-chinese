@@ -1,20 +1,42 @@
-Arrays and Dictionaries
-=======================
+Collection Types
+================
 
 Swift provides two special types for working with collections of values:
 
-* :newTerm:`Arrays` (for ordered lists of values)
-* :newTerm:`Dictionaries` (for collections of values that can be referenced
-  and looked up via an unique identifier or “key”)
+* :newTerm:`Arrays`, for ordered lists of values
+* :newTerm:`Dictionaries`, for collections of values that can be referenced
+  and looked up via an unique identifier or “key”
 
 .. TODO: mention somewhere (either here or in Custom Types)
    that arrays and dictionaries are value types rather than reference types,
    and demonstrate what that means.
-.. TODO: note also that they need to be created as variables in order to be mutable.
 .. TODO: should I mention about bridging to NSArray / NSDictionary?
    Dictionary is not yet bridged to NSDictionary –
    the work for this is in rdar://16014066,
    which is currently scheduled (but I'd say unlikely) for the March milestone
+
+.. _ArraysAndDictionaries_Mutability:
+
+Mutability of Collections
+-------------------------
+
+Swift's two collection types give a way to store multiple values in a single collection.
+If you create an array or a dictionary, and assign it to a *variable* named value,
+the collection that is created will be :newTerm:`mutable`.
+This means that you will be able to change (or :newTerm:`mutate`) the collection
+after it has been created –
+perhaps to add more items to the collection,
+or to remove existing items from the ones it already contains.
+
+However, if you assign an array or a dictionary to a *constant* named value,
+the collection will be :newTerm:`immutable`.
+It will not then be possible to change the contents of the collection.
+
+It is good practice to create immutable collections
+in all cases where the collection does not need to change.
+This enables the Swift compiler to optimize the performance of the collection.
+
+.. QUESTION: do we want to make an explicit point about choosing immutablility by default?
 
 .. _ArraysAndDictionaries_Arrays:
 
@@ -22,27 +44,25 @@ Arrays
 ------
 
 An :newTerm:`array` stores multiple values of the same type in an ordered list.
-Swift's arrays are :newTerm:`mutable`,
-which means that they can be changed (or :newTerm:`mutated`) after they are created.
-This means that you can add new things to the list,
-and remove existing things from the list,
-at any point after it is first created.
+The same value is allowed to appear in an array multiple times at different positions.
 
 Swift's arrays are specific about the kinds of values they can store.
-This is different from Objective-C's ``NSArray`` and ``NSMutableArray`` classes.
+This is different from Objective-C's ``NSArray`` and ``NSMutableArray`` classes,
+which can store any kind of object,
+and do not make any guarantees about the nature of the objects they return.
 In Swift, you explictly declare the type of values that you want a particular array to store.
 If you create an array of ``Int`` values, for example,
 then you can't insert anything other than ``Int`` values into that array.
 This means that Swift arrays are type-safe,
 and are always clear about what they may contain.
 
-Swift's array type is written as “``Array<SomeType>``”,
+Swift's array type is written as ``Array<SomeType>``,
 where ``SomeType`` is the kind of thing that the array will be allowed to store.
 This might be ``String``, or ``Int``, or indeed any other valid type in Swift
 (including types that you define yourself, as described in :doc:`CustomTypes`,
 and also protocol types, as described in :doc:`Protocols`).
 
-Here's an example, which creates a shopping list to store ``String`` values:
+Here's an example, which creates an array called ``shoppingList`` to store ``String`` values:
 
 .. testcode:: arrays
 
@@ -88,6 +108,12 @@ by checking its read-only ``count`` property:
     --> println("The shopping list contains \(shoppingList.count) items.")
     <-- The shopping list contains 2 items.
 
+.. TODO: with the existing Array implementation, you can *set* count to a larger value,
+   but Swift will assert if you try and access an item at one of the new indices.
+   The same is not true for Dictionary,
+   which does not allow you to assign a new value to count.
+   I'll need to check what the story is for resizing arrays when NewArray lands.
+
 New items can be added to the end of the array by calling its ``append()`` method:
 
 .. testcode:: arrays
@@ -96,7 +122,7 @@ New items can be added to the end of the array by calling its ``append()`` metho
     /-> shoppingList now contains \(shoppingList.count) items, and someone is making pancakes
     <-/ shoppingList now contains 3 items, and someone is making pancakes
 
-You can access the values in an array by using :newTerm:`subscript syntax`,
+You can retrieve a value from the array by using :newTerm:`subscript syntax`,
 and passing in the index of the value you want to retrieve:
 
 .. testcode:: arrays
@@ -109,8 +135,21 @@ and passing in the index of the value you want to retrieve:
 Subscript syntax involves writing an index value within square brackets
 (such as ``[0]`` in this example),
 immediately after the name of the array.
+(Subscripts are described in more detail in :ref:`Methods_Subscripts`.)
 Note that the first item in the array has an index of ``0``, not ``1``.
 Arrays in Swift are always zero-indexed.
+
+Subscript syntax can be used to change an existing value at a given index:
+
+.. testcode:: arrays
+
+    --> shoppingList[0] = "Six eggs"
+    /-> the first item in the list is now equal to \"\(shoppingList[0])\"
+    <-/ the first item in the list is now equal to "Six eggs"
+
+.. QUESTION: should I note here that you can't set the firstItem variable
+   and expect the value in the array to change,
+   because Array is a value type?
 
 An item can be inserted into the array at a specified index by using the ``insert()`` method:
 
@@ -134,13 +173,13 @@ Similarly, an item can be removed from the array using the ``removeAt()`` method
     <-/ shoppingList now contains 3 items, and no Maple Syrup
 
 Any gaps in the array are closed when an item is removed,
-and so the value at index ``0`` is once again equal to ``"Eggs"``:
+and so the value at index ``0`` is once again equal to ``"Six eggs"``:
 
 .. testcode:: arrays
 
     --> firstItem = shoppingList[0]
-    /-> firstItem is once again equal to \"\(firstItem)\"
-    <-/ firstItem is once again equal to "Eggs"
+    /-> firstItem is now equal to \"\(firstItem)\"
+    <-/ firstItem is now equal to "Six eggs"
 
 .. TODO: there are quite a few more Array methods, such as sort() and popLast() –
    how many of them should be listed here?
@@ -156,7 +195,7 @@ you can do so using initializer syntax:
     --> println("ints is an Array<Int> containing \(ints.count) items.")
     <-- ints is an Array<Int> containing 0 items.
 
-Note that the type of ``ints`` has been inferred to be ``Array<Int>``,
+Note that the type of the ``ints`` variable has been inferred to be ``Array<Int>``,
 because it was set to the output of an ``Array<Int>`` initializer.
 
 .. note::
@@ -184,17 +223,12 @@ which acts as an identifier for that value within the dictionary.
 A dictionary allows you to set a value for a particular key.
 If the dictionary already has a value for that key,
 the old value is removed, and the new value is associated with that key instead.
-Otherwise, the new value and key are added to the dictionary.
-
-Like arrays, Swift's dictionaries are always :newTerm:`mutable`,
-which means that you can add new entries to the dictionary,
-and remove existing entries from the dictionary,
-at any point after it is first created.
+Otherwise, the new key-value pair are added to the dictionary.
 
 As with arrays, Swift's dictionaries are specific about the kinds of values they can store.
 This is different from Objective-C's ``NSDictionary`` and ``NSMutableDictionary`` classes.
-In Swift, you explictly declare the type of values that you want a dictionary to store,
-*and* the type of its keys.
+In Swift, you explictly declare the type of values that you want a dictionary to store.
+You also declare an explicit type for the keys that are used to reference the stored values.
 
 Swift's dictionary type is written as ``Dictionary<KeyType, ValueType>``.
 where ``KeyType`` is the kind of values that are allowed to be keys,
@@ -204,6 +238,10 @@ The only restriction is that ``KeyType`` must be :newTerm:`hashable` –
 that is, it must provide a way to make itself uniquely representable.
 All of Swift's basic types (such as ``String``, ``Int``, ``Double``, and ``Bool``)
 are hashable by default, and so all of these types can be used as the keys of a dictionary.
+Enumeration member values without associated values (described in :doc:`Enumerations`)
+are also hashable by default.
+
+.. QUESTION: is there anything else that should be on this list?
 
 .. note::
 
@@ -218,8 +256,9 @@ are hashable by default, and so all of these types can be used as the keys of a 
    I've reported this as rdar://16332447, because it seems inconsistent.
    Should we mention this here?
 
-Here's an example, which creates a dictionary to store international airports
-referenced by their three-letter prefix:
+Here's an example, which creates a dictionary to store the names of international airports.
+In this dictionary, the keys are three-letter International Air Transport Association codes,
+and the values are airport names:
 
 .. testcode:: dictionaries
 
@@ -230,7 +269,7 @@ The ``airports`` dictionary has been declared as
 “a ``Dictionary`` of type ``String``, ``String``”,
 which is written as ``Dictionary<String, String>``.
 Because it is “of type ``String``, ``String``”,
-all of its keys must be strings, and so must all of its values.
+all of its keys must be strings, and all of its values must be strings.
 
 The ``airports`` array has been initialized with two key-value pairs.
 The first pair has a key of ``"TYO"``, and a value of ``"Tokyo"``.
@@ -244,7 +283,7 @@ and the pairs are written as a list, separated by commas,
 surrounded by a pair of square brackets.
 
 This dictionary literal contains two ``String : String`` pairs.
-This matches the type of the ``shoppingList`` variable's declaration –
+This matches the type of the ``airports`` variable declaration –
 a ``Dictionary`` with only ``String`` keys, and only ``String`` values –
 and so the assignment of the dictionary literal is permitted
 as a way to initialize the ``airports`` dictionary with two initial items.
@@ -252,7 +291,7 @@ as a way to initialize the ``airports`` dictionary with two initial items.
 Thanks to Swift's type inference,
 you don't actually have to write the type of the dictionary
 if you're initializing it with a dictionary literal.
-The initialization of ``airports`` can be written in a shorter form instead:
+The initialization of ``airports`` could have been be written in a shorter form instead:
 
 .. testcode:: dictionariesInferred
 
@@ -260,8 +299,8 @@ The initialization of ``airports`` can be written in a shorter form instead:
     <<< // airports : Dictionary<String, String> = Dictionary<String, String>(1.33333, 2, <DictionaryBufferOwner<String, String> instance>)
 
 Because all of the keys in the literal are of the same type as each other,
-and likewise all of the values are of the same kind as each other,
-it is possible to infer that a ``Dictionary<String, String>`` is
+and likewise all of the values are of the same type as each other,
+it is possible to infer that ``Dictionary<String, String>`` is
 the correct type to use for the ``airports`` variable.
 
 Like an array, you can find out the number of items in a ``Dictionary``
@@ -272,6 +311,11 @@ by checking its read-only ``count`` property:
     --> println("The dictionary of airports contains \(airports.count) items.")
     <-- The dictionary of airports contains 2 items.
 
+.. TODO: see the note for Array about setting count to a new value.
+   If it turns out that Array is indeed meant to have a settable count property,
+   I should change the wording of the paragraph here to avoid making it sound as if
+   Dictionary's count property is read-only, like array's.
+
 New items can be added to the dictionary by calling its ``add()`` method
 and passing in a new key and value of the correct types:
 
@@ -279,8 +323,8 @@ and passing in a new key and value of the correct types:
 
     --> airports.add("LHR", "London Heathrow")
     <<< // r0 : Bool = false
-    /-> airports now contains \(airports.count) items
-    <-/ airports now contains 3 items
+    /-> the airports dictionary now contains \(airports.count) items
+    <-/ the airports dictionary now contains 3 items
 
 .. TODO: note that add() returns a Bool to indicate whether or not
    the action was an add or a replace.
@@ -292,20 +336,33 @@ This must be a key that you know is already in the dictionary:
 
 .. testcode:: dictionariesInferred
 
-    --> let heathrow = airports["LHR"]
-    <<< // heathrow : String = "London Heathrow"
-    /-> heathrow is equal to \"\(heathrow)\"
-    <-/ heathrow is equal to "London Heathrow"
+    --> let lhr = airports["LHR"]
+    <<< // lhr : String = "London Heathrow"
+    /-> lhr is equal to \"\(lhr)\"
+    <-/ lhr is equal to "London Heathrow"
+
+As an alternative, you can use the dictionary's ``find()`` method
+to try and find a value for a particular key.
+The ``find()`` method returns an *optional* value
+(as described in :ref:`BasicTypes_Optionals`),
+which can be checked and unwrapped using :ref:`BasicTypes_OptionalBinding`:
+
+.. testcode:: dictionariesInferred
+
+    --> if let airportName = airports["DUB"] {
+            println("The name of the airport is \(airportName).")
+        } else {
+            println("That airport is not in the airports dictionary.")
+        }
+    <-- The name of the airport is Dublin.
 
 .. TODO: talk about the fact that Swift will crash if the key isn't there,
    and describe how to find out if it's there before trying to access it.
-.. TODO: file a Radar suggesting that array and dictionary subscripts
-   should return optionals.
+.. NOTE: I've filed rdar://16335854 to suggest that Array<T> and Dictionary<KeyType, T>
+   subscripts should return Optional<T>.
 
 .. subscript(key: KeyType) -> ValueType { get set }
-.. add(key: KeyType, v: ValueType) -> Bool
 .. deleteKey(k: KeyType) -> Bool
-.. find(k: KeyType) -> ValueType?
 .. itemsAsArray() -> Element[]
 .. == the same if same count and every element in lhs is also in rhs
 .. needs to be Hashable to be a key (or does this go in Prorocols?)
