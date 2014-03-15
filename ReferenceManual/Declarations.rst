@@ -469,7 +469,7 @@ The *existing type* can be a named type or a compound type.
 Type aliases do not create new types;
 they simply allow a name to refer to an existing type.
 
-See also :ref:`Declarations_TypealiasProtocolElements`.
+See also :ref:`Declarations_ProtocolAssociatedTypeDeclaration`.
 
 .. langref-grammar
 
@@ -494,7 +494,7 @@ See also :ref:`Declarations_TypealiasProtocolElements`.
 .. TR: Are type aliases allowed to contain a type-inheritance-clause?
     Currently, this doesn't work, and it seems as though it shouldn't work.
     Doesn't it only make sense to specify protocol conformance requirements
-    in the context of an associated typealias (declared as protocol member)?
+    in the context of an associated type (declared as protocol member)?
     I modified the grammar under the assumption that they are not allowed.
 
 
@@ -631,7 +631,9 @@ Function Signature
 
     Grammar of a function declaration
 
-    function-declaration --> attribute-list-OPT function-specifier-OPT ``mutating``-OPT ``func`` function-name generic-parameter-clause-OPT function-signature code-block-OPT
+    function-declaration --> function-head function-name generic-parameter-clause-OPT function-signature function-body
+
+    function-head --> attribute-list-OPT function-specifier-OPT ``mutating``-OPT ``func``
     function-specifier --> ``static`` | ``class``
     function-name --> identifier | operator
 
@@ -642,6 +644,8 @@ Function Signature
     selector-parameters --> ``(`` tuple-pattern-element ``)`` selector-tuples
     selector-tuples --> selector-name ``(`` tuple-pattern-element ``)`` selector-tuples-OPT
     selector-name --> identifier
+
+    function-body --> code-block
 
 .. NOTE: Added the optional ``mutating`` modifier,
     based on the grammar found in ParseDecl.cpp.
@@ -990,33 +994,10 @@ Protocol Declaration
 
 .. syntax-outline::
 
-    protocol <#protocol name#> : <#adopted protocols#> {
+    protocol <#protocol name#> : <#inherited protocols#> {
         <#protocol members#>
     }
 
-
-.. _Declarations_FunctionProtocolElements:
-
-Function Protocol Elements
-~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-
-.. _Declarations_VariableProtocolElements:
-
-Variable Protocol Elements
-~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-
-.. _Declarations_SubscriptProtocolElements:
-
-Subscript Protocol Elements
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-
-.. _Declarations_TypealiasProtocolElements:
-
-Typealias Protocol Elements
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. langref-grammar
 
@@ -1032,13 +1013,78 @@ Typealias Protocol Elements
 
     protocol-declaration --> attribute-list-OPT ``protocol`` protocol-name type-inheritance-clause-OPT protocol-body
     protocol-name --> identifier
-    protocol-body --> ``{`` protocol-members-OPT ``}``
+    protocol-body --> ``{`` protocol-member-declarations-OPT ``}``
 
-    protocol-members --> protocol-member protocol-members-OPT
-    protocol-member --> variable-declaration | function-declaration | associated-typealias | subscript-head
-    associated-typealias --> typealias-head type-inheritance-clause-OPT typealias-assignment-OPT
+    protocol-member-declaration --> protocol-property-declaration
+    protocol-member-declaration --> protocol-method-declaration
+    protocol-member-declaration --> protocol-initializer-declaration
+    protocol-member-declaration --> protocol-subscript-declaration
+    protocol-member-declaration --> protocol-associated-type-declaration
+    protocol-member-declarations --> protocol-member-declaration protocol-member-declarations-OPT
 
-.. TR: Can protocols declare constant properties as well?
+
+.. _Declarations_ProtocolPropertyDeclaration:
+
+Protocol Property Declaration
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. syntax-grammar::
+
+    Grammar of a protocol property declaration
+
+    protocol-property-declaration --> variable-declaration-head variable-name type-annotation getter-setter-keyword-block
+
+
+.. _Declarations_ProtocolMethodDeclaration:
+
+Protocol Method Declaration
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. syntax-grammar::
+
+    Grammar of a protocol method declaration
+
+    protocol-method-declaration --> function-head function-name generic-parameter-clause-OPT function-signature
+
+
+.. _Declarations_ProtocolInitializerDeclaration:
+
+Protocol Initializer Declaration
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. syntax-grammar::
+
+    Grammar of a protocol initializer declaration
+
+    protocol-initializer-declaration --> initializer-head generic-parameter-clause-OPT initializer-signature
+
+.. _Declarations_ProtocolSubscriptDeclaration:
+
+
+Protocol Subscript Declaration
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. syntax-grammar::
+
+    Grammar of a protocol subscript declaration
+
+    protocol-subscript-declaration --> subscript-head getter-setter-keyword-block
+
+
+.. _Declarations_ProtocolAssociatedTypeDeclaration:
+
+Protocol Associated Type Declaration
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. syntax-grammar::
+
+    Grammar of a protocol associated type declaration
+
+    protocol-associated-type-declaration --> typealias-head type-inheritance-clause-OPT typealias-assignment-OPT
 
 
 .. _Declarations_InitializerDeclaration:
@@ -1073,8 +1119,10 @@ Initializer Declaration
 
     Grammar of an initializer declaration
 
-    initializer-declaration --> attribute-list-OPT ``init`` generic-parameter-clause-OPT initializer-signature code-block
+    initializer-declaration --> initializer-head generic-parameter-clause-OPT initializer-signature initializer-body
+    initializer-head --> attribute-list-OPT ``init``
     initializer-signature --> tuple-pattern | selector-tuples
+    initializer-body --> code-block
 
 
 .. _Declarations_DeinitializerDeclaration:
