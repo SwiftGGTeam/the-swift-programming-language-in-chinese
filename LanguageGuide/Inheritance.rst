@@ -171,34 +171,43 @@ Instance methods of a class are inherited by any and all subclasses of that clas
 
 .. QUESTION: Should I mention that you can subclass from NSObject?
 
-.. _Inheritance_OverridingInstanceMethods:
+.. _Inheritance_Overriding:
 
-Overriding Instance Methods
----------------------------
+Overriding
+----------
 
-A subclass can provide its own custom implementation of an instance method
+A subclass can provide its own custom implementation of
+an instance method, class method,
+instance computed property, class computed property, or subscript
 that it would otherwise inherit from a superclass.
-This is known as :newTerm:`overriding` the method.
+This is known as :newTerm:`overriding`.
 
-If you define a subclass method that overrides a superclass method,
-you must prefix the overriding method definition with the ``@override`` attribute.
+.. note::
+
+    Stored instance properties and stored class properties cannot be overridden.
+
+.. TODO: remove this note if stored property overriding is implemented for 1.0.
+
+Whenever you override something that would overwise be inherited,
+you must prefix your overriding definition with the ``@override`` attribute.
 This makes it clear that you intended to provide an override,
-and did not just accidentally provide a method with
-the same name, parameter types and return type by mistake.
-(Accidentally overriding a method can cause unexpected behavior,
-and method overriding without the ``@override`` attribute is
-diagnosed as an error when your code is compiled.)
+and did not just accidentally provide a matching definition by mistake.
+Overriding by accident can cause unexpected behavior,
+and any overrides without the ``@override`` attribute are
+diagnosed as an error when your code is compiled.
+(The definition you have accidentally overridden may not have been provided
+by your subclass's immediate superclass –
+it may have been inherited from another superclass further up the chain.)
 
 In addition, the ``@override`` attribute prompts the Swift compiler
-to check that the superclass has a method declaration that matches
+to check that the superclass has a declaration that matches
 the one you have provided.
-This helps to ensure that your overriding method definition is correct,
-and has not used an incorrect name, type, or parameter order by mistake.
+This helps to ensure that your overriding definition is correct.
 
 .. QUESTION: have I introduced the concept of "attributes" by this point?
    If not, when / where should I do so?
 
-For example:
+The following example declares a new subclass of ``Vehicle``, called ``Car``:
 
 .. testcode:: inheritance
 
@@ -215,7 +224,6 @@ For example:
             }
         }
 
-This example declares a new subclass of ``Vehicle``, called ``Car``.
 ``Car`` declares a new Boolean property called ``isConvertible``,
 in addition to the properties it inherits from ``Vehicle``.
 This property defaults to ``false``, as most cars are not convertibles.
@@ -249,9 +257,3 @@ you can see that the description has indeed changed:
    For example, the parameter names do not have to match
    in order for a function to override a similar signature in its parent.
    (This is true for both of the function declaration syntaxes.)
-
-.. note::
-
-    Overriding of properties is not yet implemented.
-
-.. TODO: remove or improve this note if property overriding is not implemented for 1.0.
