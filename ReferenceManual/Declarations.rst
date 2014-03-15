@@ -610,12 +610,6 @@ This alternative uses "signature" instead of "method" or "selector", but still u
 
 .. TODO: Decide on a syntax-outline for regular Swift functions and for selector-style functions.
 
-
-.. _Declarations_FunctionSignature:
-
-Function Signature
-~~~~~~~~~~~~~~~~~~
-
 .. write-me:: Waiting for design decisions from compiler team.
 
 .. langref-grammar
