@@ -837,7 +837,7 @@ Structure Declaration
 ---------------------
 
 A :newTerm:`structure declaration` introduces a named, structure type into your program.
-Structure declarations begin with the keyword ``struct`` and have the following form:
+Structure declarations are declared using the keyword ``struct`` and have the following form:
 
 .. syntax-outline::
 
@@ -903,7 +903,7 @@ Class Declaration
 -----------------
 
 A :newTerm:`class declaration` introduces a named, class type into your program.
-Class declarations begin with the keyword ``class`` and have the following form:
+Class declarations are declared using the keyword ``class`` and have the following form:
 
 .. syntax-outline::
 
@@ -986,12 +986,60 @@ see :ref:`CustomTypes_ValueTypesAndReferenceTypes`.
 Protocol Declaration
 --------------------
 
+A :newTerm:`protocol declaration` introduces a named, protocol type into your program.
+Protocol declarations are declared using the keyword ``protocol`` and have the following form:
+
 .. syntax-outline::
 
     protocol <#protocol name#> : <#inherited protocols#> {
-        <#protocol members#>
+        <#protocol member declarations#>
     }
 
+The body of a protocol contains zero or more *protocol member declarations*,
+which describe the conformance requirements that any type adopting the protocol must fullfil.
+In particular, a protocol can declare that conforming types must
+implement certain properties, methods, initializers, and subscripts.
+Protocols can also declare special kinds of type aliases,
+called :newTerm:`associated types`, that can be used to clarify the relationship
+between the various declarations of the protocol.
+Each of the *protocol member declarations* are discussed in detail below.
+
+Protocol types may inherit from any number of other protocols.
+When a protocol type inherits from other protocols,
+the set of requirements from those other protocols are aggregated together,
+and any type that inherits from the current protocol must conform to all of those requirements.
+For an example of how to use protocol inheritance,
+see :ref:`Protocols_ProtocolInheritance`.
+
+.. note::
+
+    You can also aggregate together the conformance requirements of multiple
+    protocols using protocol composition types,
+    as described in :ref:`Types_ProtocolCompositionType`
+    and :ref:`Protocols_ProtocolComposition`.
+
+You can add protocol conformance to a previously declared type
+by adopting the protocol in an extension declaration of that type.
+In the extension, you must implement all of the adopted protocol's
+requirements. If the type already implements all of the requirements,
+you can leave the body of the extension declaration empty.
+
+By default, types that conform to a protocol must implement all of the
+member declarations of a protocol. That said, you can mark a protocol
+member declaration with the ``optional`` attribute to specify
+that its implementation is optional.
+
+.. TODO: Maybe discuss trying to access an optional member that you're
+    not sure is implemented by a type.
+
+If you want to restrict the adoption of a protocol to class types only,
+you can mark the entire protocol declaration with the ``class_protocol`` attribute.
+Any protocol that inherits from a protocol marked with the ``class_protocol`` attribute
+can likewise be adopted only by a class type.
+
+.. Still to cover at the top-level:
+    Using protocols as types
+    Delegates
 
 .. langref-grammar
 
