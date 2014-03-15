@@ -31,9 +31,9 @@ Basic Types
 Swift provides several basic types for working with fundamental values.
 These types will be familiar to C and Objective-C developers:
 
-* :newTerm:`Integer numbers` (for numbers without a fractional component)
-* :newTerm:`Floating-point numbers` (for numbers with a fractional component)
-* :newTerm:`Booleans` (for values that can only be true or false)
+* :newTerm:`Integer numbers`, for numbers without a fractional component
+* :newTerm:`Floating-point numbers`, for numbers with a fractional component
+* :newTerm:`Booleans`, for values that can only be true or false
 
 In addition to these simple types,
 Swift incorporates some less familiar (but very powerful) advanced types:
@@ -44,8 +44,14 @@ Swift incorporates some less familiar (but very powerful) advanced types:
 Each of these types, and the ways in which they can be used,
 are discussed in more detail below.
 
-Swift also provides a powerful and flexible way to create and work with string and character types.
-These are introduced below, and are discussed in more detail in :doc:`Strings`.
+Swift also provides powerful and flexible versions of the following common types:
+
+* :newTerm:`Strings`, for working with text
+  (as introduced below, and discussed in detail in :doc:`Strings`)
+* :newTerm:`Arrays` and :newTerm:`Dictionaries`, for working with collections of values
+  (as described in :doc:`CollectionTypes`)
+* :newTerm:`Enumerations`, for defining multiple values of a similar kind
+  (as described in :doc:`Enumerations`)
 
 .. _BasicTypes_NamedValues:
 
