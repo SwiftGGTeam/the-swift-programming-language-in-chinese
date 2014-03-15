@@ -268,9 +268,10 @@ Classes and structures can define :newTerm:`subscripts`,
 which enable instances of that class or structure to be queried via one or more
 values in square brackets after the instance name.
 This is similar to the way in which the elements in an ``Array`` instance
-can be accessed as ``someArray[n]``,
+can be accessed as ``someArray[index]``,
 and elements in a ``Dictionary`` instance can be accessed as
 ``someDictionary[key]``.
+(Array and dictionary subscripts are described in detail in :doc:`CollectionTypes`.)
 
 .. _Methods_SubscriptSyntax:
 
@@ -287,9 +288,9 @@ in the same way as for computed properties:
 
 ::
 
-    subscript(n: Int) -> Int {
+    subscript(index: Int) -> Int {
         get {
-            // return an appropriate susbcript value here
+            // return an appropriate subscript value here
         }
         set(newValue) {
             // perform a suitable setting action here
@@ -306,7 +307,7 @@ the ``get`` keyword can be dropped for read-only subscripts:
 
 ::
 
-    subscript(n: Int) -> Int {
+    subscript(index: Int) -> Int {
         // return an appropriate subscript value here
     }
 
@@ -319,8 +320,8 @@ Here's an example of a read-only subscript implementation:
             init withMultiplier(multiplier: Int) {
                 self.multiplier = multiplier
             }
-            subscript(i: Int) -> Int {
-                return multiplier * i
+            subscript(index: Int) -> Int {
+                return multiplier * index
             }
         }
     --> var threeTimesTable = TimesTable(withMultiplier: 3)
@@ -379,11 +380,6 @@ and the appropriate subscript to be used will be inferred based on
 the types of the value or values that are contained within the subscript braces
 at the point that the subscript is used.
 This definition of multiple subscripts is known as :newTerm:`subscript overloading`.
-
-Subscript definitions on classes may override a subscript implementation
-provided by their superclass.
-Where they do so, the overriding definition must be prefixed by the ``@override`` attribute,
-as with overriding instance methods.
 
 While it is most common for a subscript to take a single parameter,
 you can also define a subscript with multiple parameters
