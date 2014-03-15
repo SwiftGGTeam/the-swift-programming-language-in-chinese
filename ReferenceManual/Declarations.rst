@@ -1025,9 +1025,9 @@ requirements. If the type already implements all of the requirements,
 you can leave the body of the extension declaration empty.
 
 By default, types that conform to a protocol must implement all of the
-member declarations of a protocol. That said, you can mark a protocol
-member declaration with the ``optional`` attribute to specify
-that its implementation is optional.
+properties, methods, initializers, and subscripts declared in the protocol.
+That said, you can mark these protocol member declarations with the ``optional`` attribute
+to specify that their implementation by a conforming type is optional.
 
 .. TODO: Maybe discuss trying to access an optional member that you're
     not sure is implemented by a type.
