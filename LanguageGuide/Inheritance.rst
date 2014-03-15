@@ -97,6 +97,10 @@ and ``Vehicle`` is said to be the :newTerm:`superclass` of ``Bicycle``.
 The new ``Bicycle`` class automatically gains all of the characteristics of ``Vehicle``,
 and is able to tailor those characteristics (and add new ones) to suit its needs.
 
+.. QUESTION: this isn't quite true.
+   Bicycle doesn't inherit Vehicle's initializer, because it provides its own.
+   Does this matter for the purposes of this description?
+
 The ``Bicycle`` class also declares an initializer
 to set up its tailored characteristics.
 The initializer for ``Bicycle`` starts by calling ``super.init()``.
@@ -109,8 +113,11 @@ and so it is not changed within the initializer for ``Bicycle``.
 The original value of ``numberOfWheels`` is not correct, however,
 and is replaced with a new value of ``2``.
 
-If you create an instance of ``Bicycle``, and print its description,
-you can see how its properties have been updated:
+As well as inheriting the properties of ``Vehicle``,
+``Bicycle`` also inherits its methods.
+If you create an instance of ``Bicycle``,
+you can call its inherited ``description()`` method,
+and see how its properties have been updated:
 
 .. testcode:: inheritance
 
@@ -153,8 +160,7 @@ you can see how its properties have been updated:
     --> println("Tandem: \(tandem.description())")
     <-- Tandem: 2 wheels; up to 2 passengers
 
-Note that the ``description()`` method has also been inherited
-by ``Bicycle`` and ``Tandem``.
+Note that the ``description()`` method has also been inherited by ``Tandem``.
 Instance methods of a class are inherited by any and all subclasses of that class.
 
 .. note::
