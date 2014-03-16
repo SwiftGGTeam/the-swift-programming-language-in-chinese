@@ -37,6 +37,10 @@ There are two ways to initialize properties:
 
 .. TODO: mention that memory is automatically managed by ARC
 
+.. TODO: mention that you can't construct a class instance from a class metatype value,
+   because you can't be sure that a subclass will definitely provide the constructor –
+   see doug's notes from r14175 for more info
+
 .. _Initialization_Initializers:
 
 Initializers

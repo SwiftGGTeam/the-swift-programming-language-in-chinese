@@ -36,6 +36,9 @@ In addition, enumerations can:
 * conform to :newTerm:`protocols` to provide standard functionality of a certain type
   (as described in :doc:`Protocols`)
 
+.. TODO: this chapter should probably mention that enums without associated values
+   are hashable and equatable by default (and what that means in practice)
+
 .. _Enumerations_EnumerationSyntax:
 
 Enumeration Syntax

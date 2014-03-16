@@ -173,6 +173,10 @@ and attempting to do so will result in an error:
     !!! languageName = "Swift++"
     !!! ~~~~~~~~~~~~ ^
 
+.. QUESTION: should this section mention that Swift-clashing names
+   can be qualified with a backtick (e.g. let `protocol` = 1)?
+   It's of a kind with the contents of this section, but it's pretty damn niche…
+
 .. _BasicTypes_PrintingNamedValues:
 
 Printing Named Values

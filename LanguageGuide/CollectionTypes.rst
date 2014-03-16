@@ -11,6 +11,11 @@ Swift provides two special types for working with collections of values:
    Dictionary is not yet bridged to NSDictionary –
    the work for this is in rdar://16014066,
    which is currently scheduled (but I'd say unlikely) for the March milestone
+.. TODO: should I mention the Collection protocol, to which both of these conform?
+.. TODO: we have a couple of ways to get the index of a Collection when iterating:
+   for i in indices(collection) { collection[i] }
+   for (index, object) in enumerate(collection) { //... }
+   Should these be mentioned, and if so, should it be here or in Control Flow?
 
 .. _ArraysAndDictionaries_Mutability:
 

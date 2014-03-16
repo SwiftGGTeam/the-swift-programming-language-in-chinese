@@ -366,3 +366,9 @@ Type Properties
 .. mention that type methods can access type properties (and other type methods?)
    without needing to reference the type's name,
    as they also get an implicit ``self`` parameter.
+.. as it stands, this is the first time I'll mention .dynamicType (assuming I do)
+   is this the right place to introduce it?
+.. mention that you can get at type properties a few different ways:
+   TypeName.propertyName; someInstance.dynamicType.propertyName;
+   just plain old propertyName if you're already at a type level in that type
+   (likewise for methods in the methods chapter)

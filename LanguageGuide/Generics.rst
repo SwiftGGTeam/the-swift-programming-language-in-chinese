@@ -12,6 +12,10 @@ Generics
 
 .. write-me::
 
+.. where do I mention SomeType.self, SomeType.Type and all that malarkey?
+   I'm going to have to talk about passing around types at some point,
+   but that tends to blow people's brains. Might it go in here?
+
 Associated Types
 ----------------
 

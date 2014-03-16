@@ -425,6 +425,9 @@ you should define it as a class in your code.
 .. TODO: reiterate here that arrays and dictionaries are value types rather than reference types,
    and demonstrate what that means for the values they store
    when they themselves are value types or reference types.
+   Also make a note about what this means for key copying,
+   as per the swift-discuss email thread "Dictionaries and key copying"
+   started by Alex Migicovsky on Mar 1 2014.
 
 .. _CustomTypes_Pointers:
 

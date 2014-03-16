@@ -16,6 +16,9 @@ Functions
 Every function is given a name to identify what it does,
 and this name is used to “call” the function to perform its task when needed.
 
+.. TODO: should this chapter mention __FUNCTION__
+   (as described in the release notes for 2014-03-12)?
+
 .. _Functions_FunctionDeclarations:
 
 Function Declarations
@@ -734,6 +737,8 @@ Function Binding
 .. var c = C()
 .. var boundFunc = c.foo 	// a function with type (Int) -> Float
 .. var unboundFunc = C.foo // a function with type (C) -> (Int) -> Float
+.. selector-style methods can be referenced as foo.bar:bas:
+   (see Doug's comments from the 2014-03-12 release notes)
 
 .. _Functions_CurriedFunctions:
 

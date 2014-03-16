@@ -18,6 +18,10 @@ Closures
 .. no need for __block; discuss memory safety
 .. functions are just a really special non-capturing version of closures
 .. closures can be named
+.. you have to write "self." for property references in an explicit closure expression,
+   since "self" will be captured, not the property (as per rdar://16193162)
+   we don't do this for autoclosures, however -
+   see the commits comments from r14676 for the reasons why
 
 .. refnote:: References
 
