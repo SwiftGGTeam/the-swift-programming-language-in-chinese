@@ -131,7 +131,7 @@ Here's an example of ``willSet`` and ``didSet`` in action:
 .. testcode:: storedProperties
 
     --> class StepCounter {
-            var totalSteps: Int {
+            var totalSteps: Int = 0 {
                 willSet(newTotalSteps) {
                     println("About to set totalSteps to \(newTotalSteps)")
                 }
@@ -140,9 +140,6 @@ Here's an example of ``willSet`` and ``didSet`` in action:
                         println("Added \(totalSteps - oldValue) steps")
                     }
                 }
-            }
-            init() {
-                totalSteps = 0
             }
         }
     --> let stepCounter = StepCounter()
