@@ -88,20 +88,15 @@ This is effectively saying “I want to increment the ``count`` property of myse
 
 In practice, you don't need to write ``self`` in your code very often.
 If you don't explicitly write ``self``,
-Swift assumes that you are referring to a property or method of ``self``
-whenever you use a property or method name within another method.
+Swift assumes that you are referring to a property or method of the current instance
+whenever you use a known property or method name within another method.
 This can be seen by the use of ``count`` (rather than ``self.count``)
 inside the three instance methods for ``Counter``.
-It's as if there is an invisible “``self.``” on the beginning of
-any property or method name you write within a method's body.
 
-.. QUESTION: is this actually what's happening?
-   I'd previously been describing it as an implicit parameter,
-   but x.self now exists as a property everywhere,
-   so I'm referring to it as a property here too.
-
-If a method's parameter name happens to match the name of a property,
-it becomes necessary to disambiguate between the property and the parameter.
+The only exception to this rule is when a method's parameter name
+happens to be the same as the name of a property.
+In this situation, the parameter name takes precedence,
+and it becomes necessary to refer to the property in a more qualified way.
 The implicit ``self`` property can be used to make it clear which one is which.
 
 Here, the ``self`` property is used
