@@ -89,7 +89,7 @@ This is effectively saying “I want to increment the ``count`` property of myse
 In practice, you don't need to write ``self`` in your code very often.
 If you don't explicitly write ``self``,
 Swift assumes that you are referring to a property or method of the current instance
-whenever you use a known property or method name within another method.
+whenever you use a known property or method name within a method.
 This can be seen by the use of ``count`` (rather than ``self.count``)
 inside the three instance methods for ``Counter``.
 
@@ -97,11 +97,10 @@ The only exception to this rule is when a method's parameter name
 happens to be the same as the name of a property.
 In this situation, the parameter name takes precedence,
 and it becomes necessary to refer to the property in a more qualified way.
-The implicit ``self`` property can be used to make it clear which one is which.
+The implicit ``self`` property can be used to make it clear which is which.
 
-Here, the ``self`` property is used
-to disambiguate between a method parameter called ``x``,
-and an instance property that is also called ``x``:
+Here, ``self`` is used to disambiguate between
+a method parameter called ``x``, and an instance property that is also called ``x``:
 
 .. testcode:: self
 
@@ -118,62 +117,27 @@ and an instance property that is also called ``x``:
         }
     <-- This point is to the right of the line where x == 1.0
 
-Without the use of ``self``,
-Swift would assume that both uses of ``x`` referred to the method parameter.
+Without the ``self`` prefix,
+Swift would assume that both uses of ``x`` referred to the method parameter called ``x``.
 
-.. _Methods_SelfClasses:
+.. _Methods_MutatingMethodsForValueTypes:
 
-Using “self” in Class Instance Methods
-______________________________________
+Mutating Methods for Value Types
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-For classes, the ``self`` property is a read-only reference to the class instance.
-Although the reference is read-only, any variable properties of
-the instance it refers to can still be modified:
+Structures and enumerations are :ref:`CustomTypes_ValueTypes`.
+By default, the properties of a value type cannot be modified from within its instance methods.
 
-.. testcode:: selfClasses
+.. TODO: find out why.
+.. TODO: once I actually know why, explain it. 
 
-    --> class BankAccount {
-            var balance = 0.0
-            func depositMoney(amount: Double) {
-                // the next line is the same as "self.balance += amount"
-                balance += amount
-            }
-        }
-    --> let savingsAccount = BankAccount()
-    <<< // savingsAccount : BankAccount = <BankAccount instance>
-    --> savingsAccount.depositMoney(100.00)
-    --> println("The savings account now contains $\(savingsAccount.balance)")
-    <-- The savings account now contains $100.0
-
-Here, the ``depositMoney()`` instance method modifies
-the ``balance`` variable property by adding ``amount`` to it.
-
-This example could have been written with ``self.balance += amount``
-rather than ``balance += amount``.
-However, the use of the ``self`` prefix is not required,
-as there is no ambiguity as to what ``balance`` refers to.
-
-.. note::
-
-    You cannot assign a new value to ``self`` for a class type.
-
-.. _Methods_SelfStructures:
-
-Using “self” in Structure Instance Methods
-__________________________________________
-
-By default, the ``self`` property of a structure is a constant,
-and cannot be modified.
-Because structures are value types,
-this means that a structure's properties also cannot be modified
-from within an instance method,
-even if they are declared as variable properties.
-
-However, if your structure instance does need to modify its properties within a method,
-it can opt in to “mutating” behavior for that method.
+However, if your structure or enumeration needs to modify its properties within a particular method,
+it can opt in to :newTerm:`mutating` behavior for that method.
 The method is then able to “mutate” (i.e. “change”)
-``self`` and its properties within the method,
+its properties from within the method,
 and any changes that it makes are written back to the original structure when the method ends.
+It can also assign a completely new instance to its implicit ``self`` property,
+and this new instance will replace the existing one when the method ends.
 
 You can opt in to this behavior by placing the ``mutating`` keyword
 before the ``func`` keyword for that method:
@@ -183,7 +147,6 @@ before the ``func`` keyword for that method:
     --> struct Point {
             var x = 0.0, y = 0.0
             mutating func moveBy(deltaX: Double, deltaY: Double) {
-                // the next lines are the same as self.x += deltaX and self.y += deltaY
                 x += deltaX
                 y += deltaY
             }
@@ -199,12 +162,29 @@ which moves a ``Point`` instance by a certain amount.
 Instead of returning a new point,
 this method actually modifies the point on which it is called.
 The ``mutating`` keyword has been added to its definition
-to enable it to modify the variable properties of the implicit ``self`` parameter.
-As before, it does not need to explicitly refer to ``self``,
-and can use ``x`` and ``y`` as shorthand for ``self.x`` and ``self.y``.
+to enable it to modify its properties.
 
-Mutating methods can also assign an entirely new instance of the structure to ``self``.
-The example shown above could have been written in the following way instead:
+Note that you cannot call a mutating method on a constant of structure type,
+because its properties cannot be changed, even if they are variable properties
+(as described in :ref:`Properties_StoredPropertiesOfConstantStructureInstances`):
+
+.. testcode:: selfStructures
+
+    --> let fixedPoint = Point(3.0, 3.0)
+    <<< fixedPoint : Point = Point(3.0, 3.0)
+    --> fixedPoint.moveBy(2.0, 3.0)
+    !!! <REPL Input>:1:1: error: 'Point' does not have a member named 'moveBy'
+    !!! fixedPoint.moveBy(2.0, 3.0)
+    !!! ^          ~~~~~~
+    /// this will report an error
+
+.. _Methods_AssigningToSelfWithinAMutatingMethod:
+
+Assigning to Self Within a Mutating Method
+__________________________________________
+
+Mutating methods can assign an entirely new instance to the implicit ``self`` property.
+The ``Point`` example shown above could have been written in the following way instead:
 
 .. testcode:: selfStructuresAssign
 
@@ -221,37 +201,12 @@ The example shown above could have been written in the following way instead:
     <<< The point is now at (3.0, 4.0)
 
 This version of the mutating ``moveBy()`` method creates a brand new structure
-whose ``x`` and ``y`` values are set to the new location.
+whose ``x`` and ``y`` values are set to the target location.
 The end result of calling this alternative version of the method
 will be exactly the same as for calling the earlier version.
 
-Note that you cannot call a mutating method on a constant of structure type,
-because its properties cannot be changed, even if they are variable properties
-(as described in :ref:`Properties_StoredPropertiesOfConstantStructureInstances`):
-
-.. testcode:: selfStructuresAssign
-
-    --> let fixedPoint = Point(3.0, 3.0)
-    <<< fixedPoint : Point = Point(3.0, 3.0)
-    --> fixedPoint.moveBy(2.0, 3.0)
-    !!! <REPL Input>:1:1: error: 'Point' does not have a member named 'moveBy'
-    !!! fixedPoint.moveBy(2.0, 3.0)
-    !!! ^          ~~~~~~
-    /// this will report an error
-
-.. _Methods_SelfEnumerations:
-
-Using “self” in Enumeration Instance Methods
-____________________________________________
-
-The ``self`` property of an enumeration instance method
-is a read-only copy of the enumeration member,
-and cannot be modified within instance methods.
-This is similar to the behavior for structure instance methods seen above.
-
-Enumeration instance methods can request to receive a writeable ``self`` property
-by placing the ``mutating`` keyword before the ``func`` keyword for that method.
-Mutating methods can set ``self`` to a different member from the same enumeration:
+Mutating methods for enumerations can set the implicit ``self`` parameter to be
+a different member from the same enumeration:
 
 .. testcode:: selfEnumerations
 
@@ -278,7 +233,7 @@ Mutating methods can set ``self`` to a different member from the same enumeratio
 This example defines an enumeration for a three-state switch.
 The switch cycles between three different power states
 (``Off``, ``Low`` and ``High``)
-every time that its ``next()`` method is called.
+every time its ``next()`` method is called.
 
 .. _Methods_TypeMethods:
 
