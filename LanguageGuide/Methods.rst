@@ -45,6 +45,9 @@ It defines three instance methods:
 * ``incrementBy(amount: Int)``, which increments the counter by an arbitrary integer amount, and
 * ``reset()``, which resets the counter back to zero
 
+It also defines a variable property, ``count``,
+for keeping track of the current counter value.
+
 Instance methods are called using the same dot syntax as properties:
 
 .. testcode:: classesAndStructures
@@ -65,24 +68,15 @@ Instance methods are called using the same dot syntax as properties:
 
 .. _Methods_TheSelfParameter:
 
-The “self” Parameter
+The “self” Property
 ~~~~~~~~~~~~~~~~~~~~
 
-Every instance method has an extra implicit parameter called ``self``,
-which is made available to the method without having to be declared.
-The implicit ``self`` parameter refers to the instance on which the method is called.
+Every instance of a type has an implicit property called ``self``,
+which is exactly equivalent to the instance itself.
+This implicit ``self`` property can be used
+to refer to the current instance within its own instance methods.
 
-It's almost as if the ``increment()`` method from above had been written
-as a stand-alone function like this:
-
-::
-
-    func increment(self: Counter) {
-        self.count++
-    }
-
-In practice, you don't actually write the ``self: TypeName`` parameter in your code –
-instead, ``self`` is automatically made available to any method you define:
+For example, the ``increment()`` method from above could have been written like this:
 
 ::
 
@@ -90,26 +84,28 @@ instead, ``self`` is automatically made available to any method you define:
         self.count++
     }
 
-Even though it has an implicit ``self`` parameter available,
-the ``Counter`` class above has chosen *not* to use ``self.count``
-to refer to its ``count`` property within its instance methods.
-Because there are no other named values called ``count`` within each method's body,
-the ``self.`` prefix can be dropped,
-because it is clear that ``count`` can only mean the instance property.
-Instead, ``count`` is written in a shorter form, without the ``self.`` prefix:
+This is effectively saying “I want to increment the ``count`` property of myself”.
 
-::
+In practice, you don't need to write ``self`` in your code very often.
+If you don't explicitly write ``self``,
+Swift assumes that you are referring to a property or method of ``self``
+whenever you use a property or method name within another method.
+This can be seen by the use of ``count`` (rather than ``self.count``)
+inside the three instance methods for ``Counter``.
+It's as if there is an invisible “``self.``” on the beginning of
+any property or method name you write within a method's body.
 
-    func increment() {
-        count++
-    }
+.. QUESTION: is this actually what's happening?
+   I'd previously been describing it as an implicit parameter,
+   but x.self now exists as a property everywhere,
+   so I'm referring to it as a property here too.
 
-Here, ``count`` still means “the ``count`` property of the implicit ``self`` parameter” –
-it just doesn't have to be written out long-hand if the meaning is unambiguous.
+If a method's parameter name happens to match the name of a property,
+it becomes necessary to disambiguate between the property and the parameter.
+The implicit ``self`` property can be used to make it clear which one is which.
 
-The implicit ``self`` parameter can be useful when
-a method parameter conflicts with the name of an instance property.
-Here, the ``self`` prefix is used to disambiguate between a method parameter called ``x``,
+Here, the ``self`` property is used
+to disambiguate between a method parameter called ``x``,
 and an instance property that is also called ``x``:
 
 .. testcode:: self
@@ -127,21 +123,24 @@ and an instance property that is also called ``x``:
         }
     <-- This point is to the right of the line where x == 1.0
 
+Without the use of ``self``,
+Swift would assume that both uses of ``x`` referred to the method parameter.
+
 .. _Methods_SelfClasses:
 
 Using “self” in Class Instance Methods
 ______________________________________
 
-For class instance methods, the ``self`` parameter is a read-only reference
-to the instance on which the method is called.
+For classes, the ``self`` property is a read-only reference to the class instance.
 Although the reference is read-only, any variable properties of
-the instance it refers to can be modified as normal:
+the instance it refers to can still be modified:
 
 .. testcode:: selfClasses
 
     --> class BankAccount {
             var balance = 0.0
             func depositMoney(amount: Double) {
+                // the next line is the same as "self.balance += amount"
                 balance += amount
             }
         }
@@ -159,26 +158,37 @@ rather than ``balance += amount``.
 However, the use of the ``self`` prefix is not required,
 as there is no ambiguity as to what ``balance`` refers to.
 
+.. note::
+
+    You cannot assign a new value to ``self`` for a class type.
+
 .. _Methods_SelfStructures:
 
 Using “self” in Structure Instance Methods
 __________________________________________
 
-For structure instance methods, the ``self`` parameter is
-a read-only copy of the structure instance, and its properties cannot be modified.
+By default, the ``self`` property of a structure is a constant,
+and cannot be modified.
+Because structures are value types,
+this means that a structure's properties also cannot be modified
+from within an instance method,
+even if they are declared as variable properties.
 
-If your structure instance needs to modify its properties within a method,
-you can request to receive a writeable ``self`` parameter instead.
-You can opt in to this behavior by placing the ``mutating`` keyword
-before the ``func`` keyword for that method.
+However, if your structure instance does need to modify its properties within a method,
+it can opt in to “mutating” behavior for that method.
 The method is then able to “mutate” (i.e. “change”)
-the properties of the structure instance:
+``self`` and its properties within the method,
+and any changes that it makes are written back to the original structure when the method ends.
+
+You can opt in to this behavior by placing the ``mutating`` keyword
+before the ``func`` keyword for that method:
 
 .. testcode:: selfStructures
 
     --> struct Point {
             var x = 0.0, y = 0.0
             mutating func moveBy(deltaX: Double, deltaY: Double) {
+                // the next lines are the same as self.x += deltaX and self.y += deltaY
                 x += deltaX
                 y += deltaY
             }
@@ -189,29 +199,62 @@ the properties of the structure instance:
     --> println("The point is now at (\(somePoint.x), \(somePoint.y))")
     <-- The point is now at (3.0, 4.0)
 
-The ``Point`` structure above defines a ``moveBy()`` method,
+The ``Point`` structure above defines a mutating ``moveBy()`` method,
 which moves a ``Point`` instance by a certain amount.
 Instead of returning a new point,
 this method actually modifies the point on which it is called.
 The ``mutating`` keyword has been added to its definition
 to enable it to modify the variable properties of the implicit ``self`` parameter.
-As above, it does not need to explicitly refer to ``self``,
+As before, it does not need to explicitly refer to ``self``,
 and can use ``x`` and ``y`` as shorthand for ``self.x`` and ``self.y``.
 
-.. TODO: Mention that you can't use mutating methods on
-   constant instances of a structure.
+Mutating methods can also assign an entirely new instance of the structure to ``self``.
+The example shown above could have been written in the following way instead:
+
+.. testcode:: selfStructuresAssign
+
+    --> struct Point {
+            var x = 0.0, y = 0.0
+            mutating func moveBy(deltaX: Double, deltaY: Double) {
+                self = Point(x + deltaX, y + deltaY)
+            }
+        }
+    >>> var somePoint = Point(1.0, 1.0)
+    <<< // somePoint : Point = Point(1.0, 1.0)
+    >>> somePoint.moveBy(2.0, 3.0)
+    >>> println("The point is now at (\(somePoint.x), \(somePoint.y))")
+    <<< The point is now at (3.0, 4.0)
+
+This version of the mutating ``moveBy()`` method creates a brand new structure
+whose ``x`` and ``y`` values are set to the new location.
+The end result of calling this alternative version of the method
+will be exactly the same as for calling the earlier version.
+
+Note that you cannot call a mutating method on a constant of structure type,
+because its properties cannot be changed, even if they are variable properties
+(as described in :ref:`Properties_StoredPropertiesOfConstantStructureInstances`):
+
+.. testcode:: selfStructuresAssign
+
+    --> let fixedPoint = Point(3.0, 3.0)
+    <<< fixedPoint : Point = Point(3.0, 3.0)
+    --> fixedPoint.moveBy(2.0, 3.0)
+    !!! <REPL Input>:1:1: error: 'Point' does not have a member named 'moveBy'
+    !!! fixedPoint.moveBy(2.0, 3.0)
+    !!! ^          ~~~~~~
+    /// this will report an error
 
 .. _Methods_SelfEnumerations:
 
 Using “self” in Enumeration Instance Methods
 ____________________________________________
 
-The ``self`` parameter of an enumeration instance method
+The ``self`` property of an enumeration instance method
 is a read-only copy of the enumeration member,
-and cannot be modified.
+and cannot be modified within instance methods.
 This is similar to the behavior for structure instance methods seen above.
 
-Enumeration instance methods can request to receive a writeable ``self`` parameter
+Enumeration instance methods can request to receive a writeable ``self`` property
 by placing the ``mutating`` keyword before the ``func`` keyword for that method.
 Mutating methods can set ``self`` to a different member from the same enumeration:
 
