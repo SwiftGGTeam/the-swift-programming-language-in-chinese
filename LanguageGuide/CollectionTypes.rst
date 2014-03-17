@@ -155,7 +155,7 @@ and passing in the index of the value you want to retrieve:
 Subscript syntax involves writing an index value within square brackets
 (such as ``[0]`` in this example),
 immediately after the name of the array.
-(Subscripts are described in more detail in :ref:`Methods_Subscripts`.)
+(Subscripts are described in more detail in :doc:`Subscripts`.)
 Note that the first item in the array has an index of ``0``, not ``1``.
 Arrays in Swift are always zero-indexed.
 

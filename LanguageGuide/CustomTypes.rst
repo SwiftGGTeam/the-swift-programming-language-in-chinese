@@ -48,6 +48,8 @@ Both can:
   (as described in :doc:`Properties`)
 * define :newTerm:`methods` to provide functionality
   (as described in :doc:`Methods`)
+* define :newTerm:`subscripts` to provide access to their values using subscript syntax
+  (as described in :doc:`Subscripts`)
 * define :newTerm:`initializers` to set up their initial state
   (as described in :doc:`Initialization`)
 * be :newTerm:`extended` to expand their functionality beyond a default implementation

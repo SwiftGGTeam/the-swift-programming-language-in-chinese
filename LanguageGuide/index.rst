@@ -15,6 +15,7 @@ Language Guide
     CustomTypes
     Properties
     Methods
+    Subscripts
     Inheritance
     Initialization
     TypeCasting
