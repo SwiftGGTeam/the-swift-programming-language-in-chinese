@@ -120,6 +120,13 @@ contain a count of how many ``MediaItem`` instances were found of each type.
 .. QUESTION: is it correct to refer to 'is' and 'as' as 'operators'?
    Or is there some better name we could use?
 
+.. TODO: you can also use "is" within a switch statement…
+   case is SomeClass:
+   …and there's talk of implementing this for "as" too…
+   case let c as SomeClass:
+   This chapter should definitely talk about the former,
+   and should also mention the latter if it is implemented.
+
 .. _TypeCasting_Downcasting:
 
 Downcasting
