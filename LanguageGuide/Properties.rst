@@ -64,7 +64,7 @@ in that their value can be changed at any point until the initializer for
 the class or structure they belong to has completed its initialization.
 (Instance initialization is described in more detail in :doc:`Initialization`.)
 
-.. _Properties_StoredPropertiesConstantStructure Instances:
+.. _Properties_StoredPropertiesOfConstantStructureInstances:
 
 Stored Properties of Constant Structure Instances
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
