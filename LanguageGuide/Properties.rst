@@ -89,13 +89,15 @@ Because ``rangeOfFourItems`` has been declared as a constant (with the ``let`` k
 it is not possible to change its ``firstValue`` property,
 even though it is a variable property.
 
-This behavior is due to the fact that structures are :ref:`CustomTypes_ValueTypes`,
-and are treated as though they are one single value
-when they are copied, passed to a function, or marked as constant / variable.
-The same is not true for classes, which are :ref:`CustomTypes_ReferenceTypes`,
-not value types.
+This behavior is due to the fact that structures are :ref:`CustomTypes_ValueTypes`.
+When an instance of a value type is marked as being a constant,
+so are all of its properties.
 
-.. TODO: this explanation could do to be improved.
+The same is not true for classes, which are :ref:`CustomTypes_ReferenceTypes`.
+If you asign an instance of a reference type to a constant,
+you can still change that instance's variable properties.
+
+.. TODO: this explanation could still do to be improved.
 
 .. QUESTION: the same is actually true for computed properties of structures too
    (which surprised me, as they don't have storage).
