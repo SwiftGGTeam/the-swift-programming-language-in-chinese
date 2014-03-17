@@ -80,9 +80,9 @@ even if they were declared as variable properties:
     <<< // rangeOfFourItems : FixedLengthRange = FixedLengthRange(0, 4)
     /// this range represents integer values 0, 1, 2, and 3
     --> rangeOfFourItems.firstValue = 6
-    !!! <REPL Input>:1:28: error: cannot assign to the result of this expression
-    !!! rangeOfSeveralItems.firstValue = 6
-    !!! ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ^
+    !!! <REPL Input>:1:29: error: cannot assign to the result of this expression
+    !!! rangeOfFourItems.firstValue = 6
+    !!! ~~~~~~~~~~~~~~~~~~~~~~~~~~~ ^
     /// this will report an error, even thought firstValue is a variable property
 
 Because ``rangeOfFourItems`` has been declared as a constant (with the ``let`` keyword),
