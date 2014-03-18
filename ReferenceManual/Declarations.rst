@@ -221,6 +221,11 @@ The type annotation (``:`` *type*) is optional in a constant declaration
 when the type of the *constant name* may be inferred,
 as described in :ref:`Types_TypeInference`.
 
+To declare a class constant named property,
+mark the declaration with ``class`` keyword. To declare a static constant named property,
+mark the declaration with ``static`` keyword instead. Class and static properties
+are discussed in :ref:`Properties_TypeProperties`.
+
 For more information about constants and for guidance about when to use them,
 see :ref:`BasicTypes_NamedValues` and :ref:`Properties_StoredProperties`.
 
@@ -327,7 +332,7 @@ Instead, they are called only when the value is set outside of an initialization
 A ``willSet`` observer is called just before the value of the variable or property
 is set. The new value is passed to the ``willSet`` observer as a constant,
 and therefore it can't be changed in the implementation of the ``willSet`` clause.
-The ``didSet`` observer is called immediately after the new value is set. In constrast
+The ``didSet`` observer is called immediately after the new value is set. In contrast
 to the ``willSet`` observer, the old value of the variable or property
 is passed to the ``didSet`` observer in case you still need access to it. That said,
 if you assign a value to a variable or property within its own ``didSet`` observer clause,
@@ -386,6 +391,11 @@ the value of a computed named value or a computed property is not stored in memo
 
 For more information and to see examples of computed properties,
 see :ref:`Properties_ComputedProperties`.
+
+To declare a class variable property,
+mark the declaration with ``class`` keyword. To declare a static variable property,
+mark the declaration with ``static`` keyword instead. Class and static properties
+are discussed in :ref:`Properties_TypeProperties`.
 
 You can also declare properties in the context of a protocol declaration,
 as described in :ref:`Declarations_ProtocolPropertyDeclaration`.
