@@ -758,8 +758,9 @@ Enumeration declarations can't contain destructor or protocol declarations.
 
 Unlike with classes and structures,
 enumeration types do not have an implicitly provided default initializer;
-all initializers must be declared explicitly. In the body of an initializer
-declaration, you must assign one of the enumerators to ``self``.
+all initializers must be declared explicitly. Initializers can delegate
+to other initializers in the enumeration, but the initialization process is complete
+only after an initializer assigns one of the enumerators to ``self``.
 
 To reference the enumerators of an enumeration type, use dot (``.``) syntax,
 as in ``EnumerationType.Enumerator``. When the enumeration type can be inferred
@@ -771,6 +772,9 @@ To check the values of enumerators, use a ``switch`` statement,
 as shown in :ref:`Enumerations_ConsideringEnumerationValuesWithASwitchStatement`.
 The enumeration type is pattern-matched against the enumerator patterns in the case blocks
 of the ``switch`` statement, as described in :ref:`Patterns_EnumeratorPattern`.
+
+You can extend the behavior of an enumeration type with an extension declaration,
+as discussed in :ref:`Declarations_ExtensionDeclaration`.
 
 .. TODO: Note that you can require protocol adoption,
     by using a protocol type as the raw value type,
@@ -864,7 +868,6 @@ see :doc:`../LanguageGuide/CustomTypes`.
 
 Structure types can adopt any number of protocols,
 but can't inherit from classes, enumerations, or other structures.
-Structure types can also be extended.
 
 There are three ways create an instance of a previously declared structure:
 
@@ -888,6 +891,9 @@ Structures are value types; instances of a structure are copied when assigned to
 variables or constants, or when passed as arguments to a function call.
 For information about value types,
 see :ref:`CustomTypes_ValueTypesAndReferenceTypes`.
+
+You can extend the behavior of a structure type with an extension declaration,
+as discussed in :ref:`Declarations_ExtensionDeclaration`.
 
 .. TODO: Discuss generic parameter clause in the context of a struct?
 
@@ -933,25 +939,28 @@ Class types can inherit from only one parent class, its *superclass*,
 but can adopt any number of protocols.
 The *superclass* appears first in the **type-inheritance-clause**,
 followed by any *adopted protocols*.
+
+As discussed in :ref:`Declarations_InitializerDeclaration`,
+classes can have designated and convenience initializers.
+When you declare either kind of initializer,
+you can require any subclass to override it by marking the initializer
+with the ``required`` attribute.
+The designated initializer of a class must initialize all of the class's
+declared properties and it must do so before calling any of it's superclass's
+designated initializers.
+
 Although properties and methods declared in the *superclass* are inherited by
-the base class, initializers declared in the *superclass* are not.
+the current class, designated initializers declared in the *superclass* are not.
+That said, if the current class overrides all of the superclass's
+designated initializers, it inherits the superclass's convenience initializers.
 Swift classes do not inherit from a universal base class.
 
 Properties, methods, and initializers of a superclass can be overridden.
-That said, an initializer must call one of its superclass's
-initializers before overriding any of the superclass's properties.
-
-Any initializer that does not explicitly call a superclass's initializer
-(or that does not call another initializer that ultimately calls a superclass's initializer)
-receives an implicit call to the superclass's default initializer
-(that is,
-a call to ``super.init()`` is implicitly inserted at the end of the initializer's declaration).
-For an extended discussion and an example of this behavior,
-see :ref:`Initialization_SubclassingAndInitializerDelegation`.
+That said, a designated initializer of the class must call one of its superclass's
+designated initializers before overriding any of the superclass's properties.
+Overridden methods must be marked with the ``override`` attribute.
 
 .. TODO: Need a way to refer to grammatical categories (see type-inheritance-clause, above).
-
-Class types can also be extended.
 
 There are two ways create an instance of a previously declared class:
 
@@ -962,9 +971,6 @@ There are two ways create an instance of a previously declared class:
    call the class's default initializer,
    as described in :ref:`Initialization_DefaultInitializers`.
 
-The process of initializing a class's declared properties
-is described in :doc:`../LanguageGuide/Initialization`.
-
 Properties of a class instance may be accessed using dot (``.``) syntax,
 as described in :ref:`CustomTypes_AccessingProperties`.
 
@@ -972,6 +978,9 @@ Classes are reference types; instances of a class are referred to, rather than c
 when assigned to variables or constants, or when passed as arguments to a function call.
 For information about reference types,
 see :ref:`CustomTypes_ValueTypesAndReferenceTypes`.
+
+You can extend the behavior of a class type with an extension declaration,
+as discussed in :ref:`Declarations_ExtensionDeclaration`.
 
 .. TODO: Discuss generic parameter clause in the context of a class?
 
@@ -1220,6 +1229,8 @@ Protocol Associated Type Declaration
 
 .. write-me:: Need to discuss with Dave what we want to call these things
     and where he plans on covering them.
+
+
 
 See also :ref:`Declarations_TypealiasDeclaration`.
 
