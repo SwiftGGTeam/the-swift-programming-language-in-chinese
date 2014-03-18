@@ -117,58 +117,66 @@ Here's an example of a structure definition and a class definition:
 
 .. testcode:: customTypes
 
-    --> struct Size {
-            var width = 0.0
-            var height = 0.0
+    --> struct Resolution {
+            var width = 0
+            var height = 0
         }
-    --> class Rectangle {
-            var size = Size()
+    --> class VideoMode {
+            var resolution = Resolution()
+            var interlaced = false
+            var frameRate = 0.0
+            var name: String? = .None
         }
 
-The example above defines a new structure called ``Size``,
-with two :newTerm:`variable stored properties` called ``width`` and ``height``.
+The example above defines a new structure called ``Resolution``,
+to describe a pixel-based display resolution.
+This structure has two :newTerm:`variable stored properties` called ``width`` and ``height``.
 Stored properties are named values that are bundled up and stored
 as part of the class or structure,
 and are described in detail in :doc:`Properties`.
-These two properties are inferred to be of type ``Double``
-by setting them to an initial floating-point value of ``0.0``.
+These two properties are inferred to be of type ``Int``
+by setting them to an initial floating-point value of ``0``.
 
-The example also defines a new class called ``Rectangle``,
-which has a variable stored property called ``size``.
-This property is initialized with a new ``Size`` structure instance,
-which infers a property type of ``Size``.
+The example above also defines a new class called ``VideoMode``,
+to describe a specific video mode for video display.
+This class has four variable stored properties.
+The first, ``resolution``, is initialized with a new ``Resolution`` structure instance,
+which infers a property type of ``Resolution``.
+For the other three properties,
+new ``VideoMode`` instances will be initialized with
+an ``interlaced`` setting of ``false`` (meaning “non-interlaced video”),
+a playback frame rate of ``0.0``,
+and an optional ``String`` value called ``name``,
+which has a default value of ``.None``, or “no ``name`` value”.
 
 .. _CustomTypes_ClassAndStructureInstances:
 
 Class and Structure Instances
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The ``Size`` structure definition, and the ``Rectangle`` class definition,
-only describe what a ``Size`` or ``Rectangle`` will look like.
-They do not in themselves describe a specific size or rectangle.
-To do that, you need to create an :newTerm:`instance` of the class or structure.
+The ``Resolution`` structure definition, and the ``VideoMode`` class definition,
+only describe what a ``Resolution`` or ``VideoMode`` will look like.
+They do not in themselves describe a specific resolution or video mode.
+To do that, you need to create an :newTerm:`instance` of the structure or class.
 
 .. QUESTION: this isn't strictly true.
-   You could argue that the Size structure definition describes a size of (0, 0).
+   You could argue that the Resolution structure definition describes a resolution of (0, 0),
+   not that this would be a valid resolution.
 
 The syntax for creating instances is very similar for both structures and classes:
 
 .. testcode:: customTypes
 
-    --> let someSize = Size()
-    <<< // someSize : Size = Size(0.0, 0.0)
-    --> let someRectangle = Rectangle()
-    <<< // someRectangle : Rectangle = <Rectangle instance>
+    --> let someResolution = Resolution()
+    <<< // someResolution : Resolution = Resolution(0, 0)
+    --> let someVideoMode = VideoMode()
+    <<< // someVideoMode : VideoMode = <VideoMode instance>
 
 Structures and classes both use :newTerm:`initializer syntax` when creating new instances.
 The simplest form of initializer syntax uses the type name of the class or structure
-followed by empty parentheses, such as ``Size()`` or ``Rectangle()``.
+followed by empty parentheses, such as ``Resolution()`` or ``VideoMode()``.
 This creates a new instance of the class or structure,
 with any properties initialized to their default values.
-In the example above,
-the ``width`` and ``height`` values of the ``Size`` structure instance
-have been automatically initialized to ``0.0``,
-which was the default value provided by the ``Size`` structure's definition.
 (Class and structure initialization is described in more detail
 in :doc:`Initialization`.)
 
@@ -181,7 +189,7 @@ in :doc:`Initialization`.)
 Terminology
 ___________
 
-An instance of a *class* (such as ``someRectangle`` above)
+An instance of a *class* (such as ``someVideoMode`` above)
 is traditionally known as an :newTerm:`object`.
 However, Swift classes and structures are much closer in functionality than in other languages,
 and much of this chapter describes functionality that can apply to
@@ -197,25 +205,27 @@ The properties of an instance can be accessed using :newTerm:`dot syntax`:
 
 .. testcode:: customTypes
 
-    --> println("The width of someSize is \(someSize.width)")
-    <-- The width of someSize is 0.0
+    --> println("The width of someResolution is \(someResolution.width)")
+    <-- The width of someResolution is 0
 
-``someSize.width`` refers to the ``width`` property of ``someSize``.
-Dot syntax can be used to drill down into sub-properties
-such as the ``width`` property in the ``size`` property of a ``Rectangle``:
+``someResolution.width`` refers to the ``width`` property of ``someResolution``,
+and returns its default initial value of ``0``.
+
+Dot syntax can be used to drill down into sub-properties,
+such as the ``width`` property in the ``resolution`` property of a ``VideoMode``:
 
 .. testcode:: customTypes
 
-    --> println("The width of someRectangle is \(someRectangle.size.width)")
-    <-- The width of someRectangle is 0.0
+    --> println("The width of someVideoMode is \(someVideoMode.resolution.width)")
+    <-- The width of someVideoMode is 0
 
 Dot syntax can also be used to assign a new value to a variable property:
 
 .. testcode:: customTypes
 
-    --> someRectangle.size.width = 2.0
-    --> println("The width of someRectangle is now \(someRectangle.size.width)")
-    <-- The width of someRectangle is now 2.0
+    --> someVideoMode.resolution.width = 1280
+    --> println("The width of someVideoMode is now \(someVideoMode.resolution.width)")
+    <-- The width of someVideoMode is now 1280
 
 .. _CustomTypes_MemberwiseStructureInitializers:
 
@@ -225,22 +235,22 @@ Memberwise Structure Initializers
 .. HACK: this is currently duplicated in Initialization.
 
 All structures have an automatically-generated :newTerm:`memberwise initializer`,
-which can be used to initialise the properties of new structure instances.
+which can be used to initialise the member properties of new structure instances.
 Initial values for the properties of the new instance
 can be passed to the memberwise initializer by name:
 
 .. testcode:: customTypes
 
-    --> let twoByTwo = Size(width: 2.0, height: 2.0)
-    <<< // twoByTwo : Size = Size(2.0, 2.0)
+    --> let vga = Resolution(width: 640, height: 480)
+    <<< // vga : Resolution = Resolution(640, 480)
 
 Initial values can also be provided without names,
 if they are listed in the same order that the properties are declared in the structure's definition:
 
 .. testcode:: customTypes
 
-    --> let fourByThree = Size(4.0, 3.0)
-    <<< // fourByThree : Size = Size(4.0, 3.0)
+    --> let svga = Resolution(800, 600)
+    <<< // svga : Resolution = Resolution(800, 600)
 
 .. TODO: Include a justifiable reason for why classes do not provide a memberwise initializer.
 .. TODO: According to rdar://15670604, we may end up with one for classes as well.
@@ -287,48 +297,59 @@ This means that any structure and enumeration instances you create –
 and any value types they have as properties –
 will always be copied when they are passed around.
 
-For example, using the ``Size`` structure from above:
+For example, using the ``Resolution`` structure from above:
 
 .. testcode:: customTypes
 
-    --> let iPhone4 = Size(width: 640.0, height: 960.0)
-    <<< // iPhone4 : Size = Size(640.0, 960.0)
-    --> var iPhone5 = iPhone4
-    <<< // iPhone5 : Size = Size(640.0, 960.0)
-    --> iPhone5.height = 1136.0
-    --> println("The iPhone 5 screen is now \(iPhone5.height) pixels high")
-    <-- The iPhone 5 screen is now 1136.0 pixels high
-    --> println("The iPhone 4 screen is still \(iPhone4.height) pixels high")
-    <-- The iPhone 4 screen is still 960.0 pixels high
+    --> let hd = Resolution(width: 1920, height: 1080)
+    <<< // hd : Resolution = Resolution(1920, 1080)
+    --> var cinema = hd
+    <<< // cinema : Resolution = Resolution(1920, 1080)
 
-This example declares a constant called ``iPhone4``,
-and sets it to a ``Size`` instance initialized with
-the width and height of the iPhone 4's screen
-(which is 640 pixel wide, and 960 pixels tall).
+This example declares a constant called ``hd``,
+and sets it to a ``Resolution`` instance initialized with
+the width and height of full HD video
+(which is ``1920`` pixels wide by ``1080`` pixels high).
 
-It then declares a variable called ``iPhone5``,
-and sets it to the current value of ``iPhone4``.
-Because ``Size`` is a structure,
-a new copy of the existing instance is made,
-and this new copy is assigned to ``iPhone5``.
-``iPhone4`` and ``iPhone5`` may currently have the same width and height,
-but they are two completely different instances behind the scenes.
+It then declares a variable called ``cinema``,
+and sets it to the current value of ``hd``.
+Because ``Resolution`` is a structure,
+a *copy* of the existing instance is made,
+and this new copy is assigned to ``cinema``.
+Even though ``hd`` and ``cinema`` now have the same width and height,
+they are two completely different instances behind the scenes.
 
-Next, the ``height`` property of ``iPhone5`` is amended to be
-the height of the iPhone 5's taller screen (which is 1,136 pixels tall).
+Next, the ``width`` property of ``cinema`` is amended to be
+the width of the slightly-wider 2K standard used for digital cinema projection
+(which is ``2048`` pixels wide and ``1080`` pixels high):
 
-The two calls to ``println`` at the end of this example show that
-the ``height`` property of ``iPhone5`` has indeed changed to be ``1136.0``.
-However, the ``height`` property of the original ``iPhone4`` instance
-still has the old value of ``960.0``.
+.. testcode:: customTypes
 
-When ``iPhone5`` is given the current value of ``iPhone4``,
-the *values* stored in ``iPhone4`` are copied into the new ``iPhone5`` instance.
-The end result is two completely separate instances,
-which just happen to contain the same numeric values.
+    --> cinema.width = 2048
+
+Checking the ``width`` property of ``cinema``
+shows that it has indeed changed to be ``2048``:
+
+.. testcode:: customTypes
+
+    --> println("cinema is now \(cinema.width) pixels wide")
+    <-- cinema is now 2048 pixels wide
+
+However, the ``width`` property of the original ``hd`` instance
+still has the old value of ``1920``:
+
+.. testcode:: customTypes
+
+    --> println("hd is still \(hd.width) pixels wide")
+    <-- hd is still 1920 pixels wide
+
+When ``cinema`` was given the current value of ``hd``,
+the *values* stored in ``hd`` were copied into the new ``cinema`` instance.
+The end result was two completely separate instances,
+which just happened to contain the same numeric values.
 Because they are separate instances,
-setting the height of ``iPhone5`` to ``1136.0``
-doesn't affect the height value stored in ``iPhone4``.
+setting the width of ``cinema`` to ``2048``
+doesn't affect the width stored in ``hd``.
 
 The same behavior applies to enumerations:
 
@@ -367,59 +388,61 @@ Rather than making a copy, a :newTerm:`reference` to the same existing instance 
 .. TODO: This enables you to have multiple variables and constants
    that all refer to the same one instance. 
 
-Here's an example, using the ``Rectangle`` class defined above:
+Here's an example, using the ``VideoMode`` class defined above:
 
 .. testcode:: customTypes
 
-    --> let rect = Rectangle()
-    <<< // rect : Rectangle = <Rectangle instance>
-    --> rect.size = Size(width: 1.0, height: 1.0)
-    --> println("The rectangle's initial width is \(rect.size.width)")
-    <-- The rectangle's initial width is 1.0
-    --> let sameRect = rect
-    <<< // sameRect : Rectangle = <Rectangle instance>
-    --> sameRect.size.width = 3.0
-    --> println("The rectangle's width via sameRect is now \(sameRect.size.width)")
-    <-- The rectangle's width via sameRect is now 3.0
-    --> println("The rectangle's width via rect is also \(rect.size.width)")
-    <-- The rectangle's width via rect is also 3.0
+    --> let tenEighty = VideoMode()
+    <<< // tenEighty : VideoMode = <VideoMode instance>
+    --> tenEighty.resolution = hd
+    --> tenEighty.interlaced = true
+    --> tenEighty.name = "1080i"
+    --> tenEighty.frameRate = 25.0
 
-This example declares a new constant called ``rect``,
-and sets it to refer to a new ``Rectangle`` instance.
-The rectangle is given a size with a width and height of ``1.0``.
+This example declares a new constant called ``tenEighty``,
+and sets it to refer to a new instance of the ``VideoMode`` class.
+The video mode is assigned a copy of the HD resolution of ``1920`` by ``1080`` from before.
+It is set to be interlaced, and is given a name of ``"1080i"``.
+Finally, it is set to a frame rate of ``25.0`` frames per second.
 
-A second constant is also declared, called ``sameRect``,
-and is set to refer to the same rectangle already referred to by ``rect``.
-This *doesn't* copy ``rect``, or create a new ``Rectangle`` instance –
-instead, there are now *two* constants that refer to the same one underlying instance.
+Next, ``tenEighty`` is assigned to a new constant, called ``alsoTenEighty``,
+and the frame rate of ``alsoTenEighty`` is modified:
 
-The width of the rectangle is then modified.
-Because ``sameRect`` refers to the same instance as ``rect``,
-the underlying ``width`` and ``height`` properties can be accessed via either ``rect`` or ``sameRect`` –
-it doesn't make a difference which one is chosen, as they both refer to the same thing.
-Here, the width and height are accessed and changed via ``sameRect``
-(e.g. ``sameRect.size.width``).
+.. testcode:: customTypes
 
-The final lines of this example print the current value of the rectangle's width.
-As shown here, it doesn't matter whether you access the width via ``rect`` or ``sameRect`` –
-the updated value of ``3.0`` from the underlying rectangle is returned in both cases.
+    --> let alsoTenEighty = tenEighty
+    <<< // alsoTenEighty : VideoMode = <VideoMode instance>
+    --> alsoTenEighty.frameRate = 30.0
 
-Note that ``rect`` and ``sameRect`` are declared as *constants*,
+Because classes are reference types,
+``tenEighty`` and ``alsoTenEighty`` actually both refer to the *same* ``VideoMode`` instance.
+Effectively, they are just two different names for the same single reference.
+
+Checking the ``frameRate`` property of ``tenEighty``
+shows that it correctly reports the new frame rate of ``30.0``
+from the underlying ``VideoMode`` instance:
+
+.. testcode:: customTypes
+
+    --> println("The frameRate property of tenEighty is now \(tenEighty.frameRate)")
+    <-- The frameRate property of tenEighty is now 30.0
+
+Note that ``tenEighty`` and ``alsoTenEighty`` are declared as *constants*,
 rather than variables.
-However, it is still possible to change ``rect.size`` and ``sameRect.size.width``.
+However, it is still possible to change
+``tenEighty.frameRate`` and ``alsoTenEighty.frameRate``.
 This is allowed because
-the values of the ``rect`` and ``sameRect`` constants themselves do not actually change.
-``rect`` and ``sameRect`` do not themselves store the rectangle –
-instead, they both *refer* to a rectangle behind the scenes.
-The ``width`` property of the underlying rectangle is changed,
-not the values of the ``rect`` and ``sameRect`` references to that rectangle.
+the values of the ``tenEighty`` and ``alsoTenEighty`` constants themselves do not actually change.
+``tenEighty`` and ``alsoTenEighty`` do not themselves “store” the ``VideoMode`` instance –
+instead, they both *refer* to a ``VideoMode`` instance behind the scenes.
+It is the ``frameRate`` property of the underlying ``VideoMode`` that is changed,
+not the values of the constant references to that ``VideoMode``.
 
-.. TODO: Surely a rectangle is a good candidate for a structure, not a class,
-   and indeed I say as much below.
+.. note::
 
-Classes are the only reference types in Swift.
-If you want to create a new type that is passed by reference rather than by value,
-you should define it as a class in your code.
+    Classes are the only reference types in Swift.
+    If you want to create a new type that is passed by reference rather than by value,
+    you should define it as a class in your code.
 
 .. QUESTION: This isn't strictly true. Functions are reference types too.
    Does this matter for the point I'm making here?
