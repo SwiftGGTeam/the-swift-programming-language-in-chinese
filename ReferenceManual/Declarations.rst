@@ -1,6 +1,8 @@
 Declarations
 ============
 
+
+
 .. write-me::
 
 .. langref-grammar
@@ -50,6 +52,8 @@ Declarations
 Module Scope
 ------------
 
+.. write-me:: Need to get the TR below answered to write more about this.
+
 The top level scope of a Swift source file
 consists of a series of statements.
 
@@ -87,7 +91,6 @@ The statements inside a code block are executed in order.
 
 .. TODO: Discuss scope.  I assume a code block creates a new scope?
 
-.. TODO: This section doesn't feel like it belongs in this chapter.
 
 .. langref-grammar
 
@@ -289,7 +292,7 @@ A stored value or property declared with observers has the following form:
         willSet(<#setter name#>) {
             <#statements#>
         }
-        didSet {
+        didSet(<#setter name#> {
             <#statements#>
         }
     }
@@ -314,16 +317,21 @@ Instead, they are called only when the value is set outside of an initialization
 A ``willSet`` observer is called just before the value of the variable or property
 is set. The new value is passed to the ``willSet`` observer as a constant,
 and therefore it can't be changed in the implementation of the ``willSet`` clause.
+The ``didSet`` observer is called immediately after the new value is set. In constrast
+to the ``willSet`` observer, the old value of the variable or property
+is passed to the ``didSet`` observer in case you still need access to it. That said,
+if you assign a value to a variable or property within its own ``didSet`` observer clause,
+the new value that you assign will replace the one that was just set.
 
-The *setter name* and enclosing parentheses in the ``willSet`` clause is optional.
-If you provide a setter name,
-it is used as the name of the parameter to the ``willSet`` observer.
-If you do not provide a setter name,
-the default parameter name to the ``willSet`` observer is ``value``.
+The *setter name* and enclosing parentheses in the ``willSet`` and ``didSet`` clauses are optional.
+If you provide setter names,
+they are used as the parameter names to the ``willSet`` and ``didSet`` observers.
+If you do not provide setter names,
+the default parameter name to the ``willSet`` observer is ``newValue``
+and the default parameter name to the ``didSet`` observer is ``oldValue``.
 
-The ``didSet`` observer is called immediately after the new value is set.
-No parameters are passed to the ``didSet`` observer when it is called.
-The ``didSet`` clause is optional.
+The ``didSet`` clause is optional when you provide a ``willSet`` clause.
+Likewise, the ``willSet`` clause is optional when you provide a ``didSet`` clause.
 
 For more information and to see an example of how to use stored property observers,
 see :ref:`Properties_StoredPropertyObservers`.
@@ -360,7 +368,7 @@ That said, if you provide a setter clause, you must also provide a getter clause
 
 The *setter name* and enclosing parentheses is optional.
 If you provide a setter name, it is used as the name of the parameter to the setter.
-If you do not provide a setter name, the default parameter name to the setter is ``value``,
+If you do not provide a setter name, the default parameter name to the setter is ``newValue``,
 as described in :ref:`Properties_ShorthandSetterDeclaration`.
 
 Unlike stored named values and variable stored properties,
@@ -400,7 +408,7 @@ as described in :ref:`Declarations_ProtocolPropertyDeclaration`.
     willset-didset ::= didset willset?
 
     willset        ::= attribute-list 'willSet' set-name? brace-item-list
-    didset         ::= attribute-list 'didSet' brace-item-list
+    didset         ::= attribute-list 'didSet' set-name? brace-item-list
 
     get-kw         ::= attribute-list 'get'
     set-kw         ::= attribute-list 'set'
@@ -435,7 +443,7 @@ as described in :ref:`Declarations_ProtocolPropertyDeclaration`.
     willSet-didSet-block --> ``{`` willSet-clause didSet-clause-OPT ``}``
     willSet-didSet-block --> ``{`` didSet-clause willSet-clause ``}``
     willSet-clause --> attribute-list-OPT ``willSet`` setter-name-OPT code-block
-    didSet-clause --> attribute-list-OPT ``didSet`` code-block
+    didSet-clause --> attribute-list-OPT ``didSet`` setter-name-OPT code-block
 
 .. NOTE: Type annotations are required for computed properties -- the
    types of those properties are not computed/inferred.
@@ -1216,6 +1224,11 @@ See also :ref:`Declarations_TypealiasDeclaration`.
 
 Initializer Declaration
 -----------------------
+
+.. TODO: Rewrite/verify this section after Doug writes his "How Initialization Works Now"
+    document, which should be finished later today, 3/18.
+    I'll also need to revisit any other discussions of initialization in the chapter:
+    enumerations, structures, classes, extensions, and protocols.
 
 An :newTerm:`initializer declaration` introduces an initializer for a class,
 structure, or enumeration into your program.
