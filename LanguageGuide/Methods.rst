@@ -66,7 +66,7 @@ Instance methods are called using the same dot syntax as properties:
     /-> counter value is now \(counter.count)
     <-/ counter value is now 0
 
-.. _Methods_TheSelfParameter:
+.. _Methods_TheSelfProperty:
 
 The “self” Property
 ~~~~~~~~~~~~~~~~~~~~
