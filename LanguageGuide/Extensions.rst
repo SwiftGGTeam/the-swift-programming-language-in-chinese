@@ -173,14 +173,7 @@ is known as :newTerm:`initializer overloading`.)
 
     If you provide a new initializer via an extension,
     you are still responsible for making sure that each instance is fully initialized
-    once the initializer has completed, as described in
-    :ref:`Initialization_DefiniteInitialization`.
-    Depending on the type you are extending, you may need to
-    delegate to another initializer
-    (as described in :ref:`Initialization_InitializerDelegation`),
-    or call a superclass initializer
-    (as described in :ref:`Initialization_SubclassingAndInitializerDelegation`),
-    to ensure that all instance properties are fully initialized.
+    once the initializer has completed.
 
 .. QUESTION: You can use 'self' in this way for structs and enums.
    How might you do this kind of construction for a class?
