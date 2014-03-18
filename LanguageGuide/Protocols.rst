@@ -491,6 +491,8 @@ Here's how ``DiceGameTracker`` looks in action:
    (even though we only have one game)
    and the game is instantiated through the type?
 
+.. _Protocols_Initializers:
+
 Initializers
 ------------
 
@@ -499,6 +501,8 @@ Initializers
 .. You can't construct from a protocol
 .. You can define initializer requirements in protocols
 
+.. _Protocols_ClassAndStaticMethodsAndProperties:
+
 Class and Static Methods and Properties
 ---------------------------------------
 
@@ -506,6 +510,8 @@ Class and Static Methods and Properties
 
 .. Protocols can provide class (and static) functions and properties
    (although rdar://14620454 and rdar://15242744).
+
+.. _Protocols_AddingProtocolConformanceWithExtensions:
 
 Adding Protocol Conformance With Extensions
 -------------------------------------------
@@ -572,6 +578,8 @@ Similarly, the ``SnakesAndLadders`` game class can be extended to conform to ``T
     --> println(game.asText())
     <-- A game of Snakes and Ladders with 25 squares
 
+.. _Protocols_DeclaringExistingConformance:
+
 Declaring Existing Conformance
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -604,6 +612,8 @@ Instances of ``Hamster`` can now be used wherever ``TextRepresentable`` is the r
 
     Types do not automatically conform to a protocol just by satisfying its requirements.
     They must always explicitly declare their conformance.
+
+.. _Protocols_CollectionsOfProtocolTypes:
 
 Collections of Protocol Types
 -----------------------------
@@ -639,6 +649,8 @@ even if the actual instance behind the scenes is of one of those types.
 Nonetheless, because it is of type ``TextRepresentable``,
 and anything that is ``TextRepresentable`` is known to have an ``asText()`` method,
 it is safe to call ``thing.asText()`` each time through the loop.
+
+.. _Protocols_ProtocolInheritance:
 
 Protocol Inheritance
 --------------------
@@ -718,6 +730,8 @@ of any ``SnakesAndLadders`` instance:
     <-/ A game of Snakes and Ladders with 25 squares:
     <-/ 🆓 🆓 👍 🆓 🆓 👍 🆓 🆓 👍 👍 🆓 🆓 🆓 🐍 🆓 🆓 🆓 🆓 🐍 🆓 🆓 🐍 🆓 🐍 🆓 
 
+.. _Protocols_CheckingForProtocolConformance:
+
 Checking for Protocol Conformance
 ---------------------------------
 
@@ -729,12 +743,16 @@ Checking for Protocol Conformance
 .. currently, you can only check for protocol conformance if the protocols
    are declared as @objc - does that mean that this shouldn't be mentioned here yet?
 
+.. _Protocols_ProtocolComposition:
+
 Protocol Composition
 --------------------
 
 .. write-me::
 
 .. protocol<P1, P2> syntax for protocol conformance aka "something that conforms to multiple protocols"
+
+.. _Protocols_OptionalRequirements:
 
 Optional Requirements
 ---------------------
