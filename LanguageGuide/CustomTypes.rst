@@ -626,6 +626,8 @@ For the example above,
 this enables the names of ``Suit`` and ``Rank`` to be kept short,
 because their names are naturally qualified by the context in which they are defined.
 
+.. _CustomTypes_TypeAliases:
+
 Type Aliases
 ------------
 
