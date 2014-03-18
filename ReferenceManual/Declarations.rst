@@ -1253,6 +1253,9 @@ If the class inherits any properties from its superclass, one of the
 superclass's designated initializers must be called before any of these
 properties can be set or modified in the current class.
 
+Designated initializers can be declared in the context of a class declaration only
+and therefore can't be added to a class using an extension declaration.
+
 The second form (also shown in function-style syntax) is used to declare
 convenience initializers for classes and has the following form:
 
