@@ -34,6 +34,7 @@ since linking between definitions is not yet supported by our build tools.
     Expressions
     Statements
     Declarations
+    Attributes
     Patterns
     Generics
     zzSummaryOfTheGrammar
