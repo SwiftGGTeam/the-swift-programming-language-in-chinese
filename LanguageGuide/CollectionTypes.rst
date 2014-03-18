@@ -17,7 +17,7 @@ Swift provides two special types for working with collections of values:
    for (index, object) in enumerate(collection) { //... }
    Should these be mentioned, and if so, should it be here or in Control Flow?
 
-.. _ArraysAndDictionaries_Mutability:
+.. _CollectionTypes_Mutability:
 
 Mutability of Collections
 -------------------------
@@ -51,7 +51,7 @@ This enables the Swift compiler to optimize the performance of the collection.
     The difference between value types and reference types is covered in detail
     in the :ref:`CustomTypes_ValueTypesAndReferenceTypes` section of :doc:`CustomTypes`.
 
-.. _ArraysAndDictionaries_Arrays:
+.. _CollectionTypes_Arrays:
 
 Arrays
 ------
@@ -230,7 +230,7 @@ because it was set to the output of an ``Array<Int>`` initializer.
 .. TODO: Mention that [] can be used as an empty array literal
    if the context gives enough type information.
 
-.. _ArraysAndDictionaries_Dictionaries:
+.. _CollectionTypes_Dictionaries:
 
 Dictionaries
 ------------

@@ -111,7 +111,7 @@ The underscore character ``_``
 causes the individual values to be ignored,
 and does not provide access to the current value during each iteration of the loop.
 
-The ``for``-``in`` loop can be used with :ref:`ArraysAndDictionaries_Arrays`
+The ``for``-``in`` loop can be used with :ref:`CollectionTypes_Arrays`
 to iterate over their items:
 
 .. testcode::
@@ -142,7 +142,7 @@ This can be used to iterate through the characters of a string in order:
     <-/ l
     <-/ o
 
-Iteration can also be used with :ref:`ArraysAndDictionaries_Dictionaries`
+Iteration can also be used with :ref:`CollectionTypes_Dictionaries`
 to access their key-value pairs.
 Every item in a dictionary has a ``key`` property and a ``value`` property,
 which can be accessed via dot syntax:
