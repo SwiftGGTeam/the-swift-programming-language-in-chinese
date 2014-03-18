@@ -1,32 +1,20 @@
 Initialization
 ==============
 
-.. write-me::
+:newTerm:`Initialization` is the process of preparing an instance of
+a class, structure or enumeration for use.
+This involves setting an initial value for any stored properties,
+and performing any other setup or initialization that is required
+before the new instance is considered ready to for use.
+
+This initialization process is implemented by defining :newTerm:`initializers`,
+which are like special methods that can be called
+to create a new instance of a particular type.
+Instances of class types can also implement a :newTerm:`deinitializer`,
+which gives an oppprtunity to perform any custom cleanup that you require to be run
+when an instance of that class instance is destroyed.
 
 .. TODO: this chapter seems to have lost its "definite initialization" section.
-
-Classes and structures must always set their stored properties
-to an appropriate initial value by the time that an instance is created.
-There are two ways to initialize properties:
-
-1. Provide an :newTerm:`initial value` as part of the property declaration
-   (as described in :doc:`Properties`)
-2. Provide a value for the property within an :newTerm:`initializer`
-
-.. note::
-    If you assign a default value to a stored property,
-    or set its initial value within an initializer,
-    the value of that property is set directly,
-    without calling any stored property observers.
-
-.. QUESTION: is this the right place to mention this note?
-
-.. QUESTION: the same is also true for Obj-C KVO observers of the property.
-   Is it appropriate to mention that here?
-
-.. QUESTION: is this true once the instance is fully qualified within the initializer?
-   To put it another way, is property setting *always* direct in an init?
-   (I think the answer is yes.)
 
 .. TODO: mention that memory is automatically managed by ARC
 
@@ -39,11 +27,11 @@ There are two ways to initialize properties:
 Initializers
 ------------
 
-:newTerm:`Initializers` are called when a new instance of your type is created.
+:newTerm:`Initializers` are called to create a new instance of a type.
 In its simplest form, an initializer is like an instance method with no parameters,
 written using the ``init`` keyword:
 
-.. testcode:: initialization
+.. testcode:: fahrenheitInit
 
     --> struct Fahrenheit {
             var temperature: Double
@@ -62,26 +50,50 @@ The structure defines a single initializer, ``init()``, with no parameters,
 which initializes the stored temperature with a value of ``32.0``
 (the freezing point of water when expressed in the Fahrenheit scale).
 
-Initializers always begin with ``init``.
 Unlike Objective-C, Swift initializers do not return a value.
 Their primary role is to ensure that new instances of that type
 are correctly initialized before they are used for the first time.
 
-As an alternative, this example could be written
+.. _Initialization_DefaultPropertyValues:
+
+Default Property Values
+-----------------------
+
+Classes and structures **must** set all of their stored properties
+to an appropriate initial value by the time
+an instance of that class or structure is created.
+Stored properties cannot be left in an indeterminate state.
+
+You can set the initial value of a stored property from within an initializer,
+as shown above.
+As an alternative, you can provide a :newTerm:`default property value`
+as part of the property's declaration.
+
+The ``Fahrenheit`` example can be written in a simpler form
 by providing a default value at the point that the property is declared:
 
-.. testcode:: initialization
+.. testcode:: fahrenheitDefault
 
-    --> struct AnotherFahrenheit {
-            var temperature: Double = 32.0
+    --> struct Fahrenheit {
+            var temperature = 32.0
         }
 
-If a property should always taken the same initial value,
-it is preferable to set this value as a default when the property is declared,
-as in the ``AnotherFahrenheit`` example.
-The end result –
-a default value of ``32.0`` for ``temperature`` when a new instance is created –
-is the same in both cases.
+If a property should always take the same initial value,
+you should always provide a default value as part of the property declaration,
+rather than setting its value within an initializer.
+The end result is the same,
+but the use of a default value ties the property's initialization more closely to its declaration,
+and makes for shorter, clearer initializers.
+It also enables you to infer the type of the property from its default value, as shown here.
+Finally, it makes it easier for you to take advantage of
+default initializers and initializer inheritance,
+as described later in this chapter.
+
+.. note::
+    When you assign a default value to a stored property,
+    or set its initial value within an initializer,
+    the value of that property is set directly,
+    without calling any stored property observers.
 
 .. _Initialization_DefaultInitializers:
 
@@ -113,7 +125,9 @@ Memberwise Structure Initializers
 .. TODO: mention that structures and enums can assign a value to self during initialization,
    but classes cannot.
 
-All structures have an automatically-generated :newTerm:`memberwise initializer`,
+In addition to the default initializers mentioned above,
+all instances of structure types have
+an automatically-generated :newTerm:`memberwise initializer`,
 which can be used to initialise the member properties of new structure instances.
 Initial values for the properties of the new instance
 can be passed to the memberwise initializer by name:
@@ -202,6 +216,42 @@ as long as is is definitely set to a value by the time the initializer has finis
     <-- Temperature is 0.0°K
 
 .. TODO: This could do with a more elegant example.
+
+Optional Property Values
+------------------------
+
+If your custom type has a stored property that cannot be known during initialization,
+or that is logically allowed to have “no value yet”,
+it should be declared as having an optional type,
+and initialized with a value of ``.None`` as part of its declaration.
+This makes it clear that the property is
+deliberately intended to have “no value yet” during initialization,
+and has not just been left in an indeterminate state.
+
+For example:
+
+.. testcode:: initialization
+
+    --> class SurveyQuestion {
+            var text: String
+            var response: String? = .None
+            init withText(text: String) {
+                self.text = text
+            }
+            func ask() {
+                println(text)
+            }
+        }
+    --> let cheeseQuestion = SurveyQuestion(withText: "Do you like cheese?")
+    <<< // cheeseQuestion : SurveyQuestion = <SurveyQuestion instance>
+    --> cheeseQuestion.ask()
+    <-- Do you like cheese?
+    --> cheeseQuestion.response = "Yes, I do like cheese."
+
+The response to a survey question cannot be known until it is asked,
+and so the ``response`` property is declared as ``String?``, or “optional ``String``”.
+It is assigned a default value of ``.None`` as part of its declaration,
+meaning “no string yet”.
 
 .. _Initialization_DesignatedAndConvenienceInitializers:
 
