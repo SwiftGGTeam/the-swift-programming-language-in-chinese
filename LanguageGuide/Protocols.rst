@@ -65,7 +65,7 @@ Instance Properties
 
 A protocol can require any conforming type to provide
 an instance property with a particular name and type.
-The protocol doesn't specify whether the property is
+The protocol doesn't specify whether the property should be
 a stored property or a computed property –
 it just specifies the required property name and type.
 
@@ -507,34 +507,216 @@ Class and Static Methods and Properties
 .. Protocols can provide class (and static) functions and properties
    (although rdar://14620454 and rdar://15242744).
 
-Subscripts
-----------
-
-.. write-me::
-
-.. Subscript requirements (but it's broken at the moment)
-
 Adding Protocol Conformance With Extensions
 -------------------------------------------
 
-.. write-me::
+An existing type can be extended to conform to a new protocol,
+even if you do not have access to the source code for the existing type.
+This is achieved by using :doc:`Extensions`.
+Extensions give a way to add new properties, methods, initializers and subscripts
+to an existing type,
+and are therefore able to add any of the requirements that a protocol may demand
+on to an existing type.
 
-.. Extensions can make an existing type conform to a protocol
+.. note::
+
+    Existing instances of a type automatically gain conformance to a protocol
+    when that conformance is added to the instance's type in an extension.
+
+For example:
+
+.. testcode:: protocols
+
+    --> protocol TextRepresentable {
+            func asText() -> String
+        }
+
+This protocol, called ``TextRepresentable``, can be implemented by
+any type that has a way to be represented as text.
+This might be a description of itself, or a text version of its current state.
+
+The ``Dice`` class from earlier can be extended to conform to ``TextRepresentable``:
+
+.. testcode:: protocols
+
+    --> extension Dice : TextRepresentable {
+            func asText() -> String {
+                return "A \(sides)-sided dice"
+            }
+        }
+
+This extension declares the new protocol conformance in exactly the same way
+as if ``Dice`` had provided it in its original implementation.
+The protocol name is provided after the type name, separated by a colon,
+and an implementation of all of the requirements of the protocol
+is provided within the extension's curly braces.
+
+Any ``Dice`` instance can now be treated as ``TextRepresentable``:
+
+.. testcode:: protocols
+
+    --> let d12 = Dice(withSides: 12, generator: LinearCongruentialGenerator())
+    <<< // d12 : Dice = <Dice instance>
+    --> println(d12.asText())
+    <-- A 12-sided dice
+
+Similarly, the ``SnakesAndLadders`` game class can be extended to conform to ``TextRepresentable``:
+
+.. testcode:: protocols
+
+    --> extension SnakesAndLadders : TextRepresentable {
+            func asText() -> String {
+                return "A game of Snakes and Ladders with \(finalSquare) squares"
+            }
+        }
+    --> println(game.asText())
+    <-- A game of Snakes and Ladders with 25 squares
+
+Declaring Existing Conformance
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If a type already happens to satisfy all of the requirements of a protocol,
+but has not yet declared itself as conforming to that protocol,
+it can be declared to conform by using an empty extension:
+
+.. testcode:: protocols
+
+    --> struct Hamster {
+            var name: String
+            func asText() -> String {
+                return "A hamster named \(name)"
+            }
+        }
+    --> extension Hamster : TextRepresentable {}
+
+Instances of ``Hamster`` can now be used wherever ``TextRepresentable`` is the required type:
+
+.. testcode:: protocols
+
+    --> let simonTheHamster = Hamster(name: "Simon")
+    <<< // simonTheHamster : Hamster = Hamster("Simon")
+    --> let somethingTextRepresentable: TextRepresentable = simonTheHamster
+    <<< // somethingTextRepresentable : TextRepresentable = <unprintable value>
+    --> println(somethingTextRepresentable.asText())
+    <-- A hamster named Simon
+
+.. note::
+
+    Types do not automatically conform to a protocol just by satisfying its requirements.
+    They must always explicitly declare their conformance.
+
+Collections of Protocol Types
+-----------------------------
+
+A protocol can be used as the type to be stored in
+a collection such as an ``Array`` or a ``Dictionary``,
+as mentioned in :ref:`Protocols_UsingProtocolsAsTypes`.
+This example creates an array of ``TextRepresentable`` things:
+
+.. testcode:: protocols
+
+    --> var textRepresentableThings = Array<TextRepresentable>()
+    <<< // textRepresentableThings : Array<TextRepresentable> = []
+    --> textRepresentableThings.append(game)
+    --> textRepresentableThings.append(d12)
+    --> textRepresentableThings.append(simonTheHamster)
+
+It is now possible to iterate over the array,
+and print each thing's textual representation:
+
+.. testcode:: protocols
+
+    --> for thing in textRepresentableThings {
+            println(thing.asText())
+        }
+    <-/ A game of Snakes and Ladders with 25 squares
+    <-/ A 12-sided dice
+    <-/ A hamster named Simon
+
+Note that the ``thing`` constant is of type ``TextRepresentable``.
+It is not of type ``Dice``, or ``DiceGame``, or ``Hamster``,
+even if the actual instance behind the scenes is of one of those types.
+Nonetheless, because it is of type ``TextRepresentable``,
+and anything that is ``TextRepresentable`` is known to have an ``asText()`` method,
+it is safe to call ``thing.asText()`` each time through the loop.
 
 Protocol Inheritance
 --------------------
 
-.. write-me::
+A protocol can :newTerm:`inherit` from another protocol,
+and add further requirements on top of the requirements it inherits.
+The syntax for protocol inheritance is the same as for class inheritance:
 
-.. Protocols can inherit from other protocols
-.. Perhaps use a Printable and FancyPrintable kind of example
+::
 
-Protocol Composition
---------------------
+    protocol SomeSubProtocol : SomeSuperProtocol {
+        // protocol definition goes here
+    }
 
-.. write-me::
+For example:
 
-.. protocol<P1, P2> syntax for protocol conformance aka "something that conforms to multiple protocols"
+.. testcode:: protocols
+
+    --> protocol PrettyTextRepresentable : TextRepresentable {
+            func asPrettyText() -> String
+        }
+
+This example defines a new protocol, ``PrettyTextRepresentable``,
+which inherits from ``TextRepresentable``.
+Anything that conforms to ``PrettyTextRepresentable`` must satisfy all of the requirements
+enforced by ``TextRepresentable``,
+*plus* the addition requirements enforced by ``PrettyTextRepresentable``.
+In this example, ``PrettyTextRepresentable`` adds a single requirement
+to provide an instance method called ``asPrettyText()`` that returns a ``String``.
+
+The ``SnakesAndLadders`` class can be extended to conform to ``PrettyTextRepresentable``:
+
+.. testcode:: protocols
+
+    --> extension SnakesAndLadders : PrettyTextRepresentable {
+            func asPrettyText() -> String {
+                var output = asText() + ":\n"
+                for index in 1..finalSquare {
+                    switch board[index] {
+                        case let ladder where ladder > 0:
+                            output += "👍 "
+                        case let snake where snake < 0:
+                            output += "🐍 "
+                        default:
+                            output += "🆓 "
+                    }
+                }
+                return output
+            }
+        }
+
+
+This extension declares conformance to ``PrettyTextRepresentable``,
+and provides an implementation of the ``asPrettyText()`` method
+for the ``SnakesAndLadders`` type.
+Anything that is ``PrettyTextRepresentable`` must also be ``TextRepresentable``,
+and so the ``asPrettyText()`` implementation starts by calling the ``asText()`` method
+from the ``TextRepresentable`` protocol to begin an output string.
+It appends a colon and a line break,
+and uses this as the start of its pretty text representation.
+It then iterates through the array of board squares,
+and appends an emoji representation for each square:
+
+* If the square's value is greater than ``0``, it is the base of a ladder,
+  and is represented by 👍
+* If the square's value is less than ``0``, it is the head of a snake,
+  and is represented by 🐍
+* Otherwise, the square's value is ``0``, and it is a “free” square,
+  represented by 🆓
+
+The method implementation can now be used to print a pretty text description
+of any ``SnakesAndLadders`` instance:
+
+.. testcode:: protocols
+
+    --> println(game.asPrettyText())
+    <-/ A game of Snakes and Ladders with 25 squares:
+    <-/ 🆓 🆓 👍 🆓 🆓 👍 🆓 🆓 👍 👍 🆓 🆓 🆓 🐍 🆓 🆓 🆓 🆓 🐍 🆓 🆓 🐍 🆓 🐍 🆓 
 
 Checking for Protocol Conformance
 ---------------------------------
@@ -544,6 +726,15 @@ Checking for Protocol Conformance
 .. is and as
 .. Perhaps follow on from the Printable and FancyPrintable example
    to check for conformance and call the appropriate print method
+.. currently, you can only check for protocol conformance if the protocols
+   are declared as @objc - does that mean that this shouldn't be mentioned here yet?
+
+Protocol Composition
+--------------------
+
+.. write-me::
+
+.. protocol<P1, P2> syntax for protocol conformance aka "something that conforms to multiple protocols"
 
 Optional Requirements
 ---------------------
@@ -552,7 +743,8 @@ Optional Requirements
 
 .. Non-mandatory protocol requirements via @optional
 .. Checking for (and calling) optional implementations via optional binding and closures
-.. all dependent on the implementation of rdar://16101161
+.. all dependent on the implementation of rdar://16101161,
+   "Optional protocol requirements for non-@objc protocols"
 
 .. Other things to be included:
 .. ----------------------------
