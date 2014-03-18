@@ -1,9 +1,12 @@
 Declarations
 ============
 
-
-
-.. write-me::
+A :newTerm:`declaration` introduces a new name or construct into your program.
+For example, you use declarations to introduce variables and constants
+and to define new, named enumeration, structure, class,
+and protocol types. You can also use a declaration to extend the the behavior
+of an existing named type and to import symbols into your program that are declared elsewhere.
+This chapter describes the syntax and behavior of these and other Swift declarations.
 
 .. langref-grammar
 
@@ -57,6 +60,9 @@ Module Scope
 The :newTerm:`module scope` defines the top-level (global) scope of a Swift source file.
 It consists of a series of statements, which include declarations,
 expressions, and other kinds of statements.
+
+Variables, constants, and other named declarations that are declared at global scope
+are visible to any other code in the same file.
 
 .. TODO: Need to add more to this section.
 
