@@ -54,8 +54,9 @@ Module Scope
 
 .. write-me:: Need to get the TR below answered to write more about this.
 
-The top level scope of a Swift source file
-consists of a series of statements.
+The :newTerm:`module scope` defines the top-level (global) scope of a Swift source file.
+It consists of a series of statements, which include declarations,
+expressions, and other kinds of statements.
 
 .. TODO: Need to add more to this section.
 
@@ -87,7 +88,10 @@ It has the following form:
         <#statements#>
     }
 
-The statements inside a code block are executed in order.
+The *statements* inside a code block include declarations,
+expressions, and other kinds of statements and are executed in order.
+
+.. TR: What exactly are the scope rules for Swift?
 
 .. TODO: Discuss scope.  I assume a code block creates a new scope?
 
