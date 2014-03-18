@@ -281,7 +281,7 @@ Type Methods
 Subscripts
 ----------
 
-Extensions can add new :ref:`Methods_Subscripts`
+Extensions can add new :doc:`Subscripts`
 to an existing type.
 This example adds an integer subscript to Swift's built-in ``Int`` type.
 This subscript ``[n]`` returns the decimal digit ``n`` places in

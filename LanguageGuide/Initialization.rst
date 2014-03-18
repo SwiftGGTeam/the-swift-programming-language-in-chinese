@@ -1,50 +1,37 @@
 Initialization
 ==============
 
-.. write-me::
+:newTerm:`Initialization` is the process of preparing an instance of
+a class, structure or enumeration for use.
+This involves setting an initial value for any stored properties,
+and performing any other setup or initialization that is required
+before the new instance is considered ready to for use.
 
-.. note::
-    This chapter is awaiting a rewrite in light of recent structural changes
-    to the overall document, and also in light of recent changes to
-    the way in which initializer delegation works.
+This initialization process is implemented by defining :newTerm:`initializers`,
+which are like special methods that can be called
+to create a new instance of a particular type.
+Instances of class types can also implement a :newTerm:`deinitializer`,
+which gives an oppprtunity to perform any custom cleanup that you require to be run
+when an instance of that class instance is destroyed.
 
-.. TODO: Remove this note following the rewrite.
-
-Classes and structures must always set their stored properties
-to an appropriate initial value by the time that an instance is created.
-There are two ways to initialize properties:
-
-1. Provide an :newTerm:`initial value` as part of the property declaration
-   (as described in :doc:`Properties`)
-2. Provide a value for the property within an :newTerm:`initializer`
-
-.. note::
-    If you assign a default value to a stored property,
-    or set its initial value within an initializer,
-    the value of that property is set directly,
-    without calling any stored property observers.
-
-.. QUESTION: is this the right place to mention this note?
-
-.. QUESTION: the same is also true for Obj-C KVO observers of the property.
-   Is it appropriate to mention that here?
-
-.. QUESTION: is this true once the instance is fully qualified within the initializer?
-   To put it another way, is property setting *always* direct in an init?
-   (I think the answer is yes.)
+.. TODO: this chapter seems to have lost its "definite initialization" section.
 
 .. TODO: mention that memory is automatically managed by ARC
+
+.. TODO: mention that you can't construct a class instance from a class metatype value,
+   because you can't be sure that a subclass will definitely provide the constructor –
+   see doug's notes from r14175 for more info
 
 .. _Initialization_Initializers:
 
 Initializers
 ------------
 
-:newTerm:`Initializers` are called when a new instance of your type is created.
+:newTerm:`Initializers` are called to create a new instance of a type.
 In its simplest form, an initializer is like an instance method with no parameters,
 written using the ``init`` keyword:
 
-.. testcode:: initialization
+.. testcode:: fahrenheitInit
 
     --> struct Fahrenheit {
             var temperature: Double
@@ -60,29 +47,53 @@ written using the ``init`` keyword:
 This example defines a new structure to store temperatures expressed in the Fahrenheit scale.
 The structure has one stored property, ``temperature``, which is of type ``Double``.
 The structure defines a single initializer, ``init()``, with no parameters,
-which initializes the stored temperature value to ``32.0``
+which initializes the stored temperature with a value of ``32.0``
 (the freezing point of water when expressed in the Fahrenheit scale).
 
-Initializers always begin with ``init``.
 Unlike Objective-C, Swift initializers do not return a value.
 Their primary role is to ensure that new instances of that type
 are correctly initialized before they are used for the first time.
 
-As an alternative, this example could have been written
+.. _Initialization_DefaultPropertyValues:
+
+Default Property Values
+-----------------------
+
+Classes and structures **must** set all of their stored properties
+to an appropriate initial value by the time
+an instance of that class or structure is created.
+Stored properties cannot be left in an indeterminate state.
+
+You can set the initial value of a stored property from within an initializer,
+as shown above.
+As an alternative, you can provide a :newTerm:`default property value`
+as part of the property's declaration.
+
+The ``Fahrenheit`` example can be written in a simpler form
 by providing a default value at the point that the property is declared:
 
-.. testcode:: initialization
+.. testcode:: fahrenheitDefault
 
-    --> struct AnotherFahrenheit {
-            var temperature: Double = 32.0
+    --> struct Fahrenheit {
+            var temperature = 32.0
         }
 
-If a property should always taken the same initial value,
-it is preferable to set this value as a default when the property is declared,
-as in the ``AnotherFahrenheit`` example.
-The end result –
-a default value of ``32.0`` for ``temperature`` when a new instance is created –
-is the same in both cases.
+If a property should always take the same initial value,
+you should always provide a default value as part of the property declaration,
+rather than setting its value within an initializer.
+The end result is the same,
+but the use of a default value ties the property's initialization more closely to its declaration,
+and makes for shorter, clearer initializers.
+It also enables you to infer the type of the property from its default value, as shown here.
+Finally, it makes it easier for you to take advantage of
+default initializers and initializer inheritance,
+as described later in this chapter.
+
+.. note::
+    When you assign a default value to a stored property,
+    or set its initial value within an initializer,
+    the value of that property is set directly,
+    without calling any stored property observers.
 
 .. _Initialization_DefaultInitializers:
 
@@ -99,6 +110,10 @@ You don't have to declare that you want the default initializer to be implemente
 it is available automatically for all classes and structures without their own initializer.
 
 .. TODO: show an example.
+.. QUESTION: How is this affected by inheritance?
+   If I am a subclass of a superclass that defines a designated initializer,
+   I (the subclass) presumably don't get a default initializer,
+   because I am obliged to delegate up to my parent's default initializer.
 
 .. _Initialization_MemberwiseStructureInitializers:
 
@@ -110,7 +125,9 @@ Memberwise Structure Initializers
 .. TODO: mention that structures and enums can assign a value to self during initialization,
    but classes cannot.
 
-All structures have an automatically-generated :newTerm:`memberwise initializer`,
+In addition to the default initializers mentioned above,
+all instances of structure types have
+an automatically-generated :newTerm:`memberwise initializer`,
 which can be used to initialise the member properties of new structure instances.
 Initial values for the properties of the new instance
 can be passed to the memberwise initializer by name:
@@ -132,13 +149,15 @@ if they are listed in the same order that the properties are declared in the str
     <<< // fourByThree : Size = Size(4.0, 3.0)
 
 .. TODO: Include a justifiable reason for why classes do not provide a memberwise initializer.
+.. TODO: According to rdar://15670604, we may end up with one for classes as well.
+   However, I can't find a Radar tracking this directly.
 
 .. _Initialization_InitializerInputParameters:
 
 Initializer Input Parameters
 ----------------------------
 
-Initializers can also take :newTerm:`input parameters`,
+Initializers can take :newTerm:`input parameters`,
 to customize the initialization process.
 The following example defines a structure to store temperatures expressed in the Celsius scale.
 It implements two custom initializers,
@@ -165,7 +184,8 @@ with a value from a different temperature scale:
     /-> freezingPointOfWater.temperatureInCelsius is \(freezingPointOfWater.temperatureInCelsius)
     <-/ freezingPointOfWater.temperatureInCelsius is 0.0
 
-.. TODO: mention that initializers can be written in either function syntax.
+.. TODO: mention that initializers can be written in either function syntax,
+   and show an example in function-style as well as selector-style.
 
 The value of a constant ``let`` property can be modified at any point during initialization,
 as long as is is definitely set to a value by the time the initializer has finished:
@@ -197,225 +217,48 @@ as long as is is definitely set to a value by the time the initializer has finis
 
 .. TODO: This could do with a more elegant example.
 
-.. _Initialization_InitializerDelegation:
+Optional Property Values
+------------------------
 
-Initializer Delegation
-----------------------
+If your custom type has a stored property that cannot be known during initialization,
+or that is logically allowed to have “no value yet”,
+it should be declared as having an optional type,
+and initialized with a value of ``.None`` as part of its declaration.
+This makes it clear that the property is
+deliberately intended to have “no value yet” during initialization,
+and has not just been left in an indeterminate state.
 
-Initializers can :newTerm:`delegate` some or all of the task of initialization to
-other initializers within the same class or structure by calling ``self.init``.
-The code below defines a ``Document`` class,
-which uses a default ``title`` value of ``[untitled]`` if none is specified:
+For example:
 
-.. testcode:: initializerDelegation
+.. testcode:: initialization
 
-    --> class Document {
-            var title: String
-            init withTitle(title: String) {
-                self.title = title
-            }
-            init() {
-                self.init(withTitle: "[untitled]")
-            }
-        }
-
-This first example declares a new constant called ``thisBook``,
-and sets it to the result of calling ``init withTitle()`` for a specific title string:
-
-.. testcode:: initializerDelegation
-
-    --> let thisBook = Document(withTitle: "The Swift Programming Language")
-    <<< // thisBook : Document = <Document instance>
-    --> println("This book is called '\(thisBook.title)'")
-    <-- This book is called 'The Swift Programming Language'
-
-This second example declares a new constant called ``someBook``,
-and sets it to the result of the basic ``init()`` method for ``Document``.
-This method delegates to the more detailed ``init withTitle()`` method,
-passing it a placeholder string value of ``[untitled]``:
-
-.. testcode:: initializerDelegation
-
-    --> let someBook = Document()
-    <<< // someBook : Document = <Document instance>
-    --> println("Some unknown book is called '\(someBook.title)'")
-    <-- Some unknown book is called '[untitled]'
-
-Both of these initializers ensure that the value of ``title``
-is set to a valid string before the initializer ends.
-This means that the ``Document`` class passes the definite initialization test mentioned above.
-
-.. _Initialization_SubclassingAndInitializerDelegation:
-
-Subclassing and Initializer Delegation
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Swift classes do not automatically inherit initializers from their parent classes.
-This behavior is different from Objective-C, where initializers are inherited by default.
-Swift's avoidance of automatic initializer inheritance ensures that
-subclasses are able to control exactly how they can be instantiated.
-
-To help with this,
-Swift inserts an implicit call to ``super.init()``
-at the end of any subclass initializer
-that does not either call a superclass initializer itself,
-or hand off to a same-class initializer that ultimately calls a superclass initializer.
-This ensures that properties of the parent class
-(and so on up the chain)
-still get instantiated,
-even if an explicit superclass initializer is not called.
-
-The example below defines a new subclass of ``Document``, called ``TextDocument``.
-This subclass adds an additional string property called ``bodyText``,
-which is given a default value of ``[replace me]``.
-
-``TextDocument`` provides four ways for a new text document to be initialized:
-
-* ``init()``, passing in no specific values
-* ``init withTitle()``, passing in a specific title but no body text
-* ``init withText()``, passing in some specific body text but no title
-* ``init withTitle() text()``, passing in a specific title and body text
-
-Here's how it looks in Swift code:
-
-.. testcode:: initializerDelegation
-
-    --> class TextDocument : Document {
-
-            var bodyText: String = "[replace me]"
-
-            init() {}
-
-            init withTitle(title: String) {
-                super.init(withTitle: title)
-            }
-
+    --> class SurveyQuestion {
+            var text: String
+            var response: String? = .None
             init withText(text: String) {
-                bodyText = text
+                self.text = text
             }
-
-            init withTitle(title: String) text(text: String) {
-                self.init(withTitle: title)
-                bodyText = text
+            func ask() {
+                println(text)
             }
-
         }
+    --> let cheeseQuestion = SurveyQuestion(withText: "Do you like cheese?")
+    <<< // cheeseQuestion : SurveyQuestion = <SurveyQuestion instance>
+    --> cheeseQuestion.ask()
+    <-- Do you like cheese?
+    --> cheeseQuestion.response = "Yes, I do like cheese."
 
-The first initializer, ``init()``, takes no parameters at all.
-The curly braces after the parentheses define an empty code block for the method:
+The response to a survey question cannot be known until it is asked,
+and so the ``response`` property is declared as ``String?``, or “optional ``String``”.
+It is assigned a default value of ``.None`` as part of its declaration,
+meaning “no string yet”.
 
-::
+.. _Initialization_DesignatedAndConvenienceInitializers:
 
-    init() {}
+Designated and Convenience Initializers
+---------------------------------------
 
-Despite having an empty code block,
-this method still creates a new ``TextDocument`` instance with a default title and text.
-The default value of ``bodyText`` comes from the ``bodyText`` property declaration,
-and the default value of ``title`` comes from Swift inserting an implicit call to ``super.init()``
-at the end of this empty code block.
-
-Here's how this initializer could be called:
-
-.. testcode:: initializerDelegation
-
-    --> let empty = TextDocument()
-    <<< // empty : TextDocument = <TextDocument instance>
-    --> println("\(empty.title):\n\(empty.bodyText)")
-    <-/ [untitled]:
-    <-/ [replace me]
-
-``TextDocument`` does not actually do any custom initialization inside its empty ``init()`` method.
-However, it is still necessary to provide an empty definition
-in order to be able to call ``TextDocument()``.
-Because ``TextDocument`` defines its own initializers,
-it does not get a default initializer implementation for ``init()``.
-Providing an empty ``init()`` definition means that there is
-still an ``init()`` method to call when a new document is created via basic initializer syntax.
-
-The second initializer, ``init withTitle()``,
-calls the superclass ``init withTitle()`` method from ``Document``,
-and passes in the new value of ``title``:
-
-::
-
-    init withTitle(title: String) {
-        super.init(withTitle: title)
-    }
-
-As before, the value of ``bodyText`` comes from the property's default value.
-
-Here's how this initializer could be called:
-
-.. testcode:: initializerDelegation
-
-    --> let titled = TextDocument(withTitle: "Write something please")
-    <<< // titled : TextDocument = <TextDocument instance>
-    --> println("\(titled.title):\n\(titled.bodyText)")
-    <-/ Write something please:
-    <-/ [replace me]
-
-The third initializer, ``init withText()``,
-sets the ``bodyText`` property to a new ``text`` value:
-
-::
-
-    init withText(text: String) {
-        bodyText = text
-    }
-
-Because it doesn't call a superclass initializer,
-Swift inserts an implicit ``super.init()`` call at the end of the method.
-This calls the ``init()`` method of the ``Document`` class,
-which in turn calls the ``init withTitle()`` method of the ``Document`` class
-and sets the same placeholder title as before.
-
-Here's how this initializer could be called:
-
-.. testcode:: initializerDelegation
-
-    --> let untitledPangram = TextDocument(
-        withText: "Amazingly few discotheques provide jukeboxes")
-    <<< // untitledPangram : TextDocument = <TextDocument instance>
-    --> println("\(untitledPangram.title):\n\(untitledPangram.bodyText)")
-    <-/ [untitled]:
-    <-/ Amazingly few discotheques provide jukeboxes
-
-The final initializer, ``init withTitle() text()``,
-starts by delegating across to the ``init withTitle()`` method
-provided by ``TextDocument`` itself.
-This in turn delegates up to the ``init withTitle()`` method of the superclass (``Document``).
-It then sets ``bodyText`` to the new ``text`` value.
-
-::
-
-    init withTitle(title: String) text(text: String) {
-        self.init(withTitle: title)
-        bodyText = text
-    }
-
-There's no reason why ``TextDocument`` couldn't have called up to
-the ``init withTitle()`` method of ``Document`` directly.
-The decision to delegate to its *own* ``init withTitle()`` method is mainly a design choice.
-If ``TextDocument`` were to gain new functionality in the future –
-perhaps to insert and update the title at the start of the body text –
-then this functionality would typically be added in its own ``init withTitle()`` method.
-Delegating to its own implementation of the method,
-rather than straight up to the parent method,
-helps to plan for functionality changes in the future.
-
-Here's how this final initializer could be called:
-
-.. testcode:: initializerDelegation
-
-    --> let foxPangram = TextDocument(
-            withTitle: "Quick brown fox",
-            text: "The quick brown fox jumped over the lazy dog")
-    <<< // foxPangram : TextDocument = <TextDocument instance>
-    --> println("\(foxPangram.title):\n\(foxPangram.bodyText)")
-    <-/ Quick brown fox:
-    <-/ The quick brown fox jumped over the lazy dog
-
-.. TODO: Illustrate how the order of things matters when inserting calls to super.init
+.. write-me::
 
 .. _Initialization_DynamicReturnTypes:
 

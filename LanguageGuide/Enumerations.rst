@@ -36,6 +36,9 @@ In addition, enumerations can:
 * conform to :newTerm:`protocols` to provide standard functionality of a certain type
   (as described in :doc:`Protocols`)
 
+.. TODO: this chapter should probably mention that enums without associated values
+   are hashable and equatable by default (and what that means in practice)
+
 .. _Enumerations_EnumerationSyntax:
 
 Enumeration Syntax
@@ -180,8 +183,9 @@ However, it can sometimes be useful for enumeration members to also store
 
 Swift enumerations can be defined to store an associated value of any given type,
 and this type can be different for each member of the enumeration if needed.
-These kinds of associated values are known as
-:newTerm:`tagged unions` or :newTerm:`variants` in other programming languages.
+Enumerations similar to these are known as
+:newTerm:`discriminated unions`, :newTerm:`tagged unions` or :newTerm:`variants`
+in other programming languages.
 
 For example: imagine an inventory tracking system that needs to
 track products using two different types of barcode.
@@ -278,6 +282,8 @@ In addition to associated values,
 enumeration members can also come pre-populated with default values (called :newTerm:`raw values`),
 which are all of the same type.
 
+.. QUESTION: it's not really "in addition to", it's "alternatively" - does this matter?
+
 Here's an example that stores raw ASCII values alongside named enumeration members:
 
 .. testcode:: rawValues
@@ -296,8 +302,10 @@ and are set to some of the more common ASCII control characters.
 Note that raw values are *not* the same as associated values.
 Raw values are set to pre-populated values when the enumeration is first defined in your code,
 like the three ASCII codes above.
-Associated values are only set when you create a new constant or variable
-based on one of the enumeration's members.
+The raw value for a particular enumeration member is always the same.
+Associated values are set when you create a new constant or variable
+based on one of the enumeration's members,
+and can be different each time you do so.
 
 Raw values can be
 strings, characters, or any of the integer or floating-point number types.

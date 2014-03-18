@@ -39,8 +39,8 @@ Language Guide
 * Reworked several other chapters to fit with the new overall structure
 * Moved away from an explicit REPL-like presentation of code examples,
   and added in hand-written comments instead
-* New section on :ref:`Methods_Subscripts`
-* New section about mutating ``self`` in :ref:`enumeration instance methods <Methods_SelfEnumerations>`
+* New section on :doc:`Subscripts`
+* New section about mutating ``self`` in :ref:`enumeration instance methods <Methods_MutatingMethodsForValueTypes>`
 * New sections about :ref:`BasicTypes_PrintingNamedValues`
   and :ref:`BasicTypes_StringInterpolation` in Basic Types
 * Improved examples for :ref:`ControlFlow_While` and :ref:`ControlFlow_Break`,
@@ -80,7 +80,7 @@ Language Guide
 * ``val`` is once again ``let``
 * Destructors are now :ref:`Initialization_Deinitializers`,
   and have an improved and expanded description
-* Added information about the new :ref:`@override attribute <Inheritance_OverridingInstanceMethods>`
+* Added information about the new :ref:`@override attribute <Inheritance_Overriding>`
 * Improved descriptions for :ref:`the implicit self parameter <Methods_TheSelfParameter>`
 * The :ref:`AdvancedOperators_OperatorFunctions` section
   now uses a Vector2D structure instead of a Point

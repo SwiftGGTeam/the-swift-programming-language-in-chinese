@@ -9,6 +9,7 @@ Chapters that have not yet been written are indicated with an [x] after their na
     BasicTypes
     BasicOperators
     Strings
+    CollectionTypes
     ControlFlow
     Functions
     Closures
@@ -16,6 +17,7 @@ Chapters that have not yet been written are indicated with an [x] after their na
     CustomTypes
     Properties
     Methods
+    Subscripts
     Inheritance
     Initialization
     TypeCasting

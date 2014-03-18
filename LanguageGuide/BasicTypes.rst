@@ -16,10 +16,8 @@
     * A brief mention of characters and strings
     * Tuples ✔︎
     * Varargs tuples
-    * Typealiases ✔︎
     * Type inference ✔︎
     * Type casting through type initializers ✔︎
-    * Arrays
     * Optional types ✔︎
     * Pattern binding
     * Literals ✔︎
@@ -31,16 +29,11 @@ Basic Types
 ===========
 
 Swift provides several basic types for working with fundamental values.
-Some of these types will be familiar to C and Objective-C developers:
+These types will be familiar to C and Objective-C developers:
 
-* :newTerm:`Numbers` (including integers and floating-point numbers)
-* :newTerm:`Booleans` (for values that can only be true or false)
-* :newTerm:`Arrays` (for ordered lists of values)
-* :newTerm:`Dictionaries` (for collections of values that can be referenced
-  and looked up via an unique identifier or “key”)
-
-Although these types may be familiar,
-Swift expands their capabilities beyond what is possible in other languages.
+* :newTerm:`Integer numbers`, for numbers without a fractional component
+* :newTerm:`Floating-point numbers`, for numbers with a fractional component
+* :newTerm:`Booleans`, for values that can only be true or false
 
 In addition to these simple types,
 Swift incorporates some less familiar (but very powerful) advanced types:
@@ -51,8 +44,14 @@ Swift incorporates some less familiar (but very powerful) advanced types:
 Each of these types, and the ways in which they can be used,
 are discussed in more detail below.
 
-Swift also provides a powerful and flexible way to create and work with string and character types.
-These are introduced below, and are discussed in more detail in :doc:`Strings`.
+Swift also provides powerful and flexible versions of the following common types:
+
+* :newTerm:`Strings`, for working with text
+  (as introduced below, and discussed in detail in :doc:`Strings`)
+* :newTerm:`Arrays` and :newTerm:`Dictionaries`, for working with collections of values
+  (as described in :doc:`CollectionTypes`)
+* :newTerm:`Enumerations`, for defining multiple values of a similar kind
+  (as described in :doc:`Enumerations`)
 
 .. _BasicTypes_NamedValues:
 
@@ -173,6 +172,10 @@ and attempting to do so will result in an error:
     !!! <REPL Input>:1:14: error: cannot assign to 'let' value 'languageName'
     !!! languageName = "Swift++"
     !!! ~~~~~~~~~~~~ ^
+
+.. QUESTION: should this section mention that Swift-clashing names
+   can be qualified with a backtick (e.g. let `protocol` = 1)?
+   It's of a kind with the contents of this section, but it's pretty damn niche…
 
 .. _BasicTypes_PrintingNamedValues:
 
@@ -675,20 +678,6 @@ and ensures that the intention of a particular section of code is always made cl
    Introducing the LogicValue protocol at this early stage is a bit overkill.
    I'd like to revisit this if time permits, and maybe move this to Control Flow.
 
-.. _BasicTypes_Arrays:
-
-Arrays
-------
-
-.. write-me::
-
-.. _BasicTypes_Dictionaries:
-
-Dictionaries
-------------
-
-.. write-me::
-
 .. _BasicTypes_Tuples:
 
 Tuples
@@ -903,8 +892,6 @@ would be made available as a variable rather than a constant.
     you should declare a constant or variable yourself
     before the ``if``-``else`` statement begins.
 
-.. TODO: Add a section about arrays and dictionaries once their design is more tied down.
-
 .. refnote:: References
 
     * https://[Internal Staging Server]/docs/LangRef.html#integer_literal ✔︎
@@ -920,7 +907,6 @@ would be made available as a variable rather than a constant.
     * https://[Internal Staging Server]/docs/whitepaper/TypesAndValues.html#floating-point-types ✔︎
     * https://[Internal Staging Server]/docs/whitepaper/TypesAndValues.html#bool ✔︎
     * https://[Internal Staging Server]/docs/whitepaper/TypesAndValues.html#tuples
-    * https://[Internal Staging Server]/docs/whitepaper/TypesAndValues.html#arrays
     * https://[Internal Staging Server]/docs/whitepaper/LexicalStructure.html#identifiers-and-operators
     * https://[Internal Staging Server]/docs/whitepaper/LexicalStructure.html#integer-literals
     * https://[Internal Staging Server]/docs/whitepaper/LexicalStructure.html#floating-point-literals

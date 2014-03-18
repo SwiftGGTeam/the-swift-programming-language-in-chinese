@@ -3,7 +3,7 @@ Properties
 
 .. TODO: research and write up the story for @weak
 
-:newTerm:`Properties` are a way to associate multiple values with a particular
+:newTerm:`Properties` are a way to associate values with a particular
 class, structure or enumeration.
 They take one of two forms:
 
@@ -38,30 +38,24 @@ or :newTerm:`constant stored properties` (introduced by the ``let`` keyword):
 
 .. testcode:: storedProperties
 
-    --> struct Count {
-            var current: Int
-            let max: Int
+    --> struct FixedLengthRange {
+            var firstValue: Int
+            let length: Int
         }
-    --> var countToThree = Count(current: 0, max: 3)
-    <<< // countToThree : Count = Count(0, 3)
-    --> for _ in countToThree.current...countToThree.max {
-            println(++countToThree.current)
-        }
-    <-/ 1
-    <-/ 2
-    <-/ 3
+    --> var rangeOfThreeItems = FixedLengthRange(firstValue: 0, length: 3)
+    <<< // rangeOfThreeItems : FixedLengthRange = FixedLengthRange(0, 3)
+    /// the range represents integer values 0, 1, and 2
+    --> rangeOfThreeItems.firstValue = 6
+    /// the range now represents integer values 6, 7, and 8
 
-This example defines a simple ``Count`` structure for keeping track of a counter.
-Instances of ``Count`` have a variable stored property called ``current``,
-and a constant stored property called ``max``.
-In the example above, ``max`` is initialized when the new counter is created,
+This example defines a structure called ``FixedLengthRange``,
+which describes a range of integers
+whose range length cannot be changed once it has been created.
+Instances of ``FixedLengthRange`` have
+a variable stored property called ``firstValue``,
+and a constant stored property called ``length``.
+In the example above, ``length`` is initialized when the new range is created,
 and cannot be changed thereafter, because it is a constant property.
-
-The example uses a ``for``-``in`` loop to iterate over a half-closed range
-that runs from the counter's ``current`` property value
-to the counter's ``max`` property value.
-Each time through the loop, the ``current`` property is incremented,
-and the result is printed.
 
 Constant stored properties are very similar to constant named values,
 in that their value cannot be changed once it has been initialized.
@@ -69,6 +63,48 @@ Constant stored properties have slightly more flexibility, however,
 in that their value can be changed at any point until the initializer for
 the class or structure they belong to has completed its initialization.
 (Instance initialization is described in more detail in :doc:`Initialization`.)
+
+.. _Properties_StoredPropertiesOfConstantStructureInstances:
+
+Stored Properties of Constant Structure Instances
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you create an instance of a structure,
+and assign that instance to a constant,
+you will *not* be able to modify its properties,
+even if they were declared as variable properties:
+
+.. testcode:: storedProperties
+
+    --> let rangeOfFourItems = FixedLengthRange(firstValue: 0, length: 4)
+    <<< // rangeOfFourItems : FixedLengthRange = FixedLengthRange(0, 4)
+    /// this range represents integer values 0, 1, 2, and 3
+    --> rangeOfFourItems.firstValue = 6
+    !!! <REPL Input>:1:29: error: cannot assign to the result of this expression
+    !!! rangeOfFourItems.firstValue = 6
+    !!! ~~~~~~~~~~~~~~~~~~~~~~~~~~~ ^
+    /// this will report an error, even thought firstValue is a variable property
+
+Because ``rangeOfFourItems`` has been declared as a constant (with the ``let`` keyword),
+it is not possible to change its ``firstValue`` property,
+even though it is a variable property.
+
+This behavior is due to the fact that structures are :ref:`CustomTypes_ValueTypes`.
+When an instance of a value type is marked as being a constant,
+so are all of its properties.
+
+The same is not true for classes, which are :ref:`CustomTypes_ReferenceTypes`.
+If you asign an instance of a reference type to a constant,
+you can still change that instance's variable properties.
+
+.. TODO: this explanation could still do to be improved.
+
+.. QUESTION: the same is actually true for computed properties of structures too
+   (which surprised me, as they don't have storage).
+   Does this mean I should mention it again later on?
+   For now, I've deliberately said "properties" rather than "stored properties"
+   in the first paragraph of this section, to set expectations.
+   (I've also asked whether this is intentional, in rdar://16338553.)
 
 .. _Properties_StoredPropertiesAndInstanceVariables:
 
@@ -93,8 +129,6 @@ is defined in a single location as part of the type's definition.
 
 .. TODO: How do I define whether my properties are strong- or weak-reference?
 .. TODO: what happens if one property of a constant structure is an object reference?
-.. TODO: immutability of value type constants means that
-   their mutable properties are also immutable
 
 .. _Properties_StoredPropertyObservers:
 
@@ -131,7 +165,7 @@ Here's an example of ``willSet`` and ``didSet`` in action:
 .. testcode:: storedProperties
 
     --> class StepCounter {
-            var totalSteps: Int {
+            var totalSteps: Int = 0 {
                 willSet(newTotalSteps) {
                     println("About to set totalSteps to \(newTotalSteps)")
                 }
@@ -140,9 +174,6 @@ Here's an example of ``willSet`` and ``didSet`` in action:
                         println("Added \(totalSteps - oldValue) steps")
                     }
                 }
-            }
-            init() {
-                totalSteps = 0
             }
         }
     --> let stepCounter = StepCounter()
@@ -369,3 +400,9 @@ Type Properties
 .. mention that type methods can access type properties (and other type methods?)
    without needing to reference the type's name,
    as they also get an implicit ``self`` parameter.
+.. as it stands, this is the first time I'll mention .dynamicType (assuming I do)
+   is this the right place to introduce it?
+.. mention that you can get at type properties a few different ways:
+   TypeName.propertyName; someInstance.dynamicType.propertyName;
+   just plain old propertyName if you're already at a type level in that type
+   (likewise for methods in the methods chapter)
