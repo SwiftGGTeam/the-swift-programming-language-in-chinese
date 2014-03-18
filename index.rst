@@ -19,6 +19,34 @@ Contents
 Change Log
 ----------
 
+March 18 2014
+~~~~~~~~~~~~~
+
+Language Guide
+++++++++++++++
+
+* Added a new chapter about :doc:`LanguageGuide/CollectionTypes`
+* Rewritten much of the :doc:`LanguageGuide/Initialization` chapter to clarify the rules about property initialization
+* Removed all information about Initializer Delegation, because it's no longer correct
+  (and a new version about designated and convenience initializers has not yet been written)
+* Added a new section about the fact that you can't set
+  :ref:`stored properties of constant structure instances
+  <Properties_StoredPropertiesOfConstantStructureInstances>`
+* New sections on :ref:`Protocols_AddingProtocolConformanceWithExtensions`,
+  :ref:`Protocols_CollectionsOfProtocolTypes`,
+  and :ref:`Protocols_ProtocolInheritance`
+* ``self`` is now a :ref:`property of every value in Swift <Methods_TheSelfProperty>` –
+  updated the Methods chapter to match,
+  and rewritten much of the information about ``mutating`` to focus it on
+  :ref:`Methods_MutatingMethodsForValueTypes`
+* Simplified the example of :ref:`read-only subscript <Subscripts_SubscriptSyntax>`
+* :ref:`CustomTypes_DefiningClassesAndStructures` no longer uses
+  a Rectangle as an example for a custom class type
+* Added a short section on :ref:`type aliases <CustomTypes_TypeAliases>`
+  (as used in a non-Generics context)
+* Clarified what can be :ref:`overridden <Inheritance_Overriding>`
+* Moved :doc:`LanguageGuide/Subscripts` into its own chapter
+
 March 12 2014
 ~~~~~~~~~~~~~
 
@@ -39,7 +67,7 @@ Language Guide
 * Reworked several other chapters to fit with the new overall structure
 * Moved away from an explicit REPL-like presentation of code examples,
   and added in hand-written comments instead
-* New section on :doc:`Subscripts`
+* New section on :doc:`LanguageGuide/Subscripts`
 * New section about mutating ``self`` in :ref:`enumeration instance methods <Methods_MutatingMethodsForValueTypes>`
 * New sections about :ref:`BasicTypes_PrintingNamedValues`
   and :ref:`BasicTypes_StringInterpolation` in Basic Types
@@ -81,7 +109,7 @@ Language Guide
 * Destructors are now :ref:`Initialization_Deinitializers`,
   and have an improved and expanded description
 * Added information about the new :ref:`@override attribute <Inheritance_Overriding>`
-* Improved descriptions for :ref:`the implicit self parameter <Methods_TheSelfParameter>`
+* Improved descriptions for :ref:`the implicit self parameter <Methods_TheSelfProperty>`
 * The :ref:`AdvancedOperators_OperatorFunctions` section
   now uses a Vector2D structure instead of a Point
 * Clarified that structures can also assign to ``self`` within an initializer
@@ -95,7 +123,7 @@ Language Guide
 
 * New section on :doc:`LanguageGuide/TypeCasting`
 * New section on :ref:`Initialization_Deinitializers`
-* New section on :ref:`self <Methods_TheSelfParameter>` and ``mutating`` structure methods
+* New section on :ref:`self <Methods_TheSelfProperty>` and ``mutating`` structure methods
 * :ref:`Properties_StoredPropertyObservers` and :ref:`Properties_ComputedProperties` now all use curly braces
 * Information about the :ref:`BasicOperators_ClosedRangeOperator` (``..``)
 * Re-ordered the :doc:`LanguageGuide/ControlFlow` chapter
