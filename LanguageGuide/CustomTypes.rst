@@ -135,7 +135,7 @@ Stored properties are named values that are bundled up and stored
 as part of the class or structure,
 and are described in detail in :doc:`Properties`.
 These two properties are inferred to be of type ``Int``
-by setting them to an initial floating-point value of ``0``.
+by setting them to an initial integer value of ``0``.
 
 The example above also defines a new class called ``VideoMode``,
 to describe a specific video mode for video display.
