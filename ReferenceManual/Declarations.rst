@@ -369,18 +369,8 @@ the value of a computed named value or a computed property is not stored in memo
 For more information and to see examples of computed properties,
 see :ref:`Properties_ComputedProperties`.
 
-You can also declare computed properties in the context of a protocol declaration.
-These computed properties have the following form:
-
-.. syntax-outline::
-
-    var <#variable name#> : <#type#> { get set }
-
-Computed properties in protocols only declare the getter and setter requirements for types
-that conform to the protocol. As a result, you don't implement the getter or setter
-directly in the protocol in which it is declared.
-
-As with other computed properties, the setter clause is optional.
+You can also declare properties in the context of a protocol declaration,
+as described in :ref:`Declarations_ProtocolPropertyDeclaration`.
 
 .. TODO: Need to discuss class and static variable properties.
 
@@ -631,9 +621,9 @@ This alternative uses "signature" instead of "method" or "selector", but still u
     function-specifier --> ``static`` | ``class``
     function-name --> identifier | operator
 
-    function-signature --> function-parameters function-signature-result-OPT
+    function-signature --> function-parameters function-result-OPT
     function-parameters --> tuple-patterns | selector-parameters
-    function-signature-result --> ``->`` attribute-list-OPT type
+    function-result --> ``->`` attribute-list-OPT type
 
     selector-parameters --> ``(`` tuple-pattern-element ``)`` selector-tuples
     selector-tuples --> selector-name ``(`` tuple-pattern-element ``)`` selector-tuples-OPT
@@ -1028,18 +1018,25 @@ By default, types that conform to a protocol must implement all of the
 properties, methods, initializers, and subscripts declared in the protocol.
 That said, you can mark these protocol member declarations with the ``optional`` attribute
 to specify that their implementation by a conforming type is optional.
-
-.. TODO: Maybe discuss trying to access an optional member that you're
-    not sure is implemented by a type.
+For more information about how to use the ``optional`` attribute
+and for guidance about how to access optional protocol members---
+for example, when you're not sure if a conforming type implements them---
+see :ref:`Protocols_OptionalRequirements`.
 
 If you want to restrict the adoption of a protocol to class types only,
 you can mark the entire protocol declaration with the ``class_protocol`` attribute.
 Any protocol that inherits from a protocol marked with the ``class_protocol`` attribute
 can likewise be adopted only by a class type.
 
-.. Still to cover at the top-level:
-    Using protocols as types
-    Delegates
+Protocols are named types, and as a result they can appear in all the same places
+in you code, as discussed in :ref:`Protocols_UsingProtocolsAsTypes`. That said,
+you can't construct an instance of a protocol,
+because protocols do not actually provide the implementations for the requirements
+they specify.
+
+Protocols can also be used to declare the methods a delegate of a class or structure
+should implement, as described in :ref:`Protocols_Delegates`.
+
 
 .. langref-grammar
 
@@ -1070,6 +1067,41 @@ can likewise be adopted only by a class type.
 Protocol Property Declaration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Protocols declare that conforming types must implement a property
+by including a :newTerm:`protocol property declaration`
+in the body of the protocol declaration.
+Protocol property declarations have a special form of a variable
+declaration:
+
+.. syntax-outline::
+
+    var <#property name#> : <#type#> { get set }
+
+As with other protocol member declarations, these property declarations
+only declare the getter and setter requirements for types
+that conform to the protocol. As a result, you don't implement the getter or setter
+directly in the protocol in which it is declared.
+
+The getter and setter requirements can be satisfied by a conforming type in a variety of ways.
+If the property declaration includes both the ``get`` and ``set`` keywords,
+a conforming type can implement it with a variable stored property
+or a computed property that is both readable and writeable
+(that is, one that implements both a getter and a setter).
+It can't be implemented as a constant stored property
+or a read-only computed property. If the property declaration includes
+only the ``get`` keyword, it can be implemented as any kind of property at all.
+To see examples of conforming types that implement the property requirements of a protocol,
+see :ref:`Protocols_InstanceProperties`.
+
+To declare a class or static property requirement in a protocol declaration,
+mark the property declaration with the ``class`` keyword. Classes that implement
+this property also declare the property with the ``class`` keyword. Structures
+that implement it must declare the property with the ``static`` keyword instead.
+If you're implementing the property in an extension,
+use the ``class`` keyword if you're extending a class and the ``static`` keyword
+if you're extending a structure.
+
+See also :ref:`Declarations_VariableDeclaration`.
 
 .. syntax-grammar::
 
@@ -1083,6 +1115,26 @@ Protocol Property Declaration
 Protocol Method Declaration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Protocols declare that conforming types must implement a method
+by including a :newTerm:`protocol method declaration`
+in the body of the protocol declaration. Protocol method declarations have the same form as
+function declarations, with two exceptions: They don't include a function body,
+and you can't provide any default parameter values as part of the function declaration.
+To see examples of conforming types that implement the method requirements of a protocol,
+see :ref:`Protocols_InstanceMethods`.
+
+As with protocol property declarations,
+to declare a class or static method requirement in a protocol declaration,
+mark the method declaration with the ``class`` keyword. Classes that implement
+this method also declare the method with the ``class`` keyword. Structures
+that implement it must declare the method with the ``static`` keyword instead.
+If you're implementing the method in an extension,
+use the ``class`` keyword if you're extending a class and the ``static`` keyword
+if you're extending a structure.
+
+:ref:`Declarations_FunctionDeclaration`
+
+.. TODO: Talk about using ``Self`` in parameters and return types.
 
 .. syntax-grammar::
 
@@ -1096,6 +1148,14 @@ Protocol Method Declaration
 Protocol Initializer Declaration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Protocols declare that conforming types must implement an initializer
+by including a :newTerm:`protocol initializer declaration`
+in the body of the protocol declaration. Protocol initializer declarations have the same form as
+initializer declaration, except they don't include the initializer's body.
+To see examples of conforming types that implement the initializer requirements of a protocol,
+see :ref:`Protocols_Initializers`.
+
+See also :ref:`Declarations_InitializerDeclaration`.
 
 .. syntax-grammar::
 
@@ -1109,6 +1169,24 @@ Protocol Initializer Declaration
 Protocol Subscript Declaration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Protocols declare that conforming types must implement a subscript
+by including a :newTerm:`protocol subscript declaration`
+in the body of the protocol declaration.
+Protocol property declarations have a special form of a subscript declaration:
+
+.. syntax-outline::
+
+    subscript (<#parameters#>) -> <#return type#> { get set }
+
+Subscript declarations only declare the minimum getter and setter implementation
+requirements for types that conform to the protocol.
+If the subscript declaration includes both the ``get`` and ``set`` keywords,
+a conforming type must implement both a getter and a setter clause.
+If the subscript declaration includes only the ``get`` keyword,
+a conforming type must implement *at least* a getter clause
+but is also free to implement a setter clause if desired.
+
+See also :ref:`Declarations_SubscriptDeclaration`.
 
 .. syntax-grammar::
 
@@ -1122,6 +1200,11 @@ Protocol Subscript Declaration
 Protocol Associated Type Declaration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+.. write-me:: Need to discuss with Dave what we want to call these things
+    and where he plans on covering them.
+
+See also :ref:`Declarations_TypealiasDeclaration`.
+
 .. syntax-grammar::
 
     Grammar of a protocol associated type declaration
@@ -1134,19 +1217,67 @@ Protocol Associated Type Declaration
 Initializer Declaration
 -----------------------
 
+An :newTerm:`initializer declaration` introduces an initializer for a class,
+structure, or enumeration into your program.
+
+Initializer declarations are declared using the keyword ``init`` and have
+two basic forms. Similar to the syntax of function declarations,
+initializer declarations can be declared using function-style and selector-style syntax.
+Unlike function declarations, initializer declarations don't have a name
+and can have only one kind of return type, as described below.
+
+Structure, enumeration, and class types can have any numer of initializers,
+but the rules and associated behavior for class initializers are different.
+Unlike structures and enumerations, classes have two kinds of initializers:
+designated initializers and convenience initializers,
+as described in :doc:`../LanguageGuide/Initialization`.
+
+The first form (shown in function-style syntax)
+is used to declare initializers for structures, enumerations,
+and designated initializers of classes and has the following form:
+
 .. syntax-outline::
 
     init(<#parameter name#>: <#parameter type#>) {
         <#statements#>
     }
 
+Initializers in structures and enumerations can call other declared initializers
+to delegate part or all of the initialization process.
+
+A designated initializer of a class is responsible for initializing
+all of the class's properties directly. It can't call any other initializers
+of the same class, and if the class has a superclass, it must call one of
+the superclass's designated initializers.
+If the class inherits any properties from its superclass, one of the
+superclass's designated initializers must be called before any of these
+properties can be set or modified in the current class.
+
+The second form (also shown in function-style syntax) is used to declare
+convenience initializers for classes and has the following form:
+
 .. syntax-outline::
 
-    init <#selector keyword 1#>(<#parameter name 1#>: <#parameter type 1#>)
-         <#selector keyword 2#>(<#parameter name 2#>: <#parameter type 2#>)
-    }
+    init(<#parameter name#>: <#parameter type#>) -> Self {
         <#statements#>
     }
+
+Convenience initializers always have a return type of ``Self``
+and can delegate the initialization process to another
+convenience initializer or to one of the class's designated initializers.
+That said, the initialization processes must end with a call to a designated
+initializer that ultimately initializes the class's properties.
+Convenience initializers can't call a superclass's initializers.
+
+You can mark designated and convenience initializers with the ``required``
+attribute to require that every subclass implement the initializer.
+Because designated initializers are not inherited by subclasses,
+they must be implemented directly. Required convenience initializers can be implemented
+explicitly or inherited when the subclass implements all of the superclass's
+designated initializers.
+
+To see examples of initializers in various type declarations,
+see :doc:`../LanguageGuide/Initialization`.
 
 .. TODO: Revisit the selector-style initializer syntax-outline
     after we've nailed down the syntax-outline for selector-style function declarations.
@@ -1163,7 +1294,10 @@ Initializer Declaration
 
     initializer-declaration --> initializer-head generic-parameter-clause-OPT initializer-signature initializer-body
     initializer-head --> attribute-list-OPT ``init``
-    initializer-signature --> tuple-pattern | selector-tuples
+
+    initializer-signature --> initializer-parameters initializer-result-OPT
+    initializer-parameters --> tuple-pattern | selector-tuples
+    initializer-result --> ``->`` ``Self``
     initializer-body --> code-block
 
 
@@ -1331,20 +1465,11 @@ as long as the *parameters* or the *return* type differ from the one you're over
 You can also override a subscript declaration inherited from a superclass. When you do so,
 you must mark the overridden subscript declaration with an ``override`` attribute (``@override``).
 
-You can also declare subscripts in the context of a protocol declaration.
-These subscript declarations have the following form:
-
-.. syntax-outline::
-
-    subscript (<#parameters#>) -> <#return type#> { get set }
-
-Subscript declarations in protocols only declare the getter and setter
-requirements for types that conform to the protocol.
-As a result, you don’t implement the getter or setter directly in the protocol in which it is declared.
-As with computed properties, the setter clause is optional.
+You can also declare subscripts in the context of a protocol declaration,
+as described in :ref:`Declarations_ProtocolSubscriptDeclaration`.
 
 For more information about subscripting and to see examples of subscript declarations,
-see :ref:`Methods_Subscripts`.
+see :doc:`../LanguageGuide/Subscripts`.
 
 .. langref-grammar
     decl-subscript ::= subscript-head '{' get-set '}'
