@@ -47,6 +47,18 @@ Language Guide
 * Clarified what can be :ref:`overridden <Inheritance_Overriding>`
 * Moved :doc:`LanguageGuide/Subscripts` into its own chapter
 
+Reference Manual
+++++++++++++++++
+
+* Added a draft of the :doc:`ReferenceManual/Declarations` chapter.
+  There are still a few placeholder sections in this chapter.
+* The grammar for attributes has been removed from
+  the :doc:`ReferenceManual/Declarations` chapter and given its own chapter,
+  :doc:`ReferenceManual/Attributes`. This chapter currently contains grammar only.
+* **NOTE:** The grammar in the :doc:`ReferenceManual/Expressions`
+  chapter is out of date. It will be updated shortly.
+
+
 March 12 2014
 ~~~~~~~~~~~~~
 
