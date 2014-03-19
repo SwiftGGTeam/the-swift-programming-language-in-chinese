@@ -171,7 +171,7 @@ because its properties cannot be changed, even if they are variable properties
 .. testcode:: selfStructures
 
     --> let fixedPoint = Point(3.0, 3.0)
-    <<< fixedPoint : Point = Point(3.0, 3.0)
+    <<< // fixedPoint : Point = Point(3.0, 3.0)
     --> fixedPoint.moveBy(2.0, 3.0)
     !!! <REPL Input>:1:1: error: 'Point' does not have a member named 'moveBy'
     !!! fixedPoint.moveBy(2.0, 3.0)
