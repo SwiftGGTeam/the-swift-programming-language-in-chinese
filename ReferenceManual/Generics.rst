@@ -1,10 +1,24 @@
 Generics
 ========
 
+.. write-me:: Need to write an introduction.
+    Should probably mention associated types at this level.
+
+.. TODO: Verify the grammar for both of these sections.
+
+.. Resources to look at:
+    swift/docs/Generics.html
+    swift/lib/Parse/ParseGeneric.cpp
+    swift/include/swift/AST/Decl.h
+    Various test files in swift/test
+
+
 .. _Generics_GenericParameterClause:
 
 Generic Parameter Clause
 ------------------------
+
+.. write-me::
 
 .. langref-grammar
 
@@ -39,10 +53,13 @@ Generic Parameter Clause
     otherwise, you'd have a syntactic ambiguity
     (a comma separated list types inside of a comma separated list of requirements).
 
+
 .. _Generics_GenericArgumentClause:
 
 Generic Argument Clause
 -----------------------
+
+.. write-me::
 
 .. langref-grammar
 
