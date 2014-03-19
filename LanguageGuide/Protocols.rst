@@ -156,7 +156,7 @@ Here's a more complex class, which also conforms to the ``FullyNamed`` protocol:
 This class implements ``fullName`` as a computed read-only property for a starship.
 Each ``Starship`` class instance stores a mandatory ``name``, and an optional ``prefix``.
 The ``fullName`` property uses the ``prefix`` value if it exists,
-and prepends it on to the beginning of ``name`` to create a full name for the starship.
+and prepends it to the beginning of ``name`` to create a full name for the starship.
 
 .. TODO: add some advice on how protocols should be named
 
@@ -169,7 +169,7 @@ Protocols can require specific instance methods to be implemented by conforming 
 These methods are written as part of the protocol's definition
 in exactly the same way as for a normal instance method definition,
 but without curly braces or a method body.
-Variadic parameters are allowed,
+:ref:`Functions_VariadicParameters` are allowed,
 subject to the same rules as for normal instance methods.
 
 .. note::
@@ -350,6 +350,9 @@ any type that wants to be able to observe and track the progress of a ``DiceGame
 .. QUESTION: should DiceGame be a protocol, or a base class?
    I figure a base class wouldn't actually be playable,
    but I want some common type to pass to the delegate.
+
+.. QUESTION: should DiceGame be called something like “Playable” instead,
+   and used as an opportunity to talk about protocol naming?
 
 Here's a version of the *Snakes and Ladders* game from the :doc:`ControlFlow` chapter,
 adapted to use a ``Dice`` instance for its dice-rolls;
