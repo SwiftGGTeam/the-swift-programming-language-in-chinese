@@ -223,7 +223,7 @@ In Swift, an enumeration to define product barcodes of either type might look li
 
 This can be read as:
 
-“Declare an enumeration type called ``Barcode``,
+“Define an enumeration type called ``Barcode``,
 that can take either a value of ``UPCA`` with an associated value of type (``Int``, ``Int``, ``Int``),
 or a value of ``QRCode`` with an associated value of type ``String``.”
 
@@ -295,7 +295,7 @@ Here's an example that stores raw ASCII values alongside named enumeration membe
         }
 
 Here, the raw values for an enumeration called ``ASCIIControlCharacter``
-are declared to be of type ``UnicodeScalar``,
+are defined to be of type ``UnicodeScalar``,
 and are set to some of the more common ASCII control characters.
 (``UnicodeScalar`` values are described in more detail in :doc:`Strings`.)
 

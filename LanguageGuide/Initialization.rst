@@ -222,7 +222,7 @@ Optional Property Values
 
 If your custom type has a stored property that cannot be known during initialization,
 or that is logically allowed to have “no value yet”,
-it should be declared as having an optional type,
+that property should be declared as having an optional type,
 and initialized with a value of ``.None`` as part of its declaration.
 This makes it clear that the property is
 deliberately intended to have “no value yet” during initialization,

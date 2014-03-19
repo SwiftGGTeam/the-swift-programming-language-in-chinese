@@ -39,8 +39,8 @@ a ``String`` value called ``personName`` –
 and returns an output ``String`` value containing a greeting for that person.
 
 All of this information is rolled up into the function's :newTerm:`declaration`.
-Functions are declared using the ``func`` keyword.
-This example declares a function called ``sayHello`` that accepts a single parameter called ``personName``,
+Functions are defined using the ``func`` keyword.
+This example defines a function called ``sayHello`` that accepts a single parameter called ``personName``,
 which is of type ``String``.
 The function returns a ``String`` value when it is done,
 as indicated by the :newTerm:`return operator` ``->``
@@ -478,7 +478,7 @@ and expect that change to be visible outside of the function.
 
 However, it can sometimes be useful for a function to have
 a variable copy of a parameter's value to work with.
-One approach would be to define a new variable yourself within the function,
+One approach would be to declare a new variable yourself within the function,
 and copy the parameter's value in to it.
 To simplify this process, Swift enables you to specify
 one or more parameters as :newTerm:`variable parameters` instead.
@@ -505,7 +505,7 @@ Variable parameters are declared by prefixing the parameter name with the keywor
     /-> originalString is still equal to \"\(originalString)\"
     <-/ originalString is still equal to "hello"
 
-This example declares a new function called ``alignRight``,
+This example defines a new function called ``alignRight``,
 which aligns an input string to the right-hand edge of a longer output string.
 Any space on the left is filled with a specified padding character.
 In this example, the string ``"hello"`` is converted to the string ``"-----hello"``.
@@ -568,7 +568,7 @@ and can be used anywhere that a ``Sequence`` is valid.
 
 .. note::
 
-    A function may define at most one variadic parameter,
+    A function may have at most one variadic parameter,
     and it must always appear last in the parameters list,
     to avoid ambiguity when calling the function with multiple parameters.
 
@@ -589,7 +589,7 @@ Swift also supports a second declaration syntax known as
 This syntax follows a similar style to Objective-C messaging.
 The function name is written as a series of separate :newTerm:`selector parts`.
 Each selector part has a corresponding parameter name and type,
-and has its own set of parentheses when declared.
+and has its own set of parentheses when defined.
 
 Here's how the string-joining function from above could be written
 as a selector-style declaration:

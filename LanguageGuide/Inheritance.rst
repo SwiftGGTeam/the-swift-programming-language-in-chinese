@@ -101,7 +101,7 @@ and is able to tailor those characteristics (and add new ones) to suit its needs
    Bicycle doesn't inherit Vehicle's initializer, because it provides its own.
    Does this matter for the purposes of this description?
 
-The ``Bicycle`` class also declares an initializer
+The ``Bicycle`` class also defines an initializer
 to set up its tailored characteristics.
 The initializer for ``Bicycle`` starts by calling ``super.init()``.
 This calls the initializer for ``Bicycle``\ 's superclass, ``Vehicle``,
@@ -207,7 +207,7 @@ This helps to ensure that your overriding definition is correct.
 .. QUESTION: have I introduced the concept of "attributes" by this point?
    If not, when / where should I do so?
 
-The following example declares a new subclass of ``Vehicle``, called ``Car``:
+The following example defines a new subclass of ``Vehicle``, called ``Car``:
 
 .. testcode:: inheritance
 

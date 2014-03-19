@@ -309,7 +309,7 @@ it performs :newTerm:`type checks` when compiling your code.
 Any mismatched types are flagged as errors so that you can fix them.
 
 Type-checking helps to avoid accidental errors when you're working with different types of values.
-However, this doesn't mean that you have to define the type of
+However, this doesn't mean that you have to specify the type of
 every constant and variable that you declare.
 If you don't specify the type of value you need,
 Swift will use :newTerm:`type inference` to work out the appropriate type.

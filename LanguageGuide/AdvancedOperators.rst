@@ -789,7 +789,7 @@ and returns the result.
 Custom Operators
 ~~~~~~~~~~~~~~~~
 
-You can define your own :newTerm:`custom operators` in addition to
+You can declare and implement your own :newTerm:`custom operators` in addition to
 the standard operators provided by Swift.
 Custom operators can be defined using the characters ``/ = - + * % < > ! & | ^ ~ .`` only.
 

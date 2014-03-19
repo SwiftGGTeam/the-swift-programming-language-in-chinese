@@ -633,7 +633,7 @@ Type Aliases
 
 :newTerm:`Type aliases` are a way to define an alternative name
 (or :newTerm:`alias`) for an existing type.
-Type aliases are declared with the ``typealias`` keyword:
+Type aliases are defined with the ``typealias`` keyword:
 
 .. testcode:: nestedTypesAndTypeAlias
 
@@ -641,7 +641,7 @@ Type aliases are declared with the ``typealias`` keyword:
 
 Type aliases can be useful when you want to refer to an existing type
 by a name that is contextually more appropriate.
-Once you have declared a type alias,
+Once you have defined a type alias,
 you can use the alias anywhere you might use the original name:
 
 .. testcode:: nestedTypesAndTypeAlias

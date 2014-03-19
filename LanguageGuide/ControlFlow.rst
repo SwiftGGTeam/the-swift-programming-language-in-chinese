@@ -239,7 +239,7 @@ This is effectively shorthand for (and equivalent to):
         <#increment#>
     }
 
-Named values defined within the initialization expression
+Named values declared within the initialization expression
 (such as ``var index = 0``)
 are only valid within the scope of the for loop itself.
 If you want to retrieve the final value of ``index`` after the loop ends,

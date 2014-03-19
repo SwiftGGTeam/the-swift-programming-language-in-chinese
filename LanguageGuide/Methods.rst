@@ -45,7 +45,7 @@ It defines three instance methods:
 * ``incrementBy(amount: Int)``, which increments the counter by an arbitrary integer amount, and
 * ``reset()``, which resets the counter back to zero
 
-It also defines a variable property, ``count``,
+It also declares a variable property, ``count``,
 for keeping track of the current counter value.
 
 Instance methods are called using the same dot syntax as properties:
