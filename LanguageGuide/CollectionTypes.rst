@@ -205,11 +205,16 @@ and so the value at index ``0`` is once again equal to ``"Six eggs"``:
    how many of them should be listed here?
    I'm holding off writing about any more of them until NewArray lands.
 
+.. _CollectionTypes_CreatingAnEmptyArray:
+
+Creating an Empty Array
+~~~~~~~~~~~~~~~~~~~~~~~
+
 If you want to create an empty ``Array`` of a certain type,
 without setting any initial values,
 you can do so using initializer syntax:
 
-.. testcode:: arrays
+.. testcode:: arraysEmpty
 
     --> var someInts = Array<Int>()
     <<< // someInts : Array<Int> = []
@@ -218,6 +223,18 @@ you can do so using initializer syntax:
 
 Note that the type of the ``someInts`` variable has been inferred to be ``Array<Int>``,
 because it was set to the output of an ``Array<Int>`` initializer.
+
+As an alternative, if the context already provides type information –
+such as a function argument, or an already-typed variable or constant –
+an empty array can be created by using an empty array literal:
+
+.. testcode:: arraysEmpty
+
+    --> someInts.append(3)
+    /-> someInts now contains \(someInts.count) value of type Int
+    <-/ someInts now contains 1 value of type Int
+    --> someInts = []
+    /// someInts is now an empty array, but is still of type Int
 
 .. TODO: func find<T : Equatable>(array: T[], value: T) -> Int?
    This is defined in Algorithm.swift,
@@ -455,6 +472,36 @@ You can remove a key-value pair from the dictionary by using the ``deleteKey()``
     >>>     println("The key-value pair for APL has now been deleted.")
     >>> }
     <-/ The key-value pair for APL has now been deleted.
+
+.. _CollectionTypes_CreatingAnEmptyDictionary:
+
+Creating an Empty Dictionary
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+As with arrays, if you want to create an empty ``Dictionary`` of a certain type,
+you can do so using initializer syntax:
+
+.. testcode:: dictionariesEmpty
+
+    --> var namesOfIntegers = Dictionary<Int, String>()
+    <<< // namesOfIntegers : Dictionary<Int, String> = Dictionary<Int, String>(1.33333, 0, <DictionaryBufferOwner<Int, String> instance>)
+    /// namesOfIntegers is an empty Dictionary<Int, String>
+
+This example creates an empty dictionary of type ``Int``, ``String``
+to store human-readable names of integer values.
+Its keys are of type ``Int``, and its values are of type ``String``.
+
+If the context already provides type information,
+an empty dictionary can be created by using an empty dictionary literal,
+which is written as ``[:]``, like this:
+
+.. testcode:: dictionariesEmpty
+
+    --> namesOfIntegers[16] = "sixteen"
+    /-> namesOfIntegers now contains \(namesOfIntegers.count) key-value pair
+    <-/ namesOfIntegers now contains 1 key-value pair
+    --> namesOfIntegers = [:]
+    /// namesOfIntegers is once again an empty dictionary of type Int, String
 
 .. TODO: write about itemsAsArray() -> Element[]
 .. TODO: Mention that "==" will consider two dictionaries to be the same
