@@ -1126,7 +1126,7 @@ to reflect the fact that you must land exactly on square 25:
 The dice is rolled at the start of each loop.
 Rather than moving the player immediately,
 a ``switch`` statement is used to consider the result of the move,
-and to work out if should be allowed to take the place:
+and to work out if should be allowed to take place:
 
 * If the dice roll will move the player onto the final square,
   the game is effectively over.
