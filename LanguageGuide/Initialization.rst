@@ -120,7 +120,7 @@ it is available automatically for all classes and structures without their own i
 Memberwise Structure Initializers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. HACK: this is currently duplicated in CustomTypes.
+.. HACK: this is currently duplicated in ClassesAndStructures.
 
 .. TODO: mention that structures and enums can assign a value to self during initialization,
    but classes cannot.

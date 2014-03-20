@@ -747,7 +747,7 @@ If your data structure would benefit from named member values,
 or is likely to persist beyond a temporary scope,
 it should be modeled as a :newTerm:`class` or :newTerm:`structure`,
 rather than as a tuple.
-These are described in detail in :doc:`CustomTypes`.
+These are described in detail in :doc:`ClassesAndStructures`.
 
 .. _BasicTypes_Optionals:
 

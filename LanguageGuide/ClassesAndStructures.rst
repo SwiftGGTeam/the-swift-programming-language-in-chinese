@@ -29,8 +29,8 @@
     * @conversion functions for converting between types
     * Subscript getters and setters
 
-Custom Types
-============
+Classes and Structures
+======================
 
 Enumerations, as introduced in the previous chapter,
 give a way to define your own custom types to work with lists of values.
@@ -66,7 +66,7 @@ In addition, classes have several capabilities that structures and enumerations 
 * :newTerm:`deinitializers`, which enable an instance of a class to clean up after itself
   (as described in :doc:`Initialization`)
 
-.. _CustomTypes_DefiningClassesAndStructures:
+.. _ClassesAndStructures_DefiningClassesAndStructures:
 
 Defining Classes and Structures
 -------------------------------
@@ -81,7 +81,7 @@ automatically made available for other code to use.
 .. TODO: add a note here about public and private interfaces,
    once we know how these will be declared in Swift.
 
-.. _CustomTypes_DefinitionSyntax:
+.. _ClassesAndStructures_DefinitionSyntax:
 
 Definition Syntax
 ~~~~~~~~~~~~~~~~~
@@ -91,7 +91,7 @@ Classes are introduced by the ``class`` keyword,
 and structures are introduced by the ``struct`` keyword.
 Both place their entire definition within a pair of braces:
 
-.. testcode:: customTypes
+.. testcode:: ClassesAndStructures
 
     --> class SomeClass {
             // class definition goes here
@@ -115,7 +115,7 @@ Both place their entire definition within a pair of braces:
 
 Here's an example of a structure definition and a class definition:
 
-.. testcode:: customTypes
+.. testcode:: ClassesAndStructures
 
     --> struct Resolution {
             var width = 0
@@ -149,7 +149,7 @@ a playback frame rate of ``0.0``,
 and an optional ``String`` value called ``name``,
 which has a default value of ``.None``, or “no ``name`` value”.
 
-.. _CustomTypes_ClassAndStructureInstances:
+.. _ClassesAndStructures_ClassAndStructureInstances:
 
 Class and Structure Instances
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -165,7 +165,7 @@ To do that, you need to create an :newTerm:`instance` of the structure or class.
 
 The syntax for creating instances is very similar for both structures and classes:
 
-.. testcode:: customTypes
+.. testcode:: ClassesAndStructures
 
     --> let someResolution = Resolution()
     <<< // someResolution : Resolution = Resolution(0, 0)
@@ -184,7 +184,7 @@ in :doc:`Initialization`.)
 .. TODO: note that you can only use the default constructor if you provide default values
    for all properties on a structure or class.
 
-.. _CustomTypes_Terminology:
+.. _ClassesAndStructures_Terminology:
 
 Terminology
 ___________
@@ -196,14 +196,14 @@ and much of this chapter describes functionality that can apply to
 instances of *either* a class or a structure type.
 Because of this, the more general term :newTerm:`instance` is used below.
 
-.. _CustomTypes_AccessingProperties:
+.. _ClassesAndStructures_AccessingProperties:
 
 Accessing Properties
 ~~~~~~~~~~~~~~~~~~~~
 
 The properties of an instance can be accessed using :newTerm:`dot syntax`:
 
-.. testcode:: customTypes
+.. testcode:: ClassesAndStructures
 
     --> println("The width of someResolution is \(someResolution.width)")
     <-- The width of someResolution is 0
@@ -214,20 +214,20 @@ and returns its default initial value of ``0``.
 Dot syntax can be used to drill down into sub-properties,
 such as the ``width`` property in the ``resolution`` property of a ``VideoMode``:
 
-.. testcode:: customTypes
+.. testcode:: ClassesAndStructures
 
     --> println("The width of someVideoMode is \(someVideoMode.resolution.width)")
     <-- The width of someVideoMode is 0
 
 Dot syntax can also be used to assign a new value to a variable property:
 
-.. testcode:: customTypes
+.. testcode:: ClassesAndStructures
 
     --> someVideoMode.resolution.width = 1280
     --> println("The width of someVideoMode is now \(someVideoMode.resolution.width)")
     <-- The width of someVideoMode is now 1280
 
-.. _CustomTypes_MemberwiseStructureInitializers:
+.. _ClassesAndStructures_MemberwiseStructureInitializers:
 
 Memberwise Structure Initializers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -239,7 +239,7 @@ which can be used to initialise the member properties of new structure instances
 Initial values for the properties of the new instance
 can be passed to the memberwise initializer by name:
 
-.. testcode:: customTypes
+.. testcode:: ClassesAndStructures
 
     --> let vga = Resolution(width: 640, height: 480)
     <<< // vga : Resolution = Resolution(640, 480)
@@ -247,7 +247,7 @@ can be passed to the memberwise initializer by name:
 Initial values can also be provided without names,
 if they are listed in the same order that the properties are declared in the structure's definition:
 
-.. testcode:: customTypes
+.. testcode:: ClassesAndStructures
 
     --> let svga = Resolution(800, 600)
     <<< // svga : Resolution = Resolution(800, 600)
@@ -259,7 +259,7 @@ if they are listed in the same order that the properties are declared in the str
 Unlike structures, class instances do not receive a default memberwise initializer.
 (Initializers are described in more detail in :doc:`Initialization`.)
 
-.. _CustomTypes_ValueTypesAndReferenceTypes:
+.. _ClassesAndStructures_ValueTypesAndReferenceTypes:
 
 Value Types and Reference Types
 -------------------------------
@@ -276,7 +276,7 @@ This difference is very important when deciding how to define the building block
 .. TODO: this section needs updating to clarify that assignment is always like value semantics,
    and it's only really possible to see the difference when looking at the properties of a type.
 
-.. _CustomTypes_ValueTypes:
+.. _ClassesAndStructures_ValueTypes:
 
 Value Types
 ~~~~~~~~~~~
@@ -299,7 +299,7 @@ will always be copied when they are passed around.
 
 For example, using the ``Resolution`` structure from above:
 
-.. testcode:: customTypes
+.. testcode:: ClassesAndStructures
 
     --> let hd = Resolution(width: 1920, height: 1080)
     <<< // hd : Resolution = Resolution(1920, 1080)
@@ -323,14 +323,14 @@ Next, the ``width`` property of ``cinema`` is amended to be
 the width of the slightly-wider 2K standard used for digital cinema projection
 (which is ``2048`` pixels wide and ``1080`` pixels high):
 
-.. testcode:: customTypes
+.. testcode:: ClassesAndStructures
 
     --> cinema.width = 2048
 
 Checking the ``width`` property of ``cinema``
 shows that it has indeed changed to be ``2048``:
 
-.. testcode:: customTypes
+.. testcode:: ClassesAndStructures
 
     --> println("cinema is now \(cinema.width) pixels wide")
     <-- cinema is now 2048 pixels wide
@@ -338,7 +338,7 @@ shows that it has indeed changed to be ``2048``:
 However, the ``width`` property of the original ``hd`` instance
 still has the old value of ``1920``:
 
-.. testcode:: customTypes
+.. testcode:: ClassesAndStructures
 
     --> println("hd is still \(hd.width) pixels wide")
     <-- hd is still 1920 pixels wide
@@ -353,7 +353,7 @@ doesn't affect the width stored in ``hd``.
 
 The same behavior applies to enumerations:
 
-.. testcode:: customTypes
+.. testcode:: ClassesAndStructures
 
     --> enum CompassPoint {
             case North, South, East, West
@@ -375,7 +375,7 @@ the copy of the original value that was stored in ``rememberedDirection``.
 
 .. TODO: Should I give an example of passing a value type to a function here?
 
-.. _CustomTypes_ReferenceTypes:
+.. _ClassesAndStructures_ReferenceTypes:
 
 Reference Types
 ~~~~~~~~~~~~~~~
@@ -390,7 +390,7 @@ Rather than making a copy, a :newTerm:`reference` to the same existing instance 
 
 Here's an example, using the ``VideoMode`` class defined above:
 
-.. testcode:: customTypes
+.. testcode:: ClassesAndStructures
 
     --> let tenEighty = VideoMode()
     <<< // tenEighty : VideoMode = <VideoMode instance>
@@ -408,7 +408,7 @@ Finally, it is set to a frame rate of ``25.0`` frames per second.
 Next, ``tenEighty`` is assigned to a new constant, called ``alsoTenEighty``,
 and the frame rate of ``alsoTenEighty`` is modified:
 
-.. testcode:: customTypes
+.. testcode:: ClassesAndStructures
 
     --> let alsoTenEighty = tenEighty
     <<< // alsoTenEighty : VideoMode = <VideoMode instance>
@@ -422,7 +422,7 @@ Checking the ``frameRate`` property of ``tenEighty``
 shows that it correctly reports the new frame rate of ``30.0``
 from the underlying ``VideoMode`` instance:
 
-.. testcode:: customTypes
+.. testcode:: ClassesAndStructures
 
     --> println("The frameRate property of tenEighty is now \(tenEighty.frameRate)")
     <-- The frameRate property of tenEighty is now 30.0
@@ -454,7 +454,7 @@ not the values of the constant references to that ``VideoMode``.
    as per the swift-discuss email thread "Dictionaries and key copying"
    started by Alex Migicovsky on Mar 1 2014.
 
-.. _CustomTypes_Pointers:
+.. _ClassesAndStructures_Pointers:
 
 Pointers
 ________
@@ -480,7 +480,7 @@ and the value it contains is always a reference to a particular instance of that
 .. TODO: Saying that we don't use the reference operator is actually untrue.
    We use it at the call-site for inout function parameters.
 
-.. _CustomTypes_ChoosingBetweenClassesAndStructures:
+.. _ClassesAndStructures_ChoosingBetweenClassesAndStructures:
 
 Choosing Between Classes and Structures
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -541,7 +541,7 @@ not structures.
    its location is a structure, but it doesn't make sense for Window
    to be a value type, as it is not copied when passed around.
 
-.. _CustomTypes_IdentityOperators:
+.. _ClassesAndStructures_IdentityOperators:
 
 Identity Operators
 ------------------
@@ -554,7 +554,7 @@ Identity Operators
 
 .. write-me::
 
-.. _CustomTypes_TypeAliases:
+.. _ClassesAndStructures_TypeAliases:
 
 Type Aliases
 ------------

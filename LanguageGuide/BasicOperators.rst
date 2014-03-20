@@ -387,7 +387,7 @@ Swift supports all of the standard C :newTerm:`comparison operators`:
    They should be added to this section if and when they are implemented.
 
 These :newTerm:`identity operators` are used to test if two object named values both refer to the same object instance.
-They are described under :ref:`CustomTypes_IdentityOperators` in the :doc:`CustomTypes` chapter.
+They are described under :ref:`ClassesAndStructures_IdentityOperators` in the :doc:`ClassesAndStructures` chapter.
 
 Each of the comparison operators returns a ``Bool`` value to indicate whether or not the statement is true:
 

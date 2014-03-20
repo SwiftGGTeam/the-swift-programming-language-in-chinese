@@ -334,7 +334,7 @@ as if the number had been padded with zeroes to the left:
 Nested Types
 ------------
 
-Extensions can add new :ref:`CustomTypes_NestedTypes`
+Extensions can add new :doc:`NestedTypes`
 to existing classes, structures and enumerations:
 
 .. testcode:: extensionsNestedTypes

@@ -12,7 +12,7 @@ Language Guide
     Functions
     Closures
     Enumerations
-    CustomTypes
+    ClassesAndStructures
     Properties
     Methods
     Subscripts

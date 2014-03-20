@@ -49,7 +49,8 @@ This enables the Swift compiler to optimize the performance of the collection.
     when they are assigned to a named value or passed to a function.
     This is different from the behavior of Cocoa's ``NSArray`` and ``NSDictionary`` classes.
     The difference between value types and reference types is covered in detail
-    in the :ref:`CustomTypes_ValueTypesAndReferenceTypes` section of :doc:`CustomTypes`.
+    in the :ref:`ClassesAndStructures_ValueTypesAndReferenceTypes` section
+    of :doc:`ClassesAndStructures`.
 
 .. _CollectionTypes_Arrays:
 
@@ -72,7 +73,7 @@ and are always clear about what they may contain.
 Swift's array type is written as ``Array<SomeType>``,
 where ``SomeType`` is the kind of thing that the array will be allowed to store.
 This might be ``String``, or ``Int``, or indeed any other valid type in Swift
-(including types that you define yourself, as described in :doc:`CustomTypes`,
+(including types that you define yourself, as described in :doc:`ClassesAndStructures`,
 and also protocol types, as described in :doc:`Protocols`).
 
 Here's an example, which creates an array called ``shoppingList`` to store ``String`` values:

@@ -125,7 +125,7 @@ Swift would assume that both uses of ``x`` referred to the method parameter call
 Mutating Methods for Value Types
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Structures and enumerations are :ref:`CustomTypes_ValueTypes`.
+Structures and enumerations are :ref:`ClassesAndStructures_ValueTypes`.
 By default, the properties of a value type cannot be modified from within its instance methods.
 
 .. TODO: find out why.
