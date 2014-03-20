@@ -154,7 +154,7 @@ because it would not consider the complete list of ``CompassPoint`` members.
 Enforcing completeness ensures that enumeration members are not accidentally missed or forgotten,
 and is part of Swift's goal of completeness and lack of ambiguity.
 
-When it is not appropriate to provide a ``case`` statement for every enumeration member,
+When it is not appropriate to provide a ``case`` for every enumeration member,
 you can provide a ``default`` case to cover any members that are not addressed explicitly:
 
 .. testcode:: enums

@@ -660,28 +660,51 @@ and so no message is printed.
 Switch
 ~~~~~~
 
-A ``switch`` statement considers several possible values of the same type,
-and executes different code depending on the value that is matched.
-It provides an alternative approach to the ``if``-``else`` statement for responding to multiple states.
+A ``switch`` statement considers a value
+and compares it against several possible matching patterns.
+It then executes an appropriate block of code,
+based on the first pattern that matched successfully.
+It provides an alternative approach to the ``if``-``else`` statement
+for responding to multiple potential states.
 
-.. note::
+In its simplest form, a ``switch`` statement compares against
+one or more values of the same type as the value being considered:
 
-    Unlike C and Objective-C, ``switch`` statements in Swift do not
-    fall through the bottom of each case and into the next one by default.
-    Instead, the entire ``switch`` statement completes its execution
-    as soon as the first matching ``case`` statement is completed,
-    without requiring an explicit ``break`` statement.
-    This difference in behaviour is described in more detail in
-    the :ref:`ControlFlow_Fallthrough` section later in this chapter.
+::
 
-.. TODO: have I actually described how case statements work by this point?
-   They were previously described in the enumerations section of Basic Types,
-   which appeared before this section, but has now been moved.
+    switch <#some value to consider#> {
+        case <#possible value 1#>:
+            <#do things in response to possible value 1#>
+        case <#possible value 2#>,
+             <#possible value 3#>:
+            <#do things in response to possible values 2 or 3#>
+        default:
+            <#otherwise, do something else#>
+    }
 
-The following example matches a ``UnicodeScalar``,
+Every ``switch`` statement is made up of multiple possible :newTerm:`cases`,
+each of which begins with the ``case`` keyword.
+In addition to comparing against specific values,
+Swift also provides several ways for each case to specify
+more complex matching patterns.
+These are described in detail later in this section.
+
+The body of each ``switch`` case is a separate branch of code execution,
+in a similar manner to the branches of an ``if``-``else`` statement.
+The ``switch`` statement's role is to decide which branch should be selected,
+and it does this by :newTerm:`switching` on the value to be considered.
+
+Every ``switch`` statement must be :newTerm:`exhaustive`. 
+This means that every possible value of the type to be considered
+must be able to be matched by one of the ``switch`` cases.
+If it is not appropriate to provide a ``switch`` case for every possible value,
+you can define a default catch-all case to cover any values that are not addressed explicitly.
+This catch-all case is indicated by the keyword ``default``,
+and should always appear last.
+
+The following example switches on a ``UnicodeScalar`` value,
 and determines if it represents a number symbol in one of four languages.
-Multiple values are covered in a single ``case`` statement on one line,
-for brevity:
+Multiple values are covered in a single ``switch`` case for brevity:
 
 .. testcode::
 
@@ -715,7 +738,8 @@ This example checks ``numberSymbol`` to see if it is
 a Latin, Arabic, Chinese or Thai symbol for
 the numbers ``1`` to ``4``.
 If a match is found,
-it sets an optional ``Int?`` variable (``possibleIntegerValue``) to the appropriate integer value.
+it sets an optional ``Int?`` variable (called ``possibleIntegerValue``)
+to the appropriate integer value.
 If the symbol is not recognized,
 the optional ``Int?`` is set to a value of ``.None``, meaning “no value”.
 Finally, it checks to see if a value was found,
@@ -723,26 +747,64 @@ using an :ref:`BasicTypes_OptionalBinding`.
 If it was, the output value is printed;
 otherwise, an error message is reported.
 
-Every ``switch`` statement must be exhaustive.
-This means that every possible input value must be matched by
-one of the ``case`` statements inside the ``switch`` statement.
-If it is not appropriate to provide a ``case`` statement for every possible value,
-you can define a default catch-all case to cover any values that are not addressed explicitly.
-This catch-all case is indicated by the keyword ``default``,
-and should always appear last, as in the example above.
-
-It is not practical to list every single possible ``UnicodeScalar`` value,
-and so a ``default`` case is used here
-to provide a catch-all case for any characters that have not already been matched.
+It is not practical to list every single possible ``UnicodeScalar`` value in the example above,
+and so a ``default`` case is used to provide
+a catch-all case for any characters that have not already been matched.
 This also provides a handy opportunity to set the optional integer value to ``.None``,
 to indicate that no match was found.
+
+.. _ControlFlow_NoImplicitFallthrough:
+
+No Implicit Fallthrough
+_______________________
+
+Unlike C and Objective-C, ``switch`` statements in Swift do not
+fall through the bottom of each case and into the next one by default.
+Instead, the entire ``switch`` statement finishes its execution
+as soon as the first matching ``switch`` case is completed,
+*without* requiring an explicit ``break`` statement.
+
+Furthermore, the body of each case *must* contain
+at least one executable statement.
+It is not valid to write the following code,
+because the first case is empty:
+
+::
+
+    switch <#some value to consider#> {
+        case <#possible value 1#>:
+        case <#possible value 2#>:
+            <#statements#>
+    }
+
+Unlike C, this code does not match both of values 1 and 2.
+Rather, it reports an error that the first case does not contain any executable code.
+This approach avoids accidental fallthrough from one case to another,
+and makes for safer code that is explicit in its intent.
+
+Multiple matches for a single ``switch`` case can be separated by commas,
+and can be written over multiple lines if the list is long:
+
+::
+
+    switch <#some value to consider#> {
+        case <#possible value 1#>,
+             <#possible value 2#>:
+            <#statements#>
+    }
+
+.. note::
+
+    If you wish to opt in to fallthrough behavior for a particular ``switch`` case,
+    you can do so with the ``fallthrough`` keyword,
+    as described in :ref:`ControlFlow_Fallthrough`.
 
 .. _ControlFlow_RangeMatching:
 
 Range Matching
 ______________
 
-Values in ``case`` statements can be checked for their inclusion in a range.
+Values in ``switch`` cases can be checked for their inclusion in a range.
 This example uses number ranges
 to provide a natural-language count for numbers of any size:
 
@@ -781,7 +843,7 @@ to provide a natural-language count for numbers of any size:
 Tuples
 ______
 
-Multiple values can be tested in the same ``switch`` statement using tuples.
+Multiple values can be tested in the same ``switch`` statement using :ref:`BasicTypes_Tuples`.
 Each element of the tuple can be tested against a different value or range of values.
 Alternatively, the underscore (``_``) identifier can be used to match any possible value.
 
@@ -818,12 +880,12 @@ or outside of the box altogether.
         }
     <-- (1, 1) is inside the box
 
-Unlike C, Swift allows multiple ``case`` statements to consider the same value or values.
-In fact, the point (0, 0) could match all *four* of the ``case`` statements in this example.
+Unlike C, Swift allows multiple ``switch`` cases to consider the same value or values.
+In fact, the point (0, 0) could match all *four* of the cases in this example.
 However, if multiple matches are possible,
-the first matching ``case`` will always be used.
+the first matching case will always be used.
 The point (0, 0) would match ``case (0, 0)`` first,
-and so all other matching ``case`` and ``default`` statements would be ignored.
+and so all other matching cases would be ignored.
 
 .. TODO: The type of a tuple can be used in a case statement to check for different types:
    var x: Any = (1, 2)
@@ -835,10 +897,10 @@ and so all other matching ``case`` and ``default`` statements would be ignored.
 Named Value Bindings
 ____________________
 
-A ``case`` statement can bind the value or values it matches to temporary constants or variables,
-for use in the body of the ``case`` statement.
+A ``switch`` case can bind the value or values it matches to temporary constants or variables,
+for use in the body of the case.
 This is known as :newTerm:`named value binding`,
-because the values are “bound” to temporary named values within the ``case`` statement's code block.
+because the values are “bound” to temporary named values within the case's body.
 
 Again, the example below takes an (x, y) point,
 expressed as a tuple of type ``(Int, Int)``,
@@ -867,41 +929,40 @@ or somewhere else.
         }
     <-- on the x-axis with an x value of 2
 
-The three ``case`` statements declare placeholder constants ``x`` and ``y``,
+The three ``switch`` cases declare placeholder constants ``x`` and ``y``,
 which temporarily take on one or both of the tuple values from ``anotherPoint``.
-The first case statement, ``case (let x, 0)``,
+The first case, ``case (let x, 0)``,
 will match any point with a ``y`` value of ``0``,
 and will assign the point's ``x`` value to the temporary constant ``x``.
-Similarly, the second case statement, ``case (0, let y)``,
+Similarly, the second case, ``case (0, let y)``,
 will match any point with an ``x`` value of ``0``,
 and will assign the point's ``y`` value to the temporary constant ``y``.
 
 Once the temporary constants have been declared,
-they can be used within the ``case`` statement's code block.
+they can be used within the case's code block.
 Here, they are used as shorthand for printing the values via the ``println`` function.
 
-Note that this ``switch`` statement does not have a ``default`` block.
-The final ``case`` block,
-``case let (x, y)``,
+Note that this ``switch`` statement does not have a ``default`` case.
+The final case, ``case let (x, y)``,
 declares a tuple of two placeholder constants that can match any value.
 As a result, it matches all possible remaining values,
-and a ``default`` block is not needed to make the ``switch`` statement exhaustive.
+and a ``default`` case is not needed to make the ``switch`` statement exhaustive.
 
 In the example above,
 the temporary named values ``x`` and ``y`` have been declared as constants
 via the ``let`` keyword, because there is no need to modify their values
-within the body of the ``case`` statement.
+within the body of the case.
 However, they could have been declared as variables instead, via the ``var`` keyword.
-If this had been the case, a temporary variable would have been created
+If this had been done, a temporary variable would have been created
 and initialized with the appropriate value.
-Any changes to that variable would only have an effect within the body of the ``case`` statement.
+Any changes to that variable would only have an effect within the body of the case.
 
 .. _ControlFlow_Where:
 
 Where
 _____
 
-A ``case`` statement can check for additional conditions using the ``where`` clause.
+A ``switch`` case can check for additional conditions using the ``where`` clause.
 
 The example below categorizes an (x, y) point on the following graph:
 
@@ -928,15 +989,15 @@ or none of the above.
         }
     <-- (1, -1) is on the line x == -y
 
-The three ``case`` statements declare placeholder constants ``x`` and ``y``,
+The three ``switch`` cases declare placeholder constants ``x`` and ``y``,
 which temporarily take on the two tuple values from ``point``.
 Here, these constants are used as part of a ``where`` clause,
 to create a dynamic filter.
-The ``case`` statement will only match the current value of ``point``
+The ``switch`` case will only match the current value of ``point``
 if the ``where`` clause's condition equates to ``true`` for that value.
 
-As in the previous example, the final ``case`` block matches all possible remaining values,
-and so a ``default`` block is not needed to make the ``switch`` statement exhaustive.
+As in the previous example, the final case matches all possible remaining values,
+and so a ``default`` case is not needed to make the ``switch`` statement exhaustive.
 
 .. _ControlFlow_ControlTransferStatements:
 
@@ -1150,10 +1211,11 @@ Fallthrough
 Switch statements in Swift do not fall through the bottom of each case and into the next one.
 Instead, the entire switch statement completes its execution as soon as the first matching case is completed.
 This is different from C,
-which requires you to insert an explicit ``break`` statement at the end of every ``case`` to prevent fall-through.
+which requires you to insert an explicit ``break`` statement
+at the end of every ``switch`` case to prevent fall-through.
 Avoiding default fall-through means that Swift ``switch`` statements are
 much more concise and predictable than their counterparts in C,
-and avoids executing multiple ``case`` blocks by mistake.
+and avoids executing multiple ``switch`` cases by mistake.
 
 If you want to opt in to C-style fallthrough behavior,
 you can do so using the ``fallthrough`` keyword.
@@ -1186,7 +1248,7 @@ The ``default`` case adds some extra text onto the end of the description,
 and the ``switch`` statement is complete.
 
 If the value of ``integerToDescribe`` is *not* in the list of known prime numbers,
-it is not matched by the first ``case`` statement at all.
+it is not matched by the first ``switch`` case at all.
 There are no other specific cases,
 and so it ends up being matched by the catch-all ``default`` case.
 
@@ -1195,9 +1257,12 @@ the number's description is printed using the ``println`` function.
 In this example,
 the number ``5`` is correctly identified as being a prime number.
 
-Fallthrough does not check the ``case`` conditions for the block it falls into.
-It simply causes code execution to move directly to the statements inside the next ``case`` (or ``default``) block,
-as in C's standard ``switch`` statement behavior.
+.. note::
+
+    Fallthrough does not check the conditions for the ``switch`` case it falls into.
+    It simply causes code execution to move directly to the statements
+    inside the next case (or ``default`` case) block,
+    as in C's standard ``switch`` statement behavior.
 
 .. refnote:: References
 
