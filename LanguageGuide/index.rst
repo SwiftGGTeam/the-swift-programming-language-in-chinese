@@ -19,6 +19,7 @@ Language Guide
     Inheritance
     Initialization
     TypeCasting
+    NestedTypes
     Extensions
     Protocols
     Generics
