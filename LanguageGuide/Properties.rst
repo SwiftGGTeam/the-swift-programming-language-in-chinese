@@ -17,7 +17,7 @@ and are described in more detail below.
 
 .. note::
 
-    Computed properties can be provided by classes, structures and enumerations.
+    Computed properties can be provided by classes, structures, and enumerations.
     Stored properties can only be provided by classes and structures.
 
 .. QUESTION: should I mention dot syntax again?

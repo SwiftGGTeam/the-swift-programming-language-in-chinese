@@ -28,7 +28,7 @@ initializers, operators, and subscripts.
 Protocol Syntax
 ---------------
 
-Protocols are defined in a very similar way to classes, structures and enumerations:
+Protocols are defined in a very similar way to classes, structures, and enumerations:
 
 ::
 
