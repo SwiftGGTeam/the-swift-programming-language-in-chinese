@@ -84,9 +84,9 @@ Here's an example, which creates an array called ``shoppingList`` to store ``Str
     <<< // shoppingList : Array<String> = ["Eggs", "Milk"]
     /// shoppingList has been initialized with two initial items
 
-The ``shoppingList`` array has been declared as
+The ``shoppingList`` variable is declared as
 “an ``Array`` of type ``String``”, written as ``Array<String>``.
-Because it is “of type ``String``”,
+Because the array is “of type ``String``”,
 this particular array is *only* allowed to store ``String`` values.
 
 .. note::
