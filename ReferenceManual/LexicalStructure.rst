@@ -287,11 +287,11 @@ Literals
 
 A :newTerm:`literal` is the source code representation of a value of an
 integer, floating-point, character, or string type.
-Here are some examples of literals::
+The following are examples of literals: ::
 
-    42 // Integer literal
-    3.14159 // Floating-point literal
-    'a' // Character literal
+    42              // Integer literal
+    3.14159         // Floating-point literal
+    'a'             // Character literal
     "Hello, world!" // String literal
 
 
