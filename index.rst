@@ -40,9 +40,9 @@ Language Guide
   and rewritten much of the information about ``mutating`` to focus it on
   :ref:`Methods_MutatingMethodsForValueTypes`
 * Simplified the example of :ref:`read-only subscript <Subscripts_SubscriptSyntax>`
-* :ref:`CustomTypes_DefiningClassesAndStructures` no longer uses
+* :ref:`ClassesAndStructures_DefiningClassesAndStructures` no longer uses
   a Rectangle as an example for a custom class type
-* Added a short section on :ref:`type aliases <CustomTypes_TypeAliases>`
+* Added a short section on :ref:`type aliases <ClassesAndStructures_TypeAliases>`
   (as used in a non-Generics context)
 * Clarified what can be :ref:`overridden <Inheritance_Overriding>`
 * Moved :doc:`LanguageGuide/Subscripts` into its own chapter
@@ -67,7 +67,7 @@ Language Guide
 
 * Added the first half of a chapter on :doc:`LanguageGuide/Protocols`
 * Epic refactoring of the old Classes and Structures chapter into new chapters called
-  :doc:`LanguageGuide/CustomTypes`, :doc:`LanguageGuide/Properties`, :doc:`LanguageGuide/Methods`,
+  Custom Types, :doc:`LanguageGuide/Properties`, :doc:`LanguageGuide/Methods`,
   :doc:`LanguageGuide/Inheritance`, :doc:`LanguageGuide/Initialization`
   and :doc:`LanguageGuide/TypeCasting`, and moved the :doc:`LanguageGuide/Enumerations` chapter
   to appear before all of the above
@@ -85,7 +85,7 @@ Language Guide
   and :ref:`BasicTypes_StringInterpolation` in Basic Types
 * Improved examples for :ref:`ControlFlow_While` and :ref:`ControlFlow_Break`,
   and a new example for :ref:`ControlFlow_DoWhile`
-* Embedded Types are now referred to as :ref:`CustomTypes_NestedTypes`,
+* Embedded Types are now referred to as :doc:`LanguageGuide/NestedTypes`,
   and their example has been simplified
 * Moved :ref:`BasicTypes_OptionalBinding` into the :doc:`LanguageGuide/BasicTypes` chapter,
   and adopted it for several more examples throughout the book

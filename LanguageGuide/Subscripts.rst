@@ -25,14 +25,14 @@ in the same way as for computed properties:
 
 ::
 
-    subscript(index: Int) -> Int {
-        get {
-            // return an appropriate subscript value here
-        }
-        set(newValue) {
-            // perform a suitable setting action here
-        }
-    }
+   subscript(index: Int) -> Int {
+      get {
+         // return an appropriate subscript value here
+      }
+      set(newValue) {
+         // perform a suitable setting action here
+      }
+   }
 
 The type of ``newValue`` is the same as the return value of the subscript.
 As with computed properties, you can choose not to specify the setter's ``(newValue)`` parameter,
@@ -44,27 +44,27 @@ the ``get`` keyword can be dropped for read-only subscripts:
 
 ::
 
-    subscript(index: Int) -> Int {
-        // return an appropriate subscript value here
-    }
+   subscript(index: Int) -> Int {
+      // return an appropriate subscript value here
+   }
 
 Here's an example of a read-only subscript implementation:
 
 .. testcode:: subscripts
 
-    --> class TimesTable {
-            let multiplier: Int
-            init withMultiplier(multiplier: Int) {
-                self.multiplier = multiplier
-            }
-            subscript(index: Int) -> Int {
-                return multiplier * index
-            }
-        }
-    --> var threeTimesTable = TimesTable(withMultiplier: 3)
-    <<< // threeTimesTable : TimesTable = <TimesTable instance>
-    --> println("six times three is \(threeTimesTable[6])")
-    <-- six times three is 18
+   -> class TimesTable {
+         let multiplier: Int
+         init withMultiplier(multiplier: Int) {
+            self.multiplier = multiplier
+         }
+         subscript(index: Int) -> Int {
+            return multiplier * index
+         }
+      }
+   -> var threeTimesTable = TimesTable(withMultiplier: 3)
+   << // threeTimesTable : TimesTable = <TimesTable instance>
+   -> println("six times three is \(threeTimesTable[6])")
+   <- six times three is 18
 
 This example defines a ``TimesTable`` class to represent an n-times-table of integers.
 In this example, the class is used to represent the three-times-table.
@@ -90,12 +90,12 @@ by passing in a key of the appropriate type within subscript braces:
 
 .. testcode:: subscripts
 
-    --> let numberOfLegs = ["spider" : 8, "ant" : 6, "cat" : 4]
-    <<< // numberOfLegs : Dictionary<String, Int> = Dictionary<String, Int>(1.33333, 3, <DictionaryBufferOwner<String, Int> instance>)
-    --> let spiderLegs = numberOfLegs["spider"]
-    <<< // spiderLegs : Int = 8
-    /-> spiderLegs is equal to \(spiderLegs)
-    <-/ spiderLegs is equal to 8
+   -> let numberOfLegs = ["spider" : 8, "ant" : 6, "cat" : 4]
+   << // numberOfLegs : Dictionary<String, Int> = Dictionary<String, Int>(1.33333, 3, <DictionaryBufferOwner<String, Int> instance>)
+   -> let spiderLegs = numberOfLegs["spider"]
+   << // spiderLegs : Int = 8
+   /> spiderLegs is equal to \(spiderLegs)
+   </ spiderLegs is equal to 8
 
 This ``Dictionary`` instance is of type ``Dictionary<String, Int>``.
 This means that it has keys of type ``String``,
@@ -124,30 +124,30 @@ if it is appropriate for your type:
 
 .. testcode:: subscripts
 
-    --> struct Matrix {
-            var rows: Int, columns: Int
-            var grid = Array<Double>()
-            init withRows(rows: Int) columns(Int) {
-                self.rows = rows
-                self.columns = columns
-                for _ in 0...(rows * columns) {
-                    grid.append(0.0)
-                }
+   -> struct Matrix {
+         var rows: Int, columns: Int
+         var grid = Array<Double>()
+         init withRows(rows: Int) columns(Int) {
+            self.rows = rows
+            self.columns = columns
+            for _ in 0...(rows * columns) {
+               grid.append(0.0)
             }
-            subscript(row: Int, column: Int) -> Double? {
-                get {
-                    if row >= rows || column >= columns {
-                        return .None
-                    }
-                    return grid[(row * columns) + column]
-                }
-                set {
-                    if newValue && row < rows && column < columns {
-                        grid[(row * columns) + column] = newValue!
-                    }
-                }
+         }
+         subscript(row: Int, column: Int) -> Double? {
+            get {
+               if row >= rows || column >= columns {
+                  return .None
+               }
+               return grid[(row * columns) + column]
             }
-        }
+            set {
+               if newValue && row < rows && column < columns {
+                  grid[(row * columns) + column] = newValue!
+               }
+            }
+         }
+      }
 
 .. TODO: Investigate switching this over to use the shorter “Double[]” syntax
    once I know more about Arrays and how their syntax works.
@@ -160,15 +160,15 @@ Each position in the matrix is given an initial value of ``0.0``:
 
 .. testcode:: subscripts
 
-    --> var matrix = Matrix(withRows: 2, columns: 2)
-    <<< // matrix : Matrix = Matrix(2, 2, [0.0, 0.0, 0.0, 0.0])
+   -> var matrix = Matrix(withRows: 2, columns: 2)
+   << // matrix : Matrix = Matrix(2, 2, [0.0, 0.0, 0.0, 0.0])
 
 The ``grid`` array is effectively a flattened version of the matrix,
 as read from top left to bottom right:
 
 .. image:: ../images/subscriptMatrix01.png
-    :width: 488
-    :align: center
+   :width: 488
+   :align: center
 
 The ``Matrix`` subscript has a return type of ``Double?``, or “optional ``Double``”.
 This is to cope with the fact that you might request a value outside of
@@ -179,22 +179,22 @@ is outside the bounds of the matrix:
 
 ::
 
-    if row >= rows || column >= columns {
-        return .None
-    }
-    return grid[(row * columns) + column]
+   if row >= rows || column >= columns {
+      return .None
+   }
+   return grid[(row * columns) + column]
 
 A value of ``.None`` is returned if you try and access
 a subscript that is outside of the matrix bounds:
 
 .. testcode:: subscripts
 
-    --> if let someValue = matrix[2, 2] {
-            println("The matrix has a value of \(someValue) at [2, 2]")
-        } else {
-            println("The matrix is not big enough to hold a value at [2, 2]")
-        }
-    <-- The matrix is not big enough to hold a value at [2, 2]
+   -> if let someValue = matrix[2, 2] {
+         println("The matrix has a value of \(someValue) at [2, 2]")
+      } else {
+         println("The matrix is not big enough to hold a value at [2, 2]")
+      }
+   <- The matrix is not big enough to hold a value at [2, 2]
 
 Otherwise, the subscript's getter returns
 the appropriate value from the ``grid`` array.
@@ -204,8 +204,8 @@ separated by a comma:
 
 .. testcode:: subscripts
 
-    --> matrix[0, 1] = 1.5
-    --> matrix[1, 0] = 3.2
+   -> matrix[0, 1] = 1.5
+   -> matrix[1, 0] = 3.2
 
 These two statements call the subscript's setter to set
 a value of ``1.5`` in the top right position of the matrix
@@ -214,8 +214,8 @@ and ``3.2`` in the bottom left position
 (where ``row`` is ``1`` and ``column`` is ``0``):
 
 .. image:: ../images/subscriptMatrix02.png
-    :width: 300
-    :align: center
+   :width: 300
+   :align: center
 
 The subscript's setter has an implicit ``value`` parameter of type ``Double?``.
 The ``value`` parameter contains the new value to set for that row and column,
@@ -223,9 +223,9 @@ and is checked by the subscript's setter:
 
 ::
 
-    if value && row < rows && column < columns {
-        grid[(row * columns) + column] = value!
-    }
+   if value && row < rows && column < columns {
+      grid[(row * columns) + column] = value!
+   }
 
 The setter checks to see if ``value`` is not equal to ``.None``,
 and also checks to make sure that the ``row`` and ``column`` values are valid.

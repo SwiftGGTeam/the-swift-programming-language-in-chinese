@@ -1,36 +1,36 @@
 .. docnote:: Subjects to be covered in this section
 
-    * Classes
-    * Objects
-    * Structures
-    * Instance variables
-    * Getters and setters
-    * willSet / didSet
-    * Constructors and destructors
-    * Designated initializers
-    * Instance and class methods
-    * Working with self and Self
-    * Super
-    * Memory management via ARC
-    * UnsafePointer?
-    * Cast operators (?, !, b as D, b is D)
-    * Type inference and discovery?
-    * "Everything is a type"
-    * Stored vs computed properties
-    * === vs ==
-    * “is” to check for class membership
-    * “as” for casting
-    * No “self = [super init]” (assignment equates to void)
-    * @inout
-    * value types and reference types
-    * Type functions and variables
-    * Nested classes and structures
-    * Bound functions
-    * @conversion functions for converting between types
-    * Subscript getters and setters
+   * Classes
+   * Objects
+   * Structures
+   * Instance variables
+   * Getters and setters
+   * willSet / didSet
+   * Constructors and destructors
+   * Designated initializers
+   * Instance and class methods
+   * Working with self and Self
+   * Super
+   * Memory management via ARC
+   * UnsafePointer?
+   * Cast operators (?, !, b as D, b is D)
+   * Type inference and discovery?
+   * "Everything is a type"
+   * Stored vs computed properties
+   * === vs ==
+   * “is” to check for class membership
+   * “as” for casting
+   * No “self = [super init]” (assignment equates to void)
+   * @inout
+   * value types and reference types
+   * Type functions and variables
+   * Nested classes and structures
+   * Bound functions
+   * @conversion functions for converting between types
+   * Subscript getters and setters
 
-Custom Types
-============
+Classes and Structures
+======================
 
 Enumerations, as introduced in the previous chapter,
 give a way to define your own custom types to work with lists of values.
@@ -66,7 +66,7 @@ In addition, classes have several capabilities that structures and enumerations 
 * :newTerm:`deinitializers`, which enable an instance of a class to clean up after itself
   (as described in :doc:`Initialization`)
 
-.. _CustomTypes_DefiningClassesAndStructures:
+.. _ClassesAndStructures_DefiningClassesAndStructures:
 
 Defining Classes and Structures
 -------------------------------
@@ -81,7 +81,7 @@ automatically made available for other code to use.
 .. TODO: add a note here about public and private interfaces,
    once we know how these will be declared in Swift.
 
-.. _CustomTypes_DefinitionSyntax:
+.. _ClassesAndStructures_DefinitionSyntax:
 
 Definition Syntax
 ~~~~~~~~~~~~~~~~~
@@ -91,42 +91,42 @@ Classes are introduced by the ``class`` keyword,
 and structures are introduced by the ``struct`` keyword.
 Both place their entire definition within a pair of braces:
 
-.. testcode:: customTypes
+.. testcode:: ClassesAndStructures
 
-    --> class SomeClass {
-            // class definition goes here
-        }
-    --> struct SomeStructure {
-            // structure definition goes here
-        }
+   -> class SomeClass {
+         // class definition goes here
+      }
+   -> struct SomeStructure {
+         // structure definition goes here
+      }
 
 .. note::
 
-    Whenever you define a new class or structure,
-    you are effectively defining a brand new Swift type.
-    Types should be given ``UpperCamelCase`` names
-    (such as ``SomeClass`` and ``SomeStructure`` here),
-    to match the capitalization of standard Swift types
-    (such as ``String``, ``Int``, and ``Bool``).
-    Named values, functions, and methods should always be given
-    ``lowerCamelCase`` names
-    (such as ``allowedEntry`` and ``contentHeight``)
-    to differentiate them from type names.
+   Whenever you define a new class or structure,
+   you are effectively defining a brand new Swift type.
+   Types should be given ``UpperCamelCase`` names
+   (such as ``SomeClass`` and ``SomeStructure`` here),
+   to match the capitalization of standard Swift types
+   (such as ``String``, ``Int``, and ``Bool``).
+   Named values, functions, and methods should always be given
+   ``lowerCamelCase`` names
+   (such as ``allowedEntry`` and ``contentHeight``)
+   to differentiate them from type names.
 
 Here's an example of a structure definition and a class definition:
 
-.. testcode:: customTypes
+.. testcode:: ClassesAndStructures
 
-    --> struct Resolution {
-            var width = 0
-            var height = 0
-        }
-    --> class VideoMode {
-            var resolution = Resolution()
-            var interlaced = false
-            var frameRate = 0.0
-            var name: String? = .None
-        }
+   -> struct Resolution {
+         var width = 0
+         var height = 0
+      }
+   -> class VideoMode {
+         var resolution = Resolution()
+         var interlaced = false
+         var frameRate = 0.0
+         var name: String? = .None
+      }
 
 The example above defines a new structure called ``Resolution``,
 to describe a pixel-based display resolution.
@@ -149,7 +149,7 @@ a playback frame rate of ``0.0``,
 and an optional ``String`` value called ``name``,
 which has a default value of ``.None``, or “no ``name`` value”.
 
-.. _CustomTypes_ClassAndStructureInstances:
+.. _ClassesAndStructures_ClassAndStructureInstances:
 
 Class and Structure Instances
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -165,12 +165,12 @@ To do that, you need to create an :newTerm:`instance` of the structure or class.
 
 The syntax for creating instances is very similar for both structures and classes:
 
-.. testcode:: customTypes
+.. testcode:: ClassesAndStructures
 
-    --> let someResolution = Resolution()
-    <<< // someResolution : Resolution = Resolution(0, 0)
-    --> let someVideoMode = VideoMode()
-    <<< // someVideoMode : VideoMode = <VideoMode instance>
+   -> let someResolution = Resolution()
+   << // someResolution : Resolution = Resolution(0, 0)
+   -> let someVideoMode = VideoMode()
+   << // someVideoMode : VideoMode = <VideoMode instance>
 
 Structures and classes both use :newTerm:`initializer syntax` when creating new instances.
 The simplest form of initializer syntax uses the type name of the class or structure
@@ -184,7 +184,7 @@ in :doc:`Initialization`.)
 .. TODO: note that you can only use the default constructor if you provide default values
    for all properties on a structure or class.
 
-.. _CustomTypes_Terminology:
+.. _ClassesAndStructures_Terminology:
 
 Terminology
 ___________
@@ -196,17 +196,17 @@ and much of this chapter describes functionality that can apply to
 instances of *either* a class or a structure type.
 Because of this, the more general term :newTerm:`instance` is used below.
 
-.. _CustomTypes_AccessingProperties:
+.. _ClassesAndStructures_AccessingProperties:
 
 Accessing Properties
 ~~~~~~~~~~~~~~~~~~~~
 
 The properties of an instance can be accessed using :newTerm:`dot syntax`:
 
-.. testcode:: customTypes
+.. testcode:: ClassesAndStructures
 
-    --> println("The width of someResolution is \(someResolution.width)")
-    <-- The width of someResolution is 0
+   -> println("The width of someResolution is \(someResolution.width)")
+   <- The width of someResolution is 0
 
 ``someResolution.width`` refers to the ``width`` property of ``someResolution``,
 and returns its default initial value of ``0``.
@@ -214,20 +214,20 @@ and returns its default initial value of ``0``.
 Dot syntax can be used to drill down into sub-properties,
 such as the ``width`` property in the ``resolution`` property of a ``VideoMode``:
 
-.. testcode:: customTypes
+.. testcode:: ClassesAndStructures
 
-    --> println("The width of someVideoMode is \(someVideoMode.resolution.width)")
-    <-- The width of someVideoMode is 0
+   -> println("The width of someVideoMode is \(someVideoMode.resolution.width)")
+   <- The width of someVideoMode is 0
 
 Dot syntax can also be used to assign a new value to a variable property:
 
-.. testcode:: customTypes
+.. testcode:: ClassesAndStructures
 
-    --> someVideoMode.resolution.width = 1280
-    --> println("The width of someVideoMode is now \(someVideoMode.resolution.width)")
-    <-- The width of someVideoMode is now 1280
+   -> someVideoMode.resolution.width = 1280
+   -> println("The width of someVideoMode is now \(someVideoMode.resolution.width)")
+   <- The width of someVideoMode is now 1280
 
-.. _CustomTypes_MemberwiseStructureInitializers:
+.. _ClassesAndStructures_MemberwiseStructureInitializers:
 
 Memberwise Structure Initializers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -239,18 +239,18 @@ which can be used to initialise the member properties of new structure instances
 Initial values for the properties of the new instance
 can be passed to the memberwise initializer by name:
 
-.. testcode:: customTypes
+.. testcode:: ClassesAndStructures
 
-    --> let vga = Resolution(width: 640, height: 480)
-    <<< // vga : Resolution = Resolution(640, 480)
+   -> let vga = Resolution(width: 640, height: 480)
+   << // vga : Resolution = Resolution(640, 480)
 
 Initial values can also be provided without names,
 if they are listed in the same order that the properties are declared in the structure's definition:
 
-.. testcode:: customTypes
+.. testcode:: ClassesAndStructures
 
-    --> let svga = Resolution(800, 600)
-    <<< // svga : Resolution = Resolution(800, 600)
+   -> let svga = Resolution(800, 600)
+   << // svga : Resolution = Resolution(800, 600)
 
 .. TODO: Include a justifiable reason for why classes do not provide a memberwise initializer.
 .. TODO: According to rdar://15670604, we may end up with one for classes as well.
@@ -259,7 +259,7 @@ if they are listed in the same order that the properties are declared in the str
 Unlike structures, class instances do not receive a default memberwise initializer.
 (Initializers are described in more detail in :doc:`Initialization`.)
 
-.. _CustomTypes_ValueTypesAndReferenceTypes:
+.. _ClassesAndStructures_ValueTypesAndReferenceTypes:
 
 Value Types and Reference Types
 -------------------------------
@@ -276,7 +276,7 @@ This difference is very important when deciding how to define the building block
 .. TODO: this section needs updating to clarify that assignment is always like value semantics,
    and it's only really possible to see the difference when looking at the properties of a type.
 
-.. _CustomTypes_ValueTypes:
+.. _ClassesAndStructures_ValueTypes:
 
 Value Types
 ~~~~~~~~~~~
@@ -299,12 +299,12 @@ will always be copied when they are passed around.
 
 For example, using the ``Resolution`` structure from above:
 
-.. testcode:: customTypes
+.. testcode:: ClassesAndStructures
 
-    --> let hd = Resolution(width: 1920, height: 1080)
-    <<< // hd : Resolution = Resolution(1920, 1080)
-    --> var cinema = hd
-    <<< // cinema : Resolution = Resolution(1920, 1080)
+   -> let hd = Resolution(width: 1920, height: 1080)
+   << // hd : Resolution = Resolution(1920, 1080)
+   -> var cinema = hd
+   << // cinema : Resolution = Resolution(1920, 1080)
 
 This example declares a constant called ``hd``,
 and sets it to a ``Resolution`` instance initialized with
@@ -323,25 +323,25 @@ Next, the ``width`` property of ``cinema`` is amended to be
 the width of the slightly-wider 2K standard used for digital cinema projection
 (which is ``2048`` pixels wide and ``1080`` pixels high):
 
-.. testcode:: customTypes
+.. testcode:: ClassesAndStructures
 
-    --> cinema.width = 2048
+   -> cinema.width = 2048
 
 Checking the ``width`` property of ``cinema``
 shows that it has indeed changed to be ``2048``:
 
-.. testcode:: customTypes
+.. testcode:: ClassesAndStructures
 
-    --> println("cinema is now \(cinema.width) pixels wide")
-    <-- cinema is now 2048 pixels wide
+   -> println("cinema is now \(cinema.width) pixels wide")
+   <- cinema is now 2048 pixels wide
 
 However, the ``width`` property of the original ``hd`` instance
 still has the old value of ``1920``:
 
-.. testcode:: customTypes
+.. testcode:: ClassesAndStructures
 
-    --> println("hd is still \(hd.width) pixels wide")
-    <-- hd is still 1920 pixels wide
+   -> println("hd is still \(hd.width) pixels wide")
+   <- hd is still 1920 pixels wide
 
 When ``cinema`` was given the current value of ``hd``,
 the *values* stored in ``hd`` were copied into the new ``cinema`` instance.
@@ -353,20 +353,20 @@ doesn't affect the width stored in ``hd``.
 
 The same behavior applies to enumerations:
 
-.. testcode:: customTypes
+.. testcode:: ClassesAndStructures
 
-    --> enum CompassPoint {
-            case North, South, East, West
-        }
-    --> var currentDirection = CompassPoint.West
-    <<< // currentDirection : CompassPoint = <unprintable value>
-    --> let rememberedDirection = currentDirection
-    <<< // rememberedDirection : CompassPoint = <unprintable value>
-    --> currentDirection = .East
-    --> if rememberedDirection == .West {
-            println("The remembered direction is still .West")
-        }
-    <-- The remembered direction is still .West
+   -> enum CompassPoint {
+         case North, South, East, West
+      }
+   -> var currentDirection = CompassPoint.West
+   << // currentDirection : CompassPoint = <unprintable value>
+   -> let rememberedDirection = currentDirection
+   << // rememberedDirection : CompassPoint = <unprintable value>
+   -> currentDirection = .East
+   -> if rememberedDirection == .West {
+         println("The remembered direction is still .West")
+      }
+   <- The remembered direction is still .West
 
 When ``rememberedDirection`` is assigned the value of ``currentDirection``,
 it is actually set to a copy of that value.
@@ -375,7 +375,7 @@ the copy of the original value that was stored in ``rememberedDirection``.
 
 .. TODO: Should I give an example of passing a value type to a function here?
 
-.. _CustomTypes_ReferenceTypes:
+.. _ClassesAndStructures_ReferenceTypes:
 
 Reference Types
 ~~~~~~~~~~~~~~~
@@ -390,14 +390,14 @@ Rather than making a copy, a :newTerm:`reference` to the same existing instance 
 
 Here's an example, using the ``VideoMode`` class defined above:
 
-.. testcode:: customTypes
+.. testcode:: ClassesAndStructures
 
-    --> let tenEighty = VideoMode()
-    <<< // tenEighty : VideoMode = <VideoMode instance>
-    --> tenEighty.resolution = hd
-    --> tenEighty.interlaced = true
-    --> tenEighty.name = "1080i"
-    --> tenEighty.frameRate = 25.0
+   -> let tenEighty = VideoMode()
+   << // tenEighty : VideoMode = <VideoMode instance>
+   -> tenEighty.resolution = hd
+   -> tenEighty.interlaced = true
+   -> tenEighty.name = "1080i"
+   -> tenEighty.frameRate = 25.0
 
 This example declares a new constant called ``tenEighty``,
 and sets it to refer to a new instance of the ``VideoMode`` class.
@@ -408,11 +408,11 @@ Finally, it is set to a frame rate of ``25.0`` frames per second.
 Next, ``tenEighty`` is assigned to a new constant, called ``alsoTenEighty``,
 and the frame rate of ``alsoTenEighty`` is modified:
 
-.. testcode:: customTypes
+.. testcode:: ClassesAndStructures
 
-    --> let alsoTenEighty = tenEighty
-    <<< // alsoTenEighty : VideoMode = <VideoMode instance>
-    --> alsoTenEighty.frameRate = 30.0
+   -> let alsoTenEighty = tenEighty
+   << // alsoTenEighty : VideoMode = <VideoMode instance>
+   -> alsoTenEighty.frameRate = 30.0
 
 Because classes are reference types,
 ``tenEighty`` and ``alsoTenEighty`` actually both refer to the *same* ``VideoMode`` instance.
@@ -422,10 +422,10 @@ Checking the ``frameRate`` property of ``tenEighty``
 shows that it correctly reports the new frame rate of ``30.0``
 from the underlying ``VideoMode`` instance:
 
-.. testcode:: customTypes
+.. testcode:: ClassesAndStructures
 
-    --> println("The frameRate property of tenEighty is now \(tenEighty.frameRate)")
-    <-- The frameRate property of tenEighty is now 30.0
+   -> println("The frameRate property of tenEighty is now \(tenEighty.frameRate)")
+   <- The frameRate property of tenEighty is now 30.0
 
 Note that ``tenEighty`` and ``alsoTenEighty`` are declared as *constants*,
 rather than variables.
@@ -440,9 +440,9 @@ not the values of the constant references to that ``VideoMode``.
 
 .. note::
 
-    Classes are the only reference types in Swift.
-    If you want to create a new type that is passed by reference rather than by value,
-    you should define it as a class in your code.
+   Classes are the only reference types in Swift.
+   If you want to create a new type that is passed by reference rather than by value,
+   you should define it as a class in your code.
 
 .. QUESTION: This isn't strictly true. Functions are reference types too.
    Does this matter for the point I'm making here?
@@ -454,7 +454,7 @@ not the values of the constant references to that ``VideoMode``.
    as per the swift-discuss email thread "Dictionaries and key copying"
    started by Alex Migicovsky on Mar 1 2014.
 
-.. _CustomTypes_Pointers:
+.. _ClassesAndStructures_Pointers:
 
 Pointers
 ________
@@ -480,7 +480,7 @@ and the value it contains is always a reference to a particular instance of that
 .. TODO: Saying that we don't use the reference operator is actually untrue.
    We use it at the call-site for inout function parameters.
 
-.. _CustomTypes_ChoosingBetweenClassesAndStructures:
+.. _ClassesAndStructures_ChoosingBetweenClassesAndStructures:
 
 Choosing Between Classes and Structures
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -498,11 +498,11 @@ defined as a class or as a structure.
 
 .. note::
 
-    Enumerations have many useful features in Swift,
-    but are not really suited to creating general-purpose data types
-    in the same way as classes and structures.
-    Enumerations should only be used when you need the specific capabilities
-    that they offer.
+   Enumerations have many useful features in Swift,
+   but are not really suited to creating general-purpose data types
+   in the same way as classes and structures.
+   Enumerations should only be used when you need the specific capabilities
+   that they offer.
 
 As a general rule, you should only define a new structure when:
 
@@ -541,7 +541,7 @@ not structures.
    its location is a structure, but it doesn't make sense for Window
    to be a value type, as it is not copied when passed around.
 
-.. _CustomTypes_IdentityOperators:
+.. _ClassesAndStructures_IdentityOperators:
 
 Identity Operators
 ------------------
@@ -554,104 +554,37 @@ Identity Operators
 
 .. write-me::
 
-.. _CustomTypes_NestedTypes:
-
-Nested Types
-------------
-
-:newTerm:`Nested types` are a way to define custom enumerations, classes and structures
-to support the functionality of another custom type.
-The definition for a nested type is written within the braces of the type it supports,
-and types can be nested to as many levels as are required.
-
-For example:
-
-.. testcode:: nestedTypesAndTypeAlias
-
-    --> struct PlayingCard {
-            let rank: Rank
-            let suit: Suit
-            enum Rank {
-                case Two, Three, Four, Five, Six, Seven, Eight, Nine, Ten
-                case Jack, Queen, King, Ace
-            }
-            enum Suit : UnicodeScalar {
-                case Spades = '♠', Hearts = '♡', Diamonds = '♢', Clubs = '♣'
-            }
-        }
-    --> let theAceOfSpades = PlayingCard(.Ace, .Spades)
-    <<< // theAceOfSpades : PlayingCard = PlayingCard(<unprintable value>, <unprintable value>)
-
-This example defines a structure to represent any of
-the 52 playing cards in a standard deck.
-
-The ``PlayingCard`` structure has two properties,
-called ``rank`` and ``suit``.
-Their types are defined by two nested enumerations:
-
-* ``Rank``, which enumerates the thirteen possible playing card ranks
-* ``Suit``, which enumerates the four common playing card suits,
-  and associates each of them with
-  a raw ``UnicodeScalar`` value to represent their symbol
-
-Because ``PlayingCard`` is a structure with no custom initializers,
-it has an implicit memberwise initializer
-(as described in :ref:`CustomTypes_MemberwiseStructureInitializers`).
-This is used to initialize a new constant called ``theAceOfSpades``.
-Even though ``Rank`` and ``Suit`` are nested within ``PlayingCard``,
-their type can still be inferred from the context,
-and so the initialization of this instance is able to refer to the enumeration members
-by their member names (``.Ace`` and ``.Spades``) alone.
-
-.. QUESTION: should the "Memberwise Structure Initializers" link in this paragraph
-   go to the short introduction of the subject in this chapter,
-   or should it go to somewhere in the Initializers chapter?
-
-.. _CustomTypes_ReferringToNestedTypes:
-
-Referring to Nested Types
-~~~~~~~~~~~~~~~~~~~~~~~~~
-
-A nested type can be used outside of its definition context,
-by prefixing its name with the name of the type it is nested within:
-
-.. testcode:: nestedTypesAndTypeAlias
-
-    --> let heartsSymbol = PlayingCard.Suit.Hearts.toRaw()
-    <<< // heartsSymbol : UnicodeScalar = '♡'
-    /-> heartsSymbol is '\(heartsSymbol)'
-    <-/ heartsSymbol is '♡'
-
-For the example above, 
-this enables the names of ``Suit`` and ``Rank`` to be kept short,
-because their names are naturally qualified by the context in which they are defined.
-
-.. _CustomTypes_TypeAliases:
+.. _ClassesAndStructures_TypeAliases:
 
 Type Aliases
 ------------
 
 :newTerm:`Type aliases` are a way to define an alternative name
 (or :newTerm:`alias`) for an existing type.
-Type aliases are declared with the ``typealias`` keyword:
+Type aliases are defined with the ``typealias`` keyword:
 
-.. testcode:: nestedTypesAndTypeAlias
+.. testcode:: typeAliases
 
-    --> typealias BlackjackCard = PlayingCard
+   -> typealias BlackjackCard = PlayingCard
 
 Type aliases can be useful when you want to refer to an existing type
 by a name that is contextually more appropriate.
-Once you have declared a type alias,
+Once you have defined a type alias,
 you can use the alias anywhere you might use the original name:
 
-.. testcode:: nestedTypesAndTypeAlias
+.. testcode:: typeAliases
 
-    --> let theQueenOfHearts = BlackjackCard(.Queen, .Hearts)
-    <<< // theQueenOfHearts : PlayingCard = PlayingCard(<unprintable value>, <unprintable value>)
+   -> let theQueenOfHearts = BlackjackCard(.Queen, .Hearts)
+   << // theQueenOfHearts : PlayingCard = PlayingCard(<unprintable value>, <unprintable value>)
 
 .. note::
 
-    Type aliases do not actually define a new type in Swift.
-    They are just an alternative name for an existing type.
-    In the example above,
-    ``theQueenOfHearts`` is of type ``PlayingCard``, not ``BlackjackCard``.
+   Type aliases do not actually define a new type in Swift.
+   They are just an alternative name for an existing type.
+   In the example above,
+   ``theQueenOfHearts`` is of type ``PlayingCard``, not ``BlackjackCard``.
+
+.. TODO: this example used to have the PlayingCard example above it.
+   It needs to change to be something else, as currently it fails swifttest.
+   However, I'm holding off updating it until I hear back from the core design team
+   as to whether they want to mention type aliases here at all.

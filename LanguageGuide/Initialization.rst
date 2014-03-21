@@ -33,16 +33,16 @@ written using the ``init`` keyword:
 
 .. testcode:: fahrenheitInit
 
-    --> struct Fahrenheit {
-            var temperature: Double
-            init() {
-                temperature = 32.0
-            }
-        }
-    --> var f = Fahrenheit()
-    <<< // f : Fahrenheit = Fahrenheit(32.0)
-    --> println("The default temperature is \(f.temperature)° Fahrenheit")
-    <-- The default temperature is 32.0° Fahrenheit
+   -> struct Fahrenheit {
+         var temperature: Double
+         init() {
+            temperature = 32.0
+         }
+      }
+   -> var f = Fahrenheit()
+   << // f : Fahrenheit = Fahrenheit(32.0)
+   -> println("The default temperature is \(f.temperature)° Fahrenheit")
+   <- The default temperature is 32.0° Fahrenheit
 
 This example defines a new structure to store temperatures expressed in the Fahrenheit scale.
 The structure has one stored property, ``temperature``, which is of type ``Double``.
@@ -74,9 +74,9 @@ by providing a default value at the point that the property is declared:
 
 .. testcode:: fahrenheitDefault
 
-    --> struct Fahrenheit {
-            var temperature = 32.0
-        }
+   -> struct Fahrenheit {
+         var temperature = 32.0
+      }
 
 If a property should always take the same initial value,
 you should always provide a default value as part of the property declaration,
@@ -90,10 +90,10 @@ default initializers and initializer inheritance,
 as described later in this chapter.
 
 .. note::
-    When you assign a default value to a stored property,
-    or set its initial value within an initializer,
-    the value of that property is set directly,
-    without calling any stored property observers.
+   When you assign a default value to a stored property,
+   or set its initial value within an initializer,
+   the value of that property is set directly,
+   without calling any stored property observers.
 
 .. _Initialization_DefaultInitializers:
 
@@ -120,7 +120,7 @@ it is available automatically for all classes and structures without their own i
 Memberwise Structure Initializers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. HACK: this is currently duplicated in CustomTypes.
+.. HACK: this is currently duplicated in ClassesAndStructures.
 
 .. TODO: mention that structures and enums can assign a value to self during initialization,
    but classes cannot.
@@ -134,19 +134,19 @@ can be passed to the memberwise initializer by name:
 
 .. testcode:: classesAndStructures
 
-    --> struct Size {
-            var width = 0.0, height = 0.0
-        }
-    --> let twoByTwo = Size(width: 2.0, height: 2.0)
-    <<< // twoByTwo : Size = Size(2.0, 2.0)
+   -> struct Size {
+         var width = 0.0, height = 0.0
+      }
+   -> let twoByTwo = Size(width: 2.0, height: 2.0)
+   << // twoByTwo : Size = Size(2.0, 2.0)
 
 Initial values can also be provided without names,
 if they are listed in the same order that the properties are declared in the structure's definition:
 
 .. testcode:: classesAndStructures
 
-    --> let fourByThree = Size(4.0, 3.0)
-    <<< // fourByThree : Size = Size(4.0, 3.0)
+   -> let fourByThree = Size(4.0, 3.0)
+   << // fourByThree : Size = Size(4.0, 3.0)
 
 .. TODO: Include a justifiable reason for why classes do not provide a memberwise initializer.
 .. TODO: According to rdar://15670604, we may end up with one for classes as well.
@@ -166,23 +166,23 @@ with a value from a different temperature scale:
 
 .. testcode:: initialization
 
-    --> struct Celsius {
-            var temperatureInCelsius: Double = 0.0
-            init withFahrenheit(fahrenheit: Double) {
-                temperatureInCelsius = (fahrenheit - 32.0) / 1.8
-            }
-            init withKelvin(kelvin: Double) {
-                temperatureInCelsius = kelvin + 273.15
-            }
-        }
-    --> var boilingPointOfWater = Celsius(withFahrenheit: 212.0)
-    <<< // boilingPointOfWater : Celsius = Celsius(100.0)
-    /-> boilingPointOfWater.temperatureInCelsius is \(boilingPointOfWater.temperatureInCelsius)
-    <-/ boilingPointOfWater.temperatureInCelsius is 100.0
-    --> var freezingPointOfWater = Celsius(withKelvin: -273.15)
-    <<< // freezingPointOfWater : Celsius = Celsius(0.0)
-    /-> freezingPointOfWater.temperatureInCelsius is \(freezingPointOfWater.temperatureInCelsius)
-    <-/ freezingPointOfWater.temperatureInCelsius is 0.0
+   -> struct Celsius {
+         var temperatureInCelsius: Double = 0.0
+         init withFahrenheit(fahrenheit: Double) {
+            temperatureInCelsius = (fahrenheit - 32.0) / 1.8
+         }
+         init withKelvin(kelvin: Double) {
+            temperatureInCelsius = kelvin + 273.15
+         }
+      }
+   -> var boilingPointOfWater = Celsius(withFahrenheit: 212.0)
+   << // boilingPointOfWater : Celsius = Celsius(100.0)
+   /> boilingPointOfWater.temperatureInCelsius is \(boilingPointOfWater.temperatureInCelsius)
+   </ boilingPointOfWater.temperatureInCelsius is 100.0
+   -> var freezingPointOfWater = Celsius(withKelvin: -273.15)
+   << // freezingPointOfWater : Celsius = Celsius(0.0)
+   /> freezingPointOfWater.temperatureInCelsius is \(freezingPointOfWater.temperatureInCelsius)
+   </ freezingPointOfWater.temperatureInCelsius is 0.0
 
 .. TODO: mention that initializers can be written in either function syntax,
    and show an example in function-style as well as selector-style.
@@ -192,28 +192,28 @@ as long as is is definitely set to a value by the time the initializer has finis
 
 .. testcode:: initialization
 
-    --> struct Temperature {
-            let storedValue: Double
-            let storedScale: String
-            init withValue(value: Double) inScale(scale: String) {
-                storedValue = value
-                storedScale = scale
+   -> struct Temperature {
+         let storedValue: Double
+         let storedScale: String
+         init withValue(value: Double) inScale(scale: String) {
+            storedValue = value
+            storedScale = scale
+         }
+         func toKelvin() -> Double {
+            switch storedScale {
+               case "F": // Fahrenheit
+                  return (storedValue - 32.0) / 1.8
+               case "C": // Celsius
+                  return storedValue + 273.15
+               default:  // assume Kelvin otherwise
+                  return storedValue
             }
-            func toKelvin() -> Double {
-                switch storedScale {
-                    case "F": // Fahrenheit
-                        return (storedValue - 32.0) / 1.8
-                    case "C": // Celsius
-                        return storedValue + 273.15
-                    default:  // assume Kelvin otherwise
-                        return storedValue
-                }
-            }
-        }
-    --> var absoluteZero = Temperature(withValue: -273.15, inScale: "C")
-    <<< // absoluteZero : Temperature = Temperature(-273.15, "C")
-    --> println("Temperature is \(absoluteZero.toKelvin())°K")
-    <-- Temperature is 0.0°K
+         }
+      }
+   -> var absoluteZero = Temperature(withValue: -273.15, inScale: "C")
+   << // absoluteZero : Temperature = Temperature(-273.15, "C")
+   -> println("Temperature is \(absoluteZero.toKelvin())°K")
+   <- Temperature is 0.0°K
 
 .. TODO: This could do with a more elegant example.
 
@@ -222,7 +222,7 @@ Optional Property Values
 
 If your custom type has a stored property that cannot be known during initialization,
 or that is logically allowed to have “no value yet”,
-it should be declared as having an optional type,
+that property should be declared as having an optional type,
 and initialized with a value of ``.None`` as part of its declaration.
 This makes it clear that the property is
 deliberately intended to have “no value yet” during initialization,
@@ -232,21 +232,21 @@ For example:
 
 .. testcode:: initialization
 
-    --> class SurveyQuestion {
-            var text: String
-            var response: String? = .None
-            init withText(text: String) {
-                self.text = text
-            }
-            func ask() {
-                println(text)
-            }
-        }
-    --> let cheeseQuestion = SurveyQuestion(withText: "Do you like cheese?")
-    <<< // cheeseQuestion : SurveyQuestion = <SurveyQuestion instance>
-    --> cheeseQuestion.ask()
-    <-- Do you like cheese?
-    --> cheeseQuestion.response = "Yes, I do like cheese."
+   -> class SurveyQuestion {
+         var text: String
+         var response: String? = .None
+         init withText(text: String) {
+            self.text = text
+         }
+         func ask() {
+            println(text)
+         }
+      }
+   -> let cheeseQuestion = SurveyQuestion(withText: "Do you like cheese?")
+   << // cheeseQuestion : SurveyQuestion = <SurveyQuestion instance>
+   -> cheeseQuestion.ask()
+   <- Do you like cheese?
+   -> cheeseQuestion.response = "Yes, I do like cheese."
 
 The response to a survey question cannot be known until it is asked,
 and so the ``response`` property is declared as ``String?``, or “optional ``String``”.
@@ -302,9 +302,9 @@ and is written without parentheses:
 
 ::
 
-    deinit {
-        // perform the deinitialization
-    }
+   deinit {
+      // perform the deinitialization
+   }
 
 Deinitializers are called automatically, just before instance destruction takes place.
 You are not allowed to call ``super.deinit`` yourself.
@@ -332,17 +332,17 @@ to store and manage its current state:
 
 .. testcode:: deinitializer
 
-    --> struct Bank {
-            static var coinsInBank = 10_000
-            static func vendCoins(var numberOfCoinsToVend: Int) -> Int {
-                numberOfCoinsToVend = min(numberOfCoinsToVend, coinsInBank)
-                coinsInBank -= numberOfCoinsToVend
-                return numberOfCoinsToVend
-            }
-            static func receiveCoins(coins: Int) {
-                coinsInBank += coins
-            }
-        }
+   -> struct Bank {
+         static var coinsInBank = 10_000
+         static func vendCoins(var numberOfCoinsToVend: Int) -> Int {
+            numberOfCoinsToVend = min(numberOfCoinsToVend, coinsInBank)
+            coinsInBank -= numberOfCoinsToVend
+            return numberOfCoinsToVend
+         }
+         static func receiveCoins(coins: Int) {
+            coinsInBank += coins
+         }
+      }
 
 ``Bank`` keeps track of the current number of coins it holds via its ``coinsInBank`` property.
 It also offers two methods – ``vendCoins()`` and ``receiveCoins()`` –
@@ -364,18 +364,18 @@ This is represented by the player's ``coinsInPurse`` property:
 
 .. testcode:: deinitializer
 
-    --> class Player {
-            var coinsInPurse: Int
-            init withCoins(coins: Int) {
-                coinsInPurse = Bank.vendCoins(coins)
-            }
-            func winCoins(coins: Int) {
-                coinsInPurse += Bank.vendCoins(coins)
-            }
-            deinit {
-                Bank.receiveCoins(coinsInPurse)
-            }
-        }
+   -> class Player {
+         var coinsInPurse: Int
+         init withCoins(coins: Int) {
+            coinsInPurse = Bank.vendCoins(coins)
+         }
+         func winCoins(coins: Int) {
+            coinsInPurse += Bank.vendCoins(coins)
+         }
+         deinit {
+            Bank.receiveCoins(coinsInPurse)
+         }
+      }
 
 Each ``Player`` instance is initialized with a starting allowance of
 some specified number of coins from the bank during initialization
@@ -392,12 +392,12 @@ Here's how that looks in action:
 
 .. testcode:: deinitializer
 
-    --> var playerOne: Player? = Player(withCoins: 100)
-    <<< // playerOne : Player? = <unprintable value>
-    --> println("A new player has joined the game with \(playerOne!.coinsInPurse) coins")
-    <-- A new player has joined the game with 100 coins
-    --> println("There are now \(Bank.coinsInBank) coins left in the bank")
-    <-- There are now 9900 coins left in the bank
+   -> var playerOne: Player? = Player(withCoins: 100)
+   << // playerOne : Player? = <unprintable value>
+   -> println("A new player has joined the game with \(playerOne!.coinsInPurse) coins")
+   <- A new player has joined the game with 100 coins
+   -> println("There are now \(Bank.coinsInBank) coins left in the bank")
+   <- There are now 9900 coins left in the bank
 
 A new ``Player`` instance is created, with a request for 100 coins if they are available.
 This ``Player`` instance is stored in an optional ``Player`` variable called ``playerOne``.
@@ -410,11 +410,11 @@ and whenever its ``winCoins()`` method is called:
 
 .. testcode:: deinitializer
 
-    --> playerOne!.winCoins(2_000)
-    --> println("PlayerOne won 2000 coins & now has \(playerOne!.coinsInPurse) coins")
-    <-- PlayerOne won 2000 coins & now has 2100 coins
-    --> println("The bank now only has \(Bank.coinsInBank) coins left")
-    <-- The bank now only has 7900 coins left
+   -> playerOne!.winCoins(2_000)
+   -> println("PlayerOne won 2000 coins & now has \(playerOne!.coinsInPurse) coins")
+   <- PlayerOne won 2000 coins & now has 2100 coins
+   -> println("The bank now only has \(Bank.coinsInBank) coins left")
+   <- The bank now only has 7900 coins left
 
 Here, the player has won 2,000 coins.
 Their purse now contains 2,100 coins,
@@ -422,11 +422,11 @@ and the bank only has 7,900 coins left.
 
 .. testcode:: deinitializer
 
-    --> playerOne = .None
-    --> println("PlayerOne has left the game")
-    <-- PlayerOne has left the game
-    --> println("The bank now has \(Bank.coinsInBank) coins")
-    <-- The bank now has 10000 coins
+   -> playerOne = .None
+   -> println("PlayerOne has left the game")
+   <- PlayerOne has left the game
+   -> println("The bank now has \(Bank.coinsInBank) coins")
+   <- The bank now has 10000 coins
 
 The player has now left the game.
 This is indicated by setting the optional ``playerOne`` variable to ``.None``,

@@ -14,13 +14,14 @@ Chapters that have not yet been written are indicated with an [x] after their na
     Functions
     Closures
     Enumerations
-    CustomTypes
+    ClassesAndStructures
     Properties
     Methods
     Subscripts
     Inheritance
     Initialization
     TypeCasting
+    NestedTypes
     Extensions
     Protocols
     Generics
