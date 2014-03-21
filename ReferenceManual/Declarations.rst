@@ -880,7 +880,7 @@ type aliases, and even other structure, class, and enumeration declarations.
 Structure declarations can't contain destructor or protocol declarations.
 For a discussion and several examples of structures
 that include these kind of declarations,
-see :doc:`../LanguageGuide/CustomTypes`.
+see :doc:`../LanguageGuide/ClassesAndStructures`.
 
 Structure types can adopt any number of protocols,
 but can't inherit from classes, enumerations, or other structures.
@@ -901,12 +901,12 @@ The process of initializing a structure's declared properties
 is described in :doc:`../LanguageGuide/Initialization`.
 
 Properties of a structure instance can be accessed using dot (``.``) syntax,
-as described in :ref:`CustomTypes_AccessingProperties`.
+as described in :ref:`ClassesAndStructures_AccessingProperties`.
 
 Structures are value types; instances of a structure are copied when assigned to
 variables or constants, or when passed as arguments to a function call.
 For information about value types,
-see :ref:`CustomTypes_ValueTypesAndReferenceTypes`.
+see :ref:`ClassesAndStructures_ValueTypesAndReferenceTypes`.
 
 You can extend the behavior of a structure type with an extension declaration,
 as discussed in :ref:`Declarations_ExtensionDeclaration`.
@@ -949,7 +949,7 @@ and even other class, structure, and enumeration declarations.
 Class declarations can't contain protocol declarations.
 For a discussion and several examples of classes
 that include these kind of declarations,
-see :doc:`../LanguageGuide/CustomTypes`.
+see :doc:`../LanguageGuide/ClassesAndStructures`.
 
 Class types can inherit from only one parent class, its *superclass*,
 but can adopt any number of protocols.
@@ -988,12 +988,12 @@ There are two ways create an instance of a previously declared class:
    as described in :ref:`Initialization_DefaultInitializers`.
 
 Properties of a class instance may be accessed using dot (``.``) syntax,
-as described in :ref:`CustomTypes_AccessingProperties`.
+as described in :ref:`ClassesAndStructures_AccessingProperties`.
 
 Classes are reference types; instances of a class are referred to, rather than copied,
 when assigned to variables or constants, or when passed as arguments to a function call.
 For information about reference types,
-see :ref:`CustomTypes_ValueTypesAndReferenceTypes`.
+see :ref:`ClassesAndStructures_ValueTypesAndReferenceTypes`.
 
 You can extend the behavior of a class type with an extension declaration,
 as discussed in :ref:`Declarations_ExtensionDeclaration`.
