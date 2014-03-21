@@ -178,6 +178,11 @@ because its properties cannot be changed, even if they are variable properties
    !! ^        ~~~~~~
    // this will report an error
 
+.. TODO: talk about @!mutating as well.
+   Struct setters are implicitly 'mutating' by default and thus do not work on 'let's.
+   However, JoeG says that this ought to work
+   if the setter for the computed property is explicitly defined as @!mutating.
+
 .. _Methods_AssigningToSelfWithinAMutatingMethod:
 
 Assigning to Self Within a Mutating Method
