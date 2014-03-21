@@ -583,3 +583,8 @@ you can use the alias anywhere you might use the original name:
     They are just an alternative name for an existing type.
     In the example above,
     ``theQueenOfHearts`` is of type ``PlayingCard``, not ``BlackjackCard``.
+
+.. TODO: this example used to have the PlayingCard example above it.
+   It needs to change to be something else, as currently it fails swifttest.
+   However, I'm holding off updating it until I hear back from the core design team
+   as to whether they want to mention type aliases here at all.
