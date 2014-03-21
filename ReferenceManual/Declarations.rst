@@ -8,6 +8,12 @@ and protocol types. You can also use a declaration to extend the the behavior
 of an existing named type and to import symbols into your program that are declared elsewhere.
 This chapter describes the syntax and behavior of these and other Swift declarations.
 
+In Swift, most declarations are also definitions in the sense they are implemented
+or initialized at the same time they are declared. That said, because protocols don't
+implement their members, most protocol members are declarations only. For convenience
+and because the distinction isn't that important in Swift,
+the term *declaration* is used to cover both declarations and definitions.
+
 .. langref-grammar
 
     decl ::= decl-class
