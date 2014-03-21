@@ -13,44 +13,44 @@ Types can be nested to as many levels as are required:
 
 .. testcode:: nestedTypes
 
-    --> struct BlackjackCard {
-            enum Suit : UnicodeScalar {
-                case Spades = '♠', Hearts = '♡', Diamonds = '♢', Clubs = '♣'
+   -> struct BlackjackCard {
+         enum Suit : UnicodeScalar {
+            case Spades = '♠', Hearts = '♡', Diamonds = '♢', Clubs = '♣'
+         }
+         enum Rank : String {
+            case Two = "2", Three = "3", Four = "4", Five = "5", Six = "6"
+            case Seven = "7", Eight = "8", Nine = "9", Ten = "10"
+            case Jack = "Jack", Queen = "Queen", King = "King", Ace = "Ace"
+            struct Values {
+               let firstValue: Int
+               let secondValue: Int?
             }
-            enum Rank : String {
-                case Two = "2", Three = "3", Four = "4", Five = "5", Six = "6"
-                case Seven = "7", Eight = "8", Nine = "9", Ten = "10"
-                case Jack = "Jack", Queen = "Queen", King = "King", Ace = "Ace"
-                struct Values {
-                    let firstValue: Int
-                    let secondValue: Int?
-                }
-                var values: Values {
-                    switch self {
-                        case .Ace:
-                            return Values(1, 11)
-                        case .Jack, .Queen, .King:
-                            return Values(10, .None)
-                        default:
-                            return Values(self.toRaw().toInt()!, .None)
-                    }
-                }
+            var values: Values {
+               switch self {
+                  case .Ace:
+                     return Values(1, 11)
+                  case .Jack, .Queen, .King:
+                     return Values(10, .None)
+                  default:
+                     return Values(self.toRaw().toInt()!, .None)
+               }
             }
-            let rank: Rank
-            let suit: Suit
-            var description: String {
-                var output = "the \(rank.toRaw()) of \(suit.toRaw())"
-                output += " is worth \(rank.values.firstValue)"
-                if let secondValue = rank.values.secondValue {
-                    output += " or \(secondValue)"
-                }
-                return output
+         }
+         let rank: Rank
+         let suit: Suit
+         var description: String {
+            var output = "the \(rank.toRaw()) of \(suit.toRaw())"
+            output += " is worth \(rank.values.firstValue)"
+            if let secondValue = rank.values.secondValue {
+               output += " or \(secondValue)"
             }
-        }
-    --> let theAceOfSpades = BlackjackCard(.Ace, .Spades)
-    <<< // theAceOfSpades : BlackjackCard = BlackjackCard(<unprintable value>, <unprintable value>)
-    --> println("Blackjack value: \(theAceOfSpades.description)")
-    <-- Blackjack value: the Ace of ♠ is worth 1 or 11
+            return output
+         }
+      }
+   -> let theAceOfSpades = BlackjackCard(.Ace, .Spades)
+   << // theAceOfSpades : BlackjackCard = BlackjackCard(<unprintable value>, <unprintable value>)
+   -> println("Blackjack value: \(theAceOfSpades.description)")
+   <- Blackjack value: the Ace of ♠ is worth 1 or 11
 
 This example defines a playing card for use in the game of Blackjack.
 One notable feature of Blackjack is that the Ace card has a value of
@@ -109,10 +109,10 @@ by prefixing its name with the name of the type it is nested within:
 
 .. testcode:: nestedTypes
 
-    --> let heartsSymbol = BlackjackCard.Suit.Hearts.toRaw()
-    <<< // heartsSymbol : UnicodeScalar = '♡'
-    /-> heartsSymbol is '\(heartsSymbol)'
-    <-/ heartsSymbol is '♡'
+   -> let heartsSymbol = BlackjackCard.Suit.Hearts.toRaw()
+   << // heartsSymbol : UnicodeScalar = '♡'
+   /> heartsSymbol is '\(heartsSymbol)'
+   </ heartsSymbol is '♡'
 
 For the example above, 
 this enables the names of ``Suit``, ``Rank`` and ``Values`` to be kept deliberately short,
