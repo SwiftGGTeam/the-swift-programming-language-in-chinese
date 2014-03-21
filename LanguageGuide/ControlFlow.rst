@@ -799,6 +799,11 @@ and can be written over multiple lines if the list is long:
     you can do so with the ``fallthrough`` keyword,
     as described in :ref:`ControlFlow_Fallthrough`.
 
+.. TODO: we don't currently have a nice way to include a case (or a default case)
+   that intentionally includes a no-op executable statement.
+   This might end up being a single semi-colon, but it's still up for design discussion.
+   Update this section once it has been decided.
+
 .. _ControlFlow_RangeMatching:
 
 Range Matching
