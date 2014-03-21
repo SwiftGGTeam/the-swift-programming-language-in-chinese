@@ -393,10 +393,7 @@ Swift supports a switch statement superficially similar to the one in C:
 .. testcode:: switch
 
     --> switch 5 {
-            case 2:
-            case 3:
-            case 5:
-            case 7:
+            case 2, 3, 5, 7:
                 println("prime")
             default:
                 println("not prime, or greater than 7")
@@ -414,29 +411,12 @@ if that's what you want:
 .. testcode:: switch
 
     --> switch 5 {
-            case 2:
-            case 3:
-            case 5:
-            case 7:
-                println("prime")
-                fallthrough
-            default:
-                println("integer")
-        }
-    <<< prime
-    <<< integer
-
-As shorthand, you can also specify multiple values in a single case separated by commas:
-
-.. testcode:: switch
-
-    --> switch 5 {
             case 2, 3, 5, 7:
                 println("prime")
                 fallthrough
             default:
                 println("integer")
-            }
+        }
     <<< prime
     <<< integer
 
@@ -586,8 +566,7 @@ The compiler enforces exhaustiveness (which you can silence by adding a ``defaul
     --> switch color {
             case .Blue:
                 println("blue")
-            case .Red:
-            case .Green:
+            case .Red, .Green:
                 println("not blue")
         }
     <-- blue
@@ -910,7 +889,7 @@ that are defined as part of the protocol:
     --> testableThing.origin
     !!! <REPL Input>:1:1: error: 'HitTestable' does not have a member named 'origin'
     !!! testableThing.origin
-    !!! ^~~~~~~
+    !!! ^             ~~~~~~
 
 This guarantees safety when dealing with different types,
 such as when hit-testing a series of different elements:
