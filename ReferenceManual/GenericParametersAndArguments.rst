@@ -1,5 +1,5 @@
-Generics
-========
+Generic Parameters and Arguments
+================================
 
 .. write-me:: Need to write an introduction.
     Should probably mention associated types at this level.
