@@ -25,8 +25,8 @@ Bitwise NOT Operator
 The :newTerm:`bitwise NOT operator` (``~``) inverts all of the bits in a number:
 
 .. image:: ../images/bitwiseNOT.png
-    :width: 570
-    :align: center
+   :width: 570
+   :align: center
 
 The bitwise NOT operator is a prefix operator,
 and appears immediately before the value it operates on,
@@ -34,10 +34,10 @@ without any whitespace:
 
 .. testcode:: bitwiseOperators
 
-    --> let initialBits: UInt8 = 0b00001111
-    <<< // initialBits : UInt8 = 15
-    --> let invertedBits = ~initialBits  // equals 11110000
-    <<< // invertedBits : UInt8 = 240
+   -> let initialBits: UInt8 = 0b00001111
+   << // initialBits : UInt8 = 15
+   -> let invertedBits = ~initialBits  // equals 11110000
+   << // invertedBits : UInt8 = 240
 
 ``UInt8`` integers have eight bits,
 and can store any value between ``0`` and ``255``.
@@ -62,19 +62,19 @@ The :newTerm:`bitwise AND operator` (``&``) combines the bits of two numbers.
 It returns a new number whose bits are set to ``1`` only if the bits were equal to ``1`` in *both* input numbers:
 
 .. image:: ../images/bitwiseAND.png
-    :width: 570
-    :align: center
+   :width: 570
+   :align: center
 
 For example:
 
 .. testcode:: bitwiseOperators
 
-    --> let firstSixBits: UInt8 = 0b11111100
-    <<< // firstSixBits : UInt8 = 252
-    --> let lastSixBits: UInt8  = 0b00111111
-    <<< // lastSixBits : UInt8 = 63
-    --> let middleFourBits = firstSixBits & lastSixBits  // equals 00111100
-    <<< // middleFourBits : UInt8 = 60
+   -> let firstSixBits: UInt8 = 0b11111100
+   << // firstSixBits : UInt8 = 252
+   -> let lastSixBits: UInt8  = 0b00111111
+   << // lastSixBits : UInt8 = 63
+   -> let middleFourBits = firstSixBits & lastSixBits  // equals 00111100
+   << // middleFourBits : UInt8 = 60
 
 The values of ``firstSixBits`` and ``lastSixBits`` both have their four middle bits equal to ``1``.
 The bitwise AND operator combines them to make the number ``00111100``,
@@ -90,19 +90,19 @@ and returns a new number whose bits are set to ``1``
 if the bits were equal to ``1`` in *either* of the input numbers:
 
 .. image:: ../images/bitwiseOR.png
-    :width: 570
-    :align: center
+   :width: 570
+   :align: center
 
 For example:
 
 .. testcode:: bitwiseOperators
 
-    --> let someBits: UInt8 = 0b10110010
-    <<< // someBits : UInt8 = 178
-    --> let moreBits: UInt8 = 0b01011110
-    <<< // moreBits : UInt8 = 94
-    --> let combinedbits = someBits | moreBits  // equals 11111110
-    <<< // combinedbits : UInt8 = 254
+   -> let someBits: UInt8 = 0b10110010
+   << // someBits : UInt8 = 178
+   -> let moreBits: UInt8 = 0b01011110
+   << // moreBits : UInt8 = 94
+   -> let combinedbits = someBits | moreBits  // equals 11111110
+   << // combinedbits : UInt8 = 254
 
 The values of ``someBits`` and ``moreBits`` have different bits set to ``1``.
 The bitwise OR operator combines them to make the number ``11111110``,
@@ -119,19 +119,19 @@ and returns a new number whose bits are set to ``1`` where the input bits are di
 and ``0`` where the input bits are the same:
 
 .. image:: ../images/bitwiseXOR.png
-    :width: 570
-    :align: center
+   :width: 570
+   :align: center
 
 For example:
 
 .. testcode:: bitwiseOperators
 
-    --> let firstBits: UInt8 = 0b00010100
-    <<< // firstBits : UInt8 = 20
-    --> let otherBits: UInt8 = 0b00000101
-    <<< // otherBits : UInt8 = 5
-    --> let outputBits = firstBits ^ otherBits  // equals 00010001
-    <<< // outputBits : UInt8 = 17
+   -> let firstBits: UInt8 = 0b00010100
+   << // firstBits : UInt8 = 20
+   -> let otherBits: UInt8 = 0b00000101
+   << // otherBits : UInt8 = 5
+   -> let outputBits = firstBits ^ otherBits  // equals 00010001
+   << // outputBits : UInt8 = 17
 
 .. TODO: Explain how this can be useful to toggle just a few bits in a bitfield.
 
@@ -172,38 +172,38 @@ gray numbers have been discarded,
 and orange zeroes have been inserted:
 
 .. image:: ../images/bitshiftUnsigned.png
-    :width: 639
-    :align: center
+   :width: 639
+   :align: center
 
 Here's how bit shifting looks in Swift code:
 
 .. testcode:: bitwiseShiftOperators
 
-    --> let shiftBits: UInt8 = 4    // 00000100 in binary
-    <<< // shiftBits : UInt8 = 4
-    --> shiftBits << 1              // 00001000
-    <<< // r0 : UInt8 = 8
-    --> shiftBits << 2              // 00010000
-    <<< // r1 : UInt8 = 16
-    --> shiftBits << 5              // 10000000
-    <<< // r2 : UInt8 = 128
-    --> shiftBits << 6              // 00000000
-    <<< // r3 : UInt8 = 0
-    --> shiftBits >> 2              // 00000001
-    <<< // r4 : UInt8 = 1
+   -> let shiftBits: UInt8 = 4   // 00000100 in binary
+   << // shiftBits : UInt8 = 4
+   -> shiftBits << 1           // 00001000
+   << // r0 : UInt8 = 8
+   -> shiftBits << 2           // 00010000
+   << // r1 : UInt8 = 16
+   -> shiftBits << 5           // 10000000
+   << // r2 : UInt8 = 128
+   -> shiftBits << 6           // 00000000
+   << // r3 : UInt8 = 0
+   -> shiftBits >> 2           // 00000001
+   << // r4 : UInt8 = 1
 
 Bit shifting can be used to encode and decode values within other data types:
 
 .. testcode:: bitwiseShiftOperators
 
-    --> let pink: UInt32 = 0xCC6699
-    <<< // pink : UInt32 = 13395609
-    --> let redComponent = (pink & 0xFF0000) >> 16     // redComponent is 0xCC, or 204
-    <<< // redComponent : UInt32 = 204
-    --> let greenComponent = (pink & 0x00FF00) >> 8    // greenComponent is 0x66, or 102
-    <<< // greenComponent : UInt32 = 102
-    --> let blueComponent = pink & 0x0000FF            // blueComponent is 0x99, or 153
-    <<< // blueComponent : UInt32 = 153
+   -> let pink: UInt32 = 0xCC6699
+   << // pink : UInt32 = 13395609
+   -> let redComponent = (pink & 0xFF0000) >> 16    // redComponent is 0xCC, or 204
+   << // redComponent : UInt32 = 204
+   -> let greenComponent = (pink & 0x00FF00) >> 8   // greenComponent is 0x66, or 102
+   << // greenComponent : UInt32 = 102
+   -> let blueComponent = pink & 0x0000FF         // blueComponent is 0x99, or 153
+   << // blueComponent : UInt32 = 153
 
 This example uses a ``UInt32`` constant called ``pink`` to store a
 Cascading Style Sheets color value for the color pink.
@@ -236,9 +236,9 @@ which has a decimal value of ``153``.
 
 .. admonition:: Experiment
 
-    Try removing the parentheses around ``(pink & 0xFF0000)`` and ``(pink & 0x00FF00)``.
-    Why do the values of ``redComponent`` and ``greenComponent`` change?
-    Why do you then get same value of ``153`` for all three components?
+   Try removing the parentheses around ``(pink & 0xFF0000)`` and ``(pink & 0x00FF00)``.
+   Why do the values of ``redComponent`` and ``greenComponent`` change?
+   Why do you then get same value of ``153`` for all three components?
 
 .. QUESTION: I've used UInt32 values here,
    but this would also work with an inferred Int.
@@ -265,8 +265,8 @@ counting upwards from ``0``.
 Here's how the bits inside an ``Int8`` look for the number ``4``:
 
 .. image:: ../images/bitshiftSignedFour.png
-    :width: 388
-    :align: center
+   :width: 388
+   :align: center
 
 The sign bit is ``0`` (meaning “positive”),
 and the seven value bits are just the number ``4``,
@@ -281,15 +281,15 @@ so this means ``2`` to the power of ``7``, or ``128``.
 Here's how the bits inside an ``Int8`` look for the number ``-4``:
 
 .. image:: ../images/bitshiftSignedMinusFour.png
-    :width: 388
-    :align: center
+   :width: 388
+   :align: center
 
 This time, the sign bit is ``1`` (meaning “negative”),
 and the seven value bits actually have a binary value of ``124`` (which is ``128 - 4``):
 
 .. image:: ../images/bitshiftSignedMinusFourValue.png
-    :width: 388
-    :align: center
+   :width: 388
+   :align: center
 
 The encoding used for negative numbers is known as a :newTerm:`two's complement` representation.
 It may seem an unusual way to represent negative numbers,
@@ -301,8 +301,8 @@ just by performing a standard binary addition of all eight bits
 and discarding anything that doesn't fit in the eight bits once you're done:
 
 .. image:: ../images/bitshiftSignedAddition.png
-    :width: 445
-    :align: center
+   :width: 445
+   :align: center
 
 The two's complement representation also means that you can
 shift the bits of negative numbers to the left and right just like positive numbers,
@@ -316,8 +316,8 @@ To achieve this, an extra rule is used when shifting signed integers to the righ
   rather than with a zero.
 
 .. image:: ../images/bitshiftSigned.png
-    :width: 639
-    :align: center
+   :width: 639
+   :align: center
 
 This ensures that signed integers have the same sign after they are shifted to the right,
 and is known as an :newTerm:`arithmetic shift`.
@@ -342,13 +342,13 @@ will cause an error:
 
 .. testcode:: overflowOperatorsWillFailToOverflow
 
-    --> var potentialOverflow = Int16.max
-    <<< // potentialOverflow : Int16 = 32767
-    /-> potentialOverflow equals \(potentialOverflow), which is the largest value an Int16 can hold
-    <-/ potentialOverflow equals 32767, which is the largest value an Int16 can hold
-    --> potentialOverflow += 1
-    xxx overflow
-    /// this causes an error
+   -> var potentialOverflow = Int16.max
+   << // potentialOverflow : Int16 = 32767
+   /> potentialOverflow equals \(potentialOverflow), which is the largest value an Int16 can hold
+   </ potentialOverflow equals 32767, which is the largest value an Int16 can hold
+   -> potentialOverflow += 1
+   xx overflow
+   // this causes an error
 
 .. TODO: change the error text we detect here
    once overflowing provides an error message rather than just an assert.
@@ -380,13 +380,13 @@ using the overflow addition operator (``&+``):
 
 .. testcode:: overflowOperatorsWillOverflow
 
-    --> var willOverflow = UInt8.max
-    <<< // willOverflow : UInt8 = 255
-    /-> willOverflow equals \(willOverflow), which is the largest value a UInt8 can hold
-    <-/ willOverflow equals 255, which is the largest value a UInt8 can hold
-    --> willOverflow = willOverflow &+ 1
-    /-> willOverflow is now equal to \(willOverflow)
-    <-/ willOverflow is now equal to 0
+   -> var willOverflow = UInt8.max
+   << // willOverflow : UInt8 = 255
+   /> willOverflow equals \(willOverflow), which is the largest value a UInt8 can hold
+   </ willOverflow equals 255, which is the largest value a UInt8 can hold
+   -> willOverflow = willOverflow &+ 1
+   /> willOverflow is now equal to \(willOverflow)
+   </ willOverflow is now equal to 0
 
 Here, the variable ``willOverflow`` is initialized with the largest value a ``UInt8`` can hold
 (``255``, or ``11111111`` in binary).
@@ -397,8 +397,8 @@ as shown in the diagram below.
 The value that remains within the bounds of the ``UInt8`` after the overflow addition is ``00000000``, or zero:
 
 .. image:: ../images/overflowAddition.png
-    :width: 390
-    :align: center
+   :width: 390
+   :align: center
 
 .. _AdvancedOperators_ValueUnderflow:
 
@@ -414,20 +414,20 @@ the number will overflow back round to ``11111111``,
 or ``255`` in decimal:
 
 .. image:: ../images/overflowUnsignedSubtraction.png
-    :width: 419
-    :align: center
+   :width: 419
+   :align: center
 
 Here's how that looks in Swift code:
 
 .. testcode:: overflowOperatorsWillUnderflow
 
-    --> var willUnderflow = UInt8.min
-    <<< // willUnderflow : UInt8 = 0
-    /-> willUnderflow equals \(willUnderflow), which is the smallest value a UInt8 can hold
-    <-/ willUnderflow equals 0, which is the smallest value a UInt8 can hold
-    --> willUnderflow = willUnderflow &- 1
-    /-> willUnderflow is now equal to \(willUnderflow)
-    <-/ willUnderflow is now equal to 255
+   -> var willUnderflow = UInt8.min
+   << // willUnderflow : UInt8 = 0
+   /> willUnderflow equals \(willUnderflow), which is the smallest value a UInt8 can hold
+   </ willUnderflow equals 0, which is the smallest value a UInt8 can hold
+   -> willUnderflow = willUnderflow &- 1
+   /> willUnderflow is now equal to \(willUnderflow)
+   </ willUnderflow is now equal to 255
 
 A similar underflow happens for signed integers.
 As described under :ref:`AdvancedOperators_BitwiseLeftAndRightShifts`,
@@ -440,20 +440,20 @@ which toggles the sign bit and gives positive ``127``,
 the largest positive value that an ``Int8`` can hold:
 
 .. image:: ../images/overflowSignedSubtraction.png
-    :width: 419
-    :align: center
+   :width: 419
+   :align: center
 
 Here's the same thing in Swift code:
 
 .. testcode:: overflowOperatorsWillUnderflow
 
-    --> var signedUnderflow = Int8.min
-    <<< // signedUnderflow : Int8 = -128
-    /-> signedUnderflow equals \(signedUnderflow), which is the smallest value an Int8 can hold
-    <-/ signedUnderflow equals -128, which is the smallest value an Int8 can hold
-    --> signedUnderflow = signedUnderflow &- 1
-    /-> signedUnderflow is now equal to \(signedUnderflow)
-    <-/ signedUnderflow is now equal to 127
+   -> var signedUnderflow = Int8.min
+   << // signedUnderflow : Int8 = -128
+   /> signedUnderflow equals \(signedUnderflow), which is the smallest value an Int8 can hold
+   </ signedUnderflow equals -128, which is the smallest value an Int8 can hold
+   -> signedUnderflow = signedUnderflow &- 1
+   /> signedUnderflow is now equal to \(signedUnderflow)
+   </ signedUnderflow is now equal to 127
 
 The end result of the overflow and underflow behavior described above is that for both signed and unsigned integers,
 overflow always wraps around from the largest valid integer value back to the smallest,
@@ -470,23 +470,23 @@ will cause an error:
 
 .. testcode:: overflowOperatorsDivZeroError
 
-    --> let x = 1
-    <<< // x : Int = 1
-    --> let y = x / 0
-    xxx division by zero
-    /// this causes an error
+   -> let x = 1
+   << // x : Int = 1
+   -> let y = x / 0
+   xx division by zero
+   // this causes an error
  
 However, the overflow versions of these operators (``&/`` and ``&%``)
 return a value of zero if you divide by zero:
 
 .. testcode:: overflowOperatorsAllowedDivZero
 
-    --> let x = 1
-    <<< // x : Int = 1
-    --> let y = x &/ 0
-    <<< // y : Int = 0
-    /-> y is equal to \(y)
-    <-/ y is equal to 0
+   -> let x = 1
+   << // x : Int = 1
+   -> let y = x &/ 0
+   << // y : Int = 0
+   /> y is equal to \(y)
+   </ y is equal to 0
 
 .. NOTE: currently, this testcode block must be the last in the overflowOperators group,
    as otherwise the stack trace crash from the division-by-zero will mean that
@@ -513,10 +513,10 @@ Why does the following expression equal ``4``?
 
 .. testcode:: evaluationOrder
 
-    --> 2 + 3 * 4 % 5
-    <<< // r0 : Int = 4
-    /-> this equals \(2 + 3 * 4 % 5)
-    <-/ this equals 4
+   -> 2 + 3 * 4 % 5
+   << // r0 : Int = 4
+   /> this equals \(2 + 3 * 4 % 5)
+   </ this equals 4
 
 Taken strictly from left to right, you might expect this to read as follows:
 
@@ -554,22 +554,22 @@ starting from their left:
 
 .. testcode:: evaluationOrder
 
-    --> 2 + ((3 * 4) % 5)
-    <<< // r1 : Int = 4
+   -> 2 + ((3 * 4) % 5)
+   << // r1 : Int = 4
 
 ``(3 * 4)`` is ``12``, so this is equivalent to:
 
 .. testcode:: evaluationOrder
 
-    --> 2 + (12 % 5)
-    <<< // r2 : Int = 4
+   -> 2 + (12 % 5)
+   << // r2 : Int = 4
 
 ``(12 % 5)`` is ``2``, so this is equivalent to:
 
 .. testcode:: evaluationOrder
 
-    --> 2 + 2
-    <<< // r3 : Int = 4
+   -> 2 + 2
+   << // r3 : Int = 4
 
 This gives the final answer of ``4``.
 
@@ -577,11 +577,11 @@ A complete list of Swift operator precedences and associativity rules can be fou
 
 .. note::
 
-    Swift's operator precedences and associativity rules are simpler and more predictable
-    than those found in C and Objective-C.
-    However, this means that they are not the same as in C-based languages.
-    Be careful to ensure that operator interactions still behave in the way you intend
-    when porting existing code to Swift.
+   Swift's operator precedences and associativity rules are simpler and more predictable
+   than those found in C and Objective-C.
+   However, this means that they are not the same as in C-based languages.
+   Be careful to ensure that operator interactions still behave in the way you intend
+   when porting existing code to Swift.
 
 .. TODO: update this link to go to the specific section of the Reference Manual.
 
@@ -595,12 +595,12 @@ This is known as :newTerm:`overloading` the existing operators.
 
 .. testcode:: customOperators
 
-    --> struct Vector2D {
-            var x = 0.0, y = 0.0
-        }
-    --> @infix func + (lhs: Vector2D, rhs: Vector2D) -> Vector2D {
-            return Vector2D(lhs.x + rhs.x, lhs.y + rhs.y)
-        }
+   -> struct Vector2D {
+         var x = 0.0, y = 0.0
+      }
+   -> @infix func + (lhs: Vector2D, rhs: Vector2D) -> Vector2D {
+         return Vector2D(lhs.x + rhs.x, lhs.y + rhs.y)
+      }
 
 This example shows how to provide an implementation of the
 infix arithmetic addition operator (``+``) for a custom structure.
@@ -634,21 +634,21 @@ so that it can be used as an infix operator between existing ``Vector2D`` instan
 
 .. testcode:: customOperators
 
-    --> let vector = Vector2D(3.0, 1.0)
-    <<< // vector : Vector2D = Vector2D(3.0, 1.0)
-    --> let anotherVector = Vector2D(2.0, 4.0)
-    <<< // anotherVector : Vector2D = Vector2D(2.0, 4.0)
-    --> let combinedVector = vector + anotherVector
-    <<< // combinedVector : Vector2D = Vector2D(5.0, 5.0)
-    /-> combinedVector is a Vector2D instance with values of (\(combinedVector.x), \(combinedVector.y))
-    <-/ combinedVector is a Vector2D instance with values of (5.0, 5.0)
+   -> let vector = Vector2D(3.0, 1.0)
+   << // vector : Vector2D = Vector2D(3.0, 1.0)
+   -> let anotherVector = Vector2D(2.0, 4.0)
+   << // anotherVector : Vector2D = Vector2D(2.0, 4.0)
+   -> let combinedVector = vector + anotherVector
+   << // combinedVector : Vector2D = Vector2D(5.0, 5.0)
+   /> combinedVector is a Vector2D instance with values of (\(combinedVector.x), \(combinedVector.y))
+   </ combinedVector is a Vector2D instance with values of (5.0, 5.0)
 
 This example adds together the vectors ``(3.0, 1.0)`` and ``(2.0, 4.0)``
 to make the vector ``(5.0, 5.0)``, as illustrated below.
 
 .. image:: ../images/vectorAddition.png
-    :width: 400
-    :align: center
+   :width: 400
+   :align: center
 
 .. _AdvancedOperators_PrefixAndPostfixOperators:
 
@@ -670,9 +670,9 @@ The attribute is written before the ``func`` keyword when declaring the operator
 
 .. testcode:: customOperators
 
-    --> @prefix func - (rhs: Vector2D) -> Vector2D {
-            return Vector2D(-rhs.x, -rhs.y)
-        }
+   -> @prefix func - (rhs: Vector2D) -> Vector2D {
+         return Vector2D(-rhs.x, -rhs.y)
+      }
 
 This example implements the :ref:`BasicOperators_UnaryMinusOperator`
 (``-a``) for ``Vector2D`` instances.
@@ -686,16 +686,16 @@ performs this operation on both the ``x`` and ``y`` properties:
 
 .. testcode:: customOperators
 
-    --> let positive = Vector2D(3.0, 4.0)
-    <<< // positive : Vector2D = Vector2D(3.0, 4.0)
-    --> let negative = -positive
-    <<< // negative : Vector2D = Vector2D(-3.0, -4.0)
-    /-> negative is a Vector2D instance with values of (\(negative.x), \(negative.y))
-    <-/ negative is a Vector2D instance with values of (-3.0, -4.0)
-    --> let alsoPositive = -negative
-    <<< // alsoPositive : Vector2D = Vector2D(3.0, 4.0)
-    /-> alsoPositive is a Vector2D instance with values of (\(alsoPositive.x), \(alsoPositive.y))
-    <-/ alsoPositive is a Vector2D instance with values of (3.0, 4.0)
+   -> let positive = Vector2D(3.0, 4.0)
+   << // positive : Vector2D = Vector2D(3.0, 4.0)
+   -> let negative = -positive
+   << // negative : Vector2D = Vector2D(-3.0, -4.0)
+   /> negative is a Vector2D instance with values of (\(negative.x), \(negative.y))
+   </ negative is a Vector2D instance with values of (-3.0, -4.0)
+   -> let alsoPositive = -negative
+   << // alsoPositive : Vector2D = Vector2D(3.0, 4.0)
+   /> alsoPositive is a Vector2D instance with values of (\(alsoPositive.x), \(alsoPositive.y))
+   </ alsoPositive is a Vector2D instance with values of (3.0, 4.0)
 
 .. QUESTION: is this the first time I will have introduced attributes?
    If so, do they need more qualification?
@@ -716,9 +716,9 @@ as its value will be modified directly from within the operator function:
 
 .. testcode:: customOperators
 
-    --> @assignment func += (inout lhs: Vector2D, rhs: Vector2D) {
-            lhs = lhs + rhs
-        }
+   -> @assignment func += (inout lhs: Vector2D, rhs: Vector2D) {
+         lhs = lhs + rhs
+      }
 
 This example implements an addition assignment operator function for ``Vector2D`` instances.
 Because an addition operator has already been defined above,
@@ -728,13 +728,13 @@ and uses it to set the left-hand value to itself plus the right-hand value:
 
 .. testcode:: customOperators
 
-    --> var original = Vector2D(1.0, 2.0)
-    <<< // original : Vector2D = Vector2D(1.0, 2.0)
-    --> let vectorToAdd = Vector2D(3.0, 4.0)
-    <<< // vectorToAdd : Vector2D = Vector2D(3.0, 4.0)
-    --> original += vectorToAdd
-    /-> original now has values of (\(original.x), \(original.y))
-    <-/ original now has values of (4.0, 6.0)
+   -> var original = Vector2D(1.0, 2.0)
+   << // original : Vector2D = Vector2D(1.0, 2.0)
+   -> let vectorToAdd = Vector2D(3.0, 4.0)
+   << // vectorToAdd : Vector2D = Vector2D(3.0, 4.0)
+   -> original += vectorToAdd
+   /> original now has values of (\(original.x), \(original.y))
+   </ original now has values of (4.0, 6.0)
 
 The ``@assignment`` attribute can be combined with
 either the ``@prefix`` or ``@postfix`` attribute,
@@ -743,10 +743,10 @@ for ``Vector2D`` instances:
 
 .. testcode:: customOperators
 
-    --> @prefix @assignment func ++ (inout rhs: Vector2D) -> Vector2D {
-            rhs += Vector2D(1.0, 1.0)
-            return rhs
-        }
+   -> @prefix @assignment func ++ (inout rhs: Vector2D) -> Vector2D {
+         rhs += Vector2D(1.0, 1.0)
+         return rhs
+      }
 
 This operator function takes advantage of the addition assignment operator defined above.
 It adds a ``Vector2D`` with ``x`` and ``y`` values of ``1.0``
@@ -755,22 +755,22 @@ and returns the result.
 
 .. testcode:: customOperators
 
-    --> var toIncrement = Vector2D(3.0, 4.0)
-    <<< // toIncrement : Vector2D = Vector2D(3.0, 4.0)
-    --> let afterIncrement = ++toIncrement
-    <<< // afterIncrement : Vector2D = Vector2D(4.0, 5.0)
-    /-> toIncrement now has values of (\(toIncrement.x), \(toIncrement.y))
-    <-/ toIncrement now has values of (4.0, 5.0)
-    /-> afterIncrement also has values of (\(afterIncrement.x), \(afterIncrement.y))
-    <-/ afterIncrement also has values of (4.0, 5.0)
+   -> var toIncrement = Vector2D(3.0, 4.0)
+   << // toIncrement : Vector2D = Vector2D(3.0, 4.0)
+   -> let afterIncrement = ++toIncrement
+   << // afterIncrement : Vector2D = Vector2D(4.0, 5.0)
+   /> toIncrement now has values of (\(toIncrement.x), \(toIncrement.y))
+   </ toIncrement now has values of (4.0, 5.0)
+   /> afterIncrement also has values of (\(afterIncrement.x), \(afterIncrement.y))
+   </ afterIncrement also has values of (4.0, 5.0)
 
 .. note::
 
-    It is not possible to overload the default
-    :ref:`BasicOperators_AssignmentOperator` (``=``).
-    Only the compound assignment operators may be overloaded.
-    Similarly, the :ref:`BasicOperators_TernaryConditionalOperator`
-    (``a ? b : c``) may not be overloaded.
+   It is not possible to overload the default
+   :ref:`BasicOperators_AssignmentOperator` (``=``).
+   Only the compound assignment operators may be overloaded.
+   Similarly, the :ref:`BasicOperators_TernaryConditionalOperator`
+   (``a ? b : c``) may not be overloaded.
 
 .. QUESTION: some of the standard operators (such as equation and comparison)
    are implemented as part of a protocol (such as Equatable and Comparable).
@@ -798,7 +798,7 @@ and can be declared as ``prefix``, ``infix`` or ``postfix``:
 
 .. testcode:: customOperators
 
-    --> operator prefix +++ {}
+   -> operator prefix +++ {}
 
 This example defines a new prefix operator called ``+++``.
 This operator does not have an existing meaning in Swift,
@@ -810,10 +810,10 @@ by adding the vector to itself via assignment:
 
 .. testcode:: customOperators
 
-    --> @prefix @assignment func +++ (inout rhs: Vector2D) -> Vector2D {
-            rhs += rhs
-            return rhs
-        }
+   -> @prefix @assignment func +++ (inout rhs: Vector2D) -> Vector2D {
+         rhs += rhs
+         return rhs
+      }
 
 This implementation of ``+++`` is very similar to
 the implementation of ``++`` for ``Vector2D``,
@@ -822,14 +822,14 @@ rather than adding ``Vector2D(1.0, 1.0)``:
 
 .. testcode:: customOperators
 
-    --> var toBeDoubled = Vector2D(1.0, 4.0)
-    <<< // toBeDoubled : Vector2D = Vector2D(1.0, 4.0)
-    --> let afterDoubling = +++toBeDoubled
-    <<< // afterDoubling : Vector2D = Vector2D(2.0, 8.0)
-    /-> toBeDoubled now has values of (\(toBeDoubled.x), \(toBeDoubled.y))
-    <-/ toBeDoubled now has values of (2.0, 8.0)
-    /-> afterDoubling also has values of (\(afterDoubling.x), \(afterDoubling.y))
-    <-/ afterDoubling also has values of (2.0, 8.0)
+   -> var toBeDoubled = Vector2D(1.0, 4.0)
+   << // toBeDoubled : Vector2D = Vector2D(1.0, 4.0)
+   -> let afterDoubling = +++toBeDoubled
+   << // afterDoubling : Vector2D = Vector2D(2.0, 8.0)
+   /> toBeDoubled now has values of (\(toBeDoubled.x), \(toBeDoubled.y))
+   </ toBeDoubled now has values of (2.0, 8.0)
+   /> afterDoubling also has values of (\(afterDoubling.x), \(afterDoubling.y))
+   </ afterDoubling also has values of (2.0, 8.0)
 
 .. _AdvancedOperators_CustomPrecedenceAndAssociativity:
 
@@ -858,18 +858,18 @@ with ``left`` associativity, and a precedence of ``140``:
 
 .. testcode:: customOperators
 
-    --> operator infix +- { associativity left precedence 140 }
-    --> func +- (lhs: Vector2D, rhs: Vector2D) -> Vector2D {
-            return Vector2D(lhs.x + rhs.x, lhs.y - rhs.y)
-        }
-    --> let firstVector = Vector2D(1.0, 2.0)
-    <<< // firstVector : Vector2D = Vector2D(1.0, 2.0)
-    --> let secondVector = Vector2D(3.0, 4.0)
-    <<< // secondVector : Vector2D = Vector2D(3.0, 4.0)
-    --> let plusMinusVector = firstVector +- secondVector
-    <<< // plusMinusVector : Vector2D = Vector2D(4.0, -2.0)
-    /-> plusMinusVector is a Vector2D instance with values of (\(plusMinusVector.x), \(plusMinusVector.y))
-    <-/ plusMinusVector is a Vector2D instance with values of (4.0, -2.0)
+   -> operator infix +- { associativity left precedence 140 }
+   -> func +- (lhs: Vector2D, rhs: Vector2D) -> Vector2D {
+         return Vector2D(lhs.x + rhs.x, lhs.y - rhs.y)
+      }
+   -> let firstVector = Vector2D(1.0, 2.0)
+   << // firstVector : Vector2D = Vector2D(1.0, 2.0)
+   -> let secondVector = Vector2D(3.0, 4.0)
+   << // secondVector : Vector2D = Vector2D(3.0, 4.0)
+   -> let plusMinusVector = firstVector +- secondVector
+   << // plusMinusVector : Vector2D = Vector2D(4.0, -2.0)
+   /> plusMinusVector is a Vector2D instance with values of (\(plusMinusVector.x), \(plusMinusVector.y))
+   </ plusMinusVector is a Vector2D instance with values of (4.0, -2.0)
 
 This operator adds together the ``x`` values of two vectors,
 and subtracts the ``y`` value of the second vector from the first.

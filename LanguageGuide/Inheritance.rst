@@ -10,17 +10,17 @@ Here's an example:
 
 .. testcode:: inheritance
 
-    --> class Vehicle {
-            var numberOfWheels: Int
-            var maxPassengers: Int
-            func description() -> String {
-                return "\(numberOfWheels) wheels; up to \(maxPassengers) passengers"
-            }
-            init() {
-                numberOfWheels = 0
-                maxPassengers = 1
-            }
-        }
+   -> class Vehicle {
+         var numberOfWheels: Int
+         var maxPassengers: Int
+         func description() -> String {
+            return "\(numberOfWheels) wheels; up to \(maxPassengers) passengers"
+         }
+         init() {
+            numberOfWheels = 0
+            maxPassengers = 1
+         }
+      }
 
 This example starts by defining a “base” class called ``Vehicle``.
 This base class declares two properties
@@ -51,9 +51,9 @@ written using the ``init`` keyword:
 
 ::
 
-    init() {
-        // perform some initialization here
-    }
+   init() {
+      // perform some initialization here
+   }
 
 This simple initializer is called whenever a new instance is created
 via :newTerm:`initialization syntax`
@@ -61,8 +61,8 @@ via :newTerm:`initialization syntax`
 
 .. testcode:: inheritance
 
-    --> let someVehicle = Vehicle()
-    <<< // someVehicle : Vehicle = <Vehicle instance>
+   -> let someVehicle = Vehicle()
+   << // someVehicle : Vehicle = <Vehicle instance>
 
 The initializer for ``Vehicle`` sets some initial property values
 (``numberOfWheels = 0`` and ``maxPassengers = 1``)
@@ -85,12 +85,12 @@ This can be read as:
 
 .. testcode:: inheritance
 
-    --> class Bicycle : Vehicle {
-            init() {
-                super.init()
-                numberOfWheels = 2
-            }
-        }
+   -> class Bicycle : Vehicle {
+         init() {
+            super.init()
+            numberOfWheels = 2
+         }
+      }
 
 ``Bicycle`` is said to be a :newTerm:`subclass` of ``Vehicle``, 
 and ``Vehicle`` is said to be the :newTerm:`superclass` of ``Bicycle``.
@@ -121,21 +121,21 @@ and see how its properties have been updated:
 
 .. testcode:: inheritance
 
-    --> let bicycle = Bicycle()
-    <<< // bicycle : Bicycle = <Bicycle instance>
-    --> println("Bicycle: \(bicycle.description())")
-    <-- Bicycle: 2 wheels; up to 1 passengers
+   -> let bicycle = Bicycle()
+   << // bicycle : Bicycle = <Bicycle instance>
+   -> println("Bicycle: \(bicycle.description())")
+   <- Bicycle: 2 wheels; up to 1 passengers
 
 Subclasses can themselves be subclassed:
 
 .. testcode:: inheritance
 
-    --> class Tandem : Bicycle {
-            init() {
-                super.init()
-                maxPassengers = 2
-            }
-        }
+   -> class Tandem : Bicycle {
+         init() {
+            super.init()
+            maxPassengers = 2
+         }
+      }
 
 This example creates a subclass of ``Bicycle`` for a two-seater bicycle
 (known as a “tandem”).
@@ -146,28 +146,28 @@ but it does update ``maxPassengers`` to have the correct value for a tandem.
 
 .. note::
 
-    Subclasses are only allowed to modify
-    *variable* properties of superclasses during initialization.
-    Inherited constant properties may not be modified by subclasses.
+   Subclasses are only allowed to modify
+   *variable* properties of superclasses during initialization.
+   Inherited constant properties may not be modified by subclasses.
 
 Again, if you create an instance of ``Tandem``, and print its description,
 you can see how its properties have been updated:
 
 .. testcode:: inheritance
 
-    --> let tandem = Tandem()
-    <<< // tandem : Tandem = <Tandem instance>
-    --> println("Tandem: \(tandem.description())")
-    <-- Tandem: 2 wheels; up to 2 passengers
+   -> let tandem = Tandem()
+   << // tandem : Tandem = <Tandem instance>
+   -> println("Tandem: \(tandem.description())")
+   <- Tandem: 2 wheels; up to 2 passengers
 
 Note that the ``description()`` method has also been inherited by ``Tandem``.
 Instance methods of a class are inherited by any and all subclasses of that class.
 
 .. note::
 
-    Swift classes do not inherit from a universal “base” class.
-    Any classes you define without specifying a superclass
-    will automatically become base classes for you to build upon.
+   Swift classes do not inherit from a universal “base” class.
+   Any classes you define without specifying a superclass
+   will automatically become base classes for you to build upon.
 
 .. QUESTION: Should I mention that you can subclass from NSObject?
 
@@ -184,7 +184,7 @@ This is known as :newTerm:`overriding`.
 
 .. note::
 
-    Stored instance properties and stored class properties cannot be overridden.
+   Stored instance properties and stored class properties cannot be overridden.
 
 .. TODO: remove this note if stored property overriding is implemented for 1.0.
 
@@ -211,18 +211,18 @@ The following example defines a new subclass of ``Vehicle``, called ``Car``:
 
 .. testcode:: inheritance
 
-    --> class Car : Vehicle {
-            var isConvertible = false
-            init() {
-                super.init()
-                maxPassengers = 5
-                numberOfWheels = 4
-            }
-            @override func description() -> String {
-                return super.description() + "; "
-                    + (isConvertible ? "convertible" : "not convertible")
-            }
-        }
+   -> class Car : Vehicle {
+         var isConvertible = false
+         init() {
+            super.init()
+            maxPassengers = 5
+            numberOfWheels = 4
+         }
+         @override func description() -> String {
+            return super.description() + "; "
+               + (isConvertible ? "convertible" : "not convertible")
+         }
+      }
 
 ``Car`` declares a new Boolean property called ``isConvertible``,
 in addition to the properties it inherits from ``Vehicle``.
@@ -247,10 +247,10 @@ you can see that the description has indeed changed:
 
 .. testcode:: inheritance
 
-    --> var car = Car()
-    <<< // car : Car = <Car instance>
-    --> println("Car: \(car.description())")
-    <-- Car: 4 wheels; up to 5 passengers; not convertible
+   -> var car = Car()
+   << // car : Car = <Car instance>
+   -> println("Car: \(car.description())")
+   <- Car: 4 wheels; up to 5 passengers; not convertible
 
 .. TODO: provide more information about function signatures,
    and what does / does not make them unique.

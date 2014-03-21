@@ -1,13 +1,13 @@
 .. docnote:: Subjects to be covered in this section
 
-    * Enums ✔︎
-    * Enum element patterns
-    * Enums for groups of constants ✔︎
-    * Enums with raw values (inc. getting / setting raw values) ✔︎
-    * Enum default / unknown values?
-    * Enum delayed identifier resolution
-    * Option sets
-    * Enum special capabilities such as embeddability, type properties etc.
+   * Enums ✔︎
+   * Enum element patterns
+   * Enums for groups of constants ✔︎
+   * Enums with raw values (inc. getting / setting raw values) ✔︎
+   * Enum default / unknown values?
+   * Enum delayed identifier resolution
+   * Option sets
+   * Enum special capabilities such as embeddability, type properties etc.
 
 Enumerations
 ============
@@ -49,20 +49,20 @@ and place their entire definition within a pair of braces:
 
 .. testcode:: enums
 
-    --> enum SomeEnumeration {
-            // enumeration definition goes here
-        }
+   -> enum SomeEnumeration {
+         // enumeration definition goes here
+      }
 
 Here's an example for the four main points of a compass:
 
 .. testcode:: enums
 
-    --> enum CompassPoint {
-            case North
-            case South
-            case East
-            case West
-        }
+   -> enum CompassPoint {
+         case North
+         case South
+         case East
+         case West
+      }
 
 The values defined in an enumeration
 (such as ``North``, ``South``, ``East``, and ``West``)
@@ -72,22 +72,22 @@ is about to be defined.
 
 .. note::
 
-    Unlike C and Objective-C,
-    Swift enumeration members are not assigned a default integer value when they are created.
-    In the ``CompassPoints`` example above,
-    ``North``, ``South``, ``East`` and ``West``
-    do not implicitly equal
-    ``0``, ``1``, ``2`` and ``3``.
-    Instead, the different enumeration members are fully-fledged values in their own right,
-    with an explicitly-defined type of ``CompassPoint``.
+   Unlike C and Objective-C,
+   Swift enumeration members are not assigned a default integer value when they are created.
+   In the ``CompassPoints`` example above,
+   ``North``, ``South``, ``East`` and ``West``
+   do not implicitly equal
+   ``0``, ``1``, ``2`` and ``3``.
+   Instead, the different enumeration members are fully-fledged values in their own right,
+   with an explicitly-defined type of ``CompassPoint``.
 
 Multiple member values can appear on a single line, separated by commas:
 
 .. testcode:: enums
 
-    --> enum Planet {
-            case Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune
-        }
+   -> enum Planet {
+         case Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune
+      }
 
 Each enumeration definition defines a brand new type.
 As a result, their names
@@ -98,8 +98,8 @@ so that they read as a sentence when declaring a named value of that type:
 
 .. testcode:: enums
 
-    --> var directionToHead = CompassPoint.West
-    <<< // directionToHead : CompassPoint = <unprintable value>
+   -> var directionToHead = CompassPoint.West
+   << // directionToHead : CompassPoint = <unprintable value>
 
 The type of ``directionToHead`` has been inferred
 from the fact that it was initialized with one of the possible values of ``CompassPoint``.
@@ -108,7 +108,7 @@ it can be set to a different ``CompassPoint`` value using a shorter dot syntax:
 
 .. testcode:: enums
 
-    --> directionToHead = .East
+   -> directionToHead = .East
 
 The type of ``directionToHead`` is already known,
 and so we can drop the type when setting its value.
@@ -123,18 +123,18 @@ Enumeration values can be checked with a ``switch`` statement:
 
 .. testcode:: enums
 
-    --> directionToHead = .South
-    --> switch directionToHead {
-            case .North:
-                println("Lots of planets have a north")
-            case .South:
-                println("Watch out for penguins")
-            case .East:
-                println("Where the sun rises")
-            case .West:
-                println("Where the skies are blue")
-        }
-    <-- Watch out for penguins
+   -> directionToHead = .South
+   -> switch directionToHead {
+         case .North:
+            println("Lots of planets have a north")
+         case .South:
+            println("Watch out for penguins")
+         case .East:
+            println("Where the sun rises")
+         case .West:
+            println("Where the skies are blue")
+      }
+   <- Watch out for penguins
 
 You can read this as:
 
@@ -159,15 +159,15 @@ you can provide a ``default`` case to cover any members that are not addressed e
 
 .. testcode:: enums
 
-    --> let somePlanet = Planet.Earth
-    <<< // somePlanet : Planet = <unprintable value>
-    --> switch somePlanet {
-            case .Earth:
-                println("Mostly harmless")
-            default:
-                println("Not a safe place for humans")
-        }
-    <-- Mostly harmless
+   -> let somePlanet = Planet.Earth
+   << // somePlanet : Planet = <unprintable value>
+   -> switch somePlanet {
+         case .Earth:
+            println("Mostly harmless")
+         default:
+            println("Not a safe place for humans")
+      }
+   <- Mostly harmless
 
 .. _Enumerations_AssociatedValues:
 
@@ -197,16 +197,16 @@ followed by ten “identifier” digits.
 These are followed by a “check” digit to verify that the code has been scanned correctly:
 
 .. image:: ../images/barcode_UPC.png
-    :height: 80
-    :align: center
+   :height: 80
+   :align: center
 
 Other products are labelled with 2D barcodes in `QR code <http://en.wikipedia.org/wiki/QR_Code>`_ format,
 which can use any `ISO 8859-1 <http://en.wikipedia.org/wiki/ISO_8859-1>`_ character
 and can encode a string up to 2,953 characters long:
 
 .. image:: ../images/barcode_QR.png
-    :height: 80
-    :align: center
+   :height: 80
+   :align: center
 
 It would be convenient for an inventory tracking system to be able to store UPC-A barcodes
 as a tuple of three integers,
@@ -216,10 +216,10 @@ In Swift, an enumeration to define product barcodes of either type might look li
 
 .. testcode:: enums
 
-    --> enum Barcode {
-            case UPCA(Int, Int, Int)
-            case QRCode(String)
-        }
+   -> enum Barcode {
+         case UPCA(Int, Int, Int)
+         case QRCode(String)
+      }
 
 This can be read as:
 
@@ -236,8 +236,8 @@ as shown below:
 
 .. testcode:: enums
 
-    --> var productBarcode = Barcode.UPCA(8, 85909_51226, 3)
-    <<< // productBarcode : Barcode = <unprintable value>
+   -> var productBarcode = Barcode.UPCA(8, 85909_51226, 3)
+   << // productBarcode : Barcode = <unprintable value>
 
 This creates a new variable called ``productBarcode``,
 and assigns it a value of ``Barcode.UPCA`` with an associated tuple value of ``(8, 8590951226, 3)``.
@@ -249,7 +249,7 @@ The same product can be changed to have a different type of barcode:
 
 .. testcode:: enums
 
-    --> productBarcode = .QRCode("ABCDEFGHIJKLMNOP")
+   -> productBarcode = .QRCode("ABCDEFGHIJKLMNOP")
 
 At this point,
 the original ``Barcode.UPCA`` and its integer values are replaced by
@@ -263,13 +263,13 @@ This time, however, the associated values can be extracted as part of the switch
 
 .. testcode:: enums
 
-    --> switch productBarcode {
-            case .UPCA(let numberSystem, let identifier, let check):
-                println("UPC-A with value of \(numberSystem), \(identifier), \(check).")
-            case .QRCode(let productCode):
-                println("QR code with value of \(productCode).")
-        }
-    <-- QR code with value of ABCDEFGHIJKLMNOP.
+   -> switch productBarcode {
+         case .UPCA(let numberSystem, let identifier, let check):
+            println("UPC-A with value of \(numberSystem), \(identifier), \(check).")
+         case .QRCode(let productCode):
+            println("QR code with value of \(productCode).")
+      }
+   <- QR code with value of ABCDEFGHIJKLMNOP.
 
 .. _Enumerations_RawValues:
 
@@ -288,11 +288,11 @@ Here's an example that stores raw ASCII values alongside named enumeration membe
 
 .. testcode:: rawValues
 
-    --> enum ASCIIControlCharacter : UnicodeScalar {
-            case Tab = '\t'
-            case LineFeed = '\n'
-            case CarriageReturn = '\r'
-        }
+   -> enum ASCIIControlCharacter : UnicodeScalar {
+         case Tab = '\t'
+         case LineFeed = '\n'
+         case CarriageReturn = '\r'
+      }
 
 Here, the raw values for an enumeration called ``ASCIIControlCharacter``
 are defined to be of type ``UnicodeScalar``,
@@ -318,9 +318,9 @@ with raw integer values to represent each planet's order from the sun:
 
 .. testcode:: rawValues
 
-    --> enum Planet : Int {
-            case Mercury = 1, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune
-        }
+   -> enum Planet : Int {
+         case Mercury = 1, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune
+      }
 
 Auto-incrementation means that ``Planet.Venus`` has a raw value of ``2``, and so on.
 
@@ -328,10 +328,10 @@ The raw value of an enumeration member can be accessed using its ``toRaw`` metho
 
 .. testcode:: rawValues
 
-    --> let earthsOrder = Planet.Earth.toRaw()
-    <<< // earthsOrder : Int = 3
-    /-> earthsOrder is \(earthsOrder)
-    <-/ earthsOrder is 3
+   -> let earthsOrder = Planet.Earth.toRaw()
+   << // earthsOrder : Int = 3
+   /> earthsOrder is \(earthsOrder)
+   </ earthsOrder is 3
 
 Enumerations also have a ``fromRaw`` method,
 which can be used to try and find an enumeration member with a particular raw value.
@@ -339,9 +339,9 @@ The ``fromRaw`` method could be used to find Uranus from its raw value of ``7``,
 
 .. testcode:: rawValues
 
-    --> let possiblePlanet = Planet.fromRaw(7)
-    <<< // possiblePlanet : Planet? = <unprintable value>
-    /// possiblePlanet is of type Planet? and equals Planet.Uranus
+   -> let possiblePlanet = Planet.fromRaw(7)
+   << // possiblePlanet : Planet? = <unprintable value>
+   // possiblePlanet is of type Planet? and equals Planet.Uranus
 
 Not all possible ``Int`` values will find a matching planet, however.
 Because of this, the ``fromRaw`` method returns an *optional* enumeration member.
@@ -353,19 +353,19 @@ the optional ``Planet`` value returned by ``fromRaw()`` will equal ``.None``:
 
 .. testcode:: rawValues
 
-    --> let positionToFind = 9
-    <<< // positionToFind : Int = 9
-    --> if let somePlanet = Planet.fromRaw(positionToFind) {
-            switch somePlanet {
-                case .Earth:
-                    println("Mostly harmless")
-                default:
-                    println("Not a safe place for humans")
-            }
-        } else {
-            println("There isn't a planet at position \(positionToFind)")
-        }
-    <-- There isn't a planet at position 9
+   -> let positionToFind = 9
+   << // positionToFind : Int = 9
+   -> if let somePlanet = Planet.fromRaw(positionToFind) {
+         switch somePlanet {
+            case .Earth:
+               println("Mostly harmless")
+            default:
+               println("Not a safe place for humans")
+         }
+      } else {
+         println("There isn't a planet at position \(positionToFind)")
+      }
+   <- There isn't a planet at position 9
 
 This example uses :ref:`BasicTypes_OptionalBinding`
 to try and access a planet with a raw value of ``9``.

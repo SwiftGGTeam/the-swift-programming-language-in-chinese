@@ -43,14 +43,14 @@ This enables the Swift compiler to optimize the performance of the collection.
 
 .. note::
 
-    Swift's ``Array`` and ``Dictionary`` are
-    *value types*, not *reference types*.
-    This means that they are copied rather than referenced
-    when they are assigned to a named value or passed to a function.
-    This is different from the behavior of Cocoa's ``NSArray`` and ``NSDictionary`` classes.
-    The difference between value types and reference types is covered in detail
-    in the :ref:`ClassesAndStructures_ValueTypesAndReferenceTypes` section
-    of :doc:`ClassesAndStructures`.
+   Swift's ``Array`` and ``Dictionary`` are
+   *value types*, not *reference types*.
+   This means that they are copied rather than referenced
+   when they are assigned to a named value or passed to a function.
+   This is different from the behavior of Cocoa's ``NSArray`` and ``NSDictionary`` classes.
+   The difference between value types and reference types is covered in detail
+   in the :ref:`ClassesAndStructures_ValueTypesAndReferenceTypes` section
+   of :doc:`ClassesAndStructures`.
 
 .. _CollectionTypes_Arrays:
 
@@ -81,9 +81,9 @@ Here's an example, which creates an array called ``shoppingList`` to store ``Str
 
 .. testcode:: arrays
 
-    --> var shoppingList: Array<String> = ["Eggs", "Milk"]
-    <<< // shoppingList : Array<String> = ["Eggs", "Milk"]
-    /// shoppingList has been initialized with two initial items
+   -> var shoppingList: Array<String> = ["Eggs", "Milk"]
+   << // shoppingList : Array<String> = ["Eggs", "Milk"]
+   // shoppingList has been initialized with two initial items
 
 The ``shoppingList`` variable is declared as
 “an ``Array`` of ``String`` values”, written as ``Array<String>``.
@@ -92,10 +92,10 @@ it is *only* allowed to store ``String`` values.
 
 .. note::
 
-    The ``shoppingList`` array has been declared as
-    a variable (with the ``var`` introducer),
-    and not a constant (with the ``let`` introducer),
-    because we are about to add more items to the shopping list.
+   The ``shoppingList`` array has been declared as
+   a variable (with the ``var`` introducer),
+   and not a constant (with the ``let`` introducer),
+   because we are about to add more items to the shopping list.
 
 Here, the ``shoppingList`` array has been initialized with two ``String`` values
 (``"Eggs"`` and ``"Milk"``).
@@ -117,8 +117,8 @@ The initialization of ``shoppingList`` could have been be written in a shorter f
 
 .. testcode:: arraysInferred
 
-    --> var shoppingList = ["Eggs", "Milk"]
-    <<< // shoppingList : String[] = ["Eggs", "Milk"]
+   -> var shoppingList = ["Eggs", "Milk"]
+   << // shoppingList : String[] = ["Eggs", "Milk"]
 
 Because all of the values in the array literal are of the same type as each other,
 it is possible to infer that ``Array<String>`` is
@@ -129,8 +129,8 @@ by checking its read-only ``count`` property:
 
 .. testcode:: arraysInferred
 
-    --> println("The shopping list contains \(shoppingList.count) items.")
-    <-- The shopping list contains 2 items.
+   -> println("The shopping list contains \(shoppingList.count) items.")
+   <- The shopping list contains 2 items.
 
 .. TODO: with the existing Array implementation, you can *set* count to a larger value,
    but Swift will assert if you try and access an item at one of the new indices.
@@ -142,19 +142,19 @@ New items can be added to the end of the array by calling its ``append()`` metho
 
 .. testcode:: arraysInferred
 
-    --> shoppingList.append("Flour")
-    /-> shoppingList now contains \(shoppingList.count) items, and someone is making pancakes
-    <-/ shoppingList now contains 3 items, and someone is making pancakes
+   -> shoppingList.append("Flour")
+   /> shoppingList now contains \(shoppingList.count) items, and someone is making pancakes
+   </ shoppingList now contains 3 items, and someone is making pancakes
 
 You can retrieve a value from the array by using :newTerm:`subscript syntax`,
 and passing in the index of the value you want to retrieve:
 
 .. testcode:: arraysInferred
 
-    --> var firstItem = shoppingList[0]
-    <<< // firstItem : String = "Eggs"
-    /-> firstItem is equal to \"\(firstItem)\"
-    <-/ firstItem is equal to "Eggs"
+   -> var firstItem = shoppingList[0]
+   << // firstItem : String = "Eggs"
+   /> firstItem is equal to \"\(firstItem)\"
+   </ firstItem is equal to "Eggs"
 
 Subscript syntax involves writing an index value within square brackets
 (such as ``[0]`` in this example),
@@ -167,9 +167,9 @@ Subscript syntax can be used to change an existing value at a given index:
 
 .. testcode:: arraysInferred
 
-    --> shoppingList[0] = "Six eggs"
-    /-> the first item in the list is now equal to \"\(shoppingList[0])\"
-    <-/ the first item in the list is now equal to "Six eggs"
+   -> shoppingList[0] = "Six eggs"
+   /> the first item in the list is now equal to \"\(shoppingList[0])\"
+   </ the first item in the list is now equal to "Six eggs"
 
 .. QUESTION: should I note here that you can't set the firstItem variable
    and expect the value in the array to change,
@@ -179,10 +179,10 @@ An item can be inserted into the array at a specified index by using the ``inser
 
 .. testcode:: arraysInferred
 
-    --> shoppingList.insert("Maple Syrup", 0)
-    /// shoppingList now contains 4 items
-    /-> \"\(shoppingList[0])\" is now the first item in the list
-    <-/ "Maple Syrup" is now the first item in the list
+   -> shoppingList.insert("Maple Syrup", 0)
+   // shoppingList now contains 4 items
+   /> \"\(shoppingList[0])\" is now the first item in the list
+   </ "Maple Syrup" is now the first item in the list
 
 This call to the ``insert()`` method inserts a new value of ``"Maple Syrup"``
 at an index of ``0``, i.e. at the very beginning of the shopping list.
@@ -191,19 +191,19 @@ Similarly, an item can be removed from the array using the ``removeAt()`` method
 
 .. testcode:: arraysInferred
 
-    --> shoppingList.removeAt(0)
-    /// the item that was at index 0 has just been removed
-    /-> shoppingList now contains \(shoppingList.count) items, and no Maple Syrup
-    <-/ shoppingList now contains 3 items, and no Maple Syrup
+   -> shoppingList.removeAt(0)
+   // the item that was at index 0 has just been removed
+   /> shoppingList now contains \(shoppingList.count) items, and no Maple Syrup
+   </ shoppingList now contains 3 items, and no Maple Syrup
 
 Any gaps in the array are closed when an item is removed,
 and so the value at index ``0`` is once again equal to ``"Six eggs"``:
 
 .. testcode:: arraysInferred
 
-    --> firstItem = shoppingList[0]
-    /-> firstItem is now equal to \"\(firstItem)\"
-    <-/ firstItem is now equal to "Six eggs"
+   -> firstItem = shoppingList[0]
+   /> firstItem is now equal to \"\(firstItem)\"
+   </ firstItem is now equal to "Six eggs"
 
 .. TODO: there are quite a few more Array methods, such as sort() and popLast() –
    how many of them should be listed here?
@@ -220,10 +220,10 @@ you can do so using initializer syntax:
 
 .. testcode:: arraysEmpty
 
-    --> var someInts = Array<Int>()
-    <<< // someInts : Array<Int> = []
-    --> println("someInts is an Array<Int> containing \(someInts.count) items.")
-    <-- someInts is an Array<Int> containing 0 items.
+   -> var someInts = Array<Int>()
+   << // someInts : Array<Int> = []
+   -> println("someInts is an Array<Int> containing \(someInts.count) items.")
+   <- someInts is an Array<Int> containing 0 items.
 
 Note that the type of the ``someInts`` variable has been inferred to be ``Array<Int>``,
 because it was set to the output of an ``Array<Int>`` initializer.
@@ -234,11 +234,11 @@ an empty array can be created by using an empty array literal:
 
 .. testcode:: arraysEmpty
 
-    --> someInts.append(3)
-    /-> someInts now contains \(someInts.count) value of type Int
-    <-/ someInts now contains 1 value of type Int
-    --> someInts = []
-    /// someInts is now an empty array, but is still of type Int
+   -> someInts.append(3)
+   /> someInts now contains \(someInts.count) value of type Int
+   </ someInts now contains 1 value of type Int
+   -> someInts = []
+   // someInts is now an empty array, but is still of type Int
 
 .. TODO: func find<T : Equatable>(array: T[], value: T) -> Int?
    This is defined in Algorithm.swift,
@@ -284,9 +284,9 @@ are also hashable by default.
 
 .. note::
 
-    You can enable your own custom types to be used as dictionary keys
-    by making them conform to the ``Hashable`` protocol.
-    This process is described in :doc:`Protocols`.
+   You can enable your own custom types to be used as dictionary keys
+   by making them conform to the ``Hashable`` protocol.
+   This process is described in :doc:`Protocols`.
 
 .. TODO: make sure that this process actually is described in the Protocols chapter,
    and remove this link if not.
@@ -301,8 +301,8 @@ and the values are airport names:
 
 .. testcode:: dictionaries
 
-    --> var airports: Dictionary<String, String> = ["TYO" : "Tokyo", "DUB" : "Dublin"]
-    <<< // airports : Dictionary<String, String> = Dictionary<String, String>(1.33333, 2, <DictionaryBufferOwner<String, String> instance>)
+   -> var airports: Dictionary<String, String> = ["TYO" : "Tokyo", "DUB" : "Dublin"]
+   << // airports : Dictionary<String, String> = Dictionary<String, String>(1.33333, 2, <DictionaryBufferOwner<String, String> instance>)
 
 The ``airports`` dictionary has been declared as having a type of ``Dictionary<String, String>``,
 which means “a ``Dictionary`` whose keys are of type ``String``,
@@ -310,10 +310,10 @@ and whose values are also of type ``String``”.
 
 .. note::
 
-    The ``airports`` dictionary has been declared as
-    a variable (with the ``var`` introducer),
-    and not a constant (with the ``let`` introducer),
-    because we are about to add more airports to the dictionary.
+   The ``airports`` dictionary has been declared as
+   a variable (with the ``var`` introducer),
+   and not a constant (with the ``let`` introducer),
+   because we are about to add more airports to the dictionary.
 
 The ``airports`` dictionary has been initialized with two :newTerm:`key-value pairs`.
 A key-value pair is a combination of a key and a value.
@@ -340,8 +340,8 @@ The initialization of ``airports`` could have been be written in a shorter form 
 
 .. testcode:: dictionariesInferred
 
-    --> var airports = ["TYO" : "Tokyo", "DUB" : "Dublin"]
-    <<< // airports : Dictionary<String, String> = Dictionary<String, String>(1.33333, 2, <DictionaryBufferOwner<String, String> instance>)
+   -> var airports = ["TYO" : "Tokyo", "DUB" : "Dublin"]
+   << // airports : Dictionary<String, String> = Dictionary<String, String>(1.33333, 2, <DictionaryBufferOwner<String, String> instance>)
 
 Because all of the keys in the literal are of the same type as each other,
 and likewise all of the values are of the same type as each other,
@@ -353,8 +353,8 @@ by checking its read-only ``count`` property:
 
 .. testcode:: dictionariesInferred
 
-    --> println("The dictionary of airports contains \(airports.count) items.")
-    <-- The dictionary of airports contains 2 items.
+   -> println("The dictionary of airports contains \(airports.count) items.")
+   <- The dictionary of airports contains 2 items.
 
 .. TODO: see the note for Array about setting count to a new value.
    If it turns out that Array is indeed meant to have a settable count property,
@@ -366,10 +366,10 @@ and passing in a new key and value of the correct types:
 
 .. testcode:: dictionariesInferred
 
-    --> airports.add("LHR", "London Heathrow")
-    <<< // r0 : Bool = false
-    /-> the airports dictionary now contains \(airports.count) items
-    <-/ the airports dictionary now contains 3 items
+   -> airports.add("LHR", "London Heathrow")
+   << // r0 : Bool = false
+   /> the airports dictionary now contains \(airports.count) items
+   </ the airports dictionary now contains 3 items
 
 .. TODO: note that add() returns a Bool to indicate whether or not
    the action was an add or a replace.
@@ -382,15 +382,15 @@ and ``false`` if it was not in use:
 
 .. testcode:: dictionariesInferred
 
-    --> if airports.add("DUB", "Dublin International") {
-            println("There was already a value for that key in the dictionary.")
-        }
-    <-- There was already a value for that key in the dictionary.
+   -> if airports.add("DUB", "Dublin International") {
+         println("There was already a value for that key in the dictionary.")
+      }
+   <- There was already a value for that key in the dictionary.
 
 .. note::
 
-    If you try and use the ``add()`` method to add a value for a key that already exists,
-    the existing value for that key will not be replaced in the dictionary.
+   If you try and use the ``add()`` method to add a value for a key that already exists,
+   the existing value for that key will not be replaced in the dictionary.
 
 .. TODO: I've filed rdar://16336109 about the fact that
    this Bool value feels the wrong way round.
@@ -413,33 +413,33 @@ as an alternative to the ``add()`` method described above:
 
 .. testcode:: dictionariesInferred
 
-    --> airports["SFO"] = "San Francisco International"
-    >>> var sfo = "SFO" // a hack to get around rdar://16336177
-    <<< // sfo : String = "SFO"
-    /-> \(airports[sfo]) has been added to the dictionary
-    <-/ San Francisco International has been added to the dictionary
+   -> airports["SFO"] = "San Francisco International"
+   >> var sfo = "SFO" // a hack to get around rdar://16336177
+   << // sfo : String = "SFO"
+   /> \(airports[sfo]) has been added to the dictionary
+   </ San Francisco International has been added to the dictionary
 
 Subscript syntax can also be used to replace an existing value with a different one:
 
 .. testcode:: dictionariesInferred
 
-    >>> let oldDub = airports["DUB"]
-    <<< // oldDub : String = "Dublin"
-    --> airports["DUB"] = "Dublin International"
-    >>> var dub = "DUB" // a hack to get around rdar://16336177
-    <<< // dub : String = "DUB"
-    /-> The name for DUB has been changed from \"\(oldDub)\" to \"\(airports[dub])\"
-    <-/ The name for DUB has been changed from "Dublin" to "Dublin International"
+   >> let oldDub = airports["DUB"]
+   << // oldDub : String = "Dublin"
+   -> airports["DUB"] = "Dublin International"
+   >> var dub = "DUB" // a hack to get around rdar://16336177
+   << // dub : String = "DUB"
+   /> The name for DUB has been changed from \"\(oldDub)\" to \"\(airports[dub])\"
+   </ The name for DUB has been changed from "Dublin" to "Dublin International"
 
 If you use subscript syntax to retrieve a value from the dictionary,
 the key that you use must already be in the dictionary:
 
 .. testcode:: dictionariesInferred
 
-    --> let lhr = airports["LHR"]
-    <<< // lhr : String = "London Heathrow"
-    /-> lhr is equal to \"\(lhr)\"
-    <-/ lhr is equal to "London Heathrow"
+   -> let lhr = airports["LHR"]
+   << // lhr : String = "London Heathrow"
+   /> lhr is equal to \"\(lhr)\"
+   </ lhr is equal to "London Heathrow"
 
 .. TODO: talk about the fact that Swift will crash if the key isn't there,
    and describe how to find out if it's there before trying to access it.
@@ -454,26 +454,26 @@ which can be checked and unwrapped using :ref:`BasicTypes_OptionalBinding`:
 
 .. testcode:: dictionariesInferred
 
-    --> if let airportName = airports.find("DUB") {
-            println("The name of the airport is \(airportName).")
-        } else {
-            println("That airport is not in the airports dictionary.")
-        }
-    <-- The name of the airport is Dublin International.
+   -> if let airportName = airports.find("DUB") {
+         println("The name of the airport is \(airportName).")
+      } else {
+         println("That airport is not in the airports dictionary.")
+      }
+   <- The name of the airport is Dublin International.
 
 You can remove a key-value pair from the dictionary by using the ``deleteKey()`` method:
 
 .. testcode:: dictionariesInferred
 
-    --> airports["APL"] = "Apple International" // this isn't the correct name for APL
-    --> airports.deleteKey("APL")               // …so it has been deleted
-    <<< // r1 : Bool = true
-    >>> if let deletedName = airports.find("APL") {
-    >>>     println("The key-value pair for APL has *not* been deleted, but it should have been!")
-    >>> } else {
-    >>>     println("The key-value pair for APL has now been deleted.")
-    >>> }
-    <-/ The key-value pair for APL has now been deleted.
+   -> airports["APL"] = "Apple International" // this isn't the correct name for APL
+   -> airports.deleteKey("APL")            // …so it has been deleted
+   << // r1 : Bool = true
+   >> if let deletedName = airports.find("APL") {
+   >>    println("The key-value pair for APL has *not* been deleted, but it should have been!")
+   >> } else {
+   >>    println("The key-value pair for APL has now been deleted.")
+   >> }
+   </ The key-value pair for APL has now been deleted.
 
 .. _CollectionTypes_CreatingAnEmptyDictionary:
 
@@ -485,9 +485,9 @@ you can do so using initializer syntax:
 
 .. testcode:: dictionariesEmpty
 
-    --> var namesOfIntegers = Dictionary<Int, String>()
-    <<< // namesOfIntegers : Dictionary<Int, String> = Dictionary<Int, String>(1.33333, 0, <DictionaryBufferOwner<Int, String> instance>)
-    /// namesOfIntegers is an empty Dictionary<Int, String>
+   -> var namesOfIntegers = Dictionary<Int, String>()
+   << // namesOfIntegers : Dictionary<Int, String> = Dictionary<Int, String>(1.33333, 0, <DictionaryBufferOwner<Int, String> instance>)
+   // namesOfIntegers is an empty Dictionary<Int, String>
 
 This example creates an empty dictionary of type ``Int``, ``String``
 to store human-readable names of integer values.
@@ -499,11 +499,11 @@ which is written as ``[:]``, like this:
 
 .. testcode:: dictionariesEmpty
 
-    --> namesOfIntegers[16] = "sixteen"
-    /-> namesOfIntegers now contains \(namesOfIntegers.count) key-value pair
-    <-/ namesOfIntegers now contains 1 key-value pair
-    --> namesOfIntegers = [:]
-    /// namesOfIntegers is once again an empty dictionary of type Int, String
+   -> namesOfIntegers[16] = "sixteen"
+   /> namesOfIntegers now contains \(namesOfIntegers.count) key-value pair
+   </ namesOfIntegers now contains 1 key-value pair
+   -> namesOfIntegers = [:]
+   // namesOfIntegers is once again an empty dictionary of type Int, String
 
 .. TODO: write about itemsAsArray() -> Element[]
 .. TODO: Mention that "==" will consider two dictionaries to be the same
@@ -513,10 +513,10 @@ which is written as ``[:]``, like this:
 
 .. note::
 
-    Behind the scenes,
-    Swift's ``Array`` and ``Dictionary`` types are implemented as :newTerm:`generic collections`.
-    Generics such as ``Array`` and ``Dictionary`` are described in detail in :doc:`Generics`.
+   Behind the scenes,
+   Swift's ``Array`` and ``Dictionary`` types are implemented as :newTerm:`generic collections`.
+   Generics such as ``Array`` and ``Dictionary`` are described in detail in :doc:`Generics`.
 
 .. refnote:: References
 
-    * https://[Internal Staging Server]/docs/whitepaper/TypesAndValues.html#arrays
+   * https://[Internal Staging Server]/docs/whitepaper/TypesAndValues.html#arrays

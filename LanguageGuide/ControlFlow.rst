@@ -1,19 +1,19 @@
 .. docnote:: Control flow
 
-    Some aspects of control flow will already have been introduced before this chapter as part of the language tour. I'm envisaging that the basic flow control introduced in that chapter will provide enough flexibility to get us through the chapters on types, operators, strings and generics, before going into much more detail on all the possibilities here.
+   Some aspects of control flow will already have been introduced before this chapter as part of the language tour. I'm envisaging that the basic flow control introduced in that chapter will provide enough flexibility to get us through the chapters on types, operators, strings and generics, before going into much more detail on all the possibilities here.
 
 .. docnote:: Subjects to be covered in this section
 
-    * Conditional branching (if)
-    * Looping (while, do while, for, for in)
-    * Iterators
-    * Switch statement (including pattern matching)
-    * Pattern matching and expressions in patterns
-    * Overloading the ~= function for pattern matching
-    * Control transfer (return, break, continue, fallthrough)
-    * Ranges
-    * Variable scope (as this is the first time we've defined scopes)
-    * Clarification around expressions and statements?
+   * Conditional branching (if)
+   * Looping (while, do while, for, for in)
+   * Iterators
+   * Switch statement (including pattern matching)
+   * Pattern matching and expressions in patterns
+   * Overloading the ~= function for pattern matching
+   * Control transfer (return, break, continue, fallthrough)
+   * Ranges
+   * Variable scope (as this is the first time we've defined scopes)
+   * Clarification around expressions and statements?
 
 Control Flow
 ============
@@ -50,14 +50,14 @@ which prints the first few entries in the five-times-table:
 
 .. testcode::
 
-    --> for index in 1..5 {
-            println("\(index) times 5 is \(index * 5)")
-        }
-    <-/ 1 times 5 is 5
-    <-/ 2 times 5 is 10
-    <-/ 3 times 5 is 15
-    <-/ 4 times 5 is 20
-    <-/ 5 times 5 is 25
+   -> for index in 1..5 {
+         println("\(index) times 5 is \(index * 5)")
+      }
+   </ 1 times 5 is 5
+   </ 2 times 5 is 10
+   </ 3 times 5 is 15
+   </ 4 times 5 is 20
+   </ 5 times 5 is 25
 
 Here, the collection of items being iterated is a
 closed range of numbers from ``1`` to ``5`` inclusive,
@@ -86,17 +86,17 @@ you can ignore the values using an underscore in place of a variable name:
 
 .. testcode::
 
-    --> let base = 3
-    <<< // base : Int = 3
-    --> let power = 10
-    <<< // power : Int = 10
-    --> var answer = 1
-    <<< // answer : Int = 1
-    --> for _ in 0...power {
-            answer *= base
-        }
-    --> println("\(base) to the power of \(power) is \(answer)")
-    <-- 3 to the power of 10 is 59049
+   -> let base = 3
+   << // base : Int = 3
+   -> let power = 10
+   << // power : Int = 10
+   -> var answer = 1
+   << // answer : Int = 1
+   -> for _ in 0...power {
+         answer *= base
+      }
+   -> println("\(base) to the power of \(power) is \(answer)")
+   <- 3 to the power of 10 is 59049
 
 This example calculates the value of one number to the power of another
 (in this case, ``3`` to the power of ``10``).
@@ -116,15 +116,15 @@ to iterate over their items:
 
 .. testcode::
 
-    --> let names = ["Anna", "Alex", "Brian", "Jack"]
-    <<< // names : String[] = ["Anna", "Alex", "Brian", "Jack"]
-    --> for name in names {
-            println("Hello, \(name)!")
-        }
-    <-/ Hello, Anna!
-    <-/ Hello, Alex!
-    <-/ Hello, Brian!
-    <-/ Hello, Jack!
+   -> let names = ["Anna", "Alex", "Brian", "Jack"]
+   << // names : String[] = ["Anna", "Alex", "Brian", "Jack"]
+   -> for name in names {
+         println("Hello, \(name)!")
+      }
+   </ Hello, Anna!
+   </ Hello, Alex!
+   </ Hello, Brian!
+   </ Hello, Jack!
 
 Swift's ``String`` type has a ``chars`` property,
 which provides the individual characters in the string as an ``Array`` of ``UnicodeScalar`` values
@@ -133,14 +133,14 @@ This can be used to iterate through the characters of a string in order:
 
 .. testcode::
 
-    --> for scalar in "Hello".chars {
-            println(scalar)
-        }
-    <-/ H
-    <-/ e
-    <-/ l
-    <-/ l
-    <-/ o
+   -> for scalar in "Hello".chars {
+         println(scalar)
+      }
+   </ H
+   </ e
+   </ l
+   </ l
+   </ o
 
 Iteration can also be used with :ref:`CollectionTypes_Dictionaries`
 to access their key-value pairs.
@@ -149,14 +149,14 @@ which can be accessed via dot syntax:
 
 .. testcode::
 
-    --> let numberOfLegs = ["spider" : 8, "ant" : 6, "cat" : 4]
-    <<< // numberOfLegs : Dictionary<String, Int> = Dictionary<String, Int>(1.33333, 3, <DictionaryBufferOwner<String, Int> instance>)
-    --> for item in numberOfLegs {
-            println("\(item.key)s have \(item.value) legs")
-        }
-    <-/ spiders have 8 legs
-    <-/ ants have 6 legs
-    <-/ cats have 4 legs
+   -> let numberOfLegs = ["spider" : 8, "ant" : 6, "cat" : 4]
+   << // numberOfLegs : Dictionary<String, Int> = Dictionary<String, Int>(1.33333, 3, <DictionaryBufferOwner<String, Int> instance>)
+   -> for item in numberOfLegs {
+         println("\(item.key)s have \(item.value) legs")
+      }
+   </ spiders have 8 legs
+   </ ants have 6 legs
+   </ cats have 4 legs
 
 Items in a ``Dictionary`` may not necessarily be iterated in the same order as they were inserted.
 The contents of a ``Dictionary`` are inherently unordered,
@@ -191,20 +191,20 @@ Swift also supports traditional C-style ``for`` loops with a condition and an in
 
 .. testcode::
 
-    --> for var index = 0; index < 3; ++index {
-            println("index is \(index)")
-        }
-    <-/ index is 0
-    <-/ index is 1
-    <-/ index is 2
+   -> for var index = 0; index < 3; ++index {
+         println("index is \(index)")
+      }
+   </ index is 0
+   </ index is 1
+   </ index is 2
 
 The general form of this loop format is:
 
 ::
 
-    for <#initialization#>; <#condition#>; <#increment#> {
-        <#statements#>
-    }
+   for <#initialization#>; <#condition#>; <#increment#> {
+      <#statements#>
+   }
 
 Semicolons are used to separate the three parts of the loop's definition, as in C.
 However, unlike C, there is no need to add parentheses around
@@ -233,11 +233,11 @@ This is effectively shorthand for (and equivalent to):
 
 ::
 
-    <#initialization#>
-    while <#condition#> {
-        <#statements#>
-        <#increment#>
-    }
+   <#initialization#>
+   while <#condition#> {
+      <#statements#>
+      <#increment#>
+   }
 
 Named values declared within the initialization expression
 (such as ``var index = 0``)
@@ -247,16 +247,16 @@ you must declare ``index`` before the loop's scope begins:
 
 .. testcode::
 
-    --> var index = 0
-    <<< // index : Int = 0
-    --> for index = 0; index < 3; ++index {
-            println("index is \(index)")
-        }
-    <-/ index is 0
-    <-/ index is 1
-    <-/ index is 2
-    --> println("The loop statements were executed \(index) times")
-    <-- The loop statements were executed 3 times
+   -> var index = 0
+   << // index : Int = 0
+   -> for index = 0; index < 3; ++index {
+         println("index is \(index)")
+      }
+   </ index is 0
+   </ index is 1
+   </ index is 2
+   -> println("The loop statements were executed \(index) times")
+   <- The loop statements were executed 3 times
 
 .. TODO: We shouldn't need to initialize index to 0 on the first line of this example,
    but variables can't currently be used unitialized in the REPL.
@@ -298,17 +298,17 @@ The general form of a ``while`` loop is:
 
 ::
 
-    while <#condition equates to true#> {
-        <#statements#>
-    }
+   while <#condition equates to true#> {
+      <#statements#>
+   }
 
 This example plays a simple game of *Snakes and Ladders*
 (also known as *Chutes and Ladders*)
 using the board shown below.
 
 .. image:: ../images/snakesAndLadders.png
-    :height: 250
-    :align: center
+   :height: 250
+   :align: center
 
 The rules of the game are as follows:
 
@@ -326,11 +326,11 @@ one each at indices ``0`` through ``25`` inclusive:
 
 .. testcode:: snakesAndLadders1
 
-    --> let finalSquare = 25
-    <<< // finalSquare : Int = 25
-    --> var board = Array<Int>()
-    <<< // board : Array<Int> = []
-    --> for _ in 0..finalSquare { board.append(0) }
+   -> let finalSquare = 25
+   << // finalSquare : Int = 25
+   -> var board = Array<Int>()
+   << // board : Array<Int> = []
+   -> for _ in 0..finalSquare { board.append(0) }
 
 Some squares are then set to have more specific values for the snakes and ladders.
 Squares with a ladder base have a positive number to move you up the board,
@@ -338,8 +338,8 @@ whereas squares with a snake head have a negative number to move you back down t
 
 .. testcode:: snakesAndLadders1
 
-    --> board[03] = +08; board[06] = +11; board[09] = +09; board[10] = +02
-    --> board[14] = -10; board[19] = -11; board[22] = -02; board[24] = -08
+   -> board[03] = +08; board[06] = +11; board[09] = +09; board[10] = +02
+   -> board[14] = -10; board[19] = -11; board[22] = -02; board[24] = -08
 
 Square 3 contains the bottom of a ladder that moves you up to square 11.
 To represent this, ``board[03]`` is equal to ``+08``,
@@ -358,54 +358,54 @@ The first dice roll will always move the player on to the board:
 
 .. testcode:: snakesAndLadders1
 
-    --> var square = 0
-    <<< // square : Int = 0
-    --> var diceRoll = 0
-    <<< // diceRoll : Int = 0
-    --> while square < finalSquare {
-            // roll the dice
-            if ++diceRoll == 7 { diceRoll = 1 }
-    >>>     println("diceRoll is \(diceRoll)")
-            // move by the rolled amount
-            square += diceRoll
-    >>>     println("after diceRoll, square is \(square)")
-            if square < board.count {
-                // if we're still on the board, move up or down for a snake or a ladder
-                square += board[square]
-    >>>         println("after snakes or ladders, square is \(square)")
-            }
-        }
-    --> println("Game over!")
-    <<< diceRoll is 1
-    <<< after diceRoll, square is 1
-    <<< after snakes or ladders, square is 1
-    <<< diceRoll is 2
-    <<< after diceRoll, square is 3
-    <<< after snakes or ladders, square is 11
-    <<< diceRoll is 3
-    <<< after diceRoll, square is 14
-    <<< after snakes or ladders, square is 4
-    <<< diceRoll is 4
-    <<< after diceRoll, square is 8
-    <<< after snakes or ladders, square is 8
-    <<< diceRoll is 5
-    <<< after diceRoll, square is 13
-    <<< after snakes or ladders, square is 13
-    <<< diceRoll is 6
-    <<< after diceRoll, square is 19
-    <<< after snakes or ladders, square is 8
-    <<< diceRoll is 1
-    <<< after diceRoll, square is 9
-    <<< after snakes or ladders, square is 18
-    <<< diceRoll is 2
-    <<< after diceRoll, square is 20
-    <<< after snakes or ladders, square is 20
-    <<< diceRoll is 3
-    <<< after diceRoll, square is 23
-    <<< after snakes or ladders, square is 23
-    <<< diceRoll is 4
-    <<< after diceRoll, square is 27
-    <<< Game over!
+   -> var square = 0
+   << // square : Int = 0
+   -> var diceRoll = 0
+   << // diceRoll : Int = 0
+   -> while square < finalSquare {
+         // roll the dice
+         if ++diceRoll == 7 { diceRoll = 1 }
+   >>    println("diceRoll is \(diceRoll)")
+         // move by the rolled amount
+         square += diceRoll
+   >>    println("after diceRoll, square is \(square)")
+         if square < board.count {
+            // if we're still on the board, move up or down for a snake or a ladder
+            square += board[square]
+   >>       println("after snakes or ladders, square is \(square)")
+         }
+      }
+   -> println("Game over!")
+   << diceRoll is 1
+   << after diceRoll, square is 1
+   << after snakes or ladders, square is 1
+   << diceRoll is 2
+   << after diceRoll, square is 3
+   << after snakes or ladders, square is 11
+   << diceRoll is 3
+   << after diceRoll, square is 14
+   << after snakes or ladders, square is 4
+   << diceRoll is 4
+   << after diceRoll, square is 8
+   << after snakes or ladders, square is 8
+   << diceRoll is 5
+   << after diceRoll, square is 13
+   << after snakes or ladders, square is 13
+   << diceRoll is 6
+   << after diceRoll, square is 19
+   << after snakes or ladders, square is 8
+   << diceRoll is 1
+   << after diceRoll, square is 9
+   << after snakes or ladders, square is 18
+   << diceRoll is 2
+   << after diceRoll, square is 20
+   << after snakes or ladders, square is 20
+   << diceRoll is 3
+   << after diceRoll, square is 23
+   << after snakes or ladders, square is 23
+   << diceRoll is 4
+   << after diceRoll, square is 27
+   << Game over!
 
 This example uses a very simple approach to dice-rolling.
 Instead of using a random number generator,
@@ -462,9 +462,9 @@ The general form of a ``do``-``while`` loop is:
 
 ::
 
-    do {
-        <#statements#>
-    } while <#condition equates to true#>
+   do {
+      <#statements#>
+   } while <#condition equates to true#>
 
 Here's the *Snakes and Ladders* example again,
 written as a ``do``-``while`` loop rather than a ``while`` loop.
@@ -473,17 +473,17 @@ are initialized in exactly the same way as before:
 
 .. testcode:: snakesAndLadders2
 
-    --> let finalSquare = 25
-    <<< // finalSquare : Int = 25
-    --> var board = Array<Int>()
-    <<< // board : Array<Int> = []
-    --> for _ in 0..finalSquare { board.append(0) }
-    --> board[03] = +08; board[06] = +11; board[09] = +09; board[10] = +02
-    --> board[14] = -10; board[19] = -11; board[22] = -02; board[24] = -08
-    --> var square = 0
-    <<< // square : Int = 0
-    --> var diceRoll = 0
-    <<< // diceRoll : Int = 0
+   -> let finalSquare = 25
+   << // finalSquare : Int = 25
+   -> var board = Array<Int>()
+   << // board : Array<Int> = []
+   -> for _ in 0..finalSquare { board.append(0) }
+   -> board[03] = +08; board[06] = +11; board[09] = +09; board[10] = +02
+   -> board[14] = -10; board[19] = -11; board[22] = -02; board[24] = -08
+   -> var square = 0
+   << // square : Int = 0
+   -> var diceRoll = 0
+   << // diceRoll : Int = 0
 
 In this version of the game,
 the *first* action in the loop is to check for a ladder or a snake.
@@ -497,49 +497,49 @@ and will have no effect:
 
 .. testcode:: snakesAndLadders2
 
-    --> do {
-            // move up or down for a snake or ladder
-            square += board[square]
-    >>>        println("after snakes or ladders, square is \(square)")
-            // roll the dice
-            if ++diceRoll == 7 { diceRoll = 1 }
-    >>>     println("diceRoll is \(diceRoll)")
-            // move by the rolled amount
-            square += diceRoll
-    >>>     println("after diceRoll, square is \(square)")
-    --> } while square < finalSquare
-    --> println("Game over!")
-    <<< after snakes or ladders, square is 0
-    <<< diceRoll is 1
-    <<< after diceRoll, square is 1
-    <<< after snakes or ladders, square is 1
-    <<< diceRoll is 2
-    <<< after diceRoll, square is 3
-    <<< after snakes or ladders, square is 11
-    <<< diceRoll is 3
-    <<< after diceRoll, square is 14
-    <<< after snakes or ladders, square is 4
-    <<< diceRoll is 4
-    <<< after diceRoll, square is 8
-    <<< after snakes or ladders, square is 8
-    <<< diceRoll is 5
-    <<< after diceRoll, square is 13
-    <<< after snakes or ladders, square is 13
-    <<< diceRoll is 6
-    <<< after diceRoll, square is 19
-    <<< after snakes or ladders, square is 8
-    <<< diceRoll is 1
-    <<< after diceRoll, square is 9
-    <<< after snakes or ladders, square is 18
-    <<< diceRoll is 2
-    <<< after diceRoll, square is 20
-    <<< after snakes or ladders, square is 20
-    <<< diceRoll is 3
-    <<< after diceRoll, square is 23
-    <<< after snakes or ladders, square is 23
-    <<< diceRoll is 4
-    <<< after diceRoll, square is 27
-    <<< Game over!
+   -> do {
+         // move up or down for a snake or ladder
+         square += board[square]
+   >>      println("after snakes or ladders, square is \(square)")
+         // roll the dice
+         if ++diceRoll == 7 { diceRoll = 1 }
+   >>    println("diceRoll is \(diceRoll)")
+         // move by the rolled amount
+         square += diceRoll
+   >>    println("after diceRoll, square is \(square)")
+   -> } while square < finalSquare
+   -> println("Game over!")
+   << after snakes or ladders, square is 0
+   << diceRoll is 1
+   << after diceRoll, square is 1
+   << after snakes or ladders, square is 1
+   << diceRoll is 2
+   << after diceRoll, square is 3
+   << after snakes or ladders, square is 11
+   << diceRoll is 3
+   << after diceRoll, square is 14
+   << after snakes or ladders, square is 4
+   << diceRoll is 4
+   << after diceRoll, square is 8
+   << after snakes or ladders, square is 8
+   << diceRoll is 5
+   << after diceRoll, square is 13
+   << after snakes or ladders, square is 13
+   << diceRoll is 6
+   << after diceRoll, square is 19
+   << after snakes or ladders, square is 8
+   << diceRoll is 1
+   << after diceRoll, square is 9
+   << after snakes or ladders, square is 18
+   << diceRoll is 2
+   << after diceRoll, square is 20
+   << after snakes or ladders, square is 20
+   << diceRoll is 3
+   << after diceRoll, square is 23
+   << after snakes or ladders, square is 23
+   << diceRoll is 4
+   << after diceRoll, square is 27
+   << Game over!
 
 After checking for snakes and ladders, the dice is rolled,
 and the player is moved forward by ``diceRoll`` squares as before.
@@ -588,12 +588,12 @@ It only executes a set of statements if that condition is ``true``:
 
 .. testcode::
 
-    --> var temperatureInFahrenheit = 30
-    <<< // temperatureInFahrenheit : Int = 30
-    --> if temperatureInFahrenheit <= 32 {
-            println("It's very cold. Consider wearing a scarf.")
-        }
-    <-- It's very cold. Consider wearing a scarf.
+   -> var temperatureInFahrenheit = 30
+   << // temperatureInFahrenheit : Int = 30
+   -> if temperatureInFahrenheit <= 32 {
+         println("It's very cold. Consider wearing a scarf.")
+      }
+   <- It's very cold. Consider wearing a scarf.
 
 This example checks to see if the temperature
 (expressed using the Fahrenheit scale)
@@ -608,13 +608,13 @@ an alternative set of statements when the ``if`` condition is ``false``:
 
 .. testcode::
 
-    --> temperatureInFahrenheit = 40
-    --> if temperatureInFahrenheit <= 32 {
-            println("It's very cold. Consider wearing a scarf.")
-        } else {
-            println("It's not that cold. Wear a t-shirt.")
-        }
-    <-- It's not that cold. Wear a t-shirt.
+   -> temperatureInFahrenheit = 40
+   -> if temperatureInFahrenheit <= 32 {
+         println("It's very cold. Consider wearing a scarf.")
+      } else {
+         println("It's not that cold. Wear a t-shirt.")
+      }
+   <- It's not that cold. Wear a t-shirt.
 
 One of of these two branches will always be executed.
 Because the temperature has increased to ``40`` degrees Fahrenheit,
@@ -626,15 +626,15 @@ to consider additional clauses:
 
 .. testcode::
 
-    --> temperatureInFahrenheit = 90
-    --> if temperatureInFahrenheit <= 32 {
-            println("It's very cold. Consider wearing a scarf.")
-        } else if temperatureInFahrenheit >= 86 {
-            println("It's really warm. Don't forget to wear sunscreen.")
-        } else {
-            println("It's not that cold. Wear a t-shirt.")
-        }
-    <-- It's really warm. Don't forget to wear sunscreen.
+   -> temperatureInFahrenheit = 90
+   -> if temperatureInFahrenheit <= 32 {
+         println("It's very cold. Consider wearing a scarf.")
+      } else if temperatureInFahrenheit >= 86 {
+         println("It's really warm. Don't forget to wear sunscreen.")
+      } else {
+         println("It's not that cold. Wear a t-shirt.")
+      }
+   <- It's really warm. Don't forget to wear sunscreen.
 
 Here, an additional ``if`` clause has been added to respond to particularly warm temperatures.
 The final ``else`` clause still remains,
@@ -644,12 +644,12 @@ The final ``else`` clause is optional, however, and can be excluded if the set o
 
 .. testcode::
 
-    --> temperatureInFahrenheit = 72
-    --> if temperatureInFahrenheit <= 32 {
-            println("It's very cold. Consider wearing a scarf.")
-        } else if temperatureInFahrenheit >= 86 {
-            println("It's really warm. Don't forget to wear sunscreen.")
-        }
+   -> temperatureInFahrenheit = 72
+   -> if temperatureInFahrenheit <= 32 {
+         println("It's very cold. Consider wearing a scarf.")
+      } else if temperatureInFahrenheit >= 86 {
+         println("It's really warm. Don't forget to wear sunscreen.")
+      }
 
 In this example,
 the temperature is neither too cold nor too warm to trigger the ``if`` or ``else if`` conditions,
@@ -672,15 +672,15 @@ one or more values of the same type as the value being considered:
 
 ::
 
-    switch <#some value to consider#> {
-        case <#possible value 1#>:
-            <#do things in response to possible value 1#>
-        case <#possible value 2#>,
-             <#possible value 3#>:
-            <#do things in response to possible values 2 or 3#>
-        default:
-            <#otherwise, do something else#>
-    }
+   switch <#some value to consider#> {
+      case <#possible value 1#>:
+         <#do things in response to possible value 1#>
+      case <#possible value 2#>,
+          <#possible value 3#>:
+         <#do things in response to possible values 2 or 3#>
+      default:
+         <#otherwise, do something else#>
+   }
 
 Every ``switch`` statement is made up of multiple possible :newTerm:`cases`,
 each of which begins with the ``case`` keyword.
@@ -708,28 +708,28 @@ Multiple values are covered in a single ``switch`` case for brevity:
 
 .. testcode::
 
-    --> let numberSymbol = '三'   // Simplified Chinese symbol for the number 3
-    <<< // numberSymbol : UnicodeScalar = '三'
-    --> var possibleIntegerValue: Int? = .None
-    <<< // possibleIntegerValue : Int? = <unprintable value>
-    --> switch numberSymbol {
-            case '1', '١', '一', '๑':
-                possibleIntegerValue = 1
-            case '2', '٢', '二', '๒':
-                possibleIntegerValue = 2
-            case '3', '٣', '三', '๓':
-                possibleIntegerValue = 3
-            case '4', '٤', '四', '๔':
-                possibleIntegerValue = 4
-            default:
-                possibleIntegerValue = .None
-        }
-    --> if let integerValue = possibleIntegerValue {
-            println("The integer value of \(numberSymbol) is \(integerValue).")
-        } else {
-            println("An integer value could not be found for \(numberSymbol).")
-        }
-    <-- The integer value of 三 is 3.
+   -> let numberSymbol = '三'   // Simplified Chinese symbol for the number 3
+   << // numberSymbol : UnicodeScalar = '三'
+   -> var possibleIntegerValue: Int? = .None
+   << // possibleIntegerValue : Int? = <unprintable value>
+   -> switch numberSymbol {
+         case '1', '١', '一', '๑':
+            possibleIntegerValue = 1
+         case '2', '٢', '二', '๒':
+            possibleIntegerValue = 2
+         case '3', '٣', '三', '๓':
+            possibleIntegerValue = 3
+         case '4', '٤', '四', '๔':
+            possibleIntegerValue = 4
+         default:
+            possibleIntegerValue = .None
+      }
+   -> if let integerValue = possibleIntegerValue {
+         println("The integer value of \(numberSymbol) is \(integerValue).")
+      } else {
+         println("An integer value could not be found for \(numberSymbol).")
+      }
+   <- The integer value of 三 is 3.
 
 .. TODO: The initialization of integerValue can be removed
   once the REPL supports uninitialized named values.
@@ -771,11 +771,11 @@ because the first case is empty:
 
 ::
 
-    switch <#some value to consider#> {
-        case <#possible value 1#>:
-        case <#possible value 2#>:
-            <#statements#>
-    }
+   switch <#some value to consider#> {
+      case <#possible value 1#>:
+      case <#possible value 2#>:
+         <#statements#>
+   }
 
 Unlike C, this code does not match both of values 1 and 2.
 Rather, it reports an error that the first case does not contain any executable code.
@@ -787,17 +787,17 @@ and can be written over multiple lines if the list is long:
 
 ::
 
-    switch <#some value to consider#> {
-        case <#possible value 1#>,
-             <#possible value 2#>:
-            <#statements#>
-    }
+   switch <#some value to consider#> {
+      case <#possible value 1#>,
+          <#possible value 2#>:
+         <#statements#>
+   }
 
 .. note::
 
-    If you wish to opt in to fallthrough behavior for a particular ``switch`` case,
-    you can do so with the ``fallthrough`` keyword,
-    as described in :ref:`ControlFlow_Fallthrough`.
+   If you wish to opt in to fallthrough behavior for a particular ``switch`` case,
+   you can do so with the ``fallthrough`` keyword,
+   as described in :ref:`ControlFlow_Fallthrough`.
 
 .. TODO: we don't currently have a nice way to include a case (or a default case)
    that intentionally includes a no-op executable statement.
@@ -815,30 +815,30 @@ to provide a natural-language count for numbers of any size:
 
 .. testcode::
 
-    --> let count = 3_000_000_000_000
-    <<< // count : Int = 3000000000000
-    --> let countedThings = "stars in the Milky Way"
-    <<< // countedThings : String = "stars in the Milky Way"
-    --> var naturalCount = ""
-    <<< // naturalCount : String = ""
-    --> switch count {
-            case 0:
-                naturalCount = "no"
-            case 1..3:
-                naturalCount = "a few"
-            case 4..9:
-                naturalCount = "several"
-            case 10..99:
-                naturalCount = "tens of"
-            case 100..999:
-                naturalCount = "hundreds of"
-            case 1000..999_999:
-                naturalCount = "thousands of"
-            default:
-                naturalCount = "millions and millions of"
-        }
-    --> println("There are \(naturalCount) \(countedThings).")
-    <-- There are millions and millions of stars in the Milky Way.
+   -> let count = 3_000_000_000_000
+   << // count : Int = 3000000000000
+   -> let countedThings = "stars in the Milky Way"
+   << // countedThings : String = "stars in the Milky Way"
+   -> var naturalCount = ""
+   << // naturalCount : String = ""
+   -> switch count {
+         case 0:
+            naturalCount = "no"
+         case 1..3:
+            naturalCount = "a few"
+         case 4..9:
+            naturalCount = "several"
+         case 10..99:
+            naturalCount = "tens of"
+         case 100..999:
+            naturalCount = "hundreds of"
+         case 1000..999_999:
+            naturalCount = "thousands of"
+         default:
+            naturalCount = "millions and millions of"
+      }
+   -> println("There are \(naturalCount) \(countedThings).")
+   <- There are millions and millions of stars in the Milky Way.
 
 .. TODO: remove the initializer for naturalCount once we can declare unitialized variables in the REPL.
 .. TODO: Add a description for this example.
@@ -857,8 +857,8 @@ expressed as a simple tuple of type ``(Int, Int)``,
 and categorizes it on the following graph:
 
 .. image:: ../images/coordinateGraphSimple.png
-    :height: 250
-    :align: center
+   :height: 250
+   :align: center
 
 It decides if the point is
 at the origin (0, 0);
@@ -869,21 +869,21 @@ or outside of the box altogether.
 
 .. testcode::
 
-    --> let somePoint = (1, 1)
-    <<< // somePoint : (Int, Int) = (1, 1)
-    --> switch somePoint {
-            case (0, 0):
-                println("(0, 0) is at the origin")
-            case (_, 0):
-                println("(\(somePoint.0), 0) is on the x-axis")
-            case (0, _):
-                println("(0, \(somePoint.1)) is on the y-axis")
-            case (-2..2, -2..2):
-                println("(\(somePoint.0), \(somePoint.1)) is inside the box")
-            default:
-                println("(\(somePoint.0), \(somePoint.1)) is outside of the box")
-        }
-    <-- (1, 1) is inside the box
+   -> let somePoint = (1, 1)
+   << // somePoint : (Int, Int) = (1, 1)
+   -> switch somePoint {
+         case (0, 0):
+            println("(0, 0) is at the origin")
+         case (_, 0):
+            println("(\(somePoint.0), 0) is on the x-axis")
+         case (0, _):
+            println("(0, \(somePoint.1)) is on the y-axis")
+         case (-2..2, -2..2):
+            println("(\(somePoint.0), \(somePoint.1)) is inside the box")
+         default:
+            println("(\(somePoint.0), \(somePoint.1)) is outside of the box")
+      }
+   <- (1, 1) is inside the box
 
 Unlike C, Swift allows multiple ``switch`` cases to consider the same value or values.
 In fact, the point (0, 0) could match all *four* of the cases in this example.
@@ -912,8 +912,8 @@ expressed as a tuple of type ``(Int, Int)``,
 and categorizes it on the following graph:
 
 .. image:: ../images/coordinateGraphMedium.png
-    :height: 250
-    :align: center
+   :height: 250
+   :align: center
 
 It decides if the point is
 on the red x-axis;
@@ -922,17 +922,17 @@ or somewhere else.
 
 .. testcode::
 
-    --> let anotherPoint = (2, 0)
-    <<< // anotherPoint : (Int, Int) = (2, 0)
-    --> switch anotherPoint {
-            case (let x, 0):
-                println("on the x-axis with an x value of \(x)")
-            case (0, let y):
-                println("on the y-axis with a y value of \(y)")
-            case let (x, y):
-                println("somewhere else at (\(x), \(y))")
-        }
-    <-- on the x-axis with an x value of 2
+   -> let anotherPoint = (2, 0)
+   << // anotherPoint : (Int, Int) = (2, 0)
+   -> switch anotherPoint {
+         case (let x, 0):
+            println("on the x-axis with an x value of \(x)")
+         case (0, let y):
+            println("on the y-axis with a y value of \(y)")
+         case let (x, y):
+            println("somewhere else at (\(x), \(y))")
+      }
+   <- on the x-axis with an x value of 2
 
 The three ``switch`` cases declare placeholder constants ``x`` and ``y``,
 which temporarily take on one or both of the tuple values from ``anotherPoint``.
@@ -972,8 +972,8 @@ A ``switch`` case can check for additional conditions using the ``where`` clause
 The example below categorizes an (x, y) point on the following graph:
 
 .. image:: ../images/coordinateGraphComplex.png
-    :height: 250
-    :align: center
+   :height: 250
+   :align: center
 
 It decides if the point is
 on the green diagonal line where ``x == y``;
@@ -982,17 +982,17 @@ or none of the above.
 
 .. testcode::
 
-    --> let yetAnotherPoint = (1, -1)
-    <<< // yetAnotherPoint : (Int, Int) = (1, -1)
-    --> switch yetAnotherPoint {
-            case let (x, y) where x == y:
-                println("(\(x), \(y)) is on the line x == y")
-            case let (x, y) where x == -y:
-                println("(\(x), \(y)) is on the line x == -y")
-            case let (x, y):
-                println("(\(x), \(y)) is just some arbitrary point")
-        }
-    <-- (1, -1) is on the line x == -y
+   -> let yetAnotherPoint = (1, -1)
+   << // yetAnotherPoint : (Int, Int) = (1, -1)
+   -> switch yetAnotherPoint {
+         case let (x, y) where x == y:
+            println("(\(x), \(y)) is on the line x == y")
+         case let (x, y) where x == -y:
+            println("(\(x), \(y)) is on the line x == -y")
+         case let (x, y):
+            println("(\(x), \(y)) is just some arbitrary point")
+      }
+   <- (1, -1) is on the line x == -y
 
 The three ``switch`` cases declare placeholder constants ``x`` and ``y``,
 which temporarily take on the two tuple values from ``point``.
@@ -1035,30 +1035,30 @@ without leaving the loop altogether.
 
 .. note::
 
-    In a ``for``-``condition``-``increment`` loop,
-    the incrementer will still be evaluated after calling the ``continue`` statement.
-    The loop itself continues to work as normal;
-    only code within the loop's body is skipped.
+   In a ``for``-``condition``-``increment`` loop,
+   the incrementer will still be evaluated after calling the ``continue`` statement.
+   The loop itself continues to work as normal;
+   only code within the loop's body is skipped.
 
 The following example takes a lowercase string,
 and removes all of its vowels and spaces to create a cryptic puzzle phrase for someone to try and guess:
 
 .. testcode::
 
-    --> let puzzleInput = "great minds think alike"
-    <<< // puzzleInput : String = "great minds think alike"
-    --> var puzzleOutput = ""
-    <<< // puzzleOutput : String = ""
-    --> for letter in puzzleInput.chars {
-            switch letter {
-                case 'a', 'e', 'i', 'o', 'u', ' ':
-                    continue
-                default:
-                    puzzleOutput += letter
-            }
-        }
-    --> println(puzzleOutput)
-    <-- grtmndsthnklk
+   -> let puzzleInput = "great minds think alike"
+   << // puzzleInput : String = "great minds think alike"
+   -> var puzzleOutput = ""
+   << // puzzleOutput : String = ""
+   -> for letter in puzzleInput.chars {
+         switch letter {
+            case 'a', 'e', 'i', 'o', 'u', ' ':
+               continue
+            default:
+               puzzleOutput += letter
+         }
+      }
+   -> println(puzzleOutput)
+   <- grtmndsthnklk
 
 The ``letter`` constant is inferred to be of type ``UnicodeScalar``
 from the fact that it is iterating over a sequence of ``UnicodeScalar`` values.
@@ -1095,25 +1095,25 @@ you must roll again until you roll the exact number needed to land on square 25.
 The game board is the same as before:
 
 .. image:: ../images/snakesAndLadders.png
-    :height: 250
-    :align: center
+   :height: 250
+   :align: center
 
 The values of ``finalSquare``, ``board``, ``square``, and ``diceRoll``
 are initialized in the same way as before:
 
 .. testcode:: snakesAndLadders3
 
-    --> let finalSquare = 25
-    <<< // finalSquare : Int = 25
-    --> var board = Array<Int>()
-    <<< // board : Array<Int> = []
-    --> for _ in 0..finalSquare { board.append(0) }
-    --> board[03] = +08; board[06] = +11; board[09] = +09; board[10] = +02
-    --> board[14] = -10; board[19] = -11; board[22] = -02; board[24] = -08
-    --> var square = 0
-    <<< // square : Int = 0
-    --> var diceRoll = 0
-    <<< // diceRoll : Int = 0
+   -> let finalSquare = 25
+   << // finalSquare : Int = 25
+   -> var board = Array<Int>()
+   << // board : Array<Int> = []
+   -> for _ in 0..finalSquare { board.append(0) }
+   -> board[03] = +08; board[06] = +11; board[09] = +09; board[10] = +02
+   -> board[14] = -10; board[19] = -11; board[22] = -02; board[24] = -08
+   -> var square = 0
+   << // square : Int = 0
+   -> var diceRoll = 0
+   << // diceRoll : Int = 0
 
 This version of the game uses a ``while`` loop and a ``switch`` statement
 to implement the game's logic.
@@ -1122,72 +1122,72 @@ to reflect the fact that you must land exactly on square 25:
 
 .. testcode:: snakesAndLadders3
 
-    --> while square != finalSquare {
-            if ++diceRoll == 7 { diceRoll = 1 }
-    >>>     println("diceRoll is \(diceRoll)")
-            switch square + diceRoll {
-                case finalSquare:
-                    // diceRoll will move us to the final square, so the game is over
-    >>>             println("finalSquare, game is over")
-                    break
-                case let newSquare where newSquare > finalSquare:
-                    // diceRoll will move us beyond the final square, so roll again
-    >>>             println("move too far, roll again")
-                    continue
-                default:
-                    // this is a valid move, so find out its effect
-                    square += diceRoll
-    >>>             println("after diceRoll, square is \(square)")
-                    square += board[square]
-    >>>             println("after snakes or ladders, square is \(square)")
-            }
-        }
-    --> println("Game over!")
-    <<< diceRoll is 1
-    <<< after diceRoll, square is 1
-    <<< after snakes or ladders, square is 1
-    <<< diceRoll is 2
-    <<< after diceRoll, square is 3
-    <<< after snakes or ladders, square is 11
-    <<< diceRoll is 3
-    <<< after diceRoll, square is 14
-    <<< after snakes or ladders, square is 4
-    <<< diceRoll is 4
-    <<< after diceRoll, square is 8
-    <<< after snakes or ladders, square is 8
-    <<< diceRoll is 5
-    <<< after diceRoll, square is 13
-    <<< after snakes or ladders, square is 13
-    <<< diceRoll is 6
-    <<< after diceRoll, square is 19
-    <<< after snakes or ladders, square is 8
-    <<< diceRoll is 1
-    <<< after diceRoll, square is 9
-    <<< after snakes or ladders, square is 18
-    <<< diceRoll is 2
-    <<< after diceRoll, square is 20
-    <<< after snakes or ladders, square is 20
-    <<< diceRoll is 3
-    <<< after diceRoll, square is 23
-    <<< after snakes or ladders, square is 23
-    <<< diceRoll is 4
-    <<< move too far, roll again
-    <<< diceRoll is 5
-    <<< move too far, roll again
-    <<< diceRoll is 6
-    <<< move too far, roll again
-    <<< diceRoll is 1
-    <<< after diceRoll, square is 24
-    <<< after snakes or ladders, square is 16
-    <<< diceRoll is 2
-    <<< after diceRoll, square is 18
-    <<< after snakes or ladders, square is 18
-    <<< diceRoll is 3
-    <<< after diceRoll, square is 21
-    <<< after snakes or ladders, square is 21
-    <<< diceRoll is 4
-    <<< finalSquare, game is over
-    <<< Game over!
+   -> while square != finalSquare {
+         if ++diceRoll == 7 { diceRoll = 1 }
+   >>    println("diceRoll is \(diceRoll)")
+         switch square + diceRoll {
+            case finalSquare:
+               // diceRoll will move us to the final square, so the game is over
+   >>          println("finalSquare, game is over")
+               break
+            case let newSquare where newSquare > finalSquare:
+               // diceRoll will move us beyond the final square, so roll again
+   >>          println("move too far, roll again")
+               continue
+            default:
+               // this is a valid move, so find out its effect
+               square += diceRoll
+   >>          println("after diceRoll, square is \(square)")
+               square += board[square]
+   >>          println("after snakes or ladders, square is \(square)")
+         }
+      }
+   -> println("Game over!")
+   << diceRoll is 1
+   << after diceRoll, square is 1
+   << after snakes or ladders, square is 1
+   << diceRoll is 2
+   << after diceRoll, square is 3
+   << after snakes or ladders, square is 11
+   << diceRoll is 3
+   << after diceRoll, square is 14
+   << after snakes or ladders, square is 4
+   << diceRoll is 4
+   << after diceRoll, square is 8
+   << after snakes or ladders, square is 8
+   << diceRoll is 5
+   << after diceRoll, square is 13
+   << after snakes or ladders, square is 13
+   << diceRoll is 6
+   << after diceRoll, square is 19
+   << after snakes or ladders, square is 8
+   << diceRoll is 1
+   << after diceRoll, square is 9
+   << after snakes or ladders, square is 18
+   << diceRoll is 2
+   << after diceRoll, square is 20
+   << after snakes or ladders, square is 20
+   << diceRoll is 3
+   << after diceRoll, square is 23
+   << after snakes or ladders, square is 23
+   << diceRoll is 4
+   << move too far, roll again
+   << diceRoll is 5
+   << move too far, roll again
+   << diceRoll is 6
+   << move too far, roll again
+   << diceRoll is 1
+   << after diceRoll, square is 24
+   << after snakes or ladders, square is 16
+   << diceRoll is 2
+   << after diceRoll, square is 18
+   << after snakes or ladders, square is 18
+   << diceRoll is 3
+   << after diceRoll, square is 21
+   << after snakes or ladders, square is 21
+   << diceRoll is 4
+   << finalSquare, game is over
+   << Game over!
 
 The dice is rolled at the start of each loop.
 Rather than moving the player immediately,
@@ -1228,19 +1228,19 @@ The example below uses ``fallthrough`` to create a textual description of a numb
 
 .. testcode::
 
-    --> let integerToDescribe = 5
-    <<< // integerToDescribe : Int = 5
-    --> var description = "The number \(integerToDescribe) is"
-    <<< // description : String = "The number 5 is"
-    --> switch integerToDescribe {
-            case 2, 3, 5, 7, 11, 13, 17, 19:
-                description += " a prime number, and also"
-                fallthrough
-            default:
-                description += " an integer."
-        }
-    --> println(description)
-    <-- The number 5 is a prime number, and also an integer.
+   -> let integerToDescribe = 5
+   << // integerToDescribe : Int = 5
+   -> var description = "The number \(integerToDescribe) is"
+   << // description : String = "The number 5 is"
+   -> switch integerToDescribe {
+         case 2, 3, 5, 7, 11, 13, 17, 19:
+            description += " a prime number, and also"
+            fallthrough
+         default:
+            description += " an integer."
+      }
+   -> println(description)
+   <- The number 5 is a prime number, and also an integer.
 
 This example declares a new ``String`` variable called ``description``,
 and assigns it an initial value.
@@ -1264,20 +1264,20 @@ the number ``5`` is correctly identified as being a prime number.
 
 .. note::
 
-    Fallthrough does not check the conditions for the ``switch`` case it falls into.
-    It simply causes code execution to move directly to the statements
-    inside the next case (or ``default`` case) block,
-    as in C's standard ``switch`` statement behavior.
+   Fallthrough does not check the conditions for the ``switch`` case it falls into.
+   It simply causes code execution to move directly to the statements
+   inside the next case (or ``default`` case) block,
+   as in C's standard ``switch`` statement behavior.
 
 .. refnote:: References
 
-    * https://[Internal Staging Server]/docs/whitepaper/GuidedTour.html#branching-and-looping
-    * https://[Internal Staging Server]/docs/whitepaper/GuidedTour.html#pattern-matching
-    * https://[Internal Staging Server]/docs/Pattern%20Matching.html
-    * https://[Internal Staging Server]/docs/LangRef.html#pattern-expr
-    * /swift/include/swift/AST/Stmt.h
-    * /swift/test/IDE/complete_stmt_controlling_expr.swift
-    * /swift/test/interpreter/break_continue.swift
-    * /swift/test/Parse/foreach.swift
-    * /swift/test/reverse.swift
-    * /swift/test/statements.swift
+   * https://[Internal Staging Server]/docs/whitepaper/GuidedTour.html#branching-and-looping
+   * https://[Internal Staging Server]/docs/whitepaper/GuidedTour.html#pattern-matching
+   * https://[Internal Staging Server]/docs/Pattern%20Matching.html
+   * https://[Internal Staging Server]/docs/LangRef.html#pattern-expr
+   * /swift/include/swift/AST/Stmt.h
+   * /swift/test/IDE/complete_stmt_controlling_expr.swift
+   * /swift/test/interpreter/break_continue.swift
+   * /swift/test/Parse/foreach.swift
+   * /swift/test/reverse.swift
+   * /swift/test/statements.swift

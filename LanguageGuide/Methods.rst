@@ -24,18 +24,18 @@ Here's an example:
 
 .. testcode:: classesAndStructures
 
-    --> class Counter {
-            var count: Int = 0
-            func increment() {
-                count++
-            }
-            func incrementBy(amount: Int) {
-                count += amount
-            }
-            func reset() {
-                count = 0
-            }
-        }
+   -> class Counter {
+         var count: Int = 0
+         func increment() {
+            count++
+         }
+         func incrementBy(amount: Int) {
+            count += amount
+         }
+         func reset() {
+            count = 0
+         }
+      }
 
 This example defines a simple ``Counter`` class,
 which keeps track of the number of times something has happened.
@@ -52,19 +52,19 @@ Instance methods are called using the same dot syntax as properties:
 
 .. testcode:: classesAndStructures
 
-    --> let counter = Counter()
-    <<< // counter : Counter = <Counter instance>
-    /-> initial counter value is \(counter.count)
-    <-/ initial counter value is 0
-    --> counter.increment()
-    /-> counter value is now \(counter.count)
-    <-/ counter value is now 1
-    --> counter.incrementBy(5)
-    /-> counter value is now \(counter.count)
-    <-/ counter value is now 6
-    --> counter.reset()
-    /-> counter value is now \(counter.count)
-    <-/ counter value is now 0
+   -> let counter = Counter()
+   << // counter : Counter = <Counter instance>
+   /> initial counter value is \(counter.count)
+   </ initial counter value is 0
+   -> counter.increment()
+   /> counter value is now \(counter.count)
+   </ counter value is now 1
+   -> counter.incrementBy(5)
+   /> counter value is now \(counter.count)
+   </ counter value is now 6
+   -> counter.reset()
+   /> counter value is now \(counter.count)
+   </ counter value is now 0
 
 .. _Methods_TheSelfProperty:
 
@@ -80,9 +80,9 @@ For example, the ``increment()`` method from above could have been written like 
 
 ::
 
-    func increment() {
-        self.count++
-    }
+   func increment() {
+      self.count++
+   }
 
 This is effectively saying “I want to increment the ``count`` property of myself”.
 
@@ -104,18 +104,18 @@ a method parameter called ``x``, and an instance property that is also called ``
 
 .. testcode:: self
 
-    --> struct Point {
-            var x = 0.0, y = 0.0
-            func isToTheRightOfX(x: Double) -> Bool {
-                return self.x > x
-            }
-        }
-    --> let somePoint = Point(4.0, 5.0)
-    <<< // somePoint : Point = Point(4.0, 5.0)
-    --> if somePoint.isToTheRightOfX(1.0) {
-            println("This point is to the right of the line where x == 1.0")
-        }
-    <-- This point is to the right of the line where x == 1.0
+   -> struct Point {
+         var x = 0.0, y = 0.0
+         func isToTheRightOfX(x: Double) -> Bool {
+            return self.x > x
+         }
+      }
+   -> let somePoint = Point(4.0, 5.0)
+   << // somePoint : Point = Point(4.0, 5.0)
+   -> if somePoint.isToTheRightOfX(1.0) {
+         println("This point is to the right of the line where x == 1.0")
+      }
+   <- This point is to the right of the line where x == 1.0
 
 Without the ``self`` prefix,
 Swift would assume that both uses of ``x`` referred to the method parameter called ``x``.
@@ -144,18 +144,18 @@ before the ``func`` keyword for that method:
 
 .. testcode:: selfStructures
 
-    --> struct Point {
-            var x = 0.0, y = 0.0
-            mutating func moveBy(deltaX: Double, deltaY: Double) {
-                x += deltaX
-                y += deltaY
-            }
-        }
-    --> var somePoint = Point(1.0, 1.0)
-    <<< // somePoint : Point = Point(1.0, 1.0)
-    --> somePoint.moveBy(2.0, 3.0)
-    --> println("The point is now at (\(somePoint.x), \(somePoint.y))")
-    <-- The point is now at (3.0, 4.0)
+   -> struct Point {
+         var x = 0.0, y = 0.0
+         mutating func moveBy(deltaX: Double, deltaY: Double) {
+            x += deltaX
+            y += deltaY
+         }
+      }
+   -> var somePoint = Point(1.0, 1.0)
+   << // somePoint : Point = Point(1.0, 1.0)
+   -> somePoint.moveBy(2.0, 3.0)
+   -> println("The point is now at (\(somePoint.x), \(somePoint.y))")
+   <- The point is now at (3.0, 4.0)
 
 The ``Point`` structure above defines a mutating ``moveBy()`` method,
 which moves a ``Point`` instance by a certain amount.
@@ -170,13 +170,13 @@ because its properties cannot be changed, even if they are variable properties
 
 .. testcode:: selfStructures
 
-    --> let fixedPoint = Point(3.0, 3.0)
-    <<< // fixedPoint : Point = Point(3.0, 3.0)
-    --> fixedPoint.moveBy(2.0, 3.0)
-    !!! <REPL Input>:1:1: error: 'Point' does not have a member named 'moveBy'
-    !!! fixedPoint.moveBy(2.0, 3.0)
-    !!! ^          ~~~~~~
-    /// this will report an error
+   -> let fixedPoint = Point(3.0, 3.0)
+   << // fixedPoint : Point = Point(3.0, 3.0)
+   -> fixedPoint.moveBy(2.0, 3.0)
+   !! <REPL Input>:1:1: error: 'Point' does not have a member named 'moveBy'
+   !! fixedPoint.moveBy(2.0, 3.0)
+   !! ^        ~~~~~~
+   // this will report an error
 
 .. _Methods_AssigningToSelfWithinAMutatingMethod:
 
@@ -188,17 +188,17 @@ The ``Point`` example shown above could have been written in the following way i
 
 .. testcode:: selfStructuresAssign
 
-    --> struct Point {
-            var x = 0.0, y = 0.0
-            mutating func moveBy(deltaX: Double, deltaY: Double) {
-                self = Point(x + deltaX, y + deltaY)
-            }
-        }
-    >>> var somePoint = Point(1.0, 1.0)
-    <<< // somePoint : Point = Point(1.0, 1.0)
-    >>> somePoint.moveBy(2.0, 3.0)
-    >>> println("The point is now at (\(somePoint.x), \(somePoint.y))")
-    <<< The point is now at (3.0, 4.0)
+   -> struct Point {
+         var x = 0.0, y = 0.0
+         mutating func moveBy(deltaX: Double, deltaY: Double) {
+            self = Point(x + deltaX, y + deltaY)
+         }
+      }
+   >> var somePoint = Point(1.0, 1.0)
+   << // somePoint : Point = Point(1.0, 1.0)
+   >> somePoint.moveBy(2.0, 3.0)
+   >> println("The point is now at (\(somePoint.x), \(somePoint.y))")
+   << The point is now at (3.0, 4.0)
 
 This version of the mutating ``moveBy()`` method creates a brand new structure
 whose ``x`` and ``y`` values are set to the target location.
@@ -210,25 +210,25 @@ a different member from the same enumeration:
 
 .. testcode:: selfEnumerations
 
-    --> enum TriStateSwitch {
-            case Off, Low, High
-            mutating func next() {
-                switch self {
-                    case Off:
-                        self = Low
-                    case Low:
-                        self = High
-                    case High:
-                        self = Off
-                }
+   -> enum TriStateSwitch {
+         case Off, Low, High
+         mutating func next() {
+            switch self {
+               case Off:
+                  self = Low
+               case Low:
+                  self = High
+               case High:
+                  self = Off
             }
-        }
-    --> var ovenLight = TriStateSwitch.Low
-    <<< // ovenLight : TriStateSwitch = <unprintable value>
-    --> ovenLight.next()
-    /// ovenLight is now equal to .High
-    --> ovenLight.next()
-    /// ovenLight is now equal to .Off
+         }
+      }
+   -> var ovenLight = TriStateSwitch.Low
+   << // ovenLight : TriStateSwitch = <unprintable value>
+   -> ovenLight.next()
+   // ovenLight is now equal to .High
+   -> ovenLight.next()
+   // ovenLight is now equal to .Off
 
 This example defines an enumeration for a three-state switch.
 The switch cycles between three different power states
