@@ -73,7 +73,8 @@ and are always clear about what they may contain.
 Swift's array type is written as ``Array<SomeType>``,
 where ``SomeType`` is the kind of thing that the array will be allowed to store.
 This might be ``String``, or ``Int``, or indeed any other valid type in Swift
-(including types that you define yourself, as described in :doc:`ClassesAndStructures`,
+(including types that you define yourself, as described in :doc:`ClassesAndStructures`;
+enumeration types, as described in :doc:`Enumerations`;
 and also protocol types, as described in :doc:`Protocols`).
 
 Here's an example, which creates an array called ``shoppingList`` to store ``String`` values:
@@ -85,9 +86,9 @@ Here's an example, which creates an array called ``shoppingList`` to store ``Str
     /// shoppingList has been initialized with two initial items
 
 The ``shoppingList`` variable is declared as
-“an ``Array`` of type ``String``”, written as ``Array<String>``.
-Because the array is “of type ``String``”,
-this particular array is *only* allowed to store ``String`` values.
+“an ``Array`` of ``String`` values”, written as ``Array<String>``.
+Because this particular array has specified a value type of ``String``,
+it is *only* allowed to store ``String`` values.
 
 .. note::
 
@@ -105,26 +106,28 @@ surrounded by a pair of square brackets.
 
 In this case, the array literal contains two ``String`` values, and nothing else.
 This matches the type of the ``shoppingList`` variable's declaration –
-an ``Array`` that only contains ``String`` values –
+an ``Array`` that can only contain ``String`` values –
 and so the assignment of the array literal is permitted
 as a way to initialize ``shoppingList`` with two initial items.
 
-.. note::
+Thanks to Swift's type inference,
+you don't actually have to write the type of the array
+if you're initializing it with an array literal containing values of the same type.
+The initialization of ``shoppingList`` could have been be written in a shorter form instead:
 
-    It will eventually be possible to infer the type of an array
-    purely from the array literal.
-    However, this does not yet work as intended.
+.. testcode:: arraysInferred
 
-.. TODO: the type of an array will eventually be inferrable from an array literal.
-   This sort of "works" at the moment, but after doing so, the type is inferred as String[],
-   not Array<String>, which it seems is actually a different thing.
-   At least, you can't call any of the methods below on it.
-   Remove the note above if this is still not working as intended when this book is published.
+    --> var shoppingList = ["Eggs", "Milk"]
+    <<< // shoppingList : String[] = ["Eggs", "Milk"]
+
+Because all of the values in the array literal are of the same type as each other,
+it is possible to infer that ``Array<String>`` is
+the correct type to use for the ``shoppingList`` variable.
 
 You can find out the number of items in an ``Array``
 by checking its read-only ``count`` property:
 
-.. testcode:: arrays
+.. testcode:: arraysInferred
 
     --> println("The shopping list contains \(shoppingList.count) items.")
     <-- The shopping list contains 2 items.
@@ -137,7 +140,7 @@ by checking its read-only ``count`` property:
 
 New items can be added to the end of the array by calling its ``append()`` method:
 
-.. testcode:: arrays
+.. testcode:: arraysInferred
 
     --> shoppingList.append("Flour")
     /-> shoppingList now contains \(shoppingList.count) items, and someone is making pancakes
@@ -146,7 +149,7 @@ New items can be added to the end of the array by calling its ``append()`` metho
 You can retrieve a value from the array by using :newTerm:`subscript syntax`,
 and passing in the index of the value you want to retrieve:
 
-.. testcode:: arrays
+.. testcode:: arraysInferred
 
     --> var firstItem = shoppingList[0]
     <<< // firstItem : String = "Eggs"
@@ -162,7 +165,7 @@ Arrays in Swift are always zero-indexed.
 
 Subscript syntax can be used to change an existing value at a given index:
 
-.. testcode:: arrays
+.. testcode:: arraysInferred
 
     --> shoppingList[0] = "Six eggs"
     /-> the first item in the list is now equal to \"\(shoppingList[0])\"
@@ -174,7 +177,7 @@ Subscript syntax can be used to change an existing value at a given index:
 
 An item can be inserted into the array at a specified index by using the ``insert()`` method:
 
-.. testcode:: arrays
+.. testcode:: arraysInferred
 
     --> shoppingList.insert("Maple Syrup", 0)
     /// shoppingList now contains 4 items
@@ -186,7 +189,7 @@ at an index of ``0``, i.e. at the very beginning of the shopping list.
 
 Similarly, an item can be removed from the array using the ``removeAt()`` method:
 
-.. testcode:: arrays
+.. testcode:: arraysInferred
 
     --> shoppingList.removeAt(0)
     /// the item that was at index 0 has just been removed
@@ -196,7 +199,7 @@ Similarly, an item can be removed from the array using the ``removeAt()`` method
 Any gaps in the array are closed when an item is removed,
 and so the value at index ``0`` is once again equal to ``"Six eggs"``:
 
-.. testcode:: arrays
+.. testcode:: arraysInferred
 
     --> firstItem = shoppingList[0]
     /-> firstItem is now equal to \"\(firstItem)\"
@@ -266,7 +269,7 @@ This is different from Objective-C's ``NSDictionary`` and ``NSMutableDictionary`
 In Swift, you explictly declare the type of values that you want a dictionary to store.
 You also declare an explicit type for the keys that are used to reference the stored values.
 
-Swift's dictionary type is written as ``Dictionary<KeyType, ValueType>``.
+Swift's dictionary type is written as ``Dictionary<KeyType, ValueType>``,
 where ``KeyType`` is the kind of things that are allowed to be keys,
 and ``ValueType`` is the kind of values that the dictionary is allowed to store for those keys.
 
@@ -301,11 +304,9 @@ and the values are airport names:
     --> var airports: Dictionary<String, String> = ["TYO" : "Tokyo", "DUB" : "Dublin"]
     <<< // airports : Dictionary<String, String> = Dictionary<String, String>(1.33333, 2, <DictionaryBufferOwner<String, String> instance>)
 
-The ``airports`` dictionary has been declared as
-“a ``Dictionary`` of type ``String``, ``String``”,
-which is written as ``Dictionary<String, String>``.
-Because it is “of type ``String``, ``String``”,
-all of its keys must be strings, and all of its values must be strings.
+The ``airports`` dictionary has been declared as having a type of ``Dictionary<String, String>``,
+which means “a ``Dictionary`` whose keys are of type ``String``,
+and whose values are also of type ``String``”.
 
 .. note::
 
@@ -332,9 +333,9 @@ a ``Dictionary`` with only ``String`` keys, and only ``String`` values –
 and so the assignment of the dictionary literal is permitted
 as a way to initialize the ``airports`` dictionary with two initial items.
 
-Thanks to Swift's type inference,
-you don't actually have to write the type of the dictionary
-if you're initializing it with a dictionary literal.
+As with arrays,
+you don't have to write the type of the dictionary
+if you're initializing it with a dictionary literal whose keys and values have consistent types.
 The initialization of ``airports`` could have been be written in a shorter form instead:
 
 .. testcode:: dictionariesInferred
@@ -345,7 +346,7 @@ The initialization of ``airports`` could have been be written in a shorter form 
 Because all of the keys in the literal are of the same type as each other,
 and likewise all of the values are of the same type as each other,
 it is possible to infer that ``Dictionary<String, String>`` is
-the correct type to use for the ``airports`` variable.
+the correct type to use for ``airports``.
 
 Like an array, you can find out the number of items in a ``Dictionary``
 by checking its read-only ``count`` property:
@@ -388,7 +389,7 @@ and ``false`` if it was not in use:
 
 .. note::
 
-    If you try and add a value for a key that already exists,
+    If you try and use the ``add()`` method to add a value for a key that already exists,
     the existing value for that key will not be replaced in the dictionary.
 
 .. TODO: I've filed rdar://16336109 about the fact that
