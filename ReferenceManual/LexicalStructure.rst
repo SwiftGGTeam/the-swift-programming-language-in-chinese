@@ -204,60 +204,53 @@ The following keywords are reserved and may not be used as identifiers.
 .. NOTE: The LangRef is out of date for keywords. The list of current keywords
 	is defined in the file: swift/inclue/swift/Parse/Tokens.def
 
-*Keywords used in declarations*:
+* Keywords used in declarations:
+  ``class``,
+  ``deinit``,
+  ``enum``,
+  ``extension``,
+  ``func``,
+  ``import``,
+  ``init``,
+  ``let``,
+  ``protocol``,
+  ``static``,
+  ``struct``,
+  ``subscript``,
+  ``typealias``,
+  and ``var``.
 
-``class``
-``deinit``
-``enum``
-``extension``
-``func``
-``import``
-``init``
-``let``
-``protocol``
-``static``
-``struct``
-``subscript``
-``typealias``
-``var``
+* Keywords used in statements:
+  ``break``,
+  ``case``,
+  ``continue``,
+  ``default``,
+  ``do``,
+  ``else``,
+  ``fallthrough``,
+  ``if``,
+  ``in``,
+  ``for``,
+  ``return``,
+  ``switch``,
+  ``where``,
+  and ``while``.
 
-*Keywords used in statements*:
-
-``break``
-``case``
-``continue``
-``default``
-``do``
-``else``
-``fallthrough``
-``if``
-``in``
-``for``
-``return``
-``switch``
-``where``
-``while``
-
-*Keywords used in expressions and types*:
-
-``as``
-``dynamicType``
-``is``
-``new``
-``super``
-``self``
-``Self``
-``Type``
-``unowned``
-``weak``
-``__COLUMN__``
-``__FILE__``
-``__FUNCTION__``
-``__LINE__``
-
-In addition,
-the following keywords are used in particular contexts.
-Outside of those contexts, they may be used as identifiers.
+* Keywords used in expressions and types:
+  ``as``,
+  ``dynamicType``,
+  ``is``,
+  ``new``,
+  ``super``,
+  ``self``,
+  ``Self``,
+  ``Type``,
+  ``unowned``,
+  ``weak``,
+  ``__COLUMN__``,
+  ``__FILE__``,
+  ``__FUNCTION__``,
+  and ``__LINE__``.
 
 .. langref-grammar
 
@@ -269,21 +262,24 @@ Outside of those contexts, they may be used as identifiers.
     set
     type
 
-``associativity``
-``didSet``
-``get``
-``infix``
-``inout``
-``left``
-``mutating``
-``none``
-``operator``
-``postfix``
-``precedence``
-``prefix``
-``right``
-``set``
-``willSet``
+* Keywords reserved in particular contexts:
+  ``associativity``, 
+  ``didSet``, 
+  ``get``, 
+  ``infix``, 
+  ``inout``, 
+  ``left``, 
+  ``mutating``, 
+  ``none``, 
+  ``operator``, 
+  ``postfix``, 
+  ``precedence``, 
+  ``prefix``, 
+  ``right``, 
+  ``set``, 
+  and ``willSet``.
+  Outside the context in which they appear in the grammar,
+  they can be used as identifiers.
 
 
 .. _LexicalStructure_Literals:
