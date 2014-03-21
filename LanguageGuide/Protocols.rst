@@ -14,7 +14,7 @@ methods, properties, and other requirements
 that suit a particular task or piece of functionality.
 The protocol doesn't actually provide an implementation for any of these requirements –
 it only describes what an implementation will look like.
-The protocol can then be adopted by a class, structure or enumeration
+The protocol can then be :newTerm:`adopted` by a class, structure, or enumeration
 to provide an actual implementation of those requirements.
 Any type that satisfies the requirements of a protocol is said to
 :newTerm:`conform` to that protocol.
@@ -36,9 +36,9 @@ Protocols are defined in a very similar way to classes, structures, and enumerat
         // protocol definition goes here
     }
 
-Custom types can declare that they implement a particular protocol
+Custom types can state that they adopt a particular protocol
 by placing the protocol's name after the type's name,
-separated by a colon, as part of their own definition:
+separated by a colon, as part of their definition:
 
 ::
 
@@ -46,10 +46,8 @@ separated by a colon, as part of their own definition:
         // structure definition goes here
     }
 
-.. QUESTION: is "declare" the correct word to use here?
-
 If a class has a superclass, the superclass name should be listed
-before any protocols it implements, followed by a comma.
+before any protocols it adopts, followed by a comma.
 Multiple protocols can also be listed, separated by commas:
 
 ::
@@ -109,7 +107,7 @@ it only specifies that the thing must be able to provide a full name for itself.
 It specifies this requirement by stating that any ``FullyNamed`` type must have
 a gettable instance property called ``fullName``, which is of type ``String``.
 
-Here's an example of a simple structure that conforms to
+Here's an example of a simple structure that adopts and conforms to
 the ``FullyNamed`` protocol:
 
 .. testcode:: protocols
@@ -124,7 +122,7 @@ the ``FullyNamed`` protocol:
 
 This example defines a structure called ``Person``,
 which represents a specific named person.
-It declares that it implements the ``FullyNamed`` protocol
+It states that it adopts the ``FullyNamed`` protocol
 as part of the first line of its definition.
 
 Each instance of ``Person`` has a single stored property called ``fullName``,
@@ -133,7 +131,7 @@ This matches the single requirement of the ``FullyNamed`` protocol,
 and means that ``Person`` has correctly conformed to the protocol.
 (Swift will report an error at compile-time if a protocol requirement is not fulfilled.)
 
-Here's a more complex class, which also conforms to the ``FullyNamed`` protocol:
+Here's a more complex class, which also adopts and conforms to the ``FullyNamed`` protocol:
 
 .. testcode:: protocols
 
@@ -192,14 +190,12 @@ which returns a ``Double`` value whenever it is called.
 it is assumed that this value will be
 a number between ``0.0`` and ``1.0`` inclusive.)
 
-.. QUESTION: should I *make* this range be part of the protocol?
-
 The ``RandomNumberGenerator`` protocol does not make any assumptions
 about how each random number will be generated –
 it just requires that any generator provides a standard way
 to generate a new random number.
 
-Here's an implementation of a class that conforms to
+Here's an implementation of a class that adopts and conforms to
 the ``RandomNumberGenerator`` protocol.
 This class implements a pseudorandom number generator algorithm known as
 a :newTerm:`linear congruential generator`:
@@ -274,10 +270,10 @@ from which to create their dice roll values.
 
 The ``generator`` property is of type ``RandomNumberGenerator``.
 This means that it can be set to an instance of
-*any* type that conforms to the ``RandomNumberGenerator`` protocol.
+*any* type that adopts the ``RandomNumberGenerator`` protocol.
 Nothing else is specified about the nature of the generator –
 the only thing that matters is that it must
-conform to the ``RandomNumberGenerator`` protocol.
+adopt the ``RandomNumberGenerator`` protocol.
 
 ``Dice`` also has an initializer, to set up its initial state.
 This initializer has a parameter called ``generator``,
@@ -290,7 +286,7 @@ which returns an integer value between 1 and the number of sides on the dice.
 This method calls the generator's ``random()`` method to create
 a new random number between ``0.0`` and ``1.0``,
 and uses this random number to create a dice roll value within the correct range.
-Because ``generator`` is known to conform to ``RandomNumberGenerator``,
+Because ``generator`` is known to adopt ``RandomNumberGenerator``,
 it is guaranteed to have a ``random()`` method to call.
 
 .. QUESTION: would it be better to show Dice using a RandomNumberGenerator
@@ -347,16 +343,12 @@ by any game that involves a dice.
 The ``DiceGameDelegate`` protocol can be adopted by
 any type that wants to be able to observe and track the progress of a ``DiceGame``.
 
-.. QUESTION: should DiceGame be a protocol, or a base class?
-   I figure a base class wouldn't actually be playable,
-   but I want some common type to pass to the delegate.
-
 .. QUESTION: should DiceGame be called something like “Playable” instead,
    and used as an opportunity to talk about protocol naming?
 
 Here's a version of the *Snakes and Ladders* game from the :doc:`ControlFlow` chapter,
 adapted to use a ``Dice`` instance for its dice-rolls;
-to conform to the ``DiceGame`` protocol;
+to adopt the ``DiceGame`` protocol;
 and to notify a ``DiceGameDelegate`` about its progress:
 
 .. testcode:: protocols
@@ -398,7 +390,7 @@ and to notify a ``DiceGameDelegate`` about its progress:
 for a description of the gameplay of the *Snakes and Ladders* game shown above.)
 
 This version of the game has been wrapped up as a class called ``SnakesAndLadders``,
-which declares conformance to the ``DiceGame`` protocol.
+which adopts the ``DiceGame`` protocol.
 It provides a gettable ``dice`` property and a ``play()`` method
 in order to conform to the protocol.
 (The ``dice`` property has been declared as a constant property
@@ -426,7 +418,7 @@ In each case, it passes the ``SnakesAndLadders`` instance as
 a parameter to the delegate method.
 
 This next example shows a class called ``DiceGameTracker``,
-which implements the ``DiceGameDelegate`` protocol:
+which adopts the ``DiceGameDelegate`` protocol:
 
 .. testcode:: protocols
 
@@ -519,7 +511,7 @@ Class and Static Methods and Properties
 Adding Protocol Conformance With Extensions
 -------------------------------------------
 
-An existing type can be extended to conform to a new protocol,
+An existing type can be extended to adopt and conform to a new protocol,
 even if you do not have access to the source code for the existing type.
 This is achieved by using :doc:`Extensions`.
 Extensions give a way to add new properties, methods, initializers and subscripts
@@ -529,7 +521,7 @@ on to an existing type.
 
 .. note::
 
-    Existing instances of a type automatically gain conformance to a protocol
+    Existing instances of a type automatically adopt and conform to a protocol
     when that conformance is added to the instance's type in an extension.
 
 For example:
@@ -544,7 +536,7 @@ This protocol, called ``TextRepresentable``, can be implemented by
 any type that has a way to be represented as text.
 This might be a description of itself, or a text version of its current state.
 
-The ``Dice`` class from earlier can be extended to conform to ``TextRepresentable``:
+The ``Dice`` class from earlier can be extended to adopt and conform to ``TextRepresentable``:
 
 .. testcode:: protocols
 
@@ -554,7 +546,7 @@ The ``Dice`` class from earlier can be extended to conform to ``TextRepresentabl
             }
         }
 
-This extension declares the new protocol conformance in exactly the same way
+This extension adopts the new protocol in exactly the same way
 as if ``Dice`` had provided it in its original implementation.
 The protocol name is provided after the type name, separated by a colon,
 and an implementation of all of the requirements of the protocol
@@ -569,7 +561,8 @@ Any ``Dice`` instance can now be treated as ``TextRepresentable``:
     --> println(d12.asText())
     <-- A 12-sided dice
 
-Similarly, the ``SnakesAndLadders`` game class can be extended to conform to ``TextRepresentable``:
+Similarly, the ``SnakesAndLadders`` game class can be extended to
+adopt and conform to the ``TextRepresentable`` protocol:
 
 .. testcode:: protocols
 
@@ -583,12 +576,12 @@ Similarly, the ``SnakesAndLadders`` game class can be extended to conform to ``T
 
 .. _Protocols_DeclaringExistingConformance:
 
-Declaring Existing Conformance
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Declaring Protocol Adoption
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If a type already happens to satisfy all of the requirements of a protocol,
-but has not yet declared itself as conforming to that protocol,
-it can be declared to conform by using an empty extension:
+If a type already conforms to all of the requirements of a protocol,
+but has not yet stated that it adopts that protocol,
+it can be made to adopt the protocol with an empty extension:
 
 .. testcode:: protocols
 
@@ -613,8 +606,8 @@ Instances of ``Hamster`` can now be used wherever ``TextRepresentable`` is the r
 
 .. note::
 
-    Types do not automatically conform to a protocol just by satisfying its requirements.
-    They must always explicitly declare their conformance.
+    Types do not automatically adopt a protocol just by satisfying its requirements.
+    They must always explicitly declare their adoption of the protocol.
 
 .. _Protocols_CollectionsOfProtocolTypes:
 
@@ -678,13 +671,13 @@ For example:
 
 This example defines a new protocol, ``PrettyTextRepresentable``,
 which inherits from ``TextRepresentable``.
-Anything that conforms to ``PrettyTextRepresentable`` must satisfy all of the requirements
+Anything that adopts ``PrettyTextRepresentable`` must satisfy all of the requirements
 enforced by ``TextRepresentable``,
 *plus* the addition requirements enforced by ``PrettyTextRepresentable``.
 In this example, ``PrettyTextRepresentable`` adds a single requirement
 to provide an instance method called ``asPrettyText()`` that returns a ``String``.
 
-The ``SnakesAndLadders`` class can be extended to conform to ``PrettyTextRepresentable``:
+The ``SnakesAndLadders`` class can be extended to adopt and conform to ``PrettyTextRepresentable``:
 
 .. testcode:: protocols
 
@@ -706,7 +699,7 @@ The ``SnakesAndLadders`` class can be extended to conform to ``PrettyTextReprese
         }
 
 
-This extension declares conformance to ``PrettyTextRepresentable``,
+This extension states that it adopts the ``PrettyTextRepresentable`` protocol,
 and provides an implementation of the ``asPrettyText()`` method
 for the ``SnakesAndLadders`` type.
 Anything that is ``PrettyTextRepresentable`` must also be ``TextRepresentable``,
