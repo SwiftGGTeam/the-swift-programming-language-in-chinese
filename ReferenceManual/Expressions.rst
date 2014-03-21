@@ -254,6 +254,13 @@ Likewise, being passed as an function parameter: ::
     var aDisk: SKDisk = disks.objectAtIndex(row)!
     useDisk(disks.objectAtIndex(row)!)
 
+If the type specified after ``as``
+is followed by an exclamation mark (``!``),
+the expression is understood as a force-value expression.
+The following are equivalent: ::
+
+    x as SomeType!
+    (x as SomeType)!
 
 .. langref-grammar
 
@@ -264,7 +271,7 @@ Likewise, being passed as an function parameter: ::
 
     Grammar of an expression cast
 
-    expression-cast --> ``is`` type | ``as`` type
+    expression-cast --> ``is`` type | ``as`` type ``!``-OPT
 
 .. _Expressions_PrimaryExpressions:
 
