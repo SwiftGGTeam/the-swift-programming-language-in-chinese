@@ -106,7 +106,7 @@ Here's an example of a protocol with a single property requirement:
 The ``FullyNamed`` protocol defines any kind of thing that has a fully-qualified name.
 It doesn't specify what *kind* of thing it must be –
 it only specifies that the thing must be able to provide a full name for itself.
-It implements this requirement by stating that any ``FullyNamed`` type must have
+It specifies this requirement by stating that any ``FullyNamed`` type must have
 a gettable instance property called ``fullName``, which is of type ``String``.
 
 Here's an example of a simple structure that conforms to
@@ -321,12 +321,12 @@ with a ``LinearCongruentialGenerator`` instance as its random number generator:
 Delegates
 ---------
 
-Protocols are often used to implement :newTerm:`delegates`.
-Delegates give a way for a class or structure to hand off (or *delegate*)
+:newTerm:`Delegates` are a way for a class or structure to hand off (or *delegate*)
 some responsibilities to an instance of another type.
 Delegates can be used to notify an instance of another type that something has happened,
 or to retrieve information from an external data source without needing to know
 the underlying type of that external source.
+The methods that a delegate must implement are typically described by a protocol.
 
 This example defines two protocols for use with dice-based board games:
 
