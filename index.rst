@@ -19,6 +19,20 @@ Contents
 Change Log
 ----------
 
+March 21 2014
+~~~~~~~~~~~~~
+
+Language Guide
+++++++++++++++
+
+* New information about creating :doc:`LanguageGuide/CollectionTypes` from literals,
+  and inferring the type of an array
+* Updated the :ref:`ControlFlow_Switch` description to give more of an introduction,
+  and to reflect an upcoming change to ``switch`` to ban empty cases
+* Custom Types has been split into :doc:`LanguageGuide/ClassesAndStructures`
+  and :doc:`LanguageGuide/NestedTypes`
+* Expanded the :doc:`LanguageGuide/NestedTypes` example now that it is later in the book
+
 March 18 2014
 ~~~~~~~~~~~~~
 
