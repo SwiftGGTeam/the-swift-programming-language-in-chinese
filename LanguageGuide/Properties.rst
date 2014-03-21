@@ -219,6 +219,13 @@ and the default name of ``oldValue`` is used instead.
 
 .. TODO: mention that this also works for global / local variables
 
+.. TODO: you can now observe changes to a parent property,
+   regardless of whether it is stored or not.
+   that said, at the time of writing, it only works with computed properties,
+   because stored properties cannot yet be overridden.
+   nonetheless, it should still be mentioned here,
+   and may mean that the name of this section needs to change.
+
 .. _Properties_ComputedProperties:
 
 Computed Properties
