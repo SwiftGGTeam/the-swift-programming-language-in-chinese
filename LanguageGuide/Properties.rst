@@ -226,6 +226,9 @@ and the default name of ``oldValue`` is used instead.
    nonetheless, it should still be mentioned here,
    and may mean that the name of this section needs to change.
 
+.. TODO: mention that you can't override to observe a read-only property,
+   as there will never be anything to actually observe
+
 .. _Properties_ComputedProperties:
 
 Computed Properties
