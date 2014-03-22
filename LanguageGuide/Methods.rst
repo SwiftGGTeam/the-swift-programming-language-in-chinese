@@ -175,7 +175,7 @@ because its properties cannot be changed, even if they are variable properties
    -> fixedPoint.moveBy(2.0, 3.0)
    !! <REPL Input>:1:1: error: 'Point' does not have a member named 'moveBy'
    !! fixedPoint.moveBy(2.0, 3.0)
-   !! ^        ~~~~~~
+   !! ^          ~~~~~~
    // this will report an error
 
 .. TODO: talk about @!mutating as well.
