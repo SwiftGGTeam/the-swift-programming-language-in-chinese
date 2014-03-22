@@ -173,6 +173,7 @@ In the example above, ``T`` is said to be a :newTerm:`generic parameter`.
 Generic parameters are a way to specify and name a placeholder type,
 and are written immediately after the function's name,
 between a less-than symbol and a greater-than symbol (such as ``<T>``).
+Multiple generic parameters can be provided, separated by commas (such as ``<T, U, V>``).
 
 Once specified,
 a generic parameter can be used as the type of a function's parameters
@@ -189,20 +190,6 @@ Note that you don't explicitly specify the type to be used when you call the fun
 You don't, for example, write ``swapTwo<Int>(x, y)``.
 The type that ``T`` represents is inferred for you,
 and indeed you are not allowed to specify a type yourself.
-
-Multiple generic parameters can be provided, separated by commas:
-
-::
-
-   func someFunction<T, U, V>(someParameter: T, anotherParameter: U) -> V {
-      // function body goes here
-   }
-
-This function has a first parameter of type ``T``;
-a second parameter of type ``U``;
-and returns a value of type ``V``.
-The actual types to use for ``T``, ``U`` and ``V``
-will be inferred each time that the function is called.
 
 Naming of Generic Parameters
 ____________________________
