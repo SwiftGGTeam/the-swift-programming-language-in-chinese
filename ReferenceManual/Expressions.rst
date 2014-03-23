@@ -191,69 +191,61 @@ They have the following form:
 
 .. syntax-outline::
 
-   <#variable#> as <#type>
    <#variable#> is <#type>
+   <#variable#> as <#type>
+   <#variable#> as <#type>!
 
 The ``is`` operator checks at runtime
 whether the value of its left-hand argument
 has the type specified by its right-hand argument
 or one of its subtypes.
-If so, it returns ``true``; otherwise, it returs ``false``.
+If so, it returns ``true``; otherwise, it returns ``false``.
 
-The ``as`` operator explicitly specifies that the value of its left-hand argument
-should be understood to be of the type specified by its right-hand argument.
-If it is guaranteed the value is of that type
-or that it can be converted to the type,
-the value returned is of the specified type;
-otherwise, the value returned is an optional type.
-In the case of an optional type,
-the cast operator returns ``.None`` if the runtime type conversion fails.
+The ``as`` operator explicitly specifies
+that the value of its left-hand argument
+is to be treated as the type specified
+by its right-hand argument.
+
+There are three possible values of the expression:
+
+* If the value of the left-hand expression
+  is of a type that is guaranteed to be convertable
+  to the specified type,
+  the value is returned with the specified type.
+
+* If the value is guaranteed *not* to be convertable
+  to the specified type,
+  a compile-time error is raised.
+
+* Otherwise, the value of the left-hand expression
+  is returned as on optional of the type specified.
+  At runtime, if the cast fails, its value is ``.None``.
+
+.. TODO: List the exact rules for above.
+
 For example: ::
 
+    class SomeSuperType {}
     class SomeType : SomeSuperType {}
+    class SomeChildType : SomeType {}
+
     let x = SomeType()
 
-    let y = x as SomeSuperType
-    // The type of y is SomeSuperType because conversion to a supertype always succeeds.
-
-    let z = x as AnotherType
-    // The type of z is AnotherType? because the cast could fail at runtime.
+    let y = x as SomeSuperType  // y : SomeSuperType
+    let z = x as SomeChildType  // z : SomeChildType?
 
 Specifying a type with ``as`` provides the same type context
 to the compiler as a function call and a variable type annotation.
 For example, the following examples
 are equivalent to the ones above: ::
 
-    let y : SomeSuperType = x
-    let z : AnotherType? = x
+    let y2 : SomeSuperType = x
+    let z2 : SomeChildType? = x
 
-Likewise, being passed as an function parameter: ::
-
-    func f (a : SomeSuperType) -> SomeSuperType { /* ... */ }
-    f(x)  // Because of the type of f(), x is treated as SomeSuperType.
-
-.. TODO: Some of the above detail and example belongs in the guide.
-
-.. TODO: List the exact rules for when a type cast
-   is guaranteed to suceed.
-
-.. TODO: Contrast explicit "as" casts with implicit casts
-   that happen because of a function call or type annotation.
-
-.. [Contributor 6004] wrote on Feb 24, 2014 in swift-discuss@group.apple.com
-
-    If the compiler isn't sure whether the coercion will succeed, it gives
-    you a 'Foo?' instead—an Optional Foo.
-
-    someNSResponder as NSWindow
-    disks.objectAtIndex(row) as SKDisk
-
-    However, both function calls and variable type annotations provide the same
-    sort of type context as an explicit coercion using "as", so the most
-    concise way to write this is as follows:
-
-    var aDisk: SKDisk = disks.objectAtIndex(row)!
-    useDisk(disks.objectAtIndex(row)!)
+    func f (a : SomeSuperType) -> SomeSuperType { return a }
+    func g (a : SomeChildType) -> SomeChildType { return a }
+    let y3 = f(x)
+    let z3 = g(x)
 
 If the type specified after ``as``
 is followed by an exclamation mark (``!``),
@@ -262,6 +254,10 @@ The following are equivalent: ::
 
     x as SomeType!
     (x as SomeType)!
+
+.. TODO: Some of the above detail and example belongs in the guide.
+
+.. TODO: Use test-code directive for the above code listings.
 
 .. langref-grammar
 
