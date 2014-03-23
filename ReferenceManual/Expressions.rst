@@ -19,7 +19,7 @@ Expressions
 
     Grammar of an expression
 
-    expression --> expression-sequence expression-cast-OPT
+    expression --> expression-sequence
     expression-sequence --> unary-expression binary-expressions-OPT
     expression-list --> expression | expression ``,`` expression-list
 
@@ -77,9 +77,10 @@ as its arguments.
 
     Grammar of a binary expression
 
-    binary-expression --> binary-operator unary-expression expression-cast-OPT
-    binary-expression --> assignment-operator unary-expression expression-cast-OPT
-    binary-expression --> conditional-operator unary-expression expression-cast-OPT
+    binary-expression --> binary-operator unary-expression
+    binary-expression --> assignment-operator unary-expression
+    binary-expression --> conditional-operator unary-expression
+    binary-expression --> type-checking-operator
     binary-expressions --> binary-expression binary-expressions-OPT
 
 .. TODO: Give a list of the binary operators defined in the Swift stdlib.
@@ -269,9 +270,10 @@ The following are equivalent: ::
 
 .. syntax-grammar::
 
-    Grammar of an expression cast
+    Grammar of a type-checking operator
 
-    expression-cast --> ``is`` type | ``as`` type ``!``-OPT
+    type-checking-operator --> ``is`` type
+    type-checking-operator --> ``as`` type ``!``-OPT
 
 .. _Expressions_PrimaryExpressions:
 
