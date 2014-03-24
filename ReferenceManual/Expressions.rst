@@ -1,6 +1,8 @@
 Expressions
 ===========
 
+
+
 .. writeme::
 
 .. TODO: Intro prose goes here.
@@ -216,6 +218,9 @@ There are three possible values of the expression:
   At runtime, if the cast fails, its value is ``.None``.
 
 .. TODO: List the exact rules for above.
+   It seems like conversion to a supertype always works,
+   conversion to a subtype sometimes works,
+   and other conversions always fail.
 
 For example: ::
 
@@ -248,8 +253,6 @@ The following are equivalent: ::
 
     x as SomeType!
     (x as SomeType)!
-
-.. TODO: Some of the above detail and example belongs in the guide.
 
 .. TODO: Use test-code directive for the above code listings.
 
@@ -638,7 +641,7 @@ when calling a function that takes only one argument: ::
     myData.process() {$0 * 2}
     myData.process {$0 * 2}
 
-:Term:`Selector-style function calls` consist of a function
+:newTerm:`Selector-style function calls` consist of a function
 followed by interleaved parts of its selector and its argements.
 
 .. TODO: Skipping for now until the selector call syntax settles down
@@ -717,10 +720,12 @@ It has the following form:
     <#instance of a class#>.init
 
 The value of this expression is a function
-which can be called,
+that can be called,
 set as the value of a variable,
 and so on,
 just as with any other function.
+
+.. TODO: This feels like pointless throat clearing...
 
 .. langref-grammar
 
