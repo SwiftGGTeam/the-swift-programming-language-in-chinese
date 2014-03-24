@@ -7,8 +7,6 @@ It can also be necessary to treat a specific instance as if it is a different
 superclass or subclass from its own class hierarchy.
 Both of these tasks are achieved using :newTerm:`type casting`.
 
-.. TODO: the wording of this para is unclear in its use of pronouns.
-
 The next few code snippets define three classes,
 and an array containing instances of those classes,
 for use in an example of type casting.
@@ -191,6 +189,95 @@ whenever a ``Song`` is found in the library.
    The underlying instance remains the same; it is just treated and accessed
    as an instance of the type to which it has been cast.
 
+.. _TypeCasting_AnyAndAnyObject:
+
+Any and AnyObject
+-----------------
+
+Swift provides two special :ref:`ClassesAndStructures_TypeAliases`
+for working with non-specific types:
+
+* ``AnyObject``, which can represent an instance of any class type
+* ``Any``, which can represent an instance of any type at all,
+  apart from function and closure types
+
+.. TODO: remove this note if / when rdar://16406907 is fixed.
+
+Here's an example of using ``Any`` to work with a mix of different types:
+
+.. testcode:: typeCasting
+
+   -> var things = Array<Any>()
+   << // things : Array<Any> = []
+   -> things.append(0)
+   -> things.append(0.0)
+   -> things.append(42)
+   -> things.append(3.14159)
+   -> things.append("hello")
+   -> things.append((3.0, 5.0))
+   -> things.append(Movie("Ghostbusters", director: "Ivan Reitman"))
+
+This example creates a new array called ``things``, which can store values of type ``Any``.
+In this case, it contains
+two ``Int`` values, two ``Double`` values, a ``String`` value,
+a tuple of type ``(Double, Double)``,
+and the movie “Ghostbusters”, directed by Ivan Reitman.
+
+.. note::
+
+   ``Any`` and ``AnyObject`` should only be used when you explicitly need
+   the behavior and capabilities they provide.
+   It is always better to be specific about the types you expect to work with in your code.
+
+.. _TypeCasting_CheckedCastsInSwitchStatements:
+
+Checked Casts in Switch Statements
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you are working with named values whose type is only known to be ``Any`` or ``AnyObject``,
+you can use the ``is`` and ``as`` operators to find out about the types they hold,
+and to work with them as more specific types.
+This is true even if they are not class types.
+
+For example, the ``is`` and ``as`` operators can be used within
+the cases of a ``switch`` statement to check and match values of a certain type,
+and to assign those values to temporary constants or variables
+(as described in :ref:`ControlFlow_NamedValueBindings`):
+
+.. testcode:: typeCasting
+
+   -> for thing in things {
+         switch thing {
+            case 0 as Int:
+               println("zero as an Int")
+            case 0 as Double:
+               println("zero as a Double")
+            case let someInt as Int:
+               println("an integer value of \(someInt)")
+            case let someDouble as Double where someDouble > 0:
+               println("a positive double value of \(someDouble)")
+            case is Double:
+               println("some other double value that I don't want to print")
+            case let someString as String where someString == someString.lowercase:
+               println("a lowercase string value of \"\(someString)\"")
+            case let (x, y) as (Double, Double):
+               println("an (x, y) point at \(x), \(y)")
+            case let movie as Movie:
+               println("a movie called '\(movie.name)', dir. \(movie.director)")
+            default:
+               println("something else")
+         }
+      }
+   </ zero as an Int
+   </ zero as a Double
+   </ an integer value of 42
+   </ a positive double value of 3.14159
+   </ a lowercase string value of "hello"
+   </ an (x, y) point at 3.0, 5.0
+   </ a movie called 'Ghostbusters', dir. Ivan Reitman
+
+.. TODO: Where should I mention “AnyClass”?
+
 .. TODO: casting also needs to be mentioned in the context of protocol conformance.
 
 .. TODO: talk about the use of "as" outside of an "if" statement sense,
@@ -204,4 +291,3 @@ whenever a ``Song`` is found in the library.
    I can't think of an example where it's useful.
    However, it does display different behavior from downcasting,
    in that upcasting always works, and so it doesn't return an optional.
-   
