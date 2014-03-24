@@ -19,14 +19,8 @@ Expressions
 
     Grammar of an expression
 
-    expression --> expression-sequence
-    expression-sequence --> unary-expression binary-expressions-OPT
+    expression --> unary-expression binary-expressions-OPT
     expression-list --> expression | expression ``,`` expression-list
-
-.. TODO: Maybe call expression-sequence operator-sequence-expression?
-
-.. The middle part of ?: uses 'expression-sequence'
-   which is why we need to keep that part separate from expression.
 
 .. _Expressions_UnaryOperators:
 
@@ -178,7 +172,7 @@ The unused expression is not evaluated.
 
     Grammar of a conditional operator
 
-    conditional-operator --> ``?`` expression-sequence ``:``
+    conditional-operator --> ``?`` expression ``:``
 
 .. _Expressions_Type-CastingOperators:
 
