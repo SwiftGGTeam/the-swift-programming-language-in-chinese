@@ -20,6 +20,7 @@ Contents
     :maxdepth: 2
 
     Introduction
+    GuidedTour/index
     LanguageGuide/index
     ReferenceManual/index
 
@@ -30,4 +31,3 @@ Internal Chapters
     :maxdepth: 1
 
     ReplacementRules
-    LanguageGuide/LanguageTour
