@@ -55,7 +55,7 @@ Loop Statements
 Loop statements allow a block of code to be executed repeatedly,
 depending on the conditions specified in the loop.
 Swift has four loop statements:
-a ``for`` statement, a collection-based ``for`` statement, a ``while`` statement,
+a ``for`` statement, a ``for``-``in`` statement, a ``while`` statement,
 and a ``do``-``while`` statement.
 
 Control flow in a loop statement can be changed by a break statement and a continue statement
@@ -66,7 +66,7 @@ and is discussed in :ref:`Statements_BreakStatement` and :ref:`Statements_Contin
     Grammar of a loop statement
 
     loop-statement --> for-statement
-    loop-statement --> collection-based-for-statement
+    loop-statement --> for-in-statement
     loop-statement --> while-statement
     loop-statement --> do-while-statement
 
@@ -134,19 +134,21 @@ the ``LogicValue`` protocol.
 
     for-init --> variable-declaration | expression-list
 
-.. _Statements_CollectionBasedForStatement:
+.. _Statements_For-InStatement:
 
-Collection-Based For Statement
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+For-In Statement
+~~~~~~~~~~~~~~~~
 
 .. Other rejected headings included range-based, enumerator-based,
    container-based sequence-based and for-each.
+   Changed this to ``for``-``in`` statement to match Language Guide
+   and because it's more consistent with ``do``-``while`` statement.
 
-A collection-based ``for`` statement allows a block of code to be executed
+A ``for``-``in`` statement allows a block of code to be executed
 once for each item in a collection (or any type)
 that conforms to the ``Sequence`` protocol.
 
-A collection-based ``for`` statement has the following form:
+A ``for``-``in`` statement has the following form:
 
 .. syntax-outline::
 
@@ -164,7 +166,7 @@ it is assigned to the *item* pattern,
 the program executes the *statements*,
 and then continues execution at the beginning of the loop.
 Otherwise, the program does not perform assignment or execute the *statements*,
-and it is finished executing the collection-based ``for`` statement.
+and it is finished executing the ``for``-``in`` statement.
 
 .. TODO: Doug's remarks from 1/29/14 meeting:
     Consider calling this sequence-based-for-statement,
@@ -179,9 +181,9 @@ and it is finished executing the collection-based ``for`` statement.
 
 .. syntax-grammar::
 
-    Grammar of a collection-based for statement
+    Grammar of a for-in statement
 
-    collection-based-for-statement --> ``for`` pattern ``in`` expression code-block
+    for-in-statement --> ``for`` pattern ``in`` expression code-block
 
 .. _Statements_WhileStatement:
 
@@ -213,7 +215,7 @@ the *statements* in a ``while`` statement may be executed zero or more times.
 
 The value of the *condition* must have a type that conforms to
 the ``LogicValue`` protocol. The condition may also be an optional binding declaration,
-as discussed in :ref:`ControlFlow_OptionalBinding`.
+as discussed in :ref:`BasicTypes_OptionalBinding`.
 
 .. langref-grammar
 
@@ -257,7 +259,7 @@ the *statements* in a ``do``-``while`` statement are executed at least once.
 
 The value of the *condition* must have a type that conforms to
 the ``LogicValue`` protocol. The condition may also be an optional binding declaration,
-as discussed in :ref:`ControlFlow_OptionalBinding`.
+as discussed in :ref:`BasicTypes_OptionalBinding`.
 
 .. langref-grammar
 
@@ -337,7 +339,7 @@ An ``if`` statement chained together in this way has the following form:
 
 The value of any condition in an ``if`` statement must have a type that conforms to
 the ``LogicValue`` protocol. The condition may also be an optional binding declaration,
-as discussed in :ref:`ControlFlow_OptionalBinding`.
+as discussed in :ref:`BasicTypes_OptionalBinding`.
 
 .. TODO: Should we promote this last sentence (here and elsewhere) higher up in the chapter?
 

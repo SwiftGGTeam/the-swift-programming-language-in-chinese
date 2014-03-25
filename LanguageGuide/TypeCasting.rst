@@ -22,12 +22,12 @@ and an ``init withName()`` initializer.
 
 .. testcode:: typeCasting
 
-    --> class MediaItem {
-            var name: String
-            init withName(name: String) {
-                self.name = name
-            }
-        }
+   -> class MediaItem {
+         var name: String
+         init withName(name: String) {
+            self.name = name
+         }
+      }
 
 The next snippet defines two subclasses of ``MediaItem``.
 The first subclass, ``Movie``, encapsulates additional information about a movie or film.
@@ -38,33 +38,33 @@ on top of the base class:
 
 .. testcode:: typeCasting
 
-    --> class Movie : MediaItem {
-            var director: String
-            init withName(name: String) director(director: String) {
-                self.director = director
-                super.init(withName: name)
-            }
-        }
-    --> class Song : MediaItem {
-            var artist: String
-            init withName(name: String) artist(artist: String) {
-                self.artist = artist
-                super.init(withName: name)
-            }
-        }
+   -> class Movie : MediaItem {
+         var director: String
+         init withName(name: String) director(director: String) {
+            self.director = director
+            super.init(withName: name)
+         }
+      }
+   -> class Song : MediaItem {
+         var artist: String
+         init withName(name: String) artist(artist: String) {
+            self.artist = artist
+            super.init(withName: name)
+         }
+      }
 
 Because ``Movie`` and ``Song`` are both subclasses of ``MediaItem``,
 their instances can be used wherever a ``MediaItem`` instance can be used:
 
 .. testcode:: typeCasting
 
-    --> var library = Array<MediaItem>()
-    <<< // library : Array<MediaItem> = []
-    --> library.append(Movie("Casablanca", director: "Michael Curtiz"))
-    --> library.append(Song("Blue Suede Shoes", artist: "Elvis Presley"))
-    --> library.append(Movie("Citizen Kane", director: "Orson Welles"))
-    --> library.append(Song("The One And Only", artist: "Chesney Hawkes"))
-    --> library.append(Song("Never Gonna Give You Up", artist: "Rick Astley"))
+   -> var library = Array<MediaItem>()
+   << // library : Array<MediaItem> = []
+   -> library.append(Movie("Casablanca", director: "Michael Curtiz"))
+   -> library.append(Song("Blue Suede Shoes", artist: "Elvis Presley"))
+   -> library.append(Movie("Citizen Kane", director: "Orson Welles"))
+   -> library.append(Song("The One And Only", artist: "Chesney Hawkes"))
+   -> library.append(Song("Never Gonna Give You Up", artist: "Rick Astley"))
 
 The snippet above declares and initializes a new empty array called ``library``,
 which is declared as an ``Array`` of type ``MediaItem``.
@@ -76,10 +76,13 @@ and so an instance of either class can be added to the array.
 
 .. note::
 
-    The ``withName:`` selector has been left out of each of these initializer calls, for brevity.
-    The initializers for ``Movie`` and ``Song`` both have their ``name`` value as the first parameter,
-    and it is clear from the context that this is the correct initializer to use.
-    As a result, leaving out the ``withName:`` selector does not cause any ambiguity.
+   The ``withName:`` selector has been left out of each of these initializer calls, for brevity.
+   The initializers for ``Movie`` and ``Song`` both have their ``name`` value as the first parameter,
+   and it is clear from the context that this is the correct initializer to use.
+   As a result, leaving out the ``withName:`` selector does not cause any ambiguity.
+
+.. TODO: change this section to use shorter array initialization syntax
+   if it is added to the language in time.
 
 .. _TypeCasting_CheckingType:
 
@@ -90,19 +93,19 @@ You can check whether an instance is of a certain type by using the ``is`` opera
 
 .. testcode:: typeCasting
 
-    --> var movieCount = 0
-    <<< // movieCount : Int = 0
-    --> var songCount = 0
-    <<< // songCount : Int = 0
-    --> for item in library {
-            if item is Movie {
-                ++movieCount
-            } else if item is Song {
-                ++songCount
-            }
-        }
-    --> println("Media library contains \(movieCount) movies and \(songCount) songs")
-    <-- Media library contains 2 movies and 3 songs
+   -> var movieCount = 0
+   << // movieCount : Int = 0
+   -> var songCount = 0
+   << // songCount : Int = 0
+   -> for item in library {
+         if item is Movie {
+            ++movieCount
+         } else if item is Song {
+            ++songCount
+         }
+      }
+   -> println("Media library contains \(movieCount) movies and \(songCount) songs")
+   <- Media library contains 2 movies and 3 songs
 
 This example iterates through all of the items in the ``library`` array.
 On each pass, the ``for``-``in`` loop sets the ``item`` constant
@@ -117,6 +120,13 @@ contain a count of how many ``MediaItem`` instances were found of each type.
 .. QUESTION: is it correct to refer to 'is' and 'as' as 'operators'?
    Or is there some better name we could use?
 
+.. TODO: you can also use "is" within a switch statement…
+   case is SomeClass:
+   …and there's talk of implementing this for "as" too…
+   case let c as SomeClass:
+   This chapter should definitely talk about the former,
+   and should also mention the latter if it is implemented.
+
 .. _TypeCasting_Downcasting:
 
 Downcasting
@@ -128,18 +138,18 @@ you can try and :newTerm:`downcast` to the subclass using the ``as`` operator:
 
 .. testcode:: typeCasting
 
-    --> for item in library {
-            if let movie = item as Movie {
-                println("Movie: '\(movie.name)', dir. \(movie.director)")
-            } else if let song = item as Song {
-                println("Song: '\(song.name)', by \(song.artist)")
-            }
-        }
-    <-/ Movie: 'Casablanca', dir. Michael Curtiz
-    <-/ Song: 'Blue Suede Shoes', by Elvis Presley
-    <-/ Movie: 'Citizen Kane', dir. Orson Welles
-    <-/ Song: 'The One And Only', by Chesney Hawkes
-    <-/ Song: 'Never Gonna Give You Up', by Rick Astley
+   -> for item in library {
+         if let movie = item as Movie {
+            println("Movie: '\(movie.name)', dir. \(movie.director)")
+         } else if let song = item as Song {
+            println("Song: '\(song.name)', by \(song.artist)")
+         }
+      }
+   </ Movie: 'Casablanca', dir. Michael Curtiz
+   </ Song: 'Blue Suede Shoes', by Elvis Presley
+   </ Movie: 'Citizen Kane', dir. Orson Welles
+   </ Song: 'The One And Only', by Chesney Hawkes
+   </ Song: 'Never Gonna Give You Up', by Rick Astley
 
 This example iterates over each ``MediaItem`` in ``library``,
 and prints an appropriate description for each one.
@@ -177,9 +187,9 @@ whenever a ``Song`` is found in the library.
 
 .. note::
 
-    Casting does not actually modify the instance, or change its values.
-    The underlying instance remains the same; it is just treated and accessed
-    as an instance of the type to which it has been cast.
+   Casting does not actually modify the instance, or change its values.
+   The underlying instance remains the same; it is just treated and accessed
+   as an instance of the type to which it has been cast.
 
 .. TODO: casting also needs to be mentioned in the context of protocol conformance.
 

@@ -1,46 +1,39 @@
 .. docnote:: Subjects to be covered in this section
 
-    * Declaration syntax ✔︎
-    * Multiple variable declarations and initializations on one line:
-    * var i = 1; var j = 2; print(i + j)
-    * var k = 1, l = 2
-    * …but not… var m, n = 2
-    * Naming conventions ✔︎
-    * Integer types ✔︎
-    * Floating-point types ✔︎
-    * infinity and -infinity
-    * Bool ✔︎
-    * Void
-    * No suffixes for integers / floats ✔︎
-    * Lazy initialization
-    * A brief mention of characters and strings
-    * Tuples ✔︎
-    * Varargs tuples
-    * Typealiases ✔︎
-    * Type inference ✔︎
-    * Type casting through type initializers ✔︎
-    * Arrays
-    * Optional types ✔︎
-    * Pattern binding
-    * Literals ✔︎
-    * Immutability
-    * (Don't redeclare objects within a REPL session)
-    * min and max for integers ✔︎
+   * Declaration syntax ✔︎
+   * Multiple variable declarations and initializations on one line:
+   * var i = 1; var j = 2; print(i + j)
+   * var k = 1, l = 2
+   * …but not… var m, n = 2
+   * Naming conventions ✔︎
+   * Integer types ✔︎
+   * Floating-point types ✔︎
+   * infinity and -infinity
+   * Bool ✔︎
+   * Void
+   * No suffixes for integers / floats ✔︎
+   * Lazy initialization
+   * A brief mention of characters and strings
+   * Tuples ✔︎
+   * Varargs tuples
+   * Type inference ✔︎
+   * Type casting through type initializers ✔︎
+   * Optional types ✔︎
+   * Pattern binding
+   * Literals ✔︎
+   * Immutability
+   * (Don't redeclare objects within a REPL session)
+   * min and max for integers ✔︎
 
 Basic Types
 ===========
 
 Swift provides several basic types for working with fundamental values.
-Some of these types will be familiar to C and Objective-C developers:
+These types will be familiar to C and Objective-C developers:
 
-* :newTerm:`Numbers` (including integers and floating-point numbers)
-* :newTerm:`Booleans` (for values that can only be true or false)
-* :newTerm:`Arrays` (for ordered lists of values)
-* :newTerm:`Dictionaries` (for collections of values that can be referenced
-  and looked up via an unique identifier or “key”)
-
-Although these types may be familiar,
-Swift expands their capabilities beyond what is possible in other languages.
+* :newTerm:`Integer numbers`, for numbers without a fractional component
+* :newTerm:`Floating-point numbers`, for numbers with a fractional component
+* :newTerm:`Booleans`, for values that can only be true or false
 
 In addition to these simple types,
 Swift incorporates some less familiar (but very powerful) advanced types:
@@ -51,8 +44,14 @@ Swift incorporates some less familiar (but very powerful) advanced types:
 Each of these types, and the ways in which they can be used,
 are discussed in more detail below.
 
-Swift also provides a powerful and flexible way to create and work with string and character types.
-These are introduced below, and are discussed in more detail in :doc:`Strings`.
+Swift also provides powerful and flexible versions of the following common types:
+
+* :newTerm:`Strings`, for working with text
+  (as introduced below, and discussed in detail in :doc:`Strings`)
+* :newTerm:`Arrays` and :newTerm:`Dictionaries`, for working with collections of values
+  (as described in :doc:`CollectionTypes`)
+* :newTerm:`Enumerations`, for defining multiple values of a similar kind
+  (as described in :doc:`Enumerations`)
 
 .. _BasicTypes_NamedValues:
 
@@ -87,10 +86,10 @@ to track the number of login attempts a user has made:
 
 .. testcode:: namedValues
 
-    --> let maximumNumberOfLoginAttempts = 10
-    <<< // maximumNumberOfLoginAttempts : Int = 10
-    --> var currentLoginAttempt = 0
-    <<< // currentLoginAttempt : Int = 0
+   -> let maximumNumberOfLoginAttempts = 10
+   << // maximumNumberOfLoginAttempts : Int = 10
+   -> var currentLoginAttempt = 0
+   << // currentLoginAttempt : Int = 0
 
 This can be read as:
 
@@ -114,8 +113,8 @@ to be explicit about the kind of values they can store:
 
 .. testcode:: namedValues
 
-    --> let welcomeMessage: String = "Hello"
-    <<< // welcomeMessage : String = "Hello"
+   -> let welcomeMessage: String = "Hello"
+   << // welcomeMessage : String = "Hello"
 
 The colon in the declaration means *“…of type…,”*
 so this can be read as:
@@ -123,7 +122,7 @@ so this can be read as:
 “Declare a constant called ``welcomeMessage`` that is of type ``String``,
 and give it a value of ``"Hello"``.”
 
-The phrase “of type ``String``” means “can store any ``String`` value”.
+The phrase “of type ``String``” means “can store any ``String`` value.”
 Think of it as meaning “the type of thing” (or “the kind of thing”) that can be stored.
 
 You can use almost any character you like for constant and variable names,
@@ -131,12 +130,12 @@ including Unicode characters:
 
 .. testcode:: namedValues
 
-    --> let π = 3.14159
-    <<< // π : Double = 3.14159
-    --> let 你好 = "你好世界"
-    <<< // 你好 : String = "你好世界"
-    --> let 🐶🐮 = "dogcow"
-    <<< // 🐶🐮 : String = "dogcow"
+   -> let π = 3.14159
+   << // π : Double = 3.14159
+   -> let 你好 = "你好世界"
+   << // 你好 : String = "你好世界"
+   -> let 🐶🐮 = "dogcow"
+   << // 🐶🐮 : String = "dogcow"
 
 Constant and variable names cannot contain
 mathematical symbols, arrows, private-use (or invalid) Unicode code points,
@@ -153,20 +152,52 @@ The value of an existing variable can be changed to another value of a compatibl
 
 .. testcode:: namedValues
 
-    --> var friendlyWelcome = "hello, world"
-    <<< // friendlyWelcome : String = "hello, world"
-    /-> friendlyWelcome is \"\(friendlyWelcome)\"
-    <-/ friendlyWelcome is "hello, world"
-    --> friendlyWelcome = "👋, 🌎"
-    /-> friendlyWelcome is now \"\(friendlyWelcome)\"
-    <-/ friendlyWelcome is now "👋, 🌎"
+   -> var friendlyWelcome = "hello, world"
+   << // friendlyWelcome : String = "hello, world"
+   /> friendlyWelcome is \"\(friendlyWelcome)\"
+   </ friendlyWelcome is "hello, world"
+   -> friendlyWelcome = "👋, 🌎"
+   /> friendlyWelcome is now \"\(friendlyWelcome)\"
+   </ friendlyWelcome is now "👋, 🌎"
 
-You can also print the value of a named value by using the ``println`` function:
+Unlike a variable, the value of a constant cannot be changed once it is set,
+and attempting to do so will result in an error:
 
 .. testcode:: namedValues
 
-    --> println(friendlyWelcome)
-    <-- 👋, 🌎
+   -> let languageName = "Swift"
+   << // languageName : String = "Swift"
+   -> languageName = "Swift++"
+   // this will result in an error – languageName cannot be changed
+   !! <REPL Input>:1:14: error: cannot assign to 'let' value 'languageName'
+   !! languageName = "Swift++"
+   !! ~~~~~~~~~~~~ ^
+
+.. QUESTION: should this section mention that Swift-clashing names
+   can be qualified with a backtick (e.g. let `protocol` = 1)?
+   It's of a kind with the contents of this section, but it's pretty damn niche…
+
+.. _BasicTypes_PrintingNamedValues:
+
+Printing Named Values
+~~~~~~~~~~~~~~~~~~~~~
+
+The current value of a constant or variable can be printed with the ``println()`` function:
+
+.. testcode:: namedValues
+
+   -> println(friendlyWelcome)
+   <- 👋, 🌎
+
+``println()`` is a special global function that prints a value,
+followed by a line break, to an appropriate output.
+If you are working in Xcode, for example,
+``println()`` will print its output in Xcode's “console” pane.
+(A second function, ``print()``, performs the same task
+without appending a line break to the end of the value to be printed.)
+
+.. QUESTION: have I referred to Xcode's console correctly here?
+   Should I mention other output streams, such as the REPL / playgrounds?
 
 .. NOTE: this is a deliberately simplistic description of what you can do with println().
    It will be expanded later on.
@@ -175,18 +206,37 @@ You can also print the value of a named value by using the ``println`` function:
    Strictly speaking, you can't print the value of *any* named value –
    you can only print values of types for which String has a constructor.
 
-Unlike a variable, the value of a constant cannot be changed once it is set,
-and attempting to do so will result in an error:
+The ``println()`` function will print any ``String`` value you pass to it:
 
 .. testcode:: namedValues
 
-    --> let languageName = "Swift"
-    <<< // languageName : String = "Swift"
-    --> languageName = "Swift++"
-    /// this will result in an error – languageName cannot be changed
-    !!! <REPL Input>:1:14: error: cannot assign to 'let' value 'languageName'
-    !!! languageName = "Swift++"
-    !!! ~~~~~~~~~~~~ ^
+   -> println("This is a string")
+   <- This is a string
+
+.. _BasicTypes_StringInterpolation:
+
+String Interpolation
+____________________
+
+The ``println()`` function can be used to print more complex logging messages,
+in a similar manner to Cocoa's ``NSLog()`` function.
+These messages can include the current values of constants and variables.
+
+Swift uses :newTerm:`string interpolation` to include named values
+as part of a longer string.
+String interpolation gives a way to include a constant or variable's name
+as a placeholder in a string,
+and to prompt Swift to replace it with the current value of that constant or variable.
+The constant or variable's name should be wrapped by parentheses,
+and escaped with a backslash before the opening parenthesis:
+
+.. testcode:: namedValues
+
+   -> println("The current value of friendlyWelcome is \(friendlyWelcome)")
+   <- The current value of friendlyWelcome is 👋, 🌎
+
+.. TODO: this still doesn't talk about all of the things that string interpolation can do.
+   It should still be covered in more detail in the Strings and Characters chapter.
 
 .. _BasicTypes_Integers:
 
@@ -259,7 +309,7 @@ it performs :newTerm:`type checks` when compiling your code.
 Any mismatched types are flagged as errors so that you can fix them.
 
 Type-checking helps to avoid accidental errors when you're working with different types of values.
-However, this doesn't mean that you have to define the type of
+However, this doesn't mean that you have to specify the type of
 every constant and variable that you declare.
 If you don't specify the type of value you need,
 Swift will use :newTerm:`type inference` to work out the appropriate type.
@@ -284,18 +334,18 @@ because you have initialized it with a number that looks like an integer:
 
 .. testcode:: typeInference
 
-    --> let meaningOfLife = 42
-    <<< // meaningOfLife : Int = 42
-    /// meaningOfLife is inferred to be of type Int
+   -> let meaningOfLife = 42
+   << // meaningOfLife : Int = 42
+   // meaningOfLife is inferred to be of type Int
 
 Likewise, if you don't specify a type for a floating-point literal,
 Swift assumes that you want to create a ``Double``:
 
 .. testcode:: typeInference
 
-    --> let pi = 3.14159
-    <<< // pi : Double = 3.14159
-    /// pi is inferred to be of type Double
+   -> let pi = 3.14159
+   << // pi : Double = 3.14159
+   // pi is inferred to be of type Double
 
 Swift always chooses ``Double`` (rather than ``Float``)
 when inferring the type of floating-point numbers.
@@ -305,9 +355,9 @@ a type of ``Double`` will be inferred from the context:
 
 .. testcode:: typeInference
 
-    --> let anotherPi = 3 + 0.14159
-    <<< // anotherPi : Double = 3.14159
-    /// anotherPi is also inferred to be of type Double
+   -> let anotherPi = 3 + 0.14159
+   << // anotherPi : Double = 3.14159
+   // anotherPi is also inferred to be of type Double
 
 The literal value of ``3`` has no explicit type in and of itself,
 and so an appropriate output type of ``Double`` is inferred
@@ -329,14 +379,14 @@ All of these integer literals have a decimal value of ``17``:
 
 .. testcode:: numberLiterals
 
-    --> let decimalInteger = 17
-    <<< // decimalInteger : Int = 17
-    --> let binaryInteger = 0b10001        // 17 in binary notation
-    <<< // binaryInteger : Int = 17
-    --> let octalInteger = 0o21            // 17 in octal notation
-    <<< // octalInteger : Int = 17
-    --> let hexadecimalInteger = 0x11      // 17 in hexadecimal notation
-    <<< // hexadecimalInteger : Int = 17
+   -> let decimalInteger = 17
+   << // decimalInteger : Int = 17
+   -> let binaryInteger = 0b10001      // 17 in binary notation
+   << // binaryInteger : Int = 17
+   -> let octalInteger = 0o21         // 17 in octal notation
+   << // octalInteger : Int = 17
+   -> let hexadecimalInteger = 0x11     // 17 in hexadecimal notation
+   << // hexadecimalInteger : Int = 17
 
 Floating-point literals can be decimal (with no prefix),
 or hexadecimal (with a ``0x`` prefix).
@@ -357,16 +407,16 @@ the base number is multiplied by 2\ :superscript:`exp`:
 * ``0xFp2`` means 15 ⨉ 2\ :superscript:`2`, or ``60.0``
 * ``0xFp-2`` means 15 ⨉ 2\ :superscript:`-2`, or ``3.75``
 
-All of these floating-point literals have a decimal value of ``12.5``:
+All of these floating-point literals have a decimal value of ``12.1875``:
 
 .. testcode:: numberLiterals
 
-    --> let decimalDouble = 12.5
-    <<< // decimalDouble : Double = 12.5
-    --> let exponentDouble = 1.25e1
-    <<< // exponentDouble : Double = 12.5
-    --> let hexadecimalDouble = 0xC.8p0
-    <<< // hexadecimalDouble : Double = 12.5
+   -> let decimalDouble = 12.1875
+   << // decimalDouble : Double = 12.1875
+   -> let exponentDouble = 1.21875e1
+   << // exponentDouble : Double = 12.1875
+   -> let hexadecimalDouble = 0xC.3p0
+   << // hexadecimalDouble : Double = 12.1875
 
 Numeric literals can contain extra formatting to make them easier to read.
 Both integers and floats can be padded with extra zeroes at the beginning
@@ -375,16 +425,12 @@ Neither type of formatting affects the underlying value of the literal:
 
 .. testcode:: numberLiterals
 
-    --> let paddedDouble = 000123.456
-    <<< // paddedDouble : Double = 123.456
-    --> let oneMillion = 1_000_000
-    <<< // oneMillion : Int = 1000000
-    --> let justOverOneMillion = 1_000_000.000_000_1
-    <<< // justOverOneMillion : Double = 1e+06
-
-In the example above, the value of ``justOverOneMillion`` has been printed as ``1e+06``.
-This is a short-form representation of its underlying ``Double`` value of ``1000000.0000001``.
-The actual value of ``justOverOneMillion`` still has all of the precision of the original.
+   -> let paddedDouble = 000123.456
+   << // paddedDouble : Double = 123.456
+   -> let oneMillion = 1_000_000
+   << // oneMillion : Int = 1000000
+   -> let justOverOneMillion = 1_000_000.000_000_1
+   << // justOverOneMillion : Double = 1e+06
 
 .. _BasicTypes_NumericTypeConversion:
 
@@ -399,7 +445,7 @@ and will match the inferred type for integer literal values.
 
 Other integer types should be used only when they are are specifically needed for the task at hand,
 due to explicitly-sized data from an external source,
-or for performance, memory usage, or other optimization.
+or for performance, memory usage, or other necessary optimization.
 Using explicitly-sized types in these situations
 helps to catch any accidental value overflows
 and implicitly documents the nature of the data being used.
@@ -413,10 +459,10 @@ The minimum and maximum values of each integer type can be accessed using its ``
 
 .. testcode:: namedValues
 
-    --> let minValue = UInt8.min  // minValue is equal to 0, and is of type UInt8
-    <<< // minValue : UInt8 = 0
-    --> let maxValue = UInt8.max  // maxValue is equal to 255, and is of type UInt8
-    <<< // maxValue : UInt8 = 255
+   -> let minValue = UInt8.min  // minValue is equal to 0, and is of type UInt8
+   << // minValue : UInt8 = 0
+   -> let maxValue = UInt8.max  // maxValue is equal to 255, and is of type UInt8
+   << // maxValue : UInt8 = 255
 
 The values of these properties are of the appropriate sized number type
 (such as ``UInt8`` in the example above)
@@ -437,17 +483,17 @@ and trying to do so is reported as an error:
 
 .. testcode:: namedValuesOverflowError
 
-    --> let cannotBeNegative: UInt8 = -1
-    !!! <REPL Input>:1:31: error: integer literal overflows when stored into 'UInt8'
-    !!! let cannotBeNegative: UInt8 = -1
-    !!!                               ^
-    /// UInt8 cannot store negative numbers, and so this will report an error
-    --> let tooBig: Int8 = Int8.max + 1
-    !!! <REPL Input>:1:29: error: arithmetic operation '127 + 1' (on type 'Int8') results in an overflow
-    !!! let tooBig: Int8 = Int8.max + 1
-    !!!                             ^
-    /// Int8 cannot store a number larger than its maximum value,
-    /// and so this will also report an error
+   -> let cannotBeNegative: UInt8 = -1
+   !! <REPL Input>:1:31: error: integer literal overflows when stored into 'UInt8'
+   !! let cannotBeNegative: UInt8 = -1
+   !!                        ^
+   // UInt8 cannot store negative numbers, and so this will report an error
+   -> let tooBig: Int8 = Int8.max + 1
+   !! <REPL Input>:1:29: error: arithmetic operation '127 + 1' (on type 'Int8') results in an overflow
+   !! let tooBig: Int8 = Int8.max + 1
+   !!                      ^
+   // Int8 cannot store a number larger than its maximum value,
+   // and so this will also report an error
 
 Because of this,
 numeric type conversion is something you must opt in to on a case-by-case basis.
@@ -459,12 +505,12 @@ you initialize a new number of the desired type with the existing value:
 
 .. testcode:: typeConversion
 
-    --> let twoThousand: UInt16 = 2_000
-    <<< // twoThousand : UInt16 = 2000
-    --> let one: UInt8 = 1
-    <<< // one : UInt8 = 1
-    --> let twoThousandAndOne = twoThousand + UInt16(one)
-    <<< // twoThousandAndOne : UInt16 = 2001
+   -> let twoThousand: UInt16 = 2_000
+   << // twoThousand : UInt16 = 2000
+   -> let one: UInt8 = 1
+   << // one : UInt8 = 1
+   -> let twoThousandAndOne = twoThousand + UInt16(one)
+   << // twoThousandAndOne : UInt16 = 2001
 
 The constant ``twoThousand`` is of type ``UInt16``,
 whereas the constant ``one`` is of type ``UInt8``.
@@ -499,14 +545,14 @@ Conversions between integer and floating-point numeric types must also be made e
 
 .. testcode:: typeConversion
 
-    --> let three = 3
-    <<< // three : Int = 3
-    --> let pointOneFourOneFiveNine = 0.14159
-    <<< // pointOneFourOneFiveNine : Double = 0.14159
-    --> let pi = Double(three) + pointOneFourOneFiveNine
-    <<< // pi : Float64 = 3.14159
-    /-> pi equals \(pi), and is inferred to be of type Double
-    <-/ pi equals 3.14159, and is inferred to be of type Double
+   -> let three = 3
+   << // three : Int = 3
+   -> let pointOneFourOneFiveNine = 0.14159
+   << // pointOneFourOneFiveNine : Double = 0.14159
+   -> let pi = Double(three) + pointOneFourOneFiveNine
+   << // pi : Float64 = 3.14159
+   /> pi equals \(pi), and is inferred to be of type Double
+   </ pi equals 3.14159, and is inferred to be of type Double
 
 Here, the value of the constant ``three`` is used to create a new value of type ``Double``,
 so that both sides of the addition are of the same type.
@@ -522,10 +568,10 @@ in that an integer type can be initialized with a ``Double`` or ``Float`` value:
 
 .. testcode:: typeConversion
 
-    --> let integerPi = Int(pi)
-    <<< // integerPi : Int = 3
-    /-> integerPi equals \(integerPi), and is inferred to be of type Int
-    <-/ integerPi equals 3, and is inferred to be of type Int
+   -> let integerPi = Int(pi)
+   << // integerPi : Int = 3
+   /> integerPi equals \(integerPi), and is inferred to be of type Int
+   </ integerPi equals 3, and is inferred to be of type Int
 
 Floating-point values are always rounded towards zero
 when used to initialize a new integer value in this way.
@@ -537,11 +583,11 @@ when used to initialize a new integer value in this way.
 
 .. note::
 
-    The rules for combining numeric named values are different to
-    the rules for numeric literals.
-    The literal value ``3`` can be added directly to the literal value ``0.14159``,
-    because number literals do not have an explicit type in and of themselves.
-    Their type is inferred only at the point that they are evaluated by the compiler.
+   The rules for combining numeric named values are different to
+   the rules for numeric literals.
+   The literal value ``3`` can be added directly to the literal value ``0.14159``,
+   because number literals do not have an explicit type in and of themselves.
+   Their type is inferred only at the point that they are evaluated by the compiler.
 
 .. NOTE: this section on explicit conversions could be included in the Operators section.
    I think it's more appropriate here, however,
@@ -560,10 +606,10 @@ To represent this fact, Swift provides two Boolean literal values,
 
 .. testcode:: booleans
 
-    --> let orangesAreOrange = true
-    <<< // orangesAreOrange : Bool = true
-    --> let turnipsAreDelicious = false
-    <<< // turnipsAreDelicious : Bool = false
+   -> let orangesAreOrange = true
+   << // orangesAreOrange : Bool = true
+   -> let turnipsAreDelicious = false
+   << // turnipsAreDelicious : Bool = false
 
 The types of ``orangesAreOrange`` and ``turnipsAreDelicious``
 have been inferred as ``Bool`` from the fact that
@@ -579,12 +625,12 @@ such as the ``if``-``else`` statement:
 
 .. testcode:: booleans
 
-    --> if turnipsAreDelicious {
-            println("Mmm, tasty turnips!")
-        } else {
-            println("Eww, turnips are horrible.")
-        }
-    <-- Eww, turnips are horrible.
+   -> if turnipsAreDelicious {
+         println("Mmm, tasty turnips!")
+      } else {
+         println("Eww, turnips are horrible.")
+      }
+   <- Eww, turnips are horrible.
 
 Conditional statements such as ``if``-``else`` are covered in more detail in :doc:`ControlFlow`.
 
@@ -593,24 +639,24 @@ The following example will produce an error:
 
 .. testcode:: booleansNotLogicValue
 
-    --> let i = 1
-    <<< // i : Int = 1
-    --> if i {
-            // this example will not compile, and will report an error
-        }
-    !!! <REPL Input>:1:4: error: type 'Int' does not conform to protocol 'LogicValue'
-    !!! if i {
-    !!!    ^
+   -> let i = 1
+   << // i : Int = 1
+   -> if i {
+         // this example will not compile, and will report an error
+      }
+   !! <REPL Input>:1:4: error: type 'Int' does not conform to protocol 'LogicValue'
+   !! if i {
+   !!   ^
 
 However, it is valid to say:
 
 .. testcode:: booleansIsLogicValue
 
-    --> let i = 1
-    <<< // i : Int = 1
-    --> if i == 1 {
-            // this example will compile successfully
-        }
+   -> let i = 1
+   << // i : Int = 1
+   -> if i == 1 {
+         // this example will compile successfully
+      }
 
 The result of the ``i == 1`` comparison is of type ``Bool``,
 and so this second example passes the type-check.
@@ -622,29 +668,15 @@ and ensures that the intention of a particular section of code is always made cl
 
 .. note::
 
-    Strictly speaking, an ``if``-``else`` statement's condition expression
-    can be of any type that conforms to the ``LogicValue`` protocol.
-    ``Bool`` is one example of a type that conforms to this protocol,
-    but there are others, such as :ref:`BasicTypes_Optionals` below.
-    The ``LogicValue`` protocol is described in more detail in :doc:`Protocols`.
+   Strictly speaking, an ``if``-``else`` statement's condition expression
+   can be of any type that conforms to the ``LogicValue`` protocol.
+   ``Bool`` is one example of a type that conforms to this protocol,
+   but there are others, such as :ref:`BasicTypes_Optionals` below.
+   The ``LogicValue`` protocol is described in more detail in :doc:`Protocols`.
 
 .. TODO: I'm not quite happy with this yet.
    Introducing the LogicValue protocol at this early stage is a bit overkill.
    I'd like to revisit this if time permits, and maybe move this to Control Flow.
-
-.. _BasicTypes_Arrays:
-
-Arrays
-------
-
-.. write-me::
-
-.. _BasicTypes_Dictionaries:
-
-Dictionaries
-------------
-
-.. write-me::
 
 .. _BasicTypes_Tuples:
 
@@ -658,10 +690,10 @@ Here's an example of a tuple:
 
 .. testcode:: tuples
 
-    --> let httpStatus = (404, "Not Found")
-    <<< // httpStatus : (Int, String) = (404, "Not Found")
-    /-> httpStatus is of type (Int, String), and equals (\(httpStatus.0), \"\(httpStatus.1)\")
-    <-/ httpStatus is of type (Int, String), and equals (404, "Not Found")
+   -> let httpStatus = (404, "Not Found")
+   << // httpStatus : (Int, String) = (404, "Not Found")
+   /> httpStatus is of type (Int, String), and equals (\(httpStatus.0), \"\(httpStatus.1)\")
+   </ httpStatus is of type (Int, String), and equals (404, "Not Found")
 
 ``(404, "Not Found")`` is a tuple that describes an *HTTP status code*.
 An HTTP status code is a special value returned by a web server whenever you request a web page.
@@ -682,10 +714,10 @@ You can access the individual element values in a tuple using index numbers star
 
 .. testcode:: tuples
 
-    --> println("The status code is \(httpStatus.0)")
-    <-- The status code is 404
-    --> println("The status message is \(httpStatus.1)")
-    <-- The status message is Not Found
+   -> println("The status code is \(httpStatus.0)")
+   <- The status code is 404
+   -> println("The status message is \(httpStatus.1)")
+   <- The status message is Not Found
 
 As an alternative,
 you can :newTerm:`decompose` a tuple's contents into separate named values,
@@ -693,12 +725,12 @@ which can then be used as normal:
 
 .. testcode:: tuples
 
-    --> let (statusCode, statusMessage) = httpStatus
-    <<< // (statusCode, statusMessage) : (Int, String) = (404, "Not Found")
-    --> println("The status code is \(statusCode)")
-    <-- The status code is 404
-    --> println("The status message is \(statusMessage)")
-    <-- The status message is Not Found
+   -> let (statusCode, statusMessage) = httpStatus
+   << // (statusCode, statusMessage) : (Int, String) = (404, "Not Found")
+   -> println("The status code is \(statusCode)")
+   <- The status code is 404
+   -> println("The status message is \(statusMessage)")
+   <- The status message is Not Found
 
 Tuples are particularly useful as the return values of functions.
 A function that tries to retrieve a web page might return this ``(Int, String)`` tuple type
@@ -715,7 +747,7 @@ If your data structure would benefit from named member values,
 or is likely to persist beyond a temporary scope,
 it should be modeled as a :newTerm:`class` or :newTerm:`structure`,
 rather than as a tuple.
-Classes and structures are described in detail in :doc:`CustomTypes`.
+These are described in detail in :doc:`ClassesAndStructures`.
 
 .. _BasicTypes_Optionals:
 
@@ -733,18 +765,18 @@ They can be used to say:
 
 .. note::
 
-    This concept doesn't exist in C or Objective-C.
-    The nearest thing in Objective-C is
-    the ability to return ``nil`` from a method that would otherwise return an object,
-    with ``nil`` meaning “the absence of a valid object”.
-    However, this only works for objects – it doesn't work for
-    structs, or basic C types, or enumeration values.
-    For these types,
-    Objective-C methods typically return a special value (such as ``NSNotFound``) to indicate the absence of a value.
-    This assumes that the method's caller knows there is a special value to test for,
-    and remembers to check for it.
-    Swift's optionals give a way to indicate the absence of a value for *any type at all*,
-    without the need for special constants or ``nil`` tests.
+   This concept doesn't exist in C or Objective-C.
+   The nearest thing in Objective-C is
+   the ability to return ``nil`` from a method that would otherwise return an object,
+   with ``nil`` meaning “the absence of a valid object.”
+   However, this only works for objects – it doesn't work for
+   structs, or basic C types, or enumeration values.
+   For these types,
+   Objective-C methods typically return a special value (such as ``NSNotFound``) to indicate the absence of a value.
+   This assumes that the method's caller knows there is a special value to test against,
+   and remembers to check for it.
+   Swift's optionals give a way to indicate the absence of a value for *any type at all*,
+   without the need for special constants or ``nil`` tests.
 
 Here's an example.
 Swift's ``String`` type has a method called ``toInt()``,
@@ -757,11 +789,11 @@ The example below shows how to use ``toInt()`` to try and convert a ``String`` i
 
 .. testcode:: optionals
 
-    --> let possibleNumber = "123"
-    <<< // possibleNumber : String = "123"
-    --> let convertedNumber = possibleNumber.toInt()
-    <<< // convertedNumber : Int? = <unprintable value>
-    /// convertedNumber is inferred to be of type "Int?", or "optional Int"
+   -> let possibleNumber = "123"
+   << // possibleNumber : String = "123"
+   -> let convertedNumber = possibleNumber.toInt()
+   << // convertedNumber : Int? = <unprintable value>
+   // convertedNumber is inferred to be of type "Int?", or "optional Int"
 
 Because the ``toInt()`` method might fail,
 it returns an *optional* ``Int``, rather than an ``Int``.
@@ -780,23 +812,23 @@ Once you're sure that the optional *does* contain a value,
 you can access its underlying value
 by adding an exclamation mark (``!``) to the end of the optional's name.
 The exclamation mark effectively says,
-“I know that this optional definitely has a value – please use it”.
+“I know that this optional definitely has a value – please use it.”
 
 .. testcode:: optionals
 
-    --> if convertedNumber {
-            println("\(possibleNumber) has an integer value of \(convertedNumber!)")
-        } else {
-            println("\(possibleNumber) could not be converted to an integer")
-        }
-    <-- 123 has an integer value of 123
+   -> if convertedNumber {
+         println("\(possibleNumber) has an integer value of \(convertedNumber!)")
+      } else {
+         println("\(possibleNumber) could not be converted to an integer")
+      }
+   <- 123 has an integer value of 123
 
 ``if``-``else`` statements are described in more detail in :doc:`ControlFlow`.
 
 .. note::
 
-    Trying to use ``!`` to access a non-existent optional value will trigger
-    an unrecoverable runtime error.
+   Trying to use ``!`` to access a non-existent optional value will trigger
+   an unrecoverable runtime error.
 
 .. _BasicTypes_OptionalBinding:
 
@@ -813,20 +845,20 @@ Optional bindings for the ``if``-``else`` statement are written in the following
 
 ::
 
-    if let <#newNamedValue#> = <#someOptional#> {
-        <#statements#>
-    }
+   if let <#newNamedValue#> = <#someOptional#> {
+      <#statements#>
+   }
 
 The example from above can be can be rewritten to use optional binding:
 
 .. testcode:: optionals
 
-    --> if let actualNumber = possibleNumber.toInt() {
-            println("\(possibleNumber) has an integer value of \(actualNumber)")
-        } else {
-            println("\(possibleNumber) could not be converted to an integer")
-        }
-    <-- 123 has an integer value of 123
+   -> if let actualNumber = possibleNumber.toInt() {
+         println("\(possibleNumber) has an integer value of \(actualNumber)")
+      } else {
+         println("\(possibleNumber) could not be converted to an integer")
+      }
+   <- 123 has an integer value of 123
 
 As before, this example uses the ``toInt()`` method from ``String``
 to try and convert ``"123"`` into an ``Int``.
@@ -853,35 +885,32 @@ would be made available as a variable rather than a constant.
 
 .. note::
 
-    Constants or variables created via optional binding
-    are only available within the code block following their creation,
-    as in the first branch of the ``if``-``else`` statement above.
-    If you want to work with the optional's value outside of this code block,
-    you should declare a constant or variable yourself
-    before the ``if``-``else`` statement begins.
-
-.. TODO: Add a section about arrays and dictionaries once their design is more tied down.
+   Constants or variables created via optional binding
+   are only available within the code block following their creation,
+   as in the first branch of the ``if``-``else`` statement above.
+   If you want to work with the optional's value outside of this code block,
+   you should declare a constant or variable yourself
+   before the ``if``-``else`` statement begins.
 
 .. refnote:: References
 
-    * https://[Internal Staging Server]/docs/LangRef.html#integer_literal ✔︎
-    * https://[Internal Staging Server]/docs/LangRef.html#floating_literal ✔︎
-    * https://[Internal Staging Server]/docs/LangRef.html#expr-delayed-identifier ✔︎
-    * https://[Internal Staging Server]/docs/LangRef.html#type-tuple
-    * https://[Internal Staging Server]/docs/whitepaper/TypesAndValues.html#types-and-values ✔︎
-    * https://[Internal Staging Server]/docs/whitepaper/TypesAndValues.html#integer-types ✔︎
-    * https://[Internal Staging Server]/docs/whitepaper/TypesAndValues.html#no-integer-suffixes ✔︎
-    * https://[Internal Staging Server]/docs/whitepaper/TypesAndValues.html#no-implicit-integer-promotions-or-conversions ✔︎
-    * https://[Internal Staging Server]/docs/whitepaper/TypesAndValues.html#no-silent-truncation-or-undefined-behavior
-    * https://[Internal Staging Server]/docs/whitepaper/TypesAndValues.html#separators-in-literals ✔︎
-    * https://[Internal Staging Server]/docs/whitepaper/TypesAndValues.html#floating-point-types ✔︎
-    * https://[Internal Staging Server]/docs/whitepaper/TypesAndValues.html#bool ✔︎
-    * https://[Internal Staging Server]/docs/whitepaper/TypesAndValues.html#tuples
-    * https://[Internal Staging Server]/docs/whitepaper/TypesAndValues.html#arrays
-    * https://[Internal Staging Server]/docs/whitepaper/LexicalStructure.html#identifiers-and-operators
-    * https://[Internal Staging Server]/docs/whitepaper/LexicalStructure.html#integer-literals
-    * https://[Internal Staging Server]/docs/whitepaper/LexicalStructure.html#floating-point-literals
-    * https://[Internal Staging Server]/docs/whitepaper/GuidedTour.html#declarations-and-basic-syntax
-    * https://[Internal Staging Server]/docs/whitepaper/GuidedTour.html#tuples
-    * https://[Internal Staging Server]/docs/literals.html
-    * http://en.wikipedia.org/wiki/Operator_(computer_programming)
+   * https://[Internal Staging Server]/docs/LangRef.html#integer_literal ✔︎
+   * https://[Internal Staging Server]/docs/LangRef.html#floating_literal ✔︎
+   * https://[Internal Staging Server]/docs/LangRef.html#expr-delayed-identifier ✔︎
+   * https://[Internal Staging Server]/docs/LangRef.html#type-tuple
+   * https://[Internal Staging Server]/docs/whitepaper/TypesAndValues.html#types-and-values ✔︎
+   * https://[Internal Staging Server]/docs/whitepaper/TypesAndValues.html#integer-types ✔︎
+   * https://[Internal Staging Server]/docs/whitepaper/TypesAndValues.html#no-integer-suffixes ✔︎
+   * https://[Internal Staging Server]/docs/whitepaper/TypesAndValues.html#no-implicit-integer-promotions-or-conversions ✔︎
+   * https://[Internal Staging Server]/docs/whitepaper/TypesAndValues.html#no-silent-truncation-or-undefined-behavior
+   * https://[Internal Staging Server]/docs/whitepaper/TypesAndValues.html#separators-in-literals ✔︎
+   * https://[Internal Staging Server]/docs/whitepaper/TypesAndValues.html#floating-point-types ✔︎
+   * https://[Internal Staging Server]/docs/whitepaper/TypesAndValues.html#bool ✔︎
+   * https://[Internal Staging Server]/docs/whitepaper/TypesAndValues.html#tuples
+   * https://[Internal Staging Server]/docs/whitepaper/LexicalStructure.html#identifiers-and-operators
+   * https://[Internal Staging Server]/docs/whitepaper/LexicalStructure.html#integer-literals
+   * https://[Internal Staging Server]/docs/whitepaper/LexicalStructure.html#floating-point-literals
+   * https://[Internal Staging Server]/docs/whitepaper/GuidedTour.html#declarations-and-basic-syntax
+   * https://[Internal Staging Server]/docs/whitepaper/GuidedTour.html#tuples
+   * https://[Internal Staging Server]/docs/literals.html
+   * http://en.wikipedia.org/wiki/Operator_(computer_programming)

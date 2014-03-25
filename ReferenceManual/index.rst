@@ -10,13 +10,12 @@ Reference Manual
     Expressions
     Statements
     Declarations
+    Attributes
     Patterns
     Generics
     zzSummaryOfTheGrammar
 
 .. docnote:: To be included?
 
-    * Phases of Translation (maybe include this in the introduction?)
     * Name Binding
-    * Type Checking
     * Standard Library
