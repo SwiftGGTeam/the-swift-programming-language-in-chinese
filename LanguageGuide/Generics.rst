@@ -202,7 +202,7 @@ This also makes it less likely that the name you choose will clash with an actua
 
 Traditionally, the first type to be specified as a generic parameter is given the name ``T``,
 followed by ``U``, then ``V``, and so on.
-The choice of name to use is entirely up to yourself, however.
+The choice of name to use is entirely up to you, however.
 
 .. note::
 
