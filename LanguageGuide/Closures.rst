@@ -14,66 +14,68 @@ Closures
 
 .. write-me::
 
-.. testcode:: closures
+.. named functions can be nested inside other named functions
+.. closures can have an variadic parameter
+.. closure parameters can be inout
+.. types can be inferred
 
-    --> let strings = ["Alex", "Barry", "Chris", "Daniella", "Ewa"]
-    <<< // strings : String[] = ["Alex", "Barry", "Chris", "Daniella", "Ewa"]
-
-.. testcode:: closures
-
-    --> func sort<T>(var array: T[], pred: (T, T) -> Bool) -> T[] {
-        insertionSort(&array, 0...array.count, pred)
-        return array
-    }
+.. we've "claimed" {} for functions, closures and block statements
+.. @auto-closure attribute seems to automatically make a closure over the thing assigned to it
 
 .. testcode:: closures
 
-    --> var reverseSorted = sort(strings, { 
-            (lhs: String, rhs: String) -> Bool 
-          in 
-            return lhs > rhs } )
-    <<< // reverseSorted : String[] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
+   -> let strings = ["Alex", "Barry", "Chris", "Daniella", "Ewa"]
+   << // strings : String[] = ["Alex", "Barry", "Chris", "Daniella", "Ewa"]
 
 .. testcode:: closures
 
-    --> var reverseSorted = sort(strings, { (lhs, rhs) in return lhs > rhs } )
+   -> func sort<T>(var array: T[], pred: (T, T) -> Bool) -> T[] {
+         insertionSort(&array, 0...array.count, pred)
+         return array
+      }
+
+Swift's standard library provides a ``sort()`` function,
+which takes an array of strings, together with a sorting closure,
+and uses the closure to sort the array.
+
+When sorting values of type ``String``,
+``sort()`` expects to receive a closure that has two ``String`` parameters,
+and returns a ``Bool`` value.
+The closure it expects is like a function with the following form:
+
+::
+
+   func sortingFunction(lhs: String, rhs: String) -> Bool {
+      // 
+   }
 
 .. testcode:: closures
 
-    --> var reverseSorted = sort(strings, { (lhs, rhs) in lhs > rhs } )
+   -> var reverseSorted = sort(strings, { 
+            (lhs: String, rhs: String) -> Bool in 
+         return lhs > rhs }
+      )
+   << // reverseSorted : String[] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
 
 .. testcode:: closures
 
-    --> var reverseSorted = sort(strings, { $0 > $1 } )
+   -> var reverseSorted = sort(strings, { (lhs, rhs) in return lhs > rhs } )
 
 .. testcode:: closures
 
-    --> var reverseSorted = sort(strings) { $0 > $1 } // trailing closure
+   -> var reverseSorted = sort(strings, { (lhs, rhs) in lhs > rhs } )
 
 .. testcode:: closures
 
-    --> var reverseSorted = sort(strings, > )
+   -> var reverseSorted = sort(strings, { $0 > $1 } )
 
+.. testcode:: closures
 
+   -> var reverseSorted = sort(strings) { $0 > $1 } // trailing closure
 
-Function Parameters Can Be Closures
------------------------------------
+.. testcode:: closures
 
-func reduce(values : Int[], initialValue : Int, 
- fn : (Int, Int) -> Int) -> Int {
-var result = initialValue
-for val in values {
-result = fn(result, val)
-}
-return result
-}
-
-func add(x : Int, y : Int) -> Int { return x + y }
-var myResult = reduce([1, 2, 3, 4, 5], 0, add)
-// myResult : Int = 15
-
-var myResult = reduce([1, 2, 3, 4, 5], 0, +)
-
+   -> var reverseSorted = sort(strings, > )
 
 
 
@@ -85,6 +87,40 @@ var myResult = reduce([1, 2, 3, 4, 5], 0, +)
    since "self" will be captured, not the property (as per rdar://16193162)
    we don't do this for autoclosures, however -
    see the commits comments from r14676 for the reasons why
+.. can use 'var' and 'let' for closure parameters
+.. var closure3a : ()->()->(Int,Int) = {{ (4, 2) }} // multi-level closing.
+
+.. auto-closures can also be created:
+.. var closure1 : @auto_closure () -> Int = 4  // Function producing 4 whenever it is called.
+.. from Assert.swift in stdlib/core:
+   @transparent
+   func assert(
+     condition: @auto_closure () -> Bool, message: StaticString = StaticString()
+   ) {
+   }
+.. note that an @auto_closure's argument type must always be ()
+.. see also test/expr/closure/closures.swift
+
+.. The auto_closure attribute modifies a function type,
+   changing the behavior of any assignment into (or initialization of) a value with the function type.
+   Instead of requiring that the rvalue and lvalue have the same function type,
+   an "auto closing" function type requires its initializer expression to have
+   the same type as the function's result type,
+   and it implicitly binds a closure over this expression.
+   This is typically useful for function arguments that want to
+   capture computation that can be run lazily.
+   auto_closure is only valid in a type of a syntactic function type
+   that is defined to take a syntactic empty tuple.
+
+.. <rdar://problem/16193162> Require specifying self for locations in code
+   where strong reference cycles are likely
+   This requires that property references have an explicit "self." qualifier
+   when in an explicit closure expression, since self will be captured, not the property.
+   We don't do the same for autoclosures.
+   The logic here is that autoclosures can't practically be used in capturing situations anyway,
+   since that would be extremely surprising to clients.
+   Further, forcing a syntactic requirement in an autoclosure context
+   would defeat the whole point of autoclosures: make them implicit.
 
 .. refnote:: References
 
