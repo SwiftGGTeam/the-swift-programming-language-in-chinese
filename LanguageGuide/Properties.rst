@@ -17,8 +17,8 @@ and are described in more detail below.
 
 .. note::
 
-    Computed properties can be provided by classes, structures and enumerations.
-    Stored properties can only be provided by classes and structures.
+   Computed properties can be provided by classes, structures, and enumerations.
+   Stored properties can only be provided by classes and structures.
 
 .. QUESTION: should I mention dot syntax again?
    I introduced it in Custom Types out of necessity,
@@ -38,15 +38,15 @@ or :newTerm:`constant stored properties` (introduced by the ``let`` keyword):
 
 .. testcode:: storedProperties
 
-    --> struct FixedLengthRange {
-            var firstValue: Int
-            let length: Int
-        }
-    --> var rangeOfThreeItems = FixedLengthRange(firstValue: 0, length: 3)
-    <<< // rangeOfThreeItems : FixedLengthRange = FixedLengthRange(0, 3)
-    /// the range represents integer values 0, 1, and 2
-    --> rangeOfThreeItems.firstValue = 6
-    /// the range now represents integer values 6, 7, and 8
+   -> struct FixedLengthRange {
+         var firstValue: Int
+         let length: Int
+      }
+   -> var rangeOfThreeItems = FixedLengthRange(firstValue: 0, length: 3)
+   << // rangeOfThreeItems : FixedLengthRange = FixedLengthRange(0, 3)
+   // the range represents integer values 0, 1, and 2
+   -> rangeOfThreeItems.firstValue = 6
+   // the range now represents integer values 6, 7, and 8
 
 This example defines a structure called ``FixedLengthRange``,
 which describes a range of integers
@@ -76,24 +76,24 @@ even if they were declared as variable properties:
 
 .. testcode:: storedProperties
 
-    --> let rangeOfFourItems = FixedLengthRange(firstValue: 0, length: 4)
-    <<< // rangeOfFourItems : FixedLengthRange = FixedLengthRange(0, 4)
-    /// this range represents integer values 0, 1, 2, and 3
-    --> rangeOfFourItems.firstValue = 6
-    !!! <REPL Input>:1:29: error: cannot assign to the result of this expression
-    !!! rangeOfFourItems.firstValue = 6
-    !!! ~~~~~~~~~~~~~~~~~~~~~~~~~~~ ^
-    /// this will report an error, even thought firstValue is a variable property
+   -> let rangeOfFourItems = FixedLengthRange(firstValue: 0, length: 4)
+   << // rangeOfFourItems : FixedLengthRange = FixedLengthRange(0, 4)
+   // this range represents integer values 0, 1, 2, and 3
+   -> rangeOfFourItems.firstValue = 6
+   !! <REPL Input>:1:29: error: cannot assign to the result of this expression
+   !! rangeOfFourItems.firstValue = 6
+   !! ~~~~~~~~~~~~~~~~~~~~~~~~~~~ ^
+   // this will report an error, even thought firstValue is a variable property
 
 Because ``rangeOfFourItems`` has been declared as a constant (with the ``let`` keyword),
 it is not possible to change its ``firstValue`` property,
 even though it is a variable property.
 
-This behavior is due to the fact that structures are :ref:`CustomTypes_ValueTypes`.
+This behavior is due to the fact that structures are :ref:`ClassesAndStructures_ValueTypes`.
 When an instance of a value type is marked as being a constant,
 so are all of its properties.
 
-The same is not true for classes, which are :ref:`CustomTypes_ReferenceTypes`.
+The same is not true for classes, which are :ref:`ClassesAndStructures_ReferenceTypes`.
 If you asign an instance of a reference type to a constant,
 you can still change that instance's variable properties.
 
@@ -155,38 +155,38 @@ or use the default parameter name of ``oldValue``.
 
 .. note::
 
-    ``willSet`` and ``didSet`` observers are not called when
-    a property is first initialized.
-    They are only called when the property's value is set
-    outside of an initialization context.
+   ``willSet`` and ``didSet`` observers are not called when
+   a property is first initialized.
+   They are only called when the property's value is set
+   outside of an initialization context.
 
 Here's an example of ``willSet`` and ``didSet`` in action:
 
 .. testcode:: storedProperties
 
-    --> class StepCounter {
-            var totalSteps: Int = 0 {
-                willSet(newTotalSteps) {
-                    println("About to set totalSteps to \(newTotalSteps)")
-                }
-                didSet {
-                    if totalSteps > oldValue  {
-                        println("Added \(totalSteps - oldValue) steps")
-                    }
-                }
+   -> class StepCounter {
+         var totalSteps: Int = 0 {
+            willSet(newTotalSteps) {
+               println("About to set totalSteps to \(newTotalSteps)")
             }
-        }
-    --> let stepCounter = StepCounter()
-    <<< // stepCounter : StepCounter = <StepCounter instance>
-    --> stepCounter.totalSteps = 200
-    <-/ About to set totalSteps to 200
-    <-/ Added 200 steps
-    --> stepCounter.totalSteps = 360
-    <-/ About to set totalSteps to 360
-    <-/ Added 160 steps
-    --> stepCounter.totalSteps = 896
-    <-/ About to set totalSteps to 896
-    <-/ Added 536 steps
+            didSet {
+               if totalSteps > oldValue  {
+                  println("Added \(totalSteps - oldValue) steps")
+               }
+            }
+         }
+      }
+   -> let stepCounter = StepCounter()
+   << // stepCounter : StepCounter = <StepCounter instance>
+   -> stepCounter.totalSteps = 200
+   </ About to set totalSteps to 200
+   </ Added 200 steps
+   -> stepCounter.totalSteps = 360
+   </ About to set totalSteps to 360
+   </ Added 160 steps
+   -> stepCounter.totalSteps = 896
+   </ About to set totalSteps to 896
+   </ Added 536 steps
 
 This example defines a new class called ``StepCounter``,
 which keeps track of the total number of steps that a person has taken while walking.
@@ -214,10 +214,20 @@ and the default name of ``oldValue`` is used instead.
 
 .. note::
 
-    If you assign a value to a property within its own ``didSet`` observer,
-    the new value that you assign will replace the one that was just set.
+   If you assign a value to a property within its own ``didSet`` observer,
+   the new value that you assign will replace the one that was just set.
 
 .. TODO: mention that this also works for global / local variables
+
+.. TODO: you can now observe changes to a parent property,
+   regardless of whether it is stored or not.
+   that said, at the time of writing, it only works with computed properties,
+   because stored properties cannot yet be overridden.
+   nonetheless, it should still be mentioned here,
+   and may mean that the name of this section needs to change.
+
+.. TODO: mention that you can't override to observe a read-only property,
+   as there will never be anything to actually observe
 
 .. _Properties_ComputedProperties:
 
@@ -231,34 +241,34 @@ to retrieve and set other properties and values indirectly.
 
 .. testcode:: computedProperties
 
-    --> struct Point {
-            var x = 0.0, y = 0.0
-        }
-    --> struct Size {
-            var width = 0.0, height = 0.0
-        }
-    --> struct Rect {
-            var origin = Point()
-            var size = Size()
-            var center: Point {
-                get {
-                    let centerX = origin.x + (size.width / 2)
-                    let centerY = origin.y + (size.height / 2)
-                    return Point(centerX, centerY)
-                }
-                set(newCenter) {
-                    origin.x = newCenter.x - (size.width / 2)
-                    origin.y = newCenter.y - (size.height / 2)
-                }
+   -> struct Point {
+         var x = 0.0, y = 0.0
+      }
+   -> struct Size {
+         var width = 0.0, height = 0.0
+      }
+   -> struct Rect {
+         var origin = Point()
+         var size = Size()
+         var center: Point {
+            get {
+               let centerX = origin.x + (size.width / 2)
+               let centerY = origin.y + (size.height / 2)
+               return Point(centerX, centerY)
             }
-        }
-    --> var square = Rect(origin: Point(0.0, 0.0), size: Size(10.0, 10.0))
-    <<< // square : Rect = Rect(Point(0.0, 0.0), Size(10.0, 10.0))
-    --> let initialSquareCenter = square.center
-    <<< // initialSquareCenter : Point = Point(5.0, 5.0)
-    --> square.center = Point(x: 15.0, y: 15.0)
-    --> println("square.origin is now at (\(square.origin.x), \(square.origin.y))")
-    <-- square.origin is now at (10.0, 10.0)
+            set(newCenter) {
+               origin.x = newCenter.x - (size.width / 2)
+               origin.y = newCenter.y - (size.height / 2)
+            }
+         }
+      }
+   -> var square = Rect(origin: Point(0.0, 0.0), size: Size(10.0, 10.0))
+   << // square : Rect = Rect(Point(0.0, 0.0), Size(10.0, 10.0))
+   -> let initialSquareCenter = square.center
+   << // initialSquareCenter : Point = Point(5.0, 5.0)
+   -> square.center = Point(x: 15.0, y: 15.0)
+   -> println("square.origin is now at (\(square.origin.x), \(square.origin.y))")
+   <- square.origin is now at (10.0, 10.0)
 
 This example defines three structures for working with geometric shapes:
 
@@ -292,8 +302,8 @@ which modifies the ``x`` and ``y`` values of the stored ``origin`` property,
 and moves the square to its new position.
 
 .. image:: ../images/computedProperties.png
-    :width: 400
-    :align: center
+   :width: 400
+   :align: center
 
 .. _Properties_ShorthandSetterDeclaration:
 
@@ -307,21 +317,21 @@ which takes advantage of this shorthand notation:
 
 .. testcode:: computedProperties
 
-    --> struct AlternativeRect {
-            var origin = Point()
-            var size = Size()
-            var center: Point {
-                get {
-                    let centerX = origin.x + (size.width / 2)
-                    let centerY = origin.y + (size.height / 2)
-                    return Point(centerX, centerY)
-                }
-                set {
-                    origin.x = newValue.x - (size.width / 2)
-                    origin.y = newValue.y - (size.height / 2)
-                }
+   -> struct AlternativeRect {
+         var origin = Point()
+         var size = Size()
+         var center: Point {
+            get {
+               let centerX = origin.x + (size.width / 2)
+               let centerY = origin.y + (size.height / 2)
+               return Point(centerX, centerY)
             }
-        }
+            set {
+               origin.x = newValue.x - (size.width / 2)
+               origin.y = newValue.y - (size.height / 2)
+            }
+         }
+      }
 
 .. _Properties_ReadOnlyComputedProperties:
 
@@ -336,27 +346,27 @@ but which cannot be set to a different value by users of your class or structure
 
 .. note::
 
-    Computed properties – including read-only computed properties –
-    are always declared as variable properties with the ``var`` keyword.
-    The ``let`` keyword is only ever used for constant properties,
-    to indicate that their value cannot be changed once it is set
-    as part of instance initialization.
+   Computed properties – including read-only computed properties –
+   are always declared as variable properties with the ``var`` keyword.
+   The ``let`` keyword is only ever used for constant properties,
+   to indicate that their value cannot be changed once it is set
+   as part of instance initialization.
 
 The declaration of a read-only computed property can be simplified
 by removing the ``get`` keyword:
 
 .. testcode:: computedProperties
 
-    --> struct Cuboid {
-            var width = 0.0, height = 0.0, depth = 0.0
-            var volume: Double {
-                return width * height * depth
-            }
-        }
-    --> let fourByFiveByTwo = Cuboid(4.0, 5.0, 2.0)
-    <<< // fourByFiveByTwo : Cuboid = Cuboid(4.0, 5.0, 2.0)
-    --> println("the volume of fourByFiveByTwo is \(fourByFiveByTwo.volume)")
-    <-- the volume of fourByFiveByTwo is 40.0
+   -> struct Cuboid {
+         var width = 0.0, height = 0.0, depth = 0.0
+         var volume: Double {
+            return width * height * depth
+         }
+      }
+   -> let fourByFiveByTwo = Cuboid(4.0, 5.0, 2.0)
+   << // fourByFiveByTwo : Cuboid = Cuboid(4.0, 5.0, 2.0)
+   -> println("the volume of fourByFiveByTwo is \(fourByFiveByTwo.volume)")
+   <- the volume of fourByFiveByTwo is 40.0
 
 This example defines a new structure called ``Cuboid``,
 which represents a 3D rectangular box with ``width``, ``height`` and ``depth`` properties.
@@ -370,15 +380,15 @@ to enable the outside world to discover its current calculated volume.
 
 .. note::
 
-    Read-only computed properties are not the same as constant properties.
-    They have some similarities,
-    in that neither can have their value set by external users of the class or structure,
-    but they differ considerably in how their values are retrieved.
-    Constant properties are assigned their own storage,
-    and the contents of this storage cannot be changed to a different value
-    once it has been set during initialization.
-    Read-only computed properties do not have storage assigned to them,
-    and can return any value they like at any time.
+   Read-only computed properties are not the same as constant properties.
+   They have some similarities,
+   in that neither can have their value set by external users of the class or structure,
+   but they differ considerably in how their values are retrieved.
+   Constant properties are assigned their own storage,
+   and the contents of this storage cannot be changed to a different value
+   once it has been set during initialization.
+   Read-only computed properties do not have storage assigned to them,
+   and can return any value they like at any time.
 
 .. NOTE: getters and setters are also allowed for named values
    that are not associated with a particular class or struct.

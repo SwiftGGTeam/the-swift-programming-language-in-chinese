@@ -23,7 +23,7 @@ including those that represent arrays, dictionaries, and optional values.
 .. TODO: Discuss with Jeanne: What do we call instances of the "Optional" type?
 
 Data types that are normally considered basic or primitive in other languages---
-those that represent numbers, characters, and strings---
+such as types that represent numbers, characters, and strings---
 are actually named types,
 defined and implemented in the Swift Standard Library using structures.
 Because they are named types,

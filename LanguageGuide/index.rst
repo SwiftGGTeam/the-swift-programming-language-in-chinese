@@ -2,24 +2,25 @@ Language Guide
 ==============
 
 .. toctree::
-    :maxdepth: 1
+   :maxdepth: 1
 
-    BasicTypes
-    BasicOperators
-    Strings
-    CollectionTypes
-    ControlFlow
-    Functions
-    Closures
-    Enumerations
-    CustomTypes
-    Properties
-    Methods
-    Subscripts
-    Inheritance
-    Initialization
-    TypeCasting
-    Extensions
-    Protocols
-    Generics
-    AdvancedOperators
+   BasicTypes
+   BasicOperators
+   Strings
+   CollectionTypes
+   ControlFlow
+   Functions
+   Closures
+   Enumerations
+   ClassesAndStructures
+   Properties
+   Methods
+   Subscripts
+   Inheritance
+   Initialization
+   TypeCasting
+   NestedTypes
+   Extensions
+   Protocols
+   Generics
+   AdvancedOperators
