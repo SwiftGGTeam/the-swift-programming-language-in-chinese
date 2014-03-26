@@ -626,7 +626,15 @@ String literals are of type ``String``.
 Array Literals
 ~~~~~~~~~~~~~~
 
-.. write-me::
+:newTerm:`Array literals` represent an ordered collection,
+made up of items of the same type.
+It is made up of a left square bracket (``[``),
+followed by a comma-separated list of expressions,
+followed by a right square bracket (``]``).
+The last expression in the array can be followed by an optional comma.
+
+The value of an array literal has type ``T[]``,
+where ``T`` is the type of the expressions inside it.
 
 .. syntax-grammar::
 
