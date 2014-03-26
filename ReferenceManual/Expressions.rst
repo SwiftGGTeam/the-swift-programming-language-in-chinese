@@ -3,7 +3,7 @@ Expressions
 
 
 
-.. writeme::
+.. write-me::
 
 .. TODO: Intro prose goes here.
 
@@ -58,7 +58,7 @@ Binary expressions are formed by combining
 an infix binary operator with the expressions that it takes
 as its arguments.
 
-.. writeme::
+.. write-me::
 
 .. TODO: More intro prose goes here.
 
@@ -273,7 +273,7 @@ The following are equivalent: ::
 Primary Expressions
 -------------------
 
-.. writeme::
+.. write-me::
 
 .. TODO: Intro prose goes here.
 
@@ -622,7 +622,7 @@ by applying a postfix operator or other postfix syntax
 to an expression.
 Syntactically, every primary expression is also a postfix expression.
 
-.. writeme::
+.. write-me::
 
 .. TODO: Intro prose goes here.
 
