@@ -346,7 +346,7 @@ and at the top level of a file it is the name of the current module.
 
     Grammar of a literal expression
 
-    literal-expression --> literal | ``__FILE__`` | ``__LINE__`` | ``__COLUMN__``
+    literal-expression --> literal | ``__FILE__`` | ``__LINE__`` | ``__COLUMN__`` | ``__FUNCTION__``
 
 .. _Expressions_IdentifierExpression:
 
