@@ -811,6 +811,22 @@ Subscript Expression
 Forcing an Expression's Value
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+The :newTerm:`force-value` operator may be summarized
+as "unwrap Optional or crash".
+It has the following form:
+
+.. syntax-outline::
+
+   <#expression#>!
+
+The expression must be of an Optional type.
+If its value is not ``.None``,
+this operator unwraps the otional value
+and returns it as a non-Optional.
+Otherwise, it raises a runtime error.
+
+.. TR: What exactly is the nature of the error?
+
 .. langref-grammar
 
     expr-force-value ::= expr-postfix '!'
