@@ -313,7 +313,9 @@ Literal Expression
 ~~~~~~~~~~~~~~~~~~
 
 A :newTerm:`literal expression` consists of
-either an ordinary literal (such as a string or a number)
+either an ordinary literal (such as a string or a number),
+an array literal,
+a dictionary literal,
 or one of the following special literals:
 
 ================    ======  ===============================================
@@ -335,6 +337,38 @@ and at the top level of a file it is the name of the current module.
 .. TR: Should all of these meanings be documented,
    or are some of them "internal use only" hacks?
 
+:newTerm:`Array literals` represent an ordered collection,
+made up of items of the same type.
+It has the following form:
+
+.. syntax-outline::
+
+   [<#value1#>, <#value2#>, <#...#>]
+
+The last expression in the array can be followed by an optional comma.
+The value of an array literal has type ``T[]``,
+where ``T`` is the type of the expressions inside it.
+
+.. TR: Is T[] always going to be a synonym for Array<T>?
+   Currently, the REPL uses the former for array literals,
+   but the latter matches what is used for dictionary literals.
+
+:newTerm:`Dictionary literals` represent an unordered collection of key-value pairs,
+where all the keys are of the same type
+and all the values are of the same type.
+it has the following form:
+
+.. syntax-outline::
+
+   [<#key1#>: <#value1#>, <#key2#>: <#value2#>, <#...#>]
+
+The last expression in the dictionary can be followed by an optional comma.
+An empty dictionary literal is written as ``[:]``
+to distinguish it from an empty array literal.
+The value of dictionary literal has type ``Dictionary<K,V>``,
+where ``K`` is the type of its key expressions
+and ``V`` is the type of its value expressions.
+
 .. langref-grammar
 
     expr-literal ::= integer_literal
@@ -349,7 +383,20 @@ and at the top level of a file it is the name of the current module.
 
     Grammar of a literal expression
 
-    literal-expression --> literal | ``__FILE__`` | ``__LINE__`` | ``__COLUMN__`` | ``__FUNCTION__``
+    literal-expression --> literal
+    literal-expression --> array-expression | dictionary-expression
+    literal-expression --> ``__FILE__`` | ``__LINE__`` | ``__COLUMN__`` | ``__FUNCTION__``
+
+    array-expression --> ``[`` array-expression-items-OPT ``]``
+	array-expression-items --> array-expression-item ``,``-OPT | array-expression-item ``,`` array-expression-items
+	array-expression-item --> expression
+
+	dictionary-expression --> ``[`` dictionary-expression-items ``]`` | empty-dictionary-expression
+	empty-dictionary-expression --> ``[`` ``:`` ``]``
+	dictionary-expression-items --> dictionary-expression-item ``,``-OPT | dictionary-expression-item ``,`` dictionary-expression-items
+	dictionary-expression-item --> expression ``:`` expression
+
+
 
 .. _Expressions_IdentifierExpression:
 
