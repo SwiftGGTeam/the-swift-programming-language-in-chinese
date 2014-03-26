@@ -567,6 +567,11 @@ It has the following form:
 Postfix Expressions
 -------------------
 
+:newTerm:`Postfix expressions` are formed
+by applying a postfix operator or other postfix syntax
+to an expression.
+Syntactically, every primary expression is also a postfix expression.
+
 .. writeme::
 
 .. TODO: Intro prose goes here.
