@@ -281,6 +281,12 @@ Primary Expressions
    Used to build up more complex expressions
    Not made up of sub-expressions
 
+.. NOTE: Ignoring the expr-call-suffix? bit like this
+
+    a.closure { return 0 } onError { println("error") }
+
+    This is going away along with all of the other selector stuff.
+
 .. langref-grammar
 
     expr-primary  ::= expr-literal
