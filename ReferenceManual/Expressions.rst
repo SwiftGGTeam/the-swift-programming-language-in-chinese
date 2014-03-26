@@ -332,6 +332,9 @@ inside a property getter or setter it is the name of that property,
 inside special members like ``init`` or ``subscript`` it is the name of that keyword,
 and at the top level of a file it is the name of the current module.
 
+.. TR: Should all of these meanings be documented,
+   or are some of them "internal use only" hacks?
+
 .. langref-grammar
 
     expr-literal ::= integer_literal
