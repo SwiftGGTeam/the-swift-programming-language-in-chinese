@@ -403,6 +403,11 @@ and ``V`` is the type of its value expressions.
 Identifier Expression
 ~~~~~~~~~~~~~~~~~~~~~
 
+.. FIXME
+
+   self and Self go here -- they're keywords
+
+
 .. langref-grammar
 
     expr-identifier ::= identifier generic-args?
