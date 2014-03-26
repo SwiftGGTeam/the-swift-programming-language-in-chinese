@@ -240,6 +240,29 @@ an empty array can be created by using an empty array literal:
    -> someInts = []
    // someInts is now an empty array, but is still of type Int
 
+``Array`` also provides an initializer for creating an array of a certain size
+with all of its values set to a provided default value.
+This initializer takes two arguments –
+the number of elements to be added to the new array,
+and a default value of the appropriate type:
+
+.. testcode:: arraysEmpty
+
+   -> var sixDoubles = Array<Double>(6, 0.0)
+   << // sixDoubles : Array<Double> = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+   // sixDoubles is now [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+
+Thanks to type inference, you don't actually need to specify
+the type to be stored in the ``Array`` when using this initializer,
+because it can be inferred from the default value:
+
+.. testcode:: arraysEmpty
+
+   -> var threeBools = Array(3, false)
+   << // threeBools : Array<Bool> = [false, false, false]
+   /> threeBools is inferred to be an Array<Bool>, and equals [\(threeBools[0]), \(threeBools[1]), \(threeBools[2])]
+   </ threeBools is inferred to be an Array<Bool>, and equals [false, false, false]
+
 .. TODO: func find<T : Equatable>(array: T[], value: T) -> Int?
    This is defined in Algorithm.swift,
    and gives a way to find the index of a value in an array if it exists.
