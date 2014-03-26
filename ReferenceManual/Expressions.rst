@@ -808,22 +808,21 @@ Subscript Expression
     subscript-expression --> postfix-expression ``[`` expression ``]``
 
 
-Forcing an Expression's Value
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Forced Expression
+~~~~~~~~~~~~~~~~~
 
-The :newTerm:`force-value` operator may be summarized
-as "unwrap Optional or crash".
+A :newTerm:`forced expression` unwraps an Optional value.
 It has the following form:
 
 .. syntax-outline::
 
    <#expression#>!
 
-The expression must be of an Optional type.
+The *expression* must be of an optional type.
 If its value is not ``.None``,
-this operator unwraps the otional value
-and returns it as a non-Optional.
-Otherwise, it raises a runtime error.
+the optional value is unwrapped
+and returned with the corresponding non-optional type.
+Otherwise, a runtime error is raised.
 
 .. TR: What exactly is the nature of the error?
 
