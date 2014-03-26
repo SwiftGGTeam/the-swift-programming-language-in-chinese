@@ -652,7 +652,21 @@ where ``T`` is the type of the expressions inside it.
 Dictionary Literals
 ~~~~~~~~~~~~~~~~~~~
 
-.. write-me::
+:newTerm:`Dictionary literals` represent an unordered collection of key-value pairs,
+where all the keys are of the same type
+and all the values are of the same type.
+it has the following form:
+
+.. syntax-outline::
+
+   [<#key1#>: <#value1#>, <#key2#>: <#value2#>, <#...#>]
+
+The last expression in the dictionary can be followed by an optional comma.
+An empty dictionary literal is written as ``[:]``
+to distinguish it from an empty array literal.
+The value of dictionary literal has type ``Dictionary<K,V>``,
+where ``K`` is the type of its key expressions
+and ``V`` is the type of its value expressions.
 
 .. syntax-grammar::
 
