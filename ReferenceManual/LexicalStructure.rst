@@ -628,13 +628,19 @@ Array Literals
 
 :newTerm:`Array literals` represent an ordered collection,
 made up of items of the same type.
-It is made up of a left square bracket (``[``),
-followed by a comma-separated list of expressions,
-followed by a right square bracket (``]``).
-The last expression in the array can be followed by an optional comma.
+It has the following form:
 
+.. syntax-outline::
+
+   [<#value1#>, <#value2#>, <#...#>]
+
+The last expression in the array can be followed by an optional comma.
 The value of an array literal has type ``T[]``,
 where ``T`` is the type of the expressions inside it.
+
+.. TR: Is T[] always going to be a synonym for Array<T>?
+   Currently, the REPL uses the former for array literals,
+   but the latter matches what is used for dictionary literals.
 
 .. syntax-grammar::
 
