@@ -842,11 +842,52 @@ Otherwise, a runtime error is raised.
     forced-expression --> postfix-expression ``!``
 
 
-Optional Chaining
-~~~~~~~~~~~~~~~~~
+Chained-Optional Expression
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. TODO: Better title.
-   Something like "unwrapping optional values" might work.
+An :newTerm:`chained-optional expression` provides a simplified synatax
+for using optional values in postfix expressions.
+It has the following form:
+
+.. syntax-outline::
+
+    <#expression#>?.<#member#>
+
+If the *expression* is not ``.None``,
+the optional-member expression evaluates
+to the non-optional unwrapped value of the expression
+and any chained postfix expression are evaluated normally.
+Otherwise,
+the chained-optional expression evaluates to ``.None``
+and any chained postfix expressions are ignored.
+
+Informally, all postfix expressions that follow the chained-optional expression
+and are still part of the same expression
+chain to the chained-optional expression.
+
+To determine which postfix expressions chain
+to the chained-optional expression,
+walk up the parse tree until a non-postfix expression is encountered.
+All postfix expressions below that expression
+are understood to chain to the chained-optional expression.
+
+.. TR: Confirm.
+
+.. TODO: See if this even makes sense to anyone without a linguistics background.
+
+.. LangRef
+
+   A postfix-expression E1 is said to directly chain to a
+   postfix-expression E2 if E1 is syntactically the postfix-expression base
+   of E2; note that this does not include any syntactic nesting, e.g. via
+   parentheses. E1 chains to E2 if they are the same expression or E1
+   directly chains to an expression which chains to E2. This relation has a
+   maximum, called the largest chained expression.
+
+   The largest chained expression of an expr-optional must be convertible to
+   an r-value of type U? for some type U. Note that a single expression may
+   be the largest chained expression of multiple expr-optionals.
+
 
 .. langref-grammar
 
@@ -856,10 +897,7 @@ Optional Chaining
 
    Grammar of an optional expression
 
-   optional-expression --> postfix-expression ``?``
+   chained-optional-expression --> postfix-expression ``?``
 
 .. NOTE: The fact that ? must be postfix when it's used for Optional
    is in "Lexical Structure", under the discussion of left/right binding.
-
-.. TODO: Try to re-title.  It's about chaining of optional operators,
-   not about the optional kind of chaining.
