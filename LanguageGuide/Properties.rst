@@ -416,3 +416,5 @@ Type Properties
    TypeName.propertyName; someInstance.dynamicType.propertyName;
    just plain old propertyName if you're already at a type level in that type
    (likewise for methods in the methods chapter)
+.. type properties *must* have an initializer or a getter/setter,
+   because there's no "+ initialize" during which to init them otherwise
