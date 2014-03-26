@@ -27,13 +27,6 @@ Closures
    -> let strings = ["Alex", "Barry", "Chris", "Daniella", "Ewa"]
    << // strings : String[] = ["Alex", "Barry", "Chris", "Daniella", "Ewa"]
 
-.. testcode:: closures
-
-   -> func sort<T>(var array: T[], pred: (T, T) -> Bool) -> T[] {
-         insertionSort(&array, 0...array.count, pred)
-         return array
-      }
-
 Swift's standard library provides a ``sort()`` function,
 which takes an array of strings, together with a sorting closure,
 and uses the closure to sort the array.
@@ -59,23 +52,23 @@ The closure it expects is like a function with the following form:
 
 .. testcode:: closures
 
-   -> var reverseSorted = sort(strings, { (lhs, rhs) in return lhs > rhs } )
+   -> reverseSorted = sort(strings, { (lhs, rhs) in return lhs > rhs } )
 
 .. testcode:: closures
 
-   -> var reverseSorted = sort(strings, { (lhs, rhs) in lhs > rhs } )
+   -> reverseSorted = sort(strings, { (lhs, rhs) in lhs > rhs } )
 
 .. testcode:: closures
 
-   -> var reverseSorted = sort(strings, { $0 > $1 } )
+   -> reverseSorted = sort(strings, { $0 > $1 } )
 
 .. testcode:: closures
 
-   -> var reverseSorted = sort(strings) { $0 > $1 } // trailing closure
+   -> reverseSorted = sort(strings) { $0 > $1 } // trailing closure
 
 .. testcode:: closures
 
-   -> var reverseSorted = sort(strings, > )
+   -> reverseSorted = sort(strings, > )
 
 
 
