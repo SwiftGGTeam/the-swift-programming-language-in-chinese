@@ -680,7 +680,7 @@ A :newTerm:`new expression` allocates and initializes an array
 of a given type and dimension,
 in the following form:
 
-.. syntax-outline:
+.. syntax-outline::
 
    new <#type#>[<#size#>]
 
