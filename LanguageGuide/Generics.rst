@@ -254,6 +254,12 @@ Generic Enumerations
    I'm going to have to talk about passing around types at some point,
    but that tends to blow people's brains. Might it go in here?
 
+.. generics can be extended, and the syntax is:
+   extension Array {
+      // T is available for you to use in this context
+      func doStuff() -> T { ... }
+   }
+
 .. refnote:: References
 
    * https://[Internal Staging Server]/docs/whitepaper/GuidedTour.html#generics
