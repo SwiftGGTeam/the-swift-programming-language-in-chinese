@@ -479,7 +479,7 @@ An ``Int8`` named value can store numbers between ``-128`` and ``127``,
 whereas a ``UInt8`` named value can store numbers between ``0`` and ``255``.
 A number that can be stored in one numeric type
 cannot necessarily be stored in another numeric type,
-and trying to do so is reported as an error:
+and trying to do so is reported as an error when your code is compiled:
 
 .. testcode:: namedValuesOverflowError
 
@@ -573,8 +573,8 @@ in that an integer type can be initialized with a ``Double`` or ``Float`` value:
    /> integerPi equals \(integerPi), and is inferred to be of type Int
    </ integerPi equals 3, and is inferred to be of type Int
 
-Floating-point values are always rounded towards zero
-when used to initialize a new integer value in this way.
+Floating-point values are always truncated when used to initialize a new integer value in this way.
+This means that ``4.75`` becomes ``4``, and ``-3.9`` becomes ``-3``.
 
 .. TODO: negative floating-point numbers cause an overflow when used
    to initialize an unsigned integer type.
