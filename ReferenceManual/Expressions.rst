@@ -924,17 +924,22 @@ and any chained postfix expressions are ignored.
 
 Informally, all postfix expressions that follow the chained-optional expression
 and are still part of the same expression
-chain to the chained-optional expression.
+are chained to the chained-optional expression.
+Specifically,
+a postfix expression is *directly chained* 
+to the expression that is its first part.
+A postfix expression is *chained* to an expression
+if it is either directly chained to that expression
+or if it is directly chained to another postfix expression
+that is directly chained to that expression.
 
-To determine which postfix expressions chain
-to the chained-optional expression,
-walk up the parse tree until a non-postfix expression is encountered.
-All postfix expressions below that expression
-are understood to chain to the chained-optional expression.
-
-.. TR: Confirm.
-
-.. TODO: See if this even makes sense to anyone without a linguistics background.
+For example, in the expression ``x?.foo()[7]``
+the array expression is directly chained
+to the function call expression,
+which is directly chained to the chained-optional expression.
+Both the array expression and function call expression
+are chained to the chained-optional expression;
+they are both ignored if the value of ``x`` is ``.None``.
 
 .. LangRef
 
@@ -956,7 +961,7 @@ are understood to chain to the chained-optional expression.
 
 .. syntax-grammar::
 
-   Grammar of an optional expression
+   Grammar of a chained optional expression
 
    chained-optional-expression --> postfix-expression ``?``
 
