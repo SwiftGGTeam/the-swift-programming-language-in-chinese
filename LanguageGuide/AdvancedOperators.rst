@@ -473,8 +473,9 @@ will cause an error:
    -> let x = 1
    << // x : Int = 1
    -> let y = x / 0
-   xx division by zero
-   // this causes an error
+   !! <REPL Input>:1:11: error: division by zero
+   !! let y = x / 0
+   !!           ^
  
 However, the overflow versions of these operators (``&/`` and ``&%``)
 return a value of zero if you divide by zero:
