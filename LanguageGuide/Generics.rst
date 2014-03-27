@@ -172,7 +172,7 @@ Generic Parameters
 In the example above, ``T`` is said to be a :newTerm:`generic parameter`.
 Generic parameters are a way to specify and name a placeholder type,
 and are written immediately after the function's name,
-between a less-than symbol and a greater-than symbol (such as ``<T>``).
+between a pair of matching angle brackets (such as ``<T>``).
 Multiple generic parameters can be provided, separated by commas (such as ``<T, U, V>``).
 
 Once specified,
