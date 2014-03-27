@@ -257,14 +257,15 @@ Note that these operators modify ``i``, and also return a value.
 If you only want to increment or decrement the value stored in ``i``,
 you can choose to ignore the returned value.
 However, if you *do* use the returned value,
-it will be different based on whether you used the prefix or postfix
-version of the operator:
+it will be different based on whether you used the prefix or postfix version of the operator,
+based on the following rules:
 
-* ``++i`` and ``--i`` modify ``i``, and return the *new* value
-* ``i++`` and ``i--`` modify ``i``, and return the *old* value
+* if the operator is written *before* the variable,
+  it increments the variable *before* returning its value
+* if the operator is written *after* the variable,
+  it increments the variable *after* returning its value
 
-This is important if you are using ``++`` or ``--`` to modify a variable
-while also finding out its value:
+For example:
 
 .. testcode:: arithmeticOperators
 
@@ -280,17 +281,16 @@ while also finding out its value:
    </ a is now equal to 2, but c has been set to the pre-increment value of 1
 
 In the example above,
-``let b = ++a`` sets ``b`` to the value of ``a``,
-*after* it has been incremented.
-This is why both ``a`` and ``b`` are equal to ``1``.
+``let b = ++a`` increments ``a`` *before* returning its value.
+This is why both ``a`` and ``b`` are equal to to the new value of ``1``.
 
-However, ``let c = a++`` sets ``c`` to the value of ``a`` *before* it is incremented.
-The result is that ``c`` gets the old value of ``1``,
-but ``a`` now equals ``2``.
+However, ``let c = a++`` increments ``a`` *after* returning its value.
+This means that ``c`` gets the old value of ``1``,
+and ``a`` is then updated to equal ``2``.
 
 Unless you need the specific behavior of ``i++``,
 it is recommended that you use ``++i`` and ``--i`` in all cases,
-because they have the typical expected behavior of modifying ``i``
+because they have the typical expected behavior of modifying ``i``,
 and then returning the result.
 
 .. QUESTION: is this good advice
