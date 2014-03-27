@@ -77,9 +77,16 @@ that isn't in a Private Use Area.
 After the first character,
 digits and combining Unicode characters are also allowed.
 
-.. TR: Is dollar-identifier really allowed as an identifier?
-   We use it to define anonymous-closure-argument (an expression)
-   and the tail end of a foo.$0 style dot expression.
+To use a reserved word as an identifier,
+put a backtick (:literal:`\``) before and after it.
+For example, ``class`` is not a valid identifier,
+but :literal:`\`class\`` is valid.
+The backticks are not considered part of the identifier;
+:literal:`\`x\`` and ``x`` have the same meaning.
+
+Inside a closure with no explicit parameter names,
+the parameters are implicitly named ``$0``, ``$1``, ``$2``, and so on.
+These names are valid identifiers within the scope of the closure.
 
 .. langref-grammar
 
@@ -116,29 +123,30 @@ digits and combining Unicode characters are also allowed.
     Grammar of an identifier
 
     identifier --> identifier-head identifier-characters-OPT
-    identifier --> dollar-identifier
+    identifier --> ````` identifier-head identifier-characters-OPT `````
+    identifier --> implicit-parameter-name
     identifier-list --> identifier | identifier ``,`` identifier-list
 
     identifier-head --> Upper- or lowercase letter A through Z
-    identifier-head --> U+00A8 | U+00AA | U+00AD | U+00AF | U+00B2-U+00B5 | U+00B7-U+00BA
-    identifier-head --> U+00BC-U+00BE | U+00C0-U+00D6 | U+00D8-U+00F6 | U+00F8-U+00FF
-    identifier-head --> U+0100-U+02FF | U+0370-U+167F | U+1681-U+180D | U+180F-U+1DBF
-    identifier-head --> U+1E00-U+1FFF
-    identifier-head --> U+200B-U+200D | U+202A-U+202E | U+203F-U+2040 | U+2054 | U+2060-U+206F
-    identifier-head --> U+2070-U+20CF | U+2100-U+218F | U+2460-U+24FF | U+2776-U+2793
-    identifier-head --> U+2C00-U+2DFF | U+2E80-U+2FFF
-    identifier-head --> U+3004-U+3007 | U+3021-U+302F | U+3031-U+303F | U+3040-U+D7FF
-    identifier-head --> U+F900-U+FD3D | U+FD40-U+FDCF | U+FDF0-U+FE1F | U+FE30-U+FE44
-    identifier-head --> U+FE47-U+FFFD
+    identifier-head --> U+00A8, U+00AA, U+00AD, U+00AF, U+00B2--U+00B5, or U+00B7--U+00BA
+    identifier-head --> U+00BC--U+00BE, U+00C0--U+00D6, U+00D8--U+00F6, or U+00F8--U+00FF
+    identifier-head --> U+0100--U+02FF, U+0370--U+167F, U+1681--U+180D, or U+180F--U+1DBF
+    identifier-head --> U+1E00--U+1FFF
+    identifier-head --> U+200B--U+200D, U+202A--U+202E, U+203F--U+2040, U+2054, or U+2060--U+206F
+    identifier-head --> U+2070--U+20CF, U+2100--U+218F, U+2460--U+24FF, or U+2776--U+2793
+    identifier-head --> U+2C00--U+2DFF, or U+2E80--U+2FFF
+    identifier-head --> U+3004--U+3007, U+3021--U+302F, U+3031--U+303F, or U+3040--U+D7FF
+    identifier-head --> U+F900--U+FD3D, U+FD40--U+FDCF, U+FDF0--U+FE1F, or U+FE30--U+FE44
+    identifier-head --> U+FE47--U+FFFD
 
-    identifier-head --> U+10000-U+1FFFD | U+20000-U+2FFFD | U+30000-U+3FFFD | U+40000-U+4FFFD
-    identifier-head --> U+50000-U+5FFFD | U+60000-U+6FFFD | U+70000-U+7FFFD | U+80000-U+8FFFD
-    identifier-head --> U+90000-U+9FFFD | U+A0000-U+AFFFD | U+B0000-U+BFFFD | U+C0000-U+CFFFD
-    identifier-head --> U+D0000-U+DFFFD | U+E0000-U+EFFFD
+    identifier-head --> U+10000--U+1FFFD, U+20000--U+2FFFD, U+30000--U+3FFFD, or U+40000--U+4FFFD
+    identifier-head --> U+50000--U+5FFFD, U+60000--U+6FFFD, U+70000--U+7FFFD, or U+80000--U+8FFFD
+    identifier-head --> U+90000--U+9FFFD, U+A0000--U+AFFFD, U+B0000--U+BFFFD, orU+C0000--U+CFFFD
+    identifier-head --> U+D0000--U+DFFFD, U+E0000--U+EFFFD
 
     identifier-character --> Digit 0 through 9
+    identifier-character --> U+0300--U+036F, U+1DC0--U+1DFF, U+20D0--U+20FF, or U+FE20--U+FE2F
     identifier-character --> identifier-head
-    identifier-character --> U+0300-U+036F | U+1DC0-U+1DFF | U+20D0-U+20FF | U+FE20-U+FE2F
     identifier-characters --> identifier-character identifier-characters-OPT
 
     dollar-identifier --> ``$`` decimal-digits
@@ -150,9 +158,6 @@ Keywords
 --------
 
 The following keywords are reserved and may not be used as identifiers.
-
-.. TODO: Check with Jeanne about how to format this list.
-   As a table?  As a multi-column list?  Etc.
 
 .. langref-grammar
 
@@ -194,56 +199,56 @@ The following keywords are reserved and may not be used as identifiers.
     keyword ::= '__FILE__'
     keyword ::= '__LINE__'
 
-*Keywords used in declarations and types*:
+.. NOTE: The LangRef is out of date for keywords. The list of current keywords
+	is defined in the file: swift/inclue/swift/Parse/Tokens.def
 
-``class``
-``deinit``
-``enum``
-``extension``
-``func``
-``import``
-``init``
-``let``
-``protocol``
-``static``
-``struct``
-``subscript``
-``type``
-``Type``
-``typealias``
-``var``
-``where``
+* Keywords used in declarations:
+  ``class``,
+  ``deinit``,
+  ``enum``,
+  ``extension``,
+  ``func``,
+  ``import``,
+  ``init``,
+  ``let``,
+  ``protocol``,
+  ``static``,
+  ``struct``,
+  ``subscript``,
+  ``typealias``,
+  and ``var``.
 
-*Keywords used in expressions*:
+* Keywords used in statements:
+  ``break``,
+  ``case``,
+  ``continue``,
+  ``default``,
+  ``do``,
+  ``else``,
+  ``fallthrough``,
+  ``if``,
+  ``in``,
+  ``for``,
+  ``return``,
+  ``switch``,
+  ``where``,
+  and ``while``.
 
-``as``
-``is``
-``new``
-``super``
-``self``
-``Self``
-``__COLUMN__``
-``__FILE__``
-``__LINE__``
-
-*Keywords used in statements*:
-
-``break``
-``case``
-``continue``
-``default``
-``do``
-``else``
-``if``
-``in``
-``for``
-``return``
-``switch``
-``while``
-
-In addition,
-the following keywords are used in particular contexts.
-Outside of those contexts, they may be used as identifiers.
+* Keywords used in expressions and types:
+  ``as``,
+  ``dynamicType``,
+  ``is``,
+  ``new``,
+  ``super``,
+  ``self``,
+  ``Self``,
+  ``Type``,
+  ``unowned``,
+  ``weak``,
+  ``__COLUMN__``,
+  ``__FILE__``,
+  ``__FUNCTION__``,
+  and ``__LINE__``.
 
 .. langref-grammar
 
@@ -255,21 +260,24 @@ Outside of those contexts, they may be used as identifiers.
     set
     type
 
-``associativity``
-``didSet``
-``get``
-``infix``
-``inout``
-``left``
-``mutating``
-``none``
-``operator``
-``postfix``
-``precedence``
-``prefix``
-``right``
-``set``
-``willSet``
+* Keywords reserved in particular contexts:
+  ``associativity``, 
+  ``didSet``, 
+  ``get``, 
+  ``infix``, 
+  ``inout``, 
+  ``left``, 
+  ``mutating``, 
+  ``none``, 
+  ``operator``, 
+  ``postfix``, 
+  ``precedence``, 
+  ``prefix``, 
+  ``right``, 
+  ``set``, 
+  and ``willSet``.
+  Outside the context in which they appear in the grammar,
+  they can be used as identifiers.
 
 
 .. _LexicalStructure_Literals:
@@ -279,19 +287,23 @@ Literals
 
 A :newTerm:`literal` is the source code representation of a value of an
 integer, floating-point, character, or string type.
-Here are some examples of literals::
+The following are examples of literals: ::
 
-    42 // Integer literal
-    3.14159 // Floating-point literal
-    'a' // Character literal
-    "Hello, world!" // String literal
+    42                  // Integer literal
+    3.14159             // Floating-point literal
+    'a'                 // Character literal
+    "Hello, world!"     // String literal
+    [1, 2, 3]           // Array literal
+    ['x': 10, 'y': 20]  // Dictionary literal
 
 
 .. syntax-grammar::
 
     Grammar of a literal
 
-    literal --> integer-literal | floating-point-literal | character-literal | string-literal
+    literal --> integer-literal | floating-point-literal
+    literal --> character-literal | string-literal
+    literal --> array-literal | dictionary-literal
 
 .. TR: Is the design here that integers can be turned into doubles,
    but everything else has to use an explicit constructor
@@ -404,6 +416,14 @@ Floating-Point Literals
 
 By default, floating-point literals are expressed in decimal (with no prefix),
 but they can also be expressed in hexadecimal (with a ``0x`` prefix).
+
+.. TODO: Confirm that using a Unicode special x operator below
+   rather thas just the letter x is correct.
+   This is used in the Guide too.
+   APSG entry on 'x' says to use it in screen resolutions
+   such as 600 x 800, but doesn't comment on this specific usage.
+   Developer Publications SG entry on 'x' says:
+   Used in place of a multiplication sign or the word by to describe dimensions: a 50 x 50 pixel resolution.
 
 Decimal floating-point literals consist of a sequence of decimal digits
 followed by either a decimal fraction, a decimal exponent, or both.
@@ -603,6 +623,58 @@ String literals are of type ``String``.
     I'm still going to submit it to Jeanne in its current form,
     while letting her know that it's not final.
 
+Array Literals
+~~~~~~~~~~~~~~
+
+:newTerm:`Array literals` represent an ordered collection,
+made up of items of the same type.
+It has the following form:
+
+.. syntax-outline::
+
+   [<#value1#>, <#value2#>, <#...#>]
+
+The last expression in the array can be followed by an optional comma.
+The value of an array literal has type ``T[]``,
+where ``T`` is the type of the expressions inside it.
+
+.. TR: Is T[] always going to be a synonym for Array<T>?
+   Currently, the REPL uses the former for array literals,
+   but the latter matches what is used for dictionary literals.
+
+.. syntax-grammar::
+
+    array-literal --> ``[`` array-literal-items-OPT ``]``
+	array-literal-items --> array-literal-item ``,``-OPT | array-literal-item ``,`` array-literal-items
+	array-literal-item --> expression
+
+
+Dictionary Literals
+~~~~~~~~~~~~~~~~~~~
+
+:newTerm:`Dictionary literals` represent an unordered collection of key-value pairs,
+where all the keys are of the same type
+and all the values are of the same type.
+it has the following form:
+
+.. syntax-outline::
+
+   [<#key1#>: <#value1#>, <#key2#>: <#value2#>, <#...#>]
+
+The last expression in the dictionary can be followed by an optional comma.
+An empty dictionary literal is written as ``[:]``
+to distinguish it from an empty array literal.
+The value of dictionary literal has type ``Dictionary<K,V>``,
+where ``K`` is the type of its key expressions
+and ``V`` is the type of its value expressions.
+
+.. syntax-grammar::
+
+	dictionary-literal --> ``[`` dictionary-literal-items ``]`` | empty-dictionary-literal
+	empty-dictionary-literal --> ``[`` ``:`` ``]``
+	dictionary-literal-items --> dictionary-literal-item ``,``-OPT | dictionary-literal-item ``,`` dictionary-literal-items
+	dictionary-literal-item --> expression ``:`` expression
+
 
 .. _LexicalStructure_Operators:
 
@@ -610,7 +682,8 @@ Operators
 ---------
 
 The Swift Standard Library defines a number of operators for your use,
-many of which are discussed in :doc:`../LanguageGuide/Operators`.
+many of which are discussed in :doc:`../LanguageGuide/BasicOperators`
+and :doc:`../LanguageGuide/AdvancedOperators`.
 The present section describes which characters can be used as operators.
 
 Operators are made up of one or more of the following characters:
@@ -707,9 +780,9 @@ that may then be misinterpreted as a bit shift ``>>`` operator.
    it only applies in certain grammatical constructs.
 
 To learn how to define new, custom operators,
-see :ref:`ClassesAndStructures_CustomOperators`.
+see :ref:`AdvancedOperators_CustomOperators` and :ref:`Declarations_OperatorDeclaration`.
 To learn how to overload existing operators,
-see :ref:`ClassesAndStructures_OperatorFunctions`.
+see :ref:`AdvancedOperators_OperatorFunctions`.
 
 .. langref-grammar
 
