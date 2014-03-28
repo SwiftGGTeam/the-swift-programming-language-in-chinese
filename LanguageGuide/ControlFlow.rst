@@ -61,7 +61,7 @@ which prints the first few entries in the five-times-table:
 
 Here, the collection of items being iterated is a
 closed range of numbers from ``1`` to ``5`` inclusive,
-as indicated by the use of the :ref:`BasicOperators_ClosedRangeOperator` (``..``).
+as indicated by the use of the closed range operator (``..``).
 The value of ``index`` is set to the first number in the range (``1``),
 and the statements inside the loop are executed.
 In this case, the loop only contains one statement,
@@ -111,8 +111,7 @@ The underscore character ``_``
 causes the individual values to be ignored,
 and does not provide access to the current value during each iteration of the loop.
 
-The ``for``-``in`` loop can be used with :ref:`CollectionTypes_Arrays`
-to iterate over their items:
+The ``for``-``in`` loop can be used with arrays to iterate over their items:
 
 .. testcode::
 
@@ -142,8 +141,7 @@ This can be used to iterate through the characters of a string in order:
    </ l
    </ o
 
-Iteration can also be used with :ref:`CollectionTypes_Dictionaries`
-to access their key-value pairs.
+Iteration can also be used with dictionaries to access their key-value pairs.
 Every item in a dictionary has a ``key`` property and a ``value`` property,
 which can be accessed via dot syntax:
 
@@ -161,6 +159,7 @@ which can be accessed via dot syntax:
 Items in a ``Dictionary`` may not necessarily be iterated in the same order as they were inserted.
 The contents of a ``Dictionary`` are inherently unordered,
 and iterating over them does not guarantee the order in which they will be retrieved.
+(Arrays and Dictionaries are described in more detail in :doc:`CollectionTypes`.)
 
 .. TODO: provide some advice on how to iterate over a Dictionary in order
    (perhaps sorted by key), using a predicate or array sort or some kind.
@@ -742,8 +741,7 @@ it sets an optional ``Int?`` variable (called ``possibleIntegerValue``)
 to the appropriate integer value.
 If the symbol is not recognized,
 the optional ``Int?`` is set to a value of ``.None``, meaning “no value”.
-Finally, it checks to see if a value was found,
-using an :ref:`BasicTypes_OptionalBinding`.
+Finally, it uses optional binding to check if a value was found.
 If it was, the output value is printed;
 otherwise, an error message is reported.
 
@@ -848,7 +846,7 @@ to provide a natural-language count for numbers of any size:
 Tuples
 ______
 
-Multiple values can be tested in the same ``switch`` statement using :ref:`BasicTypes_Tuples`.
+Multiple values can be tested in the same ``switch`` statement using tuples.
 Each element of the tuple can be tested against a different value or range of values.
 Alternatively, the underscore (``_``) identifier can be used to match any possible value.
 

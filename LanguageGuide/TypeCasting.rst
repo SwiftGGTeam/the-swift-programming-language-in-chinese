@@ -166,7 +166,7 @@ The result of ``item as Movie`` is of type ``Movie?``, or “optional ``Movie``�
 
 Downcasting to ``Movie`` will fail when trying to downcast
 the two ``Song`` instances in the library array.
-To cope with this, the example above uses :ref:`BasicTypes_OptionalBinding`
+To cope with this, the example above uses optional binding
 to check whether the optional ``Movie`` actually contains a value
 (i.e. to find out whether the downcast succeeded.)
 This optional binding is written “``if let movie = item as Movie``”,
@@ -194,14 +194,13 @@ whenever a ``Song`` is found in the library.
 Any and AnyObject
 -----------------
 
-Swift provides two special :ref:`ClassesAndStructures_TypeAliases`
-for working with non-specific types:
+Swift provides two special type aliases for working with non-specific types:
 
 * ``AnyObject``, which can represent an instance of any class type
 * ``Any``, which can represent an instance of any type at all,
   apart from function and closure types
 
-.. TODO: remove this note if / when rdar://16406907 is fixed.
+.. TODO: remove the note about function and closure types if / when rdar://16406907 is fixed.
 
 Here's an example of using ``Any`` to work with a mix of different types:
 

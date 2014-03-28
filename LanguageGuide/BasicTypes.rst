@@ -671,7 +671,7 @@ and ensures that the intention of a particular section of code is always made cl
    Strictly speaking, an ``if``-``else`` statement's condition expression
    can be of any type that conforms to the ``LogicValue`` protocol.
    ``Bool`` is one example of a type that conforms to this protocol,
-   but there are others, such as :ref:`BasicTypes_Optionals` below.
+   but there are others, such as :newTerm:`optionals`, described below.
    The ``LogicValue`` protocol is described in more detail in :doc:`Protocols`.
 
 .. TODO: I'm not quite happy with this yet.

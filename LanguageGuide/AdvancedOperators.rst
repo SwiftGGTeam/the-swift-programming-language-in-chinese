@@ -430,9 +430,9 @@ Here's how that looks in Swift code:
    </ willUnderflow is now equal to 255
 
 A similar underflow happens for signed integers.
-As described under :ref:`AdvancedOperators_BitwiseLeftAndRightShifts`,
-all subtraction for signed integers is performed as straight binary subtraction,
-with the sign bit included as part of the numbers being subtracted.
+All subtraction for signed integers is performed as straight binary subtraction,
+with the sign bit included as part of the numbers being subtracted
+(as described in :ref:`AdvancedOperators_BitwiseLeftAndRightShifts`).
 The smallest number that an ``Int8`` can hold is ``-128``,
 which is ``10000000`` in binary.
 Subtracting ``1`` from this binary number with the overflow operator gives a binary value of ``01111111``,
@@ -675,7 +675,7 @@ The attribute is written before the ``func`` keyword when declaring the operator
          return Vector2D(-rhs.x, -rhs.y)
       }
 
-This example implements the :ref:`BasicOperators_UnaryMinusOperator`
+This example implements the unary minus operator
 (``-a``) for ``Vector2D`` instances.
 The unary minus operator is a prefix operator,
 and so this function has to be qualified with the ``@prefix`` attribute.
@@ -706,8 +706,7 @@ performs this operation on both the ``x`` and ``y`` properties:
 Compound Assignment Operators
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-:ref:`BasicOperators_CompoundAssignmentOperators`
-combine assignment (``=``) with another operation.
+:newTerm:`Compound assignment operators` combine assignment (``=``) with another operation.
 One example is the addition assignment operator (``+=``).
 This combines addition and assignment into a single operation.
 Operator functions that implement compound assignment must be qualified with
@@ -768,9 +767,9 @@ and returns the result.
 .. note::
 
    It is not possible to overload the default
-   :ref:`BasicOperators_AssignmentOperator` (``=``).
+   assignment operator` (``=``).
    Only the compound assignment operators may be overloaded.
-   Similarly, the :ref:`BasicOperators_TernaryConditionalOperator`
+   Similarly, the ternary conditional operator
    (``a ? b : c``) may not be overloaded.
 
 .. QUESTION: some of the standard operators (such as equation and comparison)

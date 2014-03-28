@@ -167,8 +167,7 @@ Protocols can require specific instance methods to be implemented by conforming 
 These methods are written as part of the protocol's definition
 in exactly the same way as for a normal instance method definition,
 but without curly braces or a method body.
-:ref:`Functions_VariadicParameters` are allowed,
-subject to the same rules as for normal instance methods.
+Variadic parameters are allowed, subject to the same rules as for normal instance methods.
 
 .. note::
 

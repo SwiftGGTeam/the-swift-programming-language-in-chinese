@@ -22,10 +22,10 @@ to eliminate common coding errors:
   detect and disallow value overflow
 
 You can choose to opt in to value overflow behavior
-by using Swift's :newTerm:`overflow operators` (such as ``a &+ b``).
+by using Swift's overflow operators (such as ``a &+ b``).
 Overflow operators are described in :doc:`AdvancedOperators`.
 
-Swift also provides two :ref:`BasicOperators_RangeOperators`
+Swift also provides two range operators
 (``a..b`` and ``a...b``),
 which give a short-hand way to express a range of values.
 
@@ -388,13 +388,8 @@ Swift supports all of the standard C :newTerm:`comparison operators`:
 * Greater than or equal to (``a >= b``)
 * Less than or equal to (``a <= b``)
 
-.. TODO: we don't currently have identity and non-identity operators outside of Cocoa.
-   It's been decided that these will be called === and !===,
-   but they don't exist at present for Swift-pure classes.
-   They should be added to this section if and when they are implemented.
-
 These :newTerm:`identity operators` are used to test if two object named values both refer to the same object instance.
-They are described under :ref:`ClassesAndStructures_IdentityOperators` in the :doc:`ClassesAndStructures` chapter.
+They are described in more detail in :doc:`ClassesAndStructures`.
 
 Each of the comparison operators returns a ``Bool`` value to indicate whether or not the statement is true:
 
@@ -547,7 +542,7 @@ It is said to be :newTerm:`half-closed`
 because it contains its first value, but not its final value.
 
 Half-closed ranges are particularly useful when working with
-zero-based lists such as :ref:`CollectionTypes_Arrays`,
+zero-based lists such as arrays,
 where it is useful to count up to (but not including) the length of the list:
 
 .. testcode:: rangeOperators
@@ -568,6 +563,7 @@ Note that the array contains four items,
 but ``0...count`` only counts as far as ``3``
 (the index of the last item in the array),
 because it is a half-closed range.
+(Arrays are described in more detail in :ref:`CollectionTypes_Arrays`.)
 
 .. _BasicOperators_LogicalOperators:
 

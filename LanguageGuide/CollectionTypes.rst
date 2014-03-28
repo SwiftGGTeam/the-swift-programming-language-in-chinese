@@ -49,8 +49,7 @@ This enables the Swift compiler to optimize the performance of the collection.
    when they are assigned to a named value or passed to a function.
    This is different from the behavior of Cocoa's ``NSArray`` and ``NSDictionary`` classes.
    The difference between value types and reference types is covered in detail
-   in the :ref:`ClassesAndStructures_ValueTypesAndReferenceTypes` section
-   of :doc:`ClassesAndStructures`.
+   in :ref:`ClassesAndStructures_ValueTypesAndReferenceTypes`.
 
 .. _CollectionTypes_Arrays:
 
@@ -472,8 +471,7 @@ the key that you use must already be in the dictionary:
 As an alternative, you can use the dictionary's ``find()`` method
 to try and find a value for a particular key.
 The ``find()`` method returns an *optional* value
-(as described in :ref:`BasicTypes_Optionals`),
-which can be checked and unwrapped using :ref:`BasicTypes_OptionalBinding`:
+which can be checked and unwrapped using optional binding:
 
 .. testcode:: dictionariesInferred
 
@@ -483,6 +481,8 @@ which can be checked and unwrapped using :ref:`BasicTypes_OptionalBinding`:
          println("That airport is not in the airports dictionary.")
       }
    <- The name of the airport is Dublin International.
+
+(Optionals and optional binding are described in :ref:`BasicTypes_Optionals`.)
 
 You can remove a key-value pair from the dictionary by using the ``deleteKey()`` method:
 
