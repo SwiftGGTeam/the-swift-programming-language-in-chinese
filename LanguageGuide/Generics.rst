@@ -72,7 +72,7 @@ and this type can be used as the type to be stored in an ``Array``:
    </ prints "11" and "15"
 
 This example creates a new ``Array`` to store functions of type ``Int -> Int``.
-It then adds two :doc:`Closures` to the array.
+It then adds two closures to the array.
 Because the ``someFunctions`` array is known to store things that are of type ``Int -> Int``,
 Swift infers that the two closures added to the array must have a single ``Int`` parameter,
 and return an ``Int`` value.

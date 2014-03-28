@@ -268,8 +268,7 @@ Type Methods
 Subscripts
 ----------
 
-Extensions can add new :doc:`Subscripts`
-to an existing type.
+Extensions can add new subscripts to an existing type.
 This example adds an integer subscript to Swift's built-in ``Int`` type.
 This subscript ``[n]`` returns the decimal digit ``n`` places in
 from the right of the number,
@@ -328,8 +327,7 @@ as if the number had been padded with zeroes to the left:
 Nested Types
 ------------
 
-Extensions can add new :doc:`NestedTypes`
-to existing classes, structures and enumerations:
+Extensions can add new nested types to existing classes, structures and enumerations:
 
 .. testcode:: extensionsNestedTypes
 
