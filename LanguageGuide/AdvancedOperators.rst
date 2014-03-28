@@ -25,7 +25,6 @@ Bitwise NOT Operator
 The :newTerm:`bitwise NOT operator` (``~``) inverts all of the bits in a number:
 
 .. image:: ../images/bitwiseNOT.png
-   :width: 570
    :align: center
 
 The bitwise NOT operator is a prefix operator,
@@ -62,7 +61,6 @@ The :newTerm:`bitwise AND operator` (``&``) combines the bits of two numbers.
 It returns a new number whose bits are set to ``1`` only if the bits were equal to ``1`` in *both* input numbers:
 
 .. image:: ../images/bitwiseAND.png
-   :width: 570
    :align: center
 
 For example:
@@ -90,7 +88,6 @@ and returns a new number whose bits are set to ``1``
 if the bits were equal to ``1`` in *either* of the input numbers:
 
 .. image:: ../images/bitwiseOR.png
-   :width: 570
    :align: center
 
 For example:
@@ -119,7 +116,6 @@ and returns a new number whose bits are set to ``1`` where the input bits are di
 and ``0`` where the input bits are the same:
 
 .. image:: ../images/bitwiseXOR.png
-   :width: 570
    :align: center
 
 For example:
@@ -172,7 +168,6 @@ gray numbers have been discarded,
 and orange zeroes have been inserted:
 
 .. image:: ../images/bitshiftUnsigned.png
-   :width: 639
    :align: center
 
 Here's how bit shifting looks in Swift code:
@@ -265,7 +260,6 @@ counting upwards from ``0``.
 Here's how the bits inside an ``Int8`` look for the number ``4``:
 
 .. image:: ../images/bitshiftSignedFour.png
-   :width: 388
    :align: center
 
 The sign bit is ``0`` (meaning “positive”),
@@ -281,14 +275,12 @@ so this means ``2`` to the power of ``7``, or ``128``.
 Here's how the bits inside an ``Int8`` look for the number ``-4``:
 
 .. image:: ../images/bitshiftSignedMinusFour.png
-   :width: 388
    :align: center
 
 This time, the sign bit is ``1`` (meaning “negative”),
 and the seven value bits actually have a binary value of ``124`` (which is ``128 - 4``):
 
 .. image:: ../images/bitshiftSignedMinusFourValue.png
-   :width: 388
    :align: center
 
 The encoding used for negative numbers is known as a :newTerm:`two's complement` representation.
@@ -301,7 +293,6 @@ just by performing a standard binary addition of all eight bits
 and discarding anything that doesn't fit in the eight bits once you're done:
 
 .. image:: ../images/bitshiftSignedAddition.png
-   :width: 445
    :align: center
 
 The two's complement representation also means that you can
@@ -316,7 +307,6 @@ To achieve this, an extra rule is used when shifting signed integers to the righ
   rather than with a zero.
 
 .. image:: ../images/bitshiftSigned.png
-   :width: 639
    :align: center
 
 This ensures that signed integers have the same sign after they are shifted to the right,
@@ -397,7 +387,6 @@ as shown in the diagram below.
 The value that remains within the bounds of the ``UInt8`` after the overflow addition is ``00000000``, or zero:
 
 .. image:: ../images/overflowAddition.png
-   :width: 390
    :align: center
 
 .. _AdvancedOperators_ValueUnderflow:
@@ -414,7 +403,6 @@ the number will overflow back round to ``11111111``,
 or ``255`` in decimal:
 
 .. image:: ../images/overflowUnsignedSubtraction.png
-   :width: 419
    :align: center
 
 Here's how that looks in Swift code:
@@ -440,7 +428,6 @@ which toggles the sign bit and gives positive ``127``,
 the largest positive value that an ``Int8`` can hold:
 
 .. image:: ../images/overflowSignedSubtraction.png
-   :width: 419
    :align: center
 
 Here's the same thing in Swift code:
@@ -648,7 +635,6 @@ This example adds together the vectors ``(3.0, 1.0)`` and ``(2.0, 4.0)``
 to make the vector ``(5.0, 5.0)``, as illustrated below.
 
 .. image:: ../images/vectorAddition.png
-   :width: 400
    :align: center
 
 .. _AdvancedOperators_PrefixAndPostfixOperators:

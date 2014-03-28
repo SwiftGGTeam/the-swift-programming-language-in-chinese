@@ -302,7 +302,6 @@ which modifies the ``x`` and ``y`` values of the stored ``origin`` property,
 and moves the square to its new position.
 
 .. image:: ../images/computedProperties.png
-   :width: 400
    :align: center
 
 .. _Properties_ShorthandSetterDeclaration:

@@ -174,7 +174,6 @@ Here's how the remainder operator works.
 To calculate ``9 % 4``, you first work out how many ``4``\ s will fit inside ``9``:
 
 .. image:: ../images/remainderInteger.png
-   :width: 349
    :align: center
 
 You can fit two ``4``\ s inside ``9``, as this illustration shows.
@@ -233,7 +232,6 @@ In this example, ``8`` divided by ``2.5`` equals ``3``, with a remainder of ``0.
 so the remainder operator returns a ``Double`` value of ``0.5``.
 
 .. image:: ../images/remainderFloat.png
-   :width: 311
    :align: center
 
 .. _BasicOperators_IncrementAndDecrementOperators:

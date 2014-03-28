@@ -168,7 +168,6 @@ The ``grid`` array is effectively a flattened version of the matrix,
 as read from top left to bottom right:
 
 .. image:: ../images/subscriptMatrix01.png
-   :width: 488
    :align: center
 
 The ``Matrix`` subscript has a return type of ``Double?``, or “optional ``Double``”.
@@ -215,7 +214,6 @@ and ``3.2`` in the bottom left position
 (where ``row`` is ``1`` and ``column`` is ``0``):
 
 .. image:: ../images/subscriptMatrix02.png
-   :width: 300
    :align: center
 
 The subscript's setter has an implicit ``value`` parameter of type ``Double?``.
