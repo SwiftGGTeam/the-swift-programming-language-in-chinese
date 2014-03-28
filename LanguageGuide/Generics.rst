@@ -13,14 +13,14 @@ Generics
 :newTerm:`Generics` are a way to write code that can work with any type at all,
 subject to certain requirements that you choose to define.
 This enables you to write reusable code that can work with *any* type,
-including types that you yourself have not defined.
+including types that you have not defined yourself.
 
 You've actually been using generics throughout this book, even if you didn't realise it.
 Swifts ``Array`` and ``Dictionary`` types are both :newTerm:`generic collections`.
 You can create an array to hold ``Int`` values, or ``String`` values,
 or indeed any other type that can be created in Swift.
 Similarly, you can create a dictionary to store values of any specified type,
-and there are no limitations on what that type can be.
+and there are no limitations on what that type must be.
 
 ``Dictionary`` does, however, choose to place a limitation on
 the types that can be used as *keys* for a dictionary.
@@ -79,7 +79,7 @@ and return an ``Int`` value.
 This means that the two closures can be written very concisely,
 and do not need to specify their parameter or return value types.
 Instead, they can refer to their single parameter as ``$0``,
-and returning a value without needing to write the ``return`` keyword.
+and can return a value without needing to write the ``return`` keyword.
 
 The array is then iterated with a ``for``-``in`` loop.
 Each item in the array is a function,
@@ -106,16 +106,19 @@ it is useful to understand how functions can be made to work with values of any 
 Here's an example of a :newTerm:`generic function`,
 based on the ``swap()`` function from Swift's Standard Library:
 
-.. testcode:: swapOne
+.. testcode:: swapValues
 
    -> func swapValues<T>(inout a: T, inout b: T) {
          (a, b) = (b, a)
       }
 
+(There's a lot going on in this function definition, but don't worry –
+all will be explained below.)
+
 This function, called ``swapValues()``, takes two values ``a`` and ``b``,
 and swaps them. For example:
 
-.. testcode:: swapOne
+.. testcode:: swapValues
 
    -> var firstInt = 1
    << // firstInt : Int = 1
@@ -128,7 +131,7 @@ and swaps them. For example:
 This function doesn't just work with ``Int`` values, however –
 it can be used with any other type, such as a pair of ``String`` values:
 
-.. testcode:: swapOne
+.. testcode:: swapValues
 
    -> var firstString = "hello"
    << // firstString : String = "hello"
@@ -147,7 +150,7 @@ To achieve this, the ``swapValues()`` function needs to talk *generically*
 about the types it can work with.
 Here's its definition again:
 
-.. testcode:: swapTwo
+.. testcode:: swapValues
 
    -> func swapValues<T>(inout a: T, inout b: T) {
          (a, b) = (b, a)
@@ -177,17 +180,17 @@ Multiple type parameters can be provided, separated by commas (such as ``<T, U, 
 
 Once specified,
 a type parameter can be used as the type of a function's parameters
-(as in the ``swapValues()`` function),
-or as its return type,
+(such as the ``a`` and ``b`` parameters of the ``swapValues()`` function);
+as the function's return type;
 or as a type annotation within the body of the function.
 In each case, the placeholder type represented by the type parameter
-is replaced with an actual type whenever the function is called.
+is replaced with an *actual* type whenever the function is called.
 (In the ``swapValues()`` example above,
 ``T`` was replaced with ``Int`` the first time the function was called,
 and was replaced with ``String`` the second time it was called.)
 
 Note that you don't explicitly specify the type to be used when you call the function.
-You don't, for example, write ``swapTwo<Int>(x, y)``.
+You don't, for example, write ``swapValues<Int>(x, y)``.
 The type that ``T`` represents is inferred for you,
 and indeed you are not allowed to specify a type yourself.
 
@@ -208,6 +211,132 @@ The choice of name to use is entirely up to you, however.
 
    Type parameters should always have capitalized names (such as ``T``)
    to indicate that they represent a type, not a value.
+
+Generic Types
+-------------
+
+As mentioned above, Swift enables you to define your own :newTerm:`generic types`.
+These are custom classes, structures, enumerations and protocols
+that can work with *any* type, in a similar way to ``Array`` and ``Dictionary``.
+
+Here's an example of a generic type called ``Stack``.
+This represents an ordered “stack” of values, with two operations:
+
+* :newTerm:`pushing` a new value on to the top of the stack
+* :newTerm:`popping` a value off the top of the stack
+
+This illustration shows the push / pop behavior for a stack:
+
+.. image:: ../images/stackPushPop.png
+   :align: center
+
+1. There are currently three values on the stack.
+2. A fourth value is “pushed” on to the top of the stack
+3. The stack now holds four values, with the most recent one at the top.
+4. The top item in the stack is removed, or “popped”.
+5. After popping a value, the stack once again holds three values.
+
+Here's an implementation of a generic ``Stack`` class in Swift code.
+This class uses an ``Array`` property to store the values in the stack,
+and provides two methods, ``push()`` and ``pop()``,
+to push and pop values on and off the stack:
+
+.. testcode:: genericStack
+
+   -> class Stack<T> {
+         var items = Array<T>()
+         func push(item: T) {
+            items.append(item)
+         }
+         func pop() -> T {
+            return items.popLast()
+         }
+      }
+
+.. QUESTION: should Stack be a class, or a structure?
+   it does wrap an Array, after all…
+
+The ``Stack`` class can be used to create a stack of any type,
+such as a stack of ``String`` values:
+
+.. testcode:: genericStack
+
+   -> var stackOfStrings = Stack<String>()
+   << // stackOfStrings : Stack<String> = <Stack<String> instance>
+   -> stackOfStrings.push("uno")
+   -> stackOfStrings.push("dos")
+   -> stackOfStrings.push("tres")
+   -> stackOfStrings.push("cuatro")
+   /> the stack now contains \(stack.items.count) strings
+   </ the stack now contains 4 strings
+
+Here's how ``stackOfStrings`` looks after pushing these four values on to the stack:
+
+.. image:: ../images/stackPushedFourStrings.png
+   :align: center
+
+Popping a value from the stack will return and remove the top value, ``"cuatro"``:
+
+.. testcode:: genericStack
+
+   -> let fromTheTop = stackOfStrings.pop()
+   << // fromTheTop : String = "cuatro"
+   /> fromTheTop is equal to \"\(fromTheTop)\", and the stack now contains \(stack.items.count) strings
+   </ fromTheTop is equal to "cuatro", and the stack now contains 3 strings
+
+Here's how the stack looks after popping its top value:
+
+.. image:: ../images/stackPoppedOneString.png
+   :align: center
+
+Generic Type Definition Syntax
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Generic types use type parameters to provide a name for the placeholder types they work with,
+in the same way as generic functions described above.
+
+Here's how a type parameter is used within the definition of ``Stack``:
+
+.. testcode:: genericStackDefinition
+
+   -> class Stack<T> {
+         var items = Array<T>()
+         func push(item: T) {
+            items.append(item)
+         }
+         func pop() -> T {
+            return items.popLast()
+         }
+      }
+
+As with ``swapValues<T>``,
+the ``Stack`` definition includes a single type parameter called ``T``,
+written within a pair of angle brackets (``<T>``).
+This type parameter is written immediately after the class name, ``Stack``.
+
+``T`` defines a placeholder name for “some type ``T``” to be provided later on.
+This future type can be referred to as “``T``” anywhere within the class's definition.
+In this case, ``T`` is used as a placeholder in three places:
+
+1. to create a property called ``items``,
+   which is initialized with an empty array of values of type ``T``
+2. to specify that the ``push()`` method has a single parameter called ``item``,
+   which must be of type ``T``
+3. to specify that the value returned by the ``pop()`` method
+   will be a value of type ``T``
+
+This use of a placeholder type enables ``Stack`` to define the generic behavior
+of a stack of values, regardless of what type those values happen to be.
+
+As shown above, instances of ``Stack`` can be created
+in a similar way to ``Array`` and ``Dictionary``,
+by writing the actual type to be used within angle brackets after the name:
+
+.. testcode:: genericStackDefinition
+
+   -> var stackOfInts = Stack<Int>()
+   << // stackOfInts : Stack<Int> = <Stack<Int> instance>
+   -> stackOfInts.push(42)
 
 Associated Types
 ----------------
