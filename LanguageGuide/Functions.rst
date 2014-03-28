@@ -716,6 +716,7 @@ Inout Parameters
 .. write-me::
 
 .. inout properties and a general discussion of byref / byvalue
+.. presumably you can't pass a constant as the argument for an inout parameter
 
 .. _Functions_FunctionsAsParametersAndReturnTypes:
 
