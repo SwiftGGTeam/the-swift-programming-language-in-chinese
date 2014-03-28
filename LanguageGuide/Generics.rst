@@ -166,21 +166,21 @@ the ``swapValues()`` function can be confident that whatever type ``T`` represen
 both ``a`` and ``b`` are of that type.
 This enables it to provide its swapping functionality for any given type.
 
-Generic Parameters
-~~~~~~~~~~~~~~~~~~
+Type Parameters
+~~~~~~~~~~~~~~~
 
-In the example above, ``T`` is said to be a :newTerm:`generic parameter`.
-Generic parameters are a way to specify and name a placeholder type,
+In the example above, ``T`` is said to be a :newTerm:`type parameter`.
+Type parameters are a way to specify and name a placeholder type,
 and are written immediately after the function's name,
 between a pair of matching angle brackets (such as ``<T>``).
-Multiple generic parameters can be provided, separated by commas (such as ``<T, U, V>``).
+Multiple type parameters can be provided, separated by commas (such as ``<T, U, V>``).
 
 Once specified,
-a generic parameter can be used as the type of a function's parameters
+a type parameter can be used as the type of a function's parameters
 (as in the ``swapValues()`` function),
 or as its return type,
 or as a type annotation within the body of the function.
-In each case, the placeholder type represented by the generic parameter
+In each case, the placeholder type represented by the type parameter
 is replaced with an actual type whenever the function is called.
 (In the ``swapValues()`` example above,
 ``T`` was replaced with ``Int`` the first time the function was called,
@@ -191,22 +191,22 @@ You don't, for example, write ``swapTwo<Int>(x, y)``.
 The type that ``T`` represents is inferred for you,
 and indeed you are not allowed to specify a type yourself.
 
-Naming of Generic Parameters
-____________________________
+Naming of Type Parameters
+_________________________
 
-The choice of ``T`` as a generic parameter name is slightly arbitrary.
+The choice of ``T`` as a type parameter name is slightly arbitrary.
 You could just as easily name the parameter ``SomeType``, or ``TypeThatIsNotYetKnown``,
 but it is generally briefer and clearer to use a short, single-letter name
-as the name for a placeholder parameter.
+as the name for a placeholder type parameter.
 This also makes it less likely that the name you choose will clash with an actual type name.
 
-Traditionally, the first type to be specified as a generic parameter is given the name ``T``,
+Traditionally, the first type to be specified as a type parameter is given the name ``T``,
 followed by ``U``, then ``V``, and so on.
 The choice of name to use is entirely up to you, however.
 
 .. note::
 
-   Generic parameters should always have capitalized names (such as ``T``)
+   Type parameters should always have capitalized names (such as ``T``)
    to indicate that they represent a type, not a value.
 
 Associated Types
