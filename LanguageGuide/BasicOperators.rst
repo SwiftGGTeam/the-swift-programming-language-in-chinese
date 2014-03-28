@@ -386,8 +386,11 @@ Swift supports all of the standard C :newTerm:`comparison operators`:
 * Greater than or equal to (``a >= b``)
 * Less than or equal to (``a <= b``)
 
-These :newTerm:`identity operators` are used to test if two object named values both refer to the same object instance.
-They are described in more detail in :doc:`ClassesAndStructures`.
+.. note::
+
+   Swift also provides two :newTerm:`identity operators` (``===`` and ``!==``),
+   which are used to test if two object named values both refer to the same object instance.
+   These identity operators are described in more detail in :doc:`ClassesAndStructures`.
 
 Each of the comparison operators returns a ``Bool`` value to indicate whether or not the statement is true:
 
