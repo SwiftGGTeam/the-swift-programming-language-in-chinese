@@ -403,7 +403,6 @@ and ``V`` is the type of its value expressions.
 	dictionary-expression-item --> expression ``:`` expression
 
 
-
 .. _Expressions_IdentifierExpression:
 
 Identifier Expression
@@ -815,7 +814,7 @@ and the identifier of its member.
 
 .. TR: Is this list exhaustive?  Or are there other things that can use dots?
 
-.. syntax-grammar::
+.. syntax-outline::
 
    <#expression#>.<#member name#>
 
@@ -898,7 +897,7 @@ Otherwise, a runtime error is raised.
 
 .. syntax-grammar::
 
-    Grammar of a force-value expression
+    Grammar of a forced-value expression
 
     forced-expression --> postfix-expression ``!``
 
@@ -912,7 +911,7 @@ It has the following form:
 
 .. syntax-outline::
 
-    <#expression#>?.<#member#>
+    <#expression#>?<#postfix operators#>
 
 If the *expression* is not ``.None``,
 the optional-member expression evaluates
