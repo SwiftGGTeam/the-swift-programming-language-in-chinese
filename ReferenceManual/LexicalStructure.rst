@@ -30,7 +30,13 @@ space (U+0020),
 line feed (U+000A),
 carriage return (U+000D),
 horizontal tab (U+0009),
+vertical tab (U+000B),
+form feed (U+000C)
 and null (U+0000).
+
+.. Whitespace characters are listed roughly from
+   most salient/common to least,
+   not in order of Unicode codepoints.
 
 Comments are treated as whitespace by the compiler.
 Single line comments begin with `//`
