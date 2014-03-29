@@ -150,7 +150,7 @@ To achieve this, the ``swapValues()`` function needs to talk *generically*
 about the types it can work with.
 Here's its definition again:
 
-.. testcode:: swapValues
+.. testcode:: swapValuesAgain
 
    -> func swapValues<T>(inout a: T, inout b: T) {
          (a, b) = (b, a)
@@ -239,7 +239,9 @@ This illustration shows the push / pop behavior for a stack:
 Here's an implementation of a generic ``Stack`` class in Swift code.
 This class uses an ``Array`` property to store the values in the stack,
 and provides two methods, ``push()`` and ``pop()``,
-to push and pop values on and off the stack:
+to push and pop values on and off the stack.
+(Don't worry too much about the details of this implementation for now –
+a full explanation of how ``Stack`` is defined will be given below.)
 
 .. testcode:: genericStack
 
@@ -256,6 +258,11 @@ to push and pop values on and off the stack:
 .. QUESTION: should Stack be a class, or a structure?
    it does wrap an Array, after all…
 
+.. QUESTION: should Stack's pop() method include bounds checking?
+   I haven't yet introduced assert()…
+
+.. TODO: describe the fact that Array has a popLast() method
+
 The ``Stack`` class can be used to create a stack of any type,
 such as a stack of ``String`` values:
 
@@ -267,7 +274,7 @@ such as a stack of ``String`` values:
    -> stackOfStrings.push("dos")
    -> stackOfStrings.push("tres")
    -> stackOfStrings.push("cuatro")
-   /> the stack now contains \(stack.items.count) strings
+   /> the stack now contains \(stackOfStrings.items.count) strings
    </ the stack now contains 4 strings
 
 Here's how ``stackOfStrings`` looks after pushing these four values on to the stack:
@@ -281,13 +288,17 @@ Popping a value from the stack will return and remove the top value, ``"cuatro"`
 
    -> let fromTheTop = stackOfStrings.pop()
    << // fromTheTop : String = "cuatro"
-   /> fromTheTop is equal to \"\(fromTheTop)\", and the stack now contains \(stack.items.count) strings
+   /> fromTheTop is equal to \"\(fromTheTop)\", and the stack now contains \(stackOfStrings.items.count) strings
    </ fromTheTop is equal to "cuatro", and the stack now contains 3 strings
 
 Here's how the stack looks after popping its top value:
 
 .. image:: ../images/stackPoppedOneString.png
    :align: center
+
+Because it is a generic type,
+``Stack`` can now be used to create a stack of *any* valid type in Swift,
+in a similar manner to ``Array`` and ``Dictionary``.
 
 Generic Type Definition Syntax
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -326,11 +337,11 @@ In this case, ``T`` is used as a placeholder in three places:
    will be a value of type ``T``
 
 This use of a placeholder type enables ``Stack`` to define the generic behavior
-of a stack of values, regardless of what type those values happen to be.
+of a stack of values, regardless of what type those values happen to be for a particular stack.
 
-As shown above, instances of ``Stack`` can be created
-in a similar way to ``Array`` and ``Dictionary``,
-by writing the actual type to be used within angle brackets after the name:
+Instances of ``Stack`` are created in a similar way to ``Array`` and ``Dictionary``,
+by writing the actual type to be used for this specific stack within angle brackets
+after the variable name:
 
 .. testcode:: genericStackDefinition
 
@@ -338,28 +349,143 @@ by writing the actual type to be used within angle brackets after the name:
    << // stackOfInts : Stack<Int> = <Stack<Int> instance>
    -> stackOfInts.push(42)
 
+Type Constraints
+----------------
+
+The ``swapValues()`` function, and the ``Stack`` type,
+are both able to work with any type at all.
+However, it can sometimes be useful to enforce
+certain :newTerm:`type constraints` on the types that can be used with
+generic functions and generic types.
+
+As mentioned earlier,
+Swift's ``Dictionary`` puts a constraint on the types that can be used as its keys.
+Specifically, it requires that the keys must conform to the ``Hashable`` protocol.
+You can define your own constraints when creating custom generic types,
+and these constraints provide much of the power of generic programming.
+Abstract concepts like ``Hashable``
+give a way to talk about types in terms of their conceptual characteristics,
+rather than their explicit type.
+
+Here's a non-generic function called ``findInt()``,
+which is given an ``Int`` value to find,
+and an array of ``Int`` values within which to find it.
+The ``findInt()`` function returns an optional ``Int`` value,
+which will be the index of the first matching value in the array if it is found,
+or ``.None`` if the value could not be found:
+
+.. testcode:: typeConstraints
+
+   -> func findInt(array: Array<Int>, valueToFind: Int) -> Int? {
+         var index = 0
+         for integer in array {
+            if integer == valueToFind {
+               return index
+            }
+            ++index
+         }
+         return .None
+      }
+
+The ``findInt()`` function can now be used to find an integer value in an array of integers:
+
+.. testcode:: typeConstraints
+
+   -> let integers = [-6, 0, -27, 3, 2001]
+   << // integers : Int[] = [-6, 0, -27, 3, 2001]
+   -> if let foundIndex = findInt(integers, -27) {
+         println("The index of -27 is \(foundIndex)")
+      }
+   <- The index of -27 is 2
+
+The principle of finding a value in an array isn't just useful for integers, however.
+We could try and write the same functionality as a generic function called ``findValue()``,
+by replacing anything that mentions integers to talk about values of some type ``T`` instead.
+Here's how a generic version of ``findInt()``, called ``findValue()``, might be written:
+
+.. testcode:: typeConstraints
+
+   -> func findValue<T>(array: Array<T>, valueToFind: T) -> Int? {
+         var index = 0
+         for value in array {
+            if value == valueToFind {
+               return index
+            }
+            ++index
+         }
+         return .None
+      }
+   !! <REPL Input>:4:14: error: expression does not type-check
+   !!              if value == valueToFind {
+   !!                 ~~~~~~^~~~~~~~~~~~~~
+
+(Note that the return type is still ``Int?``,
+because the function returns an optional index number,
+not an optional value from the array.)
+
+However, this function will not compile as written above.
+The problem lies with the equality check, “``if value == valueToFind``”.
+Not every type in Swift can be compared with the equality operator (``==``).
+If you create your own class or structure to represent a complex data model, for example,
+then the meaning of “equality” for that class or structure
+is not something that Swift can guess for you.
+Because of this, it is not possible to guarantee that this code will work
+for *every* possible type ``T``,
+and an appropriate error is reported when you try and compile the code.
+
+All is not lost, however.
+Swift's Standard Library defines a protocol called ``Equatable``,
+which requires any conforming type to implement the equality operator
+to compare any two values of that type.
+(All of Swift's standard types automatically support the ``Equatable`` protocol,
+and you can make your own types conform to ``Equatable`` too,
+as described in :ref:`AdvancedOperators_ProtocolOperatorRequirements`.)
+
+.. TODO: will the way to do this *actually* be described there?
+
+Any type that is ``Equatable`` can safely be used with the ``findValue()`` function,
+because it is guaranteed to support the equality operator.
+To express this fact, you can write a type constraint of ``Equatable``
+as part of the type parameter's definition when you define the function:
+
+.. testcode:: typeConstraintsEquatable
+
+   -> func findValue<T: Equatable>(array: Array<T>, valueToFind: T) -> Int? {
+         var index = 0
+         for value in array {
+            if value == valueToFind {
+               return index
+            }
+            ++index
+         }
+         return .None
+      }
+
+The type parameter here has been written as ``<T: Equatable>``,
+which means “any type ``T`` that is ``Equatable``.”
+
+The ``findValue()`` function now compiles successfully,
+and can be used with any type that is ``Equatable``, such as ``Double`` or ``String``:
+
+.. testcode:: typeConstraintsEquatable
+
+   -> let doubleIndex = findValue([3.14159, 0.1, 0.25], 9.3)
+   << // doubleIndex : Int? = <unprintable value>
+   /> doubleIndex is an optional Int with no value, because 9.3 is not in the array
+   </ doubleIndex is an optional Int with no value, because 9.3 is not in the array
+   -> let stringIndex = findValue(["Mike", "Malcolm", "Bunny"], "Bunny")
+   << // stringIndex : Int? = <unprintable value>
+   /> stringIndex is an optional Int containing a value of \(stringIndex!)
+   </ stringIndex is an optional Int containing a value of 2
+
+.. providing different type parameters on individual methods within a generic type
+.. likewise providing type parameters for initializers
+.. requirements can be inheritance clauses as well as protocol conformance clauses
+
 Associated Types
 ----------------
 
 .. write-me::
-
-Using “Self” in a Protocol
---------------------------
-
-.. write-me::
-
-.. Self as the dynamic type of the current type that is implementing the protocols
-
-Operators
----------
-
-.. write-me::
-
-.. Protocols can require the implementation of operators (though assignment operators are broken)
-.. Likewise for requiring custom operators
-.. However, Doug thought that this might be better covered by Generics,
-   where you know that two things are definitely of the same type.
-   Perhaps mention it here, but don't actually show an example?
 
 Subscripts
 ----------
@@ -368,11 +494,6 @@ Subscripts
 
 .. Protocols can require conforming types to provide specific subscripts
 .. These typically return a value of type T, which is why I've moved this here
-
-Collections
------------
-
-.. Describe how to create a Stack<T> as an example of custom collections
 
 Generic Enumerations
 --------------------
