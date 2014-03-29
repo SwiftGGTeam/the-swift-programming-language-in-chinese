@@ -236,40 +236,39 @@ This illustration shows the push / pop behavior for a stack:
 4. The top item in the stack is removed, or “popped”.
 5. After popping a value, the stack once again holds three values.
 
-Here's an implementation of a generic ``Stack`` class in Swift code.
-This class uses an ``Array`` property to store the values in the stack,
+Here's an implementation of a generic ``Stack`` structure in Swift code.
+This structure uses an ``Array`` property called ``items`` to store the values in the stack,
 and provides two methods, ``push()`` and ``pop()``,
 to push and pop values on and off the stack.
+These methods are marked as ``mutating``,
+because they need to modify (or *mutate*) the structure's ``items`` array.
 (Don't worry too much about the details of this implementation for now –
 a full explanation of how ``Stack`` is defined will be given below.)
 
 .. testcode:: genericStack
 
-   -> class Stack<T> {
+   -> struct Stack<T> {
          var items = Array<T>()
-         func push(item: T) {
+         mutating func push(item: T) {
             items.append(item)
          }
-         func pop() -> T {
+         mutating func pop() -> T {
             return items.popLast()
          }
       }
-
-.. QUESTION: should Stack be a class, or a structure?
-   it does wrap an Array, after all…
 
 .. QUESTION: should Stack's pop() method include bounds checking?
    I haven't yet introduced assert()…
 
 .. TODO: describe the fact that Array has a popLast() method
 
-The ``Stack`` class can be used to create a stack of any type,
+The ``Stack`` structure can be used to create a stack of any type,
 such as a stack of ``String`` values:
 
 .. testcode:: genericStack
 
    -> var stackOfStrings = Stack<String>()
-   << // stackOfStrings : Stack<String> = <Stack<String> instance>
+   << // stackOfStrings : Stack<String> = Stack<String>([])
    -> stackOfStrings.push("uno")
    -> stackOfStrings.push("dos")
    -> stackOfStrings.push("tres")
@@ -310,12 +309,12 @@ Here's how a type parameter is used within the definition of ``Stack``:
 
 .. testcode:: genericStackDefinition
 
-   -> class Stack<T> {
+   -> struct Stack<T> {
          var items = Array<T>()
-         func push(item: T) {
+         mutating func push(item: T) {
             items.append(item)
          }
-         func pop() -> T {
+         mutating func pop() -> T {
             return items.popLast()
          }
       }
@@ -323,10 +322,10 @@ Here's how a type parameter is used within the definition of ``Stack``:
 As with ``swapValues<T>``,
 the ``Stack`` definition includes a single type parameter called ``T``,
 written within a pair of angle brackets (``<T>``).
-This type parameter is written immediately after the class name, ``Stack``.
+This type parameter is written immediately after the structure name, ``Stack``.
 
 ``T`` defines a placeholder name for “some type ``T``” to be provided later on.
-This future type can be referred to as “``T``” anywhere within the class's definition.
+This future type can be referred to as “``T``” anywhere within the structure's definition.
 In this case, ``T`` is used as a placeholder in three places:
 
 1. to create a property called ``items``,
@@ -346,7 +345,7 @@ after the variable name:
 .. testcode:: genericStackDefinition
 
    -> var stackOfInts = Stack<Int>()
-   << // stackOfInts : Stack<Int> = <Stack<Int> instance>
+   << // stackOfInts : Stack<Int> = Stack<Int>([])
    -> stackOfInts.push(42)
 
 Type Constraints
