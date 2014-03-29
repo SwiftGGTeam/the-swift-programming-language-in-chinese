@@ -872,3 +872,21 @@ and associativity settings can be found in the :doc:`../ReferenceManual/index`.)
    This is being tracked as rdar://16061044.
    If this Radar is fixed, the operator declaration above should be split over multiple lines
    for consistency with the rest of the code.
+
+.. _AdvancedOperators_ProtocolOperatorRequirements:
+
+Protocol Operator Requirements
+------------------------------
+
+.. write-me::
+
+.. Protocols can require the implementation of operators (though assignment operators are broken)
+.. Likewise for requiring custom operators
+.. However, Doug thought that this might be better covered by Generics,
+   where you know that two things are definitely of the same type.
+   Perhaps mention it here, but don't actually show an example?
+.. Self as the dynamic type of the current type that is implementing the protocols
+   protocol Comparable {
+      func <(Self, Self) -> Bool
+   }
+.. generic operators
