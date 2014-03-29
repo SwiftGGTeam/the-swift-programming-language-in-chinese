@@ -272,6 +272,15 @@ you should always use ``Int`` for code consistency and interoperability.
 Even on 32-bit platforms, ``Int`` can store any value between ``-2,147,483,648`` and ``2,147,483,647``,
 and is large enough for many integer ranges.
 
+.. TODO mention UInt here too.
+   [Contributor 7746] says it should have the same caveats as Int8 and friends:
+   Int should be preferred over UInt,
+   *unless* you specifically need a word-sized unsigned quantity
+   because you're doing something specialized.
+   You should specifically say something like
+   "Don't use this for values that you know are logically positive,
+   still prefer to use Int for that to provide more consistent type inference".
+
 .. _BasicTypes_FloatingPointNumbers:
 
 Floating-Point Numbers
