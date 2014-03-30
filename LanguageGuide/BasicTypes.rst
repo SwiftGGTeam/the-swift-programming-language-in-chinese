@@ -301,14 +301,23 @@ you should always use ``Int`` for code consistency and interoperability.
 Even on 32-bit platforms, ``Int`` can store any value between ``-2,147,483,648`` and ``2,147,483,647``,
 and is large enough for many integer ranges.
 
-.. TODO mention UInt here too.
-   [Contributor 7746] says it should have the same caveats as Int8 and friends:
-   Int should be preferred over UInt,
-   *unless* you specifically need a word-sized unsigned quantity
-   because you're doing something specialized.
-   You should specifically say something like
-   "Don't use this for values that you know are logically positive,
-   still prefer to use Int for that to provide more consistent type inference".
+UInt
+~~~~
+
+Swift also provides an unsigned integer type, ``UInt``,
+which has the same size as the current platform's architecture:
+
+* On a 32-bit platform, ``UInt`` is the same size as ``UInt32``.
+* On a 64-bit platform, ``UInt`` is the same size as ``UInt64``.
+
+.. note::
+
+   ``UInt`` should only be used when you specifically need
+   an unsigned integer type with the same size as the platform's architecture.
+   If this is not the case, ``Int`` should be preferred,
+   even when the values to be stored are known to be non-negative.
+   A consistent use of ``Int`` for integer values helps with code interoperability,
+   and provides consistency when using type inference, as described below.
 
 .. _BasicTypes_FloatingPointNumbers:
 
