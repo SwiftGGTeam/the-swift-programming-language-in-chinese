@@ -238,6 +238,35 @@ and escaped with a backslash before the opening parenthesis:
 .. TODO: this still doesn't talk about all of the things that string interpolation can do.
    It should still be covered in more detail in the Strings and Characters chapter.
 
+Comments
+--------
+
+As you may have noticed from the examples above…
+
+::
+
+   // …single-line comments begin with two forward-slashes, like in C.
+
+You can also write multi-line comments…
+
+::
+
+   /* …which start with a forward-slash followed by an asterisk,
+      and end with an asterisk followed by a forward-slash, also like C. */
+
+Unlike C, multi-line comments can also be nested:
+
+::
+
+   /* This is done by starting a new block of comments,
+      /* then starting another new block inside of the first block.
+      The second block is then closed… */
+   …followed by the original block. */
+
+.. TODO: These multiline comments can't be tested by swifttest,
+   because they aren't supported by the REPL.
+   They should be tested manually before release.
+
 .. _BasicTypes_Integers:
 
 Integers
