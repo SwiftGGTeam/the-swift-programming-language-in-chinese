@@ -99,7 +99,6 @@ Swift helps you to avoid these kinds of errors in your code.
 
 .. TODO: Should we mention that x = y = z is also not valid?
    If so, is there a convincing argument as to why this is a good thing?
-.. TODO: Add a section about the new assignments bindings.
 
 .. _BasicOperators_ArithmeticOperators:
 
@@ -571,9 +570,13 @@ because it is a half-closed range.
 Logical Operators
 -----------------
 
-.. write-me::
+:newTerm:`Logical operators` modify or combine
+the Boolean logic values ``true`` and ``false``.
+Swift supports the three standard logical operators found in C-based languages:
 
-.. TODO: write an introduction to this section.
+* Logical NOT (``!a``)
+* Logical AND (``a && b``)
+* Logical OR (``a || b``)
 
 .. _BasicOperators_LogicalNOTOperator:
 
