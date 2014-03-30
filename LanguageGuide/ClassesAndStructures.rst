@@ -542,13 +542,49 @@ not structures.
 Identity Operators
 ------------------
 
-.. This will cover === and !===,
-   which I've decided should be covered alongside the reference / value discussion
-   rather than in either of the Operators chapters.
+Because classes are *reference types*,
+it is possible for multiple named values to refer to
+the same single instance of a class behind the scenes.
+(The same is not true for structures and enumerations,
+because they are *value types*,
+and are always copied when they are assigned to a named value
+or passed to a function.)
 
-.. QUESTION: is this the right choice?
+It can sometimes be useful to find out if two named values refer to
+exactly the same instance of a class.
+To enable this, Swift provides two :newTerm:`identity operators`:
 
-.. write-me::
+* Identical to (``===``)
+* Not identical to (``!==``)
+
+These operators can be used to check if two named values refer to the same single instance:
+
+.. testcode:: ClassesAndStructures
+
+   -> if tenEighty === alsoTenEighty {
+         println("tenEighty and alsoTenEighty refer to the same Resolution instance.")
+      }
+   <- tenEighty and alsoTenEighty refer to the same Resolution instance.
+
+Note that “identical to” (represented by three equals signs, or ``===``)
+does not mean the same thing as “equal to” (represented by two equals signs, or ``==``):
+
+* :newTerm:`Identity` means that
+  two named values of class type refer to exactly the same class instance.
+* :newTerm:`Equality` means that
+  two instances are considered “equal” or “equivalent” in value,
+  for some appropriate meaning of “equal”, as defined by the type's designer.
+
+When you define your own custom classes and structures,
+it is your responsibility to decide what qualifies as two instances being “equal”.
+The process of defining your own implementations of the “equal to” and “not equal to” operators
+is described in :ref:`AdvancedOperators_EquivalenceOperators`.
+
+.. note::
+
+   The identity operators are not used with structure and enumeration types,
+   because they are value types that store their values directly,
+   rather than referencing an instance of that type behind the scenes.
 
 .. _ClassesAndStructures_TypeAliases:
 

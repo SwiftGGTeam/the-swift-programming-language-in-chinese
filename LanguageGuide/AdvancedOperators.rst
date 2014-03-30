@@ -753,7 +753,7 @@ and returns the result.
 .. note::
 
    It is not possible to overload the default
-   assignment operator` (``=``).
+   assignment operator (``=``).
    Only the compound assignment operators may be overloaded.
    Similarly, the ternary conditional operator
    (``a ? b : c``) may not be overloaded.
@@ -766,9 +766,51 @@ and returns the result.
    UPDATE: going by rdar://14011860, we don't currently have a way for a protocol
    like Equatable to provide a default implementation of != if you implement ==
 
-.. QUESTION: Should I mention @transparent in the Operator Functions section?
-   All of the stdlib operators (e.g. for fixed- and floating-point numbers)
-   are declared as @transparent…
+.. _AdvancedOperators_EquivalenceOperators:
+
+Equivalence Operators
+~~~~~~~~~~~~~~~~~~~~~
+
+Custom classes and structures do not receive a default implementation of
+the :newTerm:`equivalence operators`,
+known as the “equal to” operator (``==``) and “not equal to” operator (``!=``).
+It is not possible for Swift to guess what would qualify as “equal” for your own custom types,
+because the meaning of “equal” is dependent on the roles that those types play in your code.
+
+If you would like to use the equivalence operators
+to check for equivalence of your own custom types,
+you can provide implementations for them in the same way as for other infix operators:
+
+.. testcode:: customOperators
+
+   -> @infix func == (lhs: Vector2D, rhs: Vector2D) -> Bool {
+         return (lhs.x == rhs.x) && (lhs.y == rhs.y)
+      }
+   -> @infix func != (lhs: Vector2D, rhs: Vector2D) -> Bool {
+         return !(lhs == rhs)
+      }
+
+This example implements an “equal to” operator (``==``)
+to check if two ``Vector2D`` instances have equivalent values.
+In the context of ``Vector2D``,
+it makes sense to consider “equal” as meaning
+“both instances have the same ``x`` values and ``y`` values”,
+and so this is the logic used by the operator implementation.
+The example also implements the “not equal to” operator (``!=``),
+which simply returns the inverse of the result of the “equal to” operator.
+
+These operators can now be used to check if two ``Vector2D`` instances are equivalent:
+
+.. testcode:: customOperators
+
+   -> let twoThree = Vector2D(2.0, 3.0)
+   << // twoThree : Vector2D = Vector2D(2.0, 3.0)
+   -> let anotherTwoThree = Vector2D(2.0, 3.0)
+   << // anotherTwoThree : Vector2D = Vector2D(2.0, 3.0)
+   -> if twoThree == anotherTwoThree {
+         println("These two vectors are equivalent.")
+      }
+   <- These two vectors are equivalent.
 
 .. _AdvancedOperators_CustomOperators:
 
