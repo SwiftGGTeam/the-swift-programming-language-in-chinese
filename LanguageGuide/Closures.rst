@@ -12,52 +12,175 @@
 Closures
 ========
 
-.. write-me::
-
 .. named functions can be nested inside other named functions
-.. closures can have an variadic parameter
+.. closures can have a variadic parameter
 .. closure parameters can be inout
 .. types can be inferred
 
 .. we've "claimed" {} for functions, closures and block statements
 .. @auto-closure attribute seems to automatically make a closure over the thing assigned to it
 
-:newTerm:`Closures` are a way to write functions within other functions,
-and to :newTerm:`capture` and refer to any named values that are available within the outer function.
+.. are methods "just" named closures that capture state from the instance they are defined on?
+
+Functions, as introduced in the previous chapter,
+are actually a special case of a more general feature known as :newTerm:`closures`.
+Closures are a way to write self-contained blocks of functionality
+that can be passed around and used in your code.
+
+In addition to everything mentioned in the Functions chapter,
+closures have two extra abilities:
+
+* they can be written without a function name
+  (although you can name them if you wish)
+* they can :newTerm:`capture` and modify constants and variables
+  from the context in which they are defined
+
+Swift handles all of the memory management of capturing for you.
+(The concept and meaning of “capturing state” is explained in detail below.)
+
+The relationship between functions and closures is an important one.
+Another way to think about it is
+“functions are just simple closures that have a name, and don't capture anything.”
+(Although functions are really just specialized closures,
+this chapter will still refer to them as “functions” for simplicity.)
 
 Swift's closures are similar to :newTerm:`lambdas` in other programming languages,
 and :newTerm:`blocks` in C-like languages.
-Closures have a clean, clear syntax,
+Swift's closures have a clean, clear syntax,
 with optimizations for writing brief, clutter-free closures in common scenarios.
-These optimizations include
-inference of parameter types,
-implicit returning of values from single-expression closures,
-short-hand parameter names,
-and a trailing closure syntax.
+These optimizations include:
+
+* inference of parameter types
+* implicit return values from single-expression closures
+* short-hand parameter names
+* trailing closure syntax
+
 All of these optimizations are described in detail below.
+
+Function Types
+--------------
+
+Every closure – including simple closures such as functions –
+has a specific :newTerm:`function type`.
+This is made up of all of the parameter types for the function,
+together with its return type.
+
+For example:
+
+.. testcode:: functionTypes
+
+   -> func addTwoInts(a: Int, b: Int) -> Int {
+         return a + b
+      }
+   >> addTwoInts
+   << // r0 : (a: Int, b: Int) -> Int = <unprintable value>
+   -> func multiplyTwoInts(a: Int, b: Int) -> Int {
+         return a * b
+      }
+   >> multiplyTwoInts
+   << // r1 : (a: Int, b: Int) -> Int = <unprintable value>
+
+This example defines two simple mathematical functions
+called ``addTwoInts()`` and ``multiplyTwoInts()``.
+These functions each take two ``Int`` values,
+and return an ``Int`` value which is the result of
+performing an appropriate mathematical operation.
+
+The type of both of these functions is ``(Int, Int) -> Int``.
+This can be read as:
+
+“A function type that has two parameters, both of type ``Int``,
+and that returns a value of type ``Int``.”
+
+.. QUESTION: does their "type" also include the parameter label names?
+
+Here's another example, for a function with no parameters or return value:
+
+.. testcode:: functionTypes
+
+   -> func printHelloWorld() {
+         println("hello, world")
+      }
+   >> printHelloWorld
+   << // r2 : () -> () = <unprintable value>
+
+The type of this function is ``() -> ()``,
+or “a function that has no parameters, and returns ``Void``.”
+Functions that don't specify a return value always return ``Void``,
+which is equivalent to an empty tuple in Swift, shown as ``()``.
+
+Function types can be used just like any other types in Swift.
+For example you can define a constant or variable to be of a function type,
+and can assign an appropriate function to that variable:
+
+.. testcode:: functionTypes
+
+   -> var mathFunction: (Int, Int) -> Int = addTwoInts
+   << // mathFunction : (Int, Int) -> Int = <unprintable value>
+
+This can be read as:
+
+“Define a variable called ``mathFunction``,
+which has a type of ‘a function that takes two ``Int`` values,
+and returns an ``Int`` value.’
+Set this new variable to refer to the function called ``addTwoInts``.”
+
+The ``addTwoInts()`` function has the same type as the ``mathFunction`` variable,
+and so this assignment is allowed by Swift's type-checker.
+
+You can now call the assigned function by using the constant or variable's name:
+
+.. testcode:: functionTypes
+
+   -> println("Two plus three is \(mathFunction(2, 3))")
+   <- Two plus three is 5
+
+A different function with the same matching type can be assigned to the same variable,
+in the same way as for non-function types:
+
+.. testcode:: functionTypes
+
+   -> mathFunction = multiplyTwoInts
+   -> println("Two times three is \(mathFunction(2, 3))")
+   <- Two times three is 6
+
+You can leave it up to Swift to infer the appropriate function type to use
+by assigning a function when you define the constant or variable:
+
+.. testcode:: functionTypes
+
+   -> let anotherMathFunction = addTwoInts
+   // anotherMathFunction is inferred to be of type (Int, Int) -> Int
 
 Closure Syntax
 --------------
+
+.. write-me::
+
+.. Swift's standard library provides a ``sort()`` function,
+   which takes an array of strings, together with a sorting closure,
+   and uses the closure to sort the array.
+
+.. When sorting values of type ``String``,
+   ``sort()`` expects to receive a closure that has two ``String`` parameters,
+   and returns a ``Bool`` value.
+   The closure it expects is like a function with the following form:
+
+.. note::
+
+   This section has yet to be written.
+   I've included some syntax examples in the meantime.
+
+Here are some strings to be sorted:
 
 .. testcode:: closures
 
    -> let strings = ["Alex", "Barry", "Chris", "Daniella", "Ewa"]
    << // strings : String[] = ["Alex", "Barry", "Chris", "Daniella", "Ewa"]
 
-Swift's standard library provides a ``sort()`` function,
-which takes an array of strings, together with a sorting closure,
-and uses the closure to sort the array.
-
-When sorting values of type ``String``,
-``sort()`` expects to receive a closure that has two ``String`` parameters,
-and returns a ``Bool`` value.
-The closure it expects is like a function with the following form:
-
-::
-
-   func sortingFunction(lhs: String, rhs: String) -> Bool {
-      // 
-   }
+The Standard Library's ``sort()`` function takes an ``Array<T>``
+and a sorting closure of type ``(T, T) -> Bool``.
+It can be called by passing in a named function as the sorting closure:
 
 .. testcode:: closures
 
@@ -67,32 +190,47 @@ The closure it expects is like a function with the following form:
    -> var reverseSorted = sort(strings, backwards)
    << // reverseSorted : String[] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
 
+Alternatively, you can pass in an unnamed closure expression:
+
 .. testcode:: closures
 
    -> reverseSorted = sort(strings, { (lhs: String, rhs: String) -> Bool in 
          return lhs > rhs
       })
 
+The types of the parameters and return type can be inferred from context:
+
 .. testcode:: closures
 
    -> reverseSorted = sort(strings, { (lhs, rhs) in return lhs > rhs } )
+
+Single-expression closures implicitly return their expression value
+if you leave out the ``return`` keyword:
 
 .. testcode:: closures
 
    -> reverseSorted = sort(strings, { (lhs, rhs) in lhs > rhs } )
 
+Parameter names can be left out if you use shorthand ``$n`` parameter references instead:
+
 .. testcode:: closures
 
    -> reverseSorted = sort(strings, { $0 > $1 } )
+
+The last closure in a function can be written as a :newTerm:`trailing closure`,
+with its braces outside of the function parentheses:
 
 .. testcode:: closures
 
    -> reverseSorted = sort(strings) { $0 > $1 } // trailing closure
 
+If you have an operator function that satisfies the type-check,
+it can be passed in by name,
+and the correct overloaded version to use will be inferred:
+
 .. testcode:: closures
 
    -> reverseSorted = sort(strings, > )
-
 
 
 .. capturing / closing over variables (and what this means in practice)
