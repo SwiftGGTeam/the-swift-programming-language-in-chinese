@@ -29,10 +29,12 @@ Language Guide
 * Added information about :ref:`Any / AnyObject <TypeCasting_AnyAndAnyObject>`
   and :ref:`checked casts in switch statements <TypeCasting_CheckedCastsInSwitchStatements>`
 * Added information about :ref:`Array's default value initializer <CollectionTypes_CreatingAnEmptyArray>`
-* Described how the :ref:`identity operators <ClassesAndStructures_IdentityOperators>` work
-* Improved wording for :ref:`++ and -- <BasicOperators_IncrementAndDecrementOperators>`
-  based on user feedback
+* Described how the :ref:`identity operators <ClassesAndStructures_IdentityOperators>` work,
+  and how to implement :ref:`equivalence operators <AdvancedOperators_EquivalenceOperators>`
+  for your own types
 * Added information about :ref:`BasicTypes_UInt` and :ref:`BasicTypes_Comments` in Basic Types
+* Improved wording for the
+  :ref:`increment and decrement operators <BasicOperators_IncrementAndDecrementOperators>`
 
 March 21 2014
 ~~~~~~~~~~~~~
