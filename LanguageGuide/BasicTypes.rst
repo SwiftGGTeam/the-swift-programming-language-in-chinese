@@ -238,20 +238,22 @@ and escaped with a backslash before the opening parenthesis:
 .. TODO: this still doesn't talk about all of the things that string interpolation can do.
    It should still be covered in more detail in the Strings and Characters chapter.
 
+.. _BasicTypes_Comments:
+
 Comments
 --------
 
-As you may have noticed from the examples above…
+As you may have noticed from the examples above:
 
 ::
 
-   // …single-line comments begin with two forward-slashes, like in C.
+   // ...single-line comments begin with two forward-slashes, like in C.
 
-You can also write multi-line comments…
+You can also write multi-line comments:
 
 ::
 
-   /* …which start with a forward-slash followed by an asterisk,
+   /* ...which start with a forward-slash followed by an asterisk,
       and end with an asterisk followed by a forward-slash, also like C. */
 
 Unlike C, multi-line comments can also be nested:
@@ -260,8 +262,8 @@ Unlike C, multi-line comments can also be nested:
 
    /* This is done by starting a new block of comments,
       /* then starting another new block inside of the first block.
-      The second block is then closed… */
-   …followed by the original block. */
+      The second block is then closed... */
+   ...followed by the original block. */
 
 .. TODO: These multiline comments can't be tested by swifttest,
    because they aren't supported by the REPL.
@@ -300,6 +302,8 @@ Unless you need to work with a specific size of integer,
 you should always use ``Int`` for code consistency and interoperability.
 Even on 32-bit platforms, ``Int`` can store any value between ``-2,147,483,648`` and ``2,147,483,647``,
 and is large enough for many integer ranges.
+
+.. _BasicTypes_UInt:
 
 UInt
 ~~~~
