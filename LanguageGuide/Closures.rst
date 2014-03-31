@@ -150,6 +150,7 @@ by assigning a function when you define the constant or variable:
 .. testcode:: functionTypes
 
    -> let anotherMathFunction = addTwoInts
+   << // anotherMathFunction : (a: Int, b: Int) -> Int = <unprintable value>
    // anotherMathFunction is inferred to be of type (Int, Int) -> Int
 
 Closure Syntax
@@ -173,7 +174,7 @@ Closure Syntax
 
 Here are some strings to be sorted:
 
-.. testcode:: closures
+.. testcode:: closureSyntax
 
    -> let strings = ["Alex", "Barry", "Chris", "Daniella", "Ewa"]
    << // strings : String[] = ["Alex", "Barry", "Chris", "Daniella", "Ewa"]
@@ -182,7 +183,7 @@ The Standard Library's ``sort()`` function takes an ``Array<T>``
 and a sorting closure of type ``(T, T) -> Bool``.
 It can be called by passing in a named function as the sorting closure:
 
-.. testcode:: closures
+.. testcode:: closureSyntax
 
    -> func backwards(lhs: String, rhs: String) -> Bool {
          return lhs > rhs
@@ -192,46 +193,57 @@ It can be called by passing in a named function as the sorting closure:
 
 Alternatively, you can pass in an unnamed closure expression:
 
-.. testcode:: closures
+.. testcode:: closureSyntax
 
    -> reverseSorted = sort(strings, { (lhs: String, rhs: String) -> Bool in 
          return lhs > rhs
       })
+   >> reverseSorted
+   << // reverseSorted : String[] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
 
 The types of the parameters and return type can be inferred from context:
 
-.. testcode:: closures
+.. testcode:: closureSyntax
 
    -> reverseSorted = sort(strings, { (lhs, rhs) in return lhs > rhs } )
+   >> reverseSorted
+   << // reverseSorted : String[] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
 
 Single-expression closures implicitly return their expression value
 if you leave out the ``return`` keyword:
 
-.. testcode:: closures
+.. testcode:: closureSyntax
 
    -> reverseSorted = sort(strings, { (lhs, rhs) in lhs > rhs } )
+   >> reverseSorted
+   << // reverseSorted : String[] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
 
 Parameter names can be left out if you use shorthand ``$n`` parameter references instead:
 
-.. testcode:: closures
+.. testcode:: closureSyntax
 
    -> reverseSorted = sort(strings, { $0 > $1 } )
+   >> reverseSorted
+   << // reverseSorted : String[] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
 
 The last closure in a function can be written as a :newTerm:`trailing closure`,
 with its braces outside of the function parentheses:
 
-.. testcode:: closures
+.. testcode:: closureSyntax
 
    -> reverseSorted = sort(strings) { $0 > $1 } // trailing closure
+   >> reverseSorted
+   << // reverseSorted : String[] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
 
 If you have an operator function that satisfies the type-check,
 it can be passed in by name,
 and the correct overloaded version to use will be inferred:
 
-.. testcode:: closures
+.. testcode:: closureSyntax
 
    -> reverseSorted = sort(strings, > )
-
+   >> reverseSorted
+   << // reverseSorted : String[] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
 
 .. capturing / closing over variables (and what this means in practice)
 .. no need for __block; discuss memory safety
