@@ -20,7 +20,8 @@ Functions
 ---------
 
 .. Define functions with "func"
-.. Call  functions with "()" postfix.
+.. Call functions with "()" postfix.
+.. [No discussion of selector style syntax here.]
 
 Objects
 -------
@@ -32,6 +33,10 @@ Objects
 .. Access methods and properties with "."
 .. Customize object lifecycle with "init" and "deinit"
 
+.. Indicate superclass and protocol conformance with ":"
+.. Override superclass methods with "@override"
+.. Call the superclass's implentation with "super"
+
 Value Types
 -----------
 
@@ -40,13 +45,7 @@ Value Types
 .. Use structs for complex multipart data
 .. Use enums when values come from a list
 .. Associating additional data with enums
-
-Inheritance
------------
-
-.. Both reference and value types support inheritance using ":"
-.. Override superclass methods with "@override"
-.. Call the superclass's implentation with "super"
+.. Indicate protocol conformance using ":"
 
 Protocols
 ---------
