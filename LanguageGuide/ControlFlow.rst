@@ -199,7 +199,7 @@ Swift also supports traditional C-style ``for`` loops with a condition and an in
 
 The general form of this loop format is:
 
-::
+.. syntax-outline::
 
    for <#initialization#>; <#condition#>; <#increment#> {
       <#statements#>
@@ -230,7 +230,7 @@ The loop is executed as follows:
 
 This is effectively shorthand for (and equivalent to):
 
-::
+.. syntax-outline::
 
    <#initialization#>
    while <#condition#> {
@@ -295,7 +295,7 @@ a set of statements is repeated until the condition becomes ``false``.
 
 The general form of a ``while`` loop is:
 
-::
+.. syntax-outline::
 
    while <#condition equates to true#> {
       <#statements#>
@@ -459,7 +459,7 @@ It then continues to repeat the loop until the condition is ``false``.
 
 The general form of a ``do``-``while`` loop is:
 
-::
+.. syntax-outline::
 
    do {
       <#statements#>
@@ -669,7 +669,7 @@ for responding to multiple potential states.
 In its simplest form, a ``switch`` statement compares against
 one or more values of the same type as the value being considered:
 
-::
+.. syntax-outline::
 
    switch <#some value to consider#> {
       case <#possible value 1#>:
@@ -767,7 +767,7 @@ at least one executable statement.
 It is not valid to write the following code,
 because the first case is empty:
 
-::
+.. syntax-outline::
 
    switch <#some value to consider#> {
       case <#possible value 1#>:
@@ -783,7 +783,7 @@ and makes for safer code that is explicit in its intent.
 Multiple matches for a single ``switch`` case can be separated by commas,
 and can be written over multiple lines if the list is long:
 
-::
+.. syntax-outline::
 
    switch <#some value to consider#> {
       case <#possible value 1#>,

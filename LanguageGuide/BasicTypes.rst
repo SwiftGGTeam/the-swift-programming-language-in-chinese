@@ -893,9 +893,9 @@ to simplify and shorten the unwrapping of a value contained within an optional.
 
 Optional bindings for the ``if``-``else`` statement are written in the following form:
 
-::
+.. syntax-outline::
 
-   if let <#newNamedValue#> = <#someOptional#> {
+   if let <#constantName#> = <#someOptional#> {
       <#statements#>
    }
 
