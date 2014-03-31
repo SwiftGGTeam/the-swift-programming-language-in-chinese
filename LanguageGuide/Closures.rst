@@ -22,6 +22,23 @@ Closures
 .. we've "claimed" {} for functions, closures and block statements
 .. @auto-closure attribute seems to automatically make a closure over the thing assigned to it
 
+:newTerm:`Closures` are a way to write functions within other functions,
+and to :newTerm:`capture` and refer to any named values that are available within the outer function.
+
+Swift's closures are similar to :newTerm:`lambdas` in other programming languages,
+and :newTerm:`blocks` in C-like languages.
+Closures have a clean, clear syntax,
+with optimizations for writing brief, clutter-free closures in common scenarios.
+These optimizations include
+inference of parameter types,
+implicit returning of values from single-expression closures,
+short-hand parameter names,
+and a trailing closure syntax.
+All of these optimizations are described in detail below.
+
+Closure Syntax
+--------------
+
 .. testcode:: closures
 
    -> let strings = ["Alex", "Barry", "Chris", "Daniella", "Ewa"]
@@ -44,11 +61,17 @@ The closure it expects is like a function with the following form:
 
 .. testcode:: closures
 
-   -> var reverseSorted = sort(strings, { 
-            (lhs: String, rhs: String) -> Bool in 
-         return lhs > rhs }
-      )
+   -> func backwards(lhs: String, rhs: String) -> Bool {
+         return lhs > rhs
+      }
+   -> var reverseSorted = sort(strings, backwards)
    << // reverseSorted : String[] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
+
+.. testcode:: closures
+
+   -> reverseSorted = sort(strings, { (lhs: String, rhs: String) -> Bool in 
+         return lhs > rhs
+      })
 
 .. testcode:: closures
 
@@ -114,6 +137,11 @@ The closure it expects is like a function with the following form:
    since that would be extremely surprising to clients.
    Further, forcing a syntactic requirement in an autoclosure context
    would defeat the whole point of autoclosures: make them implicit.
+
+.. We don't actually have a story for creating weak references to self
+   to avoid reference cycles when a closure stored in a property references self.
+   There are proposals for this in /swift/docs/weak.rst,
+   but they are yet to be implemented.
 
 .. refnote:: References
 
