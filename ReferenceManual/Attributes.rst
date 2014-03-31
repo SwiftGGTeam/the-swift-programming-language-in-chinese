@@ -17,13 +17,17 @@ Attributes
 
     Grammar of an attribute list
 
-    attribute-list --> ``@`` attribute | ``@`` attribute ``,``-OPT attribute-list
+    attribute-list --> ``@`` attribute | ``@`` attribute attribute-list
     attribute --> declaration-attribute | type-attribute | interface-builder-attribute
 
 .. NOTE: Our grammar doesn't have empty terminals (no epsilon)
    so we need to make attribute-list actually contain something.
    This means that instead of having "empty" as a possible expansion,
    attribute-list always appears as -OPT.
+
+.. TODO: Update the grammar to accomodate things like @objc(:some:selector:).
+    Also, now that the optional comma is removed, should consider remaning
+    attribute-list to simply attributes and simplifying the grammar accordingly.
 
 ..  Here's the current list (as of 3/6/2014):
 
