@@ -19,6 +19,21 @@ Contents
 Change Log
 ----------
 
+March 31 2014
+~~~~~~~~~~~~~
+
+Language Guide
+++++++++++++++
+
+* First draft of half of a chapter about :doc:`LanguageGuide/Generics`
+* Added information about :ref:`Any / AnyObject <TypeCasting_AnyAndAnyObject>`
+  and :ref:`checked casts in switch statements <TypeCasting_CheckedCastsInSwitchStatements>`
+* Added information about :ref:`Array's default value initializer <CollectionTypes_CreatingAnEmptyArray>`
+* Described how the :ref:`identity operators <ClassesAndStructures_IdentityOperators>` work
+* Improved wording for :ref:`++ and -- <BasicOperators_IncrementAndDecrementOperators>`
+  based on user feedback
+* Added information about :ref:`BasicTypes_UInt` and :ref:`BasicTypes_Comments` in Basic Types
+
 March 21 2014
 ~~~~~~~~~~~~~
 
