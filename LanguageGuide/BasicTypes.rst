@@ -238,6 +238,8 @@ and escaped with a backslash before the opening parenthesis:
 .. TODO: this still doesn't talk about all of the things that string interpolation can do.
    It should still be covered in more detail in the Strings and Characters chapter.
 
+.. _BasicTypes_Comments:
+
 Comments
 --------
 
