@@ -125,7 +125,7 @@ Swift would assume that both uses of ``x`` referred to the method parameter call
 Mutating Methods for Value Types
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Structures and enumerations are :ref:`ClassesAndStructures_ValueTypes`.
+Structures and enumerations are *value types*.
 By default, the properties of a value type cannot be modified from within its instance methods.
 
 .. TODO: find out why.
@@ -175,8 +175,13 @@ because its properties cannot be changed, even if they are variable properties
    -> fixedPoint.moveBy(2.0, 3.0)
    !! <REPL Input>:1:1: error: 'Point' does not have a member named 'moveBy'
    !! fixedPoint.moveBy(2.0, 3.0)
-   !! ^        ~~~~~~
+   !! ^          ~~~~~~
    // this will report an error
+
+.. TODO: talk about @!mutating as well.
+   Struct setters are implicitly 'mutating' by default and thus do not work on 'let's.
+   However, JoeG says that this ought to work
+   if the setter for the computed property is explicitly defined as @!mutating.
 
 .. _Methods_AssigningToSelfWithinAMutatingMethod:
 

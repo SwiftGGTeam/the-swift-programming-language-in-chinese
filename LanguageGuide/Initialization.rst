@@ -188,7 +188,7 @@ with a value from a different temperature scale:
    and show an example in function-style as well as selector-style.
 
 The value of a constant ``let`` property can be modified at any point during initialization,
-as long as is is definitely set to a value by the time the initializer has finished:
+as long as it is definitely set to a value by the time the initializer has finished:
 
 .. testcode:: initialization
 

@@ -89,11 +89,11 @@ Because ``rangeOfFourItems`` has been declared as a constant (with the ``let`` k
 it is not possible to change its ``firstValue`` property,
 even though it is a variable property.
 
-This behavior is due to the fact that structures are :ref:`ClassesAndStructures_ValueTypes`.
+This behavior is due to the fact that structures are *value types*.
 When an instance of a value type is marked as being a constant,
 so are all of its properties.
 
-The same is not true for classes, which are :ref:`ClassesAndStructures_ReferenceTypes`.
+The same is not true for classes, which are *reference types*.
 If you asign an instance of a reference type to a constant,
 you can still change that instance's variable properties.
 
@@ -302,7 +302,6 @@ which modifies the ``x`` and ``y`` values of the stored ``origin`` property,
 and moves the square to its new position.
 
 .. image:: ../images/computedProperties.png
-   :width: 400
    :align: center
 
 .. _Properties_ShorthandSetterDeclaration:
@@ -416,3 +415,5 @@ Type Properties
    TypeName.propertyName; someInstance.dynamicType.propertyName;
    just plain old propertyName if you're already at a type level in that type
    (likewise for methods in the methods chapter)
+.. type properties *must* have an initializer or a getter/setter,
+   because there's no "+ initialize" during which to init them otherwise

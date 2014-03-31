@@ -49,8 +49,7 @@ This enables the Swift compiler to optimize the performance of the collection.
    when they are assigned to a named value or passed to a function.
    This is different from the behavior of Cocoa's ``NSArray`` and ``NSDictionary`` classes.
    The difference between value types and reference types is covered in detail
-   in the :ref:`ClassesAndStructures_ValueTypesAndReferenceTypes` section
-   of :doc:`ClassesAndStructures`.
+   in :ref:`ClassesAndStructures_ValueTypesAndReferenceTypes`.
 
 .. _CollectionTypes_Arrays:
 
@@ -239,6 +238,29 @@ an empty array can be created by using an empty array literal:
    </ someInts now contains 1 value of type Int
    -> someInts = []
    // someInts is now an empty array, but is still of type Int
+
+``Array`` also provides an initializer for creating an array of a certain size
+with all of its values set to a provided default value.
+This initializer takes two arguments –
+the number of elements to be added to the new array,
+and a default value of the appropriate type:
+
+.. testcode:: arraysEmpty
+
+   -> var sixDoubles = Array<Double>(6, 0.0)
+   << // sixDoubles : Array<Double> = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+   // sixDoubles is now [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+
+Thanks to type inference, you don't actually need to specify
+the type to be stored in the ``Array`` when using this initializer,
+because it can be inferred from the default value:
+
+.. testcode:: arraysEmpty
+
+   -> var threeBools = Array(3, false)
+   << // threeBools : Array<Bool> = [false, false, false]
+   /> threeBools is inferred to be an Array<Bool>, and equals [\(threeBools[0]), \(threeBools[1]), \(threeBools[2])]
+   </ threeBools is inferred to be an Array<Bool>, and equals [false, false, false]
 
 .. TODO: func find<T : Equatable>(array: T[], value: T) -> Int?
    This is defined in Algorithm.swift,
@@ -449,8 +471,7 @@ the key that you use must already be in the dictionary:
 As an alternative, you can use the dictionary's ``find()`` method
 to try and find a value for a particular key.
 The ``find()`` method returns an *optional* value
-(as described in :ref:`BasicTypes_Optionals`),
-which can be checked and unwrapped using :ref:`BasicTypes_OptionalBinding`:
+which can be checked and unwrapped using optional binding:
 
 .. testcode:: dictionariesInferred
 
@@ -460,6 +481,8 @@ which can be checked and unwrapped using :ref:`BasicTypes_OptionalBinding`:
          println("That airport is not in the airports dictionary.")
       }
    <- The name of the airport is Dublin International.
+
+(Optionals and optional binding are described in :ref:`BasicTypes_Optionals`.)
 
 You can remove a key-value pair from the dictionary by using the ``deleteKey()`` method:
 

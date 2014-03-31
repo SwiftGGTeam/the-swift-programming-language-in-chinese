@@ -22,10 +22,10 @@ to eliminate common coding errors:
   detect and disallow value overflow
 
 You can choose to opt in to value overflow behavior
-by using Swift's :newTerm:`overflow operators` (such as ``a &+ b``).
+by using Swift's overflow operators (such as ``a &+ b``).
 Overflow operators are described in :doc:`AdvancedOperators`.
 
-Swift also provides two :ref:`BasicOperators_RangeOperators`
+Swift also provides two range operators
 (``a..b`` and ``a...b``),
 which give a short-hand way to express a range of values.
 
@@ -99,7 +99,6 @@ Swift helps you to avoid these kinds of errors in your code.
 
 .. TODO: Should we mention that x = y = z is also not valid?
    If so, is there a convincing argument as to why this is a good thing?
-.. TODO: Add a section about the new assignments bindings.
 
 .. _BasicOperators_ArithmeticOperators:
 
@@ -159,15 +158,21 @@ Remainder Operator
 ~~~~~~~~~~~~~~~~~~
 
 The :newTerm:`binary remainder operator` (``a % b``)
-works out how many multiples of ``b`` will fit inside ``a``
+works out how many multiples of ``b`` will fit inside ``a``,
 and returns the value that is left over
 (known as the :newTerm:`remainder`).
 
-For example: to calculate ``9 % 4``,
-you first work out how many ``4``\ s will fit inside ``9``:
+.. note::
+
+   The remainder operator (``%``) is also known as
+   a :newTerm:`modulo operator` in other languages.
+   However, its behavior in Swift for negative numbers means that it is,
+   strictly speaking, a remainder rather than a modulo operation.
+
+Here's how the remainder operator works.
+To calculate ``9 % 4``, you first work out how many ``4``\ s will fit inside ``9``:
 
 .. image:: ../images/remainderInteger.png
-   :width: 349
    :align: center
 
 You can fit two ``4``\ s inside ``9``, as this illustration shows.
@@ -226,7 +231,6 @@ In this example, ``8`` divided by ``2.5`` equals ``3``, with a remainder of ``0.
 so the remainder operator returns a ``Double`` value of ``0.5``.
 
 .. image:: ../images/remainderFloat.png
-   :width: 311
    :align: center
 
 .. _BasicOperators_IncrementAndDecrementOperators:
@@ -257,14 +261,15 @@ Note that these operators modify ``i``, and also return a value.
 If you only want to increment or decrement the value stored in ``i``,
 you can choose to ignore the returned value.
 However, if you *do* use the returned value,
-it will be different based on whether you used the prefix or postfix
-version of the operator:
+it will be different based on whether you used the prefix or postfix version of the operator,
+based on the following rules:
 
-* ``++i`` and ``--i`` modify ``i``, and return the *new* value
-* ``i++`` and ``i--`` modify ``i``, and return the *old* value
+* if the operator is written *before* the variable,
+  it increments the variable *before* returning its value
+* if the operator is written *after* the variable,
+  it increments the variable *after* returning its value
 
-This is important if you are using ``++`` or ``--`` to modify a variable
-while also finding out its value:
+For example:
 
 .. testcode:: arithmeticOperators
 
@@ -280,17 +285,16 @@ while also finding out its value:
    </ a is now equal to 2, but c has been set to the pre-increment value of 1
 
 In the example above,
-``let b = ++a`` sets ``b`` to the value of ``a``,
-*after* it has been incremented.
-This is why both ``a`` and ``b`` are equal to ``1``.
+``let b = ++a`` increments ``a`` *before* returning its value.
+This is why both ``a`` and ``b`` are equal to to the new value of ``1``.
 
-However, ``let c = a++`` sets ``c`` to the value of ``a`` *before* it is incremented.
-The result is that ``c`` gets the old value of ``1``,
-but ``a`` now equals ``2``.
+However, ``let c = a++`` increments ``a`` *after* returning its value.
+This means that ``c`` gets the old value of ``1``,
+and ``a`` is then updated to equal ``2``.
 
 Unless you need the specific behavior of ``i++``,
 it is recommended that you use ``++i`` and ``--i`` in all cases,
-because they have the typical expected behavior of modifying ``i``
+because they have the typical expected behavior of modifying ``i``,
 and then returning the result.
 
 .. QUESTION: is this good advice
@@ -381,13 +385,11 @@ Swift supports all of the standard C :newTerm:`comparison operators`:
 * Greater than or equal to (``a >= b``)
 * Less than or equal to (``a <= b``)
 
-.. TODO: we don't currently have identity and non-identity operators outside of Cocoa.
-   It's been decided that these will be called === and !===,
-   but they don't exist at present for Swift-pure classes.
-   They should be added to this section if and when they are implemented.
+.. note::
 
-These :newTerm:`identity operators` are used to test if two object named values both refer to the same object instance.
-They are described under :ref:`ClassesAndStructures_IdentityOperators` in the :doc:`ClassesAndStructures` chapter.
+   Swift also provides two :newTerm:`identity operators` (``===`` and ``!==``),
+   which are used to test if two object named values both refer to the same object instance.
+   These identity operators are described in more detail in :doc:`ClassesAndStructures`.
 
 Each of the comparison operators returns a ``Bool`` value to indicate whether or not the statement is true:
 
@@ -540,7 +542,7 @@ It is said to be :newTerm:`half-closed`
 because it contains its first value, but not its final value.
 
 Half-closed ranges are particularly useful when working with
-zero-based lists such as :ref:`CollectionTypes_Arrays`,
+zero-based lists such as arrays,
 where it is useful to count up to (but not including) the length of the list:
 
 .. testcode:: rangeOperators
@@ -561,15 +563,20 @@ Note that the array contains four items,
 but ``0...count`` only counts as far as ``3``
 (the index of the last item in the array),
 because it is a half-closed range.
+(Arrays are described in more detail in :ref:`CollectionTypes_Arrays`.)
 
 .. _BasicOperators_LogicalOperators:
 
 Logical Operators
 -----------------
 
-.. write-me::
+:newTerm:`Logical operators` modify or combine
+the Boolean logic values ``true`` and ``false``.
+Swift supports the three standard logical operators found in C-based languages:
 
-.. TODO: write an introduction to this section.
+* Logical NOT (``!a``)
+* Logical AND (``a && b``)
+* Logical OR (``a || b``)
 
 .. _BasicOperators_LogicalNOTOperator:
 

@@ -167,8 +167,7 @@ Protocols can require specific instance methods to be implemented by conforming 
 These methods are written as part of the protocol's definition
 in exactly the same way as for a normal instance method definition,
 but without curly braces or a method body.
-:ref:`Functions_VariadicParameters` are allowed,
-subject to the same rules as for normal instance methods.
+Variadic parameters are allowed, subject to the same rules as for normal instance methods.
 
 .. note::
 
@@ -346,8 +345,8 @@ any type that wants to be able to observe and track the progress of a ``DiceGame
 .. QUESTION: should DiceGame be called something like “Playable” instead,
    and used as an opportunity to talk about protocol naming?
 
-Here's a version of the *Snakes and Ladders* game from the :doc:`ControlFlow` chapter,
-adapted to use a ``Dice`` instance for its dice-rolls;
+Here's a version of the *Snakes and Ladders* game originally introduced in :doc:`ControlFlow`.
+This version has been adapted to use a ``Dice`` instance for its dice-rolls;
 to adopt the ``DiceGame`` protocol;
 and to notify a ``DiceGameDelegate`` about its progress:
 
@@ -451,7 +450,7 @@ to print some introductory information about the game that is about to be played
 The ``game`` parameter has a type of ``DiceGame``, not ``SnakesAndLadders``,
 and so ``gameDidStart()`` can only access and use any methods and properties that
 are implemented as part of the ``DiceGame`` protocol.
-However, the method is still able to use :doc:`TypeCasting` to
+However, the method is still able to use type casting to
 query the type of the underlying instance.
 In this example, it checks to see if ``game`` is actually
 an instance of ``SnakesAndLadders`` behind the scenes,
@@ -513,7 +512,7 @@ Adding Protocol Conformance With Extensions
 
 An existing type can be extended to adopt and conform to a new protocol,
 even if you do not have access to the source code for the existing type.
-This is achieved by using :doc:`Extensions`.
+This is achieved by using extensions, as described in :doc:`Extensions`.
 Extensions give a way to add new properties, methods, initializers and subscripts
 to an existing type,
 and are therefore able to add any of the requirements that a protocol may demand

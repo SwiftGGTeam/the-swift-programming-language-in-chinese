@@ -40,8 +40,7 @@ This process is covered in the :doc:`Protocols` chapter.
 Computed Properties
 -------------------
 
-Extensions can add new :ref:`Properties_ComputedProperties`
-to existing types.
+Extensions can add new computed properties to existing types.
 This example adds five new computed properties to Swift's built-in ``Double`` type,
 to provide basic support for working with distance units:
 
@@ -81,7 +80,7 @@ Similarly, there are 3.28024 feet in a meter,
 and so the ``ft`` computed property divides the underlying ``Double`` value
 by ``3.28024``, to convert it from feet to meters.
 
-These properties are :ref:`Properties_ReadOnlyComputedProperties`,
+These properties are read-only computed properties,
 and so they have been expressed without the ``get`` keyword, for brevity.
 Their return value is inferred to be of type ``Double``,
 and can be used within mathematical calculations wherever a ``Double`` is accepted:
@@ -95,24 +94,21 @@ and can be used within mathematical calculations wherever a ``Double`` is accept
 
 .. note::
 
-   Extensions can add new computed properties,
-   but they cannot add :ref:`Properties_StoredProperties`,
-   or add :ref:`Properties_StoredPropertyObservers`
-   to existing stored properties.
+   Extensions can add new computed properties, but they cannot add stored properties,
+   or add stored property observers to existing stored properties.
 
 .. _Extensions_Initializers:
 
 Initializers
 ------------
 
-Extensions can add new :ref:`Initialization_Initializers` to existing types.
+Extensions can add new initializers to existing types.
 This enables you to extend other types to accept
 your own custom types as initializer parameters.
 
 .. note::
 
-   Extensions can add new initializers to classes, but they cannot add
-   :ref:`Initialization_Deinitializers`.
+   Extensions can add new initializers to classes, but they cannot add deinitializers.
    Deinitializers must always be provided by the original class implementation.
 
 This approach can be used to extend the basic ``String`` type
@@ -183,8 +179,7 @@ is known as :newTerm:`initializer overloading`.)
 Instance Methods
 ----------------
 
-Extensions can add new :ref:`Methods_InstanceMethods`
-to an existing type:
+Extensions can add new instance methods to an existing type:
 
 .. testcode:: extensionsInstanceMethods
 
@@ -241,8 +236,7 @@ just like mutating methods from an original implementation:
    </ someInt is now 123
 
 This example adds a ``shiftRight()`` method to instances of ``Int``.
-This method is similar to the
-bitwise right shift operator
+This method is similar to the bitwise right shift operator
 (as described in :ref:`AdvancedOperators_BitwiseLeftAndRightShifts`),
 except that it shifts by powers of ten, rather than powers of two.
 
@@ -274,8 +268,7 @@ Type Methods
 Subscripts
 ----------
 
-Extensions can add new :doc:`Subscripts`
-to an existing type.
+Extensions can add new subscripts to an existing type.
 This example adds an integer subscript to Swift's built-in ``Int`` type.
 This subscript ``[n]`` returns the decimal digit ``n`` places in
 from the right of the number,
@@ -334,8 +327,7 @@ as if the number had been padded with zeroes to the left:
 Nested Types
 ------------
 
-Extensions can add new :doc:`NestedTypes`
-to existing classes, structures and enumerations:
+Extensions can add new nested types to existing classes, structures and enumerations:
 
 .. testcode:: extensionsNestedTypes
 

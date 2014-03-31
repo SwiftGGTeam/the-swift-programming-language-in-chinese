@@ -125,14 +125,12 @@ if it is appropriate for your type:
 .. testcode:: subscripts
 
    -> struct Matrix {
-         var rows: Int, columns: Int
-         var grid = Array<Double>()
+         let rows: Int, columns: Int
+         var grid: Array<Double>
          init withRows(rows: Int) columns(Int) {
             self.rows = rows
             self.columns = columns
-            for _ in 0...(rows * columns) {
-               grid.append(0.0)
-            }
+            grid = Array(rows * columns, 0.0)
          }
          subscript(row: Int, column: Int) -> Double? {
             get {
@@ -156,7 +154,10 @@ This example defines a ``Matrix`` structure,
 which represents a two-dimensional matrix of ``Double`` values.
 ``Matrix`` provides an initializer that takes two parameters called ``rows`` and ``columns``,
 and creates an array that is large enough to store ``rows * columns`` values of type ``Double``.
-Each position in the matrix is given an initial value of ``0.0``:
+Each position in the matrix is given an initial value of ``0.0``.
+To achieve this, the array's size, and an initial cell value of ``0.0``,
+are passed to an ``Array`` initializer that creates and initializes a new array of the correct size.
+(This initializer is described in more detail in :ref:`CollectionTypes_CreatingAnEmptyArray`.)
 
 .. testcode:: subscripts
 
@@ -167,7 +168,6 @@ The ``grid`` array is effectively a flattened version of the matrix,
 as read from top left to bottom right:
 
 .. image:: ../images/subscriptMatrix01.png
-   :width: 488
    :align: center
 
 The ``Matrix`` subscript has a return type of ``Double?``, or “optional ``Double``”.
@@ -214,7 +214,6 @@ and ``3.2`` in the bottom left position
 (where ``row`` is ``1`` and ``column`` is ``0``):
 
 .. image:: ../images/subscriptMatrix02.png
-   :width: 300
    :align: center
 
 The subscript's setter has an implicit ``value`` parameter of type ``Double?``.
@@ -223,8 +222,8 @@ and is checked by the subscript's setter:
 
 ::
 
-   if value && row < rows && column < columns {
-      grid[(row * columns) + column] = value!
+   if newValue && row < rows && column < columns {
+      grid[(row * columns) + column] = newValue!
    }
 
 The setter checks to see if ``value`` is not equal to ``.None``,
