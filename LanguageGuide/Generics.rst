@@ -97,6 +97,8 @@ and define your own protocols (like ``Hashable``),
 to enable those generic types to define and enforce certain requirements
 on the types they can work with.
 
+.. _Generics_GenericFunctions:
+
 Generic Functions
 -----------------
 
@@ -169,6 +171,8 @@ the ``swapValues()`` function can be confident that whatever type ``T`` represen
 both ``a`` and ``b`` are of that type.
 This enables it to provide its swapping functionality for any given type.
 
+.. _Generics_TypeParameters:
+
 Type Parameters
 ~~~~~~~~~~~~~~~
 
@@ -194,6 +198,8 @@ You don't, for example, write ``swapValues<Int>(x, y)``.
 The type that ``T`` represents is inferred for you,
 and indeed you are not allowed to specify a type yourself.
 
+.. _Generics_NamingOfTypeParameters:
+
 Naming of Type Parameters
 _________________________
 
@@ -211,6 +217,8 @@ The choice of name to use is entirely up to you, however.
 
    Type parameters should always have capitalized names (such as ``T``)
    to indicate that they represent a type, not a value.
+
+.. _Generics_GenericTypes:
 
 Generic Types
 -------------
@@ -299,6 +307,8 @@ Because it is a generic type,
 ``Stack`` can now be used to create a stack of *any* valid type in Swift,
 in a similar manner to ``Array`` and ``Dictionary``.
 
+.. _Generics_GenericTypeDefinitionSyntax:
+
 Generic Type Definition Syntax
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -347,6 +357,8 @@ after the variable name:
    -> var stackOfInts = Stack<Int>()
    << // stackOfInts : Stack<Int> = Stack<Int>([])
    -> stackOfInts.push(42)
+
+.. _Generics_TypeConstraints:
 
 Type Constraints
 ----------------
@@ -481,10 +493,14 @@ and can be used with any type that is ``Equatable``, such as ``Double`` or ``Str
 .. likewise providing type parameters for initializers
 .. requirements can be inheritance clauses as well as protocol conformance clauses
 
+.. _Generics_AssociatedTypes:
+
 Associated Types
 ----------------
 
 .. write-me::
+
+.. _Generics_Subscripts:
 
 Subscripts
 ----------
@@ -494,8 +510,12 @@ Subscripts
 .. Protocols can require conforming types to provide specific subscripts
 .. These typically return a value of type T, which is why I've moved this here
 
+.. _Generics_GenericEnumerations:
+
 Generic Enumerations
 --------------------
+
+.. write-me::
 
 .. Describe how Optional<T> actually works
 
