@@ -580,9 +580,6 @@ Extending existing types to provide initializers that accept new types
 (including your own type definitions)
 is covered in :doc:`Extensions`.
 
-.. TODO: add a note that this is not traditional type-casting,
-   and perhaps include a forward reference to the objects chapter.
-
 .. _BasicTypes_IntegerAndFloatingPointConversion:
 
 Integer and Floating-Point Conversion
@@ -724,6 +721,8 @@ and ensures that the intention of a particular section of code is always made cl
 .. TODO: I'm not quite happy with this yet.
    Introducing the LogicValue protocol at this early stage is a bit overkill.
    I'd like to revisit this if time permits, and maybe move this to Control Flow.
+
+.. TODO: the LogicValue protocol is not yet described in the Protocols chapter.
 
 .. _BasicTypes_Tuples:
 
