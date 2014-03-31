@@ -138,10 +138,12 @@ The closure it expects is like a function with the following form:
    Further, forcing a syntactic requirement in an autoclosure context
    would defeat the whole point of autoclosures: make them implicit.
 
-.. We don't actually have a story for creating weak references to self
-   to avoid reference cycles when a closure stored in a property references self.
-   There are proposals for this in /swift/docs/weak.rst,
+.. To avoid reference cycles when a property closure references self or a property of self,
+   you should use the same workaround as in Obj-C –
+   that is, to declare a @weak (or @unowned) local variable, and capture that instead.
+   There are proposals for a better solution in /swift/docs/weak.rst,
    but they are yet to be implemented.
+   The Radar for their implementation is rdar://15046325.
 
 .. refnote:: References
 
