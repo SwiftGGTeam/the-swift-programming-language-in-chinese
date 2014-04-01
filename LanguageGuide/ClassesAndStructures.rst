@@ -438,15 +438,6 @@ instead, they both *refer* to a ``VideoMode`` instance behind the scenes.
 It is the ``frameRate`` property of the underlying ``VideoMode`` that is changed,
 not the values of the constant references to that ``VideoMode``.
 
-.. note::
-
-   Classes are the only reference types in Swift.
-   If you want to create a new type that is passed by reference rather than by value,
-   you should define it as a class in your code.
-
-.. QUESTION: This isn't strictly true. Functions are reference types too.
-   Does this matter for the point I'm making here?
-
 .. TODO: reiterate here that arrays and dictionaries are value types rather than reference types,
    and demonstrate what that means for the values they store
    when they themselves are value types or reference types.
