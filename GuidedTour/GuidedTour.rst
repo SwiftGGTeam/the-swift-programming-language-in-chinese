@@ -64,6 +64,14 @@ In contrast, constants can only have a value assigned once:
    !! myConstant = 50
    !! ~~~~~~~~~~ ^
 
+.. note: Experiment
+
+   Edit the code in the boxes above.
+   Try setting a different values
+   for ``myVariable`` and ``myConstant``.
+   Try changing their names.
+   What characters are not allowed in variable names?
+
 .. TR: Is the requirement that constants have a value
    a current REPL limitation, or an expected language feature?
 
