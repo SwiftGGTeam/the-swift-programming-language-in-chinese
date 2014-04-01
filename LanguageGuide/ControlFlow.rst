@@ -410,7 +410,7 @@ This example uses a very simple approach to dice-rolling.
 Instead of using a random number generator,
 it starts with a ``diceRoll`` value of ``0``.
 Each time through the ``while`` loop,
-``diceRoll`` is incremented with the prefix increment operator (++i),
+``diceRoll`` is incremented with the prefix increment operator (``++i``),
 and then checked to see if it has become too large.
 The return value of ``++diceRoll`` is equal to
 the value of ``diceRoll`` *after* it has been incremented.
