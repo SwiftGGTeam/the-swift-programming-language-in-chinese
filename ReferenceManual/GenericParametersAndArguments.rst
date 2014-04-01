@@ -118,8 +118,16 @@ and their associated types must be identical.
 Any concrete, type argument substituted for a type parameter must
 meet all the constraints and requirements placed on the type parameter.
 
-.. NOTE: Generic functions can be overloaded on the basis of constraints alone.
-.. NOTE: Classes derived from generic classes must also be generic.
+You can overload a generic function or initializer by providing different
+constraints, requirements, or both on the type parameters in the generic parameter clause.
+When you call an overloaded generic function or initializer,
+the compiler uses these constraints to resolve which overloaded function
+or initializer to invoke.
+
+You can subclass a generic class, but the subclass must also be a generic class.
+
+.. NOTE: Not sure where to put this last sentence.
+    Maybe it just belongs in Class Declaration.
 
 .. langref-grammar
 
@@ -160,7 +168,46 @@ meet all the constraints and requirements placed on the type parameter.
 Generic Argument Clause
 -----------------------
 
-.. write-me::
+A :newTerm:`generic argument clause` specifies the type arguments of a generic
+type.
+A generic argument clause is enclosed in angle bracket (``< >``)
+and has the following form:
+
+.. syntax-outline::
+
+    <<#generic argument list#>>
+
+The *generic argument list* is a comma-separated list of type arguments.
+Each type argument is the name of an actual, concrete type that replaces
+a corresponding type parameter in the generic parameter clause of a generic type.
+The result is a specialized version of that generic type. As an example,
+the Swift Standard Library defines a generic dictionary type as::
+
+    struct Dictionary<KeyType : Hashable, ValueType> : Collection, DictionaryLiteralConvertible {
+        /* ... */
+    }
+
+.. TODO: How are we supposed to wrap code lines like the above?
+
+The specialized version of the generic ``Dictionary`` type, ``Dictionary<String, Int>``
+is formed by replacing the generic parameters ``KeyType: Hashable`` and ``ValueType``
+with the concrete, type arguments ``String`` and ``Int``. Each type argument must satisfy
+all the contraints of the generic parameter it replaces, including any additional
+requirements specified in a ``where`` clause. In the example above,
+the ``KeyType`` type parameter is constrained to conform to the ``Hashable`` protocol,
+and therefore ``String`` must also conform to the ``Hashable`` protocol.
+
+You can also replace a type parameter with a type argument that is itself
+a specialized version of a generic type (provided it satisfies the appropriate
+constraints and requirements). For example, you can replace the type parameter
+``T`` in ``Array<T>`` with a specialized version of an array, ``Array<Int>``,
+to form an array whose elements are themselves arrays of integers::
+
+    let arrayOfArrays : Array<Array<Int>> = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+
+As mentioned above in :ref:`GenericParametersAndArguments_GenericParameterClause`,
+you don't use a generic argument clause to specify the type arguments
+of a generic function or initializer.
 
 .. langref-grammar
 
