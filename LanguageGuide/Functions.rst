@@ -718,33 +718,106 @@ Inout Parameters
 .. inout properties and a general discussion of byref / byvalue
 .. presumably you can't pass a constant as the argument for an inout parameter
 
-.. _Functions_FunctionsAsParametersAndReturnTypes:
+.. _Functions_FunctionTypes:
 
-Functions as Parameters and Return Types
-----------------------------------------
+Function Types
+--------------
 
-.. write-me::
+Every function has a specific :newTerm:`function type`,
+made up of the parameter types and the return type of the function.
 
-.. functions can be passed in as parameters, and can be returned as return values
+For example:
 
-.. _Functions_FunctionBinding:
+.. testcode:: functionTypes
 
-Function Binding
-----------------
+   -> func addTwoInts(a: Int, b: Int) -> Int {
+         return a + b
+      }
+   >> addTwoInts
+   << // r0 : (a: Int, b: Int) -> Int = <unprintable value>
+   -> func multiplyTwoInts(a: Int, b: Int) -> Int {
+         return a * b
+      }
+   >> multiplyTwoInts
+   << // r1 : (a: Int, b: Int) -> Int = <unprintable value>
 
-.. write-me::
+This example defines two simple mathematical functions
+called ``addTwoInts()`` and ``multiplyTwoInts()``.
+These functions each take two ``Int`` values,
+and return an ``Int`` value which is the result of
+performing an appropriate mathematical operation.
 
-.. variables can be bound to functions, and then called e.g. var fork = g.fork; fork() .
-.. functions are reference types
-.. you can get a function that refers to a method, either with or without the 'self' argument already being bound:
-.. class C {
-..    func foo(x: Int) -> Float { ... }
-.. }
-.. var c = C()
-.. var boundFunc = c.foo 	// a function with type (Int) -> Float
-.. var unboundFunc = C.foo // a function with type (C) -> (Int) -> Float
-.. selector-style methods can be referenced as foo.bar:bas:
-   (see Doug's comments from the 2014-03-12 release notes)
+The type of both of these functions is ``(Int, Int) -> Int``.
+This can be read as:
+
+“A function type that has two parameters, both of type ``Int``,
+and that returns a value of type ``Int``.”
+
+.. QUESTION: does their "type" also include the parameter label names?
+
+Here's another example, for a function with no parameters or return value:
+
+.. testcode:: functionTypes
+
+   -> func printHelloWorld() {
+         println("hello, world")
+      }
+   >> printHelloWorld
+   << // r2 : () -> () = <unprintable value>
+
+The type of this function is ``() -> ()``,
+or “a function that has no parameters, and returns ``Void``.”
+Functions that don't specify a return value always return ``Void``,
+which is equivalent to an empty tuple in Swift, shown as ``()``.
+
+.. _Functions_UsingFunctionTypes:
+
+Using Function Types
+~~~~~~~~~~~~~~~~~~~~
+
+Function types can be used just like any other types in Swift.
+For example you can define a constant or variable to be of a function type,
+and can assign an appropriate function to that variable:
+
+.. testcode:: functionTypes
+
+   -> var mathFunction: (Int, Int) -> Int = addTwoInts
+   << // mathFunction : (Int, Int) -> Int = <unprintable value>
+
+This can be read as:
+
+“Define a variable called ``mathFunction``,
+which has a type of ‘a function that takes two ``Int`` values,
+and returns an ``Int`` value.’
+Set this new variable to refer to the function called ``addTwoInts``.”
+
+The ``addTwoInts()`` function has the same type as the ``mathFunction`` variable,
+and so this assignment is allowed by Swift's type-checker.
+
+You can now call the assigned function by using the constant or variable's name:
+
+.. testcode:: functionTypes
+
+   -> println("Two plus three is \(mathFunction(2, 3))")
+   <- Two plus three is 5
+
+A different function with the same matching type can be assigned to the same variable,
+in the same way as for non-function types:
+
+.. testcode:: functionTypes
+
+   -> mathFunction = multiplyTwoInts
+   -> println("Two times three is \(mathFunction(2, 3))")
+   <- Two times three is 6
+
+You can leave it up to Swift to infer the appropriate function type to use
+by assigning a function when you define the constant or variable:
+
+.. testcode:: functionTypes
+
+   -> let anotherMathFunction = addTwoInts
+   << // anotherMathFunction : (a: Int, b: Int) -> Int = <unprintable value>
+   // anotherMathFunction is inferred to be of type (Int, Int) -> Int
 
 .. _Functions_CurriedFunctions:
 

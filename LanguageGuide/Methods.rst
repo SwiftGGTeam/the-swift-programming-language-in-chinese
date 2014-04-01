@@ -251,3 +251,20 @@ Type Methods
 .. mention that type methods can access type properties (and other type methods?)
    without needing to reference the type's name,
    as they also get an implicit ``self`` parameter.
+
+.. _Methods_MethodBinding:
+
+Method Binding
+--------------
+
+.. write-me::
+
+.. you can get a function that refers to a method, either with or without the 'self' argument already being bound:
+.. class C {
+..    func foo(x: Int) -> Float { ... }
+.. }
+.. var c = C()
+.. var boundFunc = c.foo 	// a function with type (Int) -> Float
+.. var unboundFunc = C.foo // a function with type (C) -> (Int) -> Float
+.. selector-style methods can be referenced as foo.bar:bas:
+   (see Doug's comments from the 2014-03-12 release notes)
