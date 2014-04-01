@@ -758,6 +758,8 @@ Optional Requirements
 .. Checking for (and calling) optional implementations via optional binding and closures
 .. all dependent on the implementation of rdar://16101161,
    "Optional protocol requirements for non-@objc protocols"
+.. Protocol requirements can be marked as @unavailable,
+   but this currently only works if they are also marked as @objc.
 
 .. Other things to be included:
 .. ----------------------------
