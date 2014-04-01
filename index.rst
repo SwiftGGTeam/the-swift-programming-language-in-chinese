@@ -19,6 +19,17 @@ Contents
 Change Log
 ----------
 
+April 1 2014
+~~~~~~~~~~~~
+
+Reference Manual
+++++++++++++++++
+
+* Added a draft of the :doc:`ReferenceManual/GenericParametersAndArguments` chapter.
+  **NOTE:** The title of this chapter was previously "Generics".
+* Incorporated various editorial feedback to the :doc:`ReferenceManual/Declarations` chapter.
+  There are still a few placeholder sections in this chapter.
+
 March 31 2014
 ~~~~~~~~~~~~~
 
