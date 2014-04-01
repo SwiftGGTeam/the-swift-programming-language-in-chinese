@@ -24,15 +24,17 @@ as entry point for the program,
 so there is no need for a ``main`` function.
 
 The rest of this tour show you examples
-of many of the things Swift lets you do,
-without explaining the concepts in any detail,
-to give you a broad overview of the language
-and let you start learning by writing programs in Swift
-as quickly as possible.
+of how to accomplish a variety of programming tasks in Swift
+without explaining the concepts in detail.
+It gives you a broad (but shallow) overview of the language
+to help you start writing actual code in Swift
 
-Values
-------
+Experienced programmers may find the examples give them enough information
+thay they can skim the rest of the language guide
+and answer their own questions by reading the reference manual.
 
+Variables and Constants
+-----------------------
 
 
 .. Set variables and constants
