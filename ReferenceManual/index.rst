@@ -36,7 +36,7 @@ since linking between definitions is not yet supported by our build tools.
     Declarations
     Attributes
     Patterns
-    Generics
+    GenericParametersAndArguments
     zzSummaryOfTheGrammar
 
 .. docnote:: To be included?
