@@ -13,6 +13,7 @@ Reference Manual
     Attributes
     Patterns
     GenericParametersAndArguments
+    TechReview
     zzSummaryOfTheGrammar
 
 .. docnote:: To be included?
