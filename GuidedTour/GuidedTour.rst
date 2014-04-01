@@ -23,6 +23,9 @@ The first statement at global scope is used
 as entry point for the program,
 so there is no need for a ``main`` function.
 
+.. TODO: Also notice that there are no semicolons.
+   You can use semicolons to separate two statements on a single line.
+
 The rest of this tour show you examples
 of how to accomplish a variety of programming tasks in Swift
 without explaining the concepts in detail.
