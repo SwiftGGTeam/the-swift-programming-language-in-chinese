@@ -12,7 +12,7 @@ Reference Manual
     Declarations
     Attributes
     Patterns
-    Generics
+    GenericParametersAndArguments
     zzSummaryOfTheGrammar
 
 .. docnote:: To be included?
