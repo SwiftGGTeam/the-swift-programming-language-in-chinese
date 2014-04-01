@@ -269,6 +269,23 @@ Unlike C, multi-line comments can also be nested:
    because they aren't supported by the REPL.
    They should be tested manually before release.
 
+.. _BasicTypes_Semicolons:
+
+Semicolons
+----------
+
+Unlike many other languages,
+Swift does not require you to write a semicolon (``;``) after each statement in your code
+(although you can do so if you wish).
+Semicolons *are* required, however,
+if you want to write multiple separate statements on a single line:
+
+.. testcode:: semiColons
+
+   -> let cat = "🐱"; let dog = "🐶"
+   << // cat : String = "🐱"
+   << // dog : String = "🐶"
+
 .. _BasicTypes_Integers:
 
 Integers
