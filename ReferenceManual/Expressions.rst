@@ -1,6 +1,12 @@
 Expressions
 ===========
 
+
+
+.. write-me::
+
+.. TODO: Intro prose goes here.
+
 .. langref-grammar
 
     expr          ::= expr-basic
@@ -15,16 +21,21 @@ Expressions
 
     Grammar of an expression
 
-    expression --> expression-sequence expression-cast-OPT
-    expression-sequence --> unary-expression binary-expressions-OPT
+    expression --> unary-expression binary-expressions-OPT
     expression-list --> expression | expression ``,`` expression-list
 
 .. _Expressions_UnaryOperators:
 
-Unary Operators
----------------
+Unary Expressions
+-----------------
 
-.. NOTE: We haven't quite decided whether unary expressions should come before or after postfix expressions.
+Unary expressions are formed by combining
+an optional prefix operator with an expression.
+Prefix operators take one argument,
+the expression that follows them.
+
+.. TR: As of r14954, ParsExpr.cpp also has expr-discard
+   which consists of an underscore (_).  What is that for?
 
 .. langref-grammar
 
@@ -35,15 +46,21 @@ Unary Operators
     Grammar of a unary expression
 
     unary-expression --> prefix-operators-OPT postfix-expression
+    prefix-operators --> prefix-operator prefix-operators-OPT
 
-
-.. TODO: Give a list of the unary operators defined in the Swift stdlib.
-    Then give a cross-reference to the Swift stdlib for more details.
 
 .. _Expressions_BinaryOperators:
 
-Binary Operators
-----------------
+Binary Expressions
+------------------
+
+Binary expressions are formed by combining
+an infix binary operator with the expressions that it takes
+as its arguments.
+
+.. write-me::
+
+.. TODO: More intro prose goes here.
 
 .. langref-grammar
 
@@ -56,9 +73,10 @@ Binary Operators
 
     Grammar of a binary expression
 
-    binary-expression --> binary-operator unary-expression expression-cast-OPT
-    binary-expression --> assignment-operator unary-expression expression-cast-OPT
-    binary-expression --> conditional-operator unary-expression expression-cast-OPT
+    binary-expression --> binary-operator unary-expression
+    binary-expression --> assignment-operator unary-expression
+    binary-expression --> conditional-operator unary-expression
+    binary-expression --> type-checking-operator
     binary-expressions --> binary-expression binary-expressions-OPT
 
 .. TODO: Give a list of the binary operators defined in the Swift stdlib.
@@ -81,15 +99,38 @@ Binary Operators
    in respect to the spacing rules -- ``x + y * z`` is diffirent than
    ``x + y* z``.
 
-.. _Expressions_Built-InBinaryOperators:
-
-Built-In Binary Operators
-~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. _Expressions_AssignmentOperator:
+.. TODO: Give a list of the unary operators defined in the Swift stdlib.
+    Then give a cross-reference to the Swift stdlib for more details.
+    Table of operator, meaning, precedence, and associativity.
+    Only the most commonly used ones?
+    We can discuss them in some detail now, knowing that it could migrate
+    to a proper Standar Library Reference book later.
 
 Assignment Operator
-+++++++++++++++++++
+~~~~~~~~~~~~~~~~~~~
+
+The :newTerm:`assigment operator` updates the value of variables.
+It has the following form:
+
+.. syntax-outline::
+
+   <#variable name#> = <#value#>
+
+The value of the variable on the left of the ``=``
+is set to the value obtained by evaluating the expression on the right.
+
+If the left side consists of a tuple,
+the value of the right side must be a tuple
+with the same number of elements.
+The values of the right-hand tuple
+are assigned to the corresponding variables in the left-hand tuple.
+For example: ::
+
+    // Sets and swaps the value of a and b.
+    var (a, b) = (1, 2)
+    (a, b) = (b, a)
+
+The assignment operator does not return any value.
 
 .. langref-grammar
 
@@ -104,7 +145,26 @@ Assignment Operator
 .. _Expressions_ConditionalOperator:
 
 Conditional Operator
-++++++++++++++++++++
+~~~~~~~~~~~~~~~~~~~~
+
+The conditional operator evaluates to one of two given values
+based on the value of a condition;
+it has the following form:
+
+.. syntax-outline::
+
+   <#condition#> ? <#expression used if true#> : <#expression used if false#>
+
+If the *condition* evaluates to ``true``,
+the conditional operator evaluates the first expression
+and returns its value.
+Otherwise, it evaluates the second expression
+and returns its value.
+The unused expression is not evaluated.
+
+.. The REPL v1-28 allows nesting such as true ? false ? 10 : 20 : 2
+   which parses as true ? (false ? 10 : 20) : 2 -- the parens are optional --
+   but that's a really bad idea if you want your code to be readable.
 
 .. langref-grammar
 
@@ -114,15 +174,87 @@ Conditional Operator
 
     Grammar of a conditional operator
 
-    conditional-operator --> ``?`` expression-sequence ``:``
-
-.. TODO: Discuss in prose that '?' is being used as an infix operator in this context.
-    In additional, there must be whitespace on both sides of '?' and ':'.
+    conditional-operator --> ``?`` expression ``:``
 
 .. _Expressions_Type-CastingOperators:
 
-Type-Casting Operators
-++++++++++++++++++++++
+Type-Checking Operators
+~~~~~~~~~~~~~~~~~~~~~~~
+
+There are two type-checking operators,
+the ``is`` operator and the ``as`` operator.
+They have the following form:
+
+.. syntax-outline::
+
+   <#variable#> is <#type>
+   <#variable#> as <#type>
+   <#variable#> as <#type>!
+
+The ``is`` operator checks at runtime
+whether the value of its left-hand argument
+has the type specified by its right-hand argument
+or one of its subtypes.
+If so, it returns ``true``; otherwise, it returns ``false``.
+
+The ``as`` operator explicitly specifies
+that the value of its left-hand argument
+is to be treated as the type specified
+by its right-hand argument.
+
+There are three possible values of the expression:
+
+* If the value of the left-hand expression
+  is of a type that is guaranteed to be convertable
+  to the specified type,
+  the value is returned with the specified type.
+
+* If the value is guaranteed *not* to be convertable
+  to the specified type,
+  a compile-time error is raised.
+
+* Otherwise, the value of the left-hand expression
+  is returned as on optional of the type specified.
+  At runtime, if the cast fails, its value is ``.None``.
+
+.. TODO: List the exact rules for above.
+   It seems like conversion to a supertype always works,
+   conversion to a subtype sometimes works,
+   and other conversions always fail.
+
+For example: ::
+
+    class SomeSuperType {}
+    class SomeType : SomeSuperType {}
+    class SomeChildType : SomeType {}
+
+    let x = SomeType()
+
+    let y = x as SomeSuperType  // y : SomeSuperType
+    let z = x as SomeChildType  // z : SomeChildType?
+
+Specifying a type with ``as`` provides the same type context
+to the compiler as a function call and a variable type annotation.
+For example, the following examples
+are equivalent to the ones above: ::
+
+    let y2 : SomeSuperType = x
+    let z2 : SomeChildType? = x
+
+    func f (a : SomeSuperType) -> SomeSuperType { return a }
+    func g (a : SomeChildType) -> SomeChildType { return a }
+    let y3 = f(x)
+    let z3 = g(x)
+
+If the type specified after ``as``
+is followed by an exclamation mark (``!``),
+the expression is understood as a force-value expression.
+The following are equivalent: ::
+
+    x as SomeType!
+    (x as SomeType)!
+
+.. TODO: Use test-code directive for the above code listings.
 
 .. langref-grammar
 
@@ -131,14 +263,29 @@ Type-Casting Operators
 
 .. syntax-grammar::
 
-    Grammar of an expression cast
+    Grammar of a type-checking operator
 
-    expression-cast --> ``is`` type | ``as`` type
+    type-checking-operator --> ``is`` type
+    type-checking-operator --> ``as`` type ``!``-OPT
 
 .. _Expressions_PrimaryExpressions:
 
 Primary Expressions
 -------------------
+
+.. write-me::
+
+.. TODO: Intro prose goes here.
+
+.. The most common expression type
+   Used to build up more complex expressions
+   Not made up of sub-expressions
+
+.. NOTE: Ignoring the expr-call-suffix? bit like this
+
+    a.closure { return 0 } onError { println("error") }
+
+    This is going away along with all of the other selector stuff.
 
 .. langref-grammar
 
@@ -160,7 +307,7 @@ Primary Expressions
     primary-expression --> closure-expression
     primary-expression --> anonymous-closure-argument
     primary-expression --> parenthesized-expression
-    primary-expression --> delayed-identifier-expression
+    primary-expression --> implicit-member-expression
 
 .. NOTE: One reason for breaking primary expressions out of postfix
    expressions is for exposition -- it makes it easier to organize the
@@ -170,6 +317,63 @@ Primary Expressions
 
 Literal Expression
 ~~~~~~~~~~~~~~~~~~
+
+A :newTerm:`literal expression` consists of
+either an ordinary literal (such as a string or a number),
+an array literal,
+a dictionary literal,
+or one of the following special literals:
+
+================    ======  ===============================================
+Literal             Type    Value
+================    ======  ===============================================
+``__FILE__``        String  The name of the file in which it appears
+``__LINE__``        Int     The line number on which it appears
+``__COLUMN__``      Int     The column number in which it begins
+``__FUNCTION__``    String  The name of the declaration in which it appears
+================    ======  ===============================================
+
+Inside a function,
+the value of ``__FUNCTION__`` is the name of that function,
+inside a method it is the name of that method,
+inside a property getter or setter it is the name of that property,
+inside special members like ``init`` or ``subscript`` it is the name of that keyword,
+and at the top level of a file it is the name of the current module.
+
+.. TR: Should all of these meanings be documented,
+   or are some of them "internal use only" hacks?
+
+:newTerm:`Array literals` represent an ordered collection,
+made up of items of the same type.
+It has the following form:
+
+.. syntax-outline::
+
+   [<#value1#>, <#value2#>, <#...#>]
+
+The last expression in the array can be followed by an optional comma.
+The value of an array literal has type ``T[]``,
+where ``T`` is the type of the expressions inside it.
+
+.. TR: Is T[] always going to be a synonym for Array<T>?
+   Currently, the REPL uses the former for array literals,
+   but the latter matches what is used for dictionary literals.
+
+:newTerm:`Dictionary literals` represent an unordered collection of key-value pairs,
+where all the keys are of the same type
+and all the values are of the same type.
+it has the following form:
+
+.. syntax-outline::
+
+   [<#key1#>: <#value1#>, <#key2#>: <#value2#>, <#...#>]
+
+The last expression in the dictionary can be followed by an optional comma.
+An empty dictionary literal is written as ``[:]``
+to distinguish it from an empty array literal.
+The value of dictionary literal has type ``Dictionary<K,V>``,
+where ``K`` is the type of its key expressions
+and ``V`` is the type of its value expressions.
 
 .. langref-grammar
 
@@ -185,12 +389,29 @@ Literal Expression
 
     Grammar of a literal expression
 
-    literal-expression --> literal | ``__FILE__`` | ``__LINE__`` | ``__COLUMN__``
+    literal-expression --> literal
+    literal-expression --> array-expression | dictionary-expression
+    literal-expression --> ``__FILE__`` | ``__LINE__`` | ``__COLUMN__`` | ``__FUNCTION__``
+
+    array-expression --> ``[`` array-expression-items-OPT ``]``
+	array-expression-items --> array-expression-item ``,``-OPT | array-expression-item ``,`` array-expression-items
+	array-expression-item --> expression
+
+	dictionary-expression --> ``[`` dictionary-expression-items ``]`` | empty-dictionary-expression
+	empty-dictionary-expression --> ``[`` ``:`` ``]``
+	dictionary-expression-items --> dictionary-expression-item ``,``-OPT | dictionary-expression-item ``,`` dictionary-expression-items
+	dictionary-expression-item --> expression ``:`` expression
+
 
 .. _Expressions_IdentifierExpression:
 
 Identifier Expression
 ~~~~~~~~~~~~~~~~~~~~~
+
+.. FIXME
+
+   self and Self go here -- they're keywords
+
 
 .. langref-grammar
 
@@ -202,6 +423,8 @@ Identifier Expression
 
     identifier-expression --> identifier generic-argument-clause-OPT
 
+.. TODO: [Contributor 6004] notes: Arbitrary identifiers cannot have generic arguments, only those in a type context. (We do have to do some magic to determine what might be a type context.)
+
 .. TODO: Discuss in prose: The LangRef has a subsection called 'Generic Disambiguation',
     the contents of which may or may not need to appear here.
 
@@ -209,6 +432,37 @@ Identifier Expression
 
 Superclass Expression
 ~~~~~~~~~~~~~~~~~~~~~
+
+A :newTerm:`superclass expression` lets a class
+interact with its superclass.
+It has one of the following forms:
+
+.. syntax-outline::
+
+   super.<#member name#>
+   super[<#subscript index#>]
+   super.init
+
+The first form is understood as a member of the superclass.
+This allows a subclass to call the superclass's
+implementation of a method that it overrides,
+to get and set propertiess defined by its superclass,
+and to access its superclass's implementation of getters and setters.
+
+.. TR: Confirm the above about properties.
+
+The second form is understood as a call
+to the superclass's subscript method.
+This allows a subclass to use its superclass's support for subscripting
+in the subclass's support for subscripting.
+
+The third form is understood as the superclass's initializer.
+This allows a subclass to call the initializer of its superclass
+as part of the subclass's initializer.
+
+.. TR: ParseExpr.cpp as of r14954 has a second form of expr-super
+   where super.init is followed by 'identifier' and 'expr-call-suffix'
+   What is this for?  What does it mean?
 
 .. langref-grammar
 
@@ -234,11 +488,54 @@ Superclass Expression
 Closure Expression
 ~~~~~~~~~~~~~~~~~~
 
+A :newTerm:`closure expression` creates a closure,
+also known as a *lambda* or an *anonymous function*.
+Like function declarations,
+closures contain statements which they execute,
+and they can capture values from their enclosing scope.
+.. values --> variables and constants
+Unlike function declarations,
+the return type and parameter types can be omitted.
+The omitted type information is inferred
+from the context in which the closure is used.
+
+A closure that consists of only a single expression
+is understood to return the value of that expression.
+In this special case,
+type information from the expression
+is used to infer omitted parameter or return types.
+
+A closure may also omit names for its parameters.
+Its parameters are then implicitly named
+``$`` followed by their position:
+``$0``, ``$1``, ``$2``, and so on.
+
+Omitting types and parameter names allows closures
+to be used with a very brief syntax when needed.
+All of the following examples have the same behavior
+when called with two integers: ::
+
+    // Full function declaration, for comparison
+    func a (x : Int, y : Int) {
+        let result = x + y
+        return result
+    }
+
+    b = { (x : Int, y : Int) -> Int in
+        let result = x + y
+        return x + y
+    }
+
+    c = { (x, y) in x + y }
+
+    d = { $0 + $1 }
+
 .. langref-grammar
 
     expr-closure ::= '{' closure-signature? brace-item* '}'
     closure-signature ::= pattern-tuple func-signature-result? 'in'
     closure-signature ::= identifier (',' identifier)* func-signature-result? 'in'
+    expr-anon-closure-arg ::= dollarident
 
 .. syntax-grammar::
 
@@ -250,26 +547,34 @@ Closure Expression
     closure-signature --> tuple-pattern function-signature-result-OPT ``in``
     closure-signature --> identifier-list function-signature-result-OPT ``in``
 
-.. _Expressions_AnonymousClosureArgument:
-
-Anonymous Closure Argument
-++++++++++++++++++++++++++
-
-.. langref-grammar
-
-    expr-anon-closure-arg ::= dollarident
-
-
-.. syntax-grammar::
-
-    Grammar of an anonymous closure argument
-
     anonymous-closure-argument --> dollar-identifier
+
 
 .. _Expressions_DelayedIdentifierExpression:
 
-Delayed Identifier Expression
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Implicit Member Expression
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+An :newTerm:`implicit member expression`
+is an abbreviated way to access a member of a type,
+such as an enumerator or a class method,
+in a context where type inference
+can determine the implied type.
+It has the following form:
+
+.. syntax-outline::
+
+   .<#member name#>
+
+For example, the following pairs of assignments are equivalent: ::
+
+    var x : ExampleEnumeration
+    x = ExampleEnumeration.SomeValue
+    x = .SomeValue
+
+    var y : ExampleClass
+    y = .someClassMethod()
+    y = ExampleClass.someClassMethod()
 
 .. langref-grammar
 
@@ -278,16 +583,29 @@ Delayed Identifier Expression
 
 .. syntax-grammar::
 
-    Grammar of a delayed identifier expression
+    Grammar of a implicit member expression
 
-    delayed-identifier-expression --> ``.`` enumerator-name
-
-.. TODO: Come up with a better name for delayed-identifier-expression.
+    implicit-member-expression --> ``.`` identifier
 
 .. _Expressions_ParenthesizedExpression:
 
 Parenthesized Expression
 ~~~~~~~~~~~~~~~~~~~~~~~~
+
+A :newTerm:`parenthesized expression` consists of
+a comma-separated list of expressions surrounded by paretheses.
+Each expression in it may have an optional identifier before it,
+set off by a colon (``:``).
+It has the following form:
+
+.. syntax-outline::
+
+   (<#identifier#>: <#expression#>, <#identifier#>: <#expression#>)
+
+.. TR: Is this still correct?
+   There's been a lot of flux around these recently,
+   partly as a side effect of changes to the grammar
+   for method/function declarations.
 
 .. langref-grammar
 
@@ -308,6 +626,18 @@ Parenthesized Expression
 
 Postfix Expressions
 -------------------
+
+:newTerm:`Postfix expressions` are formed
+by applying a postfix operator or other postfix syntax
+to an expression.
+Syntactically, every primary expression is also a postfix expression.
+
+.. write-me::
+
+.. TODO: Intro prose goes here.
+
+.. Formed by putting a postfix operator or postfix-operator-like suffix
+   after an expression.
 
 .. langref-grammar
 
@@ -334,13 +664,54 @@ Postfix Expressions
     postfix-expression --> dot-expression
     postfix-expression --> metatype-expression
     postfix-expression --> subscript-expression
-    postfix-expression --> force-value-expression
+    postfix-expression --> forced-expression
     postfix-expression --> optional-expression
 
 .. _Expressions_FunctionCallExpression:
 
 Function Call Expression
 ~~~~~~~~~~~~~~~~~~~~~~~~
+
+:newTerm:`Function-style calls` calls consist of a function
+followed by its arguments in parenthesis.
+Arguments are separated by commas
+and support optional lables.
+They have the following form
+(showing a function that takes no arguments,
+one that takes a single argument,
+and one that takes three arguments):
+
+.. syntax-outline::
+
+    <#function>()
+    <#function>(<#argument#>)
+    <#function>(<#argument 1#>, <#argument 2#>, <#argument 3#>)
+
+The function portion of the function call expression
+can be any expression whose value is of a functional type
+(
+
+A function call expression can include a :newTerm:`trailing closure`
+in the form of a closure expression immediately after the parenthesis.
+The trailing closure is understood as an additional argument to the function,
+added after the last parenthesized argument.
+The following function calls are equivalent: ::
+
+    exampleFunction(x, {$0 == 13})
+    exampleFunction(x) {$0 == 13}
+
+The parentheses can be omitted
+when calling a function that takes only one argument: ::
+
+    myData.process() {$0 * 2}
+    myData.process {$0 * 2}
+
+:newTerm:`Selector-style function calls` consist of a function
+followed by interleaved parts of its selector and its argements.
+
+.. TODO: Skipping for now until the selector call syntax settles down
+
+.. write-me ::
 
 .. langref-grammar
 
@@ -353,23 +724,30 @@ Function Call Expression
 
     function-call-expression --> postfix-expression parenthesized-expression trailing-closure-OPT
     function-call-expression --> postfix-expression parenthesized-expression-OPT trailing-closure
-    trailing-closure --> closure-expressions expression-cast-OPT
+    trailing-closure --> closure-expressions
 
-.. TR: Is it the case that you can have one or more expr-closure (i.e., expr-closure+)?
-    This doesn't seem right.
+.. Multiple trailing closures in LangRef is an error,
+   and so is the trailing typecast,
+   per [Contributor 6004] 2014-03-04 email.
 
-.. NOTE: The following are three equivalent ways of doing the same thing:
-
-        [1, 2, 3].map {$0 * 2}
-        [1, 2, 3].map() {$0 * 2}
-        [1, 2, 3].map({$0 * 2})
-
-    TODO: Consider giving the above examples in prose.
 
 .. _Expressions_NewExpression:
 
 New Expression
 ~~~~~~~~~~~~~~
+
+A :newTerm:`new expression` allocates and initializes an array
+of a given type and dimension,
+in the following form:
+
+.. syntax-outline::
+
+   new <#type#>[<#size#>]
+
+It consists of the keyword ``new``,
+followed by a type identifier,
+followed by one or more expressions in square brackets (``[`` and ``]``)
+which specify the initial dimensions of the array.
 
 .. langref-grammar
 
@@ -398,6 +776,22 @@ New Expression
 Initializer Expression
 ~~~~~~~~~~~~~~~~~~~~~~
 
+An :newTerm:`initializer expression` is understood
+as a reference to the class's initializer.
+It has the following form:
+
+.. syntax-outline::
+
+    <#instance of a class#>.init
+
+The value of this expression is a function
+that can be called,
+set as the value of a variable,
+and so on,
+just as with any other function.
+
+.. TODO: This feels like pointless throat clearing...
+
 .. langref-grammar
 
     expr-init ::= expr-postfix '.' 'init'
@@ -413,6 +807,26 @@ Initializer Expression
 Dot Expression
 ~~~~~~~~~~~~~~
 
+A :newTerm:`dot expression` allows access
+to the members of a class, structure, enumerator, or module.
+It consists of a period (``.``) between the item
+and the identifier of its member.
+
+.. TR: Is this list exhaustive?  Or are there other things that can use dots?
+
+.. syntax-outline::
+
+   <#expression#>.<#member name#>
+
+The members of a tuple
+are implictly named using integers in the order they appear,
+beginning with zero.
+For example: ::
+
+    var t = (10, 20, 30)
+    t.0 = t.1
+    // Now t is (20, 20, 30)
+
 .. langref-grammar
 
     expr-dot ::= expr-postfix '.' dollarident
@@ -422,7 +836,7 @@ Dot Expression
 
     Grammar of a dot expression
 
-    dot-expression --> postfix-expression ``.`` dollar-identifier
+    dot-expression --> postfix-expression ``.`` decimal-digit
     dot-expression --> postfix-expression ``.`` named-expression
 
 .. _Expressions_MetatypeExpression:
@@ -432,6 +846,8 @@ Metatype Expression
 
 .. NOTE: There is no definition for metatype-expression in the LangRef.
     This was probably just an oversight, according to Ted and Doug.
+
+.. I think this changed to .type recently.
 
 .. syntax-grammar::
 
@@ -457,8 +873,23 @@ Subscript Expression
     subscript-expression --> postfix-expression ``[`` expression ``]``
 
 
-Forcing an Expression's Value
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Forced Expression
+~~~~~~~~~~~~~~~~~
+
+A :newTerm:`forced expression` unwraps an Optional value.
+It has the following form:
+
+.. syntax-outline::
+
+   <#expression#>!
+
+The *expression* must be of an optional type.
+If its value is not ``.None``,
+the optional value is unwrapped
+and returned with the corresponding non-optional type.
+Otherwise, a runtime error is raised.
+
+.. TR: What exactly is the nature of the error?
 
 .. langref-grammar
 
@@ -466,16 +897,62 @@ Forcing an Expression's Value
 
 .. syntax-grammar::
 
-    Grammar of a force-value expression
+    Grammar of a forced-value expression
 
-    force-value-expression --> postfix-expression ``!``
-
-.. TODO: Also, come up with a better name for force-value-expression.
-    Possibly call it "unwrapped-expression"?
+    forced-expression --> postfix-expression ``!``
 
 
-Optional Chaining
-~~~~~~~~~~~~~~~~~
+Chained-Optional Expression
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+An :newTerm:`chained-optional expression` provides a simplified synatax
+for using optional values in postfix expressions.
+It has the following form:
+
+.. syntax-outline::
+
+    <#expression#>?<#postfix operators#>
+
+If the *expression* is not ``.None``,
+the optional-member expression evaluates
+to the non-optional unwrapped value of the expression
+and any chained postfix expression are evaluated normally.
+Otherwise,
+the chained-optional expression evaluates to ``.None``
+and any chained postfix expressions are ignored.
+
+Informally, all postfix expressions that follow the chained-optional expression
+and are still part of the same expression
+are chained to the chained-optional expression.
+Specifically,
+a postfix expression is *directly chained* 
+to the expression that is its first part.
+A postfix expression is *chained* to an expression
+if it is either directly chained to that expression
+or if it is directly chained to another postfix expression
+that is directly chained to that expression.
+
+For example, in the expression ``x?.foo()[7]``
+the array expression is directly chained
+to the function call expression,
+which is directly chained to the chained-optional expression.
+Both the array expression and function call expression
+are chained to the chained-optional expression;
+they are both ignored if the value of ``x`` is ``.None``.
+
+.. LangRef
+
+   A postfix-expression E1 is said to directly chain to a
+   postfix-expression E2 if E1 is syntactically the postfix-expression base
+   of E2; note that this does not include any syntactic nesting, e.g. via
+   parentheses. E1 chains to E2 if they are the same expression or E1
+   directly chains to an expression which chains to E2. This relation has a
+   maximum, called the largest chained expression.
+
+   The largest chained expression of an expr-optional must be convertible to
+   an r-value of type U? for some type U. Note that a single expression may
+   be the largest chained expression of multiple expr-optionals.
+
 
 .. langref-grammar
 
@@ -483,12 +960,9 @@ Optional Chaining
 
 .. syntax-grammar::
 
-   Grammar of an optional expression
+   Grammar of a chained optional expression
 
-   optional-expression --> postfix-expression ``?``
+   chained-optional-expression --> postfix-expression ``?``
 
 .. NOTE: The fact that ? must be postfix when it's used for Optional
    is in "Lexical Structure", under the discussion of left/right binding.
-
-.. TODO: Try to re-title.  It's about chaining of optional operators,
-   not about the optional kind of chaining.
