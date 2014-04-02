@@ -1,7 +1,7 @@
 Technical Review Queries
 ========================
 
-.. write-me::
+.. Nothing goes here.
 
 Lexical Structure
 =================
@@ -156,11 +156,13 @@ The value of an array literal has type ``T[]``,
 where ``T`` is the type of the expressions inside it.
 
 .. docnote::
-   Is T[] always going to be a synonym for Array<T>?
+   Is T[] always going to be a synonym for Array < T > ?
    Currently, the REPL uses the former for array literals,
    but the latter matches what is used for dictionary literals.
    Is there a reason to prefer one over the other in the docs?
-   Using Array<T> gives better parallelism.
+   Using Array < T > gives better parallelism.
+
+.. Spaces around <T> above to prevent it being read as an HTML tag by Sphinx.
 
 Operators
 ---------
@@ -174,7 +176,6 @@ and the unary prefix operator ``&`` are reserved.
 These tokens can't be overloaded, nor can they be used to define custom operators.
 
 .. docnote::
-   
    LangRef also says (){}[].,;: are reserved punctuation,
    but those aren't valid operator characters anyway.
    OK to omit them from this list of reserved tokens?
