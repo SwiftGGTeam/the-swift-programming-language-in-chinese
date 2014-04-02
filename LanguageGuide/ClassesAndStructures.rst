@@ -102,15 +102,16 @@ Both place their entire definition within a pair of braces:
 
 .. note::
 
-   Whenever you define a new class or structure,
+   As with enumerations,
+   whenever you define a new class or structure,
    you are effectively defining a brand new Swift type.
-   Types should be given ``UpperCamelCase`` names
-   (such as ``SomeClass`` and ``SomeStructure`` here),
+   As a result, you should give your classes and structures ``UpperCamelCase`` names
+   (such as ``SomeClass`` and ``SomeStructure`` here)
    to match the capitalization of standard Swift types
    (such as ``String``, ``Int``, and ``Bool``).
-   Named values, functions, and methods should always be given
+   Conversely, properties and methods should always be given
    ``lowerCamelCase`` names
-   (such as ``allowedEntry`` and ``contentHeight``)
+   (such as ``frameRate`` and ``incrementCount()``)
    to differentiate them from type names.
 
 Here's an example of a structure definition and a class definition:
