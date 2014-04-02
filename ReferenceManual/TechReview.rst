@@ -760,7 +760,7 @@ Attributes
    effect the parser.  The grammar is regular enough that even if we don't know
    what to do with an attribute, we can still parse it.
    It's likely that someday we will allow user-defined attributes.
-   
+
    The structure of what's inside the parens is always going to be special.
    Essentially, the attribute defines its own grammar for what goes in its
    parens.  The stuff in parens should just be (gramatically) a balanced token
@@ -850,16 +850,21 @@ Patterns
 Other Topics
 ------------
 
-inout
+inout, var, etc. in function declaration grammar:
 
-function
-    'func' inentifier '(' param-list? ')'
+Skeleton::
 
-param-list
-    (   ) identifier? identifier? ':' type '=' expr?
+    function-declaration --> 'func' identifier '(' param-list? ')' ...
 
-It will not depend on patterns in any way -- right now it's such a lie that it depends on patterns.  Doug will be writing up a grammar for this.
+param-list::
+
+    param-list --> parameter-modifiers? identifier? identifier? ':' type '=' expr?
+
+...
+
+It will not depend on patterns in any way -- right now it's a lie that it depends on patterns.
+Doug will be writing up a grammar for this.
 
 The selector style function declaration and call syntax is going away.  We will
-have one syntax for selector and normal function.  The curried bit will stay --
+have one syntax for selector and normal functions. The curried bit will stay --
 you can just have multiple sets of paraenthesized parameter lists.
