@@ -51,10 +51,16 @@ This enables the Swift compiler to optimize the performance of the collection.
    The difference between value types and reference types is covered in detail
    in :ref:`ClassesAndStructures_ValueTypesAndReferenceTypes`.
 
+.. TODO: provide an example of what this means in practice
+   (similar to the Resolution examples in Classes and Structures)
+
 .. _CollectionTypes_Arrays:
 
 Arrays
 ------
+
+.. TODO: update this section to use (and eventually prefer) T[] syntax,
+   based on [Contributor 7746]'s feedback
 
 An :newTerm:`array` stores multiple values of the same type in an ordered list.
 The same value is allowed to appear in an array multiple times at different positions.
