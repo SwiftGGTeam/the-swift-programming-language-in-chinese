@@ -130,105 +130,6 @@ is defined in a single location as part of the type's definition.
 .. TODO: How do I define whether my properties are strong- or weak-reference?
 .. TODO: what happens if one property of a constant structure is an object reference?
 
-.. _Properties_StoredPropertyObservers:
-
-Stored Property Observers
-~~~~~~~~~~~~~~~~~~~~~~~~~
-
-:newTerm:`Stored property observers` are a way to observe and respond to
-the setting of new values for a stored property.
-You have the option to define either or both of these observers on a stored property:
-
-* ``willSet``, which is called just before the value is stored
-* ``didSet``, which is called immediately after the new value is stored
-
-If you implement a ``willSet`` observer,
-it will be passed the new property value as a constant parameter.
-You can specify a name for this parameter as part of your ``willSet`` implementation.
-If you choose not to write the parameter name and parentheses within your implementation,
-the parameter will still be made available with a default parameter name of ``newValue``.
-
-Similarly, if you implement a ``didSet`` observer,
-it will be passed a constant parameter containing the old property value.
-You can name the parameter if you wish,
-or use the default parameter name of ``oldValue``.
-
-.. note::
-
-   ``willSet`` and ``didSet`` observers are not called when
-   a property is first initialized.
-   They are only called when the property's value is set
-   outside of an initialization context.
-
-Here's an example of ``willSet`` and ``didSet`` in action:
-
-.. testcode:: storedProperties
-
-   -> class StepCounter {
-         var totalSteps: Int = 0 {
-            willSet(newTotalSteps) {
-               println("About to set totalSteps to \(newTotalSteps)")
-            }
-            didSet {
-               if totalSteps > oldValue  {
-                  println("Added \(totalSteps - oldValue) steps")
-               }
-            }
-         }
-      }
-   -> let stepCounter = StepCounter()
-   << // stepCounter : StepCounter = <StepCounter instance>
-   -> stepCounter.totalSteps = 200
-   </ About to set totalSteps to 200
-   </ Added 200 steps
-   -> stepCounter.totalSteps = 360
-   </ About to set totalSteps to 360
-   </ Added 160 steps
-   -> stepCounter.totalSteps = 896
-   </ About to set totalSteps to 896
-   </ Added 536 steps
-
-This example defines a new class called ``StepCounter``,
-which keeps track of the total number of steps that a person has taken while walking.
-This class might be used with input data from a pedometer or other step counter
-to keep track of a person's exercise during their daily routine.
-
-The ``StepCounter`` class declares a ``totalSteps`` property of type ``Int``.
-This is a stored property with ``willSet`` and ``didSet`` observers.
-
-The ``willSet`` and ``didSet`` observers for ``totalSteps`` are called
-whenever the property is assigned a new value.
-This is true even if the new value is the same as the current value.
-
-This example's ``willSet`` observer uses
-a custom parameter name of ``newTotalSteps`` for the upcoming new value.
-In this example, it simply prints out the value that is about to be set.
-
-The ``didSet`` observer is called after the value of ``totalSteps`` has been updated.
-In this example, it looks at the new value of ``totalSteps``,
-and compares it against the old value.
-If the total number of steps has increased,
-a message is printed to indicate how many new steps have been taken.
-The ``didSet`` observer does not provide a custom parameter name for the old value,
-and the default name of ``oldValue`` is used instead.
-
-.. note::
-
-   If you assign a value to a property within its own ``didSet`` observer,
-   the new value that you assign will replace the one that was just set.
-
-.. TODO: mention that this also works for global / local variables
-
-.. TODO: you can now observe changes to a parent property,
-   regardless of whether it is stored or not.
-   that said, at the time of writing, it only works with computed properties,
-   because stored properties cannot yet be overridden.
-   nonetheless, it should still be mentioned here,
-   and may mean that the name of this section needs to change.
-
-.. TODO: mention that you can't override to observe a read-only property,
-   as there will never be anything to actually observe
-
 .. _Properties_ComputedProperties:
 
 Computed Properties
@@ -397,6 +298,105 @@ to enable the outside world to discover its current calculated volume.
 
 .. TODO: Add an example of a computed property for an enumeration
    (now that the Enumerations chapter no longer has an example of this itself).
+
+.. _Properties_StoredPropertyObservers:
+
+Stored Property Observers
+-------------------------
+
+:newTerm:`Stored property observers` are a way to observe and respond to
+the setting of new values for a stored property.
+You have the option to define either or both of these observers on a stored property:
+
+* ``willSet``, which is called just before the value is stored
+* ``didSet``, which is called immediately after the new value is stored
+
+If you implement a ``willSet`` observer,
+it will be passed the new property value as a constant parameter.
+You can specify a name for this parameter as part of your ``willSet`` implementation.
+If you choose not to write the parameter name and parentheses within your implementation,
+the parameter will still be made available with a default parameter name of ``newValue``.
+
+Similarly, if you implement a ``didSet`` observer,
+it will be passed a constant parameter containing the old property value.
+You can name the parameter if you wish,
+or use the default parameter name of ``oldValue``.
+
+.. note::
+
+   ``willSet`` and ``didSet`` observers are not called when
+   a property is first initialized.
+   They are only called when the property's value is set
+   outside of an initialization context.
+
+Here's an example of ``willSet`` and ``didSet`` in action:
+
+.. testcode:: storedProperties
+
+   -> class StepCounter {
+         var totalSteps: Int = 0 {
+            willSet(newTotalSteps) {
+               println("About to set totalSteps to \(newTotalSteps)")
+            }
+            didSet {
+               if totalSteps > oldValue  {
+                  println("Added \(totalSteps - oldValue) steps")
+               }
+            }
+         }
+      }
+   -> let stepCounter = StepCounter()
+   << // stepCounter : StepCounter = <StepCounter instance>
+   -> stepCounter.totalSteps = 200
+   </ About to set totalSteps to 200
+   </ Added 200 steps
+   -> stepCounter.totalSteps = 360
+   </ About to set totalSteps to 360
+   </ Added 160 steps
+   -> stepCounter.totalSteps = 896
+   </ About to set totalSteps to 896
+   </ Added 536 steps
+
+This example defines a new class called ``StepCounter``,
+which keeps track of the total number of steps that a person has taken while walking.
+This class might be used with input data from a pedometer or other step counter
+to keep track of a person's exercise during their daily routine.
+
+The ``StepCounter`` class declares a ``totalSteps`` property of type ``Int``.
+This is a stored property with ``willSet`` and ``didSet`` observers.
+
+The ``willSet`` and ``didSet`` observers for ``totalSteps`` are called
+whenever the property is assigned a new value.
+This is true even if the new value is the same as the current value.
+
+This example's ``willSet`` observer uses
+a custom parameter name of ``newTotalSteps`` for the upcoming new value.
+In this example, it simply prints out the value that is about to be set.
+
+The ``didSet`` observer is called after the value of ``totalSteps`` has been updated.
+In this example, it looks at the new value of ``totalSteps``,
+and compares it against the old value.
+If the total number of steps has increased,
+a message is printed to indicate how many new steps have been taken.
+The ``didSet`` observer does not provide a custom parameter name for the old value,
+and the default name of ``oldValue`` is used instead.
+
+.. note::
+
+   If you assign a value to a property within its own ``didSet`` observer,
+   the new value that you assign will replace the one that was just set.
+
+.. TODO: mention that this also works for global / local variables
+
+.. TODO: you can now observe changes to a parent property,
+   regardless of whether it is stored or not.
+   that said, at the time of writing, it only works with computed properties,
+   because stored properties cannot yet be overridden.
+   nonetheless, it should still be mentioned here,
+   and may mean that the name of this section needs to change.
+
+.. TODO: mention that you can't override to observe a read-only property,
+   as there will never be anything to actually observe
 
 .. _Properties_TypeProperties:
 
