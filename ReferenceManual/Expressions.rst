@@ -463,6 +463,7 @@ as part of the subclass's initializer.
 .. TR: ParseExpr.cpp as of r14954 has a second form of expr-super
    where super.init is followed by 'identifier' and 'expr-call-suffix'
    What is this for?  What does it mean?
+   [Brian says that's for foo.init withBar:]
 
 .. langref-grammar
 
@@ -606,6 +607,7 @@ It has the following form:
    There's been a lot of flux around these recently,
    partly as a side effect of changes to the grammar
    for method/function declarations.
+   [Skipped for this TR]
 
 .. langref-grammar
 
