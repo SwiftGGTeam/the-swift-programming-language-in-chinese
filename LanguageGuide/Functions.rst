@@ -798,8 +798,8 @@ You can now call the assigned function by using the constant or variable's name:
 
 .. testcode:: functionTypes
 
-   -> println("Two plus three is \(mathFunction(2, 3))")
-   <- Two plus three is 5
+   -> println("Result: \(mathFunction(2, 3))")
+   <- Result: 5
 
 A different function with the same matching type can be assigned to the same variable,
 in the same way as for non-function types:
@@ -807,8 +807,8 @@ in the same way as for non-function types:
 .. testcode:: functionTypes
 
    -> mathFunction = multiplyTwoInts
-   -> println("Two times three is \(mathFunction(2, 3))")
-   <- Two times three is 6
+   -> println("Result: \(mathFunction(2, 3))")
+   <- Result: 6
 
 You can leave it up to Swift to infer the appropriate function type to use
 by assigning a function when you define the constant or variable:
@@ -818,6 +818,63 @@ by assigning a function when you define the constant or variable:
    -> let anotherMathFunction = addTwoInts
    << // anotherMathFunction : (a: Int, b: Int) -> Int = <unprintable value>
    // anotherMathFunction is inferred to be of type (Int, Int) -> Int
+
+.. _Functions_FunctionsAsParameters:
+
+Functions as Parameters
+-----------------------
+
+A function type such as ``(Int, Int) -> Int`` can be used as
+a parameter type for another function.
+This enables you to leave some aspects of a function's implementation
+for the function's caller to provide when the function is called.
+
+Here's an example to print the results of the math functions from above:
+
+.. testcode:: functionTypes
+
+   -> func printMathResult(mathFunction: (Int, Int) -> Int, a: Int, b: Int) {
+         println("Result: \(mathFunction(a, b))")
+      }
+   -> printMathResult(addTwoInts, 3, 5)
+   <- Result: 8
+
+This example defines a function called ``printMathResult()``, which has three parameters.
+The first parameter is called ``mathFunction``, and is of type ``(Int, Int) -> Int``.
+You can pass any function of that type as the argument for this first parameter.
+The second and third parameters are called ``a`` and ``b``, and are both of type ``Int``.
+These are used as the two input values for the provided math function.
+
+When ``printMathResult()`` is called above,
+it is passed the ``addTwoInts()`` function, and the integer values ``3`` and ``5``.
+It calls the provided function with the values ``3`` and ``5``, and prints the result of ``8``.
+
+The role of ``printMathResult()`` is to print the result of some appropriate function.
+It doesn't need to know or care what that function's implementation actually does –
+it just cares that the function is of the correct type.
+This enables ``printMathResult()`` to hand off some of its functionality
+to the caller of the function in a type-safe way.
+
+.. _Functions_FunctionsAsReturnTypes:
+
+Functions as Return Types
+-------------------------
+
+A function type can also be used as the return type of another function.
+
+.. testcode:: functionTypes
+
+   -> mathFunctionFromString(operatorString: String) -> (Int, Int) -> Int {
+         switch operatorString {
+            case "*":
+               return multiplyTwoInts
+            default:
+               return addTwoInts
+         }
+      }
+   -> let functionToUse = mathFunctionFromString("*")
+   -> functionToUse(3, 4)
+   <- 12
 
 .. _Functions_CurriedFunctions:
 
