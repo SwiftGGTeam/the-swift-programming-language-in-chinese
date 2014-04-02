@@ -25,6 +25,9 @@ or :newTerm:`maximal munch`.
     If there's something else we can say that's more specific,
     I would rather do that.
 
+.. A bit of handwaving is good here.  Just call out the exceptions at the point
+   where they appear later.
+
 Whitespace and Comments
 ~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -37,6 +40,8 @@ Nesting is allowed, but the comment markers must be balanced.
 .. docnote::
    LangRef says comments are ignored *and* treated as whitespace.
    Is there a difference?
+
+.. They are treated as whitespace.
 
 Integer Literals
 ~~~~~~~~~~~~~~~~
@@ -75,11 +80,24 @@ as described in :ref:`BasicTypes_Integers`.
    Also, are adjacent underscores meant to be allowed, as in ``5__000``?
    (The REPL supports them as of swift-1.21 but it seems odd.)
 
+.. Fine as is.  They're happy to follow the trail blazed by other languages.
+   We will look into how Ruby and Java handle trailing underscores here and
+   follow up.
+   TODO: Do some research
+
 .. docnote::
     Why are negative integer literals treated (grammatically)
     asymmetrically to negative floating-point literals.
     From [Contributor 7746]'s radar:
     rdar://problem/15181997 Teach the compiler about a concept of negative integer literals.
+
+..  If you're doing an enum case, we want you to be able to do -3 as an Integer
+    value.  The answer to the assymetry is that floating point literals should
+    also allow a leading negative sign.  Integers are a little bit special
+    because they show up in the compile stuff.
+    TODO: File a bug
+
+    This is a parser hack, not a lexer hack. In the surface grammar, we can ignore it.
 
 [Partial grammar below.]
 
@@ -131,6 +149,8 @@ Floating-Point Literals
    Why not allow all combinations --
    optional fraction and optional exponent in any base?
 
+.. This complexity is intentional.
+
 
 Textual Literals
 ~~~~~~~~~~~~~~~~
@@ -141,15 +161,42 @@ String literals are of type ``String``.
 .. docnote::
    Is UnicodeScalar the final name for that type?
 
+.. We will have this as a single Unicode char, as well as Char which will be a
+   single Unicode grapheme cluster.  Watch for changes around this and the
+   single/double quotes grammar coming after WWDC.  For now, it might be best
+   to just not document the single quoted character literal, because we know
+   that it's going to change.  If we can't make it work right, it's possible we
+   would just delete single quoted strings.  Right now, iterating over a String
+   returns a sequence of UnicodeScalar values.  In the fullness of time, it
+   should return a sequence of Char values.
+   TODO: Scrub out UnicodeScalar literals from the docs.
+   TODO: File a bug asking for them to do the equivalent change
+
 .. docnote::
    Is there any context where string/double-quoted literals
    become implicitly null-terminated?
    That is, is their type always String or could it be char* or NSString?
 
+.. There's some encoding stuff going on here -- a String type can opt into one
+   of several protocols depending on what encoding it wants to use.  We have
+   UTF-8, UTF-16 (default) and ASCII.  So you explicitly say what encoding the
+   string literal takes.
+   We don't document this.
+   The type is always String -- there's some bridging and interop going on, but
+   that doesn't effect the type of the string literal.
+
 .. docnote::
     Are we considering the Boolean values ``true`` and ``false``
     as literals (in the lexical structure sense). Where should we include
     these in the grammar? What about ``nil``?
+
+.. Those are library-defined constants, not keywords.  They don't appear in the
+   grammar.  We will call them what they are -- they're not keywords.  We would
+   prefer that the documentation use nil instead of .None -- it works in more
+   contexts than just Optional, such as unchecked optionals.  When you're
+   working with optionals you don't have to know the implementation of
+   Optional<T> to know that you need to use nil.
+   TODO: Scrub for .None and change it to nil.
 
 Operators
 ~~~~~~~~~
@@ -166,6 +213,8 @@ These tokens can't be overloaded, nor can they be used to define custom operator
    LangRef also says (){}[].,;: are reserved punctuation,
    but those aren't valid operator characters anyway.
    OK to omit them from this list of reserved tokens?
+
+.. Dot is weird.  Otherwise, fine as is.
 
 The whitespace around an operator is used to determine
 whether an operator is used as a prefix operator, a postfix operator,
@@ -209,6 +258,8 @@ it must have whitespace around both sides.
    we have directly explained how whitespace impacts behavior.
    (It also appears that left and right bound are defined backward in LangRef.)
 
+.. Fine.
+
 In certain constructs, operators with a leading ``<`` or ``>``
 may be split into two or more tokens. The remainder is treated the same way
 and may be split again. As a result, there is no need to use whitespace
@@ -221,6 +272,14 @@ that may then be misinterpreted as a bit shift ``>>`` operator.
    Is there a special context you must be in for this <<>> rule to happen?
    With this rule in effect, how is >> ever parsed as a bit shift
    and not two greater-than operators?
+
+.. Once the parser sees a < it goes into a pre-scanning lookahead mode.  It
+   matches < and > and looks at what token comes after the > -- if it's a . or
+   a ( it treats the <...> as a generic parameter list, otherwise it treats
+   them as less than and greater than.
+
+   This fails to parse things like x<<2>>(1+2) but it's the same as C#.  So
+   don't write that.
 
 .. syntax-grammar::
 
@@ -240,10 +299,20 @@ that may then be misinterpreted as a bit shift ``>>`` operator.
    (A past build of Swift allowed various arrows and mathematical operators
    such as circled plus.)
 
+.. We currently allow anything that Unicode classifies as a symbol (including
+   snowman with fez) but for now we only document these normal things.
+   For now, we leave this as an undocumented feature of the compiler.
+   In the general case, we want to add other operators and maybe Apple-reserved
+   operators for SPI, but we can't even have a meaningful conversation withthe
+   community for a good two years.
+
 .. docnote::
    LangRef doesn't list ? as either a character that you can use in an operator
    or as reserved punctuation.
    Is this correct?
+
+.. The ? is a reserved punctuation.  Optional-chaining (foo?.bar) is actually a
+   monad -- the ? is actually a monadic bind operator.  It is like a burrito.
 
 Types
 -----
@@ -253,13 +322,35 @@ Types
     What are we going to call them?
     Do we have the syntax/grammar locked down?
 
+.. Even after the syntactic change, we still have been calling them
+   "metatypes".  It seems like an OK term.  Let's just keep the title and say
+   that the way you get a metatype type is by writing ".type".  That's the
+   standard naming -- in OO we talk about metaclasses -- so there's good reason
+   to describe them this way.
+
 .. docnote::
     How close are Arrays from being locked down?
     What should this section of the RefMan look like?
 
+.. We're getting pretty close.  Dave's still working on it and keeps claiming
+   it will be tomorrow.  Really all we have to document is that there's a sugar
+   for array types and show people how multiple sets of array brackets work
+   (for multi-dimensional arrays) -- and bounce them over to the Standard
+   Library Reference for the details.
+
 .. docnote::
     What do function types look like now (after the unification proposal)?
     Are they still based on tuple types?
+
+.. The grammar for a function type should be "type -> type" without any
+   parens or labels.  For WWDC and likely 1.0, tuples will keep their labels.
+   The bit still in flux is the declaration syntax for functions.
+
+   Note: Our endgame and where we are now are different.
+
+   Both of these are valid tuple types:
+   Int -> Int
+   (a : Int) -> Int
 
 .. docnote::
     What do tuple types look like now?
@@ -502,6 +593,49 @@ Protocol Associated Type Declaration
     that are related to the type of ``Self``, such as a type of data stored in a
     collection or the node and edge types of a graph." Is this still true?
 
+.. At one point, Self was an associated type, but that's the wrong modeling of
+   the problem.  Self is the stand-in type for the thing that conforms to the
+   protocol.  It's weird to think of it as an associated type because it's the
+   primary thing.  It's certainly not an associated type.  In many ways, you
+   can think of associated types as being parameters that get filled in by the
+   conformance ofa specific concrete type to that protocol.
+
+   There's a substitution mapping here.  The parameters are associated with
+   self because they're derived from Self.  When you have a concrete type that
+   conforms to a protocol, it supplies concrete types for Self and all the
+   associated types.
+
+   The associated types like parameters, but they're associated with Self in
+   the protocol.  Self is the eventual type of the thing that conforms to the
+   protocol -- you have to have a name for it so you can do things with it.
+
+   We use "associated" in contrast with generic parameters in interfaces in C#.
+   The interesting thing there is that they don't have a name like Self for the
+   actual type, but you can name any of these independant types.    In theory,
+   they're often independent but in practice they're often not -- you have an
+   interface parameterized on T, where all the uses of the thing are that T is
+   the same is Self.  Instead of having these independant parameters to an
+   interface, we have a named thing (Self) and all these other things that hand
+   off of it.
+
+   Here's a stupid simple way to see the distinction:
+
+   C#:
+
+       interface Sequence <Element> {}
+
+       class String : Sequence <UnicodeScalar>
+       class String : Sequence <GraphemeCluster>
+
+   These are both fine in C#
+
+   Swift:
+
+       protocol Sequence { typealias Element }
+
+       class String : Sequence { typealias Element = ... }
+
+   Here you have to pick one or the other -- you can't have both.
 
 .. syntax-grammar::
 
@@ -616,6 +750,22 @@ Attributes
     What should the new grammar look like (also taking into account ``!`` inverted attributes)?
     What should we call the "arguments" that attributes take? ("options"?)
 
+.. The grammar should be @ <attribute> ( <optional arguments> )
+   Other languages have specific grammar production rules for specific
+   attributes, specifying the syntax of them, in addition do the description of
+   what they mean.
+
+   Instead of pulling all the known attributesin the grammar, have a general
+   production rule.  From the parsing perspective, the attribute name doesn't
+   effect the parser.  The grammar is regular enough that even if we don't know
+   what to do with an attribute, we can still parse it.
+   It's likely that someday we will allow user-defined attributes.
+   
+   The structure of what's inside the parens is always going to be special.
+   Essentially, the attribute defines its own grammar for what goes in its
+   parens.  The stuff in parens should just be (gramatically) a balanced token
+   sequence.
+
 .. docnote:: Let's revisit which attributes we should document, now that more have
     been added and some have been removed. I'm copying the current Attr.def file below.
 
@@ -654,6 +804,9 @@ including the declarations the attribute can appear, and whether duplicates are 
 * ATTR(weak)
 * ATTR(requires_stored_property_inits)
 
+.. Override is going to become a keyword.  (Not known if it will be context
+   sensitive.)  The other operator stuff will probably become keywords too.
+
 * IB_ATTR(IBOutlet)
 * IB_ATTR(IBAction)
 * IB_ATTR(IBDesignable)
@@ -669,6 +822,15 @@ including the declarations the attribute can appear, and whether duplicates are 
     Similarly for ``weak`` and ``unowned``.
     What's the story here?
 
+.. We should just make nonmutating a keyword, to match the keyword mutating.
+   Then both @mutating and @!mutating should be removed.
+   TODO: Follow up and/or file a bug for this.
+
+.. TODO: Revisit this and figure out which things we need to document.
+
+.. In addition to @!mutating we may eventually have @!objc which means don't
+   expose to Obj-C.  We could handle this as an attribute named !objc.
+
 Patterns
 --------
 
@@ -677,3 +839,27 @@ Patterns
     How up to date is pattern grammar in the LangRef?
     There is an 'is' pattern; what about an 'as' pattern?
 
+.. Patterns might be getting a little simpler since they are not being used for
+   functions.  For now, it's ok to not have a discussion of pattern matching as
+   a topic -- let's just talk about how awesome switch statements are.  The
+   people who come from functional backgrounds will see the pattern matching
+   here just like they will see the monads in optional chaining.
+   Joe Groff is the pattern guru -- he designed this stuff and implemented
+   the crazy switch.
+
+Other Topics
+------------
+
+inout
+
+function
+    'func' inentifier '(' param-list? ')'
+
+param-list
+    (   ) identifier? identifier? ':' type '=' expr?
+
+It will not depend on patterns in any way -- right now it's such a lie that it depends on patterns.  Doug will be writing up a grammar for this.
+
+The selector style function declaration and call syntax is going away.  We will
+have one syntax for selector and normal function.  The curried bit will stay --
+you can just have multiple sets of paraenthesized parameter lists.
