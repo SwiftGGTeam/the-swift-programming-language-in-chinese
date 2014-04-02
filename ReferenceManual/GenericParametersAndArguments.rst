@@ -1,14 +1,6 @@
 Generic Parameters and Arguments
 ================================
 
-.. Resources to look at:
-    swift/docs/Generics.html
-    swift/lib/Parse/ParseGeneric.cpp
-    swift/include/swift/AST/Decl.h
-    Various test files in swift/test
-
-.. TODO: This intro section needs more work.
-
 In Swift, you can declare generic types---including generic classes, structures, and
 enumerations---functions, and initializers.
 Generics allow you to express the essential interface
@@ -20,7 +12,7 @@ you specify the :newTerm:`type parameters` the generic type, function, or initia
 can work with.
 These type parameters act as placeholders that
 are replaced by actual, concrete :newTerm:`type arguments`
-when a generic type is created or a generic function or initializer is called.
+when an instance of a generic type is created or a generic function or initializer is called.
 This chapter describes the syntax and associated rules for generic parameters
 and arguments.
 
@@ -30,6 +22,7 @@ For an overview of generics in Swift, see :doc:`../LanguageGuide/Generics`.
     because they are declared with one or more type parameters.
 
 .. _GenericParametersAndArguments_GenericParameterClause:
+
 
 Generic Parameter Clause
 ------------------------
@@ -49,20 +42,20 @@ each of which has the following form:
 
 .. syntax-outline::
 
-    <<#type parameter#> : <#constraints#>>
+    <<#type parameter#> : <#constraint#>>
 
 A generic parameter consists of a *type parameter* followed by
-zero or more *constraints*. The type parameter is simply the name
+an optional *constraint*. The type parameter is simply the name
 of a placeholder type
 (for instance, ``T``, ``U``, ``V``, ``KeyType``, ``ValueType``, and so on).
 Type parameters and any of their associated types are in scope for the rest of the
 type, function, or initializer declaration, including the signature of the function
 or initializer.
 
-The *constraints* specify that a type parameter inherits
-from a specific class or conforms to any number of protocols
-(either a comma-separated list of protocols or a single protocol composition)
-or both.
+The *constraint* specifies that a type parameter inherits
+from a specific class or conforms to a protocol. If you want to constrain a
+type parameter to conform to multiple parameters,
+use a protocol composition.
 For instance, in the generic function below, the generic parameter ``T : Comparable``
 indicates that any type argument substituted
 for the type parameter ``T`` must conform to the ``Comparable`` protocol.
@@ -96,13 +89,18 @@ by including a ``where`` clause after the *generic parameter list*.
 A ``where`` clause consists of the keyword ``where``,
 followed by comma-separated list of one or more *requirements*.
 
-The *requirements* in a ``where`` clause specify that a type paramater conforms
-to a protocol or protocol composition. Although you can express all of the constrains
-of a generic parameter in the requirements of a ``where`` clause
+The *requirements* in a ``where`` clause specify that a type paramater inherits from
+a class, conforms to a protocol, or a protocol composition.
+Although the ``where`` clause provides syntactic
+sugar for expressing simple constraints on type parameters
 (for instance, ``T : Comparable`` is equivalent to ``T where T : Comparable`` and so on),
-you can also express two kinds of constraints on the associated types of the type parameters.
+you can use it to provide more complex constraints on type parameters
+and their associated types. For instance, you can express the constraints that
+a generic type ``T`` inherits from a class ``C`` and conforms to a protocol ``P`` as
+``<T where T : C, T : P>``.
 
-You can constrain the associated types of type parameters to conform to protocols.
+As mentioned above,
+you can constrain the associated types of type parameters to conform to protocols.
 For example, the generic parameter clause ``<T : Generator where T.Element : Equatable>``
 specifies that ``T`` conforms to the ``Generator`` protocol
 and the associated type of ``T``, ``T.Element``, conforms to the ``Equatable`` protocol
@@ -115,7 +113,7 @@ using the ``==`` operator. For example, the generic parameter clause
 expresses the constraints that ``T`` and ``U`` conform to the ``Generator`` protocol
 and their associated types must be identical.
 
-Any concrete, type argument substituted for a type parameter must
+Any type argument substituted for a type parameter must
 meet all the constraints and requirements placed on the type parameter.
 
 You can overload a generic function or initializer by providing different
@@ -148,7 +146,9 @@ You can subclass a generic class, but the subclass must also be a generic class.
 
     generic-parameter-clause --> ``<`` generic-parameter-list requirement-clause-OPT ``>``
     generic-parameter-list --> generic-parameter | generic-parameter ``,`` generic-parameter-list
-    generic-parameter --> type-name type-inheritance-clause-OPT | type-name ``:`` protocol-composition-type
+    generic-parameter --> type-name
+    generic-parameter --> type-name ``:`` type-identifier
+    generic-parameter --> type-name ``:`` protocol-composition-type
 
     requirement-clause --> ``where`` requirement-list
     requirement-list --> requirement | requirement ``,`` requirement-list

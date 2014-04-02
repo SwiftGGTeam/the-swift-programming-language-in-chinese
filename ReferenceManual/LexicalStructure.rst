@@ -267,20 +267,20 @@ The following keywords are reserved and may not be used as identifiers.
     type
 
 * Keywords reserved in particular contexts:
-  ``associativity``, 
-  ``didSet``, 
-  ``get``, 
-  ``infix``, 
-  ``inout``, 
-  ``left``, 
-  ``mutating``, 
-  ``none``, 
-  ``operator``, 
-  ``postfix``, 
-  ``precedence``, 
-  ``prefix``, 
-  ``right``, 
-  ``set``, 
+  ``associativity``,
+  ``didSet``,
+  ``get``,
+  ``infix``,
+  ``inout``,
+  ``left``,
+  ``mutating``,
+  ``none``,
+  ``operator``,
+  ``postfix``,
+  ``precedence``,
+  ``prefix``,
+  ``right``,
+  ``set``,
   and ``willSet``.
   Outside the context in which they appear in the grammar,
   they can be used as identifiers.
@@ -650,6 +650,8 @@ where ``T`` is the type of the expressions inside it.
 
 .. syntax-grammar::
 
+	Grammar of an array literal
+
     array-literal --> ``[`` array-literal-items-OPT ``]``
 	array-literal-items --> array-literal-item ``,``-OPT | array-literal-item ``,`` array-literal-items
 	array-literal-item --> expression
@@ -675,6 +677,8 @@ where ``K`` is the type of its key expressions
 and ``V`` is the type of its value expressions.
 
 .. syntax-grammar::
+
+	Grammar of a dictionary literal
 
 	dictionary-literal --> ``[`` dictionary-literal-items ``]`` | empty-dictionary-literal
 	empty-dictionary-literal --> ``[`` ``:`` ``]``
