@@ -173,6 +173,14 @@ Tuple Type
     2. Are function parameter names going to be part of the function type?
     3. Related to (1) and (2): Are tuple types going to used as the left-hand side
        of a function type (as in the current grammar)?
+    UPDATE from Doug, 4/2/14:
+    Re: 1: For WWDC and likely 1.0, tuples will keep their labels. (Our endgame
+    and where we are now are different.)
+    Re: 2: Yes, in cases like: (a: Int) -> Int
+    Re: 3: No, it's now just type (before, we were relying on tuple-types
+    to enforce parens). Of course, a tuple-type is a type, so you can
+    still have (a: Int) -> Int.
+
 
 .. _Types_FunctionType:
 
@@ -190,7 +198,7 @@ Function Type
 
     Grammar of a function type
 
-    function-type --> tuple-type ``->`` attribute-list-OPT type
+    function-type --> type ``->`` attribute-list-OPT type
 
 .. NOTE: Functions are first-class citizens in Swift,
     except for generic functions, i.e., parametric polymorphic functions.
@@ -213,6 +221,18 @@ Function Type
     2. Are function parameter names going to be part of the function type?
     3. Related to (1) and (2): Are tuple types going to used as the left-hand side
        of a function type (as in the current grammar)?
+    UPDATE from Doug, 4/2/14:
+    Re: 1: For WWDC and likely 1.0, tuples will keep their labels. (Our endgame
+    and where we are now are different.)
+    Re: 2: Yes, in cases like: (a: Int) -> Int
+    Re: 3: No, it's now just type (before, we were relying on tuple-types
+    to enforce parens). Of course, a tuple-type is a type, so you can
+    still have (a: Int) -> Int.
+
+    Function *declarations* on the other hand are still flux. Doug will be writing
+    a new grammar for them soon. One notable change is that they will no longer
+    use patterns in the function parameters.
+
 
 .. _Types_ArrayType:
 
@@ -246,6 +266,13 @@ Array Type
     Joe has a proposal on the table, but no decision has been made.
     Let's hold off on writing about these until they are nailed down.
     Update: [Contributor 5711] is now DRI for rewriting/implementing Arrays.
+
+    UPDATE from Doug, 4/2/14:
+    We're getting pretty close.  Dave's still working on it and keeps claiming
+    it will be tomorrow.  Really all we have to document is that there's a sugar
+    for array types and show people how multiple sets of array brackets work
+    (for multi-dimensional arrays) -- and bounce them over to the Standard
+    Library Reference for the details.
 
 .. _Types_OptionalType:
 
@@ -435,7 +462,7 @@ Metatype Type
 
     Grammar of a metatype type
 
-    metatype-type --> type ``.`` ``metatype``
+    metatype-type --> type ``.`` ``Type``
 
 .. _Types_TypeInheritanceClause:
 

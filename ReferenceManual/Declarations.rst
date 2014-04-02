@@ -667,16 +667,6 @@ This alternative uses "signature" instead of "method" or "selector", but still u
 .. NOTE: Added the optional ``mutating`` modifier,
     based on the grammar found in ParseDecl.cpp.
 
-.. TODO: Verify that the selector-name is just an identifier,
-    because the LangRef grammar has it as an identifier-or-any
-    (i.e., identifier | ``_``). I don't see this category in the identifiers
-    chapter anymore, so we just need to make sure it's still correct.
-
-.. TODO: The overgeneration from tuple-patterns combined with some upcoming changes
-    mean that we should just create a new syntactic category
-    for function arguments instead.
-    We're going to hold off on doing this until they [compiler team] make their changes.
-
 .. TODO: Code block is optional in the context of a protocol.
     Everywhere else, it's required.
     We could refactor to have a separation between function definition/declaration.
@@ -684,12 +674,17 @@ This alternative uses "signature" instead of "method" or "selector", but still u
     which is a definition and declaration corner case.
     Let's just deal with this difference in prose.
 
-.. NOTE: Selector style syntax is pretty stable at this point.
-    The only contentious issue recently has been the calling syntax.
-    Any changes will probably be fiddley little bits.
+.. NOTE: According to Doug, 4/2/14,
+    The selector-style function declaration and call syntax is going away soon.
+    We will have one syntax for selector and normal functions. We'll still
+    have curried function declarations and calls, however.
 
-.. TODO: Revise selector-name---can we come up with a better name for this?
-
+    Doug is going to be writing a new grammar for this. Here's a skeleton he wrote out:
+    func-decl --> 'func' identifier '(' param-list? ')' ...
+    param-list --> param-modifiers? identifier? identifier? ':' type ('=' expr)?
+    ... (where 'param-modifiers' would be things like 'inout' and 'var')
+    Of note, it won't depend on patterns in any way -- right now it's not really
+    true that it depends on patterns.
 
 .. _Declarations_EnumerationDeclaration:
 
@@ -744,8 +739,7 @@ If the raw value type is specified as ``Int``
 and you don't assign a value to the enumerators explicitly,
 they are implicitly assigned the values ``0``, ``1``, ``2``, and so on.
 Each unassigned enumerator of type ``Int`` is implicitly assigned a raw value
-that is automatically incremented from the raw value of the previous enumerator,
-beginning at ``0``.
+that is automatically incremented from the raw value of the previous enumerator.
 
 ::
 
@@ -830,6 +824,11 @@ as discussed in :ref:`Declarations_ExtensionDeclaration`.
     raw-value-style-enumerator --> identifier raw-value-assignment-OPT
     raw-value-assignment --> ``=`` literal
     enum-name --> identifier
+
+.. TODO: Adjust the prose to match the eventual outcome of
+    <rdar://problem/16504472> Raw value enum cases accept negative intergers but not negative floating-point numbers,
+    which I filed today, 4/2.
+    This may require adjusting the grammar as well.
 
 .. NOTE: The two types of enums are sufficiently different enough to warrant separating
     the grammar accordingly. ([Contributor 6004] pointed this out in his email.)
@@ -1246,6 +1245,64 @@ Protocol Associated Type Declaration
 .. write-me:: Need to discuss with Dave what we want to call these things
     and where he plans on covering them.
 
+.. NOTE:
+    What are associated types? What are they "associated" with? Is "Self"
+    an implicit associated type of every protocol? [...]
+
+    Here's an initial stab:
+    An Associated Type is associated with an implementation of that protocol.
+    The protocol declares it, and is defined as part of the protocol's implementation.
+
+    "The ``Self`` type allows you to refer to the eventual type of ``self``
+    (where ``self`` is the type that conforms to the protocol).
+    In addition to ``Self``, a protocol's operations often need to refer to types
+    that are related to the type of ``Self``, such as a type of data stored in a
+    collection or the node and edge types of a graph." Is this still true?
+
+    NOTES from Doug:
+    At one point, Self was an associated type, but that's the wrong modeling of
+    the problem.  Self is the stand-in type for the thing that conforms to the
+    protocol.  It's weird to think of it as an associated type because it's the
+    primary thing.  It's certainly not an associated type.  In many ways, you
+    can think of associated types as being parameters that get filled in by the
+    conformance of a specific concrete type to that protocol.
+
+    There's a substitution mapping here.  The parameters are associated with
+    Self because they're derived from Self.  When you have a concrete type that
+    conforms to a protocol, it supplies concrete types for Self and all the
+    associated types.
+
+    The associated types are like parameters, but they're associated with Self in
+    the protocol.  Self is the eventual type of the thing that conforms to the
+    protocol -- you have to have a name for it so you can do things with it.
+
+    We use "associated" in contrast with generic parameters in interfaces in C#.
+    The interesting thing there is that they don't have a name like Self for the
+    actual type, but you can name any of these independant types.    In theory,
+    they're often independent but in practice they're often not -- you have an
+    interface parameterized on T, where all the uses of the thing are that T are
+    the same as Self.  Instead of having these independant parameters to an
+    interface, we have a named thing (Self) and all these other things that hand
+    off of it.
+
+    Here's a stupid simple way to see the distinction:
+
+    C#:
+
+    interface Sequence <Element> {}
+
+    class String : Sequence <UnicodeScalar>
+    class String : Sequence <GraphemeCluster>
+
+    These are both fine in C#
+
+    Swift:
+
+    protocol Sequence { typealias Element }
+
+    class String : Sequence { typealias Element = ... }
+
+    Here you have to pick one or the other -- you can't have both.
 
 
 See also :ref:`Declarations_TypealiasDeclaration`.
