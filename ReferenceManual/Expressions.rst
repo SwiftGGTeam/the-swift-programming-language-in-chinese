@@ -197,6 +197,10 @@ has the type specified by its right-hand argument
 or one of its subtypes.
 If so, it returns ``true``; otherwise, it returns ``false``.
 
+.. TR: Why is a trivially true "is" check a compile error?
+   For example:
+   if "hello" is String {}
+
 The ``as`` operator explicitly specifies
 that the value of its left-hand argument
 is to be treated as the type specified
