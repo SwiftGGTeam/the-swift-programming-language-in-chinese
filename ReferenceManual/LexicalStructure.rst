@@ -548,6 +548,10 @@ using the following escape sequences:
 * Double Quote (``\"``)
 * Single Quote (``\'``)
 
+.. TR: Are \v and \f allowed for vertical tab and formfeed?
+   We allow them as whitespace as of now --
+   should that mean we want escape sequences for them too?
+
 .. The behavior of \n and \r is not the same as C.
    We specify exactly what those escapes mean.
    The behavior on C is platform dependent --
