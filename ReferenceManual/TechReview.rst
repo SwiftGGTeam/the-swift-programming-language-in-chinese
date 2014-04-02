@@ -260,3 +260,76 @@ that may then be misinterpreted as a bit shift ``>>`` operator.
 
 Expresions
 ==========
+
+Unary Expressions
+-----------------
+
+Unary expressions are formed by combining
+an optional prefix operator with an expression.
+Prefix operators take one argument,
+the expression that follows them.
+
+.. docnote::
+   As of r14954, ParsExpr.cpp also has expr-discard
+   which consists of an underscore (_).  What is that for?
+
+Literal Expression
+------------------
+
+A :newTerm:`literal expression` consists of
+either an ordinary literal (such as a string or a number),
+an array literal,
+a dictionary literal,
+or one of the following special literals:
+
+================    ======  ===============================================
+Literal             Type    Value
+================    ======  ===============================================
+``__FILE__``        String  The name of the file in which it appears
+``__LINE__``        Int     The line number on which it appears
+``__COLUMN__``      Int     The column number in which it begins
+``__FUNCTION__``    String  The name of the declaration in which it appears
+================    ======  ===============================================
+
+Inside a function,
+the value of ``__FUNCTION__`` is the name of that function,
+inside a method it is the name of that method,
+inside a property getter or setter it is the name of that property,
+inside special members like ``init`` or ``subscript`` it is the name of that keyword,
+and at the top level of a file it is the name of the current module.
+
+.. docnote::
+   Should all of these meanings of __FUNCTION__ be documented,
+   or are some of them "internal use only" hacks?
+
+
+Dot Expression
+--------------
+
+A :newTerm:`dot expression` allows access
+to the members of a class, structure, enumerator, or module.
+It consists of a period (``.``) between the item
+and the identifier of its member.
+
+.. docnote::
+   Is this list exhaustive?  Or are there other things that can use dots?
+
+Forced Expression
+-----------------
+
+A :newTerm:`forced expression` unwraps an Optional value.
+It has the following form:
+
+.. syntax-outline::
+
+   <#expression#>!
+
+The *expression* must be of an optional type.
+If its value is not ``.None``,
+the optional value is unwrapped
+and returned with the corresponding non-optional type.
+Otherwise, a runtime error is raised.
+
+.. docnote::
+   What is the nature of the error?
+
