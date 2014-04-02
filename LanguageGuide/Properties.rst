@@ -280,15 +280,9 @@ to enable the outside world to discover its current calculated volume.
 
 .. note::
 
-   Read-only computed properties are not the same as constant properties.
-   They have some similarities,
-   in that neither can have their value set by external users of the class or structure,
-   but they differ considerably in how their values are retrieved.
-   Constant properties are assigned their own storage,
-   and the contents of this storage cannot be changed to a different value
-   once it has been set during initialization.
-   Read-only computed properties do not have storage assigned to them,
-   and can return any value they like at any time.
+   Read-only computed properties are not the same as constant stored properties.
+   A read-only computed property can return a different value every time it is called,
+   whereas a constant stored property will always return the same value.
 
 .. NOTE: getters and setters are also allowed for named values
    that are not associated with a particular class or struct.
