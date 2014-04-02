@@ -53,9 +53,7 @@ type, function, or initializer declaration, including the signature of the funct
 or initializer.
 
 The *constraint* specifies that a type parameter inherits
-from a specific class or conforms to a protocol. If you want to constrain a
-type parameter to conform to multiple parameters,
-use a protocol composition.
+from a specific class or conforms to a protocol or protocol composition.
 For instance, in the generic function below, the generic parameter ``T : Comparable``
 indicates that any type argument substituted
 for the type parameter ``T`` must conform to the ``Comparable`` protocol.
@@ -90,7 +88,7 @@ A ``where`` clause consists of the keyword ``where``,
 followed by comma-separated list of one or more *requirements*.
 
 The *requirements* in a ``where`` clause specify that a type paramater inherits from
-a class, conforms to a protocol, or a protocol composition.
+a class or conforms to a protocol or protocol composition.
 Although the ``where`` clause provides syntactic
 sugar for expressing simple constraints on type parameters
 (for instance, ``T : Comparable`` is equivalent to ``T where T : Comparable`` and so on),
