@@ -278,7 +278,34 @@ the expression that follows them.
 
 .. docnote::
    As of r14954, ParsExpr.cpp also has expr-discard
-   which consists of an underscore (_).  What is that for?
+   which consists of an underscore (_).
+   What is that for?
+   My guess is that it's used on the left side of an assigment
+   to indicate that the return value is being discarded,
+   or that part of a pattern-matched assignment
+   is being discarded.
+   [Aside: Could this be used as the body of a do-nothing default: statement
+   in a switch to satisfy the must-be-exhaustive constrait?]
+
+Type-Checking Operators
+~~~~~~~~~~~~~~~~~~~~~~~
+
+The ``is`` operator checks at runtime
+whether the value of its left-hand argument
+has the type specified by its right-hand argument
+or one of its subtypes.
+If so, it returns ``true``; otherwise, it returns ``false``.
+
+.. docnote::
+   Why is a trivially true/false "is" check a compile error? [...]
+
+        if "hello" is String { println("it is") }
+
+   Gives the error 'is' test is always true
+
+        if "hello" is Int { println("it is") }
+
+   Gives the error expression does not type-check
 
 Literal Expression
 ~~~~~~~~~~~~~~~~~~
