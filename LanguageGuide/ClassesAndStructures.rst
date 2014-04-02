@@ -577,38 +577,3 @@ is described in :ref:`AdvancedOperators_EquivalenceOperators`.
    The identity operators are not used with structure and enumeration types,
    because they are value types that store their values directly,
    rather than referencing an instance of that type behind the scenes.
-
-.. _ClassesAndStructures_TypeAliases:
-
-Type Aliases
-------------
-
-:newTerm:`Type aliases` are a way to define an alternative name
-(or :newTerm:`alias`) for an existing type.
-Type aliases are defined with the ``typealias`` keyword:
-
-.. testcode:: typeAliases
-
-   -> typealias BlackjackCard = PlayingCard
-
-Type aliases can be useful when you want to refer to an existing type
-by a name that is contextually more appropriate.
-Once you have defined a type alias,
-you can use the alias anywhere you might use the original name:
-
-.. testcode:: typeAliases
-
-   -> let theQueenOfHearts = BlackjackCard(.Queen, .Hearts)
-   << // theQueenOfHearts : PlayingCard = PlayingCard(<unprintable value>, <unprintable value>)
-
-.. note::
-
-   Type aliases do not actually define a new type in Swift.
-   They are just an alternative name for an existing type.
-   In the example above,
-   ``theQueenOfHearts`` is of type ``PlayingCard``, not ``BlackjackCard``.
-
-.. TODO: this example used to have the PlayingCard example above it.
-   It needs to change to be something else, as currently it fails swifttest.
-   However, I'm holding off updating it until I hear back from the core design team
-   as to whether they want to mention type aliases here at all.

@@ -658,6 +658,45 @@ This means that ``4.75`` becomes ``4``, and ``-3.9`` becomes ``-3``.
    I think it's more appropriate here, however,
    and helps to reinforce the “just use Int” message.
 
+.. _BasicTypes_TypeAliases:
+
+Type Aliases
+------------
+
+:newTerm:`Type aliases` are a way to define an alternative name
+(or :newTerm:`alias`) for an existing type.
+Type aliases are defined with the ``typealias`` keyword.
+
+Type aliases are useful when you want to refer to an existing type
+by a name that is contextually more appropriate,
+such as when working with data of a specific size from an external source:
+
+.. testcode:: typeAliases
+
+   -> typealias AudioSample = UInt16
+
+Once you have defined a type alias,
+you can use the alias anywhere you might use the original name:
+
+.. testcode:: typeAliases
+
+   -> var maxAmplitudeFound = AudioSample.min
+   << // maxAmplitudeFound : UInt16 = 0
+   /> maxAmplitudeFound is now \(maxAmplitudeFound)
+   </ maxAmplitudeFound is now 0
+
+Here, ``AudioSample`` has been defined as an alias for ``UInt16``.
+Because it is an alias,
+the call to ``AudioSample.min`` actually calls ``UInt16.min``,
+which provides an initial value of ``0`` for the ``maxAmplitudeFound`` variable.
+
+.. note::
+
+   Type aliases do not actually define a new type in Swift.
+   They are just an alternative name for an existing type.
+   In the example above,
+   ``maxAmplitudeFound`` is of type ``UInt16``, not ``AudioSample``.
+
 .. _BasicTypes_Booleans:
 
 Booleans
