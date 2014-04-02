@@ -4,7 +4,7 @@ Technical Review Queries
 .. Nothing goes here.
 
 Lexical Structure
-=================
+-----------------
 
 The :newTerm:`lexical structure` of Swift describes what sequence of characters
 form valid tokens of the language.
@@ -26,7 +26,7 @@ or :newTerm:`maximal munch`.
     I would rather do that.
 
 Whitespace and Comments
------------------------
+~~~~~~~~~~~~~~~~~~~~~~~
 
 Comments are treated as whitespace by the compiler.
 Single line comments begin with `//`
@@ -39,7 +39,7 @@ Nesting is allowed, but the comment markers must be balanced.
    Is there a difference?
 
 Integer Literals
-----------------
+~~~~~~~~~~~~~~~~
 
 :newTerm:`Integer literals` represent integer values of unspecified precision.
 By default, integer literals are expressed in decimal;
@@ -75,6 +75,12 @@ as described in :ref:`BasicTypes_Integers`.
    Also, are adjacent underscores meant to be allowed, as in ``5__000``?
    (The REPL supports them as of swift-1.21 but it seems odd.)
 
+.. docnote::
+    Why are negative integer literals treated (grammatically)
+    asymmetrically to negative floating-point literals.
+    From [Contributor 7746]'s radar:
+    rdar://problem/15181997 Teach the compiler about a concept of negative integer literals.
+
 [Partial grammar below.]
 
 .. syntax-grammar::
@@ -101,7 +107,7 @@ as described in :ref:`BasicTypes_Integers`.
 
 
 Floating-Point Literals
------------------------
+~~~~~~~~~~~~~~~~~~~~~~~
 
 .. syntax-grammar::
 
@@ -127,7 +133,7 @@ Floating-Point Literals
 
 
 Textual Literals
------------------
+~~~~~~~~~~~~~~~~
 
 Character literals are of type of ``UnicodeScalar``.
 String literals are of type ``String``.
@@ -140,32 +146,13 @@ String literals are of type ``String``.
    become implicitly null-terminated?
    That is, is their type always String or could it be char* or NSString?
 
-Array Literals
---------------
-
-:newTerm:`Array literals` represent an ordered collection,
-made up of items of the same type.
-It has the following form:
-
-.. syntax-outline::
-
-   [<#value1#>, <#value2#>, <#...#>]
-
-The last expression in the array can be followed by an optional comma.
-The value of an array literal has type ``T[]``,
-where ``T`` is the type of the expressions inside it.
-
 .. docnote::
-   Is T[] always going to be a synonym for Array < T > ?
-   Currently, the REPL uses the former for array literals,
-   but the latter matches what is used for dictionary literals.
-   Is there a reason to prefer one over the other in the docs?
-   Using Array < T > gives better parallelism.
-
-.. Spaces around <T> above to prevent it being read as an HTML tag by Sphinx.
+    Are we considering the Boolean values ``true`` and ``false``
+    as literals (in the lexical structure sense). Where should we include
+    these in the grammar? What about ``nil``?
 
 Operators
----------
+~~~~~~~~~
 
 Operators are made up of one or more of the following characters:
 ``/``, ``=``, ``-``, ``+``, ``!``, ``*``, ``%``, ``<``, ``>``,
@@ -252,17 +239,37 @@ that may then be misinterpreted as a bit shift ``>>`` operator.
    that are allowed to be operators?
    (A past build of Swift allowed various arrows and mathematical operators
    such as circled plus.)
-   
+
 .. docnote::
    LangRef doesn't list ? as either a character that you can use in an operator
    or as reserved punctuation.
    Is this correct?
 
+Types
+-----
+
+.. docnote::
+    What is the new story for "metatype types"?
+    What are we going to call them?
+    Do we have the syntax/grammar locked down?
+
+.. docnote::
+    How close are Arrays from being locked down?
+    What should this section of the RefMan look like?
+
+.. docnote::
+    What do function types look like now (after the unification proposal)?
+    Are they still based on tuple types?
+
+.. docnote::
+    What do tuple types look like now?
+
+
 Expresions
-==========
+----------
 
 Unary Expressions
------------------
+~~~~~~~~~~~~~~~~~
 
 Unary expressions are formed by combining
 an optional prefix operator with an expression.
@@ -274,7 +281,7 @@ the expression that follows them.
    which consists of an underscore (_).  What is that for?
 
 Literal Expression
-------------------
+~~~~~~~~~~~~~~~~~~
 
 A :newTerm:`literal expression` consists of
 either an ordinary literal (such as a string or a number),
@@ -302,9 +309,34 @@ and at the top level of a file it is the name of the current module.
    Should all of these meanings of __FUNCTION__ be documented,
    or are some of them "internal use only" hacks?
 
+:newTerm:`Array literals` represent an ordered collection,
+made up of items of the same type.
+It has the following form:
+
+.. syntax-outline::
+
+   [<#value1#>, <#value2#>, <#...#>]
+
+The last expression in the array can be followed by an optional comma.
+The value of an array literal has type ``T[]``,
+where ``T`` is the type of the expressions inside it.
+
+.. docnote::
+   Is T[] always going to be a synonym for Array < T > ?
+   Currently, the REPL uses the former for array literals,
+   but the latter matches what is used for dictionary literals.
+   Is there a reason to prefer one over the other in the docs?
+   Using Array < T > gives better parallelism.
+
+.. Alex, I'm not sure what you're asking here?
+    What does "the latter matches what is used for dictionary literals" mean?
+    In the sentence you wrote "the latter" refers to "Array<T>", right?
+
+.. Spaces around <T> above to prevent it being read as an HTML tag by Sphinx.
+
 
 Dot Expression
---------------
+~~~~~~~~~~~~~~
 
 A :newTerm:`dot expression` allows access
 to the members of a class, structure, enumerator, or module.
@@ -315,7 +347,7 @@ and the identifier of its member.
    Is this list exhaustive?  Or are there other things that can use dots?
 
 Forced Expression
------------------
+~~~~~~~~~~~~~~~~~
 
 A :newTerm:`forced expression` unwraps an Optional value.
 It has the following form:
@@ -332,4 +364,289 @@ Otherwise, a runtime error is raised.
 
 .. docnote::
    What is the nature of the error?
+
+
+Declarations
+------------
+
+Module Scope
+~~~~~~~~~~~~
+
+.. write-me:: Need to get the TR below answered to write more about this.
+
+The :newTerm:`module scope` defines the top-level (global) scope of a Swift source file.
+It consists of a series of statements, which include declarations,
+expressions, and other kinds of statements.
+
+Variables, constants, and other named declarations that are declared at global scope
+are visible to any other code in the same file.
+
+.. docnote::
+    What exactly is "module scope"?
+    Is it the scope of a *single* Swift source file?
+    The way it's currently written here
+    makes it seem like module scope is the same as the scope
+    of a single Swift source file.
+    I don't think this is correct, but I'm unsure of what we should
+    document here.
+    The current LangRef doesn't say much and includes the grammar:
+    top-level ::= brace-item*
+
+Code Blocks
+~~~~~~~~~~~
+
+A :newTerm:`code block` is used by a variety of declarations and control structures
+to group statements together.
+It has the following form:
+
+.. syntax-outline::
+
+    {
+        <#statements#>
+    }
+
+The *statements* inside a code block include declarations,
+expressions, and other kinds of statements and are executed in order
+of their appearance in source code.
+
+.. docnote:: What exactly are the scope rules for Swift and where should
+    we document them? I assume a code block creates a new scope?
+
+Constant Declaration
+~~~~~~~~~~~~~~~~~~~~
+
+.. syntax-grammar::
+
+    Grammar of a constant declaration
+
+    constant-declaration --> attribute-list-OPT constant-specifier-OPT ``let`` pattern-initializer-list
+    constant-specifier -->  ``static`` | ``class``
+
+    pattern-initializer-list --> pattern-initializer | pattern-initializer ``,`` pattern-initializer-list
+    pattern-initializer --> pattern initializer-OPT
+    initializer --> ``=`` expression
+
+.. docnote:: We need to come up with a better name than "constant-specifier",
+    because otherwise we have lots of different names for the same choice
+    (e.g., constant-specifier, variable-specifier, function-specifier).
+    Maybe "type-level-specifier"? But what happens when we do get *real* static functions?
+
+
+Typealias Declaration
+~~~~~~~~~~~~~~~~~~~~~
+
+.. syntax-grammar::
+
+    Grammar of a typealias declaration
+
+    typealias-declaration --> typealias-head typealias-assignment
+    typealias-head --> ``typealias`` typealias-name
+    typealias-name --> identifier
+    typealias-assignment --> ``=`` type
+
+.. docnote:: Are type aliases allowed to contain a type-inheritance-clause?
+    Currently, this doesn't work, and it seems as though it shouldn't work.
+    Doesn't it only make sense to specify protocol conformance requirements
+    in the context of an associated type (declared as protocol member)?
+    I modified the grammar under the assumption that they are not allowed.
+
+Enumeration Declaration
+~~~~~~~~~~~~~~~~~~~~~~~
+
+.. docnote::
+    What should we call the enumeration members? Traditionally, they're called
+    "enumerators", but it may possibly be confusing that in Cocoa / ObjC
+    land, the term "enumerator" is used to refer to an instance of the NSEnumerator class.
+
+Protocol Associated Type Declaration
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. docnote::
+    What are associated types? What are they "associated" with? Is "Self"
+    an implicit associated type of every protocol? [...]
+
+    Here's an initial stab:
+    An Associated Type is associated with an implementation of that protocol.
+    The protocol declares it, and is defined as part of the protocol's implementation.
+
+    "The ``Self`` type allows you to refer to the eventual type of ``self``
+    (where ``self`` is the type that conforms to the protocol).
+    In addition to ``Self``, a protocol's operations often need to refer to types
+    that are related to the type of ``Self``, such as a type of data stored in a
+    collection or the node and edge types of a graph." Is this still true?
+
+
+.. syntax-grammar::
+
+    Grammar of a protocol associated type declaration
+
+    protocol-associated-type-declaration --> typealias-head type-inheritance-clause-OPT typealias-assignment-OPT
+
+
+Extension Declaration
+~~~~~~~~~~~~~~~~~~~~~
+
+Extension declarations can contain initializer declarations. That said,
+if the type you're extending is defined in another module,
+an initializer declaration must delegate to an initializer already defined in that module
+to ensure members of that type are properly initialized.
+
+.. docnote::
+    Is this correct?
+
+Operator Declaration
+~~~~~~~~~~~~~~~~~~~~
+
+Prefix operators declarations don't specify a precedence level.
+Prefix operators are nonassociative.
+
+.. docnote::
+    Do all prefix operators default to the same precedence level? If so, what is it?
+    Same question for postfix operators.
+
+.. docnote:: More generally, what do the current precedence levels (0--255) mean?
+    How should we discuss them in the prose? [...]
+
+    The current LangRef says:
+    "Swift has simplified precedence levels when compared with C.
+    From highest to lowest:
+
+    * "exponentiative:" <<, >>  (associativity none, precedence 160)
+    * "multiplicative:" *, /, %, & (associativity left, precedence 150)
+    * "additive:" +, -, |, ^ (associativity left, precedence 140)
+    * "comparative:" ==, !=, <, <=, >=, > (associativity none, precedence 130)
+    * "conjunctive:" && (associativity left, precedence 120)
+    * "disjunctive:" || (associativity none, precedence 110)"
+
+    Also, from Policy.swift:
+
+    * "compound (assignment):" *=, /=, %=, +=, -=, <<=, >>=, &=, ^=,
+      |=, &&=, ||= (associativity right, precedence 90)
+    * "=" is hardcoded as if it had associativity right, precedence 90
+    * "as" and "is" are hardcoded as if they had associativity none, precedence 95
+    * "? :" is hardcoded as if it had associativity right, precedence 100
+
+    **Should we be using these instead of the raw precedence level values?**
+
+.. docnote::
+    Should we give describe the most common stdlib operators somewhere?
+    If so, the description should include the fixity, precedence, and associativity
+    of each operator. Maybe a table would be best?
+    The Langauge Guide currently says:
+    "(A complete list of the default Swift operator precedence and associativity
+    settings can be found in the :doc:`../ReferenceManual/index`.)"
+    Aside: I'm not sure "settings" is the best word here. Maybe "values"?
+
+.. syntax-grammar::
+
+    Grammar of an operator declaration
+
+    operator-declaration --> prefix-operator-declaration | postfix-operator-declaration | infix-operator-declaration
+
+    prefix-operator-declaration --> ``operator`` ``prefix`` operator ``{`` ``}``
+    postfix-operator-declaration --> ``operator`` ``postfix`` operator ``{`` ``}``
+    infix-operator-declaration --> ``operator`` ``infix`` operator ``{`` infix-operator-attributes-OPT ``}``
+
+    infix-operator-attributes --> precedence-clause-OPT associativity-clause-OPT
+    precedence-clause --> ``precedence`` precedence-level
+    precedence-level --> 0 through 255
+    associativity-clause --> ``associativity`` associativity
+    associativity --> ``left`` | ``right`` | ``none``
+
+.. docnote:: I added this grammar from looking at ParseDecl.cpp and from trying
+    out various permutations in the REPL. Is this the correct grammar?
+
+Attributes
+----------
+
+.. syntax-grammar::
+
+    Grammar of an attribute list
+
+    attribute-list --> ``@`` attribute | ``@`` attribute attribute-list
+    attribute --> declaration-attribute | type-attribute | interface-builder-attribute
+
+.. syntax-grammar::
+
+    Grammar of a declaration attribute
+
+    declaration-attribute --> ``assignment`` | ``class_protocol`` | ``infix`` | ``mutating`` | ``objc`` | ``optional`` | ``override`` | ``postfix`` | ``prefix`` | ``required`` | ``unowned`` | ``weak``
+
+.. syntax-grammar::
+
+    Grammar of a type attribute
+
+    type-attribute --> ``unchecked``
+
+.. syntax-grammar::
+
+    Grammar of an interface builder attribute
+
+    interface-builder-attribute -->  ``IBAction`` | ``IBDesignable`` | ``IBInspectable`` | ``IBOutlet``
+
+
+.. docnote:: We need to update the grammar to accomodate things like @objc(:some:selector:).
+    What should the new grammar look like (also taking into account ``!`` inverted attributes)?
+    What should we call the "arguments" that attributes take? ("options"?)
+
+.. docnote:: Let's revisit which attributes we should document, now that more have
+    been added and some have been removed. I'm copying the current Attr.def file below.
+
+**Type attributes:**
+
+* TYPE_ATTR(auto_closure)
+* TYPE_ATTR(cc)
+* TYPE_ATTR(noreturn)
+* TYPE_ATTR(objc_block)
+* TYPE_ATTR(thin)
+* TYPE_ATTR(thick)
+* TYPE_ATTR(unchecked)
+
+**Schema for DECL_ATTR:**
+// - Attribute name. - Options for the attribute,
+including the declarations the attribute can appear, and whether duplicates are allowed.
+
+* DECL_ATTR(asmname, OnFunc|OnConstructor|OnDestructor)
+* DECL_ATTR(availability, OnFunc | OnStruct | OnEnum | OnClass | OnProtocol | OnVar | OnConstructor | OnDestructor | AllowMultipleAttributes)
+* DECL_ATTR(objc, OnFunc | OnClass | OnProtocol | OnVar | OnSubscript | OnConstructor | OnDestructor)
+
+* ATTR(assignment)
+* ATTR(class_protocol)
+* ATTR(conversion)
+* ATTR(exported)
+* ATTR(infix)
+* ATTR(mutating)
+* ATTR(noreturn)
+* ATTR(prefix)
+* ATTR(postfix)
+* ATTR(optional)
+* ATTR(override)
+* ATTR(required)
+* ATTR(transparent)
+* ATTR(unowned)
+* ATTR(weak)
+* ATTR(requires_stored_property_inits)
+
+* IB_ATTR(IBOutlet)
+* IB_ATTR(IBAction)
+* IB_ATTR(IBDesignable)
+* IB_ATTR(IBInspectable)
+
+// "Virtual" attributes can not be spelled in the source code.
+
+* VIRTUAL_ATTR(raw_doc_comment)
+
+.. docnote::
+    It seems odd that ``mutating`` is a context sensitive keyword AND an attribute.
+    This raises the question about how to describe what attributes *are*.
+    Similarly for ``weak`` and ``unowned``.
+    What's the story here?
+
+Patterns
+--------
+
+.. docnote::
+    What kind of information do we want to cover about patterns in general?
+    How up to date is pattern grammar in the LangRef?
+    There is an 'is' pattern; what about an 'as' pattern?
 
