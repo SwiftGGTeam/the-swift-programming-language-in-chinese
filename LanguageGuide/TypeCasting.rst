@@ -200,9 +200,9 @@ Swift provides two special type aliases for working with non-specific types:
 
 * ``AnyObject``, which can represent an instance of any class type
 * ``Any``, which can represent an instance of any type at all,
-  apart from function and closure types
+  apart from function types
 
-.. TODO: remove the note about function and closure types if / when rdar://16406907 is fixed.
+.. TODO: remove the note about function types if / when rdar://16406907 is fixed.
 
 Here's an example of using ``Any`` to work with a mix of different types:
 
