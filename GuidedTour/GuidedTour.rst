@@ -152,13 +152,13 @@ because there are no elements in it to let the compiler infer its type.
     -> vegetables[1] = "onion"
     >> vegetables
     << // vegetables : String[] = ["carrot", "onion", "tomato"]
-    -> var vegetableColors : Dictionary<String, String> = [:]
-    << // vegetableColors : Dictionary<String, String> = Dictionary<String, String>(1.33333, 0, <DictionaryBufferOwner<String, String> instance>)
-    -> vegetableColors.add("carrot", "orange")
+    -> var fruitColors : Dictionary<String, String> = [:]
+    << // fruitColors : Dictionary<String, String> = Dictionary<String, String>(1.33333, 0, <DictionaryBufferOwner<String, String> instance>)
+    -> fruitColors.add("banana", "yellow")
     << // r0 : Bool = false
-    -> vegetableColors.add("tomato", "red")
+    -> fruitColors.add("apple", "red")
     << // r1 : Bool = false
-    -> vegetableColors["tomato"] = "green"
+    -> fruitColors["apple"] = "green"
 
 .. admonition:: Experiment
 
