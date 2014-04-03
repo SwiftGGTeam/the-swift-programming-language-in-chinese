@@ -794,7 +794,7 @@ Set this new variable to refer to the function called ``addTwoInts``.”
 The ``addTwoInts()`` function has the same type as the ``mathFunction`` variable,
 and so this assignment is allowed by Swift's type-checker.
 
-You can now call the assigned function by using the constant or variable's name:
+You can now call the assigned function with the name ``mathFunction``:
 
 .. testcode:: functionTypes
 
@@ -810,8 +810,9 @@ in the same way as for non-function types:
    -> println("Result: \(mathFunction(2, 3))")
    <- Result: 6
 
-You can leave it up to Swift to infer the appropriate function type to use
-by assigning a function when you define the constant or variable:
+As with any other type,
+you can leave it to Swift to infer the function type
+when you assign a function to a constant or variable:
 
 .. testcode:: functionTypes
 
@@ -819,10 +820,10 @@ by assigning a function when you define the constant or variable:
    << // anotherMathFunction : (a: Int, b: Int) -> Int = <unprintable value>
    // anotherMathFunction is inferred to be of type (Int, Int) -> Int
 
-.. _Functions_FunctionsAsParameters:
+.. _Functions_FunctionTypesAsParameterTypes:
 
-Functions as Parameters
------------------------
+Function Types as Parameter Types
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 A function type such as ``(Int, Int) -> Int`` can be used as
 a parameter type for another function.
@@ -855,26 +856,76 @@ it just cares that the function is of the correct type.
 This enables ``printMathResult()`` to hand off some of its functionality
 to the caller of the function in a type-safe way.
 
-.. _Functions_FunctionsAsReturnTypes:
+.. _Functions_FunctionTypesAsReturnTypes:
 
-Functions as Return Types
--------------------------
+Function Types as Return Types
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-A function type can also be used as the return type of another function.
+A function type can be used as the return type of another function.
+This is indicated by writing a complete function type
+immediately after the return indicator (``->``) of the returning function.
+
+To help illustrate this, here are two simple functions,
+``stepForward()`` and ``stepBackward()``,
+which return a value of one more / one less than their input value.
+Both of these functions have a type of ``(Int) -> Int``:
 
 .. testcode:: functionTypes
 
-   -> mathFunctionFromString(operatorString: String) -> (Int, Int) -> Int {
-         switch operatorString {
-            case "*":
-               return multiplyTwoInts
-            default:
-               return addTwoInts
-         }
+   -> func stepForward(input: Int) -> Int {
+         return input + 1
       }
-   -> let functionToUse = mathFunctionFromString("*")
-   -> functionToUse(3, 4)
-   <- 12
+   -> func stepBackward(input: Int) -> Int {
+         return input - 1
+      }
+
+Here's a function called ``chooseStepFunction()``,
+whose return type is “a function of type ``(Int) -> Int``”.
+It chooses whether to return
+the ``stepForward()`` function or the ``stepBackward()`` function
+based on a Boolean parameter called ``backwards``:
+
+.. testcode:: functionTypes
+
+   -> func chooseStepFunction(backwards: Bool) -> (Int) -> Int {
+         return backwards ? stepBackward : stepForward
+      }
+
+``chooseStepFunction()`` can now be used to obtain a function
+that will step in one direction or the other.
+For example:
+
+.. testcode:: functionTypes
+
+   -> var currentValue = 3
+   << // currentValue : Int = 3
+   -> let moveNearerToZero = chooseStepFunction(currentValue > 0)
+   << // moveNearerToZero : (Int) -> Int = <unprintable value>
+   // moveNearerToZero now refers to the stepBackward() function
+
+This example works out whether a positive or negative step is needed
+to move a variable called ``currentValue`` progressively closer to zero.
+``currentValue`` has an initial value of ``3``,
+which means that ``currentValue > 0`` returns ``true``,
+causing ``chooseStepFunction()`` to return the ``stepBackward()`` function.
+A reference to the returned function is stored in a constant called ``moveNearerToZero``.
+
+Now that ``moveNearerToZero`` refers to the correct function,
+it can be used to count to zero:
+
+.. testcode:: functionTypes
+
+   -> println("Counting to zero:")
+   </ Counting to zero:
+   -> while currentValue != 0 {
+         println("\(currentValue)... ")
+         currentValue = moveNearerToZero(currentValue)
+      }
+   -> println("zero!")
+   </ 3...
+   </ 2...
+   </ 1...
+   </ zero!
 
 .. _Functions_CurriedFunctions:
 
