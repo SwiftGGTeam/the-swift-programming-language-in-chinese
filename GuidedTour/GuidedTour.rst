@@ -315,8 +315,8 @@ to repeat code.
    -> println("n is \(n)")
    << n is 64
 
-Functions
----------
+Functions and Closures
+----------------------
 
 Functions are declared using ``func``
 and called with a parenthesized list of arguments.
@@ -392,7 +392,8 @@ that were declared in the outer function.
     -> returnFifteen()
     << // r0 : Int = 15
 
-A function can accept other functions as arguments
+Functions are considered first-class types.
+This means a function can accept other functions as arguments
 and return another function.
 
 .. testcode:: return-func
@@ -410,8 +411,34 @@ and return another function.
 
 .. TODO: Confirm spelling of "incrementer" (not "incrementor").
 
+.. testcode pass-func
 
+    // Re-implement the Standard Library sort function.
+    func bubbleSort (list : Int[], outOfOrder : (Int, Int) -> Bool) -> Int[] {
+        for i in 0...list.count {
+            for j in 0...list.count {
+                if outOfOrder(list[i], list[j]) {
+                    // TODO: Fails to type check
+                    (list[i], list[j]) = (list[j], list[i])
+                }
+            }
+        }
+        return list
+    }
+    func greaterThan (x : Int, y : Int) -> Bool {
+        return x > y
+    }
+    var numbers = [8, 3, 5, 6]
+    var sortedNumbers = bubbleSort(numbers, lessThan)
 
+.. admonition:: Experiment
+
+   After you have read the section about generics,
+   change this function to accept any array,
+   not just an array of integers.
+
+A closure is just a function that isn't given a name when it is declared.
+.. TODO
 
 Objects
 -------
