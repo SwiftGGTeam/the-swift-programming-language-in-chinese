@@ -122,8 +122,55 @@ as part of the string.
 Control Flow
 ------------
 
-.. Make decisions with "if" and "switch"
-.. Repeat code with "while" and "for"
+Swift includes if and switch statements
+to choose between alternatives.
+Switch statements in Swift support comparison of any type,
+and there are a wide range of matching mechanisms.
+
+.. TODO: Example with if/else if/else
+
+.. TODO: Simple example with switch
+
+.. TODO: Forward pointer or handwave about complex switch
+
+.. testcode:: switch
+   -> let somePoint = (1, 1)
+   << // somePoint : (Int, Int) = (1, 1)
+   -> switch somePoint {
+         case (0, 0):
+            println("(0, 0) is at the origin")
+         case (_, 0):
+            println("(\(somePoint.0), 0) is on the x-axis")
+         case (0, _):
+            println("(0, \(somePoint.1)) is on the y-axis")
+         case (x, y) where x == y:
+            println("\(x), \(y)) is on the diagonal")
+         default:
+            println("The point is somewhere else.")
+      }
+   <- (1, 1) is on the diagonal stnhsnthsnch
+
+Swift also includes for and while loops
+to repeat code.
+
+Array and dictionary literals are represented
+using values inside ``[`` and ``]``.
+
+.. TODO: Array/dict literals are here because I need them for loops.
+   It might be more natural to move them earlier.
+
+.. testcode:: for-loop
+    -> let listOfNumbers = [8, 3, 5]
+    << // listOfNumbers : Int[] = [8, 3, 5]
+    -> var sum = 0
+    << // sum : Int = 0
+    -> for n in listOfNumbers {
+          sum += n
+       }
+    >> sum
+    << sum : Int = 16
+
+
 
 Functions
 ---------
