@@ -776,8 +776,8 @@ Using Function Types
 ~~~~~~~~~~~~~~~~~~~~
 
 Function types can be used just like any other types in Swift.
-For example you can define a constant or variable to be of a function type,
-and can assign an appropriate function to that variable:
+For example, you can define a constant or variable to be of a function type,
+and assign an appropriate function to that variable:
 
 .. testcode:: functionTypes
 
