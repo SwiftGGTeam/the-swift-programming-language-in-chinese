@@ -275,15 +275,20 @@ to repeat code.
 
 .. testcode:: for-each
 
-    -> let listOfNumbers = [8, 3, 5]
-    << // listOfNumbers : Int[] = [8, 3, 5]
+    -> let listOfNumbers = 1..5
+    << // listOfNumbers : Range<Int> = Range<Int>(1, 6)
     -> var sum = 0
     << // sum : Int = 0
     -> for n in listOfNumbers {
           sum += n
        }
     >> sum
-    << // sum : Int = 16
+    << // sum : Int = 15
+
+.. admonition:: Experiment
+
+   Change ``1..5`` to ``1...5`` --- notice that 5 is omitted from the sum.
+   In what situations would you want to include or exclude the final number?
 
 .. testcode:: while
    -> var n = 2
