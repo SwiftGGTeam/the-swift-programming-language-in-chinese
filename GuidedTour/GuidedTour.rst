@@ -54,11 +54,9 @@ The value of a variable can be re-assigned:
 
    -> var myVariable = 42
    << // myVariable : Int = 42
-   -> println(myVariable)
-   << 42
    -> myVariable = 50
-   -> println(myVariable)
-   << 50
+   >> myVariable
+   << // myVariable : Int = 50
 
 In contrast, constants can only have a value assigned once:
 
@@ -71,7 +69,8 @@ In contrast, constants can only have a value assigned once:
    !! myConstant = 50
    !! ~~~~~~~~~~ ^
 
-.. note:: Experiment
+.. admonition:: Experiment
+
    Edit the code in the boxes above.
    Try setting a different values
    for ``myVariable`` and ``myConstant``.
@@ -89,9 +88,9 @@ assigning a value of the wrong type to a variable is an error.
 
     -> var string = "Hello"
     << // string : String = "Hello"
-    -> string = 98.5
+    -> string = 98.5  // error
     !!  <REPL Input>:1:8: error: expression does not type-check
-    !! string = 98.5
+    !! string = 98.5  // error
     !! ~~~~~~~^~~~~~
 
 Notice that you didn’t have to explictly
@@ -113,24 +112,30 @@ as part of the string.
    -> let summary = "I have \(apples + oranges) pieces of fruit."
    << // summary : String = "I have 8 pieces of fruit."
 
-.. note:: Experiment
+.. admonition:: Experiment
+
    How would you use string interpolation
    to include someone's name in a greeting?
 
 The previous examples have used integers, floating-point numbers, and strings.
-The other basic data types include arrays and dictionaries,
-which are written using square brackets (``[`` and ``]``).
+The other basic data types are arrays and dictionaries,
+which are written using square brackets (``[`` and ``]``),
+and tuples which are written using parenthesis (``(`` and ``)``).
 
 .. testcode:: array-dict
+
     -> let fruits = ["apple", "orange", "banana"]
     << // fruits : String[] = ["apple", "orange", "banana"]
-
     -> let ages = [
            "John Appleseed": 7,
            "Anna Haro": 12,
            "Daniel Higgins": 21,
         ]
     << // ages : Dictionary<String, Int> = Dictionary<String, Int>(1.33333, 3, <DictionaryBufferOwner<String, Int> instance>)
+    -> let origin = (0, 0)
+    << // origin : (Int, Int) = (0, 0)
+    -> let x = origin.0
+    << // x : Int = 0
 
 Arrays and dictionaries use the same syntax
 for accessing their elements.
@@ -138,6 +143,7 @@ An empty array or dictionary needs its type explicitly specified
 because there are no elements in it to let the compiler infer its type.
 
 .. testcode:: vegetable-array-dict
+
     -> var vegetables : String[] = []
     << // vegetables : String[] = []
     -> vegetables.append("carrot")
@@ -145,8 +151,7 @@ because there are no elements in it to let the compiler infer its type.
     -> vegetables.append("tomato")
     -> vegetables[1] = "onion"
     >> vegetables
-    << // vegetables : Array<String> = ["carrot", "cucumber", "tomatoe"]
-
+    << // vegetables : String[] = ["carrot", "onion", "tomato"]
     -> var vegetableColors : Dictionary<String, String> = [:]
     << // vegetableColors : Dictionary<String, String> = Dictionary<String, String>(1.33333, 0, <DictionaryBufferOwner<String, String> instance>)
     -> vegetableColors.add("carrot", "orange")
@@ -155,7 +160,8 @@ because there are no elements in it to let the compiler infer its type.
     << // r1 : Bool = false
     -> vegetableColors["tomato"] = "green"
 
-.. note:: Experiment
+.. admonition:: Experiment
+
     Can you use square brackets to set the second element of an empty array?
     What about setting the value for a key of an empty dictionary?
 
@@ -182,6 +188,7 @@ and there are a wide range of matching mechanisms.
 .. TODO: Forward pointer or handwave about complex switch
 
 .. testcode:: switch
+
    -> let somePoint = (1, 1)
    << // somePoint : (Int, Int) = (1, 1)
    -> switch somePoint {
@@ -202,6 +209,7 @@ Swift also includes for and while loops
 to repeat code.
 
 .. testcode:: for-loop
+
     -> let listOfNumbers = [8, 3, 5]
     << // listOfNumbers : Int[] = [8, 3, 5]
     -> var sum = 0
