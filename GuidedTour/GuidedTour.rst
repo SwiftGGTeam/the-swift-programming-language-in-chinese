@@ -11,7 +11,7 @@ In Swift, this can be done in a single line:
 .. testcode:: hello-world
 
    -> println("Hello, world")
-   << Hello, world
+   <- Hello, world
 
 If you have written code in a language like C or Objective-C,
 this syntax probably looks familiar to you.
@@ -71,8 +71,7 @@ In contrast, constants can only have a value assigned once:
    !! myConstant = 50
    !! ~~~~~~~~~~ ^
 
-.. note: Experiment
-
+.. note:: Experiment
    Edit the code in the boxes above.
    Try setting a different values
    for ``myVariable`` and ``myConstant``.
