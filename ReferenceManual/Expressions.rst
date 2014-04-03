@@ -196,6 +196,13 @@ whether the value of its left-hand argument
 has the type specified by its right-hand argument
 or one of its subtypes.
 If so, it returns ``true``; otherwise, it returns ``false``.
+The check must not be provably true or false at compile time.
+The following are invalid: ::
+
+    "hello" is String
+    "hello" is Int
+
+.. TR: Why do we have that restriction?
 
 The ``as`` operator explicitly specifies
 that the value of its left-hand argument
