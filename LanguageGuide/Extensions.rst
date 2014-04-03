@@ -9,10 +9,12 @@
 Extensions
 ==========
 
-:newTerm:`Extensions` are a way to add new functionality to an existing
-class, structure or enumeration,
-even if you do not have access to the source code for the existing type.
-Extensions are similar to Objective-C categories, but have many more capabilities.
+:newTerm:`Extensions` are a way to add functionality to an existing
+class, structure or enumeration type.
+This includes the ability to extend types
+for which you do not have access to the original source code
+(known as :newTerm:`retroactive modeling`).
+Extensions are similar to :newTerm:`categories` in Objective-C.
 
 Extensions can:
 
@@ -22,9 +24,8 @@ Extensions can:
 * define subscripts
 * define and use new nested types
 
-In addition, extensions can use these capabilities to
-make an existing type conform to a protocol.
-This process is covered in the :doc:`Protocols` chapter.
+Extensions can also be used to make an existing type conform to a protocol.
+This process is covered in :doc:`Protocols`.
 
 .. QUESTION: I've put operator conformance in the Classes and Structures chapter,
    rather than this chapter, because it isn't actually implemented via an extension
