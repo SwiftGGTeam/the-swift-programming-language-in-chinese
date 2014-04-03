@@ -302,9 +302,100 @@ to repeat code.
 Functions
 ---------
 
-.. Define functions with "func"
-.. Call functions with "()" postfix.
-.. [No discussion of selector style syntax here.]
+Functions are declared using ``func``
+and called with a parenthesized list of arguments.
+Argument names are part of the signature;
+you can specify each parameter by name when calling the function.
+
+.. testcode:: func
+
+    -> func greet(name : String, day : String) -> String {
+           return "Hello \(name), today is \(day)."
+       }
+    -> greet("Bob", "Tuesday")
+    << // r0 : String = "Hello Bob, today is Tuesday."
+    -> greet(name:"Alice", "Wednesday")
+    << // r1 : String = "Hello Alice, today is Wednesday."
+
+.. admonition:: Experiment
+
+   Remove the day of the week parameter.
+   Add a third parameter to include today's lunch special in the greeting.
+
+Functions can return multiple values using a tuple.
+
+.. testcode:: func-tuple
+
+   -> func fetchLocalGasPrices() -> (Double, Double, Double) {
+         return (3.59, 3.69, 3.79)
+      }
+
+Since you name the elements in any tuple,
+these features work together to make it easier to query the values:
+
+.. testcode:: func-labelled-tuple
+
+   -> func fetchBetterGasPrices() -> (regular: Double, midgrade: Double, premium: Double) {
+         return (3.49, 3.59, 3.69)
+      }
+   -> fetchBetterGasPrices().midgrade
+   << // r0 : Double = 3.59
+
+.. TODO: If named tuples go away, remove this example.
+
+Functions can also be defined to take variable argument lists.
+
+.. testcode:: functions
+
+   -> func addAllTheInts(theInts: Int...) -> Int {
+         var sum = 0
+         for i in theInts {
+            sum += i
+         }
+         return sum
+      }
+   -> addAllTheInts()
+   << // r0 : Int = 0
+   -> addAllTheInts(42, 597, 12)
+   << // r1 : Int = 651
+
+Functions can be nested.
+Nested functions have access to variables
+that were declared in the outer function.
+
+.. testcode:: nested-func
+
+    -> func returnFifteen () -> Int {
+           var y = 10
+           func add () -> () {
+               y += 5
+           }
+           add()
+           return y
+       }
+    -> returnFifteen()
+    << // r0 : Int = 15
+
+A function can accept other functions as arguments
+and return another function.
+
+.. testcode:: return-func
+
+    -> func makeIncrementer() -> (Int -> Int) {
+           func addOne (number : Int) -> Int {
+               return 1 + number
+           }
+           return addOne
+       }
+    -> var increment = makeIncrementer()
+    << // increment : (Int -> Int) = <unprintable value>
+    -> increment(7)
+    << // r0 : Int = 8
+
+.. TODO: Confirm spelling of "incrementer" (not "incrementor").
+
+
+
 
 Objects
 -------
