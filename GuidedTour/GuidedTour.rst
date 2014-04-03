@@ -13,7 +13,7 @@ In Swift, this can be done in a single line:
    -> println("Hello, world")
    << Hello, world
 
-If you have written code in a language like C or Objective-C before,
+If you have written code in a language like C or Objective-C,
 this syntax probably looks familiar to you.
 Unlike those languages,
 this line of Swift code is a complete program.
@@ -25,19 +25,23 @@ so there is no need for a ``main`` function.
 Also notice that there are no semicolons.
 You can use semicolons to separate two statements on a single line,
 but otherwise there is no need to mark the end of a statement.
+These illustrate some of the design goals of the language:
+code written in Swift should be **safe**, **consistent**, and **clear**.
 
 The rest of this tour show you examples
 of how to accomplish a variety of programming tasks in Swift
 without explaining the concepts in detail.
 It gives you a broad (but shallow) overview of the language
-to help you start writing actual code in Swift
-
-Experienced programmers may find the examples give them enough information
+to help you start writing actual code in Swift.
+Don't worry if you don't understand all of the examples ---
+all of the subjects covered in this tour are explained in detail later in this book.
+Experienced programmers may find that the examples in this chapter
+give them enough information about Swift
 thay they can skim the rest of the language guide
-and answer their own questions by reading the reference manual.
+and refer to the reference manual for specific questions.
 
-Variables and Constants
------------------------
+Simple Values
+-------------
 
 Variables and constants are created using the same syntax,
 with one difference:
@@ -92,14 +96,10 @@ assigning a value of the wrong type to a variable is an error.
     !! ~~~~~~~^~~~~~
 
 Notice that you didn’t have to explictly
-tell the compiler the type of ``integer``.
+tell the compiler the type of ``string``.
 If you don't specify a type,
-Swift uses determines the appropriate type to use
-based on the initial value you set
-and the other types in the expression.
-
-.. TODO Thinking that "integer" might not be the clearest name here.
-   Type inference doesn’t care what your variable names are.
+Swift determines the variable's type
+based on its initial value.
 
 Strings in Swift have support a special interpolation syntax
 that includes the string value of an expression
