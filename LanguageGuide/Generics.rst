@@ -180,7 +180,8 @@ In the example above, ``T`` is said to be a :newTerm:`type parameter`.
 Type parameters are a way to specify and name a placeholder type,
 and are written immediately after the function's name,
 between a pair of matching angle brackets (such as ``<T>``).
-Multiple type parameters can be provided, separated by commas (such as ``<T, U, V>``).
+Multiple type parameters can be provided between the angle brackets,
+separated by commas.
 
 Once specified,
 a type parameter can be used as the type of a function's parameters
@@ -203,20 +204,26 @@ and indeed you are not allowed to specify a type yourself.
 Naming of Type Parameters
 _________________________
 
-The choice of ``T`` as a type parameter name is slightly arbitrary.
-You could just as easily name the parameter ``SomeType``, or ``TypeThatIsNotYetKnown``,
-but it is generally briefer and clearer to use a short, single-letter name
-as the name for a placeholder type parameter.
-This also makes it less likely that the name you choose will clash with an actual type name.
+The choice of name for a type parameter is entirely up to you.
+In simple cases where a generic function or generic type needs to refer to a single placeholder type
+(such as the ``swapValues()`` generic function above,
+or a generic collection that stores a single type, such as ``Array``),
+it is traditional to use the single-character name ``T`` for the type parameter.
+However, you are free to use any valid identifier as the type parameter name.
 
-Traditionally, the first type to be specified as a type parameter is given the name ``T``,
-followed by ``U``, then ``V``, and so on.
-The choice of name to use is entirely up to you, however.
+If you are defining more complex generic functions or generic types with multiple parameters,
+it can be useful to provide more descriptive type parameter names.
+For example, Swift's ``Dictionary`` type has two type parameters –
+one for its keys, and one for its values.
+If you were writing ``Dictionary`` yourself,
+you might name these two type parameters ``KeyType`` and ``ValueType``
+to provide a reminder of their purpose as you use them within your generic code.
 
 .. note::
 
-   Type parameters should always have capitalized names (such as ``T``)
-   to indicate that they represent a type, not a value.
+   Type parameters should always have ``UpperCamelCase`` names
+   (such as ``T`` and ``KeyType``)
+   to indicate that they are a placeholder for a *type*, not a value.
 
 .. _Generics_GenericTypes:
 
