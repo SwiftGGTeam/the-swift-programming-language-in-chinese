@@ -113,10 +113,59 @@ as part of the string.
    -> let summary = "I have \(apples + oranges) pieces of fruit."
    << // summary : String = "I have 8 pieces of fruit."
 
-.. note: Experiment
-
+.. note:: Experiment
    How would you use string interpolation
    to include someone's name in a greeting?
+
+The previous examples have used integers, floating-point numbers, and strings.
+The other basic data types include arrays and dictionaries,
+which are written using square brackets (``[`` and ``]``).
+
+.. testcode:: array-dict
+    -> let fruits = ["apple", "orange", "banana"]
+    << // fruits : String[] = ["apple", "orange", "banana"]
+
+    -> let ages = [
+           "John Appleseed": 7,
+           "Anna Haro": 12,
+           "Daniel Higgins": 21,
+        ]
+    << // ages : Dictionary<String, Int> = Dictionary<String, Int>(1.33333, 3, <DictionaryBufferOwner<String, Int> instance>)
+
+Arrays and dictionaries use the same syntax
+for accessing their elements.
+An empty array or dictionary needs its type explicitly specified
+because there are no elements in it to let the compiler infer its type.
+
+.. testcode:: vegetable-array-dict
+    -> var vegetables : String[] = []
+    << // vegetables : String[] = []
+    -> vegetables.append("carrot")
+    -> vegetables.append("cucumber")
+    -> vegetables.append("tomato")
+    -> vegetables[1] = "onion"
+    >> vegetables
+    << // vegetables : Array<String> = ["carrot", "cucumber", "tomatoe"]
+
+    -> var vegetableColors : Dictionary<String, String> = [:]
+    << // vegetableColors : Dictionary<String, String> = Dictionary<String, String>(1.33333, 0, <DictionaryBufferOwner<String, String> instance>)
+    -> vegetableColors.add("carrot", "orange")
+    << // r0 : Bool = false
+    -> vegetableColors.add("tomato", "red")
+    << // r1 : Bool = false
+    -> vegetableColors["tomato"] = "green"
+
+.. note:: Experiment
+    Can you use square brackets to set the second element of an empty array?
+    What about setting the value for a key of an empty dictionary?
+
+.. TR: Style question... is this better than writing the following?  Why?
+       var vegetables = Array<String>()
+       var vegetableColors = Dictionary<String, String>()
+   You can't write String[]() -- it tries to subscript the String type and crashes.
+
+.. The REPL output after creating a dictionary doesn't make any sense.
+   No way to get it to pretty-print the keys and values.
 
 Control Flow
 ------------
@@ -151,12 +200,6 @@ and there are a wide range of matching mechanisms.
 
 Swift also includes for and while loops
 to repeat code.
-
-Array and dictionary literals are represented
-using values inside ``[`` and ``]``.
-
-.. TODO: Array/dict literals are here because I need them for loops.
-   It might be more natural to move them earlier.
 
 .. testcode:: for-loop
     -> let listOfNumbers = [8, 3, 5]
