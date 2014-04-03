@@ -1,8 +1,8 @@
 Subscripts
 ==========
 
-Classes and structures can define :newTerm:`subscripts`,
-which enable instances of that class or structure to be queried via one or more
+Classes, structures and enumerations can define :newTerm:`subscripts`,
+which enable instances of that type to be queried via one or more
 values in square brackets after the instance name.
 This is similar to the way in which the elements in an ``Array`` instance
 can be accessed as ``someArray[index]``,
