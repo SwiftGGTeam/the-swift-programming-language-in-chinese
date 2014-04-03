@@ -257,3 +257,6 @@ you can see that the description has indeed changed:
    For example, the parameter names do not have to match
    in order for a function to override a similar signature in its parent.
    (This is true for both of the function declaration syntaxes.)
+
+.. TODO: This chapter needs to mention the @final attribute
+   once it is fully implemented.
