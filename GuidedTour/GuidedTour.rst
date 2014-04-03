@@ -181,13 +181,47 @@ to choose between alternatives.
 Switch statements in Swift support comparison of any type,
 and there are a wide range of matching mechanisms.
 
-.. TODO: Example with if/else if/else
+An if statement is written as follows:
 
-.. TODO: Simple example with switch
+.. testcode:: if
 
-.. TODO: Forward pointer or handwave about complex switch
+   -> let haveJellyBabies = false
+   << // haveJellyBabies : Bool = false
+   -> let haveGummiBears = true
+   << // haveGummiBears : Bool = true
+   -> if haveJellyBabies {
+          println("Would you like a jelly baby?")
+      } else if haveGummiBears {
+          println("Would you like a gummi bear?")
+      } else {
+          println("Sorry, all we have left are fruits and vegetables.")
+      }
+   << Would you like a gummi bear?
 
-.. testcode:: switch
+Note that there are no parenthesis around the conditional,
+and that the braces around the body are required.
+
+Switch statements are written as follows:
+
+.. testcode:: simple-switch
+
+   -> let vegetable = "cucumber"
+   << // vegetable : String = "cucumber"
+   -> switch vegetable {
+          case "lettuce":
+              println("Let's make salad.")
+          case "celery":
+              println("Get raisins and make ants on a log.")
+          case "cucumber":
+             println("How about a cucumber sandwich?")
+          default:
+              println("Everything tastes good in soup.")
+      }
+    << How about a cucumber sandwich?
+
+Switch statements support a variety of complex matching criteria:
+
+.. testcode:: fancy-switch
 
    -> let somePoint = (1, 1)
    << // somePoint : (Int, Int) = (1, 1)
@@ -198,17 +232,17 @@ and there are a wide range of matching mechanisms.
             println("(\(somePoint.0), 0) is on the x-axis")
          case (0, _):
             println("(0, \(somePoint.1)) is on the y-axis")
-         case (x, y) where x == y:
-            println("\(x), \(y)) is on the diagonal")
+         case let (x, y) where x == y:
+            println("(\(x), \(y)) is on the diagonal")
          default:
             println("The point is somewhere else.")
       }
-   <- (1, 1) is on the diagonal stnhsnthsnch
+   <- (1, 1) is on the diagonal
 
 Swift also includes for and while loops
 to repeat code.
 
-.. testcode:: for-loop
+.. testcode for-loop
 
     -> let listOfNumbers = [8, 3, 5]
     << // listOfNumbers : Int[] = [8, 3, 5]
