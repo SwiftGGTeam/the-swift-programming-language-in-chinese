@@ -219,6 +219,34 @@ Switch statements are written as follows:
       }
     << How about a cucumber sandwich?
 
+.. admonition:: Experiment
+
+   What error do you get if you remove the default case?
+
+There must be a switch case for every possible value ---
+for most types of value, this means you need a default clause.
+Execion does not "fall through" from one case statement to the next
+unless you add the explicit ``fallthough`` keyword.
+
+.. testcode:: fallthrough-switch
+
+    -> let birdsSinging = true
+    << // birdsSinging : Bool = true
+    -> switch birdsSinging {
+           case true:
+               println("The birds are singing.")
+               fallthrough
+           case false:
+               println("It's a beautiful day.")
+       }
+    !! <REPL Input>:7:3: error: switch must be exhaustive, consider adding a default clause
+    !! }
+    !! ^
+    << The birds are singing.
+    << It's a beautiful day.
+
+.. FIXME: The REPL error above is because of <rdar://> 
+
 Switch statements support a variety of complex matching criteria:
 
 .. testcode:: fancy-switch
@@ -226,23 +254,28 @@ Switch statements support a variety of complex matching criteria:
    -> let somePoint = (1, 1)
    << // somePoint : (Int, Int) = (1, 1)
    -> switch somePoint {
-         case (0, 0):
-            println("(0, 0) is at the origin")
-         case (_, 0):
-            println("(\(somePoint.0), 0) is on the x-axis")
-         case (0, _):
-            println("(0, \(somePoint.1)) is on the y-axis")
-         case let (x, y) where x == y:
-            println("(\(x), \(y)) is on the diagonal")
-         default:
-            println("The point is somewhere else.")
+          case (0, 0):
+              println("(0, 0) is at the origin")
+          case (_, 0):
+              println("(\(somePoint.0), 0) is on the x-axis")
+          case (0, _):
+              println("(0, \(somePoint.1)) is on the y-axis")
+          case let (x, y) where x == y:
+              println("(\(x), \(y)) is on the diagonal")
+          default:
+              println("The point is somewhere else.")
       }
    <- (1, 1) is on the diagonal
+
+.. admonition:: Experiment
+
+   Add a case statement that matches points where x is greater than y,
+   and one that matches points where x is odd.
 
 Swift also includes for and while loops
 to repeat code.
 
-.. testcode for-loop
+.. testcode:: for-each
 
     -> let listOfNumbers = [8, 3, 5]
     << // listOfNumbers : Int[] = [8, 3, 5]
@@ -252,9 +285,16 @@ to repeat code.
           sum += n
        }
     >> sum
-    << sum : Int = 16
+    << // sum : Int = 16
 
-
+.. testcode:: while
+   -> var n = 2
+   << n : Int = 2
+   -> while n < 100 {
+          n = n * 2
+      }
+   -> println("n is \(n)")
+   << n is 64
 
 Functions
 ---------
