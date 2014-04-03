@@ -17,14 +17,14 @@ If you have written code in a language like C or Objective-C before,
 this syntax probably looks familiar to you.
 Unlike those languages,
 this line of Swift code is a complete program.
-There is no need to import a standard library for functionaly like
+There is no need to import a standard library for functionality like
 input/output or string handling.
 The first statement at global scope is used
 as entry point for the program,
 so there is no need for a ``main`` function.
-
-.. TODO: Also notice that there are no semicolons.
-   You can use semicolons to separate two statements on a single line.
+Also notice that there are no semicolons.
+You can use semicolons to separate two statements on a single line,
+but otherwise there is no need to mark the end of a statement.
 
 The rest of this tour show you examples
 of how to accomplish a variety of programming tasks in Swift
@@ -74,33 +74,50 @@ In contrast, constants can only have a value assigned once:
    for ``myVariable`` and ``myConstant``.
    Try changing their names.
    What characters are not allowed in variable names?
+   What happens if you try to assign a new value to a constant?
 
 .. TR: Is the requirement that constants have a value
    a current REPL limitation, or an expected language feature?
 
 Swift enforces the type of a variable ---
-it is an error to set it to a value
-of a different type.
+assigning a value of the wrong type to a variable is an error.
 
 .. testcode:: typecheck
 
-    -> var integer = 100
-    << // integer : Int = 100
-    -> integer = 98.5
-    !! <REPL Input>:1:9: error: expression does not type-check
-    !! integer = 98.5
-    !! ~~~~~~~~^~~~~~
+    -> var string = "Hello"
+    << // string : String = "Hello"
+    -> string = 98.5
+    !!  <REPL Input>:1:8: error: expression does not type-check
+    !! string = 98.5
+    !! ~~~~~~~^~~~~~
 
 Notice that you didn’t have to explictly
 tell the compiler the type of ``integer``.
-It was able to infer the variable’s type from the value you assigned to it.
+If you don't specify a type,
+Swift uses determines the appropriate type to use
+based on the initial value you set
+and the other types in the expression.
 
 .. TODO Thinking that "integer" might not be the clearest name here.
    Type inference doesn’t care what your variable names are.
 
-.. Note on type inference
-.. Perform simple math
-.. Perform string interpolation
+Strings in Swift have support a special interpolation syntax
+that includes the string value of an expression
+as part of the string.
+
+.. testcode:: string-interpolation
+
+   -> let apples = 3
+   << // apples : Int = 3
+   -> let oranges = 5
+   << // oranges : Int = 5
+   -> let summary = "I have \(apples + oranges) pieces of fruit."
+   << // summary : String = "I have 8 pieces of fruit."
+
+.. note: Experiment
+
+   How would you use string interpolation
+   to include someone's name in a greeting?
 
 Control Flow
 ------------
