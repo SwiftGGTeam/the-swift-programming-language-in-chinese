@@ -236,17 +236,14 @@ unless you add the explicit ``fallthough`` keyword.
            case true:
                println("The birds are singing.")
                fallthrough
-           case false:
+           default:
                println("It's a beautiful day.")
        }
-    !! <REPL Input>:7:3: error: switch must be exhaustive, consider adding a default clause
-    !! }
-    !! ^
     << The birds are singing.
     << It's a beautiful day.
 
-.. FIXME: The REPL error above is because of <rdar://problem/16514545>.
-   If it doesn't get fixed, use a different example.
+.. See also <rdar://problem/16514545>
+   I'm using default here instead of case false as a workaround to this bug.
 
 Switch statements support a variety of complex matching criteria:
 
