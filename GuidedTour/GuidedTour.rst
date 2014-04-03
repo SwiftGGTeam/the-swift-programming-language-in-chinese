@@ -245,7 +245,8 @@ unless you add the explicit ``fallthough`` keyword.
     << The birds are singing.
     << It's a beautiful day.
 
-.. FIXME: The REPL error above is because of <rdar://> 
+.. FIXME: The REPL error above is because of <rdar://problem/16514545>.
+   If it doesn't get fixed, use a different example.
 
 Switch statements support a variety of complex matching criteria:
 
