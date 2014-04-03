@@ -99,6 +99,22 @@ If you don't specify a type,
 Swift determines the variable's type
 based on its initial value.
 
+Assignment matches parts on the left side to parts on the right,
+which allows you to perform several assignments at once.
+For example, to swap the value of ``x`` and ``y``:
+
+.. testcode:: swap
+
+   -> var x = 10
+   << // x : Int = 10
+   -> var y = 100
+   << // y : Int = 100
+   -> (x, y) = (y, x)
+   -> x
+   << // x : Int = 100
+   -> y
+   << // y : Int = 10
+
 Strings in Swift have support a special interpolation syntax
 that includes the string value of an expression
 as part of the string.
