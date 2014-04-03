@@ -99,6 +99,30 @@ If you don't specify a type,
 Swift determines the variable's type
 based on its initial value.
 
+You can provide a type explicitly
+by writing it after a colon (``:``).
+
+.. testcode:: type-annotation
+
+   -> let implicitString = "Hello"
+   << // implicitString : String = "Hello"
+   -> let explicitString : String = "Hello"
+   << // explicitString : String = "Hello"
+
+If you want to cast a value to another type,
+you do it explicitly.
+
+.. testcode:: cast
+   -> let label = "The width is "
+   -> let width = 94
+   -> println(label + String(width))
+   << The width is 94
+
+.. admonition:: Experiment
+
+   What error do you get if you remove the cast from the last line?
+   Why?
+
 Assignment matches parts on the left side to parts on the right,
 which allows you to perform several assignments at once.
 For example, to swap the value of ``x`` and ``y``:
