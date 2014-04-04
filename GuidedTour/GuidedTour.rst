@@ -466,44 +466,55 @@ A closure is just a function that isn't given a name when it is declared.
 Objects
 -------
 
-.. Declare classes with "class"
-.. Declare methods with "func"
-.. Declare properties with "var" and "let"
-.. Make instances with "Class()"
-.. Access methods and properties with "."
-.. Customize object lifecycle with "init" and "deinit"
+.. write-me::
 
-.. Indicate superclass and protocol conformance with ":"
-.. Override superclass methods with "@override"
-.. Call the superclass's implentation with "super"
+* Declare classes with "class"
+* Declare methods with "func"
+* Declare properties with "var" and "let"
+* Make instances with "Class()"
+* Access methods and properties with "."
+* Customize object lifecycle with "init" and "deinit"
+
+* Indicate superclass and protocol conformance with ":"
+* Override superclass methods with "@override"
+* Call the superclass's implentation with "super"
 
 Value Types
 -----------
 
-.. Differences from objects (reference types)
-.. Use tuples for simple multipart data
-.. Use structs for complex multipart data
-.. Use enums when values come from a list
-.. Associating additional data with enums
-.. Indicate protocol conformance using ":"
+.. write-me::
+
+* Differences from objects (reference types)
+* Use tuples for simple multipart data
+* Use structs for complex multipart data
+* Use enums when values come from a list
+* Associating additional data with enums
+* Indicate protocol conformance using ":"
 
 Protocols
 ---------
 
-.. Again, supported by both reference and value types
-.. Distinguish is/has/can ...
-.. Can be used as a first-class type (ie in variable declaration)
+.. write-me::
+
+* Again, supported by both reference and value types
+* Distinguish is/has/can ...
+* Can be used as a first-class type (ie in variable declaration)
 
 Optionals
 ---------
 
-.. Contrast with nil/NULL
-.. Implemented as enum (no magic)
-.. Convenience syntax "?" and "!"
+.. write-me::
+
+* Contrast with nil/NULL
+* Implemented as enum (no magic)
+* Convenience syntax "?" and "!"
 
 Generics
 --------
 
+.. write-me::
+
 Patterns and Advanced Switches
 ------------------------------
 
+.. write-me::
