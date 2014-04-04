@@ -27,22 +27,21 @@ are actually a special case of a more general feature known as :newTerm:`closure
 Closures are a way to write self-contained blocks of functionality
 that can be passed around and used in your code.
 
-In addition to everything mentioned in the Functions chapter,
-closures have two extra abilities:
+Closures have two extra abilities
+in addition to those described in :doc:`Functions`:
 
-* they can be written without a function name
-  (although you can name them if you wish)
 * they can :newTerm:`capture` and modify constants and variables
   from the context in which they are defined
+* they can be written without a function name
+  (although you can name them if you wish)
+
+In essence, functions are just simple closures that have a name,
+and don't capture anything.
+Although functions are really just specialized closures,
+this chapter will continue to refer to them as “functions” for simplicity.
 
 Swift handles all of the memory management of capturing for you.
-(The concept and meaning of “capturing state” is explained in detail below.)
-
-The relationship between functions and closures is an important one.
-Another way to think about it is
-“functions are just simple closures that have a name, and don't capture anything.”
-(Although functions are really just specialized closures,
-this chapter will still refer to them as “functions” for simplicity.)
+The concept and meaning of “capturing” is explained in detail below.
 
 Swift's closures are similar to :newTerm:`lambdas` in other programming languages,
 and :newTerm:`blocks` in C-like languages.
@@ -57,8 +56,93 @@ These optimizations include:
 
 All of these optimizations are described in detail below.
 
-Closure Syntax
---------------
+Capturing Values
+----------------
+
+.. write-me::
+
+.. testcode:: closures
+
+   -> func makeIncrementor(amount: Int) -> () -> Int {
+         var runningTotal = 0
+         func incrementor() -> Int {
+            runningTotal += amount
+            return runningTotal
+         }
+         return incrementor
+      }
+
+This example defines a function called ``makeIncrementor()``,
+which creates and returns functions that
+increment and return a stored number each time they are called.
+
+``makeIncrementor()`` has a single ``Int`` parameter called ``amount``.
+This defines the amount that the new incrementor will add each time it is called.
+``makeIncrementor()`` also defines an integer variable called ``runningTotal``,
+which stores the current running total of the incrementor.
+This variable is initialized with a value of ``0``.
+
+Next, ``makeIncrementor()`` defines a nested function, called ``incrementor()``.
+This is the function that will be returned to do the actual incrementing.
+
+::
+
+      func incrementor() -> Int {
+         runningTotal += amount
+         return runningTotal
+      }
+
+When considered in isolation,
+the nested ``incrementor()`` function seems rather odd.
+It doesn't have any parameters,
+and yet it refers to things called ``runningTotal`` and ``amount`` within its function body.
+It does this by capturing the *existing* values of ``runningTotal`` and ``amount``
+from its surrounding function.
+
+Here's how the flow of things goes each time ``makeIncrementor()`` is called:
+
+1. ``makeIncrementor()`` is passed a constant ``amount`` argument.
+2. ``makeIncrementor()`` defines a new ``runningTotal`` variable,
+   and assigns an initial integer value of ``0``.
+3. ``makeIncrementor()`` defines a nested function called ``incrementor()``.
+   This function uses (and therefore captures)
+   the ``amount`` argument and the ``runningTotal`` variable.
+4. Because it uses but does not modify ``amount``,
+   the ``incrementor()`` function automatically captures and *stores*
+   a copy of the value of ``amount``.
+   This value is stored along with the new ``incrementor()`` function.
+5. Conversely, because it modifies the ``runningTotal`` variable each time it is called,
+   ``incrementor()`` captures a *reference* to ``runningTotal``,
+   so that it can be sure that it exists each time that it needs to update it.
+6. ``makeIncrementor()`` returns the new ``incrementor()`` function to its caller.
+7. ``makeIncrementor()`` ends its execution.
+   It no longer needs ``runningTotal``,
+   but ``runningTotal`` continues to stick around nonetheless,
+   so that the returned ``incrementor()`` function can continue to use it.
+
+Swift handles all of the hard work of deciding what should be captured by reference,
+and what should be copied instead.
+It also handles all of the memory management involved in disposing of ``runningTotal``
+when it is no longer needed by the returned incrementor function.
+
+Here's an example of ``makeIncrementor()`` in action:
+
+.. testcode:: closures
+
+   -> let incrementByTen = makeIncrementor(10)
+   << // tenIncrementor : () -> Int = <unprintable value>
+   -> incrementByTen()
+   << r0 : Int = 10
+   // returns a value of 10
+   -> incrementByTen()
+   << r1 : Int = 20
+   // returns a value of 20
+   -> incrementByTen()
+   << r2 : Int = 30
+   // returns a value of 30
+
+Closure Expressions
+-------------------
 
 .. write-me::
 
@@ -148,6 +232,10 @@ and the correct overloaded version to use will be inferred:
    -> reverseSorted = sort(strings, > )
    >> reverseSorted
    << // reverseSorted : String[] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
+
+.. misc notes…
+
+.. functions and closures are reference types
 
 .. capturing / closing over variables (and what this means in practice)
 .. no need for __block; discuss memory safety
