@@ -391,6 +391,8 @@ and the default name of ``oldValue`` is used instead.
 
 .. TODO: mention that you can't override to observe a read-only property,
    as there will never be anything to actually observe
+   The same will be true for overriden constant properties
+   once stored property overriding is implemented.
 
 .. _Properties_TypeProperties:
 
