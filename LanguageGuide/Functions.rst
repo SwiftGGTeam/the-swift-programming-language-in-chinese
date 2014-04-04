@@ -230,7 +230,7 @@ as part of the function return value assignment:
    <- The text from after the splitter is 'world'
 
 This example sets two constants called ``first`` and ``possibleSecond``
-to equal the two output values stored in the ``splitOnFirst()`` function's
+to equal the two output values stored in the ``splitOnFirst`` function's
 return tuple value.
 These two constants can then be used independently of each other.
 Here, the value stored in the optional second tuple value is unwrapped and accessed
@@ -697,7 +697,7 @@ Likewise, the second selector part, ``backwards``,
 is also used as the name of the Boolean indicator of whether the string
 should be converted into a column of characters in reverse order.
 
-Note that this example calls ``print()`` rather than ``println()``
+Note that this example calls ``print`` rather than ``println``
 to print its output, as the ``output`` string already has a line break
 at the end of the returned string.
 
@@ -742,7 +742,7 @@ For example:
    << // r1 : (a: Int, b: Int) -> Int = <unprintable value>
 
 This example defines two simple mathematical functions
-called ``addTwoInts()`` and ``multiplyTwoInts()``.
+called ``addTwoInts`` and ``multiplyTwoInts``.
 These functions each take two ``Int`` values,
 and return an ``Int`` value which is the result of
 performing an appropriate mathematical operation.
@@ -791,7 +791,7 @@ which has a type of ‘a function that takes two ``Int`` values,
 and returns an ``Int`` value.’
 Set this new variable to refer to the function called ``addTwoInts``.”
 
-The ``addTwoInts()`` function has the same type as the ``mathFunction`` variable,
+The ``addTwoInts`` function has the same type as the ``mathFunction`` variable,
 and so this assignment is allowed by Swift's type-checker.
 
 You can now call the assigned function with the name ``mathFunction``:
@@ -840,20 +840,20 @@ Here's an example to print the results of the math functions from above:
    -> printMathResult(addTwoInts, 3, 5)
    <- Result: 8
 
-This example defines a function called ``printMathResult()``, which has three parameters.
+This example defines a function called ``printMathResult``, which has three parameters.
 The first parameter is called ``mathFunction``, and is of type ``(Int, Int) -> Int``.
 You can pass any function of that type as the argument for this first parameter.
 The second and third parameters are called ``a`` and ``b``, and are both of type ``Int``.
 These are used as the two input values for the provided math function.
 
-When ``printMathResult()`` is called above,
-it is passed the ``addTwoInts()`` function, and the integer values ``3`` and ``5``.
+When ``printMathResult`` is called above,
+it is passed the ``addTwoInts`` function, and the integer values ``3`` and ``5``.
 It calls the provided function with the values ``3`` and ``5``, and prints the result of ``8``.
 
-The role of ``printMathResult()`` is to print the result of some appropriate function.
+The role of ``printMathResult`` is to print the result of some appropriate function.
 It doesn't need to know or care what that function's implementation actually does –
 it just cares that the function is of the correct type.
-This enables ``printMathResult()`` to hand off some of its functionality
+This enables ``printMathResult`` to hand off some of its functionality
 to the caller of the function in a type-safe way.
 
 .. _Functions_FunctionTypesAsReturnTypes:
@@ -866,7 +866,7 @@ This is indicated by writing a complete function type
 immediately after the return indicator (``->``) of the returning function.
 
 To help illustrate this, here are two simple functions,
-``stepForward()`` and ``stepBackward()``,
+``stepForward`` and ``stepBackward``,
 which return a value of one more / one less than their input value.
 Both of these functions have a type of ``(Int) -> Int``:
 
@@ -879,10 +879,10 @@ Both of these functions have a type of ``(Int) -> Int``:
          return input - 1
       }
 
-Here's a function called ``chooseStepFunction()``,
+Here's a function called ``chooseStepFunction``,
 whose return type is “a function of type ``(Int) -> Int``”.
 It chooses whether to return
-the ``stepForward()`` function or the ``stepBackward()`` function
+the ``stepForward`` function or the ``stepBackward`` function
 based on a Boolean parameter called ``backwards``:
 
 .. testcode:: functionTypes
@@ -891,7 +891,7 @@ based on a Boolean parameter called ``backwards``:
          return backwards ? stepBackward : stepForward
       }
 
-``chooseStepFunction()`` can now be used to obtain a function
+``chooseStepFunction`` can now be used to obtain a function
 that will step in one direction or the other.
 For example:
 
@@ -907,7 +907,7 @@ This example works out whether a positive or negative step is needed
 to move a variable called ``currentValue`` progressively closer to zero.
 ``currentValue`` has an initial value of ``3``,
 which means that ``currentValue > 0`` returns ``true``,
-causing ``chooseStepFunction()`` to return the ``stepBackward()`` function.
+causing ``chooseStepFunction`` to return the ``stepBackward`` function.
 A reference to the returned function is stored in a constant called ``moveNearerToZero``.
 
 Now that ``moveNearerToZero`` refers to the correct function,
@@ -938,7 +938,7 @@ a function written within the body of another function.
 The nested function is hidden from the outside world,
 but can still be used by its enclosing function.
 
-The ``chooseStepFunction()`` example above can be rewritten
+The ``chooseStepFunction`` example above can be rewritten
 to use and return nested functions:
 
 .. testcode:: nestedFunctions

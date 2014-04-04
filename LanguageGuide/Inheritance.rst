@@ -26,7 +26,7 @@ This example starts by defining a “base” class called ``Vehicle``.
 This base class declares two properties
 (``numberOfWheels`` and ``maxPassengers``)
 that are universal to all vehicles.
-These properties are used by a method called ``description()``,
+These properties are used by a method called ``description``,
 which returns a ``String`` description of the vehicle's characteristics.
 
 .. QUESTION: this example doesn't really need an initializer.
@@ -116,7 +116,7 @@ and is replaced with a new value of ``2``.
 As well as inheriting the properties of ``Vehicle``,
 ``Bicycle`` also inherits its methods.
 If you create an instance of ``Bicycle``,
-you can call its inherited ``description()`` method,
+you can call its inherited ``description`` method,
 and see how its properties have been updated:
 
 .. testcode:: inheritance
@@ -160,7 +160,7 @@ you can see how its properties have been updated:
    -> println("Tandem: \(tandem.description())")
    <- Tandem: 2 wheels; up to 2 passengers
 
-Note that the ``description()`` method has also been inherited by ``Tandem``.
+Note that the ``description`` method has also been inherited by ``Tandem``.
 Instance methods of a class are inherited by any and all subclasses of that class.
 
 .. note::
@@ -231,18 +231,18 @@ This property defaults to ``false``, as most cars are not convertibles.
 which sets the maximum number of passengers to ``5``,
 and the default number of wheels to ``4``.
 
-``Car`` then overrides its inherited ``description()`` method.
+``Car`` then overrides its inherited ``description`` method.
 It does this by defining a function with the same declaration as
 the one it would otherwise inherit,
 prefixed by the ``@override`` attribute.
-Rather than providing a completely custom implementation of ``description()``,
-it actually starts by calling ``super.description()`` to retrieve
+Rather than providing a completely custom implementation of ``description``,
+it actually starts by calling ``super.description`` to retrieve
 the description provided by its superclass.
 It then appends some additional information onto the end,
 and returns the complete description.
 
 If you create a new instance of ``Car``,
-and print the output of its ``description()`` method,
+and print the output of its ``description`` method,
 you can see that the description has indeed changed:
 
 .. testcode:: inheritance

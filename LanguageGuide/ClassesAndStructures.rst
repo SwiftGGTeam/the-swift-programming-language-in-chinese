@@ -111,7 +111,7 @@ Both place their entire definition within a pair of braces:
    (such as ``String``, ``Int``, and ``Bool``).
    Conversely, properties and methods should always be given
    ``lowerCamelCase`` names
-   (such as ``frameRate`` and ``incrementCount()``)
+   (such as ``frameRate`` and ``incrementCount``)
    to differentiate them from type names.
 
 Here's an example of a structure definition and a class definition:

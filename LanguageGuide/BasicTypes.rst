@@ -182,18 +182,18 @@ and attempting to do so will result in an error:
 Printing Named Values
 ~~~~~~~~~~~~~~~~~~~~~
 
-The current value of a constant or variable can be printed with the ``println()`` function:
+The current value of a constant or variable can be printed with the ``println`` function:
 
 .. testcode:: namedValues
 
    -> println(friendlyWelcome)
    <- 👋, 🌎
 
-``println()`` is a special global function that prints a value,
+``println`` is a special global function that prints a value,
 followed by a line break, to an appropriate output.
 If you are working in Xcode, for example,
-``println()`` will print its output in Xcode's “console” pane.
-(A second function, ``print()``, performs the same task
+``println`` will print its output in Xcode's “console” pane.
+(A second function, ``print``, performs the same task
 without appending a line break to the end of the value to be printed.)
 
 .. QUESTION: have I referred to Xcode's console correctly here?
@@ -206,7 +206,7 @@ without appending a line break to the end of the value to be printed.)
    Strictly speaking, you can't print the value of *any* named value –
    you can only print values of types for which String has a constructor.
 
-The ``println()`` function will print any ``String`` value you pass to it:
+The ``println`` function will print any ``String`` value you pass to it:
 
 .. testcode:: namedValues
 
@@ -218,8 +218,8 @@ The ``println()`` function will print any ``String`` value you pass to it:
 String Interpolation
 ____________________
 
-The ``println()`` function can be used to print more complex logging messages,
-in a similar manner to Cocoa's ``NSLog()`` function.
+The ``println`` function can be used to print more complex logging messages,
+in a similar manner to Cocoa's ``NSLog`` function.
 These messages can include the current values of constants and variables.
 
 Swift uses :newTerm:`string interpolation` to include named values
@@ -885,13 +885,13 @@ They can be used to say:
    without the need for special constants or ``nil`` tests.
 
 Here's an example.
-Swift's ``String`` type has a method called ``toInt()``,
+Swift's ``String`` type has a method called ``toInt``,
 which tries to convert a ``String`` value into an ``Int`` value.
 However, not every string can be converted into an integer.
 The string ``"123"`` can be converted into the numeric value ``123``,
 but the string ``"hello, world"`` does not have an obvious numeric value to convert to.
 
-The example below shows how to use ``toInt()`` to try and convert a ``String`` into an ``Int``:
+The example below shows how to use ``toInt`` to try and convert a ``String`` into an ``Int``:
 
 .. testcode:: optionals
 
@@ -901,7 +901,7 @@ The example below shows how to use ``toInt()`` to try and convert a ``String`` i
    << // convertedNumber : Int? = <unprintable value>
    // convertedNumber is inferred to be of type "Int?", or "optional Int"
 
-Because the ``toInt()`` method might fail,
+Because the ``toInt`` method might fail,
 it returns an *optional* ``Int``, rather than an ``Int``.
 An optional ``Int`` is written as ``Int?``, not ``Int``.
 The question mark indicates that the value it contains is optional,
@@ -966,13 +966,13 @@ The example from above can be can be rewritten to use optional binding:
       }
    <- 123 has an integer value of 123
 
-As before, this example uses the ``toInt()`` method from ``String``
+As before, this example uses the ``toInt`` method from ``String``
 to try and convert ``"123"`` into an ``Int``.
 It then prints a message to indicate if the conversion was successful.
 
 ``if let actualNumber = possibleNumber.toInt()`` can be read as:
 
-“If the optional ``Int`` returned by ``possibleNumber.toInt()`` contains a value,
+“If the optional ``Int`` returned by ``possibleNumber.toInt`` contains a value,
 set a new constant called ``actualNumber`` to the value contained in the optional.”
 
 If the conversion is successful,

@@ -196,7 +196,7 @@ Extensions can add new instance methods to an existing type:
          }
       }
 
-This example adds a new ``String`` instance method called ``toSpooky()``.
+This example adds a new ``String`` instance method called ``toSpooky``.
 This new method is now available to any instances of ``String``.
 The method returns a spookier version of the original string,
 by converting odd-numbered characters to uppercase,
@@ -236,7 +236,7 @@ just like mutating methods from an original implementation:
    /> someInt is now \(someInt)
    </ someInt is now 123
 
-This example adds a ``shiftRight()`` method to instances of ``Int``.
+This example adds a ``shiftRight`` method to instances of ``Int``.
 This method is similar to the bitwise right shift operator
 (as described in :ref:`AdvancedOperators_BitwiseLeftAndRightShifts`),
 except that it shifts by powers of ten, rather than powers of two.
@@ -382,11 +382,11 @@ The nested enumeration can now be used with ``UnicodeScalar`` values:
    </ 'Hello' is made up of the following kinds of letters:
    </ consonant vowel consonant consonant vowel
 
-This function, ``printLetterKinds()``,
+This function, ``printLetterKinds``,
 takes an input ``String`` value and iterates over its characters.
 For each scalar, it considers the ``kind`` computed property for that scalar,
 and prints an appropriate description of that kind.
-The ``printLetterKinds()`` function can then be called
+The ``printLetterKinds`` function can then be called
 to print the kinds of letters in an entire word,
 as shown here for the word ``"Hello"``.
 

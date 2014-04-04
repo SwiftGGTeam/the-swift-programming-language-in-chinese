@@ -15,7 +15,7 @@ This first snippet defines a new base class called ``MediaItem``.
 This class provides basic functionality for any kind of item that might appear
 in a digital media library.
 Specifically, it declares a ``name`` property of type ``String``,
-and an ``init withName()`` initializer.
+and an ``init withName`` initializer.
 (It is assumed that all media items, including all movies and songs, will have a name.)
 
 .. testcode:: typeCasting

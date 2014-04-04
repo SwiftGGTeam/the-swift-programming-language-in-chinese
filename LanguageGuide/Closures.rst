@@ -82,17 +82,17 @@ For example:
          return incrementor
       }
 
-This example defines a function called ``makeIncrementor()``,
+This example defines a function called ``makeIncrementor``,
 which creates and returns functions that
 increment and return a stored number each time they are called.
 
-``makeIncrementor()`` has a single ``Int`` parameter called ``amount``.
+``makeIncrementor`` has a single ``Int`` parameter called ``amount``.
 This defines the amount that the new incrementor will add each time it is called.
-``makeIncrementor()`` also defines an integer variable called ``runningTotal``,
+``makeIncrementor`` also defines an integer variable called ``runningTotal``,
 which stores the current running total of the incrementor.
 This variable is initialized with a value of ``0``.
 
-Next, ``makeIncrementor()`` defines a nested function, called ``incrementor()``.
+Next, ``makeIncrementor`` defines a nested function, called ``incrementor``.
 This is the function that will be returned to do the actual incrementing.
 
 ::
@@ -103,39 +103,39 @@ This is the function that will be returned to do the actual incrementing.
       }
 
 When considered in isolation,
-the nested ``incrementor()`` function seems rather odd.
+the nested ``incrementor`` function seems rather odd.
 It doesn't have any parameters,
 and yet it refers to things called ``runningTotal`` and ``amount`` within its function body.
 It does this by capturing the *existing* values of ``runningTotal`` and ``amount``
 from its surrounding function.
 
-Here's how the flow of things goes each time ``makeIncrementor()`` is called:
+Here's how the flow of things goes each time ``makeIncrementor`` is called:
 
-1. ``makeIncrementor()`` is passed a constant ``amount`` argument.
-2. ``makeIncrementor()`` defines a new ``runningTotal`` variable,
+1. ``makeIncrementor`` is passed a constant ``amount`` argument.
+2. ``makeIncrementor`` defines a new ``runningTotal`` variable,
    and assigns an initial integer value of ``0``.
-3. ``makeIncrementor()`` defines a nested function called ``incrementor()``.
+3. ``makeIncrementor`` defines a nested function called ``incrementor``.
    This function uses (and therefore captures)
    the ``amount`` argument and the ``runningTotal`` variable.
 4. Because it uses but does not modify ``amount``,
-   the ``incrementor()`` function automatically captures and *stores*
+   the ``incrementor`` function automatically captures and *stores*
    a copy of the value of ``amount``.
-   This value is stored along with the new ``incrementor()`` function.
+   This value is stored along with the new ``incrementor`` function.
 5. Conversely, because it modifies the ``runningTotal`` variable each time it is called,
-   ``incrementor()`` captures a *reference* to ``runningTotal``,
+   ``incrementor`` captures a *reference* to ``runningTotal``,
    so that it can be sure that it exists each time that it needs to update it.
-6. ``makeIncrementor()`` returns the new ``incrementor()`` function to its caller.
-7. ``makeIncrementor()`` ends its execution.
+6. ``makeIncrementor`` returns the new ``incrementor`` function to its caller.
+7. ``makeIncrementor`` ends its execution.
    It no longer needs ``runningTotal``,
    but ``runningTotal`` continues to stick around nonetheless,
-   so that the returned ``incrementor()`` function can continue to use it.
+   so that the returned ``incrementor`` function can continue to use it.
 
 Swift handles all of the hard work of deciding what should be captured by reference,
 and what should be copied instead.
 It also handles all of the memory management involved in disposing of ``runningTotal``
 when it is no longer needed by the returned incrementor function.
 
-Here's an example of ``makeIncrementor()`` in action:
+Here's an example of ``makeIncrementor`` in action:
 
 .. testcode:: closures
 
@@ -156,12 +156,12 @@ Closure Expressions
 
 .. write-me::
 
-.. Swift's standard library provides a ``sort()`` function,
+.. Swift's standard library provides a ``sort`` function,
    which takes an array of strings, together with a sorting closure,
    and uses the closure to sort the array.
 
 .. When sorting values of type ``String``,
-   ``sort()`` expects to receive a closure that has two ``String`` parameters,
+   ``sort`` expects to receive a closure that has two ``String`` parameters,
    and returns a ``Bool`` value.
    The closure it expects is like a function with the following form:
 
@@ -177,7 +177,7 @@ Here are some strings to be sorted:
    -> let strings = ["Alex", "Barry", "Chris", "Daniella", "Ewa"]
    << // strings : String[] = ["Alex", "Barry", "Chris", "Daniella", "Ewa"]
 
-The Standard Library's ``sort()`` function takes an ``Array<T>``
+The Standard Library's ``sort`` function takes an ``Array<T>``
 and a sorting closure of type ``(T, T) -> Bool``.
 It can be called by passing in a named function as the sorting closure:
 

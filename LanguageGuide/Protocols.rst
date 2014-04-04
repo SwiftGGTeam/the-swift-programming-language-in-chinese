@@ -183,7 +183,7 @@ For example:
       }
 
 This protocol, ``RandomNumberGenerator``, requires any conforming type
-to have an instance method called ``random()``,
+to have an instance method called ``random``,
 which returns a ``Double`` value whenever it is called.
 (Although it is not specified as part of the protocol,
 it is assumed that this value will be
@@ -280,13 +280,13 @@ which is also of type ``RandomNumberGenerator``.
 You can pass a value of any conforming type in to this parameter
 when initializing a new ``Dice`` instance.
 
-``Dice`` provides one instance method, ``roll()``,
+``Dice`` provides one instance method, ``roll``,
 which returns an integer value between 1 and the number of sides on the dice.
-This method calls the generator's ``random()`` method to create
+This method calls the generator's ``random`` method to create
 a new random number between ``0.0`` and ``1.0``,
 and uses this random number to create a dice roll value within the correct range.
 Because ``generator`` is known to adopt ``RandomNumberGenerator``,
-it is guaranteed to have a ``random()`` method to call.
+it is guaranteed to have a ``random`` method to call.
 
 .. QUESTION: would it be better to show Dice using a RandomNumberGenerator
    as a data source, a la UITableViewDataSource etc.?
@@ -390,14 +390,14 @@ for a description of the gameplay of the *Snakes and Ladders* game shown above.)
 
 This version of the game has been wrapped up as a class called ``SnakesAndLadders``,
 which adopts the ``DiceGame`` protocol.
-It provides a gettable ``dice`` property and a ``play()`` method
+It provides a gettable ``dice`` property and a ``play`` method
 in order to conform to the protocol.
 (The ``dice`` property has been declared as a constant property
 because it does not need to change after initialization,
 and the protocol only requires that it is gettable.)
 
 The *Snakes and Ladders* game board setup takes place during the class's initializer.
-All of the actual game logic has been moved into the protocol's ``play()`` method,
+All of the actual game logic has been moved into the protocol's ``play`` method,
 which uses the protocol's required ``dice`` property to provide its dice roll values.
 
 Note that the ``delegate`` property is declared as an *optional* ``DiceGameDelegate``.
@@ -408,10 +408,10 @@ It can be set to a suitable delegate by the game instantiator if they wish.
 
 ``DiceGameDelegate`` provides three methods for tracking the progress of a game.
 These three methods have been incorporated into the game logic within
-the ``play()`` method above, and are called when
+the ``play`` method above, and are called when
 a new game starts, a new turn begins, or the game ends.
 Because the ``delegate`` property is an optional ``DiceGameDelegate``,
-the ``play()`` method first checks to see if the optional property has a value
+the ``play`` method first checks to see if the optional property has a value
 before calling each method.
 In each case, it passes the ``SnakesAndLadders`` instance as
 a parameter to the delegate method.
@@ -445,10 +445,10 @@ It resets a ``numberOfTurns`` property to zero when the game starts;
 increments it each time a new turn begins;
 and prints out the total number of turns once the game has ended.
 
-The implementation of ``gameDidStart()`` shown above makes use of the ``game`` parameter
+The implementation of ``gameDidStart`` shown above makes use of the ``game`` parameter
 to print some introductory information about the game that is about to be played.
 The ``game`` parameter has a type of ``DiceGame``, not ``SnakesAndLadders``,
-and so ``gameDidStart()`` can only access and use any methods and properties that
+and so ``gameDidStart`` can only access and use any methods and properties that
 are implemented as part of the ``DiceGame`` protocol.
 However, the method is still able to use type casting to
 query the type of the underlying instance.
@@ -456,10 +456,10 @@ In this example, it checks to see if ``game`` is actually
 an instance of ``SnakesAndLadders`` behind the scenes,
 and prints an appropriate message if so.
 
-``gameDidStart()`` also accesses the ``dice`` property of the passed ``game`` parameter.
+``gameDidStart`` also accesses the ``dice`` property of the passed ``game`` parameter.
 Because ``game`` is known to conform to the ``DiceGame`` protocol,
 it is guaranteed to have a ``dice`` property,
-and so the ``gameDidStart()`` method is able to access and print the dice's ``sides`` property,
+and so the ``gameDidStart`` method is able to access and print the dice's ``sides`` property,
 regardless of what kind of game is being played.
 
 Here's how ``DiceGameTracker`` looks in action:
@@ -642,8 +642,8 @@ Note that the ``thing`` constant is of type ``TextRepresentable``.
 It is not of type ``Dice``, or ``DiceGame``, or ``Hamster``,
 even if the actual instance behind the scenes is of one of those types.
 Nonetheless, because it is of type ``TextRepresentable``,
-and anything that is ``TextRepresentable`` is known to have an ``asText()`` method,
-it is safe to call ``thing.asText()`` each time through the loop.
+and anything that is ``TextRepresentable`` is known to have an ``asText`` method,
+it is safe to call ``thing.asText`` each time through the loop.
 
 .. _Protocols_ProtocolInheritance:
 
@@ -674,7 +674,7 @@ Anything that adopts ``PrettyTextRepresentable`` must satisfy all of the require
 enforced by ``TextRepresentable``,
 *plus* the addition requirements enforced by ``PrettyTextRepresentable``.
 In this example, ``PrettyTextRepresentable`` adds a single requirement
-to provide an instance method called ``asPrettyText()`` that returns a ``String``.
+to provide an instance method called ``asPrettyText`` that returns a ``String``.
 
 The ``SnakesAndLadders`` class can be extended to adopt and conform to ``PrettyTextRepresentable``:
 
@@ -699,10 +699,10 @@ The ``SnakesAndLadders`` class can be extended to adopt and conform to ``PrettyT
 
 
 This extension states that it adopts the ``PrettyTextRepresentable`` protocol,
-and provides an implementation of the ``asPrettyText()`` method
+and provides an implementation of the ``asPrettyText`` method
 for the ``SnakesAndLadders`` type.
 Anything that is ``PrettyTextRepresentable`` must also be ``TextRepresentable``,
-and so the ``asPrettyText()`` implementation starts by calling the ``asText()`` method
+and so the ``asPrettyText`` implementation starts by calling the ``asText`` method
 from the ``TextRepresentable`` protocol to begin an output string.
 It appends a colon and a line break,
 and uses this as the start of its pretty text representation.

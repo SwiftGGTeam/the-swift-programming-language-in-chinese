@@ -46,7 +46,7 @@ written using the ``init`` keyword:
 
 This example defines a new structure to store temperatures expressed in the Fahrenheit scale.
 The structure has one stored property, ``temperature``, which is of type ``Double``.
-The structure defines a single initializer, ``init()``, with no parameters,
+The structure defines a single initializer, ``init``, with no parameters,
 which initializes the stored temperature with a value of ``32.0``
 (the freezing point of water when expressed in the Fahrenheit scale).
 
@@ -345,10 +345,10 @@ to store and manage its current state:
       }
 
 ``Bank`` keeps track of the current number of coins it holds via its ``coinsInBank`` property.
-It also offers two methods – ``vendCoins()`` and ``receiveCoins()`` –
+It also offers two methods – ``vendCoins`` and ``receiveCoins`` –
 to handle the distribution and collection of coins.
 
-``vendCoins()`` checks that there are enough coins in the bank before handing any out.
+``vendCoins`` checks that there are enough coins in the bank before handing any out.
 If there are not enough coins, it returns a smaller number than the number that was requested
 (and may even return zero if there are no coins left in the bank at all).
 It declares ``numberOfCoinsToVend`` as a variable parameter,
@@ -356,7 +356,7 @@ so that the number can be modified within the method's body
 without needing to declare a new variable.
 It returns an integer value to indicate the actual number of coins that were vended.
 
-The ``receiveCoins()`` method simply adds the received number of coins back into the bank's coin store.
+The ``receiveCoins`` method simply adds the received number of coins back into the bank's coin store.
 
 The ``Player`` class describes a player in the game.
 Each player has a certain number of coins stored in their purse at any time.
@@ -381,7 +381,7 @@ Each ``Player`` instance is initialized with a starting allowance of
 some specified number of coins from the bank during initialization
 (although it may receive fewer than that number, if not enough are available).
 
-The ``Player`` class defines a ``winCoins()`` method,
+The ``Player`` class defines a ``winCoins`` method,
 which tries to retrieve a certain number of coins from the bank
 and add them to the player's purse.
 The ``Player`` class also implements a deinitializer,
@@ -406,7 +406,7 @@ Using an optional gives a way to keep track of whether there is currently a play
 
 Because ``playerOne`` is an optional, it is qualified with an exclamation mark (``!``)
 when its ``coinsInPurse`` property is accessed to print its default number of coins,
-and whenever its ``winCoins()`` method is called:
+and whenever its ``winCoins`` method is called:
 
 .. testcode:: deinitializer
 

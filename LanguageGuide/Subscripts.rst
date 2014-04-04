@@ -175,7 +175,7 @@ The ``Matrix`` subscript has a return type of ``Double?``, or “optional ``Doub
 This is to cope with the fact that you might request a value outside of
 the bounds of the matrix.
 To cope with this,
-``Matrix`` includes a convenience method called ``indexIsValid()``,
+``Matrix`` includes a convenience method called ``indexIsValid``,
 which checks to see if the requested ``row`` or ``column``
 is outside the bounds of the matrix:
 
