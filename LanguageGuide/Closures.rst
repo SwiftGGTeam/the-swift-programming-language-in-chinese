@@ -59,17 +59,18 @@ Capturing Values
 ----------------
 
 A closure can :newTerm:`capture` constants and variables
-from the surrounding context in which the closure is defined.
-The closure is then able to refer to (and modify) those constants and variables
-from within its closure body,
+from the surrounding context in which it is defined.
+The closure is then able to refer to and modify
+the values of those constants and variables from within its body,
 even if the original scope that defined the constants and variables no longer exists.
 
 The simplest form of a closure in Swift is a nested function,
 written within the body of another function.
-A nested function can capture any of the outer function's arguments,
-and can also capture any named values defined within the outer function.
+A nested function can capture any of its outer function's arguments,
+and can also capture any constants and variables defined within the outer function.
 
-For example:
+Here's an example of a function called ``makeIncrementor``,
+which creates functions that increment and return a stored value each time they are called:
 
 .. testcode:: closures
 
@@ -82,18 +83,25 @@ For example:
          return incrementor
       }
 
-This example defines a function called ``makeIncrementor``,
-which creates and returns functions that
-increment and return a stored number each time they are called.
+The ``makeIncrementor`` function returns *another* function,
+as described in :ref:`Functions_FunctionTypesAsReturnTypes`.
+The functions it returns are of type ``() -> Int``.
+This means that they have no parameters,
+and return an ``Int`` value each time they are called.
 
-``makeIncrementor`` has a single ``Int`` parameter called ``amount``.
-This defines the amount that the new incrementor will add each time it is called.
-``makeIncrementor`` also defines an integer variable called ``runningTotal``,
-which stores the current running total of the incrementor.
+The ``makeIncrementor`` function defines an integer variable called ``runningTotal``,
+which stores the current running total of the incrementor it returns.
 This variable is initialized with a value of ``0``.
+``makeIncrementor`` also has a single ``Int`` parameter called ``amount``,
+which defines the amount that the returned function will increment ``runningTotal`` by
+each time it is called.
 
-Next, ``makeIncrementor`` defines a nested function, called ``incrementor``.
-This is the function that will be returned to do the actual incrementing.
+Next, ``makeIncrementor`` defines a nested function called ``incrementor``,
+which performs the actual incrementing.
+This function simply adds ``amount`` to ``runningTotal``, and returns the result.
+
+When considered in isolation,
+the nested ``incrementor`` function might seem unusual:
 
 ::
 
@@ -102,54 +110,105 @@ This is the function that will be returned to do the actual incrementing.
          return runningTotal
       }
 
-When considered in isolation,
-the nested ``incrementor`` function seems rather odd.
-It doesn't have any parameters,
-and yet it refers to things called ``runningTotal`` and ``amount`` within its function body.
+The ``incrementor`` function doesn't have any parameters,
+and yet it refers to ``runningTotal`` and ``amount`` from within its function body.
 It does this by capturing the *existing* values of ``runningTotal`` and ``amount``
-from its surrounding function.
+from its surrounding function,
+and using them within its own function body.
 
-Here's how the flow of things goes each time ``makeIncrementor`` is called:
+Because it does not modify ``amount``,
+``incrementor`` actually captures and stores a *copy* of the value stored in ``amount``.
+This value is stored along with the new ``incrementor`` function.
 
-1. ``makeIncrementor`` is passed a constant ``amount`` argument.
-2. ``makeIncrementor`` defines a new ``runningTotal`` variable,
-   and assigns an initial integer value of ``0``.
-3. ``makeIncrementor`` defines a nested function called ``incrementor``.
-   This function uses (and therefore captures)
-   the ``amount`` argument and the ``runningTotal`` variable.
-4. Because it uses but does not modify ``amount``,
-   the ``incrementor`` function automatically captures and *stores*
-   a copy of the value of ``amount``.
-   This value is stored along with the new ``incrementor`` function.
-5. Conversely, because it modifies the ``runningTotal`` variable each time it is called,
-   ``incrementor`` captures a *reference* to ``runningTotal``,
-   so that it can be sure that it exists each time that it needs to update it.
-6. ``makeIncrementor`` returns the new ``incrementor`` function to its caller.
-7. ``makeIncrementor`` ends its execution.
-   It no longer needs ``runningTotal``,
-   but ``runningTotal`` continues to stick around nonetheless,
-   so that the returned ``incrementor`` function can continue to use it.
+However, because it modifies the ``runningTotal`` variable each time it is called,
+``incrementor`` captures a *reference* to the current ``runningTotal`` variable,
+and not just a copy of its initial value.
+This makes sure that ``runningTotal`` does not disappear
+when the call to ``makeIncrementor`` ends,
+and ensures that it will continue to be available
+the next time that the returned incrementor function is called.
 
-Swift handles all of the hard work of deciding what should be captured by reference,
-and what should be copied instead.
-It also handles all of the memory management involved in disposing of ``runningTotal``
-when it is no longer needed by the returned incrementor function.
+.. note::
+
+   Swift handles all of the work of deciding what should be captured by reference
+   and what should be copied by value.
+   There is no need to annotate ``amount`` or ``runningTotal``
+   to say that they can be used within the ``incrementor`` closure.
+   Swift also handles all of the memory management involved in disposing of ``runningTotal``
+   when it is no longer needed by the returned incrementor function.
 
 Here's an example of ``makeIncrementor`` in action:
 
 .. testcode:: closures
 
    -> let incrementByTen = makeIncrementor(10)
-   << // tenIncrementor : () -> Int = <unprintable value>
+   << // incrementByTen : () -> Int = <unprintable value>
+
+This example sets a constant called ``incrementByTen`` 
+to refer to an incrementor function that adds ``10`` to its running total
+each time it is called.
+Calling the function multiple times shows this behavior in action:
+
+.. testcode:: closures
+
    -> incrementByTen()
    << // r0 : Int = 10
-   // returns a value of 10
+   /> returns a value of \(r0)
+   </ returns a value of 10
    -> incrementByTen()
    << // r1 : Int = 20
-   // returns a value of 20
+   /> returns a value of \(r1)
+   </ returns a value of 20
    -> incrementByTen()
    << // r2 : Int = 30
-   // returns a value of 30
+   /> returns a value of \(r2)
+   </ returns a value of 30
+
+If you create another incrementor,
+it will have its own stored reference to a new ``runningTotal`` variable,
+and will not affect the original incrementor:
+
+.. testcode:: closures
+
+   -> let incrementBySeven = makeIncrementor(7)
+   << // incrementBySeven : () -> Int = <unprintable value>
+   -> incrementBySeven()
+   << // r3 : Int = 7
+   /> returns a value of \(r3)
+   </ returns a value of 7
+   -> incrementByTen()
+   << // r4 : Int = 40
+   /> returns a value of \(r4)
+   </ returns a value of 40
+
+Closures are Reference Types
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In the example above,
+``incrementBySeven`` and ``incrementByTen`` are constants,
+but the closures they refer to are still able to increment
+the ``runningTotal`` variables that they have captured.
+This is because functions and closures are :newTerm:`reference types`.
+As such, they are passed around by reference, not by value.
+
+Whenever you assign a function or a closure to a constant or a variable,
+you are actually setting that constant or variable to be
+a *reference* to the function or closure.
+In the example above,
+it is the choice of closure that ``incrementByTen`` *refers to* that is constant,
+and not the contents of the closure itself.
+
+This also means that if you assign the closure to another constant or variable,
+they will both refer to the same single closure:
+
+.. testcode:: closures
+
+   -> let alsoIncrementByTen = incrementByTen
+   << // alsoIncrementByTen : () -> Int = <unprintable value>
+   -> alsoIncrementByTen()
+   << // r5 : Int = 50
+   /> returns a value of \(r5)
+   </ returns a value of 50
 
 Closure Expressions
 -------------------
