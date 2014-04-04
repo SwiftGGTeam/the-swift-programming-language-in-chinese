@@ -48,12 +48,14 @@ Swift's closures have a clean, clear syntax,
 with optimizations for writing brief, clutter-free closures in common scenarios.
 These optimizations include:
 
-* inference of parameter types
-* implicit return values from single-expression closures
-* short-hand parameter names
+* inferring parameter and return value types from context
+* implicit returns from single-expression closures
+* short-hand argument names
 * trailing closure syntax
 
 All of these optimizations are described in detail below.
+
+.. _Closures_CapturingValues:
 
 Capturing Values
 ----------------
@@ -181,6 +183,8 @@ and will not affect the original incrementor:
    /> returns a value of \(r4)
    </ returns a value of 40
 
+.. _Closures_ClosuresAreReferenceTypes:
+
 Closures are Reference Types
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -199,7 +203,7 @@ it is the choice of closure that ``incrementByTen`` *refers to* that is constant
 and not the contents of the closure itself.
 
 This also means that if you assign the closure to another constant or variable,
-they will both refer to the same single closure:
+it will refer to the same single closure:
 
 .. testcode:: closures
 
@@ -210,112 +214,275 @@ they will both refer to the same single closure:
    /> returns a value of \(r5)
    </ returns a value of 50
 
+.. _Closures_ClosureExpressions:
+
 Closure Expressions
 -------------------
 
+Nested functions are a convenient way to name and define self-contained blocks of code
+as part of a larger function.
+However, it can sometimes be useful to write shorter versions of function-like constructs, 
+without the need for a full declaration and name.
+This is particularly true when working with functions that take other functions
+as one or more of their arguments.
+
+:newTerm:`Closure expressions` are a way to write inline closures in a brief, focused syntax.
+This section describes how closure expressions can be used,
+and introduces several syntax optimizations you can use
+to write closures in their simplest form without loss of clarity or intent.
+To illustrate the options for closure expression syntax,
+this section will refine a single example over several iterations,
+each showing a more succint way to express the same functionality.
+
+Swift's Standard Library provides a function called ``sort``,
+which sorts an array of values of some known type,
+based on the output of a sorting closure that you provide.
+Once it has completed the sorting process,
+the ``sort`` function returns a new array of the same type and size as the old one,
+with its elements in the correct sorted order.
+
+This example uses the ``sort`` function to sort an array of ``String`` values
+in reverse alphabetical order.
+Here's the initial array to be sorted:
+
+.. testcode:: closureSyntax
+
+   -> let array = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
+   << // array : String[] = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
+
+The ``sort`` function takes two arguments:
+
+* An array of values of some known type.
+* A closure that takes two arguments of the same type as the array's contents,
+  and returns a ``Bool`` value to say whether the first value should appear
+  before or after the second value once sorted.
+  The sorting closure needs to return ``true``
+  if the first value should appear *before* the second value,
+  and ``false`` otherwise.
+
+This example is sorting an array of ``String`` values,
+and so the sorting closure needs to be a function of type ``(String, String) -> Bool``.
+
+One way to provide the sorting closure would be to write a simple function called ``backwards``,
+and to pass it in as the ``sort`` function's second parameter:
+
+.. testcode:: closureSyntax
+
+   -> func backwards(s1: String, s2: String) -> Bool {
+         return s1 > s2
+      }
+   -> var reversed = sort(array, backwards)
+   << // reversed : String[] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
+   /> reversed is equal to [\"\(reversed[0])\", \"\(reversed[1])\", \"\(reversed[2])\", \"\(reversed[3])\", \"\(reversed[4])\"]
+   </ reversed is equal to ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
+
+If the first string (``s1``) is greater than the second string (``s2``),
+the ``backwards`` function will return ``true``,
+indicating that ``s1`` should appear before ``s2`` in the sorted array.
+For characters in strings,
+“greater than” means “appears later in the alphabet than”.
+This means that the letter ``"B"`` is “greater than” the letter ``"A"``,
+and the string ``"Tom"`` is greater than the string ``"Tim"``.
+This gives a reverse alphabetical sort,
+with ``"Brian"`` being placed before ``"Anna"``, and so on.
+
+However, this is a rather long-winded way to write
+what is essentially a single-expression function (``a > b``).
+In this example, it would be preferable to write the sorting closure inline,
+using closure expression syntax.
+
+.. _Closures_ClosureExpressionSyntax:
+
+Closure Expression Syntax
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Closure expression syntax has the following form:
+
+.. syntax-outline::
+
+   { (<#parameters#>) -> <#return type#> in
+      <#statements#>
+   }
+
+This syntax can be used to write an inline version of the ``backwards`` function:
+
+.. testcode:: closureSyntax
+
+   -> reversed = sort(array, { (s1: String, s2: String) -> Bool in 
+         return s1 > s2
+      })
+   >> reversed
+   << // reversed : String[] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
+
+Note that the declaration of parameters and return type for this inline closure
+is identical to the declaration from the ``backwards`` function.
+In both cases, it is written as ``(s1: String, s2: String) -> Bool``.
+However, for the inline closure expression,
+the parameters and return type are written *inside* the curly braces,
+not outside of them.
+
+Note also that the start of the closure's body is introduced by the ``in`` keyword.
+This keyword indicates that
+the definition of the closure's parameters and return type has finished,
+and the body of the closure is about to begin.
+
+Because the body of the closure it so short,
+it can even be written on a single line:
+
+.. testcode:: closureSyntax
+
+   -> reversed = sort(array, { (s1: String, s2: String) -> Bool in return s1 > s2 } )
+   >> reversed
+   << // reversed : String[] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
+
+This illustrates that the overall call to the ``sort`` function has remained the same.
+A pair of parentheses still wrap the entire set of arguments for the function –
+its just that one of those arguments happens to be an inline closure.
+
+.. _Closures_InferringTypeFromContext:
+
+Inferring Type From Context
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Because the sorting closure is passed as an argument to a function,
+it is possible to infer the types of its parameters,
+and the type of the value it returns,
+from the type of the ``sort`` function's second parameter.
+This parameter is expecting a function of type ``(String, String) -> Bool``.
+This means that the ``String`` and ``Bool`` types do not need to be written
+as part of the closure expression.
+Because the return type is inferred,
+the return indicator (``->``) can also be omitted:
+
+.. testcode:: closureSyntax
+
+   -> reversed = sort(array, { (s1, s2) in return s1 > s2 } )
+   >> reversed
+   << // reversed : String[] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
+
+It is always possible to infer parameter types and return type
+when passing a closure to a function as an inline closure expression.
+As a result, it is rare to need to write an inline closure in its fullest form.
+
+Nonetheless, you are free to make the types explicit if you wish,
+and doing so is encouraged if it avoids ambiguity for readers of your code.
+In the case of the ``sort`` function,
+the purpose of the closure is clear from the fact that sorting is taking place,
+and it is safe for a reader to assume that
+the closure is likely to be working with ``String`` values,
+because it is assisting with the sorting of an array of strings.
+
+.. _Closures_ImplicitReturnsFromSingleExpressionClosures:
+
+Implicit Returns From Single-Expression Closures
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Single-expression closures can implicitly return the result of their single expression
+by omitting the ``return`` keyword from their declaration:
+
+.. testcode:: closureSyntax
+
+   -> reversed = sort(array, { (s1, s2) in s1 > s2 } )
+   >> reversed
+   << // reversed : String[] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
+
+Here, the function type of the ``sort`` function's second argument
+makes it clear that a ``Bool`` value must be returned by the closure.
+Because the closure's body contains a single expression that returns a ``Bool`` value,
+there is no ambiguity, and the ``return`` keyword can be omitted.
+
+.. _Closures_ShortHandArgumentNames:
+
+Short-Hand Argument Names
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Swift automatically provides short-hand argument names to inline closures,
+which can be used to refer to the values of the closure's arguments
+by the names ``$0``, ``$1``, ``$2``, and so on.
+
+If you use these short-hand argument names within your closure expression,
+you can omit the closure's argument list from its definition,
+and the number and type of the short-hand argument names
+will be inferred from the expected function type.
+The ``in`` keyword can also be omitted,
+because the closure expression is made up entirely of its body:
+
+.. testcode:: closureSyntax
+
+   -> reversed = sort(array, { $0 > $1 } )
+   >> reversed
+   << // reversed : String[] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
+
+Here, ``$0`` and ``$1`` are used as
+short-hand ways to refer to the closure's first and second ``String`` arguments.
+
+.. _Closures_OperatorFunctions:
+
+Operator Functions
+~~~~~~~~~~~~~~~~~~
+
+There's actually an even *shorter* way to write the closure expression above.
+Swift's ``String`` type defines its string-specific implementation of
+the greater-than operator (``>``)
+as a function that has two parameters of type ``String``,
+and returns a value of type ``Bool``.
+This exactly matches the function type needed for the ``sort`` function's
+second parameter.
+As a result, you can simply pass in the greater-than operator,
+and Swift will infer that you want to use its string-specific implementation:
+
+.. testcode:: closureSyntax
+
+   -> reversed = sort(array, > )
+   >> reversed
+   << // reversed : String[] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
+
+Operator functions are described in more detail in :ref:`AdvancedOperators_OperatorFunctions`.
+
+.. _Closures_TrailingClosures:
+
+Trailing Closures
+-----------------
+
 .. write-me::
 
-.. Swift's standard library provides a ``sort`` function,
-   which takes an array of strings, together with a sorting closure,
-   and uses the closure to sort the array.
-
-.. When sorting values of type ``String``,
-   ``sort`` expects to receive a closure that has two ``String`` parameters,
-   and returns a ``Bool`` value.
-   The closure it expects is like a function with the following form:
-
-.. note::
-
-   This section has yet to be written.
-   I've included some syntax examples in the meantime.
-
-Here are some strings to be sorted:
-
 .. testcode:: closureSyntax
 
-   -> let strings = ["Alex", "Barry", "Chris", "Daniella", "Ewa"]
-   << // strings : String[] = ["Alex", "Barry", "Chris", "Daniella", "Ewa"]
+   -> reversed = sort(array) { $0 > $1 } // trailing closure
+   >> reversed
+   << // reversed : String[] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
 
-The Standard Library's ``sort`` function takes an ``Array<T>``
-and a sorting closure of type ``(T, T) -> Bool``.
-It can be called by passing in a named function as the sorting closure:
-
-.. testcode:: closureSyntax
-
-   -> func backwards(lhs: String, rhs: String) -> Bool {
-         return lhs > rhs
-      }
-   -> var reverseSorted = sort(strings, backwards)
-   << // reverseSorted : String[] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
-
-Alternatively, you can pass in an unnamed closure expression:
-
-.. testcode:: closureSyntax
-
-   -> reverseSorted = sort(strings, { (lhs: String, rhs: String) -> Bool in 
-         return lhs > rhs
-      })
-   >> reverseSorted
-   << // reverseSorted : String[] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
-
-The types of the parameters and return type can be inferred from context:
-
-.. testcode:: closureSyntax
-
-   -> reverseSorted = sort(strings, { (lhs, rhs) in return lhs > rhs } )
-   >> reverseSorted
-   << // reverseSorted : String[] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
-
-Single-expression closures implicitly return their expression value
-if you leave out the ``return`` keyword:
-
-.. testcode:: closureSyntax
-
-   -> reverseSorted = sort(strings, { (lhs, rhs) in lhs > rhs } )
-   >> reverseSorted
-   << // reverseSorted : String[] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
-
-Parameter names can be left out if you use shorthand ``$n`` parameter references instead:
-
-.. testcode:: closureSyntax
-
-   -> reverseSorted = sort(strings, { $0 > $1 } )
-   >> reverseSorted
-   << // reverseSorted : String[] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
-
-The last closure in a function can be written as a :newTerm:`trailing closure`,
-with its braces outside of the function parentheses:
-
-.. testcode:: closureSyntax
-
-   -> reverseSorted = sort(strings) { $0 > $1 } // trailing closure
-   >> reverseSorted
-   << // reverseSorted : String[] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
-
-If you have an operator function that satisfies the type-check,
-it can be passed in by name,
-and the correct overloaded version to use will be inferred:
-
-.. testcode:: closureSyntax
-
-   -> reverseSorted = sort(strings, > )
-   >> reverseSorted
-   << // reverseSorted : String[] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
 
 .. misc notes…
 
-.. functions and closures are reference types
-
-.. capturing / closing over variables (and what this means in practice)
-.. no need for __block; discuss memory safety
-.. functions are just a really special non-capturing version of closures
-.. closures can be named
 .. you have to write "self." for property references in an explicit closure expression,
    since "self" will be captured, not the property (as per rdar://16193162)
    we don't do this for autoclosures, however -
    see the commits comments from r14676 for the reasons why
 .. can use 'var' and 'let' for closure parameters
 .. var closure3a : ()->()->(Int,Int) = {{ (4, 2) }} // multi-level closing.
+
+.. <rdar://problem/16193162> Require specifying self for locations in code
+   where strong reference cycles are likely
+   This requires that property references have an explicit "self." qualifier
+   when in an explicit closure expression, since self will be captured, not the property.
+   We don't do the same for autoclosures.
+   The logic here is that autoclosures can't practically be used in capturing situations anyway,
+   since that would be extremely surprising to clients.
+   Further, forcing a syntactic requirement in an autoclosure context
+   would defeat the whole point of autoclosures: make them implicit.
+
+.. To avoid reference cycles when a property closure references self or a property of self,
+   you should use the same workaround as in Obj-C –
+   that is, to declare a @weak (or @unowned) local variable, and capture that instead.
+   There are proposals for a better solution in /swift/docs/weak.rst,
+   but they are yet to be implemented.
+   The Radar for their implementation is rdar://15046325.
+
+.. _Closures_AutoClosures:
+
+Auto-Closures
+-------------
 
 .. auto-closures can also be created:
 .. var closure1 : @auto_closure () -> Int = 4  // Function producing 4 whenever it is called.
@@ -339,22 +506,7 @@ and the correct overloaded version to use will be inferred:
    auto_closure is only valid in a type of a syntactic function type
    that is defined to take a syntactic empty tuple.
 
-.. <rdar://problem/16193162> Require specifying self for locations in code
-   where strong reference cycles are likely
-   This requires that property references have an explicit "self." qualifier
-   when in an explicit closure expression, since self will be captured, not the property.
-   We don't do the same for autoclosures.
-   The logic here is that autoclosures can't practically be used in capturing situations anyway,
-   since that would be extremely surprising to clients.
-   Further, forcing a syntactic requirement in an autoclosure context
-   would defeat the whole point of autoclosures: make them implicit.
-
-.. To avoid reference cycles when a property closure references self or a property of self,
-   you should use the same workaround as in Obj-C –
-   that is, to declare a @weak (or @unowned) local variable, and capture that instead.
-   There are proposals for a better solution in /swift/docs/weak.rst,
-   but they are yet to be implemented.
-   The Radar for their implementation is rdar://15046325.
+.. write-me::
 
 .. refnote:: References
 
