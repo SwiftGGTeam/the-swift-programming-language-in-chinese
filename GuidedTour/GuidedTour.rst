@@ -1,8 +1,8 @@
 A Guided Tour of the Swift Language
 ===================================
 
-Tradition suggests that the first program you write in a new language
-should print the words "Hello, world" on your screen.
+Tradition suggests that the first program write in a new language
+should print the words "Hello, world" on the screen.
 In Swift, this can be done in a single line:
 
 .. K&R uses "hello, world".
@@ -26,7 +26,7 @@ Also notice that there are no semicolons.
 You can use semicolons to separate two statements on a single line,
 but otherwise there is no need to mark the end of a statement.
 These illustrate some of the design goals of the language:
-code written in Swift should be **safe**, **consistent**, and **clear**.
+code written in Swift should be safe, consistent, and clear.
 
 The rest of this tour show you examples
 of how to accomplish a variety of programming tasks in Swift
@@ -113,6 +113,7 @@ If you want to cast a value to another type,
 you do it explicitly.
 
 .. testcode:: cast
+
    -> let label = "The width is "
    -> let width = 94
    -> println(label + String(width))
@@ -134,9 +135,9 @@ For example, to swap the value of ``x`` and ``y``:
    -> var y = 100
    << // y : Int = 100
    -> (x, y) = (y, x)
-   -> x
+   >> x
    << // x : Int = 100
-   -> y
+   >> y
    << // y : Int = 10
 
 Strings in Swift have support a special interpolation syntax
@@ -203,7 +204,7 @@ because there are no elements in it to let the compiler infer its type.
 .. admonition:: Experiment
 
     Can you use square brackets to set the second element of an empty array?
-    What about setting the value for a key of an empty dictionary?
+    Can you use them to set the value for a key of an empty dictionary?
 
 .. Mention [] and [:] as empty array/dict literals.
    They aren't fully typed, so they require a type annotation in a variable declaration,
@@ -250,13 +251,13 @@ Switch statements are written as follows:
           case "lettuce":
               println("Let's make salad.")
           case "celery":
-              println("Get raisins and make ants on a log.")
+              println("Add some raisins and make ants on a log.")
           case "cucumber":
              println("How about a cucumber sandwich?")
           default:
               println("Everything tastes good in soup.")
       }
-    << How about a cucumber sandwich?
+   << How about a cucumber sandwich?
 
 .. admonition:: Experiment
 
