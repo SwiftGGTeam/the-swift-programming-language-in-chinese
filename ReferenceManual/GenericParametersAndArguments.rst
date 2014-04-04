@@ -42,7 +42,7 @@ each of which has the following form:
 
 .. syntax-outline::
 
-    <<#type parameter#> : <#constraint#>>
+    <#type parameter#> : <#constraint#>
 
 A generic parameter consists of a *type parameter* followed by
 an optional *constraint*. The type parameter is simply the name
