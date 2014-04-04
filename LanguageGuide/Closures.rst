@@ -214,6 +214,9 @@ it will refer to the same single closure:
    /> returns a value of \(r5)
    </ returns a value of 50
 
+The subject of value types and reference types is covered in more detail
+in :ref:`ClassesAndStructures_ValueTypesAndReferenceTypes`.
+
 .. _Closures_ClosureExpressions:
 
 Closure Expressions
