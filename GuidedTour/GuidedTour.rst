@@ -1,7 +1,7 @@
 A Guided Tour of the Swift Language
 ===================================
 
-Tradition suggests that the first program write in a new language
+Tradition suggests that the first program in a new language
 should print the words "Hello, world" on the screen.
 In Swift, this can be done in a single line:
 
@@ -23,18 +23,17 @@ The first statement at global scope is used
 as entry point for the program,
 so there is no need for a ``main`` function.
 Also notice that there are no semicolons.
-You can use semicolons to separate two statements on a single line,
+You can use semicolons to separate statements written on a single line,
 but otherwise there is no need to mark the end of a statement.
-These illustrate some of the design goals of the language:
-code written in Swift should be safe, consistent, and clear.
 
-The rest of this tour show you examples
+The rest of this tour shows examples
 of how to accomplish a variety of programming tasks in Swift
-without explaining the concepts in detail.
+without giving an explanation of the concepts.
 It gives you a broad (but shallow) overview of the language
-to help you start writing actual code in Swift.
-Don't worry if you don't understand all of the examples ---
-all of the subjects covered in this tour are explained in detail later in this book.
+to help you start writing actual code.
+Don't worry if there is something that you don't understand ---
+everything introduced in this tour
+is explained in detail in the following chapters.
 Experienced programmers may find that the examples in this chapter
 give them enough information about Swift
 thay they can skim the rest of the language guide
@@ -45,10 +44,9 @@ Simple Values
 
 Variables and constants are created using the same syntax,
 with one difference:
-variables use the ``var`` keyword
-and constants use the ``let`` keyword.
+use ``var`` to declare a variable and ``let`` for a constant.
 
-The value of a variable can be re-assigned:
+The value of a variable can be assigned multiple times:
 
 .. testcode:: var
 
@@ -58,15 +56,15 @@ The value of a variable can be re-assigned:
    >> myVariable
    << // myVariable : Int = 50
 
-In contrast, constants can only have a value assigned once:
+In contrast, constants can have a value assigned only once:
 
 .. testcode:: let
 
    -> let myConstant = 42
    << // myConstant : Int = 42
-   -> myConstant = 50
+   -> myConstant = 50  // error
    !! <REPL Input>:1:12: error: cannot assign to 'let' value 'myConstant'
-   !! myConstant = 50
+   !! myConstant = 50  // error
    !! ~~~~~~~~~~ ^
 
 .. admonition:: Experiment
@@ -78,7 +76,7 @@ In contrast, constants can only have a value assigned once:
    What characters are not allowed in variable names?
    What happens if you try to assign a new value to a constant?
 
-.. TR: Is the requirement that constants have a value
+.. TR: Is the requirement that constants need an initial value
    a current REPL limitation, or an expected language feature?
 
 Swift enforces the type of a variable ---
@@ -86,21 +84,21 @@ assigning a value of the wrong type to a variable is an error.
 
 .. testcode:: typecheck
 
-    -> var string = "Hello"
-    << // string : String = "Hello"
-    -> string = 98.5  // error
-    !!  <REPL Input>:1:8: error: expression does not type-check
-    !! string = 98.5  // error
-    !! ~~~~~~~^~~~~~
+    -> var greeting = "Hello"
+    << // greeting : String = "Hello"
+    -> greeting = 98.5  // error
+    !!  <REPL Input>:1:10: error: expression does not type-check
+    !! greeting = 98.5  // error
+    !! ~~~~~~~~~^~~~~~
 
 Notice that you didn’t have to explictly
 tell the compiler the type of ``string``.
 If you don't specify a type,
 Swift determines the variable's type
 based on its initial value.
-
-You can provide a type explicitly
-by writing it after a colon (``:``).
+A type annotation specifies an explicit type for a variable
+by writing it after the variable,
+separated by a colon.
 
 .. testcode:: type-annotation
 
@@ -108,6 +106,12 @@ by writing it after a colon (``:``).
    << // implicitString : String = "Hello"
    -> let explicitString : String = "Hello"
    << // explicitString : String = "Hello"
+
+.. admonition:: Experiment
+
+   Try providing an explicit type that doesn't match
+   the variable's initial value.
+   What error do you get?
 
 If you want to cast a value to another type,
 you do it explicitly.
@@ -145,6 +149,10 @@ For example, to swap the value of ``x`` and ``y``:
    >> y
    << // y : Int = 10
 
+.. TODO: If the PG doesn't show a good result for x and y in the swap line,
+   turn the >> lines into -> lines
+   to show the reader that the swap worked.
+
 Strings in Swift have support a special interpolation syntax
 that includes the string value of an expression
 as part of the string.
@@ -163,10 +171,8 @@ as part of the string.
    Try using string interpolation
    to include someone's name in a greeting.
 
-The previous examples have used integers, floating-point numbers, and strings.
-The other basic data types are arrays and dictionaries,
-which are written using square brackets (``[`` and ``]``),
-and tuples which are written using parenthesis (``(`` and ``)``).
+Arrays and dictionaries are written using square brackets (``[`` and ``]``).
+Tuples are written using parenthesis (``(`` and ``)``).
 
 .. testcode:: array-dict
 
@@ -185,8 +191,6 @@ and tuples which are written using parenthesis (``(`` and ``)``).
 
 Arrays and dictionaries use the same syntax
 for accessing their elements.
-An empty array or dictionary needs its type explicitly specified
-because there are no elements in it to let the compiler infer its type.
 
 .. testcode:: vegetable-array-dict
 
@@ -213,6 +217,9 @@ because there are no elements in it to let the compiler infer its type.
     Why do you think empty arrays and dictionaries
     have this difference in behavior?
 
+.. An empty array or dictionary needs its type explicitly specified
+   because there are no elements in it to let the compiler infer its type.
+   
 .. Mention [] and [:] as empty array/dict literals.
    They aren't fully typed, so they require a type annotation in a variable declaration,
    but they are useful when calling a function or re-assigning the value of a variable.
@@ -223,8 +230,7 @@ because there are no elements in it to let the compiler infer its type.
 Control Flow
 ------------
 
-Swift includes if and switch statements
-to choose between alternatives.
+Choose between alternative blocks of code with ``if`` and ``switch``.
 Switch statements in Swift support comparison of any type,
 and there are a wide range of matching mechanisms.
 
@@ -234,11 +240,11 @@ An if statement is written as follows:
 
    -> let haveJellyBabies = false
    << // haveJellyBabies : Bool = false
-   -> let haveGummiBears = true
-   << // haveGummiBears : Bool = true
+   -> let remainingGummiBears = 5
+   << // remainingGummiBears : Int = 5
    -> if haveJellyBabies {
           println("Would you like a jelly baby?")
-      } else if haveGummiBears {
+      } else if remainingGummiBears > 0 {
           println("Would you like a gummi bear?")
       } else {
           println("Sorry, all we have left are fruits and vegetables.")
@@ -247,6 +253,9 @@ An if statement is written as follows:
 
 Note that there are no parenthesis around the conditional,
 and that the braces around the body are required.
+The conditional must be a Boolean expression;
+code like ``if remainingGummiBears { ... }`` is an error,
+not an implicit comparison to zero.
 
 Switch statements are written as follows:
 
@@ -273,8 +282,8 @@ Switch statements are written as follows:
 
 There must be a switch case for every possible value ---
 for most types of value, this means you need a default clause.
-Execion does not "fall through" from one case statement to the next
-unless you add the explicit ``fallthough`` keyword.
+Execution does not "fall through" from one case statement to the next
+unless you use ``fallthough`` to opt in to that behavior.
 
 .. testcode:: fallthrough-switch
 
@@ -293,7 +302,8 @@ unless you add the explicit ``fallthough`` keyword.
 .. See also <rdar://problem/16514545>
    I'm using default here instead of case false as a workaround to this bug.
 
-Switch statements support a variety of complex matching criteria:
+Switch statements support a variety of complex matching criteria
+such as tuple unpacking and ``where`` clauses:
 
 .. testcode:: fancy-switch
 
@@ -316,11 +326,10 @@ Switch statements support a variety of complex matching criteria:
 .. admonition:: Experiment
 
    Try adding a case statement
-   that matches points where x is greater than y,
-   and one that matches points where x is odd.
+   that matches points where ``x`` is greater than ``y``,
+   and one that matches points where ``x`` is odd.
 
-Swift also includes for and while loops
-to repeat code.
+Repeat blocks of code with ``for`` and ``while``.
 
 .. testcode:: for-each
 
@@ -341,19 +350,32 @@ to repeat code.
 
 .. testcode:: while
    -> var n = 2
-   << n : Int = 2
+   << // n : Int = 2
    -> while n < 100 {
           n = n * 2
       }
    -> println("n is \(n)")
-   << n is 64
+   << n is 128
+
+The condition of a loop can be an the end instead,
+ensuring that the loop is run at least once.
+
+.. testcode:: do-while
+
+   -> var n = 2
+   << // n : Int = 2
+   -> do {
+          n = n * 2
+      } while n < 100
+   -> println("n is \(n)")
+   << n is 128
 
 Functions and Closures
 ----------------------
 
 Functions are declared using ``func``
 and called with a parenthesized list of arguments.
-Argument names are part of the signature;
+Argument names are part of the function signature;
 you can specify each parameter by name when calling the function.
 
 .. testcode:: func
@@ -375,37 +397,27 @@ Functions can return multiple values using a tuple.
 
 .. testcode:: func-tuple
 
-   -> func fetchLocalGasPrices() -> (Double, Double, Double) {
+   -> func getGasPrices() -> (Double, Double, Double) {
          return (3.59, 3.69, 3.79)
       }
-
-Since you name the elements in any tuple,
-these features work together to make it easier to query the values:
-
-.. testcode:: func-labelled-tuple
-
-   -> func fetchBetterGasPrices() -> (regular: Double, midgrade: Double, premium: Double) {
-         return (3.49, 3.59, 3.69)
-      }
-   -> fetchBetterGasPrices().midgrade
-   << // r0 : Double = 3.59
-
-.. TODO: If named tuples go away, remove this example.
+   >> getGasPrices()
+   << // r0 : (Double, Double, Double) = (3.59, 3.69, 3.79)
 
 Functions can also be defined to take variable argument lists.
 
 .. testcode:: functions
 
-   -> func addAllTheInts(theInts: Int...) -> Int {
+   -> // Re-implement the Standard Library sum function for Int values.
+   -> func sumOf(numbers : Int...) -> Int {
          var sum = 0
-         for i in theInts {
-            sum += i
+         for number in numbers {
+            sum += number
          }
          return sum
       }
-   -> addAllTheInts()
+   -> sumOf()
    << // r0 : Int = 0
-   -> addAllTheInts(42, 597, 12)
+   -> sumOf(42, 597, 12)
    << // r1 : Int = 651
 
 Functions can be nested.
@@ -425,9 +437,15 @@ that were declared in the outer function.
     -> returnFifteen()
     << // r0 : Int = 15
 
-Functions are considered first-class types.
-This means a function can accept other functions as arguments
-and return another function.
+.. admonition:: Experiment
+
+   Try removing the call to the ``add`` function.
+   Try calling the ``add`` function twice.
+   What happens?
+
+Functions are first-class types in Swift.
+This means a function can accept functions as arguments
+and have a function as its return value.
 
 .. testcode:: return-func
 
@@ -465,10 +483,13 @@ and return another function.
     var sortedNumbers = bubbleSort(numbers, lessThan)
 
 A closure is just a function that isn't given a name when it is declared.
-.. TODO
+
+.. write-me::
 
 Objects
 -------
+
+.. TODO: Pull in the Shape example code from old tour.
 
 .. write-me::
 
