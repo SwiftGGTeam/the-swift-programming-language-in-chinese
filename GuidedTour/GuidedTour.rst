@@ -115,9 +115,11 @@ you do it explicitly.
 .. testcode:: cast
 
    -> let label = "The width is "
+   << // label : String = "The width is "
    -> let width = 94
+   << // width : Int = 94
    -> println(label + String(width))
-   << The width is 94
+   <- The width is 94
 
 .. admonition:: Experiment
 
