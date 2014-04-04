@@ -184,15 +184,15 @@ because there are no elements in it to let the compiler infer its type.
 
 .. testcode:: vegetable-array-dict
 
-    -> var vegetables : String[] = []
-    << // vegetables : String[] = []
+    -> var vegetables = Array<String>()
+    << // vegetables : Array<String> = []
     -> vegetables.append("carrot")
     -> vegetables.append("cucumber")
     -> vegetables.append("tomato")
     -> vegetables[1] = "onion"
     >> vegetables
-    << // vegetables : String[] = ["carrot", "onion", "tomato"]
-    -> var fruitColors : Dictionary<String, String> = [:]
+    << // vegetables : Array<String> = ["carrot", "onion", "tomato"]
+    -> var fruitColors = Dictionary<String, String>()
     << // fruitColors : Dictionary<String, String> = Dictionary<String, String>(1.33333, 0, <DictionaryBufferOwner<String, String> instance>)
     -> fruitColors.add("banana", "yellow")
     << // r0 : Bool = false
@@ -205,10 +205,9 @@ because there are no elements in it to let the compiler infer its type.
     Can you use square brackets to set the second element of an empty array?
     What about setting the value for a key of an empty dictionary?
 
-.. TR: Style question... is this better than writing the following?  Why?
-       var vegetables = Array<String>()
-       var vegetableColors = Dictionary<String, String>()
-   You can't write String[]() -- it tries to subscript the String type and crashes.
+.. Mention [] and [:] as empty array/dict literals.
+   They aren't fully typed, so they require a type annotation in a variable declaration,
+   but they are useful when calling a function or re-assigning the value of a variable.
 
 .. The REPL output after creating a dictionary doesn't make any sense.
    No way to get it to pretty-print the keys and values.
