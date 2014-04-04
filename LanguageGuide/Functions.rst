@@ -927,6 +927,43 @@ it can be used to count to zero:
    </ 1...
    </ zero!
 
+.. _Functions_NestedFunctions:
+
+Nested Functions
+----------------
+
+Functions can be :newTerm:`nested` inside other functions.
+As its name suggests, a nested function is simply
+a function written within the body of another function.
+The nested function is hidden from the outside world,
+but can still be used by its enclosing function.
+
+The ``chooseStepFunction()`` example above can be rewritten
+to use and return nested functions:
+
+.. testcode:: nestedFunctions
+
+   -> func chooseStepFunction(backwards: Bool) -> (Int) -> Int {
+         func stepForward(input: Int) -> Int { return input + 1 }
+         func stepBackward(input: Int) -> Int { return input - 1 }
+         return backwards ? stepBackward : stepForward
+      }
+   -> var currentValue = -4
+   << // currentValue : Int = -4
+   -> let moveNearerToZero = chooseStepFunction(currentValue > 0)
+   << // moveNearerToZero : (Int) -> Int = <unprintable value>
+   // moveNearerToZero now refers to the nested stepForward() function
+   -> while currentValue != 0 {
+         println("\(currentValue)... ")
+         currentValue = moveNearerToZero(currentValue)
+      }
+   -> println("zero!")
+   </ -4...
+   </ -3...
+   </ -2...
+   </ -1...
+   </ zero!
+
 .. _Functions_CurriedFunctions:
 
 Curried Functions
