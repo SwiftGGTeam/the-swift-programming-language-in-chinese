@@ -123,8 +123,11 @@ you do it explicitly.
 
 .. admonition:: Experiment
 
-   What error do you get if you remove the cast from the last line?
-   Why?
+   Try removing the cast to ``String`` from the last line.
+   What error do you get?
+   
+   Try rewriting the last line to use string interpolation.
+   Do you still need an explicit cast?
 
 Assignment matches parts on the left side to parts on the right,
 which allows you to perform several assignments at once.
@@ -157,8 +160,8 @@ as part of the string.
 
 .. admonition:: Experiment
 
-   How would you use string interpolation
-   to include someone's name in a greeting?
+   Try using string interpolation
+   to include someone's name in a greeting.
 
 The previous examples have used integers, floating-point numbers, and strings.
 The other basic data types are arrays and dictionaries,
@@ -205,8 +208,10 @@ because there are no elements in it to let the compiler infer its type.
 
 .. admonition:: Experiment
 
-    Can you use square brackets to set the second element of an empty array?
-    Can you use them to set the value for a key of an empty dictionary?
+    Try using square brackets to set the second element of an empty array,
+    and to set the value for a key of an empty dictionary.
+    Why do you think empty arrays and dictionaries
+    have this difference in behavior?
 
 .. Mention [] and [:] as empty array/dict literals.
    They aren't fully typed, so they require a type annotation in a variable declaration,
@@ -263,7 +268,8 @@ Switch statements are written as follows:
 
 .. admonition:: Experiment
 
-   What error do you get if you remove the default case?
+   Try removing the default case.
+   What error do you get?
 
 There must be a switch case for every possible value ---
 for most types of value, this means you need a default clause.
@@ -309,7 +315,8 @@ Switch statements support a variety of complex matching criteria:
 
 .. admonition:: Experiment
 
-   Add a case statement that matches points where x is greater than y,
+   Try adding a case statement
+   that matches points where x is greater than y,
    and one that matches points where x is odd.
 
 Swift also includes for and while loops
@@ -329,8 +336,8 @@ to repeat code.
 
 .. admonition:: Experiment
 
-   Change ``1..5`` to ``1...5`` --- notice that 5 is omitted from the sum.
-   In what situations would you want to include or exclude the final number?
+   Try changing ``1..5`` to ``1...5`` --- notice that 5 is omitted from the sum.
+   When would you want to include or exclude the final number?
 
 .. testcode:: while
    -> var n = 2
@@ -361,8 +368,8 @@ you can specify each parameter by name when calling the function.
 
 .. admonition:: Experiment
 
-   Remove the day of the week parameter.
-   Add a third parameter to include today's lunch special in the greeting.
+   Try removing the day of the week parameter.
+   Try adding a third parameter to include today's lunch special in the greeting.
 
 Functions can return multiple values using a tuple.
 
@@ -456,12 +463,6 @@ and return another function.
     }
     var numbers = [8, 3, 5, 6]
     var sortedNumbers = bubbleSort(numbers, lessThan)
-
-.. admonition:: Experiment
-
-   After you have read the section about generics,
-   change this function to accept any array,
-   not just an array of integers.
 
 A closure is just a function that isn't given a name when it is declared.
 .. TODO
