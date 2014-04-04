@@ -12,7 +12,6 @@
 Closures
 ========
 
-.. named functions can be nested inside other named functions
 .. closures can have a variadic parameter
 .. closure parameters can be inout
 .. types can be inferred
@@ -26,11 +25,13 @@ Functions, as introduced in the previous chapter,
 are actually a special case of a more general feature known as :newTerm:`closures`.
 Closures are a way to write self-contained blocks of functionality
 that can be passed around and used in your code.
+Swift's closures are similar to lambdas in other programming languages,
+and blocks in C-like languages.
 
 Closures have two extra abilities
 in addition to those described in :doc:`Functions`:
 
-* they can :newTerm:`capture` and modify constants and variables
+* they can capture and modify constants and variables
   from the context in which they are defined
 * they can be written without a function name
   (although you can name them if you wish)
@@ -43,8 +44,6 @@ this chapter will continue to refer to them as “functions” for simplicity.
 Swift handles all of the memory management of capturing for you.
 The concept and meaning of “capturing” is explained in detail below.
 
-Swift's closures are similar to :newTerm:`lambdas` in other programming languages,
-and :newTerm:`blocks` in C-like languages.
 Swift's closures have a clean, clear syntax,
 with optimizations for writing brief, clutter-free closures in common scenarios.
 These optimizations include:
@@ -59,7 +58,18 @@ All of these optimizations are described in detail below.
 Capturing Values
 ----------------
 
-.. write-me::
+A closure can :newTerm:`capture` constants and variables
+from the surrounding context in which the closure is defined.
+The closure is then able to refer to (and modify) those constants and variables
+from within its closure body,
+even if the original scope that defined the constants and variables no longer exists.
+
+The simplest form of a closure in Swift is a nested function,
+written within the body of another function.
+A nested function can capture any of the outer function's arguments,
+and can also capture any named values defined within the outer function.
+
+For example:
 
 .. testcode:: closures
 
@@ -132,13 +142,13 @@ Here's an example of ``makeIncrementor()`` in action:
    -> let incrementByTen = makeIncrementor(10)
    << // tenIncrementor : () -> Int = <unprintable value>
    -> incrementByTen()
-   << r0 : Int = 10
+   << // r0 : Int = 10
    // returns a value of 10
    -> incrementByTen()
-   << r1 : Int = 20
+   << // r1 : Int = 20
    // returns a value of 20
    -> incrementByTen()
-   << r2 : Int = 30
+   << // r2 : Int = 30
    // returns a value of 30
 
 Closure Expressions
