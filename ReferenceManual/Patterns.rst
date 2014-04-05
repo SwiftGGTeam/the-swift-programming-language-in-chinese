@@ -1,6 +1,22 @@
 Patterns
 ========
 
+.. TR:
+    What kind of information do we want to cover about patterns in general?
+    How up to date is pattern grammar in the LangRef?
+    There is an 'is' pattern; what about an 'as' pattern?
+
+    Notes from Doug, 4/2/14:
+    Patterns might be getting a little simpler since they are not being used for
+    functions.  For now, it's ok to not have a discussion of pattern matching as
+    a topic -- let's just talk about how awesome switch statements are.  The
+    people who come from functional backgrounds will see the pattern matching
+    here just like they will see the monads in optional chaining.
+    Joe Groff is the pattern guru -- he designed this stuff and implemented
+    the crazy switch.
+
+.. TODO: Schedule a meeting with Joe to discuss grammar and content.
+
 .. langref-grammar
 
     pattern-atom ::= pattern-var

@@ -367,8 +367,7 @@ the optional ``Planet`` value returned by ``fromRaw()`` will equal ``.None``:
       }
    <- There isn't a planet at position 9
 
-This example uses :ref:`BasicTypes_OptionalBinding`
-to try and access a planet with a raw value of ``9``.
+This example uses optional binding to try and access a planet with a raw value of ``9``.
 The statement ``if let somePlanet = Planet.fromRaw(9)`` retrieves an optional ``Planet``,
 and sets ``somePlanet`` to the contents of that optional if it can be retrieved.
 In this case, it is not possible to retrieve a planet with a position of ``9``,

@@ -889,7 +889,7 @@ that are defined as part of the protocol:
    -> testableThing.origin
    !! <REPL Input>:1:1: error: 'HitTestable' does not have a member named 'origin'
    !! testableThing.origin
-   !! ^          ~~~~~~
+   !! ^             ~~~~~~
 
 This guarantees safety when dealing with different types,
 such as when hit-testing a series of different elements:

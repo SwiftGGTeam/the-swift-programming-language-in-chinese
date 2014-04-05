@@ -232,9 +232,9 @@ as part of the function return value assignment:
 This example sets two constants called ``first`` and ``possibleSecond``
 to equal the two output values stored in the ``splitOnFirst()`` function's
 return tuple value.
-These two constants can then be used independently of each other,
-as shown here to unwrap the value stored in the optional second tuple value
-via :ref:`BasicTypes_OptionalBinding`.
+These two constants can then be used independently of each other.
+Here, the value stored in the optional second tuple value is unwrapped and accessed
+with optional binding.
 
 .. _Functions_ParameterNames:
 
@@ -716,6 +716,7 @@ Inout Parameters
 .. write-me::
 
 .. inout properties and a general discussion of byref / byvalue
+.. presumably you can't pass a constant as the argument for an inout parameter
 
 .. _Functions_FunctionsAsParametersAndReturnTypes:
 

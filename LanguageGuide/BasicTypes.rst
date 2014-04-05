@@ -238,6 +238,37 @@ and escaped with a backslash before the opening parenthesis:
 .. TODO: this still doesn't talk about all of the things that string interpolation can do.
    It should still be covered in more detail in the Strings and Characters chapter.
 
+.. _BasicTypes_Comments:
+
+Comments
+--------
+
+As you may have noticed from the examples above:
+
+::
+
+   // ...single-line comments begin with two forward-slashes, like in C.
+
+You can also write multi-line comments:
+
+::
+
+   /* ...which start with a forward-slash followed by an asterisk,
+      and end with an asterisk followed by a forward-slash, also like C. */
+
+Unlike C, multi-line comments can also be nested:
+
+::
+
+   /* This is done by starting a new block of comments,
+      /* then starting another new block inside of the first block.
+      The second block is then closed... */
+   ...followed by the original block. */
+
+.. TODO: These multiline comments can't be tested by swifttest,
+   because they aren't supported by the REPL.
+   They should be tested manually before release.
+
 .. _BasicTypes_Integers:
 
 Integers
@@ -271,6 +302,26 @@ Unless you need to work with a specific size of integer,
 you should always use ``Int`` for code consistency and interoperability.
 Even on 32-bit platforms, ``Int`` can store any value between ``-2,147,483,648`` and ``2,147,483,647``,
 and is large enough for many integer ranges.
+
+.. _BasicTypes_UInt:
+
+UInt
+~~~~
+
+Swift also provides an unsigned integer type, ``UInt``,
+which has the same size as the current platform's architecture:
+
+* On a 32-bit platform, ``UInt`` is the same size as ``UInt32``.
+* On a 64-bit platform, ``UInt`` is the same size as ``UInt64``.
+
+.. note::
+
+   ``UInt`` should only be used when you specifically need
+   an unsigned integer type with the same size as the platform's architecture.
+   If this is not the case, ``Int`` should be preferred,
+   even when the values to be stored are known to be non-negative.
+   A consistent use of ``Int`` for integer values helps with code interoperability,
+   and provides consistency when using type inference, as described below.
 
 .. _BasicTypes_FloatingPointNumbers:
 
@@ -479,7 +530,7 @@ An ``Int8`` named value can store numbers between ``-128`` and ``127``,
 whereas a ``UInt8`` named value can store numbers between ``0`` and ``255``.
 A number that can be stored in one numeric type
 cannot necessarily be stored in another numeric type,
-and trying to do so is reported as an error:
+and trying to do so is reported as an error when your code is compiled:
 
 .. testcode:: namedValuesOverflowError
 
@@ -533,9 +584,6 @@ Extending existing types to provide initializers that accept new types
 (including your own type definitions)
 is covered in :doc:`Extensions`.
 
-.. TODO: add a note that this is not traditional type-casting,
-   and perhaps include a forward reference to the objects chapter.
-
 .. _BasicTypes_IntegerAndFloatingPointConversion:
 
 Integer and Floating-Point Conversion
@@ -573,8 +621,8 @@ in that an integer type can be initialized with a ``Double`` or ``Float`` value:
    /> integerPi equals \(integerPi), and is inferred to be of type Int
    </ integerPi equals 3, and is inferred to be of type Int
 
-Floating-point values are always rounded towards zero
-when used to initialize a new integer value in this way.
+Floating-point values are always truncated when used to initialize a new integer value in this way.
+This means that ``4.75`` becomes ``4``, and ``-3.9`` becomes ``-3``.
 
 .. TODO: negative floating-point numbers cause an overflow when used
    to initialize an unsigned integer type.
@@ -671,12 +719,14 @@ and ensures that the intention of a particular section of code is always made cl
    Strictly speaking, an ``if``-``else`` statement's condition expression
    can be of any type that conforms to the ``LogicValue`` protocol.
    ``Bool`` is one example of a type that conforms to this protocol,
-   but there are others, such as :ref:`BasicTypes_Optionals` below.
+   but there are others, such as :newTerm:`optionals`, described below.
    The ``LogicValue`` protocol is described in more detail in :doc:`Protocols`.
 
 .. TODO: I'm not quite happy with this yet.
    Introducing the LogicValue protocol at this early stage is a bit overkill.
    I'd like to revisit this if time permits, and maybe move this to Control Flow.
+
+.. TODO: the LogicValue protocol is not yet described in the Protocols chapter.
 
 .. _BasicTypes_Tuples:
 
@@ -843,9 +893,9 @@ to simplify and shorten the unwrapping of a value contained within an optional.
 
 Optional bindings for the ``if``-``else`` statement are written in the following form:
 
-::
+.. syntax-outline::
 
-   if let <#newNamedValue#> = <#someOptional#> {
+   if let <#constantName#> = <#someOptional#> {
       <#statements#>
    }
 

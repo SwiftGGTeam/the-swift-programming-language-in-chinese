@@ -61,7 +61,7 @@ which prints the first few entries in the five-times-table:
 
 Here, the collection of items being iterated is a
 closed range of numbers from ``1`` to ``5`` inclusive,
-as indicated by the use of the :ref:`BasicOperators_ClosedRangeOperator` (``..``).
+as indicated by the use of the closed range operator (``..``).
 The value of ``index`` is set to the first number in the range (``1``),
 and the statements inside the loop are executed.
 In this case, the loop only contains one statement,
@@ -111,8 +111,7 @@ The underscore character ``_``
 causes the individual values to be ignored,
 and does not provide access to the current value during each iteration of the loop.
 
-The ``for``-``in`` loop can be used with :ref:`CollectionTypes_Arrays`
-to iterate over their items:
+The ``for``-``in`` loop can be used with arrays to iterate over their items:
 
 .. testcode::
 
@@ -142,8 +141,7 @@ This can be used to iterate through the characters of a string in order:
    </ l
    </ o
 
-Iteration can also be used with :ref:`CollectionTypes_Dictionaries`
-to access their key-value pairs.
+Iteration can also be used with dictionaries to access their key-value pairs.
 Every item in a dictionary has a ``key`` property and a ``value`` property,
 which can be accessed via dot syntax:
 
@@ -161,6 +159,7 @@ which can be accessed via dot syntax:
 Items in a ``Dictionary`` may not necessarily be iterated in the same order as they were inserted.
 The contents of a ``Dictionary`` are inherently unordered,
 and iterating over them does not guarantee the order in which they will be retrieved.
+(Arrays and Dictionaries are described in more detail in :doc:`CollectionTypes`.)
 
 .. TODO: provide some advice on how to iterate over a Dictionary in order
    (perhaps sorted by key), using a predicate or array sort or some kind.
@@ -200,7 +199,7 @@ Swift also supports traditional C-style ``for`` loops with a condition and an in
 
 The general form of this loop format is:
 
-::
+.. syntax-outline::
 
    for <#initialization#>; <#condition#>; <#increment#> {
       <#statements#>
@@ -231,7 +230,7 @@ The loop is executed as follows:
 
 This is effectively shorthand for (and equivalent to):
 
-::
+.. syntax-outline::
 
    <#initialization#>
    while <#condition#> {
@@ -296,7 +295,7 @@ a set of statements is repeated until the condition becomes ``false``.
 
 The general form of a ``while`` loop is:
 
-::
+.. syntax-outline::
 
    while <#condition equates to true#> {
       <#statements#>
@@ -460,7 +459,7 @@ It then continues to repeat the loop until the condition is ``false``.
 
 The general form of a ``do``-``while`` loop is:
 
-::
+.. syntax-outline::
 
    do {
       <#statements#>
@@ -670,7 +669,7 @@ for responding to multiple potential states.
 In its simplest form, a ``switch`` statement compares against
 one or more values of the same type as the value being considered:
 
-::
+.. syntax-outline::
 
    switch <#some value to consider#> {
       case <#possible value 1#>:
@@ -742,8 +741,7 @@ it sets an optional ``Int?`` variable (called ``possibleIntegerValue``)
 to the appropriate integer value.
 If the symbol is not recognized,
 the optional ``Int?`` is set to a value of ``.None``, meaning “no value”.
-Finally, it checks to see if a value was found,
-using an :ref:`BasicTypes_OptionalBinding`.
+Finally, it uses optional binding to check if a value was found.
 If it was, the output value is printed;
 otherwise, an error message is reported.
 
@@ -769,7 +767,7 @@ at least one executable statement.
 It is not valid to write the following code,
 because the first case is empty:
 
-::
+.. syntax-outline::
 
    switch <#some value to consider#> {
       case <#possible value 1#>:
@@ -785,7 +783,7 @@ and makes for safer code that is explicit in its intent.
 Multiple matches for a single ``switch`` case can be separated by commas,
 and can be written over multiple lines if the list is long:
 
-::
+.. syntax-outline::
 
    switch <#some value to consider#> {
       case <#possible value 1#>,
@@ -848,7 +846,7 @@ to provide a natural-language count for numbers of any size:
 Tuples
 ______
 
-Multiple values can be tested in the same ``switch`` statement using :ref:`BasicTypes_Tuples`.
+Multiple values can be tested in the same ``switch`` statement using tuples.
 Each element of the tuple can be tested against a different value or range of values.
 Alternatively, the underscore (``_``) identifier can be used to match any possible value.
 

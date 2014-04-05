@@ -79,7 +79,7 @@ A ``for`` statement allows a block of code to be executed repeatedly
 while incrementing a counter,
 as long as a condition remains true.
 
-A for statement has the following form:
+A ``for`` statement has the following form:
 
 .. syntax-outline::
 
