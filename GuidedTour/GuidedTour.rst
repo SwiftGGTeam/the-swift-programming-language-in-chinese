@@ -463,7 +463,11 @@ and have a function as its return value.
 
 .. TODO: Confirm spelling of "incrementer" (not "incrementor").
 
+.. TODO: Fix the type error in the swap line below.
+
 .. testcode pass-func
+
+::
 
     // Re-implement the Standard Library sort function.
     func bubbleSort (list : Int[], outOfOrder : (Int, Int) -> Bool) -> Int[] {
