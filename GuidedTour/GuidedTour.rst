@@ -349,6 +349,7 @@ Repeat blocks of code with ``for`` and ``while``.
    When would you want to include or exclude the final number?
 
 .. testcode:: while
+
    -> var n = 2
    << // n : Int = 2
    -> while n < 100 {
