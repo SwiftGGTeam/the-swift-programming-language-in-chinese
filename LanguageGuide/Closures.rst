@@ -447,14 +447,85 @@ Operator functions are described in more detail in :ref:`AdvancedOperators_Opera
 Trailing Closures
 -----------------
 
-.. write-me::
+If you need to pass a closure expression to a function as one of the function's arguments,
+and the closure expression is long,
+it can sometimes be clearer to write it as a :newTerm:`trailing closure` instead.
+A trailing closure is a closure expression
+that is written outside of (and *after*) the parentheses of the function call it supports.
+
+Multiple consecutive trailing closures can be written
+for functions with multiple function type arguments.
+The only requirement is that these trailing closures must always be
+the final arguments provided for the function call.
+
+Because the final argument to the ``sort`` function is a closure expression,
+the string-sorting closure from above can be written
+outside of the ``sort`` function's parentheses as a trailing closure:
 
 .. testcode:: closureSyntax
 
-   -> reversed = sort(array) { $0 > $1 } // trailing closure
+   -> reversed = sort(array) { $0 > $1 }
    >> reversed
    << // reversed : String[] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
 
+As mentioned above,
+trailing closures are most useful when the closure is sufficiently long that
+it is not possible to write it inline on a single line.
+As an example, Swift's ``Array`` type has a ``map`` function
+which takes a closure expression as its single argument.
+The closure is called once for each item in the array,
+and returns an alternative mapped value (possibly of some other type) for that item.
+The nature of the mapping, and the type of the returned value,
+is left up to the closure to specify.
+
+After applying the provided closure to each array element,
+the ``map`` function returns a new array containing all of the new mapped values,
+in the same order as their corresponding values in the original array.
+
+Here's how the ``map`` function can be used with a trailing closure
+to convert an array of ``Int`` values into an array of descriptive ``String`` values:
+
+.. testcode:: arrayMap
+
+   -> let digitNames = [
+         0 : "zero", 1 : "one", 2 : "two", 3 : "three", 4 : "four",
+         5 : "five", 6 : "six", 7 : "seven", 8 : "eight", 9 : "nine"
+      ]
+   << // digitNames : Dictionary<Int, String> = Dictionary<Int, String>(1.33333, 10, <DictionaryBufferOwner<Int, String> instance>)
+   -> let numbers = [16, 48, 94, 510]
+   << // numbers : Int[] = [16, 48, 94, 510]
+
+The code above creates a dictionary of mappings between
+the integer digits and English-language versions of their names.
+It also defines an array of four integers, which will be converted into strings below.
+
+The ``numbers`` array can now be used to create an array of ``String`` values,
+by passing a closure expression to the array's ``map`` function as a trailing closure:
+
+.. testcode:: arrayMap
+
+   -> var numbersAsStrings = numbers.map() {
+         (var number) -> String in
+            var output = ""
+            while number > 0 {
+               if output != "" { output = " " + output }
+               output = digitNames[number % 10] + output
+               number /= 10
+            }
+            return output
+      }
+   << // numbersAsStrings : Array<String> = ["one six", "four eight", "nine four", "five one zero"]
+   // numbersAsStrings is inferred to be of type Array<String>
+   /> its value is now [\"\(numbersAsStrings[0])\", \"\(numbersAsStrings[0])\", \"\(numbersAsStrings[0])\", \"\(numbersAsStrings[0])\"]
+   </ its value is ["one six", "four eight", "nine four", "five one zero"]
+
+The closure expression is called once for each item in the array.
+It does not need to specify the type of its input parameter, ``number``,
+because the type is inferred from the type of values in the array to be mapped.
+However, it is useful to define the closure's single parameter as a *variable parameter*,
+as described in :ref:`Functions_ConstantAndVariableParameters`,
+so that it can be modified within the closure's body rather than declaring a new variable.
+This means that it is not appropriate to use short-hand argument names in this case.
 
 .. misc notes…
 
