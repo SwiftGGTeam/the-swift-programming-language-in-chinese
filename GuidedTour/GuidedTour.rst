@@ -491,6 +491,11 @@ A closure is just a function that isn't given a name when it is declared.
 
 .. write-me::
 
+* Explicit parameter names
+* Trailing closures
+* Implicit parameter names -- $0 and friends
+* Implicit return value as in { $0 > $1 }
+
 Objects
 -------
 
@@ -504,6 +509,8 @@ Objects
 * Make instances with "Class()"
 * Access methods and properties with "."
 * Customize object lifecycle with "init" and "deinit"
+
+.. write-me::
 
 * Indicate superclass and protocol conformance with ":"
 * Override superclass methods with "@override"
@@ -526,9 +533,9 @@ Protocols
 
 .. write-me::
 
-* Again, supported by both reference and value types
-* Distinguish is/has/can ...
-* Can be used as a first-class type (ie in variable declaration)
+* Supported by both reference and value types
+* First class type -- usable in variable declarations etc.
+* Can provide a default implementation.
 
 Optionals
 ---------
@@ -539,12 +546,12 @@ Optionals
 * Implemented as enum (no magic)
 * Convenience syntax "?" and "!"
 
-Generics
---------
+Additional Topics
+-----------------
 
 .. write-me::
 
-Patterns and Advanced Switches
-------------------------------
-
-.. write-me::
+* Generics -- on objects, methods, etc.
+* Pattern matching in switches
+* Curried functions
+* Custom operators [could go under Functions]
