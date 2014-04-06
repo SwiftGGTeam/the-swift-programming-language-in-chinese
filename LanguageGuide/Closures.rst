@@ -563,7 +563,7 @@ and is added to the output array by the ``map`` function.
 
 The use of a trailing closure here means that
 the closure's functionality is neatly encapsulated,
-and is written immediately after the function it supports.
+and is written immediately after the function it supports,
 without needing to wrap the entire closure within
 the ``map`` function's outer parentheses.
 
