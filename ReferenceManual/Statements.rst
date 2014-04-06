@@ -284,7 +284,7 @@ Swift has two branch statements: an ``if`` statement and a ``switch`` statement.
 
 .. syntax-grammar::
 
-    Grammer of a branch statement
+    Grammar of a branch statement
 
     branch-statement --> if-statement
     branch-statement --> switch-statement
