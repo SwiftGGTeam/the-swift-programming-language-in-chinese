@@ -307,6 +307,20 @@ Closure expression syntax has the following form:
       <#statements#>
    }
 
+Closure expression syntax can use
+constant parameters, variable parameters, and ``inout`` parameters.
+Default values cannot be provided.
+Variadic parameters can also be used,
+as long as the variadic parameter is named,
+and is the last parameter in the parameter list.
+Tuples may also be used as parameter types and return types.
+
+.. TODO: the note about default values is tracked by rdar://16535452.
+   Remove this note if and when that Radar is fixed.
+
+.. TODO: the note about variadic parameters requiring a name is tracked by rdar://16535434.
+   Remove this note if and when that Radar is fixed.
+
 This syntax can be used to write an inline version of the ``backwards`` function:
 
 .. testcode:: closureSyntax
