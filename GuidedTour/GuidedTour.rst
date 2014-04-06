@@ -490,7 +490,12 @@ and have a function as its return value.
             for j in 0...list.count {
                 if outOfOrder(list[i], list[j]) {
                     // TODO: Fails to type check
-                    (list[i], list[j]) = (list[j], list[i])
+                    //(list[i], list[j]) = (list[j], list[i])
+                    //
+                    // TODO: This fail too.  Need to file a bug.
+                    // let temporary = list[i]
+                    // list[i] = list[j]
+                    // list[j] = temporary
                 }
             }
         }
