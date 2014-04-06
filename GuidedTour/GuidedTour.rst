@@ -329,7 +329,7 @@ such as tuple unpacking and ``where`` clauses:
    that matches points where ``x`` is greater than ``y``,
    and one that matches points where ``x`` is odd.
 
-Repeat blocks of code with ``for`` and ``while``.
+Repeat a block of code for each item in a collection with ``for``.
 
 .. testcode:: for-each
 
@@ -347,6 +347,21 @@ Repeat blocks of code with ``for`` and ``while``.
 
    Try changing ``1..5`` to ``1...5`` --- notice that 5 is omitted from the sum.
    When would you want to include or exclude the final number?
+
+Loops can keep an explicit counter or index:
+
+.. testcode:: c-for
+
+   -> for var i = 0; i < 5; ++i {
+          println(i)
+      }
+   << 0
+   << 1
+   << 2
+   << 3
+   << 4
+
+Repeat a block of code until a condition changes using ``while``.
 
 .. testcode:: while
 
