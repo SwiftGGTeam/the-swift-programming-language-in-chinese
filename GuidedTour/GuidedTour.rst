@@ -502,14 +502,40 @@ and have a function as its return value.
     var numbers = [8, 3, 5, 6]
     var sortedNumbers = bubbleSort(numbers, lessThan)
 
-A closure is just a function that isn't given a name when it is declared.
+Closures are surrounded by curly braces (``{`` and ``{``)
+and have their arguments separated from their body by ``in``.
 
-.. write-me::
+.. testcode:: closure
 
-* Explicit parameter names
-* Trailing closures
-* Implicit parameter names -- $0 and friends
-* Implicit return value as in { $0 > $1 }
+    -> let double : Int -> Int = {
+           (number : Int) in
+           let result = 2 * number
+           return result
+       }
+    << // double : Int -> Int = <unprintable value>
+    -> double(5)
+    << // r0 : Int = 10
+
+There are several conveniences for writing closures more concisely.
+Parameter names can be omitted
+and the parameters can be referred to by number.
+Single statement closures implicitly return the value
+of their only statement.
+
+.. testcode:: closure-brief
+
+    -> let shortDouble : Int -> Int = { 2 * $0 }
+    << // shortDouble : Int -> Int = <unprintable value>
+    -> shortDouble(5)
+    << // r0 : Int = 10
+
+A closure passed as the last argument to a function call
+can appear immediately after the right parenthesis (``)``).
+
+.. testcode:: trailing-closure
+
+    -> sort([1, 5, 3, 12, 2]) { $0 > $1 }
+    << // r0 : Int[] = [12, 5, 3, 2, 1]
 
 Objects
 -------
