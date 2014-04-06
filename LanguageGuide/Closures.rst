@@ -436,7 +436,7 @@ and Swift will infer that you want to use its string-specific implementation:
 
 .. testcode:: closureSyntax
 
-   -> reversed = sort(array, > )
+   -> reversed = sort(array, >)
    >> reversed
    << // reversed : String[] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
 
