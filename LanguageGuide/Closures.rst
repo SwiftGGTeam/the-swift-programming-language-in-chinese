@@ -498,60 +498,81 @@ the ``map`` function returns a new array containing all of the new mapped values
 in the same order as their corresponding values in the original array.
 
 Here's how the ``map`` function can be used with a trailing closure
-to convert an array of ``Int`` values into an array of descriptive ``String`` values:
+to convert an array of ``Int`` values into an array of ``String`` values.
+The array ``[16, 48, 510]`` will be used to create the new array 
+``["OneSix", "FourEight", "FiveOneZero"]``:
 
 .. testcode:: arrayMap
 
    -> let digitNames = [
-         0 : "zero", 1 : "one", 2 : "two", 3 : "three", 4 : "four",
-         5 : "five", 6 : "six", 7 : "seven", 8 : "eight", 9 : "nine"
+         0 : "Zero", 1 : "One", 2 : "Two", 3 : "Three", 4 : "Four",
+         5 : "Five", 6 : "Six", 7 : "Seven", 8 : "Eight", 9 : "Nine"
       ]
    << // digitNames : Dictionary<Int, String> = Dictionary<Int, String>(1.33333, 10, <DictionaryBufferOwner<Int, String> instance>)
-   -> let numbers = [16, 48, 94, 510]
-   << // numbers : Int[] = [16, 48, 94, 510]
+   -> let numbers = [16, 48, 510]
+   << // numbers : Int[] = [16, 48, 510]
 
 The code above creates a dictionary of mappings between
 the integer digits and English-language versions of their names.
-It also defines an array of four integers, which will be converted into strings below.
+It also defines an array of integers, ready to be converted into strings.
 
 The ``numbers`` array can now be used to create an array of ``String`` values,
 by passing a closure expression to the array's ``map`` function as a trailing closure:
 
 .. testcode:: arrayMap
 
-   -> var numbersAsStrings = numbers.map() {
+   -> let strings = numbers.map() {
          (var number) -> String in
             var output = ""
             while number > 0 {
-               if output != "" { output = " " + output }
                output = digitNames[number % 10] + output
                number /= 10
             }
             return output
       }
-   << // numbersAsStrings : Array<String> = ["one six", "four eight", "nine four", "five one zero"]
-   // numbersAsStrings is inferred to be of type Array<String>
-   /> its value is now [\"\(numbersAsStrings[0])\", \"\(numbersAsStrings[0])\", \"\(numbersAsStrings[0])\", \"\(numbersAsStrings[0])\"]
-   </ its value is ["one six", "four eight", "nine four", "five one zero"]
+   << // strings : Array<String> = ["OneSix", "FourEight", "FiveOneZero"]
+   // strings is inferred to be of type Array<String>
+   /> its value is now [\"\(strings[0])\", \"\(strings[1])\", \"\(strings[2])\"]
+   </ its value is ["OneSix", "FourEight", "FiveOneZero"]
 
-The closure expression is called once for each item in the array.
-It does not need to specify the type of its input parameter, ``number``,
-because the type is inferred from the type of values in the array to be mapped.
-However, it is useful to define the closure's single parameter as a *variable parameter*,
+The ``map`` function calls the closure expression once for each item in the array.
+The closure expression does not need to specify the type of its input parameter, ``number``,
+because the type can be inferred from the values in the array to be mapped.
+However, it chooses to define the closure's ``number`` parameter as a *variable parameter*,
 as described in :ref:`Functions_ConstantAndVariableParameters`,
-so that it can be modified within the closure's body rather than declaring a new variable.
-This means that it is not appropriate to use short-hand argument names in this case.
+so that the parameter's value can be modified within the closure body,
+rather than declaring a new local variable and assigning the passed ``number`` value to it.
+The closure expression also specifies a return type of ``String``,
+to indicate the type that will be stored in the mapped output array.
 
-.. misc notes…
+The closure expression builds a string called ``output`` each time it is called.
+It calculates the last digit of ``number`` by using the remainder operator (``number % 10``),
+and uses this digit to look up an appropriate string in the ``digitNames`` dictionary.
+The appropriate string is added to the *front* of ``output``,
+effectively building a string version of the number in reverse.
+(The expression ``number % 10`` gives a value of
+``6`` for ``16``, ``8`` for ``48``, and ``0`` for ``510``.)
 
-.. you have to write "self." for property references in an explicit closure expression,
+The ``number`` variable is then divided by ``10``.
+Because it is an integer, it is rounded down during the division,
+so ``16`` becomes ``1``, ``48`` becomes ``4``, and ``510`` becomes ``51``.
+
+The process is repeated until ``number /= 10`` is equal to ``0``,
+at which point the ``output`` string is returned by the closure,
+and is added to the output array by the ``map`` function.
+
+The use of a trailing closure here means that
+the closure's functionality is neatly encapsulated,
+and is written immediately after the function it supports.
+without needing to wrap the entire closure within
+the ``map`` function's outer parentheses.
+
+.. TODO: you have to write "self." for property references in an explicit closure expression,
    since "self" will be captured, not the property (as per rdar://16193162)
    we don't do this for autoclosures, however -
    see the commits comments from r14676 for the reasons why
-.. can use 'var' and 'let' for closure parameters
-.. var closure3a : ()->()->(Int,Int) = {{ (4, 2) }} // multi-level closing.
 
-.. <rdar://problem/16193162> Require specifying self for locations in code
+.. TODO: <rdar://problem/16193162> Require specifying self for locations in code
    where strong reference cycles are likely
    This requires that property references have an explicit "self." qualifier
    when in an explicit closure expression, since self will be captured, not the property.
@@ -561,7 +582,7 @@ This means that it is not appropriate to use short-hand argument names in this c
    Further, forcing a syntactic requirement in an autoclosure context
    would defeat the whole point of autoclosures: make them implicit.
 
-.. To avoid reference cycles when a property closure references self or a property of self,
+.. TODO: To avoid reference cycles when a property closure references self or a property of self,
    you should use the same workaround as in Obj-C –
    that is, to declare a @weak (or @unowned) local variable, and capture that instead.
    There are proposals for a better solution in /swift/docs/weak.rst,
@@ -573,18 +594,18 @@ This means that it is not appropriate to use short-hand argument names in this c
 Auto-Closures
 -------------
 
-.. auto-closures can also be created:
-.. var closure1 : @auto_closure () -> Int = 4  // Function producing 4 whenever it is called.
-.. from Assert.swift in stdlib/core:
+.. TODO: var closure1 : @auto_closure () -> Int = 4  // Function producing 4 whenever it is called.
+
+.. TODO: from Assert.swift in stdlib/core:
    @transparent
    func assert(
      condition: @auto_closure () -> Bool, message: StaticString = StaticString()
    ) {
    }
-.. note that an @auto_closure's argument type must always be ()
-.. see also test/expr/closure/closures.swift
+.. TODO: note that an @auto_closure's argument type must always be ()
+   see also test/expr/closure/closures.swift
 
-.. The auto_closure attribute modifies a function type,
+.. TODO: The auto_closure attribute modifies a function type,
    changing the behavior of any assignment into (or initialization of) a value with the function type.
    Instead of requiring that the rvalue and lvalue have the same function type,
    an "auto closing" function type requires its initializer expression to have
