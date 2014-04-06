@@ -244,7 +244,7 @@ Once it has completed the sorting process,
 the ``sort`` function returns a new array of the same type and size as the old one,
 with its elements in the correct sorted order.
 
-This example uses the ``sort`` function to sort an array of ``String`` values
+These examples use the ``sort`` function to sort an array of ``String`` values
 in reverse alphabetical order.
 Here's the initial array to be sorted:
 
@@ -266,7 +266,7 @@ The ``sort`` function takes two arguments:
 This example is sorting an array of ``String`` values,
 and so the sorting closure needs to be a function of type ``(String, String) -> Bool``.
 
-One way to provide the sorting closure would be to write a simple function called ``backwards``,
+One way to provide the sorting closure would be to write a normal function of the correct type,
 and to pass it in as the ``sort`` function's second parameter:
 
 .. testcode:: closureSyntax
@@ -299,7 +299,7 @@ using closure expression syntax.
 Closure Expression Syntax
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Closure expression syntax has the following form:
+Closure expression syntax has the following general form:
 
 .. syntax-outline::
 
@@ -354,7 +354,7 @@ it can even be written on a single line:
 
 This illustrates that the overall call to the ``sort`` function has remained the same.
 A pair of parentheses still wrap the entire set of arguments for the function –
-its just that one of those arguments happens to be an inline closure.
+it's just that one of those arguments happens to be an inline closure.
 
 .. _Closures_InferringTypeFromContext:
 
@@ -405,7 +405,8 @@ by omitting the ``return`` keyword from their declaration:
 
 Here, the function type of the ``sort`` function's second argument
 makes it clear that a ``Bool`` value must be returned by the closure.
-Because the closure's body contains a single expression that returns a ``Bool`` value,
+Because the closure's body contains a single expression (``s1 > s2``)
+that returns a ``Bool`` value,
 there is no ambiguity, and the ``return`` keyword can be omitted.
 
 .. _Closures_ShortHandArgumentNames:
