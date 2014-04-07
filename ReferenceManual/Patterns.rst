@@ -48,10 +48,22 @@ Patterns
 .. NOTE: Patterns don't "have" a type in the same way that values have types.
    Patterns match things of certain types.
 
-.. _Patterns_AnyPattern:
 
-Any Pattern
------------
+.. _Patterns_WildcardPattern:
+
+Wildcard Pattern
+----------------
+
+A :newTerm:`wildcard pattern` matches and ignores any value and consists of an underscore
+``_``. Use a wildcard pattern in situations where you don't care about the values being
+matched against. For example, the following code iterates through the closed range ``0..3``,
+ignoring the current value of range on each iteration of the loop::
+
+    for _ in 0...3 {
+        // Do something three times.
+    }
+
+.. Wildcard patterns are irrefutable.
 
 .. langref-grammar
 
@@ -59,12 +71,12 @@ Any Pattern
 
 .. syntax-grammar::
 
-    Grammar of an any pattern
+    Grammar of a wildcard pattern
 
-    any-pattern --> ``_``
+    wildcard-pattern --> ``_``
 
 .. TODO: Try to come up with a better name for "any pattern".
-
+    Alex and I like "wildcard" pattern much better. Going with that.
 .. _Patterns_IsPattern:
 
 Is Pattern
