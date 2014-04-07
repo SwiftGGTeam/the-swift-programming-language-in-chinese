@@ -19,12 +19,12 @@ Unlike those languages,
 this line of Swift code is a complete program.
 There is no need to import a standard library for functionality like
 input/output or string handling.
-The first statement at global scope is used
+Code written at global scope is used
 as entry point for the program,
 so there is no need for a ``main`` function.
 Also notice that there are no semicolons.
 You can use semicolons to separate statements written on a single line,
-but otherwise there is no need to mark the end of a statement.
+but otherwise there is no need to mark the end of a statement or line.
 
 The rest of this tour shows examples
 of how to accomplish a variety of programming tasks in Swift
@@ -231,10 +231,8 @@ Control Flow
 ------------
 
 Choose between alternative blocks of code with ``if`` and ``switch``.
-Switch statements in Swift support comparison of any type,
-and there are a wide range of matching mechanisms.
 
-An if statement is written as follows:
+Use ``if`` as follows:
 
 .. testcode:: if
 
@@ -251,13 +249,13 @@ An if statement is written as follows:
       }
    << Would you like a gummi bear?
 
-Note that there are no parenthesis around the conditional,
+There are no parenthesis around the conditional,
 and that the braces around the body are required.
 The conditional must be a Boolean expression;
 code like ``if remainingGummiBears { ... }`` is an error,
 not an implicit comparison to zero.
 
-Switch statements are written as follows:
+Use ``switch`` as follows:
 
 .. testcode:: simple-switch
 
@@ -280,8 +278,9 @@ Switch statements are written as follows:
    Try removing the default case.
    What error do you get?
 
-There must be a switch case for every possible value ---
-for most types of value, this means you need a default clause.
+Switches in Swift support any kind of data, not just integers.
+Write a switch case for every possible value
+or use ``default`` to specify what happens if none of the cases match.
 Execution does not "fall through" from one case statement to the next
 unless you use ``fallthough`` to opt in to that behavior.
 
@@ -302,7 +301,7 @@ unless you use ``fallthough`` to opt in to that behavior.
 .. See also <rdar://problem/16514545>
    I'm using default here instead of case false as a workaround to this bug.
 
-Switch statements support a variety of complex matching criteria
+Switches support a variety of complex matching criteria
 such as tuple unpacking and ``where`` clauses:
 
 .. testcode:: fancy-switch
