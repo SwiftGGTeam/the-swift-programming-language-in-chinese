@@ -415,6 +415,10 @@ and ``V`` is the type of its value expressions.
 Identifier Expression
 ~~~~~~~~~~~~~~~~~~~~~
 
+.. write-me::
+
+.. TODO: Intro prose goes here.
+
 .. FIXME
 
    self and Self go here -- they're keywords
@@ -614,6 +618,8 @@ It has the following form:
    partly as a side effect of changes to the grammar
    for method/function declarations.
 
+.. TODO: Add prose about the identifiers.
+
 .. langref-grammar
 
     expr-paren      ::= '(' ')'
@@ -716,7 +722,7 @@ when calling a function that takes only one argument: ::
 :newTerm:`Selector-style function calls` consist of a function
 followed by interleaved parts of its selector and its argements.
 
-.. TODO: Skipping for now until the selector call syntax settles down
+.. TODO: Write about selector style syntax
 
 .. write-me ::
 
@@ -799,6 +805,9 @@ just as with any other function.
 
 .. TODO: This feels like pointless throat clearing...
 
+.. TODO: Update the grammar as needed for selector style initializers
+   like "foo.init withBacon".
+
 .. langref-grammar
 
     expr-init ::= expr-postfix '.' 'init'
@@ -851,6 +860,10 @@ For example: ::
 Metatype Expression
 ~~~~~~~~~~~~~~~~~~~
 
+.. write-me::
+
+.. TODO: Write this section.
+
 .. NOTE: There is no definition for metatype-expression in the LangRef.
     This was probably just an oversight, according to Ted and Doug.
 
@@ -862,12 +875,14 @@ Metatype Expression
 
     metatype-expression --> postfix-expression ``.`` ``metatype``
 
-.. TR: Is this going away?
-
 .. _Expressions_SubscriptExpression:
 
 Subscript Expression
 ~~~~~~~~~~~~~~~~~~~~
+
+.. write-me::
+
+.. TODO: Write this section.
 
 .. langref-grammar
 
