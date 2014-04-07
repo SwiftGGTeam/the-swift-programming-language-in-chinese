@@ -276,8 +276,7 @@ and to pass it in as the ``sort`` function's second parameter:
       }
    -> var reversed = sort(array, backwards)
    << // reversed : String[] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
-   /> reversed is equal to [\"\(reversed[0])\", \"\(reversed[1])\", \"\(reversed[2])\", \"\(reversed[3])\", \"\(reversed[4])\"]
-   </ reversed is equal to ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
+   // reversed is equal to ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
 
 If the first string (``s1``) is greater than the second string (``s2``),
 the ``backwards`` function will return ``true``,
@@ -532,7 +531,7 @@ by passing a closure expression to the array's ``map`` function as a trailing cl
       }
    << // strings : Array<String> = ["OneSix", "FourEight", "FiveOneZero"]
    // strings is inferred to be of type Array<String>
-   /> its value is now [\"\(strings[0])\", \"\(strings[1])\", \"\(strings[2])\"]
+   /> its value is [\"\(strings[0])\", \"\(strings[1])\", \"\(strings[2])\"]
    </ its value is ["OneSix", "FourEight", "FiveOneZero"]
 
 The ``map`` function calls the closure expression once for each item in the array.
