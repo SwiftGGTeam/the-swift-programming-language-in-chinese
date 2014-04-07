@@ -512,19 +512,19 @@ and have a function as its return value.
     var numbers = [8, 3, 5, 6]
     var sortedNumbers = bubbleSort(numbers, lessThan)
 
-Closures are surrounded by curly braces (``{`` and ``{``)
+Closures are surrounded by curly braces (``{`` and ``}``)
 and have their arguments separated from their body by ``in``.
 
 .. testcode:: closure
 
-    -> let double : Int -> Int = {
+    -> let triple : Int -> Int = {
            (number : Int) in
-           let result = 2 * number
+           let result = 3 * number
            return result
        }
-    << // double : Int -> Int = <unprintable value>
-    -> double(5)
-    << // r0 : Int = 10
+    << // triple : Int -> Int = <unprintable value>
+    -> triple(5)
+    << // r0 : Int = 15
 
 There are several conveniences for writing closures more concisely.
 Parameter names can be omitted
@@ -534,13 +534,13 @@ of their only statement.
 
 .. testcode:: closure-brief
 
-    -> let shortDouble : Int -> Int = { 2 * $0 }
-    << // shortDouble : Int -> Int = <unprintable value>
-    -> shortDouble(5)
-    << // r0 : Int = 10
+    -> let shortTriple : Int -> Int = { 3 * $0 }
+    << // shortTriple : Int -> Int = <unprintable value>
+    -> shortTriple(5)
+    << // r0 : Int = 15
 
-A closure passed as the last argument to a function call
-can appear immediately after the right parenthesis (``)``).
+A closure passed as the last argument to a function
+can appear immediately after the function call.
 
 .. testcode:: trailing-closure
 
