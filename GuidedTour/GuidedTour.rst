@@ -497,7 +497,7 @@ and have a function as its return value.
                     // TODO: Fails to type check
                     //(list[i], list[j]) = (list[j], list[i])
                     //
-                    // TODO: This fail too.  Need to file a bug.
+                    // TODO: This fails too.  Need to file a bug.
                     // let temporary = list[i]
                     // list[i] = list[j]
                     // list[j] = temporary
