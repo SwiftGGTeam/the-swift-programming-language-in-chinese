@@ -279,7 +279,7 @@ Use ``switch`` as follows:
    What error do you get?
 
 Switches in Swift support any kind of data, not just integers.
-Write a switch case for every possible value
+You must write a switch case for every possible value
 or use ``default`` to specify what happens if none of the cases match.
 Execution does not "fall through" from one case statement to the next
 unless you use ``fallthough`` to opt in to that behavior.
@@ -344,7 +344,8 @@ Repeat a block of code for each item in a collection with ``for``.
 
 .. admonition:: Experiment
 
-   Try changing ``1..5`` to ``1...5`` --- notice that 5 is omitted from the sum.
+   Try changing ``1..5`` to ``1...5`` ---
+   notice that 5 is omitted from the sum.
    When would you want to include or exclude the final number?
 
 Loops can keep an explicit counter or index:
@@ -393,6 +394,11 @@ and called with a parenthesized list of arguments.
 Argument names are part of the function signature;
 you can specify each parameter by name when calling the function.
 
+.. TR: Technically, right now, the argument names are actually
+   part of the *type* rather than the *name*
+   That is, "init (withFoo : Int)" and "init (withBar : String)"
+   both have the function name "init", but have different types.
+
 .. testcode:: func
 
     -> func greet(name : String, day : String) -> String {
@@ -418,7 +424,7 @@ Functions can return multiple values using a tuple.
    >> getGasPrices()
    << // r0 : (Double, Double, Double) = (3.59, 3.69, 3.79)
 
-Functions can also be defined to take variable argument lists.
+Functions can also be defined to take a variable number of arguments.
 
 .. testcode:: functions
 
@@ -458,7 +464,7 @@ that were declared in the outer function.
    Try calling the ``add`` function twice.
    What happens?
 
-Functions are first-class types in Swift.
+Functions are a first-class type.
 This means a function can accept functions as arguments
 and have a function as its return value.
 
