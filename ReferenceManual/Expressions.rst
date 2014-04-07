@@ -898,7 +898,7 @@ Subscript Expression
 Forced Expression
 ~~~~~~~~~~~~~~~~~
 
-A :newTerm:`forced expression` unwraps an Optional value.
+A :newTerm:`forced expression` unwraps an optional value.
 It has the following form:
 
 .. syntax-outline::
@@ -953,7 +953,6 @@ A postfix expression is *chained* to an expression
 if it is either directly chained to that expression
 or if it is directly chained to another postfix expression
 that is directly chained to that expression.
-
 For example, in the expression ``x?.foo()[7]``
 the array expression is directly chained
 to the function call expression,
