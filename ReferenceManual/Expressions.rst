@@ -504,7 +504,6 @@ also known as a *lambda* or an *anonymous function*.
 Like function declarations,
 closures contain statements which they execute,
 and they can capture values from their enclosing scope.
-.. values --> variables and constants
 Unlike function declarations,
 the return type and parameter types can be omitted.
 The omitted type information is inferred
@@ -526,20 +525,34 @@ to be used with a very brief syntax when needed.
 All of the following examples have the same behavior
 when called with two integers: ::
 
-    // Full function declaration, for comparison
-    func a (x : Int, y : Int) {
+    // Function declaration for comparison
+    func f (x : Int, y : Int) -> Int {
         let result = x + y
         return result
     }
 
-    b = { (x : Int, y : Int) -> Int in
+    let f : (Int, Int) -> Int =  {
+        (x : Int, y : Int) -> Int in
         let result = x + y
         return x + y
     }
 
-    c = { (x, y) in x + y }
+    let f : (Int, Int) -> Int = {
+        (x, y) in
+        let result = x + y
+        return x + y
+    }
 
-    d = { $0 + $1 }
+    let f : (Int, Int) -> Int = { (x, y) in x + y }
+
+    let f : (Int, Int) -> Int = { $0 + $1 }
+
+    // Not a closure expression, but related syntax
+    let f : (Int, Int) -> Int = (+)
+
+.. TODO: Would this be clearer without the explicit variable assignments?
+   That would allow the type annotations to be omitted too,
+   leaving just a closure expression.
 
 .. langref-grammar
 
