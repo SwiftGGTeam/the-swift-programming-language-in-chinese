@@ -520,39 +520,27 @@ Its parameters are then implicitly named
 ``$`` followed by their position:
 ``$0``, ``$1``, ``$2``, and so on.
 
-Omitting types and parameter names allows closures
-to be used with a very brief syntax when needed.
-All of the following examples have the same behavior
-when called with two integers: ::
+Using implicit types, parameter names, and return statements
+can make a closure expression much shorter.
+The following closure expressions are equivalent: ::
 
-    // Function declaration for comparison
-    func f (x : Int, y : Int) -> Int {
-        let result = x + y
-        return result
-    }
-
-    let f : (Int, Int) -> Int =  {
+    {
         (x : Int, y : Int) -> Int in
         let result = x + y
         return x + y
     }
 
-    let f : (Int, Int) -> Int = {
+    {
         (x, y) in
         let result = x + y
         return x + y
     }
 
-    let f : (Int, Int) -> Int = { (x, y) in x + y }
+    { (x, y) in x + y }
 
-    let f : (Int, Int) -> Int = { $0 + $1 }
+    { $0 + $1 }
 
-    // Not a closure expression, but related syntax
-    let f : (Int, Int) -> Int = (+)
-
-.. TODO: Would this be clearer without the explicit variable assignments?
-   That would allow the type annotations to be omitted too,
-   leaving just a closure expression.
+.. TODO: Revisit style guide regarding placement of "in".
 
 .. langref-grammar
 
