@@ -1059,7 +1059,12 @@ Tuple Pattern
 ~~~~~~~~~~~~~
 
 .. docnote::
-    Is the grammar still correct?
+    Is the grammar still correct? [...]
+
+    Presumably, with the new function declaration syntax coming,
+    tuple patterns will no longer need to support default arguments.
+    Therefore, we should remove the 'pattern-initializer' alternative
+    from the tuple-pattern-element production rule, correct?
 
 .. langref-grammar
 
