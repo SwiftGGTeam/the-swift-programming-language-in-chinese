@@ -10,6 +10,9 @@ and elements in a ``Dictionary`` instance can be accessed as
 ``someDictionary[key]``.
 (Array and dictionary subscripts are described in detail in :doc:`CollectionTypes`.)
 
+.. TODO: this chapter should provide an example of subscripting an enumeration,
+   as per Joe Groff's example from rdar://16555559.
+
 .. _Subscripts_SubscriptSyntax:
 
 Subscript Syntax
