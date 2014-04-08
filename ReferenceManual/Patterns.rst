@@ -33,13 +33,12 @@ Patterns
 
     Grammar of a pattern
 
-    pattern --> any-pattern
+    pattern --> wildcard-pattern
     pattern --> is-pattern
-    pattern --> variable-pattern type-annotation-OPT
+    pattern --> value-pattern type-annotation-OPT
     pattern --> expression-pattern type-annotation-OPT
     pattern --> enumerator-pattern
     pattern --> tuple-pattern type-annotation-OPT
-    pattern-list --> pattern | pattern ``,`` pattern-list
 
 .. TODO: In prose, discuss the meaning of the explicit type.
     The optional type annotation contrains a pattern to
@@ -98,10 +97,11 @@ Is Pattern
     Candidates:
     type-checking-pattern
 
-.. _Patterns_Variable-BindingPattern:
 
-Variable-Binding Pattern
-------------------------
+.. _Patterns_Value-BindingPattern:
+
+Value-Binding Pattern
+---------------------
 
 .. langref-grammar
 
@@ -110,16 +110,16 @@ Variable-Binding Pattern
 
 .. syntax-grammar::
 
-    Grammar of a variable-binding pattern
+    Grammar of a value-binding pattern
 
-    variable-binding-pattern --> ``var`` pattern
-    variable-binding-pattern --> ``let`` pattern
+    value-binding-pattern --> ``var`` pattern | ``let`` pattern
 
-.. NOTE: We chose to call this "variable-binding pattern"
+.. NOTE: We chose to call this "value-binding pattern"
     instead of "variable pattern",
-    because it's a pattern that binds variables,
+    because it's a pattern that binds values to either variables or constants,
     not a pattern that varies.
     "Variable pattern" is ambiguous between those two meanings.
+
 
 .. _Patterns_ExpressionPattern:
 
