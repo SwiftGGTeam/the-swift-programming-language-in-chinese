@@ -226,7 +226,7 @@ The loop is executed as follows:
 
 The execution process described above is effectively shorthand for (and equivalent to):
 
-.. syntax-outline::
+::
 
    <#initialization#>
    while <#condition#> {
