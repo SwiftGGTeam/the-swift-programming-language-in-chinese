@@ -27,7 +27,7 @@ Swift provides several ways to structure and control the flow of your code's exe
 For Loops
 ---------
 
-A ``for`` loop is used to iterate over multiple items in
+Use a ``for`` loop to iterate over multiple items in
 a range, sequence, collection, or progression.
 Swift provides two types of ``for`` loop:
 
@@ -107,7 +107,7 @@ The underscore character ``_``
 causes the individual values to be ignored
 and does not provide access to the current value during each iteration of the loop.
 
-The ``for``-``in`` loop can be used with arrays to iterate over their items:
+Use the ``for``-``in`` loop with an array to iterate over its items:
 
 .. testcode::
 
@@ -124,7 +124,7 @@ The ``for``-``in`` loop can be used with arrays to iterate over their items:
 Swift's ``String`` type has a ``chars`` property,
 which provides the individual characters in the string as an ``Array`` of ``UnicodeScalar`` values
 (also known as an “``Array`` of type ``UnicodeScalar``”).
-This can be used to iterate through the characters of a string in order:
+Use this property to iterate over the characters in a string in order:
 
 .. testcode::
 
@@ -137,7 +137,7 @@ This can be used to iterate through the characters of a string in order:
    </ l
    </ o
 
-You can also iterate through dictionaries to access their key-value pairs.
+You can also iterate over dictionaries to access their key-value pairs.
 Every item in a dictionary has a ``key`` property and a ``value`` property,
 which are accessed through dot syntax:
 
@@ -307,9 +307,11 @@ The rules of the game are as follows:
 
 * The board has 25 squares, and the aim is to land on or beyond square 25.
 * Each turn, you roll a six-sided dice and move by that number of squares,
-  following the path indicated by the dotted arrow above.
+  following the horizontal path indicated by the dotted arrow above.
 * If your turn ends at the bottom of a ladder, you move up that ladder.
 * If your turn ends at the head of a snake, you move down that snake.
+
+.. TODO: update this description to match the look of the final artwork.
 
 The game board is represented by an ``Array`` of type ``Int``.
 Its size is based on a constant called ``finalSquare``,
@@ -586,7 +588,7 @@ It executes a set of statements only if that condition is ``true``:
       }
    <- It's very cold. Consider wearing a scarf.
 
-The example above checks to see whether the temperature
+The preceding example above checks to see whether the temperature
 is less than or equal to 32 degrees Fahrenheit
 (the freezing point of water).
 If it is, a message is printed.
@@ -1243,7 +1245,7 @@ it is not matched by the first ``switch`` case at all.
 There are no other specific cases,
 and so it ends up being matched by the catchall ``default`` case.
 
-Once the ``switch`` statement has finished executing,
+After the ``switch`` statement has finished executing,
 the number's description is printed using the ``println`` function.
 In this example,
 the number ``5`` is correctly identified as a prime number.

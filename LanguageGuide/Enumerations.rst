@@ -93,7 +93,7 @@ As a result, their names
 (such as ``CompassPoint`` and ``Planet``)
 should start with a capital letter.
 Give enumeration types singular rather than plural names,
-so that they read as a sentence when assigning a named value of that type.
+so that they read as self-evident:
 
 .. testcode:: enums
 
@@ -168,10 +168,10 @@ you can provide a ``default`` case to cover any members that are not addressed e
       }
    <- Mostly harmless
 
-.. _Enumerations_StoringAssociatedValues:
+.. _Enumerations_AssociatedValues:
 
-Storing Associated Values
--------------------------
+Associated Values
+-----------------
 
 The examples in the previous section show how the members of an enumeration are
 a defined (and typed) value in their own right.
@@ -270,10 +270,10 @@ This time, however, the associated values can be extracted as part of the switch
       }
    <- QR code with value of ABCDEFGHIJKLMNOP.
 
-.. _Enumerations_DefiningRawValues:
+.. _Enumerations_RawValues:
 
-Defining Raw Values
--------------------
+Raw Values
+----------
 
 The barcode example in Storing Associated Values
 shows how members of an enumeration can declare that they store
