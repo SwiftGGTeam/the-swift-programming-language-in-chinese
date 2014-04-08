@@ -663,9 +663,8 @@ This means that ``4.75`` becomes ``4``, and ``-3.9`` becomes ``-3``.
 Type Aliases
 ------------
 
-:newTerm:`Type aliases` are a way to define an alternative name
-(or :newTerm:`alias`) for an existing type.
-Type aliases are defined with the ``typealias`` keyword.
+:newTerm:`Type aliases` define an alternative name for an existing type.
+You define type aliases with the ``typealias`` keyword.
 
 Type aliases are useful when you want to refer to an existing type
 by a name that is contextually more appropriate,
@@ -675,7 +674,7 @@ such as when working with data of a specific size from an external source:
 
    -> typealias AudioSample = UInt16
 
-Once you have defined a type alias,
+Once you define a type alias,
 you can use the alias anywhere you might use the original name:
 
 .. testcode:: typeAliases
@@ -685,7 +684,7 @@ you can use the alias anywhere you might use the original name:
    /> maxAmplitudeFound is now \(maxAmplitudeFound)
    </ maxAmplitudeFound is now 0
 
-Here, ``AudioSample`` has been defined as an alias for ``UInt16``.
+Here, ``AudioSample`` is defined as an alias for ``UInt16``.
 Because it is an alias,
 the call to ``AudioSample.min`` actually calls ``UInt16.min``,
 which provides an initial value of ``0`` for the ``maxAmplitudeFound`` variable.

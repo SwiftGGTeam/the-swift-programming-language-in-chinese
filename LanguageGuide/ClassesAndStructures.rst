@@ -33,43 +33,13 @@ Classes and Structures
 ======================
 
 Enumerations, as introduced in the previous chapter,
-give a way to define your own custom types to work with lists of values.
+enable you to define your own custom types to work with lists of values.
 Enumerations are particularly suited to representing a fixed set of values of a similar type.
 
-Swift provides two additional ways to define custom data types.
-These are known as :newTerm:`classes` and :newTerm:`structures`,
-and can be used to create general-purpose, flexible constructs
-to use as the building blocks of your program's code.
-
-Classes and structures have many things in common in Swift.
-Both can:
-
-* declare :newTerm:`properties` to store values
-  (as described in :doc:`Properties`)
-* define :newTerm:`methods` to provide functionality
-  (as described in :doc:`Methods`)
-* define :newTerm:`subscripts` to provide access to their values using subscript syntax
-  (as described in :doc:`Subscripts`)
-* define :newTerm:`initializers` to set up their initial state
-  (as described in :doc:`Initialization`)
-* be :newTerm:`extended` to expand their functionality beyond a default implementation
-  (as described in :doc:`Extensions`)
-* conform to :newTerm:`protocols` to provide standard functionality of a certain type
-  (as described in :doc:`Protocols`)
-
-In addition, classes have several capabilities that structures and enumerations do not:
-
-* :newTerm:`inheritance`, which enables one class to inherit the characteristics of another
-  (as described in :doc:`Inheritance`)
-* :newTerm:`type casting`, which enables you to check and interpret the type of a class instance at runtime
-  (as described in :doc:`Inheritance`)
-* :newTerm:`deinitializers`, which enable an instance of a class to clean up after itself
-  (as described in :doc:`Initialization`)
-
-.. _ClassesAndStructures_DefiningClassesAndStructures:
-
-Defining Classes and Structures
--------------------------------
+In Swift, you can also define custom data types
+as :newTerm:`classes` and :newTerm:`structures`.
+You use classes and structures to create general-purpose, flexible constructs
+that become the building blocks of your program's code.
 
 Unlike other programming languages,
 Swift does not require you to create separate interface and implementation files
@@ -81,14 +51,42 @@ automatically made available for other code to use.
 .. TODO: add a note here about public and private interfaces,
    once we know how these will be declared in Swift.
 
+.. _ClassesAndStructures_ComparingClassesAndStructures:
+
+Comparing Classes and Structures
+--------------------------------
+
+Classes and structures in Swift have many things in common.
+Both can:
+
+* Define properties to store values (see :doc:`Properties`)
+* Define methods to provide functionality (see :doc:`Methods`)
+* Define subscripts to provide access to their values using subscript syntax
+  (see :doc:`Subscripts`)
+* Define initializers to set up their initial state
+  (see :doc:`Initialization`)
+* Be extended to expand their functionality beyond a default implementation
+  (see :doc:`Extensions`)
+* Conform to protocols to provide standard functionality of a certain type
+  (see :doc:`Protocols`)
+
+Classes have additional capabilities that structures do not:
+
+* Inheritance, which enables one class to inherit the characteristics of another
+  (see :doc:`Inheritance`)
+* Type casting, which enables you to check and interpret the type of a class instance at runtime
+  (see :doc:`TypeCasting`)
+* Deinitializers, which enable an instance of a class to clean up after itself
+  (see :doc:`Initialization`)
+
 .. _ClassesAndStructures_DefinitionSyntax:
 
 Definition Syntax
 ~~~~~~~~~~~~~~~~~
 
-Classes and structures have a very similar definition syntax.
-Classes are introduced by the ``class`` keyword,
-and structures are introduced by the ``struct`` keyword.
+Classes and structures have a similar definition syntax.
+You introduce classes with the ``class`` keyword,
+and structures with the ``struct`` keyword.
 Both place their entire definition within a pair of braces:
 
 .. testcode:: ClassesAndStructures
@@ -102,15 +100,13 @@ Both place their entire definition within a pair of braces:
 
 .. note::
 
-   As with enumerations,
-   whenever you define a new class or structure,
-   you are effectively defining a brand new Swift type.
-   As a result, you should give your classes and structures ``UpperCamelCase`` names
+   Whenever you define a new class or structure,
+   you effectively define a brand new Swift type.
+   Give types ``UpperCamelCase`` names
    (such as ``SomeClass`` and ``SomeStructure`` here)
    to match the capitalization of standard Swift types
    (such as ``String``, ``Int``, and ``Bool``).
-   Conversely, properties and methods should always be given
-   ``lowerCamelCase`` names
+   Conversely, always give properties and methods ``lowerCamelCase`` names
    (such as ``frameRate`` and ``incrementCount``)
    to differentiate them from type names.
 
@@ -131,7 +127,7 @@ Here's an example of a structure definition and a class definition:
 
 The example above defines a new structure called ``Resolution``,
 to describe a pixel-based display resolution.
-This structure has two :newTerm:`variable stored properties` called ``width`` and ``height``.
+This structure has two stored properties called ``width`` and ``height``.
 Stored properties are named values that are bundled up and stored
 as part of the class or structure,
 and are described in detail in :doc:`Properties`.
@@ -155,10 +151,10 @@ which has a default value of ``.None``, or “no ``name`` value”.
 Class and Structure Instances
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The ``Resolution`` structure definition, and the ``VideoMode`` class definition,
+The ``Resolution`` structure definition and the ``VideoMode`` class definition
 only describe what a ``Resolution`` or ``VideoMode`` will look like.
-They do not in themselves describe a specific resolution or video mode.
-To do that, you need to create an :newTerm:`instance` of the structure or class.
+They themselves do not describe a specific resolution or video mode.
+To do that, you need to create an instance of the structure or class.
 
 .. QUESTION: this isn't strictly true.
    You could argue that the Resolution structure definition describes a resolution of (0, 0),
@@ -173,13 +169,13 @@ The syntax for creating instances is very similar for both structures and classe
    -> let someVideoMode = VideoMode()
    << // someVideoMode : VideoMode = <VideoMode instance>
 
-Structures and classes both use :newTerm:`initializer syntax` when creating new instances.
+Structures and classes both use initializer syntax when creating new instances.
 The simplest form of initializer syntax uses the type name of the class or structure
 followed by empty parentheses, such as ``Resolution()`` or ``VideoMode()``.
 This creates a new instance of the class or structure,
 with any properties initialized to their default values.
-(Class and structure initialization is described in more detail
-in :doc:`Initialization`.)
+Class and structure initialization is described in more detail
+in :doc:`Initialization`.
 
 .. TODO: add more detail about inferring a variable's type when using initializer syntax.
 .. TODO: note that you can only use the default constructor if you provide default values
@@ -202,17 +198,20 @@ Because of this, the more general term :newTerm:`instance` is used below.
 Accessing Properties
 ~~~~~~~~~~~~~~~~~~~~
 
-The properties of an instance can be accessed using :newTerm:`dot syntax`:
+You can access the properties of an instance using :newTerm:`dot syntax`.
+In dot syntax, you write the property name immediately after the instance name,
+separated by a period (``.``), without any spaces:
 
 .. testcode:: ClassesAndStructures
 
    -> println("The width of someResolution is \(someResolution.width)")
    <- The width of someResolution is 0
 
+In this example,
 ``someResolution.width`` refers to the ``width`` property of ``someResolution``,
 and returns its default initial value of ``0``.
 
-Dot syntax can be used to drill down into sub-properties,
+You can drill down into sub-properties,
 such as the ``width`` property in the ``resolution`` property of a ``VideoMode``:
 
 .. testcode:: ClassesAndStructures
@@ -220,7 +219,7 @@ such as the ``width`` property in the ``resolution`` property of a ``VideoMode``
    -> println("The width of someVideoMode is \(someVideoMode.resolution.width)")
    <- The width of someVideoMode is 0
 
-Dot syntax can also be used to assign a new value to a variable property:
+You can also use dot syntax to assign a new value to a variable property:
 
 .. testcode:: ClassesAndStructures
 
@@ -236,7 +235,7 @@ Memberwise Structure Initializers
 .. HACK: this is currently duplicated in Initialization.
 
 All structures have an automatically-generated :newTerm:`memberwise initializer`,
-which can be used to initialise the member properties of new structure instances.
+with which you initialize the member properties of new structure instances.
 Initial values for the properties of the new instance
 can be passed to the memberwise initializer by name:
 
@@ -258,19 +257,19 @@ if they are listed in the same order that the properties are declared in the str
    However, I can't find a Radar tracking this directly.
 
 Unlike structures, class instances do not receive a default memberwise initializer.
-(Initializers are described in more detail in :doc:`Initialization`.)
+Initializers are described in more detail in :doc:`Initialization`.
 
 .. _ClassesAndStructures_ValueTypesAndReferenceTypes:
 
 Value Types and Reference Types
 -------------------------------
 
-Classes, structures and enumerations have many things in common in Swift.
+Classes, structures, and enumerations have many things in common in Swift.
 All three can work with properties, methods, initializers, extensions, and protocols.
 However, there is one fundamental difference:
 
-* Structures and enumerations are :newTerm:`value types`
-* Classes are :newTerm:`reference types`
+* Structures and enumerations are *value* types
+* Classes are *reference* types
 
 This difference is very important when deciding how to define the building blocks of your code.
 
@@ -288,7 +287,8 @@ A :newTerm:`value type` is a type that is *copied*
 when it is assigned to a variable or constant,
 or when it is passed to a function.
 
-You've actually been using value types extensively throughout the previous chapters.
+Unbeknownst (perhaps) to you,
+you've used value types extensively throughout the previous chapters.
 In fact, all of the basic types in Swift –
 integers, floating-point numbers, Booleans, strings, arrays and dictionaries –
 are value types.
@@ -296,7 +296,7 @@ are value types.
 Swift structures and enumerations are also value types.
 This means that any structure and enumeration instances you create –
 and any value types they have as properties –
-will always be copied when they are passed around.
+are always copied when they are passed around in your code.
 
 For example, using the ``Resolution`` structure from above:
 
@@ -307,12 +307,12 @@ For example, using the ``Resolution`` structure from above:
    -> var cinema = hd
    << // cinema : Resolution = Resolution(1920, 1080)
 
-This example declares a constant called ``hd``,
+This example declares a constant called ``hd``
 and sets it to a ``Resolution`` instance initialized with
 the width and height of full HD video
-(which is ``1920`` pixels wide by ``1080`` pixels high).
+(``1920`` pixels wide by ``1080`` pixels high).
 
-It then declares a variable called ``cinema``,
+It then declares a variable called ``cinema``
 and sets it to the current value of ``hd``.
 Because ``Resolution`` is a structure,
 a *copy* of the existing instance is made,
@@ -322,7 +322,7 @@ they are two completely different instances behind the scenes.
 
 Next, the ``width`` property of ``cinema`` is amended to be
 the width of the slightly-wider 2K standard used for digital cinema projection
-(which is ``2048`` pixels wide and ``1080`` pixels high):
+(``2048`` pixels wide and ``1080`` pixels high):
 
 .. testcode:: ClassesAndStructures
 
@@ -346,7 +346,7 @@ still has the old value of ``1920``:
 
 When ``cinema`` was given the current value of ``hd``,
 the *values* stored in ``hd`` were copied into the new ``cinema`` instance.
-The end result was two completely separate instances,
+The end result is two completely separate instances,
 which just happened to contain the same numeric values.
 Because they are separate instances,
 setting the width of ``cinema`` to ``2048``
@@ -381,10 +381,10 @@ the copy of the original value that was stored in ``rememberedDirection``.
 Reference Types
 ~~~~~~~~~~~~~~~
 
-Unlike value types, an instance of a :newTerm:`reference type` is *not* copied
-when it is assigned to a variable or constant,
-or when it is passed to a function.
-Rather than making a copy, a :newTerm:`reference` to the same existing instance is used instead.
+Unlike value types, :newTerm:`reference types` are *not* copied
+when they are assigned to a variable or constant,
+or when they are passed to a function.
+Rather than making a copy, a reference to the same existing instance is used instead.
 
 .. TODO: This enables you to have multiple variables and constants
    that all refer to the same one instance. 
@@ -400,7 +400,7 @@ Here's an example, using the ``VideoMode`` class defined above:
    -> tenEighty.name = "1080i"
    -> tenEighty.frameRate = 25.0
 
-This example declares a new constant called ``tenEighty``,
+This example declares a new constant called ``tenEighty``
 and sets it to refer to a new instance of the ``VideoMode`` class.
 The video mode is assigned a copy of the HD resolution of ``1920`` by ``1080`` from before.
 It is set to be interlaced, and is given a name of ``"1080i"``.
@@ -428,13 +428,13 @@ from the underlying ``VideoMode`` instance:
    -> println("The frameRate property of tenEighty is now \(tenEighty.frameRate)")
    <- The frameRate property of tenEighty is now 30.0
 
-Note that ``tenEighty`` and ``alsoTenEighty`` are declared as *constants*,
-rather than variables.
+Note that ``tenEighty`` and ``alsoTenEighty`` are declared as *constant* named values,
+rather than variable named values.
 However, it is still possible to change
 ``tenEighty.frameRate`` and ``alsoTenEighty.frameRate``.
 This is allowed because
 the values of the ``tenEighty`` and ``alsoTenEighty`` constants themselves do not actually change.
-``tenEighty`` and ``alsoTenEighty`` do not themselves “store” the ``VideoMode`` instance –
+``tenEighty`` and ``alsoTenEighty`` themselves do not “store” the ``VideoMode`` instance –
 instead, they both *refer* to a ``VideoMode`` instance behind the scenes.
 It is the ``frameRate`` property of the underlying ``VideoMode`` that is changed,
 not the values of the constant references to that ``VideoMode``.
@@ -452,8 +452,8 @@ Pointers
 ________
 
 If you have experience with C, C++ or Objective-C,
-you may be familiar with the fact that these languages use :newTerm:`pointers` to refer to objects.
-Variables, constants and properties that refer to an instance of a reference type
+you may know that these languages use pointers to refer to objects.
+Variables, constants, and properties that refer to an instance of a reference type
 are very similar to pointers in C-like languages,
 but do not use the reference operator (``&``) or dereference operator (``*``)
 to differentiate between a pointer and the memory it points to.
@@ -477,15 +477,14 @@ and the value it contains is always a reference to a particular instance of that
 Choosing Between Classes and Structures
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Classes and structures have many things in common,
-and both can be used to define custom data types to use as
+You can use both classes and structures to define custom data types to use as
 the building blocks of your program's code.
 
-However, the fact that structure instances are always passed by *value*,
-and class instances are always passed by *reference*,
-means that they are suited to different kinds of tasks.
+However, structure instances are always passed by *value*,
+and class instances are always passed by *reference*.
+This means that they are suited to different kinds of tasks.
 As you consider the data constructs and functionality that you need for a project,
-you will need to decide whether each data construct should be
+you need to decide whether each data construct should be
 defined as a class or as a structure.
 
 .. note::
@@ -493,32 +492,31 @@ defined as a class or as a structure.
    Enumerations have many useful features in Swift,
    but are not really suited to creating general-purpose data types
    in the same way as classes and structures.
-   Enumerations should only be used when you need the specific capabilities
-   that they offer.
+   Use enumerations only when you need the specific capabilities that they offer.
 
-As a general rule, you should only define a new structure when:
+As a general rule, define a new structure only when:
 
-* the structure's primary purpose is to encapsulate a few relatively simple data values
-* the structure will not have particularly complex functionality
+* The structure's primary purpose is to encapsulate a few relatively simple data values
+* The structure will not have particularly complex functionality
   (although it may provide one or two convenience methods to work with its stored values)
-* it is reasonable to expect that the encapsulated values will be copied rather than referenced
-  when assigning or passing around an instance of that structure
-* any properties stored by the structure are themselves value types,
+* It is reasonable to expect that the encapsulated values will be copied rather than referenced
+  when you assign or pass around an instance of that structure
+* Any properties stored by the structure are themselves value types,
   which would also be expected to be copied rather than referenced
-* there is no need to inherit properties or behavior from some other existing type
+* There is no need to inherit properties or behavior from another existing type
 
 Examples of good candidates for structures include:
 
-* the size of a geometric shape
+* The size of a geometric shape
   (perhaps encapsulating a ``width`` property and a ``height`` property,
   both of type ``Double``)
-* a way to refer to ranges within a series
+* A way to refer to ranges within a series
   (perhaps encapsulating a ``start`` property and a ``length`` property,
   both of type ``Int``)
-* a point in a 3D coordinate system
+* A point in a 3D coordinate system
   (perhaps encapsulating ``x``, ``y`` and ``z`` properties, each of type ``Double``)
 
-In all other cases, you should define a class, and create instances of that class,
+In all other cases, define a class, and create instances of that class
 to be managed and passed by reference.
 In practice, this means that most custom data constructs should be classes,
 not structures.
@@ -534,22 +532,22 @@ not structures.
 Identity Operators
 ------------------
 
-Because classes are *reference types*,
+Because classes are reference types,
 it is possible for multiple named values to refer to
 the same single instance of a class behind the scenes.
 (The same is not true for structures and enumerations,
-because they are *value types*,
+because they are value types,
 and are always copied when they are assigned to a named value
 or passed to a function.)
 
 It can sometimes be useful to find out if two named values refer to
 exactly the same instance of a class.
-To enable this, Swift provides two :newTerm:`identity operators`:
+To enable this, Swift provides two identity operators:
 
 * Identical to (``===``)
 * Not identical to (``!==``)
 
-These operators can be used to check if two named values refer to the same single instance:
+Use these operators to check whether two named values refer to the same single instance:
 
 .. testcode:: ClassesAndStructures
 
@@ -561,9 +559,9 @@ These operators can be used to check if two named values refer to the same singl
 Note that “identical to” (represented by three equals signs, or ``===``)
 does not mean the same thing as “equal to” (represented by two equals signs, or ``==``):
 
-* :newTerm:`Identity` means that
+* “Identical to” means that
   two named values of class type refer to exactly the same class instance.
-* :newTerm:`Equality` means that
+* “Equal to” means that
   two instances are considered “equal” or “equivalent” in value,
   for some appropriate meaning of “equal”, as defined by the type's designer.
 
