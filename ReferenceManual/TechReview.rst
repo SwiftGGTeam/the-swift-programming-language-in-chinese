@@ -850,6 +850,7 @@ Patterns
     How about something like this as a start:
     Pattern matching is a combination of conditional branching and value binding.
 
+
 .. docnote::
     Here's a list of where patterns are most commonly used.
     Can you think of other examples? [...]
@@ -863,6 +864,7 @@ Patterns
         * iteration within a ``for``-``in`` statement
 
     Do we/will we support regex pattern matching?
+
 
 .. docnote::
     How can you unwrap (access) an enum case with an associated value
@@ -886,6 +888,7 @@ Patterns
     Is it true that patterns always appear on the left-hand side on an assignment? [...]
 
     ``var a = 1`` (``a`` is a pattern); ``var b = a`` (``b`` is a pattern, ``a`` is an expression).
+
 
 .. docnote::
     How up to date is the top-level pattern grammar in the LangRef?
@@ -918,8 +921,12 @@ Patterns
     pattern --> enumerator-pattern
     pattern --> tuple-pattern type-annotation-OPT
 
+
 Wildcard Pattern
 ~~~~~~~~~~~~~~~~
+
+.. docnote::
+    Any objection to renaming 'any' pattern to 'wildcard' pattern?
 
 A :newTerm:`wildcard pattern` matches and ignores any value and consists of an underscore
 ``_``. Use a wildcard pattern in situations where you don't care about the values being
@@ -930,20 +937,12 @@ ignoring the current value of range on each iteration of the loop::
         // Do something three times.
     }
 
-.. Wildcard patterns are irrefutable.
-
-.. langref-grammar
-
-    pattern-any ::= '_'
-
 .. syntax-grammar::
 
     Grammar of a wildcard pattern
 
     wildcard-pattern --> ``_``
 
-.. docnote::
-    Any objection to renaming 'any' pattern to 'wildcard' pattern?
 
 .. _Patterns_ExpressionPattern:
 
@@ -1034,6 +1033,7 @@ Expression Pattern
 
     expression-pattern --> expression
 
+
 .. _Patterns_EnumeratorPattern:
 
 Enumerator Pattern
@@ -1051,6 +1051,7 @@ Enumerator Pattern
     Grammar of an enumerator pattern
 
     enumerator-pattern --> type-identifier-OPT ``.`` identifier tuple-pattern-OPT
+
 
 .. _Patterns_TuplePattern:
 
