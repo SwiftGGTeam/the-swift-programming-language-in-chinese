@@ -836,8 +836,6 @@ Patterns
 
 .. docnote::
     What kind of information do we want to cover about patterns in general?
-    How up to date is pattern grammar in the LangRef?
-    There is an 'is' pattern; what about an 'as' pattern?
 
 .. Patterns might be getting a little simpler since they are not being used for
    functions.  For now, it's ok to not have a discussion of pattern matching as
@@ -846,6 +844,239 @@ Patterns
    here just like they will see the monads in optional chaining.
    Joe Groff is the pattern guru -- he designed this stuff and implemented
    the crazy switch.
+
+.. docnote::
+    How would you describe what pattern matching is?
+    How about something like this as a start:
+    Pattern matching is a combination of conditional branching and value binding.
+
+.. docnote::
+    Here's a list of where patterns are most commonly used.
+    Can you think of other examples? [...]
+
+    * the cases of a ``switch`` statement (patterns can be *guarded* using a guard expression)
+        * unwrapping/extracting associated values from an enum case
+        * type checking using an ``is`` pattern
+    * Variable and constant declarations/bindings
+        * if-let/var conditional bindings
+        * tuple decomposition (unwrapping)
+        * iteration within a ``for``-``in`` statement
+
+    Do we/will we support regex pattern matching?
+
+.. docnote::
+    How can you unwrap (access) an enum case with an associated value
+    besides using a ``switch`` statement?
+
+.. docnote::
+    You can nest patterns to an arbitrary depth (i.e., patterns can contain subpatterns).
+    Is this true?
+
+.. docnote::
+    How important are the concepts of "irrefutable" and "refutable" to expose to readers,
+    even if we don't use those terms explicitly? [...]
+
+    Is this the right way to understand them?:
+    Refutable patterns can fail to match a value; irrefutable patterns never fail to match.
+    A pattern is irrefutable if and only if every one of its subpatterns are irrefutable.
+    Pattern matching thus can fail or succeed. Is there any other possible result from
+    pattern matching? For instance, pattern matching in Haskell can also "diverge".
+
+.. docnote::
+    Is it true that patterns always appear on the left-hand side on an assignment? [...]
+
+    ``var a = 1`` (``a`` is a pattern); ``var b = a`` (``b`` is a pattern, ``a`` is an expression).
+
+.. docnote::
+    How up to date is the top-level pattern grammar in the LangRef?
+    For instance, there is an 'is' pattern but no 'as' pattern.
+
+.. docnote::
+    We removed the syntactic category "pattern-typed" and "pattern-atom".
+    Also changed "pattern-var" to "value-pattern" now that it covers "let" and "var".
+    Are these changes ok? Here's the original LangRef grammar for comparison: [...]
+
+    * pattern-atom ::= pattern-var
+    * pattern-atom ::= pattern-any
+    * pattern-atom ::= pattern-tuple
+    * pattern-atom ::= pattern-is
+    * pattern-atom ::= pattern-enum-element
+    * pattern-atom ::= expr
+    * pattern      ::= pattern-atom
+    * pattern      ::= pattern-typed
+    * pattern-typed ::= pattern-atom ':' type-annotation
+
+
+.. syntax-grammar::
+
+    Grammar of a pattern
+
+    pattern --> wildcard-pattern
+    pattern --> is-pattern
+    pattern --> value-pattern type-annotation-OPT
+    pattern --> expression-pattern type-annotation-OPT
+    pattern --> enumerator-pattern
+    pattern --> tuple-pattern type-annotation-OPT
+
+Wildcard Pattern
+~~~~~~~~~~~~~~~~
+
+A :newTerm:`wildcard pattern` matches and ignores any value and consists of an underscore
+``_``. Use a wildcard pattern in situations where you don't care about the values being
+matched against. For example, the following code iterates through the closed range ``0..3``,
+ignoring the current value of range on each iteration of the loop::
+
+    for _ in 0...3 {
+        // Do something three times.
+    }
+
+.. Wildcard patterns are irrefutable.
+
+.. langref-grammar
+
+    pattern-any ::= '_'
+
+.. syntax-grammar::
+
+    Grammar of a wildcard pattern
+
+    wildcard-pattern --> ``_``
+
+.. docnote::
+    Any objection to renaming 'any' pattern to 'wildcard' pattern?
+
+.. _Patterns_ExpressionPattern:
+
+Expression Pattern
+~~~~~~~~~~~~~~~~~~
+
+.. docnote::
+    What are the restrictions on expression patterns? [...]
+
+    Here are some examples that we expected to work but didn't:
+
+    ::
+
+        for (_, 1) in points {}
+        <REPL Input>:1:9: error: expected pattern
+        for (_, 1) in points {}
+                ^
+        <REPL Input>:1:9: error: expected ',' separator
+        for (_, 1) in points {}
+                ^
+
+    Can't match against ``nil``:
+
+    ::
+
+        var opt : Int? = nil
+        // opt : Int? = <unprintable value>
+
+        switch opt {
+            case nil: ()
+            default: ()
+        }
+        <REPL Input>:2:6: error: expression does not type-check
+        case nil: ()
+            ^~~
+
+    But, this works:
+
+    ::
+
+        var opt1 : Int? = .None
+        // opt1 : Int? = <unprintable value>
+
+        switch opt1 {
+            case .None: println("None")
+            case _: ()
+        }
+        None
+
+    Can't match an array literal in a switch statement:
+
+    ::
+
+        let arr = [1,2,3]
+        // arr : Int[] = [1, 2, 3]
+
+        switch arr {
+            case [1,2,3]:
+            println("Yep!")
+            case _: ()
+        }
+        <REPL Input>:2:6: error: expression does not type-check
+        case [1,2,3]:
+            ^~~~~~~
+
+    Initially, we though this is because we don't have an array-literal-pattern in the grammar.
+    However, [1,2,3] is an expression (array-expression), so shouldn't this work?
+    For instance, this works:
+
+    ::
+
+        let a = 2
+        // a : Int = 2
+
+        switch 5 {
+            case a + 3:
+                println("Matched")
+            default: ()
+        }
+        Matched
+
+    (``a + 3`` is an expression.)
+
+
+.. syntax-grammar::
+
+    Grammar of an expression pattern
+
+    expression-pattern --> expression
+
+.. _Patterns_EnumeratorPattern:
+
+Enumerator Pattern
+~~~~~~~~~~~~~~~~~~
+
+.. docnote::
+    Is the grammar still correct?
+
+.. langref-grammar
+
+    pattern-enum-element ::= type-identifier? '.' identifier pattern-tuple?
+
+.. syntax-grammar::
+
+    Grammar of an enumerator pattern
+
+    enumerator-pattern --> type-identifier-OPT ``.`` identifier tuple-pattern-OPT
+
+.. _Patterns_TuplePattern:
+
+Tuple Pattern
+~~~~~~~~~~~~~
+
+.. docnote::
+    Is the grammar still correct?
+
+.. langref-grammar
+
+    pattern-tuple ::= '(' pattern-tuple-body? ')'
+    pattern-tuple-body ::= pattern-tuple-element (',' pattern-tuple-body)* '...'?
+    pattern-tuple-element ::= pattern
+    pattern-tuple-element ::= pattern '=' expr
+
+.. syntax-grammar::
+
+    Grammar of a tuple pattern
+
+    tuple-pattern --> ``(`` tuple-pattern-body-OPT ``)``
+    tuple-pattern-body --> tuple-pattern-element-list ``...``-OPT
+    tuple-pattern-element-list --> tuple-pattern-element | tuple-pattern-element ``,`` tuple-pattern-element-list
+    tuple-pattern-element --> pattern | pattern-initializer
+    tuple-patterns --> tuple-pattern tuple-patterns-OPT
+
 
 Other Topics
 ------------
