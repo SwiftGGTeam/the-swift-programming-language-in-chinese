@@ -3,17 +3,13 @@ Properties
 
 .. TODO: research and write up the story for @weak
 
-:newTerm:`Properties` are a way to associate values with a particular
-class, structure or enumeration.
-They take one of two forms:
-
-* :newTerm:`Stored properties`, which store a constant or named value alongside an instance
-* :newTerm:`Computed properties`, which calculate (rather than store) a value
+:newTerm:`Properties` associate values with a particular class, structure or enumeration.
+Stored properties store a constant or variable named value alongside an instance,
+whereas computed properties calculate (rather than store) a value.
 
 Stored and computed properties are usually associated with instances of a particular type.
 However, they can also be associated with the type itself.
-These kinds of properties are known as :newTerm:`type properties`,
-and are described in more detail below.
+Such properties are known as type properties.
 
 .. note::
 
@@ -29,9 +25,8 @@ and are described in more detail below.
 Stored Properties
 -----------------
 
-In its simplest form, a property is just a named value
+In its simplest form, a stored property is just a named value
 that is stored alongside an instance of a particular class or structure.
-Properties of this kind are known as :newTerm:`stored properties`.
 Stored properties can be either
 :newTerm:`variable stored properties` (introduced by the ``var`` keyword),
 or :newTerm:`constant stored properties` (introduced by the ``let`` keyword):
@@ -48,30 +43,28 @@ or :newTerm:`constant stored properties` (introduced by the ``let`` keyword):
    -> rangeOfThreeItems.firstValue = 6
    // the range now represents integer values 6, 7, and 8
 
-This example defines a structure called ``FixedLengthRange``,
+The example above defines a structure called ``FixedLengthRange``,
 which describes a range of integers
-whose range length cannot be changed once it has been created.
+whose range length cannot be changed once it is created.
 Instances of ``FixedLengthRange`` have
 a variable stored property called ``firstValue``,
 and a constant stored property called ``length``.
 In the example above, ``length`` is initialized when the new range is created,
 and cannot be changed thereafter, because it is a constant property.
 
-Constant stored properties are very similar to constant named values,
-in that their value cannot be changed once it has been initialized.
-Constant stored properties have slightly more flexibility, however,
-in that their value can be changed at any point until the initializer for
-the class or structure they belong to has completed its initialization.
-(Instance initialization is described in more detail in :doc:`Initialization`.)
+The value of a constant stored property can be changed
+at any point until the initializer for the class or structure it belongs to
+completes its initialization.
+Instance initialization is described in :doc:`Initialization`.
 
 .. _Properties_StoredPropertiesOfConstantStructureInstances:
 
 Stored Properties of Constant Structure Instances
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you create an instance of a structure,
-and assign that instance to a constant,
-you will *not* be able to modify its properties,
+If you create an instance of a structure
+and assign that instance to a constant property or constant named value,
+you cannot modify the instance's properties,
 even if they were declared as variable properties:
 
 .. testcode:: storedProperties
@@ -85,16 +78,17 @@ even if they were declared as variable properties:
    !! ~~~~~~~~~~~~~~~~~~~~~~~~~~~ ^
    // this will report an error, even thought firstValue is a variable property
 
-Because ``rangeOfFourItems`` has been declared as a constant (with the ``let`` keyword),
+Because ``rangeOfFourItems`` is declared as a constant named value (with the ``let`` keyword),
 it is not possible to change its ``firstValue`` property,
-even though it is a variable property.
+even though ``firstValue`` is a variable property.
 
 This behavior is due to the fact that structures are *value types*.
 When an instance of a value type is marked as being a constant,
 so are all of its properties.
 
 The same is not true for classes, which are *reference types*.
-If you asign an instance of a reference type to a constant,
+If you assign an instance of a reference type
+to a constant property or constant named value,
 you can still change that instance's variable properties.
 
 .. TODO: this explanation could still do to be improved.
@@ -112,16 +106,15 @@ Stored Properties and Instance Variables
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If you have experience with Objective-C,
-you may be familiar with the fact that it provides *two* ways
+you may know that it provides *two* ways
 to store values and references alongside instances of a class.
 In addition to properties,
-Objective-C also has the concept of :newTerm:`instance variables`,
-which are used as a 'backing' store for the values stored in a property.
+you can use instance variables as a 'backing' store for the values stored in a property.
 
 Swift unifies these two separate concepts into a single property declaration.
 There is no longer a distinction between properties and instance variables,
 and the backing store for a property is not accessed directly.
-This avoids potential confusion around how the value is accessed in different contexts,
+This avoids confusion about how the value is accessed in different contexts,
 and simplifies the property's declaration into a single, definitive statement.
 All of the information about the property –
 including its name, type, and memory management characteristics –
@@ -137,7 +130,7 @@ Computed Properties
 
 Classes and structures can also define :newTerm:`computed properties`,
 which do not actually store a value.
-Instead, they provide a :newTerm:`getter`, and an optional :newTerm:`setter`,
+Instead, they provide a getter, and an optional setter,
 to retrieve and set other properties and values indirectly.
 
 .. testcode:: computedProperties
@@ -173,30 +166,30 @@ to retrieve and set other properties and values indirectly.
 
 This example defines three structures for working with geometric shapes:
 
-* ``Point``, which encapsulates an ``(x, y)`` co-ordinate
+* ``Point``, which encapsulates an ``(x, y)`` coordinate
 * ``Size``, which encapsulates a ``width`` and a ``height``
-* ``Rect``, which defines a rectangle in terms of an origin point and a size
+* ``Rect``, which defines a rectangle by an origin point and a size
 
 The ``Rect`` structure also provides a computed property called ``center``.
 The current center position of a ``Rect`` can always be determined from its ``origin`` and ``size``,
-and so there is no need to actually store the center point as an explicit ``Point`` value.
+and so you don't need to store the center point as an explicit ``Point`` value.
 Instead, ``Rect`` defines a custom getter and setter for a computed variable called ``center``,
 to enable you to work with the rectangle's ``center`` as if it were a real stored property.
 
-This example creates a new ``Rect`` variable called ``square``.
+The example creates a new ``Rect`` variable called ``square``.
 The ``square`` variable is initialized with an origin point of ``(0, 0)``,
 and a width and height of ``10``.
-This is equivalent to the blue square in the diagram below.
+This square is represented by the blue square in the diagram below.
 
-The ``square`` variable's ``center`` property is then accessed via dot syntax (``square.center``).
-This causes the getter for ``center`` to be called,
+The ``square`` variable's ``center`` property is then accessed through dot syntax (``square.center``),
+which causes the getter for ``center`` to be called,
 to retrieve the current property value.
 Rather than returning an existing value,
-this actually calculates and returns a new ``Point`` to represent the center of the square.
-As can be seen above, this correctly returns a center point of ``(5, 5)``.
+the getter actually calculates and returns a new ``Point`` to represent the center of the square.
+As can be seen above, the getter correctly returns a center point of ``(5, 5)``.
 
-The ``center`` property is then set to a new value of ``(15, 15)``.
-This moves the square up and to the right,
+The ``center`` property is then set to a new value of ``(15, 15)``,
+which moves the square up and to the right,
 to the new position shown by the orange square in the diagram below.
 Setting the ``center`` property calls the setter for ``center``,
 which modifies the ``x`` and ``y`` values of the stored ``origin`` property,
@@ -241,15 +234,16 @@ Read-Only Computed Properties
 A computed property with a getter but no setter is known as a :newTerm:`read-only computed property`.
 Read-only computed properties enable you to
 define a property that will always return a value,
-and can be accessed via dot syntax,
+and can be accessed through dot syntax,
 but which cannot be set to a different value by users of your class or structure.
 
 .. note::
 
    Computed properties – including read-only computed properties –
-   are always declared as variable properties with the ``var`` keyword.
-   The ``let`` keyword is only ever used for constant properties,
-   to indicate that their value cannot be changed once it is set
+   must be declared as variable properties with the ``var`` keyword,
+   because their value is not fixed.
+   The ``let`` keyword is only used for constant properties,
+   to indicate that their values cannot be changed once they are set
    as part of instance initialization.
 
 The declaration of a read-only computed property can be simplified
@@ -269,14 +263,14 @@ by removing the ``get`` keyword:
    <- the volume of fourByFiveByTwo is 40.0
 
 This example defines a new structure called ``Cuboid``,
-which represents a 3D rectangular box with ``width``, ``height`` and ``depth`` properties.
+which represents a 3D rectangular box with ``width``, ``height``, and ``depth`` properties.
 This structure also has a read-only computed property called ``volume``,
 which calculates and returns the current volume of the cuboid.
 It doesn't make sense for ``volume`` to be settable,
-as it would be ambiguous as to which values of ``width``, ``height`` and ``depth``
+as it would be ambiguous as to which values of ``width``, ``height``, and ``depth``
 should be used for a particular ``volume`` value.
 Nonetheless, it is useful for a ``Cuboid`` to provide a read-only computed property
-to enable the outside world to discover its current calculated volume.
+to enable external users to discover its current calculated volume.
 
 .. note::
 
