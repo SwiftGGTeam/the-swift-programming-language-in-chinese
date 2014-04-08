@@ -27,12 +27,13 @@ Swift provides several ways to structure and control the flow of your code's exe
 For Loops
 ---------
 
-Use a ``for`` loop to iterate over multiple items in
-a range, sequence, collection, or progression.
-Swift provides two types of ``for`` loop:
+A ``for`` loop performs a set of statements a certain number of times.
+Swift provides two kinds of ``for`` loop:
 
-* ``for``-``in``
-* ``for``-``condition``-``increment``
+* ``for``-``in``, which performs a set of statements for each item in
+  a range, sequence, collection, or progression
+* ``for``-``condition``-``increment``, which performs a set of statements until
+  a specific condition is met, typically by incrementing a counter each time the loop ends
 
 .. _ControlFlow_ForIn:
 
@@ -275,10 +276,10 @@ While Loops
 A ``while`` loop performs a set of statements until a condition becomes ``false``.
 These kinds of loops are best used when
 the number of iterations is not known before the first iteration begins.
-Swift provides two variations of this loop:
+Swift provides two kinds of ``while`` loop:
 
-* ``while``, and
-* ``do``-``while``
+* ``while``, which evaluates its condition at the start of each pass through the loop
+* ``do``-``while``, which evaluates its condition at the end of each pass through the loop
 
 .. _ControlFlow_While:
 
