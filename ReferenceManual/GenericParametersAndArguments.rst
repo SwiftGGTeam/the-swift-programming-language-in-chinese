@@ -1,28 +1,12 @@
 Generic Parameters and Arguments
 ================================
 
-.. Resources to look at:
-    swift/docs/Generics.html
-    swift/lib/Parse/ParseGeneric.cpp
-    swift/include/swift/AST/Decl.h
-    Various test files in swift/test
-
-.. TODO: This intro section needs more work.
-
-In Swift, you can declare generic types---including generic classes, structures, and
-enumerations---functions, and initializers.
-Generics allow you to express the essential interface
-of a data structure or an algorithm without mentioning any particular,
-concrete data type.
-
-When you declare a generic type, function, or initializer,
-you specify the :newTerm:`type parameters` the generic type, function, or initializer
-can work with.
-These type parameters act as placeholders that
-are replaced by actual, concrete :newTerm:`type arguments`
-when a generic type is created or a generic function or initializer is called.
-This chapter describes the syntax and associated rules for generic parameters
-and arguments.
+This chapter describes parameters and arguments for generic types, functions, and
+initializers. When you declare a generic type, function, or initializer,
+you specify the type parameters that the generic type, function, or initializer
+can work with. These type parameters act as placeholders that
+are replaced by actual, concrete type arguments when an instance of a generic type is
+created or a generic function or initializer is called.
 
 For an overview of generics in Swift, see :doc:`../LanguageGuide/Generics`.
 
@@ -31,12 +15,13 @@ For an overview of generics in Swift, see :doc:`../LanguageGuide/Generics`.
 
 .. _GenericParametersAndArguments_GenericParameterClause:
 
+
 Generic Parameter Clause
 ------------------------
 
 A :newTerm:`generic parameter clause` specifies the type parameters of a generic
-type or function along with any associated contraints and requirements on those parameters.
-A generic parameter clause is enclosed in angle bracket (``< >``)
+type or function, along with any associated contraints and requirements on those parameters.
+A generic parameter clause is enclosed in angle brackets (<>)
 and has one of the following forms:
 
 .. syntax-outline::
@@ -49,20 +34,18 @@ each of which has the following form:
 
 .. syntax-outline::
 
-    <<#type parameter#> : <#constraints#>>
+    <#type parameter#> : <#constraint#>
 
 A generic parameter consists of a *type parameter* followed by
-zero or more *constraints*. The type parameter is simply the name
+an optional *constraint*. A :newTerm:`type parameter` is simply the name
 of a placeholder type
 (for instance, ``T``, ``U``, ``V``, ``KeyType``, ``ValueType``, and so on).
-Type parameters and any of their associated types are in scope for the rest of the
-type, function, or initializer declaration, including the signature of the function
+You have access to the type parameters (and any of their associated types) in the rest of the
+type, function, or initializer declaration, including in the signature of the function
 or initializer.
 
-The *constraints* specify that a type parameter inherits
-from a specific class or conforms to any number of protocols
-(either a comma-separated list of protocols or a single protocol composition)
-or both.
+The *constraint* specifies that a type parameter inherits
+from a specific class or conforms to a protocol or protocol composition.
 For instance, in the generic function below, the generic parameter ``T : Comparable``
 indicates that any type argument substituted
 for the type parameter ``T`` must conform to the ``Comparable`` protocol.
@@ -76,11 +59,13 @@ for the type parameter ``T`` must conform to the ``Comparable`` protocol.
         return x
     }
 
-Because ``Int`` and ``Double``, for example, conform to the ``Comparable`` protocol,
-this function accepts arguments of either type. Unlike with generic types, you don't
+Because ``Int`` and ``Double``, for example, both conform to the ``Comparable`` protocol,
+this function accepts arguments of either type. In contrast with generic types, you don't
 specify a generic argument clause when you use a generic function or initializer.
 The type arguments are instead inferred from the type of the arguments passed
-to the function or initializer::
+to the function or initializer.
+
+::
 
     min(17, 42) // T is inferred to be Int
     min(3.14159, 2.71828) // T is inferred to be Double
@@ -94,15 +79,20 @@ Where Clauses
 You can specify additional requirements on type parameters and their associated types
 by including a ``where`` clause after the *generic parameter list*.
 A ``where`` clause consists of the keyword ``where``,
-followed by comma-separated list of one or more *requirements*.
+followed by a comma-separated list of one or more *requirements*.
 
-The *requirements* in a ``where`` clause specify that a type paramater conforms
-to a protocol or protocol composition. Although you can express all of the constrains
-of a generic parameter in the requirements of a ``where`` clause
+The *requirements* in a ``where`` clause specify that a type paramater inherits from
+a class or conforms to a protocol or protocol composition.
+Although the ``where`` clause provides syntactic
+sugar for expressing simple constraints on type parameters
 (for instance, ``T : Comparable`` is equivalent to ``T where T : Comparable`` and so on),
-you can also express two kinds of constraints on the associated types of the type parameters.
+you can use it to provide more complex constraints on type parameters
+and their associated types. For instance, you can express the constraints that
+a generic type ``T`` inherits from a class ``C`` and conforms to a protocol ``P`` as
+``<T where T : C, T : P>``.
 
-You can constrain the associated types of type parameters to conform to protocols.
+As mentioned above,
+you can constrain the associated types of type parameters to conform to protocols.
 For example, the generic parameter clause ``<T : Generator where T.Element : Equatable>``
 specifies that ``T`` conforms to the ``Generator`` protocol
 and the associated type of ``T``, ``T.Element``, conforms to the ``Equatable`` protocol
@@ -113,9 +103,9 @@ You can also specify the requirement that two types be identical,
 using the ``==`` operator. For example, the generic parameter clause
 ``<T : Generator, U : Generator where T.Element == U.Element>``
 expresses the constraints that ``T`` and ``U`` conform to the ``Generator`` protocol
-and their associated types must be identical.
+and that their associated types must be identical.
 
-Any concrete, type argument substituted for a type parameter must
+Any type argument substituted for a type parameter must
 meet all the constraints and requirements placed on the type parameter.
 
 You can overload a generic function or initializer by providing different
@@ -125,9 +115,6 @@ the compiler uses these constraints to resolve which overloaded function
 or initializer to invoke.
 
 You can subclass a generic class, but the subclass must also be a generic class.
-
-.. NOTE: Not sure where to put this last sentence.
-    Maybe it just belongs in Class Declaration.
 
 .. langref-grammar
 
@@ -148,7 +135,9 @@ You can subclass a generic class, but the subclass must also be a generic class.
 
     generic-parameter-clause --> ``<`` generic-parameter-list requirement-clause-OPT ``>``
     generic-parameter-list --> generic-parameter | generic-parameter ``,`` generic-parameter-list
-    generic-parameter --> type-name type-inheritance-clause-OPT | type-name ``:`` protocol-composition-type
+    generic-parameter --> type-name
+    generic-parameter --> type-name ``:`` type-identifier
+    generic-parameter --> type-name ``:`` protocol-composition-type
 
     requirement-clause --> ``where`` requirement-list
     requirement-list --> requirement | requirement ``,`` requirement-list
@@ -170,7 +159,7 @@ Generic Argument Clause
 
 A :newTerm:`generic argument clause` specifies the type arguments of a generic
 type.
-A generic argument clause is enclosed in angle bracket (``< >``)
+A generic argument clause is enclosed in angle brackets (<>)
 and has the following form:
 
 .. syntax-outline::
@@ -178,7 +167,7 @@ and has the following form:
     <<#generic argument list#>>
 
 The *generic argument list* is a comma-separated list of type arguments.
-Each type argument is the name of an actual, concrete type that replaces
+A :newTerm:`type argument` is the name of an actual concrete type that replaces
 a corresponding type parameter in the generic parameter clause of a generic type.
 The result is a specialized version of that generic type. As an example,
 the Swift Standard Library defines a generic dictionary type as::
@@ -191,17 +180,19 @@ the Swift Standard Library defines a generic dictionary type as::
 
 The specialized version of the generic ``Dictionary`` type, ``Dictionary<String, Int>``
 is formed by replacing the generic parameters ``KeyType: Hashable`` and ``ValueType``
-with the concrete, type arguments ``String`` and ``Int``. Each type argument must satisfy
+with the concrete type arguments ``String`` and ``Int``. Each type argument must satisfy
 all the contraints of the generic parameter it replaces, including any additional
 requirements specified in a ``where`` clause. In the example above,
-the ``KeyType`` type parameter is constrained to conform to the ``Hashable`` protocol,
+the ``KeyType`` type parameter is constrained to conform to the ``Hashable`` protocol
 and therefore ``String`` must also conform to the ``Hashable`` protocol.
 
 You can also replace a type parameter with a type argument that is itself
 a specialized version of a generic type (provided it satisfies the appropriate
 constraints and requirements). For example, you can replace the type parameter
 ``T`` in ``Array<T>`` with a specialized version of an array, ``Array<Int>``,
-to form an array whose elements are themselves arrays of integers::
+to form an array whose elements are themselves arrays of integers.
+
+::
 
     let arrayOfArrays : Array<Array<Int>> = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
 

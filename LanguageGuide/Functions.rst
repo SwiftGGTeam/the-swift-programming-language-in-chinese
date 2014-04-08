@@ -230,7 +230,7 @@ as part of the function return value assignment:
    <- The text from after the splitter is 'world'
 
 This example sets two constants called ``first`` and ``possibleSecond``
-to equal the two output values stored in the ``splitOnFirst()`` function's
+to equal the two output values stored in the ``splitOnFirst`` function's
 return tuple value.
 These two constants can then be used independently of each other.
 Here, the value stored in the optional second tuple value is unwrapped and accessed
@@ -697,7 +697,7 @@ Likewise, the second selector part, ``backwards``,
 is also used as the name of the Boolean indicator of whether the string
 should be converted into a column of characters in reverse order.
 
-Note that this example calls ``print()`` rather than ``println()``
+Note that this example calls ``print`` rather than ``println``
 to print its output, as the ``output`` string already has a line break
 at the end of the returned string.
 
@@ -718,33 +718,251 @@ Inout Parameters
 .. inout properties and a general discussion of byref / byvalue
 .. presumably you can't pass a constant as the argument for an inout parameter
 
-.. _Functions_FunctionsAsParametersAndReturnTypes:
+.. _Functions_FunctionTypes:
 
-Functions as Parameters and Return Types
-----------------------------------------
+Function Types
+--------------
 
-.. write-me::
+Every function has a specific :newTerm:`function type`,
+made up of the parameter types and the return type of the function.
 
-.. functions can be passed in as parameters, and can be returned as return values
+For example:
 
-.. _Functions_FunctionBinding:
+.. testcode:: functionTypes
 
-Function Binding
+   -> func addTwoInts(a: Int, b: Int) -> Int {
+         return a + b
+      }
+   >> addTwoInts
+   << // r0 : (a: Int, b: Int) -> Int = <unprintable value>
+   -> func multiplyTwoInts(a: Int, b: Int) -> Int {
+         return a * b
+      }
+   >> multiplyTwoInts
+   << // r1 : (a: Int, b: Int) -> Int = <unprintable value>
+
+This example defines two simple mathematical functions
+called ``addTwoInts`` and ``multiplyTwoInts``.
+These functions each take two ``Int`` values,
+and return an ``Int`` value which is the result of
+performing an appropriate mathematical operation.
+
+The type of both of these functions is ``(Int, Int) -> Int``.
+This can be read as:
+
+“A function type that has two parameters, both of type ``Int``,
+and that returns a value of type ``Int``.”
+
+.. QUESTION: does their "type" also include the parameter label names?
+
+Here's another example, for a function with no parameters or return value:
+
+.. testcode:: functionTypes
+
+   -> func printHelloWorld() {
+         println("hello, world")
+      }
+   >> printHelloWorld
+   << // r2 : () -> () = <unprintable value>
+
+The type of this function is ``() -> ()``,
+or “a function that has no parameters, and returns ``Void``.”
+Functions that don't specify a return value always return ``Void``,
+which is equivalent to an empty tuple in Swift, shown as ``()``.
+
+.. _Functions_UsingFunctionTypes:
+
+Using Function Types
+~~~~~~~~~~~~~~~~~~~~
+
+Function types can be used just like any other types in Swift.
+For example, you can define a constant or variable to be of a function type,
+and assign an appropriate function to that variable:
+
+.. testcode:: functionTypes
+
+   -> var mathFunction: (Int, Int) -> Int = addTwoInts
+   << // mathFunction : (Int, Int) -> Int = <unprintable value>
+
+This can be read as:
+
+“Define a variable called ``mathFunction``,
+which has a type of ‘a function that takes two ``Int`` values,
+and returns an ``Int`` value.’
+Set this new variable to refer to the function called ``addTwoInts``.”
+
+The ``addTwoInts`` function has the same type as the ``mathFunction`` variable,
+and so this assignment is allowed by Swift's type-checker.
+
+You can now call the assigned function with the name ``mathFunction``:
+
+.. testcode:: functionTypes
+
+   -> println("Result: \(mathFunction(2, 3))")
+   <- Result: 5
+
+A different function with the same matching type can be assigned to the same variable,
+in the same way as for non-function types:
+
+.. testcode:: functionTypes
+
+   -> mathFunction = multiplyTwoInts
+   -> println("Result: \(mathFunction(2, 3))")
+   <- Result: 6
+
+As with any other type,
+you can leave it to Swift to infer the function type
+when you assign a function to a constant or variable:
+
+.. testcode:: functionTypes
+
+   -> let anotherMathFunction = addTwoInts
+   << // anotherMathFunction : (a: Int, b: Int) -> Int = <unprintable value>
+   // anotherMathFunction is inferred to be of type (Int, Int) -> Int
+
+.. _Functions_FunctionTypesAsParameterTypes:
+
+Function Types as Parameter Types
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+A function type such as ``(Int, Int) -> Int`` can be used as
+a parameter type for another function.
+This enables you to leave some aspects of a function's implementation
+for the function's caller to provide when the function is called.
+
+Here's an example to print the results of the math functions from above:
+
+.. testcode:: functionTypes
+
+   -> func printMathResult(mathFunction: (Int, Int) -> Int, a: Int, b: Int) {
+         println("Result: \(mathFunction(a, b))")
+      }
+   -> printMathResult(addTwoInts, 3, 5)
+   <- Result: 8
+
+This example defines a function called ``printMathResult``, which has three parameters.
+The first parameter is called ``mathFunction``, and is of type ``(Int, Int) -> Int``.
+You can pass any function of that type as the argument for this first parameter.
+The second and third parameters are called ``a`` and ``b``, and are both of type ``Int``.
+These are used as the two input values for the provided math function.
+
+When ``printMathResult`` is called above,
+it is passed the ``addTwoInts`` function, and the integer values ``3`` and ``5``.
+It calls the provided function with the values ``3`` and ``5``, and prints the result of ``8``.
+
+The role of ``printMathResult`` is to print the result of some appropriate function.
+It doesn't need to know or care what that function's implementation actually does –
+it just cares that the function is of the correct type.
+This enables ``printMathResult`` to hand off some of its functionality
+to the caller of the function in a type-safe way.
+
+.. _Functions_FunctionTypesAsReturnTypes:
+
+Function Types as Return Types
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+A function type can be used as the return type of another function.
+This is indicated by writing a complete function type
+immediately after the return indicator (``->``) of the returning function.
+
+To help illustrate this, here are two simple functions,
+``stepForward`` and ``stepBackward``,
+which return a value of one more / one less than their input value.
+Both of these functions have a type of ``(Int) -> Int``:
+
+.. testcode:: functionTypes
+
+   -> func stepForward(input: Int) -> Int {
+         return input + 1
+      }
+   -> func stepBackward(input: Int) -> Int {
+         return input - 1
+      }
+
+Here's a function called ``chooseStepFunction``,
+whose return type is “a function of type ``(Int) -> Int``”.
+It chooses whether to return
+the ``stepForward`` function or the ``stepBackward`` function
+based on a Boolean parameter called ``backwards``:
+
+.. testcode:: functionTypes
+
+   -> func chooseStepFunction(backwards: Bool) -> (Int) -> Int {
+         return backwards ? stepBackward : stepForward
+      }
+
+``chooseStepFunction`` can now be used to obtain a function
+that will step in one direction or the other.
+For example:
+
+.. testcode:: functionTypes
+
+   -> var currentValue = 3
+   << // currentValue : Int = 3
+   -> let moveNearerToZero = chooseStepFunction(currentValue > 0)
+   << // moveNearerToZero : (Int) -> Int = <unprintable value>
+   // moveNearerToZero now refers to the stepBackward() function
+
+This example works out whether a positive or negative step is needed
+to move a variable called ``currentValue`` progressively closer to zero.
+``currentValue`` has an initial value of ``3``,
+which means that ``currentValue > 0`` returns ``true``,
+causing ``chooseStepFunction`` to return the ``stepBackward`` function.
+A reference to the returned function is stored in a constant called ``moveNearerToZero``.
+
+Now that ``moveNearerToZero`` refers to the correct function,
+it can be used to count to zero:
+
+.. testcode:: functionTypes
+
+   -> println("Counting to zero:")
+   </ Counting to zero:
+   -> while currentValue != 0 {
+         println("\(currentValue)... ")
+         currentValue = moveNearerToZero(currentValue)
+      }
+   -> println("zero!")
+   </ 3...
+   </ 2...
+   </ 1...
+   </ zero!
+
+.. _Functions_NestedFunctions:
+
+Nested Functions
 ----------------
 
-.. write-me::
+Functions can be :newTerm:`nested` inside other functions.
+As its name suggests, a nested function is simply
+a function written within the body of another function.
+The nested function is hidden from the outside world,
+but can still be used by its enclosing function.
 
-.. variables can be bound to functions, and then called e.g. var fork = g.fork; fork() .
-.. functions are reference types
-.. you can get a function that refers to a method, either with or without the 'self' argument already being bound:
-.. class C {
-..    func foo(x: Int) -> Float { ... }
-.. }
-.. var c = C()
-.. var boundFunc = c.foo 	// a function with type (Int) -> Float
-.. var unboundFunc = C.foo // a function with type (C) -> (Int) -> Float
-.. selector-style methods can be referenced as foo.bar:bas:
-   (see Doug's comments from the 2014-03-12 release notes)
+The ``chooseStepFunction`` example above can be rewritten
+to use and return nested functions:
+
+.. testcode:: nestedFunctions
+
+   -> func chooseStepFunction(backwards: Bool) -> (Int) -> Int {
+         func stepForward(input: Int) -> Int { return input + 1 }
+         func stepBackward(input: Int) -> Int { return input - 1 }
+         return backwards ? stepBackward : stepForward
+      }
+   -> var currentValue = -4
+   << // currentValue : Int = -4
+   -> let moveNearerToZero = chooseStepFunction(currentValue > 0)
+   << // moveNearerToZero : (Int) -> Int = <unprintable value>
+   // moveNearerToZero now refers to the nested stepForward() function
+   -> while currentValue != 0 {
+         println("\(currentValue)... ")
+         currentValue = moveNearerToZero(currentValue)
+      }
+   -> println("zero!")
+   </ -4...
+   </ -3...
+   </ -2...
+   </ -1...
+   </ zero!
 
 .. _Functions_CurriedFunctions:
 

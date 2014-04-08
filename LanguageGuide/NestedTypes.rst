@@ -77,7 +77,7 @@ This computed property considers the rank of the card,
 and initializes a new ``Values`` instance with appropriate values based on its rank.
 It uses special values for ``Jack``, ``Queen``, ``King`` and ``Ace``.
 For the numeric cards, it converts the rank's raw ``String`` value into an ``Int?``
-using ``String``'s ``toInt()`` method.
+using ``String``'s ``toInt`` method.
 Because every numeric card value is known to definitely convert to an ``Int``,
 the value of this optional ``Int`` is accessed via an exclamation mark (``!``)
 without being checked, and is used as the first value of the ``Values`` structure.

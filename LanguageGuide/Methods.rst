@@ -41,9 +41,9 @@ This example defines a simple ``Counter`` class,
 which keeps track of the number of times something has happened.
 It defines three instance methods:
 
-* ``increment()``, which simply increments the counter by ``1``
+* ``increment``, which simply increments the counter by ``1``
 * ``incrementBy(amount: Int)``, which increments the counter by an arbitrary integer amount, and
-* ``reset()``, which resets the counter back to zero
+* ``reset``, which resets the counter back to zero
 
 It also declares a variable property, ``count``,
 for keeping track of the current counter value.
@@ -76,7 +76,7 @@ which is exactly equivalent to the instance itself.
 This implicit ``self`` property can be used
 to refer to the current instance within its own instance methods.
 
-For example, the ``increment()`` method from above could have been written like this:
+For example, the ``increment`` method from above could have been written like this:
 
 ::
 
@@ -157,7 +157,7 @@ before the ``func`` keyword for that method:
    -> println("The point is now at (\(somePoint.x), \(somePoint.y))")
    <- The point is now at (3.0, 4.0)
 
-The ``Point`` structure above defines a mutating ``moveBy()`` method,
+The ``Point`` structure above defines a mutating ``moveBy`` method,
 which moves a ``Point`` instance by a certain amount.
 Instead of returning a new point,
 this method actually modifies the point on which it is called.
@@ -205,7 +205,7 @@ The ``Point`` example shown above could have been written in the following way i
    >> println("The point is now at (\(somePoint.x), \(somePoint.y))")
    << The point is now at (3.0, 4.0)
 
-This version of the mutating ``moveBy()`` method creates a brand new structure
+This version of the mutating ``moveBy`` method creates a brand new structure
 whose ``x`` and ``y`` values are set to the target location.
 The end result of calling this alternative version of the method
 will be exactly the same as for calling the earlier version.
@@ -238,7 +238,7 @@ a different member from the same enumeration:
 This example defines an enumeration for a three-state switch.
 The switch cycles between three different power states
 (``Off``, ``Low`` and ``High``)
-every time its ``next()`` method is called.
+every time its ``next`` method is called.
 
 .. _Methods_TypeMethods:
 
@@ -251,3 +251,20 @@ Type Methods
 .. mention that type methods can access type properties (and other type methods?)
    without needing to reference the type's name,
    as they also get an implicit ``self`` parameter.
+
+.. _Methods_MethodBinding:
+
+Method Binding
+--------------
+
+.. write-me::
+
+.. you can get a function that refers to a method, either with or without the 'self' argument already being bound:
+.. class C {
+..    func foo(x: Int) -> Float { ... }
+.. }
+.. var c = C()
+.. var boundFunc = c.foo 	// a function with type (Int) -> Float
+.. var unboundFunc = C.foo // a function with type (C) -> (Int) -> Float
+.. selector-style methods can be referenced as foo.bar:bas:
+   (see Doug's comments from the 2014-03-12 release notes)

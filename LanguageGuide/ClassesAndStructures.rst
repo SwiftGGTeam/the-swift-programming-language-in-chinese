@@ -102,15 +102,16 @@ Both place their entire definition within a pair of braces:
 
 .. note::
 
-   Whenever you define a new class or structure,
+   As with enumerations,
+   whenever you define a new class or structure,
    you are effectively defining a brand new Swift type.
-   Types should be given ``UpperCamelCase`` names
-   (such as ``SomeClass`` and ``SomeStructure`` here),
+   As a result, you should give your classes and structures ``UpperCamelCase`` names
+   (such as ``SomeClass`` and ``SomeStructure`` here)
    to match the capitalization of standard Swift types
    (such as ``String``, ``Int``, and ``Bool``).
-   Named values, functions, and methods should always be given
+   Conversely, properties and methods should always be given
    ``lowerCamelCase`` names
-   (such as ``allowedEntry`` and ``contentHeight``)
+   (such as ``frameRate`` and ``incrementCount``)
    to differentiate them from type names.
 
 Here's an example of a structure definition and a class definition:
@@ -438,15 +439,6 @@ instead, they both *refer* to a ``VideoMode`` instance behind the scenes.
 It is the ``frameRate`` property of the underlying ``VideoMode`` that is changed,
 not the values of the constant references to that ``VideoMode``.
 
-.. note::
-
-   Classes are the only reference types in Swift.
-   If you want to create a new type that is passed by reference rather than by value,
-   you should define it as a class in your code.
-
-.. QUESTION: This isn't strictly true. Functions are reference types too.
-   Does this matter for the point I'm making here?
-
 .. TODO: reiterate here that arrays and dictionaries are value types rather than reference types,
    and demonstrate what that means for the values they store
    when they themselves are value types or reference types.
@@ -585,38 +577,3 @@ is described in :ref:`AdvancedOperators_EquivalenceOperators`.
    The identity operators are not used with structure and enumeration types,
    because they are value types that store their values directly,
    rather than referencing an instance of that type behind the scenes.
-
-.. _ClassesAndStructures_TypeAliases:
-
-Type Aliases
-------------
-
-:newTerm:`Type aliases` are a way to define an alternative name
-(or :newTerm:`alias`) for an existing type.
-Type aliases are defined with the ``typealias`` keyword:
-
-.. testcode:: typeAliases
-
-   -> typealias BlackjackCard = PlayingCard
-
-Type aliases can be useful when you want to refer to an existing type
-by a name that is contextually more appropriate.
-Once you have defined a type alias,
-you can use the alias anywhere you might use the original name:
-
-.. testcode:: typeAliases
-
-   -> let theQueenOfHearts = BlackjackCard(.Queen, .Hearts)
-   << // theQueenOfHearts : PlayingCard = PlayingCard(<unprintable value>, <unprintable value>)
-
-.. note::
-
-   Type aliases do not actually define a new type in Swift.
-   They are just an alternative name for an existing type.
-   In the example above,
-   ``theQueenOfHearts`` is of type ``PlayingCard``, not ``BlackjackCard``.
-
-.. TODO: this example used to have the PlayingCard example above it.
-   It needs to change to be something else, as currently it fails swifttest.
-   However, I'm holding off updating it until I hear back from the core design team
-   as to whether they want to mention type aliases here at all.

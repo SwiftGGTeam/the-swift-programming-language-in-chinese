@@ -51,10 +51,16 @@ This enables the Swift compiler to optimize the performance of the collection.
    The difference between value types and reference types is covered in detail
    in :ref:`ClassesAndStructures_ValueTypesAndReferenceTypes`.
 
+.. TODO: provide an example of what this means in practice
+   (similar to the Resolution examples in Classes and Structures)
+
 .. _CollectionTypes_Arrays:
 
 Arrays
 ------
+
+.. TODO: update this section to use (and eventually prefer) T[] syntax,
+   based on [Contributor 7746]'s feedback
 
 An :newTerm:`array` stores multiple values of the same type in an ordered list.
 The same value is allowed to appear in an array multiple times at different positions.
@@ -137,7 +143,7 @@ by checking its read-only ``count`` property:
    which does not allow you to assign a new value to count.
    I'll need to check what the story is for resizing arrays when NewArray lands.
 
-New items can be added to the end of the array by calling its ``append()`` method:
+New items can be added to the end of the array by calling its ``append`` method:
 
 .. testcode:: arraysInferred
 
@@ -174,7 +180,7 @@ Subscript syntax can be used to change an existing value at a given index:
    and expect the value in the array to change,
    because String is a value type?
 
-An item can be inserted into the array at a specified index by using the ``insert()`` method:
+An item can be inserted into the array at a specified index by using the ``insert`` method:
 
 .. testcode:: arraysInferred
 
@@ -183,10 +189,10 @@ An item can be inserted into the array at a specified index by using the ``inser
    /> \"\(shoppingList[0])\" is now the first item in the list
    </ "Maple Syrup" is now the first item in the list
 
-This call to the ``insert()`` method inserts a new value of ``"Maple Syrup"``
+This call to the ``insert`` method inserts a new value of ``"Maple Syrup"``
 at an index of ``0``, i.e. at the very beginning of the shopping list.
 
-Similarly, an item can be removed from the array using the ``removeAt()`` method:
+Similarly, an item can be removed from the array using the ``removeAt`` method:
 
 .. testcode:: arraysInferred
 
@@ -383,7 +389,7 @@ by checking its read-only ``count`` property:
    I should change the wording of the paragraph here to avoid making it sound as if
    Dictionary's count property is read-only, like array's.
 
-New items can be added to the dictionary by calling its ``add()`` method
+New items can be added to the dictionary by calling its ``add`` method
 and passing in a new key and value of the correct types:
 
 .. testcode:: dictionariesInferred
@@ -396,7 +402,7 @@ and passing in a new key and value of the correct types:
 .. TODO: note that add() returns a Bool to indicate whether or not
    the action was an add or a replace.
 
-The ``add()`` method actually returns a Boolean value,
+The ``add`` method actually returns a Boolean value,
 to indicate whether or not a value already existed in the dictionary for that key.
 (This return value is ignored in the example above).
 The return value is ``true`` if the key was already being used,
@@ -411,7 +417,7 @@ and ``false`` if it was not in use:
 
 .. note::
 
-   If you try and use the ``add()`` method to add a value for a key that already exists,
+   If you try and use the ``add`` method to add a value for a key that already exists,
    the existing value for that key will not be replaced in the dictionary.
 
 .. TODO: I've filed rdar://16336109 about the fact that
@@ -431,7 +437,7 @@ However, for a dictionary, the value within the square brackets must be
 a key of the appropriate type for that dictionary.
 
 You can use subscript syntax to add a value into a dictionary,
-as an alternative to the ``add()`` method described above:
+as an alternative to the ``add`` method described above:
 
 .. testcode:: dictionariesInferred
 
@@ -468,9 +474,9 @@ the key that you use must already be in the dictionary:
 .. NOTE: I've filed rdar://16335854 to suggest that Array<T> and Dictionary<KeyType, T>
    subscripts should return Optional<T>.
 
-As an alternative, you can use the dictionary's ``find()`` method
+As an alternative, you can use the dictionary's ``find`` method
 to try and find a value for a particular key.
-The ``find()`` method returns an *optional* value
+The ``find`` method returns an *optional* value
 which can be checked and unwrapped using optional binding:
 
 .. testcode:: dictionariesInferred
@@ -484,7 +490,7 @@ which can be checked and unwrapped using optional binding:
 
 (Optionals and optional binding are described in :ref:`BasicTypes_Optionals`.)
 
-You can remove a key-value pair from the dictionary by using the ``deleteKey()`` method:
+You can remove a key-value pair from the dictionary by using the ``deleteKey`` method:
 
 .. testcode:: dictionariesInferred
 
