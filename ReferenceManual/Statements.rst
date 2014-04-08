@@ -462,8 +462,9 @@ not out of the ``switch`` statement itself.
 .. langref-grammar
 
     stmt-switch ::= 'switch' expr-basic '{' stmt-switch-case* '}'
-    stmt-switch-case ::= (case-label+ | default-label) brace-item*
-    case-label ::= 'case' pattern (',' pattern)* ('where' expr)? ':'
+    stmt-switch-case ::= (case-label | default-label) brace-item+
+
+    case-label ::= 'case' pattern ('where' expr)? (',' pattern ('where' expr)?)* ':'
     default-label ::= 'default' ':'
 
 
@@ -473,10 +474,10 @@ not out of the ``switch`` statement itself.
 
     switch-statement --> ``switch`` expression ``{`` switch-cases-OPT ``}``
     switch-cases --> switch-case switch-cases-OPT
-    switch-case --> case-labels statements-OPT | default-label statements-OPT
+    switch-case --> case-label statements | default-label statements
 
-    case-labels --> case-label case-labels-OPT
-    case-label --> ``case`` pattern-list guard-clause-OPT ``:``
+    case-label --> ``case`` case-item-list ``:``
+    case-item-list --> pattern guard-clause-OPT | pattern guard-clause-OPT ``,`` case-item-list
     default-label --> ``default:``
 
     guard-clause --> ``where`` guard-expression
