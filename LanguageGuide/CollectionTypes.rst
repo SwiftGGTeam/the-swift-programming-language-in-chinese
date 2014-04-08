@@ -184,7 +184,7 @@ An item can be inserted into the array at a specified index by using the ``inser
 
 .. testcode:: arraysInferred
 
-   -> shoppingList.insert("Maple Syrup", 0)
+   -> shoppingList.insert(0, "Maple Syrup")
    // shoppingList now contains 4 items
    /> \"\(shoppingList[0])\" is now the first item in the list
    </ "Maple Syrup" is now the first item in the list
@@ -192,14 +192,19 @@ An item can be inserted into the array at a specified index by using the ``inser
 This call to the ``insert`` method inserts a new value of ``"Maple Syrup"``
 at an index of ``0``, i.e. at the very beginning of the shopping list.
 
-Similarly, an item can be removed from the array using the ``removeAt`` method:
+Similarly, an item can be removed from the array using the ``removeAt`` method.
+This method removes the item, and returns the removed item
+(although you can ignore the returned value if you do not need it):
 
 .. testcode:: arraysInferred
 
-   -> shoppingList.removeAt(0)
+   -> let mapleSyrup = shoppingList.removeAt(0)
+   << // mapleSyrup : String = "Maple Syrup"
    // the item that was at index 0 has just been removed
    /> shoppingList now contains \(shoppingList.count) items, and no Maple Syrup
    </ shoppingList now contains 3 items, and no Maple Syrup
+   /> the mapleSyrup constant is now equal to the removed \"\(mapleSyrup)\" string
+   </ the mapleSyrup constant is now equal to the removed "Maple Syrup" string
 
 Any gaps in the array are closed when an item is removed,
 and so the value at index ``0`` is once again equal to ``"Six eggs"``:
