@@ -368,7 +368,7 @@ This parameter is expecting a function of type ``(String, String) -> Bool``.
 This means that the ``String`` and ``Bool`` types do not need to be written
 as part of the closure expression.
 Because the return type is inferred,
-the return indicator (``->``) can also be omitted:
+the return arrow (``->``) can also be omitted:
 
 .. testcode:: closureSyntax
 
