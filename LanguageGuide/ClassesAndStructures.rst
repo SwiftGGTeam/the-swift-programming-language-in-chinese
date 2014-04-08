@@ -59,25 +59,25 @@ Comparing Classes and Structures
 Classes and structures in Swift have many things in common.
 Both can:
 
-* Define properties to store values (see :doc:`Properties`)
-* Define methods to provide functionality (see :doc:`Methods`)
+* Define properties to store values
+* Define methods to provide functionality
 * Define subscripts to provide access to their values using subscript syntax
-  (see :doc:`Subscripts`)
 * Define initializers to set up their initial state
-  (see :doc:`Initialization`)
 * Be extended to expand their functionality beyond a default implementation
-  (see :doc:`Extensions`)
 * Conform to protocols to provide standard functionality of a certain type
-  (see :doc:`Protocols`)
+
+For more information, see
+:doc:`Properties`, :doc:`Methods`, :doc:`Subscripts`, :doc:`Initialization`,
+:doc:`Extensions`, and :doc:`Protocols`.
 
 Classes have additional capabilities that structures do not:
 
 * Inheritance, which enables one class to inherit the characteristics of another
-  (see :doc:`Inheritance`)
 * Type casting, which enables you to check and interpret the type of a class instance at runtime
-  (see :doc:`TypeCasting`)
 * Deinitializers, which enable an instance of a class to clean up after itself
-  (see :doc:`Initialization`)
+
+For more information, see
+:doc:`Inheritance`, :doc:`TypeCasting`, and :doc:`Initialization`.
 
 .. _ClassesAndStructures_DefinitionSyntax:
 

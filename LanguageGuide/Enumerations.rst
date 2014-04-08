@@ -25,22 +25,19 @@ strings, characters, or any of the integer or floating-point number types.
 In addition, Swift enumerations can:
 
 * Define computed properties to provide additional information about their values
-  (see :doc:`Properties`)
 * Define methods to provide functionality related to the values they represent
-  (see :doc:`Methods`)
 * Define subscripts to provide access to subscriptable aspects of
   the associated values they store
-  (see :doc:`Subscripts`)
 * Define initializers to provide an initial member value
-  (see :doc:`Initialization`)
 * Be extended to expand their functionality beyond their original implementation
-  (see :doc:`Extensions`)
 * Conform to protocols to provide standard functionality of a certain type
-  (see :doc:`Protocols`)
+
+For more information, see
+:doc:`Properties`, :doc:`Methods`, :doc:`Subscripts`, :doc:`Initialization`,
+:doc:`Extensions`, and :doc:`Protocols`.
 
 .. TODO: this chapter should probably mention that enums without associated values
    are hashable and equatable by default (and what that means in practice)
-
 
 .. _Enumerations_EnumerationSyntax:
 
