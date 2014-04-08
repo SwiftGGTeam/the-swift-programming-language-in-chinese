@@ -765,6 +765,10 @@ because the first case is empty:
          <#statements#>
    }
 
+.. TODO: syntax-outline should not be used for invalid syntax.
+   change this to be an example of actual code that does not compile,
+   for consistency with other similar examples elsewhere in the Guide.
+
 Unlike C, this code does not match both of values 1 and 2.
 Rather, it reports an error that the first case does not contain any executable code.
 This approach avoids accidental fallthrough from one case to another,
