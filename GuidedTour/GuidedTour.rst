@@ -172,7 +172,7 @@ as part of the string.
    to include someone's name in a greeting.
 
 Arrays and dictionaries are written using square brackets (``[`` and ``]``).
-Tuples are written using parenthesis (``(`` and ``)``).
+Tuples are written using parentheses (``(`` and ``)``).
 
 .. testcode:: array-dict
 
