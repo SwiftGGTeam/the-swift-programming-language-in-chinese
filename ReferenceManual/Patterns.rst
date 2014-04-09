@@ -39,7 +39,6 @@ Patterns
     pattern --> expression-pattern type-annotation-OPT
     pattern --> enumerator-pattern
     pattern --> tuple-pattern type-annotation-OPT
-    pattern-list --> pattern | pattern ``,`` pattern-list
 
 .. TODO: In prose, discuss the meaning of the explicit type.
     The optional type annotation contrains a pattern to
