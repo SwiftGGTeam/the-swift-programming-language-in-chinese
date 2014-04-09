@@ -384,7 +384,10 @@ The *control expression* of the ``switch`` statement is evaluated
 and then compared with the patterns specified in each case.
 If a match is found,
 the program executes the *statements* listed within the scope of that case.
-You must include at least one statement following the colon (``:``) of each case label.
+The scope of each case can't be empty.
+As a result, you must include either a single semicolon (``;``) or at least one statement
+following the colon (``:``) of each case label. In this context, the semicolon
+indicates that you don't intend to execute any code in the body of the case.
 
 The values of expressions your code can branch on is very flexible. For instance,
 in addition to the values of scalar types, such as integers and characters,
@@ -466,6 +469,7 @@ not out of the ``switch`` statement itself.
 
     stmt-switch ::= 'switch' expr-basic '{' stmt-switch-case* '}'
     stmt-switch-case ::= (case-label | default-label) brace-item+
+    stmt-switch-case ::= (case-label | default-label) ';'
 
     case-label ::= 'case' pattern ('where' expr)? (',' pattern ('where' expr)?)* ':'
     default-label ::= 'default' ':'
@@ -478,6 +482,7 @@ not out of the ``switch`` statement itself.
     switch-statement --> ``switch`` expression ``{`` switch-cases-OPT ``}``
     switch-cases --> switch-case switch-cases-OPT
     switch-case --> case-label statements | default-label statements
+    switch-case --> case-label ``;`` | default-label ``;``
 
     case-label --> ``case`` case-item-list ``:``
     case-item-list --> pattern guard-clause-OPT | pattern guard-clause-OPT ``,`` case-item-list
