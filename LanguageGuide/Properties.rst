@@ -3,7 +3,7 @@ Properties
 
 .. TODO: research and write up the story for @weak
 
-:newTerm:`Properties` associate values with a particular class, structure or enumeration.
+:newTerm:`Properties` associate values with a particular class, structure, or enumeration.
 Stored properties store a constant or variable named value alongside an instance,
 whereas computed properties calculate (rather than store) a value.
 
@@ -109,7 +109,7 @@ If you have experience with Objective-C,
 you may know that it provides *two* ways
 to store values and references alongside instances of a class.
 In addition to properties,
-you can use instance variables as a 'backing' store for the values stored in a property.
+you can use instance variables as a backing store for the values stored in a property.
 
 Swift unifies these two separate concepts into a single property declaration.
 There is no longer a distinction between properties and instance variables,
