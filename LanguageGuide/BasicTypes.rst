@@ -182,18 +182,18 @@ and attempting to do so will result in an error:
 Printing Named Values
 ~~~~~~~~~~~~~~~~~~~~~
 
-The current value of a constant or variable can be printed with the ``println()`` function:
+The current value of a constant or variable can be printed with the ``println`` function:
 
 .. testcode:: namedValues
 
    -> println(friendlyWelcome)
    <- 👋, 🌎
 
-``println()`` is a special global function that prints a value,
+``println`` is a special global function that prints a value,
 followed by a line break, to an appropriate output.
 If you are working in Xcode, for example,
-``println()`` will print its output in Xcode's “console” pane.
-(A second function, ``print()``, performs the same task
+``println`` will print its output in Xcode's “console” pane.
+(A second function, ``print``, performs the same task
 without appending a line break to the end of the value to be printed.)
 
 .. QUESTION: have I referred to Xcode's console correctly here?
@@ -206,7 +206,7 @@ without appending a line break to the end of the value to be printed.)
    Strictly speaking, you can't print the value of *any* named value –
    you can only print values of types for which String has a constructor.
 
-The ``println()`` function will print any ``String`` value you pass to it:
+The ``println`` function will print any ``String`` value you pass to it:
 
 .. testcode:: namedValues
 
@@ -218,8 +218,8 @@ The ``println()`` function will print any ``String`` value you pass to it:
 String Interpolation
 ____________________
 
-The ``println()`` function can be used to print more complex logging messages,
-in a similar manner to Cocoa's ``NSLog()`` function.
+The ``println`` function can be used to print more complex logging messages,
+in a similar manner to Cocoa's ``NSLog`` function.
 These messages can include the current values of constants and variables.
 
 Swift uses :newTerm:`string interpolation` to include named values
@@ -268,6 +268,23 @@ Unlike C, multi-line comments can also be nested:
 .. TODO: These multiline comments can't be tested by swifttest,
    because they aren't supported by the REPL.
    They should be tested manually before release.
+
+.. _BasicTypes_Semicolons:
+
+Semicolons
+----------
+
+Unlike many other languages,
+Swift does not require you to write a semicolon (``;``) after each statement in your code
+(although you can do so if you wish).
+Semicolons *are* required, however,
+if you want to write multiple separate statements on a single line:
+
+.. testcode:: semiColons
+
+   -> let cat = "🐱"; let dog = "🐶"
+   << // cat : String = "🐱"
+   << // dog : String = "🐶"
 
 .. _BasicTypes_Integers:
 
@@ -641,6 +658,44 @@ This means that ``4.75`` becomes ``4``, and ``-3.9`` becomes ``-3``.
    I think it's more appropriate here, however,
    and helps to reinforce the “just use Int” message.
 
+.. _BasicTypes_TypeAliases:
+
+Type Aliases
+------------
+
+:newTerm:`Type aliases` define an alternative name for an existing type.
+You define type aliases with the ``typealias`` keyword.
+
+Type aliases are useful when you want to refer to an existing type
+by a name that is contextually more appropriate,
+such as when working with data of a specific size from an external source:
+
+.. testcode:: typeAliases
+
+   -> typealias AudioSample = UInt16
+
+Once you define a type alias,
+you can use the alias anywhere you might use the original name:
+
+.. testcode:: typeAliases
+
+   -> var maxAmplitudeFound = AudioSample.min
+   << // maxAmplitudeFound : UInt16 = 0
+   /> maxAmplitudeFound is now \(maxAmplitudeFound)
+   </ maxAmplitudeFound is now 0
+
+Here, ``AudioSample`` is defined as an alias for ``UInt16``.
+Because it is an alias,
+the call to ``AudioSample.min`` actually calls ``UInt16.min``,
+which provides an initial value of ``0`` for the ``maxAmplitudeFound`` variable.
+
+.. note::
+
+   Type aliases do not actually define a new type in Swift.
+   They are just an alternative name for an existing type.
+   In the example above,
+   ``maxAmplitudeFound`` is of type ``UInt16``, not ``AudioSample``.
+
 .. _BasicTypes_Booleans:
 
 Booleans
@@ -829,13 +884,13 @@ They can be used to say:
    without the need for special constants or ``nil`` tests.
 
 Here's an example.
-Swift's ``String`` type has a method called ``toInt()``,
+Swift's ``String`` type has a method called ``toInt``,
 which tries to convert a ``String`` value into an ``Int`` value.
 However, not every string can be converted into an integer.
 The string ``"123"`` can be converted into the numeric value ``123``,
 but the string ``"hello, world"`` does not have an obvious numeric value to convert to.
 
-The example below shows how to use ``toInt()`` to try and convert a ``String`` into an ``Int``:
+The example below shows how to use ``toInt`` to try and convert a ``String`` into an ``Int``:
 
 .. testcode:: optionals
 
@@ -845,7 +900,7 @@ The example below shows how to use ``toInt()`` to try and convert a ``String`` i
    << // convertedNumber : Int? = <unprintable value>
    // convertedNumber is inferred to be of type "Int?", or "optional Int"
 
-Because the ``toInt()`` method might fail,
+Because the ``toInt`` method might fail,
 it returns an *optional* ``Int``, rather than an ``Int``.
 An optional ``Int`` is written as ``Int?``, not ``Int``.
 The question mark indicates that the value it contains is optional,
@@ -910,13 +965,13 @@ The example from above can be can be rewritten to use optional binding:
       }
    <- 123 has an integer value of 123
 
-As before, this example uses the ``toInt()`` method from ``String``
+As before, this example uses the ``toInt`` method from ``String``
 to try and convert ``"123"`` into an ``Int``.
 It then prints a message to indicate if the conversion was successful.
 
 ``if let actualNumber = possibleNumber.toInt()`` can be read as:
 
-“If the optional ``Int`` returned by ``possibleNumber.toInt()`` contains a value,
+“If the optional ``Int`` returned by ``possibleNumber.toInt`` contains a value,
 set a new constant called ``actualNumber`` to the value contained in the optional.”
 
 If the conversion is successful,
@@ -935,12 +990,57 @@ would be made available as a variable rather than a constant.
 
 .. note::
 
-   Constants or variables created via optional binding
+   Constants or variables created with optional binding
    are only available within the code block following their creation,
    as in the first branch of the ``if``-``else`` statement above.
    If you want to work with the optional's value outside of this code block,
    you should declare a constant or variable yourself
    before the ``if``-``else`` statement begins.
+
+.. _BasicTypes_Nil:
+
+nil
+~~~
+
+You can initialize an optional constant or variable with “no value at all”
+by assigning it the special value ``nil`` when the constant or variable is defined:
+
+.. testcode:: optionals
+
+   -> var serverResponseCode: Int? = nil
+   << // serverResponseCode : Int? = <unprintable value>
+
+You can also use ``nil`` to reset an optional named value
+back to a valueless state:
+
+.. testcode:: optionals
+
+   -> serverResponseCode = 404
+   /> serverResponseCode now contains an actual Int value of \(serverResponseCode!)
+   </ serverResponseCode now contains an actual Int value of 404
+   -> serverResponseCode = nil
+   // serverResponseCode once again contains no value
+
+You can check an optional constant or variable to see if it is currently ``nil``:
+
+.. testcode:: optionals
+
+   -> if serverResponseCode == nil {
+         println("No server response code.")
+      }
+   <- No server response code.
+
+Note that ``nil`` cannot be used with non-optional named values.
+If a named value in your code needs to be able to cope with
+the absence of a value under certain conditions,
+it should always be declared as an optional value of the appropriate type.
+
+.. note::
+
+   Swift's ``nil`` is not the same as ``nil`` in Objective-C.
+   In Objective-C, ``nil`` is a pointer to a non-existent object.
+   In Swift, you can set optionals of *any* type to ``nil``,
+   not just object types.
 
 .. refnote:: References
 

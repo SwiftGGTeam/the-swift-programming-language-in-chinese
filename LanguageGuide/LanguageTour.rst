@@ -288,8 +288,8 @@ you have access to each key and value through a tuple pair:
 
    -> var dict = ["first": 1, "second": 2, "third": 3]
    << // dict : Dictionary<String, Int> = Dictionary<String, Int>(1.33333, 3, <DictionaryBufferOwner<String, Int> instance>)
-   -> for item in dict {
-         println("Key: '\(item.key)', Value: \(item.value)")
+   -> for (key, value) in dict {
+         println("Key: '\(key)', Value: \(value)")
       }
    << Key: 'third', Value: 3
    << Key: 'first', Value: 1
@@ -908,7 +908,7 @@ such as when hit-testing a series of different elements:
                return eachElement
             }
          }
-         return .None
+         return nil
       } 
    -> var circle = Circle()
    << // circle : Circle = Circle()
