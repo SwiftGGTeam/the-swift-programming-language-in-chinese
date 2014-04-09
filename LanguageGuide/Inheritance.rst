@@ -189,23 +189,20 @@ This is known as :newTerm:`overriding`.
 .. TODO: remove this note if stored property overriding is implemented for 1.0.
 
 Whenever you override something that would overwise be inherited,
-you must prefix your overriding definition with the ``@override`` attribute.
+you must prefix your overriding definition with the ``override`` keyword.
 This makes it clear that you intended to provide an override,
 and did not just accidentally provide a matching definition by mistake.
 Overriding by accident can cause unexpected behavior,
-and any overrides without the ``@override`` attribute are
+and any overrides without the ``override`` keyword are
 diagnosed as an error when your code is compiled.
 (The definition you have accidentally overridden may not have been provided
 by your subclass's immediate superclass –
 it may have been inherited from another superclass further up the chain.)
 
-In addition, the ``@override`` attribute prompts the Swift compiler
+In addition, the ``override`` keyword prompts the Swift compiler
 to check that the superclass has a declaration that matches
 the one you have provided.
 This helps to ensure that your overriding definition is correct.
-
-.. QUESTION: have I introduced the concept of "attributes" by this point?
-   If not, when / where should I do so?
 
 The following example defines a new subclass of ``Vehicle``, called ``Car``:
 
@@ -218,7 +215,7 @@ The following example defines a new subclass of ``Vehicle``, called ``Car``:
             maxPassengers = 5
             numberOfWheels = 4
          }
-         @override func description() -> String {
+         override func description() -> String {
             return super.description() + "; "
                + (isConvertible ? "convertible" : "not convertible")
          }
@@ -234,7 +231,7 @@ and the default number of wheels to ``4``.
 ``Car`` then overrides its inherited ``description`` method.
 It does this by defining a function with the same declaration as
 the one it would otherwise inherit,
-prefixed by the ``@override`` attribute.
+prefixed by the ``override`` keyword.
 Rather than providing a completely custom implementation of ``description``,
 it actually starts by calling ``super.description`` to retrieve
 the description provided by its superclass.
