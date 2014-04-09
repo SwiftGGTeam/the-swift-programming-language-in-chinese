@@ -83,12 +83,11 @@ A ``for`` statement has the following form:
 
 .. syntax-outline::
 
-    for (<#initialization#>; <#condition#>; <#increment#>) {
+    for <#initialization#>; <#condition#>; <#increment#> {
         <#statements#>
     }
 
-The parentheses around the *initialization*, *condition*,
-and *increment* are optional, but the semicolon between them is required.
+The semicolons between the *initialization*, *condition*, and *increment* are required.
 The braces around the *statements* in the body of the loop are also required.
 
 A ``for`` statement is executed as follows:
