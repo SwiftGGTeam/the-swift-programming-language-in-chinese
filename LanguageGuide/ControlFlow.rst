@@ -138,16 +138,20 @@ Use this property to iterate over the characters in a string in order:
    </ l
    </ o
 
-You can also iterate over dictionaries to access their key-value pairs.
-Every item in a dictionary has a ``key`` property and a ``value`` property,
-which are accessed through dot syntax:
+You can also iterate over a dictionary to access its key-value pairs.
+Each item in the dictionary is returned as a ``(key, value)`` tuple
+when the dictionary is iterated,
+and you can decompose the ``(key, value)`` tuple's members as explicitly-named constants
+for use within in the body of the ``for``-``in`` loop.
+Here, the dictionary's keys are decomposed into a constant called ``animalName``,
+and the dictionary's values are decomposed into a constant called ``legCount``:
 
 .. testcode::
 
    -> let numberOfLegs = ["spider" : 8, "ant" : 6, "cat" : 4]
    << // numberOfLegs : Dictionary<String, Int> = Dictionary<String, Int>(1.33333, 3, <DictionaryBufferOwner<String, Int> instance>)
-   -> for item in numberOfLegs {
-         println("\(item.key)s have \(item.value) legs")
+   -> for (animalName, legCount) in numberOfLegs {
+         println("\(animalName)s have \(legCount) legs")
       }
    </ spiders have 8 legs
    </ ants have 6 legs
