@@ -312,7 +312,7 @@ Default values cannot be provided.
 Variadic parameters can also be used,
 as long as the variadic parameter is named,
 and is the last parameter in the parameter list.
-Tuples may also be used as parameter types and return types.
+Tuples can also be used as parameter types and return types.
 
 .. TODO: the note about default values is tracked by rdar://16535452.
    Remove this note if and when that Radar is fixed.
@@ -342,7 +342,7 @@ This keyword indicates that
 the definition of the closure's parameters and return type has finished,
 and the body of the closure is about to begin.
 
-Because the body of the closure it so short,
+Because the body of the closure is so short,
 it can even be written on a single line:
 
 .. testcode:: closureSyntax
@@ -498,8 +498,8 @@ in the same order as their corresponding values in the original array.
 
 Here's how the ``map`` function can be used with a trailing closure
 to convert an array of ``Int`` values into an array of ``String`` values.
-The array ``[16, 48, 510]`` will be used to create the new array 
-``["OneSix", "FourEight", "FiveOneZero"]``:
+The array ``[16, 58, 510]`` will be used to create the new array 
+``["OneSix", "FiveEight", "FiveOneZero"]``:
 
 .. testcode:: arrayMap
 
@@ -508,8 +508,8 @@ The array ``[16, 48, 510]`` will be used to create the new array
          5 : "Five", 6 : "Six", 7 : "Seven", 8 : "Eight", 9 : "Nine"
       ]
    << // digitNames : Dictionary<Int, String> = Dictionary<Int, String>(1.33333, 10, <DictionaryBufferOwner<Int, String> instance>)
-   -> let numbers = [16, 48, 510]
-   << // numbers : Int[] = [16, 48, 510]
+   -> let numbers = [16, 58, 510]
+   << // numbers : Int[] = [16, 58, 510]
 
 The code above creates a dictionary of mappings between
 the integer digits and English-language versions of their names.
@@ -529,10 +529,10 @@ by passing a closure expression to the array's ``map`` function as a trailing cl
             }
             return output
       }
-   << // strings : Array<String> = ["OneSix", "FourEight", "FiveOneZero"]
+   << // strings : Array<String> = ["OneSix", "FiveEight", "FiveOneZero"]
    // strings is inferred to be of type Array<String>
    /> its value is [\"\(strings[0])\", \"\(strings[1])\", \"\(strings[2])\"]
-   </ its value is ["OneSix", "FourEight", "FiveOneZero"]
+   </ its value is ["OneSix", "FiveEight", "FiveOneZero"]
 
 The ``map`` function calls the closure expression once for each item in the array.
 The closure expression does not need to specify the type of its input parameter, ``number``,
@@ -550,11 +550,11 @@ and uses this digit to look up an appropriate string in the ``digitNames`` dicti
 The appropriate string is added to the *front* of ``output``,
 effectively building a string version of the number in reverse.
 (The expression ``number % 10`` gives a value of
-``6`` for ``16``, ``8`` for ``48``, and ``0`` for ``510``.)
+``6`` for ``16``, ``8`` for ``58``, and ``0`` for ``510``.)
 
 The ``number`` variable is then divided by ``10``.
 Because it is an integer, it is rounded down during the division,
-so ``16`` becomes ``1``, ``48`` becomes ``4``, and ``510`` becomes ``51``.
+so ``16`` becomes ``1``, ``58`` becomes ``5``, and ``510`` becomes ``51``.
 
 The process is repeated until ``number /= 10`` is equal to ``0``,
 at which point the ``output`` string is returned by the closure,

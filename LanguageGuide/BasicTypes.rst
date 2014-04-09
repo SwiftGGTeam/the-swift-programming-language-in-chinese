@@ -997,6 +997,8 @@ would be made available as a variable rather than a constant.
    you should declare a constant or variable yourself
    before the ``if``-``else`` statement begins.
 
+.. _BasicTypes_Nil:
+
 nil
 ~~~
 
