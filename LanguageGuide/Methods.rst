@@ -9,18 +9,21 @@ Instance Methods
 ----------------
 
 :newTerm:`Instance methods` are functions that belong to instances of
-a particular class, structure or enumeration.
+a particular class, structure, or enumeration.
 They support the functionality of those instances,
 either by providing ways to access and modify their properties,
 or by providing useful functionality related to their purpose.
 Instance methods can be written in either function-style syntax or selector-style syntax.
 
-Instance methods are written within the opening and closing braces of the type they belong to.
-They have implicit access to all of the other instance methods and properties of that type.
-Instance methods can only be called on a specific instance of that type.
-They cannot be called in isolation without an existing instance.
+.. TODO: remove this last sentence once the syntaxes are unified.
 
-Here's an example:
+You write an instance method within the opening and closing braces of the type it belongs to.
+An instance method has implicit access to all of the other instance methods and properties of that type.
+An instance method can only be called on a specific instance of the type it belongs to.
+It cannot be called in isolation without an existing instance.
+
+Here's an example that defines a simple ``Counter`` class,
+which counts the number of times something has happened:
 
 .. testcode:: classesAndStructures
 
@@ -37,16 +40,14 @@ Here's an example:
          }
       }
 
-This example defines a simple ``Counter`` class,
-which keeps track of the number of times something has happened.
-It defines three instance methods:
+The ``Counter`` class defines three instance methods:
 
 * ``increment``, which simply increments the counter by ``1``
-* ``incrementBy(amount: Int)``, which increments the counter by an arbitrary integer amount, and
-* ``reset``, which resets the counter back to zero
+* ``incrementBy(amount: Int)``, which increments the counter by an arbitrary integer amount
+* ``reset``, which resets the counter to zero
 
-It also declares a variable property, ``count``,
-for keeping track of the current counter value.
+The ``Counter`` class also declares a variable property, ``count``,
+to keep track of the current counter value.
 
 Instance methods are called using the same dot syntax as properties:
 
@@ -66,6 +67,9 @@ Instance methods are called using the same dot syntax as properties:
    /> counter value is now \(counter.count)
    </ counter value is now 0
 
+.. QUESTION: I've used count++ rather than ++count here.
+   Is this consistent with my advice and usage elsewhere?
+
 .. _Methods_TheSelfProperty:
 
 The “self” Property
@@ -76,7 +80,7 @@ which is exactly equivalent to the instance itself.
 This implicit ``self`` property can be used
 to refer to the current instance within its own instance methods.
 
-For example, the ``increment`` method from above could have been written like this:
+The ``increment`` method in the example above could have been written like this:
 
 ::
 
@@ -84,20 +88,19 @@ For example, the ``increment`` method from above could have been written like th
       self.count++
    }
 
-This is effectively saying “I want to increment the ``count`` property of myself”.
-
 In practice, you don't need to write ``self`` in your code very often.
 If you don't explicitly write ``self``,
 Swift assumes that you are referring to a property or method of the current instance
 whenever you use a known property or method name within a method.
-This can be seen by the use of ``count`` (rather than ``self.count``)
+This assumption is demonstrated by the use of ``count`` (rather than ``self.count``)
 inside the three instance methods for ``Counter``.
 
-The only exception to this rule is when a method's parameter name
-happens to be the same as the name of a property.
+The exception to this rule occurs when a method's parameter name
+is the same as the name of a property.
 In this situation, the parameter name takes precedence,
 and it becomes necessary to refer to the property in a more qualified way.
-The implicit ``self`` property can be used to make it clear which is which.
+You use the implicit ``self`` property to
+distinguish between the parameter name and the property name.
 
 Here, ``self`` is used to disambiguate between
 a method parameter called ``x``, and an instance property that is also called ``x``:
@@ -120,10 +123,10 @@ a method parameter called ``x``, and an instance property that is also called ``
 Without the ``self`` prefix,
 Swift would assume that both uses of ``x`` referred to the method parameter called ``x``.
 
-.. _Methods_MutatingMethodsForValueTypes:
+.. _Methods_ModifyingValueTypesFromWithinInstanceMethods:
 
-Mutating Methods for Value Types
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Modifying Value Types from Within Instance Methods
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Structures and enumerations are *value types*.
 By default, the properties of a value type cannot be modified from within its instance methods.
@@ -131,12 +134,13 @@ By default, the properties of a value type cannot be modified from within its in
 .. TODO: find out why.
 .. TODO: once I actually know why, explain it. 
 
-However, if your structure or enumeration needs to modify its properties within a particular method,
-it can opt in to :newTerm:`mutating` behavior for that method.
-The method is then able to “mutate” (i.e. “change”)
+However, if you need to modify the properties of your structure or enumeration
+within a particular method,
+you can opt in to :newTerm:`mutating` behavior for that method.
+The method can then mutate (that is, change)
 its properties from within the method,
 and any changes that it makes are written back to the original structure when the method ends.
-It can also assign a completely new instance to its implicit ``self`` property,
+The method can also assign a completely new instance to its implicit ``self`` property,
 and this new instance will replace the existing one when the method ends.
 
 You can opt in to this behavior by placing the ``mutating`` keyword
