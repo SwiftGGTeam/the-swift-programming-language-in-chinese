@@ -378,6 +378,8 @@ the expression that follows them.
    [Aside: Could this be used as the body of a do-nothing default: statement
    in a switch to satisfy the must-be-exhaustive constrait?]
 
+.. This mirrors any-pattern in an expression context.
+
 Type-Checking Operators
 ~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -397,6 +399,8 @@ If so, it returns ``true``; otherwise, it returns ``false``.
         if "hello" is Int { println("it is") }
 
    Gives the error expression does not type-check
+
+.. TODO: File a bug.  This should be a warning instead.
 
 Literal Expression
 ~~~~~~~~~~~~~~~~~~
@@ -427,6 +431,8 @@ and at the top level of a file it is the name of the current module.
    Should all of these meanings of __FUNCTION__ be documented,
    or are some of them "internal use only" hacks?
 
+.. All ok API.
+
 :newTerm:`Array literals` represent an ordered collection,
 made up of items of the same type.
 It has the following form:
@@ -452,6 +458,11 @@ where ``T`` is the type of the expressions inside it.
 
 .. Spaces around <T> above to prevent it being read as an HTML tag by Sphinx.
 
+.. There was a desire for a cleaner syntax sugar for dictionaries.
+   Something like [K:V] might work, like they do in Rust.
+   In this context, do what makes sense for prose.
+   Doug prefers T[].
+
 
 Dot Expression
 ~~~~~~~~~~~~~~
@@ -463,6 +474,15 @@ and the identifier of its member.
 
 .. docnote::
    Is this list exhaustive?  Or are there other things that can use dots?
+
+.. s/enumerator/enumeration --
+   compiler team prefers "enumeration case" for what C calls enumerators
+   Let's call them that.
+
+.. You can also have members of protocol.
+   The members of a named type, a tuple, or a modules.
+
+.. Include an example of each of these kinds of thing.
 
 Forced Expression
 ~~~~~~~~~~~~~~~~~
@@ -482,6 +502,19 @@ Otherwise, a runtime error is raised.
 
 .. docnote::
    What is the nature of the error?
+
+.. No additional details to add.
+
+.. We could call it forced unwrapped expression.
+   This has two roles -- this documents the first one.
+   The other one is when you have a thing of AnyObject
+   and it becomes a downcast.
+    var view : NSView = myArray[3] !
+   The difference between these is how it is done:
+   forcing an Optional to be of a type,
+   the way you do it is by unwrapping or crashing;
+   forcing an AnyObject to be of a type,
+   the way you do it is by downcasting or crashing.
 
 
 Declarations
@@ -510,6 +543,38 @@ are visible to any other code in the same file.
     The current LangRef doesn't say much and includes the grammar:
     top-level ::= brace-item*
 
+.. Better to call this a series of declarations
+   and add a add a top-level code declaration item,
+   which is an arbitrary statement or expression.
+   The vast majority of Swift source files don't have top-level code.
+   And we're trying to make it so, for Cocoa apps,
+   you never have to write the source file that has that.
+   ...
+   That's ambiguous -- you can get to declarations two ways.
+   From top-level code > statement > declaration,
+   or from declaration directly.
+   Maybe just leave it as statement*.
+   ...
+   Module scope is more like the scope of all the Shiy source files
+   within a module.
+   It doesn't actually matter which source file you put something in,
+   as long as it's in the same module.
+   Everything from within the module is visible
+   within all the files in the module.
+   Eventually, we'll have some notion of file-level scope.
+   Speaking generally,
+   a module consists of a bunch of files,
+   and a file consists of statements.
+   It doesn't matter which file you're in.
+   ...
+   In the places where we say "global scope"
+   we probably mean "module scope".
+   The other scope level right now is inside a class etc.
+   ...
+   You parse a file at a time.
+   For the grammar, the start symbol is swift-file or file-unit or source-file.
+
+
 Code Blocks
 ~~~~~~~~~~~
 
@@ -530,6 +595,12 @@ of their appearance in source code.
 .. docnote:: What exactly are the scope rules for Swift and where should
     we document them? I assume a code block creates a new scope?
 
+.. Yes, {} makes a new scope.
+   We have module scope,
+   we have (but don't distinguish) file scope,
+   we have nominal-type scope (like classes).
+   Case blocks are the only place where we create a scope without {}.
+
 Constant Declaration
 ~~~~~~~~~~~~~~~~~~~~
 
@@ -549,6 +620,23 @@ Constant Declaration
     (e.g., constant-specifier, variable-specifier, function-specifier).
     Maybe "type-level-specifier"? But what happens when we do get *real* static functions?
 
+.. We could call it declaration-specifier.
+   We seem to be migrating more things toward keywords
+   that go at the beginning of an declaration.
+   At that point, it makes more sense to have a nonterminal
+   that gives you a list of specifiers,
+   and then use prose to say what makes sense where.
+   Function-specifier is the same thing too.
+   Just add a head for Declaration Specifiers
+   and discuss each in turn.
+
+.. inout is only part of a function declaration.
+   That needs to be a place where we just have an optional.
+   The grammar for functions should be re-written now
+   and ready to look at.
+   The function declaration syntax is there, but we're still thrashing.
+   Mostly hagling about getting Cocoa into line.
+   The call syntax is what we've always had.
 
 Typealias Declaration
 ~~~~~~~~~~~~~~~~~~~~~
@@ -568,6 +656,9 @@ Typealias Declaration
     in the context of an associated type (declared as protocol member)?
     I modified the grammar under the assumption that they are not allowed.
 
+.. It was probably in the grammar for associated types,
+   but it's gone now.
+
 Enumeration Declaration
 ~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -575,6 +666,8 @@ Enumeration Declaration
     What should we call the enumeration members? Traditionally, they're called
     "enumerators", but it may possibly be confusing that in Cocoa / ObjC
     land, the term "enumerator" is used to refer to an instance of the NSEnumerator class.
+
+.. Let's call them enumeration cases.
 
 Protocol Associated Type Declaration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -655,6 +748,12 @@ to ensure members of that type are properly initialized.
 .. docnote::
     Is this correct?
 
+.. The rule has become more restrictive.
+   If you declare an initializer in the extension,
+   in needs to be a convenience initializer.
+
+.. We've pushed the ->T or init? bit out until past WWDC.
+
 Operator Declaration
 ~~~~~~~~~~~~~~~~~~~~
 
@@ -664,6 +763,12 @@ Prefix operators are nonassociative.
 .. docnote::
     Do all prefix operators default to the same precedence level? If so, what is it?
     Same question for postfix operators.
+
+.. They just bind tighter than any infix.
+   There's no notion of precedence between prefixes or postfixes,
+   they have an order.
+   The only place where they could be ambiguus is --a++ or the like,
+   which we reject anyhow and tell you to put parens about.
 
 .. docnote:: More generally, what do the current precedence levels (0--255) mean?
     How should we discuss them in the prose? [...]
@@ -688,6 +793,19 @@ Prefix operators are nonassociative.
     * "? :" is hardcoded as if it had associativity right, precedence 100
 
     **Should we be using these instead of the raw precedence level values?**
+
+.. Yes, we can document them.
+   It's more important to lay out the classes of these things.
+   The trajectory is to eliminate the numbers
+   and have named classes of precedences
+   that are expressed relative to each other.
+   But that change is way down the line.
+
+.. It's ok to have this table also appear in the guide
+   (without the numbers).
+   It would be better to have this in the Stdlib doc,
+   but as a stopgap we might want it here (with the numbers).
+   Or... talk about the numbers here, and have the tables in the language guide.
 
 .. docnote::
     Should we give describe the most common stdlib operators somewhere?
@@ -716,6 +834,8 @@ Prefix operators are nonassociative.
 
 .. docnote:: I added this grammar from looking at ParseDecl.cpp and from trying
     out various permutations in the REPL. Is this the correct grammar?
+
+.. This seems ok.
 
 Attributes
 ----------
@@ -833,6 +953,8 @@ including the declarations the attribute can appear, and whether duplicates are 
 
 Patterns
 --------
+
+.. Initializers and subscripts will no longer depend on patterns.
 
 .. docnote::
     What kind of information do we want to cover about patterns in general?
@@ -1051,6 +1173,20 @@ Patterns
    but in a pattern context "case let x as T"
    you're going the other way,
    doing a downcast and checking to see if the value is of that type.
+   ...
+   In a pattern, think of the "as" as a guard.
+   var y = x as T  // expression
+   switch x { case y as T: ; }  // pattern
+   Assume x is of type U.
+   In the expression, x keeps its type,
+   but the type of the whole expression is T?.
+   In the patern, the thing you declare has the type T.
+   ...
+   The checks between is/as are the same,
+   it's just the result that's difference.
+   Alternately, call them type casts;
+   "is" does the work of the runtime cast
+   but it discards the result.
 
 .. With an "as" pattern, you have to have a subpattern.
    But it doesn't have to be a "let" pattern:
