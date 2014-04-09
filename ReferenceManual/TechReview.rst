@@ -858,12 +858,24 @@ Patterns
     * the cases of a ``switch`` statement (patterns can be *guarded* using a guard expression)
         * unwrapping/extracting associated values from an enum case
         * type checking using an ``is`` pattern
+        * type casting using ``as``?
     * Variable and constant declarations/bindings
         * if-let/var conditional bindings
         * tuple decomposition (unwrapping)
         * iteration within a ``for``-``in`` statement
 
     Do we/will we support regex pattern matching?
+
+    Patterns will no longer be used in the signature of a function declaration, correct?
+    (Per Doug at our last meeting.)
+
+
+.. docnote::
+    The LangRef says "Type annotations are currently not allowed in switch statements".
+    Are they *eventually* going to be allowed there?
+
+.. docnote::
+    LangRef says that "a pattern has a type". Is this *strictly* true?
 
 
 .. docnote::
@@ -891,8 +903,26 @@ Patterns
 
 
 .. docnote::
-    How up to date is the top-level pattern grammar in the LangRef?
-    For instance, there is an 'is' pattern but no 'as' pattern.
+    How up to date is the top-level pattern grammar in the LangRef? [...]
+
+    For instance, there is an 'is' pattern but no 'as' pattern,
+    but you can do this in a ``switch`` statement case:
+
+    ::
+
+        case let t as T:
+
+    But what kind of pattern is ``let t as T``? Is it a '``let`` pattern', where the
+    pattern following the ``let`` is an expression-pattern?
+
+    Relatedly, the LangRef says:
+    "The pattern grammar mirrors the expression grammar, or to be more specific,
+    the grammar of literals. ... So every expression
+    form which can be used to build a value directly should generally have a
+    corresponding pattern form."
+
+    What does this mean, exactly?
+
 
 .. docnote::
     We removed the syntactic category "pattern-typed" and "pattern-atom".
@@ -1027,6 +1057,26 @@ Expression Pattern
     (``a + 3`` is an expression.)
 
 
+.. docnote::
+    LangRef says: [...]
+
+    "Patterns may include arbitrary expressions as subpatterns.  Expression patterns
+    are refutable and thus cannot appear in declarations."
+
+    Can you explain this a little more? Isn't ``var a`` in ``var a = 42``
+    a ``var`` pattern, where the pattern ``a`` is an expression pattern?
+
+    ...
+
+    "The order of evaluation of expressions in patterns, including whether an
+    expression is evaluated at all, is unspecified.  The compiler is free to
+    reorder or elide expression evaluation in patterns to improve dispatch
+    efficiency.  Expressions in patterns therefore cannot be relied on for side
+    effects."
+
+    Can you explain this a litte more too? Example where this is relevant?
+
+
 .. syntax-grammar::
 
     Grammar of an expression pattern
@@ -1041,6 +1091,13 @@ Enumerator Pattern
 
 .. docnote::
     Is the grammar still correct?
+
+
+.. docnote::
+    LangRef says "They are currently refutable even if the enum contains
+    only a single case." Is this only the *current* plan, or will it change?
+
+
 
 .. langref-grammar
 
@@ -1065,6 +1122,12 @@ Tuple Pattern
     tuple patterns will no longer need to support default arguments.
     Therefore, we should remove the 'pattern-initializer' alternative
     from the tuple-pattern-element production rule, correct?
+
+.. docnote::
+    LangRef says "A pattern-tuple-element has a label if it is a named pattern
+    or a type annotation of a named pattern." What does this mean, exactly,
+    and what is a 'named pattern'?
+
 
 .. langref-grammar
 
