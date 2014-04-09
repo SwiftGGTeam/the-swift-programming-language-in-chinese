@@ -697,7 +697,7 @@ must be able to be matched by one of the ``switch`` cases.
 If it is not appropriate to provide a ``switch`` case for every possible value,
 you can define a default catch-all case to cover any values that are not addressed explicitly.
 This catch-all case is indicated by the keyword ``default``,
-and should always appear last.
+and must always appear last.
 
 The following example switches on a ``UnicodeScalar`` value,
 and determines whether it represents a number symbol in one of four languages.
@@ -764,20 +764,25 @@ at least one executable statement.
 It is not valid to write the following code,
 because the first case is empty:
 
-.. syntax-outline::
+.. testcode::
 
-   switch <#some value to consider#> {
-      case <#possible value 1#>:
-      case <#possible value 2#>:
-         <#statements#>
-   }
+   -> let someCharacter = "a"
+   << // someCharacter : String = "a"
+   -> switch someCharacter {
+         case "a":
+         case "A":
+            println("The letter A")
+         default:
+            println("Not the letter A")
+      }
+   !! <REPL Input>:2:3: error: 'case' label in a 'switch' should have at least one executable statement
+   !!          case "a":
+   !!          ^~~~~~~~~
+   // this will report a compile-time error
 
-.. TODO: syntax-outline should not be used for invalid syntax.
-   change this to be an example of actual code that does not compile,
-   for consistency with other similar examples elsewhere in the Guide.
-
-Unlike C, this code does not match both of values 1 and 2.
-Rather, it reports an error that the first case does not contain any executable code.
+Unlike C, this ``switch`` statement does not match both ``"a"`` and ``"A"``.
+Rather, it reports a compile-time error that ``case "a":``
+does not contain any executable statements.
 This approach avoids accidental fallthrough from one case to another,
 and makes for safer code that is explicit in its intent.
 
@@ -798,10 +803,47 @@ and can be written over multiple lines if the list is long:
    use the ``fallthrough`` keyword,
    as described in :ref:`ControlFlow_Fallthrough`.
 
-.. TODO: we don't currently have a nice way to include a case (or a default case)
-   that intentionally includes a no-op executable statement.
-   This might end up being a single semi-colon, but it's still up for design discussion.
-   Update this section once it has been decided.
+.. _ControlFlow_IgnoringCases:
+
+Ignoring Cases
+______________
+
+Swift's ``switch`` statement is exhaustive, and does not allow empty cases.
+Because of this,
+it is sometimes necessary to deliberately match and ignore a certain case.
+You do this by writing a single semicolon (``;``) for the ignored case's body.
+A semicolon is considered a “statement” in this context,
+and makes it clear that you wish to match and ignore that particular case.
+
+In the ``numberSymbol`` example above,
+it is not necessary to assign a value of ``nil`` to ``possibleIntegerValue``
+within the ``switch`` statement's ``default`` case,
+because ``possibleIntegerValue`` is initialized with
+a value of ``nil`` when it is created.
+Nonetheless, the ``default`` case is still required to make
+the ``switch`` statement exhaustive.
+
+To satisfy this requirement without unnecessary reassignment,
+the ``switch`` statement can be written with
+a semicolon inside its ``default`` case instead:
+
+.. testcode::
+
+   -> switch numberSymbol {
+         case '1', '١', '一', '๑':
+            possibleIntegerValue = 1
+         case '2', '٢', '二', '๒':
+            possibleIntegerValue = 2
+         case '3', '٣', '三', '๓':
+            possibleIntegerValue = 3
+         case '4', '٤', '四', '๔':
+            possibleIntegerValue = 4
+         default:
+            ;
+      }
+
+This revised ``switch`` statement is still exhaustive,
+but no longer performs an unnecessary operation within its ``default`` case.
 
 .. _ControlFlow_RangeMatching:
 
