@@ -390,7 +390,7 @@ which is given an ``Int`` value to find,
 and an array of ``Int`` values within which to find it.
 The ``findInt`` function returns an optional ``Int`` value,
 which will be the index of the first matching value in the array if it is found,
-or ``.None`` if the value could not be found:
+or ``nil`` if the value could not be found:
 
 .. testcode:: typeConstraints
 
@@ -402,7 +402,7 @@ or ``.None`` if the value could not be found:
             }
             ++index
          }
-         return .None
+         return nil
       }
 
 The ``findInt`` function can now be used to find an integer value in an array of integers:
@@ -431,7 +431,7 @@ Here's how a generic version of ``findInt``, called ``findValue``, might be writ
             }
             ++index
          }
-         return .None
+         return nil
       }
    !! <REPL Input>:4:14: error: expression does not type-check
    !!              if value == valueToFind {
@@ -476,7 +476,7 @@ as part of the type parameter's definition when you define the function:
             }
             ++index
          }
-         return .None
+         return nil
       }
 
 The type parameter here has been written as ``<T: Equatable>``,

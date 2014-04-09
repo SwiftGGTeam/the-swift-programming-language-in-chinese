@@ -990,12 +990,55 @@ would be made available as a variable rather than a constant.
 
 .. note::
 
-   Constants or variables created via optional binding
+   Constants or variables created with optional binding
    are only available within the code block following their creation,
    as in the first branch of the ``if``-``else`` statement above.
    If you want to work with the optional's value outside of this code block,
    you should declare a constant or variable yourself
    before the ``if``-``else`` statement begins.
+
+nil
+~~~
+
+You can initialize an optional constant or variable with “no value at all”
+by assigning it the special value ``nil`` when the constant or variable is defined:
+
+.. testcode:: optionals
+
+   -> var serverResponseCode: Int? = nil
+   << // serverResponseCode : Int? = <unprintable value>
+
+You can also use ``nil`` to reset an optional named value
+back to a valueless state:
+
+.. testcode:: optionals
+
+   -> serverResponseCode = 404
+   /> serverResponseCode now contains an actual Int value of \(serverResponseCode!)
+   </ serverResponseCode now contains an actual Int value of 404
+   -> serverResponseCode = nil
+   // serverResponseCode once again contains no value
+
+You can check an optional constant or variable to see if it is currently ``nil``:
+
+.. testcode:: optionals
+
+   -> if serverResponseCode == nil {
+         println("No server response code.")
+      }
+   <- No server response code.
+
+Note that ``nil`` cannot be used with non-optional named values.
+If a named value in your code needs to be able to cope with
+the absence of a value under certain conditions,
+it should always be declared as an optional value of the appropriate type.
+
+.. note::
+
+   Swift's ``nil`` is not the same as ``nil`` in Objective-C.
+   In Objective-C, ``nil`` is a pointer to a non-existent object.
+   In Swift, you can set optionals of *any* type to ``nil``,
+   not just object types.
 
 .. refnote:: References
 

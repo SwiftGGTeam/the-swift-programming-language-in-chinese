@@ -223,7 +223,7 @@ Optional Property Values
 If your custom type has a stored property that cannot be known during initialization,
 or that is logically allowed to have “no value yet”,
 that property should be declared as having an optional type,
-and initialized with a value of ``.None`` as part of its declaration.
+and initialized with a value of ``nil`` as part of its declaration.
 This makes it clear that the property is
 deliberately intended to have “no value yet” during initialization,
 and has not just been left in an indeterminate state.
@@ -234,7 +234,7 @@ For example:
 
    -> class SurveyQuestion {
          var text: String
-         var response: String? = .None
+         var response: String? = nil
          init withText(text: String) {
             self.text = text
          }
@@ -250,7 +250,7 @@ For example:
 
 The response to a survey question cannot be known until it is asked,
 and so the ``response`` property is declared as ``String?``, or “optional ``String``”.
-It is assigned a default value of ``.None`` as part of its declaration,
+It is assigned a default value of ``nil`` as part of its declaration,
 meaning “no string yet”.
 
 .. _Initialization_DesignatedAndConvenienceInitializers:
@@ -422,14 +422,14 @@ and the bank only has 7,900 coins left.
 
 .. testcode:: deinitializer
 
-   -> playerOne = .None
+   -> playerOne = nil
    -> println("PlayerOne has left the game")
    <- PlayerOne has left the game
    -> println("The bank now has \(Bank.coinsInBank) coins")
    <- The bank now has 10000 coins
 
 The player has now left the game.
-This is indicated by setting the optional ``playerOne`` variable to ``.None``,
+This is indicated by setting the optional ``playerOne`` variable to ``nil``,
 meaning “no ``Player`` instance.”
 At the point that this happens, the ``Player`` instance referenced by
 the ``playerOne`` variable is destroyed.

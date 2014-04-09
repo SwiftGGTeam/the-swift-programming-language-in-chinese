@@ -30,9 +30,9 @@ Types can be nested to as many levels as are required:
                   case .Ace:
                      return Values(1, 11)
                   case .Jack, .Queen, .King:
-                     return Values(10, .None)
+                     return Values(10, nil)
                   default:
-                     return Values(self.toRaw().toInt()!, .None)
+                     return Values(self.toRaw().toInt()!, nil)
                }
             }
          }

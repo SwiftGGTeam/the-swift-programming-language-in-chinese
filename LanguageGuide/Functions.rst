@@ -200,7 +200,7 @@ This enables a function to return a combination of values as part of one compoun
                return (string[0...i], string[i+1...size])
             }
          }
-         return (string, .None)
+         return (string, nil)
       }
 
 This example defines a function called ``splitOnFirst``,
@@ -218,7 +218,7 @@ and a string made up of all of the remaining characters.
 
 If ``splitter`` is *not* found,
 the tuple will contain the entire string as its first string value
-and a value of ``.None`` in its second value to indicate that ``splitter`` was not found:
+and ``nil`` as its second value to indicate that ``splitter`` was not found:
 
 .. testcode:: functionParameters
 

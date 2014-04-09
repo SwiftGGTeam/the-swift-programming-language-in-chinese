@@ -138,7 +138,7 @@ Here's a more complex class, which also adopts and conforms to the ``FullyNamed`
    -> class Starship : FullyNamed {
          var prefix: String?
          var name: String
-         init withName(name: String) prefix(String? = .None) {
+         init withName(name: String) prefix(String? = nil) {
             self.name = name
             self.prefix = prefix
          }
@@ -357,7 +357,7 @@ and to notify a ``DiceGameDelegate`` about its progress:
          let dice = Dice(withSides: 6, generator: LinearCongruentialGenerator())
          var square = 0
          var board = Array<Int>()
-         var delegate: DiceGameDelegate? = .None
+         var delegate: DiceGameDelegate? = nil
          init() {
             for _ in 0..finalSquare { board.append(0) }
             board[03] = +08; board[06] = +11; board[09] = +09; board[10] = +02
@@ -402,7 +402,7 @@ which uses the protocol's required ``dice`` property to provide its dice roll va
 
 Note that the ``delegate`` property is declared as an *optional* ``DiceGameDelegate``.
 A delegate isn't required in order to play the game,
-and so this property has a default value of ``.None``
+and so this property has a default value of ``nil``
 when a new instance of the game is created.
 It can be set to a suitable delegate by the game instantiator if they wish.
 

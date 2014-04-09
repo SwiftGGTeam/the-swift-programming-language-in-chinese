@@ -122,7 +122,7 @@ Here's an example of a structure definition and a class definition:
          var resolution = Resolution()
          var interlaced = false
          var frameRate = 0.0
-         var name: String? = .None
+         var name: String? = nil
       }
 
 The example above defines a new structure called ``Resolution``,
@@ -144,7 +144,7 @@ new ``VideoMode`` instances will be initialized with
 an ``interlaced`` setting of ``false`` (meaning “non-interlaced video”),
 a playback frame rate of ``0.0``,
 and an optional ``String`` value called ``name``,
-which has a default value of ``.None``, or “no ``name`` value”.
+which has a default value of ``nil``, or “no ``name`` value”.
 
 .. _ClassesAndStructures_ClassAndStructureInstances:
 

@@ -707,7 +707,7 @@ Multiple values are covered in a single ``switch`` case for brevity:
 
    -> let numberSymbol = '三'   // Simplified Chinese symbol for the number 3
    << // numberSymbol : UnicodeScalar = '三'
-   -> var possibleIntegerValue: Int? = .None
+   -> var possibleIntegerValue: Int? = nil
    << // possibleIntegerValue : Int? = <unprintable value>
    -> switch numberSymbol {
          case '1', '١', '一', '๑':
@@ -719,7 +719,7 @@ Multiple values are covered in a single ``switch`` case for brevity:
          case '4', '٤', '四', '๔':
             possibleIntegerValue = 4
          default:
-            possibleIntegerValue = .None
+            possibleIntegerValue = nil
       }
    -> if let integerValue = possibleIntegerValue {
          println("The integer value of \(numberSymbol) is \(integerValue).")
@@ -740,7 +740,7 @@ If a match is found,
 it sets an optional ``Int?`` variable (called ``possibleIntegerValue``)
 to the appropriate integer value.
 If the symbol is not recognized,
-the optional ``Int?`` is set to a value of ``.None``, meaning “no value”.
+the optional ``Int?`` is set to a value of ``nil``, meaning “no value”.
 Finally, the example uses optional binding to check whether a value was found.
 If it was, the output value is printed;
 otherwise, an error message is reported.

@@ -140,7 +140,7 @@ if it is appropriate for your type:
          }
          subscript(row: Int, column: Int) -> Double? {
             get {
-               if !indexIsValid(row, column) { return .None }
+               if !indexIsValid(row, column) { return nil }
                return grid[(row * columns) + column]
             }
             set {
@@ -190,7 +190,7 @@ is outside the bounds of the matrix:
 
 .. TODO: test this code manually.
 
-A value of ``.None`` is returned if you try and access
+A value of ``nil`` is returned if you try and access
 a subscript that is outside of the matrix bounds:
 
 .. testcode:: subscripts
@@ -238,7 +238,7 @@ and is checked by the subscript's setter:
    but you can combine it with other expressions in an if statement.
    Update this example if the situation changes.
 
-The setter checks to see if ``value`` is not equal to ``.None``,
+The setter checks to see if ``value`` is not equal to ``nil``,
 and also checks to make sure that the ``row`` and ``column`` values are valid.
 If all of these things are true,
 it sets the appropriate entry in the ``grid`` array to

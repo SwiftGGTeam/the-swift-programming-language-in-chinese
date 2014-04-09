@@ -908,7 +908,7 @@ such as when hit-testing a series of different elements:
                return eachElement
             }
          }
-         return .None
+         return nil
       } 
    -> var circle = Circle()
    << // circle : Circle = Circle()

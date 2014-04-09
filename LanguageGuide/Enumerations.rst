@@ -351,7 +351,7 @@ In the example above, ``possiblePlanet`` is of type ``Planet?``,
 or “optional ``Planet``.”
 
 If you try to find a Planet with a position of ``9``,
-the optional ``Planet`` value returned by ``fromRaw`` will equal ``.None``:
+the optional ``Planet`` value returned by ``fromRaw`` will be ``nil``:
 
 .. testcode:: rawValues
 
