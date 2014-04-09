@@ -811,9 +811,15 @@ ______________
 Swift's ``switch`` statement is exhaustive, and does not allow empty cases.
 Because of this,
 it is sometimes necessary to deliberately match and ignore a certain case.
-You do this by writing a single semicolon (``;``) for the ignored case's body.
+You do this by writing a single semicolon (``;``) as the body of the case you want to ignore.
 A semicolon is considered a “statement” in this context,
 and makes it clear that you wish to match and ignore that particular case.
+
+.. note::
+
+   A ``switch`` case that only contains a comment is reported as a compile-time error.
+   Comments are not statements, and do not cause a ``switch`` case to be ignored.
+   Always use a single semicolon to ignore a ``switch`` case.
 
 In the ``numberSymbol`` example above,
 it is not necessary to assign a value of ``nil`` to ``possibleIntegerValue``
