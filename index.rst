@@ -19,6 +19,30 @@ Contents
 Change Log
 ----------
 
+April 9 2014
+~~~~~~~~~~~~~
+
+Language Guide
+++++++++++++++
+
+* New chapter on :doc:`closures <LanguageGuide/Closures>`.
+* New section about working with :ref:`function types <Functions_FunctionTypes>`.
+* New section about :ref:`nested functions <Functions_NestedFunctions>`.
+* New sections about :ref:`comments <BasicTypes_Comments>` and :ref:`semicolons <BasicTypes_Semicolons>`.
+* New section about :ref:`nil <BasicTypes_Nil>` as it is used in the context of optionals. 
+* ``nil`` is now used throughout the *Guide* instead of ``.None``.
+* New section about :ref:`ignoring switch cases <ControlFlow_IgnoringCases>` with a semicolon.
+* Improved our advice about :ref:`naming of generic type parameters <Generics_NamingOfTypeParameters>`.
+* Moved :ref:`type aliases <BasicTypes_TypeAliases>` back to the Basic Types chapter,
+  and changed the example to suit.
+* Updated the :ref:`dictionaries <CollectionTypes_Dictionaries>` section
+  to reflect that dictionaries will once again be iterated as ``(key, value)`` tuples.
+* Updated the :ref:`arrays <CollectionTypes_Arrays>` section to reflect the fact that
+  ``array.insert`` now requires the index to be written before the value,
+  and the fact that ``array.removeAt`` now returns the removed value.
+* Updated the :ref:`overriding <Inheritance_Overriding>` section now that ``override`` is a keyword.
+* Incorporated editorial feedback on several chapters.
+
 April 1 2014
 ~~~~~~~~~~~~
 
@@ -80,11 +104,11 @@ Language Guide
 * ``self`` is now a :ref:`property of every value in Swift <Methods_TheSelfProperty>` –
   updated the Methods chapter to match,
   and rewritten much of the information about ``mutating`` to focus it on
-  :ref:`Methods_MutatingMethodsForValueTypes`
+  :ref:`Methods_ModifyingValueTypesFromWithinInstanceMethods`
 * Simplified the example of :ref:`read-only subscript <Subscripts_SubscriptSyntax>`
-* :ref:`ClassesAndStructures_DefiningClassesAndStructures` no longer uses
+* :ref:`ClassesAndStructures_DefinitionSyntax` no longer uses
   a Rectangle as an example for a custom class type
-* Added a short section on :ref:`type aliases <ClassesAndStructures_TypeAliases>`
+* Added a short section on :ref:`type aliases <BasicTypes_TypeAliases>`
   (as used in a non-Generics context)
 * Clarified what can be :ref:`overridden <Inheritance_Overriding>`
 * Moved :doc:`LanguageGuide/Subscripts` into its own chapter
@@ -122,7 +146,7 @@ Language Guide
 * Moved away from an explicit REPL-like presentation of code examples,
   and added in hand-written comments instead
 * New section on :doc:`LanguageGuide/Subscripts`
-* New section about mutating ``self`` in :ref:`enumeration instance methods <Methods_MutatingMethodsForValueTypes>`
+* New section about mutating ``self`` in :ref:`enumeration instance methods <Methods_ModifyingValueTypesFromWithinInstanceMethods>`
 * New sections about :ref:`BasicTypes_PrintingNamedValues`
   and :ref:`BasicTypes_StringInterpolation` in Basic Types
 * Improved examples for :ref:`ControlFlow_While` and :ref:`ControlFlow_Break`,

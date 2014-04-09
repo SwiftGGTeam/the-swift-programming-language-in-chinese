@@ -26,7 +26,7 @@ This example starts by defining a “base” class called ``Vehicle``.
 This base class declares two properties
 (``numberOfWheels`` and ``maxPassengers``)
 that are universal to all vehicles.
-These properties are used by a method called ``description()``,
+These properties are used by a method called ``description``,
 which returns a ``String`` description of the vehicle's characteristics.
 
 .. QUESTION: this example doesn't really need an initializer.
@@ -116,7 +116,7 @@ and is replaced with a new value of ``2``.
 As well as inheriting the properties of ``Vehicle``,
 ``Bicycle`` also inherits its methods.
 If you create an instance of ``Bicycle``,
-you can call its inherited ``description()`` method,
+you can call its inherited ``description`` method,
 and see how its properties have been updated:
 
 .. testcode:: inheritance
@@ -160,7 +160,7 @@ you can see how its properties have been updated:
    -> println("Tandem: \(tandem.description())")
    <- Tandem: 2 wheels; up to 2 passengers
 
-Note that the ``description()`` method has also been inherited by ``Tandem``.
+Note that the ``description`` method has also been inherited by ``Tandem``.
 Instance methods of a class are inherited by any and all subclasses of that class.
 
 .. note::
@@ -189,23 +189,20 @@ This is known as :newTerm:`overriding`.
 .. TODO: remove this note if stored property overriding is implemented for 1.0.
 
 Whenever you override something that would overwise be inherited,
-you must prefix your overriding definition with the ``@override`` attribute.
+you must prefix your overriding definition with the ``override`` keyword.
 This makes it clear that you intended to provide an override,
 and did not just accidentally provide a matching definition by mistake.
 Overriding by accident can cause unexpected behavior,
-and any overrides without the ``@override`` attribute are
+and any overrides without the ``override`` keyword are
 diagnosed as an error when your code is compiled.
 (The definition you have accidentally overridden may not have been provided
 by your subclass's immediate superclass –
 it may have been inherited from another superclass further up the chain.)
 
-In addition, the ``@override`` attribute prompts the Swift compiler
+In addition, the ``override`` keyword prompts the Swift compiler
 to check that the superclass has a declaration that matches
 the one you have provided.
 This helps to ensure that your overriding definition is correct.
-
-.. QUESTION: have I introduced the concept of "attributes" by this point?
-   If not, when / where should I do so?
 
 The following example defines a new subclass of ``Vehicle``, called ``Car``:
 
@@ -218,7 +215,7 @@ The following example defines a new subclass of ``Vehicle``, called ``Car``:
             maxPassengers = 5
             numberOfWheels = 4
          }
-         @override func description() -> String {
+         override func description() -> String {
             return super.description() + "; "
                + (isConvertible ? "convertible" : "not convertible")
          }
@@ -231,18 +228,18 @@ This property defaults to ``false``, as most cars are not convertibles.
 which sets the maximum number of passengers to ``5``,
 and the default number of wheels to ``4``.
 
-``Car`` then overrides its inherited ``description()`` method.
+``Car`` then overrides its inherited ``description`` method.
 It does this by defining a function with the same declaration as
 the one it would otherwise inherit,
-prefixed by the ``@override`` attribute.
-Rather than providing a completely custom implementation of ``description()``,
-it actually starts by calling ``super.description()`` to retrieve
+prefixed by the ``override`` keyword.
+Rather than providing a completely custom implementation of ``description``,
+it actually starts by calling ``super.description`` to retrieve
 the description provided by its superclass.
 It then appends some additional information onto the end,
 and returns the complete description.
 
 If you create a new instance of ``Car``,
-and print the output of its ``description()`` method,
+and print the output of its ``description`` method,
 you can see that the description has indeed changed:
 
 .. testcode:: inheritance
@@ -257,3 +254,6 @@ you can see that the description has indeed changed:
    For example, the parameter names do not have to match
    in order for a function to override a similar signature in its parent.
    (This is true for both of the function declaration syntaxes.)
+
+.. TODO: This chapter needs to mention the @final attribute
+   once it is fully implemented.

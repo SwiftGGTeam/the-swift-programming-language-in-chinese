@@ -9,10 +9,12 @@
 Extensions
 ==========
 
-:newTerm:`Extensions` are a way to add new functionality to an existing
-class, structure or enumeration,
-even if you do not have access to the source code for the existing type.
-Extensions are similar to Objective-C categories, but have many more capabilities.
+:newTerm:`Extensions` are a way to add functionality to an existing
+class, structure or enumeration type.
+This includes the ability to extend types
+for which you do not have access to the original source code
+(known as :newTerm:`retroactive modeling`).
+Extensions are similar to :newTerm:`categories` in Objective-C.
 
 Extensions can:
 
@@ -22,9 +24,8 @@ Extensions can:
 * define subscripts
 * define and use new nested types
 
-In addition, extensions can use these capabilities to
-make an existing type conform to a protocol.
-This process is covered in the :doc:`Protocols` chapter.
+Extensions can also be used to make an existing type conform to a protocol.
+This process is covered in :doc:`Protocols`.
 
 .. QUESTION: I've put operator conformance in the Classes and Structures chapter,
    rather than this chapter, because it isn't actually implemented via an extension
@@ -195,7 +196,7 @@ Extensions can add new instance methods to an existing type:
          }
       }
 
-This example adds a new ``String`` instance method called ``toSpooky()``.
+This example adds a new ``String`` instance method called ``toSpooky``.
 This new method is now available to any instances of ``String``.
 The method returns a spookier version of the original string,
 by converting odd-numbered characters to uppercase,
@@ -235,7 +236,7 @@ just like mutating methods from an original implementation:
    /> someInt is now \(someInt)
    </ someInt is now 123
 
-This example adds a ``shiftRight()`` method to instances of ``Int``.
+This example adds a ``shiftRight`` method to instances of ``Int``.
 This method is similar to the bitwise right shift operator
 (as described in :ref:`AdvancedOperators_BitwiseLeftAndRightShifts`),
 except that it shifts by powers of ten, rather than powers of two.
@@ -381,11 +382,11 @@ The nested enumeration can now be used with ``UnicodeScalar`` values:
    </ 'Hello' is made up of the following kinds of letters:
    </ consonant vowel consonant consonant vowel
 
-This function, ``printLetterKinds()``,
+This function, ``printLetterKinds``,
 takes an input ``String`` value and iterates over its characters.
 For each scalar, it considers the ``kind`` computed property for that scalar,
 and prints an appropriate description of that kind.
-The ``printLetterKinds()`` function can then be called
+The ``printLetterKinds`` function can then be called
 to print the kinds of letters in an entire word,
 as shown here for the word ``"Hello"``.
 

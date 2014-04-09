@@ -97,6 +97,8 @@ and define your own protocols (like ``Hashable``),
 to enable those generic types to define and enforce certain requirements
 on the types they can work with.
 
+.. _Generics_GenericFunctions:
+
 Generic Functions
 -----------------
 
@@ -104,7 +106,7 @@ Before describing how to create custom generic types,
 it is useful to understand how functions can be made to work with values of any type.
 
 Here's an example of a :newTerm:`generic function`,
-based on the ``swap()`` function from Swift's Standard Library:
+based on the ``swap`` function from Swift's Standard Library:
 
 .. testcode:: swapValues
 
@@ -115,7 +117,7 @@ based on the ``swap()`` function from Swift's Standard Library:
 (There's a lot going on in this function definition, but don't worry –
 all will be explained below.)
 
-This function, called ``swapValues()``, takes two values ``a`` and ``b``,
+This function, called ``swapValues``, takes two values ``a`` and ``b``,
 and swaps them. For example:
 
 .. testcode:: swapValues
@@ -141,12 +143,12 @@ it can be used with any other type, such as a pair of ``String`` values:
    /> firstString is now \"\(firstString)\", and secondString is now \"\(secondString)\"
    </ firstString is now "world", and secondString is now "hello"
 
-The ``swapValues()`` function doesn't care what kind of values it works with,
+The ``swapValues`` function doesn't care what kind of values it works with,
 as long as they are of the same type as each other.
 (It wouldn't make sense to swap an ``Int`` and a ``String``,
 because you can't store a ``String`` value in an ``Int`` variable, and vice versa.)
 
-To achieve this, the ``swapValues()`` function needs to talk *generically*
+To achieve this, the ``swapValues`` function needs to talk *generically*
 about the types it can work with.
 Here's its definition again:
 
@@ -165,9 +167,11 @@ and an ``inout`` parameter called ``b`` that is also of type ``T``.”
 The “``T``” in this description is a placeholder for some type to be determined later.
 This type can be different each time the function is called.
 Nonetheless, from this definition,
-the ``swapValues()`` function can be confident that whatever type ``T`` represents,
+the ``swapValues`` function can be confident that whatever type ``T`` represents,
 both ``a`` and ``b`` are of that type.
 This enables it to provide its swapping functionality for any given type.
+
+.. _Generics_TypeParameters:
 
 Type Parameters
 ~~~~~~~~~~~~~~~
@@ -176,16 +180,17 @@ In the example above, ``T`` is said to be a :newTerm:`type parameter`.
 Type parameters are a way to specify and name a placeholder type,
 and are written immediately after the function's name,
 between a pair of matching angle brackets (such as ``<T>``).
-Multiple type parameters can be provided, separated by commas (such as ``<T, U, V>``).
+Multiple type parameters can be provided between the angle brackets,
+separated by commas.
 
 Once specified,
 a type parameter can be used as the type of a function's parameters
-(such as the ``a`` and ``b`` parameters of the ``swapValues()`` function);
+(such as the ``a`` and ``b`` parameters of the ``swapValues`` function);
 as the function's return type;
 or as a type annotation within the body of the function.
 In each case, the placeholder type represented by the type parameter
 is replaced with an *actual* type whenever the function is called.
-(In the ``swapValues()`` example above,
+(In the ``swapValues`` example above,
 ``T`` was replaced with ``Int`` the first time the function was called,
 and was replaced with ``String`` the second time it was called.)
 
@@ -194,23 +199,33 @@ You don't, for example, write ``swapValues<Int>(x, y)``.
 The type that ``T`` represents is inferred for you,
 and indeed you are not allowed to specify a type yourself.
 
+.. _Generics_NamingOfTypeParameters:
+
 Naming of Type Parameters
 _________________________
 
-The choice of ``T`` as a type parameter name is slightly arbitrary.
-You could just as easily name the parameter ``SomeType``, or ``TypeThatIsNotYetKnown``,
-but it is generally briefer and clearer to use a short, single-letter name
-as the name for a placeholder type parameter.
-This also makes it less likely that the name you choose will clash with an actual type name.
+The choice of name for a type parameter is entirely up to you.
+In simple cases where a generic function or generic type needs to refer to a single placeholder type
+(such as the ``swapValues`` generic function above,
+or a generic collection that stores a single type, such as ``Array``),
+it is traditional to use the single-character name ``T`` for the type parameter.
+However, you are free to use any valid identifier as the type parameter name.
 
-Traditionally, the first type to be specified as a type parameter is given the name ``T``,
-followed by ``U``, then ``V``, and so on.
-The choice of name to use is entirely up to you, however.
+If you are defining more complex generic functions or generic types with multiple parameters,
+it can be useful to provide more descriptive type parameter names.
+For example, Swift's ``Dictionary`` type has two type parameters –
+one for its keys, and one for its values.
+If you were writing ``Dictionary`` yourself,
+you might name these two type parameters ``KeyType`` and ``ValueType``
+to provide a reminder of their purpose as you use them within your generic code.
 
 .. note::
 
-   Type parameters should always have capitalized names (such as ``T``)
-   to indicate that they represent a type, not a value.
+   Type parameters should always have ``UpperCamelCase`` names
+   (such as ``T`` and ``KeyType``)
+   to indicate that they are a placeholder for a *type*, not a value.
+
+.. _Generics_GenericTypes:
 
 Generic Types
 -------------
@@ -238,7 +253,7 @@ This illustration shows the push / pop behavior for a stack:
 
 Here's an implementation of a generic ``Stack`` structure in Swift code.
 This structure uses an ``Array`` property called ``items`` to store the values in the stack,
-and provides two methods, ``push()`` and ``pop()``,
+and provides two methods, ``push`` and ``pop``,
 to push and pop values on and off the stack.
 These methods are marked as ``mutating``,
 because they need to modify (or *mutate*) the structure's ``items`` array.
@@ -299,6 +314,8 @@ Because it is a generic type,
 ``Stack`` can now be used to create a stack of *any* valid type in Swift,
 in a similar manner to ``Array`` and ``Dictionary``.
 
+.. _Generics_GenericTypeDefinitionSyntax:
+
 Generic Type Definition Syntax
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -330,9 +347,9 @@ In this case, ``T`` is used as a placeholder in three places:
 
 1. to create a property called ``items``,
    which is initialized with an empty array of values of type ``T``
-2. to specify that the ``push()`` method has a single parameter called ``item``,
+2. to specify that the ``push`` method has a single parameter called ``item``,
    which must be of type ``T``
-3. to specify that the value returned by the ``pop()`` method
+3. to specify that the value returned by the ``pop`` method
    will be a value of type ``T``
 
 This use of a placeholder type enables ``Stack`` to define the generic behavior
@@ -348,10 +365,12 @@ after the variable name:
    << // stackOfInts : Stack<Int> = Stack<Int>([])
    -> stackOfInts.push(42)
 
+.. _Generics_TypeConstraints:
+
 Type Constraints
 ----------------
 
-The ``swapValues()`` function, and the ``Stack`` type,
+The ``swapValues`` function, and the ``Stack`` type,
 are both able to work with any type at all.
 However, it can sometimes be useful to enforce
 certain :newTerm:`type constraints` on the types that can be used with
@@ -366,12 +385,12 @@ Abstract concepts like ``Hashable``
 give a way to talk about types in terms of their conceptual characteristics,
 rather than their explicit type.
 
-Here's a non-generic function called ``findInt()``,
+Here's a non-generic function called ``findInt``,
 which is given an ``Int`` value to find,
 and an array of ``Int`` values within which to find it.
-The ``findInt()`` function returns an optional ``Int`` value,
+The ``findInt`` function returns an optional ``Int`` value,
 which will be the index of the first matching value in the array if it is found,
-or ``.None`` if the value could not be found:
+or ``nil`` if the value could not be found:
 
 .. testcode:: typeConstraints
 
@@ -383,10 +402,10 @@ or ``.None`` if the value could not be found:
             }
             ++index
          }
-         return .None
+         return nil
       }
 
-The ``findInt()`` function can now be used to find an integer value in an array of integers:
+The ``findInt`` function can now be used to find an integer value in an array of integers:
 
 .. testcode:: typeConstraints
 
@@ -398,9 +417,9 @@ The ``findInt()`` function can now be used to find an integer value in an array 
    <- The index of -27 is 2
 
 The principle of finding a value in an array isn't just useful for integers, however.
-We could try and write the same functionality as a generic function called ``findValue()``,
+We could try and write the same functionality as a generic function called ``findValue``,
 by replacing anything that mentions integers to talk about values of some type ``T`` instead.
-Here's how a generic version of ``findInt()``, called ``findValue()``, might be written:
+Here's how a generic version of ``findInt``, called ``findValue``, might be written:
 
 .. testcode:: typeConstraints
 
@@ -412,7 +431,7 @@ Here's how a generic version of ``findInt()``, called ``findValue()``, might be 
             }
             ++index
          }
-         return .None
+         return nil
       }
    !! <REPL Input>:4:14: error: expression does not type-check
    !!              if value == valueToFind {
@@ -442,7 +461,7 @@ as described in :ref:`AdvancedOperators_ProtocolOperatorRequirements`.)
 
 .. TODO: will the way to do this *actually* be described there?
 
-Any type that is ``Equatable`` can safely be used with the ``findValue()`` function,
+Any type that is ``Equatable`` can safely be used with the ``findValue`` function,
 because it is guaranteed to support the equality operator.
 To express this fact, you can write a type constraint of ``Equatable``
 as part of the type parameter's definition when you define the function:
@@ -457,13 +476,13 @@ as part of the type parameter's definition when you define the function:
             }
             ++index
          }
-         return .None
+         return nil
       }
 
 The type parameter here has been written as ``<T: Equatable>``,
 which means “any type ``T`` that is ``Equatable``.”
 
-The ``findValue()`` function now compiles successfully,
+The ``findValue`` function now compiles successfully,
 and can be used with any type that is ``Equatable``, such as ``Double`` or ``String``:
 
 .. testcode:: typeConstraintsEquatable
@@ -481,10 +500,14 @@ and can be used with any type that is ``Equatable``, such as ``Double`` or ``Str
 .. likewise providing type parameters for initializers
 .. requirements can be inheritance clauses as well as protocol conformance clauses
 
+.. _Generics_AssociatedTypes:
+
 Associated Types
 ----------------
 
 .. write-me::
+
+.. _Generics_Subscripts:
 
 Subscripts
 ----------
@@ -494,8 +517,12 @@ Subscripts
 .. Protocols can require conforming types to provide specific subscripts
 .. These typically return a value of type T, which is why I've moved this here
 
+.. _Generics_GenericEnumerations:
+
 Generic Enumerations
 --------------------
+
+.. write-me::
 
 .. Describe how Optional<T> actually works
 
