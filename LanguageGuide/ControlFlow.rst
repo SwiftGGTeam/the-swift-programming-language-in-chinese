@@ -45,7 +45,7 @@ such as ranges of numbers, items in an array, and characters in a string.
 
 This example prints the first few entries in the five-times-table:
 
-.. testcode::
+.. testcode:: forLoops
 
    -> for index in 1..5 {
          println("\(index) times 5 is \(index * 5)")
@@ -81,7 +81,7 @@ you must declare it yourself before its use in the loop.
 If you don't need each value from the range,
 you can ignore the values by using an underscore in place of a variable name:
 
-.. testcode::
+.. testcode:: forLoops
 
    -> let base = 3
    << // base : Int = 3
@@ -110,7 +110,7 @@ and does not provide access to the current value during each iteration of the lo
 
 Use the ``for``-``in`` loop with an array to iterate over its items:
 
-.. testcode::
+.. testcode:: forLoops
 
    -> let names = ["Anna", "Alex", "Brian", "Jack"]
    << // names : String[] = ["Anna", "Alex", "Brian", "Jack"]
@@ -127,7 +127,7 @@ which provides the individual characters in the string as an ``Array`` of ``Unic
 (also known as an “``Array`` of type ``UnicodeScalar``”).
 Use this property to iterate over the characters in a string in order:
 
-.. testcode::
+.. testcode:: forLoops
 
    -> for scalar in "Hello".chars {
          println(scalar)
@@ -146,7 +146,7 @@ for use within in the body of the ``for``-``in`` loop.
 Here, the dictionary's keys are decomposed into a constant called ``animalName``,
 and the dictionary's values are decomposed into a constant called ``legCount``:
 
-.. testcode::
+.. testcode:: forLoops
 
    -> let numberOfLegs = ["spider" : 8, "ant" : 6, "cat" : 4]
    << // numberOfLegs : Dictionary<String, Int> = Dictionary<String, Int>(1.33333, 3, <DictionaryBufferOwner<String, Int> instance>)
@@ -188,7 +188,7 @@ For-Condition-Increment
 In addition to ``for``-``in`` loops,
 Swift supports traditional C-style ``for`` loops with a condition and an incrementer:
 
-.. testcode::
+.. testcode:: forLoops
 
    -> for var index = 0; index < 3; ++index {
          println("index is \(index)")
@@ -245,7 +245,7 @@ are only valid within the scope of the ``for`` loop itself.
 To retrieve the final value of ``index`` after the loop ends,
 you must declare ``index`` before the loop's scope begins:
 
-.. testcode::
+.. testcode:: forLoops
 
    -> var index = 0
    << // index : Int = 0
@@ -584,7 +584,7 @@ In its simplest form,
 the ``if``-``else`` statement has a single ``if`` condition.
 It executes a set of statements only if that condition is ``true``:
 
-.. testcode::
+.. testcode:: ifElse
 
    -> var temperatureInFahrenheit = 30
    << // temperatureInFahrenheit : Int = 30
@@ -603,7 +603,7 @@ and code execution continues after the ``if`` statement's closing brace.
 As its name suggests, the ``if``-``else`` statement can provide
 an alternative set of statements when the ``if`` condition is ``false``:
 
-.. testcode::
+.. testcode:: ifElse
 
    -> temperatureInFahrenheit = 40
    -> if temperatureInFahrenheit <= 32 {
@@ -621,7 +621,7 @@ and so the ``else`` branch is triggered instead.
 You can chain multiple ``if``-``else`` statements together,
 to consider additional clauses:
 
-.. testcode::
+.. testcode:: ifElse
 
    -> temperatureInFahrenheit = 90
    -> if temperatureInFahrenheit <= 32 {
@@ -639,7 +639,7 @@ and prints a response for any temperatures that are neither too warm nor too col
 
 The final ``else`` clause is optional, however, and can be excluded if the set of conditions does not need to be complete:
 
-.. testcode::
+.. testcode:: ifElse
 
    -> temperatureInFahrenheit = 72
    -> if temperatureInFahrenheit <= 32 {
@@ -703,7 +703,7 @@ The following example switches on a ``UnicodeScalar`` value,
 and determines whether it represents a number symbol in one of four languages.
 Multiple values are covered in a single ``switch`` case for brevity:
 
-.. testcode::
+.. testcode:: switch
 
    -> let numberSymbol = '三'   // Simplified Chinese symbol for the number 3
    << // numberSymbol : UnicodeScalar = '三'
@@ -764,7 +764,7 @@ at least one executable statement.
 It is not valid to write the following code,
 because the first case is empty:
 
-.. testcode::
+.. testcode:: switch
 
    -> let someCharacter = "a"
    << // someCharacter : String = "a"
@@ -797,7 +797,7 @@ and can be written over multiple lines if the list is long:
          <#statements#>
    }
 
-.. note::
+.. note:: switch
 
    To opt in to fallthrough behavior for a particular ``switch`` case,
    use the ``fallthrough`` keyword,
@@ -827,7 +827,7 @@ To satisfy this requirement without unnecessary reassignment,
 the ``switch`` statement can be written with
 a semicolon inside its ``default`` case instead:
 
-.. testcode::
+.. testcode:: switch
 
    -> switch numberSymbol {
          case '1', '١', '一', '๑':
@@ -854,7 +854,7 @@ Values in ``switch`` cases can be checked for their inclusion in a range.
 This example uses number ranges
 to provide a natural-language count for numbers of any size:
 
-.. testcode::
+.. testcode:: switch
 
    -> let count = 3_000_000_000_000
    << // count : Int = 3000000000000
@@ -897,7 +897,7 @@ The example below takes an (x, y) point,
 expressed as a simple tuple of type ``(Int, Int)``,
 and categorizes it on the graph that follows:
 
-.. testcode::
+.. testcode:: switch
 
    -> let somePoint = (1, 1)
    << // somePoint : (Int, Int) = (1, 1)
@@ -951,7 +951,7 @@ Again, the example below takes an (x, y) point,
 expressed as a tuple of type ``(Int, Int)``,
 and categorizes it on the graph that follows:
 
-.. testcode::
+.. testcode:: switch
 
    -> let anotherPoint = (2, 0)
    << // anotherPoint : (Int, Int) = (2, 0)
@@ -1010,7 +1010,7 @@ A ``switch`` case can check for additional conditions using the ``where`` clause
 
 The example below categorizes an (x, y) point on the following graph:
 
-.. testcode::
+.. testcode:: switch
 
    -> let yetAnotherPoint = (1, -1)
    << // yetAnotherPoint : (Int, Int) = (1, -1)
@@ -1079,7 +1079,7 @@ without leaving the loop altogether.
 The following example removes all vowels and spaces from a lowercase string
 to create a cryptic puzzle phrase:
 
-.. testcode::
+.. testcode:: controlTransfer
 
    -> let puzzleInput = "great minds think alike"
    << // puzzleInput : String = "great minds think alike"
@@ -1261,7 +1261,7 @@ To opt in to C-style fallthrough behavior,
 use the ``fallthrough`` keyword.
 The example below uses ``fallthrough`` to create a textual description of a number:
 
-.. testcode::
+.. testcode:: controlTransfer
 
    -> let integerToDescribe = 5
    << // integerToDescribe : Int = 5
