@@ -73,7 +73,7 @@ even if they were declared as variable properties:
    << // rangeOfFourItems : FixedLengthRange = FixedLengthRange(0, 4)
    // this range represents integer values 0, 1, 2, and 3
    -> rangeOfFourItems.firstValue = 6
-   !! <REPL Input>:1:29: error: cannot assign to the result of this expression
+   !! <REPL Input>:1:29: error: cannot assign to 'firstValue' in 'rangeOfFourItems'
    !! rangeOfFourItems.firstValue = 6
    !! ~~~~~~~~~~~~~~~~~~~~~~~~~~~ ^
    // this will report an error, even thought firstValue is a variable property
