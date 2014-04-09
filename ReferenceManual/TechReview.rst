@@ -850,6 +850,27 @@ Patterns
     How about something like this as a start:
     Pattern matching is a combination of conditional branching and value binding.
 
+.. You're matching the shape of a value instead of individual elements.
+   You're both checking for proprties of a value and extracting properties out of it
+   that are dependant on the value actually being of that shape.
+   It's a way to safely do this & provide a convenient notation.
+
+.. In the context of a refenerence,
+   talk about what conditions a pattern form checks for.
+   There's the aspect of testing the value
+   and then recursively matching a pattern to parts of that.
+   ie If you have a tuple pattern,
+   it matches each element of the tuple pattern against the tuple.
+   We don't call it this, but it's similar to a tree-structure pattern matching
+   like other languages have --
+   you match against the structure of something instead of the particular value.
+
+.. We have patterns in other places like 'var' and 'for'
+   but it might make sense to talk about those as different things
+   because the implementation doesn't quite line up.
+   The LangRef tries to talk about them as the same conceptual idea
+   but they were implemented separately,
+   and they're still growing together.
 
 .. docnote::
     Here's a list of where patterns are most commonly used.
@@ -869,22 +890,68 @@ Patterns
     Patterns will no longer be used in the signature of a function declaration, correct?
     (Per Doug at our last meeting.)
 
+.. In a for-in statement, the only pattern you can really use
+   is a tuple decomposition pattern.
+   (^-- Maybe not accurate.)
+   It has to be a pattern that can't ever fail [irrefutable].
+   If I use "for x in list",
+   the "x" is a variable pattern,
+   and it's implicitly under a let pattern.
+   The "x" is a named pattern.
+   Gramatically, named pattern is a special form of expression pattern
+   where we check if it's a single name
+   and turn it into a variable binding.
+   In cases where we require irrefutable patterns,
+   the only valid thing to put in an expression pattern
+   is an identifier.
+
+.. We have vague plans for regex patterns, but that's a 2.0 feature.
+
+.. Making function declarations not depend on patters -- correct.
+   Each argument is restricted to being an identifier pattern,
+   but we don't call them patters in the grammar.
+   They used to have the same restriction an var bindings,
+   but now they don't use patterns at all.
 
 .. docnote::
     The LangRef says "Type annotations are currently not allowed in switch statements".
     Are they *eventually* going to be allowed there?
 
+.. No -- they infer their type from the control expression.
+   Because we allow arbitrary expressions, a colon could be part of ?:
+   which would make parsing tricky.
+   You always have the context from the value that you're switching over
+   to determine what the type should be.
+
 .. docnote::
     LangRef says that "a pattern has a type". Is this *strictly* true?
 
+.. The pattern matches values of a particular type.
+   When the stuff they mached against is used,
+   the expression has a type.
 
 .. docnote::
     How can you unwrap (access) an enum case with an associated value
     besides using a ``switch`` statement?
 
+.. Currently, we don't.
+   The special case for Optional is special.
+   The general case, we don't.
+   It's something people want --
+   one idea would be that we could use dot syntax
+   to give you an optional of the payload type --
+   but currently, switch statements are the primitive way
+   of accessing the value associated with the enum.
+   People have asked for a switch expression
+   rather than (in addition to)
+   a switch statement, so that you could have one
+   embedded in a variable assignment or in another expression.
+
 .. docnote::
     You can nest patterns to an arbitrary depth (i.e., patterns can contain subpatterns).
     Is this true?
+
+.. Yes.
 
 .. docnote::
     How important are the concepts of "irrefutable" and "refutable" to expose to readers,
@@ -896,11 +963,45 @@ Patterns
     Pattern matching thus can fail or succeed. Is there any other possible result from
     pattern matching? For instance, pattern matching in Haskell can also "diverge".
 
+.. Identifier pattern (special form of expression pattern),
+   wildcard patterns, and tuple patterns made up of these
+   are the three kinds of irrefutable patterns.
+   It is possible to make a refutable tuple pattern:
+   
+   switch (x, y) {
+      case (is Foo, is Bar):
+      ...
+   }
+
+.. The difference revolves around syntax.
+   It may make sense to describe var/let/for patterns
+   as a separate mechanism --
+   almost as a feature of those mechanisms.
+   They let you use wildcard and destructure tuples.
+   It's not really important to highlight the fac that they
+   happen to be implemented as patterns.
+   Switch statements are the only place where proper pattern matching happens.
+   Let's just discuss var/let/for as having special structure
+   that allows tuples and wildcards.
+
+.. Pattern matching either matches or fails.
+   We don't have lazy evaluation or infinitely nested tuples
+   so we don't have the ability to diverge like Haskell does.
+   Even with recursive enums (because we don't have lazy evaluation)
+   this shouldn't change.
+   You can crash -- you can have an arbitrary expression
+   and the expression can cause a crash.
+   You should avoid using patterns
+   that can crash or cause side effects in a pattern,
+   because of the implementation of switch statements
+   how we don't guarantee that they are evaluated in a particular order.
+
 .. docnote::
     Is it true that patterns always appear on the left-hand side on an assignment? [...]
 
     ``var a = 1`` (``a`` is a pattern); ``var b = a`` (``b`` is a pattern, ``a`` is an expression).
 
+.. Yes.
 
 .. docnote::
     How up to date is the top-level pattern grammar in the LangRef? [...]
@@ -923,6 +1024,43 @@ Patterns
 
     What does this mean, exactly?
 
+.. It doesn't include "as" patterns, so it's at least somewhat outdated.
+   The thing above parses as an "as" pattern, not an "as" expression,
+   and the T is a sub-pattern (an expression -> identifier expression) of it.
+   The difference between "is" and "as" patterns
+   is that the "as" lets you bind a subpattern.
+
+.. We should add "identifier pattern" as a separate thing.
+   It has a different meaning from an identifier expression.
+       pattern --> identifier-pattern --> identifier
+   The way we parse patterns is to first treat them as expressions
+   and then take a disambiguation pass to turn things
+   that are valid patterns into patterns.
+
+.. The grammar of patterns and expressions intentionally overlap
+   so that patterns look like expressions.
+   When you match something, you're doing it structurally,
+   so the grammar should mirror that structure of the thing you're matching.
+
+.. "is" and "as" are given different meaning in a pattern context
+   An enumerator pattern is also a valid expression
+   but its meaning is different --
+   it's destructuring the enum instead of creating one.
+   The semantic difference for as/is:
+   in expression context "x as T" is a cast to T,
+   but in a pattern context "case let x as T"
+   you're going the other way,
+   doing a downcast and checking to see if the value is of that type.
+
+.. With an "as" pattern, you have to have a subpattern.
+   But it doesn't have to be a "let" pattern:
+       case .A(let x) as foo:
+   or a tuple
+       case let (x, y) as (Int, Float):
+   The second one is still a subpattern of the let.
+   "let" binds less tightly than "as"
+   The grammar looks like:
+        as-pattern --> pattern ``as`` type
 
 .. docnote::
     We removed the syntactic category "pattern-typed" and "pattern-atom".
@@ -939,6 +1077,20 @@ Patterns
     * pattern      ::= pattern-typed
     * pattern-typed ::= pattern-atom ':' type-annotation
 
+.. In a case statement, we never support a type annotation.
+   What if we separate out the grammar for producing simple patterns
+   (as used in let/var/for)
+
+   simple-pattern --> identifier-pattern type-annotation-OPT
+   simple-pattern --> wildcard-pattern type-annotation-OPT
+   simple-pattern --> simple-tuple-pattern type-annotation-OPT
+   simple-tuple-pattern --> ``(`` simple-pattern-list ``)``
+   simple-pattern-list --> simple-pattern | simple-pattern ``,`` simple-pattern-list
+
+   Then we could remove all type annotations from plain pattern.
+   This also has the advantage of matching the way things are actually implemented:
+   we capture grammatically the difference between refutable and irrefutable,
+   and the fact that they are handled separatedy (and grew independantly).
 
 .. syntax-grammar::
 
@@ -1056,6 +1208,10 @@ Expression Pattern
 
     (``a + 3`` is an expression.)
 
+.. The issue with (_, 1) is because 1 isn't allowed in a simple pattern
+   (see grammar above)
+   because they don't support expression patterns.
+   The others are bugs.
 
 .. docnote::
     LangRef says: [...]
@@ -1076,6 +1232,18 @@ Expression Pattern
 
     Can you explain this a litte more too? Example where this is relevant?
 
+.. When the compiler sees things like this:
+       switch a {
+       case .A(.X, foo()):
+       case .B(.Y, bar()):
+       case .A(.X, baz()):
+       }
+   It handles this like a nested switch --
+   first checking whether it's a .A or a .B.
+   After it matches .A, we don't ever call bar()
+   because the second case is known to have failed already.
+
+.. We already have discussion of this reordering in switch.
 
 .. syntax-grammar::
 
@@ -1092,12 +1260,15 @@ Enumerator Pattern
 .. docnote::
     Is the grammar still correct?
 
+.. Yes.
+
 
 .. docnote::
     LangRef says "They are currently refutable even if the enum contains
     only a single case." Is this only the *current* plan, or will it change?
 
-
+.. Probably won't change.
+   We don't even parse that production in let/var/for.
 
 .. langref-grammar
 
@@ -1123,10 +1294,19 @@ Tuple Pattern
     Therefore, we should remove the 'pattern-initializer' alternative
     from the tuple-pattern-element production rule, correct?
 
+.. Yes.  Also should remove variadic tuple pattern elements
+   the ``...``-OPT.
+   The only place where you can use variadic tuples is in a function declaration.
+
 .. docnote::
     LangRef says "A pattern-tuple-element has a label if it is a named pattern
     or a type annotation of a named pattern." What does this mean, exactly,
     and what is a 'named pattern'?
+
+.. That's tied in with the keyword arguments of functions.
+   If you have named pattern -- an identifier pattern -- in a function signature,
+   it became the keyword argument for that argument.
+   That sentence doesn't apply anymore.
 
 
 .. langref-grammar
