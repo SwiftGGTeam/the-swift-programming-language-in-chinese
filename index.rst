@@ -29,7 +29,7 @@ Language Guide
 * New section about working with :ref:`function types <Functions_FunctionTypes>`.
 * New section about :ref:`nested functions <Functions_NestedFunctions>`.
 * New sections about :ref:`comments <BasicTypes_Comments>` and :ref:`semicolons <BasicTypes_Semicolons>`.
-* New section about :ref:`nil <BasicTypes_Nil>` as it is used in the context of optionals. 
+* New section about :ref:`nil <BasicTypes_Nil>` as it is used in the context of optionals.
 * ``nil`` is now used throughout the *Guide* instead of ``.None``.
 * New section about :ref:`ignoring switch cases <ControlFlow_IgnoringCases>` with a semicolon.
 * Improved our advice about :ref:`naming of generic type parameters <Generics_NamingOfTypeParameters>`.
@@ -42,6 +42,12 @@ Language Guide
   and the fact that ``array.removeAt`` now returns the removed value.
 * Updated the :ref:`overriding <Inheritance_Overriding>` section now that ``override`` is a keyword.
 * Incorporated editorial feedback on several chapters.
+
+Reference Manual
+++++++++++++++++
+
+* Updated the formal grammar and surrounding prose for the ``switch`` statement in :ref:`Statements_SwitchStatement`.
+* Incorporated various editorial feedback on the :doc:`ReferenceManual/GenericParametersAndArguments` chapter.
 
 April 1 2014
 ~~~~~~~~~~~~
