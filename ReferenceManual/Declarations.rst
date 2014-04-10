@@ -50,6 +50,9 @@ the term *declaration* covers both declarations and definitions.
     declaration --> operator-declaration
     declarations --> declaration declarations-OPT
 
+    declaration-specifiers --> declaration-specifier declaration-specifiers-OPT
+    declaration-specifier --> ``class`` | ``static`` | ``mutating`` | ``override``
+
 .. NOTE: Removed enum-member-declaration, because we don't need it anymore.
 
 .. NOTE: Added 'operator-declaration' based on ParseDecl.cpp.
@@ -246,17 +249,11 @@ see :ref:`BasicTypes_NamedValues` and :ref:`Properties_StoredProperties`.
 
     Grammar of a constant declaration
 
-    constant-declaration --> attribute-list-OPT constant-specifier-OPT ``let`` pattern-initializer-list
-    constant-specifier -->  ``static`` | ``class``
+    constant-declaration --> attribute-list-OPT declaration-specifiers-OPT ``let`` pattern-initializer-list
 
     pattern-initializer-list --> pattern-initializer | pattern-initializer ``,`` pattern-initializer-list
     pattern-initializer --> pattern initializer-OPT
     initializer --> ``=`` expression
-
-.. TODO: TR: Come up with a better name than "constant-specifier",
-    because otherwise we have lots of different names for the same choice
-    (e.g., constant-specifier, variable-specifier, function-specifier).
-    Maybe "type-level-specifier"? But what happens when we do get *real* static functions?
 
 .. TODO: Write about class and static constants.
 
@@ -450,8 +447,7 @@ as described in :ref:`Declarations_ProtocolPropertyDeclaration`.
     variable-declaration --> variable-declaration-head variable-name type-annotation getter-setter-keyword-block
     variable-declaration --> variable-declaration-head variable-name type-annotation initializer-OPT willSet-didSet-block
 
-    variable-declaration-head --> attribute-list-OPT variable-specifier-OPT ``var``
-    variable-specifier --> ``static`` | ``class``
+    variable-declaration-head --> attribute-list-OPT declaration-specifiers-OPT ``var``
     variable-name --> identifier
 
     getter-setter-block --> ``{`` getter-clause setter-clause-OPT ``}``
@@ -514,12 +510,6 @@ See also :ref:`Declarations_ProtocolAssociatedTypeDeclaration`.
     typealias-name --> identifier
     typealias-assignment --> ``=`` type
 
-.. TR: Are type aliases allowed to contain a type-inheritance-clause?
-    Currently, this doesn't work, and it seems as though it shouldn't work.
-    Doesn't it only make sense to specify protocol conformance requirements
-    in the context of an associated type (declared as protocol member)?
-    I modified the grammar under the assumption that they are not allowed.
-
 
 .. _Declarations_FunctionDeclaration:
 
@@ -528,121 +518,41 @@ Function Declaration
 
 .. write-me:: Waiting for design decisions from compiler team.
 
-**[Query/Note: We are trying to decide which code-snippet-style syntax outlines to use
-for regular Swift-style function definitions and for selector-style method definitions.
-Below you'll find two alternatives for the former and four alternatives for the latter.
-We would like to pick one for regular functions and one for selector-style methods.
-Please send us your feedback!]**
-
-Most function and method definitions have the following general form:
-
-**[Regular function, alternative 1:
-This alternative is very simple and is based on the existing Xcode code snippet for C++ functions.
-The downside to this alternative is two-fold:
-first, the Swift-specific structure of the function parameters is completely hidden;
-second, we need to expose the structure of at least two parameters to visually distinguish
-regular functions and selector-style methods.]**
-
 
 .. syntax-outline::
 
-    func <#function name#>(<#function parameters#>) -> <#return type#> {
+    func <#function name#>(<#parameters#>) -> <#return type#> {
         <#statements#>
     }
 
-**[Regular function, alternative 2:
-This alternative satisfies the problems noted with the first alternative.
-That said, it's a rather long (and ugly?) way to display the general form of a simple function definition
-(the signature no longer fits on a single line).
-We've considered abbreviating names, but we're trying to avoid that
-because it's inconsistent with the rest of the document (and with existing Xcode code snippets).]**
+.. syntax-outline::
 
+    <#parameter name#>: <#parameter type#>
+    <#parameter name#>: <#parameter type#>...
+    <#parameter name#>: <#parameter type#> = <#default argument value#>
+    <#parameter name#> <#local parameter name#>: <#parameter type#>
 
 .. syntax-outline::
 
-    func <#function name#>(
-         <#parameter name 1#>: <#parameter type 1#>,
-         <#parameter name 2#>: <#parameter type 2#>)
-         -> <#return type#>
-    {
-        <#statements#>
-    }
-
-Swift also provides syntax for declaring and defining selector-style methods,
-such as those found in Objective-C. Definitions of selector-style methods have the
-following form:
-
-**[The following four alternatives deal with selector-style method definitions.
-The only difference between each of them is the name for each part of the selector.]**
-
-**[Selector-style, alternative 1:
-This alternative is descriptively pretty accurate but may also be a bit awkward.]**
-
-
-.. syntax-outline::
-
-    func <#selector name part 1#>(<#parameter name 1#>: <#parameter type 1#>)
-         <#selector name part 2#>(<#parameter name 2#>: <#parameter type 2#>)
-         -> <#return type#>
-    {
-        <#statements#>
-    }
-
-**[Selector-style, alternative 2:
-Although there is some precedent for calling each part of the selector a "keyword",
-doing so isn't quite accurate.
-The parts of the name of a method aren't keywords in the language (at least in the normal sense).]**
-
-
-.. syntax-outline::
-
-    func <#selector keyword 1#>(<#parameter name 1#>: <#parameter type 1#>)
-         <#selector keyword 2#>(<#parameter name 2#>: <#parameter type 2#>)
-         -> <#return type#>
-    {
-        <#statements#>
-    }
-
-**[Selector-style, alternative 3:
-This alternative uses "method" instead of "selector", but still uses "keyword".]**
-
-
-.. syntax-outline::
-
-    func <#method keyword 1#>(<#parameter name 1#>: <#parameter type 1#>)
-         <#method keyword 2#>(<#parameter name 2#>: <#parameter type 2#>)
-         -> <#return type#>
-    {
-        <#statements#>
-    }
-
-**[Selector-style, alternative 4:
-This alternative uses "signature" instead of "method" or "selector", but still uses "keyword".]**
-
-
-.. syntax-outline::
-
-    func <#signature keyword 1#>(<#parameter name 1#>: <#parameter type 1#>)
-         <#signature keyword 2#>(<#parameter name 2#>: <#parameter type 2#>)
-         -> <#return type#>
-    {
+    func <#function name#>(<#parameters#>)(<#parameters#>) -> <#return type#> {
         <#statements#>
     }
 
 .. TODO: Discuss in prose: Variadic functions and the other permutations of function declarations.
 
-.. TODO: Decide on a syntax-outline for regular Swift functions and for selector-style functions.
-
-.. write-me:: Waiting for design decisions from compiler team.
 
 .. langref-grammar
 
-    decl-func        ::= attribute-list 'type'? 'func' any-identifier generic-params? func-signature brace-item-list?
+    decl-func ::= ('static' | 'class')? 'mutating'? 'func' attribute-list any-identifier generic-params? func-signature stmt-brace?
     func-signature ::= func-arguments func-signature-result?
-    func-arguments ::= pattern-tuple+
-    func-arguments ::= selector-tuple
-    selector-tuple ::= '(' pattern-tuple-element ')' (identifier-or-any '(' pattern-tuple-element ')')+
-    func-signature-result ::= '->' type-annotation
+    func-signature-result ::= '->' type
+
+    func-arguments ::= curried-arguments
+    curried-arguments ::= parameter-clause+
+
+    parameter-clause ::= '(' ')' | '(' parameter (',' parameter)* '...'? )'
+    parameter ::= 'inout'? ('let' | 'var')? identifier-or-none identifier-or-none? (':' type)? ('...' | '=' expr)?
+    identifier-or-none ::= identifier | '_'
 
 .. syntax-grammar::
 
@@ -650,22 +560,23 @@ This alternative uses "signature" instead of "method" or "selector", but still u
 
     function-declaration --> function-head function-name generic-parameter-clause-OPT function-signature function-body
 
-    function-head --> attribute-list-OPT function-specifier-OPT ``mutating``-OPT ``func``
-    function-specifier --> ``static`` | ``class``
+    function-head --> attribute-list-OPT declaration-specifiers-OPT ``func``
     function-name --> identifier | operator
 
-    function-signature --> function-parameters function-result-OPT
-    function-parameters --> tuple-patterns | selector-parameters
+    function-signature --> parameter-clauses function-result-OPT
     function-result --> ``->`` attribute-list-OPT type
-
-    selector-parameters --> ``(`` tuple-pattern-element ``)`` selector-tuples
-    selector-tuples --> selector-name ``(`` tuple-pattern-element ``)`` selector-tuples-OPT
-    selector-name --> identifier
-
     function-body --> code-block
 
-.. NOTE: Added the optional ``mutating`` modifier,
-    based on the grammar found in ParseDecl.cpp.
+    parameter-clauses --> parameter-clause parameter-clauses-OPT
+    parameter-clause --> ``(`` ``)`` | ``(`` parameter-list ``...``-OPT ``)``
+    parameter-list --> parameter | parameter ``,`` parameter-list
+    parameter --> ``inout``-OPT ``let``-OPT parameter-name local-parameter-name-OPT type-annotation default-argument-clause-OPT
+    parameter --> ``inout``-OPT ``var`` parameter-name local-parameter-name-OPT type-annotation default-argument-clause-OPT
+    parameter --> attribute-list-OPT type
+    parameter-name --> identifier | ``_``
+    local-parameter-name --> identifier | ``_``
+    default-argument-clause --> ``=`` expression
+
 
 .. TODO: Code block is optional in the context of a protocol.
     Everywhere else, it's required.
@@ -673,18 +584,6 @@ This alternative uses "signature" instead of "method" or "selector", but still u
     There is also the low-level "asm name" FFI
     which is a definition and declaration corner case.
     Let's just deal with this difference in prose.
-
-.. NOTE: According to Doug, 4/2/14,
-    The selector-style function declaration and call syntax is going away soon.
-    We will have one syntax for selector and normal functions. We'll still
-    have curried function declarations and calls, however.
-
-    Doug is going to be writing a new grammar for this. Here's a skeleton he wrote out:
-    func-decl --> 'func' identifier '(' param-list? ')' ...
-    param-list --> param-modifiers? identifier? identifier? ':' type ('=' expr)?
-    ... (where 'param-modifiers' would be things like 'inout' and 'var')
-    Of note, it won't depend on patterns in any way -- right now it's not really
-    true that it depends on patterns.
 
 .. _Declarations_EnumerationDeclaration:
 
@@ -1233,7 +1132,7 @@ See also :ref:`Declarations_SubscriptDeclaration`.
 
     Grammar of a protocol subscript declaration
 
-    protocol-subscript-declaration --> subscript-head getter-setter-keyword-block
+    protocol-subscript-declaration --> subscript-head subscript-result getter-setter-keyword-block
 
 
 .. _Declarations_ProtocolAssociatedTypeDeclaration:
@@ -1345,7 +1244,7 @@ and designated initializers of classes:
 
 .. syntax-outline::
 
-    init(<#parameter name#>: <#parameter type#>) {
+    init(<#parameters#>) {
         <#statements#>
     }
 
@@ -1367,7 +1266,7 @@ The following form declares convenience initializers for classes:
 
 .. syntax-outline::
 
-    init(<#parameter name#>: <#parameter type#>) -> Self {
+    init(<#parameters#>) -> Self {
         <#statements#>
     }
 
@@ -1404,8 +1303,7 @@ see :doc:`../LanguageGuide/Initialization`.
     initializer-declaration --> initializer-head generic-parameter-clause-OPT initializer-signature initializer-body
     initializer-head --> attribute-list-OPT ``init``
 
-    initializer-signature --> initializer-parameters initializer-result-OPT
-    initializer-parameters --> tuple-pattern | selector-tuples
+    initializer-signature --> parameter-clause initializer-result-OPT
     initializer-result --> ``->`` ``Self``
     initializer-body --> code-block
 
@@ -1594,10 +1492,11 @@ see :doc:`../LanguageGuide/Subscripts`.
 
     Grammar of a subscript declaration
 
-    subscript-declaration --> subscript-head code-block
-    subscript-declaration --> subscript-head getter-setter-block
-    subscript-declaration --> subscript-head getter-setter-keyword-block
-    subscript-head --> attribute-list-OPT ``subscript`` tuple-pattern ``->`` type
+    subscript-declaration --> subscript-head subscript-result code-block
+    subscript-declaration --> subscript-head subscript-result getter-setter-block
+    subscript-declaration --> subscript-head subscript-result getter-setter-keyword-block
+    subscript-head --> attribute-list-OPT ``subscript`` parameter-clause
+    subscript-result --> ``->`` attribute-list-OPT type
 
 
 .. _Declarations_OperatorDeclaration:
