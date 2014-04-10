@@ -620,18 +620,15 @@ This example creates an array of ``TextRepresentable`` things:
 
 .. testcode:: protocols
 
-   -> var textRepresentableThings = Array<TextRepresentable>()
-   << // textRepresentableThings : Array<TextRepresentable> = []
-   -> textRepresentableThings.append(game)
-   -> textRepresentableThings.append(d12)
-   -> textRepresentableThings.append(simonTheHamster)
+   -> let things: Array<TextRepresentable> = [game, d12, simonTheHamster]
+   << // things : Array<TextRepresentable> = [<unprintable value>, <unprintable value>, <unprintable value>]
 
-It is now possible to iterate over the array,
-and print each thing's textual representation:
+It is now possible to iterate over the items in the array,
+and print each item's textual representation:
 
 .. testcode:: protocols
 
-   -> for thing in textRepresentableThings {
+   -> for thing in things {
          println(thing.asText())
       }
    </ A game of Snakes and Ladders with 25 squares
