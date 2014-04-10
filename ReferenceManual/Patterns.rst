@@ -153,11 +153,10 @@ Tuple Pattern
 
     Grammar of a tuple pattern
 
-    tuple-pattern --> ``(`` tuple-pattern-body-OPT ``)``
-    tuple-pattern-body --> tuple-pattern-element-list ``...``-OPT
+    tuple-pattern --> ``(`` tuple-pattern-element-list-OPT ``)``
     tuple-pattern-element-list --> tuple-pattern-element | tuple-pattern-element ``,`` tuple-pattern-element-list
     tuple-pattern-element --> pattern
-    tuple-patterns --> tuple-pattern tuple-patterns-OPT
 
 .. NOTE: Now that function-declarations no longer use tuple patterns,
-    tuple patterns no longer need to have '= expression'.
+    tuple patterns no longer need to have '= expression' or '...'.
+    We also no longer need tuple-patterns as a syntactic category.
