@@ -58,7 +58,7 @@ Swift has four loop statements:
 a ``for`` statement, a ``for``-``in`` statement, a ``while`` statement,
 and a ``do``-``while`` statement.
 
-Control flow in a loop statement can be changed by a break statement and a continue statement
+Control flow in a loop statement can be changed by a ``break`` statement and a ``continue`` statement
 and is discussed in :ref:`Statements_BreakStatement` and :ref:`Statements_ContinueStatement` below.
 
 .. syntax-grammar::
