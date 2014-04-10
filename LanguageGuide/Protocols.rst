@@ -727,13 +727,145 @@ of any ``SnakesAndLadders`` instance:
 Checking for Protocol Conformance
 ---------------------------------
 
-.. write-me::
+You can use the ``is`` and ``as`` operators (as described in :doc:`TypeCasting`)
+to check for protocol conformance, and to cast to a specific protocol.
+Checking for and casting to a protocol
+follows exactly the same syntax as checking for and casting to a type:
 
-.. is and as
-.. Perhaps follow on from the Printable and FancyPrintable example
-   to check for conformance and call the appropriate print method
-.. currently, you can only check for protocol conformance if the protocols
-   are declared as @objc - does that mean that this shouldn't be mentioned here yet?
+* The ``is`` operator returns ``true`` if an instance conforms to a protocol,
+  and returns ``false`` if it does not.
+* The ``as`` operator returns an optional value of the protocol's type,
+  and this value is ``nil`` if the instance does not conform to that protocol.
+
+This example defines a protocol called ``HasArea``,
+with a single property requirement of a gettable ``Double`` property called ``area``:
+
+.. testcode:: protocolConformance
+
+   -> @objc protocol HasArea {
+         var area: Double { get }
+      }
+
+.. note::
+
+   You can only check for protocol conformance
+   if your protocol is marked with the ``@objc`` attribute,
+   as seen for the ``HasArea`` protocol above.
+   This attribute is used to indicate that
+   the protocol should be exposed to Objective-C code,
+   and is described in *Building Cocoa Apps With Swift*.
+   Even if you are not interoperating with Objective-C,
+   you will still need to mark your protocols with the ``@objc`` attribute
+   if you want to be able to check for protocol conformance.
+   This requirement is likely to be removed in a future version of Swift.
+   
+   Note also that ``@objc`` protocols can only be adopted by classes,
+   and not by structures or enumerations.
+   If you mark your protocol as ``@objc`` in order to check for conformance,
+   you will only be able to apply that protocol to class types.
+
+.. QUESTION: is this acceptable wording for this limitation?
+
+.. TODO: remove this note when this limitation is lifted in the future.
+
+.. TODO: make this section link to the interop guide.
+
+Here are two classes, ``Circle`` and ``Country``,
+both of which conform to the ``HasArea`` protocol:
+
+.. testcode:: protocolConformance
+
+   -> class Circle : HasArea {
+         let pi = 3.1415927
+         var radius: Double
+         var area: Double { return pi * radius * radius }
+         init radius(Double) { self.radius = radius }
+      }
+   -> class Country : HasArea {
+         var area: Double
+         init area(Double) { self.area = area }
+      }
+
+The ``Circle`` class implements the ``area`` property requirement
+as a computed property, based on a stored ``radius`` property.
+The ``Country`` class implements the ``area`` requirement directly as a stored property.
+Both classes correctly conform to the ``HasArea`` protocol.
+
+Here's a class called ``Animal``, which does not conform to the ``HasArea`` protocol:
+
+.. testcode:: protocolConformance
+
+   -> class Animal {
+         var legs: Int
+         init legs(Int) { self.legs = legs }
+      }
+
+The ``Circle``, ``Country`` and ``Animal`` classes do not have a shared base class.
+Nonetheless, they are all classes, and so instances of all three types
+can be used to initialize an array that stores values of type ``AnyObject``:
+
+.. testcode:: protocolConformance
+
+   -> let objects: Array<AnyObject> = [
+         Circle(radius: 2.0),
+         Country(area: 243_610),
+         Animal(legs: 4)
+      ]
+   << // objects : Array<AnyObject> = [<unprintable value>, <unprintable value>, <unprintable value>]
+
+The ``objects`` array is initialized with an array literal containing
+a ``Circle`` instance with a radius of 2 units;
+a ``Country`` instance initialized with
+the surface area of the United Kingdom in square kilometers;
+and an ``Animal`` instance with four legs.
+
+The ``objects`` array can now be iterated,
+and each object in the array can be checked to see if
+it conforms to the ``HasArea`` protocol:
+
+.. testcode:: protocolConformance
+
+   -> for object in objects {
+         if let objectWithArea = object as HasArea {
+            println("Area is \(objectWithArea.area)")
+         } else {
+            println("Something that doesn't have an area")
+         }
+      }
+   !! <REPL Input>:1:5: warning: constant 'object' inferred to have type 'AnyObject', which may be unexpected
+   !! for object in objects {
+   !!     ^
+   !! <REPL Input>:1:5: note: add an explicit type annotation to silence this warning
+   !! for object in objects {
+   !!     ^
+   !!            : AnyObject
+   </ Area is 12.5664
+   </ Area is 243610.0
+   </ Something that doesn't have an area
+
+Whenever an object in the array conforms to the ``HasArea`` protocol,
+the optional value returned by the ``as`` operator is unwrapped with optional binding
+into a constant called ``objectWithArea``.
+The ``objectWithArea`` constant is known to be of type ``HasArea``,
+and so its ``area`` property can be accessed and printed in a type-safe way.
+
+Note that the underlying objects are not changed by the casting process.
+They continue to be a ``Circle``, a ``Country`` and an ``Animal``.
+However, at the point that they are stored in the ``objectWithArea`` constant,
+they are only known to be of type ``HasArea``,
+and so only their ``area`` property can be accessed.
+
+.. TODO: This is an *extremely* contrived example.
+   Also, it's not particularly useful to be able to get the area of these two objects,
+   because there's no shared unit system.
+   Also also, I'd say that a circle should probably be a structure, not a class.
+   Plus, I'm having to write lots of boilerplate initializers,
+   which make the example far less focused than I'd like.
+   The problem is, I can't use strings within an @objc protocol
+   without also having to import Foundation, so it's numbers or bust, I'm afraid.
+
+.. QUESTION: I'm deliberately choosing to eat the AnyObject warnings here.
+   Is this the right approach, given that they will be visible in Xcode too?
 
 .. _Protocols_ProtocolComposition:
 
