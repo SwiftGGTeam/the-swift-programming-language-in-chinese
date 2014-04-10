@@ -62,7 +62,7 @@ Declaration Attributes
 
     Grammar of a declaration attribute
 
-    declaration-attribute --> ``assignment`` | ``class_protocol`` | ``infix`` | ``mutating`` | ``objc`` | ``optional`` | ``override`` | ``postfix`` | ``prefix`` | ``required`` | ``unowned`` | ``weak``
+    declaration-attribute --> ``assignment`` | ``class_protocol`` | ``infix`` | ``mutating`` | ``objc`` | ``optional`` | ``postfix`` | ``prefix`` | ``required`` | ``unowned`` | ``weak``
 
 
 .. _Attributes_TypeAttributes:
