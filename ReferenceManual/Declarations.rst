@@ -99,7 +99,7 @@ It has the following form:
 .. syntax-outline::
 
     {
-        <#statements#>
+       <#statements#>
     }
 
 The *statements* inside a code block include declarations,
@@ -192,7 +192,7 @@ Constant declarations are declared using the keyword ``let`` and have the follow
 
 .. syntax-outline::
 
-    let <#constant name#> : <#type#> = <#expression#>
+    let <#constant name#>: <#type#> = <#expression#>
 
 A constant declaration defines an immutable binding between the *constant name*
 and the value of the initializer *expression*;
@@ -214,7 +214,7 @@ in the initializer *expression*.
 ::
 
     let (firstNumber, secondNumber) = (10, 42)
-    // (firstNumber, secondNumber) : (Int, Int) = (10, 42)
+    // (firstNumber, secondNumber): (Int, Int) = (10, 42)
 
 In this example,
 ``firstNumber`` is a named constant for the value ``10``,
@@ -222,9 +222,9 @@ and ``secondNumber`` is a named constant for the value ``42``.
 Both constants can now be used independently::
 
     firstNumber
-    // firstNumber : Int = 10
+    // firstNumber: Int = 10
     secondNumber
-    // secondNumber : Int = 42
+    // secondNumber: Int = 42
 
 The type annotation (``:`` *type*) is optional in a constant declaration
 when the type of the *constant name* can be inferred,
@@ -277,7 +277,7 @@ The following form declares a stored value or property:
 
 .. syntax-outline::
 
-    var <#variable name#> : <#type#> = <#expression#>
+    var <#variable name#>: <#type#> = <#expression#>
 
 You define this form of a variable declaration at global scope, the local scope
 of a function, or in the context of a class, structure, protocol, or extension declaration.
@@ -305,13 +305,13 @@ A stored value or property declared with observers has the following form:
 
 .. syntax-outline::
 
-    var <#variable name#> : <#type#> = <#expression#> {
-        willSet(<#setter name#>) {
-            <#statements#>
-        }
-        didSet(<#setter name#> {
-            <#statements#>
-        }
+    var <#variable name#>: <#type#> = <#expression#> {
+       willSet(<#setter name#>) {
+          <#statements#>
+       }
+       didSet(<#setter name#> {
+          <#statements#>
+       }
     }
 
 You define this form of a variable declaration at global scope, the local scope
@@ -358,13 +358,13 @@ The following form declares a computed value or property:
 
 .. syntax-outline::
 
-    var <#variable name#> : <#type#> {
-        get {
-            <#statements#>
-        }
-        set(<#setter name#>) {
-            <#statements#>
-        }
+    var <#variable name#>: <#type#> {
+       get {
+          <#statements#>
+       }
+       set(<#setter name#>) {
+          <#statements#>
+       }
     }
 
 You define this form of a variable declaration at global scope, the local scope
@@ -522,7 +522,7 @@ Function Declaration
 .. syntax-outline::
 
     func <#function name#>(<#parameters#>) -> <#return type#> {
-        <#statements#>
+       <#statements#>
     }
 
 .. syntax-outline::
@@ -535,7 +535,7 @@ Function Declaration
 .. syntax-outline::
 
     func <#function name#>(<#parameters#>)(<#parameters#>) -> <#return type#> {
-        <#statements#>
+       <#statements#>
     }
 
 .. TODO: Discuss in prose: Variadic functions and the other permutations of function declarations.
@@ -600,8 +600,8 @@ values---called :newTerm:`enumerators`---of any type:
 .. syntax-outline::
 
     enum <#enumeration name#> {
-        case <#enumerator 1#>
-        case <#enumerator 2#>(<#associated value types#>)
+       case <#enumerator 1#>
+       case <#enumerator 2#>(<#associated value types#>)
     }
 
 Enumerations declared in this form are sometimes called :newTerm:`discriminated unions`
@@ -621,9 +621,9 @@ enumerators of the same basic type:
 
 .. syntax-outline::
 
-    enum <#enumeration name#> : <#raw value type#> {
-        case <#enumerator 1#> = <#raw value 1#>
-        case <#enumerator 2#> = <#raw value 2#>
+    enum <#enumeration name#>: <#raw value type#> {
+       case <#enumerator 1#> = <#raw value 1#>
+       case <#enumerator 2#> = <#raw value 2#>
     }
 
 In this form, each case block consists of the keyword ``case``,
@@ -642,8 +642,8 @@ that is automatically incremented from the raw value of the previous enumerator.
 
 ::
 
-    enum ExampleEnum : Int {
-        case A, B, C = 5, D
+    enum ExampleEnum: Int {
+       case A, B, C = 5, D
     }
 
 In the above example, the value of ``ExampleEnum.A`` is ``0`` and the value of
@@ -766,8 +766,8 @@ Structure declarations are declared using the keyword ``struct`` and have the fo
 
 .. syntax-outline::
 
-    struct <#structure name#> : <#adopted protocols#> {
-        <#declarations#>
+    struct <#structure name#>: <#adopted protocols#> {
+       <#declarations#>
     }
 
 The body of a structure contains zero or more *declarations*.
@@ -834,8 +834,8 @@ Class declarations are declared using the keyword ``class`` and have the followi
 
 .. syntax-outline::
 
-    class <#class name#> : <#superclass#>, <#adopted protocols#> {
-        <#declarations#>
+    class <#class name#>: <#superclass#>, <#adopted protocols#> {
+       <#declarations#>
     }
 
 The body of a class contains zero or more *declarations*.
@@ -921,8 +921,8 @@ Protocol declarations are declared using the keyword ``protocol`` and have the f
 
 .. syntax-outline::
 
-    protocol <#protocol name#> : <#inherited protocols#> {
-        <#protocol member declarations#>
+    protocol <#protocol name#>: <#inherited protocols#> {
+       <#protocol member declarations#>
     }
 
 The body of a protocol contains zero or more *protocol member declarations*,
@@ -1016,7 +1016,7 @@ declaration:
 
 .. syntax-outline::
 
-    var <#property name#> : <#type#> { get set }
+    var <#property name#>: <#type#> { get set }
 
 As with other protocol member declarations, these property declarations
 declare only the getter and setter requirements for types
@@ -1245,7 +1245,7 @@ and designated initializers of classes:
 .. syntax-outline::
 
     init(<#parameters#>) {
-        <#statements#>
+       <#statements#>
     }
 
 Initializers in structures and enumerations can call other declared initializers
@@ -1267,7 +1267,7 @@ The following form declares convenience initializers for classes:
 .. syntax-outline::
 
     init(<#parameters#>) -> Self {
-        <#statements#>
+       <#statements#>
     }
 
 Convenience initializers always have a return type of ``Self``
@@ -1319,7 +1319,7 @@ Deinitializers take no parameters and have the following form:
 .. syntax-outline::
 
     deinit {
-        <#statements#>
+       <#statements#>
     }
 
 A deinitializer is called automatically when there are no longer any references
@@ -1362,8 +1362,8 @@ Extension declarations begin with the keyword ``extension`` and have the followi
 
 .. syntax-outline::
 
-    extension <#type#> : <#adopted protocols#> {
-        <#declarations#>
+    extension <#type#>: <#adopted protocols#> {
+       <#declarations#>
     }
 
 The body of an extension declaration contains zero or more *declarations*.
@@ -1435,12 +1435,12 @@ and have the following form:
 .. syntax-outline::
 
     subscript (<#parameters#>) -> <#return type#> {
-        get {
-            <#statements#>
-        }
-        set(<#setter name#>) {
-            <#statements#>
-        }
+       get {
+          <#statements#>
+       }
+       set(<#setter name#>) {
+          <#statements#>
+       }
     }
 
 Subscript declarations can appear only in the context of a class, structure,
@@ -1467,7 +1467,7 @@ If you do not provide a setter name, the default parameter name to the setter is
 That type of the *setter name* must be the same as the *return type*.
 
 You can overload a subscript declaration in the type in which it is declared,
-as long as the *parameters* or the *return* type differ from the one you're overloading.
+as long as the *parameters* or the *return type* differ from the one you're overloading.
 You can also override a subscript declaration inherited from a superclass. When you do so,
 you must mark the overridden subscript declaration with an ``override`` attribute (``@override``).
 
@@ -1525,8 +1525,8 @@ The following form declares a new infix operator:
 .. syntax-outline::
 
     operator infix <#operator name#> {
-        precedence <#precedence level#>
-        associativity <#associativity#>
+       precedence <#precedence level#>
+       associativity <#associativity#>
     }
 
 An :newTerm:`infix operator` is a binary operator that is written between its two operands,
