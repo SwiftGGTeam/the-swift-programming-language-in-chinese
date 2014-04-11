@@ -745,46 +745,6 @@ followed by interleaved parts of its selector and its argements.
    per [Contributor 6004] 2014-03-04 email.
 
 
-.. _Expressions_NewExpression:
-
-New Expression
-~~~~~~~~~~~~~~
-
-A :newTerm:`new expression` allocates and initializes an array
-of a given type and dimension,
-in the following form:
-
-.. syntax-outline::
-
-   new <#type#>[<#size#>]
-
-It consists of the keyword ``new``,
-followed by a type identifier,
-followed by one or more expressions in square brackets (``[`` and ``]``)
-which specify the initial dimensions of the array.
-
-.. langref-grammar
-
-    expr-new        ::= 'new' type-identifier expr-new-bounds
-    expr-new-bounds ::= expr-new-bound
-    expr-new-bounds ::= expr-new-bounds expr-new-bound
-    expr-new-bound  ::= '[' expr? ']'
-
-.. syntax-grammar::
-
-    Grammar of a new expression
-
-    new-expression --> ``new`` type-identifier new-expression-bounds
-    new-expression-bounds --> new-expression-bounds-OPT new-expression-bound
-    new-expression-bound --> ``[`` expression-OPT ``]``
-
-.. TODO: Come back and clean up this grammar.
-    Also, note that this is *explicitly* left-recursive.
-
-.. NOTE: The 'new expression' is most likely going away completely.
-    Currently, its use is restricted to creating new arrays with an initial size.
-    Apply minimal effort to document it.
-
 .. _Expressions_InitializerExpression:
 
 Initializer Expression
