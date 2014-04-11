@@ -2,10 +2,10 @@ A Guided Tour of the Swift Language
 ===================================
 
 Tradition suggests that the first program in a new language
-should print the words "Hello, world" on the screen.
+should print the words “Hello, world” on the screen.
 In Swift, this can be done in a single line:
 
-.. K&R uses "hello, world".
+.. K&R uses “hello, world”.
    It seems worth breaking with tradition to use proper casing.
 
 .. testcode:: hello-world
@@ -20,7 +20,7 @@ this line of Swift code is a complete program.
 There is no need to import a standard library for functionality like
 input/output or string handling.
 Code written at global scope is used
-as entry point for the program,
+as the entry point for the program,
 so there is no need for a ``main`` function.
 Also notice that there are no semicolons.
 You can use semicolons to separate statements written on a single line,
@@ -31,7 +31,7 @@ of how to accomplish a variety of programming tasks in Swift
 without giving an explanation of the concepts.
 It gives you a broad (but shallow) overview of the language
 to help you start writing actual code.
-Don't worry if there is something that you don't understand ---
+Don’t worry if there is something that you don’t understand ---
 everything introduced in this tour
 is explained in detail in the following chapters.
 Experienced programmers may find that the examples in this chapter
@@ -44,9 +44,9 @@ Simple Values
 
 Variables and constants are created using the same syntax,
 with one difference:
-use ``var`` to declare a variable and ``let`` for a constant.
+Use ``var`` to declare a variable and use ``let`` for a constant.
 
-The value of a variable can be assigned multiple times:
+The value of a variable can be assigned multiple times.
 
 .. testcode:: var
 
@@ -56,7 +56,7 @@ The value of a variable can be assigned multiple times:
    >> myVariable
    << // myVariable : Int = 50
 
-In contrast, constants can have a value assigned only once:
+In contrast, constants can have a value assigned only once.
 
 .. testcode:: let
 
@@ -70,7 +70,7 @@ In contrast, constants can have a value assigned only once:
 .. admonition:: Experiment
 
    Edit the code in the boxes above.
-   Try setting a different values
+   Try setting different values
    for ``myVariable`` and ``myConstant``.
    Try changing their names.
    What characters are not allowed in variable names?
@@ -93,8 +93,8 @@ assigning a value of the wrong type to a variable is an error.
 
 Notice that you didn’t have to explictly
 tell the compiler the type of ``string``.
-If you don't specify a type,
-Swift determines the variable's type
+If you don’t specify a type,
+Swift determines the variable’s type
 based on its initial value.
 A type annotation specifies an explicit type for a variable
 by writing it after the variable,
@@ -109,8 +109,8 @@ separated by a colon.
 
 .. admonition:: Experiment
 
-   Try providing an explicit type that doesn't match
-   the variable's initial value.
+   Try providing an explicit type that doesn’t match
+   the variable’s initial value.
    What error do you get?
 
 If you want to cast a value to another type,
@@ -149,7 +149,7 @@ For example, to swap the value of ``x`` and ``y``:
    >> y
    << // y : Int = 10
 
-.. TODO: If the PG doesn't show a good result for x and y in the swap line,
+.. TODO: If the PG doesn’t show a good result for x and y in the swap line,
    turn the >> lines into -> lines
    to show the reader that the swap worked.
 
@@ -169,10 +169,10 @@ as part of the string.
 .. admonition:: Experiment
 
    Try using string interpolation
-   to include someone's name in a greeting.
+   to include someone’s name in a greeting.
 
-Arrays and dictionaries are written using square brackets (``[`` and ``]``).
-Tuples are written using parentheses (``(`` and ``)``).
+Arrays and dictionaries are written using brackets (``[]``).
+Tuples are written using parentheses.
 
 .. testcode:: array-dict
 
@@ -212,7 +212,7 @@ for accessing their elements.
 
 .. admonition:: Experiment
 
-    Try using square brackets to set the second element of an empty array,
+    Try using brackets to set the second element of an empty array
     and to set the value for a key of an empty dictionary.
     Why do you think empty arrays and dictionaries
     have this difference in behavior?
@@ -221,10 +221,10 @@ for accessing their elements.
    because there are no elements in it to let the compiler infer its type.
    
 .. Mention [] and [:] as empty array/dict literals.
-   They aren't fully typed, so they require a type annotation in a variable declaration,
+   They aren’t fully typed, so they require a type annotation in a variable declaration,
    but they are useful when calling a function or re-assigning the value of a variable.
 
-.. The REPL output after creating a dictionary doesn't make any sense.
+.. The REPL output after creating a dictionary doesn’t make any sense.
    No way to get it to pretty-print the keys and values.
 
 Control Flow
@@ -249,8 +249,8 @@ Use ``if`` as follows:
       }
    << Would you like a gummi bear?
 
-There are no parenthesis around the conditional,
-and that the braces around the body are required.
+There are no parentheses around the conditional,
+and the braces around the body are required.
 The conditional must be a Boolean expression;
 code like ``if remainingGummiBears { ... }`` is an error,
 not an implicit comparison to zero.
@@ -263,7 +263,7 @@ Use ``switch`` as follows:
    << // vegetable : String = "cucumber"
    -> switch vegetable {
           case "lettuce":
-              println("Let's make salad.")
+              println("Let’s make salad.")
           case "celery":
               println("Add some raisins and make ants on a log.")
           case "cucumber":
@@ -281,7 +281,7 @@ Use ``switch`` as follows:
 Switches in Swift support any kind of data, not just integers.
 You must write a switch case for every possible value
 or use ``default`` to specify what happens if none of the cases match.
-Execution does not "fall through" from one case statement to the next
+Execution does not “fall through” from one case statement to the next
 unless you use ``fallthough`` to opt in to that behavior.
 
 .. testcode:: fallthrough-switch
@@ -293,15 +293,15 @@ unless you use ``fallthough`` to opt in to that behavior.
                println("The birds are singing.")
                fallthrough
            default:
-               println("It's a beautiful day.")
+               println("It’s a beautiful day.")
        }
     << The birds are singing.
-    << It's a beautiful day.
+    << It’s a beautiful day.
 
 .. See also <rdar://problem/16514545>
-   I'm using default here instead of case false as a workaround to this bug.
+   I’m using default here instead of case false as a workaround to this bug.
 
-Switches support a variety of complex matching criteria
+Switches support a variety of complex matching criteria,
 such as tuple unpacking and ``where`` clauses:
 
 .. testcode:: fancy-switch
@@ -344,11 +344,11 @@ Repeat a block of code for each item in a collection with ``for``.
 
 .. admonition:: Experiment
 
-   Try changing ``1..5`` to ``1...5`` ---
-   notice that 5 is omitted from the sum.
+   Try changing ``1..5`` to ``1...5``.
+   Notice that 5 is omitted from the sum.
    When would you want to include or exclude the final number?
 
-Loops can keep an explicit counter or index:
+Loops can keep an explicit counter or index.
 
 .. testcode:: c-for
 
@@ -390,7 +390,7 @@ Functions and Closures
 ----------------------
 
 Functions are declared using ``func``
-and called with a parenthesized list of arguments.
+and are called with a parenthesized list of arguments.
 Argument names are part of the function signature;
 you can specify each parameter by name when calling the function.
 
@@ -412,7 +412,7 @@ you can specify each parameter by name when calling the function.
 .. admonition:: Experiment
 
    Try removing the day of the week parameter.
-   Try adding a third parameter to include today's lunch special in the greeting.
+   Try adding a third parameter to include today’s lunch special in the greeting.
 
 Functions can return multiple values using a tuple.
 
@@ -428,7 +428,7 @@ Functions can also be defined to take a variable number of arguments.
 
 .. testcode:: functions
 
-   -> // Re-implement the Standard Library sum function for Int values.
+   -> // Reimplement the Standard Library sum function for Int values.
    -> func sumOf(numbers : Int...) -> Int {
          var sum = 0
          for number in numbers {
@@ -487,6 +487,8 @@ and have a function as its return value.
 
 .. testcode pass-func
 
+.. TODO: Fails to type check on the swap line.
+
 ::
 
     // Re-implement the Standard Library sort function.
@@ -494,13 +496,7 @@ and have a function as its return value.
         for i in 0...list.count {
             for j in 0...list.count {
                 if outOfOrder(list[i], list[j]) {
-                    // TODO: Fails to type check
-                    //(list[i], list[j]) = (list[j], list[i])
-                    //
-                    // TODO: This fails too.  Need to file a bug.
-                    // let temporary = list[i]
-                    // list[i] = list[j]
-                    // list[j] = temporary
+                    (list[i], list[j]) = (list[j], list[i])
                 }
             }
         }
@@ -512,7 +508,7 @@ and have a function as its return value.
     var numbers = [8, 3, 5, 6]
     var sortedNumbers = bubbleSort(numbers, lessThan)
 
-Closures are surrounded by curly braces (``{`` and ``}``)
+Closures are surrounded by braces (``{}``)
 and have their arguments separated from their body by ``in``.
 
 .. testcode:: closure
@@ -554,18 +550,18 @@ Objects
 
 .. write-me::
 
-* Declare classes with "class"
-* Declare methods with "func"
-* Declare properties with "var" and "let"
-* Make instances with "Class()"
-* Access methods and properties with "."
-* Customize object lifecycle with "init" and "deinit"
+* Declare classes with “class”
+* Declare methods with “func”
+* Declare properties with “var” and "let"
+* Make instances with “Class()”
+* Access methods and properties with “.”
+* Customize object lifecycle with “init” and "deinit"
 
 .. write-me::
 
-* Indicate superclass and protocol conformance with ":"
-* Override superclass methods with "@override"
-* Call the superclass's implentation with "super"
+* Indicate superclass and protocol conformance with “:”
+* Override superclass methods with “@override”
+* Call the superclass’s implentation with “super”
 
 Value Types
 -----------
@@ -577,7 +573,7 @@ Value Types
 * Use structs for complex multipart data
 * Use enums when values come from a list
 * Associating additional data with enums
-* Indicate protocol conformance using ":"
+* Indicate protocol conformance using “:”
 
 Protocols
 ---------
@@ -595,7 +591,7 @@ Optionals
 
 * Contrast with nil/NULL
 * Implemented as enum (no magic)
-* Convenience syntax "?" and "!"
+* Convenience syntax “?” and "!"
 
 Additional Topics
 -----------------
