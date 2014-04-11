@@ -356,7 +356,7 @@ It has the following form:
 
 .. syntax-outline::
 
-   [<#value1#>, <#value2#>, <#...#>]
+   [<#value 1#>, <#value 2#>, <#...#>]
 
 The last expression in the array can be followed by an optional comma.
 The value of an array literal has type ``T[]``,
@@ -373,14 +373,14 @@ it has the following form:
 
 .. syntax-outline::
 
-   [<#key1#>: <#value1#>, <#key2#>: <#value2#>, <#...#>]
+   [<#key 1#>: <#value 1#>, <#key 2#>: <#value 2#>, <#...#>]
 
 The last expression in the dictionary can be followed by an optional comma.
 An empty dictionary literal is written as ``[:]``
 to distinguish it from an empty array literal.
-The value of dictionary literal has type ``Dictionary<K,V>``,
-where ``K`` is the type of its key expressions
-and ``V`` is the type of its value expressions.
+The value of a dictionary literal has type ``Dictionary<KeyType, ValueType>``,
+where ``KeyType`` is the type of its key expressions
+and ``ValueType`` is the type of its value expressions.
 
 .. langref-grammar
 
@@ -673,7 +673,6 @@ Syntactically, every primary expression is also a postfix expression.
     postfix-expression --> primary-expression
     postfix-expression --> postfix-expression postfix-operator
     postfix-expression --> function-call-expression
-    postfix-expression --> new-expression
     postfix-expression --> initializer-expression
     postfix-expression --> dot-expression
     postfix-expression --> metatype-expression
@@ -697,9 +696,9 @@ and one that takes three arguments):
 
 .. syntax-outline::
 
-    <#function>()
-    <#function>(<#argument#>)
-    <#function>(<#argument 1#>, <#argument 2#>, <#argument 3#>)
+    <#function#>()
+    <#function#>(<#argument#>)
+    <#function#>(<#argument 1#>, <#argument 2#>, <#argument 3#>)
 
 The function portion of the function call expression
 can be any expression whose value is of a functional type
@@ -908,7 +907,7 @@ Informally, all postfix expressions that follow the chained-optional expression
 and are still part of the same expression
 are chained to the chained-optional expression.
 Specifically,
-a postfix expression is *directly chained* 
+a postfix expression is *directly chained*
 to the expression that is its first part.
 A postfix expression is *chained* to an expression
 if it is either directly chained to that expression
