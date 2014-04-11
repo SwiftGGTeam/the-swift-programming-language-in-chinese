@@ -222,10 +222,11 @@ Optional Property Values
 
 If your custom type has a stored property that cannot be known during initialization,
 or that is logically allowed to have “no value yet”,
-that property should be declared as having an optional type,
-and initialized with a value of ``nil`` as part of its declaration.
-This makes it clear that the property is
-deliberately intended to have “no value yet” during initialization,
+that property should be declared as having an optional type.
+Because it is of an optional type,
+it will be automatically initialized with a value of ``nil`` when it is defined.
+It is therefore clear that the property is
+deliberately intended to have “no value yet”,
 and has not just been left in an indeterminate state.
 
 For example:
@@ -234,7 +235,7 @@ For example:
 
    -> class SurveyQuestion {
          var text: String
-         var response: String? = nil
+         var response: String?
          init withText(text: String) {
             self.text = text
          }
@@ -250,8 +251,8 @@ For example:
 
 The response to a survey question cannot be known until it is asked,
 and so the ``response`` property is declared as ``String?``, or “optional ``String``”.
-It is assigned a default value of ``nil`` as part of its declaration,
-meaning “no string yet”.
+It is automatically assigned a value of ``nil``, meaning “no string yet”,
+by virtue of being optional.
 
 .. _Initialization_DesignatedAndConvenienceInitializers:
 

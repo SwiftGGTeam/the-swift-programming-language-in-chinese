@@ -707,7 +707,7 @@ Multiple values are covered in a single ``switch`` case for brevity:
 
    -> let numberSymbol = '三'   // Simplified Chinese symbol for the number 3
    << // numberSymbol : UnicodeScalar = '三'
-   -> var possibleIntegerValue: Int? = nil
+   -> var possibleIntegerValue: Int?
    << // possibleIntegerValue : Int? = <unprintable value>
    -> switch numberSymbol {
          case '1', '١', '一', '๑':
@@ -824,12 +824,12 @@ and makes it clear that you wish to match and ignore that particular case.
 In the ``numberSymbol`` example above,
 it is not necessary to assign a value of ``nil`` to ``possibleIntegerValue``
 within the ``switch`` statement's ``default`` case,
-because ``possibleIntegerValue`` is initialized with
-a value of ``nil`` when it is created.
+because ``possibleIntegerValue`` is automatically set to ``nil`` when it is created,
+by virtue of being of an optional type.
 Nonetheless, the ``default`` case is still required to make
 the ``switch`` statement exhaustive.
 
-To satisfy this requirement without unnecessary reassignment,
+To satisfy this requirement without an unnecessary ``nil`` assignment,
 the ``switch`` statement can be written with
 a semicolon inside its ``default`` case instead:
 
