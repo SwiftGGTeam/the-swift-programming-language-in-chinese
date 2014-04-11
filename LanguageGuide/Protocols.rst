@@ -365,12 +365,10 @@ and to notify a ``DiceGameDelegate`` about its progress:
          }
          func play() {
             square = 0
-            if delegate { delegate!.gameDidStart(self) }
+            delegate?.gameDidStart(self)
             while square != finalSquare {
                let diceRoll = dice.roll()
-               if delegate {
-                  delegate!.game(self, didStartNewTurnWithDiceRoll: diceRoll)
-               }
+               delegate?.game(self, didStartNewTurnWithDiceRoll: diceRoll)
                switch square + diceRoll {
                   case finalSquare:
                      break
@@ -381,7 +379,7 @@ and to notify a ``DiceGameDelegate`` about its progress:
                      square += board[square]
                }
             }
-            if delegate { delegate!.gameDidEnd(self) }
+            delegate?.gameDidEnd(self)
          }
       }
 
@@ -410,11 +408,16 @@ It can be set to a suitable delegate by the game instantiator if they wish.
 These three methods have been incorporated into the game logic within
 the ``play`` method above, and are called when
 a new game starts, a new turn begins, or the game ends.
-Because the ``delegate`` property is an optional ``DiceGameDelegate``,
-the ``play`` method first checks to see if the optional property has a value
-before calling each method.
-In each case, it passes the ``SnakesAndLadders`` instance as
-a parameter to the delegate method.
+
+Because the ``delegate`` property is an *optional* ``DiceGameDelegate``,
+the ``play`` method uses optional chaining each time it calls a method on the delegate.
+If the ``delegate`` property is nil,
+these delegate calls fail gracefully and without error.
+If the ``delegate`` property is non-nil,
+the delegate methods are called,
+and are passed the ``SnakesAndLadders`` instance as a parameter.
+
+.. TODO: add a cross-reference to optional chaining here.
 
 This next example shows a class called ``DiceGameTracker``,
 which adopts the ``DiceGameDelegate`` protocol:
@@ -693,7 +696,6 @@ The ``SnakesAndLadders`` class can be extended to adopt and conform to ``PrettyT
             return output
          }
       }
-
 
 This extension states that it adopts the ``PrettyTextRepresentable`` protocol,
 and provides an implementation of the ``asPrettyText`` method
