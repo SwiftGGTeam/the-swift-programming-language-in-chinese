@@ -543,7 +543,7 @@ Function Declaration
 
 .. langref-grammar
 
-    decl-func ::= ('static' | 'class')? 'mutating'? 'func' attribute-list any-identifier generic-params? func-signature stmt-brace?
+    decl-func ::= attribute-list? ('static' | 'class')? 'mutating'? 'func' any-identifier generic-params? func-signature stmt-brace?
     func-signature ::= func-arguments func-signature-result?
     func-signature-result ::= '->' type
 
