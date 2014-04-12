@@ -161,7 +161,7 @@ element is of type ``String``.
 When a tuple pattern is used as the pattern in a ``for``-``in`` statement
 or a variable or constant declaration, it can contain only wildcard patterns,
 identifier patterns, or other tuple patterns that contain those. For example, the
-following code isn't valid because the element ``0`` in the tuple pattern ``(x, 0) is
+following code isn't valid because the element ``0`` in the tuple pattern ``(x, 0)`` is
 an expression pattern.
 
 ::
