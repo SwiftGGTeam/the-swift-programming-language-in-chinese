@@ -14,13 +14,13 @@ Instances of class types can also implement a :newTerm:`deinitializer`,
 which gives an oppprtunity to perform any custom cleanup that you require to be run
 when an instance of that class instance is destroyed.
 
-.. TODO: this chapter seems to have lost its "definite initialization" section.
-
 .. TODO: mention that memory is automatically managed by ARC
 
 .. TODO: mention that you can't construct a class instance from a class metatype value,
    because you can't be sure that a subclass will definitely provide the constructor –
    see doug's notes from r14175 for more info
+
+.. TODO: mention that initializers can be marked with the @required attribute
 
 .. _Initialization_Initializers:
 
@@ -93,23 +93,149 @@ as described later in this chapter.
    When you assign a default value to a stored property,
    or set its initial value within an initializer,
    the value of that property is set directly,
-   without calling any stored property observers.
+   without calling any property observers.
+
+.. _Initialization_InitializerInputParameters:
+
+Initializer Input Parameters
+----------------------------
+
+Initializers can take :newTerm:`input parameters`,
+to customize the initialization process.
+The following example defines a structure to store temperatures expressed in the Celsius scale.
+It implements two custom initializers,
+each of which initializes a new instance of the structure
+with a value from a different temperature scale:
+
+.. testcode:: initialization
+
+   -> struct Celsius {
+         var temperatureInCelsius: Double = 0.0
+         init withFahrenheit(fahrenheit: Double) {
+            temperatureInCelsius = (fahrenheit - 32.0) / 1.8
+         }
+         init withKelvin(kelvin: Double) {
+            temperatureInCelsius = kelvin + 273.15
+         }
+      }
+   -> var boilingPointOfWater = Celsius(withFahrenheit: 212.0)
+   << // boilingPointOfWater : Celsius = Celsius(100.0)
+   /> boilingPointOfWater.temperatureInCelsius is \(boilingPointOfWater.temperatureInCelsius)
+   </ boilingPointOfWater.temperatureInCelsius is 100.0
+   -> var freezingPointOfWater = Celsius(withKelvin: -273.15)
+   << // freezingPointOfWater : Celsius = Celsius(0.0)
+   /> freezingPointOfWater.temperatureInCelsius is \(freezingPointOfWater.temperatureInCelsius)
+   </ freezingPointOfWater.temperatureInCelsius is 0.0
+
+.. TODO: mention that initializers can be written in either function syntax,
+   and show an example in function-style as well as selector-style.
+
+.. _Initialization_OptionalPropertyValues:
+
+Optional Property Values
+------------------------
+
+If your custom type has a stored property that cannot be known during initialization,
+or that is logically allowed to have “no value yet”,
+declare the property as having an optional type.
+Because it is of an optional type,
+it will be automatically initialized with a value of ``nil``.
+This makes it clear that the property is deliberately intended to have “no value yet”.
+
+For example:
+
+.. testcode:: surveyQuestionVariable
+
+   -> class SurveyQuestion {
+         var text: String
+         var response: String?
+         init withText(text: String) {
+            self.text = text
+         }
+         func ask() {
+            println(text)
+         }
+      }
+   -> let cheeseQuestion = SurveyQuestion(withText: "Do you like cheese?")
+   << // cheeseQuestion : SurveyQuestion = <SurveyQuestion instance>
+   -> cheeseQuestion.ask()
+   <- Do you like cheese?
+   -> cheeseQuestion.response = "Yes, I do like cheese."
+
+The response to a survey question cannot be known until it is asked,
+and so the ``response`` property is declared as ``String?``, or “optional ``String``”.
+It is automatically assigned a default value of ``nil``, meaning “no string yet”,
+by virtue of being optional.
+
+.. _Initialization_ModifyingConstantPropertiesDuringInitialization:
+
+Modifying Constant Properties During Initialization
+---------------------------------------------------
+
+The value of a constant property can be modified at any point during initialization,
+as long as it is definitely set to a value by the time the initializer has finished.
+The ``SurveyQuestion`` example from above can be written to use
+a constant property rather than a variable property for the ``text`` property of the question,
+to indicate that the question does not change once an instance of ``SurveyQuestion`` is created.
+Even though the ``text`` property is now a constant,
+it can still be set within the ``init withText`` initializer:
+
+.. testcode:: surveyQuestionConstant
+
+   -> class SurveyQuestion {
+         let text: String
+         var response: String?
+         init withText(text: String) {
+            self.text = text
+         }
+         func ask() {
+            println(text)
+         }
+      }
+   -> let beetsQuestion = SurveyQuestion(withText: "How about beets?")
+   << // beetsQuestion : SurveyQuestion = <SurveyQuestion instance>
+   -> beetsQuestion.ask()
+   <- How about beets?
+   -> beetsQuestion.response = "I also like beets. (But not with cheese.)"
+
+.. TODO: This could do with a more elegant example.
 
 .. _Initialization_DefaultInitializers:
 
 Default Initializers
 --------------------
 
-Swift provides a :newTerm:`default initializer` implementation
-for any class or structure that does not provide at least one initializer itself,
-if all of the properties declared by that class or structure are assigned
-default values as part of their property declaration.
+Swift provides a :newTerm:`default initializer`
+for any structure, enumeration, or base class
+that does not provide at least one initializer itself,
+and that provides default values for all of its properties.
 The default initializer simply creates a new instance
 with all of its properties set to their default values.
-You don't have to declare that you want the default initializer to be implemented –
-it is available automatically for all classes and structures without their own initializer.
 
-.. TODO: show an example.
+This example defines a class called ``ShoppingListItem``,
+which encapsulates the name, quantity and purchase state
+of an item in a shopping list:
+
+.. testcode:: initialization
+
+   -> class ShoppingListItem {
+         var name: String?
+         var quantity = 1
+         var purchased = false
+      }
+   -> var item = ShoppingListItem()
+   << // item : ShoppingListItem = <ShoppingListItem instance>
+
+The example above creates a new instance of the ``ShoppingListItem`` class,
+and assigns it to a variable called ``item``.
+Because all of the properties of the ``ShoppingListItem`` class have default values,
+and because it is a base class with no superclass,
+``ShoppingListItem`` automatically gains a default initializer implementation
+that creates a new instance with all of its properties set to their default values.
+(The ``name`` property is an optional ``String`` property,
+and so it automatically receives a default value of ``nil``,
+even though this value is not written in the code.)
+
 .. QUESTION: How is this affected by inheritance?
    If I am a subclass of a superclass that defines a designated initializer,
    I (the subclass) presumably don't get a default initializer,
@@ -151,108 +277,6 @@ if they are listed in the same order that the properties are declared in the str
 .. TODO: Include a justifiable reason for why classes do not provide a memberwise initializer.
 .. TODO: According to rdar://15670604, we may end up with one for classes as well.
    However, I can't find a Radar tracking this directly.
-
-.. _Initialization_InitializerInputParameters:
-
-Initializer Input Parameters
-----------------------------
-
-Initializers can take :newTerm:`input parameters`,
-to customize the initialization process.
-The following example defines a structure to store temperatures expressed in the Celsius scale.
-It implements two custom initializers,
-each of which initializes a new instance of the structure
-with a value from a different temperature scale:
-
-.. testcode:: initialization
-
-   -> struct Celsius {
-         var temperatureInCelsius: Double = 0.0
-         init withFahrenheit(fahrenheit: Double) {
-            temperatureInCelsius = (fahrenheit - 32.0) / 1.8
-         }
-         init withKelvin(kelvin: Double) {
-            temperatureInCelsius = kelvin + 273.15
-         }
-      }
-   -> var boilingPointOfWater = Celsius(withFahrenheit: 212.0)
-   << // boilingPointOfWater : Celsius = Celsius(100.0)
-   /> boilingPointOfWater.temperatureInCelsius is \(boilingPointOfWater.temperatureInCelsius)
-   </ boilingPointOfWater.temperatureInCelsius is 100.0
-   -> var freezingPointOfWater = Celsius(withKelvin: -273.15)
-   << // freezingPointOfWater : Celsius = Celsius(0.0)
-   /> freezingPointOfWater.temperatureInCelsius is \(freezingPointOfWater.temperatureInCelsius)
-   </ freezingPointOfWater.temperatureInCelsius is 0.0
-
-.. TODO: mention that initializers can be written in either function syntax,
-   and show an example in function-style as well as selector-style.
-
-The value of a constant ``let`` property can be modified at any point during initialization,
-as long as it is definitely set to a value by the time the initializer has finished:
-
-.. testcode:: initialization
-
-   -> struct Temperature {
-         let storedValue: Double
-         let storedScale: String
-         init withValue(value: Double) inScale(scale: String) {
-            storedValue = value
-            storedScale = scale
-         }
-         func toKelvin() -> Double {
-            switch storedScale {
-               case "F": // Fahrenheit
-                  return (storedValue - 32.0) / 1.8
-               case "C": // Celsius
-                  return storedValue + 273.15
-               default:  // assume Kelvin otherwise
-                  return storedValue
-            }
-         }
-      }
-   -> var absoluteZero = Temperature(withValue: -273.15, inScale: "C")
-   << // absoluteZero : Temperature = Temperature(-273.15, "C")
-   -> println("Temperature is \(absoluteZero.toKelvin())°K")
-   <- Temperature is 0.0°K
-
-.. TODO: This could do with a more elegant example.
-
-Optional Property Values
-------------------------
-
-If your custom type has a stored property that cannot be known during initialization,
-or that is logically allowed to have “no value yet”,
-that property should be declared as having an optional type.
-Because it is of an optional type,
-it will be automatically initialized with a value of ``nil`` when it is defined.
-It is therefore clear that the property is
-deliberately intended to have “no value yet”,
-and has not just been left in an indeterminate state.
-
-For example:
-
-.. testcode:: initialization
-
-   -> class SurveyQuestion {
-         var text: String
-         var response: String?
-         init withText(text: String) {
-            self.text = text
-         }
-         func ask() {
-            println(text)
-         }
-      }
-   -> let cheeseQuestion = SurveyQuestion(withText: "Do you like cheese?")
-   << // cheeseQuestion : SurveyQuestion = <SurveyQuestion instance>
-   -> cheeseQuestion.ask()
-   <- Do you like cheese?
-   -> cheeseQuestion.response = "Yes, I do like cheese."
-
-The response to a survey question cannot be known until it is asked,
-and so the ``response`` property is declared as ``String?``, or “optional ``String``”.
-It is automatically assigned a value of ``nil``, meaning “no string yet”,
-by virtue of being optional.
 
 .. _Initialization_DesignatedAndConvenienceInitializers:
 
