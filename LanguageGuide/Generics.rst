@@ -16,7 +16,7 @@ This enables you to write reusable code that can work with *any* type,
 including types that you have not defined yourself.
 
 You've actually been using generics throughout this book, even if you didn't realise it.
-Swifts ``Array`` and ``Dictionary`` types are both :newTerm:`generic collections`.
+Swift's ``Array`` and ``Dictionary`` types are both :newTerm:`generic collections`.
 You can create an array to hold ``Int`` values, or ``String`` values,
 or indeed any other type that can be created in Swift.
 Similarly, you can create a dictionary to store values of any specified type,
