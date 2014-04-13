@@ -358,7 +358,7 @@ from their property definitions:
 
    -> let basicRect = Rect()
    << // basicRect : Rect = Rect(Point(0.0, 0.0), Size(0.0, 0.0))
-   /> println("basicRect's origin is (\(basicRect.origin.x), \(basicRect.origin.y)) and its size is (\(basicRect.size.width), \(basicRect.size.height))")
+   /> basicRect's origin is (\(basicRect.origin.x), \(basicRect.origin.y)) and its size is (\(basicRect.size.width), \(basicRect.size.height))
    </ basicRect's origin is (0.0, 0.0) and its size is (0.0, 0.0)
 
 The second initializer, ``init origin size``, is the same as the memberwise initializer
@@ -370,7 +370,7 @@ the appropriate stored properties:
 
    -> let originRect = Rect(origin: Point(2.0, 2.0), size: Size(5.0, 5.0))
    << // originRect : Rect = Rect(Point(2.0, 2.0), Size(5.0, 5.0))
-   /> println("originRect's origin is (\(originRect.origin.x), \(originRect.origin.y)) and its size is (\(originRect.size.width), \(originRect.size.height))")
+   /> originRect's origin is (\(originRect.origin.x), \(originRect.origin.y)) and its size is (\(originRect.size.width), \(originRect.size.height))
    </ originRect's origin is (2.0, 2.0) and its size is (5.0, 5.0)
 
 The final initializer, ``init center size``,
@@ -382,9 +382,9 @@ which stores the new origin and size values in the appropriate properties:
 .. testcode:: valueDelegation
 
    -> let centerRect = Rect(center: Point(4.0, 4.0), size: Size(3.0, 3.0))
-   << // centerRect : Rect = Rect(Point(3.0, 3.0), Size(3.0, 3.0))
-   /> println("centerRect's origin is (\(centerRect.origin.x), \(centerRect.origin.y)) and its size is (\(centerRect.size.width), \(centerRect.size.height))")
-   </ centerRect's origin is (1.5, 1.5) and its size is (3.0, 3.0)
+   << // centerRect : Rect = Rect(Point(2.5, 2.5), Size(3.0, 3.0))
+   /> centerRect's origin is (\(centerRect.origin.x), \(centerRect.origin.y)) and its size is (\(centerRect.size.width), \(centerRect.size.height))
+   </ centerRect's origin is (2.5, 2.5) and its size is (3.0, 3.0)
 
 .. _Initialization_DynamicReturnTypes:
 
