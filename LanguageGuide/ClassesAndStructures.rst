@@ -466,10 +466,6 @@ and the value it contains is always a reference to a particular instance of that
 
 .. TODO: Add a justification here to say why this is a good thing.
 
-.. TODO: Add a section about using the identity operator
-   to check if two reference named values point to the same instance.
-   This is currently blocked on rdar://problem/15566395 .
-   
 .. TODO: Saying that we don't use the reference operator is actually untrue.
    We use it at the call-site for inout function parameters.
 
