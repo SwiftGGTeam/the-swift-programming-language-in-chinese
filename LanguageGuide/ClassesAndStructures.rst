@@ -228,15 +228,13 @@ You can also use dot syntax to assign a new value to a variable property:
    -> println("The width of someVideoMode is now \(someVideoMode.resolution.width)")
    <- The width of someVideoMode is now 1280
 
-.. _ClassesAndStructures_MemberwiseStructureInitializers:
+.. _ClassesAndStructures_MemberwiseInitializersForStructureTypes:
 
-Memberwise Structure Initializers
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. HACK: this is currently duplicated in Initialization.
+Memberwise Initializers for Structure Types
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 All structures have an automatically-generated :newTerm:`memberwise initializer`,
-with which you initialize the member properties of new structure instances.
+which you can use to initialize the member properties of new structure instances.
 Initial values for the properties of the new instance
 can be passed to the memberwise initializer by name:
 

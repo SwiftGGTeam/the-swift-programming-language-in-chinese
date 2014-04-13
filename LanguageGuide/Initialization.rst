@@ -226,8 +226,6 @@ of an item in a shopping list:
    -> var item = ShoppingListItem()
    << // item : ShoppingListItem = <ShoppingListItem instance>
 
-The example above creates a new instance of the ``ShoppingListItem`` class,
-and assigns it to a variable called ``item``.
 Because all of the properties of the ``ShoppingListItem`` class have default values,
 and because it is a base class with no superclass,
 ``ShoppingListItem`` automatically gains a default initializer implementation
@@ -235,30 +233,31 @@ that creates a new instance with all of its properties set to their default valu
 (The ``name`` property is an optional ``String`` property,
 and so it automatically receives a default value of ``nil``,
 even though this value is not written in the code.)
+The example above uses the default initializer for the ``ShoppingListItem`` class
+to create a new instance of the class,
+and assigns this new instance to a variable called ``item``.
 
 .. QUESTION: How is this affected by inheritance?
    If I am a subclass of a superclass that defines a designated initializer,
    I (the subclass) presumably don't get a default initializer,
    because I am obliged to delegate up to my parent's default initializer.
 
-.. _Initialization_MemberwiseStructureInitializers:
+.. _Initialization_MemberwiseInitializersForStructureTypes:
 
-Memberwise Structure Initializers
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. HACK: this is currently duplicated in ClassesAndStructures.
-
-.. TODO: mention that structures and enums can assign a value to self during initialization,
-   but classes cannot.
+Memberwise Initializers for Structure Types
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In addition to the default initializers mentioned above,
-all instances of structure types have
-an automatically-generated :newTerm:`memberwise initializer`,
-which can be used to initialise the member properties of new structure instances.
+structure types automatically receive a :newTerm:`memberwise initializer`
+if they provide default values for all of their stored properties,
+and do not define any of their own custom initializers.
+
+The memberwise initializer is used as a short-hand way
+to initialise the member properties of new structure instances.
 Initial values for the properties of the new instance
 can be passed to the memberwise initializer by name:
 
-.. testcode:: classesAndStructures
+.. testcode:: initialization
 
    -> struct Size {
          var width = 0.0, height = 0.0
@@ -266,24 +265,126 @@ can be passed to the memberwise initializer by name:
    -> let twoByTwo = Size(width: 2.0, height: 2.0)
    << // twoByTwo : Size = Size(2.0, 2.0)
 
-Initial values can also be provided without names,
+Initial values can be provided without names,
 if they are listed in the same order that the properties are declared in the structure's definition:
 
-.. testcode:: classesAndStructures
+.. testcode:: initialization
 
    -> let fourByThree = Size(4.0, 3.0)
    << // fourByThree : Size = Size(4.0, 3.0)
 
 .. TODO: Include a justifiable reason for why classes do not provide a memberwise initializer.
-.. TODO: According to rdar://15670604, we may end up with one for classes as well.
-   However, I can't find a Radar tracking this directly.
 
-.. _Initialization_DesignatedAndConvenienceInitializers:
+.. _Initialization_InitializerDelegation:
 
-Designated and Convenience Initializers
----------------------------------------
+Initializer Delegation
+----------------------
 
-.. write-me::
+Initializers can call other initializers,
+in a process known as :newTerm:`initializer delegation`.
+The rules for how initializer delegation works,
+and for what forms of delegation are allowed,
+are different for value types and class types.
+
+Value types (structures and enumerations) do not support inheritance,
+and so their initializer delegation process is relatively simple,
+because they can only delegate to another initializer that they provide themselves.
+Classes, however, can inherit from other classes,
+as described in :doc:`Inheritance`.
+This means that classes have additional responsibilities for ensuring that
+all of the stored properties they inherit are assigned a suitable value during initialization.
+
+.. _Initialization_InitializerDelegationForValueTypes:
+
+Initializer Delegation For Value Types
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You can use ``self.init`` to refer to other initializers from the same value type
+when writing your own custom initializers for a structure or enumeration.
+You can only call ``self.init`` from within an initializer.
+
+.. note::
+
+   If you define a custom initializer for a value type,
+   you will no longer have access to the default initializer
+   (or the memberwise structure initializer, if it is a structure) for that type.
+   This avoids a situation where you provide a more complex initializer
+   that performs additional essential setup,
+   but your more complex initializer is circumvented by someone accidentally using
+   one of the automatic initializers instead.
+
+The following example defines a custom ``Rect`` structure to represent a geometric rectangle.
+The example also defines two supporting structures called ``Size`` and ``Point``.
+
+The ``Rect`` structure can be initialized in one of three ways –
+by using the default ``origin`` and ``size`` property values;
+by providing an origin point and a size;
+or by providing a center point and a size:
+
+.. testcode:: valueDelegation
+
+   -> struct Size {
+         var width = 0.0, height = 0.0
+      }
+   -> struct Point {
+         var x = 0.0, y = 0.0
+      }
+   -> struct Rect {
+         var origin = Point()
+         var size = Size()
+         init() {}
+         init origin(Point) size(Size) {
+            self.origin = origin
+            self.size = size
+         }
+         init center(Point) size(Size) {
+            let originX = center.x - (size.width / 2)
+            let originY = center.y - (size.height / 2)
+            self.init(origin: Point(originX, originY), size: size)
+         }
+      }
+
+The first initializer, ``init``, is the same as the default initializer
+that the structure would have received if it did not have its own custom initializers.
+This initializer has an empty body,
+represented by an empty pair of curly braces ``{}``,
+and does not perfom any bespoke initialization.
+If you call this initializer, it will return a ``Rect`` instance whose
+``origin`` and ``size`` properties are both initialized with
+the default values of ``Point(0.0, 0.0)`` and ``Size(0.0, 0.0)``
+from their property definitions:
+
+.. testcode:: valueDelegation
+
+   -> let basicRect = Rect()
+   << // basicRect : Rect = Rect(Point(0.0, 0.0), Size(0.0, 0.0))
+   /> println("basicRect's origin is (\(basicRect.origin.x), \(basicRect.origin.y)) and its size is (\(basicRect.size.width), \(basicRect.size.height))")
+   </ basicRect's origin is (0.0, 0.0) and its size is (0.0, 0.0)
+
+The second initializer, ``init origin size``, is the same as the memberwise initializer
+that the structure would have received if it did not have its own custom initializers.
+This initializer simply assigns the ``origin`` and ``size`` argument values to
+the appropriate stored properties:
+
+.. testcode:: valueDelegation
+
+   -> let originRect = Rect(origin: Point(2.0, 2.0), size: Size(5.0, 5.0))
+   << // originRect : Rect = Rect(Point(2.0, 2.0), Size(5.0, 5.0))
+   /> println("originRect's origin is (\(originRect.origin.x), \(originRect.origin.y)) and its size is (\(originRect.size.width), \(originRect.size.height))")
+   </ originRect's origin is (2.0, 2.0) and its size is (5.0, 5.0)
+
+The final initializer, ``init center size``,
+calculates an appropriate origin point based on
+the ``center`` and ``size`` values it is passed.
+It then calls (or :newTerm:`delegates`) to the ``init origin size`` initializer,
+which stores the new origin and size values in the appropriate properties:
+
+.. testcode:: valueDelegation
+
+   -> let centerRect = Rect(center: Point(4.0, 4.0), size: Size(3.0, 3.0))
+   << // centerRect : Rect = Rect(Point(3.0, 3.0), Size(3.0, 3.0))
+   /> println("centerRect's origin is (\(centerRect.origin.x), \(centerRect.origin.y)) and its size is (\(centerRect.size.width), \(centerRect.size.height))")
+   </ centerRect's origin is (1.5, 1.5) and its size is (3.0, 3.0)
 
 .. _Initialization_DynamicReturnTypes:
 
