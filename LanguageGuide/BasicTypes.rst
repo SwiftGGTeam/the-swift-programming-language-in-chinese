@@ -1007,7 +1007,8 @@ by assigning it the special value ``nil``:
 
 .. testcode:: optionals
 
-   -> serverResponseCode: Int? = 404
+   -> var serverResponseCode: Int? = 404
+   << // serverResponseCode : Int? = <unprintable value>
    /> serverResponseCode contains an actual Int value of \(serverResponseCode!)
    </ serverResponseCode contains an actual Int value of 404
    -> serverResponseCode = nil
