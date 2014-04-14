@@ -198,12 +198,12 @@ equivalent::
     tuple-pattern-element --> pattern
 
 
-.. _Patterns_EnumeratorPattern:
+.. _Patterns_EnumerationCasePattern:
 
-Enumerator Pattern
-------------------
+Enumeration Case Pattern
+------------------------
 
-An enumerator pattern matches an enumerator declared in an enumeration.
+An :newTerm:`enumeration case pattern` matches a case of an enumeration type.
 
 .. langref-grammar
 
@@ -211,9 +211,9 @@ An enumerator pattern matches an enumerator declared in an enumeration.
 
 .. syntax-grammar::
 
-    Grammar of an enumerator pattern
+    Grammar of an enumeration case pattern
 
-    enumerator-pattern --> type-identifier-OPT ``.`` identifier tuple-pattern-OPT
+    enum-case-pattern --> type-identifier-OPT ``.`` enum-case-name tuple-pattern-OPT
 
 
 .. _Patterns_TypeCastingPattern:

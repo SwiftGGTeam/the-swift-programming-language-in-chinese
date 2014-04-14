@@ -595,50 +595,50 @@ An :newTerm:`enumeration declaration` introduces a named, enumeration type into 
 Enumeration declarations have two basic forms and are declared using the keyword ``enum``.
 
 The following form declares an enumeration type that contains
-values---called :newTerm:`enumerators`---of any type:
+values---called :newTerm:`enumeration cases`---of any type:
 
 .. syntax-outline::
 
     enum <#enumeration name#> {
-       case <#enumerator 1#>
-       case <#enumerator 2#>(<#associated value types#>)
+        case <#enumeration case 1#>
+        case <#enumeration case 2#>(<#associated value types#>)
     }
 
 Enumerations declared in this form are sometimes called :newTerm:`discriminated unions`
 in other programming languages.
 
 In this form, each case block consists of the keyword ``case``
-followed by one or more enumerators, separated by commas.
-The name of each enumerator must be unique.
-Each enumerator can also specify that it stores values of a given type.
+followed by one or more enumeration cases, separated by commas.
+The name of each case must be unique.
+Each case can also specify that it stores values of a given type.
 These types are specified in the *associated value types* tuple,
-immediately following the enumerator.
-For more information and to see examples of enumerators with associated value types,
+immediately following the name of the case.
+For more information and to see examples of cases with associated value types,
 see :ref:`Enumerations_AssociatedValues`.
 
 The following form declares an enumeration type that contains
-enumerators of the same basic type:
+enumeration cases of the same basic type:
 
 .. syntax-outline::
 
-    enum <#enumeration name#>: <#raw value type#> {
-       case <#enumerator 1#> = <#raw value 1#>
-       case <#enumerator 2#> = <#raw value 2#>
+    enum <#enumeration name#> : <#raw value type#> {
+        case <#enumeration case 1#> = <#raw value 1#>
+        case <#enumeration case 2#> = <#raw value 2#>
     }
 
 In this form, each case block consists of the keyword ``case``,
-followed by one or more enumerators, separated by commas.
-Unlike the enumerators in the first form, each enumerator has an underlying
-value, called a :newTerm:`raw value`, of the basic same type.
+followed by one or more enumeration cases, separated by commas.
+Unlike the cases in the first form, each case has an underlying
+value, called a :newTerm:`raw value`, of the same basic type.
 The type of these values is specified in the *raw value type* and must represent a literal
 integer, floating-point number, character, or string.
 
-Each enumerator must have a unique name and be assigned a unique raw value.
+Each case must have a unique name and be assigned a unique raw value.
 If the raw value type is specified as ``Int``
-and you don't assign a value to the enumerators explicitly,
+and you don't assign a value to the cases explicitly,
 they are implicitly assigned the values ``0``, ``1``, ``2``, and so on.
-Each unassigned enumerator of type ``Int`` is implicitly assigned a raw value
-that is automatically incremented from the raw value of the previous enumerator.
+Each unassigned case of type ``Int`` is implicitly assigned a raw value
+that is automatically incremented from the raw value of the previous case.
 
 ::
 
@@ -651,11 +651,11 @@ In the above example, the value of ``ExampleEnum.A`` is ``0`` and the value of
 explicitly set to ``5``, the value of ``ExampleEnum.D`` is automatically incremented
 from ``5`` and is therefore ``6``.
 
-The raw value of an enumerator can be accessed by calling its ``toRaw`` method,
+The raw value of an enumeration case can be accessed by calling its ``toRaw`` method,
 as in ``ExampleEnum.B.toRaw()``.
-You can also use a raw value to find a corresponding enumerator, if there is one,
-by calling the ``fromRaw`` method, which returns an optional enumerator.
-For more information and to see examples of enumerators with raw value types,
+You can also use a raw value to find a corresponding case, if there is one,
+by calling the ``fromRaw`` method, which returns an optional case.
+For more information and to see examples of cases with raw value types,
 see :ref:`Enumerations_RawValues`.
 
 The body of an enumeration declared using either form can also contain zero or more declarations,
@@ -670,16 +670,17 @@ all initializers must be declared explicitly. Initializers can delegate
 to other initializers in the enumeration, but the initialization process is complete
 only after an initializer assigns one of the enumerators to ``self``.
 
-To reference the enumerators of an enumeration type, use dot (``.``) syntax,
+To reference the case of an enumeration type, use dot (``.``) syntax,
 as in ``EnumerationType.Enumerator``. When the enumeration type can be inferred
 from context, you can omit it (the dot is still required),
 as described in :ref:`Enumerations_EnumerationSyntax`
 and :ref:`Expressions_DelayedIdentifierExpression`.
 
-To check the values of enumerators, use a ``switch`` statement,
+To check the values of enumeration cases, use a ``switch`` statement,
 as shown in :ref:`Enumerations_ConsideringEnumerationValuesWithASwitchStatement`.
-The enumeration type is pattern-matched against the enumerator patterns in the case blocks
-of the ``switch`` statement, as described in :ref:`Patterns_EnumeratorPattern`.
+The enumeration type is pattern-matched against the enumeration case patterns
+in the case blocks of the ``switch`` statement,
+as described in :ref:`Patterns_EnumerationCasePattern`.
 
 You can extend the behavior of an enumeration type with an extension declaration,
 as discussed in :ref:`Declarations_ExtensionDeclaration`.
@@ -708,21 +709,22 @@ as discussed in :ref:`Declarations_ExtensionDeclaration`.
 
     enum-declaration --> attribute-list-OPT union-style-enum | attribute-list-OPT raw-value-style-enum
 
-    union-style-enum --> enum-name generic-parameter-clause-OPT union-style-enum-body
-    union-style-enum-body --> ``{`` declarations-OPT union-style-enum-members-OPT ``}``
+    union-style-enum --> enum-name generic-parameter-clause-OPT ``{`` union-style-enum-members-OPT ``}``
     union-style-enum-members --> union-style-enum-member union-style-enum-members-OPT
-    union-style-enum-member --> attribute-list-OPT ``case`` union-style-enumerator-list
-    union-style-enumerator-list --> union-style-enumerator | union-style-enumerator ``,`` union-style-enumerator-list
-    union-style-enumerator --> identifier tuple-type-OPT
-
-    raw-value-style-enum --> enum-name generic-parameter-clause-OPT ``:`` type-identifer raw-value-style-enum-body
-    raw-value-style-enum-body --> ``{`` declarations-OPT raw-value-style-enum-members ``}``
-    raw-value-style-enum-members --> raw-value-style-enum-member raw-value-style-enum-members-OPT
-    raw-value-style-enum-member --> attribute-list-OPT ``case`` raw-value-style-enumerator-list
-    raw-value-style-enumerator-list --> raw-value-style-enumerator | raw-value-style-enumerator ``,`` raw-value-style-enumerator-list
-    raw-value-style-enumerator --> identifier raw-value-assignment-OPT
-    raw-value-assignment --> ``=`` literal
+    union-style-enum-member --> declaration | union-style-enum-case-clause
+    union-style-enum-case-clause --> attribute-list-OPT ``case`` union-style-enum-case-list
+    union-style-enum-case-list --> union-style-enum-case | union-style-enum-case ``,`` union-style-enum-case-list
+    union-style-enum-case --> enum-case-name tuple-type-OPT
     enum-name --> identifier
+    enum-case-name --> identifier
+
+    raw-value-style-enum --> enum-name generic-parameter-clause-OPT ``:`` type-identifer ``{`` raw-value-style-enum-members-OPT ``}``
+    raw-value-style-enum-members --> raw-value-style-enum-member raw-value-style-enum-members-OPT
+    raw-value-style-enum-members --> declaration | raw-value-style-enum-case-clause
+    raw-value-style-enum-case-clause --> attribute-list-OPT ``case`` raw-value-style-enum-case-list
+    raw-value-style-enum-case-list --> raw-value-style-enum-case | raw-value-style-enum-case ``,`` raw-value-style-enum-case-list
+    raw-value-style-enum-case --> enum-case-name raw-value-assignment-OPT
+    raw-value-assignment --> ``=`` literal
 
 .. TODO: Adjust the prose to match the eventual outcome of
     <rdar://problem/16504472> Raw value enum cases accept negative intergers but not negative floating-point numbers,
