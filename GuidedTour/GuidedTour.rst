@@ -11,7 +11,7 @@ In Swift, this can be done in a single line:
 .. testcode:: hello-world
 
    -> println("Hello, world")
-   <- Hello, world
+   << Hello, world
 
 If you have written code in a language like C or Objective-C,
 this syntax probably looks familiar to you.
