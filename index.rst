@@ -13,6 +13,7 @@ Contents
 .. toctree::
     :maxdepth: 1
 
+    GuidedTour/index
     LanguageGuide/index
     ReferenceManual/index
 
@@ -38,6 +39,11 @@ Language Guide
 * Started to update the :ref:`property observers <Properties_PropertyObservers>` description
   to talk about property overriding now that stored properties can now be overridden
 * Updates throughout the Guide now that optionals are default-initialized to ``nil``
+
+Guided Tour
++++++++++++
+
+* New chapter with several completed sections, presenting a :doc:`guided tour <GuidedTour/GuidedTour>` of the language.
 
 April 9 2014
 ~~~~~~~~~~~~
