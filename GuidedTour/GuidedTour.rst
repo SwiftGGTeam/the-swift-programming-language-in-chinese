@@ -46,7 +46,8 @@ Variables and constants are created using the same syntax,
 with one difference:
 Use ``var`` to declare a variable and use ``let`` for a constant.
 
-The value of a variable can be assigned multiple times.
+The value of a variable can be assigned multiple times,
+but constants can have a value assigned only once.
 
 .. testcode:: var
 
@@ -55,26 +56,15 @@ The value of a variable can be assigned multiple times.
    -> myVariable = 50
    >> myVariable
    << // myVariable : Int = 50
-
-In contrast, constants can have a value assigned only once.
-
-.. testcode:: let
-
    -> let myConstant = 42
    << // myConstant : Int = 42
-   -> myConstant = 50  // error
-   !! <REPL Input>:1:12: error: cannot assign to 'let' value 'myConstant'
-   !! myConstant = 50  // error
-   !! ~~~~~~~~~~ ^
 
 .. admonition:: Experiment
 
    Edit the code in the boxes above.
    Try setting different values
    for ``myVariable`` and ``myConstant``.
-   Try changing their names.
-   What characters are not allowed in variable names?
-   What happens if you try to assign a new value to a constant?
+   What error do you get if you assign a new value to a constant?
 
 .. TR: Is the requirement that constants need an initial value
    a current REPL limitation, or an expected language feature?
@@ -86,10 +76,12 @@ assigning a value of the wrong type to a variable is an error.
 
     -> var greeting = "Hello"
     << // greeting : String = "Hello"
-    -> greeting = 98.5  // error
-    !!  <REPL Input>:1:10: error: expression does not type-check
-    !! greeting = 98.5  // error
-    !! ~~~~~~~~~^~~~~~
+    -> greeting = "Good morning"
+
+.. admonition:: Experiment
+
+   Try assigning a number to ``greeting``.
+   What error do you get?
 
 Notice that you didn’t have to explictly
 tell the compiler the type of ``string``.
@@ -139,15 +131,15 @@ For example, to swap the value of ``x`` and ``y``:
 
 .. testcode:: swap
 
-   -> var x = 10
-   << // x : Int = 10
-   -> var y = 100
-   << // y : Int = 100
-   -> (x, y) = (y, x)
-   >> x
-   << // x : Int = 100
-   >> y
-   << // y : Int = 10
+   -> var left = 10
+   << // left : Int = 10
+   -> var right = 100
+   << // right : Int = 100
+   -> (left, right) = (right, left)
+   >> left
+   << // left : Int = 100
+   >> right
+   << // right : Int = 10
 
 .. TODO: If the PG doesn’t show a good result for x and y in the swap line,
    turn the >> lines into -> lines
@@ -178,12 +170,12 @@ Tuples are written using parentheses.
 
     -> let fruits = ["apple", "orange", "banana"]
     << // fruits : String[] = ["apple", "orange", "banana"]
-    -> let ages = [
-           "John Appleseed": 7,
-           "Anna Haro": 12,
-           "Daniel Higgins": 21,
+    -> let occupations = [
+           "Malcolm": "Captain",
+           "Kayley": "Mechanic",
+           "Jayne": "Public Relations",
         ]
-    << // ages : Dictionary<String, Int> = Dictionary<String, Int>(1.33333, 3, <DictionaryBufferOwner<String, Int> instance>)
+    << // occupations : Dictionary<String, String> = Dictionary<String, String>(1.33333, 3, <DictionaryBufferOwner<String, String> instance>)
     -> let origin = (0, 0)
     << // origin : (Int, Int) = (0, 0)
     -> let x = origin.0
@@ -378,13 +370,13 @@ ensuring that the loop is run at least once.
 
 .. testcode:: do-while
 
-   -> var n = 2
-   << // n : Int = 2
+   -> var m = 2
+   << // m : Int = 2
    -> do {
-          n = n * 2
-      } while n < 100
-   -> println("n is \(n)")
-   << n is 128
+          m = m * 2
+      } while m < 100
+   -> println("m is \(m)")
+   << m is 128
 
 Functions and Closures
 ----------------------
@@ -506,7 +498,7 @@ and have a function as its return value.
         return x > y
     }
     var numbers = [8, 3, 5, 6]
-    var sortedNumbers = bubbleSort(numbers, lessThan)
+    var sortedNumbers = bubbleSort(numbers, greaterThan)
 
 Closures are surrounded by braces (``{}``)
 and have their arguments separated from their body by ``in``.
