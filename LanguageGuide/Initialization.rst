@@ -106,13 +106,6 @@ Initializers can take :newTerm:`input parameters`
 to customize the initialization process.
 Input parameters are written in the same syntax as normal method parameters.
 
-.. note::
-
-   Currently, initializers are written in Swift's selector-style syntax,
-   which is no longer described in this document.
-   Initializers will be moving over to the new unified function syntax
-   in time for WWDC 2014.
-
 Initializers can use
 constant parameters, variable parameters, and ``inout`` parameters.
 Default values can be provided for initializer parameters,
@@ -131,24 +124,21 @@ with a value from a different temperature scale:
 
    -> struct Celsius {
          var temperatureInCelsius: Double = 0.0
-         init withFahrenheit(fahrenheit: Double) {
+         init(fahrenheit: Double) {
             temperatureInCelsius = (fahrenheit - 32.0) / 1.8
          }
-         init withKelvin(kelvin: Double) {
+         init(kelvin: Double) {
             temperatureInCelsius = kelvin + 273.15
          }
       }
-   -> var boilingPointOfWater = Celsius(withFahrenheit: 212.0)
+   -> var boilingPointOfWater = Celsius(fahrenheit: 212.0)
    << // boilingPointOfWater : Celsius = Celsius(100.0)
    /> boilingPointOfWater.temperatureInCelsius is \(boilingPointOfWater.temperatureInCelsius)
    </ boilingPointOfWater.temperatureInCelsius is 100.0
-   -> var freezingPointOfWater = Celsius(withKelvin: -273.15)
+   -> var freezingPointOfWater = Celsius(kelvin: -273.15)
    << // freezingPointOfWater : Celsius = Celsius(0.0)
    /> freezingPointOfWater.temperatureInCelsius is \(freezingPointOfWater.temperatureInCelsius)
    </ freezingPointOfWater.temperatureInCelsius is 0.0
-
-.. TODO: mention that initializers can be written in either function syntax,
-   and show an example in function-style as well as selector-style.
 
 .. _Initialization_OptionalPropertyValues:
 
@@ -169,14 +159,14 @@ For example:
    -> class SurveyQuestion {
          var text: String
          var response: String?
-         init withText(text: String) {
+         init(text: String) {
             self.text = text
          }
          func ask() {
             println(text)
          }
       }
-   -> let cheeseQuestion = SurveyQuestion(withText: "Do you like cheese?")
+   -> let cheeseQuestion = SurveyQuestion(text: "Do you like cheese?")
    << // cheeseQuestion : SurveyQuestion = <SurveyQuestion instance>
    -> cheeseQuestion.ask()
    <- Do you like cheese?
@@ -198,21 +188,21 @@ The ``SurveyQuestion`` example from above can be written to use
 a constant property rather than a variable property for the ``text`` property of the question,
 to indicate that the question does not change once an instance of ``SurveyQuestion`` is created.
 Even though the ``text`` property is now a constant,
-it can still be set within the ``init withText`` initializer:
+it can still be set within the ``init text`` initializer:
 
 .. testcode:: surveyQuestionConstant
 
    -> class SurveyQuestion {
          let text: String
          var response: String?
-         init withText(text: String) {
+         init(text: String) {
             self.text = text
          }
          func ask() {
             println(text)
          }
       }
-   -> let beetsQuestion = SurveyQuestion(withText: "How about beets?")
+   -> let beetsQuestion = SurveyQuestion(text: "How about beets?")
    << // beetsQuestion : SurveyQuestion = <SurveyQuestion instance>
    -> beetsQuestion.ask()
    <- How about beets?
@@ -353,11 +343,11 @@ or by providing a center point and a size:
          var origin = Point()
          var size = Size()
          init() {}
-         init origin(Point) size(Size) {
+         init(origin: Point, size: Size) {
             self.origin = origin
             self.size = size
          }
-         init center(Point) size(Size) {
+         init(center: Point, size: Size) {
             let originX = center.x - (size.width / 2)
             let originY = center.y - (size.height / 2)
             self.init(origin: Point(originX, originY), size: size)
@@ -405,6 +395,13 @@ which stores the new origin and size values in the appropriate properties:
    << // centerRect : Rect = Rect(Point(2.5, 2.5), Size(3.0, 3.0))
    /> centerRect's origin is (\(centerRect.origin.x), \(centerRect.origin.y)) and its size is (\(centerRect.size.width), \(centerRect.size.height))
    </ centerRect's origin is (2.5, 2.5) and its size is (3.0, 3.0)
+
+.. _Initialization_InitializerDelegationForClassTypes:
+
+Initializer Delegation For Class Types
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. write-me::
 
 .. _Initialization_DynamicReturnTypes:
 
@@ -512,7 +509,7 @@ This is represented by the player's ``coinsInPurse`` property:
 
    -> class Player {
          var coinsInPurse: Int
-         init withCoins(coins: Int) {
+         init(coins: Int) {
             coinsInPurse = Bank.vendCoins(coins)
          }
          func winCoins(coins: Int) {
@@ -538,7 +535,7 @@ Here's how that looks in action:
 
 .. testcode:: deinitializer
 
-   -> var playerOne: Player? = Player(withCoins: 100)
+   -> var playerOne: Player? = Player(coins: 100)
    << // playerOne : Player? = <unprintable value>
    -> println("A new player has joined the game with \(playerOne!.coinsInPurse) coins")
    <- A new player has joined the game with 100 coins

@@ -138,7 +138,7 @@ Here's a more complex class, which also adopts and conforms to the ``FullyNamed`
    -> class Starship : FullyNamed {
          var prefix: String?
          var name: String
-         init withName(name: String) prefix(String? = nil) {
+         init(name: String, prefix: String? = nil) {
             self.name = name
             self.prefix = prefix
          }
@@ -146,7 +146,7 @@ Here's a more complex class, which also adopts and conforms to the ``FullyNamed`
             return (prefix ? prefix! + " " : "") + name
          }
       }
-   -> var ncc1701 = Starship(withName: "Enterprise", prefix: "USS")
+   -> var ncc1701 = Starship(name: "Enterprise", prefix: "USS")
    << // ncc1701 : Starship = <Starship instance>
    /> ncc1701.fullName is \"\(ncc1701.fullName)\"
    </ ncc1701.fullName is "USS Enterprise"
@@ -250,7 +250,7 @@ Here's an example of a protocol being used as a type:
    -> class Dice {
          let sides: Int
          let generator: RandomNumberGenerator
-         init withSides(sides: Int) generator(RandomNumberGenerator) {
+         init(sides: Int, generator: RandomNumberGenerator) {
             self.sides = sides
             self.generator = generator
          }
@@ -300,7 +300,7 @@ with a ``LinearCongruentialGenerator`` instance as its random number generator:
 
 .. testcode:: protocols
 
-   -> var d6 = Dice(withSides: 6, generator: LinearCongruentialGenerator())
+   -> var d6 = Dice(sides: 6, generator: LinearCongruentialGenerator())
    << // d6 : Dice = <Dice instance>
    -> for _ in 1..5 {
          println("Random dice roll is \(d6.roll())")
@@ -354,7 +354,7 @@ and to notify a ``DiceGameDelegate`` about its progress:
 
    -> class SnakesAndLadders : DiceGame {
          let finalSquare = 25
-         let dice = Dice(withSides: 6, generator: LinearCongruentialGenerator())
+         let dice = Dice(sides: 6, generator: LinearCongruentialGenerator())
          var square = 0
          var board = Array<Int>()
          var delegate: DiceGameDelegate?
@@ -558,7 +558,7 @@ Any ``Dice`` instance can now be treated as ``TextRepresentable``:
 
 .. testcode:: protocols
 
-   -> let d12 = Dice(withSides: 12, generator: LinearCongruentialGenerator())
+   -> let d12 = Dice(sides: 12, generator: LinearCongruentialGenerator())
    << // d12 : Dice = <Dice instance>
    -> println(d12.asText())
    <- A 12-sided dice
@@ -781,11 +781,11 @@ both of which conform to the ``HasArea`` protocol:
          let pi = 3.1415927
          var radius: Double
          var area: Double { return pi * radius * radius }
-         init radius(Double) { self.radius = radius }
+         init(radius: Double) { self.radius = radius }
       }
    -> class Country : HasArea {
          var area: Double
-         init area(Double) { self.area = area }
+         init(area: Double) { self.area = area }
       }
 
 The ``Circle`` class implements the ``area`` property requirement
@@ -799,7 +799,7 @@ Here's a class called ``Animal``, which does not conform to the ``HasArea`` prot
 
    -> class Animal {
          var legs: Int
-         init legs(Int) { self.legs = legs }
+         init(legs: Int) { self.legs = legs }
       }
 
 The ``Circle``, ``Country`` and ``Animal`` classes do not have a shared base class.
