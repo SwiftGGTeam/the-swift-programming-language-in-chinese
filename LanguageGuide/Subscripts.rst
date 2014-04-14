@@ -62,7 +62,7 @@ Here's an example of a read-only subscript implementation:
          }
       }
    -> let threeTimesTable = TimesTable(multiplier: 3)
-   << // threeTimesTable : TimesTable = <TimesTable instance>
+   << // threeTimesTable : TimesTable = TimesTable(3)
    -> println("six times three is \(threeTimesTable[6])")
    <- six times three is 18
 
@@ -127,7 +127,7 @@ if it is appropriate for your type:
    -> struct Matrix {
          let rows: Int, columns: Int
          var grid: Array<Double>
-         init rows(rows: Int) columns(Int) {
+         init(rows: Int, columns: Int) {
             self.rows = rows
             self.columns = columns
             grid = Array(rows * columns, 0.0)
