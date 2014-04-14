@@ -475,30 +475,26 @@ and have a function as its return value.
 
 .. TODO: Confirm spelling of "incrementer" (not "incrementor").
 
-.. TODO: Fix the type error in the swap line below.
+.. testcode:: pass-func
 
-.. testcode pass-func
-
-.. TODO: Fails to type check on the swap line.
-
-::
-
-    // Re-implement the Standard Library sort function.
-    func bubbleSort (list : Int[], outOfOrder : (Int, Int) -> Bool) -> Int[] {
-        for i in 0...list.count {
-            for j in 0...list.count {
-                if outOfOrder(list[i], list[j]) {
-                    (list[i], list[j]) = (list[j], list[i])
-                }
-            }
-        }
-        return list
-    }
-    func greaterThan (x : Int, y : Int) -> Bool {
-        return x > y
-    }
-    var numbers = [8, 3, 5, 6]
-    var sortedNumbers = bubbleSort(numbers, greaterThan)
+    -> // Re-implement the Standard Library sort function.
+    -> func bubbleSort (var list : Int[], outOfOrder : (Int, Int) -> Bool) -> Int[] {
+           for i in 0...list.count {
+               for j in 0...list.count {
+                   if outOfOrder(list[i], list[j]) {
+                       (list[i], list[j]) = (list[j], list[i])
+                   }
+               }
+           }
+           return list
+       }
+    -> func greaterThan (x : Int, y : Int) -> Bool {
+           return x > y
+       }
+    -> var numbers = [8, 3, 5, 6]
+    << // numbers : Int[] = [8, 3, 5, 6]
+    -> var sortedNumbers = bubbleSort(numbers, greaterThan)
+    << // sortedNumbers : Int[] = [8, 6, 5, 3]
 
 Closures are surrounded by braces (``{}``)
 and have their arguments separated from their body by ``in``.
