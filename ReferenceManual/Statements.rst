@@ -58,7 +58,7 @@ Swift has four loop statements:
 a ``for`` statement, a ``for``-``in`` statement, a ``while`` statement,
 and a ``do``-``while`` statement.
 
-Control flow in a loop statement can be changed by a break statement and a continue statement
+Control flow in a loop statement can be changed by a ``break`` statement and a ``continue`` statement
 and is discussed in :ref:`Statements_BreakStatement` and :ref:`Statements_ContinueStatement` below.
 
 .. syntax-grammar::
@@ -83,12 +83,11 @@ A ``for`` statement has the following form:
 
 .. syntax-outline::
 
-    for (<#initialization#>; <#condition#>; <#increment#>) {
-        <#statements#>
+    for <#initialization#>; <#condition#>; <#increment#> {
+       <#statements#>
     }
 
-The parentheses around the *initialization*, *condition*,
-and *increment* are optional, but the semicolon between them is required.
+The semicolons between the *initialization*, *condition*, and *increment* are required.
 The braces around the *statements* in the body of the loop are also required.
 
 A ``for`` statement is executed as follows:
@@ -153,7 +152,7 @@ A ``for``-``in`` statement has the following form:
 .. syntax-outline::
 
     for <#item#> in <#collection#> {
-        <#statements#>
+       <#statements#>
     }
 
 The ``generate`` method is called on the *collection* expression
@@ -198,7 +197,7 @@ A ``while`` statement has the following form:
 .. syntax-outline::
 
     while <#condition#> {
-        <#statements#>
+       <#statements#>
     }
 
 A ``while`` statement is executed as follows:
@@ -241,7 +240,7 @@ A ``do``-``while`` statement has the following form:
 .. syntax-outline::
 
     do {
-        <#statements#>
+       <#statements#>
     } while <#condition#>
 
 A ``do``-``while`` statement is executed as follows:
@@ -306,7 +305,7 @@ and has the following form:
 .. syntax-outline::
 
     if <#condition#> {
-        <#statements#>
+       <#statements#>
     }
 
 The second form of an ``if`` statement provides an additional *else clause*
@@ -318,9 +317,9 @@ When a single else clause is present, an ``if`` statement has the following form
 .. syntax-outline::
 
     if <#condition#> {
-        <#statements to execute if condition is true#>
+       <#statements to execute if condition is true#>
     } else {
-        <#statements to execute if condition is false#>
+       <#statements to execute if condition is false#>
     }
 
 The else clause of an ``if`` statement can contain another ``if`` statement
@@ -330,11 +329,11 @@ An ``if`` statement chained together in this way has the following form:
 .. syntax-outline::
 
     if <#condition 1#> {
-        <#statements to execute if condition 1 is true#>
+       <#statements to execute if condition 1 is true#>
     } else if <#condition 2#> {
-        <#statements to execute if condition 2 is true#>
+       <#statements to execute if condition 2 is true#>
     } else {
-        <#statements to execute if both conditions are false#>
+       <#statements to execute if both conditions are false#>
     }
 
 The value of any condition in an ``if`` statement must have a type that conforms to
@@ -370,22 +369,25 @@ A switch statement has the following form:
 .. syntax-outline::
 
     switch <#control expression#> {
-        case <#pattern 1#>:
-            <#statements#>
-        case <#pattern 2#> where <#condition#>:
-            <#statements#>
-        case <#pattern 3#> where <#condition#>,
-             <#pattern 4#> where <#condition#>:
-            <#statements#>
-        default:
-            <#statements#>
+       case <#pattern 1#>:
+          <#statements#>
+       case <#pattern 2#> where <#condition#>:
+          <#statements#>
+       case <#pattern 3#> where <#condition#>,
+            <#pattern 4#> where <#condition#>:
+          <#statements#>
+       default:
+          <#statements#>
     }
 
 The *control expression* of the ``switch`` statement is evaluated
 and then compared with the patterns specified in each case.
 If a match is found,
 the program executes the *statements* listed within the scope of that case.
-You must include at least one statement following the colon (``:``) of each case label.
+The scope of each case can't be empty.
+As a result, you must include either a single semicolon (``;``) or at least one statement
+following the colon (``:``) of each case label. In this context, the semicolon
+indicates that you don't intend to execute any code in the body of the case.
 
 The values of expressions your code can branch on is very flexible. For instance,
 in addition to the values of scalar types, such as integers and characters,
@@ -467,6 +469,7 @@ not out of the ``switch`` statement itself.
 
     stmt-switch ::= 'switch' expr-basic '{' stmt-switch-case* '}'
     stmt-switch-case ::= (case-label | default-label) brace-item+
+    stmt-switch-case ::= (case-label | default-label) ';'
 
     case-label ::= 'case' pattern ('where' expr)? (',' pattern ('where' expr)?)* ':'
     default-label ::= 'default' ':'
@@ -479,6 +482,7 @@ not out of the ``switch`` statement itself.
     switch-statement --> ``switch`` expression ``{`` switch-cases-OPT ``}``
     switch-cases --> switch-case switch-cases-OPT
     switch-case --> case-label statements | default-label statements
+    switch-case --> case-label ``;`` | default-label ``;``
 
     case-label --> ``case`` case-item-list ``:``
     case-item-list --> pattern guard-clause-OPT | pattern guard-clause-OPT ``,`` case-item-list

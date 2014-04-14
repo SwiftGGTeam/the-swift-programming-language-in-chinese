@@ -60,6 +60,7 @@ and describes the type inference behavior of Swift.
 
     type --> array-type | function-type | type-identifier | tuple-type | optional-type | protocol-composition-type | metatype-type
 
+
 .. _Types_TypeAnnotation:
 
 Type Annotation
@@ -69,7 +70,7 @@ A :newTerm:`type annotation` explicitly specifies the type of a variable or expr
 Type annotations begin with a colon (``:``) and end with a type,
 as the following examples show::
 
-    let x : (Double, Double) = (3.14159, 2.71828)
+    let x: (Double, Double) = (3.14159, 2.71828)
     func foo(a: Int) -> Int { /* ... */ }
 
 In the first example,
@@ -107,8 +108,8 @@ the use of ``Point`` in the type annotation refers to the tuple type ``(Double, 
 ::
 
     typealias Point = (Double, Double)
-    let origin : Point = (0, 0)
-    // origin : Point = (0.0, 0.0)
+    let origin: Point = (0, 0)
+    // origin: Point = (0.0, 0.0)
 
 In the second case, a type identifier uses dot (``.``) syntax to refer to named types
 declared in other modules or nested within other types.
@@ -116,7 +117,7 @@ For example, the type identifier in the following code references the named type
 that is declared in the ``ExampleModule`` module.
 ::
 
-    var someValue : ExampleModule.MyType
+    var someValue: ExampleModule.MyType
 
 .. langref-grammar
 
@@ -283,8 +284,8 @@ The Swift language defines the postfix operator ``?`` as syntactic sugar for
 the named type ``Optional<T>``, which is defined in the Swift Standard Library.
 In other words, the following two declarations are equivalent::
 
-    var optionalInteger : Int?
-    var optionalInteger : Optional<Int>
+    var optionalInteger: Int?
+    var optionalInteger: Optional<Int>
 
 In both cases, the variable ``optionalInteger``
 is declared to have the type of an optional integer.
@@ -517,16 +518,16 @@ Type Inference
 Swift uses type inference extensively,
 allowing you to omit the type or part of the type of many variables and expressions in your code.
 For example,
-instead of writing ``var x : Int = 0``, you can omit the type completely and simply write ``var x = 0``---
+instead of writing ``var x: Int = 0``, you can omit the type completely and simply write ``var x = 0``---
 the compiler correctly infers that ``x`` names a value of type ``Int``.
 Similarly, you can omit part of a type when the full type can be inferred from context.
-For instance, if you write ``let dict : Dictionary = ["A": 1]``,
+For instance, if you write ``let dict: Dictionary = ["A": 1]``,
 the compiler infers that ``dict`` has the type ``Dictionary<String, Int>``.
 
 In both of the examples above,
 the type information is passed up from the leaves of the expression tree to its root.
 That is,
-the type of ``x`` in ``var x : Int = 0`` is inferred by first checking the type of ``0``
+the type of ``x`` in ``var x: Int = 0`` is inferred by first checking the type of ``0``
 and then passing this type information up to the root (the variable ``x``).
 
 In Swift, type information can also flow in the opposite direction---from the root down to the leaves.
@@ -535,9 +536,9 @@ the explicit type annotation (``: Float``) on the constant ``eFloat``
 causes the numeric literal ``2.71828`` to have type ``Float`` instead of type ``Double``.::
 
     let e = 2.71828
-    // e : Double = 2.71828
-    let eFloat : Float = 2.71828
-    // eFloat : Float = 2.71828
+    // e: Double = 2.71828
+    let eFloat: Float = 2.71828
+    // eFloat: Float = 2.71828
 
 Type inference in Swift operates at the level of a single expression or statement.
 This means that all of the information needed to infer an omitted type or part of a type
