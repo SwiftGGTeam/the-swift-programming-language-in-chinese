@@ -335,7 +335,7 @@ and the values are airport names:
 .. testcode:: dictionaries
 
    -> var airports: Dictionary<String, String> = ["TYO" : "Tokyo", "DUB" : "Dublin"]
-   << // airports : Dictionary<String, String> = Dictionary<String, String>(1.33333, 2, <DictionaryBufferOwner<String, String> instance>)
+   << // airports : Dictionary<String, String> = Dictionary<String, String>(1.33333333333333, 2, <DictionaryBufferOwner<String, String> instance>)
 
 The ``airports`` dictionary has been declared as having a type of ``Dictionary<String, String>``,
 which means “a ``Dictionary`` whose keys are of type ``String``,
@@ -374,7 +374,7 @@ The initialization of ``airports`` could have been be written in a shorter form 
 .. testcode:: dictionariesInferred
 
    -> var airports = ["TYO" : "Tokyo", "DUB" : "Dublin"]
-   << // airports : Dictionary<String, String> = Dictionary<String, String>(1.33333, 2, <DictionaryBufferOwner<String, String> instance>)
+   << // airports : Dictionary<String, String> = Dictionary<String, String>(1.33333333333333, 2, <DictionaryBufferOwner<String, String> instance>)
 
 Because all of the keys in the literal are of the same type as each other,
 and likewise all of the values are of the same type as each other,
@@ -520,7 +520,7 @@ you can do so using initializer syntax:
 .. testcode:: dictionariesEmpty
 
    -> var namesOfIntegers = Dictionary<Int, String>()
-   << // namesOfIntegers : Dictionary<Int, String> = Dictionary<Int, String>(1.33333, 0, <DictionaryBufferOwner<Int, String> instance>)
+   << // namesOfIntegers : Dictionary<Int, String> = Dictionary<Int, String>(1.33333333333333, 0, <DictionaryBufferOwner<Int, String> instance>)
    // namesOfIntegers is an empty Dictionary<Int, String>
 
 This example creates an empty dictionary of type ``Int``, ``String``

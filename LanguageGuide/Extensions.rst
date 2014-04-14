@@ -59,9 +59,9 @@ to provide basic support for working with distance units:
    -> println("One inch is \(oneInch) meters")
    <- One inch is 0.0254 meters
    -> let threeFeet = 3.ft
-   << // threeFeet : Double = 0.9144
+   << // threeFeet : Double = 0.914399970739201
    -> println("Three feet is \(threeFeet) meters")
-   <- Three feet is 0.9144 meters
+   <- Three feet is 0.914399970739201 meters
 
 These computed properties give a way to express that a ``Double`` value
 should be considered as a certain unit of length.
@@ -96,7 +96,7 @@ and can be used within mathematical calculations wherever a ``Double`` is accept
 .. note::
 
    Extensions can add new computed properties, but they cannot add stored properties,
-   or add stored property observers to existing stored properties.
+   or add property observers to existing properties.
 
 .. _Extensions_Initializers:
 

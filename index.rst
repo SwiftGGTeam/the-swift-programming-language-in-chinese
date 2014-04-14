@@ -19,8 +19,28 @@ Contents
 Change Log
 ----------
 
-April 9 2014
+April 14 2014
 ~~~~~~~~~~~~~
+
+Language Guide
+++++++++++++++
+
+* Updated the :doc:`LanguageGuide/Functions` chapter to use and describe the new unified function declaration syntax
+* New sections on :ref:`local parameter names <Functions_LocalParameterNames>`,
+  :ref:`unnamed parameters <Functions_UnnamedParameters>`,
+  and :ref:`strict parameter names <Functions_StrictParameterNames>`
+* Converted all initializers in the Guide over to the new unified function declaration syntax
+* New section on :ref:`checking for protocol conformance <Protocols_CheckingForProtocolConformance>`
+* New section on :ref:`optional protocol requirements <Protocols_OptionalProtocolRequirements>`
+* The protocol examples for :ref:`delegates <Protocols_Delegates>` now use optional chaining
+* Restructured the :doc:`LanguageGuide/Initialization` chapter, and added a new section about
+  :ref:`initializer delegation for value types <Initialization_InitializerDelegationForValueTypes>`
+* Started to update the :ref:`property observers <Properties_PropertyObservers>` description
+  to talk about property overriding now that stored properties can now be overridden
+* Updates throughout the Guide now that optionals are default-initialized to ``nil``
+
+April 9 2014
+~~~~~~~~~~~~
 
 Language Guide
 ++++++++++++++
@@ -161,7 +181,7 @@ Language Guide
   and their example has been simplified
 * Moved :ref:`BasicTypes_OptionalBinding` into the :doc:`LanguageGuide/BasicTypes` chapter,
   and adopted it for several more examples throughout the book
-* :ref:`didSet <Properties_StoredPropertyObservers>` now has an ``oldValue`` parameter
+* :ref:`didSet <Properties_PropertyObservers>` now has an ``oldValue`` parameter
 * Updates to bring code examples in line with this week's Swift release
 * Lots of editorial and technical improvements based on reader feedback (thank you!)
 
@@ -208,7 +228,7 @@ Language Guide
 * New section on :doc:`LanguageGuide/TypeCasting`
 * New section on :ref:`Initialization_Deinitializers`
 * New section on :ref:`self <Methods_TheSelfProperty>` and ``mutating`` structure methods
-* :ref:`Properties_StoredPropertyObservers` and :ref:`Properties_ComputedProperties` now all use curly braces
+* :ref:`Properties_PropertyObservers` and :ref:`Properties_ComputedProperties` now all use curly braces
 * Information about the :ref:`BasicOperators_ClosedRangeOperator` (``..``)
 * Re-ordered the :doc:`LanguageGuide/ControlFlow` chapter
 * ``String`` no longer has a ``length`` property

@@ -14,13 +14,15 @@ Instances of class types can also implement a :newTerm:`deinitializer`,
 which gives an oppprtunity to perform any custom cleanup that you require to be run
 when an instance of that class instance is destroyed.
 
-.. TODO: this chapter seems to have lost its "definite initialization" section.
-
 .. TODO: mention that memory is automatically managed by ARC
 
 .. TODO: mention that you can't construct a class instance from a class metatype value,
    because you can't be sure that a subclass will definitely provide the constructor –
    see doug's notes from r14175 for more info
+
+.. TODO: mention that initializers can be marked with the @required attribute
+
+.. TODO: update this chapter once initializers switch over to the unified function syntax
 
 .. _Initialization_Initializers:
 
@@ -93,72 +95,26 @@ as described later in this chapter.
    When you assign a default value to a stored property,
    or set its initial value within an initializer,
    the value of that property is set directly,
-   without calling any stored property observers.
-
-.. _Initialization_DefaultInitializers:
-
-Default Initializers
---------------------
-
-Swift provides a :newTerm:`default initializer` implementation
-for any class or structure that does not provide at least one initializer itself,
-if all of the properties declared by that class or structure are assigned
-default values as part of their property declaration.
-The default initializer simply creates a new instance
-with all of its properties set to their default values.
-You don't have to declare that you want the default initializer to be implemented –
-it is available automatically for all classes and structures without their own initializer.
-
-.. TODO: show an example.
-.. QUESTION: How is this affected by inheritance?
-   If I am a subclass of a superclass that defines a designated initializer,
-   I (the subclass) presumably don't get a default initializer,
-   because I am obliged to delegate up to my parent's default initializer.
-
-.. _Initialization_MemberwiseStructureInitializers:
-
-Memberwise Structure Initializers
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. HACK: this is currently duplicated in ClassesAndStructures.
-
-.. TODO: mention that structures and enums can assign a value to self during initialization,
-   but classes cannot.
-
-In addition to the default initializers mentioned above,
-all instances of structure types have
-an automatically-generated :newTerm:`memberwise initializer`,
-which can be used to initialise the member properties of new structure instances.
-Initial values for the properties of the new instance
-can be passed to the memberwise initializer by name:
-
-.. testcode:: classesAndStructures
-
-   -> struct Size {
-         var width = 0.0, height = 0.0
-      }
-   -> let twoByTwo = Size(width: 2.0, height: 2.0)
-   << // twoByTwo : Size = Size(2.0, 2.0)
-
-Initial values can also be provided without names,
-if they are listed in the same order that the properties are declared in the structure's definition:
-
-.. testcode:: classesAndStructures
-
-   -> let fourByThree = Size(4.0, 3.0)
-   << // fourByThree : Size = Size(4.0, 3.0)
-
-.. TODO: Include a justifiable reason for why classes do not provide a memberwise initializer.
-.. TODO: According to rdar://15670604, we may end up with one for classes as well.
-   However, I can't find a Radar tracking this directly.
+   without calling any property observers.
 
 .. _Initialization_InitializerInputParameters:
 
 Initializer Input Parameters
 ----------------------------
 
-Initializers can take :newTerm:`input parameters`,
+Initializers can take :newTerm:`input parameters`
 to customize the initialization process.
+Input parameters are written in the same syntax as normal method parameters.
+
+Initializers can use
+constant parameters, variable parameters, and ``inout`` parameters.
+Default values can be provided for initializer parameters,
+and tuples can be used as parameter types.
+Variadic parameters cannot be used.
+
+.. TODO: Update this section if, as, and when variadics start working for initializers.
+   The fact that they don't work currently is rdar://16535434.
+
 The following example defines a structure to store temperatures expressed in the Celsius scale.
 It implements two custom initializers,
 each of which initializes a new instance of the structure
@@ -168,81 +124,52 @@ with a value from a different temperature scale:
 
    -> struct Celsius {
          var temperatureInCelsius: Double = 0.0
-         init withFahrenheit(fahrenheit: Double) {
+         init(fahrenheit: Double) {
             temperatureInCelsius = (fahrenheit - 32.0) / 1.8
          }
-         init withKelvin(kelvin: Double) {
+         init(kelvin: Double) {
             temperatureInCelsius = kelvin + 273.15
          }
       }
-   -> var boilingPointOfWater = Celsius(withFahrenheit: 212.0)
+   -> var boilingPointOfWater = Celsius(fahrenheit: 212.0)
    << // boilingPointOfWater : Celsius = Celsius(100.0)
    /> boilingPointOfWater.temperatureInCelsius is \(boilingPointOfWater.temperatureInCelsius)
    </ boilingPointOfWater.temperatureInCelsius is 100.0
-   -> var freezingPointOfWater = Celsius(withKelvin: -273.15)
+   -> var freezingPointOfWater = Celsius(kelvin: -273.15)
    << // freezingPointOfWater : Celsius = Celsius(0.0)
    /> freezingPointOfWater.temperatureInCelsius is \(freezingPointOfWater.temperatureInCelsius)
    </ freezingPointOfWater.temperatureInCelsius is 0.0
 
-.. TODO: mention that initializers can be written in either function syntax,
-   and show an example in function-style as well as selector-style.
+.. TODO: I think this example should use "fromFahrenheit" / "fromKelvin"
+   once Doug has fixed the external / local calling issue.
 
-The value of a constant ``let`` property can be modified at any point during initialization,
-as long as it is definitely set to a value by the time the initializer has finished:
-
-.. testcode:: initialization
-
-   -> struct Temperature {
-         let storedValue: Double
-         let storedScale: String
-         init withValue(value: Double) inScale(scale: String) {
-            storedValue = value
-            storedScale = scale
-         }
-         func toKelvin() -> Double {
-            switch storedScale {
-               case "F": // Fahrenheit
-                  return (storedValue - 32.0) / 1.8
-               case "C": // Celsius
-                  return storedValue + 273.15
-               default:  // assume Kelvin otherwise
-                  return storedValue
-            }
-         }
-      }
-   -> var absoluteZero = Temperature(withValue: -273.15, inScale: "C")
-   << // absoluteZero : Temperature = Temperature(-273.15, "C")
-   -> println("Temperature is \(absoluteZero.toKelvin())°K")
-   <- Temperature is 0.0°K
-
-.. TODO: This could do with a more elegant example.
+.. _Initialization_OptionalPropertyValues:
 
 Optional Property Values
 ------------------------
 
 If your custom type has a stored property that cannot be known during initialization,
 or that is logically allowed to have “no value yet”,
-that property should be declared as having an optional type,
-and initialized with a value of ``nil`` as part of its declaration.
-This makes it clear that the property is
-deliberately intended to have “no value yet” during initialization,
-and has not just been left in an indeterminate state.
+declare the property as having an optional type.
+Because it is of an optional type,
+it will be automatically initialized with a value of ``nil``.
+This makes it clear that the property is deliberately intended to have “no value yet”.
 
 For example:
 
-.. testcode:: initialization
+.. testcode:: surveyQuestionVariable
 
    -> class SurveyQuestion {
          var text: String
-         var response: String? = nil
-         init withText(text: String) {
+         var response: String?
+         init(text: String) {
             self.text = text
          }
          func ask() {
             println(text)
          }
       }
-   -> let cheeseQuestion = SurveyQuestion(withText: "Do you like cheese?")
+   -> let cheeseQuestion = SurveyQuestion(text: "Do you like cheese?")
    << // cheeseQuestion : SurveyQuestion = <SurveyQuestion instance>
    -> cheeseQuestion.ask()
    <- Do you like cheese?
@@ -250,13 +177,232 @@ For example:
 
 The response to a survey question cannot be known until it is asked,
 and so the ``response`` property is declared as ``String?``, or “optional ``String``”.
-It is assigned a default value of ``nil`` as part of its declaration,
-meaning “no string yet”.
+It is automatically assigned a default value of ``nil``, meaning “no string yet”,
+by virtue of being optional.
 
-.. _Initialization_DesignatedAndConvenienceInitializers:
+.. _Initialization_ModifyingConstantPropertiesDuringInitialization:
 
-Designated and Convenience Initializers
----------------------------------------
+Modifying Constant Properties During Initialization
+---------------------------------------------------
+
+The value of a constant property can be modified at any point during initialization,
+as long as it is definitely set to a value by the time the initializer has finished.
+The ``SurveyQuestion`` example from above can be written to use
+a constant property rather than a variable property for the ``text`` property of the question,
+to indicate that the question does not change once an instance of ``SurveyQuestion`` is created.
+Even though the ``text`` property is now a constant,
+it can still be set within the ``init text`` initializer:
+
+.. testcode:: surveyQuestionConstant
+
+   -> class SurveyQuestion {
+         let text: String
+         var response: String?
+         init(text: String) {
+            self.text = text
+         }
+         func ask() {
+            println(text)
+         }
+      }
+   -> let beetsQuestion = SurveyQuestion(text: "How about beets?")
+   << // beetsQuestion : SurveyQuestion = <SurveyQuestion instance>
+   -> beetsQuestion.ask()
+   <- How about beets?
+   -> beetsQuestion.response = "I also like beets. (But not with cheese.)"
+
+.. TODO: This could do with a more elegant example.
+
+.. _Initialization_DefaultInitializers:
+
+Default Initializers
+--------------------
+
+Swift provides a :newTerm:`default initializer`
+for any structure, enumeration, or base class
+that does not provide at least one initializer itself,
+and that provides default values for all of its properties.
+The default initializer simply creates a new instance
+with all of its properties set to their default values.
+
+This example defines a class called ``ShoppingListItem``,
+which encapsulates the name, quantity and purchase state
+of an item in a shopping list:
+
+.. testcode:: initialization
+
+   -> class ShoppingListItem {
+         var name: String?
+         var quantity = 1
+         var purchased = false
+      }
+   -> var item = ShoppingListItem()
+   << // item : ShoppingListItem = <ShoppingListItem instance>
+
+Because all of the properties of the ``ShoppingListItem`` class have default values,
+and because it is a base class with no superclass,
+``ShoppingListItem`` automatically gains a default initializer implementation
+that creates a new instance with all of its properties set to their default values.
+(The ``name`` property is an optional ``String`` property,
+and so it automatically receives a default value of ``nil``,
+even though this value is not written in the code.)
+The example above uses the default initializer for the ``ShoppingListItem`` class
+to create a new instance of the class,
+and assigns this new instance to a variable called ``item``.
+
+.. QUESTION: How is this affected by inheritance?
+   If I am a subclass of a superclass that defines a designated initializer,
+   I (the subclass) presumably don't get a default initializer,
+   because I am obliged to delegate up to my parent's default initializer.
+
+.. _Initialization_MemberwiseInitializersForStructureTypes:
+
+Memberwise Initializers for Structure Types
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In addition to the default initializers mentioned above,
+structure types automatically receive a :newTerm:`memberwise initializer`
+if they provide default values for all of their stored properties,
+and do not define any of their own custom initializers.
+
+The memberwise initializer is used as a short-hand way
+to initialise the member properties of new structure instances.
+Initial values for the properties of the new instance
+can be passed to the memberwise initializer by name:
+
+.. testcode:: initialization
+
+   -> struct Size {
+         var width = 0.0, height = 0.0
+      }
+   -> let twoByTwo = Size(width: 2.0, height: 2.0)
+   << // twoByTwo : Size = Size(2.0, 2.0)
+
+Initial values can be provided without names,
+if they are listed in the same order that the properties are declared in the structure's definition:
+
+.. testcode:: initialization
+
+   -> let fourByThree = Size(4.0, 3.0)
+   << // fourByThree : Size = Size(4.0, 3.0)
+
+.. TODO: Include a justifiable reason for why classes do not provide a memberwise initializer.
+
+.. _Initialization_InitializerDelegation:
+
+Initializer Delegation
+----------------------
+
+Initializers can call other initializers,
+in a process known as :newTerm:`initializer delegation`.
+The rules for how initializer delegation works,
+and for what forms of delegation are allowed,
+are different for value types and class types.
+
+Value types (structures and enumerations) do not support inheritance,
+and so their initializer delegation process is relatively simple,
+because they can only delegate to another initializer that they provide themselves.
+Classes, however, can inherit from other classes,
+as described in :doc:`Inheritance`.
+This means that classes have additional responsibilities for ensuring that
+all of the stored properties they inherit are assigned a suitable value during initialization.
+
+.. _Initialization_InitializerDelegationForValueTypes:
+
+Initializer Delegation For Value Types
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You can use ``self.init`` to refer to other initializers from the same value type
+when writing your own custom initializers for a structure or enumeration.
+You can only call ``self.init`` from within an initializer.
+
+.. note::
+
+   If you define a custom initializer for a value type,
+   you will no longer have access to the default initializer
+   (or the memberwise structure initializer, if it is a structure) for that type.
+   This avoids a situation where you provide a more complex initializer
+   that performs additional essential setup,
+   but your more complex initializer is circumvented by someone accidentally using
+   one of the automatic initializers instead.
+
+The following example defines a custom ``Rect`` structure to represent a geometric rectangle.
+The example also defines two supporting structures called ``Size`` and ``Point``.
+
+The ``Rect`` structure can be initialized in one of three ways –
+by using the default ``origin`` and ``size`` property values;
+by providing an origin point and a size;
+or by providing a center point and a size:
+
+.. testcode:: valueDelegation
+
+   -> struct Size {
+         var width = 0.0, height = 0.0
+      }
+   -> struct Point {
+         var x = 0.0, y = 0.0
+      }
+   -> struct Rect {
+         var origin = Point()
+         var size = Size()
+         init() {}
+         init(origin: Point, size: Size) {
+            self.origin = origin
+            self.size = size
+         }
+         init(center: Point, size: Size) {
+            let originX = center.x - (size.width / 2)
+            let originY = center.y - (size.height / 2)
+            self.init(origin: Point(originX, originY), size: size)
+         }
+      }
+
+The first initializer, ``init``, is the same as the default initializer
+that the structure would have received if it did not have its own custom initializers.
+This initializer has an empty body,
+represented by an empty pair of curly braces ``{}``,
+and does not perfom any bespoke initialization.
+If you call this initializer, it will return a ``Rect`` instance whose
+``origin`` and ``size`` properties are both initialized with
+the default values of ``Point(0.0, 0.0)`` and ``Size(0.0, 0.0)``
+from their property definitions:
+
+.. testcode:: valueDelegation
+
+   -> let basicRect = Rect()
+   << // basicRect : Rect = Rect(Point(0.0, 0.0), Size(0.0, 0.0))
+   /> basicRect's origin is (\(basicRect.origin.x), \(basicRect.origin.y)) and its size is (\(basicRect.size.width), \(basicRect.size.height))
+   </ basicRect's origin is (0.0, 0.0) and its size is (0.0, 0.0)
+
+The second initializer, ``init origin size``, is the same as the memberwise initializer
+that the structure would have received if it did not have its own custom initializers.
+This initializer simply assigns the ``origin`` and ``size`` argument values to
+the appropriate stored properties:
+
+.. testcode:: valueDelegation
+
+   -> let originRect = Rect(origin: Point(2.0, 2.0), size: Size(5.0, 5.0))
+   << // originRect : Rect = Rect(Point(2.0, 2.0), Size(5.0, 5.0))
+   /> originRect's origin is (\(originRect.origin.x), \(originRect.origin.y)) and its size is (\(originRect.size.width), \(originRect.size.height))
+   </ originRect's origin is (2.0, 2.0) and its size is (5.0, 5.0)
+
+The final initializer, ``init center size``,
+calculates an appropriate origin point based on
+the ``center`` and ``size`` values it is passed.
+It then calls (or :newTerm:`delegates`) to the ``init origin size`` initializer,
+which stores the new origin and size values in the appropriate properties:
+
+.. testcode:: valueDelegation
+
+   -> let centerRect = Rect(center: Point(4.0, 4.0), size: Size(3.0, 3.0))
+   << // centerRect : Rect = Rect(Point(2.5, 2.5), Size(3.0, 3.0))
+   /> centerRect's origin is (\(centerRect.origin.x), \(centerRect.origin.y)) and its size is (\(centerRect.size.width), \(centerRect.size.height))
+   </ centerRect's origin is (2.5, 2.5) and its size is (3.0, 3.0)
+
+.. _Initialization_InitializerDelegationForClassTypes:
+
+Initializer Delegation For Class Types
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. write-me::
 
@@ -366,7 +512,7 @@ This is represented by the player's ``coinsInPurse`` property:
 
    -> class Player {
          var coinsInPurse: Int
-         init withCoins(coins: Int) {
+         init(coins: Int) {
             coinsInPurse = Bank.vendCoins(coins)
          }
          func winCoins(coins: Int) {
@@ -392,7 +538,7 @@ Here's how that looks in action:
 
 .. testcode:: deinitializer
 
-   -> var playerOne: Player? = Player(withCoins: 100)
+   -> var playerOne: Player? = Player(coins: 100)
    << // playerOne : Player? = <unprintable value>
    -> println("A new player has joined the game with \(playerOne!.coinsInPurse) coins")
    <- A new player has joined the game with 100 coins

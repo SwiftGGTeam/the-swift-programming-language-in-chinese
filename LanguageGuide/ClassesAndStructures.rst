@@ -122,7 +122,7 @@ Here's an example of a structure definition and a class definition:
          var resolution = Resolution()
          var interlaced = false
          var frameRate = 0.0
-         var name: String? = nil
+         var name: String?
       }
 
 The example above defines a new structure called ``Resolution``,
@@ -143,8 +143,9 @@ For the other three properties,
 new ``VideoMode`` instances will be initialized with
 an ``interlaced`` setting of ``false`` (meaning “non-interlaced video”),
 a playback frame rate of ``0.0``,
-and an optional ``String`` value called ``name``,
-which has a default value of ``nil``, or “no ``name`` value”.
+and an optional ``String`` value called ``name``.
+The ``name`` property is automatically given a default value of ``nil``,
+or “no ``name`` value”, because it is of an optional type.
 
 .. _ClassesAndStructures_ClassAndStructureInstances:
 
@@ -227,15 +228,13 @@ You can also use dot syntax to assign a new value to a variable property:
    -> println("The width of someVideoMode is now \(someVideoMode.resolution.width)")
    <- The width of someVideoMode is now 1280
 
-.. _ClassesAndStructures_MemberwiseStructureInitializers:
+.. _ClassesAndStructures_MemberwiseInitializersForStructureTypes:
 
-Memberwise Structure Initializers
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. HACK: this is currently duplicated in Initialization.
+Memberwise Initializers for Structure Types
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 All structures have an automatically-generated :newTerm:`memberwise initializer`,
-with which you initialize the member properties of new structure instances.
+which you can use to initialize the member properties of new structure instances.
 Initial values for the properties of the new instance
 can be passed to the memberwise initializer by name:
 
@@ -465,10 +464,6 @@ and the value it contains is always a reference to a particular instance of that
 
 .. TODO: Add a justification here to say why this is a good thing.
 
-.. TODO: Add a section about using the identity operator
-   to check if two reference named values point to the same instance.
-   This is currently blocked on rdar://problem/15566395 .
-   
 .. TODO: Saying that we don't use the reference operator is actually untrue.
    We use it at the call-site for inout function parameters.
 

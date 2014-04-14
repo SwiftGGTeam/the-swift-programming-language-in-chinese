@@ -177,16 +177,9 @@ Overriding
 ----------
 
 A subclass can provide its own custom implementation of
-an instance method, class method,
-instance computed property, class computed property, or subscript
+an instance method, class method, instance property, class property, or subscript
 that it would otherwise inherit from a superclass.
 This is known as :newTerm:`overriding`.
-
-.. note::
-
-   Stored instance properties and stored class properties cannot be overridden.
-
-.. TODO: remove this note if stored property overriding is implemented for 1.0.
 
 Whenever you override something that would overwise be inherited,
 you must prefix your overriding definition with the ``override`` keyword.
@@ -204,7 +197,8 @@ to check that the superclass has a declaration that matches
 the one you have provided.
 This helps to ensure that your overriding definition is correct.
 
-The following example defines a new subclass of ``Vehicle``, called ``Car``:
+The following example defines a new subclass of ``Vehicle`` called ``Car``,
+which overrides the ``description`` method it inherits from ``Vehicle``:
 
 .. testcode:: inheritance
 

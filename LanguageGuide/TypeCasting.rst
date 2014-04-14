@@ -15,14 +15,14 @@ This first snippet defines a new base class called ``MediaItem``.
 This class provides basic functionality for any kind of item that might appear
 in a digital media library.
 Specifically, it declares a ``name`` property of type ``String``,
-and an ``init withName`` initializer.
+and an ``init name`` initializer.
 (It is assumed that all media items, including all movies and songs, will have a name.)
 
 .. testcode:: typeCasting
 
    -> class MediaItem {
          var name: String
-         init withName(name: String) {
+         init(name: String) {
             self.name = name
          }
       }
@@ -38,16 +38,16 @@ on top of the base class:
 
    -> class Movie : MediaItem {
          var director: String
-         init withName(name: String) director(director: String) {
+         init(name: String, director: String) {
             self.director = director
-            super.init(withName: name)
+            super.init(name: name)
          }
       }
    -> class Song : MediaItem {
          var artist: String
-         init withName(name: String) artist(artist: String) {
+         init(name: String, artist: String) {
             self.artist = artist
-            super.init(withName: name)
+            super.init(name: name)
          }
       }
 
@@ -82,11 +82,11 @@ as described below.
 
 .. note::
 
-   The ``withName:`` selector has been left out of each of these
+   The ``name:`` label has been left out of each of these
    ``Movie`` and ``Song`` initializer calls, for brevity.
    The initializers for ``Movie`` and ``Song`` both have their ``name`` value as the first parameter,
    and it is clear from the context that this is the correct initializer to use.
-   As a result, leaving out the ``withName:`` selector does not cause any ambiguity.
+   As a result, leaving out the ``name:`` label does not cause any ambiguity.
 
 .. _TypeCasting_CheckingType:
 

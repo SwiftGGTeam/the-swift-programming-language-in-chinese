@@ -498,7 +498,7 @@ Neither type of formatting affects the underlying value of the literal:
    -> let oneMillion = 1_000_000
    << // oneMillion : Int = 1000000
    -> let justOverOneMillion = 1_000_000.000_000_1
-   << // justOverOneMillion : Double = 1e+06
+   << // justOverOneMillion : Double = 1000000.0000001
 
 .. _BasicTypes_NumericTypeConversion:
 
@@ -1002,45 +1002,40 @@ would be made available as a variable rather than a constant.
 nil
 ~~~
 
-You can initialize an optional constant or variable with “no value at all”
-by assigning it the special value ``nil`` when the constant or variable is defined:
+You can set an optional variable back to a valueless state
+by assigning it the special value ``nil``:
 
 .. testcode:: optionals
 
-   -> var serverResponseCode: Int? = nil
+   -> var serverResponseCode: Int? = 404
    << // serverResponseCode : Int? = <unprintable value>
-
-You can also use ``nil`` to reset an optional named value
-back to a valueless state:
-
-.. testcode:: optionals
-
-   -> serverResponseCode = 404
-   /> serverResponseCode now contains an actual Int value of \(serverResponseCode!)
-   </ serverResponseCode now contains an actual Int value of 404
+   /> serverResponseCode contains an actual Int value of \(serverResponseCode!)
+   </ serverResponseCode contains an actual Int value of 404
    -> serverResponseCode = nil
-   // serverResponseCode once again contains no value
+   // serverResponseCode now contains no value
 
-You can check an optional constant or variable to see if it is currently ``nil``:
+.. note::
+
+   ``nil`` cannot be used with non-optional constants and variables.
+   If a named value in your code needs to be able to cope with
+   the absence of a value under certain conditions,
+   it should always be declared as an optional value of the appropriate type.
+
+If you define an optional constant or variable without providing a default value,
+the constant or variable is automatically set to ``nil`` for you:
 
 .. testcode:: optionals
 
-   -> if serverResponseCode == nil {
-         println("No server response code.")
-      }
-   <- No server response code.
-
-Note that ``nil`` cannot be used with non-optional named values.
-If a named value in your code needs to be able to cope with
-the absence of a value under certain conditions,
-it should always be declared as an optional value of the appropriate type.
+   -> var surveyAnswer: String?
+   << // surveyAnswer : String? = <unprintable value>
+   // surveyAnswer is automatically set to nil
 
 .. note::
 
    Swift's ``nil`` is not the same as ``nil`` in Objective-C.
    In Objective-C, ``nil`` is a pointer to a non-existent object.
-   In Swift, you can set optionals of *any* type to ``nil``,
-   not just object types.
+   In Swift, ``nil`` is not a pointer – it is the absence of a value of a certain type.
+   Optionals of *any* type can be set to ``nil``, not just object types.
 
 .. refnote:: References
 

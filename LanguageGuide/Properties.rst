@@ -287,14 +287,31 @@ to enable external users to discover its current calculated volume.
 .. TODO: Add an example of a computed property for an enumeration
    (now that the Enumerations chapter no longer has an example of this itself).
 
-.. _Properties_StoredPropertyObservers:
+.. _Properties_PropertyObservers:
 
-Stored Property Observers
--------------------------
+Property Observers
+------------------
 
-:newTerm:`Stored property observers` are a way to observe and respond to
-the setting of new values for a stored property.
-You have the option to define either or both of these observers on a stored property:
+:newTerm:`Property observers` are a way to observe and respond to
+changes in a property's value.
+Property observers are called every time a property's value is set,
+even if the new value is the same as the property's current value.
+
+You can add property observers to any stored properties you define.
+You can also add property observers to any inherited property (whether stored or computed)
+by overriding the property within a subclass.
+Inheritance and overriding are described in :doc:`Inheritance`.
+
+.. TODO: update this link to point to the specific section on property overriding
+   once it has been written.
+
+.. note::
+
+   You don't need to define property observers for non-overridden computed properties,
+   because you can observe and respond to changes to their value
+   from directly within the computed property's setter.
+
+You have the option to define either or both of these observers on a property:
 
 * ``willSet``, which is called just before the value is stored
 * ``didSet``, which is called immediately after the new value is stored
@@ -375,13 +392,6 @@ and the default name of ``oldValue`` is used instead.
    the new value that you assign will replace the one that was just set.
 
 .. TODO: mention that this also works for global / local variables
-
-.. TODO: you can now observe changes to a parent property,
-   regardless of whether it is stored or not.
-   that said, at the time of writing, it only works with computed properties,
-   because stored properties cannot yet be overridden.
-   nonetheless, it should still be mentioned here,
-   and may mean that the name of this section needs to change.
 
 .. TODO: mention that you can't override to observe a read-only property,
    as there will never be anything to actually observe
