@@ -203,7 +203,15 @@ equivalent::
 Enumeration Case Pattern
 ------------------------
 
-An :newTerm:`enumeration case pattern` matches a case of an enumeration type.
+An :newTerm:`enumeration case pattern` matches a case of an existing enumeration type.
+Enumeration case patterns can appear only as patterns in ``switch`` statement
+case labels.
+
+If the enumeration case you're trying to match has any associated values,
+the corresponding enumeration case pattern must specify a tuple pattern that contains
+one element for each associated value. For an example that uses a ``switch`` statement
+to match enumeration cases containing associated values,
+see :ref:`Enumerations_AssociatedValues`.
 
 .. langref-grammar
 
