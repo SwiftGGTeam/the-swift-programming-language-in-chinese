@@ -197,7 +197,8 @@ to check that the superclass has a declaration that matches
 the one you have provided.
 This helps to ensure that your overriding definition is correct.
 
-The following example defines a new subclass of ``Vehicle``, called ``Car``:
+The following example defines a new subclass of ``Vehicle`` called ``Car``,
+which overrides the ``description`` method it inherits from ``Vehicle``:
 
 .. testcode:: inheritance
 
