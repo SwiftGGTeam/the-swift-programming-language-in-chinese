@@ -96,7 +96,7 @@ and can be used within mathematical calculations wherever a ``Double`` is accept
 .. note::
 
    Extensions can add new computed properties, but they cannot add stored properties,
-   or add stored property observers to existing stored properties.
+   or add property observers to existing properties.
 
 .. _Extensions_Initializers:
 
