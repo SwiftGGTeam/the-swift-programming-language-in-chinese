@@ -55,22 +55,19 @@ Here's an example of a read-only subscript implementation:
 
 .. testcode:: subscripts
 
-   -> class TimesTable {
+   -> struct TimesTable {
          let multiplier: Int
-         init withMultiplier(multiplier: Int) {
-            self.multiplier = multiplier
-         }
          subscript(index: Int) -> Int {
             return multiplier * index
          }
       }
-   -> let threeTimesTable = TimesTable(withMultiplier: 3)
+   -> let threeTimesTable = TimesTable(multiplier: 3)
    << // threeTimesTable : TimesTable = <TimesTable instance>
    -> println("six times three is \(threeTimesTable[6])")
    <- six times three is 18
 
-This example defines a ``TimesTable`` class to represent an n-times-table of integers.
-In this example, the class is used to represent the three-times-table.
+This example defines a ``TimesTable`` structure to represent an n-times-table of integers.
+In this example, the structure is used to represent the three-times-table.
 
 An n-times-table is based on a fixed mathematical rule.
 It is therefore not appropriate to set ``threeTimesTable[someIndex]`` to a new value.
