@@ -140,6 +140,9 @@ with a value from a different temperature scale:
    /> freezingPointOfWater.temperatureInCelsius is \(freezingPointOfWater.temperatureInCelsius)
    </ freezingPointOfWater.temperatureInCelsius is 0.0
 
+.. TODO: I think this example should use "fromFahrenheit" / "fromKelvin"
+   once Doug has fixed the external / local calling issue.
+
 .. _Initialization_OptionalPropertyValues:
 
 Optional Property Values
