@@ -102,7 +102,7 @@ All of the standard operators from C and Objective-C work as expected:
    -> let c = a * b            // c is set to an Int value of 10
    << // c : Int = 10
    -> let piOverTwo = π / 2      // piOverTwo is set to a Double value of 1.57079
-   << // piOverTwo : Double = 1.57079
+   << // piOverTwo : Double = 1.570795
 
 Comments
 ~~~~~~~~
@@ -287,7 +287,7 @@ you have access to each key and value through a tuple pair:
 .. testcode:: controlFlow
 
    -> var dict = ["first": 1, "second": 2, "third": 3]
-   << // dict : Dictionary<String, Int> = Dictionary<String, Int>(1.33333, 3, <DictionaryBufferOwner<String, Int> instance>)
+   << // dict : Dictionary<String, Int> = Dictionary<String, Int>(1.33333333333333, 3, <DictionaryBufferOwner<String, Int> instance>)
    -> for (key, value) in dict {
          println("Key: '\(key)', Value: \(value)")
       }

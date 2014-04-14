@@ -214,9 +214,9 @@ a :newTerm:`linear congruential generator`:
    -> let generator = LinearCongruentialGenerator()
    << // generator : LinearCongruentialGenerator = <LinearCongruentialGenerator instance>
    -> println("Here's a random number: \(generator.random())")
-   <- Here's a random number: 0.37465
+   <- Here's a random number: 0.37464991998171
    -> println("And another one: \(generator.random())")
-   <- And another one: 0.729024
+   <- And another one: 0.729023776863283
 
 .. _Protocols_UsingProtocolsAsTypes:
 
@@ -841,7 +841,7 @@ it conforms to the ``HasArea`` protocol:
    !! for object in objects {
    !!     ^
    !!            : AnyObject
-   </ Area is 12.5664
+   </ Area is 12.5663708
    </ Area is 243610.0
    </ Something that doesn't have an area
 

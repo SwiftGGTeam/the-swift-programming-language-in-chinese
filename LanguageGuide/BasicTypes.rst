@@ -498,7 +498,7 @@ Neither type of formatting affects the underlying value of the literal:
    -> let oneMillion = 1_000_000
    << // oneMillion : Int = 1000000
    -> let justOverOneMillion = 1_000_000.000_000_1
-   << // justOverOneMillion : Double = 1e+06
+   << // justOverOneMillion : Double = 1000000.0000001
 
 .. _BasicTypes_NumericTypeConversion:
 
