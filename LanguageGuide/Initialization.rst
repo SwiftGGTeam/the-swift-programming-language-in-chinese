@@ -22,6 +22,8 @@ when an instance of that class instance is destroyed.
 
 .. TODO: mention that initializers can be marked with the @required attribute
 
+.. TODO: update this chapter once initializers switch over to the unified function syntax
+
 .. _Initialization_Initializers:
 
 Initializers
@@ -100,8 +102,26 @@ as described later in this chapter.
 Initializer Input Parameters
 ----------------------------
 
-Initializers can take :newTerm:`input parameters`,
+Initializers can take :newTerm:`input parameters`.
 to customize the initialization process.
+Input parameters are written in the same syntax as normal method parameters.
+
+.. note::
+
+   Currently, initializers are written in Swift's selector-style syntax,
+   which is no longer described in this document.
+   Initializers will be moving over to the new unified function syntax
+   in time for WWDC 2014.
+
+Initializers can use
+constant parameters, variable parameters, and ``inout`` parameters.
+Default values can be provided for initializer parameters,
+and tuples can be used as parameter types.
+Variadic parameters cannot be used.
+
+.. TODO: Update this section if, as, and when variadics start working for initializers.
+   The fact that they don't work currently is rdar://16535434.
+
 The following example defines a structure to store temperatures expressed in the Celsius scale.
 It implements two custom initializers,
 each of which initializes a new instance of the structure
