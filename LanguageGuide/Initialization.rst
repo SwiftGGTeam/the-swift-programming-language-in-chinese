@@ -102,7 +102,7 @@ as described later in this chapter.
 Initializer Input Parameters
 ----------------------------
 
-Initializers can take :newTerm:`input parameters`.
+Initializers can take :newTerm:`input parameters`
 to customize the initialization process.
 Input parameters are written in the same syntax as normal method parameters.
 
