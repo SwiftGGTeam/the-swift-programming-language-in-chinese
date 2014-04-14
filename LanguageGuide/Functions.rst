@@ -356,8 +356,7 @@ to make its implementation clearer to read:
    -> func join(string s1: String, toString s2: String, joiner: String) -> String {
          return s1 + joiner + s2
       }
-   -> //join(string: "hello", toString: "world", joiner: ", ") - FIXME
-   -> join(s1: "hello", s2: "world", joiner: ", ")
+   -> join(string: "hello", toString: "world", joiner: ", ")
    << // r0 : String = "hello, world"
    /> returns \"\(r0)\"
    </ returns "hello, world"
@@ -426,13 +425,11 @@ If a default value is defined, you can omit that parameter when calling the func
    -> func join(string s1: String, toString s2: String, joiner: String = " ") -> String {
          return s1 + joiner + s2
       }
-   -> //join(string: "hello", toString: "world", joiner: "-") - FIXME
-   -> join(s1: "hello", s2: "world", joiner: "-")
+   -> join(string: "hello", toString: "world", joiner: "-")
    << // r0 : String = "hello-world"
    /> returns \"\(r0)\"
    </ returns "hello-world"
-   -> //join(string: "hello", toString: "world") - FIXME
-   -> join(s1: "hello", s2: "world")
+   -> join(string: "hello", toString: "world")
    << // r1 : String = "hello world"
    /> returns \"\(r1)\"
    </ returns "hello world"
@@ -490,8 +487,7 @@ Avoid this problem by naming the values when you call the function:
 
 .. testcode:: defaultParameterValues2
 
-   -> //join(string: "hello", toString: "world") - FIXME
-   -> join(s1: "hello", s2: "world")
+   -> join(string: "hello", toString: "world")
    << // r1 : String = "hello world"
    /> returns \"\(r1)\"
    </ returns "hello world"
@@ -539,8 +535,7 @@ by marking the function with the ``@call_arguments(strict)`` attribute:
    -> func join(string s1: String, toString s2: String, joiner: String = " ") -> String {
          return s1 + joiner + s2
       }
-   -> //join(string: "hello", toString: "world", joiner: "#") - FIXME
-   -> join(s1: "hello", s2: "world", joiner: "#")
+   -> join(string: "hello", toString: "world", joiner: "#")
    << // r0 : String = "hello#world"
    /> returns \"\(r0)\"
    </ returns "hello#world"
