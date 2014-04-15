@@ -42,7 +42,7 @@ Language Guide
 * Restructured the :doc:`LanguageGuide/Initialization` chapter, and added a new section about
   :ref:`initializer delegation for value types <Initialization_InitializerDelegationForValueTypes>`.
 * Started to update the :ref:`property observers <Properties_PropertyObservers>` description
-  to talk about property overriding now that stored properties can now be overridden.
+  to talk about property overriding now that stored properties can be overridden.
 * Updates throughout the Guide now that optionals are default-initialized to ``nil``.
 
 Reference Manual
