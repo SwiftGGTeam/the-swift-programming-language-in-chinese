@@ -115,7 +115,7 @@ you do it explicitly.
    -> let width = 94
    << // width : Int = 94
    -> println(label + String(width))
-   <- The width is 94
+   << The width is 94
 
 .. admonition:: Experiment
 
@@ -312,7 +312,7 @@ such as tuple unpacking and ``where`` clauses:
          default:
             println("The point is somewhere else.")
       }
-   <- (1, 1) is on the diagonal
+   << (1, 1) is on the diagonal
 
 .. admonition:: Experiment
 
