@@ -343,3 +343,6 @@ which selects an appropriate gear to use based on the current speed.
 
 .. TODO: This chapter needs to mention the @final attribute
    once it is fully implemented.
+
+.. TODO: Mention that you can return more-specific types, and take less-specific types,
+   when overriding methods that use optionals / unchecked optionals.
