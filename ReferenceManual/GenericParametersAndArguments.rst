@@ -5,7 +5,7 @@ This chapter describes parameters and arguments for generic types, functions, an
 initializers. When you declare a generic type, function, or initializer,
 you specify the type parameters that the generic type, function, or initializer
 can work with. These type parameters act as placeholders that
-are replaced by actual, concrete type arguments when an instance of a generic type is
+are replaced by actual concrete type arguments when an instance of a generic type is
 created or a generic function or initializer is called.
 
 For an overview of generics in Swift, see :doc:`../LanguageGuide/Generics`.
@@ -196,7 +196,7 @@ to form an array whose elements are themselves arrays of integers.
 
     let arrayOfArrays: Array<Array<Int>> = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
 
-As mentioned above in :ref:`GenericParametersAndArguments_GenericParameterClause`,
+As mentioned in :ref:`GenericParametersAndArguments_GenericParameterClause`,
 you don't use a generic argument clause to specify the type arguments
 of a generic function or initializer.
 

@@ -1,21 +1,23 @@
 Patterns
 ========
 
-.. TR:
-    What kind of information do we want to cover about patterns in general?
-    How up to date is pattern grammar in the LangRef?
-    There is an 'is' pattern; what about an 'as' pattern?
+A :newTerm:`pattern` represents the structure (or "shape") of a value or composite value.
+For example, the structure of a tuple ``(1, 2)`` is a comma-separated list of two
+elements. Because patterns represent the structure of a value rather than any
+one particular value, you can compare and match them with a variety of values.
+For instance, the pattern ``(x, y)`` matches the tuple ``(1, 2)`` and any other
+two-element tuple. In addition to comparing and matching a pattern with a value,
+you can extract part or all of a composite value and bind each part
+to a constant or variable name.
 
-    Notes from Doug, 4/2/14:
-    Patterns might be getting a little simpler since they are not being used for
-    functions.  For now, it's ok to not have a discussion of pattern matching as
-    a topic -- let's just talk about how awesome switch statements are.  The
-    people who come from functional backgrounds will see the pattern matching
-    here just like they will see the monads in optional chaining.
-    Joe Groff is the pattern guru -- he designed this stuff and implemented
-    the crazy switch.
+In Swift, patterns occur on the left-hand side of variable and constant declarations,
+in ``for``-``in`` statements, and in the case labels of ``switch`` statements.
+Although any pattern can occur in the case labels of a ``switch`` statement,
+only wildcard patterns, identifier patterns, and patterns that contain only those two
+patterns can occur in the other contexts.
 
-.. TODO: Schedule a meeting with Joe to discuss grammar and content.
+You can specify a type annotation for a wildcard pattern, an identifier pattern,
+and a tuple pattern to constraint the pattern to match only values of a certain type.
 
 .. langref-grammar
 
@@ -33,24 +35,29 @@ Patterns
 
     Grammar of a pattern
 
-    pattern --> any-pattern
-    pattern --> is-pattern
-    pattern --> variable-pattern type-annotation-OPT
-    pattern --> expression-pattern type-annotation-OPT
-    pattern --> enumerator-pattern
+    pattern --> wildcard-pattern type-annotation-OPT
+    pattern --> identifier-pattern type-annotation-OPT
+    pattern --> value-binding-pattern
     pattern --> tuple-pattern type-annotation-OPT
+    pattern --> enumerator-pattern
+    pattern --> type-casting-pattern
+    pattern --> expression-pattern
 
-.. TODO: In prose, discuss the meaning of the explicit type.
-    The optional type annotation contrains a pattern to
-    match only values of the specified type.
 
-.. NOTE: Patterns don't "have" a type in the same way that values have types.
-   Patterns match things of certain types.
+.. _Patterns_WildcardPattern:
 
-.. _Patterns_AnyPattern:
+Wildcard Pattern
+----------------
 
-Any Pattern
------------
+A :newTerm:`wildcard pattern` matches and ignores any value and consists of an underscore
+``_``. Use a wildcard pattern in situations where you don't care about the values being
+matched against. For example, the following code iterates through the closed range ``1..3``,
+ignoring the current value of the range on each iteration of the loop::
+
+    for _ in 1..3 {
+       // Do something three times.
+    }
+
 
 .. langref-grammar
 
@@ -58,37 +65,66 @@ Any Pattern
 
 .. syntax-grammar::
 
-    Grammar of an any pattern
+    Grammar of a wildcard pattern
 
-    any-pattern --> ``_``
+    wildcard-pattern --> ``_``
 
-.. TODO: Try to come up with a better name for "any pattern".
 
-.. _Patterns_IsPattern:
+.. _Patterns_IdentifierPattern:
 
-Is Pattern
-----------
+Identifier Pattern
+------------------
 
-.. langref-grammar
+An :newTerm:`identifier pattern` matches any value and binds the matched value to a
+variable or constant name.
+For example, in the following constant declaration, ``someValue`` is an identifier pattern
+that matches the value ``42`` of type ``Int``::
 
-    pattern-is ::= 'is' type
+    let someValue = 42
+
+When the match succeeds, the value ``42`` is bound (assigned)
+to the constant name ``someValue``.
+
+When the pattern on the left-hand side of a variable or constant declaration
+is an identifier pattern,
+the identifier pattern is implicitly a subpattern of a value-binding pattern.
 
 
 .. syntax-grammar::
 
-    Grammar of an is pattern
+    Grammar of an identifier pattern
 
-    is-pattern --> ``is`` type
+    identifier-pattern --> identifier
 
 
-.. TODO: Try to come up with a better name for "is pattern".
-    Candidates:
-    type-checking-pattern
+.. _Patterns_Value-BindingPattern:
 
-.. _Patterns_Variable-BindingPattern:
+Value-Binding Pattern
+---------------------
 
-Variable-Binding Pattern
-------------------------
+A :newTerm:`value-binding pattern` binds matched values to variable or constant names.
+Value-binding patterns that bind a matched value to the name of a constant
+begin with the keyword ``let``; those that bind to the name of variable
+begin with the keyword ``var``.
+
+Identifiers patterns within a value-binding pattern
+bind new named variables or constants to their matching values. For example,
+you can decompose the elements of a tuple and bind the value of each element to a
+corresponding identifier pattern.
+
+::
+
+    let point = (3, 2)
+    switch point {
+    // Bind x and y to the elements of point.
+    case let (x, y):
+       println("The point is at (\(x), \(y)).")
+    }
+    // Prints "The point is at (3, 2)."
+
+In the example above, ``let`` distributes to each identifier pattern in the
+tuple pattern ``(x, y)``. Because of this behavior, the ``switch`` cases
+``case let (x, y):`` and ``case (let x, let y):`` match the same values.
 
 .. langref-grammar
 
@@ -97,50 +133,57 @@ Variable-Binding Pattern
 
 .. syntax-grammar::
 
-    Grammar of a variable-binding pattern
+    Grammar of a value-binding pattern
 
-    variable-binding-pattern --> ``var`` pattern
-    variable-binding-pattern --> ``let`` pattern
+    value-binding-pattern --> ``var`` pattern | ``let`` pattern
 
-.. NOTE: We chose to call this "variable-binding pattern"
+.. NOTE: We chose to call this "value-binding pattern"
     instead of "variable pattern",
-    because it's a pattern that binds variables,
+    because it's a pattern that binds values to either variables or constants,
     not a pattern that varies.
     "Variable pattern" is ambiguous between those two meanings.
 
-.. _Patterns_ExpressionPattern:
-
-Expression Pattern
-------------------
-
-
-.. syntax-grammar::
-
-    Grammar of an expression pattern
-
-    expression-pattern --> expression
-
-.. _Patterns_EnumeratorPattern:
-
-Enumerator Pattern
-------------------
-
-An enumerator pattern matches an enumerator declared in an enumeration.
-
-.. langref-grammar
-
-    pattern-enum-element ::= type-identifier? '.' identifier pattern-tuple?
-
-.. syntax-grammar::
-
-    Grammar of an enumerator pattern
-
-    enumerator-pattern --> type-identifier-OPT ``.`` identifier tuple-pattern-OPT
 
 .. _Patterns_TuplePattern:
 
 Tuple Pattern
 -------------
+
+A :newTerm:`tuple pattern` is a comma-separated list of zero or more patterns, enclosed in
+parentheses. Tuple patterns match values of corresponding tuple types.
+
+You can constrain a tuple pattern to match certain kinds of tuple types
+using type annotations.
+For example, the tuple pattern ``(x, y): (Int, Int)`` in the constant declaration
+``let (x, y): (Int, Int) = (1, 2)`` matches only tuple types in which
+both elements are of type ``Int``. To constrain only some elements of a tuple pattern,
+provide type annotations directly to those individual elements. For example, the tuple
+pattern in ``let (x: String, y)`` matches any two-element tuple type, as long as the first
+element is of type ``String``.
+
+When a tuple pattern is used as the pattern in a ``for``-``in`` statement
+or a variable or constant declaration, it can contain only wildcard patterns,
+identifier patterns, or other tuple patterns that contain those. For example, the
+following code isn't valid because the element ``0`` in the tuple pattern ``(x, 0)`` is
+an expression pattern.
+
+::
+
+    let points = [(0, 0), (1, 0), (1, 1), (2, 0), (2, 1)]
+    // This code isn't valid.
+    for (x, 0) in points {
+       /* ... */
+    }
+
+The parentheses around a tuple pattern that contains a single element have no effect.
+The pattern matches values of that single element's type. For example, the following are
+equivalent::
+
+    let (a) = (2) // a: Int = 2
+    let (a) = 2 // a: Int = 2
+    let (a: Int) = (2) // a: Int = 2
+    let (a: Int) = 2 // a: Int = 2
+    let (a): Int = 2 // a: Int = 2
 
 .. langref-grammar
 
@@ -157,6 +200,127 @@ Tuple Pattern
     tuple-pattern-element-list --> tuple-pattern-element | tuple-pattern-element ``,`` tuple-pattern-element-list
     tuple-pattern-element --> pattern
 
-.. NOTE: Now that function-declarations no longer use tuple patterns,
-    tuple patterns no longer need to have '= expression' or '...'.
-    We also no longer need tuple-patterns as a syntactic category.
+
+.. _Patterns_EnumerationCasePattern:
+
+Enumeration Case Pattern
+------------------------
+
+An :newTerm:`enumeration case pattern` matches a case of an existing enumeration type.
+Enumeration case patterns can appear only as patterns in ``switch`` statement
+case labels.
+
+If the enumeration case you're trying to match has any associated values,
+the corresponding enumeration case pattern must specify a tuple pattern that contains
+one element for each associated value. For an example that uses a ``switch`` statement
+to match enumeration cases containing associated values,
+see :ref:`Enumerations_AssociatedValues`.
+
+.. langref-grammar
+
+    pattern-enum-element ::= type-identifier? '.' identifier pattern-tuple?
+
+.. syntax-grammar::
+
+    Grammar of an enumeration case pattern
+
+    enum-case-pattern --> type-identifier-OPT ``.`` enum-case-name tuple-pattern-OPT
+
+
+.. _Patterns_Type-CastingPatterns:
+
+Type-Casting Patterns
+---------------------
+
+There are two type-casting patterns, the ``is`` pattern and the ``as`` pattern.
+Both type-casting patterns can appear only as patterns in ``switch`` statement
+case labels. The ``is`` and ``as`` patterns have the following form:
+
+.. syntax-outline::
+
+    is <#type#>
+    <#pattern#> as <#type#>
+
+The ``is`` pattern matches a value if the runtime type of that value is the type
+(or a subclass) of the type specified by the ``is`` pattern.
+The ``is`` pattern behaves like the ``is`` operator in that they both perform a type cast
+but discard the returned type.
+
+The ``as`` pattern matches a value if the runtime type of that value is the type
+(or a subclass) of the type specified by the ``as`` pattern. If the match succeeds,
+the type of the matched value is cast to the *pattern* specified on the left-hand side
+of the ``as``.
+
+For an example that uses a ``switch`` statement
+to match values with ``is`` and ``as`` patterns,
+see :ref:`TypeCasting_CheckedCastsInSwitchStatements`.
+
+.. langref-grammar
+
+    pattern-is ::= 'is' type
+    pattern-as ::= pattern 'as' type
+
+.. syntax-grammar::
+
+    Grammar of a type casting pattern
+
+    type-casting-pattern --> is-pattern | as-pattern
+    is-pattern --> ``is`` type
+    as-pattern --> pattern ``as`` type
+
+
+
+.. _Patterns_ExpressionPattern:
+
+Expression Pattern
+------------------
+
+A expression pattern represents the value of an expression.
+Expression patterns can appear only as patterns in ``switch`` statement
+case labels.
+
+The expression represented by the expression pattern
+is compared with the value of an input expression
+using the Swift Standard Library ``~=`` operator.
+The matches succeeds
+if the ``~=`` operator returns ``true``. By default, the ``~=`` operator compares
+two values of the same type using the ``==`` operator. It can also match an integer
+value with a range of integers in an ``Range`` object, as the following example shows.
+
+::
+
+    let point = (1, 2)
+    switch point {
+       case (0, 0):
+          println("(0, 0) is at the origin.")
+       case (-2..2, -2..2):
+          println("(\(point.0), \(point.1)) is near the origin.")
+       default:
+          println("The point is at (\(point.0), \(point.1)).")
+    }
+    // Prints "(1, 2) is near the origin."
+
+You can overload the ``~=`` to provide custom expression matching behavior.
+For example, you can rewrite the above example to compare the ``point`` expression
+with a string representations of points::
+
+    // Overload the ~= operator to match a string with an integer
+    func ~=(pattern: String, value: Int) -> Bool {
+       return pattern == "\(value)"
+    }
+    switch point {
+       case ("0", "0"):
+          println("(0, 0) is at the origin.")
+       case ("-2..2", "-2..2"):
+          println("(\(point.0), \(point.1)) is near the origin.")
+       default:
+          println("The point is at (\(point.0), \(point.1)).")
+    }
+    // Prints "(1, 2) is near the origin."
+
+
+.. syntax-grammar::
+
+    Grammar of an expression pattern
+
+    expression-pattern --> expression
