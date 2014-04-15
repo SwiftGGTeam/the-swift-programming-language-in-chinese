@@ -20,7 +20,7 @@ Contents
 Change Log
 ----------
 
-April 14 2014
+April 15 2014
 ~~~~~~~~~~~~~
 
 Language Guide
