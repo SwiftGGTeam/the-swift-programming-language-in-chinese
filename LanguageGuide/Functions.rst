@@ -325,6 +325,18 @@ If you provide a local parameter name for a given parameter,
 you can still provide a separate external name for callers of your function to use.
 The local name is written after the external name, separated by a space.
 
+.. note::
+
+   These code examples for local parameter names correctly reflect
+   how local names will be implemented in the language.
+   However, there is currently an issue with the implementation of this syntax,
+   in that the *local* parameter names have to be used when calling the function,
+   not the *external* parameter names.
+   This issue is not reflected in the code examples below.
+   The underlying language issue is in the process of being fixed.
+
+.. TODO: remove this note once rdar://16607709 is fixed.
+
 The example below defines a function called ``join`` that
 combines two strings into a single string.
 A third “joiner” string is inserted between the two strings:
