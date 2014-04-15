@@ -224,10 +224,33 @@ see :ref:`Enumerations_AssociatedValues`.
     enum-case-pattern --> type-identifier-OPT ``.`` enum-case-name tuple-pattern-OPT
 
 
-.. _Patterns_TypeCastingPattern:
+.. _Patterns_Type-CastingPatterns:
 
-Type Casting Pattern
---------------------
+Type-Casting Patterns
+---------------------
+
+There are two type-casting patterns, the ``is`` pattern and the ``as`` pattern.
+Both type-casting patterns can appear only as patterns in ``switch`` statement
+case labels. The ``is`` and ``as`` patterns have the following form:
+
+.. syntax-outline::
+
+    is <#type#>
+    <#pattern#> as <#type#>
+
+The ``is`` pattern matches a value if the runtime type of that value is the type
+(or a subclass) of the type specified by the ``is`` pattern.
+The ``is`` pattern behaves like the ``is`` operator in that they both perform a type cast
+but discard the returned type.
+
+The ``as`` pattern matches a value if the runtime type of that value is the type
+(or a subclass) of the type specified by the ``as`` pattern. If the match succeeds,
+the type of the matched value is cast to the *pattern* specified on the left-hand side
+of the ``as``.
+
+For an example that uses a ``switch`` statement
+to match values against ``is`` and ``as`` patterns,
+see :ref:`TypeCasting_CheckedCastsInSwitchStatements`.
 
 .. langref-grammar
 
@@ -248,6 +271,49 @@ Type Casting Pattern
 
 Expression Pattern
 ------------------
+
+A expression pattern represents the value of an expression.
+Expression patterns can appear only as patterns in ``switch`` statement
+case labels.
+
+The expression represented by the expression pattern
+is compared against the value of an input expression
+using the Swift Standard Library ``~=`` operator.
+The matches succeeds
+if the ``~=`` operator returns ``true``. By default, the ``~=`` operator compares
+two values of the same type using the ``==`` operator. It can also match an integer
+value against a range of integers in an ``Range`` object, as the following example shows.
+
+::
+
+    let point = (1, 2)
+    switch point {
+       case (0, 0):
+          println("(0, 0) is at the origin.")
+       case (-2..2, -2..2):
+          println("(\(point.0), \(point.1)) is near the origin.")
+       default:
+          println("The point is at (\(point.0), \(point.1)).")
+    }
+    // Prints "(1, 2) is near the origin."
+
+You can overload the ``~=`` to provide custom expression matching behavior.
+For example, you can rewrite the above example to compare the ``point`` expression
+with a string representations of points::
+
+    // Overload the ~= operator to match a string with an integer
+    func ~=(pattern: String, value: Int) -> Bool {
+       return pattern == "\(value)"
+    }
+    switch point {
+       case ("0", "0"):
+          println("(0, 0) is at the origin.")
+       case ("-2..2", "-2..2"):
+          println("(\(point.0), \(point.1)) is near the origin.")
+       default:
+          println("The point is at (\(point.0), \(point.1)).")
+    }
+    // Prints "(1, 2) is near the origin."
 
 
 .. syntax-grammar::
