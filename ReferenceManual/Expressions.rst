@@ -675,7 +675,7 @@ Syntactically, every primary expression is also a postfix expression.
     postfix-expression --> function-call-expression
     postfix-expression --> initializer-expression
     postfix-expression --> dot-expression
-    postfix-expression --> metatype-expression
+    postfix-expression --> self-expression
     postfix-expression --> subscript-expression
     postfix-expression --> forced-expression
     postfix-expression --> optional-expression
@@ -817,23 +817,38 @@ For example: ::
 
 .. _Expressions_MetatypeExpression:
 
-Metatype Expression
-~~~~~~~~~~~~~~~~~~~
+Self Expression
+~~~~~~~~~~~~~~~
 
-.. write-me::
+A :newTerm:`self expression` evaluates to the type of a class
+or to the instance of a class.
+It has the following form:
 
-.. TODO: Write this section.
+.. syntax-outline::
 
-.. NOTE: There is no definition for metatype-expression in the LangRef.
-    This was probably just an oversight, according to Ted and Doug.
+   <#Class name#>.self
 
-.. I think this changed to .type recently.
+On an instance of a class, ``self`` evaluates to
+the instance of the class.
+It is used to specify scope when accessing class members,
+providing disambiguation when there is
+another variable of the same name in scope,
+such as a function parameter.
+
+On a type, ``self`` evaluates to the type itself.
+It is used to refer to a type,
+for example, to pass it as an argument to a function.
+
+.. TODO: An example of might be in order.
+
+.. There is no definition for self-expression in the LangRef.
+   This was probably just an oversight, according to Ted and Doug.
 
 .. syntax-grammar::
 
-    Grammar of a metatype expression
+    Grammar of a self expression
 
-    metatype-expression --> postfix-expression ``.`` ``metatype``
+    self-expression --> postfix-expression ``.`` ``self``
 
 .. _Expressions_SubscriptExpression:
 
