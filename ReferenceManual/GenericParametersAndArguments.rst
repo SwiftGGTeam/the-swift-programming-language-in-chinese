@@ -5,7 +5,7 @@ This chapter describes parameters and arguments for generic types, functions, an
 initializers. When you declare a generic type, function, or initializer,
 you specify the type parameters that the generic type, function, or initializer
 can work with. These type parameters act as placeholders that
-are replaced by actual, concrete type arguments when an instance of a generic type is
+are replaced by actual concrete type arguments when an instance of a generic type is
 created or a generic function or initializer is called.
 
 For an overview of generics in Swift, see :doc:`../LanguageGuide/Generics`.
@@ -34,7 +34,7 @@ each of which has the following form:
 
 .. syntax-outline::
 
-    <#type parameter#> : <#constraint#>
+    <#type parameter#>: <#constraint#>
 
 A generic parameter consists of a *type parameter* followed by
 an optional *constraint*. A :newTerm:`type parameter` is simply the name
@@ -46,17 +46,17 @@ or initializer.
 
 The *constraint* specifies that a type parameter inherits
 from a specific class or conforms to a protocol or protocol composition.
-For instance, in the generic function below, the generic parameter ``T : Comparable``
+For instance, in the generic function below, the generic parameter ``T: Comparable``
 indicates that any type argument substituted
 for the type parameter ``T`` must conform to the ``Comparable`` protocol.
 
 ::
 
-    func min<T : Comparable>(x: T, y: T) -> T {
-        if x < y {
-            return y
-        }
-        return x
+    func min<T: Comparable>(x: T, y: T) -> T {
+       if x < y {
+          return y
+       }
+          return x
     }
 
 Because ``Int`` and ``Double``, for example, both conform to the ``Comparable`` protocol,
@@ -85,15 +85,15 @@ The *requirements* in a ``where`` clause specify that a type paramater inherits 
 a class or conforms to a protocol or protocol composition.
 Although the ``where`` clause provides syntactic
 sugar for expressing simple constraints on type parameters
-(for instance, ``T : Comparable`` is equivalent to ``T where T : Comparable`` and so on),
+(for instance, ``T: Comparable`` is equivalent to ``T where T: Comparable`` and so on),
 you can use it to provide more complex constraints on type parameters
 and their associated types. For instance, you can express the constraints that
 a generic type ``T`` inherits from a class ``C`` and conforms to a protocol ``P`` as
-``<T where T : C, T : P>``.
+``<T where T: C, T: P>``.
 
 As mentioned above,
 you can constrain the associated types of type parameters to conform to protocols.
-For example, the generic parameter clause ``<T : Generator where T.Element : Equatable>``
+For example, the generic parameter clause ``<T: Generator where T.Element: Equatable>``
 specifies that ``T`` conforms to the ``Generator`` protocol
 and the associated type of ``T``, ``T.Element``, conforms to the ``Equatable`` protocol
 (``T`` has the associated type ``Element`` because ``Generator`` declares ``Element``
@@ -101,7 +101,7 @@ and ``T`` conforms to ``Generator``).
 
 You can also specify the requirement that two types be identical,
 using the ``==`` operator. For example, the generic parameter clause
-``<T : Generator, U : Generator where T.Element == U.Element>``
+``<T: Generator, U: Generator where T.Element == U.Element>``
 expresses the constraints that ``T`` and ``U`` conform to the ``Generator`` protocol
 and that their associated types must be identical.
 
@@ -172,7 +172,7 @@ a corresponding type parameter in the generic parameter clause of a generic type
 The result is a specialized version of that generic type. As an example,
 the Swift Standard Library defines a generic dictionary type as::
 
-    struct Dictionary<KeyType : Hashable, ValueType> : Collection, DictionaryLiteralConvertible {
+    struct Dictionary<KeyType: Hashable, ValueType>: Collection, DictionaryLiteralConvertible {
         /* ... */
     }
 
@@ -194,9 +194,9 @@ to form an array whose elements are themselves arrays of integers.
 
 ::
 
-    let arrayOfArrays : Array<Array<Int>> = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+    let arrayOfArrays: Array<Array<Int>> = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
 
-As mentioned above in :ref:`GenericParametersAndArguments_GenericParameterClause`,
+As mentioned in :ref:`GenericParametersAndArguments_GenericParameterClause`,
 you don't use a generic argument clause to specify the type arguments
 of a generic function or initializer.
 
