@@ -23,22 +23,27 @@ Change Log
 April 15 2014
 ~~~~~~~~~~~~~
 
+Guided Tour
++++++++++++
+
+* New chapter with several completed sections, presenting a :doc:`guided tour <GuidedTour/GuidedTour>` of the language.
+
 Language Guide
 ++++++++++++++
 
-* Updated the :doc:`LanguageGuide/Functions` chapter to use and describe the new unified function declaration syntax
+* Updated the :doc:`LanguageGuide/Functions` chapter to use and describe the new unified function declaration syntax.
 * New sections on :ref:`local parameter names <Functions_LocalParameterNames>`,
   :ref:`unnamed parameters <Functions_UnnamedParameters>`,
-  and :ref:`strict parameter names <Functions_StrictParameterNames>`
-* Converted all initializers in the Guide over to the new unified function declaration syntax
-* New section on :ref:`checking for protocol conformance <Protocols_CheckingForProtocolConformance>`
-* New section on :ref:`optional protocol requirements <Protocols_OptionalProtocolRequirements>`
-* The protocol examples for :ref:`delegates <Protocols_Delegates>` now use optional chaining
+  and :ref:`strict parameter names <Functions_StrictParameterNames>`.
+* Converted all initializers in the Guide over to the new unified function declaration syntax.
+* New section on :ref:`checking for protocol conformance <Protocols_CheckingForProtocolConformance>`.
+* New section on :ref:`optional protocol requirements <Protocols_OptionalProtocolRequirements>`.
+* The protocol examples for :ref:`delegates <Protocols_Delegates>` now use optional chaining.
 * Restructured the :doc:`LanguageGuide/Initialization` chapter, and added a new section about
-  :ref:`initializer delegation for value types <Initialization_InitializerDelegationForValueTypes>`
+  :ref:`initializer delegation for value types <Initialization_InitializerDelegationForValueTypes>`.
 * Started to update the :ref:`property observers <Properties_PropertyObservers>` description
-  to talk about property overriding now that stored properties can now be overridden
-* Updates throughout the Guide now that optionals are default-initialized to ``nil``
+  to talk about property overriding now that stored properties can now be overridden.
+* Updates throughout the Guide now that optionals are default-initialized to ``nil``.
 
 Reference Manual
 ++++++++++++++++
@@ -50,11 +55,6 @@ Reference Manual
   to account for the new unified function syntax.
 * Corrected some issues with the :ref:`enumeration <Declarations_EnumerationDeclaration>`
   declaration grammar.
-
-Guided Tour
-+++++++++++
-
-* New chapter with several completed sections, presenting a :doc:`guided tour <GuidedTour/GuidedTour>` of the language.
 
 April 9 2014
 ~~~~~~~~~~~~
