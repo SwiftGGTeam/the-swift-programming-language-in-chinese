@@ -124,7 +124,7 @@ and see how its properties have been updated:
    -> let bicycle = Bicycle()
    << // bicycle : Bicycle = <Bicycle instance>
    -> println("Bicycle: \(bicycle.description())")
-   <- Bicycle: 2 wheels; up to 1 passengers
+   </ Bicycle: 2 wheels; up to 1 passengers
 
 Subclasses can themselves be subclassed:
 
@@ -158,7 +158,7 @@ you can see how its properties have been updated:
    -> let tandem = Tandem()
    << // tandem : Tandem = <Tandem instance>
    -> println("Tandem: \(tandem.description())")
-   <- Tandem: 2 wheels; up to 2 passengers
+   </ Tandem: 2 wheels; up to 2 passengers
 
 Note that the ``description`` method has also been inherited by ``Tandem``.
 Instance methods of a class are inherited by any and all subclasses of that class.
@@ -197,13 +197,31 @@ to check that the superclass has a declaration that matches
 the one you have provided.
 This helps to ensure that your overriding definition is correct.
 
+.. _Inheritance_AccessingSuperclass:
+
+Accessing Superclass Methods, Properties, and Subscripts
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You can access the superclass version of a method, property, or subscript
+by using the ``super`` prefix. For example:
+
+* An overridden method called ``someMethod`` can call the superclass version of itself
+  by calling ``super.someMethod()`` within the overriding method implementation.
+* A overridden property called ``someProperty`` can access the superclass version of itself
+  as ``super.someProperty`` within the overriding getter or setter implementation.
+* An overridden subscript for ``someIndex`` can access the superclass version of the same subscript
+  as ``super[someIndex]`` from within the overriding subscript implementation.
+
+Overriding Methods
+~~~~~~~~~~~~~~~~~~
+
 The following example defines a new subclass of ``Vehicle`` called ``Car``,
 which overrides the ``description`` method it inherits from ``Vehicle``:
 
 .. testcode:: inheritance
 
    -> class Car : Vehicle {
-         var isConvertible = false
+         var speed: Double = 0.0
          init() {
             super.init()
             maxPassengers = 5
@@ -211,25 +229,24 @@ which overrides the ``description`` method it inherits from ``Vehicle``:
          }
          override func description() -> String {
             return super.description() + "; "
-               + (isConvertible ? "convertible" : "not convertible")
+               + "traveling at \(speed) mph"
          }
       }
 
-``Car`` declares a new Boolean property called ``isConvertible``,
+``Car`` declares a new stored ``Double`` property called ``speed``,
 in addition to the properties it inherits from ``Vehicle``.
-This property defaults to ``false``, as most cars are not convertibles.
+This property defaults to ``0.0``, meaning “zero miles per hour”.
 ``Car`` also has a custom initializer,
 which sets the maximum number of passengers to ``5``,
 and the default number of wheels to ``4``.
 
-``Car`` then overrides its inherited ``description`` method.
-It does this by defining a function with the same declaration as
-the one it would otherwise inherit,
+``Car`` overrides its inherited ``description`` method
+by defining a function with the same declaration as the one it would otherwise inherit,
 prefixed by the ``override`` keyword.
 Rather than providing a completely custom implementation of ``description``,
 it actually starts by calling ``super.description`` to retrieve
 the description provided by its superclass.
-It then appends some additional information onto the end,
+It then appends some additional information onto the end about the car's current speed,
 and returns the complete description.
 
 If you create a new instance of ``Car``,
@@ -238,10 +255,85 @@ you can see that the description has indeed changed:
 
 .. testcode:: inheritance
 
-   -> var car = Car()
+   -> let car = Car()
    << // car : Car = <Car instance>
    -> println("Car: \(car.description())")
-   <- Car: 4 wheels; up to 5 passengers; not convertible
+   </ Car: 4 wheels; up to 5 passengers; traveling at 0.0 mph
+
+Overriding Properties
+~~~~~~~~~~~~~~~~~~~~~
+
+You can override an inherited property
+to provide your own custom getter and setter for that property,
+or to add property observers to the property to observe when its value changes.
+
+Override Getters And Setters
+____________________________
+
+.. testcode:: inheritance
+
+   -> class SpeedLimitedCar : Car {
+         override var speed: Double  {
+            get {
+               return super.speed
+            }
+            set {
+               super.speed = min(newValue, 40.0)
+            }
+         }
+      }
+
+.. testcode:: inheritance
+
+   -> let limitedCar = SpeedLimitedCar()
+   << // limitedCar : SpeedLimitedCar = <SpeedLimitedCar instance>
+   -> limitedCar.speed = 60.0
+   -> println("SpeedLimitedCar: \(limitedCar.description())")
+   </ SpeedLimitedCar: 4 wheels; up to 5 passengers; traveling at 40.0 mph
+
+Override Property Observers
+___________________________
+
+You can use property overriding to add property observers to an inherited property.
+This enables you to be notified when the value of the inherited property changes,
+regardless of how that property was originally implemented.
+
+.. note::
+
+   You cannot add property observers to
+   inherited constant stored properties or inherited read-only computed properties.
+   The value of these properties cannot be set,
+   and so it is not appropriate to provide a ``willSet`` or ``didSet`` implementation
+   as part of an override.
+
+The following example defines a new class called ``AutomaticCar``,
+which is a subclass of ``Car``.
+The ``AutomaticCar`` class models a car with an automatic gearbox,
+which selects an appropriate gear to use based on the current speed.
+
+.. testcode:: inheritance
+
+   -> class AutomaticCar : Car {
+         var gear = 1
+         override var speed: Double  {
+            didSet {
+               gear = 1 + Int(speed / 10.0)
+            }
+         }
+         override func description() -> String {
+            return super.description() + " in gear \(gear)"
+         }
+      }
+
+
+
+.. testcode:: inheritance
+
+   -> let automatic = AutomaticCar()
+   << // automatic : AutomaticCar = <AutomaticCar instance>
+   -> automatic.speed = 35.0
+   -> println("AutomaticCar: \(automatic.description())")
+   </ AutomaticCar: 4 wheels; up to 5 passengers; traveling at 35.0 mph in gear 4
 
 .. TODO: provide more information about function signatures,
    and what does / does not make them unique.
