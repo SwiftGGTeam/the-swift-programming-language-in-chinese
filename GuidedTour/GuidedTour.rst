@@ -171,9 +171,9 @@ Tuples are written using parentheses.
     -> let fruits = ["apple", "orange", "banana"]
     << // fruits : String[] = ["apple", "orange", "banana"]
     -> let occupations = [
-           "Malcolm": "Captain",
-           "Kayley": "Mechanic",
-           "Jayne": "Public Relations",
+          "Malcolm": "Captain",
+          "Kayley": "Mechanic",
+          "Jayne": "Public Relations",
         ]
     << // occupations : Dictionary<String, String> = Dictionary<String, String>(1.33333, 3, <DictionaryBufferOwner<String, String> instance>)
     -> let origin = (0, 0)
@@ -233,11 +233,11 @@ Use ``if`` as follows:
    -> let remainingGummiBears = 5
    << // remainingGummiBears : Int = 5
    -> if haveJellyBabies {
-          println("Would you like a jelly baby?")
+         println("Would you like a jelly baby?")
       } else if remainingGummiBears > 0 {
-          println("Would you like a gummi bear?")
+         println("Would you like a gummi bear?")
       } else {
-          println("Sorry, all we have left are fruits and vegetables.")
+         println("Sorry, all we have left are fruits and vegetables.")
       }
    << Would you like a gummi bear?
 
@@ -254,14 +254,14 @@ Use ``switch`` as follows:
    -> let vegetable = "cucumber"
    << // vegetable : String = "cucumber"
    -> switch vegetable {
-          case "lettuce":
-              println("Let’s make salad.")
-          case "celery":
-              println("Add some raisins and make ants on a log.")
-          case "cucumber":
-             println("How about a cucumber sandwich?")
-          default:
-              println("Everything tastes good in soup.")
+         case "lettuce":
+            println("Let’s make salad.")
+         case "celery":
+            println("Add some raisins and make ants on a log.")
+         case "cucumber":
+            println("How about a cucumber sandwich?")
+         default:
+            println("Everything tastes good in soup.")
       }
    << How about a cucumber sandwich?
 
@@ -281,11 +281,11 @@ unless you use ``fallthough`` to opt in to that behavior.
     -> let birdsSinging = true
     << // birdsSinging : Bool = true
     -> switch birdsSinging {
-           case true:
-               println("The birds are singing.")
-               fallthrough
-           default:
-               println("It’s a beautiful day.")
+          case true:
+             println("The birds are singing.")
+             fallthrough
+          default:
+             println("It’s a beautiful day.")
        }
     << The birds are singing.
     << It’s a beautiful day.
@@ -301,16 +301,16 @@ such as tuple unpacking and ``where`` clauses:
    -> let somePoint = (1, 1)
    << // somePoint : (Int, Int) = (1, 1)
    -> switch somePoint {
-          case (0, 0):
-              println("(0, 0) is at the origin")
-          case (_, 0):
-              println("(\(somePoint.0), 0) is on the x-axis")
-          case (0, _):
-              println("(0, \(somePoint.1)) is on the y-axis")
-          case let (x, y) where x == y:
-              println("(\(x), \(y)) is on the diagonal")
-          default:
-              println("The point is somewhere else.")
+         case (0, 0):
+            println("(0, 0) is at the origin")
+         case (_, 0):
+            println("(\(somePoint.0), 0) is on the x-axis")
+         case (0, _):
+            println("(0, \(somePoint.1)) is on the y-axis")
+         case let (x, y) where x == y:
+            println("(\(x), \(y)) is on the diagonal")
+         default:
+            println("The point is somewhere else.")
       }
    <- (1, 1) is on the diagonal
 
@@ -345,7 +345,7 @@ Loops can keep an explicit counter or index.
 .. testcode:: c-for
 
    -> for var i = 0; i < 5; ++i {
-          println(i)
+         println(i)
       }
    << 0
    << 1
@@ -360,7 +360,7 @@ Repeat a block of code until a condition changes using ``while``.
    -> var n = 2
    << // n : Int = 2
    -> while n < 100 {
-          n = n * 2
+         n = n * 2
       }
    -> println("n is \(n)")
    << n is 128
@@ -373,7 +373,7 @@ ensuring that the loop is run at least once.
    -> var m = 2
    << // m : Int = 2
    -> do {
-          m = m * 2
+         m = m * 2
       } while m < 100
    -> println("m is \(m)")
    << m is 128
@@ -394,7 +394,7 @@ you can specify each parameter by name when calling the function.
 .. testcode:: func
 
     -> func greet(name : String, day : String) -> String {
-           return "Hello \(name), today is \(day)."
+          return "Hello \(name), today is \(day)."
        }
     -> greet("Bob", "Tuesday")
     << // r0 : String = "Hello Bob, today is Tuesday."
@@ -440,12 +440,12 @@ that were declared in the outer function.
 .. testcode:: nested-func
 
     -> func returnFifteen () -> Int {
-           var y = 10
-           func add () -> () {
-               y += 5
-           }
-           add()
-           return y
+          var y = 10
+          func add () -> () {
+             y += 5
+          }
+          add()
+          return y
        }
     -> returnFifteen()
     << // r0 : Int = 15
@@ -463,10 +463,10 @@ and have a function as its return value.
 .. testcode:: return-func
 
     -> func makeIncrementer() -> (Int -> Int) {
-           func addOne (number : Int) -> Int {
-               return 1 + number
-           }
-           return addOne
+          func addOne (number : Int) -> Int {
+             return 1 + number
+          }
+          return addOne
        }
     -> var increment = makeIncrementer()
     << // increment : (Int -> Int) = <unprintable value>
@@ -479,17 +479,17 @@ and have a function as its return value.
 
     -> // Re-implement the Standard Library sort function.
     -> func bubbleSort (var list : Int[], outOfOrder : (Int, Int) -> Bool) -> Int[] {
-           for i in 0...list.count {
-               for j in 0...list.count {
-                   if outOfOrder(list[i], list[j]) {
-                       (list[i], list[j]) = (list[j], list[i])
-                   }
-               }
-           }
-           return list
+          for i in 0...list.count {
+             for j in 0...list.count {
+                if outOfOrder(list[i], list[j]) {
+                   (list[i], list[j]) = (list[j], list[i])
+                }
+             }
+          }
+          return list
        }
     -> func greaterThan (x : Int, y : Int) -> Bool {
-           return x > y
+          return x > y
        }
     -> var numbers = [8, 3, 5, 6]
     << // numbers : Int[] = [8, 3, 5, 6]
@@ -502,9 +502,9 @@ and have their arguments separated from their body by ``in``.
 .. testcode:: closure
 
     -> let triple : Int -> Int = {
-           (number : Int) in
-           let result = 3 * number
-           return result
+          (number : Int) in
+          let result = 3 * number
+          return result
        }
     << // triple : Int -> Int = <unprintable value>
     -> triple(5)
