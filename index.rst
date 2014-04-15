@@ -40,6 +40,17 @@ Language Guide
   to talk about property overriding now that stored properties can now be overridden
 * Updates throughout the Guide now that optionals are default-initialized to ``nil``
 
+Reference Manual
+++++++++++++++++
+
+* Added a draft of the :doc:`ReferenceManual/Patterns` chapter.
+* Updated the grammar for :ref:`function <Declarations_FunctionDeclaration>`,
+  :ref:`initializer <Declarations_InitializerDeclaration>`,
+  and :ref:`subscript <Declarations_SubscriptDeclaration>` declarations
+  to account for the new unified function syntax.
+* Corrected some issues with the :ref:`enumeration <Declarations_EnumerationDeclaration>`
+  declaration grammar.
+
 Guided Tour
 +++++++++++
 
