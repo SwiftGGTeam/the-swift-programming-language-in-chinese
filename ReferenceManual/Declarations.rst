@@ -50,6 +50,9 @@ the term *declaration* covers both declarations and definitions.
     declaration --> operator-declaration
     declarations --> declaration declarations-OPT
 
+    declaration-specifiers --> declaration-specifier declaration-specifiers-OPT
+    declaration-specifier --> ``class`` | ``static`` | ``mutating`` | ``override``
+
 .. NOTE: Removed enum-member-declaration, because we don't need it anymore.
 
 .. NOTE: Added 'operator-declaration' based on ParseDecl.cpp.
@@ -96,7 +99,7 @@ It has the following form:
 .. syntax-outline::
 
     {
-        <#statements#>
+       <#statements#>
     }
 
 The *statements* inside a code block include declarations,
@@ -189,7 +192,7 @@ Constant declarations are declared using the keyword ``let`` and have the follow
 
 .. syntax-outline::
 
-    let <#constant name#> : <#type#> = <#expression#>
+    let <#constant name#>: <#type#> = <#expression#>
 
 A constant declaration defines an immutable binding between the *constant name*
 and the value of the initializer *expression*;
@@ -211,7 +214,7 @@ in the initializer *expression*.
 ::
 
     let (firstNumber, secondNumber) = (10, 42)
-    // (firstNumber, secondNumber) : (Int, Int) = (10, 42)
+    // (firstNumber, secondNumber): (Int, Int) = (10, 42)
 
 In this example,
 ``firstNumber`` is a named constant for the value ``10``,
@@ -219,9 +222,9 @@ and ``secondNumber`` is a named constant for the value ``42``.
 Both constants can now be used independently::
 
     firstNumber
-    // firstNumber : Int = 10
+    // firstNumber: Int = 10
     secondNumber
-    // secondNumber : Int = 42
+    // secondNumber: Int = 42
 
 The type annotation (``:`` *type*) is optional in a constant declaration
 when the type of the *constant name* can be inferred,
@@ -246,17 +249,11 @@ see :ref:`BasicTypes_NamedValues` and :ref:`Properties_StoredProperties`.
 
     Grammar of a constant declaration
 
-    constant-declaration --> attribute-list-OPT constant-specifier-OPT ``let`` pattern-initializer-list
-    constant-specifier -->  ``static`` | ``class``
+    constant-declaration --> attribute-list-OPT declaration-specifiers-OPT ``let`` pattern-initializer-list
 
     pattern-initializer-list --> pattern-initializer | pattern-initializer ``,`` pattern-initializer-list
     pattern-initializer --> pattern initializer-OPT
     initializer --> ``=`` expression
-
-.. TODO: TR: Come up with a better name than "constant-specifier",
-    because otherwise we have lots of different names for the same choice
-    (e.g., constant-specifier, variable-specifier, function-specifier).
-    Maybe "type-level-specifier"? But what happens when we do get *real* static functions?
 
 .. TODO: Write about class and static constants.
 
@@ -280,7 +277,7 @@ The following form declares a stored value or property:
 
 .. syntax-outline::
 
-    var <#variable name#> : <#type#> = <#expression#>
+    var <#variable name#>: <#type#> = <#expression#>
 
 You define this form of a variable declaration at global scope, the local scope
 of a function, or in the context of a class, structure, protocol, or extension declaration.
@@ -308,13 +305,13 @@ A stored value or property declared with observers has the following form:
 
 .. syntax-outline::
 
-    var <#variable name#> : <#type#> = <#expression#> {
-        willSet(<#setter name#>) {
-            <#statements#>
-        }
-        didSet(<#setter name#> {
-            <#statements#>
-        }
+    var <#variable name#>: <#type#> = <#expression#> {
+       willSet(<#setter name#>) {
+          <#statements#>
+       }
+       didSet(<#setter name#> {
+          <#statements#>
+       }
     }
 
 You define this form of a variable declaration at global scope, the local scope
@@ -361,13 +358,13 @@ The following form declares a computed value or property:
 
 .. syntax-outline::
 
-    var <#variable name#> : <#type#> {
-        get {
-            <#statements#>
-        }
-        set(<#setter name#>) {
-            <#statements#>
-        }
+    var <#variable name#>: <#type#> {
+       get {
+          <#statements#>
+       }
+       set(<#setter name#>) {
+          <#statements#>
+       }
     }
 
 You define this form of a variable declaration at global scope, the local scope
@@ -450,8 +447,7 @@ as described in :ref:`Declarations_ProtocolPropertyDeclaration`.
     variable-declaration --> variable-declaration-head variable-name type-annotation getter-setter-keyword-block
     variable-declaration --> variable-declaration-head variable-name type-annotation initializer-OPT willSet-didSet-block
 
-    variable-declaration-head --> attribute-list-OPT variable-specifier-OPT ``var``
-    variable-specifier --> ``static`` | ``class``
+    variable-declaration-head --> attribute-list-OPT declaration-specifiers-OPT ``var``
     variable-name --> identifier
 
     getter-setter-block --> ``{`` getter-clause setter-clause-OPT ``}``
@@ -514,12 +510,6 @@ See also :ref:`Declarations_ProtocolAssociatedTypeDeclaration`.
     typealias-name --> identifier
     typealias-assignment --> ``=`` type
 
-.. TR: Are type aliases allowed to contain a type-inheritance-clause?
-    Currently, this doesn't work, and it seems as though it shouldn't work.
-    Doesn't it only make sense to specify protocol conformance requirements
-    in the context of an associated type (declared as protocol member)?
-    I modified the grammar under the assumption that they are not allowed.
-
 
 .. _Declarations_FunctionDeclaration:
 
@@ -528,121 +518,41 @@ Function Declaration
 
 .. write-me:: Waiting for design decisions from compiler team.
 
-**[Query/Note: We are trying to decide which code-snippet-style syntax outlines to use
-for regular Swift-style function definitions and for selector-style method definitions.
-Below you'll find two alternatives for the former and four alternatives for the latter.
-We would like to pick one for regular functions and one for selector-style methods.
-Please send us your feedback!]**
-
-Most function and method definitions have the following general form:
-
-**[Regular function, alternative 1:
-This alternative is very simple and is based on the existing Xcode code snippet for C++ functions.
-The downside to this alternative is two-fold:
-first, the Swift-specific structure of the function parameters is completely hidden;
-second, we need to expose the structure of at least two parameters to visually distinguish
-regular functions and selector-style methods.]**
-
 
 .. syntax-outline::
 
-    func <#function name#>(<#function parameters#>) -> <#return type#> {
-        <#statements#>
+    func <#function name#>(<#parameters#>) -> <#return type#> {
+       <#statements#>
     }
 
-**[Regular function, alternative 2:
-This alternative satisfies the problems noted with the first alternative.
-That said, it's a rather long (and ugly?) way to display the general form of a simple function definition
-(the signature no longer fits on a single line).
-We've considered abbreviating names, but we're trying to avoid that
-because it's inconsistent with the rest of the document (and with existing Xcode code snippets).]**
+.. syntax-outline::
 
+    <#parameter name#>: <#parameter type#>
+    <#parameter name#>: <#parameter type#>...
+    <#parameter name#>: <#parameter type#> = <#default argument value#>
+    <#parameter name#> <#local parameter name#>: <#parameter type#>
 
 .. syntax-outline::
 
-    func <#function name#>(
-         <#parameter name 1#>: <#parameter type 1#>,
-         <#parameter name 2#>: <#parameter type 2#>)
-         -> <#return type#>
-    {
-        <#statements#>
-    }
-
-Swift also provides syntax for declaring and defining selector-style methods,
-such as those found in Objective-C. Definitions of selector-style methods have the
-following form:
-
-**[The following four alternatives deal with selector-style method definitions.
-The only difference between each of them is the name for each part of the selector.]**
-
-**[Selector-style, alternative 1:
-This alternative is descriptively pretty accurate but may also be a bit awkward.]**
-
-
-.. syntax-outline::
-
-    func <#selector name part 1#>(<#parameter name 1#>: <#parameter type 1#>)
-         <#selector name part 2#>(<#parameter name 2#>: <#parameter type 2#>)
-         -> <#return type#>
-    {
-        <#statements#>
-    }
-
-**[Selector-style, alternative 2:
-Although there is some precedent for calling each part of the selector a "keyword",
-doing so isn't quite accurate.
-The parts of the name of a method aren't keywords in the language (at least in the normal sense).]**
-
-
-.. syntax-outline::
-
-    func <#selector keyword 1#>(<#parameter name 1#>: <#parameter type 1#>)
-         <#selector keyword 2#>(<#parameter name 2#>: <#parameter type 2#>)
-         -> <#return type#>
-    {
-        <#statements#>
-    }
-
-**[Selector-style, alternative 3:
-This alternative uses "method" instead of "selector", but still uses "keyword".]**
-
-
-.. syntax-outline::
-
-    func <#method keyword 1#>(<#parameter name 1#>: <#parameter type 1#>)
-         <#method keyword 2#>(<#parameter name 2#>: <#parameter type 2#>)
-         -> <#return type#>
-    {
-        <#statements#>
-    }
-
-**[Selector-style, alternative 4:
-This alternative uses "signature" instead of "method" or "selector", but still uses "keyword".]**
-
-
-.. syntax-outline::
-
-    func <#signature keyword 1#>(<#parameter name 1#>: <#parameter type 1#>)
-         <#signature keyword 2#>(<#parameter name 2#>: <#parameter type 2#>)
-         -> <#return type#>
-    {
-        <#statements#>
+    func <#function name#>(<#parameters#>)(<#parameters#>) -> <#return type#> {
+       <#statements#>
     }
 
 .. TODO: Discuss in prose: Variadic functions and the other permutations of function declarations.
 
-.. TODO: Decide on a syntax-outline for regular Swift functions and for selector-style functions.
-
-.. write-me:: Waiting for design decisions from compiler team.
 
 .. langref-grammar
 
-    decl-func        ::= attribute-list 'type'? 'func' any-identifier generic-params? func-signature brace-item-list?
+    decl-func ::= attribute-list? ('static' | 'class')? 'mutating'? 'func' any-identifier generic-params? func-signature stmt-brace?
     func-signature ::= func-arguments func-signature-result?
-    func-arguments ::= pattern-tuple+
-    func-arguments ::= selector-tuple
-    selector-tuple ::= '(' pattern-tuple-element ')' (identifier-or-any '(' pattern-tuple-element ')')+
-    func-signature-result ::= '->' type-annotation
+    func-signature-result ::= '->' type
+
+    func-arguments ::= curried-arguments
+    curried-arguments ::= parameter-clause+
+
+    parameter-clause ::= '(' ')' | '(' parameter (',' parameter)* '...'? )'
+    parameter ::= 'inout'? ('let' | 'var')? identifier-or-none identifier-or-none? (':' type)? ('...' | '=' expr)?
+    identifier-or-none ::= identifier | '_'
 
 .. syntax-grammar::
 
@@ -650,22 +560,23 @@ This alternative uses "signature" instead of "method" or "selector", but still u
 
     function-declaration --> function-head function-name generic-parameter-clause-OPT function-signature function-body
 
-    function-head --> attribute-list-OPT function-specifier-OPT ``mutating``-OPT ``func``
-    function-specifier --> ``static`` | ``class``
+    function-head --> attribute-list-OPT declaration-specifiers-OPT ``func``
     function-name --> identifier | operator
 
-    function-signature --> function-parameters function-result-OPT
-    function-parameters --> tuple-patterns | selector-parameters
+    function-signature --> parameter-clauses function-result-OPT
     function-result --> ``->`` attribute-list-OPT type
-
-    selector-parameters --> ``(`` tuple-pattern-element ``)`` selector-tuples
-    selector-tuples --> selector-name ``(`` tuple-pattern-element ``)`` selector-tuples-OPT
-    selector-name --> identifier
-
     function-body --> code-block
 
-.. NOTE: Added the optional ``mutating`` modifier,
-    based on the grammar found in ParseDecl.cpp.
+    parameter-clauses --> parameter-clause parameter-clauses-OPT
+    parameter-clause --> ``(`` ``)`` | ``(`` parameter-list ``...``-OPT ``)``
+    parameter-list --> parameter | parameter ``,`` parameter-list
+    parameter --> ``inout``-OPT ``let``-OPT parameter-name local-parameter-name-OPT type-annotation default-argument-clause-OPT
+    parameter --> ``inout``-OPT ``var`` parameter-name local-parameter-name-OPT type-annotation default-argument-clause-OPT
+    parameter --> attribute-list-OPT type
+    parameter-name --> identifier | ``_``
+    local-parameter-name --> identifier | ``_``
+    default-argument-clause --> ``=`` expression
+
 
 .. TODO: Code block is optional in the context of a protocol.
     Everywhere else, it's required.
@@ -673,18 +584,6 @@ This alternative uses "signature" instead of "method" or "selector", but still u
     There is also the low-level "asm name" FFI
     which is a definition and declaration corner case.
     Let's just deal with this difference in prose.
-
-.. NOTE: According to Doug, 4/2/14,
-    The selector-style function declaration and call syntax is going away soon.
-    We will have one syntax for selector and normal functions. We'll still
-    have curried function declarations and calls, however.
-
-    Doug is going to be writing a new grammar for this. Here's a skeleton he wrote out:
-    func-decl --> 'func' identifier '(' param-list? ')' ...
-    param-list --> param-modifiers? identifier? identifier? ':' type ('=' expr)?
-    ... (where 'param-modifiers' would be things like 'inout' and 'var')
-    Of note, it won't depend on patterns in any way -- right now it's not really
-    true that it depends on patterns.
 
 .. _Declarations_EnumerationDeclaration:
 
@@ -696,55 +595,55 @@ An :newTerm:`enumeration declaration` introduces a named, enumeration type into 
 Enumeration declarations have two basic forms and are declared using the keyword ``enum``.
 
 The following form declares an enumeration type that contains
-values---called :newTerm:`enumerators`---of any type:
+values---called :newTerm:`enumeration cases`---of any type:
 
 .. syntax-outline::
 
     enum <#enumeration name#> {
-        case <#enumerator 1#>
-        case <#enumerator 2#>(<#associated value types#>)
+        case <#enumeration case 1#>
+        case <#enumeration case 2#>(<#associated value types#>)
     }
 
 Enumerations declared in this form are sometimes called :newTerm:`discriminated unions`
 in other programming languages.
 
 In this form, each case block consists of the keyword ``case``
-followed by one or more enumerators, separated by commas.
-The name of each enumerator must be unique.
-Each enumerator can also specify that it stores values of a given type.
+followed by one or more enumeration cases, separated by commas.
+The name of each case must be unique.
+Each case can also specify that it stores values of a given type.
 These types are specified in the *associated value types* tuple,
-immediately following the enumerator.
-For more information and to see examples of enumerators with associated value types,
+immediately following the name of the case.
+For more information and to see examples of cases with associated value types,
 see :ref:`Enumerations_AssociatedValues`.
 
 The following form declares an enumeration type that contains
-enumerators of the same basic type:
+enumeration cases of the same basic type:
 
 .. syntax-outline::
 
     enum <#enumeration name#> : <#raw value type#> {
-        case <#enumerator 1#> = <#raw value 1#>
-        case <#enumerator 2#> = <#raw value 2#>
+        case <#enumeration case 1#> = <#raw value 1#>
+        case <#enumeration case 2#> = <#raw value 2#>
     }
 
 In this form, each case block consists of the keyword ``case``,
-followed by one or more enumerators, separated by commas.
-Unlike the enumerators in the first form, each enumerator has an underlying
-value, called a :newTerm:`raw value`, of the basic same type.
+followed by one or more enumeration cases, separated by commas.
+Unlike the cases in the first form, each case has an underlying
+value, called a :newTerm:`raw value`, of the same basic type.
 The type of these values is specified in the *raw value type* and must represent a literal
 integer, floating-point number, character, or string.
 
-Each enumerator must have a unique name and be assigned a unique raw value.
+Each case must have a unique name and be assigned a unique raw value.
 If the raw value type is specified as ``Int``
-and you don't assign a value to the enumerators explicitly,
+and you don't assign a value to the cases explicitly,
 they are implicitly assigned the values ``0``, ``1``, ``2``, and so on.
-Each unassigned enumerator of type ``Int`` is implicitly assigned a raw value
-that is automatically incremented from the raw value of the previous enumerator.
+Each unassigned case of type ``Int`` is implicitly assigned a raw value
+that is automatically incremented from the raw value of the previous case.
 
 ::
 
-    enum ExampleEnum : Int {
-        case A, B, C = 5, D
+    enum ExampleEnum: Int {
+       case A, B, C = 5, D
     }
 
 In the above example, the value of ``ExampleEnum.A`` is ``0`` and the value of
@@ -752,11 +651,11 @@ In the above example, the value of ``ExampleEnum.A`` is ``0`` and the value of
 explicitly set to ``5``, the value of ``ExampleEnum.D`` is automatically incremented
 from ``5`` and is therefore ``6``.
 
-The raw value of an enumerator can be accessed by calling its ``toRaw`` method,
+The raw value of an enumeration case can be accessed by calling its ``toRaw`` method,
 as in ``ExampleEnum.B.toRaw()``.
-You can also use a raw value to find a corresponding enumerator, if there is one,
-by calling the ``fromRaw`` method, which returns an optional enumerator.
-For more information and to see examples of enumerators with raw value types,
+You can also use a raw value to find a corresponding case, if there is one,
+by calling the ``fromRaw`` method, which returns an optional case.
+For more information and to see examples of cases with raw value types,
 see :ref:`Enumerations_RawValues`.
 
 The body of an enumeration declared using either form can also contain zero or more declarations,
@@ -771,16 +670,17 @@ all initializers must be declared explicitly. Initializers can delegate
 to other initializers in the enumeration, but the initialization process is complete
 only after an initializer assigns one of the enumerators to ``self``.
 
-To reference the enumerators of an enumeration type, use dot (``.``) syntax,
+To reference the case of an enumeration type, use dot (``.``) syntax,
 as in ``EnumerationType.Enumerator``. When the enumeration type can be inferred
 from context, you can omit it (the dot is still required),
 as described in :ref:`Enumerations_EnumerationSyntax`
 and :ref:`Expressions_DelayedIdentifierExpression`.
 
-To check the values of enumerators, use a ``switch`` statement,
+To check the values of enumeration cases, use a ``switch`` statement,
 as shown in :ref:`Enumerations_ConsideringEnumerationValuesWithASwitchStatement`.
-The enumeration type is pattern-matched against the enumerator patterns in the case blocks
-of the ``switch`` statement, as described in :ref:`Patterns_EnumeratorPattern`.
+The enumeration type is pattern-matched against the enumeration case patterns
+in the case blocks of the ``switch`` statement,
+as described in :ref:`Patterns_EnumerationCasePattern`.
 
 You can extend the behavior of an enumeration type with an extension declaration,
 as discussed in :ref:`Declarations_ExtensionDeclaration`.
@@ -809,21 +709,22 @@ as discussed in :ref:`Declarations_ExtensionDeclaration`.
 
     enum-declaration --> attribute-list-OPT union-style-enum | attribute-list-OPT raw-value-style-enum
 
-    union-style-enum --> enum-name generic-parameter-clause-OPT union-style-enum-body
-    union-style-enum-body --> ``{`` declarations-OPT union-style-enum-members-OPT ``}``
+    union-style-enum --> enum-name generic-parameter-clause-OPT ``{`` union-style-enum-members-OPT ``}``
     union-style-enum-members --> union-style-enum-member union-style-enum-members-OPT
-    union-style-enum-member --> attribute-list-OPT ``case`` union-style-enumerator-list
-    union-style-enumerator-list --> union-style-enumerator | union-style-enumerator ``,`` union-style-enumerator-list
-    union-style-enumerator --> identifier tuple-type-OPT
-
-    raw-value-style-enum --> enum-name generic-parameter-clause-OPT ``:`` type-identifer raw-value-style-enum-body
-    raw-value-style-enum-body --> ``{`` declarations-OPT raw-value-style-enum-members ``}``
-    raw-value-style-enum-members --> raw-value-style-enum-member raw-value-style-enum-members-OPT
-    raw-value-style-enum-member --> attribute-list-OPT ``case`` raw-value-style-enumerator-list
-    raw-value-style-enumerator-list --> raw-value-style-enumerator | raw-value-style-enumerator ``,`` raw-value-style-enumerator-list
-    raw-value-style-enumerator --> identifier raw-value-assignment-OPT
-    raw-value-assignment --> ``=`` literal
+    union-style-enum-member --> declaration | union-style-enum-case-clause
+    union-style-enum-case-clause --> attribute-list-OPT ``case`` union-style-enum-case-list
+    union-style-enum-case-list --> union-style-enum-case | union-style-enum-case ``,`` union-style-enum-case-list
+    union-style-enum-case --> enum-case-name tuple-type-OPT
     enum-name --> identifier
+    enum-case-name --> identifier
+
+    raw-value-style-enum --> enum-name generic-parameter-clause-OPT ``:`` type-identifer ``{`` raw-value-style-enum-members-OPT ``}``
+    raw-value-style-enum-members --> raw-value-style-enum-member raw-value-style-enum-members-OPT
+    raw-value-style-enum-members --> declaration | raw-value-style-enum-case-clause
+    raw-value-style-enum-case-clause --> attribute-list-OPT ``case`` raw-value-style-enum-case-list
+    raw-value-style-enum-case-list --> raw-value-style-enum-case | raw-value-style-enum-case ``,`` raw-value-style-enum-case-list
+    raw-value-style-enum-case --> enum-case-name raw-value-assignment-OPT
+    raw-value-assignment --> ``=`` literal
 
 .. TODO: Adjust the prose to match the eventual outcome of
     <rdar://problem/16504472> Raw value enum cases accept negative intergers but not negative floating-point numbers,
@@ -867,8 +768,8 @@ Structure declarations are declared using the keyword ``struct`` and have the fo
 
 .. syntax-outline::
 
-    struct <#structure name#> : <#adopted protocols#> {
-        <#declarations#>
+    struct <#structure name#>: <#adopted protocols#> {
+       <#declarations#>
     }
 
 The body of a structure contains zero or more *declarations*.
@@ -935,8 +836,8 @@ Class declarations are declared using the keyword ``class`` and have the followi
 
 .. syntax-outline::
 
-    class <#class name#> : <#superclass#>, <#adopted protocols#> {
-        <#declarations#>
+    class <#class name#>: <#superclass#>, <#adopted protocols#> {
+       <#declarations#>
     }
 
 The body of a class contains zero or more *declarations*.
@@ -1022,8 +923,8 @@ Protocol declarations are declared using the keyword ``protocol`` and have the f
 
 .. syntax-outline::
 
-    protocol <#protocol name#> : <#inherited protocols#> {
-        <#protocol member declarations#>
+    protocol <#protocol name#>: <#inherited protocols#> {
+       <#protocol member declarations#>
     }
 
 The body of a protocol contains zero or more *protocol member declarations*,
@@ -1117,7 +1018,7 @@ declaration:
 
 .. syntax-outline::
 
-    var <#property name#> : <#type#> { get set }
+    var <#property name#>: <#type#> { get set }
 
 As with other protocol member declarations, these property declarations
 declare only the getter and setter requirements for types
@@ -1233,7 +1134,7 @@ See also :ref:`Declarations_SubscriptDeclaration`.
 
     Grammar of a protocol subscript declaration
 
-    protocol-subscript-declaration --> subscript-head getter-setter-keyword-block
+    protocol-subscript-declaration --> subscript-head subscript-result getter-setter-keyword-block
 
 
 .. _Declarations_ProtocolAssociatedTypeDeclaration:
@@ -1345,8 +1246,8 @@ and designated initializers of classes:
 
 .. syntax-outline::
 
-    init(<#parameter name#>: <#parameter type#>) {
-        <#statements#>
+    init(<#parameters#>) {
+       <#statements#>
     }
 
 Initializers in structures and enumerations can call other declared initializers
@@ -1367,8 +1268,8 @@ The following form declares convenience initializers for classes:
 
 .. syntax-outline::
 
-    init(<#parameter name#>: <#parameter type#>) -> Self {
-        <#statements#>
+    init(<#parameters#>) -> Self {
+       <#statements#>
     }
 
 Convenience initializers always have a return type of ``Self``
@@ -1404,8 +1305,7 @@ see :doc:`../LanguageGuide/Initialization`.
     initializer-declaration --> initializer-head generic-parameter-clause-OPT initializer-signature initializer-body
     initializer-head --> attribute-list-OPT ``init``
 
-    initializer-signature --> initializer-parameters initializer-result-OPT
-    initializer-parameters --> tuple-pattern | selector-tuples
+    initializer-signature --> parameter-clause initializer-result-OPT
     initializer-result --> ``->`` ``Self``
     initializer-body --> code-block
 
@@ -1421,7 +1321,7 @@ Deinitializers take no parameters and have the following form:
 .. syntax-outline::
 
     deinit {
-        <#statements#>
+       <#statements#>
     }
 
 A deinitializer is called automatically when there are no longer any references
@@ -1464,8 +1364,8 @@ Extension declarations begin with the keyword ``extension`` and have the followi
 
 .. syntax-outline::
 
-    extension <#type#> : <#adopted protocols#> {
-        <#declarations#>
+    extension <#type#>: <#adopted protocols#> {
+       <#declarations#>
     }
 
 The body of an extension declaration contains zero or more *declarations*.
@@ -1537,12 +1437,12 @@ and have the following form:
 .. syntax-outline::
 
     subscript (<#parameters#>) -> <#return type#> {
-        get {
-            <#statements#>
-        }
-        set(<#setter name#>) {
-            <#statements#>
-        }
+       get {
+          <#statements#>
+       }
+       set(<#setter name#>) {
+          <#statements#>
+       }
     }
 
 Subscript declarations can appear only in the context of a class, structure,
@@ -1569,7 +1469,7 @@ If you do not provide a setter name, the default parameter name to the setter is
 That type of the *setter name* must be the same as the *return type*.
 
 You can overload a subscript declaration in the type in which it is declared,
-as long as the *parameters* or the *return* type differ from the one you're overloading.
+as long as the *parameters* or the *return type* differ from the one you're overloading.
 You can also override a subscript declaration inherited from a superclass. When you do so,
 you must mark the overridden subscript declaration with an ``override`` attribute (``@override``).
 
@@ -1594,10 +1494,11 @@ see :doc:`../LanguageGuide/Subscripts`.
 
     Grammar of a subscript declaration
 
-    subscript-declaration --> subscript-head code-block
-    subscript-declaration --> subscript-head getter-setter-block
-    subscript-declaration --> subscript-head getter-setter-keyword-block
-    subscript-head --> attribute-list-OPT ``subscript`` tuple-pattern ``->`` type
+    subscript-declaration --> subscript-head subscript-result code-block
+    subscript-declaration --> subscript-head subscript-result getter-setter-block
+    subscript-declaration --> subscript-head subscript-result getter-setter-keyword-block
+    subscript-head --> attribute-list-OPT ``subscript`` parameter-clause
+    subscript-result --> ``->`` attribute-list-OPT type
 
 
 .. _Declarations_OperatorDeclaration:
@@ -1626,8 +1527,8 @@ The following form declares a new infix operator:
 .. syntax-outline::
 
     operator infix <#operator name#> {
-        precedence <#precedence level#>
-        associativity <#associativity#>
+       precedence <#precedence level#>
+       associativity <#associativity#>
     }
 
 An :newTerm:`infix operator` is a binary operator that is written between its two operands,
