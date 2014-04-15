@@ -96,7 +96,7 @@ separated by a colon.
 
    -> let implicitString = "Hello"
    << // implicitString : String = "Hello"
-   -> let explicitString : String = "Hello"
+   -> let explicitString: String = "Hello"
    << // explicitString : String = "Hello"
 
 .. admonition:: Experiment
@@ -393,7 +393,7 @@ you can specify each parameter by name when calling the function.
 
 .. testcode:: func
 
-    -> func greet(name : String, day : String) -> String {
+    -> func greet(name: String, day: String) -> String {
           return "Hello \(name), today is \(day)."
        }
     -> greet("Bob", "Tuesday")
@@ -421,7 +421,7 @@ Functions can also be defined to take a variable number of arguments.
 .. testcode:: functions
 
    -> // Reimplement the Standard Library sum function for Int values.
-   -> func sumOf(numbers : Int...) -> Int {
+   -> func sumOf(numbers: Int...) -> Int {
          var sum = 0
          for number in numbers {
             sum += number
@@ -463,7 +463,7 @@ and have a function as its return value.
 .. testcode:: return-func
 
     -> func makeIncrementer() -> (Int -> Int) {
-          func addOne (number : Int) -> Int {
+          func addOne (number: Int) -> Int {
              return 1 + number
           }
           return addOne
@@ -478,7 +478,7 @@ and have a function as its return value.
 .. testcode:: pass-func
 
     -> // Re-implement the Standard Library sort function.
-    -> func bubbleSort (var list : Int[], outOfOrder : (Int, Int) -> Bool) -> Int[] {
+    -> func bubbleSort (var list: Int[], outOfOrder: (Int, Int) -> Bool) -> Int[] {
           for i in 0...list.count {
              for j in 0...list.count {
                 if outOfOrder(list[i], list[j]) {
@@ -501,8 +501,8 @@ and have their arguments separated from their body by ``in``.
 
 .. testcode:: closure
 
-    -> let triple : Int -> Int = {
-          (number : Int) in
+    -> let triple: Int -> Int = {
+          (number: Int) in
           let result = 3 * number
           return result
        }
@@ -518,7 +518,7 @@ of their only statement.
 
 .. testcode:: closure-brief
 
-    -> let shortTriple : Int -> Int = { 3 * $0 }
+    -> let shortTriple: Int -> Int = { 3 * $0 }
     << // shortTriple : Int -> Int = <unprintable value>
     -> shortTriple(5)
     << // r0 : Int = 15
