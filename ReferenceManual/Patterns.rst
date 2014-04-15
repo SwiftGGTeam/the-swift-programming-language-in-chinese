@@ -1,21 +1,23 @@
 Patterns
 ========
 
-.. write-me:: Need intro.
+A :newTerm:`pattern` represents the structure (or "shape") of a value or composite value.
+For example, the structure of a tuple ``(1, 2)`` is a comma-separated list of two
+elements. Because patterns represent the structure of a value rather than any
+one particular value, you can compare and match them with a variety of values.
+For instance, the pattern ``(x, y)`` matches the tuple ``(1, 2)`` and any other
+two-element tuple. In addition to comparing and matching a pattern with a value,
+you can extract part or all of a composite value and bind each part
+to a constant or variable name.
 
-.. Discuss in intro:
-    What patterns are
-    Pattern matching
-    Pattern matching contexts
-    refutable vs irrefutable
+In Swift, patterns occur on the left-hand side of variable and constant declarations,
+in ``for``-``in`` statements, and in the case labels of ``switch`` statements.
+Although any pattern can occur in the case labels of a ``switch`` statement,
+only wildcard patterns, identifier patterns, and patterns that contain only those two
+patterns can occur in the other contexts.
 
-.. TODO: In prose, discuss the meaning of the explicit type.
-    The optional type annotation contrains a pattern to
-    match only values of the specified type.
-
-.. NOTE: Patterns don't "have" a type in the same way that values have types.
-   Patterns match things of certain types.
-
+You can specify a type annotation for a wildcard pattern, an identifier pattern,
+and a tuple pattern to constraint the pattern to match only values of a certain type.
 
 .. langref-grammar
 
@@ -35,7 +37,7 @@ Patterns
 
     pattern --> wildcard-pattern type-annotation-OPT
     pattern --> identifier-pattern type-annotation-OPT
-    pattern --> value-pattern
+    pattern --> value-binding-pattern
     pattern --> tuple-pattern type-annotation-OPT
     pattern --> enumerator-pattern
     pattern --> type-casting-pattern
@@ -83,8 +85,9 @@ that matches the value ``42`` of type ``Int``::
 When the match succeeds, the value ``42`` is bound (assigned)
 to the constant name ``someValue``.
 
-When the pattern of variable or constant declaration is an identifier pattern, the
-identifier pattern is implicitly a subpattern of a value-binding pattern.
+When the pattern on the left-hand side of a variable or constant declaration
+is an identifier pattern,
+the identifier pattern is implicitly a subpattern of a value-binding pattern.
 
 
 .. syntax-grammar::
@@ -115,7 +118,7 @@ corresponding identifier pattern.
     switch point {
     // Bind x and y to the elements of point.
     case let (x, y):
-       println("The point is at (\(x), \(y).")
+       println("The point is at (\(x), \(y)).")
     }
     // Prints "The point is at (3, 2)."
 
@@ -249,7 +252,7 @@ the type of the matched value is cast to the *pattern* specified on the left-han
 of the ``as``.
 
 For an example that uses a ``switch`` statement
-to match values against ``is`` and ``as`` patterns,
+to match values with ``is`` and ``as`` patterns,
 see :ref:`TypeCasting_CheckedCastsInSwitchStatements`.
 
 .. langref-grammar
@@ -277,12 +280,12 @@ Expression patterns can appear only as patterns in ``switch`` statement
 case labels.
 
 The expression represented by the expression pattern
-is compared against the value of an input expression
+is compared with the value of an input expression
 using the Swift Standard Library ``~=`` operator.
 The matches succeeds
 if the ``~=`` operator returns ``true``. By default, the ``~=`` operator compares
 two values of the same type using the ``==`` operator. It can also match an integer
-value against a range of integers in an ``Range`` object, as the following example shows.
+value with a range of integers in an ``Range`` object, as the following example shows.
 
 ::
 
