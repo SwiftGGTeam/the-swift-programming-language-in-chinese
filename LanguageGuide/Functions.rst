@@ -531,7 +531,9 @@ Strict Parameter Names
 It is sometimes useful to require that parameter names are provided when a function is called,
 to avoid ambiguity as to each parameter's purpose.
 You can require callers to use a function's parameter names
-by marking the function with the ``@call_arguments(strict)`` attribute:
+by marking the function with the ``@call_arguments(strict)`` attribute.
+This attribute also requires that the parameters are provided
+in the same order as in the function's definition.
 
 .. testcode:: strictParameterNames
 
@@ -555,7 +557,13 @@ results in a compile-time error:
    join("hello", "world", "#")
    // this reports a compile-time error
 
-.. TODO: mention that strict parameters have to be provided in the original order.
+Trying to call the function with its parameter names in the wrong order
+also results in a compile-time error:
+
+::
+
+   join(toString: "world", joiner: "#", string: "hello")
+   // this reports a compile-time error
 
 .. _Functions_FunctionsWithoutParameters:
 
