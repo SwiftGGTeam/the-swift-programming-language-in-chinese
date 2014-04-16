@@ -34,9 +34,6 @@ an optional prefix operator with an expression.
 Prefix operators take one argument,
 the expression that follows them.
 
-.. TR: As of r14954, ParsExpr.cpp also has expr-discard
-   which consists of an underscore (_).  What is that for?
-
 .. langref-grammar
 
     expr-unary   ::= operator-prefix* expr-postfix
@@ -132,6 +129,12 @@ For example: ::
 
 The assignment operator does not return any value.
 
+.. TODO: Document "ignored" expression (_).
+   I still think the LHS of an assignment is better described as a pattern
+   or as some kind of named thing
+   than as an expression.
+   There are vast swathes of expressions that can't appear there.
+
 .. langref-grammar
 
     op-binary-or-ternary ::= '='
@@ -202,7 +205,7 @@ The following are invalid: ::
     "hello" is String
     "hello" is Int
 
-.. TR: Why do we have that restriction?
+.. See also <rdar://problem/16639705> Proveably true/false "is" expressions should be a warning, not an error
 
 The ``as`` operator explicitly specifies
 that the value of its left-hand argument
@@ -214,7 +217,7 @@ There are three possible values of the expression:
 * If the value of the left-hand expression
   is of a type that is guaranteed to be convertable
   to the specified type,
-  the value is returned with the specified type.
+  the value is returned as the specified type.
 
 * If the value is guaranteed *not* to be convertable
   to the specified type,
@@ -347,9 +350,6 @@ inside a property getter or setter it is the name of that property,
 inside special members like ``init`` or ``subscript`` it is the name of that keyword,
 and at the top level of a file it is the name of the current module.
 
-.. TR: Should all of these meanings be documented,
-   or are some of them "internal use only" hacks?
-
 :newTerm:`Array literals` represent an ordered collection,
 made up of items of the same type.
 It has the following form:
@@ -358,13 +358,11 @@ It has the following form:
 
    [<#value 1#>, <#value 2#>, <#...#>]
 
+.. TODO: Decide on usage of <#...#> throughout the reference.
+
 The last expression in the array can be followed by an optional comma.
 The value of an array literal has type ``T[]``,
 where ``T`` is the type of the expressions inside it.
-
-.. TR: Is T[] always going to be a synonym for Array<T>?
-   Currently, the REPL uses the former for array literals,
-   but the latter matches what is used for dictionary literals.
 
 :newTerm:`Dictionary literals` represent an unordered collection of key-value pairs,
 where all the keys are of the same type
@@ -564,7 +562,7 @@ Implicit Member Expression
 
 An :newTerm:`implicit member expression`
 is an abbreviated way to access a member of a type,
-such as an enumerator or a class method,
+such as an enumeration case or a class method,
 in a context where type inference
 can determine the implied type.
 It has the following form:
@@ -779,15 +777,21 @@ Dot Expression
 ~~~~~~~~~~~~~~
 
 A :newTerm:`dot expression` allows access
-to the members of a class, structure, enumerator, or module.
+to the members of a named type, a tuple, or a module.
 It consists of a period (``.``) between the item
 and the identifier of its member.
-
-.. TR: Is this list exhaustive?  Or are there other things that can use dots?
 
 .. syntax-outline::
 
    <#expression#>.<#member name#>
+
+The members of a named type are named
+as part of the type's declaration or extension.
+For example: ::
+
+    class C { var x }
+    var c = C()
+    let y = c.x  // Member access
 
 The members of a tuple
 are implictly named using integers in the order they appear,
@@ -797,6 +801,10 @@ For example: ::
     var t = (10, 20, 30)
     t.0 = t.1
     // Now t is (20, 20, 30)
+
+The member of a module access its top-level declarations.
+
+.. TR: Confirm?
 
 .. langref-grammar
 
@@ -880,13 +888,20 @@ It has the following form:
 
    <#expression#>!
 
-The *expression* must be of an optional type.
-If its value is not ``.None``,
+If the *expression* is of an optional type
+and its value is not ``nil``,
 the optional value is unwrapped
 and returned with the corresponding non-optional type.
-Otherwise, a runtime error is raised.
+If its value is ``nil``, a runtime error is raised.
 
-.. TR: What exactly is the nature of the error?
+.. TR: In previous review, we noted that this also does downcast,
+   but that doesn't match the REPL's behavior as of swift-600.0.23.1.11
+    class A {}
+    class B: A {}
+    let l: Array<A> = [B(), A(), A()]
+    var item: B = l[0] !        // Doesn't parse -- waiting for more expression
+    var item: B = l[0]!         // Doesn't typecheck
+    var item = l[0] as B!       // Ok
 
 .. langref-grammar
 
