@@ -1,8 +1,6 @@
 Properties
 ==========
 
-.. TODO: research and write up the story for @weak
-
 :newTerm:`Properties` associate values with a particular class, structure, or enumeration.
 Stored properties store a constant or variable named value alongside an instance,
 whereas computed properties calculate (rather than store) a value.
@@ -120,8 +118,15 @@ All of the information about the property –
 including its name, type, and memory management characteristics –
 is defined in a single location as part of the type's definition.
 
-.. TODO: How do I define whether my properties are strong- or weak-reference?
+.. TODO: research and write up the story for @weak
+
 .. TODO: what happens if one property of a constant structure is an object reference?
+
+.. TODO: You can initialize a property with a block with parens on the end.
+   I should write up how to do so.
+
+.. TODO: There's a design plan to introduce a @lazy attribute for lazy property init.
+   This is being tracked in rdar://16432427.
 
 .. _Properties_ComputedProperties:
 

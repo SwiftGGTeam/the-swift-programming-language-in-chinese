@@ -555,6 +555,8 @@ results in a compile-time error:
    join("hello", "world", "#")
    // this reports a compile-time error
 
+.. TODO: mention that strict parameters have to be provided in the original order.
+
 .. _Functions_FunctionsWithoutParameters:
 
 Functions Without Parameters
