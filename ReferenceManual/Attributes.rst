@@ -43,18 +43,6 @@ Attributes
     What should the new grammar look like (also taking into account ``!`` inverted attributes)?
     What should we call the "arguments" that attributes take? ("options"?)
 
-    Notes from Ted/Doug, 4/2/14:
-    The grammar should be @ <attribute> ( <optional arguments> )
-    Other languages have specific grammar production rules for specific
-    attributes, specifying the syntax of them, in addition do the description of
-    what they mean.
-
-    Instead of pulling all the known attributesin the grammar, have a general
-    production rule.  From the parsing perspective, the attribute name doesn't
-    effect the parser.  The grammar is regular enough that even if we don't know
-    what to do with an attribute, we can still parse it.
-    It's likely that someday we will allow user-defined attributes.
-
     The structure of what's inside the parens is always going to be special.
     Essentially, the attribute defines its own grammar for what goes in its
     parens.  The stuff in parens should just be (gramatically) a balanced token
@@ -70,7 +58,27 @@ Declaration Attributes
 ----------------------
 
 
-.. ``assignment`` | ``class_protocol`` | ``mutating`` | ``objc`` | ``optional`` | ``required`` | ``unowned`` | ``weak``
+.. Current list of declaration attributes (as of 4/16/14, r16419):
+    ``assignment`` (OnFunc)
+    ``availability(arguments)`` (OnFunc | OnEnum | OnClass | OnProtocol | OnVar | OnConstructor | OnDestructor; AllowMultipleAttributes)
+    ``class_protocol`` (OnProtocol)
+    ``exported`` (OnImport)
+    ``final`` (OnClass | OnFunc | OnVar | OnSubscript)
+    ``NSCopying`` (OnVar)
+    ``noreturn`` (OnFunc)
+    ``objc(arguments)`` (OnFunc | OnClass | OnProtocol | OnVar | OnSubscript | OnConstructor | OnDestructor)
+    ``required`` (OnConstructor)
+
+    ``override`` (OnFunc | OnVar | OnSubscript) *Now a contextual keyword, not an attribute
+
+    // Need info about where they can appear and whether they allow multiples:
+    ``optional``
+    ``transparent``
+    ``unowned``
+    ``weak``
+    ``requires_stored_property_inits``
+
+    Keep an eye out for ``call_arguments(arguments)``, which is coming soon.
 
 
 .. _Attributes_TypeAttributes:
@@ -78,8 +86,14 @@ Declaration Attributes
 Type Attributes
 ---------------
 
-
-.. ``unchecked``
+.. Current list of type attributes (as of 4/16/14, r16419):
+    ``auto_closure``
+    ``cc``
+    ``noreturn``
+    ``objc_block``
+    ``thin``
+    ``thick``
+    ``unchecked``
 
 
 .. _Attributes_InterfaceBuilderAttributes:
@@ -87,5 +101,8 @@ Type Attributes
 Interface Builder Attributes
 ----------------------------
 
-
-.. ``IBAction`` | ``IBDesignable`` | ``IBInspectable`` | ``IBOutlet``
+.. Current list of IB attributes (as of 4/16/14, r16419):
+    ``IBAction``
+    ``IBDesignable``
+    ``IBInspectable``
+    ``IBOutlet``
