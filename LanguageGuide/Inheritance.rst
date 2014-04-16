@@ -335,14 +335,31 @@ which selects an appropriate gear to use based on the current speed.
    -> println("AutomaticCar: \(automatic.description())")
    </ AutomaticCar: 4 wheels; up to 5 passengers; traveling at 35.0 mph in gear 4
 
+.. Inheritance_FinalMethodsPropertiesAndSubscripts:
+
+Final Methods, Properties and Subscripts
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You can prevent a method, property, or subscript from being overridden
+by marking it as :newTerm:`final`.
+Do this by writing the ``@final`` attribute before its introducer keyword
+(such as ``@final var``, ``@final func``, ``@final class func``, and ``@final subscript``).
+Any attempts to override a ``@final`` method, property, or subscript in a subclass
+are reported as a compile-time error.
+Methods, properties or subscripts that you add to a class in an extension
+can also be marked as final within the extension's definition.
+
+You can mark an entire class as final by writing the ``@final`` attribute
+before the ``class`` keyword in its class definition (``@final class``).
+Any attempts to subclass a final class will be reported as a compile-time error.
+
+.. TODO: I should probably provide an example here.
+
 .. TODO: provide more information about function signatures,
    and what does / does not make them unique.
    For example, the parameter names do not have to match
    in order for a function to override a similar signature in its parent.
    (This is true for both of the function declaration syntaxes.)
-
-.. TODO: This chapter needs to mention the @final attribute
-   once it is fully implemented.
 
 .. TODO: Mention that you can return more-specific types, and take less-specific types,
    when overriding methods that use optionals / unchecked optionals.
