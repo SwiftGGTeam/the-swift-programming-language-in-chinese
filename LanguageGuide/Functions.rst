@@ -525,7 +525,7 @@ Strict Parameter Names
    in order to help plan the overall flow of this chapter.
 
 .. TODO: this feature is not yet implemented.
-   Remove this note and test that the final code snippet produces an error
+   Remove this note and test that the final two code snippets produce an error
    once strict parameter names have been implemented.
 
 It is sometimes useful to require that parameter names are provided when a function is called,
