@@ -109,8 +109,10 @@ your own custom types as initializer parameters.
 
 .. note::
 
-   Extensions can add new initializers to classes, but they cannot add deinitializers.
-   Deinitializers must always be provided by the original class implementation.
+   Extensions can add new convenience initializers to a class,
+   but they cannot add new designated initializers or deinitializers to a class.
+   Designated initializers and deinitializers
+   must always be provided by the original class implementation.
 
 This approach can be used to extend the basic ``String`` type
 to accept an instance of your own custom type as an initializer parameter,
