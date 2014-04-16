@@ -668,10 +668,10 @@ Unlike classes and structures,
 enumeration types do not have an implicitly provided default initializer;
 all initializers must be declared explicitly. Initializers can delegate
 to other initializers in the enumeration, but the initialization process is complete
-only after an initializer assigns one of the enumerators to ``self``.
+only after an initializer assigns one of the enumeration cases to ``self``.
 
 To reference the case of an enumeration type, use dot (``.``) syntax,
-as in ``EnumerationType.Enumerator``. When the enumeration type can be inferred
+as in ``EnumerationType.EnumerationCase``. When the enumeration type can be inferred
 from context, you can omit it (the dot is still required),
 as described in :ref:`Enumerations_EnumerationSyntax`
 and :ref:`Expressions_DelayedIdentifierExpression`.
