@@ -1,6 +1,12 @@
 Attributes
 ==========
 
+.. syntax-outline::
+
+    @<#attribute name#>
+    @<#attribute name#>(<#attribute arguments#>)
+
+
 .. langref-grammar
 
     attribute-list        ::= /*empty*/
@@ -13,21 +19,26 @@ Attributes
     attribute      ::= attribute-auto_closure
     attribute      ::= attribute-noreturn
 
+.. NOTE: LangRef grammar is way out of date.
+
 .. syntax-grammar::
 
-    Grammar of an attribute list
+    Grammar of an attribute
 
-    attribute-list --> ``@`` attribute | ``@`` attribute attribute-list
-    attribute --> declaration-attribute | type-attribute | interface-builder-attribute
+    attribute --> ``@`` attribute-name attribute-argument-clause-OPT
+    attribute-name --> identifier
+    attribute-argument-clause --> ``(`` balanced-tokens-OPT ``)``
+    attributes --> attribute attributes-OPT
 
-.. NOTE: Our grammar doesn't have empty terminals (no epsilon)
-   so we need to make attribute-list actually contain something.
-   This means that instead of having "empty" as a possible expansion,
-   attribute-list always appears as -OPT.
+    balanced-tokens --> balanced-token balanced-tokens-OPT
+    balanced-token --> ``(`` balanced-tokens-OPT ``)``
+    balanced-token --> ``[`` balanced-tokens-OPT ``]``
+    balanced-token --> ``{`` balanced-tokens-OPT ``}``
+    balanced-token --> Any identifier, keyword, literal, or operator
+    balanced-token --> Any punctuation except ``(``, ``)``, ``[``, ``]``, ``{``, or ``}``
 
-.. TODO: Update the grammar to accomodate things like @objc(:some:selector:).
-    Also, now that the optional comma is removed, should consider remaning
-    attribute-list to simply attributes and simplifying the grammar accordingly.
+
+.. TODO:
 
     What should the new grammar look like (also taking into account ``!`` inverted attributes)?
     What should we call the "arguments" that attributes take? ("options"?)
@@ -58,11 +69,8 @@ Attributes
 Declaration Attributes
 ----------------------
 
-.. syntax-grammar::
 
-    Grammar of a declaration attribute
-
-    declaration-attribute --> ``assignment`` | ``class_protocol`` | ``infix`` | ``mutating`` | ``objc`` | ``optional`` | ``postfix`` | ``prefix`` | ``required`` | ``unowned`` | ``weak``
+.. ``assignment`` | ``class_protocol`` | ``mutating`` | ``objc`` | ``optional`` | ``required`` | ``unowned`` | ``weak``
 
 
 .. _Attributes_TypeAttributes:
@@ -70,11 +78,8 @@ Declaration Attributes
 Type Attributes
 ---------------
 
-.. syntax-grammar::
 
-    Grammar of a type attribute
-
-    type-attribute --> ``unchecked``
+.. ``unchecked``
 
 
 .. _Attributes_InterfaceBuilderAttributes:
@@ -82,8 +87,5 @@ Type Attributes
 Interface Builder Attributes
 ----------------------------
 
-.. syntax-grammar::
 
-    Grammar of an interface builder attribute
-
-    interface-builder-attribute -->  ``IBAction`` | ``IBDesignable`` | ``IBInspectable`` | ``IBOutlet``
+.. ``IBAction`` | ``IBDesignable`` | ``IBInspectable`` | ``IBOutlet``
