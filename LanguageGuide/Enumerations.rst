@@ -374,3 +374,6 @@ The statement ``if let somePlanet = Planet.fromRaw(9)`` retrieves an optional ``
 and sets ``somePlanet`` to the contents of that optional ``Planet`` if it can be retrieved.
 In this case, it is not possible to retrieve a planet with a position of ``9``,
 and so the ``else`` branch is executed instead.
+
+.. TODO: Switch around the order of this chapter so that all of the non-union stuff
+   is together, and the union bits (aka Associated Values) come last.
