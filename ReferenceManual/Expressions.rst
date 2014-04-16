@@ -815,29 +815,34 @@ For example: ::
 Self Expression
 ~~~~~~~~~~~~~~~
 
-A :newTerm:`self expression` evaluates to the type of a class
-or to the instance of a class.
+A :newTerm:`self expression` is an explicit reference
+to a type or an instance of a type.
 It has the following form:
 
 .. syntax-outline::
 
-   <#Class name#>.self
+   <#expression or type#>.self
 
-On an instance of a class, ``self`` evaluates to
-the instance of the class.
-It is used to specify scope when accessing class members,
+On a type, ``self`` evaluates to the type itself.
+It is used to refer to a type by name,
+for example, to pass it as an argument to a function.
+
+On an instance of a type, ``self`` evaluates to
+the instance of the type.
+It is used to specify scope when accessing members,
 providing disambiguation when there is
 another variable of the same name in scope,
 such as a function parameter.
 
-On a type, ``self`` evaluates to the type itself.
-It is used to refer to a type,
-for example, to pass it as an argument to a function.
-
-.. TODO: An example of might be in order.
+On either a type or an instance of a type,
+the value of the self expression
+has the same type as the expression or type before the period.
 
 .. There is no definition for self-expression in the LangRef.
    This was probably just an oversight, according to Ted and Doug.
+
+.. Both types and variables are identifier expressions,
+   so postfix expression includes both.
 
 .. syntax-grammar::
 
