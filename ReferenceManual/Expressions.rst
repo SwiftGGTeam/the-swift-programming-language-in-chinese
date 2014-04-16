@@ -419,11 +419,6 @@ Identifier Expression
 
 .. TODO: Intro prose goes here.
 
-.. FIXME
-
-   self and Self go here -- they're keywords
-
-
 .. langref-grammar
 
     expr-identifier ::= identifier generic-args?
