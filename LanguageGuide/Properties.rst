@@ -305,10 +305,7 @@ even if the new value is the same as the property's current value.
 You can add property observers to any stored properties you define.
 You can also add property observers to any inherited property (whether stored or computed)
 by overriding the property within a subclass.
-Inheritance and overriding are described in :doc:`Inheritance`.
-
-.. TODO: update this link to point to the specific section on property overriding
-   once it has been written.
+Property overriding is described in :ref:`Inheritance_Overriding`.
 
 .. note::
 
@@ -322,7 +319,7 @@ You have the option to define either or both of these observers on a property:
 * ``didSet``, which is called immediately after the new value is stored
 
 If you implement a ``willSet`` observer,
-it will be passed the new property value as a constant parameter.
+it is passed the new property value as a constant parameter.
 You can specify a name for this parameter as part of your ``willSet`` implementation.
 If you choose not to write the parameter name and parentheses within your implementation,
 the parameter will still be made available with a default parameter name of ``newValue``.
@@ -397,11 +394,6 @@ and the default name of ``oldValue`` is used instead.
    the new value that you assign will replace the one that was just set.
 
 .. TODO: mention that this also works for global / local variables
-
-.. TODO: mention that you can't override to observe a read-only property,
-   as there will never be anything to actually observe
-   The same will be true for overriden constant properties
-   once stored property overriding is implemented.
 
 .. _Properties_TypeProperties:
 
