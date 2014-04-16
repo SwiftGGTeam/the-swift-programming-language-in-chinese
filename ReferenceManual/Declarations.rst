@@ -447,24 +447,24 @@ as described in :ref:`Declarations_ProtocolPropertyDeclaration`.
     variable-declaration --> variable-declaration-head variable-name type-annotation getter-setter-keyword-block
     variable-declaration --> variable-declaration-head variable-name type-annotation initializer-OPT willSet-didSet-block
 
-    variable-declaration-head --> attribute-list-OPT declaration-specifiers-OPT ``var``
+    variable-declaration-head --> attributes-OPT declaration-specifiers-OPT ``var``
     variable-name --> identifier
 
     getter-setter-block --> ``{`` getter-clause setter-clause-OPT ``}``
     getter-setter-block --> ``{`` setter-clause getter-clause ``}``
-    getter-clause --> attribute-list-OPT ``get`` code-block
-    setter-clause --> attribute-list-OPT ``set`` setter-name-OPT code-block
+    getter-clause --> attributes-OPT ``get`` code-block
+    setter-clause --> attributes-OPT ``set`` setter-name-OPT code-block
     setter-name --> ``(`` identifier ``)``
 
     getter-setter-keyword-block --> ``{`` getter-keyword-clause setter-keyword-clause-OPT ``}``
     getter-setter-keyword-block --> ``{`` setter-keyword-clause getter-keyword-clause ``}``
-    getter-keyword-clause --> attribute-list-OPT ``get``
-    setter-keyword-clause --> attribute-list-OPT ``set``
+    getter-keyword-clause --> attributes-OPT ``get``
+    setter-keyword-clause --> attributes-OPT ``set``
 
     willSet-didSet-block --> ``{`` willSet-clause didSet-clause-OPT ``}``
     willSet-didSet-block --> ``{`` didSet-clause willSet-clause ``}``
-    willSet-clause --> attribute-list-OPT ``willSet`` setter-name-OPT code-block
-    didSet-clause --> attribute-list-OPT ``didSet`` setter-name-OPT code-block
+    willSet-clause --> attributes-OPT ``willSet`` setter-name-OPT code-block
+    didSet-clause --> attributes-OPT ``didSet`` setter-name-OPT code-block
 
 .. NOTE: Type annotations are required for computed properties -- the
    types of those properties are not computed/inferred.
@@ -560,11 +560,11 @@ Function Declaration
 
     function-declaration --> function-head function-name generic-parameter-clause-OPT function-signature function-body
 
-    function-head --> attribute-list-OPT declaration-specifiers-OPT ``func``
+    function-head --> attributes-OPT declaration-specifiers-OPT ``func``
     function-name --> identifier | operator
 
     function-signature --> parameter-clauses function-result-OPT
-    function-result --> ``->`` attribute-list-OPT type
+    function-result --> ``->`` attributes-OPT type
     function-body --> code-block
 
     parameter-clauses --> parameter-clause parameter-clauses-OPT
@@ -572,7 +572,7 @@ Function Declaration
     parameter-list --> parameter | parameter ``,`` parameter-list
     parameter --> ``inout``-OPT ``let``-OPT parameter-name local-parameter-name-OPT type-annotation default-argument-clause-OPT
     parameter --> ``inout``-OPT ``var`` parameter-name local-parameter-name-OPT type-annotation default-argument-clause-OPT
-    parameter --> attribute-list-OPT type
+    parameter --> attributes-OPT type
     parameter-name --> identifier | ``_``
     local-parameter-name --> identifier | ``_``
     default-argument-clause --> ``=`` expression
@@ -707,12 +707,12 @@ as discussed in :ref:`Declarations_ExtensionDeclaration`.
 
     Grammar of an enumeration declaration
 
-    enum-declaration --> attribute-list-OPT union-style-enum | attribute-list-OPT raw-value-style-enum
+    enum-declaration --> attributes-OPT union-style-enum | attributes-OPT raw-value-style-enum
 
     union-style-enum --> enum-name generic-parameter-clause-OPT ``{`` union-style-enum-members-OPT ``}``
     union-style-enum-members --> union-style-enum-member union-style-enum-members-OPT
     union-style-enum-member --> declaration | union-style-enum-case-clause
-    union-style-enum-case-clause --> attribute-list-OPT ``case`` union-style-enum-case-list
+    union-style-enum-case-clause --> attributes-OPT ``case`` union-style-enum-case-list
     union-style-enum-case-list --> union-style-enum-case | union-style-enum-case ``,`` union-style-enum-case-list
     union-style-enum-case --> enum-case-name tuple-type-OPT
     enum-name --> identifier
@@ -721,7 +721,7 @@ as discussed in :ref:`Declarations_ExtensionDeclaration`.
     raw-value-style-enum --> enum-name generic-parameter-clause-OPT ``:`` type-identifer ``{`` raw-value-style-enum-members-OPT ``}``
     raw-value-style-enum-members --> raw-value-style-enum-member raw-value-style-enum-members-OPT
     raw-value-style-enum-members --> declaration | raw-value-style-enum-case-clause
-    raw-value-style-enum-case-clause --> attribute-list-OPT ``case`` raw-value-style-enum-case-list
+    raw-value-style-enum-case-clause --> attributes-OPT ``case`` raw-value-style-enum-case-list
     raw-value-style-enum-case-list --> raw-value-style-enum-case | raw-value-style-enum-case ``,`` raw-value-style-enum-case-list
     raw-value-style-enum-case --> enum-case-name raw-value-assignment-OPT
     raw-value-assignment --> ``=`` literal
@@ -821,7 +821,7 @@ as discussed in :ref:`Declarations_ExtensionDeclaration`.
 
    Grammar of a structure declaration
 
-   struct-declaration --> attribute-list-OPT ``struct`` struct-name generic-parameter-clause-OPT type-inheritance-clause-OPT struct-body
+   struct-declaration --> attributes-OPT ``struct`` struct-name generic-parameter-clause-OPT type-inheritance-clause-OPT struct-body
    struct-name --> identifier
    struct-body --> ``{`` declarations-OPT ``}``
 
@@ -908,7 +908,7 @@ as discussed in :ref:`Declarations_ExtensionDeclaration`.
 
     Grammar of a class declaration
 
-    class-declaration --> attribute-list-OPT ``class`` class-name generic-parameter-clause-OPT type-inheritance-clause-OPT class-body
+    class-declaration --> attributes-OPT ``class`` class-name generic-parameter-clause-OPT type-inheritance-clause-OPT class-body
     class-name --> identifier
     class-body --> ``{`` declarations-OPT ``}``
 
@@ -993,7 +993,7 @@ should implement, as described in :ref:`Protocols_Delegates`.
 
     Grammar of a protocol declaration
 
-    protocol-declaration --> attribute-list-OPT ``protocol`` protocol-name type-inheritance-clause-OPT protocol-body
+    protocol-declaration --> attributes-OPT ``protocol`` protocol-name type-inheritance-clause-OPT protocol-body
     protocol-name --> identifier
     protocol-body --> ``{`` protocol-member-declarations-OPT ``}``
 
@@ -1303,7 +1303,7 @@ see :doc:`../LanguageGuide/Initialization`.
     Grammar of an initializer declaration
 
     initializer-declaration --> initializer-head generic-parameter-clause-OPT initializer-signature initializer-body
-    initializer-head --> attribute-list-OPT ``init``
+    initializer-head --> attributes-OPT ``init``
 
     initializer-signature --> parameter-clause initializer-result-OPT
     initializer-result --> ``->`` ``Self``
@@ -1350,7 +1350,7 @@ see :ref:`Initialization_Deinitializers`.
 
     Grammar of a deinitializer declaration
 
-    deinitializer-declaration --> attribute-list-OPT ``deinit`` code-block
+    deinitializer-declaration --> attributes-OPT ``deinit`` code-block
 
 .. _Declarations_ExtensionDeclaration:
 
@@ -1497,8 +1497,8 @@ see :doc:`../LanguageGuide/Subscripts`.
     subscript-declaration --> subscript-head subscript-result code-block
     subscript-declaration --> subscript-head subscript-result getter-setter-block
     subscript-declaration --> subscript-head subscript-result getter-setter-keyword-block
-    subscript-head --> attribute-list-OPT ``subscript`` parameter-clause
-    subscript-result --> ``->`` attribute-list-OPT type
+    subscript-head --> attributes-OPT ``subscript`` parameter-clause
+    subscript-result --> ``->`` attributes-OPT type
 
 
 .. _Declarations_OperatorDeclaration:
