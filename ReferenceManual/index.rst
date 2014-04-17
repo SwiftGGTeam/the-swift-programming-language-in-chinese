@@ -1,5 +1,5 @@
-Reference Manual
-================
+Language Reference
+==================
 
 This is an early draft of a document that is still being written.
 The translation of the formal grammar is essentially complete,
