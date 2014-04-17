@@ -1281,10 +1281,9 @@ Convenience initializers can't call a superclass's initializers.
 
 You can mark designated and convenience initializers with the ``required``
 attribute to require that every subclass implement the initializer.
-Because designated initializers are not inherited by subclasses,
-they must be implemented directly. Required convenience initializers can be implemented
-explicitly or inherited when the subclass implements all of the superclass's
-designated initializers.
+Required designated initializers must be implemented explicitly.
+Required convenience initializers can be either implemented explicitly
+or inherited when the subclass implements all of the superclass’s designated initializers.
 
 To see examples of initializers in various type declarations,
 see :doc:`../LanguageGuide/Initialization`.
