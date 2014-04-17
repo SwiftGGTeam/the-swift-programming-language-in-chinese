@@ -333,7 +333,7 @@ This example defines two protocols for use with dice-based board games:
       }
    -> protocol DiceGameDelegate {
          func gameDidStart(game: DiceGame)
-         func game(DiceGame) didStartNewTurnWithDiceRoll(diceRoll: Int)
+         func game(_ game: DiceGame, didStartNewTurnWithDiceRoll diceRoll: Int)
          func gameDidEnd(game: DiceGame)
       }
 
@@ -342,8 +342,9 @@ by any game that involves a dice.
 The ``DiceGameDelegate`` protocol can be adopted by
 any type that wants to be able to observe and track the progress of a ``DiceGame``.
 
-.. QUESTION: should DiceGame be called something like “Playable” instead,
-   and used as an opportunity to talk about protocol naming?
+.. QUESTION: is the Cocoa-style x:didStuffWithY: naming approach
+   the right thing to advise for delegates written in Swift?
+   It looks a little odd in the syntax above.
 
 Here's a version of the *Snakes and Ladders* game originally introduced in :doc:`ControlFlow`.
 This version has been adapted to use a ``Dice`` instance for its dice-rolls;
@@ -433,7 +434,7 @@ which adopts the ``DiceGameDelegate`` protocol:
             }
             println("The game is using a \(game.dice.sides)-sided dice")
          }
-         func game(DiceGame) didStartNewTurnWithDiceRoll(diceRoll: Int) {
+         func game(_ game: DiceGame, didStartNewTurnWithDiceRoll diceRoll: Int) {
             ++numberOfTurns
             println("Rolled a \(diceRoll)")
          }
