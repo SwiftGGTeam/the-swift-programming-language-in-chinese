@@ -59,10 +59,10 @@ Declaration Attributes
 
 
 .. Current list of declaration attributes (as of 4/16/14, r16419):
-    ``assignment`` (OnFunc)
+    ✓ ``assignment`` (OnFunc)
     ``availability(arguments)`` (OnFunc | OnEnum | OnClass | OnProtocol | OnVar | OnConstructor | OnDestructor; AllowMultipleAttributes)
-    ``class_protocol`` (OnProtocol)
-    ``exported`` (OnImport)
+    ✓ ``class_protocol`` (OnProtocol)
+    ✓ ``exported`` (OnImport)
     ``final`` (OnClass | OnFunc | OnVar | OnSubscript)
     ``NSCopying`` (OnVar)
     ``noreturn`` (OnFunc)
@@ -78,7 +78,7 @@ Declaration Attributes
     ``weak``
     ``requires_stored_property_inits``
 
-    Keep an eye out for ``call_arguments(arguments)``, which is coming soon.
+    ✓ Keep an eye out for ``call_arguments(arguments)``, which is coming soon.
     (We know the behavior of this attribute, so I'm going to document it now.
 
     Keep an eye out for ``abstract``, which is coming soon (probably for WWDC).
@@ -133,6 +133,13 @@ Declaration Attributes
     the imported module, submodule, or declaration from the current module.
     If another module imports the current module, that other module can access
     the items exported by the current module.
+
+``final``
+    The ``final`` attribute can be applied to a class or to a property, method,
+    or subscript member of a class. It is applied to class to indicate that the class
+    can't be subclassed. It is applied to a property, method, or subscript of a class
+    to indicate that those class members can't be overridden in any subclass.
+
 
 .. _Attributes_TypeAttributes:
 
