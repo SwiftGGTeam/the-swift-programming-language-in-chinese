@@ -404,7 +404,7 @@ and a speed of ``35.0`` produces a gear of ``4``:
    -> println("AutomaticCar: \(automatic.description())")
    </ AutomaticCar: 4 wheels; up to 5 passengers; traveling at 35.0 mph in gear 4
 
-.. Inheritance_FinalMethodsPropertiesAndSubscripts:
+.. _Inheritance_FinalMethodsPropertiesAndSubscripts:
 
 Final Methods, Properties and Subscripts
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
