@@ -140,6 +140,14 @@ Declaration Attributes
     can't be subclassed. It is applied to a property, method, or subscript of a class
     to indicate that those class members can't be overridden in any subclass.
 
+``required``
+    The ``required`` attribute is applied to a designated or convenience initializer
+    of a class to indicate that every subclass must implement that initializer.
+
+    Required designated initializers must be implemented explicitly.
+    Required convenience initializers can be either implemented explicitly
+    or inherited when the subclass implements all of the superclass’s designated initializers.
+
 
 .. _Attributes_TypeAttributes:
 
