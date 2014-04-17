@@ -293,8 +293,8 @@ if they are listed in the same order that the properties are declared in the str
 Initializer Delegation
 ----------------------
 
-Initializers can call other initializers,
-in a process known as :newTerm:`initializer delegation`.
+Initializers can call other initializers to perform part of an instance's initialization.
+This process is known as :newTerm:`initializer delegation`.
 The rules for how initializer delegation works,
 and for what forms of delegation are allowed,
 are different for value types and class types.
@@ -312,6 +312,9 @@ all of the stored properties they inherit are assigned a suitable value during i
 Initializer Delegation For Value Types
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+For value types, it can sometimes be useful for an initializer to call
+another initializer to help with the initialization process.
+This can avoid duplicating code across multiple initializers.
 You can use ``self.init`` to refer to other initializers from the same value type
 when writing your own custom initializers for a structure or enumeration.
 You can only call ``self.init`` from within an initializer.
@@ -327,12 +330,8 @@ You can only call ``self.init`` from within an initializer.
    one of the automatic initializers instead.
 
 The following example defines a custom ``Rect`` structure to represent a geometric rectangle.
-The example also defines two supporting structures called ``Size`` and ``Point``.
-
-The ``Rect`` structure can be initialized in one of three ways –
-by using the default ``origin`` and ``size`` property values;
-by providing an origin point and a size;
-or by providing a center point and a size:
+The example requires two supporting structures called ``Size`` and ``Point``,
+both of which provide default values of ``0.0`` for all of their properties:
 
 .. testcode:: valueDelegation
 
@@ -342,6 +341,14 @@ or by providing a center point and a size:
    -> struct Point {
          var x = 0.0, y = 0.0
       }
+
+The ``Rect`` structure below can be initialized in one of three ways –
+by using its default zero-initialized ``origin`` and ``size`` property values;
+by providing a specific origin point and size;
+or by providing a specific center point and size:
+
+.. testcode:: valueDelegation
+
    -> struct Rect {
          var origin = Point()
          var size = Size()
@@ -357,8 +364,9 @@ or by providing a center point and a size:
          }
       }
 
-The first initializer, ``init``, is the same as the default initializer
-that the structure would have received if it did not have its own custom initializers.
+The first ``Rect`` initializer, ``init``, 
+is functionally the same as the default initializer that the structure would have received
+if it did not have its own custom initializers.
 This initializer has an empty body,
 represented by an empty pair of curly braces ``{}``,
 and does not perfom any bespoke initialization.
@@ -374,8 +382,9 @@ from their property definitions:
    /> basicRect's origin is (\(basicRect.origin.x), \(basicRect.origin.y)) and its size is (\(basicRect.size.width), \(basicRect.size.height))
    </ basicRect's origin is (0.0, 0.0) and its size is (0.0, 0.0)
 
-The second initializer, ``init origin size``, is the same as the memberwise initializer
-that the structure would have received if it did not have its own custom initializers.
+The second ``Rect`` initializer, ``init origin size``,
+is functionally the same as the memberwise initializer that the structure would have received
+if it did not have its own custom initializers.
 This initializer simply assigns the ``origin`` and ``size`` argument values to
 the appropriate stored properties:
 
@@ -386,9 +395,9 @@ the appropriate stored properties:
    /> originRect's origin is (\(originRect.origin.x), \(originRect.origin.y)) and its size is (\(originRect.size.width), \(originRect.size.height))
    </ originRect's origin is (2.0, 2.0) and its size is (5.0, 5.0)
 
-The final initializer, ``init center size``,
-calculates an appropriate origin point based on
-the ``center`` and ``size`` values it is passed.
+The third ``Rect`` initializer, ``init center size``, is slightly more complex.
+It starts by calculating an appropriate origin point based on
+a ``center`` point and a ``size`` value.
 It then calls (or :newTerm:`delegates`) to the ``init origin size`` initializer,
 which stores the new origin and size values in the appropriate properties:
 
@@ -399,28 +408,206 @@ which stores the new origin and size values in the appropriate properties:
    /> centerRect's origin is (\(centerRect.origin.x), \(centerRect.origin.y)) and its size is (\(centerRect.size.width), \(centerRect.size.height))
    </ centerRect's origin is (2.5, 2.5) and its size is (3.0, 3.0)
 
+The ``init center size`` initializer could have assigned
+the new values of ``origin`` and ``size`` to the appropriate properties itself.
+However, it is more convenient (and clearer in intent)
+for the ``init center size`` initializer to take advantage of an existing initializer
+that already provides exactly that functionality.
+
 .. _Initialization_InitializerDelegationForClassTypes:
 
 Initializer Delegation For Class Types
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. write-me::
+Initializer delegation for class types comes with a few extra considerations than for value types.
+Classes can inherit from other classes, as described in :doc:`Inheritance`.
+Additionally, Swift requires that all stored properties on a type must have a value
+by the time a new instance of that type completes its initialization.
 
-.. _Initialization_DynamicReturnTypes:
+The combination of these two facts means that
+any subclass initializers you write must make sure that all of the class's stored properties –
+*including any that it inherits* – are assigned a suitable value during initialization.
 
-Dynamic Return Types
---------------------
+It is often sufficient to leave the job of initializing inherited properties
+to an initializer from the superclass that introduced those properties.
+However, your subclass must still call the appropriate superclass initializer
+to ensure that initialization takes place, and it must be confident that
+the initializer it calls is an appropriate initializer to call.
 
-.. write-me::
+Additionally, it can sometimes be useful to provide
+alternative, more convenient initializers for a subclass,
+which provide simpler or more context-specific ways to create an instance of that subclass.
 
-.. TODO: mention that methods can return a value of type Self (a la instancetype)
-.. TODO: include the several tricks seen in swift/test/decl/func/dynamic_self.swift
-.. TODO: find a good place to mention that instance methods can
-   return self(withInt: 5) to call their own type's initializer
-.. QUESTION: does this section go here, or in Inheritance, or somewhere else?
-   I want to put it in Inheritance,
-   but in practice I think it's most likely to be used for factory methods,
-   which are more akin to initialization.
+Swift defines two different kinds of initializer for class types to reflect these needs.
+These are known as :newTerm:`designated initializers` and :newTerm:`convenience initializers`.
+
+.. _Initialization_DesignatedInitializersAndConvenienceInitializers:
+
+Designated Initializers and Convenience Initializers
+____________________________________________________
+
+Designated initializers are the primary initializers for a class.
+A designated initializer is responsible for making sure that
+all of the properties introduced by that class are fully initialized,
+and for calling an appropriate superclass initializer
+to continue the initialization process up the superclass chain.
+
+Convenience initializers are secondary, supporting initializers for a class.
+A convenience initializer is a way to provide a simpler, more convenient initializer
+which may not require callers to provide as much information as a designated initializer.
+A convenience initializer might call a designated initializer on the same class
+with some of the designated initializer's parameters set to default values,
+or it might provide a way to create an instance of that class
+for a specific use case or input value type.
+
+Classes tend to have very few designated initializers,
+and it is quite common for a class to have only one designated initializer.
+Designated initializers are “funnel” points through which initialization takes place,
+and through which the initialization process continues up the superclass chain.
+
+Every class must have at least one designated initializer.
+In some cases this will be automatically inherited from a superclass,
+as described in Automatic Initializer Inheritance below.
+Howwever, you do not have to provide any convenience initializers if your class does not require them.
+Convenience initializers are a way to make your classes easier and more convenient to use,
+and should be created whenever a shortcut to a common initialization pattern
+will save time or make initialization of the class clearer in intent.
+
+.. _Initialization_InitializerChaining:
+
+Initializer Chaining
+____________________
+
+To simplify the relationships between designated and convenience initializers,
+Swift applies the following three rules for delegation calls between initializers:
+
+1) Designated initializers must call a designated initializer from their immediate superclass.
+2) Convenience initializers must call another initializer from the *same* class.
+3) Convenience initializers must ultimately end up calling a designated initializer.
+
+A simple way to remember this is:
+
+* Designated initializers must delegate *up*
+* Convenience initializers must delegate *across*
+
+These rules are illustrated in the figure below:
+
+.. image:: ../images/initializerDelegation01.png
+   :align: center
+
+Here, the superclass has a single designated initializer, and two convenience initializers.
+One of the convenience initializers calls another convenience initializer,
+which in turn calls the single designated initializer.
+This satisfies rules 2 and 3 from above.
+The superclass does not itself have a further superclass, and so rule 1 does not apply.
+
+The subclass in this figure has two designated initializers, and one convenience initializer.
+The convenience initializer must call one of the two designated initializers,
+because it can only call another initializer from the same class.
+This satisfies rules 2 and 3 from above.
+Both of the designated initializers must call the single designated initializer
+from the superclass, to satisfy rule 1 from above.
+
+.. note::
+
+   These rules don't affect how users of your classes *create* instances of each class.
+   Any of the initializers in the diagram above can be used to create
+   a fully-initialized instance of the class they belong to.
+   The rules only affect how you write the class's implementation.
+
+The figure below shows a more complex class hierarchy for four classes,
+and illustrates how the designated initializers in this hierarchy
+act as “funnel” points for class initialization,
+simplifying the interrelationships between classes in the chain:
+
+.. image:: ../images/initializerDelegation02.png
+   :align: center
+
+.. _Initialization_InitializerInheritanceAndOverriding:
+
+Initializer Inheritance and Overriding
+______________________________________
+
+Unlike Objective-C,
+Swift subclasses do not not inherit their superclass's initializers by default.
+This avoids situations where a simple initializer from a superclass
+is automatically inherited by a more specialized subclass,
+and can be used to create a new instance of the subclass
+that is not fully or correctly initialized.
+
+If you want your custom subclass to present
+one or more of the same initializers as its superclass –
+perhaps to perform some customization during initialization –
+you can provide an overriding implementation of the same initializer
+within your custom subclass.
+
+If the initializer you are overriding is a *designated* initializer,
+you can override its implementation in your subclass,
+and call the superclass version of the initializer from within your overriding version.
+
+If the initializer you are overriding is a *convenience* initializer,
+your override must call another designated initializer from your subclass,
+as per the rules described above in Initializer Chaining.
+
+.. note::
+
+   Unlike methods, properties and subscripts,
+   you do not need to write the ``override`` keyword when overriding an initializer.
+
+.. _Initialization_AutomaticInitializerInheritance:
+
+Automatic Initializer Inheritance
+_________________________________
+
+As mentioned above,
+Swift subclasses do not not inherit their superclass's initializers by default.
+However, superclass initializers *are* automatically inherited if certain conditions are met.
+In practice, this means that
+you do not need to write initializer overrides in many common scenarios,
+and can inherit your superclass initializers with minimal effort whenever it is safe to do so.
+
+Assuming that you provide default values for any new properties you introduce in a subclass,
+the following two rules apply:
+
+**Rule 1:** If your subclass doesn't define any designated initializers,
+it automatically inherits all of its superclass's designated initializers.
+
+**Rule 2:** If your subclass provides an implementation
+of *all* of its superclass's designated initializers –
+even if it just automatically inherits them, as per rule 1 –
+then it automatically inherits all of the superclass's convenience initializers.
+
+These rules apply even if your subclass adds further designated or convenience initializers.
+
+.. _Initialization_SyntaxForDesignatedAndConvenienceInitializers:
+
+Syntax for Designated and Convenience Initializers
+__________________________________________________
+
+Designated initializers are written in the same way as simple initializers for value types:
+
+.. syntax-outline::
+
+   init(<#parameters#>) {
+      <#statements#>
+   }
+
+Convenience initializers are written in the same style, but with a return type of ``Self``
+to indicate that they are a convenient way to initialize an instance of that type:
+
+.. syntax-outline::
+
+   init(<#parameters#>) -> Self {
+      <#statements#>
+   }
+
+The return type of ``Self`` for convenience initializers is a placeholder for
+“the type of the class that provides this initializer”.
+Convenience initializers return ``Self`` rather than a specific named type
+to reflect the fact that they can be automatically inherited by a subclass,
+and will create an instance of the subclass type (rather than the original type)
+when they are automatically inherited.
+``Self`` is described in more detail :ref:`Inheritance_DynamicReturnTypes`.
 
 .. _Initialization_Deinitializers:
 
