@@ -28,7 +28,7 @@ since linking between definitions is not yet supported by our build tools.
 .. toctree::
     :maxdepth: 1
 
-    Introduction
+    AboutTheLanguageReference
     LexicalStructure
     Types
     Expressions
