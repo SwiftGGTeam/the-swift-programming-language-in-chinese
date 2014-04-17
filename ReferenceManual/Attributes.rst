@@ -79,7 +79,60 @@ Declaration Attributes
     ``requires_stored_property_inits``
 
     Keep an eye out for ``call_arguments(arguments)``, which is coming soon.
+    (We know the behavior of this attribute, so I'm going to document it now.
 
+    Keep an eye out for ``abstract``, which is coming soon (probably for WWDC).
+    "I don't provide an implementation, but subclasses **must**."
+    Similar to a class cluster in ObjC.
+
+    Keep an eye out for ``virtual``, which is coming soon (probably not for WWDC).
+    "It's not there yet, but it'll be there at runtime, trust me."
+
+``assignment``
+    The ``assignment`` attribute is applied to functions that overload
+    a compound assignment operator.
+    For an example of how to use the ``assignment`` attribute,
+    see :ref:`AdvancedOperators_CompoundAssignmentOperators`.
+
+.. TR: ``assignment doesn't seem to be required as of r16459. Is this correct?
+    Emailed swift-dev on 4/17/14 with the following example:
+
+    (swift) struct Vector2D {
+             var x = 0.0, y = 0.0
+        }
+    (swift) func += (inout lhs: Vector2D, rhs: Vector2D) {
+              lhs = Vector2D(lhs.x + rhs.x, lhs.y + rhs.y)
+            }
+    (swift) var original = Vector2D(1.0, 2.0)
+    // original : Vector2D = Vector2D(1.0, 2.0)
+    (swift) let vectorToAdd = Vector2D(3.0, 4.0)
+    // vectorToAdd : Vector2D = Vector2D(3.0, 4.0)
+    (swift) original += vectorToAdd
+    (swift) original
+    // original : Vector2D = Vector2D(4.0, 6.0)
+
+
+``call_arguments(strict)``
+    The ``call_arguments(strict)`` attribute is applied to any function or method to
+    indicate that you must use the parameter names of that function or method when calling
+    it. In addition, you must specify those parameter names in the same order
+    in which they are declared as part of the function or methods definition.
+    For an example of how to use the ``call_arguments(strict)`` attribute,
+    see :ref:`Functions_StrictParameterNames`.
+
+``class_protocol``
+    The ``class_protocol`` attribute is applied to a protocol to indicate
+    that the protocol can be adopted by class types only.
+
+    If you apply the ``objc`` attribute to a protocol, the ``class_protocol`` attribute
+    is implicitly applied to that protocol; there's no need to mark the protocol with
+    the ``class_protocol`` explicitly.
+
+``exported``
+    The ``exported`` attribute is applied to an import declaration to export
+    the imported module, submodule, or declaration from the current module.
+    If another module imports the current module, that other module can access
+    the items exported by the current module.
 
 .. _Attributes_TypeAttributes:
 
@@ -88,9 +141,18 @@ Type Attributes
 
 .. Current list of type attributes (as of 4/16/14, r16419):
     ``auto_closure``
+    example:
+
+        func foo(@auto_closure f:() -> ()) {
+            f()
+        }
+        foo(x = 5)
+
+
+
     ``cc``
     ``noreturn``
-    ``objc_block``
+    ``objc_block`` // Confirm that we shouldn't document this.
     ``thin``
     ``thick``
     ``unchecked``
@@ -102,6 +164,7 @@ Interface Builder Attributes
 ----------------------------
 
 .. Current list of IB attributes (as of 4/16/14, r16419):
+    // Talk to Tony and Robert Morrish about where go for more information.
     ``IBAction``
     ``IBDesignable``
     ``IBInspectable``
