@@ -4,7 +4,7 @@ Reference Manual
 .. toctree::
     :maxdepth: 1
 
-    Introduction
+    AboutTheLanguageReference
     LexicalStructure
     Types
     Expressions
