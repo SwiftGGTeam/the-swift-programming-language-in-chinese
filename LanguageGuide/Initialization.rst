@@ -683,9 +683,18 @@ You can apply the ``@required`` attribute to
 a designated or convenience initializer of a class
 to indicate that every subclass of that class must implement the initializer.
 
-Required designated initializers must be implemented explicitly by subclasses,
-and the requirement cannot be satisfied by an automatically-inherited initializer.
-Required convenience initializers can be implemented explicitly or inherited automatically.
+Even if an initializer is marked as ``@required``,
+you may not have to provide an explicit implementation of that initializer,
+and may be able to satisfy the requirement with an inherited initializer instead.
+Requirements are satisfied based on the following two rules:
+
+**Rule 1:** If your superclass has a required *designated* initializer,
+you must provide an implementation of that initializer.
+The requirement can't be satisfied by an inherited initializer.
+
+**Rule 2:** If your superclass has a required *convenience* initializer,
+you can satisfy the requirement with an inherited initializer,
+even if the requirement started life as a designated initializer higher up the chain.
 
 .. TODO: provide an example.
 
