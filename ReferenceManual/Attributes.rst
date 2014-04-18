@@ -140,6 +140,11 @@ Declaration Attributes
     can't be subclassed. It is applied to a property, method, or subscript of a class
     to indicate that those class members can't be overridden in any subclass.
 
+.. TODO: Dave may or may not include an example of how to use the 'final' attribute
+    in the guide. If he does, include the following sentence:
+    For an example of how to use the ``final`` attribute,
+    see :ref:`Inheritance_FinalMethodsPropertiesAndSubscripts`.
+
 ``required``
     The ``required`` attribute is applied to a designated or convenience initializer
     of a class to indicate that every subclass must implement that initializer.
