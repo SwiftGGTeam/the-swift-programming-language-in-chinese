@@ -20,6 +20,17 @@ Contents
 Change Log
 ----------
 
+April 17 2014
+~~~~~~~~~~~~~
+
+Language Reference
+++++++++++++++++++
+
+* Added a draft of the :doc:`ReferenceManual/AboutTheLanguageReference` chapter.
+  **NOTE:** The title of this chapter was previously "Introduction".
+  The "Reference Manual" is now know as the "Language Reference" for the sake of parity with
+  the "Language Guide".
+
 April 15 2014
 ~~~~~~~~~~~~~
 
@@ -45,8 +56,8 @@ Language Guide
   to talk about property overriding now that stored properties can be overridden.
 * Updates throughout the Guide now that optionals are default-initialized to ``nil``.
 
-Reference Manual
-++++++++++++++++
+Language Reference
+++++++++++++++++++
 
 * Added a draft of the :doc:`ReferenceManual/Patterns` chapter.
 * Updated the grammar for :ref:`function <Declarations_FunctionDeclaration>`,
@@ -80,8 +91,8 @@ Language Guide
 * Updated the :ref:`overriding <Inheritance_Overriding>` section now that ``override`` is a keyword.
 * Incorporated editorial feedback on several chapters.
 
-Reference Manual
-++++++++++++++++
+Language Reference
+++++++++++++++++++
 
 * Updated the formal grammar and surrounding prose for the ``switch`` statement in :ref:`Statements_SwitchStatement`.
 * Incorporated various editorial feedback on the :doc:`ReferenceManual/GenericParametersAndArguments` chapter.
@@ -89,8 +100,8 @@ Reference Manual
 April 1 2014
 ~~~~~~~~~~~~
 
-Reference Manual
-++++++++++++++++
+Language Reference
+++++++++++++++++++
 
 * Added a draft of the :doc:`ReferenceManual/GenericParametersAndArguments` chapter.
   **NOTE:** The title of this chapter was previously "Generics".
@@ -156,8 +167,8 @@ Language Guide
 * Clarified what can be :ref:`overridden <Inheritance_Overriding>`
 * Moved :doc:`LanguageGuide/Subscripts` into its own chapter
 
-Reference Manual
-++++++++++++++++
+Language Reference
+++++++++++++++++++
 
 * Added a draft of the :doc:`ReferenceManual/Declarations` chapter.
   There are still a few placeholder sections in this chapter.
@@ -202,8 +213,8 @@ Language Guide
 * Updates to bring code examples in line with this week's Swift release
 * Lots of editorial and technical improvements based on reader feedback (thank you!)
 
-Reference Manual
-++++++++++++++++
+Language Reference
+++++++++++++++++++
 
 * Minor formal grammar updates to the :doc:`ReferenceManual/LexicalStructure` chapter.
 * **NOTE:** The grammar in the :doc:`ReferenceManual/Declarations` and :doc:`ReferenceManual/Expressions`
@@ -213,8 +224,8 @@ Reference Manual
 February 28 2014
 ~~~~~~~~~~~~~~~~
 
-Reference Manual
-++++++++++++++++
+Language Reference
+++++++++++++++++++
 
 * Substantial updates to the :doc:`ReferenceManual/LexicalStructure` chapter.
   Most sections of this chapter have been improved, both in prose and in formal grammar.
@@ -254,8 +265,8 @@ Language Guide
 * Placeholder sections for Arrays and Dictionaries (but no content as yet) in :doc:`LanguageGuide/BasicTypes`
 * Editorial changes and improvements throughout the *Guide*
 
-Reference Manual
-++++++++++++++++
+Language Reference
+++++++++++++++++++
 
 * Updated the :doc:`ReferenceManual/Statements` chapter to account for optional binding in ``if`` and ``while`` statements.
   Also simplified the grammar by making expressions and declarations be kinds of statements.
