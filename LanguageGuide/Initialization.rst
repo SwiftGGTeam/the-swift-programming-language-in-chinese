@@ -609,6 +609,63 @@ and will create an instance of the subclass type (rather than the original type)
 when they are automatically inherited.
 ``Self`` is described in more detail :ref:`Inheritance_DynamicReturnTypes`.
 
+The following example shows designated initializers, convenience initializers,
+and automatic initializer inheritance in action.
+This example will define three new classes called
+``Food``, ``RecipeIngredient``, and ``ShoppingListItem``.
+Their class and initializer hierarchy is shown in the following diagram:
+
+.. image:: ../images/initializerDelegation03.png
+   :align: center
+
+The ``Food`` class defines a single ``String`` property called ``name``:
+
+.. testcode:: designatedConvenience
+
+   -> class Food {
+         var name: String
+         init(name: String) {
+            self.name = name
+         }
+         init() -> Self {
+            self.init(name: "[Unnamed]")
+         }
+      }
+
+The ``RecipeIngredient`` class is a subclass of ``Food`` that adds
+an ``Int`` property called ``quantity``:
+
+.. testcode:: designatedConvenience
+
+   -> class RecipeIngredient : Food {
+         var quantity: Int
+         init(name: String, quantity: Int) {
+            self.quantity = quantity
+            super.init(name: name)
+         }
+         init(name: String) -> Self {
+            self.init(name: name, quantity: 1)
+         }
+      }
+
+The ``ShoppingListItem`` class is a subclass of ``RecipeIngredient`` that adds
+a ``Bool`` property called ``purchased``, with a default value of ``false``.
+It also adds a computed ``String`` property called ``description``:
+
+.. testcode:: designatedConvenience
+
+   -> class ShoppingListItem : RecipeIngredient {
+         var purchased = false
+         var description: String {
+            var output = "\(quantity) x \(name.lowercase)"
+            output += purchased ? " ✔︎" : " ✘"
+            return output
+         }
+      }
+
+.. QUESTION: Should description be a property or a method?
+   I think I've used a method elsewhere in the book for a similar scenario.
+
 .. _Initialization_Deinitializers:
 
 Deinitializers
