@@ -674,6 +674,21 @@ It also adds a computed ``String`` property called ``description``:
    After conferring with Doug, I've decided not to include these in the Guide
    if you can't write them yourself in pure Swift.
 
+.. _Initialization_RequiredInitializers:
+
+Required Initializers
+_____________________
+
+You can apply the ``@required`` attribute to
+a designated or convenience initializer of a class
+to indicate that every subclass of that class must implement the initializer.
+
+Required designated initializers must be implemented explicitly by subclasses,
+and the requirement cannot be satisfied by an automatically-inherited initializer.
+Required convenience initializers can be implemented explicitly or inherited automatically.
+
+.. TODO: provide an example.
+
 .. _Initialization_Deinitializers:
 
 Deinitializers
