@@ -760,7 +760,6 @@ with a single property requirement of a gettable ``Double`` property called ``ar
    Even if you are not interoperating with Objective-C,
    you will still need to mark your protocols with the ``@objc`` attribute
    if you want to be able to check for protocol conformance.
-   This requirement is likely to be removed in a future version of Swift.
    
    Note also that ``@objc`` protocols can only be adopted by classes,
    and not by structures or enumerations.
@@ -894,11 +893,10 @@ to reflect the fact that the optional requirement may not have been implemented.
 .. note::
 
    Optional protocol requirements can only be specified
-   if your protocol is marked with the ``@objc`` attribute,
+   if your protocol is marked with the ``@objc`` attribute.
    Even if you are not interoperating with Objective-C,
    you will still need to mark your protocols with the ``@objc`` attribute
    if you want to specify optional requirements.
-   This limitation is likely to be removed in a future version of Swift.
    
    Note also that ``@objc`` protocols can only be adopted by classes,
    and not by structures or enumerations.
