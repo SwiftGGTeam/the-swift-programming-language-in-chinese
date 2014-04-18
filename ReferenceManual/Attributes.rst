@@ -7,51 +7,6 @@ Attributes
     @<#attribute name#>(<#attribute arguments#>)
 
 
-.. langref-grammar
-
-    attribute-list        ::= /*empty*/
-    attribute-list        ::= attribute-list-clause attribute-list
-    attribute-list-clause ::= '@' attribute
-    attribute-list-clause ::= '@' attribute ','? attribute-list-clause
-    attribute      ::= attribute-infix
-    attribute      ::= attribute-resilience
-    attribute      ::= attribute-inout
-    attribute      ::= attribute-auto_closure
-    attribute      ::= attribute-noreturn
-
-.. NOTE: LangRef grammar is way out of date.
-
-.. syntax-grammar::
-
-    Grammar of an attribute
-
-    attribute --> ``@`` attribute-name attribute-argument-clause-OPT
-    attribute-name --> identifier
-    attribute-argument-clause --> ``(`` balanced-tokens-OPT ``)``
-    attributes --> attribute attributes-OPT
-
-    balanced-tokens --> balanced-token balanced-tokens-OPT
-    balanced-token --> ``(`` balanced-tokens-OPT ``)``
-    balanced-token --> ``[`` balanced-tokens-OPT ``]``
-    balanced-token --> ``{`` balanced-tokens-OPT ``}``
-    balanced-token --> Any identifier, keyword, literal, or operator
-    balanced-token --> Any punctuation except ``(``, ``)``, ``[``, ``]``, ``{``, or ``}``
-
-
-.. TODO:
-
-    What should the new grammar look like (also taking into account ``!`` inverted attributes)?
-    What should we call the "arguments" that attributes take? ("options"?)
-
-    The structure of what's inside the parens is always going to be special.
-    Essentially, the attribute defines its own grammar for what goes in its
-    parens.  The stuff in parens should just be (gramatically) a balanced token
-    sequence.
-
-.. TODO: Schedule another TR meeting with Ted and Doug to get the specific
-    about the new grammar and what we should document.
-
-
 .. _Attributes_DeclarationAttributes:
 
 Declaration Attributes
@@ -176,7 +131,6 @@ Type Attributes
         foo(x = 5)
 
 
-
     ``cc`` // Mainly used for SIL at the moment. May eventually surface in the Swift
               type system at some point (for power users that need to tweak calling conventions).
     ``noreturn``
@@ -197,3 +151,39 @@ Interface Builder Attributes
     ``IBDesignable``
     ``IBInspectable``
     ``IBOutlet``
+
+.. langref-grammar
+
+    attribute-list        ::= /*empty*/
+    attribute-list        ::= attribute-list-clause attribute-list
+    attribute-list-clause ::= '@' attribute
+    attribute-list-clause ::= '@' attribute ','? attribute-list-clause
+    attribute      ::= attribute-infix
+    attribute      ::= attribute-resilience
+    attribute      ::= attribute-inout
+    attribute      ::= attribute-auto_closure
+    attribute      ::= attribute-noreturn
+
+.. NOTE: LangRef grammar is way out of date.
+
+.. syntax-grammar::
+
+    Grammar of an attribute
+
+    attribute --> ``@`` attribute-name attribute-argument-clause-OPT
+    attribute-name --> identifier
+    attribute-argument-clause --> ``(`` balanced-tokens-OPT ``)``
+    attributes --> attribute attributes-OPT
+
+    balanced-tokens --> balanced-token balanced-tokens-OPT
+    balanced-token --> ``(`` balanced-tokens-OPT ``)``
+    balanced-token --> ``[`` balanced-tokens-OPT ``]``
+    balanced-token --> ``{`` balanced-tokens-OPT ``}``
+    balanced-token --> Any identifier, keyword, literal, or operator
+    balanced-token --> Any punctuation except ``(``, ``)``, ``[``, ``]``, ``{``, or ``}``
+
+
+.. TODO:
+    Find out if there's a solution to the "!" inverted attributes problem.
+    It'd be nice if we didn't have to use ! for this meaning too.
+    If we decide to keep it, I'll need to update the grammar accordingly.
