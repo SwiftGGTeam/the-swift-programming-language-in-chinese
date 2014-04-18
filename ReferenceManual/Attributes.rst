@@ -73,6 +73,7 @@ Declaration Attributes
     (swift) original
     // original : Vector2D = Vector2D(4.0, 6.0)
 
+    Update from [Contributor 7746]: This is a bug; he filed <rdar://problem/16656024> to track it.
 
 ``call_arguments(strict)``
     The ``call_arguments(strict)`` attribute is applied to any function or method to
