@@ -63,17 +63,17 @@ Declaration Attributes
     ``availability(arguments)`` (OnFunc | OnEnum | OnClass | OnProtocol | OnVar | OnConstructor | OnDestructor; AllowMultipleAttributes)
     ✓ ``class_protocol`` (OnProtocol)
     ✓ ``exported`` (OnImport)
-    ``final`` (OnClass | OnFunc | OnVar | OnSubscript)
+    ✓ ``final`` (OnClass | OnFunc | OnVar | OnSubscript)
     ``NSCopying`` (OnVar)
     ``noreturn`` (OnFunc)
     ``objc(arguments)`` (OnFunc | OnClass | OnProtocol | OnVar | OnSubscript | OnConstructor | OnDestructor)
-    ``required`` (OnConstructor)
+    ✓ ``required`` (OnConstructor)
 
     ``override`` (OnFunc | OnVar | OnSubscript) *Now a contextual keyword, not an attribute
 
     // Need info about where they can appear and whether they allow multiples:
     ``optional``
-    ``transparent``
+    ``transparent`` // Per Doug's email on 3/25, we probably shouldn't document this.
     ``unowned``
     ``weak``
     ``requires_stored_property_inits``
@@ -170,12 +170,13 @@ Type Attributes
 
 
 
-    ``cc``
+    ``cc`` // Mainly used for SIL at the moment. May eventually surface in the Swift
+              type system at some point (for power users that need to tweak calling conventions).
     ``noreturn``
     ``objc_block`` // Confirm that we shouldn't document this.
-    ``thin``
-    ``thick``
-    ``unchecked``
+    ``thin`` // Mainly used for SIL at the moment. Confirm that we shouldn't document for 1.0
+    ``thick`` // Mainly used for SIL at the moment. Confirm that we shouldn't document for 1.0
+    ``unchecked`` // May be going away if we can come up with better syntactic sugar.
 
 
 .. _Attributes_InterfaceBuilderAttributes:
