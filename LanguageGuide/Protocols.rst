@@ -874,6 +874,9 @@ and so only their ``area`` property can be accessed.
 Optional Protocol Requirements
 ------------------------------
 
+.. TODO: split this section into several subsections as per [Contributor 7746]'s feedback,
+   and cover the missing alternative approaches that he mentioned.
+
 Protocols can define :newTerm:`optional requirements`,
 which do not have to be implemented by types that conform to the protocol.
 Optional requirements are prefixed by the ``@optional`` keyword
