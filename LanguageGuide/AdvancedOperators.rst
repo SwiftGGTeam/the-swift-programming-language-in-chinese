@@ -706,6 +706,11 @@ as its value will be modified directly from within the operator function:
          lhs = lhs + rhs
       }
 
+.. TODO: This isn't actually true - you don't need to specify @assignment.
+   Nonetheless, our current policy is to specify it anyway.
+   This is being tracked in rdar://problem/16656024,
+   and this section should be updated based on the outcome of that radar.
+
 This example implements an addition assignment operator function for ``Vector2D`` instances.
 Because an addition operator has already been defined above,
 there is no need to reimplement the addition process again here.
