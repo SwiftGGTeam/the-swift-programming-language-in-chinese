@@ -60,13 +60,18 @@ Declaration Attributes
 
 .. Current list of declaration attributes (as of 4/16/14, r16419):
     ✓ ``assignment`` (OnFunc)
+
+    // @availability isn't implemented yet. Find out from Ted when it's going to be.
     ``availability(arguments)`` (OnFunc | OnEnum | OnClass | OnProtocol | OnVar | OnConstructor | OnDestructor; AllowMultipleAttributes)
+
     ✓ ``class_protocol`` (OnProtocol)
     ✓ ``exported`` (OnImport)
     ✓ ``final`` (OnClass | OnFunc | OnVar | OnSubscript)
+
     ``NSCopying`` (OnVar)
     ``noreturn`` (OnFunc)
     ``objc(arguments)`` (OnFunc | OnClass | OnProtocol | OnVar | OnSubscript | OnConstructor | OnDestructor)
+
     ✓ ``required`` (OnConstructor)
 
     ``override`` (OnFunc | OnVar | OnSubscript) *Now a contextual keyword, not an attribute
@@ -91,6 +96,8 @@ Declaration Attributes
 ``assignment``
     The ``assignment`` attribute is applied to functions that overload
     a compound assignment operator.
+    Functions that overload a compound assignment operator must mark
+    their initial input parameter as ``inout``.
     For an example of how to use the ``assignment`` attribute,
     see :ref:`AdvancedOperators_CompoundAssignmentOperators`.
 
