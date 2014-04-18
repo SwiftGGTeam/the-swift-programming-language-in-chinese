@@ -992,8 +992,10 @@ Nested Functions
 Functions can be :newTerm:`nested` inside other functions.
 As its name suggests, a nested function is simply
 a function written within the body of another function.
-The nested function is hidden from the outside world,
+The nested function is hidden from the outside world by default,
 but can still be used by its enclosing function.
+An enclosing function can return one of its nested functions
+to allow the nested function to be used in another scope.
 
 The ``chooseStepFunction`` example above can be rewritten
 to use and return nested functions:
