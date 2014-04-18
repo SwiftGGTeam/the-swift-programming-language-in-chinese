@@ -285,23 +285,25 @@ regardless of whether the inherited property is implemented as
 a stored or computed property at source.
 (The stored or computed nature of an inherited property is not known by a subclass –
 it only knows that the inherited property has a certain name and type.)
+You must always state both the name and the type of the property you are overriding,
+to enable the compiler to check that your override matches
+a superclass property with the same name and type.
 
-You can also change the read-only / read-write nature of a property in an override.
-If you provide a getter but no setter for a property override in your subclass,
-that property will be read-only when accessed on instances of your subclass.
-Conversely, you can present an inherited read-only property
-as a read-write property on your subclass
+You can present an inherited read-only property as a read-write property
 by providing both a getter and a setter in your subclass property override.
+You cannot, however, present an inherited read-write property as a read-only property.
+
+.. TODO: You can also convert a read-write property into a read-only property
+   (at least, you can as of Swift r16524), but this is not intended behavior
+   (as tracked by rdar://problem/16659058). I've not mentioned it as a result.
 
 .. note::
 
    If you provide a setter as part of a property override,
-   you must also provide a getter.
-   This is the same rule as for computed properties.
-
-   If you need to provide a getter,
-   but don't want to modify the property value within the getter,
-   you can simply return ``super.someProperty``,
+   you must also provide a getter for that override.
+   If you don't want to modify the inherited property's value within the overriding getter,
+   you can simply pass through the inherited value
+   by returning ``super.someProperty`` from the getter,
    as in the ``SpeedLimitedCar`` example below.
 
 The following example defines a new class called ``SpeedLimitedCar``,
