@@ -666,6 +666,14 @@ It also adds a computed ``String`` property called ``description``:
 .. QUESTION: Should description be a property or a method?
    I think I've used a method elsewhere in the book for a similar scenario.
 
+.. TODO: talk about the general factory initializer pattern,
+   and how Swift's approach to initialization removes the need for most factories.
+
+.. NOTE: We import some Obj-C-imported factory initializers as init() -> MyType,
+   but you can't currently write these in Swift yourself.
+   After conferring with Doug, I've decided not to include these in the Guide
+   if you can't write them yourself in pure Swift.
+
 .. _Initialization_Deinitializers:
 
 Deinitializers
