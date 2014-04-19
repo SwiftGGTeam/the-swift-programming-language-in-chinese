@@ -884,6 +884,17 @@ Optional Protocol Requirements
 .. TODO: split this section into several subsections as per [Contributor 7746]'s feedback,
    and cover the missing alternative approaches that he mentioned.
 
+.. TODO: you can specify optional subscripts,
+   and the way you check for them / work with them is a bit esoteric.
+   You have to try and access a value from the subscript,
+   and see if the value you get back (which will be an optional)
+   has a value or is nil.
+
+.. TODO: you can specify optional initializers,
+   but there doesn't seem to be a way to check for them or call them.
+   Doug has suggested that we should probably ban them,
+   which I've filed as rdar://16669554.
+
 Protocols can define :newTerm:`optional requirements`,
 which do not have to be implemented by types that conform to the protocol.
 Optional requirements are prefixed by the ``@optional`` keyword
