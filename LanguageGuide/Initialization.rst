@@ -707,6 +707,11 @@ the following two rules apply:
 
 These rules apply even if your subclass adds further designated or convenience initializers.
 
+.. note::
+
+   A subclass can implement a superclass designated initializer
+   as a subclass convenience initializer as part of satisfying rule 2.
+
 .. _Initialization_SyntaxForDesignatedAndConvenienceInitializers:
 
 Syntax for Designated and Convenience Initializers
@@ -742,17 +747,14 @@ _________________________________________________
 
 The following example shows designated initializers, convenience initializers,
 and automatic initializer inheritance in action.
-This example defines three new classes called
-``Food``, ``RecipeIngredient``, and ``ShoppingListItem``.
-The class and initializer hierarchy,
-and the properties that each class introduces,
-are shown in the following diagram:
+This example defines a hierarchy of three classes called
+``Food``, ``RecipeIngredient``, and ``ShoppingListItem``,
+and demonstrates how their initializers interact.
 
-.. image:: ../images/initializerDelegation03.png
-   :align: center
-
-The ``Food`` class defines a single ``String`` property called ``name``,
-without a default value:
+The base class in the hierarchy is called ``Food``,
+which is a simple class to encapsulate the name of a foodstuff.
+The ``Food`` class introduces a single ``String`` property called ``name``,
+and provides two initializers for creating ``Food`` instances:
 
 .. testcode:: designatedConvenience
 
@@ -766,16 +768,22 @@ without a default value:
          }
       }
 
+The figure below shows the initializer chain for the ``Food`` class:
+
+.. image:: ../images/initializersExample01.png
+   :align: center
+
 Classes do not have a default memberwise initializer,
-and so the ``Food`` class provides an initializer that takes a single argument called ``name``.
+and so the ``Food`` class provides a designated initializer
+that takes a single argument called ``name``.
 This initializer can be used to create a new ``Food`` instance with a specific name:
 
 .. testcode:: designatedConvenience
 
-   -> let bacon = Food("Bacon")
-   << // bacon : Food = <Food instance>
-   /> bacon.name is \"\(bacon.name)\"
-   </ bacon.name is "Bacon"
+   -> let namedMeat = Food(name: "Bacon")
+   << // namedMeat : Food = <Food instance>
+   /> namedMeat's name is \"\(namedMeat.name)\"
+   </ namedMeat's name is "Bacon"
 
 The ``init(name: String)`` initializer is provided as a *designated* initializer,
 because it ensures that all of the stored properties of
@@ -786,18 +794,21 @@ to complete its initialization.
 
 The ``Food`` class also provides a *convenience* initializer, ``init()``, with no arguments.
 The ``init()`` initializer provides a default placeholder name for a new food
-by delegating to the ``Food`` class's ``init(name: String)`` with
-a default ``name`` value of ``[Unnamed]``:
+by delegating across to the ``Food`` class's ``init(name: String)`` with
+a ``name`` value of ``[Unnamed]``:
 
 .. testcode:: designatedConvenience
 
    -> let mysteryMeat = Food()
    << // mysteryMeat : Food = <Food instance>
-   /> mysteryMeat.name is \"\(mysteryMeat.name)\"
-   </ mysteryMeat.name is "[Unnamed]"
+   /> mysteryMeat's name is \"\(mysteryMeat.name)\"
+   </ mysteryMeat's name is "[Unnamed]"
 
-The ``RecipeIngredient`` class is a subclass of ``Food`` that adds
-an ``Int`` property called ``quantity``, without a default value:
+The second class in the hierarchy is a subclass of ``Food`` called ``RecipeIngredient``.
+The ``RecipeIngredient`` class models an ingredient in a cooking recipe.
+It introduces an ``Int`` property called ``quantity``
+(in addition to the ``name`` property it inherits from ``Food``),
+and defines two initializers for creating ``RecipeIngredient`` instances:
 
 .. testcode:: designatedConvenience
 
@@ -812,13 +823,64 @@ an ``Int`` property called ``quantity``, without a default value:
          }
       }
 
-The ``RecipeIngredient`` class has a designated initializer that takes
-a ``name`` value and a ``quantity`` value,
-and ensures that 
+The figure below shows the initializer chain for the ``RecipeIngredient`` class:
 
-The ``ShoppingListItem`` class is a subclass of ``RecipeIngredient`` that adds
-a ``Bool`` property called ``purchased``, with a default value of ``false``.
-It also adds a computed ``String`` property called ``description``:
+.. image:: ../images/initializersExample02.png
+   :align: center
+
+The ``RecipeIngredient`` class has a single designated initializer,
+``init(name: String, quantity: Int)``,
+which can be used to populate all of the properties of a new ``RecipeIngredient`` instance.
+This initializer starts by assigning
+the passed ``quantity`` argument to the ``quantity`` property,
+which is the only new property introduced by ``RecipeIngredient``.
+After doing so, the initializer delegates up to
+the ``init(name: String)`` initializer of the ``Food`` class.
+This process satisfies safety check 1 from *Two-Phase Initialization* above.
+
+``RecipeIngredient`` also defines a convenience initializer,
+``init(name: String) -> Self``,
+which can be used to create a ``RecipeIngredient`` instance by name alone.
+This convenience initializer assumes a quantity of ``1``
+for any ``RecipeIngredient`` instance that is created without an explicit quantity.
+The definition of this convenience initializer makes
+``RecipeIngredient`` instances quicker and more convenient to create,
+and avoids code duplication when creating
+several single-quantity ``RecipeIngredient`` instances.
+This convenience initializer simply delegates across to the class's designated initializer.
+
+Note that the ``init(name: String) -> Self`` convenience initializer provided by ``RecipeIngredient``
+takes the same parameters as the ``init(name: String)`` *designated* initializer from ``Food``.
+Even though ``RecipeIngredient`` has provided this initializer as a convenience initializer,
+this nonetheless means that ``RecipeIngredient`` has provided
+an implementation of all of its superclass's designated initializers.
+Because of this, it automatically inherits all of its superclass's convenience initializers too.
+This means that ``RecipeIngredient`` inherits the ``init()`` initializer from ``Food``.
+The inherited version of ``init()`` functions in exactly the same was as the ``Food`` version,
+except that it delegates to the ``RecipeIngredient`` version of ``init(name: String)``
+rather than the ``Food`` version.
+
+All three of these initializers can be used to create new ``RecipeIngredient`` instances:
+
+.. testcode:: designatedConvenience
+
+   -> let oneMysteryItem = RecipeIngredient()
+   << // oneMysteryItem : RecipeIngredient = <RecipeIngredient instance>
+   -> let oneBacon = RecipeIngredient(name: "Bacon")
+   << // oneBacon : RecipeIngredient = <RecipeIngredient instance>
+   -> let sixEggs = RecipeIngredient(name: "Eggs", quantity: 6)
+   << // sixEggs : RecipeIngredient = <RecipeIngredient instance>
+
+The third and final class in the hierarchy is
+a subclass of ``RecipeIngredient`` called ``ShoppingListItem``.
+The ``ShoppingListItem`` class models a recipe ingredient as it appears in a shopping list.
+
+Every item in the shopping list starts out as “unpurchased”.
+To represent this fact,
+``ShoppingListItem`` introduces a Boolean property called ``purchased``,
+with a default value of ``false``.
+``ShoppingListItem`` also adds a computed ``String`` property called ``description``,
+to provide a textual description of a ``ShoppingListItem`` instance:
 
 .. testcode:: designatedConvenience
 
@@ -830,6 +892,51 @@ It also adds a computed ``String`` property called ``description``:
             return output
          }
       }
+
+.. note::
+
+   ``ShoppingListItem`` does not define an initializer to provide
+   an initial value for ``purchased``,
+   because items in a shopping list (as modeled here) always start out unpurchased.
+
+Because it provides a default value for all of the properties it introduces,
+and does not define any initializers itself,
+``ShoppingListItem`` automatically inherits
+*all* of the designated and convenience initializers from it superclass.
+
+The figure below shows the overall initializer chain for all three classes:
+
+.. image:: ../images/initializersExample03.png
+   :align: center
+
+All three of the inherited initializers can be used to create
+a new ``ShoppingListItem`` instance:
+
+.. testcode:: designatedConvenience
+
+   -> var breakfastList = [
+         ShoppingListItem(),
+         ShoppingListItem(name: "Bacon"),
+         ShoppingListItem(name: "Eggs", quantity: 6),
+      ]
+   << // breakfastList : ShoppingListItem[] = [<ShoppingListItem instance>, <ShoppingListItem instance>, <ShoppingListItem instance>]
+   -> breakfastList[0].name = "Orange juice"
+   -> breakfastList[0].purchased = true
+   -> for item in breakfastList {
+         println(item.description)
+      }
+   // 1 x orange juice ✔︎
+   // 1 x bacon ✘
+   // 6 x eggs ✘
+
+Here, a new array called ``breakfastList`` is created from
+an array literal containing three new ``ShoppingListItem`` instances.
+The type of the array is inferred to be ``Array<ShoppingListItem>``.
+After creating the array,
+the name of the unnamed ``ShoppingListItem`` at the start of the array
+is changed to be ``"Orange juice"``, and it is marked as having been purchased.
+Printing the description of each item in the array
+shows that their default states have been set as expected.
 
 .. QUESTION: Should description be a property or a method?
    I think I've used a method elsewhere in the book for a similar scenario.
