@@ -20,7 +20,7 @@ Any type that satisfies the requirements of a protocol is said to
 :newTerm:`conform` to that protocol.
 
 Protocols can require that conforming types have specific
-instance properties, instance methods, type properties, type methods,
+instance properties, instance methods, type methods,
 initializers, operators, and subscripts.
 
 .. _Protocols_ProtocolSyntax:
@@ -499,15 +499,22 @@ Initializers
 .. You can't construct from a protocol
 .. You can define initializer requirements in protocols
 
-.. _Protocols_ClassAndStaticMethodsAndProperties:
+.. _Protocols_TypeMethods:
 
-Class and Static Methods and Properties
----------------------------------------
+Type Methods
+------------
 
 .. write-me::
 
-.. Protocols can provide class (and static) functions and properties
+.. TODO: Protocols can provide class (and static) functions
    (although rdar://14620454 and rdar://15242744).
+
+.. TODO: We already have static properties,
+   but we won't have class properties for Swift 1.0, says [Contributor 7746].
+   This means that protocols will not allow the definition of type-level properties,
+   because a class would be unable to fulfil them.
+   I've named this section's placeholder title
+   to refer to "Type Methods" only for now.
 
 .. _Protocols_AddingProtocolConformanceWithExtensions:
 

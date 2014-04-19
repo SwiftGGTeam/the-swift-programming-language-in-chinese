@@ -252,7 +252,7 @@ Type Methods
 .. write-me::
 
 .. see release notes from 2013-12-18 for a note about lazy initialization
-.. mention that type methods can access type properties (and other type methods?)
+.. mention that static methods can access static properties (and other static methods?)
    without needing to reference the type's name,
    as they also get an implicit ``self`` parameter.
 

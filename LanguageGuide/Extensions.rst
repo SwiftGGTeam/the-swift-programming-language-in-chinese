@@ -18,7 +18,7 @@ Extensions are similar to :newTerm:`categories` in Objective-C.
 
 Extensions can:
 
-* add computed properties and computed type properties
+* add computed properties and computed static properties
 * define instance methods and type methods
 * provide new initializers
 * define subscripts
@@ -252,10 +252,10 @@ Calling ``shiftRight(3)`` on an integer variable containing the number ``123456`
 shifts the number to the right by three decimal places,
 and changes the variable to have a value of ``123``.
 
-.. _Extensions_ComputedTypeProperties:
+.. _Extensions_ComputedStaticProperties:
 
-Computed Type Properties
-------------------------
+Computed Static Properties
+--------------------------
 
 .. write-me::
 

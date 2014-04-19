@@ -6,8 +6,8 @@ Stored properties store a constant or variable named value alongside an instance
 whereas computed properties calculate (rather than store) a value.
 
 Stored and computed properties are usually associated with instances of a particular type.
-However, they can also be associated with the type itself.
-Such properties are known as type properties.
+However, for value types, they can also be associated with the type itself.
+Such properties are known as static properties.
 
 .. note::
 
@@ -395,22 +395,26 @@ and the default name of ``oldValue`` is used instead.
 
 .. TODO: mention that this also works for global / local variables
 
-.. _Properties_TypeProperties:
+.. _Properties_StaticProperties:
 
-Type Properties
----------------
+Static Properties
+-----------------
 
 .. write-me::
 
-.. see release notes from 2013-12-18 for a note about lazy initialization
-.. mention that type methods can access type properties (and other type methods?)
+.. QUESTION: we won't have class properties for Swift 1.0, says [Contributor 7746].
+   I've named this section "Static Properties" as a result,
+   and mirrored this approach elsewhere in the book.
+   Is this the right approach, or should I call them "Type Properties" from the off?
+.. TODO: see release notes from 2013-12-18 for a note about lazy initialization
+.. TODO: mention that type methods can access type properties (and other type methods?)
    without needing to reference the type's name,
    as they also get an implicit ``self`` parameter.
-.. as it stands, this is the first time I'll mention .dynamicType (assuming I do)
+.. TODO: as it stands, this is the first time I'll mention .dynamicType (assuming I do)
    is this the right place to introduce it?
-.. mention that you can get at type properties a few different ways:
+.. TODO: mention that you can get at type properties a few different ways:
    TypeName.propertyName; someInstance.dynamicType.propertyName;
    just plain old propertyName if you're already at a type level in that type
    (likewise for methods in the methods chapter)
-.. type properties *must* have an initializer or a getter/setter,
+.. TODO: type properties *must* have an initializer or a getter/setter,
    because there's no "+ initialize" during which to init them otherwise
