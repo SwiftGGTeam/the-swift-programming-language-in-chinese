@@ -20,10 +20,6 @@ when an instance of that class instance is destroyed.
    because you can't be sure that a subclass will definitely provide the constructor –
    see doug's notes from r14175 for more info
 
-.. TODO: mention that initializers can be marked with the @required attribute
-
-.. TODO: update this chapter once initializers switch over to the unified function syntax
-
 .. _Initialization_Initializers:
 
 Initializers
@@ -124,24 +120,21 @@ with a value from a different temperature scale:
 
    -> struct Celsius {
          var temperatureInCelsius: Double = 0.0
-         init(fahrenheit: Double) {
+         init(fromFahrenheit fahrenheit: Double) {
             temperatureInCelsius = (fahrenheit - 32.0) / 1.8
          }
-         init(kelvin: Double) {
+         init(fromKelvin kelvin: Double) {
             temperatureInCelsius = kelvin + 273.15
          }
       }
-   -> var boilingPointOfWater = Celsius(fahrenheit: 212.0)
+   -> var boilingPointOfWater = Celsius(fromFahrenheit: 212.0)
    << // boilingPointOfWater : Celsius = Celsius(100.0)
    /> boilingPointOfWater.temperatureInCelsius is \(boilingPointOfWater.temperatureInCelsius)
    </ boilingPointOfWater.temperatureInCelsius is 100.0
-   -> var freezingPointOfWater = Celsius(kelvin: -273.15)
+   -> var freezingPointOfWater = Celsius(fromKelvin: -273.15)
    << // freezingPointOfWater : Celsius = Celsius(0.0)
    /> freezingPointOfWater.temperatureInCelsius is \(freezingPointOfWater.temperatureInCelsius)
    </ freezingPointOfWater.temperatureInCelsius is 0.0
-
-.. TODO: I think this example should use "fromFahrenheit" / "fromKelvin"
-   once Doug has fixed the external / local calling issue.
 
 .. _Initialization_OptionalPropertyValues:
 
@@ -210,8 +203,6 @@ it can still be set within the ``init text`` initializer:
    -> beetsQuestion.ask()
    <- How about beets?
    -> beetsQuestion.response = "I also like beets. (But not with cheese.)"
-
-.. TODO: This could do with a more elegant example.
 
 .. _Initialization_DefaultInitializers:
 
