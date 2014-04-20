@@ -797,7 +797,7 @@ and can be written over multiple lines if the list is long:
          <#statements#>
    }
 
-.. note:: switch
+.. note::
 
    To opt in to fallthrough behavior for a particular ``switch`` case,
    use the ``fallthrough`` keyword,
