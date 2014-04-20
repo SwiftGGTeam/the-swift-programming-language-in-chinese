@@ -270,7 +270,7 @@ However, there is one fundamental difference:
 * Structures and enumerations are *value* types
 * Classes are *reference* types
 
-This difference is very important when deciding how to define the building blocks of your code.
+This difference is very important as you decide how to define the building blocks of your code.
 
 .. TODO: this section needs updating to clarify that assignment is always like value semantics,
    and it's only really possible to see the difference when looking at the properties of a type.
