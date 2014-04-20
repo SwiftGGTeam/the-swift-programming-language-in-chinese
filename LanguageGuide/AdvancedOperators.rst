@@ -322,12 +322,12 @@ negative integers remain negative as their value moves closer to zero.
 Overflow Operators
 ------------------
 
-An error will be caused if you try to insert a number into an integer named value
+An error will be caused if you try to insert a number into an integer constant or variable
 that cannot hold that value.
 This gives extra safety when working with numbers that are too large or too small.
 
 For example, the ``Int16`` integer type can hold any signed integer number between ``-32768`` and ``32767``.
-Trying to set a ``UInt16`` named value to a number outside of this range
+Trying to set a ``UInt16`` constant or variable to a number outside of this range
 will cause an error:
 
 .. testcode:: overflowOperatorsWillFailToOverflow

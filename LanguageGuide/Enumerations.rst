@@ -175,7 +175,7 @@ Associated Values
 
 The examples in the previous section show how the members of an enumeration are
 a defined (and typed) value in their own right.
-You can set a named value to ``Planet.Earth``,
+You can set a constant or variable to ``Planet.Earth``,
 and check for this value later.
 However, it is sometimes useful to be able to store
 :newTerm:`associated values` of other types alongside these member values.
@@ -227,7 +227,8 @@ with an associated value of type (``Int``, ``Int``, ``Int``),
 or a value of ``QRCode`` with an associated value of type ``String``.”
 
 This definition does not provide any actual ``Int`` or ``String`` values –
-it just defines the *type* of associated values that ``Barcode`` named values can store
+it just defines the *type* of associated values
+that ``Barcode`` constants and variables can store
 when they are equal to ``Barcode.UPCA`` or ``Barcode.QRCode``.
 
 New barcodes can then be created using either type:
@@ -253,7 +254,7 @@ The same product can be changed to have a different type of barcode:
 At this point,
 the original ``Barcode.UPCA`` and its integer values are replaced by
 the new ``Barcode.QRCode`` and its string value.
-Named values of type ``Barcode`` can store either a ``.UPCA`` or a ``.QRCode``
+Constants and variables of type ``Barcode`` can store either a ``.UPCA`` or a ``.QRCode``
 (together with their associated values),
 but they can only store one of them at any given time.
 

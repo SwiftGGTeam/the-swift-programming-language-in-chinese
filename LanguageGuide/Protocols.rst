@@ -230,7 +230,7 @@ Because it is a type,
 a protocol can be used in many places where other types are allowed, including:
 
 * as a parameter type or return type in a function, method, or initializer
-* as the type of a named value or property
+* as the type of a constant, variable, or property
 * as the type of items in an ``Array``, ``Dictionary`` or other container
 
 .. note::
@@ -1107,7 +1107,7 @@ Protocol Composition
 .. Show how to make a custom type conform to LogicValue or some other protocol
 .. LogicValue certainly needs to be mentioned in here somewhere
 .. Show a protocol being used by an enumeration
-.. accessing protocol methods, properties etc. through a named value that is *just* of protocol type
+.. accessing protocol methods, properties etc. through a constant or variable that is *just* of protocol type
 .. Protocols can't be nested, but nested types can implement protocols
 .. Protocol requirements can be marked as @unavailable,
    but this currently only works if they are also marked as @objc.

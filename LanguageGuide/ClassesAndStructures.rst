@@ -128,7 +128,7 @@ Here's an example of a structure definition and a class definition:
 The example above defines a new structure called ``Resolution``,
 to describe a pixel-based display resolution.
 This structure has two stored properties called ``width`` and ``height``.
-Stored properties are named values that are bundled up and stored
+Stored properties are constants or variables that are bundled up and stored
 as part of the class or structure,
 and are described in detail in :doc:`Properties`.
 These two properties are inferred to be of type ``Int``
@@ -427,8 +427,8 @@ from the underlying ``VideoMode`` instance:
    -> println("The frameRate property of tenEighty is now \(tenEighty.frameRate)")
    <- The frameRate property of tenEighty is now 30.0
 
-Note that ``tenEighty`` and ``alsoTenEighty`` are declared as *constant* named values,
-rather than variable named values.
+Note that ``tenEighty`` and ``alsoTenEighty`` are declared as *constants*,
+rather than variables.
 However, it is still possible to change
 ``tenEighty.frameRate`` and ``alsoTenEighty.frameRate``.
 This is allowed because
@@ -452,12 +452,15 @@ ________
 
 If you have experience with C, C++ or Objective-C,
 you may know that these languages use pointers to refer to objects.
-Variables, constants, and properties that refer to an instance of a reference type
+Constants or variables that refer to an instance of a reference type
 are very similar to pointers in C-like languages,
 but do not use the reference operator (``&``) or dereference operator (``*``)
 to differentiate between a pointer and the memory it points to.
-Instead, a reference type in Swift is declared like any other named value,
+Instead, a constant or variable that refers to an instance of a reference type
+is declared like any other constant or variable in Swift,
 and the value it contains is always a reference to a particular instance of that type.
+
+.. TODO: functions aren't "instances". This needs clarifying.
 
 .. TODO: We need something here to say
    "but don't worry, you can still do all of the stuff you're used to".
@@ -528,21 +531,21 @@ Identity Operators
 ------------------
 
 Because classes are reference types,
-it is possible for multiple named values to refer to
+it is possible for multiple constants and variables to refer to
 the same single instance of a class behind the scenes.
 (The same is not true for structures and enumerations,
 because they are value types,
-and are always copied when they are assigned to a named value
+and are always copied when they are assigned to a constant or variable,
 or passed to a function.)
 
-It can sometimes be useful to find out if two named values refer to
+It can sometimes be useful to find out if two constants or variables refer to
 exactly the same instance of a class.
 To enable this, Swift provides two identity operators:
 
 * Identical to (``===``)
 * Not identical to (``!==``)
 
-Use these operators to check whether two named values refer to the same single instance:
+Use these operators to check whether two constants or variables refer to the same single instance:
 
 .. testcode:: ClassesAndStructures
 
@@ -555,7 +558,7 @@ Note that “identical to” (represented by three equals signs, or ``===``)
 does not mean the same thing as “equal to” (represented by two equals signs, or ``==``):
 
 * “Identical to” means that
-  two named values of class type refer to exactly the same class instance.
+  two constants or variables of class type refer to exactly the same class instance.
 * “Equal to” means that
   two instances are considered “equal” or “equivalent” in value,
   for some appropriate meaning of “equal”, as defined by the type's designer.
@@ -570,3 +573,5 @@ is described in :ref:`AdvancedOperators_EquivalenceOperators`.
    The identity operators are not used with structure and enumeration types,
    because they are value types that store their values directly,
    rather than referencing an instance of that type behind the scenes.
+
+.. TODO: This needs clarifying with regards to function references.

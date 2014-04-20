@@ -236,7 +236,8 @@ and the movie “Ghostbusters”, directed by Ivan Reitman.
 Checked Casts in Switch Statements
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you are working with named values whose type is only known to be ``Any`` or ``AnyObject``,
+If you are working with a constant or variable
+whose type is only known to be ``Any`` or ``AnyObject``,
 you can use the ``is`` and ``as`` operators to find out about the types they hold,
 and to work with them as more specific types.
 This is true even if they are not class types.
@@ -244,7 +245,7 @@ This is true even if they are not class types.
 For example, the ``is`` and ``as`` operators can be used within
 the cases of a ``switch`` statement to check and match values of a certain type,
 and to assign those values to temporary constants or variables
-(as described in :ref:`ControlFlow_NamedValueBindings`):
+(as described in :ref:`ControlFlow_ValueBindings`):
 
 .. testcode:: typeCasting
 
@@ -285,7 +286,7 @@ and to assign those values to temporary constants or variables
 .. TODO: talk about the use of "as" outside of an "if" statement sense,
    once rdar://16063985 is fixed.
 
-.. TODO: this section needs to address the question of "a named value having a type"
+.. TODO: this section needs to address the question of "a constant or variable having a type"
    as distinct from "a class instance having a type".
    This is also relevant in a protocol context.
 

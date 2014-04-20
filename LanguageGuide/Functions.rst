@@ -235,7 +235,7 @@ and ``nil`` as its second value to indicate that ``splitter`` was not found:
       }
    <- The text from after the splitter is 'world'
 
-Alternatively, decompose the tuple into multiple named values
+Alternatively, decompose the tuple into multiple constants or variables
 as part of the function return value assignment:
 
 .. testcode:: functionParameters
@@ -656,7 +656,7 @@ but the returned value is not used.
 Constant and Variable Parameters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Function parameters are constant named values by default.
+Function parameters are constants by default.
 Trying to change the value of a function parameter
 from within the body of that function results in a compile-time error.
 This means that you can't accidentally change the value of a parameter

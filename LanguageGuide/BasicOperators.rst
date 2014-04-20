@@ -74,7 +74,7 @@ The :newTerm:`assignment operator` (``a = b``) updates the value of ``a`` with t
    </ a is now equal to 10
 
 If the right side of the assignment is a tuple with multiple values,
-its elements can be decomposed into multiple named values at once:
+its elements can be decomposed into multiple constants or variables at once:
 
 .. testcode:: assignmentOperator
 
@@ -241,7 +241,7 @@ Increment and Decrement Operators
 Like C, Swift provides an :newTerm:`increment operator` (``++``)
 and an :newTerm:`decrement operator` (``--``)
 as a shorthand way to increase or decrease the value of a numeric variable by ``1``.
-These operators can be used with named values of any integer or floating-point type.
+These operators can be used with variables of any integer or floating-point type.
 
 .. testcode:: arithmeticOperators
 
@@ -388,7 +388,7 @@ Swift supports all of the standard C :newTerm:`comparison operators`:
 .. note::
 
    Swift also provides two :newTerm:`identity operators` (``===`` and ``!==``),
-   which are used to test if two object named values both refer to the same object instance.
+   which are used to test if two object references both refer to the same object instance.
    These identity operators are described in more detail in :doc:`ClassesAndStructures`.
 
 Each of the comparison operators returns a ``Bool`` value to indicate whether or not the statement is true:
@@ -485,8 +485,7 @@ This is shorthand for:
    </ rowHeight is equal to 90
 
 The shorthand version is more concise,
-and removes the need for ``rowHeight`` to be a variable named value
-rather than a constant named value.
+and removes the need for ``rowHeight`` to be a variable rather than a constant.
 
 .. TODO: leave rowHeight uninitialized once the REPL allows uninitialized variables?
 

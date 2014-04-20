@@ -2,7 +2,7 @@ Properties
 ==========
 
 :newTerm:`Properties` associate values with a particular class, structure, or enumeration.
-Stored properties store a constant or variable named value alongside an instance,
+Stored properties store a constant or variable value alongside an instance,
 whereas computed properties calculate (rather than store) a value.
 
 Stored and computed properties are usually associated with instances of a particular type.
@@ -23,7 +23,7 @@ Such properties are known as static properties.
 Stored Properties
 -----------------
 
-In its simplest form, a stored property is just a named value
+In its simplest form, a stored property is just a constant or variable
 that is stored alongside an instance of a particular class or structure.
 Stored properties can be either
 :newTerm:`variable stored properties` (introduced by the ``var`` keyword),
@@ -61,7 +61,7 @@ Stored Properties of Constant Structure Instances
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If you create an instance of a structure
-and assign that instance to a constant property or constant named value,
+and assign that instance to a constant,
 you cannot modify the instance's properties,
 even if they were declared as variable properties:
 
@@ -76,7 +76,7 @@ even if they were declared as variable properties:
    !! ~~~~~~~~~~~~~~~~~~~~~~~~~~~ ^
    // this will report an error, even thought firstValue is a variable property
 
-Because ``rangeOfFourItems`` is declared as a constant named value (with the ``let`` keyword),
+Because ``rangeOfFourItems`` is declared as a constant (with the ``let`` keyword),
 it is not possible to change its ``firstValue`` property,
 even though ``firstValue`` is a variable property.
 
@@ -85,8 +85,7 @@ When an instance of a value type is marked as being a constant,
 so are all of its properties.
 
 The same is not true for classes, which are *reference types*.
-If you assign an instance of a reference type
-to a constant property or constant named value,
+If you assign an instance of a reference type to a constant,
 you can still change that instance's variable properties.
 
 .. TODO: this explanation could still do to be improved.
@@ -283,7 +282,7 @@ to enable external users to discover its current calculated volume.
    A read-only computed property can return a different value every time it is called,
    whereas a constant stored property will always return the same value.
 
-.. NOTE: getters and setters are also allowed for named values
+.. NOTE: getters and setters are also allowed for constants and variables
    that are not associated with a particular class or struct.
    Where should this be mentioned?
    

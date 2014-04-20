@@ -1,16 +1,11 @@
 .. docnote:: Subjects to be covered in this section
 
    * Declaration syntax ✔︎
-   * Multiple variable declarations and initializations on one line:
-   * var i = 1; var j = 2; print(i + j)
-   * var k = 1, l = 2
-   * …but not… var m, n = 2
    * Naming conventions ✔︎
    * Integer types ✔︎
    * Floating-point types ✔︎
    * infinity and -infinity
    * Bool ✔︎
-   * Void
    * No suffixes for integers / floats ✔︎
    * Lazy initialization
    * A brief mention of characters and strings
@@ -22,69 +17,105 @@
    * Pattern binding
    * Literals ✔︎
    * Immutability
-   * (Don't redeclare objects within a REPL session)
    * min and max for integers ✔︎
 
 Basic Types
 ===========
 
-Swift provides several basic types for working with fundamental values.
-These types will be familiar to C and Objective-C developers:
+Swift is a :newTerm:`type safe` language.
+This means that it encourages you to be clear about
+the types of values and objects your code can work with.
+If part of your code expects some text,
+type safety means that you can't accidentally pass it a number by mistake.
 
-* :newTerm:`Integer numbers`, for numbers without a fractional component
-* :newTerm:`Floating-point numbers`, for numbers with a fractional component
-* :newTerm:`Booleans`, for values that can only be true or false
+Because Swift is type safe,
+it performs :newTerm:`type checks` when compiling your code,
+and flags any mismatched types as errors.
+This enables you to catch and fix errors as early as possible in the development process.
 
-In addition to these simple types,
-Swift incorporates some less familiar (but very powerful) advanced types:
+Types are at the heart of the Swift programming language.
+Swift's use of types makes for a safe and flexible language,
+and gives you many different options when defining the structure of your apps.
 
-* arbitrary groups of values of different types (known as :newTerm:`tuples`)
-* types that can be either a known value or a missing value (known as :newTerm:`optionals`)
+Types are a way to categorize different kinds of values,
+and to ensure that those values are compatible when they are used together.
+Simple examples of Swift types include
+the ``Int`` type for integer whole numbers;
+the ``Bool`` type for values that can only be true or false;
+and the ``String`` type for a collection of textual characters.
 
-Each of these types, and the ways in which they can be used,
-are discussed in more detail below.
+Swift provides many of these basic types for you,
+as described in this chapter.
+Swift also provides two powerful collection types, ``Array`` and ``Dictionary``,
+for working with collections of values of a similar type.
+These are introduced in :doc:`CollectionTypes`.
 
-Swift also provides powerful and flexible versions of the following common types:
+You can create your own custom types to suit the needs of your code.
+If your app needs to model a person with a name and an age,
+you can define a new type called ``Person``,
+with a ``String`` property called ``name``, and an ``Int`` property called ``age``.
+You create these custom types as classes, structures, and enumerations,
+all of which can provide initializers, properties, methods, and subscripts
+to represent their data and functionality.
+These custom types are introduced in :doc:`ClassesAndStructures` and :doc:`Enumerations`.
 
-* :newTerm:`Strings`, for working with text
-  (as introduced below, and discussed in detail in :doc:`Strings`)
-* :newTerm:`Arrays` and :newTerm:`Dictionaries`, for working with collections of values
-  (as described in :doc:`CollectionTypes`)
-* :newTerm:`Enumerations`, for defining multiple values of a similar kind
-  (as described in :doc:`Enumerations`)
+In situations where it would be excessive to define a new named type,
+you can group together multiple values of different types
+to create a single value known as a tuple.
+You could group together an ``Int`` value and a ``String`` value as a single tuple, say,
+and use this pairing of values as the single return value from a function.
+Tuples are an effective shorthand for creating ad-hoc groupings of values within your code.
 
-.. _BasicTypes_NamedValues:
+Swift also provides an elegant way to cope with values that may or may not exist.
+These types, known as optionals,
+represent either a known value of a specific type,
+or the absence of a value of that type.
+Optionals enable your code to cope with the absence of a value,
+regardless of what type of value it may be.
+Much of the Swift language is based on the simplicity of optionals
+as a way to write code that copes gracefully and safely with the absence of a value.
 
-Named Values
-------------
+Many other parts of the Swift language are based around the concept of types.
+For example, every function in Swift has a specific type,
+and every protocol you define creates a new abstract type for use in your code.
+Swift uses the concept of types to create a powerful yet safe way to express
+and work with the fundamental elements of your code.
+(See :doc:`Functions` and :doc:`Protocols` for more on how Swift's type system
+works with function and protocol types.)
 
-.. QUESTION: Do we need to have introduced the REPL
-   (or some other learning environment) before starting this section?
+This chapter introduces many of the basic types provided by Swift,
+and describes how to store values of those types in constants and variables.
 
-Before describing the types themselves,
-it is important to understand how they are used to create new values
-and to refer to these values in your code.
-This section introduces the concept of :newTerm:`named values`,
-which give a way to store and pass around specific values by name.
+.. note::
 
-A named value is a way to store a particular value
-(such as the number ``42``, or the string ``"hello"``)
-and refer to it with a name of your choosing.
-Swift provides two types of named values:
+   Don't worry if some of the concepts mentioned in the section above are unfamiliar.
+   This guide introduces all of these concepts in detail,
+   with self-contained, real-world examples for every subject.
 
-* :newTerm:`constant named values`, also known as :newTerm:`constants`, and
-* :newTerm:`variable named values`, also known as :newTerm:`variables`
+.. _BasicTypes_ConstantsAndVariables:
 
-A constant has a fixed value that cannot be changed once it is set,
-whereas a variable can be set to a different value in the future.
+Constants and Variables
+-----------------------
 
-All named values must be declared before they are used.
-Constants are declared using the ``let`` keyword,
-and variables are declared using the ``var`` keyword.
-Here's an example of how constants and variables could be used
+Constants and variables are a way to give a name
+(such as ``maximumNumberOfLoginAttempts`` or ``welcomeMessage``)
+to a value of a particular type
+(such as the number ``10``, or the string ``"Hello"``).
+A :newTerm:`constant` cannot be changed once it is set, whereas
+a :newTerm:`variable` can be set to a different value in the future.
+
+.. _BasicTypes_DeclaringConstantsAndVariables:
+
+Declaring Constants and Variables
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Constants and variables must be declared before they are used.
+You declare constants with the ``let`` keyword,
+and variables with the ``var`` keyword.
+Here's an example of how constants and variables can be used
 to track the number of login attempts a user has made:
 
-.. testcode:: namedValues
+.. testcode:: constantsAndVariables
 
    -> let maximumNumberOfLoginAttempts = 10
    << // maximumNumberOfLoginAttempts : Int = 10
@@ -98,37 +129,73 @@ and give it a value of ``10``.
 Then, declare a new variable called ``currentLoginAttempt``,
 and give it an initial value of ``0``.”
 
-The maximum number of allowed login attempts is declared as a constant,
-because that maximum value never changes.
-The current login attempt counter is declared as a variable, however,
+In this example,
+the maximum number of allowed login attempts is declared as a constant,
+because the maximum value never changes.
+The current login attempt counter is declared as a variable,
 because this value must be incremented after each failed login attempt.
 
-If a named value in your code is not going to change,
+If a stored value in your code is not going to change,
 it should always be declared as a constant with the ``let`` keyword.
 Variables should only be used for
-named values that need to be able to change their value.
+storing values that need to be able to change.
 
-Named value declarations can include a specific :newTerm:`type`,
-to be explicit about the kind of values they can store:
+.. _BasicTypes_TypeAnnotations:
 
-.. testcode:: namedValues
+Type Annotations
+~~~~~~~~~~~~~~~~
 
-   -> let welcomeMessage: String = "Hello"
-   << // welcomeMessage : String = "Hello"
+You can provide a :newTerm:`type annotation` when you declare a constant or variable,
+to be clear about the kind of values the constant or variable can store.
+Type annotations are written by placing a colon after the constant or variable name,
+followed by a space, followed by the name of the type to use.
+
+This example provides a type annotation for a variable called ``welcomeMessage``,
+to indicate that the variable can store ``String`` values:
+
+.. code::
+
+   var welcomeMessage: String
+
+.. TODO: this example can't be swifttested,
+   because variables can't be left uninitialized in the REPL.
+   It will need manual testing instead.
 
 The colon in the declaration means *“…of type…,”*
 so this can be read as:
 
-“Declare a constant called ``welcomeMessage`` that is of type ``String``,
-and give it a value of ``"Hello"``.”
+“Declare a variable called ``welcomeMessage`` that is of type ``String``.”
 
 The phrase “of type ``String``” means “can store any ``String`` value.”
 Think of it as meaning “the type of thing” (or “the kind of thing”) that can be stored.
 
+The ``welcomeMessage`` variable can now be set to any string value without error:
+
+.. testcode:: constantsAndVariables
+
+   >> var welcomeMessage = "Hello"
+   << // welcomeMessage : String = "Hello"
+   -> welcomeMessage = "Hello"
+
+.. note::
+
+   It is rare that you need to write type annotations in practice.
+   If you provide an initial value for a constant or variable at the point that it is defined,
+   Swift can almost always infer the type to be used for that constant or variable,
+   as described in :ref:`BasicTypes_TypeSafetyAndTypeInference`.
+   In the ``welcomeMessage`` example above, no initial value is provided,
+   and so the type of the ``welcomeMessage`` variable is specified with a type annotation
+   rather than being inferred from an initial value.
+
+.. _BasicTypes_NamingConstantsAndVariables:
+
+Naming Constants and Variables
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 You can use almost any character you like for constant and variable names,
 including Unicode characters:
 
-.. testcode:: namedValues
+.. testcode:: constantsAndVariables
 
    -> let π = 3.14159
    << // π : Double = 3.14159
@@ -140,17 +207,20 @@ including Unicode characters:
 Constant and variable names cannot contain
 mathematical symbols, arrows, private-use (or invalid) Unicode code points,
 or line- and box-drawing characters.
-They also cannot begin with a number
-(although numbers may be included elsewhere within the name).
+They also cannot begin with a number,
+although numbers may be included elsewhere within the name.
 
-Once you've declared a named value of a certain type,
+Once you've declared a constant or variable of a certain type,
 you can't redeclare it again with the same name,
-or set it to store values of a different type.
-You also can't change it from a constant to a variable (or vice versa).
+or change it to store values of a different type.
+Nor can you change a constant into a variable,
+or a variable into a constant.
 
-The value of an existing variable can be changed to another value of a compatible type:
+The value of an existing variable can be changed to another value of a compatible type.
+In this example, the value of ``friendlyWelcome`` is changed from
+``"hello, world"`` to ``"👋, 🌎"``:
 
-.. testcode:: namedValues
+.. testcode:: constantsAndVariables
 
    -> var friendlyWelcome = "hello, world"
    << // friendlyWelcome : String = "hello, world"
@@ -160,15 +230,15 @@ The value of an existing variable can be changed to another value of a compatibl
    /> friendlyWelcome is now \"\(friendlyWelcome)\"
    </ friendlyWelcome is now "👋, 🌎"
 
-Unlike a variable, the value of a constant cannot be changed once it is set,
-and attempting to do so will result in an error:
+Unlike a variable, the value of a constant cannot be changed once it is set.
+Attempting to do so is reported as an error when your code is compiled:
 
-.. testcode:: namedValues
+.. testcode:: constantsAndVariables
 
    -> let languageName = "Swift"
    << // languageName : String = "Swift"
    -> languageName = "Swift++"
-   // this will result in an error – languageName cannot be changed
+   // this is a compile-time error – languageName cannot be changed
    !! <REPL Input>:1:14: error: cannot assign to 'let' value 'languageName'
    !! languageName = "Swift++"
    !! ~~~~~~~~~~~~ ^
@@ -177,22 +247,22 @@ and attempting to do so will result in an error:
    can be qualified with a backtick (e.g. let `protocol` = 1)?
    It's of a kind with the contents of this section, but it's pretty damn niche…
 
-.. _BasicTypes_PrintingNamedValues:
+.. _BasicTypes_PrintingConstantsAndVariables:
 
-Printing Named Values
-~~~~~~~~~~~~~~~~~~~~~
+Printing Constants and Variables
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The current value of a constant or variable can be printed with the ``println`` function:
+You can print the current value of a constant or variable with the ``println`` function:
 
-.. testcode:: namedValues
+.. testcode:: constantsAndVariables
 
    -> println(friendlyWelcome)
    <- 👋, 🌎
 
-``println`` is a special global function that prints a value,
+``println`` is a global function that prints a value,
 followed by a line break, to an appropriate output.
 If you are working in Xcode, for example,
-``println`` will print its output in Xcode's “console” pane.
+``println`` prints its output in Xcode's “console” pane.
 (A second function, ``print``, performs the same task
 without appending a line break to the end of the value to be printed.)
 
@@ -203,12 +273,12 @@ without appending a line break to the end of the value to be printed.)
    It will be expanded later on.
 
 .. QUESTION: is this *too* simplistic?
-   Strictly speaking, you can't print the value of *any* named value –
+   Strictly speaking, you can't print the value of *any* constant or variable –
    you can only print values of types for which String has a constructor.
 
-The ``println`` function will print any ``String`` value you pass to it:
+The ``println`` function prints any ``String`` value you pass to it:
 
-.. testcode:: namedValues
+.. testcode:: constantsAndVariables
 
    -> println("This is a string")
    <- This is a string
@@ -218,19 +288,17 @@ The ``println`` function will print any ``String`` value you pass to it:
 String Interpolation
 ____________________
 
-The ``println`` function can be used to print more complex logging messages,
+The ``println`` function can print more complex logging messages,
 in a similar manner to Cocoa's ``NSLog`` function.
 These messages can include the current values of constants and variables.
 
-Swift uses :newTerm:`string interpolation` to include named values
-as part of a longer string.
-String interpolation gives a way to include a constant or variable's name
-as a placeholder in a string,
+Swift uses :newTerm:`string interpolation` to include a constant or variable's name
+as a placeholder in a longer string,
 and to prompt Swift to replace it with the current value of that constant or variable.
 The constant or variable's name should be wrapped by parentheses,
 and escaped with a backslash before the opening parenthesis:
 
-.. testcode:: namedValues
+.. testcode:: constantsAndVariables
 
    -> println("The current value of friendlyWelcome is \(friendlyWelcome)")
    <- The current value of friendlyWelcome is 👋, 🌎
@@ -243,11 +311,12 @@ and escaped with a backslash before the opening parenthesis:
 Comments
 --------
 
-As you may have noticed from the examples above:
+As you may have noticed from the examples above,
+comments in Swift have some similarity to those found in C:
 
 ::
 
-   // ...single-line comments begin with two forward-slashes, like in C.
+   // Single-line comments begin with two forward-slashes, like in C.
 
 You can also write multi-line comments:
 
@@ -264,6 +333,9 @@ Unlike C, multi-line comments can also be nested:
       /* then starting another new block inside of the first block.
       The second block is then closed... */
    ...followed by the original block. */
+
+Nested multi-line comments enable you to comment out large blocks of code quickly and easily,
+even if the code already contains multi-line comments.
 
 .. TODO: These multiline comments can't be tested by swifttest,
    because they aren't supported by the REPL.
@@ -316,7 +388,8 @@ which has the same size as the current platform's architecture:
 * On a 64-bit platform, ``Int`` is the same size as ``Int64``.
 
 Unless you need to work with a specific size of integer,
-you should always use ``Int`` for code consistency and interoperability.
+always use ``Int`` for integer values in your code.
+This aids code consistency and interoperability.
 Even on 32-bit platforms, ``Int`` can store any value between ``-2,147,483,648`` and ``2,147,483,647``,
 and is large enough for many integer ranges.
 
@@ -333,12 +406,12 @@ which has the same size as the current platform's architecture:
 
 .. note::
 
-   ``UInt`` should only be used when you specifically need
+   Use ``UInt`` only when you specifically need
    an unsigned integer type with the same size as the platform's architecture.
-   If this is not the case, ``Int`` should be preferred,
+   If this is not the case, ``Int`` is preferred,
    even when the values to be stored are known to be non-negative.
-   A consistent use of ``Int`` for integer values helps with code interoperability,
-   and provides consistency when using type inference, as described below.
+   A consistent use of ``Int`` for integer values aids code interoperability
+   and provides consistency when you use type inference, as described below.
 
 .. _BasicTypes_FloatingPointNumbers:
 
@@ -357,35 +430,34 @@ Swift provides two signed floating-point number types:
 * ``Float``, which represents a 32-bit floating-point number,
   and should be used when floating-point values do not require 64-bit precision
 
-``Double`` has a precision of at least 15 digits,
-whereas the precision of ``Float`` can be as little as 6 digits.
-The appropriate floating-point type to use will depend on the nature and range of
-values you need to work with in your code.
+.. note::
 
-.. _BasicTypes_TypeSafetyAndTypeInference:
+   ``Double`` has a precision of at least 15 digits,
+   whereas the precision of ``Float`` can be as little as 6 digits.
+   The appropriate floating-point type to use depends on the nature and range of
+   values you need to work with in your code.
 
-Type Safety and Type Inference
-------------------------------
+.. _BasicTypes_TypeInference:
 
-Swift is a :newTerm:`type safe` language.
-This means that it encourages you to be clear about the types of values and objects your code can work with.
-If some part of your code expects a string,
-type safety means that you can't accidentally pass it an integer by mistake.
+Type Inference
+--------------
 
-Because Swift is type safe,
-it performs :newTerm:`type checks` when compiling your code.
+As mentioned earlier,
+Swift performs :newTerm:`type checks` when compiling your code.
 Any mismatched types are flagged as errors so that you can fix them.
 
-Type-checking helps to avoid accidental errors when you're working with different types of values.
+Type-checking helps avoid accidental errors when you're working with different types of values.
 However, this doesn't mean that you have to specify the type of
 every constant and variable that you declare.
 If you don't specify the type of value you need,
-Swift will use :newTerm:`type inference` to work out the appropriate type.
-Type inference is the ability for a compiler to automatically deduce the type of a particular expression when it compiles your code,
-just by examining the values you provide.
+Swift uses :newTerm:`type inference` to work out the appropriate type.
+Type inference enables a compiler to automatically deduce
+the type of a particular expression when it compiles your code,
+simply by examining the values you provide.
 
-Type inference means that Swift requires far fewer type declarations than languages such as C or Objective-C.
-Named values are still explicitly-typed,
+Because of type inference, Swift requires far fewer type declarations
+than languages such as C or Objective-C.
+Constants and variables are still explicitly typed,
 but much of the work of specifying their type is done for you.
 
 Type inference is particularly useful
@@ -436,7 +508,7 @@ from the presence of a floating-point literal as part of the addition.
 Numeric Literals
 ----------------
 
-Integer literals can be written as any of the following:
+Integer literals can be written as:
 
 * A :newTerm:`decimal` number, with no prefix
 * A :newTerm:`binary` number, with a ``0b`` prefix
@@ -460,20 +532,20 @@ Floating-point literals can be decimal (with no prefix),
 or hexadecimal (with a ``0x`` prefix).
 They must always have a number (or hexadecimal number) on both sides of the decimal point.
 They can also have an optional :newTerm:`exponent`,
-indicated by an upper- or lowercase ``e`` for decimal floats,
-or an upper- or lowercase ``p`` for hexadecimal floats.
+indicated by an uppercase or lowercase ``e`` for decimal floats,
+or an uppercase or lowercase ``p`` for hexadecimal floats.
 
 For decimal numbers with an exponent of ``exp``,
 the base number is multiplied by 10\ :superscript:`exp`:
 
-* ``1.25e2`` means 1.25 ⨉ 10\ :superscript:`2`, or ``125.0``
-* ``1.25e-2`` means 1.25 ⨉ 10\ :superscript:`-2`, or ``0.0125``
+* ``1.25e2`` means 1.25 ⨉ 10\ :superscript:`2`, or ``125.0``.
+* ``1.25e-2`` means 1.25 ⨉ 10\ :superscript:`-2`, or ``0.0125``.
 
 For hexadecimal numbers with an exponent of ``exp``,
 the base number is multiplied by 2\ :superscript:`exp`:
 
-* ``0xFp2`` means 15 ⨉ 2\ :superscript:`2`, or ``60.0``
-* ``0xFp-2`` means 15 ⨉ 2\ :superscript:`-2`, or ``3.75``
+* ``0xFp2`` means 15 ⨉ 2\ :superscript:`2`, or ``60.0``.
+* ``0xFp-2`` means 15 ⨉ 2\ :superscript:`-2`, or ``3.75``.
 
 All of these floating-point literals have a decimal value of ``12.1875``:
 
@@ -505,14 +577,14 @@ Neither type of formatting affects the underlying value of the literal:
 Numeric Type Conversion
 -----------------------
 
-The ``Int`` type should be used for all general-purpose integer named values in your code,
-even if they are known to be nonnegative.
+Use the ``Int`` type for all general-purpose integer constants and variables in your code,
+even if they are known to be non-negative.
 Using the default integer type in everyday situations means that
-integer named values are immediately interoperable in your code
+integer constants and variables are immediately interoperable in your code
 and will match the inferred type for integer literal values.
 
-Other integer types should be used only when they are are specifically needed for the task at hand,
-due to explicitly-sized data from an external source,
+Use other integer types only when they are are specifically needed for the task at hand,
+because of explicitly-sized data from an external source,
 or for performance, memory usage, or other necessary optimization.
 Using explicitly-sized types in these situations
 helps to catch any accidental value overflows
@@ -523,16 +595,17 @@ and implicitly documents the nature of the data being used.
 Integer Bounds
 ~~~~~~~~~~~~~~
 
-The minimum and maximum values of each integer type can be accessed using its ``min`` and ``max`` properties:
+You can access the minimum and maximum values of each integer type
+with its ``min`` and ``max`` properties:
 
-.. testcode:: namedValues
+.. testcode:: constantsAndVariables
 
    -> let minValue = UInt8.min  // minValue is equal to 0, and is of type UInt8
    << // minValue : UInt8 = 0
    -> let maxValue = UInt8.max  // maxValue is equal to 255, and is of type UInt8
    << // maxValue : UInt8 = 255
 
-The values of these properties are of the appropriate sized number type
+The values of these properties are of the appropriate-sized number type
 (such as ``UInt8`` in the example above)
 and can therefore be used in expressions alongside other values of the same type.
 
@@ -541,15 +614,14 @@ and can therefore be used in expressions alongside other values of the same type
 Integer Conversion
 ~~~~~~~~~~~~~~~~~~
 
-The range of numbers that can be stored in an integer named value
+The range of numbers that can be stored in an integer constant or variable
 is different for each numeric type.
-An ``Int8`` named value can store numbers between ``-128`` and ``127``,
-whereas a ``UInt8`` named value can store numbers between ``0`` and ``255``.
-A number that can be stored in one numeric type
-cannot necessarily be stored in another numeric type,
-and trying to do so is reported as an error when your code is compiled:
+An ``Int8`` constant or variable can store numbers between ``-128`` and ``127``,
+whereas a ``UInt8`` constant or variable can store numbers between ``0`` and ``255``.
+A number that will not fit into a constant or variable of a sized integer type
+is reported as an error when your code is compiled:
 
-.. testcode:: namedValuesOverflowError
+.. testcode:: constantsAndVariablesOverflowError
 
    -> let cannotBeNegative: UInt8 = -1
    !! <REPL Input>:1:31: error: integer literal overflows when stored into 'UInt8'
@@ -563,12 +635,12 @@ and trying to do so is reported as an error when your code is compiled:
    // Int8 cannot store a number larger than its maximum value,
    // and so this will also report an error
 
-Because of this,
+Because each numeric type can store a different range of values,
 numeric type conversion is something you must opt in to on a case-by-case basis.
 This opt-in approach avoids accidental errors
-and helps to make type conversion intentions explicit in your code.
+and helps make type conversion intentions explicit in your code.
 
-To convert from one specific number type to another,
+To convert one specific number type to another,
 you initialize a new number of the desired type with the existing value:
 
 .. testcode:: typeConversion
@@ -595,7 +667,7 @@ because it is the sum of two ``UInt16`` values.
 and pass in an initial value.
 Behind the scenes, ``UInt16`` has an initializer that accepts a ``UInt8`` value,
 and so this initializer is used to make a new ``UInt16`` from an existing ``UInt8``.
-You can't just pass in *any* type here, however –
+You can't pass in *any* type here, however –
 it has to be a type for which ``UInt16`` provides an initializer.
 Extending existing types to provide initializers that accept new types
 (including your own type definitions)
@@ -606,7 +678,7 @@ is covered in :doc:`Extensions`.
 Integer and Floating-Point Conversion
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Conversions between integer and floating-point numeric types must also be made explicit:
+Conversions between integer and floating-point numeric types must be made explicit:
 
 .. testcode:: typeConversion
 
@@ -648,7 +720,7 @@ This means that ``4.75`` becomes ``4``, and ``-3.9`` becomes ``-3``.
 
 .. note::
 
-   The rules for combining numeric named values are different to
+   The rules for combining numeric constants and variables are different from
    the rules for numeric literals.
    The literal value ``3`` can be added directly to the literal value ``0.14159``,
    because number literals do not have an explicit type in and of themselves.
@@ -692,7 +764,7 @@ which provides an initial value of ``0`` for the ``maxAmplitudeFound`` variable.
 .. note::
 
    Type aliases do not actually define a new type in Swift.
-   They are just an alternative name for an existing type.
+   They are simply an alternative name for an existing type.
    In the example above,
    ``maxAmplitudeFound`` is of type ``UInt16``, not ``AudioSample``.
 
@@ -704,7 +776,7 @@ Booleans
 Swift has a basic :newTerm:`Boolean` type, called ``Bool``.
 Boolean values are referred to as :newTerm:`logical`,
 because they can only ever be true or false.
-To represent this fact, Swift provides two Boolean literal values,
+Swift provides two Boolean literal values,
 ``true`` and ``false``:
 
 .. testcode:: booleans
@@ -718,12 +790,12 @@ The types of ``orangesAreOrange`` and ``turnipsAreDelicious``
 have been inferred as ``Bool`` from the fact that
 they were initialized with Boolean literal values.
 As with ``Int`` and ``Double`` above,
-you don't need to declare named values as ``Bool``
+you don't need to declare constants or variables as ``Bool``
 if you set them to ``true`` or ``false`` as soon as you create them.
 Type inference helps to make Swift code much more concise and readable
-when initializing named values with other values whose type is already known.
+when initializing constants or variables with other values whose type is already known.
 
-Boolean values are particularly useful when working with conditional statements
+Boolean values are particularly useful when you work with conditional statements
 such as the ``if``-``else`` statement:
 
 .. testcode:: booleans
@@ -738,7 +810,7 @@ such as the ``if``-``else`` statement:
 Conditional statements such as ``if``-``else`` are covered in more detail in :doc:`ControlFlow`.
 
 Swift's type safety means that non-Boolean values cannot be substituted for ``Bool``.
-The following example will produce an error:
+The following example reports a compile-time error:
 
 .. testcode:: booleansNotLogicValue
 
@@ -767,7 +839,7 @@ and so this second example passes the type-check.
 
 As with other examples of type safety in Swift,
 this approach avoids accidental errors,
-and ensures that the intention of a particular section of code is always made clear.
+and ensures that the intention of a particular section of code is always clear.
 
 .. note::
 
@@ -788,8 +860,9 @@ and ensures that the intention of a particular section of code is always made cl
 Tuples
 ------
 
-:newTerm:`Tuples` are a way to group together multiple values of various types.
-They provide a simple way to pass around multiple values as a single entity.
+:newTerm:`Tuples` group multiple values into a single compound value.
+The values within a tuple can be of any type,
+and do not have to be of the same type as each other.
 
 Here's an example of a tuple:
 
@@ -824,9 +897,9 @@ You can access the individual element values in a tuple using index numbers star
    -> println("The status message is \(httpStatus.1)")
    <- The status message is Not Found
 
-As an alternative,
-you can :newTerm:`decompose` a tuple's contents into separate named values,
-which can then be used as normal:
+Alternatively,
+you can :newTerm:`decompose` a tuple's contents into separate constants or variables,
+which can then be accessed as usual:
 
 .. testcode:: tuples
 
@@ -838,11 +911,11 @@ which can then be used as normal:
    <- The status message is Not Found
 
 Tuples are particularly useful as the return values of functions.
-A function that tries to retrieve a web page might return this ``(Int, String)`` tuple type
+A function that tries to retrieve a web page might return the ``(Int, String)`` tuple type
 to describe the success or failure of the page retrieval.
 By returning a tuple with two distinct values,
 each of a different type,
-the function can provide more useful information about its outcome
+the function provides more useful information about its outcome
 than if it could only return a single value of a single type.
 Functions are described in detail in :doc:`Functions`.
 
@@ -850,17 +923,17 @@ Tuples are useful for temporary groups of related values.
 They are not suited to the creation of complex data structures.
 If your data structure would benefit from named member values,
 or is likely to persist beyond a temporary scope,
-it should be modeled as a :newTerm:`class` or :newTerm:`structure`,
+model it as a :newTerm:`class` or :newTerm:`structure`,
 rather than as a tuple.
-These are described in detail in :doc:`ClassesAndStructures`.
+See :doc:`ClassesAndStructures`.
 
 .. _BasicTypes_Optionals:
 
 Optionals
 ---------
 
-:newTerm:`Optionals` are a way to handle missing values.
-They can be used to say:
+You use :newTerm:`Optionals` in situations where a value may be absent.
+An optional says:
 
 * There *is* a value, and it equals *x*
 
@@ -875,12 +948,12 @@ They can be used to say:
    the ability to return ``nil`` from a method that would otherwise return an object,
    with ``nil`` meaning “the absence of a valid object.”
    However, this only works for objects – it doesn't work for
-   structs, or basic C types, or enumeration values.
+   structs, basic C types, or enumeration values.
    For these types,
    Objective-C methods typically return a special value (such as ``NSNotFound``) to indicate the absence of a value.
    This assumes that the method's caller knows there is a special value to test against,
    and remembers to check for it.
-   Swift's optionals give a way to indicate the absence of a value for *any type at all*,
+   Swift's optionals let you indicate the absence of a value for *any type at all*,
    without the need for special constants or ``nil`` tests.
 
 Here's an example.
@@ -909,7 +982,10 @@ or it might contain *no value at all*.
 (It can't contain anything else, such as a ``Bool`` value or a ``String`` value –
 it's either an ``Int``, or it's nothing at all.)
 
-You can use an ``if``-``else`` statement to find out whether or not an optional contains a value.
+If-Else
+~~~~~~~
+
+You can use an ``if``-``else`` statement to find out whether an optional contains a value.
 If an optional does have a value, it equates to ``true``;
 if it has no value at all, it equates to ``false``.
 
@@ -932,7 +1008,7 @@ The exclamation mark effectively says,
 
 .. note::
 
-   Trying to use ``!`` to access a non-existent optional value will trigger
+   Trying to use ``!`` to access a non-existent optional value triggers
    an unrecoverable runtime error.
 
 .. _BasicTypes_OptionalBinding:
@@ -941,9 +1017,11 @@ Optional Binding
 ~~~~~~~~~~~~~~~~
 
 :newTerm:`Optional binding` is a convenient way to find out if an optional contains a value,
-and to make that value available if it exists.
+and to make that value available as a constant or variable if it exists.
 Optional binding can be used with ``if``-``else`` and ``while`` statements
-to simplify and shorten the unwrapping of a value contained within an optional.
+to check for a value inside the optional,
+and to extract that value into a constant or variable,
+as part of a single action.
 (``if``-``else`` and ``while`` statements are described in more detail in :doc:`ControlFlow`.)
 
 Optional bindings for the ``if``-``else`` statement are written in the following form:
@@ -954,7 +1032,8 @@ Optional bindings for the ``if``-``else`` statement are written in the following
       <#statements#>
    }
 
-The example from above can be can be rewritten to use optional binding:
+The ``possibleNumber`` example from the ``if``-``else`` section above
+can be rewritten to use optional binding:
 
 .. testcode:: optionals
 
@@ -965,7 +1044,8 @@ The example from above can be can be rewritten to use optional binding:
       }
    <- 123 has an integer value of 123
 
-As before, this example uses the ``toInt`` method from ``String``
+As in the ``if``-``else`` section above,
+this example uses the ``toInt`` method from ``String``
 to try and convert ``"123"`` into an ``Int``.
 It then prints a message to indicate if the conversion was successful.
 
@@ -1017,7 +1097,7 @@ by assigning it the special value ``nil``:
 .. note::
 
    ``nil`` cannot be used with non-optional constants and variables.
-   If a named value in your code needs to be able to cope with
+   If a constant or variable in your code needs to be able to cope with
    the absence of a value under certain conditions,
    it should always be declared as an optional value of the appropriate type.
 

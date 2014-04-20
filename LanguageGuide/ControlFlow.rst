@@ -68,7 +68,7 @@ the value of ``index`` is updated to contain the second value in the range (``2`
 and the ``println`` function is called again.
 This process continues until the end of the range is reached.
 
-``index`` is a constant named value whose value is automatically set
+``index`` is a constant whose value is automatically set
 at the start of each iteration of the loop.
 As such, it does not have to be declared before it is used.
 It is implicitly declared simply by its inclusion in the loop declaration,
@@ -213,7 +213,7 @@ The loop is executed as follows:
 
 1. When the loop is first entered,
    the :newTerm:`initialization expression` is evaluated once,
-   to set up any named values that are needed for the loop.
+   to set up any constants or variables that are needed for the loop.
 
 2. The :newTerm:`condition expression` is evaluated.
    If it equates to ``false``, the loop ends,
@@ -239,7 +239,7 @@ The execution process described above is effectively shorthand for (and equivale
       <#increment#>
    }
 
-Named values declared within the initialization expression
+Constants and variables declared within the initialization expression
 (such as ``var index = 0``)
 are only valid within the scope of the ``for`` loop itself.
 To retrieve the final value of ``index`` after the loop ends,
@@ -943,15 +943,15 @@ and so all other matching cases would be ignored.
    switch x {
    case is (Int, Int):
 
-.. _ControlFlow_NamedValueBindings:
+.. _ControlFlow_ValueBindings:
 
-Named Value Bindings
-____________________
+Value Bindings
+______________
 
 A ``switch`` case can bind the value or values it matches to temporary constants or variables,
 for use in the body of the case.
-This is known as :newTerm:`named value binding`,
-because the values are “bound” to temporary named values within the case's body.
+This is known as :newTerm:`value binding`,
+because the values are “bound” to temporary constants or variables within the case's body.
 
 Again, the example below takes an (x, y) point,
 expressed as a tuple of type ``(Int, Int)``,
@@ -999,9 +999,8 @@ As a result, it matches all possible remaining values,
 and a ``default`` case is not needed to make the ``switch`` statement exhaustive.
 
 In the example above,
-the temporary named values ``x`` and ``y`` have been declared as constants
-via the ``let`` keyword, because there is no need to modify their values
-within the body of the case.
+``x`` and ``y`` have been declared as constants with the ``let`` keyword,
+because there is no need to modify their values within the body of the case.
 However, they could have been declared as variables instead, via the ``var`` keyword.
 If this had been done, a temporary variable would have been created
 and initialized with the appropriate value.
