@@ -12,28 +12,30 @@
 Enumerations
 ============
 
-:newTerm:`Enumerations` are a way to define multiple related values of a similar kind
+:newTerm:`Enumerations` are a way to define multiple related values of a similar kind,
 and to work with those values in a type-safe way within your code.
 
 Enumerations in Swift are much more flexible than their counterparts in C and Objective-C.
-Swift enumerations can store associated values of any type along with each member value,
-in a similar way to unions or variants in other languages.
-Alternatively, enumerations can provide default raw values for each enumeration member,
+Swift enumerations can provide a default raw value for each enumeration member,
 and these raw values can be
 strings, characters, or any of the integer or floating-point number types.
 
-In addition, Swift enumerations can:
+Alternatively, enumeration members can specify
+associated values of *any* type to be stored along with each different member value,
+in a similar way to unions or variants in other languages.
+This gives a way to define a common set of related members as part of one enumeration,
+each of which has a different set of values of appropriate types associated with it.
 
-* Define computed properties to provide additional information about their values
-* Define methods to provide functionality related to the values they represent
-* Define subscripts to provide access to subscriptable aspects of
-  the associated values they store
-* Define initializers to provide an initial member value
-* Be extended to expand their functionality beyond their original implementation
-* Conform to protocols to provide standard functionality of a certain type
+Enumerations in Swift are first-class types in their own right.
+They adopt many features traditionally only supported by classes,
+such as computed properties to provide additional information about their values,
+and instance methods to provide functionality related to the values they represent.
+Enumerations can also define initializers to provide an initial member value;
+can be extended to expand their functionality beyond their original implementation;
+and can conform to protocols to provide standard functionality.
 
-For more information, see
-:doc:`Properties`, :doc:`Methods`, :doc:`Subscripts`, :doc:`Initialization`,
+For more information on each of these capabilities, see
+:doc:`Properties`, :doc:`Methods`, :doc:`Initialization`,
 :doc:`Extensions`, and :doc:`Protocols`.
 
 .. TODO: this chapter should probably mention that enums without associated values
