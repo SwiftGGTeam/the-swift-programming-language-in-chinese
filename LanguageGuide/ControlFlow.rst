@@ -14,13 +14,27 @@
 Control Flow
 ============
 
-Swift provides several ways to structure and control the flow of your code's execution:
+Swift provides all of the familiar control flow constructs found in C-like languages.
+These include ``for`` and ``while`` loops to perform a task multiple times;
+``if``-``else`` and ``switch`` statements
+to execute different branches of code based on certain conditions;
+and control flow statements such as ``break`` and ``continue``
+to transfer the flow of execution to another point in your code.
 
-* :newTerm:`Loops`, which perform a task multiple times
-* :newTerm:`Conditional statements`,
-  which execute different branches of code based on certain conditions
-* :newTerm:`Control transfer statements`,
-  which immediately transfer the flow of execution to another point in your code
+In addition to the traditional ``for``-``condition``-``increment`` loop found in C,
+Swift adds a ``for``-``in`` loop that makes it easy to iterate over
+arrays, dictionaries, ranges, strings, and sequences.
+The ``for``-``in`` loop can even be used with your own custom types
+if they conform to the ``Sequence`` protocol.
+
+Swift's ``switch`` statement is also considerably more powerful than its counterpart in C.
+The cases of a ``switch`` statement do not “fall through” to the next case in Swift,
+avoiding common C errors caused by missing ``break`` statements.
+Cases can match many different types of pattern,
+including range matches, tuples, and casts to a specific type.
+Matched values in a ``switch`` case can be bound to temporary constants or variables
+for use within the case's body,
+and complex matching conditions can be expressed with a ``where`` clause for each case.
 
 .. _ControlFlow_ForLoops:
 
@@ -593,7 +607,7 @@ It executes a set of statements only if that condition is ``true``:
       }
    <- It's very cold. Consider wearing a scarf.
 
-The preceding example above checks to see whether the temperature
+The preceding example checks to see whether the temperature
 is less than or equal to 32 degrees Fahrenheit
 (the freezing point of water).
 If it is, a message is printed.
@@ -1260,10 +1274,10 @@ By contrast, C requires you to insert an explicit ``break`` statement
 at the end of every ``switch`` case to prevent fallthrough.
 Avoiding default fallthrough means that Swift ``switch`` statements are
 much more concise and predictable than their counterparts in C,
-and avoid executing multiple ``switch`` cases by mistake.
+and thus they avoid executing multiple ``switch`` cases by mistake.
 
-To opt in to C-style fallthrough behavior,
-use the ``fallthrough`` keyword.
+If you really need C-style fallthrough behavior,
+you can opt in to this behavior on a case-by-case basis with the ``fallthrough`` keyword.
 The example below uses ``fallthrough`` to create a textual description of a number:
 
 .. testcode:: controlTransfer
