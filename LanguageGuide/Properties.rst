@@ -2,12 +2,19 @@ Properties
 ==========
 
 :newTerm:`Properties` associate values with a particular class, structure, or enumeration.
-Stored properties store a constant or variable value alongside an instance,
+Stored properties store constant and variable values alongside an instance,
 whereas computed properties calculate (rather than store) a value.
 
 Stored and computed properties are usually associated with instances of a particular type.
 However, for value types, they can also be associated with the type itself.
 Such properties are known as static properties.
+
+You can observe changes to a property, and respond to those changes,
+by defining property observers that are called
+just before and just after a property value is changed.
+Property observers can even be added to
+properties that your subclass inherits from its superclass,
+and are an easy way to add custom actions in response to property value changes.
 
 .. note::
 
