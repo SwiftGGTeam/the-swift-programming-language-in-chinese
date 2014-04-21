@@ -24,7 +24,7 @@ Declaration Attributes
     ✓ ``final`` (OnClass | OnFunc | OnVar | OnSubscript)
 
     ``NSCopying`` (OnVar)
-    ``noreturn`` (OnFunc)
+    ✓ ``noreturn`` (OnFunc)
     ``objc(arguments)`` (OnFunc | OnClass | OnProtocol | OnVar | OnSubscript | OnConstructor | OnDestructor)
 
     ✓ ``required`` (OnConstructor)
@@ -32,7 +32,7 @@ Declaration Attributes
     ``override`` (OnFunc | OnVar | OnSubscript) *Now a contextual keyword, not an attribute
 
     // Need info about where they can appear and whether they allow multiples:
-    ``optional``
+    ✓ ``optional``
     ``transparent`` // Per Doug's email on 3/25, we probably shouldn't document this.
     ``unowned``
     ``weak``
@@ -111,6 +111,16 @@ Declaration Attributes
     For an example of how to use the ``final`` attribute,
     see :ref:`Inheritance_FinalMethodsPropertiesAndSubscripts`.
 
+``noreturn``
+    The ``noreturn`` attribute is applied to a function or method declaration
+    to indicate that the corresponding type of that function or method,
+    ``T``, is ``@noreturn T``.
+    You can mark a function or method type with this attribute to indicate that
+    the function or method doesn't return to its caller.
+
+.. TR: Need some more info on this attribute. Is the above correct? What else should we
+    document here? How about some actual examples?
+
 ``optional``
     The ``optional`` attribute is applied to a protocol's property, method,
     or subscript members to indicate that a conforming type isn't required
@@ -119,7 +129,6 @@ Declaration Attributes
     The ``optional`` attribute can be applied only to protocols that are marked
     with the ``objc`` attribute. As a result, only classes types can adopt and conform
     to a protocol that contains optional member requirements.
-
     For more information about how to use the ``optional`` attribute
     and for guidance about how to access optional protocol members---
     for example, when you're not sure whether a conforming type implements them---
@@ -130,7 +139,6 @@ Declaration Attributes
     an initializer with the @optional attribute. It's still being decided by the
     compiler team. Update this section if they decide to make everything work
     properly for optional initializer requirements.
-
 
 ``required``
     The ``required`` attribute is applied to a designated or convenience initializer
@@ -164,6 +172,15 @@ Type Attributes
     ``thin`` // Mainly used for SIL at the moment. Confirm that we shouldn't document for 1.0
     ``thick`` // Mainly used for SIL at the moment. Confirm that we shouldn't document for 1.0
     ``unchecked`` // May be going away if we can come up with better syntactic sugar.
+
+``noreturn``
+    The ``noreturn`` attribute is applied to the type of a function or method
+    to indicate that the function or method doesn't return to its caller.
+    You can also mark a function or method declaration with this attribute to indicate that
+    the corresponding type of that function or method, ``T``, is ``@noreturn T``.
+
+.. TR: Need some more info on this attribute. Is the above correct? What else should we
+    document here? How about some actual examples?
 
 
 .. _Attributes_InterfaceBuilderAttributes:
