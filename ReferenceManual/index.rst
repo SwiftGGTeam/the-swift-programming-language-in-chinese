@@ -1,10 +1,10 @@
-Reference Manual
-================
+Language Reference
+==================
 
 .. toctree::
     :maxdepth: 1
 
-    Introduction
+    AboutTheLanguageReference
     LexicalStructure
     Types
     Expressions

@@ -491,7 +491,7 @@ the set of requirements from those other protocols are aggregated together,
 and any type that inherits from the current protocol must conform to all of those requirements.
 
 A type inheritance clause in an enumeration definition may be either a list of protocols,
-or in the case of an enumeration that assigns raw values to its members,
+or in the case of an enumeration that assigns raw values to its cases,
 a single, named type that specifies the type of those raw values.
 For an example of an enumeration definition that uses a type inheritance clause
 to specify the type of its raw values, see :ref:`Enumerations_RawValues`.

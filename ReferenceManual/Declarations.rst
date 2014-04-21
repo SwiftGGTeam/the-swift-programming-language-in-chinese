@@ -668,10 +668,10 @@ Unlike classes and structures,
 enumeration types do not have an implicitly provided default initializer;
 all initializers must be declared explicitly. Initializers can delegate
 to other initializers in the enumeration, but the initialization process is complete
-only after an initializer assigns one of the enumerators to ``self``.
+only after an initializer assigns one of the enumeration cases to ``self``.
 
 To reference the case of an enumeration type, use dot (``.``) syntax,
-as in ``EnumerationType.Enumerator``. When the enumeration type can be inferred
+as in ``EnumerationType.EnumerationCase``. When the enumeration type can be inferred
 from context, you can omit it (the dot is still required),
 as described in :ref:`Enumerations_EnumerationSyntax`
 and :ref:`Expressions_DelayedIdentifierExpression`.
@@ -1281,10 +1281,9 @@ Convenience initializers can't call a superclass's initializers.
 
 You can mark designated and convenience initializers with the ``required``
 attribute to require that every subclass implement the initializer.
-Because designated initializers are not inherited by subclasses,
-they must be implemented directly. Required convenience initializers can be implemented
-explicitly or inherited when the subclass implements all of the superclass's
-designated initializers.
+Required designated initializers must be implemented explicitly.
+Required convenience initializers can be either implemented explicitly
+or inherited when the subclass implements all of the superclass’s designated initializers.
 
 To see examples of initializers in various type declarations,
 see :doc:`../LanguageGuide/Initialization`.
