@@ -433,7 +433,7 @@ Here's how a generic version of ``findInt``, called ``findValue``, might be writ
          }
          return nil
       }
-   !! <REPL Input>:4:14: error: expression does not type-check
+   !! <REPL Input>:4:12: error: expression does not type-check
    !!              if value == valueToFind {
    !!                 ~~~~~~^~~~~~~~~~~~~~
 
