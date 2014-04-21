@@ -114,7 +114,8 @@ Declaration Attributes
 
     Required designated initializers must be implemented explicitly.
     Required convenience initializers can be either implemented explicitly
-    or inherited when the subclass implements all of the superclass’s designated initializers.
+    or inherited when the subclass directly implements all of the superclass’s designated
+    initializers (or overrides the designated initializers with convenience initializers).
 
 
 .. _Attributes_TypeAttributes:
