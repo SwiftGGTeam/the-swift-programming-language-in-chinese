@@ -957,13 +957,22 @@ requirements. If the type already implements all of the requirements,
 you can leave the body of the extension declaration empty.
 
 By default, types that conform to a protocol must implement all
-properties, methods, initializers, and subscripts declared in the protocol.
+properties, methods, and subscripts declared in the protocol.
 That said, you can mark these protocol member declarations with the ``optional`` attribute
 to specify that their implementation by a conforming type is optional.
+The ``optional`` attribute can be applied only to protocols that are marked
+with the ``objc`` attribute. As a result, only classes types can adopt and conform
+to a protocol that contains optional member requirements.
 For more information about how to use the ``optional`` attribute
 and for guidance about how to access optional protocol members---
 for example, when you're not sure whether a conforming type implements them---
-see :ref:`Protocols_OptionalRequirements`.
+see :ref:`Protocols_OptionalProtocolRequirements`.
+
+.. TODO: Currently, you can't check for an optional initializer,
+    so we're leaving those out of the documentation, even though you can mark
+    an initializer with the @optional attribute. It's still being decided by the
+    compiler team. Update this section if they decide to make everything work
+    properly for optional initializer requirements.
 
 To restrict the adoption of a protocol to class types only,
 mark the entire protocol declaration with the ``class_protocol`` attribute.

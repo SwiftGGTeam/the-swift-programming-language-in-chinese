@@ -83,6 +83,9 @@ Declaration Attributes
     For an example of how to use the ``call_arguments(strict)`` attribute,
     see :ref:`Functions_StrictParameterNames`.
 
+.. TODO: This might not be the final name of this attribute. Update this info
+    after it's been implemented.
+
 ``class_protocol``
     The ``class_protocol`` attribute is applied to a protocol to indicate
     that the protocol can be adopted by class types only.
@@ -107,6 +110,27 @@ Declaration Attributes
     in the guide. If he does, include the following sentence:
     For an example of how to use the ``final`` attribute,
     see :ref:`Inheritance_FinalMethodsPropertiesAndSubscripts`.
+
+``optional``
+    The ``optional`` attribute is applied to a protocol's property, method,
+    or subscript members to indicate that a conforming type isn't required
+    to implement those members.
+
+    The ``optional`` attribute can be applied only to protocols that are marked
+    with the ``objc`` attribute. As a result, only classes types can adopt and conform
+    to a protocol that contains optional member requirements.
+
+    For more information about how to use the ``optional`` attribute
+    and for guidance about how to access optional protocol members---
+    for example, when you're not sure whether a conforming type implements them---
+    see :ref:`Protocols_OptionalProtocolRequirements`.
+
+.. TODO: Currently, you can't check for an optional initializer,
+    so we're leaving those out of the documentation, even though you can mark
+    an initializer with the @optional attribute. It's still being decided by the
+    compiler team. Update this section if they decide to make everything work
+    properly for optional initializer requirements.
+
 
 ``required``
     The ``required`` attribute is applied to a designated or convenience initializer
