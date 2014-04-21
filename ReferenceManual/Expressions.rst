@@ -113,8 +113,16 @@ It has the following form:
 
    <#variable name#> = <#value#>
 
-The value of the variable on the left of the ``=``
+The value of the expression on the left of the ``=``
 is set to the value obtained by evaluating the expression on the right.
+The expression on the left side can be an
+identifier expression, a ignored expressions, or a tuple.
+In this usage, tuples contain only
+identifier expressions, ignored expressions, and other tuples.
+This is parallel to the grammar of a simple pattern.
+
+.. TODO: Make sure Brian actually has something called a simple pattern
+   in his discussion of for loops and var declarations.
 
 If the left side consists of a tuple,
 the value of the right side must be a tuple
@@ -128,12 +136,6 @@ For example: ::
     (a, b) = (b, a)
 
 The assignment operator does not return any value.
-
-.. TODO: Document "ignored" expression (_).
-   I still think the LHS of an assignment is better described as a pattern
-   or as some kind of named thing
-   than as an expression.
-   There are vast swathes of expressions that can't appear there.
 
 .. langref-grammar
 
@@ -318,6 +320,7 @@ Primary Expressions
     primary-expression --> anonymous-closure-argument
     primary-expression --> parenthesized-expression
     primary-expression --> implicit-member-expression
+    primary-expression --> ignored-expression
 
 .. NOTE: One reason for breaking primary expressions out of postfix
    expressions is for exposition -- it makes it easier to organize the
@@ -628,6 +631,24 @@ It has the following form:
     parenthesized-expression --> ``(`` expression-element-list-OPT ``)``
     expression-element-list --> expression-element | expression-element ``,`` expression-element-list
     expression-element --> expression | identifier ``:`` expression
+
+
+Ignored Expression
+------------------
+
+An :newTerm:`ignored expression`
+is used with the assignment operator
+to explicitly discard a value.
+For example: ::
+
+    (x, _) = (10, 20)
+
+.. <rdar://problem/16678866> Assignment to _ from a variable causes a REPL segfault
+
+.. syntax-grammar::
+
+   ignored-expression --> ``_``
+
 
 .. _Expressions_PostfixExpressions:
 
