@@ -229,11 +229,6 @@ There are three possible values of the expression:
   is returned as on optional of the type specified.
   At runtime, if the cast fails, its value is ``nil``.
 
-.. TODO: List the exact rules for above.
-   It seems like conversion to a supertype always works,
-   conversion to a subtype sometimes works,
-   and other conversions always fail.
-
 For example: ::
 
     class SomeSuperType {}
@@ -242,8 +237,8 @@ For example: ::
 
     let x = SomeType()
 
-    let y = x as SomeSuperType  // y : SomeSuperType
-    let z = x as SomeChildType  // z : SomeChildType?
+    let y = x as SomeSuperType  // y: SomeSuperType
+    let z = x as SomeChildType  // z: SomeChildType?
 
 Specifying a type with ``as`` provides the same type context
 to the compiler as a function call and a variable type annotation.
@@ -416,9 +411,25 @@ and ``ValueType`` is the type of its value expressions.
 Identifier Expression
 ~~~~~~~~~~~~~~~~~~~~~
 
-.. write-me::
+An :newTerm:`identifier expression` 
+evaluates to the value or type
+with the given name.
 
-.. TODO: Intro prose goes here.
+If the identifier 
+
+.. TODO: Why do we even have this?
+   The places it is used are
+
+   primary-expression --> identifier-expression
+   superclass-method-expression --> ``super`` ``.`` identifier-expression
+
+   In the former case,
+   I would expect a primary expression to be a value
+   (not a type).
+   In the latter case,
+   the method on a superclass is going to be just a plain identifier,
+   again not a type.
+
 
 .. langref-grammar
 
@@ -699,14 +710,11 @@ Syntactically, every primary expression is also a postfix expression.
 Function Call Expression
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-:newTerm:`Function-style calls` calls consist of a function
+A :newTerm:`function call expression` consist of a function
 followed by its arguments in parenthesis.
 Arguments are separated by commas
-and support optional lables.
-They have the following form
-(showing a function that takes no arguments,
-one that takes a single argument,
-and one that takes three arguments):
+and support optional labels.
+They have the following form:
 
 .. syntax-outline::
 
@@ -720,7 +728,7 @@ can be any expression whose value is of a functional type
 
 A function call expression can include a :newTerm:`trailing closure`
 in the form of a closure expression immediately after the parenthesis.
-The trailing closure is understood as an additional argument to the function,
+The trailing closure is understood as an argument to the function,
 added after the last parenthesized argument.
 The following function calls are equivalent: ::
 
@@ -728,17 +736,14 @@ The following function calls are equivalent: ::
     exampleFunction(x) {$0 == 13}
 
 The parentheses can be omitted
-when calling a function that takes only one argument: ::
+when calling a function that takes only one argument
+with a trailing closure: ::
 
     myData.process() {$0 * 2}
     myData.process {$0 * 2}
 
-:newTerm:`Selector-style function calls` consist of a function
-followed by interleaved parts of its selector and its argements.
-
-.. TODO: Write about selector style syntax
-
-.. write-me ::
+.. TR: Should we document the fact that multiple trailing closures work?
+   The grammar box below and the prose above would need to change.
 
 .. langref-grammar
 
@@ -778,9 +783,6 @@ and so on,
 just as with any other function.
 
 .. TODO: This feels like pointless throat clearing...
-
-.. TODO: Update the grammar as needed for selector style initializers
-   like "foo.init withBacon".
 
 .. langref-grammar
 
