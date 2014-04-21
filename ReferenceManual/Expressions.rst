@@ -227,7 +227,7 @@ There are three possible values of the expression:
 
 * Otherwise, the value of the left-hand expression
   is returned as on optional of the type specified.
-  At runtime, if the cast fails, its value is ``.None``.
+  At runtime, if the cast fails, its value is ``nil``.
 
 .. TODO: List the exact rules for above.
    It seems like conversion to a supertype always works,
@@ -946,12 +946,12 @@ It has the following form:
 
     <#expression#>?<#postfix operators#>
 
-If the *expression* is not ``.None``,
+If the *expression* is not ``nil``,
 the optional-member expression evaluates
 to the non-optional unwrapped value of the expression
 and any chained postfix expression are evaluated normally.
 Otherwise,
-the chained-optional expression evaluates to ``.None``
+the chained-optional expression evaluates to ``nil``
 and any chained postfix expressions are ignored.
 
 Informally, all postfix expressions that follow the chained-optional expression
@@ -970,7 +970,7 @@ to the function call expression,
 which is directly chained to the chained-optional expression.
 Both the array expression and function call expression
 are chained to the chained-optional expression;
-they are both ignored if the value of ``x`` is ``.None``.
+they are both ignored if the value of ``x`` is ``nil``.
 
 .. LangRef
 
