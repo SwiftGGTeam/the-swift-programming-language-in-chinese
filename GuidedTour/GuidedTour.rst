@@ -42,12 +42,12 @@ and refer to the reference manual for specific questions.
 Simple Values
 -------------
 
-Variables and constants are created using the same syntax,
+Constants and variables are created using the same syntax,
 with one difference:
-Use ``var`` to declare a variable and use ``let`` for a constant.
-
-The value of a variable can be assigned multiple times,
-but constants can have a value assigned only once.
+Use ``let`` to declare a constant and use ``var`` for a variable.
+The value of a constant can be assigned only once,
+although it does not need to be known at compile time.
+The value of a variable can be assigned multiple times.
 
 .. testcode:: var
 
@@ -62,15 +62,13 @@ but constants can have a value assigned only once.
 .. admonition:: Experiment
 
    Edit the code in the boxes above.
-   Try setting different values
-   for ``myVariable`` and ``myConstant``.
-   What error do you get if you assign a new value to a constant?
+   Try assigning ``myConstant`` a new value.
+   What error do you get?
 
 .. TR: Is the requirement that constants need an initial value
    a current REPL limitation, or an expected language feature?
 
-Swift enforces the type of a variable ---
-assigning a value of the wrong type to a variable is an error.
+Assigning a value of the wrong type to a variable is an error.
 
 .. testcode:: typecheck
 
@@ -80,23 +78,30 @@ assigning a value of the wrong type to a variable is an error.
 
 .. admonition:: Experiment
 
-   Try assigning a number to ``greeting``.
+   Try assigning a number to ``greeting``
+   instead of the string "Good morning".
    What error do you get?
 
-Notice that you didn’t have to explictly
-tell the compiler the type of ``string``.
-If you don’t specify a type,
-Swift determines the variable’s type
-based on its initial value.
-A type annotation specifies an explicit type for a variable
-by writing it after the variable,
+In the previous example,
+the compiler understands that ``greeting`` is a string
+because its initial value is a string.
+This behavior of determining type information
+based on the surrounding code
+is known as *type inference*,
+and it allows you to take advantage of type checking
+without writing explicit type information everywhere.
+
+When the initial value doesn't provide enough information,
+or when there is no initial value,
+specify an explicit type
+by writing the type after the variable,
 separated by a colon.
 
 .. testcode:: type-annotation
 
    -> let implicitString = "Hello"
    << // implicitString : String = "Hello"
-   -> let explicitString : String = "Hello"
+   -> let explicitString: String = "Hello"
    << // explicitString : String = "Hello"
 
 .. admonition:: Experiment
@@ -105,8 +110,9 @@ separated by a colon.
    the variable’s initial value.
    What error do you get?
 
-If you want to cast a value to another type,
-you do it explicitly.
+Values are never implicitly converted or cast to another type.
+If you need to convert a value to a different type,
+make an instance of the desired type explicitly.
 
 .. testcode:: cast
 
@@ -115,19 +121,19 @@ you do it explicitly.
    -> let width = 94
    << // width : Int = 94
    -> println(label + String(width))
-   <- The width is 94
+   << The width is 94
 
 .. admonition:: Experiment
 
    Try removing the cast to ``String`` from the last line.
    What error do you get?
    
-   Try rewriting the last line to use string interpolation.
-   Do you still need an explicit cast?
-
-Assignment matches parts on the left side to parts on the right,
-which allows you to perform several assignments at once.
-For example, to swap the value of ``x`` and ``y``:
+Multiple values can be assigned at once.
+Values on the right side are assigned
+to the corresponding parts on the left.
+For example,
+you can swap two values in place
+without a temporary value.
 
 .. testcode:: swap
 
@@ -141,11 +147,27 @@ For example, to swap the value of ``x`` and ``y``:
    >> right
    << // right : Int = 10
 
-.. TODO: If the PG doesn’t show a good result for x and y in the swap line,
+.. TODO: If the PG doesn’t show a good result for left and right in the swap line,
    turn the >> lines into -> lines
    to show the reader that the swap worked.
 
-Strings in Swift have support a special interpolation syntax
+.. No tuple destructuring example
+   because I haven't really introduced tuples yet.
+
+.. testcode:: swap
+
+   -> let tupleResult = (404
+   -> var left = 10
+   << // left : Int = 10
+   -> var right = 100
+   << // right : Int = 100
+   -> (left, right) = (right, left)
+   >> left
+   << // left : Int = 100
+   >> right
+   << // right : Int = 10
+
+Strings in Swift support a special interpolation syntax
 that includes the string value of an expression
 as part of the string.
 
@@ -166,14 +188,22 @@ as part of the string.
 Arrays and dictionaries are written using brackets (``[]``).
 Tuples are written using parentheses.
 
+.. TODO: Add a short bit about what tuples are.
+   We didn't have them in Obj-C,
+   so devs may have never seen one before in their code.
+   Roughly,
+   a tuple lets you refer to multiple values as a single value
+   and pass them around together.
+   It's stort of halfway between an array and a struct.
+
 .. testcode:: array-dict
 
     -> let fruits = ["apple", "orange", "banana"]
     << // fruits : String[] = ["apple", "orange", "banana"]
     -> let occupations = [
-           "Malcolm": "Captain",
-           "Kayley": "Mechanic",
-           "Jayne": "Public Relations",
+          "Malcolm": "Captain",
+          "Kayley": "Mechanic",
+          "Jayne": "Public Relations",
         ]
     << // occupations : Dictionary<String, String> = Dictionary<String, String>(1.33333, 3, <DictionaryBufferOwner<String, String> instance>)
     -> let origin = (0, 0)
@@ -209,10 +239,13 @@ for accessing their elements.
     Why do you think empty arrays and dictionaries
     have this difference in behavior?
 
-.. An empty array or dictionary needs its type explicitly specified
-   because there are no elements in it to let the compiler infer its type.
-   
-.. Mention [] and [:] as empty array/dict literals.
+.. TODO: Iterate on the way the empty array & dict are created.
+   Alternatives:
+   vegetables: Array<String> = []
+   vegetables: String[] = []
+   vegetables = String[]()
+
+.. TODO: Mention [] and [:] as empty array/dict literals.
    They aren’t fully typed, so they require a type annotation in a variable declaration,
    but they are useful when calling a function or re-assigning the value of a variable.
 
@@ -222,9 +255,8 @@ for accessing their elements.
 Control Flow
 ------------
 
-Choose between alternative blocks of code with ``if`` and ``switch``.
-
-Use ``if`` as follows:
+Use ``if`` to choose between blocks of code
+by checking Boolean conditions.
 
 .. testcode:: if
 
@@ -233,11 +265,11 @@ Use ``if`` as follows:
    -> let remainingGummiBears = 5
    << // remainingGummiBears : Int = 5
    -> if haveJellyBabies {
-          println("Would you like a jelly baby?")
+         println("Would you like a jelly baby?")
       } else if remainingGummiBears > 0 {
-          println("Would you like a gummi bear?")
+         println("Would you like a gummi bear?")
       } else {
-          println("Sorry, all we have left are fruits and vegetables.")
+         println("Sorry, all we have left are fruits and vegetables.")
       }
    << Would you like a gummi bear?
 
@@ -247,21 +279,23 @@ The conditional must be a Boolean expression;
 code like ``if remainingGummiBears { ... }`` is an error,
 not an implicit comparison to zero.
 
-Use ``switch`` as follows:
+Use ``switch`` to choose between blocks of code
+where each block of code is associated
+with a possible value.
 
 .. testcode:: simple-switch
 
    -> let vegetable = "cucumber"
    << // vegetable : String = "cucumber"
    -> switch vegetable {
-          case "lettuce":
-              println("Let’s make salad.")
-          case "celery":
-              println("Add some raisins and make ants on a log.")
-          case "cucumber":
-             println("How about a cucumber sandwich?")
-          default:
-              println("Everything tastes good in soup.")
+         case "lettuce":
+            println("Let’s make salad.")
+         case "celery":
+            println("Add some raisins and make ants on a log.")
+         case "cucumber":
+            println("How about a cucumber sandwich?")
+         default:
+            println("Everything tastes good in soup.")
       }
    << How about a cucumber sandwich?
 
@@ -270,28 +304,15 @@ Use ``switch`` as follows:
    Try removing the default case.
    What error do you get?
 
-Switches in Swift support any kind of data, not just integers.
-You must write a switch case for every possible value
+Switches support any kind of data, not just integers.
+You need to provide a case for every possible value
 or use ``default`` to specify what happens if none of the cases match.
-Execution does not “fall through” from one case statement to the next
-unless you use ``fallthough`` to opt in to that behavior.
+Execution does not implicitly “fall through”
+so there is no need to explicitly break out of the switch
+at the end of each case‘s code.
 
-.. testcode:: fallthrough-switch
-
-    -> let birdsSinging = true
-    << // birdsSinging : Bool = true
-    -> switch birdsSinging {
-           case true:
-               println("The birds are singing.")
-               fallthrough
-           default:
-               println("It’s a beautiful day.")
-       }
-    << The birds are singing.
-    << It’s a beautiful day.
-
-.. See also <rdar://problem/16514545>
-   I’m using default here instead of case false as a workaround to this bug.
+.. Omitting mention of "fallthrough" keyword.
+   It's in the guide/reference if you need it.
 
 Switches support a variety of complex matching criteria,
 such as tuple unpacking and ``where`` clauses:
@@ -301,18 +322,18 @@ such as tuple unpacking and ``where`` clauses:
    -> let somePoint = (1, 1)
    << // somePoint : (Int, Int) = (1, 1)
    -> switch somePoint {
-          case (0, 0):
-              println("(0, 0) is at the origin")
-          case (_, 0):
-              println("(\(somePoint.0), 0) is on the x-axis")
-          case (0, _):
-              println("(0, \(somePoint.1)) is on the y-axis")
-          case let (x, y) where x == y:
-              println("(\(x), \(y)) is on the diagonal")
-          default:
-              println("The point is somewhere else.")
+         case (0, 0):
+            println("(0, 0) is at the origin")
+         case (_, 0):
+            println("(\(somePoint.0), 0) is on the x-axis")
+         case (0, _):
+            println("(0, \(somePoint.1)) is on the y-axis")
+         case let (x, y) where x == y:
+            println("(\(x), \(y)) is on the diagonal")
+         default:
+            println("The point is somewhere else.")
       }
-   <- (1, 1) is on the diagonal
+   << (1, 1) is on the diagonal
 
 .. admonition:: Experiment
 
@@ -345,7 +366,7 @@ Loops can keep an explicit counter or index.
 .. testcode:: c-for
 
    -> for var i = 0; i < 5; ++i {
-          println(i)
+         println(i)
       }
    << 0
    << 1
@@ -360,7 +381,7 @@ Repeat a block of code until a condition changes using ``while``.
    -> var n = 2
    << // n : Int = 2
    -> while n < 100 {
-          n = n * 2
+         n = n * 2
       }
    -> println("n is \(n)")
    << n is 128
@@ -373,7 +394,7 @@ ensuring that the loop is run at least once.
    -> var m = 2
    << // m : Int = 2
    -> do {
-          m = m * 2
+         m = m * 2
       } while m < 100
    -> println("m is \(m)")
    << m is 128
@@ -383,8 +404,10 @@ Functions and Closures
 
 Functions are declared using ``func``
 and are called with a parenthesized list of arguments.
-Argument names are part of the function signature;
+Argument names are part of the function's name;
 you can specify each parameter by name when calling the function.
+
+.. TODO: I've hand waved here by saying args are part of the "name".
 
 .. TR: Technically, right now, the argument names are actually
    part of the *type* rather than the *name*
@@ -393,8 +416,8 @@ you can specify each parameter by name when calling the function.
 
 .. testcode:: func
 
-    -> func greet(name : String, day : String) -> String {
-           return "Hello \(name), today is \(day)."
+    -> func greet(name: String, day: String) -> String {
+          return "Hello \(name), today is \(day)."
        }
     -> greet("Bob", "Tuesday")
     << // r0 : String = "Hello Bob, today is Tuesday."
@@ -416,12 +439,13 @@ Functions can return multiple values using a tuple.
    >> getGasPrices()
    << // r0 : (Double, Double, Double) = (3.59, 3.69, 3.79)
 
-Functions can also be defined to take a variable number of arguments.
+Functions can also take a variable number of arguments,
+collecting them into an array.
 
 .. testcode:: functions
 
    -> // Reimplement the Standard Library sum function for Int values.
-   -> func sumOf(numbers : Int...) -> Int {
+   -> func sumOf(numbers: Int...) -> Int {
          var sum = 0
          for number in numbers {
             sum += number
@@ -440,12 +464,12 @@ that were declared in the outer function.
 .. testcode:: nested-func
 
     -> func returnFifteen () -> Int {
-           var y = 10
-           func add () -> () {
-               y += 5
-           }
-           add()
-           return y
+          var y = 10
+          func add () -> () {
+             y += 5
+          }
+          add()
+          return y
        }
     -> returnFifteen()
     << // r0 : Int = 15
@@ -457,16 +481,15 @@ that were declared in the outer function.
    What happens?
 
 Functions are a first-class type.
-This means a function can accept functions as arguments
-and have a function as its return value.
+This means a function can return another function as its value.
 
 .. testcode:: return-func
 
     -> func makeIncrementer() -> (Int -> Int) {
-           func addOne (number : Int) -> Int {
-               return 1 + number
-           }
-           return addOne
+          func addOne (number: Int) -> Int {
+             return 1 + number
+          }
+          return addOne
        }
     -> var increment = makeIncrementer()
     << // increment : (Int -> Int) = <unprintable value>
@@ -475,50 +498,66 @@ and have a function as its return value.
 
 .. TODO: Confirm spelling of "incrementer" (not "incrementor").
 
+A function can take another function as one of its argument.
+
 .. testcode:: pass-func
 
     -> // Re-implement the Standard Library sort function.
-    -> func bubbleSort (var list : Int[], outOfOrder : (Int, Int) -> Bool) -> Int[] {
-           for i in 0...list.count {
-               for j in 0...list.count {
-                   if outOfOrder(list[i], list[j]) {
-                       (list[i], list[j]) = (list[j], list[i])
-                   }
-               }
-           }
-           return list
+    -> func bubbleSort (var list: Int[], outOfOrder: (Int, Int) -> Bool) -> Int[] {
+          for i in 0...list.count {
+             for j in 0...list.count {
+                if outOfOrder(list[i], list[j]) {
+                   (list[i], list[j]) = (list[j], list[i])
+                }
+             }
+          }
+          return list
        }
     -> func greaterThan (x : Int, y : Int) -> Bool {
-           return x > y
+          return x > y
        }
     -> var numbers = [8, 3, 5, 6]
     << // numbers : Int[] = [8, 3, 5, 6]
     -> var sortedNumbers = bubbleSort(numbers, greaterThan)
     << // sortedNumbers : Int[] = [8, 6, 5, 3]
 
-Closures are surrounded by braces (``{}``)
+.. TODO: Probably want to either explicitly
+   un-name the parameters to bubbleSort() with _
+   or provide the names when calling the function.
+
+Closures are just like a function
+except you don't give them a name when you declare them.
+They are written as code surrounded by braces (``{}``)
 and have their arguments separated from their body by ``in``.
 
 .. testcode:: closure
 
-    -> let triple : Int -> Int = {
-           (number : Int) in
-           let result = 3 * number
-           return result
+    -> let triple: Int -> Int = {
+          (number: Int) in
+          let result = 3 * number
+          return result
        }
     << // triple : Int -> Int = <unprintable value>
     -> triple(5)
     << // r0 : Int = 15
 
+.. TODO: The type of "number" can be omitted above,
+   and in fact the parens are probably not needed either.
+   I've written them for now
+   so that I start with the most verbose function-y syntax.
+
 There are several conveniences for writing closures more concisely.
-Parameter names can be omitted
-and the parameters can be referred to by number.
+When the closure's type is already known,
+such as the callback for a delegate,
+the type of its parameters can be omitted.
+For even more brevity,
+the parameters can be referred to by number instead of by name.
 Single statement closures implicitly return the value
 of their only statement.
 
 .. testcode:: closure-brief
 
-    -> let shortTriple : Int -> Int = { 3 * $0 }
+    -> let shortTriple: Int -> Int = { 3 * $0 }
     << // shortTriple : Int -> Int = <unprintable value>
     -> shortTriple(5)
     << // r0 : Int = 15
@@ -529,6 +568,15 @@ can appear immediately after the function call.
 .. testcode:: trailing-closure
 
     -> sort([1, 5, 3, 12, 2]) { $0 > $1 }
+    << // r0 : Int[] = [12, 5, 3, 2, 1]
+
+The previous listing can be written without a closure at all
+by passing the ``>`` operator
+as the second argument to the ``sort`` function.
+
+.. testcode:: operator-closure
+
+    -> sort([1, 5, 3, 12, 2], >)
     << // r0 : Int[] = [12, 5, 3, 2, 1]
 
 Objects
