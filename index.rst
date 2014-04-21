@@ -20,6 +20,22 @@ Contents
 Change Log
 ----------
 
+April 21 2014
+~~~~~~~~~~~~~
+
+Language Guide
+++++++++++++++++++
+
+* Major new section about :ref:`initializer delegation for class types
+  <Initialization_InitializerDelegationForClassTypes>`
+* New section on :ref:`required initializers <Initialization_RequiredInitializers>`
+* New section on :ref:`overriding properties <Inheritance_OverridingProperties>`
+* Stopped using the phrase “named values” to refer to constants and variables.
+* Major revision to the :doc:`LanguageGuide/BasicTypes` introduction to talk about types in Swift.
+* New and expanded introductions to :doc:`LanguageGuide/BasicOperators`, :doc:`LanguageGuide/ControlFlow`,
+  :doc:`LanguageGuide/Enumerations`, :doc:`LanguageGuide/Functions`,
+  :doc:`LanguageGuide/Methods`, and :doc:`LanguageGuide/Properties`.
+
 April 17 2014
 ~~~~~~~~~~~~~
 

@@ -1,58 +1,54 @@
 Basic Operators
 ===============
 
-An :newTerm:`operator` is a special symbol or phrase that is used to check or change values.
-A simple example is the addition operator (``+``)
-which is used to add two numbers together (as in ``let i = 1 + 2``).
+An :newTerm:`operator` is a special symbol or phrase that you use to check or change values.
+For example, the addition operator (``+``) adds two numbers together
+(as in ``let i = 1 + 2``).
 More complex examples include the logical AND operator ``&&``
 (as in ``if enteredDoorCode && passedRetinaScan``),
 or the increment operator ``++i``,
-which gives a shorthand way to increase the value of ``i`` by ``1``.
+which is a shortcut to increase the value of ``i`` by ``1``.
 
-All of the most common operators are described in this chapter.
-Swift's more advanced operators are described in :doc:`AdvancedOperators`.
+Swift supports all standard C operators,
+and improves several capabilities to eliminate common coding errors.
+The assignment operator (``=``) does not return a value,
+to prevent it from being mistakenly used when
+the equality comparison operator (``==``) is intended.
+Arithmetic operators (``+``, ``-``, ``*``, ``/``, ``%`` and so forth)
+detect and disallow value overflow,
+to avoid unexpected results when working with numbers that become larger or smaller
+than the allowed value range of the type that stores them.
+(You can choose to opt in to value overflow behavior
+by using Swift's overflow operators,
+as described in :ref:`AdvancedOperators_OverflowOperators`.)
 
-Swift supports all of the standard operators from C,
-and improves several of their capabilities
-to eliminate common coding errors:
+Unlike C, remainder (``%``) calculations in Swift
+can be performed on floating-point numbers.
+Swift also provides two range operators (``a..b`` and ``a...b``) not found in C,
+as a shortcut for expressing a range of values.
 
-* Remainder (``%``) calculations can be performed on floating-point numbers
-* Assignment (``=``) does not return a value
-* Arithmetic operators (``+``, ``-``, ``*``, ``/``, ``%`` etc.)
-  detect and disallow value overflow
-
-You can choose to opt in to value overflow behavior
-by using Swift's overflow operators (such as ``a &+ b``).
-Overflow operators are described in :doc:`AdvancedOperators`.
-
-Swift also provides two range operators
-(``a..b`` and ``a...b``),
-which give a short-hand way to express a range of values.
-
-You can define your own implementations of the standard operators –
-and create new operators with custom functionality –
-for any custom types you define.
-This process is covered in detail in :doc:`AdvancedOperators`.
+This chapter describes the common operators in Swift.
+:doc:`AdvancedOperators` covers Swift's advanced operators,
+and describes how to define your own custom operators
+and implement the standard operators for your own custom types.
 
 .. _BasicOperators_Terminology:
 
 Terminology
 -----------
 
-Operators are often referred to as :newTerm:`unary`, :newTerm:`binary`, or :newTerm:`ternary`:
+Operators are unary, binary, or ternary:
 
-* Unary operators operate on a single target (such as ``-a``).
-  They are said to be :newTerm:`prefix` operators if they appear
-  immediately before their target (such as ``!b``),
-  and :newTerm:`postfix` operators if they appear
-  immediately after their target (such as ``i++``).
-* Binary operators operate on two targets (such as ``2 + 3``),
-  and are said to be :newTerm:`infix` because they appear inbetween their two targets.
-* Ternary operators operate on three targets.
-  Like C, Swift has just one ternary operator,
-  known as the :newTerm:`ternary conditional operator` (``a ? b : c``).
+* :newTerm:`Unary` operators operate on a single target (such as ``-a``).
+  Unary :newTerm:`prefix` operators appear immediately before their target (such as ``!b``),
+  and unary :newTerm:`postfix` operators appear immediately after their target (such as ``i++``).
+* :newTerm:`Binary` operators operate on two targets (such as ``2 + 3``)
+  and are :newTerm:`infix` because they appear in between their two targets.
+* :newTerm:`Ternary` operators operate on three targets.
+  Like C, Swift has only one ternary operator,
+  the ternary conditional operator (``a ? b : c``).
 
-The values that operators affect are known as :newTerm:`operands`.
+The values that operators affect are :newTerm:`operands`.
 In the expression ``1 + 2``, the ``+`` symbol is a binary operator
 and its two operands are the values ``1`` and ``2``.
 
@@ -74,7 +70,7 @@ The :newTerm:`assignment operator` (``a = b``) updates the value of ``a`` with t
    </ a is now equal to 10
 
 If the right side of the assignment is a tuple with multiple values,
-its elements can be decomposed into multiple named values at once:
+its elements can be decomposed into multiple constants or variables at once:
 
 .. testcode:: assignmentOperator
 
@@ -83,7 +79,7 @@ its elements can be decomposed into multiple named values at once:
    /> x is equal to \(x), and y is equal to \(y)
    </ x is equal to 1, and y is equal to 2
 
-Unlike C and Objective-C, the assignment operator does not itself return a value.
+Unlike C and Objective-C, the assignment operator in Swift does not itself return a value.
 The following statement is not valid:
 
 ::
@@ -92,7 +88,7 @@ The following statement is not valid:
       // this is not valid, because x = y does not return a value
    }
 
-This avoids the assignment operator (``=``) being used by accident
+This feature prevents the assignment operator (``=``) from being used by accident
 when the equality comparison operator (``==``) is actually intended.
 By making ``if x = y`` invalid,
 Swift helps you to avoid these kinds of errors in your code.
@@ -107,10 +103,10 @@ Arithmetic Operators
 
 Swift supports the four standard :newTerm:`arithmetic operators` for all number types:
 
-* addition (``+``)
-* subtraction (``-``)
-* multiplication (``*``)
-* division (``/``)
+* Addition (``+``)
+* Subtraction (``-``)
+* Multiplication (``*``)
+* Division (``/``)
 
 .. testcode:: arithmeticOperators
 
@@ -122,6 +118,11 @@ Swift supports the four standard :newTerm:`arithmetic operators` for all number 
    << // r2 : Int = 6
    -> 10.0 / 2.5   // equals 4.0
    << // r3 : Double = 4.0
+
+Unlike C and Objective-C, the four arithmetic operators
+do not allow values to overflow by default.
+You can opt in to value overflow behavior by using Swift's overflow operators
+(such as ``a &+ b``). See :ref:`AdvancedOperators_OverflowOperators`.
 
 The addition operator is also supported for ``String`` concatenation:
 
@@ -175,8 +176,7 @@ To calculate ``9 % 4``, you first work out how many ``4``\ s will fit inside ``9
 .. image:: ../images/remainderInteger.png
    :align: center
 
-You can fit two ``4``\ s inside ``9``, as this illustration shows.
-After doing so, there is a remainder of ``1`` left over (shown in orange).
+You can fit two ``4``\ s inside ``9``, and the remainder is ``1`` (shown in orange).
 
 In Swift, this would be written as:
 
@@ -214,10 +214,10 @@ giving a remainder value of ``-1``.
 The sign of ``b`` is ignored for negative values of ``b``.
 This means that ``a % b`` and ``a % -b`` always give the same answer.
 
-.. _BasicOperators_FloatingPointRemainderCalculations:
+.. _BasicOperators_FloatingPointRemainderCalculationsInSwift:
 
-Floating-Point Remainder Calculations
-_____________________________________
+Floating-Point Remainder Calculations in Swift
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Unlike the remainder operator in C and Objective-C,
 Swift's remainder operator can also operate on floating-point numbers:
@@ -240,8 +240,8 @@ Increment and Decrement Operators
 
 Like C, Swift provides an :newTerm:`increment operator` (``++``)
 and an :newTerm:`decrement operator` (``--``)
-as a shorthand way to increase or decrease the value of a numeric variable by ``1``.
-These operators can be used with named values of any integer or floating-point type.
+as a shortcut to increase or decrease the value of a numeric variable by ``1``.
+You can use these operators with variables of any integer or floating-point type.
 
 .. testcode:: arithmeticOperators
 
@@ -254,8 +254,9 @@ Each time you call ``++i``, the value of ``i`` is increased by ``1``.
 Essentially, ``++i`` is shorthand for saying ``i = i + 1``.
 Likewise, ``--i`` can be used as shorthand for ``i = i - 1``.
 
-``++`` and ``--`` can be used as prefix operators or as postfix operators.
+The ``++`` and ``--`` symbols can be used as prefix operators or as postfix operators.
 ``++i`` and ``i++`` are both valid ways to increase the value of ``i`` by ``1``.
+Similarly, ``--i`` and ``i--`` are both valid ways to decrease the value of ``i`` by ``1``.
 
 Note that these operators modify ``i``, and also return a value.
 If you only want to increment or decrement the value stored in ``i``,
@@ -264,10 +265,10 @@ However, if you *do* use the returned value,
 it will be different based on whether you used the prefix or postfix version of the operator,
 based on the following rules:
 
-* if the operator is written *before* the variable,
-  it increments the variable *before* returning its value
-* if the operator is written *after* the variable,
-  it increments the variable *after* returning its value
+* If the operator is written *before* the variable,
+  it increments the variable *before* returning its value.
+* If the operator is written *after* the variable,
+  it increments the variable *after* returning its value.
 
 For example:
 
@@ -322,7 +323,7 @@ known as the :newTerm:`unary minus operator`:
    << // plusThree : Int = 3
 
 The unary minus operator (``-``) is prepended directly before the value it operates on,
-without any whitespace.
+without any white space.
 
 .. _BasicOperators_UnaryPlusOperator:
 
@@ -339,9 +340,9 @@ the value it operates on, without any change:
    -> let alsoMinusSix = +minusSix   // alsoMinusSix equals -6
    << // alsoMinusSix : Int = -6
 
-The unary plus operator doesn't actually do anything.
-However, it can be used to provide symmetry in your code
-when used alongside the unary minus operator.
+Although the unary plus operator doesn't actually do anything,
+you can use it to provide symmetry in your code for positive numbers
+when also using the unary minus operator for negative numbers.
 
 .. _BasicOperators_CompoundAssignmentOperators:
 
@@ -369,14 +370,15 @@ that performs both tasks at the same time.
    You cannot write ``let b = a += 2``, for example.
    This behavior is different from the increment and decrement operators mentioned above.
 
-A complete list of compound assignment operators can be found in the :doc:`../ReferenceManual/index`.
+For a complete list of compound assignment operators
+see the :doc:`../ReferenceManual/index`.
 
 .. _BasicOperators_ComparisonOperators:
 
 Comparison Operators
 --------------------
 
-Swift supports all of the standard C :newTerm:`comparison operators`:
+Swift supports all standard C :newTerm:`comparison operators`:
 
 * Equal to (``a == b``)
 * Not equal to (``a != b``)
@@ -388,7 +390,7 @@ Swift supports all of the standard C :newTerm:`comparison operators`:
 .. note::
 
    Swift also provides two :newTerm:`identity operators` (``===`` and ``!==``),
-   which are used to test if two object named values both refer to the same object instance.
+   which you use to test whether two object references both refer to the same object instance.
    These identity operators are described in more detail in :doc:`ClassesAndStructures`.
 
 Each of the comparison operators returns a ``Bool`` value to indicate whether or not the statement is true:
@@ -436,12 +438,12 @@ Ternary Conditional Operator
 
 The :newTerm:`ternary conditional operator` is a special operator with three parts,
 which takes the form ``question ? answer1 : answer2``.
-It provides a shorthand way to evaluate one of two expressions
+It is a shortcut for evaluating one of two expressions
 based on whether ``question`` is true or false.
 If ``question`` is true, it evaluates ``answer1`` and returns its value;
 otherwise, it evaluates ``answer2`` and returns its value.
 
-Effectively, it is shorthand for:
+This operator is shorthand for:
 
 ::
 
@@ -452,8 +454,8 @@ Effectively, it is shorthand for:
    }
 
 Here's an example, which calculates the pixel height for a table row.
-The row should be 50 pixels taller than the content if it has a header,
-and 20 pixels taller if it doesn't:
+The row height should be 50 pixels taller than the content height
+if the row has a header, and 20 pixels taller if it doesn't:
 
 .. testcode:: ternaryConditionalOperatorPart1
 
@@ -484,9 +486,12 @@ This is shorthand for:
    /> rowHeight is equal to \(rowHeight)
    </ rowHeight is equal to 90
 
-The shorthand version is more concise,
-and removes the need for ``rowHeight`` to be a variable named value
-rather than a constant named value.
+The first example's use of the ternary conditional operator means that
+``rowHeight`` can be set to the correct value on a single line of code.
+This is more concise than the second example,
+and removes the need for ``rowHeight`` to be a variable,
+because its value does not need to be modified within an ``if``-``else`` statement
+(as seen in the second example).
 
 .. TODO: leave rowHeight uninitialized once the REPL allows uninitialized variables?
 
@@ -502,7 +507,7 @@ Range Operators
 ---------------
 
 Swift includes two :newTerm:`range operators`,
-which provide shorthand ways to express a range of values.
+which are shortcuts for expressing a range of values.
 
 .. _BasicOperators_ClosedRangeOperator:
 
@@ -541,7 +546,7 @@ but does not include ``b``.
 It is said to be :newTerm:`half-closed`
 because it contains its first value, but not its final value.
 
-Half-closed ranges are particularly useful when working with
+Half-closed ranges are particularly useful when you work with
 zero-based lists such as arrays,
 where it is useful to count up to (but not including) the length of the list:
 
@@ -588,7 +593,7 @@ and ``false`` becomes ``true``.
 
 The logical NOT operator is a prefix operator,
 and appears immediately before the value it operates on,
-without any whitespace.
+without any white space.
 It can be read as “not ``a``”, as seen in the following example:
 
 .. testcode:: logicalOperators
@@ -601,8 +606,8 @@ It can be read as “not ``a``”, as seen in the following example:
    <- ACCESS DENIED
 
 The phrase ``if !allowedEntry`` can be read as “if not allowed entry.”
-The subsequent line is only executed if “not allowed entry” is true,
-i.e. if ``allowedEntry`` is ``false``.
+The subsequent line is only executed if “not allowed entry” is true;
+that is, if ``allowedEntry`` is ``false``.
 
 As in this example,
 careful choice of Boolean constant and variable names
@@ -646,14 +651,14 @@ Logical OR Operator
 ~~~~~~~~~~~~~~~~~~~
 
 The :newTerm:`logical OR operator`
-(``a || b``, i.e. an infix operator made from two adjacent pipe characters)
-is used to create logical expressions where only *one* of the two values has to be ``true``
+(``a || b``) is an infix operator made from two adjacent pipe characters.
+You use it to create logical expressions where only *one* of the two values has to be ``true``
 for the overall expression to be ``true``.
 
 Like the Logical AND operator above,
-the Logical OR operator uses short-circuit evaluation when considering its expressions.
-If the left-hand side of a Logical OR expression is ``true``,
-the right-hand side will not be evaluated,
+the Logical OR operator uses short-circuit evaluation to consider its expressions.
+If the left side of a Logical OR expression is ``true``,
+the right side is not evaluated,
 because it cannot change the outcome of the overall expression.
 
 For example:
@@ -701,7 +706,7 @@ It can be read as:
 
 If we've entered the correct door code and passed the retina scan;
 or if we have a valid door key;
-or if we know the emergency override password;
+or if we know the emergency override password,
 then allow access.
 
 Based on the example values from earlier,
@@ -714,7 +719,7 @@ so the overall compound expression still equates to ``true``.
 Explicit Parentheses
 ~~~~~~~~~~~~~~~~~~~~
 
-It can sometimes be useful to include parentheses when they are not strictly needed,
+It is sometimes useful to include parentheses when they are not strictly needed,
 to make the intention of a complex expression easier to read.
 In the door access example above,
 it is useful to add parentheses around the first part of the compound expression

@@ -18,7 +18,7 @@ Extensions are similar to :newTerm:`categories` in Objective-C.
 
 Extensions can:
 
-* add computed properties and computed type properties
+* add computed properties and computed static properties
 * define instance methods and type methods
 * provide new initializers
 * define subscripts
@@ -109,8 +109,10 @@ your own custom types as initializer parameters.
 
 .. note::
 
-   Extensions can add new initializers to classes, but they cannot add deinitializers.
-   Deinitializers must always be provided by the original class implementation.
+   Extensions can add new convenience initializers to a class,
+   but they cannot add new designated initializers or deinitializers to a class.
+   Designated initializers and deinitializers
+   must always be provided by the original class implementation.
 
 This approach can be used to extend the basic ``String`` type
 to accept an instance of your own custom type as an initializer parameter,
@@ -250,10 +252,10 @@ Calling ``shiftRight(3)`` on an integer variable containing the number ``123456`
 shifts the number to the right by three decimal places,
 and changes the variable to have a value of ``123``.
 
-.. _Extensions_ComputedTypeProperties:
+.. _Extensions_ComputedStaticProperties:
 
-Computed Type Properties
-------------------------
+Computed Static Properties
+--------------------------
 
 .. write-me::
 

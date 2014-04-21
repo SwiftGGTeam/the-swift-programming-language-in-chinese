@@ -20,7 +20,7 @@ Any type that satisfies the requirements of a protocol is said to
 :newTerm:`conform` to that protocol.
 
 Protocols can require that conforming types have specific
-instance properties, instance methods, type properties, type methods,
+instance properties, instance methods, type methods,
 initializers, operators, and subscripts.
 
 .. _Protocols_ProtocolSyntax:
@@ -230,7 +230,7 @@ Because it is a type,
 a protocol can be used in many places where other types are allowed, including:
 
 * as a parameter type or return type in a function, method, or initializer
-* as the type of a named value or property
+* as the type of a constant, variable, or property
 * as the type of items in an ``Array``, ``Dictionary`` or other container
 
 .. note::
@@ -333,7 +333,7 @@ This example defines two protocols for use with dice-based board games:
       }
    -> protocol DiceGameDelegate {
          func gameDidStart(game: DiceGame)
-         func game(DiceGame) didStartNewTurnWithDiceRoll(diceRoll: Int)
+         func game(_ game: DiceGame, didStartNewTurnWithDiceRoll diceRoll: Int)
          func gameDidEnd(game: DiceGame)
       }
 
@@ -342,8 +342,9 @@ by any game that involves a dice.
 The ``DiceGameDelegate`` protocol can be adopted by
 any type that wants to be able to observe and track the progress of a ``DiceGame``.
 
-.. QUESTION: should DiceGame be called something like “Playable” instead,
-   and used as an opportunity to talk about protocol naming?
+.. QUESTION: is the Cocoa-style x:didStuffWithY: naming approach
+   the right thing to advise for delegates written in Swift?
+   It looks a little odd in the syntax above.
 
 Here's a version of the *Snakes and Ladders* game originally introduced in :doc:`ControlFlow`.
 This version has been adapted to use a ``Dice`` instance for its dice-rolls;
@@ -433,7 +434,7 @@ which adopts the ``DiceGameDelegate`` protocol:
             }
             println("The game is using a \(game.dice.sides)-sided dice")
          }
-         func game(DiceGame) didStartNewTurnWithDiceRoll(diceRoll: Int) {
+         func game(_ game: DiceGame, didStartNewTurnWithDiceRoll diceRoll: Int) {
             ++numberOfTurns
             println("Rolled a \(diceRoll)")
          }
@@ -498,15 +499,22 @@ Initializers
 .. You can't construct from a protocol
 .. You can define initializer requirements in protocols
 
-.. _Protocols_ClassAndStaticMethodsAndProperties:
+.. _Protocols_TypeMethods:
 
-Class and Static Methods and Properties
----------------------------------------
+Type Methods
+------------
 
 .. write-me::
 
-.. Protocols can provide class (and static) functions and properties
+.. TODO: Protocols can provide class (and static) functions
    (although rdar://14620454 and rdar://15242744).
+
+.. TODO: We already have static properties,
+   but we won't have class properties for Swift 1.0, says [Contributor 7746].
+   This means that protocols will not allow the definition of type-level properties,
+   because a class would be unable to fulfil them.
+   I've named this section's placeholder title
+   to refer to "Type Methods" only for now.
 
 .. _Protocols_AddingProtocolConformanceWithExtensions:
 
@@ -759,7 +767,6 @@ with a single property requirement of a gettable ``Double`` property called ``ar
    Even if you are not interoperating with Objective-C,
    you will still need to mark your protocols with the ``@objc`` attribute
    if you want to be able to check for protocol conformance.
-   This requirement is likely to be removed in a future version of Swift.
    
    Note also that ``@objc`` protocols can only be adopted by classes,
    and not by structures or enumerations.
@@ -874,6 +881,20 @@ and so only their ``area`` property can be accessed.
 Optional Protocol Requirements
 ------------------------------
 
+.. TODO: split this section into several subsections as per [Contributor 7746]'s feedback,
+   and cover the missing alternative approaches that he mentioned.
+
+.. TODO: you can specify optional subscripts,
+   and the way you check for them / work with them is a bit esoteric.
+   You have to try and access a value from the subscript,
+   and see if the value you get back (which will be an optional)
+   has a value or is nil.
+
+.. TODO: you can specify optional initializers,
+   but there doesn't seem to be a way to check for them or call them.
+   Doug has suggested that we should probably ban them,
+   which I've filed as rdar://16669554.
+
 Protocols can define :newTerm:`optional requirements`,
 which do not have to be implemented by types that conform to the protocol.
 Optional requirements are prefixed by the ``@optional`` keyword
@@ -893,11 +914,10 @@ to reflect the fact that the optional requirement may not have been implemented.
 .. note::
 
    Optional protocol requirements can only be specified
-   if your protocol is marked with the ``@objc`` attribute,
+   if your protocol is marked with the ``@objc`` attribute.
    Even if you are not interoperating with Objective-C,
    you will still need to mark your protocols with the ``@objc`` attribute
    if you want to specify optional requirements.
-   This limitation is likely to be removed in a future version of Swift.
    
    Note also that ``@objc`` protocols can only be adopted by classes,
    and not by structures or enumerations.
@@ -1087,7 +1107,7 @@ Protocol Composition
 .. Show how to make a custom type conform to LogicValue or some other protocol
 .. LogicValue certainly needs to be mentioned in here somewhere
 .. Show a protocol being used by an enumeration
-.. accessing protocol methods, properties etc. through a named value that is *just* of protocol type
+.. accessing protocol methods, properties etc. through a constant or variable that is *just* of protocol type
 .. Protocols can't be nested, but nested types can implement protocols
 .. Protocol requirements can be marked as @unavailable,
    but this currently only works if they are also marked as @objc.

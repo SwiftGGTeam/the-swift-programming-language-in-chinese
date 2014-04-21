@@ -23,14 +23,14 @@ Mutability of Collections
 -------------------------
 
 Arrays and dictionaries are ways to store multiple values together in a single collection.
-If you create an array or a dictionary, and assign it to a *variable* named value,
+If you create an array or a dictionary, and assign it to a variable,
 the collection that is created will be :newTerm:`mutable`.
 This means that you will be able to change (or :newTerm:`mutate`) the collection
 after it has been created –
 perhaps to add more items to the collection,
 or to remove existing items from the ones it already contains.
 
-However, if you assign an array or a dictionary to a *constant* named value,
+However, if you assign an array or a dictionary to a constant,
 the collection will be :newTerm:`immutable`.
 It will not then be possible to change the contents of the collection.
 
@@ -46,7 +46,7 @@ This enables the Swift compiler to optimize the performance of the collection.
    Swift's ``Array`` and ``Dictionary`` are
    *value types*, not *reference types*.
    This means that they are copied rather than referenced
-   when they are assigned to a named value or passed to a function.
+   when they are assigned to a constant or variable, or passed to a function.
    This is different from the behavior of Cocoa's ``NSArray`` and ``NSDictionary`` classes.
    The difference between value types and reference types is covered in detail
    in :ref:`ClassesAndStructures_ValueTypesAndReferenceTypes`.

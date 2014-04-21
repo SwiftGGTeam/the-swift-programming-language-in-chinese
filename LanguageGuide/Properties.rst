@@ -1,15 +1,20 @@
 Properties
 ==========
 
-.. TODO: research and write up the story for @weak
-
 :newTerm:`Properties` associate values with a particular class, structure, or enumeration.
-Stored properties store a constant or variable named value alongside an instance,
+Stored properties store constant and variable values alongside an instance,
 whereas computed properties calculate (rather than store) a value.
 
 Stored and computed properties are usually associated with instances of a particular type.
-However, they can also be associated with the type itself.
-Such properties are known as type properties.
+However, for value types, they can also be associated with the type itself.
+Such properties are known as static properties.
+
+You can observe changes to a property, and respond to those changes,
+by defining property observers that are called
+just before and just after a property value is changed.
+Property observers can even be added to
+properties that your subclass inherits from its superclass,
+and are an easy way to add custom actions in response to property value changes.
 
 .. note::
 
@@ -25,7 +30,7 @@ Such properties are known as type properties.
 Stored Properties
 -----------------
 
-In its simplest form, a stored property is just a named value
+In its simplest form, a stored property is just a constant or variable
 that is stored alongside an instance of a particular class or structure.
 Stored properties can be either
 :newTerm:`variable stored properties` (introduced by the ``var`` keyword),
@@ -63,7 +68,7 @@ Stored Properties of Constant Structure Instances
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If you create an instance of a structure
-and assign that instance to a constant property or constant named value,
+and assign that instance to a constant,
 you cannot modify the instance's properties,
 even if they were declared as variable properties:
 
@@ -78,7 +83,7 @@ even if they were declared as variable properties:
    !! ~~~~~~~~~~~~~~~~~~~~~~~~~~~ ^
    // this will report an error, even thought firstValue is a variable property
 
-Because ``rangeOfFourItems`` is declared as a constant named value (with the ``let`` keyword),
+Because ``rangeOfFourItems`` is declared as a constant (with the ``let`` keyword),
 it is not possible to change its ``firstValue`` property,
 even though ``firstValue`` is a variable property.
 
@@ -87,8 +92,7 @@ When an instance of a value type is marked as being a constant,
 so are all of its properties.
 
 The same is not true for classes, which are *reference types*.
-If you assign an instance of a reference type
-to a constant property or constant named value,
+If you assign an instance of a reference type to a constant,
 you can still change that instance's variable properties.
 
 .. TODO: this explanation could still do to be improved.
@@ -120,8 +124,15 @@ All of the information about the property –
 including its name, type, and memory management characteristics –
 is defined in a single location as part of the type's definition.
 
-.. TODO: How do I define whether my properties are strong- or weak-reference?
+.. TODO: research and write up the story for @weak
+
 .. TODO: what happens if one property of a constant structure is an object reference?
+
+.. TODO: You can initialize a property with a block with parens on the end.
+   I should write up how to do so.
+
+.. TODO: There's a design plan to introduce a @lazy attribute for lazy property init.
+   This is being tracked in rdar://16432427.
 
 .. _Properties_ComputedProperties:
 
@@ -278,7 +289,7 @@ to enable external users to discover its current calculated volume.
    A read-only computed property can return a different value every time it is called,
    whereas a constant stored property will always return the same value.
 
-.. NOTE: getters and setters are also allowed for named values
+.. NOTE: getters and setters are also allowed for constants and variables
    that are not associated with a particular class or struct.
    Where should this be mentioned?
    
@@ -300,10 +311,7 @@ even if the new value is the same as the property's current value.
 You can add property observers to any stored properties you define.
 You can also add property observers to any inherited property (whether stored or computed)
 by overriding the property within a subclass.
-Inheritance and overriding are described in :doc:`Inheritance`.
-
-.. TODO: update this link to point to the specific section on property overriding
-   once it has been written.
+Property overriding is described in :ref:`Inheritance_Overriding`.
 
 .. note::
 
@@ -317,7 +325,7 @@ You have the option to define either or both of these observers on a property:
 * ``didSet``, which is called immediately after the new value is stored
 
 If you implement a ``willSet`` observer,
-it will be passed the new property value as a constant parameter.
+it is passed the new property value as a constant parameter.
 You can specify a name for this parameter as part of your ``willSet`` implementation.
 If you choose not to write the parameter name and parentheses within your implementation,
 the parameter will still be made available with a default parameter name of ``newValue``.
@@ -393,27 +401,26 @@ and the default name of ``oldValue`` is used instead.
 
 .. TODO: mention that this also works for global / local variables
 
-.. TODO: mention that you can't override to observe a read-only property,
-   as there will never be anything to actually observe
-   The same will be true for overriden constant properties
-   once stored property overriding is implemented.
+.. _Properties_StaticProperties:
 
-.. _Properties_TypeProperties:
-
-Type Properties
----------------
+Static Properties
+-----------------
 
 .. write-me::
 
-.. see release notes from 2013-12-18 for a note about lazy initialization
-.. mention that type methods can access type properties (and other type methods?)
+.. QUESTION: we won't have class properties for Swift 1.0, says [Contributor 7746].
+   I've named this section "Static Properties" as a result,
+   and mirrored this approach elsewhere in the book.
+   Is this the right approach, or should I call them "Type Properties" from the off?
+.. TODO: see release notes from 2013-12-18 for a note about lazy initialization
+.. TODO: mention that type methods can access type properties (and other type methods?)
    without needing to reference the type's name,
    as they also get an implicit ``self`` parameter.
-.. as it stands, this is the first time I'll mention .dynamicType (assuming I do)
+.. TODO: as it stands, this is the first time I'll mention .dynamicType (assuming I do)
    is this the right place to introduce it?
-.. mention that you can get at type properties a few different ways:
+.. TODO: mention that you can get at type properties a few different ways:
    TypeName.propertyName; someInstance.dynamicType.propertyName;
    just plain old propertyName if you're already at a type level in that type
    (likewise for methods in the methods chapter)
-.. type properties *must* have an initializer or a getter/setter,
+.. TODO: type properties *must* have an initializer or a getter/setter,
    because there's no "+ initialize" during which to init them otherwise
