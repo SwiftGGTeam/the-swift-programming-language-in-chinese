@@ -214,7 +214,7 @@ because its properties cannot be changed, even if they are variable properties
 .. _Methods_AssigningToSelfWithinAMutatingMethod:
 
 Assigning to “self” Within a Mutating Method
-__________________________________________
+____________________________________________
 
 Mutating methods can assign an entirely new instance to the implicit ``self`` property.
 The ``Point`` example shown above could have been written in the following way instead:

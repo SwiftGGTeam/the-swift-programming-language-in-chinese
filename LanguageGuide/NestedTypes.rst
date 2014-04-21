@@ -92,7 +92,7 @@ a second value to display, and inserts addition description detail if so.
 
 Because ``BlackjackCard`` is a structure with no custom initializers,
 it has an implicit memberwise initializer
-(as described in :ref:`Initialization_MemberwiseStructureInitializers`).
+(as described in :ref:`Initialization_MemberwiseInitializersForStructureTypes`).
 This is used to initialize a new constant called ``theAceOfSpades``.
 Even though ``Rank`` and ``Suit`` are nested within ``BlackjackCard``,
 their type can still be inferred from the context,

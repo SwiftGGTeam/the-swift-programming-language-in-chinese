@@ -182,7 +182,7 @@ The ``welcomeMessage`` variable can now be set to any string value without error
    It is rare that you need to write type annotations in practice.
    If you provide an initial value for a constant or variable at the point that it is defined,
    Swift can almost always infer the type to be used for that constant or variable,
-   as described in :ref:`BasicTypes_TypeSafetyAndTypeInference`.
+   as described in :ref:`BasicTypes_TypeInference`.
    In the ``welcomeMessage`` example above, no initial value is provided,
    and so the type of the ``welcomeMessage`` variable is specified with a type annotation
    rather than being inferred from an initial value.
