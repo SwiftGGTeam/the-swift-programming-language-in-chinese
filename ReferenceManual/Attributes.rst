@@ -75,6 +75,11 @@ Declaration Attributes
 
     Update from [Contributor 7746]: This is a bug; he filed <rdar://problem/16656024> to track it.
 
+``availability``
+
+.. write-me::
+
+
 ``call_arguments(strict)``
     The ``call_arguments(strict)`` attribute is applied to any function or method to
     indicate that you must use the parameter names of that function or method when calling
@@ -121,6 +126,15 @@ Declaration Attributes
 .. TR: Need some more info on this attribute. Is the above correct? What else should we
     document here? How about some actual examples?
 
+``NSCopying``
+
+.. write-me::
+
+``objc``
+
+.. write-me::
+
+
 ``optional``
     The ``optional`` attribute is applied to a protocol's property, method,
     or subscript members to indicate that a conforming type isn't required
@@ -149,6 +163,10 @@ Declaration Attributes
     or inherited when the subclass directly implements all of the superclass’s designated
     initializers (or overrides the designated initializers with convenience initializers).
 
+``weak``
+
+.. write-me::
+
 
 .. _Attributes_TypeAttributes:
 
@@ -167,11 +185,16 @@ Type Attributes
 
     ``cc`` // Mainly used for SIL at the moment. May eventually surface in the Swift
               type system at some point (for power users that need to tweak calling conventions).
-    ``noreturn``
+    ✓ ``noreturn``
     ``objc_block`` // Confirm that we shouldn't document this.
     ``thin`` // Mainly used for SIL at the moment. Confirm that we shouldn't document for 1.0
     ``thick`` // Mainly used for SIL at the moment. Confirm that we shouldn't document for 1.0
     ``unchecked`` // May be going away if we can come up with better syntactic sugar.
+
+``auto_closure``
+
+.. write-me::
+
 
 ``noreturn``
     The ``noreturn`` attribute is applied to the type of a function or method
@@ -194,6 +217,23 @@ Interface Builder Attributes
     ``IBDesignable``
     ``IBInspectable``
     ``IBOutlet``
+
+``IBAction``
+
+.. write-me::
+
+``IBDesignable``
+
+.. write-me::
+
+``IBInspectable``
+
+.. write-me::
+
+``IBOutlet``
+
+.. write-me::
+
 
 .. langref-grammar
 
