@@ -1,7 +1,31 @@
 Methods
 =======
 
-.. write-me::
+:newTerm:`Methods` are named functions that are associated with a particular type.
+Classes, structures, and enumerations can all define instance methods,
+which encapsulate specific tasks and functionality for working with an instance of a given type.
+Classes, structures, and enumerations can also define type methods,
+which are associated with the type itself.
+Type methods are similar to class methods in Objective-C.
+
+The fact that structures and enumerations can define methods in Swift
+is a major difference from C and Objective-C.
+In Objective-C, classes are the only types that can define methods.
+In Swift, you can choose whether to define a class, structure, or enumeration,
+and still have the flexibility to define methods on the type you create.
+
+All methods have access to an implicit ``self`` property.
+When used in an instance method, ``self`` is equivalent to the instance itself;
+for type methods, it is equivalent to the type.
+The ``self`` property is used to disambiguate between parameters and properties
+that have the same name.
+
+By default, an instance method on a structure or an enumeration
+cannot modify the properties of that instance.
+However, these methods can be marked as “mutating” methods,
+which *are* allowed to modify the instance's properties.
+Mutating instance methods can also assign
+an entirely new instance of the structure or enumeration to ``self`` from within the method.
 
 .. _Methods_InstanceMethods:
 
@@ -13,7 +37,7 @@ a particular class, structure, or enumeration.
 They support the functionality of those instances,
 either by providing ways to access and modify their properties,
 or by providing useful functionality related to their purpose.
-Instance methods can be written in either function-style syntax or selector-style syntax.
+Instance methods have exactly the same syntax as functions.
 
 .. TODO: remove this last sentence once the syntaxes are unified.
 
@@ -189,7 +213,7 @@ because its properties cannot be changed, even if they are variable properties
 
 .. _Methods_AssigningToSelfWithinAMutatingMethod:
 
-Assigning to Self Within a Mutating Method
+Assigning to “self” Within a Mutating Method
 __________________________________________
 
 Mutating methods can assign an entirely new instance to the implicit ``self`` property.
