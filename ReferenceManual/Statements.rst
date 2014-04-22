@@ -31,11 +31,11 @@ and is used as a statement terminator when multiple statements appear on the sam
 
     Grammar of a statement
 
-    statement --> expression ;-OPT
-    statement --> declaration ;-OPT
-    statement --> loop-statement ;-OPT
-    statement --> branch-statement ;-OPT
-    statement --> control-transfer-statement ;-OPT
+    statement --> expression ``;``-OPT
+    statement --> declaration ``;``-OPT
+    statement --> loop-statement ``;``-OPT
+    statement --> branch-statement ``;``-OPT
+    statement --> control-transfer-statement ``;``-OPT
     statements --> statement statements-OPT
 
 .. NOTE: Removed semicolon-statement as syntactic category,
