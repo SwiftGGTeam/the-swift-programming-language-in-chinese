@@ -1,10 +1,25 @@
 Attributes
 ==========
 
+:newTerm:`Attributes` provide more information about a declaration or type.
+There are two kinds of attributes in Swift, those that apply to declarations
+and those that apply to types.
+For instance, the ``required`` attribute is applied to a designated or convenience initializer
+declaration of a class to indicate that every subclass must implement that initializer.
+The ``noreturn`` attribute is applied to a function or method type to indicate that
+the function or method doesn't return to its caller.
+
+Attributes are specified by writing the ``@`` symbol followed by the attribute's name
+and any arguments that the attribute accepts:
+
 .. syntax-outline::
 
     @<#attribute name#>
     @<#attribute name#>(<#attribute arguments#>)
+
+Some declaration attributes accept arguments that specify more information about the attribute
+and how it applies to a particular declaration. These *attribute arguments* are enclosed
+in parentheses and their format is defined by the attribute they belong to.
 
 .. TR: Which attributes are inheritable and which attribute imply other attributes?
 
@@ -13,6 +28,8 @@ Attributes
 Declaration Attributes
 ----------------------
 
+Declaration attributes are applied to declarations only. However, you can also apply
+the ``noreturn`` attribute to a function or method type.
 
 .. Current list of declaration attributes (as of 4/16/14, r16419):
     ✓ ``assignment`` (OnFunc)
@@ -173,10 +190,45 @@ Declaration Attributes
 .. write-me::
 
 
+.. _Attributes_InterfaceBuilderAttributes:
+
+Interface Builder Attributes
+----------------------------
+
+Interface Builder attributes are applied to method and property declarations
+and are used by Interface Builder to synchronize with Xcode.
+
+.. Current list of IB attributes (as of 4/16/14, r16419):
+    // Talk to Tony and Robert Morrish about where go for more information.
+    ``IBAction`` (OnFunc)
+    ``IBDesignable`` (OnClass)
+    ``IBInspectable`` (OnVar)
+    ``IBOutlet`` (OnVar)
+
+``IBAction``
+
+.. write-me::
+
+``IBDesignable``
+
+.. write-me::
+
+``IBInspectable``
+
+.. write-me::
+
+``IBOutlet``
+
+.. write-me::
+
+
 .. _Attributes_TypeAttributes:
 
 Type Attributes
 ---------------
+
+Type attributes are applied to types only. However, you can also apply the ``noreturn``
+attribute to a function or method declaration.
 
 .. Current list of type attributes (as of 4/16/14, r16419):
     ``auto_closure``
@@ -210,35 +262,6 @@ Type Attributes
 
 .. TR: Need some more info on this attribute. Is the above correct? What else should we
     document here? How about some actual examples?
-
-
-.. _Attributes_InterfaceBuilderAttributes:
-
-Interface Builder Attributes
-----------------------------
-
-.. Current list of IB attributes (as of 4/16/14, r16419):
-    // Talk to Tony and Robert Morrish about where go for more information.
-    ``IBAction`` (OnFunc)
-    ``IBDesignable`` (OnClass)
-    ``IBInspectable`` (OnVar)
-    ``IBOutlet`` (OnVar)
-
-``IBAction``
-
-.. write-me::
-
-``IBDesignable``
-
-.. write-me::
-
-``IBInspectable``
-
-.. write-me::
-
-``IBOutlet``
-
-.. write-me::
 
 
 .. langref-grammar
