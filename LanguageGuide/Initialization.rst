@@ -696,7 +696,7 @@ the following two rules apply:
   even if it just automatically inherits them, as per rule 1 –
   then it automatically inherits all of the superclass convenience initializers.
 
-These rules apply even if your subclass adds further designated or convenience initializers.
+These rules apply even if your subclass adds further convenience initializers.
 
 .. note::
 
