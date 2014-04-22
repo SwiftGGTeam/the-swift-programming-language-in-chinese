@@ -703,6 +703,10 @@ These rules apply even if your subclass adds further convenience initializers.
    A subclass can implement a superclass designated initializer
    as a subclass convenience initializer as part of satisfying rule 2.
 
+.. TODO: feedback from Beto is that this note is a little hard to parse.
+   Perhaps this point should be left until the later "in action" example,
+   where this principle is demonstrated?
+
 .. _Initialization_SyntaxForDesignatedAndConvenienceInitializers:
 
 Syntax for Designated and Convenience Initializers
@@ -847,7 +851,7 @@ this nonetheless means that ``RecipeIngredient`` has provided
 an implementation of all of its superclass's designated initializers.
 Because of this, it automatically inherits all of its superclass's convenience initializers too.
 This means that ``RecipeIngredient`` inherits the ``init()`` initializer from ``Food``.
-The inherited version of ``init()`` functions in exactly the same was as the ``Food`` version,
+The inherited version of ``init()`` functions in exactly the same way as as the ``Food`` version,
 except that it delegates to the ``RecipeIngredient`` version of ``init(name: String)``
 rather than the ``Food`` version.
 
@@ -939,6 +943,9 @@ shows that their default states have been set as expected.
    but you can't currently write these in Swift yourself.
    After conferring with Doug, I've decided not to include these in the Guide
    if you can't write them yourself in pure Swift.
+
+.. TODO: Feedback from Beto is that it would be useful to indicate the flow
+   through these inherited initializers.
 
 .. _Initialization_RequiredInitializers:
 
