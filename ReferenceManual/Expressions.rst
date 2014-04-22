@@ -347,7 +347,7 @@ inside a property getter or setter it is the name of that property,
 inside special members like ``init`` or ``subscript`` it is the name of that keyword,
 and at the top level of a file it is the name of the current module.
 
-:newTerm:`Array literals` represent an ordered collection,
+An :newTerm:`array literal` represent an ordered collection,
 made up of items of the same type.
 It has the following form:
 
@@ -361,10 +361,11 @@ The last expression in the array can be followed by an optional comma.
 The value of an array literal has type ``T[]``,
 where ``T`` is the type of the expressions inside it.
 
-:newTerm:`Dictionary literals` represent an unordered collection of key-value pairs,
+A :newTerm:`dictionary literal` represents
+an unordered collection of key-value pairs,
 where all the keys are of the same type
 and all the values are of the same type.
-it has the following form:
+It has the following form:
 
 .. syntax-outline::
 
