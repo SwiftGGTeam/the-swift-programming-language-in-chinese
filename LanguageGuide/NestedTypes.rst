@@ -30,9 +30,9 @@ Types can be nested to as many levels as are required:
                   case .Ace:
                      return Values(1, 11)
                   case .Jack, .Queen, .King:
-                     return Values(10, .None)
+                     return Values(10, nil)
                   default:
-                     return Values(self.toRaw().toInt()!, .None)
+                     return Values(self.toRaw().toInt()!, nil)
                }
             }
          }
@@ -77,7 +77,7 @@ This computed property considers the rank of the card,
 and initializes a new ``Values`` instance with appropriate values based on its rank.
 It uses special values for ``Jack``, ``Queen``, ``King`` and ``Ace``.
 For the numeric cards, it converts the rank's raw ``String`` value into an ``Int?``
-using ``String``'s ``toInt()`` method.
+using ``String``'s ``toInt`` method.
 Because every numeric card value is known to definitely convert to an ``Int``,
 the value of this optional ``Int`` is accessed via an exclamation mark (``!``)
 without being checked, and is used as the first value of the ``Values`` structure.
@@ -92,7 +92,7 @@ a second value to display, and inserts addition description detail if so.
 
 Because ``BlackjackCard`` is a structure with no custom initializers,
 it has an implicit memberwise initializer
-(as described in :ref:`Initialization_MemberwiseStructureInitializers`).
+(as described in :ref:`Initialization_MemberwiseInitializersForStructureTypes`).
 This is used to initialize a new constant called ``theAceOfSpades``.
 Even though ``Rank`` and ``Suit`` are nested within ``BlackjackCard``,
 their type can still be inferred from the context,

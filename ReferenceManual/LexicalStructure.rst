@@ -12,9 +12,6 @@ within the constraints of the grammar that are specified below.
 This behavior is referred to as :newTerm:`longest match`
 or :newTerm:`maximal munch`.
 
-.. TR: Is this correct? I say "in most cases",
-	because of how ``>>`` is split in certain constructs,
-	as described below in the discussion of operators.
 
 .. _LexicalStructure_WhitespaceAndComments:
 
@@ -30,20 +27,19 @@ space (U+0020),
 line feed (U+000A),
 carriage return (U+000D),
 horizontal tab (U+0009),
+vertical tab (U+000B),
+form feed (U+000C)
 and null (U+0000).
+
+.. Whitespace characters are listed roughly from
+   most salient/common to least,
+   not in order of Unicode codepoints.
 
 Comments are treated as whitespace by the compiler.
 Single line comments begin with `//`
 and continue until the end of the line.
 Multiline comments begin with ``/*`` and end with ``*/``.
 Nesting is allowed, but the comment markers must be balanced.
-
-.. TODO: Make sure we have an example of nested comments in the guide.
-    Dave will include a discussion of comments (including nested comments),
-    but he isn't sure exactly where yet.
-
-.. TR: LangRef says comments are ignored *and* treated as whitespace.
-   Is there a difference?
 
 .. langref-grammar
 
@@ -134,15 +130,15 @@ These names are valid identifiers within the scope of the closure.
     identifier-head --> U+1E00--U+1FFF
     identifier-head --> U+200B--U+200D, U+202A--U+202E, U+203F--U+2040, U+2054, or U+2060--U+206F
     identifier-head --> U+2070--U+20CF, U+2100--U+218F, U+2460--U+24FF, or U+2776--U+2793
-    identifier-head --> U+2C00--U+2DFF, or U+2E80--U+2FFF
+    identifier-head --> U+2C00--U+2DFF or U+2E80--U+2FFF
     identifier-head --> U+3004--U+3007, U+3021--U+302F, U+3031--U+303F, or U+3040--U+D7FF
     identifier-head --> U+F900--U+FD3D, U+FD40--U+FDCF, U+FDF0--U+FE1F, or U+FE30--U+FE44
     identifier-head --> U+FE47--U+FFFD
 
     identifier-head --> U+10000--U+1FFFD, U+20000--U+2FFFD, U+30000--U+3FFFD, or U+40000--U+4FFFD
     identifier-head --> U+50000--U+5FFFD, U+60000--U+6FFFD, U+70000--U+7FFFD, or U+80000--U+8FFFD
-    identifier-head --> U+90000--U+9FFFD, U+A0000--U+AFFFD, U+B0000--U+BFFFD, orU+C0000--U+CFFFD
-    identifier-head --> U+D0000--U+DFFFD, U+E0000--U+EFFFD
+    identifier-head --> U+90000--U+9FFFD, U+A0000--U+AFFFD, U+B0000--U+BFFFD, or U+C0000--U+CFFFD
+    identifier-head --> U+D0000--U+DFFFD or U+E0000--U+EFFFD
 
     identifier-character --> Digit 0 through 9
     identifier-character --> U+0300--U+036F, U+1DC0--U+1DFF, U+20D0--U+20FF, or U+FE20--U+FE2F
@@ -261,20 +257,21 @@ The following keywords are reserved and may not be used as identifiers.
     type
 
 * Keywords reserved in particular contexts:
-  ``associativity``, 
-  ``didSet``, 
-  ``get``, 
-  ``infix``, 
-  ``inout``, 
-  ``left``, 
-  ``mutating``, 
-  ``none``, 
-  ``operator``, 
-  ``postfix``, 
-  ``precedence``, 
-  ``prefix``, 
-  ``right``, 
-  ``set``, 
+  ``associativity``,
+  ``didSet``,
+  ``get``,
+  ``infix``,
+  ``inout``,
+  ``left``,
+  ``mutating``,
+  ``none``,
+  ``operator``,
+  ``override``,
+  ``postfix``,
+  ``precedence``,
+  ``prefix``,
+  ``right``,
+  ``set``,
   and ``willSet``.
   Outside the context in which they appear in the grammar,
   they can be used as identifiers.
@@ -361,24 +358,27 @@ as described in :ref:`BasicTypes_Integers`.
 
 .. langref-grammar
 
-    integer_literal ::= -?[0-9][0-9_]*
-    integer_literal ::= -?0x[0-9a-fA-F][0-9a-fA-F_]*
-    integer_literal ::= -?0o[0-7][0-7_]*
-    integer_literal ::= -?0b[01][01_]*
+    integer_literal ::= [0-9][0-9_]*
+    integer_literal ::= 0x[0-9a-fA-F][0-9a-fA-F_]*
+    integer_literal ::= 0o[0-7][0-7_]*
+    integer_literal ::= 0b[01][01_]*
 
 .. NOTE: Updated the langref-grammer to reflect [Contributor 7746]' comment in
 	<rdar://problem/15181997> Teach the compiler about a concept of negative integer literals.
 	This feels very strange from a grammatical point of view.
 	Updated the syntax-grammar below as well.
+	Update: This is a parser hack, not a lexer hack. Therefore,
+	it's not part of the grammar for integer literal, contrary to [Contributor 2562]'s claim.
+	(Doug confirmed this, 4/2/2014.)
 
 .. syntax-grammar::
 
     Grammar of an integer literal
 
-    integer-literal --> negative-sign-OPT binary-literal
-	integer-literal --> negative-sign-OPT octal-literal
-	integer-literal --> negative-sign-OPT decimal-literal
-	integer-literal --> negative-sign-OPT hexadecimal-literal
+    integer-literal --> binary-literal
+	integer-literal --> octal-literal
+	integer-literal --> decimal-literal
+	integer-literal --> hexadecimal-literal
 
     binary-literal --> ``0b`` binary-digit binary-literal-characters-OPT
     binary-digit --> Digit 0 or 1
@@ -400,8 +400,6 @@ as described in :ref:`BasicTypes_Integers`.
     hexadecimal-digit --> Digit 0 through 9, a through f, or A through F
     hexadecimal-literal-character --> hexadecimal-digit | ``_``
     hexadecimal-literal-characters --> hexadecimal-literal-character hexadecimal-literal-characters-OPT
-
-	negative-sign --> ``-``
 
 
 .. _LexicalStructure_Floating-PointLiterals:
@@ -471,9 +469,6 @@ which represents a 32-bit floating-point number.
     floating_literal ::= 0x[0-9A-Fa-f][0-9A-Fa-f_]*
                            (\.[0-9A-Fa-f][0-9A-Fa-f_]*)?[pP][+-]?[0-9][0-9_]*
 
-.. TR: Why are these rules so complex?
-   Why not allow all combinations --
-   optional fraction and optional exponent in any base?
 
 .. syntax-grammar::
 
@@ -497,8 +492,6 @@ which represents a 32-bit floating-point number.
 
 Textual Literals
 ~~~~~~~~~~~~~~~~~
-
-.. TODO: Or "Text Literals"?
 
 There are two kinds of textual literals:
 single character literals and string literals.
@@ -539,6 +532,10 @@ using the following escape sequences:
 * Double Quote (``\"``)
 * Single Quote (``\'``)
 
+.. TR: Are \v and \f allowed for vertical tab and formfeed?
+   We allow them as whitespace as of now --
+   should that mean we want escape sequences for them too?
+
 .. The behavior of \n and \r is not the same as C.
    We specify exactly what those escapes mean.
    The behavior on C is platform dependent --
@@ -569,10 +566,15 @@ For example, all the following have the same value: ::
 Character literals are of type of ``UnicodeScalar``.
 String literals are of type ``String``.
 
-.. TR: Is UnicodeScalar the final name for that type?
-
-.. TR: Any context where string literals become implicitly null-terminated?
-   That is, is their type always String or could it be char* or NSString?
+.. NOTE: We will have this as a single Unicode char, as well as Char which will be a
+   single Unicode grapheme cluster.  Watch for changes around this and the
+   single/double quotes grammar coming after WWDC.  For now, it might be best
+   to just not document the single quoted character literal, because we know
+   that it's going to change.  If we can't make it work right, it's possible we
+   would just delete single quoted strings.  Right now, iterating over a String
+   returns a sequence of UnicodeScalar values.  In the fullness of time, it
+   should return a sequence of Char values.
+.. TODO: Scrub out UnicodeScalar literals from the docs.
 
 .. langref-grammar
 
@@ -612,9 +614,6 @@ String literals are of type ``String``.
    the quoted-texts rule which allows repetition; no need to allow
    repetition in the quoted-text/escaped-character rule too.
 
-.. TR: Paren balancing is required by the grammar of *expression* already, so I
-   omitted it in the rule above.
-
 .. TODO: The rules for characters and strings are still in flux,
     so we'll probably need to circle back to this section later.
     I'm still going to submit it to Jeanne in its current form,
@@ -638,10 +637,6 @@ That said, the tokens
 ``=``, ``->``, ``//``, ``/*``, ``*/``, ``.``,
 and the unary prefix operator ``&`` are reserved.
 These tokens can't be overloaded, nor can they be used to define custom operators.
-
-.. TR: LangRef also says (){}[].,;: are reserved punctuation,
-   but those aren't valid operator characters anyway.
-   OK to omit here?
 
 The whitespace around an operator is used to determine
 whether an operator is used as a prefix operator, a postfix operator,
@@ -676,36 +671,6 @@ it must not have whitespace on the left.
 To use it in the conditional (``? :``) operator,
 it must have whitespace around both sides.
 
-.. Right bound - whitespace after
-   Left bound - whitespace before
-
-.. NOTE: LangRef says that an operator is prefix if it is right-bound
-	but not left-bound, and that an operator is postfix if it is left-bound
-	but not right-bound. This is incorrect; the opposite is actually true.
-	That is, an operator is postifx if it is right-bound and not left-bound,
-	and an operator is prefix if it is left-bound but not right bound.
-
-.. Old-content:
-	=================   =================   ================  =======
-	Whitespace Before   Whitespace After    Kind of Operator  Example
-	=================   =================   ================  =======
-	No                  No                  Binary            ``a+b``
-	Yes                 No                  Prefix            ``a +b``
-	No                  Yes                 Postfix           ``a+ b``
-	Yes                 Yes                 Binary            ``a + b``
-	=================   =================   ================  =======
-
-	An operator with no whitespace before it and a dot (``.``) after it
-	is treated as a postfix operator.
-	For example, ``a++.b`` is treated as ``a++ . b`` rather than ``a ++ .b``.
-
-.. TR: Using ++ instead of ! above,
-   to avoid confusion between the special case about dots (above)
-   and the special case about bang (below).
-   My discussion of this rule is rather different
-   than what's in LangRef.
-   Let's make sure it's still true.
-
 In certain constructs, operators with a leading ``<`` or ``>``
 may be split into two or more tokens. The remainder is treated the same way
 and may be split again. As a result, there is no need to use whitespace
@@ -714,15 +679,13 @@ to disambiguate between the closing ``>`` characters in constructs like
 In this example, the closing ``>`` characters are not treated as a single token
 that may then be misinterpreted as a bit shift ``>>`` operator.
 
-.. TODO: Lead with the problem above,
-   use that to motivate the solution.
+.. NOTE: Once the parser sees a < it goes into a pre-scanning lookahead mode.  It
+   matches < and > and looks at what token comes after the > -- if it's a . or
+   a ( it treats the <...> as a generic parameter list, otherwise it treats
+   them as less than and greater than.
 
-.. TR: Any special context you must be in for this <<>> rule to happen?
-
-.. TR: With this rule in effect, how is >> ever parsed as a bit shift
-   and not two greater-than operators?
-   Alex, I think that the rule is contextual;
-   it only applies in certain grammatical constructs.
+   This fails to parse things like x<<2>>(1+2) but it's the same as C#.  So
+   don't write that.
 
 To learn how to define new, custom operators,
 see :ref:`AdvancedOperators_CustomOperators` and :ref:`Declarations_OperatorDeclaration`.
@@ -764,7 +727,9 @@ see :ref:`AdvancedOperators_OperatorFunctions`.
     punctuation ::= '->'
     punctuation ::= '&' // unary prefix operator
 
-.. TR: LangRef doesn't mention '?' as reserved, but it behaves as if it is.
+.. NOTE: The ? is a reserved punctuation.  Optional-chaining (foo?.bar) is actually a
+   monad -- the ? is actually a monadic bind operator.  It is like a burrito.
+   The current list of reserved punctuation is in Tokens.def.
 
 .. syntax-grammar::
 

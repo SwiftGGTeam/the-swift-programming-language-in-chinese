@@ -6,13 +6,12 @@ For example, you use declarations to introduce variables and constants
 and to define new, named enumeration, structure, class,
 and protocol types. You can also use a declaration to extend the the behavior
 of an existing named type and to import symbols into your program that are declared elsewhere.
-This chapter describes the syntax and behavior of these and other Swift declarations.
 
-In Swift, most declarations are also definitions in the sense they are implemented
+In Swift, most declarations are also definitions in the sense that they are implemented
 or initialized at the same time they are declared. That said, because protocols don't
 implement their members, most protocol members are declarations only. For convenience
 and because the distinction isn't that important in Swift,
-the term *declaration* is used to cover both declarations and definitions.
+the term *declaration* covers both declarations and definitions.
 
 .. langref-grammar
 
@@ -50,6 +49,9 @@ the term *declaration* is used to cover both declarations and definitions.
     declaration --> subscript-declaration
     declaration --> operator-declaration
     declarations --> declaration declarations-OPT
+
+    declaration-specifiers --> declaration-specifier declaration-specifiers-OPT
+    declaration-specifier --> ``class`` | ``static`` | ``mutating`` | ``override``
 
 .. NOTE: Removed enum-member-declaration, because we don't need it anymore.
 
@@ -97,11 +99,12 @@ It has the following form:
 .. syntax-outline::
 
     {
-        <#statements#>
+       <#statements#>
     }
 
 The *statements* inside a code block include declarations,
-expressions, and other kinds of statements and are executed in order.
+expressions, and other kinds of statements and are executed in order
+of their appearance in source code.
 
 .. TR: What exactly are the scope rules for Swift?
 
@@ -141,9 +144,9 @@ it consists of the ``import`` keyword followed by a module name:
 
     import <#module#>
 
-Providing more detail limits what symbols are imported ---
-it can specify a specific submodule,
-or it can specify a specific declaration within a module or submodule.
+Providing more detail limits which symbols are imported ---
+you can specify a specific submodule
+or a specific declaration within a module or submodule.
 When this detailed form is used,
 only the imported symbol
 (and not the module that declares it)
@@ -189,13 +192,13 @@ Constant declarations are declared using the keyword ``let`` and have the follow
 
 .. syntax-outline::
 
-    let <#constant name#> : <#type#> = <#expression#>
+    let <#constant name#>: <#type#> = <#expression#>
 
 A constant declaration defines an immutable binding between the *constant name*
 and the value of the initializer *expression*;
 after the value of a constant is set, it cannot be changed.
 That said, if a constant is initialized with a class object,
-the object itself may change,
+the object itself can change,
 but the binding between the constant name and the object it refers to can't.
 
 When a constant is declared at global scope,
@@ -211,20 +214,20 @@ in the initializer *expression*.
 ::
 
     let (firstNumber, secondNumber) = (10, 42)
-    // (firstNumber, secondNumber) : (Int, Int) = (10, 42)
+    // (firstNumber, secondNumber): (Int, Int) = (10, 42)
 
 In this example,
 ``firstNumber`` is a named constant for the value ``10``,
 and ``secondNumber`` is a named constant for the value ``42``.
-Both constants may now be used independently::
+Both constants can now be used independently::
 
     firstNumber
-    // firstNumber : Int = 10
+    // firstNumber: Int = 10
     secondNumber
-    // secondNumber : Int = 42
+    // secondNumber: Int = 42
 
 The type annotation (``:`` *type*) is optional in a constant declaration
-when the type of the *constant name* may be inferred,
+when the type of the *constant name* can be inferred,
 as described in :ref:`Types_TypeInference`.
 
 To declare a class constant named property,
@@ -246,17 +249,11 @@ see :ref:`BasicTypes_NamedValues` and :ref:`Properties_StoredProperties`.
 
     Grammar of a constant declaration
 
-    constant-declaration --> attribute-list-OPT constant-specifier-OPT ``let`` pattern-initializer-list
-    constant-specifier -->  ``static`` | ``class``
+    constant-declaration --> attribute-list-OPT declaration-specifiers-OPT ``let`` pattern-initializer-list
 
     pattern-initializer-list --> pattern-initializer | pattern-initializer ``,`` pattern-initializer-list
     pattern-initializer --> pattern initializer-OPT
     initializer --> ``=`` expression
-
-.. TODO: TR: Come up with a better name than "constant-specifier",
-    because otherwise we have lots of different names for the same choice
-    (e.g., constant-specifier, variable-specifier, function-specifier).
-    Maybe "type-level-specifier"? But what happens when we do get *real* static functions?
 
 .. TODO: Write about class and static constants.
 
@@ -269,21 +266,20 @@ Variable Declaration
 A :newTerm:`variable declaration` introduces a variable, named value into your program
 and is declared using the keyword ``var``.
 
-Variable declarations have several forms which are used to declare different kinds
+Variable declarations have several forms that declare different kinds
 of named, mutable values,
 including stored and computed values and properties,
 and stored value and property observers.
-The appropriate form to use depends on two things:
-the scope at which it is declared and the kind of variable you intend to declare.
+The appropriate form to use depends on
+the scope at which the variable is declared and the kind of variable you intend to declare.
 
-The first form is used to declare a stored value or property
-and has the following form:
+The following form declares a stored value or property:
 
 .. syntax-outline::
 
-    var <#variable name#> : <#type#> = <#expression#>
+    var <#variable name#>: <#type#> = <#expression#>
 
-This form of a variable declaration can be defined at global scope, the local scope
+You define this form of a variable declaration at global scope, the local scope
 of a function, or in the context of a class, structure, protocol, or extension declaration.
 When a variable declaration of this form is declared at global scope or the local
 scope of a function, it is referred to as a :newTerm:`stored named value`.
@@ -292,7 +288,7 @@ structure, protocol, or extension declaration,
 it is referred to as a :newTerm:`variable stored property`.
 
 The initializer *expression* can't be present in a protocol declaration,
-but it all other contexts, the initializer *expression* is optional.
+but in all other contexts, the initializer *expression* is optional.
 That said, if no initializer *expression* is present,
 the variable declaration must include an explicit type annotation (``:`` *type*).
 
@@ -309,16 +305,16 @@ A stored value or property declared with observers has the following form:
 
 .. syntax-outline::
 
-    var <#variable name#> : <#type#> = <#expression#> {
-        willSet(<#setter name#>) {
-            <#statements#>
-        }
-        didSet(<#setter name#> {
-            <#statements#>
-        }
+    var <#variable name#>: <#type#> = <#expression#> {
+       willSet(<#setter name#>) {
+          <#statements#>
+       }
+       didSet(<#setter name#> {
+          <#statements#>
+       }
     }
 
-This form of a variable declaration can be defined at global scope, the local scope
+You define this form of a variable declaration at global scope, the local scope
 of a function, or in the context of a class or structure declaration.
 When a variable declaration of this form is declared at global scope or the local
 scope of a function, the observers are referred to as :newTerm:`stored named value observers`.
@@ -342,7 +338,8 @@ The ``didSet`` observer is called immediately after the new value is set. In con
 to the ``willSet`` observer, the old value of the variable or property
 is passed to the ``didSet`` observer in case you still need access to it. That said,
 if you assign a value to a variable or property within its own ``didSet`` observer clause,
-the new value that you assign will replace the one that was just set.
+that new value that you assign will replace the one that was just set and passed to
+the ``willSet`` observer.
 
 The *setter name* and enclosing parentheses in the ``willSet`` and ``didSet`` clauses are optional.
 If you provide setter names,
@@ -357,21 +354,20 @@ Likewise, the ``willSet`` clause is optional when you provide a ``didSet`` claus
 For more information and to see an example of how to use stored property observers,
 see :ref:`Properties_StoredPropertyObservers`.
 
-The next form is used to declare a computed value or property
-and has the following form:
+The following form declares a computed value or property:
 
 .. syntax-outline::
 
-    var <#variable name#> : <#type#> {
-        get {
-            <#statements#>
-        }
-        set(<#setter name#>) {
-            <#statements#>
-        }
+    var <#variable name#>: <#type#> {
+       get {
+          <#statements#>
+       }
+       set(<#setter name#>) {
+          <#statements#>
+       }
     }
 
-This form of a variable declaration can be defined at global scope, the local scope
+You define this form of a variable declaration at global scope, the local scope
 of a function, or in the context of a class, structure, or extension declaration.
 When a variable declaration of this form is declared at global scope or the local
 scope of a function, it is referred to as a :newTerm:`computed named value`.
@@ -385,7 +381,7 @@ The setter clause is optional,
 and when only a getter is needed, you can omit both clauses and simply
 return the requested value directly,
 as described in :ref:`Properties_ReadOnlyComputedProperties`.
-That said, if you provide a setter clause, you must also provide a getter clause.
+But if you provide a setter clause, you must also provide a getter clause.
 
 The *setter name* and enclosing parentheses is optional.
 If you provide a setter name, it is used as the name of the parameter to the setter.
@@ -399,8 +395,8 @@ For more information and to see examples of computed properties,
 see :ref:`Properties_ComputedProperties`.
 
 To declare a class variable property,
-mark the declaration with ``class`` keyword. To declare a static variable property,
-mark the declaration with ``static`` keyword instead. Class and static properties
+mark the declaration with the ``class`` keyword. To declare a static variable property,
+mark the declaration with the ``static`` keyword instead. Class and static properties
 are discussed in :ref:`Properties_TypeProperties`.
 
 You can also declare properties in the context of a protocol declaration,
@@ -451,8 +447,7 @@ as described in :ref:`Declarations_ProtocolPropertyDeclaration`.
     variable-declaration --> variable-declaration-head variable-name type-annotation getter-setter-keyword-block
     variable-declaration --> variable-declaration-head variable-name type-annotation initializer-OPT willSet-didSet-block
 
-    variable-declaration-head --> attribute-list-OPT variable-specifier-OPT ``var``
-    variable-specifier --> ``static`` | ``class``
+    variable-declaration-head --> attribute-list-OPT declaration-specifiers-OPT ``var``
     variable-name --> identifier
 
     getter-setter-block --> ``{`` getter-clause setter-clause-OPT ``}``
@@ -515,12 +510,6 @@ See also :ref:`Declarations_ProtocolAssociatedTypeDeclaration`.
     typealias-name --> identifier
     typealias-assignment --> ``=`` type
 
-.. TR: Are type aliases allowed to contain a type-inheritance-clause?
-    Currently, this doesn't work, and it seems as though it shouldn't work.
-    Doesn't it only make sense to specify protocol conformance requirements
-    in the context of an associated type (declared as protocol member)?
-    I modified the grammar under the assumption that they are not allowed.
-
 
 .. _Declarations_FunctionDeclaration:
 
@@ -529,121 +518,41 @@ Function Declaration
 
 .. write-me:: Waiting for design decisions from compiler team.
 
-**[Query/Note: We are trying to decide which code-snippet-style syntax outlines to use
-for regular Swift-style function definitions and for selector-style method definitions.
-Below you'll find two alternatives for the former and four alternatives for the latter.
-We would like to pick one for regular functions and one for selector-style methods.
-Please send us your feedback!]**
-
-Most function and method definitions have the following general form:
-
-**[Regular function, alternative 1:
-This alternative is very simple and is based on the existing Xcode code snippet for C++ functions.
-The downside to this alternative is two-fold:
-first, the Swift-specific structure of the function parameters is completely hidden;
-second, we need to expose the structure of at least two parameters to visually distinguish
-regular functions and selector-style methods.]**
-
 
 .. syntax-outline::
 
-    func <#function name#>(<#function parameters#>) -> <#return type#> {
-        <#statements#>
+    func <#function name#>(<#parameters#>) -> <#return type#> {
+       <#statements#>
     }
 
-**[Regular function, alternative 2:
-This alternative satisfies the problems noted with the first alternative.
-That said, it's a rather long (and ugly?) way to display the general form of a simple function definition
-(the signature no longer fits on a single line).
-We've considered abbreviating names, but we're trying to avoid that
-because it's inconsistent with the rest of the document (and with existing Xcode code snippets).]**
+.. syntax-outline::
 
+    <#parameter name#>: <#parameter type#>
+    <#parameter name#>: <#parameter type#>...
+    <#parameter name#>: <#parameter type#> = <#default argument value#>
+    <#parameter name#> <#local parameter name#>: <#parameter type#>
 
 .. syntax-outline::
 
-    func <#function name#>(
-         <#parameter name 1#>: <#parameter type 1#>,
-         <#parameter name 2#>: <#parameter type 2#>)
-         -> <#return type#>
-    {
-        <#statements#>
-    }
-
-Swift also provides syntax for declaring and defining selector-style methods,
-such as those found in Objective-C. Definitions of selector-style methods have the
-following form:
-
-**[The following four alternatives deal with selector-style method definitions.
-The only difference between each of them is the name for each part of the selector.]**
-
-**[Selector-style, alternative 1:
-This alternative is descriptively pretty accurate but may also be a bit awkward.]**
-
-
-.. syntax-outline::
-
-    func <#selector name part 1#>(<#parameter name 1#>: <#parameter type 1#>)
-         <#selector name part 2#>(<#parameter name 2#>: <#parameter type 2#>)
-         -> <#return type#>
-    {
-        <#statements#>
-    }
-
-**[Selector-style, alternative 2:
-Although there is some precedent for calling each part of the selector a "keyword",
-doing so isn't quite accurate.
-The parts of the name of a method aren't keywords in the language (at least in the normal sense).]**
-
-
-.. syntax-outline::
-
-    func <#selector keyword 1#>(<#parameter name 1#>: <#parameter type 1#>)
-         <#selector keyword 2#>(<#parameter name 2#>: <#parameter type 2#>)
-         -> <#return type#>
-    {
-        <#statements#>
-    }
-
-**[Selector-style, alternative 3:
-This alternative uses "method" instead of "selector", but still uses "keyword".]**
-
-
-.. syntax-outline::
-
-    func <#method keyword 1#>(<#parameter name 1#>: <#parameter type 1#>)
-         <#method keyword 2#>(<#parameter name 2#>: <#parameter type 2#>)
-         -> <#return type#>
-    {
-        <#statements#>
-    }
-
-**[Selector-style, alternative 4:
-This alternative uses "signature" instead of "method" or "selector", but still uses "keyword".]**
-
-
-.. syntax-outline::
-
-    func <#signature keyword 1#>(<#parameter name 1#>: <#parameter type 1#>)
-         <#signature keyword 2#>(<#parameter name 2#>: <#parameter type 2#>)
-         -> <#return type#>
-    {
-        <#statements#>
+    func <#function name#>(<#parameters#>)(<#parameters#>) -> <#return type#> {
+       <#statements#>
     }
 
 .. TODO: Discuss in prose: Variadic functions and the other permutations of function declarations.
 
-.. TODO: Decide on a syntax-outline for regular Swift functions and for selector-style functions.
-
-.. write-me:: Waiting for design decisions from compiler team.
 
 .. langref-grammar
 
-    decl-func        ::= attribute-list 'type'? 'func' any-identifier generic-params? func-signature brace-item-list?
+    decl-func ::= attribute-list? ('static' | 'class')? 'mutating'? 'func' any-identifier generic-params? func-signature stmt-brace?
     func-signature ::= func-arguments func-signature-result?
-    func-arguments ::= pattern-tuple+
-    func-arguments ::= selector-tuple
-    selector-tuple ::= '(' pattern-tuple-element ')' (identifier-or-any '(' pattern-tuple-element ')')+
-    func-signature-result ::= '->' type-annotation
+    func-signature-result ::= '->' type
+
+    func-arguments ::= curried-arguments
+    curried-arguments ::= parameter-clause+
+
+    parameter-clause ::= '(' ')' | '(' parameter (',' parameter)* '...'? )'
+    parameter ::= 'inout'? ('let' | 'var')? identifier-or-none identifier-or-none? (':' type)? ('...' | '=' expr)?
+    identifier-or-none ::= identifier | '_'
 
 .. syntax-grammar::
 
@@ -651,32 +560,23 @@ This alternative uses "signature" instead of "method" or "selector", but still u
 
     function-declaration --> function-head function-name generic-parameter-clause-OPT function-signature function-body
 
-    function-head --> attribute-list-OPT function-specifier-OPT ``mutating``-OPT ``func``
-    function-specifier --> ``static`` | ``class``
+    function-head --> attribute-list-OPT declaration-specifiers-OPT ``func``
     function-name --> identifier | operator
 
-    function-signature --> function-parameters function-result-OPT
-    function-parameters --> tuple-patterns | selector-parameters
+    function-signature --> parameter-clauses function-result-OPT
     function-result --> ``->`` attribute-list-OPT type
-
-    selector-parameters --> ``(`` tuple-pattern-element ``)`` selector-tuples
-    selector-tuples --> selector-name ``(`` tuple-pattern-element ``)`` selector-tuples-OPT
-    selector-name --> identifier
-
     function-body --> code-block
 
-.. NOTE: Added the optional ``mutating`` modifier,
-    based on the grammar found in ParseDecl.cpp.
+    parameter-clauses --> parameter-clause parameter-clauses-OPT
+    parameter-clause --> ``(`` ``)`` | ``(`` parameter-list ``...``-OPT ``)``
+    parameter-list --> parameter | parameter ``,`` parameter-list
+    parameter --> ``inout``-OPT ``let``-OPT parameter-name local-parameter-name-OPT type-annotation default-argument-clause-OPT
+    parameter --> ``inout``-OPT ``var`` parameter-name local-parameter-name-OPT type-annotation default-argument-clause-OPT
+    parameter --> attribute-list-OPT type
+    parameter-name --> identifier | ``_``
+    local-parameter-name --> identifier | ``_``
+    default-argument-clause --> ``=`` expression
 
-.. TODO: Verify that the selector-name is just an identifier,
-    because the LangRef grammar has it as an identifier-or-any
-    (i.e., identifier | ``_``). I don't see this category in the identifiers
-    chapter anymore, so we just need to make sure it's still correct.
-
-.. TODO: The overgeneration from tuple-patterns combined with some upcoming changes
-    mean that we should just create a new syntactic category
-    for function arguments instead.
-    We're going to hold off on doing this until they [compiler team] make their changes.
 
 .. TODO: Code block is optional in the context of a protocol.
     Everywhere else, it's required.
@@ -685,73 +585,65 @@ This alternative uses "signature" instead of "method" or "selector", but still u
     which is a definition and declaration corner case.
     Let's just deal with this difference in prose.
 
-.. NOTE: Selector style syntax is pretty stable at this point.
-    The only contentious issue recently has been the calling syntax.
-    Any changes will probably be fiddley little bits.
-
-.. TODO: Revise selector-name---can we come up with a better name for this?
-
-
 .. _Declarations_EnumerationDeclaration:
 
 Enumeration Declaration
 -----------------------
 
-A :newTerm:`enumeration declaration` introduces a named, enumeration type into your program.
+An :newTerm:`enumeration declaration` introduces a named, enumeration type into your program.
 
 Enumeration declarations have two basic forms and are declared using the keyword ``enum``.
 
-The first form allows you to declare an enumeration type that contains
-values---called :newTerm:`enumerators`---of any type and has the following form:
+The following form declares an enumeration type that contains
+values---called :newTerm:`enumeration cases`---of any type:
 
 .. syntax-outline::
 
     enum <#enumeration name#> {
-        case <#enumerator 1#>
-        case <#enumerator 2#>(<#associated value types#>)
+        case <#enumeration case 1#>
+        case <#enumeration case 2#>(<#associated value types#>)
     }
 
 Enumerations declared in this form are sometimes called :newTerm:`discriminated unions`
 in other programming languages.
 
 In this form, each case block consists of the keyword ``case``
-followed by one or more enumerators, separated by commas.
-The name of each enumerator must be unique.
-Each enumerator can also specify that it stores values of a given type.
+followed by one or more enumeration cases, separated by commas.
+The name of each case must be unique.
+Each case can also specify that it stores values of a given type.
 These types are specified in the *associated value types* tuple,
-immediately following the enumerator.
-For more information and to see examples of enumerators with associated value types,
+immediately following the name of the case.
+For more information and to see examples of cases with associated value types,
 see :ref:`Enumerations_AssociatedValues`.
 
-The second form allow you to declare an enumeration type that contains
-enumerators of the same basic type and has the following form:
+The following form declares an enumeration type that contains
+enumeration cases of the same basic type:
 
 .. syntax-outline::
 
     enum <#enumeration name#> : <#raw value type#> {
-        case <#enumerator 1#> = <#raw value 1#>
-        case <#enumerator 2#> = <#raw value 2#>
+        case <#enumeration case 1#> = <#raw value 1#>
+        case <#enumeration case 2#> = <#raw value 2#>
     }
 
 In this form, each case block consists of the keyword ``case``,
-followed by one or more enumerators, separated by commas.
-Unlike the enumerators in the first form, each enumerator has an underlying
-value, called a :newTerm:`raw value`, of the basic same type.
+followed by one or more enumeration cases, separated by commas.
+Unlike the cases in the first form, each case has an underlying
+value, called a :newTerm:`raw value`, of the same basic type.
 The type of these values is specified in the *raw value type* and must represent a literal
 integer, floating-point number, character, or string.
 
-Each enumerator must have a unique name and be assigned a unique raw value.
+Each case must have a unique name and be assigned a unique raw value.
 If the raw value type is specified as ``Int``
-and you don't assign a value to the enumerators explicitly,
+and you don't assign a value to the cases explicitly,
 they are implicitly assigned the values ``0``, ``1``, ``2``, and so on.
-Each unassigned enumerator of type ``Int`` is implicitly assigned a raw value
-that is automatically incremented from the raw value of the previous enumerator,
-beginning at ``0``.
+Each unassigned case of type ``Int`` is implicitly assigned a raw value
+that is automatically incremented from the raw value of the previous case.
 
 ::
 
-    enum ExampleEnum : Int {
-        case A, B, C = 5, D
+    enum ExampleEnum: Int {
+       case A, B, C = 5, D
     }
 
 In the above example, the value of ``ExampleEnum.A`` is ``0`` and the value of
@@ -759,11 +651,11 @@ In the above example, the value of ``ExampleEnum.A`` is ``0`` and the value of
 explicitly set to ``5``, the value of ``ExampleEnum.D`` is automatically incremented
 from ``5`` and is therefore ``6``.
 
-The raw value of an enumerator can be accessed by calling its ``toRaw`` method,
+The raw value of an enumeration case can be accessed by calling its ``toRaw`` method,
 as in ``ExampleEnum.B.toRaw()``.
-You can also use a raw value to find a corresponding enumerator, if there is one,
-by calling the ``fromRaw`` method, which returns an optional enumerator.
-For more information and to see examples of enumerators with raw value types,
+You can also use a raw value to find a corresponding case, if there is one,
+by calling the ``fromRaw`` method, which returns an optional case.
+For more information and to see examples of cases with raw value types,
 see :ref:`Enumerations_RawValues`.
 
 The body of an enumeration declared using either form can also contain zero or more declarations,
@@ -772,22 +664,23 @@ instance methods, static methods, initializers, type aliases,
 and even other enumeration, structure, and class declarations.
 Enumeration declarations can't contain destructor or protocol declarations.
 
-Unlike with classes and structures,
+Unlike classes and structures,
 enumeration types do not have an implicitly provided default initializer;
 all initializers must be declared explicitly. Initializers can delegate
 to other initializers in the enumeration, but the initialization process is complete
-only after an initializer assigns one of the enumerators to ``self``.
+only after an initializer assigns one of the enumeration cases to ``self``.
 
-To reference the enumerators of an enumeration type, use dot (``.``) syntax,
-as in ``EnumerationType.Enumerator``. When the enumeration type can be inferred
+To reference the case of an enumeration type, use dot (``.``) syntax,
+as in ``EnumerationType.EnumerationCase``. When the enumeration type can be inferred
 from context, you can omit it (the dot is still required),
 as described in :ref:`Enumerations_EnumerationSyntax`
 and :ref:`Expressions_DelayedIdentifierExpression`.
 
-To check the values of enumerators, use a ``switch`` statement,
+To check the values of enumeration cases, use a ``switch`` statement,
 as shown in :ref:`Enumerations_ConsideringEnumerationValuesWithASwitchStatement`.
-The enumeration type is pattern-matched against the enumerator patterns in the case blocks
-of the ``switch`` statement, as described in :ref:`Patterns_EnumeratorPattern`.
+The enumeration type is pattern-matched against the enumeration case patterns
+in the case blocks of the ``switch`` statement,
+as described in :ref:`Patterns_EnumerationCasePattern`.
 
 You can extend the behavior of an enumeration type with an extension declaration,
 as discussed in :ref:`Declarations_ExtensionDeclaration`.
@@ -816,21 +709,27 @@ as discussed in :ref:`Declarations_ExtensionDeclaration`.
 
     enum-declaration --> attribute-list-OPT union-style-enum | attribute-list-OPT raw-value-style-enum
 
-    union-style-enum --> enum-name generic-parameter-clause-OPT union-style-enum-body
-    union-style-enum-body --> ``{`` declarations-OPT union-style-enum-members-OPT ``}``
+    union-style-enum --> enum-name generic-parameter-clause-OPT ``{`` union-style-enum-members-OPT ``}``
     union-style-enum-members --> union-style-enum-member union-style-enum-members-OPT
-    union-style-enum-member --> attribute-list-OPT ``case`` union-style-enumerator-list
-    union-style-enumerator-list --> union-style-enumerator | union-style-enumerator ``,`` union-style-enumerator-list
-    union-style-enumerator --> identifier tuple-type-OPT
-
-    raw-value-style-enum --> enum-name generic-parameter-clause-OPT ``:`` type-identifer raw-value-style-enum-body
-    raw-value-style-enum-body --> ``{`` declarations-OPT raw-value-style-enum-members ``}``
-    raw-value-style-enum-members --> raw-value-style-enum-member raw-value-style-enum-members-OPT
-    raw-value-style-enum-member --> attribute-list-OPT ``case`` raw-value-style-enumerator-list
-    raw-value-style-enumerator-list --> raw-value-style-enumerator | raw-value-style-enumerator ``,`` raw-value-style-enumerator-list
-    raw-value-style-enumerator --> identifier raw-value-assignment-OPT
-    raw-value-assignment --> ``=`` literal
+    union-style-enum-member --> declaration | union-style-enum-case-clause
+    union-style-enum-case-clause --> attribute-list-OPT ``case`` union-style-enum-case-list
+    union-style-enum-case-list --> union-style-enum-case | union-style-enum-case ``,`` union-style-enum-case-list
+    union-style-enum-case --> enum-case-name tuple-type-OPT
     enum-name --> identifier
+    enum-case-name --> identifier
+
+    raw-value-style-enum --> enum-name generic-parameter-clause-OPT ``:`` type-identifer ``{`` raw-value-style-enum-members-OPT ``}``
+    raw-value-style-enum-members --> raw-value-style-enum-member raw-value-style-enum-members-OPT
+    raw-value-style-enum-members --> declaration | raw-value-style-enum-case-clause
+    raw-value-style-enum-case-clause --> attribute-list-OPT ``case`` raw-value-style-enum-case-list
+    raw-value-style-enum-case-list --> raw-value-style-enum-case | raw-value-style-enum-case ``,`` raw-value-style-enum-case-list
+    raw-value-style-enum-case --> enum-case-name raw-value-assignment-OPT
+    raw-value-assignment --> ``=`` literal
+
+.. TODO: Adjust the prose to match the eventual outcome of
+    <rdar://problem/16504472> Raw value enum cases accept negative intergers but not negative floating-point numbers,
+    which I filed today, 4/2.
+    This may require adjusting the grammar as well.
 
 .. NOTE: The two types of enums are sufficiently different enough to warrant separating
     the grammar accordingly. ([Contributor 6004] pointed this out in his email.)
@@ -864,13 +763,13 @@ as discussed in :ref:`Declarations_ExtensionDeclaration`.
 Structure Declaration
 ---------------------
 
-A :newTerm:`structure declaration` introduces a named, structure type into your program.
+A :newTerm:`structure declaration` introduces a named structure type into your program.
 Structure declarations are declared using the keyword ``struct`` and have the following form:
 
 .. syntax-outline::
 
-    struct <#structure name#> : <#adopted protocols#> {
-        <#declarations#>
+    struct <#structure name#>: <#adopted protocols#> {
+       <#declarations#>
     }
 
 The body of a structure contains zero or more *declarations*.
@@ -879,7 +778,7 @@ static properties, instance methods, static methods, initializers,
 type aliases, and even other structure, class, and enumeration declarations.
 Structure declarations can't contain destructor or protocol declarations.
 For a discussion and several examples of structures
-that include these kind of declarations,
+that include various kinds of declarations,
 see :doc:`../LanguageGuide/ClassesAndStructures`.
 
 Structure types can adopt any number of protocols,
@@ -887,15 +786,15 @@ but can't inherit from classes, enumerations, or other structures.
 
 There are three ways create an instance of a previously declared structure:
 
-1. Call one of the initializers declared within the structure,
-   as described in :ref:`Initialization_Initializers`.
-2. If no initializers are declared,
-   call the structure's memberwise initializer,
-   as described in :ref:`Initialization_MemberwiseStructureInitializers`.
-3. If no initializers are declared,
-   and all properties of the structure declaration were given initial values,
-   call the structure's default initializer,
-   as described in :ref:`Initialization_DefaultInitializers`.
+* Call one of the initializers declared within the structure,
+  as described in :ref:`Initialization_Initializers`.
+* If no initializers are declared,
+  call the structure's memberwise initializer,
+  as described in :ref:`Initialization_MemberwiseStructureInitializers`.
+* If no initializers are declared,
+  and all properties of the structure declaration were given initial values,
+  call the structure's default initializer,
+  as described in :ref:`Initialization_DefaultInitializers`.
 
 The process of initializing a structure's declared properties
 is described in :doc:`../LanguageGuide/Initialization`.
@@ -932,13 +831,13 @@ as discussed in :ref:`Declarations_ExtensionDeclaration`.
 Class Declaration
 -----------------
 
-A :newTerm:`class declaration` introduces a named, class type into your program.
+A :newTerm:`class declaration` introduces a named class type into your program.
 Class declarations are declared using the keyword ``class`` and have the following form:
 
 .. syntax-outline::
 
-    class <#class name#> : <#superclass#>, <#adopted protocols#> {
-        <#declarations#>
+    class <#class name#>: <#superclass#>, <#adopted protocols#> {
+       <#declarations#>
     }
 
 The body of a class contains zero or more *declarations*.
@@ -948,10 +847,10 @@ a single destructor method, type aliases,
 and even other class, structure, and enumeration declarations.
 Class declarations can't contain protocol declarations.
 For a discussion and several examples of classes
-that include these kind of declarations,
+that include various kinds of declarations,
 see :doc:`../LanguageGuide/ClassesAndStructures`.
 
-Class types can inherit from only one parent class, its *superclass*,
+A class type can inherit from only one parent class, its *superclass*,
 but can adopt any number of protocols.
 The *superclass* appears first in the **type-inheritance-clause**,
 followed by any *adopted protocols*.
@@ -962,8 +861,13 @@ When you declare either kind of initializer,
 you can require any subclass to override it by marking the initializer
 with the ``required`` attribute.
 The designated initializer of a class must initialize all of the class's
-declared properties and it must do so before calling any of it's superclass's
+declared properties and it must do so before calling any of its superclass's
 designated initializers.
+
+A class can override properties, methods, and initializers of its superclass.
+That said, a designated initializer of the class must call one of its superclass's
+designated initializers before the class overrides any of the superclass's properties.
+Overridden methods must be marked with the ``override`` attribute.
 
 Although properties and methods declared in the *superclass* are inherited by
 the current class, designated initializers declared in the *superclass* are not.
@@ -971,23 +875,18 @@ That said, if the current class overrides all of the superclass's
 designated initializers, it inherits the superclass's convenience initializers.
 Swift classes do not inherit from a universal base class.
 
-Properties, methods, and initializers of a superclass can be overridden.
-That said, a designated initializer of the class must call one of its superclass's
-designated initializers before overriding any of the superclass's properties.
-Overridden methods must be marked with the ``override`` attribute.
-
 .. TODO: Need a way to refer to grammatical categories (see type-inheritance-clause, above).
 
 There are two ways create an instance of a previously declared class:
 
-1. Call one of the initializers declared within the class,
-   as described in :ref:`Initialization_Initializers`.
-2. If no initializers are declared,
-   and all properties of the class declaration were given initial values,
-   call the class's default initializer,
-   as described in :ref:`Initialization_DefaultInitializers`.
+* Call one of the initializers declared within the class,
+  as described in :ref:`Initialization_Initializers`.
+* If no initializers are declared,
+  and all properties of the class declaration were given initial values,
+  call the class's default initializer,
+  as described in :ref:`Initialization_DefaultInitializers`.
 
-Properties of a class instance may be accessed using dot (``.``) syntax,
+Access properties of a class instance with dot (``.``) syntax,
 as described in :ref:`ClassesAndStructures_AccessingProperties`.
 
 Classes are reference types; instances of a class are referred to, rather than copied,
@@ -1019,34 +918,34 @@ as discussed in :ref:`Declarations_ExtensionDeclaration`.
 Protocol Declaration
 --------------------
 
-A :newTerm:`protocol declaration` introduces a named, protocol type into your program.
+A :newTerm:`protocol declaration` introduces a named protocol type into your program.
 Protocol declarations are declared using the keyword ``protocol`` and have the following form:
 
 .. syntax-outline::
 
-    protocol <#protocol name#> : <#inherited protocols#> {
-        <#protocol member declarations#>
+    protocol <#protocol name#>: <#inherited protocols#> {
+       <#protocol member declarations#>
     }
 
 The body of a protocol contains zero or more *protocol member declarations*,
-which describe the conformance requirements that any type adopting the protocol must fullfil.
+which describe the conformance requirements that any type adopting the protocol must fulfill.
 In particular, a protocol can declare that conforming types must
 implement certain properties, methods, initializers, and subscripts.
 Protocols can also declare special kinds of type aliases,
-called :newTerm:`associated types`, that can be used to clarify the relationship
+called :newTerm:`associated types`, that can clarify the relationship
 between the various declarations of the protocol.
-Each of the *protocol member declarations* are discussed in detail below.
+The *protocol member declarations* are discussed in detail below.
 
-Protocol types may inherit from any number of other protocols.
+Protocol types can inherit from any number of other protocols.
 When a protocol type inherits from other protocols,
-the set of requirements from those other protocols are aggregated together,
-and any type that inherits from the current protocol must conform to all of those requirements.
+the set of requirements from those other protocols are aggregated,
+and any type that inherits from the current protocol must conform to all those requirements.
 For an example of how to use protocol inheritance,
 see :ref:`Protocols_ProtocolInheritance`.
 
 .. note::
 
-    You can also aggregate together the conformance requirements of multiple
+    You can also aggregate the conformance requirements of multiple
     protocols using protocol composition types,
     as described in :ref:`Types_ProtocolCompositionType`
     and :ref:`Protocols_ProtocolComposition`.
@@ -1057,27 +956,28 @@ In the extension, you must implement all of the adopted protocol's
 requirements. If the type already implements all of the requirements,
 you can leave the body of the extension declaration empty.
 
-By default, types that conform to a protocol must implement all of the
+By default, types that conform to a protocol must implement all
 properties, methods, initializers, and subscripts declared in the protocol.
 That said, you can mark these protocol member declarations with the ``optional`` attribute
 to specify that their implementation by a conforming type is optional.
 For more information about how to use the ``optional`` attribute
 and for guidance about how to access optional protocol members---
-for example, when you're not sure if a conforming type implements them---
+for example, when you're not sure whether a conforming type implements them---
 see :ref:`Protocols_OptionalRequirements`.
 
-If you want to restrict the adoption of a protocol to class types only,
-you can mark the entire protocol declaration with the ``class_protocol`` attribute.
+To restrict the adoption of a protocol to class types only,
+mark the entire protocol declaration with the ``class_protocol`` attribute.
 Any protocol that inherits from a protocol marked with the ``class_protocol`` attribute
 can likewise be adopted only by a class type.
 
-Protocols are named types, and as a result they can appear in all the same places
-in you code, as discussed in :ref:`Protocols_UsingProtocolsAsTypes`. That said,
+Protocols are named types, and thus they can appear in all the same places
+in your code as other named types, as discussed in :ref:`Protocols_UsingProtocolsAsTypes`.
+However,
 you can't construct an instance of a protocol,
 because protocols do not actually provide the implementations for the requirements
 they specify.
 
-Protocols can also be used to declare the methods a delegate of a class or structure
+You can also use protocols to declare which methods a delegate of a class or structure
 should implement, as described in :ref:`Protocols_Delegates`.
 
 
@@ -1118,10 +1018,10 @@ declaration:
 
 .. syntax-outline::
 
-    var <#property name#> : <#type#> { get set }
+    var <#property name#>: <#type#> { get set }
 
 As with other protocol member declarations, these property declarations
-only declare the getter and setter requirements for types
+declare only the getter and setter requirements for types
 that conform to the protocol. As a result, you don't implement the getter or setter
 directly in the protocol in which it is declared.
 
@@ -1129,11 +1029,11 @@ The getter and setter requirements can be satisfied by a conforming type in a va
 If the property declaration includes both the ``get`` and ``set`` keywords,
 a conforming type can implement it with a variable stored property
 or a computed property that is both readable and writeable
-(that is, one that implements both a getter and a setter).
-It can't be implemented as a constant stored property
+(that is, one that implements both a getter and a setter); however, it can't
+be implemented as a constant stored property
 or a read-only computed property. If the property declaration includes
-only the ``get`` keyword, it can be implemented as any kind of property at all.
-To see examples of conforming types that implement the property requirements of a protocol,
+only the ``get`` keyword, it can be implemented as any kind of property.
+For examples of conforming types that implement the property requirements of a protocol,
 see :ref:`Protocols_InstanceProperties`.
 
 To declare a class or static property requirement in a protocol declaration,
@@ -1159,11 +1059,11 @@ Protocol Method Declaration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Protocols declare that conforming types must implement a method
-by including a :newTerm:`protocol method declaration`
-in the body of the protocol declaration. Protocol method declarations have the same form as
+by including a protocol method declaration in the body of the protocol declaration.
+Protocol method declarations have the same form as
 function declarations, with two exceptions: They don't include a function body,
 and you can't provide any default parameter values as part of the function declaration.
-To see examples of conforming types that implement the method requirements of a protocol,
+For examples of conforming types that implement the method requirements of a protocol,
 see :ref:`Protocols_InstanceMethods`.
 
 As with protocol property declarations,
@@ -1175,7 +1075,7 @@ If you're implementing the method in an extension,
 use the ``class`` keyword if you're extending a class and the ``static`` keyword
 if you're extending a structure.
 
-:ref:`Declarations_FunctionDeclaration`
+See also :ref:`Declarations_FunctionDeclaration`.
 
 .. TODO: Talk about using ``Self`` in parameters and return types.
 
@@ -1192,10 +1092,10 @@ Protocol Initializer Declaration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Protocols declare that conforming types must implement an initializer
-by including a :newTerm:`protocol initializer declaration`
-in the body of the protocol declaration. Protocol initializer declarations have the same form as
-initializer declaration, except they don't include the initializer's body.
-To see examples of conforming types that implement the initializer requirements of a protocol,
+by including a protocol initializer declaration in the body of the protocol declaration.
+Protocol initializer declarations have the same form as
+initializer declarations, except they don't include the initializer's body.
+For examples of conforming types that implement the initializer requirements of a protocol,
 see :ref:`Protocols_Initializers`.
 
 See also :ref:`Declarations_InitializerDeclaration`.
@@ -1213,8 +1113,7 @@ Protocol Subscript Declaration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Protocols declare that conforming types must implement a subscript
-by including a :newTerm:`protocol subscript declaration`
-in the body of the protocol declaration.
+by including a protocol subscript declaration in the body of the protocol declaration.
 Protocol property declarations have a special form of a subscript declaration:
 
 .. syntax-outline::
@@ -1227,7 +1126,7 @@ If the subscript declaration includes both the ``get`` and ``set`` keywords,
 a conforming type must implement both a getter and a setter clause.
 If the subscript declaration includes only the ``get`` keyword,
 a conforming type must implement *at least* a getter clause
-but is also free to implement a setter clause if desired.
+and optionally can implement a setter clause.
 
 See also :ref:`Declarations_SubscriptDeclaration`.
 
@@ -1235,7 +1134,7 @@ See also :ref:`Declarations_SubscriptDeclaration`.
 
     Grammar of a protocol subscript declaration
 
-    protocol-subscript-declaration --> subscript-head getter-setter-keyword-block
+    protocol-subscript-declaration --> subscript-head subscript-result getter-setter-keyword-block
 
 
 .. _Declarations_ProtocolAssociatedTypeDeclaration:
@@ -1246,6 +1145,64 @@ Protocol Associated Type Declaration
 .. write-me:: Need to discuss with Dave what we want to call these things
     and where he plans on covering them.
 
+.. NOTE:
+    What are associated types? What are they "associated" with? Is "Self"
+    an implicit associated type of every protocol? [...]
+
+    Here's an initial stab:
+    An Associated Type is associated with an implementation of that protocol.
+    The protocol declares it, and is defined as part of the protocol's implementation.
+
+    "The ``Self`` type allows you to refer to the eventual type of ``self``
+    (where ``self`` is the type that conforms to the protocol).
+    In addition to ``Self``, a protocol's operations often need to refer to types
+    that are related to the type of ``Self``, such as a type of data stored in a
+    collection or the node and edge types of a graph." Is this still true?
+
+    NOTES from Doug:
+    At one point, Self was an associated type, but that's the wrong modeling of
+    the problem.  Self is the stand-in type for the thing that conforms to the
+    protocol.  It's weird to think of it as an associated type because it's the
+    primary thing.  It's certainly not an associated type.  In many ways, you
+    can think of associated types as being parameters that get filled in by the
+    conformance of a specific concrete type to that protocol.
+
+    There's a substitution mapping here.  The parameters are associated with
+    Self because they're derived from Self.  When you have a concrete type that
+    conforms to a protocol, it supplies concrete types for Self and all the
+    associated types.
+
+    The associated types are like parameters, but they're associated with Self in
+    the protocol.  Self is the eventual type of the thing that conforms to the
+    protocol -- you have to have a name for it so you can do things with it.
+
+    We use "associated" in contrast with generic parameters in interfaces in C#.
+    The interesting thing there is that they don't have a name like Self for the
+    actual type, but you can name any of these independant types.    In theory,
+    they're often independent but in practice they're often not -- you have an
+    interface parameterized on T, where all the uses of the thing are that T are
+    the same as Self.  Instead of having these independant parameters to an
+    interface, we have a named thing (Self) and all these other things that hand
+    off of it.
+
+    Here's a stupid simple way to see the distinction:
+
+    C#:
+
+    interface Sequence <Element> {}
+
+    class String : Sequence <UnicodeScalar>
+    class String : Sequence <GraphemeCluster>
+
+    These are both fine in C#
+
+    Swift:
+
+    protocol Sequence { typealias Element }
+
+    class String : Sequence { typealias Element = ... }
+
+    Here you have to pick one or the other -- you can't have both.
 
 
 See also :ref:`Declarations_TypealiasDeclaration`.
@@ -1276,26 +1233,27 @@ initializer declarations can be declared using function-style and selector-style
 Unlike function declarations, initializer declarations don't have a name
 and can have only one kind of return type, as described below.
 
-Structure, enumeration, and class types can have any numer of initializers,
+.. TODO: Adjust this last sentence if we include another form of initializer.
+
+Structure, enumeration, and class types can have any number of initializers,
 but the rules and associated behavior for class initializers are different.
 Unlike structures and enumerations, classes have two kinds of initializers:
 designated initializers and convenience initializers,
 as described in :doc:`../LanguageGuide/Initialization`.
 
-The first form (shown in function-style syntax)
-is used to declare initializers for structures, enumerations,
-and designated initializers of classes and has the following form:
+The following form declares initializers for structures, enumerations,
+and designated initializers of classes:
 
 .. syntax-outline::
 
-    init(<#parameter name#>: <#parameter type#>) {
-        <#statements#>
+    init(<#parameters#>) {
+       <#statements#>
     }
 
 Initializers in structures and enumerations can call other declared initializers
 to delegate part or all of the initialization process.
 
-A designated initializer of a class is responsible for initializing
+A designated initializer of a class initializes
 all of the class's properties directly. It can't call any other initializers
 of the same class, and if the class has a superclass, it must call one of
 the superclass's designated initializers.
@@ -1306,13 +1264,12 @@ properties can be set or modified in the current class.
 Designated initializers can be declared in the context of a class declaration only
 and therefore can't be added to a class using an extension declaration.
 
-The second form (also shown in function-style syntax) is used to declare
-convenience initializers for classes and has the following form:
+The following form declares convenience initializers for classes:
 
 .. syntax-outline::
 
-    init(<#parameter name#>: <#parameter type#>) -> Self {
-        <#statements#>
+    init(<#parameters#>) -> Self {
+       <#statements#>
     }
 
 Convenience initializers always have a return type of ``Self``
@@ -1324,10 +1281,9 @@ Convenience initializers can't call a superclass's initializers.
 
 You can mark designated and convenience initializers with the ``required``
 attribute to require that every subclass implement the initializer.
-Because designated initializers are not inherited by subclasses,
-they must be implemented directly. Required convenience initializers can be implemented
-explicitly or inherited when the subclass implements all of the superclass's
-designated initializers.
+Required designated initializers must be implemented explicitly.
+Required convenience initializers can be either implemented explicitly
+or inherited when the subclass implements all of the superclass’s designated initializers.
 
 To see examples of initializers in various type declarations,
 see :doc:`../LanguageGuide/Initialization`.
@@ -1348,8 +1304,7 @@ see :doc:`../LanguageGuide/Initialization`.
     initializer-declaration --> initializer-head generic-parameter-clause-OPT initializer-signature initializer-body
     initializer-head --> attribute-list-OPT ``init``
 
-    initializer-signature --> initializer-parameters initializer-result-OPT
-    initializer-parameters --> tuple-pattern | selector-tuples
+    initializer-signature --> parameter-clause initializer-result-OPT
     initializer-result --> ``->`` ``Self``
     initializer-body --> code-block
 
@@ -1365,12 +1320,12 @@ Deinitializers take no parameters and have the following form:
 .. syntax-outline::
 
     deinit {
-        <#statements#>
+       <#statements#>
     }
 
 A deinitializer is called automatically when there are no longer any references
 to a class object, just before the class object is deallocated.
-They can be declared only in the body of a class declaration---
+A deinitializer can be declared only in the body of a class declaration---
 but not in an extension of a class---
 and each class can have at most one.
 
@@ -1408,8 +1363,8 @@ Extension declarations begin with the keyword ``extension`` and have the followi
 
 .. syntax-outline::
 
-    extension <#type#> : <#adopted protocols#> {
-        <#declarations#>
+    extension <#type#>: <#adopted protocols#> {
+       <#declarations#>
     }
 
 The body of an extension declaration contains zero or more *declarations*.
@@ -1418,7 +1373,7 @@ instance methods, static and class methods, initializers, subscript declarations
 and even class, structure, and enumeration declarations.
 Extension declarations can't contain destructor or protocol declarations,
 store properties, stored property observers, or other extension declarations.
-For a discussion and several examples of extensions that include these kind of declarations,
+For a discussion and several examples of extensions that include various kinds of declarations,
 see :doc:`../LanguageGuide/Extensions`.
 
 Extension declarations can add protocol conformance to an existing
@@ -1473,25 +1428,24 @@ Subscript Declaration
 ---------------------
 
 A :newTerm:`subscript` declaration allows you to add subscripting support for objects
-of a particular type. Subscript declarations are declared using the keyword ``subscript``
+of a particular type and are typically used to provide a convenient syntax
+for accessing the elements in a collection, list, or sequence.
+Subscript declarations are declared using the keyword ``subscript``
 and have the following form:
 
 .. syntax-outline::
 
     subscript (<#parameters#>) -> <#return type#> {
-        get {
-            <#statements#>
-        }
-        set(<#setter name#>) {
-            <#statements#>
-        }
+       get {
+          <#statements#>
+       }
+       set(<#setter name#>) {
+          <#statements#>
+       }
     }
 
 Subscript declarations can appear only in the context of a class, structure,
 enumeration, extension, or protocol declaration.
-
-Subscript declarations are typically used to provide a convenient syntax
-for accessing the elements in a collection, list, or sequence.
 
 The *parameters* specify one or more indicies used to access elements of the corresponding type
 in a subscript expression (for example, the ``i`` in the expression ``object[i]``).
@@ -1500,7 +1454,7 @@ each parameter must include a type annotation to specify the type of each index.
 The *return type* specifies the type of the element being accessed.
 
 As with computed properties,
-subscript declarations provide support for reading and writing the value of the accessed elements.
+subscript declarations support reading and writing the value of the accessed elements.
 The getter is used to read the value,
 and the setter is used to write the value.
 The setter clause is optional,
@@ -1508,13 +1462,13 @@ and when only a getter is needed, you can omit both clauses and simply
 return the requested value directly.
 That said, if you provide a setter clause, you must also provide a getter clause.
 
-The *setter name* and enclosing parentheses is optional.
+The *setter name* and enclosing parentheses are optional.
 If you provide a setter name, it is used as the name of the parameter to the setter.
 If you do not provide a setter name, the default parameter name to the setter is ``value``.
 That type of the *setter name* must be the same as the *return type*.
 
 You can overload a subscript declaration in the type in which it is declared,
-as long as the *parameters* or the *return* type differ from the one you're overloading.
+as long as the *parameters* or the *return type* differ from the one you're overloading.
 You can also override a subscript declaration inherited from a superclass. When you do so,
 you must mark the overridden subscript declaration with an ``override`` attribute (``@override``).
 
@@ -1539,10 +1493,11 @@ see :doc:`../LanguageGuide/Subscripts`.
 
     Grammar of a subscript declaration
 
-    subscript-declaration --> subscript-head code-block
-    subscript-declaration --> subscript-head getter-setter-block
-    subscript-declaration --> subscript-head getter-setter-keyword-block
-    subscript-head --> attribute-list-OPT ``subscript`` tuple-pattern ``->`` type
+    subscript-declaration --> subscript-head subscript-result code-block
+    subscript-declaration --> subscript-head subscript-result getter-setter-block
+    subscript-declaration --> subscript-head subscript-result getter-setter-keyword-block
+    subscript-head --> attribute-list-OPT ``subscript`` parameter-clause
+    subscript-result --> ``->`` attribute-list-OPT type
 
 
 .. _Declarations_OperatorDeclaration:
@@ -1554,7 +1509,7 @@ An :newTerm:`operator declaration` introduces a new infix, prefix,
 or postfix operator into your program
 and is declared using the contextual keyword ``operator``.
 
-Swift allows you to declare operators of three different fixities:
+You can declare operators of three different fixities:
 infix, prefix, and postfix.
 The :newTerm:`fixity` of an operator specifies the relative position of an operator
 to its operands.
@@ -1566,24 +1521,23 @@ The fixity of the operator is specified by including the contextual keyword
 In each form, the name of the operator can contain only the operator characters
 defined in :ref:`LexicalStructure_Operators`.
 
-The first form is used to declare a new infix operator
-and has the following form:
+The following form declares a new infix operator:
 
 .. syntax-outline::
 
     operator infix <#operator name#> {
-        precedence <#precedence level#>
-        associativity <#associativity#>
+       precedence <#precedence level#>
+       associativity <#associativity#>
     }
 
 An :newTerm:`infix operator` is a binary operator that is written between its two operands,
-such as the familiar addition operator (``+``) is in the expression ``1 + 2``.
+such as the familiar addition operator (``+``) in the expression ``1 + 2``.
 
 Infix operators can optionally specify a precedence, associativity, or both.
 
 The :newTerm:`precedence` of an operator specifies how tightly an operator
 binds to its operands in the absence of grouping parentheses.
-The precedence of an operator is specified by writing the contextual keyword ``precedence``
+You specify the precedence of an operator by writing the contextual keyword ``precedence``
 followed by the *precedence level*.
 The *precedence level* can be any whole number (decimal integer) from 0 to 255;
 unlike decimal integer literals, it can't contain any underscore characters.
@@ -1595,12 +1549,11 @@ binds more tightly to its operands.
 
 The :newTerm:`associativity` of an operator specifies how a sequence of operators
 with the same precedence level are grouped together in the absence of grouping parentheses.
-The associativity of an operator is specified by writing the contextual keyword ``associativity``
-followed by the *associativity*.
-The *associativity* is specified using one of contextual keywords ``left``, ``right``,
+You specify the associativity of an operator by writing the contextual keyword ``associativity``
+followed by the *associativity*, which is one of the contextual keywords ``left``, ``right``,
 or ``none``. Operators that are left-associative group left-to-right. For example,
 the subtraction operator (``-``) is left-associative,
-and therefore the expression ``4 - 5 + 6`` is grouped as ``(4 - 5) - 6``
+and therefore the expression ``4 - 5 - 6`` is grouped as ``(4 - 5) - 6``
 and evaluates to ``-7``. Operators that are right-associative group right-to-left,
 and operators that are specified with an associativity of ``none`` don't associate at all.
 Nonassociative operators of the same precedence level can't appear adjacent to each to other.
@@ -1609,7 +1562,7 @@ For example, ``1 < 2 < 3`` is not a valid expression.
 Infix operators that are declared without specifying a precedence or associativity are
 initialized with a precedence level of 100 and an associativity of ``none``.
 
-The second form is used to declare a new prefix operator and has the following form:
+The following form declares a new prefix operator:
 
 .. syntax-outline::
 
@@ -1623,7 +1576,7 @@ Prefix operators are nonassociative.
 
 .. TR: Do all prefix operators default to the same precedence level? If so, what is it?
 
-The third form is used to declare a new postfix operator and has the following form:
+The following form declares a new postfix operator:
 
 .. syntax-outline::
 
@@ -1636,7 +1589,7 @@ As with prefix operators, postfix operator declarations don't specify a preceden
 Postfix operators are nonassociative.
 
 After declaring a new operator,
-you need to implement it by declaring a function that has the same name as the operator.
+you implement it by declaring a function that has the same name as the operator.
 To see an example of how to create and implement a new operator,
 see :ref:`AdvancedOperators_CustomOperators`.
 

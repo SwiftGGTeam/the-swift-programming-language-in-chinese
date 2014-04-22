@@ -1,5 +1,5 @@
-A Tour of the Swift Language
-============================
+A Tour of the Swift Language (Old)
+==================================
 
 So what does Swift look like? History suggests that we start with "hello, world":
 
@@ -102,7 +102,7 @@ All of the standard operators from C and Objective-C work as expected:
    -> let c = a * b            // c is set to an Int value of 10
    << // c : Int = 10
    -> let piOverTwo = π / 2      // piOverTwo is set to a Double value of 1.57079
-   << // piOverTwo : Double = 1.57079
+   << // piOverTwo : Double = 1.570795
 
 Comments
 ~~~~~~~~
@@ -287,9 +287,9 @@ you have access to each key and value through a tuple pair:
 .. testcode:: controlFlow
 
    -> var dict = ["first": 1, "second": 2, "third": 3]
-   << // dict : Dictionary<String, Int> = Dictionary<String, Int>(1.33333, 3, <DictionaryBufferOwner<String, Int> instance>)
-   -> for item in dict {
-         println("Key: '\(item.key)', Value: \(item.value)")
+   << // dict : Dictionary<String, Int> = Dictionary<String, Int>(1.33333333333333, 3, <DictionaryBufferOwner<String, Int> instance>)
+   -> for (key, value) in dict {
+         println("Key: '\(key)', Value: \(value)")
       }
    << Key: 'third', Value: 3
    << Key: 'first', Value: 1
@@ -889,7 +889,7 @@ that are defined as part of the protocol:
    -> testableThing.origin
    !! <REPL Input>:1:1: error: 'HitTestable' does not have a member named 'origin'
    !! testableThing.origin
-   !! ^          ~~~~~~
+   !! ^             ~~~~~~
 
 This guarantees safety when dealing with different types,
 such as when hit-testing a series of different elements:
@@ -908,7 +908,7 @@ such as when hit-testing a series of different elements:
                return eachElement
             }
          }
-         return .None
+         return nil
       } 
    -> var circle = Circle()
    << // circle : Circle = Circle()

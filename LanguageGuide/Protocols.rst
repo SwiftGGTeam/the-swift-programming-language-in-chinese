@@ -20,7 +20,7 @@ Any type that satisfies the requirements of a protocol is said to
 :newTerm:`conform` to that protocol.
 
 Protocols can require that conforming types have specific
-instance properties, instance methods, type properties, type methods,
+instance properties, instance methods, type methods,
 initializers, operators, and subscripts.
 
 .. _Protocols_ProtocolSyntax:
@@ -138,7 +138,7 @@ Here's a more complex class, which also adopts and conforms to the ``FullyNamed`
    -> class Starship : FullyNamed {
          var prefix: String?
          var name: String
-         init withName(name: String) prefix(String? = .None) {
+         init(name: String, prefix: String? = nil) {
             self.name = name
             self.prefix = prefix
          }
@@ -146,7 +146,7 @@ Here's a more complex class, which also adopts and conforms to the ``FullyNamed`
             return (prefix ? prefix! + " " : "") + name
          }
       }
-   -> var ncc1701 = Starship(withName: "Enterprise", prefix: "USS")
+   -> var ncc1701 = Starship(name: "Enterprise", prefix: "USS")
    << // ncc1701 : Starship = <Starship instance>
    /> ncc1701.fullName is \"\(ncc1701.fullName)\"
    </ ncc1701.fullName is "USS Enterprise"
@@ -167,8 +167,7 @@ Protocols can require specific instance methods to be implemented by conforming 
 These methods are written as part of the protocol's definition
 in exactly the same way as for a normal instance method definition,
 but without curly braces or a method body.
-:ref:`Functions_VariadicParameters` are allowed,
-subject to the same rules as for normal instance methods.
+Variadic parameters are allowed, subject to the same rules as for normal instance methods.
 
 .. note::
 
@@ -184,7 +183,7 @@ For example:
       }
 
 This protocol, ``RandomNumberGenerator``, requires any conforming type
-to have an instance method called ``random()``,
+to have an instance method called ``random``,
 which returns a ``Double`` value whenever it is called.
 (Although it is not specified as part of the protocol,
 it is assumed that this value will be
@@ -215,9 +214,9 @@ a :newTerm:`linear congruential generator`:
    -> let generator = LinearCongruentialGenerator()
    << // generator : LinearCongruentialGenerator = <LinearCongruentialGenerator instance>
    -> println("Here's a random number: \(generator.random())")
-   <- Here's a random number: 0.37465
+   <- Here's a random number: 0.37464991998171
    -> println("And another one: \(generator.random())")
-   <- And another one: 0.729024
+   <- And another one: 0.729023776863283
 
 .. _Protocols_UsingProtocolsAsTypes:
 
@@ -231,7 +230,7 @@ Because it is a type,
 a protocol can be used in many places where other types are allowed, including:
 
 * as a parameter type or return type in a function, method, or initializer
-* as the type of a named value or property
+* as the type of a constant, variable, or property
 * as the type of items in an ``Array``, ``Dictionary`` or other container
 
 .. note::
@@ -251,7 +250,7 @@ Here's an example of a protocol being used as a type:
    -> class Dice {
          let sides: Int
          let generator: RandomNumberGenerator
-         init withSides(sides: Int) generator(RandomNumberGenerator) {
+         init(sides: Int, generator: RandomNumberGenerator) {
             self.sides = sides
             self.generator = generator
          }
@@ -281,13 +280,13 @@ which is also of type ``RandomNumberGenerator``.
 You can pass a value of any conforming type in to this parameter
 when initializing a new ``Dice`` instance.
 
-``Dice`` provides one instance method, ``roll()``,
+``Dice`` provides one instance method, ``roll``,
 which returns an integer value between 1 and the number of sides on the dice.
-This method calls the generator's ``random()`` method to create
+This method calls the generator's ``random`` method to create
 a new random number between ``0.0`` and ``1.0``,
 and uses this random number to create a dice roll value within the correct range.
 Because ``generator`` is known to adopt ``RandomNumberGenerator``,
-it is guaranteed to have a ``random()`` method to call.
+it is guaranteed to have a ``random`` method to call.
 
 .. QUESTION: would it be better to show Dice using a RandomNumberGenerator
    as a data source, a la UITableViewDataSource etc.?
@@ -301,7 +300,7 @@ with a ``LinearCongruentialGenerator`` instance as its random number generator:
 
 .. testcode:: protocols
 
-   -> var d6 = Dice(withSides: 6, generator: LinearCongruentialGenerator())
+   -> var d6 = Dice(sides: 6, generator: LinearCongruentialGenerator())
    << // d6 : Dice = <Dice instance>
    -> for _ in 1..5 {
          println("Random dice roll is \(d6.roll())")
@@ -334,7 +333,7 @@ This example defines two protocols for use with dice-based board games:
       }
    -> protocol DiceGameDelegate {
          func gameDidStart(game: DiceGame)
-         func game(DiceGame) didStartNewTurnWithDiceRoll(diceRoll: Int)
+         func game(_ game: DiceGame, didStartNewTurnWithDiceRoll diceRoll: Int)
          func gameDidEnd(game: DiceGame)
       }
 
@@ -343,11 +342,12 @@ by any game that involves a dice.
 The ``DiceGameDelegate`` protocol can be adopted by
 any type that wants to be able to observe and track the progress of a ``DiceGame``.
 
-.. QUESTION: should DiceGame be called something like “Playable” instead,
-   and used as an opportunity to talk about protocol naming?
+.. QUESTION: is the Cocoa-style x:didStuffWithY: naming approach
+   the right thing to advise for delegates written in Swift?
+   It looks a little odd in the syntax above.
 
-Here's a version of the *Snakes and Ladders* game from the :doc:`ControlFlow` chapter,
-adapted to use a ``Dice`` instance for its dice-rolls;
+Here's a version of the *Snakes and Ladders* game originally introduced in :doc:`ControlFlow`.
+This version has been adapted to use a ``Dice`` instance for its dice-rolls;
 to adopt the ``DiceGame`` protocol;
 and to notify a ``DiceGameDelegate`` about its progress:
 
@@ -355,10 +355,10 @@ and to notify a ``DiceGameDelegate`` about its progress:
 
    -> class SnakesAndLadders : DiceGame {
          let finalSquare = 25
-         let dice = Dice(withSides: 6, generator: LinearCongruentialGenerator())
+         let dice = Dice(sides: 6, generator: LinearCongruentialGenerator())
          var square = 0
          var board = Array<Int>()
-         var delegate: DiceGameDelegate? = .None
+         var delegate: DiceGameDelegate?
          init() {
             for _ in 0..finalSquare { board.append(0) }
             board[03] = +08; board[06] = +11; board[09] = +09; board[10] = +02
@@ -366,12 +366,10 @@ and to notify a ``DiceGameDelegate`` about its progress:
          }
          func play() {
             square = 0
-            if delegate { delegate!.gameDidStart(self) }
+            delegate?.gameDidStart(self)
             while square != finalSquare {
                let diceRoll = dice.roll()
-               if delegate {
-                  delegate!.game(self, didStartNewTurnWithDiceRoll: diceRoll)
-               }
+               delegate?.game(self, didStartNewTurnWithDiceRoll: diceRoll)
                switch square + diceRoll {
                   case finalSquare:
                      break
@@ -382,7 +380,7 @@ and to notify a ``DiceGameDelegate`` about its progress:
                      square += board[square]
                }
             }
-            if delegate { delegate!.gameDidEnd(self) }
+            delegate?.gameDidEnd(self)
          }
       }
 
@@ -391,31 +389,36 @@ for a description of the gameplay of the *Snakes and Ladders* game shown above.)
 
 This version of the game has been wrapped up as a class called ``SnakesAndLadders``,
 which adopts the ``DiceGame`` protocol.
-It provides a gettable ``dice`` property and a ``play()`` method
+It provides a gettable ``dice`` property and a ``play`` method
 in order to conform to the protocol.
 (The ``dice`` property has been declared as a constant property
 because it does not need to change after initialization,
 and the protocol only requires that it is gettable.)
 
 The *Snakes and Ladders* game board setup takes place during the class's initializer.
-All of the actual game logic has been moved into the protocol's ``play()`` method,
+All of the actual game logic has been moved into the protocol's ``play`` method,
 which uses the protocol's required ``dice`` property to provide its dice roll values.
 
-Note that the ``delegate`` property is declared as an *optional* ``DiceGameDelegate``.
-A delegate isn't required in order to play the game,
-and so this property has a default value of ``.None``
-when a new instance of the game is created.
-It can be set to a suitable delegate by the game instantiator if they wish.
+Note that the ``delegate`` property is defined as an *optional* ``DiceGameDelegate``,
+because a delegate isn't required in order to play the game.
+Because it is of an optional type,
+the ``delegate`` property is automatically set to an initial value of ``nil``.
+It can be set to a suitable delegate thereafter by the game instantiator if they wish.
 
 ``DiceGameDelegate`` provides three methods for tracking the progress of a game.
 These three methods have been incorporated into the game logic within
-the ``play()`` method above, and are called when
+the ``play`` method above, and are called when
 a new game starts, a new turn begins, or the game ends.
-Because the ``delegate`` property is an optional ``DiceGameDelegate``,
-the ``play()`` method first checks to see if the optional property has a value
-before calling each method.
-In each case, it passes the ``SnakesAndLadders`` instance as
-a parameter to the delegate method.
+
+Because the ``delegate`` property is an *optional* ``DiceGameDelegate``,
+the ``play`` method uses optional chaining each time it calls a method on the delegate.
+If the ``delegate`` property is nil,
+these delegate calls fail gracefully and without error.
+If the ``delegate`` property is non-nil,
+the delegate methods are called,
+and are passed the ``SnakesAndLadders`` instance as a parameter.
+
+.. TODO: add a cross-reference to optional chaining here.
 
 This next example shows a class called ``DiceGameTracker``,
 which adopts the ``DiceGameDelegate`` protocol:
@@ -431,7 +434,7 @@ which adopts the ``DiceGameDelegate`` protocol:
             }
             println("The game is using a \(game.dice.sides)-sided dice")
          }
-         func game(DiceGame) didStartNewTurnWithDiceRoll(diceRoll: Int) {
+         func game(_ game: DiceGame, didStartNewTurnWithDiceRoll diceRoll: Int) {
             ++numberOfTurns
             println("Rolled a \(diceRoll)")
          }
@@ -446,21 +449,21 @@ It resets a ``numberOfTurns`` property to zero when the game starts;
 increments it each time a new turn begins;
 and prints out the total number of turns once the game has ended.
 
-The implementation of ``gameDidStart()`` shown above makes use of the ``game`` parameter
+The implementation of ``gameDidStart`` shown above makes use of the ``game`` parameter
 to print some introductory information about the game that is about to be played.
 The ``game`` parameter has a type of ``DiceGame``, not ``SnakesAndLadders``,
-and so ``gameDidStart()`` can only access and use any methods and properties that
+and so ``gameDidStart`` can only access and use any methods and properties that
 are implemented as part of the ``DiceGame`` protocol.
-However, the method is still able to use :doc:`TypeCasting` to
+However, the method is still able to use type casting to
 query the type of the underlying instance.
 In this example, it checks to see if ``game`` is actually
 an instance of ``SnakesAndLadders`` behind the scenes,
 and prints an appropriate message if so.
 
-``gameDidStart()`` also accesses the ``dice`` property of the passed ``game`` parameter.
+``gameDidStart`` also accesses the ``dice`` property of the passed ``game`` parameter.
 Because ``game`` is known to conform to the ``DiceGame`` protocol,
 it is guaranteed to have a ``dice`` property,
-and so the ``gameDidStart()`` method is able to access and print the dice's ``sides`` property,
+and so the ``gameDidStart`` method is able to access and print the dice's ``sides`` property,
 regardless of what kind of game is being played.
 
 Here's how ``DiceGameTracker`` looks in action:
@@ -496,15 +499,22 @@ Initializers
 .. You can't construct from a protocol
 .. You can define initializer requirements in protocols
 
-.. _Protocols_ClassAndStaticMethodsAndProperties:
+.. _Protocols_TypeMethods:
 
-Class and Static Methods and Properties
----------------------------------------
+Type Methods
+------------
 
 .. write-me::
 
-.. Protocols can provide class (and static) functions and properties
+.. TODO: Protocols can provide class (and static) functions
    (although rdar://14620454 and rdar://15242744).
+
+.. TODO: We already have static properties,
+   but we won't have class properties for Swift 1.0, says [Contributor 7746].
+   This means that protocols will not allow the definition of type-level properties,
+   because a class would be unable to fulfil them.
+   I've named this section's placeholder title
+   to refer to "Type Methods" only for now.
 
 .. _Protocols_AddingProtocolConformanceWithExtensions:
 
@@ -513,7 +523,7 @@ Adding Protocol Conformance With Extensions
 
 An existing type can be extended to adopt and conform to a new protocol,
 even if you do not have access to the source code for the existing type.
-This is achieved by using :doc:`Extensions`.
+This is achieved by using extensions, as described in :doc:`Extensions`.
 Extensions give a way to add new properties, methods, initializers and subscripts
 to an existing type,
 and are therefore able to add any of the requirements that a protocol may demand
@@ -556,7 +566,7 @@ Any ``Dice`` instance can now be treated as ``TextRepresentable``:
 
 .. testcode:: protocols
 
-   -> let d12 = Dice(withSides: 12, generator: LinearCongruentialGenerator())
+   -> let d12 = Dice(sides: 12, generator: LinearCongruentialGenerator())
    << // d12 : Dice = <Dice instance>
    -> println(d12.asText())
    <- A 12-sided dice
@@ -621,18 +631,15 @@ This example creates an array of ``TextRepresentable`` things:
 
 .. testcode:: protocols
 
-   -> var textRepresentableThings = Array<TextRepresentable>()
-   << // textRepresentableThings : Array<TextRepresentable> = []
-   -> textRepresentableThings.append(game)
-   -> textRepresentableThings.append(d12)
-   -> textRepresentableThings.append(simonTheHamster)
+   -> let things: Array<TextRepresentable> = [game, d12, simonTheHamster]
+   << // things : Array<TextRepresentable> = [<unprintable value>, <unprintable value>, <unprintable value>]
 
-It is now possible to iterate over the array,
-and print each thing's textual representation:
+It is now possible to iterate over the items in the array,
+and print each item's textual representation:
 
 .. testcode:: protocols
 
-   -> for thing in textRepresentableThings {
+   -> for thing in things {
          println(thing.asText())
       }
    </ A game of Snakes and Ladders with 25 squares
@@ -643,8 +650,8 @@ Note that the ``thing`` constant is of type ``TextRepresentable``.
 It is not of type ``Dice``, or ``DiceGame``, or ``Hamster``,
 even if the actual instance behind the scenes is of one of those types.
 Nonetheless, because it is of type ``TextRepresentable``,
-and anything that is ``TextRepresentable`` is known to have an ``asText()`` method,
-it is safe to call ``thing.asText()`` each time through the loop.
+and anything that is ``TextRepresentable`` is known to have an ``asText`` method,
+it is safe to call ``thing.asText`` each time through the loop.
 
 .. _Protocols_ProtocolInheritance:
 
@@ -675,7 +682,7 @@ Anything that adopts ``PrettyTextRepresentable`` must satisfy all of the require
 enforced by ``TextRepresentable``,
 *plus* the addition requirements enforced by ``PrettyTextRepresentable``.
 In this example, ``PrettyTextRepresentable`` adds a single requirement
-to provide an instance method called ``asPrettyText()`` that returns a ``String``.
+to provide an instance method called ``asPrettyText`` that returns a ``String``.
 
 The ``SnakesAndLadders`` class can be extended to adopt and conform to ``PrettyTextRepresentable``:
 
@@ -698,12 +705,11 @@ The ``SnakesAndLadders`` class can be extended to adopt and conform to ``PrettyT
          }
       }
 
-
 This extension states that it adopts the ``PrettyTextRepresentable`` protocol,
-and provides an implementation of the ``asPrettyText()`` method
+and provides an implementation of the ``asPrettyText`` method
 for the ``SnakesAndLadders`` type.
 Anything that is ``PrettyTextRepresentable`` must also be ``TextRepresentable``,
-and so the ``asPrettyText()`` implementation starts by calling the ``asText()`` method
+and so the ``asPrettyText`` implementation starts by calling the ``asText`` method
 from the ``TextRepresentable`` protocol to begin an output string.
 It appends a colon and a line break,
 and uses this as the start of its pretty text representation.
@@ -731,13 +737,356 @@ of any ``SnakesAndLadders`` instance:
 Checking for Protocol Conformance
 ---------------------------------
 
-.. write-me::
+You can use the ``is`` and ``as`` operators (as described in :doc:`TypeCasting`)
+to check for protocol conformance, and to cast to a specific protocol.
+Checking for and casting to a protocol
+follows exactly the same syntax as checking for and casting to a type:
 
-.. is and as
-.. Perhaps follow on from the Printable and FancyPrintable example
-   to check for conformance and call the appropriate print method
-.. currently, you can only check for protocol conformance if the protocols
-   are declared as @objc - does that mean that this shouldn't be mentioned here yet?
+* The ``is`` operator returns ``true`` if an instance conforms to a protocol,
+  and returns ``false`` if it does not.
+* The ``as`` operator returns an optional value of the protocol's type,
+  and this value is ``nil`` if the instance does not conform to that protocol.
+
+This example defines a protocol called ``HasArea``,
+with a single property requirement of a gettable ``Double`` property called ``area``:
+
+.. testcode:: protocolConformance
+
+   -> @objc protocol HasArea {
+         var area: Double { get }
+      }
+
+.. note::
+
+   You can only check for protocol conformance
+   if your protocol is marked with the ``@objc`` attribute,
+   as seen for the ``HasArea`` protocol above.
+   This attribute is used to indicate that
+   the protocol should be exposed to Objective-C code,
+   and is described in *Building Cocoa Apps With Swift*.
+   Even if you are not interoperating with Objective-C,
+   you will still need to mark your protocols with the ``@objc`` attribute
+   if you want to be able to check for protocol conformance.
+   
+   Note also that ``@objc`` protocols can only be adopted by classes,
+   and not by structures or enumerations.
+   If you mark your protocol as ``@objc`` in order to check for conformance,
+   you will only be able to apply that protocol to class types.
+
+.. QUESTION: is this acceptable wording for this limitation?
+
+.. TODO: remove this note when this limitation is lifted in the future.
+
+.. TODO: make this section link to the interop guide.
+
+Here are two classes, ``Circle`` and ``Country``,
+both of which conform to the ``HasArea`` protocol:
+
+.. testcode:: protocolConformance
+
+   -> class Circle : HasArea {
+         let pi = 3.1415927
+         var radius: Double
+         var area: Double { return pi * radius * radius }
+         init(radius: Double) { self.radius = radius }
+      }
+   -> class Country : HasArea {
+         var area: Double
+         init(area: Double) { self.area = area }
+      }
+
+The ``Circle`` class implements the ``area`` property requirement
+as a computed property, based on a stored ``radius`` property.
+The ``Country`` class implements the ``area`` requirement directly as a stored property.
+Both classes correctly conform to the ``HasArea`` protocol.
+
+Here's a class called ``Animal``, which does not conform to the ``HasArea`` protocol:
+
+.. testcode:: protocolConformance
+
+   -> class Animal {
+         var legs: Int
+         init(legs: Int) { self.legs = legs }
+      }
+
+The ``Circle``, ``Country`` and ``Animal`` classes do not have a shared base class.
+Nonetheless, they are all classes, and so instances of all three types
+can be used to initialize an array that stores values of type ``AnyObject``:
+
+.. testcode:: protocolConformance
+
+   -> let objects: Array<AnyObject> = [
+         Circle(radius: 2.0),
+         Country(area: 243_610),
+         Animal(legs: 4)
+      ]
+   << // objects : Array<AnyObject> = [<unprintable value>, <unprintable value>, <unprintable value>]
+
+The ``objects`` array is initialized with an array literal containing
+a ``Circle`` instance with a radius of 2 units;
+a ``Country`` instance initialized with
+the surface area of the United Kingdom in square kilometers;
+and an ``Animal`` instance with four legs.
+
+The ``objects`` array can now be iterated,
+and each object in the array can be checked to see if
+it conforms to the ``HasArea`` protocol:
+
+.. testcode:: protocolConformance
+
+   -> for object in objects {
+         if let objectWithArea = object as HasArea {
+            println("Area is \(objectWithArea.area)")
+         } else {
+            println("Something that doesn't have an area")
+         }
+      }
+   !! <REPL Input>:1:5: warning: constant 'object' inferred to have type 'AnyObject', which may be unexpected
+   !! for object in objects {
+   !!     ^
+   !! <REPL Input>:1:5: note: add an explicit type annotation to silence this warning
+   !! for object in objects {
+   !!     ^
+   !!            : AnyObject
+   </ Area is 12.5663708
+   </ Area is 243610.0
+   </ Something that doesn't have an area
+
+Whenever an object in the array conforms to the ``HasArea`` protocol,
+the optional value returned by the ``as`` operator is unwrapped with optional binding
+into a constant called ``objectWithArea``.
+The ``objectWithArea`` constant is known to be of type ``HasArea``,
+and so its ``area`` property can be accessed and printed in a type-safe way.
+
+Note that the underlying objects are not changed by the casting process.
+They continue to be a ``Circle``, a ``Country`` and an ``Animal``.
+However, at the point that they are stored in the ``objectWithArea`` constant,
+they are only known to be of type ``HasArea``,
+and so only their ``area`` property can be accessed.
+
+.. TODO: This is an *extremely* contrived example.
+   Also, it's not particularly useful to be able to get the area of these two objects,
+   because there's no shared unit system.
+   Also also, I'd say that a circle should probably be a structure, not a class.
+   Plus, I'm having to write lots of boilerplate initializers,
+   which make the example far less focused than I'd like.
+   The problem is, I can't use strings within an @objc protocol
+   without also having to import Foundation, so it's numbers or bust, I'm afraid.
+
+.. QUESTION: I'm deliberately choosing to eat the AnyObject warnings here.
+   Is this the right approach, given that they will be visible in Xcode too?
+
+.. _Protocols_OptionalProtocolRequirements:
+
+Optional Protocol Requirements
+------------------------------
+
+.. TODO: split this section into several subsections as per [Contributor 7746]'s feedback,
+   and cover the missing alternative approaches that he mentioned.
+
+.. TODO: you can specify optional subscripts,
+   and the way you check for them / work with them is a bit esoteric.
+   You have to try and access a value from the subscript,
+   and see if the value you get back (which will be an optional)
+   has a value or is nil.
+
+.. TODO: you can specify optional initializers,
+   but there doesn't seem to be a way to check for them or call them.
+   Doug has suggested that we should probably ban them,
+   which I've filed as rdar://16669554.
+
+Protocols can define :newTerm:`optional requirements`,
+which do not have to be implemented by types that conform to the protocol.
+Optional requirements are prefixed by the ``@optional`` keyword
+as part of the protocol's definition.
+
+Optional protocol requirements can be checked and called with optional chaining,
+to cope with the fact that the requirement may not have been implemented
+by a type that conforms to the protocol.
+
+You check for an implementation of an optional requirement
+by writing a question mark after the name of the requirement when it is called,
+such as ``someOptionalMethod?(someArgument)``.
+Optional property requirements, and optional method requirements that return a value,
+will always return an optional value of the appropriate type when they are accessed or called,
+to reflect the fact that the optional requirement may not have been implemented.
+
+.. note::
+
+   Optional protocol requirements can only be specified
+   if your protocol is marked with the ``@objc`` attribute.
+   Even if you are not interoperating with Objective-C,
+   you will still need to mark your protocols with the ``@objc`` attribute
+   if you want to specify optional requirements.
+   
+   Note also that ``@objc`` protocols can only be adopted by classes,
+   and not by structures or enumerations.
+   If you mark your protocol as ``@objc`` in order to specify optional requirements,
+   you will only be able to apply that protocol to class types.
+
+.. QUESTION: is this acceptable wording for this limitation?
+
+.. TODO: remove this note when this limitation is lifted in the future.
+
+The following example defines an integer-counting class called ``Counter``,
+which uses an external data source to tell it how much to count by.
+This data source is defined by the ``CounterDataSource`` protocol,
+which has two optional requirements:
+
+.. testcode:: protocolConformance
+
+   -> @objc protocol CounterDataSource {
+         @optional func incrementForCount(count: Int) -> Int
+         @optional var fixedIncrement: Int { get }
+      }
+
+The ``CounterDataSource`` protocol defines
+an optional method requirement called ``incrementForCount``,
+and an optional property requirement called ``fixedIncrement``.
+These requirements define two different ways for data sources to provide
+an appropriate increment amount for a ``Counter`` instance.
+
+.. note::
+
+   Strictly speaking, you can write a custom class
+   that conforms to ``CounterDataSource`` without implementing
+   *either* of the optional protocol requirements.
+   They are both optional, after all.
+   This is technically allowed, but wouldn't make for a very good data source.
+
+The ``Counter`` class, defined below,
+has an optional ``dataSource`` property of type ``CounterDataSource?``:
+
+.. testcode:: protocolConformance
+
+   -> @objc class Counter {
+         var count = 0
+         var dataSource: CounterDataSource?
+         func increment() {
+            if let amount = dataSource?.incrementForCount?(count) {
+               count += amount
+            } else if let amount = dataSource?.fixedIncrement? {
+               count += amount
+            }
+         }
+      }
+
+The ``Counter`` class stores its current value in a variable property called ``count``.
+The ``Counter`` class also defines a method called ``increment``,
+which increments the ``count`` property every time the method is called.
+
+The ``increment`` method first tries to retrieve an increment amount
+by looking for an implementation of the ``incrementForCount`` method on its data source.
+The ``increment`` method uses optional chaining to try and call ``incrementForCount``,
+and passes the current ``count`` value as the method's single argument.
+
+Note that there are *two* levels of optional chaining at play here.
+Firstly, it is possible that ``dataSource`` may be ``nil``,
+and so ``dataSource`` has a question mark after its name to indicate that
+``incrementForCount`` should only be called if ``dataSource`` is non-nil.
+Secondly, even if ``dataSource`` *does* exist,
+there is no guarantee that it implements ``incrementForCount``,
+because it is an optional requirement.
+This is why ``incrementForCount`` is also written with a question mark after its name.
+
+Because the call to ``incrementForCount`` can fail for either of these two reasons,
+the call returns an *optional* ``Int`` value.
+This is true even though ``incrementForCount`` is defined as returning
+a non-optional ``Int`` value in the definition of ``CounterDataSource``.
+
+After calling ``incrementForCount``, the optional ``Int`` that it returns
+is unwrapped into a constant called ``amount``, using optional binding.
+If the optional ``Int`` does contain a value –
+that is, if the delegate and method both exist,
+and the method returned a value –
+the unwrapped ``amount`` is added onto the stored ``count`` property,
+and incrementation is complete.
+
+If it is *not* possible to retrieve a value from the ``incrementForCount`` method –
+either because ``dataSource`` is nil,
+or because the data source does not implement ``incrementForCount`` –
+then the ``increment`` method tries to retrieve a value
+from the data source's ``fixedIncrement`` property instead.
+The ``fixedIncrement`` property is also an optional requirement,
+and so its name is also written using optional chaining with a question mark on the end,
+to indicate that the attempt to access the property's value can fail.
+As before, the returned value is an optional ``Int`` value,
+even though ``fixedIncrement`` is defined as a non-optional ``Int`` property
+as part of the ``CounterDataSource`` protocol definition.
+
+Here's a simple ``CounterDataSource`` implementation where the data source
+returns a constant value of ``3`` every time it is queried.
+It does this by implementing the optional ``fixedIncrement`` property requirement:
+
+.. testcode:: protocolConformance
+
+   -> class ThreeSource : CounterDataSource {
+         let fixedIncrement = 3
+      }
+
+You can use an instance of ``ThreeSource`` as the data source for a new ``Counter`` instance:
+
+.. testcode:: protocolConformance
+
+   -> var counter = Counter()
+   << // counter : Counter = <Counter instance>
+   -> counter.dataSource = ThreeSource()
+   -> for _ in 1..4 {
+         counter.increment()
+         println(counter.count)
+      }
+   </ 3 
+   </ 6 
+   </ 9 
+   </ 12 
+
+The code above creates a new ``Counter`` instance;
+sets its data source to be a new ``ThreeSource`` instance;
+and calls the counter's ``increment`` method four times.
+As expected, the counter's ``count`` property increases by three
+each time ``increment`` is called.
+
+Here's a more complex data source called ``TowardsZeroSource``,
+which makes a ``Counter`` instance count up or down towards zero
+from its current ``count`` value:
+
+.. testcode:: protocolConformance
+
+   -> class TowardsZeroSource : CounterDataSource {
+         func incrementForCount(count: Int) -> Int {
+            if count == 0 {
+               return 0
+            } else if count < 0 {
+               return 1
+            } else {
+               return -1
+            }
+         }
+      }
+
+The ``TowardsZeroSource`` class implements
+the optional ``incrementForCount`` method from the ``CounterDataSource`` protocol,
+and uses the ``count`` argument value to work out which direction to count in.
+If ``count`` is already zero, the method returns ``0``
+to indicate that no further counting should take place.
+
+You can use an instance of ``TowardsZeroSource`` with the existing ``Counter`` instance
+to count from ``-4`` to zero.
+Once the counter reaches zero, no more counting takes place:
+
+.. testcode:: protocolConformance
+
+   -> counter.count = -4
+   -> counter.dataSource = TowardsZeroSource()
+   -> for _ in 1..5 {
+         counter.increment()
+         println(counter.count)
+      }
+   </ -3 
+   </ -2 
+   </ -1 
+   </ 0 
+   </ 0 
 
 .. _Protocols_ProtocolComposition:
 
@@ -747,18 +1096,6 @@ Protocol Composition
 .. write-me::
 
 .. protocol<P1, P2> syntax for protocol conformance aka "something that conforms to multiple protocols"
-
-.. _Protocols_OptionalRequirements:
-
-Optional Requirements
----------------------
-
-.. write-me::
-
-.. Non-mandatory protocol requirements via @optional
-.. Checking for (and calling) optional implementations via optional binding and closures
-.. all dependent on the implementation of rdar://16101161,
-   "Optional protocol requirements for non-@objc protocols"
 
 .. Other things to be included:
 .. ----------------------------
@@ -770,8 +1107,11 @@ Optional Requirements
 .. Show how to make a custom type conform to LogicValue or some other protocol
 .. LogicValue certainly needs to be mentioned in here somewhere
 .. Show a protocol being used by an enumeration
-.. accessing protocol methods, properties etc. through a named value that is *just* of protocol type
+.. accessing protocol methods, properties etc. through a constant or variable that is *just* of protocol type
 .. Protocols can't be nested, but nested types can implement protocols
+.. Protocol requirements can be marked as @unavailable,
+   but this currently only works if they are also marked as @objc.
+.. Checking for (and calling) optional implementations via optional binding and closures
 
 .. refnote:: References
 

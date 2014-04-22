@@ -29,64 +29,28 @@ Attributes
     Also, now that the optional comma is removed, should consider remaning
     attribute-list to simply attributes and simplifying the grammar accordingly.
 
-..  Here's the current list (as of 3/6/2014):
+    What should the new grammar look like (also taking into account ``!`` inverted attributes)?
+    What should we call the "arguments" that attributes take? ("options"?)
 
-        // Type attributes
-    TYPE_ATTR(auto_closure)
-    TYPE_ATTR(cc)
-    TYPE_ATTR(noreturn)
-    TYPE_ATTR(objc_block)
-    TYPE_ATTR(thin)
-    TYPE_ATTR(thick)
-    TYPE_ATTR(unchecked)
+    Notes from Ted/Doug, 4/2/14:
+    The grammar should be @ <attribute> ( <optional arguments> )
+    Other languages have specific grammar production rules for specific
+    attributes, specifying the syntax of them, in addition do the description of
+    what they mean.
 
-    ATTR(assignment)
-    ATTR(class_protocol)
-    ATTR(conversion)
-    ATTR(exported)
-    ATTR(infix)
-    ATTR(mutating)
-    ATTR(resilient)
-    ATTR(fragile)
-    ATTR(born_fragile)
-    ATTR(asmname)
-    ATTR(noreturn)
-    ATTR(prefix)
-    ATTR(postfix)
-    ATTR(objc)
-    ATTR(optional)
-    ATTR(override)
-    ATTR(required)
-    ATTR(transparent)
-    ATTR(unowned)
-    ATTR(weak)
-    ATTR(requires_stored_property_inits)
+    Instead of pulling all the known attributesin the grammar, have a general
+    production rule.  From the parsing perspective, the attribute name doesn't
+    effect the parser.  The grammar is regular enough that even if we don't know
+    what to do with an attribute, we can still parse it.
+    It's likely that someday we will allow user-defined attributes.
 
-    IB_ATTR(IBOutlet)
-    IB_ATTR(IBAction)
-    IB_ATTR(IBDesignable)
-    IB_ATTR(IBInspectable)
+    The structure of what's inside the parens is always going to be special.
+    Essentially, the attribute defines its own grammar for what goes in its
+    parens.  The stuff in parens should just be (gramatically) a balanced token
+    sequence.
 
-    // "Virtual" attributes can not be spelled in the source code.
-    VIRTUAL_ATTR(raw_doc_comment)
-
-    According to Doug (1/29/14), many of these attributes are not worth documenting
-    either in the near future or at all. We should really focus on the following first:
-    ``mutating``, ``objc``, ``weak``, ``unowned``, ``optional``, ``class_protocol``,
-    ``IBOutlet``, ``IBAction``, ``IBLiveView``, and ``IBInspectable``.
-    The rest should be omitted (at least for now)---they're really
-    only used in the Standard Library.
-    In addition, it's likely that inout will get folder into the function stuff,
-    and resilience is totally pointless (for now),
-    because we're not doing it for Swift 1.0. Leave both of them off entirely.
-
-    TR: None of the attributes Doug mentioned above are type attributes.
-    Are there any types attributes that we should bother documenting?
-
-    TODO: For the attributes we are planning on documenting in the near future,
-    we need to get more information about their use and behavior.
-    Find out what we can from current documentation,
-    and email Doug or swift-dev for anything that's missing.
+.. TODO: Schedule another TR meeting with Ted and Doug to get the specific
+    about the new grammar and what we should document.
 
 
 .. _Attributes_DeclarationAttributes:
@@ -98,7 +62,7 @@ Declaration Attributes
 
     Grammar of a declaration attribute
 
-    declaration-attribute --> ``assignment`` | ``class_protocol`` | ``infix`` | ``mutating`` | ``objc`` | ``optional`` | ``override`` | ``postfix`` | ``prefix`` | ``required`` | ``unowned`` | ``weak``
+    declaration-attribute --> ``assignment`` | ``class_protocol`` | ``infix`` | ``mutating`` | ``objc`` | ``optional`` | ``postfix`` | ``prefix`` | ``required`` | ``unowned`` | ``weak``
 
 
 .. _Attributes_TypeAttributes:

@@ -7,7 +7,7 @@
    * Enum default / unknown values?
    * Enum delayed identifier resolution
    * Option sets
-   * Enum special capabilities such as embeddability, type properties etc.
+   * Enum special capabilities such as embeddability, static properties etc.
 
 Enumerations
 ============
@@ -16,25 +16,27 @@ Enumerations
 and to work with those values in a type-safe way within your code.
 
 Enumerations in Swift are much more flexible than their counterparts in C and Objective-C.
-Swift enumerations can:
+Swift enumerations can provide a default raw value for each enumeration member,
+and these raw values can be
+strings, characters, or any of the integer or floating-point number types.
 
-* store :newTerm:`associated values` of any type along with each member value
-* provide :newTerm:`raw values` for each enumeration member
+Alternatively, enumeration members can specify
+associated values of *any* type to be stored along with each different member value,
+in a similar way to unions or variants in other languages.
+This gives a way to define a common set of related members as part of one enumeration,
+each of which has a different set of values of appropriate types associated with it.
 
-These capabilities are described in detail within this chapter.
+Enumerations in Swift are first-class types in their own right.
+They adopt many features traditionally only supported by classes,
+such as computed properties to provide additional information about their values,
+and instance methods to provide functionality related to the values they represent.
+Enumerations can also define initializers to provide an initial member value;
+can be extended to expand their functionality beyond their original implementation;
+and can conform to protocols to provide standard functionality.
 
-In addition, enumerations can:
-
-* declare :newTerm:`computed properties` to provide additional information about their values
-  (as described in :doc:`Properties`)
-* define :newTerm:`methods` to provide functionality related to the values they represent
-  (as described in :doc:`Methods`)
-* define :newTerm:`initializers` to provide an initial member value
-  (as described in :doc:`Initialization`)
-* be :newTerm:`extended` to expand their functionality beyond their original implementation
-  (as described in :doc:`Extensions`)
-* conform to :newTerm:`protocols` to provide standard functionality of a certain type
-  (as described in :doc:`Protocols`)
+For more information on each of these capabilities, see
+:doc:`Properties`, :doc:`Methods`, :doc:`Initialization`,
+:doc:`Extensions`, and :doc:`Protocols`.
 
 .. TODO: this chapter should probably mention that enums without associated values
    are hashable and equatable by default (and what that means in practice)
@@ -66,9 +68,8 @@ Here's an example for the four main points of a compass:
 
 The values defined in an enumeration
 (such as ``North``, ``South``, ``East``, and ``West``)
-are known as the :newTerm:`member values` (or :newTerm:`members`) of that enumeration.
-The ``case`` keyword is used to indicate that a new line of member values
-is about to be defined.
+are the :newTerm:`member values` (or :newTerm:`members`) of that enumeration.
+The ``case`` keyword indicates that a new line of member values is about to be defined.
 
 .. note::
 
@@ -93,17 +94,17 @@ Each enumeration definition defines a brand new type.
 As a result, their names
 (such as ``CompassPoint`` and ``Planet``)
 should start with a capital letter.
-Enumeration types should have singular rather than plural names,
-so that they read as a sentence when declaring a named value of that type:
+Give enumeration types singular rather than plural names,
+so that they read as self-evident:
 
 .. testcode:: enums
 
    -> var directionToHead = CompassPoint.West
    << // directionToHead : CompassPoint = <unprintable value>
 
-The type of ``directionToHead`` has been inferred
-from the fact that it was initialized with one of the possible values of ``CompassPoint``.
-Once it is declared as being a ``CompassPoint``,
+The type of ``directionToHead`` is inferred
+when it is initialized with one of the possible values of ``CompassPoint``.
+Once ``directionToHead`` is declared as a ``CompassPoint``,
 it can be set to a different ``CompassPoint`` value using a shorter dot syntax:
 
 .. testcode:: enums
@@ -111,15 +112,15 @@ it can be set to a different ``CompassPoint`` value using a shorter dot syntax:
    -> directionToHead = .East
 
 The type of ``directionToHead`` is already known,
-and so we can drop the type when setting its value.
+and so you can drop the type when setting its value.
 This makes for highly readable code when working with explicitly-typed enumeration values.
 
-.. _Enumerations_ConsideringEnumerationValuesWithASwitchStatement:
+.. _Enumerations_CheckingEnumerationValuesWithASwitchStatement:
 
-Considering Enumeration Values with a Switch Statement
-------------------------------------------------------
+Checking Enumeration Values with a Switch Statement
+---------------------------------------------------
 
-Enumeration values can be checked with a ``switch`` statement:
+You can check enumeration values with a ``switch`` statement:
 
 .. testcode:: enums
 
@@ -148,9 +149,9 @@ print ``"Watch out for penguins"``.”
 
 As described in :doc:`ControlFlow`,
 a ``switch`` statement must be exhaustive when considering an enumeration's members.
-If the ``case`` for ``.West`` had been omitted,
-this code would not compile,
-because it would not consider the complete list of ``CompassPoint`` members.
+If the ``case`` for ``.West`` is omitted,
+this code does not compile,
+because it does not consider the complete list of ``CompassPoint`` members.
 Enforcing completeness ensures that enumeration members are not accidentally missed or forgotten,
 and is part of Swift's goal of completeness and lack of ambiguity.
 
@@ -174,38 +175,37 @@ you can provide a ``default`` case to cover any members that are not addressed e
 Associated Values
 -----------------
 
-The examples above show how the members of an enumeration are
+The examples in the previous section show how the members of an enumeration are
 a defined (and typed) value in their own right.
-You can set a named value to ``Planet.Earth``,
+You can set a constant or variable to ``Planet.Earth``,
 and check for this value later.
-However, it can sometimes be useful for enumeration members to also store
-:newTerm:`associated values` of other types alongside their own.
+However, it is sometimes useful to be able to store
+:newTerm:`associated values` of other types alongside these member values.
+This enables you to store additional custom information along with the member value,
+and for this information to vary each time you use that member in your code.
 
-Swift enumerations can be defined to store an associated value of any given type,
-and this type can be different for each member of the enumeration if needed.
+You can define Swift enumerations to store associated values of any given type,
+and the value types can be different for each member of the enumeration if needed.
 Enumerations similar to these are known as
-:newTerm:`discriminated unions`, :newTerm:`tagged unions` or :newTerm:`variants`
+:newTerm:`discriminated unions`, :newTerm:`tagged unions`, or :newTerm:`variants`
 in other programming languages.
 
-For example: imagine an inventory tracking system that needs to
-track products using two different types of barcode.
-Some products are labelled with 1D barcodes
-in `UPC-A <http://en.wikipedia.org/wiki/Universal_Product_Code>`_ format,
+For example, suppose an inventory tracking system needs to
+track products by two different types of barcode.
+Some products are labeled with 1D barcodes in UPC-A format,
 which uses the numbers ``0`` to ``9``.
 Each barcode has a “number system” digit,
 followed by ten “identifier” digits.
 These are followed by a “check” digit to verify that the code has been scanned correctly:
 
 .. image:: ../images/barcode_UPC.png
-   :height: 80
    :align: center
 
-Other products are labelled with 2D barcodes in `QR code <http://en.wikipedia.org/wiki/QR_Code>`_ format,
-which can use any `ISO 8859-1 <http://en.wikipedia.org/wiki/ISO_8859-1>`_ character
+Other products are labeled with 2D barcodes in QR code format,
+which can use any ISO 8859-1 character
 and can encode a string up to 2,953 characters long:
 
 .. image:: ../images/barcode_QR.png
-   :height: 80
    :align: center
 
 It would be convenient for an inventory tracking system to be able to store UPC-A barcodes
@@ -224,23 +224,25 @@ In Swift, an enumeration to define product barcodes of either type might look li
 This can be read as:
 
 “Define an enumeration type called ``Barcode``,
-that can take either a value of ``UPCA`` with an associated value of type (``Int``, ``Int``, ``Int``),
+which can take either a value of ``UPCA``
+with an associated value of type (``Int``, ``Int``, ``Int``),
 or a value of ``QRCode`` with an associated value of type ``String``.”
 
 This definition does not provide any actual ``Int`` or ``String`` values –
-it just defines the *type* of associated values that ``Barcode`` named values can store
+it just defines the *type* of associated values
+that ``Barcode`` constants and variables can store
 when they are equal to ``Barcode.UPCA`` or ``Barcode.QRCode``.
 
-New barcodes can then be created using either of these types,
-as shown below:
+New barcodes can then be created using either type:
 
 .. testcode:: enums
 
    -> var productBarcode = Barcode.UPCA(8, 85909_51226, 3)
    << // productBarcode : Barcode = <unprintable value>
 
-This creates a new variable called ``productBarcode``,
-and assigns it a value of ``Barcode.UPCA`` with an associated tuple value of ``(8, 8590951226, 3)``.
+This example creates a new variable called ``productBarcode``
+and assigns it a value of ``Barcode.UPCA``
+with an associated tuple value of ``(8, 8590951226, 3)``.
 (The provided “identifier” value has an underscore within its integer literal –
 ``85909_51226`` –
 to make it easier to read as a barcode.)
@@ -254,9 +256,9 @@ The same product can be changed to have a different type of barcode:
 At this point,
 the original ``Barcode.UPCA`` and its integer values are replaced by
 the new ``Barcode.QRCode`` and its string value.
-Named values of type ``Barcode`` can store either a ``.UPCA`` or a ``.QRCode``
+Constants and variables of type ``Barcode`` can store either a ``.UPCA`` or a ``.QRCode``
 (together with their associated values),
-but they can only store one or the other at a time.
+but they can only store one of them at any given time.
 
 The different barcode types can be checked using a switch statement, as before.
 This time, however, the associated values can be extracted as part of the switch statement:
@@ -276,10 +278,12 @@ This time, however, the associated values can be extracted as part of the switch
 Raw Values
 ----------
 
-The barcode example above shows how members of an enumeration can declare that they store
+The barcode example in Storing Associated Values
+shows how members of an enumeration can declare that they store
 associated values of different types.
 In addition to associated values,
-enumeration members can also come pre-populated with default values (called :newTerm:`raw values`),
+enumeration members can come prepopulated with default values
+(called :newTerm:`raw values`),
 which are all of the same type.
 
 .. QUESTION: it's not really "in addition to", it's "alternatively" - does this matter?
@@ -297,10 +301,11 @@ Here's an example that stores raw ASCII values alongside named enumeration membe
 Here, the raw values for an enumeration called ``ASCIIControlCharacter``
 are defined to be of type ``UnicodeScalar``,
 and are set to some of the more common ASCII control characters.
-(``UnicodeScalar`` values are described in more detail in :doc:`Strings`.)
+``UnicodeScalar`` values are described in :doc:`Strings`.
 
 Note that raw values are *not* the same as associated values.
-Raw values are set to pre-populated values when the enumeration is first defined in your code,
+Raw values are set to prepopulated values
+when you first define the enumeration in your code,
 like the three ASCII codes above.
 The raw value for a particular enumeration member is always the same.
 Associated values are set when you create a new constant or variable
@@ -324,7 +329,7 @@ with raw integer values to represent each planet's order from the sun:
 
 Auto-incrementation means that ``Planet.Venus`` has a raw value of ``2``, and so on.
 
-The raw value of an enumeration member can be accessed using its ``toRaw`` method:
+Access the raw value of an enumeration member with its ``toRaw`` method:
 
 .. testcode:: rawValues
 
@@ -333,9 +338,9 @@ The raw value of an enumeration member can be accessed using its ``toRaw`` metho
    /> earthsOrder is \(earthsOrder)
    </ earthsOrder is 3
 
-Enumerations also have a ``fromRaw`` method,
-which can be used to try and find an enumeration member with a particular raw value.
-The ``fromRaw`` method could be used to find Uranus from its raw value of ``7``, say:
+Use an enumeration's ``fromRaw`` method
+to try and find an enumeration member with a particular raw value.
+For example, to find Uranus from its raw value of ``7``:
 
 .. testcode:: rawValues
 
@@ -348,8 +353,8 @@ Because of this, the ``fromRaw`` method returns an *optional* enumeration member
 In the example above, ``possiblePlanet`` is of type ``Planet?``,
 or “optional ``Planet``.”
 
-If you try and find a Planet with a position of ``9``,
-the optional ``Planet`` value returned by ``fromRaw()`` will equal ``.None``:
+If you try to find a Planet with a position of ``9``,
+the optional ``Planet`` value returned by ``fromRaw`` will be ``nil``:
 
 .. testcode:: rawValues
 
@@ -367,9 +372,11 @@ the optional ``Planet`` value returned by ``fromRaw()`` will equal ``.None``:
       }
    <- There isn't a planet at position 9
 
-This example uses :ref:`BasicTypes_OptionalBinding`
-to try and access a planet with a raw value of ``9``.
+This example uses optional binding to try and access a planet with a raw value of ``9``.
 The statement ``if let somePlanet = Planet.fromRaw(9)`` retrieves an optional ``Planet``,
-and sets ``somePlanet`` to the contents of that optional if it can be retrieved.
+and sets ``somePlanet`` to the contents of that optional ``Planet`` if it can be retrieved.
 In this case, it is not possible to retrieve a planet with a position of ``9``,
 and so the ``else`` branch is executed instead.
+
+.. TODO: Switch around the order of this chapter so that all of the non-union stuff
+   is together, and the union bits (aka Associated Values) come last.

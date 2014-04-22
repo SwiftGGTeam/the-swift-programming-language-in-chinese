@@ -9,22 +9,23 @@
 Extensions
 ==========
 
-:newTerm:`Extensions` are a way to add new functionality to an existing
-class, structure or enumeration,
-even if you do not have access to the source code for the existing type.
-Extensions are similar to Objective-C categories, but have many more capabilities.
+:newTerm:`Extensions` are a way to add functionality to an existing
+class, structure or enumeration type.
+This includes the ability to extend types
+for which you do not have access to the original source code
+(known as :newTerm:`retroactive modeling`).
+Extensions are similar to :newTerm:`categories` in Objective-C.
 
 Extensions can:
 
-* add computed properties and computed type properties
+* add computed properties and computed static properties
 * define instance methods and type methods
 * provide new initializers
 * define subscripts
 * define and use new nested types
 
-In addition, extensions can use these capabilities to
-make an existing type conform to a protocol.
-This process is covered in the :doc:`Protocols` chapter.
+Extensions can also be used to make an existing type conform to a protocol.
+This process is covered in :doc:`Protocols`.
 
 .. QUESTION: I've put operator conformance in the Classes and Structures chapter,
    rather than this chapter, because it isn't actually implemented via an extension
@@ -40,8 +41,7 @@ This process is covered in the :doc:`Protocols` chapter.
 Computed Properties
 -------------------
 
-Extensions can add new :ref:`Properties_ComputedProperties`
-to existing types.
+Extensions can add new computed properties to existing types.
 This example adds five new computed properties to Swift's built-in ``Double`` type,
 to provide basic support for working with distance units:
 
@@ -59,9 +59,9 @@ to provide basic support for working with distance units:
    -> println("One inch is \(oneInch) meters")
    <- One inch is 0.0254 meters
    -> let threeFeet = 3.ft
-   << // threeFeet : Double = 0.9144
+   << // threeFeet : Double = 0.914399970739201
    -> println("Three feet is \(threeFeet) meters")
-   <- Three feet is 0.9144 meters
+   <- Three feet is 0.914399970739201 meters
 
 These computed properties give a way to express that a ``Double`` value
 should be considered as a certain unit of length.
@@ -81,7 +81,7 @@ Similarly, there are 3.28024 feet in a meter,
 and so the ``ft`` computed property divides the underlying ``Double`` value
 by ``3.28024``, to convert it from feet to meters.
 
-These properties are :ref:`Properties_ReadOnlyComputedProperties`,
+These properties are read-only computed properties,
 and so they have been expressed without the ``get`` keyword, for brevity.
 Their return value is inferred to be of type ``Double``,
 and can be used within mathematical calculations wherever a ``Double`` is accepted:
@@ -95,25 +95,24 @@ and can be used within mathematical calculations wherever a ``Double`` is accept
 
 .. note::
 
-   Extensions can add new computed properties,
-   but they cannot add :ref:`Properties_StoredProperties`,
-   or add :ref:`Properties_StoredPropertyObservers`
-   to existing stored properties.
+   Extensions can add new computed properties, but they cannot add stored properties,
+   or add property observers to existing properties.
 
 .. _Extensions_Initializers:
 
 Initializers
 ------------
 
-Extensions can add new :ref:`Initialization_Initializers` to existing types.
+Extensions can add new initializers to existing types.
 This enables you to extend other types to accept
 your own custom types as initializer parameters.
 
 .. note::
 
-   Extensions can add new initializers to classes, but they cannot add
-   :ref:`Initialization_Deinitializers`.
-   Deinitializers must always be provided by the original class implementation.
+   Extensions can add new convenience initializers to a class,
+   but they cannot add new designated initializers or deinitializers to a class.
+   Designated initializers and deinitializers
+   must always be provided by the original class implementation.
 
 This approach can be used to extend the basic ``String`` type
 to accept an instance of your own custom type as an initializer parameter,
@@ -183,8 +182,7 @@ is known as :newTerm:`initializer overloading`.)
 Instance Methods
 ----------------
 
-Extensions can add new :ref:`Methods_InstanceMethods`
-to an existing type:
+Extensions can add new instance methods to an existing type:
 
 .. testcode:: extensionsInstanceMethods
 
@@ -200,7 +198,7 @@ to an existing type:
          }
       }
 
-This example adds a new ``String`` instance method called ``toSpooky()``.
+This example adds a new ``String`` instance method called ``toSpooky``.
 This new method is now available to any instances of ``String``.
 The method returns a spookier version of the original string,
 by converting odd-numbered characters to uppercase,
@@ -240,9 +238,8 @@ just like mutating methods from an original implementation:
    /> someInt is now \(someInt)
    </ someInt is now 123
 
-This example adds a ``shiftRight()`` method to instances of ``Int``.
-This method is similar to the
-bitwise right shift operator
+This example adds a ``shiftRight`` method to instances of ``Int``.
+This method is similar to the bitwise right shift operator
 (as described in :ref:`AdvancedOperators_BitwiseLeftAndRightShifts`),
 except that it shifts by powers of ten, rather than powers of two.
 
@@ -255,10 +252,10 @@ Calling ``shiftRight(3)`` on an integer variable containing the number ``123456`
 shifts the number to the right by three decimal places,
 and changes the variable to have a value of ``123``.
 
-.. _Extensions_ComputedTypeProperties:
+.. _Extensions_ComputedStaticProperties:
 
-Computed Type Properties
-------------------------
+Computed Static Properties
+--------------------------
 
 .. write-me::
 
@@ -274,8 +271,7 @@ Type Methods
 Subscripts
 ----------
 
-Extensions can add new :doc:`Subscripts`
-to an existing type.
+Extensions can add new subscripts to an existing type.
 This example adds an integer subscript to Swift's built-in ``Int`` type.
 This subscript ``[n]`` returns the decimal digit ``n`` places in
 from the right of the number,
@@ -334,8 +330,7 @@ as if the number had been padded with zeroes to the left:
 Nested Types
 ------------
 
-Extensions can add new :doc:`NestedTypes`
-to existing classes, structures and enumerations:
+Extensions can add new nested types to existing classes, structures and enumerations:
 
 .. testcode:: extensionsNestedTypes
 
@@ -389,11 +384,11 @@ The nested enumeration can now be used with ``UnicodeScalar`` values:
    </ 'Hello' is made up of the following kinds of letters:
    </ consonant vowel consonant consonant vowel
 
-This function, ``printLetterKinds()``,
+This function, ``printLetterKinds``,
 takes an input ``String`` value and iterates over its characters.
 For each scalar, it considers the ``kind`` computed property for that scalar,
 and prints an appropriate description of that kind.
-The ``printLetterKinds()`` function can then be called
+The ``printLetterKinds`` function can then be called
 to print the kinds of letters in an entire word,
 as shown here for the word ``"Hello"``.
 

@@ -25,7 +25,6 @@ Bitwise NOT Operator
 The :newTerm:`bitwise NOT operator` (``~``) inverts all of the bits in a number:
 
 .. image:: ../images/bitwiseNOT.png
-   :width: 570
    :align: center
 
 The bitwise NOT operator is a prefix operator,
@@ -62,7 +61,6 @@ The :newTerm:`bitwise AND operator` (``&``) combines the bits of two numbers.
 It returns a new number whose bits are set to ``1`` only if the bits were equal to ``1`` in *both* input numbers:
 
 .. image:: ../images/bitwiseAND.png
-   :width: 570
    :align: center
 
 For example:
@@ -90,7 +88,6 @@ and returns a new number whose bits are set to ``1``
 if the bits were equal to ``1`` in *either* of the input numbers:
 
 .. image:: ../images/bitwiseOR.png
-   :width: 570
    :align: center
 
 For example:
@@ -119,7 +116,6 @@ and returns a new number whose bits are set to ``1`` where the input bits are di
 and ``0`` where the input bits are the same:
 
 .. image:: ../images/bitwiseXOR.png
-   :width: 570
    :align: center
 
 For example:
@@ -172,7 +168,6 @@ gray numbers have been discarded,
 and orange zeroes have been inserted:
 
 .. image:: ../images/bitshiftUnsigned.png
-   :width: 639
    :align: center
 
 Here's how bit shifting looks in Swift code:
@@ -265,7 +260,6 @@ counting upwards from ``0``.
 Here's how the bits inside an ``Int8`` look for the number ``4``:
 
 .. image:: ../images/bitshiftSignedFour.png
-   :width: 388
    :align: center
 
 The sign bit is ``0`` (meaning “positive”),
@@ -281,14 +275,12 @@ so this means ``2`` to the power of ``7``, or ``128``.
 Here's how the bits inside an ``Int8`` look for the number ``-4``:
 
 .. image:: ../images/bitshiftSignedMinusFour.png
-   :width: 388
    :align: center
 
 This time, the sign bit is ``1`` (meaning “negative”),
 and the seven value bits actually have a binary value of ``124`` (which is ``128 - 4``):
 
 .. image:: ../images/bitshiftSignedMinusFourValue.png
-   :width: 388
    :align: center
 
 The encoding used for negative numbers is known as a :newTerm:`two's complement` representation.
@@ -301,7 +293,6 @@ just by performing a standard binary addition of all eight bits
 and discarding anything that doesn't fit in the eight bits once you're done:
 
 .. image:: ../images/bitshiftSignedAddition.png
-   :width: 445
    :align: center
 
 The two's complement representation also means that you can
@@ -316,7 +307,6 @@ To achieve this, an extra rule is used when shifting signed integers to the righ
   rather than with a zero.
 
 .. image:: ../images/bitshiftSigned.png
-   :width: 639
    :align: center
 
 This ensures that signed integers have the same sign after they are shifted to the right,
@@ -332,12 +322,12 @@ negative integers remain negative as their value moves closer to zero.
 Overflow Operators
 ------------------
 
-An error will be caused if you try to insert a number into an integer named value
+An error will be caused if you try to insert a number into an integer constant or variable
 that cannot hold that value.
 This gives extra safety when working with numbers that are too large or too small.
 
 For example, the ``Int16`` integer type can hold any signed integer number between ``-32768`` and ``32767``.
-Trying to set a ``UInt16`` named value to a number outside of this range
+Trying to set a ``UInt16`` constant or variable to a number outside of this range
 will cause an error:
 
 .. testcode:: overflowOperatorsWillFailToOverflow
@@ -397,7 +387,6 @@ as shown in the diagram below.
 The value that remains within the bounds of the ``UInt8`` after the overflow addition is ``00000000``, or zero:
 
 .. image:: ../images/overflowAddition.png
-   :width: 390
    :align: center
 
 .. _AdvancedOperators_ValueUnderflow:
@@ -414,7 +403,6 @@ the number will overflow back round to ``11111111``,
 or ``255`` in decimal:
 
 .. image:: ../images/overflowUnsignedSubtraction.png
-   :width: 419
    :align: center
 
 Here's how that looks in Swift code:
@@ -430,9 +418,9 @@ Here's how that looks in Swift code:
    </ willUnderflow is now equal to 255
 
 A similar underflow happens for signed integers.
-As described under :ref:`AdvancedOperators_BitwiseLeftAndRightShifts`,
-all subtraction for signed integers is performed as straight binary subtraction,
-with the sign bit included as part of the numbers being subtracted.
+All subtraction for signed integers is performed as straight binary subtraction,
+with the sign bit included as part of the numbers being subtracted
+(as described in :ref:`AdvancedOperators_BitwiseLeftAndRightShifts`).
 The smallest number that an ``Int8`` can hold is ``-128``,
 which is ``10000000`` in binary.
 Subtracting ``1`` from this binary number with the overflow operator gives a binary value of ``01111111``,
@@ -440,7 +428,6 @@ which toggles the sign bit and gives positive ``127``,
 the largest positive value that an ``Int8`` can hold:
 
 .. image:: ../images/overflowSignedSubtraction.png
-   :width: 419
    :align: center
 
 Here's the same thing in Swift code:
@@ -473,8 +460,9 @@ will cause an error:
    -> let x = 1
    << // x : Int = 1
    -> let y = x / 0
-   xx division by zero
-   // this causes an error
+   !! <REPL Input>:1:11: error: division by zero
+   !! let y = x / 0
+   !!           ^
  
 However, the overflow versions of these operators (``&/`` and ``&%``)
 return a value of zero if you divide by zero:
@@ -647,7 +635,6 @@ This example adds together the vectors ``(3.0, 1.0)`` and ``(2.0, 4.0)``
 to make the vector ``(5.0, 5.0)``, as illustrated below.
 
 .. image:: ../images/vectorAddition.png
-   :width: 400
    :align: center
 
 .. _AdvancedOperators_PrefixAndPostfixOperators:
@@ -674,7 +661,7 @@ The attribute is written before the ``func`` keyword when declaring the operator
          return Vector2D(-rhs.x, -rhs.y)
       }
 
-This example implements the :ref:`BasicOperators_UnaryMinusOperator`
+This example implements the unary minus operator
 (``-a``) for ``Vector2D`` instances.
 The unary minus operator is a prefix operator,
 and so this function has to be qualified with the ``@prefix`` attribute.
@@ -705,8 +692,7 @@ performs this operation on both the ``x`` and ``y`` properties:
 Compound Assignment Operators
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-:ref:`BasicOperators_CompoundAssignmentOperators`
-combine assignment (``=``) with another operation.
+:newTerm:`Compound assignment operators` combine assignment (``=``) with another operation.
 One example is the addition assignment operator (``+=``).
 This combines addition and assignment into a single operation.
 Operator functions that implement compound assignment must be qualified with
@@ -719,6 +705,11 @@ as its value will be modified directly from within the operator function:
    -> @assignment func += (inout lhs: Vector2D, rhs: Vector2D) {
          lhs = lhs + rhs
       }
+
+.. TODO: This isn't actually true - you don't need to specify @assignment.
+   Nonetheless, our current policy is to specify it anyway.
+   This is being tracked in rdar://problem/16656024,
+   and this section should be updated based on the outcome of that radar.
 
 This example implements an addition assignment operator function for ``Vector2D`` instances.
 Because an addition operator has already been defined above,
@@ -767,9 +758,9 @@ and returns the result.
 .. note::
 
    It is not possible to overload the default
-   :ref:`BasicOperators_AssignmentOperator` (``=``).
+   assignment operator (``=``).
    Only the compound assignment operators may be overloaded.
-   Similarly, the :ref:`BasicOperators_TernaryConditionalOperator`
+   Similarly, the ternary conditional operator
    (``a ? b : c``) may not be overloaded.
 
 .. QUESTION: some of the standard operators (such as equation and comparison)
@@ -780,9 +771,51 @@ and returns the result.
    UPDATE: going by rdar://14011860, we don't currently have a way for a protocol
    like Equatable to provide a default implementation of != if you implement ==
 
-.. QUESTION: Should I mention @transparent in the Operator Functions section?
-   All of the stdlib operators (e.g. for fixed- and floating-point numbers)
-   are declared as @transparent…
+.. _AdvancedOperators_EquivalenceOperators:
+
+Equivalence Operators
+~~~~~~~~~~~~~~~~~~~~~
+
+Custom classes and structures do not receive a default implementation of
+the :newTerm:`equivalence operators`,
+known as the “equal to” operator (``==``) and “not equal to” operator (``!=``).
+It is not possible for Swift to guess what would qualify as “equal” for your own custom types,
+because the meaning of “equal” is dependent on the roles that those types play in your code.
+
+If you would like to use the equivalence operators
+to check for equivalence of your own custom types,
+you can provide implementations for them in the same way as for other infix operators:
+
+.. testcode:: customOperators
+
+   -> @infix func == (lhs: Vector2D, rhs: Vector2D) -> Bool {
+         return (lhs.x == rhs.x) && (lhs.y == rhs.y)
+      }
+   -> @infix func != (lhs: Vector2D, rhs: Vector2D) -> Bool {
+         return !(lhs == rhs)
+      }
+
+This example implements an “equal to” operator (``==``)
+to check if two ``Vector2D`` instances have equivalent values.
+In the context of ``Vector2D``,
+it makes sense to consider “equal” as meaning
+“both instances have the same ``x`` values and ``y`` values”,
+and so this is the logic used by the operator implementation.
+The example also implements the “not equal to” operator (``!=``),
+which simply returns the inverse of the result of the “equal to” operator.
+
+These operators can now be used to check if two ``Vector2D`` instances are equivalent:
+
+.. testcode:: customOperators
+
+   -> let twoThree = Vector2D(2.0, 3.0)
+   << // twoThree : Vector2D = Vector2D(2.0, 3.0)
+   -> let anotherTwoThree = Vector2D(2.0, 3.0)
+   << // anotherTwoThree : Vector2D = Vector2D(2.0, 3.0)
+   -> if twoThree == anotherTwoThree {
+         println("These two vectors are equivalent.")
+      }
+   <- These two vectors are equivalent.
 
 .. _AdvancedOperators_CustomOperators:
 
@@ -886,3 +919,21 @@ and associativity settings can be found in the :doc:`../ReferenceManual/index`.)
    This is being tracked as rdar://16061044.
    If this Radar is fixed, the operator declaration above should be split over multiple lines
    for consistency with the rest of the code.
+
+.. _AdvancedOperators_ProtocolOperatorRequirements:
+
+Protocol Operator Requirements
+------------------------------
+
+.. write-me::
+
+.. Protocols can require the implementation of operators (though assignment operators are broken)
+.. Likewise for requiring custom operators
+.. However, Doug thought that this might be better covered by Generics,
+   where you know that two things are definitely of the same type.
+   Perhaps mention it here, but don't actually show an example?
+.. Self as the dynamic type of the current type that is implementing the protocols
+   protocol Comparable {
+      func <(Self, Self) -> Bool
+   }
+.. generic operators

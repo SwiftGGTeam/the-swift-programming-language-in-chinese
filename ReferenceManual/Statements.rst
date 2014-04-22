@@ -14,7 +14,7 @@ and control transfer statements provide a way to alter the order in which code i
 Each type of control flow statement is described in detail below.
 
 Each type of statement can be used in function bodies and in top-level code.
-A semicolon (``;``) may optionally appear after any statement
+A semicolon (``;``) can optionally appear after any statement
 and is used as a statement terminator when multiple statements appear on the same line.
 
 .. langref-grammar
@@ -58,7 +58,7 @@ Swift has four loop statements:
 a ``for`` statement, a ``for``-``in`` statement, a ``while`` statement,
 and a ``do``-``while`` statement.
 
-Control flow in a loop statement can be changed by a break statement and a continue statement
+Control flow in a loop statement can be changed by a ``break`` statement and a ``continue`` statement
 and is discussed in :ref:`Statements_BreakStatement` and :ref:`Statements_ContinueStatement` below.
 
 .. syntax-grammar::
@@ -79,16 +79,15 @@ A ``for`` statement allows a block of code to be executed repeatedly
 while incrementing a counter,
 as long as a condition remains true.
 
-A for statement has the following form:
+A ``for`` statement has the following form:
 
 .. syntax-outline::
 
-    for (<#initialization#>; <#condition#>; <#increment#>) {
-        <#statements#>
+    for <#initialization#>; <#condition#>; <#increment#> {
+       <#statements#>
     }
 
-The parentheses around the *initialization*, *condition*,
-and *increment* are optional, but the semicolon between them is required.
+The semicolons between the *initialization*, *condition*, and *increment* are required.
 The braces around the *statements* in the body of the loop are also required.
 
 A ``for`` statement is executed as follows:
@@ -153,7 +152,7 @@ A ``for``-``in`` statement has the following form:
 .. syntax-outline::
 
     for <#item#> in <#collection#> {
-        <#statements#>
+       <#statements#>
     }
 
 The ``generate`` method is called on the *collection* expression
@@ -198,7 +197,7 @@ A ``while`` statement has the following form:
 .. syntax-outline::
 
     while <#condition#> {
-        <#statements#>
+       <#statements#>
     }
 
 A ``while`` statement is executed as follows:
@@ -211,10 +210,10 @@ A ``while`` statement is executed as follows:
 2. The program executes the *statements*, and execution returns to step 1.
 
 Because the value of the *condition* is evaluated before the *statements* are executed,
-the *statements* in a ``while`` statement may be executed zero or more times.
+the *statements* in a ``while`` statement can be executed zero or more times.
 
 The value of the *condition* must have a type that conforms to
-the ``LogicValue`` protocol. The condition may also be an optional binding declaration,
+the ``LogicValue`` protocol. The condition can also be an optional binding declaration,
 as discussed in :ref:`BasicTypes_OptionalBinding`.
 
 .. langref-grammar
@@ -241,7 +240,7 @@ A ``do``-``while`` statement has the following form:
 .. syntax-outline::
 
     do {
-        <#statements#>
+       <#statements#>
     } while <#condition#>
 
 A ``do``-``while`` statement is executed as follows:
@@ -258,7 +257,7 @@ Because the value of the *condition* is evaluated after the *statements* are exe
 the *statements* in a ``do``-``while`` statement are executed at least once.
 
 The value of the *condition* must have a type that conforms to
-the ``LogicValue`` protocol. The condition may also be an optional binding declaration,
+the ``LogicValue`` protocol. The condition can also be an optional binding declaration,
 as discussed in :ref:`BasicTypes_OptionalBinding`.
 
 .. langref-grammar
@@ -284,7 +283,7 @@ Swift has two branch statements: an ``if`` statement and a ``switch`` statement.
 
 .. syntax-grammar::
 
-    Grammer of a branch statement
+    Grammar of a branch statement
 
     branch-statement --> if-statement
     branch-statement --> switch-statement
@@ -306,7 +305,7 @@ and has the following form:
 .. syntax-outline::
 
     if <#condition#> {
-        <#statements#>
+       <#statements#>
     }
 
 The second form of an ``if`` statement provides an additional *else clause*
@@ -318,27 +317,27 @@ When a single else clause is present, an ``if`` statement has the following form
 .. syntax-outline::
 
     if <#condition#> {
-        <#statements to execute if condition is true#>
+       <#statements to execute if condition is true#>
     } else {
-        <#statements to execute if condition is false#>
+       <#statements to execute if condition is false#>
     }
 
-The else clause of an ``if`` statement may contain another ``if`` statement
+The else clause of an ``if`` statement can contain another ``if`` statement
 to test more than one condition.
 An ``if`` statement chained together in this way has the following form:
 
 .. syntax-outline::
 
     if <#condition 1#> {
-        <#statements to execute if condition 1 is true#>
+       <#statements to execute if condition 1 is true#>
     } else if <#condition 2#> {
-        <#statements to execute if condition 2 is true#>
+       <#statements to execute if condition 2 is true#>
     } else {
-        <#statements to execute if both conditions are false#>
+       <#statements to execute if both conditions are false#>
     }
 
 The value of any condition in an ``if`` statement must have a type that conforms to
-the ``LogicValue`` protocol. The condition may also be an optional binding declaration,
+the ``LogicValue`` protocol. The condition can also be an optional binding declaration,
 as discussed in :ref:`BasicTypes_OptionalBinding`.
 
 .. TODO: Should we promote this last sentence (here and elsewhere) higher up in the chapter?
@@ -370,18 +369,25 @@ A switch statement has the following form:
 .. syntax-outline::
 
     switch <#control expression#> {
-        case <#pattern list 1#>:
-            <#statements#>
-        case <#pattern list 2#> where <#condition#>:
-            <#statements#>
-        default:
-            <#statements#>
+       case <#pattern 1#>:
+          <#statements#>
+       case <#pattern 2#> where <#condition#>:
+          <#statements#>
+       case <#pattern 3#> where <#condition#>,
+            <#pattern 4#> where <#condition#>:
+          <#statements#>
+       default:
+          <#statements#>
     }
 
 The *control expression* of the ``switch`` statement is evaluated
-and then compared with the pattern list specified in each case.
+and then compared with the patterns specified in each case.
 If a match is found,
 the program executes the *statements* listed within the scope of that case.
+The scope of each case can't be empty.
+As a result, you must include either a single semicolon (``;``) or at least one statement
+following the colon (``:``) of each case label. In this context, the semicolon
+indicates that you don't intend to execute any code in the body of the case.
 
 The values of expressions your code can branch on is very flexible. For instance,
 in addition to the values of scalar types, such as integers and characters,
@@ -392,10 +398,10 @@ and checked for inclusion in a specified range of values.
 For examples of how to use these various types of values in ``switch`` statements,
 see :ref:`ControlFlow_Switch` in the :doc:`../LanguageGuide/ControlFlow` chapter.
 
-A ``switch`` case may optionally contain a :newTerm:`guard expression`,
-which is introduced by the keyword ``where`` followed by an expression.
-Guard expressions are used to provide an additional condition
-before a case is considered matched to the *control expression*.
+A ``switch`` case can optionally contain a guard expression after each pattern.
+A :newTerm:`guard expression` is introduced by the keyword ``where`` followed by an expression,
+and is used to provide an additional condition
+before a pattern in a case is considered matched to the *control expression*.
 If a guard expression is present, the *statements* within the relevant case
 are executed only if the value of the *control expression*
 matches one of the patterns of the case and the guard expression evaluates to ``true``.
@@ -404,16 +410,16 @@ only if it is a tuple that contains two elements of the same value, such as ``(1
 
     case let (x, y) where x == y:
 
-As the above example shows, patterns in a case may also bind constants
-using the keyword ``let`` (they may also bind variables using the keyword ``var``).
+As the above example shows, patterns in a case can also bind constants
+using the keyword ``let`` (they can also bind variables using the keyword ``var``).
 These constants (or variables) can then be referenced in a corresponding guard expression
 and throughout the rest of the code within the scope of the case.
 That said, if the case contains multiple patterns that match the control expression,
-none of those patterns may contain constant or variable bindings.
+none of those patterns can contain constant or variable bindings.
 
-A ``switch`` statement may also include a default case, introduced by the keyword ``default``.
+A ``switch`` statement can also include a default case, introduced by the keyword ``default``.
 The code within a default case is executed only if no other cases match the control expression.
-A ``switch`` statement`` may include only one default case,
+A ``switch`` statement`` can include only one default case,
 which must appear at the end of the ``switch`` statement.
 
 Although the actual execution order of pattern-matching operations,
@@ -462,8 +468,10 @@ not out of the ``switch`` statement itself.
 .. langref-grammar
 
     stmt-switch ::= 'switch' expr-basic '{' stmt-switch-case* '}'
-    stmt-switch-case ::= (case-label+ | default-label) brace-item*
-    case-label ::= 'case' pattern (',' pattern)* ('where' expr)? ':'
+    stmt-switch-case ::= (case-label | default-label) brace-item+
+    stmt-switch-case ::= (case-label | default-label) ';'
+
+    case-label ::= 'case' pattern ('where' expr)? (',' pattern ('where' expr)?)* ':'
     default-label ::= 'default' ':'
 
 
@@ -473,11 +481,12 @@ not out of the ``switch`` statement itself.
 
     switch-statement --> ``switch`` expression ``{`` switch-cases-OPT ``}``
     switch-cases --> switch-case switch-cases-OPT
-    switch-case --> case-labels statements-OPT | default-label statements-OPT
+    switch-case --> case-label statements | default-label statements
+    switch-case --> case-label ``;`` | default-label ``;``
 
-    case-labels --> case-label case-labels-OPT
-    case-label --> ``case`` pattern-list guard-clause-OPT ``:``
-    default-label --> ``default:``
+    case-label --> ``case`` case-item-list ``:``
+    case-item-list --> pattern guard-clause-OPT | pattern guard-clause-OPT ``,`` case-item-list
+    default-label --> ``default`` ``:``
 
     guard-clause --> ``where`` guard-expression
     guard-expression --> expression
@@ -581,7 +590,7 @@ the value of the ``switch`` statement's control expression.
 
 A ``fallthrough`` statement can appear anywhere inside a ``switch`` statement,
 not just as the last statement of a case block,
-but it may not be used in the final case block.
+but it can't be used in the final case block.
 It also cannot transfer control into a case block
 whose pattern contains constant or variable bindings.
 
@@ -610,8 +619,8 @@ A ``return`` statement occurs only in the body of a function or method definitio
 and causes program execution to return to the calling function or method.
 Program execution continues at the point immediately following the function or method call.
 
-A ``return`` statement may consist of only the keyword ``return``,
-or it may consist of the keyword ``return`` followed by an expression, as shown below.
+A ``return`` statement can consist of only the keyword ``return``,
+or it can consist of the keyword ``return`` followed by an expression, as shown below.
 
 .. syntax-outline::
 

@@ -1,14 +1,17 @@
 Subscripts
 ==========
 
-Classes and structures can define :newTerm:`subscripts`,
-which enable instances of that class or structure to be queried via one or more
+Classes, structures, and enumerations can define :newTerm:`subscripts`,
+which enable instances of that type to be queried via one or more
 values in square brackets after the instance name.
 This is similar to the way in which the elements in an ``Array`` instance
 can be accessed as ``someArray[index]``,
 and elements in a ``Dictionary`` instance can be accessed as
 ``someDictionary[key]``.
 (Array and dictionary subscripts are described in detail in :doc:`CollectionTypes`.)
+
+.. TODO: this chapter should provide an example of subscripting an enumeration,
+   as per Joe Groff's example from rdar://16555559.
 
 .. _Subscripts_SubscriptSyntax:
 
@@ -52,22 +55,19 @@ Here's an example of a read-only subscript implementation:
 
 .. testcode:: subscripts
 
-   -> class TimesTable {
+   -> struct TimesTable {
          let multiplier: Int
-         init withMultiplier(multiplier: Int) {
-            self.multiplier = multiplier
-         }
          subscript(index: Int) -> Int {
             return multiplier * index
          }
       }
-   -> var threeTimesTable = TimesTable(withMultiplier: 3)
-   << // threeTimesTable : TimesTable = <TimesTable instance>
+   -> let threeTimesTable = TimesTable(multiplier: 3)
+   << // threeTimesTable : TimesTable = TimesTable(3)
    -> println("six times three is \(threeTimesTable[6])")
    <- six times three is 18
 
-This example defines a ``TimesTable`` class to represent an n-times-table of integers.
-In this example, the class is used to represent the three-times-table.
+This example defines a ``TimesTable`` structure to represent an n-times-table of integers.
+In this example, the structure is used to represent the three-times-table.
 
 An n-times-table is based on a fixed mathematical rule.
 It is therefore not appropriate to set ``threeTimesTable[someIndex]`` to a new value.
@@ -91,7 +91,7 @@ by passing in a key of the appropriate type within subscript braces:
 .. testcode:: subscripts
 
    -> let numberOfLegs = ["spider" : 8, "ant" : 6, "cat" : 4]
-   << // numberOfLegs : Dictionary<String, Int> = Dictionary<String, Int>(1.33333, 3, <DictionaryBufferOwner<String, Int> instance>)
+   << // numberOfLegs : Dictionary<String, Int> = Dictionary<String, Int>(1.33333333333333, 3, <DictionaryBufferOwner<String, Int> instance>)
    -> let spiderLegs = numberOfLegs["spider"]
    << // spiderLegs : Int = 8
    /> spiderLegs is equal to \(spiderLegs)
@@ -125,66 +125,69 @@ if it is appropriate for your type:
 .. testcode:: subscripts
 
    -> struct Matrix {
-         var rows: Int, columns: Int
-         var grid = Array<Double>()
-         init withRows(rows: Int) columns(Int) {
+         let rows: Int, columns: Int
+         var grid: Array<Double>
+         init(rows: Int, columns: Int) {
             self.rows = rows
             self.columns = columns
-            for _ in 0...(rows * columns) {
-               grid.append(0.0)
-            }
+            grid = Array(rows * columns, 0.0)
+         }
+         func indexIsValid(row: Int, column: Int) -> Bool {
+            return row >= 0 && row < rows && column >= 0 && column < columns
          }
          subscript(row: Int, column: Int) -> Double? {
             get {
-               if row >= rows || column >= columns {
-                  return .None
-               }
+               if !indexIsValid(row, column) { return nil }
                return grid[(row * columns) + column]
             }
             set {
-               if newValue && row < rows && column < columns {
+               if newValue && indexIsValid(row, column) {
                   grid[(row * columns) + column] = newValue!
                }
             }
          }
       }
 
-.. TODO: Investigate switching this over to use the shorter “Double[]” syntax
-   once I know more about Arrays and how their syntax works.
+.. TODO: Consider switching this over to use the shorter “Double[]” syntax
+   once it can be used for initialization
 
 This example defines a ``Matrix`` structure,
 which represents a two-dimensional matrix of ``Double`` values.
 ``Matrix`` provides an initializer that takes two parameters called ``rows`` and ``columns``,
 and creates an array that is large enough to store ``rows * columns`` values of type ``Double``.
-Each position in the matrix is given an initial value of ``0.0``:
+Each position in the matrix is given an initial value of ``0.0``.
+To achieve this, the array's size, and an initial cell value of ``0.0``,
+are passed to an ``Array`` initializer that creates and initializes a new array of the correct size.
+(This initializer is described in more detail in :ref:`CollectionTypes_CreatingAnEmptyArray`.)
 
 .. testcode:: subscripts
 
-   -> var matrix = Matrix(withRows: 2, columns: 2)
+   -> var matrix = Matrix(rows: 2, columns: 2)
    << // matrix : Matrix = Matrix(2, 2, [0.0, 0.0, 0.0, 0.0])
 
 The ``grid`` array is effectively a flattened version of the matrix,
 as read from top left to bottom right:
 
 .. image:: ../images/subscriptMatrix01.png
-   :width: 488
    :align: center
 
 The ``Matrix`` subscript has a return type of ``Double?``, or “optional ``Double``”.
 This is to cope with the fact that you might request a value outside of
 the bounds of the matrix.
 To cope with this,
-the subscript's getter checks to see if the requested ``row`` or ``column``
+``Matrix`` includes a convenience method called ``indexIsValid``,
+which checks to see if the requested ``row`` or ``column``
 is outside the bounds of the matrix:
 
 ::
 
-   if row >= rows || column >= columns {
-      return .None
-   }
-   return grid[(row * columns) + column]
+      func indexIsValid(row: Int, column: Int) -> Bool {
+         return row >= 0 && row < rows && column >= 0 && column < columns
+      }
 
-A value of ``.None`` is returned if you try and access
+.. TODO: test this code manually.
+
+A value of ``nil`` is returned if you try and access
 a subscript that is outside of the matrix bounds:
 
 .. testcode:: subscripts
@@ -214,7 +217,6 @@ and ``3.2`` in the bottom left position
 (where ``row`` is ``1`` and ``column`` is ``0``):
 
 .. image:: ../images/subscriptMatrix02.png
-   :width: 300
    :align: center
 
 The subscript's setter has an implicit ``value`` parameter of type ``Double?``.
@@ -223,11 +225,17 @@ and is checked by the subscript's setter:
 
 ::
 
-   if value && row < rows && column < columns {
-      grid[(row * columns) + column] = value!
-   }
+      if newValue && indexIsValid(row, column) {
+         grid[(row * columns) + column] = newValue!
+      }
 
-The setter checks to see if ``value`` is not equal to ``.None``,
+.. TODO: test this code manually.
+
+.. TODO: ideally this would use optional binding,
+   but you can combine it with other expressions in an if statement.
+   Update this example if the situation changes.
+
+The setter checks to see if ``value`` is not equal to ``nil``,
 and also checks to make sure that the ``row`` and ``column`` values are valid.
 If all of these things are true,
 it sets the appropriate entry in the ``grid`` array to

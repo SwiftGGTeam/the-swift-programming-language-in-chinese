@@ -23,14 +23,14 @@ Mutability of Collections
 -------------------------
 
 Arrays and dictionaries are ways to store multiple values together in a single collection.
-If you create an array or a dictionary, and assign it to a *variable* named value,
+If you create an array or a dictionary, and assign it to a variable,
 the collection that is created will be :newTerm:`mutable`.
 This means that you will be able to change (or :newTerm:`mutate`) the collection
 after it has been created –
 perhaps to add more items to the collection,
 or to remove existing items from the ones it already contains.
 
-However, if you assign an array or a dictionary to a *constant* named value,
+However, if you assign an array or a dictionary to a constant,
 the collection will be :newTerm:`immutable`.
 It will not then be possible to change the contents of the collection.
 
@@ -46,16 +46,21 @@ This enables the Swift compiler to optimize the performance of the collection.
    Swift's ``Array`` and ``Dictionary`` are
    *value types*, not *reference types*.
    This means that they are copied rather than referenced
-   when they are assigned to a named value or passed to a function.
+   when they are assigned to a constant or variable, or passed to a function.
    This is different from the behavior of Cocoa's ``NSArray`` and ``NSDictionary`` classes.
    The difference between value types and reference types is covered in detail
-   in the :ref:`ClassesAndStructures_ValueTypesAndReferenceTypes` section
-   of :doc:`ClassesAndStructures`.
+   in :ref:`ClassesAndStructures_ValueTypesAndReferenceTypes`.
+
+.. TODO: provide an example of what this means in practice
+   (similar to the Resolution examples in Classes and Structures)
 
 .. _CollectionTypes_Arrays:
 
 Arrays
 ------
+
+.. TODO: update this section to use (and eventually prefer) T[] syntax,
+   based on [Contributor 7746]'s feedback
 
 An :newTerm:`array` stores multiple values of the same type in an ordered list.
 The same value is allowed to appear in an array multiple times at different positions.
@@ -138,7 +143,7 @@ by checking its read-only ``count`` property:
    which does not allow you to assign a new value to count.
    I'll need to check what the story is for resizing arrays when NewArray lands.
 
-New items can be added to the end of the array by calling its ``append()`` method:
+New items can be added to the end of the array by calling its ``append`` method:
 
 .. testcode:: arraysInferred
 
@@ -175,26 +180,31 @@ Subscript syntax can be used to change an existing value at a given index:
    and expect the value in the array to change,
    because String is a value type?
 
-An item can be inserted into the array at a specified index by using the ``insert()`` method:
+An item can be inserted into the array at a specified index by using the ``insert`` method:
 
 .. testcode:: arraysInferred
 
-   -> shoppingList.insert("Maple Syrup", 0)
+   -> shoppingList.insert(0, "Maple Syrup")
    // shoppingList now contains 4 items
    /> \"\(shoppingList[0])\" is now the first item in the list
    </ "Maple Syrup" is now the first item in the list
 
-This call to the ``insert()`` method inserts a new value of ``"Maple Syrup"``
+This call to the ``insert`` method inserts a new value of ``"Maple Syrup"``
 at an index of ``0``, i.e. at the very beginning of the shopping list.
 
-Similarly, an item can be removed from the array using the ``removeAt()`` method:
+Similarly, an item can be removed from the array using the ``removeAt`` method.
+This method removes the item, and returns the removed item
+(although you can ignore the returned value if you do not need it):
 
 .. testcode:: arraysInferred
 
-   -> shoppingList.removeAt(0)
+   -> let mapleSyrup = shoppingList.removeAt(0)
+   << // mapleSyrup : String = "Maple Syrup"
    // the item that was at index 0 has just been removed
    /> shoppingList now contains \(shoppingList.count) items, and no Maple Syrup
    </ shoppingList now contains 3 items, and no Maple Syrup
+   /> the mapleSyrup constant is now equal to the removed \"\(mapleSyrup)\" string
+   </ the mapleSyrup constant is now equal to the removed "Maple Syrup" string
 
 Any gaps in the array are closed when an item is removed,
 and so the value at index ``0`` is once again equal to ``"Six eggs"``:
@@ -239,6 +249,29 @@ an empty array can be created by using an empty array literal:
    </ someInts now contains 1 value of type Int
    -> someInts = []
    // someInts is now an empty array, but is still of type Int
+
+``Array`` also provides an initializer for creating an array of a certain size
+with all of its values set to a provided default value.
+This initializer takes two arguments –
+the number of elements to be added to the new array,
+and a default value of the appropriate type:
+
+.. testcode:: arraysEmpty
+
+   -> var sixDoubles = Array<Double>(6, 0.0)
+   << // sixDoubles : Array<Double> = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+   // sixDoubles is now [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+
+Thanks to type inference, you don't actually need to specify
+the type to be stored in the ``Array`` when using this initializer,
+because it can be inferred from the default value:
+
+.. testcode:: arraysEmpty
+
+   -> var threeBools = Array(3, false)
+   << // threeBools : Array<Bool> = [false, false, false]
+   /> threeBools is inferred to be an Array<Bool>, and equals [\(threeBools[0]), \(threeBools[1]), \(threeBools[2])]
+   </ threeBools is inferred to be an Array<Bool>, and equals [false, false, false]
 
 .. TODO: func find<T : Equatable>(array: T[], value: T) -> Int?
    This is defined in Algorithm.swift,
@@ -302,7 +335,7 @@ and the values are airport names:
 .. testcode:: dictionaries
 
    -> var airports: Dictionary<String, String> = ["TYO" : "Tokyo", "DUB" : "Dublin"]
-   << // airports : Dictionary<String, String> = Dictionary<String, String>(1.33333, 2, <DictionaryBufferOwner<String, String> instance>)
+   << // airports : Dictionary<String, String> = Dictionary<String, String>(1.33333333333333, 2, <DictionaryBufferOwner<String, String> instance>)
 
 The ``airports`` dictionary has been declared as having a type of ``Dictionary<String, String>``,
 which means “a ``Dictionary`` whose keys are of type ``String``,
@@ -341,7 +374,7 @@ The initialization of ``airports`` could have been be written in a shorter form 
 .. testcode:: dictionariesInferred
 
    -> var airports = ["TYO" : "Tokyo", "DUB" : "Dublin"]
-   << // airports : Dictionary<String, String> = Dictionary<String, String>(1.33333, 2, <DictionaryBufferOwner<String, String> instance>)
+   << // airports : Dictionary<String, String> = Dictionary<String, String>(1.33333333333333, 2, <DictionaryBufferOwner<String, String> instance>)
 
 Because all of the keys in the literal are of the same type as each other,
 and likewise all of the values are of the same type as each other,
@@ -361,7 +394,7 @@ by checking its read-only ``count`` property:
    I should change the wording of the paragraph here to avoid making it sound as if
    Dictionary's count property is read-only, like array's.
 
-New items can be added to the dictionary by calling its ``add()`` method
+New items can be added to the dictionary by calling its ``add`` method
 and passing in a new key and value of the correct types:
 
 .. testcode:: dictionariesInferred
@@ -374,7 +407,7 @@ and passing in a new key and value of the correct types:
 .. TODO: note that add() returns a Bool to indicate whether or not
    the action was an add or a replace.
 
-The ``add()`` method actually returns a Boolean value,
+The ``add`` method actually returns a Boolean value,
 to indicate whether or not a value already existed in the dictionary for that key.
 (This return value is ignored in the example above).
 The return value is ``true`` if the key was already being used,
@@ -389,7 +422,7 @@ and ``false`` if it was not in use:
 
 .. note::
 
-   If you try and use the ``add()`` method to add a value for a key that already exists,
+   If you try and use the ``add`` method to add a value for a key that already exists,
    the existing value for that key will not be replaced in the dictionary.
 
 .. TODO: I've filed rdar://16336109 about the fact that
@@ -409,7 +442,7 @@ However, for a dictionary, the value within the square brackets must be
 a key of the appropriate type for that dictionary.
 
 You can use subscript syntax to add a value into a dictionary,
-as an alternative to the ``add()`` method described above:
+as an alternative to the ``add`` method described above:
 
 .. testcode:: dictionariesInferred
 
@@ -446,11 +479,10 @@ the key that you use must already be in the dictionary:
 .. NOTE: I've filed rdar://16335854 to suggest that Array<T> and Dictionary<KeyType, T>
    subscripts should return Optional<T>.
 
-As an alternative, you can use the dictionary's ``find()`` method
+As an alternative, you can use the dictionary's ``find`` method
 to try and find a value for a particular key.
-The ``find()`` method returns an *optional* value
-(as described in :ref:`BasicTypes_Optionals`),
-which can be checked and unwrapped using :ref:`BasicTypes_OptionalBinding`:
+The ``find`` method returns an *optional* value
+which can be checked and unwrapped using optional binding:
 
 .. testcode:: dictionariesInferred
 
@@ -461,7 +493,9 @@ which can be checked and unwrapped using :ref:`BasicTypes_OptionalBinding`:
       }
    <- The name of the airport is Dublin International.
 
-You can remove a key-value pair from the dictionary by using the ``deleteKey()`` method:
+(Optionals and optional binding are described in :ref:`BasicTypes_Optionals`.)
+
+You can remove a key-value pair from the dictionary by using the ``deleteKey`` method:
 
 .. testcode:: dictionariesInferred
 
@@ -486,7 +520,7 @@ you can do so using initializer syntax:
 .. testcode:: dictionariesEmpty
 
    -> var namesOfIntegers = Dictionary<Int, String>()
-   << // namesOfIntegers : Dictionary<Int, String> = Dictionary<Int, String>(1.33333, 0, <DictionaryBufferOwner<Int, String> instance>)
+   << // namesOfIntegers : Dictionary<Int, String> = Dictionary<Int, String>(1.33333333333333, 0, <DictionaryBufferOwner<Int, String> instance>)
    // namesOfIntegers is an empty Dictionary<Int, String>
 
 This example creates an empty dictionary of type ``Int``, ``String``

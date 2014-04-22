@@ -13,64 +13,85 @@ Functions
 =========
 
 :newTerm:`Functions` are self-contained chunks of code that perform a specific task.
-Every function is given a name to identify what it does,
+You give a function a name that identifies what it does,
 and this name is used to “call” the function to perform its task when needed.
+
+Swift's unified function syntax is flexible enough to express anything from
+a simple C-style function with no parameter names,
+all the way to to a complex Objective-C style method
+with local and external parameter names for each parameter.
+Parameters can be used to create automatic local variables
+for use within the function's body,
+and can provide default values to simplify function calls.
+Parameters can also be passed as ``inout`` parameters,
+which modify a passed variable once the function has completed its execution.
+
+Every function in Swift has a type, made up of its parameter and return types,
+and this type can be used like any other type in Swift.
+This makes it easy to pass functions as parameters to other functions,
+and to return functions from functions.
+Functions can also be nested within other functions
+to encapsulate useful functionality within a local function scope.
 
 .. TODO: should this chapter mention __FUNCTION__
    (as described in the release notes for 2014-03-12)?
 
-.. _Functions_FunctionDeclarations:
+.. _Functions_DefiningAndCallingFunctions:
 
-Function Declarations
----------------------
+Defining and Calling Functions
+------------------------------
 
-A function can be given some *input* values to work with
+You can give a function some input values to work with
 (known as :newTerm:`parameters`),
-and can pass back some *output*
-(known as a :newTerm:`return value`)
-when it is done.
+and it can pass back some output
+(known as a :newTerm:`return value`).
 The function's name should describe the task that it performs.
-The function below is called ``sayHello``,
+The function in the example below is called ``sayHello``,
 because that's what it does –
-it takes a person's name as input,
+it takes a person's name as input
 and passes back a greeting for that person.
 To do this, it takes one input parameter –
 a ``String`` value called ``personName`` –
-and returns an output ``String`` value containing a greeting for that person.
+and returns an output ``String`` value containing a greeting for that person:
 
-All of this information is rolled up into the function's :newTerm:`declaration`.
-Functions are defined using the ``func`` keyword.
-This example defines a function called ``sayHello`` that accepts a single parameter called ``personName``,
-which is of type ``String``.
-The function returns a ``String`` value when it is done,
-as indicated by the :newTerm:`return operator` ``->``
-(a hyphen followed by a greater-than symbol).
-
-.. TODO: revisit this introduction to make it slightly less academic and formal.
-
-The declaration describes what the function does,
-what it expects to receive,
-and what it will return when it is done.
-This makes it easy for the function to be called from elsewhere in your code in a clear and unambiguous way.
-
-.. testcode:: functionDeclaration
+.. testcode:: definingAndCalling
 
    -> func sayHello(personName: String) -> String {
          let greeting = "Hello, " + personName + "!"
          return greeting
       }
+
+All of this information is rolled up into the function's :newTerm:`definition`.
+Functions are defined using the ``func`` keyword.
+This example defines a function called ``sayHello``
+that accepts a single parameter called ``personName``,
+which is of type ``String``.
+The function returns a ``String`` value when it is done,
+as indicated by the :newTerm:`return arrow` ``->``
+(a hyphen followed by a greater-than symbol)
+followed by the type name “``String``”.
+
+The definition describes what the function does,
+what it expects to receive,
+and what it returns when it is done.
+The definition makes it easy for the function to be :newTerm:`called` (that is, used)
+elsewhere in your code in a clear and unambiguous way:
+
+.. testcode:: definingAndCalling
+
    -> println(sayHello("Anna"))
    <- Hello, Anna!
    -> println(sayHello("Brian"))
    <- Hello, Brian!
 
-The ``sayHello`` function is called by passing it a ``String`` value in parentheses,
+You call the ``sayHello`` function by passing it a ``String`` value in parentheses,
 such as ``sayHello("Anna")``.
-Because ``sayHello`` returns a ``String``,
-it can be wrapped in a call to the ``println`` function
-to print that ``String`` and see its value, as shown above.
+Because the function returns a ``String`` value,
+``sayHello`` can be wrapped in a call to the ``println`` function
+to print that string and see its value, as shown above.
 
-The ``sayHello`` function starts by declaring a new ``String`` constant called ``greeting``,
+The body of the ``sayHello`` function starts by
+defining a new ``String`` constant called ``greeting``,
 and setting it to a simple greeting message for ``personName``.
 This greeting is then passed back out of the function using the ``return`` keyword.
 As soon as ``return greeting`` is called,
@@ -83,10 +104,10 @@ The example above shows what happens if it is called with an input value of ``"A
 and an input value of ``"Brian"``.
 The function returns a tailored greeting in each case.
 
-The contents of this function could actually be simplified further,
+The contents of this function can be simplified further,
 to combine the message creation and the return statement into one line:
 
-.. testcode:: functionDeclaration
+.. testcode:: definingAndCalling
 
    -> func sayHelloAgain(personName: String) -> String {
          return "Hello again, " + personName + "!"
@@ -96,7 +117,7 @@ to combine the message creation and the return statement into one line:
 
 .. admonition:: Experiment
 
-   Try calling this function with your own name.
+   Try calling the ``sayHello`` function with your own name.
    Once you've done that,
    see what happens if you change the message to a different greeting.
 
@@ -106,14 +127,14 @@ to combine the message creation and the return statement into one line:
 
    What about if you pass in a second input parameter (also a ``String``),
    called ``birthdayType``?
-   (You can separate multiple input parameters with a comma.)
+   (You separate multiple input parameters with a comma.)
    ``birthdayType`` should contain the type of birthday you want to celebrate,
    such as ``12th`` or ``21st``.
    Can you make a function called ``sayHappyBirthday``,
    and use it to wish somebody called ``Peter`` a happy ``40th`` birthday?
 
    For bonus points,
-   make this new second parameter be an ``Int`` called ``age``
+   make this new second parameter an ``Int`` called ``age``
    (rather than a ``String`` called ``birthdayType``),
    and work out whether ``age`` should have
    ``st``, ``nd``, ``rd`` or ``th``
@@ -121,12 +142,25 @@ to combine the message creation and the return statement into one line:
    on the end.
    Can you get it to work for any value of ``age``?
 
+.. _Functions_FunctionParametersAndReturnValues:
+
+Function Parameters and Return Values
+-------------------------------------
+
+Function parameters and return values are extremely flexible in Swift.
+You can define anything from a simple utility function with a single unnamed parameter
+to a complex function with expressive parameter names and different parameter options.
+
 .. _Functions_MultipleInputParameters:
 
 Multiple Input Parameters
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Functions can have multiple input parameters.
+Where this is the case,
+all of the parameter definitions are written within the function's surrounding parentheses
+when the functions is defined.
+
 This function takes a start and an end index for a half-open range,
 and works out how many elements the range contains:
 
@@ -143,9 +177,10 @@ and works out how many elements the range contains:
 Tuples as Input Parameters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Any type of value can be used as an input parameter for a function,
-if it is declared appropriately.
-For example, the range function above can be rewritten to take a tuple of two ``Int`` values:
+You can use any type of value as an input parameter for a function,
+if it is defined appropriately.
+For example, suppose you rewrite the range function above
+to take a tuple of two ``Int`` values:
 
 .. QUESTION: Is my use of “any” technically correct here?
    Is there some type that cannot be passed to a function?
@@ -176,7 +211,7 @@ and it will calculate the half-open range length for that tuple.
 Tuples as Return Values
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-Functions can also return a tuple as their return type.
+Functions can return a tuple as their return type.
 This enables a function to return a combination of values as part of one compound return:
 
 .. testcode:: functionParameters
@@ -188,25 +223,25 @@ This enables a function to return a combination of values as part of one compoun
                return (string[0...i], string[i+1...size])
             }
          }
-         return (string, .None)
+         return (string, nil)
       }
 
 This example defines a function called ``splitOnFirst``,
 which looks for a ``UnicodeScalar`` called ``splitter``
 within a ``String`` called ``string``.
 It returns a tuple of type ``(String, String?)``.
-This tuple will contain an initial ``String``,
+This tuple contains an initial ``String``
 and an optional second ``String``,
 wrapped up together as a compound value inside a single tuple.
 
 If ``splitter`` is found,
 the tuple will contain two strings –
-a string made up of all of the characters from before the first instance of the splitter,
+a string made up of all of the characters from before the first instance of the splitter
 and a string made up of all of the remaining characters.
 
 If ``splitter`` is *not* found,
-the tuple will contain the entire string as its first string value,
-and a value of ``.None`` in its second value to indicate that ``splitter`` was not found:
+the tuple will contain the entire string as its first string value
+and ``nil`` as its second value to indicate that ``splitter`` was not found:
 
 .. testcode:: functionParameters
 
@@ -217,7 +252,7 @@ and a value of ``.None`` in its second value to indicate that ``splitter`` was n
       }
    <- The text from after the splitter is 'world'
 
-Alternatively, you can decompose the tuple into multiple named values
+Alternatively, decompose the tuple into multiple constants or variables
 as part of the function return value assignment:
 
 .. testcode:: functionParameters
@@ -230,20 +265,21 @@ as part of the function return value assignment:
    <- The text from after the splitter is 'world'
 
 This example sets two constants called ``first`` and ``possibleSecond``
-to equal the two output values stored in the ``splitOnFirst()`` function's
+to equal the two output values stored in the ``splitOnFirst`` function's
 return tuple value.
-These two constants can then be used independently of each other,
-as shown here to unwrap the value stored in the optional second tuple value
-via :ref:`BasicTypes_OptionalBinding`.
+These two constants can then be used independently of each other.
+Here, the value stored in the optional second tuple value is unwrapped and accessed
+with optional binding.
 
 .. _Functions_ParameterNames:
 
 Parameter Names
 ~~~~~~~~~~~~~~~
 
-Values can be passed to a function using the parameter names from the function's declaration.
-This helps to make their purpose clear,
-and also enables values to be passed in a different order to the original function declaration.
+You use the parameter names from the function's definition
+to pass values (known as :newTerm:`arguments`) to the function when it is called.
+This helps make the purpose of the values clear,
+and also enables values to be passed in a different order to the original function definition.
 
 .. testcode:: functionParameters
 
@@ -262,22 +298,28 @@ and also enables values to be passed in a different order to the original functi
    /> containsASpace equals \(containsASpace), because stringToSearch contains a space
    </ containsASpace equals true, because stringToSearch contains a space
 
-Here, the parameter values are passed in a different order when the function is actually called.
+.. TODO: this function's first line is too long.
+
+Here, the parameter values are passed in a different order to the original function definition
+when the function is actually called.
 Because they are named,
 it is still clear which value should be used for which parameter.
 
-If ``characterToFind`` is found quickly,
-this example returns ``true`` before the entire set of characters in ``stringToSearch`` has been checked.
-As soon as the first matching character is found,
-``containsCharacter`` returns ``true``,
-and doesn't even bother to check the remaining characters.
-You can return control from a function at any time,
-and it will stop what it is doing immediately.
-In fact, this function will only return ``false`` if the entire set of characters in ``stringToSearch`` is exhausted,
-and the end of the for loop is reached.
+.. note::
 
-If parameter names are *not* provided when calling a method,
-the passed parameters are assumed to be in the order they were originally declared:
+   If ``characterToFind`` is found quickly,
+   this example returns ``true`` before the entire set of characters in ``stringToSearch`` is checked.
+   As soon as the first matching character is found,
+   ``containsCharacter`` returns ``true``,
+   and doesn't bother to check the remaining characters.
+   You can return control from a function at any time,
+   and it will stop what it is doing immediately.
+   In fact, this function only returns ``false`` if
+   the entire set of characters in ``stringToSearch`` is exhausted,
+   and the end of the for loop is reached.
+
+If you do not provide parameter names when calling a method,
+the passed parameters are assumed to be in the order they were originally defined:
 
 .. testcode:: functionParameters
 
@@ -286,104 +328,259 @@ the passed parameters are assumed to be in the order they were originally declar
    /> containsAHyphen equals \(containsAHyphen), because the string does not contain a hyphen
    </ containsAHyphen equals false, because the string does not contain a hyphen
 
+.. _Functions_LocalParameterNames:
+
+Local Parameter Names
+_____________________
+
+The parameter names that you define for callers of your function to use
+are not always the most appropriate names to use within your function's implementation.
+You can define alternative :newTerm:`local parameter names` for use within the function's body,
+to help make your function implementation read more naturally.
+
+If you provide a local parameter name for a given parameter,
+you can still provide a separate external name for callers of your function to use.
+The local name is written after the external name, separated by a space.
+
+The example below defines a function called ``join`` that
+combines two strings into a single string.
+A third “joiner” string is inserted between the two strings:
+
+.. testcode:: localParameterNames1
+
+   -> func join(string: String, toString: String, joiner: String) -> String {
+         return string + joiner + toString
+      }
+   -> join(string: "hello", toString: "world", joiner: " ")
+   << // r0 : String = "hello world"
+   /> returns \"\(r0)\"
+   </ returns "hello world"
+
+The second parameter of the ``join`` function above is called ``toString``.
+This choice of name makes for a clear, expressive sentence when the function is called.
+
+The ``join`` function uses the ``toString`` parameter name within its function body
+to refer to the string's value.
+However, this parameter name does not read cleanly as a sentence
+as part of the function's return statement
+(``return string + joiner + toString``).
+
+You can rewrite the ``join`` function with local parameter names,
+to make its implementation clearer to read:
+
+.. testcode:: localParameterNames2
+
+   -> func join(string s1: String, toString s2: String, joiner: String) -> String {
+         return s1 + joiner + s2
+      }
+   -> join(string: "hello", toString: "world", joiner: ", ")
+   << // r0 : String = "hello, world"
+   /> returns \"\(r0)\"
+   </ returns "hello, world"
+
+In this version of the ``join`` function,
+the first parameter has a name of ``string``, and a local name of ``s1``.
+The second parameter has a name of ``toString``, and a local name of ``s2``.
+The third parameter does not have separate names,
+and so the name ``joiner`` is used both when calling the function
+and when referring to the parameter's value within the function implementation.
+
+This use of local parameter names enables the ``join`` function
+to be called in an expressive, sentence-like manner by external users,
+while also providing a function body that reads clearly in its intent.
+
+.. _Functions_UnnamedParameters:
+
+Unnamed Parameters
+__________________
+
+You can write functions with parameters that do not have external parameter names at all,
+but which still have local parameter names for use within the function's body.
+
+To define a parameter without an external name,
+write an underscore character (``_``) in place of the external name.
+The underscore character should still be
+separated from the local parameter name by a space:
+
+.. testcode:: functionParameters
+
+   -> func columnize(_ stringToColumnize: String) -> String {
+         var output = ""
+         for character in stringToColumnize.chars {
+            output += character + '\n'
+         }
+         return output
+      }
+   -> print(columnize("abc"))
+   </ a
+   </ b
+   </ c
+
+This example defines a function called ``columnize`` that takes an input string
+and prints each of its characters on a separate line to create a column of text.
+
+Because the ``columnize`` function has a single parameter,
+and has a function name that makes the purpose of that parameter clear,
+the function does not define an external name for its single parameter.
+The function does, however, define a local parameter name of ``stringToColumnize``,
+so that the function implementation can refer to the parameter's value within the function body.
+
+Note that this example calls ``print`` rather than ``println``
+to print its output, as the ``output`` string already has a line break
+at the end of the returned string.
+
 .. _Functions_DefaultParameterValues:
 
 Default Parameter Values
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-Function parameters can be assigned :newTerm:`default values`.
-If a default value is defined in the function declaration,
-it can be omitted when calling the function:
+You can define a default value for a parameter as part of a function definition.
+If a default value is defined, you can omit that parameter when calling the function:
 
-.. testcode:: functionParameters
+.. testcode:: defaultParameterValues1
 
-   -> func joinTwoStrings(string1: String, string2: String, joiner: String = " ") -> String {
-         return string1 + joiner + string2
+   -> func join(string s1: String, toString s2: String, joiner: String = " ") -> String {
+         return s1 + joiner + s2
       }
-   -> joinTwoStrings("hello", "world", ":")
-   << // r1 : String = "hello:world"
+   -> join(string: "hello", toString: "world", joiner: "-")
+   << // r0 : String = "hello-world"
+   /> returns \"\(r0)\"
+   </ returns "hello-world"
+   -> join(string: "hello", toString: "world")
+   << // r1 : String = "hello world"
    /> returns \"\(r1)\"
-   </ returns "hello:world"
-   -> joinTwoStrings("hello", "world")
-   << // r2 : String = "hello world"
-   /> returns \"\(r2)\"
    </ returns "hello world"
 
-This function joins two strings together.
-If a value for ``joiner`` is provided,
-that string is used to join the two strings together,
-as shown in the first example,
-which uses a colon to join the two words.
+This version of the ``join`` function provides a default value for the ``joiner`` parameter.
+If a string value for ``joiner`` is provided when the ``join`` function is called,
+that string value is used to join the two strings together,
+as shown in the first call to the ``join`` function above,
+which uses a hyphen to join the two strings.
 If no value of ``joiner`` is provided,
-a default value
-(in this case a string containing a single space)
-is used instead.
+the default value of a single space (``" "``) is used instead,
+as shown in the second call to the ``join`` function above.
 
-It's important to choose an appropriate order for function parameters when working with default values.
-The ``joinTwoStrings`` function could have been written with ``joiner`` as the second (rather than third) parameter:
+It's important to choose an appropriate function parameter order when working with default values.
+The ``join`` function could be written
+with ``joiner`` as the second (rather than third) parameter:
 
-.. testcode:: functionParameters
+.. testcode:: defaultParameterValues2
 
-   -> func joinTwoMoreStrings(string1: String, joiner: String = " ", string2: String) -> String {
-         return string1 + joiner + string2
+   -> func join(string s1: String, joiner: String = " ", toString s2: String) -> String {
+         return s1 + joiner + s2
       }
-   -> joinTwoMoreStrings("hello", ":", "world")
-   << // r3 : String = "hello:world"
-   /> this also returns \"\(r3)\"
-   </ this also returns "hello:world"
+   -> join("hello", "-", "world")
+   << // r0 : String = "hello-world"
+   /> returns \"\(r0)\"
+   </ returns "hello-world"
 
 .. TODO: the first line of this example is too long,
    and needs to be wrapped in line with the Style Guide
 
-However, if you try and call this version of the function without passing in a value for ``joiner``,
-and without using named values,
-the code will not compile:
+This version of the ``join`` function places its ``joiner`` parameter
+as the second (rather than third) parameter in the list.
+However, if you call this version of the ``join`` function
+without passing in a value for ``joiner``, and without using parameter names,
+the code does not compile:
 
-.. testcode:: functionParameters
+.. testcode:: defaultParameterValues2
 
-   -> joinTwoMoreStrings("hello", "world")   // this will report an error
-   !! <REPL Input>:1:19: error: tuple types '($T1, $T2)' and '(string1: String, joiner: String, string2: String)' have a different number of elements (2 vs. 3)
-   !! joinTwoMoreStrings("hello", "world")   // this will report an error
+   -> join("hello", "world")   // this will report an error
+   !! <REPL Input>:1:5: error: tuple types '($T1, $T2)' and '(string: String, joiner: String, toString: String)' have a different number of elements (2 vs. 3)
+   !! join("hello", "world")   // this will report an error
    !!               ^
 
-Because the values are not named in the function call,
-it looks as though you have only provided two (rather than three)
-of the expected parameters for the function.
-Without named values,
+Because the argument values are not named in the function call,
+it looks as though you have provided only two (rather than three)
+of the expected arguments for the function.
+Without named arguments,
 Swift assigns the first value (``"hello"``)
-to the first parameter (``string1``);
+to the first parameter (``string``);
 the second value (``"world"``)
 to the second parameter (``joiner``);
-and cannot find a value for the third parameter (``string2``).
+and cannot find a value for the third parameter (``toString``).
 
-This problem can be avoided by naming the values when you call the function:
+Avoid this problem by naming the values when you call the function:
 
-.. testcode:: functionParameters
+.. testcode:: defaultParameterValues2
 
-   -> joinTwoMoreStrings(string1: "hello", string2: "world")
-   << // r4 : String = "hello world"
-   /> returns \"\(r4)\"
+   -> join(string: "hello", toString: "world")
+   << // r1 : String = "hello world"
+   /> returns \"\(r1)\"
    </ returns "hello world"
 
-This tells Swift which parameters you want
-the values of "hello" and "world" to be used for,
+This code tells Swift which parameters you want
+the values of ``"hello"`` and ``"world"`` to be used for,
 and the code compiles without error,
 using the default value of ``joiner`` as before.
 
 As a general rule,
-it is best to place any parameters with default values at the end of a function declaration.
+place parameters with default values at the end of a function's parameter list.
 It is also advisable to name the values in your function calls
-whenever a function takes more than one parameter, if it aids readability.
+whenever a function takes more than one parameter.
 This helps to ensure that your intentions are clearly expressed in your code.
+Even if you do not *require* callers to use parameter names when calling your function,
+it is still good practice to provide names for them to use if they wish.
 
 .. QUESTION: how does this advice overlap with
    the principle of putting variadic parameters last,
    and also the principle of putting closure parameters last?
 
-.. _Functions_FunctionsWithoutParametersAndReturnValues:
+.. _Functions_StrictParameterNames:
 
-Functions Without Parameters and Return Values
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Strict Parameter Names
+~~~~~~~~~~~~~~~~~~~~~~
+
+.. note::
+
+   Strict parameter names have not yet been implemented.
+   This section has been written in advance of their implementation,
+   in order to help plan the overall flow of this chapter.
+
+.. TODO: this feature is not yet implemented.
+   Remove this note and test that the final two code snippets produce an error
+   once strict parameter names have been implemented.
+
+It is sometimes useful to require that parameter names are provided when a function is called,
+to avoid ambiguity as to each parameter's purpose.
+You can require callers to use a function's parameter names
+by marking the function with the ``@call_arguments(strict)`` attribute.
+This attribute also requires that the parameters are provided
+in the same order as in the function's definition.
+
+.. testcode:: strictParameterNames
+
+   // @call_arguments(strict) - not yet implemented
+   -> func join(string s1: String, toString s2: String, joiner: String = " ") -> String {
+         return s1 + joiner + s2
+      }
+   -> join(string: "hello", toString: "world", joiner: "#")
+   << // r0 : String = "hello#world"
+   /> returns \"\(r0)\"
+   </ returns "hello#world"
+
+This version of the ``join`` function requires any callers to provide
+all of the function's parameter names when they call the function.
+Trying to call this version of the ``join`` function without using its parameter names
+results in a compile-time error:
+
+::
+
+   join("hello", "world", "#")
+   // this reports a compile-time error
+
+Trying to call the function with its parameter names in the wrong order
+also results in a compile-time error:
+
+::
+
+   join(toString: "world", joiner: "#", string: "hello")
+   // this reports a compile-time error
+
+.. _Functions_FunctionsWithoutParameters:
+
+Functions Without Parameters
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Functions don't have to have input parameters.
 Here's a function with no input parameters,
@@ -397,11 +594,16 @@ which always returns the same ``String`` message whenever it is called:
    -> println(sayHelloWorld())
    <- hello, world
 
-The function declaration still needs parentheses after the function's name,
+The function definition still needs parentheses after the function's name,
 even though it does not take any parameters.
-It is also called with empty parentheses when used.
+The function name is also followed by empty parentheses when the function is called.
 
-Functions don't have to return a value, either.
+.. _Functions_FunctionsWithoutReturnValues:
+
+Functions Without Return Values
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Functions don't have to return a value.
 Here's a version of the ``sayHello`` function,
 called ``waveGoodbye``,
 which prints its own ``String`` value rather than returning it:
@@ -415,16 +617,16 @@ which prints its own ``String`` value rather than returning it:
    <- Goodbye, Dave 👋
 
 Because it does not need to return a value,
-the function's declaration does not include the return operator (``->``)
+the function's definition does not include the return arrow (``->``)
 or a return type.
 
 .. note::
 
-   Strictly speaking, this function *does* still return a value,
-   even though no return value is declared.
-   Functions without a declared return type return a special value of type ``Void``.
+   Strictly speaking, the ``waveGoodbye`` function *does* still return a value,
+   even though no return value is defined.
+   Functions without a defined return type return a special value of type ``Void``.
    This is simply an empty tuple,
-   i.e. a tuple with zero elements,
+   in effect a tuple with zero elements,
    which can be written as ``()``.
 
 The return value of a function can be ignored when it is called:
@@ -441,7 +643,7 @@ The return value of a function can be ignored when it is called:
    -> printAndCount("hello, world")
    << hello, world
    // prints "hello, world" and returns a value of 12
-   << // r5 : Int = 12
+   << // r1 : Int = 12
    -> printWithoutCounting("hello, world")
    << hello, world
    // prints "hello, world" but does not return a value
@@ -458,34 +660,33 @@ When the second function is called,
 the message is still printed by the first function,
 but the returned value is not used.
 
-Return values can be ignored,
-but a function that says it will return a value must always do so.
-A function with a declared return type must
-never allow control to fall out of the bottom of the function
-without returning a value.
+.. note::
+
+   Return values can be ignored,
+   but a function that says it will return a value must always do so.
+   A function with a defined return type must
+   never allow control to fall out of the bottom of the function
+   without returning a value.
 
 .. _Functions_ConstantAndVariableParameters:
 
 Constant and Variable Parameters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Function parameters are :newTerm:`constants` by default.
-You cannot change the value of a function parameter
-from within the body of that function,
-and trying to do so will result in an error.
-This approach means that you can't accidentally change the value of a parameter
-and expect that change to be visible outside of the function.
+Function parameters are constants by default.
+Trying to change the value of a function parameter
+from within the body of that function results in a compile-time error.
+This means that you can't accidentally change the value of a parameter
+and expect that change to be visible outside the function.
 
-However, it can sometimes be useful for a function to have
-a variable copy of a parameter's value to work with.
-One approach would be to declare a new variable yourself within the function,
-and copy the parameter's value in to it.
-To simplify this process, Swift enables you to specify
-one or more parameters as :newTerm:`variable parameters` instead.
-Variable parameters are made available as variables rather than constants,
+However, sometimes it is useful for a function to have
+a *variable* copy of a parameter's value to work with.
+You can avoid defining a new variable yourself within the function
+by specifying one or more parameters as variable parameters instead.
+Variable parameters are available as variables rather than constants,
 and give a new modifiable copy of the parameter's value for your function to work with.
 
-Variable parameters are declared by prefixing the parameter name with the keyword ``var``:
+Define variable parameters by prefixing the parameter name with the keyword ``var``:
 
 .. testcode:: functionParameters
 
@@ -506,11 +707,11 @@ Variable parameters are declared by prefixing the parameter name with the keywor
    </ originalString is still equal to "hello"
 
 This example defines a new function called ``alignRight``,
-which aligns an input string to the right-hand edge of a longer output string.
+which aligns an input string to the right edge of a longer output string.
 Any space on the left is filled with a specified padding character.
 In this example, the string ``"hello"`` is converted to the string ``"-----hello"``.
 
-This function declares the input parameter ``string`` to be a variable parameter.
+The ``alignRight`` function defines the input parameter ``string`` to be a variable parameter.
 This means that ``string`` is now available as a local variable,
 initialized with the passed-in string value,
 and can be manipulated within the body of the function.
@@ -518,8 +719,8 @@ and can be manipulated within the body of the function.
 The function starts by working out how many characters need to be added to the left of ``string``
 in order to right-align it within the overall string.
 This value is stored in a local constant called ``amountToPad``.
-The function then adds ``amountToPad`` copies of the ``pad`` character to the left of the existing string,
-and returns the result.
+The function then adds ``amountToPad`` copies of the ``pad`` character
+to the left of the existing string and returns the result.
 It uses the ``string`` variable parameter for all of its string manipulation.
 
 .. note::
@@ -534,9 +735,10 @@ It uses the ``string`` variable parameter for all of its string manipulation.
 Variadic Parameters
 ~~~~~~~~~~~~~~~~~~~
 
-A :newTerm:`variadic parameter` is a parameter that accepts zero or more values of a certain type.
-Variadic parameters give a way to cope with a varying number of input values.
-They are indicated by inserting three period characters (``...``) after their type declaration.
+A :newTerm:`variadic parameter` accepts zero or more values of a certain type.
+You use a variadic parameter to specify that the parameter can be passed
+a varying number of input values when the function is called,
+by inserting three period characters (``...``) after the parameter's type name.
 
 This example calculates the :newTerm:`arithmetic mean`
 (also known as the :newTerm:`average`) for a list of numbers of any length:
@@ -551,12 +753,12 @@ This example calculates the :newTerm:`arithmetic mean`
          return total / Double(numbers.count)
       }
    -> arithmeticMean(1, 2, 3, 4, 5)
-   << // r6 : Double = 3.0
-   /> returns \(r6), which is the arithmetic mean of these five numbers
+   << // r2 : Double = 3.0
+   /> returns \(r2), which is the arithmetic mean of these five numbers
    </ returns 3.0, which is the arithmetic mean of these five numbers
    -> arithmeticMean(3, 8, 19)
-   << // r7 : Double = 10.0
-   /> returns \(r7), which is the arithmetic mean of these three numbers
+   << // r3 : Double = 10.0
+   /> returns \(r3), which is the arithmetic mean of these three numbers
    </ returns 10.0, which is the arithmetic mean of these three numbers
 
 As shown in this example,
@@ -564,7 +766,7 @@ a variadic parameter can be used with the ``for``-``in`` statement
 to iterate through the list of values represented by the parameter.
 Variadic parameters automatically conform to the ``Sequence`` protocol,
 and can be used anywhere that a ``Sequence`` is valid.
-(Protocols such as ``Sequence`` are covered in more detail in :doc:`Protocols`.)
+``Sequence`` is covered in more detail in :doc:`Protocols`.
 
 .. note::
 
@@ -577,173 +779,266 @@ and can be used anywhere that a ``Sequence`` is valid.
    I've reported this as rdar://16387108;
    if it doesn't get fixed, I should mention it here.
 
-.. _Functions_SelectorStyleFunctions:
-
-Selector-Style Functions
-------------------------
-
-All of the examples so far have used a declaration syntax known as
-:newTerm:`function-style declaration`.
-This follows the C approach of
-putting all of the parameters inside one set of parentheses
-immediately after the function name.
-
-In addition to function-style declarations,
-Swift also supports a second declaration syntax known as
-:newTerm:`selector-style declaration`.
-This syntax follows a similar style to Objective-C messaging.
-The function name is written as a series of separate :newTerm:`selector parts`.
-Each selector part has a corresponding parameter name and type,
-and has its own set of parentheses when defined.
-
-Here's how the string-joining function from above could be written
-as a selector-style declaration:
-
-.. testcode:: selectorStyle
-
-   -> func joinString(string1: String) toString(string2: String)
-         withJoiner(joiner: String = " ") -> String
-      {
-         return string1 + joiner + string2
-      }
-
-``joinString``, ``toString`` and ``withJoiner`` are the selector parts;
-``string1``, ``string2`` and ``joiner`` are the parameter names;
-and all three parameters have a type of ``String``.
-
-.. note::
-
-   The parameter names are not used when calling the function.
-   They are only used within the function's declaration.
-
-Selector-style syntax lends itself to expressive function declarations,
-which can be written and read as sentences for ease of comprehension.
-The use of prepositions such as “to” and “with” is not mandatory,
-but is encouraged where it aids readability.
-
-.. _Functions_CallingSelectorStyleFunctions:
-
-Calling Selector-Style Functions
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Selector-style functions are called by placing the first selector part
-outside a set of parentheses, and their second and subsequent selector parts
-inside the parentheses, separated by commas.
-Each selector part within the parentheses is separated from its parameter value
-by a colon:
-
-.. testcode:: selectorStyle
-
-   -> joinString("hello", toString: "world", withJoiner: ":")
-   << // r0 : String = "hello:world"
-   /> returns \"\(r0)\"
-   </ returns "hello:world"
-
-As before, any parameters with default values can be excluded when the function is called:
-
-.. testcode:: selectorStyle
-
-   -> joinString("hello", toString: "world")
-   << // r1 : String = "hello world"
-   /> returns \"\(r1)\"
-   </ returns "hello world"
-
-With the exception of the first selector part,
-the selector parts may be provided in any order:
-
-.. testcode:: selectorStyle
-
-   -> joinString("hello", withJoiner: "-", toString: "world")
-   << // r2 : String = "hello-world"
-   /> returns \"\(r2)\"
-   </ returns "hello-world"
-
-.. _Functions_AutomaticParameterNames:
-
-Automatic Parameter Names
-~~~~~~~~~~~~~~~~~~~~~~~~~
-
-If a parameter name is omitted from a selector-style declaration,
-the parameter is automatically given the same name as its selector part.
-Default values are still allowed:
-
-.. testcode:: selectorStyle
-
-   -> func columnize(String) backwards(Bool = false) -> String {
-         var output = ""
-         for character in columnize.chars {
-            if backwards {
-               output = character + '\n' + output
-            } else {
-               output += character + '\n'
-            }
-         }
-         return output
-      }
-   -> print(columnize("abc"))
-   </ a
-   </ b
-   </ c
-   -> print(columnize("abc", backwards: true))
-   </ c
-   </ b
-   </ a
-
-This example takes an input string,
-and prints each of its characters on a separate line in a column.
-The first selector part, ``columnize``,
-is also used as the name of the string to be converted into a column.
-Likewise, the second selector part, ``backwards``,
-is also used as the name of the Boolean indicator of whether the string
-should be converted into a column of characters in reverse order.
-
-Note that this example calls ``print()`` rather than ``println()``
-to print its output, as the ``output`` string already has a line break
-at the end of the returned string.
-
-.. TODO: It is not currently possible to use variadic parameters with selector-style declarations,
-   but this may be added as part of the revision of selector-style syntax.
-   This is tracked as rdar://16030076, and this section should be updated
-   once it is implemented.
-   In the meantime, I have chosen not to mention it either way,
-   as Joe wasn't sure whether this would make it in for their March deadline.
+.. TODO: sequence isn't currently covered in Protocols.
+   remove this comment if it is not included before release.
 
 .. _Functions_InoutParameters:
 
 Inout Parameters
-----------------
+~~~~~~~~~~~~~~~~
 
 .. write-me::
 
 .. inout properties and a general discussion of byref / byvalue
+.. presumably you can't pass a constant as the argument for an inout parameter
 
-.. _Functions_FunctionsAsParametersAndReturnTypes:
+.. _Functions_FunctionTypes:
 
-Functions as Parameters and Return Types
-----------------------------------------
+Function Types
+--------------
 
-.. write-me::
+Every function has a specific :newTerm:`function type`,
+made up of the parameter types and the return type of the function.
 
-.. functions can be passed in as parameters, and can be returned as return values
+For example:
 
-.. _Functions_FunctionBinding:
+.. testcode:: functionTypes
 
-Function Binding
+   -> func addTwoInts(a: Int, b: Int) -> Int {
+         return a + b
+      }
+   >> addTwoInts
+   << // r0 : (a: Int, b: Int) -> Int = <unprintable value>
+   -> func multiplyTwoInts(a: Int, b: Int) -> Int {
+         return a * b
+      }
+   >> multiplyTwoInts
+   << // r1 : (a: Int, b: Int) -> Int = <unprintable value>
+
+This example defines two simple mathematical functions
+called ``addTwoInts`` and ``multiplyTwoInts``.
+These functions each take two ``Int`` values,
+and return an ``Int`` value, which is the result of
+performing an appropriate mathematical operation.
+
+The type of both of these functions is ``(Int, Int) -> Int``.
+This can be read as:
+
+“A function type that has two parameters, both of type ``Int``,
+and that returns a value of type ``Int``.”
+
+.. QUESTION: does their "type" also include the parameter label names?
+
+Here's another example, for a function with no parameters or return value:
+
+.. testcode:: functionTypes
+
+   -> func printHelloWorld() {
+         println("hello, world")
+      }
+   >> printHelloWorld
+   << // r2 : () -> () = <unprintable value>
+
+The type of this function is ``() -> ()``,
+or “a function that has no parameters, and returns ``Void``.”
+Functions that don't specify a return value always return ``Void``,
+which is equivalent to an empty tuple in Swift, shown as ``()``.
+
+.. _Functions_UsingFunctionTypes:
+
+Using Function Types
+~~~~~~~~~~~~~~~~~~~~
+
+You use function types just like any other types in Swift.
+For example, you can define a constant or variable to be of a function type,
+and assign an appropriate function to that variable:
+
+.. testcode:: functionTypes
+
+   -> var mathFunction: (Int, Int) -> Int = addTwoInts
+   << // mathFunction : (Int, Int) -> Int = <unprintable value>
+
+This can be read as:
+
+“Define a variable called ``mathFunction``,
+which has a type of ‘a function that takes two ``Int`` values,
+and returns an ``Int`` value.’
+Set this new variable to refer to the function called ``addTwoInts``.”
+
+The ``addTwoInts`` function has the same type as the ``mathFunction`` variable,
+and so this assignment is allowed by Swift's type-checker.
+
+You can now call the assigned function with the name ``mathFunction``:
+
+.. testcode:: functionTypes
+
+   -> println("Result: \(mathFunction(2, 3))")
+   <- Result: 5
+
+A different function with the same matching type can be assigned to the same variable,
+in the same way as for non-function types:
+
+.. testcode:: functionTypes
+
+   -> mathFunction = multiplyTwoInts
+   -> println("Result: \(mathFunction(2, 3))")
+   <- Result: 6
+
+As with any other type,
+you can leave it to Swift to infer the function type
+when you assign a function to a constant or variable:
+
+.. testcode:: functionTypes
+
+   -> let anotherMathFunction = addTwoInts
+   << // anotherMathFunction : (a: Int, b: Int) -> Int = <unprintable value>
+   // anotherMathFunction is inferred to be of type (Int, Int) -> Int
+
+.. _Functions_FunctionTypesAsParameterTypes:
+
+Function Types as Parameter Types
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You can use a function type such as ``(Int, Int) -> Int``
+as a parameter type for another function.
+This enables you to leave some aspects of a function's implementation
+for the function's caller to provide when the function is called.
+
+Here's an example to print the results of the math functions from above:
+
+.. testcode:: functionTypes
+
+   -> func printMathResult(mathFunction: (Int, Int) -> Int, a: Int, b: Int) {
+         println("Result: \(mathFunction(a, b))")
+      }
+   -> printMathResult(addTwoInts, 3, 5)
+   <- Result: 8
+
+This example defines a function called ``printMathResult``, which has three parameters.
+The first parameter is called ``mathFunction``, and is of type ``(Int, Int) -> Int``.
+You can pass any function of that type as the argument for this first parameter.
+The second and third parameters are called ``a`` and ``b``, and are both of type ``Int``.
+These are used as the two input values for the provided math function.
+
+When ``printMathResult`` is called above,
+it is passed the ``addTwoInts`` function, and the integer values ``3`` and ``5``.
+It calls the provided function with the values ``3`` and ``5``, and prints the result of ``8``.
+
+The role of ``printMathResult`` is to print the result of
+a call to a math function of an appropriate type.
+It doesn't matter what that function's implementation actually does –
+it matters only that the function is of the correct type.
+This enables ``printMathResult`` to hand off some of its functionality
+to the caller of the function in a type-safe way.
+
+.. _Functions_FunctionTypesAsReturnTypes:
+
+Function Types as Return Types
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You can use a function type as the return type of another function.
+You do this by writing a complete function type
+immediately after the return arrow (``->``) of the returning function.
+
+The next example defines two simple functions called ``stepForward`` and ``stepBackward``.
+The ``stepForward`` function returns a value one more than its input value, 
+and the ``stepBackward`` function returns a value one less than its input value.
+Both functions have a type of ``(Int) -> Int``:
+
+.. testcode:: functionTypes
+
+   -> func stepForward(input: Int) -> Int {
+         return input + 1
+      }
+   -> func stepBackward(input: Int) -> Int {
+         return input - 1
+      }
+
+Here's a function called ``chooseStepFunction``,
+whose return type is “a function of type ``(Int) -> Int``”.
+``chooseStepFunction`` returns the ``stepForward`` function or the ``stepBackward`` function
+based on a Boolean parameter called ``backwards``:
+
+.. testcode:: functionTypes
+
+   -> func chooseStepFunction(backwards: Bool) -> (Int) -> Int {
+         return backwards ? stepBackward : stepForward
+      }
+
+You can now use ``chooseStepFunction`` to obtain a function
+that will step in one direction or the other.
+For example:
+
+.. testcode:: functionTypes
+
+   -> var currentValue = 3
+   << // currentValue : Int = 3
+   -> let moveNearerToZero = chooseStepFunction(currentValue > 0)
+   << // moveNearerToZero : (Int) -> Int = <unprintable value>
+   // moveNearerToZero now refers to the stepBackward() function
+
+The preceding example works out whether a positive or negative step is needed
+to move a variable called ``currentValue`` progressively closer to zero.
+``currentValue`` has an initial value of ``3``,
+which means that ``currentValue > 0`` returns ``true``,
+causing ``chooseStepFunction`` to return the ``stepBackward`` function.
+A reference to the returned function is stored in a constant called ``moveNearerToZero``.
+
+Now that ``moveNearerToZero`` refers to the correct function,
+it can be used to count to zero:
+
+.. testcode:: functionTypes
+
+   -> println("Counting to zero:")
+   </ Counting to zero:
+   -> while currentValue != 0 {
+         println("\(currentValue)... ")
+         currentValue = moveNearerToZero(currentValue)
+      }
+   -> println("zero!")
+   </ 3...
+   </ 2...
+   </ 1...
+   </ zero!
+
+.. _Functions_NestedFunctions:
+
+Nested Functions
 ----------------
 
-.. write-me::
+Functions can be :newTerm:`nested` inside other functions.
+As its name suggests, a nested function is simply
+a function written within the body of another function.
+The nested function is hidden from the outside world by default,
+but can still be used by its enclosing function.
+An enclosing function can return one of its nested functions
+to allow the nested function to be used in another scope.
 
-.. variables can be bound to functions, and then called e.g. var fork = g.fork; fork() .
-.. functions are reference types
-.. you can get a function that refers to a method, either with or without the 'self' argument already being bound:
-.. class C {
-..    func foo(x: Int) -> Float { ... }
-.. }
-.. var c = C()
-.. var boundFunc = c.foo 	// a function with type (Int) -> Float
-.. var unboundFunc = C.foo // a function with type (C) -> (Int) -> Float
-.. selector-style methods can be referenced as foo.bar:bas:
-   (see Doug's comments from the 2014-03-12 release notes)
+The ``chooseStepFunction`` example above can be rewritten
+to use and return nested functions:
+
+.. testcode:: nestedFunctions
+
+   -> func chooseStepFunction(backwards: Bool) -> (Int) -> Int {
+         func stepForward(input: Int) -> Int { return input + 1 }
+         func stepBackward(input: Int) -> Int { return input - 1 }
+         return backwards ? stepBackward : stepForward
+      }
+   -> var currentValue = -4
+   << // currentValue : Int = -4
+   -> let moveNearerToZero = chooseStepFunction(currentValue > 0)
+   << // moveNearerToZero : (Int) -> Int = <unprintable value>
+   // moveNearerToZero now refers to the nested stepForward() function
+   -> while currentValue != 0 {
+         println("\(currentValue)... ")
+         currentValue = moveNearerToZero(currentValue)
+      }
+   -> println("zero!")
+   </ -4...
+   </ -3...
+   </ -2...
+   </ -1...
+   </ zero!
 
 .. _Functions_CurriedFunctions:
 
