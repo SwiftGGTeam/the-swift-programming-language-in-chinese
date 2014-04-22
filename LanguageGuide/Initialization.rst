@@ -851,7 +851,7 @@ this nonetheless means that ``RecipeIngredient`` has provided
 an implementation of all of its superclass's designated initializers.
 Because of this, it automatically inherits all of its superclass's convenience initializers too.
 This means that ``RecipeIngredient`` inherits the ``init()`` initializer from ``Food``.
-The inherited version of ``init()`` functions in exactly the same way as as the ``Food`` version,
+The inherited version of ``init()`` functions in exactly the same way as the ``Food`` version,
 except that it delegates to the ``RecipeIngredient`` version of ``init(name: String)``
 rather than the ``Food`` version.
 
