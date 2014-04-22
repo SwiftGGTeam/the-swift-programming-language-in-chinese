@@ -34,7 +34,7 @@ the ``noreturn`` attribute to a function or method type.
 .. Current list of declaration attributes (as of 4/16/14, r16419):
     ✓ ``assignment`` (OnFunc)
 
-    // @availability isn't implemented yet. Find out from Ted when it's going to be.
+    TR: @availability isn't fully implemented yet. Find out from Ted when it's going to be.
     ``availability(arguments)`` (OnFunc | OnEnum | OnClass | OnProtocol | OnVar | OnConstructor | OnDestructor; AllowMultipleAttributes)
 
     ✓ ``class_protocol`` (OnProtocol)
@@ -49,12 +49,12 @@ the ``noreturn`` attribute to a function or method type.
 
     ``override`` (OnFunc | OnVar | OnSubscript) *Now a contextual keyword, not an attribute
 
-    // Need info about where they can appear and whether they allow multiples:
+    TR: Need info about where they (below) can appear and whether they allow multiples:
     ✓ ``optional``
     ``transparent`` // Per Doug's email on 3/25, we probably shouldn't document this.
     ``unowned``
     ``weak``
-    ``requires_stored_property_inits``
+    ``requires_stored_property_inits`` TR: I don't think we're documenting this one, but find out.
 
     ✓ Keep an eye out for ``call_arguments(arguments)``, which is coming soon.
     (We know the behavior of this attribute, so I'm going to document it now.
@@ -141,9 +141,11 @@ the ``noreturn`` attribute to a function or method type.
     You can mark a function or method type with this attribute to indicate that
     the function or method doesn't return to its caller.
 
-.. You can't override a @noreturn method with a returning one. That said,
-    you can override a method that isn't marked with @noreturn with one that is.
-    The same holds true for implementing protocol requirements.
+    You can override a function or method that is not marked with the ``noreturn``
+    attribute with a function or method that is. That said, you can't override
+    a function or method that is marked with the ``noreturn`` attribute with a function
+    or method that is not. Similar rules apply when you implement a protocol
+    method in a conforming type.
 
 .. TR: Need some more info on this attribute. Is the above correct? What else should we
     document here? How about some actual examples?
@@ -205,6 +207,15 @@ and are used by Interface Builder to synchronize with Xcode.
     ``IBInspectable`` (OnVar)
     ``IBOutlet`` (OnVar)
 
+    Keep an eye out for @IBOutletCollection; it's not implemented yet,
+    but it will be soon (hopefully?). The intent is to bring parity with
+    Objective-C's @IBOutletCollection. It'll behave like so:
+
+    @IBOutletCollect var buttons: UIButton[]
+
+    And allow you to connect multiple UIButton instances from IB to your code,
+    populating the array.
+
 ``IBAction``
 
 .. write-me::
@@ -220,6 +231,11 @@ and are used by Interface Builder to synchronize with Xcode.
 ``IBOutlet``
 
 .. write-me::
+
+``IBOutletCollection``
+
+.. write-me::
+
 
 
 .. _Attributes_TypeAttributes:
@@ -247,6 +263,10 @@ attribute to a function or method declaration.
     ``thin`` // Mainly used for SIL at the moment. Confirm that we shouldn't document for 1.0
     ``thick`` // Mainly used for SIL at the moment. Confirm that we shouldn't document for 1.0
     ``unchecked`` // May be going away if we can come up with better syntactic sugar.
+
+    // @thin and @cc are only accepted in SIL. (from attributes.swift test)
+    var thinFunc : @thin () -> () // expected-error {{attribute is not supported}}
+    var ccFunc : @cc(cdecl) () -> () // expected-error {{attribute is not supported}}
 
 ``auto_closure``
 
