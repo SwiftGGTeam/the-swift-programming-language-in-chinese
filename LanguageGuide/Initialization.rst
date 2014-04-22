@@ -696,7 +696,7 @@ the following two rules apply:
   even if it just automatically inherits them, as per rule 1 –
   then it automatically inherits all of the superclass convenience initializers.
 
-These rules apply even if your subclass adds further designated or convenience initializers.
+These rules apply even if your subclass adds further convenience initializers.
 
 .. note::
 
@@ -879,7 +879,7 @@ to provide a textual description of a ``ShoppingListItem`` instance:
          var purchased = false
          var description: String {
             var output = "\(quantity) x \(name.lowercase)"
-            output += purchased ? " ✔︎" : " ✘"
+            output += purchased ? " ✔" : " ✘"
             return output
          }
       }
@@ -916,9 +916,9 @@ a new ``ShoppingListItem`` instance:
    -> for item in breakfastList {
          println(item.description)
       }
-   // 1 x orange juice ✔︎
-   // 1 x bacon ✘
-   // 6 x eggs ✘
+   </ 1 x orange juice ✔
+   </ 1 x bacon ✘
+   </ 6 x eggs ✘
 
 Here, a new array called ``breakfastList`` is created from
 an array literal containing three new ``ShoppingListItem`` instances.
