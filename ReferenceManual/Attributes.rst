@@ -124,7 +124,7 @@ the ``noreturn`` attribute to a function or method type.
     the items exported by the current module.
 
 ``final``
-    The ``final`` attribute can be applied to a class or to a property, method,
+    The ``final`` attribute is applied to a class or to a property, method,
     or subscript member of a class. It is applied to class to indicate that the class
     can't be subclassed. It is applied to a property, method, or subscript of a class
     to indicate that those class members can't be overridden in any subclass.
@@ -151,8 +151,21 @@ the ``noreturn`` attribute to a function or method type.
     document here? How about some actual examples?
 
 ``NSCopying``
+    The ``NSCopying`` attribute is applied to a variable stored property of a class.
+    This attribute causes the property's setter to be synthesized with a *copy*
+    of the property's value---returned by the ``copyWithZone`` method---instead of the
+    value of the property itself.
+    The type of the property must conform to the ``NSCopying`` protocol.
 
-.. write-me::
+    The ``NSCopying`` attribute behaves in a way similar to the Objective-C ``copy``
+    property attribute.
+
+.. TODO: Possibly put a link to "Copy Properties Maintain Their Own Copies" section
+    in Programming with Objective-C, after we have support in rst for linking to uBooks,
+    etc.
+
+.. TODO: If and when Dave includes a section about this in the Guide,
+    provide a link to the relevant section.
 
 ``objc``
 
@@ -191,6 +204,8 @@ the ``noreturn`` attribute to a function or method type.
 
 .. write-me::
 
+.. TODO: If and when Dave includes a section about this in the Guide,
+    provide a link to the relevant section.
 
 .. _Attributes_InterfaceBuilderAttributes:
 
