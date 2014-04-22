@@ -201,8 +201,11 @@ the ``noreturn`` attribute to a function or method type.
     initializers (or overrides the designated initializers with convenience initializers).
 
 ``weak``
-
-.. write-me::
+    The ``weak`` attribute is applied to a stored property, variable, or constant
+    to indicate that the property, variable, or constant has a weak reference to the
+    object stored as its value. The type of the property, variable, or constant
+    must be an optional class type. Use the ``weak`` attribute to avoid strong
+    reference cycles.
 
 .. TODO: If and when Dave includes a section about this in the Guide,
     provide a link to the relevant section.
