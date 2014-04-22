@@ -119,10 +119,6 @@ The expression on the left side can be an
 identifier expression, a ignored expressions, or a tuple.
 In this usage, tuples contain only
 identifier expressions, ignored expressions, and other tuples.
-This is parallel to the grammar of a simple pattern.
-
-.. TODO: Make sure Brian actually has something called a simple pattern
-   in his discussion of for loops and var declarations.
 
 If the left side is a tuple,
 the right side must be a tuple
