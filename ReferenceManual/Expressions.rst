@@ -124,16 +124,15 @@ This is parallel to the grammar of a simple pattern.
 .. TODO: Make sure Brian actually has something called a simple pattern
    in his discussion of for loops and var declarations.
 
-If the left side consists of a tuple,
-the value of the right side must be a tuple
+If the left side is a tuple,
+the right side must be a tuple
 with the same number of elements.
 The values of the right-hand tuple
 are assigned to the corresponding variables in the left-hand tuple.
 For example: ::
 
-    // Sets and swaps the value of a and b.
-    var (a, b) = (1, 2)
-    (a, b) = (b, a)
+    (a, _, (b, c)) = ("test", 9.45, (12, 3))
+    // a is "test", b is 12, and c is 3.
 
 The assignment operator does not return any value.
 
