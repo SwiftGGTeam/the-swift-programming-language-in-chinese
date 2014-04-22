@@ -6,6 +6,7 @@ Attributes
     @<#attribute name#>
     @<#attribute name#>(<#attribute arguments#>)
 
+.. TR: Which attributes are inheritable and which attribute imply other attributes?
 
 .. _Attributes_DeclarationAttributes:
 
@@ -123,6 +124,10 @@ Declaration Attributes
     You can mark a function or method type with this attribute to indicate that
     the function or method doesn't return to its caller.
 
+.. You can't override a @noreturn method with a returning one. That said,
+    you can override a method that isn't marked with @noreturn with one that is.
+    The same holds true for implementing protocol requirements.
+
 .. TR: Need some more info on this attribute. Is the above correct? What else should we
     document here? How about some actual examples?
 
@@ -193,6 +198,7 @@ Type Attributes
 
 ``auto_closure``
 
+
 .. write-me::
 
 
@@ -213,10 +219,10 @@ Interface Builder Attributes
 
 .. Current list of IB attributes (as of 4/16/14, r16419):
     // Talk to Tony and Robert Morrish about where go for more information.
-    ``IBAction``
-    ``IBDesignable``
-    ``IBInspectable``
-    ``IBOutlet``
+    ``IBAction`` (OnFunc)
+    ``IBDesignable`` (OnClass)
+    ``IBInspectable`` (OnVar)
+    ``IBOutlet`` (OnVar)
 
 ``IBAction``
 
