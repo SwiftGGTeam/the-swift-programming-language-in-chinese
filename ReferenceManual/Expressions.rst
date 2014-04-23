@@ -275,10 +275,10 @@ The following are equivalent: ::
 Primary Expressions
 -------------------
 
-A :newTerm:`primary expression`
-is the most basic kind of expression.
-It can be used as an expression on its own,
-and it can be combined with other tokens
+:newTerm:`Primary expression`
+are the most basic kind of expression.
+They can be used as expressions on their own,
+and they can be combined with other tokens
 such as operators, prefixes, and postfixes,
 to make more complex expressions.
 
