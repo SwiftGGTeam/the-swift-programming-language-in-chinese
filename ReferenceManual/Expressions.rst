@@ -275,13 +275,12 @@ The following are equivalent: ::
 Primary Expressions
 -------------------
 
-.. write-me::
-
-.. TODO: Intro prose goes here.
-
-.. The most common expression type
-   Used to build up more complex expressions
-   Not made up of sub-expressions
+A :newTerm:`primary expression`
+is the most basic kind of expression.
+It can be used as an expression on its own,
+and it can be combined with other tokens
+such as operators, prefixes, and postfixes,
+to make more complex expressions.
 
 .. langref-grammar
 
