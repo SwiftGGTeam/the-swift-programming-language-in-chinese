@@ -168,8 +168,38 @@ the ``noreturn`` attribute to a function or method type.
     provide a link to the relevant section.
 
 ``objc``
+    The ``objc`` attribute tells the compiler that a declaration is available
+    to use in Objective-C code. You can apply this attribute to any declaration
+    that can be represented in Objective-C, including non-nested classes, protocols,
+    properties and methods (including getters and setters) of classes and protocols,
+    initializers, deinitializers, and subscripts.
 
-.. write-me::
+    If you apply the ``objc`` attribute to a class or protocol, it's
+    implicitly applied to the members of that class or protocol.
+    The compiler also implicitly adds the ``objc`` attribute to a class or protocol
+    that inherits from another class or protocol marked with the ``objc`` attribute.
+    That said, protocols marked with the ``objc`` attribute can't inherit
+    from protocols that aren't.
+
+    The ``objc`` attribute optionally accepts a single attribute argument,
+    which consists of a string. Use this attribute when you want to expose a different
+    name to Objective-C for the entity the ``objc`` attribute applies to.
+    You can use this argument to name classes, protocols, methods,
+    getters, setters, and initializers. In the example below,
+    the getter for the ``enabled`` property of the ``ExampleClass``
+    is exposed to Objective-C code as ``isEnabled``
+    rather than just as the name of the property itself.
+
+    ::
+
+        @objc
+        class ExampleClass {
+           var enabled: Bool {
+              @objc(isEnabled) get {
+                 // Return the appropriate value
+              }
+           }
+        }
 
 
 ``optional``
