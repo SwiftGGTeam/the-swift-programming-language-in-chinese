@@ -29,7 +29,7 @@ Expressions
 Unary Expressions
 -----------------
 
-Unary expressions are formed by combining
+:newTerm:`Unary expressions` are formed by combining
 an optional prefix operator with an expression.
 Prefix operators take one argument,
 the expression that follows them.
@@ -168,7 +168,7 @@ The assignment operator does not return any value.
 Conditional Operator
 ~~~~~~~~~~~~~~~~~~~~
 
-The conditional operator evaluates to one of two given values
+The :newTerm:`conditional operator` evaluates to one of two given values
 based on the value of a condition;
 it has the following form:
 
@@ -202,7 +202,7 @@ The unused expression is not evaluated.
 Type-Checking Operators
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-There are two type-checking operators,
+There are two :newTerm:`type-checking operators`,
 the ``is`` operator and the ``as`` operator.
 They have the following form:
 
@@ -340,7 +340,7 @@ to make more complex expressions.
 Literal Expression
 ~~~~~~~~~~~~~~~~~~
 
-A :newTerm:`literal expression` consists of
+:newTerm:`Literal expression` consists of
 either an ordinary literal (such as a string or a number),
 an array literal,
 a dictionary literal,
@@ -564,11 +564,11 @@ It has the following form:
 
 For example, the following pairs of assignments are equivalent: ::
 
-    var x : ExampleEnumeration
+    var x: ExampleEnumeration
     x = ExampleEnumeration.SomeValue
     x = .SomeValue
 
-    var y : ExampleClass
+    var y: ExampleClass
     y = .someClassMethod()
     y = ExampleClass.someClassMethod()
 
@@ -651,10 +651,6 @@ by applying a postfix operator or other postfix syntax
 to an expression.
 Syntactically, every primary expression is also a postfix expression.
 
-.. write-me::
-
-.. TODO: Intro prose goes here.
-
 .. Formed by putting a postfix operator or postfix-operator-like suffix
    after an expression.
 
@@ -702,9 +698,7 @@ They have the following form:
     <#function#>(<#argument#>)
     <#function#>(<#argument 1#>, <#argument 2#>, <#argument 3#>)
 
-The function portion of the function call expression
-can be any expression whose value is of a functional type
-(
+The *function* can be any expression whose value is of a functional type.
 
 A function call expression can include a :newTerm:`trailing closure`
 in the form of a closure expression immediately after the parenthesis.
@@ -716,8 +710,7 @@ The following function calls are equivalent: ::
     exampleFunction(x) {$0 == 13}
 
 The parentheses can be omitted
-when calling a function that takes only one argument
-with a trailing closure: ::
+the trailing closure is the functions's only argument: ::
 
     myData.process() {$0 * 2}
     myData.process {$0 * 2}
@@ -959,19 +952,19 @@ It has the following form:
 
 If the *expression* is not ``nil``,
 the optional-member expression evaluates
-to the non-optional unwrapped value of the expression
-and any chained postfix expression are evaluated normally.
+to the unwrapped value of the expression,
+and any chained postfix expression are evaluated.
 Otherwise,
 the chained-optional expression evaluates to ``nil``
 and any chained postfix expressions are ignored.
 
 Informally, all postfix expressions that follow the chained-optional expression
 and are still part of the same expression
-are chained to the chained-optional expression.
+are understood to be chained to the chained-optional expression.
 Specifically,
-a postfix expression is *directly chained*
+a postfix expression is :newTerm:`directly chained`
 to the expression that is its first part.
-A postfix expression is *chained* to an expression
+A postfix expression is :newTerm:`chained` to an expression
 if it is either directly chained to that expression
 or if it is directly chained to another postfix expression
 that is directly chained to that expression.
