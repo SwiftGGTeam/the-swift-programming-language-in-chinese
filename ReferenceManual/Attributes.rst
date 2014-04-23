@@ -247,8 +247,19 @@ the ``noreturn`` attribute to a function or method type.
 Interface Builder Attributes
 ----------------------------
 
-Interface Builder attributes are applied to method and property declarations
-and are used by Interface Builder to synchronize with Xcode.
+Interface Builder attributes are declaration attributes
+used by Interface Builder to synchronize with Xcode.
+Swift provides the following Interface Builder attributes:
+``IBAction``, ``IBDesignable``, ``IBInspectable``, ``IBOutlet``,
+and ``IBOutletCollection``. These attributes are conceptually the same as their
+Objective-C counterparts.
+
+.. TODO: Need to link to the relevant discussion of these attributes in Objc.
+
+The ``IBOutlet``, ``IBOutletCollection``, and ``IBInspectable`` attributes
+are applied to property declarations of a class. The ``IBAction`` attribute
+is applied to method declarations of a class, and the ``IBDesignable`` attribute
+is applied to class declarations.
 
 .. Current list of IB attributes (as of 4/16/14, r16419):
     // Talk to Tony and Robert Morrish about where go for more information.
@@ -266,26 +277,22 @@ and are used by Interface Builder to synchronize with Xcode.
     And allow you to connect multiple UIButton instances from IB to your code,
     populating the array.
 
-``IBAction``
+    ``IBAction``
+        The ``IBAction`` attribute is applied to a method of a class to expose the method
+        as a potential action in Interface Builder.
 
-.. write-me::
+    ``IBDesignable``
+    TR: Need more information about this attribute.
 
-``IBDesignable``
+    ``IBInspectable``
+    TR: Need more information about this attribute.
 
-.. write-me::
+    ``IBOutlet``
+        The ``IBOutlet`` attribute is applied to a property of a class to expose that
+        property as an outlet in Interface Builder
+        so Interface Builder can synchronize the display and connection of outlets with Xcode.
 
-``IBInspectable``
-
-.. write-me::
-
-``IBOutlet``
-
-.. write-me::
-
-``IBOutletCollection``
-
-.. write-me::
-
+    ``IBOutletCollection``
 
 
 .. _Attributes_TypeAttributes:
