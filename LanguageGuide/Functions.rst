@@ -787,13 +787,6 @@ It uses the ``string`` variable parameter for all of its string manipulation.
 Inout Parameters
 ~~~~~~~~~~~~~~~~
 
-A function receives *constant* argument values by default.
-You can define individual parameters to receive *variable* argument values instead,
-as described in the previous section.
-However, any changes you make to a variable argument value
-do not persist beyond the end of each call to the function,
-and do not affect the original value that was used to call the function.
-
 It is sometimes useful for a function parameter to represent
 the *actual* external value used for the call,
 and for any modifications to that value to change
@@ -861,7 +854,7 @@ even though they were originally defined outside of the function.
 
 .. note::
 
-   In-out parameters are not the same as returning a value from a function.
+   ``inout`` parameters are not the same as returning a value from a function.
    The ``swapTwoInts`` example above does not define a return type or return a value,
    but it still modifies the values of ``someInt`` and ``anotherInt``.
    In-out parameters are an alternative way for a function to have an effect
