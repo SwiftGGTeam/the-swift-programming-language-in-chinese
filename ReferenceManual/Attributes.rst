@@ -287,10 +287,12 @@ attribute to a function or method declaration.
     var ccFunc : @cc(cdecl) () -> () // expected-error {{attribute is not supported}}
 
 ``auto_closure``
-
-
-.. write-me::
-
+    An ``auto_closure`` attribute is used to delay the evaluation of an expression
+    by automatically wrapping that expression in a closure with no arguments.
+    This attribute is applied to a function or method type that takes no arguments
+    and that returns the type of the expression.
+    For an example of how to use the ``auto_closure`` attribute,
+    see :ref:`Closures_AutoClosures`.
 
 ``noreturn``
     The ``noreturn`` attribute is applied to the type of a function or method
