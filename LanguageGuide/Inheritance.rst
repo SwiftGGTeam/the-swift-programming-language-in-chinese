@@ -177,7 +177,7 @@ Overriding
 ----------
 
 A subclass can provide its own custom implementation of
-an instance method, class method, instance property, class property, or subscript
+an instance method, class method, instance property, or subscript
 that it would otherwise inherit from a superclass.
 This is known as :newTerm:`overriding`.
 
