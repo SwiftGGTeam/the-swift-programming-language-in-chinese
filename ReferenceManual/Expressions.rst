@@ -574,20 +574,23 @@ Parenthesized Expression
 
 A :newTerm:`parenthesized expression` consists of
 a comma-separated list of expressions surrounded by paretheses.
-Each expression in it may have an optional identifier before it,
-set off by a colon (``:``).
+Each expression can have an optional identifier before it,
+separated by a colon (``:``).
 It has the following form:
 
 .. syntax-outline::
 
    (<#identifier#>: <#expression#>, <#identifier#>: <#expression#>)
 
-.. TR: Is this still correct?
-   There's been a lot of flux around these recently,
-   partly as a side effect of changes to the grammar
-   for method/function declarations.
+.. TR: Should this only be used in a function call?
+   As a primary expression, it seems like it is a remnant of named tuples
+   which are going away, and should only be lightly documented.
+   For example, you shouldn't do this anymore:
 
-.. TODO: Add prose about the identifiers.
+   (swift) var x = (a: 1, b: 2)
+   // x : (a: Int, b: Int) = (1, 2)
+   (swift) x.a
+   // r1 : Int = 1
 
 .. langref-grammar
 
