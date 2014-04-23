@@ -52,8 +52,12 @@ the ``noreturn`` attribute to a function or method type.
     TR: Need info about where they (below) can appear and whether they allow multiples:
     ✓ ``optional``
     ``transparent`` // Per Doug's email on 3/25, we probably shouldn't document this.
-    ``unowned``
-    ``weak``
+    ``unowned``, ``unowned(unsafe)``, ``unowned(safe)``
+
+    TR: Need to get more information about this attribute from John McCall.
+    (see also John's 4/23/14 commit email for r16693)
+
+    ✓ ``weak``
     ``requires_stored_property_inits`` TR: I don't think we're documenting this one, but find out.
 
     ✓ Keep an eye out for ``call_arguments(arguments)``, which is coming soon.

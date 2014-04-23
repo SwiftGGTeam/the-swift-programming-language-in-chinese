@@ -203,8 +203,8 @@ but the binding between the constant name and the object it refers to can't.
 
 When a constant is declared at global scope,
 it must be initialized with a value.
-When a constant declaration occurs in the context of a class, structure,
-or protocol declaration, it is considered a :newTerm:`constant named property`.
+When a constant declaration occurs in the context of a class or structure
+declaration, it is considered a :newTerm:`constant property`.
 Constant declarations are not computed properties and therefore do not have getters
 or setters.
 
@@ -230,13 +230,19 @@ The type annotation (``:`` *type*) is optional in a constant declaration
 when the type of the *constant name* can be inferred,
 as described in :ref:`Types_TypeInference`.
 
-To declare a class constant named property,
-mark the declaration with ``class`` keyword. To declare a static constant named property,
-mark the declaration with ``static`` keyword instead. Class and static properties
-are discussed in :ref:`Properties_TypeProperties`.
+To declare a static constant property,
+mark the declaration with the ``static`` keyword. Static properties
+are discussed in :ref:`Properties_StaticProperties`.
+
+.. TODO: Discuss class properties after they're implemented
+    (probably not until after 1.0)
+
+    To declare a class constant property, mark the declaration with the ``class`` keyword.
+
+.. TODO: Need to discuss static constant properties in more detail.
 
 For more information about constants and for guidance about when to use them,
-see :ref:`BasicTypes_NamedValues` and :ref:`Properties_StoredProperties`.
+see :ref:`BasicTypes_ConstantsAndVariables` and :ref:`Properties_StoredProperties`.
 
 .. TODO: Need to discuss class and static constant properties.
 
@@ -255,36 +261,46 @@ see :ref:`BasicTypes_NamedValues` and :ref:`Properties_StoredProperties`.
     pattern-initializer --> pattern initializer-OPT
     initializer --> ``=`` expression
 
-.. TODO: Write about class and static constants.
-
 
 .. _Declarations_VariableDeclaration:
 
 Variable Declaration
 --------------------
 
-A :newTerm:`variable declaration` introduces a variable, named value into your program
+A :newTerm:`variable declaration` introduces a variable named value into your program
 and is declared using the keyword ``var``.
 
 Variable declarations have several forms that declare different kinds
 of named, mutable values,
-including stored and computed values and properties,
-and stored value and property observers.
+including stored and computed variables and properties,
+stored variable and property observers, and static variable properties.
 The appropriate form to use depends on
 the scope at which the variable is declared and the kind of variable you intend to declare.
 
-The following form declares a stored value or property:
+.. note::
+
+    You can also declare properties in the context of a protocol declaration,
+    as described in :ref:`Declarations_ProtocolPropertyDeclaration`.
+
+You can override a property in a subclass by prefixing the subclass's property declaration
+with the ``override`` keyword, as described in :ref:`Inheritance_Overriding`.
+
+.. _Declarations_StoredVariablesAndVariableStoredProperties:
+
+Stored Variables and Variable Stored Properties
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The following form declares a stored variable or variable stored property:
 
 .. syntax-outline::
 
     var <#variable name#>: <#type#> = <#expression#>
 
 You define this form of a variable declaration at global scope, the local scope
-of a function, or in the context of a class, structure, protocol, or extension declaration.
+of a function, or in the context of a class or structure declaration.
 When a variable declaration of this form is declared at global scope or the local
-scope of a function, it is referred to as a :newTerm:`stored named value`.
-When it is declared in the context of a class,
-structure, protocol, or extension declaration,
+scope of a function, it is referred to as a :newTerm:`stored variable`.
+When it is declared in the context of a class or structure declaration,
 it is referred to as a :newTerm:`variable stored property`.
 
 The initializer *expression* can't be present in a protocol declaration,
@@ -297,64 +313,16 @@ if the *variable name* is a tuple pattern,
 the name of each item in the tuple is bound to the corresponding value
 in the initializer *expression*.
 
-As their names suggest, the value of a stored named value or a variable stored property
+As their names suggest, the value of a stored variable or a variable stored property
 is stored in memory.
 
-You can also declare a stored value or property with ``willSet`` and ``didSet`` observers.
-A stored value or property declared with observers has the following form:
 
-.. syntax-outline::
+.. _Declarations_ComputedVariablesAndComputedProperties:
 
-    var <#variable name#>: <#type#> = <#expression#> {
-       willSet(<#setter name#>) {
-          <#statements#>
-       }
-       didSet(<#setter name#> {
-          <#statements#>
-       }
-    }
+Computed Variables and Computed Properties
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You define this form of a variable declaration at global scope, the local scope
-of a function, or in the context of a class or structure declaration.
-When a variable declaration of this form is declared at global scope or the local
-scope of a function, the observers are referred to as :newTerm:`stored named value observers`.
-When it is declared in the context of a class or structure declaration,
-the observers are referred to as :newTerm:`stored property observers`.
-
-The initializer *expression* is optional in the context of a class or structure declaration,
-but required elsewhere. The type annotation is required in all variable declarations that
-include observers, regardless of the context in which they are declared.
-
-The ``willSet`` and ``didSet`` observers provide a way to observe (and to respond appropriately)
-when the value of a stored value or property is being set.
-The observers are not called when the value or property
-is first initialized.
-Instead, they are called only when the value is set outside of an initialization context.
-
-A ``willSet`` observer is called just before the value of the variable or property
-is set. The new value is passed to the ``willSet`` observer as a constant,
-and therefore it can't be changed in the implementation of the ``willSet`` clause.
-The ``didSet`` observer is called immediately after the new value is set. In contrast
-to the ``willSet`` observer, the old value of the variable or property
-is passed to the ``didSet`` observer in case you still need access to it. That said,
-if you assign a value to a variable or property within its own ``didSet`` observer clause,
-that new value that you assign will replace the one that was just set and passed to
-the ``willSet`` observer.
-
-The *setter name* and enclosing parentheses in the ``willSet`` and ``didSet`` clauses are optional.
-If you provide setter names,
-they are used as the parameter names to the ``willSet`` and ``didSet`` observers.
-If you do not provide setter names,
-the default parameter name to the ``willSet`` observer is ``newValue``
-and the default parameter name to the ``didSet`` observer is ``oldValue``.
-
-The ``didSet`` clause is optional when you provide a ``willSet`` clause.
-Likewise, the ``willSet`` clause is optional when you provide a ``didSet`` clause.
-
-For more information and to see an example of how to use stored property observers,
-see :ref:`Properties_StoredPropertyObservers`.
-
-The following form declares a computed value or property:
+The following form declares a computed variable or computed property:
 
 .. syntax-outline::
 
@@ -368,9 +336,9 @@ The following form declares a computed value or property:
     }
 
 You define this form of a variable declaration at global scope, the local scope
-of a function, or in the context of a class, structure, or extension declaration.
+of a function, or in the context of a class, structure, enumeration, or extension declaration.
 When a variable declaration of this form is declared at global scope or the local
-scope of a function, it is referred to as a :newTerm:`computed named value`.
+scope of a function, it is referred to as a :newTerm:`computed variable`.
 When it is declared in the context of a class,
 structure, or extension declaration,
 it is referred to as a :newTerm:`computed property`.
@@ -394,15 +362,86 @@ the value of a computed named value or a computed property is not stored in memo
 For more information and to see examples of computed properties,
 see :ref:`Properties_ComputedProperties`.
 
-To declare a class variable property,
-mark the declaration with the ``class`` keyword. To declare a static variable property,
-mark the declaration with the ``static`` keyword instead. Class and static properties
-are discussed in :ref:`Properties_TypeProperties`.
 
-You can also declare properties in the context of a protocol declaration,
-as described in :ref:`Declarations_ProtocolPropertyDeclaration`.
+.. _Declarations_StoredVariableObserversAndPropertyObservers:
 
-.. TODO: Need to discuss class and static variable properties.
+Stored Variable Observers and Property Observers
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You can also declare a stored variable or property with ``willSet`` and ``didSet`` observers.
+A stored variable or property declared with observers has the following form:
+
+.. syntax-outline::
+
+    var <#variable name#>: <#type#> = <#expression#> {
+       willSet(<#setter name#>) {
+          <#statements#>
+       }
+       didSet(<#setter name#> {
+          <#statements#>
+       }
+    }
+
+You define this form of a variable declaration at global scope, the local scope
+of a function, or in the context of a class or structure declaration.
+When a variable declaration of this form is declared at global scope or the local
+scope of a function, the observers are referred to as :newTerm:`stored variable observers`.
+When it is declared in the context of a class or structure declaration,
+the observers are referred to as :newTerm:`property observers`.
+
+You can add property observers to any stored property. You can also add property
+observers to any inherited property (whether stored or computed) by overriding
+the property within a subclass, as described in :ref:`Inheritance_OverridingPropertyObservers`.
+
+The initializer *expression* is optional in the context of a class or structure declaration,
+but required elsewhere. The type annotation is required in all variable declarations that
+include observers, regardless of the context in which they are declared.
+
+The ``willSet`` and ``didSet`` observers provide a way to observe (and to respond appropriately)
+when the value of a variable or property is being set.
+The observers are not called when the variable or property
+is first initialized.
+Instead, they are called only when the value is set outside of an initialization context.
+
+A ``willSet`` observer is called just before the value of the variable or property
+is set. The new value is passed to the ``willSet`` observer as a constant,
+and therefore it can't be changed in the implementation of the ``willSet`` clause.
+The ``didSet`` observer is called immediately after the new value is set. In contrast
+to the ``willSet`` observer, the old value of the variable or property
+is passed to the ``didSet`` observer in case you still need access to it. That said,
+if you assign a value to a variable or property within its own ``didSet`` observer clause,
+that new value that you assign will replace the one that was just set and passed to
+the ``willSet`` observer.
+
+The *setter name* and enclosing parentheses in the ``willSet`` and ``didSet`` clauses are optional.
+If you provide setter names,
+they are used as the parameter names to the ``willSet`` and ``didSet`` observers.
+If you do not provide setter names,
+the default parameter name to the ``willSet`` observer is ``newValue``
+and the default parameter name to the ``didSet`` observer is ``oldValue``.
+
+The ``didSet`` clause is optional when you provide a ``willSet`` clause.
+Likewise, the ``willSet`` clause is optional when you provide a ``didSet`` clause.
+
+For more information and to see an example of how to use property observers,
+see :ref:`Properties_PropertyObservers`.
+
+
+.. _Declarations_StaticVariableProperties:
+
+Static Variable Properties
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+To declare a static variable property,
+mark the declaration with the ``static`` keyword. Static properties
+are discussed in :ref:`Properties_StaticProperties`.
+
+.. TODO: Discuss class properties after they're implemented
+    (probably not until after 1.0)
+
+    To declare a class variable property, mark the declaration with the ``class`` keyword.
+
+.. TODO: Need to discuss static variable properties in more detail.
 
 .. langref-grammar
     decl-var-head  ::= attribute-list ('static' | 'class')? 'var'
@@ -590,12 +629,31 @@ Function Declaration
 Enumeration Declaration
 -----------------------
 
-An :newTerm:`enumeration declaration` introduces a named, enumeration type into your program.
+An :newTerm:`enumeration declaration` introduces a named enumeration type into your program.
 
 Enumeration declarations have two basic forms and are declared using the keyword ``enum``.
+The body of an enumeration declared using either form contains
+zero or more values---called :newTerm:`enumeration cases`---
+and any number of declarations,
+including computed properties,
+instance methods, static methods, initializers, type aliases,
+and even other enumeration, structure, and class declarations.
+Enumeration declarations can't contain destructor or protocol declarations.
+
+Unlike classes and structures,
+enumeration types do not have an implicitly provided default initializer;
+all initializers must be declared explicitly. Initializers can delegate
+to other initializers in the enumeration, but the initialization process is complete
+only after an initializer assigns one of the enumeration cases to ``self``.
+
+You can extend the behavior of an enumeration type with an extension declaration,
+as discussed in :ref:`Declarations_ExtensionDeclaration`.
+
+Enumerations with Cases of Any Type
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The following form declares an enumeration type that contains
-values---called :newTerm:`enumeration cases`---of any type:
+enumeration cases of any type:
 
 .. syntax-outline::
 
@@ -615,6 +673,9 @@ These types are specified in the *associated value types* tuple,
 immediately following the name of the case.
 For more information and to see examples of cases with associated value types,
 see :ref:`Enumerations_AssociatedValues`.
+
+Enumerations with Cases of the Same Basic Type
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The following form declares an enumeration type that contains
 enumeration cases of the same basic type:
@@ -658,17 +719,8 @@ by calling the ``fromRaw`` method, which returns an optional case.
 For more information and to see examples of cases with raw value types,
 see :ref:`Enumerations_RawValues`.
 
-The body of an enumeration declared using either form can also contain zero or more declarations,
-including computed properties,
-instance methods, static methods, initializers, type aliases,
-and even other enumeration, structure, and class declarations.
-Enumeration declarations can't contain destructor or protocol declarations.
-
-Unlike classes and structures,
-enumeration types do not have an implicitly provided default initializer;
-all initializers must be declared explicitly. Initializers can delegate
-to other initializers in the enumeration, but the initialization process is complete
-only after an initializer assigns one of the enumeration cases to ``self``.
+Accessing Enumeration Cases
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 To reference the case of an enumeration type, use dot (``.``) syntax,
 as in ``EnumerationType.EnumerationCase``. When the enumeration type can be inferred
@@ -677,13 +729,11 @@ as described in :ref:`Enumerations_EnumerationSyntax`
 and :ref:`Expressions_DelayedIdentifierExpression`.
 
 To check the values of enumeration cases, use a ``switch`` statement,
-as shown in :ref:`Enumerations_ConsideringEnumerationValuesWithASwitchStatement`.
+as shown in :ref:`Enumerations_CheckingEnumerationValuesWithASwitchStatement`.
 The enumeration type is pattern-matched against the enumeration case patterns
 in the case blocks of the ``switch`` statement,
 as described in :ref:`Patterns_EnumerationCasePattern`.
 
-You can extend the behavior of an enumeration type with an extension declaration,
-as discussed in :ref:`Declarations_ExtensionDeclaration`.
 
 .. TODO: Note that you can require protocol adoption,
     by using a protocol type as the raw value type,
@@ -790,7 +840,7 @@ There are three ways create an instance of a previously declared structure:
   as described in :ref:`Initialization_Initializers`.
 * If no initializers are declared,
   call the structure's memberwise initializer,
-  as described in :ref:`Initialization_MemberwiseStructureInitializers`.
+  as described in :ref:`Initialization_MemberwiseInitializersForStructureTypes`.
 * If no initializers are declared,
   and all properties of the structure declaration were given initial values,
   call the structure's default initializer,
@@ -842,7 +892,7 @@ Class declarations are declared using the keyword ``class`` and have the followi
 
 The body of a class contains zero or more *declarations*.
 These *declarations* can include both stored and computed properties,
-class properties, instance methods, class methods, initializers,
+instance methods, class methods, initializers,
 a single destructor method, type aliases,
 and even other class, structure, and enumeration declarations.
 Class declarations can't contain protocol declarations.
@@ -867,7 +917,7 @@ designated initializers.
 A class can override properties, methods, and initializers of its superclass.
 That said, a designated initializer of the class must call one of its superclass's
 designated initializers before the class overrides any of the superclass's properties.
-Overridden methods must be marked with the ``override`` attribute.
+Overridden methods must be marked with the ``override`` keyword.
 
 Although properties and methods declared in the *superclass* are inherited by
 the current class, designated initializers declared in the *superclass* are not.
@@ -1035,23 +1085,28 @@ that conform to the protocol. As a result, you don't implement the getter or set
 directly in the protocol in which it is declared.
 
 The getter and setter requirements can be satisfied by a conforming type in a variety of ways.
-If the property declaration includes both the ``get`` and ``set`` keywords,
+If a property declaration includes both the ``get`` and ``set`` keywords,
 a conforming type can implement it with a variable stored property
 or a computed property that is both readable and writeable
-(that is, one that implements both a getter and a setter); however, it can't
-be implemented as a constant stored property
-or a read-only computed property. If the property declaration includes
+(that is, one that implements both a getter and a setter). However,
+that property declaration can't be implemented as a constant property
+or a read-only computed property. If a property declaration includes
 only the ``get`` keyword, it can be implemented as any kind of property.
 For examples of conforming types that implement the property requirements of a protocol,
 see :ref:`Protocols_InstanceProperties`.
 
-To declare a class or static property requirement in a protocol declaration,
-mark the property declaration with the ``class`` keyword. Classes that implement
-this property also declare the property with the ``class`` keyword. Structures
-that implement it must declare the property with the ``static`` keyword instead.
-If you're implementing the property in an extension,
-use the ``class`` keyword if you're extending a class and the ``static`` keyword
-if you're extending a structure.
+.. TODO:
+    Because we're not going to have 'class' properties for 1.0,
+    you can't declare static or class properties in a protocol declaration.
+    Add the following text back in after we get the ability to do 'class' properties:
+
+    To declare a class or static property requirement in a protocol declaration,
+    mark the property declaration with the ``class`` keyword. Classes that implement
+    this property also declare the property with the ``class`` keyword. Structures
+    that implement it must declare the property with the ``static`` keyword instead.
+    If you're implementing the property in an extension,
+    use the ``class`` keyword if you're extending a class and the ``static`` keyword
+    if you're extending a structure.
 
 See also :ref:`Declarations_VariableDeclaration`.
 
@@ -1075,8 +1130,7 @@ and you can't provide any default parameter values as part of the function decla
 For examples of conforming types that implement the method requirements of a protocol,
 see :ref:`Protocols_InstanceMethods`.
 
-As with protocol property declarations,
-to declare a class or static method requirement in a protocol declaration,
+To declare a class or static method requirement in a protocol declaration,
 mark the method declaration with the ``class`` keyword. Classes that implement
 this method also declare the method with the ``class`` keyword. Structures
 that implement it must declare the method with the ``static`` keyword instead.
@@ -1239,10 +1293,6 @@ structure, or enumeration into your program.
 Initializer declarations are declared using the keyword ``init`` and have
 two basic forms. Similar to the syntax of function declarations,
 initializer declarations can be declared using function-style and selector-style syntax.
-Unlike function declarations, initializer declarations don't have a name
-and can have only one kind of return type, as described below.
-
-.. TODO: Adjust this last sentence if we include another form of initializer.
 
 Structure, enumeration, and class types can have any number of initializers,
 but the rules and associated behavior for class initializers are different.
@@ -1381,11 +1431,11 @@ Extension declarations begin with the keyword ``extension`` and have the followi
     }
 
 The body of an extension declaration contains zero or more *declarations*.
-These *declarations* can include computed properties, computed static and class properties,
+These *declarations* can include computed properties, computed static properties,
 instance methods, static and class methods, initializers, subscript declarations,
 and even class, structure, and enumeration declarations.
 Extension declarations can't contain destructor or protocol declarations,
-store properties, stored property observers, or other extension declarations.
+store properties, property observers, or other extension declarations.
 For a discussion and several examples of extensions that include various kinds of declarations,
 see :doc:`../LanguageGuide/Extensions`.
 
@@ -1483,7 +1533,7 @@ That type of the *setter name* must be the same as the *return type*.
 You can overload a subscript declaration in the type in which it is declared,
 as long as the *parameters* or the *return type* differ from the one you're overloading.
 You can also override a subscript declaration inherited from a superclass. When you do so,
-you must mark the overridden subscript declaration with an ``override`` attribute (``@override``).
+you must mark the overridden subscript declaration with the ``override`` keyword.
 
 You can also declare subscripts in the context of a protocol declaration,
 as described in :ref:`Declarations_ProtocolSubscriptDeclaration`.
