@@ -201,6 +201,8 @@ the ``noreturn`` attribute to a function or method type.
            }
         }
 
+.. TODO: If and when Dave includes a section about this in the Guide,
+    provide a link to the relevant section. Possibly link to Anna and Jacks guide too.
 
 ``optional``
     The ``optional`` attribute is applied to a protocol's property, method,
