@@ -857,7 +857,7 @@ even though they were originally defined outside of the function.
    ``inout`` parameters are not the same as returning a value from a function.
    The ``swapTwoInts`` example above does not define a return type or return a value,
    but it still modifies the values of ``someInt`` and ``anotherInt``.
-   ``inout` parameters are an alternative way for a function to have an effect
+   ``inout`` parameters are an alternative way for a function to have an effect
    outside of the scope of its function body.
 
 .. _Functions_FunctionTypes:
