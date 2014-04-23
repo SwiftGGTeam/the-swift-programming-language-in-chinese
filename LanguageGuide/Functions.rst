@@ -668,6 +668,58 @@ but the returned value is not used.
    never allow control to fall out of the bottom of the function
    without returning a value.
 
+.. _Functions_VariadicParameters:
+
+Variadic Parameters
+~~~~~~~~~~~~~~~~~~~
+
+A :newTerm:`variadic parameter` accepts zero or more values of a certain type.
+You use a variadic parameter to specify that the parameter can be passed
+a varying number of input values when the function is called,
+by inserting three period characters (``...``) after the parameter's type name.
+
+This example calculates the :newTerm:`arithmetic mean`
+(also known as the :newTerm:`average`) for a list of numbers of any length:
+
+.. testcode:: functionParameters
+
+   -> func arithmeticMean(numbers: Double...) -> Double {
+         var total: Double = 0
+         for number in numbers {
+            total += number
+         }
+         return total / Double(numbers.count)
+      }
+   -> arithmeticMean(1, 2, 3, 4, 5)
+   << // r2 : Double = 3.0
+   /> returns \(r2), which is the arithmetic mean of these five numbers
+   </ returns 3.0, which is the arithmetic mean of these five numbers
+   -> arithmeticMean(3, 8, 19)
+   << // r3 : Double = 10.0
+   /> returns \(r3), which is the arithmetic mean of these three numbers
+   </ returns 10.0, which is the arithmetic mean of these three numbers
+
+As shown in this example,
+a variadic parameter can be used with the ``for``-``in`` statement
+to iterate through the list of values represented by the parameter.
+Variadic parameters automatically conform to the ``Sequence`` protocol,
+and can be used anywhere that a ``Sequence`` is valid.
+``Sequence`` is covered in more detail in :doc:`Protocols`.
+
+.. note::
+
+   A function may have at most one variadic parameter,
+   and it must always appear last in the parameters list,
+   to avoid ambiguity when calling the function with multiple parameters.
+
+.. TODO: A function's variadic parameter cannot be referred to by name
+   when the function is called.
+   I've reported this as rdar://16387108;
+   if it doesn't get fixed, I should mention it here.
+
+.. TODO: sequence isn't currently covered in Protocols.
+   remove this comment if it is not included before release.
+
 .. _Functions_ConstantAndVariableParameters:
 
 Constant and Variable Parameters
@@ -730,67 +782,90 @@ It uses the ``string`` variable parameter for all of its string manipulation.
    and are not visible outside of the function's body.
    The variable parameter only exists for the lifetime of that function call.
 
-.. _Functions_VariadicParameters:
-
-Variadic Parameters
-~~~~~~~~~~~~~~~~~~~
-
-A :newTerm:`variadic parameter` accepts zero or more values of a certain type.
-You use a variadic parameter to specify that the parameter can be passed
-a varying number of input values when the function is called,
-by inserting three period characters (``...``) after the parameter's type name.
-
-This example calculates the :newTerm:`arithmetic mean`
-(also known as the :newTerm:`average`) for a list of numbers of any length:
-
-.. testcode:: functionParameters
-
-   -> func arithmeticMean(numbers: Double...) -> Double {
-         var total: Double = 0
-         for number in numbers {
-            total += number
-         }
-         return total / Double(numbers.count)
-      }
-   -> arithmeticMean(1, 2, 3, 4, 5)
-   << // r2 : Double = 3.0
-   /> returns \(r2), which is the arithmetic mean of these five numbers
-   </ returns 3.0, which is the arithmetic mean of these five numbers
-   -> arithmeticMean(3, 8, 19)
-   << // r3 : Double = 10.0
-   /> returns \(r3), which is the arithmetic mean of these three numbers
-   </ returns 10.0, which is the arithmetic mean of these three numbers
-
-As shown in this example,
-a variadic parameter can be used with the ``for``-``in`` statement
-to iterate through the list of values represented by the parameter.
-Variadic parameters automatically conform to the ``Sequence`` protocol,
-and can be used anywhere that a ``Sequence`` is valid.
-``Sequence`` is covered in more detail in :doc:`Protocols`.
-
-.. note::
-
-   A function may have at most one variadic parameter,
-   and it must always appear last in the parameters list,
-   to avoid ambiguity when calling the function with multiple parameters.
-
-.. TODO: A function's variadic parameter cannot be referred to by name
-   when the function is called.
-   I've reported this as rdar://16387108;
-   if it doesn't get fixed, I should mention it here.
-
-.. TODO: sequence isn't currently covered in Protocols.
-   remove this comment if it is not included before release.
-
 .. _Functions_InoutParameters:
 
 Inout Parameters
 ~~~~~~~~~~~~~~~~
 
-.. write-me::
+A function receives *constant* argument values by default.
+You can define individual parameters to receive *variable* argument values instead,
+as described in the previous section.
+However, any changes you make to a variable argument value
+do not persist beyond the end of each call to the function,
+and do not affect the original value that was used to call the function.
 
-.. inout properties and a general discussion of byref / byvalue
-.. presumably you can't pass a constant as the argument for an inout parameter
+It is sometimes useful for a function parameter to represent
+the *actual* external value used for the call,
+and for any modifications to that value to change
+the original value from outside of the function,
+after the function has completed its execution.
+You define such parameters as :newTerm:`inout parameters`,
+which are written by placing the ``inout`` keyword at the start of their parameter definition.
+
+You can think of ``inout`` parameters in the following way:
+
+An ``inout`` parameter has a value that is passed *in* to the function;
+is modified by the function;
+and is passed back *out* of the function to replace the original value.
+
+You can only ever pass a variable as the argument for an ``inout`` parameter.
+You cannot pass a constant or a literal value as the argument,
+because constants and literals cannot be modified.
+You place an ampersand (``&``) directly before a variable's name
+when you pass it as an argument to an inout parameter,
+to indicate that it can be modified by the function.
+(This is similar to C's use of the ampersand character as a reference operator.)
+
+.. note::
+
+   In-out parameters cannot have default values,
+   and variadic parameters cannot be marked as ``inout``.
+   If you mark a parameter as ``inout``,
+   it cannot also be marked as ``var`` or ``let``.
+
+Here's an example of a function called ``swapTwoInts``,
+which has two ``inout`` integer parameters called ``a`` and ``b``:
+
+.. testcode:: inout
+
+   -> func swapTwoInts(inout a: Int, inout b: Int) {
+         let temporaryA = a
+         a = b
+         b = temporaryA
+      }
+
+The ``swapTwoInts`` function simply swaps the value of ``b`` into ``a``,
+and the value of ``a`` into ``b``.
+The function performs this swap by storing the value of ``a`` in
+a temporary constant called ``temporaryA``; assigning the value of ``b`` to ``a``;
+and then assigning ``temporaryA`` to ``b``.
+
+The ``swapTwoInts`` function can be called with two variables of type ``Int``
+to swap their values.
+Note that the names of ``someInt`` and ``anotherInt`` are prefixed with an ampersand
+when they are passed to the ``swapTwoInts`` function:
+
+.. testcode:: inout
+
+   -> var someInt = 3
+   << // someInt : Int = 3
+   -> var anotherInt = 107
+   << // anotherInt : Int = 107
+   -> swapTwoInts(&someInt, &anotherInt)
+   -> println("someInt is now \(someInt), and anotherInt is now \(anotherInt)")
+   <- someInt is now 107, and anotherInt is now 3
+
+After calling the ``swapTwoInts`` function,
+the values of ``someInt`` and ``anotherInt`` have both been modified,
+even though they were originally defined outside of the function.
+
+.. note::
+
+   In-out parameters are not the same as returning a value from a function.
+   The ``swapTwoInts`` example above does not define a return type or return a value,
+   but it still modifies the values of ``someInt`` and ``anotherInt``.
+   In-out parameters are an alternative way for a function to have an effect
+   outside of the scope of its function body.
 
 .. _Functions_FunctionTypes:
 
