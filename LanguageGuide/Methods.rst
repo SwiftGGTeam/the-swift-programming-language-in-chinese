@@ -292,7 +292,7 @@ Method Binding
 ..    func foo(x: Int) -> Float { ... }
 .. }
 .. var c = C()
-.. var boundFunc = c.foo 	// a function with type (Int) -> Float
+.. var boundFunc = c.foo   // a function with type (Int) -> Float
 .. var unboundFunc = C.foo // a function with type (C) -> (Int) -> Float
 .. selector-style methods can be referenced as foo.bar:bas:
    (see Doug's comments from the 2014-03-12 release notes)

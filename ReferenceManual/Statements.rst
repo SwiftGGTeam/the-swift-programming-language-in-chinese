@@ -352,9 +352,9 @@ as discussed in :ref:`BasicTypes_OptionalBinding`.
 
     Grammar of an if statement
 
-    if-statement  --> ``if`` if-condition code-block else-clause-OPT
+    if-statement --> ``if`` if-condition code-block else-clause-OPT
     if-condition --> expression | declaration
-    else-clause  --> ``else`` code-block | ``else`` if-statement
+    else-clause --> ``else`` code-block | ``else`` if-statement
 
 .. _Statements_SwitchStatement:
 

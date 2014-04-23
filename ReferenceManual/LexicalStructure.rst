@@ -196,7 +196,7 @@ The following keywords are reserved and may not be used as identifiers.
     keyword ::= '__LINE__'
 
 .. NOTE: The LangRef is out of date for keywords. The list of current keywords
-	is defined in the file: swift/inclue/swift/Parse/Tokens.def
+    is defined in the file: swift/inclue/swift/Parse/Tokens.def
 
 * Keywords used in declarations:
   ``class``,
@@ -367,21 +367,21 @@ as described in :ref:`BasicTypes_Integers`.
     integer_literal ::= 0b[01][01_]*
 
 .. NOTE: Updated the langref-grammer to reflect [Contributor 7746]' comment in
-	<rdar://problem/15181997> Teach the compiler about a concept of negative integer literals.
-	This feels very strange from a grammatical point of view.
-	Updated the syntax-grammar below as well.
-	Update: This is a parser hack, not a lexer hack. Therefore,
-	it's not part of the grammar for integer literal, contrary to [Contributor 2562]'s claim.
-	(Doug confirmed this, 4/2/2014.)
+    <rdar://problem/15181997> Teach the compiler about a concept of negative integer literals.
+    This feels very strange from a grammatical point of view.
+    Updated the syntax-grammar below as well.
+    Update: This is a parser hack, not a lexer hack. Therefore,
+    it's not part of the grammar for integer literal, contrary to [Contributor 2562]'s claim.
+    (Doug confirmed this, 4/2/2014.)
 
 .. syntax-grammar::
 
     Grammar of an integer literal
 
     integer-literal --> binary-literal
-	integer-literal --> octal-literal
-	integer-literal --> decimal-literal
-	integer-literal --> hexadecimal-literal
+    integer-literal --> octal-literal
+    integer-literal --> decimal-literal
+    integer-literal --> hexadecimal-literal
 
     binary-literal --> ``0b`` binary-digit binary-literal-characters-OPT
     binary-digit --> Digit 0 or 1
@@ -643,11 +643,11 @@ where ``T`` is the type of the expressions inside it.
 
 .. syntax-grammar::
 
-	Grammar of an array literal
+    Grammar of an array literal
 
     array-literal --> ``[`` array-literal-items-OPT ``]``
-	array-literal-items --> array-literal-item ``,``-OPT | array-literal-item ``,`` array-literal-items
-	array-literal-item --> expression
+    array-literal-items --> array-literal-item ``,``-OPT | array-literal-item ``,`` array-literal-items
+    array-literal-item --> expression
 
 
 Dictionary Literals
@@ -671,12 +671,12 @@ and ``V`` is the type of its value expressions.
 
 .. syntax-grammar::
 
-	Grammar of a dictionary literal
+    Grammar of a dictionary literal
 
-	dictionary-literal --> ``[`` dictionary-literal-items ``]`` | empty-dictionary-literal
-	empty-dictionary-literal --> ``[`` ``:`` ``]``
-	dictionary-literal-items --> dictionary-literal-item ``,``-OPT | dictionary-literal-item ``,`` dictionary-literal-items
-	dictionary-literal-item --> expression ``:`` expression
+    dictionary-literal --> ``[`` dictionary-literal-items ``]`` | empty-dictionary-literal
+    empty-dictionary-literal --> ``[`` ``:`` ``]``
+    dictionary-literal-items --> dictionary-literal-item ``,``-OPT | dictionary-literal-item ``,`` dictionary-literal-items
+    dictionary-literal-item --> expression ``:`` expression
 
 
 .. _LexicalStructure_Operators:
