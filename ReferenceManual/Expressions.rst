@@ -51,13 +51,33 @@ the expression that follows them.
 Binary Expressions
 ------------------
 
-Binary expressions are formed by combining
-an infix binary operator with the expressions that it takes
-as its arguments.
+:newTerm:`Binary expressions` are formed by combining
+an infix binary operator with the expression that it takes
+as its left-hand and right-hand arguments.
+It has the following form:
 
-.. write-me::
+.. syntax-outline::
 
-.. TODO: More intro prose goes here.
+   <#left-hand argument#> <#operator#> <#right-hand argument#>
+
+At parse time,
+an expression made up of binary operators is represented as a flat list,
+with the expression that follows each operator
+understood as its right-hand argument,
+and the unary expression of the containing expression
+understood as the left-hand argument
+to the first operator in the list.
+This list is transformed into a tree
+by applying operator precedence,
+at which point the left- and right-hand arguments
+of each operator are the appropriate expression.
+
+For example the expression `2 + 3 * 5`
+is initially understood as a list of three items,
+`2`, `+ 3`, and `* 5`.
+It is then transformed into the tree `(2 + (3 * 5))`.
+
+.. TODO: In the amazing future, the previous paragraph would benefit from a diagram.
 
 .. langref-grammar
 
@@ -74,6 +94,7 @@ as its arguments.
     binary-expression --> assignment-operator unary-expression
     binary-expression --> conditional-operator unary-expression
     binary-expression --> type-checking-operator
+
     binary-expressions --> binary-expression binary-expressions-OPT
 
 .. TODO: Give a list of the binary operators defined in the Swift stdlib.
