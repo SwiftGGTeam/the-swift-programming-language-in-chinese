@@ -20,6 +20,15 @@ Contents
 Change Log
 ----------
 
+April 22 2014
+~~~~~~~~~~~~~
+
+Language Reference
+++++++++++++++++++
+
+* Added a draft of the :doc:`ReferenceManual/Attributes` chapter.
+  **NOTE:** Information about the 'availability' attribute is not yet written.
+
 April 21 2014
 ~~~~~~~~~~~~~
 
