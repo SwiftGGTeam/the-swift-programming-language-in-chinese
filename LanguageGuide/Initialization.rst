@@ -136,6 +136,9 @@ with a value from a different temperature scale:
    /> freezingPointOfWater.temperatureInCelsius is \(freezingPointOfWater.temperatureInCelsius)
    </ freezingPointOfWater.temperatureInCelsius is 0.0
 
+.. TODO: I need to provide an example of default values for initializer parameters,
+   to show they can help you to get multiple initializers "for free" (after a fashion).
+
 .. _Initialization_OptionalPropertyValues:
 
 Optional Property Values
