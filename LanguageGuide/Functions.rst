@@ -811,7 +811,7 @@ to indicate that it can be modified by the function.
 
 .. note::
 
-   In-out parameters cannot have default values,
+   ``inout`` parameters cannot have default values,
    and variadic parameters cannot be marked as ``inout``.
    If you mark a parameter as ``inout``,
    it cannot also be marked as ``var`` or ``let``.
@@ -857,7 +857,7 @@ even though they were originally defined outside of the function.
    ``inout`` parameters are not the same as returning a value from a function.
    The ``swapTwoInts`` example above does not define a return type or return a value,
    but it still modifies the values of ``someInt`` and ``anotherInt``.
-   In-out parameters are an alternative way for a function to have an effect
+   ``inout` parameters are an alternative way for a function to have an effect
    outside of the scope of its function body.
 
 .. _Functions_FunctionTypes:
