@@ -116,9 +116,9 @@ It has the following form:
 The value of the expression on the left of the ``=``
 is set to the value obtained by evaluating the expression on the right.
 The expression on the left side can be an
-identifier expression, a ignored expressions, or a tuple.
+identifier, a ignored expressions, or a tuple.
 In this usage, tuples contain only
-identifier expressions, ignored expressions, and other tuples.
+identifier, ignored expressions, and other tuples.
 
 If the left side is a tuple,
 the right side must be a tuple
@@ -303,8 +303,8 @@ Primary Expressions
 
     Grammar of a primary expression
 
+    primary-expression --> identifier generic-argument-clause-OPT
     primary-expression --> literal-expression
-    primary-expression --> identifier-expression
     primary-expression --> superclass-expression
     primary-expression --> closure-expression
     primary-expression --> anonymous-closure-argument
@@ -315,6 +315,11 @@ Primary Expressions
 .. NOTE: One reason for breaking primary expressions out of postfix
    expressions is for exposition -- it makes it easier to organize the
    prose surrounding the production rules.
+
+.. TR: Is a generic argument clause allowed
+   after an identifier in expression context?
+   It seems like that should only occur when an identifier
+   is a *type* identifier.
 
 .. _Expressions_LiteralExpression:
 
@@ -402,46 +407,6 @@ and ``ValueType`` is the type of its value expressions.
 	dictionary-expression-item --> expression ``:`` expression
 
 
-.. _Expressions_IdentifierExpression:
-
-Identifier Expression
-~~~~~~~~~~~~~~~~~~~~~
-
-An :newTerm:`identifier expression` 
-evaluates to the value or type
-with the given name.
-
-If the identifier 
-
-.. TODO: Why do we even have this?
-   The places it is used are
-
-   primary-expression --> identifier-expression
-   superclass-method-expression --> ``super`` ``.`` identifier-expression
-
-   In the former case,
-   I would expect a primary expression to be a value
-   (not a type).
-   In the latter case,
-   the method on a superclass is going to be just a plain identifier,
-   again not a type.
-
-
-.. langref-grammar
-
-    expr-identifier ::= identifier generic-args?
-
-.. syntax-grammar::
-
-    Grammar of an identifier expression
-
-    identifier-expression --> identifier generic-argument-clause-OPT
-
-.. TODO: [Contributor 6004] notes: Arbitrary identifiers cannot have generic arguments, only those in a type context. (We do have to do some magic to determine what might be a type context.)
-
-.. TODO: Discuss in prose: The LangRef has a subsection called 'Generic Disambiguation',
-    the contents of which may or may not need to appear here.
-
 .. _Expressions_SuperclassExpression:
 
 Superclass Expression
@@ -493,7 +458,7 @@ as part of the subclass's initializer.
 
     superclass-expression --> superclass-method-expression | superclass-subscript-expression | superclass-constructor-expression
 
-    superclass-method-expression --> ``super`` ``.`` identifier-expression
+    superclass-method-expression --> ``super`` ``.`` identifier
     superclass-subscript-expression --> ``super`` ``[`` expression ``]``
     superclass-constructor-expression --> ``super`` ``.`` ``init``
 
