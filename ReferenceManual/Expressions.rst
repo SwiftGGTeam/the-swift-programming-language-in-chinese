@@ -847,9 +847,36 @@ has the same type as the expression or type before the period.
 Subscript Expression
 ~~~~~~~~~~~~~~~~~~~~
 
-.. write-me::
+A :newTerm:`subscript expression` provides access
+to an item in a collection,
+using the getter and setter
+of the corresponding subscript declaration.
+It has the following form:
 
-.. TODO: Write this section.
+.. syntax-outline::
+
+   <#collection expression#>[<#index expressions#>]
+
+To evaluate the value of a subscript expression,
+getter of the *collection expression* is called
+with the *index expressions* passed as the subscript parameters.
+To set its value,
+the setter is called in the same way.
+
+.. TR: Confirm that inside the square brackets is an expression *list*,
+   a comma-separated list of expressions.
+   I see this, for example:
+   (swift) class Test {
+             subscript(a: Int, b: Int) -> Int { return 12 }
+           }
+   (swift) var t = Test()
+   // t : Test = <Test instance>
+   (swift) t[1, 2]
+   // r0 : Int = 12
+       
+
+For information about subscript declarations,
+see `Subscript Declaration`_.
 
 .. langref-grammar
 
@@ -859,7 +886,7 @@ Subscript Expression
 
     Grammar of a subscript expression
 
-    subscript-expression --> postfix-expression ``[`` expression ``]``
+    subscript-expression --> postfix-expression ``[`` expression-list ``]``
 
 
 Forced Expression
