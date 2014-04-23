@@ -710,6 +710,9 @@ These rules apply even if your subclass adds further convenience initializers.
    Perhaps this point should be left until the later "in action" example,
    where this principle is demonstrated?
 
+.. TODO: There are rare cases in which we automatically insert a call to super.init() for you.
+   When is this? Either way, I need to mention it in here.
+
 .. _Initialization_SyntaxForDesignatedAndConvenienceInitializers:
 
 Syntax for Designated and Convenience Initializers
