@@ -732,21 +732,23 @@ with a trailing closure: ::
 Initializer Expression
 ~~~~~~~~~~~~~~~~~~~~~~
 
-An :newTerm:`initializer expression` is understood
-as a reference to the class's initializer.
+An :newTerm:`initializer expression` provides access
+to a class's initializer.
 It has the following form:
 
 .. syntax-outline::
 
-    <#instance of a class#>.init
+    <#class#>.init
 
-The value of this expression is a function
-that can be called,
-set as the value of a variable,
-and so on,
-just as with any other function.
+The value of an initializer expression
+is a function that can be called
+to initialize a new instance of the class,
+but can't be used as a value.
+For example, the following is not allowed: ::
 
-.. TODO: This feels like pointless throat clearing...
+    var x = MyClass.init    // error
+
+.. TR: Why is this function not like every other function?
 
 .. langref-grammar
 
