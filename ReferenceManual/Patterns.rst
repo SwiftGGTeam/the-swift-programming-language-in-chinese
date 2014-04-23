@@ -39,7 +39,7 @@ and a tuple pattern to constraint the pattern to match only values of a certain 
     pattern --> identifier-pattern type-annotation-OPT
     pattern --> value-binding-pattern
     pattern --> tuple-pattern type-annotation-OPT
-    pattern --> enumerator-pattern
+    pattern --> enum-case-pattern
     pattern --> type-casting-pattern
     pattern --> expression-pattern
 

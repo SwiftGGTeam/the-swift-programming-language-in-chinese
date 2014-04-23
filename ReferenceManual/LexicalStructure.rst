@@ -290,12 +290,17 @@ The following are examples of literals: ::
     3.14159             // Floating-point literal
     'a'                 // Character literal
     "Hello, world!"     // String literal
+    [1, 2, 3]           // Array literal
+    ['x': 10, 'y': 20]  // Dictionary literal
+
 
 .. syntax-grammar::
 
     Grammar of a literal
 
-    literal --> integer-literal | floating-point-literal | textual-literal
+    literal --> integer-literal | floating-point-literal
+    literal --> character-literal | string-literal
+    literal --> array-literal | dictionary-literal
 
 .. TR: Is the design here that integers can be turned into doubles,
    but everything else has to use an explicit constructor
@@ -616,6 +621,62 @@ String literals are of type ``String``.
     so we'll probably need to circle back to this section later.
     I'm still going to submit it to Jeanne in its current form,
     while letting her know that it's not final.
+
+Array Literals
+~~~~~~~~~~~~~~
+
+:newTerm:`Array literals` represent an ordered collection,
+made up of items of the same type.
+It has the following form:
+
+.. syntax-outline::
+
+   [<#value1#>, <#value2#>, <#...#>]
+
+The last expression in the array can be followed by an optional comma.
+The value of an array literal has type ``T[]``,
+where ``T`` is the type of the expressions inside it.
+
+.. TR: Is T[] always going to be a synonym for Array<T>?
+   Currently, the REPL uses the former for array literals,
+   but the latter matches what is used for dictionary literals.
+
+.. syntax-grammar::
+
+	Grammar of an array literal
+
+    array-literal --> ``[`` array-literal-items-OPT ``]``
+	array-literal-items --> array-literal-item ``,``-OPT | array-literal-item ``,`` array-literal-items
+	array-literal-item --> expression
+
+
+Dictionary Literals
+~~~~~~~~~~~~~~~~~~~
+
+:newTerm:`Dictionary literals` represent an unordered collection of key-value pairs,
+where all the keys are of the same type
+and all the values are of the same type.
+it has the following form:
+
+.. syntax-outline::
+
+   [<#key1#>: <#value1#>, <#key2#>: <#value2#>, <#...#>]
+
+The last expression in the dictionary can be followed by an optional comma.
+An empty dictionary literal is written as ``[:]``
+to distinguish it from an empty array literal.
+The value of dictionary literal has type ``Dictionary<K,V>``,
+where ``K`` is the type of its key expressions
+and ``V`` is the type of its value expressions.
+
+.. syntax-grammar::
+
+	Grammar of a dictionary literal
+
+	dictionary-literal --> ``[`` dictionary-literal-items ``]`` | empty-dictionary-literal
+	empty-dictionary-literal --> ``[`` ``:`` ``]``
+	dictionary-literal-items --> dictionary-literal-item ``,``-OPT | dictionary-literal-item ``,`` dictionary-literal-items
+	dictionary-literal-item --> expression ``:`` expression
 
 
 .. _LexicalStructure_Operators:

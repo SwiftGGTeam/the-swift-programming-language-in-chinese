@@ -23,7 +23,7 @@ including those that represent arrays, dictionaries, and optional values.
 .. TODO: Discuss with Jeanne: What do we call instances of the "Optional" type?
 
 Data types that are normally considered basic or primitive in other languages---
-those that represent numbers, characters, and strings---
+such as types that represent numbers, characters, and strings---
 are actually named types,
 defined and implemented in the Swift Standard Library using structures.
 Because they are named types,
@@ -60,6 +60,7 @@ and describes the type inference behavior of Swift.
 
     type --> array-type | function-type | type-identifier | tuple-type | optional-type | protocol-composition-type | metatype-type
 
+
 .. _Types_TypeAnnotation:
 
 Type Annotation
@@ -69,7 +70,7 @@ A :newTerm:`type annotation` explicitly specifies the type of a variable or expr
 Type annotations begin with a colon (``:``) and end with a type,
 as the following examples show::
 
-    let x : (Double, Double) = (3.14159, 2.71828)
+    let x: (Double, Double) = (3.14159, 2.71828)
     func foo(a: Int) -> Int { /* ... */ }
 
 In the first example,
@@ -83,7 +84,7 @@ Type annotations may contain an optional list of type attributes before the type
 
     Grammar of a type annotation
 
-    type-annotation --> ``:`` attribute-list-OPT type
+    type-annotation --> ``:`` attributes-OPT type
 
 
 .. _Types_TypeIdentifier:
@@ -107,8 +108,8 @@ the use of ``Point`` in the type annotation refers to the tuple type ``(Double, 
 ::
 
     typealias Point = (Double, Double)
-    let origin : Point = (0, 0)
-    // origin : Point = (0.0, 0.0)
+    let origin: Point = (0, 0)
+    // origin: Point = (0.0, 0.0)
 
 In the second case, a type identifier uses dot (``.``) syntax to refer to named types
 declared in other modules or nested within other types.
@@ -116,7 +117,7 @@ For example, the type identifier in the following code references the named type
 that is declared in the ``ExampleModule`` module.
 ::
 
-    var someValue : ExampleModule.MyType
+    var someValue: ExampleModule.MyType
 
 .. langref-grammar
 
@@ -151,7 +152,7 @@ Tuple Type
     tuple-type --> ``(`` tuple-type-body-OPT ``)``
     tuple-type-body --> tuple-type-element-list ``...``-OPT
     tuple-type-element-list --> tuple-type-element | tuple-type-element ``,`` tuple-type-element-list
-    tuple-type-element --> attribute-list-OPT type | element-name type-annotation
+    tuple-type-element --> attributes-OPT type | element-name type-annotation
     element-name --> identifier
 
 .. NOTE: Info from Doug about the relationship between tuple types and tuple patterns:
@@ -173,6 +174,14 @@ Tuple Type
     2. Are function parameter names going to be part of the function type?
     3. Related to (1) and (2): Are tuple types going to used as the left-hand side
        of a function type (as in the current grammar)?
+    UPDATE from Doug, 4/2/14:
+    Re: 1: For WWDC and likely 1.0, tuples will keep their labels. (Our endgame
+    and where we are now are different.)
+    Re: 2: Yes, in cases like: (a: Int) -> Int
+    Re: 3: No, it's now just type (before, we were relying on tuple-types
+    to enforce parens). Of course, a tuple-type is a type, so you can
+    still have (a: Int) -> Int.
+
 
 .. _Types_FunctionType:
 
@@ -190,7 +199,7 @@ Function Type
 
     Grammar of a function type
 
-    function-type --> tuple-type ``->`` attribute-list-OPT type
+    function-type --> type ``->`` attributes-OPT type
 
 .. NOTE: Functions are first-class citizens in Swift,
     except for generic functions, i.e., parametric polymorphic functions.
@@ -213,6 +222,18 @@ Function Type
     2. Are function parameter names going to be part of the function type?
     3. Related to (1) and (2): Are tuple types going to used as the left-hand side
        of a function type (as in the current grammar)?
+    UPDATE from Doug, 4/2/14:
+    Re: 1: For WWDC and likely 1.0, tuples will keep their labels. (Our endgame
+    and where we are now are different.)
+    Re: 2: Yes, in cases like: (a: Int) -> Int
+    Re: 3: No, it's now just type (before, we were relying on tuple-types
+    to enforce parens). Of course, a tuple-type is a type, so you can
+    still have (a: Int) -> Int.
+
+    Function *declarations* on the other hand are still flux. Doug will be writing
+    a new grammar for them soon. One notable change is that they will no longer
+    use patterns in the function parameters.
+
 
 .. _Types_ArrayType:
 
@@ -247,6 +268,13 @@ Array Type
     Let's hold off on writing about these until they are nailed down.
     Update: [Contributor 5711] is now DRI for rewriting/implementing Arrays.
 
+    UPDATE from Doug, 4/2/14:
+    We're getting pretty close.  Dave's still working on it and keeps claiming
+    it will be tomorrow.  Really all we have to document is that there's a sugar
+    for array types and show people how multiple sets of array brackets work
+    (for multi-dimensional arrays) -- and bounce them over to the Standard
+    Library Reference for the details.
+
 .. _Types_OptionalType:
 
 Optional Type
@@ -256,8 +284,8 @@ The Swift language defines the postfix operator ``?`` as syntactic sugar for
 the named type ``Optional<T>``, which is defined in the Swift Standard Library.
 In other words, the following two declarations are equivalent::
 
-    var optionalInteger : Int?
-    var optionalInteger : Optional<Int>
+    var optionalInteger: Int?
+    var optionalInteger: Optional<Int>
 
 In both cases, the variable ``optionalInteger``
 is declared to have the type of an optional integer.
@@ -435,7 +463,7 @@ Metatype Type
 
     Grammar of a metatype type
 
-    metatype-type --> type ``.`` ``metatype``
+    metatype-type --> type ``.`` ``Type``
 
 .. _Types_TypeInheritanceClause:
 
@@ -463,7 +491,7 @@ the set of requirements from those other protocols are aggregated together,
 and any type that inherits from the current protocol must conform to all of those requirements.
 
 A type inheritance clause in an enumeration definition may be either a list of protocols,
-or in the case of an enumeration that assigns raw values to its members,
+or in the case of an enumeration that assigns raw values to its cases,
 a single, named type that specifies the type of those raw values.
 For an example of an enumeration definition that uses a type inheritance clause
 to specify the type of its raw values, see :ref:`Enumerations_RawValues`.
@@ -490,16 +518,16 @@ Type Inference
 Swift uses type inference extensively,
 allowing you to omit the type or part of the type of many variables and expressions in your code.
 For example,
-instead of writing ``var x : Int = 0``, you can omit the type completely and simply write ``var x = 0``---
+instead of writing ``var x: Int = 0``, you can omit the type completely and simply write ``var x = 0``---
 the compiler correctly infers that ``x`` names a value of type ``Int``.
 Similarly, you can omit part of a type when the full type can be inferred from context.
-For instance, if you write ``let dict : Dictionary = ["A": 1]``,
+For instance, if you write ``let dict: Dictionary = ["A": 1]``,
 the compiler infers that ``dict`` has the type ``Dictionary<String, Int>``.
 
 In both of the examples above,
 the type information is passed up from the leaves of the expression tree to its root.
 That is,
-the type of ``x`` in ``var x : Int = 0`` is inferred by first checking the type of ``0``
+the type of ``x`` in ``var x: Int = 0`` is inferred by first checking the type of ``0``
 and then passing this type information up to the root (the variable ``x``).
 
 In Swift, type information can also flow in the opposite direction---from the root down to the leaves.
@@ -508,9 +536,9 @@ the explicit type annotation (``: Float``) on the constant ``eFloat``
 causes the numeric literal ``2.71828`` to have type ``Float`` instead of type ``Double``.::
 
     let e = 2.71828
-    // e : Double = 2.71828
-    let eFloat : Float = 2.71828
-    // eFloat : Float = 2.71828
+    // e: Double = 2.71828
+    let eFloat: Float = 2.71828
+    // eFloat: Float = 2.71828
 
 Type inference in Swift operates at the level of a single expression or statement.
 This means that all of the information needed to infer an omitted type or part of a type

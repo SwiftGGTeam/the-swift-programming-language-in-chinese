@@ -31,11 +31,11 @@ and is used as a statement terminator when multiple statements appear on the sam
 
     Grammar of a statement
 
-    statement --> expression ;-OPT
-    statement --> declaration ;-OPT
-    statement --> loop-statement ;-OPT
-    statement --> branch-statement ;-OPT
-    statement --> control-transfer-statement ;-OPT
+    statement --> expression ``;``-OPT
+    statement --> declaration ``;``-OPT
+    statement --> loop-statement ``;``-OPT
+    statement --> branch-statement ``;``-OPT
+    statement --> control-transfer-statement ``;``-OPT
     statements --> statement statements-OPT
 
 .. NOTE: Removed semicolon-statement as syntactic category,
@@ -58,7 +58,7 @@ Swift has four loop statements:
 a ``for`` statement, a ``for``-``in`` statement, a ``while`` statement,
 and a ``do``-``while`` statement.
 
-Control flow in a loop statement can be changed by a break statement and a continue statement
+Control flow in a loop statement can be changed by a ``break`` statement and a ``continue`` statement
 and is discussed in :ref:`Statements_BreakStatement` and :ref:`Statements_ContinueStatement` below.
 
 .. syntax-grammar::
@@ -84,7 +84,7 @@ A ``for`` statement has the following form:
 .. syntax-outline::
 
     for <#initialization#>; <#condition#>; <#increment#> {
-        <#statements#>
+       <#statements#>
     }
 
 The semicolons between the *initialization*, *condition*, and *increment* are required.
@@ -152,7 +152,7 @@ A ``for``-``in`` statement has the following form:
 .. syntax-outline::
 
     for <#item#> in <#collection#> {
-        <#statements#>
+       <#statements#>
     }
 
 The ``generate`` method is called on the *collection* expression
@@ -197,7 +197,7 @@ A ``while`` statement has the following form:
 .. syntax-outline::
 
     while <#condition#> {
-        <#statements#>
+       <#statements#>
     }
 
 A ``while`` statement is executed as follows:
@@ -240,7 +240,7 @@ A ``do``-``while`` statement has the following form:
 .. syntax-outline::
 
     do {
-        <#statements#>
+       <#statements#>
     } while <#condition#>
 
 A ``do``-``while`` statement is executed as follows:
@@ -305,7 +305,7 @@ and has the following form:
 .. syntax-outline::
 
     if <#condition#> {
-        <#statements#>
+       <#statements#>
     }
 
 The second form of an ``if`` statement provides an additional *else clause*
@@ -317,9 +317,9 @@ When a single else clause is present, an ``if`` statement has the following form
 .. syntax-outline::
 
     if <#condition#> {
-        <#statements to execute if condition is true#>
+       <#statements to execute if condition is true#>
     } else {
-        <#statements to execute if condition is false#>
+       <#statements to execute if condition is false#>
     }
 
 The else clause of an ``if`` statement can contain another ``if`` statement
@@ -329,11 +329,11 @@ An ``if`` statement chained together in this way has the following form:
 .. syntax-outline::
 
     if <#condition 1#> {
-        <#statements to execute if condition 1 is true#>
+       <#statements to execute if condition 1 is true#>
     } else if <#condition 2#> {
-        <#statements to execute if condition 2 is true#>
+       <#statements to execute if condition 2 is true#>
     } else {
-        <#statements to execute if both conditions are false#>
+       <#statements to execute if both conditions are false#>
     }
 
 The value of any condition in an ``if`` statement must have a type that conforms to
@@ -369,15 +369,15 @@ A switch statement has the following form:
 .. syntax-outline::
 
     switch <#control expression#> {
-        case <#pattern 1#>:
-            <#statements#>
-        case <#pattern 2#> where <#condition#>:
-            <#statements#>
-        case <#pattern 3#> where <#condition#>,
-             <#pattern 4#> where <#condition#>:
-            <#statements#>
-        default:
-            <#statements#>
+       case <#pattern 1#>:
+          <#statements#>
+       case <#pattern 2#> where <#condition#>:
+          <#statements#>
+       case <#pattern 3#> where <#condition#>,
+            <#pattern 4#> where <#condition#>:
+          <#statements#>
+       default:
+          <#statements#>
     }
 
 The *control expression* of the ``switch`` statement is evaluated
