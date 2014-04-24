@@ -491,7 +491,7 @@ and can be used with any type that is ``Equatable``, such as ``Double`` or ``Str
    << // doubleIndex : Int? = <unprintable value>
    /> doubleIndex is an optional Int with no value, because 9.3 is not in the array
    </ doubleIndex is an optional Int with no value, because 9.3 is not in the array
-   -> let stringIndex = findValue(["Mike", "Malcolm", "Bunny"], "Bunny")
+   -> let stringIndex = findValue(["Mike", "Malcolm", "Andrea"], "Andrea")
    << // stringIndex : Int? = <unprintable value>
    /> stringIndex is an optional Int containing a value of \(stringIndex!)
    </ stringIndex is an optional Int containing a value of 2
