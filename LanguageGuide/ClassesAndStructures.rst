@@ -251,12 +251,12 @@ if they are listed in the same order that the properties are declared in the str
    -> let svga = Resolution(800, 600)
    << // svga : Resolution = Resolution(800, 600)
 
-.. TODO: Include a justifiable reason for why classes do not provide a memberwise initializer.
-.. TODO: According to rdar://15670604, we may end up with one for classes as well.
-   However, I can't find a Radar tracking this directly.
-
 Unlike structures, class instances do not receive a default memberwise initializer.
 Initializers are described in more detail in :doc:`Initialization`.
+
+.. TODO: The current plan is to introduce a memberwise initializer for classes too,
+   as described in rdar://16704095.
+   We hope to have this by WWDC, and this section will need updating if this lands.
 
 .. _ClassesAndStructures_ValueTypesAndReferenceTypes:
 
