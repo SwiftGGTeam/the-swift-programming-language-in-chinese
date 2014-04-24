@@ -625,7 +625,7 @@ It has the following form:
 
 
 Ignored Expression
-------------------
+~~~~~~~~~~~~~~~~~~
 
 An :newTerm:`ignored expression`
 is used with the assignment operator
