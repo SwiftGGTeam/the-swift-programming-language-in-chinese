@@ -732,10 +732,10 @@ of any ``SnakesAndLadders`` instance:
    </ A game of Snakes and Ladders with 25 squares:
    </ 🆓 🆓 👍 🆓 🆓 👍 🆓 🆓 👍 👍 🆓 🆓 🆓 🐍 🆓 🆓 🆓 🆓 🐍 🆓 🆓 🐍 🆓 🐍 🆓 
 
-.. _Protocols_ProtocolComposition:
+.. _Protocols_ProtocolCompositions:
 
-Protocol Composition
---------------------
+Protocol Compositions
+---------------------
 
 It can sometimes be useful to require a type to conform to multiple protocols at once.
 You can combine multiple protocols into a single requirement
