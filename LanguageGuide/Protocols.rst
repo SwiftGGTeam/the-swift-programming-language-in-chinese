@@ -38,17 +38,17 @@ Protocols are defined in a very similar way to classes, structures, and enumerat
 
 Custom types can state that they adopt a particular protocol
 by placing the protocol's name after the type's name,
-separated by a colon, as part of their definition:
+separated by a colon, as part of their definition.
+Multiple protocols can also be listed, separated by commas:
 
 ::
 
-   struct SomeStructure : SomeProtocol {
+   struct SomeStructure : FirstProtocol, AnotherProtocol {
       // structure definition goes here
    }
 
 If a class has a superclass, the superclass name should be listed
-before any protocols it adopts, followed by a comma.
-Multiple protocols can also be listed, separated by commas:
+before any protocols it adopts, followed by a comma:
 
 ::
 
