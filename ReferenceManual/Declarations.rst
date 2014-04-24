@@ -737,7 +737,7 @@ as described in :ref:`Patterns_EnumerationCasePattern`.
 
 .. TODO: Note that you can require protocol adoption,
     by using a protocol type as the raw value type,
-    but you do need to make it be one of the typesgit
+    but you do need to make it be one of the types
     that support = in order for you to specify the raw values.
     You can have: <#raw value type, protocol conformance#>.
     UPDATE: You can only have one raw value type specified.
