@@ -500,18 +500,18 @@ Type Methods
    I've named this section's placeholder title
    to refer to "Type Methods" only for now.
 
-.. _Protocols_AddingProtocolConformanceWithExtensions:
+.. _Protocols_AddingProtocolConformanceWithAnExtension:
 
-Adding Protocol Conformance With Extensions
--------------------------------------------
+Adding Protocol Conformance With An Extension
+---------------------------------------------
 
 An existing type can be extended to adopt and conform to a new protocol,
 even if you do not have access to the source code for the existing type.
-This is achieved by using extensions, as described in :doc:`Extensions`.
+This is achieved by defining an extension
+that adds the protocol's functionality to the existing type.
 Extensions give a way to add new properties, methods, and subscripts
 to an existing type,
-and are therefore able to add any of the requirements that a protocol may demand
-on to an existing type.
+and are therefore able to add any of the requirements that a protocol may demand.
 
 .. note::
 

@@ -15,6 +15,7 @@ This includes the ability to extend types
 for which you do not have access to the original source code
 (known as :newTerm:`retroactive modeling`).
 Extensions are similar to :newTerm:`categories` in Objective-C.
+Unlike Objective-C categories, Swift extensions do not have names.
 
 Extensions can:
 
@@ -25,7 +26,7 @@ Extensions can:
 * define and use new nested types
 
 Extensions can also be used to make an existing type conform to a protocol.
-This process is covered in :doc:`Protocols`.
+This process is described in :ref:`Protocols_AddingProtocolConformanceWithAnExtension`.
 
 .. QUESTION: I've put operator conformance in the Classes and Structures chapter,
    rather than this chapter, because it isn't actually implemented via an extension
@@ -35,6 +36,30 @@ This process is covered in :doc:`Protocols`.
 .. QUESTION: What are the rules for overloading via extensions?
 
 .. TODO: Talk about extending enumerations to have additional member values
+
+Extension Syntax
+----------------
+
+Extensions are declared with the ``extension`` keyword:
+
+::
+
+   extension SomeType {
+      // new functionality to add to SomeType goes here
+   }
+
+An extension can also extend an existing type to make it adopt one or more protocols.
+Where this is the case,
+the protocol names are written in exactly the same way as for a class or structure:
+
+::
+
+   extension SomeType: SomeProtocol, AnotherProtocol {
+      // implementation of protocol requirements goes here
+   }
+
+Adding protocol conformance in this way is described in
+:ref:`Protocols_AddingProtocolConformanceWithAnExtension`.
 
 .. _Extensions_ComputedProperties:
 
