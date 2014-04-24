@@ -20,8 +20,7 @@ Any type that satisfies the requirements of a protocol is said to
 :newTerm:`conform` to that protocol.
 
 Protocols can require that conforming types have specific
-instance properties, instance methods, type methods,
-initializers, operators, and subscripts.
+instance properties, instance methods, type methods, operators, and subscripts.
 
 .. _Protocols_ProtocolSyntax:
 
@@ -484,21 +483,6 @@ Here's how ``DiceGameTracker`` looks in action:
    </ Rolled a 5
    </ The game lasted for 4 turns
 
-.. TODO: expand this example to show how you can initialize from a type.
-   Perhaps a function that returns a random game type to play
-   (even though we only have one game)
-   and the game is instantiated through the type?
-
-.. _Protocols_Initializers:
-
-Initializers
-------------
-
-.. write-me::
-
-.. You can't construct from a protocol
-.. You can define initializer requirements in protocols
-
 .. _Protocols_TypeMethods:
 
 Type Methods
@@ -524,7 +508,7 @@ Adding Protocol Conformance With Extensions
 An existing type can be extended to adopt and conform to a new protocol,
 even if you do not have access to the source code for the existing type.
 This is achieved by using extensions, as described in :doc:`Extensions`.
-Extensions give a way to add new properties, methods, initializers and subscripts
+Extensions give a way to add new properties, methods, and subscripts
 to an existing type,
 and are therefore able to add any of the requirements that a protocol may demand
 on to an existing type.
@@ -953,6 +937,8 @@ Optional Protocol Requirements
    but there doesn't seem to be a way to check for them or call them.
    Doug has suggested that we should probably ban them,
    which I've filed as rdar://16669554.
+   And in any case, even if you could check for them,
+   they might not work due to rdar://13695680.
 
 Protocols can define :newTerm:`optional requirements`,
 which do not have to be implemented by types that conform to the protocol.
@@ -1162,6 +1148,19 @@ Once the counter reaches zero, no more counting takes place:
 .. Protocol requirements can be marked as @unavailable,
    but this currently only works if they are also marked as @objc.
 .. Checking for (and calling) optional implementations via optional binding and closures
+
+.. Initializers
+.. ------------
+.. You can't construct from a protocol itself, 
+   but you can define initializer requirements in protocols
+.. TODO: although you can define initializer requirements,
+   you can't actually make use of them, due to rdar://13695680.
+   Don't mention the fact that you can define them unless they actually start working.
+.. TODO: use the Snakes & Ladders example to show how you can initialize from a type.
+   Perhaps a function that returns a random game type to play
+   (even though we only have one game)
+   and the game is instantiated through the type?
+   See protocols_init.swift in tspl_lab/examples.
 
 .. refnote:: References
 
