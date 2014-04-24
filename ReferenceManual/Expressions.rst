@@ -546,10 +546,10 @@ The following closure expressions are equivalent: ::
     anonymous-closure-argument --> dollar-identifier
 
 
-.. _Expressions_DelayedIdentifierExpression:
+.. _Expressions_ImplicitMemberExpression:
 
 Implicit Member Expression
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 An :newTerm:`implicit member expression`
 is an abbreviated way to access a member of a type,
@@ -887,7 +887,7 @@ the setter is called in the same way.
    // t : Test = <Test instance>
    (swift) t[1, 2]
    // r0 : Int = 12
-       
+
 
 For information about subscript declarations,
 see `Subscript Declaration`_.
