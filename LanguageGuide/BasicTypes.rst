@@ -157,7 +157,7 @@ to indicate that the variable can store ``String`` values:
 
    var welcomeMessage: String
 
-.. TODO: this example can't be swifttested,
+.. TESTME: this example can't be swifttested,
    because variables can't be left uninitialized in the REPL.
    It will need manual testing instead.
 
@@ -337,7 +337,7 @@ Unlike C, multi-line comments can also be nested:
 Nested multi-line comments enable you to comment out large blocks of code quickly and easily,
 even if the code already contains multi-line comments.
 
-.. TODO: These multiline comments can't be tested by swifttest,
+.. TESTME: These multiline comments can't be tested by swifttest,
    because they aren't supported by the REPL.
    They should be tested manually before release.
 
@@ -695,7 +695,7 @@ Here, the value of the constant ``three`` is used to create a new value of type 
 so that both sides of the addition are of the same type.
 Without this conversion in place, the addition would not be allowed.
 
-.. TODO: the return type of pi here is inferred as Float64,
+.. FIXME: the return type of pi here is inferred as Float64,
    but it should really be inferred as Double.
    This is due to rdar://15211554.
    This code sample should be updated once the issue is fixed.
@@ -713,7 +713,7 @@ in that an integer type can be initialized with a ``Double`` or ``Float`` value:
 Floating-point values are always truncated when used to initialize a new integer value in this way.
 This means that ``4.75`` becomes ``4``, and ``-3.9`` becomes ``-3``.
 
-.. TODO: negative floating-point numbers cause an overflow when used
+.. FIXME: negative floating-point numbers cause an overflow when used
    to initialize an unsigned integer type.
    This has been filed as rdar://problem/16206455,
    and this section may need updating based on the outcome of that Radar.

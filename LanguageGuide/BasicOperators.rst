@@ -146,12 +146,13 @@ can be added together to make a new ``String`` value:
    /> dogCow is equal to \"🐶🐮\"
    </ dogCow is equal to "🐶🐮"
 
-.. TODO: revisit this example based on whether single quotes
+.. FIXME: revisit this example based on whether single quotes
    continue to return a UnicodeScalar,
    and in light of where we end up with characters vs scalars.
    This also raises the question of my use of the name 'scalar'
    when using for-in to iterate over someString.chars.
    I've used 'scalar' several times throughout the book.
+   See rdar://16363872 for the single-quotes change.
 
 .. _BasicOperators_RemainderOperator:
 
@@ -492,8 +493,6 @@ This is more concise than the second example,
 and removes the need for ``rowHeight`` to be a variable,
 because its value does not need to be modified within an ``if``-``else`` statement
 (as seen in the second example).
-
-.. TODO: leave rowHeight uninitialized once the REPL allows uninitialized variables?
 
 The ternary conditional operator provides
 an efficient shorthand for deciding which of two expressions to consider.
