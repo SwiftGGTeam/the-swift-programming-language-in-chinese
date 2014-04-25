@@ -813,7 +813,7 @@ and defines two initializers for creating ``RecipeIngredient`` instances:
 
 .. testcode:: designatedConvenience
 
-   -> class RecipeIngredient : Food {
+   -> class RecipeIngredient: Food {
          var quantity: Int
          init(name: String, quantity: Int) {
             self.quantity = quantity
@@ -885,7 +885,7 @@ to provide a textual description of a ``ShoppingListItem`` instance:
 
 .. testcode:: designatedConvenience
 
-   -> class ShoppingListItem : RecipeIngredient {
+   -> class ShoppingListItem: RecipeIngredient {
          var purchased = false
          var description: String {
             var output = "\(quantity) x \(name.lowercase)"

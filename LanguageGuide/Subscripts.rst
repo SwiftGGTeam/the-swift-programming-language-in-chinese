@@ -90,7 +90,7 @@ by passing in a key of the appropriate type within subscript braces:
 
 .. testcode:: subscripts
 
-   -> let numberOfLegs = ["spider" : 8, "ant" : 6, "cat" : 4]
+   -> let numberOfLegs = ["spider": 8, "ant": 6, "cat": 4]
    << // numberOfLegs : Dictionary<String, Int> = Dictionary<String, Int>(1.33333333333333, 3, <DictionaryBufferOwner<String, Int> instance>)
    -> let spiderLegs = numberOfLegs["spider"]
    << // spiderLegs : Int = 8

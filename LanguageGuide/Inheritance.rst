@@ -85,7 +85,7 @@ This can be read as:
 
 .. testcode:: inheritance
 
-   -> class Bicycle : Vehicle {
+   -> class Bicycle: Vehicle {
          init() {
             super.init()
             numberOfWheels = 2
@@ -130,7 +130,7 @@ Subclasses can themselves be subclassed:
 
 .. testcode:: inheritance
 
-   -> class Tandem : Bicycle {
+   -> class Tandem: Bicycle {
          init() {
             super.init()
             maxPassengers = 2
@@ -225,7 +225,7 @@ which overrides the ``description`` method it inherits from ``Vehicle``:
 
 .. testcode:: inheritance
 
-   -> class Car : Vehicle {
+   -> class Car: Vehicle {
          var speed: Double = 0.0
          init() {
             super.init()
@@ -314,7 +314,7 @@ This limitation is implemented by overriding the inherited ``speed`` property.
 
 .. testcode:: inheritance
 
-   -> class SpeedLimitedCar : Car {
+   -> class SpeedLimitedCar: Car {
          override var speed: Double  {
             get {
                return super.speed
@@ -377,7 +377,7 @@ which automatically selects an appropriate gear to use based on the current spee
 
 .. testcode:: inheritance
 
-   -> class AutomaticCar : Car {
+   -> class AutomaticCar: Car {
          var gear = 1
          override var speed: Double  {
             didSet {

@@ -14,10 +14,10 @@ Types can be nested to as many levels as are required:
 .. testcode:: nestedTypes
 
    -> struct BlackjackCard {
-         enum Suit : UnicodeScalar {
+         enum Suit: UnicodeScalar {
             case Spades = '♠', Hearts = '♡', Diamonds = '♢', Clubs = '♣'
          }
-         enum Rank : String {
+         enum Rank: String {
             case Two = "2", Three = "3", Four = "4", Five = "5", Six = "6"
             case Seven = "7", Eight = "8", Nine = "9", Ten = "10"
             case Jack = "Jack", Queen = "Queen", King = "King", Ace = "Ace"

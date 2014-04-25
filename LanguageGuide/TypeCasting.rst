@@ -36,14 +36,14 @@ on top of the base class:
 
 .. testcode:: typeCasting
 
-   -> class Movie : MediaItem {
+   -> class Movie: MediaItem {
          var director: String
          init(name: String, director: String) {
             self.director = director
             super.init(name: name)
          }
       }
-   -> class Song : MediaItem {
+   -> class Song: MediaItem {
          var artist: String
          init(name: String, artist: String) {
             self.artist = artist

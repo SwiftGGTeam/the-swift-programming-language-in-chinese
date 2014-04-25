@@ -162,7 +162,7 @@ and the dictionary's values are decomposed into a constant called ``legCount``:
 
 .. testcode:: forLoops
 
-   -> let numberOfLegs = ["spider" : 8, "ant" : 6, "cat" : 4]
+   -> let numberOfLegs = ["spider": 8, "ant": 6, "cat": 4]
    << // numberOfLegs : Dictionary<String, Int> = Dictionary<String, Int>(1.33333333333333, 3, <DictionaryBufferOwner<String, Int> instance>)
    -> for (animalName, legCount) in numberOfLegs {
          println("\(animalName)s have \(legCount) legs")

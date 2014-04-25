@@ -273,7 +273,7 @@ because it can be inferred from the default value:
    /> threeBools is inferred to be an Array<Bool>, and equals [\(threeBools[0]), \(threeBools[1]), \(threeBools[2])]
    </ threeBools is inferred to be an Array<Bool>, and equals [false, false, false]
 
-.. TODO: func find<T : Equatable>(array: T[], value: T) -> Int?
+.. TODO: func find<T: Equatable>(array: T[], value: T) -> Int?
    This is defined in Algorithm.swift,
    and gives a way to find the index of a value in an array if it exists.
    I'm holding off writing about it until NewArray lands.
@@ -334,7 +334,7 @@ and the values are airport names:
 
 .. testcode:: dictionaries
 
-   -> var airports: Dictionary<String, String> = ["TYO" : "Tokyo", "DUB" : "Dublin"]
+   -> var airports: Dictionary<String, String> = ["TYO": "Tokyo", "DUB": "Dublin"]
    << // airports : Dictionary<String, String> = Dictionary<String, String>(1.33333333333333, 2, <DictionaryBufferOwner<String, String> instance>)
 
 The ``airports`` dictionary has been declared as having a type of ``Dictionary<String, String>``,
@@ -360,7 +360,7 @@ Each key-value pair is separated by a colon,
 and the pairs are written as a list, separated by commas,
 surrounded by a pair of square brackets.
 
-This dictionary literal contains two ``String : String`` pairs.
+This dictionary literal contains two ``String: String`` pairs.
 This matches the type of the ``airports`` variable declaration –
 a ``Dictionary`` with only ``String`` keys, and only ``String`` values –
 and so the assignment of the dictionary literal is permitted
@@ -373,7 +373,7 @@ The initialization of ``airports`` could have been be written in a shorter form 
 
 .. testcode:: dictionariesInferred
 
-   -> var airports = ["TYO" : "Tokyo", "DUB" : "Dublin"]
+   -> var airports = ["TYO": "Tokyo", "DUB": "Dublin"]
    << // airports : Dictionary<String, String> = Dictionary<String, String>(1.33333333333333, 2, <DictionaryBufferOwner<String, String> instance>)
 
 Because all of the keys in the literal are of the same type as each other,

@@ -292,7 +292,7 @@ Here's an example that stores raw ASCII values alongside named enumeration membe
 
 .. testcode:: rawValues
 
-   -> enum ASCIIControlCharacter : UnicodeScalar {
+   -> enum ASCIIControlCharacter: UnicodeScalar {
          case Tab = '\t'
          case LineFeed = '\n'
          case CarriageReturn = '\r'
@@ -323,7 +323,7 @@ with raw integer values to represent each planet's order from the sun:
 
 .. testcode:: rawValues
 
-   -> enum Planet : Int {
+   -> enum Planet: Int {
          case Mercury = 1, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune
       }
 

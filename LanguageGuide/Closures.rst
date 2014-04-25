@@ -504,8 +504,8 @@ The array ``[16, 58, 510]`` will be used to create the new array
 .. testcode:: arrayMap
 
    -> let digitNames = [
-         0 : "Zero", 1 : "One", 2 : "Two", 3 : "Three", 4 : "Four",
-         5 : "Five", 6 : "Six", 7 : "Seven", 8 : "Eight", 9 : "Nine"
+         0: "Zero", 1: "One", 2: "Two",   3: "Three", 4: "Four",
+         5: "Five", 6: "Six", 7: "Seven", 8: "Eight", 9: "Nine"
       ]
    << // digitNames : Dictionary<Int, String> = Dictionary<Int, String>(1.33333333333333, 10, <DictionaryBufferOwner<Int, String> instance>)
    -> let numbers = [16, 58, 510]
@@ -593,7 +593,7 @@ the ``map`` function's outer parentheses.
 Auto-Closures
 -------------
 
-.. TODO: var closure1 : @auto_closure () -> Int = 4  // Function producing 4 whenever it is called.
+.. TODO: var closure1: @auto_closure () -> Int = 4  // Function producing 4 whenever it is called.
 
 .. TODO: from Assert.swift in stdlib/core:
    @transparent

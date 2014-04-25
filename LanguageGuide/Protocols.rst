@@ -42,7 +42,7 @@ Multiple protocols can also be listed, separated by commas:
 
 ::
 
-   struct SomeStructure : FirstProtocol, AnotherProtocol {
+   struct SomeStructure: FirstProtocol, AnotherProtocol {
       // structure definition goes here
    }
 
@@ -51,7 +51,7 @@ before any protocols it adopts, followed by a comma:
 
 ::
 
-   class SomeClass : SomeSuperclass, FirstProtocol, AnotherProtocol {
+   class SomeClass: SomeSuperclass, FirstProtocol, AnotherProtocol {
       // class definition goes here
    }
 
@@ -111,7 +111,7 @@ the ``FullyNamed`` protocol:
 
 .. testcode:: protocols
 
-   -> struct Person : FullyNamed {
+   -> struct Person: FullyNamed {
          var fullName: String
       }
    -> let john = Person(fullName: "John Appleseed")
@@ -134,7 +134,7 @@ Here's a more complex class, which also adopts and conforms to the ``FullyNamed`
 
 .. testcode:: protocols
 
-   -> class Starship : FullyNamed {
+   -> class Starship: FullyNamed {
          var prefix: String?
          var name: String
          init(name: String, prefix: String? = nil) {
@@ -200,7 +200,7 @@ a :newTerm:`linear congruential generator`:
 
 .. testcode:: protocols
 
-   -> class LinearCongruentialGenerator : RandomNumberGenerator {
+   -> class LinearCongruentialGenerator: RandomNumberGenerator {
          var lastRandom = 42.0
          let m = 139968.0
          let a = 3877.0
@@ -352,7 +352,7 @@ and to notify a ``DiceGameDelegate`` about its progress:
 
 .. testcode:: protocols
 
-   -> class SnakesAndLadders : DiceGame {
+   -> class SnakesAndLadders: DiceGame {
          let finalSquare = 25
          let dice = Dice(sides: 6, generator: LinearCongruentialGenerator())
          var square = 0
@@ -424,7 +424,7 @@ which adopts the ``DiceGameDelegate`` protocol:
 
 .. testcode:: protocols
 
-   -> class DiceGameTracker : DiceGameDelegate {
+   -> class DiceGameTracker: DiceGameDelegate {
          var numberOfTurns = 0
          func gameDidStart(game: DiceGame) {
             numberOfTurns = 0
@@ -534,7 +534,7 @@ The ``Dice`` class from earlier can be extended to adopt and conform to ``TextRe
 
 .. testcode:: protocols
 
-   -> extension Dice : TextRepresentable {
+   -> extension Dice: TextRepresentable {
          func asText() -> String {
             return "A \(sides)-sided dice"
          }
@@ -560,7 +560,7 @@ adopt and conform to the ``TextRepresentable`` protocol:
 
 .. testcode:: protocols
 
-   -> extension SnakesAndLadders : TextRepresentable {
+   -> extension SnakesAndLadders: TextRepresentable {
          func asText() -> String {
             return "A game of Snakes and Ladders with \(finalSquare) squares"
          }
@@ -585,7 +585,7 @@ it can be made to adopt the protocol with an empty extension:
             return "A hamster named \(name)"
          }
       }
-   -> extension Hamster : TextRepresentable {}
+   -> extension Hamster: TextRepresentable {}
 
 Instances of ``Hamster`` can now be used wherever ``TextRepresentable`` is the required type:
 
@@ -648,7 +648,7 @@ The syntax for protocol inheritance is the same as for class inheritance:
 
 ::
 
-   protocol SomeSubProtocol : SomeSuperProtocol {
+   protocol SomeSubProtocol: SomeSuperProtocol {
       // protocol definition goes here
    }
 
@@ -656,7 +656,7 @@ For example:
 
 .. testcode:: protocols
 
-   -> protocol PrettyTextRepresentable : TextRepresentable {
+   -> protocol PrettyTextRepresentable: TextRepresentable {
          func asPrettyText() -> String
       }
 
@@ -672,7 +672,7 @@ The ``SnakesAndLadders`` class can be extended to adopt and conform to ``PrettyT
 
 .. testcode:: protocols
 
-   -> extension SnakesAndLadders : PrettyTextRepresentable {
+   -> extension SnakesAndLadders: PrettyTextRepresentable {
          func asPrettyText() -> String {
             var output = asText() + ":\n"
             for index in 1..finalSquare {
@@ -739,7 +739,7 @@ into a single protocol composition requirement on a function parameter:
    -> protocol Aged {
          var age: Int { get }
       }
-   -> struct Person : Named, Aged {
+   -> struct Person: Named, Aged {
          var name: String
          var age: Int
       }
@@ -827,13 +827,13 @@ both of which conform to the ``HasArea`` protocol:
 
 .. testcode:: protocolConformance
 
-   -> class Circle : HasArea {
+   -> class Circle: HasArea {
          let pi = 3.1415927
          var radius: Double
          var area: Double { return pi * radius * radius }
          init(radius: Double) { self.radius = radius }
       }
-   -> class Country : HasArea {
+   -> class Country: HasArea {
          var area: Double
          init(area: Double) { self.area = area }
       }
@@ -1065,7 +1065,7 @@ It does this by implementing the optional ``fixedIncrement`` property requiremen
 
 .. testcode:: protocolConformance
 
-   -> class ThreeSource : CounterDataSource {
+   -> class ThreeSource: CounterDataSource {
          let fixedIncrement = 3
       }
 
@@ -1097,7 +1097,7 @@ from its current ``count`` value:
 
 .. testcode:: protocolConformance
 
-   -> class TowardsZeroSource : CounterDataSource {
+   -> class TowardsZeroSource: CounterDataSource {
          func incrementForCount(count: Int) -> Int {
             if count == 0 {
                return 0
