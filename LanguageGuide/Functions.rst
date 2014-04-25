@@ -526,57 +526,6 @@ it is still good practice to provide names for them to use if they wish.
    the principle of putting variadic parameters last,
    and also the principle of putting closure parameters last?
 
-.. _Functions_StrictParameterNames:
-
-Strict Parameter Names
-~~~~~~~~~~~~~~~~~~~~~~
-
-.. note::
-
-   Strict parameter names have not yet been implemented.
-   This section has been written in advance of their implementation,
-   in order to help plan the overall flow of this chapter.
-
-.. TODO: this feature is not yet implemented.
-   Remove this note and test that the final two code snippets produce an error
-   once strict parameter names have been implemented.
-
-It is sometimes useful to require that parameter names are provided when a function is called,
-to avoid ambiguity as to each parameter's purpose.
-You can require callers to use a function's parameter names
-by marking the function with the ``@call_arguments(strict)`` attribute.
-This attribute also requires that the parameters are provided
-in the same order as in the function's definition.
-
-.. testcode:: strictParameterNames
-
-   // @call_arguments(strict) - not yet implemented
-   -> func join(string s1: String, toString s2: String, joiner: String = " ") -> String {
-         return s1 + joiner + s2
-      }
-   -> join(string: "hello", toString: "world", joiner: "#")
-   << // r0 : String = "hello#world"
-   /> returns \"\(r0)\"
-   </ returns "hello#world"
-
-This version of the ``join`` function requires any callers to provide
-all of the function's parameter names when they call the function.
-Trying to call this version of the ``join`` function without using its parameter names
-results in a compile-time error:
-
-::
-
-   join("hello", "world", "#")
-   // this reports a compile-time error
-
-Trying to call the function with its parameter names in the wrong order
-also results in a compile-time error:
-
-::
-
-   join(toString: "world", joiner: "#", string: "hello")
-   // this reports a compile-time error
-
 .. _Functions_FunctionsWithoutParameters:
 
 Functions Without Parameters
