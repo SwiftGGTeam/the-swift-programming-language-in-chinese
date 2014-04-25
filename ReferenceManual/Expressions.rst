@@ -661,7 +661,6 @@ For example, the following pairs of assignments are equivalent: ::
 
     expr-delayed-identifier ::= '.' identifier
 
-
 .. syntax-grammar::
 
     Grammar of a implicit member expression
