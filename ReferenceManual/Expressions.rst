@@ -671,8 +671,10 @@ by applying a postfix operator or other postfix syntax
 to an expression.
 Syntactically, every primary expression is also a postfix expression.
 
-.. Formed by putting a postfix operator or postfix-operator-like suffix
-   after an expression.
+The Standard Library provides the following postfix operators:
+
+* ``++`` Increment
+* ``--`` Decrement
 
 .. langref-grammar
 
