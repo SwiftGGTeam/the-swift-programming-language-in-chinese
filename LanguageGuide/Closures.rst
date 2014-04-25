@@ -521,13 +521,13 @@ by passing a closure expression to the array's ``map`` function as a trailing cl
 .. testcode:: arrayMap
 
    -> let strings = numbers.map() {
-         (var number) -> String in
-            var output = ""
-            while number > 0 {
-               output = digitNames[number % 10] + output
-               number /= 10
-            }
-            return output
+            (var number) -> String in
+         var output = ""
+         while number > 0 {
+            output = digitNames[number % 10] + output
+            number /= 10
+         }
+         return output
       }
    << // strings : Array<String> = ["OneSix", "FiveEight", "FiveOneZero"]
    // strings is inferred to be of type Array<String>
