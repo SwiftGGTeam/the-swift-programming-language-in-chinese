@@ -283,8 +283,8 @@ and also enables values to be passed in a different order to the original functi
 
 .. testcode:: functionParameters
 
-   -> func containsCharacter(stringToSearch: String, characterToFind: UnicodeScalar) -> Bool {
-         for character in stringToSearch.chars {
+   -> func containsCharacter(string: String, characterToFind: UnicodeScalar) -> Bool {
+         for character in string.chars {
             if character == characterToFind {
                return true
             }
@@ -293,10 +293,10 @@ and also enables values to be passed in a different order to the original functi
       }
    -> let containsASpace = containsCharacter(
          characterToFind: ' ',
-         stringToSearch: "This will return true")
+         string: "This will return true")
    << // containsASpace : Bool = true
-   /> containsASpace equals \(containsASpace), because stringToSearch contains a space
-   </ containsASpace equals true, because stringToSearch contains a space
+   /> containsASpace equals \(containsASpace), because string contains a space
+   </ containsASpace equals true, because string contains a space
 
 .. TODO: this function's first line is too long.
 
@@ -308,14 +308,14 @@ it is still clear which value should be used for which parameter.
 .. note::
 
    If ``characterToFind`` is found quickly,
-   this example returns ``true`` before the entire set of characters in ``stringToSearch`` is checked.
+   this example returns ``true`` before the entire set of characters in ``string`` is checked.
    As soon as the first matching character is found,
    ``containsCharacter`` returns ``true``,
    and doesn't bother to check the remaining characters.
    You can return control from a function at any time,
    and it will stop what it is doing immediately.
    In fact, this function only returns ``false`` if
-   the entire set of characters in ``stringToSearch`` is exhausted,
+   the entire set of characters in ``string`` is exhausted,
    and the end of the for loop is reached.
 
 If you do not provide parameter names when calling a method,
