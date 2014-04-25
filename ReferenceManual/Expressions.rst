@@ -95,7 +95,7 @@ of each operator are the appropriate expression.
 For example the expression `2 + 3 * 5`
 is initially understood as a list of three items,
 `2`, `+ 3`, and `* 5`.
-It is then transformed into the tree `(2 + (3 * 5))`.
+It is then transformed into the tree (2 + (3 * 5)).
 
 .. TODO: In the amazing future, the previous paragraph would benefit from a diagram.
 
