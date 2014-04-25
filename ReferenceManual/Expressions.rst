@@ -119,6 +119,8 @@ It is then transformed into the tree `(2 + (3 * 5))`.
 
 The Standard Library provides the following binary operators:
 
+.. The following comes from stdlib/core/Policy.swift
+
 * Exponentiative (No associativity, precedence level 160)
     - ``<<`` Left bit shift
     - ``>>`` Right bit shift
