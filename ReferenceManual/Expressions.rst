@@ -45,6 +45,15 @@ an optional prefix operator with an expression.
 Prefix operators take one argument,
 the expression that follows them.
 
+The Standard Library provides the following prefix operators:
+
+* ``++`` Increment
+* ``--`` Decrement
+* ``!`` Logical negation
+* ``~`` Bitwise negation
+* ``+`` Unary plus, a no-op provided for parity with unary minus
+* ``-`` Unary minus
+
 .. langref-grammar
 
     expr-unary   ::= operator-prefix* expr-postfix
