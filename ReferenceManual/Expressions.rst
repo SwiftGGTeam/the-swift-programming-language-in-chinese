@@ -1,11 +1,22 @@
 Expressions
 ===========
 
+In Swift, there are four kinds of expressions:
+primary expressions, unary expressions, binary expressions, and postfix expressions.
 
-
-.. write-me::
-
-.. TODO: Intro prose goes here.
+Primary expressions are conceptually the core kind of expression
+and they provide a way to access values.
+They can be used on their own
+and as part of a unary, binary, or postfix expression
+to build up more complex expressions.
+Unary and binary expressions let you
+combine expressions and operators.
+Postfix expressions,
+like unary and binary expressions,
+let you build up more complex expressions
+using postfixes such as function calls and member access.
+Each kind of expression is described in detail
+in the sections below.
 
 .. langref-grammar
 
