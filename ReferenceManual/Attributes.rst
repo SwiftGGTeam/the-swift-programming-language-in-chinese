@@ -254,13 +254,13 @@ Interface Builder Attributes
 Interface Builder attributes are declaration attributes
 used by Interface Builder to synchronize with Xcode.
 Swift provides the following Interface Builder attributes:
-``IBAction``, ``IBDesignable``, ``IBInspectable``, ``IBOutlet``,
-and ``IBOutletCollection``. These attributes are conceptually the same as their
+``IBAction``, ``IBDesignable``, ``IBInspectable``, and ``IBOutlet``.
+These attributes are conceptually the same as their
 Objective-C counterparts.
 
 .. TODO: Need to link to the relevant discussion of these attributes in Objc.
 
-The ``IBOutlet``, ``IBOutletCollection``, and ``IBInspectable`` attributes
+The ``IBOutlet`` and ``IBInspectable`` attributes
 are applied to property declarations of a class. The ``IBAction`` attribute
 is applied to method declarations of a class, and the ``IBDesignable`` attribute
 is applied to class declarations.
@@ -280,6 +280,8 @@ is applied to class declarations.
 
     And allow you to connect multiple UIButton instances from IB to your code,
     populating the array.
+    UPDATE: According to [Contributor 6004]'s feedback on USWCAOC (04/24/14),
+    this is just going to be spelled @IBOutlet.
 
     ``IBAction``
         The ``IBAction`` attribute is applied to a method of a class to expose the method
@@ -295,8 +297,6 @@ is applied to class declarations.
         The ``IBOutlet`` attribute is applied to a property of a class to expose that
         property as an outlet in Interface Builder
         so Interface Builder can synchronize the display and connection of outlets with Xcode.
-
-    ``IBOutletCollection``
 
 
 .. _Attributes_TypeAttributes:
