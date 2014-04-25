@@ -117,10 +117,80 @@ It is then transformed into the tree `(2 + (3 * 5))`.
 
     binary-expressions --> binary-expression binary-expressions-OPT
 
-.. TODO: Give a list of the binary operators defined in the Swift stdlib.
-    Then give a cross-reference to the Swift stdlib for more details.
+The Standard Library provides binary operators
+in several different precedence groups
+as follows:
 
-.. NOTE: You have essentially expression sequences here, and within it are
+* Exponentiative (160)
+    - ``<<`` Left bit shift
+    - ``>>`` Right bit shift
+
+.. TODO: Do we have logical/barrell shift?
+
+* Multiplicative (150)
+    - ``*`` Multiply
+    - ``/`` Divide
+    - ``%`` Remainder
+    - ``&*`` Mulitply with overflow
+    - ``&/`` Divide with overflow
+    - ``&%`` Remainder with overflow
+    - ``&`` Bitwise AND
+
+* Additive (140)
+    - ``+`` Add
+    - ``-`` Subtract
+    - ``&+`` Add with overflow
+    - ``&-`` Subtract with overflow
+    - ``|`` Bitwise OR
+    - ``^`` Bitwise XOR
+
+* Cast (132)
+    - ``is`` Type check
+    - ``as`` Type declaration
+
+.. TODO: Revisit names for is/as.
+
+* Comparitive (130)
+    - ``<`` Less than
+    - ``<=`` Less than or equal
+    - ``>`` Greater than
+    - ``>=`` Greater than or equal
+    - ``==`` Equal
+    - ``!=`` Not equal
+    - ``===``
+    - ``!==`
+    - ``~=`` Pattern match
+
+.. TODO: What is === for?  I assume low-level pointer comparison of objects,
+   as opposed to isEqual: style comparison?
+
+* Conjunctive (120)
+    - ``&&`` Logical AND
+
+* Disjunctive (110)
+    - ``||`` Logical OR
+
+* Ternary Conditional (100)
+    - ``?`` ``:`` Ternary conditional
+
+* Assignment (90)
+    - ``=`` Assign
+
+* Compound Assignment (90)
+    - ``*=`` Multiply and assign
+    - ``/=`` Divide and assign
+    - ``%=`` Remainder and assign
+    - ``+=`` Add and assign
+    - ``-=`` Subtract and assign
+    - ``<<=`` Left bit shift and assign
+    - ``>>=`` Right bit shift and assign
+    - ``&=`` Bitwise AND and assign
+    - ``^=`` Bitwise XOR and assign
+    - ``|=`` Bitwise OR and assign
+    - ``&&=`` Logical AND and assign
+    - ``||=`` Logical OR and assign
+
+.. You have essentially expression sequences here, and within it are
    parts of the expressions.  We're calling them "expressions" even
    though they aren't what we ordinarily think of as expressions.  We
    have this two-phase thing where we do the expression sequence parsing
@@ -128,21 +198,14 @@ It is then transformed into the tree `(2 + (3 * 5))`.
    operator precedence and we do a second phase of parsing that builds
    something that's a more traditional tree.
 
-.. TODO: You're going to care about this if you're adding new operators --
+.. You're going to care about this if you're adding new operators --
    it's not a high priority.  We could probably loosely describe this
    process by saying that the parser handles it as a flat list and then
    applies the operator precedence to make a more typical parse tree.
    At some point, we will probably have to document the syntax around
    creating operators.  This may need to be discussed in the Language Guide
-   in respect to the spacing rules -- ``x + y * z`` is diffirent than
+   in respect to the spacing rules -- ``x + y * z`` is different than
    ``x + y* z``.
-
-.. TODO: Give a list of the unary operators defined in the Swift stdlib.
-    Then give a cross-reference to the Swift stdlib for more details.
-    Table of operator, meaning, precedence, and associativity.
-    Only the most commonly used ones?
-    We can discuss them in some detail now, knowing that it could migrate
-    to a proper Standar Library Reference book later.
 
 Assignment Operator
 ~~~~~~~~~~~~~~~~~~~
