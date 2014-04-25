@@ -526,6 +526,8 @@ it is still good practice to provide names for them to use if they wish.
    the principle of putting variadic parameters last,
    and also the principle of putting closure parameters last?
 
+.. TODO: reinstate the section on Strict Parameter Names once they are implemented.
+
 .. _Functions_FunctionsWithoutParameters:
 
 Functions Without Parameters
