@@ -5,7 +5,7 @@ This part of the book describes the formal grammar of the Swift programming lang
 The grammar described here is intended to help you understand the language in more
 detail, rather than to allow you to directly implement a parser or compiler.
 
-The Swift language is relatively small; many common types, functions, and operators
+The Swift language is relatively small, becuase many common types, functions, and operators
 that appear virtual everywhere in Swift code
 are actually defined in the Swift Standard Library. Although these types, functions,
 and operators are not part of the Swift language itself,
@@ -21,10 +21,10 @@ The notation used to describe the formal grammar of the Swift programming langua
 follows a few conventions.
 
 * An arrow (⟶) is used to mark grammar productions and can be read as "can consist of".
-* Syntactic categories are indicated by *italic* text and can appear on both sides
+* Syntactic categories are indicated by *italic* text and appear on both sides
   of a grammar production rule.
 * Literal words and punctuation are indicated by boldface ``constant width`` text
-  and can appear on the right-hand side of a grammar production rule only.
+  and appear only on the right-hand side of a grammar production rule.
 * Alternative grammar productions are separated by vertical
   bars (|). When alternative productions are too long to read easily,
   they are broken into multiple grammar production rules on new lines.
@@ -41,14 +41,11 @@ As an example, the grammar of a getter-setter block is defined as follows:
 
     getter-setter-block --> ``{`` getter setter-OPT ``}`` | ``{`` setter getter ``}``
 
-This definition indicates that a **getter-setter-block** can consist of a **getter**
-followed by an optional **setter**, enclosed in braces,
-*or* a **setter** followed by a **getter**, enclosed in braces.
+This definition indicates that a getter-setter block can consist of a getter
+followed by an optional setter, enclosed in braces,
+*or* a setter followed by a getter, enclosed in braces.
 The grammar production above is equivalent to the following two productions,
 where the alternatives are spelled out explicitly:
-
-.. TODO: Need to update **getter-setter-block** et al. to use links to
-    grammar production once we have support for them.
 
 .. syntax-grammar:: omit
 
