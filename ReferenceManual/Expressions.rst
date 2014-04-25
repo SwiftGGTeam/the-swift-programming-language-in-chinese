@@ -117,17 +117,15 @@ It is then transformed into the tree `(2 + (3 * 5))`.
 
     binary-expressions --> binary-expression binary-expressions-OPT
 
-The Standard Library provides binary operators
-in several different precedence groups
-as follows:
+The Standard Library provides the following binary operators:
 
-* Exponentiative (160)
+* Exponentiative (No associativity, precedence level 160)
     - ``<<`` Left bit shift
     - ``>>`` Right bit shift
 
 .. TODO: Do we have logical/barrell shift?
 
-* Multiplicative (150)
+* Multiplicative (Left associative, precedence level 150)
     - ``*`` Multiply
     - ``/`` Divide
     - ``%`` Remainder
@@ -136,7 +134,7 @@ as follows:
     - ``&%`` Remainder with overflow
     - ``&`` Bitwise AND
 
-* Additive (140)
+* Additive (Left associative, precedence level 140)
     - ``+`` Add
     - ``-`` Subtract
     - ``&+`` Add with overflow
@@ -144,13 +142,17 @@ as follows:
     - ``|`` Bitwise OR
     - ``^`` Bitwise XOR
 
-* Cast (132)
+* Range (No associativity, precedence level 135)
+    - ``...`` Exclusive range
+    - ``..`` Inclusive range
+
+* Cast (No associativity, precedence level 132)
     - ``is`` Type check
     - ``as`` Type declaration
 
 .. TODO: Revisit names for is/as.
 
-* Comparitive (130)
+* Comparitive (No associativity, precedence level 130)
     - ``<`` Less than
     - ``<=`` Less than or equal
     - ``>`` Greater than
@@ -158,25 +160,23 @@ as follows:
     - ``==`` Equal
     - ``!=`` Not equal
     - ``===``
-    - ``!==`
+    - ``!==``
     - ``~=`` Pattern match
 
 .. TODO: What is === for?  I assume low-level pointer comparison of objects,
    as opposed to isEqual: style comparison?
 
-* Conjunctive (120)
+* Conjunctive (Left associative, precedence level 120)
     - ``&&`` Logical AND
 
-* Disjunctive (110)
+* Disjunctive (Left associative, precedence level 110)
     - ``||`` Logical OR
 
-* Ternary Conditional (100)
+* Ternary Conditional (Right associative, precedence level 100)
     - ``?`` ``:`` Ternary conditional
 
-* Assignment (90)
+* Assignment (Right associative, precedence level 90)
     - ``=`` Assign
-
-* Compound Assignment (90)
     - ``*=`` Multiply and assign
     - ``/=`` Divide and assign
     - ``%=`` Remainder and assign
