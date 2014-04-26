@@ -49,7 +49,7 @@ It cannot be called in isolation without an existing instance.
 Here's an example that defines a simple ``Counter`` class,
 which counts the number of times something has happened:
 
-.. testcode:: classesAndStructures
+.. testcode:: instanceMethods
 
    -> class Counter {
          var count: Int = 0
@@ -75,7 +75,7 @@ to keep track of the current counter value.
 
 Instance methods are called using the same dot syntax as properties:
 
-.. testcode:: classesAndStructures
+.. testcode:: instanceMethods
 
    -> let counter = Counter()
    << // counter : Counter = <Counter instance>
@@ -273,7 +273,46 @@ every time its ``next`` method is called.
 Type Methods
 ------------
 
-.. write-me::
+Instance methods, as described above,
+are methods that are called on an instance of a particular type.
+You can also define methods that are called on the type itself.
+These kinds of methods are called :newTerm:`type methods`.
+Type methods on classes are prefixed with the word ``class``,
+and type methods on structures and enumerations are prefixed with the word ``static``:
+
+.. testcode:: typeMethods
+
+   -> class SomeClass {
+         class func someTypeMethod() {
+            // method body goes here
+         }
+      }
+   -> struct SomeStructure {
+         static func someTypeMethod() {
+            // method body goes here
+         }
+      }
+   -> enum SomeEnumeration {
+         static func someTypeMethod() {
+            // method body goes here
+         }
+      }
+
+.. note::
+
+   In Objective-C, you can only define type-level methods for Objective-C classes.
+   In Swift, you can define type-level methods for all classes, structures and enumerations.
+   Each type method is explicitly scoped to the type it supports.
+
+Type methods are called with dot syntax, just like instance methods.
+However, type methods are called on the type they belong to,
+and not on an instance of that type.
+To call a type method on a class called ``SomeClass``, for example,
+you write the following:
+
+.. testcode:: typeMethods
+
+   -> SomeClass.someTypeMethod()
 
 .. see release notes from 2013-12-18 for a note about lazy initialization
 .. mention that static methods can access static properties (and other static methods?)
