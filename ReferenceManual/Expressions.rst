@@ -790,11 +790,21 @@ They have the following form:
 
 .. syntax-outline::
 
-    <#function#>()
-    <#function#>(<#argument#>)
     <#function#>(<#argument 1#>, <#argument 2#>, <#argument 3#>)
 
 The *function* can be any expression whose value is of a functional type.
+
+If the function definition includes labels for its parameters,
+the function call must include a label before its arguments
+separated by a colon (``:``) ---
+this has the following form:
+
+.. syntax-outline::
+
+   <#function#>(<#label 1#>: <#argument 1#>, <#label 2#>: <#argument 2#>)
+
+.. TODO: Discuss parameter/argument reordering
+   once we come to a decision about when it's allowed.
 
 A function call expression can include a :newTerm:`trailing closure`
 in the form of a closure expression immediately after the parenthesis.
@@ -805,14 +815,11 @@ The following function calls are equivalent: ::
     exampleFunction(x, {$0 == 13})
     exampleFunction(x) {$0 == 13}
 
-The parentheses can be omitted
-the trailing closure is the functions's only argument: ::
+If the trailing closure is the functions's only argument,
+the parentheses can be omitted: ::
 
     myData.process() {$0 * 2}
     myData.process {$0 * 2}
-
-.. TR: Should we document the fact that multiple trailing closures work?
-   The grammar box below and the prose above would need to change.
 
 .. langref-grammar
 
@@ -830,6 +837,8 @@ the trailing closure is the functions's only argument: ::
 .. Multiple trailing closures in LangRef is an error,
    and so is the trailing typecast,
    per [Contributor 6004] 2014-03-04 email.
+   Not documenting those in the prose or grammar
+   even though they happen to still work.
 
 
 .. _Expressions_InitializerExpression:
