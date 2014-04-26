@@ -949,9 +949,15 @@ It has the following form:
 
    <#expression or type#>.self
 
+On either a type or an instance of a type,
+the value of the self expression
+has the same type as the expression or type before the period.
+
 On a type, ``self`` evaluates to the type itself.
 It is used to refer to a type by name,
 for example, to pass it as an argument to a function.
+
+.. TODO: An example might be helpful.
 
 On an instance of a type, ``self`` evaluates to
 the instance of the type.
@@ -959,15 +965,19 @@ It is used to specify scope when accessing members,
 providing disambiguation when there is
 another variable of the same name in scope,
 such as a function parameter.
+For example, in an initializer: ::
 
-On either a type or an instance of a type,
-the value of the self expression
-has the same type as the expression or type before the period.
+    class MyClass {
+       var greeting: String
+       init (greeting: String) {
+          self.greeting = greeting
+       }
+    }
 
 .. There is no definition for self-expression in the LangRef.
    This was probably just an oversight, according to Ted and Doug.
 
-.. Both types and variables are identifier expressions,
+.. Both types and variables are identifiers,
    so postfix expression includes both.
 
 .. syntax-grammar::
