@@ -277,26 +277,10 @@ Instance methods, as described above,
 are methods that are called on an instance of a particular type.
 You can also define methods that are called on the type itself.
 These kinds of methods are called :newTerm:`type methods`.
-Type methods on classes are prefixed with the word ``class``,
-and type methods on structures and enumerations are prefixed with the word ``static``:
-
-.. testcode:: typeMethods
-
-   -> class SomeClass {
-         class func someTypeMethod() {
-            // method body goes here
-         }
-      }
-   -> struct SomeStructure {
-         static func someTypeMethod() {
-            // method body goes here
-         }
-      }
-   -> enum SomeEnumeration {
-         static func someTypeMethod() {
-            // method body goes here
-         }
-      }
+Type methods for classes are indicated by writing
+the keyword ``class`` before the method's ``func`` keyword,
+and type methods for structures and enumerations are indicated by writing
+the keyword ``static`` before the method's ``func`` keyword.
 
 .. note::
 
@@ -305,19 +289,153 @@ and type methods on structures and enumerations are prefixed with the word ``sta
    Each type method is explicitly scoped to the type it supports.
 
 Type methods are called with dot syntax, just like instance methods.
-However, type methods are called on the type they belong to,
-and not on an instance of that type.
+However, type methods are called on the type, and not on an instance of that type.
 To call a type method on a class called ``SomeClass``, for example,
 you write the following:
 
 .. testcode:: typeMethods
 
+   -> class SomeClass {
+         class func someTypeMethod() {
+            // type method implementation goes here
+         }
+      }
    -> SomeClass.someTypeMethod()
 
+Within the body of a type method,
+the implicit ``self`` property refers to the type itself,
+rather than an instance of that type.
+For structures and enumerations,
+this means that you can use ``self`` to disambiguate between
+static properties and static method parameters,
+just as you do for instance properties and instance method parameters.
+
+More generally, any unqualified method and property names that you use
+within the body of a type method will refer to other type-level methods and properties.
+A type method can call another type method just by using the other method's name,
+without needing to prefix it with the type name.
+Similarly, type methods on structures and enumerations can access static properties
+by using the static property's name without a type name prefix.
+
+The example below defines a structure called ``LevelTracker``,
+which tracks a player's progress through the different levels or stages of a game.
+This game is a single-player game,
+but can store information for multiple players on a single device.
+
+All of the game's levels (apart from level one) are locked when the game is first played.
+Every time a player finishes a level,
+that level is unlocked for all players on the device.
+The ``LevelTracker`` structure uses static properties and methods
+to keep track of which levels of the game have been unlocked.
+It also tracks the current level for an individual player.
+
+.. testcode:: typeMethods
+
+   -> struct LevelTracker {
+         static var highestUnlockedLevel = 1
+         static func unlockLevel(level: Int) {
+            if level > highestUnlockedLevel { highestUnlockedLevel = level }
+         }
+         static func levelIsUnlocked(level: Int) -> Bool {
+            return level <= highestUnlockedLevel
+         }
+         var currentLevel = 1
+         mutating func setCurrentLevel(level: Int) -> Bool {
+            if LevelTracker.levelIsUnlocked(level) {
+               currentLevel = level
+               return true
+            } else {
+               return false
+            }
+         }
+      }
+
+The ``LevelTracker`` structure keeps track of the highest level that any player has unlocked.
+This value is stored in a static property called ``highestUnlockedLevel``.
+
+``LevelTracker`` also defines two type functions to work with
+the ``highestUnlockedLevel`` property.
+The first is a type function called ``unlockLevel``,
+which updates the value of ``highestUnlockedLevel`` whenever a new level is unlocked.
+The second is a convenience type function called ``levelIsUnlocked``,
+which returns ``true`` if a particular level number has already been unlocked.
+(Note that these type methods can access the ``highestUnlockedLevel`` static property
+without the need to write it as ``LevelTracker.highestUnlockedLevel``.)
+
+In addition to its static property and type methods,
+``LevelTracker`` also tracks an individual player's progress through the game.
+It uses an instance property called ``currentLevel`` to track
+the level that a player is currently playing.
+
+To help manage the ``currentLevel`` property,
+``LevelTracker`` defines an instance method called ``setCurrentLevel``.
+Before updating ``currentLevel``,
+this method checks to make sure that the requested new level has already been unlocked.
+The ``setCurrentLevel`` method returns a Boolean value to indicate
+whether or not it was actually able to set ``currentLevel``.
+
+The ``LevelTracker`` structure is used with the ``Player`` class, shown below,
+to track and update the progress of an individual player:
+
+.. testcode:: typeMethods
+
+   -> class Player {
+         var tracker = LevelTracker()
+         let playerName: String
+         func completedLevel(level: Int) {
+            LevelTracker.unlockLevel(level + 1)
+            tracker.setCurrentLevel(level + 1)
+         }
+         init(name: String) {
+            playerName = name
+         }
+      }
+
+The ``Player`` class creates a new instance of ``LevelTracker``
+to track that player's progress.
+It also provides a method called ``completedLevel``,
+which is called whenever a player completes a particular level.
+This method unlocks the next level for all players,
+and updates the player's progress to move them on to the next level.
+(The Boolean return value of ``setCurrentLevel`` is ignored,
+because the level is known to have been unlocked
+by the call to ``LevelTracker.unlockLevel`` on the previous line.)
+
+You can create a instance of the ``Player`` class for a new player,
+and see what happens when the player completes level one:
+
+.. testcode:: typeMethods
+
+   -> var player = Player(name: "Argyrios")
+   << // player : Player = <Player instance>
+   -> player.completedLevel(1)
+   -> println("highest unlocked level is now \(LevelTracker.highestUnlockedLevel)")
+   <- highest unlocked level is now 2
+
+If you create a second player, and try to move them ahead
+to a level that has not yet been unlocked by any player in the game,
+the attempt to set their current level will fail:
+
+.. testcode:: typeMethods
+
+   -> player = Player(name: "Beto")
+   -> if player.tracker.setCurrentLevel(6) {
+         println("player is now on level 6")
+      } else {
+         println("level 6 has not yet been unlocked")
+      }
+   <- level 6 has not yet been unlocked
+
+.. _Methods_TheDynamicTypeProperty:
+
+The “dynamicType” Property
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You can access type properties 
+
+
+
 .. see release notes from 2013-12-18 for a note about lazy initialization
-.. mention that static methods can access static properties (and other static methods?)
-   without needing to reference the type's name,
-   as they also get an implicit ``self`` parameter.
 
 .. _Methods_MethodBinding:
 
