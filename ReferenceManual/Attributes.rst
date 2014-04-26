@@ -34,22 +34,26 @@ the ``noreturn`` attribute to a function or method type.
 .. Current list of declaration attributes (as of 4/16/14, r16419):
     ✓ ``assignment`` (OnFunc)
 
-    TR: @availability isn't fully implemented yet. Find out from Ted when it's going to be.
     ``availability(arguments)`` (OnFunc | OnEnum | OnClass | OnProtocol | OnVar | OnConstructor | OnDestructor; AllowMultipleAttributes)
+    Update from Ted:
+    "Let’s document this after WWDC, as details continue to evolve.
+    Some functionality will be in place before the conference, but this is mainly for API authors.
+    Since no Swift APIs will be published until at least 2.0, this isn’t even needed right now.
+    It mainly serves as plumbing right now to import the availability information from Clang."
+
 
     ✓ ``class_protocol`` (OnProtocol)
     ✓ ``exported`` (OnImport)
     ✓ ``final`` (OnClass | OnFunc | OnVar | OnSubscript)
 
-    ``NSCopying`` (OnVar)
+    ✓ ``NSCopying`` (OnVar)
     ✓ ``noreturn`` (OnFunc)
-    ``objc(arguments)`` (OnFunc | OnClass | OnProtocol | OnVar | OnSubscript | OnConstructor | OnDestructor)
+    ✓ ``objc(arguments)`` (OnFunc | OnClass | OnProtocol | OnVar | OnSubscript | OnConstructor | OnDestructor)
 
     ✓ ``required`` (OnConstructor)
 
     ``override`` (OnFunc | OnVar | OnSubscript) *Now a contextual keyword, not an attribute
 
-    TR: Need info about where they (below) can appear and whether they allow multiples:
     ✓ ``optional``
     ``transparent`` // Per Doug's email on 3/25, we probably shouldn't document this.
     ``unowned``, ``unowned(unsafe)``, ``unowned(safe)``
@@ -60,12 +64,17 @@ the ``noreturn`` attribute to a function or method type.
     ✓ ``weak``
     ``requires_stored_property_inits`` TR: I don't think we're documenting this one, but find out.
 
-    ✓ Keep an eye out for ``call_arguments(arguments)``, which is coming soon.
-    (We know the behavior of this attribute, so I'm going to document it now.
+    Keep an eye out for ``call_arguments(arguments)``, which is coming soon.
+    Update from Ted: We're not going to document this for WWDC.
 
     Keep an eye out for ``abstract``, which is coming soon (probably for WWDC).
     "I don't provide an implementation, but subclasses **must**."
     Similar to a class cluster in ObjC.
+    Update from Ted:
+    "We discussed using @abstract for CoreData.
+    Doug is talking to Ben Trumbull today [4/24/14] about our actual plan there,
+    and we shall see if is still needed."
+    TODO: Follow up next week.
 
     Keep an eye out for ``virtual``, which is coming soon (probably not for WWDC).
     "It's not there yet, but it'll be there at runtime, trust me."
@@ -97,12 +106,7 @@ the ``noreturn`` attribute to a function or method type.
 
     Update from [Contributor 7746]: This is a bug; he filed <rdar://problem/16656024> to track it.
 
-``availability``
-
-.. write-me::
-
-
-``call_arguments(strict)``
+.. ``call_arguments(strict)``
     The ``call_arguments(strict)`` attribute is applied to any function or method to
     indicate that you must use the parameter names of that function or method when calling
     it. In addition, you must specify those parameter names in the same order
