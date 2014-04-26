@@ -546,10 +546,6 @@ The third form is understood as the superclass's initializer.
 This allows a subclass to call the initializer of its superclass
 as part of the subclass's initializer.
 
-.. TR: ParseExpr.cpp as of r14954 has a second form of expr-super
-   where super.init is followed by 'identifier' and 'expr-call-suffix'
-   What is this for?  What does it mean?
-
 .. langref-grammar
 
     expr-super ::= expr-super-method
