@@ -913,7 +913,7 @@ For example: ::
 
 The members of a tuple
 are implictly named using integers in the order they appear,
-beginning with zero.
+starting from zero.
 For example: ::
 
     var t = (10, 20, 30)
