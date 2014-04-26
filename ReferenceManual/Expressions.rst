@@ -263,10 +263,6 @@ Otherwise, it evaluates the second expression
 and returns its value.
 The unused expression is not evaluated.
 
-.. The REPL v1-28 allows nesting such as true ? false ? 10 : 20 : 2
-   which parses as true ? (false ? 10 : 20) : 2 -- the parens are optional --
-   but that's a really bad idea if you want your code to be readable.
-
 .. langref-grammar
 
     op-binary-or-ternary ::= '?'-infix expr-sequence ':'
