@@ -210,29 +210,26 @@ The Standard Library provides the following binary operators:
 Assignment Operator
 ~~~~~~~~~~~~~~~~~~~
 
-The :newTerm:`assigment operator` updates the value of variables.
+The :newTerm:`assigment operator` sets a new value
+for a given expression.
 It has the following form:
 
 .. syntax-outline::
 
-   <#variable name#> = <#value#>
+   <#expression#> = <#value#>
 
-The value of the expression on the left of the ``=``
-is set to the value obtained by evaluating the expression on the right.
-The expression on the left side can be an
-identifier, a ignored expressions, or a tuple.
-In this usage, tuples contain only
-identifier, ignored expressions, and other tuples.
-
-If the left side is a tuple,
-the right side must be a tuple
+The value of the *expression*
+is set to the value obtained by evaluating the *value*.
+If the *expression* is a tuple,
+he *value* must be a tuple
 with the same number of elements.
-The values of the right-hand tuple
-are assigned to the corresponding variables in the left-hand tuple.
+(Nested tuples are allowed.)
+Assignment is performed from each part of the *value*
+to the corresponding part of the *expression*.
 For example: ::
 
     (a, _, (b, c)) = ("test", 9.45, (12, 3))
-    // a is "test", b is 12, and c is 3.
+    // a is "test", b is 12, c is 3, and 9.45 is ignored
 
 The assignment operator does not return any value.
 
