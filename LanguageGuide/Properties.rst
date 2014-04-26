@@ -548,9 +548,9 @@ has been updated to equal ``7``:
 
    leftChannel.currentLevel = 7
    println(leftChannel.currentLevel)
-   7
+   // prints "7"
    println(AudioChannel.maxInputLevelForAllChannels)
-   7
+   // prints "7"
 
 .. TESTME: this code cannot be swifttested due to rdar://16732688.
 
@@ -563,9 +563,9 @@ and the ``maxInputLevelForAllChannels`` static property has been updated to equa
 
    rightChannel.currentLevel = 11
    println(rightChannel.currentLevel)
-   10
+   // prints "10"
    println(AudioChannel.maxInputLevelForAllChannels)
-   11
+   // prints "11"
 
 .. TESTME: this code cannot be swifttested due to rdar://16732688.
 
