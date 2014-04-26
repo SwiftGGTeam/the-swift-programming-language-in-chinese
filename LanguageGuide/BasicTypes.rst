@@ -1178,5 +1178,5 @@ and functions are described in :doc:`Functions`.
    that invalid conditions are unlikely to arise.
    Nonetheless, in situations where invalid conditions are possible,
    an assertion is an effective way to ensure that
-   such conditions are likely to be highlighted and noticed during development,
+   such conditions are highlighted and noticed during development,
    before your app is published.
