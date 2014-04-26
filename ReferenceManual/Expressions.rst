@@ -1035,7 +1035,8 @@ see :ref:`Declarations_ProtocolSubscriptDeclaration`.
 Forced Expression
 ~~~~~~~~~~~~~~~~~
 
-A :newTerm:`forced expression` unwraps an optional value.
+A :newTerm:`forced expression` unwraps an optional value
+that you are certain is not ``nil``.
 It has the following form:
 
 .. syntax-outline::
