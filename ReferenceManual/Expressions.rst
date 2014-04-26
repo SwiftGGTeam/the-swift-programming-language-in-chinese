@@ -432,8 +432,7 @@ Literal Expression
 
 :newTerm:`Literal expression` consists of
 either an ordinary literal (such as a string or a number),
-an array literal,
-a dictionary literal,
+an array or dictionary expression,
 or one of the following special literals:
 
 ================    ======  ===============================================
@@ -454,8 +453,8 @@ inside a property getter or setter it is the name of that property,
 inside special members like ``init`` or ``subscript`` it is the name of that keyword,
 and at the top level of a file it is the name of the current module.
 
-An :newTerm:`array literal` represent an ordered collection,
-made up of items of the same type.
+An :newTerm:`array expression` is
+an ordered collection of values.
 It has the following form:
 
 .. syntax-outline::
@@ -465,13 +464,13 @@ It has the following form:
 .. TODO: Decide on usage of <#...#> throughout the reference.
 
 The last expression in the array can be followed by an optional comma.
-The value of an array literal has type ``T[]``,
+The value of an array expression has type ``T[]``,
 where ``T`` is the type of the expressions inside it.
+If there are expressions of multiple types,
+``T`` is their closest common supertype.
 
-A :newTerm:`dictionary literal` represents
+A :newTerm:`dictionary expression` is
 an unordered collection of key-value pairs,
-where all the keys are of the same type
-and all the values are of the same type.
 It has the following form:
 
 .. syntax-outline::
@@ -484,6 +483,9 @@ to distinguish it from an empty array literal.
 The value of a dictionary literal has type ``Dictionary<KeyType, ValueType>``,
 where ``KeyType`` is the type of its key expressions
 and ``ValueType`` is the type of its value expressions.
+If there are expressions of multiple types,
+``KeyType`` and ``ValueType`` are the closest common supertype
+for their respective values.
 
 .. langref-grammar
 
@@ -507,8 +509,7 @@ and ``ValueType`` is the type of its value expressions.
 	array-expression-items --> array-expression-item ``,``-OPT | array-expression-item ``,`` array-expression-items
 	array-expression-item --> expression
 
-	dictionary-expression --> ``[`` dictionary-expression-items ``]`` | empty-dictionary-expression
-	empty-dictionary-expression --> ``[`` ``:`` ``]``
+	dictionary-expression --> ``[`` dictionary-expression-items ``]`` | ``[`` ``:`` ``]``
 	dictionary-expression-items --> dictionary-expression-item ``,``-OPT | dictionary-expression-item ``,`` dictionary-expression-items
 	dictionary-expression-item --> expression ``:`` expression
 
