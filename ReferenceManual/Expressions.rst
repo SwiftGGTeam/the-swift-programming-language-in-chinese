@@ -722,9 +722,9 @@ Ignored Expression
 ~~~~~~~~~~~~~~~~~~
 
 An :newTerm:`ignored expression`
-is used with the assignment operator
-to explicitly discard a value.
-For example: ::
+is used to explicitly ignore a value during an assignment.
+For example in the following assignment
+10 is assigned to ``x`` and 20 is ignored: ::
 
     (x, _) = (10, 20)
 
