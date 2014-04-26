@@ -58,8 +58,10 @@ Adding protocol conformance in this way is described in
 Computed Properties
 -------------------
 
-Extensions can add new computed properties to existing types.
-This example adds five new computed properties to Swift's built-in ``Double`` type,
+Extensions can add computed instance properties to existing types.
+Extensions can also add computed static properties to existing structures and enumerations.
+
+This example adds five computed instance properties to Swift's built-in ``Double`` type,
 to provide basic support for working with distance units:
 
 .. testcode:: extensionsComputedProperties
@@ -114,6 +116,8 @@ and can be used within mathematical calculations wherever a ``Double`` is accept
 
    Extensions can add new computed properties, but they cannot add stored properties,
    or add property observers to existing properties.
+
+.. TODO: change this example to something more advisable / less contentious.
 
 .. _Extensions_Initializers:
 
@@ -194,12 +198,13 @@ is known as :newTerm:`initializer overloading`.)
 .. QUESTION: You can use 'self' in this way for structs and enums.
    How might you do this kind of construction for a class?
 
-.. _Extensions_InstanceMethods:
+.. _Extensions_Methods:
 
-Instance Methods
-----------------
+Methods
+-------
 
-Extensions can add new instance methods to an existing type:
+Extensions can add new instance methods and type methods to existing types.
+The following example adds a new instance method called ``toSpooky`` to the ``String`` type:
 
 .. testcode:: extensionsInstanceMethods
 
@@ -215,11 +220,12 @@ Extensions can add new instance methods to an existing type:
          }
       }
 
-This example adds a new ``String`` instance method called ``toSpooky``.
-This new method is now available to any instances of ``String``.
-The method returns a spookier version of the original string,
+The ``toSpooky`` method returns a spookier version of the original string,
 by converting odd-numbered characters to uppercase,
-and even-numbered characters to lowercase:
+and even-numbered characters to lowercase.
+
+After this extension is defined,
+you can call the ``toSpooky`` method on any ``String`` instance:
 
 .. testcode:: extensionsInstanceMethods
 
@@ -268,20 +274,6 @@ the number is rounded down to the nearest whole number each time the division ta
 Calling ``shiftRight(3)`` on an integer variable containing the number ``123456``
 shifts the number to the right by three decimal places,
 and changes the variable to have a value of ``123``.
-
-.. _Extensions_ComputedStaticProperties:
-
-Computed Static Properties
---------------------------
-
-.. write-me::
-
-.. _Extensions_TypeMethods:
-
-Type Methods
-------------
-
-.. write-me::
 
 .. _Extensions_Subscripts:
 
