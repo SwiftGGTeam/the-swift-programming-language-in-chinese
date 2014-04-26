@@ -436,6 +436,13 @@ Any attempts to subclass a final class will be reported as a compile-time error.
 .. TODO: Mention that you can return more-specific types, and take less-specific types,
    when overriding methods that use optionals / unchecked optionals.
    
+.. _Methods_OverridingTypeMethods:
+
+Overriding Type Methods
+~~~~~~~~~~~~~~~~~~~~~~~
+
+.. write-me::
+
 .. _Inheritance_DynamicReturnTypes:
 
 Dynamic Return Types
