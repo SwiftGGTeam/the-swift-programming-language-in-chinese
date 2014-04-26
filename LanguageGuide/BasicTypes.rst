@@ -1100,3 +1100,83 @@ the constant or variable is automatically set to ``nil`` for you:
    In Objective-C, ``nil`` is a pointer to a non-existent object.
    In Swift, ``nil`` is not a pointer – it is the absence of a value of a certain type.
    Optionals of *any* type can be set to ``nil``, not just object types.
+
+Assertions
+----------
+
+Optionals enable you to check for values that may or may not exist,
+and to write code that copes gracefully with the absence of a value.
+In some cases, however, it is simply not possible for your code to continue execution
+if a value does not exist, or if a provided value does not satisfy certain conditions.
+In these situations,
+you can trigger an :newTerm:`assertion` in your code to end code execution,
+and to provide an opportunity to debug the cause of the absent or invalid value.
+
+An assertion is a run-time check that some Boolean condition definitely equates to ``true``.
+Literally put, an assertion “asserts” that a condition is true.
+You use an assertion to make sure that an essential condition is satisfied
+before executing any further code.
+If the condition equates to ``true``, code execution continues as normal;
+if the condition equates to ``false``, code execution ends, and your app is terminated.
+
+If your code triggers an assertion while running in a debug environment,
+such as when you build and run an app in Xcode,
+an assertion enables you to see exactly where the invalid state occurred,
+and to query the state of your app at the time that the assertion was triggered.
+An assertion also gives you the opportunity to provide
+a suitable debug message as to the nature of the assert.
+
+You write an assertion by calling the global ``assert`` function.
+You pass the ``assert`` function an expression that equates to ``true`` or ``false``,
+and a string message to display if the result of the condition is ``false``:
+
+.. testcode:: assertions
+
+   -> let age = -3
+   << // age : Int = -3
+   -> assert(age >= 0, "A person's age cannot be less than zero")
+   xx assert
+   // this causes the assertion to trigger, because age is not >= 0
+
+In this example, code execution will only continue if ``age >= 0`` equates to ``true`` –
+that is, if the value of ``age`` is non-negative.
+If the value of ``age`` *is* negative, as in the code above,
+then ``age >= 0`` equates to ``false``,
+and the assertion is triggered, terminating the application.
+
+Assertion messages cannot use string interpolation.
+The assertion message can be omitted if desired, as in the following example:
+
+.. testcode:: assertions
+
+   -> assert(age >= 0)
+   xx assert
+
+When To Use Assertions
+~~~~~~~~~~~~~~~~~~~~~~
+
+Use an assert whenever a condition has the potential to be false,
+but must *definitely* be true in order for your code to continue execution.
+Suitable candidates for an assertion check include:
+
+* A subscript index is passed to a custom subscript implementation,
+  but the subscript index could be invalid or out of bounds.
+
+* A value is passed to a function,
+  but an invalid value means that the function cannot fulfil its task.
+
+* An optional value is currently ``nil``,
+  but a non-``nil`` value is essential for subsequent code to execute successfully.
+
+Subscripts are described in :doc:`Subscripts`,
+and functions are described in :doc:`Functions`.
+
+.. note::
+
+   Assertions cause your app to terminate,
+   and are not a substitute for designing your code in such a way
+   that invalid conditions are unlikely to arise.
+   Nonetheless, in situations where invalid conditions are possible,
+   an assertion is an effective way to ensure that
+   such conditions are likely to be highlighted and noticed during development,
+   before your app is published.
