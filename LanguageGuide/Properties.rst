@@ -419,11 +419,14 @@ no matter how many instances of that type you create.
 These kinds of properties are called :newTerm:`static properties`,
 and are prefixed by the keyword ``static``:
 
-::
+.. testcode:: staticPropertySyntax
 
-   struct SomeStructure {
-      static let someStaticProperty = "Some Value"
-   }
+   -> struct SomeStructure {
+         static var someStaticProperty = "Some Value"
+      }
+   -> enum SomeEnumeration {
+         static var someStaticProperty = "Some Value"
+      }
 
 Static properties are useful for defining values that are universal to
 *all* instances of a particular value type.
@@ -456,9 +459,9 @@ However, static properties are queried and set on the *type*, not on an instance
 To set a static property on a structure type called ``SomeStructure``,
 you write the following:
 
-::
+.. testcode:: staticPropertySyntax
 
-   SomeStructure.someStaticProperty = "New Value"
+   -> SomeStructure.someStaticProperty = "New Value"
 
 The example below uses two static properties as part of a structure that models
 an audio level meter for a number of audio channels.
@@ -530,35 +533,41 @@ You can use the ``AudioChannel`` structure to create
 two new audio channels called ``leftChannel`` and ``rightChannel``,
 to represent the audio levels of a stereo sound system:
 
-.. testcode:: staticProperties
+::
 
-   -> var leftChannel = AudioChannel()
-   -> var rightChannel = AudioChannel()
+   var leftChannel = AudioChannel()
+   var rightChannel = AudioChannel()
+
+.. TESTME: this code cannot be swifttested due to rdar://16732688.
 
 If you set the ``currentLevel`` of the *left* channel to ``7``,
 you can see that the ``maxInputLevelForAllChannels`` static property
 has been updated to equal ``7``:
 
-.. testcode:: staticProperties
+::
 
-   -> leftChannel.currentLevel = 7
-   -> println(leftChannel.currentLevel)
-   <- 7
-   -> println(AudioChannel.maxInputLevelForAllChannels)
-   <- 7
+   leftChannel.currentLevel = 7
+   println(leftChannel.currentLevel)
+   7
+   println(AudioChannel.maxInputLevelForAllChannels)
+   7
+
+.. TESTME: this code cannot be swifttested due to rdar://16732688.
 
 If you try and set the ``currentLevel`` of the *right* channel to ``11``,
 you can see that the right channel's ``currentLevel`` property
 has been capped to the maximum value of ``10``,
 and the ``maxInputLevelForAllChannels`` static property has been updated to equal ``11``:
 
-.. testcode:: staticProperties
+::
 
-   -> rightChannel.currentLevel = 11
-   -> println(rightChannel.currentLevel)
-   <- 10
-   -> println(AudioChannel.maxInputLevelForAllChannels)
-   <- 11
+   rightChannel.currentLevel = 11
+   println(rightChannel.currentLevel)
+   10
+   println(AudioChannel.maxInputLevelForAllChannels)
+   11
+
+.. TESTME: this code cannot be swifttested due to rdar://16732688.
 
 .. QUESTION: we won't have class properties for Swift 1.0, says [Contributor 7746].
    I've named this section "Static Properties" as a result,
