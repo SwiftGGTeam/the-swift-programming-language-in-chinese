@@ -426,15 +426,6 @@ the attempt to set their current level will fail:
       }
    <- level 6 has not yet been unlocked
 
-.. _Methods_TheDynamicTypeProperty:
-
-The “dynamicType” Property
-~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-You can access type properties 
-
-
-
 .. see release notes from 2013-12-18 for a note about lazy initialization
 
 .. _Methods_MethodBinding:
