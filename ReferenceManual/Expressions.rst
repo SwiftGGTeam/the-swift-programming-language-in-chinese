@@ -278,72 +278,86 @@ The unused expression is not evaluated.
 Type-Checking Operators
 ~~~~~~~~~~~~~~~~~~~~~~~
 
+.. TODO: Change these to Type-Casting
+   as does the cast and returns the result
+   is does the cast and discards the result,
+   just telling you whether it worked.
+
+.. TODO: Better to call this a cast than an "interpret".
+
 There are two :newTerm:`type-checking operators`,
 the ``is`` operator and the ``as`` operator.
 They have the following form:
 
 .. syntax-outline::
 
-   <#variable#> is <#type>
-   <#variable#> as <#type>
-   <#variable#> as <#type>!
+   <#expression#> is <#type>
+   <#expression#> as <#type>
+   <#expression#> as <#type>!
 
 The ``is`` operator checks at runtime
-whether the value of its left-hand argument
-has the type specified by its right-hand argument
-or one of its subtypes.
+whether the *expression*
+is of the specified *type*
+(but not one of its subtypes).
 If so, it returns ``true``; otherwise, it returns ``false``.
-The check must not be provably true or false at compile time.
+
+The check must not be known to be true or false at compile time.
 The following are invalid: ::
 
     "hello" is String
     "hello" is Int
 
-.. See also <rdar://problem/16639705> Proveably true/false "is" expressions should be a warning, not an error
+.. See also <rdar://problem/16639705> Provably true/false "is" expressions should be a warning, not an error
 
-The ``as`` operator explicitly specifies
-that the value of its left-hand argument
-is to be treated as the type specified
-by its right-hand argument.
+.. See also <rdar://problem/16732083> Subtypes are not considered by the 'is' operator
 
-There are three possible values of the expression:
+The ``as`` operator 
+performs the same runtime check as the ``is`` operator,
+but also returns the value of the *expression*
+as the specified *type*.
+It behaves as follows:
 
-* If the value of the left-hand expression
-  is of a type that is guaranteed to be convertable
-  to the specified type,
-  the value is returned as the specified type.
+* If interpretation of the *expression*
+  as the specified *type*,
+  is guaranteed to succeed,
+  the value of *expression* is returned
+  as an instance of the specified *type*.
+  For example, going from a subclass to a superclass.
 
-* If the value is guaranteed *not* to be convertable
-  to the specified type,
+* If interpretation of the *expression*
+  as the specified *type*,
+  is guaranteed to fail,
   a compile-time error is raised.
 
-* Otherwise, the value of the left-hand expression
-  is returned as on optional of the type specified.
-  At runtime, if the cast fails, its value is ``nil``.
+* Otherwise, the value of *expression*
+  is returned as an optional of the specified *type*.
+  At runtime, if the *expression* can't be interpreted
+  as in instance of the specified *type*,
+  the value returned is ``nil``.
+  For example, going from a superclass to a subclass.
 
 For example: ::
 
     class SomeSuperType {}
     class SomeType : SomeSuperType {}
     class SomeChildType : SomeType {}
-
     let x = SomeType()
 
-    let y = x as SomeSuperType  // y: SomeSuperType
-    let z = x as SomeChildType  // z: SomeChildType?
+    let y = x as SomeSuperType  // y is of type SomeSuperType
+    let z = x as SomeChildType  // z is of type SomeChildType?
 
-Specifying a type with ``as`` provides the same type context
-to the compiler as a function call and a variable type annotation.
-For example, the following examples
-are equivalent to the ones above: ::
-
-    let y2 : SomeSuperType = x
-    let z2 : SomeChildType? = x
+Specifying a type with ``as`` provides the same type information
+to the compiler as a function call or a type annotation,
+as shown in the following examples: ::
 
     func f (a : SomeSuperType) -> SomeSuperType { return a }
     func g (a : SomeChildType) -> SomeChildType { return a }
-    let y3 = f(x)
-    let z3 = g(x)
+
+    let y2: SomeSuperType = x   // y2 is of type SomeSuperType
+    let z2: SomeChildType? = x  // z2 is of type SomeChildType?
+
+    let y3 = f(x)   // y3 is of type SomeSuperType
+    let z3 = g(x)   // z3 is of type SomeChildType?
 
 If the type specified after ``as``
 is followed by an exclamation mark (``!``),
