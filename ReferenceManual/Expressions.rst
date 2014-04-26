@@ -991,25 +991,25 @@ For example, in an initializer: ::
 Subscript Expression
 ~~~~~~~~~~~~~~~~~~~~
 
-A :newTerm:`subscript expression` provides access
-to an item in a collection,
+A :newTerm:`subscript expression` provides subscript access
 using the getter and setter
 of the corresponding subscript declaration.
 It has the following form:
 
 .. syntax-outline::
 
-   <#collection expression#>[<#index expressions#>]
+   <#expression#>[<#index expressions#>]
 
 To evaluate the value of a subscript expression,
-getter of the *collection expression* is called
+the subscript getter for the *expression*'s type is called
 with the *index expressions* passed as the subscript parameters.
 To set its value,
-the setter is called in the same way.
+the subscript setter is called in the same way.
 
-.. TR: Confirm that inside the square brackets is an expression *list*,
-   a comma-separated list of expressions.
-   I see this, for example:
+.. TR: Confirm that indexing on
+   a comma-separated list of expressions
+   is intentional, not just a side effect.
+   I see this working, for example:
    (swift) class Test {
              subscript(a: Int, b: Int) -> Int { return 12 }
            }
@@ -1018,9 +1018,8 @@ the setter is called in the same way.
    (swift) t[1, 2]
    // r0 : Int = 12
 
-
 For information about subscript declarations,
-see `Subscript Declaration`_.
+see :ref:`Declarations_ProtocolSubscriptDeclaration`.
 
 .. langref-grammar
 
