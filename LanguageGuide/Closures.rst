@@ -1,14 +1,3 @@
-.. docnote:: Subjects to be covered in this section
-
-   * Closures
-   * Trailing closures
-   * Nested closures
-   * Capturing values
-   * Different closure expression forms
-   * Anonymous closure arguments
-   * Attributes (infix, resilience, inout, auto_closure, noreturn, weak)
-   * Typedefs for closure signatures to aid readability
-
 Closures
 ========
 
@@ -593,6 +582,8 @@ the ``map`` function's outer parentheses.
 Auto-Closures
 -------------
 
+.. write-me::
+
 .. TODO: var closure1: @auto_closure () -> Int = 4  // Function producing 4 whenever it is called.
 
 .. TODO: from Assert.swift in stdlib/core:
@@ -614,18 +605,3 @@ Auto-Closures
    capture computation that can be run lazily.
    auto_closure is only valid in a type of a syntactic function type
    that is defined to take a syntactic empty tuple.
-
-.. write-me::
-
-.. refnote:: References
-
-   * https://[Internal Staging Server]/docs/whitepaper/TypesAndValues.html#functions
-   * https://[Internal Staging Server]/docs/whitepaper/Closures.html#closures
-   * https://[Internal Staging Server]/docs/whitepaper/Closures.html#functions-vs-closures
-   * https://[Internal Staging Server]/docs/whitepaper/Closures.html#nested-functions
-   * https://[Internal Staging Server]/docs/whitepaper/Closures.html#closure-expressions
-   * https://[Internal Staging Server]/docs/whitepaper/Closures.html#trailing-closures
-   * https://[Internal Staging Server]/docs/whitepaper/GuidedTour.html#functions
-   * https://[Internal Staging Server]/docs/whitepaper/GuidedTour.html#closures
-   * https://[Internal Staging Server]/docs/Expressions.html
-   * /test/Serialization/Inputs/def_transparent.swift (example of currying)

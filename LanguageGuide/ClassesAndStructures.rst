@@ -1,34 +1,3 @@
-.. docnote:: Subjects to be covered in this section
-
-   * Classes
-   * Objects
-   * Structures
-   * Instance variables
-   * Getters and setters
-   * willSet / didSet
-   * Constructors and destructors
-   * Designated initializers
-   * Instance and class methods
-   * Working with self and Self
-   * Super
-   * Memory management via ARC
-   * UnsafePointer?
-   * Cast operators (?, !, b as D, b is D)
-   * Type inference and discovery?
-   * "Everything is a type"
-   * Stored vs computed properties
-   * === vs ==
-   * “is” to check for class membership
-   * “as” for casting
-   * No “self = [super init]” (assignment equates to void)
-   * @inout
-   * value types and reference types
-   * Type functions and variables
-   * Nested classes and structures
-   * Bound functions
-   * @conversion functions for converting between types
-   * Subscript getters and setters
-
 Classes and Structures
 ======================
 

@@ -550,7 +550,3 @@ which is written as ``[:]``, like this:
    Behind the scenes,
    Swift's ``Array`` and ``Dictionary`` types are implemented as :newTerm:`generic collections`.
    Generics such as ``Array`` and ``Dictionary`` are described in detail in :doc:`Generics`.
-
-.. refnote:: References
-
-   * https://[Internal Staging Server]/docs/whitepaper/TypesAndValues.html#arrays

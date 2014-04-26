@@ -1,16 +1,3 @@
-.. docnote:: Subjects to be covered in this section
-
-   * Conditional branching (if)
-   * Looping (while, do while, for, for in)
-   * Iterators
-   * Switch statement (including pattern matching)
-   * Pattern matching and expressions in patterns
-   * Overloading the ~= function for pattern matching
-   * Control transfer (return, break, continue, fallthrough)
-   * Ranges
-   * Variable scope (as this is the first time we've defined scopes)
-   * Clarification around expressions and statements?
-
 Control Flow
 ============
 
@@ -1322,16 +1309,3 @@ the number ``5`` is correctly identified as a prime number.
    It simply causes code execution to move directly to the statements
    inside the next case (or ``default`` case) block,
    as in C's standard ``switch`` statement behavior.
-
-.. refnote:: References
-
-   * https://[Internal Staging Server]/docs/whitepaper/GuidedTour.html#branching-and-looping
-   * https://[Internal Staging Server]/docs/whitepaper/GuidedTour.html#pattern-matching
-   * https://[Internal Staging Server]/docs/Pattern%20Matching.html
-   * https://[Internal Staging Server]/docs/LangRef.html#pattern-expr
-   * /swift/include/swift/AST/Stmt.h
-   * /swift/test/IDE/complete_stmt_controlling_expr.swift
-   * /swift/test/interpreter/break_continue.swift
-   * /swift/test/Parse/foreach.swift
-   * /swift/test/reverse.swift
-   * /swift/test/statements.swift

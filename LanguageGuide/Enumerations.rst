@@ -1,14 +1,3 @@
-.. docnote:: Subjects to be covered in this section
-
-   * Enums ✔︎
-   * Enum element patterns
-   * Enums for groups of constants ✔︎
-   * Enums with raw values (inc. getting / setting raw values) ✔︎
-   * Enum default / unknown values?
-   * Enum delayed identifier resolution
-   * Option sets
-   * Enum special capabilities such as embeddability, static properties etc.
-
 Enumerations
 ============
 

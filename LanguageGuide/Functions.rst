@@ -1,14 +1,3 @@
-.. docnote:: Subjects to be covered in this section
-
-   * Functions
-   * Function signatures (including pattern matching)
-   * Setting variables to functions
-   * Naming conventions
-   * return statement
-   * Can only have one variadic parameter
-   * Attributes (infix, resilience, inout, auto_closure, noreturn)
-   * Marking functions as transparent (and what this means)
-
 Functions
 =========
 
@@ -1066,18 +1055,6 @@ Curried Functions
 
 .. write-me::
 
-.. function currying syntax 
-.. partial application
-
-.. refnote:: References
-
-   * https://[Internal Staging Server]/docs/whitepaper/TypesAndValues.html#functions
-   * https://[Internal Staging Server]/docs/whitepaper/Closures.html#closures
-   * https://[Internal Staging Server]/docs/whitepaper/Closures.html#functions-vs-closures
-   * https://[Internal Staging Server]/docs/whitepaper/Closures.html#nested-functions
-   * https://[Internal Staging Server]/docs/whitepaper/Closures.html#closure-expressions
-   * https://[Internal Staging Server]/docs/whitepaper/Closures.html#trailing-closures
-   * https://[Internal Staging Server]/docs/whitepaper/GuidedTour.html#functions
-   * https://[Internal Staging Server]/docs/whitepaper/GuidedTour.html#closures
-   * https://[Internal Staging Server]/docs/Expressions.html
-   * /test/Serialization/Inputs/def_transparent.swift (example of currying)
+.. TODO: function currying syntax 
+.. TODO: partial application
+.. TODO: currying example from /test/Serialization/Inputs/def_transparent.swift

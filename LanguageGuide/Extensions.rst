@@ -1,11 +1,3 @@
-.. docnote:: Subjects to be covered in this section
-
-   * Extending classes and structures
-   * Start by extending an existing thing to have something it didn't
-   * Continue by extending String to have an initializer for something it doesn't by default
-   * Making a type ``Printable`` / nicely ``DebugPrintable`` (inc. guidelines for format)
-   * Extensions can extend existing types to add protocol conformance
-
 Extensions
 ==========
 
@@ -423,8 +415,3 @@ as shown here for the word ``"Hello"``.
    Because of this, all of the ``UnicodeScalar.Kind`` member values
    can be written in short-hand form inside the ``switch`` statement,
    such as ``.Vowel`` rather than ``UnicodeScalar.Kind.Vowel``.
-
-
-.. refnote:: References
-
-   * https://[Internal Staging Server]/docs/whitepaper/GuidedTour.html#extensions

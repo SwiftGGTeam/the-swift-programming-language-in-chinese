@@ -1,11 +1,3 @@
-.. docnote:: Subjects to be covered in this section
-
-   * Definition of protocols
-   * Adoption of protocols
-   * Standard protocols (Equatable etc.)
-   * Default implementations of methods
-   * Protocol compositions
-
 Protocols
 =========
 
@@ -1161,7 +1153,3 @@ Once the counter reaches zero, no more counting takes place:
    (even though we only have one game)
    and the game is instantiated through the type?
    See protocols_init.swift in tspl_lab/examples.
-
-.. refnote:: References
-
-   * https://[Internal Staging Server]/docs/whitepaper/GuidedTour.html#protocols

@@ -1,24 +1,3 @@
-.. docnote:: Subjects to be covered in this section
-
-   * Declaration syntax ✔︎
-   * Naming conventions ✔︎
-   * Integer types ✔︎
-   * Floating-point types ✔︎
-   * infinity and -infinity
-   * Bool ✔︎
-   * No suffixes for integers / floats ✔︎
-   * Lazy initialization
-   * A brief mention of characters and strings
-   * Tuples ✔︎
-   * Varargs tuples
-   * Type inference ✔︎
-   * Type casting through type initializers ✔︎
-   * Optional types ✔︎
-   * Pattern binding
-   * Literals ✔︎
-   * Immutability
-   * min and max for integers ✔︎
-
 Basic Types
 ===========
 
@@ -139,6 +118,9 @@ If a stored value in your code is not going to change,
 it should always be declared as a constant with the ``let`` keyword.
 Variables should only be used for
 storing values that need to be able to change.
+
+.. TODO: I need to mention that globals are lazily initialized somewhere.
+   Probably not here, but somewhere.
 
 .. _BasicTypes_TypeAnnotations:
 
@@ -436,6 +418,8 @@ Swift provides two signed floating-point number types:
    whereas the precision of ``Float`` can be as little as 6 digits.
    The appropriate floating-point type to use depends on the nature and range of
    values you need to work with in your code.
+
+.. TODO: mention infinity, -infinity etc.
 
 .. _BasicTypes_TypeInference:
 
@@ -1116,26 +1100,3 @@ the constant or variable is automatically set to ``nil`` for you:
    In Objective-C, ``nil`` is a pointer to a non-existent object.
    In Swift, ``nil`` is not a pointer – it is the absence of a value of a certain type.
    Optionals of *any* type can be set to ``nil``, not just object types.
-
-.. refnote:: References
-
-   * https://[Internal Staging Server]/docs/LangRef.html#integer_literal ✔︎
-   * https://[Internal Staging Server]/docs/LangRef.html#floating_literal ✔︎
-   * https://[Internal Staging Server]/docs/LangRef.html#expr-delayed-identifier ✔︎
-   * https://[Internal Staging Server]/docs/LangRef.html#type-tuple
-   * https://[Internal Staging Server]/docs/whitepaper/TypesAndValues.html#types-and-values ✔︎
-   * https://[Internal Staging Server]/docs/whitepaper/TypesAndValues.html#integer-types ✔︎
-   * https://[Internal Staging Server]/docs/whitepaper/TypesAndValues.html#no-integer-suffixes ✔︎
-   * https://[Internal Staging Server]/docs/whitepaper/TypesAndValues.html#no-implicit-integer-promotions-or-conversions ✔︎
-   * https://[Internal Staging Server]/docs/whitepaper/TypesAndValues.html#no-silent-truncation-or-undefined-behavior
-   * https://[Internal Staging Server]/docs/whitepaper/TypesAndValues.html#separators-in-literals ✔︎
-   * https://[Internal Staging Server]/docs/whitepaper/TypesAndValues.html#floating-point-types ✔︎
-   * https://[Internal Staging Server]/docs/whitepaper/TypesAndValues.html#bool ✔︎
-   * https://[Internal Staging Server]/docs/whitepaper/TypesAndValues.html#tuples
-   * https://[Internal Staging Server]/docs/whitepaper/LexicalStructure.html#identifiers-and-operators
-   * https://[Internal Staging Server]/docs/whitepaper/LexicalStructure.html#integer-literals
-   * https://[Internal Staging Server]/docs/whitepaper/LexicalStructure.html#floating-point-literals
-   * https://[Internal Staging Server]/docs/whitepaper/GuidedTour.html#declarations-and-basic-syntax
-   * https://[Internal Staging Server]/docs/whitepaper/GuidedTour.html#tuples
-   * https://[Internal Staging Server]/docs/literals.html
-   * http://en.wikipedia.org/wiki/Operator_(computer_programming)
