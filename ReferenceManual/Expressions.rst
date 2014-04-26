@@ -49,8 +49,8 @@ The Standard Library provides the following prefix operators:
 
 * ``++`` Increment
 * ``--`` Decrement
-* ``!`` Logical negation
-* ``~`` Bitwise negation
+* ``!`` Logical NOT
+* ``~`` Bitwise NOT
 * ``+`` Unary plus, a no-op provided for parity with unary minus
 * ``-`` Unary minus
 
@@ -122,10 +122,8 @@ The Standard Library provides the following binary operators:
 .. The following comes from stdlib/core/Policy.swift
 
 * Exponentiative (No associativity, precedence level 160)
-    - ``<<`` Left bit shift
-    - ``>>`` Right bit shift
-
-.. TODO: Do we have logical/barrell shift?
+    - ``<<`` Bitwise left shift
+    - ``>>`` Bitwise right shift
 
 * Multiplicative (Left associative, precedence level 150)
     - ``*`` Multiply
