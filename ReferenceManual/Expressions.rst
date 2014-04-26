@@ -574,44 +574,52 @@ A :newTerm:`closure expression` creates a closure,
 also known as a *lambda* or an *anonymous function*.
 Like function declarations,
 closures contain statements which they execute,
-and they can capture values from their enclosing scope.
-Unlike function declarations,
-the return type and parameter types can be omitted.
-The omitted type information is inferred
-from the context in which the closure is used.
+and they capture values from their enclosing scope.
+It has the following form:
 
-A closure that consists of only a single expression
-is understood to return the value of that expression.
-In this special case,
-type information from the expression
-is used to infer omitted parameter or return types.
+.. syntax-outline::
 
-A closure may also omit names for its parameters.
-Its parameters are then implicitly named
-``$`` followed by their position:
-``$0``, ``$1``, ``$2``, and so on.
+   {
+      (<#parameters#>) -> <#return type#> in
+      <#statements#>
+   }
 
-Using implicit types, parameter names, and return statements
-can make a closure expression much shorter.
-The following closure expressions are equivalent: ::
+The *parameters* have the same form
+as the parameters in a function declaration,
+as described in :ref:`Declarations_FunctionDeclaration`.
+
+There are several special forms
+that allow closures to be writter more concicely:
+
+* A closure may omit the types
+  of its parameters, its return type, or both.
+  If the omitted types can't be inferred,
+  a compile-time error is raised.
+
+* A closure may omit names for its parameters.
+  Its parameters are then implicitly named
+  ``$`` followed by their position:
+  ``$0``, ``$1``, ``$2``, and so on.
+
+* A closure that consists of only a single expression
+  is understood to return the value of that expression.
+
+The following closure expressions are equivalent,
+assuming type inference suceeds: ::
 
     {
-        (x : Int, y : Int) -> Int in
-        let result = x + y
+        (x: Int, y: Int) -> Int in
         return x + y
     }
 
     {
         (x, y) in
-        let result = x + y
         return x + y
     }
 
     { (x, y) in x + y }
 
     { $0 + $1 }
-
-.. TODO: Revisit style guide regarding placement of "in".
 
 .. langref-grammar
 
@@ -651,13 +659,13 @@ It has the following form:
 
 For example, the following pairs of assignments are equivalent: ::
 
-    var x: ExampleEnumeration
-    x = ExampleEnumeration.SomeValue
+    var x: MyEnumeration
+    x = MyEnumeration.SomeValue
     x = .SomeValue
 
-    var y: ExampleClass
+    var y: MyClass
     y = .someClassMethod()
-    y = ExampleClass.someClassMethod()
+    y = MyClass.someClassMethod()
 
 .. langref-grammar
 
