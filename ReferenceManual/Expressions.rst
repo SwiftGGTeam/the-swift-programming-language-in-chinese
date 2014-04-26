@@ -1078,12 +1078,12 @@ It has the following form:
 
 .. syntax-outline::
 
-    <#expression#>?<#postfix operators#>
+    <#expression#>?<#postfixes #>
 
 If the *expression* is not ``nil``,
-the optional-member expression evaluates
+the chained-optional expression evaluates
 to the unwrapped value of the expression,
-and any chained postfix expression are evaluated.
+after any chained postfix expression are evaluated.
 Otherwise,
 the chained-optional expression evaluates to ``nil``
 and any chained postfix expressions are ignored.
@@ -1097,14 +1097,18 @@ to the expression that is its first part.
 A postfix expression is :newTerm:`chained` to an expression
 if it is either directly chained to that expression
 or if it is directly chained to another postfix expression
-that is directly chained to that expression.
+that is chained to that expression.
+
 For example, in the expression ``x?.foo()[7]``
-the array expression is directly chained
-to the function call expression,
-which is directly chained to the chained-optional expression.
-Both the array expression and function call expression
-are chained to the chained-optional expression;
-they are both ignored if the value of ``x`` is ``nil``.
+both the function call and the array subscript
+are chained to the chained optional expression,
+and they are both ignored if the value of ``x`` is ``nil``.
+The function call is directly chained
+it is chained to the chained-optional expression
+because it is chained directly to that expression.
+The array subscript is chained to the chained optional expression
+because it is directly chained to the function call,
+which is chained to the chained-optional call.
 
 .. LangRef
 
