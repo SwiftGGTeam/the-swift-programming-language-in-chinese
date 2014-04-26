@@ -275,66 +275,47 @@ The unused expression is not evaluated.
 
 .. _Expressions_Type-CastingOperators:
 
-Type-Checking Operators
+Type-Casting Operators
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-.. TODO: Change these to Type-Casting
-   as does the cast and returns the result
-   is does the cast and discards the result,
-   just telling you whether it worked.
+There are two :newTerm:`type-casting operators`:
+The ``as`` operator performs a type cast
+and returns the result,
+and the ``is`` operator performs a type cast
+and indicates whether the cast failed.
 
-.. TODO: Better to call this a cast than an "interpret".
-
-There are two :newTerm:`type-checking operators`,
-the ``is`` operator and the ``as`` operator.
 They have the following form:
 
 .. syntax-outline::
 
-   <#expression#> is <#type>
    <#expression#> as <#type>
    <#expression#> as <#type>!
-
-The ``is`` operator checks at runtime
-whether the *expression*
-is of the specified *type*
-(but not one of its subtypes).
-If so, it returns ``true``; otherwise, it returns ``false``.
-
-The check must not be known to be true or false at compile time.
-The following are invalid: ::
-
-    "hello" is String
-    "hello" is Int
-
-.. See also <rdar://problem/16639705> Provably true/false "is" expressions should be a warning, not an error
-
-.. See also <rdar://problem/16732083> Subtypes are not considered by the 'is' operator
+   <#expression#> is <#type>
 
 The ``as`` operator 
-performs the same runtime check as the ``is`` operator,
-but also returns the value of the *expression*
+performs a runtime cast of the *expression*
 as the specified *type*.
 It behaves as follows:
 
-* If interpretation of the *expression*
-  as the specified *type*,
+* If casting the *expression*
+  to the specified *type*,
   is guaranteed to succeed,
   the value of *expression* is returned
   as an instance of the specified *type*.
-  For example, going from a subclass to a superclass.
+  For example, casting from a subclass to a superclass.
 
-* If interpretation of the *expression*
-  as the specified *type*,
+* If casting the *expression*
+  to the specified *type*,
   is guaranteed to fail,
   a compile-time error is raised.
 
 * Otherwise, the value of *expression*
   is returned as an optional of the specified *type*.
-  At runtime, if the *expression* can't be interpreted
-  as in instance of the specified *type*,
-  the value returned is ``nil``.
-  For example, going from a superclass to a subclass.
+  At runtime, if the cast suceeds,
+  the value of *expression* is returned
+  as in instance of the specified *type*;
+  otherwise the value returned is ``nil``.
+  For example, casting from a superclass to a subclass.
 
 For example: ::
 
@@ -367,7 +348,27 @@ The following are equivalent: ::
     x as SomeType!
     (x as SomeType)!
 
-.. TODO: Use test-code directive for the above code listings.
+The ``is`` operator checks at runtime
+whether the *expression*
+is of the specified *type*
+(but not one of its subtypes).
+If so, it returns ``true``; otherwise, it returns ``false``.
+
+.. If the bugs are fixed, this can be reworded:
+    The ``is`` operator checks at runtime
+    whether the *expression*
+    can be cast to the specified *type*
+    If so, it returns ``true``; otherwise, it returns ``false``.
+
+The check must not be known to be true or false at compile time.
+The following are invalid: ::
+
+    "hello" is String
+    "hello" is Int
+
+.. See also <rdar://problem/16639705> Provably true/false "is" expressions should be a warning, not an error
+
+.. See also <rdar://problem/16732083> Subtypes are not considered by the 'is' operator
 
 .. langref-grammar
 
