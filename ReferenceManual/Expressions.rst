@@ -852,17 +852,32 @@ It has the following form:
 
 .. syntax-outline::
 
-    <#class#>.init
+    <#class or expression#>.init
 
 The value of an initializer expression
-is a function that can be called
+can be called like a function
 to initialize a new instance of the class,
 but can't be used as a value.
-For example, the following is not allowed: ::
+For example, the following is invalid: ::
 
     var x = MyClass.init    // error
 
-.. TR: Why is this function not like every other function?
+Initializer expressions are used
+to delegate to the initializer of a superclass: ::
+
+    init () {
+       // ... Initialization goes here ...
+       super.init()
+    }
+
+.. TODO: .init doesn't quite behave like either
+   an instance method or a class method,
+   because it isn't a method.
+
+.. TODO: This section is a bit thin.
+   For example, I think MyClass()
+   is syntactic sugar for MyClass.init() 
+   but I'm not sure.
 
 .. langref-grammar
 
