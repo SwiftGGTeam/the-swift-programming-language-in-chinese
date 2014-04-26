@@ -149,23 +149,24 @@ and prepends it to the beginning of ``name`` to create a full name for the stars
 
 .. TODO: add some advice on how protocols should be named
 
-.. _Protocols_InstanceMethods:
+.. _Protocols_Methods:
 
-Instance Methods
-----------------
+Methods
+-------
 
-Protocols can require specific instance methods to be implemented by conforming types.
+Protocols can require specific instance methods and type methods
+to be implemented by conforming types.
 These methods are written as part of the protocol's definition
-in exactly the same way as for a normal instance method definition,
+in exactly the same way as for normal instance and type methods,
 but without curly braces or a method body.
-Variadic parameters are allowed, subject to the same rules as for normal instance methods.
+Variadic parameters are allowed, subject to the same rules as for normal methods.
 
 .. note::
 
-   Protocols use the same syntax as normal instance methods,
+   Protocols use the same syntax as normal methods,
    but are not allowed to specify default values for method parameters.
 
-For example:
+The following example defines a protocol with a single instance method requirement:
 
 .. testcode:: protocols
 
@@ -474,23 +475,6 @@ Here's how ``DiceGameTracker`` looks in action:
    </ Rolled a 4
    </ Rolled a 5
    </ The game lasted for 4 turns
-
-.. _Protocols_TypeMethods:
-
-Type Methods
-------------
-
-.. write-me::
-
-.. TODO: Protocols can provide class (and static) functions
-   (although rdar://14620454 and rdar://15242744).
-
-.. TODO: We already have static properties,
-   but we won't have class properties for Swift 1.0, says [Contributor 7746].
-   This means that protocols will not allow the definition of type-level properties,
-   because a class would be unable to fulfil them.
-   I've named this section's placeholder title
-   to refer to "Type Methods" only for now.
 
 .. _Protocols_AddingProtocolConformanceWithAnExtension:
 
