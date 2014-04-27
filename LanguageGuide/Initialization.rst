@@ -920,7 +920,7 @@ a new ``ShoppingListItem`` instance:
          ShoppingListItem(name: "Bacon"),
          ShoppingListItem(name: "Eggs", quantity: 6),
       ]
-   << // breakfastList : ShoppingListItem[] = [<ShoppingListItem instance>, <ShoppingListItem instance>, <ShoppingListItem instance>]
+   << // breakfastList : Array<ShoppingListItem> = [<ShoppingListItem instance>, <ShoppingListItem instance>, <ShoppingListItem instance>]
    -> breakfastList[0].name = "Orange juice"
    -> breakfastList[0].purchased = true
    -> for item in breakfastList {

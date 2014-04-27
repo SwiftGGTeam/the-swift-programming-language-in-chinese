@@ -114,7 +114,7 @@ Use the ``for``-``in`` loop with an array to iterate over its items:
 .. testcode:: forLoops
 
    -> let names = ["Anna", "Alex", "Brian", "Jack"]
-   << // names : String[] = ["Anna", "Alex", "Brian", "Jack"]
+   << // names : Array<String> = ["Anna", "Alex", "Brian", "Jack"]
    -> for name in names {
          println("Hello, \(name)!")
       }

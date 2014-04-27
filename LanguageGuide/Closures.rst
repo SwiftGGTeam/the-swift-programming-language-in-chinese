@@ -240,7 +240,7 @@ Here's the initial array to be sorted:
 .. testcode:: closureSyntax
 
    -> let array = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
-   << // array : String[] = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
+   << // array : Array<String> = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
 
 The ``sort`` function takes two arguments:
 
@@ -264,7 +264,7 @@ and to pass it in as the ``sort`` function's second parameter:
          return s1 > s2
       }
    -> var reversed = sort(array, backwards)
-   << // reversed : String[] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
+   << // reversed : Array<String> = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
    // reversed is equal to ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
 
 If the first string (``s1``) is greater than the second string (``s2``),
@@ -317,7 +317,7 @@ This syntax can be used to write an inline version of the ``backwards`` function
          return s1 > s2
       })
    >> reversed
-   << // reversed : String[] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
+   << // reversed : Array<String> = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
 
 Note that the declaration of parameters and return type for this inline closure
 is identical to the declaration from the ``backwards`` function.
@@ -338,7 +338,7 @@ it can even be written on a single line:
 
    -> reversed = sort(array, { (s1: String, s2: String) -> Bool in return s1 > s2 } )
    >> reversed
-   << // reversed : String[] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
+   << // reversed : Array<String> = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
 
 This illustrates that the overall call to the ``sort`` function has remained the same.
 A pair of parentheses still wrap the entire set of arguments for the function –
@@ -363,7 +363,7 @@ the return arrow (``->``) can also be omitted:
 
    -> reversed = sort(array, { (s1, s2) in return s1 > s2 } )
    >> reversed
-   << // reversed : String[] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
+   << // reversed : Array<String> = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
 
 It is always possible to infer parameter types and return type
 when passing a closure to a function as an inline closure expression.
@@ -389,7 +389,7 @@ by omitting the ``return`` keyword from their declaration:
 
    -> reversed = sort(array, { (s1, s2) in s1 > s2 } )
    >> reversed
-   << // reversed : String[] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
+   << // reversed : Array<String> = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
 
 Here, the function type of the ``sort`` function's second argument
 makes it clear that a ``Bool`` value must be returned by the closure.
@@ -417,7 +417,7 @@ because the closure expression is made up entirely of its body:
 
    -> reversed = sort(array, { $0 > $1 } )
    >> reversed
-   << // reversed : String[] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
+   << // reversed : Array<String> = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
 
 Here, ``$0`` and ``$1`` are used as
 short-hand ways to refer to the closure's first and second ``String`` arguments.
@@ -441,7 +441,7 @@ and Swift will infer that you want to use its string-specific implementation:
 
    -> reversed = sort(array, >)
    >> reversed
-   << // reversed : String[] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
+   << // reversed : Array<String> = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
 
 Operator functions are described in more detail in :ref:`AdvancedOperators_OperatorFunctions`.
 
@@ -469,7 +469,7 @@ outside of the ``sort`` function's parentheses as a trailing closure:
 
    -> reversed = sort(array) { $0 > $1 }
    >> reversed
-   << // reversed : String[] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
+   << // reversed : Array<String> = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
 
 As mentioned above,
 trailing closures are most useful when the closure is sufficiently long that
@@ -498,7 +498,7 @@ The array ``[16, 58, 510]`` will be used to create the new array
       ]
    << // digitNames : Dictionary<Int, String> = Dictionary<Int, String>(1.33333333333333, 10, <DictionaryBufferOwner<Int, String> instance>)
    -> let numbers = [16, 58, 510]
-   << // numbers : Int[] = [16, 58, 510]
+   << // numbers : Array<Int> = [16, 58, 510]
 
 The code above creates a dictionary of mappings between
 the integer digits and English-language versions of their names.

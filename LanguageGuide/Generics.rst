@@ -401,7 +401,7 @@ The ``findInt`` function can now be used to find an integer value in an array of
 .. testcode:: typeConstraints
 
    -> let integers = [-6, 0, -27, 3, 2001]
-   << // integers : Int[] = [-6, 0, -27, 3, 2001]
+   << // integers : Array<Int> = [-6, 0, -27, 3, 2001]
    -> if let foundIndex = findInt(integers, -27) {
          println("The index of -27 is \(foundIndex)")
       }

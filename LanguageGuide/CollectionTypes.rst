@@ -123,7 +123,7 @@ The initialization of ``shoppingList`` could have been be written in a shorter f
 .. testcode:: arraysInferred
 
    -> var shoppingList = ["Eggs", "Milk"]
-   << // shoppingList : String[] = ["Eggs", "Milk"]
+   << // shoppingList : Array<String> = ["Eggs", "Milk"]
 
 Because all of the values in the array literal are of the same type as each other,
 it is possible to infer that ``Array<String>`` is
