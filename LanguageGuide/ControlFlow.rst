@@ -268,10 +268,7 @@ it sets ``index`` to ``3``,
 which causes ``index < 3`` to equate to ``false``,
 ending the loop.
 
-.. TODO: Need to mention that loop variables are immutable by default.
-.. QUESTION: Can you make a loop variable mutable –
-   and therefore influence loop execution, such as jumping ahead –
-   by prepending it with 'var'?
+.. TODO: Need to mention that loop variables are constants by default.
 
 .. _ControlFlow_WhileLoops:
 
@@ -824,7 +821,8 @@ to provide a natural-language count for numbers of any size:
    -> println("There are \(naturalCount) \(countedThings).")
    <- There are millions and millions of stars in the Milky Way.
 
-.. TODO: remove the initializer for naturalCount once we can declare unitialized variables in the REPL.
+.. FIXME: remove the initializer for naturalCount once we can declare unitialized variables in the REPL.
+
 .. TODO: Add a description for this example.
 
 .. _ControlFlow_Tuples:
@@ -874,11 +872,6 @@ However, if multiple matches are possible,
 the first matching case is always used.
 The point (0, 0) would match ``case (0, 0)`` first,
 and so all other matching cases would be ignored.
-
-.. TODO: The type of a tuple can be used in a case statement to check for different types:
-   var x: Any = (1, 2)
-   switch x {
-   case is (Int, Int):
 
 .. _ControlFlow_ValueBindings:
 

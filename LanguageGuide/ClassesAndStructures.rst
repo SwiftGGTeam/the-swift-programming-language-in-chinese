@@ -354,9 +354,6 @@ when they are assigned to a variable or constant,
 or when they are passed to a function.
 Rather than making a copy, a reference to the same existing instance is used instead.
 
-.. TODO: This enables you to have multiple variables and constants
-   that all refer to the same one instance. 
-
 Here's an example, using the ``VideoMode`` class defined above:
 
 .. testcode:: ClassesAndStructures
@@ -430,9 +427,6 @@ is declared like any other constant or variable in Swift,
 and the value it contains is always a reference to a particular instance of that type.
 
 .. TODO: functions aren't "instances". This needs clarifying.
-
-.. TODO: We need something here to say
-   "but don't worry, you can still do all of the stuff you're used to".
 
 .. TODO: Add a justification here to say why this is a good thing.
 
