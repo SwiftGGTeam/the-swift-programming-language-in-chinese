@@ -563,6 +563,13 @@ and is written immediately after the function it supports,
 without needing to wrap the entire closure within
 the ``map`` function's outer parentheses.
 
+.. _Closures_AvoidingReferenceCyclesInClosures:
+
+Avoiding Reference Cycles in Closures
+-------------------------------------
+
+.. write-me::
+
 .. TODO: you have to write "self." for property references in an explicit closure expression,
    since "self" will be captured, not the property (as per rdar://16193162)
    we don't do this for autoclosures, however -
