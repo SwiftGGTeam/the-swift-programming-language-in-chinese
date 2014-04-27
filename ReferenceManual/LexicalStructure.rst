@@ -239,12 +239,12 @@ The following keywords are reserved and may not be used as identifiers.
   ``self``,
   ``Self``,
   ``Type``,
-  ``unowned``,
-  ``weak``,
   ``__COLUMN__``,
   ``__FILE__``,
   ``__FUNCTION__``,
   and ``__LINE__``.
+
+.. NOTE: Chris removed 'weak' and 'unowned' from the list of keywords in r16940.
 
 .. langref-grammar
 
