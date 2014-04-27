@@ -461,6 +461,11 @@ for functions with multiple function type arguments.
 The only requirement is that these trailing closures must always be
 the final arguments provided for the function call.
 
+Additionally, if *all* of a function's parameters are function types,
+and you provide trailing closures for all of those parameters when calling the function,
+you do not need to write a pair of parentheses ``()``
+after the function's name when you call the function.
+
 Because the final argument to the ``sort`` function is a closure expression,
 the string-sorting closure from above can be written
 outside of the ``sort`` function's parentheses as a trailing closure:
@@ -474,7 +479,7 @@ outside of the ``sort`` function's parentheses as a trailing closure:
 As mentioned above,
 trailing closures are most useful when the closure is sufficiently long that
 it is not possible to write it inline on a single line.
-As an example, Swift's ``Array`` type has a ``map`` function
+As an example, Swift's ``Array`` type has a ``map`` method
 which takes a closure expression as its single argument.
 The closure is called once for each item in the array,
 and returns an alternative mapped value (possibly of some other type) for that item.
@@ -482,10 +487,10 @@ The nature of the mapping, and the type of the returned value,
 is left up to the closure to specify.
 
 After applying the provided closure to each array element,
-the ``map`` function returns a new array containing all of the new mapped values,
+the ``map`` method returns a new array containing all of the new mapped values,
 in the same order as their corresponding values in the original array.
 
-Here's how the ``map`` function can be used with a trailing closure
+Here's how the ``map`` method can be used with a trailing closure
 to convert an array of ``Int`` values into an array of ``String`` values.
 The array ``[16, 58, 510]`` will be used to create the new array 
 ``["OneSix", "FiveEight", "FiveOneZero"]``:
@@ -505,11 +510,14 @@ the integer digits and English-language versions of their names.
 It also defines an array of integers, ready to be converted into strings.
 
 The ``numbers`` array can now be used to create an array of ``String`` values,
-by passing a closure expression to the array's ``map`` function as a trailing closure:
+by passing a closure expression to the array's ``map`` method as a trailing closure.
+Note that the call to ``numbers.map`` does not need to include any parentheses after ``map``,
+because the ``map`` method has only one parameter,
+and that parameter is provided as a trailing closure:
 
 .. testcode:: arrayMap
 
-   -> let strings = numbers.map() {
+   -> let strings = numbers.map {
             (var number) -> String in
          var output = ""
          while number > 0 {
