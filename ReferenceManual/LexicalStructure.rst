@@ -265,6 +265,7 @@ The following keywords are reserved and may not be used as identifiers.
   ``left``,
   ``mutating``,
   ``none``,
+  ``nonmutating``,
   ``operator``,
   ``override``,
   ``postfix``,
