@@ -262,6 +262,23 @@ This time, however, the associated values can be extracted as part of the switch
       }
    <- QR code with value of ABCDEFGHIJKLMNOP.
 
+You can extract each associated value as a constant (with the ``let`` prefix)
+or a variable (with the ``var`` prefix)
+for use within the ``switch`` case's body.
+If all of the associated values for a enumeration member
+are extracted as constants, or if all are extracted as variables,
+you can place a single ``var`` or ``let`` annotation before the member name, for brevity:
+
+.. testcode:: enums
+
+   -> switch productBarcode {
+         case let .UPCA(numberSystem, identifier, check):
+            println("UPC-A with value of \(numberSystem), \(identifier), \(check).")
+         case let .QRCode(productCode):
+            println("QR code with value of \(productCode).")
+      }
+   <- QR code with value of ABCDEFGHIJKLMNOP.
+
 .. _Enumerations_RawValues:
 
 Raw Values
