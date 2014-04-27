@@ -34,7 +34,17 @@ In its simplest form, a stored property is just a constant or variable
 that is stored alongside an instance of a particular class or structure.
 Stored properties can be either
 :newTerm:`variable stored properties` (introduced by the ``var`` keyword),
-or :newTerm:`constant stored properties` (introduced by the ``let`` keyword):
+or :newTerm:`constant stored properties` (introduced by the ``let`` keyword).
+
+You can provide a default value for a stored property as part of its definition,
+as described in :ref:`Initialization_DefaultPropertyValues`.
+In addition, even though it is normally constant,
+you can change the value of a constant stored property at any point during initialization.
+This process is described in :ref:`Initialization_ModifyingConstantPropertiesDuringInitialization`.
+
+The example below defines a structure called ``FixedLengthRange``,
+which describes a range of integers
+whose range length cannot be changed once it is created:
 
 .. testcode:: storedProperties
 
@@ -48,19 +58,11 @@ or :newTerm:`constant stored properties` (introduced by the ``let`` keyword):
    -> rangeOfThreeItems.firstValue = 6
    // the range now represents integer values 6, 7, and 8
 
-The example above defines a structure called ``FixedLengthRange``,
-which describes a range of integers
-whose range length cannot be changed once it is created.
 Instances of ``FixedLengthRange`` have
 a variable stored property called ``firstValue``,
 and a constant stored property called ``length``.
 In the example above, ``length`` is initialized when the new range is created,
 and cannot be changed thereafter, because it is a constant property.
-
-The value of a constant stored property can be changed
-at any point until the initializer for the class or structure it belongs to
-completes its initialization.
-Instance initialization is described in :doc:`Initialization`.
 
 .. _Properties_StoredPropertiesOfConstantStructureInstances:
 
@@ -123,8 +125,6 @@ and simplifies the property's declaration into a single, definitive statement.
 All of the information about the property –
 including its name, type, and memory management characteristics –
 is defined in a single location as part of the type's definition.
-
-.. TODO: research and write up the story for @weak
 
 .. TODO: what happens if one property of a constant structure is an object reference?
 
@@ -400,6 +400,15 @@ and the default name of ``oldValue`` is used instead.
    the new value that you assign will replace the one that was just set.
 
 .. TODO: mention that this also works for global / local variables
+
+.. _Properties_WeakProperties:
+
+Weak Properties
+---------------
+
+.. write-me::
+
+.. TODO: research and write up the story for @weak
 
 .. _Properties_StaticProperties:
 
