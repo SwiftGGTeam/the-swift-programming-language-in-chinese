@@ -359,14 +359,14 @@ and to notify a ``DiceGameDelegate`` about its progress:
          func play() {
             square = 0
             delegate?.gameDidStart(self)
-            while square != finalSquare {
+            gameLoop: while square != finalSquare {
                let diceRoll = dice.roll()
                delegate?.game(self, didStartNewTurnWithDiceRoll: diceRoll)
                switch square + diceRoll {
                   case finalSquare:
-                     break
+                     break gameLoop
                   case let x where x > finalSquare:
-                     continue
+                     continue gameLoop
                   default:
                      square += diceRoll
                      square += board[square]
