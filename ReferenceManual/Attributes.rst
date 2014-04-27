@@ -62,10 +62,10 @@ the ``noreturn`` attribute to a function or method type.
     (see also John's 4/23/14 commit email for r16693)
 
     ✓ ``weak``
-    ``requires_stored_property_inits`` TR: I don't think we're documenting this one, but find out.
-
-    Keep an eye out for ``call_arguments(arguments)``, which is coming soon.
-    Update from Ted: We're not going to document this for WWDC.
+    ``requires_stored_property_inits``
+    NOTE: According to [Contributor 7746] and Doug's email on 4/26/14,
+    we're not going to document this, because it's a very specialized attribute,
+    only introduced for NSManagedObject.
 
     Keep an eye out for ``abstract``, which is coming soon (probably for WWDC).
     "I don't provide an implementation, but subclasses **must**."
@@ -114,8 +114,7 @@ the ``noreturn`` attribute to a function or method type.
     For an example of how to use the ``call_arguments(strict)`` attribute,
     see :ref:`Functions_StrictParameterNames`.
 
-.. TODO: This might not be the final name of this attribute. Update this info
-    after it's been implemented.
+.. NOTE: According to [Contributor 7746]'s email on 4/26/14, this won't be an attribute.
 
 ``class_protocol``
     The ``class_protocol`` attribute is applied to a protocol to indicate
