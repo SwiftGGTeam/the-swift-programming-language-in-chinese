@@ -285,7 +285,7 @@ the keyword ``static`` before the method's ``func`` keyword.
 .. note::
 
    In Objective-C, you can only define type-level methods for Objective-C classes.
-   In Swift, you can define type-level methods for all classes, structures and enumerations.
+   In Swift, you can define type-level methods for all classes, structures, and enumerations.
    Each type method is explicitly scoped to the type it supports.
 
 Type methods are called with dot syntax, just like instance methods.
