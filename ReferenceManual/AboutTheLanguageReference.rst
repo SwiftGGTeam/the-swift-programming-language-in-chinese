@@ -6,7 +6,7 @@ The grammar described here is intended to help you understand the language in mo
 detail, rather than to allow you to directly implement a parser or compiler.
 
 The Swift language is relatively small, becuase many common types, functions, and operators
-that appear virtual everywhere in Swift code
+that appear virtually everywhere in Swift code
 are actually defined in the Swift Standard Library. Although these types, functions,
 and operators are not part of the Swift language itself,
 the discussions and code examples used in this part of the book use them extensively.
