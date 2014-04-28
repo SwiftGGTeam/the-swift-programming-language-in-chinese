@@ -12,10 +12,10 @@ and operators are not part of the Swift language itself,
 the discussions and code examples used in this part of the book use them extensively.
 
 
-.. _Introduction_NotationalConventions:
+.. _Introduction_HowToReadTheGrammar:
 
-Notational Conventions
-----------------------
+How to Read the Grammar
+-----------------------
 
 The notation used to describe the formal grammar of the Swift programming language
 follows a few conventions.
