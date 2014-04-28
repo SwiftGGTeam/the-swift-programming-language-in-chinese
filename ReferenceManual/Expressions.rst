@@ -34,18 +34,20 @@ in the sections below.
 
     Grammar of an expression
 
-    expression --> unary-expression binary-expressions-OPT
+    expression --> prefix-expression binary-expressions-OPT
     expression-list --> expression | expression ``,`` expression-list
 
 .. _Expressions_UnaryOperators:
 
-Unary Expressions
------------------
+Prefix Expressions
+------------------
 
-:newTerm:`Unary expressions` are formed by combining
+:newTerm:`Prefix expressions` are formed by combining
 an optional prefix operator with an expression.
 Prefix operators take one argument,
 the expression that follows them.
+
+.. TR: Does it make sense to call out the left-to-right grouping?
 
 The Swift Standard Library provides the following prefix operators:
 
@@ -69,7 +71,7 @@ see "Basic Operators" and "Advanced Operators".
 
     Grammar of a unary expression
 
-    unary-expression --> prefix-operators-OPT postfix-expression
+    prefix-expression --> prefix-operators-OPT postfix-expression
     prefix-operators --> prefix-operator prefix-operators-OPT
 
 
@@ -211,9 +213,9 @@ The Swift Standard Library provides the following binary operators:
 
     Grammar of a binary expression
 
-    binary-expression --> binary-operator unary-expression
-    binary-expression --> assignment-operator unary-expression
-    binary-expression --> conditional-operator unary-expression
+    binary-expression --> binary-operator prefix-expression
+    binary-expression --> assignment-operator prefix-expression
+    binary-expression --> conditional-operator prefix-expression
     binary-expression --> type-checking-operator
 
     binary-expressions --> binary-expression binary-expressions-OPT
@@ -757,6 +759,8 @@ Postfix Expressions
 by applying a postfix operator or other postfix syntax
 to an expression.
 Syntactically, every primary expression is also a postfix expression.
+
+.. TR: Does it make sense to call out the left-to-right grouping?
 
 The Swift Standard Library provides the following postfix operators:
 
