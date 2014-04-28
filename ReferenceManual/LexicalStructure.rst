@@ -562,7 +562,7 @@ For example, all the following have the same value: ::
    "1 2 \(1 + 2)"
    var x = 3; "1 2 \(x)"
 
-Character literals are of type of ``UnicodeScalar``.
+Character literals are of type ``Character``.
 String literals are of type ``String``.
 
 .. NOTE: We will have this as a single Unicode char, as well as Char which will be a
@@ -596,13 +596,13 @@ String literals are of type ``String``.
 
     character-literal --> ``'`` quoted-character ``'``
     quoted-character --> escaped-character
-    quoted-character --> Any Unicode grapheme cluster except ``'`` ``\`` U+000A U+000D
+    quoted-character --> Any Unicode extended grapheme cluster except ``'``, ``\``, U+000A, or U+000D
 
     string-literal --> ``"`` quoted-text ``"``
     quoted-text --> quoted-text-item quoted-text-OPT
     quoted-text-item --> escaped-character
     quoted-text-item --> ``\(`` expression ``)``
-    quoted-text-item --> Any Unicode grapheme cluster except ``"`` ``\`` U+000A U+000D
+    quoted-text-item --> Any Unicode extended grapheme cluster except ``"``, ``\``, U+000A, or U+000D
 
     escaped-character --> ``\0`` | ``\\`` | ``\t`` | ``\n`` | ``\r`` | ``\"`` | ``\'``
     escaped-character --> ``\x`` hexadecimal-digit hexadecimal-digit
