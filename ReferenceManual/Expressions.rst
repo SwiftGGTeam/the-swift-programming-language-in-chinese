@@ -3,6 +3,8 @@ Expressions
 
 In Swift, there are four kinds of expressions:
 primary expressions, unary expressions, binary expressions, and postfix expressions.
+When an expression is evaluated,
+it can return a value, cause side effects, or both.
 
 Primary expressions are conceptually the core kind of expression
 and they provide a way to access values.
@@ -45,14 +47,19 @@ an optional prefix operator with an expression.
 Prefix operators take one argument,
 the expression that follows them.
 
-The Standard Library provides the following prefix operators:
+The Swift Standard Library provides the following prefix operators:
 
 * ``++`` Increment
 * ``--`` Decrement
 * ``!`` Logical NOT
 * ``~`` Bitwise NOT
-* ``+`` Unary plus, a no-op provided for parity with unary minus
+* ``+`` Unary plus
 * ``-`` Unary minus
+
+For information about the behavior of these operators,
+see "Basic Operators" and "Advanced Operators".
+
+.. TODO Link
 
 .. langref-grammar
 
@@ -80,44 +87,7 @@ It has the following form:
 
    <#left-hand argument#> <#operator#> <#right-hand argument#>
 
-At parse time,
-an expression made up of binary operators is represented as a flat list,
-with the expression that follows each operator
-understood as its right-hand argument,
-and the unary expression of the containing expression
-understood as the left-hand argument
-to the first operator in the list.
-This list is transformed into a tree
-by applying operator precedence,
-at which point the left- and right-hand arguments
-of each operator are the appropriate expression.
-
-For example the expression ``2 + 3 * 5``
-is initially understood as a list of three items,
-``2``, ``+ 3``, and ``* 5``.
-It is then transformed into the tree (2 + (3 * 5)).
-
-.. TODO: In the amazing future, the previous paragraph would benefit from a diagram.
-
-.. langref-grammar
-
-    expr-binary ::= op-binary-or-ternary expr-unary expr-cast?
-    op-binary-or-ternary ::= operator-binary
-    op-binary-or-ternary ::= '='
-    op-binary-or-ternary ::= '?'-infix expr-sequence ':'
-
-.. syntax-grammar::
-
-    Grammar of a binary expression
-
-    binary-expression --> binary-operator unary-expression
-    binary-expression --> assignment-operator unary-expression
-    binary-expression --> conditional-operator unary-expression
-    binary-expression --> type-checking-operator
-
-    binary-expressions --> binary-expression binary-expressions-OPT
-
-The Standard Library provides the following binary operators:
+The Swift Standard Library provides the following binary operators:
 
 .. The following comes from stdlib/core/Policy.swift
 
@@ -207,6 +177,48 @@ The Standard Library provides the following binary operators:
    in respect to the spacing rules -- ``x + y * z`` is different than
    ``x + y* z``.
 
+.. note::
+
+    At parse time,
+    an expression made up of binary operators is represented as a flat list,
+    with the expression that follows each operator
+    understood as its right-hand argument,
+    and the unary expression of the containing expression
+    understood as the left-hand argument
+    to the first operator in the list.
+    This list is transformed into a tree
+    by applying operator precedence,
+    at which point the left- and right-hand arguments
+    of each operator are the appropriate expression.
+
+    For example the expression ``2 + 3 * 5``
+    is initially understood as a list of three items,
+    ``2``, ``+ 3``, and ``* 5``.
+    It is then transformed into the tree (2 + (3 * 5)).
+
+.. TODO: In the amazing future, the previous paragraph would benefit from a diagram.
+
+.. TODO: Make sure this looks ok -- a grammar box right after a note.
+
+.. langref-grammar
+
+    expr-binary ::= op-binary-or-ternary expr-unary expr-cast?
+    op-binary-or-ternary ::= operator-binary
+    op-binary-or-ternary ::= '='
+    op-binary-or-ternary ::= '?'-infix expr-sequence ':'
+
+.. syntax-grammar::
+
+    Grammar of a binary expression
+
+    binary-expression --> binary-operator unary-expression
+    binary-expression --> assignment-operator unary-expression
+    binary-expression --> conditional-operator unary-expression
+    binary-expression --> type-checking-operator
+
+    binary-expressions --> binary-expression binary-expressions-OPT
+
+
 Assignment Operator
 ~~~~~~~~~~~~~~~~~~~
 
@@ -288,9 +300,9 @@ They have the following form:
 
 .. syntax-outline::
 
-   <#expression#> as <#type>
-   <#expression#> as <#type>!
-   <#expression#> is <#type>
+   <#expression#> as <#type#>
+   <#expression#> as <#type#>!
+   <#expression#> is <#type#>
 
 The ``as`` operator 
 performs a runtime cast of the *expression*
@@ -746,7 +758,7 @@ by applying a postfix operator or other postfix syntax
 to an expression.
 Syntactically, every primary expression is also a postfix expression.
 
-The Standard Library provides the following postfix operators:
+The Swift Standard Library provides the following postfix operators:
 
 * ``++`` Increment
 * ``--`` Decrement
