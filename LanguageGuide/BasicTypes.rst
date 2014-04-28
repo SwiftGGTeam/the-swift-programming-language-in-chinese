@@ -1101,6 +1101,8 @@ the constant or variable is automatically set to ``nil`` for you:
    In Swift, ``nil`` is not a pointer – it is the absence of a value of a certain type.
    Optionals of *any* type can be set to ``nil``, not just object types.
 
+.. _BasicTypes_Assertions:
+
 Assertions
 ----------
 
@@ -1151,6 +1153,8 @@ The assertion message can be omitted if desired, as in the following example:
 
    -> assert(age >= 0)
    xx assert
+
+.. _BasicTypes_WhenToUseAssertions:
 
 When To Use Assertions
 ~~~~~~~~~~~~~~~~~~~~~~
