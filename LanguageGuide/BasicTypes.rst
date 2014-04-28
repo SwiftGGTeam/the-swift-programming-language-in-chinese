@@ -71,6 +71,9 @@ and describes how to store values of those types in constants and variables.
    This guide introduces all of these concepts in detail,
    with self-contained, real-world examples for every subject.
 
+.. TODO: this introduction isn't right.
+   it needs changing to be an introduction to this chapter only.
+
 .. _BasicTypes_ConstantsAndVariables:
 
 Constants and Variables
@@ -1184,3 +1187,5 @@ and functions are described in :doc:`Functions`.
    an assertion is an effective way to ensure that
    such conditions are highlighted and noticed during development,
    before your app is published.
+
+.. QUESTION: is this the right place for the assertions section to go?
