@@ -130,8 +130,10 @@ and not the return value of the closure.
    at the point that the closure is executed.
    This means that you cannot access any other property values from within your closure,
    even if those properties have default values.
+   You also cannot use the implicit ``self`` property,
+   or call any of the instance's methods.
    Closures should only be used to provide a default value
-   when that default value is always the same,
+   when the default value is always the same,
    and is independent of any outside values.
 
 The example below defines a structure called ``CheckersBoard``,
