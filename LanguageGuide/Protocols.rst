@@ -1,11 +1,3 @@
-.. docnote:: Subjects to be covered in this section
-
-   * Definition of protocols
-   * Adoption of protocols
-   * Standard protocols (Equatable etc.)
-   * Default implementations of methods
-   * Protocol compositions
-
 Protocols
 =========
 
@@ -20,8 +12,7 @@ Any type that satisfies the requirements of a protocol is said to
 :newTerm:`conform` to that protocol.
 
 Protocols can require that conforming types have specific
-instance properties, instance methods, type methods,
-initializers, operators, and subscripts.
+instance properties, instance methods, type methods, operators, and subscripts.
 
 .. _Protocols_ProtocolSyntax:
 
@@ -38,21 +29,21 @@ Protocols are defined in a very similar way to classes, structures, and enumerat
 
 Custom types can state that they adopt a particular protocol
 by placing the protocol's name after the type's name,
-separated by a colon, as part of their definition:
-
-::
-
-   struct SomeStructure : SomeProtocol {
-      // structure definition goes here
-   }
-
-If a class has a superclass, the superclass name should be listed
-before any protocols it adopts, followed by a comma.
+separated by a colon, as part of their definition.
 Multiple protocols can also be listed, separated by commas:
 
 ::
 
-   class SomeClass : SomeSuperclass, FirstProtocol, AnotherProtocol {
+   struct SomeStructure: FirstProtocol, AnotherProtocol {
+      // structure definition goes here
+   }
+
+If a class has a superclass, the superclass name should be listed
+before any protocols it adopts, followed by a comma:
+
+::
+
+   class SomeClass: SomeSuperclass, FirstProtocol, AnotherProtocol {
       // class definition goes here
    }
 
@@ -112,7 +103,7 @@ the ``FullyNamed`` protocol:
 
 .. testcode:: protocols
 
-   -> struct Person : FullyNamed {
+   -> struct Person: FullyNamed {
          var fullName: String
       }
    -> let john = Person(fullName: "John Appleseed")
@@ -135,7 +126,7 @@ Here's a more complex class, which also adopts and conforms to the ``FullyNamed`
 
 .. testcode:: protocols
 
-   -> class Starship : FullyNamed {
+   -> class Starship: FullyNamed {
          var prefix: String?
          var name: String
          init(name: String, prefix: String? = nil) {
@@ -158,23 +149,24 @@ and prepends it to the beginning of ``name`` to create a full name for the stars
 
 .. TODO: add some advice on how protocols should be named
 
-.. _Protocols_InstanceMethods:
+.. _Protocols_Methods:
 
-Instance Methods
-----------------
+Methods
+-------
 
-Protocols can require specific instance methods to be implemented by conforming types.
+Protocols can require specific instance methods and type methods
+to be implemented by conforming types.
 These methods are written as part of the protocol's definition
-in exactly the same way as for a normal instance method definition,
+in exactly the same way as for normal instance and type methods,
 but without curly braces or a method body.
-Variadic parameters are allowed, subject to the same rules as for normal instance methods.
+Variadic parameters are allowed, subject to the same rules as for normal methods.
 
 .. note::
 
-   Protocols use the same syntax as normal instance methods,
+   Protocols use the same syntax as normal methods,
    but are not allowed to specify default values for method parameters.
 
-For example:
+The following example defines a protocol with a single instance method requirement:
 
 .. testcode:: protocols
 
@@ -201,7 +193,7 @@ a :newTerm:`linear congruential generator`:
 
 .. testcode:: protocols
 
-   -> class LinearCongruentialGenerator : RandomNumberGenerator {
+   -> class LinearCongruentialGenerator: RandomNumberGenerator {
          var lastRandom = 42.0
          let m = 139968.0
          let a = 3877.0
@@ -353,7 +345,7 @@ and to notify a ``DiceGameDelegate`` about its progress:
 
 .. testcode:: protocols
 
-   -> class SnakesAndLadders : DiceGame {
+   -> class SnakesAndLadders: DiceGame {
          let finalSquare = 25
          let dice = Dice(sides: 6, generator: LinearCongruentialGenerator())
          var square = 0
@@ -367,14 +359,14 @@ and to notify a ``DiceGameDelegate`` about its progress:
          func play() {
             square = 0
             delegate?.gameDidStart(self)
-            while square != finalSquare {
+            gameLoop: while square != finalSquare {
                let diceRoll = dice.roll()
                delegate?.game(self, didStartNewTurnWithDiceRoll: diceRoll)
                switch square + diceRoll {
                   case finalSquare:
-                     break
+                     break gameLoop
                   case let x where x > finalSquare:
-                     continue
+                     continue gameLoop
                   default:
                      square += diceRoll
                      square += board[square]
@@ -425,7 +417,7 @@ which adopts the ``DiceGameDelegate`` protocol:
 
 .. testcode:: protocols
 
-   -> class DiceGameTracker : DiceGameDelegate {
+   -> class DiceGameTracker: DiceGameDelegate {
          var numberOfTurns = 0
          func gameDidStart(game: DiceGame) {
             numberOfTurns = 0
@@ -484,50 +476,18 @@ Here's how ``DiceGameTracker`` looks in action:
    </ Rolled a 5
    </ The game lasted for 4 turns
 
-.. TODO: expand this example to show how you can initialize from a type.
-   Perhaps a function that returns a random game type to play
-   (even though we only have one game)
-   and the game is instantiated through the type?
+.. _Protocols_AddingProtocolConformanceWithAnExtension:
 
-.. _Protocols_Initializers:
-
-Initializers
-------------
-
-.. write-me::
-
-.. You can't construct from a protocol
-.. You can define initializer requirements in protocols
-
-.. _Protocols_TypeMethods:
-
-Type Methods
-------------
-
-.. write-me::
-
-.. TODO: Protocols can provide class (and static) functions
-   (although rdar://14620454 and rdar://15242744).
-
-.. TODO: We already have static properties,
-   but we won't have class properties for Swift 1.0, says [Contributor 7746].
-   This means that protocols will not allow the definition of type-level properties,
-   because a class would be unable to fulfil them.
-   I've named this section's placeholder title
-   to refer to "Type Methods" only for now.
-
-.. _Protocols_AddingProtocolConformanceWithExtensions:
-
-Adding Protocol Conformance With Extensions
--------------------------------------------
+Adding Protocol Conformance With An Extension
+---------------------------------------------
 
 An existing type can be extended to adopt and conform to a new protocol,
 even if you do not have access to the source code for the existing type.
-This is achieved by using extensions, as described in :doc:`Extensions`.
-Extensions give a way to add new properties, methods, initializers and subscripts
+This is achieved by defining an extension
+that adds the protocol's functionality to the existing type.
+Extensions give a way to add new properties, methods, and subscripts
 to an existing type,
-and are therefore able to add any of the requirements that a protocol may demand
-on to an existing type.
+and are therefore able to add any of the requirements that a protocol may demand.
 
 .. note::
 
@@ -550,7 +510,7 @@ The ``Dice`` class from earlier can be extended to adopt and conform to ``TextRe
 
 .. testcode:: protocols
 
-   -> extension Dice : TextRepresentable {
+   -> extension Dice: TextRepresentable {
          func asText() -> String {
             return "A \(sides)-sided dice"
          }
@@ -576,7 +536,7 @@ adopt and conform to the ``TextRepresentable`` protocol:
 
 .. testcode:: protocols
 
-   -> extension SnakesAndLadders : TextRepresentable {
+   -> extension SnakesAndLadders: TextRepresentable {
          func asText() -> String {
             return "A game of Snakes and Ladders with \(finalSquare) squares"
          }
@@ -601,7 +561,7 @@ it can be made to adopt the protocol with an empty extension:
             return "A hamster named \(name)"
          }
       }
-   -> extension Hamster : TextRepresentable {}
+   -> extension Hamster: TextRepresentable {}
 
 Instances of ``Hamster`` can now be used wherever ``TextRepresentable`` is the required type:
 
@@ -664,7 +624,7 @@ The syntax for protocol inheritance is the same as for class inheritance:
 
 ::
 
-   protocol SomeSubProtocol : SomeSuperProtocol {
+   protocol SomeSubProtocol: SomeSuperProtocol {
       // protocol definition goes here
    }
 
@@ -672,7 +632,7 @@ For example:
 
 .. testcode:: protocols
 
-   -> protocol PrettyTextRepresentable : TextRepresentable {
+   -> protocol PrettyTextRepresentable: TextRepresentable {
          func asPrettyText() -> String
       }
 
@@ -688,7 +648,7 @@ The ``SnakesAndLadders`` class can be extended to adopt and conform to ``PrettyT
 
 .. testcode:: protocols
 
-   -> extension SnakesAndLadders : PrettyTextRepresentable {
+   -> extension SnakesAndLadders: PrettyTextRepresentable {
          func asPrettyText() -> String {
             var output = asText() + ":\n"
             for index in 1..finalSquare {
@@ -731,6 +691,65 @@ of any ``SnakesAndLadders`` instance:
    -> println(game.asPrettyText())
    </ A game of Snakes and Ladders with 25 squares:
    </ 🆓 🆓 👍 🆓 🆓 👍 🆓 🆓 👍 👍 🆓 🆓 🆓 🐍 🆓 🆓 🆓 🆓 🐍 🆓 🆓 🐍 🆓 🐍 🆓 
+
+.. _Protocols_ProtocolComposition:
+
+Protocol Composition
+--------------------
+
+It can sometimes be useful to require a type to conform to multiple protocols at once.
+You can combine multiple protocols into a single requirement
+with a :newTerm:`protocol composition`.
+Protocol compositions have the form ``protocol<SomeProtocol, AnotherProtocol>``,
+and you can list as many protocols within the pair of angle brackets (``<>``) as you need,
+separated by commas.
+
+Here's an example that combines two protocols called ``Named`` and ``Aged``
+into a single protocol composition requirement on a function parameter:
+
+.. testcode:: protocolComposition
+
+   -> protocol Named {
+         var name: String { get }
+      }
+   -> protocol Aged {
+         var age: Int { get }
+      }
+   -> struct Person: Named, Aged {
+         var name: String
+         var age: Int
+      }
+   -> func wishHappyBirthday(celebrator: protocol<Named, Aged>) {
+         println("Happy birthday \(celebrator.name) - you're \(celebrator.age)!")
+      }
+   -> let birthdayPerson = Person(name: "Malcolm", age: 21)
+   << // birthdayPerson : Person = Person("Malcolm", 21)
+   -> wishHappyBirthday(celebrator: birthdayPerson)
+   <- Happy birthday Malcolm - you're 21!
+
+This example defines a protocol called ``Named``,
+with a single requirement for a gettable ``String`` property called ``name``.
+It also defines a protocol called ``Aged``,
+with a single requirement for a gettable ``Int`` property called ``age``.
+Both of these protocols are adopted by a structure called ``Person``.
+
+The example also defines a function called ``wishHappyBirthday``,
+which takes a single parameter called ``celebrator``.
+The type of this parameter is ``protocol<Named, Aged>``,
+which means “any type that conforms to both the ``Named`` and ``Aged`` protocols.”
+It doesn't matter what specific type is passed to the function,
+as long as it conforms to both of the required protocols.
+
+The example then creates a new ``Person`` instance called ``birthdayPerson``,
+and passes this new instance to the ``wishHappyBirthday`` function.
+Because ``Person`` conforms to both protocols, this is a valid call,
+and the ``wishHappyBirthday`` function is able to print its birthday greeting.
+
+.. note::
+
+   Protocol compositions do not define a new, permanent protocol type.
+   Rather, they define a temporary local protocol that has the combined requirements
+   of all protocols in the composition.
 
 .. _Protocols_CheckingForProtocolConformance:
 
@@ -784,13 +803,13 @@ both of which conform to the ``HasArea`` protocol:
 
 .. testcode:: protocolConformance
 
-   -> class Circle : HasArea {
+   -> class Circle: HasArea {
          let pi = 3.1415927
          var radius: Double
          var area: Double { return pi * radius * radius }
          init(radius: Double) { self.radius = radius }
       }
-   -> class Country : HasArea {
+   -> class Country: HasArea {
          var area: Double
          init(area: Double) { self.area = area }
       }
@@ -894,6 +913,8 @@ Optional Protocol Requirements
    but there doesn't seem to be a way to check for them or call them.
    Doug has suggested that we should probably ban them,
    which I've filed as rdar://16669554.
+   And in any case, even if you could check for them,
+   they might not work due to rdar://13695680.
 
 Protocols can define :newTerm:`optional requirements`,
 which do not have to be implemented by types that conform to the protocol.
@@ -1020,7 +1041,7 @@ It does this by implementing the optional ``fixedIncrement`` property requiremen
 
 .. testcode:: protocolConformance
 
-   -> class ThreeSource : CounterDataSource {
+   -> class ThreeSource: CounterDataSource {
          let fixedIncrement = 3
       }
 
@@ -1052,7 +1073,7 @@ from its current ``count`` value:
 
 .. testcode:: protocolConformance
 
-   -> class TowardsZeroSource : CounterDataSource {
+   -> class TowardsZeroSource: CounterDataSource {
          func incrementForCount(count: Int) -> Int {
             if count == 0 {
                return 0
@@ -1088,15 +1109,6 @@ Once the counter reaches zero, no more counting takes place:
    </ 0 
    </ 0 
 
-.. _Protocols_ProtocolComposition:
-
-Protocol Composition
---------------------
-
-.. write-me::
-
-.. protocol<P1, P2> syntax for protocol conformance aka "something that conforms to multiple protocols"
-
 .. Other things to be included:
 .. ----------------------------
 
@@ -1113,6 +1125,15 @@ Protocol Composition
    but this currently only works if they are also marked as @objc.
 .. Checking for (and calling) optional implementations via optional binding and closures
 
-.. refnote:: References
-
-   * https://[Internal Staging Server]/docs/whitepaper/GuidedTour.html#protocols
+.. Initializers
+.. ------------
+.. You can't construct from a protocol itself, 
+   but you can define initializer requirements in protocols
+.. TODO: although you can define initializer requirements,
+   you can't actually make use of them, due to rdar://13695680.
+   Don't mention the fact that you can define them unless they actually start working.
+.. TODO: use the Snakes & Ladders example to show how you can initialize from a type.
+   Perhaps a function that returns a random game type to play
+   (even though we only have one game)
+   and the game is instantiated through the type?
+   See protocols_init.swift in tspl_lab/examples.

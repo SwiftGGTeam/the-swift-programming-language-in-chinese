@@ -1,12 +1,3 @@
-.. docnote:: Subjects to be covered in this section
-
-   * Array
-   * Dictionary
-   * (any other generics from the Standard Library)
-   * Typing of generics
-   * Working with subscripts
-   * Creating one's own generics
-
 Generics
 ========
 
@@ -410,7 +401,7 @@ The ``findInt`` function can now be used to find an integer value in an array of
 .. testcode:: typeConstraints
 
    -> let integers = [-6, 0, -27, 3, 2001]
-   << // integers : Int[] = [-6, 0, -27, 3, 2001]
+   << // integers : Array<Int> = [-6, 0, -27, 3, 2001]
    -> if let foundIndex = findInt(integers, -27) {
          println("The index of -27 is \(foundIndex)")
       }
@@ -433,7 +424,7 @@ Here's how a generic version of ``findInt``, called ``findValue``, might be writ
          }
          return nil
       }
-   !! <REPL Input>:4:14: error: expression does not type-check
+   !! <REPL Input>:4:12: error: expression does not type-check
    !!              if value == valueToFind {
    !!                 ~~~~~~^~~~~~~~~~~~~~
 
@@ -491,7 +482,7 @@ and can be used with any type that is ``Equatable``, such as ``Double`` or ``Str
    << // doubleIndex : Int? = <unprintable value>
    /> doubleIndex is an optional Int with no value, because 9.3 is not in the array
    </ doubleIndex is an optional Int with no value, because 9.3 is not in the array
-   -> let stringIndex = findValue(["Mike", "Malcolm", "Bunny"], "Bunny")
+   -> let stringIndex = findValue(["Mike", "Malcolm", "Andrea"], "Andrea")
    << // stringIndex : Int? = <unprintable value>
    /> stringIndex is an optional Int containing a value of \(stringIndex!)
    </ stringIndex is an optional Int containing a value of 2
@@ -535,8 +526,3 @@ Generic Enumerations
       // T is available for you to use in this context
       func doStuff() -> T { ... }
    }
-
-.. refnote:: References
-
-   * https://[Internal Staging Server]/docs/whitepaper/GuidedTour.html#generics
-   * https://[Internal Staging Server]/docs/Generics%20Syntax%20Tradeoffs.html

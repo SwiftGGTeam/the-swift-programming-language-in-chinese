@@ -1,14 +1,3 @@
-.. docnote:: Subjects to be covered in this section
-
-   * Closures
-   * Trailing closures
-   * Nested closures
-   * Capturing values
-   * Different closure expression forms
-   * Anonymous closure arguments
-   * Attributes (infix, resilience, inout, auto_closure, noreturn, weak)
-   * Typedefs for closure signatures to aid readability
-
 Closures
 ========
 
@@ -251,7 +240,7 @@ Here's the initial array to be sorted:
 .. testcode:: closureSyntax
 
    -> let array = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
-   << // array : String[] = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
+   << // array : Array<String> = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
 
 The ``sort`` function takes two arguments:
 
@@ -275,7 +264,7 @@ and to pass it in as the ``sort`` function's second parameter:
          return s1 > s2
       }
    -> var reversed = sort(array, backwards)
-   << // reversed : String[] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
+   << // reversed : Array<String> = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
    // reversed is equal to ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
 
 If the first string (``s1``) is greater than the second string (``s2``),
@@ -328,7 +317,7 @@ This syntax can be used to write an inline version of the ``backwards`` function
          return s1 > s2
       })
    >> reversed
-   << // reversed : String[] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
+   << // reversed : Array<String> = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
 
 Note that the declaration of parameters and return type for this inline closure
 is identical to the declaration from the ``backwards`` function.
@@ -349,7 +338,7 @@ it can even be written on a single line:
 
    -> reversed = sort(array, { (s1: String, s2: String) -> Bool in return s1 > s2 } )
    >> reversed
-   << // reversed : String[] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
+   << // reversed : Array<String> = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
 
 This illustrates that the overall call to the ``sort`` function has remained the same.
 A pair of parentheses still wrap the entire set of arguments for the function –
@@ -374,7 +363,7 @@ the return arrow (``->``) can also be omitted:
 
    -> reversed = sort(array, { (s1, s2) in return s1 > s2 } )
    >> reversed
-   << // reversed : String[] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
+   << // reversed : Array<String> = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
 
 It is always possible to infer parameter types and return type
 when passing a closure to a function as an inline closure expression.
@@ -400,7 +389,7 @@ by omitting the ``return`` keyword from their declaration:
 
    -> reversed = sort(array, { (s1, s2) in s1 > s2 } )
    >> reversed
-   << // reversed : String[] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
+   << // reversed : Array<String> = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
 
 Here, the function type of the ``sort`` function's second argument
 makes it clear that a ``Bool`` value must be returned by the closure.
@@ -428,7 +417,7 @@ because the closure expression is made up entirely of its body:
 
    -> reversed = sort(array, { $0 > $1 } )
    >> reversed
-   << // reversed : String[] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
+   << // reversed : Array<String> = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
 
 Here, ``$0`` and ``$1`` are used as
 short-hand ways to refer to the closure's first and second ``String`` arguments.
@@ -452,7 +441,7 @@ and Swift will infer that you want to use its string-specific implementation:
 
    -> reversed = sort(array, >)
    >> reversed
-   << // reversed : String[] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
+   << // reversed : Array<String> = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
 
 Operator functions are described in more detail in :ref:`AdvancedOperators_OperatorFunctions`.
 
@@ -472,6 +461,11 @@ for functions with multiple function type arguments.
 The only requirement is that these trailing closures must always be
 the final arguments provided for the function call.
 
+Additionally, if *all* of a function's parameters are function types,
+and you provide trailing closures for all of those parameters when calling the function,
+you do not need to write a pair of parentheses ``()``
+after the function's name when you call the function.
+
 Because the final argument to the ``sort`` function is a closure expression,
 the string-sorting closure from above can be written
 outside of the ``sort`` function's parentheses as a trailing closure:
@@ -480,12 +474,12 @@ outside of the ``sort`` function's parentheses as a trailing closure:
 
    -> reversed = sort(array) { $0 > $1 }
    >> reversed
-   << // reversed : String[] = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
+   << // reversed : Array<String> = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
 
 As mentioned above,
 trailing closures are most useful when the closure is sufficiently long that
 it is not possible to write it inline on a single line.
-As an example, Swift's ``Array`` type has a ``map`` function
+As an example, Swift's ``Array`` type has a ``map`` method
 which takes a closure expression as its single argument.
 The closure is called once for each item in the array,
 and returns an alternative mapped value (possibly of some other type) for that item.
@@ -493,10 +487,10 @@ The nature of the mapping, and the type of the returned value,
 is left up to the closure to specify.
 
 After applying the provided closure to each array element,
-the ``map`` function returns a new array containing all of the new mapped values,
+the ``map`` method returns a new array containing all of the new mapped values,
 in the same order as their corresponding values in the original array.
 
-Here's how the ``map`` function can be used with a trailing closure
+Here's how the ``map`` method can be used with a trailing closure
 to convert an array of ``Int`` values into an array of ``String`` values.
 The array ``[16, 58, 510]`` will be used to create the new array 
 ``["OneSix", "FiveEight", "FiveOneZero"]``:
@@ -504,30 +498,33 @@ The array ``[16, 58, 510]`` will be used to create the new array
 .. testcode:: arrayMap
 
    -> let digitNames = [
-         0 : "Zero", 1 : "One", 2 : "Two", 3 : "Three", 4 : "Four",
-         5 : "Five", 6 : "Six", 7 : "Seven", 8 : "Eight", 9 : "Nine"
+         0: "Zero", 1: "One", 2: "Two",   3: "Three", 4: "Four",
+         5: "Five", 6: "Six", 7: "Seven", 8: "Eight", 9: "Nine"
       ]
    << // digitNames : Dictionary<Int, String> = Dictionary<Int, String>(1.33333333333333, 10, <DictionaryBufferOwner<Int, String> instance>)
    -> let numbers = [16, 58, 510]
-   << // numbers : Int[] = [16, 58, 510]
+   << // numbers : Array<Int> = [16, 58, 510]
 
 The code above creates a dictionary of mappings between
 the integer digits and English-language versions of their names.
 It also defines an array of integers, ready to be converted into strings.
 
 The ``numbers`` array can now be used to create an array of ``String`` values,
-by passing a closure expression to the array's ``map`` function as a trailing closure:
+by passing a closure expression to the array's ``map`` method as a trailing closure.
+Note that the call to ``numbers.map`` does not need to include any parentheses after ``map``,
+because the ``map`` method has only one parameter,
+and that parameter is provided as a trailing closure:
 
 .. testcode:: arrayMap
 
-   -> let strings = numbers.map() {
-         (var number) -> String in
-            var output = ""
-            while number > 0 {
-               output = digitNames[number % 10] + output
-               number /= 10
-            }
-            return output
+   -> let strings = numbers.map {
+            (var number) -> String in
+         var output = ""
+         while number > 0 {
+            output = digitNames[number % 10] + output
+            number /= 10
+         }
+         return output
       }
    << // strings : Array<String> = ["OneSix", "FiveEight", "FiveOneZero"]
    // strings is inferred to be of type Array<String>
@@ -566,6 +563,13 @@ and is written immediately after the function it supports,
 without needing to wrap the entire closure within
 the ``map`` function's outer parentheses.
 
+.. _Closures_AvoidingReferenceCyclesInClosures:
+
+Avoiding Reference Cycles in Closures
+-------------------------------------
+
+.. write-me::
+
 .. TODO: you have to write "self." for property references in an explicit closure expression,
    since "self" will be captured, not the property (as per rdar://16193162)
    we don't do this for autoclosures, however -
@@ -593,7 +597,9 @@ the ``map`` function's outer parentheses.
 Auto-Closures
 -------------
 
-.. TODO: var closure1 : @auto_closure () -> Int = 4  // Function producing 4 whenever it is called.
+.. write-me::
+
+.. TODO: var closure1: @auto_closure () -> Int = 4  // Function producing 4 whenever it is called.
 
 .. TODO: from Assert.swift in stdlib/core:
    @transparent
@@ -614,18 +620,3 @@ Auto-Closures
    capture computation that can be run lazily.
    auto_closure is only valid in a type of a syntactic function type
    that is defined to take a syntactic empty tuple.
-
-.. write-me::
-
-.. refnote:: References
-
-   * https://[Internal Staging Server]/docs/whitepaper/TypesAndValues.html#functions
-   * https://[Internal Staging Server]/docs/whitepaper/Closures.html#closures
-   * https://[Internal Staging Server]/docs/whitepaper/Closures.html#functions-vs-closures
-   * https://[Internal Staging Server]/docs/whitepaper/Closures.html#nested-functions
-   * https://[Internal Staging Server]/docs/whitepaper/Closures.html#closure-expressions
-   * https://[Internal Staging Server]/docs/whitepaper/Closures.html#trailing-closures
-   * https://[Internal Staging Server]/docs/whitepaper/GuidedTour.html#functions
-   * https://[Internal Staging Server]/docs/whitepaper/GuidedTour.html#closures
-   * https://[Internal Staging Server]/docs/Expressions.html
-   * /test/Serialization/Inputs/def_transparent.swift (example of currying)

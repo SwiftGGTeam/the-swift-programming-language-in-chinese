@@ -1,14 +1,3 @@
-.. docnote:: Subjects to be covered in this section
-
-   * Functions
-   * Function signatures (including pattern matching)
-   * Setting variables to functions
-   * Naming conventions
-   * return statement
-   * Can only have one variadic parameter
-   * Attributes (infix, resilience, inout, auto_closure, noreturn)
-   * Marking functions as transparent (and what this means)
-
 Functions
 =========
 
@@ -283,8 +272,8 @@ and also enables values to be passed in a different order to the original functi
 
 .. testcode:: functionParameters
 
-   -> func containsCharacter(stringToSearch: String, characterToFind: UnicodeScalar) -> Bool {
-         for character in stringToSearch.chars {
+   -> func containsCharacter(string: String, characterToFind: UnicodeScalar) -> Bool {
+         for character in string.chars {
             if character == characterToFind {
                return true
             }
@@ -293,10 +282,10 @@ and also enables values to be passed in a different order to the original functi
       }
    -> let containsASpace = containsCharacter(
          characterToFind: ' ',
-         stringToSearch: "This will return true")
+         string: "This will return true")
    << // containsASpace : Bool = true
-   /> containsASpace equals \(containsASpace), because stringToSearch contains a space
-   </ containsASpace equals true, because stringToSearch contains a space
+   /> containsASpace equals \(containsASpace), because string contains a space
+   </ containsASpace equals true, because string contains a space
 
 .. TODO: this function's first line is too long.
 
@@ -308,14 +297,14 @@ it is still clear which value should be used for which parameter.
 .. note::
 
    If ``characterToFind`` is found quickly,
-   this example returns ``true`` before the entire set of characters in ``stringToSearch`` is checked.
+   this example returns ``true`` before the entire set of characters in ``string`` is checked.
    As soon as the first matching character is found,
    ``containsCharacter`` returns ``true``,
    and doesn't bother to check the remaining characters.
    You can return control from a function at any time,
    and it will stop what it is doing immediately.
    In fact, this function only returns ``false`` if
-   the entire set of characters in ``stringToSearch`` is exhausted,
+   the entire set of characters in ``string`` is exhausted,
    and the end of the for loop is reached.
 
 If you do not provide parameter names when calling a method,
@@ -526,56 +515,7 @@ it is still good practice to provide names for them to use if they wish.
    the principle of putting variadic parameters last,
    and also the principle of putting closure parameters last?
 
-.. _Functions_StrictParameterNames:
-
-Strict Parameter Names
-~~~~~~~~~~~~~~~~~~~~~~
-
-.. note::
-
-   Strict parameter names have not yet been implemented.
-   This section has been written in advance of their implementation,
-   in order to help plan the overall flow of this chapter.
-
-.. TODO: this feature is not yet implemented.
-   Remove this note and test that the final two code snippets produce an error
-   once strict parameter names have been implemented.
-
-It is sometimes useful to require that parameter names are provided when a function is called,
-to avoid ambiguity as to each parameter's purpose.
-You can require callers to use a function's parameter names
-by marking the function with the ``@call_arguments(strict)`` attribute.
-This attribute also requires that the parameters are provided
-in the same order as in the function's definition.
-
-.. testcode:: strictParameterNames
-
-   // @call_arguments(strict) - not yet implemented
-   -> func join(string s1: String, toString s2: String, joiner: String = " ") -> String {
-         return s1 + joiner + s2
-      }
-   -> join(string: "hello", toString: "world", joiner: "#")
-   << // r0 : String = "hello#world"
-   /> returns \"\(r0)\"
-   </ returns "hello#world"
-
-This version of the ``join`` function requires any callers to provide
-all of the function's parameter names when they call the function.
-Trying to call this version of the ``join`` function without using its parameter names
-results in a compile-time error:
-
-::
-
-   join("hello", "world", "#")
-   // this reports a compile-time error
-
-Trying to call the function with its parameter names in the wrong order
-also results in a compile-time error:
-
-::
-
-   join(toString: "world", joiner: "#", string: "hello")
-   // this reports a compile-time error
+.. TODO: reinstate the section on Strict Parameter Names once they are implemented.
 
 .. _Functions_FunctionsWithoutParameters:
 
@@ -668,6 +608,58 @@ but the returned value is not used.
    never allow control to fall out of the bottom of the function
    without returning a value.
 
+.. _Functions_VariadicParameters:
+
+Variadic Parameters
+~~~~~~~~~~~~~~~~~~~
+
+A :newTerm:`variadic parameter` accepts zero or more values of a certain type.
+You use a variadic parameter to specify that the parameter can be passed
+a varying number of input values when the function is called,
+by inserting three period characters (``...``) after the parameter's type name.
+
+This example calculates the :newTerm:`arithmetic mean`
+(also known as the :newTerm:`average`) for a list of numbers of any length:
+
+.. testcode:: functionParameters
+
+   -> func arithmeticMean(numbers: Double...) -> Double {
+         var total: Double = 0
+         for number in numbers {
+            total += number
+         }
+         return total / Double(numbers.count)
+      }
+   -> arithmeticMean(1, 2, 3, 4, 5)
+   << // r2 : Double = 3.0
+   /> returns \(r2), which is the arithmetic mean of these five numbers
+   </ returns 3.0, which is the arithmetic mean of these five numbers
+   -> arithmeticMean(3, 8, 19)
+   << // r3 : Double = 10.0
+   /> returns \(r3), which is the arithmetic mean of these three numbers
+   </ returns 10.0, which is the arithmetic mean of these three numbers
+
+As shown in this example,
+a variadic parameter can be used with the ``for``-``in`` statement
+to iterate through the list of values represented by the parameter.
+Variadic parameters automatically conform to the ``Sequence`` protocol,
+and can be used anywhere that a ``Sequence`` is valid.
+``Sequence`` is covered in more detail in :doc:`Protocols`.
+
+.. note::
+
+   A function may have at most one variadic parameter,
+   and it must always appear last in the parameters list,
+   to avoid ambiguity when calling the function with multiple parameters.
+
+.. TODO: A function's variadic parameter cannot be referred to by name
+   when the function is called.
+   I've reported this as rdar://16387108;
+   if it doesn't get fixed, I should mention it here.
+
+.. TODO: sequence isn't currently covered in Protocols.
+   remove this comment if it is not included before release.
+
 .. _Functions_ConstantAndVariableParameters:
 
 Constant and Variable Parameters
@@ -730,67 +722,83 @@ It uses the ``string`` variable parameter for all of its string manipulation.
    and are not visible outside of the function's body.
    The variable parameter only exists for the lifetime of that function call.
 
-.. _Functions_VariadicParameters:
-
-Variadic Parameters
-~~~~~~~~~~~~~~~~~~~
-
-A :newTerm:`variadic parameter` accepts zero or more values of a certain type.
-You use a variadic parameter to specify that the parameter can be passed
-a varying number of input values when the function is called,
-by inserting three period characters (``...``) after the parameter's type name.
-
-This example calculates the :newTerm:`arithmetic mean`
-(also known as the :newTerm:`average`) for a list of numbers of any length:
-
-.. testcode:: functionParameters
-
-   -> func arithmeticMean(numbers: Double...) -> Double {
-         var total: Double = 0
-         for number in numbers {
-            total += number
-         }
-         return total / Double(numbers.count)
-      }
-   -> arithmeticMean(1, 2, 3, 4, 5)
-   << // r2 : Double = 3.0
-   /> returns \(r2), which is the arithmetic mean of these five numbers
-   </ returns 3.0, which is the arithmetic mean of these five numbers
-   -> arithmeticMean(3, 8, 19)
-   << // r3 : Double = 10.0
-   /> returns \(r3), which is the arithmetic mean of these three numbers
-   </ returns 10.0, which is the arithmetic mean of these three numbers
-
-As shown in this example,
-a variadic parameter can be used with the ``for``-``in`` statement
-to iterate through the list of values represented by the parameter.
-Variadic parameters automatically conform to the ``Sequence`` protocol,
-and can be used anywhere that a ``Sequence`` is valid.
-``Sequence`` is covered in more detail in :doc:`Protocols`.
-
-.. note::
-
-   A function may have at most one variadic parameter,
-   and it must always appear last in the parameters list,
-   to avoid ambiguity when calling the function with multiple parameters.
-
-.. TODO: A function's variadic parameter cannot be referred to by name
-   when the function is called.
-   I've reported this as rdar://16387108;
-   if it doesn't get fixed, I should mention it here.
-
-.. TODO: sequence isn't currently covered in Protocols.
-   remove this comment if it is not included before release.
-
 .. _Functions_InoutParameters:
 
 Inout Parameters
 ~~~~~~~~~~~~~~~~
 
-.. write-me::
+It is sometimes useful for a function parameter to represent
+the *actual* external value used for the call,
+and for any modifications to that value to change
+the original value from outside of the function,
+after the function has completed its execution.
+You define such parameters as :newTerm:`inout parameters`,
+which are written by placing the ``inout`` keyword at the start of their parameter definition.
 
-.. inout properties and a general discussion of byref / byvalue
-.. presumably you can't pass a constant as the argument for an inout parameter
+You can think of ``inout`` parameters in the following way:
+
+An ``inout`` parameter has a value that is passed *in* to the function;
+is modified by the function;
+and is passed back *out* of the function to replace the original value.
+
+You can only ever pass a variable as the argument for an ``inout`` parameter.
+You cannot pass a constant or a literal value as the argument,
+because constants and literals cannot be modified.
+You place an ampersand (``&``) directly before a variable's name
+when you pass it as an argument to an inout parameter,
+to indicate that it can be modified by the function.
+(This is similar to C's use of the ampersand character as a reference operator.)
+
+.. note::
+
+   ``inout`` parameters cannot have default values,
+   and variadic parameters cannot be marked as ``inout``.
+   If you mark a parameter as ``inout``,
+   it cannot also be marked as ``var`` or ``let``.
+
+Here's an example of a function called ``swapTwoInts``,
+which has two ``inout`` integer parameters called ``a`` and ``b``:
+
+.. testcode:: inout
+
+   -> func swapTwoInts(inout a: Int, inout b: Int) {
+         let temporaryA = a
+         a = b
+         b = temporaryA
+      }
+
+The ``swapTwoInts`` function simply swaps the value of ``b`` into ``a``,
+and the value of ``a`` into ``b``.
+The function performs this swap by storing the value of ``a`` in
+a temporary constant called ``temporaryA``; assigning the value of ``b`` to ``a``;
+and then assigning ``temporaryA`` to ``b``.
+
+The ``swapTwoInts`` function can be called with two variables of type ``Int``
+to swap their values.
+Note that the names of ``someInt`` and ``anotherInt`` are prefixed with an ampersand
+when they are passed to the ``swapTwoInts`` function:
+
+.. testcode:: inout
+
+   -> var someInt = 3
+   << // someInt : Int = 3
+   -> var anotherInt = 107
+   << // anotherInt : Int = 107
+   -> swapTwoInts(&someInt, &anotherInt)
+   -> println("someInt is now \(someInt), and anotherInt is now \(anotherInt)")
+   <- someInt is now 107, and anotherInt is now 3
+
+After calling the ``swapTwoInts`` function,
+the values of ``someInt`` and ``anotherInt`` have both been modified,
+even though they were originally defined outside of the function.
+
+.. note::
+
+   ``inout`` parameters are not the same as returning a value from a function.
+   The ``swapTwoInts`` example above does not define a return type or return a value,
+   but it still modifies the values of ``someInt`` and ``anotherInt``.
+   ``inout`` parameters are an alternative way for a function to have an effect
+   outside of the scope of its function body.
 
 .. _Functions_FunctionTypes:
 
@@ -1047,18 +1055,6 @@ Curried Functions
 
 .. write-me::
 
-.. function currying syntax 
-.. partial application
-
-.. refnote:: References
-
-   * https://[Internal Staging Server]/docs/whitepaper/TypesAndValues.html#functions
-   * https://[Internal Staging Server]/docs/whitepaper/Closures.html#closures
-   * https://[Internal Staging Server]/docs/whitepaper/Closures.html#functions-vs-closures
-   * https://[Internal Staging Server]/docs/whitepaper/Closures.html#nested-functions
-   * https://[Internal Staging Server]/docs/whitepaper/Closures.html#closure-expressions
-   * https://[Internal Staging Server]/docs/whitepaper/Closures.html#trailing-closures
-   * https://[Internal Staging Server]/docs/whitepaper/GuidedTour.html#functions
-   * https://[Internal Staging Server]/docs/whitepaper/GuidedTour.html#closures
-   * https://[Internal Staging Server]/docs/Expressions.html
-   * /test/Serialization/Inputs/def_transparent.swift (example of currying)
+.. TODO: function currying syntax 
+.. TODO: partial application
+.. TODO: currying example from /test/Serialization/Inputs/def_transparent.swift

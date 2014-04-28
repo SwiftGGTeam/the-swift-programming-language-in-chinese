@@ -36,14 +36,14 @@ on top of the base class:
 
 .. testcode:: typeCasting
 
-   -> class Movie : MediaItem {
+   -> class Movie: MediaItem {
          var director: String
          init(name: String, director: String) {
             self.director = director
             super.init(name: name)
          }
       }
-   -> class Song : MediaItem {
+   -> class Song: MediaItem {
          var artist: String
          init(name: String, artist: String) {
             self.artist = artist
@@ -68,7 +68,7 @@ and so it infers a type of ``Array<MediaItem>`` for the ``library`` array:
          Song("The One And Only", artist: "Chesney Hawkes"),
          Song("Never Gonna Give You Up", artist: "Rick Astley")
       ]
-   << // library : MediaItem[] = [<MediaItem instance>, <MediaItem instance>, <MediaItem instance>, <MediaItem instance>, <MediaItem instance>]
+   << // library : Array<MediaItem> = [<MediaItem instance>, <MediaItem instance>, <MediaItem instance>, <MediaItem instance>, <MediaItem instance>]
    // the type of "library" is inferred to be Array<MediaItem>
 
 The items stored in ``library`` are still ``Movie`` and ``Song`` instances behind the scenes.
@@ -261,8 +261,8 @@ and to assign those values to temporary constants or variables
                println("a positive double value of \(someDouble)")
             case is Double:
                println("some other double value that I don't want to print")
-            case let someString as String where someString == someString.lowercase:
-               println("a lowercase string value of \"\(someString)\"")
+            case let someString as String:
+               println("a string value of \"\(someString)\"")
             case let (x, y) as (Double, Double):
                println("an (x, y) point at \(x), \(y)")
             case let movie as Movie:
@@ -275,7 +275,7 @@ and to assign those values to temporary constants or variables
    </ zero as a Double
    </ an integer value of 42
    </ a positive double value of 3.14159
-   </ a lowercase string value of "hello"
+   </ a string value of "hello"
    </ an (x, y) point at 3.0, 5.0
    </ a movie called 'Ghostbusters', dir. Ivan Reitman
 

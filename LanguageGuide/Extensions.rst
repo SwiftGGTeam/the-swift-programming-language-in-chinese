@@ -1,11 +1,3 @@
-.. docnote:: Subjects to be covered in this section
-
-   * Extending classes and structures
-   * Start by extending an existing thing to have something it didn't
-   * Continue by extending String to have an initializer for something it doesn't by default
-   * Making a type ``Printable`` / nicely ``DebugPrintable`` (inc. guidelines for format)
-   * Extensions can extend existing types to add protocol conformance
-
 Extensions
 ==========
 
@@ -15,6 +7,7 @@ This includes the ability to extend types
 for which you do not have access to the original source code
 (known as :newTerm:`retroactive modeling`).
 Extensions are similar to :newTerm:`categories` in Objective-C.
+Unlike Objective-C categories, Swift extensions do not have names.
 
 Extensions can:
 
@@ -25,7 +18,7 @@ Extensions can:
 * define and use new nested types
 
 Extensions can also be used to make an existing type conform to a protocol.
-This process is covered in :doc:`Protocols`.
+This process is described in :ref:`Protocols_AddingProtocolConformanceWithAnExtension`.
 
 .. QUESTION: I've put operator conformance in the Classes and Structures chapter,
    rather than this chapter, because it isn't actually implemented via an extension
@@ -36,13 +29,39 @@ This process is covered in :doc:`Protocols`.
 
 .. TODO: Talk about extending enumerations to have additional member values
 
+Extension Syntax
+----------------
+
+Extensions are declared with the ``extension`` keyword:
+
+::
+
+   extension SomeType {
+      // new functionality to add to SomeType goes here
+   }
+
+An extension can also extend an existing type to make it adopt one or more protocols.
+Where this is the case,
+the protocol names are written in exactly the same way as for a class or structure:
+
+::
+
+   extension SomeType: SomeProtocol, AnotherProtocol {
+      // implementation of protocol requirements goes here
+   }
+
+Adding protocol conformance in this way is described in
+:ref:`Protocols_AddingProtocolConformanceWithAnExtension`.
+
 .. _Extensions_ComputedProperties:
 
 Computed Properties
 -------------------
 
-Extensions can add new computed properties to existing types.
-This example adds five new computed properties to Swift's built-in ``Double`` type,
+Extensions can add computed instance properties to existing types.
+Extensions can also add computed static properties to existing structures and enumerations.
+
+This example adds five computed instance properties to Swift's built-in ``Double`` type,
 to provide basic support for working with distance units:
 
 .. testcode:: extensionsComputedProperties
@@ -97,6 +116,8 @@ and can be used within mathematical calculations wherever a ``Double`` is accept
 
    Extensions can add new computed properties, but they cannot add stored properties,
    or add property observers to existing properties.
+
+.. TODO: change this example to something more advisable / less contentious.
 
 .. _Extensions_Initializers:
 
@@ -177,12 +198,13 @@ is known as :newTerm:`initializer overloading`.)
 .. QUESTION: You can use 'self' in this way for structs and enums.
    How might you do this kind of construction for a class?
 
-.. _Extensions_InstanceMethods:
+.. _Extensions_Methods:
 
-Instance Methods
-----------------
+Methods
+-------
 
-Extensions can add new instance methods to an existing type:
+Extensions can add new instance methods and type methods to existing types.
+The following example adds a new instance method called ``toSpooky`` to the ``String`` type:
 
 .. testcode:: extensionsInstanceMethods
 
@@ -198,11 +220,12 @@ Extensions can add new instance methods to an existing type:
          }
       }
 
-This example adds a new ``String`` instance method called ``toSpooky``.
-This new method is now available to any instances of ``String``.
-The method returns a spookier version of the original string,
+The ``toSpooky`` method returns a spookier version of the original string,
 by converting odd-numbered characters to uppercase,
-and even-numbered characters to lowercase:
+and even-numbered characters to lowercase.
+
+After this extension is defined,
+you can call the ``toSpooky`` method on any ``String`` instance:
 
 .. testcode:: extensionsInstanceMethods
 
@@ -251,20 +274,6 @@ the number is rounded down to the nearest whole number each time the division ta
 Calling ``shiftRight(3)`` on an integer variable containing the number ``123456``
 shifts the number to the right by three decimal places,
 and changes the variable to have a value of ``123``.
-
-.. _Extensions_ComputedStaticProperties:
-
-Computed Static Properties
---------------------------
-
-.. write-me::
-
-.. _Extensions_TypeMethods:
-
-Type Methods
-------------
-
-.. write-me::
 
 .. _Extensions_Subscripts:
 
@@ -343,7 +352,7 @@ Extensions can add new nested types to existing classes, structures and enumerat
                case 'a', 'e', 'i', 'o', 'u':
                   return .Vowel
                case 'b', 'c', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'm',
-                   'n', 'p', 'q', 'r', 's', 't', 'v', 'w', 'x', 'y', 'z':
+                  'n', 'p', 'q', 'r', 's', 't', 'v', 'w', 'x', 'y', 'z':
                   return .Consonant
                default:
                   return .Other
@@ -398,8 +407,3 @@ as shown here for the word ``"Hello"``.
    Because of this, all of the ``UnicodeScalar.Kind`` member values
    can be written in short-hand form inside the ``switch`` statement,
    such as ``.Vowel`` rather than ``UnicodeScalar.Kind.Vowel``.
-
-
-.. refnote:: References
-
-   * https://[Internal Staging Server]/docs/whitepaper/GuidedTour.html#extensions

@@ -340,7 +340,7 @@ will cause an error:
    xx overflow
    // this causes an error
 
-.. TODO: change the error text we detect here
+.. FIXME: change the error text we detect here
    once overflowing provides an error message rather than just an assert.
 
 Triggering an error in these scenarios is much safer than allowing an outsized value to overflow.
@@ -480,7 +480,7 @@ return a value of zero if you divide by zero:
    as otherwise the stack trace crash from the division-by-zero will mean that
    subsequent blocks in the group won't get tested.
 
-.. TODO: update this example code to check for a true error,
+.. FIXME: update this example code to check for a true error,
    rather than a stack trace,
    once rdar://15804939 has been fixed.
 
@@ -706,7 +706,7 @@ as its value will be modified directly from within the operator function:
          lhs = lhs + rhs
       }
 
-.. TODO: This isn't actually true - you don't need to specify @assignment.
+.. FIXME: This isn't actually true - you don't need to specify @assignment.
    Nonetheless, our current policy is to specify it anyway.
    This is being tracked in rdar://problem/16656024,
    and this section should be updated based on the outcome of that radar.
@@ -915,7 +915,7 @@ and associativity settings can be found in the :doc:`../ReferenceManual/index`.)
 
 .. TODO: update this link to go to the specific section of the Reference Manual.
 
-.. TODO: Custom operator declarations cannot be written over multiple lines in the REPL.
+.. FIXME: Custom operator declarations cannot be written over multiple lines in the REPL.
    This is being tracked as rdar://16061044.
    If this Radar is fixed, the operator declaration above should be split over multiple lines
    for consistency with the rest of the code.

@@ -85,7 +85,7 @@ This can be read as:
 
 .. testcode:: inheritance
 
-   -> class Bicycle : Vehicle {
+   -> class Bicycle: Vehicle {
          init() {
             super.init()
             numberOfWheels = 2
@@ -130,7 +130,7 @@ Subclasses can themselves be subclassed:
 
 .. testcode:: inheritance
 
-   -> class Tandem : Bicycle {
+   -> class Tandem: Bicycle {
          init() {
             super.init()
             maxPassengers = 2
@@ -177,7 +177,7 @@ Overriding
 ----------
 
 A subclass can provide its own custom implementation of
-an instance method, class method, instance property, class property, or subscript
+an instance method, class method, instance property, or subscript
 that it would otherwise inherit from a superclass.
 This is known as :newTerm:`overriding`.
 
@@ -225,7 +225,7 @@ which overrides the ``description`` method it inherits from ``Vehicle``:
 
 .. testcode:: inheritance
 
-   -> class Car : Vehicle {
+   -> class Car: Vehicle {
          var speed: Double = 0.0
          init() {
             super.init()
@@ -314,7 +314,7 @@ This limitation is implemented by overriding the inherited ``speed`` property.
 
 .. testcode:: inheritance
 
-   -> class SpeedLimitedCar : Car {
+   -> class SpeedLimitedCar: Car {
          override var speed: Double  {
             get {
                return super.speed
@@ -377,7 +377,7 @@ which automatically selects an appropriate gear to use based on the current spee
 
 .. testcode:: inheritance
 
-   -> class AutomaticCar : Car {
+   -> class AutomaticCar: Car {
          var gear = 1
          override var speed: Double  {
             didSet {
@@ -436,6 +436,13 @@ Any attempts to subclass a final class will be reported as a compile-time error.
 .. TODO: Mention that you can return more-specific types, and take less-specific types,
    when overriding methods that use optionals / unchecked optionals.
    
+.. _Methods_OverridingTypeMethods:
+
+Overriding Type Methods
+~~~~~~~~~~~~~~~~~~~~~~~
+
+.. write-me::
+
 .. _Inheritance_DynamicReturnTypes:
 
 Dynamic Return Types

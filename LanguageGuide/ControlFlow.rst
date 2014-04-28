@@ -1,16 +1,3 @@
-.. docnote:: Subjects to be covered in this section
-
-   * Conditional branching (if)
-   * Looping (while, do while, for, for in)
-   * Iterators
-   * Switch statement (including pattern matching)
-   * Pattern matching and expressions in patterns
-   * Overloading the ~= function for pattern matching
-   * Control transfer (return, break, continue, fallthrough)
-   * Ranges
-   * Variable scope (as this is the first time we've defined scopes)
-   * Clarification around expressions and statements?
-
 Control Flow
 ============
 
@@ -127,7 +114,7 @@ Use the ``for``-``in`` loop with an array to iterate over its items:
 .. testcode:: forLoops
 
    -> let names = ["Anna", "Alex", "Brian", "Jack"]
-   << // names : String[] = ["Anna", "Alex", "Brian", "Jack"]
+   << // names : Array<String> = ["Anna", "Alex", "Brian", "Jack"]
    -> for name in names {
          println("Hello, \(name)!")
       }
@@ -162,7 +149,7 @@ and the dictionary's values are decomposed into a constant called ``legCount``:
 
 .. testcode:: forLoops
 
-   -> let numberOfLegs = ["spider" : 8, "ant" : 6, "cat" : 4]
+   -> let numberOfLegs = ["spider": 8, "ant": 6, "cat": 4]
    << // numberOfLegs : Dictionary<String, Int> = Dictionary<String, Int>(1.33333333333333, 3, <DictionaryBufferOwner<String, Int> instance>)
    -> for (animalName, legCount) in numberOfLegs {
          println("\(animalName)s have \(legCount) legs")
@@ -281,10 +268,7 @@ it sets ``index`` to ``3``,
 which causes ``index < 3`` to equate to ``false``,
 ending the loop.
 
-.. TODO: Need to mention that loop variables are immutable by default.
-.. QUESTION: Can you make a loop variable mutable –
-   and therefore influence loop execution, such as jumping ahead –
-   by prepending it with 'var'?
+.. TODO: Need to mention that loop variables are constants by default.
 
 .. _ControlFlow_WhileLoops:
 
@@ -674,21 +658,21 @@ Switch
 A ``switch`` statement considers a value
 and compares it against several possible matching patterns.
 It then executes an appropriate block of code,
-based on the first pattern that matched successfully.
-It provides an alternative approach to the ``if``-``else`` statement
+based on the first pattern that matches successfully.
+A ``switch`` statement provides an alternative to the ``if``-``else`` statement
 for responding to multiple potential states.
 
-In its simplest form, a ``switch`` statement compares
-one or more values of the same type against the value being considered:
+In its simplest form, a ``switch`` statement compares a value against
+one or more values of the same type:
 
 .. syntax-outline::
 
    switch <#some value to consider#> {
-      case <#possible value 1#>:
-         <#do things in response to possible value 1#>
-      case <#possible value 2#>,
-          <#possible value 3#>:
-         <#do things in response to possible values 2 or 3#>
+      case <#value 1#>:
+         <#respond to value 1#>
+      case <#value 2#>,
+          <#value 3#>:
+         <#respond to value 2 or 3#>
       default:
          <#otherwise, do something else#>
    }
@@ -702,65 +686,43 @@ These options are described later in this section.
 
 The body of each ``switch`` case is a separate branch of code execution,
 in a similar manner to the branches of an ``if``-``else`` statement.
-The ``switch`` statement determines which branch should be selected,
-and it does this by :newTerm:`switching` on the value to be considered.
+The ``switch`` statement determines which branch should be selected.
+This is known as :newTerm:`switching` on the value that is being considered.
 
 Every ``switch`` statement must be :newTerm:`exhaustive`. 
-That is, every possible value of the type to be considered
-must be able to be matched by one of the ``switch`` cases.
+That is, every possible value of the type being considered
+must be matched by one of the ``switch`` cases.
 If it is not appropriate to provide a ``switch`` case for every possible value,
 you can define a default catch-all case to cover any values that are not addressed explicitly.
 This catch-all case is indicated by the keyword ``default``,
 and must always appear last.
 
-The following example switches on a ``UnicodeScalar`` value,
-and determines whether it represents a number symbol in one of four languages.
-Multiple values are covered in a single ``switch`` case for brevity:
+This example uses a ``switch`` statement to consider
+a single character called ``someCharacter``:
 
 .. testcode:: switch
 
-   -> let numberSymbol = '三'   // Simplified Chinese symbol for the number 3
-   << // numberSymbol : UnicodeScalar = '三'
-   -> var possibleIntegerValue: Int?
-   << // possibleIntegerValue : Int? = <unprintable value>
-   -> switch numberSymbol {
-         case '1', '١', '一', '๑':
-            possibleIntegerValue = 1
-         case '2', '٢', '二', '๒':
-            possibleIntegerValue = 2
-         case '3', '٣', '三', '๓':
-            possibleIntegerValue = 3
-         case '4', '٤', '四', '๔':
-            possibleIntegerValue = 4
+   -> let someCharacter = "e"
+   << // someCharacter : String = "e"
+   -> switch someCharacter.lowercase {
+         case "a", "e", "i", "o", "u":
+            println("\(someCharacter) is a vowel")
+         case "b", "c", "d", "f", "g", "h", "j", "k", "l", "m",
+            "n", "p", "q", "r", "s", "t", "v", "w", "x", "y", "z":
+            println("\(someCharacter) is a consonant")
          default:
-            possibleIntegerValue = nil
+            println("\(someCharacter) is not a vowel or a consonant")
       }
-   -> if let integerValue = possibleIntegerValue {
-         println("The integer value of \(numberSymbol) is \(integerValue).")
-      } else {
-         println("An integer value could not be found for \(numberSymbol).")
-      }
-   <- The integer value of 三 is 3.
+   <- e is a vowel
 
-.. TODO: The default case should become a no-op case once we can use
-   a single semi-colon to indicate a deliberately empty case.
-   This gives a good opportunity to mention that pattern, too.
-   The required change to the language is being tracked as rdar://16381532.
+The ``switch`` statement's first case matches
+all five lowercase vowels in the English language.
+Similarly, its second case matches all lowercase English consonants.
 
-This example checks ``numberSymbol`` to determine if it is
-a Latin, Arabic, Chinese or Thai symbol for
-the numbers ``1`` to ``4``.
-If a match is found,
-it sets an optional ``Int?`` variable (called ``possibleIntegerValue``)
-to the appropriate integer value.
-If the symbol is not recognized,
-the optional ``Int?`` is set to a value of ``nil``, meaning “no value”.
-Finally, the example uses optional binding to check whether a value was found.
-If it was, the output value is printed;
-otherwise, an error message is reported.
-
-It is not practical to list every possible ``UnicodeScalar`` value in the example above,
-so a ``default`` case provides a catchall for any characters that have not already been matched.
+It is not practical to write every other possible character as part of a ``switch`` case,
+and so this ``switch`` statement provides a ``default`` case
+to match all other characters that are not vowels or consonants.
+This ensures that the ``switch`` statement is exhaustive.
 
 .. _ControlFlow_NoImplicitFallthrough:
 
@@ -771,18 +733,24 @@ Unlike C and Objective-C, ``switch`` statements in Swift do not
 fall through the bottom of each case and into the next one by default.
 Instead, the entire ``switch`` statement finishes its execution
 as soon as the first matching ``switch`` case is completed,
-*without* requiring an explicit ``break`` statement.
+without requiring an explicit ``break`` statement.
+This makes the ``switch`` statement safer and easier to use than in C,
+and avoids executing more than once ``switch`` case by mistake.
 
-Furthermore, the body of each case *must* contain
-at least one executable statement.
-It is not valid to write the following code,
-because the first case is empty:
+.. note::
 
-.. testcode:: switch
+   You can still break out of a matched ``switch`` case
+   before that case has completed its execution if you need to.
+   See :ref:`ControlFlow_BreakInASwitchStatement` for details.
 
-   -> let someCharacter = "a"
-   << // someCharacter : String = "a"
-   -> switch someCharacter {
+The body of each case *must* contain at least one executable statement.
+It is not valid to write the following code, because the first case is empty:
+
+.. testcode:: noFallthrough
+
+   -> let anotherCharacter = "a"
+   << // anotherCharacter : String = "a"
+   -> switch anotherCharacter {
          case "a":
          case "A":
             println("The letter A")
@@ -798,7 +766,7 @@ Unlike C, this ``switch`` statement does not match both ``"a"`` and ``"A"``.
 Rather, it reports a compile-time error that ``case "a":``
 does not contain any executable statements.
 This approach avoids accidental fallthrough from one case to another,
-and makes for safer code that is explicit in its intent.
+and makes for safer code that is clearer in its intent.
 
 Multiple matches for a single ``switch`` case can be separated by commas,
 and can be written over multiple lines if the list is long:
@@ -806,8 +774,8 @@ and can be written over multiple lines if the list is long:
 .. syntax-outline::
 
    switch <#some value to consider#> {
-      case <#possible value 1#>,
-          <#possible value 2#>:
+      case <#value 1#>,
+          <#value 2#>:
          <#statements#>
    }
 
@@ -816,54 +784,6 @@ and can be written over multiple lines if the list is long:
    To opt in to fallthrough behavior for a particular ``switch`` case,
    use the ``fallthrough`` keyword,
    as described in :ref:`ControlFlow_Fallthrough`.
-
-.. _ControlFlow_IgnoringCases:
-
-Ignoring Cases
-______________
-
-Swift's ``switch`` statement is exhaustive, and does not allow empty cases.
-Because of this,
-it is sometimes necessary to deliberately match and ignore a certain case.
-You do this by writing a single semicolon (``;``) as the body of the case you want to ignore.
-A semicolon is considered a “statement” in this context,
-and makes it clear that you wish to match and ignore that particular case.
-
-.. note::
-
-   A ``switch`` case that only contains a comment is reported as a compile-time error.
-   Comments are not statements, and do not cause a ``switch`` case to be ignored.
-   Always use a single semicolon to ignore a ``switch`` case.
-
-In the ``numberSymbol`` example above,
-it is not necessary to assign a value of ``nil`` to ``possibleIntegerValue``
-within the ``switch`` statement's ``default`` case,
-because ``possibleIntegerValue`` is automatically set to ``nil`` when it is created,
-by virtue of being of an optional type.
-Nonetheless, the ``default`` case is still required to make
-the ``switch`` statement exhaustive.
-
-To satisfy this requirement without an unnecessary ``nil`` assignment,
-the ``switch`` statement can be written with
-a semicolon inside its ``default`` case instead:
-
-.. testcode:: switch
-
-   -> switch numberSymbol {
-         case '1', '١', '一', '๑':
-            possibleIntegerValue = 1
-         case '2', '٢', '二', '๒':
-            possibleIntegerValue = 2
-         case '3', '٣', '三', '๓':
-            possibleIntegerValue = 3
-         case '4', '٤', '四', '๔':
-            possibleIntegerValue = 4
-         default:
-            ;
-      }
-
-This revised ``switch`` statement is still exhaustive,
-but no longer performs an unnecessary operation within its ``default`` case.
 
 .. _ControlFlow_RangeMatching:
 
@@ -874,7 +794,7 @@ Values in ``switch`` cases can be checked for their inclusion in a range.
 This example uses number ranges
 to provide a natural-language count for numbers of any size:
 
-.. testcode:: switch
+.. testcode:: rangeMatching
 
    -> let count = 3_000_000_000_000
    << // count : Int = 3000000000000
@@ -901,7 +821,8 @@ to provide a natural-language count for numbers of any size:
    -> println("There are \(naturalCount) \(countedThings).")
    <- There are millions and millions of stars in the Milky Way.
 
-.. TODO: remove the initializer for naturalCount once we can declare unitialized variables in the REPL.
+.. FIXME: remove the initializer for naturalCount once we can declare unitialized variables in the REPL.
+
 .. TODO: Add a description for this example.
 
 .. _ControlFlow_Tuples:
@@ -917,7 +838,7 @@ The example below takes an (x, y) point,
 expressed as a simple tuple of type ``(Int, Int)``,
 and categorizes it on the graph that follows:
 
-.. testcode:: switch
+.. testcode:: tuples
 
    -> let somePoint = (1, 1)
    << // somePoint : (Int, Int) = (1, 1)
@@ -952,11 +873,6 @@ the first matching case is always used.
 The point (0, 0) would match ``case (0, 0)`` first,
 and so all other matching cases would be ignored.
 
-.. TODO: The type of a tuple can be used in a case statement to check for different types:
-   var x: Any = (1, 2)
-   switch x {
-   case is (Int, Int):
-
 .. _ControlFlow_ValueBindings:
 
 Value Bindings
@@ -971,7 +887,7 @@ Again, the example below takes an (x, y) point,
 expressed as a tuple of type ``(Int, Int)``,
 and categorizes it on the graph that follows:
 
-.. testcode:: switch
+.. testcode:: valueBindings
 
    -> let anotherPoint = (2, 0)
    << // anotherPoint : (Int, Int) = (2, 0)
@@ -1029,7 +945,7 @@ A ``switch`` case can check for additional conditions using the ``where`` clause
 
 The example below categorizes an (x, y) point on the following graph:
 
-.. testcode:: switch
+.. testcode:: where
 
    -> let yetAnotherPoint = (1, -1)
    << // yetAnotherPoint : (Int, Int) = (1, -1)
@@ -1098,7 +1014,7 @@ without leaving the loop altogether.
 The following example removes all vowels and spaces from a lowercase string
 to create a cryptic puzzle phrase:
 
-.. testcode:: controlTransfer
+.. testcode:: continue
 
    -> let puzzleInput = "great minds think alike"
    << // puzzleInput : String = "great minds think alike"
@@ -1120,6 +1036,9 @@ by its iteration over a sequence of ``UnicodeScalar`` values.
 This is why the case statement compares ``letter`` against ``UnicodeScalar`` values
 (with single quote marks) rather than ``String`` values.
 
+.. TODO: change this paragraph once we start iterating over Character values
+   rather than UnicodeScalar values.
+
 The code above calls the ``continue`` keyword whenever it matches a vowel or a space,
 causing the current iteration of the loop to end immediately
 and to jump straight to the start of the next iteration.
@@ -1132,21 +1051,200 @@ rather than requiring the block to match every character that should get printed
 Break
 ~~~~~
 
-The ``break`` statement is similar to the ``continue`` statement,
-except that it jumps out of the loop altogether,
-transferring control to the first line of code after the loop's closing brace (``}``).
+The ``break`` statement is used to end execution of an entire control flow statement immediately.
+The ``break`` statement can be used inside ``switch`` statements and loop statements.
+
+.. _ControlFlow_BreakInALoop:
+
+Break in a Loop Statement
+_________________________
+
+When used inside a loop statement,
+``break`` ends the loop's execution immediately,
+and transfers control to the first line of code after the loop's closing brace (``}``).
 No further code from the current iteration of the loop is executed,
 and no further iterations of the loop are started.
 
-The following example shows the ``continue`` and ``break`` statements in action
-for an adapted version of the *Snakes and Ladders* game.
+.. TODO: I need an example here.
 
+.. _ControlFlow_BreakInASwitchStatement:
+
+Break in a Switch Statement
+___________________________
+
+When used inside a ``switch`` statement,
+``break`` causes the ``switch`` statement to end its execution immediately,
+and to transfer control to the first line of code after
+the ``switch`` statement's closing brace (``}``).
+
+This behavior can be used to match and ignore one or more cases in a ``switch`` statement.
+Because Swift's ``switch`` statement is exhaustive,
+and does not allow empty cases,
+it is sometimes necessary to deliberately match and ignore a case
+in order to make your intentions explicit.
+You do this by writing the ``break`` statement as the body of the case you want to ignore.
+This has the effect of ignoring the matched case
+by exiting the ``switch`` statement whenever a match for that case is made.
+
+.. note::
+
+   A ``switch`` case that only contains a comment is reported as a compile-time error.
+   Comments are not statements, and do not cause a ``switch`` case to be ignored.
+   Always use a ``break`` statement to ignore a ``switch`` case.
+
+The following example switches on a ``UnicodeScalar`` value,
+and determines whether it represents a number symbol in one of four languages.
+Multiple values are covered in a single ``switch`` case for brevity:
+
+.. testcode:: breakInASwitchStatement
+
+   -> let numberSymbol = '三'   // Simplified Chinese symbol for the number 3
+   << // numberSymbol : UnicodeScalar = '三'
+   -> var possibleIntegerValue: Int?
+   << // possibleIntegerValue : Int? = <unprintable value>
+   -> switch numberSymbol {
+         case '1', '١', '一', '๑':
+            possibleIntegerValue = 1
+         case '2', '٢', '二', '๒':
+            possibleIntegerValue = 2
+         case '3', '٣', '三', '๓':
+            possibleIntegerValue = 3
+         case '4', '٤', '四', '๔':
+            possibleIntegerValue = 4
+         default:
+            break
+      }
+   -> if let integerValue = possibleIntegerValue {
+         println("The integer value of \(numberSymbol) is \(integerValue).")
+      } else {
+         println("An integer value could not be found for \(numberSymbol).")
+      }
+   <- The integer value of 三 is 3.
+
+This example checks ``numberSymbol`` to determine if it is
+a Latin, Arabic, Chinese or Thai symbol for
+the numbers ``1`` to ``4``.
+If a match is found,
+one of the ``switch`` statement's cases will set
+an optional ``Int?`` variable called ``possibleIntegerValue``
+to an appropriate integer value.
+
+After the switch statement has completed its execution,
+the example uses optional binding to see if a value was found.
+The ``possibleIntegerValue`` variable has an implicit initial value of ``nil``
+by virtue of being an optional type,
+and so the optional binding will only succeed
+if ``possibleIntegerValue`` was set to an actual value
+by one of the ``switch`` statement's first four cases.
+
+It is not practical to list every possible ``UnicodeScalar`` value in the example above,
+and so a ``default`` case provides a catchall for any characters that are not matched.
+This ``default`` case does not need to perform any action,
+and so it is written with a single ``break`` statement as its body.
+As soon as the ``default`` statement is matched,
+the ``break`` statement ends the ``switch`` statement's execution,
+and code execution continues from the ``if let`` statement.
+
+.. _ControlFlow_Fallthrough:
+
+Fallthrough
+~~~~~~~~~~~
+
+Switch statements in Swift do not fall through the bottom of each case and into the next one.
+Instead, the entire switch statement completes its execution as soon as the first matching case is completed.
+By contrast, C requires you to insert an explicit ``break`` statement
+at the end of every ``switch`` case to prevent fallthrough.
+Avoiding default fallthrough means that Swift ``switch`` statements are
+much more concise and predictable than their counterparts in C,
+and thus they avoid executing multiple ``switch`` cases by mistake.
+
+If you really need C-style fallthrough behavior,
+you can opt in to this behavior on a case-by-case basis with the ``fallthrough`` keyword.
+The example below uses ``fallthrough`` to create a textual description of a number:
+
+.. testcode:: fallthrough
+
+   -> let integerToDescribe = 5
+   << // integerToDescribe : Int = 5
+   -> var description = "The number \(integerToDescribe) is"
+   << // description : String = "The number 5 is"
+   -> switch integerToDescribe {
+         case 2, 3, 5, 7, 11, 13, 17, 19:
+            description += " a prime number, and also"
+            fallthrough
+         default:
+            description += " an integer."
+      }
+   -> println(description)
+   <- The number 5 is a prime number, and also an integer.
+
+This example declares a new ``String`` variable called ``description``,
+and assigns it an initial value.
+The function then considers the value of ``integerToDescribe`` using a ``switch`` statement.
+If the value of ``integerToDescribe`` is one of the prime numbers in the list,
+the function appends text to the end of ``description``,
+to note that the number is prime.
+It then uses the ``fallthrough`` keyword to “fall into” the ``default`` case as well.
+The ``default`` case adds some extra text to the end of the description,
+and the ``switch`` statement is complete.
+
+If the value of ``integerToDescribe`` is *not* in the list of known prime numbers,
+it is not matched by the first ``switch`` case at all.
+There are no other specific cases,
+and so it ends up being matched by the catchall ``default`` case.
+
+After the ``switch`` statement has finished executing,
+the number's description is printed using the ``println`` function.
+In this example,
+the number ``5`` is correctly identified as a prime number.
+
+.. note::
+
+   Fallthrough does not check the conditions for the ``switch`` case it falls into.
+   It simply causes code execution to move directly to the statements
+   inside the next case (or ``default`` case) block,
+   as in C's standard ``switch`` statement behavior.
+
+.. _ControlFlow_LabeledStatements:
+
+Labeled Statements
+~~~~~~~~~~~~~~~~~~
+
+You can nest loops and ``switch`` statements
+inside other loops and ``switch`` statements in Swift
+to create complex control flow structures.
+However, loops and ``switch`` statements can both use the ``break`` statement
+to end their execution prematurely.
+As a result, it is sometimes useful to be explicit about
+which loop or ``switch`` statement you would like a ``break`` statement to terminate.
+Similarly, if you have multiple nested loops,
+it can be useful to be explicit about which loop you would like the ``continue`` statement
+to continue the execution of.
+
+To achieve these aims,
+you can mark a loop statement or ``switch`` statement with a :newTerm:`statement label`,
+and use this label with the ``break`` statement or ``continue`` statement
+to end or continue the execution of the labeled statement.
+
+A labeled statement is indicated by placing
+a label on the same line as the statement's introducer keyword, followed by a colon.
+Here's an example of this syntax for a ``while`` loop,
+although the principle is the same for all loops and ``switch`` statements:
+
+.. syntax-outline::
+
+   <#label name#>: while <#condition#>
+      <#statements#>
+   }
+
+The following example uses the ``break`` and ``continue`` statements
+with a labeled ``while`` loop for an adapted version of the *Snakes and Ladders* game.
 This time around, the game has an extra rule:
 
 * To win, you must land *exactly* on square 25.
 
 If a particular dice roll would take you beyond square 25,
-roll again until you roll the exact number needed to land on square 25.
+you must roll again until you roll the exact number needed to land on square 25.
 
 The game board is the same as before:
 
@@ -1156,7 +1254,7 @@ The game board is the same as before:
 The values of ``finalSquare``, ``board``, ``square``, and ``diceRoll``
 are initialized in the same way as before:
 
-.. testcode:: snakesAndLadders3
+.. testcode:: labels
 
    -> let finalSquare = 25
    << // finalSquare : Int = 25
@@ -1172,23 +1270,26 @@ are initialized in the same way as before:
 
 This version of the game uses a ``while`` loop and a ``switch`` statement
 to implement the game's logic.
+The ``while`` loop has a statement label called ``gameLoop``,
+to indicate that it is the main game loop for the Snakes and Ladders game.
+
 The ``while`` loop's condition is ``while square != finalSquare``,
 to reflect that you must land exactly on square 25:
 
-.. testcode:: snakesAndLadders3
+.. testcode:: labels
 
-   -> while square != finalSquare {
+   -> gameLoop: while square != finalSquare {
          if ++diceRoll == 7 { diceRoll = 1 }
    >>    println("diceRoll is \(diceRoll)")
          switch square + diceRoll {
             case finalSquare:
                // diceRoll will move us to the final square, so the game is over
    >>          println("finalSquare, game is over")
-               break
+               break gameLoop
             case let newSquare where newSquare > finalSquare:
                // diceRoll will move us beyond the final square, so roll again
    >>          println("move too far, roll again")
-               continue
+               continue gameLoop
             default:
                // this is a valid move, so find out its effect
                square += diceRoll
@@ -1247,15 +1348,15 @@ to reflect that you must land exactly on square 25:
 The dice is rolled at the start of each loop.
 Rather than moving the player immediately,
 a ``switch`` statement is used to consider the result of the move,
-and to work out whether the move is allowed:
+and to work out if the move is allowed:
 
 * If the dice roll will move the player onto the final square,
   the game is over.
-  The ``break`` statement transfers control to
-  the first line of code outside of the loop, which ends the game.
+  The ``break gameLoop`` statement transfers control to
+  the first line of code outside of the ``while`` loop, which ends the game.
 * If the dice roll will move the player *beyond* the final square,
   the move is invalid, and the player needs to roll again.
-  The ``continue`` statement ends the current loop iteration,
+  The ``continue gameLoop`` statement ends the current ``while`` loop iteration,
   and begins the next iteration of the loop.
 * In all other cases, the dice roll is a valid move.
   The player moves forward by ``diceRoll`` squares,
@@ -1263,75 +1364,16 @@ and to work out whether the move is allowed:
   The loop then ends, and control returns to the ``while`` condition
   to decide whether another turn is required.
 
-.. _ControlFlow_Fallthrough:
-
-Fallthrough
-~~~~~~~~~~~
-
-Switch statements in Swift do not fall through the bottom of each case and into the next one.
-Instead, the entire switch statement completes its execution as soon as the first matching case is completed.
-By contrast, C requires you to insert an explicit ``break`` statement
-at the end of every ``switch`` case to prevent fallthrough.
-Avoiding default fallthrough means that Swift ``switch`` statements are
-much more concise and predictable than their counterparts in C,
-and thus they avoid executing multiple ``switch`` cases by mistake.
-
-If you really need C-style fallthrough behavior,
-you can opt in to this behavior on a case-by-case basis with the ``fallthrough`` keyword.
-The example below uses ``fallthrough`` to create a textual description of a number:
-
-.. testcode:: controlTransfer
-
-   -> let integerToDescribe = 5
-   << // integerToDescribe : Int = 5
-   -> var description = "The number \(integerToDescribe) is"
-   << // description : String = "The number 5 is"
-   -> switch integerToDescribe {
-         case 2, 3, 5, 7, 11, 13, 17, 19:
-            description += " a prime number, and also"
-            fallthrough
-         default:
-            description += " an integer."
-      }
-   -> println(description)
-   <- The number 5 is a prime number, and also an integer.
-
-This example declares a new ``String`` variable called ``description``,
-and assigns it an initial value.
-The function then considers the value of ``integerToDescribe`` using a ``switch`` statement.
-If the value of ``integerToDescribe`` is one of the prime numbers in the list,
-the function appends text to the end of ``description``,
-to note that the number is prime.
-It then uses the ``fallthrough`` keyword to “fall into” the ``default`` case as well.
-The ``default`` case adds some extra text to the end of the description,
-and the ``switch`` statement is complete.
-
-If the value of ``integerToDescribe`` is *not* in the list of known prime numbers,
-it is not matched by the first ``switch`` case at all.
-There are no other specific cases,
-and so it ends up being matched by the catchall ``default`` case.
-
-After the ``switch`` statement has finished executing,
-the number's description is printed using the ``println`` function.
-In this example,
-the number ``5`` is correctly identified as a prime number.
-
 .. note::
 
-   Fallthrough does not check the conditions for the ``switch`` case it falls into.
-   It simply causes code execution to move directly to the statements
-   inside the next case (or ``default`` case) block,
-   as in C's standard ``switch`` statement behavior.
+   If the ``break`` statement above did not use the ``gameLoop`` label,
+   it would break out of the ``switch`` statement, not the ``while`` statement.
+   Using the ``gameLoop`` label makes it clear which control statement should be terminated.
 
-.. refnote:: References
-
-   * https://[Internal Staging Server]/docs/whitepaper/GuidedTour.html#branching-and-looping
-   * https://[Internal Staging Server]/docs/whitepaper/GuidedTour.html#pattern-matching
-   * https://[Internal Staging Server]/docs/Pattern%20Matching.html
-   * https://[Internal Staging Server]/docs/LangRef.html#pattern-expr
-   * /swift/include/swift/AST/Stmt.h
-   * /swift/test/IDE/complete_stmt_controlling_expr.swift
-   * /swift/test/interpreter/break_continue.swift
-   * /swift/test/Parse/foreach.swift
-   * /swift/test/reverse.swift
-   * /swift/test/statements.swift
+   Note also that it is not strictly necessary to use the ``gameLoop`` label
+   when calling ``continue gameLoop`` to jump to the next iteration of the loop.
+   There is only one loop in the game,
+   and so there is no ambiguity as to which loop the ``continue`` statement will affect.
+   However, there is no harm in using the ``gameLoop`` label with the ``continue`` statement.
+   Doing so is consistent with the label's use alongside the ``break`` statement,
+   and helps make the game's logic clearer to read and understand.

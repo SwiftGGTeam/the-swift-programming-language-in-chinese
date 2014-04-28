@@ -20,6 +20,30 @@ Contents
 Change Log
 ----------
 
+April 28 2014
+~~~~~~~~~~~~~
+
+Language Guide
+++++++++++++++++++
+
+* New section about :ref:`assertions <BasicTypes_Assertions>`,
+  and :ref:`suggestions on when to use them <BasicTypes_WhenToUseAssertions>`.
+  Also updated the :ref:`subscripts matrix example <Subscripts_SubscriptOptions>`
+  to use assertions rather than an optional subscript return type.
+* New section about :ref:`labeled control flow statements <ControlFlow_LabeledStatements>`,
+  and updates to the :doc:`LanguageGuide/ControlFlow` chapter in light of the fact that
+  ``break`` now breaks out of a ``switch`` statement,
+  and is the new preferred way to provide an empty ``switch`` case.
+* New section on :ref:`inout parameters <Functions_InoutParameters>`.
+* New section about :ref:`setting a default property value with a closure
+  <Initialization_SettingADefaultPropertyValueWithAClosure>`.
+* New sections on :ref:`static properties <Properties_StaticProperties>`
+  and :ref:`type methods <Methods_TypeMethods>`.
+* New section about :ref:`protocol compositions <Protocols_ProtocolComposition>`.
+* Editorial improvements to :doc:`LanguageGuide/CollectionTypes`,
+  including advice about bounds / key checking.
+* Updated code style throughout the Guide for consistency with our emerging Swift style.
+
 April 22 2014
 ~~~~~~~~~~~~~
 
@@ -68,9 +92,8 @@ Language Guide
 ++++++++++++++
 
 * Updated the :doc:`LanguageGuide/Functions` chapter to use and describe the new unified function declaration syntax.
-* New sections on :ref:`local parameter names <Functions_LocalParameterNames>`,
-  :ref:`unnamed parameters <Functions_UnnamedParameters>`,
-  and :ref:`strict parameter names <Functions_StrictParameterNames>`.
+* New sections on :ref:`local parameter names <Functions_LocalParameterNames>`
+  and :ref:`unnamed parameters <Functions_UnnamedParameters>`.
 * Converted all initializers in the Guide over to the new unified function declaration syntax.
 * New section on :ref:`checking for protocol conformance <Protocols_CheckingForProtocolConformance>`.
 * New section on :ref:`optional protocol requirements <Protocols_OptionalProtocolRequirements>`.
@@ -104,7 +127,6 @@ Language Guide
 * New sections about :ref:`comments <BasicTypes_Comments>` and :ref:`semicolons <BasicTypes_Semicolons>`.
 * New section about :ref:`nil <BasicTypes_Nil>` as it is used in the context of optionals.
 * ``nil`` is now used throughout the *Guide* instead of ``.None``.
-* New section about :ref:`ignoring switch cases <ControlFlow_IgnoringCases>` with a semicolon.
 * Improved our advice about :ref:`naming of generic type parameters <Generics_NamingOfTypeParameters>`.
 * Moved :ref:`type aliases <BasicTypes_TypeAliases>` back to the Basic Types chapter,
   and changed the example to suit.
@@ -142,7 +164,6 @@ Language Guide
 * First draft of half of a chapter about :doc:`LanguageGuide/Generics`
 * Added information about :ref:`Any / AnyObject <TypeCasting_AnyAndAnyObject>`
   and :ref:`checked casts in switch statements <TypeCasting_CheckedCastsInSwitchStatements>`
-* Added information about :ref:`Array's default value initializer <CollectionTypes_CreatingAnEmptyArray>`
 * Described how the :ref:`identity operators <ClassesAndStructures_IdentityOperators>` work,
   and how to implement :ref:`equivalence operators <AdvancedOperators_EquivalenceOperators>`
   for your own types
@@ -177,7 +198,7 @@ Language Guide
 * Added a new section about the fact that you can't set
   :ref:`stored properties of constant structure instances
   <Properties_StoredPropertiesOfConstantStructureInstances>`
-* New sections on :ref:`Protocols_AddingProtocolConformanceWithExtensions`,
+* New sections on :ref:`Protocols_AddingProtocolConformanceWithAnExtension`,
   :ref:`Protocols_CollectionsOfProtocolTypes`,
   and :ref:`Protocols_ProtocolInheritance`
 * ``self`` is now a :ref:`property of every value in Swift <Methods_TheSelfProperty>` –
@@ -226,7 +247,7 @@ Language Guide
   and added in hand-written comments instead
 * New section on :doc:`LanguageGuide/Subscripts`
 * New section about mutating ``self`` in :ref:`enumeration instance methods <Methods_ModifyingValueTypesFromWithinInstanceMethods>`
-* New sections about :ref:`BasicTypes_PrintingNamedValues`
+* New sections about :ref:`BasicTypes_PrintingConstantsAndVariables`
   and :ref:`BasicTypes_StringInterpolation` in Basic Types
 * Improved examples for :ref:`ControlFlow_While` and :ref:`ControlFlow_Break`,
   and a new example for :ref:`ControlFlow_DoWhile`

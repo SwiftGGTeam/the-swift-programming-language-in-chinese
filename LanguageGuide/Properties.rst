@@ -34,7 +34,17 @@ In its simplest form, a stored property is just a constant or variable
 that is stored alongside an instance of a particular class or structure.
 Stored properties can be either
 :newTerm:`variable stored properties` (introduced by the ``var`` keyword),
-or :newTerm:`constant stored properties` (introduced by the ``let`` keyword):
+or :newTerm:`constant stored properties` (introduced by the ``let`` keyword).
+
+You can provide a default value for a stored property as part of its definition,
+as described in :ref:`Initialization_DefaultPropertyValues`.
+In addition, even though it is normally constant,
+you can change the value of a constant stored property at any point during initialization.
+This process is described in :ref:`Initialization_ModifyingConstantPropertiesDuringInitialization`.
+
+The example below defines a structure called ``FixedLengthRange``,
+which describes a range of integers
+whose range length cannot be changed once it is created:
 
 .. testcode:: storedProperties
 
@@ -48,19 +58,11 @@ or :newTerm:`constant stored properties` (introduced by the ``let`` keyword):
    -> rangeOfThreeItems.firstValue = 6
    // the range now represents integer values 6, 7, and 8
 
-The example above defines a structure called ``FixedLengthRange``,
-which describes a range of integers
-whose range length cannot be changed once it is created.
 Instances of ``FixedLengthRange`` have
 a variable stored property called ``firstValue``,
 and a constant stored property called ``length``.
 In the example above, ``length`` is initialized when the new range is created,
 and cannot be changed thereafter, because it is a constant property.
-
-The value of a constant stored property can be changed
-at any point until the initializer for the class or structure it belongs to
-completes its initialization.
-Instance initialization is described in :doc:`Initialization`.
 
 .. _Properties_StoredPropertiesOfConstantStructureInstances:
 
@@ -123,8 +125,6 @@ and simplifies the property's declaration into a single, definitive statement.
 All of the information about the property –
 including its name, type, and memory management characteristics –
 is defined in a single location as part of the type's definition.
-
-.. TODO: research and write up the story for @weak
 
 .. TODO: what happens if one property of a constant structure is an object reference?
 
@@ -401,26 +401,194 @@ and the default name of ``oldValue`` is used instead.
 
 .. TODO: mention that this also works for global / local variables
 
+.. _Properties_WeakProperties:
+
+Weak Properties
+---------------
+
+.. write-me::
+
+.. TODO: research and write up the story for @weak
+
 .. _Properties_StaticProperties:
 
 Static Properties
 -----------------
 
-.. write-me::
+Instance properties, as described above,
+are properties that belong to an instance of a particular type.
+Every time you create a new instance of that type,
+it stores its own set of property values, separate from any other instance.
+
+For value types (that is, structures and enumerations),
+you can also define properties that belong to the type itself,
+and not to any one instance of that type.
+There will only ever be one copy of these properties,
+no matter how many instances of that type you create.
+These kinds of properties are called :newTerm:`static properties`,
+and are prefixed by the keyword ``static``:
+
+.. testcode:: staticPropertySyntax
+
+   -> struct SomeStructure {
+         static var someStaticProperty = "Some Value"
+      }
+   -> enum SomeEnumeration {
+         static var someStaticProperty = "Some Value"
+      }
+
+Static properties are useful for defining values that are universal to
+*all* instances of a particular value type.
+This might be a constant property that all instances can use
+(like a static constant in C),
+or a variable property that stores a value that is global to all instances of that type
+(like a static variable in C).
+
+In C and Objective-C, you define static constants and variables associated with a type
+as global static variables.
+In Swift, however, static properties are written as part of the type's definition,
+within the type's outer curly braces,
+and each static property is explicitly scoped to the type it supports.
+
+Static properties can be constant or variable,
+and can be stored properties or computed properties.
+Static properties that are both stored and variable can also have property observers,
+just like stored variable instance properties.
+
+.. note::
+
+   Unlike stored instance properties,
+   stored static properties must *always* be given a default value.
+   This is because the type itself does not have an initializer
+   that can assign a value to a stored static property at initialization time.
+
+Static properties are queried and set with dot syntax, just like instance properties.
+However, static properties are queried and set on the *type*, not on an instance of that type.
+
+To set a static property on a structure type called ``SomeStructure``,
+you write the following:
+
+.. testcode:: staticPropertySyntax
+
+   -> SomeStructure.someStaticProperty = "New Value"
+
+The example below uses two static properties as part of a structure that models
+an audio level meter for a number of audio channels.
+Each of these channels has an integer audio level between ``0`` and ``10`` inclusive,
+as shown in the figure below:
+
+.. image:: ../images/staticPropertiesVUMeter.png
+   :align: center
+
+The figure above shows two separate audio channels as part of a stereo audio level meter.
+The left channel has a current level of ``9``,
+and the right channel has a current level of ``7``.
+
+Each audio channel in the meter is modeled by an ``AudioChannel`` structure:
+
+.. testcode:: staticProperties
+
+   -> struct AudioChannel {
+         static let thresholdLevel = 10
+         static var maxInputLevelForAllChannels = 0
+         var currentLevel: Int = 0 {
+            didSet {
+               if currentLevel > AudioChannel.maxInputLevelForAllChannels {
+                  // store this as the new overall maximum input level
+                  AudioChannel.maxInputLevelForAllChannels = currentLevel
+               }
+               if currentLevel > AudioChannel.thresholdLevel {
+                  // cap the new audio level to the threshold level
+                  currentLevel = AudioChannel.thresholdLevel
+               }
+            }
+         }
+      }
+
+The ``AudioChannel`` structure defines two static properties to support its functionality.
+The first, ``thresholdLevel``, defines the maximum threshold value an audio level can take.
+This is a constant value of ``10`` for all ``AudioChannel`` instances.
+If an audio signal comes in with a higher value than ``10``,
+it will be capped to this threshold value (as described below).
+
+The second static property is
+a variable stored property called ``maxInputLevelForAllChannels``.
+This keeps track of the maximum input value that has been received
+by *any* ``AudioChannel`` instance.
+It starts with an initial value of ``0``.
+
+The ``AudioChannel`` structure also defines
+a stored instance property called ``currentLevel``,
+which represents the channel's current audio level on a scale of ``0`` to ``10``.
+
+The ``currentLevel`` property has a ``didSet`` property observer
+to check the value of ``currentLevel`` whenever it is set.
+This observer performs two checks:
+
+* If the new value of ``currentLevel`` is higher than
+  any value previously received by *any* ``AudioChannel`` instance,
+  the property observer stores the new ``currentLevel`` value in
+  the ``maxInputLevelForAllChannels`` static property.
+
+* If the new value of ``currentLevel`` is greater than the allowed ``thresholdLevel``,
+  the property observer caps ``currentLevel`` to ``thresholdLevel``.
+
+.. note::
+
+   In the second check, the ``didSet`` observer sets ``currentLevel`` to a different value.
+   This does not, however, cause the observer to be called again.
+
+You can use the ``AudioChannel`` structure to create
+two new audio channels called ``leftChannel`` and ``rightChannel``,
+to represent the audio levels of a stereo sound system:
+
+::
+
+   var leftChannel = AudioChannel()
+   var rightChannel = AudioChannel()
+
+.. TESTME: this code cannot be swifttested due to rdar://16732688.
+
+If you set the ``currentLevel`` of the *left* channel to ``7``,
+you can see that the ``maxInputLevelForAllChannels`` static property
+has been updated to equal ``7``:
+
+::
+
+   leftChannel.currentLevel = 7
+   println(leftChannel.currentLevel)
+   // prints "7"
+   println(AudioChannel.maxInputLevelForAllChannels)
+   // prints "7"
+
+.. TESTME: this code cannot be swifttested due to rdar://16732688.
+
+If you try and set the ``currentLevel`` of the *right* channel to ``11``,
+you can see that the right channel's ``currentLevel`` property
+has been capped to the maximum value of ``10``,
+and the ``maxInputLevelForAllChannels`` static property has been updated to equal ``11``:
+
+::
+
+   rightChannel.currentLevel = 11
+   println(rightChannel.currentLevel)
+   // prints "10"
+   println(AudioChannel.maxInputLevelForAllChannels)
+   // prints "11"
+
+.. TESTME: this code cannot be swifttested due to rdar://16732688.
 
 .. QUESTION: we won't have class properties for Swift 1.0, says [Contributor 7746].
    I've named this section "Static Properties" as a result,
    and mirrored this approach elsewhere in the book.
    Is this the right approach, or should I call them "Type Properties" from the off?
+
 .. TODO: see release notes from 2013-12-18 for a note about lazy initialization
-.. TODO: mention that type methods can access type properties (and other type methods?)
-   without needing to reference the type's name,
-   as they also get an implicit ``self`` parameter.
+
 .. TODO: as it stands, this is the first time I'll mention .dynamicType (assuming I do)
    is this the right place to introduce it?
+
 .. TODO: mention that you can get at type properties a few different ways:
    TypeName.propertyName; someInstance.dynamicType.propertyName;
    just plain old propertyName if you're already at a type level in that type
    (likewise for methods in the methods chapter)
-.. TODO: type properties *must* have an initializer or a getter/setter,
-   because there's no "+ initialize" during which to init them otherwise

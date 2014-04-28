@@ -93,6 +93,106 @@ as described later in this chapter.
    the value of that property is set directly,
    without calling any property observers.
 
+.. _Initialization_SettingADefaultPropertyValueWithAClosure:
+
+Setting A Default Property Value with a Closure
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If a property's default value requires some customization or setup,
+and that customization is not dependent on other property values,
+you can use a closure to provide a customized default value for that property.
+Whenever a new instance of the type that the property belongs to is initialized,
+the property's closure is executed,
+and the return value of the closure is assigned as the property's default value.
+
+Here's a skeleton outline of how a closure can provide a default property value:
+
+::
+
+   class SomeClass {
+      let someProperty: SomeType = {
+         // calculate a default value for someProperty inside this closure
+         // someValue must be of the same type as SomeType
+         return someValue
+      }()
+   }
+
+Note that the closure's end curly brace is followed by an empty pair of parentheses.
+This tells Swift to execute the closure immediately.
+If you omit these parentheses,
+you are trying to assign the closure itself to the property,
+and not the return value of the closure.
+
+.. note::
+
+   If you use a closure to initialize a property,
+   remember that the rest of the instance has not yet been initialized
+   at the point that the closure is executed.
+   This means that you cannot access any other property values from within your closure,
+   even if those properties have default values.
+   You also cannot use the implicit ``self`` property,
+   or call any of the instance's methods.
+   Closures should only be used to provide a default value
+   when the default value is always the same,
+   and is independent of any outside values.
+
+The example below defines a structure called ``CheckersBoard``,
+which models a board for the game of *Checkers* (also known as *Draughts*):
+
+.. image:: ../images/checkersBoard.png
+   :align: center
+
+The game of *Checkers* is played on a ten-by-ten board,
+with alternating black and white squares.
+To represent this game board,
+the ``CheckersBoard`` structure has a single property called ``boardColors``,
+which is an array of 100 ``Bool`` values.
+A value of ``true`` in the array represents a black square,
+and a value of ``false`` represents a white square.
+The first item in the array represents the top left square on the board
+and the last item in the array represents the bottom right square on the board.
+
+The ``boardColors`` array is initialized with a closure to set up its color values:
+
+.. testcode:: checkers
+
+   -> struct CheckersBoard {
+         let boardColors: Array<Bool> = {
+            var temporaryBoard = Array<Bool>()
+            var isBlack = false
+            for i in 1..10 {
+               for j in 1..10 {
+                  temporaryBoard.append(isBlack)
+                  isBlack = !isBlack
+               }
+               isBlack = !isBlack
+            }
+            return temporaryBoard
+         }()
+         func squareIsBlack(row: Int, column: Int) -> Bool {
+            return boardColors[(row * 10) + column]
+         }
+      }
+
+Whenever a new ``CheckersBoard`` instance is created, the closure is executed,
+and the default value of ``boardColors`` is calculated and returned.
+The closure in the example above calculates and sets
+the appropriate color for each square on the board
+in a temporary array called ``temporaryBoard``,
+and returns this temporary array as the closure's return value
+once its setup is complete.
+The returned array value is stored in ``boardColors``,
+and can be queried with the ``squareIsBlack`` utility function:
+
+.. testcode:: checkers
+
+   -> let board = CheckersBoard()
+   << // board : CheckersBoard = CheckersBoard([false, true, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, true, false])
+   -> println(board.squareIsBlack(row: 0, column: 1))
+   <- true
+   -> println(board.squareIsBlack(row: 9, column: 9))
+   <- false
+
 .. _Initialization_InitializerInputParameters:
 
 Initializer Input Parameters
@@ -135,6 +235,9 @@ with a value from a different temperature scale:
    << // freezingPointOfWater : Celsius = Celsius(0.0)
    /> freezingPointOfWater.temperatureInCelsius is \(freezingPointOfWater.temperatureInCelsius)
    </ freezingPointOfWater.temperatureInCelsius is 0.0
+
+.. TODO: I need to provide an example of default values for initializer parameters,
+   to show they can help you to get multiple initializers "for free" (after a fashion).
 
 .. _Initialization_OptionalPropertyValues:
 
@@ -703,6 +806,13 @@ These rules apply even if your subclass adds further convenience initializers.
    A subclass can implement a superclass designated initializer
    as a subclass convenience initializer as part of satisfying rule 2.
 
+.. TODO: feedback from Beto is that this note is a little hard to parse.
+   Perhaps this point should be left until the later "in action" example,
+   where this principle is demonstrated?
+
+.. TODO: There are rare cases in which we automatically insert a call to super.init() for you.
+   When is this? Either way, I need to mention it in here.
+
 .. _Initialization_SyntaxForDesignatedAndConvenienceInitializers:
 
 Syntax for Designated and Convenience Initializers
@@ -803,7 +913,7 @@ and defines two initializers for creating ``RecipeIngredient`` instances:
 
 .. testcode:: designatedConvenience
 
-   -> class RecipeIngredient : Food {
+   -> class RecipeIngredient: Food {
          var quantity: Int
          init(name: String, quantity: Int) {
             self.quantity = quantity
@@ -847,7 +957,7 @@ this nonetheless means that ``RecipeIngredient`` has provided
 an implementation of all of its superclass's designated initializers.
 Because of this, it automatically inherits all of its superclass's convenience initializers too.
 This means that ``RecipeIngredient`` inherits the ``init()`` initializer from ``Food``.
-The inherited version of ``init()`` functions in exactly the same was as the ``Food`` version,
+The inherited version of ``init()`` functions in exactly the same way as the ``Food`` version,
 except that it delegates to the ``RecipeIngredient`` version of ``init(name: String)``
 rather than the ``Food`` version.
 
@@ -875,7 +985,7 @@ to provide a textual description of a ``ShoppingListItem`` instance:
 
 .. testcode:: designatedConvenience
 
-   -> class ShoppingListItem : RecipeIngredient {
+   -> class ShoppingListItem: RecipeIngredient {
          var purchased = false
          var description: String {
             var output = "\(quantity) x \(name.lowercase)"
@@ -910,7 +1020,7 @@ a new ``ShoppingListItem`` instance:
          ShoppingListItem(name: "Bacon"),
          ShoppingListItem(name: "Eggs", quantity: 6),
       ]
-   << // breakfastList : ShoppingListItem[] = [<ShoppingListItem instance>, <ShoppingListItem instance>, <ShoppingListItem instance>]
+   << // breakfastList : Array<ShoppingListItem> = [<ShoppingListItem instance>, <ShoppingListItem instance>, <ShoppingListItem instance>]
    -> breakfastList[0].name = "Orange juice"
    -> breakfastList[0].purchased = true
    -> for item in breakfastList {
@@ -939,6 +1049,9 @@ shows that their default states have been set as expected.
    but you can't currently write these in Swift yourself.
    After conferring with Doug, I've decided not to include these in the Guide
    if you can't write them yourself in pure Swift.
+
+.. TODO: Feedback from Beto is that it would be useful to indicate the flow
+   through these inherited initializers.
 
 .. _Initialization_RequiredInitializers:
 

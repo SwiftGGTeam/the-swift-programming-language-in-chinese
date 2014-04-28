@@ -1,14 +1,3 @@
-.. docnote:: Subjects to be covered in this section
-
-   * Enums ✔︎
-   * Enum element patterns
-   * Enums for groups of constants ✔︎
-   * Enums with raw values (inc. getting / setting raw values) ✔︎
-   * Enum default / unknown values?
-   * Enum delayed identifier resolution
-   * Option sets
-   * Enum special capabilities such as embeddability, static properties etc.
-
 Enumerations
 ============
 
@@ -261,7 +250,10 @@ Constants and variables of type ``Barcode`` can store either a ``.UPCA`` or a ``
 but they can only store one of them at any given time.
 
 The different barcode types can be checked using a switch statement, as before.
-This time, however, the associated values can be extracted as part of the switch statement:
+This time, however, the associated values can be extracted as part of the switch statement.
+You extract each associated value as a constant (with the ``let`` prefix)
+or a variable (with the ``var`` prefix)
+for use within the ``switch`` case's body:
 
 .. testcode:: enums
 
@@ -269,6 +261,20 @@ This time, however, the associated values can be extracted as part of the switch
          case .UPCA(let numberSystem, let identifier, let check):
             println("UPC-A with value of \(numberSystem), \(identifier), \(check).")
          case .QRCode(let productCode):
+            println("QR code with value of \(productCode).")
+      }
+   <- QR code with value of ABCDEFGHIJKLMNOP.
+
+If all of the associated values for a enumeration member
+are extracted as constants, or if all are extracted as variables,
+you can place a single ``var`` or ``let`` annotation before the member name, for brevity:
+
+.. testcode:: enums
+
+   -> switch productBarcode {
+         case let .UPCA(numberSystem, identifier, check):
+            println("UPC-A with value of \(numberSystem), \(identifier), \(check).")
+         case let .QRCode(productCode):
             println("QR code with value of \(productCode).")
       }
    <- QR code with value of ABCDEFGHIJKLMNOP.
@@ -292,7 +298,7 @@ Here's an example that stores raw ASCII values alongside named enumeration membe
 
 .. testcode:: rawValues
 
-   -> enum ASCIIControlCharacter : UnicodeScalar {
+   -> enum ASCIIControlCharacter: UnicodeScalar {
          case Tab = '\t'
          case LineFeed = '\n'
          case CarriageReturn = '\r'
@@ -323,7 +329,7 @@ with raw integer values to represent each planet's order from the sun:
 
 .. testcode:: rawValues
 
-   -> enum Planet : Int {
+   -> enum Planet: Int {
          case Mercury = 1, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune
       }
 

@@ -1,24 +1,3 @@
-.. docnote:: Subjects to be covered in this section
-
-   * Declaration syntax ✔︎
-   * Naming conventions ✔︎
-   * Integer types ✔︎
-   * Floating-point types ✔︎
-   * infinity and -infinity
-   * Bool ✔︎
-   * No suffixes for integers / floats ✔︎
-   * Lazy initialization
-   * A brief mention of characters and strings
-   * Tuples ✔︎
-   * Varargs tuples
-   * Type inference ✔︎
-   * Type casting through type initializers ✔︎
-   * Optional types ✔︎
-   * Pattern binding
-   * Literals ✔︎
-   * Immutability
-   * min and max for integers ✔︎
-
 Basic Types
 ===========
 
@@ -140,6 +119,9 @@ it should always be declared as a constant with the ``let`` keyword.
 Variables should only be used for
 storing values that need to be able to change.
 
+.. TODO: I need to mention that globals are lazily initialized somewhere.
+   Probably not here, but somewhere.
+
 .. _BasicTypes_TypeAnnotations:
 
 Type Annotations
@@ -157,7 +139,7 @@ to indicate that the variable can store ``String`` values:
 
    var welcomeMessage: String
 
-.. TODO: this example can't be swifttested,
+.. TESTME: this example can't be swifttested,
    because variables can't be left uninitialized in the REPL.
    It will need manual testing instead.
 
@@ -337,7 +319,7 @@ Unlike C, multi-line comments can also be nested:
 Nested multi-line comments enable you to comment out large blocks of code quickly and easily,
 even if the code already contains multi-line comments.
 
-.. TODO: These multiline comments can't be tested by swifttest,
+.. TESTME: These multiline comments can't be tested by swifttest,
    because they aren't supported by the REPL.
    They should be tested manually before release.
 
@@ -436,6 +418,8 @@ Swift provides two signed floating-point number types:
    whereas the precision of ``Float`` can be as little as 6 digits.
    The appropriate floating-point type to use depends on the nature and range of
    values you need to work with in your code.
+
+.. TODO: mention infinity, -infinity etc.
 
 .. _BasicTypes_TypeInference:
 
@@ -695,7 +679,7 @@ Here, the value of the constant ``three`` is used to create a new value of type 
 so that both sides of the addition are of the same type.
 Without this conversion in place, the addition would not be allowed.
 
-.. TODO: the return type of pi here is inferred as Float64,
+.. FIXME: the return type of pi here is inferred as Float64,
    but it should really be inferred as Double.
    This is due to rdar://15211554.
    This code sample should be updated once the issue is fixed.
@@ -713,7 +697,7 @@ in that an integer type can be initialized with a ``Double`` or ``Float`` value:
 Floating-point values are always truncated when used to initialize a new integer value in this way.
 This means that ``4.75`` becomes ``4``, and ``-3.9`` becomes ``-3``.
 
-.. TODO: negative floating-point numbers cause an overflow when used
+.. FIXME: negative floating-point numbers cause an overflow when used
    to initialize an unsigned integer type.
    This has been filed as rdar://problem/16206455,
    and this section may need updating based on the outcome of that Radar.
@@ -1117,25 +1101,86 @@ the constant or variable is automatically set to ``nil`` for you:
    In Swift, ``nil`` is not a pointer – it is the absence of a value of a certain type.
    Optionals of *any* type can be set to ``nil``, not just object types.
 
-.. refnote:: References
+.. _BasicTypes_Assertions:
 
-   * https://[Internal Staging Server]/docs/LangRef.html#integer_literal ✔︎
-   * https://[Internal Staging Server]/docs/LangRef.html#floating_literal ✔︎
-   * https://[Internal Staging Server]/docs/LangRef.html#expr-delayed-identifier ✔︎
-   * https://[Internal Staging Server]/docs/LangRef.html#type-tuple
-   * https://[Internal Staging Server]/docs/whitepaper/TypesAndValues.html#types-and-values ✔︎
-   * https://[Internal Staging Server]/docs/whitepaper/TypesAndValues.html#integer-types ✔︎
-   * https://[Internal Staging Server]/docs/whitepaper/TypesAndValues.html#no-integer-suffixes ✔︎
-   * https://[Internal Staging Server]/docs/whitepaper/TypesAndValues.html#no-implicit-integer-promotions-or-conversions ✔︎
-   * https://[Internal Staging Server]/docs/whitepaper/TypesAndValues.html#no-silent-truncation-or-undefined-behavior
-   * https://[Internal Staging Server]/docs/whitepaper/TypesAndValues.html#separators-in-literals ✔︎
-   * https://[Internal Staging Server]/docs/whitepaper/TypesAndValues.html#floating-point-types ✔︎
-   * https://[Internal Staging Server]/docs/whitepaper/TypesAndValues.html#bool ✔︎
-   * https://[Internal Staging Server]/docs/whitepaper/TypesAndValues.html#tuples
-   * https://[Internal Staging Server]/docs/whitepaper/LexicalStructure.html#identifiers-and-operators
-   * https://[Internal Staging Server]/docs/whitepaper/LexicalStructure.html#integer-literals
-   * https://[Internal Staging Server]/docs/whitepaper/LexicalStructure.html#floating-point-literals
-   * https://[Internal Staging Server]/docs/whitepaper/GuidedTour.html#declarations-and-basic-syntax
-   * https://[Internal Staging Server]/docs/whitepaper/GuidedTour.html#tuples
-   * https://[Internal Staging Server]/docs/literals.html
-   * http://en.wikipedia.org/wiki/Operator_(computer_programming)
+Assertions
+----------
+
+Optionals enable you to check for values that may or may not exist,
+and to write code that copes gracefully with the absence of a value.
+In some cases, however, it is simply not possible for your code to continue execution
+if a value does not exist, or if a provided value does not satisfy certain conditions.
+In these situations,
+you can trigger an :newTerm:`assertion` in your code to end code execution,
+and to provide an opportunity to debug the cause of the absent or invalid value.
+
+An assertion is a run-time check that some Boolean condition definitely equates to ``true``.
+Literally put, an assertion “asserts” that a condition is true.
+You use an assertion to make sure that an essential condition is satisfied
+before executing any further code.
+If the condition equates to ``true``, code execution continues as normal;
+if the condition equates to ``false``, code execution ends, and your app is terminated.
+
+If your code triggers an assertion while running in a debug environment,
+such as when you build and run an app in Xcode,
+an assertion enables you to see exactly where the invalid state occurred,
+and to query the state of your app at the time that the assertion was triggered.
+An assertion also gives you the opportunity to provide
+a suitable debug message as to the nature of the assert.
+
+You write an assertion by calling the global ``assert`` function.
+You pass the ``assert`` function an expression that equates to ``true`` or ``false``,
+and a string message to display if the result of the condition is ``false``:
+
+.. testcode:: assertions
+
+   -> let age = -3
+   << // age : Int = -3
+   -> assert(age >= 0, "A person's age cannot be less than zero")
+   xx assert
+   // this causes the assertion to trigger, because age is not >= 0
+
+In this example, code execution will only continue if ``age >= 0`` equates to ``true`` –
+that is, if the value of ``age`` is non-negative.
+If the value of ``age`` *is* negative, as in the code above,
+then ``age >= 0`` equates to ``false``,
+and the assertion is triggered, terminating the application.
+
+Assertion messages cannot use string interpolation.
+The assertion message can be omitted if desired, as in the following example:
+
+.. testcode:: assertions
+
+   -> assert(age >= 0)
+   xx assert
+
+.. _BasicTypes_WhenToUseAssertions:
+
+When To Use Assertions
+~~~~~~~~~~~~~~~~~~~~~~
+
+Use an assert whenever a condition has the potential to be false,
+but must *definitely* be true in order for your code to continue execution.
+Suitable candidates for an assertion check include:
+
+* A subscript index is passed to a custom subscript implementation,
+  but the subscript index could be invalid or out of bounds.
+
+* A value is passed to a function,
+  but an invalid value means that the function cannot fulfil its task.
+
+* An optional value is currently ``nil``,
+  but a non-``nil`` value is essential for subsequent code to execute successfully.
+
+Subscripts are described in :doc:`Subscripts`,
+and functions are described in :doc:`Functions`.
+
+.. note::
+
+   Assertions cause your app to terminate,
+   and are not a substitute for designing your code in such a way
+   that invalid conditions are unlikely to arise.
+   Nonetheless, in situations where invalid conditions are possible,
+   an assertion is an effective way to ensure that
+   such conditions are highlighted and noticed during development,
+   before your app is published.

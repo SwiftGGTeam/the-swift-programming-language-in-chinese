@@ -1,34 +1,3 @@
-.. docnote:: Subjects to be covered in this section
-
-   * Classes
-   * Objects
-   * Structures
-   * Instance variables
-   * Getters and setters
-   * willSet / didSet
-   * Constructors and destructors
-   * Designated initializers
-   * Instance and class methods
-   * Working with self and Self
-   * Super
-   * Memory management via ARC
-   * UnsafePointer?
-   * Cast operators (?, !, b as D, b is D)
-   * Type inference and discovery?
-   * "Everything is a type"
-   * Stored vs computed properties
-   * === vs ==
-   * “is” to check for class membership
-   * “as” for casting
-   * No “self = [super init]” (assignment equates to void)
-   * @inout
-   * value types and reference types
-   * Type functions and variables
-   * Nested classes and structures
-   * Bound functions
-   * @conversion functions for converting between types
-   * Subscript getters and setters
-
 Classes and Structures
 ======================
 
@@ -251,12 +220,12 @@ if they are listed in the same order that the properties are declared in the str
    -> let svga = Resolution(800, 600)
    << // svga : Resolution = Resolution(800, 600)
 
-.. TODO: Include a justifiable reason for why classes do not provide a memberwise initializer.
-.. TODO: According to rdar://15670604, we may end up with one for classes as well.
-   However, I can't find a Radar tracking this directly.
-
 Unlike structures, class instances do not receive a default memberwise initializer.
 Initializers are described in more detail in :doc:`Initialization`.
+
+.. TODO: The current plan is to introduce a memberwise initializer for classes too,
+   as described in rdar://16704095.
+   We hope to have this by WWDC, and this section will need updating if this lands.
 
 .. _ClassesAndStructures_ValueTypesAndReferenceTypes:
 
@@ -385,9 +354,6 @@ when they are assigned to a variable or constant,
 or when they are passed to a function.
 Rather than making a copy, a reference to the same existing instance is used instead.
 
-.. TODO: This enables you to have multiple variables and constants
-   that all refer to the same one instance. 
-
 Here's an example, using the ``VideoMode`` class defined above:
 
 .. testcode:: ClassesAndStructures
@@ -461,9 +427,6 @@ is declared like any other constant or variable in Swift,
 and the value it contains is always a reference to a particular instance of that type.
 
 .. TODO: functions aren't "instances". This needs clarifying.
-
-.. TODO: We need something here to say
-   "but don't worry, you can still do all of the stuff you're used to".
 
 .. TODO: Add a justification here to say why this is a good thing.
 
