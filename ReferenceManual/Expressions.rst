@@ -235,7 +235,7 @@ It has the following form:
 The value of the *expression*
 is set to the value obtained by evaluating the *value*.
 If the *expression* is a tuple,
-he *value* must be a tuple
+the *value* must be a tuple
 with the same number of elements.
 (Nested tuples are allowed.)
 Assignment is performed from each part of the *value*
@@ -259,10 +259,10 @@ The assignment operator does not return any value.
 
 .. _Expressions_ConditionalOperator:
 
-Conditional Operator
-~~~~~~~~~~~~~~~~~~~~
+Ternary Conditional Operator
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The :newTerm:`conditional operator` evaluates to one of two given values
+The :newTerm:`ternary conditional operator` evaluates to one of two given values
 based on the value of a condition;
 it has the following form:
 
@@ -356,11 +356,10 @@ as shown in the following examples: ::
 
 If the type specified after ``as``
 is followed by an exclamation mark (``!``),
-the expression is understood as a force-value expression.
-The following are equivalent: ::
-
-    x as SomeType!
-    (x as SomeType)!
+the entire ``as`` expression is understood as a force-value expression.
+For example, the expression ``x as SomeType!``
+is understood as ``(x as SomeType)!``
+and not as ``x as (SomeType!)``.
 
 The ``is`` operator checks at runtime
 whether the *expression*
@@ -429,7 +428,7 @@ to make more complex expressions.
     primary-expression --> anonymous-closure-argument
     primary-expression --> parenthesized-expression
     primary-expression --> implicit-member-expression
-    primary-expression --> ignored-expression
+    primary-expression --> wildcard-expression
 
 .. NOTE: One reason for breaking primary expressions out of postfix
    expressions is for exposition -- it makes it easier to organize the
@@ -460,6 +459,7 @@ Literal             Type    Value
 ================    ======  ===============================================
 
 .. TODO: self and Self probably belong here as magic/special literals.
+   Also .dynamicType goes somewhere
 
 Inside a function,
 the value of ``__FUNCTION__`` is the name of that function,
@@ -542,7 +542,7 @@ It has one of the following forms:
 
    super.<#member name#>
    super[<#subscript index#>]
-   super.init
+   super.init(<#initializer arguments#>)
 
 The first form is understood as a member of the superclass.
 This allows a subclass to call the superclass's
@@ -586,7 +586,8 @@ Closure Expression
 ~~~~~~~~~~~~~~~~~~
 
 A :newTerm:`closure expression` creates a closure,
-also known as a *lambda* or an *anonymous function*.
+also known as a *lambda* or an *anonymous function*
+in other programming languages.
 Like function declarations,
 closures contain statements which they execute,
 and they capture values from their enclosing scope.
@@ -604,10 +605,12 @@ as the parameters in a function declaration,
 as described in :ref:`Declarations_FunctionDeclaration`.
 
 There are several special forms
-that allow closures to be writter more concicely:
+that allow closures to be written more concicely:
 
-* A closure may omit the types
+* A closure can omit the types
   of its parameters, its return type, or both.
+  If you omit both types,
+  omit the ``in`` keyword before the statements.
   If the omitted types can't be inferred,
   a compile-time error is raised.
 
@@ -619,8 +622,13 @@ that allow closures to be writter more concicely:
 * A closure that consists of only a single expression
   is understood to return the value of that expression.
 
+.. TODO: In the implied return case,
+   the expression in the closure
+   participates in type checking of the surrounding expression.
+
 The following closure expressions are equivalent,
-assuming type inference suceeds: ::
+assuming they are used in a context
+that provides the needed type information: ::
 
     {
         (x: Int, y: Int) -> Int in
@@ -632,7 +640,7 @@ assuming type inference suceeds: ::
         return x + y
     }
 
-    { (x, y) in x + y }
+    { return $0 + $1 }
 
     { $0 + $1 }
 
@@ -672,16 +680,11 @@ It has the following form:
 
    .<#member name#>
 
-For example, the following pairs of assignments are equivalent: ::
+For example: ::
 
-    var x: MyEnumeration
-    x = MyEnumeration.SomeValue
-    x = .SomeValue
-
-    var y: MyClass
-    y = .someClassMethod()
-    y = MyClass.someClassMethod()
-
+    var x = MyEnumeration.SomeValue
+    x = .AnotherValue
+    
 .. langref-grammar
 
     expr-delayed-identifier ::= '.' identifier
@@ -703,9 +706,15 @@ Each expression can have an optional identifier before it,
 separated by a colon (``:``).
 It has the following form:
 
+.. TODO: Give context for this --
+   used to create a tuple literal
+   and used to pass the arguments to a function call.
+   Parens group if there is only one value in them,
+   otherwise they create a tuple.
+
 .. syntax-outline::
 
-   (<#identifier#>: <#expression#>, <#identifier#>: <#expression#>)
+   (<#identifier 1#>: <#expression 1#>, <#identifier 2#>: <#expression 2#>, <#...#>)
 
 .. TR: Should this only be used in a function call?
    As a primary expression, it seems like it is a remnant of named tuples
@@ -733,10 +742,10 @@ It has the following form:
     expression-element --> expression | identifier ``:`` expression
 
 
-Ignored Expression
-~~~~~~~~~~~~~~~~~~
+Wildcard Expression
+~~~~~~~~~~~~~~~~~~~
 
-An :newTerm:`ignored expression`
+A :newTerm:`wildcard expression`
 is used to explicitly ignore a value during an assignment.
 For example in the following assignment
 10 is assigned to ``x`` and 20 is ignored: ::
@@ -747,8 +756,9 @@ For example in the following assignment
 
 .. syntax-grammar::
 
-   ignored-expression --> ``_``
+    Grammar of a wildcard expression
 
+    wildcard-expression --> ``_``
 
 .. _Expressions_PostfixExpressions:
 
@@ -788,7 +798,7 @@ The Swift Standard Library provides the following postfix operators:
     postfix-expression --> postfix-expression postfix-operator
     postfix-expression --> function-call-expression
     postfix-expression --> initializer-expression
-    postfix-expression --> dot-expression
+    postfix-expression --> explicit-member-expression
     postfix-expression --> self-expression
     postfix-expression --> subscript-expression
     postfix-expression --> forced-expression
@@ -798,6 +808,9 @@ The Swift Standard Library provides the following postfix operators:
 
 Function Call Expression
 ~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. TODO: After we rewrite function decls,
+   revisit this section to make sure that the names for things match.
 
 A :newTerm:`function call expression` consist of a function
 followed by its arguments in parenthesis.
@@ -811,17 +824,14 @@ They have the following form:
 
 The *function* can be any expression whose value is of a functional type.
 
-If the function definition includes labels for its parameters,
-the function call must include a label before its arguments
+If the function definition includes names for its parameters,
+the function call must include a names before its arguments
 separated by a colon (``:``) ---
 this has the following form:
 
 .. syntax-outline::
 
-   <#function#>(<#label 1#>: <#argument 1#>, <#label 2#>: <#argument 2#>)
-
-.. TODO: Discuss parameter/argument reordering
-   once we come to a decision about when it's allowed.
+   <#function#>(<#argument name 1#>: <#argument value 1#>, <#argument name 2#>: <#argument value 2#>)
 
 A function call expression can include a :newTerm:`trailing closure`
 in the form of a closure expression immediately after the parenthesis.
@@ -869,17 +879,17 @@ It has the following form:
 
 .. syntax-outline::
 
-    <#class or expression#>.init
+    <#class or expression#>.init(<#initializer arguments#>)
 
-The value of an initializer expression
-can be called like a function
-to initialize a new instance of the class,
-but can't be used as a value.
-For example, the following is invalid: ::
+An initializer expression is used like a function call
+to initialize a new instance of a type.
+Unlike other functions, an initializer can't be used as a value.
+For example: ::
 
-    var x = MyClass.init    // error
+    var x = MyClass.someClassFunction // ok
+    var y = MyClass.init              // error
 
-Initializer expressions are used
+Initializer expressions are also used
 to delegate to the initializer of a superclass: ::
 
     init () {
@@ -908,10 +918,10 @@ to delegate to the initializer of a superclass: ::
 
 .. _Expressions_DotExpression:
 
-Dot Expression
-~~~~~~~~~~~~~~
+Explicit Member Expression
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-A :newTerm:`dot expression` allows access
+A :newTerm:`explicit member expression` allows access
 to the members of a named type, a tuple, or a module.
 It consists of a period (``.``) between the item
 and the identifier of its member.
@@ -937,7 +947,8 @@ For example: ::
     t.0 = t.1
     // Now t is (20, 20, 30)
 
-The member of a module access its top-level declarations.
+The members of a module access
+the top-level declarations of that module.
 
 .. TR: Confirm?
 
@@ -948,15 +959,19 @@ The member of a module access its top-level declarations.
 
 .. syntax-grammar::
 
-    Grammar of a dot expression
+    Grammar of an explicit member expression
 
-    dot-expression --> postfix-expression ``.`` decimal-digit
-    dot-expression --> postfix-expression ``.`` named-expression
+    explicit-member-expression --> postfix-expression ``.`` decimal-digit
+    explicit-member-expression --> postfix-expression ``.`` named-expression
 
 .. _Expressions_MetatypeExpression:
 
 Self Expression
 ~~~~~~~~~~~~~~~
+
+.. write-me::
+
+   This section needs a rewrite.
 
 A :newTerm:`self expression` is an explicit reference
 to a type or an instance of a type.
@@ -978,6 +993,8 @@ for example, to pass it as an argument to a function.
 
 On an instance of a type, ``self`` evaluates to
 the instance of the type.
+
+
 It is used to specify scope when accessing members,
 providing disambiguation when there is
 another variable of the same name in scope,
