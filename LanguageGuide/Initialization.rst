@@ -359,7 +359,7 @@ structure types automatically receive a :newTerm:`memberwise initializer`
 if they provide default values for all of their stored properties,
 and do not define any of their own custom initializers.
 
-The memberwise initializer is used as a short-hand way
+The memberwise initializer is used as a shorthand way
 to initialise the member properties of new structure instances.
 Initial values for the properties of the new instance
 can be passed to the memberwise initializer by name:
