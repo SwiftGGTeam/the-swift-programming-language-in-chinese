@@ -79,6 +79,11 @@ To check the value of ``index`` after the loop completes,
 or to work with its value as a variable rather than a constant,
 you must declare it yourself before its use in the loop.
 
+.. TODO: feedback from Troy Koelling was that
+   he expected this to be ``var`` rather than ``let.
+   The text above is actually technically correct,
+   but the fact that this caused confusion suggests that I should revisit the wording.
+
 If you don't need each value from the range,
 you can ignore the values by using an underscore in place of a variable name:
 
