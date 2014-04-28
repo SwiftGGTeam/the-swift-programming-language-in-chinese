@@ -1,20 +1,22 @@
 Patterns
 ========
 
-A :newTerm:`pattern` represents the structure (or "shape") of a value or composite value.
+A :newTerm:`pattern` represents the structure (or "shape") of a single value
+or a composite value.
 For example, the structure of a tuple ``(1, 2)`` is a comma-separated list of two
 elements. Because patterns represent the structure of a value rather than any
-one particular value, you can compare and match them with a variety of values.
+one particular value, you can match them with a variety of values.
 For instance, the pattern ``(x, y)`` matches the tuple ``(1, 2)`` and any other
-two-element tuple. In addition to comparing and matching a pattern with a value,
+two-element tuple. In addition matching a pattern with a value,
 you can extract part or all of a composite value and bind each part
 to a constant or variable name.
 
-In Swift, patterns occur on the left-hand side of variable and constant declarations,
-in ``for``-``in`` statements, and in the case labels of ``switch`` statements.
+In Swift, patterns occur in variable and constant declarations (on their left-hand side),
+in ``for``-``in`` statements, and in ``switch`` statements (in their case labels).
 Although any pattern can occur in the case labels of a ``switch`` statement,
-only wildcard patterns, identifier patterns, and patterns that contain only those two
-patterns can occur in the other contexts.
+in the other contexts,
+only wildcard patterns, identifier patterns, and patterns containing those two
+patterns can occur.
 
 You can specify a type annotation for a wildcard pattern, an identifier pattern,
 and a tuple pattern to constraint the pattern to match only values of a certain type.
@@ -50,7 +52,7 @@ Wildcard Pattern
 ----------------
 
 A :newTerm:`wildcard pattern` matches and ignores any value and consists of an underscore
-``_``. Use a wildcard pattern in situations where you don't care about the values being
+(``_``). Use a wildcard pattern when you don't care about the values being
 matched against. For example, the following code iterates through the closed range ``1..3``,
 ignoring the current value of the range on each iteration of the loop::
 
@@ -153,7 +155,7 @@ A :newTerm:`tuple pattern` is a comma-separated list of zero or more patterns, e
 parentheses. Tuple patterns match values of corresponding tuple types.
 
 You can constrain a tuple pattern to match certain kinds of tuple types
-using type annotations.
+by using type annotations.
 For example, the tuple pattern ``(x, y): (Int, Int)`` in the constant declaration
 ``let (x, y): (Int, Int) = (1, 2)`` matches only tuple types in which
 both elements are of type ``Int``. To constrain only some elements of a tuple pattern,
@@ -162,10 +164,10 @@ pattern in ``let (x: String, y)`` matches any two-element tuple type, as long as
 element is of type ``String``.
 
 When a tuple pattern is used as the pattern in a ``for``-``in`` statement
-or a variable or constant declaration, it can contain only wildcard patterns,
+or in a variable or constant declaration, it can contain only wildcard patterns,
 identifier patterns, or other tuple patterns that contain those. For example, the
 following code isn't valid because the element ``0`` in the tuple pattern ``(x, 0)`` is
-an expression pattern.
+an expression pattern:
 
 ::
 
@@ -207,7 +209,7 @@ Enumeration Case Pattern
 ------------------------
 
 An :newTerm:`enumeration case pattern` matches a case of an existing enumeration type.
-Enumeration case patterns can appear only as patterns in ``switch`` statement
+Enumeration case patterns appear only in ``switch`` statement
 case labels.
 
 If the enumeration case you're trying to match has any associated values,
@@ -233,7 +235,7 @@ Type-Casting Patterns
 ---------------------
 
 There are two type-casting patterns, the ``is`` pattern and the ``as`` pattern.
-Both type-casting patterns can appear only as patterns in ``switch`` statement
+Both type-casting patterns appear only in ``switch`` statement
 case labels. The ``is`` and ``as`` patterns have the following form:
 
 .. syntax-outline::
@@ -241,15 +243,16 @@ case labels. The ``is`` and ``as`` patterns have the following form:
     is <#type#>
     <#pattern#> as <#type#>
 
-The ``is`` pattern matches a value if the runtime type of that value is the type
-(or a subclass) of the type specified by the ``is`` pattern.
+The ``is`` pattern matches a value if the type of that value at runtime is the same as
+the type specified in the right-hand side of the ``is`` pattern---or a subclass of that type.
 The ``is`` pattern behaves like the ``is`` operator in that they both perform a type cast
 but discard the returned type.
 
-The ``as`` pattern matches a value if the runtime type of that value is the type
-(or a subclass) of the type specified by the ``as`` pattern. If the match succeeds,
-the type of the matched value is cast to the *pattern* specified on the left-hand side
-of the ``as``.
+The ``as`` pattern matches a value if the type of that value at runtime is the same as
+the type specified in the right-hand side of the ``as`` pattern---or a subclass of that type.
+If the match succeeds,
+the type of the matched value is cast to the *pattern* specified in the left-hand side
+of the ``as`` pattern.
 
 For an example that uses a ``switch`` statement
 to match values with ``is`` and ``as`` patterns,
@@ -275,8 +278,8 @@ see :ref:`TypeCasting_CheckedCastsInSwitchStatements`.
 Expression Pattern
 ------------------
 
-A expression pattern represents the value of an expression.
-Expression patterns can appear only as patterns in ``switch`` statement
+An :newTerm:`expression pattern` represents the value of an expression.
+Expression patterns appear only in ``switch`` statement
 case labels.
 
 The expression represented by the expression pattern
@@ -285,7 +288,7 @@ using the Swift Standard Library ``~=`` operator.
 The matches succeeds
 if the ``~=`` operator returns ``true``. By default, the ``~=`` operator compares
 two values of the same type using the ``==`` operator. It can also match an integer
-value with a range of integers in an ``Range`` object, as the following example shows.
+value with a range of integers in an ``Range`` object, as the following example shows:
 
 ::
 
@@ -302,7 +305,9 @@ value with a range of integers in an ``Range`` object, as the following example 
 
 You can overload the ``~=`` to provide custom expression matching behavior.
 For example, you can rewrite the above example to compare the ``point`` expression
-with a string representations of points::
+with a string representations of points.
+
+::
 
     // Overload the ~= operator to match a string with an integer
     func ~=(pattern: String, value: Int) -> Bool {

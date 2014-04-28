@@ -196,7 +196,7 @@ The following keywords are reserved and may not be used as identifiers.
     keyword ::= '__LINE__'
 
 .. NOTE: The LangRef is out of date for keywords. The list of current keywords
-	is defined in the file: swift/inclue/swift/Parse/Tokens.def
+    is defined in the file: swift/inclue/swift/Parse/Tokens.def
 
 * Keywords used in declarations:
   ``class``,
@@ -239,12 +239,12 @@ The following keywords are reserved and may not be used as identifiers.
   ``self``,
   ``Self``,
   ``Type``,
-  ``unowned``,
-  ``weak``,
   ``__COLUMN__``,
   ``__FILE__``,
   ``__FUNCTION__``,
   and ``__LINE__``.
+
+.. NOTE: Chris removed 'weak' and 'unowned' from the list of keywords in r16940.
 
 .. langref-grammar
 
@@ -265,6 +265,7 @@ The following keywords are reserved and may not be used as identifiers.
   ``left``,
   ``mutating``,
   ``none``,
+  ``nonmutating``,
   ``operator``,
   ``override``,
   ``postfix``,
@@ -283,24 +284,20 @@ Literals
 --------
 
 A :newTerm:`literal` is the source code representation of a value of an
-integer, floating-point, character, or string type.
+integer, floating-point number, character, or string type.
 The following are examples of literals: ::
 
     42                  // Integer literal
     3.14159             // Floating-point literal
     'a'                 // Character literal
     "Hello, world!"     // String literal
-    [1, 2, 3]           // Array literal
-    ['x': 10, 'y': 20]  // Dictionary literal
 
 
 .. syntax-grammar::
 
     Grammar of a literal
 
-    literal --> integer-literal | floating-point-literal
-    literal --> character-literal | string-literal
-    literal --> array-literal | dictionary-literal
+    literal --> integer-literal | floating-point-literal | textual-literal
 
 .. TR: Is the design here that integers can be turned into doubles,
    but everything else has to use an explicit constructor
@@ -367,21 +364,21 @@ as described in :ref:`BasicTypes_Integers`.
     integer_literal ::= 0b[01][01_]*
 
 .. NOTE: Updated the langref-grammer to reflect [Contributor 7746]' comment in
-	<rdar://problem/15181997> Teach the compiler about a concept of negative integer literals.
-	This feels very strange from a grammatical point of view.
-	Updated the syntax-grammar below as well.
-	Update: This is a parser hack, not a lexer hack. Therefore,
-	it's not part of the grammar for integer literal, contrary to [Contributor 2562]'s claim.
-	(Doug confirmed this, 4/2/2014.)
+    <rdar://problem/15181997> Teach the compiler about a concept of negative integer literals.
+    This feels very strange from a grammatical point of view.
+    Updated the syntax-grammar below as well.
+    Update: This is a parser hack, not a lexer hack. Therefore,
+    it's not part of the grammar for integer literal, contrary to [Contributor 2562]'s claim.
+    (Doug confirmed this, 4/2/2014.)
 
 .. syntax-grammar::
 
     Grammar of an integer literal
 
     integer-literal --> binary-literal
-	integer-literal --> octal-literal
-	integer-literal --> decimal-literal
-	integer-literal --> hexadecimal-literal
+    integer-literal --> octal-literal
+    integer-literal --> decimal-literal
+    integer-literal --> hexadecimal-literal
 
     binary-literal --> ``0b`` binary-digit binary-literal-characters-OPT
     binary-digit --> Digit 0 or 1
@@ -471,7 +468,6 @@ which represents a 32-bit floating-point number.
     floating_literal ::= [0-9][0-9_]*[eE][+-]?[0-9][0-9_]*
     floating_literal ::= 0x[0-9A-Fa-f][0-9A-Fa-f_]*
                            (\.[0-9A-Fa-f][0-9A-Fa-f_]*)?[pP][+-]?[0-9][0-9_]*
-
 
 .. syntax-grammar::
 
@@ -621,62 +617,6 @@ String literals are of type ``String``.
     so we'll probably need to circle back to this section later.
     I'm still going to submit it to Jeanne in its current form,
     while letting her know that it's not final.
-
-Array Literals
-~~~~~~~~~~~~~~
-
-:newTerm:`Array literals` represent an ordered collection,
-made up of items of the same type.
-It has the following form:
-
-.. syntax-outline::
-
-   [<#value1#>, <#value2#>, <#...#>]
-
-The last expression in the array can be followed by an optional comma.
-The value of an array literal has type ``T[]``,
-where ``T`` is the type of the expressions inside it.
-
-.. TR: Is T[] always going to be a synonym for Array<T>?
-   Currently, the REPL uses the former for array literals,
-   but the latter matches what is used for dictionary literals.
-
-.. syntax-grammar::
-
-	Grammar of an array literal
-
-    array-literal --> ``[`` array-literal-items-OPT ``]``
-	array-literal-items --> array-literal-item ``,``-OPT | array-literal-item ``,`` array-literal-items
-	array-literal-item --> expression
-
-
-Dictionary Literals
-~~~~~~~~~~~~~~~~~~~
-
-:newTerm:`Dictionary literals` represent an unordered collection of key-value pairs,
-where all the keys are of the same type
-and all the values are of the same type.
-it has the following form:
-
-.. syntax-outline::
-
-   [<#key1#>: <#value1#>, <#key2#>: <#value2#>, <#...#>]
-
-The last expression in the dictionary can be followed by an optional comma.
-An empty dictionary literal is written as ``[:]``
-to distinguish it from an empty array literal.
-The value of dictionary literal has type ``Dictionary<K,V>``,
-where ``K`` is the type of its key expressions
-and ``V`` is the type of its value expressions.
-
-.. syntax-grammar::
-
-	Grammar of a dictionary literal
-
-	dictionary-literal --> ``[`` dictionary-literal-items ``]`` | empty-dictionary-literal
-	empty-dictionary-literal --> ``[`` ``:`` ``]``
-	dictionary-literal-items --> dictionary-literal-item ``,``-OPT | dictionary-literal-item ``,`` dictionary-literal-items
-	dictionary-literal-item --> expression ``:`` expression
 
 
 .. _LexicalStructure_Operators:

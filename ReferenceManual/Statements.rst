@@ -31,11 +31,11 @@ and is used as a statement terminator when multiple statements appear on the sam
 
     Grammar of a statement
 
-    statement --> expression ;-OPT
-    statement --> declaration ;-OPT
-    statement --> loop-statement ;-OPT
-    statement --> branch-statement ;-OPT
-    statement --> control-transfer-statement ;-OPT
+    statement --> expression ``;``-OPT
+    statement --> declaration ``;``-OPT
+    statement --> loop-statement ``;``-OPT
+    statement --> branch-statement ``;``-OPT
+    statement --> control-transfer-statement ``;``-OPT
     statements --> statement statements-OPT
 
 .. NOTE: Removed semicolon-statement as syntactic category,
@@ -352,9 +352,9 @@ as discussed in :ref:`BasicTypes_OptionalBinding`.
 
     Grammar of an if statement
 
-    if-statement  --> ``if`` if-condition code-block else-clause-OPT
+    if-statement --> ``if`` if-condition code-block else-clause-OPT
     if-condition --> expression | declaration
-    else-clause  --> ``else`` code-block | ``else`` if-statement
+    else-clause --> ``else`` code-block | ``else`` if-statement
 
 .. _Statements_SwitchStatement:
 
