@@ -93,6 +93,104 @@ as described later in this chapter.
    the value of that property is set directly,
    without calling any property observers.
 
+.. _Initialization_SettingADefaultPropertyValueWithAClosure:
+
+Setting A Default Property Value with a Closure
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If a property's default value requires some customization or setup,
+and that customization is not dependent on other property values,
+you can use a closure to provide a customized default value for that property.
+Whenever a new instance of the type that the property belongs to is initialized,
+the property's closure is executed,
+and the return value of the closure is assigned as the property's default value.
+
+Here's a skeleton outline of how a closure can provide a default property value:
+
+::
+
+   class SomeClass {
+      let someProperty: SomeType = {
+         // calculate a default value for someProperty inside this closure
+         // someValue must be of the same type as SomeType
+         return someValue
+      }()
+   }
+
+Note that the closure's end curly brace is followed by an empty pair of parentheses.
+This tells Swift to execute the closure immediately.
+If you omit these parentheses,
+you are trying to assign the closure itself to the property,
+and not the return value of the closure.
+
+.. note::
+
+   If you use a closure to initialize a property,
+   remember that the rest of the instance has not yet been initialized
+   at the point that the closure is executed.
+   This means that you cannot access any other property values from within your closure,
+   even if those properties have default values.
+   Closures should only be used to provide a default value
+   when that default value is always the same,
+   and is independent of any outside values.
+
+The example below defines a structure called ``CheckersBoard``,
+which models a board for the game of *Checkers* (also known as *Draughts*):
+
+.. image:: ../images/checkersBoard.png
+   :align: center
+
+The game of *Checkers* is played on a ten-by-ten board,
+with alternating black and white squares.
+To represent this game board,
+the ``CheckersBoard`` structure has a single property called ``boardColors``,
+which is an array of 100 ``Bool`` values.
+A value of ``true`` in the array represents a black square,
+and a value of ``false`` represents a white square.
+The first item in the array represents the top left square on the board
+and the last item in the array represents the bottom right square on the board.
+
+The ``boardColors`` array is initialized with a closure to set up its color values:
+
+.. testcode:: checkers
+
+   -> struct CheckersBoard {
+         let boardColors: Array<Bool> = {
+            var temporaryBoard = Array<Bool>()
+            var isBlack = false
+            for i in 1..10 {
+               for j in 1..10 {
+                  temporaryBoard.append(isBlack)
+                  isBlack = !isBlack
+               }
+               isBlack = !isBlack
+            }
+            return temporaryBoard
+         }()
+         func squareIsBlack(row: Int, column: Int) -> Bool {
+            return boardColors[(row * 10) + column]
+         }
+      }
+
+Whenever a new ``CheckersBoard`` instance is created, the closure is executed,
+and the default value of ``boardColors`` is calculated and returned.
+The closure in the example above calculates and sets
+the appropriate color for each square on the board
+in a temporary array called ``temporaryBoard``,
+and returns this temporary array as the closure's return value
+once its setup is complete.
+The returned array value is stored in ``boardColors``,
+and can be queried with the ``squareIsBlack`` utility function:
+
+.. testcode:: checkers
+
+   -> let board = CheckersBoard()
+   << // board : CheckersBoard = CheckersBoard([false, true, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, true, false])
+   -> println(board.squareIsBlack(row: 0, column: 1))
+   <- true
+   -> println(board.squareIsBlack(row: 9, column: 9))
+   <- false
+
 .. _Initialization_InitializerInputParameters:
 
 Initializer Input Parameters
