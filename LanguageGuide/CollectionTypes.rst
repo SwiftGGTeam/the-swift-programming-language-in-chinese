@@ -198,7 +198,7 @@ Subscript syntax can also be used to change an existing value at a given index:
 .. testcode:: arraysInferred
 
    -> shoppingList[0] = "Six eggs"
-   /> the first item in the list is now equal to \"\(shoppingList[0])\"
+   /> the first item in the list is now equal to \"\(shoppingList[0])\", rather than \"Eggs\"
    </ the first item in the list is now equal to "Six eggs", rather than "Eggs"
 
 .. note::
@@ -309,8 +309,8 @@ because it can be inferred from the default value:
 .. testcode:: arraysEmpty
 
    -> var anotherThreeDoubles = Array(3, 0.0)
-   << // anotherThreeDoubles : Array<Double> = [false, false, false]
-   /> anotherThreeDoubles is inferred to be an Array<Double>, and equals [\(anotherThreeDoubles[0]), \(anotherThreeDoubles[1]), \(anotherThreeDoubles[2])]
+   << // anotherThreeDoubles : Array<Double> = [0.0, 0.0, 0.0]
+   /> anotherThreeDoubles is inferred as Array<Double>, and equals [\(anotherThreeDoubles[0]), \(anotherThreeDoubles[1]), \(anotherThreeDoubles[2])]
    </ anotherThreeDoubles is inferred as Array<Double>, and equals [0.0, 0.0, 0.0]
 
 .. TODO: func find<T: Equatable>(array: T[], value: T) -> Int?
@@ -509,15 +509,16 @@ You can remove a key-value pair from the dictionary by calling the ``deleteKey``
 
 .. testcode:: dictionariesInferred
 
-   -> airports.add("APL", "Apple International") // this is not the *real* APL
-   -> airports.deleteKey("APL")                  // so it has been deleted
+   -> airports.deleteKey("TYO")
    << // r1 : Bool = true
-   >> if let deletedName = airports.find("APL") {
-   >>    println("The key-value pair for APL has *not* been deleted, but it should have been!")
+   >> if let deletedName = airports.find("TYO") {
+   >>    println("The key-value pair for TYO has *not* been deleted, but it should have been!")
    >> } else {
-   >>    println("The key-value pair for APL has now been deleted.")
+   >>    println("The key-value pair for TYO has now been deleted.")
    >> }
-   </ The key-value pair for APL has now been deleted.
+   </ The key-value pair for TYO has now been deleted.
+
+.. FIXME: reinstate the APL example once the very weird rdar://16738584 is fixed.
 
 As with arrays, you can access the values in a dictionary with subscript syntax.
 However, for a dictionary, the value within the square brackets must be
