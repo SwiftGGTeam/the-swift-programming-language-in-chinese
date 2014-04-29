@@ -356,6 +356,8 @@ Loops can keep an explicit counter or index.
    << 4
 
 Repeat a block of code until a condition changes using ``while``.
+The condition of a loop can be an the end instead,
+ensuring that the loop is run at least once.
 
 .. testcode:: while
 
@@ -366,12 +368,7 @@ Repeat a block of code until a condition changes using ``while``.
       }
    -> println("n is \(n)")
    << n is 128
-
-The condition of a loop can be an the end instead,
-ensuring that the loop is run at least once.
-
-.. testcode:: do-while
-
+   ---
    -> var m = 2
    << // m : Int = 2
    -> do {
