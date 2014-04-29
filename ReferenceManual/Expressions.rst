@@ -37,6 +37,7 @@ in the sections below.
     expression --> prefix-expression binary-expressions-OPT
     expression-list --> expression | expression ``,`` expression-list
 
+
 .. _Expressions_PrefixExpressions:
 
 Prefix Expressions
@@ -73,7 +74,7 @@ see :doc:`../LanguageGuide/BasicOperators` and :doc:`../LanguageGuide/AdvancedOp
     prefix-operators --> prefix-operator prefix-operators-OPT
 
 
-.. _Expressions_BinaryOperators:
+.. _Expressions_BinaryExpressions:
 
 Binary Expressions
 ------------------
@@ -213,9 +214,10 @@ see :doc:`../LanguageGuide/BasicOperators` and :doc:`../LanguageGuide/AdvancedOp
     binary-expression --> assignment-operator prefix-expression
     binary-expression --> conditional-operator prefix-expression
     binary-expression --> type-checking-operator
-
     binary-expressions --> binary-expression binary-expressions-OPT
 
+
+.. _Expressions_AssignmentOperator:
 
 Assignment Operator
 ~~~~~~~~~~~~~~~~~~~
@@ -253,7 +255,8 @@ The assignment operator does not return any value.
 
     assignment-operator --> ``=``
 
-.. _Expressions_ConditionalOperator:
+
+.. _Expressions_TernaryConditionalOperator:
 
 Ternary Conditional Operator
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -285,6 +288,7 @@ see :ref:`BasicOperators_TernaryConditionalOperator`.
     Grammar of a conditional operator
 
     conditional-operator --> ``?`` expression ``:``
+
 
 .. _Expressions_Type-CastingOperators:
 
@@ -397,6 +401,7 @@ see :doc:`../LanguageGuide/TypeCasting`.
     type-checking-operator --> ``is`` type
     type-checking-operator --> ``as`` type ``!``-OPT
 
+
 .. _Expressions_PrimaryExpressions:
 
 Primary Expressions
@@ -441,6 +446,7 @@ to make more complex expressions.
    It seems like that should only occur when an identifier
    is a *type* identifier.
 
+
 .. _Expressions_LiteralExpression:
 
 Literal Expression
@@ -484,7 +490,6 @@ The value of an array literal has type ``T[]``,
 where ``T`` is the type of the expressions inside it.
 If there are expressions of multiple types,
 ``T`` is their closest common supertype.
-
 
 A :newTerm:`dictionary literal` is
 an unordered collection of key-value pairs,
@@ -542,11 +547,15 @@ It has one of the following forms:
 
 .. syntax-outline::
 
-   super.<#member name#>
-   super[<#subscript index#>]
-   super.init(<#initializer arguments#>)
+    super.<#member name#>
+    super[<#subscript index#>]
+    super.init
 
-.. TODO: The above makes the hacky syntax highlighter explode.
+.. TODO: super.init should be super.init(<#initializer arguments#>) above,
+    but doing so currently makes the syntax highlighter explode and the build fail.
+    In fact, putting *anything* after the 'init' causes a crash!
+    I'm removing the correct version so I can get a build I can send to Jeanne for
+    copyedit.
 
 The first form is understood as a member of the superclass.
 This allows a subclass to call the superclass's
@@ -584,6 +593,7 @@ as part of the subclass's initializer.
     superclass-subscript-expression --> ``super`` ``[`` expression ``]``
     superclass-constructor-expression --> ``super`` ``.`` ``init``
 
+
 .. _Expressions_ClosureExpression:
 
 Closure Expression
@@ -599,8 +609,7 @@ It has the following form:
 
 .. syntax-outline::
 
-   {
-      (<#parameters#>) -> <#return type#> in
+   { (<#parameters#>) -> <#return type#> in
       <#statements#>
    }
 
@@ -648,8 +657,8 @@ that provides the needed type information: ::
 
     { $0 + $1 }
 
-For more information and examples of closures,
-see :doc:`../LanguageGuide/Closures`.
+For more information and examples of closure expressions,
+see :ref:`Closures_ClosureExpressions`.
 
 .. langref-grammar
 
@@ -701,6 +710,7 @@ For example: ::
     Grammar of a implicit member expression
 
     implicit-member-expression --> ``.`` identifier
+
 
 .. _Expressions_ParenthesizedExpression:
 
@@ -758,6 +768,7 @@ For example in the following assignment
 
     wildcard-expression --> ``_``
 
+
 .. _Expressions_PostfixExpressions:
 
 Postfix Expressions
@@ -805,6 +816,7 @@ see :doc:`../LanguageGuide/BasicOperators` and :doc:`../LanguageGuide/AdvancedOp
     postfix-expression --> forced-expression
     postfix-expression --> optional-expression
 
+
 .. _Expressions_FunctionCallExpression:
 
 Function Call Expression
@@ -813,20 +825,18 @@ Function Call Expression
 .. TODO: After we rewrite function decls,
    revisit this section to make sure that the names for things match.
 
-A :newTerm:`function call expression` consist of a function
-followed by its arguments in parenthesis.
-Arguments are separated by commas
-and support optional labels.
-They have the following form:
+A :newTerm:`function call expression` consist of a function name
+followed by a comma-separated list of the function's arguments in parentheses.
+Function call expressions have the following form:
 
 .. syntax-outline::
 
-    <#function#>(<#argument 1#>, <#argument 2#>, <#argument 3#>)
+    <#function name#>(<#argument value 1#>, <#argument value 2#>)
 
-The *function* can be any expression whose value is of a function type.
+The *function name* can be any expression whose value is of a function type.
 
 If the function definition includes names for its parameters,
-the function call must include a names before its arguments
+the function call must include names before its argument values
 separated by a colon (``:``) ---
 this has the following form:
 
@@ -835,7 +845,7 @@ this has the following form:
    <#function#>(<#argument name 1#>: <#argument value 1#>, <#argument name 2#>: <#argument value 2#>)
 
 A function call expression can include a :newTerm:`trailing closure`
-in the form of a closure expression immediately after the parenthesis.
+in the form of a closure expression immediately after the closing parenthesis.
 The trailing closure is understood as an argument to the function,
 added after the last parenthesized argument.
 The following function calls are equivalent: ::
@@ -956,6 +966,7 @@ the top-level declarations of that module.
     explicit-member-expression --> postfix-expression ``.`` decimal-digit
     explicit-member-expression --> postfix-expression ``.`` named-expression
 
+
 .. _Expressions_SelfExpression:
 
 Self Expression
@@ -1058,6 +1069,8 @@ see :ref:`Declarations_ProtocolSubscriptDeclaration`.
     subscript-expression --> postfix-expression ``[`` expression-list ``]``
 
 
+.. _Expressions_ForcedExpression:
+
 Forced Expression
 ~~~~~~~~~~~~~~~~~
 
@@ -1094,6 +1107,8 @@ If its value is ``nil``, a runtime error is raised.
 
     forced-expression --> postfix-expression ``!``
 
+
+.. _Expression_Chained-OptionalExpression:
 
 Chained-Optional Expression
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
