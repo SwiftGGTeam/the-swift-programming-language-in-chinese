@@ -549,7 +549,7 @@ It has one of the following forms:
 
     super.<#member name#>
     super[<#subscript index#>]
-    super.init
+    super.init(<#initializer arguments#>)
 
 .. TODO: super.init should be super.init(<#initializer arguments#>) above,
     but doing so currently makes the syntax highlighter explode and the build fail.
