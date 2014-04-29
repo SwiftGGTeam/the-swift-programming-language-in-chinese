@@ -604,3 +604,36 @@ Additional Topics
 * Pattern matching in switches
 * Curried functions
 * Custom operators [could go under Functions]
+
+xxx Approach to Writing xxx
+---------------------------
+
+**This section is for reviewers, not to be published.**
+
+- Assume the reader has a background in programming.
+
+- Assume that if the reader gets to confused,
+  they will play with the code a bit,
+  and/or skip to the guide.
+
+- Think of having a chat over lunch with a developer,
+  walking them through the cool aspects of the language.
+
+- Aim to illustrating more than one concept in a single listing.
+  to make the more interetsing.
+
+- Aim to make experiment boxes moderate size exercises.
+  Avoid trivial code changes,
+  although those are inevitable early on.
+
+- Leave details to the guide.
+  Repeat facts here only if they are especially interesting or important.
+
+- Use joyful and approachable prose
+  Avoid terms like "statement" which are too technical for this context,
+  phrases like "you can (do x)" which are mostly filler,
+  and task-oriented phrases like "to (do x)"
+  which are inappropriate in a non-task-oriented context.
+  Refer to code voice terms only if needed,
+  but omit the head noun.
+   
