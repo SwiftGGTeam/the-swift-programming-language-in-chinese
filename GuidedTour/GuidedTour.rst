@@ -150,72 +150,60 @@ as part of the string.
 
 .. admonition:: Experiment
 
-   Try using string interpolation
-   to include someone’s name in a greeting.
+   Try using string interpolation to
+   include a floating point calculation in a string,
+   and to include someone’s name in a greeting.
 
-Arrays and dictionaries are written using brackets (``[]``).
-Tuples are written using parentheses.
-
-.. TODO: Add a short bit about what tuples are.
-   We didn't have them in Obj-C,
-   so devs may have never seen one before in their code.
-   Roughly,
-   a tuple lets you refer to multiple values as a single value
-   and pass them around together.
-   It's stort of halfway between an array and a struct.
+Arrays and dictionaries are written using brackets (``[]``)
+and their elements are accessed by writing
+the index or key in brackets.
 
 .. testcode:: array-dict
 
     -> let fruits = ["apple", "orange", "banana"]
     << // fruits : String[] = ["apple", "orange", "banana"]
-    -> let occupations = [
+    -> let favoriteFruit = fruits[1]
+    << // favoriteFruit : String = "orange"
+    ---
+    -> var forecasts = [
+          "San Francisco": 59.0,
+          "Paris": 51.6,
+          "Shanghai": 73.2,
+       ]
+    << // forecasts : Dictionary<String, Double> = Dictionary<String, Double>(1.33333, 3, <DictionaryBufferOwner<String, Double> instance>)
+    -> forecasts["San Francisco"] < forecasts["Paris"]
+    << // r0 : Bool = false
+
+.. admonition:: Experiment
+
+   Try sorting ``fruits`` using the Swift Standard Library ``sort`` function.
+
+.. Forcasts above are real current conditions from 9:14 pm April 28, 2014.
+
+.. Old Firefly example
+   which doesn't follow our editorial guidelines for names of people
+    -> var occupations = [
           "Malcolm": "Captain",
           "Kayley": "Mechanic",
           "Jayne": "Public Relations",
         ]
     << // occupations : Dictionary<String, String> = Dictionary<String, String>(1.33333, 3, <DictionaryBufferOwner<String, String> instance>)
-    -> let origin = (0, 0)
-    << // origin : (Int, Int) = (0, 0)
-    -> let x = origin.0
-    << // x : Int = 0
-
-Arrays and dictionaries use the same syntax
-for accessing their elements.
-
-.. testcode:: vegetable-array-dict
-
-    -> var vegetables = Array<String>()
-    << // vegetables : Array<String> = []
-    -> vegetables.append("carrot")
-    -> vegetables.append("cucumber")
-    -> vegetables.append("tomato")
-    -> vegetables[1] = "onion"
-    >> vegetables
-    << // vegetables : Array<String> = ["carrot", "onion", "tomato"]
-    -> var fruitColors = Dictionary<String, String>()
-    << // fruitColors : Dictionary<String, String> = Dictionary<String, String>(1.33333, 0, <DictionaryBufferOwner<String, String> instance>)
-    -> fruitColors.add("banana", "yellow")
+    -> occupations["Jayne"] == "Doctor"
     << // r0 : Bool = false
-    -> fruitColors.add("apple", "red")
-    << // r1 : Bool = false
-    -> fruitColors["apple"] = "green"
+    ---
 
-.. admonition:: Experiment
+An empty array is written ``[]``
+and an empty dictionary is written ``[:]``.
+since the type of an empty array or dictionary
+can't be inferred from its content ---
+specify it expliticly.
 
-    Try using brackets to set the second element of an empty array
-    and to set the value for a key of an empty dictionary.
-    Why do you think empty arrays and dictionaries
-    have this difference in behavior?
+.. testcode:: empty-array-dict
 
-.. TODO: Iterate on the way the empty array & dict are created.
-   Alternatives:
-   vegetables: Array<String> = []
-   vegetables: String[] = []
-   vegetables = String[]()
-
-.. TODO: Mention [] and [:] as empty array/dict literals.
-   They aren’t fully typed, so they require a type annotation in a variable declaration,
-   but they are useful when calling a function or re-assigning the value of a variable.
+   -> var emptyArray: String[] = []
+   << // emptyArray : String[] = []
+   -> var emptyDictionary: Dictionary<String, Float> = [:]
+   << // emptyDictionary : Dictionary<String, Float> = Dictionary<String, Float>(1.33333, 0, <DictionaryBufferOwner<String, Float> instance>)
 
 .. The REPL output after creating a dictionary doesn’t make any sense.
    No way to get it to pretty-print the keys and values.
