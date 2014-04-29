@@ -652,7 +652,7 @@ and can be used anywhere that a ``Sequence`` is valid.
    and it must always appear last in the parameters list,
    to avoid ambiguity when calling the function with multiple parameters.
 
-.. TODO: A function's variadic parameter cannot be referred to by name
+.. FIXME: A function's variadic parameter cannot be referred to by name
    when the function is called.
    I've reported this as rdar://16387108;
    if it doesn't get fixed, I should mention it here.

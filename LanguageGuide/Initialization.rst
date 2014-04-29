@@ -208,7 +208,7 @@ Default values can be provided for initializer parameters,
 and tuples can be used as parameter types.
 Variadic parameters cannot be used.
 
-.. TODO: Update this section if, as, and when variadics start working for initializers.
+.. FIXME: Update this section if, as, and when variadics start working for initializers.
    The fact that they don't work currently is rdar://16535434.
 
 The following example defines a structure to store temperatures expressed in the Celsius scale.

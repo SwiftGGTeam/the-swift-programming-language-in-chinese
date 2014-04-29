@@ -203,7 +203,7 @@ Swift provides two special type aliases for working with non-specific types:
 * ``Any``, which can represent an instance of any type at all,
   apart from function types
 
-.. TODO: remove the note about function types if / when rdar://16406907 is fixed.
+.. FIXME: remove the note about function types if / when rdar://16406907 is fixed.
 
 Here's an example of using ``Any`` to work with a mix of different types:
 
@@ -280,11 +280,6 @@ and to assign those values to temporary constants or variables
    </ a movie called 'Ghostbusters', dir. Ivan Reitman
 
 .. TODO: Where should I mention “AnyClass”?
-
-.. TODO: casting also needs to be mentioned in the context of protocol conformance.
-
-.. TODO: talk about the use of "as" outside of an "if" statement sense,
-   once rdar://16063985 is fixed.
 
 .. TODO: this section needs to address the question of "a constant or variable having a type"
    as distinct from "a class instance having a type".

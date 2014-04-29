@@ -303,10 +303,10 @@ as long as the variadic parameter is named,
 and is the last parameter in the parameter list.
 Tuples can also be used as parameter types and return types.
 
-.. TODO: the note about default values is tracked by rdar://16535452.
+.. FIXME: the note about default values is tracked by rdar://16535452.
    Remove this note if and when that Radar is fixed.
 
-.. TODO: the note about variadic parameters requiring a name is tracked by rdar://16535434.
+.. FIXME: the note about variadic parameters requiring a name is tracked by rdar://16535434.
    Remove this note if and when that Radar is fixed.
 
 This syntax can be used to write an inline version of the ``backwards`` function:
@@ -585,7 +585,7 @@ Avoiding Reference Cycles in Closures
    Further, forcing a syntactic requirement in an autoclosure context
    would defeat the whole point of autoclosures: make them implicit.
 
-.. TODO: To avoid reference cycles when a property closure references self or a property of self,
+.. FIXME: To avoid reference cycles when a property closure references self or a property of self,
    you should use the same workaround as in Obj-C –
    that is, to declare a @weak (or @unowned) local variable, and capture that instead.
    There are proposals for a better solution in /swift/docs/weak.rst,

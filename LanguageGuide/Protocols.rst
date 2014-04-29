@@ -909,13 +909,6 @@ Optional Protocol Requirements
    and see if the value you get back (which will be an optional)
    has a value or is nil.
 
-.. TODO: you can specify optional initializers,
-   but there doesn't seem to be a way to check for them or call them.
-   Doug has suggested that we should probably ban them,
-   which I've filed as rdar://16669554.
-   And in any case, even if you could check for them,
-   they might not work due to rdar://13695680.
-
 Protocols can define :newTerm:`optional requirements`,
 which do not have to be implemented by types that conform to the protocol.
 Optional requirements are prefixed by the ``@optional`` keyword
@@ -1124,16 +1117,3 @@ Once the counter reaches zero, no more counting takes place:
 .. Protocol requirements can be marked as @unavailable,
    but this currently only works if they are also marked as @objc.
 .. Checking for (and calling) optional implementations via optional binding and closures
-
-.. Initializers
-.. ------------
-.. You can't construct from a protocol itself, 
-   but you can define initializer requirements in protocols
-.. TODO: although you can define initializer requirements,
-   you can't actually make use of them, due to rdar://13695680.
-   Don't mention the fact that you can define them unless they actually start working.
-.. TODO: use the Snakes & Ladders example to show how you can initialize from a type.
-   Perhaps a function that returns a random game type to play
-   (even though we only have one game)
-   and the game is instantiated through the type?
-   See protocols_init.swift in tspl_lab/examples.
