@@ -303,7 +303,7 @@ value with a range of integers in an ``Range`` object, as the following example 
     }
     // Prints "(1, 2) is near the origin."
 
-You can overload the ``~=`` to provide custom expression matching behavior.
+You can overload the ``~=`` operator to provide custom expression matching behavior.
 For example, you can rewrite the above example to compare the ``point`` expression
 with a string representations of points.
 
