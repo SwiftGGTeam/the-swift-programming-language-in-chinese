@@ -59,9 +59,7 @@ The Swift Standard Library provides the following prefix operators:
 * ``-`` Unary minus
 
 For information about the behavior of these operators,
-see "Basic Operators" and "Advanced Operators".
-
-.. TODO Link
+see :doc:`../LanguageGuide/BasicOperators` and :doc:`../LanguageGuide/AdvancedOperators`.
 
 .. langref-grammar
 
@@ -161,6 +159,9 @@ The Swift Standard Library provides the following binary operators:
     - ``|=`` Bitwise OR and assign
     - ``&&=`` Logical AND and assign
     - ``||=`` Logical OR and assign
+
+For information about the behavior of these operators,
+see :doc:`../LanguageGuide/BasicOperators` and :doc:`../LanguageGuide/AdvancedOperators`.
 
 .. You have essentially expression sequences here, and within it are
    parts of the expressions.  We're calling them "expressions" even
@@ -306,7 +307,7 @@ They have the following form:
    <#expression#> as <#type#>!
    <#expression#> is <#type#>
 
-The ``as`` operator 
+The ``as`` operator
 performs a runtime cast of the *expression*
 as the specified *type*.
 It behaves as follows:
@@ -686,7 +687,7 @@ For example: ::
 
     var x = MyEnumeration.SomeValue
     x = .AnotherValue
-    
+
 .. langref-grammar
 
     expr-delayed-identifier ::= '.' identifier
@@ -778,6 +779,9 @@ The Swift Standard Library provides the following postfix operators:
 
 * ``++`` Increment
 * ``--`` Decrement
+
+For information about the behavior of these operators,
+see :doc:`../LanguageGuide/BasicOperators` and :doc:`../LanguageGuide/AdvancedOperators`.
 
 .. langref-grammar
 
@@ -905,7 +909,7 @@ to delegate to the initializer of a superclass: ::
 
 .. TODO: This section is a bit thin.
    For example, I think MyClass()
-   is syntactic sugar for MyClass.init() 
+   is syntactic sugar for MyClass.init()
    but I'm not sure.
 
 .. langref-grammar
