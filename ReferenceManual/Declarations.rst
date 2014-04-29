@@ -51,7 +51,7 @@ the term *declaration* covers both declarations and definitions.
     declarations --> declaration declarations-OPT
 
     declaration-specifiers --> declaration-specifier declaration-specifiers-OPT
-    declaration-specifier --> ``class`` | ``static`` | ``mutating`` | ``override``
+    declaration-specifier --> ``class`` | ``static`` | ``mutating`` | ``nonmutating`` | ``override``
 
 .. NOTE: Removed enum-member-declaration, because we don't need it anymore.
 
@@ -726,7 +726,7 @@ To reference the case of an enumeration type, use dot (``.``) syntax,
 as in ``EnumerationType.EnumerationCase``. When the enumeration type can be inferred
 from context, you can omit it (the dot is still required),
 as described in :ref:`Enumerations_EnumerationSyntax`
-and :ref:`Expressions_DelayedIdentifierExpression`.
+and :ref:`Expressions_ImplicitMemberExpression`.
 
 To check the values of enumeration cases, use a ``switch`` statement,
 as shown in :ref:`Enumerations_CheckingEnumerationValuesWithASwitchStatement`.

@@ -15,7 +15,7 @@ Each type of control flow statement is described in detail below.
 
 Each type of statement can be used in function bodies and in top-level code.
 A semicolon (``;``) can optionally appear after any statement
-and is used as a statement terminator when multiple statements appear on the same line.
+and is used to separate multiple statetments if they appear on the same line.
 
 .. langref-grammar
 
@@ -352,9 +352,9 @@ as discussed in :ref:`BasicTypes_OptionalBinding`.
 
     Grammar of an if statement
 
-    if-statement  --> ``if`` if-condition code-block else-clause-OPT
+    if-statement --> ``if`` if-condition code-block else-clause-OPT
     if-condition --> expression | declaration
-    else-clause  --> ``else`` code-block | ``else`` if-statement
+    else-clause --> ``else`` code-block | ``else`` if-statement
 
 .. _Statements_SwitchStatement:
 
