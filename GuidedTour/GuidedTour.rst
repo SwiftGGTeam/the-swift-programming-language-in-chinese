@@ -311,13 +311,36 @@ Repeat a block of code for each item in a collection with ``for``.
     >> sum
     << // sum : Int = 15
 
-.. TODO: Show for (k,v) in dict style iteration.
-
 .. admonition:: Experiment
 
    Try changing ``1..5`` to ``1...5``.
    Notice that 5 is omitted from the sum.
    When would you want to include or exclude the final number?
+
+.. testcode:: for-dict
+
+   -> let interestingNumbers = [
+         "Prime": [2, 3, 5, 7, 11, 13],
+         "Fibonacci": [1, 1, 2, 3, 5, 8],
+         "Square": [1, 4, 9, 16, 25],
+      ]
+   << // interestingNumbers : Dictionary<String, Array<Int>> = Dictionary<String, Array<Int>>(1.33333333333333, 3, <DictionaryBufferOwner<String, Array<Int>> instance>)
+   -> var largest = 0
+   << // largest : Int = 0
+   -> for (kind, numbers) in interestingNumbers {
+         for number in numbers {
+            if number > largest {
+                largest = number
+            }
+         }
+      }
+   >> largest
+   << // largest : Int = 25
+
+.. admonition:: Experiment
+
+   Try keeping track of which kind of number
+   was the largest, as well as what that largest number was.
 
 Loops can keep an explicit counter or index.
 
