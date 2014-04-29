@@ -435,6 +435,10 @@ collecting them into an array.
    -> sumOf(42, 597, 12)
    << // r1 : Int = 651
 
+.. admonition:: Experiment
+
+   Try writing a function that calculates the average.
+
 Functions can be nested.
 Nested functions have access to variables
 that were declared in the outer function.
@@ -499,13 +503,6 @@ A function can take another function as one of its argument.
     -> var sortedNumbers = bubbleSort(numbers, greaterThan)
     << // sortedNumbers : Int[] = [8, 6, 5, 3]
 
-.. TODO: Probably want to either explicitly
-   un-name the parameters to bubbleSort() with _
-   or provide the names when calling the function.
-
-.. TODO: Introduce tuples
-    * Use tuples for simple multipart data
-
 Closures are just like a function
 except you don't give them a name when you declare them.
 They are written as code surrounded by braces (``{}``)
@@ -522,7 +519,7 @@ and have their arguments separated from their body by ``in``.
     -> triple(5)
     << // r0 : Int = 15
 
-.. TODO: The type of "number" can be omitted above,
+.. The type of "number" can be omitted above,
    and in fact the parens are probably not needed either.
    I've written them for now
    so that I start with the most verbose function-y syntax.
@@ -550,6 +547,11 @@ can appear immediately after the function call.
 
     -> sort([1, 5, 3, 12, 2]) { $0 > $1 }
     << // r0 : Int[] = [12, 5, 3, 2, 1]
+
+.. admonition:: Experiment
+
+   Try rewriting the bubble sort function above
+   so it takes a trailing closure to do comparisons.
 
 The previous listing can be written without a closure at all
 by passing the ``>`` operator
