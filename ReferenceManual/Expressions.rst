@@ -2,19 +2,19 @@ Expressions
 ===========
 
 In Swift, there are four kinds of expressions:
-primary expressions, unary expressions, binary expressions, and postfix expressions.
+primary expressions, prefix expressions, binary expressions, and postfix expressions.
 When an expression is evaluated,
 it can return a value, cause side effects, or both.
 
 Primary expressions are conceptually the core kind of expression
 and they provide a way to access values.
 They can be used on their own
-and as part of a unary, binary, or postfix expression
+and as part of a prefix, binary, or postfix expression
 to build up more complex expressions.
-Unary and binary expressions let you
+Prefix and binary expressions let you
 combine expressions and operators.
 Postfix expressions,
-like unary and binary expressions,
+like prefix and binary expressions,
 let you build up more complex expressions
 using postfixes such as function calls and member access.
 Each kind of expression is described in detail
@@ -37,7 +37,7 @@ in the sections below.
     expression --> prefix-expression binary-expressions-OPT
     expression-list --> expression | expression ``,`` expression-list
 
-.. _Expressions_UnaryOperators:
+.. _Expressions_PrefixExpressions:
 
 Prefix Expressions
 ------------------
@@ -67,7 +67,7 @@ see :doc:`../LanguageGuide/BasicOperators` and :doc:`../LanguageGuide/AdvancedOp
 
 .. syntax-grammar::
 
-    Grammar of a unary expression
+    Grammar of a prefix expression
 
     prefix-expression --> prefix-operators-OPT postfix-expression
     prefix-operators --> prefix-operator prefix-operators-OPT
@@ -113,14 +113,12 @@ The Swift Standard Library provides the following binary operators:
     - ``^`` Bitwise XOR
 
 * Range (No associativity, precedence level 135)
-    - ``...`` Exclusive range
-    - ``..`` Inclusive range
+    - ``...`` Half-closed range
+    - ``..`` Closed range
 
 * Cast (No associativity, precedence level 132)
     - ``is`` Type check
-    - ``as`` Type declaration
-
-.. TODO: Revisit names for is/as.
+    - ``as`` Type cast
 
 * Comparitive (No associativity, precedence level 130)
     - ``<`` Less than
@@ -129,12 +127,9 @@ The Swift Standard Library provides the following binary operators:
     - ``>=`` Greater than or equal
     - ``==`` Equal
     - ``!=`` Not equal
-    - ``===``
-    - ``!==``
+    - ``===`` Identical
+    - ``!==`` Not identical
     - ``~=`` Pattern match
-
-.. TODO: What is === for?  I assume low-level pointer comparison of objects,
-   as opposed to isEqual: style comparison?
 
 * Conjunctive (Left associative, precedence level 120)
     - ``&&`` Logical AND
@@ -186,7 +181,7 @@ see :doc:`../LanguageGuide/BasicOperators` and :doc:`../LanguageGuide/AdvancedOp
     an expression made up of binary operators is represented as a flat list,
     with the expression that follows each operator
     understood as its right-hand argument,
-    and the unary expression of the containing expression
+    and the prefix expression of the containing expression
     understood as the left-hand argument
     to the first operator in the list.
     This list is transformed into a tree
@@ -277,6 +272,9 @@ and returns its value.
 Otherwise, it evaluates the second expression
 and returns its value.
 The unused expression is not evaluated.
+
+For an example that uses the ternary conditional operator,
+see :ref:`BasicOperators_TernaryConditionalOperator`.
 
 .. langref-grammar
 
@@ -380,6 +378,9 @@ The following are invalid: ::
     "hello" is String
     "hello" is Int
 
+For more information type casting and to see more examples that use the type-casting operators,
+see :doc:`../LanguageGuide/TypeCasting`.
+
 .. See also <rdar://problem/16639705> Provably true/false "is" expressions should be a warning, not an error
 
 .. See also <rdar://problem/16732083> Subtypes are not considered by the 'is' operator
@@ -447,7 +448,7 @@ Literal Expression
 
 :newTerm:`Literal expression` consists of
 either an ordinary literal (such as a string or a number),
-an array or dictionary expression,
+an array or dictionary literal,
 or one of the following special literals:
 
 ================    ======  ===============================================
@@ -469,7 +470,7 @@ inside a property getter or setter it is the name of that property,
 inside special members like ``init`` or ``subscript`` it is the name of that keyword,
 and at the top level of a file it is the name of the current module.
 
-An :newTerm:`array expression` is
+An :newTerm:`array literal` is
 an ordered collection of values.
 It has the following form:
 
@@ -477,15 +478,15 @@ It has the following form:
 
    [<#value 1#>, <#value 2#>, <#...#>]
 
-.. TODO: Decide on usage of <#...#> throughout the reference.
-
 The last expression in the array can be followed by an optional comma.
-The value of an array expression has type ``T[]``,
+An empty array literal is written as ``[]``.
+The value of an array literal has type ``T[]``,
 where ``T`` is the type of the expressions inside it.
 If there are expressions of multiple types,
 ``T`` is their closest common supertype.
 
-A :newTerm:`dictionary expression` is
+
+A :newTerm:`dictionary literal` is
 an unordered collection of key-value pairs,
 It has the following form:
 
@@ -518,16 +519,16 @@ for their respective values.
     Grammar of a literal expression
 
     literal-expression --> literal
-    literal-expression --> array-expression | dictionary-expression
+    literal-expression --> array-literal | dictionary-literal
     literal-expression --> ``__FILE__`` | ``__LINE__`` | ``__COLUMN__`` | ``__FUNCTION__``
 
-    array-expression --> ``[`` array-expression-items-OPT ``]``
-	array-expression-items --> array-expression-item ``,``-OPT | array-expression-item ``,`` array-expression-items
-	array-expression-item --> expression
+    array-literal --> ``[`` array-literal-items-OPT ``]``
+	array-literal-items --> array-literal-item ``,``-OPT | array-literal-item ``,`` array-literal-items
+	array-literal-item --> expression
 
-	dictionary-expression --> ``[`` dictionary-expression-items ``]`` | ``[`` ``:`` ``]``
-	dictionary-expression-items --> dictionary-expression-item ``,``-OPT | dictionary-expression-item ``,`` dictionary-expression-items
-	dictionary-expression-item --> expression ``:`` expression
+	dictionary-literal --> ``[`` dictionary-literal-items ``]`` | ``[`` ``:`` ``]``
+	dictionary-literal-items --> dictionary-literal-item ``,``-OPT | dictionary-literal-item ``,`` dictionary-literal-items
+	dictionary-literal-item --> expression ``:`` expression
 
 
 .. _Expressions_SuperclassExpression:
@@ -647,6 +648,9 @@ that provides the needed type information: ::
 
     { $0 + $1 }
 
+For more information and examples of closures,
+see :doc:`../LanguageGuide/Closures`.
+
 .. langref-grammar
 
     expr-closure ::= '{' closure-signature? brace-item* '}'
@@ -709,25 +713,14 @@ Each expression can have an optional identifier before it,
 separated by a colon (``:``).
 It has the following form:
 
-.. TODO: Give context for this --
-   used to create a tuple literal
-   and used to pass the arguments to a function call.
-   Parens group if there is only one value in them,
-   otherwise they create a tuple.
-
 .. syntax-outline::
 
    (<#identifier 1#>: <#expression 1#>, <#identifier 2#>: <#expression 2#>, <#...#>)
 
-.. TR: Should this only be used in a function call?
-   As a primary expression, it seems like it is a remnant of named tuples
-   which are going away, and should only be lightly documented.
-   For example, you shouldn't do this anymore:
-
-   (swift) var x = (a: 1, b: 2)
-   // x : (a: Int, b: Int) = (1, 2)
-   (swift) x.a
-   // r1 : Int = 1
+Parenthesized expressions are used to create tuples and to pass arguments
+to a function call. If there is only one value inside the parenthesized expression,
+the type of the parenthesized expression is the type of that value. For example,
+the type of the parenthesized expression ``(1)`` is ``Int``, not ``(Int)``.
 
 .. langref-grammar
 
@@ -744,6 +737,8 @@ It has the following form:
     expression-element-list --> expression-element | expression-element ``,`` expression-element-list
     expression-element --> expression | identifier ``:`` expression
 
+
+.. _Expressions_WildcardExpression:
 
 Wildcard Expression
 ~~~~~~~~~~~~~~~~~~~
@@ -828,7 +823,7 @@ They have the following form:
 
     <#function#>(<#argument 1#>, <#argument 2#>, <#argument 3#>)
 
-The *function* can be any expression whose value is of a functional type.
+The *function* can be any expression whose value is of a function type.
 
 If the function definition includes names for its parameters,
 the function call must include a names before its arguments
@@ -880,12 +875,12 @@ Initializer Expression
 ~~~~~~~~~~~~~~~~~~~~~~
 
 An :newTerm:`initializer expression` provides access
-to a class's initializer.
+to a types's initializer.
 It has the following form:
 
 .. syntax-outline::
 
-    <#class or expression#>.init(<#initializer arguments#>)
+    <#type or expression#>.init(<#initializer arguments#>)
 
 An initializer expression is used like a function call
 to initialize a new instance of a type.
@@ -903,15 +898,6 @@ to delegate to the initializer of a superclass: ::
        super.init()
     }
 
-.. TODO: .init doesn't quite behave like either
-   an instance method or a class method,
-   because it isn't a method.
-
-.. TODO: This section is a bit thin.
-   For example, I think MyClass()
-   is syntactic sugar for MyClass.init()
-   but I'm not sure.
-
 .. langref-grammar
 
     expr-init ::= expr-postfix '.' 'init'
@@ -922,7 +908,7 @@ to delegate to the initializer of a superclass: ::
 
     initializer-expression --> postfix-expression ``.`` ``init``
 
-.. _Expressions_DotExpression:
+.. _Expressions_ExplicitMemberExpression:
 
 Explicit Member Expression
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -970,49 +956,48 @@ the top-level declarations of that module.
     explicit-member-expression --> postfix-expression ``.`` decimal-digit
     explicit-member-expression --> postfix-expression ``.`` named-expression
 
-.. _Expressions_MetatypeExpression:
+.. _Expressions_SelfExpression:
 
 Self Expression
 ~~~~~~~~~~~~~~~
 
-.. write-me::
+.. write-me:: This section needs a rewrite.
 
-   This section needs a rewrite.
+..  Old prose:
+    A :newTerm:`self expression` is an explicit reference
+    to a type or an instance of a type.
+    It has the following form:
 
-A :newTerm:`self expression` is an explicit reference
-to a type or an instance of a type.
-It has the following form:
+    .. syntax-outline::
 
-.. syntax-outline::
+       <#type or expression#>.self
 
-   <#expression or type#>.self
+    On either a type or an instance of a type,
+    the value of the self expression
+    has the same type as the expression or type before the period.
 
-On either a type or an instance of a type,
-the value of the self expression
-has the same type as the expression or type before the period.
+    On a type, ``self`` evaluates to the type itself.
+    It is used to refer to a type by name,
+    for example, to pass it as an argument to a function.
 
-On a type, ``self`` evaluates to the type itself.
-It is used to refer to a type by name,
-for example, to pass it as an argument to a function.
+    .. TODO: An example might be helpful.
 
-.. TODO: An example might be helpful.
-
-On an instance of a type, ``self`` evaluates to
-the instance of the type.
+    On an instance of a type, ``self`` evaluates to
+    the instance of the type.
 
 
-It is used to specify scope when accessing members,
-providing disambiguation when there is
-another variable of the same name in scope,
-such as a function parameter.
-For example, in an initializer: ::
+    It is used to specify scope when accessing members,
+    providing disambiguation when there is
+    another variable of the same name in scope,
+    such as a function parameter.
+    For example, in an initializer: ::
 
-    class MyClass {
-       var greeting: String
-       init (greeting: String) {
-          self.greeting = greeting
-       }
-    }
+        class MyClass {
+           var greeting: String
+           init (greeting: String) {
+              self.greeting = greeting
+           }
+        }
 
 .. There is no definition for self-expression in the LangRef.
    This was probably just an oversight, according to Ted and Doug.
@@ -1025,6 +1010,7 @@ For example, in an initializer: ::
     Grammar of a self expression
 
     self-expression --> postfix-expression ``.`` ``self``
+
 
 .. _Expressions_SubscriptExpression:
 
