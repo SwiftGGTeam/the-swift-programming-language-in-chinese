@@ -333,8 +333,8 @@ It behaves as follows:
 For example: ::
 
     class SomeSuperType {}
-    class SomeType : SomeSuperType {}
-    class SomeChildType : SomeType {}
+    class SomeType: SomeSuperType {}
+    class SomeChildType: SomeType {}
     let x = SomeType()
 
     let y = x as SomeSuperType  // y is of type SomeSuperType
@@ -344,8 +344,8 @@ Specifying a type with ``as`` provides the same type information
 to the compiler as a function call or a type annotation,
 as shown in the following examples: ::
 
-    func f (a : SomeSuperType) -> SomeSuperType { return a }
-    func g (a : SomeChildType) -> SomeChildType { return a }
+    func f (a: SomeSuperType) -> SomeSuperType { return a }
+    func g (a: SomeChildType) -> SomeChildType { return a }
 
     let y2: SomeSuperType = x   // y2 is of type SomeSuperType
     let z2: SomeChildType? = x  // z2 is of type SomeChildType?
