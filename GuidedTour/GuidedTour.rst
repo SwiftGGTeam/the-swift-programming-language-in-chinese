@@ -355,6 +355,8 @@ Repeat a block of code for each item in a collection with ``for``.
     >> sum
     << // sum : Int = 15
 
+.. TODO: Show for (k,v) in dict style iteration.
+
 .. admonition:: Experiment
 
    Try changing ``1..5`` to ``1...5``.
@@ -525,6 +527,9 @@ A function can take another function as one of its argument.
    un-name the parameters to bubbleSort() with _
    or provide the names when calling the function.
 
+.. TODO: Introduce tuples
+    * Use tuples for simple multipart data
+
 Closures are just like a function
 except you don't give them a name when you declare them.
 They are written as code surrounded by braces (``{}``)
@@ -605,7 +610,6 @@ Value Types
 .. write-me::
 
 * Differences from objects (reference types)
-* Use tuples for simple multipart data
 * Use structs for complex multipart data
 * Use enums when values come from a list
 * Associating additional data with enums
