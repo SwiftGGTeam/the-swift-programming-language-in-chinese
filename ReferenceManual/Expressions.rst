@@ -853,7 +853,7 @@ The following function calls are equivalent: ::
     exampleFunction(x, {$0 == 13})
     exampleFunction(x) {$0 == 13}
 
-If the trailing closure is the functions's only argument,
+If the trailing closure is the function's only argument,
 the parentheses can be omitted: ::
 
     myData.process() {$0 * 2}
