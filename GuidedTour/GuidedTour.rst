@@ -127,48 +127,10 @@ make an instance of the desired type explicitly.
 
    Try removing the cast to ``String`` from the last line.
    What error do you get?
-   
-Multiple values can be assigned at once.
-Values on the right side are assigned
-to the corresponding parts on the left.
-For example,
-you can swap two values in place
-without a temporary value.
 
-.. testcode:: swap
-
-   -> var left = 10
-   << // left : Int = 10
-   -> var right = 100
-   << // right : Int = 100
-   -> (left, right) = (right, left)
-   >> left
-   << // left : Int = 100
-   >> right
-   << // right : Int = 10
-
-.. TODO: If the PG doesn’t show a good result for left and right in the swap line,
-   turn the >> lines into -> lines
-   to show the reader that the swap worked.
-
-.. No tuple destructuring example
-   because I haven't really introduced tuples yet.
-
-.. testcode:: swap
-
-   -> let tupleResult = (404
-   -> var left = 10
-   << // left : Int = 10
-   -> var right = 100
-   << // right : Int = 100
-   -> (left, right) = (right, left)
-   >> left
-   << // left : Int = 100
-   >> right
-   << // right : Int = 10
-
-Strings in Swift support a special interpolation syntax
-that includes the string value of an expression
+A simpler way to include values in strings
+is to use the special escape ``\(`` ``)`` in a string,
+which includes the string value of an expression
 as part of the string.
 
 .. testcode:: string-interpolation
