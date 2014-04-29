@@ -584,8 +584,8 @@ as the second argument to the ``sort`` function.
     -> sort([1, 5, 3, 12, 2], >)
     << // r0 : Int[] = [12, 5, 3, 2, 1]
 
-Objects
--------
+Objects and Classes
+-------------------
 
 .. TODO: Pull in the Shape example code from old tour.
 
@@ -604,8 +604,8 @@ Objects
 * Override superclass methods with “@override”
 * Call the superclass’s implentation with “super”
 
-Value Types
------------
+Enumerations and Structures
+---------------------------
 
 .. write-me::
 
