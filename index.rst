@@ -19,7 +19,6 @@ Contents
 .. toctree::
     :maxdepth: 2
 
-    Introduction
     GuidedTour/index
     LanguageGuide/index
     ReferenceManual/index
