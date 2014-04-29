@@ -58,29 +58,31 @@ The value of a variable can be assigned multiple times.
    << // myVariable : Int = 50
    -> let myConstant = 42
    << // myConstant : Int = 42
+   -> myConstant = 100  // error
+   !! <REPL Input>:1:12: error: cannot assign to 'let' value 'myConstant'
+   !! myConstant = 100  // error
+   !! ~~~~~~~~~~ ^
 
 .. admonition:: Experiment
 
    Edit the code in the boxes above.
-   Try assigning ``myConstant`` a new value.
-   What error do you get?
+   Try changing ``myConstant`` to be a variable.
+   Try removing the last line, so it is only assigned a value once.
 
 .. TR: Is the requirement that constants need an initial value
    a current REPL limitation, or an expected language feature?
 
-Assigning a value of the wrong type to a variable is an error.
+A variable must have the same type
+as the value you want to assign to it.
 
 .. testcode:: typecheck
 
     -> var greeting = "Hello"
     << // greeting : String = "Hello"
-    -> greeting = "Good morning"
-
-.. admonition:: Experiment
-
-   Try assigning a number to ``greeting``
-   instead of the string "Good morning".
-   What error do you get?
+    -> greeting = 123
+    !! <REPL Input>:1:10: error: expression does not type-check
+    !! greeting = 123
+    !! ~~~~~~~~~^~~~~
 
 In the previous example,
 the compiler understands that ``greeting`` is a string
@@ -105,6 +107,10 @@ separated by a colon.
    << // explicitString : String = "Hello"
 
 .. admonition:: Experiment
+
+   Try creating a constant with
+   an explicit type of ``Float`` and a value of ``4``.
+   Notice how the type of ``4`` is determined based on how you use it.
 
    Try providing an explicit type that doesn’t match
    the variable’s initial value.
