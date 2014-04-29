@@ -551,12 +551,6 @@ It has one of the following forms:
     super[<#subscript index#>]
     super.init(<#initializer arguments#>)
 
-.. TODO: super.init should be super.init(<#initializer arguments#>) above,
-    but doing so currently makes the syntax highlighter explode and the build fail.
-    In fact, putting *anything* after the 'init' causes a crash!
-    I'm removing the correct version so I can get a build I can send to Jeanne for
-    copyedit.
-
 The first form is understood as a member of the superclass.
 This allows a subclass to call the superclass's
 implementation of a method that it overrides,
