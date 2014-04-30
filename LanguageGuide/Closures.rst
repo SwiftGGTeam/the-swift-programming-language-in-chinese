@@ -365,6 +365,9 @@ the return arrow (``->``) can also be omitted:
    >> reversed
    << // reversed : Array<String> = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
 
+.. TODO: if you're not providing a type,
+   we don't require you to put parens around the parameter list.
+
 It is always possible to infer parameter types and return type
 when passing a closure to a function as an inline closure expression.
 As a result, it is rare to need to write an inline closure in its fullest form.
