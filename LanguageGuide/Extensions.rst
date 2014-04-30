@@ -405,5 +405,5 @@ as shown here for the word ``"Hello"``.
 
    ``scalar.kind`` is already known to be of type ``UnicodeScalar.Kind``.
    Because of this, all of the ``UnicodeScalar.Kind`` member values
-   can be written in short-hand form inside the ``switch`` statement,
+   can be written in shorthand form inside the ``switch`` statement,
    such as ``.Vowel`` rather than ``UnicodeScalar.Kind.Vowel``.

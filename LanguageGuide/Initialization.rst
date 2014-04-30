@@ -11,7 +11,7 @@ This initialization process is implemented by defining :newTerm:`initializers`,
 which are like special methods that can be called
 to create a new instance of a particular type.
 Instances of class types can also implement a :newTerm:`deinitializer`,
-which gives an oppprtunity to perform any custom cleanup that you require to be run
+which gives an opportunity to perform any custom cleanup that you require to be run
 when an instance of that class instance is destroyed.
 
 .. TODO: mention that memory is automatically managed by ARC
@@ -359,7 +359,7 @@ structure types automatically receive a :newTerm:`memberwise initializer`
 if they provide default values for all of their stored properties,
 and do not define any of their own custom initializers.
 
-The memberwise initializer is used as a short-hand way
+The memberwise initializer is used as a shorthand way
 to initialise the member properties of new structure instances.
 Initial values for the properties of the new instance
 can be passed to the memberwise initializer by name:
