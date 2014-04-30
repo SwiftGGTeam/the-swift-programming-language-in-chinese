@@ -674,18 +674,13 @@ Conversions between integer and floating-point numeric types must be made explic
    -> let pointOneFourOneFiveNine = 0.14159
    << // pointOneFourOneFiveNine : Double = 0.14159
    -> let pi = Double(three) + pointOneFourOneFiveNine
-   << // pi : Float64 = 3.14159
+   << // pi : Double = 3.14159
    /> pi equals \(pi), and is inferred to be of type Double
    </ pi equals 3.14159, and is inferred to be of type Double
 
 Here, the value of the constant ``three`` is used to create a new value of type ``Double``,
 so that both sides of the addition are of the same type.
 Without this conversion in place, the addition would not be allowed.
-
-.. FIXME: the return type of pi here is inferred as Float64,
-   but it should really be inferred as Double.
-   This is due to rdar://15211554.
-   This code sample should be updated once the issue is fixed.
 
 The reverse is also true for floating-point to integer conversion,
 in that an integer type can be initialized with a ``Double`` or ``Float`` value:
