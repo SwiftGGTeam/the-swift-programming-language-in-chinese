@@ -5,4 +5,3 @@ Guided Tour
     :maxdepth: 1
 
     GuidedTour
-    LanguageTour
