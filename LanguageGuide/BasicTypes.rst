@@ -850,10 +850,10 @@ Here's an example of a tuple:
 
 .. testcode:: tuples
 
-   -> let httpStatus = (404, "Not Found")
-   << // httpStatus : (Int, String) = (404, "Not Found")
-   /> httpStatus is of type (Int, String), and equals (\(httpStatus.0), \"\(httpStatus.1)\")
-   </ httpStatus is of type (Int, String), and equals (404, "Not Found")
+   -> let http404Error = (404, "Not Found")
+   << // http404Error : (Int, String) = (404, "Not Found")
+   /> http404Error is of type (Int, String), and equals (\(http404Error.0), \"\(http404Error.1)\")
+   </ http404Error is of type (Int, String), and equals (404, "Not Found")
 
 ``(404, "Not Found")`` is a tuple that describes an *HTTP status code*.
 An HTTP status code is a special value returned by a web server whenever you request a web page.
@@ -874,9 +874,9 @@ You can access the individual element values in a tuple using index numbers star
 
 .. testcode:: tuples
 
-   -> println("The status code is \(httpStatus.0)")
+   -> println("The status code is \(http404Error.0)")
    <- The status code is 404
-   -> println("The status message is \(httpStatus.1)")
+   -> println("The status message is \(http404Error.1)")
    <- The status message is Not Found
 
 Alternatively,
@@ -885,12 +885,29 @@ which can then be accessed as usual:
 
 .. testcode:: tuples
 
-   -> let (statusCode, statusMessage) = httpStatus
+   -> let (statusCode, statusMessage) = http404Error
    << // (statusCode, statusMessage) : (Int, String) = (404, "Not Found")
    -> println("The status code is \(statusCode)")
    <- The status code is 404
    -> println("The status message is \(statusMessage)")
    <- The status message is Not Found
+
+You can also name the elements in a tuple directly when the tuple is defined:
+
+.. testcode:: tuples
+
+   -> let http200Status = (statusCode: 200, description: "OK")
+   << // http200Status : (statusCode: Int, description: String) = (200, "OK")
+
+If you name the elements in a tuple,
+you can use the element names to access the values of those elements:
+
+.. testcode:: tuples
+
+   -> println("The status code is \(http200Status.statusCode)")
+   <- The status code is 200
+   -> println("The status message is \(http200Status.description)")
+   <- The status message is OK
 
 Tuples are particularly useful as the return values of functions.
 A function that tries to retrieve a web page might return the ``(Int, String)`` tuple type
@@ -901,13 +918,14 @@ the function provides more useful information about its outcome
 than if it could only return a single value of a single type.
 Functions are described in detail in :doc:`Functions`.
 
-Tuples are useful for temporary groups of related values.
-They are not suited to the creation of complex data structures.
-If your data structure would benefit from named member values,
-or is likely to persist beyond a temporary scope,
-model it as a :newTerm:`class` or :newTerm:`structure`,
-rather than as a tuple.
-See :doc:`ClassesAndStructures`.
+.. note::
+
+   Tuples are useful for temporary groups of related values.
+   They are not suited to the creation of complex data structures.
+   If your data structure is likely to persist beyond a temporary scope,
+   model it as a :newTerm:`class` or :newTerm:`structure`,
+   rather than as a tuple.
+   See :doc:`ClassesAndStructures`.
 
 .. _BasicTypes_Optionals:
 
