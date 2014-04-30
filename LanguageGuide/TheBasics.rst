@@ -1,78 +1,41 @@
 The Basics
 ==========
 
-Swift is a :newTerm:`type safe` language.
-This means that it encourages you to be clear about
-the types of values and objects your code can work with.
-If part of your code expects some text,
-type safety means that you can't accidentally pass it a number by mistake.
+Swift is a new programming language for iOS and OS X app development.
+Nonetheless, many parts of Swift will be familiar
+from your experience of developing in C and Objective-C.
 
-Because Swift is type safe,
-it performs :newTerm:`type checks` when compiling your code,
-and flags any mismatched types as errors.
+Swift provides its own versions of all of the fundamental C and Objective-C types,
+such as ``Int`` for integers; ``Double`` and ``Float`` for floating-point values;
+``Bool`` for Boolean values; and ``String`` for ordered collections of characters.
+Swift also provides powerful versions of the two primary collection types,
+``Array`` and ``Dictionary`` (as described in :doc:`CollectionTypes`).
+
+Like C, Swift uses constants and variables to store and refer to values.
+Constants in Swift are much more flexible than those in C, however,
+and are used throughout the language to make code safer and clearer in intent
+when working with values that do not need to change.
+
+In addition to all of the types you will be familiar with,
+Swift also introduces some advanced types not found in Objective-C.
+These include tuples,
+which enable you to create and pass around ad-hoc groupings of values.
+Tuples can be used to return multiple values from a function as a single compound value.
+
+Swift also introduces optional types,
+which are a way to handle the absence of a value.
+Optionals are a way to say either “There *is* a value, and it equals *x*”;
+or “there *isn't* a value at all”.
+Optionals are similar to working with ``nil`` in Objective-C,
+but in a way that works for any type, not just classes.
+Optionals are safer and more expressive than ``nil`` pointers in Objective-C,
+and are at the heart of many of Swift's most powerful features.
+
+Optionals are an example of the fact that Swift is a *type safe* language.
+This means that it helps you to be clear about the types of values your code can work with.
+If part of your code expects a ``String``,
+type safety means that you can't accidentally pass it an ``Int`` by mistake.
 This enables you to catch and fix errors as early as possible in the development process.
-
-Types are at the heart of the Swift programming language.
-Swift's use of types makes for a safe and flexible language,
-and gives you many different options when defining the structure of your apps.
-
-Types are a way to categorize different kinds of values,
-and to ensure that those values are compatible when they are used together.
-Simple examples of Swift types include
-the ``Int`` type for integer whole numbers;
-the ``Bool`` type for values that can only be true or false;
-and the ``String`` type for a collection of textual characters.
-
-Swift provides many of these basic types for you,
-as described in this chapter.
-Swift also provides two powerful collection types, ``Array`` and ``Dictionary``,
-for working with collections of values of a similar type.
-These are introduced in :doc:`CollectionTypes`.
-
-You can create your own custom types to suit the needs of your code.
-If your app needs to model a person with a name and an age,
-you can define a new type called ``Person``,
-with a ``String`` property called ``name``, and an ``Int`` property called ``age``.
-You create these custom types as classes, structures, and enumerations,
-all of which can provide initializers, properties, methods, and subscripts
-to represent their data and functionality.
-These custom types are introduced in :doc:`ClassesAndStructures` and :doc:`Enumerations`.
-
-In situations where it would be excessive to define a new named type,
-you can group together multiple values of different types
-to create a single value known as a tuple.
-You could group together an ``Int`` value and a ``String`` value as a single tuple, say,
-and use this pairing of values as the single return value from a function.
-Tuples are an effective shorthand for creating ad-hoc groupings of values within your code.
-
-Swift also provides an elegant way to cope with values that may or may not exist.
-These types, known as optionals,
-represent either a known value of a specific type,
-or the absence of a value of that type.
-Optionals enable your code to cope with the absence of a value,
-regardless of what type of value it may be.
-Much of the Swift language is based on the simplicity of optionals
-as a way to write code that copes gracefully and safely with the absence of a value.
-
-Many other parts of the Swift language are based around the concept of types.
-For example, every function in Swift has a specific type,
-and every protocol you define creates a new abstract type for use in your code.
-Swift uses the concept of types to create a powerful yet safe way to express
-and work with the fundamental elements of your code.
-(See :doc:`Functions` and :doc:`Protocols` for more on how Swift's type system
-works with function and protocol types.)
-
-This chapter introduces many of the basic types provided by Swift,
-and describes how to store values of those types in constants and variables.
-
-.. note::
-
-   Don't worry if some of the concepts mentioned in the section above are unfamiliar.
-   This guide introduces all of these concepts in detail,
-   with self-contained, real-world examples for every subject.
-
-.. TODO: this introduction isn't right.
-   it needs changing to be an introduction to this chapter only.
 
 .. _BasicTypes_ConstantsAndVariables:
 
@@ -429,9 +392,16 @@ Swift provides two signed floating-point number types:
 Type Inference
 --------------
 
-As mentioned earlier,
-Swift performs :newTerm:`type checks` when compiling your code.
-Any mismatched types are flagged as errors so that you can fix them.
+Swift is a :newTerm:`type safe` language.
+This means that it encourages you to be clear about
+the types of values your code can work with.
+If part of your code expects a ``String``,
+type safety means that you can't accidentally pass it an ``Int`` by mistake.
+
+Because Swift is type safe,
+it performs :newTerm:`type checks` when compiling your code,
+and flags any mismatched types as errors.
+This enables you to catch and fix errors as early as possible in the development process.
 
 Type-checking helps avoid accidental errors when you're working with different types of values.
 However, this doesn't mean that you have to specify the type of
@@ -832,7 +802,7 @@ and ensures that the intention of a particular section of code is always clear.
    Strictly speaking, an ``if``-``else`` statement's condition expression
    can be of any type that conforms to the ``LogicValue`` protocol.
    ``Bool`` is one example of a type that conforms to this protocol,
-   but there are others, such as :newTerm:`optionals`, described below.
+   but there are others, such as optionals, described below.
    The ``LogicValue`` protocol is described in more detail in :doc:`Protocols`.
 
 .. TODO: I'm not quite happy with this yet.
@@ -927,8 +897,7 @@ Functions are described in detail in :doc:`Functions`.
    Tuples are useful for temporary groups of related values.
    They are not suited to the creation of complex data structures.
    If your data structure is likely to persist beyond a temporary scope,
-   model it as a :newTerm:`class` or :newTerm:`structure`,
-   rather than as a tuple.
+   model it as a class or structure, rather than as a tuple.
    See :doc:`ClassesAndStructures`.
 
 .. _BasicTypes_Optionals:
@@ -936,7 +905,7 @@ Functions are described in detail in :doc:`Functions`.
 Optionals
 ---------
 
-You use :newTerm:`Optionals` in situations where a value may be absent.
+You use :newTerm:`optionals` in situations where a value may be absent.
 An optional says:
 
 * There *is* a value, and it equals *x*
