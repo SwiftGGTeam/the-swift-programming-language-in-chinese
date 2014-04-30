@@ -229,7 +229,7 @@ a protocol can be used in many places where other types are allowed, including:
 
 * as a parameter type or return type in a function, method, or initializer
 * as the type of a constant, variable, or property
-* as the type of items in an ``Array``, ``Dictionary`` or other container
+* as the type of items in an array, dictionary, or other container
 
 .. note::
 
@@ -355,10 +355,9 @@ and to notify a ``DiceGameDelegate`` about its progress:
          let finalSquare = 25
          let dice = Dice(sides: 6, generator: LinearCongruentialGenerator())
          var square = 0
-         var board = Array<Int>()
+         var board = Int[](finalSquare + 1, 0)
          var delegate: DiceGameDelegate?
          init() {
-            for _ in 0..finalSquare { board.append(0) }
             board[03] = +08; board[06] = +11; board[09] = +09; board[10] = +02
             board[14] = -10; board[19] = -11; board[22] = -02; board[24] = -08
          }
@@ -381,6 +380,8 @@ and to notify a ``DiceGameDelegate`` about its progress:
             delegate?.gameDidEnd(self)
          }
       }
+
+.. TODO: update this example to use a closure to initialize the board property.
 
 (See the :ref:`ControlFlow_Break` section of the :doc:`ControlFlow` chapter
 for a description of the gameplay of the *Snakes and Ladders* game shown above.)
@@ -591,14 +592,14 @@ Collections of Protocol Types
 -----------------------------
 
 A protocol can be used as the type to be stored in
-a collection such as an ``Array`` or a ``Dictionary``,
+a collection such as an array or a dictionary,
 as mentioned in :ref:`Protocols_UsingProtocolsAsTypes`.
 This example creates an array of ``TextRepresentable`` things:
 
 .. testcode:: protocols
 
-   -> let things: Array<TextRepresentable> = [game, d12, simonTheHamster]
-   << // things : Array<TextRepresentable> = [<unprintable value>, <unprintable value>, <unprintable value>]
+   -> let things: TextRepresentable[] = [game, d12, simonTheHamster]
+   << // things : TextRepresentable[] = [<unprintable value>, <unprintable value>, <unprintable value>]
 
 It is now possible to iterate over the items in the array,
 and print each item's textual representation:
@@ -840,12 +841,12 @@ can be used to initialize an array that stores values of type ``AnyObject``:
 
 .. testcode:: protocolConformance
 
-   -> let objects: Array<AnyObject> = [
+   -> let objects: AnyObject[] = [
          Circle(radius: 2.0),
          Country(area: 243_610),
          Animal(legs: 4)
       ]
-   << // objects : Array<AnyObject> = [<unprintable value>, <unprintable value>, <unprintable value>]
+   << // objects : AnyObject[] = [<unprintable value>, <unprintable value>, <unprintable value>]
 
 The ``objects`` array is initialized with an array literal containing
 a ``Circle`` instance with a radius of 2 units;

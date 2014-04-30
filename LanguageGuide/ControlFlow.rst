@@ -129,8 +129,8 @@ Use the ``for``-``in`` loop with an array to iterate over its items:
    </ Hello, Jack!
 
 Swift's ``String`` type has a ``chars`` property,
-which provides the individual characters in the string as an ``Array`` of ``UnicodeScalar`` values
-(also known as an “``Array`` of type ``UnicodeScalar``”).
+which provides the individual characters in the string as an array of ``UnicodeScalar`` values
+(also known as an “array of type ``UnicodeScalar``”).
 Use this property to iterate over the characters in a string in order:
 
 .. testcode:: forLoops
@@ -321,20 +321,19 @@ The rules of the game are as follows:
 
 .. TODO: update this description to match the look of the final artwork.
 
-The game board is represented by an ``Array`` of type ``Int``.
+The game board is represented by an array of ``Int`` values.
 Its size is based on a constant called ``finalSquare``,
 which is used to initialize the array,
 and also to check for a win condition later in the example.
-The board is initialized with 26 zeroes, not 25 –
+The board is initialized with 26 zero ``Int`` values, not 25 –
 one each at indices ``0`` through ``25`` inclusive:
 
 .. testcode:: snakesAndLadders1
 
    -> let finalSquare = 25
    << // finalSquare : Int = 25
-   -> var board = Array<Int>()
-   << // board : Array<Int> = []
-   -> for _ in 0..finalSquare { board.append(0) }
+   -> var board = Int[](finalSquare + 1, 0)
+   << // board : Int[] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
 Some squares are then set to have more specific values for the snakes and ladders.
 Squares with a ladder base have a positive number to move you up the board,
@@ -476,9 +475,8 @@ are initialized in exactly the same way as with a ``while`` loop:
 
    -> let finalSquare = 25
    << // finalSquare : Int = 25
-   -> var board = Array<Int>()
-   << // board : Array<Int> = []
-   -> for _ in 0..finalSquare { board.append(0) }
+   -> var board = Int[](finalSquare + 1, 0)
+   << // board : Int[] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
    -> board[03] = +08; board[06] = +11; board[09] = +09; board[10] = +02
    -> board[14] = -10; board[19] = -11; board[22] = -02; board[24] = -08
    -> var square = 0
@@ -1263,9 +1261,8 @@ are initialized in the same way as before:
 
    -> let finalSquare = 25
    << // finalSquare : Int = 25
-   -> var board = Array<Int>()
-   << // board : Array<Int> = []
-   -> for _ in 0..finalSquare { board.append(0) }
+   -> var board = Int[](finalSquare + 1, 0)
+   << // board : Int[] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
    -> board[03] = +08; board[06] = +11; board[09] = +09; board[10] = +02
    -> board[14] = -10; board[19] = -11; board[22] = -02; board[24] = -08
    -> var square = 0

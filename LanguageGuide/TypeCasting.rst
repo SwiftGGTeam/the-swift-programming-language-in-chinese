@@ -57,7 +57,7 @@ Here, the type of the ``library`` array is inferred
 by initializing it with the contents of an array literal.
 Swift's type-checker is able to deduce that ``Movie`` and ``Song`` have
 a common superclass of ``MediaItem``,
-and so it infers a type of ``Array<MediaItem>`` for the ``library`` array:
+and so it infers a type of ``MediaItem[]`` for the ``library`` array:
 
 .. testcode:: typeCasting
 
@@ -69,7 +69,7 @@ and so it infers a type of ``Array<MediaItem>`` for the ``library`` array:
          Song("Never Gonna Give You Up", artist: "Rick Astley")
       ]
    << // library : Array<MediaItem> = [<MediaItem instance>, <MediaItem instance>, <MediaItem instance>, <MediaItem instance>, <MediaItem instance>]
-   // the type of "library" is inferred to be Array<MediaItem>
+   // the type of "library" is inferred to be MediaItem[]
 
 The items stored in ``library`` are still ``Movie`` and ``Song`` instances behind the scenes.
 However, if you iterate over the contents of this array,
@@ -209,8 +209,8 @@ Here's an example of using ``Any`` to work with a mix of different types:
 
 .. testcode:: typeCasting
 
-   -> var things = Array<Any>()
-   << // things : Array<Any> = []
+   -> var things = Any[]()
+   << // things : Any[] = []
    -> things.append(0)
    -> things.append(0.0)
    -> things.append(42)

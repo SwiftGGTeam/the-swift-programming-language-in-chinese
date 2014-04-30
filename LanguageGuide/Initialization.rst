@@ -157,8 +157,8 @@ The ``boardColors`` array is initialized with a closure to set up its color valu
 .. testcode:: checkers
 
    -> struct CheckersBoard {
-         let boardColors: Array<Bool> = {
-            var temporaryBoard = Array<Bool>()
+         let boardColors: Bool[] = {
+            var temporaryBoard = Bool[]()
             var isBlack = false
             for i in 1..10 {
                for j in 1..10 {
@@ -1032,7 +1032,7 @@ a new ``ShoppingListItem`` instance:
 
 Here, a new array called ``breakfastList`` is created from
 an array literal containing three new ``ShoppingListItem`` instances.
-The type of the array is inferred to be ``Array<ShoppingListItem>``.
+The type of the array is inferred to be ``ShoppingListItem[]``.
 After creating the array,
 the name of the unnamed ``ShoppingListItem`` at the start of the array
 is changed to be ``"Orange juice"``, and it is marked as having been purchased.
