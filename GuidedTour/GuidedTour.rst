@@ -161,7 +161,7 @@ the index or key in brackets.
 .. testcode:: array-dict
 
     -> let fruits = ["apple", "orange", "banana"]
-    << // fruits : String[] = ["apple", "orange", "banana"]
+    << // fruits : Array<String> = ["apple", "orange", "banana"]
     -> let favoriteFruit = fruits[1]
     << // favoriteFruit : String = "orange"
     ---
@@ -170,7 +170,7 @@ the index or key in brackets.
           "Paris": 51.6,
           "Shanghai": 73.2,
        ]
-    << // forecasts : Dictionary<String, Double> = Dictionary<String, Double>(1.33333, 3, <DictionaryBufferOwner<String, Double> instance>)
+    << // forecasts : Dictionary<String, Double> = Dictionary<String, Double>(1.33333333333333, 3, <DictionaryBufferOwner<String, Double> instance>)
     -> forecasts["San Francisco"] < forecasts["Paris"]
     << // r0 : Bool = false
 
@@ -187,7 +187,7 @@ the index or key in brackets.
           "Kayley": "Mechanic",
           "Jayne": "Public Relations",
         ]
-    << // occupations : Dictionary<String, String> = Dictionary<String, String>(1.33333, 3, <DictionaryBufferOwner<String, String> instance>)
+    << // occupations : Dictionary<String, String> = Dictionary<String, String>(1.33333333333333, 3, <DictionaryBufferOwner<String, String> instance>)
     -> occupations["Jayne"] == "Doctor"
     << // r0 : Bool = false
     ---
@@ -200,10 +200,10 @@ specify it expliticly.
 
 .. testcode:: empty-array-dict
 
-   -> var emptyArray: String[] = []
-   << // emptyArray : String[] = []
+   -> var emptyArray: Array<String> = []
+   << // emptyArray : Array<String> = []
    -> var emptyDictionary: Dictionary<String, Float> = [:]
-   << // emptyDictionary : Dictionary<String, Float> = Dictionary<String, Float>(1.33333, 0, <DictionaryBufferOwner<String, Float> instance>)
+   << // emptyDictionary : Dictionary<String, Float> = Dictionary<String, Float>(1.33333333333333, 0, <DictionaryBufferOwner<String, Float> instance>)
 
 .. The REPL output after creating a dictionary doesn’t make any sense.
    No way to get it to pretty-print the keys and values.
@@ -485,7 +485,7 @@ A function can take another function as one of its argument.
 .. testcode:: pass-func
 
     -> // Re-implement the Standard Library sort function.
-    -> func bubbleSort (var list: Int[], outOfOrder: (Int, Int) -> Bool) -> Int[] {
+    -> func bubbleSort (var list: Array<Int>, outOfOrder: (Int, Int) -> Bool) -> Array<Int> {
           for i in 0...list.count {
              for j in 0...list.count {
                 if outOfOrder(list[i], list[j]) {
@@ -499,9 +499,9 @@ A function can take another function as one of its argument.
           return x > y
        }
     -> var numbers = [8, 3, 5, 6]
-    << // numbers : Int[] = [8, 3, 5, 6]
+    << // numbers : Array<Int> = [8, 3, 5, 6]
     -> var sortedNumbers = bubbleSort(numbers, greaterThan)
-    << // sortedNumbers : Int[] = [8, 6, 5, 3]
+    << // sortedNumbers : Array<Int> = [8, 6, 5, 3]
 
 Closures are just like a function
 except you don't give them a name when you declare them.
@@ -546,7 +546,7 @@ can appear immediately after the function call.
 .. testcode:: trailing-closure
 
     -> sort([1, 5, 3, 12, 2]) { $0 > $1 }
-    << // r0 : Int[] = [12, 5, 3, 2, 1]
+    << // r0 : Array<Int> = [12, 5, 3, 2, 1]
 
 .. admonition:: Experiment
 
@@ -560,7 +560,7 @@ as the second argument to the ``sort`` function.
 .. testcode:: operator-closure
 
     -> sort([1, 5, 3, 12, 2], >)
-    << // r0 : Int[] = [12, 5, 3, 2, 1]
+    << // r0 : Array<Int> = [12, 5, 3, 2, 1]
 
 Objects and Classes
 -------------------
