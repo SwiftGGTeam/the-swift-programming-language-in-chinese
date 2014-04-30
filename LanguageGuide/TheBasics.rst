@@ -1,5 +1,5 @@
-Basic Types
-===========
+The Basics
+==========
 
 Swift is a :newTerm:`type safe` language.
 This means that it encourages you to be clear about
