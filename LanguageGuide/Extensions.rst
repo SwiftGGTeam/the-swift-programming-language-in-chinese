@@ -211,14 +211,19 @@ The following example adds a new instance method called ``toSpooky`` to the ``St
    -> extension String {
          func toSpooky() -> String {
             var i = 0
-            var spookyVersion = ""
-            for scalar in self.chars {
-               spookyVersion += (i % 2 == 0) ? scalar.uppercase : scalar.lowercase
+            var spooky = ""
+            for character in self {
+               let charString = String(character)
+               spooky += (i % 2 == 0) ? charString.uppercase : charString.lowercase
                ++i
             }
-            return spookyVersion
+            return spooky
          }
       }
+
+.. TODO: improve the fact that I have to convert character to a String
+   to get this to work, based on where we end up with uppercase / lowercase conversions,
+   particularly for the Character type.
 
 The ``toSpooky`` method returns a spookier version of the original string,
 by converting odd-numbered characters to uppercase,
@@ -343,16 +348,16 @@ Extensions can add new nested types to existing classes, structures and enumerat
 
 .. testcode:: extensionsNestedTypes
 
-   -> extension UnicodeScalar {
+   -> extension Character {
          enum Kind {
             case Vowel, Consonant, Other
          }
          var kind: Kind {
-            switch self.lowercase {
-               case 'a', 'e', 'i', 'o', 'u':
+            switch String(self).lowercase {
+               case "a", "e", "i", "o", "u":
                   return .Vowel
-               case 'b', 'c', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'm',
-                  'n', 'p', 'q', 'r', 's', 't', 'v', 'w', 'x', 'y', 'z':
+               case "b", "c", "d", "f", "g", "h", "j", "k", "l", "m",
+                  "n", "p", "q", "r", "s", "t", "v", "w", "x", "y", "z":
                   return .Consonant
                default:
                   return .Other
@@ -360,25 +365,30 @@ Extensions can add new nested types to existing classes, structures and enumerat
          }
       }
 
-This example adds a new nested enumeration to ``UnicodeScalar``.
+.. TODO: improve the fact that I have to convert character to a String
+   to get this to work, based on where we end up with uppercase / lowercase conversions,
+   particularly for the Character type.
+
+This example adds a new nested enumeration to ``Character``.
 This enumeration, called ``Kind``,
-gives a way to express the kind of letter that a particular scalar represents.
-Specifically, it expresses whether the scalar is
+gives a way to express the kind of letter that a particular character represents.
+Specifically, it expresses whether the character is
 a vowel or a consonant in a standard Latin script
 (without taking into account accents or regional variations),
-or whether it is some other kind of scalar.
+or whether it is some other kind of character.
 
-This example also adds a new computed instance property to ``UnicodeScalar``,
-called ``kind``, which returns the appropriate ``Kind`` enumeration member for that scalar.
+This example also adds a new computed instance property to ``Character``,
+called ``kind``,
+which returns the appropriate ``Kind`` enumeration member for that character.
 
-The nested enumeration can now be used with ``UnicodeScalar`` values:
+The nested enumeration can now be used with ``Character`` values:
 
 .. testcode:: extensionsNestedTypes
 
    -> func printLetterKinds(word: String) {
          println("'\(word)' is made up of the following kinds of letters:")
-         for scalar in word.chars {
-            switch scalar.kind {
+         for character in word {
+            switch character.kind {
                case .Vowel:
                   print("vowel ")
                case .Consonant:
@@ -395,7 +405,7 @@ The nested enumeration can now be used with ``UnicodeScalar`` values:
 
 This function, ``printLetterKinds``,
 takes an input ``String`` value and iterates over its characters.
-For each scalar, it considers the ``kind`` computed property for that scalar,
+For each character, it considers the ``kind`` computed property for that character,
 and prints an appropriate description of that kind.
 The ``printLetterKinds`` function can then be called
 to print the kinds of letters in an entire word,
@@ -403,7 +413,7 @@ as shown here for the word ``"Hello"``.
 
 .. note::
 
-   ``scalar.kind`` is already known to be of type ``UnicodeScalar.Kind``.
-   Because of this, all of the ``UnicodeScalar.Kind`` member values
+   ``character.kind`` is already known to be of type ``Character.Kind``.
+   Because of this, all of the ``Character.Kind`` member values
    can be written in shorthand form inside the ``switch`` statement,
-   such as ``.Vowel`` rather than ``UnicodeScalar.Kind.Vowel``.
+   such as ``.Vowel`` rather than ``Character.Kind.Vowel``.
