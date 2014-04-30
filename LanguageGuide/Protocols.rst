@@ -14,6 +14,12 @@ Any type that satisfies the requirements of a protocol is said to
 Protocols can require that conforming types have specific
 instance properties, instance methods, type methods, operators, and subscripts.
 
+.. FIXME: Protocols should also be able to support initializers,
+   and indeed you can currently write them,
+   but they don't work due to rdar://13695680.
+   I'll need to write about them if this is fixed by WWDC,
+   or at least mention them in the list above.
+
 .. _Protocols_ProtocolSyntax:
 
 Protocol Syntax
