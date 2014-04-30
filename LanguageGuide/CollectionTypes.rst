@@ -97,12 +97,12 @@ and are always clear about what they may contain.
 Array Type Shorthand Syntax
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Swift's array type is written in full as ``Array<SomeType>``,
+The type of a Swift array is written in full as ``Array<SomeType>``,
 where ``SomeType`` is the type that the array is allowed to store.
-However, array types can also be written in shorthand form as ``SomeType[]``.
+The type of an array can also be written in shorthand form as ``SomeType[]``.
 Although the two forms are functionally identical,
 the shorthand form is preferred,
-and is used throughout this guide when referring to array types.
+and is used throughout this guide when referring to the type of an array.
 
 .. _CollectionTypes_ArrayLiterals:
 
@@ -300,7 +300,7 @@ which is written as ``[]``
    -> someInts = []
    // someInts is now an empty array, but is still of type Int[]
 
-Swift's array type also provides
+Swift's ``Array`` type also provides
 an initializer for creating an array of a certain size
 with all of its values set to a provided default value.
 This initializer takes two arguments –

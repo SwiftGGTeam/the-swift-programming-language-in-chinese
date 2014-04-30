@@ -485,7 +485,7 @@ outside of the ``sort`` function's parentheses as a trailing closure:
 As mentioned above,
 trailing closures are most useful when the closure is sufficiently long that
 it is not possible to write it inline on a single line.
-As an example, Swift's array type has a ``map`` method
+As an example, Swift's ``Array`` type has a ``map`` method
 which takes a closure expression as its single argument.
 The closure is called once for each item in the array,
 and returns an alternative mapped value (possibly of some other type) for that item.
