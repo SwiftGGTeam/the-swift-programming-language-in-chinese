@@ -152,7 +152,7 @@ Tuple Type
     tuple-type --> ``(`` tuple-type-body-OPT ``)``
     tuple-type-body --> tuple-type-element-list ``...``-OPT
     tuple-type-element-list --> tuple-type-element | tuple-type-element ``,`` tuple-type-element-list
-    tuple-type-element --> attributes-OPT type | element-name type-annotation
+    tuple-type-element --> attributes-OPT ``inout``-OPT type | ``inout``-OPT element-name type-annotation
     element-name --> identifier
 
 .. NOTE: Info from Doug about the relationship between tuple types and tuple patterns:
