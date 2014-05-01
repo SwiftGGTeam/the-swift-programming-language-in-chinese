@@ -565,22 +565,115 @@ as the second argument to the ``sort`` function.
 Objects and Classes
 -------------------
 
-.. TODO: Pull in the Shape example code from old tour.
+Classes are created using ``class``,
+followed by the class's properties and methods in braces.
+A property declaration is the same
+as a constant or variable declaration,
+except that it is in the context of a class.
+Likewise, method and function declarations are the same.
 
-.. write-me::
+::
 
-* Declare classes with “class”
-* Declare methods with “func”
-* Declare properties with “var” and "let"
-* Make instances with “Class()”
-* Access methods and properties with “.”
-* Customize object lifecycle with “init” and "deinit"
+    class Shape {
+       var numberOfSides: Int = 0
+       func printDescription() {
+          println("A shape with \(numberOfSides) sides.")
+       }
+    }
 
-.. write-me::
+.. admonition:: Experiment
 
-* Indicate superclass and protocol conformance with “:”
-* Override superclass methods with “@override”
-* Call the superclass’s implentation with “super”
+   Try adding a constant property using ``let``
+   and adding another method that takes an argument.
+
+This version of the ``Shape`` class is missing something important:
+an initializer to set up the class when an instance is created.
+The initializer looks like a function,
+except it begins with ``init`` instead of ``func`` and a function name.
+
+::
+
+    class NamedShape {
+       var numberOfSides: Int = 0
+       var name: String
+
+       init(name: String) {
+          self.name = name
+       }
+
+       func describe() {
+          return "A shape with \(numberOfSides) sides."
+       }
+    }
+
+Notice how ``self`` is used to distinguish the ``name`` property
+from the ``name`` argument to the initializer.
+The arguments to the initializer are passed like a function call
+when you create an instance of the class.
+Every property needs to either have a value assigned
+when it is declared (like ``numberOfSides``)
+or in the initializer (like ``name``).
+
+::
+
+    var shape = NamedShape("test shape")
+    shape.name = "new shape name"
+    var shapeDescription = shape.describe()
+
+Dot syntax is used to access a the properties and methods of a class.
+
+.. TODO: I'd like to move the above fact earlier,
+   maybe to the first paragraph,
+   but at that point I didn't yet have an instance of the class.
+
+Classes that inherit from other classes
+include the superclass's name, separated by a colon.
+It's just fine to have a class with no superclass though ---
+classes in Swift don't all have a common root class.
+
+Methods on a subclass that override the superclass's implentation
+are marked with ``override`` ---
+overriding a method by accident, without ``override``,
+is detected by the compiler as an error.
+The compiler also detects methods with ``override``
+that don't actually override any method in the superclass.
+
+::
+
+    class Square: NamedShape {
+       var sideLength: Double
+
+       init(sideLength: Double, name: String) {
+          self.sideLength = sideLength
+          super.init(name)
+          numberOfSides = 4
+       }
+
+       func area() ->  Double {
+          return sideLength * sideLength
+       }
+
+       override describe() -> String {
+          return "A square with sides of length \(sideLength)."
+       }
+    }
+
+.. admonition:: Experiment
+
+   Try making another subclass of ``NamedShape``
+   called ``Circle``
+   which takes a radius and a name
+   as arguments to its initializer,
+   and implements an ``area`` and ``describe`` method.
+
+The initializer of a class with a superclass
+has three parts:
+
+1. Setting the value of properties that the subclass declares.
+
+2. Calling the superclass's initializer.
+
+3. Setting or changing the value of properties that the superclass declares.
 
 Enumerations and Structures
 ---------------------------
