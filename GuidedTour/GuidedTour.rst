@@ -172,7 +172,7 @@ the index or key in brackets.
        ]
     << // forecasts : Dictionary<String, Double> = Dictionary<String, Double>(1.33333333333333, 3, <DictionaryBufferOwner<String, Double> instance>)
     -> forecasts["San Francisco"] < forecasts["Paris"]
-    << // r0 : Bool = false
+    <$ : Bool = false
 
 .. admonition:: Experiment
 
@@ -189,7 +189,7 @@ the index or key in brackets.
         ]
     << // occupations : Dictionary<String, String> = Dictionary<String, String>(1.33333333333333, 3, <DictionaryBufferOwner<String, String> instance>)
     -> occupations["Jayne"] == "Doctor"
-    << // r0 : Bool = false
+    <$ : Bool = false
     ---
 
 An empty array is written ``[]``
@@ -398,9 +398,9 @@ you can specify each parameter by name when calling the function.
           return "Hello \(name), today is \(day)."
        }
     -> greet("Bob", "Tuesday")
-    << // r0 : String = "Hello Bob, today is Tuesday."
+    <$ : String = "Hello Bob, today is Tuesday."
     -> greet(name:"Alice", "Wednesday")
-    << // r1 : String = "Hello Alice, today is Wednesday."
+    <$ : String = "Hello Alice, today is Wednesday."
 
 .. admonition:: Experiment
 
@@ -415,7 +415,7 @@ Functions can return multiple values using a tuple.
          return (3.59, 3.69, 3.79)
       }
    >> getGasPrices()
-   << // r0 : (Double, Double, Double) = (3.59, 3.69, 3.79)
+   <$ : (Double, Double, Double) = (3.59, 3.69, 3.79)
 
 Functions can also take a variable number of arguments,
 collecting them into an array.
@@ -431,9 +431,9 @@ collecting them into an array.
          return sum
       }
    -> sumOf()
-   << // r0 : Int = 0
+   <$ : Int = 0
    -> sumOf(42, 597, 12)
-   << // r1 : Int = 651
+   <$ : Int = 651
 
 .. admonition:: Experiment
 
@@ -454,7 +454,7 @@ that were declared in the outer function.
           return y
        }
     -> returnFifteen()
-    << // r0 : Int = 15
+    <$ : Int = 15
 
 .. admonition:: Experiment
 
@@ -476,7 +476,7 @@ This means a function can return another function as its value.
     -> var increment = makeIncrementer()
     << // increment : (Int -> Int) = <unprintable value>
     -> increment(7)
-    << // r0 : Int = 8
+    <$ : Int = 8
 
 .. TODO: Confirm spelling of "incrementer" (not "incrementor").
 
@@ -517,7 +517,7 @@ and have their arguments separated from their body by ``in``.
        }
     << // triple : Int -> Int = <unprintable value>
     -> triple(5)
-    << // r0 : Int = 15
+    <$ : Int = 15
 
 .. The type of "number" can be omitted above,
    and in fact the parens are probably not needed either.
@@ -538,7 +538,7 @@ of their only statement.
     -> let shortTriple: Int -> Int = { 3 * $0 }
     << // shortTriple : Int -> Int = <unprintable value>
     -> shortTriple(5)
-    << // r0 : Int = 15
+    <$ : Int = 15
 
 A closure passed as the last argument to a function
 can appear immediately after the function call.
@@ -546,7 +546,7 @@ can appear immediately after the function call.
 .. testcode::
 
     -> sort([1, 5, 3, 12, 2]) { $0 > $1 }
-    << // r0 : Array<Int> = [12, 5, 3, 2, 1]
+    <$ : Array<Int> = [12, 5, 3, 2, 1]
 
 .. admonition:: Experiment
 
@@ -560,7 +560,7 @@ as the second argument to the ``sort`` function.
 .. testcode::
 
     -> sort([1, 5, 3, 12, 2], >)
-    << // r0 : Array<Int> = [12, 5, 3, 2, 1]
+    <$ : Array<Int> = [12, 5, 3, 2, 1]
 
 Objects and Classes
 -------------------
