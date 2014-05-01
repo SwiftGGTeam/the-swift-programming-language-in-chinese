@@ -333,12 +333,6 @@ The Swift Standard Library also defines types for various sizes of
 signed and unsigned integers,
 as described in :ref:`BasicTypes_Integers`.
 
-.. TR: The prose assumes underscores only belong between digits.
-   Is there a reason to allow them at the end of a literal?
-   Java and Ruby both require underscores to be between digits.
-   Also, are adjacent underscores meant to be allowed, like 5__000?
-   (REPL supports them as of swift-1.21 but it seems odd.)
-
 .. langref-grammar
 
     integer_literal ::= [0-9][0-9_]*
