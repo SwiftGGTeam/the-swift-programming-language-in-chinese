@@ -464,7 +464,7 @@ that is written outside of (and *after*) the parentheses of the function call it
 
 .. testcode:: closureSyntax
 
-   -> func someFunctionThatTakesAClosure(() -> ()) {
+   -> func someFunctionThatTakesAClosure(closure: () -> ()) {
          // function body goes here
       }
    ---
@@ -500,7 +500,7 @@ must be on the same line as the opening brace of the second trailing closure:
 
 .. testcode:: closureSyntax
 
-   -> func someFunctionThatTakesTwoClosures(() -> (), () -> ()) {
+   -> func someFunctionThatTakesTwoClosures(first: () -> (), second: () -> ()) {
          // function body goes here
       }
    ---
