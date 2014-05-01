@@ -141,10 +141,15 @@ String and character literals can include the following special characters:
 .. testcode:: specialCharacters
 
    -> let wiseWords  = "\"Imagination is more important than knowledge\" - Einstein"
+   << // wiseWords : String = "\"Imagination is more important than knowledge\" - Einstein"
+   >> println(wiseWords)
    </ "Imagination is more important than knowledge" - Einstein
    -> let dollarSign = '\x24'        // $,  Unicode code point U+0024
+   << // dollarSign : Character = <unprintable value>
    -> let blackHeart = '\u2665'      // ♥,  Unicode code point U+2665
+   << // blackHeart : Character = <unprintable value>
    -> let swiftHeart = '\U0001F496'  // 💖, Unicode code point U+1F496
+   << // swiftHeart : Character = <unprintable value>
 
 .. what about SNOWMAN WITHOUT SNOW?
    Unicode: U+26C4 U+FE0F, UTF-8: E2 9B 84 EF B8 8F
