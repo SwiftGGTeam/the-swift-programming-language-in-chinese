@@ -181,10 +181,8 @@ The parentheses around a tuple pattern that contains a single element have no ef
 The pattern matches values of that single element's type. For example, the following are
 equivalent::
 
-    let (a) = (2) // a: Int = 2
-    let (a) = 2 // a: Int = 2
-    let (a: Int) = (2) // a: Int = 2
-    let (a: Int) = 2 // a: Int = 2
+    let a = 2        // a: Int = 2
+    let (a) = 2      // a: Int = 2
     let (a): Int = 2 // a: Int = 2
 
 .. langref-grammar

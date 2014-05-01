@@ -668,7 +668,7 @@ see :ref:`Closures_ClosureExpressions`.
     closure-expression --> ``{`` closure-signature-OPT statements ``}``
     closure-expressions --> closure-expression closure-expressions-OPT
 
-    closure-signature --> tuple-pattern function-signature-result-OPT ``in``
+    closure-signature --> parameter-clause function-signature-result-OPT ``in``
     closure-signature --> identifier-list function-signature-result-OPT ``in``
 
     anonymous-closure-argument --> dollar-identifier
