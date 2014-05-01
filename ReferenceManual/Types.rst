@@ -199,7 +199,7 @@ Function Type
 
     Grammar of a function type
 
-    function-type --> type ``->`` attributes-OPT type
+    function-type --> type ``->`` type
 
 .. NOTE: Functions are first-class citizens in Swift,
     except for generic functions, i.e., parametric polymorphic functions.
