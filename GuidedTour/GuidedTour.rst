@@ -576,8 +576,8 @@ Likewise, method and function declarations are the same.
 
     class Shape {
        var numberOfSides: Int = 0
-       func printDescription() {
-          println("A shape with \(numberOfSides) sides.")
+       func describe() -> String {
+          return "A shape with \(numberOfSides) sides."
        }
     }
 
@@ -601,7 +601,7 @@ except it begins with ``init`` instead of ``func`` and a function name.
           self.name = name
        }
 
-       func describe() {
+       func describe() -> String {
           return "A shape with \(numberOfSides) sides."
        }
     }
