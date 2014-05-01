@@ -8,7 +8,7 @@ In Swift, this can be done in a single line:
 .. K&R uses “hello, world”.
    It seems worth breaking with tradition to use proper casing.
 
-.. testcode:: hello-world
+.. testcode::
 
    -> println("Hello, world")
    << Hello, world
@@ -49,7 +49,7 @@ The value of a constant can be assigned only once,
 although it does not need to be known at compile time.
 The value of a variable can be assigned multiple times.
 
-.. testcode:: var
+.. testcode::
 
    -> var myVariable = 42
    << // myVariable : Int = 42
@@ -75,7 +75,7 @@ The value of a variable can be assigned multiple times.
 A variable must have the same type
 as the value you want to assign to it.
 
-.. testcode:: typecheck
+.. testcode::
 
     -> var greeting = "Hello"
     << // greeting : String = "Hello"
@@ -99,7 +99,7 @@ specify an explicit type
 by writing the type after the variable,
 separated by a colon.
 
-.. testcode:: type-annotation
+.. testcode::
 
    -> let implicitString = "Hello"
    << // implicitString : String = "Hello"
@@ -120,7 +120,7 @@ Values are never implicitly converted or cast to another type.
 If you need to convert a value to a different type,
 make an instance of the desired type explicitly.
 
-.. testcode:: cast
+.. testcode::
 
    -> let label = "The width is "
    << // label : String = "The width is "
@@ -139,7 +139,7 @@ is to use the special escape ``\(`` ``)`` in a string,
 which includes the string value of an expression
 as part of the string.
 
-.. testcode:: string-interpolation
+.. testcode::
 
    -> let apples = 3
    << // apples : Int = 3
@@ -158,7 +158,7 @@ Arrays and dictionaries are written using brackets (``[]``)
 and their elements are accessed by writing
 the index or key in brackets.
 
-.. testcode:: array-dict
+.. testcode::
 
     -> let fruits = ["apple", "orange", "banana"]
     << // fruits : Array<String> = ["apple", "orange", "banana"]
@@ -198,7 +198,7 @@ since the type of an empty array or dictionary
 can't be inferred from its content ---
 specify it expliticly.
 
-.. testcode:: empty-array-dict
+.. testcode::
 
    -> var emptyArray: Array<String> = []
    << // emptyArray : Array<String> = []
@@ -214,7 +214,7 @@ Control Flow
 Use ``if`` to choose between blocks of code
 by checking Boolean conditions.
 
-.. testcode:: if
+.. testcode::
 
    -> let haveJellyBabies = false
    << // haveJellyBabies : Bool = false
@@ -239,7 +239,7 @@ Use ``switch`` to choose between blocks of code
 where each block of code is associated
 with a possible value.
 
-.. testcode:: simple-switch
+.. testcode::
 
    -> let vegetable = "cucumber"
    << // vegetable : String = "cucumber"
@@ -273,7 +273,7 @@ at the end of each case‘s code.
 Switches support a variety of complex matching criteria,
 such as tuple unpacking and ``where`` clauses:
 
-.. testcode:: fancy-switch
+.. testcode::
 
    -> let somePoint = (1, 1)
    << // somePoint : (Int, Int) = (1, 1)
@@ -299,7 +299,7 @@ such as tuple unpacking and ``where`` clauses:
 
 Repeat a block of code for each item in a collection with ``for``.
 
-.. testcode:: for-each
+.. testcode::
 
     -> let listOfNumbers = 1..5
     << // listOfNumbers : Range<Int> = Range<Int>(1, 6)
@@ -317,7 +317,7 @@ Repeat a block of code for each item in a collection with ``for``.
    Notice that 5 is omitted from the sum.
    When would you want to include or exclude the final number?
 
-.. testcode:: for-dict
+.. testcode::
 
    -> let interestingNumbers = [
          "Prime": [2, 3, 5, 7, 11, 13],
@@ -344,7 +344,7 @@ Repeat a block of code for each item in a collection with ``for``.
 
 Loops can keep an explicit counter or index.
 
-.. testcode:: c-for
+.. testcode::
 
    -> for var i = 0; i < 5; ++i {
          println(i)
@@ -359,7 +359,7 @@ Repeat a block of code until a condition changes using ``while``.
 The condition of a loop can be an the end instead,
 ensuring that the loop is run at least once.
 
-.. testcode:: while
+.. testcode::
 
    -> var n = 2
    << // n : Int = 2
@@ -392,7 +392,7 @@ you can specify each parameter by name when calling the function.
    That is, "init (withFoo : Int)" and "init (withBar : String)"
    both have the function name "init", but have different types.
 
-.. testcode:: func
+.. testcode::
 
     -> func greet(name: String, day: String) -> String {
           return "Hello \(name), today is \(day)."
@@ -409,7 +409,7 @@ you can specify each parameter by name when calling the function.
 
 Functions can return multiple values using a tuple.
 
-.. testcode:: func-tuple
+.. testcode::
 
    -> func getGasPrices() -> (Double, Double, Double) {
          return (3.59, 3.69, 3.79)
@@ -420,7 +420,7 @@ Functions can return multiple values using a tuple.
 Functions can also take a variable number of arguments,
 collecting them into an array.
 
-.. testcode:: functions
+.. testcode::
 
    -> // Reimplement the Standard Library sum function for Int values.
    -> func sumOf(numbers: Int...) -> Int {
@@ -443,7 +443,7 @@ Functions can be nested.
 Nested functions have access to variables
 that were declared in the outer function.
 
-.. testcode:: nested-func
+.. testcode::
 
     -> func returnFifteen () -> Int {
           var y = 10
@@ -465,7 +465,7 @@ that were declared in the outer function.
 Functions are a first-class type.
 This means a function can return another function as its value.
 
-.. testcode:: return-func
+.. testcode::
 
     -> func makeIncrementer() -> (Int -> Int) {
           func addOne (number: Int) -> Int {
@@ -482,7 +482,7 @@ This means a function can return another function as its value.
 
 A function can take another function as one of its argument.
 
-.. testcode:: pass-func
+.. testcode::
 
     -> // Re-implement the Standard Library sort function.
     -> func bubbleSort (var list: Array<Int>, outOfOrder: (Int, Int) -> Bool) -> Array<Int> {
@@ -508,7 +508,7 @@ except you don't give them a name when you declare them.
 They are written as code surrounded by braces (``{}``)
 and have their arguments separated from their body by ``in``.
 
-.. testcode:: closure
+.. testcode::
 
     -> let triple: Int -> Int = {
           (number: Int) in
@@ -533,7 +533,7 @@ the parameters can be referred to by number instead of by name.
 Single statement closures implicitly return the value
 of their only statement.
 
-.. testcode:: closure-brief
+.. testcode::
 
     -> let shortTriple: Int -> Int = { 3 * $0 }
     << // shortTriple : Int -> Int = <unprintable value>
@@ -543,7 +543,7 @@ of their only statement.
 A closure passed as the last argument to a function
 can appear immediately after the function call.
 
-.. testcode:: trailing-closure
+.. testcode::
 
     -> sort([1, 5, 3, 12, 2]) { $0 > $1 }
     << // r0 : Array<Int> = [12, 5, 3, 2, 1]
@@ -557,7 +557,7 @@ The previous listing can be written without a closure at all
 by passing the ``>`` operator
 as the second argument to the ``sort`` function.
 
-.. testcode:: operator-closure
+.. testcode::
 
     -> sort([1, 5, 3, 12, 2], >)
     << // r0 : Array<Int> = [12, 5, 3, 2, 1]
