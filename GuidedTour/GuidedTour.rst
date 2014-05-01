@@ -58,10 +58,7 @@ The value of a variable can be assigned multiple times.
    << // myVariable : Int = 50
    -> let myConstant = 42
    << // myConstant : Int = 42
-   -> myConstant = 100  // error
-   !! <REPL Input>:1:12: error: cannot assign to 'let' value 'myConstant'
-   !! myConstant = 100  // error
-   !! ~~~~~~~~~~ ^
+   // myConstant = 100  // Uncomment to see the error
 
 .. admonition:: Experiment
 
@@ -79,10 +76,7 @@ as the value you want to assign to it.
 
     -> var greeting = "Hello"
     << // greeting : String = "Hello"
-    -> greeting = 123
-    !! <REPL Input>:1:10: error: expression does not type-check
-    !! greeting = 123
-    !! ~~~~~~~~~^~~~~
+    // greeting = 123  // Uncomment to see the error
 
 In the previous example,
 the compiler understands that ``greeting`` is a string
