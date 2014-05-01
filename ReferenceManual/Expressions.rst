@@ -49,6 +49,8 @@ Prefix operators take one argument,
 the expression that follows them.
 
 .. TR: Does it make sense to call out the left-to-right grouping?
+   
+   Probably obvious, but it doesn't hurt to call it out.
 
 The Swift Standard Library provides the following prefix operators:
 
@@ -871,6 +873,11 @@ the parentheses can be omitted: ::
    per [Contributor 6004] 2014-03-04 email.
    Not documenting those in the prose or grammar
    even though they happen to still work.
+
+.. TODO: File a bug asking for a definite answer here.
+   Either we need to add discussion of them here
+   or Dave needs to remove them from the Guide.
+   (CC Dave)
 
 
 .. _Expressions_InitializerExpression:
