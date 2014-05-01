@@ -554,7 +554,7 @@ It has one of the following forms:
 The first form is understood as a member of the superclass.
 This allows a subclass to call the superclass's
 implementation of a method that it overrides,
-to get and set propertiess defined by its superclass,
+to get and set properties defined by its superclass,
 and to access its superclass's implementation of getters and setters.
 
 .. TR: Confirm the above about properties.
