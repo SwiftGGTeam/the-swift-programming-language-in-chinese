@@ -1,18 +1,115 @@
 Strings and Characters
 ======================
 
+A :newTerm:`string` is an ordered collection of characters,
+such as ``"hello, world"`` or ``"arbitrary"``.
+Swift strings are represented by the ``String`` type,
+which is a collection of multiple ``Character`` values.
+Any ``String`` can be iterated as a collection
+to retrieve each of its ``Character`` member values in turn.
+
 Strings
 -------
 
 .. write-me::
 
-.. x the String type
-.. x mention bridging to NSString
-.. x how to construct a String from a double-quote string literal
-.. x how to construct an empty String
-.. x how to construct from length and Character (cf Array)
-.. x strings are immutable / relationship with var and let
-.. x strings are value types, not reference types
+.. note::
+
+   Swift's ``String`` type is bridged seamlessly to Objective-C's ``NSString`` class.
+   If you are working with the Foundation framework in Cocoa or Cocoa Touch,
+   the entire ``NSString`` API is available to call on any ``String`` value you create,
+   in addition to the ``String`` features described in this chapter.
+   You can also use a ``String`` value with any API that requires an ``NSString`` instance.
+   
+   For more information about using ``String`` with Foundation and Cocoa,
+   see *Building Cocoa Apps With Swift*.
+
+.. TODO: make this be a link to BCAWS.
+
+.. QUESTION: This chapter is the only time I talk in detail about bridging in the Guide.
+   Is this okay to do?
+
+Strings are Value Types in Swift
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Swift's ``String`` type is a *value type*.
+This means that if you create a ``String`` value in Swift,
+that ``String`` value is *copied* when it is passed to a function or method,
+or when it is assigned to a constant or variable.
+In each case, a new copy of the existing ``String`` value is created,
+and the new copy is passed or assigned, rather than the original version.
+(Value types are described in :ref:`ClassesAndStructures_ValueTypesAndReferenceTypes`.)
+
+This behavior is different to ``NSString`` in Cocoa.
+When you create an ``NSString`` instance in Cocoa,
+and pass it to a function or method or assign it to a variable,
+you are always passing or assigning a *reference* to the same single ``NSString``.
+No copying of the string takes place, unless you specifically request it.
+
+Swift's copy-by-default ``String`` behavior
+matches the way that strings are used in code in practice.
+When a function or method passes you a ``String`` value,
+it is clear that you own that exact ``String`` value,
+and it will not be modified unless you modify it yourself.
+
+Behind the scenes, Swift's compiler optimizes string usage
+so that actual copying only takes place when absolutely necessary.
+This ensures that you always get great performance
+when working with strings as value types within your code.
+
+.. TODO: talk about what this means for bridging to NSString,
+   and how the semantics for working with NSString
+   relate to the default value semantics used by String.
+
+String Mutability
+~~~~~~~~~~~~~~~~~
+
+In Objective-C and Cocoa,
+you choose between two classes (``NSString`` and ``NSMutableString``)
+to determine whether a string is allowed to be modified (or *mutated*).
+Swift does not have this distinction.
+Instead, you indicate whether a particular ``String`` can be modified
+by assigning it to a variable (in which case it can be modified),
+or to a constant (in which case it cannot be modified).
+
+.. TODO: give an example of this.
+
+String Literals
+~~~~~~~~~~~~~~~
+
+You can include fixed ``String`` values within your code
+by writing those values as :newTerm:`string literals`.
+String literals are a sequence of textual characters
+surrounded by a pair of double quotes (``""``),
+and can be used to provide an initial value for a constant or variable
+of type ``String``:
+
+.. testcode:: stringLiterals
+
+   -> let someString = "Some string literal value"
+   << // someString : String = "Some string literal value"
+
+Note that Swift infers a type of ``String`` for the ``someString`` constant,
+because it is initialized with a string literal value.
+
+Empty Strings
+~~~~~~~~~~~~~
+
+If you need to create an empty string value as the starting point for building a string,
+you can do so by assigning an empty string literal to a variable,
+or by initializing a new ``String`` with initialization syntax:
+
+.. testcode:: emptyStrings
+
+   -> var emptyString = ""               // empty string literal
+   << // emptyString : String = ""
+   -> var anotherEmptyString = String()  // initialization syntax
+   << // anotherEmptyString : String = ""
+   // these two strings are both empty, and are equivalent to each other
+
+.. QUESTION: I've made both of these variables,
+   because you'd be likely to use them as such if they start out empty.
+   Is this the correct approach to take here?
 
 Characters
 ----------
@@ -20,8 +117,38 @@ Characters
 .. write-me::
 
 .. x the Character type (handwavey for now as to what it means in Unicode terms)
-.. x escaped characters such as '\n'
-.. x unicode escaped code points such as '\u0041' and '\U0001F436'
+
+Character Literals
+------------------
+
+.. write-me::
+
+Special Characters
+------------------
+
+String and character literals can include the following special characters:
+
+* The escaped special characters ``\0`` (null character), ``\\`` (backslash),
+  ``\t`` (horizontal tab), ``\n`` (line feed), ``\r`` (carriage return),
+  ``\"`` (double quote) and ``\'`` (single quote)
+* Two-byte Unicode code points, written as ``\xnn``,
+  where ``nn`` is two hexadecimal digits
+* Four-byte Unicode code points, written as ``\unnnn``,
+  where ``nnnn`` is four hexadecimal digits
+* Eight-byte Unicode code points, written as ``\Unnnnnnnn``,
+  where ``nnnnnnnn`` is eight hexadecimal digits
+
+.. testcode:: specialCharacters
+
+   -> let wiseWords  = "\"Imagination is more important than knowledge\" - Einstein"
+   </ "Imagination is more important than knowledge" - Einstein
+   -> let dollarSign = '\x24'        // $,  Unicode code point U+0024
+   -> let blackHeart = '\u2665'      // ♥,  Unicode code point U+2665
+   -> let swiftHeart = '\U0001F496'  // 💖, Unicode code point U+1F496
+
+.. what about SNOWMAN WITHOUT SNOW?
+   Unicode: U+26C4 U+FE0F, UTF-8: E2 9B 84 EF B8 8F
+   U+FE0F is the unicode variation selector.
 .. x how to construct a Character from a single-quote character literal
 .. x how to construct an empty Character
 
@@ -32,9 +159,15 @@ String and Character Concatenation
 
 .. x adding two Strings / a String and a Character / two Characters to make a String
 .. x appending a String or a Character onto a String
+.. x how to construct from length and Character (cf Array)
 
-String as a Collection of Characters
-------------------------------------
+String Interpolation
+--------------------
+
+.. write-me::
+
+Strings as a Collection of Characters
+-------------------------------------
 
 .. write-me::
 
@@ -51,6 +184,15 @@ Comparing Strings
 .. x equivalence for String in Swift (right now)
 .. x isEmpty property for == ""
 
+Slicing Strings
+---------------
+
+.. write-me::
+
+.. slicing a String (based on a good example to come from Dave)
+.. String can't be indexed with integers (again, cf NSString)
+.. bidirectional indexing (and why this is the case)
+
 String Functions and Methods
 ----------------------------
 
@@ -58,9 +200,6 @@ String Functions and Methods
 
 .. .split()
 .. .startsWith() and .endsWith()
-.. slicing a String (based on a good example to come from Dave)
-.. String can't be indexed with integers (again, cf NSString)
-.. bidirectional indexing (and why this is the case)
 .. uppercaseString and lowercaseString??
 .. will Character have an uppercase and lowercase method?
 .. other generic functions from Collection
