@@ -13,6 +13,7 @@ Language Reference
     Attributes
     Patterns
     GenericParametersAndArguments
+    TechReviewQueries
     zzSummaryOfTheGrammar
 
 .. docnote:: To be included?
