@@ -586,10 +586,23 @@ Likewise, method and function declarations are the same.
    Try adding a constant property using ``let``
    and adding another method that takes an argument.
 
+Instances of the class are created
+by putting parentheses after the class name,
+and the properties an methods of the instance
+are accessed using dot syntax.
+
+::
+
+    var shape = Shape()
+    shape.numberOfSides = 7
+    var shapeDescription = shape.describe()
+
 This version of the ``Shape`` class is missing something important:
 an initializer to set up the class when an instance is created.
-The initializer looks like a function,
-except it begins with ``init`` instead of ``func`` and a function name.
+The initializer similar to a function,
+but it begins with ``init`` instead of ``func`` and has no function name.
+
+.. TODO: Probably worth pointing out that the initializer isn't a method.
 
 ::
 
@@ -613,18 +626,6 @@ when you create an instance of the class.
 Every property needs to either have a value assigned
 when it is declared (like ``numberOfSides``)
 or in the initializer (like ``name``).
-
-::
-
-    var shape = NamedShape("test shape")
-    shape.name = "new shape name"
-    var shapeDescription = shape.describe()
-
-Dot syntax is used to access a the properties and methods of a class.
-
-.. TODO: I'd like to move the above fact earlier,
-   maybe to the first paragraph,
-   but at that point I didn't yet have an instance of the class.
 
 Classes that inherit from other classes
 include the superclass's name, separated by a colon.
