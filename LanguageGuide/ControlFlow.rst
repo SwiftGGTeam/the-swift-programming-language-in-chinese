@@ -128,22 +128,6 @@ Use the ``for``-``in`` loop with an array to iterate over its items:
    </ Hello, Brian!
    </ Hello, Jack!
 
-Swift's ``String`` type has a ``chars`` property,
-which provides the individual characters in the string as an array of ``UnicodeScalar`` values
-(also known as an “array of type ``UnicodeScalar``”).
-Use this property to iterate over the characters in a string in order:
-
-.. testcode:: forLoops
-
-   -> for scalar in "Hello".chars {
-         println(scalar)
-      }
-   </ H
-   </ e
-   </ l
-   </ l
-   </ o
-
 You can also iterate over a dictionary to access its key-value pairs.
 Each item in the dictionary is returned as a ``(key, value)`` tuple
 when the dictionary is iterated,
@@ -168,11 +152,25 @@ The contents of a ``Dictionary`` are inherently unordered,
 and iterating over them does not guarantee the order in which they will be retrieved.
 (Arrays and Dictionaries are described in more detail in :doc:`CollectionTypes`.)
 
+In addition to arrays and dictionaries,
+you can also use the ``for``-``in`` loop to iterate over the ``Character`` values in a string:
+
+.. testcode:: forLoops
+
+   -> for character in "Hello" {
+         println(character)
+      }
+   </ H
+   </ e
+   </ l
+   </ l
+   </ o
+
 .. TODO: provide some advice on how to iterate over a Dictionary in order
    (perhaps sorted by key), using a predicate or array sort or some kind.
 
 The examples above use a ``for``-``in`` loop to iterate
-ranges, arrays, strings, and dictionaries.
+ranges, arrays, dictionaries, and strings.
 However, you can use this syntax to iterate *any* collection,
 including your own classes and collection types,
 as long as they conform to the ``Sequence`` protocol.
@@ -182,6 +180,9 @@ For more on protocols, including ``Sequence``, see :doc:`Protocols`.
    If so, they might make for a good example.
    What would the syntax be if they did?
    'for planet in Planet'?
+
+.. TODO: The Protocols chapter doesn't actually talk about the Sequence protocol.
+   Remove this final paragraph if this remains the case for WWDC.
 
 .. TODO: for (index, object) in enumerate(collection)
    and also for i in indices(collection) { collection[i] }
@@ -1023,24 +1024,21 @@ to create a cryptic puzzle phrase:
    << // puzzleInput : String = "great minds think alike"
    -> var puzzleOutput = ""
    << // puzzleOutput : String = ""
-   -> for letter in puzzleInput.chars {
-         switch letter {
+   -> for character in puzzleInput {
+         switch character {
             case 'a', 'e', 'i', 'o', 'u', ' ':
                continue
             default:
-               puzzleOutput += letter
+               puzzleOutput += character
          }
       }
    -> println(puzzleOutput)
    <- grtmndsthnklk
 
-The ``letter`` constant is inferred to be of type ``UnicodeScalar``
-by its iteration over a sequence of ``UnicodeScalar`` values.
-This is why the case statement compares ``letter`` against ``UnicodeScalar`` values
+The ``character`` constant is inferred to be of type ``Character``
+because it comes from a ``for``-``in`` iteration over the characters in a string.
+This is why the case statement compares ``character`` against ``Character`` values
 (with single quote marks) rather than ``String`` values.
-
-.. TODO: change this paragraph once we start iterating over Character values
-   rather than UnicodeScalar values.
 
 The code above calls the ``continue`` keyword whenever it matches a vowel or a space,
 causing the current iteration of the loop to end immediately
@@ -1095,14 +1093,14 @@ by exiting the ``switch`` statement whenever a match for that case is made.
    Comments are not statements, and do not cause a ``switch`` case to be ignored.
    Always use a ``break`` statement to ignore a ``switch`` case.
 
-The following example switches on a ``UnicodeScalar`` value,
+The following example switches on a ``Character`` value,
 and determines whether it represents a number symbol in one of four languages.
 Multiple values are covered in a single ``switch`` case for brevity:
 
 .. testcode:: breakInASwitchStatement
 
    -> let numberSymbol = '三'   // Simplified Chinese symbol for the number 3
-   << // numberSymbol : UnicodeScalar = '三'
+   << // numberSymbol : Character = <unprintable value>
    -> var possibleIntegerValue: Int?
    << // possibleIntegerValue : Int? = <unprintable value>
    -> switch numberSymbol {
@@ -1140,7 +1138,7 @@ and so the optional binding will only succeed
 if ``possibleIntegerValue`` was set to an actual value
 by one of the ``switch`` statement's first four cases.
 
-It is not practical to list every possible ``UnicodeScalar`` value in the example above,
+It is not practical to list every possible ``Character`` value in the example above,
 and so a ``default`` case provides a catchall for any characters that are not matched.
 This ``default`` case does not need to perform any action,
 and so it is written with a single ``break`` statement as its body.
