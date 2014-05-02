@@ -58,7 +58,7 @@ and describes the type inference behavior of Swift.
 
     Grammar of a type
 
-    type --> array-type | function-type | type-identifier | tuple-type | optional-type | protocol-composition-type | metatype-type
+    type --> array-type | function-type | type-identifier | tuple-type | optional-type | implicitly-unwrapped-optional-type | protocol-composition-type | metatype-type
 
 
 .. _Types_TypeAnnotation:
@@ -287,6 +287,9 @@ In other words, the following two declarations are equivalent::
     var optionalInteger: Int?
     var optionalInteger: Optional<Int>
 
+.. TODO: Rewrite the first sentence. In this case, '?' isn't the operator at all;
+    it's just punctuation.
+
 In both cases, the variable ``optionalInteger``
 is declared to have the type of an optional integer.
 Note that no whitespace may appear between the type and the ``?`` operator.
@@ -319,7 +322,6 @@ that has a value of ``Optional.None`` results in a runtime error.
 For examples that show how to use optional types,
 see :ref:`BasicTypes_Optionals`.
 
-
 .. langref-grammar
 
     type-optional ::= type-simple '?'-postfix
@@ -332,6 +334,21 @@ see :ref:`BasicTypes_Optionals`.
     Grammar of an optional type
 
     optional-type --> type ``?``
+
+
+.. _Types_ImplicitlyUnwrappedOptionalType:
+
+Implicitly Unwrapped Optional Type
+----------------------------------
+
+.. write-me::
+
+.. syntax-grammar::
+
+    Grammar of an implicitly unwrapped optional type
+
+    implicitly-unwrapped-optional-type --> type ``!``
+
 
 .. _Types_ProtocolCompositionType:
 
