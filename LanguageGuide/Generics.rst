@@ -254,7 +254,7 @@ a full explanation of how ``Stack`` is defined will be given below.)
 .. testcode:: genericStack
 
    -> struct Stack<T> {
-         var items = Array<T>()
+         var items = T[]()
          mutating func push(item: T) {
             items.append(item)
          }
@@ -318,7 +318,7 @@ Here's how a type parameter is used within the definition of ``Stack``:
 .. testcode:: genericStackDefinition
 
    -> struct Stack<T> {
-         var items = Array<T>()
+         var items = T[]()
          mutating func push(item: T) {
             items.append(item)
          }
@@ -385,7 +385,7 @@ or ``nil`` if the value could not be found:
 
 .. testcode:: typeConstraints
 
-   -> func findInt(array: Array<Int>, valueToFind: Int) -> Int? {
+   -> func findInt(array: Int[], valueToFind: Int) -> Int? {
          var index = 0
          for integer in array {
             if integer == valueToFind {
@@ -414,7 +414,7 @@ Here's how a generic version of ``findInt``, called ``findValue``, might be writ
 
 .. testcode:: typeConstraints
 
-   -> func findValue<T>(array: Array<T>, valueToFind: T) -> Int? {
+   -> func findValue<T>(array: T[], valueToFind: T) -> Int? {
          var index = 0
          for value in array {
             if value == valueToFind {
@@ -459,7 +459,7 @@ as part of the type parameter's definition when you define the function:
 
 .. testcode:: typeConstraintsEquatable
 
-   -> func findValue<T: Equatable>(array: Array<T>, valueToFind: T) -> Int? {
+   -> func findValue<T: Equatable>(array: T[], valueToFind: T) -> Int? {
          var index = 0
          for value in array {
             if value == valueToFind {

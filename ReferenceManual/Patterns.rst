@@ -181,10 +181,8 @@ The parentheses around a tuple pattern that contains a single element have no ef
 The pattern matches values of that single element's type. For example, the following are
 equivalent::
 
-    let (a) = (2) // a: Int = 2
-    let (a) = 2 // a: Int = 2
-    let (a: Int) = (2) // a: Int = 2
-    let (a: Int) = 2 // a: Int = 2
+    let a = 2        // a: Int = 2
+    let (a) = 2      // a: Int = 2
     let (a): Int = 2 // a: Int = 2
 
 .. langref-grammar
@@ -303,7 +301,7 @@ value with a range of integers in an ``Range`` object, as the following example 
     }
     // Prints "(1, 2) is near the origin."
 
-You can overload the ``~=`` to provide custom expression matching behavior.
+You can overload the ``~=`` operator to provide custom expression matching behavior.
 For example, you can rewrite the above example to compare the ``point`` expression
 with a string representations of points.
 

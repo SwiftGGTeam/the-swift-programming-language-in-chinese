@@ -14,6 +14,15 @@ Any type that satisfies the requirements of a protocol is said to
 Protocols can require that conforming types have specific
 instance properties, instance methods, type methods, operators, and subscripts.
 
+.. FIXME: Protocols should also be able to support initializers,
+   and indeed you can currently write them,
+   but they don't work due to rdar://13695680.
+   I'll need to write about them if this is fixed by WWDC,
+   or at least mention them in the list above.
+   UPDATE: actually, they *can* be used right now,
+   but only in a generic function, and not more generally with the protocol type.
+   I'm not sure I should mention them in this chapter until they work more generally.
+
 .. _Protocols_ProtocolSyntax:
 
 Protocol Syntax
@@ -223,7 +232,7 @@ a protocol can be used in many places where other types are allowed, including:
 
 * as a parameter type or return type in a function, method, or initializer
 * as the type of a constant, variable, or property
-* as the type of items in an ``Array``, ``Dictionary`` or other container
+* as the type of items in an array, dictionary, or other container
 
 .. note::
 
@@ -349,10 +358,9 @@ and to notify a ``DiceGameDelegate`` about its progress:
          let finalSquare = 25
          let dice = Dice(sides: 6, generator: LinearCongruentialGenerator())
          var square = 0
-         var board = Array<Int>()
+         var board = Int[](finalSquare + 1, 0)
          var delegate: DiceGameDelegate?
          init() {
-            for _ in 0..finalSquare { board.append(0) }
             board[03] = +08; board[06] = +11; board[09] = +09; board[10] = +02
             board[14] = -10; board[19] = -11; board[22] = -02; board[24] = -08
          }
@@ -375,6 +383,8 @@ and to notify a ``DiceGameDelegate`` about its progress:
             delegate?.gameDidEnd(self)
          }
       }
+
+.. TODO: update this example to use a closure to initialize the board property.
 
 (See the :ref:`ControlFlow_Break` section of the :doc:`ControlFlow` chapter
 for a description of the gameplay of the *Snakes and Ladders* game shown above.)
@@ -585,14 +595,14 @@ Collections of Protocol Types
 -----------------------------
 
 A protocol can be used as the type to be stored in
-a collection such as an ``Array`` or a ``Dictionary``,
+a collection such as an array or a dictionary,
 as mentioned in :ref:`Protocols_UsingProtocolsAsTypes`.
 This example creates an array of ``TextRepresentable`` things:
 
 .. testcode:: protocols
 
-   -> let things: Array<TextRepresentable> = [game, d12, simonTheHamster]
-   << // things : Array<TextRepresentable> = [<unprintable value>, <unprintable value>, <unprintable value>]
+   -> let things: TextRepresentable[] = [game, d12, simonTheHamster]
+   << // things : TextRepresentable[] = [<unprintable value>, <unprintable value>, <unprintable value>]
 
 It is now possible to iterate over the items in the array,
 and print each item's textual representation:
@@ -834,12 +844,12 @@ can be used to initialize an array that stores values of type ``AnyObject``:
 
 .. testcode:: protocolConformance
 
-   -> let objects: Array<AnyObject> = [
+   -> let objects: AnyObject[] = [
          Circle(radius: 2.0),
          Country(area: 243_610),
          Animal(legs: 4)
       ]
-   << // objects : Array<AnyObject> = [<unprintable value>, <unprintable value>, <unprintable value>]
+   << // objects : AnyObject[] = [<unprintable value>, <unprintable value>, <unprintable value>]
 
 The ``objects`` array is initialized with an array literal containing
 a ``Circle`` instance with a radius of 2 units;
@@ -908,13 +918,6 @@ Optional Protocol Requirements
    You have to try and access a value from the subscript,
    and see if the value you get back (which will be an optional)
    has a value or is nil.
-
-.. TODO: you can specify optional initializers,
-   but there doesn't seem to be a way to check for them or call them.
-   Doug has suggested that we should probably ban them,
-   which I've filed as rdar://16669554.
-   And in any case, even if you could check for them,
-   they might not work due to rdar://13695680.
 
 Protocols can define :newTerm:`optional requirements`,
 which do not have to be implemented by types that conform to the protocol.
@@ -1124,16 +1127,3 @@ Once the counter reaches zero, no more counting takes place:
 .. Protocol requirements can be marked as @unavailable,
    but this currently only works if they are also marked as @objc.
 .. Checking for (and calling) optional implementations via optional binding and closures
-
-.. Initializers
-.. ------------
-.. You can't construct from a protocol itself, 
-   but you can define initializer requirements in protocols
-.. TODO: although you can define initializer requirements,
-   you can't actually make use of them, due to rdar://13695680.
-   Don't mention the fact that you can define them unless they actually start working.
-.. TODO: use the Snakes & Ladders example to show how you can initialize from a type.
-   Perhaps a function that returns a random game type to play
-   (even though we only have one game)
-   and the game is instantiated through the type?
-   See protocols_init.swift in tspl_lab/examples.

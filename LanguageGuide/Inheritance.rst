@@ -293,10 +293,6 @@ You can present an inherited read-only property as a read-write property
 by providing both a getter and a setter in your subclass property override.
 You cannot, however, present an inherited read-write property as a read-only property.
 
-.. TODO: You can also convert a read-write property into a read-only property
-   (at least, you can as of Swift r16524), but this is not intended behavior
-   (as tracked by rdar://problem/16659058). I've not mentioned it as a result.
-
 .. note::
 
    If you provide a setter as part of a property override,

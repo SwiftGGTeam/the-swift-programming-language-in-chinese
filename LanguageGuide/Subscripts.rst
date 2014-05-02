@@ -4,7 +4,7 @@ Subscripts
 Classes, structures, and enumerations can define :newTerm:`subscripts`,
 which enable instances of that type to be queried via one or more
 values in square brackets after the instance name.
-This is similar to the way in which the elements in an ``Array`` instance
+This is similar to the way in which the elements in an array
 can be accessed as ``someArray[index]``,
 and elements in a ``Dictionary`` instance can be accessed as
 ``someDictionary[key]``.
@@ -95,7 +95,7 @@ by passing in a key of the appropriate type within subscript braces:
 .. testcode:: dictionarySubscript
 
    -> let numberOfLegs = ["spider": 8, "ant": 6, "cat": 4]
-   << // numberOfLegs : Dictionary<String, Int> = Dictionary<String, Int>(1.33333333333333, 3, <DictionaryBufferOwner<String, Int> instance>)
+   << // numberOfLegs : Dictionary<String, Int> = Dictionary<String, Int>(1.33333333333333, 3, <unprintable value>)
    -> let spiderLegs = numberOfLegs["spider"]
    << // spiderLegs : Int = 8
    /> spiderLegs is equal to \(spiderLegs)
@@ -133,7 +133,7 @@ The ``Matrix`` structure's subscript takes two integer parameters:
 
    -> struct Matrix {
          let rows: Int, columns: Int
-         var grid: Array<Double>
+         var grid: Double[]
          init(rows: Int, columns: Int) {
             self.rows = rows
             self.columns = columns
@@ -161,7 +161,7 @@ The ``Matrix`` structure's subscript takes two integer parameters:
 and creates an array that is large enough to store ``rows * columns`` values of type ``Double``.
 Each position in the matrix is given an initial value of ``0.0``.
 To achieve this, the array's size, and an initial cell value of ``0.0``,
-are passed to an ``Array`` initializer that creates and initializes a new array of the correct size.
+are passed to an array initializer that creates and initializes a new array of the correct size.
 (This initializer is described in more detail in :ref:`CollectionTypes_CreatingAnEmptyArray`.)
 
 .. testcode:: matrixSubscript

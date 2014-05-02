@@ -145,7 +145,7 @@ These names are valid identifiers within the scope of the closure.
     identifier-character --> identifier-head
     identifier-characters --> identifier-character identifier-characters-OPT
 
-    implicit-parameter-name --> ``$`` decimal-digits
+    dollar-identifier --> ``$`` decimal-digits
 
 
 .. _LexicalStructure_Keywords:
@@ -299,23 +299,6 @@ The following are examples of literals: ::
 
     literal --> integer-literal | floating-point-literal | textual-literal
 
-.. TR: Is the design here that integers can be turned into doubles,
-   but everything else has to use an explicit constructor
-   if the literal's type doesn't match the variable's type?
-
-   class Example { init(x : Int) {} }
-   var a = Example(10)   // works
-   var b : Example = 10  // fails
-
-   var x = Double(10)    // works
-   var y : Double = 10   // works
-
-   var s1 = String('x')  // works
-   var s2 : String = 'x' // fails
-   var s3 = "x"          // works
-   s1 == s3              -> true
-
-.. Note: The grammar for "literal-expression" is in "Expressions".
 
 .. _LexicalStructure_IntegerLiterals:
 
@@ -541,10 +524,10 @@ using the following escape sequences:
    in text mode, \n maps to the platform's line separator
    which could be CR or LF or CRLF.
 
-Characters can also be escaped by ``\x`` followed by two hexadecimal digits,
+Characters can also be expressed by ``\x`` followed by two hexadecimal digits,
 ``\u`` followed by four hexadecimal digits,
 or ``\U`` followed by eight hexadecimal digits.
-The digits in these escape codes identify a Unicode codepoint.
+The digits in these escape sequences identify a Unicode codepoint.
 
 The value of an expression can be inserted into a string literal
 by placing the expression in parentheses after a backslash (``\``).

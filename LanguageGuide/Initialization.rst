@@ -11,7 +11,7 @@ This initialization process is implemented by defining :newTerm:`initializers`,
 which are like special methods that can be called
 to create a new instance of a particular type.
 Instances of class types can also implement a :newTerm:`deinitializer`,
-which gives an oppprtunity to perform any custom cleanup that you require to be run
+which gives an opportunity to perform any custom cleanup that you require to be run
 when an instance of that class instance is destroyed.
 
 .. TODO: mention that memory is automatically managed by ARC
@@ -157,8 +157,8 @@ The ``boardColors`` array is initialized with a closure to set up its color valu
 .. testcode:: checkers
 
    -> struct CheckersBoard {
-         let boardColors: Array<Bool> = {
-            var temporaryBoard = Array<Bool>()
+         let boardColors: Bool[] = {
+            var temporaryBoard = Bool[]()
             var isBlack = false
             for i in 1..10 {
                for j in 1..10 {
@@ -208,7 +208,7 @@ Default values can be provided for initializer parameters,
 and tuples can be used as parameter types.
 Variadic parameters cannot be used.
 
-.. TODO: Update this section if, as, and when variadics start working for initializers.
+.. FIXME: Update this section if, as, and when variadics start working for initializers.
    The fact that they don't work currently is rdar://16535434.
 
 The following example defines a structure to store temperatures expressed in the Celsius scale.
@@ -359,7 +359,7 @@ structure types automatically receive a :newTerm:`memberwise initializer`
 if they provide default values for all of their stored properties,
 and do not define any of their own custom initializers.
 
-The memberwise initializer is used as a short-hand way
+The memberwise initializer is used as a shorthand way
 to initialise the member properties of new structure instances.
 Initial values for the properties of the new instance
 can be passed to the memberwise initializer by name:
@@ -1032,7 +1032,7 @@ a new ``ShoppingListItem`` instance:
 
 Here, a new array called ``breakfastList`` is created from
 an array literal containing three new ``ShoppingListItem`` instances.
-The type of the array is inferred to be ``Array<ShoppingListItem>``.
+The type of the array is inferred to be ``ShoppingListItem[]``.
 After creating the array,
 the name of the unnamed ``ShoppingListItem`` at the start of the array
 is changed to be ``"Orange juice"``, and it is marked as having been purchased.

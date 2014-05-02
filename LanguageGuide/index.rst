@@ -4,7 +4,7 @@ Language Guide
 .. toctree::
    :maxdepth: 1
 
-   BasicTypes
+   TheBasics
    BasicOperators
    Strings
    CollectionTypes

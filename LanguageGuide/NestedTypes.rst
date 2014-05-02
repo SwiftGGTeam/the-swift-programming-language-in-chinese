@@ -14,7 +14,7 @@ Types can be nested to as many levels as are required:
 .. testcode:: nestedTypes
 
    -> struct BlackjackCard {
-         enum Suit: UnicodeScalar {
+         enum Suit: Character {
             case Spades = '♠', Hearts = '♡', Diamonds = '♢', Clubs = '♣'
          }
          enum Rank: String {
@@ -59,7 +59,7 @@ either one or eleven. This characteristic is encapsulated in the logic above.
 The ``BlackjackCard`` structure defines two nested enumerations:
 
 * ``Suit``, which describes the four common playing card suits,
-  together with a raw ``UnicodeScalar`` value to represent their symbol
+  together with a raw ``Character`` value to represent their symbol
 * ``Rank``, which describes the thirteen possible playing card ranks,
   together with a raw ``String`` value to represent their name
 
@@ -110,7 +110,7 @@ by prefixing its name with the name of the type it is nested within:
 .. testcode:: nestedTypes
 
    -> let heartsSymbol = BlackjackCard.Suit.Hearts.toRaw()
-   << // heartsSymbol : UnicodeScalar = '♡'
+   << // heartsSymbol : Character = <unprintable value>
    /> heartsSymbol is '\(heartsSymbol)'
    </ heartsSymbol is '♡'
 

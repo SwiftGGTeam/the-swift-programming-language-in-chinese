@@ -205,7 +205,7 @@ This enables a function to return a combination of values as part of one compoun
 
 .. testcode:: functionParameters
 
-   -> func splitOnFirst(string: String, splitter: UnicodeScalar) -> (String, String?) {
+   -> func splitOnFirst(string: String, splitter: Character) -> (String, String?) {
          let size = string.size()
          for i in 0...size {
             if string[i] == splitter {
@@ -216,7 +216,7 @@ This enables a function to return a combination of values as part of one compoun
       }
 
 This example defines a function called ``splitOnFirst``,
-which looks for a ``UnicodeScalar`` called ``splitter``
+which looks for a ``Character`` called ``splitter``
 within a ``String`` called ``string``.
 It returns a tuple of type ``(String, String?)``.
 This tuple contains an initial ``String``
@@ -272,8 +272,8 @@ and also enables values to be passed in a different order to the original functi
 
 .. testcode:: functionParameters
 
-   -> func containsCharacter(string: String, characterToFind: UnicodeScalar) -> Bool {
-         for character in string.chars {
+   -> func containsCharacter(string: String, characterToFind: Character) -> Bool {
+         for character in string {
             if character == characterToFind {
                return true
             }
@@ -395,7 +395,7 @@ separated from the local parameter name by a space:
 
    -> func columnize(_ stringToColumnize: String) -> String {
          var output = ""
-         for character in stringToColumnize.chars {
+         for character in stringToColumnize {
             output += character + '\n'
          }
          return output
@@ -652,7 +652,7 @@ and can be used anywhere that a ``Sequence`` is valid.
    and it must always appear last in the parameters list,
    to avoid ambiguity when calling the function with multiple parameters.
 
-.. TODO: A function's variadic parameter cannot be referred to by name
+.. FIXME: A function's variadic parameter cannot be referred to by name
    when the function is called.
    I've reported this as rdar://16387108;
    if it doesn't get fixed, I should mention it here.
@@ -682,7 +682,7 @@ Define variable parameters by prefixing the parameter name with the keyword ``va
 
 .. testcode:: functionParameters
 
-   -> func alignRight(var string: String, count: Int, pad: UnicodeScalar) -> String {
+   -> func alignRight(var string: String, count: Int, pad: Character) -> String {
          let amountToPad = count - string.size()
          for _ in 0...amountToPad {
             string = pad + string
