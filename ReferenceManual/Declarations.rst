@@ -39,6 +39,7 @@ the term *declaration* covers both declarations and definitions.
     declaration --> variable-declaration
     declaration --> typealias-declaration
     declaration --> function-declaration
+    declaration --> method-declaration
     declaration --> enum-declaration
     declaration --> struct-declaration
     declaration --> class-declaration
@@ -570,6 +571,7 @@ Function Declaration
     <#parameter name#>: <#parameter type#>...
     <#parameter name#>: <#parameter type#> = <#default argument value#>
     <#parameter name#> <#local parameter name#>: <#parameter type#>
+    `<#parameter name#>: <#parameter type#>
 
 .. syntax-outline::
 
@@ -590,7 +592,7 @@ Function Declaration
     curried-arguments ::= parameter-clause+
 
     parameter-clause ::= '(' ')' | '(' parameter (',' parameter)* '...'? )'
-    parameter ::= 'inout'? ('let' | 'var')? identifier-or-none identifier-or-none? (':' type)? ('...' | '=' expr)?
+    parameter ::= 'inout'? ('let' | 'var')? '`'? identifier-or-none identifier-or-none? (':' type)? ('...' | '=' expr)?
     identifier-or-none ::= identifier | '_'
 
 .. syntax-grammar::
@@ -609,8 +611,8 @@ Function Declaration
     parameter-clauses --> parameter-clause parameter-clauses-OPT
     parameter-clause --> ``(`` ``)`` | ``(`` parameter-list ``...``-OPT ``)``
     parameter-list --> parameter | parameter ``,`` parameter-list
-    parameter --> ``inout``-OPT ``let``-OPT parameter-name local-parameter-name-OPT type-annotation default-argument-clause-OPT
-    parameter --> ``inout``-OPT ``var`` parameter-name local-parameter-name-OPT type-annotation default-argument-clause-OPT
+    parameter --> ``inout``-OPT ``let``-OPT `````-OPT parameter-name local-parameter-name-OPT type-annotation default-argument-clause-OPT
+    parameter --> ``inout``-OPT ``var`` `````-OPT parameter-name local-parameter-name-OPT type-annotation default-argument-clause-OPT
     parameter --> attributes-OPT type
     parameter-name --> identifier | ``_``
     local-parameter-name --> identifier | ``_``
@@ -623,6 +625,36 @@ Function Declaration
     There is also the low-level "asm name" FFI
     which is a definition and declaration corner case.
     Let's just deal with this difference in prose.
+
+
+.. _Declarations_MethodDeclaration:
+
+Method Declaration
+------------------
+
+.. write-me::
+
+.. syntax-outline::
+
+    def <#method name#>(<#parameters#>) -> <#return type#> {
+       <#statements#>
+    }
+
+
+.. syntax-outline::
+
+    def <#method name#>(<#parameters#>)(<#parameters#>) -> <#return type#> {
+       <#statements#>
+    }
+
+
+.. syntax-grammar::
+
+    Grammar of a method declaration
+
+    method-declaration --> method-head function-name generic-parameter-clause-OPT function-signature function-body
+    method-head --> attributes-OPT declaration-specifiers-OPT ``def``
+
 
 .. _Declarations_EnumerationDeclaration:
 
@@ -1039,6 +1071,12 @@ they specify.
 You can also use protocols to declare which methods a delegate of a class or structure
 should implement, as described in :ref:`Protocols_Delegates`.
 
+.. TODO: Now that functions and methods have syntactically diverged,
+    we need a protocol-operator-function-declaration production and section
+    to describe how you declare an operator requirement in a protocol and how the adopting
+    type conforms to that protocol. Currently, a type satisfies this requirement if it
+    adopts the protocol and the operator function is implemented at file-scope somewhere
+    in the same module as that type.
 
 .. langref-grammar
 
@@ -1125,10 +1163,10 @@ Protocol Method Declaration
 Protocols declare that conforming types must implement a method
 by including a protocol method declaration in the body of the protocol declaration.
 Protocol method declarations have the same form as
-function declarations, with two exceptions: They don't include a function body,
-and you can't provide any default parameter values as part of the function declaration.
+method declarations, with two exceptions: They don't include a method body,
+and you can't provide any default parameter values as part of the method declaration.
 For examples of conforming types that implement the method requirements of a protocol,
-see :ref:`Protocols_InstanceMethods`.
+see :ref:`Protocols_Methods`.
 
 To declare a class or static method requirement in a protocol declaration,
 mark the method declaration with the ``class`` keyword. Classes that implement
@@ -1146,7 +1184,7 @@ See also :ref:`Declarations_FunctionDeclaration`.
 
     Grammar of a protocol method declaration
 
-    protocol-method-declaration --> function-head function-name generic-parameter-clause-OPT function-signature
+    protocol-method-declaration --> method-head function-name generic-parameter-clause-OPT function-signature
 
 
 .. _Declarations_ProtocolInitializerDeclaration:
@@ -1158,8 +1196,6 @@ Protocols declare that conforming types must implement an initializer
 by including a protocol initializer declaration in the body of the protocol declaration.
 Protocol initializer declarations have the same form as
 initializer declarations, except they don't include the initializer's body.
-For examples of conforming types that implement the initializer requirements of a protocol,
-see :ref:`Protocols_Initializers`.
 
 See also :ref:`Declarations_InitializerDeclaration`.
 
@@ -1167,7 +1203,7 @@ See also :ref:`Declarations_InitializerDeclaration`.
 
     Grammar of a protocol initializer declaration
 
-    protocol-initializer-declaration --> initializer-head generic-parameter-clause-OPT initializer-signature
+    protocol-initializer-declaration --> initializer-head generic-parameter-clause-OPT parameter-clause
 
 .. _Declarations_ProtocolSubscriptDeclaration:
 
@@ -1289,10 +1325,8 @@ Initializer Declaration
 
 An :newTerm:`initializer declaration` introduces an initializer for a class,
 structure, or enumeration into your program.
-
 Initializer declarations are declared using the keyword ``init`` and have
-two basic forms. Similar to the syntax of function declarations,
-initializer declarations can be declared using function-style and selector-style syntax.
+two basic forms.
 
 Structure, enumeration, and class types can have any number of initializers,
 but the rules and associated behavior for class initializers are different.
@@ -1301,7 +1335,7 @@ designated initializers and convenience initializers,
 as described in :doc:`../LanguageGuide/Initialization`.
 
 The following form declares initializers for structures, enumerations,
-and designated initializers of classes:
+and convenience initializers of classes:
 
 .. syntax-outline::
 
@@ -1311,6 +1345,21 @@ and designated initializers of classes:
 
 Initializers in structures and enumerations can call other declared initializers
 to delegate part or all of the initialization process.
+
+Convenience initializers can delegate the initialization process to another
+convenience initializer or to one of the class's designated initializers.
+That said, the initialization processes must end with a call to a designated
+initializer that ultimately initializes the class's properties.
+Convenience initializers can't call a superclass's initializers.
+
+To declare designated initializers for a class,
+prefix the initializer declaration with the context-sensitive keyword ``designated``.
+
+.. syntax-outline::
+
+    designated init(<#parameters#>) {
+       <#statements#>
+    }
 
 A designated initializer of a class initializes
 all of the class's properties directly. It can't call any other initializers
@@ -1322,21 +1371,6 @@ properties can be set or modified in the current class.
 
 Designated initializers can be declared in the context of a class declaration only
 and therefore can't be added to a class using an extension declaration.
-
-The following form declares convenience initializers for classes:
-
-.. syntax-outline::
-
-    init(<#parameters#>) -> Self {
-       <#statements#>
-    }
-
-Convenience initializers always have a return type of ``Self``
-and can delegate the initialization process to another
-convenience initializer or to one of the class's designated initializers.
-That said, the initialization processes must end with a call to a designated
-initializer that ultimately initializes the class's properties.
-Convenience initializers can't call a superclass's initializers.
 
 You can mark designated and convenience initializers with the ``required``
 attribute to require that every subclass implement the initializer.
@@ -1351,9 +1385,6 @@ you don't need to mark overridden initializers with the ``override`` keyword.
 To see examples of initializers in various type declarations,
 see :doc:`../LanguageGuide/Initialization`.
 
-.. TODO: Revisit the selector-style initializer syntax-outline
-    after we've nailed down the syntax-outline for selector-style function declarations.
-
 .. langref-grammar
 
     decl-constructor ::= attribute-list 'init' generic-params? constructor-signature brace-item-list
@@ -1364,11 +1395,8 @@ see :doc:`../LanguageGuide/Initialization`.
 
     Grammar of an initializer declaration
 
-    initializer-declaration --> initializer-head generic-parameter-clause-OPT initializer-signature initializer-body
-    initializer-head --> attributes-OPT ``init``
-
-    initializer-signature --> parameter-clause initializer-result-OPT
-    initializer-result --> ``->`` ``Self``
+    initializer-declaration --> initializer-head generic-parameter-clause-OPT parameter-clause initializer-body
+    initializer-head --> attributes-OPT ``designated``-OPT ``init``
     initializer-body --> code-block
 
 
