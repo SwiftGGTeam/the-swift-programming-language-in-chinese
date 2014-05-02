@@ -576,7 +576,7 @@ Likewise, method and function declarations are the same.
 
     class Shape {
        var numberOfSides: Int = 0
-       func describe() -> String {
+       func description() -> String {
           return "A shape with \(numberOfSides) sides."
        }
     }
@@ -595,7 +595,7 @@ are accessed using dot syntax.
 
     var shape = Shape()
     shape.numberOfSides = 7
-    var shapeDescription = shape.describe()
+    var shapeDescription = shape.description()
 
 This version of the ``Shape`` class is missing something important:
 an initializer to set up the class when an instance is created.
@@ -614,7 +614,7 @@ but it begins with ``init`` instead of ``func`` and has no function name.
           self.name = name
        }
 
-       func describe() -> String {
+       func description() -> String {
           return "A shape with \(numberOfSides) sides."
        }
     }
@@ -654,7 +654,7 @@ that don't actually override any method in the superclass.
           return sideLength * sideLength
        }
 
-       override describe() -> String {
+       override description() -> String {
           return "A square with sides of length \(sideLength)."
        }
     }
