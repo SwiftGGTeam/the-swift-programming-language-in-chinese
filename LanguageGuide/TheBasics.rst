@@ -453,12 +453,8 @@ a type of ``Double`` will be inferred from the context:
 .. testcode:: typeInference
 
    -> let anotherPi = 3 + 0.14159
-   << // anotherPi : Float64 = 3.14159
+   << // anotherPi : Double = 3.14159
    // anotherPi is also inferred to be of type Double
-
-.. FIXME: the value of anotherPi is inferred to be of type Float64,
-   but it should be of type Double.
-   This is tracked in rdar://16770279.
 
 The literal value of ``3`` has no explicit type in and of itself,
 and so an appropriate output type of ``Double`` is inferred
