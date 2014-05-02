@@ -1203,7 +1203,7 @@ See also :ref:`Declarations_InitializerDeclaration`.
 
     Grammar of a protocol initializer declaration
 
-    protocol-initializer-declaration --> initializer-head generic-parameter-clause-OPT initializer-signature
+    protocol-initializer-declaration --> initializer-head generic-parameter-clause-OPT parameter-clause
 
 .. _Declarations_ProtocolSubscriptDeclaration:
 
@@ -1325,10 +1325,8 @@ Initializer Declaration
 
 An :newTerm:`initializer declaration` introduces an initializer for a class,
 structure, or enumeration into your program.
-
 Initializer declarations are declared using the keyword ``init`` and have
-two basic forms. Similar to the syntax of function declarations,
-initializer declarations can be declared using function-style and selector-style syntax.
+two basic forms.
 
 Structure, enumeration, and class types can have any number of initializers,
 but the rules and associated behavior for class initializers are different.
@@ -1337,7 +1335,7 @@ designated initializers and convenience initializers,
 as described in :doc:`../LanguageGuide/Initialization`.
 
 The following form declares initializers for structures, enumerations,
-and designated initializers of classes:
+and convenience initializers of classes:
 
 .. syntax-outline::
 
@@ -1347,6 +1345,21 @@ and designated initializers of classes:
 
 Initializers in structures and enumerations can call other declared initializers
 to delegate part or all of the initialization process.
+
+Convenience initializers can delegate the initialization process to another
+convenience initializer or to one of the class's designated initializers.
+That said, the initialization processes must end with a call to a designated
+initializer that ultimately initializes the class's properties.
+Convenience initializers can't call a superclass's initializers.
+
+To declare designated initializers for a class,
+prefix the initializer declaration with the context-sensitive keyword ``designated``.
+
+.. syntax-outline::
+
+    designated init(<#parameters#>) {
+       <#statements#>
+    }
 
 A designated initializer of a class initializes
 all of the class's properties directly. It can't call any other initializers
@@ -1358,21 +1371,6 @@ properties can be set or modified in the current class.
 
 Designated initializers can be declared in the context of a class declaration only
 and therefore can't be added to a class using an extension declaration.
-
-The following form declares convenience initializers for classes:
-
-.. syntax-outline::
-
-    init(<#parameters#>) -> Self {
-       <#statements#>
-    }
-
-Convenience initializers always have a return type of ``Self``
-and can delegate the initialization process to another
-convenience initializer or to one of the class's designated initializers.
-That said, the initialization processes must end with a call to a designated
-initializer that ultimately initializes the class's properties.
-Convenience initializers can't call a superclass's initializers.
 
 You can mark designated and convenience initializers with the ``required``
 attribute to require that every subclass implement the initializer.
@@ -1387,9 +1385,6 @@ you don't need to mark overridden initializers with the ``override`` keyword.
 To see examples of initializers in various type declarations,
 see :doc:`../LanguageGuide/Initialization`.
 
-.. TODO: Revisit the selector-style initializer syntax-outline
-    after we've nailed down the syntax-outline for selector-style function declarations.
-
 .. langref-grammar
 
     decl-constructor ::= attribute-list 'init' generic-params? constructor-signature brace-item-list
@@ -1400,11 +1395,8 @@ see :doc:`../LanguageGuide/Initialization`.
 
     Grammar of an initializer declaration
 
-    initializer-declaration --> initializer-head generic-parameter-clause-OPT initializer-signature initializer-body
-    initializer-head --> attributes-OPT ``init``
-
-    initializer-signature --> parameter-clause initializer-result-OPT
-    initializer-result --> ``->`` ``Self``
+    initializer-declaration --> initializer-head generic-parameter-clause-OPT parameter-clause initializer-body
+    initializer-head --> attributes-OPT ``designated``-OPT ``init``
     initializer-body --> code-block
 
 
