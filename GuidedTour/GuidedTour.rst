@@ -676,6 +676,89 @@ has three parts:
 
 3. Setting or changing the value of properties that the superclass declares.
 
+In addition to simple properties,
+properties can use an explicit getter and setter
+to create a computed property.
+
+::
+
+    let PI = 3.14159265
+    let TWO_PI = 2 * PI
+
+    class Circle: NamedShape {
+        var radius: Double
+
+        // A computed property
+        var circumference: Double {
+            get {
+                return TWO_PI * radius
+            }
+            set {
+                radius = newValue / TWO_PI
+            }
+        }
+
+        // A read-only computed property
+        var area: Double {
+           get {
+              return PI * radius * radius
+           }
+        }
+
+        init(radius: Double, name: String) {
+            self.radius = radius
+            super.init(name)
+            numberOfSides = 1
+        }
+
+        func area() -> Double {
+            return PI * radius * radius
+        }
+
+        override description() -> String {
+           return "A circle with radius of length \(radius)."
+        }
+    }
+
+In the setter for ``circumference`` the new value
+has the implicit name ``newValue``.
+You can provide an explicit name in parentheses after ``set``.
+
+If you don't need to computer the property
+but still need to provide code that is run before and after setting a new value,
+use ``willSet`` and ``didSet``.
+For example, the class below ensures
+that the radius of its circle
+is always the same as the side length of its square.
+
+::
+
+   class CircleAndSquare {
+      var circle: Circle {
+         didSet {
+            square.sideLength = newValue.radius
+         }
+      }
+      var square: Square {
+         didSet {
+            circle.radius = newValue.sideLength
+         }
+      }
+      init(size: Double, name: String) {
+         square = Square(size, name)
+         circle = Circle(size, name)
+      }
+   }
+
+.. What is getter-setter-keyword-clause for?
+   It looks like you write var foo: Type { get }
+   but what does that even mean?
+
+.. Grammatically, these clauses are general to variables.
+   Not sure what it would look like
+   (or if it's even allowed)
+   to use them outside a class or a struct.
+
 Enumerations and Structures
 ---------------------------
 
