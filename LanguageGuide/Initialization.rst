@@ -1128,7 +1128,7 @@ each of which stores an instance of the other class as a property:
    ---
    -> class City {
          var name: String
-         @unowned var country: Country
+         unowned var country: Country
          init(name: String, country: Country) {
             self.name = name
             self.country = country
@@ -1170,7 +1170,7 @@ once initialization is complete.
 .. note::
 
    The ``City`` class's ``country`` property is defined as an *unowned* property,
-   indicated by the ``@unowned`` attribute.
+   indicated by the ``unowned`` keyword.
    This avoids a strong reference cycle between a ``Country`` instance
    and the ``City`` instance stored in its ``capitalCity`` property.
    For an explanation of strong reference cycles and unowned properties,

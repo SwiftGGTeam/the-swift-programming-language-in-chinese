@@ -632,7 +632,7 @@ Avoiding Reference Cycles in Closures
 
 .. FIXME: To avoid reference cycles when a property closure references self or a property of self,
    you should use the same workaround as in Obj-C –
-   that is, to declare a @weak (or @unowned) local variable, and capture that instead.
+   that is, to declare a weak (or unowned) local variable, and capture that instead.
    There are proposals for a better solution in /swift/docs/weak.rst,
    but they are yet to be implemented.
    The Radar for their implementation is rdar://15046325.
