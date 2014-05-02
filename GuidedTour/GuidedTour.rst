@@ -13,36 +13,49 @@ In Swift, this can be done in a single line:
    -> println("Hello, world")
    << Hello, world
 
-If you have written code in a language like C or Objective-C,
-this syntax probably looks familiar to you.
+If you have written code in C or Objective-C,
+this syntax looks familiar to you.
 Unlike those languages,
 this line of Swift code is a complete program.
-There is no need to import a standard library for functionality like
+You don't need to import a standard library for functionality like
 input/output or string handling.
 Code written at global scope is used
 as the entry point for the program,
-so there is no need for a ``main`` function.
-Also notice that there are no semicolons.
-You can use semicolons to separate statements written on a single line,
-but otherwise there is no need to mark the end of a statement or line.
+so you don't need a ``main`` function.
+You also don't need to write semicolons
+at the end of every statement.
 
-The rest of this tour shows examples
-of how to accomplish a variety of programming tasks in Swift
-without giving an explanation of the concepts.
-It gives you a broad (but shallow) overview of the language
-to help you start writing actual code.
-Don’t worry if there is something that you don’t understand ---
+This tour gives you enough information
+to start writing code in Swift
+by showing you how you accomplish a variety of programming tasks.
+It illustrates the most important parts of the language,
+but there are additional details and options
+that are covered in the guide and reference.
+
+.. TODO Keep rewriting this paragraph.
+
+This tour shows you
+how to accomplish a variety of programming tasks in Swift
+without explaining the concepts in detail.
+providing just enough information about the language
+to help you start writing code.
+Don’t worry if you don’t understand something ---
 everything introduced in this tour
 is explained in detail in the following chapters.
-Experienced programmers may find that the examples in this chapter
-give them enough information about Swift
-thay they can skim the rest of the language guide
-and refer to the reference manual for specific questions.
+Experienced programmers may find that the examples
+provide enough information about Swift
+thay they can skim the the *Language Guide*
+and refer to the *Language Reference*
+for answers to specific questions.
+
+.. TODO Should be an xName-No-Link element for the references
+   to parts of this book above,
+   rather than just putting them in italics.
 
 Simple Values
 -------------
 
-Constants and variables are created using the same syntax,
+You create constants and variables using the same syntax,
 with one difference:
 Use ``let`` to declare a constant and use ``var`` for a variable.
 The value of a constant can be assigned only once,
@@ -65,9 +78,8 @@ The value of a variable can be assigned multiple times.
 
 .. admonition:: Experiment
 
-   Edit the code in the boxes above.
-   Try changing ``myConstant`` to be a variable.
-   Try removing the last line, so it is only assigned a value once.
+   Changing ``myConstant`` to be a variable.
+   Remove the last line, so ``myConstant`` is only assigned a value once.
 
 .. TR: Is the requirement that constants need an initial value
    a current REPL limitation, or an expected language feature?
@@ -108,13 +120,16 @@ separated by a colon.
 
 .. admonition:: Experiment
 
-   Try creating a constant with
+   Create a constant with
    an explicit type of ``Float`` and a value of ``4``.
    Notice how the type of ``4`` is determined based on how you use it.
 
    Try providing an explicit type that doesn’t match
    the variable’s initial value.
    What error do you get?
+
+.. TODO Discuss the fact that the type of a literal
+   is determined by the context in which it is used.
 
 Values are never implicitly converted or cast to another type.
 If you need to convert a value to a different type,
@@ -135,9 +150,8 @@ make an instance of the desired type explicitly.
    What error do you get?
 
 A simpler way to include values in strings
-is to use the special escape ``\(`` ``)`` in a string,
-which includes the string value of an expression
-as part of the string.
+is to write ``\(`` and ``)`` around an expression,
+which includes it as part of the string.
 
 .. testcode:: string-interpolation
 
