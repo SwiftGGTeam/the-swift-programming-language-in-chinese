@@ -39,6 +39,7 @@ the term *declaration* covers both declarations and definitions.
     declaration --> variable-declaration
     declaration --> typealias-declaration
     declaration --> function-declaration
+    declaration --> method-declaration
     declaration --> enum-declaration
     declaration --> struct-declaration
     declaration --> class-declaration
@@ -570,6 +571,7 @@ Function Declaration
     <#parameter name#>: <#parameter type#>...
     <#parameter name#>: <#parameter type#> = <#default argument value#>
     <#parameter name#> <#local parameter name#>: <#parameter type#>
+    `<#parameter name#>: <#parameter type#>
 
 .. syntax-outline::
 
@@ -590,7 +592,7 @@ Function Declaration
     curried-arguments ::= parameter-clause+
 
     parameter-clause ::= '(' ')' | '(' parameter (',' parameter)* '...'? )'
-    parameter ::= 'inout'? ('let' | 'var')? identifier-or-none identifier-or-none? (':' type)? ('...' | '=' expr)?
+    parameter ::= 'inout'? ('let' | 'var')? '`'? identifier-or-none identifier-or-none? (':' type)? ('...' | '=' expr)?
     identifier-or-none ::= identifier | '_'
 
 .. syntax-grammar::
@@ -609,8 +611,8 @@ Function Declaration
     parameter-clauses --> parameter-clause parameter-clauses-OPT
     parameter-clause --> ``(`` ``)`` | ``(`` parameter-list ``...``-OPT ``)``
     parameter-list --> parameter | parameter ``,`` parameter-list
-    parameter --> ``inout``-OPT ``let``-OPT parameter-name local-parameter-name-OPT type-annotation default-argument-clause-OPT
-    parameter --> ``inout``-OPT ``var`` parameter-name local-parameter-name-OPT type-annotation default-argument-clause-OPT
+    parameter --> ``inout``-OPT ``let``-OPT `````-OPT parameter-name local-parameter-name-OPT type-annotation default-argument-clause-OPT
+    parameter --> ``inout``-OPT ``var`` `````-OPT parameter-name local-parameter-name-OPT type-annotation default-argument-clause-OPT
     parameter --> attributes-OPT type
     parameter-name --> identifier | ``_``
     local-parameter-name --> identifier | ``_``
@@ -623,6 +625,36 @@ Function Declaration
     There is also the low-level "asm name" FFI
     which is a definition and declaration corner case.
     Let's just deal with this difference in prose.
+
+
+.. _Declarations_MethodDeclaration:
+
+Method Declaration
+------------------
+
+.. write-me::
+
+.. syntax-outline::
+
+    def <#method name#>(<#parameters#>) -> <#return type#> {
+       <#statements#>
+    }
+
+
+.. syntax-outline::
+
+    def <#method name#>(<#parameters#>)(<#parameters#>) -> <#return type#> {
+       <#statements#>
+    }
+
+
+.. syntax-grammar::
+
+    Grammar of a method declaration
+
+    method-declaration --> method-head function-name generic-parameter-clause-OPT function-signature function-body
+    method-head --> attributes-OPT declaration-specifiers-OPT ``def``
+
 
 .. _Declarations_EnumerationDeclaration:
 
@@ -1039,6 +1071,12 @@ they specify.
 You can also use protocols to declare which methods a delegate of a class or structure
 should implement, as described in :ref:`Protocols_Delegates`.
 
+.. TODO: Now that functions and methods have syntactically diverged,
+    we need a protocol-operator-function-declaration production and section
+    to describe how you declare an operator requirement in a protocol and how the adopting
+    type conforms to that protocol. Currently, a type satisfies this requirement if it
+    adopts the protocol and the operator function is implemented at file-scope somewhere
+    in the same module as that type.
 
 .. langref-grammar
 
@@ -1125,10 +1163,10 @@ Protocol Method Declaration
 Protocols declare that conforming types must implement a method
 by including a protocol method declaration in the body of the protocol declaration.
 Protocol method declarations have the same form as
-function declarations, with two exceptions: They don't include a function body,
-and you can't provide any default parameter values as part of the function declaration.
+method declarations, with two exceptions: They don't include a method body,
+and you can't provide any default parameter values as part of the method declaration.
 For examples of conforming types that implement the method requirements of a protocol,
-see :ref:`Protocols_InstanceMethods`.
+see :ref:`Protocols_Methods`.
 
 To declare a class or static method requirement in a protocol declaration,
 mark the method declaration with the ``class`` keyword. Classes that implement
@@ -1146,7 +1184,7 @@ See also :ref:`Declarations_FunctionDeclaration`.
 
     Grammar of a protocol method declaration
 
-    protocol-method-declaration --> function-head function-name generic-parameter-clause-OPT function-signature
+    protocol-method-declaration --> method-head function-name generic-parameter-clause-OPT function-signature
 
 
 .. _Declarations_ProtocolInitializerDeclaration:
@@ -1158,8 +1196,6 @@ Protocols declare that conforming types must implement an initializer
 by including a protocol initializer declaration in the body of the protocol declaration.
 Protocol initializer declarations have the same form as
 initializer declarations, except they don't include the initializer's body.
-For examples of conforming types that implement the initializer requirements of a protocol,
-see :ref:`Protocols_Initializers`.
 
 See also :ref:`Declarations_InitializerDeclaration`.
 
