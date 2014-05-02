@@ -480,7 +480,7 @@ Metatype Type
 
     Grammar of a metatype type
 
-    metatype-type --> type ``.`` ``Type``
+    metatype-type --> type ``.`` ``Type`` | type ``.`` ``Protocol``
 
 .. _Types_TypeInheritanceClause:
 
