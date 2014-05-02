@@ -1093,6 +1093,7 @@ ________________________________________
 .. write-me::
 
 .. testcode:: implicitlyUnwrappedOptionals
+   :compile: yes
 
    -> class Country {
          var name: String
@@ -1114,6 +1115,7 @@ ________________________________________
    ---
    -> var country = Country(name: "Canada", capitalName: "Ottawa")
    -> println("\(country.name)'s capital city is called \(country.capitalCity.name)")
+   <- Canada's capital city is called Ottawa
 
 .. TODO: this needs an explanation (and a back-link to @weak properties).
 
