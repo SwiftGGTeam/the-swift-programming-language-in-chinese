@@ -679,7 +679,9 @@ If it doesn't, the new value it assigns will be overwritten by
 its own class's designated initializer.
 
 **Safety check 4**
-  An initializer cannot call any methods or read the values of any properties
+  An initializer cannot call any instance methods,
+  read the values of any instance properties,
+  or refer to ``self`` as a value
   until after the first phase of initialization is complete.
 
 The class instance doesn't actually exist in memory until the first phase ends.
@@ -1087,10 +1089,30 @@ Requirements are satisfied based on the following two rules:
 
 .. _Initialization_ImplicitlyUnwrappedOptionalProperties:
 
-Implicitly-Unwrapped Optional Properties
+Implicitly Unwrapped Optional Properties
 ________________________________________
 
-.. write-me::
+Implicitly unwrapped optional properties are useful when
+an instance property cannot be set until initialization is complete,
+but is guaranteed to always exist thereafter.
+
+In these kinds of cases,
+you could define the instance property as a normal optional,
+but this would require you to unwrap the property's value when it is used.
+Using an implicitly unwrapped optional instead
+means that you do not need to unwrap the optional value yourself each time it is used.
+
+.. note::
+
+   You should only define a property as an implicitly unwrapped optional
+   if you are sure that that property will *always* contain
+   a non-``nil`` value once it is initialized.
+   If a property has the potential to be ``nil`` at some future point,
+   it should always be declared as a true optional,
+   and not as an implicitly unwrapped optional.
+
+The following example defines two classes, ``Country`` and ``City``,
+each of which stores an instance of the other class as a property:
 
 .. testcode:: implicitlyUnwrappedOptionals
    :compile: yes
@@ -1106,7 +1128,7 @@ ________________________________________
    ---
    -> class City {
          var name: String
-         @weak var country: Country?
+         @unowned var country: Country
          init(name: String, country: Country) {
             self.name = name
             self.country = country
@@ -1117,16 +1139,42 @@ ________________________________________
    -> println("\(country.name)'s capital city is called \(country.capitalCity.name)")
    <- Canada's capital city is called Ottawa
 
-.. TODO: this needs an explanation (and a back-link to @weak properties).
+In this data model, every country has a capital city, and every city belongs to a country.
+To represent this, the ``Country`` class has a ``capitalCity`` property,
+and the ``City`` class has a ``country`` property.
+
+To set up this interdependency,
+the initializer for ``City`` takes a ``Country`` instance,
+and stores it as a reference to the city's country.
+However, the initializer for ``Country`` cannot pass ``self`` to the ``City`` initializer
+until the new ``Country`` instance has been fully initialized.
+
+To cope with this requirement,
+the ``capitalCity`` property is declared as an implicitly unwrapped optional property.
+This means that it has a default value of ``nil``, like any other optional
+(see :ref:`BasicTypes_ImplicitlyUnwrappedOptionals`.)
+
+Because of this default ``nil`` value for ``capitalCity``,
+a new ``Country`` instance is considered fully initialized
+as soon as it sets its ``name`` property within its initializer.
+This means that the initializer can start to reference and pass around
+the implicit ``self`` property as soon as ``name`` has been set.
+This enables it to pass ``self`` as one of the parameters for
+the ``City`` initializer when setting its own ``capitalCity`` property.
+
+In the example above, the use of an implicitly unwrapped optional
+means that all of the two-phase initializer requirements described above are satisfied,
+and the property can be used and accessed like a non-optional value
+once initialization is complete.
 
 .. note::
 
-   You should only define an implicitly-unwrapped optional property
-   if you are sure that that property will *always* contain
-   a non-``nil`` value in practice.
-   If a property has the potential to be ``nil`` at some future point,
-   it should always be declared as a true optional,
-   and not as an implicitly unwrapped optional.
+   The ``City`` class's ``country`` property is defined as an *unowned* property,
+   indicated by the ``@unowned`` attribute.
+   This avoids a strong reference cycle between a ``Country`` instance
+   and the ``City`` instance stored in its ``capitalCity`` property.
+   For an explanation of strong reference cycles and unowned properties,
+   see :ref:`Properties_WeakAndUnownedProperties`.
 
 .. _Initialization_Deinitializers:
 
