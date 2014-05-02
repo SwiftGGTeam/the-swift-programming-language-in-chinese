@@ -1132,10 +1132,10 @@ an optional ``String`` and an implicitly-unwrapped optional ``String``:
    -> println(assumedString)  // no exclamation mark is needed to access its value
    <- An implicitly-unwrapped optional string.
 
-You can think of an implicitly-unwrapped optional as being “unwrapped at source”.
+You can think of an implicitly-unwrapped optional as
+giving permission for the optional to be unwrapped automatically whenever it is used.
 Rather than placing an exclamation mark after the optional's name each time you use it,
 you place an exclamation mark after the optional's type when you declare it.
-The implicitly-unwrapped optional is then automatically unwrapped whenever it is accessed.
 
 .. note::
 
