@@ -159,13 +159,13 @@ the index or key in brackets.
     -> let favoriteFruit = fruits[1]
     << // favoriteFruit : String = "orange"
     ---
-    -> var forecasts = [
+    -> var temperatures = [
           "San Francisco": 59.0,
           "Paris": 51.6,
           "Shanghai": 73.2,
        ]
-    << // forecasts : Dictionary<String, Double> = Dictionary<String, Double>(1.33333333333333, 3, <DictionaryBufferOwner<String, Double> instance>)
-    -> forecasts["San Francisco"] < forecasts["Paris"]
+    << // temperatures : Dictionary<String, Double> = Dictionary<String, Double>(1.33333333333333, 3, <DictionaryBufferOwner<String, Double> instance>)
+    -> temperatures["San Francisco"] < temperatures["Paris"]
     <$ : Bool = false
 
 .. admonition:: Experiment
