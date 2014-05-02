@@ -239,19 +239,24 @@ with a value from a different temperature scale:
 .. TODO: I need to provide an example of default values for initializer parameters,
    to show they can help you to get multiple initializers "for free" (after a fashion).
 
-.. _Initialization_OptionalPropertyValues:
+.. _Initialization_OptionalPropertyTypes:
 
-Optional Property Values
-------------------------
+Optional Property Types
+-----------------------
 
-If your custom type has a stored property that cannot be known during initialization,
-or that is logically allowed to have “no value yet”,
-declare the property as having an optional type.
+If your custom type has a stored property that is logically allowed to have “no value”,
+you should declare the property with an *optional* type.
+This might be because the property's value is not set during initialization,
+or because the property is allowed to have “no value” at some later point.
+
 Because it is of an optional type,
-it will be automatically initialized with a value of ``nil``.
-This makes it clear that the property is deliberately intended to have “no value yet”.
+this kind of property will be automatically initialized with a value of ``nil``
+if you do not provide a default value.
+This makes it clear that the property is deliberately intended to have “no value yet”
+during initialization.
 
-For example:
+The following example defines a class called ``SurveyQuestion``,
+with an optional ``String`` property called ``response``:
 
 .. testcode:: surveyQuestionVariable
 
@@ -272,9 +277,10 @@ For example:
    -> cheeseQuestion.response = "Yes, I do like cheese."
 
 The response to a survey question cannot be known until it is asked,
-and so the ``response`` property is declared as ``String?``, or “optional ``String``”.
+and so the ``response`` property is declared with a type of ``String?``,
+or “optional ``String``”.
 It is automatically assigned a default value of ``nil``, meaning “no string yet”,
-by virtue of being optional.
+when a new instance of ``SurveyQuestion`` is initialized.
 
 .. _Initialization_ModifyingConstantPropertiesDuringInitialization:
 
@@ -1052,6 +1058,48 @@ shows that their default states have been set as expected.
 
 .. TODO: Feedback from Beto is that it would be useful to indicate the flow
    through these inherited initializers.
+
+.. _Initialization_ImplicitlyUnwrappedOptionalProperties:
+
+Implicitly-Unwrapped Optional Properties
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. write-me::
+
+.. testcode:: implicitlyUnwrappedOptionals
+
+   -> class Country {
+         var name: String
+         var capitalCity: City!
+         init(name: String, capitalName: String) {
+            self.name = name
+            self.capitalCity = City(name: capitalName, country: self)
+         }
+      }
+   ---
+   -> class City {
+         var name: String
+         @weak var country: Country?
+         init(name: String, country: Country) {
+            self.name = name
+            self.country = country
+         }
+      }
+   ---
+   -> var country = Country(name: "Canada", capitalName: "Ottawa")
+   -> println("\(country.name)'s capital city is called \(country.capitalCity.name)")
+
+.. TODO: this needs an explanation (and a back-link to @weak properties).
+
+.. note::
+
+   You should only define an implicitly-unwrapped optional property
+   if you are sure that that property will *always* contain
+   a non-``nil`` value in practice.
+   If a property has the potential to be ``nil`` at some future point,
+   it should always be declared as a true optional,
+   and not as an implicitly unwrapped optional.
+
 
 .. _Initialization_RequiredInitializers:
 
