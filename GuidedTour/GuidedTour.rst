@@ -381,6 +381,8 @@ you can specify each parameter by name when calling the function.
 
 .. TODO: I've hand waved here by saying args are part of the "name".
 
+.. TODO: Call out what -> means in the signature.
+
 .. TR: Technically, right now, the argument names are actually
    part of the *type* rather than the *name*
    That is, "init (withFoo : Int)" and "init (withBar : String)"
