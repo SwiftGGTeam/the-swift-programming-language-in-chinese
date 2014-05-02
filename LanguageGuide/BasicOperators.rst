@@ -222,7 +222,7 @@ Swift's remainder operator can also operate on floating-point numbers:
 .. testcode:: arithmeticOperators
 
    -> 8 % 2.5   // equals 0.5
-   << // r7 : Float64 = 0.5
+   << // r7 : Double = 0.5
 
 In this example, ``8`` divided by ``2.5`` equals ``3``, with a remainder of ``0.5``,
 so the remainder operator returns a ``Double`` value of ``0.5``.

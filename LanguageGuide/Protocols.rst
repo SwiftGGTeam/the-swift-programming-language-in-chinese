@@ -19,6 +19,9 @@ instance properties, instance methods, type methods, operators, and subscripts.
    but they don't work due to rdar://13695680.
    I'll need to write about them if this is fixed by WWDC,
    or at least mention them in the list above.
+   UPDATE: actually, they *can* be used right now,
+   but only in a generic function, and not more generally with the protocol type.
+   I'm not sure I should mention them in this chapter until they work more generally.
 
 .. _Protocols_ProtocolSyntax:
 

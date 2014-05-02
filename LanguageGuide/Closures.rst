@@ -460,21 +460,60 @@ If you need to pass a closure expression to a function as one of the function's 
 and the closure expression is long,
 it can sometimes be clearer to write it as a :newTerm:`trailing closure` instead.
 A trailing closure is a closure expression
-that is written outside of (and *after*) the parentheses of the function call it supports.
+that is written outside of (and *after*) the parentheses of the function call it supports:
 
-Multiple consecutive trailing closures can be written
-for functions with multiple function type arguments.
-The only requirement is that these trailing closures must always be
-the final arguments provided for the function call.
+.. testcode:: closureSyntax
 
+   -> func someFunctionThatTakesAClosure(closure: () -> ()) {
+         // function body goes here
+      }
+   ---
+   -> // here's how you'd call this function without using a trailing closure:
+   ---
+   -> someFunctionThatTakesAClosure({
+         // closure's body goes here
+      })
+   ---
+   -> // here's how to call this function with a trailing closure instead:
+   ---
+   -> someFunctionThatTakesAClosure() {
+         // trailing closure's body goes here
+      }
+
+You can provide multiple trailing closures
+for functions with multiple function type parameters.
 Additionally, if *all* of a function's parameters are function types,
 and you provide trailing closures for all of those parameters when calling the function,
 you do not need to write a pair of parentheses ``()``
 after the function's name when you call the function.
 
-Because the final argument to the ``sort`` function is a closure expression,
-the string-sorting closure from the previous examples can be written
-outside of the ``sort`` function's parentheses as a trailing closure:
+.. note::
+
+   Trailing closures can only be used when the function type parameters
+   are the last parameters in the list.
+
+Here's an example of how you can provide multiple trailing closures
+when calling a function with two parameters,
+both of which have a function type of ``() -> ()``.
+Note that the closing brace of the first trailing closure
+must be on the same line as the opening brace of the second trailing closure:
+
+.. testcode:: closureSyntax
+
+   -> func someFunctionThatTakesTwoClosures(first: () -> (), second: () -> ()) {
+         // function body goes here
+      }
+   ---
+   -> // here's how you'd call this function with two trailing closures:
+   ---
+   -> someFunctionThatTakesTwoClosures {
+         // first trailing closure's body goes here
+      } {
+         // second trailing closure's body goes here
+      }
+
+The string-sorting closure from the *Closure Expression Syntax* section above
+can be written outside of the ``sort`` function's parentheses as a trailing closure:
 
 .. testcode:: closureSyntax
 
@@ -507,7 +546,7 @@ The array ``[16, 58, 510]`` is used to create the new array
          0: "Zero", 1: "One", 2: "Two",   3: "Three", 4: "Four",
          5: "Five", 6: "Six", 7: "Seven", 8: "Eight", 9: "Nine"
       ]
-   << // digitNames : Dictionary<Int, String> = Dictionary<Int, String>(1.33333333333333, 10, <DictionaryBufferOwner<Int, String> instance>)
+   << // digitNames : Dictionary<Int, String> = Dictionary<Int, String>(1.33333333333333, 10, <unprintable value>)
    -> let numbers = [16, 58, 510]
    << // numbers : Array<Int> = [16, 58, 510]
 
@@ -593,7 +632,7 @@ Avoiding Reference Cycles in Closures
 
 .. FIXME: To avoid reference cycles when a property closure references self or a property of self,
    you should use the same workaround as in Obj-C –
-   that is, to declare a @weak (or @unowned) local variable, and capture that instead.
+   that is, to declare a weak (or unowned) local variable, and capture that instead.
    There are proposals for a better solution in /swift/docs/weak.rst,
    but they are yet to be implemented.
    The Radar for their implementation is rdar://15046325.
