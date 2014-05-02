@@ -806,6 +806,7 @@ see :doc:`../LanguageGuide/BasicOperators` and :doc:`../LanguageGuide/AdvancedOp
     postfix-expression --> initializer-expression
     postfix-expression --> explicit-member-expression
     postfix-expression --> self-expression
+    postfix-expression --> dynamic-type-expression
     postfix-expression --> subscript-expression
     postfix-expression --> forced-expression
     postfix-expression --> optional-expression
@@ -836,7 +837,7 @@ this has the following form:
 
 .. syntax-outline::
 
-   <#function#>(<#argument name 1#>: <#argument value 1#>, <#argument name 2#>: <#argument value 2#>)
+   <#function name#>(<#argument name 1#>: <#argument value 1#>, <#argument name 2#>: <#argument value 2#>)
 
 A function call expression can include a :newTerm:`trailing closure`
 in the form of a closure expression immediately after the closing parenthesis.
@@ -884,7 +885,7 @@ It has the following form:
 
 .. syntax-outline::
 
-    <#type or expression#>.init(<#initializer arguments#>)
+    <#expression#>.init(<#initializer arguments#>)
 
 An initializer expression is used like a function call
 to initialize a new instance of a type.
@@ -968,6 +969,10 @@ Self Expression
 
 .. write-me:: This section needs a rewrite.
 
+.. syntax-outline::
+
+       <#expression#>.self
+
 ..  Old prose:
     A :newTerm:`self expression` is an explicit reference
     to a type or an instance of a type.
@@ -1015,6 +1020,24 @@ Self Expression
     Grammar of a self expression
 
     self-expression --> postfix-expression ``.`` ``self``
+
+
+.. _Expressions_DynamicTypeExpression:
+
+Dynamic Type Expression
+~~~~~~~~~~~~~~~~~~~~~~~
+
+.. write-me::
+
+.. syntax-outline::
+
+    <#expression#>.dynamicType
+
+.. syntax-grammar::
+
+    Grammar of a dynamic type expression
+
+    dynamic-type-expression --> postfix-expression ``.`` ``dynamicType
 
 
 .. _Expressions_SubscriptExpression:
