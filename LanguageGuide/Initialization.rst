@@ -1059,10 +1059,36 @@ shows that their default states have been set as expected.
 .. TODO: Feedback from Beto is that it would be useful to indicate the flow
    through these inherited initializers.
 
+.. _Initialization_RequiredInitializers:
+
+Required Initializers
+_____________________
+
+You can apply the ``@required`` attribute to
+a designated or convenience initializer of a class
+to indicate that every subclass of that class must implement the initializer.
+
+Even if an initializer is marked as ``@required``,
+you may not have to provide an explicit implementation of that initializer,
+and may be able to satisfy the requirement with an inherited initializer instead.
+Requirements are satisfied based on the following two rules:
+
+**Rule 1**
+  If your superclass has a required *designated* initializer,
+  you must provide an implementation of that initializer.
+  The requirement can't be satisfied by an inherited initializer.
+
+**Rule 2**
+  If your superclass has a required *convenience* initializer,
+  you can satisfy the requirement with an inherited initializer,
+  even if the requirement started life as a designated initializer higher up the chain.
+
+.. TODO: provide an example.
+
 .. _Initialization_ImplicitlyUnwrappedOptionalProperties:
 
 Implicitly-Unwrapped Optional Properties
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+________________________________________
 
 .. write-me::
 
@@ -1099,33 +1125,6 @@ Implicitly-Unwrapped Optional Properties
    If a property has the potential to be ``nil`` at some future point,
    it should always be declared as a true optional,
    and not as an implicitly unwrapped optional.
-
-
-.. _Initialization_RequiredInitializers:
-
-Required Initializers
-_____________________
-
-You can apply the ``@required`` attribute to
-a designated or convenience initializer of a class
-to indicate that every subclass of that class must implement the initializer.
-
-Even if an initializer is marked as ``@required``,
-you may not have to provide an explicit implementation of that initializer,
-and may be able to satisfy the requirement with an inherited initializer instead.
-Requirements are satisfied based on the following two rules:
-
-**Rule 1**
-  If your superclass has a required *designated* initializer,
-  you must provide an implementation of that initializer.
-  The requirement can't be satisfied by an inherited initializer.
-
-**Rule 2**
-  If your superclass has a required *convenience* initializer,
-  you can satisfy the requirement with an inherited initializer,
-  even if the requirement started life as a designated initializer higher up the chain.
-
-.. TODO: provide an example.
 
 .. _Initialization_Deinitializers:
 
