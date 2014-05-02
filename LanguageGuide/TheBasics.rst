@@ -1090,7 +1090,7 @@ the constant or variable is automatically set to ``nil`` for you:
 
 .. _BasicTypes_ImplicitlyUnwrappedOptionals:
 
-Implicitly-Unwrapped Optionals
+Implicitly Unwrapped Optionals
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 As described above,
@@ -1106,15 +1106,15 @@ In these cases, it is useful to remove the need
 to check and unwrap the optional's value every time it is accessed,
 because it can confidently be assumed to have a value all of the time.
 
-These kinds of optionals are defined as :newTerm:`implicitly-unwrapped optionals`,
+These kinds of optionals are defined as :newTerm:`implicitly unwrapped optionals`,
 and are written by placing an exclamation mark (``String!``)
 rather than a question mark (``String?``) after the type that you want to make optional.
 
-An implicitly-unwrapped optional is a normal optional behind the scenes,
+An implicitly unwrapped optional is a normal optional behind the scenes,
 but can also be used like a non-optional value,
 without the need to unwrap the optional value each time it is accessed.
 The following example shows the difference in behavior between
-an optional ``String`` and an implicitly-unwrapped optional ``String``:
+an optional ``String`` and an implicitly unwrapped optional ``String``:
 
 .. testcode:: implicitlyUnwrappedOptionals
 
@@ -1123,25 +1123,25 @@ an optional ``String`` and an implicitly-unwrapped optional ``String``:
    -> println(possibleString!) // requires an exclamation mark to access its value
    <- An optional string.
    ---
-   -> let assumedString: String! = "An implicitly-unwrapped optional string."
+   -> let assumedString: String! = "An implicitly unwrapped optional string."
    << // assumedString : String! = String!(<unprintable value>)
    -> println(assumedString)  // no exclamation mark is needed to access its value
-   <- An implicitly-unwrapped optional string.
+   <- An implicitly unwrapped optional string.
 
-You can think of an implicitly-unwrapped optional as
+You can think of an implicitly unwrapped optional as
 giving permission for the optional to be unwrapped automatically whenever it is used.
 Rather than placing an exclamation mark after the optional's name each time you use it,
 you place an exclamation mark after the optional's type when you declare it.
 
 .. note::
 
-   If you try and access an implicitly-unwrapped optional
+   If you try and access an implicitly unwrapped optional
    when it does not contain a value,
    you will trigger an unrecoverable runtime error.
    This is exactly the same as if you place an exclamation mark
    after a normal optional that does not contain a value.
 
-You can still treat an implicitly-unwrapped optional like a normal optional,
+You can still treat an implicitly unwrapped optional like a normal optional,
 to check if it contains a value:
 
 .. testcode:: implicitlyUnwrappedOptionals
@@ -1149,9 +1149,9 @@ to check if it contains a value:
    -> if assumedString {
          println(assumedString)
       }
-   <- An implicitly-unwrapped optional string.
+   <- An implicitly unwrapped optional string.
 
-You can also use an implicitly-unwrapped optional with optional binding,
+You can also use an implicitly unwrapped optional with optional binding,
 to check and unwrap its value in a single statement:
 
 .. testcode:: implicitlyUnwrappedOptionals
@@ -1159,17 +1159,17 @@ to check and unwrap its value in a single statement:
    -> if let definiteString = assumedString {
          println(definiteString)
       }
-   <- An implicitly-unwrapped optional string.
+   <- An implicitly unwrapped optional string.
 
-Implicitly-unwrapped optionals are useful when
+Implicitly unwrapped optionals are useful when
 an optional's value is confirmed to exist immediately after the optional is first defined,
 and can definitely be assumed to exist at every point thereafter.
-The primary use of implicitly-unwrapped optionals in Swift is during class initialization,
+The primary use of implicitly unwrapped optionals in Swift is during class initialization,
 as described in :ref:`Initialization_ImplicitlyUnwrappedOptionalProperties`.
 
 .. note::
 
-   Implicitly-unwrapped optionals should never be used when there is a possibility of
+   Implicitly unwrapped optionals should never be used when there is a possibility of
    a variable becoming ``nil`` at a later point.
    Always use a normal optional type if you need to check for a ``nil`` value
    during the lifetime of a variable.
