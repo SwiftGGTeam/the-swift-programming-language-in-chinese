@@ -448,15 +448,6 @@ Dynamic Return Types
 
 .. write-me::
 
-.. note::
-
-   ``Self`` (with a capital ``S``) is not the same as ``self`` (with a lowercase ``s``).
-   Lowercase ``self`` is a placeholder for “myself”,
-   whereas uppercase ``Self`` is a placeholder for “the type of myself”.
-   The different capitalizations of ``self`` and ``Self`` reflect
-   the fact that lowercase ``self`` represents an instance,
-   and uppercase ``Self`` represents a type.
-
 .. TODO: mention that methods can return a value of type Self (a la instancetype)
 .. TODO: include the several tricks seen in swift/test/decl/func/dynamic_self.swift
 .. TODO: find a good place to mention that instance methods can
