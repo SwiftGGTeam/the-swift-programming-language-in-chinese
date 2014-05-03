@@ -1117,7 +1117,7 @@ The following example defines two classes, ``Country`` and ``City``,
 each of which stores an instance of the other class as a property:
 
 .. testcode:: implicitlyUnwrappedOptionals
-   :compile: yes
+   :compile: true
 
    -> class Country {
          var name: String

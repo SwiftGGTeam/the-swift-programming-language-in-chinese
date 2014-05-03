@@ -102,7 +102,7 @@ This example provides a type annotation for a variable called ``welcomeMessage``
 to indicate that the variable can store ``String`` values:
 
 .. testcode:: typeAnnotations
-   :compile: yes
+   :compile: true
 
    -> var welcomeMessage: String
    >> welcomeMessage = "hello"

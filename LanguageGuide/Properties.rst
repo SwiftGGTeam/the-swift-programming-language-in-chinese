@@ -485,7 +485,7 @@ and the right channel has a current level of ``7``.
 Each audio channel in the meter is modeled by an ``AudioChannel`` structure:
 
 .. testcode:: staticProperties
-   :compile: yes
+   :compile: true
 
    -> struct AudioChannel {
          static let thresholdLevel = 10
@@ -542,7 +542,7 @@ two new audio channels called ``leftChannel`` and ``rightChannel``,
 to represent the audio levels of a stereo sound system:
 
 .. testcode:: staticProperties
-   :compile: yes
+   :compile: true
 
    -> var leftChannel = AudioChannel()
    -> var rightChannel = AudioChannel()
@@ -552,7 +552,7 @@ you can see that the ``maxInputLevelForAllChannels`` static property
 has been updated to equal ``7``:
 
 .. testcode:: staticProperties
-   :compile: yes
+   :compile: true
 
    -> leftChannel.currentLevel = 7
    -> println(leftChannel.currentLevel)
@@ -566,7 +566,7 @@ has been capped to the maximum value of ``10``,
 and the ``maxInputLevelForAllChannels`` static property has been updated to equal ``11``:
 
 .. testcode:: staticProperties
-   :compile: yes
+   :compile: true
 
    -> rightChannel.currentLevel = 11
    -> println(rightChannel.currentLevel)
