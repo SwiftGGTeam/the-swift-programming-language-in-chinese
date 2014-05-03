@@ -1152,7 +1152,7 @@ until the new ``Country`` instance has been fully initialized.
 To cope with this requirement,
 the ``capitalCity`` property is declared as an implicitly unwrapped optional property.
 This means that it has a default value of ``nil``, like any other optional
-(see :ref:`BasicTypes_ImplicitlyUnwrappedOptionals`.)
+(see :ref:`TheBasics_ImplicitlyUnwrappedOptionals`.)
 
 Because of this default ``nil`` value for ``capitalCity``,
 a new ``Country`` instance is considered fully initialized

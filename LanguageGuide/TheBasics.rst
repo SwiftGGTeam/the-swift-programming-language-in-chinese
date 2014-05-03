@@ -37,7 +37,7 @@ If part of your code expects a ``String``,
 type safety means that you can't accidentally pass it an ``Int`` by mistake.
 This enables you to catch and fix errors as early as possible in the development process.
 
-.. _BasicTypes_ConstantsAndVariables:
+.. _TheBasics_ConstantsAndVariables:
 
 Constants and Variables
 -----------------------
@@ -49,7 +49,7 @@ to a value of a particular type
 A :newTerm:`constant` cannot be changed once it is set, whereas
 a :newTerm:`variable` can be set to a different value in the future.
 
-.. _BasicTypes_DeclaringConstantsAndVariables:
+.. _TheBasics_DeclaringConstantsAndVariables:
 
 Declaring Constants and Variables
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -88,7 +88,7 @@ storing values that need to be able to change.
 .. TODO: I need to mention that globals are lazily initialized somewhere.
    Probably not here, but somewhere.
 
-.. _BasicTypes_TypeAnnotations:
+.. _TheBasics_TypeAnnotations:
 
 Type Annotations
 ~~~~~~~~~~~~~~~~
@@ -130,12 +130,12 @@ The ``welcomeMessage`` variable can now be set to any string value without error
    It is rare that you need to write type annotations in practice.
    If you provide an initial value for a constant or variable at the point that it is defined,
    Swift can almost always infer the type to be used for that constant or variable,
-   as described in :ref:`BasicTypes_TypeInference`.
+   as described in :ref:`TheBasics_TypeInference`.
    In the ``welcomeMessage`` example above, no initial value is provided,
    and so the type of the ``welcomeMessage`` variable is specified with a type annotation
    rather than being inferred from an initial value.
 
-.. _BasicTypes_NamingConstantsAndVariables:
+.. _TheBasics_NamingConstantsAndVariables:
 
 Naming Constants and Variables
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -195,7 +195,7 @@ Attempting to do so is reported as an error when your code is compiled:
    can be qualified with a backtick (e.g. let `protocol` = 1)?
    It's of a kind with the contents of this section, but it's pretty damn niche…
 
-.. _BasicTypes_PrintingConstantsAndVariables:
+.. _TheBasics_PrintingConstantsAndVariables:
 
 Printing Constants and Variables
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -231,7 +231,7 @@ The ``println`` function prints any ``String`` value you pass to it:
    -> println("This is a string")
    <- This is a string
 
-.. _BasicTypes_StringInterpolation:
+.. _TheBasics_StringInterpolation:
 
 String Interpolation
 ____________________
@@ -254,7 +254,7 @@ and escaped with a backslash before the opening parenthesis:
 .. TODO: this still doesn't talk about all of the things that string interpolation can do.
    It should still be covered in more detail in the Strings and Characters chapter.
 
-.. _BasicTypes_Comments:
+.. _TheBasics_Comments:
 
 Comments
 --------
@@ -289,7 +289,7 @@ even if the code already contains multi-line comments.
    because they aren't supported by the REPL.
    They should be tested manually before release.
 
-.. _BasicTypes_Semicolons:
+.. _TheBasics_Semicolons:
 
 Semicolons
 ----------
@@ -306,7 +306,7 @@ if you want to write multiple separate statements on a single line:
    << // cat : String = "🐱"
    << // dog : String = "🐶"
 
-.. _BasicTypes_Integers:
+.. _TheBasics_Integers:
 
 Integers
 --------
@@ -323,7 +323,7 @@ in that an 8-bit unsigned integer is of type ``UInt8``,
 and a 32-bit signed integer is of type ``Int32``.
 Like all types in Swift, these integer types have capitalized names.
 
-.. _BasicTypes_Int:
+.. _TheBasics_Int:
 
 Int
 ~~~
@@ -341,7 +341,7 @@ This aids code consistency and interoperability.
 Even on 32-bit platforms, ``Int`` can store any value between ``-2,147,483,648`` and ``2,147,483,647``,
 and is large enough for many integer ranges.
 
-.. _BasicTypes_UInt:
+.. _TheBasics_UInt:
 
 UInt
 ~~~~
@@ -361,7 +361,7 @@ which has the same size as the current platform's architecture:
    A consistent use of ``Int`` for integer values aids code interoperability
    and provides consistency when you use type inference, as described below.
 
-.. _BasicTypes_FloatingPointNumbers:
+.. _TheBasics_FloatingPointNumbers:
 
 Floating-Point Numbers
 ----------------------
@@ -387,7 +387,7 @@ Swift provides two signed floating-point number types:
 
 .. TODO: mention infinity, -infinity etc.
 
-.. _BasicTypes_TypeInference:
+.. _TheBasics_TypeInference:
 
 Type Inference
 --------------
@@ -460,7 +460,7 @@ The literal value of ``3`` has no explicit type in and of itself,
 and so an appropriate output type of ``Double`` is inferred
 from the presence of a floating-point literal as part of the addition.
 
-.. _BasicTypes_NumericLiterals:
+.. _TheBasics_NumericLiterals:
 
 Numeric Literals
 ----------------
@@ -529,7 +529,7 @@ Neither type of formatting affects the underlying value of the literal:
    -> let justOverOneMillion = 1_000_000.000_000_1
    << // justOverOneMillion : Double = 1000000.0000001
 
-.. _BasicTypes_NumericTypeConversion:
+.. _TheBasics_NumericTypeConversion:
 
 Numeric Type Conversion
 -----------------------
@@ -547,7 +547,7 @@ Using explicitly-sized types in these situations
 helps to catch any accidental value overflows
 and implicitly documents the nature of the data being used.
 
-.. _BasicTypes_IntegerBounds:
+.. _TheBasics_IntegerBounds:
 
 Integer Bounds
 ~~~~~~~~~~~~~~
@@ -566,7 +566,7 @@ The values of these properties are of the appropriate-sized number type
 (such as ``UInt8`` in the example above)
 and can therefore be used in expressions alongside other values of the same type.
 
-.. _BasicTypes_IntegerConversion:
+.. _TheBasics_IntegerConversion:
 
 Integer Conversion
 ~~~~~~~~~~~~~~~~~~
@@ -630,7 +630,7 @@ Extending existing types to provide initializers that accept new types
 (including your own type definitions)
 is covered in :doc:`Extensions`.
 
-.. _BasicTypes_IntegerAndFloatingPointConversion:
+.. _TheBasics_IntegerAndFloatingPointConversion:
 
 Integer and Floating-Point Conversion
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -682,7 +682,7 @@ This means that ``4.75`` becomes ``4``, and ``-3.9`` becomes ``-3``.
    I think it's more appropriate here, however,
    and helps to reinforce the “just use Int” message.
 
-.. _BasicTypes_TypeAliases:
+.. _TheBasics_TypeAliases:
 
 Type Aliases
 ------------
@@ -720,7 +720,7 @@ which provides an initial value of ``0`` for the ``maxAmplitudeFound`` variable.
    In the example above,
    ``maxAmplitudeFound`` is of type ``UInt16``, not ``AudioSample``.
 
-.. _BasicTypes_Booleans:
+.. _TheBasics_Booleans:
 
 Booleans
 --------
@@ -807,7 +807,7 @@ and ensures that the intention of a particular section of code is always clear.
 
 .. TODO: the LogicValue protocol is not yet described in the Protocols chapter.
 
-.. _BasicTypes_Tuples:
+.. _TheBasics_Tuples:
 
 Tuples
 ------
@@ -896,7 +896,7 @@ Functions are described in detail in :doc:`Functions`.
    model it as a class or structure, rather than as a tuple.
    See :doc:`ClassesAndStructures`.
 
-.. _BasicTypes_Optionals:
+.. _TheBasics_Optionals:
 
 Optionals
 ---------
@@ -951,7 +951,7 @@ or it might contain *no value at all*.
 (It can't contain anything else, such as a ``Bool`` value or a ``String`` value –
 it's either an ``Int``, or it's nothing at all.)
 
-.. _BasicTypes_OptionalsIfElse:
+.. _TheBasics_OptionalsIfElse:
 
 If-Else
 ~~~~~~~
@@ -982,7 +982,7 @@ The exclamation mark effectively says,
    Trying to use ``!`` to access a non-existent optional value triggers
    an unrecoverable runtime error.
 
-.. _BasicTypes_OptionalBinding:
+.. _TheBasics_OptionalBinding:
 
 Optional Binding
 ~~~~~~~~~~~~~~~~
@@ -1048,7 +1048,7 @@ would be made available as a variable rather than a constant.
    you should declare a constant or variable yourself
    before the ``if``-``else`` statement begins.
 
-.. _BasicTypes_Nil:
+.. _TheBasics_Nil:
 
 nil
 ~~~
@@ -1088,7 +1088,7 @@ the constant or variable is automatically set to ``nil`` for you:
    In Swift, ``nil`` is not a pointer – it is the absence of a value of a certain type.
    Optionals of *any* type can be set to ``nil``, not just object types.
 
-.. _BasicTypes_ImplicitlyUnwrappedOptionals:
+.. _TheBasics_ImplicitlyUnwrappedOptionals:
 
 Implicitly Unwrapped Optionals
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1174,7 +1174,7 @@ as described in :ref:`Initialization_ImplicitlyUnwrappedOptionalProperties`.
    Always use a normal optional type if you need to check for a ``nil`` value
    during the lifetime of a variable.
 
-.. _BasicTypes_Assertions:
+.. _TheBasics_Assertions:
 
 Assertions
 ----------
@@ -1227,7 +1227,7 @@ The assertion message can be omitted if desired, as in the following example:
    -> assert(age >= 0)
    xx assert
 
-.. _BasicTypes_WhenToUseAssertions:
+.. _TheBasics_WhenToUseAssertions:
 
 When To Use Assertions
 ~~~~~~~~~~~~~~~~~~~~~~
