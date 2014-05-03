@@ -162,7 +162,7 @@ and creates an array that is large enough to store ``rows * columns`` values of 
 Each position in the matrix is given an initial value of ``0.0``.
 To achieve this, the array's size, and an initial cell value of ``0.0``,
 are passed to an array initializer that creates and initializes a new array of the correct size.
-(This initializer is described in more detail in :ref:`CollectionTypes_CreatingAnEmptyArray`.)
+(This initializer is described in more detail in :ref:`CollectionTypes_CreatingAndInitializingAnArray`.)
 
 .. testcode:: matrixSubscript
 
