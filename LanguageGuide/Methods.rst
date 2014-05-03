@@ -106,11 +106,16 @@ to refer to the current instance within its own instance methods.
 
 The ``increment`` method in the example above could have been written like this:
 
-::
+.. testcode:: instanceMethodsIncrement
 
-   func increment() {
-      self.count++
-   }
+   >> class Counter {
+   >> var count: Int = 0
+      func increment() {
+         self.count++
+      }
+   >> }
+
+.. NOTE: I'm slightly cheating with my testing of this excerpt, but it works!
 
 In practice, you don't need to write ``self`` in your code very often.
 If you don't explicitly write ``self``,

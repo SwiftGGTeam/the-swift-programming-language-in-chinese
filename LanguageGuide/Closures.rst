@@ -91,9 +91,11 @@ This function simply adds ``amount`` to ``runningTotal``, and returns the result
 When considered in isolation,
 the nested ``incrementor`` function might seem unusual:
 
-::
+.. testcode:: closuresPullout
 
-      func incrementor() -> Int {
+   -> func incrementor() -> Int {
+   >>    var runningTotal = 0
+   >>    var amount = 1
          runningTotal += amount
          return runningTotal
       }

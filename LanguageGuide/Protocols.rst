@@ -30,31 +30,34 @@ Protocol Syntax
 
 Protocols are defined in a very similar way to classes, structures, and enumerations:
 
-::
+.. testcode:: protocolSyntax
 
-   protocol SomeProtocol {
-      // protocol definition goes here
-   }
+   -> protocol SomeProtocol {
+         // protocol definition goes here
+      }
 
 Custom types can state that they adopt a particular protocol
 by placing the protocol's name after the type's name,
 separated by a colon, as part of their definition.
 Multiple protocols can also be listed, separated by commas:
 
-::
+.. testcode:: protocolSyntax
 
-   struct SomeStructure: FirstProtocol, AnotherProtocol {
-      // structure definition goes here
-   }
+   >> protocol FirstProtocol {}
+   >> protocol AnotherProtocol {}
+   -> struct SomeStructure: FirstProtocol, AnotherProtocol {
+         // structure definition goes here
+      }
 
 If a class has a superclass, the superclass name should be listed
 before any protocols it adopts, followed by a comma:
 
-::
+.. testcode:: protocolSyntax
 
-   class SomeClass: SomeSuperclass, FirstProtocol, AnotherProtocol {
-      // class definition goes here
-   }
+   >> class SomeSuperclass {}
+   -> class SomeClass: SomeSuperclass, FirstProtocol, AnotherProtocol {
+         // class definition goes here
+      }
 
 .. _Protocols_InstanceProperties:
 
@@ -86,16 +89,16 @@ Gettable-and-settable properties are indicated by writing
 ``{ get set }`` after their type declaration,
 and gettable properties are indicated by writing ``{ get }``.
 
-::
+.. testcode:: instanceProperties
 
-   protocol SomeProtocol {
-      var mustBeSettable: Int { get set }
-      var doesNotNeedToBeSettable: Int { get }
-   }
+   -> protocol SomeProtocol {
+         var mustBeSettable: Int { get set }
+         var doesNotNeedToBeSettable: Int { get }
+      }
 
 Here's an example of a protocol with a single property requirement:
 
-.. testcode:: protocols
+.. testcode:: instanceProperties
 
    -> protocol FullyNamed {
          var fullName: String { get }
@@ -110,7 +113,7 @@ a gettable instance property called ``fullName``, which is of type ``String``.
 Here's an example of a simple structure that adopts and conforms to
 the ``FullyNamed`` protocol:
 
-.. testcode:: protocols
+.. testcode:: instanceProperties
 
    -> struct Person: FullyNamed {
          var fullName: String
@@ -133,7 +136,7 @@ and means that ``Person`` has correctly conformed to the protocol.
 
 Here's a more complex class, which also adopts and conforms to the ``FullyNamed`` protocol:
 
-.. testcode:: protocols
+.. testcode:: instanceProperties
 
    -> class Starship: FullyNamed {
          var prefix: String?
@@ -632,11 +635,12 @@ A protocol can :newTerm:`inherit` from another protocol,
 and add further requirements on top of the requirements it inherits.
 The syntax for protocol inheritance is the same as for class inheritance:
 
-::
+.. testcode:: protocols
 
-   protocol SomeSubProtocol: SomeSuperProtocol {
-      // protocol definition goes here
-   }
+   >> protocol SomeSuperProtocol {}
+   -> protocol SomeSubProtocol: SomeSuperProtocol {
+         // protocol definition goes here
+      }
 
 For example:
 

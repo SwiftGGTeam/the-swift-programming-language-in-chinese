@@ -34,21 +34,24 @@ Extension Syntax
 
 Extensions are declared with the ``extension`` keyword:
 
-::
+.. testcode:: extensionSyntax
 
-   extension SomeType {
-      // new functionality to add to SomeType goes here
-   }
+   >> struct SomeType {}
+   -> extension SomeType {
+         // new functionality to add to SomeType goes here
+      }
 
 An extension can also extend an existing type to make it adopt one or more protocols.
 Where this is the case,
 the protocol names are written in exactly the same way as for a class or structure:
 
-::
+.. testcode:: extensionSyntax
 
-   extension SomeType: SomeProtocol, AnotherProtocol {
-      // implementation of protocol requirements goes here
-   }
+   >> protocol SomeProtocol {}
+   >> protocol AnotherProtocol {}
+   -> extension SomeType: SomeProtocol, AnotherProtocol {
+         // implementation of protocol requirements goes here
+      }
 
 Adding protocol conformance in this way is described in
 :ref:`Protocols_AddingProtocolConformanceWithAnExtension`.

@@ -101,13 +101,13 @@ followed by a space, followed by the name of the type to use.
 This example provides a type annotation for a variable called ``welcomeMessage``,
 to indicate that the variable can store ``String`` values:
 
-.. code::
+.. testcode:: typeAnnotations
+   :compile: yes
 
-   var welcomeMessage: String
-
-.. TESTME: this example can't be swifttested,
-   because variables can't be left uninitialized in the REPL.
-   It will need manual testing instead.
+   -> var welcomeMessage: String
+   >> welcomeMessage = "hello"
+   >> println(welcomeMessage)
+   << hello
 
 The colon in the declaration means *“…of type…,”*
 so this can be read as:
@@ -262,32 +262,31 @@ Comments
 As you may have noticed from the examples above,
 comments in Swift have some similarity to those found in C:
 
-::
+.. testcode:: comments
+   :compile: true
 
-   // Single-line comments begin with two forward-slashes, like in C.
+   -> // Single-line comments begin with two forward-slashes, like in C.
 
 You can also write multi-line comments:
 
-::
+.. testcode:: comments
+   :compile: true
 
-   /* ...which start with a forward-slash followed by an asterisk,
-      and end with an asterisk followed by a forward-slash, also like C. */
+   -> /* ...which start with a forward-slash followed by an asterisk,
+         and end with an asterisk followed by a forward-slash, also like C. */
 
 Unlike C, multi-line comments can also be nested:
 
-::
+.. testcode:: comments
+   :compile: true
 
-   /* This is done by starting a new block of comments,
-      /* then starting another new block inside of the first block.
-      The second block is then closed... */
-   ...followed by the original block. */
+   -> /* This is done by starting a new block of comments,
+         /* then starting another new block inside of the first block.
+         The second block is then closed... */
+      ...followed by the original block. */
 
 Nested multi-line comments enable you to comment out large blocks of code quickly and easily,
 even if the code already contains multi-line comments.
-
-.. TESTME: These multiline comments can't be tested by swifttest,
-   because they aren't supported by the REPL.
-   They should be tested manually before release.
 
 .. _TheBasics_Semicolons:
 

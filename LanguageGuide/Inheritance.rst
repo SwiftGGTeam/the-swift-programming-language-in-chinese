@@ -49,11 +49,13 @@ and ensure that all of the instance's properties have valid initial values.
 In its simplest form, an initializer is like an instance method with no parameters,
 written using the ``init`` keyword:
 
-::
+.. testcode:: inheritance
 
-   init() {
-      // perform some initialization here
-   }
+   >> class Test {
+   -> init() {
+         // perform some initialization here
+      }
+   >> }
 
 This simple initializer is called whenever a new instance is created
 via :newTerm:`initialization syntax`

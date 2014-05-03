@@ -107,15 +107,17 @@ and the return value of the closure is assigned as the property's default value.
 
 Here's a skeleton outline of how a closure can provide a default property value:
 
-::
+.. testcode:: defaultPropertyWithClosure
 
-   class SomeClass {
-      let someProperty: SomeType = {
-         // calculate a default value for someProperty inside this closure
-         // someValue must be of the same type as SomeType
-         return someValue
-      }()
-   }
+   >> class SomeType {}
+   -> class SomeClass {
+         let someProperty: SomeType = {
+            // calculate a default value for someProperty inside this closure
+            // someValue must be of the same type as SomeType
+   >>       let someValue = SomeType()
+            return someValue
+         }()
+      }
 
 Note that the closure's end curly brace is followed by an empty pair of parentheses.
 This tells Swift to execute the closure immediately.
@@ -1200,11 +1202,13 @@ Class definitions can have at most one deinitializer per class.
 The deinitializer does not take any parameters,
 and is written without parentheses:
 
-::
+.. testcode:: deinitializer
 
-   deinit {
-      // perform the deinitialization
-   }
+   >> class Test {
+   -> deinit {
+         // perform the deinitialization
+      }
+   >> }
 
 Deinitializers are called automatically, just before instance destruction takes place.
 You are not allowed to call ``super.deinit`` yourself.
