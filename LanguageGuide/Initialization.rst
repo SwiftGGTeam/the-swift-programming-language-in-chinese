@@ -990,14 +990,14 @@ Every item in the shopping list starts out as “unpurchased”.
 To represent this fact,
 ``ShoppingListItem`` introduces a Boolean property called ``purchased``,
 with a default value of ``false``.
-``ShoppingListItem`` also adds a computed ``String`` property called ``description``,
-to provide a textual description of a ``ShoppingListItem`` instance:
+``ShoppingListItem`` also adds a ``description`` method,
+which provides a textual description of a ``ShoppingListItem`` instance:
 
 .. testcode:: designatedConvenience
 
    -> class ShoppingListItem: RecipeIngredient {
          var purchased = false
-         var description: String {
+         func description() -> String {
             var output = "\(quantity) x \(name.lowercase)"
             output += purchased ? " ✔" : " ✘"
             return output
@@ -1034,7 +1034,7 @@ a new ``ShoppingListItem`` instance:
    -> breakfastList[0].name = "Orange juice"
    -> breakfastList[0].purchased = true
    -> for item in breakfastList {
-         println(item.description)
+         println(item.description())
       }
    </ 1 x orange juice ✔
    </ 1 x bacon ✘
@@ -1050,7 +1050,7 @@ Printing the description of each item in the array
 shows that their default states have been set as expected.
 
 .. QUESTION: Should description be a property or a method?
-   I think I've used a method elsewhere in the book for a similar scenario.
+   I've gone for a method for now, for consistency with NSObjectProtocol's approach.
 
 .. TODO: talk about the general factory initializer pattern,
    and how Swift's approach to initialization removes the need for most factories.
