@@ -104,33 +104,6 @@ to combine the message creation and the return statement into one line:
    -> println(sayHelloAgain("Anna"))
    <- Hello again, Anna!
 
-.. admonition:: Experiment
-
-   Try calling the ``sayHello`` function with your own name.
-   Once you've done that,
-   see what happens if you change the message to a different greeting.
-
-   Try using this function to say hello to a friend instead.
-   You could use an ``if else`` statement to make it reply with a special greeting when it recognizes your name,
-   and a different greeting for everyone else.
-
-   What about if you pass in a second input parameter (also a ``String``),
-   called ``birthdayType``?
-   (You separate multiple input parameters with a comma.)
-   ``birthdayType`` should contain the type of birthday you want to celebrate,
-   such as ``12th`` or ``21st``.
-   Can you make a function called ``sayHappyBirthday``,
-   and use it to wish somebody called ``Peter`` a happy ``40th`` birthday?
-
-   For bonus points,
-   make this new second parameter an ``Int`` called ``age``
-   (rather than a ``String`` called ``birthdayType``),
-   and work out whether ``age`` should have
-   ``st``, ``nd``, ``rd`` or ``th``
-   (as in ``1st``, ``2nd``, ``3rd`` or ``4th``)
-   on the end.
-   Can you get it to work for any value of ``age``?
-
 .. _Functions_FunctionParametersAndReturnValues:
 
 Function Parameters and Return Values

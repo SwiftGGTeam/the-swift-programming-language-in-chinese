@@ -229,12 +229,6 @@ There's no need to shift this to the right,
 as ``0x000099`` already equals ``0x99``,
 which has a decimal value of ``153``.
 
-.. admonition:: Experiment
-
-   Try removing the parentheses around ``(pink & 0xFF0000)`` and ``(pink & 0x00FF00)``.
-   Why do the values of ``redComponent`` and ``greenComponent`` change?
-   Why do you then get same value of ``153`` for all three components?
-
 .. QUESTION: I've used UInt32 values here,
    but this would also work with an inferred Int.
    Which is a better example? (I've chosen not to use Int so far,
