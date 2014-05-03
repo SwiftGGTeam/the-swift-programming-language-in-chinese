@@ -29,69 +29,6 @@ Strings
 .. QUESTION: This chapter is the only time I talk in detail about bridging in the Guide.
    Is this okay to do?
 
-Strings are Value Types in Swift
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Swift's ``String`` type is a *value type*.
-This means that if you create a new ``String`` value,
-that ``String`` value is *copied* when it is passed to a function or method,
-or when it is assigned to a constant or variable.
-In each case, a new copy of the existing ``String`` value is created,
-and the new copy is passed or assigned, rather than the original version.
-(Value types are described in :ref:`ClassesAndStructures_ValueTypesAndReferenceTypes`.)
-
-.. note::
-
-   This behavior is different to ``NSString`` in Cocoa.
-   When you create an ``NSString`` instance in Cocoa,
-   and pass it to a function or method or assign it to a variable,
-   you are always passing or assigning a *reference* to the same single ``NSString``.
-   No copying of the string takes place, unless you specifically request it.
-
-Swift's copy-by-default ``String`` behavior
-matches the way that strings are used in code in practice.
-When a function or method passes you a ``String`` value,
-it is clear that you own that exact ``String`` value,
-regardless of where it came from.
-You can be confident that the string you are passed will not be modified
-unless you modify it yourself.
-
-Behind the scenes, Swift's compiler optimizes string usage
-so that actual copying only takes place when absolutely necessary.
-This ensures that you always get great performance
-when working with strings as value types within your code.
-
-.. TODO: talk about what this means for bridging to NSString,
-   and how the semantics for working with NSString
-   relate to the default value semantics used by String.
-
-String Mutability
-~~~~~~~~~~~~~~~~~
-
-In Objective-C and Cocoa,
-you choose between two classes (``NSString`` and ``NSMutableString``)
-to determine whether a string is allowed to be modified (or *mutated*).
-Swift does not have this distinction.
-Instead, you indicate whether a particular ``String`` can be modified
-by assigning it to a variable (in which case it can be modified),
-or to a constant (in which case it cannot be modified):
-
-.. testcode:: stringMutability
-
-   -> var variableString = "Mary had"
-   << // variableString : String = "Mary had"
-   -> variableString += " a little lamb"
-   /> variableString is now \"\(variableString)\"
-   </ variableString is now "Mary had a little lamb"
-   ---
-   -> let constantString = "its fleece was"
-   << // constantString : String = "its fleece was"
-   -> constantString += " white as snow"
-   !! <REPL Input>:1:16: error: expression does not type-check
-   !! constantString += " white as snow"
-   !! ~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~
-   // this reports a compile-time error - a constant string cannot be modified
-
 String Literals
 ~~~~~~~~~~~~~~~
 
@@ -163,6 +100,69 @@ or by initializing a new ``String`` with initialization syntax:
 .. QUESTION: I've made both of these variables,
    because you'd be likely to use them as such if they start out empty.
    Is this the correct approach to take here?
+
+String Mutability
+~~~~~~~~~~~~~~~~~
+
+In Objective-C and Cocoa,
+you choose between two classes (``NSString`` and ``NSMutableString``)
+to determine whether a string is allowed to be modified (or *mutated*).
+Swift does not have this distinction.
+Instead, you indicate whether a particular ``String`` can be modified
+by assigning it to a variable (in which case it can be modified),
+or to a constant (in which case it cannot be modified):
+
+.. testcode:: stringMutability
+
+   -> var variableString = "Mary had"
+   << // variableString : String = "Mary had"
+   -> variableString += " a little lamb"
+   /> variableString is now \"\(variableString)\"
+   </ variableString is now "Mary had a little lamb"
+   ---
+   -> let constantString = "its fleece was"
+   << // constantString : String = "its fleece was"
+   -> constantString += " white as snow"
+   !! <REPL Input>:1:16: error: expression does not type-check
+   !! constantString += " white as snow"
+   !! ~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~
+   // this reports a compile-time error - a constant string cannot be modified
+
+Strings are Value Types
+~~~~~~~~~~~~~~~~~~~~~~~
+
+Swift's ``String`` type is a *value type*.
+This means that if you create a new ``String`` value,
+that ``String`` value is *copied* when it is passed to a function or method,
+or when it is assigned to a constant or variable.
+In each case, a new copy of the existing ``String`` value is created,
+and the new copy is passed or assigned, rather than the original version.
+(Value types are described in :ref:`ClassesAndStructures_ValueTypesAndReferenceTypes`.)
+
+.. note::
+
+   This behavior is different to ``NSString`` in Cocoa.
+   When you create an ``NSString`` instance in Cocoa,
+   and pass it to a function or method or assign it to a variable,
+   you are always passing or assigning a *reference* to the same single ``NSString``.
+   No copying of the string takes place, unless you specifically request it.
+
+Swift's copy-by-default ``String`` behavior
+matches the way that strings are used in code in practice.
+When a function or method passes you a ``String`` value,
+it is clear that you own that exact ``String`` value,
+regardless of where it came from.
+You can be confident that the string you are passed will not be modified
+unless you modify it yourself.
+
+Behind the scenes, Swift's compiler optimizes string usage
+so that actual copying only takes place when absolutely necessary.
+This ensures that you always get great performance
+when working with strings as value types within your code.
+
+.. TODO: talk about what this means for bridging to NSString,
+   and how the semantics for working with NSString
+   relate to the default value semantics used by String.
 
 Characters
 ----------
