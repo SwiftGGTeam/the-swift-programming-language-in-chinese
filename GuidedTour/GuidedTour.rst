@@ -164,12 +164,12 @@ which includes it as part of the string.
 
 .. admonition:: Experiment
 
-   Try using string interpolation to
+   Use ``\()`` to
    include a floating point calculation in a string,
    and to include someone’s name in a greeting.
 
-Arrays and dictionaries are written using brackets (``[]``)
-and their elements are accessed by writing
+You create arrays and dictionaries using brackets (``[]``),
+and access their elements by writing
 the index or key in brackets.
 
 .. testcode:: array-dict
@@ -191,6 +191,9 @@ the index or key in brackets.
 .. admonition:: Experiment
 
    Try sorting ``fruits`` using the Swift Standard Library ``sort`` function.
+
+.. TODO Either give more information about how to sort
+   or come up with another exercise.
 
 .. Forcasts above are real current conditions from 9:14 pm April 28, 2014.
 
