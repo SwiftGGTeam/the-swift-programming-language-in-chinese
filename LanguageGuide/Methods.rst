@@ -179,14 +179,14 @@ before the ``func`` keyword for that method:
 
    -> struct Point {
          var x = 0.0, y = 0.0
-         mutating func moveBy(deltaX: Double, deltaY: Double) {
+         mutating func moveByX(deltaX: Double, y deltaY: Double) {
             x += deltaX
             y += deltaY
          }
       }
    -> var somePoint = Point(1.0, 1.0)
    << // somePoint : Point = Point(1.0, 1.0)
-   -> somePoint.moveBy(2.0, 3.0)
+   -> somePoint.moveByX(2.0, y: 3.0)
    -> println("The point is now at (\(somePoint.x), \(somePoint.y))")
    <- The point is now at (3.0, 4.0)
 
@@ -205,10 +205,10 @@ because its properties cannot be changed, even if they are variable properties
 
    -> let fixedPoint = Point(3.0, 3.0)
    << // fixedPoint : Point = Point(3.0, 3.0)
-   -> fixedPoint.moveBy(2.0, 3.0)
-   !! <REPL Input>:1:1: error: immutable value of type 'Point' only has mutating members named 'moveBy'
-   !! fixedPoint.moveBy(2.0, 3.0)
-   !! ^          ~~~~~~
+   -> fixedPoint.moveByX(2.0, y: 3.0)
+   !! <REPL Input>:1:1: error: immutable value of type 'Point' only has mutating members named 'moveByX'
+   !! fixedPoint.moveByX(2.0, y: 3.0)
+   !! ^          ~~~~~~~
    // this will report an error
 
 .. TODO: talk about @!mutating as well.
@@ -228,13 +228,13 @@ The ``Point`` example shown above could have been written in the following way i
 
    -> struct Point {
          var x = 0.0, y = 0.0
-         mutating func moveBy(deltaX: Double, deltaY: Double) {
+         mutating func moveByX(deltaX: Double, y deltaY: Double) {
             self = Point(x + deltaX, y + deltaY)
          }
       }
    >> var somePoint = Point(1.0, 1.0)
    << // somePoint : Point = Point(1.0, 1.0)
-   >> somePoint.moveBy(2.0, 3.0)
+   >> somePoint.moveByX(2.0, y: 3.0)
    >> println("The point is now at (\(somePoint.x), \(somePoint.y))")
    << The point is now at (3.0, 4.0)
 

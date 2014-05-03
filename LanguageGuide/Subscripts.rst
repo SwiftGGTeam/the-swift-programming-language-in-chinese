@@ -141,16 +141,16 @@ The ``Matrix`` structure's subscript takes two integer parameters:
             self.columns = columns
             grid = Array(rows * columns, 0.0)
          }
-         func indexIsValid(row: Int, column: Int) -> Bool {
+         func indexIsValidForRow(row: Int, column: Int) -> Bool {
             return row >= 0 && row < rows && column >= 0 && column < columns
          }
          subscript(row: Int, column: Int) -> Double {
             get {
-               assert(indexIsValid(row, column), "Matrix index out of range")
+               assert(indexIsValidForRow(row, column: column), "Index out of range")
                return grid[(row * columns) + column]
             }
             set {
-               assert(indexIsValid(row, column), "Matrix index out of range")
+               assert(indexIsValidForRow(row, column: column), "Index out of range")
                grid[(row * columns) + column] = newValue
             }
          }
@@ -211,7 +211,7 @@ is outside the bounds of the matrix:
    << // rows : Int = 2
    >> var columns = 2
    << // columns : Int = 2
-   -> func indexIsValid(row: Int, column: Int) -> Bool {
+   -> func indexIsValidForRow(row: Int, column: Int) -> Bool {
          return row >= 0 && row < rows && column >= 0 && column < columns
       }
 

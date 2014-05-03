@@ -171,7 +171,7 @@ The ``boardColors`` array is initialized with a closure to set up its color valu
             }
             return temporaryBoard
          }()
-         func squareIsBlack(row: Int, column: Int) -> Bool {
+         func squareIsBlackAtRow(row: Int, column: Int) -> Bool {
             return boardColors[(row * 10) + column]
          }
       }
@@ -184,15 +184,15 @@ in a temporary array called ``temporaryBoard``,
 and returns this temporary array as the closure's return value
 once its setup is complete.
 The returned array value is stored in ``boardColors``,
-and can be queried with the ``squareIsBlack`` utility function:
+and can be queried with the ``squareIsBlackAtRow`` utility function:
 
 .. testcode:: checkers
 
    -> let board = CheckersBoard()
    << // board : CheckersBoard = CheckersBoard([false, true, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, true, false])
-   -> println(board.squareIsBlack(row: 0, column: 1))
+   -> println(board.squareIsBlackAtRow(0, column: 1))
    <- true
-   -> println(board.squareIsBlack(row: 9, column: 9))
+   -> println(board.squareIsBlackAtRow(9, column: 9))
    <- false
 
 .. _Initialization_InitializerInputParameters:
