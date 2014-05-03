@@ -337,7 +337,7 @@ This example defines two protocols for use with dice-based board games:
       }
    -> protocol DiceGameDelegate {
          func gameDidStart(game: DiceGame)
-         func game(_ game: DiceGame, didStartNewTurnWithDiceRoll diceRoll: Int)
+         func game(game: DiceGame, didStartNewTurnWithDiceRoll diceRoll: Int)
          func gameDidEnd(game: DiceGame)
       }
 
@@ -439,7 +439,7 @@ which adopts the ``DiceGameDelegate`` protocol:
             }
             println("The game is using a \(game.dice.sides)-sided dice")
          }
-         func game(_ game: DiceGame, didStartNewTurnWithDiceRoll diceRoll: Int) {
+         func game(game: DiceGame, didStartNewTurnWithDiceRoll diceRoll: Int) {
             ++numberOfTurns
             println("Rolled a \(diceRoll)")
          }
