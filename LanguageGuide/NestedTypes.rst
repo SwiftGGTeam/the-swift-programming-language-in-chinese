@@ -38,7 +38,7 @@ Types can be nested to as many levels as are required:
          }
          let rank: Rank
          let suit: Suit
-         func description() -> String {
+         var description: String {
             var output = "the \(rank.toRaw()) of \(suit.toRaw())"
             output += " is worth \(rank.values.firstValue)"
             if let secondValue = rank.values.secondValue {
@@ -49,7 +49,7 @@ Types can be nested to as many levels as are required:
       }
    -> let theAceOfSpades = BlackjackCard(.Ace, .Spades)
    << // theAceOfSpades : BlackjackCard = BlackjackCard(<unprintable value>, <unprintable value>)
-   -> println("Blackjack value: \(theAceOfSpades.description())")
+   -> println("Blackjack value: \(theAceOfSpades.description)")
    <- Blackjack value: the Ace of ♠ is worth 1 or 11
 
 This example defines a playing card for use in the game of Blackjack.
@@ -84,10 +84,10 @@ without being checked, and is used as the first value of the ``Values`` structur
 
 The ``BlackjackCard`` structure itself is pretty simple.
 It actually only has two properties – ``rank``, and ``suit``.
-It also defines a method called ``description``,
+It also defines a computed property called ``description``,
 which uses the values stored in ``rank`` and ``suit`` to build
 a textual description of the card.
-The ``description`` method uses optional binding to check if there is
+The ``description`` property uses optional binding to check if there is
 a second value to display, and inserts addition description detail if so.
 
 Because ``BlackjackCard`` is a structure with no custom initializers,
