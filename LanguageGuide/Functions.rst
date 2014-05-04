@@ -302,7 +302,7 @@ based on the standard set of vowels and consonants used in American English:
 You can use the ``count`` function to count the characters in an arbitrary string,
 and to retrieve the counted totals as a tuple of three named ``Int`` values:
 
-.. testcode:: tuplesAsReturnValues
+.. testcode:: tupleTypesAsReturnTypes
 
    -> let total = count("some arbitrary string!")
    << // total : (vowels: Int, consonants: Int, others: Int) = (6, 13, 3)
