@@ -134,7 +134,8 @@ the method's first parameter using a preposition such as
 as seen in the ``incrementBy`` method from the ``Counter`` class above.
 This enables the method to be read as a sentence when it is called.
 Swift makes this established method naming convention easy to write
-by using a different default approach for method parameters.
+by using a different default approach for method parameters
+than it uses for function parameters.
 
 Specifically, Swift considers the *first* parameter name in a method
 to be a local parameter name by default,
@@ -193,6 +194,24 @@ a back tick (`````) before the ``numberOfTimes`` parameter:
 The default behavior described above mean that method definitions in Swift
 are written with the same grammatical style as Objective-C,
 and are called in a natural, expressive way.
+
+.. _Methods_ModifyingTheExternalParameterNameBehaviorForMethods:
+
+Modifying the External Parameter Name Behavior for Methods
+__________________________________________________________
+
+It can sometimes be useful for a method to provide an external parameter name
+for its first parameter, even though this is not the default behavior.
+Where this is the case, you can either add an explicit external name yourself,
+or you can prefix the first parameter's name with a back tick
+to use the local name as an external name too.
+
+Conversely, if you do not want to provide an external name
+for the second or subsequent parameter of a method,
+you can override the default behavior by using an underscore character (``_``)
+as an explicit external parameter name for that parameter.
+
+.. TODO: provide (good, would-actually-be-appropriate) examples here.
 
 .. _Methods_TheSelfProperty:
 
