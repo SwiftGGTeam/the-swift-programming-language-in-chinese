@@ -672,7 +672,7 @@ It uses the ``string`` variable parameter for all of its string manipulation.
 .. _Functions_InOutParameters:
 
 In-Out Parameters
-~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~
 
 It is sometimes useful for a function parameter to represent
 the *actual* external value used for the call,
