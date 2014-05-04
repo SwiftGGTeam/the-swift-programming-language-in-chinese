@@ -924,12 +924,13 @@ Designated initializers are written in the same way as simple initializers for v
       <#statements#>
    }
 
-Convenience initializers are written in the same style, but with a return type of ``Self``
-to indicate that they are a convenient way to initialize an instance of that type:
+Convenience initializers are written in the same style,
+but with the ``convenience`` keyword placed before the ``init`` keyword,
+separated by a space:
 
 .. syntax-outline::
 
-   init(<#parameters#>) -> Self {
+   convenience init(<#parameters#>) {
       <#statements#>
    }
 
@@ -962,7 +963,7 @@ and provides two initializers for creating ``Food`` instances:
          init(name: String) {
             self.name = name
          }
-         init() -> Self {
+         convenience init() {
             self.init(name: "[Unnamed]")
          }
       }
@@ -1017,7 +1018,7 @@ and defines two initializers for creating ``RecipeIngredient`` instances:
             self.quantity = quantity
             super.init(name: name)
          }
-         init(name: String) -> Self {
+         convenience init(name: String) {
             self.init(name: name, quantity: 1)
          }
       }
@@ -1038,7 +1039,7 @@ the ``init(name: String)`` initializer of the ``Food`` class.
 This process satisfies safety check 1 from *Two-Phase Initialization* above.
 
 ``RecipeIngredient`` also defines a convenience initializer,
-``init(name: String) -> Self``,
+``init(name: String)``,
 which can be used to create a ``RecipeIngredient`` instance by name alone.
 This convenience initializer assumes a quantity of ``1``
 for any ``RecipeIngredient`` instance that is created without an explicit quantity.
@@ -1048,7 +1049,7 @@ and avoids code duplication when creating
 several single-quantity ``RecipeIngredient`` instances.
 This convenience initializer simply delegates across to the class's designated initializer.
 
-Note that the ``init(name: String) -> Self`` convenience initializer provided by ``RecipeIngredient``
+Note that the ``init(name: String)`` convenience initializer provided by ``RecipeIngredient``
 takes the same parameters as the ``init(name: String)`` *designated* initializer from ``Food``.
 Even though ``RecipeIngredient`` has provided this initializer as a convenience initializer,
 this nonetheless means that ``RecipeIngredient`` has provided
