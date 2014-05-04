@@ -67,25 +67,26 @@ as shown above.
 As an alternative, you can provide a :newTerm:`default property value`
 as part of the property's declaration.
 
-The ``Fahrenheit`` example can be written in a simpler form
-by providing a default value at the point that the property is declared:
+If a property always takes the same initial value,
+you should provide a default value as part of the property's declaration,
+rather than setting its value within an initializer.
+The end result is the same,
+but the use of a default value ties the property's initialization more closely to its declaration,
+and makes for shorter, clearer initializers.
+It also enables you to infer the type of the property from its default value.
+Finally, it makes it easier for you to take advantage of
+default initializers and initializer inheritance,
+as described later in this chapter.
+
+The ``Fahrenheit`` structure from above can be written in a simpler form
+by providing a default value for its ``temperature`` property
+at the point that the property is declared:
 
 .. testcode:: fahrenheitDefault
 
    -> struct Fahrenheit {
          var temperature = 32.0
       }
-
-If a property should always take the same initial value,
-you should always provide a default value as part of the property declaration,
-rather than setting its value within an initializer.
-The end result is the same,
-but the use of a default value ties the property's initialization more closely to its declaration,
-and makes for shorter, clearer initializers.
-It also enables you to infer the type of the property from its default value, as shown here.
-Finally, it makes it easier for you to take advantage of
-default initializers and initializer inheritance,
-as described later in this chapter.
 
 .. note::
    When you assign a default value to a stored property,
