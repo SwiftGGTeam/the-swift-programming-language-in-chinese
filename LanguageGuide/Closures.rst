@@ -483,7 +483,7 @@ to store the current running total of the incrementor that will be returned.
 This variable is initialized with a value of ``0``.
 
 The ``makeIncrementor`` function has a single ``Int`` parameter
-with an external name of ``forIncrement``, and an internal name of ``amount``.
+with an external name of ``forIncrement``, and a local name of ``amount``.
 The argument value passed to this parameter specifies
 how much ``runningTotal`` should be incremented by
 each time the returned incrementor function is called.
