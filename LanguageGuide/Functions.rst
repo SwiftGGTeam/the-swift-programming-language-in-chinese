@@ -332,6 +332,8 @@ the body of the function itself, and cannot be used when calling the function.
 These kinds of parameter names are known as :newTerm:`local parameter names`,
 because they are only available for use within the function's body.
 
+.. _Functions_ExternalParameterNames:
+
 External Parameter Names
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -414,6 +416,8 @@ while still providing a function body that is simple and readable.
    would be unclear to someone reading your code for the first time.
    You do not need to provide external parameter names for a function's parameters
    if the purpose of those parameters is clear and unambiguous when the function is called.
+
+.. _Functions_ShorthandExternalParameterNames:
 
 Shorthand External Parameter Names
 __________________________________
