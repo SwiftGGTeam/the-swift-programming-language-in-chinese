@@ -196,14 +196,14 @@ and can be queried with the ``squareIsBlackAtRow`` utility function:
    -> println(board.squareIsBlackAtRow(9, column: 9))
    <- false
 
-.. _Initialization_InitializerInputParameters:
+.. _Initialization_InitializationParameters:
 
-Initializer Input Parameters
-----------------------------
+Initialization Parameters
+-------------------------
 
-Initializers can take :newTerm:`input parameters`
-to customize the initialization process.
-Input parameters are written in the same syntax as normal method parameters.
+Initializers can define :newTerm:`initialization parameters`,
+which define the types and names of values that customize the initialization process.
+Initialization parameters are written in the same syntax as function and method parameters.
 
 Initializers can use
 constant parameters, variable parameters, and ``inout`` parameters.
@@ -214,8 +214,9 @@ Variadic parameters cannot be used.
 .. FIXME: Update this section if, as, and when variadics start working for initializers.
    The fact that they don't work currently is rdar://16535434.
 
-The following example defines a structure to store temperatures expressed in the Celsius scale.
-It implements two custom initializers,
+The following example defines a structure called ``Celsius``,
+which stores temperatures expressed in the Celsius scale.
+The ``Celsius`` structure implements two custom initializers,
 each of which initializes a new instance of the structure
 with a value from a different temperature scale:
 
@@ -239,8 +240,94 @@ with a value from a different temperature scale:
    /> freezingPointOfWater.temperatureInCelsius is \(freezingPointOfWater.temperatureInCelsius)
    </ freezingPointOfWater.temperatureInCelsius is 0.0
 
+The first initializer has a single initialization parameter
+with an external name of ``fromFahrenheit``, and a local name of ``fahrenheit``.
+The second initializer has a single initialization parameter
+with an external name of ``fromKelvin``, and a local name of ``kelvin``.
+Both of these initializers convert their single argument into
+a value in the Celsius scale,
+and store this value in a property called ``temperatureInCelsius``.
+
 .. TODO: I need to provide an example of default values for initializer parameters,
    to show they can help you to get multiple initializers "for free" (after a fashion).
+
+.. _Initialization_LocalAndExternalNames:
+
+Local and External Parameter Names
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Initializer input parameters are written in the same way as function and method parameters.
+As with function and method parameters,
+initializer input parameters can have both a local name
+for use within the initializer's body,
+and an external name for use when calling the initializer.
+
+However, initializers do not have an identifying function name before their parentheses
+in the way that functions and methods do.
+This means that the names and types of an initializer's parameters
+play a particularly important role in identifying which initializer is being called.
+Because of this, it is usually desirable to provide an external name
+for every initialization parameter.
+
+To help with this, Swift provides an automatic external name
+for *every* parameter in an initializer if you don't provide an external name yourself.
+This automatic external name is the same as the local name,
+as if you had written a back tick before every initialization parameter.
+
+.. note::
+
+   If you do not want to provide an external name for a parameter in an initializer,
+   provide an underscore (``_``) as an explicit external name for that parameter
+   to override the default behavior described above.
+
+The following example defines a structure called ``Color``,
+with three constant properties called ``red``, ``green``, and ``blue``.
+These properties store a value between ``0.0`` and ``1.0``
+to indicate the amount of red, green, and blue in the color.
+
+``Color`` provides an initializer with
+three appropriately-named parameters of type ``Double``.
+``Color`` also defines a method called ``limitToRange``,
+to cope with argument values outside of the ``0.0`` to ``1.0`` range defined above:
+
+.. testcode:: externalParameterNames
+
+   -> struct Color {
+         let red = 0.0, green = 0.0, blue = 0.0
+         init(red: Double, green: Double, blue: Double) {
+            self.red   = limitToRange(red)
+            self.green = limitToRange(green)
+            self.blue  = limitToRange(blue)
+         }
+         func limitToRange(component: Double) -> Double {
+            if component > 1.0 { return 1.0 }
+            if component < 0.0 { return 0.0 }
+            return component
+         }
+      }
+
+Whenever you create a new ``Color`` instance,
+you call its initializer using external names for each of the three color components:
+
+.. testcode:: externalParameterNames
+
+   -> let magenta = Color(red: 1.0, green: 0.0, blue: 1.0)
+   << // magenta : Color = Color(1.0, 0.0, 1.0)
+
+Note that it is not possible to call this initializer
+without using the external names.
+External names must always be used in an intializer if they are defined,
+and omitting them is a compile-time error:
+
+.. testcode:: externalParameterNames
+
+   -> let veryGreen = Color(0.0, 1.0, 0.0)
+   << // veryGreen : Color = Color(0.0, 1.0, 0.0)
+   // this reports a compile-time error - external names are required
+
+.. FIXME: this should be an error, but Doug hasn't implemented the checking yet.
+   I'll need to come back and inclue the error message for swifttesting purposes
+   once he has implemented it.
 
 .. _Initialization_OptionalPropertyTypes:
 
