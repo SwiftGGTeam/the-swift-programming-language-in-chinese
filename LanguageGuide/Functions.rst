@@ -273,64 +273,43 @@ Tuples as Return Values
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 Functions can use a tuple type as their return type.
-This enables a function to return multiple values as part of one compound return type:
+This enables a function to return multiple values as part of one compound return type.
+
+The example below defines a function called ``count``,
+which counts the number of vowels, consonants, and other characters in a string,
+based on the standard set of vowels and consonants used in American English:
 
 .. testcode:: tuplesAsReturnValues
 
-   -> func splitOnFirst(string: String, splitter: Character) -> (String, String?) {
-         let characterCount = countElements(string)
-         for i in 0...characterCount {
-            if string[i] == splitter {
-               return (string[0...i], string[i+1...size])
+   -> func count(string: String) -> (vowels: Int, consonants: Int, others: Int) {
+         var vowels = 0, consonants = 0, others = 0
+         for character in string {
+            switch String(character).lowercase {
+               case "a", "e", "i", "o", "u":
+                  ++vowels
+               case "b", "c", "d", "f", "g", "h", "j", "k", "l", "m",
+                  "n", "p", "q", "r", "s", "t", "v", "w", "x", "y", "z":
+                  ++consonants
+               default:
+                  ++others
             }
          }
-         return (string, nil)
+         return (vowels, consonants, others)
       }
 
-This example defines a function called ``splitOnFirst``,
-which looks for a ``Character`` called ``splitter``
-within a ``String`` called ``string``.
-It returns a tuple of type ``(String, String?)``.
-This tuple contains an initial ``String``
-and an optional second ``String``,
-wrapped up together as a compound value inside a single tuple.
-
-If ``splitter`` is found,
-the tuple will contain two strings –
-a string made up of all of the characters from before the first instance of the splitter
-and a string made up of all of the remaining characters.
-
-If ``splitter`` is *not* found,
-the tuple will contain the entire string as its first string value
-and ``nil`` as its second value to indicate that ``splitter`` was not found:
+You can use the ``count`` function to count the characters in an arbitrary string,
+and to retrieve the counted totals as a tuple of three named ``Int`` values:
 
 .. testcode:: tuplesAsReturnValues
 
-   -> let helloWorld = splitOnFirst("hello world", " ")
-   << // helloWorld : (String, String?) = ("hello", <unprintable value>)
-   -> if let secondPart = helloWorld.1 {
-         println("The text from after the splitter is '\(secondPart)'")
-      }
-   <- The text from after the splitter is 'world'
+   -> let total = count("some arbitrary string!")
+   << // total : (vowels: Int, consonants: Int, others: Int) = (6, 13, 3)
+   -> println("\(total.vowels) vowels and \(total.consonants) consonants")
+   <- 6 vowels and 13 consonants
 
-Alternatively, decompose the tuple into multiple constants or variables
-as part of the function return value assignment:
-
-.. testcode:: tuplesAsReturnValues
-
-   -> let (first, possibleSecond) = splitOnFirst("hello world", " ")
-   << // (first, possibleSecond) : (String, String?) = ("hello", <unprintable value>)
-   -> if let second = possibleSecond {
-         println("The text from after the splitter is '\(second)'")
-      }
-   <- The text from after the splitter is 'world'
-
-This example sets two constants called ``first`` and ``possibleSecond``
-to equal the two output values stored in the ``splitOnFirst`` function's
-return tuple value.
-These two constants can then be used independently of each other.
-Here, the value stored in the optional second tuple value is unwrapped and accessed
-with optional binding.
+Note that the tuple's members do not need to be named
+at the point that the tuple is returned from the function,
+because their names have already been specified as part of the function's return type.
 
 .. _Functions_FunctionParameterNames:
 
