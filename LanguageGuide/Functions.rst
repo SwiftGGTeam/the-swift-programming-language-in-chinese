@@ -233,23 +233,19 @@ but the returned value is not used.
    without returning a value,
    and attempting to do so will result in a compile-time error.
 
-.. _Functions_TuplesAsInputParameters:
+.. _Functions_TupleTypesAsParameterTypes:
 
-Tuples as Input Parameters
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+Tuple Types as Parameter Types
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can use any type of value as an input parameter for a function,
-if it is defined appropriately.
+You can use a tuple type as the type of a function parameter.
 For example, suppose you rewrite the ``halfOpenRangeLength`` function from above
-to take a tuple of two ``Int`` values:
+to take a tuple of two named ``Int`` values:
 
-.. QUESTION: Is my use of “any” technically correct here?
-   Is there some type that cannot be passed to a function?
+.. testcode:: tuplesTypesAsParameterTypes
 
-.. testcode:: tuplesAsInputParameters
-
-   -> func halfOpenRangeLength(range: (Int, Int)) -> Int {
-         return range.1 - range.0
+   -> func halfOpenRangeLength(range: (start: Int, end: Int)) -> Int {
+         return range.end - range.start
       }
    -> let someRange = (1, 10)
    << // someRange : (Int, Int) = (1, 10)
@@ -257,29 +253,35 @@ to take a tuple of two ``Int`` values:
    <- 9
 
 Note that this function takes *one* input parameter, not two.
-Its single input parameter is a tuple containing two ``Int`` values.
+Its single input parameter is a tuple called ``range``,
+which contains two ``Int`` values.
 This ability to bundle up related values into a single compound value
 is one of the major benefits of tuples.
 This function can be passed any tuple of type ``(Int, Int)`` –
 such as ``(1, 10)`` in the example above –
 and it will calculate the half-open range length for that tuple.
 
+In the example above, the ``someRange`` tuple's elements are not given names
+when the tuple is created.
+However, the tuple's elements *are* given names as part of the function's parameter list.
+This means that the elements can be accessed by name within the function's body.
+
 .. TODO: mention that you can pass a tuple as the entire set of arguments,
    as in var argTuple = (0, "one", '2'); x.foo:bar:bas:(argTuple)
 
-.. _Functions_TuplesAsReturnValues:
+.. _Functions_TupleTypesAsReturnTypes:
 
-Tuples as Return Values
-~~~~~~~~~~~~~~~~~~~~~~~
+Tuple Types as Return Types
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Functions can use a tuple type as their return type.
+You can also use a tuple type as the return type for a function.
 This enables a function to return multiple values as part of one compound return type.
 
 The example below defines a function called ``count``,
 which counts the number of vowels, consonants, and other characters in a string,
 based on the standard set of vowels and consonants used in American English:
 
-.. testcode:: tuplesAsReturnValues
+.. testcode:: tupleTypesAsReturnTypes
 
    -> func count(string: String) -> (vowels: Int, consonants: Int, others: Int) {
          var vowels = 0, consonants = 0, others = 0
