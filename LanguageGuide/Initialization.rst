@@ -201,7 +201,7 @@ and can be queried with the ``squareIsBlackAtRow`` utility function:
 Initialization Parameters
 -------------------------
 
-Initializers can define :newTerm:`initialization parameters`,
+Initializers can provide :newTerm:`initialization parameters`,
 which define the types and names of values that customize the initialization process.
 Initialization parameters are written in the same syntax as function and method parameters.
 
