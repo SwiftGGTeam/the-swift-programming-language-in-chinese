@@ -429,10 +429,10 @@ with a parenthesized list of arguments.
 
 .. admonition:: Experiment
 
-   Try removing the day of the week parameter.
-   Try adding a third parameter to include today’s lunch special in the greeting.
+   Remove the ``day`` parameter.
+   Add a parameter to include today’s lunch special in the greeting.
 
-Functions can return multiple values using a tuple.
+Functions can return multiple values by using a tuple.
 
 .. testcode:: func-tuple
 
@@ -462,7 +462,7 @@ collecting them into an array.
 
 .. admonition:: Experiment
 
-   Try writing a function that calculates the average.
+   Write a function that calculates the average of its arguments.
 
 Functions can be nested.
 Nested functions have access to variables
