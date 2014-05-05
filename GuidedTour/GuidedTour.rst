@@ -555,7 +555,8 @@ and use ``in`` to separate the arguments from the body.
 You have several options for writing closures more concisely.
 When the closure's type is already known,
 such as the callback for a delegate,
-you can omit the type of its parameters.
+you can omit the type of its parameters,
+its return type, or both.
 For even more brevity,
 you can refer to parameters by number instead of by name.
 Single statement closures implicitly return the value
@@ -569,7 +570,7 @@ of their only statement.
     << // r0 : Int = 15
 
 A closure passed as the last argument to a function
-can appear immediately after the function call.
+can appear immediately after the parentheses.
 
 .. testcode:: trailing-closure
 
