@@ -145,9 +145,6 @@ for use with string interpolation.
 .. TODO: make this reference to string interpolation be a link to
    the appropriate section of the Strings and Characters section once it is written.
 
-.. TODO: check if convenience initializers require the "convenience" keyword
-   when they are written in an extension.
-
 .. testcode:: extensionsInitializers
 
    -> struct Point {
