@@ -469,6 +469,11 @@ collecting them into an array.
 Functions can be nested.
 Nested functions have access to variables
 that were declared in the outer function.
+You can use nested functions
+to organize the code in a function
+that is long or complex.
+
+.. TR: Any objections to this guidance?
 
 .. testcode:: nested-func
 
@@ -482,15 +487,6 @@ that were declared in the outer function.
        }
     -> returnFifteen()
     << // r0 : Int = 15
-
-.. admonition:: Experiment
-
-   Try removing the call to the ``add`` function.
-   Try calling the ``add`` function twice.
-   What happens?
-
-.. TODO: Rewrite the above exercise so it has an actual point,
-   rather than just making trivial code changes.
 
 Functions are a first-class type.
 This means a function can return another function as its value.
