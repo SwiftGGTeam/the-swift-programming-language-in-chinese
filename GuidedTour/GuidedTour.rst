@@ -209,11 +209,11 @@ the index or key in brackets.
     << // r0 : Bool = false
     ---
 
-An empty array is written ``[]``
+An empty array is written ``[]``,
 and an empty dictionary is written ``[:]``.
-since the type of an empty array or dictionary
-can't be inferred from its content ---
-specify it expliticly.
+Because the type of an empty array or dictionary
+can't be inferred from its content,
+use a type annotation to specify it expliticly.
 
 .. testcode:: empty-array-dict
 
@@ -280,7 +280,10 @@ with a possible value.
 Switches support any kind of data, not just integers.
 You need to provide a case for every possible value
 or use ``default`` to specify what happens if none of the cases match.
-Execution does not implicitly “fall through”
+
+After executing the code inside the switch case that matched,
+the program exits from the switch statement.
+Execution doesn't continue or "fall through" to the next case,
 so there is no need to explicitly break out of the switch
 at the end of each case‘s code.
 
