@@ -145,7 +145,7 @@ These names are valid identifiers within the scope of the closure.
     identifier-character --> identifier-head
     identifier-characters --> identifier-character identifier-characters-OPT
 
-    dollar-identifier --> ``$`` decimal-digits
+    implicit-parameter-name --> ``$`` decimal-digits
 
 
 .. _LexicalStructure_Keywords:

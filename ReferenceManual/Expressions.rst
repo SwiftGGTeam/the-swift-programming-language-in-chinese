@@ -670,10 +670,10 @@ see :ref:`Closures_ClosureExpressions`.
     closure-expression --> ``{`` closure-signature-OPT statements ``}``
     closure-expressions --> closure-expression closure-expressions-OPT
 
-    closure-signature --> parameter-clause function-signature-result-OPT ``in``
-    closure-signature --> identifier-list function-signature-result-OPT ``in``
+    closure-signature --> parameter-clause function-result-OPT ``in``
+    closure-signature --> identifier-list function-result-OPT ``in``
 
-    anonymous-closure-argument --> dollar-identifier
+    anonymous-closure-argument --> implicit-parameter-name
 
 
 .. _Expressions_ImplicitMemberExpression:
@@ -811,7 +811,7 @@ see :doc:`../LanguageGuide/BasicOperators` and :doc:`../LanguageGuide/AdvancedOp
     postfix-expression --> dynamic-type-expression
     postfix-expression --> subscript-expression
     postfix-expression --> forced-expression
-    postfix-expression --> optional-expression
+    postfix-expression --> chained-optional-expression
 
 
 .. _Expressions_FunctionCallExpression:
@@ -961,7 +961,7 @@ the top-level declarations of that module.
     Grammar of an explicit member expression
 
     explicit-member-expression --> postfix-expression ``.`` decimal-digit
-    explicit-member-expression --> postfix-expression ``.`` named-expression
+    explicit-member-expression --> postfix-expression ``.`` identifier generic-argument-clause-OPT
 
 
 .. _Expressions_SelfExpression:
