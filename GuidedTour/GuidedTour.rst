@@ -504,7 +504,7 @@ This means a function can return another function as its value.
     -> increment(7)
     << // r0 : Int = 8
 
-.. TODO: Confirm spelling of "incrementer" (not "incrementor").
+.. EDIT: Confirm spelling of "incrementer" (not "incrementor").
 
 A function can take another function as one of its arguments.
 
@@ -534,7 +534,7 @@ you don't give them a name when you declare them.
 You write a closure as code surrounded by braces (``{}``)
 and use ``in`` to separate the arguments from the body.
 
-.. EDIT: Second sentence above reads better is singular closure.
+.. EDIT: Second sentence above reads better as describing singular closure.
 
 .. testcode:: closure
 
