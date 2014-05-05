@@ -176,7 +176,7 @@ is made available in the current scope.
 
     Grammar of an import declaration
 
-    import-declaration --> attribute-list-OPT ``import`` import-kind-OPT import-path
+    import-declaration --> attributes-OPT ``import`` import-kind-OPT import-path
 
     import-kind --> ``typealias`` | ``struct`` | ``class`` | ``enum`` | ``protocol`` | ``var`` | ``func``
     import-path --> import-path-identifier | import-path-identifier ``.`` import-path
@@ -256,7 +256,7 @@ see :ref:`TheBasics_ConstantsAndVariables` and :ref:`Properties_StoredProperties
 
     Grammar of a constant declaration
 
-    constant-declaration --> attribute-list-OPT declaration-specifiers-OPT ``let`` pattern-initializer-list
+    constant-declaration --> attributes-OPT declaration-specifiers-OPT ``let`` pattern-initializer-list
 
     pattern-initializer-list --> pattern-initializer | pattern-initializer ``,`` pattern-initializer-list
     pattern-initializer --> pattern initializer-OPT
