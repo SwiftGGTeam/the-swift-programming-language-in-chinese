@@ -317,7 +317,12 @@ such as tuple unpacking and ``where`` clauses:
    that matches points where ``x`` is greater than ``y``,
    and one that matches points where ``x`` is odd.
 
-Repeat a block of code for each item in a collection with ``for``.
+Use ``for`` to iterate over a collection of items.
+
+.. TR: Will we end up having Collection and Container protocols
+   in the WWDC timeframe?
+   Let's match the English noun I use here to the protocol name,
+   if it makes sense.
 
 .. testcode:: for-each
 
@@ -336,6 +341,12 @@ Repeat a block of code for each item in a collection with ``for``.
    Try changing ``1..5`` to ``1...5``.
    Notice that 5 is omitted from the sum.
    When would you want to include or exclude the final number?
+
+You can also use ``for`` to iterate over items in a dictionary
+by providing a variable name to use
+for each key-value pair.
+
+.. EDIT: key/value or key-value?
 
 .. testcode:: for-dict
 
