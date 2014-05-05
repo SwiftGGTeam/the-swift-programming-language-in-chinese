@@ -84,6 +84,8 @@ you must declare it yourself before its use in the loop.
    The text above is actually technically correct,
    but the fact that this caused confusion suggests that I should revisit the wording.
 
+.. TODO: note that you can use floating-point values with ranges too.
+
 If you don't need each value from the range,
 you can ignore the values by using an underscore in place of a variable name:
 
