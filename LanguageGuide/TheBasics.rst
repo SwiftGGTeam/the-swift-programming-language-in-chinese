@@ -80,10 +80,22 @@ because the maximum value never changes.
 The current login attempt counter is declared as a variable,
 because this value must be incremented after each failed login attempt.
 
-If a stored value in your code is not going to change,
-it should always be declared as a constant with the ``let`` keyword.
-Variables should only be used for
-storing values that need to be able to change.
+You can declare multiple constants or multiple variables on a single line,
+separated by commas:
+
+.. testcode:: multipleDeclarations
+
+   -> var x = 0.0, y = 0.0, z = 0.0
+   << // x : Double = 0.0
+   << // y : Double = 0.0
+   << // z : Double = 0.0
+
+.. note::
+
+   If a stored value in your code is not going to change,
+   it should always be declared as a constant with the ``let`` keyword.
+   Variables should only be used for
+   storing values that need to be able to change.
 
 .. TODO: I need to mention that globals are lazily initialized somewhere.
    Probably not here, but somewhere.
