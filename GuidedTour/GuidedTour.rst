@@ -386,8 +386,8 @@ Loops can keep an explicit counter or index.
    << 3
    << 4
 
-Repeat a block of code until a condition changes using ``while``.
-The condition of a loop can be an the end instead,
+Use ``while`` to repeat a block of code until a condition changes.
+The condition of a loop can be at the end instead,
 ensuring that the loop is run at least once.
 
 .. testcode:: while
@@ -411,17 +411,11 @@ ensuring that the loop is run at least once.
 Functions and Closures
 ----------------------
 
-Functions are declared using ``func``
-and are called with a parenthesized list of arguments.
-Argument names are part of the function's name;
-you can specify each parameter by name when calling the function.
+Use ``func`` to declare functions
+and call them by following their name
+with a parenthesized list of arguments.
 
-.. TODO: I've hand waved here by saying args are part of the "name".
-
-.. TR: Technically, right now, the argument names are actually
-   part of the *type* rather than the *name*
-   That is, "init (withFoo : Int)" and "init (withBar : String)"
-   both have the function name "init", but have different types.
+.. TODO: Argument names are postponed to the discussion of methods.
 
 .. testcode:: func
 
