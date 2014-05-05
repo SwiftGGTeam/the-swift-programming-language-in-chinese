@@ -39,11 +39,11 @@ As an example, the grammar of a getter-setter block is defined as follows:
 
     Grammar of a getter-setter block
 
-    getter-setter-block --> ``{`` getter setter-OPT ``}`` | ``{`` setter getter ``}``
+    getter-setter-block --> ``{`` getter-clause setter-clause-OPT ``}`` | ``{`` setter-clause getter-clause ``}``
 
-This definition indicates that a getter-setter block can consist of a getter
-followed by an optional setter, enclosed in braces,
-*or* a setter followed by a getter, enclosed in braces.
+This definition indicates that a getter-setter block can consist of a getter clause
+followed by an optional setter clause, enclosed in braces,
+*or* a setter clause followed by a getter clause, enclosed in braces.
 The grammar production above is equivalent to the following two productions,
 where the alternatives are spelled out explicitly:
 
@@ -51,5 +51,8 @@ where the alternatives are spelled out explicitly:
 
     Grammar of a getter setter block
 
-    getter-setter-block --> ``{`` getter setter-OPT ``}``
-    getter-setter-block --> ``{`` setter getter ``}``
+    getter-setter-block --> ``{`` getter-clause setter-clause-OPT ``}``
+    getter-setter-block --> ``{`` setter-clause getter-clause ``}``
+
+.. TODO: Need to come up with another example here that's not an actual grammar
+    production, because otherwise we have multiple link destinations.

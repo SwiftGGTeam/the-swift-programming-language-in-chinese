@@ -37,7 +37,7 @@ If part of your code expects a ``String``,
 type safety means that you can't accidentally pass it an ``Int`` by mistake.
 This enables you to catch and fix errors as early as possible in the development process.
 
-.. _BasicTypes_ConstantsAndVariables:
+.. _TheBasics_ConstantsAndVariables:
 
 Constants and Variables
 -----------------------
@@ -49,7 +49,7 @@ to a value of a particular type
 A :newTerm:`constant` cannot be changed once it is set, whereas
 a :newTerm:`variable` can be set to a different value in the future.
 
-.. _BasicTypes_DeclaringConstantsAndVariables:
+.. _TheBasics_DeclaringConstantsAndVariables:
 
 Declaring Constants and Variables
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -80,15 +80,27 @@ because the maximum value never changes.
 The current login attempt counter is declared as a variable,
 because this value must be incremented after each failed login attempt.
 
-If a stored value in your code is not going to change,
-it should always be declared as a constant with the ``let`` keyword.
-Variables should only be used for
-storing values that need to be able to change.
+You can declare multiple constants or multiple variables on a single line,
+separated by commas:
+
+.. testcode:: multipleDeclarations
+
+   -> var x = 0.0, y = 0.0, z = 0.0
+   << // x : Double = 0.0
+   << // y : Double = 0.0
+   << // z : Double = 0.0
+
+.. note::
+
+   If a stored value in your code is not going to change,
+   it should always be declared as a constant with the ``let`` keyword.
+   Variables should only be used for
+   storing values that need to be able to change.
 
 .. TODO: I need to mention that globals are lazily initialized somewhere.
    Probably not here, but somewhere.
 
-.. _BasicTypes_TypeAnnotations:
+.. _TheBasics_TypeAnnotations:
 
 Type Annotations
 ~~~~~~~~~~~~~~~~
@@ -101,13 +113,13 @@ followed by a space, followed by the name of the type to use.
 This example provides a type annotation for a variable called ``welcomeMessage``,
 to indicate that the variable can store ``String`` values:
 
-.. code::
+.. testcode:: typeAnnotations
+   :compile: true
 
-   var welcomeMessage: String
-
-.. TESTME: this example can't be swifttested,
-   because variables can't be left uninitialized in the REPL.
-   It will need manual testing instead.
+   -> var welcomeMessage: String
+   >> welcomeMessage = "hello"
+   >> println(welcomeMessage)
+   << hello
 
 The colon in the declaration means *“…of type…,”*
 so this can be read as:
@@ -130,12 +142,12 @@ The ``welcomeMessage`` variable can now be set to any string value without error
    It is rare that you need to write type annotations in practice.
    If you provide an initial value for a constant or variable at the point that it is defined,
    Swift can almost always infer the type to be used for that constant or variable,
-   as described in :ref:`BasicTypes_TypeInference`.
+   as described in :ref:`TheBasics_TypeInference`.
    In the ``welcomeMessage`` example above, no initial value is provided,
    and so the type of the ``welcomeMessage`` variable is specified with a type annotation
    rather than being inferred from an initial value.
 
-.. _BasicTypes_NamingConstantsAndVariables:
+.. _TheBasics_NamingConstantsAndVariables:
 
 Naming Constants and Variables
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -163,6 +175,17 @@ you can't redeclare it again with the same name,
 or change it to store values of a different type.
 Nor can you change a constant into a variable,
 or a variable into a constant.
+
+.. note::
+
+   If you need to give a constant or variable the same name as a reserved Swift keyword,
+   you can do so by surrounding the keyword with back ticks (`````) when using it as a name.
+   However, you should avoid using keywords as names unless you have absolutely no choice.
+
+.. QUESTION: I've deliberately not given an example here,
+   because I don't want to suggest that such an example is
+   a good example of when you *should* use a keyword as a name.
+   Is this the right approach to take?
 
 The value of an existing variable can be changed to another value of a compatible type.
 In this example, the value of ``friendlyWelcome`` is changed from
@@ -195,7 +218,7 @@ Attempting to do so is reported as an error when your code is compiled:
    can be qualified with a backtick (e.g. let `protocol` = 1)?
    It's of a kind with the contents of this section, but it's pretty damn niche…
 
-.. _BasicTypes_PrintingConstantsAndVariables:
+.. _TheBasics_PrintingConstantsAndVariables:
 
 Printing Constants and Variables
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -231,7 +254,7 @@ The ``println`` function prints any ``String`` value you pass to it:
    -> println("This is a string")
    <- This is a string
 
-.. _BasicTypes_StringInterpolation:
+.. _TheBasics_StringInterpolation:
 
 String Interpolation
 ____________________
@@ -254,7 +277,7 @@ and escaped with a backslash before the opening parenthesis:
 .. TODO: this still doesn't talk about all of the things that string interpolation can do.
    It should still be covered in more detail in the Strings and Characters chapter.
 
-.. _BasicTypes_Comments:
+.. _TheBasics_Comments:
 
 Comments
 --------
@@ -262,34 +285,33 @@ Comments
 As you may have noticed from the examples above,
 comments in Swift have some similarity to those found in C:
 
-::
+.. testcode:: comments
+   :compile: true
 
-   // Single-line comments begin with two forward-slashes, like in C.
+   -> // Single-line comments begin with two forward-slashes, like in C.
 
 You can also write multi-line comments:
 
-::
+.. testcode:: comments
+   :compile: true
 
-   /* ...which start with a forward-slash followed by an asterisk,
-      and end with an asterisk followed by a forward-slash, also like C. */
+   -> /* ...which start with a forward-slash followed by an asterisk,
+         and end with an asterisk followed by a forward-slash, also like C. */
 
 Unlike C, multi-line comments can also be nested:
 
-::
+.. testcode:: comments
+   :compile: true
 
-   /* This is done by starting a new block of comments,
-      /* then starting another new block inside of the first block.
-      The second block is then closed... */
-   ...followed by the original block. */
+   -> /* This is done by starting a new block of comments,
+         /* then starting another new block inside of the first block.
+         The second block is then closed... */
+      ...followed by the original block. */
 
 Nested multi-line comments enable you to comment out large blocks of code quickly and easily,
 even if the code already contains multi-line comments.
 
-.. TESTME: These multiline comments can't be tested by swifttest,
-   because they aren't supported by the REPL.
-   They should be tested manually before release.
-
-.. _BasicTypes_Semicolons:
+.. _TheBasics_Semicolons:
 
 Semicolons
 ----------
@@ -306,7 +328,7 @@ if you want to write multiple separate statements on a single line:
    << // cat : String = "🐱"
    << // dog : String = "🐶"
 
-.. _BasicTypes_Integers:
+.. _TheBasics_Integers:
 
 Integers
 --------
@@ -323,7 +345,7 @@ in that an 8-bit unsigned integer is of type ``UInt8``,
 and a 32-bit signed integer is of type ``Int32``.
 Like all types in Swift, these integer types have capitalized names.
 
-.. _BasicTypes_Int:
+.. _TheBasics_Int:
 
 Int
 ~~~
@@ -341,7 +363,7 @@ This aids code consistency and interoperability.
 Even on 32-bit platforms, ``Int`` can store any value between ``-2,147,483,648`` and ``2,147,483,647``,
 and is large enough for many integer ranges.
 
-.. _BasicTypes_UInt:
+.. _TheBasics_UInt:
 
 UInt
 ~~~~
@@ -361,7 +383,7 @@ which has the same size as the current platform's architecture:
    A consistent use of ``Int`` for integer values aids code interoperability
    and provides consistency when you use type inference, as described below.
 
-.. _BasicTypes_FloatingPointNumbers:
+.. _TheBasics_FloatingPointNumbers:
 
 Floating-Point Numbers
 ----------------------
@@ -387,7 +409,7 @@ Swift provides two signed floating-point number types:
 
 .. TODO: mention infinity, -infinity etc.
 
-.. _BasicTypes_TypeInference:
+.. _TheBasics_TypeInference:
 
 Type Inference
 --------------
@@ -460,7 +482,7 @@ The literal value of ``3`` has no explicit type in and of itself,
 and so an appropriate output type of ``Double`` is inferred
 from the presence of a floating-point literal as part of the addition.
 
-.. _BasicTypes_NumericLiterals:
+.. _TheBasics_NumericLiterals:
 
 Numeric Literals
 ----------------
@@ -529,7 +551,7 @@ Neither type of formatting affects the underlying value of the literal:
    -> let justOverOneMillion = 1_000_000.000_000_1
    << // justOverOneMillion : Double = 1000000.0000001
 
-.. _BasicTypes_NumericTypeConversion:
+.. _TheBasics_NumericTypeConversion:
 
 Numeric Type Conversion
 -----------------------
@@ -547,7 +569,7 @@ Using explicitly-sized types in these situations
 helps to catch any accidental value overflows
 and implicitly documents the nature of the data being used.
 
-.. _BasicTypes_IntegerBounds:
+.. _TheBasics_IntegerBounds:
 
 Integer Bounds
 ~~~~~~~~~~~~~~
@@ -566,7 +588,7 @@ The values of these properties are of the appropriate-sized number type
 (such as ``UInt8`` in the example above)
 and can therefore be used in expressions alongside other values of the same type.
 
-.. _BasicTypes_IntegerConversion:
+.. _TheBasics_IntegerConversion:
 
 Integer Conversion
 ~~~~~~~~~~~~~~~~~~
@@ -630,7 +652,7 @@ Extending existing types to provide initializers that accept new types
 (including your own type definitions)
 is covered in :doc:`Extensions`.
 
-.. _BasicTypes_IntegerAndFloatingPointConversion:
+.. _TheBasics_IntegerAndFloatingPointConversion:
 
 Integer and Floating-Point Conversion
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -682,7 +704,7 @@ This means that ``4.75`` becomes ``4``, and ``-3.9`` becomes ``-3``.
    I think it's more appropriate here, however,
    and helps to reinforce the “just use Int” message.
 
-.. _BasicTypes_TypeAliases:
+.. _TheBasics_TypeAliases:
 
 Type Aliases
 ------------
@@ -720,7 +742,7 @@ which provides an initial value of ``0`` for the ``maxAmplitudeFound`` variable.
    In the example above,
    ``maxAmplitudeFound`` is of type ``UInt16``, not ``AudioSample``.
 
-.. _BasicTypes_Booleans:
+.. _TheBasics_Booleans:
 
 Booleans
 --------
@@ -807,7 +829,7 @@ and ensures that the intention of a particular section of code is always clear.
 
 .. TODO: the LogicValue protocol is not yet described in the Protocols chapter.
 
-.. _BasicTypes_Tuples:
+.. _TheBasics_Tuples:
 
 Tuples
 ------
@@ -896,7 +918,7 @@ Functions are described in detail in :doc:`Functions`.
    model it as a class or structure, rather than as a tuple.
    See :doc:`ClassesAndStructures`.
 
-.. _BasicTypes_Optionals:
+.. _TheBasics_Optionals:
 
 Optionals
 ---------
@@ -951,6 +973,8 @@ or it might contain *no value at all*.
 (It can't contain anything else, such as a ``Bool`` value or a ``String`` value –
 it's either an ``Int``, or it's nothing at all.)
 
+.. _TheBasics_OptionalsIfElse:
+
 If-Else
 ~~~~~~~
 
@@ -980,7 +1004,7 @@ The exclamation mark effectively says,
    Trying to use ``!`` to access a non-existent optional value triggers
    an unrecoverable runtime error.
 
-.. _BasicTypes_OptionalBinding:
+.. _TheBasics_OptionalBinding:
 
 Optional Binding
 ~~~~~~~~~~~~~~~~
@@ -1046,7 +1070,7 @@ would be made available as a variable rather than a constant.
    you should declare a constant or variable yourself
    before the ``if``-``else`` statement begins.
 
-.. _BasicTypes_Nil:
+.. _TheBasics_Nil:
 
 nil
 ~~~
@@ -1086,7 +1110,93 @@ the constant or variable is automatically set to ``nil`` for you:
    In Swift, ``nil`` is not a pointer – it is the absence of a value of a certain type.
    Optionals of *any* type can be set to ``nil``, not just object types.
 
-.. _BasicTypes_Assertions:
+.. _TheBasics_ImplicitlyUnwrappedOptionals:
+
+Implicitly Unwrapped Optionals
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+As described above,
+optionals indicate that a constant or variable is allowed to have “no value”.
+Optionals can be checked with an ``if``-``else`` statement to see if a value exists,
+and can be conditionally unwrapped with optional binding
+to access the optional's value if it does exist.
+
+In some cases, however,
+it is convenient to treat an optional as if it *always* has a value,
+once its value is confirmed to exist.
+In these cases, it is useful to remove the need
+to check and unwrap the optional's value every time it is accessed,
+because it can confidently be assumed to have a value all of the time.
+
+These kinds of optionals are defined as :newTerm:`implicitly unwrapped optionals`,
+and are written by placing an exclamation mark (``String!``)
+rather than a question mark (``String?``) after the type that you want to make optional.
+
+An implicitly unwrapped optional is a normal optional behind the scenes,
+but can also be used like a non-optional value,
+without the need to unwrap the optional value each time it is accessed.
+The following example shows the difference in behavior between
+an optional ``String`` and an implicitly unwrapped optional ``String``:
+
+.. testcode:: implicitlyUnwrappedOptionals
+
+   -> let possibleString: String? = "An optional string."
+   << // possibleString : String? = <unprintable value>
+   -> println(possibleString!) // requires an exclamation mark to access its value
+   <- An optional string.
+   ---
+   -> let assumedString: String! = "An implicitly unwrapped optional string."
+   << // assumedString : String! = String!(<unprintable value>)
+   -> println(assumedString)  // no exclamation mark is needed to access its value
+   <- An implicitly unwrapped optional string.
+
+You can think of an implicitly unwrapped optional as
+giving permission for the optional to be unwrapped automatically whenever it is used.
+Rather than placing an exclamation mark after the optional's name each time you use it,
+you place an exclamation mark after the optional's type when you declare it.
+
+.. note::
+
+   If you try and access an implicitly unwrapped optional
+   when it does not contain a value,
+   you will trigger an unrecoverable runtime error.
+   This is exactly the same as if you place an exclamation mark
+   after a normal optional that does not contain a value.
+
+You can still treat an implicitly unwrapped optional like a normal optional,
+to check if it contains a value:
+
+.. testcode:: implicitlyUnwrappedOptionals
+
+   -> if assumedString {
+         println(assumedString)
+      }
+   <- An implicitly unwrapped optional string.
+
+You can also use an implicitly unwrapped optional with optional binding,
+to check and unwrap its value in a single statement:
+
+.. testcode:: implicitlyUnwrappedOptionals
+
+   -> if let definiteString = assumedString {
+         println(definiteString)
+      }
+   <- An implicitly unwrapped optional string.
+
+Implicitly unwrapped optionals are useful when
+an optional's value is confirmed to exist immediately after the optional is first defined,
+and can definitely be assumed to exist at every point thereafter.
+The primary use of implicitly unwrapped optionals in Swift is during class initialization,
+as described in :ref:`Initialization_ImplicitlyUnwrappedOptionalProperties`.
+
+.. note::
+
+   Implicitly unwrapped optionals should never be used when there is a possibility of
+   a variable becoming ``nil`` at a later point.
+   Always use a normal optional type if you need to check for a ``nil`` value
+   during the lifetime of a variable.
+
+.. _TheBasics_Assertions:
 
 Assertions
 ----------
@@ -1139,7 +1249,7 @@ The assertion message can be omitted if desired, as in the following example:
    -> assert(age >= 0)
    xx assert
 
-.. _BasicTypes_WhenToUseAssertions:
+.. _TheBasics_WhenToUseAssertions:
 
 When To Use Assertions
 ~~~~~~~~~~~~~~~~~~~~~~

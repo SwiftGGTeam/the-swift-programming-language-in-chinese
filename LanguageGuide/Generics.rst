@@ -424,7 +424,7 @@ Here's how a generic version of ``findInt``, called ``findValue``, might be writ
          }
          return nil
       }
-   !! <REPL Input>:4:12: error: expression does not type-check
+   !! <REPL Input>:4:18: error: could not find an overload for '==' that accepts the supplied arguments
    !!              if value == valueToFind {
    !!                 ~~~~~~^~~~~~~~~~~~~~
 

@@ -176,15 +176,15 @@ Here's how bit shifting looks in Swift code:
 
    -> let shiftBits: UInt8 = 4   // 00000100 in binary
    << // shiftBits : UInt8 = 4
-   -> shiftBits << 1           // 00001000
+   -> shiftBits << 1             // 00001000
    << // r0 : UInt8 = 8
-   -> shiftBits << 2           // 00010000
+   -> shiftBits << 2             // 00010000
    << // r1 : UInt8 = 16
-   -> shiftBits << 5           // 10000000
+   -> shiftBits << 5             // 10000000
    << // r2 : UInt8 = 128
-   -> shiftBits << 6           // 00000000
+   -> shiftBits << 6             // 00000000
    << // r3 : UInt8 = 0
-   -> shiftBits >> 2           // 00000001
+   -> shiftBits >> 2             // 00000001
    << // r4 : UInt8 = 1
 
 Bit shifting can be used to encode and decode values within other data types:
@@ -197,7 +197,7 @@ Bit shifting can be used to encode and decode values within other data types:
    << // redComponent : UInt32 = 204
    -> let greenComponent = (pink & 0x00FF00) >> 8   // greenComponent is 0x66, or 102
    << // greenComponent : UInt32 = 102
-   -> let blueComponent = pink & 0x0000FF         // blueComponent is 0x99, or 153
+   -> let blueComponent = pink & 0x0000FF           // blueComponent is 0x99, or 153
    << // blueComponent : UInt32 = 153
 
 This example uses a ``UInt32`` constant called ``pink`` to store a
@@ -228,12 +228,6 @@ which gives an output value of ``0x000099``.
 There's no need to shift this to the right,
 as ``0x000099`` already equals ``0x99``,
 which has a decimal value of ``153``.
-
-.. admonition:: Experiment
-
-   Try removing the parentheses around ``(pink & 0xFF0000)`` and ``(pink & 0x00FF00)``.
-   Why do the values of ``redComponent`` and ``greenComponent`` change?
-   Why do you then get same value of ``153`` for all three components?
 
 .. QUESTION: I've used UInt32 values here,
    but this would also work with an inferred Int.

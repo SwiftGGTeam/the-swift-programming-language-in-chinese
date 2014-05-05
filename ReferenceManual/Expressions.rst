@@ -306,7 +306,6 @@ They have the following form:
 .. syntax-outline::
 
    <#expression#> as <#type#>
-   <#expression#> as <#type#>!
    <#expression#> is <#type#>
 
 The ``as`` operator
@@ -348,8 +347,8 @@ Specifying a type with ``as`` provides the same type information
 to the compiler as a function call or a type annotation,
 as shown in the following examples: ::
 
-    func f (a: SomeSuperType) -> SomeSuperType { return a }
-    func g (a: SomeChildType) -> SomeChildType { return a }
+    func f(a: SomeSuperType) -> SomeSuperType { return a }
+    func g(a: SomeChildType) -> SomeChildType { return a }
 
     let y2: SomeSuperType = x   // y2 is of type SomeSuperType
     let z2: SomeChildType? = x  // z2 is of type SomeChildType?
@@ -357,12 +356,16 @@ as shown in the following examples: ::
     let y3 = f(x)   // y3 is of type SomeSuperType
     let z3 = g(x)   // z3 is of type SomeChildType?
 
-If the type specified after ``as``
-is followed by an exclamation mark (``!``),
-the entire ``as`` expression is understood as a force-value expression.
-For example, the expression ``x as SomeType!``
-is understood as ``(x as SomeType)!``
-and not as ``x as (SomeType!)``.
+.. NOTE: The following text is no longer relevant,
+    because now that T! is a type, x as T! no longer means
+    the same thing as (x as T)!. Leaving the old prose in case this changes again.
+
+    If the type specified after ``as``
+    is followed by an exclamation mark (``!``),
+    the entire ``as`` expression is understood as a force-value expression.
+    For example, the expression ``x as SomeType!``
+    is understood as ``(x as SomeType)!``
+    and not as ``x as (SomeType!)``.
 
 The ``is`` operator checks at runtime
 whether the *expression*
@@ -398,8 +401,7 @@ see :doc:`../LanguageGuide/TypeCasting`.
 
     Grammar of a type-checking operator
 
-    type-checking-operator --> ``is`` type
-    type-checking-operator --> ``as`` type ``!``-OPT
+    type-checking-operator --> ``is`` type | ``as`` type
 
 
 .. _Expressions_PrimaryExpressions:
@@ -528,12 +530,12 @@ for their respective values.
     literal-expression --> ``__FILE__`` | ``__LINE__`` | ``__COLUMN__`` | ``__FUNCTION__``
 
     array-literal --> ``[`` array-literal-items-OPT ``]``
-	array-literal-items --> array-literal-item ``,``-OPT | array-literal-item ``,`` array-literal-items
-	array-literal-item --> expression
+    array-literal-items --> array-literal-item ``,``-OPT | array-literal-item ``,`` array-literal-items
+    array-literal-item --> expression
 
-	dictionary-literal --> ``[`` dictionary-literal-items ``]`` | ``[`` ``:`` ``]``
-	dictionary-literal-items --> dictionary-literal-item ``,``-OPT | dictionary-literal-item ``,`` dictionary-literal-items
-	dictionary-literal-item --> expression ``:`` expression
+    dictionary-literal --> ``[`` dictionary-literal-items ``]`` | ``[`` ``:`` ``]``
+    dictionary-literal-items --> dictionary-literal-item ``,``-OPT | dictionary-literal-item ``,`` dictionary-literal-items
+    dictionary-literal-item --> expression ``:`` expression
 
 
 .. _Expressions_SuperclassExpression:
@@ -668,10 +670,10 @@ see :ref:`Closures_ClosureExpressions`.
     closure-expression --> ``{`` closure-signature-OPT statements ``}``
     closure-expressions --> closure-expression closure-expressions-OPT
 
-    closure-signature --> parameter-clause function-signature-result-OPT ``in``
-    closure-signature --> identifier-list function-signature-result-OPT ``in``
+    closure-signature --> parameter-clause function-result-OPT ``in``
+    closure-signature --> identifier-list function-result-OPT ``in``
 
-    anonymous-closure-argument --> dollar-identifier
+    anonymous-closure-argument --> implicit-parameter-name
 
 
 .. _Expressions_ImplicitMemberExpression:
@@ -809,7 +811,7 @@ see :doc:`../LanguageGuide/BasicOperators` and :doc:`../LanguageGuide/AdvancedOp
     postfix-expression --> dynamic-type-expression
     postfix-expression --> subscript-expression
     postfix-expression --> forced-expression
-    postfix-expression --> optional-expression
+    postfix-expression --> chained-optional-expression
 
 
 .. _Expressions_FunctionCallExpression:
@@ -898,7 +900,7 @@ For example: ::
 Initializer expressions are also used
 to delegate to the initializer of a superclass: ::
 
-    init () {
+    init() {
        // ... Initialization goes here ...
        super.init()
     }
@@ -959,7 +961,7 @@ the top-level declarations of that module.
     Grammar of an explicit member expression
 
     explicit-member-expression --> postfix-expression ``.`` decimal-digit
-    explicit-member-expression --> postfix-expression ``.`` named-expression
+    explicit-member-expression --> postfix-expression ``.`` identifier generic-argument-clause-OPT
 
 
 .. _Expressions_SelfExpression:
@@ -1037,7 +1039,7 @@ Dynamic Type Expression
 
     Grammar of a dynamic type expression
 
-    dynamic-type-expression --> postfix-expression ``.`` ``dynamicType
+    dynamic-type-expression --> postfix-expression ``.`` ``dynamicType``
 
 
 .. _Expressions_SubscriptExpression:

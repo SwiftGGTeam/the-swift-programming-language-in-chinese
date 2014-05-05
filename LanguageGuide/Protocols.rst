@@ -30,31 +30,34 @@ Protocol Syntax
 
 Protocols are defined in a very similar way to classes, structures, and enumerations:
 
-::
+.. testcode:: protocolSyntax
 
-   protocol SomeProtocol {
-      // protocol definition goes here
-   }
+   -> protocol SomeProtocol {
+         // protocol definition goes here
+      }
 
 Custom types can state that they adopt a particular protocol
 by placing the protocol's name after the type's name,
 separated by a colon, as part of their definition.
 Multiple protocols can also be listed, separated by commas:
 
-::
+.. testcode:: protocolSyntax
 
-   struct SomeStructure: FirstProtocol, AnotherProtocol {
-      // structure definition goes here
-   }
+   >> protocol FirstProtocol {}
+   >> protocol AnotherProtocol {}
+   -> struct SomeStructure: FirstProtocol, AnotherProtocol {
+         // structure definition goes here
+      }
 
 If a class has a superclass, the superclass name should be listed
 before any protocols it adopts, followed by a comma:
 
-::
+.. testcode:: protocolSyntax
 
-   class SomeClass: SomeSuperclass, FirstProtocol, AnotherProtocol {
-      // class definition goes here
-   }
+   >> class SomeSuperclass {}
+   -> class SomeClass: SomeSuperclass, FirstProtocol, AnotherProtocol {
+         // class definition goes here
+      }
 
 .. _Protocols_InstanceProperties:
 
@@ -86,16 +89,16 @@ Gettable-and-settable properties are indicated by writing
 ``{ get set }`` after their type declaration,
 and gettable properties are indicated by writing ``{ get }``.
 
-::
+.. testcode:: instanceProperties
 
-   protocol SomeProtocol {
-      var mustBeSettable: Int { get set }
-      var doesNotNeedToBeSettable: Int { get }
-   }
+   -> protocol SomeProtocol {
+         var mustBeSettable: Int { get set }
+         var doesNotNeedToBeSettable: Int { get }
+      }
 
 Here's an example of a protocol with a single property requirement:
 
-.. testcode:: protocols
+.. testcode:: instanceProperties
 
    -> protocol FullyNamed {
          var fullName: String { get }
@@ -110,7 +113,7 @@ a gettable instance property called ``fullName``, which is of type ``String``.
 Here's an example of a simple structure that adopts and conforms to
 the ``FullyNamed`` protocol:
 
-.. testcode:: protocols
+.. testcode:: instanceProperties
 
    -> struct Person: FullyNamed {
          var fullName: String
@@ -133,7 +136,7 @@ and means that ``Person`` has correctly conformed to the protocol.
 
 Here's a more complex class, which also adopts and conforms to the ``FullyNamed`` protocol:
 
-.. testcode:: protocols
+.. testcode:: instanceProperties
 
    -> class Starship: FullyNamed {
          var prefix: String?
@@ -178,6 +181,7 @@ Variadic parameters are allowed, subject to the same rules as for normal methods
 The following example defines a protocol with a single instance method requirement:
 
 .. testcode:: protocols
+   :compile: true
 
    -> protocol RandomNumberGenerator {
          func random() -> Double
@@ -201,6 +205,7 @@ This class implements a pseudorandom number generator algorithm known as
 a :newTerm:`linear congruential generator`:
 
 .. testcode:: protocols
+   :compile: true
 
    -> class LinearCongruentialGenerator: RandomNumberGenerator {
          var lastRandom = 42.0
@@ -213,7 +218,6 @@ a :newTerm:`linear congruential generator`:
          }
       }
    -> let generator = LinearCongruentialGenerator()
-   << // generator : LinearCongruentialGenerator = <LinearCongruentialGenerator instance>
    -> println("Here's a random number: \(generator.random())")
    <- Here's a random number: 0.37464991998171
    -> println("And another one: \(generator.random())")
@@ -247,6 +251,7 @@ a protocol can be used in many places where other types are allowed, including:
 Here's an example of a protocol being used as a type:
 
 .. testcode:: protocols
+   :compile: true
 
    -> class Dice {
          let sides: Int
@@ -300,9 +305,9 @@ Here's how the ``Dice`` class can be used to create a six-sided dice
 with a ``LinearCongruentialGenerator`` instance as its random number generator:
 
 .. testcode:: protocols
+   :compile: true
 
    -> var d6 = Dice(sides: 6, generator: LinearCongruentialGenerator())
-   << // d6 : Dice = <Dice instance>
    -> for _ in 1..5 {
          println("Random dice roll is \(d6.roll())")
       }
@@ -327,6 +332,7 @@ The methods that a delegate must implement are typically described by a protocol
 This example defines two protocols for use with dice-based board games:
 
 .. testcode:: protocols
+   :compile: true
 
    -> protocol DiceGame {
          var dice: Dice { get }
@@ -334,7 +340,7 @@ This example defines two protocols for use with dice-based board games:
       }
    -> protocol DiceGameDelegate {
          func gameDidStart(game: DiceGame)
-         func game(_ game: DiceGame, didStartNewTurnWithDiceRoll diceRoll: Int)
+         func game(game: DiceGame, didStartNewTurnWithDiceRoll diceRoll: Int)
          func gameDidEnd(game: DiceGame)
       }
 
@@ -353,17 +359,19 @@ to adopt the ``DiceGame`` protocol;
 and to notify a ``DiceGameDelegate`` about its progress:
 
 .. testcode:: protocols
+   :compile: true
 
    -> class SnakesAndLadders: DiceGame {
          let finalSquare = 25
          let dice = Dice(sides: 6, generator: LinearCongruentialGenerator())
          var square = 0
-         var board = Int[](finalSquare + 1, 0)
-         var delegate: DiceGameDelegate?
+         var board: Int[]
          init() {
+            board = Int[](finalSquare + 1, 0)
             board[03] = +08; board[06] = +11; board[09] = +09; board[10] = +02
             board[14] = -10; board[19] = -11; board[22] = -02; board[24] = -08
          }
+         var delegate: DiceGameDelegate?
          func play() {
             square = 0
             delegate?.gameDidStart(self)
@@ -383,8 +391,6 @@ and to notify a ``DiceGameDelegate`` about its progress:
             delegate?.gameDidEnd(self)
          }
       }
-
-.. TODO: update this example to use a closure to initialize the board property.
 
 (See the :ref:`ControlFlow_Break` section of the :doc:`ControlFlow` chapter
 for a description of the gameplay of the *Snakes and Ladders* game shown above.)
@@ -426,6 +432,7 @@ This next example shows a class called ``DiceGameTracker``,
 which adopts the ``DiceGameDelegate`` protocol:
 
 .. testcode:: protocols
+   :compile: true
 
    -> class DiceGameTracker: DiceGameDelegate {
          var numberOfTurns = 0
@@ -436,7 +443,7 @@ which adopts the ``DiceGameDelegate`` protocol:
             }
             println("The game is using a \(game.dice.sides)-sided dice")
          }
-         func game(_ game: DiceGame, didStartNewTurnWithDiceRoll diceRoll: Int) {
+         func game(game: DiceGame, didStartNewTurnWithDiceRoll diceRoll: Int) {
             ++numberOfTurns
             println("Rolled a \(diceRoll)")
          }
@@ -471,11 +478,10 @@ regardless of what kind of game is being played.
 Here's how ``DiceGameTracker`` looks in action:
 
 .. testcode:: protocols
+   :compile: true
 
    -> let tracker = DiceGameTracker()
-   << // tracker : DiceGameTracker = <DiceGameTracker instance>
    -> let game = SnakesAndLadders()
-   << // game : SnakesAndLadders = <SnakesAndLadders instance>
    -> game.delegate = tracker
    -> game.play()
    </ Started a new game of Snakes and Ladders
@@ -507,6 +513,7 @@ and are therefore able to add any of the requirements that a protocol may demand
 For example:
 
 .. testcode:: protocols
+   :compile: true
 
    -> protocol TextRepresentable {
          func asText() -> String
@@ -519,6 +526,7 @@ This might be a description of itself, or a text version of its current state.
 The ``Dice`` class from earlier can be extended to adopt and conform to ``TextRepresentable``:
 
 .. testcode:: protocols
+   :compile: true
 
    -> extension Dice: TextRepresentable {
          func asText() -> String {
@@ -535,9 +543,9 @@ is provided within the extension's curly braces.
 Any ``Dice`` instance can now be treated as ``TextRepresentable``:
 
 .. testcode:: protocols
+   :compile: true
 
    -> let d12 = Dice(sides: 12, generator: LinearCongruentialGenerator())
-   << // d12 : Dice = <Dice instance>
    -> println(d12.asText())
    <- A 12-sided dice
 
@@ -545,6 +553,7 @@ Similarly, the ``SnakesAndLadders`` game class can be extended to
 adopt and conform to the ``TextRepresentable`` protocol:
 
 .. testcode:: protocols
+   :compile: true
 
    -> extension SnakesAndLadders: TextRepresentable {
          func asText() -> String {
@@ -564,6 +573,7 @@ but has not yet stated that it adopts that protocol,
 it can be made to adopt the protocol with an empty extension:
 
 .. testcode:: protocols
+   :compile: true
 
    -> struct Hamster {
          var name: String
@@ -576,11 +586,10 @@ it can be made to adopt the protocol with an empty extension:
 Instances of ``Hamster`` can now be used wherever ``TextRepresentable`` is the required type:
 
 .. testcode:: protocols
+   :compile: true
 
    -> let simonTheHamster = Hamster(name: "Simon")
-   << // simonTheHamster : Hamster = Hamster("Simon")
    -> let somethingTextRepresentable: TextRepresentable = simonTheHamster
-   << // somethingTextRepresentable : TextRepresentable = <unprintable value>
    -> println(somethingTextRepresentable.asText())
    <- A hamster named Simon
 
@@ -600,14 +609,15 @@ as mentioned in :ref:`Protocols_UsingProtocolsAsTypes`.
 This example creates an array of ``TextRepresentable`` things:
 
 .. testcode:: protocols
+   :compile: true
 
    -> let things: TextRepresentable[] = [game, d12, simonTheHamster]
-   << // things : TextRepresentable[] = [<unprintable value>, <unprintable value>, <unprintable value>]
 
 It is now possible to iterate over the items in the array,
 and print each item's textual representation:
 
 .. testcode:: protocols
+   :compile: true
 
    -> for thing in things {
          println(thing.asText())
@@ -632,15 +642,18 @@ A protocol can :newTerm:`inherit` from another protocol,
 and add further requirements on top of the requirements it inherits.
 The syntax for protocol inheritance is the same as for class inheritance:
 
-::
+.. testcode:: protocols
+   :compile: true
 
-   protocol SomeSubProtocol: SomeSuperProtocol {
-      // protocol definition goes here
-   }
+   >> protocol SomeSuperProtocol {}
+   -> protocol SomeSubProtocol: SomeSuperProtocol {
+         // protocol definition goes here
+      }
 
 For example:
 
 .. testcode:: protocols
+   :compile: true
 
    -> protocol PrettyTextRepresentable: TextRepresentable {
          func asPrettyText() -> String
@@ -657,6 +670,7 @@ to provide an instance method called ``asPrettyText`` that returns a ``String``.
 The ``SnakesAndLadders`` class can be extended to adopt and conform to ``PrettyTextRepresentable``:
 
 .. testcode:: protocols
+   :compile: true
 
    -> extension SnakesAndLadders: PrettyTextRepresentable {
          func asPrettyText() -> String {
@@ -697,6 +711,7 @@ The method implementation can now be used to print a pretty text description
 of any ``SnakesAndLadders`` instance:
 
 .. testcode:: protocols
+   :compile: true
 
    -> println(game.asPrettyText())
    </ A game of Snakes and Ladders with 25 squares:
