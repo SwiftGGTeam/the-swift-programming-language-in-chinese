@@ -215,7 +215,7 @@ the *statements* in a ``while`` statement can be executed zero or more times.
 
 The value of the *condition* must have a type that conforms to
 the ``LogicValue`` protocol. The condition can also be an optional binding declaration,
-as discussed in :ref:`BasicTypes_OptionalBinding`.
+as discussed in :ref:`TheBasics_OptionalBinding`.
 
 .. langref-grammar
 
@@ -259,7 +259,7 @@ the *statements* in a ``do``-``while`` statement are executed at least once.
 
 The value of the *condition* must have a type that conforms to
 the ``LogicValue`` protocol. The condition can also be an optional binding declaration,
-as discussed in :ref:`BasicTypes_OptionalBinding`.
+as discussed in :ref:`TheBasics_OptionalBinding`.
 
 .. langref-grammar
 
@@ -339,7 +339,7 @@ An ``if`` statement chained together in this way has the following form:
 
 The value of any condition in an ``if`` statement must have a type that conforms to
 the ``LogicValue`` protocol. The condition can also be an optional binding declaration,
-as discussed in :ref:`BasicTypes_OptionalBinding`.
+as discussed in :ref:`TheBasics_OptionalBinding`.
 
 .. TODO: Should we promote this last sentence (here and elsewhere) higher up in the chapter?
 
