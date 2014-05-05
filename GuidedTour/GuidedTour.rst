@@ -13,36 +13,38 @@ In Swift, this can be done in a single line:
    -> println("Hello, world")
    << Hello, world
 
-If you have written code in a language like C or Objective-C,
-this syntax probably looks familiar to you.
+If you have written code in C or Objective-C,
+this syntax looks familiar to you.
 Unlike those languages,
 this line of Swift code is a complete program.
-There is no need to import a standard library for functionality like
+You don't need to import a standard library for functionality like
 input/output or string handling.
 Code written at global scope is used
 as the entry point for the program,
-so there is no need for a ``main`` function.
-Also notice that there are no semicolons.
-You can use semicolons to separate statements written on a single line,
-but otherwise there is no need to mark the end of a statement or line.
+so you don't need a ``main`` function.
+You also don't need to write semicolons
+at the end of every statement.
 
-The rest of this tour shows examples
-of how to accomplish a variety of programming tasks in Swift
-without giving an explanation of the concepts.
-It gives you a broad (but shallow) overview of the language
-to help you start writing actual code.
-Don’t worry if there is something that you don’t understand ---
+This tour gives you enough information
+to start writing code in Swift
+by showing you how you accomplish a variety of programming tasks.
+Don’t worry if you don’t understand something ---
 everything introduced in this tour
 is explained in detail in the following chapters.
-Experienced programmers may find that the examples in this chapter
-give them enough information about Swift
-thay they can skim the rest of the language guide
-and refer to the reference manual for specific questions.
+Experienced programmers may find that the examples
+provide enough information about Swift
+thay they can skim the the *Language Guide*
+and refer to the *Language Reference*
+for answers to specific questions.
+
+.. TODO Should be an xName-No-Link element for the references
+   to parts of this book above,
+   rather than just putting them in italics.
 
 Simple Values
 -------------
 
-Constants and variables are created using the same syntax,
+You create constants and variables using the same syntax,
 with one difference:
 Use ``let`` to declare a constant and use ``var`` for a variable.
 The value of a constant can be assigned only once,
@@ -62,9 +64,8 @@ The value of a variable can be assigned multiple times.
 
 .. admonition:: Experiment
 
-   Edit the code in the boxes above.
-   Try changing ``myConstant`` to be a variable.
-   Try removing the last line, so it is only assigned a value once.
+   Changing ``myConstant`` to be a variable.
+   Remove the last line, so ``myConstant`` is only assigned a value once.
 
 .. TR: Is the requirement that constants need an initial value
    a current REPL limitation, or an expected language feature?
@@ -84,14 +85,21 @@ because its initial value is a string.
 This behavior of determining type information
 based on the surrounding code
 is known as *type inference*,
-and it allows you to take advantage of type checking
-without writing explicit type information everywhere.
+and it allows the compiler to warn you
+about type-related errors in your code
+without requiring you to
+write explicit type information everywhere.
 
 When the initial value doesn't provide enough information,
 or when there is no initial value,
 specify an explicit type
 by writing the type after the variable,
 separated by a colon.
+Type inference allows the compiler
+to correctly infer the type of numbers ---
+if you write ``4.0 / 2``
+it is understood that ``4.0``, ``2``, and the result
+all have the type ``Double``.
 
 .. testcode::
 
@@ -99,10 +107,19 @@ separated by a colon.
    << // implicitString : String = "Hello"
    -> let explicitString: String = "Hello"
    << // explicitString : String = "Hello"
+   ---
+   -> let implicitInteger = 70
+   << // implicitInteger : Int = 70
+   -> let implicitDouble = 70.0
+   << // implicitDouble : Double = 70.0
+   -> let explicitDouble: Double = 70
+   << // explicitDouble : Double = 70.0
+   -> let explicitFloat: Float = 70
+   << // explicitFloat : Float = 70.0
 
 .. admonition:: Experiment
 
-   Try creating a constant with
+   Create a constant with
    an explicit type of ``Float`` and a value of ``4``.
    Notice how the type of ``4`` is determined based on how you use it.
 
@@ -110,7 +127,7 @@ separated by a colon.
    the variable’s initial value.
    What error do you get?
 
-Values are never implicitly converted or cast to another type.
+Values are never implicitly converted to another type.
 If you need to convert a value to a different type,
 make an instance of the desired type explicitly.
 
@@ -125,13 +142,12 @@ make an instance of the desired type explicitly.
 
 .. admonition:: Experiment
 
-   Try removing the cast to ``String`` from the last line.
+   Try removing the conversion to ``String`` from the last line.
    What error do you get?
 
 A simpler way to include values in strings
-is to use the special escape ``\(`` ``)`` in a string,
-which includes the string value of an expression
-as part of the string.
+is to write ``\(`` and ``)`` around an expression,
+which includes it as part of the string.
 
 .. testcode::
 
@@ -144,12 +160,12 @@ as part of the string.
 
 .. admonition:: Experiment
 
-   Try using string interpolation to
+   Use ``\()`` to
    include a floating point calculation in a string,
    and to include someone’s name in a greeting.
 
-Arrays and dictionaries are written using brackets (``[]``)
-and their elements are accessed by writing
+You create arrays and dictionaries using brackets (``[]``),
+and access their elements by writing
 the index or key in brackets.
 
 .. testcode::
@@ -170,7 +186,10 @@ the index or key in brackets.
 
 .. admonition:: Experiment
 
-   Try sorting ``fruits`` using the Swift Standard Library ``sort`` function.
+   Add you own favorite fruit to the array
+   and compare it to ``favoriteFruit`` with the ``==`` operator.
+   Add the current temperature of your town
+   to the dictionary.
 
 .. Forcasts above are real current conditions from 9:14 pm April 28, 2014.
 
@@ -186,11 +205,11 @@ the index or key in brackets.
     <$ : Bool = false
     ---
 
-An empty array is written ``[]``
+An empty array is written ``[]``,
 and an empty dictionary is written ``[:]``.
-since the type of an empty array or dictionary
-can't be inferred from its content ---
-specify it expliticly.
+Because the type of an empty array or dictionary
+can't be inferred from its content,
+use a type annotation to specify it expliticly.
 
 .. testcode::
 
@@ -257,7 +276,10 @@ with a possible value.
 Switches support any kind of data, not just integers.
 You need to provide a case for every possible value
 or use ``default`` to specify what happens if none of the cases match.
-Execution does not implicitly “fall through”
+
+After executing the code inside the switch case that matched,
+the program exits from the switch statement.
+Execution doesn't continue or "fall through" to the next case,
 so there is no need to explicitly break out of the switch
 at the end of each case‘s code.
 
@@ -291,7 +313,12 @@ such as tuple unpacking and ``where`` clauses:
    that matches points where ``x`` is greater than ``y``,
    and one that matches points where ``x`` is odd.
 
-Repeat a block of code for each item in a collection with ``for``.
+Use ``for`` to iterate over a collection of items.
+
+.. TR: Will we end up having Collection and Container protocols
+   in the WWDC timeframe?
+   Let's match the English noun I use here to the protocol name,
+   if it makes sense.
 
 .. testcode::
 
@@ -310,6 +337,12 @@ Repeat a block of code for each item in a collection with ``for``.
    Try changing ``1..5`` to ``1...5``.
    Notice that 5 is omitted from the sum.
    When would you want to include or exclude the final number?
+
+You can also use ``for`` to iterate over items in a dictionary
+by providing a variable name to use
+for each key-value pair.
+
+.. EDIT: key/value or key-value?
 
 .. testcode::
 
@@ -349,8 +382,8 @@ Loops can keep an explicit counter or index.
    << 3
    << 4
 
-Repeat a block of code until a condition changes using ``while``.
-The condition of a loop can be an the end instead,
+Use ``while`` to repeat a block of code until a condition changes.
+The condition of a loop can be at the end instead,
 ensuring that the loop is run at least once.
 
 .. testcode::
@@ -374,17 +407,11 @@ ensuring that the loop is run at least once.
 Functions and Closures
 ----------------------
 
-Functions are declared using ``func``
-and are called with a parenthesized list of arguments.
-Argument names are part of the function's name;
-you can specify each parameter by name when calling the function.
+Use ``func`` to declare functions
+and call them by following their name
+with a parenthesized list of arguments.
 
-.. TODO: I've hand waved here by saying args are part of the "name".
-
-.. TR: Technically, right now, the argument names are actually
-   part of the *type* rather than the *name*
-   That is, "init (withFoo : Int)" and "init (withBar : String)"
-   both have the function name "init", but have different types.
+.. TODO: Argument names are postponed to the discussion of methods.
 
 .. testcode::
 
@@ -398,10 +425,10 @@ you can specify each parameter by name when calling the function.
 
 .. admonition:: Experiment
 
-   Try removing the day of the week parameter.
-   Try adding a third parameter to include today’s lunch special in the greeting.
+   Remove the ``day`` parameter.
+   Add a parameter to include today’s lunch special in the greeting.
 
-Functions can return multiple values using a tuple.
+Functions can return multiple values by using a tuple.
 
 .. testcode::
 
@@ -431,11 +458,16 @@ collecting them into an array.
 
 .. admonition:: Experiment
 
-   Try writing a function that calculates the average.
+   Write a function that calculates the average of its arguments.
 
 Functions can be nested.
 Nested functions have access to variables
 that were declared in the outer function.
+You can use nested functions
+to organize the code in a function
+that is long or complex.
+
+.. TR: Any objections to this guidance?
 
 .. testcode::
 
@@ -449,12 +481,6 @@ that were declared in the outer function.
        }
     -> returnFifteen()
     <$ : Int = 15
-
-.. admonition:: Experiment
-
-   Try removing the call to the ``add`` function.
-   Try calling the ``add`` function twice.
-   What happens?
 
 Functions are a first-class type.
 This means a function can return another function as its value.
@@ -472,9 +498,9 @@ This means a function can return another function as its value.
     -> increment(7)
     <$ : Int = 8
 
-.. TODO: Confirm spelling of "incrementer" (not "incrementor").
+.. EDIT: Confirm spelling of "incrementer" (not "incrementor").
 
-A function can take another function as one of its argument.
+A function can take another function as one of its arguments.
 
 .. testcode::
 
@@ -497,10 +523,12 @@ A function can take another function as one of its argument.
     -> var sortedNumbers = bubbleSort(numbers, greaterThan)
     << // sortedNumbers : Array<Int> = [8, 6, 5, 3]
 
-Closures are just like a function
-except you don't give them a name when you declare them.
-They are written as code surrounded by braces (``{}``)
-and have their arguments separated from their body by ``in``.
+Closures are the same as functions with one difference:
+you don't give them a name when you declare them.
+You write a closure as code surrounded by braces (``{}``)
+and use ``in`` to separate the arguments from the body.
+
+.. EDIT: Second sentence above reads better as describing singular closure.
 
 .. testcode::
 
@@ -518,12 +546,13 @@ and have their arguments separated from their body by ``in``.
    I've written them for now
    so that I start with the most verbose function-y syntax.
 
-There are several conveniences for writing closures more concisely.
+You have several options for writing closures more concisely.
 When the closure's type is already known,
 such as the callback for a delegate,
-the type of its parameters can be omitted.
+you can omit the type of its parameters,
+its return type, or both.
 For even more brevity,
-the parameters can be referred to by number instead of by name.
+you can refer to parameters by number instead of by name.
 Single statement closures implicitly return the value
 of their only statement.
 
@@ -535,7 +564,7 @@ of their only statement.
     <$ : Int = 15
 
 A closure passed as the last argument to a function
-can appear immediately after the function call.
+can appear immediately after the parentheses.
 
 .. testcode::
 
@@ -544,7 +573,7 @@ can appear immediately after the function call.
 
 .. admonition:: Experiment
 
-   Try rewriting the bubble sort function above
+   Rewrite the bubble sort function above
    so it takes a trailing closure to do comparisons.
 
 The previous listing can be written without a closure at all
