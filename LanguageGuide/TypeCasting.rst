@@ -57,7 +57,7 @@ Here, the type of the ``library`` array is inferred
 by initializing it with the contents of an array literal.
 Swift's type-checker is able to deduce that ``Movie`` and ``Song`` have
 a common superclass of ``MediaItem``,
-and so it infers a type of ``Array<MediaItem>`` for the ``library`` array:
+and so it infers a type of ``MediaItem[]`` for the ``library`` array:
 
 .. testcode:: typeCasting
 
@@ -69,7 +69,7 @@ and so it infers a type of ``Array<MediaItem>`` for the ``library`` array:
          Song("Never Gonna Give You Up", artist: "Rick Astley")
       ]
    << // library : Array<MediaItem> = [<MediaItem instance>, <MediaItem instance>, <MediaItem instance>, <MediaItem instance>, <MediaItem instance>]
-   // the type of "library" is inferred to be Array<MediaItem>
+   // the type of "library" is inferred to be MediaItem[]
 
 The items stored in ``library`` are still ``Movie`` and ``Song`` instances behind the scenes.
 However, if you iterate over the contents of this array,
@@ -203,14 +203,14 @@ Swift provides two special type aliases for working with non-specific types:
 * ``Any``, which can represent an instance of any type at all,
   apart from function types
 
-.. TODO: remove the note about function types if / when rdar://16406907 is fixed.
+.. FIXME: remove the note about function types if / when rdar://16406907 is fixed.
 
 Here's an example of using ``Any`` to work with a mix of different types:
 
 .. testcode:: typeCasting
 
-   -> var things = Array<Any>()
-   << // things : Array<Any> = []
+   -> var things = Any[]()
+   << // things : Any[] = []
    -> things.append(0)
    -> things.append(0.0)
    -> things.append(42)
@@ -280,11 +280,6 @@ and to assign those values to temporary constants or variables
    </ a movie called 'Ghostbusters', dir. Ivan Reitman
 
 .. TODO: Where should I mention “AnyClass”?
-
-.. TODO: casting also needs to be mentioned in the context of protocol conformance.
-
-.. TODO: talk about the use of "as" outside of an "if" statement sense,
-   once rdar://16063985 is fixed.
 
 .. TODO: this section needs to address the question of "a constant or variable having a type"
    as distinct from "a class instance having a type".

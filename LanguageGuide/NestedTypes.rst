@@ -14,7 +14,7 @@ Types can be nested to as many levels as are required:
 .. testcode:: nestedTypes
 
    -> struct BlackjackCard {
-         enum Suit: UnicodeScalar {
+         enum Suit: Character {
             case Spades = '♠', Hearts = '♡', Diamonds = '♢', Clubs = '♣'
          }
          enum Rank: String {
@@ -38,7 +38,7 @@ Types can be nested to as many levels as are required:
          }
          let rank: Rank
          let suit: Suit
-         var description: String {
+         func description() -> String {
             var output = "the \(rank.toRaw()) of \(suit.toRaw())"
             output += " is worth \(rank.values.firstValue)"
             if let secondValue = rank.values.secondValue {
@@ -49,7 +49,7 @@ Types can be nested to as many levels as are required:
       }
    -> let theAceOfSpades = BlackjackCard(.Ace, .Spades)
    << // theAceOfSpades : BlackjackCard = BlackjackCard(<unprintable value>, <unprintable value>)
-   -> println("Blackjack value: \(theAceOfSpades.description)")
+   -> println("Blackjack value: \(theAceOfSpades.description())")
    <- Blackjack value: the Ace of ♠ is worth 1 or 11
 
 This example defines a playing card for use in the game of Blackjack.
@@ -59,7 +59,7 @@ either one or eleven. This characteristic is encapsulated in the logic above.
 The ``BlackjackCard`` structure defines two nested enumerations:
 
 * ``Suit``, which describes the four common playing card suits,
-  together with a raw ``UnicodeScalar`` value to represent their symbol
+  together with a raw ``Character`` value to represent their symbol
 * ``Rank``, which describes the thirteen possible playing card ranks,
   together with a raw ``String`` value to represent their name
 
@@ -84,10 +84,10 @@ without being checked, and is used as the first value of the ``Values`` structur
 
 The ``BlackjackCard`` structure itself is pretty simple.
 It actually only has two properties – ``rank``, and ``suit``.
-It also defines a computed property called ``description``,
+It also defines a method called ``description``,
 which uses the values stored in ``rank`` and ``suit`` to build
 a textual description of the card.
-The ``description`` property uses optional binding to check if there is
+The ``description`` method uses optional binding to check if there is
 a second value to display, and inserts addition description detail if so.
 
 Because ``BlackjackCard`` is a structure with no custom initializers,
@@ -110,7 +110,7 @@ by prefixing its name with the name of the type it is nested within:
 .. testcode:: nestedTypes
 
    -> let heartsSymbol = BlackjackCard.Suit.Hearts.toRaw()
-   << // heartsSymbol : UnicodeScalar = '♡'
+   << // heartsSymbol : Character = <unprintable value>
    /> heartsSymbol is '\(heartsSymbol)'
    </ heartsSymbol is '♡'
 

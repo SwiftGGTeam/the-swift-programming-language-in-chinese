@@ -20,14 +20,47 @@ Contents
 Change Log
 ----------
 
+May 5 2014
+~~~~~~~~~~
+
+Language Guide
+++++++++++++++++++
+
+* New sections in :ref:`Functions <Functions_FunctionParameterNames>`,
+  :ref:`Methods <Methods_LocalAndExternalNames>`,
+  and :ref:`Initialization <Initialization_LocalAndExternalNames>`
+  about the revised parameter syntax and rules.
+  This has also involved a fairly major rewrite of the entire
+  :doc:`LanguageGuide/Functions` chapter.
+* New sections about
+  :ref:`implicitly unwrapped optionals <TheBasics_ImplicitlyUnwrappedOptionals>`
+  and :ref:`when to use them as properties <Initialization_ImplicitlyUnwrappedOptionalProperties>`.
+* New information about :ref:`named tuple elements <TheBasics_Tuples>`,
+  and examples of how to use them with
+  :ref:`function parameters <Functions_TupleTypesAsParameterTypes>`
+  and :ref:`function return types <Functions_TupleTypesAsReturnTypes>`.
+* :ref:`Convenience initializers <Initialization_SyntaxForDesignatedAndConvenienceInitializers>`
+  now use the ``convenience`` keyword.
+* Renamed Basic Types to :doc:`LanguageGuide/TheBasics`,
+  and changed its introduction completely.
+* The base unit of a ``String`` is now ``Character``, not ``UnicodeScalar``.
+  Updated all examples to match.
+* New outline example for writing :ref:`multiple trailing closures <Closures_TrailingClosures>`,
+  and re-ordered the :doc:`LanguageGuide/Closures` chapter to put
+  :ref:`closure expressions <Closures_ClosureExpressions>`
+  before :ref:`capturing values <Closures_CapturingValues>`.
+* Switched the entire *Guide* over to using
+  :ref:`array shorthand syntax <CollectionTypes_ArrayTypeShorthandSyntax>`
+  now that it can be used to initialize a new array (``String[]()``).
+
 April 28 2014
 ~~~~~~~~~~~~~
 
 Language Guide
 ++++++++++++++++++
 
-* New section about :ref:`assertions <BasicTypes_Assertions>`,
-  and :ref:`suggestions on when to use them <BasicTypes_WhenToUseAssertions>`.
+* New section about :ref:`assertions <TheBasics_Assertions>`,
+  and :ref:`suggestions on when to use them <TheBasics_WhenToUseAssertions>`.
   Also updated the :ref:`subscripts matrix example <Subscripts_SubscriptOptions>`
   to use assertions rather than an optional subscript return type.
 * New section about :ref:`labeled control flow statements <ControlFlow_LabeledStatements>`,
@@ -64,7 +97,7 @@ Language Guide
 * New section on :ref:`required initializers <Initialization_RequiredInitializers>`
 * New section on :ref:`overriding properties <Inheritance_OverridingProperties>`
 * Stopped using the phrase “named values” to refer to constants and variables.
-* Major revision to the :doc:`LanguageGuide/BasicTypes` introduction to talk about types in Swift.
+* Major revision to the :doc:`LanguageGuide/TheBasics` introduction to talk about types in Swift.
 * New and expanded introductions to :doc:`LanguageGuide/BasicOperators`, :doc:`LanguageGuide/ControlFlow`,
   :doc:`LanguageGuide/Enumerations`, :doc:`LanguageGuide/Functions`,
   :doc:`LanguageGuide/Methods`, and :doc:`LanguageGuide/Properties`.
@@ -92,8 +125,6 @@ Language Guide
 ++++++++++++++
 
 * Updated the :doc:`LanguageGuide/Functions` chapter to use and describe the new unified function declaration syntax.
-* New sections on :ref:`local parameter names <Functions_LocalParameterNames>`
-  and :ref:`unnamed parameters <Functions_UnnamedParameters>`.
 * Converted all initializers in the Guide over to the new unified function declaration syntax.
 * New section on :ref:`checking for protocol conformance <Protocols_CheckingForProtocolConformance>`.
 * New section on :ref:`optional protocol requirements <Protocols_OptionalProtocolRequirements>`.
@@ -124,11 +155,11 @@ Language Guide
 * New chapter on :doc:`closures <LanguageGuide/Closures>`.
 * New section about working with :ref:`function types <Functions_FunctionTypes>`.
 * New section about :ref:`nested functions <Functions_NestedFunctions>`.
-* New sections about :ref:`comments <BasicTypes_Comments>` and :ref:`semicolons <BasicTypes_Semicolons>`.
-* New section about :ref:`nil <BasicTypes_Nil>` as it is used in the context of optionals.
+* New sections about :ref:`comments <TheBasics_Comments>` and :ref:`semicolons <TheBasics_Semicolons>`.
+* New section about :ref:`nil <TheBasics_Nil>` as it is used in the context of optionals.
 * ``nil`` is now used throughout the *Guide* instead of ``.None``.
 * Improved our advice about :ref:`naming of generic type parameters <Generics_NamingOfTypeParameters>`.
-* Moved :ref:`type aliases <BasicTypes_TypeAliases>` back to the Basic Types chapter,
+* Moved :ref:`type aliases <TheBasics_TypeAliases>` back to the Basic Types chapter,
   and changed the example to suit.
 * Updated the :ref:`dictionaries <CollectionTypes_Dictionaries>` section
   to reflect that dictionaries will once again be iterated as ``(key, value)`` tuples.
@@ -167,7 +198,7 @@ Language Guide
 * Described how the :ref:`identity operators <ClassesAndStructures_IdentityOperators>` work,
   and how to implement :ref:`equivalence operators <AdvancedOperators_EquivalenceOperators>`
   for your own types
-* Added information about :ref:`BasicTypes_UInt` and :ref:`BasicTypes_Comments` in Basic Types
+* Added information about :ref:`TheBasics_UInt` and :ref:`TheBasics_Comments` in Basic Types
 * Improved wording for the
   :ref:`increment and decrement operators <BasicOperators_IncrementAndDecrementOperators>`
 
@@ -208,7 +239,7 @@ Language Guide
 * Simplified the example of :ref:`read-only subscript <Subscripts_SubscriptSyntax>`
 * :ref:`ClassesAndStructures_DefinitionSyntax` no longer uses
   a Rectangle as an example for a custom class type
-* Added a short section on :ref:`type aliases <BasicTypes_TypeAliases>`
+* Added a short section on :ref:`type aliases <TheBasics_TypeAliases>`
   (as used in a non-Generics context)
 * Clarified what can be :ref:`overridden <Inheritance_Overriding>`
 * Moved :doc:`LanguageGuide/Subscripts` into its own chapter
@@ -247,13 +278,13 @@ Language Guide
   and added in hand-written comments instead
 * New section on :doc:`LanguageGuide/Subscripts`
 * New section about mutating ``self`` in :ref:`enumeration instance methods <Methods_ModifyingValueTypesFromWithinInstanceMethods>`
-* New sections about :ref:`BasicTypes_PrintingConstantsAndVariables`
-  and :ref:`BasicTypes_StringInterpolation` in Basic Types
+* New sections about :ref:`TheBasics_PrintingConstantsAndVariables`
+  and :ref:`TheBasics_StringInterpolation` in Basic Types
 * Improved examples for :ref:`ControlFlow_While` and :ref:`ControlFlow_Break`,
   and a new example for :ref:`ControlFlow_DoWhile`
 * Embedded Types are now referred to as :doc:`LanguageGuide/NestedTypes`,
   and their example has been simplified
-* Moved :ref:`BasicTypes_OptionalBinding` into the :doc:`LanguageGuide/BasicTypes` chapter,
+* Moved :ref:`TheBasics_OptionalBinding` into the :doc:`LanguageGuide/TheBasics` chapter,
   and adopted it for several more examples throughout the book
 * :ref:`didSet <Properties_PropertyObservers>` now has an ``oldValue`` parameter
 * Updates to bring code examples in line with this week's Swift release
@@ -308,7 +339,7 @@ Language Guide
 * ``String`` no longer has a ``length`` property
 * :doc:`LanguageGuide/Extensions` and :doc:`LanguageGuide/Protocols` are now separate chapters (but are not yet written)
 * We no longer refer to getters, setters, observers and initializers as “methods”
-* Placeholder sections for Arrays and Dictionaries (but no content as yet) in :doc:`LanguageGuide/BasicTypes`
+* Placeholder sections for Arrays and Dictionaries (but no content as yet) in :doc:`LanguageGuide/TheBasics`
 * Editorial changes and improvements throughout the *Guide*
 
 Language Reference

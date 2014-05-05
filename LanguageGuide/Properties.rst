@@ -401,14 +401,12 @@ and the default name of ``oldValue`` is used instead.
 
 .. TODO: mention that this also works for global / local variables
 
-.. _Properties_WeakProperties:
+.. _Properties_WeakAndUnownedProperties:
 
-Weak Properties
----------------
+Weak and Unowned Properties
+---------------------------
 
 .. write-me::
-
-.. TODO: research and write up the story for @weak
 
 .. _Properties_StaticProperties:
 
@@ -487,6 +485,7 @@ and the right channel has a current level of ``7``.
 Each audio channel in the meter is modeled by an ``AudioChannel`` structure:
 
 .. testcode:: staticProperties
+   :compile: true
 
    -> struct AudioChannel {
          static let thresholdLevel = 10
@@ -542,41 +541,38 @@ You can use the ``AudioChannel`` structure to create
 two new audio channels called ``leftChannel`` and ``rightChannel``,
 to represent the audio levels of a stereo sound system:
 
-::
+.. testcode:: staticProperties
+   :compile: true
 
-   var leftChannel = AudioChannel()
-   var rightChannel = AudioChannel()
-
-.. TESTME: this code cannot be swifttested due to rdar://16732688.
+   -> var leftChannel = AudioChannel()
+   -> var rightChannel = AudioChannel()
 
 If you set the ``currentLevel`` of the *left* channel to ``7``,
 you can see that the ``maxInputLevelForAllChannels`` static property
 has been updated to equal ``7``:
 
-::
+.. testcode:: staticProperties
+   :compile: true
 
-   leftChannel.currentLevel = 7
-   println(leftChannel.currentLevel)
-   // prints "7"
-   println(AudioChannel.maxInputLevelForAllChannels)
-   // prints "7"
-
-.. TESTME: this code cannot be swifttested due to rdar://16732688.
+   -> leftChannel.currentLevel = 7
+   -> println(leftChannel.currentLevel)
+   <- 7
+   -> println(AudioChannel.maxInputLevelForAllChannels)
+   <- 7
 
 If you try and set the ``currentLevel`` of the *right* channel to ``11``,
 you can see that the right channel's ``currentLevel`` property
 has been capped to the maximum value of ``10``,
 and the ``maxInputLevelForAllChannels`` static property has been updated to equal ``11``:
 
-::
+.. testcode:: staticProperties
+   :compile: true
 
-   rightChannel.currentLevel = 11
-   println(rightChannel.currentLevel)
-   // prints "10"
-   println(AudioChannel.maxInputLevelForAllChannels)
-   // prints "11"
-
-.. TESTME: this code cannot be swifttested due to rdar://16732688.
+   -> rightChannel.currentLevel = 11
+   -> println(rightChannel.currentLevel)
+   <- 10
+   -> println(AudioChannel.maxInputLevelForAllChannels)
+   <- 11
 
 .. QUESTION: we won't have class properties for Swift 1.0, says [Contributor 7746].
    I've named this section "Static Properties" as a result,

@@ -4,7 +4,7 @@ Subscripts
 Classes, structures, and enumerations can define :newTerm:`subscripts`,
 which enable instances of that type to be queried via one or more
 values in square brackets after the instance name.
-This is similar to the way in which the elements in an ``Array`` instance
+This is similar to the way in which the elements in an array
 can be accessed as ``someArray[index]``,
 and elements in a ``Dictionary`` instance can be accessed as
 ``someDictionary[key]``.
@@ -26,18 +26,19 @@ However, subscripts can be read-write or read-only,
 and this behavior is communicated via a getter and setter
 in the same way as for computed properties:
 
-::
+.. testcode:: subscriptSyntax
 
-   subscript(index: Int) -> Int {
-      get {
-         // return an appropriate subscript value here
+   >> class Test1 {
+   -> subscript(index: Int) -> Int {
+         get {
+            // return an appropriate subscript value here
+   >>       return 1
+         }
+         set(newValue) {
+            // perform a suitable setting action here
+         }
       }
-      set(newValue) {
-         // perform a suitable setting action here
-      }
-   }
-
-.. TESTME: check this syntax manually.
+   >> }
 
 The type of ``newValue`` is the same as the return value of the subscript.
 As with computed properties, you can choose not to specify the setter's ``(newValue)`` parameter,
@@ -47,13 +48,14 @@ if you do not provide one yourself.
 As with read-only computed properties,
 the ``get`` keyword can be dropped for read-only subscripts:
 
-::
+.. testcode:: subscriptSyntax
 
-   subscript(index: Int) -> Int {
-      // return an appropriate subscript value here
-   }
-
-.. TESTME: check this syntax manually.
+   >> class Test2 {
+   -> subscript(index: Int) -> Int {
+         // return an appropriate subscript value here
+   >>    return 1
+      }
+   >> }
 
 Here's an example of a read-only subscript implementation:
 
@@ -95,7 +97,7 @@ by passing in a key of the appropriate type within subscript braces:
 .. testcode:: dictionarySubscript
 
    -> let numberOfLegs = ["spider": 8, "ant": 6, "cat": 4]
-   << // numberOfLegs : Dictionary<String, Int> = Dictionary<String, Int>(1.33333333333333, 3, <DictionaryBufferOwner<String, Int> instance>)
+   << // numberOfLegs : Dictionary<String, Int> = Dictionary<String, Int>(<unprintable value>)
    -> let spiderLegs = numberOfLegs["spider"]
    << // spiderLegs : Int = 8
    /> spiderLegs is equal to \(spiderLegs)
@@ -115,6 +117,8 @@ Subscript Options
 Subscripts can take any number of input parameters,
 and these input parameters can be of any type.
 Subscripts can also return any type.
+Subscripts can use variable parameters and variadic parameters,
+but cannot use inout parameters or provide default parameter values. 
 
 A class or structure can provide as many subscript implementations as it needs,
 and the appropriate subscript to be used will be inferred based on
@@ -129,26 +133,26 @@ The following example defines a ``Matrix`` structure,
 which represents a two-dimensional matrix of ``Double`` values.
 The ``Matrix`` structure's subscript takes two integer parameters:
 
-.. testcode:: matrixSubscript
+.. testcode:: matrixSubscript, matrixSubscriptAssert
 
    -> struct Matrix {
          let rows: Int, columns: Int
-         var grid: Array<Double>
+         var grid: Double[]
          init(rows: Int, columns: Int) {
             self.rows = rows
             self.columns = columns
             grid = Array(rows * columns, 0.0)
          }
-         func indexIsValid(row: Int, column: Int) -> Bool {
+         func indexIsValidForRow(row: Int, column: Int) -> Bool {
             return row >= 0 && row < rows && column >= 0 && column < columns
          }
          subscript(row: Int, column: Int) -> Double {
             get {
-               assert(indexIsValid(row, column), "Matrix index out of range")
+               assert(indexIsValidForRow(row, column: column), "Index out of range")
                return grid[(row * columns) + column]
             }
             set {
-               assert(indexIsValid(row, column), "Matrix index out of range")
+               assert(indexIsValidForRow(row, column: column), "Index out of range")
                grid[(row * columns) + column] = newValue
             }
          }
@@ -161,10 +165,10 @@ The ``Matrix`` structure's subscript takes two integer parameters:
 and creates an array that is large enough to store ``rows * columns`` values of type ``Double``.
 Each position in the matrix is given an initial value of ``0.0``.
 To achieve this, the array's size, and an initial cell value of ``0.0``,
-are passed to an ``Array`` initializer that creates and initializes a new array of the correct size.
-(This initializer is described in more detail in :ref:`CollectionTypes_CreatingAnEmptyArray`.)
+are passed to an array initializer that creates and initializes a new array of the correct size.
+(This initializer is described in more detail in :ref:`CollectionTypes_CreatingAndInitializingAnArray`.)
 
-.. testcode:: matrixSubscript
+.. testcode:: matrixSubscript, matrixSubscriptAssert
 
    -> var matrix = Matrix(rows: 2, columns: 2)
    << // matrix : Matrix = Matrix(2, 2, [0.0, 0.0, 0.0, 0.0])
@@ -178,7 +182,7 @@ as read from top left to bottom right:
 Values in the matrix can be set by passing row and column values into the subscript,
 separated by a comma:
 
-.. testcode:: matrixSubscript
+.. testcode:: matrixSubscript, matrixSubscriptAssert
 
    -> matrix[0, 1] = 1.5
    >> println(matrix[0, 1])
@@ -203,21 +207,25 @@ To assist with these assertions,
 which checks to see if the requested ``row`` or ``column``
 is outside the bounds of the matrix:
 
-::
+.. testcode:: matrixSubscript
 
-   func indexIsValid(row: Int, column: Int) -> Bool {
-      return row >= 0 && row < rows && column >= 0 && column < columns
-   }
-
-.. TESTME: test this code manually.
+   >> var rows = 2
+   << // rows : Int = 2
+   >> var columns = 2
+   << // columns : Int = 2
+   -> func indexIsValidForRow(row: Int, column: Int) -> Bool {
+         return row >= 0 && row < rows && column >= 0 && column < columns
+      }
 
 An assertion is triggered if you try and access a subscript
 that is outside of the matrix bounds:
 
-::
+.. testcode:: matrixSubscriptAssert
 
-   let someValue = matrix[2, 2]
+   -> let someValue = matrix[2, 2]
+   xx assert
    // this triggers an assert, because [2, 2] is outside of the matrix bounds
 
-.. TESTME: the assert in this example would mean that all other tests would fail
-   if it were to be swifttested. It will need to be tested manually instead.
+.. TODO: subscripts can provide external names for their parameters,
+   to enable subscript overloading (e.g. subscript(row: Int) and subscript(column: Int)
+   to get a slice of the matrix). This would make a great example!

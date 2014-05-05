@@ -49,11 +49,13 @@ and ensure that all of the instance's properties have valid initial values.
 In its simplest form, an initializer is like an instance method with no parameters,
 written using the ``init`` keyword:
 
-::
+.. testcode:: inheritance
 
-   init() {
-      // perform some initialization here
-   }
+   >> class Test {
+   -> init() {
+         // perform some initialization here
+      }
+   >> }
 
 This simple initializer is called whenever a new instance is created
 via :newTerm:`initialization syntax`
@@ -292,10 +294,6 @@ a superclass property with the same name and type.
 You can present an inherited read-only property as a read-write property
 by providing both a getter and a setter in your subclass property override.
 You cannot, however, present an inherited read-write property as a read-only property.
-
-.. TODO: You can also convert a read-write property into a read-only property
-   (at least, you can as of Swift r16524), but this is not intended behavior
-   (as tracked by rdar://problem/16659058). I've not mentioned it as a result.
 
 .. note::
 

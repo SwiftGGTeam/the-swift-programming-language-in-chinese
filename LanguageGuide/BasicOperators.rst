@@ -82,11 +82,17 @@ its elements can be decomposed into multiple constants or variables at once:
 Unlike C and Objective-C, the assignment operator in Swift does not itself return a value.
 The following statement is not valid:
 
-::
+.. testcode:: assignmentOperatorInvalid
 
-   if x = y {
-      // this is not valid, because x = y does not return a value
-   }
+   -> if x = y {
+         // this is not valid, because x = y does not return a value
+      }
+   !! <REPL Input>:1:4: error: use of unresolved identifier 'x'
+   !! if x = y {
+   !!    ^
+   !! <REPL Input>:1:8: error: use of unresolved identifier 'y'
+   !! if x = y {
+   !!        ^
 
 This feature prevents the assignment operator (``=``) from being used by accident
 when the equality comparison operator (``==``) is actually intended.
@@ -131,27 +137,23 @@ The addition operator is also supported for ``String`` concatenation:
    -> "hello, " + "world"      // equals "hello, world"
    << // r4 : String = "hello, world"
 
-Two ``UnicodeScalar`` values,
-or one ``UnicodeScalar`` value and one ``String`` value,
+Two ``Character`` values,
+or one ``Character`` value and one ``String`` value,
 can be added together to make a new ``String`` value:
 
 .. testcode:: arithmeticOperators
 
    -> let dog = '🐶'
-   << // dog : UnicodeScalar = '🐶'
+   << // dog : Character = <unprintable value>
    -> let cow = '🐮'
-   << // cow : UnicodeScalar = '🐮'
+   << // cow : Character = <unprintable value>
    -> let dogCow = dog + cow
    << // dogCow : String = "🐶🐮"
    /> dogCow is equal to \"🐶🐮\"
    </ dogCow is equal to "🐶🐮"
 
 .. FIXME: revisit this example based on whether single quotes
-   continue to return a UnicodeScalar,
-   and in light of where we end up with characters vs scalars.
-   This also raises the question of my use of the name 'scalar'
-   when using for-in to iterate over someString.chars.
-   I've used 'scalar' several times throughout the book.
+   continue to return a Character.
    See rdar://16363872 for the single-quotes change.
 
 .. _BasicOperators_RemainderOperator:
@@ -446,13 +448,19 @@ otherwise, it evaluates ``answer2`` and returns its value.
 
 This operator is shorthand for:
 
-::
+.. testcode:: ternaryConditionalOperatorOutline
 
-   if question {
-      answer1
-   } else {
-      answer2
-   }
+   >> let question = true
+   << // question : Bool = true
+   >> let answer1 = true
+   << // answer1 : Bool = true
+   >> let answer2 = true
+   << // answer2 : Bool = true
+   -> if question {
+         answer1
+      } else {
+         answer2
+      }
 
 Here's an example, which calculates the pixel height for a table row.
 The row height should be 50 pixels taller than the content height

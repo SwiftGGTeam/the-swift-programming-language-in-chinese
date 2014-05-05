@@ -223,7 +223,7 @@ if they are listed in the same order that the properties are declared in the str
 Unlike structures, class instances do not receive a default memberwise initializer.
 Initializers are described in more detail in :doc:`Initialization`.
 
-.. TODO: The current plan is to introduce a memberwise initializer for classes too,
+.. FIXME: The current plan is to introduce a memberwise initializer for classes too,
    as described in rdar://16704095.
    We hope to have this by WWDC, and this section will need updating if this lands.
 

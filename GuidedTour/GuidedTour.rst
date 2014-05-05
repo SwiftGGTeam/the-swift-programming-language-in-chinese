@@ -8,7 +8,7 @@ In Swift, this can be done in a single line:
 .. K&R uses “hello, world”.
    It seems worth breaking with tradition to use proper casing.
 
-.. testcode:: hello-world
+.. testcode::
 
    -> println("Hello, world")
    << Hello, world
@@ -49,7 +49,7 @@ The value of a constant can be assigned only once,
 although it does not need to be known at compile time.
 The value of a variable can be assigned multiple times.
 
-.. testcode:: var
+.. testcode::
 
    -> var myVariable = 42
    << // myVariable : Int = 42
@@ -58,29 +58,25 @@ The value of a variable can be assigned multiple times.
    << // myVariable : Int = 50
    -> let myConstant = 42
    << // myConstant : Int = 42
+   // myConstant = 100  // Uncomment to see the error
 
 .. admonition:: Experiment
 
    Edit the code in the boxes above.
-   Try assigning ``myConstant`` a new value.
-   What error do you get?
+   Try changing ``myConstant`` to be a variable.
+   Try removing the last line, so it is only assigned a value once.
 
 .. TR: Is the requirement that constants need an initial value
    a current REPL limitation, or an expected language feature?
 
-Assigning a value of the wrong type to a variable is an error.
+A variable must have the same type
+as the value you want to assign to it.
 
-.. testcode:: typecheck
+.. testcode::
 
     -> var greeting = "Hello"
     << // greeting : String = "Hello"
-    -> greeting = "Good morning"
-
-.. admonition:: Experiment
-
-   Try assigning a number to ``greeting``
-   instead of the string "Good morning".
-   What error do you get?
+    // greeting = 123  // Uncomment to see the error
 
 In the previous example,
 the compiler understands that ``greeting`` is a string
@@ -97,7 +93,7 @@ specify an explicit type
 by writing the type after the variable,
 separated by a colon.
 
-.. testcode:: type-annotation
+.. testcode::
 
    -> let implicitString = "Hello"
    << // implicitString : String = "Hello"
@@ -105,6 +101,10 @@ separated by a colon.
    << // explicitString : String = "Hello"
 
 .. admonition:: Experiment
+
+   Try creating a constant with
+   an explicit type of ``Float`` and a value of ``4``.
+   Notice how the type of ``4`` is determined based on how you use it.
 
    Try providing an explicit type that doesn’t match
    the variable’s initial value.
@@ -114,7 +114,7 @@ Values are never implicitly converted or cast to another type.
 If you need to convert a value to a different type,
 make an instance of the desired type explicitly.
 
-.. testcode:: cast
+.. testcode::
 
    -> let label = "The width is "
    << // label : String = "The width is "
@@ -127,51 +127,13 @@ make an instance of the desired type explicitly.
 
    Try removing the cast to ``String`` from the last line.
    What error do you get?
-   
-Multiple values can be assigned at once.
-Values on the right side are assigned
-to the corresponding parts on the left.
-For example,
-you can swap two values in place
-without a temporary value.
 
-.. testcode:: swap
-
-   -> var left = 10
-   << // left : Int = 10
-   -> var right = 100
-   << // right : Int = 100
-   -> (left, right) = (right, left)
-   >> left
-   << // left : Int = 100
-   >> right
-   << // right : Int = 10
-
-.. TODO: If the PG doesn’t show a good result for left and right in the swap line,
-   turn the >> lines into -> lines
-   to show the reader that the swap worked.
-
-.. No tuple destructuring example
-   because I haven't really introduced tuples yet.
-
-.. testcode:: swap
-
-   -> let tupleResult = (404
-   -> var left = 10
-   << // left : Int = 10
-   -> var right = 100
-   << // right : Int = 100
-   -> (left, right) = (right, left)
-   >> left
-   << // left : Int = 100
-   >> right
-   << // right : Int = 10
-
-Strings in Swift support a special interpolation syntax
-that includes the string value of an expression
+A simpler way to include values in strings
+is to use the special escape ``\(`` ``)`` in a string,
+which includes the string value of an expression
 as part of the string.
 
-.. testcode:: string-interpolation
+.. testcode::
 
    -> let apples = 3
    << // apples : Int = 3
@@ -182,72 +144,60 @@ as part of the string.
 
 .. admonition:: Experiment
 
-   Try using string interpolation
-   to include someone’s name in a greeting.
+   Try using string interpolation to
+   include a floating point calculation in a string,
+   and to include someone’s name in a greeting.
 
-Arrays and dictionaries are written using brackets (``[]``).
-Tuples are written using parentheses.
+Arrays and dictionaries are written using brackets (``[]``)
+and their elements are accessed by writing
+the index or key in brackets.
 
-.. TODO: Add a short bit about what tuples are.
-   We didn't have them in Obj-C,
-   so devs may have never seen one before in their code.
-   Roughly,
-   a tuple lets you refer to multiple values as a single value
-   and pass them around together.
-   It's stort of halfway between an array and a struct.
-
-.. testcode:: array-dict
+.. testcode::
 
     -> let fruits = ["apple", "orange", "banana"]
-    << // fruits : String[] = ["apple", "orange", "banana"]
-    -> let occupations = [
+    << // fruits : Array<String> = ["apple", "orange", "banana"]
+    -> let favoriteFruit = fruits[1]
+    << // favoriteFruit : String = "orange"
+    ---
+    -> var temperatures = [
+          "San Francisco": 59.0,
+          "Paris": 51.6,
+          "Shanghai": 73.2,
+       ]
+    << // temperatures : Dictionary<String, Double> = Dictionary<String, Double>(1.33333333333333, 3, <DictionaryBufferOwner<String, Double> instance>)
+    -> temperatures["San Francisco"] < temperatures["Paris"]
+    <$ : Bool = false
+
+.. admonition:: Experiment
+
+   Try sorting ``fruits`` using the Swift Standard Library ``sort`` function.
+
+.. Forcasts above are real current conditions from 9:14 pm April 28, 2014.
+
+.. Old Firefly example
+   which doesn't follow our editorial guidelines for names of people
+    -> var occupations = [
           "Malcolm": "Captain",
           "Kayley": "Mechanic",
           "Jayne": "Public Relations",
         ]
-    << // occupations : Dictionary<String, String> = Dictionary<String, String>(1.33333, 3, <DictionaryBufferOwner<String, String> instance>)
-    -> let origin = (0, 0)
-    << // origin : (Int, Int) = (0, 0)
-    -> let x = origin.0
-    << // x : Int = 0
+    << // occupations : Dictionary<String, String> = Dictionary<String, String>(1.33333333333333, 3, <DictionaryBufferOwner<String, String> instance>)
+    -> occupations["Jayne"] == "Doctor"
+    <$ : Bool = false
+    ---
 
-Arrays and dictionaries use the same syntax
-for accessing their elements.
+An empty array is written ``[]``
+and an empty dictionary is written ``[:]``.
+since the type of an empty array or dictionary
+can't be inferred from its content ---
+specify it expliticly.
 
-.. testcode:: vegetable-array-dict
+.. testcode::
 
-    -> var vegetables = Array<String>()
-    << // vegetables : Array<String> = []
-    -> vegetables.append("carrot")
-    -> vegetables.append("cucumber")
-    -> vegetables.append("tomato")
-    -> vegetables[1] = "onion"
-    >> vegetables
-    << // vegetables : Array<String> = ["carrot", "onion", "tomato"]
-    -> var fruitColors = Dictionary<String, String>()
-    << // fruitColors : Dictionary<String, String> = Dictionary<String, String>(1.33333, 0, <DictionaryBufferOwner<String, String> instance>)
-    -> fruitColors.add("banana", "yellow")
-    << // r0 : Bool = false
-    -> fruitColors.add("apple", "red")
-    << // r1 : Bool = false
-    -> fruitColors["apple"] = "green"
-
-.. admonition:: Experiment
-
-    Try using brackets to set the second element of an empty array
-    and to set the value for a key of an empty dictionary.
-    Why do you think empty arrays and dictionaries
-    have this difference in behavior?
-
-.. TODO: Iterate on the way the empty array & dict are created.
-   Alternatives:
-   vegetables: Array<String> = []
-   vegetables: String[] = []
-   vegetables = String[]()
-
-.. TODO: Mention [] and [:] as empty array/dict literals.
-   They aren’t fully typed, so they require a type annotation in a variable declaration,
-   but they are useful when calling a function or re-assigning the value of a variable.
+   -> var emptyArray: Array<String> = []
+   << // emptyArray : Array<String> = []
+   -> var emptyDictionary: Dictionary<String, Float> = [:]
+   << // emptyDictionary : Dictionary<String, Float> = Dictionary<String, Float>(1.33333333333333, 0, <DictionaryBufferOwner<String, Float> instance>)
 
 .. The REPL output after creating a dictionary doesn’t make any sense.
    No way to get it to pretty-print the keys and values.
@@ -258,7 +208,7 @@ Control Flow
 Use ``if`` to choose between blocks of code
 by checking Boolean conditions.
 
-.. testcode:: if
+.. testcode::
 
    -> let haveJellyBabies = false
    << // haveJellyBabies : Bool = false
@@ -283,7 +233,7 @@ Use ``switch`` to choose between blocks of code
 where each block of code is associated
 with a possible value.
 
-.. testcode:: simple-switch
+.. testcode::
 
    -> let vegetable = "cucumber"
    << // vegetable : String = "cucumber"
@@ -317,7 +267,7 @@ at the end of each case‘s code.
 Switches support a variety of complex matching criteria,
 such as tuple unpacking and ``where`` clauses:
 
-.. testcode:: fancy-switch
+.. testcode::
 
    -> let somePoint = (1, 1)
    << // somePoint : (Int, Int) = (1, 1)
@@ -343,7 +293,7 @@ such as tuple unpacking and ``where`` clauses:
 
 Repeat a block of code for each item in a collection with ``for``.
 
-.. testcode:: for-each
+.. testcode::
 
     -> let listOfNumbers = 1..5
     << // listOfNumbers : Range<Int> = Range<Int>(1, 6)
@@ -361,9 +311,34 @@ Repeat a block of code for each item in a collection with ``for``.
    Notice that 5 is omitted from the sum.
    When would you want to include or exclude the final number?
 
+.. testcode::
+
+   -> let interestingNumbers = [
+         "Prime": [2, 3, 5, 7, 11, 13],
+         "Fibonacci": [1, 1, 2, 3, 5, 8],
+         "Square": [1, 4, 9, 16, 25],
+      ]
+   << // interestingNumbers : Dictionary<String, Array<Int>> = Dictionary<String, Array<Int>>(1.33333333333333, 3, <DictionaryBufferOwner<String, Array<Int>> instance>)
+   -> var largest = 0
+   << // largest : Int = 0
+   -> for (kind, numbers) in interestingNumbers {
+         for number in numbers {
+            if number > largest {
+                largest = number
+            }
+         }
+      }
+   >> largest
+   << // largest : Int = 25
+
+.. admonition:: Experiment
+
+   Try keeping track of which kind of number
+   was the largest, as well as what that largest number was.
+
 Loops can keep an explicit counter or index.
 
-.. testcode:: c-for
+.. testcode::
 
    -> for var i = 0; i < 5; ++i {
          println(i)
@@ -375,8 +350,10 @@ Loops can keep an explicit counter or index.
    << 4
 
 Repeat a block of code until a condition changes using ``while``.
+The condition of a loop can be an the end instead,
+ensuring that the loop is run at least once.
 
-.. testcode:: while
+.. testcode::
 
    -> var n = 2
    << // n : Int = 2
@@ -385,12 +362,7 @@ Repeat a block of code until a condition changes using ``while``.
       }
    -> println("n is \(n)")
    << n is 128
-
-The condition of a loop can be an the end instead,
-ensuring that the loop is run at least once.
-
-.. testcode:: do-while
-
+   ---
    -> var m = 2
    << // m : Int = 2
    -> do {
@@ -414,15 +386,15 @@ you can specify each parameter by name when calling the function.
    That is, "init (withFoo : Int)" and "init (withBar : String)"
    both have the function name "init", but have different types.
 
-.. testcode:: func
+.. testcode::
 
     -> func greet(name: String, day: String) -> String {
           return "Hello \(name), today is \(day)."
        }
     -> greet("Bob", "Tuesday")
-    << // r0 : String = "Hello Bob, today is Tuesday."
+    <$ : String = "Hello Bob, today is Tuesday."
     -> greet(name:"Alice", "Wednesday")
-    << // r1 : String = "Hello Alice, today is Wednesday."
+    <$ : String = "Hello Alice, today is Wednesday."
 
 .. admonition:: Experiment
 
@@ -431,18 +403,18 @@ you can specify each parameter by name when calling the function.
 
 Functions can return multiple values using a tuple.
 
-.. testcode:: func-tuple
+.. testcode::
 
    -> func getGasPrices() -> (Double, Double, Double) {
          return (3.59, 3.69, 3.79)
       }
    >> getGasPrices()
-   << // r0 : (Double, Double, Double) = (3.59, 3.69, 3.79)
+   <$ : (Double, Double, Double) = (3.59, 3.69, 3.79)
 
 Functions can also take a variable number of arguments,
 collecting them into an array.
 
-.. testcode:: functions
+.. testcode::
 
    -> // Reimplement the Standard Library sum function for Int values.
    -> func sumOf(numbers: Int...) -> Int {
@@ -453,15 +425,19 @@ collecting them into an array.
          return sum
       }
    -> sumOf()
-   << // r0 : Int = 0
+   <$ : Int = 0
    -> sumOf(42, 597, 12)
-   << // r1 : Int = 651
+   <$ : Int = 651
+
+.. admonition:: Experiment
+
+   Try writing a function that calculates the average.
 
 Functions can be nested.
 Nested functions have access to variables
 that were declared in the outer function.
 
-.. testcode:: nested-func
+.. testcode::
 
     -> func returnFifteen () -> Int {
           var y = 10
@@ -472,7 +448,7 @@ that were declared in the outer function.
           return y
        }
     -> returnFifteen()
-    << // r0 : Int = 15
+    <$ : Int = 15
 
 .. admonition:: Experiment
 
@@ -483,7 +459,7 @@ that were declared in the outer function.
 Functions are a first-class type.
 This means a function can return another function as its value.
 
-.. testcode:: return-func
+.. testcode::
 
     -> func makeIncrementer() -> (Int -> Int) {
           func addOne (number: Int) -> Int {
@@ -494,16 +470,16 @@ This means a function can return another function as its value.
     -> var increment = makeIncrementer()
     << // increment : (Int -> Int) = <unprintable value>
     -> increment(7)
-    << // r0 : Int = 8
+    <$ : Int = 8
 
 .. TODO: Confirm spelling of "incrementer" (not "incrementor").
 
 A function can take another function as one of its argument.
 
-.. testcode:: pass-func
+.. testcode::
 
     -> // Re-implement the Standard Library sort function.
-    -> func bubbleSort (var list: Int[], outOfOrder: (Int, Int) -> Bool) -> Int[] {
+    -> func bubbleSort (var list: Array<Int>, outOfOrder: (Int, Int) -> Bool) -> Array<Int> {
           for i in 0...list.count {
              for j in 0...list.count {
                 if outOfOrder(list[i], list[j]) {
@@ -517,20 +493,16 @@ A function can take another function as one of its argument.
           return x > y
        }
     -> var numbers = [8, 3, 5, 6]
-    << // numbers : Int[] = [8, 3, 5, 6]
+    << // numbers : Array<Int> = [8, 3, 5, 6]
     -> var sortedNumbers = bubbleSort(numbers, greaterThan)
-    << // sortedNumbers : Int[] = [8, 6, 5, 3]
-
-.. TODO: Probably want to either explicitly
-   un-name the parameters to bubbleSort() with _
-   or provide the names when calling the function.
+    << // sortedNumbers : Array<Int> = [8, 6, 5, 3]
 
 Closures are just like a function
 except you don't give them a name when you declare them.
 They are written as code surrounded by braces (``{}``)
 and have their arguments separated from their body by ``in``.
 
-.. testcode:: closure
+.. testcode::
 
     -> let triple: Int -> Int = {
           (number: Int) in
@@ -539,9 +511,9 @@ and have their arguments separated from their body by ``in``.
        }
     << // triple : Int -> Int = <unprintable value>
     -> triple(5)
-    << // r0 : Int = 15
+    <$ : Int = 15
 
-.. TODO: The type of "number" can be omitted above,
+.. The type of "number" can be omitted above,
    and in fact the parens are probably not needed either.
    I've written them for now
    so that I start with the most verbose function-y syntax.
@@ -555,32 +527,37 @@ the parameters can be referred to by number instead of by name.
 Single statement closures implicitly return the value
 of their only statement.
 
-.. testcode:: closure-brief
+.. testcode::
 
     -> let shortTriple: Int -> Int = { 3 * $0 }
     << // shortTriple : Int -> Int = <unprintable value>
     -> shortTriple(5)
-    << // r0 : Int = 15
+    <$ : Int = 15
 
 A closure passed as the last argument to a function
 can appear immediately after the function call.
 
-.. testcode:: trailing-closure
+.. testcode::
 
     -> sort([1, 5, 3, 12, 2]) { $0 > $1 }
-    << // r0 : Int[] = [12, 5, 3, 2, 1]
+    <$ : Array<Int> = [12, 5, 3, 2, 1]
+
+.. admonition:: Experiment
+
+   Try rewriting the bubble sort function above
+   so it takes a trailing closure to do comparisons.
 
 The previous listing can be written without a closure at all
 by passing the ``>`` operator
 as the second argument to the ``sort`` function.
 
-.. testcode:: operator-closure
+.. testcode::
 
     -> sort([1, 5, 3, 12, 2], >)
-    << // r0 : Int[] = [12, 5, 3, 2, 1]
+    <$ : Array<Int> = [12, 5, 3, 2, 1]
 
-Objects
--------
+Objects and Classes
+-------------------
 
 .. TODO: Pull in the Shape example code from old tour.
 
@@ -599,13 +576,12 @@ Objects
 * Override superclass methods with “@override”
 * Call the superclass’s implentation with “super”
 
-Value Types
------------
+Enumerations and Structures
+---------------------------
 
 .. write-me::
 
 * Differences from objects (reference types)
-* Use tuples for simple multipart data
 * Use structs for complex multipart data
 * Use enums when values come from a list
 * Associating additional data with enums

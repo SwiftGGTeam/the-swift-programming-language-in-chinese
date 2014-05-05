@@ -6,7 +6,7 @@ Chapters that have not yet been written are indicated with an [x] after their na
 .. toctree::
     :maxdepth: 1
 
-    BasicTypes
+    TheBasics
     BasicOperators
     Strings
     CollectionTypes

@@ -57,7 +57,7 @@ the collections you create.
 
 .. note::
 
-   Swift's ``Array`` and ``Dictionary`` are
+   Swift's array and dictionary types are
    *value types*, not *reference types*,
    and are copied rather than referenced
    when they are assigned to a constant or variable, or passed to a function.
@@ -85,14 +85,24 @@ They differ from Objective-C's ``NSArray`` and ``NSMutableArray`` classes,
 which can store any kind of object,
 and do not provide any information about the nature of the objects they return.
 In Swift, the type of values that a particular array can store is always made clear,
-either through an explicit type annotation, or through type inference.
+either through an explicit type annotation, or through type inference,
+and does not have to be a class type.
 If you create an array of ``Int`` values, for example,
 then you can't insert anything other than ``Int`` values into that array.
 This means that Swift arrays are type-safe,
 and are always clear about what they may contain.
 
-Swift's array type is written as ``Array<SomeType>``,
+.. _CollectionTypes_ArrayTypeShorthandSyntax:
+
+Array Type Shorthand Syntax
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The type of a Swift array is written in full as ``Array<SomeType>``,
 where ``SomeType`` is the type that the array is allowed to store.
+The type of an array can also be written in shorthand form as ``SomeType[]``.
+Although the two forms are functionally identical,
+the shorthand form is preferred,
+and is used throughout this guide when referring to the type of an array.
 
 .. _CollectionTypes_ArrayLiterals:
 
@@ -100,7 +110,7 @@ Array Literals
 ~~~~~~~~~~~~~~
 
 An array can be initialized with an :newTerm:`array literal`,
-which is a shorthand way to write one or more values as an ``Array`` collection.
+which is a shorthand way to write one or more values as an array collection.
 Array literals are written as a list of values, separated by commas,
 surrounded by a pair of square brackets:
 
@@ -112,12 +122,12 @@ The example below creates an array called ``shoppingList`` to store ``String`` v
 
 .. testcode:: arrays
 
-   -> var shoppingList: Array<String> = ["Eggs", "Milk"]
-   << // shoppingList : Array<String> = ["Eggs", "Milk"]
+   -> var shoppingList: String[] = ["Eggs", "Milk"]
+   << // shoppingList : String[] = ["Eggs", "Milk"]
    // shoppingList has been initialized with two initial items
 
 The ``shoppingList`` variable is declared as
-“an ``Array`` of ``String`` values”, written as ``Array<String>``.
+“an array of ``String`` values”, written as ``String[]``.
 Because this particular array has specified a value type of ``String``,
 it is *only* allowed to store ``String`` values.
 Here, the ``shoppingList`` array is initialized with two ``String`` values
@@ -131,7 +141,7 @@ Here, the ``shoppingList`` array is initialized with two ``String`` values
 
 In this case, the array literal contains two ``String`` values, and nothing else.
 This matches the type of the ``shoppingList`` variable's declaration –
-an ``Array`` that can only contain ``String`` values –
+an array that can only contain ``String`` values –
 and so the assignment of the array literal is permitted
 as a way to initialize ``shoppingList`` with two initial items.
 
@@ -146,7 +156,7 @@ The initialization of ``shoppingList`` could have been be written in a shorter f
    << // shoppingList : Array<String> = ["Eggs", "Milk"]
 
 Because all values in the array literal are of the same type,
-Swift can infer that ``Array<String>`` is
+Swift can infer that ``String[]`` is
 the correct type to use for the ``shoppingList`` variable.
 
 .. _CollectionTypes_AccessingAndModifyingAnArray:
@@ -156,7 +166,7 @@ Accessing and Modifying an Array
 
 You access and modify an array through its methods and properties,
 or by using subscript syntax.
-You can find out the number of items in an ``Array``
+You can find out the number of items in an array
 by checking its read-only ``count`` property:
 
 .. testcode:: arraysInferred
@@ -262,19 +272,19 @@ and so the value at index ``0`` is once again equal to ``"Six eggs"``:
 Creating and Initializing an Array
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can create an empty ``Array`` of a certain type
+You can create an empty array of a certain type
 (without setting any initial values)
 using initializer syntax:
 
 .. testcode:: arraysEmpty
 
-   -> var someInts = Array<Int>()
-   << // someInts : Array<Int> = []
-   -> println("someInts is an Array<Int> containing \(someInts.count) items.")
-   <- someInts is an Array<Int> containing 0 items.
+   -> var someInts = Int[]()
+   << // someInts : Int[] = []
+   -> println("someInts is of type Int[] with \(someInts.count) items.")
+   <- someInts is of type Int[] with 0 items.
 
-Note that the type of the ``someInts`` variable has been inferred to be ``Array<Int>``,
-because it was set to the output of an ``Array<Int>`` initializer.
+Note that the type of the ``someInts`` variable has been inferred to be ``Int[]``,
+because it was set to the output of an ``Int[]`` initializer.
 
 Alternatively, if the context already provides type information –
 such as a function argument, or an already-typed variable or constant –
@@ -288,9 +298,10 @@ which is written as ``[]``
    /> someInts now contains \(someInts.count) value of type Int
    </ someInts now contains 1 value of type Int
    -> someInts = []
-   // someInts is now an empty array, but is still of type Array<Int>
+   // someInts is now an empty array, but is still of type Int[]
 
-``Array`` also provides an initializer for creating an array of a certain size
+Swift's ``Array`` type also provides
+an initializer for creating an array of a certain size
 with all of its values set to a provided default value.
 This initializer takes two arguments –
 the number of elements to be added to the new array,
@@ -298,20 +309,20 @@ and a default value of the appropriate type:
 
 .. testcode:: arraysEmpty
 
-   -> var threeDoubles = Array<Double>(3, 0.0)
-   << // threeDoubles : Array<Double> = [0.0, 0.0, 0.0]
-   // threeDoubles is an Array<Double>, and equals [0.0, 0.0, 0.0]
+   -> var threeDoubles = Double[](3, 0.0)
+   << // threeDoubles : Double[] = [0.0, 0.0, 0.0]
+   // threeDoubles is of type Double[], and equals [0.0, 0.0, 0.0]
 
 Thanks to type inference, you don't actually need to specify
-the type to be stored in the ``Array`` when using this initializer,
+the type to be stored in the array when using this initializer,
 because it can be inferred from the default value:
 
 .. testcode:: arraysEmpty
 
    -> var anotherThreeDoubles = Array(3, 0.0)
    << // anotherThreeDoubles : Array<Double> = [0.0, 0.0, 0.0]
-   /> anotherThreeDoubles is inferred as Array<Double>, and equals [\(anotherThreeDoubles[0]), \(anotherThreeDoubles[1]), \(anotherThreeDoubles[2])]
-   </ anotherThreeDoubles is inferred as Array<Double>, and equals [0.0, 0.0, 0.0]
+   /> anotherThreeDoubles is inferred as Double[], and equals [\(anotherThreeDoubles[0]), \(anotherThreeDoubles[1]), \(anotherThreeDoubles[2])]
+   </ anotherThreeDoubles is inferred as Double[], and equals [0.0, 0.0, 0.0]
 
 .. TODO: func find<T: Equatable>(array: T[], value: T) -> Int?
    This is defined in Algorithm.swift,
@@ -392,7 +403,7 @@ and the values are airport names:
 .. testcode:: dictionaries
 
    -> var airports: Dictionary<String, String> = ["TYO": "Tokyo", "DUB": "Dublin"]
-   << // airports : Dictionary<String, String> = Dictionary<String, String>(1.33333333333333, 2, <DictionaryBufferOwner<String, String> instance>)
+   << // airports : Dictionary<String, String> = Dictionary<String, String>(<unprintable value>)
 
 The ``airports`` dictionary is declared as having a type of ``Dictionary<String, String>``,
 which means “a ``Dictionary`` whose keys are of type ``String``,
@@ -423,7 +434,7 @@ The initialization of ``airports`` could have been be written in a shorter form 
 .. testcode:: dictionariesInferred
 
    -> var airports = ["TYO": "Tokyo", "DUB": "Dublin"]
-   << // airports : Dictionary<String, String> = Dictionary<String, String>(1.33333333333333, 2, <DictionaryBufferOwner<String, String> instance>)
+   << // airports : Dictionary<String, String> = Dictionary<String, String>(<unprintable value>)
 
 Because all of the keys in the literal are of the same type as each other,
 and likewise all of the values are of the same type as each other,
@@ -585,7 +596,7 @@ you can create an empty ``Dictionary`` of a certain type using initializer synta
 .. testcode:: dictionariesEmpty
 
    -> var namesOfIntegers = Dictionary<Int, String>()
-   << // namesOfIntegers : Dictionary<Int, String> = Dictionary<Int, String>(1.33333333333333, 0, <DictionaryBufferOwner<Int, String> instance>)
+   << // namesOfIntegers : Dictionary<Int, String> = Dictionary<Int, String>(<unprintable value>)
    // namesOfIntegers is an empty Dictionary<Int, String>
 
 This example creates an empty dictionary of type ``Int``, ``String``
@@ -616,5 +627,5 @@ which is written as ``[:]``
 .. note::
 
    Behind the scenes,
-   Swift's ``Array`` and ``Dictionary`` types are implemented as :newTerm:`generic collections`.
-   Generics such as ``Array`` and ``Dictionary`` are described in detail in :doc:`Generics`.
+   Swift's array and dictionary types are implemented as :newTerm:`generic collections`.
+   Generic types are described in :doc:`Generics`.

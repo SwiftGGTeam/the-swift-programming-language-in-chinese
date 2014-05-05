@@ -37,9 +37,8 @@ a particular class, structure, or enumeration.
 They support the functionality of those instances,
 either by providing ways to access and modify their properties,
 or by providing useful functionality related to their purpose.
-Instance methods have exactly the same syntax as functions.
-
-.. TODO: remove this last sentence once the syntaxes are unified.
+Instance methods have exactly the same syntax as functions,
+as described in :doc:`Functions`. 
 
 You write an instance method within the opening and closing braces of the type it belongs to.
 An instance method has implicit access to all of the other instance methods and properties of that type.
@@ -79,20 +78,144 @@ Instance methods are called using the same dot syntax as properties:
 
    -> let counter = Counter()
    << // counter : Counter = <Counter instance>
-   /> initial counter value is \(counter.count)
-   </ initial counter value is 0
+   /> the initial counter value is \(counter.count)
+   </ the initial counter value is 0
    -> counter.increment()
-   /> counter value is now \(counter.count)
-   </ counter value is now 1
+   /> the counter's value is now \(counter.count)
+   </ the counter's value is now 1
    -> counter.incrementBy(5)
-   /> counter value is now \(counter.count)
-   </ counter value is now 6
+   /> the counter's value is now \(counter.count)
+   </ the counter's value is now 6
    -> counter.reset()
-   /> counter value is now \(counter.count)
-   </ counter value is now 0
+   /> the counter's value is now \(counter.count)
+   </ the counter's value is now 0
 
 .. QUESTION: I've used count++ rather than ++count here.
    Is this consistent with my advice and usage elsewhere?
+
+.. _Methods_LocalAndExternalNames:
+
+Local and External Parameter Names
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Function parameters can have both a local name (for use within the function's body)
+and an external name (for use when calling the function),
+as described in :ref:`Functions_ExternalParameterNames`.
+The same is also true for method parameters,
+because methods are essentially just functions that are associated with a type.
+However, the default behavior of local names and external names
+is different for functions and methods.
+
+.. _Methods_ExternalParameterNamesForFunctions:
+
+External Parameter Names for Functions
+______________________________________
+
+Stand-alone functions in Swift do not provide external parameter names by default.
+This follows the typical behavior of C functions,
+which tend not to name their arguments when the function is called.
+
+If you *do* want to provide an external name for a function parameter,
+to be used when calling the function,
+you opt in to this behavior by defining an external name yourself,
+or by placing a back tick (`````) before the parameter's local name
+to indicate that the local name should also be used as an external name.
+This process is described in :ref:`Functions_ShorthandExternalParameterNames`.
+
+.. _Methods_ExternalParameterNamesForMethods:
+
+External Parameter Names for Methods
+____________________________________
+
+Methods in Swift are very similar to their counterparts in Objective-C.
+As in Objective-C, the name of a method in Swift tends to refer to
+the method's first parameter using a preposition such as
+``with``, ``for``, or ``by``,
+as seen in the ``incrementBy`` method from the ``Counter`` class above.
+This enables the method to be read as a sentence when it is called.
+Swift makes this established method naming convention easy to write
+by using a different default approach for method parameters
+than it uses for function parameters.
+
+Specifically, Swift considers the *first* parameter name in a method
+to be a local parameter name by default,
+and the second and subsequent parameter names to be
+both local *and* external parameter names by default.
+This matches the typical naming and calling convention
+you will be familiar with from writing Objective-C methods,
+and makes for expressive method calls without the need to qualify your parameter names.
+
+Consider this alternative version of the ``Counter`` class,
+which defines a more complex form of the ``incrementBy`` method:
+
+.. testcode:: externalParameterNames
+
+   -> class Counter {
+         var count: Int = 0
+         func incrementBy(amount: Int, numberOfTimes: Int) {
+            count += amount * numberOfTimes
+         }
+      }
+
+This ``incrementBy`` method has two parameters –
+one called ``amount``, and one called ``numberOfTimes``.
+By default, Swift considers ``amount`` to be a local name only,
+but considers ``numberOfTimes`` to be both a local *and* an external name.
+This means that the method is called as follows:
+
+.. testcode:: externalParameterNames
+
+   -> let counter = Counter()
+   << // counter : Counter = <Counter instance>
+   -> counter.incrementBy(5, numberOfTimes: 3)
+   /> counter value is now \(counter.count)
+   </ counter value is now 15
+
+There is no need to define an external parameter name for the first argument value,
+because its purpose is clear from the function name ``incrementBy``.
+The second argument, however, is qualified by an external parameter name
+to make its purpose clear when the method is called.
+
+This default behavior effectively treats the method as if you had written
+a back tick (`````) before the ``numberOfTimes`` parameter:
+
+.. testcode:: externalParameterNamesComparison
+
+   >> class Counter {
+   >>    var count: Int = 0
+   >>    func incrementBy(amount: Int) {
+   >>       count += amount
+   >>    }
+   -> func incrementBy(amount: Int, `numberOfTimes: Int) {
+         count += amount * numberOfTimes
+      }
+   >> }
+   !! <REPL Input>:6:33: warning: extraneous '`' in parameter: 'numberOfTimes' is already the keyword argument name
+   !! func incrementBy(amount: Int, `numberOfTimes: Int) {
+   !! ^
+   !!-
+
+The default behavior described above mean that method definitions in Swift
+are written with the same grammatical style as Objective-C,
+and are called in a natural, expressive way.
+
+.. _Methods_ModifyingTheExternalParameterNameBehaviorForMethods:
+
+Modifying the External Parameter Name Behavior for Methods
+__________________________________________________________
+
+It can sometimes be useful for a method to provide an external parameter name
+for its first parameter, even though this is not the default behavior.
+Where this is the case, you can either add an explicit external name yourself,
+or you can prefix the first parameter's name with a back tick
+to use the local name as an external name too.
+
+Conversely, if you do not want to provide an external name
+for the second or subsequent parameter of a method,
+you can override the default behavior by using an underscore character (``_``)
+as an explicit external parameter name for that parameter.
+
+.. TODO: provide (good, would-actually-be-appropriate) examples here.
 
 .. _Methods_TheSelfProperty:
 
@@ -106,11 +229,16 @@ to refer to the current instance within its own instance methods.
 
 The ``increment`` method in the example above could have been written like this:
 
-::
+.. testcode:: instanceMethodsIncrement
 
-   func increment() {
-      self.count++
-   }
+   >> class Counter {
+   >> var count: Int = 0
+      func increment() {
+         self.count++
+      }
+   >> }
+
+.. NOTE: I'm slightly cheating with my testing of this excerpt, but it works!
 
 In practice, you don't need to write ``self`` in your code very often.
 If you don't explicitly write ``self``,
@@ -119,8 +247,8 @@ whenever you use a known property or method name within a method.
 This assumption is demonstrated by the use of ``count`` (rather than ``self.count``)
 inside the three instance methods for ``Counter``.
 
-The exception to this rule occurs when a method's parameter name
-is the same as the name of a property.
+The main exception to this rule occurs when a parameter name for an instance method
+has the same name as a property of that instance.
 In this situation, the parameter name takes precedence,
 and it becomes necessary to refer to the property in a more qualified way.
 You use the implicit ``self`` property to
@@ -174,14 +302,14 @@ before the ``func`` keyword for that method:
 
    -> struct Point {
          var x = 0.0, y = 0.0
-         mutating func moveBy(deltaX: Double, deltaY: Double) {
+         mutating func moveByX(deltaX: Double, y deltaY: Double) {
             x += deltaX
             y += deltaY
          }
       }
    -> var somePoint = Point(1.0, 1.0)
    << // somePoint : Point = Point(1.0, 1.0)
-   -> somePoint.moveBy(2.0, 3.0)
+   -> somePoint.moveByX(2.0, y: 3.0)
    -> println("The point is now at (\(somePoint.x), \(somePoint.y))")
    <- The point is now at (3.0, 4.0)
 
@@ -200,10 +328,10 @@ because its properties cannot be changed, even if they are variable properties
 
    -> let fixedPoint = Point(3.0, 3.0)
    << // fixedPoint : Point = Point(3.0, 3.0)
-   -> fixedPoint.moveBy(2.0, 3.0)
-   !! <REPL Input>:1:1: error: immutable value of type 'Point' only has mutating members named 'moveBy'
-   !! fixedPoint.moveBy(2.0, 3.0)
-   !! ^          ~~~~~~
+   -> fixedPoint.moveByX(2.0, y: 3.0)
+   !! <REPL Input>:1:1: error: immutable value of type 'Point' only has mutating members named 'moveByX'
+   !! fixedPoint.moveByX(2.0, y: 3.0)
+   !! ^          ~~~~~~~
    // this will report an error
 
 .. TODO: talk about @!mutating as well.
@@ -223,13 +351,13 @@ The ``Point`` example shown above could have been written in the following way i
 
    -> struct Point {
          var x = 0.0, y = 0.0
-         mutating func moveBy(deltaX: Double, deltaY: Double) {
+         mutating func moveByX(deltaX: Double, y deltaY: Double) {
             self = Point(x + deltaX, y + deltaY)
          }
       }
    >> var somePoint = Point(1.0, 1.0)
    << // somePoint : Point = Point(1.0, 1.0)
-   >> somePoint.moveBy(2.0, 3.0)
+   >> somePoint.moveByX(2.0, y: 3.0)
    >> println("The point is now at (\(somePoint.x), \(somePoint.y))")
    << The point is now at (3.0, 4.0)
 
@@ -285,7 +413,7 @@ the keyword ``static`` before the method's ``func`` keyword.
 .. note::
 
    In Objective-C, you can only define type-level methods for Objective-C classes.
-   In Swift, you can define type-level methods for all classes, structures and enumerations.
+   In Swift, you can define type-level methods for all classes, structures, and enumerations.
    Each type method is explicitly scoped to the type it supports.
 
 Type methods are called with dot syntax, just like instance methods.
