@@ -154,10 +154,25 @@ The ``Matrix`` structure's subscript takes two integer parameters:
                grid[(row * columns) + column] = newValue
             }
          }
+         subscript(`row: Int) -> Slice<Double> {
+            get {
+               assert(row >= 0 && row < rows, "Row index out of range")
+               let rowStart = row * columns
+               let rowEnd = rowStart + columns
+               return grid[rowStart...rowEnd]
+            }
+         }
+         subscript(`column: Int) -> Double[] {
+            get {
+               assert(column >= 0 && column < columns, "Column index out of range")
+               var columnArray = Double[]()
+               for row in 0...rows {
+                  columnArray.append(grid[column + (row * columns)])
+               }
+               return columnArray
+            }
+         }
       }
-
-.. TODO: Consider switching this over to use the shorter “Double[]” syntax
-   once it can be used for initialization
 
 ``Matrix`` provides an initializer that takes two parameters called ``rows`` and ``columns``,
 and creates an array that is large enough to store ``rows * columns`` values of type ``Double``.
