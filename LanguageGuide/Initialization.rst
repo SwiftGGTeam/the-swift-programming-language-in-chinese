@@ -934,14 +934,6 @@ separated by a space:
       <#statements#>
    }
 
-The return type of ``Self`` for convenience initializers is a placeholder for
-“the type of the class that provides this initializer”.
-Convenience initializers return ``Self`` rather than a specific named type
-to reflect the fact that they can be automatically inherited by a subclass,
-and will create an instance of the subclass type (rather than the original type)
-when they are automatically inherited.
-``Self`` is described in more detail in :ref:`Inheritance_DynamicReturnTypes`.
-
 Designated and Convenience Initializers in Action
 _________________________________________________
 
