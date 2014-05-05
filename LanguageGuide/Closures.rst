@@ -373,7 +373,7 @@ The array ``[16, 58, 510]`` is used to create the new array
          0: "Zero", 1: "One", 2: "Two",   3: "Three", 4: "Four",
          5: "Five", 6: "Six", 7: "Seven", 8: "Eight", 9: "Nine"
       ]
-   << // digitNames : Dictionary<Int, String> = Dictionary<Int, String>(1.33333333333333, 10, <unprintable value>)
+   << // digitNames : Dictionary<Int, String> = Dictionary<Int, String>(<unprintable value>)
    -> let numbers = [16, 58, 510]
    << // numbers : Array<Int> = [16, 58, 510]
 
