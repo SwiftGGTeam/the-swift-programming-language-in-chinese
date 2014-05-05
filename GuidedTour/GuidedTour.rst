@@ -192,10 +192,10 @@ the index or key in brackets.
 
 .. admonition:: Experiment
 
-   Try sorting ``fruits`` using the Swift Standard Library ``sort`` function.
-
-.. TODO Either give more information about how to sort
-   or come up with another exercise.
+   Add you own favorite fruit to the array
+   and compare it to ``favoriteFruit`` with the ``==`` operator.
+   Add the current temperature of your town
+   to the dictionary.
 
 .. Forcasts above are real current conditions from 9:14 pm April 28, 2014.
 
