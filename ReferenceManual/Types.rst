@@ -320,7 +320,7 @@ Unwrapping an optional
 that has a value of ``Optional.None`` results in a runtime error.
 
 For examples that show how to use optional types,
-see :ref:`BasicTypes_Optionals`.
+see :ref:`TheBasics_Optionals`.
 
 .. langref-grammar
 

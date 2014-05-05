@@ -243,7 +243,7 @@ are discussed in :ref:`Properties_StaticProperties`.
 .. TODO: Need to discuss static constant properties in more detail.
 
 For more information about constants and for guidance about when to use them,
-see :ref:`BasicTypes_ConstantsAndVariables` and :ref:`Properties_StoredProperties`.
+see :ref:`TheBasics_ConstantsAndVariables` and :ref:`Properties_StoredProperties`.
 
 .. TODO: Need to discuss class and static constant properties.
 

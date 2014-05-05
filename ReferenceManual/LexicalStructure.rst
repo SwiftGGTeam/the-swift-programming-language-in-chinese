@@ -331,7 +331,7 @@ Unless otherwise specified,
 the default type of an integer literal is the Swift Standard Library type ``Int``.
 The Swift Standard Library also defines types for various sizes of
 signed and unsigned integers,
-as described in :ref:`BasicTypes_Integers`.
+as described in :ref:`TheBasics_Integers`.
 
 .. TR: The prose assumes underscores only belong between digits.
    Is there a reason to allow them at the end of a literal?
