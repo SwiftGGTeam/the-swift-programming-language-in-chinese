@@ -101,6 +101,11 @@ or when there is no initial value,
 specify an explicit type
 by writing the type after the variable,
 separated by a colon.
+Type inference allows the compiler
+to correctly infer the type of numbers ---
+if you write ``4.0 / 2``
+it is understood that ``4.0``, ``2``, and the result
+all have the type ``Double``.
 
 .. testcode:: type-annotation
 
@@ -108,6 +113,15 @@ separated by a colon.
    << // implicitString : String = "Hello"
    -> let explicitString: String = "Hello"
    << // explicitString : String = "Hello"
+   ---
+   -> let implicitInteger = 70
+   << // implicitInteger : Int = 70
+   -> let implicitDouble = 70.0
+   << // implicitDouble : Double = 70.0
+   -> let explicitDouble: Double = 70
+   << // explicitDouble : Double = 70.0
+   -> let explicitFloat: Float = 70
+   << // explicitFloat : Float = 70.0
 
 .. admonition:: Experiment
 
@@ -118,9 +132,6 @@ separated by a colon.
    Try providing an explicit type that doesn’t match
    the variable’s initial value.
    What error do you get?
-
-.. TODO Discuss the fact that the type of a literal
-   is determined by the context in which it is used.
 
 Values are never implicitly converted to another type.
 If you need to convert a value to a different type,
