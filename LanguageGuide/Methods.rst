@@ -181,9 +181,19 @@ a back tick (`````) before the ``numberOfTimes`` parameter:
 
 .. testcode:: externalParameterNamesComparison
 
+   >> class Counter {
+   >>    var count: Int = 0
+   >>    func incrementBy(amount: Int) {
+   >>       count += amount
+   >>    }
    -> func incrementBy(amount: Int, `numberOfTimes: Int) {
          count += amount * numberOfTimes
       }
+   >> }
+   !! <REPL Input>:6:33: warning: extraneous '`' in parameter: 'numberOfTimes' is already the keyword argument name
+   !! func incrementBy(amount: Int, `numberOfTimes: Int) {
+   !! ^
+   !!-
 
 The default behavior described above mean that method definitions in Swift
 are written with the same grammatical style as Objective-C,
