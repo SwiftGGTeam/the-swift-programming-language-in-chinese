@@ -1335,29 +1335,11 @@ designated initializers and convenience initializers,
 as described in :doc:`../LanguageGuide/Initialization`.
 
 The following form declares initializers for structures, enumerations,
-and convenience initializers of classes:
+and designated initializers of classes:
 
 .. syntax-outline::
 
     init(<#parameters#>) {
-       <#statements#>
-    }
-
-Initializers in structures and enumerations can call other declared initializers
-to delegate part or all of the initialization process.
-
-Convenience initializers can delegate the initialization process to another
-convenience initializer or to one of the class's designated initializers.
-That said, the initialization processes must end with a call to a designated
-initializer that ultimately initializes the class's properties.
-Convenience initializers can't call a superclass's initializers.
-
-To declare designated initializers for a class,
-prefix the initializer declaration with the context-sensitive keyword ``designated``.
-
-.. syntax-outline::
-
-    designated init(<#parameters#>) {
        <#statements#>
     }
 
@@ -1371,6 +1353,24 @@ properties can be set or modified in the current class.
 
 Designated initializers can be declared in the context of a class declaration only
 and therefore can't be added to a class using an extension declaration.
+
+Initializers in structures and enumerations can call other declared initializers
+to delegate part or all of the initialization process.
+
+To declare convenience initializers for a class,
+prefix the initializer declaration with the context-sensitive keyword ``convenience``.
+
+.. syntax-outline::
+
+    convenience init(<#parameters#>) {
+       <#statements#>
+    }
+
+Convenience initializers can delegate the initialization process to another
+convenience initializer or to one of the class's designated initializers.
+That said, the initialization processes must end with a call to a designated
+initializer that ultimately initializes the class's properties.
+Convenience initializers can't call a superclass's initializers.
 
 You can mark designated and convenience initializers with the ``required``
 attribute to require that every subclass implement the initializer.
@@ -1396,7 +1396,7 @@ see :doc:`../LanguageGuide/Initialization`.
     Grammar of an initializer declaration
 
     initializer-declaration --> initializer-head generic-parameter-clause-OPT parameter-clause initializer-body
-    initializer-head --> attributes-OPT ``designated``-OPT ``init``
+    initializer-head --> attributes-OPT ``convenience``-OPT ``init``
     initializer-body --> code-block
 
 
