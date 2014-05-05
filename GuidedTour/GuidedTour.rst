@@ -531,10 +531,12 @@ A function can take another function as one of its arguments.
     -> var sortedNumbers = bubbleSort(numbers, greaterThan)
     << // sortedNumbers : Int[] = [8, 6, 5, 3]
 
-Closures are just like a function
-except you don't give them a name when you declare them.
-They are written as code surrounded by braces (``{}``)
-and have their arguments separated from their body by ``in``.
+Closures are the same as functions with one difference:
+you don't give them a name when you declare them.
+You write a closure as code surrounded by braces (``{}``)
+and use ``in`` to separate the arguments from the body.
+
+.. EDIT: Second sentence above reads better is singular closure.
 
 .. testcode:: closure
 
@@ -552,12 +554,12 @@ and have their arguments separated from their body by ``in``.
    I've written them for now
    so that I start with the most verbose function-y syntax.
 
-There are several conveniences for writing closures more concisely.
+You have several options for writing closures more concisely.
 When the closure's type is already known,
 such as the callback for a delegate,
-the type of its parameters can be omitted.
+you can omit the type of its parameters.
 For even more brevity,
-the parameters can be referred to by number instead of by name.
+you can refer to parameters by number instead of by name.
 Single statement closures implicitly return the value
 of their only statement.
 
@@ -578,7 +580,7 @@ can appear immediately after the function call.
 
 .. admonition:: Experiment
 
-   Try rewriting the bubble sort function above
+   Rewrite the bubble sort function above
    so it takes a trailing closure to do comparisons.
 
 The previous listing can be written without a closure at all
