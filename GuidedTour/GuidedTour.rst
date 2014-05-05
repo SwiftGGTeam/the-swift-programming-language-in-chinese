@@ -91,8 +91,10 @@ because its initial value is a string.
 This behavior of determining type information
 based on the surrounding code
 is known as *type inference*,
-and it allows you to take advantage of type checking
-without writing explicit type information everywhere.
+and it allows the compiler to warn you
+about type-related errors in your code
+without requiring you to
+write explicit type information everywhere.
 
 When the initial value doesn't provide enough information,
 or when there is no initial value,
@@ -120,7 +122,7 @@ separated by a colon.
 .. TODO Discuss the fact that the type of a literal
    is determined by the context in which it is used.
 
-Values are never implicitly converted or cast to another type.
+Values are never implicitly converted to another type.
 If you need to convert a value to a different type,
 make an instance of the desired type explicitly.
 
@@ -135,7 +137,7 @@ make an instance of the desired type explicitly.
 
 .. admonition:: Experiment
 
-   Try removing the cast to ``String`` from the last line.
+   Try removing the conversion to ``String`` from the last line.
    What error do you get?
 
 A simpler way to include values in strings
