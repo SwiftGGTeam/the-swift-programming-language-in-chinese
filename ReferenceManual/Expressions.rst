@@ -530,12 +530,12 @@ for their respective values.
     literal-expression --> ``__FILE__`` | ``__LINE__`` | ``__COLUMN__`` | ``__FUNCTION__``
 
     array-literal --> ``[`` array-literal-items-OPT ``]``
-	array-literal-items --> array-literal-item ``,``-OPT | array-literal-item ``,`` array-literal-items
-	array-literal-item --> expression
+    array-literal-items --> array-literal-item ``,``-OPT | array-literal-item ``,`` array-literal-items
+    array-literal-item --> expression
 
-	dictionary-literal --> ``[`` dictionary-literal-items ``]`` | ``[`` ``:`` ``]``
-	dictionary-literal-items --> dictionary-literal-item ``,``-OPT | dictionary-literal-item ``,`` dictionary-literal-items
-	dictionary-literal-item --> expression ``:`` expression
+    dictionary-literal --> ``[`` dictionary-literal-items ``]`` | ``[`` ``:`` ``]``
+    dictionary-literal-items --> dictionary-literal-item ``,``-OPT | dictionary-literal-item ``,`` dictionary-literal-items
+    dictionary-literal-item --> expression ``:`` expression
 
 
 .. _Expressions_SuperclassExpression:
@@ -1039,7 +1039,7 @@ Dynamic Type Expression
 
     Grammar of a dynamic type expression
 
-    dynamic-type-expression --> postfix-expression ``.`` ``dynamicType
+    dynamic-type-expression --> postfix-expression ``.`` ``dynamicType``
 
 
 .. _Expressions_SubscriptExpression:
