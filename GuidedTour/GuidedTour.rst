@@ -28,17 +28,6 @@ at the end of every statement.
 This tour gives you enough information
 to start writing code in Swift
 by showing you how you accomplish a variety of programming tasks.
-It illustrates the most important parts of the language,
-but there are additional details and options
-that are covered in the guide and reference.
-
-.. TODO Keep rewriting this paragraph.
-
-This tour shows you
-how to accomplish a variety of programming tasks in Swift
-without explaining the concepts in detail.
-providing just enough information about the language
-to help you start writing code.
 Don’t worry if you don’t understand something ---
 everything introduced in this tour
 is explained in detail in the following chapters.
