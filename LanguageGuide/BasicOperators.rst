@@ -82,11 +82,17 @@ its elements can be decomposed into multiple constants or variables at once:
 Unlike C and Objective-C, the assignment operator in Swift does not itself return a value.
 The following statement is not valid:
 
-::
+.. testcode:: assignmentOperatorInvalid
 
-   if x = y {
-      // this is not valid, because x = y does not return a value
-   }
+   -> if x = y {
+         // this is not valid, because x = y does not return a value
+      }
+   !! <REPL Input>:1:4: error: use of unresolved identifier 'x'
+   !! if x = y {
+   !!    ^
+   !! <REPL Input>:1:8: error: use of unresolved identifier 'y'
+   !! if x = y {
+   !!        ^
 
 This feature prevents the assignment operator (``=``) from being used by accident
 when the equality comparison operator (``==``) is actually intended.
@@ -442,13 +448,19 @@ otherwise, it evaluates ``answer2`` and returns its value.
 
 This operator is shorthand for:
 
-::
+.. testcode:: ternaryConditionalOperatorOutline
 
-   if question {
-      answer1
-   } else {
-      answer2
-   }
+   >> let question = true
+   << // question : Bool = true
+   >> let answer1 = true
+   << // answer1 : Bool = true
+   >> let answer2 = true
+   << // answer2 : Bool = true
+   -> if question {
+         answer1
+      } else {
+         answer2
+      }
 
 Here's an example, which calculates the pixel height for a table row.
 The row height should be 50 pixels taller than the content height

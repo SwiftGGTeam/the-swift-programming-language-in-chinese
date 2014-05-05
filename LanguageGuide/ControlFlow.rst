@@ -761,7 +761,7 @@ It is not valid to write the following code, because the first case is empty:
          default:
             println("Not the letter A")
       }
-   !! <REPL Input>:2:3: error: 'case' label in a 'switch' should have at least one executable statement
+   !! <REPL Input>:2:6: error: 'case' label in a 'switch' should have at least one executable statement
    !!          case "a":
    !!          ^~~~~~~~~
    // this will report a compile-time error

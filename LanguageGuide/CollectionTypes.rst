@@ -434,7 +434,7 @@ The initialization of ``airports`` could have been be written in a shorter form 
 .. testcode:: dictionariesInferred
 
    -> var airports = ["TYO": "Tokyo", "DUB": "Dublin"]
-   << // // airports : Dictionary<String, String> = Dictionary<String, String>(1.33333333333333, 2, <unprintable value>)
+   << // airports : Dictionary<String, String> = Dictionary<String, String>(1.33333333333333, 2, <unprintable value>)
 
 Because all of the keys in the literal are of the same type as each other,
 and likewise all of the values are of the same type as each other,

@@ -67,25 +67,26 @@ as shown above.
 As an alternative, you can provide a :newTerm:`default property value`
 as part of the property's declaration.
 
-The ``Fahrenheit`` example can be written in a simpler form
-by providing a default value at the point that the property is declared:
+If a property always takes the same initial value,
+you should provide a default value as part of the property's declaration,
+rather than setting its value within an initializer.
+The end result is the same,
+but the use of a default value ties the property's initialization more closely to its declaration,
+and makes for shorter, clearer initializers.
+It also enables you to infer the type of the property from its default value.
+Finally, it makes it easier for you to take advantage of
+default initializers and initializer inheritance,
+as described later in this chapter.
+
+The ``Fahrenheit`` structure from above can be written in a simpler form
+by providing a default value for its ``temperature`` property
+at the point that the property is declared:
 
 .. testcode:: fahrenheitDefault
 
    -> struct Fahrenheit {
          var temperature = 32.0
       }
-
-If a property should always take the same initial value,
-you should always provide a default value as part of the property declaration,
-rather than setting its value within an initializer.
-The end result is the same,
-but the use of a default value ties the property's initialization more closely to its declaration,
-and makes for shorter, clearer initializers.
-It also enables you to infer the type of the property from its default value, as shown here.
-Finally, it makes it easier for you to take advantage of
-default initializers and initializer inheritance,
-as described later in this chapter.
 
 .. note::
    When you assign a default value to a stored property,
@@ -107,15 +108,17 @@ and the return value of the closure is assigned as the property's default value.
 
 Here's a skeleton outline of how a closure can provide a default property value:
 
-::
+.. testcode:: defaultPropertyWithClosure
 
-   class SomeClass {
-      let someProperty: SomeType = {
-         // calculate a default value for someProperty inside this closure
-         // someValue must be of the same type as SomeType
-         return someValue
-      }()
-   }
+   >> class SomeType {}
+   -> class SomeClass {
+         let someProperty: SomeType = {
+            // calculate a default value for someProperty inside this closure
+            // someValue must be of the same type as SomeType
+   >>       let someValue = SomeType()
+            return someValue
+         }()
+      }
 
 Note that the closure's end curly brace is followed by an empty pair of parentheses.
 This tells Swift to execute the closure immediately.
@@ -169,7 +172,7 @@ The ``boardColors`` array is initialized with a closure to set up its color valu
             }
             return temporaryBoard
          }()
-         func squareIsBlack(row: Int, column: Int) -> Bool {
+         func squareIsBlackAtRow(row: Int, column: Int) -> Bool {
             return boardColors[(row * 10) + column]
          }
       }
@@ -182,25 +185,25 @@ in a temporary array called ``temporaryBoard``,
 and returns this temporary array as the closure's return value
 once its setup is complete.
 The returned array value is stored in ``boardColors``,
-and can be queried with the ``squareIsBlack`` utility function:
+and can be queried with the ``squareIsBlackAtRow`` utility function:
 
 .. testcode:: checkers
 
    -> let board = CheckersBoard()
    << // board : CheckersBoard = CheckersBoard([false, true, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, true, false])
-   -> println(board.squareIsBlack(row: 0, column: 1))
+   -> println(board.squareIsBlackAtRow(0, column: 1))
    <- true
-   -> println(board.squareIsBlack(row: 9, column: 9))
+   -> println(board.squareIsBlackAtRow(9, column: 9))
    <- false
 
-.. _Initialization_InitializerInputParameters:
+.. _Initialization_InitializationParameters:
 
-Initializer Input Parameters
-----------------------------
+Initialization Parameters
+-------------------------
 
-Initializers can take :newTerm:`input parameters`
-to customize the initialization process.
-Input parameters are written in the same syntax as normal method parameters.
+Initializers can provide :newTerm:`initialization parameters`,
+which define the types and names of values that customize the initialization process.
+Initialization parameters are written in the same syntax as function and method parameters.
 
 Initializers can use
 constant parameters, variable parameters, and ``inout`` parameters.
@@ -211,8 +214,9 @@ Variadic parameters cannot be used.
 .. FIXME: Update this section if, as, and when variadics start working for initializers.
    The fact that they don't work currently is rdar://16535434.
 
-The following example defines a structure to store temperatures expressed in the Celsius scale.
-It implements two custom initializers,
+The following example defines a structure called ``Celsius``,
+which stores temperatures expressed in the Celsius scale.
+The ``Celsius`` structure implements two custom initializers,
 each of which initializes a new instance of the structure
 with a value from a different temperature scale:
 
@@ -236,8 +240,94 @@ with a value from a different temperature scale:
    /> freezingPointOfWater.temperatureInCelsius is \(freezingPointOfWater.temperatureInCelsius)
    </ freezingPointOfWater.temperatureInCelsius is 0.0
 
+The first initializer has a single initialization parameter
+with an external name of ``fromFahrenheit``, and a local name of ``fahrenheit``.
+The second initializer has a single initialization parameter
+with an external name of ``fromKelvin``, and a local name of ``kelvin``.
+Both of these initializers convert their single argument into
+a value in the Celsius scale,
+and store this value in a property called ``temperatureInCelsius``.
+
 .. TODO: I need to provide an example of default values for initializer parameters,
    to show they can help you to get multiple initializers "for free" (after a fashion).
+
+.. _Initialization_LocalAndExternalNames:
+
+Local and External Parameter Names
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Initializer input parameters are written in the same way as function and method parameters.
+As with function and method parameters,
+initializer input parameters can have both a local name
+for use within the initializer's body,
+and an external name for use when calling the initializer.
+
+However, initializers do not have an identifying function name before their parentheses
+in the way that functions and methods do.
+This means that the names and types of an initializer's parameters
+play a particularly important role in identifying which initializer is being called.
+Because of this, it is usually desirable to provide an external name
+for every initialization parameter.
+
+To help with this, Swift provides an automatic external name
+for *every* parameter in an initializer if you don't provide an external name yourself.
+This automatic external name is the same as the local name,
+as if you had written a back tick before every initialization parameter.
+
+.. note::
+
+   If you do not want to provide an external name for a parameter in an initializer,
+   provide an underscore (``_``) as an explicit external name for that parameter
+   to override the default behavior described above.
+
+The following example defines a structure called ``Color``,
+with three constant properties called ``red``, ``green``, and ``blue``.
+These properties store a value between ``0.0`` and ``1.0``
+to indicate the amount of red, green, and blue in the color.
+
+``Color`` provides an initializer with
+three appropriately-named parameters of type ``Double``.
+``Color`` also defines a method called ``limitToRange``,
+to cope with argument values outside of the ``0.0`` to ``1.0`` range defined above:
+
+.. testcode:: externalParameterNames
+
+   -> struct Color {
+         let red = 0.0, green = 0.0, blue = 0.0
+         init(red: Double, green: Double, blue: Double) {
+            self.red   = limitToRange(red)
+            self.green = limitToRange(green)
+            self.blue  = limitToRange(blue)
+         }
+         func limitToRange(component: Double) -> Double {
+            if component > 1.0 { return 1.0 }
+            if component < 0.0 { return 0.0 }
+            return component
+         }
+      }
+
+Whenever you create a new ``Color`` instance,
+you call its initializer using external names for each of the three color components:
+
+.. testcode:: externalParameterNames
+
+   -> let magenta = Color(red: 1.0, green: 0.0, blue: 1.0)
+   << // magenta : Color = Color(1.0, 0.0, 1.0)
+
+Note that it is not possible to call this initializer
+without using the external names.
+External names must always be used in an intializer if they are defined,
+and omitting them is a compile-time error:
+
+.. testcode:: externalParameterNames
+
+   -> let veryGreen = Color(0.0, 1.0, 0.0)
+   << // veryGreen : Color = Color(0.0, 1.0, 0.0)
+   // this reports a compile-time error - external names are required
+
+.. FIXME: this should be an error, but Doug hasn't implemented the checking yet.
+   I'll need to come back and inclue the error message for swifttesting purposes
+   once he has implemented it.
 
 .. _Initialization_OptionalPropertyTypes:
 
@@ -834,12 +924,13 @@ Designated initializers are written in the same way as simple initializers for v
       <#statements#>
    }
 
-Convenience initializers are written in the same style, but with a return type of ``Self``
-to indicate that they are a convenient way to initialize an instance of that type:
+Convenience initializers are written in the same style,
+but with the ``convenience`` keyword placed before the ``init`` keyword,
+separated by a space:
 
 .. syntax-outline::
 
-   init(<#parameters#>) -> Self {
+   convenience init(<#parameters#>) {
       <#statements#>
    }
 
@@ -872,7 +963,7 @@ and provides two initializers for creating ``Food`` instances:
          init(name: String) {
             self.name = name
          }
-         init() -> Self {
+         convenience init() {
             self.init(name: "[Unnamed]")
          }
       }
@@ -927,7 +1018,7 @@ and defines two initializers for creating ``RecipeIngredient`` instances:
             self.quantity = quantity
             super.init(name: name)
          }
-         init(name: String) -> Self {
+         convenience init(name: String) {
             self.init(name: name, quantity: 1)
          }
       }
@@ -948,7 +1039,7 @@ the ``init(name: String)`` initializer of the ``Food`` class.
 This process satisfies safety check 1 from *Two-Phase Initialization* above.
 
 ``RecipeIngredient`` also defines a convenience initializer,
-``init(name: String) -> Self``,
+``init(name: String)``,
 which can be used to create a ``RecipeIngredient`` instance by name alone.
 This convenience initializer assumes a quantity of ``1``
 for any ``RecipeIngredient`` instance that is created without an explicit quantity.
@@ -958,7 +1049,7 @@ and avoids code duplication when creating
 several single-quantity ``RecipeIngredient`` instances.
 This convenience initializer simply delegates across to the class's designated initializer.
 
-Note that the ``init(name: String) -> Self`` convenience initializer provided by ``RecipeIngredient``
+Note that the ``init(name: String)`` convenience initializer provided by ``RecipeIngredient``
 takes the same parameters as the ``init(name: String)`` *designated* initializer from ``Food``.
 Even though ``RecipeIngredient`` has provided this initializer as a convenience initializer,
 this nonetheless means that ``RecipeIngredient`` has provided
@@ -988,14 +1079,14 @@ Every item in the shopping list starts out as “unpurchased”.
 To represent this fact,
 ``ShoppingListItem`` introduces a Boolean property called ``purchased``,
 with a default value of ``false``.
-``ShoppingListItem`` also adds a computed ``String`` property called ``description``,
-to provide a textual description of a ``ShoppingListItem`` instance:
+``ShoppingListItem`` also adds a ``description`` method,
+which provides a textual description of a ``ShoppingListItem`` instance:
 
 .. testcode:: designatedConvenience
 
    -> class ShoppingListItem: RecipeIngredient {
          var purchased = false
-         var description: String {
+         func description() -> String {
             var output = "\(quantity) x \(name.lowercase)"
             output += purchased ? " ✔" : " ✘"
             return output
@@ -1032,7 +1123,7 @@ a new ``ShoppingListItem`` instance:
    -> breakfastList[0].name = "Orange juice"
    -> breakfastList[0].purchased = true
    -> for item in breakfastList {
-         println(item.description)
+         println(item.description())
       }
    </ 1 x orange juice ✔
    </ 1 x bacon ✘
@@ -1048,7 +1139,7 @@ Printing the description of each item in the array
 shows that their default states have been set as expected.
 
 .. QUESTION: Should description be a property or a method?
-   I think I've used a method elsewhere in the book for a similar scenario.
+   I've gone for a method for now, for consistency with NSObjectProtocol's approach.
 
 .. TODO: talk about the general factory initializer pattern,
    and how Swift's approach to initialization removes the need for most factories.
@@ -1115,7 +1206,7 @@ The following example defines two classes, ``Country`` and ``City``,
 each of which stores an instance of the other class as a property:
 
 .. testcode:: implicitlyUnwrappedOptionals
-   :compile: yes
+   :compile: true
 
    -> class Country {
          var name: String
@@ -1152,7 +1243,7 @@ until the new ``Country`` instance has been fully initialized.
 To cope with this requirement,
 the ``capitalCity`` property is declared as an implicitly unwrapped optional property.
 This means that it has a default value of ``nil``, like any other optional
-(see :ref:`BasicTypes_ImplicitlyUnwrappedOptionals`.)
+(see :ref:`TheBasics_ImplicitlyUnwrappedOptionals`.)
 
 Because of this default ``nil`` value for ``capitalCity``,
 a new ``Country`` instance is considered fully initialized
@@ -1200,11 +1291,13 @@ Class definitions can have at most one deinitializer per class.
 The deinitializer does not take any parameters,
 and is written without parentheses:
 
-::
+.. testcode:: deinitializer
 
-   deinit {
-      // perform the deinitialization
-   }
+   >> class Test {
+   -> deinit {
+         // perform the deinitialization
+      }
+   >> }
 
 Deinitializers are called automatically, just before instance destruction takes place.
 You are not allowed to call ``super.deinit`` yourself.

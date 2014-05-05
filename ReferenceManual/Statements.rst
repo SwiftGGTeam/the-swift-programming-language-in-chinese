@@ -37,6 +37,7 @@ and is used to separate multiple statetments if they appear on the same line.
     statement --> branch-statement ``;``-OPT
     statement --> control-transfer-statement ``;``-OPT
     statements --> statement statements-OPT
+    statement-label --> identifier ``:``
 
 .. NOTE: Removed semicolon-statement as syntactic category,
     because, according to Doug, they're not really statements.
@@ -65,10 +66,10 @@ and is discussed in :ref:`Statements_BreakStatement` and :ref:`Statements_Contin
 
     Grammar of a loop statement
 
-    loop-statement --> for-statement
-    loop-statement --> for-in-statement
-    loop-statement --> while-statement
-    loop-statement --> do-while-statement
+    loop-statement --> statement-label-OPT for-statement
+    loop-statement --> statement-label-OPT for-in-statement
+    loop-statement --> statement-label-OPT while-statement
+    loop-statement --> statement-label-OPT do-while-statement
 
 .. _Statements_ForStatement:
 
@@ -286,7 +287,7 @@ Swift has two branch statements: an ``if`` statement and a ``switch`` statement.
     Grammar of a branch statement
 
     branch-statement --> if-statement
-    branch-statement --> switch-statement
+    branch-statement --> statement-label-OPT switch-statement
 
 .. _Statements_IfStatement:
 
@@ -541,7 +542,7 @@ in the :doc:`../LanguageGuide/ControlFlow` chapter.
 
     Grammar of a break statement
 
-    break-statement --> ``break``
+    break-statement --> ``break`` identifier-OPT
 
 .. _Statements_ContinueStatement:
 
@@ -573,7 +574,7 @@ in the :doc:`../LanguageGuide/ControlFlow` chapter.
 
     Grammar of a continue statement
 
-    continue-statement --> ``continue``
+    continue-statement --> ``continue`` identifier-OPT
 
 .. _Statements_FallthroughStatement:
 
