@@ -487,6 +487,9 @@ that were declared in the outer function.
    Try calling the ``add`` function twice.
    What happens?
 
+.. TODO: Rewrite the above exercise so it has an actual point,
+   rather than just making trivial code changes.
+
 Functions are a first-class type.
 This means a function can return another function as its value.
 
@@ -505,7 +508,7 @@ This means a function can return another function as its value.
 
 .. TODO: Confirm spelling of "incrementer" (not "incrementor").
 
-A function can take another function as one of its argument.
+A function can take another function as one of its arguments.
 
 .. testcode:: pass-func
 
