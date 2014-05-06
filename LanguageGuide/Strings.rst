@@ -6,6 +6,8 @@ such as ``"hello, world"`` or ``"albatross"``.
 Swift strings are represented by the ``String`` type,
 which in turn represents a collection of ``Character`` values.
 
+.. _Strings_Strings:
+
 Strings
 -------
 
@@ -27,10 +29,12 @@ Strings
 .. QUESTION: This chapter is the only time I talk in detail about bridging in the Guide.
    Is this okay to do?
 
+.. _Strings_Literals:
+
 String Literals
 ~~~~~~~~~~~~~~~
 
-You can include fixed ``String`` values within your code as :newTerm:`string literals`.
+You can include pre-defined ``String`` values within your code as :newTerm:`string literals`.
 A string literal is a fixed sequence of textual characters
 surrounded by a pair of double quotes (``""``),
 and can be used to provide an initial value for a constant or variable:
@@ -42,6 +46,8 @@ and can be used to provide an initial value for a constant or variable:
 
 Note that Swift infers a type of ``String`` for the ``someString`` constant,
 because it is initialized with a string literal value.
+
+.. _Strings_SpecialCharactersInStringLiterals:
 
 Special Characters in String Literals
 _____________________________________
@@ -77,6 +83,8 @@ String literals can include the following special characters:
 .. x how to construct a Character from a single-quote character literal
 .. x how to construct an empty Character
 
+.. _Strings_InitializingAnEmptyString:
+
 Initializing an Empty String
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -97,6 +105,8 @@ or by initializing a new ``String`` with initialization syntax:
    because you'd be likely to use them as such if they start out empty.
    Is this the correct approach to take here?
 
+.. _Strings_StringMutability:
+
 String Mutability
 ~~~~~~~~~~~~~~~~~
 
@@ -110,19 +120,21 @@ or to a constant (in which case it cannot be modified):
 
 .. testcode:: stringMutability
 
-   -> var variableString = "Mary had"
-   << // variableString : String = "Mary had"
-   -> variableString += " a little lamb"
+   -> var variableString = "Horse"
+   << // variableString : String = "Horse"
+   -> variableString += " and carriage"
    /> variableString is now \"\(variableString)\"
-   </ variableString is now "Mary had a little lamb"
+   </ variableString is now "Horse and carriage"
    ---
-   -> let constantString = "its fleece was"
-   << // constantString : String = "its fleece was"
-   -> constantString += " white as snow"
+   -> let constantString = "Highlander"
+   << // constantString : String = "Highlander"
+   -> constantString += " and another Highlander"
    !! <REPL Input>:1:16: error: expression does not type-check
-   !! constantString += " white as snow"
+   !! constantString += " and another Highlander"
    !! ~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~
    // this reports a compile-time error - a constant string cannot be modified
+
+.. _Strings_StringsAreValueTypes:
 
 Strings are Value Types
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -132,7 +144,7 @@ This means that if you create a new ``String`` value,
 that ``String`` value is *copied* when it is passed to a function or method,
 or when it is assigned to a constant or variable.
 In each case, a new copy of the existing ``String`` value is created,
-and the new copy is passed or assigned, rather than the original version.
+and the new copy is passed or assigned, not the original version.
 (Value types are described in :ref:`ClassesAndStructures_ValueTypesAndReferenceTypes`.)
 
 .. note::
@@ -144,8 +156,8 @@ and the new copy is passed or assigned, rather than the original version.
    No copying of the string takes place, unless you specifically request it.
 
 Swift's copy-by-default ``String`` behavior
-matches the way that strings are used in code in practice.
-When a function or method passes you a ``String`` value,
+matches the way that strings are used in practice.
+When a function or method passes you a ``String`` value in Swift,
 it is clear that you own that exact ``String`` value,
 regardless of where it came from.
 You can be confident that the string you are passed will not be modified
@@ -154,11 +166,13 @@ unless you modify it yourself.
 Behind the scenes, Swift's compiler optimizes string usage
 so that actual copying only takes place when absolutely necessary.
 This ensures that you always get great performance
-when working with strings as value types within your code.
+when working with strings as value types.
 
 .. TODO: talk about what this means for bridging to NSString,
    and how the semantics for working with NSString
    relate to the default value semantics used by String.
+
+.. _Strings_Characters:
 
 Characters
 ----------
@@ -180,43 +194,47 @@ by iterating over that string with a ``for``-``in`` loop:
 
 The ``for``-``in`` loop is described in :ref:`ControlFlow_ForLoops`.
 
-You can initialize a stand-alone ``Character`` constant or variable
-from a single-character string literal
-by providing a ``Character`` type annotation when you define the constant or variable:
+You can also create a stand-alone ``Character`` constant or variable
+from a single-character string literal by providing a ``Character`` type annotation:
 
 .. testcode:: characters
 
    -> let interrobang: Character = "‽"
 
+.. _Strings_HowCharactersAreRepresentedInSwift:
+
 How Characters Are Represented in Swift
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The ``Character`` elements retrieved from Swift's ``String`` type
-represent Unicode characters.
+The ``Character`` elements in a ``String`` value represent Unicode characters.
 This is different from the characters in a Cocoa ``NSString``,
-which are returned as individual UTF-16 code units
-when accessed with the ``characterAtIndex`` method from ``NSString``.
+which are individual UTF-16 code units.
 
 This means that a Unicode emoji character such as 🐥
 (known as ``FRONT-FACING BABY CHICK``, or Unicode code point ``U+1F425``)
-is considered to be a single character in Swift,
-but is considered to be two characters when stored in an ``NSString`` in Objective-C.
+is a single character in Swift,
+but is considered to be *two* characters when accessed through an ``NSString`` in Objective-C.
 This is because a ``FRONT-FACING BABY CHICK`` takes up two code units
-when stored in UTF-16 format (where it is represented as ``U+D83D U+DC25``).
+when stored in UTF-16 format (``U+D83D U+DC25``).
 
-However, if you use an ``NSString`` as a ``String`` value in Swift,
-that ``NSString`` will be treated just like a native ``Swift`` string,
-and its  ``Character`` values will be true Unicode characters,
-not UTF-16 code units.
+.. note::
+
+   If you use an ``NSString`` value as a bridged ``String`` value in Swift,
+   that ``NSString`` will be treated just like a native ``Swift`` string,
+   and its  ``Character`` values will be true Unicode characters, not UTF-16 code units.
+   Swift takes care of translating UTF-16 code units into Unicode characters for you
+   when you use an ``NSString`` as a ``String``.
 
 For more information about Swift's Unicode support,
 see :ref:`Strings_UnicodeRepresentations` below.
 
+.. _Strings_StringAndCharacterConcatenation:
+
 String and Character Concatenation
 ----------------------------------
 
-``String`` and ``Character`` values can be concatenated with the addition operator (``+``)
-to create a new ``String`` value:
+``String`` and ``Character`` values can be added together (or *concatenated*)
+with the addition operator (``+``) to create a new ``String`` value:
 
 .. testcode:: emptyStrings
 
@@ -238,7 +256,7 @@ to create a new ``String`` value:
    -> let characterPlusCharacter = character1 + character2  // equals "!?"
    << // characterPlusCharacter : String = "!?"
 
-You can also append a ``String`` or ``Character`` onto
+You can also append a ``String`` or ``Character`` value onto
 an existing ``String`` variable with the addition assignment operator (``+=``):
 
 .. testcode:: emptyStrings
@@ -260,18 +278,18 @@ an existing ``String`` variable with the addition assignment operator (``+=``):
    You can't append a ``String`` or ``Character`` onto an existing ``Character`` variable,
    because a ``Character`` value can only ever be one character long.
 
-.. x adding two Strings / a String and a Character / two Characters to make a String
-.. x appending a String or a Character onto a String
-.. x how to construct from length and Character (cf Array)
+.. TODO: how to construct from length and Character (cf Array)
+
+.. _Strings_StringInterpolation:
 
 String Interpolation
 --------------------
 
 String interpolation enables you to construct a new ``String`` value
-from constants, variables, literals, and expressions
+from a mix of constants, variables, literals, and expressions
 by including their values inside a string literal.
-Each item that you insert into the string literal is wrapped by a pair of parentheses,
-prefixed by a backslash:
+Each item that you insert into the string literal is wrapped in
+a pair of parentheses, prefixed by a backslash:
 
 .. testcode:: stringInterpolation
 
@@ -284,7 +302,8 @@ prefixed by a backslash:
 
 In the example above,
 the value of ``multiplier`` is inserted into a string literal as ``\(multiplier)``.
-The actual value of ``multiplier`` is inserted into the string in place of this placeholder.
+This placeholder is replaced with the actual value of ``multiplier``
+when the string interpolation is evaluated to create an actual string.
 
 The value of ``multiplier`` is also used as part of a larger expression later in the string.
 This expression calculates the value of ``Double(multiplier) * 2.5``,
@@ -298,8 +317,10 @@ when it is included inside the string literal.
    cannot contain an unescaped double quote (``"``) or backslash (``\``),
    and cannot contain a carriage return (``\r``) or line feed (``\n``).
 
-String Initializers for Interpolation
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. _Strings_StringInitializersForStringInterpolation:
+
+String Initializers for String Interpolation
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Any value that you use with string interpolation must be of a type that can be used
 to initialize a new ``String`` instance.
@@ -314,6 +335,8 @@ and so the interpolation is valid.
    you can extend ``String`` to give it a new initializer that takes
    an instance of your custom type. This process is described in :doc:`Extensions`.
 
+.. _Strings_StringsAsACollectionOfCharacters:
+
 Strings as a Collection of Characters
 -------------------------------------
 
@@ -324,6 +347,8 @@ Strings as a Collection of Characters
 .. x countElements(someString) to get the number of Characters in a String, *not* length
 .. x explain the difference between String's Characters, and NSString's UTF-16 code unit length
 
+.. _Strings_ComparingStrings:
+
 Comparing Strings
 -----------------
 
@@ -333,6 +358,8 @@ Comparing Strings
 .. x isEmpty property for == ""
 .. .hasPrefix() and .hasSuffix()
 
+.. _Strings_SlicingStrings:
+
 Slicing Strings
 ---------------
 
@@ -341,6 +368,8 @@ Slicing Strings
 .. slicing a String (based on a good example to come from Dave)
 .. String can't be indexed with integers (again, cf NSString)
 .. bidirectional indexing (and why this is the case)
+
+.. _Strings_StringFunctionsAndMethods:
 
 String Functions and Methods
 ----------------------------
@@ -362,7 +391,8 @@ Unicode Representations
 -----------------------
 
 Swift provides four different ways to decompose a ``String`` value into smaller units.
-As mentioned above, you can iterate over the string itself with a ``for``-``in`` statement
+As described in :ref:`Strings_Characters`,
+you can iterate over the string itself with a ``for``-``in`` statement
 to access its individual ``Character`` values as Unicode characters.
 
 Alternatively, you can access a ``String`` value
@@ -379,6 +409,8 @@ and the 🐶 character (``DOG FACE``, or Unicode code point ``U+1F436``):
 .. testcode:: unicodeRepresentations
 
    -> let dogString = "Dog!🐶"
+
+.. _Strings_UTF8:
 
 UTF-8
 ~~~~~
@@ -404,6 +436,8 @@ whose UTF-8 representation is the same as their ASCII representation.
 The second four ``codeUnit`` values (``240``, ``159``, ``144``, ``182``)
 are a four-byte UTF-8 representation of the 🐶 character.
 
+.. _Strings_UTF16:
+
 UTF-16
 ~~~~~~
 
@@ -426,10 +460,13 @@ Again, the first four ``codeUnit`` values
 represent the characters ``D``, ``o``, ``g``, and ``!``,
 whose UTF-16 code units have the same values as in the string's UTF-8 representation.
 
-The fifth and sixth ``codeUnit`` values (``55357`` and ``56374``), however,
+The fifth and sixth ``codeUnit`` values (``55357`` and ``56374``)
 are a UTF-16 surrogate pair representation of the 🐶 character.
-In UTF code point terms, these values are a lead surrogate value of ``U+D83D``,
-and a trail surrogate value of ``U+DC36``.
+In UTF code point terms, these values are
+a lead surrogate value of ``U+D83D`` (decimal value ``55357``),
+and a trail surrogate value of ``U+DC36`` (decimal value ``56374``).
+
+.. _Strings_UnicodeScalars:
 
 Unicode Scalars
 ~~~~~~~~~~~~~~~
@@ -454,6 +491,11 @@ the scalar's 21-bit code point, represented within a ``UInt32`` value:
    -> print("\n")
    </ 68 111 103 33 128054
 
+.. FIXME: at the time of writing,
+   the ``unicodeScalars`` property actually returns a ``UTF16Scalars``,
+   which needs to be renamed to ``UnicodeScalarView``.
+   This is being tracked in rdar://16821900.
+
 The ``value`` property for the first four ``UnicodeScalar`` values
 (``68``, ``111``, ``103``, ``33``)
 once again represent the characters ``D``, ``o``, ``g``, and ``!``.
@@ -461,7 +503,7 @@ The ``value`` property of the fifth and final ``UnicodeScalar``, ``128054``,
 is a decimal equivalent of the hexadecimal value ``1F436``,
 which is equivalent to the Unicode code point ``U+1F436``, or 🐶.
 
-As an alternative to querying their ``value`` property,
+As an alternative to querying their ``value`` properties,
 each ``UnicodeScalar`` value can also be used to construct a new ``String`` value,
 such as with string interpolation:
 
