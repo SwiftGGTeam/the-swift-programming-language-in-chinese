@@ -226,7 +226,52 @@ an existing ``String`` variable with the addition assignment operator (``+=``):
 String Interpolation
 --------------------
 
-.. write-me::
+String interpolation enables you to construct a new ``String`` value
+from constants, variables, literals, and expressions
+by including their values inside a string literal.
+Each item that you insert into the string literal is wrapped by a pair of parentheses,
+prefixed by a backslash:
+
+.. testcode:: stringInterpolation
+
+   -> let multiplier = 3
+   << // multiplier : Int = 3
+   -> let message = "\(multiplier) times 2.5 is \(Double(multiplier) * 2.5)"
+   << // message : String = "3 times 2.5 is 7.5"
+   /> message is \"\(message)\"
+   </ message is "3 times 2.5 is 7.5"
+
+In the example above,
+the value of ``multiplier`` is inserted into a string literal as ``\(multiplier)``.
+The actual value of ``multiplier`` is inserted into the string in place of this placeholder.
+
+The value of ``multiplier`` is also used as part of a larger expression later in the string.
+This expression calculates the value of ``Double(multiplier) * 2.5``,
+and inserts the result (``7.5``) into the string.
+In this case, the expression is written as ``\(Double(multiplier) * 2.5)``
+when it is included inside the string literal.
+
+.. note::
+
+   The expressions you write inside parentheses within an interpolated string
+   cannot contain an unescaped double quote (``"``) or backslash (``\``),
+   and cannot contain a carriage return (``\r``) or line feed (``\n``).
+
+String Initializers for Interpolation
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Any value that you use with string interpolation must be of a type that can be used
+to initialize a new ``String`` instance.
+In the example above, the first interpolated value (``multiplier``) is an ``Int``,
+and the second interpolated value (``Double(multiplier) * 2.5``) equates to a ``Double``.
+Both of these types can be used to construct a ``String`` value,
+and so the interpolation is valid.
+
+.. note::
+
+   If you want to make your own custom types available for use with string interpolation,
+   you can extend ``String`` to give it a new initializer that takes
+   an instance of your custom type. This process is described in :doc:`Extensions`.
 
 Strings as a Collection of Characters
 -------------------------------------
