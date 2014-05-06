@@ -530,12 +530,12 @@ for their respective values.
     literal-expression --> ``__FILE__`` | ``__LINE__`` | ``__COLUMN__`` | ``__FUNCTION__``
 
     array-literal --> ``[`` array-literal-items-OPT ``]``
-	array-literal-items --> array-literal-item ``,``-OPT | array-literal-item ``,`` array-literal-items
-	array-literal-item --> expression
+    array-literal-items --> array-literal-item ``,``-OPT | array-literal-item ``,`` array-literal-items
+    array-literal-item --> expression
 
-	dictionary-literal --> ``[`` dictionary-literal-items ``]`` | ``[`` ``:`` ``]``
-	dictionary-literal-items --> dictionary-literal-item ``,``-OPT | dictionary-literal-item ``,`` dictionary-literal-items
-	dictionary-literal-item --> expression ``:`` expression
+    dictionary-literal --> ``[`` dictionary-literal-items ``]`` | ``[`` ``:`` ``]``
+    dictionary-literal-items --> dictionary-literal-item ``,``-OPT | dictionary-literal-item ``,`` dictionary-literal-items
+    dictionary-literal-item --> expression ``:`` expression
 
 
 .. _Expressions_SuperclassExpression:
@@ -670,10 +670,10 @@ see :ref:`Closures_ClosureExpressions`.
     closure-expression --> ``{`` closure-signature-OPT statements ``}``
     closure-expressions --> closure-expression closure-expressions-OPT
 
-    closure-signature --> parameter-clause function-signature-result-OPT ``in``
-    closure-signature --> identifier-list function-signature-result-OPT ``in``
+    closure-signature --> parameter-clause function-result-OPT ``in``
+    closure-signature --> identifier-list function-result-OPT ``in``
 
-    anonymous-closure-argument --> dollar-identifier
+    anonymous-closure-argument --> implicit-parameter-name
 
 
 .. _Expressions_ImplicitMemberExpression:
@@ -811,7 +811,7 @@ see :doc:`../LanguageGuide/BasicOperators` and :doc:`../LanguageGuide/AdvancedOp
     postfix-expression --> dynamic-type-expression
     postfix-expression --> subscript-expression
     postfix-expression --> forced-expression
-    postfix-expression --> optional-expression
+    postfix-expression --> chained-optional-expression
 
 
 .. _Expressions_FunctionCallExpression:
@@ -961,7 +961,7 @@ the top-level declarations of that module.
     Grammar of an explicit member expression
 
     explicit-member-expression --> postfix-expression ``.`` decimal-digit
-    explicit-member-expression --> postfix-expression ``.`` named-expression
+    explicit-member-expression --> postfix-expression ``.`` identifier generic-argument-clause-OPT
 
 
 .. _Expressions_SelfExpression:
@@ -1039,7 +1039,7 @@ Dynamic Type Expression
 
     Grammar of a dynamic type expression
 
-    dynamic-type-expression --> postfix-expression ``.`` ``dynamicType
+    dynamic-type-expression --> postfix-expression ``.`` ``dynamicType``
 
 
 .. _Expressions_SubscriptExpression:

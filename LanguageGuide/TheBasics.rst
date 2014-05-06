@@ -80,10 +80,22 @@ because the maximum value never changes.
 The current login attempt counter is declared as a variable,
 because this value must be incremented after each failed login attempt.
 
-If a stored value in your code is not going to change,
-it should always be declared as a constant with the ``let`` keyword.
-Variables should only be used for
-storing values that need to be able to change.
+You can declare multiple constants or multiple variables on a single line,
+separated by commas:
+
+.. testcode:: multipleDeclarations
+
+   -> var x = 0.0, y = 0.0, z = 0.0
+   << // x : Double = 0.0
+   << // y : Double = 0.0
+   << // z : Double = 0.0
+
+.. note::
+
+   If a stored value in your code is not going to change,
+   it should always be declared as a constant with the ``let`` keyword.
+   Variables should only be used for
+   storing values that need to be able to change.
 
 .. TODO: I need to mention that globals are lazily initialized somewhere.
    Probably not here, but somewhere.
@@ -163,6 +175,17 @@ you can't redeclare it again with the same name,
 or change it to store values of a different type.
 Nor can you change a constant into a variable,
 or a variable into a constant.
+
+.. note::
+
+   If you need to give a constant or variable the same name as a reserved Swift keyword,
+   you can do so by surrounding the keyword with back ticks (`````) when using it as a name.
+   However, you should avoid using keywords as names unless you have absolutely no choice.
+
+.. QUESTION: I've deliberately not given an example here,
+   because I don't want to suggest that such an example is
+   a good example of when you *should* use a keyword as a name.
+   Is this the right approach to take?
 
 The value of an existing variable can be changed to another value of a compatible type.
 In this example, the value of ``friendlyWelcome`` is changed from

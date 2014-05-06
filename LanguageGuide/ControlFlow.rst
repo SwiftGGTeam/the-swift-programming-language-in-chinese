@@ -84,6 +84,8 @@ you must declare it yourself before its use in the loop.
    The text above is actually technically correct,
    but the fact that this caused confusion suggests that I should revisit the wording.
 
+.. TODO: note that you can use floating-point values with ranges too.
+
 If you don't need each value from the range,
 you can ignore the values by using an underscore in place of a variable name:
 
@@ -139,7 +141,7 @@ and the dictionary's values are decomposed into a constant called ``legCount``:
 .. testcode:: forLoops
 
    -> let numberOfLegs = ["spider": 8, "ant": 6, "cat": 4]
-   << // numberOfLegs : Dictionary<String, Int> = Dictionary<String, Int>(1.33333333333333, 3, <unprintable value>)
+   << // numberOfLegs : Dictionary<String, Int> = Dictionary<String, Int>(<unprintable value>)
    -> for (animalName, legCount) in numberOfLegs {
          println("\(animalName)s have \(legCount) legs")
       }

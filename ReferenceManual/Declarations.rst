@@ -176,7 +176,7 @@ is made available in the current scope.
 
     Grammar of an import declaration
 
-    import-declaration --> attribute-list-OPT ``import`` import-kind-OPT import-path
+    import-declaration --> attributes-OPT ``import`` import-kind-OPT import-path
 
     import-kind --> ``typealias`` | ``struct`` | ``class`` | ``enum`` | ``protocol`` | ``var`` | ``func``
     import-path --> import-path-identifier | import-path-identifier ``.`` import-path
@@ -243,7 +243,7 @@ are discussed in :ref:`Properties_StaticProperties`.
 .. TODO: Need to discuss static constant properties in more detail.
 
 For more information about constants and for guidance about when to use them,
-see :ref:`BasicTypes_ConstantsAndVariables` and :ref:`Properties_StoredProperties`.
+see :ref:`TheBasics_ConstantsAndVariables` and :ref:`Properties_StoredProperties`.
 
 .. TODO: Need to discuss class and static constant properties.
 
@@ -256,7 +256,7 @@ see :ref:`BasicTypes_ConstantsAndVariables` and :ref:`Properties_StoredPropertie
 
     Grammar of a constant declaration
 
-    constant-declaration --> attribute-list-OPT declaration-specifiers-OPT ``let`` pattern-initializer-list
+    constant-declaration --> attributes-OPT declaration-specifiers-OPT ``let`` pattern-initializer-list
 
     pattern-initializer-list --> pattern-initializer | pattern-initializer ``,`` pattern-initializer-list
     pattern-initializer --> pattern initializer-OPT
@@ -800,9 +800,9 @@ as described in :ref:`Patterns_EnumerationCasePattern`.
     enum-name --> identifier
     enum-case-name --> identifier
 
-    raw-value-style-enum --> enum-name generic-parameter-clause-OPT ``:`` type-identifer ``{`` raw-value-style-enum-members-OPT ``}``
+    raw-value-style-enum --> enum-name generic-parameter-clause-OPT ``:`` type-identifier ``{`` raw-value-style-enum-members-OPT ``}``
     raw-value-style-enum-members --> raw-value-style-enum-member raw-value-style-enum-members-OPT
-    raw-value-style-enum-members --> declaration | raw-value-style-enum-case-clause
+    raw-value-style-enum-member --> declaration | raw-value-style-enum-case-clause
     raw-value-style-enum-case-clause --> attributes-OPT ``case`` raw-value-style-enum-case-list
     raw-value-style-enum-case-list --> raw-value-style-enum-case | raw-value-style-enum-case ``,`` raw-value-style-enum-case-list
     raw-value-style-enum-case --> enum-case-name raw-value-assignment-OPT
@@ -1335,29 +1335,11 @@ designated initializers and convenience initializers,
 as described in :doc:`../LanguageGuide/Initialization`.
 
 The following form declares initializers for structures, enumerations,
-and convenience initializers of classes:
+and designated initializers of classes:
 
 .. syntax-outline::
 
     init(<#parameters#>) {
-       <#statements#>
-    }
-
-Initializers in structures and enumerations can call other declared initializers
-to delegate part or all of the initialization process.
-
-Convenience initializers can delegate the initialization process to another
-convenience initializer or to one of the class's designated initializers.
-That said, the initialization processes must end with a call to a designated
-initializer that ultimately initializes the class's properties.
-Convenience initializers can't call a superclass's initializers.
-
-To declare designated initializers for a class,
-prefix the initializer declaration with the context-sensitive keyword ``designated``.
-
-.. syntax-outline::
-
-    designated init(<#parameters#>) {
        <#statements#>
     }
 
@@ -1371,6 +1353,24 @@ properties can be set or modified in the current class.
 
 Designated initializers can be declared in the context of a class declaration only
 and therefore can't be added to a class using an extension declaration.
+
+Initializers in structures and enumerations can call other declared initializers
+to delegate part or all of the initialization process.
+
+To declare convenience initializers for a class,
+prefix the initializer declaration with the context-sensitive keyword ``convenience``.
+
+.. syntax-outline::
+
+    convenience init(<#parameters#>) {
+       <#statements#>
+    }
+
+Convenience initializers can delegate the initialization process to another
+convenience initializer or to one of the class's designated initializers.
+That said, the initialization processes must end with a call to a designated
+initializer that ultimately initializes the class's properties.
+Convenience initializers can't call a superclass's initializers.
 
 You can mark designated and convenience initializers with the ``required``
 attribute to require that every subclass implement the initializer.
@@ -1396,7 +1396,7 @@ see :doc:`../LanguageGuide/Initialization`.
     Grammar of an initializer declaration
 
     initializer-declaration --> initializer-head generic-parameter-clause-OPT parameter-clause initializer-body
-    initializer-head --> attributes-OPT ``designated``-OPT ``init``
+    initializer-head --> attributes-OPT ``convenience``-OPT ``init``
     initializer-body --> code-block
 
 
@@ -1733,7 +1733,7 @@ see :ref:`AdvancedOperators_CustomOperators`.
 
     infix-operator-attributes --> precedence-clause-OPT associativity-clause-OPT
     precedence-clause --> ``precedence`` precedence-level
-    precedence-level --> 0 through 255
+    precedence-level --> Digit 0 through 255
     associativity-clause --> ``associativity`` associativity
     associativity --> ``left`` | ``right`` | ``none``
 

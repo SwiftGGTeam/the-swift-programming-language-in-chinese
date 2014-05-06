@@ -97,7 +97,7 @@ by passing in a key of the appropriate type within subscript braces:
 .. testcode:: dictionarySubscript
 
    -> let numberOfLegs = ["spider": 8, "ant": 6, "cat": 4]
-   << // numberOfLegs : Dictionary<String, Int> = Dictionary<String, Int>(1.33333333333333, 3, <unprintable value>)
+   << // numberOfLegs : Dictionary<String, Int> = Dictionary<String, Int>(<unprintable value>)
    -> let spiderLegs = numberOfLegs["spider"]
    << // spiderLegs : Int = 8
    /> spiderLegs is equal to \(spiderLegs)
@@ -117,6 +117,8 @@ Subscript Options
 Subscripts can take any number of input parameters,
 and these input parameters can be of any type.
 Subscripts can also return any type.
+Subscripts can use variable parameters and variadic parameters,
+but cannot use inout parameters or provide default parameter values. 
 
 A class or structure can provide as many subscript implementations as it needs,
 and the appropriate subscript to be used will be inferred based on
