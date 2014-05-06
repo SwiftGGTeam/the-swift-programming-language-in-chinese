@@ -143,18 +143,14 @@ can be added together to make a new ``String`` value:
 
 .. testcode:: arithmeticOperators
 
-   -> let dog = '🐶'
+   -> let dog: Character = "🐶"
    << // dog : Character = <unprintable value>
-   -> let cow = '🐮'
+   -> let cow: Character = "🐮"
    << // cow : Character = <unprintable value>
    -> let dogCow = dog + cow
    << // dogCow : String = "🐶🐮"
    /> dogCow is equal to \"🐶🐮\"
    </ dogCow is equal to "🐶🐮"
-
-.. FIXME: revisit this example based on whether single quotes
-   continue to return a Character.
-   See rdar://16363872 for the single-quotes change.
 
 .. _BasicOperators_RemainderOperator:
 

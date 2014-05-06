@@ -15,7 +15,7 @@ Types can be nested to as many levels as are required:
 
    -> struct BlackjackCard {
          enum Suit: Character {
-            case Spades = '♠', Hearts = '♡', Diamonds = '♢', Clubs = '♣'
+            case Spades = "♠", Hearts = "♡", Diamonds = "♢", Clubs = "♣"
          }
          enum Rank: String {
             case Two = "2", Three = "3", Four = "4", Five = "5", Six = "6"
@@ -111,8 +111,8 @@ by prefixing its name with the name of the type it is nested within:
 
    -> let heartsSymbol = BlackjackCard.Suit.Hearts.toRaw()
    << // heartsSymbol : Character = <unprintable value>
-   /> heartsSymbol is '\(heartsSymbol)'
-   </ heartsSymbol is '♡'
+   /> heartsSymbol is \"\(heartsSymbol)\"
+   </ heartsSymbol is "♡"
 
 For the example above, 
 this enables the names of ``Suit``, ``Rank`` and ``Values`` to be kept deliberately short,

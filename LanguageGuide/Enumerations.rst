@@ -299,9 +299,9 @@ Here's an example that stores raw ASCII values alongside named enumeration membe
 .. testcode:: rawValues
 
    -> enum ASCIIControlCharacter: Character {
-         case Tab = '\t'
-         case LineFeed = '\n'
-         case CarriageReturn = '\r'
+         case Tab = "\t"
+         case LineFeed = "\n"
+         case CarriageReturn = "\r"
       }
 
 Here, the raw values for an enumeration called ``ASCIIControlCharacter``
