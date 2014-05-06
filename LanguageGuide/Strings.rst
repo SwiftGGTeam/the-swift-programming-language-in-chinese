@@ -4,9 +4,7 @@ Strings and Characters
 A :newTerm:`string` is an ordered collection of characters,
 such as ``"hello, world"`` or ``"albatross"``.
 Swift strings are represented by the ``String`` type,
-which is a collection of multiple ``Character`` values in a defined order.
-Any ``String`` can be iterated as a collection
-to retrieve each of its ``Character`` member values in turn.
+which is a collection of ``Character`` values in a defined order.
 
 Strings
 -------
@@ -167,9 +165,41 @@ when working with strings as value types within your code.
 Characters
 ----------
 
-.. write-me::
+Individual characters are represented in Swift by the ``Character`` type.
+You can access the individual ``Character`` values in a string
+by iterating over the string with a ``for``-``in`` loop:
 
-.. x the Character type (handwavey for now as to what it means in Unicode terms)
+.. testcode:: characters
+
+   -> for character in "Dog!🐶" {
+         println(character)
+      }
+   </ D
+   </ o
+   </ g
+   </ !
+   </ 🐶
+
+
+The ``for``-``in`` loop is described in :ref:`ControlFlow_ForLoops`.
+
+How Characters Are Represented in Swift
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The ``Character`` values in a Swift ``String``
+represent individual Unicode characters.
+This is different from the characters in a Cocoa ``NSString``,
+which represent individual UTF-16 code units.
+
+This means that a Unicode emoji character such as 🐥
+(known as ``FRONT-FACING BABY CHICK``, or Unicode code point ``U+1F425``)
+is correctly considered to be a single ``Character`` in Swift,
+but is actually considered to be *two* characters in an ``NSString``.
+This is because a ``FRONT-FACING BABY CHICK`` takes up two code units
+when stored in UTF-16 format (where it is represented as ``U+D83D U+DC25``).
+
+For more information about Swift's Unicode support,
+see :ref:`Strings_UnicodeSupport` below.
 
 String and Character Concatenation
 ----------------------------------
@@ -283,10 +313,22 @@ Strings as a Collection of Characters
 .. x countElements(someString) to get the number of Characters in a String, *not* length
 .. x explain the difference between String's Characters, and NSString's UTF-16 code unit length
 
-UTF-8 and UTF-16
-----------------
+.. _Strings_UnicodeSupport:
+
+Unicode Support
+---------------
 
 .. write-me::
+
+Swift provides four different ways to access a ``String`` value's representation.
+As mentioned above, you can iterate over the string itself with a ``for``-``in`` statement
+to access its individual ``Character`` values,
+and these values are Unicode characters.
+This is considered the “true” decomposed representation of a ``String`` in Swift.
+
+Alternatively, you can access a ``String`` as a sequence of UTF-8 or UTF-16 code points
+by querying its ``utf8`` or ``utf16`` properties,
+or as a sequence of 21-bit Unicode code points by querying its ``unicodeScalar`` property.
 
 .. x .utf8
 .. x .utf16
