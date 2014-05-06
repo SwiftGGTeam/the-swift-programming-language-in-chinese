@@ -274,8 +274,10 @@ and escaped with a backslash before the opening parenthesis:
    -> println("The current value of friendlyWelcome is \(friendlyWelcome)")
    <- The current value of friendlyWelcome is 👋, 🌎
 
-.. TODO: this still doesn't talk about all of the things that string interpolation can do.
-   It should still be covered in more detail in the Strings and Characters chapter.
+.. note::
+
+   The full set of options you can use with String interpolation
+   are described in :ref:`Strings_StringInterpolation`.
 
 .. _TheBasics_Comments:
 
