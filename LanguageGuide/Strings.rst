@@ -129,9 +129,9 @@ or to a constant (in which case it cannot be modified):
    -> let constantString = "Highlander"
    << // constantString : String = "Highlander"
    -> constantString += " and another Highlander"
-   !! <REPL Input>:1:16: error: expression does not type-check
+   !! <REPL Input>:1:16: error: could not find an overload for '+=' that accepts the supplied arguments
    !! constantString += " and another Highlander"
-   !! ~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~
+   !! ~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~
    // this reports a compile-time error - a constant string cannot be modified
 
 .. _Strings_StringsAreValueTypes:
@@ -200,6 +200,7 @@ from a single-character string literal by providing a ``Character`` type annotat
 .. testcode:: characters
 
    -> let interrobang: Character = "‽"
+   << // interrobang : Character = <unprintable value>
 
 .. _Strings_HowCharactersAreRepresentedInSwift:
 
@@ -409,6 +410,7 @@ and the 🐶 character (``DOG FACE``, or Unicode code point ``U+1F436``):
 .. testcode:: unicodeRepresentations
 
    -> let dogString = "Dog!🐶"
+   << // dogString : String = "Dog!🐶"
 
 .. _Strings_UTF8:
 
