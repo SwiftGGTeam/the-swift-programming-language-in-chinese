@@ -411,8 +411,6 @@ Use ``func`` to declare functions
 and call them by following their name
 with a parenthesized list of arguments.
 
-.. TODO: Argument names are postponed to the discussion of methods.
-
 .. TODO: Call out what -> means in the signature.
 
 .. testcode::
@@ -590,6 +588,8 @@ as the second argument to the ``sort`` function.
 Objects and Classes
 -------------------
 
+.. TODO: Use testcode throughout this section.
+
 Classes are created using ``class``,
 followed by the class's properties and methods in braces.
 A property declaration is the same
@@ -628,6 +628,10 @@ The initializer similar to a function,
 but it begins with ``init`` instead of ``func`` and has no function name.
 
 .. TODO: Probably worth pointing out that the initializer isn't a method.
+
+.. TODO: s/func/def for methods.
+
+.. TODO: Discuss arg names and API arg names.
 
 ::
 
