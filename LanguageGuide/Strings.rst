@@ -238,6 +238,15 @@ Strings as a Collection of Characters
 .. x countElements(someString) to get the number of Characters in a String, *not* length
 .. x explain the difference between String's Characters, and NSString's UTF-16 code unit length
 
+UTF-8 and UTF-16
+----------------
+
+.. write-me::
+
+.. x .utf8
+.. x .utf16
+.. x .unicodeScalars
+
 Comparing Strings
 -----------------
 
@@ -245,6 +254,7 @@ Comparing Strings
 
 .. x equivalence for String in Swift (right now)
 .. x isEmpty property for == ""
+.. .hasPrefix() and .hasSuffix()
 
 Slicing Strings
 ---------------
@@ -261,21 +271,10 @@ String Functions and Methods
 .. write-me::
 
 .. .split()
-.. .startsWith() and .endsWith()
-.. uppercaseString and lowercaseString??
-.. will Character have an uppercase and lowercase method?
+.. uppercaseString and lowercaseString
 .. other generic functions from Collection
    Reverse / reverse()?
    Reverse is a type that you can construct from a Collection that has a BidirectionalIndex
    startIndex
    endIndex
    subscript
-.. isAlpha() - on Character too?
-.. isDigit() - on Character too?
-.. isSpace() - on Character too? Don't mention these three until after the second API meeting.
-.. init from other types to print their values (do we cover this?)
-.. toInt()
-.. substr()
-.. splitFirst()
-.. splitFirstIf()
-.. splitIf()
