@@ -382,9 +382,9 @@ and then compared with the patterns specified in each case.
 If a match is found,
 the program executes the *statements* listed within the scope of that case.
 The scope of each case can't be empty.
-As a result, you must include either a single semicolon (``;``) or at least one statement
-following the colon (``:``) of each case label. In this context, the semicolon
-indicates that you don't intend to execute any code in the body of the case.
+As a result, you must include at least one statement
+following the colon (``:``) of each case label. Use a single ``break`` statement
+if you don't intend to execute any code in the body of a matched case.
 
 The values of expressions your code can branch on is very flexible. For instance,
 in addition to the values of scalar types, such as integers and characters,
