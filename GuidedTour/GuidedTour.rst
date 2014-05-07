@@ -75,9 +75,9 @@ as the value you want to assign to it.
 
 .. testcode::
 
-    -> var greeting = "Hello"
-    << // greeting : String = "Hello"
-    // greeting = 123  // Uncomment to see the error
+    -> var hello = "Hello"
+    << // hello : String = "Hello"
+    // hello = 123  // Uncomment to see the error
 
 In the previous example,
 the compiler understands that ``greeting`` is a string
@@ -226,10 +226,10 @@ an optional value either contains a value or ``nil``.
 You indicate that something is optional
 by writing a question mark (``?``) after it:
 
-.. testcode:
+.. testcode::
 
    -> var optionalString: String? = "Hello"
-   << // var optionalString : String? = "Hello"
+   << // optionalString : String? = <unprintable value>
    -> optionalString == nil
    <$ : Bool = false
 
@@ -270,12 +270,6 @@ not an implicit comparison to zero.
 Use ``if`` and ``let`` together to safely unwrap an optional value.
 
 .. testcode::
-
-   var optionalName: String? = "John Appleseed"
-   var greeting = "Hello!"
-   if let name = optionalName {
-         var greeting = "Hello, \(name)"
-   }
 
    -> var optionalName: String? = "John Appleseed"
    << // optionalName : String? = <unprintable value>
