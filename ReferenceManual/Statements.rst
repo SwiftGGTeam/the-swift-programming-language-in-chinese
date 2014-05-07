@@ -112,7 +112,7 @@ A ``for`` statement is executed as follows:
    and execution returns to step 2.
 
 Variables defined within the *initialization*
-are valid only within the scope of the for statement itself.
+are valid only within the scope of the ``for`` statement itself.
 
 The value of the *condition* expression must have a type that conforms to
 the ``LogicValue`` protocol.
