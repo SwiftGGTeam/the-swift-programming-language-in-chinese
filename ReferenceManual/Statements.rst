@@ -35,9 +35,9 @@ and is used to separate multiple statetments if they appear on the same line.
     statement --> declaration ``;``-OPT
     statement --> loop-statement ``;``-OPT
     statement --> branch-statement ``;``-OPT
+    statement --> labeled-statement
     statement --> control-transfer-statement ``;``-OPT
     statements --> statement statements-OPT
-    statement-label --> identifier ``:``
 
 .. NOTE: Removed semicolon-statement as syntactic category,
     because, according to Doug, they're not really statements.
@@ -47,6 +47,7 @@ and is used to separate multiple statetments if they appear on the same line.
     The semicolon isn't even required for the compiler; we just added
     rules that require them in some places to enforce a certain amount
     of readability.
+
 
 .. _Statements_LoopStatements:
 
@@ -59,17 +60,19 @@ Swift has four loop statements:
 a ``for`` statement, a ``for``-``in`` statement, a ``while`` statement,
 and a ``do``-``while`` statement.
 
-Control flow in a loop statement can be changed by a ``break`` statement and a ``continue`` statement
-and is discussed in :ref:`Statements_BreakStatement` and :ref:`Statements_ContinueStatement` below.
+Control flow in a loop statement can be changed by a ``break`` statement
+and a ``continue`` statement and is discussed in :ref:`Statements_BreakStatement` and
+:ref:`Statements_ContinueStatement` below.
 
 .. syntax-grammar::
 
     Grammar of a loop statement
 
-    loop-statement --> statement-label-OPT for-statement
-    loop-statement --> statement-label-OPT for-in-statement
-    loop-statement --> statement-label-OPT while-statement
-    loop-statement --> statement-label-OPT do-while-statement
+    loop-statement --> for-statement
+    loop-statement --> for-in-statement
+    loop-statement --> while-statement
+    loop-statement --> do-while-statement
+
 
 .. _Statements_ForStatement:
 
@@ -115,9 +118,6 @@ are valid only within the scope of the for statement itself.
 The value of the *condition* expression must have a type that conforms to
 the ``LogicValue`` protocol.
 
-.. TODO: Document the scope of loop variables.
-   This applies to all loops, so it doesn't belong here.
-
 .. langref-grammar
 
     stmt-for-c-style    ::= 'for'     stmt-for-c-style-init? ';' expr? ';' expr-basic?     brace-item-list
@@ -134,15 +134,11 @@ the ``LogicValue`` protocol.
 
     for-init --> variable-declaration | expression-list
 
+
 .. _Statements_For-InStatement:
 
 For-In Statement
 ~~~~~~~~~~~~~~~~
-
-.. Other rejected headings included range-based, enumerator-based,
-   container-based sequence-based and for-each.
-   Changed this to ``for``-``in`` statement to match Language Guide
-   and because it's more consistent with ``do``-``while`` statement.
 
 A ``for``-``in`` statement allows a block of code to be executed
 once for each item in a collection (or any type)
@@ -168,11 +164,6 @@ and then continues execution at the beginning of the loop.
 Otherwise, the program does not perform assignment or execute the *statements*,
 and it is finished executing the ``for``-``in`` statement.
 
-.. TODO: Doug's remarks from 1/29/14 meeting:
-    Consider calling this sequence-based-for-statement,
-    because a collection has some implication that the collection
-    could be iterated multiple times---it could be a random number generator.
-
 .. TODO: Move this info to the stdlib reference as appropriate.
 
 .. langref-grammar
@@ -184,6 +175,7 @@ and it is finished executing the ``for``-``in`` statement.
     Grammar of a for-in statement
 
     for-in-statement --> ``for`` pattern ``in`` expression code-block
+
 
 .. _Statements_WhileStatement:
 
@@ -228,6 +220,7 @@ as discussed in :ref:`TheBasics_OptionalBinding`.
     while-statement --> ``while`` while-condition  code-block
     while-condition --> expression | declaration
 
+
 .. _Statements_Do-WhileStatement:
 
 Do-While Statement
@@ -271,6 +264,7 @@ as discussed in :ref:`TheBasics_OptionalBinding`.
 
     do-while-statement --> ``do`` code-block ``while`` while-condition
 
+
 .. _Statements_BranchStatements:
 
 Branch Statements
@@ -282,12 +276,16 @@ The values of the conditions specified in a branch statement
 control how the program branches and, therefore, what block of code is executed.
 Swift has two branch statements: an ``if`` statement and a ``switch`` statement.
 
+Control flow in a ``switch`` statement can be changed by a ``break`` statement
+and is discussed in :ref:`Statements_BreakStatement` below.
+
 .. syntax-grammar::
 
     Grammar of a branch statement
 
     branch-statement --> if-statement
-    branch-statement --> statement-label-OPT switch-statement
+    branch-statement --> switch-statement
+
 
 .. _Statements_IfStatement:
 
@@ -341,8 +339,6 @@ The value of any condition in an ``if`` statement must have a type that conforms
 the ``LogicValue`` protocol. The condition can also be an optional binding declaration,
 as discussed in :ref:`TheBasics_OptionalBinding`.
 
-.. TODO: Should we promote this last sentence (here and elsewhere) higher up in the chapter?
-
 .. langref-grammar
 
     stmt-if      ::= 'if' expr-basic brace-item-list stmt-if-else?
@@ -356,6 +352,7 @@ as discussed in :ref:`TheBasics_OptionalBinding`.
     if-statement --> ``if`` if-condition code-block else-clause-OPT
     if-condition --> expression | declaration
     else-clause --> ``else`` code-block | ``else`` if-statement
+
 
 .. _Statements_SwitchStatement:
 
@@ -420,7 +417,7 @@ none of those patterns can contain constant or variable bindings.
 
 A ``switch`` statement can also include a default case, introduced by the keyword ``default``.
 The code within a default case is executed only if no other cases match the control expression.
-A ``switch`` statement`` can include only one default case,
+A ``switch`` statement can include only one default case,
 which must appear at the end of the ``switch`` statement.
 
 Although the actual execution order of pattern-matching operations,
@@ -431,6 +428,7 @@ the order in which they appear in source code.
 As a result, if multiple cases contain patterns that evaluate to the same value,
 and thus can match the value of the control expression,
 the program executes only the code within the first matching case in source order.
+
 
 .. _Statements_SwitchStatementsMustBeExhaustive:
 
@@ -443,6 +441,7 @@ must match the value of at least one pattern of a case.
 When this simply isn’t feasible
 (for instance, when the control expression’s type is ``Int``),
 you can include a default case to satisfy the requirement.
+
 
 .. _Statements_ExecutionDoesNotFallThroughCasesImplicitly:
 
@@ -458,13 +457,6 @@ which simply consists of the keyword ``fallthrough``,
 in the case from which you want execution to continue.
 For more information about the ``fallthrough`` statement,
 see :ref:`Statements_FallthroughStatement` below.
-
-Because execution does not automatically continue from one case to the next,
-a ``break`` statement is not used to transfer control out of a ``switch`` statement after
-a matching case is executed.
-In fact, ``break`` and ``continue`` statements used in the context of a ``switch`` statement
-break and continue out of an enclosing loop statement only,
-not out of the ``switch`` statement itself.
 
 .. langref-grammar
 
@@ -492,6 +484,36 @@ not out of the ``switch`` statement itself.
     guard-clause --> ``where`` guard-expression
     guard-expression --> expression
 
+
+.. _Statements_LabeledStatement:
+
+Labeled Statement
+-----------------
+
+You can prefix a loop statement or a ``switch`` statement
+with a :newTerm:`statement label`,
+which consists of the name of the label followed immediately by a colon (:).
+Use statement labels with ``break`` and ``continue`` statements to be explicit
+about how you want to change control flow in a loop statement or a ``switch`` statement,
+as discussed in :ref:`Statements_BreakStatement` and
+:ref:`Statements_ContinueStatement` below.
+
+The scope of a labeled statement is the entire statement following the statement label.
+You can nest labeled statements, but the name of each statement label must be unique.
+
+For more information and to see examples
+of how to use statement labels,
+see :ref:`ControlFlow_LabeledStatements` in the :doc:`../LanguageGuide/ControlFlow` chapter.
+
+.. syntax-grammar::
+
+    Grammar of a labeled statement
+
+    labeled-statement --> statement-label loop-statement | statement-label switch-statement
+    statement-label --> label-name ``:``
+    label-name --> identifier
+
+
 .. _Statements_ControlTransferStatements:
 
 Control Transfer Statements
@@ -518,20 +540,34 @@ a ``fallthrough`` statement, and a ``return`` statement.
     control-transfer-statement --> fallthrough-statement
     control-transfer-statement --> return-statement
 
+
 .. _Statements_BreakStatement:
 
 Break Statement
 ~~~~~~~~~~~~~~~
 
-A ``break`` statement consists of the ``break`` keyword
-and occurs only in the context of a loop statement.
-A ``break`` statement ends program execution of the current iteration
-of the innermost enclosing loop statement in which it occurs
-and stops execution of the loop statement.
-Program control is then transferred to the first line of code following the enclosing
-loop statement, if any.
-For an example of how to use a ``break`` statement in the context of a loop statement,
-see :ref:`ControlFlow_ControlTransferStatements`
+A ``break`` statement ends program execution of a loop or a ``switch`` statement.
+A ``break`` statement can consist of only the keyword ``break``,
+or it can consist of the keyword ``break`` followed by the name of a statement label,
+as shown below.
+
+.. syntax-outline::
+
+    break
+    break <#label name#>
+
+When a ``break`` statement is followed by the name of a statement label,
+it ends program execution of the loop or ``switch`` statement named by that label.
+
+When a ``break`` statement is not followed by the name of a statement label,
+it ends program execution of the ``switch`` statement or the innermost enclosing loop
+statement in which it occurs.
+
+In both cases, program control is then transferred to the first line
+of code following the enclosing loop or ``switch`` statement, if any.
+
+For examples of how to use a ``break`` statement,
+see :ref:`ControlFlow_Break` and :ref:`ControlFlow_LabeledStatements`
 in the :doc:`../LanguageGuide/ControlFlow` chapter.
 
 .. langref-grammar
@@ -542,27 +578,42 @@ in the :doc:`../LanguageGuide/ControlFlow` chapter.
 
     Grammar of a break statement
 
-    break-statement --> ``break`` identifier-OPT
+    break-statement --> ``break`` label-name-OPT
+
 
 .. _Statements_ContinueStatement:
 
 Continue Statement
 ~~~~~~~~~~~~~~~~~~
 
-A ``continue`` statement consists of the ``continue`` keyword
-and occurs only in the context of a loop statement.
-A ``continue`` statement ends program execution of the current iteration
-of the innermost enclosing loop statement in which it occurs
-but does not stop execution of the loop statement.
-Program control is then transferred to the condition
+A ``continue`` statement ends program execution of the current iteration of a loop
+statement but does not stop execution of the loop statement.
+A ``continue`` statement can consist of only the keyword ``continue``,
+or it can consist of the keyword ``continue`` followed by the name of a statement label,
+as shown below.
+
+.. syntax-outline::
+
+    continue
+    continue <#label name#>
+
+When a ``continue`` statement is followed by the name of a statement label,
+it ends program execution of the current iteration
+of the loop statement named by that label.
+
+When a ``continue`` statement is not followed by the name of a statement label,
+it ends program execution of the current iteration
+of the innermost enclosing loop statement in which it occurs.
+
+In both cases, program control is then transferred to the condition
 of the enclosing loop statement.
 
 In a ``for`` statement,
 the increment expression is still evaluated after the ``continue`` statement is executed,
 because the increment expression is evaluated after the execution of the loop's body.
 
-For an example of how to use a ``continue`` statement in the context of a loop statement,
-see :ref:`ControlFlow_ControlTransferStatements`
+For examples of how to use a ``continue`` statement,
+see :ref:`ControlFlow_Continue` and :ref:`ControlFlow_LabeledStatements`
 in the :doc:`../LanguageGuide/ControlFlow` chapter.
 
 .. langref-grammar
@@ -574,7 +625,8 @@ in the :doc:`../LanguageGuide/ControlFlow` chapter.
 
     Grammar of a continue statement
 
-    continue-statement --> ``continue`` identifier-OPT
+    continue-statement --> ``continue`` label-name-OPT
+
 
 .. _Statements_FallthroughStatement:
 
@@ -593,9 +645,7 @@ A ``fallthrough`` statement can appear anywhere inside a ``switch`` statement,
 not just as the last statement of a case block,
 but it can't be used in the final case block.
 It also cannot transfer control into a case block
-whose pattern contains constant or variable bindings.
-
-.. TODO: Need a decided-on name for "var" bindings.
+whose pattern contains value binding patterns.
 
 For an example of how to use a ``fallthrough`` statement in a ``switch`` statement,
 see :ref:`ControlFlow_ControlTransferStatements`
@@ -611,6 +661,7 @@ in the :doc:`../LanguageGuide/ControlFlow` chapter.
 
     fallthrough-statement --> ``fallthrough``
 
+
 .. _Statements_ReturnStatement:
 
 Return Statement
@@ -625,6 +676,7 @@ or it can consist of the keyword ``return`` followed by an expression, as shown 
 
 .. syntax-outline::
 
+    return
     return <#expression#>
 
 When a ``return`` statement is followed by an expression,
@@ -645,7 +697,6 @@ it can be used only to return from a function or method that does not return a v
 
     stmt-return ::= 'return' expr
     stmt-return ::= 'return'
-
 
 .. syntax-grammar::
 
