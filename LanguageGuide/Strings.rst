@@ -177,7 +177,8 @@ when working with strings as value types.
 Characters
 ----------
 
-Individual characters are represented in Swift by the ``Character`` type.
+Individual characters are represented in Swift by the ``Character`` type,
+which represents a single Unicode character.
 You can access the individual ``Character`` values in a string
 by iterating over that string with a ``for``-``in`` loop:
 
@@ -201,33 +202,6 @@ from a single-character string literal by providing a ``Character`` type annotat
 
    -> let interrobang: Character = "‽"
    << // interrobang : Character = <unprintable value>
-
-.. _Strings_HowCharactersAreRepresentedInSwift:
-
-How Characters Are Represented in Swift
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-The ``Character`` elements in a ``String`` value represent Unicode characters.
-This is different from the characters in a Cocoa ``NSString``,
-which are individual UTF-16 code units.
-
-This means that a Unicode emoji character such as 🐥
-(known as ``FRONT-FACING BABY CHICK``, or Unicode code point ``U+1F425``)
-is a single character in Swift,
-but is considered to be *two* characters when accessed through an ``NSString`` in Objective-C.
-This is because a ``FRONT-FACING BABY CHICK`` takes up two code units
-when stored in UTF-16 format (``U+D83D U+DC25``).
-
-.. note::
-
-   If you use an ``NSString`` value as a bridged ``String`` value in Swift,
-   that ``NSString`` will be treated just like a native ``Swift`` string,
-   and its  ``Character`` values will be true Unicode characters, not UTF-16 code units.
-   Swift takes care of translating UTF-16 code units into Unicode characters for you
-   when you use an ``NSString`` as a ``String``.
-
-For more information about Swift's Unicode support,
-see :ref:`Strings_UnicodeRepresentations` below.
 
 .. _Strings_StringAndCharacterConcatenation:
 
