@@ -252,7 +252,7 @@ To test this, try iterating over the characters in a string, like this:
 .. note::
    If you're wondering why/how this works,
    it's because the return value of ``String.chars`` adopts the ``Sequence`` protocol.
-   `Protocols`_ are covered later in this tour.
+   Protocols are covered later in this tour.
 
 Also try the ``..`` operator, which generates a closed enumerable range between two values:
 
