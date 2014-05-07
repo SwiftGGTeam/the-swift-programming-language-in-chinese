@@ -13,7 +13,6 @@ only when certain conditions are met,
 and control transfer statements provide a way to alter the order in which code is executed.
 Each type of control flow statement is described in detail below.
 
-Each type of statement can be used in function bodies and in top-level code.
 A semicolon (``;``) can optionally appear after any statement
 and is used to separate multiple statetments if they appear on the same line.
 
