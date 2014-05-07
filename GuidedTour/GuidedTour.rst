@@ -221,6 +221,25 @@ use a type annotation to specify it expliticly.
 .. The REPL output after creating a dictionary doesn’t make any sense.
    No way to get it to pretty-print the keys and values.
 
+In a similar way to how arrays and dictionaries contain values,
+an optional value either contains a value or ``nil``.
+You indicate that something is optional
+by writing a question mark (``?``) after it:
+
+.. testcode:
+
+   -> var optionalString: String? = "Hello"
+   << // var optionalString : String? = "Hello"
+   -> optionalString == nil
+   <$ : Bool = false
+
+Use an exclamation mark (``!``) to unwrap an optional value.
+However, if the value is ``nil``,
+there is no value to unwrap and a runtime error is raised.
+See below for a much safer approach
+that uses ``if`` and ``let`` together
+to unwrap an optional value without the possibility of runtime errors.
+
 Control Flow
 ------------
 
@@ -247,6 +266,26 @@ and the braces around the body are required.
 The conditional must be a Boolean expression;
 code like ``if remainingGummiBears { ... }`` is an error,
 not an implicit comparison to zero.
+
+Use ``if`` and ``let`` together to safely unwrap an optional value.
+
+.. testcode::
+
+   var optionalName: String? = "John Appleseed"
+   var greeting = "Hello!"
+   if let name = optionalName {
+         var greeting = "Hello, \(name)"
+   }
+
+   -> var optionalName: String? = "John Appleseed"
+   << // optionalName : String? = <unprintable value>
+   -> var greeting = "Hello!"
+   << // greeting : String = "Hello!"
+   -> if let name = optionalName {
+         greeting = "Hello, \(name)"
+      }
+   >> greeting
+   << // greeting : String = "Hello, John Appleseed"
 
 Use ``switch`` to choose between blocks of code
 where each block of code is associated
