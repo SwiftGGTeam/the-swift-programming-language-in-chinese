@@ -288,9 +288,9 @@ Operator functions are described in more detail in :ref:`AdvancedOperators_Opera
 Trailing Closures
 -----------------
 
-If you need to pass a closure expression to a function as one of the function's arguments,
+If you need to pass a closure expression to a function as the function's final argument,
 and the closure expression is long,
-it can sometimes be clearer to write it as a :newTerm:`trailing closure` instead.
+it can sometimes be useful to write it as a :newTerm:`trailing closure` instead.
 A trailing closure is a closure expression
 that is written outside of (and *after*) the parentheses of the function call it supports:
 
@@ -312,37 +312,12 @@ that is written outside of (and *after*) the parentheses of the function call it
          // trailing closure's body goes here
       }
 
-You can provide multiple trailing closures
-for functions with multiple function type parameters.
-Additionally, if *all* of a function's parameters are function types,
-and you provide trailing closures for all of those parameters when calling the function,
-you do not need to write a pair of parentheses ``()``
-after the function's name when you call the function.
-
 .. note::
 
-   Trailing closures can only be used when the function type parameters
-   are the last parameters in the list.
-
-Here's an example of how you can provide multiple trailing closures
-when calling a function with two parameters,
-both of which have a function type of ``() -> ()``.
-Note that the closing brace of the first trailing closure
-must be on the same line as the opening brace of the second trailing closure:
-
-.. testcode:: closureSyntax
-
-   -> func someFunctionThatTakesTwoClosures(first: () -> (), second: () -> ()) {
-         // function body goes here
-      }
-   ---
-   -> // here's how you'd call this function with two trailing closures:
-   ---
-   -> someFunctionThatTakesTwoClosures {
-         // first trailing closure's body goes here
-      } {
-         // second trailing closure's body goes here
-      }
+   If a closure expression is provided as the function's only argument,
+   and you provide that expression as a trailing closure,
+   you do not need to write a pair of parentheses ``()``
+   after the function's name when you call the function.
 
 The string-sorting closure from the *Closure Expression Syntax* section above
 can be written outside of the ``sort`` function's parentheses as a trailing closure:
@@ -353,8 +328,7 @@ can be written outside of the ``sort`` function's parentheses as a trailing clos
    >> reversed
    << // reversed : Array<String> = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
 
-As mentioned above,
-trailing closures are most useful when the closure is sufficiently long that
+Trailing closures are most useful when the closure is sufficiently long that
 it is not possible to write it inline on a single line.
 As an example, Swift's ``Array`` type has a ``map`` method
 which takes a closure expression as its single argument.
