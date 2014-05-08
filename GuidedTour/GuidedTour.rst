@@ -233,12 +233,16 @@ by writing a question mark (``?``) after it:
    -> optionalString == nil
    <$ : Bool = false
 
-Use an exclamation mark (``!``) to unwrap an optional value.
-However, if the value is ``nil``,
-there is no value to unwrap and a runtime error is raised.
-See below for a much safer approach
-that uses ``if`` and ``let`` together
-to unwrap an optional value without the possibility of runtime errors.
+Writing an exclamation mark (``!``) after an optional value
+forces that value to be unwrapped.
+You can use this if you know the optional always has a value.
+If the value is ``nil``,
+a runtime error is raised
+because there is no value to unwrap.
+For a safer approach,
+use ``if`` and ``let`` together
+to unwrap an optional value without the possibility of runtime errors,
+as shown in a listing below.
 
 Control Flow
 ------------
@@ -267,7 +271,9 @@ The conditional must be a Boolean expression;
 code like ``if remainingGummiBears { ... }`` is an error,
 not an implicit comparison to zero.
 
-Use ``if`` and ``let`` together to safely unwrap an optional value.
+Use ``if`` and ``let`` together to safely unwrap an optional value
+and assign it to a variable.
+This is the recommended way to work with optional values.
 
 .. testcode::
 
