@@ -38,7 +38,7 @@ Closure Expressions
 
 Nested functions are a convenient way to name and define self-contained blocks of code
 as part of a larger function.
-However, it can sometimes be useful to write shorter versions of function-like constructs, 
+However, it can sometimes be useful to write shorter versions of function-like constructs,
 without the need for a full declaration and name.
 This is particularly true when working with functions that take other functions
 as one or more of their arguments.
@@ -143,7 +143,7 @@ the ``backwards`` function shown in the earlier example:
 
 .. testcode:: closureSyntax
 
-   -> reversed = sort(names, { (s1: String, s2: String) -> Bool in 
+   -> reversed = sort(names, { (s1: String, s2: String) -> Bool in
          return s1 > s2
       })
    >> reversed
@@ -364,7 +364,7 @@ in the same order as their corresponding values in the original array.
 
 Here's how you can use the ``map`` method with a trailing closure
 to convert an array of ``Int`` values into an array of ``String`` values.
-The array ``[16, 58, 510]`` is used to create the new array 
+The array ``[16, 58, 510]`` is used to create the new array
 ``["OneSix", "FiveEight", "FiveOneZero"]``:
 
 .. testcode:: arrayMap
@@ -538,7 +538,7 @@ Here's an example of ``makeIncrementor`` in action:
    -> let incrementByTen = makeIncrementor(forIncrement: 10)
    << // incrementByTen : () -> Int = <unprintable value>
 
-This example sets a constant called ``incrementByTen`` 
+This example sets a constant called ``incrementByTen``
 to refer to an incrementor function that adds ``10`` to
 its ``runningTotal`` variable each time it is called.
 Calling the function multiple times shows this behavior in action:
@@ -639,10 +639,10 @@ Avoiding Reference Cycles in Closures
    but they are yet to be implemented.
    The Radar for their implementation is rdar://15046325.
 
-.. _Closures_AutoClosures:
+.. _Closures_Autoclosures:
 
-Auto-Closures
--------------
+Autoclosures
+------------
 
 .. write-me::
 

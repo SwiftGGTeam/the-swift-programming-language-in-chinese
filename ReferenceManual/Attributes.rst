@@ -4,12 +4,12 @@ Attributes
 :newTerm:`Attributes` provide more information about a declaration or type.
 There are two kinds of attributes in Swift, those that apply to declarations
 and those that apply to types.
-For instance, the ``required`` attribute is applied to a designated or convenience initializer
-declaration of a class to indicate that every subclass must implement that initializer.
-The ``noreturn`` attribute is applied to a function or method type to indicate that
+For instance, the ``required`` attribute---when applied to a designated or convenience initializer
+declaration of a class---indicates that every subclass must implement that initializer.
+And the ``noreturn`` attribute---when applied to a function or method type---indicates that
 the function or method doesn't return to its caller.
 
-Attributes are specified by writing the ``@`` symbol followed by the attribute's name
+You specify an attribute by writing the ``@`` symbol followed by the attribute's name
 and any arguments that the attribute accepts:
 
 .. syntax-outline::
@@ -19,17 +19,16 @@ and any arguments that the attribute accepts:
 
 Some declaration attributes accept arguments that specify more information about the attribute
 and how it applies to a particular declaration. These *attribute arguments* are enclosed
-in parentheses and their format is defined by the attribute they belong to.
+in parentheses, and their format is defined by the attribute they belong to.
 
-.. TR: Which attributes are inheritable and which attribute imply other attributes?
 
 .. _Attributes_DeclarationAttributes:
 
 Declaration Attributes
 ----------------------
 
-Declaration attributes are applied to declarations only. However, you can also apply
-the ``noreturn`` attribute to a function or method type.
+You can apply a declaration attribute to declarations only. However, you can also apply
+the ``noreturn`` attribute to a function or method *type*.
 
 .. Current list of declaration attributes (as of 4/16/14, r16419):
     ✓ ``assignment`` (OnFunc)
@@ -85,7 +84,7 @@ the ``noreturn`` attribute to a function or method type.
     }
 
 ``assignment``
-    The ``assignment`` attribute is applied to functions that overload
+    Apply this attribute to functions that overload
     a compound assignment operator.
     Functions that overload a compound assignment operator must mark
     their initial input parameter as ``inout``.
@@ -122,23 +121,23 @@ the ``noreturn`` attribute to a function or method type.
 .. NOTE: According to [Contributor 7746]'s email on 4/26/14, this won't be an attribute.
 
 ``class_protocol``
-    The ``class_protocol`` attribute is applied to a protocol to indicate
+    Apply this attribute to a protocol to indicate
     that the protocol can be adopted by class types only.
 
     If you apply the ``objc`` attribute to a protocol, the ``class_protocol`` attribute
     is implicitly applied to that protocol; there's no need to mark the protocol with
-    the ``class_protocol`` explicitly.
+    the ``class_protocol`` attribute explicitly.
 
 ``exported``
-    The ``exported`` attribute is applied to an import declaration to export
+    Apply this attribute to an import declaration to export
     the imported module, submodule, or declaration from the current module.
     If another module imports the current module, that other module can access
     the items exported by the current module.
 
 ``final``
-    The ``final`` attribute is applied to a class or to a property, method,
-    or subscript member of a class. It is applied to class to indicate that the class
-    can't be subclassed. It is applied to a property, method, or subscript of a class
+    Apply this attribute to a class or to a property, method,
+    or subscript member of a class. It's applied to class to indicate that the class
+    can't be subclassed. It's applied to a property, method, or subscript of a class
     to indicate that those class members can't be overridden in any subclass.
 
 .. TODO: Dave may or may not include an example of how to use the 'final' attribute
@@ -147,7 +146,7 @@ the ``noreturn`` attribute to a function or method type.
     see :ref:`Inheritance_FinalMethodsPropertiesAndSubscripts`.
 
 ``noreturn``
-    The ``noreturn`` attribute is applied to a function or method declaration
+    Apply this attribute to a function or method declaration
     to indicate that the corresponding type of that function or method,
     ``T``, is ``@noreturn T``.
     You can mark a function or method type with this attribute to indicate that
@@ -159,11 +158,8 @@ the ``noreturn`` attribute to a function or method type.
     or method that is not. Similar rules apply when you implement a protocol
     method in a conforming type.
 
-.. TR: Need some more info on this attribute. Is the above correct? What else should we
-    document here? How about some actual examples?
-
 ``NSCopying``
-    The ``NSCopying`` attribute is applied to a variable stored property of a class.
+    Apply this attribute to a variable stored property of a class.
     This attribute causes the property's setter to be synthesized with a *copy*
     of the property's value---returned by the ``copyWithZone`` method---instead of the
     value of the property itself.
@@ -180,7 +176,7 @@ the ``noreturn`` attribute to a function or method type.
     provide a link to the relevant section.
 
 ``objc``
-    The ``objc`` attribute tells the compiler that a declaration is available
+    This attribute tells the compiler that a declaration is available
     to use in Objective-C code. You can apply this attribute to any declaration
     that can be represented in Objective-C, including non-nested classes, protocols,
     properties and methods (including getters and setters) of classes and protocols,
@@ -202,22 +198,22 @@ the ``noreturn`` attribute to a function or method type.
     is exposed to Objective-C code as ``isEnabled``
     rather than just as the name of the property itself.
 
-    ::
+    .. testcode::
 
-        @objc
-        class ExampleClass {
-           var enabled: Bool {
-              @objc(isEnabled) get {
-                 // Return the appropriate value
+        -> @objc
+        -> class ExampleClass {
+              var enabled: Bool {
+                 @objc(isEnabled) get {
+                    // Return the appropriate value
+                 }
               }
            }
-        }
 
 .. TODO: If and when Dave includes a section about this in the Guide,
     provide a link to the relevant section. Possibly link to Anna and Jacks guide too.
 
 ``optional``
-    The ``optional`` attribute is applied to a protocol's property, method,
+    Apply this attribute to a protocol's property, method,
     or subscript members to indicate that a conforming type isn't required
     to implement those members.
 
@@ -236,7 +232,7 @@ the ``noreturn`` attribute to a function or method type.
     properly for optional initializer requirements.
 
 ``required``
-    The ``required`` attribute is applied to a designated or convenience initializer
+    Apply this attribute to a designated or convenience initializer
     of a class to indicate that every subclass must implement that initializer.
 
     Required designated initializers must be implemented explicitly.
@@ -256,10 +252,10 @@ the ``noreturn`` attribute to a function or method type.
         reference cycles.
 
 
-.. _Attributes_InterfaceBuilderAttributes:
+.. _Attributes_DeclarationAttributesUsedByInterfaceBuilder:
 
-Interface Builder Attributes
-----------------------------
+Declaration Attributes Used by Interface Builder
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Interface Builder attributes are declaration attributes
 used by Interface Builder to synchronize with Xcode.
@@ -270,10 +266,10 @@ Objective-C counterparts.
 
 .. TODO: Need to link to the relevant discussion of these attributes in Objc.
 
-The ``IBOutlet`` and ``IBInspectable`` attributes
-are applied to property declarations of a class. The ``IBAction`` attribute
-is applied to method declarations of a class, and the ``IBDesignable`` attribute
-is applied to class declarations.
+You apply the ``IBOutlet`` and ``IBInspectable`` attributes
+to property declarations of a class. You apply the ``IBAction`` attribute
+to method declarations of a class and the ``IBDesignable`` attribute
+to class declarations.
 
 .. Current list of IB attributes (as of 4/16/14, r16419):
     // Talk to Tony and Robert Morrish about where go for more information.
@@ -314,8 +310,8 @@ is applied to class declarations.
 Type Attributes
 ---------------
 
-Type attributes are applied to types only. However, you can also apply the ``noreturn``
-attribute to a function or method declaration.
+You can apply type attributes to types only. However, you can also apply the ``noreturn``
+attribute to a function or method *declaration*.
 
 .. Current list of type attributes (as of 4/16/14, r16419):
     ``auto_closure``
@@ -340,22 +336,18 @@ attribute to a function or method declaration.
     var ccFunc : @cc(cdecl) () -> () // expected-error {{attribute is not supported}}
 
 ``auto_closure``
-    An ``auto_closure`` attribute is used to delay the evaluation of an expression
+    This attribute is used to delay the evaluation of an expression
     by automatically wrapping that expression in a closure with no arguments.
-    This attribute is applied to a function or method type that takes no arguments
+    Apply this attribue to a function or method type that takes no arguments
     and that returns the type of the expression.
     For an example of how to use the ``auto_closure`` attribute,
-    see :ref:`Closures_AutoClosures`.
+    see :ref:`Closures_Autoclosures`.
 
 ``noreturn``
-    The ``noreturn`` attribute is applied to the type of a function or method
+    Apply this attribute to the type of a function or method
     to indicate that the function or method doesn't return to its caller.
     You can also mark a function or method declaration with this attribute to indicate that
     the corresponding type of that function or method, ``T``, is ``@noreturn T``.
-
-.. TR: Need some more info on this attribute. Is the above correct? What else should we
-    document here? How about some actual examples?
-
 
 .. langref-grammar
 
@@ -392,3 +384,5 @@ attribute to a function or method declaration.
     Find out if there's a solution to the "!" inverted attributes problem.
     It'd be nice if we didn't have to use ! for this meaning too.
     If we decide to keep it, I'll need to update the grammar accordingly.
+    UPDATE: According to [Contributor 7746], we'll leave it in for now, so that we can
+    eventually use it for @!objc. We probably won't have @!objc before WWDC.
