@@ -850,37 +850,41 @@ Enumerations and Structures
     struct Card {
        var rank: Rank
        var suit: Suit
-       func description() {
+       func description() -> String {
           var rankDescription: String
           var suitDescription: String
 
           switch rank {
              case .Ace:
-                rankDescription = "The ace"
+                rankDescription = "ace"
              case .Jack:
-                rankDescription = "The jack"
+                rankDescription = "jack"
              case .Queen:
-                rankDescription = "The queen"
+                rankDescription = "queen"
              case .King:
-                rankDescription = "The king"
+                rankDescription = "king"
              default:
-                rankDescription = "The \(rank.toraw())"
+                rankDescription = String(rank.toRaw())
           }
 
           switch suit {
              case .Spades:
-                suitDescription += "of spades"
+                suitDescription = "spades"
              case .Hearts:
-                suitDescription += "of hearts"
+                suitDescription = "hearts"
              case .Diamonds:
-                suitDescription += "of diamonds"
+                suitDescription = "diamonds"
              case .Clubs:
-                suitDescription += "of clubs"
+                suitDescription = "clubs"
           }
 
-          return rankDescription + " " + suitDescription
+          return "The \(rankDescription) of \(suitDescription)"
        }
     }
+
+    var c = Card(rank:.Three, suit:.Spades)
+    c.description()
+    
 
 
 .. Suits are in Bridge order, which matches Unicode order.
