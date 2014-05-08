@@ -244,8 +244,6 @@ The following keywords are reserved and may not be used as identifiers.
   ``__FUNCTION__``,
   and ``__LINE__``.
 
-.. NOTE: Chris removed 'weak' and 'unowned' from the list of keywords in r16940.
-
 .. langref-grammar
 
     get
@@ -273,6 +271,10 @@ The following keywords are reserved and may not be used as identifiers.
   ``prefix``,
   ``right``,
   ``set``,
+  ``unowned``,
+  ``unowned(safe)``,
+  ``unowned(unsafe)``,
+  ``weak``
   and ``willSet``.
   Outside the context in which they appear in the grammar,
   they can be used as identifiers.

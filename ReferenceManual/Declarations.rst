@@ -52,7 +52,7 @@ the term *declaration* covers both declarations and definitions.
     declarations --> declaration declarations-OPT
 
     declaration-specifiers --> declaration-specifier declaration-specifiers-OPT
-    declaration-specifier --> ``class`` | ``static`` | ``mutating`` | ``nonmutating`` | ``override``
+    declaration-specifier --> ``class`` | ``mutating`` | ``nonmutating`` | ``override`` | ``static`` | ``unowned`` | ``unowned(safe)`` | ``unowned(unsafe)`` | ``weak``
 
 .. NOTE: Removed enum-member-declaration, because we don't need it anymore.
 
