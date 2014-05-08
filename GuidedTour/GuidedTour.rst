@@ -835,6 +835,59 @@ is always the same as the side length of its square.
 Enumerations and Structures
 ---------------------------
 
+::
+
+    enum Suit {
+       case Spades, Hearts, Diamonds, Clubs
+    }
+
+    enum Rank: Int {
+       case Ace = 1
+       case Two, Three, Four, Five, Six, Seven, Eight, Nine, Ten
+       case Jack, Queen, King
+    }
+
+    struct Card {
+       var rank: Rank
+       var suit: Suit
+       func description() {
+          var rankDescription: String
+          var suitDescription: String
+
+          switch rank {
+             case .Ace:
+                rankDescription = "The ace"
+             case .Jack:
+                rankDescription = "The jack"
+             case .Queen:
+                rankDescription = "The queen"
+             case .King:
+                rankDescription = "The king"
+             default:
+                rankDescription = "The \(rank.toraw())"
+          }
+
+          switch suit {
+             case .Spades:
+                suitDescription += "of spades"
+             case .Hearts:
+                suitDescription += "of hearts"
+             case .Diamonds:
+                suitDescription += "of diamonds"
+             case .Clubs:
+                suitDescription += "of clubs"
+          }
+
+          return rankDescription + " " + suitDescription
+       }
+    }
+
+
+.. Suits are in Bridge order, which matches Unicode order.
+   In other games, orders differ.
+   Wikipedia lists a good half dozen orders.
+    
+    
 .. write-me::
 
 * Playing card suits (no raw value)
