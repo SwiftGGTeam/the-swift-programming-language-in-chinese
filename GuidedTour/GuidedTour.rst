@@ -837,11 +837,18 @@ Enumerations and Structures
 
 .. write-me::
 
+* Playing card suits (no raw value)
+* Playing card ranks (to/from raw)
+
+* Struct of suit + rank for playing card
+* Type method to print a description
+* For loop to generate a whole deck
+
 * Differences from objects (reference types)
 * Use structs for complex multipart data
 * Use enums when values come from a list
+
 * Associating additional data with enums
-* Indicate protocol conformance using “:”
 
 * Optional is just an enum -- no magic.
 
