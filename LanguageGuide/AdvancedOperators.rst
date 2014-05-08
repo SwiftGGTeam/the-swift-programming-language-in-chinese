@@ -1,7 +1,30 @@
 Advanced Operators
 ==================
 
-.. write-me::
+In addition to the operators described in :doc:`BasicOperators`,
+Swift provides several advanced operators that perform more complex value manipulation.
+These include all of the bitwise and bit shifting operators you will be familiar with
+from C and Objective-C.
+
+Unlike C, Swift's arithmetic operators do not overflow by default,
+and overflow behavior is trapped and reported as an error.
+If you wish to opt in to overflowing behavior,
+Swift provides a second set of arithmetic operators that overflow by default,
+such as the overflow addition operator (``&+``).
+All of these operators are described in detail below.
+
+When you define your own structures, classes, and enumerations,
+it can be useful to provide your own implementations of
+the standard Swift operators for these custom types.
+Swift makes it easy to provide tailored implementations of these operators,
+and to determine exactly what their behavior should be for each type you create.
+
+You're not just limited to the standard operators, either.
+Swift gives you the freedom to define your own custom
+infix, prefix, postfix, and assignment operators,
+with custom precedence and associativity values.
+These operators can be used and adopted in your code just like any of the standard operators,
+and you can even extend existing types to support the custom operators you define.
 
 .. _AdvancedOperators_BitwiseOperators:
 
