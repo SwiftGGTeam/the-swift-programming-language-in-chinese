@@ -244,8 +244,6 @@ The following keywords are reserved and may not be used as identifiers.
   ``__FUNCTION__``,
   and ``__LINE__``.
 
-.. NOTE: Chris removed 'weak' and 'unowned' from the list of keywords in r16940.
-
 .. langref-grammar
 
     get
@@ -273,6 +271,10 @@ The following keywords are reserved and may not be used as identifiers.
   ``prefix``,
   ``right``,
   ``set``,
+  ``unowned``,
+  ``unowned(safe)``,
+  ``unowned(unsafe)``,
+  ``weak``
   and ``willSet``.
   Outside the context in which they appear in the grammar,
   they can be used as identifiers.
@@ -284,20 +286,23 @@ Literals
 --------
 
 A :newTerm:`literal` is the source code representation of a value of an
-integer, floating-point number, character, or string type.
-The following are examples of literals: ::
+integer, floating-point number, or string type.
+The following are examples of literals:
 
-    42                  // Integer literal
-    3.14159             // Floating-point literal
-    'a'                 // Character literal
-    "Hello, world!"     // String literal
+.. testcode::
 
+    -> 42               // Integer literal
+    -> 3.14159          // Floating-point literal
+    -> "Hello, world!"  // String literal
+    << // r0 : Int = 42
+    << // r1 : Double = 3.14159
+    << // r2 : String = "Hello, world!"
 
 .. syntax-grammar::
 
     Grammar of a literal
 
-    literal --> integer-literal | floating-point-literal | textual-literal
+    literal --> integer-literal | floating-point-literal | string-literal
 
 
 .. _LexicalStructure_IntegerLiterals:
@@ -470,25 +475,10 @@ which represents a 32-bit floating-point number.
     sign --> ``+`` | ``-``
 
 
-.. _LexicalStructure_TextualLiterals:
+.. _LexicalStructure_StringLiterals:
 
-Textual Literals
-~~~~~~~~~~~~~~~~~
-
-There are two kinds of textual literals:
-single character literals and string literals.
-
-A character literal is a single character surrounded by single quotes,
-with the following form:
-
-.. syntax-outline::
-
-    '<#character#>'
-
-Character literals cannot contain
-an unescaped single quote (``'``),
-an unescaped backslash (``\``),
-a carriage return, or a line feed.
+String Literals
+~~~~~~~~~~~~~~~
 
 A string literal is a sequence of characters surrounded by double quotes,
 with the following form:
@@ -503,7 +493,7 @@ an unescaped backslash (``\``),
 a carriage return, or a line feed.
 
 Special characters
-can be included in character and string literals
+can be included in string literals
 using the following escape sequences:
 
 * Null Character (``\0``)
@@ -538,15 +528,23 @@ a carriage return, or a line feed.
 The expression must evaluate to a value of a type
 that the ``String`` class has an initializer for.
 
-For example, all the following have the same value: ::
+For example, all the following string literals have the same value:
 
-   "1 2 3"
-   "1 2 \(3)"
-   "1 2 \(1 + 2)"
-   var x = 3; "1 2 \(x)"
+.. testcode::
 
-Character literals are of type ``Character``.
-String literals are of type ``String``.
+   -> "1 2 3"
+   << // r0 : String = "1 2 3"
+   -> "1 2 \(3)"
+   << // r1 : String = "1 2 3"
+   -> "1 2 \(1 + 2)"
+   << // r2 : String = "1 2 3"
+   -> var x = 3; "1 2 \(x)"
+   << // x : Int = 3
+   << // r3 : String = "1 2 3"
+
+String literals are of type ``String``. The characters that make up a string
+are of type ``Character``. For more information about the ``String`` and ``Character``
+types, see :doc:`../LanguageGuide/Strings`.
 
 .. NOTE: We will have this as a single Unicode char, as well as Char which will be a
    single Unicode grapheme cluster.  Watch for changes around this and the
@@ -573,13 +571,7 @@ String literals are of type ``String``.
 
 .. syntax-grammar::
 
-    Grammar of textual literals
-
-    textual-literal --> character-literal | string-literal
-
-    character-literal --> ``'`` quoted-character ``'``
-    quoted-character --> escaped-character
-    quoted-character --> Any Unicode extended grapheme cluster except ``'``, ``\``, U+000A, or U+000D
+    Grammar of a string literal
 
     string-literal --> ``"`` quoted-text ``"``
     quoted-text --> quoted-text-item quoted-text-OPT
@@ -596,10 +588,14 @@ String literals are of type ``String``.
    the quoted-texts rule which allows repetition; no need to allow
    repetition in the quoted-text/escaped-character rule too.
 
-.. TODO: The rules for characters and strings are still in flux,
-    so we'll probably need to circle back to this section later.
-    I'm still going to submit it to Jeanne in its current form,
-    while letting her know that it's not final.
+.. Now that single quotes are gone, we don't have a character literal.
+	Because we may one bring them back, here's the old grammar for them:
+
+	textual-literal --> character-literal | string-literal
+
+    character-literal --> ``'`` quoted-character ``'``
+    quoted-character --> escaped-character
+    quoted-character --> Any Unicode extended grapheme cluster except ``'``, ``\``, U+000A, or U+000D
 
 
 .. _LexicalStructure_Operators:

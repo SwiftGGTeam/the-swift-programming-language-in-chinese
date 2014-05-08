@@ -238,10 +238,14 @@ with the same number of elements.
 (Nested tuples are allowed.)
 Assignment is performed from each part of the *value*
 to the corresponding part of the *expression*.
-For example: ::
+For example:
 
-    (a, _, (b, c)) = ("test", 9.45, (12, 3))
-    // a is "test", b is 12, c is 3, and 9.45 is ignored
+.. testcode::
+
+    >> var (a, _, (b, c)) = ("test", 9.45, (12, 3))
+    << // (a, _, (b, c)) : (String, Double, (Int, Int)) = ("test", 9.45, (12, 3))
+    -> (a, _, (b, c)) = ("test", 9.45, (12, 3))
+    -> // a is "test", b is 12, c is 3, and 9.45 is ignored
 
 The assignment operator does not return any value.
 
@@ -333,19 +337,26 @@ It behaves as follows:
   otherwise the value returned is ``nil``.
   For example, casting from a superclass to a subclass.
 
-For example: ::
+For example:
 
-    class SomeSuperType {}
-    class SomeType: SomeSuperType {}
-    class SomeChildType: SomeType {}
-    let x = SomeType()
+.. testcode:: type-casting
 
-    let y = x as SomeSuperType  // y is of type SomeSuperType
-    let z = x as SomeChildType  // z is of type SomeChildType?
+    -> class SomeSuperType {}
+    -> class SomeType: SomeSuperType {}
+    -> class SomeChildType: SomeType {}
+    -> let x = SomeType()
+    << // x : SomeType = <SomeType instance>
+    ---
+    -> let y = x as SomeSuperType  // y is of type SomeSuperType
+    << // y : SomeSuperType = <SomeSuperType instance>
+    -> let z = x as SomeChildType  // z is of type SomeChildType?
+    << // z : SomeChildType? = <unprintable value>
 
 Specifying a type with ``as`` provides the same type information
 to the compiler as a function call or a type annotation,
-as shown in the following examples: ::
+as shown in the following examples:
+
+::
 
     func f(a: SomeSuperType) -> SomeSuperType { return a }
     func g(a: SomeChildType) -> SomeChildType { return a }
@@ -380,10 +391,18 @@ If so, it returns ``true``; otherwise, it returns ``false``.
     If so, it returns ``true``; otherwise, it returns ``false``.
 
 The check must not be known to be true or false at compile time.
-The following are invalid: ::
+The following are invalid:
 
-    "hello" is String
+.. testcode::
+
+    -> "hello" is String
+    !! <REPL Input>:1:9: error: 'is' test is always true
+    !! "hello" is String
+    !!         ^
     "hello" is Int
+    !! <REPL Input>:1:9: error: cannot convert the expression's type 'Bool' to type 'StringLiteralConvertible'
+    !! "hello" is Int
+    !! ~~~~~~~~^~~~~~
 
 For more information type casting and to see more examples that use the type-casting operators,
 see :doc:`../LanguageGuide/TypeCasting`.
@@ -432,6 +451,7 @@ to make more complex expressions.
 
     primary-expression --> identifier generic-argument-clause-OPT
     primary-expression --> literal-expression
+    primary-expression --> self-expression
     primary-expression --> superclass-expression
     primary-expression --> closure-expression
     primary-expression --> anonymous-closure-argument
@@ -538,6 +558,30 @@ for their respective values.
     dictionary-literal-item --> expression ``:`` expression
 
 
+.. _Expressions_SelfExpression:
+
+Self Expression
+~~~~~~~~~~~~~~~
+
+.. write-me::
+
+.. syntax-outline::
+
+    self
+    self.<#member name#>
+    self[<#subscript index#>)
+    self.init(<#initializer arguments#>)
+
+.. syntax-grammar::
+
+    Grammar of a self expression
+
+    self-expression --> ``self``
+    self-expression --> ``self`` ``.`` identifier
+    self-expression --> ``self`` ``[`` expression ``]``
+    self-expression --> ``self`` ``.`` ``init``
+
+
 .. _Expressions_SuperclassExpression:
 
 Superclass Expression
@@ -583,11 +627,11 @@ as part of the subclass's initializer.
 
     Grammar of a superclass expression
 
-    superclass-expression --> superclass-method-expression | superclass-subscript-expression | superclass-constructor-expression
+    superclass-expression --> superclass-method-expression | superclass-subscript-expression | superclass-initializer-expression
 
     superclass-method-expression --> ``super`` ``.`` identifier
     superclass-subscript-expression --> ``super`` ``[`` expression ``]``
-    superclass-constructor-expression --> ``super`` ``.`` ``init``
+    superclass-initializer-expression --> ``super`` ``.`` ``init``
 
 
 .. _Expressions_ClosureExpression:
@@ -692,10 +736,14 @@ It has the following form:
 
    .<#member name#>
 
-For example: ::
+For example:
 
-    var x = MyEnumeration.SomeValue
-    x = .AnotherValue
+.. testcode::
+
+    >> enum MyEnumeration { case SomeValue, AnotherValue }
+    -> var x = MyEnumeration.SomeValue
+    << // x : MyEnumeration = <unprintable value>
+    -> x = .AnotherValue
 
 .. langref-grammar
 
@@ -752,9 +800,14 @@ Wildcard Expression
 A :newTerm:`wildcard expression`
 is used to explicitly ignore a value during an assignment.
 For example in the following assignment
-10 is assigned to ``x`` and 20 is ignored: ::
+10 is assigned to ``x`` and 20 is ignored:
 
-    (x, _) = (10, 20)
+.. testcode::
+
+    >> var (x, _) = (10, 20)
+    << // (x, _) : (Int, Int) = (10, 20)
+    -> (x, _) = (10, 20)
+    -> // x is 10, 20 is ignored
 
 .. <rdar://problem/16678866> Assignment to _ from a variable causes a REPL segfault
 
@@ -807,8 +860,8 @@ see :doc:`../LanguageGuide/BasicOperators` and :doc:`../LanguageGuide/AdvancedOp
     postfix-expression --> function-call-expression
     postfix-expression --> initializer-expression
     postfix-expression --> explicit-member-expression
-    postfix-expression --> self-expression
-    postfix-expression --> dynamic-type-expression
+    postfix-expression --> postfix-self-expression
+    postfix-expression --> metatype-expression
     postfix-expression --> subscript-expression
     postfix-expression --> forced-expression
     postfix-expression --> chained-optional-expression
@@ -845,10 +898,11 @@ A function call expression can include a :newTerm:`trailing closure`
 in the form of a closure expression immediately after the closing parenthesis.
 The trailing closure is understood as an argument to the function,
 added after the last parenthesized argument.
-The following function calls are equivalent: ::
+The following function calls are equivalent::
 
-    exampleFunction(x, {$0 == 13})
-    exampleFunction(x) {$0 == 13}
+
+     someFunction(x, {$0 == 13})
+     someFunction(x) {$0 == 13}
 
 If the trailing closure is the function's only argument,
 the parentheses can be omitted: ::
@@ -892,10 +946,17 @@ It has the following form:
 An initializer expression is used like a function call
 to initialize a new instance of a type.
 Unlike other functions, an initializer can't be used as a value.
-For example: ::
+For example:
 
-    var x = MyClass.someClassFunction // ok
-    var y = MyClass.init              // error
+.. testcode::
+
+    >> class MyClass { class func someClassFunction() {} }
+    -> var x = MyClass.someClassFunction // ok
+    << // x : () -> () = <unprintable value>
+    -> var y = MyClass.init              // error
+    !! <REPL Input>:1:17: error: initializer cannot be referenced without arguments
+    !! var y = MyClass.init
+    !!                 ^
 
 Initializer expressions are also used
 to delegate to the initializer of a superclass: ::
@@ -931,20 +992,27 @@ and the identifier of its member.
 
 The members of a named type are named
 as part of the type's declaration or extension.
-For example: ::
+For example:
 
-    class C { var x }
-    var c = C()
-    let y = c.x  // Member access
+.. testcode::
+
+    -> class C { var x = 42 }
+    -> let c = C()
+    << // c : C = <C instance>
+    -> let y = c.x  // Member access
+    << // y : Int = 42
 
 The members of a tuple
 are implictly named using integers in the order they appear,
 starting from zero.
-For example: ::
+For example:
 
-    var t = (10, 20, 30)
-    t.0 = t.1
-    // Now t is (20, 20, 30)
+.. testcode::
+
+    -> var t = (10, 20, 30)
+    << // t : (Int, Int, Int) = (10, 20, 30)
+    -> t.0 = t.1
+    -> // Now t is (20, 20, 30)
 
 The members of a module access
 the top-level declarations of that module.
@@ -964,10 +1032,10 @@ the top-level declarations of that module.
     explicit-member-expression --> postfix-expression ``.`` identifier generic-argument-clause-OPT
 
 
-.. _Expressions_SelfExpression:
+.. _Expressions_PostfixSelfExpression:
 
-Self Expression
-~~~~~~~~~~~~~~~
+Postfix Self Expression
+~~~~~~~~~~~~~~~~~~~~~~~
 
 .. write-me:: This section needs a rewrite.
 
@@ -976,7 +1044,7 @@ Self Expression
        <#expression#>.self
 
 ..  Old prose:
-    A :newTerm:`self expression` is an explicit reference
+    A :newTerm:`postfix self expression` is an explicit reference
     to a type or an instance of a type.
     It has the following form:
 
@@ -1021,13 +1089,13 @@ Self Expression
 
     Grammar of a self expression
 
-    self-expression --> postfix-expression ``.`` ``self``
+    postfix-self-expression --> postfix-expression ``.`` ``self``
 
 
-.. _Expressions_DynamicTypeExpression:
+.. _Expressions_MetatypeExpression:
 
-Dynamic Type Expression
-~~~~~~~~~~~~~~~~~~~~~~~
+Metatype Expression
+~~~~~~~~~~~~~~~~~~~
 
 .. write-me::
 
@@ -1039,7 +1107,7 @@ Dynamic Type Expression
 
     Grammar of a dynamic type expression
 
-    dynamic-type-expression --> postfix-expression ``.`` ``dynamicType``
+    metatype-expression --> postfix-expression ``.`` ``dynamicType``
 
 
 .. _Expressions_SubscriptExpression:
