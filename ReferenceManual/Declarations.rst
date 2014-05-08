@@ -212,20 +212,23 @@ or setters.
 If the *constant name* of a constant declaration is a tuple pattern,
 the name of each item in the tuple is bound to the corresponding value
 in the initializer *expression*.
-::
 
-    let (firstNumber, secondNumber) = (10, 42)
-    // (firstNumber, secondNumber): (Int, Int) = (10, 42)
+.. testcode:: constant-decl
+
+    -> let (firstNumber, secondNumber) = (10, 42)
+    << // (firstNumber, secondNumber): (Int, Int) = (10, 42)
 
 In this example,
 ``firstNumber`` is a named constant for the value ``10``,
 and ``secondNumber`` is a named constant for the value ``42``.
-Both constants can now be used independently::
+Both constants can now be used independently:
 
-    firstNumber
-    // firstNumber: Int = 10
-    secondNumber
-    // secondNumber: Int = 42
+.. testcode:: constant-decl
+
+    -> println("The first number is \(firstNumber).")
+    <- The first number is 10.
+    -> println("The second number is \(secondNumber).")
+    <- The second number is 42.
 
 The type annotation (``:`` *type*) is optional in a constant declaration
 when the type of the *constant name* can be inferred,
@@ -733,11 +736,11 @@ they are implicitly assigned the values ``0``, ``1``, ``2``, and so on.
 Each unassigned case of type ``Int`` is implicitly assigned a raw value
 that is automatically incremented from the raw value of the previous case.
 
-::
+.. testcode::
 
-    enum ExampleEnum: Int {
-       case A, B, C = 5, D
-    }
+    -> enum ExampleEnum: Int {
+          case A, B, C = 5, D
+       }
 
 In the above example, the value of ``ExampleEnum.A`` is ``0`` and the value of
 ``ExampleEnum.B`` is ``1``. And because the value of ``ExampleEnum.C`` is

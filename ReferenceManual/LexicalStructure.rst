@@ -284,14 +284,17 @@ Literals
 --------
 
 A :newTerm:`literal` is the source code representation of a value of an
-integer, floating-point number, character, or string type.
-The following are examples of literals: ::
+integer, floating-point number, or string type.
+The following are examples of literals:
 
-    42                  // Integer literal
-    3.14159             // Floating-point literal
-    'a'                 // Character literal
-    "Hello, world!"     // String literal
+.. testcode::
 
+    -> 42               // Integer literal
+    -> 3.14159          // Floating-point literal
+    -> "Hello, world!"  // String literal
+    << // r0 : Int = 42
+    << // r1 : Double = 3.14159
+    << // r2 : String = "Hello, world!"
 
 .. syntax-grammar::
 
@@ -538,12 +541,19 @@ a carriage return, or a line feed.
 The expression must evaluate to a value of a type
 that the ``String`` class has an initializer for.
 
-For example, all the following have the same value: ::
+For example, all the following string literals have the same value:
 
-   "1 2 3"
-   "1 2 \(3)"
-   "1 2 \(1 + 2)"
-   var x = 3; "1 2 \(x)"
+.. testcode::
+
+   -> "1 2 3"
+   << // r0 : String = "1 2 3"
+   -> "1 2 \(3)"
+   << // r1 : String = "1 2 3"
+   -> "1 2 \(1 + 2)"
+   << // r2 : String = "1 2 3"
+   -> var x = 3; "1 2 \(x)"
+   << // x : Int = 3
+   << // r3 : String = "1 2 3"
 
 Character literals are of type ``Character``.
 String literals are of type ``String``.

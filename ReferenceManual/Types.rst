@@ -68,17 +68,20 @@ Type Annotation
 
 A :newTerm:`type annotation` explicitly specifies the type of a variable or expression.
 Type annotations begin with a colon (``:``) and end with a type,
-as the following examples show::
+as the following examples show:
 
-    let x: (Double, Double) = (3.14159, 2.71828)
-    func foo(a: Int) -> Int { /* ... */ }
+.. testcode::
+
+    -> let someTuple: (Double, Double) = (3.14159, 2.71828)
+    << // someTuple : (Double, Double) = (3.14159, 2.71828)
+    -> func someFunction(a: Int) { /* ... */ }
 
 In the first example,
-the expression ``x`` is specified to have the tuple type ``(Double, Double)``.
+the expression ``someTuple`` is specified to have the tuple type ``(Double, Double)``.
 In the second example,
-the parameter ``a`` to the function ``foo`` is specified to have the type ``Int``.
+the parameter ``a`` to the function ``someFunction`` is specified to have the type ``Int``.
 
-Type annotations may contain an optional list of type attributes before the type.
+Type annotations can contain an optional list of type attributes before the type.
 
 .. syntax-grammar::
 
@@ -104,20 +107,25 @@ to the named type ``Dictionary<String, Int>``.
 There are two cases in which a type identifier does not refer to a type with the same name.
 In the first case, a type identifier refers to a type alias of a named or compound type.
 For instance, in the example below,
-the use of ``Point`` in the type annotation refers to the tuple type ``(Double, Double)``.
-::
+the use of ``Point`` in the type annotation refers to the tuple type ``(Int, Int)``.
 
-    typealias Point = (Double, Double)
-    let origin: Point = (0, 0)
-    // origin: Point = (0.0, 0.0)
+.. testcode::
+
+    -> typealias Point = (Int, Int)
+    -> let origin: Point = (0, 0)
+    << // origin : Point = (0, 0)
 
 In the second case, a type identifier uses dot (``.``) syntax to refer to named types
 declared in other modules or nested within other types.
 For example, the type identifier in the following code references the named type ``MyType``
 that is declared in the ``ExampleModule`` module.
-::
 
-    var someValue: ExampleModule.MyType
+.. testcode::
+
+    -> var someValue: ExampleModule.MyType
+    !! <REPL Input>:1:16: error: use of undeclared type 'ExampleModule'
+    !! var someValue: ExampleModule.MyType
+    !!                ^~~~~~~~~~~~~
 
 .. langref-grammar
 
@@ -282,10 +290,19 @@ Optional Type
 
 The Swift language defines the postfix operator ``?`` as syntactic sugar for
 the named type ``Optional<T>``, which is defined in the Swift Standard Library.
-In other words, the following two declarations are equivalent::
+In other words, the following two declarations are equivalent:
 
-    var optionalInteger: Int?
-    var optionalInteger: Optional<Int>
+.. testcode:: optional-type
+
+    -> var optionalInteger: Int?
+    << // optionalInteger : Int? = <unprintable value>
+    -> var optionalInteger: Optional<Int>
+    !! <REPL Input>:1:5: error: invalid redeclaration of 'optionalInteger'
+    !! var optionalInteger: Optional<Int>
+    !!     ^
+    !! <REPL Input>:1:5: note: 'optionalInteger' previously declared here
+    !! var optionalInteger: Int?
+    !!     ^
 
 .. TODO: Rewrite the first sentence. In this case, '?' isn't the operator at all;
     it's just punctuation.
@@ -310,11 +327,13 @@ if an instance of an optional type ``T?`` contains any value of type ``T``
 the optional type evaluates to ``true``. Otherwise, it evaluates to ``false``.
 
 If an instance of an optional type contains a value,
-you can access that value using the postfix operator ``!``, as shown below::
+you can access that value using the postfix operator ``!``, as shown below:
 
-    optionalInteger = 42
-    optionalInteger!
-    // 42
+.. testcode:: optional-type
+
+    -> optionalInteger = 42
+    -> optionalInteger! // 42
+    << // r0 : Int = 42
 
 Unwrapping an optional
 that has a value of ``Optional.None`` results in a runtime error.
@@ -550,12 +569,14 @@ and then passing this type information up to the root (the variable ``x``).
 In Swift, type information can also flow in the opposite direction---from the root down to the leaves.
 In the following example, for instance,
 the explicit type annotation (``: Float``) on the constant ``eFloat``
-causes the numeric literal ``2.71828`` to have type ``Float`` instead of type ``Double``.::
+causes the numeric literal ``2.71828`` to have type ``Float`` instead of type ``Double``.
 
-    let e = 2.71828
-    // e: Double = 2.71828
-    let eFloat: Float = 2.71828
-    // eFloat: Float = 2.71828
+.. testcode::
+
+    -> let e = 2.71828 // The type of e is inferred to be Double.
+    << // e : Double = 2.71828
+    -> let eFloat: Float = 2.71828 // The type of eFloat is Float.
+    << // eFloat : Float = 2.71828007698059
 
 Type inference in Swift operates at the level of a single expression or statement.
 This means that all of the information needed to infer an omitted type or part of a type

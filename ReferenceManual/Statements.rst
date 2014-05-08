@@ -403,9 +403,15 @@ If a guard expression is present, the *statements* within the relevant case
 are executed only if the value of the *control expression*
 matches one of the patterns of the case and the guard expression evaluates to ``true``.
 For instance, a *control expression* matches the case in the example below
-only if it is a tuple that contains two elements of the same value, such as ``(1, 1)``. ::
+only if it is a tuple that contains two elements of the same value, such as ``(1, 1)``.
 
-    case let (x, y) where x == y:
+.. testcode::
+
+    >> switch (1, 1) {
+    -> case let (x, y) where x == y:
+    >> break
+    >> default: break
+    >> }
 
 As the above example shows, patterns in a case can also bind constants
 using the keyword ``let`` (they can also bind variables using the keyword ``var``).
