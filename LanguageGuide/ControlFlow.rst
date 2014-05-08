@@ -709,7 +709,7 @@ a single lowercase character called ``someCharacter``:
 .. testcode:: switch
 
    -> let someCharacter: Character = "e"
-   << // someCharacter : Character = "e"
+   << // someCharacter : Character = <unprintable value>
    -> switch someCharacter {
          case "a", "e", "i", "o", "u":
             println("\(someCharacter) is a vowel")
@@ -755,7 +755,7 @@ It is not valid to write the following code, because the first case is empty:
 .. testcode:: noFallthrough
 
    -> let anotherCharacter: Character = "a"
-   << // anotherCharacter : Character = "a"
+   << // anotherCharacter : Character = <unprintable value>
    -> switch anotherCharacter {
          case "a":
          case "A":
