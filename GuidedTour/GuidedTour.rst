@@ -839,46 +839,45 @@ Enumerations and Structures
 
     enum Suit {
        case Spades, Hearts, Diamonds, Clubs
+       func description() -> String {
+          switch self {
+             case .Ace:
+                return "ace"
+             case .Jack:
+                return "jack"
+             case .Queen:
+                return "queen"
+             case .King:
+                return "king"
+             default:
+                return String(self.toRaw())
+          }
+       }
     }
 
     enum Rank: Int {
        case Ace = 1
        case Two, Three, Four, Five, Six, Seven, Eight, Nine, Ten
        case Jack, Queen, King
+       func description() -> String {
+          switch self {
+             case .Spades:
+                return "spades"
+             case .Hearts:
+                return "hearts"
+             case .Diamonds:
+                return "diamonds"
+             case .Clubs:
+                return "clubs"
+          }
+       }
     }
 
     struct Card {
        var rank: Rank
        var suit: Suit
        func description() -> String {
-          var rankDescription: String
-          var suitDescription: String
-
-          switch rank {
-             case .Ace:
-                rankDescription = "ace"
-             case .Jack:
-                rankDescription = "jack"
-             case .Queen:
-                rankDescription = "queen"
-             case .King:
-                rankDescription = "king"
-             default:
-                rankDescription = String(rank.toRaw())
-          }
-
-          switch suit {
-             case .Spades:
-                suitDescription = "spades"
-             case .Hearts:
-                suitDescription = "hearts"
-             case .Diamonds:
-                suitDescription = "diamonds"
-             case .Clubs:
-                suitDescription = "clubs"
-          }
-
-          return "The \(rankDescription) of \(suitDescription)"
+          return "The \(rank.description()) of \(suit.description())"
        }
     }
 
