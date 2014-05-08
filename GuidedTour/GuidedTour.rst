@@ -41,8 +41,8 @@ for answers to specific questions.
    to parts of this book above,
    rather than just putting them in italics.
 
-Simple Values
--------------
+Setting Simple Values
+---------------------
 
 You create constants and variables using the same syntax,
 with one difference:
@@ -221,8 +221,8 @@ use a type annotation to specify it expliticly.
 .. The REPL output after creating a dictionary doesn’t make any sense.
    No way to get it to pretty-print the keys and values.
 
-Control Flow
-------------
+Controlling Flow of Execution
+-----------------------------
 
 Use ``if`` to choose between blocks of code
 by checking Boolean conditions.
@@ -404,8 +404,8 @@ ensuring that the loop is run at least once.
    -> println("m is \(m)")
    << m is 128
 
-Functions and Closures
-----------------------
+Defining and Calling Functions
+------------------------------
 
 Use ``func`` to declare functions
 and call them by following their name
@@ -585,8 +585,8 @@ as the second argument to the ``sort`` function.
     -> sort([1, 5, 3, 12, 2], >)
     <$ : Array<Int> = [12, 5, 3, 2, 1]
 
-Objects and Classes
--------------------
+Defining and Instantiating Classes
+----------------------------------
 
 .. TODO: Pull in the Shape example code from old tour.
 
@@ -605,8 +605,8 @@ Objects and Classes
 * Override superclass methods with “@override”
 * Call the superclass’s implentation with “super”
 
-Enumerations and Structures
----------------------------
+Working with Enumerations and Structures
+----------------------------------------
 
 .. write-me::
 
@@ -616,8 +616,8 @@ Enumerations and Structures
 * Associating additional data with enums
 * Indicate protocol conformance using “:”
 
-Protocols
----------
+Defining and Implementing Protocols
+-----------------------------------
 
 .. write-me::
 
@@ -625,8 +625,8 @@ Protocols
 * First class type -- usable in variable declarations etc.
 * Can provide a default implementation.
 
-Optionals
----------
+Working with Optional Values
+----------------------------
 
 .. write-me::
 
