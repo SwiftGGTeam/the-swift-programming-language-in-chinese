@@ -826,6 +826,12 @@ is always the same as the side length of its square.
    (or if it's even allowed)
    to use them outside a class or a struct.
 
+.. write-me::
+
+* deinit
+* Local vs API names
+* Optional chaining with ?
+
 Enumerations and Structures
 ---------------------------
 
@@ -837,6 +843,8 @@ Enumerations and Structures
 * Associating additional data with enums
 * Indicate protocol conformance using “:”
 
+* Optional is just an enum -- no magic.
+
 Protocols
 ---------
 
@@ -846,14 +854,6 @@ Protocols
 * First class type -- usable in variable declarations etc.
 * Can provide a default implementation.
 
-Optionals
----------
-
-.. write-me::
-
-* Contrast with nil/NULL
-* Implemented as enum (no magic)
-* Convenience syntax “?” and "!"
 
 Additional Topics
 -----------------
