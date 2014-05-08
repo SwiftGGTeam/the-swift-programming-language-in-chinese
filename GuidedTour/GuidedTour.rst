@@ -221,29 +221,6 @@ use a type annotation to specify it expliticly.
 .. The REPL output after creating a dictionary doesn’t make any sense.
    No way to get it to pretty-print the keys and values.
 
-In a similar way to how arrays and dictionaries contain values,
-an optional value either contains a value or ``nil``.
-You indicate that something is optional
-by writing a question mark (``?``) after it:
-
-.. testcode::
-
-   -> var optionalString: String? = "Hello"
-   << // optionalString : String? = <unprintable value>
-   -> optionalString == nil
-   <$ : Bool = false
-
-Writing an exclamation mark (``!``) after an optional value
-forces that value to be unwrapped.
-You can use this if you know the optional always has a value.
-If the value is ``nil``,
-a runtime error is raised
-because there is no value to unwrap.
-For a safer approach,
-use ``if`` and ``let`` together
-to unwrap an optional value without the possibility of runtime errors,
-as shown in a listing below.
-
 Control Flow
 ------------
 
@@ -271,12 +248,20 @@ The conditional must be a Boolean expression;
 code like ``if remainingGummiBears { ... }`` is an error,
 not an implicit comparison to zero.
 
-Use ``if`` and ``let`` together to safely unwrap an optional value
-and assign it to a variable.
-This is the recommended way to work with optional values.
+You use ``if`` and ``let`` together to work with optional values.
+In a similar way to how arrays and dictionaries contain values,
+an optional value either contains a value
+or ``nil`` to indicate it has no value.
+Write a question mark (``?``) after a type
+to mark it as optional.
 
 .. testcode::
 
+   -> var optionalString: String? = "Hello"
+   << // optionalString : String? = <unprintable value>
+   -> optionalString == nil
+   <$ : Bool = false
+   ---
    -> var optionalName: String? = "John Appleseed"
    << // optionalName : String? = <unprintable value>
    -> var greeting = "Hello!"
@@ -286,6 +271,27 @@ This is the recommended way to work with optional values.
       }
    >> greeting
    << // greeting : String = "Hello, John Appleseed"
+
+.. admonition:: Experiment
+
+   Change ``optionalName`` to ``nil``.
+   What greeting do you get?
+   Add an ``else`` clause that sets a different greeting
+   if ``optionalName`` is ``nil``.
+
+If the optional value is ``nil``,
+the ``if`` behaves as if you wrote ``if false { ... }``.
+Otherwise the optional value is unwrapped and assigned
+to the variable after ``let``,
+which makes the unwrapped value available
+inside the block of code.
+
+Writing an exclamation mark (``!``) after an optional value
+forces that value to be unwrapped.
+If the optional value is ``nil``,
+a runtime error is raised.
+You should use this only when you are certain
+that the optional value can never be ``nil``.
 
 Use ``switch`` to choose between blocks of code
 where each block of code is associated
