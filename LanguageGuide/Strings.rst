@@ -105,6 +105,18 @@ or by initializing a new ``String`` with initialization syntax:
    because you'd be likely to use them as such if they start out empty.
    Is this the correct approach to take here?
 
+You can check whether a ``String`` value is empty
+by calling its ``isEmpty`` method:
+
+.. testcode:: emptyStrings
+
+   -> if emptyString.isEmpty() {
+         println("Nothing to see here")
+      }
+   <- Nothing to see here
+
+.. TODO: init(size, character)
+
 .. _Strings_StringMutability:
 
 String Mutability
@@ -155,9 +167,8 @@ and the new copy is passed or assigned, not the original version.
    you are always passing or assigning a *reference* to the same single ``NSString``.
    No copying of the string takes place, unless you specifically request it.
 
-Swift's copy-by-default ``String`` behavior
-matches the way that strings are used in practice.
-When a function or method passes you a ``String`` value in Swift,
+Swift's copy-by-default ``String`` behavior means that
+when a function or method passes you a ``String`` value,
 it is clear that you own that exact ``String`` value,
 regardless of where it came from.
 You can be confident that the string you are passed will not be modified
@@ -167,10 +178,6 @@ Behind the scenes, Swift's compiler optimizes string usage
 so that actual copying only takes place when absolutely necessary.
 This ensures that you always get great performance
 when working with strings as value types.
-
-.. TODO: talk about what this means for bridging to NSString,
-   and how the semantics for working with NSString
-   relate to the default value semantics used by String.
 
 .. _Strings_Characters:
 
@@ -310,28 +317,181 @@ and so the interpolation is valid.
    you can extend ``String`` to give it a new initializer that takes
    an instance of your custom type. This process is described in :doc:`Extensions`.
 
-.. _Strings_StringsAsACollectionOfCharacters:
+.. _Strings_CharacterCount:
 
-Strings as a Collection of Characters
--------------------------------------
+Character Count
+---------------
 
-.. write-me::
+Swift's ``String`` type represents a collection of ``Character`` values in a specified order.
+Each of these ``Chararacter`` values represents a single Unicode character.
+You can retrieve a count of these characters by calling
+the global ``countElements`` function,
+and passing in a string as the function's sole parameter:
 
-.. x iterating over a String
-.. x String is a collection of Characters
-.. x countElements(someString) to get the number of Characters in a String, *not* length
-.. x explain the difference between String's Characters, and NSString's UTF-16 code unit length
+.. testcode:: characterCount
+
+   -> let unusualMenagerie = "Koala 🐨, Snail 🐌, Penguin 🐧, Dromedary 🐪"
+   << // unusualMenagerie : String = "Koala 🐨, Snail 🐌, Penguin 🐧, Dromedary 🐪"
+   -> println("unusualMenagerie has \(countElements(unusualMenagerie)) characters")
+   <- unusualMenagerie has 40 characters
+
+.. note::
+
+   Different Unicode characters, and different representations of the same character,
+   can require different amounts of memory to store.
+   Because of this, characters in Swift do not each take up
+   the same amount of memory within a string's representation.
+   As a result, the length of a string cannot be calculated
+   without iterating through the string to consider each of its characters in turn.
+   If you are working with particularly long string values,
+   be aware that the ``countElements`` function will need to
+   iterate over the characters within a string
+   in order to calculate an accurate character count for that string.
+
+   Note also that the character count returned by ``countElements``
+   will not always be the same as the ``length`` property of
+   an ``NSString`` that contains the same characters.
+   The length of an ``NSString`` is based on
+   the number of 16-bit code units within the string's UTF-16 representation,
+   and not the number of Unicode characters within the string.
 
 .. _Strings_ComparingStrings:
 
 Comparing Strings
 -----------------
 
+Swift provides three ways to compare ``String`` values.
+These are string equality, prefix equality, and suffix equality.
+
+.. _Strings_StringEquality:
+
+String Equality
+~~~~~~~~~~~~~~~
+
+Two ``String`` values are considered equal if they contain
+exactly the same characters in the same order:
+
+.. testcode:: stringEquality
+
+   -> let quotation = "We're a lot alike, you and I."
+   << // quotation : String = "We\'re a lot alike, you and I."
+   -> let sameQuotation = "We're a lot alike, you and I."
+   << // sameQuotation : String = "We\'re a lot alike, you and I."
+   -> if quotation == sameQuotation {
+         println("These two strings are considered equal")
+      }
+   <- These two strings are considered equal
+
+.. _Strings_PrefixAndSuffixEquality:
+
+Prefix and Suffix Equality
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You can check if a string has a particular string prefix or suffix
+by calling the string's ``startsWith`` and ``endsWith`` methods,
+both of which take a single argument of type ``String`` and return a Boolean value.
+Both methods both perform a character-by-character comparison
+between the base string and the prefix or suffix string.
+
+The examples below consider an array of strings representing
+the scene locations from the first two acts of Shakespeare's *Romeo and Juliet*:
+
+.. testcode:: prefixesAndSuffixes
+
+   -> let romeoAndJuliet = [
+         "Act 1 Scene 1: Verona, A public place",
+         "Act 1 Scene 2: Capulet's mansion",
+         "Act 1 Scene 3: A room in Capulet's mansion",
+         "Act 1 Scene 4: A street outside Capulet's mansion",
+         "Act 1 Scene 5: The Great Hall in Capulet's mansion",
+         "Act 2 Scene 1: Outside Capulet's mansion",
+         "Act 2 Scene 2: Capulet's orchard",
+         "Act 2 Scene 3: Outside Friar Lawrence's cell",
+         "Act 2 Scene 4: A street in Verona",
+         "Act 2 Scene 5: Capulet's mansion",
+         "Act 2 Scene 6: Friar Lawrence's cell"
+      ]
+   << // romeoAndJuliet : Array<String> = ["Act 1 Scene 1: Verona, A public place", "Act 1 Scene 2: Capulet\'s mansion", "Act 1 Scene 3: A room in Capulet\'s mansion", "Act 1 Scene 4: A street outside Capulet\'s mansion", "Act 1 Scene 5: The Great Hall in Capulet\'s mansion", "Act 2 Scene 1: Outside Capulet\'s mansion", "Act 2 Scene 2: Capulet\'s orchard", "Act 2 Scene 3: Outside Friar Lawrence\'s Cell", "Act 2 Scene 4: A street in Verona", "Act 2 Scene 5: Capulet\'s mansion", "Act 2 Scene 6: Friar Lawrence\'s Cell"]
+
+You can use the ``startsWith`` method with the ``romeoAndJuliet`` array
+to count the number of scenes in Act 1 of the play:
+
+.. testcode:: prefixesAndSuffixes
+
+   -> var act1SceneCount = 0
+   << // act1SceneCount : Int = 0
+   -> for scene in romeoAndJuliet {
+         if scene.startsWith("Act 1 ") {
+            ++act1SceneCount
+         }
+      }
+   -> println("There are \(act1SceneCount) scenes in Act 1")
+   <- There are 5 scenes in Act 1
+
+Similarly, you can use the ``endsWith`` method to count the number of scenes
+that take place in or around Capulet's mansion and Friar Lawrence's cell:
+
+.. testcode:: prefixesAndSuffixes
+
+   -> var mansionCount = 0
+   << // mansionCount : Int = 0
+   -> var cellCount = 0
+   << // cellCount : Int = 0
+   -> for scene in romeoAndJuliet {
+         if scene.endsWith("Capulet's mansion") {
+            ++mansionCount
+         } else if scene.endsWith("Friar Lawrence's Cell") {
+            ++cellCount
+         }
+      }
+   -> println("\(mansionCount) mansion scenes; \(cellCount) cell scenes")
+   <- 6 mansion scenes; 2 cell scenes
+
+.. _Strings_ModifyingStrings:
+
+Modifying Strings
+-----------------
+
 .. write-me::
 
-.. x equivalence for String in Swift (right now)
-.. x isEmpty property for == ""
-.. .hasPrefix() and .hasSuffix()
+.. _Strings_SplittingAString:
+
+Splitting a String
+~~~~~~~~~~~~~~~~~~
+
+.. write-me::
+
+.. .split()
+
+.. _Strings_UppercaseAndLowercase:
+
+Uppercase and Lowercase
+~~~~~~~~~~~~~~~~~~~~~~~
+
+You can access an uppercase or lowercase version of a string
+with its ``uppercase`` and ``lowercase`` properties:
+
+.. testcode:: uppercaseAndLowercase
+
+   -> let normal = "Could you help me, please?"
+   << // normal : String = "Could you help me, please?"
+   -> let shouty = normal.uppercase
+   << // shouty : String = "COULD YOU HELP ME, PLEASE?"
+   /> shouty is equal to \"\(shouty)\"
+   </ shouty is equal to "COULD YOU HELP ME, PLEASE?"
+   -> let whispered = normal.lowercase
+   << // whispered : String = "could you help me, please?"
+   /> whispered is equal to \"\(whispered)\"
+   </ whispered is equal to "could you help me, please?"
+
+.. _Strings_ReversingAString:
+
+Reversing a String
+~~~~~~~~~~~~~~~~~~
+
+.. write-me::
+
+.. Reverse is a type that you can construct from a Collection that has a BidirectionalIndex
 
 .. _Strings_SlicingStrings:
 
@@ -343,21 +503,8 @@ Slicing Strings
 .. slicing a String (based on a good example to come from Dave)
 .. String can't be indexed with integers (again, cf NSString)
 .. bidirectional indexing (and why this is the case)
-
-.. _Strings_StringFunctionsAndMethods:
-
-String Functions and Methods
-----------------------------
-
-.. write-me::
-
-.. .split()
-.. uppercaseString and lowercaseString
-.. other generic functions from Collection
-   Reverse / reverse()?
-   Reverse is a type that you can construct from a Collection that has a BidirectionalIndex
-   startIndex
-   endIndex
+.. startIndex
+.. endIndex
    subscript
 
 .. _Strings_UnicodeRepresentations:
@@ -412,6 +559,11 @@ whose UTF-8 representation is the same as their ASCII representation.
 The second four ``codeUnit`` values (``240``, ``159``, ``144``, ``182``)
 are a four-byte UTF-8 representation of the 🐶 character.
 
+.. TODO: contiguousUTF8()
+
+.. TODO: nulTerminatedUTF8()
+   (which returns a NativeArray, but handwave this for now)
+
 .. _Strings_UTF16:
 
 UTF-16
@@ -455,7 +607,7 @@ a lead surrogate or trail surrogate code point.
 You can access a Unicode scalar representation of a ``String`` value
 by iterating over its ``unicodeScalars`` property.
 This property is of type ``UnicodeScalarView``,
-which is a collection of ``UnicodeScalar`` values,
+which is a collection of values of type ``UnicodeScalar``,
 Each ``UnicodeScalar`` has a ``value`` property that returns
 the scalar's 21-bit code point, represented within a ``UInt32`` value:
 
