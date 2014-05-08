@@ -286,13 +286,6 @@ to the variable after ``let``,
 which makes the unwrapped value available
 inside the block of code.
 
-Writing an exclamation mark (``!``) after an optional value
-forces that value to be unwrapped.
-If the optional value is ``nil``,
-a runtime error is raised.
-You should use this only when you are certain
-that the optional value can never be ``nil``.
-
 Use ``switch`` to choose between blocks of code
 where each block of code is associated
 with a possible value.
