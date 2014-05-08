@@ -74,6 +74,16 @@ the ``noreturn`` attribute to a function or method type.
     Keep an eye out for ``virtual``, which is coming soon (probably not for WWDC).
     "It's not there yet, but it'll be there at runtime, trust me."
 
+    TODO: Add ``NSManaged`` (OnVar):
+    The @NSManaged attribute can be applied to the properties of an
+    NSManagedObject subclass to indicate that they should be handled by
+    CoreData:
+
+    class Employee : NSManagedObject {
+      @NSManaged var name: String
+      @NSManaged var department: Department
+    }
+
 ``assignment``
     The ``assignment`` attribute is applied to functions that overload
     a compound assignment operator.
