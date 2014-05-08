@@ -56,12 +56,7 @@ the ``noreturn`` attribute to a function or method type.
 
     ✓ ``optional``
     ``transparent`` // Per Doug's email on 3/25, we probably shouldn't document this.
-    ``unowned``, ``unowned(unsafe)``, ``unowned(safe)``
 
-    TR: Need to get more information about this attribute from John McCall.
-    (see also John's 4/23/14 commit email for r16693)
-
-    ✓ ``weak``
     ``requires_stored_property_inits``
     NOTE: According to [Contributor 7746] and Doug's email on 4/26/14,
     we're not going to document this, because it's a very specialized attribute,
@@ -78,6 +73,16 @@ the ``noreturn`` attribute to a function or method type.
 
     Keep an eye out for ``virtual``, which is coming soon (probably not for WWDC).
     "It's not there yet, but it'll be there at runtime, trust me."
+
+    TODO: Add ``NSManaged`` (OnVar):
+    The @NSManaged attribute can be applied to the properties of an
+    NSManagedObject subclass to indicate that they should be handled by
+    CoreData:
+
+    class Employee : NSManagedObject {
+      @NSManaged var name: String
+      @NSManaged var department: Department
+    }
 
 ``assignment``
     The ``assignment`` attribute is applied to functions that overload
@@ -239,15 +244,17 @@ the ``noreturn`` attribute to a function or method type.
     or inherited when the subclass directly implements all of the superclass’s designated
     initializers (or overrides the designated initializers with convenience initializers).
 
-``weak``
-    The ``weak`` attribute is applied to a stored property, variable, or constant
-    to indicate that the property, variable, or constant has a weak reference to the
-    object stored as its value. The type of the property, variable, or constant
-    must be an optional class type. Use the ``weak`` attribute to avoid strong
-    reference cycles.
-
-.. TODO: If and when Dave includes a section about this in the Guide,
+.. TODO: 'weak' is now a CS keyword. Probably need to find somewhere else to describe it.
+    If and when Dave includes a section about this in the Guide,
     provide a link to the relevant section.
+
+    ``weak``
+        The ``weak`` attribute is applied to a stored property, variable, or constant
+        to indicate that the property, variable, or constant has a weak reference to the
+        object stored as its value. The type of the property, variable, or constant
+        must be an optional class type. Use the ``weak`` attribute to avoid strong
+        reference cycles.
+
 
 .. _Attributes_InterfaceBuilderAttributes:
 
