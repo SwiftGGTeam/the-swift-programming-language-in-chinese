@@ -1,17 +1,34 @@
 Strings and Characters
 ======================
 
-A :newTerm:`string` is an ordered collection of characters,
-such as ``"hello, world"`` or ``"albatross"``.
-Swift strings are represented by the ``String`` type,
-which in turn represents a collection of ``Character`` values.
+Swift's native ``String`` and ``Character`` types provide
+a fast, Unicode-compliant way to work with text in your code.
+The syntax for string creation and manipulation is lightweight and readable,
+with a similar syntax to simple C strings.
+String concatenation is as simple as
+adding together two strings with the ``+`` operator,
+and string mutability is managed by choosing between a constant or a variable,
+just like any other value in Swift.
+
+Despite this simplicity of syntax,
+Swift's ``String`` type is a fast, modern string implementation.
+Every string is composed of encoding-independent Unicode characters,
+and provides support for accessing those characters in various Unicode representations.
+
+Strings can also be used to insert
+constants, variables, literals, and expressions into longer strings,
+in a process known as string interpolation.
+This makes it easy to create custom string values for display, storage, and printing.
 
 .. _Strings_Strings:
 
 Strings
 -------
 
-.. write-me::
+A :newTerm:`string` is an ordered collection of characters,
+such as ``"hello, world"`` or ``"albatross"``.
+Swift strings are represented by the ``String`` type,
+which in turn represents a collection of ``Character`` values.
 
 .. note::
 
@@ -25,9 +42,6 @@ Strings
    see *Building Cocoa Apps With Swift*.
 
 .. TODO: make this be a link to BCAWS.
-
-.. QUESTION: This chapter is the only time I talk in detail about bridging in the Guide.
-   Is this okay to do?
 
 .. _Strings_Literals:
 
@@ -493,10 +507,10 @@ Reversing a String
 
 .. Reverse is a type that you can construct from a Collection that has a BidirectionalIndex
 
-.. _Strings_SlicingStrings:
+.. _Strings_SlicingAString:
 
-Slicing Strings
----------------
+Slicing a String
+~~~~~~~~~~~~~~~~
 
 .. write-me::
 
