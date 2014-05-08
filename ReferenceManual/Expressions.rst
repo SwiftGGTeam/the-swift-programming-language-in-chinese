@@ -451,6 +451,7 @@ to make more complex expressions.
 
     primary-expression --> identifier generic-argument-clause-OPT
     primary-expression --> literal-expression
+    primary-expression --> self-expression
     primary-expression --> superclass-expression
     primary-expression --> closure-expression
     primary-expression --> anonymous-closure-argument
@@ -557,6 +558,30 @@ for their respective values.
     dictionary-literal-item --> expression ``:`` expression
 
 
+.. _Expressions_SelfExpression:
+
+Self Expression
+~~~~~~~~~~~~~~~
+
+.. write-me::
+
+.. syntax-outline::
+
+    self
+    self.<#member name#>
+    self[<#subscript index#>)
+    self.init(<#initializer arguments#>)
+
+.. syntax-grammar::
+
+    Grammar of a self expression
+
+    self-expression --> ``self``
+    self-expression --> ``self`` ``.`` identifier
+    self-expression --> ``self`` ``[`` expression ``]``
+    self-expression --> ``self`` ``.`` ``init``
+
+
 .. _Expressions_SuperclassExpression:
 
 Superclass Expression
@@ -602,11 +627,11 @@ as part of the subclass's initializer.
 
     Grammar of a superclass expression
 
-    superclass-expression --> superclass-method-expression | superclass-subscript-expression | superclass-constructor-expression
+    superclass-expression --> superclass-method-expression | superclass-subscript-expression | superclass-initializer-expression
 
     superclass-method-expression --> ``super`` ``.`` identifier
     superclass-subscript-expression --> ``super`` ``[`` expression ``]``
-    superclass-constructor-expression --> ``super`` ``.`` ``init``
+    superclass-initializer-expression --> ``super`` ``.`` ``init``
 
 
 .. _Expressions_ClosureExpression:
@@ -835,8 +860,8 @@ see :doc:`../LanguageGuide/BasicOperators` and :doc:`../LanguageGuide/AdvancedOp
     postfix-expression --> function-call-expression
     postfix-expression --> initializer-expression
     postfix-expression --> explicit-member-expression
-    postfix-expression --> self-expression
-    postfix-expression --> dynamic-type-expression
+    postfix-expression --> postfix-self-expression
+    postfix-expression --> metatype-expression
     postfix-expression --> subscript-expression
     postfix-expression --> forced-expression
     postfix-expression --> chained-optional-expression
@@ -1007,10 +1032,10 @@ the top-level declarations of that module.
     explicit-member-expression --> postfix-expression ``.`` identifier generic-argument-clause-OPT
 
 
-.. _Expressions_SelfExpression:
+.. _Expressions_PostfixSelfExpression:
 
-Self Expression
-~~~~~~~~~~~~~~~
+Postfix Self Expression
+~~~~~~~~~~~~~~~~~~~~~~~
 
 .. write-me:: This section needs a rewrite.
 
@@ -1019,7 +1044,7 @@ Self Expression
        <#expression#>.self
 
 ..  Old prose:
-    A :newTerm:`self expression` is an explicit reference
+    A :newTerm:`postfix self expression` is an explicit reference
     to a type or an instance of a type.
     It has the following form:
 
@@ -1064,13 +1089,13 @@ Self Expression
 
     Grammar of a self expression
 
-    self-expression --> postfix-expression ``.`` ``self``
+    postfix-self-expression --> postfix-expression ``.`` ``self``
 
 
-.. _Expressions_DynamicTypeExpression:
+.. _Expressions_MetatypeExpression:
 
-Dynamic Type Expression
-~~~~~~~~~~~~~~~~~~~~~~~
+Metatype Expression
+~~~~~~~~~~~~~~~~~~~
 
 .. write-me::
 
@@ -1082,7 +1107,7 @@ Dynamic Type Expression
 
     Grammar of a dynamic type expression
 
-    dynamic-type-expression --> postfix-expression ``.`` ``dynamicType``
+    metatype-expression --> postfix-expression ``.`` ``dynamicType``
 
 
 .. _Expressions_SubscriptExpression:
