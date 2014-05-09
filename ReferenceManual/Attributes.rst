@@ -73,16 +73,6 @@ the ``noreturn`` attribute to a function or method *type*.
     Keep an eye out for ``virtual``, which is coming soon (probably not for WWDC).
     "It's not there yet, but it'll be there at runtime, trust me."
 
-    TODO: Add ``NSManaged`` (OnVar):
-    The @NSManaged attribute can be applied to the properties of an
-    NSManagedObject subclass to indicate that they should be handled by
-    CoreData:
-
-    class Employee : NSManagedObject {
-      @NSManaged var name: String
-      @NSManaged var department: Department
-    }
-
 ``assignment``
     Apply this attribute to functions that overload
     a compound assignment operator.
@@ -175,6 +165,14 @@ the ``noreturn`` attribute to a function or method *type*.
 .. TODO: If and when Dave includes a section about this in the Guide,
     provide a link to the relevant section.
 
+``NSManaged``
+    Apply this attribute to a variable stored property of a class that inherits from
+    ``NSManagedObject`` to indicate that the storage and implementation of the
+    property are provided dynamically by Core Data at runtime based on the class's entity
+    description (represented by an ``NSEntityDescription`` object) in the managed object model.
+
+.. TODO: Send this paragraph to Doug and Ben Trumbil to verify this.
+
 ``objc``
     This attribute tells the compiler that a declaration is available
     to use in Objective-C code. You can apply this attribute to any declaration
@@ -198,16 +196,18 @@ the ``noreturn`` attribute to a function or method *type*.
     is exposed to Objective-C code as ``isEnabled``
     rather than just as the name of the property itself.
 
-    .. testcode::
+    .. testcode:: objc-attribute
+       :compile: true
 
-        -> @objc
-        -> class ExampleClass {
-              var enabled: Bool {
-                 @objc(isEnabled) get {
-                    // Return the appropriate value
-                 }
-              }
-           }
+       -> @objc
+          class ExampleClass {
+             var enabled: Bool {
+                @objc(isEnabled) get {
+                   // Return the appropriate value
+       >>          return true
+                }
+             }
+          }
 
 .. TODO: If and when Dave includes a section about this in the Guide,
     provide a link to the relevant section. Possibly link to Anna and Jacks guide too.
