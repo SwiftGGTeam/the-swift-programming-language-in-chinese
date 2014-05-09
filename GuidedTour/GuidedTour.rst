@@ -696,11 +696,11 @@ that don't actually override any method in the superclass.
              return "A square with sides of length \(sideLength)."
           }
        }
-    >> let test_square = Square(5.2, "test square")
-    << // test_square : Square = <Square instance>
-    >> test_square.area()
+    -> let test = Square(5.2, "my test square")
+    << // test : Square = <Square instance>
+    -> test.area()
     <$ : Double = 27.04
-    >> test_square.description()
+    -> test.description()
     <$ : String = "A square with sides of length 5.2."
 
 .. admonition:: Experiment
@@ -724,45 +724,50 @@ In addition to simple properties,
 properties can use an explicit getter and setter
 to create a computed property.
 
-::
+.. testcode::
 
-    let PI = 3.14159265
-    let TWO_PI = 2 * PI
+    -> let PI = 3.14159265
+    << // PI : Double = 3.14159265
+    -> let TWO_PI = 2 * PI
+    << // TWO_PI : Double = 6.2831853
+    ---
+    -> class Circle: NamedShape {
+           var radius: Double
 
-    class Circle: NamedShape {
-        var radius: Double
-
-        // A computed property
-        var circumference: Double {
-            get {
-                return TWO_PI * radius
-            }
-            set {
-                radius = newValue / TWO_PI
-            }
-        }
-
-        // A read-only computed property
-        var area: Double {
-           get {
-              return PI * radius * radius
+           // A computed property
+           var circumference: Double {
+               get {
+                   return TWO_PI * radius
+               }
+               set {
+                   radius = newValue / TWO_PI
+               }
            }
-        }
 
-        init(radius: Double, name: String) {
-            self.radius = radius
-            super.init(name)
-            numberOfSides = 1
-        }
+           // A read-only computed property
+           var area: Double {
+              get {
+                 return PI * radius * radius
+              }
+           }
 
-        func area() -> Double {
-            return PI * radius * radius
-        }
+           init(radius: Double, name: String) {
+               self.radius = radius
+               super.init(name)
+               numberOfSides = 1
+           }
 
-        override description() -> String {
-           return "A circle with radius of length \(radius)."
-        }
-    }
+           override func description() -> String {
+              return "A circle with radius of length \(radius)."
+           }
+       }
+    -> var circle = Circle(12.7, "a circle")
+    <$ : Circle = <Circle instance>
+    -> circle.area
+    <$ : Double = 506.7074785185
+    -> circle.circumference = 31.4
+    -> circle.radius
+    <$ : Double = 4.99746521879595
 
 In the setter for ``circumference`` the new value
 has the implicit name ``newValue``.
