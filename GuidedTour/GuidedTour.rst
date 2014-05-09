@@ -597,14 +597,16 @@ as a constant or variable declaration,
 except that it is in the context of a class.
 Likewise, method and function declarations are the same.
 
-::
+.. testcode::
 
-    class Shape {
-       var numberOfSides: Int = 0
-       func description() -> String {
-          return "A shape with \(numberOfSides) sides."
+    -> class Shape {
+          var numberOfSides: Int = 0
+          func description() -> String {
+             return "A shape with \(numberOfSides) sides."
+          }
        }
-    }
+    >> Shape().description()
+    <$ : String = "A shape with 0 sides."
 
 .. admonition:: Experiment
 
@@ -616,11 +618,13 @@ by putting parentheses after the class name,
 and the properties an methods of the instance
 are accessed using dot syntax.
 
-::
+.. testcode::
 
-    var shape = Shape()
-    shape.numberOfSides = 7
-    var shapeDescription = shape.description()
+    -> var shape = Shape()
+    << // shape : Shape = <Shape instance>
+    -> shape.numberOfSides = 7
+    -> var shapeDescription = shape.description()
+    << // shapeDescription : String = "A shape with 7 sides."
 
 This version of the ``Shape`` class is missing something important:
 an initializer to set up the class when an instance is created.
