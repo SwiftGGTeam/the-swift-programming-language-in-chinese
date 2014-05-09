@@ -776,10 +776,13 @@ It has the following form:
 
    (<#identifier 1#>: <#expression 1#>, <#identifier 2#>: <#expression 2#>, <#...#>)
 
-Parenthesized expressions are used to create tuples and to pass arguments
-to a function call. If there is only one value inside the parenthesized expression,
-the type of the parenthesized expression is the type of that value. For example,
-the type of the parenthesized expression ``(1)`` is ``Int``, not ``(Int)``.
+Use parenthesized expressions to create tuples
+and to pass arguments to a function call.
+If there is only one value inside the parenthesized expression,
+the type of the parenthesized expression is the type of that value.
+For example,
+the type of the parenthesized expression ``(1)``
+is ``Int``, not ``(Int)``.
 
 .. langref-grammar
 
