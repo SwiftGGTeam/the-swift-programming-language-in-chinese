@@ -168,10 +168,8 @@ the ``noreturn`` attribute to a function or method *type*.
 ``NSManaged``
     Apply this attribute to a variable stored property of a class that inherits from
     ``NSManagedObject`` to indicate that the storage and implementation of the
-    property are provided dynamically by Core Data at runtime based on the class's entity
-    description (represented by an ``NSEntityDescription`` object) in the managed object model.
-
-.. TODO: Send this paragraph to Doug and Ben Trumbil to verify this.
+    property are provided dynamically by Core Data at runtime
+    based on the associated entity description.
 
 ``objc``
     This attribute tells the compiler that a declaration is available
