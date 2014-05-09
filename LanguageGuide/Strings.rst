@@ -1,7 +1,7 @@
 Strings and Characters
 ======================
 
-Swift's native ``String`` and ``Character`` types provide
+Swift's ``String`` and ``Character`` types provide
 a fast, Unicode-compliant way to work with text in your code.
 The syntax for string creation and manipulation is lightweight and readable,
 with a similar syntax to simple C strings.
