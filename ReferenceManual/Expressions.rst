@@ -1180,7 +1180,7 @@ It has the following form:
 If the *expression* is of an optional type
 and its value is not ``nil``,
 the optional value is unwrapped
-and returned with the corresponding non-optional type.
+and returned with the corresponding nonoptional type.
 If its value is ``nil``, a runtime error is raised.
 
 .. TR: In previous review, we noted that this also does downcast,
@@ -1208,7 +1208,7 @@ If its value is ``nil``, a runtime error is raised.
 Chained-Optional Expression
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-An :newTerm:`chained-optional expression` provides a simplified synatax
+A :newTerm:`chained-optional expression` provides a simplified synatax
 for using optional values in postfix expressions.
 It has the following form:
 
@@ -1224,8 +1224,9 @@ Otherwise,
 the chained-optional expression evaluates to ``nil``
 and any chained postfix expressions are ignored.
 
-Informally, all postfix expressions that follow the chained-optional expression
-and are still part of the same expression
+Informally,
+all postfix expressions that follow the chained-optional expression
+--- and that are still part of the same expression ---
 are understood to be chained to the chained-optional expression.
 Specifically,
 a postfix expression is :newTerm:`directly chained`
