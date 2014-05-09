@@ -265,7 +265,7 @@ a method parameter called ``x``, and an instance property that is also called ``
             return self.x > x
          }
       }
-   -> let somePoint = Point(4.0, 5.0)
+   -> let somePoint = Point(x: 4.0, y: 5.0)
    << // somePoint : Point = Point(4.0, 5.0)
    -> if somePoint.isToTheRightOfX(1.0) {
          println("This point is to the right of the line where x == 1.0")
@@ -307,7 +307,7 @@ before the ``func`` keyword for that method:
             y += deltaY
          }
       }
-   -> var somePoint = Point(1.0, 1.0)
+   -> var somePoint = Point(x: 1.0, y: 1.0)
    << // somePoint : Point = Point(1.0, 1.0)
    -> somePoint.moveByX(2.0, y: 3.0)
    -> println("The point is now at (\(somePoint.x), \(somePoint.y))")
@@ -326,7 +326,7 @@ because its properties cannot be changed, even if they are variable properties
 
 .. testcode:: selfStructures
 
-   -> let fixedPoint = Point(3.0, 3.0)
+   -> let fixedPoint = Point(x: 3.0, y: 3.0)
    << // fixedPoint : Point = Point(3.0, 3.0)
    -> fixedPoint.moveByX(2.0, y: 3.0)
    !! <REPL Input>:1:1: error: immutable value of type 'Point' only has mutating members named 'moveByX'
@@ -352,10 +352,10 @@ The ``Point`` example shown above could have been written in the following way i
    -> struct Point {
          var x = 0.0, y = 0.0
          mutating func moveByX(deltaX: Double, y deltaY: Double) {
-            self = Point(x + deltaX, y + deltaY)
+            self = Point(x: x + deltaX, y: y + deltaY)
          }
       }
-   >> var somePoint = Point(1.0, 1.0)
+   >> var somePoint = Point(x: 1.0, y: 1.0)
    << // somePoint : Point = Point(1.0, 1.0)
    >> somePoint.moveByX(2.0, y: 3.0)
    >> println("The point is now at (\(somePoint.x), \(somePoint.y))")

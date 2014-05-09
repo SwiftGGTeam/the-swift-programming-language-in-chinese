@@ -38,7 +38,7 @@ Closure Expressions
 
 Nested functions are a convenient way to name and define self-contained blocks of code
 as part of a larger function.
-However, it can sometimes be useful to write shorter versions of function-like constructs, 
+However, it can sometimes be useful to write shorter versions of function-like constructs,
 without the need for a full declaration and name.
 This is particularly true when working with functions that take other functions
 as one or more of their arguments.
@@ -138,12 +138,17 @@ Tuples can also be used as parameter types and return types.
 .. FIXME: the note about variadic parameters requiring a name is tracked by rdar://16535434.
    Remove this note if and when that Radar is fixed.
 
+.. QUESTION: should I be using names.sort or sort(names)?
+
+.. QUESTION: is "reversed" the right name to use here?
+   it's a backwards sort, not a reversed version of the original array
+
 This syntax provides a way to write an inline version of
 the ``backwards`` function shown in the earlier example:
 
 .. testcode:: closureSyntax
 
-   -> reversed = sort(names, { (s1: String, s2: String) -> Bool in 
+   -> reversed = sort(names, { (s1: String, s2: String) -> Bool in
          return s1 > s2
       })
    >> reversed
@@ -283,9 +288,9 @@ Operator functions are described in more detail in :ref:`AdvancedOperators_Opera
 Trailing Closures
 -----------------
 
-If you need to pass a closure expression to a function as one of the function's arguments,
+If you need to pass a closure expression to a function as the function's final argument,
 and the closure expression is long,
-it can sometimes be clearer to write it as a :newTerm:`trailing closure` instead.
+it can sometimes be useful to write it as a :newTerm:`trailing closure` instead.
 A trailing closure is a closure expression
 that is written outside of (and *after*) the parentheses of the function call it supports:
 
@@ -307,37 +312,12 @@ that is written outside of (and *after*) the parentheses of the function call it
          // trailing closure's body goes here
       }
 
-You can provide multiple trailing closures
-for functions with multiple function type parameters.
-Additionally, if *all* of a function's parameters are function types,
-and you provide trailing closures for all of those parameters when calling the function,
-you do not need to write a pair of parentheses ``()``
-after the function's name when you call the function.
-
 .. note::
 
-   Trailing closures can only be used when the function type parameters
-   are the last parameters in the list.
-
-Here's an example of how you can provide multiple trailing closures
-when calling a function with two parameters,
-both of which have a function type of ``() -> ()``.
-Note that the closing brace of the first trailing closure
-must be on the same line as the opening brace of the second trailing closure:
-
-.. testcode:: closureSyntax
-
-   -> func someFunctionThatTakesTwoClosures(first: () -> (), second: () -> ()) {
-         // function body goes here
-      }
-   ---
-   -> // here's how you'd call this function with two trailing closures:
-   ---
-   -> someFunctionThatTakesTwoClosures {
-         // first trailing closure's body goes here
-      } {
-         // second trailing closure's body goes here
-      }
+   If a closure expression is provided as the function's only argument,
+   and you provide that expression as a trailing closure,
+   you do not need to write a pair of parentheses ``()``
+   after the function's name when you call the function.
 
 The string-sorting closure from the *Closure Expression Syntax* section above
 can be written outside of the ``sort`` function's parentheses as a trailing closure:
@@ -348,8 +328,7 @@ can be written outside of the ``sort`` function's parentheses as a trailing clos
    >> reversed
    << // reversed : Array<String> = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
 
-As mentioned above,
-trailing closures are most useful when the closure is sufficiently long that
+Trailing closures are most useful when the closure is sufficiently long that
 it is not possible to write it inline on a single line.
 As an example, Swift's ``Array`` type has a ``map`` method
 which takes a closure expression as its single argument.
@@ -364,7 +343,7 @@ in the same order as their corresponding values in the original array.
 
 Here's how you can use the ``map`` method with a trailing closure
 to convert an array of ``Int`` values into an array of ``String`` values.
-The array ``[16, 58, 510]`` is used to create the new array 
+The array ``[16, 58, 510]`` is used to create the new array
 ``["OneSix", "FiveEight", "FiveOneZero"]``:
 
 .. testcode:: arrayMap
@@ -538,7 +517,7 @@ Here's an example of ``makeIncrementor`` in action:
    -> let incrementByTen = makeIncrementor(forIncrement: 10)
    << // incrementByTen : () -> Int = <unprintable value>
 
-This example sets a constant called ``incrementByTen`` 
+This example sets a constant called ``incrementByTen``
 to refer to an incrementor function that adds ``10`` to
 its ``runningTotal`` variable each time it is called.
 Calling the function multiple times shows this behavior in action:
@@ -639,10 +618,10 @@ Avoiding Reference Cycles in Closures
    but they are yet to be implemented.
    The Radar for their implementation is rdar://15046325.
 
-.. _Closures_AutoClosures:
+.. _Closures_Autoclosures:
 
-Auto-Closures
--------------
+Autoclosures
+------------
 
 .. write-me::
 

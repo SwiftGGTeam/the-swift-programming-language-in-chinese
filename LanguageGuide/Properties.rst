@@ -159,7 +159,7 @@ to retrieve and set other properties and values indirectly.
             get {
                let centerX = origin.x + (size.width / 2)
                let centerY = origin.y + (size.height / 2)
-               return Point(centerX, centerY)
+               return Point(x: centerX, y: centerY)
             }
             set(newCenter) {
                origin.x = newCenter.x - (size.width / 2)
@@ -167,7 +167,8 @@ to retrieve and set other properties and values indirectly.
             }
          }
       }
-   -> var square = Rect(origin: Point(0.0, 0.0), size: Size(10.0, 10.0))
+   -> var square = Rect(origin: Point(x: 0.0, y: 0.0),
+         size: Size(width: 10.0, height: 10.0))
    << // square : Rect = Rect(Point(0.0, 0.0), Size(10.0, 10.0))
    -> let initialSquareCenter = square.center
    << // initialSquareCenter : Point = Point(5.0, 5.0)
@@ -228,7 +229,7 @@ which takes advantage of this shorthand notation:
             get {
                let centerX = origin.x + (size.width / 2)
                let centerY = origin.y + (size.height / 2)
-               return Point(centerX, centerY)
+               return Point(x: centerX, y: centerY)
             }
             set {
                origin.x = newValue.x - (size.width / 2)
@@ -268,7 +269,7 @@ by removing the ``get`` keyword:
             return width * height * depth
          }
       }
-   -> let fourByFiveByTwo = Cuboid(4.0, 5.0, 2.0)
+   -> let fourByFiveByTwo = Cuboid(width: 4.0, height: 5.0, depth: 2.0)
    << // fourByFiveByTwo : Cuboid = Cuboid(4.0, 5.0, 2.0)
    -> println("the volume of fourByFiveByTwo is \(fourByFiveByTwo.volume)")
    <- the volume of fourByFiveByTwo is 40.0

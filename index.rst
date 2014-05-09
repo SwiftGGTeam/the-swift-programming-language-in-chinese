@@ -20,6 +20,19 @@ Contents
 Change Log
 ----------
 
+May 9 2014
+~~~~~~~~~~
+
+Language Guide
+++++++++++++++
+
+* New chapter on :doc:`LanguageGuide/StringsAndCharacters`.
+  (Note that some of the API names used in this chapter may yet change.)
+* Single-quoted literals (for ``Character`` values) are no longer a part of the language.
+* The entire Guide has been updated to match the latest function and method parameter rules.
+* Removed the guidance on multiple trailing closures
+  now that they have been removed from the language.
+
 May 8 2014
 ~~~~~~~~~~
 
@@ -34,7 +47,7 @@ May 5 2014
 ~~~~~~~~~~
 
 Language Guide
-++++++++++++++++++
+++++++++++++++
 
 * New sections in :ref:`Functions <Functions_FunctionParameterNames>`,
   :ref:`Methods <Methods_LocalAndExternalNames>`,
@@ -67,7 +80,7 @@ April 28 2014
 ~~~~~~~~~~~~~
 
 Language Guide
-++++++++++++++++++
+++++++++++++++
 
 * New section about :ref:`assertions <TheBasics_Assertions>`,
   and :ref:`suggestions on when to use them <TheBasics_WhenToUseAssertions>`.
@@ -100,7 +113,7 @@ April 21 2014
 ~~~~~~~~~~~~~
 
 Language Guide
-++++++++++++++++++
+++++++++++++++
 
 * Major new section about :ref:`initializer delegation for class types
   <Initialization_InitializerDelegationForClassTypes>`

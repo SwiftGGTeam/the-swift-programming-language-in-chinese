@@ -24,7 +24,7 @@ Tuples can be used to return multiple values from a function as a single compoun
 
 Swift also introduces optional types,
 which are a way to handle the absence of a value.
-Optionals are a way to say either “There *is* a value, and it equals *x*”;
+Optionals are a way to say either “there *is* a value, and it equals *x*”;
 or “there *isn't* a value at all”.
 Optionals are similar to working with ``nil`` in Objective-C,
 but in a way that works for any type, not just classes.
@@ -80,10 +80,22 @@ because the maximum value never changes.
 The current login attempt counter is declared as a variable,
 because this value must be incremented after each failed login attempt.
 
-If a stored value in your code is not going to change,
-it should always be declared as a constant with the ``let`` keyword.
-Variables should only be used for
-storing values that need to be able to change.
+You can declare multiple constants or multiple variables on a single line,
+separated by commas:
+
+.. testcode:: multipleDeclarations
+
+   -> var x = 0.0, y = 0.0, z = 0.0
+   << // x : Double = 0.0
+   << // y : Double = 0.0
+   << // z : Double = 0.0
+
+.. note::
+
+   If a stored value in your code is not going to change,
+   it should always be declared as a constant with the ``let`` keyword.
+   Variables should only be used for
+   storing values that need to be able to change.
 
 .. TODO: I need to mention that globals are lazily initialized somewhere.
    Probably not here, but somewhere.
@@ -163,6 +175,17 @@ you can't redeclare it again with the same name,
 or change it to store values of a different type.
 Nor can you change a constant into a variable,
 or a variable into a constant.
+
+.. note::
+
+   If you need to give a constant or variable the same name as a reserved Swift keyword,
+   you can do so by surrounding the keyword with back ticks (`````) when using it as a name.
+   However, you should avoid using keywords as names unless you have absolutely no choice.
+
+.. QUESTION: I've deliberately not given an example here,
+   because I don't want to suggest that such an example is
+   a good example of when you *should* use a keyword as a name.
+   Is this the right approach to take?
 
 The value of an existing variable can be changed to another value of a compatible type.
 In this example, the value of ``friendlyWelcome`` is changed from
@@ -251,39 +274,49 @@ and escaped with a backslash before the opening parenthesis:
    -> println("The current value of friendlyWelcome is \(friendlyWelcome)")
    <- The current value of friendlyWelcome is 👋, 🌎
 
-.. TODO: this still doesn't talk about all of the things that string interpolation can do.
-   It should still be covered in more detail in the Strings and Characters chapter.
+.. note::
+
+   The full set of options you can use with string interpolation
+   are described in :ref:`StringsAndCharacters_StringInterpolation`.
 
 .. _TheBasics_Comments:
 
 Comments
 --------
 
-As you may have noticed from the examples above,
-comments in Swift have some similarity to those found in C:
+Comments are a way to include non-executable text in your code,
+as a note or reminder to yourself.
+Comments are ignored by the Swift compiler when your code is compiled.
+
+Comments in Swift are very similar to comments in C.
+Single-line comments begin with two forward-slashes (``//``):
 
 .. testcode:: comments
    :compile: true
 
-   -> // Single-line comments begin with two forward-slashes, like in C.
+   -> // This is a comment
 
-You can also write multi-line comments:
-
-.. testcode:: comments
-   :compile: true
-
-   -> /* ...which start with a forward-slash followed by an asterisk,
-         and end with an asterisk followed by a forward-slash, also like C. */
-
-Unlike C, multi-line comments can also be nested:
+You can also write multi-line comments,
+which start with a forward-slash followed by an asterisk (``/*``),
+and end with an asterisk followed by a forward-slash (``*/``):
 
 .. testcode:: comments
    :compile: true
 
-   -> /* This is done by starting a new block of comments,
-         /* then starting another new block inside of the first block.
-         The second block is then closed... */
-      ...followed by the original block. */
+   -> /* This is also a comment,
+      but written over multiple lines */
+
+Unlike C, multi-line comments can be nested inside other multi-line comments.
+You write nested comments by starting a multi-line comment block,
+and then starting a second multi-line comment within the first block.
+The second block is then closed, followed by the first block:
+
+.. testcode:: comments
+   :compile: true
+
+   -> /* This is the start of the first multi-line comment
+         /* This is the second, nested multi-line comment */
+      This is the end of the first multi-line comment */
 
 Nested multi-line comments enable you to comment out large blocks of code quickly and easily,
 even if the code already contains multi-line comments.

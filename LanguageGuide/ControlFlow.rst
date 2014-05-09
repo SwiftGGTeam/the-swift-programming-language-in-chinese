@@ -84,6 +84,8 @@ you must declare it yourself before its use in the loop.
    The text above is actually technically correct,
    but the fact that this caused confusion suggests that I should revisit the wording.
 
+.. TODO: note that you can use floating-point values with ranges too.
+
 If you don't need each value from the range,
 you can ignore the values by using an underscore in place of a variable name:
 
@@ -333,7 +335,7 @@ one each at indices ``0`` through ``25`` inclusive:
 
    -> let finalSquare = 25
    << // finalSquare : Int = 25
-   -> var board = Int[](finalSquare + 1, 0)
+   -> var board = Int[](count: finalSquare + 1, value: 0)
    << // board : Int[] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
 Some squares are then set to have more specific values for the snakes and ladders.
@@ -476,7 +478,7 @@ are initialized in exactly the same way as with a ``while`` loop:
 
    -> let finalSquare = 25
    << // finalSquare : Int = 25
-   -> var board = Int[](finalSquare + 1, 0)
+   -> var board = Int[](count: finalSquare + 1, value: 0)
    << // board : Int[] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
    -> board[03] = +08; board[06] = +11; board[09] = +09; board[10] = +02
    -> board[14] = -10; board[19] = -11; board[22] = -02; board[24] = -08
@@ -702,13 +704,13 @@ This catch-all case is indicated by the keyword ``default``,
 and must always appear last.
 
 This example uses a ``switch`` statement to consider
-a single character called ``someCharacter``:
+a single lowercase character called ``someCharacter``:
 
 .. testcode:: switch
 
-   -> let someCharacter = "e"
-   << // someCharacter : String = "e"
-   -> switch someCharacter.lowercase {
+   -> let someCharacter: Character = "e"
+   << // someCharacter : Character = <unprintable value>
+   -> switch someCharacter {
          case "a", "e", "i", "o", "u":
             println("\(someCharacter) is a vowel")
          case "b", "c", "d", "f", "g", "h", "j", "k", "l", "m",
@@ -752,8 +754,8 @@ It is not valid to write the following code, because the first case is empty:
 
 .. testcode:: noFallthrough
 
-   -> let anotherCharacter = "a"
-   << // anotherCharacter : String = "a"
+   -> let anotherCharacter: Character = "a"
+   << // anotherCharacter : Character = <unprintable value>
    -> switch anotherCharacter {
          case "a":
          case "A":
@@ -1026,7 +1028,7 @@ to create a cryptic puzzle phrase:
    << // puzzleOutput : String = ""
    -> for character in puzzleInput {
          switch character {
-            case 'a', 'e', 'i', 'o', 'u', ' ':
+            case "a", "e", "i", "o", "u", " ":
                continue
             default:
                puzzleOutput += character
@@ -1034,11 +1036,6 @@ to create a cryptic puzzle phrase:
       }
    -> println(puzzleOutput)
    <- grtmndsthnklk
-
-The ``character`` constant is inferred to be of type ``Character``
-because it comes from a ``for``-``in`` iteration over the characters in a string.
-This is why the case statement compares ``character`` against ``Character`` values
-(with single quote marks) rather than ``String`` values.
 
 The code above calls the ``continue`` keyword whenever it matches a vowel or a space,
 causing the current iteration of the loop to end immediately
@@ -1099,18 +1096,18 @@ Multiple values are covered in a single ``switch`` case for brevity:
 
 .. testcode:: breakInASwitchStatement
 
-   -> let numberSymbol = '三'   // Simplified Chinese symbol for the number 3
+   -> let numberSymbol: Character = "三"  // Simplified Chinese for the number 3
    << // numberSymbol : Character = <unprintable value>
    -> var possibleIntegerValue: Int?
    << // possibleIntegerValue : Int? = <unprintable value>
    -> switch numberSymbol {
-         case '1', '١', '一', '๑':
+         case "1", "١", "一", "๑":
             possibleIntegerValue = 1
-         case '2', '٢', '二', '๒':
+         case "2", "٢", "二", "๒":
             possibleIntegerValue = 2
-         case '3', '٣', '三', '๓':
+         case "3", "٣", "三", "๓":
             possibleIntegerValue = 3
-         case '4', '٤', '四', '๔':
+         case "4", "٤", "四", "๔":
             possibleIntegerValue = 4
          default:
             break
@@ -1259,7 +1256,7 @@ are initialized in the same way as before:
 
    -> let finalSquare = 25
    << // finalSquare : Int = 25
-   -> var board = Int[](finalSquare + 1, 0)
+   -> var board = Int[](count: finalSquare + 1, value: 0)
    << // board : Int[] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
    -> board[03] = +08; board[06] = +11; board[09] = +09; board[10] = +02
    -> board[14] = -10; board[19] = -11; board[22] = -02; board[24] = -08

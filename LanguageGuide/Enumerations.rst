@@ -299,15 +299,15 @@ Here's an example that stores raw ASCII values alongside named enumeration membe
 .. testcode:: rawValues
 
    -> enum ASCIIControlCharacter: Character {
-         case Tab = '\t'
-         case LineFeed = '\n'
-         case CarriageReturn = '\r'
+         case Tab = "\t"
+         case LineFeed = "\n"
+         case CarriageReturn = "\r"
       }
 
 Here, the raw values for an enumeration called ``ASCIIControlCharacter``
 are defined to be of type ``Character``,
 and are set to some of the more common ASCII control characters.
-``Character`` values are described in :doc:`Strings`.
+``Character`` values are described in :doc:`StringsAndCharacters`.
 
 Note that raw values are *not* the same as associated values.
 Raw values are set to prepopulated values

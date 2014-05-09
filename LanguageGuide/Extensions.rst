@@ -140,10 +140,8 @@ your own custom types as initializer parameters.
 
 This approach can be used to extend the basic ``String`` type
 to accept an instance of your own custom type as an initializer parameter,
-for use with string interpolation.
-
-.. TODO: make this reference to string interpolation be a link to
-   the appropriate section of the Strings and Characters section once it is written.
+for use with string interpolation,
+as described in :ref:`StringsAndCharacters_StringInterpolation`.
 
 .. testcode:: extensionsInitializers
 
@@ -151,17 +149,27 @@ for use with string interpolation.
          var x = 0.0, y = 0.0
       }
    -> extension String {
-         init(point: Point) {
+         init(_ point: Point) {
             self = "(\(point.x), \(point.y))"
          }
       }
-   -> let somePoint = Point(3.0, 5.0)
+   -> let somePoint = Point(x: 3.0, y: 5.0)
    << // somePoint : Point = Point(3.0, 5.0)
    -> let pointDescription = String(somePoint)
    << // pointDescription : String = "(3.0, 5.0)"
    /> pointDescription is \"\(pointDescription)\"
    </ pointDescription is "(3.0, 5.0)"
 
+.. FIXME: if you don't use an underbar to avoid an external parameter name,
+   the initializer can't be used with string interpolation.
+   This is a side-effect of the stricter paramerter name rules
+   introduced in Swift r17743.
+   I've filed this fact as rdar://16862627,
+   and have updated the example above so that it works with swifttest,
+   but I haven't yet described this as a requirement
+   because I'm awaiting feedback on that Radar.
+   I'll need to explain this requirement above if rdar://16862627 is not fixed by WWDC.
+   
 This example defines a new structure called ``Point`` to represent an ``(x, y)`` co-ordinate.
 It also extends ``String`` to add a new initializer implementation,
 which accepts a single ``Point`` instance as an initialization parameter.
@@ -173,12 +181,12 @@ The new initializer can now be used to construct a ``String`` using initializer 
 by passing in a point, such as with ``String(somePoint)`` above.
 
 Now that a ``String`` can be initialized with a ``Point``,
-you can use ``Point`` instances within string interpolation syntax
+you can use ``Point`` instances directly within string interpolation syntax
 to incorporate their values as part of a longer string:
 
 .. testcode:: extensionsInitializers
 
-   -> let anotherPoint = Point(-2.0, 6.0)
+   -> let anotherPoint = Point(x: -2.0, y: 6.0)
    << // anotherPoint : Point = Point(-2.0, 6.0)
    -> println("anotherPoint's value is \(anotherPoint)")
    <- anotherPoint's value is (-2.0, 6.0)

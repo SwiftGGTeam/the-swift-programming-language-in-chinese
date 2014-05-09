@@ -377,7 +377,7 @@ which automatically selects an appropriate gear to use based on the current spee
 
    -> class AutomaticCar: Car {
          var gear = 1
-         override var speed: Double  {
+         override var speed: Double {
             didSet {
                gear = Int(speed / 10.0) + 1
             }

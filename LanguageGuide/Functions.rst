@@ -682,7 +682,7 @@ after the function has completed its execution.
 You define such parameters as :newTerm:`in-out parameters`,
 which are written by placing the ``inout`` keyword at the start of their parameter definition.
 
-You can think of ``inout`` parameters in the following way:
+You can think of in-out parameters in the following way:
 
 An in-out parameter has a value that is passed *in* to the function;
 is modified by the function;
