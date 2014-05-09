@@ -313,7 +313,7 @@ when it is included inside the string literal.
 
    The expressions you write inside parentheses within an interpolated string
    cannot contain an unescaped double quote (``"``) or backslash (``\``),
-   and cannot contain a carriage return (``\r``) or line feed (``\n``).
+   and cannot contain a carriage return or line feed.
 
 .. _Strings_StringInitializersForStringInterpolation:
 
@@ -463,17 +463,10 @@ that take place in or around Capulet's mansion and Friar Lawrence's cell:
    -> println("\(mansionCount) mansion scenes; \(cellCount) cell scenes")
    <- 6 mansion scenes; 2 cell scenes
 
-.. _Strings_ModifyingStrings:
-
-Modifying Strings
------------------
-
-.. write-me::
-
 .. _Strings_UppercaseAndLowercase:
 
 Uppercase and Lowercase
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 You can access an uppercase or lowercase version of a string
 with its ``uppercase`` and ``lowercase`` properties:
@@ -490,29 +483,6 @@ with its ``uppercase`` and ``lowercase`` properties:
    << // whispered : String = "could you help me, please?"
    /> whispered is equal to \"\(whispered)\"
    </ whispered is equal to "could you help me, please?"
-
-.. _Strings_ReversingAString:
-
-Reversing a String
-~~~~~~~~~~~~~~~~~~
-
-.. write-me::
-
-.. Reverse is a type that you can construct from a Collection that has a BidirectionalIndex
-
-.. _Strings_SlicingAString:
-
-Slicing a String
-~~~~~~~~~~~~~~~~
-
-.. write-me::
-
-.. slicing a String (based on a good example to come from Dave)
-.. String can't be indexed with integers (again, cf NSString)
-.. bidirectional indexing (and why this is the case)
-.. startIndex
-.. endIndex
-   subscript
 
 .. _Strings_UnicodeRepresentations:
 
