@@ -2,7 +2,7 @@ Declarations
 ============
 
 A :newTerm:`declaration` introduces a new name or construct into your program.
-For example, you use declarations to introduce variables and constants
+For example, you use declarations to introduce functions and methods, variables and constants,
 and to define new, named enumeration, structure, class,
 and protocol types. You can also use a declaration to extend the the behavior
 of an existing named type and to import symbols into your program that are declared elsewhere.
@@ -39,7 +39,6 @@ the term *declaration* covers both declarations and definitions.
     declaration --> variable-declaration
     declaration --> typealias-declaration
     declaration --> function-declaration
-    declaration --> method-declaration
     declaration --> enum-declaration
     declaration --> struct-declaration
     declaration --> class-declaration
@@ -630,35 +629,6 @@ Function Declaration
     Let's just deal with this difference in prose.
 
 
-.. _Declarations_MethodDeclaration:
-
-Method Declaration
-------------------
-
-.. write-me::
-
-.. syntax-outline::
-
-    def <#method name#>(<#parameters#>) -> <#return type#> {
-       <#statements#>
-    }
-
-
-.. syntax-outline::
-
-    def <#method name#>(<#parameters#>)(<#parameters#>) -> <#return type#> {
-       <#statements#>
-    }
-
-
-.. syntax-grammar::
-
-    Grammar of a method declaration
-
-    method-declaration --> method-head function-name generic-parameter-clause-OPT function-signature function-body
-    method-head --> attributes-OPT declaration-specifiers-OPT ``def``
-
-
 .. _Declarations_EnumerationDeclaration:
 
 Enumeration Declaration
@@ -1166,8 +1136,8 @@ Protocol Method Declaration
 Protocols declare that conforming types must implement a method
 by including a protocol method declaration in the body of the protocol declaration.
 Protocol method declarations have the same form as
-method declarations, with two exceptions: They don't include a method body,
-and you can't provide any default parameter values as part of the method declaration.
+function declarations, with two exceptions: They don't include a function body,
+and you can't provide any default parameter values as part of the function declaration.
 For examples of conforming types that implement the method requirements of a protocol,
 see :ref:`Protocols_Methods`.
 
@@ -1187,7 +1157,7 @@ See also :ref:`Declarations_FunctionDeclaration`.
 
     Grammar of a protocol method declaration
 
-    protocol-method-declaration --> method-head function-name generic-parameter-clause-OPT function-signature
+    protocol-method-declaration --> function-head function-name generic-parameter-clause-OPT function-signature
 
 
 .. _Declarations_ProtocolInitializerDeclaration:
