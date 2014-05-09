@@ -20,6 +20,16 @@ Contents
 Change Log
 ----------
 
+May 8 2014
+~~~~~~~~~~
+
+Language Reference
+++++++++++++++++++
+
+* Updated draft of the :doc:`ReferenceManual/Attributes` chapter.
+  This chapter has now been through the editorial process and is much improved.
+* The :doc:`ReferenceManual/Statements` chapter now covers labeled statements.
+
 May 5 2014
 ~~~~~~~~~~
 
