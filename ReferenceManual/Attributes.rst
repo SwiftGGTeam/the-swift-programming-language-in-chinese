@@ -172,11 +172,11 @@ the ``noreturn`` attribute to a function or method *type*.
     based on the associated entity description.
 
 ``objc``
-    This attribute tells the compiler that a declaration is available
-    to use in Objective-C code. You can apply this attribute to any declaration
-    that can be represented in Objective-C, including non-nested classes, protocols,
-    properties and methods (including getters and setters) of classes and protocols,
-    initializers, deinitializers, and subscripts.
+    Apply this attribute to any declaration that can be represented in Objective-C---
+    for example, non-nested classes, protocols, properties and methods
+    (including getters and setters) of classes and protocols, initializers,
+    deinitializers, and subscripts. The ``objc`` attribute tells the compiler
+    that a declaration is available to use in Objective-C code.
 
     If you apply the ``objc`` attribute to a class or protocol, it's
     implicitly applied to the members of that class or protocol.
@@ -189,9 +189,9 @@ the ``noreturn`` attribute to a function or method *type*.
     which consists of a string. Use this attribute when you want to expose a different
     name to Objective-C for the entity the ``objc`` attribute applies to.
     You can use this argument to name classes, protocols, methods,
-    getters, setters, and initializers. In the example below,
+    getters, setters, and initializers. The example below exposes
     the getter for the ``enabled`` property of the ``ExampleClass``
-    is exposed to Objective-C code as ``isEnabled``
+    to Objective-C code as ``isEnabled``
     rather than just as the name of the property itself.
 
     .. testcode:: objc-attribute
@@ -215,8 +215,8 @@ the ``noreturn`` attribute to a function or method *type*.
     or subscript members to indicate that a conforming type isn't required
     to implement those members.
 
-    The ``optional`` attribute can be applied only to protocols that are marked
-    with the ``objc`` attribute. As a result, only classes types can adopt and conform
+    You can apply the ``optional`` attribute only to protocols that are marked
+    with the ``objc`` attribute. As a result, only class types can adopt and conform
     to a protocol that contains optional member requirements.
     For more information about how to use the ``optional`` attribute
     and for guidance about how to access optional protocol members---
@@ -236,7 +236,8 @@ the ``noreturn`` attribute to a function or method *type*.
     Required designated initializers must be implemented explicitly.
     Required convenience initializers can be either implemented explicitly
     or inherited when the subclass directly implements all of the superclass’s designated
-    initializers (or overrides the designated initializers with convenience initializers).
+    initializers
+    (or when the subclass overrides the designated initializers with convenience initializers).
 
 .. TODO: 'weak' is now a CS keyword. Probably need to find somewhere else to describe it.
     If and when Dave includes a section about this in the Guide,
