@@ -637,20 +637,25 @@ but it begins with ``init`` instead of ``func`` and has no function name.
 
 .. TODO: Discuss arg names and API arg names.
 
-::
+.. testcode::
 
-    class NamedShape {
-       var numberOfSides: Int = 0
-       var name: String
+    -> class NamedShape {
+          var numberOfSides: Int = 0
+          var name: String
 
-       init(name: String) {
-          self.name = name
+          init(name: String) {
+             self.name = name
+          }
+
+          func description() -> String {
+             return "A shape with \(numberOfSides) sides."
+          }
        }
+    >> NamedShape("test name").name
+    <$ : String = "test name"
+    >> NamedShape("test name").description()
+    <$ : String = "A shape with 0 sides."
 
-       func description() -> String {
-          return "A shape with \(numberOfSides) sides."
-       }
-    }
 
 Notice how ``self`` is used to distinguish the ``name`` property
 from the ``name`` argument to the initializer.
