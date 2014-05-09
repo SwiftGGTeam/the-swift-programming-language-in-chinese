@@ -951,8 +951,8 @@ It has the following form:
 
     <#expression#>.init(<#initializer arguments#>)
 
-An initializer expression is used like a function call
-to initialize a new instance of a type.
+To initialize a new instance of a type,
+use the initializer expression in a function call.
 Unlike other functions, an initializer can't be used as a value.
 For example:
 
@@ -966,11 +966,11 @@ For example:
     !! var y = MyClass.init
     !!                 ^
 
-Initializer expressions are also used
+You also use an initializer expression
 to delegate to the initializer of a superclass: ::
 
     init() {
-       // ... Initialization goes here ...
+       // ... Subclass initialization ...
        super.init()
     }
 
