@@ -277,7 +277,7 @@ and escaped with a backslash before the opening parenthesis:
 .. note::
 
    The full set of options you can use with string interpolation
-   are described in :ref:`Strings_StringInterpolation`.
+   are described in :ref:`StringsAndCharacters_StringInterpolation`.
 
 .. _TheBasics_Comments:
 

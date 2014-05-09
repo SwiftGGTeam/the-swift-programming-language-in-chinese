@@ -20,7 +20,7 @@ constants, variables, literals, and expressions into longer strings,
 in a process known as string interpolation.
 This makes it easy to create custom string values for display, storage, and printing.
 
-.. _Strings_Strings:
+.. _StringsAndCharacters_Strings:
 
 Strings
 -------
@@ -43,7 +43,7 @@ which in turn represents a collection of ``Character`` values.
 
 .. TODO: make this be a link to BCAWS.
 
-.. _Strings_Literals:
+.. _StringsAndCharacters_Literals:
 
 String Literals
 ~~~~~~~~~~~~~~~
@@ -61,7 +61,7 @@ and can be used to provide an initial value for a constant or variable:
 Note that Swift infers a type of ``String`` for the ``someString`` constant,
 because it is initialized with a string literal value.
 
-.. _Strings_SpecialCharactersInStringLiterals:
+.. _StringsAndCharacters_SpecialCharactersInStringLiterals:
 
 Special Characters in String Literals
 _____________________________________
@@ -97,7 +97,7 @@ String literals can include the following special characters:
 .. x how to construct a Character from a single-quote character literal
 .. x how to construct an empty Character
 
-.. _Strings_InitializingAnEmptyString:
+.. _StringsAndCharacters_InitializingAnEmptyString:
 
 Initializing an Empty String
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -131,7 +131,7 @@ by calling its ``isEmpty`` method:
 
 .. TODO: init(size, character)
 
-.. _Strings_StringMutability:
+.. _StringsAndCharacters_StringMutability:
 
 String Mutability
 ~~~~~~~~~~~~~~~~~
@@ -162,7 +162,7 @@ or to a constant (in which case it cannot be modified):
    where you choose between two classes (``NSString`` and ``NSMutableString``)
    to indicate whether a string can be mutated.
 
-.. _Strings_StringsAreValueTypes:
+.. _StringsAndCharacters_StringsAreValueTypes:
 
 Strings are Value Types
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -195,7 +195,7 @@ so that actual copying only takes place when absolutely necessary.
 This ensures that you always get great performance
 when working with strings as value types.
 
-.. _Strings_Characters:
+.. _StringsAndCharacters_Characters:
 
 Characters
 ----------
@@ -226,7 +226,7 @@ from a single-character string literal by providing a ``Character`` type annotat
    -> let interrobang: Character = "‽"
    << // interrobang : Character = <unprintable value>
 
-.. _Strings_StringAndCharacterConcatenation:
+.. _StringsAndCharacters_StringAndCharacterConcatenation:
 
 String and Character Concatenation
 ----------------------------------
@@ -278,7 +278,7 @@ an existing ``String`` variable with the addition assignment operator (``+=``):
 
 .. TODO: how to construct from length and Character (cf Array)
 
-.. _Strings_StringInterpolation:
+.. _StringsAndCharacters_StringInterpolation:
 
 String Interpolation
 --------------------
@@ -315,7 +315,7 @@ when it is included inside the string literal.
    cannot contain an unescaped double quote (``"``) or backslash (``\``),
    and cannot contain a carriage return or line feed.
 
-.. _Strings_StringInitializersForStringInterpolation:
+.. _StringsAndCharacters_StringInitializersForStringInterpolation:
 
 String Initializers for String Interpolation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -333,7 +333,7 @@ and so the interpolation is valid.
    you can extend ``String`` to give it a new initializer that takes
    an instance of your custom type. This process is described in :doc:`Extensions`.
 
-.. _Strings_CharacterCount:
+.. _StringsAndCharacters_CharacterCount:
 
 Character Count
 ---------------
@@ -371,7 +371,7 @@ and passing in a string as the function's sole parameter:
    the number of 16-bit code units within the string's UTF-16 representation,
    and not the number of Unicode characters within the string.
 
-.. _Strings_ComparingStrings:
+.. _StringsAndCharacters_ComparingStrings:
 
 Comparing Strings
 -----------------
@@ -379,7 +379,7 @@ Comparing Strings
 Swift provides three ways to compare ``String`` values.
 These are string equality, prefix equality, and suffix equality.
 
-.. _Strings_StringEquality:
+.. _StringsAndCharacters_StringEquality:
 
 String Equality
 ~~~~~~~~~~~~~~~
@@ -398,7 +398,7 @@ exactly the same characters in the same order:
       }
    <- These two strings are considered equal
 
-.. _Strings_PrefixAndSuffixEquality:
+.. _StringsAndCharacters_PrefixAndSuffixEquality:
 
 Prefix and Suffix Equality
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -463,7 +463,7 @@ that take place in or around Capulet's mansion and Friar Lawrence's cell:
    -> println("\(mansionCount) mansion scenes; \(cellCount) cell scenes")
    <- 6 mansion scenes; 2 cell scenes
 
-.. _Strings_UppercaseAndLowercase:
+.. _StringsAndCharacters_UppercaseAndLowercase:
 
 Uppercase and Lowercase
 -----------------------
@@ -484,13 +484,13 @@ with its ``uppercase`` and ``lowercase`` properties:
    /> whispered is equal to \"\(whispered)\"
    </ whispered is equal to "could you help me, please?"
 
-.. _Strings_UnicodeRepresentations:
+.. _StringsAndCharacters_UnicodeRepresentations:
 
 Unicode Representations
 -----------------------
 
 Swift provides four different ways to decompose a ``String`` value into smaller units.
-As described in :ref:`Strings_Characters`,
+As described in :ref:`StringsAndCharacters_Characters`,
 you can iterate over the string itself with a ``for``-``in`` statement
 to access its individual ``Character`` values as Unicode characters.
 
@@ -510,7 +510,7 @@ and the 🐶 character (``DOG FACE``, or Unicode code point ``U+1F436``):
    -> let dogString = "Dog!🐶"
    << // dogString : String = "Dog!🐶"
 
-.. _Strings_UTF8:
+.. _StringsAndCharacters_UTF8:
 
 UTF-8
 ~~~~~
@@ -541,7 +541,7 @@ are a four-byte UTF-8 representation of the 🐶 character.
 .. TODO: nulTerminatedUTF8()
    (which returns a NativeArray, but handwave this for now)
 
-.. _Strings_UTF16:
+.. _StringsAndCharacters_UTF16:
 
 UTF-16
 ~~~~~~
@@ -571,7 +571,7 @@ In UTF code point terms, these values are
 a lead surrogate value of ``U+D83D`` (decimal value ``55357``),
 and a trail surrogate value of ``U+DC36`` (decimal value ``56374``).
 
-.. _Strings_UnicodeScalars:
+.. _StringsAndCharacters_UnicodeScalars:
 
 Unicode Scalars
 ~~~~~~~~~~~~~~~

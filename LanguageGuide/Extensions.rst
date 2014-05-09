@@ -141,7 +141,7 @@ your own custom types as initializer parameters.
 This approach can be used to extend the basic ``String`` type
 to accept an instance of your own custom type as an initializer parameter,
 for use with string interpolation,
-as described in :ref:`Strings_StringInterpolation`.
+as described in :ref:`StringsAndCharacters_StringInterpolation`.
 
 .. testcode:: extensionsInitializers
 
