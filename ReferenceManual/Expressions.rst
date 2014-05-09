@@ -883,7 +883,7 @@ Function Call Expression
 .. TODO: After we rewrite function decls,
    revisit this section to make sure that the names for things match.
 
-A :newTerm:`function call expression` consist of a function name
+A :newTerm:`function call expression` consists of a function name
 followed by a comma-separated list of the function's arguments in parentheses.
 Function call expressions have the following form:
 
@@ -895,14 +895,14 @@ The *function name* can be any expression whose value is of a function type.
 
 If the function definition includes names for its parameters,
 the function call must include names before its argument values
-separated by a colon (``:``) ---
-this has the following form:
+separated by a colon (``:``).
+This kind of function call expression has the following form:
 
 .. syntax-outline::
 
    <#function name#>(<#argument name 1#>: <#argument value 1#>, <#argument name 2#>: <#argument value 2#>)
 
-A function call expression can include a :newTerm:`trailing closure`
+A function call expression can include a trailing closure
 in the form of a closure expression immediately after the closing parenthesis.
 The trailing closure is understood as an argument to the function,
 added after the last parenthesized argument.
