@@ -43,7 +43,7 @@ in the sections below.
 Prefix Expressions
 ------------------
 
-:newTerm:`Prefix expressions` are formed by combining
+:newTerm:`Prefix expressions` combine
 an optional prefix operator with an expression.
 Prefix operators take one argument,
 the expression that follows them.
@@ -79,7 +79,7 @@ see :doc:`../LanguageGuide/BasicOperators` and :doc:`../LanguageGuide/AdvancedOp
 Binary Expressions
 ------------------
 
-:newTerm:`Binary expressions` are formed by combining
+:newTerm:`Binary expressions` combine
 an infix binary operator with the expression that it takes
 as its left-hand and right-hand arguments.
 It has the following form:
