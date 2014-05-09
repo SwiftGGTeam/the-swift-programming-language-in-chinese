@@ -780,24 +780,33 @@ For example, the class below ensures
 that the radius of its circle
 is always the same as the side length of its square.
 
-::
+.. testcode::
 
-   class CircleAndSquare {
-      var circle: Circle {
-         didSet {
-            square.sideLength = newValue.radius
+   -> class CircleAndSquare {
+         var circle: Circle {
+            willSet {
+               square.sideLength = newValue.radius
+            }
+         }
+         var square: Square {
+            willSet {
+               circle.radius = newValue.sideLength
+            }
+         }
+         init(size: Double, name: String) {
+            square = Square(size, name)
+            circle = Circle(size, name)
          }
       }
-      var square: Square {
-         didSet {
-            circle.radius = newValue.sideLength
-         }
-      }
-      init(size: Double, name: String) {
-         square = Square(size, name)
-         circle = Circle(size, name)
-      }
-   }
+   -> var circleAndSquare = CircleAndSquare(10, "another test shape")
+   << // circleAndSquare : CircleAndSquare = <CircleAndSquare instance>
+   -> circleAndSquare.square.sideLength
+   <$ : Double = 10.0
+   -> circleAndSquare.circle.radius
+   <$ : Double = 10.0
+   -> circleAndSquare.square = Square(50, "larger square")
+   -> circleAndSquare.circle.radius
+   <$ : Double = 50.0
 
 .. What is getter-setter-keyword-clause for?
    It looks like you write var foo: Type { get }
