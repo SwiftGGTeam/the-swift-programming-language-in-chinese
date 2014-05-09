@@ -231,12 +231,12 @@ by calling the array's ``insert`` method:
 
 .. testcode:: arraysInferred
 
-   -> shoppingList.insert(0, "Maple Syrup")
+   -> shoppingList.insert(0, newElement: "Maple Syrup")
    // shoppingList now contains 4 items
    /> \"\(shoppingList[0])\" is now the first item in the list
    </ "Maple Syrup" is now the first item in the list
 
-This call to the ``insert`` method inserts a new value of ``"Maple Syrup"``
+This call to the ``insert`` method inserts a new element with a value of ``"Maple Syrup"``
 at the very beginning of the shopping list,
 indicated by an index of ``0``.
 
@@ -304,12 +304,12 @@ Swift's ``Array`` type also provides
 an initializer for creating an array of a certain size
 with all of its values set to a provided default value.
 This initializer takes two arguments –
-the number of elements to be added to the new array,
-and a default value of the appropriate type:
+the number of elements to be added to the new array (called ``count``),
+and a default value of the appropriate type (called ``value``):
 
 .. testcode:: arraysEmpty
 
-   -> var threeDoubles = Double[](3, 0.0)
+   -> var threeDoubles = Double[](count: 3, value: 0.0)
    << // threeDoubles : Double[] = [0.0, 0.0, 0.0]
    // threeDoubles is of type Double[], and equals [0.0, 0.0, 0.0]
 
@@ -319,7 +319,7 @@ because it can be inferred from the default value:
 
 .. testcode:: arraysEmpty
 
-   -> var anotherThreeDoubles = Array(3, 0.0)
+   -> var anotherThreeDoubles = Array(count: 3, value: 0.0)
    << // anotherThreeDoubles : Array<Double> = [0.0, 0.0, 0.0]
    /> anotherThreeDoubles is inferred as Double[], and equals [\(anotherThreeDoubles[0]), \(anotherThreeDoubles[1]), \(anotherThreeDoubles[2])]
    </ anotherThreeDoubles is inferred as Double[], and equals [0.0, 0.0, 0.0]
@@ -466,7 +466,7 @@ and passing in a new key and value of the correct types:
 
 .. testcode:: dictionariesInferred
 
-   -> airports.add("LHR", "London Heathrow")
+   -> airports.add("LHR", value: "London Heathrow")
    << // r0 : Bool = false
    /> the airports dictionary now contains \(airports.count) items
    </ the airports dictionary now contains 3 items
@@ -479,7 +479,7 @@ and ``false`` if it was not in use:
 
 .. testcode:: dictionariesInferred
 
-   -> if airports.add("DUB", "Dublin International") {
+   -> if airports.add("DUB", value: "Dublin International") {
          println("There is already a value for that key in the dictionary.")
       }
    <- There is already a value for that key in the dictionary.

@@ -212,14 +212,6 @@ can be passed to the memberwise initializer by name:
    -> let vga = Resolution(width: 640, height: 480)
    << // vga : Resolution = Resolution(640, 480)
 
-Initial values can also be provided without names,
-if they are listed in the same order that the properties are declared in the structure's definition:
-
-.. testcode:: ClassesAndStructures
-
-   -> let svga = Resolution(800, 600)
-   << // svga : Resolution = Resolution(800, 600)
-
 Unlike structures, class instances do not receive a default memberwise initializer.
 Initializers are described in more detail in :doc:`Initialization`.
 

@@ -425,7 +425,7 @@ the scene locations from the first two acts of Shakespeare's *Romeo and Juliet*:
          "Act 2 Scene 5: Capulet's mansion",
          "Act 2 Scene 6: Friar Lawrence's cell"
       ]
-   << // romeoAndJuliet : Array<String> = ["Act 1 Scene 1: Verona, A public place", "Act 1 Scene 2: Capulet\'s mansion", "Act 1 Scene 3: A room in Capulet\'s mansion", "Act 1 Scene 4: A street outside Capulet\'s mansion", "Act 1 Scene 5: The Great Hall in Capulet\'s mansion", "Act 2 Scene 1: Outside Capulet\'s mansion", "Act 2 Scene 2: Capulet\'s orchard", "Act 2 Scene 3: Outside Friar Lawrence\'s Cell", "Act 2 Scene 4: A street in Verona", "Act 2 Scene 5: Capulet\'s mansion", "Act 2 Scene 6: Friar Lawrence\'s Cell"]
+   << // romeoAndJuliet : Array<String> = ["Act 1 Scene 1: Verona, A public place", "Act 1 Scene 2: Capulet\'s mansion", "Act 1 Scene 3: A room in Capulet\'s mansion", "Act 1 Scene 4: A street outside Capulet\'s mansion", "Act 1 Scene 5: The Great Hall in Capulet\'s mansion", "Act 2 Scene 1: Outside Capulet\'s mansion", "Act 2 Scene 2: Capulet\'s orchard", "Act 2 Scene 3: Outside Friar Lawrence\'s cell", "Act 2 Scene 4: A street in Verona", "Act 2 Scene 5: Capulet\'s mansion", "Act 2 Scene 6: Friar Lawrence\'s cell"]
 
 You can use the ``startsWith`` method with the ``romeoAndJuliet`` array
 to count the number of scenes in Act 1 of the play:
@@ -454,7 +454,7 @@ that take place in or around Capulet's mansion and Friar Lawrence's cell:
    -> for scene in romeoAndJuliet {
          if scene.endsWith("Capulet's mansion") {
             ++mansionCount
-         } else if scene.endsWith("Friar Lawrence's Cell") {
+         } else if scene.endsWith("Friar Lawrence's cell") {
             ++cellCount
          }
       }
@@ -612,7 +612,8 @@ a lead surrogate or trail surrogate code point.
 You can access a Unicode scalar representation of a ``String`` value
 by iterating over its ``unicodeScalars`` property.
 This property is of type ``UnicodeScalarView``,
-which is a collection of values of type ``UnicodeScalar``,
+which is a collection of values of type ``UnicodeScalar``.
+
 Each ``UnicodeScalar`` has a ``value`` property that returns
 the scalar's 21-bit code point, represented within a ``UInt32`` value:
 

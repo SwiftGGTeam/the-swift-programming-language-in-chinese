@@ -149,11 +149,11 @@ as described in :ref:`Strings_StringInterpolation`.
          var x = 0.0, y = 0.0
       }
    -> extension String {
-         init(point: Point) {
+         init(_ point: Point) {
             self = "(\(point.x), \(point.y))"
          }
       }
-   -> let somePoint = Point(3.0, 5.0)
+   -> let somePoint = Point(x: 3.0, y: 5.0)
    << // somePoint : Point = Point(3.0, 5.0)
    -> let pointDescription = String(somePoint)
    << // pointDescription : String = "(3.0, 5.0)"
@@ -171,12 +171,12 @@ The new initializer can now be used to construct a ``String`` using initializer 
 by passing in a point, such as with ``String(somePoint)`` above.
 
 Now that a ``String`` can be initialized with a ``Point``,
-you can use ``Point`` instances within string interpolation syntax
+you can use ``Point`` instances directly within string interpolation syntax
 to incorporate their values as part of a longer string:
 
 .. testcode:: extensionsInitializers
 
-   -> let anotherPoint = Point(-2.0, 6.0)
+   -> let anotherPoint = Point(x: -2.0, y: 6.0)
    << // anotherPoint : Point = Point(-2.0, 6.0)
    -> println("anotherPoint's value is \(anotherPoint)")
    <- anotherPoint's value is (-2.0, 6.0)

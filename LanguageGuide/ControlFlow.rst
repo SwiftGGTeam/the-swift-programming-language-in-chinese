@@ -335,7 +335,7 @@ one each at indices ``0`` through ``25`` inclusive:
 
    -> let finalSquare = 25
    << // finalSquare : Int = 25
-   -> var board = Int[](finalSquare + 1, 0)
+   -> var board = Int[](count: finalSquare + 1, value: 0)
    << // board : Int[] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
 Some squares are then set to have more specific values for the snakes and ladders.
@@ -478,7 +478,7 @@ are initialized in exactly the same way as with a ``while`` loop:
 
    -> let finalSquare = 25
    << // finalSquare : Int = 25
-   -> var board = Int[](finalSquare + 1, 0)
+   -> var board = Int[](count: finalSquare + 1, value: 0)
    << // board : Int[] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
    -> board[03] = +08; board[06] = +11; board[09] = +09; board[10] = +02
    -> board[14] = -10; board[19] = -11; board[22] = -02; board[24] = -08
@@ -1256,7 +1256,7 @@ are initialized in the same way as before:
 
    -> let finalSquare = 25
    << // finalSquare : Int = 25
-   -> var board = Int[](finalSquare + 1, 0)
+   -> var board = Int[](count: finalSquare + 1, value: 0)
    << // board : Int[] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
    -> board[03] = +08; board[06] = +11; board[09] = +09; board[10] = +02
    -> board[14] = -10; board[19] = -11; board[22] = -02; board[24] = -08

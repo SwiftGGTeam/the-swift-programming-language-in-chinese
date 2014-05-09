@@ -367,7 +367,7 @@ and to notify a ``DiceGameDelegate`` about its progress:
          var square = 0
          var board: Int[]
          init() {
-            board = Int[](finalSquare + 1, 0)
+            board = Int[](count: finalSquare + 1, value: 0)
             board[03] = +08; board[06] = +11; board[09] = +09; board[10] = +02
             board[14] = -10; board[19] = -11; board[22] = -02; board[24] = -08
          }
@@ -749,7 +749,7 @@ into a single protocol composition requirement on a function parameter:
       }
    -> let birthdayPerson = Person(name: "Malcolm", age: 21)
    << // birthdayPerson : Person = Person("Malcolm", 21)
-   -> wishHappyBirthday(celebrator: birthdayPerson)
+   -> wishHappyBirthday(birthdayPerson)
    <- Happy birthday Malcolm - you're 21!
 
 This example defines a protocol called ``Named``,

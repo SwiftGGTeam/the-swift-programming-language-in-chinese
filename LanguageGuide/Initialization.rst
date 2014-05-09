@@ -322,12 +322,11 @@ and omitting them is a compile-time error:
 .. testcode:: externalParameterNames
 
    -> let veryGreen = Color(0.0, 1.0, 0.0)
-   << // veryGreen : Color = Color(0.0, 1.0, 0.0)
    // this reports a compile-time error - external names are required
-
-.. FIXME: this should be an error, but Doug hasn't implemented the checking yet.
-   I'll need to come back and inclue the error message for swifttesting purposes
-   once he has implemented it.
+   !! <REPL Input>:1:22: error: missing argument labels 'red:green:blue:' in call
+   !! let veryGreen = Color(0.0, 1.0, 0.0)
+   !! ^
+   !! red: green:  blue:
 
 .. _Initialization_OptionalPropertyTypes:
 
@@ -468,16 +467,6 @@ can be passed to the memberwise initializer by name:
    -> let twoByTwo = Size(width: 2.0, height: 2.0)
    << // twoByTwo : Size = Size(2.0, 2.0)
 
-Initial values can be provided without names,
-if they are listed in the same order that the properties are declared in the structure's definition:
-
-.. testcode:: initialization
-
-   -> let fourByThree = Size(4.0, 3.0)
-   << // fourByThree : Size = Size(4.0, 3.0)
-
-.. TODO: Include a justifiable reason for why classes do not provide a memberwise initializer.
-
 .. _Initialization_InitializerDelegation:
 
 Initializer Delegation
@@ -550,7 +539,7 @@ or by providing a specific center point and size:
          init(center: Point, size: Size) {
             let originX = center.x - (size.width / 2)
             let originY = center.y - (size.height / 2)
-            self.init(origin: Point(originX, originY), size: size)
+            self.init(origin: Point(x: originX, y: originY), size: size)
          }
       }
 
@@ -580,7 +569,8 @@ the appropriate stored properties:
 
 .. testcode:: valueDelegation
 
-   -> let originRect = Rect(origin: Point(2.0, 2.0), size: Size(5.0, 5.0))
+   -> let originRect = Rect(origin: Point(x: 2.0, y: 2.0),
+         size: Size(width: 5.0, height: 5.0))
    << // originRect : Rect = Rect(Point(2.0, 2.0), Size(5.0, 5.0))
    /> originRect's origin is (\(originRect.origin.x), \(originRect.origin.y)) and its size is (\(originRect.size.width), \(originRect.size.height))
    </ originRect's origin is (2.0, 2.0) and its size is (5.0, 5.0)
@@ -593,7 +583,8 @@ which stores the new origin and size values in the appropriate properties:
 
 .. testcode:: valueDelegation
 
-   -> let centerRect = Rect(center: Point(4.0, 4.0), size: Size(3.0, 3.0))
+   -> let centerRect = Rect(center: Point(x: 4.0, y: 4.0),
+         size: Size(width: 3.0, height: 3.0))
    << // centerRect : Rect = Rect(Point(2.5, 2.5), Size(3.0, 3.0))
    /> centerRect's origin is (\(centerRect.origin.x), \(centerRect.origin.y)) and its size is (\(centerRect.size.width), \(centerRect.size.height))
    </ centerRect's origin is (2.5, 2.5) and its size is (3.0, 3.0)

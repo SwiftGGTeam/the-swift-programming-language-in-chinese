@@ -141,7 +141,7 @@ The ``Matrix`` structure's subscript takes two integer parameters:
          init(rows: Int, columns: Int) {
             self.rows = rows
             self.columns = columns
-            grid = Array(rows * columns, 0.0)
+            grid = Array(count: rows * columns, value: 0.0)
          }
          func indexIsValidForRow(row: Int, column: Int) -> Bool {
             return row >= 0 && row < rows && column >= 0 && column < columns
