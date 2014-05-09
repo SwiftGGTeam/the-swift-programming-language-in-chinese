@@ -468,15 +468,6 @@ Modifying Strings
 
 .. write-me::
 
-.. _Strings_SplittingAString:
-
-Splitting a String
-~~~~~~~~~~~~~~~~~~
-
-.. write-me::
-
-.. .split()
-
 .. _Strings_UppercaseAndLowercase:
 
 Uppercase and Lowercase
