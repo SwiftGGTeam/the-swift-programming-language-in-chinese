@@ -677,25 +677,31 @@ is detected by the compiler as an error.
 The compiler also detects methods with ``override``
 that don't actually override any method in the superclass.
 
-::
+.. testcode::
 
-    class Square: NamedShape {
-       var sideLength: Double
+    -> class Square: NamedShape {
+          var sideLength: Double
 
-       init(sideLength: Double, name: String) {
-          self.sideLength = sideLength
-          super.init(name)
-          numberOfSides = 4
+          init(sideLength: Double, name: String) {
+             self.sideLength = sideLength
+             super.init(name)
+             numberOfSides = 4
+          }
+
+          func area() ->  Double {
+             return sideLength * sideLength
+          }
+
+          override func description() -> String {
+             return "A square with sides of length \(sideLength)."
+          }
        }
-
-       func area() ->  Double {
-          return sideLength * sideLength
-       }
-
-       override description() -> String {
-          return "A square with sides of length \(sideLength)."
-       }
-    }
+    >> let test_square = Square(5.2, "test square")
+    << // test_square : Square = <Square instance>
+    >> test_square.area()
+    <$ : Double = 27.04
+    >> test_square.description()
+    <$ : String = "A square with sides of length 5.2."
 
 .. admonition:: Experiment
 
