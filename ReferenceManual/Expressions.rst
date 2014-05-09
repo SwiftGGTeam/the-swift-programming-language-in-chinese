@@ -1240,9 +1240,9 @@ For example, in the expression ``x?.foo()[7]``
 both the function call and the array subscript
 are chained to the chained optional expression,
 and they are both ignored if the value of ``x`` is ``nil``.
-The function call is directly chained
-it is chained to the chained-optional expression
-because it is chained directly to that expression.
+The function call is chained
+to the chained-optional expression
+because it is directly chained to that expression.
 The array subscript is chained to the chained optional expression
 because it is directly chained to the function call,
 which is chained to the chained-optional call.
