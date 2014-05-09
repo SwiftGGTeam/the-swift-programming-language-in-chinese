@@ -267,8 +267,8 @@ Ternary Conditional Operator
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The :newTerm:`ternary conditional operator` evaluates to one of two given values
-based on the value of a condition;
-it has the following form:
+based on the value of a condition.
+It has the following form:
 
 .. syntax-outline::
 
@@ -306,7 +306,7 @@ and returns the result,
 and the ``is`` operator performs a type cast
 and indicates whether the cast failed.
 
-They have the following form:
+Type-casting operators have the following form:
 
 .. syntax-outline::
 
@@ -319,14 +319,14 @@ as the specified *type*.
 It behaves as follows:
 
 * If casting the *expression*
-  to the specified *type*,
+  to the specified *type*
   is guaranteed to succeed,
   the value of *expression* is returned
   as an instance of the specified *type*.
-  For example, casting from a subclass to a superclass.
+  An example is casting from a subclass to a superclass.
 
 * If casting the *expression*
-  to the specified *type*,
+  to the specified *type*
   is guaranteed to fail,
   a compile-time error is raised.
 
