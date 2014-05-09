@@ -476,7 +476,7 @@ to make more complex expressions.
 Literal Expression
 ~~~~~~~~~~~~~~~~~~
 
-:newTerm:`Literal expression` consists of
+A :newTerm:`literal expression` consists of
 either an ordinary literal (such as a string or a number),
 an array or dictionary literal,
 or one of the following special literals:
@@ -484,10 +484,10 @@ or one of the following special literals:
 ================    ======  ===============================================
 Literal             Type    Value
 ================    ======  ===============================================
-``__FILE__``        String  The name of the file in which it appears
-``__LINE__``        Int     The line number on which it appears
-``__COLUMN__``      Int     The column number in which it begins
-``__FUNCTION__``    String  The name of the declaration in which it appears
+``__FILE__``        String  The name of the file in which it appears.
+``__LINE__``        Int     The line number on which it appears.
+``__COLUMN__``      Int     The column number in which it begins.
+``__FUNCTION__``    String  The name of the declaration in which it appears.
 ================    ======  ===============================================
 
 .. TODO: self and Self probably belong here as magic/special literals.
@@ -497,7 +497,8 @@ Inside a function,
 the value of ``__FUNCTION__`` is the name of that function,
 inside a method it is the name of that method,
 inside a property getter or setter it is the name of that property,
-inside special members like ``init`` or ``subscript`` it is the name of that keyword,
+inside special members like ``init`` or ``subscript``
+it is the name of that keyword,
 and at the top level of a file it is the name of the current module.
 
 An :newTerm:`array literal` is
@@ -509,14 +510,15 @@ It has the following form:
    [<#value 1#>, <#value 2#>, <#...#>]
 
 The last expression in the array can be followed by an optional comma.
-An empty array literal is written as ``[]``.
+An empty array literal is written
+as an empty pair of brackets (``[]``).
 The value of an array literal has type ``T[]``,
 where ``T`` is the type of the expressions inside it.
 If there are expressions of multiple types,
 ``T`` is their closest common supertype.
 
 A :newTerm:`dictionary literal` is
-an unordered collection of key-value pairs,
+an unordered collection of key-value pairs.
 It has the following form:
 
 .. syntax-outline::
@@ -524,7 +526,8 @@ It has the following form:
    [<#key 1#>: <#value 1#>, <#key 2#>: <#value 2#>, <#...#>]
 
 The last expression in the dictionary can be followed by an optional comma.
-An empty dictionary literal is written as ``[:]``
+An empty dictionary literal is written as
+a colon inside a pair of brackets (``[:]``)
 to distinguish it from an empty array literal.
 The value of a dictionary literal has type ``Dictionary<KeyType, ValueType>``,
 where ``KeyType`` is the type of its key expressions
