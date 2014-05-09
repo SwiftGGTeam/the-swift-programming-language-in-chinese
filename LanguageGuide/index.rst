@@ -6,7 +6,7 @@ Language Guide
 
    TheBasics
    BasicOperators
-   Strings
+   StringsAndCharacters
    CollectionTypes
    ControlFlow
    Functions
