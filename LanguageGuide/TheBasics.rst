@@ -276,7 +276,7 @@ and escaped with a backslash before the opening parenthesis:
 
 .. note::
 
-   The full set of options you can use with String interpolation
+   The full set of options you can use with string interpolation
    are described in :ref:`Strings_StringInterpolation`.
 
 .. _TheBasics_Comments:
@@ -284,31 +284,39 @@ and escaped with a backslash before the opening parenthesis:
 Comments
 --------
 
-As you may have noticed from the examples above,
-comments in Swift have some similarity to those found in C:
+Comments are a way to include non-executable text in your code,
+as a note or reminder to yourself.
+Comments are ignored by the Swift compiler when your code is compiled.
+
+Comments in Swift are very similar to comments in C.
+Single-line comments begin with two forward-slashes (``//``):
 
 .. testcode:: comments
    :compile: true
 
-   -> // Single-line comments begin with two forward-slashes, like in C.
+   -> // This is a comment
 
-You can also write multi-line comments:
-
-.. testcode:: comments
-   :compile: true
-
-   -> /* ...which start with a forward-slash followed by an asterisk,
-         and end with an asterisk followed by a forward-slash, also like C. */
-
-Unlike C, multi-line comments can also be nested:
+You can also write multi-line comments,
+which start with a forward-slash followed by an asterisk (``/*``),
+and end with an asterisk followed by a forward-slash (``*/``):
 
 .. testcode:: comments
    :compile: true
 
-   -> /* This is done by starting a new block of comments,
-         /* then starting another new block inside of the first block.
-         The second block is then closed... */
-      ...followed by the original block. */
+   -> /* This is also a comment,
+      but written over multiple lines */
+
+Unlike C, multi-line comments can be nested inside other multi-line comments.
+You write nested comments by starting a multi-line comment block,
+and then starting a second multi-line comment within the first block.
+The second block is then closed, followed by the first block:
+
+.. testcode:: comments
+   :compile: true
+
+   -> /* This is the start of the first multi-line comment
+         /* This is the second, nested multi-line comment */
+      This is the end of the first multi-line comment */
 
 Nested multi-line comments enable you to comment out large blocks of code quickly and easily,
 even if the code already contains multi-line comments.
