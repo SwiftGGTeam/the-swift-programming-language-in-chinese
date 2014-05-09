@@ -24,7 +24,7 @@ Tuples can be used to return multiple values from a function as a single compoun
 
 Swift also introduces optional types,
 which are a way to handle the absence of a value.
-Optionals are a way to say either “There *is* a value, and it equals *x*”;
+Optionals are a way to say either “there *is* a value, and it equals *x*”;
 or “there *isn't* a value at all”.
 Optionals are similar to working with ``nil`` in Objective-C,
 but in a way that works for any type, not just classes.
