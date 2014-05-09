@@ -380,14 +380,14 @@ as shown in the following examples:
     and not as ``x as (SomeType!)``.
 
 The ``is`` operator checks at runtime
-whether the *expression*
+to see whether the *expression*
 is of the specified *type*
 (but not one of its subtypes).
 If so, it returns ``true``; otherwise, it returns ``false``.
 
 .. If the bugs are fixed, this can be reworded:
     The ``is`` operator checks at runtime
-    whether the *expression*
+    to see whether the *expression*
     can be cast to the specified *type*
     If so, it returns ``true``; otherwise, it returns ``false``.
 
@@ -405,7 +405,8 @@ The following are invalid:
     !! "hello" is Int
     !! ~~~~~~~~^~~~~~
 
-For more information type casting and to see more examples that use the type-casting operators,
+For more information about type casting
+and to see more examples that use the type-casting operators,
 see :doc:`../LanguageGuide/TypeCasting`.
 
 .. See also <rdar://problem/16639705> Provably true/false "is" expressions should be a warning, not an error
@@ -429,7 +430,7 @@ see :doc:`../LanguageGuide/TypeCasting`.
 Primary Expressions
 -------------------
 
-:newTerm:`Primary expression`
+:newTerm:`Primary expressions`
 are the most basic kind of expression.
 They can be used as expressions on their own,
 and they can be combined with other tokens
