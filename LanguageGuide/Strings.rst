@@ -136,11 +136,7 @@ by calling its ``isEmpty`` method:
 String Mutability
 ~~~~~~~~~~~~~~~~~
 
-In Objective-C and Cocoa,
-you choose between two classes (``NSString`` and ``NSMutableString``)
-to determine whether a string is allowed to be modified (or *mutated*).
-Swift does not have this distinction.
-Instead, you indicate whether a particular ``String`` can be modified
+You indicate whether a particular ``String`` can be modified (or *mutated*)
 by assigning it to a variable (in which case it can be modified),
 or to a constant (in which case it cannot be modified):
 
@@ -159,6 +155,12 @@ or to a constant (in which case it cannot be modified):
    !! constantString += " and another Highlander"
    !! ~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~
    // this reports a compile-time error - a constant string cannot be modified
+
+.. note::
+
+   This approach is different from Objective-C and Cocoa,
+   where you choose between two classes (``NSString`` and ``NSMutableString``)
+   to indicate whether a string can be mutated.
 
 .. _Strings_StringsAreValueTypes:
 
