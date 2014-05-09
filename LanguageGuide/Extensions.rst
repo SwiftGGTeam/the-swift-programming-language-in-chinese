@@ -160,6 +160,16 @@ as described in :ref:`Strings_StringInterpolation`.
    /> pointDescription is \"\(pointDescription)\"
    </ pointDescription is "(3.0, 5.0)"
 
+.. FIXME: if you don't use an underbar to avoid an external parameter name,
+   the initializer can't be used with string interpolation.
+   This is a side-effect of the stricter paramerter name rules
+   introduced in Swift r17743.
+   I've filed this fact as rdar://16862627,
+   and have updated the example above so that it works with swifttest,
+   but I haven't yet described this as a requirement
+   because I'm awaiting feedback on that Radar.
+   I'll need to explain this requirement above if rdar://16862627 is not fixed by WWDC.
+   
 This example defines a new structure called ``Point`` to represent an ``(x, y)`` co-ordinate.
 It also extends ``String`` to add a new initializer implementation,
 which accepts a single ``Point`` instance as an initialization parameter.
