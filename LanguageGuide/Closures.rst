@@ -3,21 +3,33 @@ Closures
 
 :newTerm:`Closures` are self-contained blocks of functionality
 that can be passed around and used in your code.
-Swift's closures are similar to lambdas in other programming languages,
-and blocks in C-like languages.
-Functions, as discussed in :doc:`Functions`, are a special case of closures.
+Closures are similar to blocks in C and Objective-C,
+and lambdas in other programming languages.
 
-In addition to the capabilities described for functions,
-closures can capture and modify constants and variables
+Closures can capture and store references to any constants and variables
 from the context in which they are defined.
-Closures can also be written without a function name
-(although you can name them if you wish).
-In essence, functions are simple closures that have a name,
-and don't capture anything.
-(Although functions are specialized closures,
-this chapter refers to them as “functions” for simplicity.
+This is known as :newTerm:`closing` over those constants and variables,
+hence the name “closures”.
+Swift handles all of the memory management of capturing for you.
 
-Swift's closures have a clean, clear syntax,
+.. note::
+
+   Don't worry if you are not familiar with the concept of “capturing”.
+   It is explained in detail below in :ref:`Closures_CapturingValues`.
+
+Global and nested functions,
+as introduced in :doc:`Functions`,
+are actually special cases of closures.
+Closures take one of three forms:
+
+1) Global functions, which are closures that have a name,
+   and do not capture any values
+2) Nested functions, which are closures that have a name,
+   and can capture values from the function they are nested within
+3) Closure expressions, which are unnamed closures written in a lightweight syntax
+   that can capture values from their surrounding context
+
+Swift's closure expressions have a clean, clear syntax,
 with optimizations for writing brief, clutter-free closures in common scenarios.
 These optimizations include:
 
@@ -28,15 +40,13 @@ These optimizations include:
 
 All of these optimizations are described in detail below.
 
-In addition, Swift handles all of the memory management of capturing for you.
-The concept and meaning of “capturing” is explained in detail below.
-
 .. _Closures_ClosureExpressions:
 
 Closure Expressions
 -------------------
 
-Nested functions are a convenient way to name and define self-contained blocks of code
+Nested functions, as introduced in :ref:`Functions_NestedFunctions`,
+are a convenient way to name and define self-contained blocks of code
 as part of a larger function.
 However, it can sometimes be useful to write shorter versions of function-like constructs,
 without the need for a full declaration and name.

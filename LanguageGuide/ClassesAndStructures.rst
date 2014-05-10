@@ -422,9 +422,6 @@ and the value it contains is always a reference to a particular instance of that
 
 .. TODO: Add a justification here to say why this is a good thing.
 
-.. TODO: Saying that we don't use the reference operator is actually untrue.
-   We use it at the call-site for inout function parameters.
-
 .. _ClassesAndStructures_ChoosingBetweenClassesAndStructures:
 
 Choosing Between Classes and Structures

@@ -448,19 +448,6 @@ while also enabling the function to be called without ambiguity:
    /> containsAVee equals \(containsAVee), because \"aardvark\" contains a \"v\"
    </ containsAVee equals true, because "aardvark" contains a "v"
 
-.. note::
-
-   If ``characterToFind`` is found quickly,
-   this example returns ``true`` before the entire set of characters in ``string`` is checked.
-   As soon as the first matching character is found,
-   ``containsCharacter`` returns ``true``,
-   and doesn't bother to check the remaining characters.
-   You can return control from a function at any time,
-   and it will stop what it is doing immediately.
-   In fact, this function only returns ``false`` if
-   the entire set of characters in ``string`` is exhausted,
-   and the end of the ``for`` loop is reached.
-
 .. _Functions_DefaultParameterValues:
 
 Default Parameter Values
@@ -694,7 +681,6 @@ because constants and literals cannot be modified.
 You place an ampersand (``&``) directly before a variable's name
 when you pass it as an argument to an inout parameter,
 to indicate that it can be modified by the function.
-(This is similar to C's use of the ampersand character as a reference operator.)
 
 .. note::
 
