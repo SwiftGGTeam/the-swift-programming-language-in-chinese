@@ -1,9 +1,8 @@
 Generics
 ========
 
-:newTerm:`Generics` are a way to write flexible and reusable code
+:newTerm:`Generics` are a way to write flexible, reusable code
 that can work with any type at all,
-including types that you have not defined yourself,
 subject to certain requirements that you define.
 
 Generics are one of the most powerful features of Swift,
@@ -25,16 +24,12 @@ which takes two ``Int`` variables, and swaps their values:
          b = temporaryA
       }
 
-(The ``swapTwoInts`` function was originally introduced in :doc:`Functions`.)
+This function makes use of in-out parameters to swap the values of ``a`` and ``b``,
+as described in :ref:`Functions_InOutParameters`.
 
 The ``swapTwoInts`` function swaps the original value of ``b`` into ``a``,
 and the original value of ``a`` into ``b``.
-The function performs this swap by storing the value of ``a`` in
-a temporary constant called ``temporaryA``; assigning the value of ``b`` to ``a``;
-and then assigning ``temporaryA`` to ``b``.
-
-The ``swapTwoInts`` function can be called with two variables of type ``Int``,
-to swap their values:
+You can call this function to swap the values in two ``Int`` variables:
 
 .. testcode:: whyGenerics
 
@@ -46,14 +41,7 @@ to swap their values:
    -> println("someInt is now \(someInt), and anotherInt is now \(anotherInt)")
    <- someInt is now 107, and anotherInt is now 3
 
-.. note::
-
-   The names of ``someInt`` and ``anotherInt`` are prefixed with an ampersand
-   when they are passed to the ``swapTwoInts`` function,
-   because ``a`` and ``b`` are defined as in-out parameters,
-   as described in :ref:`Functions_InOutParameters`.
-
-The ``swapTwoInts`` function is useful, but it only works with ``Int`` values.
+This function is useful, but it can only be used with ``Int`` values.
 If you want to swap two ``String`` values,
 or two ``Double`` values,
 you have to write more functions,
@@ -91,7 +79,8 @@ This is the kind of problem that generic code can solve.
 Generics Are Used Throughout Swift
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You've actually been using generics throughout this book, even if you didn't realise it.
+You've actually been using generics throughout this Language Guide,
+even if you didn't realise it.
 For example, Swift's ``Array`` and ``Dictionary`` types
 are both generic collections.
 You can create an array that holds ``Int`` values,
