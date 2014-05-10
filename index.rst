@@ -22,6 +22,17 @@ Contents
 Change Log
 ----------
 
+May ??? 2014
+~~~~~~~~~~~~
+
+* The content of this book is now on [Tool P],
+  which shows it using the formatting and layout
+  that will actually ship at WWDC.
+
+* Because the content has moved,
+  links in the change log before this point are now broken.
+
+
 May 9 2014
 ~~~~~~~~~~
 
