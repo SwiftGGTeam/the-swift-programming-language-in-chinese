@@ -952,7 +952,7 @@ It has the following form:
     <#expression#>.init(<#initializer arguments#>)
 
 To initialize a new instance of a type,
-use the initializer expression in a function call.
+use the initializer expression in a function call expression.
 Unlike other functions, an initializer can't be used as a value.
 For example:
 
@@ -1237,15 +1237,14 @@ or if it is directly chained to another postfix expression
 that is chained to that expression.
 
 For example, in the expression ``x?.foo()[7]``
-both the function call and the array subscript
-are chained to the chained optional expression,
-and they are both ignored if the value of ``x`` is ``nil``.
-The function call is chained
-to the chained-optional expression
+the function call is chained
+to the chained-optional expression ``x?``
 because it is directly chained to that expression.
-The array subscript is chained to the chained optional expression
+The array subscript is chained to the chained-optional expression
 because it is directly chained to the function call,
-which is chained to the chained-optional call.
+and the function call is chained to the chained-optional call.
+Both the function call and the array subscript
+are ignored if the value of ``x`` is ``nil``.
 
 .. LangRef
 
@@ -1267,7 +1266,7 @@ which is chained to the chained-optional call.
 
 .. syntax-grammar::
 
-   Grammar of a chained optional expression
+   Grammar of a chained-optional expression
 
    chained-optional-expression --> postfix-expression ``?``
 
