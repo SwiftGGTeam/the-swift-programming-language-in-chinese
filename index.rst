@@ -18,6 +18,12 @@ Contents
 (If there are any issues with today's build, you can also try `yesterday's build <https://[Internal Staging Server]/documentation/Miscellaneous/Conceptual/The_Programming_Language/index.html#//apple_ref/doc/uid/TP40014097>`_ of the documentation.)
 
 
+Known Issues
+------------
+
+* <rdar://16756239> Indentation is missing in Xcode-style code outlines.
+* <rdar:/16756034> Formal grammar does not contain live links.
+* <rdar://16844985> Guided Tour has lines that don't compile in latest Swift
 
 Change Log
 ----------
