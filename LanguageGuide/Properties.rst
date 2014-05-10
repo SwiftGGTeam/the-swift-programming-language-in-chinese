@@ -402,13 +402,6 @@ and the default name of ``oldValue`` is used instead.
 
 .. TODO: mention that this also works for global / local variables
 
-.. _Properties_WeakAndUnownedProperties:
-
-Weak and Unowned Properties
----------------------------
-
-.. write-me::
-
 .. _Properties_StaticProperties:
 
 Static Properties
