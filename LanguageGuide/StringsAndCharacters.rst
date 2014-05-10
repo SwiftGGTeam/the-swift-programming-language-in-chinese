@@ -406,7 +406,7 @@ Prefix and Suffix Equality
 You can check if a string has a particular string prefix or suffix
 by calling the string's ``startsWith`` and ``endsWith`` methods,
 both of which take a single argument of type ``String`` and return a Boolean value.
-Both methods both perform a character-by-character comparison
+Both methods perform a character-by-character comparison
 between the base string and the prefix or suffix string.
 
 The examples below consider an array of strings representing
@@ -484,22 +484,53 @@ with its ``uppercase`` and ``lowercase`` properties:
    /> whispered is equal to \"\(whispered)\"
    </ whispered is equal to "could you help me, please?"
 
-.. _StringsAndCharacters_UnicodeRepresentations:
+.. _StringsAndCharacters_Unicode:
 
-Unicode Representations
------------------------
+Unicode
+-------
+
+:newTerm:`Unicode` is an international standard for encoding and representing text.
+It provides a way to represent almost any character from any language in a standardized form,
+and to read and write those characters to and from an external source
+such as a text file or web page.
+
+Swift's ``String`` and ``Character`` types are fully Unicode-compliant,
+and support a number of different Unicode encodings, as described below.
+
+.. _StringsAndCharacters_UnicodeTerminology:
+
+Unicode Terminology
+~~~~~~~~~~~~~~~~~~~
+
+Every character in Unicode can be represented by one or more :newTerm:`code points`.
+A code point is an unique 21-bit number (and name) for a character or modifier,
+such as ``U+0061`` for ``LOWERCASE LATIN LETTER A`` (``a``),
+or ``U+1F425`` for ``FRONT-FACING BABY CHICK`` (``🐥``).
+
+When a Unicode string is written to a text file or some other storage,
+these code points are encoded in one of several Unicode-defined formats.
+Each of these formats encodes the string in small chunks known as :newTerm:`code units`.
+These include the UTF-8 format (which encodes a string as 8-bit code units),
+and the UTF-16 format (which encodes a string as 16-bit code units).
+
+.. _StringsAndCharacters_UnicodeRepresentationsOfSwiftStrings:
+
+Unicode Representations of Swift Strings
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Swift provides four different ways to decompose a ``String`` value into smaller units.
-As described in :ref:`StringsAndCharacters_Characters`,
-you can iterate over the string itself with a ``for``-``in`` statement
+
+Firstly, you can iterate over the string with a ``for``-``in`` statement,
 to access its individual ``Character`` values as Unicode characters.
+This process is described in :ref:`StringsAndCharacters_Characters`.
 
 Alternatively, you can access a ``String`` value
-in one of three Unicode-compliant representations:
+in one of three other Unicode-compliant representations:
 
-* A collection of UTF-8 code units (accessed with the ``utf8`` property)
-* A collection of UTF-16 code units (accessed with the ``utf16`` property)
-* A collection of 21-bit Unicode scalar values (accessed with the ``unicodeScalars`` property)
+* A collection of UTF-8 code units (accessed with the string's ``utf8`` property)
+* A collection of UTF-16 code units (accessed with the string's ``utf16`` property)
+* A collection of 21-bit Unicode scalar values
+  (accessed with the string's ``unicodeScalars`` property)
 
 Each of the three examples below shows a different representation of the following string,
 which is made up of the characters ``D``, ``o``, ``g``, ``!``,
@@ -513,7 +544,7 @@ and the 🐶 character (``DOG FACE``, or Unicode code point ``U+1F436``):
 .. _StringsAndCharacters_UTF8:
 
 UTF-8
-~~~~~
+_____
 
 You can access a UTF-8 representation of a ``String``
 by iterating over its ``utf8`` property.
@@ -533,7 +564,7 @@ In the example above, the first four decimal ``codeUnit`` values
 (``68``, ``111``, ``103``, ``33``)
 represent the characters ``D``, ``o``, ``g``, and ``!``,
 whose UTF-8 representation is the same as their ASCII representation.
-The second four ``codeUnit`` values (``240``, ``159``, ``144``, ``182``)
+The last four ``codeUnit`` values (``240``, ``159``, ``144``, ``182``)
 are a four-byte UTF-8 representation of the 🐶 character.
 
 .. TODO: contiguousUTF8()
@@ -544,7 +575,7 @@ are a four-byte UTF-8 representation of the 🐶 character.
 .. _StringsAndCharacters_UTF16:
 
 UTF-16
-~~~~~~
+______
 
 You can access a UTF-16 representation of a ``String``
 by iterating over its ``utf16`` property.
@@ -574,7 +605,7 @@ and a trail surrogate value of ``U+DC36`` (decimal value ``56374``).
 .. _StringsAndCharacters_UnicodeScalars:
 
 Unicode Scalars
-~~~~~~~~~~~~~~~
+_______________
 
 The third and final Unicode representation of a ``String``
 enables you to access the string as a collection of Unicode scalars.
