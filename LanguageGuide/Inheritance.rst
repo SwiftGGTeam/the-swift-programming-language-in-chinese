@@ -11,8 +11,8 @@ Here's an example:
 .. testcode:: inheritance
 
    -> class Vehicle {
-         var numberOfWheels: Int
-         var maxPassengers: Int
+         let numberOfWheels: Int
+         let maxPassengers: Int
          func description() -> String {
             return "\(numberOfWheels) wheels; up to \(maxPassengers) passengers"
          }

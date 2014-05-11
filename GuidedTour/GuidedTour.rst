@@ -420,7 +420,7 @@ with a parenthesized list of arguments.
        }
     -> greet("Bob", "Tuesday")
     <$ : String = "Hello Bob, today is Tuesday."
-    -> greet(name:"Alice", "Wednesday")
+    -> greet("Alice", "Wednesday")
     <$ : String = "Hello Alice, today is Wednesday."
 
 .. admonition:: Experiment

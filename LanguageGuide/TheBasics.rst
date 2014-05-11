@@ -747,13 +747,6 @@ Because it is an alias,
 the call to ``AudioSample.min`` actually calls ``UInt16.min``,
 which provides an initial value of ``0`` for the ``maxAmplitudeFound`` variable.
 
-.. note::
-
-   Type aliases do not actually define a new type in Swift.
-   They are simply an alternative name for an existing type.
-   In the example above,
-   ``maxAmplitudeFound`` is of type ``UInt16``, not ``AudioSample``.
-
 .. _TheBasics_Booleans:
 
 Booleans
@@ -762,7 +755,7 @@ Booleans
 Swift has a basic :newTerm:`Boolean` type, called ``Bool``.
 Boolean values are referred to as :newTerm:`logical`,
 because they can only ever be true or false.
-Swift provides two Boolean literal values,
+Swift provides two Boolean constant values,
 ``true`` and ``false``:
 
 .. testcode:: booleans

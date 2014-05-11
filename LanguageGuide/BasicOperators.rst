@@ -153,6 +153,8 @@ can be added together to make a new ``String`` value:
    /> dogCow is equal to \"🐶🐮\"
    </ dogCow is equal to "🐶🐮"
 
+See also :ref:`StringsAndCharacters_StringAndCharacterConcatenation`.
+
 .. _BasicOperators_RemainderOperator:
 
 Remainder Operator

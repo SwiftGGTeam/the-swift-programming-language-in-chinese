@@ -468,7 +468,7 @@ It also tracks the current level for an individual player.
             return level <= highestUnlockedLevel
          }
          var currentLevel = 1
-         mutating func setCurrentLevel(level: Int) -> Bool {
+         mutating func advanceToLevel(level: Int) -> Bool {
             if LevelTracker.levelIsUnlocked(level) {
                currentLevel = level
                return true
@@ -496,10 +496,10 @@ It uses an instance property called ``currentLevel`` to track
 the level that a player is currently playing.
 
 To help manage the ``currentLevel`` property,
-``LevelTracker`` defines an instance method called ``setCurrentLevel``.
+``LevelTracker`` defines an instance method called ``advanceToLevel``.
 Before updating ``currentLevel``,
 this method checks to make sure that the requested new level has already been unlocked.
-The ``setCurrentLevel`` method returns a Boolean value to indicate
+The ``advanceToLevel`` method returns a Boolean value to indicate
 whether or not it was actually able to set ``currentLevel``.
 
 The ``LevelTracker`` structure is used with the ``Player`` class, shown below,
@@ -512,7 +512,7 @@ to track and update the progress of an individual player:
          let playerName: String
          func completedLevel(level: Int) {
             LevelTracker.unlockLevel(level + 1)
-            tracker.setCurrentLevel(level + 1)
+            tracker.advanceToLevel(level + 1)
          }
          init(name: String) {
             playerName = name
@@ -525,7 +525,7 @@ It also provides a method called ``completedLevel``,
 which is called whenever a player completes a particular level.
 This method unlocks the next level for all players,
 and updates the player's progress to move them on to the next level.
-(The Boolean return value of ``setCurrentLevel`` is ignored,
+(The Boolean return value of ``advanceToLevel`` is ignored,
 because the level is known to have been unlocked
 by the call to ``LevelTracker.unlockLevel`` on the previous line.)
 
@@ -547,7 +547,7 @@ the attempt to set their current level will fail:
 .. testcode:: typeMethods
 
    -> player = Player(name: "Beto")
-   -> if player.tracker.setCurrentLevel(6) {
+   -> if player.tracker.advanceToLevel(6) {
          println("player is now on level 6")
       } else {
          println("level 6 has not yet been unlocked")
