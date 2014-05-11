@@ -762,7 +762,7 @@ Booleans
 Swift has a basic :newTerm:`Boolean` type, called ``Bool``.
 Boolean values are referred to as :newTerm:`logical`,
 because they can only ever be true or false.
-Swift provides two Boolean literal values,
+Swift provides two Boolean constant values,
 ``true`` and ``false``:
 
 .. testcode:: booleans
