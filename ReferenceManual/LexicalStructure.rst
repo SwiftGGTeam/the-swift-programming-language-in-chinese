@@ -544,7 +544,7 @@ For example, all the following string literals have the same value:
 
 String literals are of type ``String``. The characters that make up a string
 are of type ``Character``. For more information about the ``String`` and ``Character``
-types, see :doc:`../LanguageGuide/Strings`.
+types, see :doc:`../LanguageGuide/StringsAndCharacters`.
 
 .. NOTE: We will have this as a single Unicode char, as well as Char which will be a
    single Unicode grapheme cluster.  Watch for changes around this and the
