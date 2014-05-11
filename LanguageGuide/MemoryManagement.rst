@@ -546,7 +546,7 @@ after the ``john`` variable is set to ``nil``.
 .. _MemoryManagement_UnownedReferencesAndImplicitlyUnwrappedOptionalProperties:
 
 Unowned References and Implicitly Unwrapped Optional Properties
-_______________________________________________________________
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The examples for weak and unowned references above
 cover two of the more common scenarios
