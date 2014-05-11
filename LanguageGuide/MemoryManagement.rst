@@ -548,27 +548,38 @@ after the ``john`` variable is set to ``nil``.
 Unowned References and Implicitly Unwrapped Optional Properties
 _______________________________________________________________
 
-Implicitly unwrapped optional properties are useful when
-an instance property cannot be set until initialization is complete,
-but is guaranteed to always exist thereafter.
+The examples for weak and unowned references above
+cover two of the more common scenarios
+in which it is necessary to break a strong reference cycle.
 
-In these kinds of cases,
-you could define the instance property as a normal optional,
-but this would require you to unwrap the property's value when it is used.
-Using an implicitly unwrapped optional instead
-means that you do not need to unwrap the optional value yourself each time it is used.
+Firstly, the ``Person`` and ``Apartment`` example shows
+a situation where two properties, both of which are allowed to be ``nil``,
+have the potential to cause a reference cycle.
+This scenario is best solved with a weak reference, as shown above.
 
-.. note::
+Secondly, the ``Customer`` and ``CreditCard`` example
+shows a situation where one property that is allowed to be ``nil``,
+and another property that cannot be ``nil``,
+have the potential to cause a reference cycle.
+This scenario is best solved with an unowned reference, as shown above.
 
-   You should only define a property as an implicitly unwrapped optional
-   if you are sure that that property will *always* contain
-   a non-``nil`` value once it is initialized.
-   If a property has the potential to be ``nil`` at some future point,
-   it should always be declared as a true optional,
-   and not as an implicitly unwrapped optional.
+However, there is a third scenario,
+in which *both* properties should always have a value,
+and neither property should ever be ``nil`` once initialization is complete.
+In this scenario, it is useful to combine an unowned property on one class
+with an implicitly unwrapped optional property on the other class.
 
-The following example defines two classes, ``Country`` and ``City``,
-each of which stores an instance of the other class as a property:
+This enables both properties to be accessed directly
+(without optional unwrapping) once initialiation is complete,
+while still avoiding a reference cycle.
+This section shows you how to set up such a relationship.
+
+The example below defines two classes, ``Country`` and ``City``,
+each of which stores an instance of the other class as a property.
+In this data model, every country must always have a capital city,
+and every city must always belong to a country.
+To represent this, the ``Country`` class has a ``capitalCity`` property,
+and the ``City`` class has a ``country`` property:
 
 .. testcode:: implicitlyUnwrappedOptionals
    :compile: true
@@ -590,45 +601,49 @@ each of which stores an instance of the other class as a property:
             self.country = country
          }
       }
-   ---
-   -> var country = Country(name: "Canada", capitalName: "Ottawa")
-   -> println("\(country.name)'s capital city is called \(country.capitalCity.name)")
-   <- Canada's capital city is called Ottawa
 
-In this data model, every country has a capital city, and every city belongs to a country.
-To represent this, the ``Country`` class has a ``capitalCity`` property,
-and the ``City`` class has a ``country`` property.
-
-To set up this interdependency,
+To set up the interdependency between the two classes,
 the initializer for ``City`` takes a ``Country`` instance,
-and stores it as a reference to the city's country.
+and stores this instance in its ``country`` property.
+
+The initializer for ``City`` is called from within the initializer for ``Country``.
 However, the initializer for ``Country`` cannot pass ``self`` to the ``City`` initializer
-until the new ``Country`` instance has been fully initialized.
+until a new ``Country`` instance has been fully initialized,
+as described in :ref:`Initialization_TwoPhaseInitialization`.
 
 To cope with this requirement,
-the ``capitalCity`` property is declared as an implicitly unwrapped optional property.
-This means that it has a default value of ``nil``, like any other optional
-(see :ref:`TheBasics_ImplicitlyUnwrappedOptionals`.)
+the ``capitalCity`` property of ``Country`` is declared as
+an implicitly unwrapped optional property,
+indicated by the exclamation mark at the end of its type annotation (``City!``).
+This means that it has a default value of ``nil``, like any other optional,
+but can be accessed without the need to unwrap its value
+(as described in :ref:`TheBasics_ImplicitlyUnwrappedOptionals`).
 
-Because of this default ``nil`` value for ``capitalCity``,
+Because ``capitalCity`` has a default ``nil`` value,
 a new ``Country`` instance is considered fully initialized
-as soon as it sets its ``name`` property within its initializer.
+as soon as the ``Country`` instance sets its ``name`` property within its initializer.
 This means that the initializer can start to reference and pass around
 the implicit ``self`` property as soon as ``name`` has been set.
 This enables it to pass ``self`` as one of the parameters for
 the ``City`` initializer when setting its own ``capitalCity`` property.
 
+All of this means that the ``Country`` and ``City`` instances
+can be created in a single statement, without creating a reference cycle,
+and the ``capitalCity`` property can be accessed directly,
+without needing to use an exclamation mark to unwrap its optional value:
+
+.. testcode:: implicitlyUnwrappedOptionals
+   :compile: true
+
+   -> var country = Country(name: "Canada", capitalName: "Ottawa")
+   -> println("\(country.name)'s capital city is called \(country.capitalCity.name)")
+   <- Canada's capital city is called Ottawa
+
 In the example above, the use of an implicitly unwrapped optional
-means that all of the two-phase initializer requirements described above are satisfied,
+means that all of the two-phase class initializer requirements are satisfied,
 and the property can be used and accessed like a non-optional value
-once initialization is complete.
-
-.. note::
-
-   The ``City`` class's ``country`` property is defined as an *unowned* property,
-   indicated by the ``unowned`` keyword.
-   This avoids a strong reference cycle between a ``Country`` instance
-   and the ``City`` instance stored in its ``capitalCity`` property.
+once initialization is complete,
+while still avoiding a strong reference cycle.
 
 .. _MemoryManagement_AvoidingReferenceCyclesInClosures:
 
