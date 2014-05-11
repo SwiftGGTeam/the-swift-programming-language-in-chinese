@@ -283,10 +283,19 @@ Swift provides two ways to resolve strong reference cycles
 when working with properties of class type.
 These are known as weak references and unowned references.
 
-Use a weak reference whenever it is valid for that reference to become ``nil``
+Weak and unowned references both give a way for one instance in a reference cycle
+to refer to the other instance *without* keeping a strong hold on it.
+This enables the instances to refer to each other
+without creating a strong reference cycle.
+
+You should use a weak reference whenever it is valid for that reference to become ``nil``
 at some point during its lifetime.
-Use an unowned reference when you known that
+Conversely, you should use an unowned reference when you known that
 the reference will never be ``nil`` once it has been set during initialization.
+
+.. QUESTION: how do I answer the question
+   "which of the two properties in the reference cycle
+   should be marked as weak or unowned?"
 
 .. _MemoryManagement_WeakReferences:
 
@@ -296,7 +305,7 @@ Weak References
 A :newTerm:`weak reference` is a reference that does not keep a strong hold
 on the instance it refers to,
 and so does not stop the referenced instance from being destroyed.
-This avoids the reference forming part of a strong reference cycle.
+This avoids the reference becoming part of a strong reference cycle.
 Weak references are indicated by placing the ``weak`` keyword
 before a property or variable declaration.
 
@@ -306,7 +315,7 @@ whenever it is possible for that reference to have
 (If the reference will *always* have a value,
 you should use an unowned reference instead,
 as described in :ref:`MemoryManagement_UnownedReferences`.)
-In the example above,
+In the ``Apartment`` example above,
 it is appropriate for an apartment to be able to have
 “no tenant” at some point in its lifetime,
 and so a weak reference is an appropriate way to break the reference cycle in this case.
@@ -407,7 +416,137 @@ This proves that the reference cycle has been broken.
 Unowned References
 ~~~~~~~~~~~~~~~~~~
 
-.. write-me::
+Just like a weak reference,
+an :newTerm:`unowned reference` does not keep a strong hold on the instance it references.
+Unlike a weak reference, however,
+an unowned reference is assumed to *always* have a value.
+Because of this, an unowned reference is always defined as a non-optional type.
+Unowned references are indicated by placing the ``unowned`` keyword
+before a property or variable declaration.
+
+The fact that an unowned reference is non-optional
+means that there is no need to unwrap the unowned reference each time it is used.
+An unowned reference can always be accessed directly.
+
+However, because an unowned reference is non-optional,
+ARC cannot set the reference to ``nil`` when the instance it refers to is destroyed.
+(Variables of a non-optional type cannot be set to ``nil``.)
+
+This means that if you try to access an unowned reference 
+after the instance that it references has been destroyed,
+you will trigger an unrecoverable runtime error.
+This is why unowned references should only be used
+when you are sure that the reference will *always* refer to an instance.
+
+.. note::
+
+   Swift guarantees that your app will definitely crash
+   if you try and access an unowned reference after the instance it references
+   has been destroyed.
+   You will never encounter unexpected behavior in this situation –
+   your app will always crash reliably.
+   (Although you should, of course, avoid it doing so.)
+
+The following example defines two classes, ``Customer`` and ``CreditCard``,
+which model a bank customer and a possible credit card for that customer.
+These two classes each store an instance of the other class as a property.
+This has the potential to create a reference cycle,
+as described in :ref:`MemoryManagement_StrongReferenceCycles`.
+
+The relationship between ``Customer`` and ``CreditCard`` is slightly different from
+the relationship between ``Apartment`` and ``Person`` seen above.
+In this data model, a customer may or may not have a credit card,
+but a credit card will *always* be associated with a customer.
+To represent this, the ``Customer`` class has an optional ``card`` property,
+but the ``CreditCard`` class has a non-optional ``customer`` property.
+
+Furthermore, a new ``CreditCard`` instance can *only* be created
+by passing a ``number`` value and a ``customer`` instance
+to a custom ``CreditCard`` initializer.
+This ensures that a ``CreditCard`` instance always has
+a ``customer`` instance associated with it when the ``CreditCard`` instance is created.
+
+Because a credit card will always have a customer,
+its ``customer`` property is defined as an unowned reference,
+to avoid a strong reference cycle:
+
+.. testcode:: unownedReferences
+   :compile: true
+
+   -> class Customer {
+         var name: String
+         var card: CreditCard?
+         init(name: String) {
+            self.name = name
+         }
+         deinit { println("\(name) is being deinitialized") }
+      }
+   ---
+   -> class CreditCard {
+         var number: Int
+         unowned var customer: Customer
+         init(number: Int, customer: Customer) {
+            self.number = number
+            self.customer = customer
+         }
+         deinit { println("Card #\(number) is being deinitialized") }
+      }
+
+This next code snippet defines an optional ``Customer`` variable called ``john``,
+which will be used to store a reference to a specific customer.
+This variable has an initial value of nil, by virtue of being optional:
+
+.. testcode:: unownedReferences
+   :compile: true
+
+   -> var john: Customer?
+
+You can now create a ``Customer`` instance,
+and use it to initialize and assign a new ``CreditCard`` instance
+as that country's ``card`` property:
+
+.. testcode:: unownedReferences
+   :compile: true
+
+   -> john = Customer(name: "John Appleseed")
+   -> john!.card = CreditCard(number: 1234_5678_9012_3456, customer: john!)
+
+Here's how the references look after linking the two instances together:
+
+.. image:: ../images/unownedReference01.png
+   :align: center
+
+The ``Customer`` instance now has a strong reference to the ``CreditCard`` instance,
+and the ``CreditCard`` instance has an unowned reference to the ``Customer`` instance.
+
+This means that when you break the strong reference held by the ``john`` variable,
+there are no more strong references to the ``Customer`` instance:
+
+.. image:: ../images/unownedReference02.png
+   :align: center
+
+Because there are no more strong references to the ``Customer`` instance,
+it is destroyed.
+After this happens,
+there are no more strong references to the ``CreditCard`` instance,
+and it too is destroyed:
+
+.. testcode:: unownedReferences
+   :compile: true
+
+   -> john = nil
+   <- John Appleseed is being deinitialized
+   <- Card #1234567890123456 is being deinitialized
+
+The final code snippet above shows that
+the deinitializers for the ``Customer`` instance and ``CreditCard`` instance
+both print their “deinitialized” messages
+after the ``john`` variable is set to ``nil``.
+
+.. _MemoryManagement_UnownedReferencesAndImplicitlyUnwrappedOptionalProperties:
+
+Unowned References and Implicitly Unwrapped Optional Properties
+_______________________________________________________________
 
 Implicitly unwrapped optional properties are useful when
 an instance property cannot be set until initialization is complete,
