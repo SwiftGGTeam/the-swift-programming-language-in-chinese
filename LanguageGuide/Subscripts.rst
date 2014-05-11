@@ -4,9 +4,9 @@ Subscripts
 Classes, structures, and enumerations can define :newTerm:`subscripts`,
 which enable instances of that type to be queried via one or more
 values in square brackets after the instance name.
-This is similar to the way in which the elements in an array
-can be accessed as ``someArray[index]``,
-and elements in a ``Dictionary`` instance can be accessed as
+This the way in which the elements in an array
+are accessed as ``someArray[index]``,
+and elements in a ``Dictionary`` instance are accessed as
 ``someDictionary[key]``.
 (Array and dictionary subscripts are described in detail in :doc:`CollectionTypes`.)
 
