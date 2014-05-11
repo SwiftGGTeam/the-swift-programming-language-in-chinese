@@ -17,15 +17,15 @@ Swift handles all of the memory management of capturing for you.
    Don't worry if you are not familiar with the concept of “capturing”.
    It is explained in detail below in :ref:`Closures_CapturingValues`.
 
-Global and nested functions,
+Global and local functions,
 as introduced in :doc:`Functions`,
 are actually special cases of closures.
 Closures take one of three forms:
 
 1) Global functions, which are closures that have a name,
    and do not capture any values
-2) Nested functions, which are closures that have a name,
-   and can capture values from the function they are nested within
+2) Local functions, which are closures that have a name,
+   and can capture values from their enclosing function
 3) Closure expressions, which are unnamed closures written in a lightweight syntax
    that can capture values from their surrounding context
 
@@ -45,7 +45,7 @@ All of these optimizations are described in detail below.
 Closure Expressions
 -------------------
 
-Nested functions, as introduced in :ref:`Functions_NestedFunctions`,
+Local functions, as introduced in :ref:`Functions_LocalFunctions`,
 are a convenient way to name and define self-contained blocks of code
 as part of a larger function.
 However, it can sometimes be useful to write shorter versions of function-like constructs,
@@ -435,14 +435,14 @@ The closure is then able to refer to and modify
 the values of those constants and variables from within its body,
 even if the original scope that defined the constants and variables no longer exists.
 
-The simplest form of a closure in Swift is a nested function,
+The simplest form of a closure in Swift is a local function,
 written within the body of another function.
-A nested function can capture any of its outer function's arguments,
+A local function can capture any of its outer function's arguments,
 and can also capture any constants and variables defined within the outer function.
 
 Here's an example of a function called ``makeIncrementor``,
-which contains a nested function called ``incrementor``.
-The nested ``incrementor`` function captures two values,
+which contains a local function called ``incrementor``.
+The local ``incrementor`` function captures two values,
 ``runningTotal`` and ``amount``,
 from its surrounding context.
 After capturing these values,
@@ -477,12 +477,12 @@ The argument value passed to this parameter specifies
 how much ``runningTotal`` should be incremented by
 each time the returned incrementor function is called.
 
-``makeIncrementor`` defines a nested function called ``incrementor``,
+``makeIncrementor`` defines a local function called ``incrementor``,
 which performs the actual incrementing.
 This function simply adds ``amount`` to ``runningTotal``, and returns the result.
 
 When considered in isolation,
-the nested ``incrementor`` function might seem unusual:
+the local ``incrementor`` function might seem unusual:
 
 .. testcode:: closuresPullout
 
@@ -516,7 +516,7 @@ the next time that the incrementor function is called.
    Swift determines what should be captured by reference,
    and what should be copied by value.
    You don't need to annotate ``amount`` or ``runningTotal``
-   to say that they can be used within the nested ``incrementor`` function.
+   to say that they can be used within the local ``incrementor`` function.
    Swift also handles all of the memory management involved in disposing of ``runningTotal``
    when it is no longer needed by the incrementor function.
 

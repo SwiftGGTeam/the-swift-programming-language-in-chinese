@@ -17,7 +17,7 @@ Every function in Swift has a type, made up of its parameter and return types,
 and this type can be used like any other type in Swift.
 This makes it easy to pass functions as parameters to other functions,
 and to return functions from functions.
-Functions can also be nested within other functions
+Functions can also be written within other functions
 to encapsulate useful functionality within a local function scope.
 
 .. TODO: should this chapter mention __FUNCTION__
@@ -942,23 +942,25 @@ it can be used to count to zero:
    </ 1...
    </ zero!
 
-.. _Functions_NestedFunctions:
+.. _Functions_LocalFunctions:
 
-Nested Functions
-----------------
+Local Functions
+---------------
 
-Functions can be :newTerm:`nested` inside other functions.
-As its name suggests, a nested function is simply
-a function written within the body of another function.
-The nested function is hidden from the outside world by default,
-but can still be used by its enclosing function.
-An enclosing function can return one of its nested functions
-to allow the nested function to be used in another scope.
+All of the functions you have encountered so far in this chapter
+have been examples of :newTerm:`global functions`, which are defined at a global scope.
+However, functions can also be defined inside the bodies of other functions,
+and these kinds of functions are referred to as :newTerm:`local functions`.
+
+Local functions are hidden from the outside world by default,
+but can still be called and used by their enclosing function.
+An enclosing function can also return one of its local functions
+to allow the local function to be used in another scope.
 
 The ``chooseStepFunction`` example above can be rewritten
-to use and return nested functions:
+to use and return local functions:
 
-.. testcode:: nestedFunctions
+.. testcode:: localFunctions
 
    -> func chooseStepFunction(backwards: Bool) -> (Int) -> Int {
          func stepForward(input: Int) -> Int { return input + 1 }
@@ -969,7 +971,7 @@ to use and return nested functions:
    << // currentValue : Int = -4
    -> let moveNearerToZero = chooseStepFunction(currentValue > 0)
    << // moveNearerToZero : (Int) -> Int = <unprintable value>
-   // moveNearerToZero now refers to the nested stepForward() function
+   // moveNearerToZero now refers to the local stepForward() function
    -> while currentValue != 0 {
          println("\(currentValue)... ")
          currentValue = moveNearerToZero(currentValue)
