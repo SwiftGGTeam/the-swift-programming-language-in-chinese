@@ -111,7 +111,7 @@ Because there is at least one strong reference,
 ARC makes sure that this ``Person`` is kept in memory, and is not destroyed.
 
 If you assign the same ``Person`` instance to two more variables,
-two more strong references to that instance will be established:
+two more strong references to that instance are established:
 
 .. testcode:: howARCWorks
 
@@ -172,6 +172,7 @@ This example defines two classes called ``Person`` and ``Apartment``,
 which model a block of apartments and its residents:
 
 .. testcode:: referenceCycles
+   :compile: true
 
    -> class Person {
          let name: String
@@ -184,7 +185,7 @@ which model a block of apartments and its residents:
          let number: Int
          init(number: Int) { self.number = number }
          var tenant: Person?
-         deinit { println("apartment #\(number) is being deinitialized") }
+         deinit { println("Apartment #\(number) is being deinitialized") }
       }
 
 Every ``Person`` instance has a ``name`` property of type ``String``,
@@ -206,6 +207,7 @@ which will be set to a specific ``Apartment`` and ``Person`` instance below.
 Both of these variables have an initial value of ``nil``, by virtue of being optional:
 
 .. testcode:: referenceCycles
+   :compile: true
 
    -> var john: Person?
    -> var number73: Apartment?
@@ -214,6 +216,7 @@ You can now create a specific ``Person`` instance and ``Apartment`` instance,
 and assign these new instances to the ``john`` and ``number73`` variables:
 
 .. testcode:: referenceCycles
+   :compile: true
 
    -> john = Person(name: "John Appleseed")
    -> number73 = Apartment(number: 73)
@@ -226,12 +229,15 @@ and the ``number73`` variable has a strong reference to the new ``Apartment`` in
    :align: center
 
 You can now link the two instances together
-so that the person has an apartment, and the apartment has a tenant:
+so that the person has an apartment, and the apartment has a tenant.
+Note that an exclamation mark (``!``) is used to unwrap and access
+the instances stored inside the ``john`` and ``number73`` optional variables,
+so that the properties of those instances can be set:
 
 .. testcode:: referenceCycles
 
-   -> john.apartment = number73
-   -> number73.tenant = john
+   -> john!.apartment = number73
+   -> number73!.tenant = john
 
 Here's how the strong references look after linking the two instances together:
 
@@ -249,6 +255,7 @@ the reference counts do not drop to zero,
 and the instances are not disposed of by ARC:
 
 .. testcode:: referenceCycles
+   :compile: true
 
    -> john = nil
    -> number73 = nil
@@ -272,14 +279,128 @@ and the ``Apartment`` instance remain, and cannot now be broken.
 Weak and Unowned References
 ---------------------------
 
-.. write-me::
+Swift provides two ways to resolve strong reference cycles
+when working with properties of class type.
+These are known as weak references and unowned references.
+
+Use a weak reference whenever it is valid for that reference to become ``nil``
+at some point during its lifetime.
+Use an unowned reference when you known that
+the reference will never be ``nil`` once it has been set during initialization.
 
 .. _MemoryManagement_WeakReferences:
 
 Weak References
 ~~~~~~~~~~~~~~~
 
-.. write-me::
+A :newTerm:`weak reference` is a reference that does not keep a strong hold
+on the instance it refers to,
+and so does not stop the referenced instance from being destroyed.
+This avoids the reference forming part of a strong reference cycle.
+Weak references are indicated by placing the ``weak`` keyword
+before a property or variable declaration.
+
+Use a weak reference to avoid reference cycles
+whenever it is possible for that reference to have
+“no value” at some point in its life.
+(If the reference will *always* have a value,
+you should use an unowned reference instead,
+as described in :ref:`MemoryManagement_UnownedReferences`.)
+In the example above,
+it is appropriate for an apartment to be able to have
+“no tenant” at some point in its lifetime,
+and so a weak reference is an appropriate way to break the reference cycle in this case.
+
+To reflect the fact that weak references are allowed to have “no value”,
+every weak reference must be declared as having an optional type.
+Optional types are the preferred way to represent the possibility for “no value” in Swift.
+
+Because a weak reference does not keep a strong hold on the instance it refers to,
+it is possible for that instance to be destroyed
+while the weak reference is still referring to it.
+To cope with this fact,
+ARC automatically sets a weak reference to ``nil``
+when the instance that it refers to is destroyed.
+This means that you can safely check for the existence of a value in the weak reference,
+just like any other optional value,
+and means that you will never end up with
+a reference to an invalid instance that no longer exists.
+
+.. TODO: I'm not actually demonstrating this fact. Should I?
+
+Here's how the strong reference cycle example from above
+can use a weak reference to avoid the cycle.
+This version of the example is identical to the one from above,
+with one important difference.
+This time around, the ``Apartment`` type's ``tenant`` property
+is declared as a weak reference:
+
+.. testcode:: weakReferences
+   :compile: true
+
+   -> class Person {
+         let name: String
+         init(name: String) { self.name = name }
+         var apartment: Apartment?
+         deinit { println("\(name) is being deinitialized") }
+      }
+   ---
+   -> class Apartment {
+         let number: Int
+         init(number: Int) { self.number = number }
+         weak var tenant: Person?
+         deinit { println("Apartment #\(number) is being deinitialized") }
+      }
+
+The strong references from the two variables (``john`` and ``number73``),
+and the links between the two instances, are created as before:
+
+.. testcode:: weakReferences
+   :compile: true
+
+   -> var john: Person?
+   -> var number73: Apartment?
+   ---
+   -> john = Person(name: "John Appleseed")
+   -> number73 = Apartment(number: 73)
+   ---
+   -> john!.apartment = number73
+   -> number73!.tenant = john
+
+Here's how the references look after linking the two instances together:
+
+.. image:: ../images/weakReference01.png
+   :align: center
+
+The ``Person`` instance still has a strong reference to the ``Apartment`` instance,
+but the ``Apartment`` instance now has a *weak* reference to the ``Person`` instance.
+
+This means that when you break the strong references held by
+the ``john`` and ``number73`` variables,
+there are no more strong references to the ``Person`` instance:
+
+.. image:: ../images/weakReference02.png
+   :align: center
+
+Because there are no more strong references to the ``Person`` instance,
+it is destroyed.
+After this happens,
+there are no more strong references to the ``Apartment`` instance,
+and it too is destroyed:
+
+.. testcode:: weakReferences
+   :compile: true
+
+   -> john = nil
+   -> number73 = nil
+   <- John Appleseed is being deinitialized
+   <- Apartment #73 is being deinitialized
+
+The final code snippet above shows that
+the deinitializers for the ``Person`` instance and ``Apartment`` instance
+both print their “deinitialized” messages
+after the ``john`` and ``number73`` variables are set to ``nil``.
+This proves that the reference cycle has been broken.
 
 .. _MemoryManagement_UnownedReferences:
 
