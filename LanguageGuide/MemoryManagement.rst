@@ -145,17 +145,148 @@ at which point it is clear that you are no longer using the ``Person`` instance:
    Structures and enumerations are value types, not reference types,
    and are not stored and passed by reference.
 
-.. _MemoryManagement_WeakAndUnownedProperties:
+.. _MemoryManagement_StrongReferenceCycles:
 
-Weak and Unowned Properties
+Strong Reference Cycles
+-----------------------
+
+In the examples above,
+ARC is able to track the number of references to the new ``Person`` instance you create,
+and to dispose of that ``Person`` instance when it is no longer needed.
+
+However, it is possible to write code in which an instance of a class
+*never* gets to a point where it has zero strong references.
+This can happen if two class instances hold a strong reference to each other,
+such that each instance keeps the other alive.
+This is known as a :newTerm:`strong reference cycle`.
+
+You can resolve strong reference cycles
+by defining some of the relationships between classes
+to be weak or unowned references instead of strong references.
+This process is described in :ref:`MemoryManagement_WeakAndUnownedReferences` below.
+However, before seeing how to break a strong reference cycle,
+it is useful to understand how such a cycle can be caused.
+
+Here's an example of how a strong reference cycle can be created by accident.
+This example defines two classes called ``Person`` and ``Apartment``,
+which model a block of apartments and its residents:
+
+.. testcode:: referenceCycles
+
+   -> class Person {
+         let name: String
+         init(name: String) { self.name = name }
+         var apartment: Apartment?
+         deinit { println("\(name) is being deinitialized") }
+      }
+   ---
+   -> class Apartment {
+         let number: Int
+         init(number: Int) { self.number = number }
+         var tenant: Person?
+         deinit { println("apartment #\(number) is being deinitialized") }
+      }
+
+Every ``Person`` instance has a ``name`` property of type ``String``,
+and an optional ``apartment`` property, which is initially ``nil``.
+The ``apartment`` property is optional, because a person may not always have an apartment.
+
+Similarly, every ``Apartment`` instance has a ``number`` property of type ``Int``,
+and an optional ``tenant`` property, which is initially ``nil``.
+The tenant property is optional, because an apartment may not always have a tenant.
+
+Both of these classes also define a deinitializer,
+which prints the fact that an instance of that class is being deinitialized.
+This enables you to see if
+instances of ``Person`` and ``Apartment`` are being disposed of as expected.
+
+This next code snippet defines two variables of optional type
+called ``john`` and ``number73``,
+which will be set to a specific ``Apartment`` and ``Person`` instance below.
+Both of these variables have an initial value of ``nil``, by virtue of being optional:
+
+.. testcode:: referenceCycles
+
+   -> var john: Person?
+   -> var number73: Apartment?
+
+You can now create a specific ``Person`` instance and ``Apartment`` instance,
+and assign these new instances to the ``john`` and ``number73`` variables:
+
+.. testcode:: referenceCycles
+
+   -> john = Person(name: "John Appleseed")
+   -> number73 = Apartment(number: 73)
+
+Here's how the strong references look after creating and assigning these two instances.
+The ``john`` variable now has a strong reference to the new ``Person`` instance,
+and the ``number73`` variable has a strong reference to the new ``Apartment`` instance:
+
+.. image:: ../images/referenceCycle01.png
+   :align: center
+
+You can now link the two instances together
+so that the person has an apartment, and the apartment has a tenant:
+
+.. testcode:: referenceCycles
+
+   -> john.apartment = number73
+   -> number73.tenant = john
+
+Here's how the strong references look after linking the two instances together:
+
+.. image:: ../images/referenceCycle02.png
+   :align: center
+
+Unfortunately, linking the two instances together creates
+a strong reference cycle between the instances.
+The ``Person`` instance now has a strong reference to the ``Apartment`` instance,
+and the ``Apartment`` instance has a strong reference to the ``Person`` instance.
+
+This means that when you break the strong references held by
+the ``john`` and ``number73`` variables,
+the reference counts do not drop to zero,
+and the instances are not disposed of by ARC:
+
+.. testcode:: referenceCycles
+
+   -> john = nil
+   -> number73 = nil
+
+Note that neither of the deinitializers were called
+when you set these two variables to ``nil``.
+The strong reference cycle means that the ``Person`` and ``Apartment`` instances
+will never be disposed of, causing a memory leak in your app.
+
+Here's how the strong references look after setting
+the ``john`` and ``number73`` variables to ``nil``:
+
+.. image:: ../images/referenceCycle03.png
+   :align: center
+
+The strong references between the ``Person`` instance
+and the ``Apartment`` instance remain, and cannot now be broken.
+
+.. _MemoryManagement_WeakAndUnownedReferences:
+
+Weak and Unowned References
 ---------------------------
 
 .. write-me::
 
-.. _MemoryManagement_ImplicitlyUnwrappedOptionalProperties:
+.. _MemoryManagement_WeakReferences:
 
-Implicitly Unwrapped Optional Properties
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Weak References
+~~~~~~~~~~~~~~~
+
+.. write-me::
+
+.. _MemoryManagement_UnownedReferences:
+
+Unowned References
+~~~~~~~~~~~~~~~~~~
+
+.. write-me::
 
 Implicitly unwrapped optional properties are useful when
 an instance property cannot be set until initialization is complete,
