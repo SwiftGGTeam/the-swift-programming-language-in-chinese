@@ -226,48 +226,12 @@ but the returned value is not used.
    without returning a value,
    and attempting to do so will result in a compile-time error.
 
-.. _Functions_TupleTypesAsParameterTypes:
-
-Tuple Types as Parameter Types
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-You can use a tuple type as the type of a function parameter.
-For example, you can rewrite the ``halfOpenRangeLength`` function from above
-to have a single tuple parameter called ``range``,
-which contains two named ``Int`` values called ``start`` and ``end``:
-
-.. testcode:: tuplesTypesAsParameterTypes
-
-   -> func halfOpenRangeLength(range: (start: Int, end: Int)) -> Int {
-         return range.end - range.start
-      }
-   -> let someRange = (1, 10)
-   << // someRange : (Int, Int) = (1, 10)
-   -> println(halfOpenRangeLength(someRange))
-   <- 9
-
-Note that this function takes *one* input parameter, not two.
-Its single input parameter is a tuple, which contains two ``Int`` values.
-This ability to bundle up related values into a single compound value
-is one of the major benefits of tuples.
-This function can be passed any tuple of type ``(Int, Int)`` –
-such as ``(1, 10)`` in the example above –
-and it will calculate the half-open range length for that tuple.
-
-In the example above, the ``someRange`` tuple's elements are not given names
-when the tuple is created.
-However, the tuple's elements *are* given names as part of the function's parameter list.
-This means that the tuple elements can be accessed by name within the function's body.
-
-.. TODO: mention that you can pass a tuple as the entire set of arguments,
-   as in var argTuple = (0, "one", '2'); x.foo:bar:bas:(argTuple)
-
 .. _Functions_TupleTypesAsReturnTypes:
 
 Tuple Types as Return Types
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can also use a tuple type as the return type for a function.
+You can use a tuple type as the return type for a function.
 This enables a function to return multiple values as part of one compound return value.
 
 The example below defines a function called ``count``,
@@ -292,7 +256,7 @@ based on the standard set of vowels and consonants used in American English:
          return (vowels, consonants, others)
       }
 
-You can use the ``count`` function to count the characters in an arbitrary string,
+You can use this ``count`` function to count the characters in an arbitrary string,
 and to retrieve the counted totals as a tuple of three named ``Int`` values:
 
 .. testcode:: tupleTypesAsReturnTypes
@@ -305,6 +269,9 @@ and to retrieve the counted totals as a tuple of three named ``Int`` values:
 Note that the tuple's members do not need to be named
 at the point that the tuple is returned from the function,
 because their names have already been specified as part of the function's return type.
+
+.. TODO: mention that you can pass a tuple as the entire set of arguments,
+   as in var argTuple = (0, "one", '2'); x.foo:bar:bas:(argTuple)
 
 .. _Functions_FunctionParameterNames:
 
