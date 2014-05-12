@@ -599,7 +599,7 @@ It has one of the following forms:
     super.init(<#initializer arguments#>)
 
 The first form is used to access a member of the superclass.
-The second form is is used to access the superclass's subscript implementation.
+The second form is used to access the superclass's subscript implementation.
 The third form is used to access an initializer of the superclass.
 
 Subclasses can use a superclass expression
