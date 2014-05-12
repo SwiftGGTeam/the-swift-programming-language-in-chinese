@@ -3,21 +3,33 @@ Closures
 
 :newTerm:`Closures` are self-contained blocks of functionality
 that can be passed around and used in your code.
-Swift's closures are similar to lambdas in other programming languages,
-and blocks in C-like languages.
-Functions, as discussed in :doc:`Functions`, are a special case of closures.
+Closures are similar to blocks in C and Objective-C,
+and lambdas in other programming languages.
 
-In addition to the capabilities described for functions,
-closures can capture and modify constants and variables
+Closures can capture and store references to any constants and variables
 from the context in which they are defined.
-Closures can also be written without a function name
-(although you can name them if you wish).
-In essence, functions are simple closures that have a name,
-and don't capture anything.
-(Although functions are specialized closures,
-this chapter refers to them as “functions” for simplicity.
+This is known as :newTerm:`closing` over those constants and variables,
+hence the name “closures”.
+Swift handles all of the memory management of capturing for you.
 
-Swift's closures have a clean, clear syntax,
+.. note::
+
+   Don't worry if you are not familiar with the concept of “capturing”.
+   It is explained in detail below in :ref:`Closures_CapturingValues`.
+
+Global and local functions,
+as introduced in :doc:`Functions`,
+are actually special cases of closures.
+Closures take one of three forms:
+
+1) Global functions, which are closures that have a name,
+   and do not capture any values
+2) Local functions, which are closures that have a name,
+   and can capture values from their enclosing function
+3) Closure expressions, which are unnamed closures written in a lightweight syntax
+   that can capture values from their surrounding context
+
+Swift's closure expressions have a clean, clear syntax,
 with optimizations for writing brief, clutter-free closures in common scenarios.
 These optimizations include:
 
@@ -28,15 +40,13 @@ These optimizations include:
 
 All of these optimizations are described in detail below.
 
-In addition, Swift handles all of the memory management of capturing for you.
-The concept and meaning of “capturing” is explained in detail below.
-
 .. _Closures_ClosureExpressions:
 
 Closure Expressions
 -------------------
 
-Nested functions are a convenient way to name and define self-contained blocks of code
+Local functions, as introduced in :ref:`Functions_LocalFunctions`,
+are a convenient way to name and define self-contained blocks of code
 as part of a larger function.
 However, it can sometimes be useful to write shorter versions of function-like constructs,
 without the need for a full declaration and name.
@@ -425,14 +435,14 @@ The closure is then able to refer to and modify
 the values of those constants and variables from within its body,
 even if the original scope that defined the constants and variables no longer exists.
 
-The simplest form of a closure in Swift is a nested function,
+The simplest form of a closure in Swift is a local function,
 written within the body of another function.
-A nested function can capture any of its outer function's arguments,
+A local function can capture any of its outer function's arguments,
 and can also capture any constants and variables defined within the outer function.
 
 Here's an example of a function called ``makeIncrementor``,
-which contains a nested function called ``incrementor``.
-The nested ``incrementor`` function captures two values,
+which contains a local function called ``incrementor``.
+The local ``incrementor`` function captures two values,
 ``runningTotal`` and ``amount``,
 from its surrounding context.
 After capturing these values,
@@ -467,12 +477,12 @@ The argument value passed to this parameter specifies
 how much ``runningTotal`` should be incremented by
 each time the returned incrementor function is called.
 
-``makeIncrementor`` defines a nested function called ``incrementor``,
+``makeIncrementor`` defines a local function called ``incrementor``,
 which performs the actual incrementing.
 This function simply adds ``amount`` to ``runningTotal``, and returns the result.
 
 When considered in isolation,
-the nested ``incrementor`` function might seem unusual:
+the local ``incrementor`` function might seem unusual:
 
 .. testcode:: closuresPullout
 
@@ -506,7 +516,7 @@ the next time that the incrementor function is called.
    Swift determines what should be captured by reference,
    and what should be copied by value.
    You don't need to annotate ``amount`` or ``runningTotal``
-   to say that they can be used within the nested ``incrementor`` function.
+   to say that they can be used within the local ``incrementor`` function.
    Swift also handles all of the memory management involved in disposing of ``runningTotal``
    when it is no longer needed by the incrementor function.
 
@@ -588,35 +598,6 @@ both of those constants or variables will refer to the same closure:
 
 Reference types are covered in more detail
 in :ref:`ClassesAndStructures_ValueTypesAndReferenceTypes`.
-
-.. _Closures_AvoidingReferenceCyclesInClosures:
-
-Avoiding Reference Cycles in Closures
--------------------------------------
-
-.. write-me::
-
-.. TODO: you have to write "self." for property references in an explicit closure expression,
-   since "self" will be captured, not the property (as per rdar://16193162)
-   we don't do this for autoclosures, however -
-   see the commits comments from r14676 for the reasons why
-
-.. TODO: <rdar://problem/16193162> Require specifying self for locations in code
-   where strong reference cycles are likely
-   This requires that property references have an explicit "self." qualifier
-   when in an explicit closure expression, since self will be captured, not the property.
-   We don't do the same for autoclosures.
-   The logic here is that autoclosures can't practically be used in capturing situations anyway,
-   since that would be extremely surprising to clients.
-   Further, forcing a syntactic requirement in an autoclosure context
-   would defeat the whole point of autoclosures: make them implicit.
-
-.. FIXME: To avoid reference cycles when a property closure references self or a property of self,
-   you should use the same workaround as in Obj-C –
-   that is, to declare a weak (or unowned) local variable, and capture that instead.
-   There are proposals for a better solution in /swift/docs/weak.rst,
-   but they are yet to be implemented.
-   The Radar for their implementation is rdar://15046325.
 
 .. _Closures_Autoclosures:
 

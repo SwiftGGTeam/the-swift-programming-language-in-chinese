@@ -105,7 +105,7 @@ by ``3.28024``, to convert it from feet to meters.
 
 These properties are read-only computed properties,
 and so they have been expressed without the ``get`` keyword, for brevity.
-Their return value is inferred to be of type ``Double``,
+Their return value is of type ``Double``,
 and can be used within mathematical calculations wherever a ``Double`` is accepted:
 
 .. testcode:: extensionsComputedProperties

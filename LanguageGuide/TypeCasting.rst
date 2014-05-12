@@ -197,6 +197,9 @@ Swift provides two special type aliases for working with non-specific types:
 
 .. FIXME: remove the note about function types if / when rdar://16406907 is fixed.
 
+.. FIXME: also rdar://problem/16879900
+   Assertion when assigning a global function to a constant of type Any
+
 Here's an example of using ``Any`` to work with a mix of different types:
 
 .. testcode:: typeCasting

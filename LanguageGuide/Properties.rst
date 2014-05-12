@@ -2,16 +2,15 @@ Properties
 ==========
 
 :newTerm:`Properties` associate values with a particular class, structure, or enumeration.
-Stored properties store constant and variable values alongside an instance,
+Stored properties store constant and variable values as part of an instance,
 whereas computed properties calculate (rather than store) a value.
 
 Stored and computed properties are usually associated with instances of a particular type.
 However, for value types, they can also be associated with the type itself.
 Such properties are known as static properties.
 
-You can observe changes to a property, and respond to those changes,
-by defining property observers that are called
-just before and just after a property value is changed.
+In addition, you can define property observers
+to monitor and respond to changes in a property's value.
 Property observers can even be added to
 properties that your subclass inherits from its superclass,
 and are an easy way to add custom actions in response to property value changes.
@@ -31,16 +30,16 @@ Stored Properties
 -----------------
 
 In its simplest form, a stored property is just a constant or variable
-that is stored alongside an instance of a particular class or structure.
+that is stored as part of an instance of a particular class or structure.
 Stored properties can be either
 :newTerm:`variable stored properties` (introduced by the ``var`` keyword),
 or :newTerm:`constant stored properties` (introduced by the ``let`` keyword).
 
 You can provide a default value for a stored property as part of its definition,
 as described in :ref:`Initialization_DefaultPropertyValues`.
-In addition, even though it is normally constant,
-you can change the value of a constant stored property at any point during initialization.
-This process is described in :ref:`Initialization_ModifyingConstantPropertiesDuringInitialization`.
+You can also set and modify the initial value for a stored property during initialization.
+This is true even for constant stored properties,
+as described in :ref:`Initialization_ModifyingConstantPropertiesDuringInitialization`.
 
 The example below defines a structure called ``FixedLengthRange``,
 which describes a range of integers
@@ -113,7 +112,7 @@ Stored Properties and Instance Variables
 
 If you have experience with Objective-C,
 you may know that it provides *two* ways
-to store values and references alongside instances of a class.
+to store values and references as part of a class instance.
 In addition to properties,
 you can use instance variables as a backing store for the values stored in a property.
 
@@ -284,12 +283,6 @@ should be used for a particular ``volume`` value.
 Nonetheless, it is useful for a ``Cuboid`` to provide a read-only computed property
 to enable external users to discover its current calculated volume.
 
-.. note::
-
-   Read-only computed properties are not the same as constant stored properties.
-   A read-only computed property can return a different value every time it is called,
-   whereas a constant stored property will always return the same value.
-
 .. NOTE: getters and setters are also allowed for constants and variables
    that are not associated with a particular class or struct.
    Where should this be mentioned?
@@ -402,17 +395,14 @@ and the default name of ``oldValue`` is used instead.
 
 .. TODO: mention that this also works for global / local variables
 
-.. _Properties_WeakAndUnownedProperties:
-
-Weak and Unowned Properties
----------------------------
-
-.. write-me::
-
 .. _Properties_StaticProperties:
 
 Static Properties
 -----------------
+
+.. TODO: this section needs to be retitled as Type Properties,
+   and reworded to talk about computed class properties too.
+   Overriding of computed class properties will also need adding to Inheritance.
 
 Instance properties, as described above,
 are properties that belong to an instance of a particular type.

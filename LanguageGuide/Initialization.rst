@@ -139,7 +139,7 @@ and not the return value of the closure.
    when the default value is always the same,
    and is independent of any outside values.
 
-The example below defines a structure called ``CheckersBoard``,
+The example below defines a structure called ``Checkerboard``,
 which models a board for the game of *Checkers* (also known as *Draughts*):
 
 .. image:: ../images/checkersBoard.png
@@ -148,7 +148,7 @@ which models a board for the game of *Checkers* (also known as *Draughts*):
 The game of *Checkers* is played on a ten-by-ten board,
 with alternating black and white squares.
 To represent this game board,
-the ``CheckersBoard`` structure has a single property called ``boardColors``,
+the ``Checkerboard`` structure has a single property called ``boardColors``,
 which is an array of 100 ``Bool`` values.
 A value of ``true`` in the array represents a black square,
 and a value of ``false`` represents a white square.
@@ -159,7 +159,7 @@ The ``boardColors`` array is initialized with a closure to set up its color valu
 
 .. testcode:: checkers
 
-   -> struct CheckersBoard {
+   -> struct Checkerboard {
          let boardColors: Bool[] = {
             var temporaryBoard = Bool[]()
             var isBlack = false
@@ -177,7 +177,7 @@ The ``boardColors`` array is initialized with a closure to set up its color valu
          }
       }
 
-Whenever a new ``CheckersBoard`` instance is created, the closure is executed,
+Whenever a new ``Checkerboard`` instance is created, the closure is executed,
 and the default value of ``boardColors`` is calculated and returned.
 The closure in the example above calculates and sets
 the appropriate color for each square on the board
@@ -189,8 +189,8 @@ and can be queried with the ``squareIsBlackAtRow`` utility function:
 
 .. testcode:: checkers
 
-   -> let board = CheckersBoard()
-   << // board : CheckersBoard = CheckersBoard([false, true, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, true, false])
+   -> let board = Checkerboard()
+   << // board : Checkerboard = Checkerboard([false, true, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, true, false])
    -> println(board.squareIsBlackAtRow(0, column: 1))
    <- true
    -> println(board.squareIsBlackAtRow(9, column: 9))
@@ -209,10 +209,7 @@ Initializers can use
 constant parameters, variable parameters, and ``inout`` parameters.
 Default values can be provided for initializer parameters,
 and tuples can be used as parameter types.
-Variadic parameters cannot be used.
-
-.. FIXME: Update this section if, as, and when variadics start working for initializers.
-   The fact that they don't work currently is rdar://16535434.
+Variadic parameters can also be used.
 
 The following example defines a structure called ``Celsius``,
 which stores temperatures expressed in the Celsius scale.
@@ -231,11 +228,11 @@ with a value from a different temperature scale:
             temperatureInCelsius = kelvin + 273.15
          }
       }
-   -> var boilingPointOfWater = Celsius(fromFahrenheit: 212.0)
+   -> let boilingPointOfWater = Celsius(fromFahrenheit: 212.0)
    << // boilingPointOfWater : Celsius = Celsius(100.0)
    /> boilingPointOfWater.temperatureInCelsius is \(boilingPointOfWater.temperatureInCelsius)
    </ boilingPointOfWater.temperatureInCelsius is 100.0
-   -> var freezingPointOfWater = Celsius(fromKelvin: -273.15)
+   -> let freezingPointOfWater = Celsius(fromKelvin: -273.15)
    << // freezingPointOfWater : Celsius = Celsius(0.0)
    /> freezingPointOfWater.temperatureInCelsius is \(freezingPointOfWater.temperatureInCelsius)
    </ freezingPointOfWater.temperatureInCelsius is 0.0
@@ -408,9 +405,9 @@ Default Initializers
 --------------------
 
 Swift provides a :newTerm:`default initializer`
-for any structure, enumeration, or base class
-that does not provide at least one initializer itself,
-and that provides default values for all of its properties.
+for any structure or base class
+that provides default values for all of its properties,
+and does not provide at least one initializer itself.
 The default initializer simply creates a new instance
 with all of its properties set to their default values.
 
@@ -543,15 +540,16 @@ or by providing a specific center point and size:
          }
       }
 
-The first ``Rect`` initializer, ``init``, 
+The first ``Rect`` initializer, ``init()``, 
 is functionally the same as the default initializer that the structure would have received
 if it did not have its own custom initializers.
 This initializer has an empty body,
 represented by an empty pair of curly braces ``{}``,
-and does not perfom any bespoke initialization.
+and does not perfom any initialization.
 If you call this initializer, it will return a ``Rect`` instance whose
 ``origin`` and ``size`` properties are both initialized with
-the default values of ``Point(0.0, 0.0)`` and ``Size(0.0, 0.0)``
+the default values of ``Point(x: 0.0, y: 0.0)``
+and ``Size(width: 0.0, height: 0.0)``
 from their property definitions:
 
 .. testcode:: valueDelegation
@@ -561,7 +559,7 @@ from their property definitions:
    /> basicRect's origin is (\(basicRect.origin.x), \(basicRect.origin.y)) and its size is (\(basicRect.size.width), \(basicRect.size.height))
    </ basicRect's origin is (0.0, 0.0) and its size is (0.0, 0.0)
 
-The second ``Rect`` initializer, ``init origin size``,
+The second ``Rect`` initializer, ``init(origin:size:)``,
 is functionally the same as the memberwise initializer that the structure would have received
 if it did not have its own custom initializers.
 This initializer simply assigns the ``origin`` and ``size`` argument values to
@@ -575,10 +573,10 @@ the appropriate stored properties:
    /> originRect's origin is (\(originRect.origin.x), \(originRect.origin.y)) and its size is (\(originRect.size.width), \(originRect.size.height))
    </ originRect's origin is (2.0, 2.0) and its size is (5.0, 5.0)
 
-The third ``Rect`` initializer, ``init center size``, is slightly more complex.
+The third ``Rect`` initializer, ``init(center:size:)``, is slightly more complex.
 It starts by calculating an appropriate origin point based on
 a ``center`` point and a ``size`` value.
-It then calls (or :newTerm:`delegates`) to the ``init origin size`` initializer,
+It then calls (or :newTerm:`delegates`) to the ``init(origin:size:)`` initializer,
 which stores the new origin and size values in the appropriate properties:
 
 .. testcode:: valueDelegation
@@ -589,10 +587,10 @@ which stores the new origin and size values in the appropriate properties:
    /> centerRect's origin is (\(centerRect.origin.x), \(centerRect.origin.y)) and its size is (\(centerRect.size.width), \(centerRect.size.height))
    </ centerRect's origin is (2.5, 2.5) and its size is (3.0, 3.0)
 
-The ``init center size`` initializer could have assigned
+The ``init(center:size:)`` initializer could have assigned
 the new values of ``origin`` and ``size`` to the appropriate properties itself.
 However, it is more convenient (and clearer in intent)
-for the ``init center size`` initializer to take advantage of an existing initializer
+for the ``init(center:size:)`` initializer to take advantage of an existing initializer
 that already provides exactly that functionality.
 
 .. _Initialization_InitializerDelegationForClassTypes:
@@ -729,6 +727,15 @@ while still giving complete flexibility to each class in a class hierarchy.
 Two-phase initialization avoids property values being accessed before they are initialized,
 and avoids property values being set to a different value by another initializer unexpectedly.
 
+.. note::
+
+   Swift's two-phase initialization process is similar to initialization in Objective-C.
+   The main difference is that during phase 1,
+   Objective-C assigns zero or null values (such as ``0`` or ``nil``) to every property.
+   Swift's initialization flow is more flexible
+   in that it lets you set custom initial values,
+   and can cope with types for which ``0`` or ``nil`` is not a valid default value.
+
 Swift's compiler performs four helpful safety-checks to make sure that
 two-phase initialization is completed without error:
 
@@ -765,10 +772,9 @@ its own class's designated initializer.
   or refer to ``self`` as a value
   until after the first phase of initialization is complete.
 
-The class instance doesn't actually exist in memory until the first phase ends.
-Before this point, there isn't an instance to access properties or call methods on.
-Once the first phase is complete,
-properties can be accessed and methods can be called as normal.
+The class instance is not fully valid until the first phase ends.
+Properties can only be accessed, and methods can only be called,
+once the class instance is known to be valid at the end of the first phase.
 
 Here's how two-phase initialization plays out, based on the four safety checks above:
 
@@ -1161,95 +1167,6 @@ Requirements are satisfied based on the following two rules:
 
 .. TODO: provide an example.
 
-.. _Initialization_ImplicitlyUnwrappedOptionalProperties:
-
-Implicitly Unwrapped Optional Properties
-________________________________________
-
-Implicitly unwrapped optional properties are useful when
-an instance property cannot be set until initialization is complete,
-but is guaranteed to always exist thereafter.
-
-In these kinds of cases,
-you could define the instance property as a normal optional,
-but this would require you to unwrap the property's value when it is used.
-Using an implicitly unwrapped optional instead
-means that you do not need to unwrap the optional value yourself each time it is used.
-
-.. note::
-
-   You should only define a property as an implicitly unwrapped optional
-   if you are sure that that property will *always* contain
-   a non-``nil`` value once it is initialized.
-   If a property has the potential to be ``nil`` at some future point,
-   it should always be declared as a true optional,
-   and not as an implicitly unwrapped optional.
-
-The following example defines two classes, ``Country`` and ``City``,
-each of which stores an instance of the other class as a property:
-
-.. testcode:: implicitlyUnwrappedOptionals
-   :compile: true
-
-   -> class Country {
-         var name: String
-         var capitalCity: City!
-         init(name: String, capitalName: String) {
-            self.name = name
-            self.capitalCity = City(name: capitalName, country: self)
-         }
-      }
-   ---
-   -> class City {
-         var name: String
-         unowned var country: Country
-         init(name: String, country: Country) {
-            self.name = name
-            self.country = country
-         }
-      }
-   ---
-   -> var country = Country(name: "Canada", capitalName: "Ottawa")
-   -> println("\(country.name)'s capital city is called \(country.capitalCity.name)")
-   <- Canada's capital city is called Ottawa
-
-In this data model, every country has a capital city, and every city belongs to a country.
-To represent this, the ``Country`` class has a ``capitalCity`` property,
-and the ``City`` class has a ``country`` property.
-
-To set up this interdependency,
-the initializer for ``City`` takes a ``Country`` instance,
-and stores it as a reference to the city's country.
-However, the initializer for ``Country`` cannot pass ``self`` to the ``City`` initializer
-until the new ``Country`` instance has been fully initialized.
-
-To cope with this requirement,
-the ``capitalCity`` property is declared as an implicitly unwrapped optional property.
-This means that it has a default value of ``nil``, like any other optional
-(see :ref:`TheBasics_ImplicitlyUnwrappedOptionals`.)
-
-Because of this default ``nil`` value for ``capitalCity``,
-a new ``Country`` instance is considered fully initialized
-as soon as it sets its ``name`` property within its initializer.
-This means that the initializer can start to reference and pass around
-the implicit ``self`` property as soon as ``name`` has been set.
-This enables it to pass ``self`` as one of the parameters for
-the ``City`` initializer when setting its own ``capitalCity`` property.
-
-In the example above, the use of an implicitly unwrapped optional
-means that all of the two-phase initializer requirements described above are satisfied,
-and the property can be used and accessed like a non-optional value
-once initialization is complete.
-
-.. note::
-
-   The ``City`` class's ``country`` property is defined as an *unowned* property,
-   indicated by the ``unowned`` keyword.
-   This avoids a strong reference cycle between a ``Country`` instance
-   and the ``City`` instance stored in its ``capitalCity`` property.
-   For an explanation of strong reference cycles and unowned properties,
-   see :ref:`Properties_WeakAndUnownedProperties`.
-
 .. _Initialization_Deinitializers:
 
 Deinitializers
@@ -1407,10 +1324,10 @@ and the bank only has 7,900 coins left.
 The player has now left the game.
 This is indicated by setting the optional ``playerOne`` variable to ``nil``,
 meaning “no ``Player`` instance.”
-At the point that this happens, the ``Player`` instance referenced by
-the ``playerOne`` variable is destroyed.
-No other properties or variables are still referring to it,
-and so it can be destroyed in order to free up the resources it was using.
+At the point that this happens,
+the ``playerOne`` variable's reference to the ``Player`` instance is broken.
+No other properties or variables are still referring to the ``Player`` instance,
+and so it is destroyed in order to free up its memory.
 Just before this happens, its deinitializer is called,
 and its coins are returned to the bank.
 

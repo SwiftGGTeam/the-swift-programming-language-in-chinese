@@ -17,7 +17,7 @@ Every function in Swift has a type, made up of its parameter and return types,
 and this type can be used like any other type in Swift.
 This makes it easy to pass functions as parameters to other functions,
 and to return functions from functions.
-Functions can also be nested within other functions
+Functions can also be written within other functions
 to encapsulate useful functionality within a local function scope.
 
 .. TODO: should this chapter mention __FUNCTION__
@@ -226,48 +226,12 @@ but the returned value is not used.
    without returning a value,
    and attempting to do so will result in a compile-time error.
 
-.. _Functions_TupleTypesAsParameterTypes:
-
-Tuple Types as Parameter Types
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-You can use a tuple type as the type of a function parameter.
-For example, you can rewrite the ``halfOpenRangeLength`` function from above
-to have a single tuple parameter called ``range``,
-which contains two named ``Int`` values called ``start`` and ``end``:
-
-.. testcode:: tuplesTypesAsParameterTypes
-
-   -> func halfOpenRangeLength(range: (start: Int, end: Int)) -> Int {
-         return range.end - range.start
-      }
-   -> let someRange = (1, 10)
-   << // someRange : (Int, Int) = (1, 10)
-   -> println(halfOpenRangeLength(someRange))
-   <- 9
-
-Note that this function takes *one* input parameter, not two.
-Its single input parameter is a tuple, which contains two ``Int`` values.
-This ability to bundle up related values into a single compound value
-is one of the major benefits of tuples.
-This function can be passed any tuple of type ``(Int, Int)`` –
-such as ``(1, 10)`` in the example above –
-and it will calculate the half-open range length for that tuple.
-
-In the example above, the ``someRange`` tuple's elements are not given names
-when the tuple is created.
-However, the tuple's elements *are* given names as part of the function's parameter list.
-This means that the tuple elements can be accessed by name within the function's body.
-
-.. TODO: mention that you can pass a tuple as the entire set of arguments,
-   as in var argTuple = (0, "one", '2'); x.foo:bar:bas:(argTuple)
-
 .. _Functions_TupleTypesAsReturnTypes:
 
 Tuple Types as Return Types
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can also use a tuple type as the return type for a function.
+You can use a tuple type as the return type for a function.
 This enables a function to return multiple values as part of one compound return value.
 
 The example below defines a function called ``count``,
@@ -292,7 +256,7 @@ based on the standard set of vowels and consonants used in American English:
          return (vowels, consonants, others)
       }
 
-You can use the ``count`` function to count the characters in an arbitrary string,
+You can use this ``count`` function to count the characters in an arbitrary string,
 and to retrieve the counted totals as a tuple of three named ``Int`` values:
 
 .. testcode:: tupleTypesAsReturnTypes
@@ -305,6 +269,9 @@ and to retrieve the counted totals as a tuple of three named ``Int`` values:
 Note that the tuple's members do not need to be named
 at the point that the tuple is returned from the function,
 because their names have already been specified as part of the function's return type.
+
+.. TODO: mention that you can pass a tuple as the entire set of arguments,
+   as in var argTuple = (0, "one", '2'); x.foo:bar:bas:(argTuple)
 
 .. _Functions_FunctionParameterNames:
 
@@ -447,19 +414,6 @@ while also enabling the function to be called without ambiguity:
    << // containsAVee : Bool = true
    /> containsAVee equals \(containsAVee), because \"aardvark\" contains a \"v\"
    </ containsAVee equals true, because "aardvark" contains a "v"
-
-.. note::
-
-   If ``characterToFind`` is found quickly,
-   this example returns ``true`` before the entire set of characters in ``string`` is checked.
-   As soon as the first matching character is found,
-   ``containsCharacter`` returns ``true``,
-   and doesn't bother to check the remaining characters.
-   You can return control from a function at any time,
-   and it will stop what it is doing immediately.
-   In fact, this function only returns ``false`` if
-   the entire set of characters in ``string`` is exhausted,
-   and the end of the ``for`` loop is reached.
 
 .. _Functions_DefaultParameterValues:
 
@@ -694,7 +648,6 @@ because constants and literals cannot be modified.
 You place an ampersand (``&``) directly before a variable's name
 when you pass it as an argument to an inout parameter,
 to indicate that it can be modified by the function.
-(This is similar to C's use of the ampersand character as a reference operator.)
 
 .. note::
 
@@ -849,6 +802,8 @@ when you assign a function to a constant or variable:
    << // anotherMathFunction : (Int, Int) -> Int = <unprintable value>
    // anotherMathFunction is inferred to be of type (Int, Int) -> Int
 
+.. TODO: talk about defining typealiases for function types somewhere?
+
 .. _Functions_FunctionTypesAsParameterTypes:
 
 Function Types as Parameter Types
@@ -956,23 +911,25 @@ it can be used to count to zero:
    </ 1...
    </ zero!
 
-.. _Functions_NestedFunctions:
+.. _Functions_LocalFunctions:
 
-Nested Functions
-----------------
+Local Functions
+---------------
 
-Functions can be :newTerm:`nested` inside other functions.
-As its name suggests, a nested function is simply
-a function written within the body of another function.
-The nested function is hidden from the outside world by default,
-but can still be used by its enclosing function.
-An enclosing function can return one of its nested functions
-to allow the nested function to be used in another scope.
+All of the functions you have encountered so far in this chapter
+have been examples of :newTerm:`global functions`, which are defined at a global scope.
+However, functions can also be defined inside the bodies of other functions,
+and these kinds of functions are referred to as :newTerm:`local functions`.
+
+Local functions are hidden from the outside world by default,
+but can still be called and used by their enclosing function.
+An enclosing function can also return one of its local functions
+to allow the local function to be used in another scope.
 
 The ``chooseStepFunction`` example above can be rewritten
-to use and return nested functions:
+to use and return local functions:
 
-.. testcode:: nestedFunctions
+.. testcode:: localFunctions
 
    -> func chooseStepFunction(backwards: Bool) -> (Int) -> Int {
          func stepForward(input: Int) -> Int { return input + 1 }
@@ -983,7 +940,7 @@ to use and return nested functions:
    << // currentValue : Int = -4
    -> let moveNearerToZero = chooseStepFunction(currentValue > 0)
    << // moveNearerToZero : (Int) -> Int = <unprintable value>
-   // moveNearerToZero now refers to the nested stepForward() function
+   // moveNearerToZero now refers to the local stepForward() function
    -> while currentValue != 0 {
          println("\(currentValue)... ")
          currentValue = moveNearerToZero(currentValue)

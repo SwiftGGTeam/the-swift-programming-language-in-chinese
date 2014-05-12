@@ -510,7 +510,9 @@ Precedence and Associativity
    as part of the hypothetical “show invisibles” feature,
    to show the invisible parentheses implied by precedence and associativity?
 
-It is important to consider each operator's :newTerm:`precedence` and :newTerm:`associativity` when working out how to calculate a compound expression.
+It is important to consider
+each operator's :newTerm:`precedence` and :newTerm:`associativity`
+when working out how to calculate a compound expression.
 These two principles are used to work out the order in which an expression should be calculated.
 
 Here's an example.
@@ -532,7 +534,7 @@ Taken strictly from left to right, you might expect this to read as follows:
 However, the actual answer is ``4``, not ``0``.
 This is due to the priorities and associativity of the operators used:
 
-* Operator :newTerm:`precedence` (also known as :newTerm:`priority`) means that
+* Operator :newTerm:`precedence` means that
   some operators are given more precedence than others,
   and are calculated first.
 
@@ -608,7 +610,11 @@ This is known as :newTerm:`overloading` the existing operators.
       }
 
 This example shows how to provide an implementation of the
-infix arithmetic addition operator (``+``) for a custom structure.
+arithmetic addition operator (``+``) for a custom structure.
+The arithmetic addition operator is a :newTerm:`binary operator`
+because it operates on two targets,
+and is said to be :newTerm:`infix` because it appears inbetween those two targets.
+
 The example starts by defining a ``Vector2D`` structure for
 a two-dimensional position vector ``(x, y)``.
 This is followed by a definition of an :newTerm:`operator function`
@@ -659,10 +665,7 @@ to make the vector ``(5.0, 5.0)``, as illustrated below.
 Prefix and Postfix Operators
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The arithmethic addition operator (``+``) shown above is a :newTerm:`binary operator`.
-Binary operators operate on two targets (such as ``2 + 3``),
-and are said to be :newTerm:`infix` because they appear inbetween their two targets.
-
+The example shown above demonstrates a custom implementation of a binary infix operator.
 Classes and structures can also provide implementations of the standard :newTerm:`unary operators`.
 Unary operators operate on a single target,
 and are said to be :newTerm:`prefix` if they come before their target (such as ``-a``),

@@ -44,9 +44,15 @@ Classes have additional capabilities that structures do not:
 * Inheritance, which enables one class to inherit the characteristics of another
 * Type casting, which enables you to check and interpret the type of a class instance at runtime
 * Deinitializers, which enable an instance of a class to clean up after itself
+* Reference counting, which allows more than one reference to a class instance
 
 For more information, see
 :doc:`Inheritance`, :doc:`TypeCasting`, and :doc:`Initialization`.
+
+.. note::
+
+   Structures are always copied when they are passed around in your code,
+   and do not use reference counting.
 
 .. _ClassesAndStructures_DefinitionSyntax:
 
@@ -197,6 +203,14 @@ You can also use dot syntax to assign a new value to a variable property:
    -> println("The width of someVideoMode is now \(someVideoMode.resolution.width)")
    <- The width of someVideoMode is now 1280
 
+.. note::
+
+   Unlike Objective-C,
+   Swift enables you to set sub-properties of properties directly.
+   In the last example above,
+   the ``width`` property of the ``resolution`` property of ``someVideoMode`` is set directly,
+   without needing to set the entire ``resolution`` property to a new value.
+
 .. _ClassesAndStructures_MemberwiseInitializersForStructureTypes:
 
 Memberwise Initializers for Structure Types
@@ -247,13 +261,12 @@ A :newTerm:`value type` is a type that is *copied*
 when it is assigned to a variable or constant,
 or when it is passed to a function.
 
-Unbeknownst (perhaps) to you,
-you've used value types extensively throughout the previous chapters.
+You've actually been using value types extensively throughout the previous chapters.
 In fact, all of the basic types in Swift –
 integers, floating-point numbers, Booleans, strings, arrays and dictionaries –
-are value types.
+are value types, and are implemented as structures behind the scenes.
 
-Swift structures and enumerations are also value types.
+All structures and enumerations are value types in Swift.
 This means that any structure and enumeration instances you create –
 and any value types they have as properties –
 are always copied when they are passed around in your code.
@@ -408,22 +421,18 @@ not the values of the constant references to that ``VideoMode``.
 Pointers
 ________
 
-If you have experience with C, C++ or Objective-C,
-you may know that these languages use pointers to refer to objects.
-Constants or variables that refer to an instance of a reference type
-are very similar to pointers in C-like languages,
-but do not use the reference operator (``&``) or dereference operator (``*``)
-to differentiate between a pointer and the memory it points to.
-Instead, a constant or variable that refers to an instance of a reference type
-is declared like any other constant or variable in Swift,
-and the value it contains is always a reference to a particular instance of that type.
+If you have experience with C, C++, or Objective-C,
+you may know that these languages use :newTerm:`pointers` to refer to addresses in memory.
+A Swift constant or variable that refers to an instance of some reference type
+is similar to a pointer in C,
+but is not a direct pointer to an address in memory,
+and does not require you to write an asterisk (``*``)
+to indicate that you are creating a reference.
+Instead, these references are defined like any other constant or variable in Swift.
 
 .. TODO: functions aren't "instances". This needs clarifying.
 
 .. TODO: Add a justification here to say why this is a good thing.
-
-.. TODO: Saying that we don't use the reference operator is actually untrue.
-   We use it at the call-site for inout function parameters.
 
 .. _ClassesAndStructures_ChoosingBetweenClassesAndStructures:
 
@@ -440,18 +449,9 @@ As you consider the data constructs and functionality that you need for a projec
 you need to decide whether each data construct should be
 defined as a class or as a structure.
 
-.. note::
-
-   Enumerations have many useful features in Swift,
-   but are not really suited to creating general-purpose data types
-   in the same way as classes and structures.
-   Use enumerations only when you need the specific capabilities that they offer.
-
-As a general rule, define a new structure only when:
+As a general guideline, consider creating a structure when:
 
 * The structure's primary purpose is to encapsulate a few relatively simple data values
-* The structure will not have particularly complex functionality
-  (although it may provide one or two convenience methods to work with its stored values)
 * It is reasonable to expect that the encapsulated values will be copied rather than referenced
   when you assign or pass around an instance of that structure
 * Any properties stored by the structure are themselves value types,
@@ -522,11 +522,5 @@ When you define your own custom classes and structures,
 it is your responsibility to decide what qualifies as two instances being “equal”.
 The process of defining your own implementations of the “equal to” and “not equal to” operators
 is described in :ref:`AdvancedOperators_EquivalenceOperators`.
-
-.. note::
-
-   The identity operators are not used with structure and enumeration types,
-   because they are value types that store their values directly,
-   rather than referencing an instance of that type behind the scenes.
 
 .. TODO: This needs clarifying with regards to function references.
