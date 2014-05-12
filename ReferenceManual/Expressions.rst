@@ -599,22 +599,13 @@ It has one of the following forms:
     super[<#subscript index#>]
     super.init(<#initializer arguments#>)
 
-The first form is understood as a member of the superclass.
-This allows a subclass to call the superclass's
-implementation of a method that it overrides,
-to get and set propertiess defined by its superclass,
-and to access its superclass's implementation of getters and setters.
+The first form is used to access a member of the superclass.
+The second form is is used to access the superclass's subscript implementation.
+The third form is used to access an initializer of the superclass.
 
-.. TR: Confirm the above about properties.
-
-The second form is understood as a call
-to the superclass's subscript method.
-This allows a subclass to use its superclass's support for subscripting
-in the subclass's support for subscripting.
-
-The third form is understood as the superclass's initializer.
-This allows a subclass to call the initializer of its superclass
-as part of the subclass's initializer.
+Subclasses can use a superclass expression
+in their implentation of members, subscripting, and initializers
+to make use of the implentation in their superclass.
 
 .. langref-grammar
 
