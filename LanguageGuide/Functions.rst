@@ -802,6 +802,8 @@ when you assign a function to a constant or variable:
    << // anotherMathFunction : (Int, Int) -> Int = <unprintable value>
    // anotherMathFunction is inferred to be of type (Int, Int) -> Int
 
+.. TODO: talk about defining typealiases for function types somewhere?
+
 .. _Functions_FunctionTypesAsParameterTypes:
 
 Function Types as Parameter Types
