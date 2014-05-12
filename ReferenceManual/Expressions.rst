@@ -431,8 +431,7 @@ Primary Expressions
 are the most basic kind of expression.
 They can be used as expressions on their own,
 and they can be combined with other tokens
-such as operators, prefixes, and postfixes,
-to make more complex expressions.
+to make prefix expressions, binary expressions, and postfix expressions.
 
 .. langref-grammar
 
