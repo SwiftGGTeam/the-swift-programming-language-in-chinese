@@ -939,8 +939,8 @@ It has the following form:
 
     <#expression#>.init(<#initializer arguments#>)
 
-To initialize a new instance of a type,
-use the initializer expression in a function call expression.
+You use the initializer expression in a function call expression
+to initialize a new instance of a type.
 Unlike other functions, an initializer can't be used as a value.
 For example:
 
