@@ -15,6 +15,8 @@ in order to manage memory for you.
 This chapter describes those situations,
 and shows how to make it easy for ARC to manage all of your app's memory.
 
+.. _MemoryManagement_HowARCWorks:
+
 How ARC Works
 -------------
 
@@ -53,6 +55,8 @@ that property, constant, or variable makes a :newTerm:`strong reference` to the 
 The reference is called a “strong“ reference because
 it keeps a firm hold on that instance,
 and does not allow it to be destroyed for as long as that strong reference remains.
+
+.. _MemoryManagement_ARCInAction:
 
 ARC In Action
 ~~~~~~~~~~~~~

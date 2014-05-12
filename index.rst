@@ -20,6 +20,23 @@ Contents
 Change Log
 ----------
 
+May 12 2014
+~~~~~~~~~~~
+
+Language Guide
+++++++++++++++
+
+* New :doc:`LanguageGuide/MemoryManagement` chapter, including sections on
+  :ref:`how ARC works <MemoryManagement_HowARCWorks>`,
+  :ref:`strong reference cycles <MemoryManagement_StrongReferenceCycles>`,
+  and :ref:`weak and unowned references <MemoryManagement_WeakAndUnownedReferences>`.
+* Rewritten much of :doc:`LanguageGuide/Generics`
+  to make the introduction more accessible to those who are new to generic programming.
+* Added some explanations of :ref:`unicode terminology <StringsAndCharacters_Unicode>`
+  to :doc:`LanguageGuide/StringsAndCharacters`.
+* Renamed nested functions to :ref:`local functions <Functions_LocalFunctions>`.
+* Incorporated lots of technical feedback from the compiler team.
+
 May 9 2014
 ~~~~~~~~~~
 
@@ -57,11 +74,11 @@ Language Guide
   :doc:`LanguageGuide/Functions` chapter.
 * New sections about
   :ref:`implicitly unwrapped optionals <TheBasics_ImplicitlyUnwrappedOptionals>`
-  and :ref:`when to use them as properties <Initialization_ImplicitlyUnwrappedOptionalProperties>`.
+  and :ref:`when to use them as properties
+  <MemoryManagement_UnownedReferencesAndImplicitlyUnwrappedOptionalProperties>`.
 * New information about :ref:`named tuple elements <TheBasics_Tuples>`,
   and examples of how to use them with
-  :ref:`function parameters <Functions_TupleTypesAsParameterTypes>`
-  and :ref:`function return types <Functions_TupleTypesAsReturnTypes>`.
+  :ref:`function return types <Functions_TupleTypesAsReturnTypes>`.
 * :ref:`Convenience initializers <Initialization_SyntaxForDesignatedAndConvenienceInitializers>`
   now use the ``convenience`` keyword.
 * Renamed Basic Types to :doc:`LanguageGuide/TheBasics`,
@@ -177,7 +194,7 @@ Language Guide
 
 * New chapter on :doc:`closures <LanguageGuide/Closures>`.
 * New section about working with :ref:`function types <Functions_FunctionTypes>`.
-* New section about :ref:`nested functions <Functions_NestedFunctions>`.
+* New section about :ref:`local functions <Functions_LocalFunctions>`.
 * New sections about :ref:`comments <TheBasics_Comments>` and :ref:`semicolons <TheBasics_Semicolons>`.
 * New section about :ref:`nil <TheBasics_Nil>` as it is used in the context of optionals.
 * ``nil`` is now used throughout the *Guide* instead of ``.None``.
