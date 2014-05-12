@@ -7,13 +7,13 @@ Named types include classes, structures, enumerations, and protocols.
 For example,
 instances of a user-defined class named ``MyClass`` have the type ``MyClass``.
 In addition to user-defined named types,
-the Swift Standard Library defines many commonly used named types,
+the Swift standard library defines many commonly used named types,
 including those that represent arrays, dictionaries, and optional values.
 
 Data types that are normally considered basic or primitive in other languages---
 such as types that represent numbers, characters, and strings---
 are actually named types,
-defined and implemented in the Swift Standard Library using structures.
+defined and implemented in the Swift standard library using structures.
 Because they are named types,
 you can extend their behavior to suit the needs of your program,
 using an extension declaration,
@@ -263,7 +263,7 @@ Optional Type
 -------------
 
 The Swift language defines the postfix operator ``?`` as syntactic sugar for
-the named type ``Optional<T>``, which is defined in the Swift Standard Library.
+the named type ``Optional<T>``, which is defined in the Swift standard library.
 In other words, the following two declarations are equivalent:
 
 .. testcode:: optional-type

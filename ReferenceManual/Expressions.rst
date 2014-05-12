@@ -50,7 +50,7 @@ the expression that follows them.
 
 .. TR: Does it make sense to call out the left-to-right grouping?
 
-The Swift Standard Library provides the following prefix operators:
+The Swift standard library provides the following prefix operators:
 
 * ``++`` Increment
 * ``--`` Decrement
@@ -88,7 +88,7 @@ It has the following form:
 
    <#left-hand argument#> <#operator#> <#right-hand argument#>
 
-The Swift Standard Library provides the following binary operators:
+The Swift standard library provides the following binary operators:
 
 .. The following comes from stdlib/core/Policy.swift
 
@@ -830,7 +830,7 @@ Syntactically, every primary expression is also a postfix expression.
 
 .. TR: Does it make sense to call out the left-to-right grouping?
 
-The Swift Standard Library provides the following postfix operators:
+The Swift standard library provides the following postfix operators:
 
 * ``++`` Increment
 * ``--`` Decrement

@@ -303,7 +303,7 @@ case labels.
 
 The expression represented by the expression pattern
 is compared with the value of an input expression
-using the Swift Standard Library ``~=`` operator.
+using the Swift standard library ``~=`` operator.
 The matches succeeds
 if the ``~=`` operator returns ``true``. By default, the ``~=`` operator compares
 two values of the same type using the ``==`` operator. It can also match an integer

@@ -333,8 +333,8 @@ Integer literals can begin with leading zeros (``0``),
 but are likewise ignored and don't affect the base or value of the literal.
 
 Unless otherwise specified,
-the default type of an integer literal is the Swift Standard Library type ``Int``.
-The Swift Standard Library also defines types for various sizes of
+the default type of an integer literal is the Swift standard library type ``Int``.
+The Swift standard library also defines types for various sizes of
 signed and unsigned integers,
 as described in :ref:`TheBasics_Integers`.
 
@@ -444,9 +444,9 @@ Floating-point literals can begin with leading zeros (``0``),
 but are likewise ignored and don't affect the base or value of the literal.
 
 Unless otherwise specified,
-the default type of a floating-point literal is the Swift Standard Library type ``Double``,
+the default type of a floating-point literal is the Swift standard library type ``Double``,
 which represents a 64-bit floating-point number.
-The Swift Standard Library also defines a ``Float`` type,
+The Swift standard library also defines a ``Float`` type,
 which represents a 32-bit floating-point number.
 
 .. langref-grammar
@@ -603,7 +603,7 @@ types, see :doc:`../LanguageGuide/StringsAndCharacters`.
 Operators
 ---------
 
-The Swift Standard Library defines a number of operators for your use,
+The Swift standard library defines a number of operators for your use,
 many of which are discussed in :doc:`../LanguageGuide/BasicOperators`
 and :doc:`../LanguageGuide/AdvancedOperators`.
 The present section describes which characters can be used as operators.

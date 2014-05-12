@@ -172,7 +172,7 @@ The *generic argument list* is a comma-separated list of type arguments.
 A :newTerm:`type argument` is the name of an actual concrete type that replaces
 a corresponding type parameter in the generic parameter clause of a generic type.
 The result is a specialized version of that generic type. As an example,
-the Swift Standard Library defines a generic dictionary type as:
+the Swift standard library defines a generic dictionary type as:
 
 .. testcode::
 
