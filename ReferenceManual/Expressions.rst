@@ -329,7 +329,7 @@ It behaves as follows:
 
 * Otherwise, the value of *expression*
   is returned as an optional of the specified *type*.
-  At runtime, if the cast suceeds,
+  At runtime, if the cast succeeds,
   the value of *expression* is returned
   as in instance of the specified *type*;
   otherwise the value returned is ``nil``.
@@ -603,8 +603,8 @@ The second form is used to access the superclass's subscript implementation.
 The third form is used to access an initializer of the superclass.
 
 Subclasses can use a superclass expression
-in their implentation of members, subscripting, and initializers
-to make use of the implentation in their superclass.
+in their implementation of members, subscripting, and initializers
+to make use of the implementation in their superclass.
 
 .. langref-grammar
 
@@ -650,7 +650,7 @@ as the parameters in a function declaration,
 as described in :ref:`Declarations_FunctionDeclaration`.
 
 There are several special forms
-that allow closures to be written more concicely:
+that allow closures to be written more concisely:
 
 * A closure can omit the types
   of its parameters, its return type, or both.
@@ -754,7 +754,7 @@ Parenthesized Expression
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 A :newTerm:`parenthesized expression` consists of
-a comma-separated list of expressions surrounded by paretheses.
+a comma-separated list of expressions surrounded by parentheses.
 Each expression can have an optional identifier before it,
 separated by a colon (``:``).
 It has the following form:
@@ -998,7 +998,7 @@ For example:
     << // y : Int = 42
 
 The members of a tuple
-are implictly named using integers in the order they appear,
+are implicitly named using integers in the order they appear,
 starting from zero.
 For example:
 
@@ -1195,7 +1195,7 @@ If its value is ``nil``, a runtime error is raised.
 Optional-Chaining Expression
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-An :newTerm:`optional-chaining expression` provides a simplified synatax
+An :newTerm:`optional-chaining expression` provides a simplified syntax
 for using optional values in postfix expressions.
 It has the following form:
 
