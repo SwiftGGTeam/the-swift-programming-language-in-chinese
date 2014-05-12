@@ -1259,9 +1259,9 @@ are ignored if the value of ``x`` is ``nil``.
    be the largest chained expression of multiple expr-optionals.
 
 .. From the perspective of monads,
-   an optional-chaining expression lifts
-   operations on non-optional types
-   into operations on optional types.
+   an optional-chaining expression lifts its chained operations
+   from working with non-optional types
+   into working with optional types.
 
 .. langref-grammar
 
