@@ -513,7 +513,7 @@ This variable has an initial value of nil, by virtue of being optional:
 
 You can now create a ``Customer`` instance,
 and use it to initialize and assign a new ``CreditCard`` instance
-as that country's ``card`` property:
+as that customer's ``card`` property:
 
 .. testcode:: unownedReferences
    :compile: true
