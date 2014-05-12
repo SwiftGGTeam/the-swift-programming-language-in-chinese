@@ -1,16 +1,6 @@
 Types
 =====
 
-.. TODO: Things to discuss/cover in this chapter:
-    Type attributes? (Waiting to find out if should document any of these)
-
-.. NOTE: Don't mention materializability at all.
-    The concept is tied to the inout attribute and will be going away.
-    The only way to get a non-materializable type is to use @inout.
-    The only place where that's even allowed is in a tuple that's part of a
-    function declaration. The grammar is shifting and will prevent these
-    from showing up anywhere else in the language.
-
 In Swift, there are two kinds of types: named types and compound types.
 A :newTerm:`named type` is a type that can be given a particular name when it is defined.
 Named types include classes, structures, enumerations, and protocols.
@@ -19,8 +9,6 @@ instances of a user-defined class named ``MyClass`` have the type ``MyClass``.
 In addition to user-defined named types,
 the Swift Standard Library defines many commonly used named types,
 including those that represent arrays, dictionaries, and optional values.
-
-.. TODO: Discuss with Jeanne: What do we call instances of the "Optional" type?
 
 Data types that are normally considered basic or primitive in other languages---
 such as types that represent numbers, characters, and strings---
@@ -37,8 +25,6 @@ A compound type may contain named types and other compound types.
 For instance, the tuple type ``(Int, (Int, Int))`` contains two elements:
 The first is the named type ``Int``,
 and the second is another compound type ``(Int, Int)``.
-
-.. TODO: TR: What about language support (syntactic sugar) for creating dictionary literals?
 
 This chapter discusses the types defined in the Swift language itself
 and describes the type inference behavior of Swift.
@@ -177,40 +163,33 @@ or more elements.
     tuple-type-element --> attributes-OPT ``inout``-OPT type | ``inout``-OPT element-name type-annotation
     element-name --> identifier
 
-.. NOTE: Info from Doug about the relationship between tuple types and tuple patterns:
-    A tuple pattern is always of tuple type.
-    There is a ton of grammatical overlap right now; some of that will be reduced
-    when we get rid of named tuple elements.
-    A tuple type is a much simpler (compared to a tuple pattern)
-    composition of simpler types.
-
-    The LangRef says that "there are special rules for converting an
-    expression to varargs tuple type.
-    The subtyping and type conversion chapter (proposed below in 'Metatype Types')
-    should discuss these rules.
-
-.. TODO: Tuple types and function types are in flux at the moment.
-    Let's hold off on writing about these until they are nailed down.
-    There are a couple of questions here:
-    1. Are tuple types going to be allowed to contain named elements?
-    2. Are function parameter names going to be part of the function type?
-    3. Related to (1) and (2): Are tuple types going to used as the left-hand side
-       of a function type (as in the current grammar)?
-    UPDATE from Doug, 4/2/14:
-    Re: 1: For WWDC and likely 1.0, tuples will keep their labels. (Our endgame
-    and where we are now are different.)
-    Re: 2: Yes, in cases like: (a: Int) -> Int
-    Re: 3: No, it's now just type (before, we were relying on tuple-types
-    to enforce parens). Of course, a tuple-type is a type, so you can
-    still have (a: Int) -> Int.
-
 
 .. _Types_FunctionType:
 
 Function Type
 -------------
 
-.. write-me:: Waiting for design decisions from compiler team. See notes below.
+.. write-me:: Finish writing this section.
+
+A function type represents the type of a function, method, or closure
+and consists of a parameter and return type separated by an arrow (``->``):
+
+.. syntax-outline::
+
+    <#parameter type#> -> <#return type#>
+
+Because the *parameter type* and the *return type* can be a tuple type,
+function types support functions and methods that take multiple paramaters
+and return multiple values.
+
+.. variadic parameter types
+.. Curried function types
+.. autoclosure function types
+
+
+To specify an in-out parameter, prefix the parameter type with the ``inout`` keyword.
+You can't mark a variadic parameter type or a return type with the ``inout`` keyword.
+In-out parameters are discussed in :ref:`Functions_InOutParameters`.
 
 .. langref-grammar
 
@@ -236,25 +215,6 @@ Function Type
     But, the following is NOT allowed::
 
         var myPolymorphicF = polymorphicF
-
-.. TODO: Tuple types and function types are in flux at the moment.
-    Let's hold off on writing about these until they are nailed down.
-    There are a couple of questions here:
-    1. Are tuple types going to be allowed to contain named elements?
-    2. Are function parameter names going to be part of the function type?
-    3. Related to (1) and (2): Are tuple types going to used as the left-hand side
-       of a function type (as in the current grammar)?
-    UPDATE from Doug, 4/2/14:
-    Re: 1: For WWDC and likely 1.0, tuples will keep their labels. (Our endgame
-    and where we are now are different.)
-    Re: 2: Yes, in cases like: (a: Int) -> Int
-    Re: 3: No, it's now just type (before, we were relying on tuple-types
-    to enforce parens). Of course, a tuple-type is a type, so you can
-    still have (a: Int) -> Int.
-
-    Function *declarations* on the other hand are still flux. Doug will be writing
-    a new grammar for them soon. One notable change is that they will no longer
-    use patterns in the function parameters.
 
 
 .. _Types_ArrayType:

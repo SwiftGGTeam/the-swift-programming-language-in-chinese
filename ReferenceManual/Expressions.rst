@@ -1206,7 +1206,7 @@ It has the following form:
 
 .. syntax-outline::
 
-    <#expression#>?<#postfixes #>
+    <#expression#>?<#postfix expressions #>
 
 If the *expression* is not ``nil``,
 the chained-optional expression evaluates
