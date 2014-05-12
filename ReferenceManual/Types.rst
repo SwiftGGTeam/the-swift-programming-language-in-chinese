@@ -144,7 +144,21 @@ that is declared in the ``ExampleModule`` module.
 Tuple Type
 ----------
 
-.. write-me:: Waiting for design decisions from compiler team. See notes below.
+A tuple type is a comma-separated list of zero or more types, enclosed in parentheses.
+
+You can use a tuple type as the return type of a function
+to enable the function to return a single tuple containing multiple values.
+You can also name the elements of a tuple type and use those names to refer to
+the values of the individual elements. An element name consists of an identifier
+followed immediately by a colon (:). For an example that demonstrates both of
+these features, see :ref:`Functions_TupleTypesAsReturnTypes`.
+
+``Void`` is a typealias for the the empty tuple type, ``()``.
+If there is only one element inside the parentheses,
+the type is simply the type of that element.
+For example, the type of ``(Int)`` is ``Int``, not ``(Int)``.
+As a result, you can label a tuple element only when the tuple type has two
+or more elements.
 
 .. langref-grammar
 
