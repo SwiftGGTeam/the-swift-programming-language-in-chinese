@@ -540,7 +540,7 @@ or by providing a specific center point and size:
          }
       }
 
-The first ``Rect`` initializer, ``init``, 
+The first ``Rect`` initializer, ``init()``, 
 is functionally the same as the default initializer that the structure would have received
 if it did not have its own custom initializers.
 This initializer has an empty body,
@@ -548,7 +548,8 @@ represented by an empty pair of curly braces ``{}``,
 and does not perfom any initialization.
 If you call this initializer, it will return a ``Rect`` instance whose
 ``origin`` and ``size`` properties are both initialized with
-the default values of ``Point(0.0, 0.0)`` and ``Size(0.0, 0.0)``
+the default values of ``Point(x: 0.0, y: 0.0)``
+and ``Size(width: 0.0, height: 0.0)``
 from their property definitions:
 
 .. testcode:: valueDelegation
@@ -558,7 +559,7 @@ from their property definitions:
    /> basicRect's origin is (\(basicRect.origin.x), \(basicRect.origin.y)) and its size is (\(basicRect.size.width), \(basicRect.size.height))
    </ basicRect's origin is (0.0, 0.0) and its size is (0.0, 0.0)
 
-The second ``Rect`` initializer, ``init origin size``,
+The second ``Rect`` initializer, ``init(origin:size:)``,
 is functionally the same as the memberwise initializer that the structure would have received
 if it did not have its own custom initializers.
 This initializer simply assigns the ``origin`` and ``size`` argument values to
@@ -572,10 +573,10 @@ the appropriate stored properties:
    /> originRect's origin is (\(originRect.origin.x), \(originRect.origin.y)) and its size is (\(originRect.size.width), \(originRect.size.height))
    </ originRect's origin is (2.0, 2.0) and its size is (5.0, 5.0)
 
-The third ``Rect`` initializer, ``init center size``, is slightly more complex.
+The third ``Rect`` initializer, ``init(center:size:)``, is slightly more complex.
 It starts by calculating an appropriate origin point based on
 a ``center`` point and a ``size`` value.
-It then calls (or :newTerm:`delegates`) to the ``init origin size`` initializer,
+It then calls (or :newTerm:`delegates`) to the ``init(origin:size:)`` initializer,
 which stores the new origin and size values in the appropriate properties:
 
 .. testcode:: valueDelegation
@@ -586,10 +587,10 @@ which stores the new origin and size values in the appropriate properties:
    /> centerRect's origin is (\(centerRect.origin.x), \(centerRect.origin.y)) and its size is (\(centerRect.size.width), \(centerRect.size.height))
    </ centerRect's origin is (2.5, 2.5) and its size is (3.0, 3.0)
 
-The ``init center size`` initializer could have assigned
+The ``init(center:size:)`` initializer could have assigned
 the new values of ``origin`` and ``size`` to the appropriate properties itself.
 However, it is more convenient (and clearer in intent)
-for the ``init center size`` initializer to take advantage of an existing initializer
+for the ``init(center:size:)`` initializer to take advantage of an existing initializer
 that already provides exactly that functionality.
 
 .. _Initialization_InitializerDelegationForClassTypes:
