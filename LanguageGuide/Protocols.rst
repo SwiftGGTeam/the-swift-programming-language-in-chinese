@@ -223,6 +223,12 @@ a :newTerm:`linear congruential generator`:
    -> println("And another one: \(generator.random())")
    <- And another one: 0.729023776863283
 
+.. TODO: mutating value type method will not satisfy a protocol requirement
+   unless the requirement is also marked mutating.
+   This is unfortunate, but it's the only way to safely have protocol-typed constants.
+   This was technical feedback from [Contributor 6004],
+   and needs mentioning / incorporating somewhere in here.
+
 .. _Protocols_UsingProtocolsAsTypes:
 
 Using Protocols as Types
