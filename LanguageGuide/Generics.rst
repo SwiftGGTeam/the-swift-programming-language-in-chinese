@@ -8,7 +8,7 @@ subject to certain requirements that you define.
 Generics are one of the most powerful features of Swift,
 and much of Swift's Standard Library is built with generic code.
 Generics enable you to write flexible code that avoids duplication,
-and expresses its intent in a clear, abstract manner.
+and expresses its intent in a clear, abstracted manner.
 
 Why Generics?
 -------------
@@ -66,15 +66,22 @@ the ``swapTwoInts``, ``swapTwoStrings``, and ``swapTwoDoubles`` functions are id
 The only difference between the three functions
 is the type of the values that they accept (``Int``, ``String``, and ``Double``).
 
-You may also have noticed that in all three functions,
-it is important that the types of ``a`` and ``b`` are defined to be the same as each other.
-If ``a`` and ``b`` were not of the same type,
-it would not be possible to swap their values.
-
 It would be much more useful, and considerably more flexible,
 to write a single function that could swap two values of *any* type.
 This is the kind of problem that generic code can solve.
 (A generic version of these functions is defined below.)
+
+.. note::
+
+   In all three functions,
+   it is important that the types of ``a`` and ``b`` are defined to be the same as each other.
+   If ``a`` and ``b`` were not of the same type,
+   it would not be possible to swap their values.
+   Swift is a type-safe language,
+   and does not allow (for example) a variable of type ``String``
+   and a variable of type ``Double``
+   to swap values with each other.
+   Attempting to do so would be reported as a compile-time error.
 
 Generics Are Used Throughout Swift
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
