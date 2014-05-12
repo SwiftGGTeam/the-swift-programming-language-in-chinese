@@ -651,36 +651,24 @@ and the property can be used and accessed like a non-optional value
 once initialization is complete,
 while still avoiding a strong reference cycle.
 
-.. _MemoryManagement_AvoidingReferenceCyclesInClosures:
+.. _MemoryManagement_ClosureCaptureLists:
 
-Avoiding Reference Cycles in Closures
--------------------------------------
+Closure Capture Lists
+---------------------
+
+:ref:`MemoryManagement_StrongReferenceCycles`
+describes how a strong reference cycle can be created
+when two class instances hold a strong reference to each other.
+
+Another situation in which a strong reference cycle can occur
+is when a closure captures an instance that holds a strong reference to that same closure.
+(Capturing values with a closure is described in :ref:`Closures_CapturingValues`.)
+Swift provides an elegant solution to this problem,
+known as a :newTerm:`closure capture list`.
+
+.. _MemoryManagement_StrongReferenceCyclesInClosures:
+
+Strong Reference Cycles in Closures
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. write-me::
-
-.. TODO: you have to write "self." for property references in an explicit closure expression,
-   since "self" will be captured, not the property (as per rdar://16193162)
-   we don't do this for autoclosures, however -
-   see the commits comments from r14676 for the reasons why
-
-.. TODO: <rdar://problem/16193162> Require specifying self for locations in code
-   where strong reference cycles are likely
-   This requires that property references have an explicit "self." qualifier
-   when in an explicit closure expression, since self will be captured, not the property.
-   We don't do the same for autoclosures.
-   The logic here is that autoclosures can't practically be used in capturing situations anyway,
-   since that would be extremely surprising to clients.
-   Further, forcing a syntactic requirement in an autoclosure context
-   would defeat the whole point of autoclosures: make them implicit.
-
-.. FIXME: To avoid reference cycles when a property closure references self or a property of self,
-   you should use the same workaround as in Obj-C –
-   that is, to declare a weak (or unowned) local variable, and capture that instead.
-   There are proposals for a better solution in /swift/docs/weak.rst,
-   but they are yet to be implemented.
-   The Radar for their implementation is rdar://15046325.
-
-
-.. TODO: weak things are banned from being declared as constants,
-   because the whole point of weak is that it can change at runtime.
-   If that isn't the case, it should be unowned, not weak.
