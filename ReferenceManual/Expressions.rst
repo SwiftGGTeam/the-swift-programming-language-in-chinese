@@ -859,7 +859,7 @@ see :doc:`../LanguageGuide/BasicOperators` and :doc:`../LanguageGuide/AdvancedOp
     postfix-expression --> metatype-expression
     postfix-expression --> subscript-expression
     postfix-expression --> forced-expression
-    postfix-expression --> chained-optional-expression
+    postfix-expression --> optional-chaining-operator
 
 
 .. _Expressions_FunctionCallExpression:
@@ -1190,31 +1190,43 @@ If its value is ``nil``, a runtime error is raised.
     forced-expression --> postfix-expression ``!``
 
 
-.. _Expression_Chained-OptionalExpression:
+.. _Expression_OptionalChainingOperator:
 
-Chained-Optional Expression
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Optional-Chaining Expression
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-A :newTerm:`chained-optional expression` provides a simplified synatax
+An :newTerm:`optional-chaining expression` provides a simplified synatax
 for using optional values in postfix expressions.
 It has the following form:
 
 .. syntax-outline::
 
-    <#expression#>?<#postfixes #>
+    <#expression#>?
+
+For example:
+
+.. testcode::
+
+   -> let s: String? = nil
+   << // r0: String? = <unprintable value>
+   -> s?.startsWith("In the beginning")
+   << // r1: Bool? = <unprintable value>
 
 If the *expression* is not ``nil``,
-the chained-optional expression evaluates
-to the unwrapped value of the expression,
-after any chained postfix expression are evaluated.
+the optional-chaining operator returns
+the value of the expression,
+and any chained postfix expression are evaluated.
 Otherwise,
-the chained-optional expression evaluates to ``nil``
+the optional-chaining operator returns ``nil``
 and any chained postfix expressions are ignored.
+The outermost postfix expression
+that contains the optional-chaining expression
+is always of an optional type.
 
 Informally,
-all postfix expressions that follow the chained-optional expression
+all postfix expressions that follow the optional-chaining expression
 --- and that are still part of the same expression ---
-are understood to be chained to the chained-optional expression.
+are understood to be chained to the optional-chaining expression.
 Specifically,
 a postfix expression is :newTerm:`directly chained`
 to the expression that is its first part.
@@ -1225,11 +1237,11 @@ that is chained to that expression.
 
 For example, in the expression ``x?.foo()[7]``
 the function call is chained
-to the chained-optional expression ``x?``
+to the optional-chaining expression ``x?``
 because it is directly chained to that expression.
-The array subscript is chained to the chained-optional expression
-because it is directly chained to the function call,
-and the function call is chained to the chained-optional call.
+The array subscript is chained to the optional-chaining expression
+because it is directly chained to the function call expression ``x?.foo()``,
+and the function call is chained to the optional-chaining expression.
 Both the function call and the array subscript
 are ignored if the value of ``x`` is ``nil``.
 
@@ -1246,6 +1258,10 @@ are ignored if the value of ``x`` is ``nil``.
    an r-value of type U? for some type U. Note that a single expression may
    be the largest chained expression of multiple expr-optionals.
 
+.. From the perspective of monads,
+   an optional-chaining expression lifts
+   operations on non-optional types
+   into operations on optional types.
 
 .. langref-grammar
 
