@@ -320,6 +320,12 @@ it is appropriate for an apartment to be able to have
 “no tenant” at some point in its lifetime,
 and so a weak reference is an appropriate way to break the reference cycle in this case.
 
+.. note::
+
+   Weak references must be declared as variables,
+   to indicate that their value can change at runtime.
+   A weak reference cannot be declared as a constant.
+
 To reflect the fact that weak references are allowed to have “no value”,
 every weak reference must be declared as having an optional type.
 Optional types are the preferred way to represent the possibility for “no value” in Swift.
