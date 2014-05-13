@@ -1212,38 +1212,67 @@ For example:
    -> s?.startsWith("In the beginning")
    << // r1: Bool? = <unprintable value>
 
+
+The ``?`` operator in an optional-chaining expression
+is similar to the ``!`` operator in a forced expression.
+Unlike a forced expression,
+an optional-chaining expression does not raise a error
+if its operand is ``nil`` ---
+rather, it has a value of ``nil``
+and causes the chained postfix expressions to be ignored.
+
 If the *expression* is not ``nil``,
-the optional-chaining operator returns
+the optional-chaining expression returns
 the value of the expression,
-and any chained postfix expression are evaluated.
+and any chained postfix expressions are evaluated.
 Otherwise,
-the optional-chaining operator returns ``nil``
+the optional-chaining expression returns ``nil``
 and any chained postfix expressions are ignored.
+
+
+-- describe the order of evaluation -- the way things are evaluated
+You can chain postfix expressions to the optional-chaining expression.
+For example, in the expression ``x?.foo.bar()``
+
+- x?   if not nil
+- x?.foo
+- x?.foo.bar()
+(returned as optional)
+
+- x?   if nil; nothing else (return nil)
+
+You chain as if there were no optional.
+
+
+the member expression ``x?.foo`` is chained
+to the optional-chaining expression ``x?``.
+The function call expression ``x?.foo.bar()``
+is also chained to the optional-chaining expression ``x?``
+because it is chained to the property ``x?.foo``.
+Both the property access and the function call
+are ignored if the value of ``x`` is ``nil``.
+
+You can chain postfix expressions to the optional-chaining expression.
+
+Formally, chaining is a relationship between an expression
+and a subexpression of that expression.
+
+For example, in the expression ``x?.foo.bar()``
+the member expression ``x?.foo`` is chained
+to the optional-chaining expression ``x?``.
+The function call expression ``x?.foo.bar()``
+is also chained to the optional-chaining expression ``x?``
+because it is chained to the expression ``x?.foo``.
+Both the member access and the function call
+are ignored if the value of ``x`` is ``nil``.
+
+.. write-me::
+
 The outermost postfix expression
 that contains the optional-chaining expression
 is always of an optional type.
 
-Informally,
-all postfix expressions that follow the optional-chaining expression
---- and that are still part of the same expression ---
-are understood to be chained to the optional-chaining expression.
-Specifically,
-a postfix expression is :newTerm:`directly chained`
-to the expression that is its first part.
-A postfix expression is :newTerm:`chained` to an expression
-if it is either directly chained to that expression
-or if it is directly chained to another postfix expression
-that is chained to that expression.
 
-For example, in the expression ``x?.foo()[7]``
-the function call is chained
-to the optional-chaining expression ``x?``
-because it is directly chained to that expression.
-The array subscript is chained to the optional-chaining expression
-because it is directly chained to the function call expression ``x?.foo()``,
-and the function call is chained to the optional-chaining expression.
-Both the function call and the array subscript
-are ignored if the value of ``x`` is ``nil``.
 
 .. LangRef
 
