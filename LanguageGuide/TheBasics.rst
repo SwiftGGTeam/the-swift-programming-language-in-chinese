@@ -352,6 +352,25 @@ in that an 8-bit unsigned integer is of type ``UInt8``,
 and a 32-bit signed integer is of type ``Int32``.
 Like all types in Swift, these integer types have capitalized names.
 
+.. _TheBasics_IntegerBounds:
+
+Integer Bounds
+~~~~~~~~~~~~~~
+
+You can access the minimum and maximum values of each integer type
+with its ``min`` and ``max`` properties:
+
+.. testcode:: integerBounds
+
+   -> let minValue = UInt8.min  // minValue is equal to 0, and is of type UInt8
+   << // minValue : UInt8 = 0
+   -> let maxValue = UInt8.max  // maxValue is equal to 255, and is of type UInt8
+   << // maxValue : UInt8 = 255
+
+The values of these properties are of the appropriate-sized number type
+(such as ``UInt8`` in the example above)
+and can therefore be used in expressions alongside other values of the same type.
+
 .. _TheBasics_Int:
 
 Int
@@ -576,25 +595,6 @@ or for performance, memory usage, or other necessary optimization.
 Using explicitly-sized types in these situations
 helps to catch any accidental value overflows
 and implicitly documents the nature of the data being used.
-
-.. _TheBasics_IntegerBounds:
-
-Integer Bounds
-~~~~~~~~~~~~~~
-
-You can access the minimum and maximum values of each integer type
-with its ``min`` and ``max`` properties:
-
-.. testcode:: constantsAndVariables
-
-   -> let minValue = UInt8.min  // minValue is equal to 0, and is of type UInt8
-   << // minValue : UInt8 = 0
-   -> let maxValue = UInt8.max  // maxValue is equal to 255, and is of type UInt8
-   << // maxValue : UInt8 = 255
-
-The values of these properties are of the appropriate-sized number type
-(such as ``UInt8`` in the example above)
-and can therefore be used in expressions alongside other values of the same type.
 
 .. _TheBasics_IntegerConversion:
 
