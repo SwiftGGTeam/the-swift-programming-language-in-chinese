@@ -94,26 +94,32 @@ at the point that the property is declared:
    the value of that property is set directly,
    without calling any property observers.
 
-.. _Initialization_SettingADefaultPropertyValueWithAClosure:
+.. _Initialization_SettingADefaultPropertyValueWithAClosureOrFunction:
 
-Setting A Default Property Value with a Closure
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Setting A Default Property Value with a Closure or Function
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If a property's default value requires some customization or setup,
-and that customization is not dependent on other property values,
-you can use a closure to provide a customized default value for that property.
+If a stored property's default value requires some customization or setup,
+you can use a closure or global function to provide
+a customized default value for that property.
 Whenever a new instance of the type that the property belongs to is initialized,
-the property's closure is executed,
-and the return value of the closure is assigned as the property's default value.
+the closure or function is called,
+and its return value is assigned as the property's default value.
 
-Here's a skeleton outline of how a closure can provide a default property value:
+These kinds of closures or functions typically create
+a temporary value of the same type as the property;
+tailor that value to represent the desired initial state;
+and then return that temporary value to be used as the property's default value.
+
+Here's a skeleton outline of how a closure can be used
+to provide a default property value:
 
 .. testcode:: defaultPropertyWithClosure
 
    >> class SomeType {}
    -> class SomeClass {
          let someProperty: SomeType = {
-            // calculate a default value for someProperty inside this closure
+            // create a default value for someProperty inside this closure
             // someValue must be of the same type as SomeType
    >>       let someValue = SomeType()
             return someValue
@@ -135,9 +141,6 @@ and not the return value of the closure.
    even if those properties have default values.
    You also cannot use the implicit ``self`` property,
    or call any of the instance's methods.
-   Closures should only be used to provide a default value
-   when the default value is always the same,
-   and is independent of any outside values.
 
 The example below defines a structure called ``Checkerboard``,
 which models a board for the game of *Checkers* (also known as *Draughts*):
