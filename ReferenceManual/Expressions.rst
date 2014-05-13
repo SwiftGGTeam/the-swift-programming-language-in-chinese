@@ -339,25 +339,21 @@ It behaves as follows:
    because of the distiction between runtime and compile time.
    Look to the old LangRef's description for another approach.
 
-.. TODO: Add a case that's guaranteed to fail.
-
 .. testcode:: type-casting
 
     -> class SomeSuperType {}
     -> class SomeType: SomeSuperType {}
     -> class SomeChildType: SomeType {}
-    -> let x = SomeType()
-    << // x : SomeType = <SomeType instance>
+    -> let s = SomeType()
+    << // s : SomeType = <SomeType instance>
     ---
-    -> let y = x as SomeSuperType  // y is of type SomeSuperType
+    -> let x = s as SomeSuperType  // known to suceed -- type is SomeSuperType
     << // y : SomeSuperType = <SomeSuperType instance>
-    -> let z = x as SomeChildType  // z is of type SomeChildType?
+    -> let y = s as Int            // known to fail -- compile-time error
+    !! <REPL Input>:1:12: error: expression does not type-check
+    !! let y = s as Int
+    -> let z = s as SomeChildType  // might fail at runtime -- type is SomeChildType?
     << // z : SomeChildType? = <unprintable value>
-    ---
-    -> let y2: SomeSuperType = x   // y2 is of type SomeSuperType
-    << // y2 : SomeSuperType = <SomeSuperType instance>
-    -> let z2: SomeChildType? = x  // z2 is of type SomeChildType?
-    << // z2 : SomeChildType? = <unprintable value>
 
 Specifying a type with ``as`` provides the same information
 to the compiler as a type annotation,
