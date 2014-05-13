@@ -315,29 +315,23 @@ performs a runtime cast of the *expression*
 to the specified *type*.
 It behaves as follows:
 
-* If casting the *expression*
-  to the specified *type*
+* If conversion to the specified *type*
   is guaranteed to succeed,
-  the value of *expression* is returned
+  the value of the *expression* is returned
   as an instance of the specified *type*.
   An example is casting from a subclass to a superclass.
 
-* If casting the *expression*
-  to the specified *type*
+* If conversion to the specified *type*
   is guaranteed to fail,
   a compile-time error is raised.
 
-* Otherwise, the value of *expression*
-  is returned as an optional of the specified *type*.
+* Otherwise, if it's not known at compile time
+  whether the conversion will succeed or fail,
+  the type of the cast expresion is an optional of the specified *type*.
   At runtime, if the cast succeeds,
-  the value of *expression* is returned
-  as an optional of the specified *type*;
+  the value of *expression* is wrapped in an optional and returned;
   otherwise the value returned is ``nil``.
   An example is casting from a superclass to a subclass.
-
-.. TODO: This is tripping readers up,
-   because of the distiction between runtime and compile time.
-   Look to the old LangRef's description for another approach.
 
 .. testcode:: type-casting
 
