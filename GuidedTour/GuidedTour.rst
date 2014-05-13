@@ -195,58 +195,70 @@ and an empty dictionary as ``[:]``.
 Control Flow
 ------------
 
-Use ``if`` to choose between blocks of code
-by checking Boolean conditions.
+Use ``if`` and ``switch`` to make conditionals,
+and use ``for``-``in``, ``for``, ``while``, and ``do``-``while``
+to make loops.
+Parentheses around the condition or loop variable are optional.
+Braces around the body are required.
 
 .. testcode::
 
-   -> let haveJellyBabies = false
-   << // haveJellyBabies : Bool = false
-   -> let remainingGummiBears = 5
-   << // remainingGummiBears : Int = 5
-   -> if haveJellyBabies {
-         println("Would you like a jelly baby?")
-      } else if remainingGummiBears > 0 {
-         println("Would you like a gummi bear?")
-      } else {
-         println("Sorry, all we have left are fruits and vegetables.")
-      }
-   << Would you like a gummi bear?
+    -> let individualScores = [75, 43, 103, 87, 12]
+    << // individualScores : Array<Int> = [75, 43, 103, 87, 12]
+    -> var teamScore = 0
+    << // teamScore : Int = 0
+    -> for score in individualScores {
+           if score > 50 {
+               teamScore += 3
+           } else {
+               teamScore += 1
+           }
+       }
+    >> teamScore
+    << // teamScore : Int = 11
 
-There are no parentheses around the conditional,
-and the braces around the body are required.
-The conditional must be a Boolean expression;
-code like ``if remainingGummiBears { ... }`` is an error,
+..
+   -> let haveJellyBabies = true
+   << // haveJellyBabies : Bool = true
+   -> if haveJellyBabies {
+      }
+   << Would you like a jelly baby?
+
+In an ``if`` statement,
+the conditional must be a Boolean expression;
+code like ``if score { ... }`` is an error,
 not an implicit comparison to zero.
 
-Use ``switch`` to choose between blocks of code
-where each block of code is associated
-with a possible value.
+Switches support any kind of data, not just integers,
+and the matching criteria can be more complex
+than simple comparison.
 
 .. testcode::
 
-   -> let vegetable = "cucumber"
-   << // vegetable : String = "cucumber"
+   -> let vegetable = "red pepper"
+   << // vegetable : String = "red pepper"
    -> switch vegetable {
-         case "lettuce":
-            println("Let’s make salad.")
          case "celery":
             println("Add some raisins and make ants on a log.")
-         case "cucumber":
-            println("How about a cucumber sandwich?")
+         case "cucumber", "watercress":
+            println("That would make a good tea sandwich.")
+         case let x where x.endsWith("pepper")
+            println("Is it a spicy \(x)?")
          default:
             println("Everything tastes good in soup.")
       }
-   << How about a cucumber sandwich?
+   << Is it a spicy red pepper?
 
 .. admonition:: Experiment
+
+   Add a case for vegetable names that start
+   with an uppercase letter.
 
    Try removing the default case.
    What error do you get?
 
-Switches support any kind of data, not just integers.
-You need to provide a case for every possible value
-or use ``default`` to specify what happens if none of the cases match.
+.. The "starts with uppercase" is probably too much of a stretch
+   before having learned about string operations.
 
 After executing the code inside the switch case that matched,
 the program exits from the switch statement.
@@ -257,32 +269,12 @@ at the end of each case‘s code.
 .. Omitting mention of "fallthrough" keyword.
    It's in the guide/reference if you need it.
 
-Switches support a variety of complex matching criteria,
-such as tuple unpacking and ``where`` clauses:
+.. Haven't shown structs or enums yet --
+   revisit switch statements at that point
+   to show another cool thing.
 
-.. testcode::
 
-   -> let somePoint = (1, 1)
-   << // somePoint : (Int, Int) = (1, 1)
-   -> switch somePoint {
-         case (0, 0):
-            println("(0, 0) is at the origin")
-         case (_, 0):
-            println("(\(somePoint.0), 0) is on the x-axis")
-         case (0, _):
-            println("(0, \(somePoint.1)) is on the y-axis")
-         case let (x, y) where x == y:
-            println("(\(x), \(y)) is on the diagonal")
-         default:
-            println("The point is somewhere else.")
-      }
-   << (1, 1) is on the diagonal
-
-.. admonition:: Experiment
-
-   Try adding a case statement
-   that matches points where ``x`` is greater than ``y``,
-   and one that matches points where ``x`` is odd.
+.. the focus here should be on .. and ...
 
 Use ``for`` to iterate over a collection of items.
 
