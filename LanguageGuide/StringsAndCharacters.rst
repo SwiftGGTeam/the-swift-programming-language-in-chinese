@@ -513,10 +513,10 @@ Each of these formats encodes the string in small chunks known as :newTerm:`code
 These include the UTF-8 format (which encodes a string as 8-bit code units),
 and the UTF-16 format (which encodes a string as 16-bit code units).
 
-.. _StringsAndCharacters_UnicodeRepresentationsOfSwiftStrings:
+.. _StringsAndCharacters_UnicodeRepresentationsOfStrings:
 
-Unicode Representations of Swift Strings
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Unicode Representations of Strings
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Swift provides four different ways to decompose a ``String`` value into smaller units.
 

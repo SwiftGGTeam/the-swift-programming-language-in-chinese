@@ -10,6 +10,8 @@ and much of Swift's standard library is built with generic code.
 Generics enable you to write flexible code that avoids duplication,
 and expresses its intent in a clear, abstracted manner.
 
+.. _Generics_WhyGenerics:
+
 Why Generics?
 -------------
 
@@ -82,6 +84,8 @@ This is the kind of problem that generic code can solve.
    and a variable of type ``Double``
    to swap values with each other.
    Attempting to do so would be reported as a compile-time error.
+
+.. _Generics_GenericsAreUsedThroughoutSwift:
 
 Generics Are Used Throughout Swift
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
