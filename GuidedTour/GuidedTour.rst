@@ -46,11 +46,11 @@ Simple Values
 
 You create constants and variables using the same syntax,
 with one difference:
-Use ``let`` to declare a constant and use ``var`` for a variable.
+Use ``let`` for a constant and use ``var`` for a variable.
 The value of a constant 
 doesn't need to be known at compile time,
 as long as it assigned only once.
-This means you can use constants to give a name to values
+This means you can use constants to name a value
 that you determine once but use in many places.
 
 .. testcode::
@@ -183,8 +183,8 @@ use the initializer syntax.
    << // emptyDictionary : Dictionary<String, Float> = Dictionary<String, Float>(1.33333333333333, 0, <DictionaryBufferOwner<String, Float> instance>)
 
 If type information can be inferred,
-such as setting a new value for a variable
-or passing an argument to a function,
+such as when you set a new value for a variable
+or pass an argument to a function,
 you can write an empty array as ``[]``
 and an empty dictionary as ``[:]``.
 
