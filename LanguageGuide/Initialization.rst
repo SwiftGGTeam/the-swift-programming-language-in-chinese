@@ -624,20 +624,20 @@ alternative, more convenient initializers for a subclass,
 which provide simpler or more context-specific ways to create an instance of that subclass.
 
 Swift defines two different kinds of initializers for class types to reflect these needs.
-These are known as :newTerm:`designated initializers` and :newTerm:`convenience initializers`.
+These are known as designated initializers and convenience initializers.
 
 .. _Initialization_DesignatedInitializersAndConvenienceInitializers:
 
 Designated Initializers and Convenience Initializers
 ____________________________________________________
 
-Designated initializers are the primary initializers for a class.
+:newTerm:`Designated initializers` are the primary initializers for a class.
 A designated initializer is responsible for making sure that
 all of the properties introduced by that class are fully initialized,
 and for calling an appropriate superclass initializer
 to continue the initialization process up the superclass chain.
 
-Convenience initializers are secondary, supporting initializers for a class.
+:newTerm:`Convenience initializers` are secondary, supporting initializers for a class.
 A convenience initializer is a way to provide a simpler, more convenient initializer
 which may not require callers to provide as much information as a designated initializer.
 A convenience initializer might call a designated initializer on the same class
