@@ -704,13 +704,15 @@ see :ref:`Closures_ClosureExpressions`.
     Grammar of a closure expression
 
     closure-expression --> ``{`` closure-signature-OPT statements ``}``
-    closure-expressions --> closure-expression closure-expressions-OPT
 
     closure-signature --> parameter-clause function-result-OPT ``in``
     closure-signature --> identifier-list function-result-OPT ``in``
+    closure-signature --> capture-list parameter-clause function-result-OPT ``in``
+    closure-signature --> capture-list identifier-list function-result-OPT ``in``
+    closure-signature --> capture-list ``in``
 
-    anonymous-closure-argument --> implicit-parameter-name
-
+    capture-list --> ``[`` capture-specifier expression ``]``
+    capture-specifier --> ``weak`` | ``unowned`` | ``unowned(safe)`` | ``unowned(unsafe)``
 
 .. _Expressions_ImplicitMemberExpression:
 
@@ -916,7 +918,7 @@ the parentheses can be omitted: ::
 
     function-call-expression --> postfix-expression parenthesized-expression trailing-closure-OPT
     function-call-expression --> postfix-expression parenthesized-expression-OPT trailing-closure
-    trailing-closure --> closure-expressions
+    trailing-closure --> closure-expression
 
 .. Multiple trailing closures in LangRef is an error,
    and so is the trailing typecast,
