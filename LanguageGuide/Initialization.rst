@@ -399,6 +399,12 @@ it can still be set within the class's initializer:
    <- How about beets?
    -> beetsQuestion.response = "I also like beets. (But not with cheese.)"
 
+.. note::
+
+   A constant property can only be modified during initialization
+   by the class that introduces it.
+   It cannot be modified by a subclass.
+
 .. _Initialization_DefaultInitializers:
 
 Default Initializers
