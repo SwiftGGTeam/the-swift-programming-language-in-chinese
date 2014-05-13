@@ -105,13 +105,13 @@ Initializing an Empty String
 If you need to create an empty ``String`` value as the starting point
 for building a longer string,
 you can do so by assigning an empty string literal to a variable,
-or by initializing a new ``String`` with initialization syntax:
+or by initializing a new ``String`` with initializer syntax:
 
 .. testcode:: emptyStrings
 
    -> var emptyString = ""               // empty string literal
    << // emptyString : String = ""
-   -> var anotherEmptyString = String()  // initialization syntax
+   -> var anotherEmptyString = String()  // initializer syntax
    << // anotherEmptyString : String = ""
    // these two strings are both empty, and are equivalent to each other
 

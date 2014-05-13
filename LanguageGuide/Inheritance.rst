@@ -58,7 +58,7 @@ written using the ``init`` keyword:
    >> }
 
 This simple initializer is called whenever a new instance is created
-via :newTerm:`initialization syntax`
+via :newTerm:`initializer syntax`
 (written as ``TypeName`` followed by empty parentheses):
 
 .. testcode:: inheritance
