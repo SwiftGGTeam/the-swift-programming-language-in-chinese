@@ -257,7 +257,7 @@ than simple comparison.
    Try removing the default case.
    What error do you get?
 
-.. The "starts with uppercase" is probably too much of a stretch
+.. TODO: The "starts with uppercase" is probably too much of a stretch
    before having learned about string operations.
 
 After executing the code inside the switch case that matched,
@@ -276,36 +276,41 @@ at the end of each case‘s code.
 
 .. the focus here should be on .. and ...
 
-Use ``for`` to iterate over a collection of items.
-
-.. TR: Will we end up having Collection and Container protocols
-   in the WWDC timeframe?
-   Let's match the English noun I use here to the protocol name,
-   if it makes sense.
+It loops that use an index,
+the range operators ``..`` and ``...``
+let you write code that is easier to read.
+The ``..`` operator includes both its start and end in the range,
+like writing ``<=`` in a conditional of a ``for`` loop.
+the ``...`` operator includes the start but not the end,
+like writing ``<`` in a conditional of a ``for`` loop.
+These two loops do the same thing:
 
 .. testcode::
 
-    -> let listOfNumbers = 1..5
-    << // listOfNumbers : Range<Int> = Range<Int>(1, 6)
-    -> var sum = 0
-    << // sum : Int = 0
-    -> for n in listOfNumbers {
-          sum += n
-       }
-    >> sum
-    << // sum : Int = 15
-
-.. admonition:: Experiment
-
-   Try changing ``1..5`` to ``1...5``.
-   Notice that 5 is omitted from the sum.
-   When would you want to include or exclude the final number?
+   -> for i in 0...5 {
+         println(i)
+      }
+   << 0
+   << 1
+   << 2
+   << 3
+   << 4
+   -> for var i = 0; i < 5; ++i {
+         println(i)
+      }
+   << 0
+   << 1
+   << 2
+   << 3
+   << 4
 
 You can also use ``for`` to iterate over items in a dictionary
 by providing a variable name to use
 for each key-value pair.
 
 .. EDIT: key/value or key-value?
+
+.. TODO: Shorten listing
 
 .. testcode::
 
@@ -331,19 +336,6 @@ for each key-value pair.
 
    Try keeping track of which kind of number
    was the largest, as well as what that largest number was.
-
-Loops can keep an explicit counter or index.
-
-.. testcode::
-
-   -> for var i = 0; i < 5; ++i {
-         println(i)
-      }
-   << 0
-   << 1
-   << 2
-   << 3
-   << 4
 
 Use ``while`` to repeat a block of code until a condition changes.
 The condition of a loop can be at the end instead,
