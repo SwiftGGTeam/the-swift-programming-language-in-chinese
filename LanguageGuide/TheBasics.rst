@@ -964,7 +964,7 @@ An optional says:
    This assumes that the method's caller knows there is a special value to test against,
    and remembers to check for it.
    Swift's optionals let you indicate the absence of a value for *any type at all*,
-   without the need for special constants or ``nil`` tests.
+   without the need for special constants.
 
 Here's an example.
 Swift's ``String`` type has a method called ``toInt``,
