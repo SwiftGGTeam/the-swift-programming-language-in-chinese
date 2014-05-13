@@ -1213,6 +1213,38 @@ For example:
    << // r1: Bool? = <unprintable value>
 
 
+On its own, the optional-chaining operator (``?``)
+simply returns the value of its argument ---
+for example, the expression ``x?`` has the same value as ``x``.
+
+You can chain postfix expressions to the optional-chaining expression.
+
+Postfix expressions that contain an optional-chaining expression
+are evaluated in a special way.
+If the optional-chaining expression is ``nil``,
+all of the other operations in the postfix expression are ignored
+and the entire postfix expression evaluates to ``nil``.
+Otherwise,
+the value of the optional-chaining expression is unwrapped
+and used to evaluate the rest of the postfix expression.
+In either case,
+the 
+
+If there is more than one postfix expression
+that contains the same chained-option expression
+--- for eaxmple,
+when you chain multiple operations
+after an optional-chaining expression ---
+this special behavior applies to only the outermost postfix expression.
+
+.. TR: Grammatically, why can't you do things like x?++ 
+   In that particular case, even though it is a postfix expression,
+   it doesn't type check.
+
+
+
+
+
 The ``?`` operator in an optional-chaining expression
 is similar to the ``!`` operator in a forced expression.
 Unlike a forced expression,
