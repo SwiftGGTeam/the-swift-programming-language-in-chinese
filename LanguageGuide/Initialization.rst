@@ -379,7 +379,7 @@ The ``SurveyQuestion`` example from above can be written to use
 a constant property rather than a variable property for the ``text`` property of the question,
 to indicate that the question does not change once an instance of ``SurveyQuestion`` is created.
 Even though the ``text`` property is now a constant,
-it can still be set within the ``init text`` initializer:
+it can still be set within the class's initializer:
 
 .. testcode:: surveyQuestionConstant
 
