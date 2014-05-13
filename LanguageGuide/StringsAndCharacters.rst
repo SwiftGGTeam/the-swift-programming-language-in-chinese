@@ -177,7 +177,7 @@ and the new copy is passed or assigned, not the original version.
 
 .. note::
 
-   This behavior is different to ``NSString`` in Cocoa.
+   This behavior is different from ``NSString`` in Cocoa.
    When you create an ``NSString`` instance in Cocoa,
    and pass it to a function or method or assign it to a variable,
    you are always passing or assigning a *reference* to the same single ``NSString``.
