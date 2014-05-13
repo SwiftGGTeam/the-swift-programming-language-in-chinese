@@ -1219,9 +1219,6 @@ and any chained postfix expression are evaluated.
 Otherwise,
 the optional-chaining operator returns ``nil``
 and any chained postfix expressions are ignored.
-The outermost postfix expression
-that contains the optional-chaining expression
-is always of an optional type.
 
 Informally,
 all postfix expressions that follow the optional-chaining expression
