@@ -6,7 +6,7 @@ that can work with any type at all,
 subject to certain requirements that you define.
 
 Generics are one of the most powerful features of Swift,
-and much of Swift's Standard Library is built with generic code.
+and much of Swift's standard library is built with generic code.
 Generics enable you to write flexible code that avoids duplication,
 and expresses its intent in a clear, abstracted manner.
 
@@ -184,7 +184,7 @@ In the two examples below, ``T`` is inferred to be ``Int`` and ``String`` respec
 
 .. note::
 
-   Swift's Standard Library defines a generic function called ``swap``,
+   Swift's standard library defines a generic function called ``swap``,
    which provides the same behavior as the ``swapTwoValues`` function from above.
    You can use Swift's existing ``swap`` function whenever you need to swap two values.
 
@@ -405,7 +405,7 @@ nor would it be able to find a value for a given key that is already in the dict
 
 ``Dictionary`` enforces this requirement by saying that
 its key type must conform to the ``Hashable`` protocol,
-which is a special protocol defined in Swift's Standard Library.
+which is a special protocol defined in Swift's standard library.
 All of Swift's basic types (such as ``String``, ``Int``, ``Double``, and ``Bool``)
 are hashable by default,
 and you can make your own custom types conform to the ``Hashable`` protocol
@@ -485,7 +485,7 @@ for *every* possible type ``T``,
 and an appropriate error is reported when you try and compile the code.
 
 All is not lost, however.
-Swift's Standard Library defines a protocol called ``Equatable``,
+Swift's standard library defines a protocol called ``Equatable``,
 which requires any conforming type to implement the equality operator
 to compare any two values of that type.
 (All of Swift's standard types automatically support the ``Equatable`` protocol,

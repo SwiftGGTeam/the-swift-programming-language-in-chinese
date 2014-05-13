@@ -66,7 +66,7 @@ To illustrate the options for closure expression syntax,
 this section will refine a single example over several iterations,
 each showing a more succint way to express the same functionality.
 
-Swift's Standard Library provides a function called ``sort``,
+Swift's standard library provides a function called ``sort``,
 which sorts an array of values of a known type,
 based on the output of a sorting closure that you provide.
 Once it completes the sorting process,
