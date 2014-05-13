@@ -58,7 +58,7 @@ ignoring the current value of the range on each iteration of the loop:
 
 .. testcode::
 
-    -> for _ in 1..3 {
+    -> for _ in 1...3 {
           // Do something three times.
        }
 
