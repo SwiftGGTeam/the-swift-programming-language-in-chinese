@@ -161,56 +161,36 @@ the index or key in brackets.
 
 .. testcode::
 
-    -> let fruits = ["apple", "orange", "banana"]
-    << // fruits : Array<String> = ["apple", "orange", "banana"]
-    -> let favoriteFruit = fruits[1]
-    << // favoriteFruit : String = "orange"
+    -> var shoppingList = ["catfish", "water", "tulips", "blue paint"]
+    << // shoppingList : Array<String> = ["catfish", "water", "tulips", "blue paint"]
+    -> shoppingList[1] = "bottle of water"
     ---
-    -> var temperatures = [
-          "San Francisco": 59.0,
-          "Paris": 51.6,
-          "Shanghai": 73.2,
-       ]
-    << // temperatures : Dictionary<String, Double> = Dictionary<String, Double>(1.33333333333333, 3, <DictionaryBufferOwner<String, Double> instance>)
-    -> temperatures["San Francisco"] < temperatures["Paris"]
-    <$ : Bool = false
-
-.. admonition:: Experiment
-
-   Add you own favorite fruit to the array
-   and compare it to ``favoriteFruit`` with the ``==`` operator.
-   Add the current temperature of your town
-   to the dictionary.
-
-.. Forcasts above are real current conditions from 9:14 pm April 28, 2014.
-
-.. Old Firefly example
-   which doesn't follow our editorial guidelines for names of people
     -> var occupations = [
           "Malcolm": "Captain",
           "Kayley": "Mechanic",
           "Jayne": "Public Relations",
         ]
     << // occupations : Dictionary<String, String> = Dictionary<String, String>(1.33333333333333, 3, <DictionaryBufferOwner<String, String> instance>)
-    -> occupations["Jayne"] == "Doctor"
-    <$ : Bool = false
-    ---
 
-An empty array is written ``[]``,
-and an empty dictionary is written ``[:]``.
-Because the type of an empty array or dictionary
-can't be inferred from its content,
-use a type annotation to specify it expliticly.
+To create an empty array or dictionary,
+use the initializer syntax.
 
 .. testcode::
 
-   -> var emptyArray: Array<String> = []
+   -> var emptyArray = String[]()
    << // emptyArray : Array<String> = []
-   -> var emptyDictionary: Dictionary<String, Float> = [:]
+   -> var emptyDictionary = Dictionary<String, Float>()
    << // emptyDictionary : Dictionary<String, Float> = Dictionary<String, Float>(1.33333333333333, 0, <DictionaryBufferOwner<String, Float> instance>)
 
-.. The REPL output after creating a dictionary doesn’t make any sense.
-   No way to get it to pretty-print the keys and values.
+If type information can be inferred,
+such as setting a new value for a variable
+or passing an argument to a function,
+you can write an empty array as ``[]``
+and an empty dictionary as ``[:]``.
+
+.. testcode::
+
+   -> shoppingList = []   // Went shopping and bought everything.
 
 Control Flow
 ------------
