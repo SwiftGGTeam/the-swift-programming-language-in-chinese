@@ -162,7 +162,7 @@ as described in :ref:`StringsAndCharacters_StringInterpolation`.
 
 .. FIXME: if you don't use an underbar to avoid an external parameter name,
    the initializer can't be used with string interpolation.
-   This is a side-effect of the stricter paramerter name rules
+   This is a side-effect of the stricter parameter name rules
    introduced in Swift r17743.
    I've filed this fact as rdar://16862627,
    and have updated the example above so that it works with swifttest,
