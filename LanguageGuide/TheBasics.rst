@@ -215,10 +215,6 @@ Attempting to do so is reported as an error when your code is compiled:
    !! languageName = "Swift++"
    !! ~~~~~~~~~~~~ ^
 
-.. QUESTION: should this section mention that Swift-clashing names
-   can be qualified with a backtick (e.g. let `protocol` = 1)?
-   It's of a kind with the contents of this section, but it's pretty damn niche…
-
 .. _TheBasics_PrintingConstantsAndVariables:
 
 Printing Constants and Variables
