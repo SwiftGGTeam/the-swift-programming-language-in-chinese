@@ -895,17 +895,38 @@ A function call expression can include a trailing closure
 in the form of a closure expression immediately after the closing parenthesis.
 The trailing closure is understood as an argument to the function,
 added after the last parenthesized argument.
-The following function calls are equivalent::
+The following function calls are equivalent:
 
+.. testcode:: trailing-closure
 
-     someFunction(x, {$0 == 13})
-     someFunction(x) {$0 == 13}
+    >> func someFunction (x: Int, f: Int -> Bool) -> Bool {
+    >>    return f(x)
+    >> }
+    >> let x = 10
+    // someFunction takes an integer and a closure as its arguments
+    -> someFunction(x, {$0 == 13})
+    <$ : Bool = false
+    -> someFunction(x) {$0 == 13}
+    <$ : Bool = false
 
 If the trailing closure is the function's only argument,
-the parentheses can be omitted: ::
+the parentheses can be omitted:
 
-    myData.process() {$0 * 2}
-    myData.process {$0 * 2}
+.. testcode:: no-paren-trailing-closure
+
+    >> class Data {
+    >>    let data = 10
+    >>    func someMethod(f: Int -> Bool) -> Bool {
+    >>       return f(self.data)
+    >>    }
+    >> }
+    >> let myData = Data()
+    << // myData : Data = <Data instance>
+    // someFunction takes a closure as its only argument
+    -> myData.someMethod() {$0 == 13}
+    << // r0 : Bool = false
+    -> myData.someMethod {$0 == 13}
+    << // r1 : Bool = false
 
 .. langref-grammar
 
