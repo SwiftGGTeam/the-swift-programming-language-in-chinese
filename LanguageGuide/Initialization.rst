@@ -374,7 +374,15 @@ Modifying Constant Properties During Initialization
 ---------------------------------------------------
 
 The value of a constant property can be modified at any point during initialization,
-as long as it is definitely set to a value by the time the initializer has finished.
+as long as it is definitely set to a value by the time initialization has finished.
+
+.. note::
+
+   For class instances,
+   a constant property can only be modified during initialization
+   by the class that introduces it.
+   It cannot be modified by a subclass.
+
 The ``SurveyQuestion`` example from above can be written to use
 a constant property rather than a variable property for the ``text`` property of the question,
 to indicate that the question does not change once an instance of ``SurveyQuestion`` is created.
@@ -398,12 +406,6 @@ it can still be set within the class's initializer:
    -> beetsQuestion.ask()
    <- How about beets?
    -> beetsQuestion.response = "I also like beets. (But not with cheese.)"
-
-.. note::
-
-   A constant property can only be modified during initialization
-   by the class that introduces it.
-   It cannot be modified by a subclass.
 
 .. _Initialization_DefaultInitializers:
 
