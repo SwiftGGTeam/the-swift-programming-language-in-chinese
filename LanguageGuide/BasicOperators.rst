@@ -58,7 +58,8 @@ and its two operands are the values ``1`` and ``2``.
 Assignment Operator
 -------------------
 
-The :newTerm:`assignment operator` (``a = b``) updates the value of ``a`` with the value of ``b``:
+The :newTerm:`assignment operator` (``a = b``)
+initializes or updates the value of ``a`` with the value of ``b``:
 
 .. testcode:: assignmentOperator
 
