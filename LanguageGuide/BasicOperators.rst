@@ -160,7 +160,7 @@ See also :ref:`StringsAndCharacters_StringAndCharacterConcatenation`.
 Remainder Operator
 ~~~~~~~~~~~~~~~~~~
 
-The :newTerm:`binary remainder operator` (``a % b``)
+The :newTerm:`remainder operator` (``a % b``)
 works out how many multiples of ``b`` will fit inside ``a``,
 and returns the value that is left over
 (known as the :newTerm:`remainder`).
@@ -417,7 +417,7 @@ such as the ``if``-``else`` statement:
 
 .. testcode:: comparisonOperators
 
-   -> let name = "world";
+   -> let name = "world"
    << // name : String = "world"
    -> if name == "world" {
          println("hello, world")

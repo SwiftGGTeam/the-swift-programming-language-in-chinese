@@ -223,8 +223,8 @@ from a single-character string literal by providing a ``Character`` type annotat
 
 .. testcode:: characters
 
-   -> let interrobang: Character = "‽"
-   << // interrobang : Character = <unprintable value>
+   -> let yenSign: Character = "¥"
+   << // yenSign : Character = <unprintable value>
 
 .. _StringsAndCharacters_StringAndCharacterConcatenation:
 
@@ -339,7 +339,7 @@ Character Count
 ---------------
 
 Swift's ``String`` type represents a collection of ``Character`` values in a specified order.
-Each of these ``Chararacter`` values represents a single Unicode character.
+Each of these ``Character`` values represents a single Unicode character.
 You can retrieve a count of these characters by calling
 the global ``countElements`` function,
 and passing in a string as the function's sole parameter:

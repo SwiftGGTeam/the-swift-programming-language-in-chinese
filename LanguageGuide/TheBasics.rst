@@ -393,7 +393,7 @@ which has the same size as the current platform's native word size:
    even when the values to be stored are known to be non-negative.
    A consistent use of ``Int`` for integer values aids code interoperability,
    avoids the need to convert between different number types,
-   and provides consistency when you use type inference, as described below.
+   and matches integer type inference, as described below.
 
 .. _TheBasics_FloatingPointNumbers:
 
@@ -632,7 +632,15 @@ This opt-in approach avoids accidental errors
 and helps make type conversion intentions explicit in your code.
 
 To convert one specific number type to another,
-you initialize a new number of the desired type with the existing value:
+you initialize a new number of the desired type with the existing value.
+In the example below,
+the constant ``twoThousand`` is of type ``UInt16``,
+whereas the constant ``one`` is of type ``UInt8``.
+They cannot be added together directly,
+because they are not of the same type.
+Instead, this example calls ``UInt16(one)`` to create
+a new ``UInt16`` initialized with the value of ``one``,
+and uses this value in place of the original:
 
 .. testcode:: typeConversion
 
@@ -643,12 +651,6 @@ you initialize a new number of the desired type with the existing value:
    -> let twoThousandAndOne = twoThousand + UInt16(one)
    << // twoThousandAndOne : UInt16 = 2001
 
-The constant ``twoThousand`` is of type ``UInt16``,
-whereas the constant ``one`` is of type ``UInt8``.
-They cannot be added together directly,
-because they are not of the same type.
-Instead, this code calls ``UInt16(one)`` to create a new ``UInt16`` initialized with the value of ``one``,
-and uses this value in place of the original.
 Because both sides of the addition are now of type ``UInt16``,
 the addition is allowed.
 The output constant (``twoThousandAndOne``) is inferred to be of type ``UInt16``,
