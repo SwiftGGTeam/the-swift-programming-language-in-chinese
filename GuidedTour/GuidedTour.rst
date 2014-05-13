@@ -48,7 +48,7 @@ You create constants and variables using the same syntax,
 with one difference:
 Use ``let`` to declare a constant and use ``var`` for a variable.
 The value of a constant 
-does not need to be known at compile time,
+doesn't need to be known at compile time,
 as long as it assigned only once.
 This means you can use constants to give a name to values
 that you determine once but use in many places.
@@ -71,54 +71,52 @@ However, you don't have to explicitly write
 the type of every single constant and variable.
 Providing an initial value lets the compiler infer
 the type of the constant or variable.
-For example, in following code,
-the compiler infers that ``greeting`` is a string
-because its initial value is a string.
-
-.. testcode::
-
-    -> var greeting = "Hello"
-    << // greeting : String = "Hello"
-    // greeting = 123  // Uncomment to see the error
+For example, in example above
+the compiler infers that ``myVariable`` is an integer
+because its initial value is a integer.
 
 If the initial value doesn't provide enough information
 (or if there is no initial value)
 by writing the type after the variable,
 separated by a colon.
 
-.. move --v
-
-Type inference allows the compiler
-to correctly infer the type of numbers ---
-if you write ``4.0 / 2``
-it is understood that ``4.0``, ``2``, and the result
-all have the type ``Double``.
-
 .. testcode::
 
-   -> let implicitString = "Hello"
-   << // implicitString : String = "Hello"
-   -> let explicitString: String = "Hello"
-   << // explicitString : String = "Hello"
-   ---
    -> let implicitInteger = 70
    << // implicitInteger : Int = 70
    -> let implicitDouble = 70.0
    << // implicitDouble : Double = 70.0
    -> let explicitDouble: Double = 70
    << // explicitDouble : Double = 70.0
-   -> let explicitFloat: Float = 70
-   << // explicitFloat : Float = 70.0
 
 .. admonition:: Experiment
 
    Create a constant with
    an explicit type of ``Float`` and a value of ``4``.
-   Notice how the type of ``4`` is determined based on how you use it.
 
-   Try providing an explicit type that doesn’t match
-   the variable’s initial value.
+   Try providing an explicit type of ``String``
+   for a variable with an initial value of 3.
    What error do you get?
+
+.. TODO: Needs to go somewhere, but not here.
+
+   Numeric literals that don't have a decimal point
+   are treated as an integer by default,
+   but type inference can make them floating point numbers
+   if the expression would otherwise be invalid.
+   For example,
+   if the value of ``seven`` is the integer ``7``,
+   the result of ``seven / 2`` is the integer ``3``.
+   However, if its value is ``7.0``
+   the result of ``seven / 2`` is ``3.5`` ---
+   dividing a floating point number by an integer would be a type error,
+   so the type of ``2`` is understood as ``2.0``.
+
+   7 / 2     // 3 (an integer)
+   7.0 / 2   // 3.5
+   let seven = 7.0
+   let two = 2
+   seven / two  // type error
 
 Values are never implicitly converted to another type.
 If you need to convert a value to a different type,
