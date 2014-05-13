@@ -1,8 +1,6 @@
 Change Log
 ==========
 
-.. write-me:: Remove this chapter
-
 .. note::
 
    This chapter will be removed on May 21, 2014.
