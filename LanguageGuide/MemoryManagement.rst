@@ -421,6 +421,9 @@ both print their “deinitialized” messages
 after the ``john`` and ``number73`` variables are set to ``nil``.
 This proves that the reference cycle has been broken.
 
+.. TODO: weak references can also be implicitly unchecked optionals.
+   I should mention this here, but when would it be appropriate to use them?
+
 .. _MemoryManagement_UnownedReferences:
 
 Unowned References
