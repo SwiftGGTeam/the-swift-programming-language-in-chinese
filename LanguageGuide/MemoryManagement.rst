@@ -294,7 +294,7 @@ without creating a strong reference cycle.
 
 You should use a weak reference whenever it is valid for that reference to become ``nil``
 at some point during its lifetime.
-Conversely, you should use an unowned reference when you known that
+Conversely, you should use an unowned reference when you know that
 the reference will never be ``nil`` once it has been set during initialization.
 
 .. QUESTION: how do I answer the question
