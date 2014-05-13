@@ -16,4 +16,3 @@ Internal Chapters
     :maxdepth: 1
 
     ReplacementRules
-    GuidedTour/LanguageTour
