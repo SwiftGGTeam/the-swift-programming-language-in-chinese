@@ -216,10 +216,10 @@ giving a remainder value of ``-1``.
 The sign of ``b`` is ignored for negative values of ``b``.
 This means that ``a % b`` and ``a % -b`` always give the same answer.
 
-.. _BasicOperators_FloatingPointRemainderCalculationsInSwift:
+.. _BasicOperators_FloatingPointRemainderCalculations:
 
-Floating-Point Remainder Calculations in Swift
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Floating-Point Remainder Calculations
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Unlike the remainder operator in C and Objective-C,
 Swift's remainder operator can also operate on floating-point numbers:
