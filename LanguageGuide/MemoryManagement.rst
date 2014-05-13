@@ -25,6 +25,12 @@ it is useful to understand how ARC manages memory behind the scenes.
 This section introduces the concept of :newTerm:`reference counting`,
 and illustrates how ARC takes care of reference counting for you.
 
+.. note::
+
+   Reference counting only applies to instances of classes.
+   Structures and enumerations are value types, not reference types,
+   and are not stored and passed by reference.
+
 Every time you create a new instance of a class,
 Swift allocates a chunk of memory to store information about that instance.
 This memory holds information about the type of the instance,
@@ -142,12 +148,6 @@ at which point it is clear that you are no longer using the ``Person`` instance:
 
    -> reference3 = nil
    <- John Appleseed is being deinitialized
-
-.. note::
-
-   Reference counting only applies to instances of classes.
-   Structures and enumerations are value types, not reference types,
-   and are not stored and passed by reference.
 
 .. _MemoryManagement_StrongReferenceCycles:
 
