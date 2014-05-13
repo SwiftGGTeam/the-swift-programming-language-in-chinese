@@ -47,9 +47,11 @@ Simple Values
 You create constants and variables using the same syntax,
 with one difference:
 Use ``let`` to declare a constant and use ``var`` for a variable.
-The value of a constant can be assigned only once,
-although it does not need to be known at compile time.
-The value of a variable can be assigned multiple times.
+The value of a constant 
+does not need to be known at compile time,
+as long as it assigned only once.
+This means you can use constants to give a name to values
+that you determine once but use in many places.
 
 .. testcode::
 
@@ -59,19 +61,19 @@ The value of a variable can be assigned multiple times.
    >> myVariable
    << // myVariable : Int = 50
    -> let myConstant = 42
-   << // myConstant : Int = 42
-   // myConstant = 100  // Uncomment to see the error
-
-.. admonition:: Experiment
-
-   Changing ``myConstant`` to be a variable.
-   Remove the last line, so ``myConstant`` is only assigned a value once.
 
 .. TR: Is the requirement that constants need an initial value
    a current REPL limitation, or an expected language feature?
 
-A variable must have the same type
+A constant or variable must have the same type
 as the value you want to assign to it.
+However, you don't have to explicitly write
+the type of every single constant and variable.
+Providing an initial value lets the compiler infer
+the type of the constant or variable.
+For example, in following code,
+the compiler infers that ``greeting`` is a string
+because its initial value is a string.
 
 .. testcode::
 
@@ -79,22 +81,13 @@ as the value you want to assign to it.
     << // greeting : String = "Hello"
     // greeting = 123  // Uncomment to see the error
 
-In the previous example,
-the compiler understands that ``greeting`` is a string
-because its initial value is a string.
-This behavior of determining type information
-based on the surrounding code
-is known as *type inference*,
-and it allows the compiler to warn you
-about type-related errors in your code
-without requiring you to
-write explicit type information everywhere.
-
-When the initial value doesn't provide enough information,
-or when there is no initial value,
-specify an explicit type
+If the initial value doesn't provide enough information
+(or if there is no initial value)
 by writing the type after the variable,
 separated by a colon.
+
+.. move --v
+
 Type inference allows the compiler
 to correctly infer the type of numbers ---
 if you write ``4.0 / 2``
