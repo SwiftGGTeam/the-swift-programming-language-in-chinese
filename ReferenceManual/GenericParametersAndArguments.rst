@@ -50,14 +50,14 @@ For instance, in the generic function below, the generic parameter ``T: Comparab
 indicates that any type argument substituted
 for the type parameter ``T`` must conform to the ``Comparable`` protocol.
 
-::
+.. testcode:: generic-params
 
-    func min<T: Comparable>(x: T, y: T) -> T {
-       if x < y {
-          return y
+    -> func simpleMin<T: Comparable>(x: T, y: T) -> T {
+          if x < y {
+             return y
+          }
+             return x
        }
-          return x
-    }
 
 Because ``Int`` and ``Double``, for example, both conform to the ``Comparable`` protocol,
 this function accepts arguments of either type. In contrast with generic types, you don't
@@ -65,10 +65,12 @@ specify a generic argument clause when you use a generic function or initializer
 The type arguments are instead inferred from the type of the arguments passed
 to the function or initializer.
 
-::
+.. testcode:: generic-params
 
-    min(17, 42) // T is inferred to be Int
-    min(3.14159, 2.71828) // T is inferred to be Double
+    -> simpleMin(17, 42) // T is inferred to be Int
+    << // r0 : Int = 42
+    -> simpleMin(3.14159, 2.71828) // T is inferred to be Double
+    << // r1 : Double = 3.14159
 
 
 .. _GenericParametersAndArguments_WhereClauses:
@@ -170,11 +172,13 @@ The *generic argument list* is a comma-separated list of type arguments.
 A :newTerm:`type argument` is the name of an actual concrete type that replaces
 a corresponding type parameter in the generic parameter clause of a generic type.
 The result is a specialized version of that generic type. As an example,
-the Swift Standard Library defines a generic dictionary type as::
+the Swift standard library defines a generic dictionary type as:
 
-    struct Dictionary<KeyType: Hashable, ValueType>: Collection, DictionaryLiteralConvertible {
-        /* ... */
-    }
+.. testcode::
+
+    -> struct Dictionary<KeyType: Hashable, ValueType>: Collection, DictionaryLiteralConvertible {
+          /* ... */
+       }
 
 .. TODO: How are we supposed to wrap code lines like the above?
 
@@ -192,9 +196,10 @@ constraints and requirements). For example, you can replace the type parameter
 ``T`` in ``Array<T>`` with a specialized version of an array, ``Array<Int>``,
 to form an array whose elements are themselves arrays of integers.
 
-::
+.. testcode::
 
-    let arrayOfArrays: Array<Array<Int>> = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+    -> let arrayOfArrays: Array<Array<Int>> = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+    << // arrayOfArrays : Array<Array<Int>> = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
 
 As mentioned in :ref:`GenericParametersAndArguments_GenericParameterClause`,
 you don't use a generic argument clause to specify the type arguments

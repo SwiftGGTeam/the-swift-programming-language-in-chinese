@@ -1,7 +1,30 @@
 Advanced Operators
 ==================
 
-.. write-me::
+In addition to the operators described in :doc:`BasicOperators`,
+Swift provides several advanced operators that perform more complex value manipulation.
+These include all of the bitwise and bit shifting operators you will be familiar with
+from C and Objective-C.
+
+Unlike C, Swift's arithmetic operators do not overflow by default,
+and overflow behavior is trapped and reported as an error.
+If you wish to opt in to overflowing behavior,
+Swift provides a second set of arithmetic operators that overflow by default,
+such as the overflow addition operator (``&+``).
+All of these operators are described in detail below.
+
+When you define your own structures, classes, and enumerations,
+it can be useful to provide your own implementations of
+the standard Swift operators for these custom types.
+Swift makes it easy to provide tailored implementations of these operators,
+and to determine exactly what their behavior should be for each type you create.
+
+You're not just limited to the standard operators, either.
+Swift gives you the freedom to define your own custom
+infix, prefix, postfix, and assignment operators,
+with custom precedence and associativity values.
+These operators can be used and adopted in your code just like any of the standard operators,
+and you can even extend existing types to support the custom operators you define.
 
 .. _AdvancedOperators_BitwiseOperators:
 
@@ -487,7 +510,9 @@ Precedence and Associativity
    as part of the hypothetical “show invisibles” feature,
    to show the invisible parentheses implied by precedence and associativity?
 
-It is important to consider each operator's :newTerm:`precedence` and :newTerm:`associativity` when working out how to calculate a compound expression.
+It is important to consider
+each operator's :newTerm:`precedence` and :newTerm:`associativity`
+when working out how to calculate a compound expression.
 These two principles are used to work out the order in which an expression should be calculated.
 
 Here's an example.
@@ -509,7 +534,7 @@ Taken strictly from left to right, you might expect this to read as follows:
 However, the actual answer is ``4``, not ``0``.
 This is due to the priorities and associativity of the operators used:
 
-* Operator :newTerm:`precedence` (also known as :newTerm:`priority`) means that
+* Operator :newTerm:`precedence` means that
   some operators are given more precedence than others,
   and are calculated first.
 
@@ -581,11 +606,15 @@ This is known as :newTerm:`overloading` the existing operators.
          var x = 0.0, y = 0.0
       }
    -> @infix func + (lhs: Vector2D, rhs: Vector2D) -> Vector2D {
-         return Vector2D(lhs.x + rhs.x, lhs.y + rhs.y)
+         return Vector2D(x: lhs.x + rhs.x, y: lhs.y + rhs.y)
       }
 
 This example shows how to provide an implementation of the
-infix arithmetic addition operator (``+``) for a custom structure.
+arithmetic addition operator (``+``) for a custom structure.
+The arithmetic addition operator is a :newTerm:`binary operator`
+because it operates on two targets,
+and is said to be :newTerm:`infix` because it appears inbetween those two targets.
+
 The example starts by defining a ``Vector2D`` structure for
 a two-dimensional position vector ``(x, y)``.
 This is followed by a definition of an :newTerm:`operator function`
@@ -616,9 +645,9 @@ so that it can be used as an infix operator between existing ``Vector2D`` instan
 
 .. testcode:: customOperators
 
-   -> let vector = Vector2D(3.0, 1.0)
+   -> let vector = Vector2D(x: 3.0, y: 1.0)
    << // vector : Vector2D = Vector2D(3.0, 1.0)
-   -> let anotherVector = Vector2D(2.0, 4.0)
+   -> let anotherVector = Vector2D(x: 2.0, y: 4.0)
    << // anotherVector : Vector2D = Vector2D(2.0, 4.0)
    -> let combinedVector = vector + anotherVector
    << // combinedVector : Vector2D = Vector2D(5.0, 5.0)
@@ -636,10 +665,7 @@ to make the vector ``(5.0, 5.0)``, as illustrated below.
 Prefix and Postfix Operators
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The arithmethic addition operator (``+``) shown above is a :newTerm:`binary operator`.
-Binary operators operate on two targets (such as ``2 + 3``),
-and are said to be :newTerm:`infix` because they appear inbetween their two targets.
-
+The example shown above demonstrates a custom implementation of a binary infix operator.
 Classes and structures can also provide implementations of the standard :newTerm:`unary operators`.
 Unary operators operate on a single target,
 and are said to be :newTerm:`prefix` if they come before their target (such as ``-a``),
@@ -652,7 +678,7 @@ The attribute is written before the ``func`` keyword when declaring the operator
 .. testcode:: customOperators
 
    -> @prefix func - (rhs: Vector2D) -> Vector2D {
-         return Vector2D(-rhs.x, -rhs.y)
+         return Vector2D(x: -rhs.x, y: -rhs.y)
       }
 
 This example implements the unary minus operator
@@ -667,7 +693,7 @@ performs this operation on both the ``x`` and ``y`` properties:
 
 .. testcode:: customOperators
 
-   -> let positive = Vector2D(3.0, 4.0)
+   -> let positive = Vector2D(x: 3.0, y: 4.0)
    << // positive : Vector2D = Vector2D(3.0, 4.0)
    -> let negative = -positive
    << // negative : Vector2D = Vector2D(-3.0, -4.0)
@@ -713,9 +739,9 @@ and uses it to set the left-hand value to itself plus the right-hand value:
 
 .. testcode:: customOperators
 
-   -> var original = Vector2D(1.0, 2.0)
+   -> var original = Vector2D(x: 1.0, y: 2.0)
    << // original : Vector2D = Vector2D(1.0, 2.0)
-   -> let vectorToAdd = Vector2D(3.0, 4.0)
+   -> let vectorToAdd = Vector2D(x: 3.0, y: 4.0)
    << // vectorToAdd : Vector2D = Vector2D(3.0, 4.0)
    -> original += vectorToAdd
    /> original now has values of (\(original.x), \(original.y))
@@ -729,7 +755,7 @@ for ``Vector2D`` instances:
 .. testcode:: customOperators
 
    -> @prefix @assignment func ++ (inout rhs: Vector2D) -> Vector2D {
-         rhs += Vector2D(1.0, 1.0)
+         rhs += Vector2D(x: 1.0, y: 1.0)
          return rhs
       }
 
@@ -740,7 +766,7 @@ and returns the result.
 
 .. testcode:: customOperators
 
-   -> var toIncrement = Vector2D(3.0, 4.0)
+   -> var toIncrement = Vector2D(x: 3.0, y: 4.0)
    << // toIncrement : Vector2D = Vector2D(3.0, 4.0)
    -> let afterIncrement = ++toIncrement
    << // afterIncrement : Vector2D = Vector2D(4.0, 5.0)
@@ -802,9 +828,9 @@ These operators can now be used to check if two ``Vector2D`` instances are equiv
 
 .. testcode:: customOperators
 
-   -> let twoThree = Vector2D(2.0, 3.0)
+   -> let twoThree = Vector2D(x: 2.0, y: 3.0)
    << // twoThree : Vector2D = Vector2D(2.0, 3.0)
-   -> let anotherTwoThree = Vector2D(2.0, 3.0)
+   -> let anotherTwoThree = Vector2D(x: 2.0, y: 3.0)
    << // anotherTwoThree : Vector2D = Vector2D(2.0, 3.0)
    -> if twoThree == anotherTwoThree {
          println("These two vectors are equivalent.")
@@ -849,7 +875,7 @@ rather than adding ``Vector2D(1.0, 1.0)``:
 
 .. testcode:: customOperators
 
-   -> var toBeDoubled = Vector2D(1.0, 4.0)
+   -> var toBeDoubled = Vector2D(x: 1.0, y: 4.0)
    << // toBeDoubled : Vector2D = Vector2D(1.0, 4.0)
    -> let afterDoubling = +++toBeDoubled
    << // afterDoubling : Vector2D = Vector2D(2.0, 8.0)
@@ -887,11 +913,11 @@ with ``left`` associativity, and a precedence of ``140``:
 
    -> operator infix +- { associativity left precedence 140 }
    -> func +- (lhs: Vector2D, rhs: Vector2D) -> Vector2D {
-         return Vector2D(lhs.x + rhs.x, lhs.y - rhs.y)
+         return Vector2D(x: lhs.x + rhs.x, y: lhs.y - rhs.y)
       }
-   -> let firstVector = Vector2D(1.0, 2.0)
+   -> let firstVector = Vector2D(x: 1.0, y: 2.0)
    << // firstVector : Vector2D = Vector2D(1.0, 2.0)
-   -> let secondVector = Vector2D(3.0, 4.0)
+   -> let secondVector = Vector2D(x: 3.0, y: 4.0)
    << // secondVector : Vector2D = Vector2D(3.0, 4.0)
    -> let plusMinusVector = firstVector +- secondVector
    << // plusMinusVector : Vector2D = Vector2D(4.0, -2.0)

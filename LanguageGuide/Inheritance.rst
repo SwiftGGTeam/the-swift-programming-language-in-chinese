@@ -328,7 +328,7 @@ the property's setter implementation checks the new value, and limits it to 40mp
 It does this by setting the underlying ``speed`` property of its superclass
 to be the smaller of ``newValue`` and ``40.0``.
 The smaller of these two values is determined by passing them to the ``min`` function,
-which is a global function provided by the Swift Standard Library.
+which is a global function provided by the Swift standard library.
 The ``min`` function takes two or more values,
 and returns the smallest one of those values.
 
@@ -377,7 +377,7 @@ which automatically selects an appropriate gear to use based on the current spee
 
    -> class AutomaticCar: Car {
          var gear = 1
-         override var speed: Double  {
+         override var speed: Double {
             didSet {
                gear = Int(speed / 10.0) + 1
             }

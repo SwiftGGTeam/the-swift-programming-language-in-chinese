@@ -1,7 +1,8 @@
 Basic Operators
 ===============
 
-An :newTerm:`operator` is a special symbol or phrase that you use to check or change values.
+An :newTerm:`operator` is a special symbol or phrase that you use to
+check, change, or combine values.
 For example, the addition operator (``+``) adds two numbers together
 (as in ``let i = 1 + 2``).
 More complex examples include the logical AND operator ``&&``
@@ -9,7 +10,7 @@ More complex examples include the logical AND operator ``&&``
 or the increment operator ``++i``,
 which is a shortcut to increase the value of ``i`` by ``1``.
 
-Swift supports all standard C operators,
+Swift supports most standard C operators,
 and improves several capabilities to eliminate common coding errors.
 The assignment operator (``=``) does not return a value,
 to prevent it from being mistakenly used when
@@ -143,25 +144,23 @@ can be added together to make a new ``String`` value:
 
 .. testcode:: arithmeticOperators
 
-   -> let dog = '🐶'
+   -> let dog: Character = "🐶"
    << // dog : Character = <unprintable value>
-   -> let cow = '🐮'
+   -> let cow: Character = "🐮"
    << // cow : Character = <unprintable value>
    -> let dogCow = dog + cow
    << // dogCow : String = "🐶🐮"
    /> dogCow is equal to \"🐶🐮\"
    </ dogCow is equal to "🐶🐮"
 
-.. FIXME: revisit this example based on whether single quotes
-   continue to return a Character.
-   See rdar://16363872 for the single-quotes change.
+See also :ref:`StringsAndCharacters_StringAndCharacterConcatenation`.
 
 .. _BasicOperators_RemainderOperator:
 
 Remainder Operator
 ~~~~~~~~~~~~~~~~~~
 
-The :newTerm:`binary remainder operator` (``a % b``)
+The :newTerm:`remainder operator` (``a % b``)
 works out how many multiples of ``b`` will fit inside ``a``,
 and returns the value that is left over
 (known as the :newTerm:`remainder`).
@@ -418,7 +417,7 @@ such as the ``if``-``else`` statement:
 
 .. testcode:: comparisonOperators
 
-   -> let name = "world";
+   -> let name = "world"
    << // name : String = "world"
    -> if name == "world" {
          println("hello, world")

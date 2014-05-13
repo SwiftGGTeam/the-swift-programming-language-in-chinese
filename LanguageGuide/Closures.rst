@@ -3,21 +3,33 @@ Closures
 
 :newTerm:`Closures` are self-contained blocks of functionality
 that can be passed around and used in your code.
-Swift's closures are similar to lambdas in other programming languages,
-and blocks in C-like languages.
-Functions, as discussed in :doc:`Functions`, are a special case of closures.
+Closures are similar to blocks in C and Objective-C,
+and lambdas in other programming languages.
 
-In addition to the capabilities described for functions,
-closures can capture and modify constants and variables
+Closures can capture and store references to any constants and variables
 from the context in which they are defined.
-Closures can also be written without a function name
-(although you can name them if you wish).
-In essence, functions are simple closures that have a name,
-and don't capture anything.
-(Although functions are specialized closures,
-this chapter refers to them as “functions” for simplicity.
+This is known as :newTerm:`closing` over those constants and variables,
+hence the name “closures”.
+Swift handles all of the memory management of capturing for you.
 
-Swift's closures have a clean, clear syntax,
+.. note::
+
+   Don't worry if you are not familiar with the concept of “capturing”.
+   It is explained in detail below in :ref:`Closures_CapturingValues`.
+
+Global and local functions,
+as introduced in :doc:`Functions`,
+are actually special cases of closures.
+Closures take one of three forms:
+
+1) Global functions, which are closures that have a name,
+   and do not capture any values
+2) Local functions, which are closures that have a name,
+   and can capture values from their enclosing function
+3) Closure expressions, which are unnamed closures written in a lightweight syntax
+   that can capture values from their surrounding context
+
+Swift's closure expressions have a clean, clear syntax,
 with optimizations for writing brief, clutter-free closures in common scenarios.
 These optimizations include:
 
@@ -28,17 +40,15 @@ These optimizations include:
 
 All of these optimizations are described in detail below.
 
-In addition, Swift handles all of the memory management of capturing for you.
-The concept and meaning of “capturing” is explained in detail below.
-
 .. _Closures_ClosureExpressions:
 
 Closure Expressions
 -------------------
 
-Nested functions are a convenient way to name and define self-contained blocks of code
+Local functions, as introduced in :ref:`Functions_LocalFunctions`,
+are a convenient way to name and define self-contained blocks of code
 as part of a larger function.
-However, it can sometimes be useful to write shorter versions of function-like constructs, 
+However, it can sometimes be useful to write shorter versions of function-like constructs,
 without the need for a full declaration and name.
 This is particularly true when working with functions that take other functions
 as one or more of their arguments.
@@ -56,7 +66,7 @@ To illustrate the options for closure expression syntax,
 this section will refine a single example over several iterations,
 each showing a more succint way to express the same functionality.
 
-Swift's Standard Library provides a function called ``sort``,
+Swift's standard library provides a function called ``sort``,
 which sorts an array of values of a known type,
 based on the output of a sorting closure that you provide.
 Once it completes the sorting process,
@@ -138,12 +148,17 @@ Tuples can also be used as parameter types and return types.
 .. FIXME: the note about variadic parameters requiring a name is tracked by rdar://16535434.
    Remove this note if and when that Radar is fixed.
 
+.. QUESTION: should I be using names.sort or sort(names)?
+
+.. QUESTION: is "reversed" the right name to use here?
+   it's a backwards sort, not a reversed version of the original array
+
 This syntax provides a way to write an inline version of
 the ``backwards`` function shown in the earlier example:
 
 .. testcode:: closureSyntax
 
-   -> reversed = sort(names, { (s1: String, s2: String) -> Bool in 
+   -> reversed = sort(names, { (s1: String, s2: String) -> Bool in
          return s1 > s2
       })
    >> reversed
@@ -283,9 +298,9 @@ Operator functions are described in more detail in :ref:`AdvancedOperators_Opera
 Trailing Closures
 -----------------
 
-If you need to pass a closure expression to a function as one of the function's arguments,
+If you need to pass a closure expression to a function as the function's final argument,
 and the closure expression is long,
-it can sometimes be clearer to write it as a :newTerm:`trailing closure` instead.
+it can sometimes be useful to write it as a :newTerm:`trailing closure` instead.
 A trailing closure is a closure expression
 that is written outside of (and *after*) the parentheses of the function call it supports:
 
@@ -307,37 +322,12 @@ that is written outside of (and *after*) the parentheses of the function call it
          // trailing closure's body goes here
       }
 
-You can provide multiple trailing closures
-for functions with multiple function type parameters.
-Additionally, if *all* of a function's parameters are function types,
-and you provide trailing closures for all of those parameters when calling the function,
-you do not need to write a pair of parentheses ``()``
-after the function's name when you call the function.
-
 .. note::
 
-   Trailing closures can only be used when the function type parameters
-   are the last parameters in the list.
-
-Here's an example of how you can provide multiple trailing closures
-when calling a function with two parameters,
-both of which have a function type of ``() -> ()``.
-Note that the closing brace of the first trailing closure
-must be on the same line as the opening brace of the second trailing closure:
-
-.. testcode:: closureSyntax
-
-   -> func someFunctionThatTakesTwoClosures(first: () -> (), second: () -> ()) {
-         // function body goes here
-      }
-   ---
-   -> // here's how you'd call this function with two trailing closures:
-   ---
-   -> someFunctionThatTakesTwoClosures {
-         // first trailing closure's body goes here
-      } {
-         // second trailing closure's body goes here
-      }
+   If a closure expression is provided as the function's only argument,
+   and you provide that expression as a trailing closure,
+   you do not need to write a pair of parentheses ``()``
+   after the function's name when you call the function.
 
 The string-sorting closure from the *Closure Expression Syntax* section above
 can be written outside of the ``sort`` function's parentheses as a trailing closure:
@@ -348,8 +338,7 @@ can be written outside of the ``sort`` function's parentheses as a trailing clos
    >> reversed
    << // reversed : Array<String> = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
 
-As mentioned above,
-trailing closures are most useful when the closure is sufficiently long that
+Trailing closures are most useful when the closure is sufficiently long that
 it is not possible to write it inline on a single line.
 As an example, Swift's ``Array`` type has a ``map`` method
 which takes a closure expression as its single argument.
@@ -364,7 +353,7 @@ in the same order as their corresponding values in the original array.
 
 Here's how you can use the ``map`` method with a trailing closure
 to convert an array of ``Int`` values into an array of ``String`` values.
-The array ``[16, 58, 510]`` is used to create the new array 
+The array ``[16, 58, 510]`` is used to create the new array
 ``["OneSix", "FiveEight", "FiveOneZero"]``:
 
 .. testcode:: arrayMap
@@ -373,7 +362,7 @@ The array ``[16, 58, 510]`` is used to create the new array
          0: "Zero", 1: "One", 2: "Two",   3: "Three", 4: "Four",
          5: "Five", 6: "Six", 7: "Seven", 8: "Eight", 9: "Nine"
       ]
-   << // digitNames : Dictionary<Int, String> = Dictionary<Int, String>(1.33333333333333, 10, <unprintable value>)
+   << // digitNames : Dictionary<Int, String> = Dictionary<Int, String>(<unprintable value>)
    -> let numbers = [16, 58, 510]
    << // numbers : Array<Int> = [16, 58, 510]
 
@@ -446,14 +435,14 @@ The closure is then able to refer to and modify
 the values of those constants and variables from within its body,
 even if the original scope that defined the constants and variables no longer exists.
 
-The simplest form of a closure in Swift is a nested function,
+The simplest form of a closure in Swift is a local function,
 written within the body of another function.
-A nested function can capture any of its outer function's arguments,
+A local function can capture any of its outer function's arguments,
 and can also capture any constants and variables defined within the outer function.
 
 Here's an example of a function called ``makeIncrementor``,
-which contains a nested function called ``incrementor``.
-The nested ``incrementor`` function captures two values,
+which contains a local function called ``incrementor``.
+The local ``incrementor`` function captures two values,
 ``runningTotal`` and ``amount``,
 from its surrounding context.
 After capturing these values,
@@ -488,12 +477,12 @@ The argument value passed to this parameter specifies
 how much ``runningTotal`` should be incremented by
 each time the returned incrementor function is called.
 
-``makeIncrementor`` defines a nested function called ``incrementor``,
+``makeIncrementor`` defines a local function called ``incrementor``,
 which performs the actual incrementing.
 This function simply adds ``amount`` to ``runningTotal``, and returns the result.
 
 When considered in isolation,
-the nested ``incrementor`` function might seem unusual:
+the local ``incrementor`` function might seem unusual:
 
 .. testcode:: closuresPullout
 
@@ -527,7 +516,7 @@ the next time that the incrementor function is called.
    Swift determines what should be captured by reference,
    and what should be copied by value.
    You don't need to annotate ``amount`` or ``runningTotal``
-   to say that they can be used within the nested ``incrementor`` function.
+   to say that they can be used within the local ``incrementor`` function.
    Swift also handles all of the memory management involved in disposing of ``runningTotal``
    when it is no longer needed by the incrementor function.
 
@@ -538,7 +527,7 @@ Here's an example of ``makeIncrementor`` in action:
    -> let incrementByTen = makeIncrementor(forIncrement: 10)
    << // incrementByTen : () -> Int = <unprintable value>
 
-This example sets a constant called ``incrementByTen`` 
+This example sets a constant called ``incrementByTen``
 to refer to an incrementor function that adds ``10`` to
 its ``runningTotal`` variable each time it is called.
 Calling the function multiple times shows this behavior in action:
@@ -610,39 +599,10 @@ both of those constants or variables will refer to the same closure:
 Reference types are covered in more detail
 in :ref:`ClassesAndStructures_ValueTypesAndReferenceTypes`.
 
-.. _Closures_AvoidingReferenceCyclesInClosures:
+.. _Closures_Autoclosures:
 
-Avoiding Reference Cycles in Closures
--------------------------------------
-
-.. write-me::
-
-.. TODO: you have to write "self." for property references in an explicit closure expression,
-   since "self" will be captured, not the property (as per rdar://16193162)
-   we don't do this for autoclosures, however -
-   see the commits comments from r14676 for the reasons why
-
-.. TODO: <rdar://problem/16193162> Require specifying self for locations in code
-   where strong reference cycles are likely
-   This requires that property references have an explicit "self." qualifier
-   when in an explicit closure expression, since self will be captured, not the property.
-   We don't do the same for autoclosures.
-   The logic here is that autoclosures can't practically be used in capturing situations anyway,
-   since that would be extremely surprising to clients.
-   Further, forcing a syntactic requirement in an autoclosure context
-   would defeat the whole point of autoclosures: make them implicit.
-
-.. FIXME: To avoid reference cycles when a property closure references self or a property of self,
-   you should use the same workaround as in Obj-C –
-   that is, to declare a weak (or unowned) local variable, and capture that instead.
-   There are proposals for a better solution in /swift/docs/weak.rst,
-   but they are yet to be implemented.
-   The Radar for their implementation is rdar://15046325.
-
-.. _Closures_AutoClosures:
-
-Auto-Closures
--------------
+Autoclosures
+------------
 
 .. write-me::
 

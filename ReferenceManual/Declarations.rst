@@ -2,7 +2,7 @@ Declarations
 ============
 
 A :newTerm:`declaration` introduces a new name or construct into your program.
-For example, you use declarations to introduce variables and constants
+For example, you use declarations to introduce functions and methods, variables and constants,
 and to define new, named enumeration, structure, class,
 and protocol types. You can also use a declaration to extend the the behavior
 of an existing named type and to import symbols into your program that are declared elsewhere.
@@ -39,7 +39,6 @@ the term *declaration* covers both declarations and definitions.
     declaration --> variable-declaration
     declaration --> typealias-declaration
     declaration --> function-declaration
-    declaration --> method-declaration
     declaration --> enum-declaration
     declaration --> struct-declaration
     declaration --> class-declaration
@@ -52,7 +51,7 @@ the term *declaration* covers both declarations and definitions.
     declarations --> declaration declarations-OPT
 
     declaration-specifiers --> declaration-specifier declaration-specifiers-OPT
-    declaration-specifier --> ``class`` | ``static`` | ``mutating`` | ``nonmutating`` | ``override``
+    declaration-specifier --> ``class`` | ``mutating`` | ``nonmutating`` | ``override`` | ``static`` | ``unowned`` | ``unowned(safe)`` | ``unowned(unsafe)`` | ``weak``
 
 .. NOTE: Removed enum-member-declaration, because we don't need it anymore.
 
@@ -176,7 +175,7 @@ is made available in the current scope.
 
     Grammar of an import declaration
 
-    import-declaration --> attribute-list-OPT ``import`` import-kind-OPT import-path
+    import-declaration --> attributes-OPT ``import`` import-kind-OPT import-path
 
     import-kind --> ``typealias`` | ``struct`` | ``class`` | ``enum`` | ``protocol`` | ``var`` | ``func``
     import-path --> import-path-identifier | import-path-identifier ``.`` import-path
@@ -212,20 +211,23 @@ or setters.
 If the *constant name* of a constant declaration is a tuple pattern,
 the name of each item in the tuple is bound to the corresponding value
 in the initializer *expression*.
-::
 
-    let (firstNumber, secondNumber) = (10, 42)
-    // (firstNumber, secondNumber): (Int, Int) = (10, 42)
+.. testcode:: constant-decl
+
+    -> let (firstNumber, secondNumber) = (10, 42)
+    << // (firstNumber, secondNumber): (Int, Int) = (10, 42)
 
 In this example,
 ``firstNumber`` is a named constant for the value ``10``,
 and ``secondNumber`` is a named constant for the value ``42``.
-Both constants can now be used independently::
+Both constants can now be used independently:
 
-    firstNumber
-    // firstNumber: Int = 10
-    secondNumber
-    // secondNumber: Int = 42
+.. testcode:: constant-decl
+
+    -> println("The first number is \(firstNumber).")
+    <- The first number is 10.
+    -> println("The second number is \(secondNumber).")
+    <- The second number is 42.
 
 The type annotation (``:`` *type*) is optional in a constant declaration
 when the type of the *constant name* can be inferred,
@@ -243,7 +245,7 @@ are discussed in :ref:`Properties_StaticProperties`.
 .. TODO: Need to discuss static constant properties in more detail.
 
 For more information about constants and for guidance about when to use them,
-see :ref:`BasicTypes_ConstantsAndVariables` and :ref:`Properties_StoredProperties`.
+see :ref:`TheBasics_ConstantsAndVariables` and :ref:`Properties_StoredProperties`.
 
 .. TODO: Need to discuss class and static constant properties.
 
@@ -256,7 +258,7 @@ see :ref:`BasicTypes_ConstantsAndVariables` and :ref:`Properties_StoredPropertie
 
     Grammar of a constant declaration
 
-    constant-declaration --> attribute-list-OPT declaration-specifiers-OPT ``let`` pattern-initializer-list
+    constant-declaration --> attributes-OPT declaration-specifiers-OPT ``let`` pattern-initializer-list
 
     pattern-initializer-list --> pattern-initializer | pattern-initializer ``,`` pattern-initializer-list
     pattern-initializer --> pattern initializer-OPT
@@ -571,7 +573,7 @@ Function Declaration
     <#parameter name#>: <#parameter type#>...
     <#parameter name#>: <#parameter type#> = <#default argument value#>
     <#parameter name#> <#local parameter name#>: <#parameter type#>
-    `<#parameter name#>: <#parameter type#>
+    #<#parameter name#>: <#parameter type#>
 
 .. syntax-outline::
 
@@ -592,7 +594,7 @@ Function Declaration
     curried-arguments ::= parameter-clause+
 
     parameter-clause ::= '(' ')' | '(' parameter (',' parameter)* '...'? )'
-    parameter ::= 'inout'? ('let' | 'var')? '`'? identifier-or-none identifier-or-none? (':' type)? ('...' | '=' expr)?
+    parameter ::= 'inout'? ('let' | 'var')? '#'? identifier-or-none identifier-or-none? (':' type)? ('...' | '=' expr)?
     identifier-or-none ::= identifier | '_'
 
 .. syntax-grammar::
@@ -611,8 +613,8 @@ Function Declaration
     parameter-clauses --> parameter-clause parameter-clauses-OPT
     parameter-clause --> ``(`` ``)`` | ``(`` parameter-list ``...``-OPT ``)``
     parameter-list --> parameter | parameter ``,`` parameter-list
-    parameter --> ``inout``-OPT ``let``-OPT `````-OPT parameter-name local-parameter-name-OPT type-annotation default-argument-clause-OPT
-    parameter --> ``inout``-OPT ``var`` `````-OPT parameter-name local-parameter-name-OPT type-annotation default-argument-clause-OPT
+    parameter --> ``inout``-OPT ``let``-OPT ``#``-OPT parameter-name local-parameter-name-OPT type-annotation default-argument-clause-OPT
+    parameter --> ``inout``-OPT ``var`` ``#``-OPT parameter-name local-parameter-name-OPT type-annotation default-argument-clause-OPT
     parameter --> attributes-OPT type
     parameter-name --> identifier | ``_``
     local-parameter-name --> identifier | ``_``
@@ -625,35 +627,6 @@ Function Declaration
     There is also the low-level "asm name" FFI
     which is a definition and declaration corner case.
     Let's just deal with this difference in prose.
-
-
-.. _Declarations_MethodDeclaration:
-
-Method Declaration
-------------------
-
-.. write-me::
-
-.. syntax-outline::
-
-    def <#method name#>(<#parameters#>) -> <#return type#> {
-       <#statements#>
-    }
-
-
-.. syntax-outline::
-
-    def <#method name#>(<#parameters#>)(<#parameters#>) -> <#return type#> {
-       <#statements#>
-    }
-
-
-.. syntax-grammar::
-
-    Grammar of a method declaration
-
-    method-declaration --> method-head function-name generic-parameter-clause-OPT function-signature function-body
-    method-head --> attributes-OPT declaration-specifiers-OPT ``def``
 
 
 .. _Declarations_EnumerationDeclaration:
@@ -733,11 +706,11 @@ they are implicitly assigned the values ``0``, ``1``, ``2``, and so on.
 Each unassigned case of type ``Int`` is implicitly assigned a raw value
 that is automatically incremented from the raw value of the previous case.
 
-::
+.. testcode::
 
-    enum ExampleEnum: Int {
-       case A, B, C = 5, D
-    }
+    -> enum ExampleEnum: Int {
+          case A, B, C = 5, D
+       }
 
 In the above example, the value of ``ExampleEnum.A`` is ``0`` and the value of
 ``ExampleEnum.B`` is ``1``. And because the value of ``ExampleEnum.C`` is
@@ -800,9 +773,9 @@ as described in :ref:`Patterns_EnumerationCasePattern`.
     enum-name --> identifier
     enum-case-name --> identifier
 
-    raw-value-style-enum --> enum-name generic-parameter-clause-OPT ``:`` type-identifer ``{`` raw-value-style-enum-members-OPT ``}``
+    raw-value-style-enum --> enum-name generic-parameter-clause-OPT ``:`` type-identifier ``{`` raw-value-style-enum-members-OPT ``}``
     raw-value-style-enum-members --> raw-value-style-enum-member raw-value-style-enum-members-OPT
-    raw-value-style-enum-members --> declaration | raw-value-style-enum-case-clause
+    raw-value-style-enum-member --> declaration | raw-value-style-enum-case-clause
     raw-value-style-enum-case-clause --> attributes-OPT ``case`` raw-value-style-enum-case-list
     raw-value-style-enum-case-list --> raw-value-style-enum-case | raw-value-style-enum-case ``,`` raw-value-style-enum-case-list
     raw-value-style-enum-case --> enum-case-name raw-value-assignment-OPT
@@ -1163,8 +1136,8 @@ Protocol Method Declaration
 Protocols declare that conforming types must implement a method
 by including a protocol method declaration in the body of the protocol declaration.
 Protocol method declarations have the same form as
-method declarations, with two exceptions: They don't include a method body,
-and you can't provide any default parameter values as part of the method declaration.
+function declarations, with two exceptions: They don't include a function body,
+and you can't provide any default parameter values as part of the function declaration.
 For examples of conforming types that implement the method requirements of a protocol,
 see :ref:`Protocols_Methods`.
 
@@ -1184,7 +1157,7 @@ See also :ref:`Declarations_FunctionDeclaration`.
 
     Grammar of a protocol method declaration
 
-    protocol-method-declaration --> method-head function-name generic-parameter-clause-OPT function-signature
+    protocol-method-declaration --> function-head function-name generic-parameter-clause-OPT function-signature
 
 
 .. _Declarations_ProtocolInitializerDeclaration:
@@ -1335,29 +1308,11 @@ designated initializers and convenience initializers,
 as described in :doc:`../LanguageGuide/Initialization`.
 
 The following form declares initializers for structures, enumerations,
-and convenience initializers of classes:
+and designated initializers of classes:
 
 .. syntax-outline::
 
     init(<#parameters#>) {
-       <#statements#>
-    }
-
-Initializers in structures and enumerations can call other declared initializers
-to delegate part or all of the initialization process.
-
-Convenience initializers can delegate the initialization process to another
-convenience initializer or to one of the class's designated initializers.
-That said, the initialization processes must end with a call to a designated
-initializer that ultimately initializes the class's properties.
-Convenience initializers can't call a superclass's initializers.
-
-To declare designated initializers for a class,
-prefix the initializer declaration with the context-sensitive keyword ``designated``.
-
-.. syntax-outline::
-
-    designated init(<#parameters#>) {
        <#statements#>
     }
 
@@ -1371,6 +1326,24 @@ properties can be set or modified in the current class.
 
 Designated initializers can be declared in the context of a class declaration only
 and therefore can't be added to a class using an extension declaration.
+
+Initializers in structures and enumerations can call other declared initializers
+to delegate part or all of the initialization process.
+
+To declare convenience initializers for a class,
+prefix the initializer declaration with the context-sensitive keyword ``convenience``.
+
+.. syntax-outline::
+
+    convenience init(<#parameters#>) {
+       <#statements#>
+    }
+
+Convenience initializers can delegate the initialization process to another
+convenience initializer or to one of the class's designated initializers.
+That said, the initialization processes must end with a call to a designated
+initializer that ultimately initializes the class's properties.
+Convenience initializers can't call a superclass's initializers.
 
 You can mark designated and convenience initializers with the ``required``
 attribute to require that every subclass implement the initializer.
@@ -1396,7 +1369,7 @@ see :doc:`../LanguageGuide/Initialization`.
     Grammar of an initializer declaration
 
     initializer-declaration --> initializer-head generic-parameter-clause-OPT parameter-clause initializer-body
-    initializer-head --> attributes-OPT ``designated``-OPT ``init``
+    initializer-head --> attributes-OPT ``convenience``-OPT ``init``
     initializer-body --> code-block
 
 
@@ -1733,7 +1706,7 @@ see :ref:`AdvancedOperators_CustomOperators`.
 
     infix-operator-attributes --> precedence-clause-OPT associativity-clause-OPT
     precedence-clause --> ``precedence`` precedence-level
-    precedence-level --> 0 through 255
+    precedence-level --> Digit 0 through 255
     associativity-clause --> ``associativity`` associativity
     associativity --> ``left`` | ``right`` | ``none``
 

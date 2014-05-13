@@ -118,7 +118,7 @@ which tend not to name their arguments when the function is called.
 If you *do* want to provide an external name for a function parameter,
 to be used when calling the function,
 you opt in to this behavior by defining an external name yourself,
-or by placing a back tick (`````) before the parameter's local name
+or by placing a hash symbol (``#``) before the parameter's local name
 to indicate that the local name should also be used as an external name.
 This process is described in :ref:`Functions_ShorthandExternalParameterNames`.
 
@@ -177,7 +177,7 @@ The second argument, however, is qualified by an external parameter name
 to make its purpose clear when the method is called.
 
 This default behavior effectively treats the method as if you had written
-a back tick (`````) before the ``numberOfTimes`` parameter:
+a hash symbol (``#``) before the ``numberOfTimes`` parameter:
 
 .. testcode:: externalParameterNamesComparison
 
@@ -186,12 +186,12 @@ a back tick (`````) before the ``numberOfTimes`` parameter:
    >>    func incrementBy(amount: Int) {
    >>       count += amount
    >>    }
-   -> func incrementBy(amount: Int, `numberOfTimes: Int) {
+   -> func incrementBy(amount: Int, #numberOfTimes: Int) {
          count += amount * numberOfTimes
       }
    >> }
-   !! <REPL Input>:6:33: warning: extraneous '`' in parameter: 'numberOfTimes' is already the keyword argument name
-   !! func incrementBy(amount: Int, `numberOfTimes: Int) {
+   !! <REPL Input>:6:33: warning: extraneous '#' in parameter: 'numberOfTimes' is already the keyword argument name
+   !! func incrementBy(amount: Int, #numberOfTimes: Int) {
    !! ^
    !!-
 
@@ -207,7 +207,7 @@ __________________________________________________________
 It can sometimes be useful for a method to provide an external parameter name
 for its first parameter, even though this is not the default behavior.
 Where this is the case, you can either add an explicit external name yourself,
-or you can prefix the first parameter's name with a back tick
+or you can prefix the first parameter's name with a hash symbol
 to use the local name as an external name too.
 
 Conversely, if you do not want to provide an external name
@@ -265,7 +265,7 @@ a method parameter called ``x``, and an instance property that is also called ``
             return self.x > x
          }
       }
-   -> let somePoint = Point(4.0, 5.0)
+   -> let somePoint = Point(x: 4.0, y: 5.0)
    << // somePoint : Point = Point(4.0, 5.0)
    -> if somePoint.isToTheRightOfX(1.0) {
          println("This point is to the right of the line where x == 1.0")
@@ -307,13 +307,13 @@ before the ``func`` keyword for that method:
             y += deltaY
          }
       }
-   -> var somePoint = Point(1.0, 1.0)
+   -> var somePoint = Point(x: 1.0, y: 1.0)
    << // somePoint : Point = Point(1.0, 1.0)
    -> somePoint.moveByX(2.0, y: 3.0)
    -> println("The point is now at (\(somePoint.x), \(somePoint.y))")
    <- The point is now at (3.0, 4.0)
 
-The ``Point`` structure above defines a mutating ``moveBy`` method,
+The ``Point`` structure above defines a mutating ``moveByX`` method,
 which moves a ``Point`` instance by a certain amount.
 Instead of returning a new point,
 this method actually modifies the point on which it is called.
@@ -326,7 +326,7 @@ because its properties cannot be changed, even if they are variable properties
 
 .. testcode:: selfStructures
 
-   -> let fixedPoint = Point(3.0, 3.0)
+   -> let fixedPoint = Point(x: 3.0, y: 3.0)
    << // fixedPoint : Point = Point(3.0, 3.0)
    -> fixedPoint.moveByX(2.0, y: 3.0)
    !! <REPL Input>:1:1: error: immutable value of type 'Point' only has mutating members named 'moveByX'
@@ -352,16 +352,16 @@ The ``Point`` example shown above could have been written in the following way i
    -> struct Point {
          var x = 0.0, y = 0.0
          mutating func moveByX(deltaX: Double, y deltaY: Double) {
-            self = Point(x + deltaX, y + deltaY)
+            self = Point(x: x + deltaX, y: y + deltaY)
          }
       }
-   >> var somePoint = Point(1.0, 1.0)
+   >> var somePoint = Point(x: 1.0, y: 1.0)
    << // somePoint : Point = Point(1.0, 1.0)
    >> somePoint.moveByX(2.0, y: 3.0)
    >> println("The point is now at (\(somePoint.x), \(somePoint.y))")
    << The point is now at (3.0, 4.0)
 
-This version of the mutating ``moveBy`` method creates a brand new structure
+This version of the mutating ``moveByX`` method creates a brand new structure
 whose ``x`` and ``y`` values are set to the target location.
 The end result of calling this alternative version of the method
 will be exactly the same as for calling the earlier version.
@@ -468,7 +468,7 @@ It also tracks the current level for an individual player.
             return level <= highestUnlockedLevel
          }
          var currentLevel = 1
-         mutating func setCurrentLevel(level: Int) -> Bool {
+         mutating func advanceToLevel(level: Int) -> Bool {
             if LevelTracker.levelIsUnlocked(level) {
                currentLevel = level
                return true
@@ -496,10 +496,10 @@ It uses an instance property called ``currentLevel`` to track
 the level that a player is currently playing.
 
 To help manage the ``currentLevel`` property,
-``LevelTracker`` defines an instance method called ``setCurrentLevel``.
+``LevelTracker`` defines an instance method called ``advanceToLevel``.
 Before updating ``currentLevel``,
 this method checks to make sure that the requested new level has already been unlocked.
-The ``setCurrentLevel`` method returns a Boolean value to indicate
+The ``advanceToLevel`` method returns a Boolean value to indicate
 whether or not it was actually able to set ``currentLevel``.
 
 The ``LevelTracker`` structure is used with the ``Player`` class, shown below,
@@ -512,7 +512,7 @@ to track and update the progress of an individual player:
          let playerName: String
          func completedLevel(level: Int) {
             LevelTracker.unlockLevel(level + 1)
-            tracker.setCurrentLevel(level + 1)
+            tracker.advanceToLevel(level + 1)
          }
          init(name: String) {
             playerName = name
@@ -525,7 +525,7 @@ It also provides a method called ``completedLevel``,
 which is called whenever a player completes a particular level.
 This method unlocks the next level for all players,
 and updates the player's progress to move them on to the next level.
-(The Boolean return value of ``setCurrentLevel`` is ignored,
+(The Boolean return value of ``advanceToLevel`` is ignored,
 because the level is known to have been unlocked
 by the call to ``LevelTracker.unlockLevel`` on the previous line.)
 
@@ -547,7 +547,7 @@ the attempt to set their current level will fail:
 .. testcode:: typeMethods
 
    -> player = Player(name: "Beto")
-   -> if player.tracker.setCurrentLevel(6) {
+   -> if player.tracker.advanceToLevel(6) {
          println("player is now on level 6")
       } else {
          println("level 6 has not yet been unlocked")

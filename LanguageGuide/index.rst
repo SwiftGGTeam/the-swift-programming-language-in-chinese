@@ -6,7 +6,7 @@ Language Guide
 
    TheBasics
    BasicOperators
-   Strings
+   StringsAndCharacters
    CollectionTypes
    ControlFlow
    Functions
@@ -18,6 +18,7 @@ Language Guide
    Subscripts
    Inheritance
    Initialization
+   MemoryManagement
    TypeCasting
    NestedTypes
    Extensions

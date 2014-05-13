@@ -223,6 +223,12 @@ a :newTerm:`linear congruential generator`:
    -> println("And another one: \(generator.random())")
    <- And another one: 0.729023776863283
 
+.. TODO: mutating value type method will not satisfy a protocol requirement
+   unless the requirement is also marked mutating.
+   This is unfortunate, but it's the only way to safely have protocol-typed constants.
+   This was technical feedback from [Contributor 6004],
+   and needs mentioning / incorporating somewhere in here.
+
 .. _Protocols_UsingProtocolsAsTypes:
 
 Using Protocols as Types
@@ -367,7 +373,7 @@ and to notify a ``DiceGameDelegate`` about its progress:
          var square = 0
          var board: Int[]
          init() {
-            board = Int[](finalSquare + 1, 0)
+            board = Int[](count: finalSquare + 1, value: 0)
             board[03] = +08; board[06] = +11; board[09] = +09; board[10] = +02
             board[14] = -10; board[19] = -11; board[22] = -02; board[24] = -08
          }
@@ -381,7 +387,7 @@ and to notify a ``DiceGameDelegate`` about its progress:
                switch square + diceRoll {
                   case finalSquare:
                      break gameLoop
-                  case let x where x > finalSquare:
+                  case let newSquare where newSquare > finalSquare:
                      continue gameLoop
                   default:
                      square += diceRoll
@@ -638,19 +644,22 @@ it is safe to call ``thing.asText`` each time through the loop.
 Protocol Inheritance
 --------------------
 
-A protocol can :newTerm:`inherit` from another protocol,
-and add further requirements on top of the requirements it inherits.
-The syntax for protocol inheritance is the same as for class inheritance:
+A protocol can :newTerm:`inherit` one or more other protocols,
+and can add further requirements on top of the requirements it inherits.
+The syntax for protocol inheritance is similar to the syntax for class inheritance,
+but with the option to list multiple inherited protocols, separated by commas:
 
 .. testcode:: protocols
    :compile: true
 
-   >> protocol SomeSuperProtocol {}
-   -> protocol SomeSubProtocol: SomeSuperProtocol {
+   >> protocol SomeProtocol {}
+   >> protocol AnotherProtocol {}
+   -> protocol InheritingProtocol: SomeProtocol, AnotherProtocol {
          // protocol definition goes here
       }
 
-For example:
+Here's an example of a protocol that inherits
+the ``TextRepresentable`` protocol from above:
 
 .. testcode:: protocols
    :compile: true
@@ -749,7 +758,7 @@ into a single protocol composition requirement on a function parameter:
       }
    -> let birthdayPerson = Person(name: "Malcolm", age: 21)
    << // birthdayPerson : Person = Person("Malcolm", 21)
-   -> wishHappyBirthday(celebrator: birthdayPerson)
+   -> wishHappyBirthday(birthdayPerson)
    <- Happy birthday Malcolm - you're 21!
 
 This example defines a protocol called ``Named``,
@@ -1032,6 +1041,10 @@ Because the call to ``incrementForCount`` can fail for either of these two reaso
 the call returns an *optional* ``Int`` value.
 This is true even though ``incrementForCount`` is defined as returning
 a non-optional ``Int`` value in the definition of ``CounterDataSource``.
+
+.. TODO: explain why there is only one layer of optional here,
+   even though there are two points of failure.
+   (This was technical review feedback from [Contributor 6004].)
 
 After calling ``incrementForCount``, the optional ``Int`` that it returns
 is unwrapped into a constant called ``amount``, using optional binding.

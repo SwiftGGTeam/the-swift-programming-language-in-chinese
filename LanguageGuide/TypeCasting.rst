@@ -62,11 +62,11 @@ and so it infers a type of ``MediaItem[]`` for the ``library`` array:
 .. testcode:: typeCasting
 
    -> let library = [
-         Movie("Casablanca", director: "Michael Curtiz"),
-         Song("Blue Suede Shoes", artist: "Elvis Presley"),
-         Movie("Citizen Kane", director: "Orson Welles"),
-         Song("The One And Only", artist: "Chesney Hawkes"),
-         Song("Never Gonna Give You Up", artist: "Rick Astley")
+         Movie(name: "Casablanca", director: "Michael Curtiz"),
+         Song(name: "Blue Suede Shoes", artist: "Elvis Presley"),
+         Movie(name: "Citizen Kane", director: "Orson Welles"),
+         Song(name: "The One And Only", artist: "Chesney Hawkes"),
+         Song(name: "Never Gonna Give You Up", artist: "Rick Astley")
       ]
    << // library : Array<MediaItem> = [<MediaItem instance>, <MediaItem instance>, <MediaItem instance>, <MediaItem instance>, <MediaItem instance>]
    // the type of "library" is inferred to be MediaItem[]
@@ -79,14 +79,6 @@ In order to work with them as their native type,
 you will need to *check* their type,
 or *downcast* them to a different type,
 as described below.
-
-.. note::
-
-   The ``name:`` label has been left out of each of these
-   ``Movie`` and ``Song`` initializer calls, for brevity.
-   The initializers for ``Movie`` and ``Song`` both have their ``name`` value as the first parameter,
-   and it is clear from the context that this is the correct initializer to use.
-   As a result, leaving out the ``name:`` label does not cause any ambiguity.
 
 .. _TypeCasting_CheckingType:
 
@@ -205,6 +197,9 @@ Swift provides two special type aliases for working with non-specific types:
 
 .. FIXME: remove the note about function types if / when rdar://16406907 is fixed.
 
+.. FIXME: also rdar://problem/16879900
+   Assertion when assigning a global function to a constant of type Any
+
 Here's an example of using ``Any`` to work with a mix of different types:
 
 .. testcode:: typeCasting
@@ -217,7 +212,7 @@ Here's an example of using ``Any`` to work with a mix of different types:
    -> things.append(3.14159)
    -> things.append("hello")
    -> things.append((3.0, 5.0))
-   -> things.append(Movie("Ghostbusters", director: "Ivan Reitman"))
+   -> things.append(Movie(name: "Ghostbusters", director: "Ivan Reitman"))
 
 This example creates a new array called ``things``, which can store values of type ``Any``.
 In this case, it contains

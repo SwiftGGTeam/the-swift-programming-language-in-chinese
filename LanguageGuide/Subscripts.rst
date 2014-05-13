@@ -4,9 +4,9 @@ Subscripts
 Classes, structures, and enumerations can define :newTerm:`subscripts`,
 which enable instances of that type to be queried via one or more
 values in square brackets after the instance name.
-This is similar to the way in which the elements in an array
-can be accessed as ``someArray[index]``,
-and elements in a ``Dictionary`` instance can be accessed as
+This the way in which the elements in an array
+are accessed as ``someArray[index]``,
+and elements in a ``Dictionary`` instance are accessed as
 ``someDictionary[key]``.
 (Array and dictionary subscripts are described in detail in :doc:`CollectionTypes`.)
 
@@ -97,7 +97,7 @@ by passing in a key of the appropriate type within subscript braces:
 .. testcode:: dictionarySubscript
 
    -> let numberOfLegs = ["spider": 8, "ant": 6, "cat": 4]
-   << // numberOfLegs : Dictionary<String, Int> = Dictionary<String, Int>(1.33333333333333, 3, <unprintable value>)
+   << // numberOfLegs : Dictionary<String, Int> = Dictionary<String, Int>(<unprintable value>)
    -> let spiderLegs = numberOfLegs["spider"]
    << // spiderLegs : Int = 8
    /> spiderLegs is equal to \(spiderLegs)
@@ -117,6 +117,8 @@ Subscript Options
 Subscripts can take any number of input parameters,
 and these input parameters can be of any type.
 Subscripts can also return any type.
+Subscripts can use variable parameters and variadic parameters,
+but cannot use inout parameters or provide default parameter values. 
 
 A class or structure can provide as many subscript implementations as it needs,
 and the appropriate subscript to be used will be inferred based on
@@ -139,7 +141,7 @@ The ``Matrix`` structure's subscript takes two integer parameters:
          init(rows: Int, columns: Int) {
             self.rows = rows
             self.columns = columns
-            grid = Array(rows * columns, 0.0)
+            grid = Array(count: rows * columns, value: 0.0)
          }
          func indexIsValidForRow(row: Int, column: Int) -> Bool {
             return row >= 0 && row < rows && column >= 0 && column < columns

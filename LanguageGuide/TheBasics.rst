@@ -7,13 +7,14 @@ from your experience of developing in C and Objective-C.
 
 Swift provides its own versions of all of the fundamental C and Objective-C types,
 such as ``Int`` for integers; ``Double`` and ``Float`` for floating-point values;
-``Bool`` for Boolean values; and ``String`` for ordered collections of characters.
+``Bool`` for Boolean values; and ``String`` for textual data.
 Swift also provides powerful versions of the two primary collection types,
 ``Array`` and ``Dictionary`` (as described in :doc:`CollectionTypes`).
 
-Like C, Swift uses constants and variables to store and refer to values.
-Constants in Swift are much more flexible than those in C, however,
-and are used throughout the language to make code safer and clearer in intent
+Like C, Swift uses variables to store and refer to values by an identifying name.
+Swift also makes extensive use of variables whose values cannot be changed.
+These are known as constants, and are much more powerful than constants in C.
+Constants are used throughout Swift to make code safer and clearer in intent
 when working with values that do not need to change.
 
 In addition to all of the types you will be familiar with,
@@ -24,7 +25,7 @@ Tuples can be used to return multiple values from a function as a single compoun
 
 Swift also introduces optional types,
 which are a way to handle the absence of a value.
-Optionals are a way to say either “There *is* a value, and it equals *x*”;
+Optionals are a way to say either “there *is* a value, and it equals *x*”;
 or “there *isn't* a value at all”.
 Optionals are similar to working with ``nil`` in Objective-C,
 but in a way that works for any type, not just classes.
@@ -80,10 +81,22 @@ because the maximum value never changes.
 The current login attempt counter is declared as a variable,
 because this value must be incremented after each failed login attempt.
 
-If a stored value in your code is not going to change,
-it should always be declared as a constant with the ``let`` keyword.
-Variables should only be used for
-storing values that need to be able to change.
+You can declare multiple constants or multiple variables on a single line,
+separated by commas:
+
+.. testcode:: multipleDeclarations
+
+   -> var x = 0.0, y = 0.0, z = 0.0
+   << // x : Double = 0.0
+   << // y : Double = 0.0
+   << // z : Double = 0.0
+
+.. note::
+
+   If a stored value in your code is not going to change,
+   it should always be declared as a constant with the ``let`` keyword.
+   Variables should only be used for
+   storing values that need to be able to change.
 
 .. TODO: I need to mention that globals are lazily initialized somewhere.
    Probably not here, but somewhere.
@@ -163,6 +176,17 @@ you can't redeclare it again with the same name,
 or change it to store values of a different type.
 Nor can you change a constant into a variable,
 or a variable into a constant.
+
+.. note::
+
+   If you need to give a constant or variable the same name as a reserved Swift keyword,
+   you can do so by surrounding the keyword with back ticks (`````) when using it as a name.
+   However, you should avoid using keywords as names unless you have absolutely no choice.
+
+.. QUESTION: I've deliberately not given an example here,
+   because I don't want to suggest that such an example is
+   a good example of when you *should* use a keyword as a name.
+   Is this the right approach to take?
 
 The value of an existing variable can be changed to another value of a compatible type.
 In this example, the value of ``friendlyWelcome`` is changed from
@@ -251,39 +275,49 @@ and escaped with a backslash before the opening parenthesis:
    -> println("The current value of friendlyWelcome is \(friendlyWelcome)")
    <- The current value of friendlyWelcome is 👋, 🌎
 
-.. TODO: this still doesn't talk about all of the things that string interpolation can do.
-   It should still be covered in more detail in the Strings and Characters chapter.
+.. note::
+
+   The full set of options you can use with string interpolation
+   are described in :ref:`StringsAndCharacters_StringInterpolation`.
 
 .. _TheBasics_Comments:
 
 Comments
 --------
 
-As you may have noticed from the examples above,
-comments in Swift have some similarity to those found in C:
+Comments are a way to include non-executable text in your code,
+as a note or reminder to yourself.
+Comments are ignored by the Swift compiler when your code is compiled.
+
+Comments in Swift are very similar to comments in C.
+Single-line comments begin with two forward-slashes (``//``):
 
 .. testcode:: comments
    :compile: true
 
-   -> // Single-line comments begin with two forward-slashes, like in C.
+   -> // This is a comment
 
-You can also write multi-line comments:
-
-.. testcode:: comments
-   :compile: true
-
-   -> /* ...which start with a forward-slash followed by an asterisk,
-         and end with an asterisk followed by a forward-slash, also like C. */
-
-Unlike C, multi-line comments can also be nested:
+You can also write multi-line comments,
+which start with a forward-slash followed by an asterisk (``/*``),
+and end with an asterisk followed by a forward-slash (``*/``):
 
 .. testcode:: comments
    :compile: true
 
-   -> /* This is done by starting a new block of comments,
-         /* then starting another new block inside of the first block.
-         The second block is then closed... */
-      ...followed by the original block. */
+   -> /* This is also a comment,
+      but written over multiple lines */
+
+Unlike C, multi-line comments can be nested inside other multi-line comments.
+You write nested comments by starting a multi-line comment block,
+and then starting a second multi-line comment within the first block.
+The second block is then closed, followed by the first block:
+
+.. testcode:: comments
+   :compile: true
+
+   -> /* This is the start of the first multi-line comment
+         /* This is the second, nested multi-line comment */
+      This is the end of the first multi-line comment */
 
 Nested multi-line comments enable you to comment out large blocks of code quickly and easily,
 even if the code already contains multi-line comments.
@@ -329,7 +363,7 @@ Int
 
 In most cases, there's no need to pick a specific size of integer to use in your code.
 Swift provides an additional integer type, ``Int``,
-which has the same size as the current platform's architecture:
+which has the same size as the current platform's native word size:
 
 * On a 32-bit platform, ``Int`` is the same size as ``Int32``.
 * On a 64-bit platform, ``Int`` is the same size as ``Int64``.
@@ -346,7 +380,7 @@ UInt
 ~~~~
 
 Swift also provides an unsigned integer type, ``UInt``,
-which has the same size as the current platform's architecture:
+which has the same size as the current platform's native word size:
 
 * On a 32-bit platform, ``UInt`` is the same size as ``UInt32``.
 * On a 64-bit platform, ``UInt`` is the same size as ``UInt64``.
@@ -354,11 +388,12 @@ which has the same size as the current platform's architecture:
 .. note::
 
    Use ``UInt`` only when you specifically need
-   an unsigned integer type with the same size as the platform's architecture.
+   an unsigned integer type with the same size as the platform's native word size.
    If this is not the case, ``Int`` is preferred,
    even when the values to be stored are known to be non-negative.
-   A consistent use of ``Int`` for integer values aids code interoperability
-   and provides consistency when you use type inference, as described below.
+   A consistent use of ``Int`` for integer values aids code interoperability,
+   avoids the need to convert between different number types,
+   and matches integer type inference, as described below.
 
 .. _TheBasics_FloatingPointNumbers:
 
@@ -515,7 +550,7 @@ All of these floating-point literals have a decimal value of ``12.1875``:
    << // hexadecimalDouble : Double = 12.1875
 
 Numeric literals can contain extra formatting to make them easier to read.
-Both integers and floats can be padded with extra zeroes at the beginning
+Both integers and floats can be padded with extra zeroes
 and can contain underscores to help with readability.
 Neither type of formatting affects the underlying value of the literal:
 
@@ -597,7 +632,15 @@ This opt-in approach avoids accidental errors
 and helps make type conversion intentions explicit in your code.
 
 To convert one specific number type to another,
-you initialize a new number of the desired type with the existing value:
+you initialize a new number of the desired type with the existing value.
+In the example below,
+the constant ``twoThousand`` is of type ``UInt16``,
+whereas the constant ``one`` is of type ``UInt8``.
+They cannot be added together directly,
+because they are not of the same type.
+Instead, this example calls ``UInt16(one)`` to create
+a new ``UInt16`` initialized with the value of ``one``,
+and uses this value in place of the original:
 
 .. testcode:: typeConversion
 
@@ -608,12 +651,6 @@ you initialize a new number of the desired type with the existing value:
    -> let twoThousandAndOne = twoThousand + UInt16(one)
    << // twoThousandAndOne : UInt16 = 2001
 
-The constant ``twoThousand`` is of type ``UInt16``,
-whereas the constant ``one`` is of type ``UInt8``.
-They cannot be added together directly,
-because they are not of the same type.
-Instead, this code calls ``UInt16(one)`` to create a new ``UInt16`` initialized with the value of ``one``,
-and uses this value in place of the original.
 Because both sides of the addition are now of type ``UInt16``,
 the addition is allowed.
 The output constant (``twoThousandAndOne``) is inferred to be of type ``UInt16``,
@@ -712,13 +749,6 @@ Because it is an alias,
 the call to ``AudioSample.min`` actually calls ``UInt16.min``,
 which provides an initial value of ``0`` for the ``maxAmplitudeFound`` variable.
 
-.. note::
-
-   Type aliases do not actually define a new type in Swift.
-   They are simply an alternative name for an existing type.
-   In the example above,
-   ``maxAmplitudeFound`` is of type ``UInt16``, not ``AudioSample``.
-
 .. _TheBasics_Booleans:
 
 Booleans
@@ -727,7 +757,7 @@ Booleans
 Swift has a basic :newTerm:`Boolean` type, called ``Bool``.
 Boolean values are referred to as :newTerm:`logical`,
 because they can only ever be true or false.
-Swift provides two Boolean literal values,
+Swift provides two Boolean constant values,
 ``true`` and ``false``:
 
 .. testcode:: booleans
@@ -839,17 +869,7 @@ There's nothing stopping you from having
 a tuple of type ``(Int, Int, Int)``, or ``(String, Bool)``,
 or indeed any other permutation you require.
 
-You can access the individual element values in a tuple using index numbers starting at zero:
-
-.. testcode:: tuples
-
-   -> println("The status code is \(http404Error.0)")
-   <- The status code is 404
-   -> println("The status message is \(http404Error.1)")
-   <- The status message is Not Found
-
-Alternatively,
-you can :newTerm:`decompose` a tuple's contents into separate constants or variables,
+You can :newTerm:`decompose` a tuple's contents into separate constants or variables,
 which can then be accessed as usual:
 
 .. testcode:: tuples
@@ -861,7 +881,33 @@ which can then be accessed as usual:
    -> println("The status message is \(statusMessage)")
    <- The status message is Not Found
 
-You can also name the elements in a tuple directly when the tuple is defined:
+If you only need some of the tuple's values,
+you can ignore parts of the tuple with an underscore (``_``)
+when you decompose the tuple:
+
+.. testcode:: tuples
+
+   -> let (justTheStatusCode, _) = http404Error
+   << // (justTheStatusCode, _) : (Int, String) = (404, "Not Found")
+   -> println("The status code is \(justTheStatusCode)")
+   <- The status code is 404
+
+Alternatively,
+you can access the individual element values in a tuple using index numbers starting at zero:
+
+.. testcode:: tuples
+
+   -> println("The status code is \(http404Error.0)")
+   <- The status code is 404
+   -> println("The status message is \(http404Error.1)")
+   <- The status message is Not Found
+
+.. _TheBasics_NamedTupleElements:
+
+Named Tuple Elements
+~~~~~~~~~~~~~~~~~~~~
+
+You can name the individual elements in a tuple when the tuple is defined:
 
 .. testcode:: tuples
 
@@ -892,7 +938,7 @@ Functions are described in detail in :doc:`Functions`.
    Tuples are useful for temporary groups of related values.
    They are not suited to the creation of complex data structures.
    If your data structure is likely to persist beyond a temporary scope,
-   model it as a class or structure, rather than as a tuple.
+   model it as a class or structure, rather than as a tuple,
    See :doc:`ClassesAndStructures`.
 
 .. _TheBasics_Optionals:
@@ -956,8 +1002,8 @@ If-Else
 ~~~~~~~
 
 You can use an ``if``-``else`` statement to find out whether an optional contains a value.
-If an optional does have a value, it equates to ``true``;
-if it has no value at all, it equates to ``false``.
+If an optional does have a value, it evaluates to ``true``;
+if it has no value at all, it evaluates to ``false``.
 
 Once you're sure that the optional *does* contain a value,
 you can access its underlying value
@@ -1098,9 +1144,9 @@ Optionals can be checked with an ``if``-``else`` statement to see if a value exi
 and can be conditionally unwrapped with optional binding
 to access the optional's value if it does exist.
 
-In some cases, however,
-it is convenient to treat an optional as if it *always* has a value,
-once its value is confirmed to exist.
+In a few cases, however,
+it is clear from a program's structure that an optional will *always* has a value,
+once its value is first set.
 In these cases, it is useful to remove the need
 to check and unwrap the optional's value every time it is accessed,
 because it can confidently be assumed to have a value all of the time.
@@ -1108,6 +1154,12 @@ because it can confidently be assumed to have a value all of the time.
 These kinds of optionals are defined as :newTerm:`implicitly unwrapped optionals`,
 and are written by placing an exclamation mark (``String!``)
 rather than a question mark (``String?``) after the type that you want to make optional.
+
+Implicitly unwrapped optionals are useful when
+an optional's value is confirmed to exist immediately after the optional is first defined,
+and can definitely be assumed to exist at every point thereafter.
+The primary use of implicitly unwrapped optionals in Swift is during class initialization,
+as described in :ref:`MemoryManagement_UnownedReferencesAndImplicitlyUnwrappedOptionalProperties`.
 
 An implicitly unwrapped optional is a normal optional behind the scenes,
 but can also be used like a non-optional value,
@@ -1160,15 +1212,9 @@ to check and unwrap its value in a single statement:
       }
    <- An implicitly unwrapped optional string.
 
-Implicitly unwrapped optionals are useful when
-an optional's value is confirmed to exist immediately after the optional is first defined,
-and can definitely be assumed to exist at every point thereafter.
-The primary use of implicitly unwrapped optionals in Swift is during class initialization,
-as described in :ref:`Initialization_ImplicitlyUnwrappedOptionalProperties`.
-
 .. note::
 
-   Implicitly unwrapped optionals should never be used when there is a possibility of
+   Implicitly unwrapped optionals should not be used when there is a possibility of
    a variable becoming ``nil`` at a later point.
    Always use a normal optional type if you need to check for a ``nil`` value
    during the lifetime of a variable.
@@ -1186,7 +1232,7 @@ In these situations,
 you can trigger an :newTerm:`assertion` in your code to end code execution,
 and to provide an opportunity to debug the cause of the absent or invalid value.
 
-An assertion is a runtime check that some Boolean condition definitely equates to ``true``.
+An assertion is a runtime check that some logical condition definitely evaluates to ``true``.
 Literally put, an assertion “asserts” that a condition is true.
 You use an assertion to make sure that an essential condition is satisfied
 before executing any further code.

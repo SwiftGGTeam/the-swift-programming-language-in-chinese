@@ -1,31 +1,19 @@
 Types
 =====
 
-.. TODO: Things to discuss/cover in this chapter:
-    Type attributes? (Waiting to find out if should document any of these)
-
-.. NOTE: Don't mention materializability at all.
-    The concept is tied to the inout attribute and will be going away.
-    The only way to get a non-materializable type is to use @inout.
-    The only place where that's even allowed is in a tuple that's part of a
-    function declaration. The grammar is shifting and will prevent these
-    from showing up anywhere else in the language.
-
 In Swift, there are two kinds of types: named types and compound types.
 A :newTerm:`named type` is a type that can be given a particular name when it is defined.
 Named types include classes, structures, enumerations, and protocols.
 For example,
 instances of a user-defined class named ``MyClass`` have the type ``MyClass``.
 In addition to user-defined named types,
-the Swift Standard Library defines many commonly used named types,
+the Swift standard library defines many commonly used named types,
 including those that represent arrays, dictionaries, and optional values.
-
-.. TODO: Discuss with Jeanne: What do we call instances of the "Optional" type?
 
 Data types that are normally considered basic or primitive in other languages---
 such as types that represent numbers, characters, and strings---
 are actually named types,
-defined and implemented in the Swift Standard Library using structures.
+defined and implemented in the Swift standard library using structures.
 Because they are named types,
 you can extend their behavior to suit the needs of your program,
 using an extension declaration,
@@ -37,8 +25,6 @@ A compound type may contain named types and other compound types.
 For instance, the tuple type ``(Int, (Int, Int))`` contains two elements:
 The first is the named type ``Int``,
 and the second is another compound type ``(Int, Int)``.
-
-.. TODO: TR: What about language support (syntactic sugar) for creating dictionary literals?
 
 This chapter discusses the types defined in the Swift language itself
 and describes the type inference behavior of Swift.
@@ -68,17 +54,20 @@ Type Annotation
 
 A :newTerm:`type annotation` explicitly specifies the type of a variable or expression.
 Type annotations begin with a colon (``:``) and end with a type,
-as the following examples show::
+as the following examples show:
 
-    let x: (Double, Double) = (3.14159, 2.71828)
-    func foo(a: Int) -> Int { /* ... */ }
+.. testcode::
+
+    -> let someTuple: (Double, Double) = (3.14159, 2.71828)
+    << // someTuple : (Double, Double) = (3.14159, 2.71828)
+    -> func someFunction(a: Int) { /* ... */ }
 
 In the first example,
-the expression ``x`` is specified to have the tuple type ``(Double, Double)``.
+the expression ``someTuple`` is specified to have the tuple type ``(Double, Double)``.
 In the second example,
-the parameter ``a`` to the function ``foo`` is specified to have the type ``Int``.
+the parameter ``a`` to the function ``someFunction`` is specified to have the type ``Int``.
 
-Type annotations may contain an optional list of type attributes before the type.
+Type annotations can contain an optional list of type attributes before the type.
 
 .. syntax-grammar::
 
@@ -104,20 +93,25 @@ to the named type ``Dictionary<String, Int>``.
 There are two cases in which a type identifier does not refer to a type with the same name.
 In the first case, a type identifier refers to a type alias of a named or compound type.
 For instance, in the example below,
-the use of ``Point`` in the type annotation refers to the tuple type ``(Double, Double)``.
-::
+the use of ``Point`` in the type annotation refers to the tuple type ``(Int, Int)``.
 
-    typealias Point = (Double, Double)
-    let origin: Point = (0, 0)
-    // origin: Point = (0.0, 0.0)
+.. testcode::
+
+    -> typealias Point = (Int, Int)
+    -> let origin: Point = (0, 0)
+    << // origin : Point = (0, 0)
 
 In the second case, a type identifier uses dot (``.``) syntax to refer to named types
 declared in other modules or nested within other types.
 For example, the type identifier in the following code references the named type ``MyType``
 that is declared in the ``ExampleModule`` module.
-::
 
-    var someValue: ExampleModule.MyType
+.. testcode::
+
+    -> var someValue: ExampleModule.MyType
+    !! <REPL Input>:1:16: error: use of undeclared type 'ExampleModule'
+    !! var someValue: ExampleModule.MyType
+    !!                ^~~~~~~~~~~~~
 
 .. langref-grammar
 
@@ -136,7 +130,21 @@ that is declared in the ``ExampleModule`` module.
 Tuple Type
 ----------
 
-.. write-me:: Waiting for design decisions from compiler team. See notes below.
+A tuple type is a comma-separated list of zero or more types, enclosed in parentheses.
+
+You can use a tuple type as the return type of a function
+to enable the function to return a single tuple containing multiple values.
+You can also name the elements of a tuple type and use those names to refer to
+the values of the individual elements. An element name consists of an identifier
+followed immediately by a colon (:). For an example that demonstrates both of
+these features, see :ref:`Functions_TupleTypesAsReturnTypes`.
+
+``Void`` is a typealias for the the empty tuple type, ``()``.
+If there is only one element inside the parentheses,
+the type is simply the type of that element.
+For example, the type of ``(Int)`` is ``Int``, not ``(Int)``.
+As a result, you can label a tuple element only when the tuple type has two
+or more elements.
 
 .. langref-grammar
 
@@ -155,45 +163,93 @@ Tuple Type
     tuple-type-element --> attributes-OPT ``inout``-OPT type | ``inout``-OPT element-name type-annotation
     element-name --> identifier
 
-.. NOTE: Info from Doug about the relationship between tuple types and tuple patterns:
-    A tuple pattern is always of tuple type.
-    There is a ton of grammatical overlap right now; some of that will be reduced
-    when we get rid of named tuple elements.
-    A tuple type is a much simpler (compared to a tuple pattern)
-    composition of simpler types.
-
-    The LangRef says that "there are special rules for converting an
-    expression to varargs tuple type.
-    The subtyping and type conversion chapter (proposed below in 'Metatype Types')
-    should discuss these rules.
-
-.. TODO: Tuple types and function types are in flux at the moment.
-    Let's hold off on writing about these until they are nailed down.
-    There are a couple of questions here:
-    1. Are tuple types going to be allowed to contain named elements?
-    2. Are function parameter names going to be part of the function type?
-    3. Related to (1) and (2): Are tuple types going to used as the left-hand side
-       of a function type (as in the current grammar)?
-    UPDATE from Doug, 4/2/14:
-    Re: 1: For WWDC and likely 1.0, tuples will keep their labels. (Our endgame
-    and where we are now are different.)
-    Re: 2: Yes, in cases like: (a: Int) -> Int
-    Re: 3: No, it's now just type (before, we were relying on tuple-types
-    to enforce parens). Of course, a tuple-type is a type, so you can
-    still have (a: Int) -> Int.
-
 
 .. _Types_FunctionType:
 
 Function Type
 -------------
 
-.. write-me:: Waiting for design decisions from compiler team. See notes below.
+A function type represents the type of a function, method, or closure
+and consists of a parameter and return type separated by an arrow (``->``):
+
+.. syntax-outline::
+
+    <#parameter type#> -> <#return type#>
+
+Because the *parameter type* and the *return type* can be a tuple type,
+function types support functions and methods that take multiple paramaters
+and return multiple values.
+
+You can apply the ``auto_closure`` attribute to a function type that has a parameter
+type of ``()`` and that returns the type of an expression. An autoclosure function
+captures an implicit closure over the specified expression, instead of the expression
+itself. For example, the following are equivalent:
+
+.. testcode::
+
+    -> var a: () -> Int = { 42 }
+    << // a : () -> Int = <unprintable value>
+    -> var a: @auto_closure () -> Int = 42
+    !! <REPL Input>:1:5: error: invalid redeclaration of 'a'
+    !! var a: () -> Int = { 42 }
+    !!     ^
+    !! <REPL Input>:1:5: note: 'a' previously declared here
+    !! var a: @auto_closure () -> Int = 42
+    !!     ^
+
+For an example of how to use the ``auto_closure`` attribute,
+see :ref:`Closures_Autoclosures`. See also :ref:`Attributes_TypeAttributes`.
+
+.. Curried function types
+
+A function type can have a variadic parameter as the last parameter in its *parameter type*.
+Syntactically,
+a variadic parameter consists of a base type name followed immediately by three dots (``...``),
+as in ``Int...``. A variadic parameter is treated as an array that contains elements
+of the base type name. For instance, the variadic parameter ``Int...`` is treated
+as ``Int[]``. For an example that uses a variadic parameter,
+see :ref:`Functions_VariadicParameters`.
+
+To specify an in-out parameter, prefix the parameter type with the ``inout`` keyword.
+You can't mark a variadic parameter or a return type with the ``inout`` keyword.
+In-out parameters are discussed in :ref:`Functions_InOutParameters`.
+
+The type of a curried function is equivalent to a nested function type.
+For example,
+the type of the curried function ``addTwoNumbers()()`` below is
+``Int -> Int -> Int``:
+
+.. testcode::
+
+    -> func addTwoNumbers(a: Int)(b: Int) -> Int {
+          return a + b
+       }
+    -> addTwoNumbers(4)(5) // Returns 9
+    !! <REPL Input>:1:18: error: missing argument label 'b:' in call
+    !! addTwoNumbers(4)(5) // Returns 9
+    !!                  ^
+    !!                  b:
+
+The function types of a curried function are grouped from right to left. For instance,
+the function type ``Int -> Int -> Int`` is understood as ``Int -> (Int -> Int)``---
+that is, a function that takes an ``Int`` and returns
+another function that takes and return an ``Int``. For example, you can rewrite
+the curried function ``addTwoNumbers()()`` as the following nested function:
+
+.. testcode::
+
+    -> func addTwoNumbers(a: Int) -> (Int -> Int) {
+          func addTheSecondNumber(b: Int) -> Int {
+             return a + b
+          }
+          return addTheSecondNumber
+       }
+    -> addTwoNumbers(4)(5) // Returns 9
+    << // r0 : Int = 9
 
 .. langref-grammar
 
     type-function ::= type-tuple '->' type-annotation
-
 
 .. syntax-grammar::
 
@@ -215,32 +271,56 @@ Function Type
 
         var myPolymorphicF = polymorphicF
 
-.. TODO: Tuple types and function types are in flux at the moment.
-    Let's hold off on writing about these until they are nailed down.
-    There are a couple of questions here:
-    1. Are tuple types going to be allowed to contain named elements?
-    2. Are function parameter names going to be part of the function type?
-    3. Related to (1) and (2): Are tuple types going to used as the left-hand side
-       of a function type (as in the current grammar)?
-    UPDATE from Doug, 4/2/14:
-    Re: 1: For WWDC and likely 1.0, tuples will keep their labels. (Our endgame
-    and where we are now are different.)
-    Re: 2: Yes, in cases like: (a: Int) -> Int
-    Re: 3: No, it's now just type (before, we were relying on tuple-types
-    to enforce parens). Of course, a tuple-type is a type, so you can
-    still have (a: Int) -> Int.
-
-    Function *declarations* on the other hand are still flux. Doug will be writing
-    a new grammar for them soon. One notable change is that they will no longer
-    use patterns in the function parameters.
-
 
 .. _Types_ArrayType:
 
 Array Type
 ----------
 
-.. write-me:: Waiting for design decisions from compiler team. See notes below.
+The Swift language uses square brackets (``[]``) immediately after the name of a type
+as syntactic sugar for the named type ``Array<T>``, which is defined in the
+Swift standard library. In other words, the following two declarations are equivalent:
+
+.. testcode:: array-type
+
+    -> let someArray: String[] = ["Alex", "Brian", "Dave"]
+    << // someArray : Array<String> = ["Alex", "Brian", "Dave"]
+    -> let someArray: Array<String> = ["Alex", "Brian", "Dave"]
+    !! <REPL Input>:1:5: error: invalid redeclaration of 'someArray'
+    !! let someArray: Array<String> = ["Alex", "Brian", "Dave"]
+    !!     ^
+    !! <REPL Input>:1:5: note: 'someArray' previously declared here
+    !! let someArray = ["Alex", "Brian", "Dave"]
+    !!     ^
+
+In both cases, the constant ``someArray``
+is declared as an array of strings. The elements of an array can be accessed using
+square brackets as well: ``someArray[0]`` refers to the element at index 0, ``"Alex"``.
+
+As the above example also shows, you can use square brackets to create
+an array using an array literal. Empty array literals are written using an an empty
+pair of square brackets and can be used to create an empty array of a specified type.
+
+.. testcode::
+
+    -> var emptyArray: Double[] = []
+    << // emptyArray : Double[] = []
+
+You can create multidimensional arrays by chaining multiple sets of square brackets
+to the name of the base type of the elements. For example, you can create
+a two-dimensional array of integers---that is, an array that contains arrays of integers---
+using two sets of square brackets.
+
+.. testcode::
+
+    -> var array2D: Int[][] = [[1, 2], [3, 4], [5, 6]]
+    << // array2D : (Int[])[] = [[1, 2], [3, 4], [5, 6]]
+
+Although the array types are grouped from left to right
+(``Int[][]`` is understood as ``(Int[])[]``),
+an index of the *left-most* chained array type corresponds to the element at that index
+in the *right-most* chained array type. For instance, in the ``array2D`` array above,
+``array2D[0]`` refers to the array ``[1, 2]`` and ``array[0][1]`` refers to the value 2.
 
 .. langref-grammar
 
@@ -280,15 +360,22 @@ Array Type
 Optional Type
 -------------
 
-The Swift language defines the postfix operator ``?`` as syntactic sugar for
-the named type ``Optional<T>``, which is defined in the Swift Standard Library.
-In other words, the following two declarations are equivalent::
+The Swift language defines the postfix ``?`` as syntactic sugar for
+the named type ``Optional<T>``, which is defined in the Swift standard library.
+In other words, the following two declarations are equivalent:
 
-    var optionalInteger: Int?
-    var optionalInteger: Optional<Int>
+.. testcode:: optional-type
 
-.. TODO: Rewrite the first sentence. In this case, '?' isn't the operator at all;
-    it's just punctuation.
+    -> var optionalInteger: Int?
+    << // optionalInteger : Int? = <unprintable value>
+    -> var optionalInteger: Optional<Int>
+    !! <REPL Input>:1:5: error: invalid redeclaration of 'optionalInteger'
+    !! var optionalInteger: Optional<Int>
+    !!     ^
+    !! <REPL Input>:1:5: note: 'optionalInteger' previously declared here
+    !! var optionalInteger: Int?
+    !!     ^
+
 
 In both cases, the variable ``optionalInteger``
 is declared to have the type of an optional integer.
@@ -310,17 +397,19 @@ if an instance of an optional type ``T?`` contains any value of type ``T``
 the optional type evaluates to ``true``. Otherwise, it evaluates to ``false``.
 
 If an instance of an optional type contains a value,
-you can access that value using the postfix operator ``!``, as shown below::
+you can access that value using the postfix operator ``!``, as shown below:
 
-    optionalInteger = 42
-    optionalInteger!
-    // 42
+.. testcode:: optional-type
+
+    -> optionalInteger = 42
+    -> optionalInteger! // 42
+    << // r0 : Int = 42
 
 Unwrapping an optional
 that has a value of ``Optional.None`` results in a runtime error.
 
 For examples that show how to use optional types,
-see :ref:`BasicTypes_Optionals`.
+see :ref:`TheBasics_Optionals`.
 
 .. langref-grammar
 
@@ -550,12 +639,14 @@ and then passing this type information up to the root (the variable ``x``).
 In Swift, type information can also flow in the opposite direction---from the root down to the leaves.
 In the following example, for instance,
 the explicit type annotation (``: Float``) on the constant ``eFloat``
-causes the numeric literal ``2.71828`` to have type ``Float`` instead of type ``Double``.::
+causes the numeric literal ``2.71828`` to have type ``Float`` instead of type ``Double``.
 
-    let e = 2.71828
-    // e: Double = 2.71828
-    let eFloat: Float = 2.71828
-    // eFloat: Float = 2.71828
+.. testcode::
+
+    -> let e = 2.71828 // The type of e is inferred to be Double.
+    << // e : Double = 2.71828
+    -> let eFloat: Float = 2.71828 // The type of eFloat is Float.
+    << // eFloat : Float = 2.71828007698059
 
 Type inference in Swift operates at the level of a single expression or statement.
 This means that all of the information needed to infer an omitted type or part of a type

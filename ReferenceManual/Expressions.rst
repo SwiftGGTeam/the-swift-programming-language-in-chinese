@@ -2,17 +2,14 @@ Expressions
 ===========
 
 In Swift, there are four kinds of expressions:
-primary expressions, prefix expressions, binary expressions, and postfix expressions.
-When an expression is evaluated,
-it can return a value, cause side effects, or both.
+prefix expressions, binary expressions, primary expressions, and postfix expressions.
+Evaluating an expression returns a value,
+causes a side effect, or both.
 
-Primary expressions are conceptually the core kind of expression
-and they provide a way to access values.
-They can be used on their own
-and as part of a prefix, binary, or postfix expression
-to build up more complex expressions.
 Prefix and binary expressions let you
-combine expressions and operators.
+apply operators to smaller expressions.
+Primary expressions are conceptually the simplest kind of expression
+and they provide a way to access values.
 Postfix expressions,
 like prefix and binary expressions,
 let you build up more complex expressions
@@ -43,14 +40,14 @@ in the sections below.
 Prefix Expressions
 ------------------
 
-:newTerm:`Prefix expressions` are formed by combining
+:newTerm:`Prefix expressions` combine
 an optional prefix operator with an expression.
 Prefix operators take one argument,
 the expression that follows them.
 
 .. TR: Does it make sense to call out the left-to-right grouping?
 
-The Swift Standard Library provides the following prefix operators:
+The Swift standard library provides the following prefix operators:
 
 * ``++`` Increment
 * ``--`` Decrement
@@ -79,7 +76,7 @@ see :doc:`../LanguageGuide/BasicOperators` and :doc:`../LanguageGuide/AdvancedOp
 Binary Expressions
 ------------------
 
-:newTerm:`Binary expressions` are formed by combining
+:newTerm:`Binary expressions` combine
 an infix binary operator with the expression that it takes
 as its left-hand and right-hand arguments.
 It has the following form:
@@ -88,7 +85,7 @@ It has the following form:
 
    <#left-hand argument#> <#operator#> <#right-hand argument#>
 
-The Swift Standard Library provides the following binary operators:
+The Swift standard library provides the following binary operators:
 
 .. The following comes from stdlib/core/Policy.swift
 
@@ -179,21 +176,22 @@ see :doc:`../LanguageGuide/BasicOperators` and :doc:`../LanguageGuide/AdvancedOp
 .. note::
 
     At parse time,
-    an expression made up of binary operators is represented as a flat list,
-    with the expression that follows each operator
-    understood as its right-hand argument,
+    an expression made up of binary operators is represented
+    as a flat list.
+    The expression that follows each operator
+    is understood as its right-hand argument,
     and the prefix expression of the containing expression
-    understood as the left-hand argument
+    is understood as the left-hand argument
     to the first operator in the list.
     This list is transformed into a tree
     by applying operator precedence,
     at which point the left- and right-hand arguments
     of each operator are the appropriate expression.
 
-    For example the expression ``2 + 3 * 5``
+    For example, the expression ``2 + 3 * 5``
     is initially understood as a list of three items,
     ``2``, ``+ 3``, and ``* 5``.
-    It is then transformed into the tree (2 + (3 * 5)).
+    This process transforms it into the tree (2 + (3 * 5)).
 
 .. TODO: In the amazing future, the previous paragraph would benefit from a diagram.
 
@@ -238,10 +236,14 @@ with the same number of elements.
 (Nested tuples are allowed.)
 Assignment is performed from each part of the *value*
 to the corresponding part of the *expression*.
-For example: ::
+For example:
 
-    (a, _, (b, c)) = ("test", 9.45, (12, 3))
-    // a is "test", b is 12, c is 3, and 9.45 is ignored
+.. testcode::
+
+    >> var (a, _, (b, c)) = ("test", 9.45, (12, 3))
+    << // (a, _, (b, c)) : (String, Double, (Int, Int)) = ("test", 9.45, (12, 3))
+    -> (a, _, (b, c)) = ("test", 9.45, (12, 3))
+    -> // a is "test", b is 12, c is 3, and 9.45 is ignored
 
 The assignment operator does not return any value.
 
@@ -262,8 +264,8 @@ Ternary Conditional Operator
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The :newTerm:`ternary conditional operator` evaluates to one of two given values
-based on the value of a condition;
-it has the following form:
+based on the value of a condition.
+It has the following form:
 
 .. syntax-outline::
 
@@ -301,7 +303,7 @@ and returns the result,
 and the ``is`` operator performs a type cast
 and indicates whether the cast failed.
 
-They have the following form:
+Type-casting operators have the following form:
 
 .. syntax-outline::
 
@@ -314,38 +316,45 @@ as the specified *type*.
 It behaves as follows:
 
 * If casting the *expression*
-  to the specified *type*,
+  to the specified *type*
   is guaranteed to succeed,
   the value of *expression* is returned
   as an instance of the specified *type*.
-  For example, casting from a subclass to a superclass.
+  An example is casting from a subclass to a superclass.
 
 * If casting the *expression*
-  to the specified *type*,
+  to the specified *type*
   is guaranteed to fail,
   a compile-time error is raised.
 
 * Otherwise, the value of *expression*
   is returned as an optional of the specified *type*.
-  At runtime, if the cast suceeds,
+  At runtime, if the cast succeeds,
   the value of *expression* is returned
   as in instance of the specified *type*;
   otherwise the value returned is ``nil``.
   For example, casting from a superclass to a subclass.
 
-For example: ::
+For example:
 
-    class SomeSuperType {}
-    class SomeType: SomeSuperType {}
-    class SomeChildType: SomeType {}
-    let x = SomeType()
+.. testcode:: type-casting
 
-    let y = x as SomeSuperType  // y is of type SomeSuperType
-    let z = x as SomeChildType  // z is of type SomeChildType?
+    -> class SomeSuperType {}
+    -> class SomeType: SomeSuperType {}
+    -> class SomeChildType: SomeType {}
+    -> let x = SomeType()
+    << // x : SomeType = <SomeType instance>
+    ---
+    -> let y = x as SomeSuperType  // y is of type SomeSuperType
+    << // y : SomeSuperType = <SomeSuperType instance>
+    -> let z = x as SomeChildType  // z is of type SomeChildType?
+    << // z : SomeChildType? = <unprintable value>
 
 Specifying a type with ``as`` provides the same type information
 to the compiler as a function call or a type annotation,
-as shown in the following examples: ::
+as shown in the following examples:
+
+::
 
     func f(a: SomeSuperType) -> SomeSuperType { return a }
     func g(a: SomeChildType) -> SomeChildType { return a }
@@ -368,24 +377,33 @@ as shown in the following examples: ::
     and not as ``x as (SomeType!)``.
 
 The ``is`` operator checks at runtime
-whether the *expression*
+to see whether the *expression*
 is of the specified *type*
 (but not one of its subtypes).
 If so, it returns ``true``; otherwise, it returns ``false``.
 
 .. If the bugs are fixed, this can be reworded:
     The ``is`` operator checks at runtime
-    whether the *expression*
+    to see whether the *expression*
     can be cast to the specified *type*
     If so, it returns ``true``; otherwise, it returns ``false``.
 
 The check must not be known to be true or false at compile time.
-The following are invalid: ::
+The following are invalid:
 
-    "hello" is String
+.. testcode::
+
+    -> "hello" is String
+    !! <REPL Input>:1:9: error: 'is' test is always true
+    !! "hello" is String
+    !!         ^
     "hello" is Int
+    !! <REPL Input>:1:9: error: cannot convert the expression's type 'Bool' to type 'StringLiteralConvertible'
+    !! "hello" is Int
+    !! ~~~~~~~~^~~~~~
 
-For more information type casting and to see more examples that use the type-casting operators,
+For more information about type casting
+and to see more examples that use the type-casting operators,
 see :doc:`../LanguageGuide/TypeCasting`.
 
 .. See also <rdar://problem/16639705> Provably true/false "is" expressions should be a warning, not an error
@@ -409,12 +427,11 @@ see :doc:`../LanguageGuide/TypeCasting`.
 Primary Expressions
 -------------------
 
-:newTerm:`Primary expression`
+:newTerm:`Primary expressions`
 are the most basic kind of expression.
 They can be used as expressions on their own,
 and they can be combined with other tokens
-such as operators, prefixes, and postfixes,
-to make more complex expressions.
+to make prefix expressions, binary expressions, and postfix expressions.
 
 .. langref-grammar
 
@@ -432,6 +449,7 @@ to make more complex expressions.
 
     primary-expression --> identifier generic-argument-clause-OPT
     primary-expression --> literal-expression
+    primary-expression --> self-expression
     primary-expression --> superclass-expression
     primary-expression --> closure-expression
     primary-expression --> anonymous-closure-argument
@@ -454,7 +472,7 @@ to make more complex expressions.
 Literal Expression
 ~~~~~~~~~~~~~~~~~~
 
-:newTerm:`Literal expression` consists of
+A :newTerm:`literal expression` consists of
 either an ordinary literal (such as a string or a number),
 an array or dictionary literal,
 or one of the following special literals:
@@ -462,10 +480,10 @@ or one of the following special literals:
 ================    ======  ===============================================
 Literal             Type    Value
 ================    ======  ===============================================
-``__FILE__``        String  The name of the file in which it appears
-``__LINE__``        Int     The line number on which it appears
-``__COLUMN__``      Int     The column number in which it begins
-``__FUNCTION__``    String  The name of the declaration in which it appears
+``__FILE__``        String  The name of the file in which it appears.
+``__LINE__``        Int     The line number on which it appears.
+``__COLUMN__``      Int     The column number in which it begins.
+``__FUNCTION__``    String  The name of the declaration in which it appears.
 ================    ======  ===============================================
 
 .. TODO: self and Self probably belong here as magic/special literals.
@@ -475,7 +493,8 @@ Inside a function,
 the value of ``__FUNCTION__`` is the name of that function,
 inside a method it is the name of that method,
 inside a property getter or setter it is the name of that property,
-inside special members like ``init`` or ``subscript`` it is the name of that keyword,
+inside special members like ``init`` or ``subscript``
+it is the name of that keyword,
 and at the top level of a file it is the name of the current module.
 
 An :newTerm:`array literal` is
@@ -487,14 +506,15 @@ It has the following form:
    [<#value 1#>, <#value 2#>, <#...#>]
 
 The last expression in the array can be followed by an optional comma.
-An empty array literal is written as ``[]``.
+An empty array literal is written
+as an empty pair of brackets (``[]``).
 The value of an array literal has type ``T[]``,
 where ``T`` is the type of the expressions inside it.
 If there are expressions of multiple types,
 ``T`` is their closest common supertype.
 
 A :newTerm:`dictionary literal` is
-an unordered collection of key-value pairs,
+an unordered collection of key-value pairs.
 It has the following form:
 
 .. syntax-outline::
@@ -502,7 +522,8 @@ It has the following form:
    [<#key 1#>: <#value 1#>, <#key 2#>: <#value 2#>, <#...#>]
 
 The last expression in the dictionary can be followed by an optional comma.
-An empty dictionary literal is written as ``[:]``
+An empty dictionary literal is written as
+a colon inside a pair of brackets (``[:]``)
 to distinguish it from an empty array literal.
 The value of a dictionary literal has type ``Dictionary<KeyType, ValueType>``,
 where ``KeyType`` is the type of its key expressions
@@ -530,12 +551,36 @@ for their respective values.
     literal-expression --> ``__FILE__`` | ``__LINE__`` | ``__COLUMN__`` | ``__FUNCTION__``
 
     array-literal --> ``[`` array-literal-items-OPT ``]``
-	array-literal-items --> array-literal-item ``,``-OPT | array-literal-item ``,`` array-literal-items
-	array-literal-item --> expression
+    array-literal-items --> array-literal-item ``,``-OPT | array-literal-item ``,`` array-literal-items
+    array-literal-item --> expression
 
-	dictionary-literal --> ``[`` dictionary-literal-items ``]`` | ``[`` ``:`` ``]``
-	dictionary-literal-items --> dictionary-literal-item ``,``-OPT | dictionary-literal-item ``,`` dictionary-literal-items
-	dictionary-literal-item --> expression ``:`` expression
+    dictionary-literal --> ``[`` dictionary-literal-items ``]`` | ``[`` ``:`` ``]``
+    dictionary-literal-items --> dictionary-literal-item ``,``-OPT | dictionary-literal-item ``,`` dictionary-literal-items
+    dictionary-literal-item --> expression ``:`` expression
+
+
+.. _Expressions_SelfExpression:
+
+Self Expression
+~~~~~~~~~~~~~~~
+
+.. write-me::
+
+.. syntax-outline::
+
+    self
+    self.<#member name#>
+    self[<#subscript index#>)
+    self.init(<#initializer arguments#>)
+
+.. syntax-grammar::
+
+    Grammar of a self expression
+
+    self-expression --> ``self``
+    self-expression --> ``self`` ``.`` identifier
+    self-expression --> ``self`` ``[`` expression ``]``
+    self-expression --> ``self`` ``.`` ``init``
 
 
 .. _Expressions_SuperclassExpression:
@@ -553,22 +598,13 @@ It has one of the following forms:
     super[<#subscript index#>]
     super.init(<#initializer arguments#>)
 
-The first form is understood as a member of the superclass.
-This allows a subclass to call the superclass's
-implementation of a method that it overrides,
-to get and set propertiess defined by its superclass,
-and to access its superclass's implementation of getters and setters.
+The first form is used to access a member of the superclass.
+The second form is used to access the superclass's subscript implementation.
+The third form is used to access an initializer of the superclass.
 
-.. TR: Confirm the above about properties.
-
-The second form is understood as a call
-to the superclass's subscript method.
-This allows a subclass to use its superclass's support for subscripting
-in the subclass's support for subscripting.
-
-The third form is understood as the superclass's initializer.
-This allows a subclass to call the initializer of its superclass
-as part of the subclass's initializer.
+Subclasses can use a superclass expression
+in their implementation of members, subscripting, and initializers
+to make use of the implementation in their superclass.
 
 .. langref-grammar
 
@@ -583,11 +619,11 @@ as part of the subclass's initializer.
 
     Grammar of a superclass expression
 
-    superclass-expression --> superclass-method-expression | superclass-subscript-expression | superclass-constructor-expression
+    superclass-expression --> superclass-method-expression | superclass-subscript-expression | superclass-initializer-expression
 
     superclass-method-expression --> ``super`` ``.`` identifier
     superclass-subscript-expression --> ``super`` ``[`` expression ``]``
-    superclass-constructor-expression --> ``super`` ``.`` ``init``
+    superclass-initializer-expression --> ``super`` ``.`` ``init``
 
 
 .. _Expressions_ClosureExpression:
@@ -614,7 +650,7 @@ as the parameters in a function declaration,
 as described in :ref:`Declarations_FunctionDeclaration`.
 
 There are several special forms
-that allow closures to be written more concicely:
+that allow closures to be written more concisely:
 
 * A closure can omit the types
   of its parameters, its return type, or both.
@@ -670,10 +706,10 @@ see :ref:`Closures_ClosureExpressions`.
     closure-expression --> ``{`` closure-signature-OPT statements ``}``
     closure-expressions --> closure-expression closure-expressions-OPT
 
-    closure-signature --> parameter-clause function-signature-result-OPT ``in``
-    closure-signature --> identifier-list function-signature-result-OPT ``in``
+    closure-signature --> parameter-clause function-result-OPT ``in``
+    closure-signature --> identifier-list function-result-OPT ``in``
 
-    anonymous-closure-argument --> dollar-identifier
+    anonymous-closure-argument --> implicit-parameter-name
 
 
 .. _Expressions_ImplicitMemberExpression:
@@ -692,10 +728,14 @@ It has the following form:
 
    .<#member name#>
 
-For example: ::
+For example:
 
-    var x = MyEnumeration.SomeValue
-    x = .AnotherValue
+.. testcode::
+
+    >> enum MyEnumeration { case SomeValue, AnotherValue }
+    -> var x = MyEnumeration.SomeValue
+    << // x : MyEnumeration = <unprintable value>
+    -> x = .AnotherValue
 
 .. langref-grammar
 
@@ -714,7 +754,7 @@ Parenthesized Expression
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 A :newTerm:`parenthesized expression` consists of
-a comma-separated list of expressions surrounded by paretheses.
+a comma-separated list of expressions surrounded by parentheses.
 Each expression can have an optional identifier before it,
 separated by a colon (``:``).
 It has the following form:
@@ -723,10 +763,13 @@ It has the following form:
 
    (<#identifier 1#>: <#expression 1#>, <#identifier 2#>: <#expression 2#>, <#...#>)
 
-Parenthesized expressions are used to create tuples and to pass arguments
-to a function call. If there is only one value inside the parenthesized expression,
-the type of the parenthesized expression is the type of that value. For example,
-the type of the parenthesized expression ``(1)`` is ``Int``, not ``(Int)``.
+Use parenthesized expressions to create tuples
+and to pass arguments to a function call.
+If there is only one value inside the parenthesized expression,
+the type of the parenthesized expression is the type of that value.
+For example,
+the type of the parenthesized expression ``(1)``
+is ``Int``, not ``(Int)``.
 
 .. langref-grammar
 
@@ -752,9 +795,14 @@ Wildcard Expression
 A :newTerm:`wildcard expression`
 is used to explicitly ignore a value during an assignment.
 For example in the following assignment
-10 is assigned to ``x`` and 20 is ignored: ::
+10 is assigned to ``x`` and 20 is ignored:
 
-    (x, _) = (10, 20)
+.. testcode::
+
+    >> var (x, _) = (10, 20)
+    << // (x, _) : (Int, Int) = (10, 20)
+    -> (x, _) = (10, 20)
+    -> // x is 10, 20 is ignored
 
 .. <rdar://problem/16678866> Assignment to _ from a variable causes a REPL segfault
 
@@ -777,7 +825,7 @@ Syntactically, every primary expression is also a postfix expression.
 
 .. TR: Does it make sense to call out the left-to-right grouping?
 
-The Swift Standard Library provides the following postfix operators:
+The Swift standard library provides the following postfix operators:
 
 * ``++`` Increment
 * ``--`` Decrement
@@ -807,11 +855,11 @@ see :doc:`../LanguageGuide/BasicOperators` and :doc:`../LanguageGuide/AdvancedOp
     postfix-expression --> function-call-expression
     postfix-expression --> initializer-expression
     postfix-expression --> explicit-member-expression
-    postfix-expression --> self-expression
-    postfix-expression --> dynamic-type-expression
+    postfix-expression --> postfix-self-expression
+    postfix-expression --> metatype-expression
     postfix-expression --> subscript-expression
     postfix-expression --> forced-expression
-    postfix-expression --> optional-expression
+    postfix-expression --> optional-chaining-operator
 
 
 .. _Expressions_FunctionCallExpression:
@@ -822,7 +870,7 @@ Function Call Expression
 .. TODO: After we rewrite function decls,
    revisit this section to make sure that the names for things match.
 
-A :newTerm:`function call expression` consist of a function name
+A :newTerm:`function call expression` consists of a function name
 followed by a comma-separated list of the function's arguments in parentheses.
 Function call expressions have the following form:
 
@@ -834,21 +882,22 @@ The *function name* can be any expression whose value is of a function type.
 
 If the function definition includes names for its parameters,
 the function call must include names before its argument values
-separated by a colon (``:``) ---
-this has the following form:
+separated by a colon (``:``).
+This kind of function call expression has the following form:
 
 .. syntax-outline::
 
    <#function name#>(<#argument name 1#>: <#argument value 1#>, <#argument name 2#>: <#argument value 2#>)
 
-A function call expression can include a :newTerm:`trailing closure`
+A function call expression can include a trailing closure
 in the form of a closure expression immediately after the closing parenthesis.
 The trailing closure is understood as an argument to the function,
 added after the last parenthesized argument.
-The following function calls are equivalent: ::
+The following function calls are equivalent::
 
-    exampleFunction(x, {$0 == 13})
-    exampleFunction(x) {$0 == 13}
+
+     someFunction(x, {$0 == 13})
+     someFunction(x) {$0 == 13}
 
 If the trailing closure is the function's only argument,
 the parentheses can be omitted: ::
@@ -889,19 +938,26 @@ It has the following form:
 
     <#expression#>.init(<#initializer arguments#>)
 
-An initializer expression is used like a function call
+You use the initializer expression in a function call expression
 to initialize a new instance of a type.
 Unlike other functions, an initializer can't be used as a value.
-For example: ::
+For example:
 
-    var x = MyClass.someClassFunction // ok
-    var y = MyClass.init              // error
+.. testcode::
 
-Initializer expressions are also used
+    >> class MyClass { class func someClassFunction() {} }
+    -> var x = MyClass.someClassFunction // ok
+    << // x : () -> () = <unprintable value>
+    -> var y = MyClass.init              // error
+    !! <REPL Input>:1:17: error: initializer cannot be referenced without arguments
+    !! var y = MyClass.init
+    !!                 ^
+
+You also use an initializer expression
 to delegate to the initializer of a superclass: ::
 
     init() {
-       // ... Initialization goes here ...
+       // ... Subclass initialization ...
        super.init()
     }
 
@@ -931,20 +987,27 @@ and the identifier of its member.
 
 The members of a named type are named
 as part of the type's declaration or extension.
-For example: ::
+For example:
 
-    class C { var x }
-    var c = C()
-    let y = c.x  // Member access
+.. testcode::
+
+    -> class C { var x = 42 }
+    -> let c = C()
+    << // c : C = <C instance>
+    -> let y = c.x  // Member access
+    << // y : Int = 42
 
 The members of a tuple
-are implictly named using integers in the order they appear,
+are implicitly named using integers in the order they appear,
 starting from zero.
-For example: ::
+For example:
 
-    var t = (10, 20, 30)
-    t.0 = t.1
-    // Now t is (20, 20, 30)
+.. testcode::
+
+    -> var t = (10, 20, 30)
+    << // t : (Int, Int, Int) = (10, 20, 30)
+    -> t.0 = t.1
+    -> // Now t is (20, 20, 30)
 
 The members of a module access
 the top-level declarations of that module.
@@ -961,13 +1024,13 @@ the top-level declarations of that module.
     Grammar of an explicit member expression
 
     explicit-member-expression --> postfix-expression ``.`` decimal-digit
-    explicit-member-expression --> postfix-expression ``.`` named-expression
+    explicit-member-expression --> postfix-expression ``.`` identifier generic-argument-clause-OPT
 
 
-.. _Expressions_SelfExpression:
+.. _Expressions_PostfixSelfExpression:
 
-Self Expression
-~~~~~~~~~~~~~~~
+Postfix Self Expression
+~~~~~~~~~~~~~~~~~~~~~~~
 
 .. write-me:: This section needs a rewrite.
 
@@ -976,7 +1039,7 @@ Self Expression
        <#expression#>.self
 
 ..  Old prose:
-    A :newTerm:`self expression` is an explicit reference
+    A :newTerm:`postfix self expression` is an explicit reference
     to a type or an instance of a type.
     It has the following form:
 
@@ -1021,13 +1084,13 @@ Self Expression
 
     Grammar of a self expression
 
-    self-expression --> postfix-expression ``.`` ``self``
+    postfix-self-expression --> postfix-expression ``.`` ``self``
 
 
-.. _Expressions_DynamicTypeExpression:
+.. _Expressions_MetatypeExpression:
 
-Dynamic Type Expression
-~~~~~~~~~~~~~~~~~~~~~~~
+Metatype Expression
+~~~~~~~~~~~~~~~~~~~
 
 .. write-me::
 
@@ -1039,7 +1102,7 @@ Dynamic Type Expression
 
     Grammar of a dynamic type expression
 
-    dynamic-type-expression --> postfix-expression ``.`` ``dynamicType
+    metatype-expression --> postfix-expression ``.`` ``dynamicType``
 
 
 .. _Expressions_SubscriptExpression:
@@ -1104,7 +1167,7 @@ It has the following form:
 If the *expression* is of an optional type
 and its value is not ``nil``,
 the optional value is unwrapped
-and returned with the corresponding non-optional type.
+and returned with the corresponding nonoptional type.
 If its value is ``nil``, a runtime error is raised.
 
 .. TR: In previous review, we noted that this also does downcast,
@@ -1127,30 +1190,40 @@ If its value is ``nil``, a runtime error is raised.
     forced-expression --> postfix-expression ``!``
 
 
-.. _Expression_Chained-OptionalExpression:
+.. _Expression_OptionalChainingOperator:
 
-Chained-Optional Expression
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Optional-Chaining Expression
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-An :newTerm:`chained-optional expression` provides a simplified synatax
+An :newTerm:`optional-chaining expression` provides a simplified syntax
 for using optional values in postfix expressions.
 It has the following form:
 
 .. syntax-outline::
 
-    <#expression#>?<#postfixes #>
+    <#expression#>?
+
+For example:
+
+.. testcode::
+
+   -> let s: String? = nil
+   << // r0: String? = <unprintable value>
+   -> s?.startsWith("In the beginning")
+   << // r1: Bool? = <unprintable value>
 
 If the *expression* is not ``nil``,
-the chained-optional expression evaluates
-to the unwrapped value of the expression,
-after any chained postfix expression are evaluated.
+the optional-chaining operator returns
+the value of the expression,
+and any chained postfix expression are evaluated.
 Otherwise,
-the chained-optional expression evaluates to ``nil``
+the optional-chaining operator returns ``nil``
 and any chained postfix expressions are ignored.
 
-Informally, all postfix expressions that follow the chained-optional expression
-and are still part of the same expression
-are understood to be chained to the chained-optional expression.
+Informally,
+all postfix expressions that follow the optional-chaining expression
+--- and that are still part of the same expression ---
+are understood to be chained to the optional-chaining expression.
 Specifically,
 a postfix expression is :newTerm:`directly chained`
 to the expression that is its first part.
@@ -1160,15 +1233,14 @@ or if it is directly chained to another postfix expression
 that is chained to that expression.
 
 For example, in the expression ``x?.foo()[7]``
-both the function call and the array subscript
-are chained to the chained optional expression,
-and they are both ignored if the value of ``x`` is ``nil``.
-The function call is directly chained
-it is chained to the chained-optional expression
-because it is chained directly to that expression.
-The array subscript is chained to the chained optional expression
-because it is directly chained to the function call,
-which is chained to the chained-optional call.
+the function call is chained
+to the optional-chaining expression ``x?``
+because it is directly chained to that expression.
+The array subscript is chained to the optional-chaining expression
+because it is directly chained to the function call expression ``x?.foo()``,
+and the function call is chained to the optional-chaining expression.
+Both the function call and the array subscript
+are ignored if the value of ``x`` is ``nil``.
 
 .. LangRef
 
@@ -1183,6 +1255,10 @@ which is chained to the chained-optional call.
    an r-value of type U? for some type U. Note that a single expression may
    be the largest chained expression of multiple expr-optionals.
 
+.. From the perspective of monads,
+   an optional-chaining expression lifts its chained operations
+   from working with non-optional types
+   into working with optional types.
 
 .. langref-grammar
 
@@ -1190,7 +1266,7 @@ which is chained to the chained-optional call.
 
 .. syntax-grammar::
 
-   Grammar of a chained optional expression
+   Grammar of a chained-optional expression
 
    chained-optional-expression --> postfix-expression ``?``
 

@@ -15,24 +15,24 @@ Types can be nested to as many levels as are required:
 
    -> struct BlackjackCard {
          enum Suit: Character {
-            case Spades = '♠', Hearts = '♡', Diamonds = '♢', Clubs = '♣'
+            case Spades = "♠", Hearts = "♡", Diamonds = "♢", Clubs = "♣"
          }
          enum Rank: String {
             case Two = "2", Three = "3", Four = "4", Five = "5", Six = "6"
             case Seven = "7", Eight = "8", Nine = "9", Ten = "10"
             case Jack = "Jack", Queen = "Queen", King = "King", Ace = "Ace"
             struct Values {
-               let firstValue: Int
-               let secondValue: Int?
+               let first: Int
+               let second: Int?
             }
             var values: Values {
                switch self {
                   case .Ace:
-                     return Values(1, 11)
+                     return Values(first: 1, second: 11)
                   case .Jack, .Queen, .King:
-                     return Values(10, nil)
+                     return Values(first: 10, second: nil)
                   default:
-                     return Values(self.toRaw().toInt()!, nil)
+                     return Values(first: self.toRaw().toInt()!, second: nil)
                }
             }
          }
@@ -40,14 +40,14 @@ Types can be nested to as many levels as are required:
          let suit: Suit
          func description() -> String {
             var output = "the \(rank.toRaw()) of \(suit.toRaw())"
-            output += " is worth \(rank.values.firstValue)"
-            if let secondValue = rank.values.secondValue {
-               output += " or \(secondValue)"
+            output += " is worth \(rank.values.first)"
+            if let second = rank.values.second {
+               output += " or \(second)"
             }
             return output
          }
       }
-   -> let theAceOfSpades = BlackjackCard(.Ace, .Spades)
+   -> let theAceOfSpades = BlackjackCard(rank: .Ace, suit: .Spades)
    << // theAceOfSpades : BlackjackCard = BlackjackCard(<unprintable value>, <unprintable value>)
    -> println("Blackjack value: \(theAceOfSpades.description())")
    <- Blackjack value: the Ace of ♠ is worth 1 or 11
@@ -111,8 +111,8 @@ by prefixing its name with the name of the type it is nested within:
 
    -> let heartsSymbol = BlackjackCard.Suit.Hearts.toRaw()
    << // heartsSymbol : Character = <unprintable value>
-   /> heartsSymbol is '\(heartsSymbol)'
-   </ heartsSymbol is '♡'
+   /> heartsSymbol is \"\(heartsSymbol)\"
+   </ heartsSymbol is "♡"
 
 For the example above, 
 this enables the names of ``Suit``, ``Rank`` and ``Values`` to be kept deliberately short,

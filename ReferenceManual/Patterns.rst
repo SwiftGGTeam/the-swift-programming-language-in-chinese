@@ -54,12 +54,13 @@ Wildcard Pattern
 A :newTerm:`wildcard pattern` matches and ignores any value and consists of an underscore
 (``_``). Use a wildcard pattern when you don't care about the values being
 matched against. For example, the following code iterates through the closed range ``1..3``,
-ignoring the current value of the range on each iteration of the loop::
+ignoring the current value of the range on each iteration of the loop:
 
-    for _ in 1..3 {
-       // Do something three times.
-    }
+.. testcode::
 
+    -> for _ in 1..3 {
+          // Do something three times.
+       }
 
 .. langref-grammar
 
@@ -80,9 +81,12 @@ Identifier Pattern
 An :newTerm:`identifier pattern` matches any value and binds the matched value to a
 variable or constant name.
 For example, in the following constant declaration, ``someValue`` is an identifier pattern
-that matches the value ``42`` of type ``Int``::
+that matches the value ``42`` of type ``Int``:
 
-    let someValue = 42
+.. testcode::
+
+    -> let someValue = 42
+    << // someValue : Int = 42
 
 When the match succeeds, the value ``42`` is bound (assigned)
 to the constant name ``someValue``.
@@ -114,15 +118,16 @@ bind new named variables or constants to their matching values. For example,
 you can decompose the elements of a tuple and bind the value of each element to a
 corresponding identifier pattern.
 
-::
+.. testcode::
 
-    let point = (3, 2)
-    switch point {
-    // Bind x and y to the elements of point.
-    case let (x, y):
-       println("The point is at (\(x), \(y)).")
-    }
-    // Prints "The point is at (3, 2)."
+    -> let point = (3, 2)
+    << // point : (Int, Int) = (3, 2)
+    -> switch point {
+          // Bind x and y to the elements of point.
+          case let (x, y):
+             println("The point is at (\(x), \(y)).")
+       }
+    <- The point is at (3, 2).
 
 In the example above, ``let`` distributes to each identifier pattern in the
 tuple pattern ``(x, y)``. Because of this behavior, the ``switch`` cases
@@ -169,21 +174,37 @@ identifier patterns, or other tuple patterns that contain those. For example, th
 following code isn't valid because the element ``0`` in the tuple pattern ``(x, 0)`` is
 an expression pattern:
 
-::
+.. testcode::
 
-    let points = [(0, 0), (1, 0), (1, 1), (2, 0), (2, 1)]
-    // This code isn't valid.
-    for (x, 0) in points {
-       /* ... */
-    }
+    -> let points = [(0, 0), (1, 0), (1, 1), (2, 0), (2, 1)]
+    << // points : Array<(Int, Int)> = [(0, 0), (1, 0), (1, 1), (2, 0), (2, 1)]
+    -> // This code isn't valid.
+    -> for (x, 0) in points {
+          /* ... */
+       }
 
 The parentheses around a tuple pattern that contains a single element have no effect.
 The pattern matches values of that single element's type. For example, the following are
-equivalent::
+equivalent:
 
-    let a = 2        // a: Int = 2
-    let (a) = 2      // a: Int = 2
-    let (a): Int = 2 // a: Int = 2
+.. testcode::
+
+    -> let a = 2        // a: Int = 2
+    << // a : Int = 2
+    -> let (a) = 2      // a: Int = 2
+    !! <REPL Input>:1:6: error: invalid redeclaration of 'a'
+    !! let (a) = 2      // a: Int = 2
+    !!      ^
+    !! <REPL Input>:1:5: note: 'a' previously declared here
+    !! let a = 2        // a: Int = 2
+    !!     ^
+    -> let (a): Int = 2 // a: Int = 2
+    !! <REPL Input>:1:6: error: invalid redeclaration of 'a'
+    !! let (a): Int = 2 // a: Int = 2
+    !!      ^
+    !! <REPL Input>:1:5: note: 'a' previously declared here
+    !! let a = 2        // a: Int = 2
+    !!     ^
 
 .. langref-grammar
 
@@ -282,44 +303,44 @@ case labels.
 
 The expression represented by the expression pattern
 is compared with the value of an input expression
-using the Swift Standard Library ``~=`` operator.
+using the Swift standard library ``~=`` operator.
 The matches succeeds
 if the ``~=`` operator returns ``true``. By default, the ``~=`` operator compares
 two values of the same type using the ``==`` operator. It can also match an integer
 value with a range of integers in an ``Range`` object, as the following example shows:
 
-::
+.. testcode:: expression-pattern
 
-    let point = (1, 2)
-    switch point {
-       case (0, 0):
-          println("(0, 0) is at the origin.")
-       case (-2..2, -2..2):
-          println("(\(point.0), \(point.1)) is near the origin.")
-       default:
-          println("The point is at (\(point.0), \(point.1)).")
-    }
-    // Prints "(1, 2) is near the origin."
+    -> let point = (1, 2)
+    -> switch point {
+          case (0, 0):
+             println("(0, 0) is at the origin.")
+          case (-2..2, -2..2):
+             println("(\(point.0), \(point.1)) is near the origin.")
+          default:
+             println("The point is at (\(point.0), \(point.1)).")
+       }
+    <- (1, 2) is near the origin.
 
 You can overload the ``~=`` operator to provide custom expression matching behavior.
 For example, you can rewrite the above example to compare the ``point`` expression
 with a string representations of points.
 
-::
+.. testcode:: expression-pattern
 
-    // Overload the ~= operator to match a string with an integer
-    func ~=(pattern: String, value: Int) -> Bool {
-       return pattern == "\(value)"
-    }
-    switch point {
-       case ("0", "0"):
-          println("(0, 0) is at the origin.")
-       case ("-2..2", "-2..2"):
-          println("(\(point.0), \(point.1)) is near the origin.")
-       default:
-          println("The point is at (\(point.0), \(point.1)).")
-    }
-    // Prints "(1, 2) is near the origin."
+    -> // Overload the ~= operator to match a string with an integer
+    -> func ~=(pattern: String, value: Int) -> Bool {
+          return pattern == "\(value)"
+       }
+    -> switch point {
+          case ("0", "0"):
+             println("(0, 0) is at the origin.")
+          case ("-2..2", "-2..2"):
+             println("(\(point.0), \(point.1)) is near the origin.")
+          default:
+             println("The point is at (\(point.0), \(point.1)).")
+       }
+    <- (1, 2) is near the origin.
 
 
 .. syntax-grammar::

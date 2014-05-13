@@ -1,173 +1,200 @@
 Generics
 ========
 
-:newTerm:`Generics` are a way to write code that can work with any type at all,
-subject to certain requirements that you choose to define.
-This enables you to write reusable code that can work with *any* type,
-including types that you have not defined yourself.
+:newTerm:`Generics` are a way to write flexible, reusable code
+that can work with any type at all,
+subject to certain requirements that you define.
 
-You've actually been using generics throughout this book, even if you didn't realise it.
-Swift's ``Array`` and ``Dictionary`` types are both :newTerm:`generic collections`.
-You can create an array to hold ``Int`` values, or ``String`` values,
-or indeed any other type that can be created in Swift.
-Similarly, you can create a dictionary to store values of any specified type,
-and there are no limitations on what that type must be.
+Generics are one of the most powerful features of Swift,
+and much of Swift's standard library is built with generic code.
+Generics enable you to write flexible code that avoids duplication,
+and expresses its intent in a clear, abstracted manner.
 
-``Dictionary`` does, however, choose to place a limitation on
-the types that can be used as *keys* for a dictionary.
-As described in :ref:`CollectionTypes_Dictionaries`,
-the type of a dictionary's keys must be :newTerm:`hashable` –
-that is, it must provide a way to make itself uniquely representable.
-``Dictionary`` needs its keys to be hashable so that it can
-check if it already contains a value for a particular key.
-Without this requirement, ``Dictionary`` would not be able to tell
-whether it should insert or replace a value for a particular key,
-nor would it be able to find a value for a given key that is already in the dictionary.
+Why Generics?
+-------------
 
-``Dictionary`` enforces this requirement by saying that
-its key type must conform to the ``Hashable`` protocol,
-which is a special protocol defined in Swift's Standard Library.
-All of Swift's basic types (such as ``String``, ``Int``, ``Double``, and ``Bool``)
-are hashable by default,
-and you can make your own custom types conform to the ``Hashable`` protocol
-so that they too can be dictionary keys
-(as described in :doc:`Protocols`).
+Here's a normal, non-generic function called ``swapTwoInts``,
+which takes two ``Int`` variables, and swaps their values:
 
-.. TODO: I still need to write that bit.
+.. testcode:: whyGenerics
 
-The important thing is that ``Array`` and ``Dictionary`` instances
-always behave in exactly the same way,
-regardless of the type that a particular ``Array`` or ``Dictionary`` instance stores,
-and regardless of what type is being used as the ``Dictionary`` key.
-The functionality that makes them array-like, and dictionary-like,
-is generic, regardless of the specific types being used.
-
-To give an idea of just how flexible generic code can be,
-here's an ``Array`` that stores *functions* –
-in this case, any function with a single ``Int`` parameter, that also returns an ``Int``.
-Functions like this have a type of ``Int -> Int``,
-and this type can be used as the type to be stored in an ``Array``:
-
-.. testcode:: generics
-
-   -> var someFunctions = Array<Int -> Int>()
-   << // someFunctions : Array<Int -> Int> = []
-   -> someFunctions.append({ $0 + 6 })
-   -> someFunctions.append({ $0 * 3 })
-   -> for function in someFunctions {
-         println(function(5))
+   -> func swapTwoInts(inout a: Int, inout b: Int) {
+         let temporaryA = a
+         a = b
+         b = temporaryA
       }
-   << 11
-   << 15
-   /> prints \"\(someFunctions[0](5))\" and \"\(someFunctions[1](5))\"
-   </ prints "11" and "15"
 
-This example creates a new ``Array`` to store functions of type ``Int -> Int``.
-It then adds two closures to the array.
-Because the ``someFunctions`` array is known to store things that are of type ``Int -> Int``,
-Swift infers that the two closures added to the array must have a single ``Int`` parameter,
-and return an ``Int`` value.
-This means that the two closures can be written very concisely,
-and do not need to specify their parameter or return value types.
-Instead, they can refer to their single parameter as ``$0``,
-and can return a value without needing to write the ``return`` keyword.
+This function makes use of in-out parameters to swap the values of ``a`` and ``b``,
+as described in :ref:`Functions_InOutParameters`.
 
-The array is then iterated with a ``for``-``in`` loop.
-Each item in the array is a function,
-and so it can be called just like a normal function
-by placing a value in parentheses after the name that refers to it.
-Here, each function is passed an ``Int`` value of ``5``.
+The ``swapTwoInts`` function swaps the original value of ``b`` into ``a``,
+and the original value of ``a`` into ``b``.
+You can call this function to swap the values in two ``Int`` variables:
 
-Even though the things being stored in the array happen to be functions,
-all of the array-like functionality remains the same,
-such as appending new items onto the end of the array,
-and iterating the array to retrieve each item in turn.
-When you write your own generic code,
-you will create your own generic types (like ``Array`` and ``Dictionary``),
-and define your own protocols (like ``Hashable``),
-to enable those generic types to define and enforce certain requirements
-on the types they can work with.
+.. testcode:: whyGenerics
+
+   -> var someInt = 3
+   << // someInt : Int = 3
+   -> var anotherInt = 107
+   << // anotherInt : Int = 107
+   -> swapTwoInts(&someInt, &anotherInt)
+   -> println("someInt is now \(someInt), and anotherInt is now \(anotherInt)")
+   <- someInt is now 107, and anotherInt is now 3
+
+This function is useful, but it can only be used with ``Int`` values.
+If you want to swap two ``String`` values,
+or two ``Double`` values,
+you have to write more functions,
+such as the ``swapTwoStrings`` and ``swapTwoDoubles`` functions shown below:
+
+.. testcode:: whyGenerics
+
+   -> func swapTwoStrings(inout a: String, inout b: String) {
+         let temporaryA = a
+         a = b
+         b = temporaryA
+      }
+   ---
+   -> func swapTwoDoubles(inout a: Double, inout b: Double) {
+         let temporaryA = a
+         a = b
+         b = temporaryA
+      }
+
+You may have noticed that the bodies of
+the ``swapTwoInts``, ``swapTwoStrings``, and ``swapTwoDoubles`` functions are identical.
+The only difference between the three functions
+is the type of the values that they accept (``Int``, ``String``, and ``Double``).
+
+It would be much more useful, and considerably more flexible,
+to write a single function that could swap two values of *any* type.
+This is the kind of problem that generic code can solve.
+(A generic version of these functions is defined below.)
+
+.. note::
+
+   In all three functions,
+   it is important that the types of ``a`` and ``b`` are defined to be the same as each other.
+   If ``a`` and ``b`` were not of the same type,
+   it would not be possible to swap their values.
+   Swift is a type-safe language,
+   and does not allow (for example) a variable of type ``String``
+   and a variable of type ``Double``
+   to swap values with each other.
+   Attempting to do so would be reported as a compile-time error.
+
+Generics Are Used Throughout Swift
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You've actually been using generics throughout this Language Guide,
+even if you didn't realise it.
+For example, Swift's ``Array`` and ``Dictionary`` types
+are both generic collections.
+You can create an array that holds ``Int`` values,
+or an array that holds ``String`` values,
+or indeed an array for any other type that can be created in Swift.
+Similarly, you can create a dictionary to store values of any specified type,
+and there are no limitations on what that type can be.
+
+Swift enables you to write generic functions
+(to solve the ``swapTwoInts`` problem),
+and generic types (such as ``Array`` and ``Dictionary``),
+to make your own code flexible and reusable.
+The process for defining generic functions and generic types is described in detail below.
 
 .. _Generics_GenericFunctions:
 
 Generic Functions
 -----------------
 
-Before describing how to create custom generic types,
-it is useful to understand how functions can be made to work with values of any type.
+:newTerm:`Generic functions` are functions that can work with any type.
+Here's a generic version of the ``swapTwoInts`` function from above,
+called ``swapTwoValues``:
 
-Here's an example of a :newTerm:`generic function`,
-based on the ``swap`` function from Swift's Standard Library:
+.. testcode:: genericFunctions
 
-.. testcode:: swapValues
-
-   -> func swapValues<T>(inout a: T, inout b: T) {
-         (a, b) = (b, a)
+   -> func swapTwoValues<T>(inout a: T, inout b: T) {
+         let temporaryA = a
+         a = b
+         b = temporaryA
       }
 
-(There's a lot going on in this function definition, but don't worry –
-all will be explained below.)
+The body of the ``swapTwoValues`` function
+is identical to the body of the ``swapTwoInts`` function.
+However, the first line of ``swapTwoValues``
+is slightly different from ``swapTwoInts``.
+Here's how the first lines compare:
 
-This function, called ``swapValues``, takes two values ``a`` and ``b``,
-and swaps them. For example:
+.. testcode:: genericFunctionsComparison
 
-.. testcode:: swapValues
+   -> func swapTwoInts(inout a: Int, inout b: Int)
+   >> {
+   >>    let temporaryA = a
+   >>    a = b
+   >>    b = temporaryA
+   >> }
+   -> func swapTwoValues<T>(inout a: T, inout b: T)
+   >> {
+   >>    let temporaryA = a
+   >>    a = b
+   >>    b = temporaryA
+   >> }
 
-   -> var firstInt = 1
-   << // firstInt : Int = 1
-   -> var secondInt = 100
-   << // secondInt : Int = 100
-   -> swapValues(&firstInt, &secondInt)
-   /> firstInt is now \(firstInt), and secondInt is now \(secondInt)
-   </ firstInt is now 100, and secondInt is now 1
+The generic version of the function
+uses a *placeholder* type name (called ``T``, in this case)
+instead of an *actual* type name (such as ``Int``, ``String``, or ``Double``).
+The placeholder type name doesn't say anything about what ``T`` must be;
+but it *does* say that both ``a`` and ``b`` must be of the same type ``T``,
+whatever ``T`` represents.
+(The actual type to use in place of ``T``
+will be determined each time the ``swapTwoValues`` function is called.)
 
-This function doesn't just work with ``Int`` values, however –
-it can be used with any other type, such as a pair of ``String`` values:
+The other difference is that the generic function's name (``swapTwoValues``)
+is followed by the placeholder type name (``T``) inside angle brackets (``<T>``).
+This tells Swift that ``T`` is a placeholder type name
+(as opposed to an actual type name) within the ``swapTwoValues`` function definition.
+This stops Swift from looking for an actual type called ``T``,
+and says “treat ``T`` as a placeholder instead”.
 
-.. testcode:: swapValues
+The ``swapTwoValues`` function can now be called in the same way as ``swapTwoInts``,
+except that it can be passed two values of *any* type,
+as long as both of those values are of the same type as each other.
+Each time ``swapTwoValues`` is called,
+the type to use for ``T`` is inferred from the types of values passed to the function.
 
-   -> var firstString = "hello"
-   << // firstString : String = "hello"
-   -> var secondString = "world"
-   << // secondString : String = "world"
-   -> swapValues(&firstString, &secondString)
-   /> firstString is now \"\(firstString)\", and secondString is now \"\(secondString)\"
-   </ firstString is now "world", and secondString is now "hello"
+In the two examples below, ``T`` is inferred to be ``Int`` and ``String`` respectively:
 
-The ``swapValues`` function doesn't care what kind of values it works with,
-as long as they are of the same type as each other.
-(It wouldn't make sense to swap an ``Int`` and a ``String``,
-because you can't store a ``String`` value in an ``Int`` variable, and vice versa.)
+.. testcode:: genericFunctions
 
-To achieve this, the ``swapValues`` function needs to talk *generically*
-about the types it can work with.
-Here's its definition again:
+   -> var someInt = 3
+   << // someInt : Int = 3
+   -> var anotherInt = 107
+   << // anotherInt : Int = 107
+   -> swapTwoValues(&someInt, &anotherInt)
+   /> someInt is now \(someInt), and anotherInt is now \(anotherInt)
+   </ someInt is now 107, and anotherInt is now 3
+   ---
+   -> var someString = "hello"
+   << // someString : String = "hello"
+   -> var anotherString = "world"
+   << // anotherString : String = "world"
+   -> swapTwoValues(&someString, &anotherString)
+   /> someString is now \"\(someString)\", and anotherString is now \"\(anotherString)\"
+   </ someString is now "world", and anotherString is now "hello"
 
-.. testcode:: swapValuesAgain
+.. note::
 
-   -> func swapValues<T>(inout a: T, inout b: T) {
-         (a, b) = (b, a)
-      }
-
-This can be read as:
-
-“Define a function called ``swapValues``, which, for some type ``T``,
-has an ``inout`` parameter called ``a`` that is of type ``T``,
-and an ``inout`` parameter called ``b`` that is also of type ``T``.”
-
-The “``T``” in this description is a placeholder for some type to be determined later.
-This type can be different each time the function is called.
-Nonetheless, from this definition,
-the ``swapValues`` function can be confident that whatever type ``T`` represents,
-both ``a`` and ``b`` are of that type.
-This enables it to provide its swapping functionality for any given type.
+   Swift's standard library defines a generic function called ``swap``,
+   which provides the same behavior as the ``swapTwoValues`` function from above.
+   You can use Swift's existing ``swap`` function whenever you need to swap two values.
 
 .. _Generics_TypeParameters:
 
 Type Parameters
 ~~~~~~~~~~~~~~~
 
-In the example above, ``T`` is said to be a :newTerm:`type parameter`.
+In the ``swapTwoValues`` example above,
+the placeholder type ``T`` is an example of a :newTerm:`type parameter`.
 Type parameters are a way to specify and name a placeholder type,
 and are written immediately after the function's name,
 between a pair of matching angle brackets (such as ``<T>``).
@@ -176,19 +203,14 @@ separated by commas.
 
 Once specified,
 a type parameter can be used as the type of a function's parameters
-(such as the ``a`` and ``b`` parameters of the ``swapValues`` function);
-as the function's return type;
+(such as the ``a`` and ``b`` parameters of the ``swapTwoValues`` function);
+or as the function's return type;
 or as a type annotation within the body of the function.
 In each case, the placeholder type represented by the type parameter
 is replaced with an *actual* type whenever the function is called.
-(In the ``swapValues`` example above,
+(In the ``swapTwoValues`` example above,
 ``T`` was replaced with ``Int`` the first time the function was called,
 and was replaced with ``String`` the second time it was called.)
-
-Note that you don't explicitly specify the type to be used when you call the function.
-You don't, for example, write ``swapValues<Int>(x, y)``.
-The type that ``T`` represents is inferred for you,
-and indeed you are not allowed to specify a type yourself.
 
 .. _Generics_NamingOfTypeParameters:
 
@@ -197,12 +219,13 @@ _________________________
 
 The choice of name for a type parameter is entirely up to you.
 In simple cases where a generic function or generic type needs to refer to a single placeholder type
-(such as the ``swapValues`` generic function above,
+(such as the ``swapTwoValues`` generic function above,
 or a generic collection that stores a single type, such as ``Array``),
 it is traditional to use the single-character name ``T`` for the type parameter.
 However, you are free to use any valid identifier as the type parameter name.
 
-If you are defining more complex generic functions or generic types with multiple parameters,
+If you are defining more complex generic functions,
+or generic types with multiple parameters,
 it can be useful to provide more descriptive type parameter names.
 For example, Swift's ``Dictionary`` type has two type parameters –
 one for its keys, and one for its values.
@@ -221,8 +244,9 @@ to provide a reminder of their purpose as you use them within your generic code.
 Generic Types
 -------------
 
-As mentioned above, Swift enables you to define your own :newTerm:`generic types`.
-These are custom classes, structures, enumerations and protocols
+In addition to generic functions,
+Swift also enables you to define your own :newTerm:`generic types`.
+These are custom classes, structures, enumerations, and protocols
 that can work with *any* type, in a similar way to ``Array`` and ``Dictionary``.
 
 Here's an example of a generic type called ``Stack``.
@@ -327,7 +351,7 @@ Here's how a type parameter is used within the definition of ``Stack``:
          }
       }
 
-As with ``swapValues<T>``,
+As with ``swapTwoValues<T>``,
 the ``Stack`` definition includes a single type parameter called ``T``,
 written within a pair of angle brackets (``<T>``).
 This type parameter is written immediately after the structure name, ``Stack``.
@@ -361,15 +385,33 @@ after the variable name:
 Type Constraints
 ----------------
 
-The ``swapValues`` function, and the ``Stack`` type,
+The ``swapTwoValues`` function, and the ``Stack`` type,
 are both able to work with any type at all.
 However, it can sometimes be useful to enforce
 certain :newTerm:`type constraints` on the types that can be used with
 generic functions and generic types.
 
-As mentioned earlier,
-Swift's ``Dictionary`` puts a constraint on the types that can be used as its keys.
-Specifically, it requires that the keys must conform to the ``Hashable`` protocol.
+For example,
+Swift's ``Dictionary`` type places a limitation on
+the types that can be used as *keys* for a dictionary.
+As described in :ref:`CollectionTypes_Dictionaries`,
+the type of a dictionary's keys must be :newTerm:`hashable` –
+that is, it must provide a way to make itself uniquely representable.
+``Dictionary`` needs its keys to be hashable so that it can
+check if it already contains a value for a particular key.
+Without this requirement, ``Dictionary`` would not be able to tell
+whether it should insert or replace a value for a particular key,
+nor would it be able to find a value for a given key that is already in the dictionary.
+
+``Dictionary`` enforces this requirement by saying that
+its key type must conform to the ``Hashable`` protocol,
+which is a special protocol defined in Swift's standard library.
+All of Swift's basic types (such as ``String``, ``Int``, ``Double``, and ``Bool``)
+are hashable by default,
+and you can make your own custom types conform to the ``Hashable`` protocol
+so that they too can be dictionary keys
+(as described in :doc:`Protocols`).
+
 You can define your own constraints when creating custom generic types,
 and these constraints provide much of the power of generic programming.
 Abstract concepts like ``Hashable``
@@ -443,7 +485,7 @@ for *every* possible type ``T``,
 and an appropriate error is reported when you try and compile the code.
 
 All is not lost, however.
-Swift's Standard Library defines a protocol called ``Equatable``,
+Swift's standard library defines a protocol called ``Equatable``,
 which requires any conforming type to implement the equality operator
 to compare any two values of that type.
 (All of Swift's standard types automatically support the ``Equatable`` protocol,
