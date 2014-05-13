@@ -387,7 +387,7 @@ and to notify a ``DiceGameDelegate`` about its progress:
                switch square + diceRoll {
                   case finalSquare:
                      break gameLoop
-                  case let x where x > finalSquare:
+                  case let newSquare where newSquare > finalSquare:
                      continue gameLoop
                   default:
                      square += diceRoll
