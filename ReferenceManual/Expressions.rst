@@ -312,7 +312,7 @@ Type-casting operators have the following form:
 
 The ``as`` operator
 performs a runtime cast of the *expression*
-as the specified *type*.
+to the specified *type*.
 It behaves as follows:
 
 * If casting the *expression*
@@ -331,11 +331,15 @@ It behaves as follows:
   is returned as an optional of the specified *type*.
   At runtime, if the cast succeeds,
   the value of *expression* is returned
-  as in instance of the specified *type*;
+  as an optional of the specified *type*;
   otherwise the value returned is ``nil``.
-  For example, casting from a superclass to a subclass.
+  An example is casting from a superclass to a subclass.
 
-For example:
+.. TODO: This is tripping readers up,
+   because of the distiction between runtime and compile time.
+   Look to the old LangRef's description for another approach.
+
+.. TODO: Add a case that's guaranteed to fail.
 
 .. testcode:: type-casting
 
@@ -349,21 +353,25 @@ For example:
     << // y : SomeSuperType = <SomeSuperType instance>
     -> let z = x as SomeChildType  // z is of type SomeChildType?
     << // z : SomeChildType? = <unprintable value>
+    ---
+    -> let y2: SomeSuperType = x   // y2 is of type SomeSuperType
+    << // y2 : SomeSuperType = <SomeSuperType instance>
+    -> let z2: SomeChildType? = x  // z2 is of type SomeChildType?
+    << // z2 : SomeChildType? = <unprintable value>
 
-Specifying a type with ``as`` provides the same type information
-to the compiler as a function call or a type annotation,
-as shown in the following examples:
+Specifying a type with ``as`` provides the same information
+to the compiler as a type annotation,
+as shown in the following example:
 
-::
+.. testcode:: type-casting-2
 
-    func f(a: SomeSuperType) -> SomeSuperType { return a }
-    func g(a: SomeChildType) -> SomeChildType { return a }
-
-    let y2: SomeSuperType = x   // y2 is of type SomeSuperType
-    let z2: SomeChildType? = x  // z2 is of type SomeChildType?
-
-    let y3 = f(x)   // y3 is of type SomeSuperType
-    let z3 = g(x)   // z3 is of type SomeChildType?
+    >> class SomeType {}
+    >> let x = SomeType()
+    ---
+    -> let y1 = x as SomeType
+    << // y1 : SomeType = <SomeType instance>
+    -> let y2: SomeType = x
+    << // y2 : SomeType = <SomeType instance>
 
 .. NOTE: The following text is no longer relevant,
     because now that T! is a type, x as T! no longer means
