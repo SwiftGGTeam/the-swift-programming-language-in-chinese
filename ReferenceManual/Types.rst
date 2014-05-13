@@ -230,7 +230,7 @@ the type of the curried function ``addTwoNumbers()()`` below is
     !!                  ^
     !!                  b:
 
-The function types of a curried function are grouped right-to-left. For instance,
+The function types of a curried function are grouped from right to left. For instance,
 the function type ``Int -> Int -> Int`` is understood as ``Int -> (Int -> Int)``---
 that is, a function that takes an ``Int`` and returns
 another function that takes and return an ``Int``. For example, you can rewrite
@@ -277,7 +277,50 @@ the curried function ``addTwoNumbers()()`` as the following nested function:
 Array Type
 ----------
 
-.. write-me:: Waiting for design decisions from compiler team. See notes below.
+The Swift language uses square brackets (``[]``) immediately after the name of a type
+as syntactic sugar for the named type ``Array<T>``, which is defined in the
+Swift standard library. In other words, the following two declarations are equivalent:
+
+.. testcode:: array-type
+
+    -> let someArray: String[] = ["Alex", "Brian", "Dave"]
+    << // someArray : Array<String> = ["Alex", "Brian", "Dave"]
+    -> let someArray: Array<String> = ["Alex", "Brian", "Dave"]
+    !! <REPL Input>:1:5: error: invalid redeclaration of 'someArray'
+    !! let someArray: Array<String> = ["Alex", "Brian", "Dave"]
+    !!     ^
+    !! <REPL Input>:1:5: note: 'someArray' previously declared here
+    !! let someArray = ["Alex", "Brian", "Dave"]
+    !!     ^
+
+In both cases, the constant ``someArray``
+is declared as an array of strings. The elements of an array can be accessed using
+square brackets as well: ``someArray[0]`` refers to the element at index 0, ``"Alex"``.
+
+As the above example also shows, you can use square brackets to create
+an array using an array literal. Empty array literals are written using an an empty
+pair of square brackets and can be used to create an empty array of a specified type.
+
+.. testcode::
+
+    -> var emptyArray: Double[] = []
+    << // emptyArray : Double[] = []
+
+You can create multidimensional arrays by chaining multiple sets of square brackets
+to the name of the base type of the elements. For example, you can create
+a two-dimensional array of integers---that is, an array that contains arrays of integers---
+using two sets of square brackets.
+
+.. testcode::
+
+    -> var array2D: Int[][] = [[1, 2], [3, 4], [5, 6]]
+    << // array2D : (Int[])[] = [[1, 2], [3, 4], [5, 6]]
+
+Although the array types are grouped from left to right
+(``Int[][]`` is understood as ``(Int[])[]``),
+an index of the *left-most* chained array type corresponds to the element at that index
+in the *right-most* chained array type. For instance, in the ``array2D`` array above,
+``array2D[0]`` refers to the array ``[1, 2]`` and ``array[0][1]`` refers to the value 2.
 
 .. langref-grammar
 
@@ -317,7 +360,7 @@ Array Type
 Optional Type
 -------------
 
-The Swift language defines the postfix operator ``?`` as syntactic sugar for
+The Swift language defines the postfix ``?`` as syntactic sugar for
 the named type ``Optional<T>``, which is defined in the Swift standard library.
 In other words, the following two declarations are equivalent:
 
@@ -333,8 +376,6 @@ In other words, the following two declarations are equivalent:
     !! var optionalInteger: Int?
     !!     ^
 
-.. TODO: Rewrite the first sentence. In this case, '?' isn't the operator at all;
-    it's just punctuation.
 
 In both cases, the variable ``optionalInteger``
 is declared to have the type of an optional integer.
