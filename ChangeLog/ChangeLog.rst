@@ -14,14 +14,17 @@ The book has the following known issues:
 * <rdar://16756239> Indentation is missing in Xcode-style code outlines.
 * <rdar://16756034> Formal grammar does not contain live links.
 * <rdar://16844985> Guided Tour has lines that don't compile in latest Swift
-* <rdar://16893324> The PDF is a mockup.
+* <rdar://16893324> The PDF version of TSPL is a mockup.
 
-May 13 2014
+May 14 2014
 ~~~~~~~~~~~~
 
 The content of this book is now on [Tool P],
 which shows it using the formatting and layout
 that will actually ship at WWDC.
+This format also includes an EPUB version,
+linked at the top right of the page.
+(At WWDC, the EPUB link will go away, and the iBook link will become live.)
 
 May 12 2014
 ~~~~~~~~~~~
