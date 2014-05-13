@@ -272,7 +272,7 @@ for every initialization parameter.
 To help with this, Swift provides an automatic external name
 for *every* parameter in an initializer if you don't provide an external name yourself.
 This automatic external name is the same as the local name,
-as if you had written a back tick before every initialization parameter.
+as if you had written a hash symbol before every initialization parameter.
 
 .. note::
 

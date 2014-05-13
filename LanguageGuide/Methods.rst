@@ -118,7 +118,7 @@ which tend not to name their arguments when the function is called.
 If you *do* want to provide an external name for a function parameter,
 to be used when calling the function,
 you opt in to this behavior by defining an external name yourself,
-or by placing a back tick (`````) before the parameter's local name
+or by placing a hash symbol (``#``) before the parameter's local name
 to indicate that the local name should also be used as an external name.
 This process is described in :ref:`Functions_ShorthandExternalParameterNames`.
 
@@ -177,7 +177,7 @@ The second argument, however, is qualified by an external parameter name
 to make its purpose clear when the method is called.
 
 This default behavior effectively treats the method as if you had written
-a back tick (`````) before the ``numberOfTimes`` parameter:
+a hash symbol (``#``) before the ``numberOfTimes`` parameter:
 
 .. testcode:: externalParameterNamesComparison
 
@@ -186,12 +186,12 @@ a back tick (`````) before the ``numberOfTimes`` parameter:
    >>    func incrementBy(amount: Int) {
    >>       count += amount
    >>    }
-   -> func incrementBy(amount: Int, `numberOfTimes: Int) {
+   -> func incrementBy(amount: Int, #numberOfTimes: Int) {
          count += amount * numberOfTimes
       }
    >> }
-   !! <REPL Input>:6:33: warning: extraneous '`' in parameter: 'numberOfTimes' is already the keyword argument name
-   !! func incrementBy(amount: Int, `numberOfTimes: Int) {
+   !! <REPL Input>:6:33: warning: extraneous '#' in parameter: 'numberOfTimes' is already the keyword argument name
+   !! func incrementBy(amount: Int, #numberOfTimes: Int) {
    !! ^
    !!-
 
@@ -207,7 +207,7 @@ __________________________________________________________
 It can sometimes be useful for a method to provide an external parameter name
 for its first parameter, even though this is not the default behavior.
 Where this is the case, you can either add an explicit external name yourself,
-or you can prefix the first parameter's name with a back tick
+or you can prefix the first parameter's name with a hash symbol
 to use the local name as an external name too.
 
 Conversely, if you do not want to provide an external name

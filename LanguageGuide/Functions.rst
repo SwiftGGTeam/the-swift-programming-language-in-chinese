@@ -386,17 +386,17 @@ If you want to provide an external parameter name for a function parameter,
 and the local parameter name is already an appropriate name to use,
 you do not need to write the same name twice for that parameter.
 Instead, you can write the name once,
-and prefix the name with a back tick (`````).
+and prefix the name with a hash symbol (``#``).
 This tells Swift to use that name as both
 the local parameter name and the external parameter name.
 
 This example defines a function called ``containsCharacter``,
 which defines external parameter names for both of its parameters
-by placing a back tick before their local parameter names:
+by placing a hash symbol before their local parameter names:
 
 .. testcode:: externalParameterNames
 
-   -> func containsCharacter(`string: String, `characterToFind: Character) -> Bool {
+   -> func containsCharacter(#string: String, #characterToFind: Character) -> Bool {
          for character in string {
             if character == characterToFind {
                return true
@@ -474,7 +474,7 @@ To make this process easier,
 Swift provides an automatic external name for any defaulted parameter you define,
 if you do not provide an external name yourself.
 The automatic external name is the same as the local name,
-as if you had written a back tick before the local name in your code.
+as if you had written a hash symbol before the local name in your code.
 
 Here's a version of the ``join`` function from earlier,
 which does not provide external names for any of its parameters,
