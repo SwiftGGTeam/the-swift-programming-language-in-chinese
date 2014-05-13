@@ -573,7 +573,7 @@ Function Declaration
     <#parameter name#>: <#parameter type#>...
     <#parameter name#>: <#parameter type#> = <#default argument value#>
     <#parameter name#> <#local parameter name#>: <#parameter type#>
-    `<#parameter name#>: <#parameter type#>
+    #<#parameter name#>: <#parameter type#>
 
 .. syntax-outline::
 
@@ -594,7 +594,7 @@ Function Declaration
     curried-arguments ::= parameter-clause+
 
     parameter-clause ::= '(' ')' | '(' parameter (',' parameter)* '...'? )'
-    parameter ::= 'inout'? ('let' | 'var')? '`'? identifier-or-none identifier-or-none? (':' type)? ('...' | '=' expr)?
+    parameter ::= 'inout'? ('let' | 'var')? '#'? identifier-or-none identifier-or-none? (':' type)? ('...' | '=' expr)?
     identifier-or-none ::= identifier | '_'
 
 .. syntax-grammar::
@@ -613,8 +613,8 @@ Function Declaration
     parameter-clauses --> parameter-clause parameter-clauses-OPT
     parameter-clause --> ``(`` ``)`` | ``(`` parameter-list ``...``-OPT ``)``
     parameter-list --> parameter | parameter ``,`` parameter-list
-    parameter --> ``inout``-OPT ``let``-OPT `````-OPT parameter-name local-parameter-name-OPT type-annotation default-argument-clause-OPT
-    parameter --> ``inout``-OPT ``var`` `````-OPT parameter-name local-parameter-name-OPT type-annotation default-argument-clause-OPT
+    parameter --> ``inout``-OPT ``let``-OPT ``#``-OPT parameter-name local-parameter-name-OPT type-annotation default-argument-clause-OPT
+    parameter --> ``inout``-OPT ``var`` ``#``-OPT parameter-name local-parameter-name-OPT type-annotation default-argument-clause-OPT
     parameter --> attributes-OPT type
     parameter-name --> identifier | ``_``
     local-parameter-name --> identifier | ``_``
