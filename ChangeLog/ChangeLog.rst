@@ -1,6 +1,12 @@
 Change Log
 ==========
 
+.. write-me:: Remove this chapter
+
+.. note::
+
+   This chapter will be removed on May 21, 2014.
+
 The book has the following known issues:
 
 .. Note: These are not the actual titles of the bugs,
@@ -12,7 +18,7 @@ The book has the following known issues:
 * <rdar://16844985> Guided Tour has lines that don't compile in latest Swift
 * <rdar://16893324> The PDF is a mockup.
 
-May 13, 2014
+May 13 2014
 ~~~~~~~~~~~~
 
 The content of this book is now on [Tool P],
