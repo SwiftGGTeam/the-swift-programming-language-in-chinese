@@ -169,8 +169,6 @@ or more elements.
 Function Type
 -------------
 
-.. write-me:: Finish writing this section.
-
 A function type represents the type of a function, method, or closure
 and consists of a parameter and return type separated by an arrow (``->``):
 
@@ -182,19 +180,76 @@ Because the *parameter type* and the *return type* can be a tuple type,
 function types support functions and methods that take multiple paramaters
 and return multiple values.
 
-.. variadic parameter types
-.. Curried function types
-.. autoclosure function types
+You can apply the ``auto_closure`` attribute to a function type that has a parameter
+type of ``()`` and that returns the type of an expression. An autoclosure function
+captures an implicit closure over the specified expression, instead of the expression
+itself. For example, the following are equivalent:
 
+.. testcode::
+
+    -> var a: () -> Int = { 42 }
+    << // a : () -> Int = <unprintable value>
+    -> var a: @auto_closure () -> Int = 42
+    !! <REPL Input>:1:5: error: invalid redeclaration of 'a'
+    !! var a: () -> Int = { 42 }
+    !!     ^
+    !! <REPL Input>:1:5: note: 'a' previously declared here
+    !! var a: @auto_closure () -> Int = 42
+    !!     ^
+
+For an example of how to use the ``auto_closure`` attribute,
+see :ref:`Closures_Autoclosures`. See also :ref:`Attributes_TypeAttributes`.
+
+.. Curried function types
+
+A function type can have a variadic parameter as the last parameter in its *parameter type*.
+Syntactically,
+a variadic parameter consists of a base type name followed immediately by three dots (``...``),
+as in ``Int...``. A variadic parameter is treated as an array that contains elements
+of the base type name. For instance, the variadic parameter ``Int...`` is treated
+as ``Int[]``. For an example that uses a variadic parameter,
+see :ref:`Functions_VariadicParameters`.
 
 To specify an in-out parameter, prefix the parameter type with the ``inout`` keyword.
-You can't mark a variadic parameter type or a return type with the ``inout`` keyword.
+You can't mark a variadic parameter or a return type with the ``inout`` keyword.
 In-out parameters are discussed in :ref:`Functions_InOutParameters`.
+
+The type of a curried function is equivalent to a nested function type.
+For example,
+the type of the curried function ``addTwoNumbers()()`` below is
+``Int -> Int -> Int``:
+
+.. testcode::
+
+    -> func addTwoNumbers(a: Int)(b: Int) -> Int {
+          return a + b
+       }
+    -> addTwoNumbers(4)(5) // Returns 9
+    !! <REPL Input>:1:18: error: missing argument label 'b:' in call
+    !! addTwoNumbers(4)(5) // Returns 9
+    !!                  ^
+    !!                  b:
+
+The function types of a curried function are grouped right-to-left. For instance,
+the function type ``Int -> Int -> Int`` is understood as ``Int -> (Int -> Int)``---
+that is, a function that takes an ``Int`` and returns
+another function that takes and return an ``Int``. For example, you can rewrite
+the curried function ``addTwoNumbers()()`` as the following nested function:
+
+.. testcode::
+
+    -> func addTwoNumbers(a: Int) -> (Int -> Int) {
+          func addTheSecondNumber(b: Int) -> Int {
+             return a + b
+          }
+          return addTheSecondNumber
+       }
+    -> addTwoNumbers(4)(5) // Returns 9
+    << // r0 : Int = 9
 
 .. langref-grammar
 
     type-function ::= type-tuple '->' type-annotation
-
 
 .. syntax-grammar::
 
