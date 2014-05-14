@@ -284,7 +284,7 @@ you can place a single ``var`` or ``let`` annotation before the member name, for
 Raw Values
 ----------
 
-The barcode example in :red:`Enumerations_AssociatedValues`
+The barcode example in :ref:`Enumerations_AssociatedValues`
 shows how members of an enumeration can declare that they store
 associated values of different types.
 In addition to associated values,
