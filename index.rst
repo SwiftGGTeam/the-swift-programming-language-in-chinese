@@ -4,10 +4,10 @@ Contents
 .. toctree::
     :maxdepth: 2
 
-    ChangeLog/index
     GuidedTour/index
     LanguageGuide/index
     ReferenceManual/index
+    ChangeLog/index
 
 Internal Chapters
 =================
