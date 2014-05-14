@@ -836,34 +836,45 @@ Enumerations and Structures
 ---------------------------
 
 You use ``enum`` to create an enumeration.
-Like all other types,
+Like classes and all other types,
 enumerations can have methods associated with them.
 
-::
-    enum Suit {
-       case Spades, Hearts, Diamonds, Clubs
-       func description() -> String {
-          switch self {
-             case .Spades:
-                return "spades"
-             case .Hearts:
-                return "hearts"
-             case .Diamonds:
-                return "diamonds"
-             case .Clubs:
-                return "clubs"
+.. testcode::
+
+    -> enum Suit {
+          case Spades, Hearts, Diamonds, Clubs
+          func description() -> String {
+             switch self {
+                case .Spades:
+                   return "spades"
+                case .Hearts:
+                   return "hearts"
+                case .Diamonds:
+                   return "diamonds"
+                case .Clubs:
+                   return "clubs"
+             }
           }
        }
-    }
+    -> let hearts = Suit.Hearts
+    << // hearts : Suit = <unprintable value>
+    -> let heartsDescription = hearts.description()
+    << // heartsDescription : String = "hearts"
 
 .. admonition:: Experiment
 
-   Add a method to ``Suit`` which returns "black"
+   Add a ``color`` method to ``Suit`` which returns "black"
    for spades and clubs, and returns "red" for hearts and diamonds.
 
 .. Suits are in Bridge order, which matches Unicode order.
    In other games, orders differ.
    Wikipedia lists a good half dozen orders.
+
+When creating the ``hearts`` constant,
+the enumeration member ``Suit.Hearts`` had to be written out in full,
+but inside the switch it could be abbreviated as just ``.Hearts``.
+You can use the abbreviated form
+anytime the value's type is already known.
 
 Enumerations can be based on an underlying "raw" value.
 In the example below,
