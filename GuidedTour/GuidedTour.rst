@@ -75,9 +75,9 @@ as the value you want to assign to it.
 
 .. testcode::
 
-    -> var greeting = "Hello"
-    << // greeting : String = "Hello"
-    // greeting = 123  // Uncomment to see the error
+    -> var hello = "Hello"
+    << // hello : String = "Hello"
+    // hello = 123  // Uncomment to see the error
 
 In the previous example,
 the compiler understands that ``greeting`` is a string
@@ -247,6 +247,44 @@ and the braces around the body are required.
 The conditional must be a Boolean expression;
 code like ``if remainingGummiBears { ... }`` is an error,
 not an implicit comparison to zero.
+
+You use ``if`` and ``let`` together to work with optional values.
+In a similar way to how arrays and dictionaries contain values,
+an optional value either contains a value
+or ``nil`` to indicate it has no value.
+Write a question mark (``?``) after a type
+to mark it as optional.
+
+.. testcode::
+
+   -> var optionalString: String? = "Hello"
+   << // optionalString : String? = <unprintable value>
+   -> optionalString == nil
+   <$ : Bool = false
+   ---
+   -> var optionalName: String? = "John Appleseed"
+   << // optionalName : String? = <unprintable value>
+   -> var greeting = "Hello!"
+   << // greeting : String = "Hello!"
+   -> if let name = optionalName {
+         greeting = "Hello, \(name)"
+      }
+   >> greeting
+   << // greeting : String = "Hello, John Appleseed"
+
+.. admonition:: Experiment
+
+   Change ``optionalName`` to ``nil``.
+   What greeting do you get?
+   Add an ``else`` clause that sets a different greeting
+   if ``optionalName`` is ``nil``.
+
+If the optional value is ``nil``,
+the ``if`` behaves as if you wrote ``if false { ... }``.
+Otherwise the optional value is unwrapped and assigned
+to the variable after ``let``,
+which makes the unwrapped value available
+inside the block of code.
 
 Use ``switch`` to choose between blocks of code
 where each block of code is associated
@@ -817,16 +855,31 @@ is always the same as the side length of its square.
    (or if it's even allowed)
    to use them outside a class or a struct.
 
+.. write-me::
+
+* deinit
+* Local vs API names
+* Optional chaining with ?
+
 Enumerations and Structures
 ---------------------------
 
 .. write-me::
 
+* Playing card suits (no raw value)
+* Playing card ranks (to/from raw)
+
+* Struct of suit + rank for playing card
+* Type method to print a description
+* For loop to generate a whole deck
+
 * Differences from objects (reference types)
 * Use structs for complex multipart data
 * Use enums when values come from a list
+
 * Associating additional data with enums
-* Indicate protocol conformance using “:”
+
+* Optional is just an enum -- no magic.
 
 Protocols
 ---------
@@ -837,14 +890,6 @@ Protocols
 * First class type -- usable in variable declarations etc.
 * Can provide a default implementation.
 
-Optionals
----------
-
-.. write-me::
-
-* Contrast with nil/NULL
-* Implemented as enum (no magic)
-* Convenience syntax “?” and "!"
 
 Additional Topics
 -----------------
