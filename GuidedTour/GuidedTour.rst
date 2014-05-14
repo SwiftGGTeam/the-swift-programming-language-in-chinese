@@ -841,16 +841,14 @@ Enumerations and Structures
        case Spades, Hearts, Diamonds, Clubs
        func description() -> String {
           switch self {
-             case .Ace:
-                return "ace"
-             case .Jack:
-                return "jack"
-             case .Queen:
-                return "queen"
-             case .King:
-                return "king"
-             default:
-                return String(self.toRaw())
+             case .Spades:
+                return "spades"
+             case .Hearts:
+                return "hearts"
+             case .Diamonds:
+                return "diamonds"
+             case .Clubs:
+                return "clubs"
           }
        }
     }
@@ -861,14 +859,16 @@ Enumerations and Structures
        case Jack, Queen, King
        func description() -> String {
           switch self {
-             case .Spades:
-                return "spades"
-             case .Hearts:
-                return "hearts"
-             case .Diamonds:
-                return "diamonds"
-             case .Clubs:
-                return "clubs"
+             case .Ace:
+                return "ace"
+             case .Jack:
+                return "jack"
+             case .Queen:
+                return "queen"
+             case .King:
+                return "king"
+             default:
+                return String(self.toRaw())
           }
        }
     }
