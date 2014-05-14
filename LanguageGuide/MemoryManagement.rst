@@ -487,7 +487,7 @@ to avoid a strong reference cycle:
    :compile: true
 
    -> class Customer {
-         var name: String
+         let name: String
          var card: CreditCard?
          init(name: String) {
             self.name = name
@@ -496,8 +496,8 @@ to avoid a strong reference cycle:
       }
    ---
    -> class CreditCard {
-         var number: Int
-         unowned var customer: Customer
+         let number: Int
+         unowned let customer: Customer
          init(number: Int, customer: Customer) {
             self.number = number
             self.customer = customer
@@ -598,7 +598,7 @@ and the ``City`` class has a ``country`` property:
    :compile: true
 
    -> class Country {
-         var name: String
+         let name: String
          var capitalCity: City!
          init(name: String, capitalName: String) {
             self.name = name
@@ -607,13 +607,18 @@ and the ``City`` class has a ``country`` property:
       }
    ---
    -> class City {
-         var name: String
-         unowned var country: Country
+         let name: String
+         unowned let country: Country
          init(name: String, country: Country) {
             self.name = name
             self.country = country
          }
       }
+
+.. FIXME: I think capitalCity should be allowed to be a constant,
+   but this isn't possible due to <rdar://problem/16906000>
+   Implicitly unwrapped optional let is not considered initialized, but var is
+   If this gets fixed, the var should be changed to a let.
 
 To set up the interdependency between the two classes,
 the initializer for ``City`` takes a ``Country`` instance,
