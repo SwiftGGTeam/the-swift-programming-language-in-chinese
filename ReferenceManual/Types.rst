@@ -298,7 +298,7 @@ is declared as an array of strings. The elements of an array can be accessed usi
 square brackets as well: ``someArray[0]`` refers to the element at index 0, ``"Alex"``.
 
 As the above example also shows, you can use square brackets to create
-an array using an array literal. Empty array literals are written using an an empty
+an array using an array literal. Empty array literals are written using an empty
 pair of square brackets and can be used to create an empty array of a specified type.
 
 .. testcode::
@@ -308,19 +308,25 @@ pair of square brackets and can be used to create an empty array of a specified 
 
 You can create multidimensional arrays by chaining multiple sets of square brackets
 to the name of the base type of the elements. For example, you can create
-a two-dimensional array of integers---that is, an array that contains arrays of integers---
-using two sets of square brackets.
+a three-dimensional array of integers using three sets of square brackets:
 
 .. testcode::
 
-    -> var array2D: Int[][] = [[1, 2], [3, 4], [5, 6]]
-    << // array2D : (Int[])[] = [[1, 2], [3, 4], [5, 6]]
+    -> var array3D: Int[][][] = [[[1, 2], [3, 4]], [[5, 6], [7, 8]]]
+    << // array3D : ((Int[])[])[] = [[[1, 2], [3, 4]], [[5, 6], [7, 8]]]
 
-Although the array types are grouped from left to right
-(``Int[][]`` is understood as ``(Int[])[]``),
-an index of the *left-most* chained array type corresponds to the element at that index
-in the *right-most* chained array type. For instance, in the ``array2D`` array above,
-``array2D[0]`` refers to the array ``[1, 2]`` and ``array[0][1]`` refers to the value 2.
+The array types in a multidimensional array are grouped from left to right.
+For example, ``Int[][][]`` is understood as ``((Int[])[])[]``.
+
+When accessing the elements in a multidimensional array,
+the left-most subscript index refers to the element at that index in the outermost
+array type. The next subscript index to the right refers to the element
+at that index in the array type that's nested one level in. And so on. This means that,
+for example, ``array3D[0]`` refers to ``[[1, 2], [3, 4]]``,
+``array3D[0][1]`` refers to ``[3, 4]``, and ``array3D[0][1][1]`` refers to the value 4.
+
+For a detailed discussion of the Swift standard library ``Array`` type,
+see :ref:`CollectionTypes_Arrays`.
 
 .. langref-grammar
 
