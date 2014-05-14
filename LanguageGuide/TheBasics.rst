@@ -1281,7 +1281,7 @@ Suitable candidates for an assertion check include:
   but the subscript index could be invalid or out of bounds.
 
 * A value is passed to a function,
-  but an invalid value means that the function cannot fulfil its task.
+  but an invalid value means that the function cannot fulfill its task.
 
 * An optional value is currently ``nil``,
   but a non-``nil`` value is essential for subsequent code to execute successfully.

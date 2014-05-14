@@ -14,7 +14,7 @@ and control transfer statements provide a way to alter the order in which code i
 Each type of control flow statement is described in detail below.
 
 A semicolon (``;``) can optionally appear after any statement
-and is used to separate multiple statetments if they appear on the same line.
+and is used to separate multiple statements if they appear on the same line.
 
 .. langref-grammar
 
