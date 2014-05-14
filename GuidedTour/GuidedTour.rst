@@ -3,13 +3,15 @@ A Swift Tour
 
 .. !!! ATTENTION !!!
 
-   Do not rename this file.
+   Do not rename this file or directory.
    
-   The name "GuidedTour" is hardcoded into
-   the handoff process for the .playground file
-   in several places.
+   The name "GuidedTour/GuidedTour.rst" and
+   "GuidedTour.xml" is hardcoded into
+   the handoff process for the .playground file.
    You will cause lots of needless running around
    if you try to make it match the chapter title.
+
+   We apologize for the inconvenience.
 
 Tradition suggests that the first program in a new language
 should print the words “Hello, world” on the screen.
