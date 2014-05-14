@@ -1,6 +1,16 @@
 A Swift Tour
 ============
 
+.. !!! ATTENTION !!!
+
+   Do not rename this file.
+   
+   The name "GuidedTour" is hardcoded into
+   the handoff process for the .playground file
+   in several places.
+   You will cause lots of needless running around
+   if you try to make it match the chapter title.
+
 Tradition suggests that the first program in a new language
 should print the words “Hello, world” on the screen.
 In Swift, this can be done in a single line:
