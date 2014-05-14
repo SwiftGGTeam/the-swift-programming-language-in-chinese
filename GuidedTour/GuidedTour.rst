@@ -411,7 +411,7 @@ Use ``func`` to declare functions
 and call them by following their name
 with a parenthesized list of arguments.
 
-.. TODO: Argument names are postponed to the discussion of methods.
+.. TODO: Call out what -> means in the signature.
 
 .. testcode::
 
@@ -588,22 +588,234 @@ as the second argument to the ``sort`` function.
 Objects and Classes
 -------------------
 
-.. TODO: Pull in the Shape example code from old tour.
+.. TODO: Use testcode throughout this section.
 
-.. write-me::
+Classes are created using ``class``,
+followed by the class's properties and methods in braces.
+A property declaration is the same
+as a constant or variable declaration,
+except that it is in the context of a class.
+Likewise, method and function declarations are the same.
 
-* Declare classes with “class”
-* Declare methods with “func”
-* Declare properties with “var” and "let"
-* Make instances with “Class()”
-* Access methods and properties with “.”
-* Customize object lifecycle with “init” and "deinit"
+.. testcode::
 
-.. write-me::
+    -> class Shape {
+          var numberOfSides: Int = 0
+          func description() -> String {
+             return "A shape with \(numberOfSides) sides."
+          }
+       }
+    >> Shape().description()
+    <$ : String = "A shape with 0 sides."
 
-* Indicate superclass and protocol conformance with “:”
-* Override superclass methods with “@override”
-* Call the superclass’s implentation with “super”
+.. admonition:: Experiment
+
+   Try adding a constant property using ``let``
+   and adding another method that takes an argument.
+
+Instances of the class are created
+by putting parentheses after the class name,
+and the properties an methods of the instance
+are accessed using dot syntax.
+
+.. testcode::
+
+    -> var shape = Shape()
+    << // shape : Shape = <Shape instance>
+    -> shape.numberOfSides = 7
+    -> var shapeDescription = shape.description()
+    << // shapeDescription : String = "A shape with 7 sides."
+
+This version of the ``Shape`` class is missing something important:
+an initializer to set up the class when an instance is created.
+The initializer similar to a function,
+but it begins with ``init`` instead of ``func`` and has no function name.
+
+.. TODO: Probably worth pointing out that the initializer isn't a method.
+
+.. TODO: s/func/def for methods.
+
+.. TODO: Discuss arg names and API arg names.
+
+.. testcode::
+
+    -> class NamedShape {
+          var numberOfSides: Int = 0
+          var name: String
+
+          init(name: String) {
+             self.name = name
+          }
+
+          func description() -> String {
+             return "A shape with \(numberOfSides) sides."
+          }
+       }
+    >> NamedShape("test name").name
+    <$ : String = "test name"
+    >> NamedShape("test name").description()
+    <$ : String = "A shape with 0 sides."
+
+
+Notice how ``self`` is used to distinguish the ``name`` property
+from the ``name`` argument to the initializer.
+The arguments to the initializer are passed like a function call
+when you create an instance of the class.
+Every property needs to either have a value assigned
+when it is declared (like ``numberOfSides``)
+or in the initializer (like ``name``).
+
+Classes that inherit from other classes
+include the superclass's name, separated by a colon.
+It's just fine to have a class with no superclass though ---
+classes in Swift don't all have a common root class.
+
+Methods on a subclass that override the superclass's implentation
+are marked with ``override`` ---
+overriding a method by accident, without ``override``,
+is detected by the compiler as an error.
+The compiler also detects methods with ``override``
+that don't actually override any method in the superclass.
+
+.. testcode::
+
+    -> class Square: NamedShape {
+          var sideLength: Double
+
+          init(sideLength: Double, name: String) {
+             self.sideLength = sideLength
+             super.init(name)
+             numberOfSides = 4
+          }
+
+          func area() ->  Double {
+             return sideLength * sideLength
+          }
+
+          override func description() -> String {
+             return "A square with sides of length \(sideLength)."
+          }
+       }
+    -> let test = Square(5.2, "my test square")
+    << // test : Square = <Square instance>
+    -> test.area()
+    <$ : Double = 27.04
+    -> test.description()
+    <$ : String = "A square with sides of length 5.2."
+
+.. admonition:: Experiment
+
+   Try making another subclass of ``NamedShape``
+   called ``Circle``
+   which takes a radius and a name
+   as arguments to its initializer,
+   and implements an ``area`` and ``describe`` method.
+
+The initializer of a class with a superclass
+has three parts:
+
+1. Setting the value of properties that the subclass declares.
+
+2. Calling the superclass's initializer.
+
+3. Setting or changing the value of properties that the superclass declares.
+
+In addition to simple properties,
+properties can use an explicit getter and setter
+to create a computed property.
+
+.. testcode::
+
+    -> let PI = 3.14159265
+    << // PI : Double = 3.14159265
+    -> let TWO_PI = 2 * PI
+    << // TWO_PI : Double = 6.2831853
+    ---
+    -> class Circle: NamedShape {
+           var radius: Double
+
+           // A computed property
+           var circumference: Double {
+               get {
+                   return TWO_PI * radius
+               }
+               set {
+                   radius = newValue / TWO_PI
+               }
+           }
+
+           // A read-only computed property
+           var area: Double {
+              get {
+                 return PI * radius * radius
+              }
+           }
+
+           init(radius: Double, name: String) {
+               self.radius = radius
+               super.init(name)
+               numberOfSides = 1
+           }
+
+           override func description() -> String {
+              return "A circle with radius of length \(radius)."
+           }
+       }
+    -> var circle = Circle(12.7, "a circle")
+    <$ : Circle = <Circle instance>
+    -> circle.area
+    <$ : Double = 506.7074785185
+    -> circle.circumference = 31.4
+    -> circle.radius
+    <$ : Double = 4.99746521879595
+
+In the setter for ``circumference`` the new value
+has the implicit name ``newValue``.
+You can provide an explicit name in parentheses after ``set``.
+
+If you don't need to computer the property
+but still need to provide code that is run before and after setting a new value,
+use ``willSet`` and ``didSet``.
+For example, the class below ensures
+that the radius of its circle
+is always the same as the side length of its square.
+
+.. testcode::
+
+   -> class CircleAndSquare {
+         var circle: Circle {
+            willSet {
+               square.sideLength = newValue.radius
+            }
+         }
+         var square: Square {
+            willSet {
+               circle.radius = newValue.sideLength
+            }
+         }
+         init(size: Double, name: String) {
+            square = Square(size, name)
+            circle = Circle(size, name)
+         }
+      }
+   -> var circleAndSquare = CircleAndSquare(10, "another test shape")
+   << // circleAndSquare : CircleAndSquare = <CircleAndSquare instance>
+   -> circleAndSquare.square.sideLength
+   <$ : Double = 10.0
+   -> circleAndSquare.circle.radius
+   <$ : Double = 10.0
+   -> circleAndSquare.square = Square(50, "larger square")
+   -> circleAndSquare.circle.radius
+   <$ : Double = 50.0
+
+.. What is getter-setter-keyword-clause for?
+   It looks like you write var foo: Type { get }
+   but what does that even mean?
+
+.. Grammatically, these clauses are general to variables.
+   Not sure what it would look like
+   (or if it's even allowed)
+   to use them outside a class or a struct.
 
 Enumerations and Structures
 ---------------------------
