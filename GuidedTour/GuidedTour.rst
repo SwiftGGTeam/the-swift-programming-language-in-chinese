@@ -835,10 +835,9 @@ is always the same as the side length of its square.
 Enumerations and Structures
 ---------------------------
 
-.. write-me::
-
-    Enumerations work as expected.
-    They can have methods like classes do.
+You use ``enum`` to create an enumeration.
+Like all other types,
+enumerations can have methods associated with them.
 
 ::
     enum Suit {
@@ -857,13 +856,23 @@ Enumerations and Structures
        }
     }
 
+.. admonition:: Experiment
+
+   Add a method to ``Suit`` which returns "black"
+   for spades and clubs, and returns "red" for hearts and diamonds.
+
 .. Suits are in Bridge order, which matches Unicode order.
    In other games, orders differ.
    Wikipedia lists a good half dozen orders.
 
-..write-me::
+Enumerations can be based on an underlying "raw" value.
+In the example below,
+the underlying value is an integer,
+so you only have to specify the first value
+and the others are computed automatically.
+You can use any type as the raw value for an enumeration.
 
-    Enumerations can be based on an underlying "raw" value.
+.. TR: Is that true?
 
 ::
     enum Rank: Int {
@@ -885,6 +894,11 @@ Enumerations and Structures
           }
        }
     }
+
+.. admonition:: Experiment
+
+   Add a method that uses the raw value
+   and compares this ``Rank`` values.
 
 .. write-me::
 
