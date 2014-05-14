@@ -835,8 +835,12 @@ is always the same as the side length of its square.
 Enumerations and Structures
 ---------------------------
 
-::
+.. write-me::
 
+    Enumerations work as expected.
+    They can have methods like classes do.
+
+::
     enum Suit {
        case Spades, Hearts, Diamonds, Clubs
        func description() -> String {
@@ -853,6 +857,15 @@ Enumerations and Structures
        }
     }
 
+.. Suits are in Bridge order, which matches Unicode order.
+   In other games, orders differ.
+   Wikipedia lists a good half dozen orders.
+
+..write-me::
+
+    Enumerations can be based on an underlying "raw" value.
+
+::
     enum Rank: Int {
        case Ace = 1
        case Two, Three, Four, Five, Six, Seven, Eight, Nine, Ten
@@ -873,6 +886,14 @@ Enumerations and Structures
        }
     }
 
+.. write-me::
+
+    Structs are also pretty much as expected.
+    They can have methods too.
+
+    TODO: Use a loop to generate a whole deck.
+
+::
     struct Card {
        var rank: Rank
        var suit: Suit
@@ -886,25 +907,13 @@ Enumerations and Structures
     
 
 
-.. Suits are in Bridge order, which matches Unicode order.
-   In other games, orders differ.
-   Wikipedia lists a good half dozen orders.
-    
-    
 .. write-me::
-
-* Playing card suits (no raw value)
-* Playing card ranks (to/from raw)
-
-* Struct of suit + rank for playing card
-* Type method to print a description
-* For loop to generate a whole deck
 
 * Differences from objects (reference types)
 * Use structs for complex multipart data
 * Use enums when values come from a list
 
-* Associating additional data with enums
+* Associating additional data with enums (algebraic types)
 
 * Optional is just an enum -- no magic.
 
