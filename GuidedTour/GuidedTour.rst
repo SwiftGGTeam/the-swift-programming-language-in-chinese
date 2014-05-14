@@ -1,5 +1,5 @@
-A Guided Tour of the Swift Language
-===================================
+A Swift Tour
+============
 
 Tradition suggests that the first program in a new language
 should print the words “Hello, world” on the screen.
