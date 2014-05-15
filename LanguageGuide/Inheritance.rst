@@ -24,7 +24,7 @@ regardless of whether it was originally defined as a stored or computed property
 .. _Inheritance_DefiningABaseClass:
 
 Defining A Base Class
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 Any class that does not inherit from another class is known as a :newTerm:`base class`.
 
@@ -109,7 +109,7 @@ it needs to be refined to describe more specific kinds of vehicle.
 .. _Inheritance_Subclassing:
 
 Subclassing
-~~~~~~~~~~~
+-----------
 
 :newTerm:`Subclassing` is the act of basing a new class on an existing class,
 in order to inherit its existing characteristics,
