@@ -1010,14 +1010,30 @@ Notice how the sunrise and sunset times
 are extracted from the ``ServerResponse`` value
 as part of a pattern matching operation.
 
-Protocols
----------
+Protocols and Extensions
+------------------------
 
-.. write-me::
+Use ``protocol`` to create a protocol:
 
-* Supported by both reference and value types
-* First class type -- usable in variable declarations etc.
-* Can provide a default implementation.
+::
+
+    protocol 
+
+Classes, enumerations, and structs can all adopt protocols.
+You can use a protocol name just like any other type ---
+for example, to create a collection of objects
+that have different types
+but all conform to a particular protocol.
+
+Use ``extension`` to add functionality to an existing type,
+such as methods and computed properties.
+You can use an extension to add protocol conformance
+to a type that is declared elsewhere,
+or even a type you imported from a library or framework.
+
+::
+
+    extension 
 
 
 Generics
