@@ -987,6 +987,9 @@ or it responds with some error information.
 
    Add a third case to ``ServerResponse`` and to the switch.
 
+Notice how the sunrise and sunset times
+are extracted from the ``ServerResponse`` value
+as part of a pattern matching operation.
 
 Protocols
 ---------
