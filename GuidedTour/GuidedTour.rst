@@ -571,11 +571,26 @@ and use ``in`` to separate the arguments from the body.
 .. testcode::
 
     -> numbers.map({
-          (number: Int) in
+          (number: Int) -> Int in
           let result = 3 * number
           return result
        })
     <$ : Array<Int> = [24, 9, 15, 18]
+
+.. The closure's return type has to be specified here
+   because type inference can't determine it.
+   If the value of the whole expression
+   is assigned to a variable of known type,
+   then it can be omitted.
+   The whole point of this first example
+   is that it *doesn't* omit anything.
+
+   var l: Int[] = numbers.map({
+             (number: Int) in
+             let result = 3 * number
+             return result
+          })
+       
 
 You have several options for writing closures more concisely.
 When the closure's type is already known,
