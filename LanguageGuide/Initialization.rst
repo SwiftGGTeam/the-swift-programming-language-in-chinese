@@ -1087,7 +1087,7 @@ which provides a textual description of a ``ShoppingListItem`` instance:
    -> class ShoppingListItem: RecipeIngredient {
          var purchased = false
          func description() -> String {
-            var output = "\(quantity) x \(name.lowercase)"
+            var output = "\(quantity) x \(name.lowercaseString)"
             output += purchased ? " ✔" : " ✘"
             return output
          }

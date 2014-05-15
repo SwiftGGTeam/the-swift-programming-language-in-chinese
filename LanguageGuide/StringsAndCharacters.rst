@@ -404,7 +404,7 @@ Prefix and Suffix Equality
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You can check if a string has a particular string prefix or suffix
-by calling the string's ``startsWith`` and ``endsWith`` methods,
+by calling the string's ``hasPrefix`` and ``hasSuffix`` methods,
 both of which take a single argument of type ``String`` and return a Boolean value.
 Both methods perform a character-by-character comparison
 between the base string and the prefix or suffix string.
@@ -429,7 +429,7 @@ the scene locations from the first two acts of Shakespeare's *Romeo and Juliet*:
       ]
    << // romeoAndJuliet : Array<String> = ["Act 1 Scene 1: Verona, A public place", "Act 1 Scene 2: Capulet\'s mansion", "Act 1 Scene 3: A room in Capulet\'s mansion", "Act 1 Scene 4: A street outside Capulet\'s mansion", "Act 1 Scene 5: The Great Hall in Capulet\'s mansion", "Act 2 Scene 1: Outside Capulet\'s mansion", "Act 2 Scene 2: Capulet\'s orchard", "Act 2 Scene 3: Outside Friar Lawrence\'s cell", "Act 2 Scene 4: A street in Verona", "Act 2 Scene 5: Capulet\'s mansion", "Act 2 Scene 6: Friar Lawrence\'s cell"]
 
-You can use the ``startsWith`` method with the ``romeoAndJuliet`` array
+You can use the ``hasPrefix`` method with the ``romeoAndJuliet`` array
 to count the number of scenes in Act 1 of the play:
 
 .. testcode:: prefixesAndSuffixes
@@ -437,14 +437,14 @@ to count the number of scenes in Act 1 of the play:
    -> var act1SceneCount = 0
    << // act1SceneCount : Int = 0
    -> for scene in romeoAndJuliet {
-         if scene.startsWith("Act 1 ") {
+         if scene.hasPrefix("Act 1 ") {
             ++act1SceneCount
          }
       }
    -> println("There are \(act1SceneCount) scenes in Act 1")
    <- There are 5 scenes in Act 1
 
-Similarly, you can use the ``endsWith`` method to count the number of scenes
+Similarly, you can use the ``hasSuffix`` method to count the number of scenes
 that take place in or around Capulet's mansion and Friar Lawrence's cell:
 
 .. testcode:: prefixesAndSuffixes
@@ -454,9 +454,9 @@ that take place in or around Capulet's mansion and Friar Lawrence's cell:
    -> var cellCount = 0
    << // cellCount : Int = 0
    -> for scene in romeoAndJuliet {
-         if scene.endsWith("Capulet's mansion") {
+         if scene.hasSuffix("Capulet's mansion") {
             ++mansionCount
-         } else if scene.endsWith("Friar Lawrence's cell") {
+         } else if scene.hasSuffix("Friar Lawrence's cell") {
             ++cellCount
          }
       }
@@ -469,17 +469,17 @@ Uppercase and Lowercase
 -----------------------
 
 You can access an uppercase or lowercase version of a string
-with its ``uppercase`` and ``lowercase`` properties:
+with its ``uppercaseString`` and ``lowercaseString`` properties:
 
 .. testcode:: uppercaseAndLowercase
 
    -> let normal = "Could you help me, please?"
    << // normal : String = "Could you help me, please?"
-   -> let shouty = normal.uppercase
+   -> let shouty = normal.uppercaseString
    << // shouty : String = "COULD YOU HELP ME, PLEASE?"
    /> shouty is equal to \"\(shouty)\"
    </ shouty is equal to "COULD YOU HELP ME, PLEASE?"
-   -> let whispered = normal.lowercase
+   -> let whispered = normal.lowercaseString
    << // whispered : String = "could you help me, please?"
    /> whispered is equal to \"\(whispered)\"
    </ whispered is equal to "could you help me, please?"

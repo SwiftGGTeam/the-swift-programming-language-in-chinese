@@ -225,7 +225,11 @@ The following example adds a new instance method called ``toSpooky`` to the ``St
             var spooky = ""
             for character in self {
                let charString = String(character)
-               spooky += (i % 2 == 0) ? charString.uppercase : charString.lowercase
+               if i % 2 == 0 {
+                  spooky += charString.uppercaseString
+               } else {
+                  spooky += charString.lowercaseString
+               }
                ++i
             }
             return spooky
@@ -364,7 +368,7 @@ Extensions can add new nested types to existing classes, structures and enumerat
             case Vowel, Consonant, Other
          }
          var kind: Kind {
-            switch String(self).lowercase {
+            switch String(self).lowercaseString {
                case "a", "e", "i", "o", "u":
                   return .Vowel
                case "b", "c", "d", "f", "g", "h", "j", "k", "l", "m",

@@ -243,7 +243,7 @@ based on the standard set of vowels and consonants used in American English:
    -> func count(string: String) -> (vowels: Int, consonants: Int, others: Int) {
          var vowels = 0, consonants = 0, others = 0
          for character in string {
-            switch String(character).lowercase {
+            switch String(character).lowercaseString {
                case "a", "e", "i", "o", "u":
                   ++vowels
                case "b", "c", "d", "f", "g", "h", "j", "k", "l", "m",
