@@ -440,16 +440,3 @@ Overriding Type Methods
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 .. write-me::
-
-.. _Inheritance_DynamicReturnTypes:
-
-Dynamic Return Types
---------------------
-
-.. write-me::
-
-.. TODO: mention that methods can return a value of type Self (a la instancetype)
-.. TODO: include the several tricks seen in swift/test/decl/func/dynamic_self.swift
-.. TODO: find a good place to mention that instance methods can
-   return self(withInt: 5) to call their own type's initializer
-.. QUESTION: does this section go here, or in Initialization, or somewhere else?
