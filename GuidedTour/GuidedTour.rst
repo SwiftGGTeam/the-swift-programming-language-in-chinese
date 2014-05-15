@@ -540,7 +540,7 @@ A function can take another function as one of its arguments.
 
 .. testcode::
 
-    -> // Re-implement the Standard Library sort function.
+    -> // Re-implement the standard library sort function.
     -> func bubbleSort(list: Int[], outOfOrder: (Int, Int) -> Bool) {
           for i in 0...list.count {
              for j in 0...list.count {
