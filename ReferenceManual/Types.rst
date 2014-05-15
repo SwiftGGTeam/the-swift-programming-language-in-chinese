@@ -520,80 +520,41 @@ which every type conforms to.
 Metatype Type
 -------------
 
-.. write-me:: Waiting for design decisions from compiler team. See notes below.
+A metatype type refers to the type of any type, including class types, structure types,
+enumeration types, and protocol types.
 
-.. TR: How do metatypes types work?
-    What information is important to convey in this section?
-    Would it be helpful to include a diagram here?
+The metatype of a class, structure, or enumeration type is the name of that type
+followed by ``.Type``. The metatype of a protocol type---not the concrete type that
+conforms to the protocol at runtime---is the name of that protocol followed by ``.Protocol``.
+For example, the metatype of the class type ``SomeClass`` is ``SomeClass.Type``
+and the metatype of the protocol ``SomeProtocol`` is ``SomeProtocol.Protocol``.
 
-.. TR: Metatype types don't seem to working quite right.
-    For example, any time I try to invoke ``.metatype`` on a class or instance of a class,
-    I get the following error: "error: expected member name following '.'"
-    Some examples:
+You can use the postfix ``self`` expression to access a type as a value.
+For example, ``SomeClass.self`` returns ``SomeClass`` itself,
+not an instance of ``SomeClass``. And ``SomeProtocol.self``
+returns ``SomeProtocol`` itself, not an instance of a type that conforms to ``SomeProtocol``
+at runtime. You can use a ``dynamicType`` expression with an instance
+of a type to access that instance's runtime type as a value,
+as the following example shows:
 
-    (swift) class X {
-          type func foo(a: Int) -> Int {
-            return 10
-          }
-        }
-    (swift) var x = X()
-    // x : X = <X instance>
-    (swift) x.foo(1)
-    <REPL Input>:1:1: error: 'X' does not have a member named 'foo'
-    x.foo(1)
-    ^ ~~~
-    (swift) X.foo(1)
-    // r0 : Int = 10
-    (swift) x.metatype.foo(1)
-    <REPL Input>:1:3: error: expected member name following '.'
-    x.metatype.foo(1)
-      ^
-    (swift) X.metatype.foo(1)
-    <REPL Input>:1:3: error: expected member name following '.'
-    X.metatype.foo(1)
-      ^
-    (swift) X
-    // r1 : X.metatype = <unprintable value>
+.. testcode::
 
-    But this works:
-    typealias AnyX = X.metatype
-
-    Let's hold off on writing this until we figure out what's going on.
-
-.. TODO: Rewrite this section, using the following notes from our meeting with Doug.
-    Just have a grammar approach, rather than saying "here is a magic
-    name which shows up in types" like it does now. That doesn't even
-    make sense---there isn't even lookup for functions.
-    You can just take any type and get .metatype out of it.
-    For example:
-
-    class X {
-        type func foo ()
-    }
-    var obj : X
-
-    You can't in Swift or Obj-C write obj.foo(). In Obj-C you write
-    [obj.class foo]---you're getting the metatype of the item.
-    In Swift, you write obj.metatype.foo().
-
-    var xm : X.metatype = obj.metatype
-
-    We use the term metatype because you can do this with things that
-    aren't objects---they don't have classes.
-    At some point in the future there will be more reflection; for now,
-    the important part is to say that this is how you get at type/class functions.
-
-    TODO: Verify that the above is correct.
-    I tried in out in the REPL today, and it doesn't seem to work.
-
-.. TODO: Most of the info from the LangRef is, according to Doug,
-    out of date and/or not applicable. For example,
-    mention of subtyping doesn't really make sense here.
-    Somewhere in the reference there should be a chapter/section
-    on subtyping and type conversion.
-
-.. TODO: Start planning a chapter on subtyping and type conversions.
-    Do we want/need this for WWDC or can it be pushed out to FCS?
+    -> class SomeBaseClass {
+           class func printClassName() {
+               println("SomeBaseClass")
+           }
+       }
+    -> class SomeSubClass: SomeBaseClass {
+           override class func printClassName() {
+               println("SomeSubClass")
+           }
+       }
+    -> let someInstance: SomeBaseClass = SomeSubClass()
+    << // someInstance : SomeBaseClass = C4REPL12SomeSubClass (has 1 child)
+    -> // someInstance is of type SomeBaseClass at compile time, but
+    -> // someInstance is of type SomeSubClass at runtime
+    -> someInstance.dynamicType.printClassName()
+    <- SomeSubClass
 
 .. langref-grammar
 
