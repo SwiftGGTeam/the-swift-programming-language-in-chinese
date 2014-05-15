@@ -17,7 +17,7 @@ If you have written code in C or Objective-C,
 this syntax looks familiar to you.
 Unlike those languages,
 this line of Swift code is a complete program.
-You don't need to import a standard library for functionality like
+You don't need to import a separate library for functionality like
 input/output or string handling.
 Code written at global scope is used
 as the entry point for the program,
@@ -458,8 +458,6 @@ with a parenthesized list of arguments.
        }
     -> greet("Bob", "Tuesday")
     <$ : String = "Hello Bob, today is Tuesday."
-    -> greet("Alice", "Wednesday")
-    <$ : String = "Hello Alice, today is Wednesday."
 
 .. admonition:: Experiment
 
@@ -509,9 +507,9 @@ that is long or complex.
 
 .. testcode::
 
-    -> func returnFifteen () -> Int {
+    -> func returnFifteen() -> Int {
           var y = 10
-          func add () -> () {
+          func add() -> () {
              y += 5
           }
           add()
@@ -526,7 +524,7 @@ This means a function can return another function as its value.
 .. testcode::
 
     -> func makeIncrementer() -> (Int -> Int) {
-          func addOne (number: Int) -> Int {
+          func addOne(number: Int) -> Int {
              return 1 + number
           }
           return addOne
@@ -542,8 +540,8 @@ A function can take another function as one of its arguments.
 
 .. testcode::
 
-    -> // Re-implement the Standard Library sort function.
-    -> func bubbleSort (var list: Array<Int>, outOfOrder: (Int, Int) -> Bool) -> Array<Int> {
+    -> // Re-implement the standard library sort function.
+    -> func bubbleSort(list: Int[], outOfOrder: (Int, Int) -> Bool) {
           for i in 0...list.count {
              for j in 0...list.count {
                 if outOfOrder(list[i], list[j]) {
@@ -551,9 +549,8 @@ A function can take another function as one of its arguments.
                 }
              }
           }
-          return list
        }
-    -> func greaterThan (x : Int, y : Int) -> Bool {
+    -> func greaterThan(x : Int, y : Int) -> Bool {
           return x > y
        }
     -> var numbers = [8, 3, 5, 6]
@@ -566,41 +563,35 @@ you don't give them a name when you declare them.
 You write a closure as code surrounded by braces (``{}``)
 and use ``in`` to separate the arguments from the body.
 
+.. TODO: This notion of closures being "just" un-named functions is problematic.
+   See Dave's recent work in the Guide comparing the two.
+
 .. EDIT: Second sentence above reads better as describing singular closure.
 
 .. testcode::
 
-    -> let triple: Int -> Int = {
+    -> numbers.map({
           (number: Int) in
           let result = 3 * number
           return result
-       }
-    << // triple : Int -> Int = <unprintable value>
-    -> triple(5)
-    <$ : Int = 15
-
-.. The type of "number" can be omitted above,
-   and in fact the parens are probably not needed either.
-   I've written them for now
-   so that I start with the most verbose function-y syntax.
+       })
+    <$ : Array<Int> = [24, 9, 15, 18]
 
 You have several options for writing closures more concisely.
 When the closure's type is already known,
 such as the callback for a delegate,
 you can omit the type of its parameters,
 its return type, or both.
-For even more brevity,
-you can refer to parameters by number instead of by name.
 Single statement closures implicitly return the value
 of their only statement.
 
 .. testcode::
 
-    -> let shortTriple: Int -> Int = { 3 * $0 }
-    << // shortTriple : Int -> Int = <unprintable value>
-    -> shortTriple(5)
-    <$ : Int = 15
+    -> numbers.map({ number in 3 * number })
+    <$ : Array<Int> = [24, 9, 15, 18]
 
+For even more brevity,
+you can refer to parameters by number instead of by name.
 A closure passed as the last argument to a function
 can appear immediately after the parentheses.
 
@@ -608,11 +599,6 @@ can appear immediately after the parentheses.
 
     -> sort([1, 5, 3, 12, 2]) { $0 > $1 }
     <$ : Array<Int> = [12, 5, 3, 2, 1]
-
-.. admonition:: Experiment
-
-   Rewrite the bubble sort function above
-   so it takes a trailing closure to do comparisons.
 
 The previous listing can be written without a closure at all
 by passing the ``>`` operator

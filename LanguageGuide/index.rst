@@ -18,7 +18,7 @@ Language Guide
    Subscripts
    Inheritance
    Initialization
-   MemoryManagement
+   AutomaticReferenceCounting
    TypeCasting
    NestedTypes
    Extensions
