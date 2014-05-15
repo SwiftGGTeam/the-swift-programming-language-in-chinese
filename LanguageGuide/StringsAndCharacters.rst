@@ -1,6 +1,11 @@
 Strings and Characters
 ======================
 
+A :newTerm:`string` is an ordered collection of characters,
+such as ``"hello, world"`` or ``"albatross"``.
+Swift strings are represented by the ``String`` type,
+which in turn represents a collection of values of ``Character`` type.
+
 Swift's ``String`` and ``Character`` types provide
 a fast, Unicode-compliant way to work with text in your code.
 The syntax for string creation and manipulation is lightweight and readable,
@@ -20,16 +25,6 @@ constants, variables, literals, and expressions into longer strings,
 in a process known as string interpolation.
 This makes it easy to create custom string values for display, storage, and printing.
 
-.. _StringsAndCharacters_Strings:
-
-Strings
--------
-
-A :newTerm:`string` is an ordered collection of characters,
-such as ``"hello, world"`` or ``"albatross"``.
-Swift strings are represented by the ``String`` type,
-which in turn represents a collection of ``Character`` values.
-
 .. note::
 
    Swift's ``String`` type is bridged seamlessly to Objective-C's ``NSString`` class.
@@ -46,12 +41,13 @@ which in turn represents a collection of ``Character`` values.
 .. _StringsAndCharacters_Literals:
 
 String Literals
-~~~~~~~~~~~~~~~
+---------------
 
-You can include pre-defined ``String`` values within your code as :newTerm:`string literals`.
+You can include predefined ``String`` values within your code as :newTerm:`string literals`.
 A string literal is a fixed sequence of textual characters
-surrounded by a pair of double quotes (``""``),
-and can be used to provide an initial value for a constant or variable:
+surrounded by a pair of double quotes (``""``).
+
+A string literal can be used to provide an initial value for a constant or variable:
 
 .. testcode:: stringLiterals
 
@@ -60,11 +56,6 @@ and can be used to provide an initial value for a constant or variable:
 
 Note that Swift infers a type of ``String`` for the ``someString`` constant,
 because it is initialized with a string literal value.
-
-.. _StringsAndCharacters_SpecialCharactersInStringLiterals:
-
-Special Characters in String Literals
-_____________________________________
 
 String literals can include the following special characters:
 
@@ -77,6 +68,8 @@ String literals can include the following special characters:
   where ``nnnn`` is four hexadecimal digits
 * Eight-byte Unicode code points, written as ``\Unnnnnnnn``,
   where ``nnnnnnnn`` is eight hexadecimal digits
+
+For example:
 
 .. testcode:: specialCharacters
 
@@ -100,12 +93,12 @@ String literals can include the following special characters:
 .. _StringsAndCharacters_InitializingAnEmptyString:
 
 Initializing an Empty String
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------
 
 If you need to create an empty ``String`` value as the starting point
 for building a longer string,
-you can do so by assigning an empty string literal to a variable,
-or by initializing a new ``String`` with initializer syntax:
+assign an empty string literal to a variable,
+or initialize a new ``String`` with initializer syntax:
 
 .. testcode:: emptyStrings
 
@@ -119,8 +112,7 @@ or by initializing a new ``String`` with initializer syntax:
    because you'd be likely to use them as such if they start out empty.
    Is this the correct approach to take here?
 
-You can check whether a ``String`` value is empty
-by calling its ``isEmpty`` method:
+To check whether a ``String`` value is empty, call its ``isEmpty`` method:
 
 .. testcode:: emptyStrings
 
@@ -134,7 +126,7 @@ by calling its ``isEmpty`` method:
 .. _StringsAndCharacters_StringMutability:
 
 String Mutability
-~~~~~~~~~~~~~~~~~
+-----------------
 
 You indicate whether a particular ``String`` can be modified (or *mutated*)
 by assigning it to a variable (in which case it can be modified),
@@ -158,32 +150,32 @@ or to a constant (in which case it cannot be modified):
 
 .. note::
 
-   This approach is different from Objective-C and Cocoa,
+   This approach is different from string mutation in Objective-C and Cocoa,
    where you choose between two classes (``NSString`` and ``NSMutableString``)
    to indicate whether a string can be mutated.
 
 .. _StringsAndCharacters_StringsAreValueTypes:
 
-Strings are Value Types
-~~~~~~~~~~~~~~~~~~~~~~~
+Strings Are Value Types
+-----------------------
 
 Swift's ``String`` type is a *value type*.
-This means that if you create a new ``String`` value,
+If you create a new ``String`` value,
 that ``String`` value is *copied* when it is passed to a function or method,
 or when it is assigned to a constant or variable.
 In each case, a new copy of the existing ``String`` value is created,
 and the new copy is passed or assigned, not the original version.
-(Value types are described in :ref:`ClassesAndStructures_ValueTypesAndReferenceTypes`.)
+Value types are described in :ref:`ClassesAndStructures_ValueTypesAndReferenceTypes`.
 
 .. note::
 
-   This behavior is different from ``NSString`` in Cocoa.
+   This behavior differs from that of ``NSString`` in Cocoa.
    When you create an ``NSString`` instance in Cocoa,
    and pass it to a function or method or assign it to a variable,
    you are always passing or assigning a *reference* to the same single ``NSString``.
    No copying of the string takes place, unless you specifically request it.
 
-Swift's copy-by-default ``String`` behavior means that
+Swift's copy-by-default ``String`` behavior ensures that
 when a function or method passes you a ``String`` value,
 it is clear that you own that exact ``String`` value,
 regardless of where it came from.
@@ -191,17 +183,17 @@ You can be confident that the string you are passed will not be modified
 unless you modify it yourself.
 
 Behind the scenes, Swift's compiler optimizes string usage
-so that actual copying only takes place when absolutely necessary.
-This ensures that you always get great performance
+so that actual copying takes place only when absolutely necessary.
+This means you always get great performance
 when working with strings as value types.
 
-.. _StringsAndCharacters_Characters:
+.. _StringsAndCharacters_WorkingWithCharacters:
 
-Characters
-----------
+Working With Characters
+-----------------------
 
-Individual characters are represented in Swift by the ``Character`` type,
-which represents a single Unicode character.
+Swift's ``String`` type represents a collection ``Character`` values in a specified order.
+Each ``Character`` value represents a single Unicode character.
 You can access the individual ``Character`` values in a string
 by iterating over that string with a ``for``-``in`` loop:
 
@@ -218,7 +210,7 @@ by iterating over that string with a ``for``-``in`` loop:
 
 The ``for``-``in`` loop is described in :ref:`ControlFlow_ForLoops`.
 
-You can also create a stand-alone ``Character`` constant or variable
+You can create a stand-alone ``Character`` constant or variable
 from a single-character string literal by providing a ``Character`` type annotation:
 
 .. testcode:: characters
@@ -226,10 +218,46 @@ from a single-character string literal by providing a ``Character`` type annotat
    -> let yenSign: Character = "¥"
    << // yenSign : Character = <unprintable value>
 
-.. _StringsAndCharacters_StringAndCharacterConcatenation:
+.. _StringsAndCharacters_CountingCharacters:
 
-String and Character Concatenation
-----------------------------------
+Counting Characters
+~~~~~~~~~~~~~~~~~~~
+
+To retrieve a count of the characters in a string,
+call the global ``countElements`` function
+and pass in a string as the function's sole parameter:
+
+.. testcode:: characterCount
+
+   -> let unusualMenagerie = "Koala 🐨, Snail 🐌, Penguin 🐧, Dromedary 🐪"
+   << // unusualMenagerie : String = "Koala 🐨, Snail 🐌, Penguin 🐧, Dromedary 🐪"
+   -> println("unusualMenagerie has \(countElements(unusualMenagerie)) characters")
+   <- unusualMenagerie has 40 characters
+
+.. note::
+
+   Different Unicode characters, and different representations of the same character,
+   can require different amounts of memory to store.
+   Because of this, characters in Swift do not each take up
+   the same amount of memory within a string's representation.
+   As a result, the length of a string cannot be calculated
+   without iterating through the string to consider each of its characters in turn.
+   If you are working with particularly long string values,
+   be aware that the ``countElements`` function will need to
+   iterate over the characters within a string
+   in order to calculate an accurate character count for that string.
+
+   Note also that the character count returned by ``countElements``
+   will not always be the same as the ``length`` property of
+   an ``NSString`` that contains the same characters.
+   The length of an ``NSString`` is based on
+   the number of 16-bit code units within the string's UTF-16 representation,
+   and not the number of Unicode characters within the string.
+
+.. _StringsAndCharacters_ConcatenatingStringsAndCharacters:
+
+Concatenating Strings and Characters
+------------------------------------
 
 ``String`` and ``Character`` values can be added together (or *concatenated*)
 with the addition operator (``+``) to create a new ``String`` value:
@@ -254,7 +282,7 @@ with the addition operator (``+``) to create a new ``String`` value:
    -> let characterPlusCharacter = character1 + character2  // equals "!?"
    << // characterPlusCharacter : String = "!?"
 
-You can also append a ``String`` or ``Character`` value onto
+You can also append a ``String`` or ``Character`` value to
 an existing ``String`` variable with the addition assignment operator (``+=``):
 
 .. testcode:: emptyStrings
@@ -274,7 +302,7 @@ an existing ``String`` variable with the addition assignment operator (``+=``):
 .. note::
 
    You can't append a ``String`` or ``Character`` onto an existing ``Character`` variable,
-   because a ``Character`` value can only ever be one character long.
+   because a ``Character`` value must contain a single character only.
 
 .. TODO: how to construct from length and Character (cf Array)
 
@@ -304,7 +332,7 @@ This placeholder is replaced with the actual value of ``multiplier``
 when the string interpolation is evaluated to create an actual string.
 
 The value of ``multiplier`` is also used as part of a larger expression later in the string.
-This expression calculates the value of ``Double(multiplier) * 2.5``,
+This expression calculates the value of ``Double(multiplier) * 2.5``
 and inserts the result (``7.5``) into the string.
 In this case, the expression is written as ``\(Double(multiplier) * 2.5)``
 when it is included inside the string literal.
@@ -333,51 +361,13 @@ and so the interpolation is valid.
    you can extend ``String`` to give it a new initializer that takes
    an instance of your custom type. This process is described in :doc:`Extensions`.
 
-.. _StringsAndCharacters_CharacterCount:
-
-Character Count
----------------
-
-Swift's ``String`` type represents a collection of ``Character`` values in a specified order.
-Each of these ``Character`` values represents a single Unicode character.
-You can retrieve a count of these characters by calling
-the global ``countElements`` function,
-and passing in a string as the function's sole parameter:
-
-.. testcode:: characterCount
-
-   -> let unusualMenagerie = "Koala 🐨, Snail 🐌, Penguin 🐧, Dromedary 🐪"
-   << // unusualMenagerie : String = "Koala 🐨, Snail 🐌, Penguin 🐧, Dromedary 🐪"
-   -> println("unusualMenagerie has \(countElements(unusualMenagerie)) characters")
-   <- unusualMenagerie has 40 characters
-
-.. note::
-
-   Different Unicode characters, and different representations of the same character,
-   can require different amounts of memory to store.
-   Because of this, characters in Swift do not each take up
-   the same amount of memory within a string's representation.
-   As a result, the length of a string cannot be calculated
-   without iterating through the string to consider each of its characters in turn.
-   If you are working with particularly long string values,
-   be aware that the ``countElements`` function will need to
-   iterate over the characters within a string
-   in order to calculate an accurate character count for that string.
-
-   Note also that the character count returned by ``countElements``
-   will not always be the same as the ``length`` property of
-   an ``NSString`` that contains the same characters.
-   The length of an ``NSString`` is based on
-   the number of 16-bit code units within the string's UTF-16 representation,
-   and not the number of Unicode characters within the string.
-
 .. _StringsAndCharacters_ComparingStrings:
 
 Comparing Strings
 -----------------
 
-Swift provides three ways to compare ``String`` values.
-These are string equality, prefix equality, and suffix equality.
+Swift provides three ways to compare ``String`` values:
+string equality, prefix equality, and suffix equality.
 
 .. _StringsAndCharacters_StringEquality:
 
@@ -403,8 +393,8 @@ exactly the same characters in the same order:
 Prefix and Suffix Equality
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can check if a string has a particular string prefix or suffix
-by calling the string's ``hasPrefix`` and ``hasSuffix`` methods,
+To check whether a string has a particular string prefix or suffix,
+call the string's ``hasPrefix`` and ``hasSuffix`` methods,
 both of which take a single argument of type ``String`` and return a Boolean value.
 Both methods perform a character-by-character comparison
 between the base string and the prefix or suffix string.
@@ -444,7 +434,7 @@ to count the number of scenes in Act 1 of the play:
    -> println("There are \(act1SceneCount) scenes in Act 1")
    <- There are 5 scenes in Act 1
 
-Similarly, you can use the ``hasSuffix`` method to count the number of scenes
+Similarly, use the ``hasSuffix`` method to count the number of scenes
 that take place in or around Capulet's mansion and Friar Lawrence's cell:
 
 .. testcode:: prefixesAndSuffixes
@@ -463,10 +453,10 @@ that take place in or around Capulet's mansion and Friar Lawrence's cell:
    -> println("\(mansionCount) mansion scenes; \(cellCount) cell scenes")
    <- 6 mansion scenes; 2 cell scenes
 
-.. _StringsAndCharacters_UppercaseAndLowercase:
+.. _StringsAndCharacters_UppercaseAndLowercaseStrings:
 
-Uppercase and Lowercase
------------------------
+Uppercase and Lowercase Strings
+-------------------------------
 
 You can access an uppercase or lowercase version of a string
 with its ``uppercaseString`` and ``lowercaseString`` properties:
@@ -495,7 +485,7 @@ and to read and write those characters to and from an external source
 such as a text file or web page.
 
 Swift's ``String`` and ``Character`` types are fully Unicode-compliant,
-and support a number of different Unicode encodings, as described below.
+and support a number of different Unicode encodings as described below.
 
 .. _StringsAndCharacters_UnicodeTerminology:
 
@@ -503,14 +493,14 @@ Unicode Terminology
 ~~~~~~~~~~~~~~~~~~~
 
 Every character in Unicode can be represented by one or more :newTerm:`code points`.
-A code point is an unique 21-bit number (and name) for a character or modifier,
+A code point is a unique 21-bit number (and name) for a character or modifier,
 such as ``U+0061`` for ``LOWERCASE LATIN LETTER A`` (``a``),
 or ``U+1F425`` for ``FRONT-FACING BABY CHICK`` (``🐥``).
 
 When a Unicode string is written to a text file or some other storage,
 these code points are encoded in one of several Unicode-defined formats.
-Each of these formats encodes the string in small chunks known as :newTerm:`code units`.
-These include the UTF-8 format (which encodes a string as 8-bit code units),
+Each format encodes the string in small chunks known as :newTerm:`code units`.
+These include the UTF-8 format (which encodes a string as 8-bit code units)
 and the UTF-16 format (which encodes a string as 16-bit code units).
 
 .. _StringsAndCharacters_UnicodeRepresentationsOfStrings:
@@ -518,11 +508,11 @@ and the UTF-16 format (which encodes a string as 16-bit code units).
 Unicode Representations of Strings
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Swift provides four different ways to decompose a ``String`` value into smaller units.
+Swift provides several different ways to access Unicode representations of strings.
 
-Firstly, you can iterate over the string with a ``for``-``in`` statement,
+You can iterate over the string with a ``for``-``in`` statement,
 to access its individual ``Character`` values as Unicode characters.
-This process is described in :ref:`StringsAndCharacters_Characters`.
+This process is described in :ref:`StringsAndCharacters_WorkingWithCharacters`.
 
 Alternatively, you can access a ``String`` value
 in one of three other Unicode-compliant representations:
@@ -532,7 +522,7 @@ in one of three other Unicode-compliant representations:
 * A collection of 21-bit Unicode scalar values
   (accessed with the string's ``unicodeScalars`` property)
 
-Each of the three examples below shows a different representation of the following string,
+Each example below shows a different representation of the following string,
 which is made up of the characters ``D``, ``o``, ``g``, ``!``,
 and the 🐶 character (``DOG FACE``, or Unicode code point ``U+1F436``):
 
@@ -607,15 +597,12 @@ and a trail surrogate value of ``U+DC36`` (decimal value ``56374``).
 Unicode Scalars
 _______________
 
-The third and final Unicode representation of a ``String``
-enables you to access the string as a collection of Unicode scalars.
-A Unicode scalar is any 21-bit Unicode code point that is not
-a lead surrogate or trail surrogate code point.
-
 You can access a Unicode scalar representation of a ``String`` value
 by iterating over its ``unicodeScalars`` property.
 This property is of type ``UnicodeScalarView``,
 which is a collection of values of type ``UnicodeScalar``.
+A Unicode scalar is any 21-bit Unicode code point that is not
+a lead surrogate or trail surrogate code point.
 
 Each ``UnicodeScalar`` has a ``value`` property that returns
 the scalar's 21-bit code point, represented within a ``UInt32`` value:
@@ -633,7 +620,7 @@ the scalar's 21-bit code point, represented within a ``UInt32`` value:
    which needs to be renamed to ``UnicodeScalarView``.
    This is being tracked in rdar://16821900.
 
-The ``value`` property for the first four ``UnicodeScalar`` values
+The ``value`` properties for the first four ``UnicodeScalar`` values
 (``68``, ``111``, ``103``, ``33``)
 once again represent the characters ``D``, ``o``, ``g``, and ``!``.
 The ``value`` property of the fifth and final ``UnicodeScalar``, ``128054``,
