@@ -1015,15 +1015,54 @@ Protocols and Extensions
 
 Use ``protocol`` to create a protocol:
 
-::
+.. testcode::
 
-    protocol 
+    -> protocol ExampleProtocol {
+           var simpleDescription: String { get }
+           mutating func adjust()
+       }
 
 Classes, enumerations, and structs can all adopt protocols.
 You can use a protocol name just like any other type ---
 for example, to create a collection of objects
 that have different types
 but all conform to a particular protocol.
+
+.. testcode::
+
+    -> class SimpleClass: ExampleProtocol {
+           var simpleDescription: String = "A very simple class."
+           func adjust() {
+               simpleDescription += "  Now 100% adjusted."
+           }
+       }
+    -> var a = SimpleClass()
+    << // a : SimpleClass = <SimpleClass instance>
+    -> a.adjust()
+    -> let aDescription = a.simpleDescription
+    << // aDescription : String = "A very simple class.  Now 100% adjusted"
+    ---
+    -> struct SimpleStructure: ExampleProtocol {
+           var simpleDescription: String = "A simple structure"
+           mutating func adjust() {
+               simpleDescription += " (adjusted)"
+           }
+       }
+    -> var b = SimpleStructure()
+    << // b : SimpleStructure = SimpleStructure("A simple structure")
+    -> b.adjust()
+    -> let bDescription = b.simpleDescription
+    << // bDescription : String = "A simple structure (adjusted)"
+
+
+Notice the use of ``mutating`` in the declaration of ``SimpleStruct``
+to mark a struct method that modifies the struct.
+It is not needed in the declaration of ``SimpleClass``
+because any method on a class can modify the class.
+The protocol declaration includes it
+so that both structs and classes can adopt this protocol;
+if the protocol were intended to be adopted only by objects,
+you wouldn't need to write ``mutating`` in it.
 
 Use ``extension`` to add functionality to an existing type,
 such as methods and computed properties.
@@ -1033,8 +1072,16 @@ or even a type you imported from a library or framework.
 
 ::
 
-    extension 
-
+    -> extension Int: ExampleProtocol {
+           var simpleDescription: String {
+               return "The number \(self)"
+           }
+           mutating func adjust() {
+               self += 42
+           }
+        }
+    -> 7.simpleDescription
+    << // r0 : String = "The number 7"
 
 Generics
 --------
