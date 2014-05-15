@@ -341,25 +341,6 @@ see :ref:`CollectionTypes_Arrays`.
 
     array-type --> type ``[`` ``]`` | array-type ``[`` ``]``
 
-.. NOTE: Writing it this way rather than as a basic type followed by
-   a list of []s -- that preserves grouping of the type as you recurse
-   down the tree.
-
-   Arrays of fixed size are not currently supported.
-   As a result, we removed "type-array '[' expr ']'" from the grammar.
-   They may or may not be supported in the future.
-
-.. TODO: Array types are in flux at the moment;
-    Joe has a proposal on the table, but no decision has been made.
-    Let's hold off on writing about these until they are nailed down.
-    Update: [Contributor 5711] is now DRI for rewriting/implementing Arrays.
-
-    UPDATE from Doug, 4/2/14:
-    We're getting pretty close.  Dave's still working on it and keeps claiming
-    it will be tomorrow.  Really all we have to document is that there's a sugar
-    for array types and show people how multiple sets of array brackets work
-    (for multi-dimensional arrays) -- and bounce them over to the Standard
-    Library Reference for the details.
 
 .. _Types_OptionalType:
 
@@ -373,7 +354,7 @@ In other words, the following two declarations are equivalent:
 .. testcode:: optional-type
 
     -> var optionalInteger: Int?
-    << // optionalInteger : Int? = <unprintable value>
+    << // optionalInteger : Int? = nil
     -> var optionalInteger: Optional<Int>
     !! <REPL Input>:1:5: error: invalid redeclaration of 'optionalInteger'
     !! var optionalInteger: Optional<Int>
@@ -385,7 +366,7 @@ In other words, the following two declarations are equivalent:
 
 In both cases, the variable ``optionalInteger``
 is declared to have the type of an optional integer.
-Note that no whitespace may appear between the type and the ``?`` operator.
+Note that no whitespace may appear between the type and the ``?``.
 
 The type ``Optional<T>`` is an enumeration with two cases, ``None`` and ``Some(T)``,
 which are used to represent values that may or may not be present.
@@ -395,6 +376,9 @@ be sure to use parentheses to properly scope the ``?`` operator.
 As an example,
 to declare an optional array of integers, write the type annotation as ``(Int[])?``;
 writing ``Int[]?`` produces an error.
+
+If you don't provide an initial value when you declare an
+optional variable or property, it's value automatically defaults to ``nil``.
 
 Optionals conform to the ``LogicValue`` protocol and therefore may occur in a Boolean context.
 In that context,
@@ -411,10 +395,14 @@ you can access that value using the postfix operator ``!``, as shown below:
     -> optionalInteger! // 42
     << // r0 : Int = 42
 
-Unwrapping an optional
-that has a value of ``Optional.None`` results in a runtime error.
+Using the ``!`` operator to unwrap an optional
+that has a value of ``nil`` results in a runtime error.
 
-For examples that show how to use optional types,
+You can also use optional chaining and optional binding to conditionally perform an
+operation on an optional expression. If the value is ``nil``,
+no operation is performed and therefore no runtime error is produced.
+
+For more information and to see examples that show how to use optional types,
 see :ref:`TheBasics_Optionals`.
 
 .. langref-grammar
@@ -436,7 +424,47 @@ see :ref:`TheBasics_Optionals`.
 Implicitly Unwrapped Optional Type
 ----------------------------------
 
-.. write-me::
+The Swift language defines the postfix ``!`` as syntactic sugar for
+the named type ``ImplicitlyUnwrappedOptional<T>``,
+which is defined in the Swift standard library.
+In other words, the following two declarations are equivalent:
+
+.. testcode::
+
+    -> var implicitlyUnwrappedString: String!
+    << // implicitlyUnwrappedString : String! = nil
+    -> var implicitlyUnwrappedString: ImplicitlyUnwrappedOptional<String>
+    !! <REPL Input>:1:5: error: invalid redeclaration of 'implicitlyUnwrappedString'
+    !! var implicitlyUnwrappedString: String!
+    !!     ^
+    !! <REPL Input>:1:5: note: 'implicitlyUnwrappedString' previously declared here
+    !! var implicitlyUnwrappedString: ImplicitlyUnwrappedOptional<String>
+    !!     ^
+
+In both cases, the variable ``implicitlyUnwrappedString``
+is declared to have the type of an implicitly unwrapped optional string.
+Note that no whitespace may appear between the type and the ``!``.
+
+You can use implicitly unwrapped optionals in all the same places in your code
+that you can use optionals. For instance, you can assign values of implicitly unwrapped
+optionals to variables, constants, and properties of optionals, and vice versa.
+
+As with optionals, if you don't provide an initial value when you declare an
+implicitly unwrapped optional variable or property,
+it's value automatically defaults to ``nil``.
+
+Because the value of an implicitly unwrapped optional is automatically unwrapped
+when you use it, there's no need to use the ``!`` operator to unwrap it. That said,
+if you try to use an implicitly unwrapped optional that has a value of ``nil``,
+you'll get a runtime error.
+
+Use optional chaining to conditionally perform an
+operation on an implicitly unwrapped optional expression.
+If the value is ``nil``,
+no operation is performed and therefore no runtime error is produced.
+
+For more information about implicitly unwrapped optional types,
+see :ref:`TheBasics_ImplicitlyUnwrappedOptionals`.
 
 .. syntax-grammar::
 
