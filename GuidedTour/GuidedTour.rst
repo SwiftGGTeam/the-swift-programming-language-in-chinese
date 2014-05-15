@@ -948,6 +948,35 @@ between the raw value and the enumeration value.
 
 * Optional is just an enum -- no magic.
 
+
+Consider the case of requesting
+the sunrise and sunset time from a server.
+The server either responds with the information,
+or it responds with some error information.
+
+::
+
+    enum ServerResponse {
+       case .Result(String, String)
+       case .Error(String)
+    }
+
+    let success = ServerResponse.Result("6:00 am", "8:09 pm")
+    let failure = ServerResponse.Error("Out of cheese.")
+
+    var serverResponse: String
+    switch success {
+       case let .Result(sunrise, sunset):
+          serverResponse = "Sunrise is at \(sunsrise) and sunset is at \(sunset)."
+       case let .Error(error):
+          serverResponse = "Failure...  \(error)"
+    }
+
+.. admonition:: Experiment
+
+   Add a third case to ``ServerResponse`` and to the switch.
+
+
 Protocols
 ---------
 
