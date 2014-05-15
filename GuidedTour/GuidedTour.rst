@@ -876,40 +876,49 @@ but inside the switch it could be abbreviated as just ``.Hearts``.
 You can use the abbreviated form
 anytime the value's type is already known.
 
-Enumerations can be based on an underlying "raw" value.
+Enumerations can have a mapping on an underlying raw value,
+such as a number or a string.
 In the example below,
 the underlying value is an integer,
 so you only have to specify the first value
-and the others are computed automatically.
-You can use any type as the raw value for an enumeration.
+and the rest of the raw values
+are assigned in order by incrementing the number.
+You can also use strings or floating-point numbers
+as the raw type of an enumeration.
 
-.. TR: Is that true?
+.. testcode::
 
-::
-    enum Rank: Int {
-       case Ace = 1
-       case Two, Three, Four, Five, Six, Seven, Eight, Nine, Ten
-       case Jack, Queen, King
-       func description() -> String {
-          switch self {
-             case .Ace:
-                return "ace"
-             case .Jack:
-                return "jack"
-             case .Queen:
-                return "queen"
-             case .King:
-                return "king"
-             default:
-                return String(self.toRaw())
+    -> enum Rank: Int {
+          case Ace = 1
+          case Two, Three, Four, Five, Six, Seven, Eight, Nine, Ten
+          case Jack, Queen, King
+          func description() -> String {
+             switch self {
+                case .Ace:
+                   return "ace"
+                case .Jack:
+                   return "jack"
+                case .Queen:
+                   return "queen"
+                case .King:
+                   return "king"
+                default:
+                   return String(self.toRaw())
+             }
           }
        }
-    }
+    -> let ace = Rank.Ace
+    << // ace : Rank = <unprintable value>
+    -> let aceRawValue = ace.toRaw()
+    <$ : Int = 1
 
 .. admonition:: Experiment
 
-   Add a method that uses the raw value
-   and compares this ``Rank`` values.
+   Write a function that compares two ``Rank`` values
+   by comparing their raw values.
+
+The ``toRaw`` and ``fromRaw`` functions let you convert
+between the raw value and the enumeration value.
 
 .. write-me::
 
