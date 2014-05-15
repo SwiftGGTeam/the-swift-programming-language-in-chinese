@@ -858,7 +858,7 @@ see :doc:`../LanguageGuide/BasicOperators` and :doc:`../LanguageGuide/AdvancedOp
     postfix-expression --> initializer-expression
     postfix-expression --> explicit-member-expression
     postfix-expression --> postfix-self-expression
-    postfix-expression --> metatype-expression
+    postfix-expression --> dynamic-type-expression
     postfix-expression --> subscript-expression
     postfix-expression --> forced-expression
     postfix-expression --> optional-chaining-operator
@@ -1089,10 +1089,10 @@ Postfix Self Expression
     postfix-self-expression --> postfix-expression ``.`` ``self``
 
 
-.. _Expressions_MetatypeExpression:
+.. _Expressions_DynamicTypeExpression:
 
-Metatype Expression
-~~~~~~~~~~~~~~~~~~~
+Dynamic Type Expression
+~~~~~~~~~~~~~~~~~~~~~~~
 
 .. write-me::
 
@@ -1104,7 +1104,7 @@ Metatype Expression
 
     Grammar of a dynamic type expression
 
-    metatype-expression --> postfix-expression ``.`` ``dynamicType``
+    dynamic-type-expression --> postfix-expression ``.`` ``dynamicType``
 
 
 .. _Expressions_SubscriptExpression:
