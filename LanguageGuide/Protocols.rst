@@ -314,7 +314,7 @@ with a ``LinearCongruentialGenerator`` instance as its random number generator:
    :compile: true
 
    -> var d6 = Dice(sides: 6, generator: LinearCongruentialGenerator())
-   -> for _ in 1..5 {
+   -> for _ in 1...5 {
          println("Random dice roll is \(d6.roll())")
       }
    </ Random dice roll is 3
@@ -684,7 +684,7 @@ The ``SnakesAndLadders`` class can be extended to adopt and conform to ``PrettyT
    -> extension SnakesAndLadders: PrettyTextRepresentable {
          func asPrettyText() -> String {
             var output = asText() + ":\n"
-            for index in 1..finalSquare {
+            for index in 1...finalSquare {
                switch board[index] {
                   case let ladder where ladder > 0:
                      output += "👍 "
@@ -1083,7 +1083,7 @@ You can use an instance of ``ThreeSource`` as the data source for a new ``Counte
    -> var counter = Counter()
    << // counter : Counter = <Counter instance>
    -> counter.dataSource = ThreeSource()
-   -> for _ in 1..4 {
+   -> for _ in 1...4 {
          counter.increment()
          println(counter.count)
       }
@@ -1130,7 +1130,7 @@ Once the counter reaches zero, no more counting takes place:
 
    -> counter.count = -4
    -> counter.dataSource = TowardsZeroSource()
-   -> for _ in 1..5 {
+   -> for _ in 1...5 {
          counter.increment()
          println(counter.count)
       }

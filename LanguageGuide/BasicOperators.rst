@@ -521,7 +521,7 @@ which are shortcuts for expressing a range of values.
 Closed Range Operator
 ~~~~~~~~~~~~~~~~~~~~~
 
-The :newTerm:`closed range operator` (``a..b``)
+The :newTerm:`closed range operator` (``a...b``)
 defines a range that runs from ``a`` to ``b``,
 and includes the values ``a`` and ``b``.
 
@@ -531,7 +531,7 @@ such as with a ``for``-``in`` loop:
 
 .. testcode:: rangeOperators
 
-   -> for index in 1..5 {
+   -> for index in 1...5 {
          println("\(index) times 5 is \(index * 5)")
       }
    </ 1 times 5 is 5
@@ -547,7 +547,7 @@ such as with a ``for``-``in`` loop:
 Half-Closed Range Operator
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The :newTerm:`half-closed range operator` (``a...b``)
+The :newTerm:`half-closed range operator` (``a..b``)
 defines a range that runs from ``a`` to ``b``,
 but does not include ``b``.
 It is said to be :newTerm:`half-closed`
@@ -563,7 +563,7 @@ where it is useful to count up to (but not including) the length of the list:
    << // names : Array<String> = ["Anna", "Alex", "Brian", "Jack"]
    -> let count = names.count
    << // count : Int = 4
-   -> for i in 0...count {
+   -> for i in 0..count {
          println("Person \(i + 1) is called \(names[i])")
       }
    </ Person 1 is called Anna
@@ -572,7 +572,7 @@ where it is useful to count up to (but not including) the length of the list:
    </ Person 4 is called Jack
 
 Note that the array contains four items,
-but ``0...count`` only counts as far as ``3``
+but ``0..count`` only counts as far as ``3``
 (the index of the last item in the array),
 because it is a half-closed range.
 (Arrays are described in more detail in :ref:`CollectionTypes_Arrays`.)

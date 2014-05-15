@@ -585,7 +585,7 @@ Define variable parameters by prefixing the parameter name with the keyword ``va
 
    -> func alignRight(var string: String, count: Int, pad: Character) -> String {
          let amountToPad = count - countElements(string)
-         for _ in 0...amountToPad {
+         for _ in 1...amountToPad {
             string = pad + string
          }
          return string

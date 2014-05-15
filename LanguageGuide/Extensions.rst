@@ -266,7 +266,7 @@ just like mutating methods from an original implementation:
 
    -> extension Int {
          mutating func shiftRight(numberOfDecimalPlaces: Int) {
-            for _ in 0...numberOfDecimalPlaces {
+            for _ in 1...numberOfDecimalPlaces {
                self /= 10
             }
          }
@@ -312,7 +312,7 @@ so:
    -> extension Int {
          subscript(digitIndex: Int) -> Int {
             var decimalBase = 1
-            for _ in 0...digitIndex {
+            for _ in 1...digitIndex {
                decimalBase *= 10
             }
             return (self / decimalBase) % 10

@@ -48,7 +48,7 @@ This example prints the first few entries in the five-times-table:
 
 .. testcode:: forLoops
 
-   -> for index in 1..5 {
+   -> for index in 1...5 {
          println("\(index) times 5 is \(index * 5)")
       }
    </ 1 times 5 is 5
@@ -59,7 +59,7 @@ This example prints the first few entries in the five-times-table:
 
 Here, the collection of items being iterated is a
 closed range of numbers from ``1`` to ``5`` inclusive,
-as indicated by the use of the closed range operator (``..``).
+as indicated by the use of the closed range operator (``...``).
 The value of ``index`` is set to the first number in the range (``1``),
 and the statements inside the loop are executed.
 In this case, the loop contains only one statement,
@@ -97,7 +97,7 @@ you can ignore the values by using an underscore in place of a variable name:
    << // power : Int = 10
    -> var answer = 1
    << // answer : Int = 1
-   -> for _ in 0...power {
+   -> for _ in 1...power {
          answer *= base
       }
    -> println("\(base) to the power of \(power) is \(answer)")
@@ -108,7 +108,7 @@ This example calculates the value of one number to the power of another
 It multiplies a starting value of ``1``
 (that is, ``3`` to the power of ``0``)
 by ``3``, ten times,
-using a half-open loop that starts with ``0`` and ends with ``9``.
+using a half-closed loop that starts with ``0`` and ends with ``9``.
 This calculation doesn't need to know the individual counter values each time through the loop –
 it simply needs to execute the loop the correct number of times.
 The underscore character ``_``
@@ -811,15 +811,15 @@ to provide a natural-language count for numbers of any size:
    -> switch count {
          case 0:
             naturalCount = "no"
-         case 1..3:
+         case 1...3:
             naturalCount = "a few"
-         case 4..9:
+         case 4...9:
             naturalCount = "several"
-         case 10..99:
+         case 10...99:
             naturalCount = "tens of"
-         case 100..999:
+         case 100...999:
             naturalCount = "hundreds of"
-         case 1000..999_999:
+         case 1000...999_999:
             naturalCount = "thousands of"
          default:
             naturalCount = "millions and millions of"
@@ -855,7 +855,7 @@ and categorizes it on the graph that follows:
             println("(\(somePoint.0), 0) is on the x-axis")
          case (0, _):
             println("(0, \(somePoint.1)) is on the y-axis")
-         case (-2..2, -2..2):
+         case (-2...2, -2...2):
             println("(\(somePoint.0), \(somePoint.1)) is inside the box")
          default:
             println("(\(somePoint.0), \(somePoint.1)) is outside of the box")

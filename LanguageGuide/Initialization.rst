@@ -166,8 +166,8 @@ The ``boardColors`` array is initialized with a closure to set up its color valu
          let boardColors: Bool[] = {
             var temporaryBoard = Bool[]()
             var isBlack = false
-            for i in 1..10 {
-               for j in 1..10 {
+            for i in 1...10 {
+               for j in 1...10 {
                   temporaryBoard.append(isBlack)
                   isBlack = !isBlack
                }
