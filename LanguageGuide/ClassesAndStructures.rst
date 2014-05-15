@@ -387,7 +387,7 @@ and the frame rate of ``alsoTenEighty`` is modified:
 
 Because classes are reference types,
 ``tenEighty`` and ``alsoTenEighty`` actually both refer to the *same* ``VideoMode`` instance.
-Effectively, they are just two different names for the same single reference.
+Effectively, they are just two different names for the same single instance.
 
 Checking the ``frameRate`` property of ``tenEighty``
 shows that it correctly reports the new frame rate of ``30.0``
