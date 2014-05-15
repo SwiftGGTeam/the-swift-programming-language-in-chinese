@@ -623,6 +623,11 @@ as the second argument to the ``sort`` function.
     -> sort([1, 5, 3, 12, 2], >)
     <$ : Array<Int> = [12, 5, 3, 2, 1]
 
+.. write-me::
+
+* Curried functions
+* Custom operators
+
 Objects and Classes
 -------------------
 
@@ -945,11 +950,6 @@ structures are always copied when they are passed around in your code.
     let threeOfSpades = Card(.Three, .Spades)
     let threeOfSpadesDescription = threeOfSpadesDescription.description()
 
-.. write-me::
-
-* Optional is just an enum -- no magic.
-
-
 Enumerations can have other values associated with them.
 This is different than a raw value:
 the raw value is always the same,
@@ -960,6 +960,10 @@ consider the case of requesting
 the sunrise and sunset time from a server.
 The server either responds with the information,
 or it responds with some error information.
+
+.. TODO: Would be better to use a non-string here...
+   Avoiding temperatures because of the F/C problem.
+   What about a collection of data that has some missing values?
 
 ::
 
@@ -994,12 +998,10 @@ Protocols
 * Can provide a default implementation.
 
 
-Additional Topics
------------------
+Generics
+--------
 
 .. write-me::
 
-* Generics -- on objects, methods, etc.
-* Pattern matching in switches
-* Curried functions
-* Custom operators [could go under Functions]
+* On function (repeat X n times, re-implementing Array init feature)
+* On classes, structures, and enumerations
