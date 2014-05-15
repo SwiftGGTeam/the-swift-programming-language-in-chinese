@@ -1,5 +1,5 @@
-Memory Management
-=================
+Automatic Reference Counting
+============================
 
 Swift uses :newTerm:`Automatic Reference Counting` (known as ARC)
 to track and manage your app's memory usage.
@@ -15,7 +15,7 @@ in order to manage memory for you.
 This chapter describes those situations,
 and shows how to make it easy for ARC to manage all of your app's memory.
 
-.. _MemoryManagement_HowARCWorks:
+.. _AutomaticReferenceCounting_HowARCWorks:
 
 How ARC Works
 -------------
@@ -62,7 +62,7 @@ The reference is called a “strong“ reference because
 it keeps a firm hold on that instance,
 and does not allow it to be destroyed for as long as that strong reference remains.
 
-.. _MemoryManagement_ARCInAction:
+.. _AutomaticReferenceCounting_ARCInAction:
 
 ARC In Action
 ~~~~~~~~~~~~~
@@ -149,7 +149,7 @@ at which point it is clear that you are no longer using the ``Person`` instance:
    -> reference3 = nil
    <- John Appleseed is being deinitialized
 
-.. _MemoryManagement_StrongReferenceCycles:
+.. _AutomaticReferenceCounting_StrongReferenceCycles:
 
 Strong Reference Cycles
 -----------------------
@@ -167,7 +167,7 @@ This is known as a :newTerm:`strong reference cycle`.
 You can resolve strong reference cycles
 by defining some of the relationships between classes
 to be weak or unowned references instead of strong references.
-This process is described in :ref:`MemoryManagement_WeakAndUnownedReferences` below.
+This process is described in :ref:`AutomaticReferenceCounting_WeakAndUnownedReferences` below.
 However, before seeing how to break a strong reference cycle,
 it is useful to understand how such a cycle can be caused.
 
@@ -278,7 +278,7 @@ the ``john`` and ``number73`` variables to ``nil``:
 The strong references between the ``Person`` instance
 and the ``Apartment`` instance remain, and cannot now be broken.
 
-.. _MemoryManagement_WeakAndUnownedReferences:
+.. _AutomaticReferenceCounting_WeakAndUnownedReferences:
 
 Weak and Unowned References
 ---------------------------
@@ -301,7 +301,7 @@ the reference will never be ``nil`` once it has been set during initialization.
    "which of the two properties in the reference cycle
    should be marked as weak or unowned?"
 
-.. _MemoryManagement_WeakReferences:
+.. _AutomaticReferenceCounting_WeakReferences:
 
 Weak References
 ~~~~~~~~~~~~~~~
@@ -318,7 +318,7 @@ whenever it is possible for that reference to have
 “no value” at some point in its life.
 (If the reference will *always* have a value,
 you should use an unowned reference instead,
-as described in :ref:`MemoryManagement_UnownedReferences`.)
+as described in :ref:`AutomaticReferenceCounting_UnownedReferences`.)
 In the ``Apartment`` example above,
 it is appropriate for an apartment to be able to have
 “no tenant” at some point in its lifetime,
@@ -424,7 +424,7 @@ This proves that the reference cycle has been broken.
 .. TODO: weak references can also be implicitly unchecked optionals.
    I should mention this here, but when would it be appropriate to use them?
 
-.. _MemoryManagement_UnownedReferences:
+.. _AutomaticReferenceCounting_UnownedReferences:
 
 Unowned References
 ~~~~~~~~~~~~~~~~~~
@@ -464,7 +464,7 @@ The following example defines two classes, ``Customer`` and ``CreditCard``,
 which model a bank customer and a possible credit card for that customer.
 These two classes each store an instance of the other class as a property.
 This has the potential to create a reference cycle,
-as described in :ref:`MemoryManagement_StrongReferenceCycles`.
+as described in :ref:`AutomaticReferenceCounting_StrongReferenceCycles`.
 
 The relationship between ``Customer`` and ``CreditCard`` is slightly different from
 the relationship between ``Apartment`` and ``Person`` seen above.
@@ -556,7 +556,7 @@ the deinitializers for the ``Customer`` instance and ``CreditCard`` instance
 both print their “deinitialized” messages
 after the ``john`` variable is set to ``nil``.
 
-.. _MemoryManagement_UnownedReferencesAndImplicitlyUnwrappedOptionalProperties:
+.. _AutomaticReferenceCounting_UnownedReferencesAndImplicitlyUnwrappedOptionalProperties:
 
 Unowned References and Implicitly Unwrapped Optional Properties
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -663,12 +663,12 @@ and the property can be used and accessed like a non-optional value
 once initialization is complete,
 while still avoiding a strong reference cycle.
 
-.. _MemoryManagement_ClosureCaptureLists:
+.. _AutomaticReferenceCounting_ClosureCaptureLists:
 
 Closure Capture Lists
 ---------------------
 
-:ref:`MemoryManagement_StrongReferenceCycles`
+:ref:`AutomaticReferenceCounting_StrongReferenceCycles`
 describes how a strong reference cycle can be created
 when two class instances hold a strong reference to each other.
 
@@ -678,7 +678,7 @@ is when a closure captures an instance that holds a strong reference to that sam
 Swift provides an elegant solution to this problem,
 known as a :newTerm:`closure capture list`.
 
-.. _MemoryManagement_StrongReferenceCyclesInClosures:
+.. _AutomaticReferenceCounting_StrongReferenceCyclesInClosures:
 
 Strong Reference Cycles in Closures
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

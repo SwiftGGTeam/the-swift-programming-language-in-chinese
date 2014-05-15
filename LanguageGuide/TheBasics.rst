@@ -1155,7 +1155,7 @@ Implicitly unwrapped optionals are useful when
 an optional's value is confirmed to exist immediately after the optional is first defined,
 and can definitely be assumed to exist at every point thereafter.
 The primary use of implicitly unwrapped optionals in Swift is during class initialization,
-as described in :ref:`MemoryManagement_UnownedReferencesAndImplicitlyUnwrappedOptionalProperties`.
+as described in :ref:`AutomaticReferenceCounting_UnownedReferencesAndImplicitlyUnwrappedOptionalProperties`.
 
 An implicitly unwrapped optional is a normal optional behind the scenes,
 but can also be used like a non-optional value,
