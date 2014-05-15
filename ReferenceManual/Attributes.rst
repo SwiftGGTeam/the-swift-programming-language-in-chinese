@@ -135,6 +135,9 @@ the ``noreturn`` attribute to a function or method *type*.
     For an example of how to use the ``final`` attribute,
     see :ref:`Inheritance_FinalMethodsPropertiesAndSubscripts`.
 
+``lazy``
+    .. write-me::
+
 ``noreturn``
     Apply this attribute to a function or method declaration
     to indicate that the corresponding type of that function or method,
