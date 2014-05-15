@@ -589,18 +589,18 @@ When the closure's type is already known,
 such as the callback for a delegate,
 you can omit the type of its parameters,
 its return type, or both.
-For even more brevity,
-you can refer to parameters by number instead of by name.
 Single statement closures implicitly return the value
 of their only statement.
 
 .. testcode::
 
-    -> let shortTriple: Int -> Int = { 3 * $0 }
+    -> let shortTriple: Int -> Int = { number in 3 * number }
     << // shortTriple : Int -> Int = <unprintable value>
     -> shortTriple(5)
     <$ : Int = 15
 
+For even more brevity,
+you can refer to parameters by number instead of by name.
 A closure passed as the last argument to a function
 can appear immediately after the parentheses.
 
