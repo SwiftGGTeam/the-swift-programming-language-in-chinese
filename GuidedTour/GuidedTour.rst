@@ -936,16 +936,13 @@ between the raw value and the enumeration value.
        }
     }
 
-    var c = Card(rank:.Three, suit:.Spades)
-    c.description()
-    
-
+    let threeOfSpades = Card(.Three, .Spades)
+    let threeOfSpadesDescription = threeOfSpadesDescription.description()
 
 .. write-me::
 
 * Differences from objects (reference types)
 * Use structs for complex multipart data
-* Use enums when values come from a list
 
 * Associating additional data with enums (algebraic types)
 
