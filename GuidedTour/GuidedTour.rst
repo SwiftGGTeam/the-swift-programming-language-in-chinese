@@ -950,7 +950,13 @@ structures are always copied when they are passed around in your code.
 * Optional is just an enum -- no magic.
 
 
-Consider the case of requesting
+Enumerations can have other values associated with them.
+This is different than a raw value:
+the raw value is always the same,
+but you provide the associated values
+when you create the instance of the enumeration.
+For example,
+consider the case of requesting
 the sunrise and sunset time from a server.
 The server either responds with the information,
 or it responds with some error information.
