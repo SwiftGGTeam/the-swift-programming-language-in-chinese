@@ -177,9 +177,9 @@ use the initializer syntax.
 
 .. testcode::
 
-   -> var emptyArray = String[]()
+   -> let emptyArray = String[]()
    << // emptyArray : Array<String> = []
-   -> var emptyDictionary = Dictionary<String, Float>()
+   -> let emptyDictionary = Dictionary<String, Float>()
    << // emptyDictionary : Dictionary<String, Float> = Dictionary<String, Float>(1.33333333333333, 0, <DictionaryBufferOwner<String, Float> instance>)
 
 If type information can be inferred,
