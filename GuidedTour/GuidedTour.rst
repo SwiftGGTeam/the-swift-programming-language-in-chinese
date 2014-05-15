@@ -186,7 +186,7 @@ the index or key in brackets.
 
 .. admonition:: Experiment
 
-   Add you own favorite fruit to the array
+   Add your own favorite fruit to the array
    and compare it to ``favoriteFruit`` with the ``==`` operator.
    Add the current temperature of your town
    to the dictionary.
