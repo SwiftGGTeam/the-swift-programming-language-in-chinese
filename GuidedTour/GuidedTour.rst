@@ -938,17 +938,19 @@ including methods and initializers.
 Unlike classes,
 structures are always copied when they are passed around in your code.
 
-::
-    struct Card {
-       var rank: Rank
-       var suit: Suit
-       func description() -> String {
-          return "The \(rank.description()) of \(suit.description())"
-       }
-    }
+.. testcode::
 
-    let threeOfSpades = Card(.Three, .Spades)
-    let threeOfSpadesDescription = threeOfSpadesDescription.description()
+    -> struct Card {
+          var rank: Rank
+          var suit: Suit
+          func description() -> String {
+             return "The \(rank.description()) of \(suit.description())"
+          }
+       }
+    -> let threeOfSpades = Card(rank: .Three, suit:.Spades)
+    << // threeOfSpades : Card = Card(<unprintable value>, <unprintable value>)
+    -> let threeOfSpadesDescription = threeOfSpades.description()
+    << // threeOfSpadesDescription : String = "The 3 of spades"
 
 Enumerations can have other values associated with them.
 This is different than a raw value:
