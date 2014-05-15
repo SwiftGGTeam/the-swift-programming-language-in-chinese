@@ -1,12 +1,45 @@
 Inheritance
 ===========
 
-Classes can :newTerm:`inherit` methods, properties and other characteristics
-from existing classes.
+A class can :newTerm:`inherit` methods, properties, and other characteristics
+from another class.
+When one class inherits from another,
+the inheriting class is known as a :newTerm:`subclass`,
+and the class it inherits from is known as its :newTerm:`superclass`.
 Inheritance is one of the fundamental behaviors that differentiate classes
 from other types in Swift.
 
-Here's an example:
+Classes in Swift can call and access
+methods, properties, and subscripts belonging to their superclass,
+and can provide their own overriding versions of those methods, properties, and subscripts
+to refine or modify their behavior.
+Swift helps to ensure your overrides are correct
+by checking that the override definition has a matching superclass definition.
+
+Classes can also add property observers to inherited properties
+in order to be notified when the value of a property changes.
+Property observers can be added to any property,
+regardless of whether it was originally defined as a stored or computed property.
+
+.. _Inheritance_DefiningABaseClass:
+
+Defining A Base Class
+~~~~~~~~~~~~~~~~~~~~~
+
+Any class that does not inherit from another class is known as a :newTerm:`base class`.
+
+.. note::
+
+   Swift classes do not inherit from a universal base class.
+   Any classes you define without specifying a superclass
+   will automatically become base classes for you to build upon.
+
+The example below defines a base class called ``Vehicle``.
+This base class declares two properties
+(``numberOfWheels`` and ``maxPassengers``)
+that are universal to all vehicles.
+These properties are used by a method called ``description``,
+which returns a ``String`` description of the vehicle's characteristics:
 
 .. testcode:: inheritance
 
@@ -22,12 +55,6 @@ Here's an example:
          }
       }
 
-This example starts by defining a “base” class called ``Vehicle``.
-This base class declares two properties
-(``numberOfWheels`` and ``maxPassengers``)
-that are universal to all vehicles.
-These properties are used by a method called ``description``,
-which returns a ``String`` description of the vehicle's characteristics.
 
 .. QUESTION: this example doesn't really need an initializer.
    I could just as easily set the values as part of the property declaration.
@@ -40,11 +67,13 @@ The ``Vehicle`` class also defines an :newTerm:`initializer`
 to set up its properties.
 Initializers are described in detail in :doc:`Initialization`,
 but a brief introduction is required here in order to illustrate
-how inherited properties can be modified.
+how inherited properties can be modified by subclasses.
 
-Initializers are special methods that are called whenever a new instance of a type is created.
-Initializers prepare each new instance for use,
-and ensure that all of the instance's properties have valid initial values.
+Initializers are a way to create a new instance of a type.
+Although initializers are not methods,
+they are written in a very similar syntax to instance methods.
+An initializer prepares a new instance for use,
+and ensures that all of the instance's properties have valid initial values.
 
 In its simplest form, an initializer is like an instance method with no parameters,
 written using the ``init`` keyword:
@@ -57,9 +86,9 @@ written using the ``init`` keyword:
       }
    >> }
 
-This simple initializer is called whenever a new instance is created
-via :newTerm:`initializer syntax`
-(written as ``TypeName`` followed by empty parentheses):
+To create a new instance of ``Vehicle``,
+you call this initializer with :newTerm:`initializer syntax`,
+written as ``TypeName`` followed by empty parentheses:
 
 .. testcode:: inheritance
 
@@ -77,10 +106,31 @@ but is not much use in itself.
 To make it more useful,
 it needs to be refined to describe more specific kinds of vehicle.
 
+.. _Inheritance_Subclassing:
+
+Subclassing
+~~~~~~~~~~~
+
+:newTerm:`Subclassing` is the act of basing a new class on an existing class,
+in order to inherit its existing characteristics,
+and to refine those existing characteristics and / or add new ones.
+
+To indicate that a class has a superclass,
+write the superclass name after the original class name,
+separated by a colon:
+
+.. testcode:: protocolSyntax
+
+   >> class SomeSuperclass {}
+   -> class SomeClass: SomeSuperclass {
+         // class definition goes here
+      }
+
 The next example defines a second, more specific vehicle called ``Bicycle``.
 This new class is based on the existing capabilities of ``Vehicle``.
-This is indicated by placing the name of the class it builds upon (``Vehicle``)
+You indicate this by placing the name of the class the subclass builds upon (``Vehicle``)
 after its own name (``Bicycle``), separated by a colon.
+
 This can be read as:
 
 “Define a new class called ``Bicycle``, which inherits the characteristics of ``Vehicle``”:
@@ -94,14 +144,11 @@ This can be read as:
          }
       }
 
-``Bicycle`` is said to be a :newTerm:`subclass` of ``Vehicle``, 
-and ``Vehicle`` is said to be the :newTerm:`superclass` of ``Bicycle``.
-The new ``Bicycle`` class automatically gains all of the characteristics of ``Vehicle``,
-and is able to tailor those characteristics (and add new ones) to suit its needs.
-
-.. QUESTION: this isn't quite true.
-   Bicycle doesn't inherit Vehicle's initializer, because it provides its own.
-   Does this matter for the purposes of this description?
+``Bicycle`` is a subclass of ``Vehicle``, and ``Vehicle`` is the superclass of ``Bicycle``.
+The new ``Bicycle`` class automatically gains all characteristics of ``Vehicle``,
+such as its ``maxPassengers`` and ``numberOfWheels`` properties.
+You can tailor those characteristics and add new ones
+to better match the requirements of the ``Bicycle`` class.
 
 The ``Bicycle`` class also defines an initializer
 to set up its tailored characteristics.
@@ -109,6 +156,11 @@ The initializer for ``Bicycle`` starts by calling ``super.init()``.
 This calls the initializer for ``Bicycle``\ 's superclass, ``Vehicle``,
 and ensures that all of the inherited properties are initialized by ``Vehicle``
 before ``Bicycle`` tries to modify them.
+
+.. note::
+
+   Unlike Objective-C, initializers are not inherited by default in Swift.
+   For more information, see :ref:`Initialization_InitializerInheritanceAndOverriding`.
 
 The default value of ``maxPassengers`` provided by ``Vehicle`` is already correct for a bicycle,
 and so it is not changed within the initializer for ``Bicycle``.
@@ -150,10 +202,10 @@ but it does update ``maxPassengers`` to have the correct value for a tandem.
 
    Subclasses are only allowed to modify
    *variable* properties of superclasses during initialization.
-   Inherited constant properties may not be modified by subclasses.
+   You can't modify inherited constant properties of subclasses.
 
-Again, if you create an instance of ``Tandem``, and print its description,
-you can see how its properties have been updated:
+Creating an instance of ``Tandem`` and printing its description
+shows how its properties have been updated:
 
 .. testcode:: inheritance
 
@@ -164,12 +216,6 @@ you can see how its properties have been updated:
 
 Note that the ``description`` method has also been inherited by ``Tandem``.
 Instance methods of a class are inherited by any and all subclasses of that class.
-
-.. note::
-
-   Swift classes do not inherit from a universal “base” class.
-   Any classes you define without specifying a superclass
-   will automatically become base classes for you to build upon.
 
 .. QUESTION: Should I mention that you can subclass from NSObject?
 
@@ -183,20 +229,17 @@ an instance method, class method, instance property, or subscript
 that it would otherwise inherit from a superclass.
 This is known as :newTerm:`overriding`.
 
-Whenever you override something that would overwise be inherited,
-you must prefix your overriding definition with the ``override`` keyword.
-This makes it clear that you intend to provide an override,
-and have not just accidentally provided a matching definition by mistake.
+To override something that would otherwise be inherited,
+you prefix your overriding definition with the ``override`` keyword.
+Doing so clarifies that you intend to provide an override,
+and have not provided a matching definition by mistake.
 Overriding by accident can cause unexpected behavior,
 and any overrides without the ``override`` keyword are
 diagnosed as an error when your code is compiled.
-(The definition you have accidentally overridden may not have been provided
-by your subclass's immediate superclass –
-it may have been inherited from another superclass further up the chain.)
 
 The ``override`` keyword also prompts the Swift compiler
 to check that your overriding class's superclass (or one of its parents)
-has a declaration that matches the one you have provided for the override.
+has a declaration that matches the one you provided for the override.
 This ensures that your overriding definition is correct.
 
 .. _Inheritance_AccessingSuperclass:
@@ -204,10 +247,17 @@ This ensures that your overriding definition is correct.
 Accessing Superclass Methods, Properties, and Subscripts
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can access the superclass version of a method, property, or subscript
+When you provide a method, property or subscript override for a subclass,
+it is sometimes useful to make use of the existing superclass implementation
+as part of your override.
+This might be to refine the behavior of that existing implementation,
+or to store a modified value in an existing inherited variable.
+
+Where this is appropriate,
+you access the superclass version of a method, property, or subscript
 by using the ``super`` prefix:
 
-* An overridden method called ``someMethod`` can call the superclass version of ``someMethod``
+* An overridden method named ``someMethod`` can call the superclass version of ``someMethod``
   by calling ``super.someMethod()`` within the overriding method implementation.
 * A overridden property called ``someProperty`` can access the superclass version of ``someProperty``
   as ``super.someProperty`` within the overriding getter or setter implementation.
@@ -278,13 +328,13 @@ to observe when the underlying property value changes.
 
 .. _Inheritance_OverridingPropertyGettersAndSetters:
 
-Overriding Property Getters And Setters
+Overriding Property Getters and Setters
 _______________________________________
 
 You can provide a custom getter (and setter, if appropriate)
 to override *any* inherited property,
 regardless of whether the inherited property is implemented as
-a stored or computed property at source.
+a stored or computed property at its source.
 (The stored or computed nature of an inherited property is not known by a subclass –
 it only knows that the inherited property has a certain name and type.)
 You must always state both the name and the type of the property you are overriding,
@@ -308,7 +358,7 @@ The following example defines a new class called ``SpeedLimitedCar``,
 which is a subclass of ``Car``.
 The ``SpeedLimitedCar`` class represents a car that has been fitted with
 a speed-limiting device, which prevents the car from traveling faster than 40mph.
-This limitation is implemented by overriding the inherited ``speed`` property.
+You implement this limitation by overriding the inherited ``speed`` property:
 
 .. testcode:: inheritance
 
@@ -324,7 +374,7 @@ This limitation is implemented by overriding the inherited ``speed`` property.
       }
 
 Whenever you set the ``speed`` property of a ``SpeedLimitedCar`` instance,
-the property's setter implementation checks the new value, and limits it to 40mph.
+the property's setter implementation checks the new value and limits it to 40mph.
 It does this by setting the underlying ``speed`` property of its superclass
 to be the smaller of ``newValue`` and ``40.0``.
 The smaller of these two values is determined by passing them to the ``min`` function,
@@ -332,9 +382,9 @@ which is a global function provided by the Swift standard library.
 The ``min`` function takes two or more values,
 and returns the smallest one of those values.
 
-If you try and set the ``speed`` property of a ``SpeedLimitedCar`` instance
+If you try to set the ``speed`` property of a ``SpeedLimitedCar`` instance
 to something more than 40mph, and then print the output of its ``description`` method,
-you can see that the speed has been limited:
+you see that the speed has been limited:
 
 .. testcode:: inheritance
 
@@ -352,6 +402,7 @@ _____________________________
 You can use property overriding to add property observers to an inherited property.
 This enables you to be notified when the value of the inherited property changes,
 regardless of how that property was originally implemented.
+For more information on property observers, see :ref:`Properties_PropertyObservers`.
 
 .. note::
 
@@ -404,10 +455,10 @@ and a speed of ``35.0`` produces a gear of ``4``:
    -> println("AutomaticCar: \(automatic.description())")
    </ AutomaticCar: 4 wheels; up to 5 passengers; traveling at 35.0 mph in gear 4
 
-.. _Inheritance_FinalMethodsPropertiesAndSubscripts:
+.. _Inheritance_PreventingOverridesOfMethodsPropertiesAndSubscripts:
 
-Final Methods, Properties and Subscripts
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Preventing Overrides of Methods, Properties and Subscripts
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You can prevent a method, property, or subscript from being overridden
 by marking it as :newTerm:`final`.
