@@ -570,19 +570,12 @@ and use ``in`` to separate the arguments from the body.
 
 .. testcode::
 
-    -> let triple: Int -> Int = {
+    -> numbers.map({
           (number: Int) in
           let result = 3 * number
           return result
-       }
-    << // triple : Int -> Int = <unprintable value>
-    -> triple(5)
-    <$ : Int = 15
-
-.. The type of "number" can be omitted above,
-   and in fact the parens are probably not needed either.
-   I've written them for now
-   so that I start with the most verbose function-y syntax.
+       })
+    <$ : Array<Int> = [24, 9, 15, 18]
 
 You have several options for writing closures more concisely.
 When the closure's type is already known,
@@ -594,10 +587,8 @@ of their only statement.
 
 .. testcode::
 
-    -> let shortTriple: Int -> Int = { number in 3 * number }
-    << // shortTriple : Int -> Int = <unprintable value>
-    -> shortTriple(5)
-    <$ : Int = 15
+    -> numbers.map({ number in 3 * number })
+    <$ : Array<Int> = [24, 9, 15, 18]
 
 For even more brevity,
 you can refer to parameters by number instead of by name.
@@ -608,11 +599,6 @@ can appear immediately after the parentheses.
 
     -> sort([1, 5, 3, 12, 2]) { $0 > $1 }
     <$ : Array<Int> = [12, 5, 3, 2, 1]
-
-.. admonition:: Experiment
-
-   Rewrite the bubble sort function above
-   so it takes a trailing closure to do comparisons.
 
 The previous listing can be written without a closure at all
 by passing the ``>`` operator
