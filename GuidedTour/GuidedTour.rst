@@ -927,6 +927,12 @@ between the raw value and the enumeration value.
 
     TODO: Use a loop to generate a whole deck.
 
+Use ``struct`` to create a structure.
+Structures support many of the same behaviors as classes,
+including methods and initializers.
+Unlike classes,
+structures are always copied when they are passed around in your code.
+
 ::
     struct Card {
        var rank: Rank
@@ -940,11 +946,6 @@ between the raw value and the enumeration value.
     let threeOfSpadesDescription = threeOfSpadesDescription.description()
 
 .. write-me::
-
-* Differences from objects (reference types)
-* Use structs for complex multipart data
-
-* Associating additional data with enums (algebraic types)
 
 * Optional is just an enum -- no magic.
 
