@@ -8,9 +8,9 @@ Please send any comments on this book to the Developer Publications Swift Discus
 Contents
 ========
 
-* `Change Log <https://[Internal Staging Server]/documentation/Miscellaneous/Conceptual/The_Programming_Language/index.html#//apple_ref/doc/uid/TP40014097>`_
+* `Change Log <https://[Internal Staging Server]/documentation/Miscellaneous/Conceptual/The_Programming_Language/ChangeLog.html#//apple_ref/doc/uid/TP40014097-CH37-XID_0>`_
 
-* `Guided Tour <https://[Internal Staging Server]/documentation/Miscellaneous/Conceptual/The_Programming_Language/GuidedTour.html#//apple_ref/doc/uid/TP40014097>`_
+* `Guided Tour <https://[Internal Staging Server]/documentation/Miscellaneous/Conceptual/The_Programming_Language/index.html#//apple_ref/doc/uid/TP40014097>`_
 
 * `Language Guide <https://[Internal Staging Server]/documentation/Miscellaneous/Conceptual/The_Programming_Language/TheBasics.html#//apple_ref/doc/uid/TP40014097-CH4-XID_215>`_
 
