@@ -541,7 +541,7 @@ A function can take another function as one of its arguments.
 .. testcode::
 
     -> // Re-implement the Standard Library sort function.
-    -> func bubbleSort(var list: Array<Int>, outOfOrder: (Int, Int) -> Bool) -> Array<Int> {
+    -> func bubbleSort(list: Int[], outOfOrder: (Int, Int) -> Bool) {
           for i in 0...list.count {
              for j in 0...list.count {
                 if outOfOrder(list[i], list[j]) {
@@ -549,7 +549,6 @@ A function can take another function as one of its arguments.
                 }
              }
           }
-          return list
        }
     -> func greaterThan(x : Int, y : Int) -> Bool {
           return x > y
@@ -558,11 +557,6 @@ A function can take another function as one of its arguments.
     << // numbers : Array<Int> = [8, 3, 5, 6]
     -> var sortedNumbers = bubbleSort(numbers, greaterThan)
     << // sortedNumbers : Array<Int> = [8, 6, 5, 3]
-
-.. TODO: This example probably doesn't work anymore.
-   The contents of an Array are no longer part of their value,
-   per [Contributor 6004]'s email.
-   If it stays, use the sugar form of Array.
 
 Closures are the same as functions with one difference:
 you don't give them a name when you declare them.
