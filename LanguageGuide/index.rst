@@ -18,6 +18,7 @@ Language Guide
    Subscripts
    Inheritance
    Initialization
+   Deinitialization
    AutomaticReferenceCounting
    TypeCasting
    NestedTypes
