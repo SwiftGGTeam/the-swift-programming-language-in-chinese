@@ -509,9 +509,9 @@ that is long or complex.
 
 .. testcode::
 
-    -> func returnFifteen () -> Int {
+    -> func returnFifteen() -> Int {
           var y = 10
-          func add () -> () {
+          func add() -> () {
              y += 5
           }
           add()
@@ -526,7 +526,7 @@ This means a function can return another function as its value.
 .. testcode::
 
     -> func makeIncrementer() -> (Int -> Int) {
-          func addOne (number: Int) -> Int {
+          func addOne(number: Int) -> Int {
              return 1 + number
           }
           return addOne
@@ -543,7 +543,7 @@ A function can take another function as one of its arguments.
 .. testcode::
 
     -> // Re-implement the Standard Library sort function.
-    -> func bubbleSort (var list: Array<Int>, outOfOrder: (Int, Int) -> Bool) -> Array<Int> {
+    -> func bubbleSort(var list: Array<Int>, outOfOrder: (Int, Int) -> Bool) -> Array<Int> {
           for i in 0...list.count {
              for j in 0...list.count {
                 if outOfOrder(list[i], list[j]) {
@@ -553,7 +553,7 @@ A function can take another function as one of its arguments.
           }
           return list
        }
-    -> func greaterThan (x : Int, y : Int) -> Bool {
+    -> func greaterThan(x : Int, y : Int) -> Bool {
           return x > y
        }
     -> var numbers = [8, 3, 5, 6]
