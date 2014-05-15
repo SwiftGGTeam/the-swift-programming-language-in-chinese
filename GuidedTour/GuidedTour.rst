@@ -967,23 +967,40 @@ or it responds with some error information.
    Avoiding temperatures because of the F/C problem.
    What about a collection of data that has some missing values?
 
-::
+.. testcode::
 
-    enum ServerResponse {
-       case .Result(String, String)
-       case .Error(String)
-    }
+    -> enum ServerResponse {
+          case Result(String, String)
+          case Error(String)
+       }
+    ---
+    -> let success = ServerResponse.Result("6:00 am", "8:09 pm")
+    << // success : ServerResponse = <unprintable value>
+    -> let failure = ServerResponse.Error("Out of cheese.")
+    << // failure : ServerResponse = <unprintable value>
+    ---
+    >> var test_response: String = ""
+    >> switch success {
+    >>    case let .Result(sunrise, sunset):
+    >>       test_response = "Sunrise is at \(sunrise) and sunset is at \(sunset)."
+    >>    case let .Error(error):
+    >>       test_response = "Failure...  \(error)"
+    >> }
+    >> test_response
+    << // test_response : String = "Sunrise is at 6:00 am and sunset is at 8:09 pm."
+    -> switch success {
+          case let .Result(sunrise, sunset):
+             let serverResponse = "Sunrise is at \(sunrise) and sunset is at \(sunset)."
+          case let .Error(error):
+             let serverResponse = "Failure...  \(error)"
+       }
 
-    let success = ServerResponse.Result("6:00 am", "8:09 pm")
-    let failure = ServerResponse.Error("Out of cheese.")
-
-    var serverResponse: String
-    switch success {
-       case let .Result(sunrise, sunset):
-          serverResponse = "Sunrise is at \(sunsrise) and sunset is at \(sunset)."
-       case let .Error(error):
-          serverResponse = "Failure...  \(error)"
-    }
+.. Note:
+   The repetition ond odd structure for the switch above is because
+   the REPL requires an initial value for variables to make it testable.
+   From a playground side, I can see the value of a variable
+   that's scoped only within the switch,
+   so I don't need a variable in the outer scope.
 
 .. admonition:: Experiment
 
