@@ -17,7 +17,7 @@ If you have written code in C or Objective-C,
 this syntax looks familiar to you.
 Unlike those languages,
 this line of Swift code is a complete program.
-You don't need to import a standard library for functionality like
+You don't need to import a separate library for functionality like
 input/output or string handling.
 Code written at global scope is used
 as the entry point for the program,
@@ -458,8 +458,6 @@ with a parenthesized list of arguments.
        }
     -> greet("Bob", "Tuesday")
     <$ : String = "Hello Bob, today is Tuesday."
-    -> greet("Alice", "Wednesday")
-    <$ : String = "Hello Alice, today is Wednesday."
 
 .. admonition:: Experiment
 
@@ -561,10 +559,18 @@ A function can take another function as one of its arguments.
     -> var sortedNumbers = bubbleSort(numbers, greaterThan)
     << // sortedNumbers : Array<Int> = [8, 6, 5, 3]
 
+.. TODO: This example probably doesn't work anymore.
+   The contents of an Array are no longer part of their value,
+   per [Contributor 6004]'s email.
+   If it stays, use the sugar form of Array.
+
 Closures are the same as functions with one difference:
 you don't give them a name when you declare them.
 You write a closure as code surrounded by braces (``{}``)
 and use ``in`` to separate the arguments from the body.
+
+.. TODO: This notion of closures being "just" un-named functions is problematic.
+   See Dave's recent work in the Guide comparing the two.
 
 .. EDIT: Second sentence above reads better as describing singular closure.
 
