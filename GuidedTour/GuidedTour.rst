@@ -846,6 +846,63 @@ enumerations can have methods associated with them.
 
 .. testcode::
 
+    -> enum Rank: Int {
+          case Ace = 1
+          case Two, Three, Four, Five, Six, Seven, Eight, Nine, Ten
+          case Jack, Queen, King
+          func description() -> String {
+             switch self {
+                case .Ace:
+                   return "ace"
+                case .Jack:
+                   return "jack"
+                case .Queen:
+                   return "queen"
+                case .King:
+                   return "king"
+                default:
+                   return String(self.toRaw())
+             }
+          }
+       }
+    -> let ace = Rank.Ace
+    << // ace : Rank = <unprintable value>
+    -> let aceRawValue = ace.toRaw()
+    <$ : Int = 1
+
+.. admonition:: Experiment
+
+   Write a function that compares two ``Rank`` values
+   by comparing their raw values.
+
+In the example above,
+the raw value type of the enuration is ``Int``,
+so you only have to specify the first raw value.
+The rest of the raw values are assigned in order.
+You can also use strings or floating-point numbers
+as the raw type of an enumeration.
+
+The ``toRaw`` and ``fromRaw`` functions let you convert
+between the raw value and the enumeration value.
+
+.. testcode::
+
+    >> var test_threeDescription = ""
+    -> if let convertedRank = Rank.fromRaw(3) {
+    ->    let threeDescription = convertedRank.description()
+    >>    test_threeDescription = threeDescription
+    -> }
+    >> test_threeDescription
+    <$ : String "3"
+
+The member values of an enumeration are actual values,
+not just another way of writing their raw values.
+In fact,
+in cases where there isn't a meaningful raw value,
+you don't have to provide one.
+
+.. testcode::
+
     -> enum Suit {
           case Spades, Hearts, Diamonds, Clubs
           func description() -> String {
@@ -881,50 +938,6 @@ but inside the switch it could be abbreviated as just ``.Hearts``.
 You can use the abbreviated form
 anytime the value's type is already known.
 
-Enumerations can have a mapping on an underlying raw value,
-such as a number or a string.
-In the example below,
-the underlying value is an integer,
-so you only have to specify the first value
-and the rest of the raw values
-are assigned in order by incrementing the number.
-You can also use strings or floating-point numbers
-as the raw type of an enumeration.
-
-.. testcode::
-
-    -> enum Rank: Int {
-          case Ace = 1
-          case Two, Three, Four, Five, Six, Seven, Eight, Nine, Ten
-          case Jack, Queen, King
-          func description() -> String {
-             switch self {
-                case .Ace:
-                   return "ace"
-                case .Jack:
-                   return "jack"
-                case .Queen:
-                   return "queen"
-                case .King:
-                   return "king"
-                default:
-                   return String(self.toRaw())
-             }
-          }
-       }
-    -> let ace = Rank.Ace
-    << // ace : Rank = <unprintable value>
-    -> let aceRawValue = ace.toRaw()
-    <$ : Int = 1
-
-.. admonition:: Experiment
-
-   Write a function that compares two ``Rank`` values
-   by comparing their raw values.
-
-The ``toRaw`` and ``fromRaw`` functions let you convert
-between the raw value and the enumeration value.
-
 .. write-me::
 
     Structs are also pretty much as expected.
@@ -935,7 +948,8 @@ between the raw value and the enumeration value.
 Use ``struct`` to create a structure.
 Structures support many of the same behaviors as classes,
 including methods and initializers.
-Unlike classes,
+One of the most important differences
+between structures and classes is that
 structures are always copied when they are passed around in your code.
 
 .. testcode::
@@ -962,10 +976,6 @@ consider the case of requesting
 the sunrise and sunset time from a server.
 The server either responds with the information,
 or it responds with some error information.
-
-.. TODO: Would be better to use a non-string here...
-   Avoiding temperatures because of the F/C problem.
-   What about a collection of data that has some missing values?
 
 .. testcode::
 
