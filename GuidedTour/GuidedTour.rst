@@ -872,7 +872,7 @@ Enumerations and Structures
 ---------------------------
 
 You use ``enum`` to create an enumeration.
-Like classes and all other types,
+Like classes and all other named types,
 enumerations can have methods associated with them.
 
 .. testcode::
