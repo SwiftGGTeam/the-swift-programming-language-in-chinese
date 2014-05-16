@@ -1023,6 +1023,25 @@ Protocols
 Generics
 --------
 
+.. testcode::
+
+    -> func repeat<ItemType>(item: ItemType, times: Int) -> ItemType[] {
+          var result = Array<ItemType>()
+          for i in 0...times {
+              result += item
+          }
+          return result
+       }
+    -> repeat("knock", 4)
+    <$ : String[] = [knock, knock, knock, knock]
+
+.. admonition:: Experiment
+
+   Make a version of anyMatch that accepts an array of any type,
+   not just an array if integers.
+
+.. TODO: Check name of function.
+
 .. write-me::
 
 * On function (repeat X n times, re-implementing Array init feature)
