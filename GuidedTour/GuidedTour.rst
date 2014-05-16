@@ -1043,6 +1043,52 @@ to make a generic function or type.
    Make a version of anyMatch that accepts an array of any type,
    not just an array if integers.
 
+You can make generic forms of functions and methods,
+as well as classes, enumerations, and structures.
+
+.. This example makes the REPL segfault.
+   <rdar://problem/16947344> REPL segfaults when creating instance of generic enum
+
+.. FIXME: Add testcode expectation lines.
+
+.. testcode::
+
+    -> enum Tree<T> {
+          case LeafNode(T)
+          case InternalNode(Tree, Tree)
+          func leafCount() -> Int {
+             switch self {
+                case let .LeafNode(item):
+                   return 1
+                case let .InternalNode(leftNode, rightNode):
+                   return leftNode.leafCount() + rightNode.leafCount()
+             }
+          }
+       }
+    -> let leafOne = Tree.LeafNode(1)
+    -> let leafTwo = Tree.LeafNode(7)
+    -> let tree = Tree.InternalNode(leafOne, leafTwo)
+    -> let leaves = tree.leafCount()
+
+..
+
+    This bit doesn't quite work yet...
+    it needs to either return a copy of the tree
+    or create new nodes and update ``self``
+    to give you back a new tree.
+
+        func map(transform: T -> T) {
+            switch self {
+                case let .Leaf(item):
+                    item = transform(item)
+                case let .Branch(leftNode, rightNode):
+                    leftNode.map(transform)
+                    rightNode.map(transform)
+            }
+        }
+
+
+
 
 Use ``where`` after the type name
 to specify a list of requirements ---
@@ -1072,28 +1118,6 @@ or a class that it must be a subclass of.
     // r1 : Bool = false
 
     <T: Generator where T.Element: Equatable>
-
-    enum TreeNode<T> {
-        case Leaf(T)
-        case Branch(TreeNode, TreeNode)
-        func leafCount() -> Int {
-            switch self {
-                case .Leaf(item):
-                    return 1
-                case .Branch(leftNode, rightNode)
-                    return leftNode.leafCount() + rightNode.leafCount()
-            }
-        }
-        func map(transform: T -> T) {
-            switch self {
-                case .Leaf(item):
-                    item = transform(item)
-                case .Branch(leftNode, rightNode)
-                    leftNode.map(transform)
-                    rightNode.map(transform)
-            }
-        }
-    }
 
 In the simple cases,
 you can omit ``where`` and just write
