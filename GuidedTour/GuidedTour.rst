@@ -1023,15 +1023,12 @@ Use ``protocol`` to create a protocol:
        }
 
 Classes, enumerations, and structs can all adopt protocols.
-You can use a protocol name just like any other type ---
-for example, to create a collection of objects
-that have different types
-but all conform to a particular protocol.
 
 .. testcode::
 
     -> class SimpleClass: ExampleProtocol {
            var simpleDescription: String = "A very simple class."
+           var anotherProperty: Int = 69105
            func adjust() {
                simpleDescription += "  Now 100% adjusted."
            }
@@ -1053,7 +1050,6 @@ but all conform to a particular protocol.
     -> b.adjust()
     -> let bDescription = b.simpleDescription
     << // bDescription : String = "A simple structure (adjusted)"
-
 
 Notice the use of ``mutating`` in the declaration of ``SimpleStruct``
 to mark a struct method that modifies the struct.
@@ -1082,6 +1078,26 @@ or even a type you imported from a library or framework.
         }
     -> 7.simpleDescription
     << // r0 : String = "The number 7"
+
+You can use a protocol name just like any other named type ---
+for example, to create a collection of objects
+that have different types
+but all conform to a particular protocol.
+When you work with values whose type is a protocol type,
+methods outside the protocol definition are not available.
+For example, the code below shows that
+even though the first element of the array has a runtime type
+of ``SimpleClass``,
+when it is declared as a list of ``ExampleProtocol`` values
+other properties can't be accessed.
+
+::
+
+    let l: ExampleProtocol[] = [a, b, 7]
+    l[0].simpleDescription
+    l[1].simpleDescription
+    l[2].simpleDescription
+    // l[0].anotherProperty  // Uncomment to see the error
 
 Generics
 --------
