@@ -16,6 +16,15 @@ The book has the following known issues:
 * <rdar://16844985> Guided Tour has lines that don't compile in latest Swift
 * <rdar://16893324> The PDF version of TSPL is a mockup.
 
+May 15 2014
+~~~~~~~~~~~
+
+Guide Tour
+++++++++++
+
+* Added a section about enumerations and structures,
+  and added some information about optionals.
+
 May 14 2014
 ~~~~~~~~~~~
 
