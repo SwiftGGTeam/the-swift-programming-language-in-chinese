@@ -1,18 +1,27 @@
 Generics
 ========
 
-:newTerm:`Generics` are a way to write flexible, reusable code
+:newTerm:`Generic code` enables you to write flexible, reusable functions and types
 that can work with any type, subject to requirements that you define.
+You can write code that avoids duplication,
+and expresses its intent in a clear, abstracted manner.
 
 Generics are one of the most powerful features of Swift,
 and much of the Swift standard library is built with generic code.
-Generics enable you to write flexible code that avoids duplication,
-and expresses its intent in a clear, abstracted manner.
+In fact, you've been using generics throughout this Language Guide,
+even if you didn't realize it.
+For example, Swift's ``Array`` and ``Dictionary`` types
+are both generic collections.
+You can create an array that holds ``Int`` values,
+or an array that holds ``String`` values,
+or indeed an array for any other type that can be created in Swift.
+Similarly, you can create a dictionary to store values of any specified type,
+and there are no limitations on what that type can be.
 
-.. _Generics_WhyGenerics:
+.. _Generics_The ProblemThatGenericsSolve:
 
-Why Generics?
--------------
+The Problem That Generics Solve
+-------------------------------
 
 Here's a standard, non-generic function called ``swapTwoInts``,
 which swaps two ``Int`` values:
@@ -84,32 +93,12 @@ This is the kind of problem that generic code can solve.
    to swap values with each other.
    Attempting to do so would be reported as a compile-time error.
 
-.. _Generics_GenericsInSwift:
-
-Generics In Swift
-~~~~~~~~~~~~~~~~~
-
-You've actually been using generics throughout this Language Guide,
-even if you didn't realize it.
-For example, Swift's ``Array`` and ``Dictionary`` types
-are both generic collections.
-You can create an array that holds ``Int`` values,
-or an array that holds ``String`` values,
-or indeed an array for any other type that can be created in Swift.
-Similarly, you can create a dictionary to store values of any specified type,
-and there are no limitations on what that type can be.
-
-Swift enables you to write generic functions
-(to solve the ``swapTwoInts`` problem)
-and to write generic types (such as ``Array`` and ``Dictionary``)
-to make your own code flexible and reusable.
-
 .. _Generics_GenericFunctions:
 
 Generic Functions
 -----------------
 
-:newTerm:`Generic functions` are functions that can work with any type.
+:newTerm:`Generic functions` can work with any type.
 Here's a generic version of the ``swapTwoInts`` function from above,
 called ``swapTwoValues``:
 
@@ -155,8 +144,7 @@ The other difference is that the generic function's name (``swapTwoValues``)
 is followed by the placeholder type name (``T``) inside angle brackets (``<T>``).
 The brackets tell Swift that ``T`` is a placeholder type name
 within the ``swapTwoValues`` function definition.
-This stops Swift from looking for an actual type called ``T``,
-and says “treat ``T`` as a placeholder instead”.
+Because ``T`` is a placeholder, Swift does not look for an actual type called ``T``.
 
 The ``swapTwoValues`` function can now be called in the same way as ``swapTwoInts``,
 except that it can be passed two values of *any* type,
@@ -188,7 +176,7 @@ In the two examples below, ``T`` is inferred to be ``Int`` and ``String`` respec
 
    The ``swapTwoValues`` function defined above is inspired by
    a generic function called ``swap``, which is part of the Swift standard library,
-   and is automatically made available for you to use in your apps when working with Swift.
+   and is automatically made available for you to use in your apps.
    If you need the behavior of the ``swapTwoValues`` function in your own code,
    you can use Swift's existing ``swap`` function rather than providing your own implementation.
 
