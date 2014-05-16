@@ -1013,7 +1013,7 @@ as part of a pattern matching operation.
 Protocols and Extensions
 ------------------------
 
-Use ``protocol`` to create a protocol:
+Use ``protocol`` to declare a protocol:
 
 .. testcode::
 
@@ -1053,17 +1053,12 @@ Classes, enumerations, and structs can all adopt protocols.
 
 .. admonition:: Experiment
 
-   Write an enumeration ``SimpleEnumeration``
-   which also conforms to this protocol.
+   Write an enumeration that conforms to this protocol.
 
 Notice the use of ``mutating`` in the declaration of ``SimpleStruct``
-to mark a struct method that modifies the struct.
+to mark a struct method that modifies the structure.
 It is not needed in the declaration of ``SimpleClass``
 because any method on a class can modify the class.
-The protocol declaration includes it
-so that both structs and classes can adopt this protocol;
-if the protocol were intended to be adopted only by objects,
-you wouldn't need to write ``mutating`` in it.
 
 Use ``extension`` to add functionality to an existing type,
 such as new methods and computed properties.
@@ -1096,7 +1091,7 @@ but all conform to a particular protocol.
 When you work with values whose type is a protocol type,
 methods outside the protocol definition are not available.
 
-..testcode::
+.. testcode::
 
     -> let protocolValue: ExampleProtocol = a
     << protocolValue : ExampleProtocol = <ExampleProtocol instance>
@@ -1106,9 +1101,10 @@ methods outside the protocol definition are not available.
 
 Even though the first element of the array
 has a runtime type of ``SimpleClass``,
-when it is declared as a value of type ``ExampleProtocol``
-you can only interact with it through methods and properties
-that are declared as part of that protocol.
+the compiler treats it as the given type of ``ExampleProtocol``.
+This means that you can't accidentally access
+methods or properties that the class implements
+in addition to its protocol conformance.
 
 Generics
 --------
