@@ -366,7 +366,7 @@ as shown in the following example:
 
     If the type specified after ``as``
     is followed by an exclamation mark (``!``),
-    the entire ``as`` expression is understood as a force-value expression.
+    the entire ``as`` expression is understood as a forced expression.
     For example, the expression ``x as SomeType!``
     is understood as ``(x as SomeType)!``
     and not as ``x as (SomeType!)``.
