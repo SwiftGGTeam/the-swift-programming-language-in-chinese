@@ -297,13 +297,9 @@ see :ref:`BasicOperators_TernaryConditionalOperator`.
 Type-Casting Operators
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-There are two :newTerm:`type-casting operators`:
-The ``as`` operator performs a type cast
-and returns the result,
-and the ``is`` operator performs a type cast
-and indicates whether the cast failed.
-
-Type-casting operators have the following form:
+There are two type-casting operators,
+the ``as`` operator and the ``is`` operator.
+They have the following form:
 
 .. syntax-outline::
 
@@ -311,7 +307,7 @@ Type-casting operators have the following form:
    <#expression#> is <#type#>
 
 The ``as`` operator
-performs a runtime cast of the *expression*
+performs a cast of the *expression*
 to the specified *type*.
 It behaves as follows:
 
@@ -326,7 +322,7 @@ It behaves as follows:
   a compile-time error is raised.
 
 * Otherwise, if it's not known at compile time
-  whether the conversion will succeed or fail,
+  whether the conversion will succeed,
   the type of the cast expresion is an optional of the specified *type*.
   At runtime, if the cast succeeds,
   the value of *expression* is wrapped in an optional and returned;
@@ -341,13 +337,14 @@ It behaves as follows:
     -> let s = SomeType()
     << // s : SomeType = <SomeType instance>
     ---
-    -> let x = s as SomeSuperType  // known to suceed -- type is SomeSuperType
+    -> let x = s as SomeSuperType  // known to succeed; type is SomeSuperType
     << // y : SomeSuperType = <SomeSuperType instance>
-    -> let y = s as Int            // known to fail -- compile-time error
-    !! <REPL Input>:1:12: error: expression does not type-check
-    !! let y = s as Int
-    -> let z = s as SomeChildType  // might fail at runtime -- type is SomeChildType?
-    << // z : SomeChildType? = <unprintable value>
+    -> let y = s as Int            // known to fail; compile-time error
+    !! <REPL Input>:1:11: error: cannot convert the expression's type '$T1' to type '$T2'
+    !! let y = s as Int            // known to fail; compile-time error
+    !!         ~~^~~~~~
+    -> let z = s as SomeChildType  // might fail at runtime; type is SomeChildType?
+    << // z : SomeChildType? = nil
 
 Specifying a type with ``as`` provides the same information
 to the compiler as a type annotation,
