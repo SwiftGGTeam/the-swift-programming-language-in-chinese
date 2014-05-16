@@ -297,13 +297,9 @@ see :ref:`BasicOperators_TernaryConditionalOperator`.
 Type-Casting Operators
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-There are two :newTerm:`type-casting operators`:
-The ``as`` operator performs a type cast
-and returns the result,
-and the ``is`` operator performs a type cast
-and indicates whether the cast failed.
-
-Type-casting operators have the following form:
+There are two type-casting operators,
+the ``as`` operator and the ``is`` operator.
+They have the following form:
 
 .. syntax-outline::
 
@@ -311,59 +307,58 @@ Type-casting operators have the following form:
    <#expression#> is <#type#>
 
 The ``as`` operator
-performs a runtime cast of the *expression*
-as the specified *type*.
+performs a cast of the *expression*
+to the specified *type*.
 It behaves as follows:
 
-* If casting the *expression*
-  to the specified *type*
+* If conversion to the specified *type*
   is guaranteed to succeed,
-  the value of *expression* is returned
+  the value of the *expression* is returned
   as an instance of the specified *type*.
   An example is casting from a subclass to a superclass.
 
-* If casting the *expression*
-  to the specified *type*
+* If conversion to the specified *type*
   is guaranteed to fail,
   a compile-time error is raised.
 
-* Otherwise, the value of *expression*
-  is returned as an optional of the specified *type*.
+* Otherwise, if it's not known at compile time
+  whether the conversion will succeed,
+  the type of the cast expresion is an optional of the specified *type*.
   At runtime, if the cast succeeds,
-  the value of *expression* is returned
-  as in instance of the specified *type*;
+  the value of *expression* is wrapped in an optional and returned;
   otherwise the value returned is ``nil``.
-  For example, casting from a superclass to a subclass.
-
-For example:
+  An example is casting from a superclass to a subclass.
 
 .. testcode:: type-casting
 
     -> class SomeSuperType {}
     -> class SomeType: SomeSuperType {}
     -> class SomeChildType: SomeType {}
-    -> let x = SomeType()
-    << // x : SomeType = <SomeType instance>
+    -> let s = SomeType()
+    << // s : SomeType = <SomeType instance>
     ---
-    -> let y = x as SomeSuperType  // y is of type SomeSuperType
+    -> let x = s as SomeSuperType  // known to succeed; type is SomeSuperType
     << // y : SomeSuperType = <SomeSuperType instance>
-    -> let z = x as SomeChildType  // z is of type SomeChildType?
-    << // z : SomeChildType? = <unprintable value>
+    -> let y = s as Int            // known to fail; compile-time error
+    !! <REPL Input>:1:11: error: cannot convert the expression's type '$T1' to type '$T2'
+    !! let y = s as Int            // known to fail; compile-time error
+    !!         ~~^~~~~~
+    -> let z = s as SomeChildType  // might fail at runtime; type is SomeChildType?
+    << // z : SomeChildType? = nil
 
-Specifying a type with ``as`` provides the same type information
-to the compiler as a function call or a type annotation,
-as shown in the following examples:
+Specifying a type with ``as`` provides the same information
+to the compiler as a type annotation,
+as shown in the following example:
 
-::
+.. testcode:: type-casting-2
 
-    func f(a: SomeSuperType) -> SomeSuperType { return a }
-    func g(a: SomeChildType) -> SomeChildType { return a }
-
-    let y2: SomeSuperType = x   // y2 is of type SomeSuperType
-    let z2: SomeChildType? = x  // z2 is of type SomeChildType?
-
-    let y3 = f(x)   // y3 is of type SomeSuperType
-    let z3 = g(x)   // z3 is of type SomeChildType?
+    >> class SomeType {}
+    >> let x = SomeType()
+    ---
+    -> let y1 = x as SomeType
+    << // y1 : SomeType = <SomeType instance>
+    -> let y2: SomeType = x
+    << // y2 : SomeType = <SomeType instance>
 
 .. NOTE: The following text is no longer relevant,
     because now that T! is a type, x as T! no longer means
@@ -564,14 +559,53 @@ for their respective values.
 Self Expression
 ~~~~~~~~~~~~~~~
 
-.. write-me::
+The ``self`` expression is an explicit reference to the current type
+or instance of the type in which it occurs.
+It has the following forms:
 
 .. syntax-outline::
 
     self
     self.<#member name#>
-    self[<#subscript index#>)
+    self[<#subscript index#>]
     self.init(<#initializer arguments#>)
+
+In an initializer, subscript, or instance method, ``self`` refers to the current
+instance of the type in which it occurs. In a static or class method,
+``self`` refers to the current type in which it occurs.
+
+The ``self`` expression is used to specify scope when accessing members,
+providing disambiguation when there is
+another variable of the same name in scope,
+such as a function parameter.
+For example, in an initializer:
+
+.. testcode::
+
+    -> class SomeClass {
+           var greeting: String
+           init(greeting: String) {
+               self.greeting = greeting
+           }
+       }
+
+In a mutating method of value type,
+you can assign a new instance of that value type to ``self``.
+For example:
+
+.. testcode::
+
+    -> struct Point {
+          var x = 0.0, y = 0.0
+          mutating func moveByX(deltaX: Double, y deltaY: Double) {
+             self = Point(x: x + deltaX, y: y + deltaY)
+          }
+       }
+    >> var somePoint = Point(x: 1.0, y: 1.0)
+    << // somePoint : Point = Point(1.0, 1.0)
+    >> somePoint.moveByX(2.0, y: 3.0)
+    >> println("The point is now at (\(somePoint.x), \(somePoint.y))")
+    << The point is now at (3.0, 4.0)
 
 .. syntax-grammar::
 
@@ -895,17 +929,38 @@ A function call expression can include a trailing closure
 in the form of a closure expression immediately after the closing parenthesis.
 The trailing closure is understood as an argument to the function,
 added after the last parenthesized argument.
-The following function calls are equivalent::
+The following function calls are equivalent:
 
+.. testcode:: trailing-closure
 
-     someFunction(x, {$0 == 13})
-     someFunction(x) {$0 == 13}
+    >> func someFunction (x: Int, f: Int -> Bool) -> Bool {
+    >>    return f(x)
+    >> }
+    >> let x = 10
+    // someFunction takes an integer and a closure as its arguments
+    -> someFunction(x, {$0 == 13})
+    <$ : Bool = false
+    -> someFunction(x) {$0 == 13}
+    <$ : Bool = false
 
 If the trailing closure is the function's only argument,
-the parentheses can be omitted: ::
+the parentheses can be omitted:
 
-    myData.process() {$0 * 2}
-    myData.process {$0 * 2}
+.. testcode:: no-paren-trailing-closure
+
+    >> class Data {
+    >>    let data = 10
+    >>    func someMethod(f: Int -> Bool) -> Bool {
+    >>       return f(self.data)
+    >>    }
+    >> }
+    >> let myData = Data()
+    << // myData : Data = <Data instance>
+    // someFunction takes a closure as its only argument
+    -> myData.someMethod() {$0 == 13}
+    << // r0 : Bool = false
+    -> myData.someMethod {$0 == 13}
+    << // r1 : Bool = false
 
 .. langref-grammar
 
@@ -947,21 +1002,25 @@ For example:
 
 .. testcode::
 
-    >> class MyClass { class func someClassFunction() {} }
-    -> var x = MyClass.someClassFunction // ok
-    << // x : () -> () = <unprintable value>
-    -> var y = MyClass.init              // error
-    !! <REPL Input>:1:17: error: initializer cannot be referenced without arguments
-    !! var y = MyClass.init
-    !!                 ^
+    >> class SomeClass { class func someClassFunction() {} }
+    -> var x = SomeClass.someClassFunction // ok
+    << // x : () -> () = <opaque>
+    -> var y = SomeClass.init              // error
+    !! <REPL Input>:1:19: error: initializer cannot be referenced without arguments
+    !! var y = SomeClass.init              // error
+    !!                   ^
 
 You also use an initializer expression
-to delegate to the initializer of a superclass: ::
+to delegate to the initializer of a superclass:
 
-    init() {
-       // ... Subclass initialization ...
-       super.init()
-    }
+.. testcode::
+
+    -> class SomeSubClass: SomeSuperClass {
+    ->     init() {
+    ->         // subclass initialization goes here
+    ->         super.init()
+    ->     }
+    -> }
 
 .. langref-grammar
 
@@ -993,10 +1052,12 @@ For example:
 
 .. testcode::
 
-    -> class C { var x = 42 }
-    -> let c = C()
-    << // c : C = <C instance>
-    -> let y = c.x  // Member access
+    -> class SomeClass {
+           var someProperty = 42
+       }
+    -> let c = SomeClass()
+    << // c : SomeClass = <C instance>
+    -> let y = c.someProperty  // Member access
     << // y : Int = 42
 
 The members of a tuple
@@ -1034,53 +1095,21 @@ the top-level declarations of that module.
 Postfix Self Expression
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-.. write-me:: This section needs a rewrite.
+A postfix ``self`` expression consists of an expression or the name of a type,
+immediately followed by ``.self``. It has the following forms:
 
 .. syntax-outline::
 
        <#expression#>.self
+       <#type#>.self
 
-..  Old prose:
-    A :newTerm:`postfix self expression` is an explicit reference
-    to a type or an instance of a type.
-    It has the following form:
+The first form evaluates to the value of the *expression*.
+For example, ``x.self`` evaluates to ``x``.
 
-    .. syntax-outline::
-
-       <#type or expression#>.self
-
-    On either a type or an instance of a type,
-    the value of the self expression
-    has the same type as the expression or type before the period.
-
-    On a type, ``self`` evaluates to the type itself.
-    It is used to refer to a type by name,
-    for example, to pass it as an argument to a function.
-
-    .. TODO: An example might be helpful.
-
-    On an instance of a type, ``self`` evaluates to
-    the instance of the type.
-
-
-    It is used to specify scope when accessing members,
-    providing disambiguation when there is
-    another variable of the same name in scope,
-    such as a function parameter.
-    For example, in an initializer: ::
-
-        class MyClass {
-           var greeting: String
-           init (greeting: String) {
-              self.greeting = greeting
-           }
-        }
-
-.. There is no definition for self-expression in the LangRef.
-   This was probably just an oversight, according to Ted and Doug.
-
-.. Both types and variables are identifiers,
-   so postfix expression includes both.
+The second form evaluates to the value of the *type*. Use this form
+to access a type as a value. For example,
+because ``SomeClass.self`` evaluates to the ``SomeClass`` type itself,
+you can pass it to a function or method that accepts a type-level argument.
 
 .. syntax-grammar::
 
@@ -1094,11 +1123,35 @@ Postfix Self Expression
 Dynamic Type Expression
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-.. write-me::
+A ``dynamicType`` expression consists of an expression,
+immediately followed by ``.dynamicType``. It has the following form:
 
 .. syntax-outline::
 
     <#expression#>.dynamicType
+
+The *expression* must evaluate to an instance of a type.
+The entire ``dynamicType`` expression evaluates to the value of that instance's
+runtime type, as the following example shows:
+
+.. testcode::
+
+    -> class SomeBaseClass {
+           class func printClassName() {
+               println("SomeBaseClass")
+           }
+       }
+    -> class SomeSubClass: SomeBaseClass {
+           override class func printClassName() {
+               println("SomeSubClass")
+           }
+       }
+    -> let someInstance: SomeBaseClass = SomeSubClass()
+    << // someInstance : SomeBaseClass = C4REPL12SomeSubClass (has 1 child)
+    -> // someInstance is of type SomeBaseClass at compile time, but
+    -> // someInstance is of type SomeSubClass at runtime
+    -> someInstance.dynamicType.printClassName()
+    <- SomeSubClass
 
 .. syntax-grammar::
 
@@ -1166,11 +1219,10 @@ It has the following form:
 
    <#expression#>!
 
-If the *expression* is of an optional type
-and its value is not ``nil``,
+If the value of the *expression* is not ``nil``,
 the optional value is unwrapped
 and returned with the corresponding nonoptional type.
-If its value is ``nil``, a runtime error is raised.
+Otherwise, a runtime error is raised.
 
 .. TR: In previous review, we noted that this also does downcast,
    but that doesn't match the REPL's behavior as of swift-600.0.23.1.11
@@ -1205,62 +1257,41 @@ It has the following form:
 
     <#expression#>?
 
+On its own, the postfix ``?`` operator
+simply returns the value of its argument ---
+for example, the expression ``x?`` has the same value as ``x``.
+
+Postfix expressions that contain an optional-chaining expression
+are evaluated in a special way.
+If the optional-chaining expression is ``nil``,
+all of the other operations in the postfix expression are ignored
+and the entire postfix expression evaluates to ``nil``.
+Otherwise,
+the value of the optional-chaining expression is unwrapped
+and used to evaluate the rest of the postfix expression.
+In either case,
+the value of the postfix expression is still of an optional type.
+
 For example:
 
-.. testcode::
+.. testcode:: optional-chaining
 
-   -> let s: String? = nil
-   << // r0: String? = <unprintable value>
-   -> s?.startsWith("In the beginning")
-   << // r1: Bool? = <unprintable value>
+   >> class OtherClass { func performAction() -> Bool {return true} }
+   >> class SomeClass { var property: OtherClass = OtherClass() }
+   -> var c: SomeClass?
+   << // c : SomeClass? = nil
+   -> var result: Bool? = c?.property.performAction()
+   << // result : Bool? = nil
 
-If the *expression* is not ``nil``,
-the optional-chaining operator returns
-the value of the expression,
-and any chained postfix expression are evaluated.
-Otherwise,
-the optional-chaining operator returns ``nil``
-and any chained postfix expressions are ignored.
+The following example shows the behavior
+of the example above
+without using optional chaining.
 
-Informally,
-all postfix expressions that follow the optional-chaining expression
---- and that are still part of the same expression ---
-are understood to be chained to the optional-chaining expression.
-Specifically,
-a postfix expression is :newTerm:`directly chained`
-to the expression that is its first part.
-A postfix expression is :newTerm:`chained` to an expression
-if it is either directly chained to that expression
-or if it is directly chained to another postfix expression
-that is chained to that expression.
+.. testcode:: optional-chaining-if-let
 
-For example, in the expression ``x?.foo()[7]``
-the function call is chained
-to the optional-chaining expression ``x?``
-because it is directly chained to that expression.
-The array subscript is chained to the optional-chaining expression
-because it is directly chained to the function call expression ``x?.foo()``,
-and the function call is chained to the optional-chaining expression.
-Both the function call and the array subscript
-are ignored if the value of ``x`` is ``nil``.
-
-.. LangRef
-
-   A postfix-expression E1 is said to directly chain to a
-   postfix-expression E2 if E1 is syntactically the postfix-expression base
-   of E2; note that this does not include any syntactic nesting, e.g. via
-   parentheses. E1 chains to E2 if they are the same expression or E1
-   directly chains to an expression which chains to E2. This relation has a
-   maximum, called the largest chained expression.
-
-   The largest chained expression of an expr-optional must be convertible to
-   an r-value of type U? for some type U. Note that a single expression may
-   be the largest chained expression of multiple expr-optionals.
-
-.. From the perspective of monads,
-   an optional-chaining expression lifts its chained operations
-   from working with non-optional types
-   into working with optional types.
+    -> if let unwrappedC = c {
+          result = unwrappedC.property.performAction()
+       }
 
 .. langref-grammar
 
@@ -1271,6 +1302,3 @@ are ignored if the value of ``x`` is ``nil``.
    Grammar of a chained-optional expression
 
    chained-optional-expression --> postfix-expression ``?``
-
-.. NOTE: The fact that ? must be postfix when it's used for Optional
-   is in "Lexical Structure", under the discussion of left/right binding.

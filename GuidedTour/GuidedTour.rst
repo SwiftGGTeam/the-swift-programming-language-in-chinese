@@ -186,7 +186,7 @@ the index or key in brackets.
 
 .. admonition:: Experiment
 
-   Add you own favorite fruit to the array
+   Add your own favorite fruit to the array
    and compare it to ``favoriteFruit`` with the ``==`` operator.
    Add the current temperature of your town
    to the dictionary.
@@ -541,22 +541,23 @@ A function can take another function as one of its arguments.
 .. testcode::
 
     -> // Re-implement the standard library sort function.
-    -> func bubbleSort(list: Int[], outOfOrder: (Int, Int) -> Bool) {
+    -> func bubbleSort(list: Int[], comparison: (Int, Int) -> Bool) {
           for i in 0...list.count {
              for j in 0...list.count {
-                if outOfOrder(list[i], list[j]) {
+                if !comparison(list[i], list[j]) {
                    (list[i], list[j]) = (list[j], list[i])
                 }
              }
           }
        }
-    -> func greaterThan(x : Int, y : Int) -> Bool {
-          return x > y
+    -> func lessThan(x : Int, y : Int) -> Bool {
+          return x < y
        }
     -> var numbers = [8, 3, 5, 6]
     << // numbers : Array<Int> = [8, 3, 5, 6]
-    -> var sortedNumbers = bubbleSort(numbers, greaterThan)
-    << // sortedNumbers : Array<Int> = [8, 6, 5, 3]
+    -> bubbleSort(numbers, lessThan)
+    >> numbers
+    << // numbers : Array<Int> = [3, 5, 6, 8]
 
 Closures are the same as functions with one difference:
 you don't give them a name when you declare them.
@@ -571,11 +572,26 @@ and use ``in`` to separate the arguments from the body.
 .. testcode::
 
     -> numbers.map({
-          (number: Int) in
+          (number: Int) -> Int in
           let result = 3 * number
           return result
        })
     <$ : Array<Int> = [24, 9, 15, 18]
+
+.. The closure's return type has to be specified here
+   because type inference can't determine it.
+   If the value of the whole expression
+   is assigned to a variable of known type,
+   then it can be omitted.
+   The whole point of this first example
+   is that it *doesn't* omit anything.
+
+   var l: Int[] = numbers.map({
+             (number: Int) in
+             let result = 3 * number
+             return result
+          })
+       
 
 You have several options for writing closures more concisely.
 When the closure's type is already known,
@@ -608,6 +624,11 @@ as the second argument to the ``sort`` function.
 
     -> sort([1, 5, 3, 12, 2], >)
     <$ : Array<Int> = [12, 5, 3, 2, 1]
+
+.. write-me::
+
+* Curried functions
+* Custom operators
 
 Objects and Classes
 -------------------
@@ -850,22 +871,184 @@ is always the same as the side length of its square.
 Enumerations and Structures
 ---------------------------
 
-.. write-me::
+You use ``enum`` to create an enumeration.
+Like classes and all other types,
+enumerations can have methods associated with them.
 
-* Playing card suits (no raw value)
-* Playing card ranks (to/from raw)
+.. testcode::
 
-* Struct of suit + rank for playing card
-* Type method to print a description
-* For loop to generate a whole deck
+    -> enum Rank: Int {
+          case Ace = 1
+          case Two, Three, Four, Five, Six, Seven, Eight, Nine, Ten
+          case Jack, Queen, King
+          func description() -> String {
+             switch self {
+                case .Ace:
+                   return "ace"
+                case .Jack:
+                   return "jack"
+                case .Queen:
+                   return "queen"
+                case .King:
+                   return "king"
+                default:
+                   return String(self.toRaw())
+             }
+          }
+       }
+    -> let ace = Rank.Ace
+    << // ace : Rank = <unprintable value>
+    -> let aceRawValue = ace.toRaw()
+    <$ : Int = 1
 
-* Differences from objects (reference types)
-* Use structs for complex multipart data
-* Use enums when values come from a list
+.. admonition:: Experiment
 
-* Associating additional data with enums
+   Write a function that compares two ``Rank`` values
+   by comparing their raw values.
 
-* Optional is just an enum -- no magic.
+In the example above,
+the raw value type of the enuration is ``Int``,
+so you only have to specify the first raw value.
+The rest of the raw values are assigned in order.
+You can also use strings or floating-point numbers
+as the raw type of an enumeration.
+
+The ``toRaw`` and ``fromRaw`` functions let you convert
+between the raw value and the enumeration value.
+
+.. testcode::
+
+    >> var test_threeDescription = ""
+    -> if let convertedRank = Rank.fromRaw(3) {
+    ->    let threeDescription = convertedRank.description()
+    >>    test_threeDescription = threeDescription
+    -> }
+    >> test_threeDescription
+    <$ : String "3"
+
+The member values of an enumeration are actual values,
+not just another way of writing their raw values.
+In fact,
+in cases where there isn't a meaningful raw value,
+you don't have to provide one.
+
+.. testcode::
+
+    -> enum Suit {
+          case Spades, Hearts, Diamonds, Clubs
+          func description() -> String {
+             switch self {
+                case .Spades:
+                   return "spades"
+                case .Hearts:
+                   return "hearts"
+                case .Diamonds:
+                   return "diamonds"
+                case .Clubs:
+                   return "clubs"
+             }
+          }
+       }
+    -> let hearts = Suit.Hearts
+    << // hearts : Suit = <unprintable value>
+    -> let heartsDescription = hearts.description()
+    << // heartsDescription : String = "hearts"
+
+.. admonition:: Experiment
+
+   Add a ``color`` method to ``Suit`` which returns "black"
+   for spades and clubs, and returns "red" for hearts and diamonds.
+
+.. Suits are in Bridge order, which matches Unicode order.
+   In other games, orders differ.
+   Wikipedia lists a good half dozen orders.
+
+When creating the ``hearts`` constant,
+the enumeration member ``Suit.Hearts`` had to be written out in full,
+but inside the switch it could be abbreviated as just ``.Hearts``.
+You can use the abbreviated form
+anytime the value's type is already known.
+
+Use ``struct`` to create a structure.
+Structures support many of the same behaviors as classes,
+including methods and initializers.
+One of the most important differences
+between structures and classes is that
+structures are always copied when they are passed around in your code.
+
+.. testcode::
+
+    -> struct Card {
+          var rank: Rank
+          var suit: Suit
+          func description() -> String {
+             return "The \(rank.description()) of \(suit.description())"
+          }
+       }
+    -> let threeOfSpades = Card(rank: .Three, suit:.Spades)
+    << // threeOfSpades : Card = Card(<unprintable value>, <unprintable value>)
+    -> let threeOfSpadesDescription = threeOfSpades.description()
+    << // threeOfSpadesDescription : String = "The 3 of spades"
+
+.. admonition:: Experiment
+
+   Add a method to ``Card`` that creates
+   a full deck of cards,
+   with one card of each combination of rank and suit.
+
+Enumerations can have other values associated with them.
+This is different than a raw value:
+the raw value is always the same,
+but you provide the associated values
+when you create the instance of the enumeration.
+For example,
+consider the case of requesting
+the sunrise and sunset time from a server.
+The server either responds with the information,
+or it responds with some error information.
+
+.. testcode::
+
+    -> enum ServerResponse {
+          case Result(String, String)
+          case Error(String)
+       }
+    ---
+    -> let success = ServerResponse.Result("6:00 am", "8:09 pm")
+    << // success : ServerResponse = <unprintable value>
+    -> let failure = ServerResponse.Error("Out of cheese.")
+    << // failure : ServerResponse = <unprintable value>
+    ---
+    >> var test_response: String = ""
+    >> switch success {
+    >>    case let .Result(sunrise, sunset):
+    >>       test_response = "Sunrise is at \(sunrise) and sunset is at \(sunset)."
+    >>    case let .Error(error):
+    >>       test_response = "Failure...  \(error)"
+    >> }
+    >> test_response
+    << // test_response : String = "Sunrise is at 6:00 am and sunset is at 8:09 pm."
+    -> switch success {
+          case let .Result(sunrise, sunset):
+             let serverResponse = "Sunrise is at \(sunrise) and sunset is at \(sunset)."
+          case let .Error(error):
+             let serverResponse = "Failure...  \(error)"
+       }
+
+.. Note:
+   The repetition ond odd structure for the switch above is because
+   the REPL requires an initial value for variables to make it testable.
+   From a playground side, I can see the value of a variable
+   that's scoped only within the switch,
+   so I don't need a variable in the outer scope.
+
+.. admonition:: Experiment
+
+   Add a third case to ``ServerResponse`` and to the switch.
+
+Notice how the sunrise and sunset times
+are extracted from the ``ServerResponse`` value
+as part of a pattern matching operation.
 
 Protocols
 ---------
@@ -877,12 +1060,11 @@ Protocols
 * Can provide a default implementation.
 
 
-Additional Topics
------------------
+Generics
+--------
 
 .. write-me::
 
-* Generics -- on objects, methods, etc.
-* Pattern matching in switches
-* Curried functions
-* Custom operators [could go under Functions]
+* On function (repeat X n times, re-implementing Array init feature)
+* On classes, structures, and enumerations
+
