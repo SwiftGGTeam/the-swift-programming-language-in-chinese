@@ -15,8 +15,7 @@ Why Generics?
 -------------
 
 Here's a standard, non-generic function called ``swapTwoInts``,
-which uses in-out parameters to swap the values of two ``Int`` arguments
-called ``a`` and ``b``:
+which swaps two ``Int`` values:
 
 .. testcode:: whyGenerics
 
@@ -26,8 +25,12 @@ called ``a`` and ``b``:
          b = temporaryA
       }
 
-Here's a call to this function,
-to swap the values of ``someInt`` and ``anotherInt``:
+This function makes use of in-out parameters to swap the values of ``a`` and ``b``,
+as described in :ref:`Functions_InOutParameters`.
+
+The ``swapTwoInts`` function swaps the original value of ``b`` into ``a``,
+and the original value of ``a`` into ``b``.
+You can call this function to swap the values in two ``Int`` variables:
 
 .. testcode:: whyGenerics
 
@@ -38,8 +41,6 @@ to swap the values of ``someInt`` and ``anotherInt``:
    -> swapTwoInts(&someInt, &anotherInt)
    -> println("someInt is now \(someInt), and anotherInt is now \(anotherInt)")
    <- someInt is now 107, and anotherInt is now 3
-
-For more on in-out parameters, see :ref:`Functions_InOutParameters`.
 
 The ``swapTwoInts`` function is useful, but it can only be used with ``Int`` values.
 If you want to swap two ``String`` values,
