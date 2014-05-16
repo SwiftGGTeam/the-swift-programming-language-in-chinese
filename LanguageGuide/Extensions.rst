@@ -1,29 +1,29 @@
 Extensions
 ==========
 
-:newTerm:`Extensions` are a way to add functionality to an existing
-class, structure or enumeration type.
+:newTerm:`Extensions` add new functionality to an existing
+class, structure, or enumeration type.
 This includes the ability to extend types
 for which you do not have access to the original source code
 (known as :newTerm:`retroactive modeling`).
-Extensions are similar to :newTerm:`categories` in Objective-C.
-Unlike Objective-C categories, Swift extensions do not have names.
+Extensions are similar to categories in Objective-C.
+(Unlike Objective-C categories, Swift extensions do not have names.)
 
-Extensions can:
+Extensions in Swift can:
 
-* add computed properties and computed static properties
-* define instance methods and type methods
-* provide new initializers
-* define subscripts
-* define and use new nested types
+* Add computed properties and computed static properties
+* Define instance methods and type methods
+* Provide new initializers
+* Define subscripts
+* Define and use new nested types
 
-Extensions can also be used to make an existing type conform to a protocol.
-This process is described in :ref:`Protocols_AddingProtocolConformanceWithAnExtension`.
+You can also use an extension to make an existing type conform to a protocol.
 
-.. QUESTION: I've put operator conformance in the Classes and Structures chapter,
-   rather than this chapter, because it isn't actually implemented via an extension
-   (at least, not right now). Is this the right choice?
-   Moving it to here could be a way to rebalance the chapters a little…
+.. note::
+
+   If you define an extension to add new functionality to an existing type,
+   the new functionality will be available on all existing instances of that type,
+   even if they were created before the extension was defined.
 
 .. QUESTION: What are the rules for overloading via extensions?
 
@@ -61,9 +61,7 @@ Adding protocol conformance in this way is described in
 Computed Properties
 -------------------
 
-Extensions can add computed instance properties to existing types.
-Extensions can also add computed static properties to existing structures and enumerations.
-
+Extensions can add computed instance properties and computed type properties to existing types.
 This example adds five computed instance properties to Swift's built-in ``Double`` type,
 to provide basic support for working with distance units:
 
@@ -85,11 +83,12 @@ to provide basic support for working with distance units:
    -> println("Three feet is \(threeFeet) meters")
    <- Three feet is 0.914399970739201 meters
 
-These computed properties give a way to express that a ``Double`` value
+These computed properties express that a ``Double`` value
 should be considered as a certain unit of length.
 Although they are implemented as computed properties,
-they can be accessed via dot syntax,
-which gives a neat way to append them onto a number to perform distance conversions.
+the names of these properties can be appended to
+a floating-point literal value with dot syntax,
+as a way to use that literal value to perform distance conversions.
 
 In this example, a ``Double`` value of ``1.0`` is considered to represent “one meter”.
 This is why the ``m`` computed property returns ``self`` –
@@ -104,7 +103,7 @@ and so the ``ft`` computed property divides the underlying ``Double`` value
 by ``3.28024``, to convert it from feet to meters.
 
 These properties are read-only computed properties,
-and so they have been expressed without the ``get`` keyword, for brevity.
+and so they are expressed without the ``get`` keyword, for brevity.
 Their return value is of type ``Double``,
 and can be used within mathematical calculations wherever a ``Double`` is accepted:
 
@@ -138,7 +137,7 @@ your own custom types as initializer parameters.
    Designated initializers and deinitializers
    must always be provided by the original class implementation.
 
-This approach can be used to extend the basic ``String`` type
+You can use this approach to extend the basic ``String`` type
 to accept an instance of your own custom type as an initializer parameter,
 for use with string interpolation,
 as described in :ref:`StringsAndCharacters_StringInterpolation`.
@@ -170,11 +169,12 @@ as described in :ref:`StringsAndCharacters_StringInterpolation`.
    because I'm awaiting feedback on that Radar.
    I'll need to explain this requirement above if rdar://16862627 is not fixed by WWDC.
    
-This example defines a new structure called ``Point`` to represent an ``(x, y)`` co-ordinate.
+The preceding example defines a new structure called ``Point``
+to represent an ``(x, y)`` coordinate.
 It also extends ``String`` to add a new initializer implementation,
 which accepts a single ``Point`` instance as an initialization parameter.
 The initializer's implementation creates a string containing the two point values
-expressed within parentheses with a comma and a space between them –
+expressed within parentheses with a comma and a space between them,
 which in this case gives a string value of ``"(3.0, 5.0)"``.
 
 The new initializer can now be used to construct a ``String`` using initializer syntax
@@ -192,7 +192,7 @@ to incorporate their values as part of a longer string:
    <- anotherPoint's value is (-2.0, 6.0)
 
 Whenever string interpolation discovers an instance in the string,
-it checks to see if ``String`` has an initializer that accepts instances of that type.
+it checks to see whether ``String`` has an initializer that accepts instances of that type.
 In this case, it successfully finds a ``String`` initializer that accepts ``Point`` instances;
 creates a new ``String`` using the initializer;
 and inserts this new string into the interpolated string.
@@ -202,9 +202,9 @@ is known as :newTerm:`initializer overloading`.)
 
 .. note::
 
-   If you provide a new initializer via an extension,
+   If you provide a new initializer with an extension,
    you are still responsible for making sure that each instance is fully initialized
-   once the initializer has completed.
+   once the initializer completes.
 
 .. QUESTION: You can use 'self' in this way for structs and enums.
    How might you do this kind of construction for a class?
@@ -261,7 +261,7 @@ you can call the ``toSpooky`` method on any ``String`` instance:
 Mutating Instance Methods
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Instance methods added via an extension can also modify (or *mutate*) the instance itself.
+Instance methods added with an extension can also modify (or *mutate*) the instance itself.
 Structure and enumeration methods that modify ``self`` or its properties
 must mark the instance method as ``mutating``,
 just like mutating methods from an original implementation:
@@ -282,10 +282,6 @@ just like mutating methods from an original implementation:
    </ someInt is now 123
 
 This example adds a ``shiftRight`` method to instances of ``Int``.
-This method is similar to the bitwise right shift operator
-(as described in :ref:`AdvancedOperators_BitwiseLeftAndRightShifts`),
-except that it shifts by powers of ten, rather than powers of two.
-
 The method shifts an ``Int`` to the right by ``numberOfDecimalPlaces``.
 It does this by diving the ``Int`` by ten, ``numberOfDecimalPlaces`` times.
 Because ``Int`` instances can only store whole numbers,
@@ -294,6 +290,10 @@ the number is rounded down to the nearest whole number each time the division ta
 Calling ``shiftRight(3)`` on an integer variable containing the number ``123456``
 shifts the number to the right by three decimal places,
 and changes the variable to have a value of ``123``.
+
+This method is similar to the bitwise right shift operator
+(as described in :ref:`AdvancedOperators_BitwiseLeftAndRightShifts`),
+except that it shifts by powers of ten, rather than powers of two.
 
 .. _Extensions_Subscripts:
 
@@ -386,7 +386,7 @@ Extensions can add new nested types to existing classes, structures and enumerat
 
 This example adds a new nested enumeration to ``Character``.
 This enumeration, called ``Kind``,
-gives a way to express the kind of letter that a particular character represents.
+expresses the kind of letter that a particular character represents.
 Specifically, it expresses whether the character is
 a vowel or a consonant in a standard Latin script
 (without taking into account accents or regional variations),
