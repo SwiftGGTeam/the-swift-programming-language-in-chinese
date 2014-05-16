@@ -963,21 +963,25 @@ For example:
 
 .. testcode::
 
-    >> class MyClass { class func someClassFunction() {} }
-    -> var x = MyClass.someClassFunction // ok
-    << // x : () -> () = <unprintable value>
-    -> var y = MyClass.init              // error
-    !! <REPL Input>:1:17: error: initializer cannot be referenced without arguments
-    !! var y = MyClass.init
-    !!                 ^
+    >> class SomeClass { class func someClassFunction() {} }
+    -> var x = SomeClass.someClassFunction // ok
+    << // x : () -> () = <opaque>
+    -> var y = SomeClass.init              // error
+    !! <REPL Input>:1:19: error: initializer cannot be referenced without arguments
+    !! var y = SomeClass.init              // error
+    !!                   ^
 
 You also use an initializer expression
-to delegate to the initializer of a superclass: ::
+to delegate to the initializer of a superclass:
 
-    init() {
-       // ... Subclass initialization ...
-       super.init()
-    }
+.. testcode::
+
+    -> class SomeSubClass: SomeSuperClass {
+    ->     init() {
+    ->         // subclass initialization goes here
+    ->         super.init()
+    ->     }
+    -> }
 
 .. langref-grammar
 
@@ -1009,10 +1013,12 @@ For example:
 
 .. testcode::
 
-    -> class C { var x = 42 }
-    -> let c = C()
-    << // c : C = <C instance>
-    -> let y = c.x  // Member access
+    -> class SomeClass {
+           var someProperty = 42
+       }
+    -> let c = SomeClass()
+    << // c : SomeClass = <C instance>
+    -> let y = c.someProperty  // Member access
     << // y : Int = 42
 
 The members of a tuple
