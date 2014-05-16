@@ -1182,11 +1182,10 @@ It has the following form:
 
    <#expression#>!
 
-If the *expression* is of an optional type
-and its value is not ``nil``,
+If the value of the *expression* is not ``nil``,
 the optional value is unwrapped
 and returned with the corresponding nonoptional type.
-If its value is ``nil``, a runtime error is raised.
+Otherwise, a runtime error is raised.
 
 .. TR: In previous review, we noted that this also does downcast,
    but that doesn't match the REPL's behavior as of swift-600.0.23.1.11
@@ -1221,62 +1220,41 @@ It has the following form:
 
     <#expression#>?
 
+On its own, the postfix ``?`` operator
+simply returns the value of its argument ---
+for example, the expression ``x?`` has the same value as ``x``.
+
+Postfix expressions that contain an optional-chaining expression
+are evaluated in a special way.
+If the optional-chaining expression is ``nil``,
+all of the other operations in the postfix expression are ignored
+and the entire postfix expression evaluates to ``nil``.
+Otherwise,
+the value of the optional-chaining expression is unwrapped
+and used to evaluate the rest of the postfix expression.
+In either case,
+the value of the postfix expression is still of an optional type.
+
 For example:
 
-.. testcode::
+.. testcode:: optional-chaining
 
-   -> let s: String? = nil
-   << // r0: String? = <unprintable value>
-   -> s?.startsWith("In the beginning")
-   << // r1: Bool? = <unprintable value>
+   >> class OtherClass { func performAction() -> Bool {return true} }
+   >> class SomeClass { var property: OtherClass = OtherClass() }
+   -> var c: SomeClass?
+   << // c : SomeClass? = nil
+   -> var result: Bool? = c?.property.performAction()
+   << // result : Bool? = nil
 
-If the *expression* is not ``nil``,
-the optional-chaining operator returns
-the value of the expression,
-and any chained postfix expression are evaluated.
-Otherwise,
-the optional-chaining operator returns ``nil``
-and any chained postfix expressions are ignored.
+The following example shows the behavior
+of the example above
+without using optional chaining.
 
-Informally,
-all postfix expressions that follow the optional-chaining expression
---- and that are still part of the same expression ---
-are understood to be chained to the optional-chaining expression.
-Specifically,
-a postfix expression is :newTerm:`directly chained`
-to the expression that is its first part.
-A postfix expression is :newTerm:`chained` to an expression
-if it is either directly chained to that expression
-or if it is directly chained to another postfix expression
-that is chained to that expression.
+.. testcode:: optional-chaining-if-let
 
-For example, in the expression ``x?.foo()[7]``
-the function call is chained
-to the optional-chaining expression ``x?``
-because it is directly chained to that expression.
-The array subscript is chained to the optional-chaining expression
-because it is directly chained to the function call expression ``x?.foo()``,
-and the function call is chained to the optional-chaining expression.
-Both the function call and the array subscript
-are ignored if the value of ``x`` is ``nil``.
-
-.. LangRef
-
-   A postfix-expression E1 is said to directly chain to a
-   postfix-expression E2 if E1 is syntactically the postfix-expression base
-   of E2; note that this does not include any syntactic nesting, e.g. via
-   parentheses. E1 chains to E2 if they are the same expression or E1
-   directly chains to an expression which chains to E2. This relation has a
-   maximum, called the largest chained expression.
-
-   The largest chained expression of an expr-optional must be convertible to
-   an r-value of type U? for some type U. Note that a single expression may
-   be the largest chained expression of multiple expr-optionals.
-
-.. From the perspective of monads,
-   an optional-chaining expression lifts its chained operations
-   from working with non-optional types
-   into working with optional types.
+    -> if let unwrappedC = c {
+          result = unwrappedC.property.performAction()
+       }
 
 .. langref-grammar
 
@@ -1287,6 +1265,3 @@ are ignored if the value of ``x`` is ``nil``.
    Grammar of a chained-optional expression
 
    chained-optional-expression --> postfix-expression ``?``
-
-.. NOTE: The fact that ? must be postfix when it's used for Optional
-   is in "Lexical Structure", under the discussion of left/right binding.
