@@ -1051,6 +1051,11 @@ Classes, enumerations, and structs can all adopt protocols.
     -> let bDescription = b.simpleDescription
     << // bDescription : String = "A simple structure (adjusted)"
 
+.. admonition:: Experiment
+
+   Write an enumeration ``SimpleEnumeration``
+   which also conforms to this protocol.
+
 Notice the use of ``mutating`` in the declaration of ``SimpleStruct``
 to mark a struct method that modifies the struct.
 It is not needed in the declaration of ``SimpleClass``
@@ -1061,12 +1066,12 @@ if the protocol were intended to be adopted only by objects,
 you wouldn't need to write ``mutating`` in it.
 
 Use ``extension`` to add functionality to an existing type,
-such as methods and computed properties.
+such as new methods and computed properties.
 You can use an extension to add protocol conformance
 to a type that is declared elsewhere,
 or even a type you imported from a library or framework.
 
-::
+.. testcode::
 
     -> extension Int: ExampleProtocol {
            var simpleDescription: String {
@@ -1079,25 +1084,31 @@ or even a type you imported from a library or framework.
     -> 7.simpleDescription
     << // r0 : String = "The number 7"
 
+.. admonition:: Experiment
+
+   Write an extension for the ``Double`` type
+   that adds an ``absoluteValue`` property.
+
 You can use a protocol name just like any other named type ---
 for example, to create a collection of objects
 that have different types
 but all conform to a particular protocol.
 When you work with values whose type is a protocol type,
 methods outside the protocol definition are not available.
-For example, the code below shows that
-even though the first element of the array has a runtime type
-of ``SimpleClass``,
-when it is declared as a list of ``ExampleProtocol`` values
-other properties can't be accessed.
 
-::
+..testcode::
 
-    let l: ExampleProtocol[] = [a, b, 7]
-    l[0].simpleDescription
-    l[1].simpleDescription
-    l[2].simpleDescription
+    -> let protocolValue: ExampleProtocol = a
+    << protocolValue : ExampleProtocol = <ExampleProtocol instance>
+    -> l.simpleDescription
+    <$ : String = "A very simple class.  Now 100% adjusted"
     // l[0].anotherProperty  // Uncomment to see the error
+
+Even though the first element of the array
+has a runtime type of ``SimpleClass``,
+when it is declared as a value of type ``ExampleProtocol``
+you can only interact with it through methods and properties
+that are declared as part of that protocol.
 
 Generics
 --------
