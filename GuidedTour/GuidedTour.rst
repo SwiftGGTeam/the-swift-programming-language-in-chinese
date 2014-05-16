@@ -280,7 +280,7 @@ than simple comparison.
             println("Add some raisins and make ants on a log.")
          case "cucumber", "watercress":
             println("That would make a good tea sandwich.")
-         case let x where x.hasSuffix("pepper")
+         case let x where x.hasSuffix("pepper"):
             println("Is it a spicy \(x)?")
          default:
             println("Everything tastes good in soup.")
@@ -648,9 +648,9 @@ but it begins with ``init`` instead of ``func`` and has no function name.
              return "A shape with \(numberOfSides) sides."
           }
        }
-    >> NamedShape("test name").name
+    >> NamedShape(name: "test name").name
     <$ : String = "test name"
-    >> NamedShape("test name").description()
+    >> NamedShape(name: "test name").description()
     <$ : String = "A shape with 0 sides."
 
 
@@ -681,7 +681,7 @@ that don't actually override any method in the superclass.
 
           init(sideLength: Double, name: String) {
              self.sideLength = sideLength
-             super.init(name)
+             super.init(name: name)
              numberOfSides = 4
           }
 
@@ -693,7 +693,7 @@ that don't actually override any method in the superclass.
              return "A square with sides of length \(sideLength)."
           }
        }
-    -> let test = Square(5.2, "my test square")
+    -> let test = Square(sideLength: 5.2, name: "my test square")
     << // test : Square = <Square instance>
     -> test.area()
     <$ : Double = 27.04
@@ -750,7 +750,7 @@ to create a computed property.
 
            init(radius: Double, name: String) {
                self.radius = radius
-               super.init(name)
+               super.init(name: name)
                numberOfSides = 1
            }
 
@@ -758,7 +758,7 @@ to create a computed property.
               return "A circle with radius of length \(radius)."
            }
        }
-    -> var circle = Circle(12.7, "a circle")
+    -> var circle = Circle(radius: 12.7, name: "a circle")
     <$ : Circle = <Circle instance>
     -> circle.area
     <$ : Double = 506.7074785185
@@ -795,13 +795,13 @@ is always the same as the side length of its square.
             circle = Circle(size, name)
          }
       }
-   -> var circleAndSquare = CircleAndSquare(10, "another test shape")
+   -> var circleAndSquare = CircleAndSquare(size: 10, name: "another test shape")
    << // circleAndSquare : CircleAndSquare = <CircleAndSquare instance>
    -> circleAndSquare.square.sideLength
    <$ : Double = 10.0
    -> circleAndSquare.circle.radius
    <$ : Double = 10.0
-   -> circleAndSquare.square = Square(50, "larger square")
+   -> circleAndSquare.square = Square(sideLength: 50, name: "larger square")
    -> circleAndSquare.circle.radius
    <$ : Double = 50.0
 
@@ -849,7 +849,7 @@ enumerations can have methods associated with them.
           }
        }
     -> let ace = Rank.Ace
-    << // ace : Rank = <unprintable value>
+    << // ace : Rank = <opaque>
     -> let aceRawValue = ace.toRaw()
     <$ : Int = 1
 
@@ -902,7 +902,7 @@ you don't have to provide one.
           }
        }
     -> let hearts = Suit.Hearts
-    << // hearts : Suit = <unprintable value>
+    << // hearts : Suit = <opaque>
     -> let heartsDescription = hearts.description()
     << // heartsDescription : String = "hearts"
 
@@ -938,7 +938,7 @@ structures are always copied when they are passed around in your code.
           }
        }
     -> let threeOfSpades = Card(rank: .Three, suit:.Spades)
-    << // threeOfSpades : Card = Card(<unprintable value>, <unprintable value>)
+    << // threeOfSpades : Card = V4REPL4Card (has 2 children)
     -> let threeOfSpadesDescription = threeOfSpades.description()
     << // threeOfSpadesDescription : String = "The 3 of spades"
 
