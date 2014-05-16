@@ -1272,7 +1272,15 @@ and used to evaluate the rest of the postfix expression.
 In either case,
 the value of the postfix expression is still of an optional type.
 
-For example:
+If a postfix expression that contains an optional-chaining expression
+is nested inside another postfix expression,
+only the outer expression returns an optional type.
+In the example below,
+when ``c`` is not ``nil``,
+its value is unwrapped and used to evaluate
+both ``.property`` and ``.performAction()``,
+and the entire expression ``c?.property.performAction()``
+has a value of an optional type.
 
 .. testcode:: optional-chaining
 
@@ -1292,13 +1300,6 @@ without using optional chaining.
     -> if let unwrappedC = c {
           result = unwrappedC.property.performAction()
        }
-
-If there is more than one postfix expression
-that contains the same chained-option expression
---- for example,
-when you chain multiple operations
-after an optional-chaining expression ---
-this special behavior applies to only the outermost postfix expression.
 
 .. langref-grammar
 
