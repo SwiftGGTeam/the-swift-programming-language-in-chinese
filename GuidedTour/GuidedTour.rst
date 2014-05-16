@@ -1065,3 +1065,6 @@ Generics
 * On function (repeat X n times, re-implementing Array init feature)
 * On classes, structures, and enumerations
 
+.. TODO: Add a "Continue Reading" section
+   which gives folks who opened this in a playground
+   a link back to the web version of the book.
