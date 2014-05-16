@@ -1056,15 +1056,15 @@ as well as classes, enumerations, and structures.
     -> enum Tree<T> {
           case LeafNode(T)
           case InternalNode(Tree, Tree, T)
-          func leafCount() -> Int {
+          func nodeCount() -> Int {
              switch self {
                 case let .LeafNode(item):
                    return 1
                 case let .InternalNode(item, leftNode, rightNode):
-                   return leftNode.leafCount() + rightNode.leafCount()
+                   return 1 + leftNode.leafCount() + rightNode.leafCount()
              }
           }
-          func allLeaves() -> T[] {
+          func allNodes() -> T[] {
              switch self {
                 case let .LeafNode(item):
                    return item
@@ -1080,7 +1080,7 @@ as well as classes, enumerations, and structures.
     -> let leafOne = Tree.LeafNode(1)
     -> let leafTwo = Tree.LeafNode(7)
     -> let tree = Tree.InternalNode(3, leafOne, leafTwo)
-    -> let leaves = tree.leafCount()
+    -> let leaves = tree.leafNodes()
 
 Use ``where`` after the type name
 to specify a list of requirements ---
