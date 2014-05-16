@@ -541,22 +541,23 @@ A function can take another function as one of its arguments.
 .. testcode::
 
     -> // Re-implement the standard library sort function.
-    -> func bubbleSort(list: Int[], outOfOrder: (Int, Int) -> Bool) {
+    -> func bubbleSort(list: Int[], comparison: (Int, Int) -> Bool) {
           for i in 0...list.count {
              for j in 0...list.count {
-                if outOfOrder(list[i], list[j]) {
+                if !comparison(list[i], list[j]) {
                    (list[i], list[j]) = (list[j], list[i])
                 }
              }
           }
        }
-    -> func greaterThan(x : Int, y : Int) -> Bool {
-          return x > y
+    -> func lessThan(x : Int, y : Int) -> Bool {
+          return x < y
        }
     -> var numbers = [8, 3, 5, 6]
     << // numbers : Array<Int> = [8, 3, 5, 6]
-    -> var sortedNumbers = bubbleSort(numbers, greaterThan)
-    << // sortedNumbers : Array<Int> = [8, 6, 5, 3]
+    -> bubbleSort(numbers, lessThan)
+    >> numbers
+    << // numbers : Array<Int> = [3, 5, 6, 8]
 
 Closures are the same as functions with one difference:
 you don't give them a name when you declare them.
