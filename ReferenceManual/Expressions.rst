@@ -1202,33 +1202,7 @@ It has the following form:
 
     <#expression#>?
 
-For example:
-
-.. testcode:: optional-chaining
-
-   >> class OtherClass { func performAction() -> Bool {return true} }
-   >> class SomeClass { var property: OtherClass = OtherClass() }
-   -> let c: SomeClass? = nil
-   << // c : SomeClass? = nil
-   -> c?.property.performAction()
-   << // r0 : Bool? = nil
-
-The following example shows the behavior
-of the example above
-without using optional chaining.
-
-.. testcode:: optional-chaining-if-let
-
-   -> var result: Bool?
-   -> if let unwrappedC = c {
-          result = unwrappedC.property.performAction()
-       } else {
-          result = nil
-       }
-   >> result
-   << // result : Bool? = nil
-
-On its own, the optional-chaining operator (``?``)
+On its own, the postfix ``?`` operator
 simply returns the value of its argument ---
 for example, the expression ``x?`` has the same value as ``x``.
 
@@ -1243,12 +1217,26 @@ and used to evaluate the rest of the postfix expression.
 In either case,
 the value of the postfix expression is still of an optional type.
 
-If there is more than one postfix expression
-that contains the same chained-option expression
---- for example,
-when you chain multiple operations
-after an optional-chaining expression ---
-this special behavior applies to only the outermost postfix expression.
+For example:
+
+.. testcode:: optional-chaining
+
+   >> class OtherClass { func performAction() -> Bool {return true} }
+   >> class SomeClass { var property: OtherClass = OtherClass() }
+   -> var c: SomeClass?
+   << // c : SomeClass? = nil
+   -> var result: Bool? = c?.property.performAction()
+   << // result : Bool? = nil
+
+The following example shows the behavior
+of the example above
+without using optional chaining.
+
+.. testcode:: optional-chaining-if-let
+
+    -> if let unwrappedC = c {
+          result = unwrappedC.property.performAction()
+       }
 
 .. TR: Grammatically, why can't you do things like x?++
    In that particular case, even though it is a postfix expression,
