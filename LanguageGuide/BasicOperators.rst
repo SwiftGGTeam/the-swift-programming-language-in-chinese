@@ -154,7 +154,7 @@ can be added together to make a new ``String`` value:
    /> dogCow is equal to \"🐶🐮\"
    </ dogCow is equal to "🐶🐮"
 
-See also :ref:`StringsAndCharacters_StringAndCharacterConcatenation`.
+See also :ref:`StringsAndCharacters_ConcatenatingStringsAndCharacters`.
 
 .. _BasicOperators_RemainderOperator:
 
