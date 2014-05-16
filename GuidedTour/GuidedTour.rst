@@ -1051,6 +1051,9 @@ as well as classes, enumerations, and structures.
 
 .. FIXME: Add testcode expectation lines.
 
+.. TODO: Brian says that you can't have recursive enums.
+   Need to come up with a different example.
+
 .. testcode::
 
     -> enum Tree<T> {
