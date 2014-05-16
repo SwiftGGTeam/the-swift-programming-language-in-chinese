@@ -1055,19 +1055,31 @@ as well as classes, enumerations, and structures.
 
     -> enum Tree<T> {
           case LeafNode(T)
-          case InternalNode(Tree, Tree)
+          case InternalNode(Tree, Tree, T)
           func leafCount() -> Int {
              switch self {
                 case let .LeafNode(item):
                    return 1
-                case let .InternalNode(leftNode, rightNode):
+                case let .InternalNode(item, leftNode, rightNode):
                    return leftNode.leafCount() + rightNode.leafCount()
+             }
+          }
+          func allLeaves() -> T[] {
+             switch self {
+                case let .LeafNode(item):
+                   return item
+                case let .InternalNode(item, leftNode, rightNode):
+                   var result = []
+                   result += leftNode.allLeaves()
+                   result += item
+                   result += rightNode.allLeaves()
+                   return result
              }
           }
        }
     -> let leafOne = Tree.LeafNode(1)
     -> let leafTwo = Tree.LeafNode(7)
-    -> let tree = Tree.InternalNode(leafOne, leafTwo)
+    -> let tree = Tree.InternalNode(3, leafOne, leafTwo)
     -> let leaves = tree.leafCount()
 
 Use ``where`` after the type name
