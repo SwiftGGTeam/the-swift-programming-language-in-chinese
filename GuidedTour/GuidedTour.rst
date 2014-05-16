@@ -1088,27 +1088,47 @@ for example,
 a protocol that that the type must implement
 or a class that it must be a subclass of.
 
-    func anyCommonElements <T, U where
-            T: Collection, U: Collection,
-            T.GeneratorType.Element: Equatable,
-            T.GeneratorType.Element == U.GeneratorType.Element>
+.. testcode::
+
+   -> func anyCommonElements <T, U where
+          T: Collection, U: Collection,
+          T.GeneratorType.Element: Equatable,
+          T.GeneratorType.Element == U.GeneratorType.Element>
     (lhs: T, rhs: U) -> Bool {
-        for lhsItem in lhs {
-            for rhsItem in rhs {
-                if lhsItem == rhsItem {
-                    return true
-                }
-            }
-        }
-        return false
+       for lhsItem in lhs {
+          for rhsItem in rhs {
+             if lhsItem == rhsItem {
+                return true
+             }
+          }
+       }
+       return false
     }
+   -> anyCommonElements([1, 2, 3], [3])
+   <$ : Bool = true
 
-    anyCommonElements([1, 2, 3], [3])
-    // r0 : Bool = true
-    anyCommonElements([1, 2, 3], [5])
-    // r1 : Bool = false
+..
+  let l1 = [1: 100, 2: 200]
+  let l2 = [(1, 100), (4, 5)]
+  anyCommonElements(l1, l2)
+  ^-- error: cannot convert the expression's type 'Bool' to type 'Array<(Int, Int)>'
 
-    <T: Generator where T.Element: Equatable>
+.. This doesn't work with T.Element 
+    func anyCommonElements <T, U where
+              T: Collection, U: Collection,
+              T.Element: Equatable,
+              T.Element == U.Element>
+        (lhs: T, rhs: U) -> Bool {
+           for lhsItem in lhs {
+              for rhsItem in rhs {
+                 if lhsItem == rhsItem {
+                    return true
+                 }
+              }
+           }
+           return false
+        }
+
 
 In the simple cases,
 you can omit ``where`` and just write
