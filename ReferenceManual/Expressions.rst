@@ -1095,7 +1095,7 @@ the top-level declarations of that module.
 Postfix Self Expression
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-The postfix ``self`` expression consists of an expression or the name of a type,
+A postfix ``self`` expression consists of an expression or the name of a type,
 immediately followed by ``.self``. It has the following forms:
 
 .. syntax-outline::
@@ -1123,11 +1123,35 @@ you can pass it to a function or method that accepts a type-level argument.
 Dynamic Type Expression
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-.. write-me::
+A ``dynamicType`` expression consists of an expression,
+immediately followed by ``.dynamicType``. It has the following form:
 
 .. syntax-outline::
 
     <#expression#>.dynamicType
+
+The *expression* must evaluate to an instance of a type.
+The entire ``dynamicType`` expression evaluates to the value of that instance's
+runtime type, as the following example shows:
+
+.. testcode::
+
+    -> class SomeBaseClass {
+           class func printClassName() {
+               println("SomeBaseClass")
+           }
+       }
+    -> class SomeSubClass: SomeBaseClass {
+           override class func printClassName() {
+               println("SomeSubClass")
+           }
+       }
+    -> let someInstance: SomeBaseClass = SomeSubClass()
+    << // someInstance : SomeBaseClass = C4REPL12SomeSubClass (has 1 child)
+    -> // someInstance is of type SomeBaseClass at compile time, but
+    -> // someInstance is of type SomeSubClass at runtime
+    -> someInstance.dynamicType.printClassName()
+    <- SomeSubClass
 
 .. syntax-grammar::
 
