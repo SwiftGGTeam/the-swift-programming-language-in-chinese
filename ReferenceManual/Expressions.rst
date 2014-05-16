@@ -297,13 +297,9 @@ see :ref:`BasicOperators_TernaryConditionalOperator`.
 Type-Casting Operators
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-There are two :newTerm:`type-casting operators`:
-The ``as`` operator performs a type cast
-and returns the result,
-and the ``is`` operator performs a type cast
-and indicates whether the cast failed.
-
-Type-casting operators have the following form:
+There are two type-casting operators,
+the ``as`` operator and the ``is`` operator.
+They have the following form:
 
 .. syntax-outline::
 
@@ -311,59 +307,58 @@ Type-casting operators have the following form:
    <#expression#> is <#type#>
 
 The ``as`` operator
-performs a runtime cast of the *expression*
-as the specified *type*.
+performs a cast of the *expression*
+to the specified *type*.
 It behaves as follows:
 
-* If casting the *expression*
-  to the specified *type*
+* If conversion to the specified *type*
   is guaranteed to succeed,
-  the value of *expression* is returned
+  the value of the *expression* is returned
   as an instance of the specified *type*.
   An example is casting from a subclass to a superclass.
 
-* If casting the *expression*
-  to the specified *type*
+* If conversion to the specified *type*
   is guaranteed to fail,
   a compile-time error is raised.
 
-* Otherwise, the value of *expression*
-  is returned as an optional of the specified *type*.
+* Otherwise, if it's not known at compile time
+  whether the conversion will succeed,
+  the type of the cast expresion is an optional of the specified *type*.
   At runtime, if the cast succeeds,
-  the value of *expression* is returned
-  as in instance of the specified *type*;
+  the value of *expression* is wrapped in an optional and returned;
   otherwise the value returned is ``nil``.
-  For example, casting from a superclass to a subclass.
-
-For example:
+  An example is casting from a superclass to a subclass.
 
 .. testcode:: type-casting
 
     -> class SomeSuperType {}
     -> class SomeType: SomeSuperType {}
     -> class SomeChildType: SomeType {}
-    -> let x = SomeType()
-    << // x : SomeType = <SomeType instance>
+    -> let s = SomeType()
+    << // s : SomeType = <SomeType instance>
     ---
-    -> let y = x as SomeSuperType  // y is of type SomeSuperType
+    -> let x = s as SomeSuperType  // known to succeed; type is SomeSuperType
     << // y : SomeSuperType = <SomeSuperType instance>
-    -> let z = x as SomeChildType  // z is of type SomeChildType?
-    << // z : SomeChildType? = <unprintable value>
+    -> let y = s as Int            // known to fail; compile-time error
+    !! <REPL Input>:1:11: error: cannot convert the expression's type '$T1' to type '$T2'
+    !! let y = s as Int            // known to fail; compile-time error
+    !!         ~~^~~~~~
+    -> let z = s as SomeChildType  // might fail at runtime; type is SomeChildType?
+    << // z : SomeChildType? = nil
 
-Specifying a type with ``as`` provides the same type information
-to the compiler as a function call or a type annotation,
-as shown in the following examples:
+Specifying a type with ``as`` provides the same information
+to the compiler as a type annotation,
+as shown in the following example:
 
-::
+.. testcode:: type-casting-2
 
-    func f(a: SomeSuperType) -> SomeSuperType { return a }
-    func g(a: SomeChildType) -> SomeChildType { return a }
-
-    let y2: SomeSuperType = x   // y2 is of type SomeSuperType
-    let z2: SomeChildType? = x  // z2 is of type SomeChildType?
-
-    let y3 = f(x)   // y3 is of type SomeSuperType
-    let z3 = g(x)   // z3 is of type SomeChildType?
+    >> class SomeType {}
+    >> let x = SomeType()
+    ---
+    -> let y1 = x as SomeType
+    << // y1 : SomeType = <SomeType instance>
+    -> let y2: SomeType = x
+    << // y2 : SomeType = <SomeType instance>
 
 .. NOTE: The following text is no longer relevant,
     because now that T! is a type, x as T! no longer means
@@ -895,17 +890,38 @@ A function call expression can include a trailing closure
 in the form of a closure expression immediately after the closing parenthesis.
 The trailing closure is understood as an argument to the function,
 added after the last parenthesized argument.
-The following function calls are equivalent::
+The following function calls are equivalent:
 
+.. testcode:: trailing-closure
 
-     someFunction(x, {$0 == 13})
-     someFunction(x) {$0 == 13}
+    >> func someFunction (x: Int, f: Int -> Bool) -> Bool {
+    >>    return f(x)
+    >> }
+    >> let x = 10
+    // someFunction takes an integer and a closure as its arguments
+    -> someFunction(x, {$0 == 13})
+    <$ : Bool = false
+    -> someFunction(x) {$0 == 13}
+    <$ : Bool = false
 
 If the trailing closure is the function's only argument,
-the parentheses can be omitted: ::
+the parentheses can be omitted:
 
-    myData.process() {$0 * 2}
-    myData.process {$0 * 2}
+.. testcode:: no-paren-trailing-closure
+
+    >> class Data {
+    >>    let data = 10
+    >>    func someMethod(f: Int -> Bool) -> Bool {
+    >>       return f(self.data)
+    >>    }
+    >> }
+    >> let myData = Data()
+    << // myData : Data = <Data instance>
+    // someFunction takes a closure as its only argument
+    -> myData.someMethod() {$0 == 13}
+    << // r0 : Bool = false
+    -> myData.someMethod {$0 == 13}
+    << // r1 : Bool = false
 
 .. langref-grammar
 
