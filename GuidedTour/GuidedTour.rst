@@ -1023,6 +1023,9 @@ Protocols
 Generics
 --------
 
+Write a name inside angle brackets
+to make a generic function or type.
+
 .. testcode::
 
     -> func repeat<ItemType>(item: ItemType, times: Int) -> ItemType[] {
@@ -1040,9 +1043,60 @@ Generics
    Make a version of anyMatch that accepts an array of any type,
    not just an array if integers.
 
-.. TODO: Check name of function.
 
-.. write-me::
+Use ``where`` after the type name
+to specify a list of requirements ---
+for example,
+a protocol that that the type must implement
+or a class that it must be a subclass of.
 
-* On function (repeat X n times, re-implementing Array init feature)
-* On classes, structures, and enumerations
+    func anyCommonElements <T, U where
+            T: Collection, U: Collection,
+            T.GeneratorType.Element: Equatable,
+            U.GeneratorType.Element: Equatable,
+            T.GeneratorType.Element == U.GeneratorType.Element>
+    (lhs: T, rhs: U) -> Bool {
+        for lhsItem in lhs {
+            for rhsItem in rhs {
+                if lhsItem == rhsItem {
+                    return true
+                }
+            }
+        }
+        return false
+    }
+
+    anyCommonElements([1, 2, 3], [3])
+    // r0 : Bool = true
+    anyCommonElements([1, 2, 3], [5])
+    // r1 : Bool = false
+
+    <T: Generator where T.Element: Equatable>
+
+    enum TreeNode<T> {
+        case Leaf(T)
+        case Branch(TreeNode, TreeNode)
+        func leafCount() -> Int {
+            switch self {
+                case .Leaf(item):
+                    return 1
+                case .Branch(leftNode, rightNode)
+                    return leftNode.leafCount() + rightNode.leafCount()
+            }
+        }
+        func map(transform: T -> T) {
+            switch self {
+                case .Leaf(item):
+                    item = transform(item)
+                case .Branch(leftNode, rightNode)
+                    leftNode.map(transform)
+                    rightNode.map(transform)
+            }
+        }
+    }
+
+In the simple cases,
+you can omit ``where`` and just write
+you can just write the protocol or class name after a colon.
+Writing ```<T: Equatable>``
+is the same as writing ``<T where T: Equatable>``.
