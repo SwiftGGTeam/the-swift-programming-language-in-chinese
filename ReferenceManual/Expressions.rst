@@ -1195,37 +1195,42 @@ Optional-Chaining Expression
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 An :newTerm:`optional-chaining expression` provides a simplified syntax
-for using optional values in postfix expressions. An optional-chaining expression
-consists of an expression that has an optional type followed immediately
-by the postfix ``?`` operator. It has the following form:
+for using optional values in postfix expressions.
+It has the following form:
 
 .. syntax-outline::
 
     <#expression#>?
 
-The *expression*,
-the optional value is unwrapped
-and returned. Unlike a forced-expression, the returned value is an optional type
-and no runtime error is raised if the value is ``nil``.
-
-You can chain postfix expressions to the optional-chaining expression to conditionally
-perform an operation on the *expression*. If the *expression* is not ``nil``,
-the optional-chaining expression returns
-the value of the expression,
-and any chained postfix expressions are evaluated.
-Otherwise,
-the optional-chaining expression returns ``nil``
-and any chained postfix expressions are ignored.
-
 For example:
 
-.. testcode::
+.. testcode:: optional-chaining
 
-   -> let s: String? = nil
-   << // r0: String? = <unprintable value>
-   -> s?.startsWith("In the beginning")
-   << // r1: Bool? = <unprintable value>
+   >> class OtherClass { func performAction() -> Bool {return true} }
+   >> class SomeClass { var property: OtherClass = OtherClass() }
+   -> let c: SomeClass? = nil
+   << // c : SomeClass? = nil
+   -> c?.property.performAction()
+   << // r0 : Bool? = nil
 
+The following example shows the behavior
+of the example above
+without using optional chaining.
+
+.. testcode:: optional-chaining-if-let
+
+   -> var result: Bool?
+   -> if let unwrappedC = c {
+          result = unwrappedC.property.performAction()
+       } else {
+          result = nil
+       }
+   >> result
+   << // result : Bool? = nil
+
+On its own, the optional-chaining operator (``?``)
+simply returns the value of its argument ---
+for example, the expression ``x?`` has the same value as ``x``.
 
 Postfix expressions that contain an optional-chaining expression
 are evaluated in a special way.
@@ -1236,54 +1241,23 @@ Otherwise,
 the value of the optional-chaining expression is unwrapped
 and used to evaluate the rest of the postfix expression.
 In either case,
-the
+the value of the postfix expression is still of an optional type.
 
 If there is more than one postfix expression
 that contains the same chained-option expression
---- for eaxmple,
+--- for example,
 when you chain multiple operations
 after an optional-chaining expression ---
 this special behavior applies to only the outermost postfix expression.
 
--- describe the order of evaluation -- the way things are evaluated
-You can chain postfix expressions to the optional-chaining expression.
-For example, in the expression ``x?.foo.bar()``
+.. TR: Grammatically, why can't you do things like x?++
+   In that particular case, even though it is a postfix expression,
+   it doesn't type check.
 
-- x?   if not nil
-- x?.foo
-- x?.foo.bar()
-(returned as optional)
-
-- x?   if nil; nothing else (return nil)
-
-You chain as if there were no optional.
-
-
-the member expression ``x?.foo`` is chained
-to the optional-chaining expression ``x?``.
-The function call expression ``x?.foo.bar()``
-is also chained to the optional-chaining expression ``x?``
-because it is chained to the property ``x?.foo``.
-Both the property access and the function call
-are ignored if the value of ``x`` is ``nil``.
-
-You can chain postfix expressions to the optional-chaining expression.
-
-
-For example, in the expression ``x?.foo.bar()``
-the member expression ``x?.foo`` is chained
-to the optional-chaining expression ``x?``.
-The function call expression ``x?.foo.bar()``
-is also chained to the optional-chaining expression ``x?``
-because it is chained to the expression ``x?.foo``.
-Both the member access and the function call
-are ignored if the value of ``x`` is ``nil``.
-
-
-
-The outermost postfix expression
-that contains the optional-chaining expression
-is always of an optional type.
+.. From the perspective of monads,
+   an optional-chaining expression lifts its chained operations
+   from working with non-optional types
+   into working with optional types.
 
 .. langref-grammar
 
