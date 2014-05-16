@@ -585,8 +585,6 @@ as the second argument to the ``sort`` function.
 Objects and Classes
 -------------------
 
-.. TODO: Use testcode throughout this section.
-
 Classes are created using ``class``,
 followed by the class's properties and methods in braces.
 A property declaration is the same
@@ -625,14 +623,7 @@ are accessed using dot syntax.
 
 This version of the ``Shape`` class is missing something important:
 an initializer to set up the class when an instance is created.
-The initializer similar to a function,
-but it begins with ``init`` instead of ``func`` and has no function name.
-
-.. TODO: Probably worth pointing out that the initializer isn't a method.
-
-.. TODO: s/func/def for methods.
-
-.. TODO: Discuss arg names and API arg names.
+Use ``init`` to create one.
 
 .. testcode::
 
