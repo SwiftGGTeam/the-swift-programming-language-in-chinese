@@ -1099,7 +1099,6 @@ or a class that it must be a subclass of.
     func anyCommonElements <T, U where
             T: Collection, U: Collection,
             T.GeneratorType.Element: Equatable,
-            U.GeneratorType.Element: Equatable,
             T.GeneratorType.Element == U.GeneratorType.Element>
     (lhs: T, rhs: U) -> Bool {
         for lhsItem in lhs {
