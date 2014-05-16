@@ -1070,26 +1070,6 @@ as well as classes, enumerations, and structures.
     -> let tree = Tree.InternalNode(leafOne, leafTwo)
     -> let leaves = tree.leafCount()
 
-..
-
-    This bit doesn't quite work yet...
-    it needs to either return a copy of the tree
-    or create new nodes and update ``self``
-    to give you back a new tree.
-
-        func map(transform: T -> T) {
-            switch self {
-                case let .Leaf(item):
-                    item = transform(item)
-                case let .Branch(leftNode, rightNode):
-                    leftNode.map(transform)
-                    rightNode.map(transform)
-            }
-        }
-
-
-
-
 Use ``where`` after the type name
 to specify a list of requirements ---
 for example,
