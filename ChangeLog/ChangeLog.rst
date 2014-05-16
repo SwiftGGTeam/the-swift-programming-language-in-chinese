@@ -15,6 +15,9 @@ The book has the following known issues:
 * <rdar://16756034> Formal grammar does not contain live links.
 * <rdar://16844985> Guided Tour has lines that don't compile in latest Swift
 * <rdar://16893324> The PDF version of TSPL is a mockup.
+* The iBook link is a placeholder
+  until this book goes live on the iBooks store WWDC week.
+  Use the EPUB link instead (which will go away at the same time).
 
 May 15 2014
 ~~~~~~~~~~~
