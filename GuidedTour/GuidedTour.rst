@@ -242,7 +242,7 @@ than simple comparison.
             println("Add some raisins and make ants on a log.")
          case "cucumber", "watercress":
             println("That would make a good tea sandwich.")
-         case let x where x.endsWith("pepper")
+         case let x where x.hasSuffix("pepper")
             println("Is it a spicy \(x)?")
          default:
             println("Everything tastes good in soup.")
