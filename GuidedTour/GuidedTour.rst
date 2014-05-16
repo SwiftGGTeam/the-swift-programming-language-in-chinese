@@ -1002,15 +1002,101 @@ Notice how the sunrise and sunset times
 are extracted from the ``ServerResponse`` value
 as part of a pattern matching operation.
 
-Protocols
----------
+Protocols and Extensions
+------------------------
 
-.. write-me::
+Use ``protocol`` to declare a protocol:
 
-* Supported by both reference and value types
-* First class type -- usable in variable declarations etc.
-* Can provide a default implementation.
+.. testcode::
 
+    -> protocol ExampleProtocol {
+           var simpleDescription: String { get }
+           mutating func adjust()
+       }
+
+Classes, enumerations, and structs can all adopt protocols.
+
+.. testcode::
+
+    -> class SimpleClass: ExampleProtocol {
+           var simpleDescription: String = "A very simple class."
+           var anotherProperty: Int = 69105
+           func adjust() {
+               simpleDescription += "  Now 100% adjusted."
+           }
+       }
+    -> var a = SimpleClass()
+    << // a : SimpleClass = <SimpleClass instance>
+    -> a.adjust()
+    -> let aDescription = a.simpleDescription
+    << // aDescription : String = "A very simple class.  Now 100% adjusted"
+    ---
+    -> struct SimpleStructure: ExampleProtocol {
+           var simpleDescription: String = "A simple structure"
+           mutating func adjust() {
+               simpleDescription += " (adjusted)"
+           }
+       }
+    -> var b = SimpleStructure()
+    << // b : SimpleStructure = SimpleStructure("A simple structure")
+    -> b.adjust()
+    -> let bDescription = b.simpleDescription
+    << // bDescription : String = "A simple structure (adjusted)"
+
+.. admonition:: Experiment
+
+   Write an enumeration that conforms to this protocol.
+
+Notice the use of ``mutating`` in the declaration of ``SimpleStruct``
+to mark a struct method that modifies the structure.
+It is not needed in the declaration of ``SimpleClass``
+because any method on a class can modify the class.
+
+Use ``extension`` to add functionality to an existing type,
+such as new methods and computed properties.
+You can use an extension to add protocol conformance
+to a type that is declared elsewhere,
+or even a type you imported from a library or framework.
+
+.. testcode::
+
+    -> extension Int: ExampleProtocol {
+           var simpleDescription: String {
+               return "The number \(self)"
+           }
+           mutating func adjust() {
+               self += 42
+           }
+        }
+    -> 7.simpleDescription
+    << // r0 : String = "The number 7"
+
+.. admonition:: Experiment
+
+   Write an extension for the ``Double`` type
+   that adds an ``absoluteValue`` property.
+
+You can use a protocol name just like any other named type ---
+for example, to create a collection of objects
+that have different types
+but all conform to a particular protocol.
+When you work with values whose type is a protocol type,
+methods outside the protocol definition are not available.
+
+.. testcode::
+
+    -> let protocolValue: ExampleProtocol = a
+    << protocolValue : ExampleProtocol = <ExampleProtocol instance>
+    -> l.simpleDescription
+    <$ : String = "A very simple class.  Now 100% adjusted"
+    // l[0].anotherProperty  // Uncomment to see the error
+
+Even though the first element of the array
+has a runtime type of ``SimpleClass``,
+the compiler treats it as the given type of ``ExampleProtocol``.
+This means that you can't accidentally access
+methods or properties that the class implements
+in addition to its protocol conformance.
 
 Generics
 --------
