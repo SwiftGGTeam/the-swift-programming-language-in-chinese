@@ -46,10 +46,12 @@ Simple Values
 
 You create constants and variables using the same syntax,
 with one difference:
-Use ``let`` to declare a constant and use ``var`` for a variable.
-The value of a constant can be assigned only once,
-although it does not need to be known at compile time.
-The value of a variable can be assigned multiple times.
+Use ``let`` for a constant and use ``var`` for a variable.
+The value of a constant 
+doesn't need to be known at compile time,
+as long as it assigned only once.
+This means you can use constants to name a value
+that you determine once but use in many places.
 
 .. testcode::
 
@@ -59,73 +61,62 @@ The value of a variable can be assigned multiple times.
    >> myVariable
    << // myVariable : Int = 50
    -> let myConstant = 42
-   << // myConstant : Int = 42
-   // myConstant = 100  // Uncomment to see the error
-
-.. admonition:: Experiment
-
-   Changing ``myConstant`` to be a variable.
-   Remove the last line, so ``myConstant`` is only assigned a value once.
 
 .. TR: Is the requirement that constants need an initial value
    a current REPL limitation, or an expected language feature?
 
-A variable must have the same type
+A constant or variable must have the same type
 as the value you want to assign to it.
+However, you don't have to explicitly write
+the type of every single constant and variable.
+Providing an initial value lets the compiler infer
+the type of the constant or variable.
+For example, in example above
+the compiler infers that ``myVariable`` is an integer
+because its initial value is a integer.
 
-.. testcode::
-
-    -> var hello = "Hello"
-    << // hello : String = "Hello"
-    // hello = 123  // Uncomment to see the error
-
-In the previous example,
-the compiler understands that ``greeting`` is a string
-because its initial value is a string.
-This behavior of determining type information
-based on the surrounding code
-is known as *type inference*,
-and it allows the compiler to warn you
-about type-related errors in your code
-without requiring you to
-write explicit type information everywhere.
-
-When the initial value doesn't provide enough information,
-or when there is no initial value,
-specify an explicit type
+If the initial value doesn't provide enough information
+(or if there is no initial value)
 by writing the type after the variable,
 separated by a colon.
-Type inference allows the compiler
-to correctly infer the type of numbers ---
-if you write ``4.0 / 2``
-it is understood that ``4.0``, ``2``, and the result
-all have the type ``Double``.
 
 .. testcode::
 
-   -> let implicitString = "Hello"
-   << // implicitString : String = "Hello"
-   -> let explicitString: String = "Hello"
-   << // explicitString : String = "Hello"
-   ---
    -> let implicitInteger = 70
    << // implicitInteger : Int = 70
    -> let implicitDouble = 70.0
    << // implicitDouble : Double = 70.0
    -> let explicitDouble: Double = 70
    << // explicitDouble : Double = 70.0
-   -> let explicitFloat: Float = 70
-   << // explicitFloat : Float = 70.0
 
 .. admonition:: Experiment
 
    Create a constant with
    an explicit type of ``Float`` and a value of ``4``.
-   Notice how the type of ``4`` is determined based on how you use it.
 
-   Try providing an explicit type that doesn’t match
-   the variable’s initial value.
+   Try providing an explicit type of ``String``
+   for a variable with an initial value of 3.
    What error do you get?
+
+.. TODO: Needs to go somewhere, but not here.
+
+   Numeric literals that don't have a decimal point
+   are treated as an integer by default,
+   but type inference can make them floating point numbers
+   if the expression would otherwise be invalid.
+   For example,
+   if the value of ``seven`` is the integer ``7``,
+   the result of ``seven / 2`` is the integer ``3``.
+   However, if its value is ``7.0``
+   the result of ``seven / 2`` is ``3.5`` ---
+   dividing a floating point number by an integer would be a type error,
+   so the type of ``2`` is understood as ``2.0``.
+
+   7 / 2     // 3 (an integer)
+   7.0 / 2   // 3.5
+   let seven = 7.0
+   let two = 2
+   seven / two  // type error
 
 Values are never implicitly converted to another type.
 If you need to convert a value to a different type,
@@ -170,82 +161,72 @@ the index or key in brackets.
 
 .. testcode::
 
-    -> let fruits = ["apple", "orange", "banana"]
-    << // fruits : Array<String> = ["apple", "orange", "banana"]
-    -> let favoriteFruit = fruits[1]
-    << // favoriteFruit : String = "orange"
+    -> var shoppingList = ["catfish", "water", "tulips", "blue paint"]
+    << // shoppingList : Array<String> = ["catfish", "water", "tulips", "blue paint"]
+    -> shoppingList[1] = "bottle of water"
     ---
-    -> var temperatures = [
-          "San Francisco": 59.0,
-          "Paris": 51.6,
-          "Shanghai": 73.2,
-       ]
-    << // temperatures : Dictionary<String, Double> = Dictionary<String, Double>(1.33333333333333, 3, <DictionaryBufferOwner<String, Double> instance>)
-    -> temperatures["San Francisco"] < temperatures["Paris"]
-    <$ : Bool = false
-
-.. admonition:: Experiment
-
-   Add your own favorite fruit to the array
-   and compare it to ``favoriteFruit`` with the ``==`` operator.
-   Add the current temperature of your town
-   to the dictionary.
-
-.. Forcasts above are real current conditions from 9:14 pm April 28, 2014.
-
-.. Old Firefly example
-   which doesn't follow our editorial guidelines for names of people
     -> var occupations = [
           "Malcolm": "Captain",
           "Kayley": "Mechanic",
           "Jayne": "Public Relations",
         ]
     << // occupations : Dictionary<String, String> = Dictionary<String, String>(1.33333333333333, 3, <DictionaryBufferOwner<String, String> instance>)
-    -> occupations["Jayne"] == "Doctor"
-    <$ : Bool = false
-    ---
 
-An empty array is written ``[]``,
-and an empty dictionary is written ``[:]``.
-Because the type of an empty array or dictionary
-can't be inferred from its content,
-use a type annotation to specify it expliticly.
+To create an empty array or dictionary,
+use the initializer syntax.
 
 .. testcode::
 
-   -> var emptyArray: Array<String> = []
+   -> let emptyArray = String[]()
    << // emptyArray : Array<String> = []
-   -> var emptyDictionary: Dictionary<String, Float> = [:]
+   -> let emptyDictionary = Dictionary<String, Float>()
    << // emptyDictionary : Dictionary<String, Float> = Dictionary<String, Float>(1.33333333333333, 0, <DictionaryBufferOwner<String, Float> instance>)
 
-.. The REPL output after creating a dictionary doesn’t make any sense.
-   No way to get it to pretty-print the keys and values.
+If type information can be inferred,
+such as when you set a new value for a variable
+or pass an argument to a function,
+you can write an empty array as ``[]``
+and an empty dictionary as ``[:]``.
+
+.. testcode::
+
+   -> shoppingList = []   // Went shopping and bought everything.
 
 Control Flow
 ------------
 
-Use ``if`` to choose between blocks of code
-by checking Boolean conditions.
+Use ``if`` and ``switch`` to make conditionals,
+and use ``for``-``in``, ``for``, ``while``, and ``do``-``while``
+to make loops.
+Parentheses around the condition or loop variable are optional.
+Braces around the body are required.
 
 .. testcode::
 
-   -> let haveJellyBabies = false
-   << // haveJellyBabies : Bool = false
-   -> let remainingGummiBears = 5
-   << // remainingGummiBears : Int = 5
-   -> if haveJellyBabies {
-         println("Would you like a jelly baby?")
-      } else if remainingGummiBears > 0 {
-         println("Would you like a gummi bear?")
-      } else {
-         println("Sorry, all we have left are fruits and vegetables.")
-      }
-   << Would you like a gummi bear?
+    -> let individualScores = [75, 43, 103, 87, 12]
+    << // individualScores : Array<Int> = [75, 43, 103, 87, 12]
+    -> var teamScore = 0
+    << // teamScore : Int = 0
+    -> for score in individualScores {
+           if score > 50 {
+               teamScore += 3
+           } else {
+               teamScore += 1
+           }
+       }
+    >> teamScore
+    << // teamScore : Int = 11
 
-There are no parentheses around the conditional,
-and the braces around the body are required.
-The conditional must be a Boolean expression;
-code like ``if remainingGummiBears { ... }`` is an error,
+..
+   -> let haveJellyBabies = true
+   << // haveJellyBabies : Bool = true
+   -> if haveJellyBabies {
+      }
+   << Would you like a jelly baby?
+
+In an ``if`` statement,
+the conditional must be a Boolean expression;
+code like ``if score { ... }`` is an error,
 not an implicit comparison to zero.
 
 You use ``if`` and ``let`` together to work with optional values.
@@ -286,34 +267,36 @@ to the variable after ``let``,
 which makes the unwrapped value available
 inside the block of code.
 
-Use ``switch`` to choose between blocks of code
-where each block of code is associated
-with a possible value.
+Switches support any kind of data, not just integers,
+and the matching criteria can be more complex
+than simple comparison.
 
 .. testcode::
 
-   -> let vegetable = "cucumber"
-   << // vegetable : String = "cucumber"
+   -> let vegetable = "red pepper"
+   << // vegetable : String = "red pepper"
    -> switch vegetable {
-         case "lettuce":
-            println("Let’s make salad.")
          case "celery":
             println("Add some raisins and make ants on a log.")
-         case "cucumber":
-            println("How about a cucumber sandwich?")
+         case "cucumber", "watercress":
+            println("That would make a good tea sandwich.")
+         case let x where x.hasSuffix("pepper")
+            println("Is it a spicy \(x)?")
          default:
             println("Everything tastes good in soup.")
       }
-   << How about a cucumber sandwich?
+   << Is it a spicy red pepper?
 
 .. admonition:: Experiment
+
+   Add a case for vegetable names that start
+   with an uppercase letter.
 
    Try removing the default case.
    What error do you get?
 
-Switches support any kind of data, not just integers.
-You need to provide a case for every possible value
-or use ``default`` to specify what happens if none of the cases match.
+.. TODO: The "starts with uppercase" is probably too much of a stretch
+   before having learned about string operations.
 
 After executing the code inside the switch case that matched,
 the program exits from the switch statement.
@@ -324,63 +307,48 @@ at the end of each case‘s code.
 .. Omitting mention of "fallthrough" keyword.
    It's in the guide/reference if you need it.
 
-Switches support a variety of complex matching criteria,
-such as tuple unpacking and ``where`` clauses:
+.. Haven't shown structs or enums yet --
+   revisit switch statements at that point
+   to show another cool thing.
+
+
+.. the focus here should be on .. and ...
+
+It loops that use an index,
+the range operators ``..`` and ``...``
+let you write code that is easier to read.
+The ``..`` operator includes both its start and end in the range,
+like writing ``<=`` in a conditional of a ``for`` loop.
+the ``...`` operator includes the start but not the end,
+like writing ``<`` in a conditional of a ``for`` loop.
+These two loops do the same thing:
 
 .. testcode::
 
-   -> let somePoint = (1, 1)
-   << // somePoint : (Int, Int) = (1, 1)
-   -> switch somePoint {
-         case (0, 0):
-            println("(0, 0) is at the origin")
-         case (_, 0):
-            println("(\(somePoint.0), 0) is on the x-axis")
-         case (0, _):
-            println("(0, \(somePoint.1)) is on the y-axis")
-         case let (x, y) where x == y:
-            println("(\(x), \(y)) is on the diagonal")
-         default:
-            println("The point is somewhere else.")
+   -> for i in 0...5 {
+         println(i)
       }
-   << (1, 1) is on the diagonal
-
-.. admonition:: Experiment
-
-   Try adding a case statement
-   that matches points where ``x`` is greater than ``y``,
-   and one that matches points where ``x`` is odd.
-
-Use ``for`` to iterate over a collection of items.
-
-.. TR: Will we end up having Collection and Container protocols
-   in the WWDC timeframe?
-   Let's match the English noun I use here to the protocol name,
-   if it makes sense.
-
-.. testcode::
-
-    -> let listOfNumbers = 1..5
-    << // listOfNumbers : Range<Int> = Range<Int>(1, 6)
-    -> var sum = 0
-    << // sum : Int = 0
-    -> for n in listOfNumbers {
-          sum += n
-       }
-    >> sum
-    << // sum : Int = 15
-
-.. admonition:: Experiment
-
-   Try changing ``1..5`` to ``1...5``.
-   Notice that 5 is omitted from the sum.
-   When would you want to include or exclude the final number?
+   << 0
+   << 1
+   << 2
+   << 3
+   << 4
+   -> for var i = 0; i < 5; ++i {
+         println(i)
+      }
+   << 0
+   << 1
+   << 2
+   << 3
+   << 4
 
 You can also use ``for`` to iterate over items in a dictionary
 by providing a variable name to use
 for each key-value pair.
 
 .. EDIT: key/value or key-value?
+
+.. TODO: Shorten listing
 
 .. testcode::
 
@@ -406,19 +374,6 @@ for each key-value pair.
 
    Try keeping track of which kind of number
    was the largest, as well as what that largest number was.
-
-Loops can keep an explicit counter or index.
-
-.. testcode::
-
-   -> for var i = 0; i < 5; ++i {
-         println(i)
-      }
-   << 0
-   << 1
-   << 2
-   << 3
-   << 4
 
 Use ``while`` to repeat a block of code until a condition changes.
 The condition of a loop can be at the end instead,
