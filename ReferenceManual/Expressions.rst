@@ -1095,17 +1095,21 @@ the top-level declarations of that module.
 Postfix Self Expression
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-.. write-me:: This section needs a rewrite.
-
-..  Old prose:
-    A :newTerm:`postfix self expression` is an explicit reference
-    to a type or an instance of a type.
-    It has the following form:
+The postfix ``self`` expression consists of an expression or the name of a type,
+immediately followed by ``.self``. It has the following forms:
 
 .. syntax-outline::
 
        <#expression#>.self
+       <#type#>.self
 
+The first form evaluates to the value of the *expression*.
+For example, ``x.self`` evaluates to ``x``.
+
+The second form evaluates to the value of the *type*. Use this form
+to access a type as a value. For example,
+because ``SomeClass.self`` evaluates to the ``SomeClass`` type itself,
+you can pass it to a function or method that accepts a type-level argument.
 
 .. syntax-grammar::
 
