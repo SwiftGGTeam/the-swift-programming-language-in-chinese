@@ -216,7 +216,7 @@ from a single-character string literal by providing a ``Character`` type annotat
 .. testcode:: characters
 
    -> let yenSign: Character = "¥"
-   << // yenSign : Character = <unprintable value>
+   << // yenSign : Character = ¥
 
 .. _StringsAndCharacters_CountingCharacters:
 
@@ -269,9 +269,9 @@ with the addition operator (``+``) to create a new ``String`` value:
    -> let string2 = " there"
    << // string2 : String = " there"
    -> let character1: Character = "!"
-   << // character1 : Character = <unprintable value>
+   << // character1 : Character = !
    -> let character2: Character = "?"
-   << // character2 : Character = <unprintable value>
+   << // character2 : Character = ?
    ---
    -> let stringPlusCharacter = string1 + character1        // equals "hello!"
    << // stringPlusCharacter : String = "hello!"

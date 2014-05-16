@@ -119,7 +119,7 @@ by passing in a key of the appropriate type within subscript braces:
 .. testcode:: dictionarySubscript
 
    -> let numberOfLegs = ["spider": 8, "ant": 6, "cat": 4]
-   << // numberOfLegs : Dictionary<String, Int> = Dictionary<String, Int>(<unprintable value>)
+   << // numberOfLegs : Dictionary<String, Int> = ["spider": 8, "ant": 6, "cat": 4]
    -> let spiderLegs = numberOfLegs["spider"]
    << // spiderLegs : Int = 8
    /> spiderLegs is equal to \(spiderLegs)

@@ -116,7 +116,7 @@ by prefixing its name with the name of the type it is nested within:
 .. testcode:: nestedTypes
 
    -> let heartsSymbol = BlackjackCard.Suit.Hearts.toRaw()
-   << // heartsSymbol : Character = <unprintable value>
+   << // heartsSymbol : Character = ♡
    /> heartsSymbol is \"\(heartsSymbol)\"
    </ heartsSymbol is "♡"
 

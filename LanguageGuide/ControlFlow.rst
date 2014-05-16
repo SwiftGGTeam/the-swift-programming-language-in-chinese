@@ -141,7 +141,7 @@ and the dictionary's values are decomposed into a constant called ``legCount``:
 .. testcode:: forLoops
 
    -> let numberOfLegs = ["spider": 8, "ant": 6, "cat": 4]
-   << // numberOfLegs : Dictionary<String, Int> = Dictionary<String, Int>(<unprintable value>)
+   << // numberOfLegs : Dictionary<String, Int> = ["spider": 8, "ant": 6, "cat": 4]
    -> for (animalName, legCount) in numberOfLegs {
          println("\(animalName)s have \(legCount) legs")
       }
@@ -709,7 +709,7 @@ a single lowercase character called ``someCharacter``:
 .. testcode:: switch
 
    -> let someCharacter: Character = "e"
-   << // someCharacter : Character = <unprintable value>
+   << // someCharacter : Character = e
    -> switch someCharacter {
          case "a", "e", "i", "o", "u":
             println("\(someCharacter) is a vowel")
@@ -755,7 +755,7 @@ It is not valid to write the following code, because the first case is empty:
 .. testcode:: noFallthrough
 
    -> let anotherCharacter: Character = "a"
-   << // anotherCharacter : Character = <unprintable value>
+   << // anotherCharacter : Character = a
    -> switch anotherCharacter {
          case "a":
          case "A":
@@ -1097,9 +1097,9 @@ Multiple values are covered in a single ``switch`` case for brevity:
 .. testcode:: breakInASwitchStatement
 
    -> let numberSymbol: Character = "三"  // Simplified Chinese for the number 3
-   << // numberSymbol : Character = <unprintable value>
+   << // numberSymbol : Character = 三
    -> var possibleIntegerValue: Int?
-   << // possibleIntegerValue : Int? = <unprintable value>
+   << // possibleIntegerValue : Int? = nil
    -> switch numberSymbol {
          case "1", "١", "一", "๑":
             possibleIntegerValue = 1

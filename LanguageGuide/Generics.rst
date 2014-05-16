@@ -527,11 +527,11 @@ and can be used with any type that is ``Equatable``, such as ``Double`` or ``Str
 .. testcode:: typeConstraintsEquatable
 
    -> let doubleIndex = findValue([3.14159, 0.1, 0.25], 9.3)
-   << // doubleIndex : Int? = <unprintable value>
+   << // doubleIndex : Int? = nil
    /> doubleIndex is an optional Int with no value, because 9.3 is not in the array
    </ doubleIndex is an optional Int with no value, because 9.3 is not in the array
    -> let stringIndex = findValue(["Mike", "Malcolm", "Andrea"], "Andrea")
-   << // stringIndex : Int? = <unprintable value>
+   << // stringIndex : Int? = 2
    /> stringIndex is an optional Int containing a value of \(stringIndex!)
    </ stringIndex is an optional Int containing a value of 2
 

@@ -846,7 +846,7 @@ Here's an example of a tuple:
 .. testcode:: tuples
 
    -> let http404Error = (404, "Not Found")
-   << // http404Error : (Int, String) = (404, "Not Found")
+   << // http404Error : (Int, String) = (404, Not Found)
    /> http404Error is of type (Int, String), and equals (\(http404Error.0), \"\(http404Error.1)\")
    </ http404Error is of type (Int, String), and equals (404, "Not Found")
 
@@ -871,7 +871,7 @@ which can then be accessed as usual:
 .. testcode:: tuples
 
    -> let (statusCode, statusMessage) = http404Error
-   << // (statusCode, statusMessage) : (Int, String) = (404, "Not Found")
+   << // (statusCode, statusMessage) : (Int, String) = (404, Not Found)
    -> println("The status code is \(statusCode)")
    <- The status code is 404
    -> println("The status message is \(statusMessage)")
@@ -884,7 +884,7 @@ when you decompose the tuple:
 .. testcode:: tuples
 
    -> let (justTheStatusCode, _) = http404Error
-   << // (justTheStatusCode, _) : (Int, String) = (404, "Not Found")
+   << // (justTheStatusCode, _) : (Int, String) = (404, Not Found)
    -> println("The status code is \(justTheStatusCode)")
    <- The status code is 404
 
@@ -908,7 +908,7 @@ You can name the individual elements in a tuple when the tuple is defined:
 .. testcode:: tuples
 
    -> let http200Status = (statusCode: 200, description: "OK")
-   << // http200Status : (statusCode: Int, description: String) = (200, "OK")
+   << // http200Status : (statusCode: Int, description: String) = (200, OK)
 
 If you name the elements in a tuple,
 you can use the element names to access the values of those elements:
@@ -980,7 +980,7 @@ The example below shows how to use ``toInt`` to try and convert a ``String`` int
    -> let possibleNumber = "123"
    << // possibleNumber : String = "123"
    -> let convertedNumber = possibleNumber.toInt()
-   << // convertedNumber : Int? = <unprintable value>
+   << // convertedNumber : Int? = 123
    // convertedNumber is inferred to be of type "Int?", or "optional Int"
 
 Because the ``toInt`` method might fail,
@@ -1100,7 +1100,7 @@ by assigning it the special value ``nil``:
 .. testcode:: optionals
 
    -> var serverResponseCode: Int? = 404
-   << // serverResponseCode : Int? = <unprintable value>
+   << // serverResponseCode : Int? = 404
    /> serverResponseCode contains an actual Int value of \(serverResponseCode!)
    </ serverResponseCode contains an actual Int value of 404
    -> serverResponseCode = nil
@@ -1119,7 +1119,7 @@ the constant or variable is automatically set to ``nil`` for you:
 .. testcode:: optionals
 
    -> var surveyAnswer: String?
-   << // surveyAnswer : String? = <unprintable value>
+   << // surveyAnswer : String? = nil
    // surveyAnswer is automatically set to nil
 
 .. note::
@@ -1166,12 +1166,12 @@ an optional ``String`` and an implicitly unwrapped optional ``String``:
 .. testcode:: implicitlyUnwrappedOptionals
 
    -> let possibleString: String? = "An optional string."
-   << // possibleString : String? = <unprintable value>
+   << // possibleString : String? = An optional string.
    -> println(possibleString!) // requires an exclamation mark to access its value
    <- An optional string.
    ---
    -> let assumedString: String! = "An implicitly unwrapped optional string."
-   << // assumedString : String! = String!(<unprintable value>)
+   << // assumedString : String! = String!(An implicitly unwrapped optional string.)
    -> println(assumedString)  // no exclamation mark is needed to access its value
    <- An implicitly unwrapped optional string.
 

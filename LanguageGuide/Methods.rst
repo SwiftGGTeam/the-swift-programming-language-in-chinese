@@ -385,7 +385,7 @@ a different member from the same enumeration:
          }
       }
    -> var ovenLight = TriStateSwitch.Low
-   << // ovenLight : TriStateSwitch = <unprintable value>
+   << // ovenLight : TriStateSwitch = <opaque>
    -> ovenLight.next()
    // ovenLight is now equal to .High
    -> ovenLight.next()

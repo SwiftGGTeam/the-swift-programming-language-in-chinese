@@ -362,7 +362,7 @@ The array ``[16, 58, 510]`` is used to create the new array
          0: "Zero", 1: "One", 2: "Two",   3: "Three", 4: "Four",
          5: "Five", 6: "Six", 7: "Seven", 8: "Eight", 9: "Nine"
       ]
-   << // digitNames : Dictionary<Int, String> = Dictionary<Int, String>(<unprintable value>)
+   << // digitNames : Dictionary<Int, String> = [0: "Zero", 1: "One", 2: "Two", 3: "Three", 4: "Four", 5: "Five", 6: "Six", 7: "Seven", 8: "Eight", 9: "Nine"]
    -> let numbers = [16, 58, 510]
    << // numbers : Array<Int> = [16, 58, 510]
 
@@ -525,7 +525,7 @@ Here's an example of ``makeIncrementor`` in action:
 .. testcode:: closures
 
    -> let incrementByTen = makeIncrementor(forIncrement: 10)
-   << // incrementByTen : () -> Int = <unprintable value>
+   << // incrementByTen : () -> Int = <opaque>
 
 This example sets a constant called ``incrementByTen``
 to refer to an incrementor function that adds ``10`` to
@@ -556,7 +556,7 @@ and this variable is unconnected to the one captured by ``incrementByTen``:
 .. testcode:: closures
 
    -> let incrementBySeven = makeIncrementor(forIncrement: 7)
-   << // incrementBySeven : () -> Int = <unprintable value>
+   << // incrementBySeven : () -> Int = <opaque>
    -> incrementBySeven()
    << // r3 : Int = 7
    /> returns a value of \(r3)
@@ -590,7 +590,7 @@ both of those constants or variables will refer to the same closure:
 .. testcode:: closures
 
    -> let alsoIncrementByTen = incrementByTen
-   << // alsoIncrementByTen : () -> Int = <unprintable value>
+   << // alsoIncrementByTen : () -> Int = <opaque>
    -> alsoIncrementByTen()
    << // r5 : Int = 50
    /> returns a value of \(r5)

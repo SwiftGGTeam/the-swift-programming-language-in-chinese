@@ -99,11 +99,11 @@ and do not currently reference a ``Person`` instance.
 .. testcode:: howARCWorks
 
    -> var reference1: Person?
-   << // reference1 : Person? = <unprintable value>
+   << // reference1 : Person? = nil
    -> var reference2: Person?
-   << // reference2 : Person? = <unprintable value>
+   << // reference2 : Person? = nil
    -> var reference3: Person?
-   << // reference3 : Person? = <unprintable value>
+   << // reference3 : Person? = nil
 
 You can now create a new ``Person`` instance,
 and assign it to one of these three variables:

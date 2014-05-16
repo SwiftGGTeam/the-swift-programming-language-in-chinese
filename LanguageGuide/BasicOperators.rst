@@ -146,9 +146,9 @@ can be added together to make a new ``String`` value:
 .. testcode:: arithmeticOperators
 
    -> let dog: Character = "🐶"
-   << // dog : Character = <unprintable value>
+   << // dog : Character = 🐶
    -> let cow: Character = "🐮"
-   << // cow : Character = <unprintable value>
+   << // cow : Character = 🐮
    -> let dogCow = dog + cow
    << // dogCow : String = "🐶🐮"
    /> dogCow is equal to \"🐶🐮\"
