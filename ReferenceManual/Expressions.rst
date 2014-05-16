@@ -559,14 +559,53 @@ for their respective values.
 Self Expression
 ~~~~~~~~~~~~~~~
 
-.. write-me::
+The ``self`` expression is an explicit reference to the current type
+or instance of the type in which it occurs.
+It has the following forms:
 
 .. syntax-outline::
 
     self
     self.<#member name#>
-    self[<#subscript index#>)
+    self[<#subscript index#>]
     self.init(<#initializer arguments#>)
+
+In an initializer, subscript, or instance method, ``self`` refers to the current
+instance of the type in which it occurs. In a static or class method,
+``self`` refers to the current type in which it occurs.
+
+The ``self`` expression is used to specify scope when accessing members,
+providing disambiguation when there is
+another variable of the same name in scope,
+such as a function parameter.
+For example, in an initializer:
+
+.. testcode::
+
+    -> class SomeClass {
+           var greeting: String
+           init(greeting: String) {
+               self.greeting = greeting
+           }
+       }
+
+In a mutating method of value type,
+you can assign a new instance of that value type to ``self``.
+For example:
+
+.. testcode::
+
+    -> struct Point {
+          var x = 0.0, y = 0.0
+          mutating func moveByX(deltaX: Double, y deltaY: Double) {
+             self = Point(x: x + deltaX, y: y + deltaY)
+          }
+       }
+    >> var somePoint = Point(x: 1.0, y: 1.0)
+    << // somePoint : Point = Point(1.0, 1.0)
+    >> somePoint.moveByX(2.0, y: 3.0)
+    >> println("The point is now at (\(somePoint.x), \(somePoint.y))")
+    << The point is now at (3.0, 4.0)
 
 .. syntax-grammar::
 
@@ -1058,51 +1097,15 @@ Postfix Self Expression
 
 .. write-me:: This section needs a rewrite.
 
-.. syntax-outline::
-
-       <#expression#>.self
-
 ..  Old prose:
     A :newTerm:`postfix self expression` is an explicit reference
     to a type or an instance of a type.
     It has the following form:
 
-    .. syntax-outline::
+.. syntax-outline::
 
-       <#type or expression#>.self
+       <#expression#>.self
 
-    On either a type or an instance of a type,
-    the value of the self expression
-    has the same type as the expression or type before the period.
-
-    On a type, ``self`` evaluates to the type itself.
-    It is used to refer to a type by name,
-    for example, to pass it as an argument to a function.
-
-    .. TODO: An example might be helpful.
-
-    On an instance of a type, ``self`` evaluates to
-    the instance of the type.
-
-
-    It is used to specify scope when accessing members,
-    providing disambiguation when there is
-    another variable of the same name in scope,
-    such as a function parameter.
-    For example, in an initializer: ::
-
-        class MyClass {
-           var greeting: String
-           init (greeting: String) {
-              self.greeting = greeting
-           }
-        }
-
-.. There is no definition for self-expression in the LangRef.
-   This was probably just an oversight, according to Ted and Doug.
-
-.. Both types and variables are identifiers,
-   so postfix expression includes both.
 
 .. syntax-grammar::
 
