@@ -1,14 +1,9 @@
-Introduction
-============
-
-*The Swift Programming Language* is one of the documents we’ll be publishing at WWDC. The chapters available here are a work in progress, and change fairly frequently (please see the change log for a list of recent changes).
+The Swift Programming Language
+==============================
 
 Please send any comments on this book to the Developer Publications Swift Discuss list (`Developer Publications-swift-discuss@group.apple.com <mailto:Developer Publications-swift-discuss@group.apple.com?subject=The%20Swift%20Programming%20Language%20book>`_).
 
-Contents
-========
-
-* `Change Log <https://[Internal Staging Server]/documentation/Miscellaneous/Conceptual/The_Programming_Language/ChangeLog.html#//apple_ref/doc/uid/TP40014097-CH37-XID_0>`_
+* `Change Log & Known Issues <https://[Internal Staging Server]/documentation/Miscellaneous/Conceptual/The_Programming_Language/ChangeLog.html#//apple_ref/doc/uid/TP40014097-CH37-XID_0>`_
 
 * `Guided Tour <https://[Internal Staging Server]/documentation/Miscellaneous/Conceptual/The_Programming_Language/index.html#//apple_ref/doc/uid/TP40014097>`_
 
