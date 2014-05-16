@@ -1293,6 +1293,13 @@ without using optional chaining.
           result = unwrappedC.property.performAction()
        }
 
+If there is more than one postfix expression
+that contains the same chained-option expression
+--- for example,
+when you chain multiple operations
+after an optional-chaining expression ---
+this special behavior applies to only the outermost postfix expression.
+
 .. langref-grammar
 
     expr-optional ::= expr-postfix '?'-postfix
