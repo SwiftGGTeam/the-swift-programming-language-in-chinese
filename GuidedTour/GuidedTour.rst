@@ -938,13 +938,6 @@ but inside the switch it could be abbreviated as just ``.Hearts``.
 You can use the abbreviated form
 anytime the value's type is already known.
 
-.. write-me::
-
-    Structs are also pretty much as expected.
-    They can have methods too.
-
-    TODO: Use a loop to generate a whole deck.
-
 Use ``struct`` to create a structure.
 Structures support many of the same behaviors as classes,
 including methods and initializers.
@@ -965,6 +958,12 @@ structures are always copied when they are passed around in your code.
     << // threeOfSpades : Card = Card(<unprintable value>, <unprintable value>)
     -> let threeOfSpadesDescription = threeOfSpades.description()
     << // threeOfSpadesDescription : String = "The 3 of spades"
+
+.. admonition:: Experiment
+
+   Add a method to ``Card`` that creates
+   a full deck of cards,
+   with one card of each combination of rank and suit.
 
 Enumerations can have other values associated with them.
 This is different than a raw value:
@@ -1037,3 +1036,4 @@ Generics
 
 * On function (repeat X n times, re-implementing Array init feature)
 * On classes, structures, and enumerations
+
