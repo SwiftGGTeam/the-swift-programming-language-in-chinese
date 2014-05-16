@@ -1091,9 +1091,9 @@ or a class that it must be a subclass of.
 .. testcode::
 
    -> func anyCommonElements <T, U where
-          T: Collection, U: Collection,
-          T.GeneratorType.Element: Equatable,
-          T.GeneratorType.Element == U.GeneratorType.Element>
+          T: Generator, U: Collection,
+          T.Element: Equatable,
+          T.Element == U.Element>
     (lhs: T, rhs: U) -> Bool {
        for lhsItem in lhs {
           for rhsItem in rhs {
