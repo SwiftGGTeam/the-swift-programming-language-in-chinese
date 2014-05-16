@@ -373,6 +373,9 @@ You implement this limitation by overriding the inherited ``speed`` property:
          }
       }
 
+.. FIXME: this is currently reporting a warning due to <rdar://problem/16941124>
+   Overriding property observers warn about using the property value "within its own getter"
+
 Whenever you set the ``speed`` property of a ``SpeedLimitedCar`` instance,
 the property's setter implementation checks the new value and limits it to 40mph.
 It does this by setting the underlying ``speed`` property of its superclass
