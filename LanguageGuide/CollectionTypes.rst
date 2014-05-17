@@ -185,6 +185,7 @@ which is a shorthand for checking whether the ``count`` property is equal to ``0
       } else {
          println("The shopping list is not empty.")
       }
+   <- The shopping list is not empty.
 
 A new item can be added to the end of an array by calling the array's ``append`` method:
 
@@ -563,6 +564,21 @@ by assigning a value of ``nil`` for that key:
    >>    println("APL has now been removed from the dictionary")
    >> }
    << APL has now been removed from the dictionary
+
+Alternatively, you can remove a key-value pair from a dictionary
+with the ``removeValueForKey`` method.
+This method removes the key-value pair if it exists,
+and returns the removed value,
+or ``nil`` if no value existed:
+
+.. testcode:: dictionariesInferred
+
+   -> if let removedValue = airports.removeValueForKey("DUB") {
+         println("The removed airport's name is \(removedValue).")
+      } else {
+         println("The airports dictionary does not contain a vale for DUB.")
+      }
+   <- The removed airport's name is Dublin International.
 
 .. _CollectionTypes_CreatingAnEmptyDictionary:
 
