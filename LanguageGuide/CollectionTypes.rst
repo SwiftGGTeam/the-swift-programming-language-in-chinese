@@ -174,6 +174,18 @@ by checking its read-only ``count`` property:
    -> println("The shopping list contains \(shoppingList.count) items.")
    <- The shopping list contains 2 items.
 
+You can find out whether an array is empty
+by checking its Boolean ``isEmpty`` property,
+which is a shorthand for checking whether the ``count`` property is equal to ``0``:
+
+.. testcode:: arraysInferred
+
+   -> if shoppingList.isEmpty {
+         println("The shopping list is empty.")
+      } else {
+         println("The shopping list is not empty.")
+      }
+
 A new item can be added to the end of an array by calling the array's ``append`` method:
 
 .. testcode:: arraysInferred
