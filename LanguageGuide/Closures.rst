@@ -370,7 +370,7 @@ The code above creates a dictionary of mappings between
 the integer digits and English-language versions of their names.
 It also defines an array of integers, ready to be converted into strings.
 
-You can now use ``numbers`` array to create an array of ``String`` values,
+You can now use the ``numbers`` array to create an array of ``String`` values,
 by passing a closure expression to the array's ``map`` method as a trailing closure.
 Note that the call to ``numbers.map`` does not need to include any parentheses after ``map``,
 because the ``map`` method has only one parameter,
@@ -382,7 +382,7 @@ and that parameter is provided as a trailing closure:
             (var number) -> String in
          var output = ""
          while number > 0 {
-            output = digitNames[number % 10] + output
+            output = digitNames[number % 10]! + output
             number /= 10
          }
          return output
@@ -405,7 +405,20 @@ to indicate the type that will be stored in the mapped output array.
 The closure expression builds a string called ``output`` each time it is called.
 It calculates the last digit of ``number`` by using the remainder operator (``number % 10``),
 and uses this digit to look up an appropriate string in the ``digitNames`` dictionary.
-The appropriate string is added to the *front* of ``output``,
+
+.. note::
+
+   The call to the ``digitNames`` dictionary's subscript
+   is followed by an exclamation mark (``!``),
+   because dictionary subscripts return an optional value
+   to indicate that the dictionary lookup can fail if the key does not exist.
+   In the example above, it is guaranteed that ``number % 10``
+   will always be a valid subscript key for the ``digitNames`` dictionary,
+   and so an exclamation mark is used to force-unwrap the ``String`` value
+   stored in the subscript's optional return value.
+
+The string retrieved from the ``digitNames`` dictionary
+is added to the *front* of ``output``,
 effectively building a string version of the number in reverse.
 (The expression ``number % 10`` gives a value of
 ``6`` for ``16``, ``8`` for ``58``, and ``0`` for ``510``.)
