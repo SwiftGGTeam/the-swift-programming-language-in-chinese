@@ -3,13 +3,14 @@ Optional Chaining
 
 :newTerm:`Optional chaining` is a way to query and call
 properties, methods, and subscripts on an optional that may be ``nil``.
-If the optional contains an actual value, the property or method access succeeds;
-if the optional is ``nil``, the access fails gracefully.
+If the optional contains an actual value,
+the property, method, or subscript access succeeds;
+if the optional is ``nil``, the access fails without reporting an error.
 
 Optional chaining also gives a way to check if
 a property, method, or subscript access succeeded.
 Multiple queries can be chained together,
-and the entire chain will fail gracefully if any link in the chain is nil.
+and the entire chain fails gracefully if any link in the chain is ``nil``.
 
 .. note::
 
@@ -26,10 +27,15 @@ after an optional value to force the unwrapping of its value.
 The main difference is that optional chaining fails gracefully when no value exists,
 whereas forced unwrapping triggers an assertion if no value exists.
 
-To reflect the fact that optional chaining can fail if the value is ``nil``,
-the result of an optional chaining call will itself be an optional value,
-even if the property or method that you are querying returns a non-optional value.
-This gives you a way to check if the optional chaining was successful or not.
+To reflect the fact that optional chaining can fail,
+the result of an optional chaining call is always an optional value,
+even if the property, method, or subscript you are querying returns a non-optional value.
+This gives a way to check if the optional chaining was successful.
+
+Specifically, the result of an optional chaining call
+is of the same type as the expected return value, but wrapped in an optional.
+A property that normally returns an ``Int`` will return an ``Int?``
+when accessed through optional chaining.
 
 Here's an example of how optional chaining differs from forced unwrapping
 and enables you to check for success.
@@ -70,11 +76,12 @@ because there is no ``residence`` value to unwrap:
    xx assert
    // this triggers an unrecoverable runtime error
 
-This code would succeed if ``john.residence`` had a non-``nil`` value,
-and would set ``roomCount`` to an ``Int`` value containing the appropriate number of rooms.
-However, this code will always fail in an unrecoverable way if ``residence`` is ``nil``.
+This code will succeed when ``john.residence`` has a non-``nil`` value,
+and will set ``roomCount`` to an ``Int`` value containing the appropriate number of rooms.
+However, this code will always fail in an unrecoverable way when ``residence`` is ``nil``,
+as illustrated above.
 
-Optional chaining provides an alternative way to try and access the value of ``numberOfRooms``.
+Optional chaining provides an alternative way to access the value of ``numberOfRooms``.
 To use optional chaining, use a question mark in place of the exclamation mark:
 
 .. testcode:: chainingIntro
@@ -89,7 +96,7 @@ To use optional chaining, use a question mark in place of the exclamation mark:
 This tells Swift to “chain“ on the optional ``residence`` property,
 and to retrieve the value of ``numberOfRooms`` if ``residence`` exists.
 Conversely, if ``residence`` does *not* exist, no chaining takes place,
-and the attempt to access ``numberOfRooms`` fails.
+and the attempt to access ``numberOfRooms`` fails without error.
 
 Because the attempt to access ``numberOfRooms`` has the potential to fail,
 the optional chaining attempt returns a value of type ``Int?``, or “optional ``Int``”.
