@@ -851,7 +851,7 @@ Custom Operators
 
 You can declare and implement your own :newTerm:`custom operators` in addition to
 the standard operators provided by Swift.
-Custom operators can be defined only with the characters ``/ = - + * % < > ! & | ^ . ~ ``.
+Custom operators can be defined only with the characters ``/ = - + * % < > ! & | ^ . ~``.
 
 New operators are declared at a global level using the ``operator`` keyword,
 and can be declared as ``prefix``, ``infix`` or ``postfix``:
