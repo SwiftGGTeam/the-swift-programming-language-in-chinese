@@ -253,7 +253,7 @@ by calling the array's ``insert`` method:
    /> \"\(shoppingList[0])\" is now the first item in the list
    </ "Maple Syrup" is now the first item in the list
 
-This call to the ``insert`` method inserts a new element with a value of ``"Maple Syrup"``
+This call to the ``insert`` method inserts a new item with a value of ``"Maple Syrup"``
 at the very beginning of the shopping list,
 indicated by an index of ``0``.
 
@@ -321,7 +321,7 @@ Swift's ``Array`` type also provides
 an initializer for creating an array of a certain size
 with all of its values set to a provided default value.
 This initializer takes two arguments –
-the number of elements to be added to the new array (called ``count``),
+the number of items to be added to the new array (called ``count``),
 and a default value of the appropriate type (called ``value``):
 
 .. testcode:: arraysEmpty
@@ -583,14 +583,9 @@ which is written as ``[:]``
    -> namesOfIntegers = [:]
    // namesOfIntegers is once again an empty dictionary of type Int, String
 
-.. TODO: write about itemsAsArray() -> Element[]
-
 .. TODO: Mention that "==" will consider two dictionaries to be the same
    if they have the same count, and every element in lhs is also in rhs
    
-.. TODO: Mention that [:] can be used as an empty dictionary literal
-   if the context gives enough type information.
-
 .. note::
 
    Behind the scenes,
