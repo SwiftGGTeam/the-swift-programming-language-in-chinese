@@ -174,12 +174,6 @@ by checking its read-only ``count`` property:
    -> println("The shopping list contains \(shoppingList.count) items.")
    <- The shopping list contains 2 items.
 
-.. TODO: with the existing Array implementation, you can *set* count to a larger value,
-   but Swift will assert if you try and access an item at one of the new indices.
-   The same is not true for Dictionary,
-   which does not allow you to assign a new value to count.
-   I'll need to check what the story is for resizing arrays when NewArray lands.
-
 New items can be added to the end of the array by calling its ``append`` method:
 
 .. testcode:: arraysInferred
@@ -388,8 +382,10 @@ which has a similar syntax to the array literal seen earlier.
 Dictionary literals are a shorthand way to write
 one or more key-value pairs as a ``Dictionary`` collection.
 
-A :newTerm:`key-value pair` is a combination of a key and a value, separated by a colon.
-The key-value pairs in a dictionary literal are written as a list, separated by commas,
+A :newTerm:`key-value pair` is a combination of a key and a value.
+In a dictionary literal,
+the key and value in each key-value pair are separated by a colon.
+The key-value pairs are written as a list, separated by commas,
 surrounded by a pair of square brackets:
 
 .. syntax-outline::
@@ -417,8 +413,8 @@ and whose values are also of type ``String``”.
 
 The ``airports`` dictionary is initialized with
 a dictionary literal containing two key-value pairs.
-The first pair has a key of ``"TYO"``, and a value of ``"Tokyo"``.
-The second pair has a key of ``"DUB"``, and a value of ``"Dublin"``.
+The first pair has a key of ``"TYO"`` and a value of ``"Tokyo"``.
+The second pair has a key of ``"DUB"`` and a value of ``"Dublin"``.
 
 This dictionary literal contains two ``String: String`` pairs.
 This matches the type of the ``airports`` variable declaration –
@@ -439,7 +435,7 @@ The initialization of ``airports`` could have been be written in a shorter form 
 Because all of the keys in the literal are of the same type as each other,
 and likewise all of the values are of the same type as each other,
 Swift can infer that ``Dictionary<String, String>`` is
-the correct type to use for ``airports``.
+the correct type to use for the ``airports`` dictionary.
 
 .. _CollectionTypes_AccessingAndModifyingADictionary:
 
@@ -456,134 +452,82 @@ by checking its read-only ``count`` property:
    -> println("The dictionary of airports contains \(airports.count) items.")
    <- The dictionary of airports contains 2 items.
 
-.. TODO: see the note for Array about setting count to a new value.
-   If it turns out that Array is indeed meant to have a settable count property,
-   I should change the wording of the paragraph here to avoid making it sound as if
-   Dictionary's count property is read-only, like array's.
-
-You can add new items to the dictionary by calling its ``add`` method,
-and passing in a new key and value of the correct types:
+You can add a new item to a dictionary with subscript syntax.
+Use a new key of the appropriate type as the subscript index,
+and assign a new value of the appropriate type:
 
 .. testcode:: dictionariesInferred
 
-   -> airports.add("LHR", value: "London Heathrow")
-   << // r0 : Bool = false
+   -> airports["LHR"] = "London"
    /> the airports dictionary now contains \(airports.count) items
    </ the airports dictionary now contains 3 items
 
-The ``add`` method actually returns a Boolean value,
-to indicate whether or not a value already existed in the dictionary for that key.
-(This return value is ignored in the example above).
-The return value is ``true`` if the key was already being used,
-and ``false`` if it was not in use:
+You can also use subscript syntax to change the value associated with a particular key:
 
 .. testcode:: dictionariesInferred
 
-   -> if airports.add("DUB", value: "Dublin International") {
-         println("There is already a value for that key in the dictionary.")
+   -> airports["LHR"] = "London Heathrow"
+   >> var lhr = "LHR" // a hack to get around rdar://16336177
+   << // lhr : String = "LHR"
+   /> the value for \"LHR\" has been changed to \"\(airports[lhr]!)\"
+   </ the value for "LHR" has been changed to "London Heathrow"
+
+As an alternative to subscripting,
+you can use a dictionary's ``updateValue(forKey:)`` method
+to set or update the value for a particular key.
+Like the subscript examples above, the ``updateValue(forKey:)`` method
+sets a value for a key if none exists,
+or updates the value if that key already exists.
+Unlike a subscript, however,
+the ``updateValue(forKey:)`` method returns the *old* value after performing an update.
+This enables you to check whether or not an update took place.
+
+The ``updateValue(forKey:)`` method returns an optional value
+of the dictionary's value type.
+For a dictionary that stores ``String`` values, for example,
+the method returns a value of type ``String?``,
+or “optional ``String``”.
+This optional value contains the old value for that key if one existed before the update,
+or ``nil`` if no value existed:
+
+.. testcode:: dictionariesInferred
+
+   -> if let oldValue = airports.updateValue("Dublin International", forKey: "DUB") {
+         println("The old value for DUB was \(oldValue).")
       }
-   <- There is already a value for that key in the dictionary.
+   <- The old value for DUB was Dublin.
 
-.. note::
-
-   If you try to use the ``add`` method to add a value for a key that already exists,
-   the existing value for that key will not be replaced in the dictionary.
-
-.. FIXME: I've filed rdar://16336109 about the fact that
-   this Bool value feels the wrong way round.
-   An add() method should return true if it succeeds, not false.
-   Also, the failure-on-existing behavior is different from how
-   NSMutableArray's setObject:forKey: works.
-   (NSMutableArray doesn't have an "add" method.)
-
-.. QUESTION: There's a lot of talk about "methods" and "returning" here,
-   when I haven't even introduced functions, let alone methods.
-   Does this matter?
-
-You can use the dictionary's ``find`` method to try and find a value for a particular key.
-The ``find`` method returns an *optional* value,
-which can be checked and unwrapped using optional binding:
+You can also use subscript syntax to retrieve a value from the dictionary for a particular key.
+Because it is possible to request a key for which no value exists,
+a dictionary's subscript returns an optional value of the dictionary's value type.
+If the dictionary contains a value for the requested key,
+the subscript returns an optional value containing the existing value for that key.
+Otherwise, the subscript returns ``nil``:
 
 .. testcode:: dictionariesInferred
 
-   -> if let airportName = airports.find("DUB") {
+   -> if let airportName = airports["DUB"] {
          println("The name of the airport is \(airportName).")
       } else {
          println("That airport is not in the airports dictionary.")
       }
-   <- The name of the airport is Dublin.
+   <- The name of the airport is Dublin International.
 
-If the provided key does not already exist in the dictionary,
-the ``find`` method will return ``nil``.
-
-You can remove a key-value pair from the dictionary by calling the ``deleteKey`` method:
+You can use subscript syntax to remove a key-value pair from a dictionary 
+by assigning a value of ``nil`` for that key:
 
 .. testcode:: dictionariesInferred
 
-   -> airports.deleteKey("TYO")
-   << // r1 : Bool = true
-   >> if let deletedName = airports.find("TYO") {
-   >>    println("The key-value pair for TYO has *not* been deleted, but it should have been!")
+   -> airports["APL"] = "Apple International"
+   // "Apple International" is not the real airport for APL, so delete it
+   -> airports["APL"] = nil
+   // APL has now been removed from the dictionary
+   >> if let deletedName = airports["APL"] {
+   >>    println("The key-value pair for APL has *not* been deleted, but it should have been!")
    >> } else {
-   >>    println("The key-value pair for TYO has now been deleted.")
+   >>    println("APL has now been removed from the dictionary")
    >> }
-   </ The key-value pair for TYO has now been deleted.
-
-.. FIXME: reinstate the APL example once the very weird rdar://16738584 is fixed.
-
-As with arrays, you can access the values in a dictionary with subscript syntax.
-However, for a dictionary, the value within the square brackets must be
-a key of the appropriate type for that dictionary.
-
-As an alternative to the ``add`` method described above,
-you can use subscript syntax to add a value into a dictionary:
-
-.. testcode:: dictionariesInferred
-
-   -> airports["SFO"] = "San Francisco International"
-   >> var sfo = "SFO" // a hack to get around rdar://16336177
-   << // sfo : String = "SFO"
-   /> \(airports[sfo]) has been added to the dictionary
-   </ San Francisco International has been added to the dictionary
-
-Unlike the ``add`` method,
-subscript syntax always replaces an existing value with a new value
-if the provided key already exists in the dictionary:
-
-.. testcode:: dictionariesInferred
-
-   >> let oldDub = airports["DUB"]
-   << // oldDub : String = "Dublin"
-   -> airports["DUB"] = "Dublin International"
-   >> var dub = "DUB" // a hack to get around rdar://16336177
-   << // dub : String = "DUB"
-   /> The name for DUB has been changed from \"\(oldDub)\" to \"\(airports[dub])\"
-   </ The name for DUB has been changed from "Dublin" to "Dublin International"
-
-If you use subscript syntax to retrieve a value from the dictionary,
-the key that you use must already be in the dictionary:
-
-.. testcode:: dictionariesInferred
-
-   -> let lhr = airports["LHR"]
-   << // lhr : String = "London Heathrow"
-   /> lhr is equal to \"\(lhr)\"
-   </ lhr is equal to "London Heathrow"
-
-.. note::
-
-   If you try to use subscript syntax to retrieve a value
-   for a key that does not exist in the dictionary,
-   you will trigger an unrecoverable runtime error.
-   Always make sure that the key you pass to a dictionary's subscript is valid.
-   If you are not sure whether a particular key already exists in the dictionary,
-   call the dictionary's ``find`` method instead.
-
-.. TODO: talk about the fact that Swift will crash if the key isn't there,
-   and describe how to find out if it's there before trying to access it.
-
-.. NOTE: I've filed rdar://16335854 to suggest that Array<T> and Dictionary<KeyType, T>
-   subscripts should return Optional<T>.
+   << APL has now been removed from the dictionary
 
 .. _CollectionTypes_CreatingAnEmptyDictionary:
 
