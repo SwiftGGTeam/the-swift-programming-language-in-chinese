@@ -488,7 +488,7 @@ and to read and write those characters to and from an external source
 such as a text file or web page.
 
 Swift's ``String`` and ``Character`` types are fully Unicode-compliant,
-and support a number of different Unicode encodings as described below.
+and support a number of different Unicode encodings, as described below.
 
 .. _StringsAndCharacters_UnicodeTerminology:
 
