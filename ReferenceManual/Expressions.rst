@@ -1273,8 +1273,8 @@ In either case,
 the value of the postfix expression is still of an optional type.
 
 If a postfix expression that contains an optional-chaining expression
-is nested inside another postfix expression,
-only the outer expression returns an optional type.
+is nested inside other postfix expressions,
+only the outermost expression returns an optional type.
 In the example below,
 when ``c`` is not ``nil``,
 its value is unwrapped and used to evaluate
