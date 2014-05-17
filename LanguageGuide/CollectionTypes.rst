@@ -174,13 +174,35 @@ by checking its read-only ``count`` property:
    -> println("The shopping list contains \(shoppingList.count) items.")
    <- The shopping list contains 2 items.
 
-New items can be added to the end of the array by calling its ``append`` method:
+A new item can be added to the end of an array by calling the array's ``append`` method:
 
 .. testcode:: arraysInferred
 
    -> shoppingList.append("Flour")
    /> shoppingList now contains \(shoppingList.count) items, and someone is making pancakes
    </ shoppingList now contains 3 items, and someone is making pancakes
+
+Alternatively, a new item can be added to the end of an array
+with the addition assignment operator (``+=``):
+
+.. testcode:: arraysInferred
+
+   -> shoppingList += "Baking Powder"
+   /> shoppingList now contains \(shoppingList.count) items, and someone is making *American* pancakes
+   </ shoppingList now contains 4 items, and someone is making *American* pancakes
+
+An array or array literal containing items of a compatible type
+can also be added to the end of an array with the addition assignment operator (``+=``):
+
+.. testcode:: arraysInferred
+
+   -> shoppingList += ["Bananas", "Apples", "Cheese"]
+   /> shoppingList now contains \(shoppingList.count) items
+   </ shoppingList now contains 7 items
+
+.. TODO: there is also a plan to make the Array type support addition, such as
+   var anotherList = shoppingList + "Ham"
+   This section should be updated as and when that feature is added.
 
 You can retrieve a value from the array by using :newTerm:`subscript syntax`,
 passing in the index of the value you want to retrieve.
@@ -202,8 +224,8 @@ Subscript syntax can also be used to change an existing value at a given index:
 .. testcode:: arraysInferred
 
    -> shoppingList[0] = "Six eggs"
-   /> the first item in the list is now equal to \"\(shoppingList[0])\", rather than \"Eggs\"
-   </ the first item in the list is now equal to "Six eggs", rather than "Eggs"
+   /> the first item in the list is now equal to \"\(shoppingList[0])\" rather than \"Eggs\"
+   </ the first item in the list is now equal to "Six eggs" rather than "Eggs"
 
 .. note::
 
@@ -226,7 +248,8 @@ by calling the array's ``insert`` method:
 .. testcode:: arraysInferred
 
    -> shoppingList.insert(0, newElement: "Maple Syrup")
-   // shoppingList now contains 4 items
+   /> shoppingList now contains \(shoppingList.count) items
+   </ shoppingList now contains 8 items
    /> \"\(shoppingList[0])\" is now the first item in the list
    </ "Maple Syrup" is now the first item in the list
 
@@ -244,7 +267,7 @@ This method removes the item, and returns the removed item
    << // mapleSyrup : String = "Maple Syrup"
    // the item that was at index 0 has just been removed
    /> shoppingList now contains \(shoppingList.count) items, and no Maple Syrup
-   </ shoppingList now contains 3 items, and no Maple Syrup
+   </ shoppingList now contains 7 items, and no Maple Syrup
    /> the mapleSyrup constant is now equal to the removed \"\(mapleSyrup)\" string
    </ the mapleSyrup constant is now equal to the removed "Maple Syrup" string
 
