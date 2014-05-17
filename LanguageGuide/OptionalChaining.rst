@@ -257,7 +257,7 @@ or ``nil`` if neither property has a value.
 .. _OptionalChaining_CallingPropertiesThroughOptionalChaining:
 
 Calling Properties Through Optional Chaining
------------------------------------------
+--------------------------------------------
 
 As demonstrated in :ref:`OptionalChaining_OptionalChainingAsAnAlternativeToForcedUnwrapping`,
 you can use optional chaining to access a property on an optional value,
