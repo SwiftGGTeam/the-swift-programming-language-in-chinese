@@ -1231,7 +1231,7 @@ although the principle is the same for all loops and ``switch`` statements:
 
 .. syntax-outline::
 
-   <#label name#>: while <#condition#>
+   <#label name#>: while <#condition#> {
       <#statements#>
    }
 
