@@ -291,7 +291,7 @@ Single-line comments begin with two forward-slashes (``//``):
 .. testcode:: comments
    :compile: true
 
-   -> // This is a comment
+   -> // this is a comment
 
 You can also write multi-line comments,
 which start with a forward-slash followed by an asterisk (``/*``),
@@ -300,7 +300,7 @@ and end with an asterisk followed by a forward-slash (``*/``):
 .. testcode:: comments
    :compile: true
 
-   -> /* This is also a comment,
+   -> /* this is also a comment,
       but written over multiple lines */
 
 Unlike C, multi-line comments can be nested inside other multi-line comments.
@@ -311,9 +311,9 @@ The second block is then closed, followed by the first block:
 .. testcode:: comments
    :compile: true
 
-   -> /* This is the start of the first multi-line comment
-         /* This is the second, nested multi-line comment */
-      This is the end of the first multi-line comment */
+   -> /* this is the start of the first multi-line comment
+         /* this is the second, nested multi-line comment */
+      this is the end of the first multi-line comment */
 
 Nested multi-line comments enable you to comment out large blocks of code quickly and easily,
 even if the code already contains multi-line comments.
@@ -527,9 +527,9 @@ All of these integer literals have a decimal value of ``17``:
 
    -> let decimalInteger = 17
    << // decimalInteger : Int = 17
-   -> let binaryInteger = 0b10001      // 17 in binary notation
+   -> let binaryInteger = 0b10001       // 17 in binary notation
    << // binaryInteger : Int = 17
-   -> let octalInteger = 0o21         // 17 in octal notation
+   -> let octalInteger = 0o21           // 17 in octal notation
    << // octalInteger : Int = 17
    -> let hexadecimalInteger = 0x11     // 17 in hexadecimal notation
    << // hexadecimalInteger : Int = 17
