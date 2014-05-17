@@ -141,14 +141,16 @@ the default ``numberOfRooms`` value of ``1``:
 Defining Model Classes for Optional Chaining
 --------------------------------------------
 
-You can use optional chaining with multi-level calls to properties, methods, and subscripts.
+You can use optional chaining with calls to properties, methods, and subscripts
+that are more than one level deep.
 This enables you to use optional chaining to drill down into sub-properties
 within complex models of interrelated types,
 and to check whether it is possible to access
 properties, methods, and subscripts on those sub-properties.
 
 The code snippets below define four model classes
-for use in several subsequent examples of optional chaining.
+for use in several subsequent examples,
+including examples of multi-level optional chaining.
 These classes expand upon the ``Person`` and ``Residence`` model from above
 by adding a ``Room`` and ``Address`` class,
 with associated properties, methods, and subscripts.
@@ -198,8 +200,6 @@ the room at the requested index in the ``rooms`` array.
 
 This version of ``Residence`` also provides a method called ``printNumberOfRooms``,
 which simply prints the number of rooms in the residence.
-This method does not specify a return type,
-and so it has an implicit return type of ``Void``.
 
 Finally, ``Residence`` defines an optional property called ``address``,
 with a type of ``Address?``.
@@ -254,10 +254,26 @@ or ``nil`` if neither property has a value.
    I could always call this out, of course,
    but this preamble section is already pretty long.
 
-You can use these classes to create a new ``Person`` instance,
-and to try and access its ``numberOfRooms`` property as before:
+.. _OptionalChaining_CallingPropertiesThroughOptionalChaining:
+
+Calling Properties Through Optional Chaining
+-----------------------------------------
+
+As demonstrated in :ref:`OptionalChaining_OptionalChainingAsAnAlternativeToForcedUnwrapping`,
+you can use optional chaining to access a property on an optional value,
+and to check if that property access is successful.
+You cannot, however, set a property's value through optional chaining.
+
+.. FIXME: this "you cannot" is because of
+   <rdar://problem/16922562> Cannot assign through optional chaining,
+   which is a P1 to be fixed after WWDC.
+   The "you cannot" sentence should be removed once this is fixed.
+
+You can use the classes defined above to create a new ``Person`` instance,
+and try to access its ``numberOfRooms`` property as before:
 
 .. testcode:: optionalChaining
+   :compile: true
 
    -> let john = Person()
    -> if let roomCount = john.residence?.numberOfRooms {
@@ -270,3 +286,244 @@ and to try and access its ``numberOfRooms`` property as before:
 Because ``john.residence`` is ``nil``,
 this optional chaining call fails in the same way as before, without error.
 
+.. QUESTION: this section is kind of duplication of the first section in this chapter,
+   but I think it's worth mentioning it specifically in this section
+   before giving a similar description for methods and subscripts.
+
+.. _OptionalChaining_CallingMethodsThroughOptionalChaining:
+
+Calling Methods Through Optional Chaining
+-----------------------------------------
+
+You can use optional chaining to call a method on an optional value,
+and to check if that method call is successful.
+This is true even if that method does not define a return value.
+
+The ``printNumberOfRooms`` method on the ``Residence`` class
+prints the current value of ``numberOfRooms``.
+Here's how the method looks:
+
+.. testcode:: optionalChainingCallouts
+
+   -> func printNumberOfRooms() {
+   >>    let numberOfRooms = 3
+         println("The number of rooms is \(numberOfRooms)")
+      }
+
+This method does not specify a return type.
+However, functions and methods with no return type have an implicit return type of ``Void``,
+as described in :ref:`Functions_FunctionsWithoutReturnValues`.
+
+If you call this method on an optional value with optional chaining,
+the method's return type will be ``Void?``, not ``Void``,
+because return values are always of an optional type when called through optional chaining.
+This enables you to use an ``if``-``else`` statement
+to check whether it was possible to call the ``printNumberOfRooms`` method,
+even though the method does not itself define a return value.
+The implicit return value from the ``printNumberOfRooms`` will be equal to ``Void``
+if the method can be called through optional chaining,
+or ``nil`` if it cannot:
+
+.. testcode:: optionalChaining
+   :compile: true
+
+   -> if john.residence?.printNumberOfRooms() {
+         println("It was possible to print the number of rooms.")
+      } else {
+         println("It was not possible to print the number of rooms.")
+      }
+   <- It was not possible to print the number of rooms.
+
+.. TODO: this is a reasonably complex thing to get your head round.
+   Is this explanation detailed enough?
+
+.. _OptionalChaining_CallingSubscriptsThroughOptionalChaining:
+
+Calling Subscripts Through Optional Chaining
+--------------------------------------------
+
+You can use optional chaining to try to retrieve
+a value from a subscript on an optional value,
+and to check if that subscript call is successful.
+You cannot, however, set a subscript through optional chaining.
+
+.. FIXME: this "you cannot" is because of
+   <rdar://problem/16922562> Cannot assign through optional chaining,
+   which is a P1 to be fixed after WWDC.
+   The "you cannot" sentence should be removed once this is fixed.
+
+.. note::
+
+   When you access a subscript on an optional value through optional chaining,
+   you place the question mark *before* the subscript's braces, not after.
+   The optional chaining question mark always follows immediately after
+   the part of the expression that is optional.
+
+The example below tries to retrieve the name of
+the first room in the ``rooms`` array of the ``john.residence`` property
+using the subscript defined on the ``Residence`` class.
+Because ``john.residence`` is currently ``nil``,
+the subscript call fails:
+
+.. testcode:: optionalChaining
+   :compile: true
+
+   -> if let firstRoomName = john.residence?[0].name {
+         println("The first room name is \(firstRoomName).")
+      } else {
+         println("Unable to retrieve the first room name.")
+      }
+   <- Unable to retrieve the first room name.
+
+The optional chaining question mark in this subscript call
+is placed immediately after ``john.residence``, before the subscript brackets,
+because ``john.residence`` is the optional value
+on which optional chaining is being attempted.
+
+If you create and assign an actual ``Residence`` instance to ``john.residence``,
+with one or more ``Room`` instances in its ``rooms`` array,
+you can use the ``Residence`` subscript to access
+the actual items in the ``rooms`` array through optional chaining:
+
+.. testcode:: optionalChaining
+   :compile: true
+
+   -> let johnsHouse = Residence()
+      johnsHouse.rooms += Room(name: "Living Room")
+      johnsHouse.rooms += Room(name: "Kitchen")
+      john.residence = johnsHouse
+   ---
+   -> if let firstRoomName = john.residence?[0].name {
+         println("The first room name is \(firstRoomName).")
+      } else {
+         println("Unable to retrieve the first room name.")
+      }
+   <- The first room name is Living Room.
+
+.. _OptionalChaining_MultiLevelChaining:
+
+Multi-Level Chaining
+--------------------
+
+You can link together multiple levels of optional chaining
+to drill down to properties, methods, and subscripts deeper within a model.
+However, multiple levels of optional chaining
+do not add more levels of optionality to the returned value.
+
+To put it another way:
+the return type of an optional chaining call
+is *always* based on the type of the value that you are ultimately trying to retrieve,
+regardless of how many levels of optional chaining you use.
+
+* If the type you are trying to retrieve is not optional,
+  it will become optional because of the optional chaining.
+* If the type you are trying to retrieve is *already* optional,
+  it will *not* become more optional because of the chaining.
+
+Therefore:
+
+* If you try to retrieve an ``Int`` value through optional chaining,
+  you will always be returned an ``Int?``,
+  no matter how many levels of chaining are used.
+
+* If you try to retrieve an ``Int?`` value through optional chaining,
+  you will always be returned an ``Int?``,
+  no matter how many levels of chaining are used.
+
+The example below tries to access the ``street`` property of the ``address`` property
+of the ``residence`` property of ``john``.
+There are *two* levels of optional chaining in use here,
+to chain through the ``residence`` and ``address`` properties,
+both of which are of optional type:
+
+.. testcode:: optionalChaining
+   :compile: true
+
+   -> if let johnsStreet = john.residence?.address?.street {
+         println("John's street name is \(johnsStreet).")
+      } else {
+         println("Unable to retrieve the address.")
+      }
+   <- Unable to retrieve the address.
+
+The value of ``john.residence`` currently contains a valid ``Residence`` instance.
+However, the value of ``john.residence.address`` is currently ``nil``.
+Because of this, the call to ``john.residence?.address?.street`` fails.
+
+Note that in the example above,
+you are trying to retrieve the value of the ``street`` property.
+The type of this property is ``String?``.
+The return value of ``john.residence?.address?.street`` is therefore also ``String?``,
+even though two levels of optional chaining are applied in addition to
+the underlying optional type of the property.
+
+If you set an actual ``Address`` instance as the value for ``john.street.address``,
+and set an an actual value for the address's ``street`` property,
+you can access the value of  property through the multi-level optional chaining:
+
+.. testcode:: optionalChaining
+   :compile: true
+
+   -> let johnsAddress = Address()
+   -> johnsAddress.buildingName = "The Larches"
+   -> johnsAddress.street = "Laurel Street"
+   -> john.residence!.address = johnsAddress
+   ---
+   -> if let johnsStreet = john.residence?.address?.street {
+         println("John's street name is \(johnsStreet).")
+      } else {
+         println("Unable to retrieve the address.")
+      }
+   <- John's street name is Laurel Street.
+
+Note the use of an exclamation mark during the assignment of
+an address instance to ``john.residence.address``.
+The ``john.residence`` property has an optional type,
+and so you need to unwrap its actual value with an exclamation mark
+before accessing the residence's ``address`` property.
+
+.. _OptionalChaining_ChainingOnMethodsWithOptionalReturnValues:
+
+Chaining on Methods With Optional Return Values
+-----------------------------------------------
+
+The previous example shows how to retrieve the value of
+a property of optional type through optional chaining.
+You can also use optional chaining to call a method that returns a value of optional type,
+and to chain on that method's return value if needed.
+
+The example below calls the ``Address`` class's ``buildingIdentifier`` method
+through optional chaining. This method returns a value of type ``String?``.
+As described above, the ultimate return type of this method call after optional chaining
+is also ``String?``:
+
+.. testcode:: optionalChaining
+   :compile: true
+
+   -> if let buildingIdentifier = john.residence?.address?.buildingIdentifier() {
+         println("John's building identifier is \(buildingIdentifier).")
+      }
+   <- John's building identifier is The Larches.
+
+If you want perform further optional chaining on this method's return value,
+place the optional chaining question mark *after* the method's parentheses:
+
+.. testcode:: optionalChaining
+   :compile: true
+
+   -> if let upper = john.residence?.address?.buildingIdentifier()?.uppercaseString {
+         println("John's uppercase building identifier is \(upper).")
+      }
+   <- John's uppercase building identifier is THE LARCHES.
+
+.. note::
+
+   In the example above,
+   you place the optional chaining question mark *after* the parentheses,
+   because the optional value you are chaining on is
+   the ``buildingIdentifier`` method's return value,
+   and not the ``buildingIdentifier`` method itself.
+
+.. TODO: add an example of chaining on a property of optional function type.
+   This can then be tied in to a revised description of how
+   the sugar for optional protocol requirements works.
