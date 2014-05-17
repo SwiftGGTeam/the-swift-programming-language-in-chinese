@@ -1171,7 +1171,7 @@ an optional ``String`` and an implicitly unwrapped optional ``String``:
    <- An optional string.
    ---
    -> let assumedString: String! = "An implicitly unwrapped optional string."
-   << // assumedString : String! = String!(An implicitly unwrapped optional string.)
+   << // assumedString : String! = An implicitly unwrapped optional string.
    -> println(assumedString)  // no exclamation mark is needed to access its value
    <- An implicitly unwrapped optional string.
 
