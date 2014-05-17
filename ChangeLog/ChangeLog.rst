@@ -54,8 +54,7 @@ Language Guide
 
 * New :doc:`../LanguageGuide/AutomaticReferenceCounting` chapter, including sections on
   :ref:`how ARC works <AutomaticReferenceCounting_HowARCWorks>`,
-  :ref:`strong reference cycles <AutomaticReferenceCounting_StrongReferenceCycles>`,
-  and :ref:`weak and unowned references <AutomaticReferenceCounting_WeakAndUnownedReferences>`.
+  and :ref:`strong reference cycles <AutomaticReferenceCounting_StrongReferenceCycles>`.
 * Rewritten much of :doc:`../LanguageGuide/Generics`
   to make the introduction more accessible to those who are new to generic programming.
 * Added some explanations of :ref:`unicode terminology <StringsAndCharacters_Unicode>`

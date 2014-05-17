@@ -163,7 +163,7 @@ This is known as a :newTerm:`strong reference cycle`.
 You resolve strong reference cycles
 by defining some of the relationships between classes
 as weak or unowned references instead of strong references.
-This process is described in :ref:`AutomaticReferenceCounting_WeakAndUnownedReferences` below.
+This process is described in :ref:`AutomaticReferenceCounting_ResolvingStrongReferenceCycles` below.
 However, before you learn how to break a strong reference cycle,
 it is useful to understand what causes sucn a cycle can be caused.
 
