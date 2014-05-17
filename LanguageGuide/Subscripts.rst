@@ -112,24 +112,38 @@ the member elements in a collection, list, or sequence.
 You are free to implement subscripts in the most appropriate way for
 your particular class or structure's functionality.
 
-For example, Swift's ``Dictionary`` collection type implements a subscript to provide
-access to the values stored in a ``Dictionary`` instance
-by passing in a key of the appropriate type within subscript braces:
+For example, Swift's ``Dictionary`` type implements a subscript
+to to set and retrieve the values stored in a ``Dictionary`` instance.
+You can set a value in a dictionary
+by providing a key of the dictionary's key type within subscript braces,
+and assigning a value of the dictionary's value type to the subscript:
 
 .. testcode:: dictionarySubscript
 
-   -> let numberOfLegs = ["spider": 8, "ant": 6, "cat": 4]
+   -> var numberOfLegs = ["spider": 8, "ant": 6, "cat": 4]
    << // numberOfLegs : Dictionary<String, Int> = ["spider": 8, "ant": 6, "cat": 4]
-   -> let spiderLegs = numberOfLegs["spider"]
-   << // spiderLegs : Int = 8
-   /> spiderLegs is equal to \(spiderLegs)
-   </ spiderLegs is equal to 8
+   -> numberOfLegs["bird"] = 2
 
-This ``Dictionary`` instance is of type ``Dictionary<String, Int>``.
-This means that it has keys of type ``String``,
-and values of type ``Int``.
-Its subscript implementation therefore expects to be passed a ``String`` key,
-and returns the corresponding ``Int`` value for that key.
+The example above defines a variable called ``numberOfLegs``,
+and initializes it with a dictionary literal containing three key-value pairs.
+The type of the ``numberOfLegs`` dictionary is inferred to be ``Dictionary<String, Int>``.
+After creating the dictionary,
+this example uses subscript assignment to add
+a ``String`` key of ``"bird"`` and an ``Int`` value of ``2`` to the dictionary.
+
+For more information about ``Dictionary`` subscripting,
+see :ref:`CollectionTypes_AccessingAndModifyingADictionary`.
+
+.. note::
+
+   Swift's ``Dictionary`` type implements its key-value subscripting
+   as a subscript that takes and receives an *optional* type.
+   For the ``numberOfLegs`` dictionary above,
+   the key-value subscript takes and returns a value of type ``Int?``,
+   or “optional int”.
+   The ``Dictionary`` type uses an optional subscript type to model the fact that
+   not every key will have a value, and to give a way to delete a value for a key
+   by assigning a ``nil`` value for that key.
 
 .. _Subscripts_SubscriptOptions:
 
@@ -140,7 +154,7 @@ Subscripts can take any number of input parameters,
 and these input parameters can be of any type.
 Subscripts can also return any type.
 Subscripts can use variable parameters and variadic parameters,
-but cannot use inout parameters or provide default parameter values. 
+but cannot use in-out parameters or provide default parameter values. 
 
 A class or structure can provide as many subscript implementations as it needs,
 and the appropriate subscript to be used will be inferred based on
