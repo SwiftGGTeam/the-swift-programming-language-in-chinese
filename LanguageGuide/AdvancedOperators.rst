@@ -31,12 +31,12 @@ and you can even extend existing types to support the custom operators you defin
 Bitwise Operators
 -----------------
 
-:newTerm:`Bitwise operators` enable you to manipulate the individual raw data bits within a data structure.
+:newTerm:`Bitwise operators` enable you to manipulate
+the individual raw data bits within a data structure.
 They are often used in low-level programming,
 such as graphics programming and device driver creation.
-They can also be useful when working with raw data from external sources,
-integrating with electronics hardware,
-and when encoding and decoding data for communication via a custom protocol.
+Bitwise operators can also be useful when you work with raw data from external sources,
+such as encoding and decoding data for communication over a custom protocol.
 
 Swift supports all of the bitwise operators found in C, as described below.
 
@@ -52,7 +52,7 @@ The :newTerm:`bitwise NOT operator` (``~``) inverts all of the bits in a number:
 
 The bitwise NOT operator is a prefix operator,
 and appears immediately before the value it operates on,
-without any whitespace:
+without any white space:
 
 .. testcode:: bitwiseOperators
 
@@ -61,9 +61,9 @@ without any whitespace:
    -> let invertedBits = ~initialBits  // equals 11110000
    << // invertedBits : UInt8 = 240
 
-``UInt8`` integers have eight bits,
+``UInt8`` integers have eight bits
 and can store any value between ``0`` and ``255``.
-This example initializes a ``UInt8`` with the binary value ``00001111``,
+This example initializes a ``UInt8`` integer with the binary value ``00001111``,
 which has its first four bits set to ``0``,
 and its second four bits set to ``1``.
 This is equivalent to a decimal value of ``15``.
@@ -72,7 +72,7 @@ The bitwise NOT operator is then used to create a new constant called ``inverted
 which is equal to ``initialBits``,
 but with all of the bits inverted.
 Zeroes become ones, and ones become zeroes.
-This gives a new value of ``11110000``,
+The value of ``invertedBits`` is ``11110000``,
 which is equal to an unsigned decimal value of ``240``.
 
 .. _AdvancedOperators_BitwiseANDOperator:
@@ -81,7 +81,8 @@ Bitwise AND Operator
 ~~~~~~~~~~~~~~~~~~~~
 
 The :newTerm:`bitwise AND operator` (``&``) combines the bits of two numbers.
-It returns a new number whose bits are set to ``1`` only if the bits were equal to ``1`` in *both* input numbers:
+It returns a new number whose bits are set to ``1``
+only if the bits were equal to ``1`` in *both* input numbers:
 
 .. image:: ../images/bitwiseAND.png
    :align: center
@@ -97,7 +98,8 @@ For example:
    -> let middleFourBits = firstSixBits & lastSixBits  // equals 00111100
    << // middleFourBits : UInt8 = 60
 
-The values of ``firstSixBits`` and ``lastSixBits`` both have their four middle bits equal to ``1``.
+The values of ``firstSixBits`` and ``lastSixBits``
+both have their four middle bits equal to ``1``.
 The bitwise AND operator combines them to make the number ``00111100``,
 which is equal to an unsigned decimal value of ``60``.
 
@@ -159,11 +161,13 @@ For example:
 Bitwise Left and Right Shifts
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The :newTerm:`bitwise left shift operator` (``<<``) and :newTerm:`bitwise right shift operator` (``>>``)
+The :newTerm:`bitwise left shift operator` (``<<``)
+and :newTerm:`bitwise right shift operator` (``>>``)
 move all of the bits in a number to the left or the right by a certain number of places,
 according to the rules defined below.
 
-Bitwise left and right shifts have the effect of multiplying (or dividing) an integer number by a factor of two.
+Bitwise left and right shifts have the effect of
+multiplying or dividing an integer number by a factor of two.
 Shifting an integer's bits to the left by one position doubles its value,
 whereas shifting it to the right by one position halves its value.
 
@@ -177,8 +181,9 @@ _______________________________________
 The bit-shifting behavior for unsigned integers is as follows:
 
 1. Existing bits are moved to the left or right by the requested number of places.
-2. Any bits that fall off the edge of the integer's storage are discarded.
-3. Zeroes are inserted in the spaces left behind.
+2. Any bits that are moved beyond the bounds of the integer's storage are discarded.
+3. Zeroes are inserted in the spaces left behind
+   after moving the original bits to the left or right
 
 This approach is known as a :newTerm:`logical shift`.
 
@@ -186,9 +191,9 @@ The illustration below shows the results of ``11111111 << 1``
 (which is ``11111111`` shifted to the left by ``1`` place),
 and ``11111111 >> 1``
 (which is ``11111111`` shifted to the right by ``1`` place).
-Blue numbers have been shifted,
-gray numbers have been discarded,
-and orange zeroes have been inserted:
+Blue numbers are shifted,
+gray numbers are discarded,
+and orange zeroes are inserted:
 
 .. image:: ../images/bitshiftUnsigned.png
    :align: center
@@ -210,7 +215,7 @@ Here's how bit shifting looks in Swift code:
    -> shiftBits >> 2             // 00000001
    << // r4 : UInt8 = 1
 
-Bit shifting can be used to encode and decode values within other data types:
+You can use bit shifting to encode and decode values within other data types:
 
 .. testcode:: bitwiseShiftOperators
 
@@ -225,9 +230,11 @@ Bit shifting can be used to encode and decode values within other data types:
 
 This example uses a ``UInt32`` constant called ``pink`` to store a
 Cascading Style Sheets color value for the color pink.
-Here, the CSS color value ``#CC6699`` is written as ``0xCC6699`` in Swift's hexadecimal number representation.
-This color is then decomposed into its red (``CC``), green (``66``) and blue (``99``) components
-using the bitwise AND operator (``&``) and the bitwise right shift operator (``>>``).
+The CSS color value ``#CC6699`` is written as
+``0xCC6699`` in Swift's hexadecimal number representation.
+This color is then decomposed into its
+red (``CC``), green (``66``), and blue (``99``) components
+by the bitwise AND operator (``&``) and the bitwise right shift operator (``>>``).
 
 The red component is obtained by performing a bitwise AND
 between the numbers ``0xCC6699`` and ``0xFF0000``.
@@ -262,8 +269,8 @@ which has a decimal value of ``153``.
 Shifting Behavior for Signed Integers
 _____________________________________
 
-The shifting behavior is slightly more involved for signed integers,
-due to the way that they are represented in binary.
+The shifting behavior is more complex for signed integers than for unsigned integers,
+because of the way signed integers are represented in binary.
 (The examples below are based on 8-bit signed integers for simplicity,
 but the same principles apply for signed integers of any size.)
 
@@ -271,7 +278,7 @@ Signed integers use their first bit (known as the :newTerm:`sign bit`)
 to indicate whether the integer is positive or negative.
 A sign bit of ``0`` means positive, and a sign bit of ``1`` means negative.
 
-The remaining bits (known as the :newTerm:`value bits`) are then used to store the actual value.
+The remaining bits (known as the :newTerm:`value bits`) store the actual value.
 Positive numbers are stored in exactly the same way as for unsigned integers,
 counting upwards from ``0``.
 Here's how the bits inside an ``Int8`` look for the number ``4``:
@@ -286,7 +293,7 @@ written in binary notation.
 Negative numbers, however, are stored differently.
 They are stored by subtracting their absolute value from ``2`` to the power of ``n``,
 where ``n`` is the number of value bits.
-In an eight-bit number, we have seven value bits,
+An eight-bit number has seven value bits,
 so this means ``2`` to the power of ``7``, or ``128``.
 
 Here's how the bits inside an ``Int8`` look for the number ``-4``:
@@ -295,30 +302,30 @@ Here's how the bits inside an ``Int8`` look for the number ``-4``:
    :align: center
 
 This time, the sign bit is ``1`` (meaning “negative”),
-and the seven value bits actually have a binary value of ``124`` (which is ``128 - 4``):
+and the seven value bits have a binary value of ``124`` (which is ``128 - 4``):
 
 .. image:: ../images/bitshiftSignedMinusFourValue.png
    :align: center
 
-The encoding used for negative numbers is known as a :newTerm:`two's complement` representation.
+The encoding for negative numbers is known as a :newTerm:`two's complement` representation.
 It may seem an unusual way to represent negative numbers,
 but it has several advantages.
 
-Firstly, it means you can add ``-1`` to ``-4``,
-just by performing a standard binary addition of all eight bits
+Firstly, you can add ``-1`` to ``-4``,
+simply by performing a standard binary addition of all eight bits
 (including the sign bit),
 and discarding anything that doesn't fit in the eight bits once you're done:
 
 .. image:: ../images/bitshiftSignedAddition.png
    :align: center
 
-The two's complement representation also means that you can
-shift the bits of negative numbers to the left and right just like positive numbers,
+Secondly, the two's complement representation also lets you
+shift the bits of negative numbers to the left and right like positive numbers,
 and still end up doubling them for every shift you make to the left,
 or halving them for every shift you make to the right.
-To achieve this, an extra rule is used when shifting signed integers to the right:
+To achieve this, an extra rule is used when signed integers are shifted to the right:
 
-* When shifting to the right,
+* When you shift signed integers to the right,
   apply the same rules as for unsigned integers,
   but fill any empty bits on the left with the *sign bit*,
   rather than with a zero.
@@ -326,11 +333,11 @@ To achieve this, an extra rule is used when shifting signed integers to the righ
 .. image:: ../images/bitshiftSigned.png
    :align: center
 
-This ensures that signed integers have the same sign after they are shifted to the right,
+This action ensures that signed integers have the same sign after they are shifted to the right,
 and is known as an :newTerm:`arithmetic shift`.
 
 Because of the special way that positive and negative numbers are stored,
-shifting either of them to the right has the effect of moving them closer to zero.
+shifting either of them to the right moves them closer to zero.
 Keeping the sign bit the same during this shift means that
 negative integers remain negative as their value moves closer to zero.
 
@@ -339,13 +346,15 @@ negative integers remain negative as their value moves closer to zero.
 Overflow Operators
 ------------------
 
-An error will be caused if you try to insert a number into an integer constant or variable
-that cannot hold that value.
+If you try to insert a number into an integer constant or variable
+that cannot hold that value,
+Swift reports an error rather than allowing an invalid value to be created.
 This gives extra safety when working with numbers that are too large or too small.
 
-For example, the ``Int16`` integer type can hold any signed integer number between ``-32768`` and ``32767``.
+For example, the ``Int16`` integer type can hold
+any signed integer number between ``-32768`` and ``32767``.
 Trying to set a ``UInt16`` constant or variable to a number outside of this range
-will cause an error:
+causes an error:
 
 .. testcode:: overflowOperatorsWillFailToOverflow
 
@@ -395,13 +404,14 @@ using the overflow addition operator (``&+``):
    /> willOverflow is now equal to \(willOverflow)
    </ willOverflow is now equal to 0
 
-Here, the variable ``willOverflow`` is initialized with the largest value a ``UInt8`` can hold
+The variable ``willOverflow`` is initialized with the largest value a ``UInt8`` can hold
 (``255``, or ``11111111`` in binary).
 It is then incremented by ``1`` using the overflow addition operator (``&+``).
 This pushes its binary representation just over the size that a ``UInt8`` can hold,
 causing it to overflow beyond its bounds,
 as shown in the diagram below.
-The value that remains within the bounds of the ``UInt8`` after the overflow addition is ``00000000``, or zero:
+The value that remains within the bounds of the ``UInt8``
+after the overflow addition is ``00000000``, or zero:
 
 .. image:: ../images/overflowAddition.png
    :align: center
@@ -414,7 +424,8 @@ Value Underflow
 Numbers can also become too small to fit in their type's maximum bounds.
 Here's an example.
 
-The *smallest* value that a UInt8 can hold is ``0`` (which is ``00000000`` in eight-bit binary form).
+The *smallest* value that a UInt8 can hold is ``0``
+(which is ``00000000`` in eight-bit binary form).
 If you subtract ``1`` from ``00000000`` using the overflow subtraction operator,
 the number will overflow back round to ``11111111``,
 or ``255`` in decimal:
@@ -434,13 +445,14 @@ Here's how that looks in Swift code:
    /> willUnderflow is now equal to \(willUnderflow)
    </ willUnderflow is now equal to 255
 
-A similar underflow happens for signed integers.
+A similar underflow occurs for signed integers.
 All subtraction for signed integers is performed as straight binary subtraction,
 with the sign bit included as part of the numbers being subtracted
 (as described in :ref:`AdvancedOperators_BitwiseLeftAndRightShifts`).
 The smallest number that an ``Int8`` can hold is ``-128``,
 which is ``10000000`` in binary.
-Subtracting ``1`` from this binary number with the overflow operator gives a binary value of ``01111111``,
+Subtracting ``1`` from this binary number with the overflow operator
+gives a binary value of ``01111111``,
 which toggles the sign bit and gives positive ``127``,
 the largest positive value that an ``Int8`` can hold:
 
@@ -459,7 +471,8 @@ Here's the same thing in Swift code:
    /> signedUnderflow is now equal to \(signedUnderflow)
    </ signedUnderflow is now equal to 127
 
-The end result of the overflow and underflow behavior described above is that for both signed and unsigned integers,
+The end result of the overflow and underflow behavior described above
+is that for both signed and unsigned integers,
 overflow always wraps around from the largest valid integer value back to the smallest,
 and underflow always wraps around from the smallest value to the largest.
 
@@ -506,14 +519,19 @@ return a value of zero if you divide by zero:
 Precedence and Associativity
 ----------------------------
 
-.. QUESTION: Could precedence and associativity be made clear
-   as part of the hypothetical “show invisibles” feature,
-   to show the invisible parentheses implied by precedence and associativity?
-
 It is important to consider
-each operator's :newTerm:`precedence` and :newTerm:`associativity`
-when working out how to calculate a compound expression.
-These two principles are used to work out the order in which an expression should be calculated.
+each operator's precedence and associativity
+when working out the order in which a compound expression will be calculated.
+
+Operator :newTerm:`precedence` means that
+some operators are given more precedence than others,
+and are calculated first.
+
+Operator :newTerm:`associativity` defines how operators of the same precedence
+are grouped together (or :newTerm:`associated`) –
+either grouped from the left, or grouped from the right.
+Think of it as meaning “they associate with the expression to their left,”
+or “they associate with the expression to their right.”
 
 Here's an example.
 Why does the following expression equal ``4``?
@@ -532,20 +550,6 @@ Taken strictly from left to right, you might expect this to read as follows:
 * 20 remainder 5 equals 0
 
 However, the actual answer is ``4``, not ``0``.
-This is due to the priorities and associativity of the operators used:
-
-* Operator :newTerm:`precedence` means that
-  some operators are given more precedence than others,
-  and are calculated first.
-
-* Operator :newTerm:`associativity` defines how operators of the same precedence
-  are grouped together (or :newTerm:`associated`) –
-  either grouped from the left, or grouped from the right.
-  Think of it as meaning “they associate with the expression to their left,”
-  or “they associate with the expression to their right.”
-
-Here's how the actual evaluation order is calculated for the example above.
-Precedence is considered first.
 Higher-precedence operators are evaluated before lower-precedence ones.
 In Swift, as in C,
 the multiplication operator (``*``) and the remainder operator (``%``)
@@ -580,7 +584,7 @@ starting from their left:
 
 This gives the final answer of ``4``.
 
-A complete list of Swift operator precedences and associativity rules can be found in the :doc:`../ReferenceManual/index`.
+A complete list of Swift operator precedences and associativity rules can be found in  :doc:`../ReferenceManual/Expressions`.
 
 .. note::
 
@@ -590,8 +594,6 @@ A complete list of Swift operator precedences and associativity rules can be fou
    Be careful to ensure that operator interactions still behave in the way you intend
    when porting existing code to Swift.
 
-.. TODO: update this link to go to the specific section of the Reference Manual.
-
 .. _AdvancedOperators_OperatorFunctions:
 
 Operator Functions
@@ -600,17 +602,8 @@ Operator Functions
 Classes and structures can provide their own implementations of existing operators.
 This is known as :newTerm:`overloading` the existing operators.
 
-.. testcode:: customOperators
-
-   -> struct Vector2D {
-         var x = 0.0, y = 0.0
-      }
-   -> @infix func + (lhs: Vector2D, rhs: Vector2D) -> Vector2D {
-         return Vector2D(x: lhs.x + rhs.x, y: lhs.y + rhs.y)
-      }
-
-This example shows how to provide an implementation of the
-arithmetic addition operator (``+``) for a custom structure.
+The example below shows how to implement
+the arithmetic addition operator (``+``) for a custom structure.
 The arithmetic addition operator is a :newTerm:`binary operator`
 because it operates on two targets,
 and is said to be :newTerm:`infix` because it appears inbetween those two targets.
@@ -618,13 +611,22 @@ and is said to be :newTerm:`infix` because it appears inbetween those two target
 The example starts by defining a ``Vector2D`` structure for
 a two-dimensional position vector ``(x, y)``.
 This is followed by a definition of an :newTerm:`operator function`
-to add together instances of the ``Vector2D`` structure.
+to add together instances of the ``Vector2D`` structure:
+
+.. testcode:: customOperators
+
+   -> struct Vector2D {
+         var x = 0.0, y = 0.0
+      }
+   -> @infix func + (left: Vector2D, right: Vector2D) -> Vector2D {
+         return Vector2D(x: left.x + right.x, y: left.y + right.y)
+      }
 
 The operator function is defined as a global function called ``+``,
 which takes two input parameters of type ``Vector2D``,
 and returns a single output value, also of type ``Vector2D``.
-Implementations of infix operators are indicated via the ``@infix`` attribute,
-which is written before the ``func`` keyword when declaring the operator function.
+You implement an infix operator by writing the ``@infix`` attribute
+before the ``func`` keyword when declaring the operator function.
 
 .. QUESTION: You can actually elide the @infix attribute for infix operator functions.
    However, I've chosen to include it (and not mention that it can be elided)
@@ -632,13 +634,13 @@ which is written before the ``func`` keyword when declaring the operator functio
    and for clarity of intent.
    Is this the right choice?
 
-In this implementation, the input parameters have been named ``lhs`` and ``rhs``
+In this implementation, the input parameters are named ``left`` and ``right``
 to represent the ``Vector2D`` instances that will be on
-the left-hand side and right-hand side of the ``+`` operator.
+the left side and right side of the ``+`` operator.
 The function returns a new ``Vector2D`` instance,
 whose ``x`` and ``y`` properties are
 initialized with the sum of the ``x`` and ``y`` properties from
-the two ``Vector2D`` instances that are being added together.
+the two ``Vector2D`` instances that are added together.
 
 The function is defined globally, rather than as a method on the ``Vector2D`` structure,
 so that it can be used as an infix operator between existing ``Vector2D`` instances:
@@ -666,27 +668,28 @@ Prefix and Postfix Operators
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The example shown above demonstrates a custom implementation of a binary infix operator.
-Classes and structures can also provide implementations of the standard :newTerm:`unary operators`.
-Unary operators operate on a single target,
-and are said to be :newTerm:`prefix` if they come before their target (such as ``-a``),
-and :newTerm:`postfix` operators if they come after their target (such as ``i++``).
+Classes and structures can also provide implementations
+of the standard :newTerm:`unary operators`.
+Unary operators operate on a single target.
+They are :newTerm:`prefix` if they precede theor target (such as ``-a``)
+and :newTerm:`postfix` operators if they follow their target (such as ``i++``).
 
-Implementations of prefix unary operators are indicated via the ``@prefix`` attribute.
-Likewise, postfix unary operators are indicated via the ``@postfix`` attribute.
-The attribute is written before the ``func`` keyword when declaring the operator function:
+You implement a prefix or postfix unary operator by writing
+the ``@prefix`` or ``@postfix`` attribute
+before the ``func`` keyword when declaring the operator function:
 
 .. testcode:: customOperators
 
-   -> @prefix func - (rhs: Vector2D) -> Vector2D {
-         return Vector2D(x: -rhs.x, y: -rhs.y)
+   -> @prefix func - (vector: Vector2D) -> Vector2D {
+         return Vector2D(x: -vector.x, y: -vector.y)
       }
 
-This example implements the unary minus operator
+The example above implements the unary minus operator
 (``-a``) for ``Vector2D`` instances.
 The unary minus operator is a prefix operator,
 and so this function has to be qualified with the ``@prefix`` attribute.
 
-For simple numeric values, the unary minus operator just converts
+For simple numeric values, the unary minus operator converts
 positive numbers into their negative equivalent, and vice versa.
 The corresponding implementation for ``Vector2D`` instances
 performs this operation on both the ``x`` and ``y`` properties:
@@ -713,17 +716,20 @@ Compound Assignment Operators
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :newTerm:`Compound assignment operators` combine assignment (``=``) with another operation.
-One example is the addition assignment operator (``+=``).
-This combines addition and assignment into a single operation.
+For example, the addition assignment operator (``+=``)
+combines addition and assignment into a single operation.
 Operator functions that implement compound assignment must be qualified with
 the ``@assignment`` attribute.
-They must also mark their left-hand input parameter as ``inout``,
-as its value will be modified directly from within the operator function:
+You must also mark their left input parameter as ``inout``,
+as its value will be modified directly from within the operator function.
+
+The example below implements
+an addition assignment operator function for ``Vector2D`` instances:
 
 .. testcode:: customOperators
 
-   -> @assignment func += (inout lhs: Vector2D, rhs: Vector2D) {
-         lhs = lhs + rhs
+   -> @assignment func += (inout left: Vector2D, right: Vector2D) {
+         left = left + right
       }
 
 .. FIXME: This isn't actually true - you don't need to specify @assignment.
@@ -731,11 +737,12 @@ as its value will be modified directly from within the operator function:
    This is being tracked in rdar://problem/16656024,
    and this section should be updated based on the outcome of that radar.
 
-This example implements an addition assignment operator function for ``Vector2D`` instances.
-Because an addition operator has already been defined above,
-there is no need to reimplement the addition process again here.
-Instead, this function takes advantage of the existing addition operator function,
-and uses it to set the left-hand value to itself plus the right-hand value:
+Because an addition operator was defined earlier,
+there is no need to reimplement the addition process here.
+Instead, the addition assignment operator function
+takes advantage of the existing addition operator function,
+and uses it to set the lefthand value to itself plus the right value.
+For example:
 
 .. testcode:: customOperators
 
@@ -754,15 +761,16 @@ for ``Vector2D`` instances:
 
 .. testcode:: customOperators
 
-   -> @prefix @assignment func ++ (inout rhs: Vector2D) -> Vector2D {
-         rhs += Vector2D(x: 1.0, y: 1.0)
-         return rhs
+   -> @prefix @assignment func ++ (inout vector: Vector2D) -> Vector2D {
+         vector += Vector2D(x: 1.0, y: 1.0)
+         return vector
       }
 
-This operator function takes advantage of the addition assignment operator defined above.
+The prefix increment operator function above takes advantage
+of the addition assignment operator defined earlier.
 It adds a ``Vector2D`` with ``x`` and ``y`` values of ``1.0``
 to the ``Vector2D`` on which it is called,
-and returns the result.
+and returns the result:
 
 .. testcode:: customOperators
 
@@ -779,9 +787,9 @@ and returns the result.
 
    It is not possible to overload the default
    assignment operator (``=``).
-   Only the compound assignment operators may be overloaded.
+   Only the compound assignment operators can be overloaded.
    Similarly, the ternary conditional operator
-   (``a ? b : c``) may not be overloaded.
+   (``a ? b : c``) cannot be overloaded.
 
 .. QUESTION: some of the standard operators (such as equation and comparison)
    are implemented as part of a protocol (such as Equatable and Comparable).
@@ -800,22 +808,21 @@ Custom classes and structures do not receive a default implementation of
 the :newTerm:`equivalence operators`,
 known as the “equal to” operator (``==``) and “not equal to” operator (``!=``).
 It is not possible for Swift to guess what would qualify as “equal” for your own custom types,
-because the meaning of “equal” is dependent on the roles that those types play in your code.
+because the meaning of “equal” depends on the roles that those types play in your code.
 
-If you would like to use the equivalence operators
-to check for equivalence of your own custom types,
-you can provide implementations for them in the same way as for other infix operators:
+To use the equivalence operators to check for equivalence of your own custom type,
+provide an implementation of the operators in the same way as for other infix operators:
 
 .. testcode:: customOperators
 
-   -> @infix func == (lhs: Vector2D, rhs: Vector2D) -> Bool {
-         return (lhs.x == rhs.x) && (lhs.y == rhs.y)
+   -> @infix func == (left: Vector2D, right: Vector2D) -> Bool {
+         return (left.x == right.x) && (left.y == right.y)
       }
-   -> @infix func != (lhs: Vector2D, rhs: Vector2D) -> Bool {
-         return !(lhs == rhs)
+   -> @infix func != (left: Vector2D, right: Vector2D) -> Bool {
+         return !(left == right)
       }
 
-This example implements an “equal to” operator (``==``)
+The above example implements an “equal to” operator (``==``)
 to check if two ``Vector2D`` instances have equivalent values.
 In the context of ``Vector2D``,
 it makes sense to consider “equal” as meaning
@@ -844,7 +851,7 @@ Custom Operators
 
 You can declare and implement your own :newTerm:`custom operators` in addition to
 the standard operators provided by Swift.
-Custom operators can be defined using the characters ``/ = - + * % < > ! & | ^ ~ .`` only.
+Custom operators can be defined only with the characters ``/ = - + * % < > ! & | ^ . ~``.
 
 New operators are declared at a global level using the ``operator`` keyword,
 and can be declared as ``prefix``, ``infix`` or ``postfix``:
@@ -853,19 +860,19 @@ and can be declared as ``prefix``, ``infix`` or ``postfix``:
 
    -> operator prefix +++ {}
 
-This example defines a new prefix operator called ``+++``.
+The example above defines a new prefix operator called ``+++``.
 This operator does not have an existing meaning in Swift,
-and so it will be given its own custom meaning in the specific context of
+and so it is given its own custom meaning below in the specific context of
 working with ``Vector2D`` instances. For the purposes of this example,
-``+++`` will be treated as a new “prefix doubling incrementer” operator.
-It will double the ``x`` and ``y`` values of a ``Vector2D`` instance,
-by adding the vector to itself via assignment:
+``+++`` is treated as a new “prefix doubling incrementer” operator.
+It doubles the ``x`` and ``y`` values of a ``Vector2D`` instance,
+by adding the vector to itself with the addition assignment operator defined earlier:
 
 .. testcode:: customOperators
 
-   -> @prefix @assignment func +++ (inout rhs: Vector2D) -> Vector2D {
-         rhs += rhs
-         return rhs
+   -> @prefix @assignment func +++ (inout vector: Vector2D) -> Vector2D {
+         vector += vector
+         return vector
       }
 
 This implementation of ``+++`` is very similar to
@@ -891,11 +898,11 @@ ___________________________________
 
 Custom ``infix`` operators may also specify a :newTerm:`precedence`
 and an :newTerm:`associativity`.
-(See :ref:`AdvancedOperators_PrecedenceAndAssociativity` for an explanation of
+See :ref:`AdvancedOperators_PrecedenceAndAssociativity` for an explanation of
 how these two characteristics affect an infix operator's interaction
-with other infix operators.)
+with other infix operators.
 
-The possible values for ``associativity`` are ``left``, ``right`` or ``none``.
+The possible values for ``associativity`` are ``left``, ``right``, and ``none``.
 Left-associative operators associate to the left if written next
 to other left-associative operators of the same precedence.
 Similarly, right-associative operators associate to the right if written
@@ -912,8 +919,8 @@ with ``left`` associativity, and a precedence of ``140``:
 .. testcode:: customOperators
 
    -> operator infix +- { associativity left precedence 140 }
-   -> func +- (lhs: Vector2D, rhs: Vector2D) -> Vector2D {
-         return Vector2D(x: lhs.x + rhs.x, y: lhs.y - rhs.y)
+   -> func +- (left: Vector2D, right: Vector2D) -> Vector2D {
+         return Vector2D(x: left.x + right.x, y: left.y - right.y)
       }
    -> let firstVector = Vector2D(x: 1.0, y: 2.0)
    << // firstVector : Vector2D = Vector2D(1.0, 2.0)
@@ -930,10 +937,8 @@ Because it is in essence an “additive” operator,
 it has been given the same associativity and precedence values
 (``left`` and ``140``)
 as default additive infix operators such as ``+`` and ``-``.
-(A complete list of the default Swift operator precedence
-and associativity settings can be found in the :doc:`../ReferenceManual/index`.)
-
-.. TODO: update this link to go to the specific section of the Reference Manual.
+For a complete list of the default Swift operator precedence
+and associativity settings, see :doc:`../ReferenceManual/Expressions`.
 
 .. FIXME: Custom operator declarations cannot be written over multiple lines in the REPL.
    This is being tracked as rdar://16061044.
@@ -947,7 +952,8 @@ Protocol Operator Requirements
 
 .. write-me::
 
-.. Protocols can require the implementation of operators (though assignment operators are broken)
+.. Protocols can require the implementation of operators
+   (though assignment operators are broken)
 .. Likewise for requiring custom operators
 .. However, Doug thought that this might be better covered by Generics,
    where you know that two things are definitely of the same type.

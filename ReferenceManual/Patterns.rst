@@ -275,7 +275,7 @@ of the ``as`` pattern.
 
 For an example that uses a ``switch`` statement
 to match values with ``is`` and ``as`` patterns,
-see :ref:`TypeCasting_CheckedCastsInSwitchStatements`.
+see :ref:`TypeCasting_TypeCastingForAnyAndAnyObject`.
 
 .. langref-grammar
 

@@ -310,13 +310,13 @@ that is written outside of (and *after*) the parentheses of the function call it
          // function body goes here
       }
    ---
-   -> // here's how you'd call this function without using a trailing closure:
+   -> // here's how you call this function without using a trailing closure:
    ---
    -> someFunctionThatTakesAClosure({
          // closure's body goes here
       })
    ---
-   -> // here's how to call this function with a trailing closure instead:
+   -> // here's how you call this function with a trailing closure instead:
    ---
    -> someFunctionThatTakesAClosure() {
          // trailing closure's body goes here
@@ -362,7 +362,7 @@ The array ``[16, 58, 510]`` is used to create the new array
          0: "Zero", 1: "One", 2: "Two",   3: "Three", 4: "Four",
          5: "Five", 6: "Six", 7: "Seven", 8: "Eight", 9: "Nine"
       ]
-   << // digitNames : Dictionary<Int, String> = Dictionary<Int, String>(<unprintable value>)
+   << // digitNames : Dictionary<Int, String> = [0: "Zero", 1: "One", 2: "Two", 3: "Three", 4: "Four", 5: "Five", 6: "Six", 7: "Seven", 8: "Eight", 9: "Nine"]
    -> let numbers = [16, 58, 510]
    << // numbers : Array<Int> = [16, 58, 510]
 
@@ -370,7 +370,7 @@ The code above creates a dictionary of mappings between
 the integer digits and English-language versions of their names.
 It also defines an array of integers, ready to be converted into strings.
 
-You can now use ``numbers`` array to create an array of ``String`` values,
+You can now use the ``numbers`` array to create an array of ``String`` values,
 by passing a closure expression to the array's ``map`` method as a trailing closure.
 Note that the call to ``numbers.map`` does not need to include any parentheses after ``map``,
 because the ``map`` method has only one parameter,
@@ -382,7 +382,7 @@ and that parameter is provided as a trailing closure:
             (var number) -> String in
          var output = ""
          while number > 0 {
-            output = digitNames[number % 10] + output
+            output = digitNames[number % 10]! + output
             number /= 10
          }
          return output
@@ -405,7 +405,20 @@ to indicate the type that will be stored in the mapped output array.
 The closure expression builds a string called ``output`` each time it is called.
 It calculates the last digit of ``number`` by using the remainder operator (``number % 10``),
 and uses this digit to look up an appropriate string in the ``digitNames`` dictionary.
-The appropriate string is added to the *front* of ``output``,
+
+.. note::
+
+   The call to the ``digitNames`` dictionary's subscript
+   is followed by an exclamation mark (``!``),
+   because dictionary subscripts return an optional value
+   to indicate that the dictionary lookup can fail if the key does not exist.
+   In the example above, it is guaranteed that ``number % 10``
+   will always be a valid subscript key for the ``digitNames`` dictionary,
+   and so an exclamation mark is used to force-unwrap the ``String`` value
+   stored in the subscript's optional return value.
+
+The string retrieved from the ``digitNames`` dictionary
+is added to the *front* of ``output``,
 effectively building a string version of the number in reverse.
 (The expression ``number % 10`` gives a value of
 ``6`` for ``16``, ``8`` for ``58``, and ``0`` for ``510``.)
@@ -525,7 +538,7 @@ Here's an example of ``makeIncrementor`` in action:
 .. testcode:: closures
 
    -> let incrementByTen = makeIncrementor(forIncrement: 10)
-   << // incrementByTen : () -> Int = <unprintable value>
+   << // incrementByTen : () -> Int = <opaque>
 
 This example sets a constant called ``incrementByTen``
 to refer to an incrementor function that adds ``10`` to
@@ -556,7 +569,7 @@ and this variable is unconnected to the one captured by ``incrementByTen``:
 .. testcode:: closures
 
    -> let incrementBySeven = makeIncrementor(forIncrement: 7)
-   << // incrementBySeven : () -> Int = <unprintable value>
+   << // incrementBySeven : () -> Int = <opaque>
    -> incrementBySeven()
    << // r3 : Int = 7
    /> returns a value of \(r3)
@@ -590,7 +603,7 @@ both of those constants or variables will refer to the same closure:
 .. testcode:: closures
 
    -> let alsoIncrementByTen = incrementByTen
-   << // alsoIncrementByTen : () -> Int = <unprintable value>
+   << // alsoIncrementByTen : () -> Int = <opaque>
    -> alsoIncrementByTen()
    << // r5 : Int = 50
    /> returns a value of \(r5)

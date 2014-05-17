@@ -1,22 +1,30 @@
 Generics
 ========
 
-:newTerm:`Generics` are a way to write flexible, reusable code
-that can work with any type at all,
-subject to certain requirements that you define.
-
-Generics are one of the most powerful features of Swift,
-and much of Swift's standard library is built with generic code.
-Generics enable you to write flexible code that avoids duplication,
+:newTerm:`Generic code` enables you to write flexible, reusable functions and types
+that can work with any type, subject to requirements that you define.
+You can write code that avoids duplication,
 and expresses its intent in a clear, abstracted manner.
 
-.. _Generics_WhyGenerics:
+Generics are one of the most powerful features of Swift,
+and much of the Swift standard library is built with generic code.
+In fact, you've been using generics throughout this Language Guide,
+even if you didn't realize it.
+For example, Swift's ``Array`` and ``Dictionary`` types
+are both generic collections.
+You can create an array that holds ``Int`` values,
+or an array that holds ``String`` values,
+or indeed an array for any other type that can be created in Swift.
+Similarly, you can create a dictionary to store values of any specified type,
+and there are no limitations on what that type can be.
 
-Why Generics?
--------------
+.. _Generics_The ProblemThatGenericsSolve:
 
-Here's a normal, non-generic function called ``swapTwoInts``,
-which takes two ``Int`` variables, and swaps their values:
+The Problem That Generics Solve
+-------------------------------
+
+Here's a standard, non-generic function called ``swapTwoInts``,
+which swaps two ``Int`` values:
 
 .. testcode:: whyGenerics
 
@@ -43,7 +51,7 @@ You can call this function to swap the values in two ``Int`` variables:
    -> println("someInt is now \(someInt), and anotherInt is now \(anotherInt)")
    <- someInt is now 107, and anotherInt is now 3
 
-This function is useful, but it can only be used with ``Int`` values.
+The ``swapTwoInts`` function is useful, but it can only be used with ``Int`` values.
 If you want to swap two ``String`` values,
 or two ``Double`` values,
 you have to write more functions,
@@ -65,8 +73,8 @@ such as the ``swapTwoStrings`` and ``swapTwoDoubles`` functions shown below:
 
 You may have noticed that the bodies of
 the ``swapTwoInts``, ``swapTwoStrings``, and ``swapTwoDoubles`` functions are identical.
-The only difference between the three functions
-is the type of the values that they accept (``Int``, ``String``, and ``Double``).
+The only difference is the type of the values that they accept
+(``Int``, ``String``, and ``Double``).
 
 It would be much more useful, and considerably more flexible,
 to write a single function that could swap two values of *any* type.
@@ -85,33 +93,12 @@ This is the kind of problem that generic code can solve.
    to swap values with each other.
    Attempting to do so would be reported as a compile-time error.
 
-.. _Generics_GenericsAreUsedThroughoutSwift:
-
-Generics Are Used Throughout Swift
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-You've actually been using generics throughout this Language Guide,
-even if you didn't realise it.
-For example, Swift's ``Array`` and ``Dictionary`` types
-are both generic collections.
-You can create an array that holds ``Int`` values,
-or an array that holds ``String`` values,
-or indeed an array for any other type that can be created in Swift.
-Similarly, you can create a dictionary to store values of any specified type,
-and there are no limitations on what that type can be.
-
-Swift enables you to write generic functions
-(to solve the ``swapTwoInts`` problem),
-and generic types (such as ``Array`` and ``Dictionary``),
-to make your own code flexible and reusable.
-The process for defining generic functions and generic types is described in detail below.
-
 .. _Generics_GenericFunctions:
 
 Generic Functions
 -----------------
 
-:newTerm:`Generic functions` are functions that can work with any type.
+:newTerm:`Generic functions` can work with any type.
 Here's a generic version of the ``swapTwoInts`` function from above,
 called ``swapTwoValues``:
 
@@ -147,18 +134,17 @@ Here's how the first lines compare:
 The generic version of the function
 uses a *placeholder* type name (called ``T``, in this case)
 instead of an *actual* type name (such as ``Int``, ``String``, or ``Double``).
-The placeholder type name doesn't say anything about what ``T`` must be;
+The placeholder type name doesn't say anything about what ``T`` must be,
 but it *does* say that both ``a`` and ``b`` must be of the same type ``T``,
 whatever ``T`` represents.
-(The actual type to use in place of ``T``
-will be determined each time the ``swapTwoValues`` function is called.)
+The actual type to use in place of ``T``
+will be determined each time the ``swapTwoValues`` function is called.
 
 The other difference is that the generic function's name (``swapTwoValues``)
 is followed by the placeholder type name (``T``) inside angle brackets (``<T>``).
-This tells Swift that ``T`` is a placeholder type name
-(as opposed to an actual type name) within the ``swapTwoValues`` function definition.
-This stops Swift from looking for an actual type called ``T``,
-and says “treat ``T`` as a placeholder instead”.
+The brackets tell Swift that ``T`` is a placeholder type name
+within the ``swapTwoValues`` function definition.
+Because ``T`` is a placeholder, Swift does not look for an actual type called ``T``.
 
 The ``swapTwoValues`` function can now be called in the same way as ``swapTwoInts``,
 except that it can be passed two values of *any* type,
@@ -188,22 +174,22 @@ In the two examples below, ``T`` is inferred to be ``Int`` and ``String`` respec
 
 .. note::
 
-   Swift's standard library defines a generic function called ``swap``,
-   which provides the same behavior as the ``swapTwoValues`` function from above.
-   You can use Swift's existing ``swap`` function whenever you need to swap two values.
+   The ``swapTwoValues`` function defined above is inspired by
+   a generic function called ``swap``, which is part of the Swift standard library,
+   and is automatically made available for you to use in your apps.
+   If you need the behavior of the ``swapTwoValues`` function in your own code,
+   you can use Swift's existing ``swap`` function rather than providing your own implementation.
 
 .. _Generics_TypeParameters:
 
 Type Parameters
-~~~~~~~~~~~~~~~
+---------------
 
 In the ``swapTwoValues`` example above,
 the placeholder type ``T`` is an example of a :newTerm:`type parameter`.
-Type parameters are a way to specify and name a placeholder type,
+Type parameters specify and name a placeholder type,
 and are written immediately after the function's name,
 between a pair of matching angle brackets (such as ``<T>``).
-Multiple type parameters can be provided between the angle brackets,
-separated by commas.
 
 Once specified,
 a type parameter can be used as the type of a function's parameters
@@ -216,30 +202,34 @@ is replaced with an *actual* type whenever the function is called.
 ``T`` was replaced with ``Int`` the first time the function was called,
 and was replaced with ``String`` the second time it was called.)
 
-.. _Generics_NamingOfTypeParameters:
+You can provide more than one type parameter if needed,
+by writing multiple type parameters within the angle brackets,
+separated by commas.
 
-Naming of Type Parameters
-_________________________
+.. _Generics_NamingTypeParameters:
 
-The choice of name for a type parameter is entirely up to you.
-In simple cases where a generic function or generic type needs to refer to a single placeholder type
+Naming Type Parameters
+~~~~~~~~~~~~~~~~~~~~~~
+
+In simple cases where a generic function or generic type
+needs to refer to a single placeholder type
 (such as the ``swapTwoValues`` generic function above,
 or a generic collection that stores a single type, such as ``Array``),
 it is traditional to use the single-character name ``T`` for the type parameter.
-However, you are free to use any valid identifier as the type parameter name.
+However, you are can use any valid identifier as the type parameter name.
 
 If you are defining more complex generic functions,
 or generic types with multiple parameters,
 it can be useful to provide more descriptive type parameter names.
 For example, Swift's ``Dictionary`` type has two type parameters –
-one for its keys, and one for its values.
+one for its keys and one for its values.
 If you were writing ``Dictionary`` yourself,
 you might name these two type parameters ``KeyType`` and ``ValueType``
-to provide a reminder of their purpose as you use them within your generic code.
+to remind you of their purpose as you use them within your generic code.
 
 .. note::
 
-   Type parameters should always have ``UpperCamelCase`` names
+   Always give type parameters ``UpperCamelCase`` names
    (such as ``T`` and ``KeyType``)
    to indicate that they are a placeholder for a *type*, not a value.
 
@@ -254,10 +244,10 @@ These are custom classes, structures, enumerations, and protocols
 that can work with *any* type, in a similar way to ``Array`` and ``Dictionary``.
 
 Here's an example of a generic type called ``Stack``.
-This represents an ordered “stack” of values, with two operations:
+This type represents an ordered “stack” of values, with two operations:
 
-* :newTerm:`pushing` a new value on to the top of the stack
-* :newTerm:`popping` a value off the top of the stack
+* :newTerm:`Pushing` a new value on to the top of the stack
+* :newTerm:`Popping` a value off the top of the stack
 
 This illustration shows the push / pop behavior for a stack:
 
@@ -270,14 +260,14 @@ This illustration shows the push / pop behavior for a stack:
 4. The top item in the stack is removed, or “popped”.
 5. After popping a value, the stack once again holds three values.
 
-Here's an implementation of a generic ``Stack`` structure in Swift code.
-This structure uses an ``Array`` property called ``items`` to store the values in the stack,
-and provides two methods, ``push`` and ``pop``,
+The example below shows an implementation of a generic ``Stack`` structure in Swift code.
+This structure uses an ``Array`` property called ``items`` to store the values in the stack.
+``Stack`` provides two methods, ``push`` and ``pop``,
 to push and pop values on and off the stack.
 These methods are marked as ``mutating``,
 because they need to modify (or *mutate*) the structure's ``items`` array.
 (Don't worry too much about the details of this implementation for now –
-a full explanation of how ``Stack`` is defined will be given below.)
+a full explanation of how ``Stack`` is defined is given below.)
 
 .. testcode:: genericStack
 
@@ -315,7 +305,7 @@ Here's how ``stackOfStrings`` looks after pushing these four values on to the st
 .. image:: ../images/stackPushedFourStrings.png
    :align: center
 
-Popping a value from the stack will return and remove the top value, ``"cuatro"``:
+Popping a value from the stack returns and removes the top value, ``"cuatro"``:
 
 .. testcode:: genericStack
 
@@ -330,7 +320,7 @@ Here's how the stack looks after popping its top value:
    :align: center
 
 Because it is a generic type,
-``Stack`` can now be used to create a stack of *any* valid type in Swift,
+``Stack`` can be used to create a stack of *any* valid type in Swift,
 in a similar manner to ``Array`` and ``Dictionary``.
 
 .. _Generics_GenericTypeDefinitionSyntax:
@@ -374,7 +364,7 @@ In this case, ``T`` is used as a placeholder in three places:
 This use of a placeholder type enables ``Stack`` to define the generic behavior
 of a stack of values, regardless of what type those values happen to be for a particular stack.
 
-Instances of ``Stack`` are created in a similar way to ``Array`` and ``Dictionary``,
+You create instances of ``Stack`` in a similar way to ``Array`` and ``Dictionary``,
 by writing the actual type to be used for this specific stack within angle brackets
 after the variable name:
 
@@ -389,8 +379,8 @@ after the variable name:
 Type Constraints
 ----------------
 
-The ``swapTwoValues`` function, and the ``Stack`` type,
-are both able to work with any type at all.
+The ``swapTwoValues`` function and the ``Stack`` type
+are both able to work with any type.
 However, it can sometimes be useful to enforce
 certain :newTerm:`type constraints` on the types that can be used with
 generic functions and generic types.
@@ -402,19 +392,19 @@ As described in :ref:`CollectionTypes_Dictionaries`,
 the type of a dictionary's keys must be :newTerm:`hashable` –
 that is, it must provide a way to make itself uniquely representable.
 ``Dictionary`` needs its keys to be hashable so that it can
-check if it already contains a value for a particular key.
-Without this requirement, ``Dictionary`` would not be able to tell
+check whether it already contains a value for a particular key.
+Without this requirement, ``Dictionary`` could not tell
 whether it should insert or replace a value for a particular key,
 nor would it be able to find a value for a given key that is already in the dictionary.
 
 ``Dictionary`` enforces this requirement by saying that
 its key type must conform to the ``Hashable`` protocol,
-which is a special protocol defined in Swift's standard library.
+which is a special protocol defined in the Swift standard library.
 All of Swift's basic types (such as ``String``, ``Int``, ``Double``, and ``Bool``)
-are hashable by default,
-and you can make your own custom types conform to the ``Hashable`` protocol
-so that they too can be dictionary keys
-(as described in :doc:`Protocols`).
+are hashable by default
+You can make your own custom types conform to the ``Hashable`` protocol
+so that they too can be dictionary keys,
+as described in :doc:`Protocols`.
 
 You can define your own constraints when creating custom generic types,
 and these constraints provide much of the power of generic programming.
@@ -423,11 +413,11 @@ give a way to talk about types in terms of their conceptual characteristics,
 rather than their explicit type.
 
 Here's a non-generic function called ``findInt``,
-which is given an ``Int`` value to find,
+which is given an ``Int`` value to find
 and an array of ``Int`` values within which to find it.
 The ``findInt`` function returns an optional ``Int`` value,
 which will be the index of the first matching value in the array if it is found,
-or ``nil`` if the value could not be found:
+or ``nil`` if the value cannot be found:
 
 .. testcode:: typeConstraints
 
@@ -442,7 +432,7 @@ or ``nil`` if the value could not be found:
          return nil
       }
 
-The ``findInt`` function can now be used to find an integer value in an array of integers:
+The ``findInt`` function can be used to find an integer value in an array of integers:
 
 .. testcode:: typeConstraints
 
@@ -453,9 +443,9 @@ The ``findInt`` function can now be used to find an integer value in an array of
       }
    <- The index of -27 is 2
 
-The principle of finding a value in an array isn't just useful for integers, however.
-We could try and write the same functionality as a generic function called ``findValue``,
-by replacing anything that mentions integers to talk about values of some type ``T`` instead.
+The principle of finding a value in an array isn't useful only for integers, however.
+You can write the same functionality as a generic function called ``findValue``,
+by replacing any mention of integers with values of some type ``T`` instead.
 Here's how a generic version of ``findInt``, called ``findValue``, might be written:
 
 .. testcode:: typeConstraints
@@ -474,9 +464,9 @@ Here's how a generic version of ``findInt``, called ``findValue``, might be writ
    !!              if value == valueToFind {
    !!                 ~~~~~~^~~~~~~~~~~~~~
 
-(Note that the return type is still ``Int?``,
+Note that the return type of this function is still ``Int?``,
 because the function returns an optional index number,
-not an optional value from the array.)
+not an optional value from the array.
 
 However, this function will not compile as written above.
 The problem lies with the equality check, “``if value == valueToFind``”.
@@ -486,19 +476,19 @@ then the meaning of “equality” for that class or structure
 is not something that Swift can guess for you.
 Because of this, it is not possible to guarantee that this code will work
 for *every* possible type ``T``,
-and an appropriate error is reported when you try and compile the code.
+and an appropriate error is reported when you try to compile the code.
 
 All is not lost, however.
-Swift's standard library defines a protocol called ``Equatable``,
+The Swift standard library defines a protocol called ``Equatable``,
 which requires any conforming type to implement the equality operator
 to compare any two values of that type.
-(All of Swift's standard types automatically support the ``Equatable`` protocol,
+All of Swift's standard types automatically support the ``Equatable`` protocol,
 and you can make your own types conform to ``Equatable`` too,
-as described in :ref:`AdvancedOperators_ProtocolOperatorRequirements`.)
+as described in :ref:`AdvancedOperators_ProtocolOperatorRequirements`.
 
 .. TODO: will the way to do this *actually* be described there?
 
-Any type that is ``Equatable`` can safely be used with the ``findValue`` function,
+Any type that is ``Equatable`` can be used safely with the ``findValue`` function,
 because it is guaranteed to support the equality operator.
 To express this fact, you can write a type constraint of ``Equatable``
 as part of the type parameter's definition when you define the function:
@@ -525,11 +515,11 @@ and can be used with any type that is ``Equatable``, such as ``Double`` or ``Str
 .. testcode:: typeConstraintsEquatable
 
    -> let doubleIndex = findValue([3.14159, 0.1, 0.25], 9.3)
-   << // doubleIndex : Int? = <unprintable value>
+   << // doubleIndex : Int? = nil
    /> doubleIndex is an optional Int with no value, because 9.3 is not in the array
    </ doubleIndex is an optional Int with no value, because 9.3 is not in the array
    -> let stringIndex = findValue(["Mike", "Malcolm", "Andrea"], "Andrea")
-   << // stringIndex : Int? = <unprintable value>
+   << // stringIndex : Int? = 2
    /> stringIndex is an optional Int containing a value of \(stringIndex!)
    </ stringIndex is an optional Int containing a value of 2
 

@@ -2,13 +2,22 @@ Subscripts
 ==========
 
 Classes, structures, and enumerations can define :newTerm:`subscripts`,
-which enable instances of that type to be queried via one or more
-values in square brackets after the instance name.
-This the way in which the elements in an array
-are accessed as ``someArray[index]``,
-and elements in a ``Dictionary`` instance are accessed as
-``someDictionary[key]``.
-(Array and dictionary subscripts are described in detail in :doc:`CollectionTypes`.)
+which are used as shortcuts for accessing
+the member elements of a collection, list, or sequence.
+Subscripts are the way in which you access
+elements in an ``Array`` instance as ``someArray[index]``,
+and elements in a ``Dictionary`` instance as ``someDictionary[key]``.
+
+Subscripts in Swift are defined in a very similar way to methods and computed properties.
+They are used as a shorthand way to set and retrieve values by index
+without the need for separate methods for setting and retrieval.
+
+You can define multiple subscripts for a single type,
+and the appropriate subscript overload to use is selected
+based on the type of index value you pass to the subscript.
+Subscripts are not limited to a single dimension,
+and you can define subscripts with multiple input parameters
+to suit your custom type's needs.
 
 .. TODO: this chapter should provide an example of subscripting an enumeration,
    as per Joe Groff's example from rdar://16555559.
@@ -18,11 +27,13 @@ and elements in a ``Dictionary`` instance are accessed as
 Subscript Syntax
 ----------------
 
-Subscripts are written with the ``subscript`` keyword.
-Their syntax is similar to both instance method syntax and computed property syntax.
-They specify one or more input parameters and a return type,
+Subscripts enable you to query instances of a type
+by writing one or more values in square brackets after the instance name.
+Subscript definitions are written with the ``subscript`` keyword,
+and their syntax is similar to both instance method syntax and computed property syntax.
+Subscripts specify one or more input parameters and a return type,
 in the same way as instance methods.
-However, subscripts can be read-write or read-only,
+Unlike instance methods, subscripts can be read-write or read-only,
 and this behavior is communicated via a getter and setter
 in the same way as for computed properties:
 
@@ -41,12 +52,13 @@ in the same way as for computed properties:
    >> }
 
 The type of ``newValue`` is the same as the return value of the subscript.
-As with computed properties, you can choose not to specify the setter's ``(newValue)`` parameter,
-and a default parameter called ``newValue`` will be provided to your setter
+As with computed properties, you can choose not to specify
+the setter's ``(newValue)`` parameter.
+A default parameter called ``newValue`` is provided to your setter
 if you do not provide one yourself.
 
 As with read-only computed properties,
-the ``get`` keyword can be dropped for read-only subscripts:
+you can drop the ``get`` keyword for read-only subscripts:
 
 .. testcode:: subscriptSyntax
 
@@ -57,7 +69,8 @@ the ``get`` keyword can be dropped for read-only subscripts:
       }
    >> }
 
-Here's an example of a read-only subscript implementation:
+Here's an example of a read-only subscript implementation,
+which defines a ``TimesTable`` structure to represent an *n*-times-table of integers:
 
 .. testcode:: timesTable
 
@@ -72,42 +85,65 @@ Here's an example of a read-only subscript implementation:
    -> println("six times three is \(threeTimesTable[6])")
    <- six times three is 18
 
-This example defines a ``TimesTable`` structure to represent an n-times-table of integers.
-In this example, the structure is used to represent the three-times-table.
+In this example, a new instance of ``TimesTable`` is created
+to represent the three-times-table.
+This is indicated by passing a value of ``3`` to the structure's ``initializer``
+as the value to use for the instance's ``multiplier`` parameter.
 
-An n-times-table is based on a fixed mathematical rule.
-It is therefore not appropriate to set ``threeTimesTable[someIndex]`` to a new value.
-This is why the subscript for ``TimesTable`` is defined as a read-only subscript.
+You can query the ``threeTimesTable`` instance by calling its subscript,
+as shown in the call to ``threeTimesTable[6]``.
+This requests the sixth entry in the three-times-table,
+which returns a value of ``18``, or ``3`` times ``6``.
+
+.. note::
+
+   An *n*-times-table is based on a fixed mathematical rule.
+   It is not appropriate to set ``threeTimesTable[someIndex]`` to a new value,
+   and so the subscript for ``TimesTable`` is defined as a read-only subscript.
 
 .. _Subscripts_SubscriptUsage:
 
 Subscript Usage
 ---------------
 
-The exact meaning of “subscript” depends upon the context in which it is used.
-Subscripts are typically used as a convenient shorthand for accessing
+The exact meaning of “subscript” depends on the context in which it is used.
+Subscripts are typically used as a shortcut for accessing
 the member elements in a collection, list, or sequence.
 You are free to implement subscripts in the most appropriate way for
 your particular class or structure's functionality.
 
-For example, Swift's ``Dictionary`` collection type implements a subscript to provide
-access to the values stored in a ``Dictionary`` instance
-by passing in a key of the appropriate type within subscript braces:
+For example, Swift's ``Dictionary`` type implements a subscript
+to to set and retrieve the values stored in a ``Dictionary`` instance.
+You can set a value in a dictionary
+by providing a key of the dictionary's key type within subscript braces,
+and assigning a value of the dictionary's value type to the subscript:
 
 .. testcode:: dictionarySubscript
 
-   -> let numberOfLegs = ["spider": 8, "ant": 6, "cat": 4]
-   << // numberOfLegs : Dictionary<String, Int> = Dictionary<String, Int>(<unprintable value>)
-   -> let spiderLegs = numberOfLegs["spider"]
-   << // spiderLegs : Int = 8
-   /> spiderLegs is equal to \(spiderLegs)
-   </ spiderLegs is equal to 8
+   -> var numberOfLegs = ["spider": 8, "ant": 6, "cat": 4]
+   << // numberOfLegs : Dictionary<String, Int> = ["spider": 8, "ant": 6, "cat": 4]
+   -> numberOfLegs["bird"] = 2
 
-This ``Dictionary`` instance is of type ``Dictionary<String, Int>``.
-This means that it has keys of type ``String``,
-and values of type ``Int``.
-Its subscript implementation therefore expects to be passed a ``String`` key,
-and returns the corresponding ``Int`` value for that key.
+The example above defines a variable called ``numberOfLegs``,
+and initializes it with a dictionary literal containing three key-value pairs.
+The type of the ``numberOfLegs`` dictionary is inferred to be ``Dictionary<String, Int>``.
+After creating the dictionary,
+this example uses subscript assignment to add
+a ``String`` key of ``"bird"`` and an ``Int`` value of ``2`` to the dictionary.
+
+For more information about ``Dictionary`` subscripting,
+see :ref:`CollectionTypes_AccessingAndModifyingADictionary`.
+
+.. note::
+
+   Swift's ``Dictionary`` type implements its key-value subscripting
+   as a subscript that takes and receives an *optional* type.
+   For the ``numberOfLegs`` dictionary above,
+   the key-value subscript takes and returns a value of type ``Int?``,
+   or “optional int”.
+   The ``Dictionary`` type uses an optional subscript type to model the fact that
+   not every key will have a value, and to give a way to delete a value for a key
+   by assigning a ``nil`` value for that key.
 
 .. _Subscripts_SubscriptOptions:
 
@@ -118,7 +154,7 @@ Subscripts can take any number of input parameters,
 and these input parameters can be of any type.
 Subscripts can also return any type.
 Subscripts can use variable parameters and variadic parameters,
-but cannot use inout parameters or provide default parameter values. 
+but cannot use in-out parameters or provide default parameter values. 
 
 A class or structure can provide as many subscript implementations as it needs,
 and the appropriate subscript to be used will be inferred based on
@@ -158,9 +194,6 @@ The ``Matrix`` structure's subscript takes two integer parameters:
          }
       }
 
-.. TODO: Consider switching this over to use the shorter “Double[]” syntax
-   once it can be used for initialization
-
 ``Matrix`` provides an initializer that takes two parameters called ``rows`` and ``columns``,
 and creates an array that is large enough to store ``rows * columns`` values of type ``Double``.
 Each position in the matrix is given an initial value of ``0.0``.
@@ -168,12 +201,17 @@ To achieve this, the array's size, and an initial cell value of ``0.0``,
 are passed to an array initializer that creates and initializes a new array of the correct size.
 (This initializer is described in more detail in :ref:`CollectionTypes_CreatingAndInitializingAnArray`.)
 
+You can construct a new ``Matrix`` instance by passing
+an appropriate row and column count to its initializer:
+
 .. testcode:: matrixSubscript, matrixSubscriptAssert
 
    -> var matrix = Matrix(rows: 2, columns: 2)
    << // matrix : Matrix = Matrix(2, 2, [0.0, 0.0, 0.0, 0.0])
 
-The ``grid`` array is effectively a flattened version of the matrix,
+This creates a new ``Matrix`` instance with two rows and two columns.
+The ``grid`` array for this ``Matrix`` instance
+is effectively a flattened version of the matrix,
 as read from top left to bottom right:
 
 .. image:: ../images/subscriptMatrix01.png

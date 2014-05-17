@@ -291,7 +291,7 @@ Single-line comments begin with two forward-slashes (``//``):
 .. testcode:: comments
    :compile: true
 
-   -> // This is a comment
+   -> // this is a comment
 
 You can also write multi-line comments,
 which start with a forward-slash followed by an asterisk (``/*``),
@@ -300,7 +300,7 @@ and end with an asterisk followed by a forward-slash (``*/``):
 .. testcode:: comments
    :compile: true
 
-   -> /* This is also a comment,
+   -> /* this is also a comment,
       but written over multiple lines */
 
 Unlike C, multi-line comments can be nested inside other multi-line comments.
@@ -311,9 +311,9 @@ The second block is then closed, followed by the first block:
 .. testcode:: comments
    :compile: true
 
-   -> /* This is the start of the first multi-line comment
-         /* This is the second, nested multi-line comment */
-      This is the end of the first multi-line comment */
+   -> /* this is the start of the first multi-line comment
+         /* this is the second, nested multi-line comment */
+      this is the end of the first multi-line comment */
 
 Nested multi-line comments enable you to comment out large blocks of code quickly and easily,
 even if the code already contains multi-line comments.
@@ -527,9 +527,9 @@ All of these integer literals have a decimal value of ``17``:
 
    -> let decimalInteger = 17
    << // decimalInteger : Int = 17
-   -> let binaryInteger = 0b10001      // 17 in binary notation
+   -> let binaryInteger = 0b10001       // 17 in binary notation
    << // binaryInteger : Int = 17
-   -> let octalInteger = 0o21         // 17 in octal notation
+   -> let octalInteger = 0o21           // 17 in octal notation
    << // octalInteger : Int = 17
    -> let hexadecimalInteger = 0x11     // 17 in hexadecimal notation
    << // hexadecimalInteger : Int = 17
@@ -846,7 +846,7 @@ Here's an example of a tuple:
 .. testcode:: tuples
 
    -> let http404Error = (404, "Not Found")
-   << // http404Error : (Int, String) = (404, "Not Found")
+   << // http404Error : (Int, String) = (404, Not Found)
    /> http404Error is of type (Int, String), and equals (\(http404Error.0), \"\(http404Error.1)\")
    </ http404Error is of type (Int, String), and equals (404, "Not Found")
 
@@ -871,7 +871,7 @@ which can then be accessed as usual:
 .. testcode:: tuples
 
    -> let (statusCode, statusMessage) = http404Error
-   << // (statusCode, statusMessage) : (Int, String) = (404, "Not Found")
+   << // (statusCode, statusMessage) : (Int, String) = (404, Not Found)
    -> println("The status code is \(statusCode)")
    <- The status code is 404
    -> println("The status message is \(statusMessage)")
@@ -884,7 +884,7 @@ when you decompose the tuple:
 .. testcode:: tuples
 
    -> let (justTheStatusCode, _) = http404Error
-   << // (justTheStatusCode, _) : (Int, String) = (404, "Not Found")
+   << // (justTheStatusCode, _) : (Int, String) = (404, Not Found)
    -> println("The status code is \(justTheStatusCode)")
    <- The status code is 404
 
@@ -908,7 +908,7 @@ You can name the individual elements in a tuple when the tuple is defined:
 .. testcode:: tuples
 
    -> let http200Status = (statusCode: 200, description: "OK")
-   << // http200Status : (statusCode: Int, description: String) = (200, "OK")
+   << // http200Status : (statusCode: Int, description: String) = (200, OK)
 
 If you name the elements in a tuple,
 you can use the element names to access the values of those elements:
@@ -980,7 +980,7 @@ The example below shows how to use ``toInt`` to try and convert a ``String`` int
    -> let possibleNumber = "123"
    << // possibleNumber : String = "123"
    -> let convertedNumber = possibleNumber.toInt()
-   << // convertedNumber : Int? = <unprintable value>
+   << // convertedNumber : Int? = 123
    // convertedNumber is inferred to be of type "Int?", or "optional Int"
 
 Because the ``toInt`` method might fail,
@@ -1100,7 +1100,7 @@ by assigning it the special value ``nil``:
 .. testcode:: optionals
 
    -> var serverResponseCode: Int? = 404
-   << // serverResponseCode : Int? = <unprintable value>
+   << // serverResponseCode : Int? = 404
    /> serverResponseCode contains an actual Int value of \(serverResponseCode!)
    </ serverResponseCode contains an actual Int value of 404
    -> serverResponseCode = nil
@@ -1119,7 +1119,7 @@ the constant or variable is automatically set to ``nil`` for you:
 .. testcode:: optionals
 
    -> var surveyAnswer: String?
-   << // surveyAnswer : String? = <unprintable value>
+   << // surveyAnswer : String? = nil
    // surveyAnswer is automatically set to nil
 
 .. note::
@@ -1155,7 +1155,7 @@ Implicitly unwrapped optionals are useful when
 an optional's value is confirmed to exist immediately after the optional is first defined,
 and can definitely be assumed to exist at every point thereafter.
 The primary use of implicitly unwrapped optionals in Swift is during class initialization,
-as described in :ref:`MemoryManagement_UnownedReferencesAndImplicitlyUnwrappedOptionalProperties`.
+as described in :ref:`AutomaticReferenceCounting_UnownedReferencesAndImplicitlyUnwrappedOptionalProperties`.
 
 An implicitly unwrapped optional is a normal optional behind the scenes,
 but can also be used like a non-optional value,
@@ -1166,12 +1166,12 @@ an optional ``String`` and an implicitly unwrapped optional ``String``:
 .. testcode:: implicitlyUnwrappedOptionals
 
    -> let possibleString: String? = "An optional string."
-   << // possibleString : String? = <unprintable value>
+   << // possibleString : String? = An optional string.
    -> println(possibleString!) // requires an exclamation mark to access its value
    <- An optional string.
    ---
    -> let assumedString: String! = "An implicitly unwrapped optional string."
-   << // assumedString : String! = String!(<unprintable value>)
+   << // assumedString : String! = An implicitly unwrapped optional string.
    -> println(assumedString)  // no exclamation mark is needed to access its value
    <- An implicitly unwrapped optional string.
 

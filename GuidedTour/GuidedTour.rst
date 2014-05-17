@@ -17,7 +17,7 @@ If you have written code in C or Objective-C,
 this syntax looks familiar to you.
 Unlike those languages,
 this line of Swift code is a complete program.
-You don't need to import a standard library for functionality like
+You don't need to import a separate library for functionality like
 input/output or string handling.
 Code written at global scope is used
 as the entry point for the program,
@@ -46,10 +46,12 @@ Simple Values
 
 You create constants and variables using the same syntax,
 with one difference:
-Use ``let`` to declare a constant and use ``var`` for a variable.
-The value of a constant can be assigned only once,
-although it does not need to be known at compile time.
-The value of a variable can be assigned multiple times.
+Use ``let`` for a constant and use ``var`` for a variable.
+The value of a constant 
+doesn't need to be known at compile time,
+as long as it assigned only once.
+This means you can use constants to name a value
+that you determine once but use in many places.
 
 .. testcode::
 
@@ -59,73 +61,62 @@ The value of a variable can be assigned multiple times.
    >> myVariable
    << // myVariable : Int = 50
    -> let myConstant = 42
-   << // myConstant : Int = 42
-   // myConstant = 100  // Uncomment to see the error
-
-.. admonition:: Experiment
-
-   Changing ``myConstant`` to be a variable.
-   Remove the last line, so ``myConstant`` is only assigned a value once.
 
 .. TR: Is the requirement that constants need an initial value
    a current REPL limitation, or an expected language feature?
 
-A variable must have the same type
+A constant or variable must have the same type
 as the value you want to assign to it.
+However, you don't have to explicitly write
+the type of every single constant and variable.
+Providing an initial value lets the compiler infer
+the type of the constant or variable.
+For example, in example above
+the compiler infers that ``myVariable`` is an integer
+because its initial value is a integer.
 
-.. testcode::
-
-    -> var hello = "Hello"
-    << // hello : String = "Hello"
-    // hello = 123  // Uncomment to see the error
-
-In the previous example,
-the compiler understands that ``greeting`` is a string
-because its initial value is a string.
-This behavior of determining type information
-based on the surrounding code
-is known as *type inference*,
-and it allows the compiler to warn you
-about type-related errors in your code
-without requiring you to
-write explicit type information everywhere.
-
-When the initial value doesn't provide enough information,
-or when there is no initial value,
-specify an explicit type
+If the initial value doesn't provide enough information
+(or if there is no initial value)
 by writing the type after the variable,
 separated by a colon.
-Type inference allows the compiler
-to correctly infer the type of numbers ---
-if you write ``4.0 / 2``
-it is understood that ``4.0``, ``2``, and the result
-all have the type ``Double``.
 
 .. testcode::
 
-   -> let implicitString = "Hello"
-   << // implicitString : String = "Hello"
-   -> let explicitString: String = "Hello"
-   << // explicitString : String = "Hello"
-   ---
    -> let implicitInteger = 70
    << // implicitInteger : Int = 70
    -> let implicitDouble = 70.0
    << // implicitDouble : Double = 70.0
    -> let explicitDouble: Double = 70
    << // explicitDouble : Double = 70.0
-   -> let explicitFloat: Float = 70
-   << // explicitFloat : Float = 70.0
 
 .. admonition:: Experiment
 
    Create a constant with
    an explicit type of ``Float`` and a value of ``4``.
-   Notice how the type of ``4`` is determined based on how you use it.
 
-   Try providing an explicit type that doesn’t match
-   the variable’s initial value.
+   Try providing an explicit type of ``String``
+   for a variable with an initial value of 3.
    What error do you get?
+
+.. TODO: Needs to go somewhere, but not here.
+
+   Numeric literals that don't have a decimal point
+   are treated as an integer by default,
+   but type inference can make them floating point numbers
+   if the expression would otherwise be invalid.
+   For example,
+   if the value of ``seven`` is the integer ``7``,
+   the result of ``seven / 2`` is the integer ``3``.
+   However, if its value is ``7.0``
+   the result of ``seven / 2`` is ``3.5`` ---
+   dividing a floating point number by an integer would be a type error,
+   so the type of ``2`` is understood as ``2.0``.
+
+   7 / 2     // 3 (an integer)
+   7.0 / 2   // 3.5
+   let seven = 7.0
+   let two = 2
+   seven / two  // type error
 
 Values are never implicitly converted to another type.
 If you need to convert a value to a different type,
@@ -170,82 +161,72 @@ the index or key in brackets.
 
 .. testcode::
 
-    -> let fruits = ["apple", "orange", "banana"]
-    << // fruits : Array<String> = ["apple", "orange", "banana"]
-    -> let favoriteFruit = fruits[1]
-    << // favoriteFruit : String = "orange"
+    -> var shoppingList = ["catfish", "water", "tulips", "blue paint"]
+    << // shoppingList : Array<String> = ["catfish", "water", "tulips", "blue paint"]
+    -> shoppingList[1] = "bottle of water"
     ---
-    -> var temperatures = [
-          "San Francisco": 59.0,
-          "Paris": 51.6,
-          "Shanghai": 73.2,
-       ]
-    << // temperatures : Dictionary<String, Double> = Dictionary<String, Double>(1.33333333333333, 3, <DictionaryBufferOwner<String, Double> instance>)
-    -> temperatures["San Francisco"] < temperatures["Paris"]
-    <$ : Bool = false
-
-.. admonition:: Experiment
-
-   Add you own favorite fruit to the array
-   and compare it to ``favoriteFruit`` with the ``==`` operator.
-   Add the current temperature of your town
-   to the dictionary.
-
-.. Forcasts above are real current conditions from 9:14 pm April 28, 2014.
-
-.. Old Firefly example
-   which doesn't follow our editorial guidelines for names of people
     -> var occupations = [
           "Malcolm": "Captain",
           "Kayley": "Mechanic",
           "Jayne": "Public Relations",
         ]
     << // occupations : Dictionary<String, String> = Dictionary<String, String>(1.33333333333333, 3, <DictionaryBufferOwner<String, String> instance>)
-    -> occupations["Jayne"] == "Doctor"
-    <$ : Bool = false
-    ---
 
-An empty array is written ``[]``,
-and an empty dictionary is written ``[:]``.
-Because the type of an empty array or dictionary
-can't be inferred from its content,
-use a type annotation to specify it expliticly.
+To create an empty array or dictionary,
+use the initializer syntax.
 
 .. testcode::
 
-   -> var emptyArray: Array<String> = []
+   -> let emptyArray = String[]()
    << // emptyArray : Array<String> = []
-   -> var emptyDictionary: Dictionary<String, Float> = [:]
+   -> let emptyDictionary = Dictionary<String, Float>()
    << // emptyDictionary : Dictionary<String, Float> = Dictionary<String, Float>(1.33333333333333, 0, <DictionaryBufferOwner<String, Float> instance>)
 
-.. The REPL output after creating a dictionary doesn’t make any sense.
-   No way to get it to pretty-print the keys and values.
+If type information can be inferred,
+such as when you set a new value for a variable
+or pass an argument to a function,
+you can write an empty array as ``[]``
+and an empty dictionary as ``[:]``.
+
+.. testcode::
+
+   -> shoppingList = []   // Went shopping and bought everything.
 
 Control Flow
 ------------
 
-Use ``if`` to choose between blocks of code
-by checking Boolean conditions.
+Use ``if`` and ``switch`` to make conditionals,
+and use ``for``-``in``, ``for``, ``while``, and ``do``-``while``
+to make loops.
+Parentheses around the condition or loop variable are optional.
+Braces around the body are required.
 
 .. testcode::
 
-   -> let haveJellyBabies = false
-   << // haveJellyBabies : Bool = false
-   -> let remainingGummiBears = 5
-   << // remainingGummiBears : Int = 5
-   -> if haveJellyBabies {
-         println("Would you like a jelly baby?")
-      } else if remainingGummiBears > 0 {
-         println("Would you like a gummi bear?")
-      } else {
-         println("Sorry, all we have left are fruits and vegetables.")
-      }
-   << Would you like a gummi bear?
+    -> let individualScores = [75, 43, 103, 87, 12]
+    << // individualScores : Array<Int> = [75, 43, 103, 87, 12]
+    -> var teamScore = 0
+    << // teamScore : Int = 0
+    -> for score in individualScores {
+           if score > 50 {
+               teamScore += 3
+           } else {
+               teamScore += 1
+           }
+       }
+    >> teamScore
+    << // teamScore : Int = 11
 
-There are no parentheses around the conditional,
-and the braces around the body are required.
-The conditional must be a Boolean expression;
-code like ``if remainingGummiBears { ... }`` is an error,
+..
+   -> let haveJellyBabies = true
+   << // haveJellyBabies : Bool = true
+   -> if haveJellyBabies {
+      }
+   << Would you like a jelly baby?
+
+In an ``if`` statement,
+the conditional must be a Boolean expression;
+code like ``if score { ... }`` is an error,
 not an implicit comparison to zero.
 
 You use ``if`` and ``let`` together to work with optional values.
@@ -286,34 +267,36 @@ to the variable after ``let``,
 which makes the unwrapped value available
 inside the block of code.
 
-Use ``switch`` to choose between blocks of code
-where each block of code is associated
-with a possible value.
+Switches support any kind of data, not just integers,
+and the matching criteria can be more complex
+than simple comparison.
 
 .. testcode::
 
-   -> let vegetable = "cucumber"
-   << // vegetable : String = "cucumber"
+   -> let vegetable = "red pepper"
+   << // vegetable : String = "red pepper"
    -> switch vegetable {
-         case "lettuce":
-            println("Let’s make salad.")
          case "celery":
             println("Add some raisins and make ants on a log.")
-         case "cucumber":
-            println("How about a cucumber sandwich?")
+         case "cucumber", "watercress":
+            println("That would make a good tea sandwich.")
+         case let x where x.hasSuffix("pepper"):
+            println("Is it a spicy \(x)?")
          default:
             println("Everything tastes good in soup.")
       }
-   << How about a cucumber sandwich?
+   << Is it a spicy red pepper?
 
 .. admonition:: Experiment
+
+   Add a case for vegetable names that start
+   with an uppercase letter.
 
    Try removing the default case.
    What error do you get?
 
-Switches support any kind of data, not just integers.
-You need to provide a case for every possible value
-or use ``default`` to specify what happens if none of the cases match.
+.. TODO: The "starts with uppercase" is probably too much of a stretch
+   before having learned about string operations.
 
 After executing the code inside the switch case that matched,
 the program exits from the switch statement.
@@ -324,63 +307,48 @@ at the end of each case‘s code.
 .. Omitting mention of "fallthrough" keyword.
    It's in the guide/reference if you need it.
 
-Switches support a variety of complex matching criteria,
-such as tuple unpacking and ``where`` clauses:
+.. Haven't shown structs or enums yet --
+   revisit switch statements at that point
+   to show another cool thing.
+
+
+.. the focus here should be on .. and ...
+
+It loops that use an index,
+the range operators ``..`` and ``...``
+let you write code that is easier to read.
+The ``..`` operator includes both its start and end in the range,
+like writing ``<=`` in a conditional of a ``for`` loop.
+the ``...`` operator includes the start but not the end,
+like writing ``<`` in a conditional of a ``for`` loop.
+These two loops do the same thing:
 
 .. testcode::
 
-   -> let somePoint = (1, 1)
-   << // somePoint : (Int, Int) = (1, 1)
-   -> switch somePoint {
-         case (0, 0):
-            println("(0, 0) is at the origin")
-         case (_, 0):
-            println("(\(somePoint.0), 0) is on the x-axis")
-         case (0, _):
-            println("(0, \(somePoint.1)) is on the y-axis")
-         case let (x, y) where x == y:
-            println("(\(x), \(y)) is on the diagonal")
-         default:
-            println("The point is somewhere else.")
+   -> for i in 0...5 {
+         println(i)
       }
-   << (1, 1) is on the diagonal
-
-.. admonition:: Experiment
-
-   Try adding a case statement
-   that matches points where ``x`` is greater than ``y``,
-   and one that matches points where ``x`` is odd.
-
-Use ``for`` to iterate over a collection of items.
-
-.. TR: Will we end up having Collection and Container protocols
-   in the WWDC timeframe?
-   Let's match the English noun I use here to the protocol name,
-   if it makes sense.
-
-.. testcode::
-
-    -> let listOfNumbers = 1..5
-    << // listOfNumbers : Range<Int> = Range<Int>(1, 6)
-    -> var sum = 0
-    << // sum : Int = 0
-    -> for n in listOfNumbers {
-          sum += n
-       }
-    >> sum
-    << // sum : Int = 15
-
-.. admonition:: Experiment
-
-   Try changing ``1..5`` to ``1...5``.
-   Notice that 5 is omitted from the sum.
-   When would you want to include or exclude the final number?
+   << 0
+   << 1
+   << 2
+   << 3
+   << 4
+   -> for var i = 0; i < 5; ++i {
+         println(i)
+      }
+   << 0
+   << 1
+   << 2
+   << 3
+   << 4
 
 You can also use ``for`` to iterate over items in a dictionary
 by providing a variable name to use
 for each key-value pair.
 
 .. EDIT: key/value or key-value?
+
+.. TODO: Shorten listing
 
 .. testcode::
 
@@ -406,19 +374,6 @@ for each key-value pair.
 
    Try keeping track of which kind of number
    was the largest, as well as what that largest number was.
-
-Loops can keep an explicit counter or index.
-
-.. testcode::
-
-   -> for var i = 0; i < 5; ++i {
-         println(i)
-      }
-   << 0
-   << 1
-   << 2
-   << 3
-   << 4
 
 Use ``while`` to repeat a block of code until a condition changes.
 The condition of a loop can be at the end instead,
@@ -458,8 +413,6 @@ with a parenthesized list of arguments.
        }
     -> greet("Bob", "Tuesday")
     <$ : String = "Hello Bob, today is Tuesday."
-    -> greet("Alice", "Wednesday")
-    <$ : String = "Hello Alice, today is Wednesday."
 
 .. admonition:: Experiment
 
@@ -509,9 +462,9 @@ that is long or complex.
 
 .. testcode::
 
-    -> func returnFifteen () -> Int {
+    -> func returnFifteen() -> Int {
           var y = 10
-          func add () -> () {
+          func add() -> () {
              y += 5
           }
           add()
@@ -526,7 +479,7 @@ This means a function can return another function as its value.
 .. testcode::
 
     -> func makeIncrementer() -> (Int -> Int) {
-          func addOne (number: Int) -> Int {
+          func addOne(number: Int) -> Int {
              return 1 + number
           }
           return addOne
@@ -542,65 +495,71 @@ A function can take another function as one of its arguments.
 
 .. testcode::
 
-    -> // Re-implement the Standard Library sort function.
-    -> func bubbleSort (var list: Array<Int>, outOfOrder: (Int, Int) -> Bool) -> Array<Int> {
-          for i in 0...list.count {
-             for j in 0...list.count {
-                if outOfOrder(list[i], list[j]) {
-                   (list[i], list[j]) = (list[j], list[i])
-                }
+    -> func hasAnyMatches(list: Int[], condition: Int -> Bool) -> Bool {
+          for item in list {
+             if condition(item) {
+                return true
              }
           }
-          return list
+          return false
        }
-    -> func greaterThan (x : Int, y : Int) -> Bool {
-          return x > y
+    -> func lessThanTen(number: Int) -> Bool {
+          return number < 10
        }
-    -> var numbers = [8, 3, 5, 6]
+    -> var numbers = [20, 19, 7, 12]
     << // numbers : Array<Int> = [8, 3, 5, 6]
-    -> var sortedNumbers = bubbleSort(numbers, greaterThan)
-    << // sortedNumbers : Array<Int> = [8, 6, 5, 3]
+    -> hasAnyMatches(numbers, lessThanTen)
+    <$ : Bool = true
 
 Closures are the same as functions with one difference:
 you don't give them a name when you declare them.
 You write a closure as code surrounded by braces (``{}``)
 and use ``in`` to separate the arguments from the body.
 
+.. TODO: This notion of closures being "just" un-named functions is problematic.
+   See Dave's recent work in the Guide comparing the two.
+
 .. EDIT: Second sentence above reads better as describing singular closure.
 
 .. testcode::
 
-    -> let triple: Int -> Int = {
-          (number: Int) in
+    -> numbers.map({
+          (number: Int) -> Int in
           let result = 3 * number
           return result
-       }
-    << // triple : Int -> Int = <unprintable value>
-    -> triple(5)
-    <$ : Int = 15
+       })
+    <$ : Array<Int> = [24, 9, 15, 18]
 
-.. The type of "number" can be omitted above,
-   and in fact the parens are probably not needed either.
-   I've written them for now
-   so that I start with the most verbose function-y syntax.
+.. The closure's return type has to be specified here
+   because type inference can't determine it.
+   If the value of the whole expression
+   is assigned to a variable of known type,
+   then it can be omitted.
+   The whole point of this first example
+   is that it *doesn't* omit anything.
+
+   var l: Int[] = numbers.map({
+             (number: Int) in
+             let result = 3 * number
+             return result
+          })
+       
 
 You have several options for writing closures more concisely.
 When the closure's type is already known,
 such as the callback for a delegate,
 you can omit the type of its parameters,
 its return type, or both.
-For even more brevity,
-you can refer to parameters by number instead of by name.
 Single statement closures implicitly return the value
 of their only statement.
 
 .. testcode::
 
-    -> let shortTriple: Int -> Int = { 3 * $0 }
-    << // shortTriple : Int -> Int = <unprintable value>
-    -> shortTriple(5)
-    <$ : Int = 15
+    -> numbers.map({ number in 3 * number })
+    <$ : Array<Int> = [24, 9, 15, 18]
 
+For even more brevity,
+you can refer to parameters by number instead of by name.
 A closure passed as the last argument to a function
 can appear immediately after the parentheses.
 
@@ -608,11 +567,6 @@ can appear immediately after the parentheses.
 
     -> sort([1, 5, 3, 12, 2]) { $0 > $1 }
     <$ : Array<Int> = [12, 5, 3, 2, 1]
-
-.. admonition:: Experiment
-
-   Rewrite the bubble sort function above
-   so it takes a trailing closure to do comparisons.
 
 The previous listing can be written without a closure at all
 by passing the ``>`` operator
@@ -622,6 +576,11 @@ as the second argument to the ``sort`` function.
 
     -> sort([1, 5, 3, 12, 2], >)
     <$ : Array<Int> = [12, 5, 3, 2, 1]
+
+.. write-me::
+
+* Curried functions
+* Custom operators
 
 Objects and Classes
 -------------------
@@ -689,9 +648,9 @@ but it begins with ``init`` instead of ``func`` and has no function name.
              return "A shape with \(numberOfSides) sides."
           }
        }
-    >> NamedShape("test name").name
+    >> NamedShape(name: "test name").name
     <$ : String = "test name"
-    >> NamedShape("test name").description()
+    >> NamedShape(name: "test name").description()
     <$ : String = "A shape with 0 sides."
 
 
@@ -722,7 +681,7 @@ that don't actually override any method in the superclass.
 
           init(sideLength: Double, name: String) {
              self.sideLength = sideLength
-             super.init(name)
+             super.init(name: name)
              numberOfSides = 4
           }
 
@@ -734,7 +693,7 @@ that don't actually override any method in the superclass.
              return "A square with sides of length \(sideLength)."
           }
        }
-    -> let test = Square(5.2, "my test square")
+    -> let test = Square(sideLength: 5.2, name: "my test square")
     << // test : Square = <Square instance>
     -> test.area()
     <$ : Double = 27.04
@@ -791,7 +750,7 @@ to create a computed property.
 
            init(radius: Double, name: String) {
                self.radius = radius
-               super.init(name)
+               super.init(name: name)
                numberOfSides = 1
            }
 
@@ -799,7 +758,7 @@ to create a computed property.
               return "A circle with radius of length \(radius)."
            }
        }
-    -> var circle = Circle(12.7, "a circle")
+    -> var circle = Circle(radius: 12.7, name: "a circle")
     <$ : Circle = <Circle instance>
     -> circle.area
     <$ : Double = 506.7074785185
@@ -836,13 +795,13 @@ is always the same as the side length of its square.
             circle = Circle(size, name)
          }
       }
-   -> var circleAndSquare = CircleAndSquare(10, "another test shape")
+   -> var circleAndSquare = CircleAndSquare(size: 10, name: "another test shape")
    << // circleAndSquare : CircleAndSquare = <CircleAndSquare instance>
    -> circleAndSquare.square.sideLength
    <$ : Double = 10.0
    -> circleAndSquare.circle.radius
    <$ : Double = 10.0
-   -> circleAndSquare.square = Square(50, "larger square")
+   -> circleAndSquare.square = Square(sideLength: 50, name: "larger square")
    -> circleAndSquare.circle.radius
    <$ : Double = 50.0
 
@@ -864,39 +823,289 @@ is always the same as the side length of its square.
 Enumerations and Structures
 ---------------------------
 
+You use ``enum`` to create an enumeration.
+Like classes and all other named types,
+enumerations can have methods associated with them.
+
+.. testcode::
+
+    -> enum Rank: Int {
+          case Ace = 1
+          case Two, Three, Four, Five, Six, Seven, Eight, Nine, Ten
+          case Jack, Queen, King
+          func description() -> String {
+             switch self {
+                case .Ace:
+                   return "ace"
+                case .Jack:
+                   return "jack"
+                case .Queen:
+                   return "queen"
+                case .King:
+                   return "king"
+                default:
+                   return String(self.toRaw())
+             }
+          }
+       }
+    -> let ace = Rank.Ace
+    << // ace : Rank = <opaque>
+    -> let aceRawValue = ace.toRaw()
+    <$ : Int = 1
+
+.. admonition:: Experiment
+
+   Write a function that compares two ``Rank`` values
+   by comparing their raw values.
+
+In the example above,
+the raw value type of the enuration is ``Int``,
+so you only have to specify the first raw value.
+The rest of the raw values are assigned in order.
+You can also use strings or floating-point numbers
+as the raw type of an enumeration.
+
+The ``toRaw`` and ``fromRaw`` functions let you convert
+between the raw value and the enumeration value.
+
+.. testcode::
+
+    >> var test_threeDescription = ""
+    -> if let convertedRank = Rank.fromRaw(3) {
+    ->    let threeDescription = convertedRank.description()
+    >>    test_threeDescription = threeDescription
+    -> }
+    >> test_threeDescription
+    <$ : String "3"
+
+The member values of an enumeration are actual values,
+not just another way of writing their raw values.
+In fact,
+in cases where there isn't a meaningful raw value,
+you don't have to provide one.
+
+.. testcode::
+
+    -> enum Suit {
+          case Spades, Hearts, Diamonds, Clubs
+          func description() -> String {
+             switch self {
+                case .Spades:
+                   return "spades"
+                case .Hearts:
+                   return "hearts"
+                case .Diamonds:
+                   return "diamonds"
+                case .Clubs:
+                   return "clubs"
+             }
+          }
+       }
+    -> let hearts = Suit.Hearts
+    << // hearts : Suit = <opaque>
+    -> let heartsDescription = hearts.description()
+    << // heartsDescription : String = "hearts"
+
+.. admonition:: Experiment
+
+   Add a ``color`` method to ``Suit`` which returns "black"
+   for spades and clubs, and returns "red" for hearts and diamonds.
+
+.. Suits are in Bridge order, which matches Unicode order.
+   In other games, orders differ.
+   Wikipedia lists a good half dozen orders.
+
+When creating the ``hearts`` constant,
+the enumeration member ``Suit.Hearts`` had to be written out in full,
+but inside the switch it could be abbreviated as just ``.Hearts``.
+You can use the abbreviated form
+anytime the value's type is already known.
+
+Use ``struct`` to create a structure.
+Structures support many of the same behaviors as classes,
+including methods and initializers.
+One of the most important differences
+between structures and classes is that
+structures are always copied when they are passed around in your code.
+
+.. testcode::
+
+    -> struct Card {
+          var rank: Rank
+          var suit: Suit
+          func description() -> String {
+             return "The \(rank.description()) of \(suit.description())"
+          }
+       }
+    -> let threeOfSpades = Card(rank: .Three, suit:.Spades)
+    << // threeOfSpades : Card = V4REPL4Card (has 2 children)
+    -> let threeOfSpadesDescription = threeOfSpades.description()
+    << // threeOfSpadesDescription : String = "The 3 of spades"
+
+.. admonition:: Experiment
+
+   Add a method to ``Card`` that creates
+   a full deck of cards,
+   with one card of each combination of rank and suit.
+
+Enumerations can have other values associated with them.
+This is different than a raw value:
+the raw value is always the same,
+but you provide the associated values
+when you create the instance of the enumeration.
+For example,
+consider the case of requesting
+the sunrise and sunset time from a server.
+The server either responds with the information,
+or it responds with some error information.
+
+.. testcode::
+
+    -> enum ServerResponse {
+          case Result(String, String)
+          case Error(String)
+       }
+    ---
+    -> let success = ServerResponse.Result("6:00 am", "8:09 pm")
+    << // success : ServerResponse = <unprintable value>
+    -> let failure = ServerResponse.Error("Out of cheese.")
+    << // failure : ServerResponse = <unprintable value>
+    ---
+    >> var test_response: String = ""
+    >> switch success {
+    >>    case let .Result(sunrise, sunset):
+    >>       test_response = "Sunrise is at \(sunrise) and sunset is at \(sunset)."
+    >>    case let .Error(error):
+    >>       test_response = "Failure...  \(error)"
+    >> }
+    >> test_response
+    << // test_response : String = "Sunrise is at 6:00 am and sunset is at 8:09 pm."
+    -> switch success {
+          case let .Result(sunrise, sunset):
+             let serverResponse = "Sunrise is at \(sunrise) and sunset is at \(sunset)."
+          case let .Error(error):
+             let serverResponse = "Failure...  \(error)"
+       }
+
+.. Note:
+   The repetition ond odd structure for the switch above is because
+   the REPL requires an initial value for variables to make it testable.
+   From a playground side, I can see the value of a variable
+   that's scoped only within the switch,
+   so I don't need a variable in the outer scope.
+
+.. admonition:: Experiment
+
+   Add a third case to ``ServerResponse`` and to the switch.
+
+Notice how the sunrise and sunset times
+are extracted from the ``ServerResponse`` value
+as part of a pattern matching operation.
+
+Protocols and Extensions
+------------------------
+
+Use ``protocol`` to declare a protocol:
+
+.. testcode::
+
+    -> protocol ExampleProtocol {
+           var simpleDescription: String { get }
+           mutating func adjust()
+       }
+
+Classes, enumerations, and structs can all adopt protocols.
+
+.. testcode::
+
+    -> class SimpleClass: ExampleProtocol {
+           var simpleDescription: String = "A very simple class."
+           var anotherProperty: Int = 69105
+           func adjust() {
+               simpleDescription += "  Now 100% adjusted."
+           }
+       }
+    -> var a = SimpleClass()
+    << // a : SimpleClass = <SimpleClass instance>
+    -> a.adjust()
+    -> let aDescription = a.simpleDescription
+    << // aDescription : String = "A very simple class.  Now 100% adjusted"
+    ---
+    -> struct SimpleStructure: ExampleProtocol {
+           var simpleDescription: String = "A simple structure"
+           mutating func adjust() {
+               simpleDescription += " (adjusted)"
+           }
+       }
+    -> var b = SimpleStructure()
+    << // b : SimpleStructure = SimpleStructure("A simple structure")
+    -> b.adjust()
+    -> let bDescription = b.simpleDescription
+    << // bDescription : String = "A simple structure (adjusted)"
+
+.. admonition:: Experiment
+
+   Write an enumeration that conforms to this protocol.
+
+Notice the use of ``mutating`` in the declaration of ``SimpleStruct``
+to mark a struct method that modifies the structure.
+It is not needed in the declaration of ``SimpleClass``
+because any method on a class can modify the class.
+
+Use ``extension`` to add functionality to an existing type,
+such as new methods and computed properties.
+You can use an extension to add protocol conformance
+to a type that is declared elsewhere,
+or even a type you imported from a library or framework.
+
+.. testcode::
+
+    -> extension Int: ExampleProtocol {
+           var simpleDescription: String {
+               return "The number \(self)"
+           }
+           mutating func adjust() {
+               self += 42
+           }
+        }
+    -> 7.simpleDescription
+    << // r0 : String = "The number 7"
+
+.. admonition:: Experiment
+
+   Write an extension for the ``Double`` type
+   that adds an ``absoluteValue`` property.
+
+You can use a protocol name just like any other named type ---
+for example, to create a collection of objects
+that have different types
+but all conform to a particular protocol.
+When you work with values whose type is a protocol type,
+methods outside the protocol definition are not available.
+
+.. testcode::
+
+    -> let protocolValue: ExampleProtocol = a
+    << protocolValue : ExampleProtocol = <ExampleProtocol instance>
+    -> l.simpleDescription
+    <$ : String = "A very simple class.  Now 100% adjusted"
+    // l[0].anotherProperty  // Uncomment to see the error
+
+Even though the first element of the array
+has a runtime type of ``SimpleClass``,
+the compiler treats it as the given type of ``ExampleProtocol``.
+This means that you can't accidentally access
+methods or properties that the class implements
+in addition to its protocol conformance.
+
+Generics
+--------
+
 .. write-me::
 
-* Playing card suits (no raw value)
-* Playing card ranks (to/from raw)
+* On function (repeat X n times, re-implementing Array init feature)
+* On classes, structures, and enumerations
 
-* Struct of suit + rank for playing card
-* Type method to print a description
-* For loop to generate a whole deck
-
-* Differences from objects (reference types)
-* Use structs for complex multipart data
-* Use enums when values come from a list
-
-* Associating additional data with enums
-
-* Optional is just an enum -- no magic.
-
-Protocols
----------
-
-.. write-me::
-
-* Supported by both reference and value types
-* First class type -- usable in variable declarations etc.
-* Can provide a default implementation.
-
-
-Additional Topics
------------------
-
-.. write-me::
-
-* Generics -- on objects, methods, etc.
-* Pattern matching in switches
-* Curried functions
-* Custom operators [could go under Functions]
+.. TODO: Add a "Continue Reading" section
+   which gives folks who opened this in a playground
+   a link back to the web version of the book.

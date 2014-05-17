@@ -124,7 +124,7 @@ Swift supports the four standard :newTerm:`arithmetic operators` for all number 
    << // r1 : Int = 2
    -> 2 * 3       // equals 6
    << // r2 : Int = 6
-   -> 10.0 / 2.5   // equals 4.0
+   -> 10.0 / 2.5  // equals 4.0
    << // r3 : Double = 4.0
 
 Unlike C and Objective-C, the four arithmetic operators
@@ -136,7 +136,7 @@ The addition operator is also supported for ``String`` concatenation:
 
 .. testcode:: arithmeticOperators
 
-   -> "hello, " + "world"      // equals "hello, world"
+   -> "hello, " + "world"  // equals "hello, world"
    << // r4 : String = "hello, world"
 
 Two ``Character`` values,
@@ -146,15 +146,17 @@ can be added together to make a new ``String`` value:
 .. testcode:: arithmeticOperators
 
    -> let dog: Character = "🐶"
-   << // dog : Character = <unprintable value>
+   << // dog : Character = 🐶
    -> let cow: Character = "🐮"
-   << // cow : Character = <unprintable value>
+   << // cow : Character = 🐮
    -> let dogCow = dog + cow
    << // dogCow : String = "🐶🐮"
    /> dogCow is equal to \"🐶🐮\"
    </ dogCow is equal to "🐶🐮"
 
-See also :ref:`StringsAndCharacters_StringAndCharacterConcatenation`.
+See also :ref:`StringsAndCharacters_ConcatenatingStringsAndCharacters`.
+
+.. TODO: should I also mention array concatenation here once we have it?
 
 .. _BasicOperators_RemainderOperator:
 
@@ -320,7 +322,7 @@ known as the :newTerm:`unary minus operator`:
 
    -> let three = 3
    << // three : Int = 3
-   -> let minusThree = -three      // minusThree equals -3
+   -> let minusThree = -three       // minusThree equals -3
    << // minusThree : Int = -3
    -> let plusThree = -minusThree   // plusThree equals 3, or "minus minus three"
    << // plusThree : Int = 3
@@ -340,7 +342,7 @@ the value it operates on, without any change:
 
    -> let minusSix = -6
    << // minusSix : Int = -6
-   -> let alsoMinusSix = +minusSix   // alsoMinusSix equals -6
+   -> let alsoMinusSix = +minusSix  // alsoMinusSix equals -6
    << // alsoMinusSix : Int = -6
 
 Although the unary plus operator doesn't actually do anything,

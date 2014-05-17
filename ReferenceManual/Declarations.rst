@@ -1401,7 +1401,7 @@ have finished executing.
 Deinitializers are not called directly.
 
 For an example of how to use a deinitializer in a class declaration,
-see :ref:`Initialization_Deinitializers`.
+see :doc:`../LanguageGuide/Deinitialization`.
 
 
 .. langref-grammar

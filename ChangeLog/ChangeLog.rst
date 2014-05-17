@@ -15,6 +15,18 @@ The book has the following known issues:
 * <rdar://16756034> Formal grammar does not contain live links.
 * <rdar://16844985> Guided Tour has lines that don't compile in latest Swift
 * <rdar://16893324> The PDF version of TSPL is a mockup.
+* The iBook link is a placeholder
+  until this book goes live on the iBooks store WWDC week.
+  Use the EPUB link instead (which will go away at the same time).
+
+May 15 2014
+~~~~~~~~~~~
+
+Guide Tour
+++++++++++
+
+* Added a section about enumerations and structures,
+  and added some information about optionals.
 
 May 14 2014
 ~~~~~~~~~~~
@@ -40,10 +52,9 @@ May 12 2014
 Language Guide
 ++++++++++++++
 
-* New :doc:`../LanguageGuide/MemoryManagement` chapter, including sections on
-  :ref:`how ARC works <MemoryManagement_HowARCWorks>`,
-  :ref:`strong reference cycles <MemoryManagement_StrongReferenceCycles>`,
-  and :ref:`weak and unowned references <MemoryManagement_WeakAndUnownedReferences>`.
+* New :doc:`../LanguageGuide/AutomaticReferenceCounting` chapter, including sections on
+  :ref:`how ARC works <AutomaticReferenceCounting_HowARCWorks>`,
+  and :ref:`strong reference cycles <AutomaticReferenceCounting_StrongReferenceCycles>`.
 * Rewritten much of :doc:`../LanguageGuide/Generics`
   to make the introduction more accessible to those who are new to generic programming.
 * Added some explanations of :ref:`unicode terminology <StringsAndCharacters_Unicode>`

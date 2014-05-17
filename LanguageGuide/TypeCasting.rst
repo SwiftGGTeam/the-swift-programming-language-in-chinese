@@ -1,18 +1,34 @@
 Type Casting
 ============
 
-It is sometimes necessary to check the specific class of an instance
-in order to decide how it should be used.
-It can also be necessary to treat a specific instance as if it is a different
+:newTerm:`Type casting` is a way to check the type of an instance,
+and / or to treat that instance as if it is a different
 superclass or subclass from somewhere else in its own class hierarchy.
-Both of these tasks are achieved using :newTerm:`type casting`.
 
-The next three code snippets define three classes,
+Type casting in Swift is implemented with the ``is`` and ``as`` operators.
+These two operators provide a simple and expressive way
+to check or cast a value as some different type.
+Because downcasting a class to one of its subclasses can fail,
+Swift uses the power of optionals to enable you to attempt a downcast,
+and to check if that cast is successful.
+
+Type casting can also be used to check if a type conforms to a protocol,
+as described in :ref:`Protocols_CheckingForProtocolConformance`.
+
+.. _TypeCasting_DefiningAClassHierarchyForTypeCasting:
+
+Defining a Class Hierarchy for Type Casting
+-------------------------------------------
+
+You can use type casting with a hierarchy of classes and subclasses
+to check the type of a particular class instance,
+and to cast that instance to another class within the same hierarchy.
+The three code snippets below define a hierarchy of classes
 and an array containing instances of those classes,
 for use in an example of type casting.
 
-This first snippet defines a new base class called ``MediaItem``.
-This class provides basic functionality for any kind of item that might appear
+The first snippet defines a new base class called ``MediaItem``.
+This class provides basic functionality for any kind of item that appears
 in a digital media library.
 Specifically, it declares a ``name`` property of type ``String``,
 and an ``init name`` initializer.
@@ -27,7 +43,7 @@ and an ``init name`` initializer.
          }
       }
 
-This next snippet defines two subclasses of ``MediaItem``.
+The next snippet defines two subclasses of ``MediaItem``.
 The first subclass, ``Movie``, encapsulates additional information about a movie or film.
 It adds a ``director`` property on top of the base ``MediaItem`` class,
 with a corresponding initializer.
@@ -43,6 +59,7 @@ on top of the base class:
             super.init(name: name)
          }
       }
+   ---
    -> class Song: MediaItem {
          var artist: String
          init(name: String, artist: String) {
@@ -51,11 +68,11 @@ on top of the base class:
          }
       }
 
-This final snippet creates a constant array called ``library``,
+The final snippet creates a constant array called ``library``,
 which contains two ``Movie`` instances and three ``Song`` instances.
-Here, the type of the ``library`` array is inferred
+The type of the ``library`` array is inferred
 by initializing it with the contents of an array literal.
-Swift's type-checker is able to deduce that ``Movie`` and ``Song`` have
+Swift's type checker is able to deduce that ``Movie`` and ``Song`` have
 a common superclass of ``MediaItem``,
 and so it infers a type of ``MediaItem[]`` for the ``library`` array:
 
@@ -87,7 +104,10 @@ Checking Type
 
 You can check whether an instance is of a certain subclass type by using the ``is`` operator.
 The ``is`` operator returns ``true`` if the instance is of that subclass type,
-and ``false`` if it is not:
+and ``false`` if it is not.
+
+The example below defines two variables, ``movieCount`` and ``songCount``,
+which count the number of ``Movie`` and ``Song`` instances in the ``library`` array:
 
 .. testcode:: typeCasting
 
@@ -95,6 +115,7 @@ and ``false`` if it is not:
    << // movieCount : Int = 0
    -> var songCount = 0
    << // songCount : Int = 0
+   ---
    -> for item in library {
          if item is Movie {
             ++movieCount
@@ -102,6 +123,7 @@ and ``false`` if it is not:
             ++songCount
          }
       }
+   ---
    -> println("Media library contains \(movieCount) movies and \(songCount) songs")
    <- Media library contains 2 movies and 3 songs
 
@@ -110,13 +132,10 @@ On each pass, the ``for``-``in`` loop sets the ``item`` constant
 to the next ``MediaItem`` in the array.
 
 ``item is Movie`` returns ``true`` if the current ``MediaItem``
-is an instance of the ``Movie`` type, and ``false`` if it is not.
+is a ``Movie`` instance, and ``false`` if it is not.
 Similarly, ``item is Song`` checks to see if the item is a ``Song`` instance.
 At the end of the ``for``-``in`` loop, the values of ``movieCount`` and ``songCount``
 contain a count of how many ``MediaItem`` instances were found of each type.
-
-.. QUESTION: is it correct to refer to 'is' and 'as' as 'operators'?
-   Or is there some better name we could use?
 
 .. _TypeCasting_Downcasting:
 
@@ -125,9 +144,17 @@ Downcasting
 
 A constant or variable of a certain class type may actually refer to
 an instance of a subclass behind the scenes. Where this is the case,
-you can try and :newTerm:`downcast` to the subclass type by using the ``as`` operator.
+you can try to :newTerm:`downcast` to the subclass type by using the ``as`` operator.
 Because downcasting can fail,
-the ``as`` operator returns an *optional* value of the type you are trying to downcast to:
+the ``as`` operator returns an *optional* value of the type you are trying to downcast to.
+
+The example below iterates over each ``MediaItem`` in ``library``,
+and prints an appropriate description for each item.
+To do this, it needs to access each item as a true ``Movie`` or ``Song``,
+and not just as a ``MediaItem``.
+This is necessary in order for it to be able to access
+the ``director`` or ``artist`` property of a ``Movie`` or ``Song``
+for use in the description.
 
 .. testcode:: typeCasting
 
@@ -138,18 +165,12 @@ the ``as`` operator returns an *optional* value of the type you are trying to do
             println("Song: '\(song.name)', by \(song.artist)")
          }
       }
+   ---
    </ Movie: 'Casablanca', dir. Michael Curtiz
    </ Song: 'Blue Suede Shoes', by Elvis Presley
    </ Movie: 'Citizen Kane', dir. Orson Welles
    </ Song: 'The One And Only', by Chesney Hawkes
    </ Song: 'Never Gonna Give You Up', by Rick Astley
-
-This example iterates over each ``MediaItem`` in ``library``,
-and prints an appropriate description for each one.
-To do this, it needs to access each item as if it is a true ``Movie`` or ``Song``,
-and not just a generic ``MediaItem``.
-This is necessary in order for it to be able to access
-the ``director`` or ``artist`` property for use in the description.
 
 The example starts by trying to downcast the current ``item`` as a ``Movie``.
 Because ``item`` is a ``MediaItem`` instance, it's possible that it *might* be a ``Movie``;
@@ -159,18 +180,18 @@ Because of this uncertainty, the ``as`` operator returns an *optional* value
 when attempting to downcast to a subclass type.
 The result of ``item as Movie`` is of type ``Movie?``, or “optional ``Movie``”.
 
-Downcasting to ``Movie`` will fail when trying to downcast
+Downcasting to ``Movie`` will fail when applied to
 the two ``Song`` instances in the library array.
 To cope with this, the example above uses optional binding
 to check whether the optional ``Movie`` actually contains a value
-(i.e. to find out whether the downcast succeeded.)
+(that is, to find out whether the downcast succeeded.)
 This optional binding is written “``if let movie = item as Movie``”,
 which can be read as:
 
 “Try and access ``item`` as a ``Movie``.
 If this is successful,
 set a new temporary constant called ``movie`` to
-the value stored in the returned ``Movie?`` optional.”
+the value stored in the returned optional ``Movie``.”
 
 If the downcasting succeeds, the properties of ``movie`` are then used
 to print a description for that ``Movie`` instance, including the name of its ``director``.
@@ -206,6 +227,7 @@ Here's an example of using ``Any`` to work with a mix of different types:
 
    -> var things = Any[]()
    << // things : Any[] = []
+   ---
    -> things.append(0)
    -> things.append(0.0)
    -> things.append(42)
@@ -222,20 +244,19 @@ and the movie “Ghostbusters”, directed by Ivan Reitman.
 
 .. note::
 
-   ``Any`` and ``AnyObject`` should only be used when you explicitly need
+   Use ``Any`` and ``AnyObject`` only when you explicitly need
    the behavior and capabilities they provide.
    It is always better to be specific about the types you expect to work with in your code.
 
-.. _TypeCasting_CheckedCastsInSwitchStatements:
+.. _TypeCasting_TypeCastingForAnyAndAnyObject:
 
-Checked Casts in Switch Statements
+Type Casting for Any and AnyObject
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If you are working with a constant or variable
 whose type is only known to be ``Any`` or ``AnyObject``,
 you can use the ``is`` and ``as`` operators to find out about the types they hold,
 and to work with them as more specific types.
-This is true even if they are not class types.
 
 For example, the ``is`` and ``as`` operators can be used within
 the cases of a ``switch`` statement to check and match values of a certain type,
@@ -266,6 +287,7 @@ and to assign those values to temporary constants or variables
                println("something else")
          }
       }
+   ---
    </ zero as an Int
    </ zero as a Double
    </ an integer value of 42
