@@ -112,17 +112,15 @@ or initialize a new ``String`` with initializer syntax:
    because you'd be likely to use them as such if they start out empty.
    Is this the correct approach to take here?
 
-To check whether a ``String`` value is empty, call its ``isEmpty`` method:
+You can find out whether a ``String`` value is empty
+by checking its Boolean ``isEmpty`` property:
 
 .. testcode:: emptyStrings
 
-   -> if emptyString.isEmpty() {
+   -> if emptyString.isEmpty {
          println("Nothing to see here")
       }
    <- Nothing to see here
-
-.. FIXME: isEmpty should be a property, not a method,
-   as described in <rdar://problem/16930759>.
 
 .. TODO: init(size, character)
 
