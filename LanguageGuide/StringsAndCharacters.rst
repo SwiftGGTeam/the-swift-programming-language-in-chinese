@@ -121,6 +121,9 @@ To check whether a ``String`` value is empty, call its ``isEmpty`` method:
       }
    <- Nothing to see here
 
+.. FIXME: isEmpty should be a property, not a method,
+   as described in <rdar://problem/16930759>.
+
 .. TODO: init(size, character)
 
 .. _StringsAndCharacters_StringMutability:
