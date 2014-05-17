@@ -590,7 +590,7 @@ and the ``City`` class has a ``country`` property:
 
    -> class Country {
          let name: String
-         var capitalCity: City!
+         let capitalCity: City!
          init(name: String, capitalName: String) {
             self.name = name
             self.capitalCity = City(name: capitalName, country: self)
@@ -605,11 +605,6 @@ and the ``City`` class has a ``country`` property:
             self.country = country
          }
       }
-
-.. FIXME: I think capitalCity should be allowed to be a constant,
-   but this isn't possible due to <rdar://problem/16906000>
-   Implicitly unwrapped optional let is not considered initialized, but var is
-   If this gets fixed, the var should be changed to a let.
 
 To set up the interdependency between the two classes,
 the initializer for ``City`` takes a ``Country`` instance,
