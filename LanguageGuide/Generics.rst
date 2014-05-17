@@ -401,7 +401,7 @@ nor would it be able to find a value for a given key that is already in the dict
 its key type must conform to the ``Hashable`` protocol,
 which is a special protocol defined in the Swift standard library.
 All of Swift's basic types (such as ``String``, ``Int``, ``Double``, and ``Bool``)
-are hashable by default
+are hashable by default.
 You can make your own custom types conform to the ``Hashable`` protocol
 so that they too can be dictionary keys,
 as described in :doc:`Protocols`.
