@@ -614,15 +614,23 @@ a collection such as an array or a dictionary,
 as mentioned in :ref:`Protocols_UsingProtocolsAsTypes`.
 This example creates an array of ``TextRepresentable`` things:
 
-.. testcode:: protocols
+.. testcode:: protocols_BROKEN
    :compile: true
 
    -> let things: TextRepresentable[] = [game, d12, simonTheHamster]
 
+.. FIXME: this example is currently totally broken due to <rdar://problem/16950035>
+   "Initializing an array of protocol type with a non-empty array literal triggers an assert"
+   On the reasonable likelihood that this doesn't get fixed for WWDC,
+   I'll probably need to remove this entire "collections of protocol types" section,
+   or at least change this example to be clunky and append the items instead.
+   I've moved it into its own knowingly-broken test group for now
+   so that the rest of this chapter's code still gets tested.
+
 It is now possible to iterate over the items in the array,
 and print each item's textual representation:
 
-.. testcode:: protocols
+.. testcode:: protocols_BROKEN
    :compile: true
 
    -> for thing in things {
