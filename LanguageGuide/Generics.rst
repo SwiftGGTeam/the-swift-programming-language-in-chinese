@@ -535,9 +535,9 @@ not an optional value from the array.
 
 However, this function will not compile as written above.
 The problem lies with the equality check, “``if value == valueToFind``”.
-Not every type in Swift can be compared with the equality operator (``==``).
+Not every type in Swift can be compared with the equal to operator (``==``).
 If you create your own class or structure to represent a complex data model, for example,
-then the meaning of “equality” for that class or structure
+then the meaning of “equal to” for that class or structure
 is not something that Swift can guess for you.
 Because of this, it is not possible to guarantee that this code will work
 for *every* possible type ``T``,
@@ -545,7 +545,8 @@ and an appropriate error is reported when you try to compile the code.
 
 All is not lost, however.
 The Swift standard library defines a protocol called ``Equatable``,
-which requires any conforming type to implement the equality operator
+which requires any conforming type to implement
+the equal to operator (``==``) and the not equal to operator (``!=``)
 to compare any two values of that type.
 All of Swift's standard types automatically support the ``Equatable`` protocol,
 and you can make your own types conform to ``Equatable`` too,
@@ -554,7 +555,7 @@ as described in :ref:`AdvancedOperators_ProtocolOperatorRequirements`.
 .. TODO: will the way to do this *actually* be described there?
 
 Any type that is ``Equatable`` can be used safely with the ``findValue`` function,
-because it is guaranteed to support the equality operator.
+because it is guaranteed to support the equal to operator.
 To express this fact, you write a type constraint of ``Equatable``
 as part of the type parameter's definition when you define the function:
 
@@ -588,9 +589,9 @@ and can be used with any type that is ``Equatable``, such as ``Double`` or ``Str
    /> stringIndex is an optional Int containing a value of \(stringIndex!)
    </ stringIndex is an optional Int containing a value of 2
 
-.. providing different type parameters on individual methods within a generic type
-.. likewise providing type parameters for initializers
-.. requirements can be inheritance clauses as well as protocol conformance clauses
+.. TODO: providing different type parameters on individual methods within a generic type
+
+.. TODO: likewise providing type parameters for initializers
 
 .. _Generics_AssociatedTypes:
 
@@ -634,7 +635,7 @@ as long as it satisfies at least these three requirements.
 Any type that conforms to the ``Container`` protocol needs to be able to specify
 the type of values it stores.
 Specifically, it needs to make sure that only items of the right type
-are added to the collection,
+are added to the container,
 and it needs to be clear about the type of the items returned by its subscript.
 
 In order to be able to define these requirements,
@@ -653,12 +654,12 @@ written as  ``typealias ItemType``.
 The protocol does not define what ``ItemType`` is an alias *for* –
 that information is left for any conforming type to provide.
 Nonetheless, the ``ItemType`` alias gives a way to talk about
-the type of the items in a ``Collection``,
+the type of the items in a ``Container``,
 and to define a type for use with the ``append`` method and subscript,
-to ensure that the expected behavior of any ``Collection`` is enforced.
+to ensure that the expected behavior of any ``Container`` is enforced.
 
 Here's a version of the non-generic ``IntStack`` type from earlier,
-adapted to conform to the ``Collection`` protocol:
+adapted to conform to the ``Container`` protocol:
 
 .. testcode:: associatedTypes
 
@@ -691,17 +692,17 @@ to satisfy these requirements.
 Moreover, ``IntStack`` specifies that for this implementation of ``Container``,
 the appropriate ``ItemType`` to use is a type of ``Int``.
 The definition of ``typealias ItemType = Int`` turns the abstract type of ``ItemType``
-into a concrete type of ``Int`` for this implementation.
+into a concrete type of ``Int`` for this implementation of the ``Container`` protocol.
 
 Thanks to Swift's type inference,
 you don't actually need to declare a concrete ``ItemType`` of ``Int``
 as part of the definition of ``IntStack``.
 Because ``IntStack`` conforms to all of the requirements of the ``Container`` protocol,
-Swift can infer the appropriate type to use by looking at the type of
-the ``append`` method's ``item`` parameter,
-and the subscript's return type.
-If you delete the ``typealias ItemType = Int`` line from the code above,
-everything still just works, and it is clear what type to use for ``ItemType``.
+Swift can infer the appropriate ``ItemType`` to use,
+just by looking at the type of the ``append`` method's ``item`` parameter,
+and the return type of the subscript.
+Indeed, if you delete the ``typealias ItemType = Int`` line from the code above,
+everything still works, because it is clear what type should be used for ``ItemType``.
 
 You can also make the generic ``Stack`` type conform to the ``Container`` protocol:
 
@@ -734,6 +735,11 @@ and the return type of the subscript.
 Swift can therefore infer that ``T`` is the appropriate type to use
 as the ``ItemType`` for this particular container.
 
+.. _Generics_ExtendingAnExistingTypeToSpecifyAnAssociatedType:
+
+Extending an Existing Type to Specify an Associated Type
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 You can extend an existing type to add conformance to a protocol,
 as described in :ref:`Protocols_AddingProtocolConformanceWithAnExtension`.
 This includes a protocol with an associated type.
@@ -753,7 +759,7 @@ as described in :ref:`Protocols_DeclaringProtocolAdoption`:
 Array's existing ``append`` method and subscript enable Swift to infer
 the appropriate type to use for ``ItemType``,
 just as for the generic ``Stack`` type above.
-After declaring this extension, you can now use any ``Array`` as a ``Container``.
+After defining this extension, you can use any ``Array`` as a ``Container``.
 
 .. _Generics_Subscripts:
 
