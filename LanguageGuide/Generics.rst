@@ -460,6 +460,8 @@ a generic function called ``someFunction``
 
 .. testcode:: typeConstraints
 
+   >> class SomeClass {}
+   >> protocol SomeProtocol {}
    -> func someFunction<T: SomeClass, U: SomeProtocol>(someT: T, someU: U) {
          // function body goes here
       }
