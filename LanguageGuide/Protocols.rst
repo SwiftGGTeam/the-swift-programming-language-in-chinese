@@ -635,7 +635,7 @@ adopt and conform to the ``TextRepresentable`` protocol:
    -> println(game.asText())
    <- A game of Snakes and Ladders with 25 squares
 
-.. _Protocols_DeclaringExistingConformance:
+.. _Protocols_DeclaringProtocolAdoption:
 
 Declaring Protocol Adoption
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
