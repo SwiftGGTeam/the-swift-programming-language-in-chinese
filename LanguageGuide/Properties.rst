@@ -468,7 +468,7 @@ The example below shows the syntax for stored and computed type properties:
    >>       return 42
          }
       }
-   -> class SomeClass
+   -> class SomeClass {
          class var computedTypeProperty: Int {
             // return an Int value here
    >>       return 42
@@ -492,11 +492,16 @@ For example:
 
 .. testcode:: typePropertySyntax
 
-   -> SomeStructure.storedTypeProperty = "Another value."
    -> println(SomeClass.computedTypeProperty)
    <- 42
+   ---
+   -> println(SomeStructure.storedTypeProperty)
+   <- Some value.
+   -> SomeStructure.storedTypeProperty = "Another value."
+   -> println(SomeStructure.storedTypeProperty)
+   <- Another value.
 
-The example below uses two type properties as part of a structure that models
+The example below uses two stored type properties as part of a structure that models
 an audio level meter for a number of audio channels.
 Each of these channels has an integer audio level between ``0`` and ``10`` inclusive,
 as shown in the figure below:
