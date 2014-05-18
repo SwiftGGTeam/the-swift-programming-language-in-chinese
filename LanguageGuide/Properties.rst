@@ -523,13 +523,13 @@ Each audio channel in the meter is modeled by an ``AudioChannel`` structure:
          static var maxInputLevelForAllChannels = 0
          var currentLevel: Int = 0 {
             didSet {
-               if currentLevel > AudioChannel.maxInputLevelForAllChannels {
-                  // store this as the new overall maximum input level
-                  AudioChannel.maxInputLevelForAllChannels = currentLevel
-               }
                if currentLevel > AudioChannel.thresholdLevel {
                   // cap the new audio level to the threshold level
                   currentLevel = AudioChannel.thresholdLevel
+               }
+               if currentLevel > AudioChannel.maxInputLevelForAllChannels {
+                  // store this as the new overall maximum input level
+                  AudioChannel.maxInputLevelForAllChannels = currentLevel
                }
             }
          }
@@ -555,17 +555,18 @@ The ``currentLevel`` property has a ``didSet`` property observer
 to check the value of ``currentLevel`` whenever it is set.
 This observer performs two checks:
 
-* If the new value of ``currentLevel`` is higher than
+* If the new value of ``currentLevel`` is greater than the allowed ``thresholdLevel``,
+  the property observer caps ``currentLevel`` to ``thresholdLevel``.
+
+* If the new value of ``currentLevel`` (after any capping) is higher than
   any value previously received by *any* ``AudioChannel`` instance,
   the property observer stores the new ``currentLevel`` value in
   the ``maxInputLevelForAllChannels`` static property.
 
-* If the new value of ``currentLevel`` is greater than the allowed ``thresholdLevel``,
-  the property observer caps ``currentLevel`` to ``thresholdLevel``.
-
 .. note::
 
-   In the second check, the ``didSet`` observer sets ``currentLevel`` to a different value.
+   In the first of these two checks,
+   the ``didSet`` observer sets ``currentLevel`` to a different value.
    This does not, however, cause the observer to be called again.
 
 You can use the ``AudioChannel`` structure to create
@@ -594,7 +595,7 @@ is updated to equal ``7``:
 If you try and set the ``currentLevel`` of the *right* channel to ``11``,
 you can see that the right channel's ``currentLevel`` property
 has been capped to the maximum value of ``10``,
-and the ``maxInputLevelForAllChannels`` type property is updated to equal ``11``:
+and the ``maxInputLevelForAllChannels`` type property is updated to equal ``10``:
 
 .. testcode:: staticProperties
    :compile: true
@@ -603,4 +604,4 @@ and the ``maxInputLevelForAllChannels`` type property is updated to equal ``11``
    -> println(rightChannel.currentLevel)
    <- 10
    -> println(AudioChannel.maxInputLevelForAllChannels)
-   <- 11
+   <- 10
