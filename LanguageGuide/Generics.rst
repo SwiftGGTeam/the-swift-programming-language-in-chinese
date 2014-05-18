@@ -446,6 +446,35 @@ Abstract concepts like ``Hashable``
 give a way to talk about types in terms of their conceptual characteristics,
 rather than their explicit type.
 
+.. _Generics_TypeConstraintSyntax:
+
+Type Constraint Syntax
+~~~~~~~~~~~~~~~~~~~~~~
+
+Type constraints are written by placing a single class or protocol constraint
+after a type parameter's name, separated by a colon,
+as part of the type parameter list.
+The general syntax for type constraints is shown below for
+a generic function called ``someFunction``
+(although the syntax is the same for generic types):
+
+.. testcode:: typeConstraints
+
+   -> func someFunction<T: SomeClass, U: SomeProtocol>(someT: T, someU: U) {
+         // function body goes here
+      }
+
+The hypothetical function above has two type parameters.
+The first type parameter, ``T``, has a type constraint
+that requires ``T`` to be a subclass of ``SomeClass``.
+The second type parameter, ``U``, has a type constraint
+that requires ``U`` to conform to the protocol ``SomeProtocol``
+
+.. _Generics_TypeConstraintsInAction:
+
+Type Constraints In Action
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 Here's a non-generic function called ``findInt``,
 which is given an ``Int`` value to find
 and an array of ``Int`` values within which to find it.
@@ -524,7 +553,7 @@ as described in :ref:`AdvancedOperators_ProtocolOperatorRequirements`.
 
 Any type that is ``Equatable`` can be used safely with the ``findValue`` function,
 because it is guaranteed to support the equality operator.
-To express this fact, you can write a type constraint of ``Equatable``
+To express this fact, you write a type constraint of ``Equatable``
 as part of the type parameter's definition when you define the function:
 
 .. testcode:: typeConstraintsEquatable
@@ -540,8 +569,8 @@ as part of the type parameter's definition when you define the function:
          return nil
       }
 
-The type parameter here has been written as ``<T: Equatable>``,
-which means “any type ``T`` that is ``Equatable``.”
+The single type parameter for ``findValue`` is written as ``T: Equatable``,
+which means “any type ``T`` that conforms to the ``Equatable`` protocol.”
 
 The ``findValue`` function now compiles successfully,
 and can be used with any type that is ``Equatable``, such as ``Double`` or ``String``:
