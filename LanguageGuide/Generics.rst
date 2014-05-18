@@ -415,6 +415,9 @@ are both able to work with any type.
 However, it can sometimes be useful to enforce
 certain :newTerm:`type constraints` on the types that can be used with
 generic functions and generic types.
+Type constraints specify that a type parameter must
+inherit from a specific class,
+or conform to a particular protocol or protocol composition.
 
 For example,
 Swift's ``Dictionary`` type places a limitation on
@@ -437,7 +440,7 @@ You can make your own custom types conform to the ``Hashable`` protocol
 so that they too can be dictionary keys,
 as described in :doc:`Protocols`.
 
-You can define your own constraints when creating custom generic types,
+You can define your own type constraints when creating custom generic types,
 and these constraints provide much of the power of generic programming.
 Abstract concepts like ``Hashable``
 give a way to talk about types in terms of their conceptual characteristics,
