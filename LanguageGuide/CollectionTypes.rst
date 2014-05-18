@@ -293,9 +293,22 @@ and so the value at index ``0`` is once again equal to ``"Six eggs"``:
    /> firstItem is now equal to \"\(firstItem)\"
    </ firstItem is now equal to "Six eggs"
 
-.. TODO: there are quite a few more Array methods, such as sort() and popLast() –
-   how many of them should be listed here?
-   I'm holding off writing about any more of them until NewArray lands.
+If you want to remove the final item from an array,
+use the ``removeLast`` method rather than the ``removeAtIndex`` method
+to avoid the need to query the array's ``count`` property.
+Like the ``removeAtIndex`` method, ``removeLast`` returns the removed item:
+
+.. testcode:: arraysInferred
+
+   -> let cheese = shoppingList.removeLast()
+   << // cheese : String = "Cheese"
+   // the last item in the array has just been removed
+   /> shoppingList now contains \(shoppingList.count) items, and no cheese
+   </ shoppingList now contains 6 items, and no cheese
+   /> the cheese constant is now equal to the removed \"\(cheese)\" string
+   </ the cheese constant is now equal to the removed "Cheese" string
+
+.. TODO: write about the algorithmic methods on Array.
 
 .. _CollectionTypes_CreatingAndInitializingAnArray:
 

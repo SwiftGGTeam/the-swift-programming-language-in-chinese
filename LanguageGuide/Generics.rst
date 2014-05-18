@@ -308,9 +308,6 @@ Here's a generic version of the same code:
       }
 
 .. QUESTION: should Stack's pop() method include bounds checking?
-   I haven't yet introduced assert()…
-
-.. TODO: describe the fact that Array has a removeLast() method
 
 Note how the generic version of ``Stack``
 is essentially the same as the non-generic version,
