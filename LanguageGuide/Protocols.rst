@@ -59,13 +59,13 @@ before any protocols it adopts, followed by a comma:
          // class definition goes here
       }
 
-.. _Protocols_InstanceProperties:
+.. _Protocols_Properties:
 
-Instance Properties
--------------------
+Properties
+----------
 
 A protocol can require any conforming type to provide
-an instance property with a particular name and type.
+an instance property or type property with a particular name and type.
 The protocol doesn't specify whether the property should be
 a stored property or a computed property –
 it just specifies the required property name and type.
@@ -96,7 +96,18 @@ and gettable properties are indicated by writing ``{ get }``.
          var doesNotNeedToBeSettable: Int { get }
       }
 
-Here's an example of a protocol with a single property requirement:
+Type property requirements are always prefixed by the ``class`` keyword
+when they are defined in a protocol.
+This is true even though they are prefixed with the ``static`` keyword
+when implemented by a structure or enumeration:
+
+.. testcode:: instanceProperties
+
+   -> protocol AnotherProtocol {
+         class var someTypeProperty: Int { get set }
+      }
+
+Here's an example of a protocol with a single instance property requirement:
 
 .. testcode:: instanceProperties
 
@@ -178,6 +189,18 @@ Variadic parameters are allowed, subject to the same rules as for normal methods
    Protocols use the same syntax as normal methods,
    but are not allowed to specify default values for method parameters.
 
+As with type property requirements,
+type method requirements are always prefixed by the ``class`` keyword
+when they are defined in a protocol.
+This is true even though they are prefixed with the ``static`` keyword
+when implemented by a structure or enumeration:
+
+.. testcode:: typeMethods
+
+   -> protocol SomeProtocol {
+         class func someTypeMethod()
+      }
+
 The following example defines a protocol with a single instance method requirement:
 
 .. testcode:: protocols
@@ -229,13 +252,13 @@ Mutating Method Requirements
 ----------------------------
 
 It is sometimes necessary for a method to modify (or *mutate*) the instance it belongs to.
-For methods on value types (that is, structures and enumerations)
+For instance methods on value types (that is, structures and enumerations)
 you place the ``mutating`` keyword before a method's ``func`` keyword
 to indicate that the method is allowed to modify the instance it belongs to
 and / or any properties of that instance.
 This process is described in :ref:`Methods_ModifyingValueTypesFromWithinInstanceMethods`.
 
-If you define a protocol method requirement
+If you define a protocol instance method requirement
 that is intended to mutate instances of any adopting type,
 mark the method with the ``mutating`` keyword
 as part of the protocol's definition.
@@ -244,13 +267,13 @@ and satisfy that method requirement.
 
 .. note::
 
-   If you mark a protocol method requirement as ``mutating``,
+   If you mark a protocol instance method requirement as ``mutating``,
    you do not need to write the ``mutating`` keyword when writing
    an implementation of that method for a class.
    The ``mutating`` keyword is only used by structures and enumerations.
 
 The example below defines a protocol called ``Togglable``,
-which defines a single method requirement called ``toggle``.
+which defines a single instance method requirement called ``toggle``.
 As its name suggests, the ``toggle`` method is intended to
 toggle or invert the state of any conforming type,
 typically by modifying a property of that type.
