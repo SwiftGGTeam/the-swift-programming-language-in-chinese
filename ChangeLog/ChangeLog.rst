@@ -22,8 +22,8 @@ The book has the following known issues:
 May 15 2014
 ~~~~~~~~~~~
 
-Guide Tour
-++++++++++
+Guided Tour
++++++++++++
 
 * Added a section about enumerations and structures,
   and added some information about optionals.
