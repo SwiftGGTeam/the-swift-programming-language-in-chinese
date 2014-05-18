@@ -1244,7 +1244,7 @@ a suitable debug message as to the nature of the assert.
 
 You write an assertion by calling the global ``assert`` function.
 You pass the ``assert`` function an expression that equates to ``true`` or ``false``,
-and a string message to display if the result of the condition is ``false``:
+and a message that should be displayed if the result of the condition is ``false``:
 
 .. testcode:: assertions
 
