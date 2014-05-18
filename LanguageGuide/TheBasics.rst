@@ -934,8 +934,8 @@ Functions are described in detail in :doc:`Functions`.
    Tuples are useful for temporary groups of related values.
    They are not suited to the creation of complex data structures.
    If your data structure is likely to persist beyond a temporary scope,
-   model it as a class or structure, rather than as a tuple,
-   See :doc:`ClassesAndStructures`.
+   model it as a class or structure, rather than as a tuple.
+   For more information, see :doc:`ClassesAndStructures`.
 
 .. _TheBasics_Optionals:
 
