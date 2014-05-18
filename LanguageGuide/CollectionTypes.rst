@@ -335,11 +335,11 @@ an initializer for creating an array of a certain size
 with all of its values set to a provided default value.
 This initializer takes two arguments –
 the number of items to be added to the new array (called ``count``),
-and a default value of the appropriate type (called ``value``):
+and a default value of the appropriate type (called ``repeatedValue``):
 
 .. testcode:: arraysEmpty
 
-   -> var threeDoubles = Double[](count: 3, value: 0.0)
+   -> var threeDoubles = Double[](count: 3, repeatedValue: 0.0)
    << // threeDoubles : Double[] = [0.0, 0.0, 0.0]
    // threeDoubles is of type Double[], and equals [0.0, 0.0, 0.0]
 
@@ -349,7 +349,7 @@ because it can be inferred from the default value:
 
 .. testcode:: arraysEmpty
 
-   -> var anotherThreeDoubles = Array(count: 3, value: 0.0)
+   -> var anotherThreeDoubles = Array(count: 3, repeatedValue: 0.0)
    << // anotherThreeDoubles : Array<Double> = [0.0, 0.0, 0.0]
    /> anotherThreeDoubles is inferred as Double[], and equals [\(anotherThreeDoubles[0]), \(anotherThreeDoubles[1]), \(anotherThreeDoubles[2])]
    </ anotherThreeDoubles is inferred as Double[], and equals [0.0, 0.0, 0.0]
