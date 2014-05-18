@@ -576,9 +576,47 @@ or ``nil`` if no value existed:
    -> if let removedValue = airports.removeValueForKey("DUB") {
          println("The removed airport's name is \(removedValue).")
       } else {
-         println("The airports dictionary does not contain a vale for DUB.")
+         println("The airports dictionary does not contain a value for DUB.")
       }
    <- The removed airport's name is Dublin International.
+
+.. _CollectionTypes_AccessingADictionarysKeysAndValues:
+
+Accessing a Dictionary's Keys and Values
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You can retrieve an iteratable collection of a dictionary's keys or values
+by accessing its ``keys`` and ``values`` properties:
+
+.. testcode:: dictionariesInferred
+
+   -> for airportCode in airports.keys {
+         println("Airport code: \(airportCode)")
+      }
+   </ Airport code: TYO
+   </ Airport code: LHR
+   ---
+   -> for airportName in airports.values {
+         println("Airport name: \(airportName)")
+      }
+   </ Airport name: Tokyo
+   </ Airport name: London Heathrow
+
+If you need to use a dictionary's keys or values
+with an API that takes an ``Array`` instance, you can initialize a new array
+with the ``keys`` or ``values`` property:
+
+.. testcode:: dictionariesInferred
+
+   -> let airportCodes = Array(airports.keys)
+   << // airportCodes : Array<String> = ["TYO", "LHR"]
+   /> airportCodes is [\"\(airportCodes[0])\", \"\(airportCodes[1])\"]
+   </ airportCodes is ["TYO", "LHR"]
+   ---
+   -> let airportNames = Array(airports.values)
+   << // airportNames : Array<String> = ["Tokyo", "London Heathrow"]
+   /> airportNames is [\"\(airportNames[0])\", \"\(airportNames[1])\"]
+   </ airportNames is ["Tokyo", "London Heathrow"]
 
 .. _CollectionTypes_CreatingAnEmptyDictionary:
 
