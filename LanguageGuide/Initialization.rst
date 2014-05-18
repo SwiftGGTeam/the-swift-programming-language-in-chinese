@@ -12,8 +12,8 @@ which are like special methods that can be called
 to create a new instance of a particular type.
 
 Instances of class types can also implement a :newTerm:`deinitializer`,
-which gives an opportunity to perform any custom cleanup that you require to be run
-when an instance of that class instance is destroyed.
+which gives an opportunity to perform any custom cleanup
+just before an instance of that class is deallocated.
 For more information about deinitializers, see :doc:`Deinitialization`.
 
 .. TODO: mention that memory is automatically managed by ARC

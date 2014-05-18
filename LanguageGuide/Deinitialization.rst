@@ -1,21 +1,21 @@
 Deinitialization
 ================
 
-A :newTerm:`deinitializer` is called just before a class instance is destroyed.
+A :newTerm:`deinitializer` is called just before a class instance is deallocated.
 Deinitializers are written with the ``deinit`` keyword,
 in a similar way to how intializers are written with the ``init`` keyword.
 Deinitializers are only available on class types.
 
-Swift automatically destroys your instances when they are no longer needed,
+Swift automatically deallocates your instances when they are no longer needed,
 to free up resources.
 Swift handles the memory management of instances via
 :newTerm:`automatic reference counting` (known as :newTerm:`ARC`),
 as described in :doc:`AutomaticReferenceCounting`.
-This means there is normally no need to perform any clean-up when your instances are destroyed.
+This means there is normally no need to perform any clean-up when your instances are deallocated.
 However, there may be times when you are working with your own resources,
 and need to perform some additional clean-up yourself.
 For example, if you create a custom class to open a file and write some data to it,
-you might need to close the file before the class instance is destroyed.
+you might need to close the file before the class instance is deallocated.
 
 Class definitions can have at most one deinitializer per class.
 The deinitializer does not take any parameters,
@@ -40,7 +40,7 @@ even if a subclass does not provide its own deinitializer.
 .. TODO: note that this is true even if your subclass doesn't actually provide
    an explicit deinitializer itself.
 
-Because the instance has not yet been destroyed,
+Because the instance has not yet been deallocated,
 a deinitializer can access all of the properties of the instance it is called on,
 and can modify its behavior based on those properties
 (such as looking up the name of a file that needs to be closed).
@@ -108,7 +108,7 @@ The ``Player`` class defines a ``winCoins`` method,
 which tries to retrieve a certain number of coins from the bank
 and add them to the player's purse.
 The ``Player`` class also implements a deinitializer,
-which is called just before a ``Player`` instance is destroyed.
+which is called just before a ``Player`` instance is deallocated.
 Here, the deinitializer simply returns all of the player's coins to the bank.
 
 Here's how that looks in action:
@@ -157,7 +157,7 @@ meaning “no ``Player`` instance.”
 At the point that this happens,
 the ``playerOne`` variable's reference to the ``Player`` instance is broken.
 No other properties or variables are still referring to the ``Player`` instance,
-and so it is destroyed in order to free up its memory.
+and so it is deallocated in order to free up its memory.
 Just before this happens, its deinitializer is called,
 and its coins are returned to the bank.
 

@@ -38,7 +38,7 @@ when they are no longer needed.
 
 To manage this process for you,
 ARC needs to keep track of whether an instance is still being used.
-If ARC were to destroy an instance that was still in use,
+If ARC were to deallocate an instance that was still in use,
 it would no longer be possible to access that instance's properties,
 or call that instance's methods.
 Indeed, if you tried to access the instance, your app would most likely crash.
@@ -46,7 +46,7 @@ Indeed, if you tried to access the instance, your app would most likely crash.
 To make sure that instances don't disappear while they are still needed,
 ARC tracks how many properties, constants, and variables
 are currently referring to each class instance.
-ARC will not destroy an instance
+ARC will not deallocate an instance
 as long as at least one active reference to that instance still exists.
 
 To make this possible,
@@ -54,7 +54,7 @@ whenever you assign a class instance to a property, constant, or variable,
 that property, constant, or variable makes a :newTerm:`strong reference` to the instance.
 The reference is called a “strong“ reference because
 it keeps a firm hold on that instance,
-and does not allow it to be destroyed for as long as that strong reference remains.
+and does not allow it to be deallocated for as long as that strong reference remains.
 
 .. _AutomaticReferenceCounting_ARCInAction:
 
@@ -81,7 +81,7 @@ which defines a stored constant property called ``name``:
 The ``Person`` class has an initializer that sets the instance's ``name`` property
 and prints a message to indicate that initialization is underway.
 The ``Person`` class also has a deinitializer
-that prints a message when an instance of the class is destroyed.
+that prints a message when an instance of the class is deallocated.
 
 The next code snippet defines three variables of type ``Person?``,
 which are used to set up multiple references to a new ``Person`` instance
@@ -114,7 +114,7 @@ This confirms that initialization has taken place.
 Because the new ``Person`` instance has been assigned to the ``reference1`` variable,
 there is now a strong reference from ``reference1`` to the new ``Person`` instance.
 Because there is at least one strong reference,
-ARC makes sure that this ``Person`` is kept in memory and is not destroyed.
+ARC makes sure that this ``Person`` is kept in memory and is not deallocated.
 
 If you assign the same ``Person`` instance to two more variables,
 two more strong references to that instance are established:
@@ -129,14 +129,14 @@ There are now *three* strong references to this single ``Person`` instance.
 If you break two of these strong references (including the original reference)
 by assigning ``nil`` to two of the variables,
 a single strong reference remains,
-and the ``Person`` instance is not destroyed:
+and the ``Person`` instance is not deallocated:
 
 .. testcode:: howARCWorks
 
    -> reference1 = nil
    -> reference2 = nil
 
-ARC does not destroy the ``Person`` instance until
+ARC does not deallocate the ``Person`` instance until
 the third and final strong reference is broken,
 at which point it is clear that you are no longer using the ``Person`` instance:
 
@@ -199,7 +199,7 @@ The tenant property is optional because an apartment may not always have a tenan
 Both of these classes also define a deinitializer,
 which prints the fact that an instance of that class is being deinitialized.
 This enables you to see whether
-instances of ``Person`` and ``Apartment`` are being destroyed as expected.
+instances of ``Person`` and ``Apartment`` are being deallocated as expected.
 
 This next code snippet defines two variables of optional type
 called ``john`` and ``number73``,
@@ -251,7 +251,7 @@ and the ``Apartment`` instance has a strong reference to the ``Person`` instance
 Therefore, when you break the strong references held by
 the ``john`` and ``number73`` variables,
 the reference counts do not drop to zero,
-and the instances are not destroyed by ARC:
+and the instances are not deallocated by ARC:
 
 .. testcode:: referenceCycles
    :compile: true
@@ -329,10 +329,10 @@ you must declare every weak reference as having an optional type.
 Optional types are the preferred way to represent the possibility for “no value” in Swift.
 
 Because a weak reference does not keep a strong hold on the instance it refers to,
-it is possible for that instance to be destroyed
+it is possible for that instance to be deallocated
 while the weak reference is still referring to it.
 Therefore, ARC automatically sets a weak reference to ``nil``
-when the instance that it refers to is destroyed.
+when the instance that it refers to is deallocated.
 You can check for the existence of a value in the weak reference,
 just like any other optional value,
 and you will never end up with
@@ -392,10 +392,10 @@ there are no more strong references to the ``Person`` instance:
    :align: center
 
 Because there are no more strong references to the ``Person`` instance,
-it is destroyed.
+it is deallocated.
 After this happens,
 there are no more strong references to the ``Apartment`` instance,
-and it too is destroyed:
+and it too is deallocated:
 
 .. testcode:: weakReferences
    :compile: true
@@ -431,20 +431,20 @@ before a property or variable declaration.
 Because an unowned reference is non-optional,
 you don't need to unwrap the unowned reference each time it is used.
 An unowned reference can always be accessed directly.
-However, ARC cannot set the reference to ``nil`` when the instance it refers to is destroyed,
+However, ARC cannot set the reference to ``nil`` when the instance it refers to is deallocated,
 because variables of a non-optional type cannot be set to ``nil``.
 
 .. note::
 
    If you try to access an unowned reference 
-   after the instance that it references is destroyed,
+   after the instance that it references is deallocated,
    you will trigger an unrecoverable runtime error.
    Use unowned references only when you are sure that
    the reference will *always* refer to an instance.
 
    Note also that Swift guarantees your app will crash
    if you try to access an unowned reference
-   after the instance it references is destroyed.
+   after the instance it references is deallocated.
    You will never encounter unexpected behavior in this situation.
    Your app will always crash reliably,
    although you should, of course, avoid it doing so.
@@ -530,10 +530,10 @@ there are no more strong references to the ``Customer`` instance:
    :align: center
 
 Because there are no more strong references to the ``Customer`` instance,
-it is destroyed.
+it is deallocated.
 After this happens,
 there are no more strong references to the ``CreditCard`` instance,
-and it too is destroyed:
+and it too is deallocated:
 
 .. testcode:: unownedReferences
    :compile: true
