@@ -563,7 +563,163 @@ and can be used with any type that is ``Equatable``, such as ``Double`` or ``Str
 Associated Types
 ----------------
 
-.. write-me::
+When defining a protocol,
+it is sometimes useful to declare one or more :newterm:`associated types`
+as part of the protocol's definition.
+An associated type is a way to give a placeholder name (or :newTerm:`alias`)
+to a type that is used as part of the protocol.
+The actual type to use for that associated type
+is not specified until the protocol is adopted.
+Associated types are specified with the ``typealias`` keyword.
+
+Here's an example of a protocol called ``Container``,
+which declares an associated type called ``ItemType``:
+
+.. testcode:: associatedTypes
+
+   -> protocol Container {
+         typealias ItemType
+         mutating func append(item: ItemType)
+         var count: Int { get }
+         subscript(i: Int) -> ItemType { get }
+      }
+
+The ``Container`` protocol defines three requirements to describe a simple container.
+New items can be added to the container with an ``append`` method;
+a count of the items in the container can be retrieved with a ``count`` property;
+and each item in the container can be retrieved
+with a subscript that takes an ``Int`` index value.
+
+This protocol doesn't specify how the items in the container should be stored,
+or what type they are allowed to be.
+The protocol only specifies the three bits of functionality
+that any type must provide in order to be considered a ``Container``.
+A conforming type can provide additional functionality if it wishes,
+as long as it satisfies at least these three requirements.
+
+Any type that conforms to the ``Container`` protocol needs to be able to specify
+the type of values it stores.
+Specifically, it needs to make sure that only items of the right type
+are added to the collection,
+and it needs to be clear about the type of the items returned by its subscript.
+
+In order to be able to define these requirements,
+the ``Container`` protocol needs a way to talk about
+the type of the elements that a container will hold,
+without knowing what that type is for a specific container.
+The ``Container`` protocol needs a way to say that
+any value passed to the ``append`` method
+must have the same type as the container's element type,
+and that the value returned by the container's subscript
+will be of the same type as the container's element type.
+
+To achieve this,
+the ``Container`` protocol declares an associated type called ``ItemType``,
+written as  ``typealias ItemType``.
+The protocol does not define what ``ItemType`` is an alias *for* –
+that information is left for any conforming type to provide.
+Nonetheless, the ``ItemType`` alias gives a way to talk about
+the type of the items in a ``Collection``,
+and to define a type for use with the ``append`` method and subscript,
+to ensure that the expected behavior of any ``Collection`` is enforced.
+
+Here's a version of the non-generic ``IntStack`` type from earlier,
+adapted to conform to the ``Collection`` protocol:
+
+.. testcode:: associatedTypes
+
+   -> struct IntStack: Container {
+         // original IntStack implementation
+         var items = Int[]()
+         mutating func push(item: Int) {
+            items.append(item)
+         }
+         mutating func pop() -> Int {
+            return items.popLast()
+         }
+         // conformance to the Container protocol
+         typealias ItemType = Int
+         mutating func append(item: Int) {
+            self.push(item)
+         }
+         var count: Int {
+            return items.count
+         }
+         subscript(i: Int) -> Int {
+            return items[i]
+         }
+      }
+
+The ``IntStack`` type implements all three of the ``Container`` protocol's requirements,
+and in each case wraps part of the ``IntStack`` type's existing functionality
+to satisfy these requirements.
+
+Moreover, ``IntStack`` specifies that for this implementation of ``Container``,
+the appropriate ``ItemType`` to use is a type of ``Int``.
+The definition of ``typealias ItemType = Int`` turns the abstract type of ``ItemType``
+into a concrete type of ``Int`` for this implementation.
+
+Thanks to Swift's type inference,
+you don't actually need to declare a concrete ``ItemType`` of ``Int``
+as part of the definition of ``IntStack``.
+Because ``IntStack`` conforms to all of the requirements of the ``Container`` protocol,
+Swift can infer the appropriate type to use by looking at the type of
+the ``append`` method's ``item`` parameter,
+and the subscript's return type.
+If you delete the ``typealias ItemType = Int`` line from the code above,
+everything still just works, and it is clear what type to use for ``ItemType``.
+
+You can also make the generic ``Stack`` type conform to the ``Container`` protocol:
+
+.. testcode:: associatedTypes
+
+   -> struct Stack<T>: Container {
+         // original Stack<T> implementation
+         var items = T[]()
+         mutating func push(item: T) {
+            items.append(item)
+         }
+         mutating func pop() -> T {
+            return items.popLast()
+         }
+         // conformance to the Container protocol
+         mutating func append(item: T) {
+            self.push(item)
+         }
+         var count: Int {
+            return items.count
+         }
+         subscript(i: Int) -> T {
+            return items[i]
+         }
+      }
+
+This time, the placeholder type parameter ``T`` is used as
+the type of the ``append`` method's ``item`` parameter,
+and the return type of the subscript.
+Swift can therefore infer that ``T`` is the appropriate type to use
+as the ``ItemType`` for this particular container.
+
+You can extend an existing type to add conformance to a protocol,
+as described in :ref:`Protocols_AddingProtocolConformanceWithAnExtension`.
+This includes a protocol with an associated type.
+
+Swift's ``Array`` type already provides an ``append`` method,
+a ``count`` property, and a subscript to retrieve its elements.
+These three capabilities match the requirements of the ``Container`` protocol.
+This means that you can extend ``Array`` to conform to the ``Container`` protocol
+simply by declaring that ``Array`` adopts the protocol.
+You do this with an empty extension
+as described in :ref:`Protocols_DeclaringProtocolAdoption`:
+
+.. testcode:: associatedTypes
+
+   -> extension Array: Container {}
+
+Array's existing ``append`` method and subscript enable Swift to infer
+the appropriate type to use for ``ItemType``,
+just as for the generic ``Stack`` type above.
+After declaring this extension, you can now use any ``Array`` as a ``Container``.
 
 .. _Generics_Subscripts:
 
