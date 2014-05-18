@@ -256,11 +256,11 @@ Subscript syntax can also be used to change an existing value at a given index:
    because String is a value type?
 
 You can insert an item into the array at a specified index
-by calling the array's ``insert`` method:
+by calling the array's ``insert(atIndex:)`` method:
 
 .. testcode:: arraysInferred
 
-   -> shoppingList.insert(0, newElement: "Maple Syrup")
+   -> shoppingList.insert("Maple Syrup", atIndex: 0)
    /> shoppingList now contains \(shoppingList.count) items
    </ shoppingList now contains 8 items
    /> \"\(shoppingList[0])\" is now the first item in the list
@@ -270,13 +270,13 @@ This call to the ``insert`` method inserts a new item with a value of ``"Maple S
 at the very beginning of the shopping list,
 indicated by an index of ``0``.
 
-Similarly, you remove an item from the array with the ``removeAt`` method.
-This method removes the item, and returns the removed item
+Similarly, you remove an item from the array with the ``removeAtIndex`` method.
+This method removes the item at the specified index, and returns the removed item
 (although you can ignore the returned value if you do not need it):
 
 .. testcode:: arraysInferred
 
-   -> let mapleSyrup = shoppingList.removeAt(0)
+   -> let mapleSyrup = shoppingList.removeAtIndex(0)
    << // mapleSyrup : String = "Maple Syrup"
    // the item that was at index 0 has just been removed
    /> shoppingList now contains \(shoppingList.count) items, and no Maple Syrup

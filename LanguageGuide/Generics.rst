@@ -271,7 +271,7 @@ in this case for a stack of ``Int`` values:
             items.append(item)
          }
          mutating func pop() -> Int {
-            return items.popLast()
+            return items.removeLast()
          }
       }
    >> var intStack = IntStack()
@@ -303,14 +303,14 @@ Here's a generic version of the same code:
             items.append(item)
          }
          mutating func pop() -> T {
-            return items.popLast()
+            return items.removeLast()
          }
       }
 
 .. QUESTION: should Stack's pop() method include bounds checking?
    I haven't yet introduced assert()…
 
-.. TODO: describe the fact that Array has a popLast() method
+.. TODO: describe the fact that Array has a removeLast() method
 
 Note how the generic version of ``Stack``
 is essentially the same as the non-generic version,
@@ -372,7 +372,7 @@ Here's how a type parameter is used within the definition of ``Stack``:
             items.append(item)
          }
          mutating func pop() -> T {
-            return items.popLast()
+            return items.removeLast()
          }
       }
 
@@ -670,7 +670,7 @@ adapted to conform to the ``Container`` protocol:
             items.append(item)
          }
          mutating func pop() -> Int {
-            return items.popLast()
+            return items.removeLast()
          }
          // conformance to the Container protocol
          typealias ItemType = Int
@@ -715,7 +715,7 @@ You can also make the generic ``Stack`` type conform to the ``Container`` protoc
             items.append(item)
          }
          mutating func pop() -> T {
-            return items.popLast()
+            return items.removeLast()
          }
          // conformance to the Container protocol
          mutating func append(item: T) {
