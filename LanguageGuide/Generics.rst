@@ -705,11 +705,11 @@ as described in :ref:`Protocols_AddingProtocolConformanceWithAnExtension`.
 This includes a protocol with an associated type.
 
 Swift's ``Array`` type already provides an ``append`` method,
-a ``count`` property, and a subscript to retrieve its elements.
+a ``count`` property, and a subscript with an ``Int`` index to retrieve its elements.
 These three capabilities match the requirements of the ``Container`` protocol.
 This means that you can extend ``Array`` to conform to the ``Container`` protocol
 simply by declaring that ``Array`` adopts the protocol.
-You do this with an empty extension
+You do this with an empty extension,
 as described in :ref:`Protocols_DeclaringProtocolAdoption`:
 
 .. testcode:: associatedTypes
