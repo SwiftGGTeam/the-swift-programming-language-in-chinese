@@ -644,7 +644,6 @@ Use ``init`` to create one.
     >> NamedShape("test name").description()
     <$ : String = "A shape with 0 sides."
 
-
 Notice how ``self`` is used to distinguish the ``name`` property
 from the ``name`` argument to the initializer.
 The arguments to the initializer are passed like a function call
@@ -652,6 +651,11 @@ when you create an instance of the class.
 Every property needs to either have a value assigned
 when it is declared (like ``numberOfSides``)
 or in the initializer (like ``name``).
+
+In addition to the initializer,
+you can use ``deinit`` create a deinitializer
+if you need te perform some clean-up
+before the object is deallocated.
 
 Classes that inherit from other classes
 include the superclass's name, separated by a colon.
@@ -809,7 +813,6 @@ is always the same as the side length of its square.
 
 .. write-me::
 
-* deinit
 * Local vs API names
 * Optional chaining with ?
 
