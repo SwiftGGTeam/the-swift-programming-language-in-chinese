@@ -400,10 +400,6 @@ and the default name of ``oldValue`` is used instead.
 Type Properties
 ---------------
 
-.. TODO: this section needs to be retitled as Type Properties,
-   and reworded to talk about computed class properties too.
-   Overriding of computed class properties will also need adding to Inheritance.
-
 Instance properties, as described above,
 are properties that belong to an instance of a particular type.
 Every time you create a new instance of that type,
