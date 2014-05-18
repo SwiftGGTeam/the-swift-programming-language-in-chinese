@@ -699,18 +699,9 @@ that don't actually override any method in the superclass.
    as arguments to its initializer,
    and implements an ``area`` and ``describe`` method.
 
-The initializer of a class with a superclass
-has three parts:
-
-1. Setting the value of properties that the subclass declares.
-
-2. Calling the superclass's initializer.
-
-3. Setting or changing the value of properties that the superclass declares.
-
 In addition to simple properties,
-properties can use an explicit getter and setter
-to create a computed property.
+properties can have a getter and a setter;
+read-only properties have only a getter.
 
 .. testcode::
 
@@ -757,11 +748,22 @@ to create a computed property.
     -> circle.radius
     <$ : Double = 4.99746521879595
 
-In the setter for ``circumference`` the new value
-has the implicit name ``newValue``.
+In the setter for ``circumference``,
+the new value has the implicit name ``newValue``.
 You can provide an explicit name in parentheses after ``set``.
 
-If you don't need to computer the property
+Notice that the initializer for the ``Circle`` class
+is made up of three parts:
+
+1. Setting the value of properties that the subclass declares.
+
+2. Calling the superclass's initializer.
+
+3. Changing the value of properties set by the superclass.
+   Any additional setup work that uses methods, getters, or setters
+   can also be done at this point.
+
+If you don't need to compute the property
 but still need to provide code that is run before and after setting a new value,
 use ``willSet`` and ``didSet``.
 For example, the class below ensures
