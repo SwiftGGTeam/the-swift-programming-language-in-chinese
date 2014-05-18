@@ -840,11 +840,11 @@ These requirements mean:
 1) ``someContainer`` is a container of type ``C1``
 2) ``anotherContainer`` is a container of type ``C2``
 3) ``someContainer`` and ``anotherContainer`` contain the same type of items
-4) The items in ``someContainer`` can be checked with the ``==`` operator
-   to see if they are the same as each other
+4) The items in ``someContainer`` can be checked with the not equal operator (``!=``)
+   to see if they are different from each other
 
 The third and fourth requirements combine to mean that
-the items in ``anotherContainer`` can *also* be checked with the ``==`` operator,
+the items in ``anotherContainer`` can *also* be checked with the ``!=`` operator,
 because they are exactly the same type as the items in ``someContainer``.
 
 These requirements mean that the ``allItemsMatch`` function
@@ -859,9 +859,9 @@ and the function returns ``false``.
 After making this check, the function iterates over all of the items in ``someContainer``
 with a ``for``-``in`` loop and the half-closed range operator (``..``).
 For each item, the function checks to see if
-the item from ``someCntainer`` is equivalent to
+the item from ``someContainer`` is not equal to
 the corresponding item in ``anotherContainer``.
-If the two items are not equivalent, then the two containers do not match,
+If the two items are not equal, then the two containers do not match,
 and the function returns ``false``.
 
 If the loop finishes without finding a mismatch,
