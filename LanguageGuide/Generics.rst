@@ -240,16 +240,16 @@ Generic Types
 
 In addition to generic functions,
 Swift also enables you to define your own :newTerm:`generic types`.
-These are custom classes, structures, enumerations, and protocols
+These are custom classes, structures, and enumerations
 that can work with *any* type, in a similar way to ``Array`` and ``Dictionary``.
 
-Here's an example of a generic type called ``Stack``.
+This section shows you how to write a generic collection type called ``Stack``.
 This type represents an ordered “stack” of values, with two operations:
 
 * :newTerm:`Pushing` a new value on to the top of the stack
 * :newTerm:`Popping` a value off the top of the stack
 
-This illustration shows the push / pop behavior for a stack:
+The illustration below shows the push / pop behavior for a stack:
 
 .. image:: ../images/stackPushPop.png
    :align: center
@@ -260,14 +260,40 @@ This illustration shows the push / pop behavior for a stack:
 4. The top item in the stack is removed, or “popped”.
 5. After popping a value, the stack once again holds three values.
 
-The example below shows an implementation of a generic ``Stack`` structure in Swift code.
+Here's how to write a non-generic version of a stack,
+in this case for a stack of ``Int`` values:
+
+.. testcode:: genericStack
+
+   -> struct IntStack {
+         var items = Int[]()
+         mutating func push(item: Int) {
+            items.append(item)
+         }
+         mutating func pop() -> Int {
+            return items.popLast()
+         }
+      }
+   >> var intStack = IntStack()
+   << // intStack : IntStack = IntStack([])
+   >> intStack.push(1)
+   >> intStack.push(2)
+   >> intStack.push(3)
+   >> intStack.push(4)
+   >> println("the stack now contains \(intStack.items.count) integers")
+   << the stack now contains 4 integers
+
 This structure uses an ``Array`` property called ``items`` to store the values in the stack.
 ``Stack`` provides two methods, ``push`` and ``pop``,
 to push and pop values on and off the stack.
 These methods are marked as ``mutating``,
 because they need to modify (or *mutate*) the structure's ``items`` array.
-(Don't worry too much about the details of this implementation for now –
-a full explanation of how ``Stack`` is defined is given below.)
+
+The ``IntStack`` type shown above can only be used with ``Int`` values, however.
+It would be much more useful to define a *generic* ``Stack`` class,
+that can manage a stack of *any* type of value.
+
+Here's a generic version of the same code:
 
 .. testcode:: genericStack
 
@@ -285,6 +311,11 @@ a full explanation of how ``Stack`` is defined is given below.)
    I haven't yet introduced assert()…
 
 .. TODO: describe the fact that Array has a popLast() method
+
+Note how the generic version of ``Stack``
+is essentially the same as the non-generic version,
+but with a placeholder type parameter called ``T``
+instead of an actual type of ``Int``.
 
 The ``Stack`` structure can be used to create a stack of any type,
 such as a stack of ``String`` values:
@@ -387,7 +418,7 @@ generic functions and generic types.
 
 For example,
 Swift's ``Dictionary`` type places a limitation on
-the types that can be used as *keys* for a dictionary.
+the types that can be used as keys for a dictionary.
 As described in :ref:`CollectionTypes_Dictionaries`,
 the type of a dictionary's keys must be :newTerm:`hashable` –
 that is, it must provide a way to make itself uniquely representable.
