@@ -761,6 +761,144 @@ the appropriate type to use for ``ItemType``,
 just as for the generic ``Stack`` type above.
 After defining this extension, you can use any ``Array`` as a ``Container``.
 
+.. _Generics_WhereClauses:
+
+Where Clauses
+-------------
+
+Type constraints, as described in :ref:`Generics_TypeConstraints`,
+enable you to define requirements on the type parameters associated with
+a generic function or type.
+
+It can sometimes be useful to define requirements for associated types too.
+This is achieved by defining :newTerm:`where clauses` as part of a type parameter list.
+A where clause enables you to require that
+an associated type conforms to a certain protocol,
+and / or that certain type parameters and associated types are the same.
+You write a where clause by placing the ``where`` keyword
+immediately after the list of type parameters,
+followed by one or more constraints for associated types,
+and / or one or more equality relationships between types and associated types.
+
+The example below defines a generic function called ``allItemsMatch``,
+which checks to see if two ``Container`` instances contain
+the same items in the same order.
+The function returns a Boolean value of ``true`` if all items match,
+and a value of ``false`` if they do not.
+
+The two containers to be checked do not have to be
+the same type of container (although they can be),
+but they do have to hold the same type of items.
+This is expressed through a combination of type constraints and where clauses:
+
+.. testcode:: associatedTypes
+
+   -> func allItemsMatch<
+            C1: Container, C2: Container
+            where C1.ItemType == C2.ItemType, C1.ItemType: Equatable>
+            (someContainer: C1, anotherContainer: C2) -> Bool {
+   ---
+         // check that both containers contain the same number of items
+         if someContainer.count != anotherContainer.count {
+            return false
+         }
+   ---
+         // check each pair of items to see if they are equivalent
+         for i in 0..someContainer.count {
+            if someContainer[i] != anotherContainer[i] {
+               return false
+            }
+         }
+   ---
+         // all items match, so return true
+         return true
+   ---
+      }
+
+This function takes two arguments called
+``someContainer`` and ``anotherContainer``.
+The ``someContainer`` argument is of type ``C1``,
+and the ``anotherContainer`` argument is of type ``C2``.
+Both ``C1`` and ``C2`` are placeholder type parameters
+for two container types to be determined when the function is called.
+
+The function's type parameter list places
+the following requirements on the two type parameters:
+
+1) ``C1`` must conform to the ``Container`` protocol (written as ``C1: Container``)
+2) ``C2`` must also conform to the ``Container`` protocol (written as ``C2: Container``)
+3) The ``ItemType`` for ``C1`` must be the same as the ``ItemType`` for ``C2``
+   (written as ``C1.ItemType == C2.ItemType``)
+4) The ``ItemType`` for ``C1`` must conform to the ``Equatable`` protocol
+   (written as ``C1.ItemType: Equatable``)
+
+The third and fourth requirements are defined as part of a where clause,
+and are written after the ``where`` keyword as part of the function's type parameter list.
+
+These requirements mean:
+
+1) ``someContainer`` is a container of type ``C1``
+2) ``anotherContainer`` is a container of type ``C2``
+3) ``someContainer`` and ``anotherContainer`` contain the same type of items
+4) The items in ``someContainer`` can be checked with the ``==`` operator
+   to see if they are the same as each other
+
+The third and fourth requirements combine to mean that
+the items in ``anotherContainer`` can *also* be checked with the ``==`` operator,
+because they are exactly the same type as the items in ``someContainer``.
+
+These requirements mean that the ``allItemsMatch`` function
+is able to compare the two containers,
+even if they are of a different container type.
+
+The ``allItemsMatch`` function starts by checking that
+both containers contain the same number of items.
+If they contain a different number of items, there is no way that they can match,
+and the function returns ``false``.
+
+After making this check, the function iterates over all of the items in ``someContainer``
+with a ``for``-``in`` loop and the half-closed range operator (``..``).
+For each item, the function checks to see if
+the item from ``someCntainer`` is equivalent to
+the corresponding item in ``anotherContainer``.
+If the two items are not equivalent, then the two containers do not match,
+and the function returns ``false``.
+
+If the loop finishes without finding a mismatch,
+the two containers match, and the function returns ``true``.
+
+Here's how the ``allItemsMatch`` function looks in action:
+
+.. testcode:: associatedTypes
+
+   -> var stackOfStrings = Stack<String>()
+   << // stackOfStrings : Stack<String> = V4REPL5Stack (has 1 child)
+   -> stackOfStrings.push("uno")
+   -> stackOfStrings.push("dos")
+   -> stackOfStrings.push("tres")
+   ---
+   -> var arrayOfStrings = ["uno", "dos", "tres"]
+   << // arrayOfStrings : Array<String> = ["uno", "dos", "tres"]
+   ---
+   -> if allItemsMatch(stackOfStrings, arrayOfStrings) {
+         println("All items match.")
+      } else {
+         println("Not all items match.")
+      }
+   <- All items match.
+
+The example above creates a ``Stack`` instance to store ``String`` values,
+and pushes three strings onto the stack.
+The example also creates an ``Array`` instance initialized with
+an array literal containing the same three strings as the stack.
+Even though the stack and the array are of a different type,
+they both conform to the ``Container`` protocol,
+and both contain the same type of values.
+You can therefore call the ``allItemsMatch`` function
+with these two containers as its arguments.
+In the example above, the ``allItemsMatch`` function correctly reports that
+all of the items in the two containers match.
+
 .. _Generics_Subscripts:
 
 Subscripts
