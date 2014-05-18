@@ -105,6 +105,99 @@ you can still change that instance's variable properties.
    in the first paragraph of this section, to set expectations.
    (I've also asked whether this is intentional, in rdar://16338553.)
 
+.. _Properties_LazyStoredProperties:
+
+Lazy Stored Properties
+~~~~~~~~~~~~~~~~~~~~~~
+
+.. QUESTION: is this section too complex for this point in the book?
+   Should it go in the Default Property Values section of Initialization instead?
+
+:newTerm:`Lazy stored properties`
+are stored properties whose initial value is not calculated
+until the first time it is used.
+These kinds of properties are indicated by writing
+the ``@lazy`` attribute before their declaration.
+
+.. note::
+
+   Lazy properties must always be declared as variables (with the ``var`` keyword),
+   because it is possible that their initial value may not be retrieved
+   until after instance initialization has finished.
+   Constant properties must always have a value *before* initialization finishes,
+   and cannot therefore be declared as lazy.
+
+Lazy properties are useful when the initial value for a property
+is dependent on outside factors whose values are not known
+until after an instance's initialization is complete.
+Lazy properties are also useful when the initial value for a property requires
+complex or computationally-expensive setup that should not be performed
+unless or until it is needed.
+
+The example below shows a hypothetical situation where
+a lazy stored property is an appropriate way to avoid
+unnecessary initialization of a complex class.
+This example defines two classes called ``DataImporter`` and ``DataManager``,
+neither of which is shown in full:
+
+.. testcode:: lazyProperties
+
+   -> class DataImporter {
+         /*
+         DataImporter is a class to import data from an external file.
+         The class is assumed to take a non-trivial amount of time to initialize.
+         */
+         var fileName = "data.txt"
+         // the DataImporter class would provide data importing functionality here
+   >>    init() {
+   >>       println("the DataImporter instance for the importer property has now been created")
+   >>    }
+      }
+   ---
+   -> class DataManager {
+         @lazy var importer = DataImporter()
+         var data = String[]()
+         // the DataManager class would provide data management functionality here
+      }
+   ---
+   -> let manager = DataManager()
+   << // manager : DataManager = C4REPL11DataManager (has 2 children)
+   -> manager.data += "Some data"
+   -> manager.data += "Some more data"
+   // the DataImporter instance for the importer property has not yet been created
+
+The ``DataManager`` class has a stored property called ``data``,
+which is initialized with a new, empty array of ``String`` values.
+Although the rest of its functionality is not shown,
+the purpose of this ``DataManager`` class is to manage and provide access to
+this array of ``String`` data.
+
+Part of the functionality of the ``DataManager`` class
+is the ability to import some data from a file.
+This functionality is provided by the ``DataImporter`` class,
+which is assumed to take some non-trivial amount of time to initialize.
+This might be because a ``DataImporter`` instance needs to open a file
+and read its contents into memory when the ``DataImporter`` instance is initialized.
+
+In this hypothetical scenario,
+it is possible for a ``DataManager`` instance to manage its data
+without ever needing to import any data from a file,
+and so there is no need to create a new ``DataImporter`` instance
+when the ``DataManager`` itself is created.
+Instead, it makes more sense to create the ``DataImporter`` instance
+if and when it is first used.
+
+Because it has been marked with the ``@lazy`` attribute,
+the ``DataImporter`` instance for the ``importer`` property
+is only created when the property is first accessed,
+such as if its ``fileName`` property is queried:
+
+.. testcode:: lazyProperties
+
+   -> println(manager.importer.fileName)
+   </ the DataImporter instance for the importer property has now been created
+   <- data.txt
+
 .. _Properties_StoredPropertiesAndInstanceVariables:
 
 Stored Properties and Instance Variables
@@ -126,12 +219,6 @@ including its name, type, and memory management characteristics –
 is defined in a single location as part of the type's definition.
 
 .. TODO: what happens if one property of a constant structure is an object reference?
-
-.. TODO: You can initialize a property with a block with parens on the end.
-   I should write up how to do so.
-
-.. TODO: There's a design plan to introduce a @lazy attribute for lazy property init.
-   This is being tracked in rdar://16432427.
 
 .. _Properties_ComputedProperties:
 
@@ -302,7 +389,8 @@ changes in a property's value.
 Property observers are called every time a property's value is set,
 even if the new value is the same as the property's current value.
 
-You can add property observers to any stored properties you define.
+You can add property observers to any stored properties you define,
+apart from lazy stored properties.
 You can also add property observers to any inherited property (whether stored or computed)
 by overriding the property within a subclass.
 Property overriding is described in :ref:`Inheritance_Overriding`.
