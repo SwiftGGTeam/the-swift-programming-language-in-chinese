@@ -395,10 +395,10 @@ and the default name of ``oldValue`` is used instead.
 
 .. TODO: mention that this also works for global / local variables
 
-.. _Properties_StaticProperties:
+.. _Properties_TypeProperties:
 
-Static Properties
------------------
+Type Properties
+---------------
 
 .. TODO: this section needs to be retitled as Type Properties,
    and reworded to talk about computed class properties too.
@@ -407,61 +407,96 @@ Static Properties
 Instance properties, as described above,
 are properties that belong to an instance of a particular type.
 Every time you create a new instance of that type,
-it stores its own set of property values, separate from any other instance.
+it has its own set of property values, separate from any other instance.
 
-For value types (that is, structures and enumerations),
-you can also define properties that belong to the type itself,
+You can also define properties that belong to the type itself,
 and not to any one instance of that type.
 There will only ever be one copy of these properties,
 no matter how many instances of that type you create.
-These kinds of properties are called :newTerm:`static properties`,
-and are prefixed by the keyword ``static``:
+These kinds of properties are called :newTerm:`type properties`.
 
-.. testcode:: staticPropertySyntax
-
-   -> struct SomeStructure {
-         static var someStaticProperty = "Some Value"
-      }
-   -> enum SomeEnumeration {
-         static var someStaticProperty = "Some Value"
-      }
-
-Static properties are useful for defining values that are universal to
-*all* instances of a particular value type.
+Type properties are useful for defining values that are universal to
+*all* instances of a particular type.
 This might be a constant property that all instances can use
 (like a static constant in C),
 or a variable property that stores a value that is global to all instances of that type
 (like a static variable in C).
 
-In C and Objective-C, you define static constants and variables associated with a type
-as global static variables.
-In Swift, however, static properties are written as part of the type's definition,
-within the type's outer curly braces,
-and each static property is explicitly scoped to the type it supports.
+For value types (that is, structures and enumerations),
+you can define stored and computed type properties.
+For classes, you can define computed type properties only.
 
-Static properties can be constant or variable,
-and can be stored properties or computed properties.
-Static properties that are both stored and variable can also have property observers,
-just like stored variable instance properties.
+Stored type properties (for value types) can be variables or constants.
+Computed type properties are always declared as variable properties,
+in the same way as computed instance properties.
 
 .. note::
 
    Unlike stored instance properties,
-   stored static properties must *always* be given a default value.
+   stored type properties must *always* be given a default value.
    This is because the type itself does not have an initializer
-   that can assign a value to a stored static property at initialization time.
+   that can assign a value to a stored type property at initialization time.
 
-Static properties are queried and set with dot syntax, just like instance properties.
-However, static properties are queried and set on the *type*, not on an instance of that type.
+.. _Properties_TypePropertySyntax:
 
-To set a static property on a structure type called ``SomeStructure``,
-you write the following:
+Type Property Syntax
+~~~~~~~~~~~~~~~~~~~~
 
-.. testcode:: staticPropertySyntax
+In C and Objective-C, you define static constants and variables associated with a type
+as *global* static variables.
+In Swift, however, type properties are written as part of the type's definition,
+within the type's outer curly braces,
+and each type property is explicitly scoped to the type it supports.
 
-   -> SomeStructure.someStaticProperty = "New Value"
+You define type properties for value types with the ``static`` keyword,
+and type properties for class types with the ``class`` keyword.
+The example below shows the syntax for stored and computed type properties:
 
-The example below uses two static properties as part of a structure that models
+.. testcode:: typePropertySyntax
+
+   -> struct SomeStructure {
+         static var storedTypeProperty = "Some value."
+         static var computedTypeProperty: Int {
+            // return an Int value here
+   >>       return 42
+         }
+      }
+   -> enum SomeEnumeration {
+         static var storedTypeProperty = "Some value."
+         static var computedTypeProperty: Int {
+            // return an Int value here
+   >>       return 42
+         }
+      }
+   -> class SomeClass
+         class var computedTypeProperty: Int {
+            // return an Int value here
+   >>       return 42
+         }
+      }
+
+.. note::
+
+   The computed type property examples above are for read-only computed type properties,
+   but you can also define read-write computed type properties
+   with the same syntax as for computed instance properties.
+
+.. _Properties_QueryingAndSettingTypeProperties:
+
+Querying and Setting Type Properties
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Type properties are queried and set with dot syntax, just like instance properties.
+However, type properties are queried and set on the *type*, not on an instance of that type.
+For example:
+
+.. testcode:: typePropertySyntax
+
+   -> SomeStructure.storedTypeProperty = "Another value."
+   -> println(SomeClass.computedTypeProperty)
+   <- 42
+
+The example below uses two type properties as part of a structure that models
 an audio level meter for a number of audio channels.
 Each of these channels has an integer audio level between ``0`` and ``10`` inclusive,
 as shown in the figure below:
@@ -495,13 +530,13 @@ Each audio channel in the meter is modeled by an ``AudioChannel`` structure:
          }
       }
 
-The ``AudioChannel`` structure defines two static properties to support its functionality.
+The ``AudioChannel`` structure defines two stored type properties to support its functionality.
 The first, ``thresholdLevel``, defines the maximum threshold value an audio level can take.
 This is a constant value of ``10`` for all ``AudioChannel`` instances.
 If an audio signal comes in with a higher value than ``10``,
 it will be capped to this threshold value (as described below).
 
-The second static property is
+The second type property is
 a variable stored property called ``maxInputLevelForAllChannels``.
 This keeps track of the maximum input value that has been received
 by *any* ``AudioChannel`` instance.
@@ -539,8 +574,8 @@ to represent the audio levels of a stereo sound system:
    -> var rightChannel = AudioChannel()
 
 If you set the ``currentLevel`` of the *left* channel to ``7``,
-you can see that the ``maxInputLevelForAllChannels`` static property
-has been updated to equal ``7``:
+you can see that the ``maxInputLevelForAllChannels`` type property
+is updated to equal ``7``:
 
 .. testcode:: staticProperties
    :compile: true
@@ -554,7 +589,7 @@ has been updated to equal ``7``:
 If you try and set the ``currentLevel`` of the *right* channel to ``11``,
 you can see that the right channel's ``currentLevel`` property
 has been capped to the maximum value of ``10``,
-and the ``maxInputLevelForAllChannels`` static property has been updated to equal ``11``:
+and the ``maxInputLevelForAllChannels`` type property is updated to equal ``11``:
 
 .. testcode:: staticProperties
    :compile: true
@@ -564,18 +599,3 @@ and the ``maxInputLevelForAllChannels`` static property has been updated to equa
    <- 10
    -> println(AudioChannel.maxInputLevelForAllChannels)
    <- 11
-
-.. QUESTION: we won't have class properties for Swift 1.0, says [Contributor 7746].
-   I've named this section "Static Properties" as a result,
-   and mirrored this approach elsewhere in the book.
-   Is this the right approach, or should I call them "Type Properties" from the off?
-
-.. TODO: see release notes from 2013-12-18 for a note about lazy initialization
-
-.. TODO: as it stands, this is the first time I'll mention .dynamicType (assuming I do)
-   is this the right place to introduce it?
-
-.. TODO: mention that you can get at type properties a few different ways:
-   TypeName.propertyName; someInstance.dynamicType.propertyName;
-   just plain old propertyName if you're already at a type level in that type
-   (likewise for methods in the methods chapter)
