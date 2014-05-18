@@ -568,7 +568,10 @@ It has the following forms:
     self
     self.<#member name#>
     self[<#subscript index#>]
+    self(<#initializer arguments#>)
     self.init(<#initializer arguments#>)
+
+.. TODO: Come back and explain the second to last form (i.e., self(arg: value)).
 
 In an initializer, subscript, or instance method, ``self`` refers to the current
 instance of the type in which it occurs. In a static or class method,
