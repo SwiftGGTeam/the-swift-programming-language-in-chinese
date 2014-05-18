@@ -773,7 +773,7 @@ Type inference helps to make Swift code much more concise and readable
 when initializing constants or variables with other values whose type is already known.
 
 Boolean values are particularly useful when you work with conditional statements
-such as the ``if``-``else`` statement:
+such as the ``if`` statement:
 
 .. testcode:: booleans
 
@@ -784,7 +784,7 @@ such as the ``if``-``else`` statement:
       }
    <- Eww, turnips are horrible.
 
-Conditional statements such as ``if``-``else`` are covered in more detail in :doc:`ControlFlow`.
+Conditional statements such as the ``if`` statement are covered in more detail in :doc:`ControlFlow`.
 
 Swift's type safety means that non-Boolean values cannot be substituted for ``Bool``.
 The following example reports a compile-time error:
@@ -820,7 +820,7 @@ and ensures that the intention of a particular section of code is always clear.
 
 .. note::
 
-   Strictly speaking, an ``if``-``else`` statement's condition expression
+   Strictly speaking, an ``if`` statement's condition expression
    can be of any type that conforms to the ``LogicValue`` protocol.
    ``Bool`` is one example of a type that conforms to this protocol,
    but there are others, such as optionals, described below.
@@ -1003,12 +1003,12 @@ Sometimes there is a number in the box, and sometimes there is not:
 .. image:: ../images/optionalBox.png
    :align: center
 
-.. _TheBasics_OptionalsIfElseAndForcedUnwrapping:
+.. _TheBasics_IfStatementsAndForcedUnwrapping:
 
-If-Else and Forced Unwrapping
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+If Statements and Forced Unwrapping
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can use an ``if``-``else`` statement to find out whether an optional contains a value.
+You can use an ``if`` statement to find out whether an optional contains a value.
 If an optional does have a value, it evaluates to ``true``;
 if it has no value at all, it evaluates to ``false``.
 
@@ -1031,7 +1031,7 @@ This is known as :newTerm:`forced unwrapping` of the optional's value.
       }
    <- possibleNumber has an integer value of 6
 
-``if``-``else`` statements are described in more detail in :doc:`ControlFlow`.
+``if`` statements are described in more detail in :doc:`ControlFlow`.
 
 .. note::
 
@@ -1047,13 +1047,13 @@ Optional Binding
 
 :newTerm:`Optional binding` is a convenient way to find out if an optional contains a value,
 and to make that value available as a constant or variable if it exists.
-Optional binding can be used with ``if``-``else`` and ``while`` statements
+Optional binding can be used with ``if`` and ``while`` statements
 to check for a value inside the optional,
 and to extract that value into a constant or variable,
 as part of a single action.
-(``if``-``else`` and ``while`` statements are described in more detail in :doc:`ControlFlow`.)
+(``if`` and ``while`` statements are described in more detail in :doc:`ControlFlow`.)
 
-Optional bindings for the ``if``-``else`` statement are written in the following form:
+Optional bindings for the ``if`` statement are written in the following form:
 
 .. syntax-outline::
 
@@ -1080,14 +1080,14 @@ set a new constant called ``actualNumber`` to the value contained in the optiona
 
 If the unwrapping is successful,
 the ``actualNumber`` constant becomes available for use within
-the first branch of the ``if``-``else`` statement.
+the first branch of the ``if`` statement.
 It has already been initialized with the value contained *within* the optional,
 and so there is no need to use the ``!`` suffix to access its value.
 In this example, ``actualNumber`` is simply used to print the unwrapped value.
 
 You can use both constants and variables with optional binding.
 If you wanted to manipulate the value of ``actualNumber``
-within the first block of the ``if``-``else`` statement,
+within the first branch of the ``if`` statement,
 you could write ``if var actualNumber`` instead,
 and the value contained within the optional
 would be made available as a variable rather than a constant.
@@ -1096,10 +1096,10 @@ would be made available as a variable rather than a constant.
 
    Constants or variables created with optional binding
    are only available within the code block following their creation,
-   as in the first branch of the ``if``-``else`` statement above.
+   as in the first branch of the ``if`` statement above.
    If you want to work with the optional's value outside of this code block,
    you should declare a constant or variable yourself
-   before the ``if``-``else`` statement begins.
+   before the ``if`` statement begins.
 
 .. _TheBasics_Nil:
 
@@ -1149,7 +1149,7 @@ Implicitly Unwrapped Optionals
 
 As described above,
 optionals indicate that a constant or variable is allowed to have “no value”.
-Optionals can be checked with an ``if``-``else`` statement to see if a value exists,
+Optionals can be checked with an ``if`` statement to see if a value exists,
 and can be conditionally unwrapped with optional binding
 to access the optional's value if it does exist.
 

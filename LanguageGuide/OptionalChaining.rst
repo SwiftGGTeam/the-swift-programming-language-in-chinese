@@ -317,7 +317,7 @@ as described in :ref:`Functions_FunctionsWithoutReturnValues`.
 If you call this method on an optional value with optional chaining,
 the method's return type will be ``Void?``, not ``Void``,
 because return values are always of an optional type when called through optional chaining.
-This enables you to use an ``if``-``else`` statement
+This enables you to use an ``if`` statement
 to check whether it was possible to call the ``printNumberOfRooms`` method,
 even though the method does not itself define a return value.
 The implicit return value from the ``printNumberOfRooms`` will be equal to ``Void``

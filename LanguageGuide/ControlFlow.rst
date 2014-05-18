@@ -3,7 +3,7 @@ Control Flow
 
 Swift provides all of the familiar control flow constructs found in C-like languages.
 These include ``for`` and ``while`` loops to perform a task multiple times;
-``if``-``else`` and ``switch`` statements
+``if`` and ``switch`` statements
 to execute different branches of code based on certain conditions;
 and control flow statements such as ``break`` and ``continue``
 to transfer the flow of execution to another point in your code.
@@ -567,25 +567,22 @@ You might want to run an extra piece of code when an error occurs,
 or to display a message when a value becomes too high or too low.
 To do this, you make parts of your code :newTerm:`conditional`.
 
-Swift provides two ways to add conditional branches to your code:
-
-* ``if``-``else``
-* ``switch``
-
-Typically, you use the ``if``-``else`` statement
+Swift provides two ways to add conditional branches to your code,
+known as the ``if`` statement and the ``switch`` statement.
+Typically, you use the ``if`` statement
 to evaluate simple conditions with only a few possible outcomes.
 The ``switch`` statement is better suited to
 more complex conditions with multiple possible permutations,
 or situations where pattern-matching can help to select
 an appropriate code branch to execute.
 
-.. _ControlFlow_IfElse:
+.. _ControlFlow_If:
 
-If-Else
-~~~~~~~
+If
+~~
 
 In its simplest form,
-the ``if``-``else`` statement has a single ``if`` condition.
+the ``if`` statement has a single ``if`` condition.
 It executes a set of statements only if that condition is ``true``:
 
 .. testcode:: ifElse
@@ -604,8 +601,10 @@ If it is, a message is printed.
 Otherwise, no message is printed,
 and code execution continues after the ``if`` statement's closing brace.
 
-As its name suggests, the ``if``-``else`` statement can provide
-an alternative set of statements when the ``if`` condition is ``false``:
+The ``if`` statement can provide an alternative set of statements,
+known as an :newTerm:`else clause`,
+for when the ``if`` condition is ``false``.
+These statements are indicated by the ``else`` keyword:
 
 .. testcode:: ifElse
 
@@ -622,7 +621,7 @@ Because the temperature has increased to ``40`` degrees Fahrenheit,
 it is no longer cold enough to advise wearing a scarf,
 and so the ``else`` branch is triggered instead.
 
-You can chain multiple ``if``-``else`` statements together,
+You can chain multiple ``if`` statements together,
 to consider additional clauses:
 
 .. testcode:: ifElse
@@ -637,11 +636,12 @@ to consider additional clauses:
       }
    <- It's really warm. Don't forget to wear sunscreen.
 
-Here, an additional ``if`` clause is added to respond to particularly warm temperatures.
+Here, an additional ``if`` statement is added to respond to particularly warm temperatures.
 The final ``else`` clause remains,
 and prints a response for any temperatures that are neither too warm nor too cold.
 
-The final ``else`` clause is optional, however, and can be excluded if the set of conditions does not need to be complete:
+The final ``else`` clause is optional, however,
+and can be excluded if the set of conditions does not need to be complete:
 
 .. testcode:: ifElse
 
@@ -665,7 +665,7 @@ A ``switch`` statement considers a value
 and compares it against several possible matching patterns.
 It then executes an appropriate block of code,
 based on the first pattern that matches successfully.
-A ``switch`` statement provides an alternative to the ``if``-``else`` statement
+A ``switch`` statement provides an alternative to the ``if`` statement
 for responding to multiple potential states.
 
 In its simplest form, a ``switch`` statement compares a value against
@@ -691,7 +691,7 @@ more complex matching patterns.
 These options are described later in this section.
 
 The body of each ``switch`` case is a separate branch of code execution,
-in a similar manner to the branches of an ``if``-``else`` statement.
+in a similar manner to the branches of an ``if`` statement.
 The ``switch`` statement determines which branch should be selected.
 This is known as :newTerm:`switching` on the value that is being considered.
 

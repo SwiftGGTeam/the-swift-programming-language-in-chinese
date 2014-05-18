@@ -416,7 +416,7 @@ Each of the comparison operators returns a ``Bool`` value to indicate whether or
    << // r5 : Bool = false
 
 Comparison operators are often used in conditional statements,
-such as the ``if``-``else`` statement:
+such as the ``if`` statement:
 
 .. testcode:: comparisonOperators
 
@@ -430,7 +430,7 @@ such as the ``if``-``else`` statement:
    << hello, world
    // prints "hello, world", because name is indeed equal to "world"
 
-The ``if``-``else`` statement is described in more detail in :doc:`ControlFlow`.
+The ``if`` statement is described in more detail in :doc:`ControlFlow`.
 
 .. TODO: which types do these operate on by default?
    How do they work with strings?
@@ -501,7 +501,7 @@ The first example's use of the ternary conditional operator means that
 ``rowHeight`` can be set to the correct value on a single line of code.
 This is more concise than the second example,
 and removes the need for ``rowHeight`` to be a variable,
-because its value does not need to be modified within an ``if``-``else`` statement
+because its value does not need to be modified within an ``if`` statement
 (as seen in the second example).
 
 The ternary conditional operator provides
