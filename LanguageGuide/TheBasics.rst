@@ -992,10 +992,10 @@ or it might contain *no value at all*.
 (It can't contain anything else, such as a ``Bool`` value or a ``String`` value –
 it's either an ``Int``, or it's nothing at all.)
 
-.. _TheBasics_OptionalsIfElse:
+.. _TheBasics_OptionalsIfElseAndForcedUnwrapping:
 
-If-Else
-~~~~~~~
+If-Else and Forced Unwrapping
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You can use an ``if``-``else`` statement to find out whether an optional contains a value.
 If an optional does have a value, it evaluates to ``true``;
@@ -1006,6 +1006,7 @@ you can access its underlying value
 by adding an exclamation mark (``!``) to the end of the optional's name.
 The exclamation mark effectively says,
 “I know that this optional definitely has a value – please use it.”
+This is known as :newTerm:`forced unwrapping` of the optional's value.
 
 .. testcode:: optionals
 
