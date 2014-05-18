@@ -703,9 +703,8 @@ that don't actually override any method in the superclass.
    as arguments to its initializer,
    and implements an ``area`` and ``describe`` method.
 
-In addition to simple properties,
-properties can have a getter and a setter;
-read-only properties have only a getter.
+In addition to simple properties which are stored,
+properties can have a getter and a setter.
 
 .. testcode::
 
@@ -811,10 +810,25 @@ is always the same as the side length of its square.
    (or if it's even allowed)
    to use them outside a class or a struct.
 
+When working with optional values,
+you can use ``?`` before operations like methods and properties.
+When the value is ``nil``,
+it returns ``nil`` and anything after it is ignored.
+Otherwise, it unwraps the optional
+and anything after it uses the unwrapped value.
+
+.. testcode::
+
+    -> let optionalCircle: Circle? = Circle(size: 2.5, name:"optional circle")
+    -> let diameter = optionalCircle?.diameter
+    ---
+    -> if let circle = optionalCircle {
+           let diameter = circle.diameter
+       }
+
 .. write-me::
 
 * Local vs API names
-* Optional chaining with ?
 
 Enumerations and Structures
 ---------------------------
