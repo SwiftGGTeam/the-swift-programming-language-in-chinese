@@ -22,6 +22,11 @@ The book has the following known issues:
 May 19 2014
 ~~~~~~~~~~~
 
+About Swift
++++++++++++
+
+* New chapter called :doc:`../GuidedTour/AboutSwift`.
+
 Language Guide
 ++++++++++++++
 

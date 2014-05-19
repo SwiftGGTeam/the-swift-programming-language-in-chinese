@@ -5,3 +5,4 @@ Guided Tour
     :maxdepth: 1
 
     GuidedTour
+    AboutSwift
