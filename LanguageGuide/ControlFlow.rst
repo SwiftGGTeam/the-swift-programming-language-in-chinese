@@ -254,10 +254,10 @@ are only valid within the scope of the ``for`` loop itself.
 To retrieve the final value of ``index`` after the loop ends,
 you must declare ``index`` before the loop's scope begins:
 
-.. testcode:: forLoops
+.. testcode:: forLoopsOutside
+   :compile: true
 
-   -> var index = 0
-   << // index : Int = 0
+   -> var index: Int
    -> for index = 0; index < 3; ++index {
          println("index is \(index)")
       }
@@ -266,9 +266,6 @@ you must declare ``index`` before the loop's scope begins:
    </ index is 2
    -> println("The loop statements were executed \(index) times")
    <- The loop statements were executed 3 times
-
-.. TODO: We shouldn't need to initialize index to 0 on the first line of this example,
-   but variables can't currently be used unitialized in the REPL.
 
 Note that the final value of ``index`` after this loop is completed is ``3``, not ``2``.
 The last time the increment statement ``++index`` is called,
