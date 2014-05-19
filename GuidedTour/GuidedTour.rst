@@ -821,14 +821,25 @@ and anything after it uses the unwrapped value.
 
     -> let optionalCircle: Circle? = Circle(size: 2.5, name:"optional circle")
     -> let diameter = optionalCircle?.diameter
-    ---
-    -> if let circle = optionalCircle {
-           let diameter = circle.diameter
+
+Methods on classes have one important difference from functions.
+The parameter names in functions are only used within the function,
+but parameters in methods are also used when you call the method.
+
+.. testcode::
+
+    -> class Counter {
+          var count: Int = 0
+          func incrementBy(amount: Int, numberOfTimes: Int) {
+             count += amount * numberOfTimes
+          }
        }
+    -> var counter = Counter()
+    -> counter.increment(2, numberOfTimes: 7)
 
-.. write-me::
-
-* Local vs API names
+.. TODO: Can you provide a local parameter name?
+   The Reference bit for that isn't written,
+   and the Guide doesn't really answer the question.
 
 Enumerations and Structures
 ---------------------------
