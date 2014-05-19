@@ -45,6 +45,9 @@ Language Guide
 * Protocols can now specify :ref:`type property requirements <Protocols_Properties>`.
 * New section about :ref:`mutating method requirements in protocols
   <Protocols_MutatingMethodRequirements>`.
+* Added a section noting that :ref:`global and local variables
+  <Properties_GlobalAndLocalVariables>` can be computed and observed,
+  and that global constants and variables are always computed lazily.
 * Switched the two :ref:`range operators <BasicOperators_RangeOperators>`
   throughout the Guide.
 * :ref:`Variadic parameters <Functions_VariadicParameters>` are converted into
