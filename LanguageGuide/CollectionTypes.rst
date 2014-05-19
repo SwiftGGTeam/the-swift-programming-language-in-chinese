@@ -412,14 +412,9 @@ are also hashable by default.
 
 .. QUESTION: is there anything else that should be on this list?
 
-.. note::
-
-   You can enable your own custom types to be used as dictionary keys
+.. TODO You can enable your own custom types to be used as dictionary keys
    by making them conform to the ``Hashable`` protocol.
-   This process is described in :doc:`Protocols`.
-
-.. TODO: make sure that this process actually is described in the Protocols chapter,
-   and remove this link if not.
+   Add a note to this effect as and when we have documentation for how to do so.
 
 .. _CollectionTypes_DictionaryLiterals:
 

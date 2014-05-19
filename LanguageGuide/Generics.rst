@@ -433,9 +433,11 @@ its key type must conform to the ``Hashable`` protocol,
 which is a special protocol defined in the Swift standard library.
 All of Swift's basic types (such as ``String``, ``Int``, ``Double``, and ``Bool``)
 are hashable by default.
-You can make your own custom types conform to the ``Hashable`` protocol
-so that they too can be dictionary keys,
-as described in :doc:`Protocols`.
+
+.. TODO: add some text to the following effect once we have documentation for Hashable:
+   You can make your own custom types conform to the ``Hashable`` protocol
+   so that they too can be dictionary keys,
+   as described in <link>.
 
 You can define your own type constraints when creating custom generic types,
 and these constraints provide much of the power of generic programming.
@@ -545,11 +547,13 @@ The Swift standard library defines a protocol called ``Equatable``,
 which requires any conforming type to implement
 the equal to operator (``==``) and the not equal to operator (``!=``)
 to compare any two values of that type.
-All of Swift's standard types automatically support the ``Equatable`` protocol,
-and you can make your own types conform to ``Equatable`` too,
-as described in :ref:`AdvancedOperators_ProtocolOperatorRequirements`.
+All of Swift's standard types automatically support the ``Equatable`` protocol.
 
-.. TODO: will the way to do this *actually* be described there?
+.. TODO: write about how to make your own types conform to Equatable
+   once we have some documentation that actually describes it.
+   The text to use is something like:
+   and you can make your own types conform to ``Equatable`` too,
+   as described in <link>.
 
 Any type that is ``Equatable`` can be used safely with the ``findValue`` function,
 because it is guaranteed to support the equal to operator.

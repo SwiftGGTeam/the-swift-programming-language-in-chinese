@@ -10,9 +10,12 @@ to transfer the flow of execution to another point in your code.
 
 In addition to the traditional ``for``-``condition``-``increment`` loop found in C,
 Swift adds a ``for``-``in`` loop that makes it easy to iterate over
-arrays, dictionaries, ranges, strings, and sequences.
-The ``for``-``in`` loop can even be used with your own custom types
-if they conform to the ``Sequence`` protocol.
+arrays, dictionaries, ranges, strings, and other sequences.
+
+.. TODO: add the text below once we have some documentation about Sequence:
+   The ``for``-``in`` loop can even be used with your own custom types
+   if they conform to the ``Sequence`` protocol.
+   <link>
 
 Swift's ``switch`` statement is also considerably more powerful than its counterpart in C.
 The cases of a ``switch`` statement do not “fall through” to the next case in Swift,
@@ -171,20 +174,18 @@ you can also use the ``for``-``in`` loop to iterate over the ``Character`` value
 .. TODO: provide some advice on how to iterate over a Dictionary in order
    (perhaps sorted by key), using a predicate or array sort or some kind.
 
-The examples above use a ``for``-``in`` loop to iterate
-ranges, arrays, dictionaries, and strings.
-However, you can use this syntax to iterate *any* collection,
-including your own classes and collection types,
-as long as they conform to the ``Sequence`` protocol.
-For more on protocols, including ``Sequence``, see :doc:`Protocols`.
+.. TODO: inclue the note below once we have some documentation for Sequence:
+   The examples above use a ``for``-``in`` loop to iterate
+   ranges, arrays, dictionaries, and strings.
+   However, you can use this syntax to iterate *any* collection,
+   including your own classes and collection types,
+   as long as they conform to the ``Sequence`` protocol.
+   <link to Sequence definition>
 
 .. QUESTION: are there any plans for enums to conform to Sequence?
    If so, they might make for a good example.
    What would the syntax be if they did?
    'for planet in Planet'?
-
-.. TODO: The Protocols chapter doesn't actually talk about the Sequence protocol.
-   Remove this final paragraph if this remains the case for WWDC.
 
 .. TODO: for (index, object) in enumerate(collection)
    and also for i in indices(collection) { collection[i] }

@@ -818,19 +818,13 @@ As with other examples of type safety in Swift,
 this approach avoids accidental errors,
 and ensures that the intention of a particular section of code is always clear.
 
-.. note::
-
+.. TODO: add a note to this effect once we have some documentation
+   that actually describes how LogicValue works:
    Strictly speaking, an ``if`` statement's condition expression
    can be of any type that conforms to the ``LogicValue`` protocol.
    ``Bool`` is one example of a type that conforms to this protocol,
    but there are others, such as optionals, described below.
-   The ``LogicValue`` protocol is described in more detail in :doc:`Protocols`.
-
-.. TODO: I'm not quite happy with this yet.
-   Introducing the LogicValue protocol at this early stage is a bit overkill.
-   I'd like to revisit this if time permits, and maybe move this to Control Flow.
-
-.. TODO: the LogicValue protocol is not yet described in the Protocols chapter.
+   The ``LogicValue`` protocol is described in <link>.
 
 .. _TheBasics_Tuples:
 
