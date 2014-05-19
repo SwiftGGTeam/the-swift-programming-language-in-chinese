@@ -8,13 +8,13 @@ the property, method, or subscript access succeeds;
 if the optional is ``nil``, the access fails without reporting an error.
 
 Optional chaining also gives a way to check if
-a property, method, or subscript access succeeded.
+a property, method, or subscript access succeeds.
 Multiple queries can be chained together,
 and the entire chain fails gracefully if any link in the chain is ``nil``.
 
 .. note::
 
-   Optional chaining in Swift is similar to messaging nil in Objective-C,
+   Optional chaining in Swift is similar to messaging ``nil`` in Objective-C,
    but in a way that works for any type, and that can be checked for success or failure.
 
 .. _OptionalChaining_OptionalChainingAsAnAlternativeToForcedUnwrapping:
@@ -505,7 +505,7 @@ is also ``String?``:
       }
    <- John's building identifier is The Larches.
 
-If you want perform further optional chaining on this method's return value,
+If you want to perform further optional chaining on this method's return value,
 place the optional chaining question mark *after* the method's parentheses:
 
 .. testcode:: optionalChaining

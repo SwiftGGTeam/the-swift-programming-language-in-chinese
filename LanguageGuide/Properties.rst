@@ -189,8 +189,8 @@ if and when it is first used.
 
 Because it has been marked with the ``@lazy`` attribute,
 the ``DataImporter`` instance for the ``importer`` property
-is only created when the property is first accessed,
-such as if its ``fileName`` property is queried:
+is only created when the ``importer`` property is first accessed,
+such as when its ``fileName`` property is queried:
 
 .. testcode:: lazyProperties
 
@@ -333,7 +333,7 @@ A computed property with a getter but no setter is known as a :newTerm:`read-onl
 Read-only computed properties enable you to
 define a property that will always return a value,
 and can be accessed through dot syntax,
-but which cannot be set to a different value by users of your class or structure.
+but which cannot be set to a different value.
 
 .. note::
 
