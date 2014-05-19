@@ -510,20 +510,17 @@ making the parameter's purpose clear and unambiguous:
 Variadic Parameters
 ~~~~~~~~~~~~~~~~~~~
 
-A :newTerm:`variadic parameter` accepts zero or more values of a certain type.
+A :newTerm:`variadic parameter` accepts zero or more values of a specified type.
 You use a variadic parameter to specify that the parameter can be passed
 a varying number of input values when the function is called.
 Variadic parameters are written by inserting
 three period characters (``...``) after the parameter's type name.
 
-A variadic parameter can be used with the ``for``-``in`` statement
-to iterate through the list of values represented by the parameter.
-Variadic parameters automatically conform to the ``Sequence`` protocol,
-and can be used anywhere that a ``Sequence`` is valid.
-``Sequence`` is covered in more detail in :doc:`Protocols`.
-
-.. TODO: sequence isn't currently covered in Protocols.
-   remove this comment if it is not included before release.
+The values passed to a variadic parameter are made available within the function's body
+as an array of the appropriate type.
+For example, a variadic parameter with a name of ``numbers`` and a type of ``Double...``
+will be made available within the function's body as
+a constant array called ``numbers`` of type ``Double[]``.
 
 The example below calculates the :newTerm:`arithmetic mean`
 (also known as the :newTerm:`average`) for a list of numbers of any length:
