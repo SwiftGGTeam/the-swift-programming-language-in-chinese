@@ -384,30 +384,42 @@ Here's how the references look now that you've linked the two instances together
 
 The ``Person`` instance still has a strong reference to the ``Apartment`` instance,
 but the ``Apartment`` instance now has a *weak* reference to the ``Person`` instance.
-This means that when you break the strong references held by
-the ``john`` and ``number73`` variables,
+This means that when you break the strong reference held by
+the ``john`` variables,
 there are no more strong references to the ``Person`` instance:
 
 .. image:: ../images/weakReference02.png
    :align: center
 
 Because there are no more strong references to the ``Person`` instance,
-it is deallocated.
-After this happens,
-there are no more strong references to the ``Apartment`` instance,
-and it too is deallocated:
+it is deallocated:
 
 .. testcode:: weakReferences
    :compile: true
 
    -> john = nil
-   -> number73 = nil
    <- John Appleseed is being deinitialized
+
+The only remaining strong reference to the ``Apartment`` instance
+is from the ``number73`` variable.
+If you break *that* strong reference,
+there are no more strong references to the ``Apartment`` instance:
+
+.. image:: ../images/weakReference03.png
+   :align: center
+
+Because there are no more strong references to the ``Apartment`` instance,
+it too is deallocated:
+
+.. testcode:: weakReferences
+   :compile: true
+
+   -> number73 = nil
    <- Apartment #73 is being deinitialized
 
-The final code snippet above shows that
+The final two code snippets above show that
 the deinitializers for the ``Person`` instance and ``Apartment`` instance
-both print their “deinitialized” messages
+print their “deinitialized” messages
 after the ``john`` and ``number73`` variables are set to ``nil``.
 This proves that the reference cycle has been broken.
 
