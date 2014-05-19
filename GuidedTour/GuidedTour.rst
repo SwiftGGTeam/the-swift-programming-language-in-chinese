@@ -1061,15 +1061,16 @@ as well as classes, enumerations, and structures.
 Use ``where`` after the type name
 to specify a list of requirements ---
 for example,
-a protocol that that the type must implement
-or a class that it must be a subclass of.
+a protocol that that the type must implement,
+to require that two types be the same,
+or to require a class to have a particular superclass.
 
 .. testcode::
 
    -> func anyCommonElements <T, U where
-         T: Generator, U: Generator,
-         T.Element: Equatable,
-         T.Element == U.Element>
+         T: Sequence, U: Sequence,
+         T.GeneratorType.Element: Equatable,
+         T.GeneratorType.Element == U.GeneratorType.Element>
       (lhs: T, rhs: U) -> Bool {
          for lhsItem in lhs {
             for rhsItem in rhs {
@@ -1083,28 +1084,18 @@ or a class that it must be a subclass of.
    -> anyCommonElements([1, 2, 3], [3])
    <$ : Bool = true
 
+.. admonition:: Experiment
+
+   Modify the ``anyCommonElements`` function
+   to make a function that returns an array
+   of the elements any two sequences have in common.
+
 ..
+  TODO: dig into this error
   let l1 = [1: 100, 2: 200]
   let l2 = [(1, 100), (4, 5)]
   anyCommonElements(l1, l2)
   ^-- error: cannot convert the expression's type 'Bool' to type 'Array<(Int, Int)>'
-
-.. This doesn't work with T.Element 
-    func anyCommonElements <T, U where
-              T: Collection, U: Collection,
-              T.Element: Equatable,
-              T.Element == U.Element>
-        (lhs: T, rhs: U) -> Bool {
-           for lhsItem in lhs {
-              for rhsItem in rhs {
-                 if lhsItem == rhsItem {
-                    return true
-                 }
-              }
-           }
-           return false
-        }
-
 
 In the simple cases,
 you can omit ``where`` and just write
