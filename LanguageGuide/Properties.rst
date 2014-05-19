@@ -483,6 +483,37 @@ and the default name of ``oldValue`` is used instead.
 
 .. TODO: mention that this also works for global / local variables
 
+.. _Properties_GlobalAndLocalVariables:
+
+Global and Local Variables
+--------------------------
+
+The capabilities described above for computing and observing properties
+are also available to :newTerm:`global variables`
+(that is, variables defined outside of any function, method, closure, or type context),
+and :newTerm:`local variables`
+(that is, variables defined within a function, method, or closure context).
+
+The global and local variables you have encountered in previous chapters
+have all been *stored* variables.
+However, you can define computed variables, and define observers for stored variables,
+in either a global or local scope.
+
+.. FIXME: observed variables in a closure trigger an assertion:
+   <rdar://problem/16955318> Observed variable in a closure triggers an assertion
+   Nonetheless, I'm claiming they work everywhere,
+   on the assumption that this will be fixed.
+   It would be odd to say "…except for observed variables in a closure" here.
+
+.. note::
+
+   Global constants and variables are always computed lazily,
+   in a similar manner to :ref:`Properties_LazyStoredProperties`.
+   Unlike lazy stored properties,
+   global constants and variables do not need to be marked with the ``@lazy`` attribute.
+
+   Local constants and variables are never computed lazily.
+
 .. _Properties_TypeProperties:
 
 Type Properties
