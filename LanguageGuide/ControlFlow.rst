@@ -798,13 +798,11 @@ This example uses number ranges
 to provide a natural-language count for numbers of any size:
 
 .. testcode:: rangeMatching
+   :compile: true
 
    -> let count = 3_000_000_000_000
-   << // count : Int = 3000000000000
    -> let countedThings = "stars in the Milky Way"
-   << // countedThings : String = "stars in the Milky Way"
-   -> var naturalCount = ""
-   << // naturalCount : String = ""
+   -> var naturalCount: String
    -> switch count {
          case 0:
             naturalCount = "no"
@@ -823,8 +821,6 @@ to provide a natural-language count for numbers of any size:
       }
    -> println("There are \(naturalCount) \(countedThings).")
    <- There are millions and millions of stars in the Milky Way.
-
-.. FIXME: remove the initializer for naturalCount once we can declare unitialized variables in the REPL.
 
 .. TODO: Add a description for this example.
 
