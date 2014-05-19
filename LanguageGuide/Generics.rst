@@ -904,30 +904,19 @@ all of the items in the two containers match.
    which provides essentially this functionality for two Sequences.
    Should I mention this fact, and if so, how?
 
-.. _Generics_Subscripts:
+.. TODO: Subscripts
+   ----------------
 
-Subscripts
-----------
+.. TODO: Protocols can require conforming types to provide specific subscripts
 
-.. write-me::
+.. TODO: These typically return a value of type T, which is why I've moved this here
 
-.. Protocols can require conforming types to provide specific subscripts
-.. These typically return a value of type T, which is why I've moved this here
+.. TODO: Generic Enumerations
+   --------------------------
 
-.. _Generics_GenericEnumerations:
+.. TODO: Describe how Optional<T> works
 
-Generic Enumerations
---------------------
-
-.. write-me::
-
-.. Describe how Optional<T> actually works
-
-.. where do I mention SomeType.self, SomeType.Type and all that malarkey?
-   I'm going to have to talk about passing around types at some point,
-   but that tends to blow people's brains. Might it go in here?
-
-.. generics can be extended, and the syntax is:
+.. TODO: generics can be extended, and the syntax is:
    extension Array {
       // T is available for you to use in this context
       func doStuff() -> T { ... }

@@ -945,21 +945,21 @@ and associativity settings, see :doc:`../ReferenceManual/Expressions`.
    If this Radar is fixed, the operator declaration above should be split over multiple lines
    for consistency with the rest of the code.
 
-.. _AdvancedOperators_ProtocolOperatorRequirements:
+.. TODO: Protocol Operator Requirements
+   ------------------------------------
 
-Protocol Operator Requirements
-------------------------------
-
-.. write-me::
-
-.. Protocols can require the implementation of operators
+.. TODO: Protocols can require the implementation of operators
    (though assignment operators are broken)
-.. Likewise for requiring custom operators
-.. However, Doug thought that this might be better covered by Generics,
+
+.. TODO: Likewise for requiring custom operators
+
+.. TODO: However, Doug thought that this might be better covered by Generics,
    where you know that two things are definitely of the same type.
    Perhaps mention it here, but don't actually show an example?
-.. Self as the dynamic type of the current type that is implementing the protocols
+
+.. TODO: Self as the dynamic type of the current type that is implementing the protocols
    protocol Comparable {
       func <(Self, Self) -> Bool
    }
-.. generic operators
+
+.. TODO: generic operators

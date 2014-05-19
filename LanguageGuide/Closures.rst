@@ -612,12 +612,8 @@ both of those constants or variables will refer to the same closure:
 Reference types are covered in more detail
 in :ref:`ClassesAndStructures_ValueTypesAndReferenceTypes`.
 
-.. _Closures_Autoclosures:
-
-Autoclosures
-------------
-
-.. write-me::
+.. TODO: Autoclosures
+   ------------------
 
 .. TODO: var closure1: @auto_closure () -> Int = 4  // Function producing 4 whenever it is called.
 

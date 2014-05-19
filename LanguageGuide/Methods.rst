@@ -554,21 +554,15 @@ the attempt to set their current level will fail:
       }
    <- level 6 has not yet been unlocked
 
-.. see release notes from 2013-12-18 for a note about lazy initialization
+.. TODO: Method Binding
+   --------------------
 
-.. _Methods_MethodBinding:
-
-Method Binding
---------------
-
-.. write-me::
-
-.. you can get a function that refers to a method, either with or without the 'self' argument already being bound:
-.. class C {
-..    func foo(x: Int) -> Float { ... }
-.. }
-.. var c = C()
-.. var boundFunc = c.foo   // a function with type (Int) -> Float
-.. var unboundFunc = C.foo // a function with type (C) -> (Int) -> Float
-.. selector-style methods can be referenced as foo.bar:bas:
+.. TODO: you can get a function that refers to a method, either with or without the 'self' argument already being bound:
+   class C {
+      func foo(x: Int) -> Float { ... }
+   }
+   var c = C()
+   var boundFunc = c.foo   // a function with type (Int) -> Float
+   var unboundFunc = C.foo // a function with type (C) -> (Int) -> Float
+.. TODO: selector-style methods can be referenced as foo.bar:bas:
    (see Doug's comments from the 2014-03-12 release notes)

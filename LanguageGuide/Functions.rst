@@ -949,13 +949,11 @@ to use and return nested functions:
    </ -1...
    </ zero!
 
-.. _Functions_CurriedFunctions:
-
-Curried Functions
------------------
-
-.. write-me::
+.. TODO: Curried Functions
+   -----------------------
 
 .. TODO: function currying syntax 
+
 .. TODO: partial application
+
 .. TODO: currying example from /test/Serialization/Inputs/def_transparent.swift
