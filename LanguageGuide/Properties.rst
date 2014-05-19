@@ -481,8 +481,6 @@ and the default name of ``oldValue`` is used instead.
    If you assign a value to a property within its own ``didSet`` observer,
    the new value that you assign will replace the one that was just set.
 
-.. TODO: mention that this also works for global / local variables
-
 .. _Properties_GlobalAndLocalVariables:
 
 Global and Local Variables

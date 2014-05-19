@@ -98,9 +98,6 @@ separated by commas:
    Variables should only be used for
    storing values that need to be able to change.
 
-.. TODO: I need to mention that globals are lazily initialized somewhere.
-   Probably not here, but somewhere.
-
 .. _TheBasics_TypeAnnotations:
 
 Type Annotations
