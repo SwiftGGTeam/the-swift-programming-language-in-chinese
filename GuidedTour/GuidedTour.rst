@@ -1122,11 +1122,96 @@ in addition to its protocol conformance.
 Generics
 --------
 
+Write a name inside angle brackets
+to make a generic function or type.
+
+.. testcode::
+
+    -> func repeat<ItemType>(item: ItemType, times: Int) -> ItemType[] {
+          var result = Array<ItemType>()
+          for i in 0...times {
+              result += item
+          }
+          return result
+       }
+    -> repeat("knock", 4)
+    <$ : String[] = [knock, knock, knock, knock]
+
+.. admonition:: Experiment
+
+   Make a version of anyMatch that accepts an array of any type,
+   not just an array if integers.
+
+You can make generic forms of functions and methods,
+as well as classes, enumerations, and structures.
+
+.. FIXME: Add testcode expectation lines.
+
+.. testcode::
+
+    // Re-implement the Swift standard library's optional type
+    -> enum Optional<T> {
+          case None
+          case Some(T)
+       }
+    -> var possibleInteger = Optional.None
+    -> possibleInteger = .Some(100)
+
+Use ``where`` after the type name
+to specify a list of requirements ---
+for example,
+a protocol that that the type must implement,
+to require that two types be the same,
+or to require a class to have a particular superclass.
+
+.. testcode::
+
+   -> func anyCommonElements <T, U where
+         T: Sequence, U: Sequence,
+         T.GeneratorType.Element: Equatable,
+         T.GeneratorType.Element == U.GeneratorType.Element>
+      (lhs: T, rhs: U) -> Bool {
+         for lhsItem in lhs {
+            for rhsItem in rhs {
+               if lhsItem == rhsItem {
+                  return true
+               }
+            }
+         }
+         return false
+      }
+   -> anyCommonElements([1, 2, 3], [3])
+   <$ : Bool = true
+
+.. admonition:: Experiment
+
+   Modify the ``anyCommonElements`` function
+   to make a function that returns an array
+   of the elements any two sequences have in common.
+
+..
+  TODO: dig into this error
+  let l1 = [1: 100, 2: 200]
+  let l2 = [(1, 100), (4, 5)]
+  anyCommonElements(l1, l2)
+  ^-- error: cannot convert the expression's type 'Bool' to type 'Array<(Int, Int)>'
+
+In the simple cases,
+you can omit ``where`` and just write
+you can just write the protocol or class name after a colon.
+Writing ```<T: Equatable>``
+is the same as writing ``<T where T: Equatable>``.
+
+Continue Reading
+----------------
+
 .. write-me::
 
-* On function (repeat X n times, re-implementing Array init feature)
-* On classes, structures, and enumerations
+This needs a live link and discussion about
+what the heading should be
+and how exactly we should phrase the content.
 
-.. TODO: Add a "Continue Reading" section
-   which gives folks who opened this in a playground
-   a link back to the web version of the book.
+You can read the rest of
+"The Swift Programming Language" on on the web,
+you can download it as a PDF,
+or you can download it in iBooks.
