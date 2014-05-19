@@ -281,41 +281,6 @@ at the end of each case‘s code.
 .. Omitting mention of "fallthrough" keyword.
    It's in the guide/reference if you need it.
 
-.. Haven't shown structs or enums yet --
-   revisit switch statements at that point
-   to show another cool thing.
-
-
-.. the focus here should be on .. and ...
-
-It loops that use an index,
-the range operators ``..`` and ``...``
-let you write code that is easier to read.
-The ``..`` operator includes both its start and end in the range,
-like writing ``<=`` in a conditional of a ``for`` loop.
-the ``...`` operator includes the start but not the end,
-like writing ``<`` in a conditional of a ``for`` loop.
-These two loops do the same thing:
-
-.. testcode::
-
-   -> for i in 0...5 {
-         println(i)
-      }
-   << 0
-   << 1
-   << 2
-   << 3
-   << 4
-   -> for var i = 0; i < 5; ++i {
-         println(i)
-      }
-   << 0
-   << 1
-   << 2
-   << 3
-   << 4
-
 You can also use ``for`` to iterate over items in a dictionary
 by providing a variable name to use
 for each key-value pair.
@@ -370,6 +335,26 @@ ensuring that the loop is run at least once.
       } while m < 100
    -> println("m is \(m)")
    << m is 128
+
+You can also keep an index in a loop
+using the ``..`` and ``...`` range operators
+or using an explicit increment and test.
+These two loops do the same thing:
+
+.. testcode::
+
+   -> for i in 0...3 {
+         println(i)
+      }
+   << 0
+   << 1
+   << 2
+   -> for var i = 0; i < 3; ++i {
+         println(i)
+      }
+   << 0
+   << 1
+   << 2
 
 Functions and Closures
 ----------------------
