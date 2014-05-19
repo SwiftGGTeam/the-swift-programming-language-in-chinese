@@ -1094,19 +1094,19 @@ or a class that it must be a subclass of.
 .. testcode::
 
    -> func anyCommonElements <T, U where
-          T: Generator, U: Collection,
-          T.Element: Equatable,
-          T.Element == U.Element>
-    (lhs: T, rhs: U) -> Bool {
-       for lhsItem in lhs {
-          for rhsItem in rhs {
-             if lhsItem == rhsItem {
-                return true
-             }
-          }
-       }
-       return false
-    }
+         T: Generator, U: Generator,
+         T.Element: Equatable,
+         T.Element == U.Element>
+      (lhs: T, rhs: U) -> Bool {
+         for lhsItem in lhs {
+            for rhsItem in rhs {
+               if lhsItem == rhsItem {
+                  return true
+               }
+            }
+         }
+         return false
+      }
    -> anyCommonElements([1, 2, 3], [3])
    <$ : Bool = true
 
