@@ -585,8 +585,6 @@ as the second argument to the ``sort`` function.
 Objects and Classes
 -------------------
 
-.. TODO: Use testcode throughout this section.
-
 Classes are created using ``class``,
 followed by the class's properties and methods in braces.
 A property declaration is the same
@@ -625,14 +623,7 @@ are accessed using dot syntax.
 
 This version of the ``Shape`` class is missing something important:
 an initializer to set up the class when an instance is created.
-The initializer similar to a function,
-but it begins with ``init`` instead of ``func`` and has no function name.
-
-.. TODO: Probably worth pointing out that the initializer isn't a method.
-
-.. TODO: s/func/def for methods.
-
-.. TODO: Discuss arg names and API arg names.
+Use ``init`` to create one.
 
 .. testcode::
 
@@ -653,7 +644,6 @@ but it begins with ``init`` instead of ``func`` and has no function name.
     >> NamedShape(name: "test name").description()
     <$ : String = "A shape with 0 sides."
 
-
 Notice how ``self`` is used to distinguish the ``name`` property
 from the ``name`` argument to the initializer.
 The arguments to the initializer are passed like a function call
@@ -661,6 +651,11 @@ when you create an instance of the class.
 Every property needs to either have a value assigned
 when it is declared (like ``numberOfSides``)
 or in the initializer (like ``name``).
+
+In addition to the initializer,
+you can use ``deinit`` create a deinitializer
+if you need te perform some clean-up
+before the object is deallocated.
 
 Classes that inherit from other classes
 include the superclass's name, separated by a colon.
@@ -708,18 +703,8 @@ that don't actually override any method in the superclass.
    as arguments to its initializer,
    and implements an ``area`` and ``describe`` method.
 
-The initializer of a class with a superclass
-has three parts:
-
-1. Setting the value of properties that the subclass declares.
-
-2. Calling the superclass's initializer.
-
-3. Setting or changing the value of properties that the superclass declares.
-
-In addition to simple properties,
-properties can use an explicit getter and setter
-to create a computed property.
+In addition to simple properties which are stored,
+properties can have a getter and a setter.
 
 .. testcode::
 
@@ -766,11 +751,22 @@ to create a computed property.
     -> circle.radius
     <$ : Double = 4.99746521879595
 
-In the setter for ``circumference`` the new value
-has the implicit name ``newValue``.
+In the setter for ``circumference``,
+the new value has the implicit name ``newValue``.
 You can provide an explicit name in parentheses after ``set``.
 
-If you don't need to computer the property
+Notice that the initializer for the ``Circle`` class
+is made up of three parts:
+
+1. Setting the value of properties that the subclass declares.
+
+2. Calling the superclass's initializer.
+
+3. Changing the value of properties set by the superclass.
+   Any additional setup work that uses methods, getters, or setters
+   can also be done at this point.
+
+If you don't need to compute the property
 but still need to provide code that is run before and after setting a new value,
 use ``willSet`` and ``didSet``.
 For example, the class below ensures
@@ -814,11 +810,36 @@ is always the same as the side length of its square.
    (or if it's even allowed)
    to use them outside a class or a struct.
 
-.. write-me::
+When working with optional values,
+you can use ``?`` before operations like methods and properties.
+When the value is ``nil``,
+it returns ``nil`` and anything after it is ignored.
+Otherwise, it unwraps the optional
+and anything after it uses the unwrapped value.
 
-* deinit
-* Local vs API names
-* Optional chaining with ?
+.. testcode::
+
+    -> let optionalCircle: Circle? = Circle(size: 2.5, name:"optional circle")
+    -> let diameter = optionalCircle?.diameter
+
+Methods on classes have one important difference from functions.
+The parameter names in functions are only used within the function,
+but parameters in methods are also used when you call the method.
+
+.. testcode::
+
+    -> class Counter {
+          var count: Int = 0
+          func incrementBy(amount: Int, numberOfTimes: Int) {
+             count += amount * numberOfTimes
+          }
+       }
+    -> var counter = Counter()
+    -> counter.increment(2, numberOfTimes: 7)
+
+.. TODO: Can you provide a local parameter name?
+   The Reference bit for that isn't written,
+   and the Guide doesn't really answer the question.
 
 Enumerations and Structures
 ---------------------------
