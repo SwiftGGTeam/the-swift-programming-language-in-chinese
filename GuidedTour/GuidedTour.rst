@@ -98,26 +98,6 @@ separated by a colon.
    for a variable with an initial value of 3.
    What error do you get?
 
-.. TODO: Needs to go somewhere, but not here.
-
-   Numeric literals that don't have a decimal point
-   are treated as an integer by default,
-   but type inference can make them floating point numbers
-   if the expression would otherwise be invalid.
-   For example,
-   if the value of ``seven`` is the integer ``7``,
-   the result of ``seven / 2`` is the integer ``3``.
-   However, if its value is ``7.0``
-   the result of ``seven / 2`` is ``3.5`` ---
-   dividing a floating point number by an integer would be a type error,
-   so the type of ``2`` is understood as ``2.0``.
-
-   7 / 2     // 3 (an integer)
-   7.0 / 2   // 3.5
-   let seven = 7.0
-   let two = 2
-   seven / two  // type error
-
 Values are never implicitly converted to another type.
 If you need to convert a value to a different type,
 make an instance of the desired type explicitly.
