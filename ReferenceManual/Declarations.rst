@@ -235,7 +235,7 @@ as described in :ref:`Types_TypeInference`.
 
 To declare a static constant property,
 mark the declaration with the ``static`` keyword. Static properties
-are discussed in :ref:`Properties_StaticProperties`.
+are discussed in :ref:`Properties_TypeProperties`.
 
 .. TODO: Discuss class properties after they're implemented
     (probably not until after 1.0)
@@ -437,7 +437,7 @@ Static Variable Properties
 
 To declare a static variable property,
 mark the declaration with the ``static`` keyword. Static properties
-are discussed in :ref:`Properties_StaticProperties`.
+are discussed in :ref:`Properties_TypeProperties`.
 
 .. TODO: Discuss class properties after they're implemented
     (probably not until after 1.0)
@@ -1104,7 +1104,7 @@ that property declaration can't be implemented as a constant property
 or a read-only computed property. If a property declaration includes
 only the ``get`` keyword, it can be implemented as any kind of property.
 For examples of conforming types that implement the property requirements of a protocol,
-see :ref:`Protocols_InstanceProperties`.
+see :ref:`Protocols_Properties`.
 
 .. TODO:
     Because we're not going to have 'class' properties for 1.0,
