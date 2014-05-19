@@ -37,6 +37,7 @@ Language Guide
 * Lots of additions and updates to the :doc:`../LanguageGuide/CollectionTypes` chapter
   to reflect recent changes to the Array and Dictionary APIs.
 * Modified the introduction to :ref:`optionals <TheBasics_Optionals>`
+  and simplified the example for :doc:`../LanguageGuide/NestedTypes`
   to reflect the fact that the ``toInt`` method on ``String`` is being removed.
 * Renamed the Static Properties section to be called
   :ref:`Type Properties <Properties_TypeProperties>`,
@@ -46,6 +47,8 @@ Language Guide
   <Protocols_MutatingMethodRequirements>`.
 * Switched the two :ref:`range operators <BasicOperators_RangeOperators>`
   throughout the Guide.
+* :ref:`Variadic parameters <Functions_VariadicParameters>` are converted into
+  an ``Array``, not a ``Sequence``. Updated the guidance to match.
 * API updates in the :doc:`../LanguageGuide/StringsAndCharacters` chapter.
 * The Memory Management chapter is now called
   :doc:`../LanguageGuide/AutomaticReferenceCounting`.
