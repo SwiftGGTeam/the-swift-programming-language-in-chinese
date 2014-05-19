@@ -448,8 +448,6 @@ This means a function can return another function as its value.
     -> increment(7)
     <$ : Int = 8
 
-.. EDIT: Confirm spelling of "incrementer" (not "incrementor").
-
 A function can take another function as one of its arguments.
 
 .. testcode::
@@ -470,15 +468,10 @@ A function can take another function as one of its arguments.
     -> hasAnyMatches(numbers, lessThanTen)
     <$ : Bool = true
 
-Closures are the same as functions with one difference:
+Closures are like functions but
 you don't give them a name when you declare them.
 You write a closure as code surrounded by braces (``{}``)
 and use ``in`` to separate the arguments from the body.
-
-.. TODO: This notion of closures being "just" un-named functions is problematic.
-   See Dave's recent work in the Guide comparing the two.
-
-.. EDIT: Second sentence above reads better as describing singular closure.
 
 .. testcode::
 
@@ -489,20 +482,9 @@ and use ``in`` to separate the arguments from the body.
        })
     <$ : Array<Int> = [24, 9, 15, 18]
 
-.. The closure's return type has to be specified here
-   because type inference can't determine it.
-   If the value of the whole expression
-   is assigned to a variable of known type,
-   then it can be omitted.
-   The whole point of this first example
-   is that it *doesn't* omit anything.
+.. admonition:: Experiment
 
-   var l: Int[] = numbers.map({
-             (number: Int) in
-             let result = 3 * number
-             return result
-          })
-       
+   Rewrite the closure to return zero for all odd numbers.
 
 You have several options for writing closures more concisely.
 When the closure's type is already known,
@@ -536,10 +518,7 @@ as the second argument to the ``sort`` function.
     -> sort([1, 5, 3, 12, 2], >)
     <$ : Array<Int> = [12, 5, 3, 2, 1]
 
-.. write-me::
-
-* Curried functions
-* Custom operators
+.. Omitted curried functions and custom operators as "advanced" topics.
 
 Objects and Classes
 -------------------
