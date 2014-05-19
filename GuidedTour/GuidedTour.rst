@@ -269,14 +269,8 @@ than simple comparison.
 
 .. admonition:: Experiment
 
-   Add a case for vegetable names that start
-   with an uppercase letter.
-
    Try removing the default case.
    What error do you get?
-
-.. TODO: The "starts with uppercase" is probably too much of a stretch
-   before having learned about string operations.
 
 After executing the code inside the switch case that matched,
 the program exits from the switch statement.
