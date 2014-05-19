@@ -366,7 +366,7 @@ as shown in the following example:
 
     If the type specified after ``as``
     is followed by an exclamation mark (``!``),
-    the entire ``as`` expression is understood as a forced expression.
+    the entire ``as`` expression is understood as a forced-value expression.
     For example, the expression ``x as SomeType!``
     is understood as ``(x as SomeType)!``
     and not as ``x as (SomeType!)``.
@@ -897,7 +897,7 @@ see :doc:`../LanguageGuide/BasicOperators` and :doc:`../LanguageGuide/AdvancedOp
     postfix-expression --> postfix-self-expression
     postfix-expression --> dynamic-type-expression
     postfix-expression --> subscript-expression
-    postfix-expression --> forced-expression
+    postfix-expression --> forced-value-expression
     postfix-expression --> optional-chaining-operator
 
 
@@ -1209,12 +1209,12 @@ see :ref:`Declarations_ProtocolSubscriptDeclaration`.
     subscript-expression --> postfix-expression ``[`` expression-list ``]``
 
 
-.. _Expressions_ForcedExpression:
+.. _Expressions_Forced-ValueExpression:
 
-Forced Expression
-~~~~~~~~~~~~~~~~~
+Forced-Value Expression
+~~~~~~~~~~~~~~~~~~~~~~~
 
-A :newTerm:`forced expression` unwraps an optional value
+A :newTerm:`forced-value expression` unwraps an optional value
 that you are certain is not ``nil``.
 It has the following form:
 
@@ -1244,7 +1244,7 @@ Otherwise, a runtime error is raised.
 
     Grammar of a forced-value expression
 
-    forced-expression --> postfix-expression ``!``
+    forced-value-expression --> postfix-expression ``!``
 
 
 .. _Expression_OptionalChainingOperator:
