@@ -19,6 +19,34 @@ The book has the following known issues:
   until this book goes live on the iBooks store WWDC week.
   Use the EPUB link instead (which will go away at the same time).
 
+May 19 2014
+~~~~~~~~~~~
+
+Language Guide
+++++++++++++++
+
+* New chapter about :doc:`../LanguageGuide/OptionalChaining`.
+* New sections in Generics about :ref:`associated types <Generics_AssociatedTypes>`
+  and :ref:`where clauses <Generics_WhereClauses>`.
+* New section about :ref:`lazy stored properties <Properties_LazyStoredProperties>`.
+* Lots of additions and updates to the :doc:`../LanguageGuide/CollectionTypes` chapter
+  to reflect recent changes to the Array and Dictionary APIs.
+* Modified the introduction to :ref:`optionals <TheBasics_Optionals>`
+  to reflect the fact that the ``toInt`` method on ``String`` is being removed.
+* Renamed the Static Properties section to be called
+  :ref:`Type Properties <Properties_TypeProperties>`,
+  and added information about computed class and static properties.
+* Protocols can now specify :ref:`type property requirements <Protocols_Properties>`.
+* New section about :ref:`mutating method requirements in protocols
+  <Protocols_MutatingMethodRequirements>`.
+* Switched the two :ref:`range operators <BasicOperators_RangeOperators>`
+  throughout the Guide.
+* API updates in the :doc:`../LanguageGuide/StringsAndCharacters` chapter.
+* The Memory Management chapter is now called
+  :doc:`../LanguageGuide/AutomaticReferenceCounting`.
+* Deinitialization is now in its own chapter called, appropriately enough,
+  :doc:`../LanguageGuide/Deinitialization`.
+
 May 15 2014
 ~~~~~~~~~~~
 
