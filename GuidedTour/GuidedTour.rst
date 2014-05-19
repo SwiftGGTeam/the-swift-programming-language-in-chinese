@@ -1046,44 +1046,17 @@ to make a generic function or type.
 You can make generic forms of functions and methods,
 as well as classes, enumerations, and structures.
 
-.. This example makes the REPL segfault.
-   <rdar://problem/16947344> REPL segfaults when creating instance of generic enum
-
 .. FIXME: Add testcode expectation lines.
-
-.. TODO: Brian says that you can't have recursive enums.
-   Need to come up with a different example.
 
 .. testcode::
 
-    -> enum Tree<T> {
-          case LeafNode(T)
-          case InternalNode(Tree, Tree, T)
-          func nodeCount() -> Int {
-             switch self {
-                case let .LeafNode(item):
-                   return 1
-                case let .InternalNode(item, leftNode, rightNode):
-                   return 1 + leftNode.leafCount() + rightNode.leafCount()
-             }
-          }
-          func allNodes() -> T[] {
-             switch self {
-                case let .LeafNode(item):
-                   return item
-                case let .InternalNode(item, leftNode, rightNode):
-                   var result = []
-                   result += leftNode.allLeaves()
-                   result += item
-                   result += rightNode.allLeaves()
-                   return result
-             }
-          }
+    // Re-implement the Swift standard library's optional type
+    -> enum Optional<T> {
+          case None
+          case Some(T)
        }
-    -> let leafOne = Tree.LeafNode(1)
-    -> let leafTwo = Tree.LeafNode(7)
-    -> let tree = Tree.InternalNode(3, leafOne, leafTwo)
-    -> let leaves = tree.leafNodes()
+    -> var possibleInteger = Optional.None
+    -> possibleInteger = .Some(100)
 
 Use ``where`` after the type name
 to specify a list of requirements ---
