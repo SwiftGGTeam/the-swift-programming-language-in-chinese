@@ -403,8 +403,8 @@ Functions and Closures
 Use ``func`` to declare functions
 and call them by following their name
 with a parenthesized list of arguments.
-
-.. TODO: Call out what -> means in the signature.
+Use ``->`` to separate the parameter names and types
+from the function's return type.
 
 .. testcode::
 
