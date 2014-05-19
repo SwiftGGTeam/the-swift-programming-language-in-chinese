@@ -93,7 +93,7 @@ written as ``TypeName`` followed by empty parentheses:
 .. testcode:: inheritance
 
    -> let someVehicle = Vehicle()
-   << // someVehicle : Vehicle = <Vehicle instance>
+   << // someVehicle : Vehicle = C4REPL7Vehicle (has 2 children)
 
 The initializer for ``Vehicle`` sets some initial property values
 (``numberOfWheels = 0`` and ``maxPassengers = 1``)
@@ -176,7 +176,7 @@ and see how its properties have been updated:
 .. testcode:: inheritance
 
    -> let bicycle = Bicycle()
-   << // bicycle : Bicycle = <Bicycle instance>
+   << // bicycle : Bicycle = C4REPL7Bicycle (has 1 child)
    -> println("Bicycle: \(bicycle.description())")
    </ Bicycle: 2 wheels; up to 1 passengers
 
@@ -210,7 +210,7 @@ shows how its properties have been updated:
 .. testcode:: inheritance
 
    -> let tandem = Tandem()
-   << // tandem : Tandem = <Tandem instance>
+   << // tandem : Tandem = C4REPL6Tandem (has 1 child)
    -> println("Tandem: \(tandem.description())")
    </ Tandem: 2 wheels; up to 2 passengers
 
@@ -312,7 +312,7 @@ you can see that the description has indeed changed:
 .. testcode:: inheritance
 
    -> let car = Car()
-   << // car : Car = <Car instance>
+   << // car : Car = C4REPL3Car (has 2 children)
    -> println("Car: \(car.description())")
    </ Car: 4 wheels; up to 5 passengers; traveling at 0.0 mph
 
@@ -392,7 +392,7 @@ you see that the speed has been limited:
 .. testcode:: inheritance
 
    -> let limitedCar = SpeedLimitedCar()
-   << // limitedCar : SpeedLimitedCar = <SpeedLimitedCar instance>
+   << // limitedCar : SpeedLimitedCar = C4REPL15SpeedLimitedCar (has 1 child)
    -> limitedCar.speed = 60.0
    -> println("SpeedLimitedCar: \(limitedCar.description())")
    </ SpeedLimitedCar: 4 wheels; up to 5 passengers; traveling at 40.0 mph
@@ -453,7 +453,7 @@ and a speed of ``35.0`` produces a gear of ``4``:
 .. testcode:: inheritance
 
    -> let automatic = AutomaticCar()
-   << // automatic : AutomaticCar = <AutomaticCar instance>
+   << // automatic : AutomaticCar = C4REPL12AutomaticCar (has 2 children)
    -> automatic.speed = 35.0
    -> println("AutomaticCar: \(automatic.description())")
    </ AutomaticCar: 4 wheels; up to 5 passengers; traveling at 35.0 mph in gear 4

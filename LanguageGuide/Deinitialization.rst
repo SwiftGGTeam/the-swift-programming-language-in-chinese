@@ -116,7 +116,7 @@ Here's how that looks in action:
 .. testcode:: deinitializer
 
    -> var playerOne: Player? = Player(coins: 100)
-   << // playerOne : Player? = <unprintable value>
+   << // playerOne : Player? = C4REPL6Player (has 1 child)
    -> println("A new player has joined the game with \(playerOne!.coinsInPurse) coins")
    <- A new player has joined the game with 100 coins
    -> println("There are now \(Bank.coinsInBank) coins left in the bank")

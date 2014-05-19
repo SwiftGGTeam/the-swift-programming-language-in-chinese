@@ -141,9 +141,9 @@ The syntax for creating instances is very similar for both structures and classe
 .. testcode:: ClassesAndStructures
 
    -> let someResolution = Resolution()
-   << // someResolution : Resolution = Resolution(0, 0)
+   << // someResolution : Resolution = V4REPL10Resolution (has 2 children)
    -> let someVideoMode = VideoMode()
-   << // someVideoMode : VideoMode = <VideoMode instance>
+   << // someVideoMode : VideoMode = C4REPL9VideoMode (has 4 children)
 
 Structures and classes both use initializer syntax when creating new instances.
 The simplest form of initializer syntax uses the type name of the class or structure
@@ -224,7 +224,7 @@ can be passed to the memberwise initializer by name:
 .. testcode:: ClassesAndStructures
 
    -> let vga = Resolution(width: 640, height: 480)
-   << // vga : Resolution = Resolution(640, 480)
+   << // vga : Resolution = V4REPL10Resolution (has 2 children)
 
 Unlike structures, class instances do not receive a default memberwise initializer.
 Initializers are described in more detail in :doc:`Initialization`.
@@ -276,9 +276,9 @@ For example, using the ``Resolution`` structure from above:
 .. testcode:: ClassesAndStructures
 
    -> let hd = Resolution(width: 1920, height: 1080)
-   << // hd : Resolution = Resolution(1920, 1080)
+   << // hd : Resolution = V4REPL10Resolution (has 2 children)
    -> var cinema = hd
-   << // cinema : Resolution = Resolution(1920, 1080)
+   << // cinema : Resolution = V4REPL10Resolution (has 2 children)
 
 This example declares a constant called ``hd``
 and sets it to a ``Resolution`` instance initialized with
@@ -364,7 +364,7 @@ Here's an example, using the ``VideoMode`` class defined above:
 .. testcode:: ClassesAndStructures
 
    -> let tenEighty = VideoMode()
-   << // tenEighty : VideoMode = <VideoMode instance>
+   << // tenEighty : VideoMode = C4REPL9VideoMode (has 4 children)
    -> tenEighty.resolution = hd
    -> tenEighty.interlaced = true
    -> tenEighty.name = "1080i"
@@ -382,7 +382,7 @@ and the frame rate of ``alsoTenEighty`` is modified:
 .. testcode:: ClassesAndStructures
 
    -> let alsoTenEighty = tenEighty
-   << // alsoTenEighty : VideoMode = <VideoMode instance>
+   << // alsoTenEighty : VideoMode = C4REPL9VideoMode (has 4 children)
    -> alsoTenEighty.frameRate = 30.0
 
 Because classes are reference types,

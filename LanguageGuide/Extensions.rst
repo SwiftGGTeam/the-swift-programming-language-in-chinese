@@ -153,7 +153,7 @@ as described in :ref:`StringsAndCharacters_StringInterpolation`.
          }
       }
    -> let somePoint = Point(x: 3.0, y: 5.0)
-   << // somePoint : Point = Point(3.0, 5.0)
+   << // somePoint : Point = V4REPL5Point (has 2 children)
    -> let pointDescription = String(somePoint)
    << // pointDescription : String = "(3.0, 5.0)"
    /> pointDescription is \"\(pointDescription)\"
@@ -187,7 +187,7 @@ to incorporate their values as part of a longer string:
 .. testcode:: extensionsInitializers
 
    -> let anotherPoint = Point(x: -2.0, y: 6.0)
-   << // anotherPoint : Point = Point(-2.0, 6.0)
+   << // anotherPoint : Point = V4REPL5Point (has 2 children)
    -> println("anotherPoint's value is \(anotherPoint)")
    <- anotherPoint's value is (-2.0, 6.0)
 

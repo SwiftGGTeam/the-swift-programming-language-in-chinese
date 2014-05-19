@@ -85,7 +85,7 @@ and so it infers a type of ``MediaItem[]`` for the ``library`` array:
          Song(name: "The One And Only", artist: "Chesney Hawkes"),
          Song(name: "Never Gonna Give You Up", artist: "Rick Astley")
       ]
-   << // library : Array<MediaItem> = [<MediaItem instance>, <MediaItem instance>, <MediaItem instance>, <MediaItem instance>, <MediaItem instance>]
+   << // library : Array<MediaItem> = [C4REPL5Movie (has 2 children), C4REPL4Song (has 2 children), C4REPL5Movie (has 2 children), C4REPL4Song (has 2 children), C4REPL4Song (has 2 children)]
    // the type of "library" is inferred to be MediaItem[]
 
 The items stored in ``library`` are still ``Movie`` and ``Song`` instances behind the scenes.

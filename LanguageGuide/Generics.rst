@@ -275,7 +275,7 @@ in this case for a stack of ``Int`` values:
          }
       }
    >> var intStack = IntStack()
-   << // intStack : IntStack = IntStack([])
+   << // intStack : IntStack = V4REPL8IntStack (has 1 child)
    >> intStack.push(1)
    >> intStack.push(2)
    >> intStack.push(3)
@@ -320,7 +320,7 @@ such as a stack of ``String`` values:
 .. testcode:: genericStack
 
    -> var stackOfStrings = Stack<String>()
-   << // stackOfStrings : Stack<String> = Stack<String>([])
+   << // stackOfStrings : Stack<String> = V4REPL5Stack (has 1 child)
    -> stackOfStrings.push("uno")
    -> stackOfStrings.push("dos")
    -> stackOfStrings.push("tres")
@@ -399,7 +399,7 @@ after the variable name:
 .. testcode:: genericStackDefinition
 
    -> var stackOfInts = Stack<Int>()
-   << // stackOfInts : Stack<Int> = Stack<Int>([])
+   << // stackOfInts : Stack<Int> = V4REPL5Stack (has 1 child)
    -> stackOfInts.push(42)
 
 .. _Generics_TypeConstraints:

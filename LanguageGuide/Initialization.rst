@@ -40,7 +40,7 @@ written using the ``init`` keyword:
          }
       }
    -> var f = Fahrenheit()
-   << // f : Fahrenheit = Fahrenheit(32.0)
+   << // f : Fahrenheit = V4REPL10Fahrenheit (has 1 child)
    -> println("The default temperature is \(f.temperature)° Fahrenheit")
    <- The default temperature is 32.0° Fahrenheit
 
@@ -195,7 +195,7 @@ and can be queried with the ``squareIsBlackAtRow`` utility function:
 .. testcode:: checkers
 
    -> let board = Checkerboard()
-   << // board : Checkerboard = Checkerboard([false, true, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, true, false, false, true, false, true, false, true, false, true, false, true, true, false, true, false, true, false, true, false, true, false])
+   << // board : Checkerboard = V4REPL12Checkerboard (has 1 child)
    -> println(board.squareIsBlackAtRow(0, column: 1))
    <- true
    -> println(board.squareIsBlackAtRow(9, column: 9))
@@ -234,11 +234,11 @@ with a value from a different temperature scale:
          }
       }
    -> let boilingPointOfWater = Celsius(fromFahrenheit: 212.0)
-   << // boilingPointOfWater : Celsius = Celsius(100.0)
+   << // boilingPointOfWater : Celsius = V4REPL7Celsius (has 1 child)
    /> boilingPointOfWater.temperatureInCelsius is \(boilingPointOfWater.temperatureInCelsius)
    </ boilingPointOfWater.temperatureInCelsius is 100.0
    -> let freezingPointOfWater = Celsius(fromKelvin: -273.15)
-   << // freezingPointOfWater : Celsius = Celsius(0.0)
+   << // freezingPointOfWater : Celsius = V4REPL7Celsius (has 1 child)
    /> freezingPointOfWater.temperatureInCelsius is \(freezingPointOfWater.temperatureInCelsius)
    </ freezingPointOfWater.temperatureInCelsius is 0.0
 
@@ -314,7 +314,7 @@ you call its initializer using external names for each of the three color compon
 .. testcode:: externalParameterNames
 
    -> let magenta = Color(red: 1.0, green: 0.0, blue: 1.0)
-   << // magenta : Color = Color(1.0, 0.0, 1.0)
+   << // magenta : Color = V4REPL5Color (has 3 children)
 
 Note that it is not possible to call this initializer
 without using the external names.
@@ -362,7 +362,7 @@ with an optional ``String`` property called ``response``:
          }
       }
    -> let cheeseQuestion = SurveyQuestion(text: "Do you like cheese?")
-   << // cheeseQuestion : SurveyQuestion = <SurveyQuestion instance>
+   << // cheeseQuestion : SurveyQuestion = C4REPL14SurveyQuestion (has 2 children)
    -> cheeseQuestion.ask()
    <- Do you like cheese?
    -> cheeseQuestion.response = "Yes, I do like cheese."
@@ -407,7 +407,7 @@ it can still be set within the class's initializer:
          }
       }
    -> let beetsQuestion = SurveyQuestion(text: "How about beets?")
-   << // beetsQuestion : SurveyQuestion = <SurveyQuestion instance>
+   << // beetsQuestion : SurveyQuestion = C4REPL14SurveyQuestion (has 2 children)
    -> beetsQuestion.ask()
    <- How about beets?
    -> beetsQuestion.response = "I also like beets. (But not with cheese.)"
@@ -436,7 +436,7 @@ of an item in a shopping list:
          var purchased = false
       }
    -> var item = ShoppingListItem()
-   << // item : ShoppingListItem = <ShoppingListItem instance>
+   << // item : ShoppingListItem = C4REPL16ShoppingListItem (has 3 children)
 
 Because all of the properties of the ``ShoppingListItem`` class have default values,
 and because it is a base class with no superclass,
@@ -475,7 +475,7 @@ can be passed to the memberwise initializer by name:
          var width = 0.0, height = 0.0
       }
    -> let twoByTwo = Size(width: 2.0, height: 2.0)
-   << // twoByTwo : Size = Size(2.0, 2.0)
+   << // twoByTwo : Size = V4REPL4Size (has 2 children)
 
 .. _Initialization_InitializerDelegation:
 
@@ -568,7 +568,7 @@ from their property definitions:
 .. testcode:: valueDelegation
 
    -> let basicRect = Rect()
-   << // basicRect : Rect = Rect(Point(0.0, 0.0), Size(0.0, 0.0))
+   << // basicRect : Rect = V4REPL4Rect (has 2 children)
    /> basicRect's origin is (\(basicRect.origin.x), \(basicRect.origin.y)) and its size is (\(basicRect.size.width), \(basicRect.size.height))
    </ basicRect's origin is (0.0, 0.0) and its size is (0.0, 0.0)
 
@@ -582,7 +582,7 @@ the appropriate stored properties:
 
    -> let originRect = Rect(origin: Point(x: 2.0, y: 2.0),
          size: Size(width: 5.0, height: 5.0))
-   << // originRect : Rect = Rect(Point(2.0, 2.0), Size(5.0, 5.0))
+   << // originRect : Rect = V4REPL4Rect (has 2 children)
    /> originRect's origin is (\(originRect.origin.x), \(originRect.origin.y)) and its size is (\(originRect.size.width), \(originRect.size.height))
    </ originRect's origin is (2.0, 2.0) and its size is (5.0, 5.0)
 
@@ -596,7 +596,7 @@ which stores the new origin and size values in the appropriate properties:
 
    -> let centerRect = Rect(center: Point(x: 4.0, y: 4.0),
          size: Size(width: 3.0, height: 3.0))
-   << // centerRect : Rect = Rect(Point(2.5, 2.5), Size(3.0, 3.0))
+   << // centerRect : Rect = V4REPL4Rect (has 2 children)
    /> centerRect's origin is (\(centerRect.origin.x), \(centerRect.origin.y)) and its size is (\(centerRect.size.width), \(centerRect.size.height))
    </ centerRect's origin is (2.5, 2.5) and its size is (3.0, 3.0)
 
@@ -983,7 +983,7 @@ This initializer can be used to create a new ``Food`` instance with a specific n
 .. testcode:: designatedConvenience
 
    -> let namedMeat = Food(name: "Bacon")
-   << // namedMeat : Food = <Food instance>
+   << // namedMeat : Food = C4REPL4Food (has 1 child)
    /> namedMeat's name is \"\(namedMeat.name)\"
    </ namedMeat's name is "Bacon"
 
@@ -1002,7 +1002,7 @@ a ``name`` value of ``[Unnamed]``:
 .. testcode:: designatedConvenience
 
    -> let mysteryMeat = Food()
-   << // mysteryMeat : Food = <Food instance>
+   << // mysteryMeat : Food = C4REPL4Food (has 1 child)
    /> mysteryMeat's name is \"\(mysteryMeat.name)\"
    </ mysteryMeat's name is "[Unnamed]"
 
@@ -1067,11 +1067,11 @@ All three of these initializers can be used to create new ``RecipeIngredient`` i
 .. testcode:: designatedConvenience
 
    -> let oneMysteryItem = RecipeIngredient()
-   << // oneMysteryItem : RecipeIngredient = <RecipeIngredient instance>
+   << // oneMysteryItem : RecipeIngredient = C4REPL16RecipeIngredient (has 2 children)
    -> let oneBacon = RecipeIngredient(name: "Bacon")
-   << // oneBacon : RecipeIngredient = <RecipeIngredient instance>
+   << // oneBacon : RecipeIngredient = C4REPL16RecipeIngredient (has 2 children)
    -> let sixEggs = RecipeIngredient(name: "Eggs", quantity: 6)
-   << // sixEggs : RecipeIngredient = <RecipeIngredient instance>
+   << // sixEggs : RecipeIngredient = C4REPL16RecipeIngredient (has 2 children)
 
 The third and final class in the hierarchy is
 a subclass of ``RecipeIngredient`` called ``ShoppingListItem``.
@@ -1121,7 +1121,7 @@ a new ``ShoppingListItem`` instance:
          ShoppingListItem(name: "Bacon"),
          ShoppingListItem(name: "Eggs", quantity: 6),
       ]
-   << // breakfastList : Array<ShoppingListItem> = [<ShoppingListItem instance>, <ShoppingListItem instance>, <ShoppingListItem instance>]
+   << // breakfastList : Array<ShoppingListItem> = [C4REPL16ShoppingListItem (has 2 children), C4REPL16ShoppingListItem (has 2 children), C4REPL16ShoppingListItem (has 2 children)]
    -> breakfastList[0].name = "Orange juice"
    -> breakfastList[0].purchased = true
    -> for item in breakfastList {

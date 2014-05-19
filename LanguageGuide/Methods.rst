@@ -77,7 +77,7 @@ Instance methods are called using the same dot syntax as properties:
 .. testcode:: instanceMethods
 
    -> let counter = Counter()
-   << // counter : Counter = <Counter instance>
+   << // counter : Counter = C4REPL7Counter (has 1 child)
    /> the initial counter value is \(counter.count)
    </ the initial counter value is 0
    -> counter.increment()
@@ -166,7 +166,7 @@ This means that the method is called as follows:
 .. testcode:: externalParameterNames
 
    -> let counter = Counter()
-   << // counter : Counter = <Counter instance>
+   << // counter : Counter = C4REPL7Counter (has 1 child)
    -> counter.incrementBy(5, numberOfTimes: 3)
    /> counter value is now \(counter.count)
    </ counter value is now 15
@@ -266,7 +266,7 @@ a method parameter called ``x``, and an instance property that is also called ``
          }
       }
    -> let somePoint = Point(x: 4.0, y: 5.0)
-   << // somePoint : Point = Point(4.0, 5.0)
+   << // somePoint : Point = V4REPL5Point (has 2 children)
    -> if somePoint.isToTheRightOfX(1.0) {
          println("This point is to the right of the line where x == 1.0")
       }
@@ -308,7 +308,7 @@ before the ``func`` keyword for that method:
          }
       }
    -> var somePoint = Point(x: 1.0, y: 1.0)
-   << // somePoint : Point = Point(1.0, 1.0)
+   << // somePoint : Point = V4REPL5Point (has 2 children)
    -> somePoint.moveByX(2.0, y: 3.0)
    -> println("The point is now at (\(somePoint.x), \(somePoint.y))")
    <- The point is now at (3.0, 4.0)
@@ -327,7 +327,7 @@ because its properties cannot be changed, even if they are variable properties
 .. testcode:: selfStructures
 
    -> let fixedPoint = Point(x: 3.0, y: 3.0)
-   << // fixedPoint : Point = Point(3.0, 3.0)
+   << // fixedPoint : Point = V4REPL5Point (has 2 children)
    -> fixedPoint.moveByX(2.0, y: 3.0)
    !! <REPL Input>:1:1: error: immutable value of type 'Point' only has mutating members named 'moveByX'
    !! fixedPoint.moveByX(2.0, y: 3.0)
@@ -356,7 +356,7 @@ The ``Point`` example shown above could have been written in the following way i
          }
       }
    >> var somePoint = Point(x: 1.0, y: 1.0)
-   << // somePoint : Point = Point(1.0, 1.0)
+   << // somePoint : Point = V4REPL5Point (has 2 children)
    >> somePoint.moveByX(2.0, y: 3.0)
    >> println("The point is now at (\(somePoint.x), \(somePoint.y))")
    << The point is now at (3.0, 4.0)
@@ -535,7 +535,7 @@ and see what happens when the player completes level one:
 .. testcode:: typeMethods
 
    -> var player = Player(name: "Argyrios")
-   << // player : Player = <Player instance>
+   << // player : Player = C4REPL6Player (has 2 children)
    -> player.completedLevel(1)
    -> println("highest unlocked level is now \(LevelTracker.highestUnlockedLevel)")
    <- highest unlocked level is now 2

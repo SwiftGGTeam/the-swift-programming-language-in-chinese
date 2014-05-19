@@ -130,7 +130,7 @@ the ``FullyNamed`` protocol:
          var fullName: String
       }
    -> let john = Person(fullName: "John Appleseed")
-   << // john : Person = Person("John Appleseed")
+   << // john : Person = V4REPL6Person (has 1 child)
    /> john.fullName is \"\(john.fullName)\"
    </ john.fullName is "John Appleseed"
 
@@ -161,7 +161,7 @@ Here's a more complex class, which also adopts and conforms to the ``FullyNamed`
          }
       }
    -> var ncc1701 = Starship(name: "Enterprise", prefix: "USS")
-   << // ncc1701 : Starship = <Starship instance>
+   << // ncc1701 : Starship = C4REPL8Starship (has 2 children)
    /> ncc1701.fullName is \"\(ncc1701.fullName)\"
    </ ncc1701.fullName is "USS Enterprise"
 
@@ -846,7 +846,7 @@ into a single protocol composition requirement on a function parameter:
          println("Happy birthday \(celebrator.name) - you're \(celebrator.age)!")
       }
    -> let birthdayPerson = Person(name: "Malcolm", age: 21)
-   << // birthdayPerson : Person = Person("Malcolm", 21)
+   << // birthdayPerson : Person = V4REPL6Person (has 2 children)
    -> wishHappyBirthday(birthdayPerson)
    <- Happy birthday Malcolm - you're 21!
 
@@ -962,7 +962,7 @@ can be used to initialize an array that stores values of type ``AnyObject``:
          Country(area: 243_610),
          Animal(legs: 4)
       ]
-   << // objects : AnyObject[] = [<unprintable value>, <unprintable value>, <unprintable value>]
+   << // objects : AnyObject[] = [C4REPL6Circle (has 2 children), C4REPL7Country (has 1 child), C4REPL6Animal (has 1 child)]
 
 The ``objects`` array is initialized with an array literal containing
 a ``Circle`` instance with a radius of 2 units;
@@ -1170,7 +1170,7 @@ You can use an instance of ``ThreeSource`` as the data source for a new ``Counte
 .. testcode:: protocolConformance
 
    -> var counter = Counter()
-   << // counter : Counter = <Counter instance>
+   << // counter : Counter = C4REPL7Counter (has 2 children)
    -> counter.dataSource = ThreeSource()
    -> for _ in 1...4 {
          counter.increment()
