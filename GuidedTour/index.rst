@@ -1,5 +1,5 @@
-Guided Tour
-===========
+Welcome to Swift
+================
 
 .. toctree::
     :maxdepth: 1
