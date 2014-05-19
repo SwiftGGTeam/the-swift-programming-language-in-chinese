@@ -98,26 +98,6 @@ separated by a colon.
    for a variable with an initial value of 3.
    What error do you get?
 
-.. TODO: Needs to go somewhere, but not here.
-
-   Numeric literals that don't have a decimal point
-   are treated as an integer by default,
-   but type inference can make them floating point numbers
-   if the expression would otherwise be invalid.
-   For example,
-   if the value of ``seven`` is the integer ``7``,
-   the result of ``seven / 2`` is the integer ``3``.
-   However, if its value is ``7.0``
-   the result of ``seven / 2`` is ``3.5`` ---
-   dividing a floating point number by an integer would be a type error,
-   so the type of ``2`` is understood as ``2.0``.
-
-   7 / 2     // 3 (an integer)
-   7.0 / 2   // 3.5
-   let seven = 7.0
-   let two = 2
-   seven / two  // type error
-
 Values are never implicitly converted to another type.
 If you need to convert a value to a different type,
 make an instance of the desired type explicitly.
@@ -289,14 +269,8 @@ than simple comparison.
 
 .. admonition:: Experiment
 
-   Add a case for vegetable names that start
-   with an uppercase letter.
-
    Try removing the default case.
    What error do you get?
-
-.. TODO: The "starts with uppercase" is probably too much of a stretch
-   before having learned about string operations.
 
 After executing the code inside the switch case that matched,
 the program exits from the switch statement.
@@ -306,41 +280,6 @@ at the end of each case‘s code.
 
 .. Omitting mention of "fallthrough" keyword.
    It's in the guide/reference if you need it.
-
-.. Haven't shown structs or enums yet --
-   revisit switch statements at that point
-   to show another cool thing.
-
-
-.. the focus here should be on .. and ...
-
-It loops that use an index,
-the range operators ``..`` and ``...``
-let you write code that is easier to read.
-The ``..`` operator includes both its start and end in the range,
-like writing ``<=`` in a conditional of a ``for`` loop.
-the ``...`` operator includes the start but not the end,
-like writing ``<`` in a conditional of a ``for`` loop.
-These two loops do the same thing:
-
-.. testcode::
-
-   -> for i in 0...5 {
-         println(i)
-      }
-   << 0
-   << 1
-   << 2
-   << 3
-   << 4
-   -> for var i = 0; i < 5; ++i {
-         println(i)
-      }
-   << 0
-   << 1
-   << 2
-   << 3
-   << 4
 
 You can also use ``for`` to iterate over items in a dictionary
 by providing a variable name to use
@@ -397,14 +336,34 @@ ensuring that the loop is run at least once.
    -> println("m is \(m)")
    << m is 128
 
+You can also keep an index in a loop
+using the ``..`` and ``...`` range operators
+or using an explicit increment and test.
+These two loops do the same thing:
+
+.. testcode::
+
+   -> for i in 0...3 {
+         println(i)
+      }
+   << 0
+   << 1
+   << 2
+   -> for var i = 0; i < 3; ++i {
+         println(i)
+      }
+   << 0
+   << 1
+   << 2
+
 Functions and Closures
 ----------------------
 
 Use ``func`` to declare functions
 and call them by following their name
 with a parenthesized list of arguments.
-
-.. TODO: Call out what -> means in the signature.
+Use ``->`` to separate the parameter names and types
+from the function's return type.
 
 .. testcode::
 
@@ -489,8 +448,6 @@ This means a function can return another function as its value.
     -> increment(7)
     <$ : Int = 8
 
-.. EDIT: Confirm spelling of "incrementer" (not "incrementor").
-
 A function can take another function as one of its arguments.
 
 .. testcode::
@@ -511,15 +468,10 @@ A function can take another function as one of its arguments.
     -> hasAnyMatches(numbers, lessThanTen)
     <$ : Bool = true
 
-Closures are the same as functions with one difference:
+Closures are like functions but
 you don't give them a name when you declare them.
 You write a closure as code surrounded by braces (``{}``)
 and use ``in`` to separate the arguments from the body.
-
-.. TODO: This notion of closures being "just" un-named functions is problematic.
-   See Dave's recent work in the Guide comparing the two.
-
-.. EDIT: Second sentence above reads better as describing singular closure.
 
 .. testcode::
 
@@ -530,20 +482,9 @@ and use ``in`` to separate the arguments from the body.
        })
     <$ : Array<Int> = [24, 9, 15, 18]
 
-.. The closure's return type has to be specified here
-   because type inference can't determine it.
-   If the value of the whole expression
-   is assigned to a variable of known type,
-   then it can be omitted.
-   The whole point of this first example
-   is that it *doesn't* omit anything.
+.. admonition:: Experiment
 
-   var l: Int[] = numbers.map({
-             (number: Int) in
-             let result = 3 * number
-             return result
-          })
-       
+   Rewrite the closure to return zero for all odd numbers.
 
 You have several options for writing closures more concisely.
 When the closure's type is already known,
@@ -577,10 +518,7 @@ as the second argument to the ``sort`` function.
     -> sort([1, 5, 3, 12, 2], >)
     <$ : Array<Int> = [12, 5, 3, 2, 1]
 
-.. write-me::
-
-* Curried functions
-* Custom operators
+.. Omitted curried functions and custom operators as "advanced" topics.
 
 Objects and Classes
 -------------------
@@ -1122,11 +1060,96 @@ in addition to its protocol conformance.
 Generics
 --------
 
+Write a name inside angle brackets
+to make a generic function or type.
+
+.. testcode::
+
+    -> func repeat<ItemType>(item: ItemType, times: Int) -> ItemType[] {
+          var result = Array<ItemType>()
+          for i in 0...times {
+              result += item
+          }
+          return result
+       }
+    -> repeat("knock", 4)
+    <$ : String[] = [knock, knock, knock, knock]
+
+.. admonition:: Experiment
+
+   Make a version of anyMatch that accepts an array of any type,
+   not just an array if integers.
+
+You can make generic forms of functions and methods,
+as well as classes, enumerations, and structures.
+
+.. FIXME: Add testcode expectation lines.
+
+.. testcode::
+
+    // Re-implement the Swift standard library's optional type
+    -> enum Optional<T> {
+          case None
+          case Some(T)
+       }
+    -> var possibleInteger = Optional.None
+    -> possibleInteger = .Some(100)
+
+Use ``where`` after the type name
+to specify a list of requirements ---
+for example,
+a protocol that that the type must implement,
+to require that two types be the same,
+or to require a class to have a particular superclass.
+
+.. testcode::
+
+   -> func anyCommonElements <T, U where
+         T: Sequence, U: Sequence,
+         T.GeneratorType.Element: Equatable,
+         T.GeneratorType.Element == U.GeneratorType.Element>
+      (lhs: T, rhs: U) -> Bool {
+         for lhsItem in lhs {
+            for rhsItem in rhs {
+               if lhsItem == rhsItem {
+                  return true
+               }
+            }
+         }
+         return false
+      }
+   -> anyCommonElements([1, 2, 3], [3])
+   <$ : Bool = true
+
+.. admonition:: Experiment
+
+   Modify the ``anyCommonElements`` function
+   to make a function that returns an array
+   of the elements any two sequences have in common.
+
+..
+  TODO: dig into this error
+  let l1 = [1: 100, 2: 200]
+  let l2 = [(1, 100), (4, 5)]
+  anyCommonElements(l1, l2)
+  ^-- error: cannot convert the expression's type 'Bool' to type 'Array<(Int, Int)>'
+
+In the simple cases,
+you can omit ``where`` and just write
+you can just write the protocol or class name after a colon.
+Writing ```<T: Equatable>``
+is the same as writing ``<T where T: Equatable>``.
+
+Continue Reading
+----------------
+
 .. write-me::
 
-* On function (repeat X n times, re-implementing Array init feature)
-* On classes, structures, and enumerations
+This needs a live link and discussion about
+what the heading should be
+and how exactly we should phrase the content.
 
-.. TODO: Add a "Continue Reading" section
-   which gives folks who opened this in a playground
-   a link back to the web version of the book.
+You can read the rest of
+"The Swift Programming Language" on on the web,
+you can download it as a PDF,
+or you can download it in iBooks.
