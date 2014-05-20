@@ -165,7 +165,7 @@ by defining some of the relationships between classes
 as weak or unowned references instead of strong references.
 This process is described in :ref:`AutomaticReferenceCounting_ResolvingStrongReferenceCycles` below.
 However, before you learn how to break a strong reference cycle,
-it is useful to understand what causes sucn a cycle can be caused.
+it is useful to understand what causes such a cycle can be caused.
 
 Here's an example of how a strong reference cycle can be created by accident.
 This example defines two classes called ``Person`` and ``Apartment``,
