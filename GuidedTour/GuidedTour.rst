@@ -770,21 +770,20 @@ and anything after it uses the unwrapped value.
 Methods on classes have one important difference from functions.
 The parameter names in functions are only used within the function,
 but parameters in methods are also used when you call the method.
+By default, a method has the same name for its parameters
+when you call it and within the method itself.
+You can specify a second name, which is used inside the method.
 
 .. testcode::
 
     -> class Counter {
           var count: Int = 0
-          func incrementBy(amount: Int, numberOfTimes: Int) {
-             count += amount * numberOfTimes
+          func incrementBy(amount: Int, numberOfTimes times: Int) {
+             count += amount * times
           }
        }
     -> var counter = Counter()
-    -> counter.increment(2, numberOfTimes: 7)
-
-.. TODO: Can you provide a local parameter name?
-   The Reference bit for that isn't written,
-   and the Guide doesn't really answer the question.
+    -> counter.incrementBy(2, numberOfTimes: 7)
 
 Enumerations and Structures
 ---------------------------
