@@ -1296,7 +1296,7 @@ has a value of an optional type.
 
 The following example shows the behavior
 of the example above
-without using optional chaining.
+without using optional chaining:
 
 .. testcode:: optional-chaining-if-let
 
