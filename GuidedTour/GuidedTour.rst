@@ -541,8 +541,8 @@ Likewise, method and function declarations are written the same way.
 
 .. admonition:: Experiment
 
-   Try adding a constant property using ``let``
-   and adding another method that takes an argument.
+   Add a constant property with ``let``
+   and add another method that takes an argument.
 
 Instances of the class are created
 by putting parentheses after the class name,
@@ -584,21 +584,21 @@ Notice how ``self`` is used to distinguish the ``name`` property
 from the ``name`` argument to the initializer.
 The arguments to the initializer are passed like a function call
 when you create an instance of the class.
-Every property needs to either have a value assigned
+Every property either needs a value assigned
 when it is declared (like ``numberOfSides``)
 or in the initializer (like ``name``).
 
-In addition to the initializer,
-you can use ``deinit`` create a deinitializer
+Use ``deinit`` to create a deinitializer
 if you need te perform some clean-up
 before the object is deallocated.
 
-Classes that inherit from other classes
-include the superclass's name, separated by a colon.
-It's just fine to have a class with no superclass though ---
-classes in Swift don't all have a common root class.
+Subclasses include their superclass's name
+after their class name,
+separated by a colon.
+There is no requirement for classes to subclass any standard root class,
+so you can include or omit a superclass as needed.
 
-Methods on a subclass that override the superclass's implentation
+Methods on a subclass that override the superclass's implementation
 are marked with ``override`` ---
 overriding a method by accident, without ``override``,
 is detected by the compiler as an error.
@@ -633,11 +633,11 @@ that don't actually override any method in the superclass.
 
 .. admonition:: Experiment
 
-   Try making another subclass of ``NamedShape``
+   Make another subclass of ``NamedShape``
    called ``Circle``
-   which takes a radius and a name
+   that takes a radius and a name
    as arguments to its initializer,
-   and implements an ``area`` and ``describe`` method.
+   and implements an ``area`` and a ``describe`` method.
 
 In addition to simple properties which are stored,
 properties can have a getter and a setter.
@@ -779,7 +779,7 @@ and anything after the ``?`` acts on the unwrapped value.
 Enumerations and Structures
 ---------------------------
 
-You use ``enum`` to create an enumeration.
+Use ``enum`` to create an enumeration.
 Like classes and all other named types,
 enumerations can have methods associated with them.
 
@@ -871,10 +871,13 @@ you don't have to provide one.
    In other games, orders differ.
    Wikipedia lists a good half dozen orders.
 
-Notice that
-when assigning a value to the ``hearts`` constant,
-the enumeration member ``Suit.Hearts`` had to be written out in full,
-but inside the switch it could be abbreviated as just ``.Hearts``.
+Notice the two ways that the ``Hearts`` member of the enumeration
+is referred to above.
+When assigning a value to the ``hearts`` constant,
+the enumeration member ``Suit.Hearts`` is written out in full
+because the constant doesn't have an explicit type specified.
+Inside the switch it could be abbreviated as just ``.Hearts``
+because the value of ``self`` is already known to be a suit.
 You can use the abbreviated form
 anytime the value's type is already known.
 
@@ -1144,7 +1147,8 @@ This needs a live link and discussion about
 what the heading should be
 and how exactly we should phrase the content.
 
-You can read the rest of
+Access the rest of
 "The Swift Programming Language" on on the web,
-you can download it as a PDF,
-or you can download it in iBooks.
+download it in iBooks.
+or download it as a PDF.
+
