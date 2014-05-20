@@ -211,9 +211,8 @@ not an implicit comparison to zero.
 You can use ``if`` and ``let`` together
 to work with values that might be missing
 using an optional value.
-Similar to how arrays and dictionaries contain values,
-an optional value either contains a value
-or ``nil`` to indicate it has no value.
+An optional value either contains a value
+or ``nil`` to indicate that the value is missing.
 Write a question mark (``?``) after a type
 to mark it as optional.
 
