@@ -651,10 +651,10 @@ properties can have a getter and a setter.
 
 .. testcode::
 
-    -> let PI = 3.14159265
+    -> let pi = 3.14159265
     << // PI : Double = 3.14159265
-    -> let TWO_PI = 2 * PI
-    << // TWO_PI : Double = 6.2831853
+    -> let twoPi = 2 * PI
+    << // twoPi : Double = 6.2831853
     ---
     -> class Circle: NamedShape {
            var radius: Double
@@ -662,17 +662,17 @@ properties can have a getter and a setter.
            // A computed property
            var circumference: Double {
                get {
-                   return TWO_PI * radius
+                   return twoPi * radius
                }
                set {
-                   radius = newValue / TWO_PI
+                   radius = newValue / twoPi
                }
            }
 
            // A read-only computed property
            var area: Double {
               get {
-                 return PI * radius * radius
+                 return pi * radius * radius
               }
            }
 
