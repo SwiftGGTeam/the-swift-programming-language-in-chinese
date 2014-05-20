@@ -45,13 +45,8 @@ everything introduced in this tour
 is explained in detail in the following chapters.
 Experienced programmers may find that the examples
 provide enough information about Swift
-thay they can skim the the *Language Guide*
-and refer to the *Language Reference*
-for answers to specific questions.
-
-.. TODO Should be an xName-No-Link element for the references
-   to parts of this book above,
-   rather than just putting them in italics.
+thay they can skim the rest of this book
+and refer back to it when they have questions.
 
 Simple Values
 -------------
