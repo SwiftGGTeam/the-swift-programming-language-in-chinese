@@ -11,7 +11,6 @@ The book has the following known issues:
    but rather a description of the impact each bug
    has on the resulting build of the book.
 
-* <rdar://16756239> Indentation is missing in Xcode-style code outlines.
 * <rdar://16756034> Formal grammar does not contain live links.
 * <rdar://16844985> Guided Tour has lines that don't compile in latest Swift
 * <rdar://16893324> The PDF version of TSPL is a mockup.
