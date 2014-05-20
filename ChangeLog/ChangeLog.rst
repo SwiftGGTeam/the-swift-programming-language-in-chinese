@@ -22,6 +22,13 @@ The book has the following known issues:
 May 19 2014
 ~~~~~~~~~~~
 
+A Swift Tour
+++++++++++++
+
+* Retitled the former "Guided Tour".
+
+* All sections now have content.
+
 About Swift
 +++++++++++
 
