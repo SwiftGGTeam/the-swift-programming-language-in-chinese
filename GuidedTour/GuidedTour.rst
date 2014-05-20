@@ -50,7 +50,7 @@ Simple Values
 Use ``let`` to make a constant and ``var`` to make a variable.
 The value of a constant
 doesn't need to be known at compile time,
-as long as it assigned only once.
+but you must assign it a value exactly once.
 This means you can use constants to name a value
 that you determine once but use in many places.
 
@@ -112,6 +112,10 @@ make an instance of the desired type explicitly.
 
    Try removing the conversion to ``String`` from the last line.
    What error do you get?
+
+.. TODO: Discuss with Core Writers ---
+   are these experiments that make you familiar with errors
+   helping you learn something?
 
 A simpler way to include values in strings
 is to write ``\(`` and ``)`` around an expression,
@@ -207,12 +211,14 @@ this means code like ``if score { ... }`` is an error,
 not an implicit comparison to zero.
 
 You can use ``if`` and ``let`` together
-to work with values that might be missing
-using an optional value.
+to work with values that might be missing.
+These values are represented as optionals.
 An optional value either contains a value
 or ``nil`` to indicate that the value is missing.
 Write a question mark (``?``) after a type
 to mark it as optional.
+
+.. TODO: Rewrite the last sentence to tie into the rest of the para.
 
 .. testcode::
 
@@ -244,6 +250,8 @@ Otherwise, the optional value is unwrapped and assigned
 to the variable after ``let``,
 which makes the unwrapped value available
 inside the block of code.
+
+.. TODO: Just --> they are not limited to integers
 
 Switches support any kind of data, not just integers,
 and the matching criteria can be more complex
@@ -357,7 +365,7 @@ Functions and Closures
 
 Use ``func`` to declare a function.
 Call a function by following its name
-with a parenthesized list of arguments.
+with a list of arguments in parentheses.
 Use ``->`` to separate the parameter names and types
 from the function's return type.
 
@@ -520,7 +528,7 @@ Objects and Classes
 -------------------
 
 Use ``class`` followed by the class's name to create a class.
-A property declaration is the same
+A property declaration in class is written the same way
 as a constant or variable declaration,
 except that it is in the context of a class.
 Likewise, method and function declarations are written the same way.
@@ -541,10 +549,10 @@ Likewise, method and function declarations are written the same way.
    Add a constant property with ``let``
    and add another method that takes an argument.
 
-Instances of the class are created
-by putting parentheses after the class name,
-and the properties and methods of the instance
-are accessed using dot syntax.
+Create an instance of a class
+by putting parentheses after the class name.
+Use dot syntax to access
+the properties and methods of the instance.
 
 .. testcode::
 
@@ -755,6 +763,8 @@ it returns ``nil`` and anything after it is ignored.
 Otherwise, it unwraps the optional
 and anything after the ``?`` acts on the unwrapped value.
 
+.. TODO: Revise para -- "it" doesn't really have a referent
+
 .. testcode::
 
     -> let optionalSquare: Square? = Square(size: 2.5, name:"optional ssquare")
@@ -891,6 +901,9 @@ structures are always copied when they are passed around in your code.
    Add a method to ``Card`` that creates
    a full deck of cards,
    with one card of each combination of rank and suit.
+
+
+.. TODO: [Contributor 9502] wants me to rewrite the "different than raw" bit.
 
 An enumeration can have other values associated with it.
 This association is different than a raw value:
