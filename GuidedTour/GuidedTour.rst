@@ -282,7 +282,7 @@ at the end of each case‘s code.
 .. Omitting mention of "fallthrough" keyword.
    It's in the guide/reference if you need it.
 
-You can also use ``for``-``in`` to iterate over items in a dictionary
+You also use ``for``-``in`` to iterate over items in a dictionary
 by providing a pair of names to use
 for each key-value pair.
 
@@ -359,7 +359,7 @@ Functions and Closures
 ----------------------
 
 Use ``func`` to declare a function.
-Call a function by following their name
+Call a function by following its name
 with a parenthesized list of arguments.
 Use ``->`` to separate the parameter names and types
 from the function's return type.
@@ -377,7 +377,7 @@ from the function's return type.
    Remove the ``day`` parameter.
    Add a parameter to include today’s lunch special in the greeting.
 
-Functions can return multiple values by using a tuple.
+Use a tuple to return multiple values from a function.
 
 .. testcode::
 
@@ -467,8 +467,8 @@ A function can take another function as one of its arguments.
     -> hasAnyMatches(numbers, lessThanTen)
     <$ : Bool = true
 
-Closures are like functions but
-you don't give them a name when you declare them.
+Closures are like functions,
+but you don't give them a name when you declare them.
 You write a closure as code surrounded by braces (``{}``)
 and use ``in`` to separate the arguments and return type from the body.
 
@@ -498,8 +498,8 @@ of their only statement.
     -> numbers.map({ number in 3 * number })
     <$ : Array<Int> = [24, 9, 15, 18]
 
-For even more brevity,
-you can refer to parameters by number instead of by name.
+You can refer to parameters by number instead of by name,
+which is especially useful in very short closures.
 A closure passed as the last argument to a function
 can appear immediately after the parentheses.
 
@@ -527,7 +527,7 @@ followed by the class's properties and methods in braces.
 A property declaration is the same
 as a constant or variable declaration,
 except that it is in the context of a class.
-Likewise, method and function declarations are the same.
+Likewise, method and function declarations are written the same way.
 
 .. testcode::
 
@@ -547,7 +547,7 @@ Likewise, method and function declarations are the same.
 
 Instances of the class are created
 by putting parentheses after the class name,
-and the properties an methods of the instance
+and the properties and methods of the instance
 are accessed using dot syntax.
 
 .. testcode::
@@ -693,7 +693,7 @@ the new value has the implicit name ``newValue``.
 You can provide an explicit name in parentheses after ``set``.
 
 Notice that the initializer for the ``Circle`` class
-is made up of three parts:
+is made up of three phases:
 
 1. Setting the value of properties that the subclass declares.
 
@@ -816,13 +816,13 @@ enumerations can have methods associated with them.
    by comparing their raw values.
 
 In the example above,
-the raw value type of the enuration is ``Int``,
+the raw value type of the enumeration is ``Int``,
 so you only have to specify the first raw value.
 The rest of the raw values are assigned in order.
 You can also use strings or floating-point numbers
 as the raw type of an enumeration.
 
-The ``toRaw`` and ``fromRaw`` functions let you convert
+Use the ``toRaw`` and ``fromRaw`` functions to convert
 between the raw value and the enumeration value.
 
 .. testcode::
@@ -872,7 +872,8 @@ you don't have to provide one.
    In other games, orders differ.
    Wikipedia lists a good half dozen orders.
 
-When creating the ``hearts`` constant,
+Notice that
+when assigning a value to the ``hearts`` constant,
 the enumeration member ``Suit.Hearts`` had to be written out in full,
 but inside the switch it could be abbreviated as just ``.Hearts``.
 You can use the abbreviated form
@@ -905,11 +906,13 @@ structures are always copied when they are passed around in your code.
    a full deck of cards,
    with one card of each combination of rank and suit.
 
-Enumerations can have other values associated with them.
-This is different than a raw value:
-the raw value is always the same,
+An enumeration can have other values associated with it.
+This association is different than a raw value:
+the raw value for a member of an enumeration is always the same,
 but you provide the associated values
-when you create the instance of the enumeration.
+when you create the instance of the enumeration,
+so different instances of the same member
+can have different associated values.
 For example,
 consider the case of requesting
 the sunrise and sunset time from a server.
@@ -1073,11 +1076,6 @@ to make a generic function or type.
     -> repeat("knock", 4)
     <$ : String[] = [knock, knock, knock, knock]
 
-.. admonition:: Experiment
-
-   Make a version of anyMatch that accepts an array of any type,
-   not just an array if integers.
-
 You can make generic forms of functions and methods,
 as well as classes, enumerations, and structures.
 
@@ -1133,8 +1131,8 @@ or to require a class to have a particular superclass.
   ^-- error: cannot convert the expression's type 'Bool' to type 'Array<(Int, Int)>'
 
 In the simple cases,
-you can omit ``where`` and just write
-you can just write the protocol or class name after a colon.
+you can omit ``where`` and simply
+write the protocol or class name after a colon.
 Writing ```<T: Equatable>``
 is the same as writing ``<T where T: Equatable>``.
 
