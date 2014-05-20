@@ -79,8 +79,8 @@ the compiler infers that ``myVariable`` is an integer
 because its initial value is a integer.
 
 If the initial value doesn't provide enough information
-(or if there is no initial value)
-by writing the type after the variable,
+(or if there is no initial value),
+specify the type by writing it after the variable,
 separated by a colon.
 
 .. testcode::
@@ -96,10 +96,6 @@ separated by a colon.
 
    Create a constant with
    an explicit type of ``Float`` and a value of ``4``.
-
-   Try providing an explicit type of ``String``
-   for a variable with an initial value of 3.
-   What error do you get?
 
 Values are never implicitly converted to another type.
 If you need to convert a value to a different type,
@@ -135,7 +131,7 @@ which includes it as part of the string.
 .. admonition:: Experiment
 
    Use ``\()`` to
-   include a floating point calculation in a string,
+   include a floating point calculation in a string
    and to include someone’s name in a greeting.
 
 You create arrays and dictionaries using brackets (``[]``),
@@ -208,8 +204,8 @@ Braces around the body are required.
    << Would you like a jelly baby?
 
 In an ``if`` statement,
-the conditional must be a Boolean expression;
-code like ``if score { ... }`` is an error,
+the conditional must be a Boolean expression ---
+this means code like ``if score { ... }`` is an error,
 not an implicit comparison to zero.
 
 You use ``if`` and ``let`` together to work with optional values.
@@ -284,7 +280,7 @@ at the end of each case‘s code.
 .. Omitting mention of "fallthrough" keyword.
    It's in the guide/reference if you need it.
 
-You can also use ``for`` to iterate over items in a dictionary
+You can also use ``for``-``in`` to iterate over items in a dictionary
 by providing a pair of names to use
 for each key-value pair.
 
