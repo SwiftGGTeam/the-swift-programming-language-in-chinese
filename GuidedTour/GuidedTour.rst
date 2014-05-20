@@ -39,14 +39,10 @@ at the end of every statement.
 
 This tour gives you enough information
 to start writing code in Swift
-by showing you how you accomplish a variety of programming tasks.
+by showing you how to accomplish a variety of programming tasks.
 Don’t worry if you don’t understand something ---
 everything introduced in this tour
-is explained in detail in the following chapters.
-Experienced programmers may find that the examples
-provide enough information about Swift
-thay they can skim the rest of this book
-and refer back to it when they have questions.
+is explained in detail in the rest of this book.
 
 Simple Values
 -------------
@@ -78,7 +74,7 @@ However, you don't have to explicitly write
 the type of every single constant and variable.
 Providing an initial value lets the compiler infer
 the type of the constant or variable.
-For example, in example above
+In example above
 the compiler infers that ``myVariable`` is an integer
 because its initial value is a integer.
 
