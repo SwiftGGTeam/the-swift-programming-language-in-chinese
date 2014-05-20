@@ -134,7 +134,7 @@ which includes it as part of the string.
    include a floating point calculation in a string
    and to include someone’s name in a greeting.
 
-You create arrays and dictionaries using brackets (``[]``),
+Create arrays and dictionaries using brackets (``[]``),
 and access their elements by writing
 the index or key in brackets.
 
@@ -208,8 +208,10 @@ the conditional must be a Boolean expression ---
 this means code like ``if score { ... }`` is an error,
 not an implicit comparison to zero.
 
-You use ``if`` and ``let`` together to work with optional values.
-In a similar way to how arrays and dictionaries contain values,
+You can use ``if`` and ``let`` together
+to work with values that might be missing
+using an optional value.
+Similar to how arrays and dictionaries contain values,
 an optional value either contains a value
 or ``nil`` to indicate it has no value.
 Write a question mark (``?``) after a type
@@ -240,8 +242,8 @@ to mark it as optional.
    if ``optionalName`` is ``nil``.
 
 If the optional value is ``nil``,
-the ``if`` behaves as if you wrote ``if false { ... }``.
-Otherwise the optional value is unwrapped and assigned
+the conditional is ``false`` and the code in braces is skipped.
+Otherwise, the optional value is unwrapped and assigned
 to the variable after ``let``,
 which makes the unwrapped value available
 inside the block of code.
