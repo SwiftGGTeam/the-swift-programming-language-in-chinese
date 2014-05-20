@@ -165,7 +165,7 @@ by defining some of the relationships between classes
 as weak or unowned references instead of strong references.
 This process is described in :ref:`AutomaticReferenceCounting_ResolvingStrongReferenceCycles` below.
 However, before you learn how to break a strong reference cycle,
-it is useful to understand what causes such a cycle can be caused.
+it is useful to understand how such a cycle can be caused.
 
 Here's an example of how a strong reference cycle can be created by accident.
 This example defines two classes called ``Person`` and ``Apartment``,
@@ -668,14 +668,32 @@ while still avoiding a strong reference cycle.
 Closure Capture Lists
 ---------------------
 
-:ref:`AutomaticReferenceCounting_StrongReferenceCycles`
-describes how a strong reference cycle can be created
-when two class instances hold a strong reference to each other.
+You saw above how a strong reference cycle can be created
+when two class instance properties hold a strong reference to each other,
+You also saw how to use weak and unowned references to break these strong reference cycles.
 
-Another situation in which a strong reference cycle can occur
-is when a closure captures a class instance that holds a strong reference to that same closure.
-(Capturing values with a closure is described in :ref:`Closures_CapturingValues`.)
-Swift provides an elegant solution to this problem,
+A strong reference cycle can also occur
+if you assign a closure to a property of some class type,
+and the body of that closure uses ``self``.
+This might be to access another property on ``self``, or to call a method on ``self``.
+In either case, you will create a strong reference cycle
+if a class instance references a closure, and the closure also references the instance.
+
+In essence, this is the same problem as before –
+two things referencing each other in a loop, and keeping each other alive.
+However, rather than two class instances,
+this time it's a class instance and a closure keeping each other alive.
+
+In fact, you can create a strong reference cycle
+even if you are not explicitly working with ``self``.
+If you define a closure that references a property or method of some instance,
+and then assign that closure to a property on the same instance,
+you will also create a strong reference cycle.
+
+This problem will always occur when an instance references a closure,
+and that closure references the instance.
+
+Fortunately, swift provides an elegant solution to this problem,
 known as a :newTerm:`closure capture list`.
 
 .. _AutomaticReferenceCounting_StrongReferenceCyclesInClosures:
@@ -683,4 +701,92 @@ known as a :newTerm:`closure capture list`.
 Strong Reference Cycles in Closures
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. write-me::
+.. weak capture - if the closure may live beyond the self that it captures
+.. unowned capture - if the closure and self will both be deallocated at the same time
+.. bind arbitrary expressions to named values. Captured with specified strength.
+.. you have to say "self"
+
+Before you learn how to break a strong reference cycle with a capture list,
+it is useful to understand how such a cycle can be caused.
+
+The example below shows how you can create a strong reference cycle by accident
+when using a closure that references ``self``.
+This example defines a class called ``StringJoiner``,
+which takes an array of strings and joins them into a single string using a closure:
+
+.. testcode:: strongReferenceCyclesInClosures
+
+   -> class StringJoiner {
+
+         var token = " "
+
+         @lazy var process: (String, Int) -> String = {
+               (string: String, index: Int) -> String in
+            if index == 0 {
+               return string
+            } else {
+               return self.token + string
+            }
+         }
+
+         func join(strings: String[]) -> String {
+            var output = ""
+            for (index, string) in enumerate(strings) {
+               output += process(string, index)
+            }
+            return output
+         }
+
+      }
+
+The ``StringJoiner`` class provides a method called ``join``,
+which takes an array of strings as its input, and returns a single string as its output.
+The ``join`` method enumerates over its input array,
+and passes each string in the array to a closure,
+along with that string's index in the array.
+The closure's job is to convert that string and index into another string,
+and return that string as the closure's output.
+(This closure is described in more detail below.)
+
+Note that the ``join`` method uses the global ``enumerate`` function
+to extract the indices and values from the array as a tuple of type (``Int``, ``String``).
+The ``enumerate`` function is described in :doc:`CollectionTypes`.
+
+.. TODO: Not yet, it isn't.
+
+Here's how that looks in action:
+
+.. testcode:: strongReferenceCyclesInClosures
+
+   -> let joiner = StringJoiner()
+   << // joiner : StringJoiner = C4REPL12StringJoiner (has 2 children)
+   -> let names = ["Alex", "Anna", "Brian", "Jack"]
+   << // names : Array<String> = ["Alex", "Anna", "Brian", "Jack"]
+   -> var joinedNames = joiner.join(names)
+   << // joinedNames : String = "Alex Anna Brian Jack"
+   -> println(joinedNames)
+   <- Alex Anna Brian Jack
+
+The default behavior of the ``StringJoiner`` class, as seen in the example above,
+is to insert a space between each of the strings in the input array
+to create a single space-separated output string.
+
+You can customize the behavior of the ``StringJoiner`` class in two different ways.
+Firstly, you can change the token that is inserted between each string,
+by setting the ``token`` property:
+
+.. testcode:: strongReferenceCyclesInClosures
+
+   -> joiner.token = "**"
+   -> joinedNames = joiner.join(names)
+   -> println(joinedNames)
+   <- Alex**Anna**Brian**Jack
+
+Althernatively, you can provide your own custom closure for the ``process`` method.
+This 
+
+.. _AutomaticReferenceCounting_ResolvingStrongReferenceCyclesInClosures:
+
+Resolving Strong Reference Cycles in Closures
+---------------------------------------------
+
