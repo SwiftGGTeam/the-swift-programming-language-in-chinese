@@ -39,21 +39,15 @@ at the end of every statement.
 
 This tour gives you enough information
 to start writing code in Swift
-by showing you how you accomplish a variety of programming tasks.
+by showing you how to accomplish a variety of programming tasks.
 Don’t worry if you don’t understand something ---
 everything introduced in this tour
-is explained in detail in the following chapters.
-Experienced programmers may find that the examples
-provide enough information about Swift
-thay they can skim the rest of this book
-and refer back to it when they have questions.
+is explained in detail in the rest of this book.
 
 Simple Values
 -------------
 
-You create constants and variables using the same syntax,
-with one difference:
-Use ``let`` for a constant and use ``var`` for a variable.
+Use ``let`` to make a constant and ``var`` to make a variable.
 The value of a constant 
 doesn't need to be known at compile time,
 as long as it assigned only once.
@@ -76,15 +70,15 @@ A constant or variable must have the same type
 as the value you want to assign to it.
 However, you don't have to explicitly write
 the type of every single constant and variable.
-Providing an initial value lets the compiler infer
+Providing a value when you create it lets the compiler infer
 the type of the constant or variable.
-For example, in example above
+In example above
 the compiler infers that ``myVariable`` is an integer
 because its initial value is a integer.
 
 If the initial value doesn't provide enough information
-(or if there is no initial value)
-by writing the type after the variable,
+(or if there is no initial value),
+specify the type by writing it after the variable,
 separated by a colon.
 
 .. testcode::
@@ -100,10 +94,6 @@ separated by a colon.
 
    Create a constant with
    an explicit type of ``Float`` and a value of ``4``.
-
-   Try providing an explicit type of ``String``
-   for a variable with an initial value of 3.
-   What error do you get?
 
 Values are never implicitly converted to another type.
 If you need to convert a value to a different type,
@@ -139,10 +129,10 @@ which includes it as part of the string.
 .. admonition:: Experiment
 
    Use ``\()`` to
-   include a floating point calculation in a string,
+   include a floating point calculation in a string
    and to include someone’s name in a greeting.
 
-You create arrays and dictionaries using brackets (``[]``),
+Create arrays and dictionaries using brackets (``[]``),
 and access their elements by writing
 the index or key in brackets.
 
@@ -155,9 +145,9 @@ the index or key in brackets.
     -> var occupations = [
           "Malcolm": "Captain",
           "Kayley": "Mechanic",
-          "Jayne": "Public Relations",
         ]
     << // occupations : Dictionary<String, String> = Dictionary<String, String>(1.33333333333333, 3, <DictionaryBufferOwner<String, String> instance>)
+    -> occupations["Jayne"] = "Public Relations"
 
 To create an empty array or dictionary,
 use the initializer syntax.
@@ -212,14 +202,15 @@ Braces around the body are required.
    << Would you like a jelly baby?
 
 In an ``if`` statement,
-the conditional must be a Boolean expression;
-code like ``if score { ... }`` is an error,
+the conditional must be a Boolean expression ---
+this means code like ``if score { ... }`` is an error,
 not an implicit comparison to zero.
 
-You use ``if`` and ``let`` together to work with optional values.
-In a similar way to how arrays and dictionaries contain values,
-an optional value either contains a value
-or ``nil`` to indicate it has no value.
+You can use ``if`` and ``let`` together
+to work with values that might be missing
+using an optional value.
+An optional value either contains a value
+or ``nil`` to indicate that the value is missing.
 Write a question mark (``?``) after a type
 to mark it as optional.
 
@@ -248,8 +239,8 @@ to mark it as optional.
    if ``optionalName`` is ``nil``.
 
 If the optional value is ``nil``,
-the ``if`` behaves as if you wrote ``if false { ... }``.
-Otherwise the optional value is unwrapped and assigned
+the conditional is ``false`` and the code in braces is skipped.
+Otherwise, the optional value is unwrapped and assigned
 to the variable after ``let``,
 which makes the unwrapped value available
 inside the block of code.
@@ -288,11 +279,9 @@ at the end of each case‘s code.
 .. Omitting mention of "fallthrough" keyword.
    It's in the guide/reference if you need it.
 
-You can also use ``for`` to iterate over items in a dictionary
-by providing a variable name to use
+You also use ``for``-``in`` to iterate over items in a dictionary
+by providing a pair of names to use
 for each key-value pair.
-
-.. EDIT: key/value or key-value?
 
 .. TODO: Shorten listing
 
@@ -366,8 +355,8 @@ These two loops do the same thing:
 Functions and Closures
 ----------------------
 
-Use ``func`` to declare functions
-and call them by following their name
+Use ``func`` to declare a function.
+Call a function by following its name
 with a parenthesized list of arguments.
 Use ``->`` to separate the parameter names and types
 from the function's return type.
@@ -385,7 +374,7 @@ from the function's return type.
    Remove the ``day`` parameter.
    Add a parameter to include today’s lunch special in the greeting.
 
-Functions can return multiple values by using a tuple.
+Use a tuple to return multiple values from a function.
 
 .. testcode::
 
@@ -475,10 +464,10 @@ A function can take another function as one of its arguments.
     -> hasAnyMatches(numbers, lessThanTen)
     <$ : Bool = true
 
-Closures are like functions but
-you don't give them a name when you declare them.
+Closures are like functions,
+but you don't give them a name when you declare them.
 You write a closure as code surrounded by braces (``{}``)
-and use ``in`` to separate the arguments from the body.
+and use ``in`` to separate the arguments and return type from the body.
 
 .. testcode::
 
@@ -506,8 +495,8 @@ of their only statement.
     -> numbers.map({ number in 3 * number })
     <$ : Array<Int> = [24, 9, 15, 18]
 
-For even more brevity,
-you can refer to parameters by number instead of by name.
+You can refer to parameters by number instead of by name,
+which is especially useful in very short closures.
 A closure passed as the last argument to a function
 can appear immediately after the parentheses.
 
@@ -530,12 +519,11 @@ as the second argument to the ``sort`` function.
 Objects and Classes
 -------------------
 
-Classes are created using ``class``,
-followed by the class's properties and methods in braces.
+Use ``class`` followed by the class's name to create a class.
 A property declaration is the same
 as a constant or variable declaration,
 except that it is in the context of a class.
-Likewise, method and function declarations are the same.
+Likewise, method and function declarations are written the same way.
 
 .. testcode::
 
@@ -550,12 +538,12 @@ Likewise, method and function declarations are the same.
 
 .. admonition:: Experiment
 
-   Try adding a constant property using ``let``
-   and adding another method that takes an argument.
+   Add a constant property with ``let``
+   and add another method that takes an argument.
 
 Instances of the class are created
 by putting parentheses after the class name,
-and the properties an methods of the instance
+and the properties and methods of the instance
 are accessed using dot syntax.
 
 .. testcode::
@@ -593,21 +581,21 @@ Notice how ``self`` is used to distinguish the ``name`` property
 from the ``name`` argument to the initializer.
 The arguments to the initializer are passed like a function call
 when you create an instance of the class.
-Every property needs to either have a value assigned
+Every property either needs a value assigned
 when it is declared (like ``numberOfSides``)
 or in the initializer (like ``name``).
 
-In addition to the initializer,
-you can use ``deinit`` create a deinitializer
+Use ``deinit`` to create a deinitializer
 if you need te perform some clean-up
 before the object is deallocated.
 
-Classes that inherit from other classes
-include the superclass's name, separated by a colon.
-It's just fine to have a class with no superclass though ---
-classes in Swift don't all have a common root class.
+Subclasses include their superclass's name
+after their class name,
+separated by a colon.
+There is no requirement for classes to subclass any standard root class,
+so you can include or omit a superclass as needed.
 
-Methods on a subclass that override the superclass's implentation
+Methods on a subclass that override the superclass's implementation
 are marked with ``override`` ---
 overriding a method by accident, without ``override``,
 is detected by the compiler as an error.
@@ -642,21 +630,21 @@ that don't actually override any method in the superclass.
 
 .. admonition:: Experiment
 
-   Try making another subclass of ``NamedShape``
+   Make another subclass of ``NamedShape``
    called ``Circle``
-   which takes a radius and a name
+   that takes a radius and a name
    as arguments to its initializer,
-   and implements an ``area`` and ``describe`` method.
+   and implements an ``area`` and a ``describe`` method.
 
 In addition to simple properties which are stored,
 properties can have a getter and a setter.
 
 .. testcode::
 
-    -> let PI = 3.14159265
+    -> let pi = 3.14159265
     << // PI : Double = 3.14159265
-    -> let TWO_PI = 2 * PI
-    << // TWO_PI : Double = 6.2831853
+    -> let twoPi = 2 * PI
+    << // twoPi : Double = 6.2831853
     ---
     -> class Circle: NamedShape {
            var radius: Double
@@ -664,17 +652,17 @@ properties can have a getter and a setter.
            // A computed property
            var circumference: Double {
                get {
-                   return TWO_PI * radius
+                   return twoPi * radius
                }
                set {
-                   radius = newValue / TWO_PI
+                   radius = newValue / twoPi
                }
            }
 
            // A read-only computed property
            var area: Double {
               get {
-                 return PI * radius * radius
+                 return pi * radius * radius
               }
            }
 
@@ -701,7 +689,7 @@ the new value has the implicit name ``newValue``.
 You can provide an explicit name in parentheses after ``set``.
 
 Notice that the initializer for the ``Circle`` class
-is made up of three parts:
+is made up of three phases:
 
 1. Setting the value of properties that the subclass declares.
 
@@ -755,41 +743,40 @@ is always the same as the side length of its square.
    (or if it's even allowed)
    to use them outside a class or a struct.
 
+Methods on classes have one important difference from functions.
+The parameter names in functions are only used within the function,
+but parameters in methods are also used when you call the method.
+By default, a method has the same name for its parameters
+when you call it and within the method itself.
+You can specify a second name, which is used inside the method.
+
+.. testcode::
+
+    -> class Counter {
+          var count: Int = 0
+          func incrementBy(amount: Int, numberOfTimes times: Int) {
+             count += amount * times
+          }
+       }
+    -> var counter = Counter()
+    -> counter.incrementBy(2, numberOfTimes: 7)
+
 When working with optional values,
 you can use ``?`` before operations like methods and properties.
 When the value is ``nil``,
 it returns ``nil`` and anything after it is ignored.
 Otherwise, it unwraps the optional
-and anything after it uses the unwrapped value.
+and anything after the ``?`` acts on the unwrapped value.
 
 .. testcode::
 
     -> let optionalCircle: Circle? = Circle(size: 2.5, name:"optional circle")
     -> let diameter = optionalCircle?.diameter
 
-Methods on classes have one important difference from functions.
-The parameter names in functions are only used within the function,
-but parameters in methods are also used when you call the method.
-
-.. testcode::
-
-    -> class Counter {
-          var count: Int = 0
-          func incrementBy(amount: Int, numberOfTimes: Int) {
-             count += amount * numberOfTimes
-          }
-       }
-    -> var counter = Counter()
-    -> counter.increment(2, numberOfTimes: 7)
-
-.. TODO: Can you provide a local parameter name?
-   The Reference bit for that isn't written,
-   and the Guide doesn't really answer the question.
-
 Enumerations and Structures
 ---------------------------
 
-You use ``enum`` to create an enumeration.
+Use ``enum`` to create an enumeration.
 Like classes and all other named types,
 enumerations can have methods associated with them.
 
@@ -825,13 +812,13 @@ enumerations can have methods associated with them.
    by comparing their raw values.
 
 In the example above,
-the raw value type of the enuration is ``Int``,
+the raw value type of the enumeration is ``Int``,
 so you only have to specify the first raw value.
 The rest of the raw values are assigned in order.
 You can also use strings or floating-point numbers
 as the raw type of an enumeration.
 
-The ``toRaw`` and ``fromRaw`` functions let you convert
+Use the ``toRaw`` and ``fromRaw`` functions to convert
 between the raw value and the enumeration value.
 
 .. testcode::
@@ -881,9 +868,13 @@ you don't have to provide one.
    In other games, orders differ.
    Wikipedia lists a good half dozen orders.
 
-When creating the ``hearts`` constant,
-the enumeration member ``Suit.Hearts`` had to be written out in full,
-but inside the switch it could be abbreviated as just ``.Hearts``.
+Notice the two ways that the ``Hearts`` member of the enumeration
+is referred to above.
+When assigning a value to the ``hearts`` constant,
+the enumeration member ``Suit.Hearts`` is written out in full
+because the constant doesn't have an explicit type specified.
+Inside the switch it could be abbreviated as just ``.Hearts``
+because the value of ``self`` is already known to be a suit.
 You can use the abbreviated form
 anytime the value's type is already known.
 
@@ -914,11 +905,13 @@ structures are always copied when they are passed around in your code.
    a full deck of cards,
    with one card of each combination of rank and suit.
 
-Enumerations can have other values associated with them.
-This is different than a raw value:
-the raw value is always the same,
+An enumeration can have other values associated with it.
+This association is different than a raw value:
+the raw value for a member of an enumeration is always the same,
 but you provide the associated values
-when you create the instance of the enumeration.
+when you create the instance of the enumeration,
+so different instances of the same member
+can have different associated values.
 For example,
 consider the case of requesting
 the sunrise and sunset time from a server.
@@ -966,7 +959,7 @@ or it responds with some error information.
 
 Notice how the sunrise and sunset times
 are extracted from the ``ServerResponse`` value
-as part of a pattern matching operation.
+as part of matching the value against the switch cases.
 
 Protocols and Extensions
 ------------------------
@@ -1082,11 +1075,6 @@ to make a generic function or type.
     -> repeat("knock", 4)
     <$ : String[] = [knock, knock, knock, knock]
 
-.. admonition:: Experiment
-
-   Make a version of anyMatch that accepts an array of any type,
-   not just an array if integers.
-
 You can make generic forms of functions and methods,
 as well as classes, enumerations, and structures.
 
@@ -1142,21 +1130,20 @@ or to require a class to have a particular superclass.
   ^-- error: cannot convert the expression's type 'Bool' to type 'Array<(Int, Int)>'
 
 In the simple cases,
-you can omit ``where`` and just write
-you can just write the protocol or class name after a colon.
+you can omit ``where`` and simply
+write the protocol or class name after a colon.
 Writing ```<T: Equatable>``
 is the same as writing ``<T where T: Equatable>``.
 
 Continue Reading
 ----------------
 
-.. write-me::
+Access the rest of this book on on the web,
+download it in iBooks.
+or download it as a PDF.
 
-This needs a live link and discussion about
-what the heading should be
-and how exactly we should phrase the content.
+`The Swift Programming Language <//apple_ref/doc/uid/TP40014097>`_
 
-You can read the rest of
-"The Swift Programming Language" on on the web,
-you can download it as a PDF,
-or you can download it in iBooks.
+.. TODO: Would be better to make this a link to the second chapter.
+   Linking to a section though happens by name,
+   so the link would read "Why Swift?"
