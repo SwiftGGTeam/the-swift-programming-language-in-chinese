@@ -47,9 +47,7 @@ is explained in detail in the rest of this book.
 Simple Values
 -------------
 
-You create constants and variables using the same syntax,
-with one difference:
-Use ``let`` for a constant and use ``var`` for a variable.
+Use ``let`` to make a constant and ``var`` to make a variable.
 The value of a constant 
 doesn't need to be known at compile time,
 as long as it assigned only once.
@@ -72,7 +70,7 @@ A constant or variable must have the same type
 as the value you want to assign to it.
 However, you don't have to explicitly write
 the type of every single constant and variable.
-Providing an initial value lets the compiler infer
+Providing a value when you create it lets the compiler infer
 the type of the constant or variable.
 In example above
 the compiler infers that ``myVariable`` is an integer
@@ -521,8 +519,7 @@ as the second argument to the ``sort`` function.
 Objects and Classes
 -------------------
 
-Classes are created using ``class``,
-followed by the class's properties and methods in braces.
+Use ``class`` followed by the class's name to create a class.
 A property declaration is the same
 as a constant or variable declaration,
 except that it is in the context of a class.
@@ -1141,14 +1138,12 @@ is the same as writing ``<T where T: Equatable>``.
 Continue Reading
 ----------------
 
-.. write-me::
-
-This needs a live link and discussion about
-what the heading should be
-and how exactly we should phrase the content.
-
-Access the rest of
-"The Swift Programming Language" on on the web,
+Access the rest of this book on on the web,
 download it in iBooks.
 or download it as a PDF.
 
+`The Swift Programming Language <//apple_ref/doc/uid/TP40014097>`_
+
+.. TODO: Would be better to make this a link to the second chapter.
+   Linking to a section though happens by name,
+   so the link would read "Why Swift?"
