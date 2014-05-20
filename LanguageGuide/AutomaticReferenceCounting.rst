@@ -145,10 +145,10 @@ at which point it is clear that you are no longer using the ``Person`` instance:
    -> reference3 = nil
    <- John Appleseed is being deinitialized
 
-.. _AutomaticReferenceCounting_StrongReferenceCycles:
+.. _AutomaticReferenceCounting_StrongReferenceCyclesBetweenClassInstances:
 
-Strong Reference Cycles
------------------------
+Strong Reference Cycles Between Class Instances
+-----------------------------------------------
 
 In the examples above,
 ARC is able to track the number of references to the new ``Person`` instance you create,
@@ -163,9 +163,10 @@ This is known as a :newTerm:`strong reference cycle`.
 You resolve strong reference cycles
 by defining some of the relationships between classes
 as weak or unowned references instead of strong references.
-This process is described in :ref:`AutomaticReferenceCounting_ResolvingStrongReferenceCycles` below.
-However, before you learn how to break a strong reference cycle,
-it is useful to understand how such a cycle can be caused.
+This process is described in
+:ref:`AutomaticReferenceCounting_ResolvingStrongReferenceCyclesBetweenClassInstances`.
+However, before you learn how to resolve a strong reference cycle,
+it is useful to understand how such a cycle is caused.
 
 Here's an example of how a strong reference cycle can be created by accident.
 This example defines two classes called ``Person`` and ``Apartment``,
@@ -273,10 +274,10 @@ the ``john`` and ``number73`` variables to ``nil``:
 The strong references between the ``Person`` instance
 and the ``Apartment`` instance remain and cannot be broken.
 
-.. _AutomaticReferenceCounting_ResolvingStrongReferenceCycles:
+.. _AutomaticReferenceCounting_ResolvingStrongReferenceCyclesBetweenClassInstances:
 
-Resolving Strong Reference Cycles
----------------------------------
+Resolving Strong Reference Cycles Between Class Instances
+---------------------------------------------------------
 
 Swift provides two ways to resolve strong reference cycles
 when you work with properties of class type:
@@ -464,8 +465,7 @@ because variables of a non-optional type cannot be set to ``nil``.
 The following example defines two classes, ``Customer`` and ``CreditCard``,
 which model a bank customer and a possible credit card for that customer.
 These two classes each store an instance of the other class as a property.
-This relationship has the potential to create a strong reference cycle,
-as described in :ref:`AutomaticReferenceCounting_StrongReferenceCycles`.
+This relationship has the potential to create a strong reference cycle.
 
 The relationship between ``Customer`` and ``CreditCard`` is slightly different from
 the relationship between ``Apartment`` and ``Person``
@@ -663,130 +663,170 @@ The ``capitalCity`` property can be used and accessed like a non-optional value
 once initialization is complete,
 while still avoiding a strong reference cycle.
 
-.. _AutomaticReferenceCounting_ClosureCaptureLists:
+.. _AutomaticReferenceCounting_StrongReferenceCyclesWithClosures:
 
-Closure Capture Lists
----------------------
+Strong Reference Cycles With Closures
+-------------------------------------
 
 You saw above how a strong reference cycle can be created
-when two class instance properties hold a strong reference to each other,
+when two class instance properties hold a strong reference to each other.
 You also saw how to use weak and unowned references to break these strong reference cycles.
 
 A strong reference cycle can also occur
 if you assign a closure to a property of some class type,
-and the body of that closure uses ``self``.
+and the body of that closure refers to ``self``.
 This might be to access another property on ``self``, or to call a method on ``self``.
 In either case, you will create a strong reference cycle
-if a class instance references a closure, and the closure also references the instance.
+if a class instance property references a closure,
+and the closure also references that instance.
 
+This happens because closures, like classes, are *reference types*.
+When you assign a closure to a property,
+you are assigning a *reference* to that closure.
 In essence, this is the same problem as before –
 two things referencing each other in a loop, and keeping each other alive.
 However, rather than two class instances,
-this time it's a class instance and a closure keeping each other alive.
+this time it's a class instance and a closure that are keeping each other alive.
 
 In fact, you can create a strong reference cycle
 even if you are not explicitly working with ``self``.
 If you define a closure that references a property or method of some instance,
 and then assign that closure to a property on the same instance,
 you will also create a strong reference cycle.
+The strong reference cycle problem will always occur when an instance references a closure,
+and that closure also references the instance.
 
-This problem will always occur when an instance references a closure,
-and that closure references the instance.
-
-Fortunately, swift provides an elegant solution to this problem,
+Swift provides an elegant solution to this problem,
 known as a :newTerm:`closure capture list`.
-
-.. _AutomaticReferenceCounting_StrongReferenceCyclesInClosures:
-
-Strong Reference Cycles in Closures
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. weak capture - if the closure may live beyond the self that it captures
-.. unowned capture - if the closure and self will both be deallocated at the same time
-.. bind arbitrary expressions to named values. Captured with specified strength.
-.. you have to say "self"
-
-Before you learn how to break a strong reference cycle with a capture list,
+However, before you learn how to break a strong reference cycle with a closure capture list,
 it is useful to understand how such a cycle can be caused.
 
-The example below shows how you can create a strong reference cycle by accident
+The example below shows how you can create a strong reference cycle
 when using a closure that references ``self``.
-This example defines a class called ``StringJoiner``,
-which takes an array of strings and joins them into a single string using a closure:
+This example defines a class called ``HTMLElement``,
+which provides a simple model for an individual element within an HTML document:
 
 .. testcode:: strongReferenceCyclesInClosures
 
-   -> class StringJoiner {
+   -> class HTMLElement {
 
-         var token = " "
+         let name: String
+         var text: String?
 
-         @lazy var process: (String, Int) -> String = {
-               (string: String, index: Int) -> String in
-            if index == 0 {
-               return string
+         @lazy var asHTML: () -> String = {
+            if let text = self.text {
+               return "<\(self.name)>\(self.text)</\(self.name)>"
             } else {
-               return self.token + string
+               return "<\(self.name) />"
             }
          }
 
-         func join(strings: String[]) -> String {
-            var output = ""
-            for (index, string) in enumerate(strings) {
-               output += process(string, index)
-            }
-            return output
+         init(name: String, text: String? = nil) {
+            self.name = name
+            self.text = text
+         }
+
+         deinit {
+            println("\(name) is being deinitialized")
          }
 
       }
 
-The ``StringJoiner`` class provides a method called ``join``,
-which takes an array of strings as its input, and returns a single string as its output.
-The ``join`` method enumerates over its input array,
-and passes each string in the array to a closure,
-along with that string's index in the array.
-The closure's job is to convert that string and index into another string,
-and return that string as the closure's output.
-(This closure is described in more detail below.)
+The ``HTMLElement`` class defines a ``name`` property,
+which indicates the name of the element, such as ``"p"`` for a paragraph element,
+or ``"br"`` for a line break element.
+Instances of ``HTMLElement`` also have an optional ``text`` property,
+which you can set to a string that represents
+the text to be rendered within that HTML element.
 
-Note that the ``join`` method uses the global ``enumerate`` function
-to extract the indices and values from the array as a tuple of type (``Int``, ``String``).
-The ``enumerate`` function is described in :doc:`CollectionTypes`.
+The ``HTMLElement`` class also defines a lazy property called ``asHTML``.
+This property references a closure that converts
+an instance's ``name`` and ``text`` values
+into a string for use in an HTML text document.
+This property is of type ``() -> String``,
+or “a function that takes no parameters, and returns a ``String`` value”.
+By default, the ``asHTML`` property is set to a closure that returns
+a simple HTML tag containing the optional ``text`` value if it exists,
+or an empty HTML tag with no text content if ``text`` does not exist.
 
-.. TODO: Not yet, it isn't.
+The ``asHTML`` property is named and used somewhat like an instance method.
+However, unlike an instance method,
+you can replace the default closure with a custom closure of your own devising
+if you want to change the HTML rendering used for a particular HTML element.
+This is why it is defined as a closure, not as a method.
 
-Here's how that looks in action:
+.. note::
+
+   The ``asHTML`` property is declared as a lazy property,
+   because it is only needed if and when the element actually needs to be rendered
+   as a string value for some HTML output target.
+   The fact that ``asHTML`` is a lazy property means that you can refer to ``self``
+   within the closure that provides its initial value,
+   because the lazy property will not be accessed until
+   after initialization has been completed and ``self`` is known to be fully initialized.
+
+The ``HTMLElement`` class provides a single initializer,
+which takes a ``name`` argument and (if desired) a ``text`` argument
+to initialize a new element.
+The class also defines a deinitializer,
+which prints a message to show when a ``HTMLElement`` instance is being deallocated.
+
+Here's how you use the ``HTMLElement`` class to create and print a new instance:
 
 .. testcode:: strongReferenceCyclesInClosures
 
-   -> let joiner = StringJoiner()
-   << // joiner : StringJoiner = C4REPL12StringJoiner (has 2 children)
-   -> let names = ["Alex", "Anna", "Brian", "Jack"]
-   << // names : Array<String> = ["Alex", "Anna", "Brian", "Jack"]
-   -> var joinedNames = joiner.join(names)
-   << // joinedNames : String = "Alex Anna Brian Jack"
-   -> println(joinedNames)
-   <- Alex Anna Brian Jack
+   -> var paragraph: HTMLElement? = HTMLElement(name: "p", text: "hello, world")
+   << // paragraph : HTMLElement? = C4REPL11HTMLElement (has 3 children)
+   -> println(paragraph!.asHTML())
+   <- <p>hello, world</p>
 
-The default behavior of the ``StringJoiner`` class, as seen in the example above,
-is to insert a space between each of the strings in the input array
-to create a single space-separated output string.
+.. note::
 
-You can customize the behavior of the ``StringJoiner`` class in two different ways.
-Firstly, you can change the token that is inserted between each string,
-by setting the ``token`` property:
+   The ``paragraph`` variable above is defined as an *optional* ``HTMLElement``,
+   so that it can be set to ``nil`` below to demonstrate
+   the presence of a strong reference cycle.
+
+Unfortunately, the ``HTMLElement`` class, as written above,
+creates a strong reference cycle between
+an ``HTMLElement`` instance and the closure used for its default ``asHTML`` value.
+Here's how the cycle looks:
+
+.. image:: ../images/closureReferenceCycle01.png
+   :align: center
+
+The instance's ``asHTML`` property holds a strong reference to its closure.
+However, because the closure refers to ``self`` within its body
+(as a way to reference ``self.name`` and ``self.text``),
+the closure *captures* self,
+which means that it holds a strong reference back to the ``HTMLElement`` instance.
+A strong reference cycle is created between the two.
+(For more information about capturing values in a closure,
+see :ref:`Closures_CapturingValues`.)
+
+.. note::
+
+   Even though the closure refers to ``self`` multiple times,
+   it only captures one strong reference to the ``HTMLElement`` instance.
+
+If you set the ``paragraph`` variable to ``nil``,
+and break its strong reference to the ``HTMLElement`` instance,
+neither the ``HTMLElement`` instance nor its closure are deallocated,
+because of the strong reference cycle:
 
 .. testcode:: strongReferenceCyclesInClosures
 
-   -> joiner.token = "**"
-   -> joinedNames = joiner.join(names)
-   -> println(joinedNames)
-   <- Alex**Anna**Brian**Jack
+   -> paragraph = nil
 
-Althernatively, you can provide your own custom closure for the ``process`` method.
-This 
+Note that the message in the ``HTMLElement`` deinitializer is not printed,
+which shows that the instance is not deallocated.
 
 .. _AutomaticReferenceCounting_ResolvingStrongReferenceCyclesInClosures:
 
 Resolving Strong Reference Cycles in Closures
 ---------------------------------------------
+
+.. weak capture - if the closure may live beyond the self that it captures
+.. unowned capture - if the closure and self will both be deallocated at the same time
+.. bind arbitrary expressions to named values. Captured with specified strength.
+.. you have to say "self"
 
