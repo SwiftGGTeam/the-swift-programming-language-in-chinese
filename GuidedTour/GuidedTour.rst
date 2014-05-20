@@ -4,7 +4,7 @@ A Swift Tour
 .. !!! ATTENTION !!!
 
    Do not rename this file or directory.
-   
+
    The name "GuidedTour/GuidedTour.rst" and
    "GuidedTour.xml" is hardcoded into
    the handoff process for the .playground file.
@@ -48,7 +48,7 @@ Simple Values
 -------------
 
 Use ``let`` to make a constant and ``var`` to make a variable.
-The value of a constant 
+The value of a constant
 doesn't need to be known at compile time,
 as long as it assigned only once.
 This means you can use constants to name a value
@@ -642,8 +642,8 @@ properties can have a getter and a setter.
 .. testcode::
 
     -> let pi = 3.14159265
-    << // PI : Double = 3.14159265
-    -> let twoPi = 2 * PI
+    << // pi : Double = 3.14159265
+    -> let twoPi = 2 * pi
     << // twoPi : Double = 6.2831853
     ---
     -> class Circle: NamedShape {
