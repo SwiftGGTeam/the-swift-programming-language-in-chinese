@@ -641,54 +641,41 @@ properties can have a getter and a setter.
 
 .. testcode::
 
-    -> let pi = 3.14159265
-    << // pi : Double = 3.14159265
-    -> let twoPi = 2 * pi
-    << // twoPi : Double = 6.2831853
+
+    -> class EquilateralTriangle: Shape {
+          var sideLength: Double = 0.0
     ---
-    -> class Circle: NamedShape {
-           var radius: Double
-
-           // A computed property
-           var circumference: Double {
-               get {
-                   return twoPi * radius
-               }
-               set {
-                   radius = newValue / twoPi
-               }
-           }
-
-           // A read-only computed property
-           var area: Double {
-              get {
-                 return pi * radius * radius
-              }
-           }
-
-           init(radius: Double, name: String) {
-               self.radius = radius
-               super.init(name: name)
-               numberOfSides = 1
-           }
-
+          init(sideLength: Double, name: String) {
+             self.sideLength = sideLength
+             super.init(name: name)
+             numberOfSides = 3
+          }
+    ---
+          var perimeter: Double {
+             get {
+                 return 3.0 * sideLength
+             }
+             set {
+                sideLength = newValue / 3.0
+             }
+          }
+    ---
            override func description() -> String {
-              return "A circle with radius of length \(radius)."
+              return "An equilateral triagle with sides of length \(sideLength)."
            }
        }
-    -> var circle = Circle(radius: 12.7, name: "a circle")
-    <$ : Circle = <Circle instance>
-    -> circle.area
-    <$ : Double = 506.7074785185
-    -> circle.circumference = 31.4
-    -> circle.radius
-    <$ : Double = 4.99746521879595
+    -> var triangle = EquilateralTriangle(sideLength: 3.1, name: "a triangle")
+    -> triangle.perimeter
+    <$ : Double = 9.3
+    -> triangle.perimeter = 9.9
+    -> triangle.sideLength
+    <$ : Double = 3.3
 
-In the setter for ``circumference``,
+In the setter for ``perimeter``,
 the new value has the implicit name ``newValue``.
 You can provide an explicit name in parentheses after ``set``.
 
-Notice that the initializer for the ``Circle`` class
+Notice that the initializer for the ``EquilateralTriangle`` class
 is made up of three phases:
 
 1. Setting the value of properties that the subclass declares.
@@ -703,35 +690,35 @@ If you don't need to compute the property
 but still need to provide code that is run before and after setting a new value,
 use ``willSet`` and ``didSet``.
 For example, the class below ensures
-that the radius of its circle
+that the side length of its triangle
 is always the same as the side length of its square.
 
 .. testcode::
 
-   -> class CircleAndSquare {
-         var circle: Circle {
+   -> class TriangleAndSquare {
+         var triangle: triangle {
             willSet {
-               square.sideLength = newValue.radius
+               square.sideLength = newValue.sideLength
             }
          }
          var square: Square {
             willSet {
-               circle.radius = newValue.sideLength
+               triangle.sideLength = newValue.sideLength
             }
          }
          init(size: Double, name: String) {
             square = Square(size, name)
-            circle = Circle(size, name)
+            triangle = triangle(size, name)
          }
       }
-   -> var circleAndSquare = CircleAndSquare(size: 10, name: "another test shape")
-   << // circleAndSquare : CircleAndSquare = <CircleAndSquare instance>
-   -> circleAndSquare.square.sideLength
+   -> var triangleAndSquare = TriangleAndSquare(size: 10, name: "another test shape")
+   << // triangleAndSquare :TriangleAndSquare = <TriangleAndSquare instance>
+   -> triangleAndSquare.square.sideLength
    <$ : Double = 10.0
-   -> circleAndSquare.circle.radius
+   -> triangleAndSquare.triangle.radius
    <$ : Double = 10.0
-   -> circleAndSquare.square = Square(sideLength: 50, name: "larger square")
-   -> circleAndSquare.circle.radius
+   -> triangleAndSquare.square = Square(sideLength: 50, name: "larger square")
+   -> triangleAndSquare.triangle.radius
    <$ : Double = 50.0
 
 .. What is getter-setter-keyword-clause for?
@@ -770,8 +757,8 @@ and anything after the ``?`` acts on the unwrapped value.
 
 .. testcode::
 
-    -> let optionalCircle: Circle? = Circle(size: 2.5, name:"optional circle")
-    -> let diameter = optionalCircle?.diameter
+    -> let optionalSquare: Square? = Square(size: 2.5, name:"optional ssquare")
+    -> let sideLength = optionalSquare?.sideLength
 
 Enumerations and Structures
 ---------------------------
