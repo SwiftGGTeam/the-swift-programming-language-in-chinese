@@ -155,9 +155,9 @@ the index or key in brackets.
     -> var occupations = [
           "Malcolm": "Captain",
           "Kayley": "Mechanic",
-          "Jayne": "Public Relations",
         ]
     << // occupations : Dictionary<String, String> = Dictionary<String, String>(1.33333333333333, 3, <DictionaryBufferOwner<String, String> instance>)
+    -> occupations["Jayne"] = "Public Relations"
 
 To create an empty array or dictionary,
 use the initializer syntax.
@@ -289,10 +289,8 @@ at the end of each case‘s code.
    It's in the guide/reference if you need it.
 
 You can also use ``for`` to iterate over items in a dictionary
-by providing a variable name to use
+by providing a pair of names to use
 for each key-value pair.
-
-.. EDIT: key/value or key-value?
 
 .. TODO: Shorten listing
 
@@ -366,8 +364,8 @@ These two loops do the same thing:
 Functions and Closures
 ----------------------
 
-Use ``func`` to declare functions
-and call them by following their name
+Use ``func`` to declare a function.
+Call a function by following their name
 with a parenthesized list of arguments.
 Use ``->`` to separate the parameter names and types
 from the function's return type.
@@ -478,7 +476,7 @@ A function can take another function as one of its arguments.
 Closures are like functions but
 you don't give them a name when you declare them.
 You write a closure as code surrounded by braces (``{}``)
-and use ``in`` to separate the arguments from the body.
+and use ``in`` to separate the arguments and return type from the body.
 
 .. testcode::
 
@@ -755,18 +753,6 @@ is always the same as the side length of its square.
    (or if it's even allowed)
    to use them outside a class or a struct.
 
-When working with optional values,
-you can use ``?`` before operations like methods and properties.
-When the value is ``nil``,
-it returns ``nil`` and anything after it is ignored.
-Otherwise, it unwraps the optional
-and anything after it uses the unwrapped value.
-
-.. testcode::
-
-    -> let optionalCircle: Circle? = Circle(size: 2.5, name:"optional circle")
-    -> let diameter = optionalCircle?.diameter
-
 Methods on classes have one important difference from functions.
 The parameter names in functions are only used within the function,
 but parameters in methods are also used when you call the method.
@@ -784,6 +770,18 @@ You can specify a second name, which is used inside the method.
        }
     -> var counter = Counter()
     -> counter.incrementBy(2, numberOfTimes: 7)
+
+When working with optional values,
+you can use ``?`` before operations like methods and properties.
+When the value is ``nil``,
+it returns ``nil`` and anything after it is ignored.
+Otherwise, it unwraps the optional
+and anything after the ``?`` acts on the unwrapped value.
+
+.. testcode::
+
+    -> let optionalCircle: Circle? = Circle(size: 2.5, name:"optional circle")
+    -> let diameter = optionalCircle?.diameter
 
 Enumerations and Structures
 ---------------------------
@@ -965,7 +963,7 @@ or it responds with some error information.
 
 Notice how the sunrise and sunset times
 are extracted from the ``ServerResponse`` value
-as part of a pattern matching operation.
+as part of matching the value against the switch cases.
 
 Protocols and Extensions
 ------------------------
