@@ -951,48 +951,38 @@ An optional says:
    However, this only works for objects – it doesn't work for
    structs, basic C types, or enumeration values.
    For these types,
-   Objective-C methods typically return a special constant (such as ``NSNotFound``)
+   Objective-C methods typically return a special value (such as ``NSNotFound``)
    to indicate the absence of a value.
    This assumes that the method's caller knows there is a special value to test against,
    and remembers to check for it.
    Swift's optionals let you indicate the absence of a value for *any type at all*,
    without the need for special constants.
 
-Every type in Swift can be made into an optional type.
-To make a type into an optional type, place a question mark after its name:
+Here's an example.
+Swift's ``String`` type has a method called ``toInt``,
+which tries to convert a ``String`` value into an ``Int`` value.
+However, not every string can be converted into an integer.
+The string ``"123"`` can be converted into the numeric value ``123``,
+but the string ``"hello, world"`` does not have an obvious numeric value to convert to.
+
+The example below shows how to use ``toInt`` to try to convert a ``String`` into an ``Int``:
 
 .. testcode:: optionals
 
-   -> var possibleNumber: Int? = 6
-   << // possibleNumber : Int? = 6
+   -> let possibleNumber = "123"
+   << // possibleNumber : String = "123"
+   -> let convertedNumber = possibleNumber.toInt()
+   << // convertedNumber : Int? = 123
+   // convertedNumber is inferred to be of type "Int?", or "optional Int"
 
-The ``possibleNumber`` variable has a type of ``Int?``, or “optional ``Int``”.
-The question mark indicates that the value stored in ``possibleNumber`` is optional.
-The ``possibleNumber`` variable might contain *some* ``Int`` value,
+Because the ``toInt`` method might fail,
+it returns an *optional* ``Int``, rather than an ``Int``.
+An optional ``Int`` is written as ``Int?``, not ``Int``.
+The question mark indicates that the value it contains is optional,
+meaning that it might contain *some* ``Int`` value,
 or it might contain *no value at all*.
 (It can't contain anything else, such as a ``Bool`` value or a ``String`` value –
 it's either an ``Int``, or it's nothing at all.)
-
-In the example above, ``possibleNumber`` has been set to the integer value ``6``.
-This means that it currently contains “some ``Int`` value” of ``6``.
-
-To make ``possibleNumber`` contain “no value at all”,
-you assign it the special value ``nil``:
-
-.. testcode:: optionals
-
-   -> possibleNumber = nil
-   // possibleNumber now contains no value
-
-The special value ``nil`` means “no value” for *any* optional type.
-If you had an optional ``String`` variable, for example,
-you would set it to ``nil`` to mean “no ``String`` value”.
-
-You can think of an ``Int?`` variable as a box that can only contain an ``Int``.
-Sometimes there is a number in the box, and sometimes there is not:
-
-.. image:: ../images/optionalBox.png
-   :align: center
 
 .. _TheBasics_IfStatementsAndForcedUnwrapping:
 
@@ -1008,25 +998,22 @@ you can access its underlying value
 by adding an exclamation mark (``!``) to the end of the optional's name.
 The exclamation mark effectively says,
 “I know that this optional definitely has a value – please use it.”
-This is known as :newTerm:`forced unwrapping` of the optional's value.
+This is known as :newTerm:`forced unwrapping` of the optional's value:
 
 .. testcode:: optionals
 
-   -> possibleNumber = 6
-   // possibleNumber once again contains a value of 6
-   ---
-   -> if possibleNumber {
-         println("possibleNumber has an integer value of \(possibleNumber!)")
+   -> if convertedNumber {
+         println("\(possibleNumber) has an integer value of \(convertedNumber!)")
       } else {
-         println("possibleNumber does not have a value")
+         println("\(possibleNumber) could not be converted to an integer")
       }
-   <- possibleNumber has an integer value of 6
+   <- 123 has an integer value of 123
 
 ``if`` statements are described in more detail in :doc:`ControlFlow`.
 
 .. note::
 
-   Trying to use ``!`` to access a non-existent optional value will trigger
+   Trying to use ``!`` to access a non-existent optional value triggers
    an unrecoverable runtime error.
    Always make sure that an optional contains a non-``nil`` value
    before using ``!`` to force unwrap its value.
@@ -1039,7 +1026,7 @@ Optional Binding
 :newTerm:`Optional binding` is a convenient way to find out if an optional contains a value,
 and to make that value available as a constant or variable if it exists.
 Optional binding can be used with ``if`` and ``while`` statements
-to check for a value inside the optional,
+to check for a value inside an optional,
 and to extract that value into a constant or variable,
 as part of a single action.
 (``if`` and ``while`` statements are described in more detail in :doc:`ControlFlow`.)
@@ -1057,24 +1044,24 @@ to use optional binding rather than forced unwrapping:
 
 .. testcode:: optionals
 
-   -> if let actualNumber = possibleNumber {
-         println("possibleNumber has an integer value of \(actualNumber)")
+   -> if let actualNumber = possibleNumber.toInt() {
+         println("\(possibleNumber) has an integer value of \(actualNumber)")
       } else {
-         println("possibleNumber could not be converted to an integer")
+         println("\(possibleNumber) could not be converted to an integer")
       }
-   <- possibleNumber has an integer value of 6
+   <- 123 has an integer value of 123
 
 This can be read as:
 
-“If the optional ``Int`` called ``possibleNumber`` contains a value,
+“If the optional ``Int`` returned by ``possibleNumber.toInt`` contains a value,
 set a new constant called ``actualNumber`` to the value contained in the optional.”
 
-If the unwrapping is successful,
+If the conversion is successful,
 the ``actualNumber`` constant becomes available for use within
 the first branch of the ``if`` statement.
 It has already been initialized with the value contained *within* the optional,
 and so there is no need to use the ``!`` suffix to access its value.
-In this example, ``actualNumber`` is simply used to print the unwrapped value.
+In this example, ``actualNumber`` is simply used to print the result of the conversion.
 
 You can use both constants and variables with optional binding.
 If you wanted to manipulate the value of ``actualNumber``
@@ -1097,9 +1084,8 @@ would be made available as a variable rather than a constant.
 nil
 ~~~
 
-As mentioned above,
-you can set an optional variable to a valueless state
-by assigning the special value ``nil`` to that variable:
+You can set an optional variable to a valueless state
+by assigning it the special value ``nil``:
 
 .. testcode:: optionals
 
