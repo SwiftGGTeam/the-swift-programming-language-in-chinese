@@ -341,13 +341,13 @@ ensuring that the loop is run at least once.
    << m is 128
 
 You can also keep an index in a loop
-using the ``..`` and ``...`` range operators
-or using an explicit increment and test.
+using ``..`` to make a range of indexes,
+or by writing an explicit increment and test.
 These two loops do the same thing:
 
 .. testcode::
 
-   -> for i in 0...3 {
+   -> for i in 0..3 {
          println(i)
       }
    << 0
@@ -359,6 +359,9 @@ These two loops do the same thing:
    << 0
    << 1
    << 2
+
+Use ``..`` to make a range that omits its upper value
+and ``...`` to make a range that includes both values.
 
 Functions and Closures
 ----------------------
