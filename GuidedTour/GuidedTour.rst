@@ -472,10 +472,10 @@ A function can take another function as one of its arguments.
     -> hasAnyMatches(numbers, lessThanTen)
     <$ : Bool = true
 
-Closures are like functions,
-but you don't give them a name when you declare them.
-You write a closure as code surrounded by braces (``{}``)
-and use ``in`` to separate the arguments and return type from the body.
+Functions are actually a special case of closures.
+You can write a closure without a name
+by surrounding code with braces (``{}``).
+Use ``in`` to separate the arguments and return type from the body.
 
 .. testcode::
 
