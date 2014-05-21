@@ -62,11 +62,11 @@ String literals can include the following special characters:
 * The escaped special characters ``\0`` (null character), ``\\`` (backslash),
   ``\t`` (horizontal tab), ``\n`` (line feed), ``\r`` (carriage return),
   ``\"`` (double quote) and ``\'`` (single quote)
-* Two-byte Unicode scalars, written as ``\xnn``,
+* Single-byte Unicode scalars, written as ``\xnn``,
   where ``nn`` is two hexadecimal digits
-* Four-byte Unicode scalars, written as ``\unnnn``,
+* Two-byte Unicode scalars, written as ``\unnnn``,
   where ``nnnn`` is four hexadecimal digits
-* Eight-byte Unicode scalars, written as ``\Unnnnnnnn``,
+* Four-byte Unicode scalars, written as ``\Unnnnnnnn``,
   where ``nnnnnnnn`` is eight hexadecimal digits
 
 For example:
