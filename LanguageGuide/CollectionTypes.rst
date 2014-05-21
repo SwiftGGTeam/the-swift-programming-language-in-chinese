@@ -99,7 +99,7 @@ Array Type Shorthand Syntax
 
 The type of a Swift array is written in full as ``Array<SomeType>``,
 where ``SomeType`` is the type that the array is allowed to store.
-The type of an array can also be written in shorthand form as ``SomeType[]``.
+You can also write the type of an array in shorthand form as ``SomeType[]``.
 Although the two forms are functionally identical,
 the shorthand form is preferred,
 and is used throughout this guide when referring to the type of an array.
@@ -174,9 +174,8 @@ by checking its read-only ``count`` property:
    -> println("The shopping list contains \(shoppingList.count) items.")
    <- The shopping list contains 2 items.
 
-You can find out whether an array is empty
-by checking its Boolean ``isEmpty`` property,
-which is a shorthand for checking whether the ``count`` property is equal to ``0``:
+Use the Boolean ``isEmpty`` property
+as a shortcut for checking whether the ``count`` property is equal to ``0``:
 
 .. testcode:: arraysInferred
 
@@ -195,7 +194,7 @@ A new item can be added to the end of an array by calling the array's ``append``
    /> shoppingList now contains \(shoppingList.count) items, and someone is making pancakes
    </ shoppingList now contains 3 items, and someone is making pancakes
 
-Alternatively, a new item can be added to the end of an array
+Alternatively, add a new item to the end of an array
 with the addition assignment operator (``+=``):
 
 .. testcode:: arraysInferred
@@ -204,8 +203,8 @@ with the addition assignment operator (``+=``):
    /> shoppingList now contains \(shoppingList.count) items, and someone is making *American* pancakes
    </ shoppingList now contains 4 items, and someone is making *American* pancakes
 
-An array or array literal containing items of a compatible type
-can also be added to the end of an array with the addition assignment operator (``+=``):
+You can also append an array of compatible items
+with the addition assignment operator (``+=``):
 
 .. testcode:: arraysInferred
 
@@ -232,7 +231,7 @@ immediately after the name of the array:
 Note that the first item in the array has an index of ``0``, not ``1``.
 Arrays in Swift are always zero-indexed.
 
-Subscript syntax can also be used to change an existing value at a given index:
+You can also use subscript syntax to change an existing value at a given index:
 
 .. testcode:: arraysInferred
 
@@ -517,7 +516,7 @@ You can also use subscript syntax to change the value associated with a particul
    </ the value for "LHR" has been changed to "London Heathrow"
 
 As an alternative to subscripting,
-you can use a dictionary's ``updateValue(forKey:)`` method
+use a dictionary's ``updateValue(forKey:)`` method
 to set or update the value for a particular key.
 Like the subscript examples above, the ``updateValue(forKey:)`` method
 sets a value for a key if none exists,
@@ -573,7 +572,7 @@ by assigning a value of ``nil`` for that key:
    >> }
    << APL has now been removed from the dictionary
 
-Alternatively, you can remove a key-value pair from a dictionary
+Alternatively, remove a key-value pair from a dictionary
 with the ``removeValueForKey`` method.
 This method removes the key-value pair if it exists,
 and returns the removed value,
