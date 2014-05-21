@@ -673,28 +673,23 @@ when two class instance properties hold a strong reference to each other.
 You also saw how to use weak and unowned references to break these strong reference cycles.
 
 A strong reference cycle can also occur
-if you assign a closure to a property of some class type,
-and the body of that closure refers to ``self``.
-This might be to access another property on ``self``, or to call a method on ``self``.
-In either case, you will create a strong reference cycle
-if a class instance property references a closure,
-and the closure also references that instance.
+if you assign a closure to a property of some class instance,
+and the body of that closure captures the instance.
+This might be because the closure's body accesses a property of the instance,
+such as ``self.someProperty``,
+or because the closure calls a method on the instance,
+such as ``self.someMethod()``.
+In either case, these accesses cause the closure to “capture” ``self``,
+creating a strong reference cycle.
 
 This happens because closures, like classes, are *reference types*.
 When you assign a closure to a property,
 you are assigning a *reference* to that closure.
-In essence, this is the same problem as before –
-two things referencing each other in a loop, and keeping each other alive.
+In essence, it's the same problem as above –
+two different things are referencing each other with a strong reference,
+and keeping each other alive.
 However, rather than two class instances,
 this time it's a class instance and a closure that are keeping each other alive.
-
-In fact, you can create a strong reference cycle
-even if you are not explicitly working with ``self``.
-If you define a closure that references a property or method of some instance,
-and then assign that closure to a property on the same instance,
-you will also create a strong reference cycle.
-The strong reference cycle problem will always occur when an instance references a closure,
-and that closure also references the instance.
 
 Swift provides an elegant solution to this problem,
 known as a :newTerm:`closure capture list`.
@@ -711,7 +706,7 @@ which provides a simple model for an individual element within an HTML document:
    -> class HTMLElement {
    ---
          let name: String
-         var text: String?
+         let text: String?
    ---
          @lazy var asHTML: () -> String = {
             if let text = self.text {
@@ -741,14 +736,17 @@ the text to be rendered within that HTML element.
 
 In addition to these two simple properties,
 the ``HTMLElement`` class defines a lazy property called ``asHTML``.
-This property references a closure that combines other properties
-into a string for use in an HTML text document.
+This property references a closure that combines ``name`` and ``text``
+into an HTML string fragment.
 The ``asHTML`` property is of type ``() -> String``,
 or “a function that takes no parameters, and returns a ``String`` value”.
 
-By default, the ``asHTML`` property is set to a closure that returns
-a simple HTML tag containing the optional ``text`` value if it exists,
-or an empty HTML tag with no text content if ``text`` does not exist.
+By default, the ``asHTML`` property is assigned a closure that returns
+a string representation of an HTML tag.
+This tag contains the optional ``text`` value if it exists,
+or no text content if ``text`` does not exist.
+For a paragraph element, the closure would return ``"<p>some text</p>"`` or ``"<p />"``,
+depending on whether the ``text`` property equals ``"some text"`` or ``nil``.
 
 The ``asHTML`` property is named and used somewhat like an instance method.
 However, unlike an instance method,
@@ -764,9 +762,9 @@ This is why it is defined as a closure, not as a method.
    because it is only needed if and when the element actually needs to be rendered
    as a string value for some HTML output target.
    The fact that ``asHTML`` is a lazy property means that you can refer to ``self``
-   within the closure that provides its initial value,
+   within the default closure,
    because the lazy property will not be accessed until
-   after initialization has been completed and ``self`` is known to be fully initialized.
+   after initialization has been completed and ``self`` is known to exist.
 
 The ``HTMLElement`` class provides a single initializer,
 which takes a ``name`` argument and (if desired) a ``text`` argument
@@ -779,7 +777,7 @@ Here's how you use the ``HTMLElement`` class to create and print a new instance:
 .. testcode:: strongReferenceCyclesForClosures
 
    -> var paragraph: HTMLElement? = HTMLElement(name: "p", text: "hello, world")
-   << // paragraph : HTMLElement? = C4REPL11HTMLElement (has 4 children)
+   << // paragraph : HTMLElement? = C4REPL11HTMLElement (has 3 children)
    -> println(paragraph!.asHTML())
    <- <p>hello, world</p>
 
@@ -836,18 +834,17 @@ As with strong reference cycles between two class instances,
 you declare each captured reference to be a weak or unowned reference
 rather than a strong reference.
 The appropriate choice of weak or unowned will depend on
-the relationships between the different parts of your code, as described below.
+the relationships between the different parts of your code.
 
 .. note::
 
    Swift requires you to write ``self.someProperty`` or ``self.someMethod``
    (rather than just ``someProperty`` or ``someMethod``)
-   when you refer to a member of ``self`` within a closure.
+   whenever you refer to a member of ``self`` within a closure.
    This helps to help you remember that there is the possibility of capturing ``self``.
 
-You write a capture list as one or more pairings of
-the ``weak`` or ``unowned`` keyword with the name of a class instance (such as ``self``)
-that you want to capture with a specific rule.
+Each item in a capture list is a pairing of the ``weak`` or ``unowned`` keyword
+with a reference to a class instance (such as ``self`` or ``someInstance``).
 These pairings are written within a pair of square braces, separated by commas.
 
 Place the capture list before a closure's parameter list and return type
@@ -868,8 +865,8 @@ if they are provided:
    once the following issue is fixed:
    <rdar://problem/16973787> Cannot infer function type from a lazy closure that uses self
 
-If a closure does not specify a parameter list or return type,
-perhaps because they can be inferred from context,
+If a closure does not specify a parameter list or return type
+because they can be inferred from context,
 place the capture list at the very start of the closure,
 followed by the ``in`` keyword:
 
@@ -897,8 +894,15 @@ and will always be deallocated at the same time.
 
 Conversely, you should define a capture as a weak reference when the captured reference
 may become ``nil`` at some point in the future.
-If the captured reference will never be ``nil``,
-it should always be captured as an unowned reference instead.
+Weak references are always of an optional type,
+and automatically become ``nil`` when the instance they reference is deallocated.
+This enables you to check for their existence within the closure's body.
+
+.. note::
+
+   If the captured reference will never become ``nil``,
+   it should always be captured as an unowned reference,
+   rather than a weak reference.
 
 An unowned reference is the appropriate capture method to use to resolve
 the strong reference cycle in the ``HTMLElement`` example from earlier.
@@ -909,7 +913,7 @@ Here's how you write the ``HTMLElement`` class to avoid the cycle:
    -> class HTMLElement {
    ---
          let name: String
-         var text: String?
+         let text: String?
    ---
          @lazy var asHTML: () -> String = {
                [unowned self] in
@@ -941,20 +945,20 @@ You can create and print an ``HTMLElement`` instance as before:
 .. testcode:: unownedReferencesForClosures
 
    -> var paragraph: HTMLElement? = HTMLElement(name: "p", text: "hello, world")
-   << // paragraph : HTMLElement? = C4REPL11HTMLElement (has 4 children)
+   << // paragraph : HTMLElement? = C4REPL11HTMLElement (has 3 children)
    -> println(paragraph!.asHTML())
    <- <p>hello, world</p>
 
-Here's how the references look with the capture list in palce:
+Here's how the references look with the capture list in place:
 
 .. image:: ../images/closureReferenceCycle02.png
    :align: center
 
 This time, the capture of ``self`` by the closure is an unowned reference,
-and does not keep a strong hold on the ``HTMLElement`` instance.
+and does not keep a strong hold on the ``HTMLElement`` instance it has captured.
 If you set the strong reference from the ``paragraph`` variable to ``nil``,
 the ``HTMLElement`` instance is deallocated,
-as can be seen from the printing of its deinitializer message:
+as can be seen from the printing of its deinitializer message in the example below:
 
 .. testcode:: unownedReferencesForClosures
 
