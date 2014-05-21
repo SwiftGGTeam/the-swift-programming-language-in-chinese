@@ -1,5 +1,0 @@
-Why Swift?
-==========
-
-.. write-me
-

@@ -62,11 +62,11 @@ String literals can include the following special characters:
 * The escaped special characters ``\0`` (null character), ``\\`` (backslash),
   ``\t`` (horizontal tab), ``\n`` (line feed), ``\r`` (carriage return),
   ``\"`` (double quote) and ``\'`` (single quote)
-* Two-byte Unicode code points, written as ``\xnn``,
+* Two-byte Unicode scalars, written as ``\xnn``,
   where ``nn`` is two hexadecimal digits
-* Four-byte Unicode code points, written as ``\unnnn``,
+* Four-byte Unicode scalars, written as ``\unnnn``,
   where ``nnnn`` is four hexadecimal digits
-* Eight-byte Unicode code points, written as ``\Unnnnnnnn``,
+* Eight-byte Unicode scalars, written as ``\Unnnnnnnn``,
   where ``nnnnnnnn`` is eight hexadecimal digits
 
 For example:
@@ -77,11 +77,11 @@ For example:
    << // wiseWords : String = "\"Imagination is more important than knowledge\" - Einstein"
    >> println(wiseWords)
    </ "Imagination is more important than knowledge" - Einstein
-   -> let dollarSign = "\x24"        // $,  Unicode code point U+0024
+   -> let dollarSign = "\x24"        // $,  Unicode scalar U+0024
    << // dollarSign : String = "$"
-   -> let blackHeart = "\u2665"      // ♥,  Unicode code point U+2665
+   -> let blackHeart = "\u2665"      // ♥,  Unicode scalar U+2665
    << // blackHeart : String = "♥"
-   -> let swiftHeart = "\U0001F496"  // 💖, Unicode code point U+1F496
+   -> let swiftHeart = "\U0001F496"  // 💖, Unicode scalar U+1F496
    << // swiftHeart : String = "💖"
 
 .. what about SNOWMAN WITHOUT SNOW?
@@ -493,13 +493,13 @@ and support a number of different Unicode encodings, as described below.
 Unicode Terminology
 ~~~~~~~~~~~~~~~~~~~
 
-Every character in Unicode can be represented by one or more :newTerm:`code points`.
-A code point is a unique 21-bit number (and name) for a character or modifier,
+Every character in Unicode can be represented by one or more :newTerm:`unicode scalars`.
+A unicode scalar is a unique 21-bit number (and name) for a character or modifier,
 such as ``U+0061`` for ``LOWERCASE LATIN LETTER A`` (``a``),
 or ``U+1F425`` for ``FRONT-FACING BABY CHICK`` (``🐥``).
 
 When a Unicode string is written to a text file or some other storage,
-these code points are encoded in one of several Unicode-defined formats.
+these unicode scalars are encoded in one of several Unicode-defined formats.
 Each format encodes the string in small chunks known as :newTerm:`code units`.
 These include the UTF-8 format (which encodes a string as 8-bit code units)
 and the UTF-16 format (which encodes a string as 16-bit code units).
@@ -525,7 +525,7 @@ in one of three other Unicode-compliant representations:
 
 Each example below shows a different representation of the following string,
 which is made up of the characters ``D``, ``o``, ``g``, ``!``,
-and the 🐶 character (``DOG FACE``, or Unicode code point ``U+1F436``):
+and the 🐶 character (``DOG FACE``, or Unicode scalar ``U+1F436``):
 
 .. testcode:: unicodeRepresentations
 
@@ -589,8 +589,7 @@ whose UTF-16 code units have the same values as in the string's UTF-8 representa
 
 The fifth and sixth ``codeUnit`` values (``55357`` and ``56374``)
 are a UTF-16 surrogate pair representation of the 🐶 character.
-In UTF code point terms, these values are
-a lead surrogate value of ``U+D83D`` (decimal value ``55357``),
+These values are a lead surrogate value of ``U+D83D`` (decimal value ``55357``),
 and a trail surrogate value of ``U+DC36`` (decimal value ``56374``).
 
 .. _StringsAndCharacters_UnicodeScalars:
@@ -606,7 +605,7 @@ A Unicode scalar is any 21-bit Unicode code point that is not
 a lead surrogate or trail surrogate code point.
 
 Each ``UnicodeScalar`` has a ``value`` property that returns
-the scalar's 21-bit code point, represented within a ``UInt32`` value:
+the scalar's 21-bit value, represented within a ``UInt32`` value:
 
 .. testcode:: unicodeRepresentations
 
@@ -626,7 +625,7 @@ The ``value`` properties for the first four ``UnicodeScalar`` values
 once again represent the characters ``D``, ``o``, ``g``, and ``!``.
 The ``value`` property of the fifth and final ``UnicodeScalar``, ``128054``,
 is a decimal equivalent of the hexadecimal value ``1F436``,
-which is equivalent to the Unicode code point ``U+1F436``, or 🐶.
+which is equivalent to the Unicode scalar ``U+1F436``, or 🐶.
 
 As an alternative to querying their ``value`` properties,
 each ``UnicodeScalar`` value can also be used to construct a new ``String`` value,
