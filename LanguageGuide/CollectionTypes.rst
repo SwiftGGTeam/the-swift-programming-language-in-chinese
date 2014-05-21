@@ -200,8 +200,8 @@ with the addition assignment operator (``+=``):
 .. testcode:: arraysInferred
 
    -> shoppingList += "Baking Powder"
-   /> shoppingList now contains \(shoppingList.count) items, and someone is making *American* pancakes
-   </ shoppingList now contains 4 items, and someone is making *American* pancakes
+   /> shoppingList now contains \(shoppingList.count) items
+   </ shoppingList now contains 4 items
 
 You can also append an array of compatible items
 with the addition assignment operator (``+=``):
