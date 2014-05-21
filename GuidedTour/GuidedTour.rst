@@ -148,7 +148,7 @@ the index or key in brackets.
     ---
     -> var occupations = [
           "Malcolm": "Captain",
-          "Kayley": "Mechanic",
+          "Kaylee": "Mechanic",
         ]
     << // occupations : Dictionary<String, String> = Dictionary<String, String>(1.33333333333333, 3, <DictionaryBufferOwner<String, String> instance>)
     -> occupations["Jayne"] = "Public Relations"
@@ -1046,9 +1046,9 @@ methods outside the protocol definition are not available.
 
     -> let protocolValue: ExampleProtocol = a
     << protocolValue : ExampleProtocol = <ExampleProtocol instance>
-    -> l.simpleDescription
+    -> protocolValue.simpleDescription
     <$ : String = "A very simple class.  Now 100% adjusted"
-    // l[0].anotherProperty  // Uncomment to see the error
+    // protocolValue[0].anotherProperty  // Uncomment to see the error
 
 Even though the first element of the array
 has a runtime type of ``SimpleClass``,
@@ -1093,7 +1093,7 @@ as well as classes, enumerations, and structures.
 Use ``where`` after the type name
 to specify a list of requirements ---
 for example,
-a protocol that that the type must implement,
+a protocol that the type must implement,
 to require that two types be the same,
 or to require a class to have a particular superclass.
 
