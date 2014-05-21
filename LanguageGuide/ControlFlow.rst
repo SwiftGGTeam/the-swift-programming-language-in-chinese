@@ -739,7 +739,7 @@ Instead, the entire ``switch`` statement finishes its execution
 as soon as the first matching ``switch`` case is completed,
 without requiring an explicit ``break`` statement.
 This makes the ``switch`` statement safer and easier to use than in C,
-and avoids executing more than once ``switch`` case by mistake.
+and avoids executing more than one ``switch`` case by mistake.
 
 .. note::
 
