@@ -712,7 +712,6 @@ which provides a simple model for an individual element within an HTML document:
    ---
          let name: String
          var text: String?
-         var parent: HTMLElement?
    ---
          @lazy var asHTML: () -> String = {
             if let text = self.text {
@@ -738,12 +737,9 @@ which indicates the name of the element, such as ``"p"`` for a paragraph element
 or ``"br"`` for a line break element.
 ``HTMLElement`` also defines an optional ``text`` property,
 which you can set to a string that represents
-the text to be rendered within that HTML element,
-and an optional ``parent`` property,
-which you can set to another ``HTMLElement`` instance
-to act as an instance's parent in the HTML document tree.
+the text to be rendered within that HTML element.
 
-In addition to these three simple properties,
+In addition to these two simple properties,
 the ``HTMLElement`` class defines a lazy property called ``asHTML``.
 This property references a closure that combines other properties
 into a string for use in an HTML text document.
@@ -753,14 +749,14 @@ or “a function that takes no parameters, and returns a ``String`` value”.
 By default, the ``asHTML`` property is set to a closure that returns
 a simple HTML tag containing the optional ``text`` value if it exists,
 or an empty HTML tag with no text content if ``text`` does not exist.
-This default closure does not use or refer to the ``parent`` property.
 
 The ``asHTML`` property is named and used somewhat like an instance method.
 However, unlike an instance method,
 you can replace the default closure with a custom closure of your own devising
 if you want to change the HTML rendering used for a particular HTML element.
 This is why it is defined as a closure, not as a method.
-(You'll see an example of this later in this chapter.)
+
+.. QUESTION: I don't actually do so, however. Is this a valid justification here?
 
 .. note::
 
@@ -914,7 +910,6 @@ Here's how you write the ``HTMLElement`` class to avoid the cycle:
    ---
          let name: String
          var text: String?
-         var parent: HTMLElement?
    ---
          @lazy var asHTML: () -> String = {
                [unowned self] in
