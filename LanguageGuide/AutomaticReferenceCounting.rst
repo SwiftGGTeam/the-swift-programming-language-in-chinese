@@ -963,3 +963,88 @@ as can be seen from the printing of its deinitializer message:
 
 .. FIXME: this doesn't actually work due to <rdar://problem/16980445>:
    Unowned capture of self in a closure capture list does not avoid a reference cycle
+
+.. _AutomaticReferenceCounting_BoundNamesInCaptureLists:
+
+Bound Names In Capture Lists
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+It can sometimes be useful to specify appropriate capture rules for
+properties of an instance within a capture list.
+Where this is the case, you can bind a temporary name to that property
+in order to assign a suitable capture strength.
+These bound names are written as ``weak someName = self.someProperty``
+or ``unowned someName = self.someProperty`` with the closure's capture list.
+The bound temporary name can then be used to refer to the captured property
+with the appropriate capture semantics within the closure's body.
+within the closure's body.
+
+.. note::
+
+   You can only bind to a property that is of some class type.
+   When you do so, you capture the instance referred to by that property
+   at the point that the binding takes place.
+   You do not also capture the instance that the property belongs to.
+
+The example below is a more complex version of the ``HTMLElement`` example from above.
+This time, each ``HTMLElement`` instance can have an optional ``parent`` property,
+which is also an ``HTMLElement``, and which must be provided during initialization:
+
+.. testcode:: boundNamesInCaptureLists
+
+   -> class HTMLElement {
+   ---
+         let name: String
+         var text: String?
+         let parent: HTMLElement?
+   ---
+         @lazy var asHTML: () -> String = {
+               [unowned self, weak parent = self.parent] in
+            var html = ""
+            if let actualParent = parent {
+               html += "<\(actualParent.name)>"
+            }
+            if let text = self.text {
+               html += "<\(self.name)>\(text)</\(self.name)>"
+            } else {
+               html += "<\(self.name) />"
+            }
+            if let actualParent = parent {
+               html += "</\(actualParent.name)>"
+            }
+            return html
+         }
+   ---
+         init(name: String, parent: HTMLElement? = nil, text: String? = nil) {
+            self.name = name
+            self.parent = parent
+            self.text = text
+         }
+   ---
+         deinit {
+            println("\(name) is being deinitialized")
+         }
+   ---
+      }
+
+.. QUESTION: isn't this going to bind to parent.property at init-time,
+   but not when parent is set thereafter?
+   I've cheated the question slightly by making parent be settable at init-time only.
+
+The default ``asHTML`` closure makes an unowned capture of ``self``, as before.
+This time, however, it also captures ``self.parent``,
+and binds this capture to a temporary name of ``parent``
+for use within the closure's body.
+
+The example above captures ``self.parent`` as a weak reference, not an unowned reference.
+This reflects the fact that the ``HTMLElement`` instance passed in as ``parent``
+may disappear in the future.
+If this happens, the ``parent`` 
+
+var div: HTMLElement? = HTMLElement(name: "div")
+var bold: HTMLElement? = HTMLElement(name: "b", text: "hello, world", parent: div)
+println(bold!.asHTML())
+div = nil
+println(bold!.asHTML())
+bold = nil
+
