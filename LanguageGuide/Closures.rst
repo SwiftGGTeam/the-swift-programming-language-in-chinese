@@ -579,6 +579,14 @@ and this variable is unconnected to the one captured by ``incrementByTen``:
    /> returns a value of \(r4)
    </ returns a value of 40
 
+.. note::
+
+   If you assign a closure to a property of a class instance,
+   and the closure captures that instance by referring to the instance or its members,
+   you will create a strong reference cycle between the closure and the instance.
+   Swift uses *capture lists* to break these strong reference cycles.
+   For more information, see :ref:`AutomaticReferenceCounting_StrongReferenceCyclesForClosures`.
+
 .. _Closures_ClosuresAreReferenceTypes:
 
 Closures are Reference Types
