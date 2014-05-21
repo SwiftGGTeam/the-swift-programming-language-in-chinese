@@ -890,13 +890,19 @@ followed by the ``in`` keyword:
 .. QUESTION: I have declared both of these closure properties as @lazy.
    Is this the right message to be sending?
 
-.. _AutomaticReferenceCounting_UnownedReferencesForClosures:
+.. _AutomaticReferenceCounting_WeakAndUnownedReferencesForClosures:
 
-Unowned References
-~~~~~~~~~~~~~~~~~~
+Weak and Unowned References
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Define a capture as an unowned reference when the closure and the instance it captures
-will always refer to each other, and will always be deallocated at the same time.
+You should define a capture in a closure as an unowned reference
+when the closure and the instance it captures will always refer to each other,
+and will always be deallocated at the same time.
+
+Conversely, you should define a capture as a weak reference when the captured reference
+may become ``nil`` at some point in the future.
+If the captured reference will never be ``nil``,
+it should always be captured as an unowned reference instead.
 
 An unowned reference is the appropriate capture method to use to resolve
 the strong reference cycle in the ``HTMLElement`` example from earlier.
@@ -962,79 +968,3 @@ as can be seen from the printing of its deinitializer message:
 
 .. FIXME: this doesn't actually work due to <rdar://problem/16980445>:
    Unowned capture of self in a closure capture list does not avoid a reference cycle
-
-.. _AutomaticReferenceCounting_WeakReferencesForClosures:
-
-Weak References
-~~~~~~~~~~~~~~~
-
-Define a capture as a weak reference when the captured reference
-may become ``nil`` at some point in the future.
-If the captured reference will never be ``nil``,
-it should be captured as an unowned reference instead.
-
-The following example creates two new ``HTMLElement`` instances,
-and combines their property values to set an alternative closure
-for one of the two instances.
-
-.. testcode:: unownedReferencesForClosures
-
-   -> var outerElement: HTMLElement? = HTMLElement(name: "div")
-   << // outerElement : HTMLElement? = C4REPL11HTMLElement (has 4 children)
-   -> var innerElement = HTMLElement(name: "b", text: "hello, world")
-   << // innerElement : HTMLElement = C4REPL11HTMLElement (has 4 children)
-   ---
-   -> innerElement.asHTML = {
-            [weak outerElement, unowned innerElement] in
-         var html = ""
-         if let outer = outerElement {
-            html += "<\(outer.name)>"
-         }
-         if let innerText = innerElement.text {
-            html += "<\(innerElement.name)>\(innerText)</\(innerElement.name)>"
-         } else {
-            html += "<\(innerElement.name) />"
-         }
-         if let outer = outerElement {
-            html += "</\(outer.name)>"
-         }
-         return html
-      }
-
-.. TODO: once <rdar://problem/16980445> is fixed, it would be nice to print
-   the output of the default closures for outerElement and innerElement.
-
-Note that the ``outerElement`` variable is defined as optional ``HTMLElement`` instance,
-so that it can be set to ``nil`` later on
-to illustrate the behavior of a weakly-captured reference.
-
-The instance referred to by ``outerElement`` is captured as a weak reference,
-and the instance referred to by ``innerElement`` is captured as an unowned reference.
-Here's how the output of this new closure looks:
-
-.. testcode:: unownedReferencesForClosures
-
-   -> println(innerElement.asHTML())
-   <- <div><b>hello, world</b></div>
-
-Here's how the strong, weak, and unowned references between the various components
-currently look:
-
-.. note::
-
-   When the closure “captures ``innerElement`` and ``outerElement``”,
-   it is not capturing the actual variables called ``innerElement`` and ``outerElement``.
-   Rather, it is capturing the class instances that those variables refer to
-   at the point that the capture takes place.
-
-.. weak capture - if the closure may live beyond the self that it captures
-.. bind arbitrary expressions to named values. Captured with specified strength.
-
-
-
-
-
-
-
-
-
