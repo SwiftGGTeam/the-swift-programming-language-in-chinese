@@ -51,7 +51,7 @@ which counts the number of times something has happened:
 .. testcode:: instanceMethods
 
    -> class Counter {
-         var count: Int = 0
+         var count = 0
          func increment() {
             count++
          }
