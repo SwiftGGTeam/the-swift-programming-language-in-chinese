@@ -96,7 +96,7 @@ separated by a colon.
 
 Values are never implicitly converted to another type.
 If you need to convert a value to a different type,
-make an instance of the desired type explicitly.
+explicitly make an instance of the desired type.
 
 .. testcode::
 
