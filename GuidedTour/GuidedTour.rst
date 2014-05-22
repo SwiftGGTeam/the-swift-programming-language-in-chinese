@@ -250,11 +250,10 @@ to the variable after ``let``,
 which makes the unwrapped value available
 inside the block of code.
 
-.. TODO: Just --> they are not limited to integers
-
-Switches support any kind of data, not just integers,
-and the matching criteria can be more complex
-than simple comparison.
+Switches support any kind of data
+and a wide variety of comparison operations ---
+they aren't limited to integers
+and tests for equality.
 
 .. testcode::
 
