@@ -1,11 +1,11 @@
 Control Flow
 ============
 
-Swift provides all of the familiar control flow constructs found in C-like languages.
+Swift provides all the familiar control flow constructs of C-like languages.
 These include ``for`` and ``while`` loops to perform a task multiple times;
 ``if`` and ``switch`` statements
 to execute different branches of code based on certain conditions;
-and control flow statements such as ``break`` and ``continue``
+and statements such as ``break`` and ``continue``
 to transfer the flow of execution to another point in your code.
 
 In addition to the traditional ``for``-``condition``-``increment`` loop found in C,
@@ -34,18 +34,18 @@ For Loops
 A ``for`` loop performs a set of statements a certain number of times.
 Swift provides two kinds of ``for`` loop:
 
-* ``for``-``in``, which performs a set of statements for each item in
-  a range, sequence, collection, or progression
-* ``for``-``condition``-``increment``, which performs a set of statements until
-  a specific condition is met, typically by incrementing a counter each time the loop ends
+* ``for``-``in`` performs a set of statements for each item in
+  a range, sequence, collection, or progression.
+* ``for``-``condition``-``increment`` performs a set of statements until
+  a specific condition is met, typically by incrementing a counter each time the loop ends.
 
 .. _ControlFlow_ForIn:
 
 For-In
 ~~~~~~
 
-The ``for``-``in`` loop provides a powerful way to iterate over collections of items,
-such as ranges of numbers, items in an array, and characters in a string.
+You use the ``for``-``in`` loop to iterate over collections of items,
+such as ranges of numbers, items in an array, or characters in a string.
 
 This example prints the first few entries in the five-times-table:
 
@@ -60,8 +60,8 @@ This example prints the first few entries in the five-times-table:
    </ 4 times 5 is 20
    </ 5 times 5 is 25
 
-Here, the collection of items being iterated is a
-closed range of numbers from ``1`` to ``5`` inclusive,
+The collection of items being iterated is
+a closed range of numbers from ``1`` to ``5`` inclusive,
 as indicated by the use of the closed range operator (``...``).
 The value of ``index`` is set to the first number in the range (``1``),
 and the statements inside the loop are executed.
@@ -72,20 +72,18 @@ the value of ``index`` is updated to contain the second value in the range (``2`
 and the ``println`` function is called again.
 This process continues until the end of the range is reached.
 
-``index`` is a constant whose value is automatically set
+In the example above, ``index`` is a constant whose value is automatically set
 at the start of each iteration of the loop.
 As such, it does not have to be declared before it is used.
 It is implicitly declared simply by its inclusion in the loop declaration,
 without the need for a ``let`` declaration keyword.
-This does, however, mean that ``index`` exists only within the scope of the loop.
-To check the value of ``index`` after the loop completes,
-or to work with its value as a variable rather than a constant,
-you must declare it yourself before its use in the loop.
 
-.. TODO: feedback from Troy Koelling was that
-   he expected this to be ``var`` rather than ``let.
-   The text above is actually technically correct,
-   but the fact that this caused confusion suggests that I should revisit the wording.
+.. note::
+
+   The ``index`` constant exists only within the scope of the loop.
+   If you want to check the value of ``index`` after the loop completes,
+   or if you want to work with its value as a variable rather than a constant,
+   you must declare it yourself before its use in the loop.
 
 .. TODO: note that you can use floating-point values with ranges too.
 
@@ -136,7 +134,7 @@ Use the ``for``-``in`` loop with an array to iterate over its items:
 You can also iterate over a dictionary to access its key-value pairs.
 Each item in the dictionary is returned as a ``(key, value)`` tuple
 when the dictionary is iterated,
-and you can decompose the ``(key, value)`` tuple's members as explicitly-named constants
+and you can decompose the ``(key, value)`` tuple's members as explicitly named constants
 for use within in the body of the ``for``-``in`` loop.
 Here, the dictionary's keys are decomposed into a constant called ``animalName``,
 and the dictionary's values are decomposed into a constant called ``legCount``:
@@ -155,7 +153,7 @@ and the dictionary's values are decomposed into a constant called ``legCount``:
 Items in a ``Dictionary`` may not necessarily be iterated in the same order as they were inserted.
 The contents of a ``Dictionary`` are inherently unordered,
 and iterating over them does not guarantee the order in which they will be retrieved.
-(Arrays and Dictionaries are described in more detail in :doc:`CollectionTypes`.)
+For more on Arrays and Dictionaries, see :doc:`CollectionTypes`.)
 
 In addition to arrays and dictionaries,
 you can also use the ``for``-``in`` loop to iterate over the ``Character`` values in a string:
@@ -207,7 +205,7 @@ Swift supports traditional C-style ``for`` loops with a condition and an increme
    </ index is 1
    </ index is 2
 
-The general form of this loop format is:
+Here's the general form of this loop format:
 
 .. syntax-outline::
 
@@ -229,7 +227,7 @@ The loop is executed as follows:
    If it equates to ``false``, the loop ends,
    and code execution continues after the ``for`` loop's closing brace (``}``).
    If the expression equates to ``true``,
-   code execution continues by executing the :newTerm:`statements` inside the braces.
+   code execution continues by executing the statements inside the braces.
 
 3. After all statements are executed,
    the :newTerm:`increment expression` is evaluated.
@@ -239,7 +237,8 @@ The loop is executed as follows:
    execution returns to step 2,
    and the condition expression is evaluated again.
 
-The execution process described above is effectively shorthand for (and equivalent to):
+The loop format and execution process described above
+is shorthand for (and equivalent to) the outline below:
 
 ::
 
@@ -286,8 +285,8 @@ These kinds of loops are best used when
 the number of iterations is not known before the first iteration begins.
 Swift provides two kinds of ``while`` loop:
 
-* ``while``, which evaluates its condition at the start of each pass through the loop
-* ``do``-``while``, which evaluates its condition at the end of each pass through the loop
+* ``while`` evaluates its condition at the start of each pass through the loop.
+* ``do``-``while`` evaluates its condition at the end of each pass through the loop.
 
 .. _ControlFlow_While:
 
@@ -298,7 +297,7 @@ A ``while`` loop starts by evaluating a single condition.
 If the condition is ``true``,
 a set of statements is repeated until the condition becomes ``false``.
 
-The general form of a ``while`` loop is:
+Here's the general form of a ``while`` loop:
 
 .. syntax-outline::
 
@@ -324,10 +323,10 @@ The rules of the game are as follows:
 
 The game board is represented by an array of ``Int`` values.
 Its size is based on a constant called ``finalSquare``,
-which is used to initialize the array,
+which is used to initialize the array
 and also to check for a win condition later in the example.
-The board is initialized with 26 zero ``Int`` values, not 25 –
-one each at indices ``0`` through ``25`` inclusive:
+The board is initialized with 26 zero ``Int`` values, not 25
+(one each at indices ``0`` through ``25`` inclusive):
 
 .. testcode:: snakesAndLadders1
 
@@ -428,14 +427,14 @@ After rolling the dice, the player moves forward by ``diceRoll`` squares.
 It's possible that the dice roll may have moved the player beyond square 25,
 in which case the game is over.
 To cope with this scenario,
-the code makes sure that ``square`` is less than the ``board`` array's ``count`` property
+the code checks that ``square`` is less than the ``board`` array's ``count`` property
 before adding the value stored in ``board[square]`` onto the current ``square`` value
 to move the player up or down any ladders or snakes.
 
-If it had not performed this check,
-``board[square]`` might try and access a value outside of the bounds of the ``board`` array,
+Had this check not been performed,
+``board[square]`` might try to access a value outside the bounds of the ``board`` array,
 which would trigger an error.
-If ``square`` is now equal to ``26``, say,
+If ``square`` is now equal to ``26``,
 the code would try to check the value of ``board[26]``,
 which is larger than the size of the array.
 
@@ -459,7 +458,7 @@ performs a single pass through the loop block first,
 *before* considering the loop's condition.
 It then continues to repeat the loop until the condition is ``false``.
 
-The general form of a ``do``-``while`` loop is:
+Here's the general form of a ``do``-``while`` loop:
 
 .. syntax-outline::
 
@@ -489,7 +488,7 @@ In this version of the game,
 the *first* action in the loop is to check for a ladder or a snake.
 No ladder on the board takes the player straight to square 25,
 and so it is not possible to win the game by moving up a ladder.
-This makes it safe to check for a snake or a ladder as the first action in the loop.
+Therefore, it is safe to check for a snake or a ladder as the first action in the loop.
 
 At the start of the game, the player is on “square zero”.
 ``board[0]`` always equals ``0``,
@@ -571,7 +570,7 @@ Typically, you use the ``if`` statement
 to evaluate simple conditions with only a few possible outcomes.
 The ``switch`` statement is better suited to
 more complex conditions with multiple possible permutations,
-or situations where pattern-matching can help to select
+and is useful in situations where pattern-matching can help select
 an appropriate code branch to execute.
 
 .. _ControlFlow_If:
@@ -592,7 +591,7 @@ It executes a set of statements only if that condition is ``true``:
       }
    <- It's very cold. Consider wearing a scarf.
 
-The preceding example checks to see whether the temperature
+The preceding example checks whether the temperature
 is less than or equal to 32 degrees Fahrenheit
 (the freezing point of water).
 If it is, a message is printed.
@@ -614,7 +613,7 @@ These statements are indicated by the ``else`` keyword:
       }
    <- It's not that cold. Wear a t-shirt.
 
-One of of these two branches is always executed.
+One of these two branches is always executed.
 Because the temperature has increased to ``40`` degrees Fahrenheit,
 it is no longer cold enough to advise wearing a scarf,
 and so the ``else`` branch is triggered instead.
@@ -723,10 +722,10 @@ The ``switch`` statement's first case matches
 all five lowercase vowels in the English language.
 Similarly, its second case matches all lowercase English consonants.
 
-It is not practical to write every other possible character as part of a ``switch`` case,
+It is not practical to write all other possible characters as part of a ``switch`` case,
 and so this ``switch`` statement provides a ``default`` case
 to match all other characters that are not vowels or consonants.
-This ensures that the ``switch`` statement is exhaustive.
+This provision ensures that the ``switch`` statement is exhaustive.
 
 .. _ControlFlow_NoImplicitFallthrough:
 
@@ -830,13 +829,13 @@ to provide a natural-language count for numbers of any size:
 Tuples
 ______
 
-You can test multiple values can be tested in the same ``switch`` statement using tuples.
+You can use tuples to test multiple values in the same ``switch`` statement.
 Each element of the tuple can be tested against a different value or range of values.
 Alternatively, use the underscore (``_``) identifier to match any possible value.
 
 The example below takes an (x, y) point,
 expressed as a simple tuple of type ``(Int, Int)``,
-and categorizes it on the graph that follows:
+and categorizes it on the graph that follows the example:
 
 .. testcode:: tuples
 
@@ -864,7 +863,7 @@ at the origin (0, 0);
 on the red x-axis;
 on the orange y-axis;
 inside the blue 4-by-4 box centered on the origin;
-or outside of the box altogether.
+or outside of the box.
 
 Unlike C, Swift allows multiple ``switch`` cases to consider the same value or values.
 In fact, the point (0, 0) could match all *four* of the cases in this example.
@@ -883,8 +882,8 @@ for use in the body of the case.
 This is known as :newTerm:`value binding`,
 because the values are “bound” to temporary constants or variables within the case's body.
 
-Again, the example below takes an (x, y) point,
-expressed as a tuple of type ``(Int, Int)``,
+The example below takes an (x, y) point,
+expressed as a tuple of type ``(Int, Int)``
 and categorizes it on the graph that follows:
 
 .. testcode:: valueBindings
@@ -907,15 +906,15 @@ and categorizes it on the graph that follows:
 The ``switch`` statement determines if the point is
 on the red x-axis;
 on the orange y-axis;
-or somewhere else.
+or somewhere else not on either axis.
 
 The three ``switch`` cases declare placeholder constants ``x`` and ``y``,
 which temporarily take on one or both tuple values from ``anotherPoint``.
 The first case, ``case (let x, 0)``,
-matches any point with a ``y`` value of ``0``,
+matches any point with a ``y`` value of ``0``
 and assigns the point's ``x`` value to the temporary constant ``x``.
 Similarly, the second case, ``case (0, let y)``,
-matches any point with an ``x`` value of ``0``,
+matches any point with an ``x`` value of ``0``
 and assigns the point's ``y`` value to the temporary constant ``y``.
 
 Once the temporary constants are declared,
@@ -929,9 +928,9 @@ As a result, it matches all possible remaining values,
 and a ``default`` case is not needed to make the ``switch`` statement exhaustive.
 
 In the example above,
-``x`` and ``y`` have been declared as constants with the ``let`` keyword,
+``x`` and ``y`` are declared as constants with the ``let`` keyword,
 because there is no need to modify their values within the body of the case.
-However, they could have been declared as variables instead, via the ``var`` keyword.
+However, they could have been declared as variables instead, with the ``var`` keyword.
 If this had been done, a temporary variable would have been created
 and initialized with the appropriate value.
 Any changes to that variable would only have an effect within the body of the case.
@@ -941,7 +940,7 @@ Any changes to that variable would only have an effect within the body of the ca
 Where
 _____
 
-A ``switch`` case can check for additional conditions using the ``where`` clause.
+A ``switch`` case can use a ``where`` clause to check for additional conditions.
 
 The example below categorizes an (x, y) point on the following graph:
 
@@ -965,11 +964,11 @@ The example below categorizes an (x, y) point on the following graph:
 The ``switch`` statement determines if the point is
 on the green diagonal line where ``x == y``;
 on the purple diagonal line where ``x == -y``;
-or none of the above.
+or neither.
 
 The three ``switch`` cases declare placeholder constants ``x`` and ``y``,
 which temporarily take on the two tuple values from ``point``.
-Here, these constants are used as part of a ``where`` clause,
+These constants are used as part of a ``where`` clause,
 to create a dynamic filter.
 The ``switch`` case matches the current value of ``point``
 only if the ``where`` clause's condition equates to ``true`` for that value.
@@ -1008,7 +1007,7 @@ without leaving the loop altogether.
 
    In a ``for``-``condition``-``increment`` loop,
    the incrementer is still evaluated after calling the ``continue`` statement.
-   The loop itself continues to work as normal;
+   The loop itself continues to work as usual;
    only the code within the loop's body is skipped.
 
 The following example removes all vowels and spaces from a lowercase string
@@ -1043,8 +1042,10 @@ rather than requiring the block to match every character that should get printed
 Break
 ~~~~~
 
-The ``break`` statement is used to end execution of an entire control flow statement immediately.
-The ``break`` statement can be used inside ``switch`` statements and loop statements.
+The ``break`` statement ends execution of an entire control flow statement immediately.
+The ``break`` statement can be used inside a ``switch`` statement or loop statement
+when you want to terminate the execution of the ``switch`` or loop statement
+earlier than would otherwise be the case.
 
 .. _ControlFlow_BreakInALoop:
 
@@ -1070,21 +1071,21 @@ and to transfer control to the first line of code after
 the ``switch`` statement's closing brace (``}``).
 
 This behavior can be used to match and ignore one or more cases in a ``switch`` statement.
-Because Swift's ``switch`` statement is exhaustive,
+Because Swift's ``switch`` statement is exhaustive
 and does not allow empty cases,
 it is sometimes necessary to deliberately match and ignore a case
 in order to make your intentions explicit.
-You do this by writing the ``break`` statement as the body of the case you want to ignore.
-This has the effect of ignoring the matched case
-by exiting the ``switch`` statement whenever a match for that case is made.
+You do this by writing the ``break`` statement as the entire body of the case you want to ignore.
+When that case is matched by the ``switch`` statement,
+the ``break`` statement inside the case ends the ``switch`` statement's execution immediately.
 
 .. note::
 
    A ``switch`` case that only contains a comment is reported as a compile-time error.
-   Comments are not statements, and do not cause a ``switch`` case to be ignored.
+   Comments are not statements and do not cause a ``switch`` case to be ignored.
    Always use a ``break`` statement to ignore a ``switch`` case.
 
-The following example switches on a ``Character`` value,
+The following example switches on a ``Character`` value
 and determines whether it represents a number symbol in one of four languages.
 Multiple values are covered in a single ``switch`` case for brevity:
 
@@ -1113,24 +1114,24 @@ Multiple values are covered in a single ``switch`` case for brevity:
       }
    <- The integer value of 三 is 3.
 
-This example checks ``numberSymbol`` to determine if it is
-a Latin, Arabic, Chinese or Thai symbol for
+This example checks ``numberSymbol`` to determine whether it is
+a Latin, Arabic, Chinese, or Thai symbol for
 the numbers ``1`` to ``4``.
 If a match is found,
-one of the ``switch`` statement's cases will set
+one of the ``switch`` statement's cases sets
 an optional ``Int?`` variable called ``possibleIntegerValue``
 to an appropriate integer value.
 
-After the switch statement has completed its execution,
-the example uses optional binding to see if a value was found.
+After the switch statement completes its execution,
+the example uses optional binding to determine whether a value was found.
 The ``possibleIntegerValue`` variable has an implicit initial value of ``nil``
 by virtue of being an optional type,
-and so the optional binding will only succeed
+and so the optional binding will succeed only
 if ``possibleIntegerValue`` was set to an actual value
 by one of the ``switch`` statement's first four cases.
 
 It is not practical to list every possible ``Character`` value in the example above,
-and so a ``default`` case provides a catchall for any characters that are not matched.
+so a ``default`` case provides a catchall for any characters that are not matched.
 This ``default`` case does not need to perform any action,
 and so it is written with a single ``break`` statement as its body.
 As soon as the ``default`` statement is matched,
@@ -1170,7 +1171,7 @@ The example below uses ``fallthrough`` to create a textual description of a numb
    -> println(description)
    <- The number 5 is a prime number, and also an integer.
 
-This example declares a new ``String`` variable called ``description``,
+This example declares a new ``String`` variable called ``description``
 and assigns it an initial value.
 The function then considers the value of ``integerToDescribe`` using a ``switch`` statement.
 If the value of ``integerToDescribe`` is one of the prime numbers in the list,
@@ -1183,7 +1184,7 @@ and the ``switch`` statement is complete.
 If the value of ``integerToDescribe`` is *not* in the list of known prime numbers,
 it is not matched by the first ``switch`` case at all.
 There are no other specific cases,
-and so it ends up being matched by the catchall ``default`` case.
+and so ``integerToDescribe`` is matched by the catchall ``default`` case.
 
 After the ``switch`` statement has finished executing,
 the number's description is printed using the ``println`` function.
@@ -1192,9 +1193,10 @@ the number ``5`` is correctly identified as a prime number.
 
 .. note::
 
-   Fallthrough does not check the conditions for the ``switch`` case it falls into.
-   It simply causes code execution to move directly to the statements
-   inside the next case (or ``default`` case) block,
+   The ``fallthrough`` keyword does not check the case conditions
+   for the ``switch`` case it causes execution to fall into.
+   The ``fallthrough`` keyword simply causes code execution to move
+   directly to the statements inside the next case (or ``default`` case) block,
    as in C's standard ``switch`` statement behavior.
 
 .. _ControlFlow_LabeledStatements:
@@ -1207,11 +1209,11 @@ inside other loops and ``switch`` statements in Swift
 to create complex control flow structures.
 However, loops and ``switch`` statements can both use the ``break`` statement
 to end their execution prematurely.
-As a result, it is sometimes useful to be explicit about
-which loop or ``switch`` statement you would like a ``break`` statement to terminate.
+Therefore, it is sometimes useful to be explicit about
+which loop or ``switch`` statement you want a ``break`` statement to terminate.
 Similarly, if you have multiple nested loops,
-it can be useful to be explicit about which loop you would like the ``continue`` statement
-to continue the execution of.
+it can be useful to be explicit about which loop the ``continue`` statement
+should affect.
 
 To achieve these aims,
 you can mark a loop statement or ``switch`` statement with a :newTerm:`statement label`,
@@ -1225,12 +1227,13 @@ although the principle is the same for all loops and ``switch`` statements:
 
 .. syntax-outline::
 
-   <#label name#>: while <#condition#> {
+   <#label name#>: while <#condition equates to true#> {
       <#statements#>
    }
 
 The following example uses the ``break`` and ``continue`` statements
-with a labeled ``while`` loop for an adapted version of the *Snakes and Ladders* game.
+with a labeled ``while`` loop for an adapted version of the *Snakes and Ladders* game
+that you saw earlier in this chapter.
 This time around, the game has an extra rule:
 
 * To win, you must land *exactly* on square 25.
@@ -1347,7 +1350,7 @@ and to work out if the move is allowed:
   the first line of code outside of the ``while`` loop, which ends the game.
 * If the dice roll will move the player *beyond* the final square,
   the move is invalid, and the player needs to roll again.
-  The ``continue gameLoop`` statement ends the current ``while`` loop iteration,
+  The ``continue gameLoop`` statement ends the current ``while`` loop iteration
   and begins the next iteration of the loop.
 * In all other cases, the dice roll is a valid move.
   The player moves forward by ``diceRoll`` squares,
