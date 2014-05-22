@@ -147,8 +147,8 @@ the index or key in brackets.
     -> shoppingList[1] = "bottle of water"
     ---
     -> var occupations = [
-          "Malcolm": "Captain",
-          "Kaylee": "Mechanic",
+           "Malcolm": "Captain",
+           "Kaylee": "Mechanic",
         ]
     << // occupations : Dictionary<String, String> = Dictionary<String, String>(1.33333333333333, 3, <DictionaryBufferOwner<String, String> instance>)
     -> occupations["Jayne"] = "Public Relations"
@@ -232,7 +232,7 @@ to mark it as optional.
    -> var greeting = "Hello!"
    << // greeting : String = "Hello!"
    -> if let name = optionalName {
-         greeting = "Hello, \(name)"
+          greeting = "Hello, \(name)"
       }
    >> greeting
    << // greeting : String = "Hello, John Appleseed"
@@ -262,14 +262,14 @@ than simple comparison.
    -> let vegetable = "red pepper"
    << // vegetable : String = "red pepper"
    -> switch vegetable {
-         case "celery":
-            println("Add some raisins and make ants on a log.")
-         case "cucumber", "watercress":
-            println("That would make a good tea sandwich.")
-         case let x where x.hasSuffix("pepper"):
-            println("Is it a spicy \(x)?")
-         default:
-            println("Everything tastes good in soup.")
+          case "celery":
+              println("Add some raisins and make ants on a log.")
+          case "cucumber", "watercress":
+              println("That would make a good tea sandwich.")
+          case let x where x.hasSuffix("pepper"):
+              println("Is it a spicy \(x)?")
+          default:
+              println("Everything tastes good in soup.")
       }
    << Is it a spicy red pepper?
 
@@ -296,19 +296,19 @@ for each key-value pair.
 .. testcode::
 
    -> let interestingNumbers = [
-         "Prime": [2, 3, 5, 7, 11, 13],
-         "Fibonacci": [1, 1, 2, 3, 5, 8],
-         "Square": [1, 4, 9, 16, 25],
+          "Prime": [2, 3, 5, 7, 11, 13],
+          "Fibonacci": [1, 1, 2, 3, 5, 8],
+          "Square": [1, 4, 9, 16, 25],
       ]
    << // interestingNumbers : Dictionary<String, Array<Int>> = Dictionary<String, Array<Int>>(1.33333333333333, 3, <DictionaryBufferOwner<String, Array<Int>> instance>)
    -> var largest = 0
    << // largest : Int = 0
    -> for (kind, numbers) in interestingNumbers {
-         for number in numbers {
-            if number > largest {
-                largest = number
-            }
-         }
+          for number in numbers {
+              if number > largest {
+                  largest = number
+              }
+          }
       }
    >> largest
    << // largest : Int = 25
@@ -327,7 +327,7 @@ ensuring that the loop is run at least once.
    -> var n = 2
    << // n : Int = 2
    -> while n < 100 {
-         n = n * 2
+          n = n * 2
       }
    -> println("n is \(n)")
    << n is 128
@@ -335,7 +335,7 @@ ensuring that the loop is run at least once.
    -> var m = 2
    << // m : Int = 2
    -> do {
-         m = m * 2
+          m = m * 2
       } while m < 100
    -> println("m is \(m)")
    << m is 128
@@ -348,13 +348,13 @@ These two loops do the same thing:
 .. testcode::
 
    -> for i in 0..3 {
-         println(i)
+          println(i)
       }
    << 0
    << 1
    << 2
    -> for var i = 0; i < 3; ++i {
-         println(i)
+          println(i)
       }
    << 0
    << 1
@@ -375,7 +375,7 @@ from the function's return type.
 .. testcode::
 
     -> func greet(name: String, day: String) -> String {
-          return "Hello \(name), today is \(day)."
+           return "Hello \(name), today is \(day)."
        }
     -> greet("Bob", "Tuesday")
     <$ : String = "Hello Bob, today is Tuesday."
@@ -390,7 +390,7 @@ Use a tuple to return multiple values from a function.
 .. testcode::
 
    -> func getGasPrices() -> (Double, Double, Double) {
-         return (3.59, 3.69, 3.79)
+          return (3.59, 3.69, 3.79)
       }
    >> getGasPrices()
    <$ : (Double, Double, Double) = (3.59, 3.69, 3.79)
@@ -402,11 +402,11 @@ collecting them into an array.
 
    -> // Reimplement the Standard Library sum function for Int values.
    -> func sumOf(numbers: Int...) -> Int {
-         var sum = 0
-         for number in numbers {
-            sum += number
-         }
-         return sum
+          var sum = 0
+          for number in numbers {
+              sum += number
+          }
+          return sum
       }
    -> sumOf()
    <$ : Int = 0
@@ -429,12 +429,12 @@ that is long or complex.
 .. testcode::
 
     -> func returnFifteen() -> Int {
-          var y = 10
-          func add() -> () {
-             y += 5
-          }
-          add()
-          return y
+           var y = 10
+           func add() -> () {
+               y += 5
+           }
+           add()
+           return y
        }
     -> returnFifteen()
     <$ : Int = 15
@@ -445,10 +445,10 @@ This means a function can return another function as its value.
 .. testcode::
 
     -> func makeIncrementer() -> (Int -> Int) {
-          func addOne(number: Int) -> Int {
-             return 1 + number
-          }
-          return addOne
+           func addOne(number: Int) -> Int {
+               return 1 + number
+           }
+           return addOne
        }
     -> var increment = makeIncrementer()
     << // increment : (Int -> Int) = <unprintable value>
@@ -460,15 +460,15 @@ A function can take another function as one of its arguments.
 .. testcode::
 
     -> func hasAnyMatches(list: Int[], condition: Int -> Bool) -> Bool {
-          for item in list {
-             if condition(item) {
-                return true
-             }
-          }
-          return false
+           for item in list {
+               if condition(item) {
+                   return true
+               }
+           }
+           return false
        }
     -> func lessThanTen(number: Int) -> Bool {
-          return number < 10
+           return number < 10
        }
     -> var numbers = [20, 19, 7, 12]
     << // numbers : Array<Int> = [8, 3, 5, 6]
@@ -483,9 +483,9 @@ Use ``in`` to separate the arguments and return type from the body.
 .. testcode::
 
     -> numbers.map({
-          (number: Int) -> Int in
-          let result = 3 * number
-          return result
+           (number: Int) -> Int in
+           let result = 3 * number
+           return result
        })
     <$ : Array<Int> = [24, 9, 15, 18]
 
@@ -539,10 +539,10 @@ Likewise, method and function declarations are written the same way.
 .. testcode::
 
     -> class Shape {
-          var numberOfSides: Int = 0
-          func description() -> String {
-             return "A shape with \(numberOfSides) sides."
-          }
+           var numberOfSides: Int = 0
+           func description() -> String {
+               return "A shape with \(numberOfSides) sides."
+           }
        }
     >> Shape().description()
     <$ : String = "A shape with 0 sides."
@@ -572,16 +572,16 @@ Use ``init`` to create one.
 .. testcode::
 
     -> class NamedShape {
-          var numberOfSides: Int = 0
-          var name: String
-
-          init(name: String) {
-             self.name = name
-          }
-
-          func description() -> String {
-             return "A shape with \(numberOfSides) sides."
-          }
+           var numberOfSides: Int = 0
+           var name: String
+    ---
+           init(name: String) {
+              self.name = name
+           }
+    ---
+           func description() -> String {
+              return "A shape with \(numberOfSides) sides."
+           }
        }
     >> NamedShape(name: "test name").name
     <$ : String = "test name"
@@ -616,21 +616,21 @@ that don't actually override any method in the superclass.
 .. testcode::
 
     -> class Square: NamedShape {
-          var sideLength: Double
-
-          init(sideLength: Double, name: String) {
-             self.sideLength = sideLength
-             super.init(name: name)
-             numberOfSides = 4
-          }
-
-          func area() ->  Double {
-             return sideLength * sideLength
-          }
-
-          override func description() -> String {
-             return "A square with sides of length \(sideLength)."
-          }
+           var sideLength: Double
+    ---
+           init(sideLength: Double, name: String) {
+               self.sideLength = sideLength
+               super.init(name: name)
+               numberOfSides = 4
+           }
+    ---
+           func area() ->  Double {
+               return sideLength * sideLength
+           }
+    ---
+           override func description() -> String {
+               return "A square with sides of length \(sideLength)."
+           }
        }
     -> let test = Square(sideLength: 5.2, name: "my test square")
     << // test : Square = <Square instance>
@@ -654,25 +654,25 @@ properties can have a getter and a setter.
 
 
     -> class EquilateralTriangle: Shape {
-          var sideLength: Double = 0.0
+           var sideLength: Double = 0.0
     ---
-          init(sideLength: Double, name: String) {
-             self.sideLength = sideLength
-             super.init(name: name)
-             numberOfSides = 3
-          }
+           init(sideLength: Double, name: String) {
+               self.sideLength = sideLength
+               super.init(name: name)
+               numberOfSides = 3
+           }
     ---
-          var perimeter: Double {
-             get {
-                 return 3.0 * sideLength
-             }
-             set {
-                sideLength = newValue / 3.0
-             }
-          }
+           var perimeter: Double {
+               get {
+                    return 3.0 * sideLength
+               }
+               set {
+                   sideLength = newValue / 3.0
+               }
+           }
     ---
            override func description() -> String {
-              return "An equilateral triagle with sides of length \(sideLength)."
+               return "An equilateral triagle with sides of length \(sideLength)."
            }
        }
     -> var triangle = EquilateralTriangle(sideLength: 3.1, name: "a triangle")
@@ -707,20 +707,20 @@ is always the same as the side length of its square.
 .. testcode::
 
    -> class TriangleAndSquare {
-         var triangle: triangle {
-            willSet {
-               square.sideLength = newValue.sideLength
-            }
-         }
-         var square: Square {
-            willSet {
-               triangle.sideLength = newValue.sideLength
-            }
-         }
-         init(size: Double, name: String) {
-            square = Square(size, name)
-            triangle = triangle(size, name)
-         }
+          var triangle: triangle {
+              willSet {
+                  square.sideLength = newValue.sideLength
+              }
+          }
+          var square: Square {
+              willSet {
+                  triangle.sideLength = newValue.sideLength
+              }
+          }
+          init(size: Double, name: String) {
+              square = Square(size, name)
+              triangle = triangle(size, name)
+          }
       }
    -> var triangleAndSquare = TriangleAndSquare(size: 10, name: "another test shape")
    << // triangleAndSquare :TriangleAndSquare = <TriangleAndSquare instance>
@@ -751,10 +751,10 @@ You can specify a second name, which is used inside the method.
 .. testcode::
 
     -> class Counter {
-          var count: Int = 0
-          func incrementBy(amount: Int, numberOfTimes times: Int) {
-             count += amount * times
-          }
+           var count: Int = 0
+           func incrementBy(amount: Int, numberOfTimes times: Int) {
+               count += amount * times
+           }
        }
     -> var counter = Counter()
     -> counter.incrementBy(2, numberOfTimes: 7)
@@ -783,23 +783,23 @@ enumerations can have methods associated with them.
 .. testcode::
 
     -> enum Rank: Int {
-          case Ace = 1
-          case Two, Three, Four, Five, Six, Seven, Eight, Nine, Ten
-          case Jack, Queen, King
-          func description() -> String {
-             switch self {
-                case .Ace:
-                   return "ace"
-                case .Jack:
-                   return "jack"
-                case .Queen:
-                   return "queen"
-                case .King:
-                   return "king"
-                default:
-                   return String(self.toRaw())
-             }
-          }
+           case Ace = 1
+           case Two, Three, Four, Five, Six, Seven, Eight, Nine, Ten
+           case Jack, Queen, King
+           func description() -> String {
+               switch self {
+                   case .Ace:
+                       return "ace"
+                   case .Jack:
+                       return "jack"
+                   case .Queen:
+                       return "queen"
+                   case .King:
+                       return "king"
+                   default:
+                       return String(self.toRaw())
+               }
+           }
        }
     -> let ace = Rank.Ace
     << // ace : Rank = <opaque>
@@ -825,8 +825,8 @@ between the raw value and the enumeration value.
 
     >> var test_threeDescription = ""
     -> if let convertedRank = Rank.fromRaw(3) {
-    ->    let threeDescription = convertedRank.description()
-    >>    test_threeDescription = threeDescription
+    ->     let threeDescription = convertedRank.description()
+    >>     test_threeDescription = threeDescription
     -> }
     >> test_threeDescription
     <$ : String "3"
@@ -840,19 +840,19 @@ you don't have to provide one.
 .. testcode::
 
     -> enum Suit {
-          case Spades, Hearts, Diamonds, Clubs
-          func description() -> String {
-             switch self {
-                case .Spades:
-                   return "spades"
-                case .Hearts:
-                   return "hearts"
-                case .Diamonds:
-                   return "diamonds"
-                case .Clubs:
-                   return "clubs"
-             }
-          }
+           case Spades, Hearts, Diamonds, Clubs
+           func description() -> String {
+               switch self {
+                   case .Spades:
+                       return "spades"
+                   case .Hearts:
+                       return "hearts"
+                   case .Diamonds:
+                       return "diamonds"
+                   case .Clubs:
+                       return "clubs"
+               }
+           }
        }
     -> let hearts = Suit.Hearts
     << // hearts : Suit = <opaque>
@@ -888,11 +888,11 @@ structures are always copied when they are passed around in your code.
 .. testcode::
 
     -> struct Card {
-          var rank: Rank
-          var suit: Suit
-          func description() -> String {
-             return "The \(rank.description()) of \(suit.description())"
-          }
+           var rank: Rank
+           var suit: Suit
+           func description() -> String {
+               return "The \(rank.description()) of \(suit.description())"
+           }
        }
     -> let threeOfSpades = Card(rank: .Three, suit:.Spades)
     << // threeOfSpades : Card = V4REPL4Card (has 2 children)
@@ -924,8 +924,8 @@ or it responds with some error information.
 .. testcode::
 
     -> enum ServerResponse {
-          case Result(String, String)
-          case Error(String)
+           case Result(String, String)
+           case Error(String)
        }
     ---
     -> let success = ServerResponse.Result("6:00 am", "8:09 pm")
@@ -935,18 +935,18 @@ or it responds with some error information.
     ---
     >> var test_response: String = ""
     >> switch success {
-    >>    case let .Result(sunrise, sunset):
-    >>       test_response = "Sunrise is at \(sunrise) and sunset is at \(sunset)."
-    >>    case let .Error(error):
-    >>       test_response = "Failure...  \(error)"
+    >>     case let .Result(sunrise, sunset):
+    >>         test_response = "Sunrise is at \(sunrise) and sunset is at \(sunset)."
+    >>     case let .Error(error):
+    >>         test_response = "Failure...  \(error)"
     >> }
     >> test_response
     << // test_response : String = "Sunrise is at 6:00 am and sunset is at 8:09 pm."
     -> switch success {
-          case let .Result(sunrise, sunset):
-             let serverResponse = "Sunrise is at \(sunrise) and sunset is at \(sunset)."
-          case let .Error(error):
-             let serverResponse = "Failure...  \(error)"
+           case let .Result(sunrise, sunset):
+               let serverResponse = "Sunrise is at \(sunrise) and sunset is at \(sunset)."
+           case let .Error(error):
+               let serverResponse = "Failure...  \(error)"
        }
 
 .. Note:
@@ -972,8 +972,8 @@ Use ``protocol`` to declare a protocol:
 .. testcode::
 
     -> protocol ExampleProtocol {
-           var simpleDescription: String { get }
-           mutating func adjust()
+            var simpleDescription: String { get }
+            mutating func adjust()
        }
 
 Classes, enumerations, and structs can all adopt protocols.
@@ -981,11 +981,11 @@ Classes, enumerations, and structs can all adopt protocols.
 .. testcode::
 
     -> class SimpleClass: ExampleProtocol {
-           var simpleDescription: String = "A very simple class."
-           var anotherProperty: Int = 69105
-           func adjust() {
-               simpleDescription += "  Now 100% adjusted."
-           }
+            var simpleDescription: String = "A very simple class."
+            var anotherProperty: Int = 69105
+            func adjust() {
+                 simpleDescription += "  Now 100% adjusted."
+            }
        }
     -> var a = SimpleClass()
     << // a : SimpleClass = <SimpleClass instance>
@@ -994,10 +994,10 @@ Classes, enumerations, and structs can all adopt protocols.
     << // aDescription : String = "A very simple class.  Now 100% adjusted"
     ---
     -> struct SimpleStructure: ExampleProtocol {
-           var simpleDescription: String = "A simple structure"
-           mutating func adjust() {
-               simpleDescription += " (adjusted)"
-           }
+            var simpleDescription: String = "A simple structure"
+            mutating func adjust() {
+                 simpleDescription += " (adjusted)"
+            }
        }
     -> var b = SimpleStructure()
     << // b : SimpleStructure = SimpleStructure("A simple structure")
@@ -1069,11 +1069,11 @@ to make a generic function or type.
 .. testcode::
 
     -> func repeat<ItemType>(item: ItemType, times: Int) -> ItemType[] {
-          var result = Array<ItemType>()
-          for i in 0...times {
-              result += item
-          }
-          return result
+           var result = Array<ItemType>()
+           for i in 0...times {
+                result += item
+           }
+           return result
        }
     -> repeat("knock", 4)
     <$ : String[] = [knock, knock, knock, knock]
@@ -1087,8 +1087,8 @@ as well as classes, enumerations, and structures.
 
     // Re-implement the Swift standard library's optional type
     -> enum Optional<T> {
-          case None
-          case Some(T)
+           case None
+           case Some(T)
        }
     -> var possibleInteger = Optional.None
     -> possibleInteger = .Some(100)
@@ -1103,17 +1103,17 @@ or to require a class to have a particular superclass.
 .. testcode::
 
    -> func anyCommonElements <T, U where
-         T: Sequence, U: Sequence,
-         T.GeneratorType.Element: Equatable,
-         T.GeneratorType.Element == U.GeneratorType.Element>
+          T: Sequence, U: Sequence,
+          T.GeneratorType.Element: Equatable,
+          T.GeneratorType.Element == U.GeneratorType.Element>
       (lhs: T, rhs: U) -> Bool {
-         for lhsItem in lhs {
-            for rhsItem in rhs {
-               if lhsItem == rhsItem {
-                  return true
-               }
-            }
-         }
+          for lhsItem in lhs {
+              for rhsItem in rhs {
+                  if lhsItem == rhsItem {
+                      return true
+                  }
+              }
+          }
          return false
       }
    -> anyCommonElements([1, 2, 3], [3])
