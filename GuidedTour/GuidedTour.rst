@@ -1135,7 +1135,7 @@ or to require a class to have a particular superclass.
 In the simple cases,
 you can omit ``where`` and simply
 write the protocol or class name after a colon.
-Writing ```<T: Equatable>``
+Writing ``<T: Equatable>``
 is the same as writing ``<T where T: Equatable>``.
 
 Continue Reading
