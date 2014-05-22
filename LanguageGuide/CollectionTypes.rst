@@ -9,13 +9,13 @@ which can be referenced and looked up through a unique identifier
 (also known as a key).
 
 Arrays and dictionaries in Swift are always clear about the types of values
-(and keys) that they can store.
+and keys that they can store.
 This means that you cannot insert a value of the wrong type
 into an array or dictionary by mistake.
 It also means you can be confident about the types of values
 you will retrieve from an array or dictionary.
-Swift's use of explicitly-typed collections means that
-your code is always clear about the types of values it can work with,
+Swift's use of explicitly-typed collections ensures that
+your code is always clear about the types of values it can work with
 and enables you to catch any type mismatches early in your code's development.
 
 .. TODO: should I mention about bridging to NSArray / NSDictionary?
@@ -38,8 +38,7 @@ Mutability of Collections
 Arrays and dictionaries store multiple values together in a single collection.
 If you create an array or a dictionary, and assign it to a variable,
 the collection that is created will be :newTerm:`mutable`.
-This means that you will be able to change (or :newTerm:`mutate`) the collection
-after it has been created –
+This means that you can change (or :newTerm:`mutate`) the collection after it is created,
 perhaps to add more items to the collection,
 or to remove existing items from the ones it already contains.
 
@@ -49,11 +48,8 @@ and it is not possible to change the contents of the collection.
 
 It is good practice to create immutable collections
 in all cases where the collection does not need to change.
-This enables the Swift compiler to optimize the performance of
+Doing so enables the Swift compiler to optimize the performance of
 the collections you create.
-
-.. QUESTION: do we *want* to make this explicit point about choosing
-   immutablility by default for collection types?
 
 .. note::
 
@@ -62,7 +58,7 @@ the collections you create.
    and are copied rather than referenced
    when they are assigned to a constant or variable, or passed to a function.
    This is different from the behavior of Cocoa's ``NSArray`` and ``NSDictionary`` classes.
-   The difference between value types and reference types is covered in detail
+   The difference between value types and reference types is covered
    in :ref:`ClassesAndStructures_ValueTypesAndReferenceTypes`.
 
 .. TODO: provide an example of what this means in practice
@@ -82,15 +78,14 @@ The same value can appear in an array multiple times at different positions.
 
 Swift arrays are specific about the kinds of values they can store.
 They differ from Objective-C's ``NSArray`` and ``NSMutableArray`` classes,
-which can store any kind of object,
+which can store any kind of object
 and do not provide any information about the nature of the objects they return.
 In Swift, the type of values that a particular array can store is always made clear,
 either through an explicit type annotation, or through type inference,
 and does not have to be a class type.
 If you create an array of ``Int`` values, for example,
-then you can't insert anything other than ``Int`` values into that array.
-This means that Swift arrays are type-safe,
-and are always clear about what they may contain.
+you can't insert anything other than ``Int`` values into that array.
+Swift arrays are type safe, and are always clear about what they may contain.
 
 .. _CollectionTypes_ArrayTypeShorthandSyntax:
 
@@ -109,9 +104,9 @@ and is used throughout this guide when referring to the type of an array.
 Array Literals
 ~~~~~~~~~~~~~~
 
-An array can be initialized with an :newTerm:`array literal`,
+You can initialize an array with an :newTerm:`array literal`,
 which is a shorthand way to write one or more values as an array collection.
-Array literals are written as a list of values, separated by commas,
+An array literal is written as a list of values, separated by commas,
 surrounded by a pair of square brackets:
 
 .. syntax-outline::
@@ -135,20 +130,20 @@ Here, the ``shoppingList`` array is initialized with two ``String`` values
 
 .. note::
 
-   The ``shoppingList`` array is declared as a variable (with the ``var`` introducer),
-   and not a constant (with the ``let`` introducer),
-   because more items will be added to the shopping list in the examples below.
+   The ``shoppingList`` array is declared as a variable (with the ``var`` introducer)
+   and not a constant (with the ``let`` introducer)
+   because more items are added to the shopping list in the examples below.
 
-In this case, the array literal contains two ``String`` values, and nothing else.
-This matches the type of the ``shoppingList`` variable's declaration –
-an array that can only contain ``String`` values –
+In this case, the array literal contains two ``String`` values and nothing else.
+This matches the type of the ``shoppingList`` variable's declaration
+(an ``Array`` that can only contain ``String`` values),
 and so the assignment of the array literal is permitted
 as a way to initialize ``shoppingList`` with two initial items.
 
 Thanks to Swift's type inference,
 you don't have to write the type of the array
 if you're initializing it with an array literal containing values of the same type.
-The initialization of ``shoppingList`` could have been be written in a shorter form instead:
+The initialization of ``shoppingList`` could have been written in a shorter form instead:
 
 .. testcode:: arraysInferred
 
@@ -166,8 +161,8 @@ Accessing and Modifying an Array
 
 You access and modify an array through its methods and properties,
 or by using subscript syntax.
-You can find out the number of items in an array
-by checking its read-only ``count`` property:
+
+To find out the number of items in an array, check its read-only ``count`` property:
 
 .. testcode:: arraysInferred
 
@@ -186,7 +181,7 @@ as a shortcut for checking whether the ``count`` property is equal to ``0``:
       }
    <- The shopping list is not empty.
 
-A new item can be added to the end of an array by calling the array's ``append`` method:
+You can add a new item to the end of an array by calling the array's ``append`` method:
 
 .. testcode:: arraysInferred
 
@@ -217,8 +212,7 @@ with the addition assignment operator (``+=``):
    This section should be updated as and when that feature is added.
 
 You can retrieve a value from the array by using :newTerm:`subscript syntax`,
-passing in the index of the value you want to retrieve.
-Subscript syntax involves writing an index value within square brackets
+passing the index of the value you want to retrieve within square brackets
 immediately after the name of the array:
 
 .. testcode:: arraysInferred
@@ -241,12 +235,12 @@ You can also use subscript syntax to change an existing value at a given index:
 
 .. note::
 
-   You will trigger an unrecoverable runtime error
-   if you try to use subscript syntax to retrieve or set a value for an index
-   that is outside of an array's existing bounds.
+   If you try to use subscript syntax to retrieve or set a value for an index
+   that is outside of an array's existing bounds,
+   you will trigger an unrecoverable runtime error.
    However, you can check that an index is valid before using it,
    by comparing it to the array's ``count`` property.
-   Except for when ``count`` is ``0`` (meaning the array is empty),
+   Except when ``count`` is ``0`` (meaning the array is empty),
    the largest valid index in an array will always be ``count - 1``,
    because arrays are indexed from zero.
 
@@ -325,11 +319,11 @@ using initializer syntax:
    -> println("someInts is of type Int[] with \(someInts.count) items.")
    <- someInts is of type Int[] with 0 items.
 
-Note that the type of the ``someInts`` variable has been inferred to be ``Int[]``,
-because it was set to the output of an ``Int[]`` initializer.
+Note that the type of the ``someInts`` variable is inferred to be ``Int[]``,
+because it is set to the output of an ``Int[]`` initializer.
 
-Alternatively, if the context already provides type information –
-such as a function argument, or an already-typed variable or constant –
+Alternatively, if the context already provides type information,
+such as a function argument or an already-typed variable or constant,
 you can create an empty array with an empty array literal,
 which is written as ``[]``
 (an empty pair of square brackets):
@@ -345,8 +339,7 @@ which is written as ``[]``
 Swift's ``Array`` type also provides
 an initializer for creating an array of a certain size
 with all of its values set to a provided default value.
-This initializer takes two arguments –
-the number of items to be added to the new array (called ``count``),
+You pass this initializer the number of items to be added to the new array (called ``count``)
 and a default value of the appropriate type (called ``repeatedValue``):
 
 .. testcode:: arraysEmpty
@@ -355,7 +348,7 @@ and a default value of the appropriate type (called ``repeatedValue``):
    << // threeDoubles : Double[] = [0.0, 0.0, 0.0]
    // threeDoubles is of type Double[], and equals [0.0, 0.0, 0.0]
 
-Thanks to type inference, you don't actually need to specify
+Thanks to type inference, you don't need to specify
 the type to be stored in the array when using this initializer,
 because it can be inferred from the default value:
 
@@ -392,11 +385,11 @@ the definition for a particular word.
 
 Swift dictionaries are specific about the types of keys and values they can store.
 They differ from Objective-C's ``NSDictionary`` and ``NSMutableDictionary`` classes,
-which can use any kind of object as their keys and values,
+which can use any kind of object as their keys and values
 and do not provide any information about the nature of these objects.
 In Swift, the type of keys and values
 that a particular dictionary can store is always made clear,
-either through an explicit type annotation, or through type inference.
+either through an explicit type annotation or through type inference.
 
 Swift's dictionary type is written as ``Dictionary<KeyType, ValueType>``,
 where ``KeyType`` is the type of value that can be used as a dictionary key,
@@ -420,9 +413,9 @@ are also hashable by default.
 Dictionary Literals
 ~~~~~~~~~~~~~~~~~~~
 
-A dictionary can be initialized with a :newTerm:`dictionary literal`,
+You can initialize a dictionary with with a :newTerm:`dictionary literal`,
 which has a similar syntax to the array literal seen earlier.
-Dictionary literals are a shorthand way to write
+A dictionary literal is a shorthand way to write
 one or more key-value pairs as a ``Dictionary`` collection.
 
 A :newTerm:`key-value pair` is a combination of a key and a value.
@@ -460,8 +453,8 @@ The first pair has a key of ``"TYO"`` and a value of ``"Tokyo"``.
 The second pair has a key of ``"DUB"`` and a value of ``"Dublin"``.
 
 This dictionary literal contains two ``String: String`` pairs.
-This matches the type of the ``airports`` variable declaration –
-a ``Dictionary`` with only ``String`` keys, and only ``String`` values –
+This matches the type of the ``airports`` variable declaration
+(a ``Dictionary`` with only ``String`` keys, and only ``String`` values)
 and so the assignment of the dictionary literal is permitted
 as a way to initialize the ``airports`` dictionary with two initial items.
 
@@ -475,8 +468,8 @@ The initialization of ``airports`` could have been be written in a shorter form 
    -> var airports = ["TYO": "Tokyo", "DUB": "Dublin"]
    << // airports : Dictionary<String, String> = ["DUB": "Dublin", "TYO": "Tokyo"]
 
-Because all of the keys in the literal are of the same type as each other,
-and likewise all of the values are of the same type as each other,
+Because all keys in the literal are of the same type as each other,
+and likewise all values are of the same type as each other,
 Swift can infer that ``Dictionary<String, String>`` is
 the correct type to use for the ``airports`` dictionary.
 
@@ -485,7 +478,7 @@ the correct type to use for the ``airports`` dictionary.
 Accessing and Modifying a Dictionary
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can access and modify a dictionary through its methods and properties,
+You access and modify a dictionary through its methods and properties,
 or by using subscript syntax.
 As with an array, you can find out the number of items in a ``Dictionary``
 by checking its read-only ``count`` property:
@@ -631,7 +624,7 @@ Creating an Empty Dictionary
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 As with arrays,
-you can create an empty ``Dictionary`` of a certain type using initializer syntax:
+you can create an empty ``Dictionary`` of a certain type by using initializer syntax:
 
 .. testcode:: dictionariesEmpty
 
@@ -663,4 +656,4 @@ which is written as ``[:]``
 
    Behind the scenes,
    Swift's array and dictionary types are implemented as :newTerm:`generic collections`.
-   Generic types are described in :doc:`Generics`.
+   For more on generic types and collections, see :doc:`Generics`.
