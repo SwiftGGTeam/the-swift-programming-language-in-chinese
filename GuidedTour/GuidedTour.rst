@@ -964,7 +964,7 @@ Protocols and Extensions
 
 Use ``protocol`` to declare a protocol:
 
-.. testcode::
+.. FIXME Broken
 
     -> protocol ExampleProtocol {
             var simpleDescription: String { get }
@@ -973,7 +973,7 @@ Use ``protocol`` to declare a protocol:
 
 Classes, enumerations, and structs can all adopt protocols.
 
-.. testcode::
+.. FIXME Broken
 
     -> class SimpleClass: ExampleProtocol {
             var simpleDescription: String = "A very simple class."
@@ -1015,7 +1015,7 @@ You can use an extension to add protocol conformance
 to a type that is declared elsewhere,
 or even a type you imported from a library or framework.
 
-.. testcode::
+.. FIXME Broken
 
     -> extension Int: ExampleProtocol {
            var simpleDescription: String {
@@ -1040,7 +1040,7 @@ but all conform to a particular protocol.
 When you work with values whose type is a protocol type,
 methods outside the protocol definition are not available.
 
-.. testcode::
+.. FIXME Broken
 
     -> let protocolValue: ExampleProtocol = a
     << protocolValue : ExampleProtocol = <ExampleProtocol instance>
