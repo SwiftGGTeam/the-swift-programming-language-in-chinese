@@ -760,7 +760,7 @@ you can write ``?`` before operations like methods, properties, and subscripting
 If the value before the ``?`` is ``nil``,
 everything after the ``?`` is ignored
 and the value of the whole expression is ``nil``.
-Otherwise, the optional value is unwrapped
+Otherwise, the optional value is unwrapped,
 and everything after the ``?`` acts on the unwrapped value.
 In both cases,
 the value of the whole expression is an optional value.
@@ -880,7 +880,7 @@ Structures support many of the same behaviors as classes,
 including methods and initializers.
 One of the most important differences
 between structures and classes is that
-structures are always copied when they are passed around in your code
+structures are always copied when they are passed around in your code,
 but classes are passed by reference.
 
 .. testcode::
@@ -903,12 +903,16 @@ but classes are passed by reference.
    a full deck of cards,
    with one card of each combination of rank and suit.
 
-An instance of an enumeration member can have values associated with it.
-This is different than having a raw value:
-the raw value for an enumeration member is the same for all instances,
-but instances of the same enumeration member
-can have different associated values.
+An instance of an enumeration member
+can have values associated with the instance.
+Instances of the same enumeration member
+can have different values associated with them.
 You provide the associated values when you create the instance.
+Associated values and raw values are different:
+the raw value of all an enumeration member
+is the same for all of its instances,
+and you provide the raw value when you define the enumeration.
+
 For example,
 consider the case of requesting
 the sunrise and sunset time from a server.
@@ -1136,7 +1140,7 @@ Continue Reading
 ----------------
 
 Access the rest of this book on on the web,
-download it in iBooks.
+download it in iBooks,
 or download it as a PDF.
 
 `The Swift Programming Language <//apple_ref/doc/uid/TP40014097>`_
