@@ -898,7 +898,7 @@ see :doc:`../LanguageGuide/BasicOperators` and :doc:`../LanguageGuide/AdvancedOp
     postfix-expression --> dynamic-type-expression
     postfix-expression --> subscript-expression
     postfix-expression --> forced-value-expression
-    postfix-expression --> optional-chaining-operator
+    postfix-expression --> optional-chaining-expression
 
 
 .. _Expressions_FunctionCallExpression:
@@ -1310,6 +1310,6 @@ without using optional chaining:
 
 .. syntax-grammar::
 
-   Grammar of a chained-optional expression
+   Grammar of an optional-chaining expression
 
-   chained-optional-expression --> postfix-expression ``?``
+   optional-chaining-expression --> postfix-expression ``?``
