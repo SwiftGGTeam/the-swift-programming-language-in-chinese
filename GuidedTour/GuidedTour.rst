@@ -909,7 +909,7 @@ Instances of the same enumeration member
 can have different values associated with them.
 You provide the associated values when you create the instance.
 Associated values and raw values are different:
-the raw value of all an enumeration member
+The raw value of an enumeration member
 is the same for all of its instances,
 and you provide the raw value when you define the enumeration.
 
