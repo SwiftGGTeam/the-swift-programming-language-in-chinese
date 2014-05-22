@@ -934,12 +934,9 @@ Optionals
 ---------
 
 You use :newTerm:`optionals` in situations where a value may be absent.
-An optional says:
+An optional says either:
 
-* There *is* a value, and it equals *x*
-
-…or…
-
+* There *is* a value, and it equals *x*, or
 * There *isn't* a value at all
 
 .. note::
