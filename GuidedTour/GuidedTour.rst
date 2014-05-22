@@ -214,10 +214,8 @@ to work with values that might be missing.
 These values are represented as optionals.
 An optional value either contains a value
 or contains ``nil`` to indicate that the value is missing.
-Write a question mark (``?``) after a type
-to mark it as optional.
-
-.. TODO: Rewrite the last sentence to tie into the rest of the para.
+Write a question mark (``?``) after the type of a value
+to mark the value as optional.
 
 .. testcode::
 
@@ -288,8 +286,6 @@ at the end of each case‘s code.
 You also use ``for``-``in`` to iterate over items in a dictionary
 by providing a pair of names to use
 for each key-value pair.
-
-.. TODO: Shorten listing
 
 .. testcode::
 
