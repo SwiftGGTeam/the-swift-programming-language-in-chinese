@@ -904,7 +904,6 @@ but classes are passed by reference.
    a full deck of cards,
    with one card of each combination of rank and suit.
 
-
 An instance of an enumeration member can have values associated with it.
 This is different than having a raw value:
 the raw value for an enumeration member is the same for all instances,
