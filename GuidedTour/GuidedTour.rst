@@ -703,7 +703,7 @@ is always the same as the side length of its square.
 .. FIXME Broken
 
    -> class TriangleAndSquare {
-          var triangle: triangle {
+          var triangle: EquilateralTriangle {
               willSet {
                   square.sideLength = newValue.sideLength
               }
@@ -714,8 +714,8 @@ is always the same as the side length of its square.
               }
           }
           init(size: Double, name: String) {
-              square = Square(size, name)
-              triangle = triangle(size, name)
+              square = Square(sideLength: size, name: name)
+              triangle = EquilateralTriangle(sideLength: size, name: name)
           }
       }
    -> var triangleAndSquare = TriangleAndSquare(size: 10, name: "another test shape")
