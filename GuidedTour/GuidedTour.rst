@@ -768,7 +768,7 @@ the value of the whole expression is an optional value.
 
 .. testcode::
 
-    -> let optionalSquare: Square? = Square(size: 2.5, name:"optional square")
+    -> let optionalSquare: Square? = Square(sideLength: 2.5, name:"optional square")
     -> let sideLength = optionalSquare?.sideLength
 
 Enumerations and Structures
