@@ -194,7 +194,7 @@ Braces around the body are required.
                teamScore += 1
            }
        }
-    >> teamScore
+    -> teamScore
     << // teamScore : Int = 11
 
 ..
@@ -259,15 +259,14 @@ and tests for equality.
    << // vegetable : String = "red pepper"
    -> switch vegetable {
           case "celery":
-              println("Add some raisins and make ants on a log.")
+              let vegetableComment = "Add some raisins and make ants on a log."
           case "cucumber", "watercress":
-              println("That would make a good tea sandwich.")
+              let vegetableComment = "That would make a good tea sandwich."
           case let x where x.hasSuffix("pepper"):
-              println("Is it a spicy \(x)?")
+              let vegetableComment = "Is it a spicy \(x)?"
           default:
-              println("Everything tastes good in soup.")
+              let vegetableComment = "Everything tastes good in soup."
       }
-   << Is it a spicy red pepper?
 
 .. admonition:: Experiment
 
@@ -304,7 +303,7 @@ for each key-value pair.
               }
           }
       }
-   >> largest
+   -> largest
    << // largest : Int = 25
 
 .. admonition:: Experiment
@@ -323,16 +322,16 @@ ensuring that the loop is run at least once.
    -> while n < 100 {
           n = n * 2
       }
-   -> println("n is \(n)")
-   << n is 128
+   -> n
+   << // n : Int =128
    ---
    -> var m = 2
    << // m : Int = 2
    -> do {
           m = m * 2
       } while m < 100
-   -> println("m is \(m)")
-   << m is 128
+   -> m
+   << // m : Int = 128
 
 You can also keep an index in a loop
 using ``..`` to make a range of indexes,
@@ -386,7 +385,7 @@ Use a tuple to return multiple values from a function.
    -> func getGasPrices() -> (Double, Double, Double) {
           return (3.59, 3.69, 3.79)
       }
-   >> getGasPrices()
+   -> getGasPrices()
    <$ : (Double, Double, Double) = (3.59, 3.69, 3.79)
 
 Functions can also take a variable number of arguments,
@@ -516,8 +515,11 @@ as the second argument to the ``sort`` function.
 
 .. testcode::
 
-    -> sort([1, 5, 3, 12, 2], >)
+    -> sort([1, 5, 3, 12, 2], > )
     <$ : Array<Int> = [12, 5, 3, 2, 1]
+
+.. Note: Extra space after > is a workaround
+   <rdar://problem/16998083> Passing an operator name as a closure requires an extra space
 
 .. Omitted curried functions and custom operators as "advanced" topics.
 
@@ -647,7 +649,7 @@ properties can have a getter and a setter.
 .. testcode::
 
 
-    -> class EquilateralTriangle: Shape {
+    -> class EquilateralTriangle: NamedShape {
            var sideLength: Double = 0.0
     ---
            init(sideLength: Double, name: String) {
@@ -698,10 +700,10 @@ For example, the class below ensures
 that the side length of its triangle
 is always the same as the side length of its square.
 
-.. testcode::
+.. FIXME Broken
 
    -> class TriangleAndSquare {
-          var triangle: triangle {
+          var triangle: EquilateralTriangle {
               willSet {
                   square.sideLength = newValue.sideLength
               }
@@ -712,18 +714,18 @@ is always the same as the side length of its square.
               }
           }
           init(size: Double, name: String) {
-              square = Square(size, name)
-              triangle = triangle(size, name)
+              square = Square(sideLength: size, name: name)
+              triangle = EquilateralTriangle(sideLength: size, name: name)
           }
       }
    -> var triangleAndSquare = TriangleAndSquare(size: 10, name: "another test shape")
    << // triangleAndSquare :TriangleAndSquare = <TriangleAndSquare instance>
    -> triangleAndSquare.square.sideLength
    <$ : Double = 10.0
-   -> triangleAndSquare.triangle.radius
+   -> triangleAndSquare.triangle.sideLength
    <$ : Double = 10.0
    -> triangleAndSquare.square = Square(sideLength: 50, name: "larger square")
-   -> triangleAndSquare.triangle.radius
+   -> triangleAndSquare.triangle.sideLength
    <$ : Double = 50.0
 
 .. What is getter-setter-keyword-clause for?
@@ -758,14 +760,14 @@ you can write ``?`` before operations like methods, properties, and subscripting
 If the value before the ``?`` is ``nil``,
 everything after the ``?`` is ignored
 and the value of the whole expression is ``nil``.
-Otherwise, the optional value is unwrapped
+Otherwise, the optional value is unwrapped,
 and everything after the ``?`` acts on the unwrapped value.
 In both cases,
 the value of the whole expression is an optional value.
 
 .. testcode::
 
-    -> let optionalSquare: Square? = Square(size: 2.5, name:"optional square")
+    -> let optionalSquare: Square? = Square(sideLength: 2.5, name:"optional square")
     -> let sideLength = optionalSquare?.sideLength
 
 Enumerations and Structures
@@ -878,7 +880,7 @@ Structures support many of the same behaviors as classes,
 including methods and initializers.
 One of the most important differences
 between structures and classes is that
-structures are always copied when they are passed around in your code
+structures are always copied when they are passed around in your code,
 but classes are passed by reference.
 
 .. testcode::
@@ -901,13 +903,16 @@ but classes are passed by reference.
    a full deck of cards,
    with one card of each combination of rank and suit.
 
-
-An instance of an enumeration member can have values associated with it.
-This is different than having a raw value:
-the raw value for an enumeration member is the same for all instances,
-but instances of the same enumeration member
-can have different associated values.
+An instance of an enumeration member
+can have values associated with the instance.
+Instances of the same enumeration member
+can have different values associated with them.
 You provide the associated values when you create the instance.
+Associated values and raw values are different:
+The raw value of an enumeration member
+is the same for all of its instances,
+and you provide the raw value when you define the enumeration.
+
 For example,
 consider the case of requesting
 the sunrise and sunset time from a server.
@@ -1063,7 +1068,7 @@ to make a generic function or type.
 
     -> func repeat<ItemType>(item: ItemType, times: Int) -> ItemType[] {
            var result = Array<ItemType>()
-           for i in 0...times {
+           for i in 0..times {
                 result += item
            }
            return result
@@ -1079,11 +1084,11 @@ as well as classes, enumerations, and structures.
 .. testcode::
 
     // Re-implement the Swift standard library's optional type
-    -> enum Optional<T> {
+    -> enum OptionalValue<T> {
            case None
            case Some(T)
        }
-    -> var possibleInteger = Optional.None
+    -> var possibleInteger: OptionalValue<Int> = .None
     -> possibleInteger = .Some(100)
 
 Use ``where`` after the type name
@@ -1117,7 +1122,6 @@ or to require a class to have a particular superclass.
    Modify the ``anyCommonElements`` function
    to make a function that returns an array
    of the elements that any two sequences have in common.
-   <C-D-o>
 
 ..
   TODO: dig into this error
@@ -1136,7 +1140,7 @@ Continue Reading
 ----------------
 
 Access the rest of this book on on the web,
-download it in iBooks.
+download it in iBooks,
 or download it as a PDF.
 
 `The Swift Programming Language <//apple_ref/doc/uid/TP40014097>`_
