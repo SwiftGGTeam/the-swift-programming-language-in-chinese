@@ -1276,7 +1276,7 @@ Suitable scenarios for an assertion check include:
 * An optional value is currently ``nil``,
   but a non-``nil`` value is essential for subsequent code to execute successfully.
 
-See also :doc:`Subscripts` and functions :doc:`Functions`.
+See also :doc:`Subscripts` and :doc:`Functions`.
 
 .. note::
 
