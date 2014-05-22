@@ -171,11 +171,11 @@ which prints its own ``String`` value rather than returning it:
 
 .. testcode:: functionsWithoutReturnValues
 
-   -> func waveGoodbye(personName: String) {
-         println("Goodbye, \(personName) 👋")
+   -> func sayGoodbye(personName: String) {
+         println("Goodbye, \(personName)!")
       }
-   -> waveGoodbye("Dave")
-   <- Goodbye, Dave 👋
+   -> sayGoodbye("Dave")
+   <- Goodbye, Dave!
 
 Because it does not need to return a value,
 the function's definition does not include the return arrow (``->``)
@@ -183,7 +183,7 @@ or a return type.
 
 .. note::
 
-   Strictly speaking, the ``waveGoodbye`` function *does* still return a value,
+   Strictly speaking, the ``sayGoodbye`` function *does* still return a value,
    even though no return value is defined.
    Functions without a defined return type return a special value of type ``Void``.
    This is simply an empty tuple,
