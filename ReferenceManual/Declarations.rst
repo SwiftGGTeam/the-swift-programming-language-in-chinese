@@ -512,10 +512,10 @@ are discussed in :ref:`Properties_TypeProperties`.
    types of those properties are not computed/inferred.
 
 
-.. _Declarations_TypealiasDeclaration:
+.. _Declarations_TypeAliasDeclaration:
 
-Typealias Declaration
----------------------
+Type Alias Declaration
+----------------------
 
 A :newTerm:`type alias declaration` introduces a named alias of an existing type into your program.
 Type alias declarations begin with the keyword ``typealias`` and have the following form:
@@ -687,7 +687,7 @@ enumeration cases of the same basic type:
 
 .. syntax-outline::
 
-    enum <#enumeration name#> : <#raw value type#> {
+    enum <#enumeration name#>: <#raw value type#> {
         case <#enumeration case 1#> = <#raw value 1#>
         case <#enumeration case 2#> = <#raw value 2#>
     }
