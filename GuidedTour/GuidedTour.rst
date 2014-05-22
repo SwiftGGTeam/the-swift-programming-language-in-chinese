@@ -720,10 +720,10 @@ is always the same as the side length of its square.
    << // triangleAndSquare :TriangleAndSquare = <TriangleAndSquare instance>
    -> triangleAndSquare.square.sideLength
    <$ : Double = 10.0
-   -> triangleAndSquare.triangle.radius
+   -> triangleAndSquare.triangle.sideLength
    <$ : Double = 10.0
    -> triangleAndSquare.square = Square(sideLength: 50, name: "larger square")
-   -> triangleAndSquare.triangle.radius
+   -> triangleAndSquare.triangle.sideLength
    <$ : Double = 50.0
 
 .. What is getter-setter-keyword-clause for?
