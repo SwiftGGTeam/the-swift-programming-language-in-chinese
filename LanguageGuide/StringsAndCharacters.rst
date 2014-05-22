@@ -556,7 +556,7 @@ In the example above, the first four decimal ``codeUnit`` values
 represent the characters ``D``, ``o``, ``g``, and ``!``,
 whose UTF-8 representation is the same as their ASCII representation.
 The last four ``codeUnit`` values (``240``, ``159``, ``144``, ``182``)
-are a four-byte UTF-8 representation of the 🐶 character.
+are a four-byte UTF-8 representation of the ``DOG FACE`` character.
 
 .. TODO: contiguousUTF8()
 
@@ -588,7 +588,7 @@ represent the characters ``D``, ``o``, ``g``, and ``!``,
 whose UTF-16 code units have the same values as in the string's UTF-8 representation.
 
 The fifth and sixth ``codeUnit`` values (``55357`` and ``56374``)
-are a UTF-16 surrogate pair representation of the 🐶 character.
+are a UTF-16 surrogate pair representation of the ``DOG FACE`` character.
 These values are a lead surrogate value of ``U+D83D`` (decimal value ``55357``),
 and a trail surrogate value of ``U+DC36`` (decimal value ``56374``).
 
@@ -625,7 +625,7 @@ The ``value`` properties for the first four ``UnicodeScalar`` values
 once again represent the characters ``D``, ``o``, ``g``, and ``!``.
 The ``value`` property of the fifth and final ``UnicodeScalar``, ``128054``,
 is a decimal equivalent of the hexadecimal value ``1F436``,
-which is equivalent to the Unicode scalar ``U+1F436``, or 🐶.
+which is equivalent to the Unicode scalar ``U+1F436`` for the ``DOG FACE`` character.
 
 As an alternative to querying their ``value`` properties,
 each ``UnicodeScalar`` value can also be used to construct a new ``String`` value,
