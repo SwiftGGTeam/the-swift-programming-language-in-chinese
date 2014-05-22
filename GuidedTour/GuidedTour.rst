@@ -595,10 +595,10 @@ when it is declared (like ``numberOfSides``)
 or in the initializer (like ``name``).
 
 Use ``deinit`` to create a deinitializer
-if you need te perform some clean-up
+if you need to perform some clean-up
 before the object is deallocated.
 
-Subclasses include their superclass's name
+Subclasses include their superclass name
 after their class name,
 separated by a colon.
 There is no requirement for classes to subclass any standard root class,
@@ -642,10 +642,10 @@ that don't actually override any method in the superclass.
    Make another subclass of ``NamedShape``
    called ``Circle``
    that takes a radius and a name
-   as arguments to its initializer,
-   and implements an ``area`` and a ``describe`` method.
+   as arguments to its initializer.
+   Implement an ``area`` and a ``describe`` method on the ``Circle`` class.
 
-In addition to simple properties which are stored,
+In addition to simple properties that are stored,
 properties can have a getter and a setter.
 
 .. testcode::
