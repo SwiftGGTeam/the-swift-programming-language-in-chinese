@@ -68,11 +68,10 @@ that you determine once but use in many places.
 
 A constant or variable must have the same type
 as the value you want to assign to it.
-However, you don't have to explicitly write
-the type of every single constant and variable.
-Providing a value when you create it lets the compiler infer
-the type of the constant or variable.
-In example above
+However, you don't always have to write the type explicitly.
+Providing a value when you create a constant or variable
+lets the compiler infer its type.
+In the example above,
 the compiler infers that ``myVariable`` is an integer
 because its initial value is a integer.
 
@@ -97,7 +96,7 @@ separated by a colon.
 
 Values are never implicitly converted to another type.
 If you need to convert a value to a different type,
-make an instance of the desired type explicitly.
+explicitly make an instance of the desired type.
 
 .. testcode::
 
@@ -147,8 +146,8 @@ the index or key in brackets.
     -> shoppingList[1] = "bottle of water"
     ---
     -> var occupations = [
-          "Malcolm": "Captain",
-          "Kaylee": "Mechanic",
+           "Malcolm": "Captain",
+           "Kaylee": "Mechanic",
         ]
     << // occupations : Dictionary<String, String> = Dictionary<String, String>(1.33333333333333, 3, <DictionaryBufferOwner<String, String> instance>)
     -> occupations["Jayne"] = "Public Relations"
@@ -214,11 +213,9 @@ You can use ``if`` and ``let`` together
 to work with values that might be missing.
 These values are represented as optionals.
 An optional value either contains a value
-or ``nil`` to indicate that the value is missing.
-Write a question mark (``?``) after a type
-to mark it as optional.
-
-.. TODO: Rewrite the last sentence to tie into the rest of the para.
+or contains ``nil`` to indicate that the value is missing.
+Write a question mark (``?``) after the type of a value
+to mark the value as optional.
 
 .. testcode::
 
@@ -232,7 +229,7 @@ to mark it as optional.
    -> var greeting = "Hello!"
    << // greeting : String = "Hello!"
    -> if let name = optionalName {
-         greeting = "Hello, \(name)"
+          greeting = "Hello, \(name)"
       }
    >> greeting
    << // greeting : String = "Hello, John Appleseed"
@@ -251,25 +248,24 @@ to the variable after ``let``,
 which makes the unwrapped value available
 inside the block of code.
 
-.. TODO: Just --> they are not limited to integers
-
-Switches support any kind of data, not just integers,
-and the matching criteria can be more complex
-than simple comparison.
+Switches support any kind of data
+and a wide variety of comparison operations ---
+they aren't limited to integers
+and tests for equality.
 
 .. testcode::
 
    -> let vegetable = "red pepper"
    << // vegetable : String = "red pepper"
    -> switch vegetable {
-         case "celery":
-            println("Add some raisins and make ants on a log.")
-         case "cucumber", "watercress":
-            println("That would make a good tea sandwich.")
-         case let x where x.hasSuffix("pepper"):
-            println("Is it a spicy \(x)?")
-         default:
-            println("Everything tastes good in soup.")
+          case "celery":
+              println("Add some raisins and make ants on a log.")
+          case "cucumber", "watercress":
+              println("That would make a good tea sandwich.")
+          case let x where x.hasSuffix("pepper"):
+              println("Is it a spicy \(x)?")
+          default:
+              println("Everything tastes good in soup.")
       }
    << Is it a spicy red pepper?
 
@@ -291,24 +287,22 @@ You also use ``for``-``in`` to iterate over items in a dictionary
 by providing a pair of names to use
 for each key-value pair.
 
-.. TODO: Shorten listing
-
 .. testcode::
 
    -> let interestingNumbers = [
-         "Prime": [2, 3, 5, 7, 11, 13],
-         "Fibonacci": [1, 1, 2, 3, 5, 8],
-         "Square": [1, 4, 9, 16, 25],
+          "Prime": [2, 3, 5, 7, 11, 13],
+          "Fibonacci": [1, 1, 2, 3, 5, 8],
+          "Square": [1, 4, 9, 16, 25],
       ]
    << // interestingNumbers : Dictionary<String, Array<Int>> = Dictionary<String, Array<Int>>(1.33333333333333, 3, <DictionaryBufferOwner<String, Array<Int>> instance>)
    -> var largest = 0
    << // largest : Int = 0
    -> for (kind, numbers) in interestingNumbers {
-         for number in numbers {
-            if number > largest {
-                largest = number
-            }
-         }
+          for number in numbers {
+              if number > largest {
+                  largest = number
+              }
+          }
       }
    >> largest
    << // largest : Int = 25
@@ -327,7 +321,7 @@ ensuring that the loop is run at least once.
    -> var n = 2
    << // n : Int = 2
    -> while n < 100 {
-         n = n * 2
+          n = n * 2
       }
    -> println("n is \(n)")
    << n is 128
@@ -335,7 +329,7 @@ ensuring that the loop is run at least once.
    -> var m = 2
    << // m : Int = 2
    -> do {
-         m = m * 2
+          m = m * 2
       } while m < 100
    -> println("m is \(m)")
    << m is 128
@@ -348,13 +342,13 @@ These two loops do the same thing:
 .. testcode::
 
    -> for i in 0..3 {
-         println(i)
+          println(i)
       }
    << 0
    << 1
    << 2
    -> for var i = 0; i < 3; ++i {
-         println(i)
+          println(i)
       }
    << 0
    << 1
@@ -375,7 +369,7 @@ from the function's return type.
 .. testcode::
 
     -> func greet(name: String, day: String) -> String {
-          return "Hello \(name), today is \(day)."
+           return "Hello \(name), today is \(day)."
        }
     -> greet("Bob", "Tuesday")
     <$ : String = "Hello Bob, today is Tuesday."
@@ -390,7 +384,7 @@ Use a tuple to return multiple values from a function.
 .. testcode::
 
    -> func getGasPrices() -> (Double, Double, Double) {
-         return (3.59, 3.69, 3.79)
+          return (3.59, 3.69, 3.79)
       }
    >> getGasPrices()
    <$ : (Double, Double, Double) = (3.59, 3.69, 3.79)
@@ -402,11 +396,11 @@ collecting them into an array.
 
    -> // Reimplement the Standard Library sum function for Int values.
    -> func sumOf(numbers: Int...) -> Int {
-         var sum = 0
-         for number in numbers {
-            sum += number
-         }
-         return sum
+          var sum = 0
+          for number in numbers {
+              sum += number
+          }
+          return sum
       }
    -> sumOf()
    <$ : Int = 0
@@ -429,12 +423,12 @@ that is long or complex.
 .. testcode::
 
     -> func returnFifteen() -> Int {
-          var y = 10
-          func add() -> () {
-             y += 5
-          }
-          add()
-          return y
+           var y = 10
+           func add() -> () {
+               y += 5
+           }
+           add()
+           return y
        }
     -> returnFifteen()
     <$ : Int = 15
@@ -445,10 +439,10 @@ This means a function can return another function as its value.
 .. testcode::
 
     -> func makeIncrementer() -> (Int -> Int) {
-          func addOne(number: Int) -> Int {
-             return 1 + number
-          }
-          return addOne
+           func addOne(number: Int) -> Int {
+               return 1 + number
+           }
+           return addOne
        }
     -> var increment = makeIncrementer()
     << // increment : (Int -> Int) = <unprintable value>
@@ -460,15 +454,15 @@ A function can take another function as one of its arguments.
 .. testcode::
 
     -> func hasAnyMatches(list: Int[], condition: Int -> Bool) -> Bool {
-          for item in list {
-             if condition(item) {
-                return true
-             }
-          }
-          return false
+           for item in list {
+               if condition(item) {
+                   return true
+               }
+           }
+           return false
        }
     -> func lessThanTen(number: Int) -> Bool {
-          return number < 10
+           return number < 10
        }
     -> var numbers = [20, 19, 7, 12]
     << // numbers : Array<Int> = [8, 3, 5, 6]
@@ -483,9 +477,9 @@ Use ``in`` to separate the arguments and return type from the body.
 .. testcode::
 
     -> numbers.map({
-          (number: Int) -> Int in
-          let result = 3 * number
-          return result
+           (number: Int) -> Int in
+           let result = 3 * number
+           return result
        })
     <$ : Array<Int> = [24, 9, 15, 18]
 
@@ -531,7 +525,7 @@ Objects and Classes
 -------------------
 
 Use ``class`` followed by the class's name to create a class.
-A property declaration in class is written the same way
+A property declaration in a class is written the same way
 as a constant or variable declaration,
 except that it is in the context of a class.
 Likewise, method and function declarations are written the same way.
@@ -539,17 +533,17 @@ Likewise, method and function declarations are written the same way.
 .. testcode::
 
     -> class Shape {
-          var numberOfSides: Int = 0
-          func description() -> String {
-             return "A shape with \(numberOfSides) sides."
-          }
+           var numberOfSides: Int = 0
+           func description() -> String {
+               return "A shape with \(numberOfSides) sides."
+           }
        }
     >> Shape().description()
     <$ : String = "A shape with 0 sides."
 
 .. admonition:: Experiment
 
-   Add a constant property with ``let``
+   Add a constant property with ``let``,
    and add another method that takes an argument.
 
 Create an instance of a class
@@ -572,16 +566,16 @@ Use ``init`` to create one.
 .. testcode::
 
     -> class NamedShape {
-          var numberOfSides: Int = 0
-          var name: String
-
-          init(name: String) {
-             self.name = name
-          }
-
-          func description() -> String {
-             return "A shape with \(numberOfSides) sides."
-          }
+           var numberOfSides: Int = 0
+           var name: String
+    ---
+           init(name: String) {
+              self.name = name
+           }
+    ---
+           func description() -> String {
+              return "A shape with \(numberOfSides) sides."
+           }
        }
     >> NamedShape(name: "test name").name
     <$ : String = "test name"
@@ -597,10 +591,10 @@ when it is declared (like ``numberOfSides``)
 or in the initializer (like ``name``).
 
 Use ``deinit`` to create a deinitializer
-if you need te perform some clean-up
+if you need to perform some clean-up
 before the object is deallocated.
 
-Subclasses include their superclass's name
+Subclasses include their superclass name
 after their class name,
 separated by a colon.
 There is no requirement for classes to subclass any standard root class,
@@ -616,21 +610,21 @@ that don't actually override any method in the superclass.
 .. testcode::
 
     -> class Square: NamedShape {
-          var sideLength: Double
-
-          init(sideLength: Double, name: String) {
-             self.sideLength = sideLength
-             super.init(name: name)
-             numberOfSides = 4
-          }
-
-          func area() ->  Double {
-             return sideLength * sideLength
-          }
-
-          override func description() -> String {
-             return "A square with sides of length \(sideLength)."
-          }
+           var sideLength: Double
+    ---
+           init(sideLength: Double, name: String) {
+               self.sideLength = sideLength
+               super.init(name: name)
+               numberOfSides = 4
+           }
+    ---
+           func area() ->  Double {
+               return sideLength * sideLength
+           }
+    ---
+           override func description() -> String {
+               return "A square with sides of length \(sideLength)."
+           }
        }
     -> let test = Square(sideLength: 5.2, name: "my test square")
     << // test : Square = <Square instance>
@@ -644,35 +638,35 @@ that don't actually override any method in the superclass.
    Make another subclass of ``NamedShape``
    called ``Circle``
    that takes a radius and a name
-   as arguments to its initializer,
-   and implements an ``area`` and a ``describe`` method.
+   as arguments to its initializer.
+   Implement an ``area`` and a ``describe`` method on the ``Circle`` class.
 
-In addition to simple properties which are stored,
+In addition to simple properties that are stored,
 properties can have a getter and a setter.
 
 .. testcode::
 
 
     -> class EquilateralTriangle: Shape {
-          var sideLength: Double = 0.0
+           var sideLength: Double = 0.0
     ---
-          init(sideLength: Double, name: String) {
-             self.sideLength = sideLength
-             super.init(name: name)
-             numberOfSides = 3
-          }
+           init(sideLength: Double, name: String) {
+               self.sideLength = sideLength
+               super.init(name: name)
+               numberOfSides = 3
+           }
     ---
-          var perimeter: Double {
-             get {
-                 return 3.0 * sideLength
-             }
-             set {
-                sideLength = newValue / 3.0
-             }
-          }
+           var perimeter: Double {
+               get {
+                    return 3.0 * sideLength
+               }
+               set {
+                   sideLength = newValue / 3.0
+               }
+           }
     ---
            override func description() -> String {
-              return "An equilateral triagle with sides of length \(sideLength)."
+               return "An equilateral triagle with sides of length \(sideLength)."
            }
        }
     -> var triangle = EquilateralTriangle(sideLength: 3.1, name: "a triangle")
@@ -707,20 +701,20 @@ is always the same as the side length of its square.
 .. testcode::
 
    -> class TriangleAndSquare {
-         var triangle: triangle {
-            willSet {
-               square.sideLength = newValue.sideLength
-            }
-         }
-         var square: Square {
-            willSet {
-               triangle.sideLength = newValue.sideLength
-            }
-         }
-         init(size: Double, name: String) {
-            square = Square(size, name)
-            triangle = triangle(size, name)
-         }
+          var triangle: triangle {
+              willSet {
+                  square.sideLength = newValue.sideLength
+              }
+          }
+          var square: Square {
+              willSet {
+                  triangle.sideLength = newValue.sideLength
+              }
+          }
+          init(size: Double, name: String) {
+              square = Square(size, name)
+              triangle = triangle(size, name)
+          }
       }
    -> var triangleAndSquare = TriangleAndSquare(size: 10, name: "another test shape")
    << // triangleAndSquare :TriangleAndSquare = <TriangleAndSquare instance>
@@ -751,26 +745,27 @@ You can specify a second name, which is used inside the method.
 .. testcode::
 
     -> class Counter {
-          var count: Int = 0
-          func incrementBy(amount: Int, numberOfTimes times: Int) {
-             count += amount * times
-          }
+           var count: Int = 0
+           func incrementBy(amount: Int, numberOfTimes times: Int) {
+               count += amount * times
+           }
        }
     -> var counter = Counter()
     -> counter.incrementBy(2, numberOfTimes: 7)
 
 When working with optional values,
-you can use ``?`` before operations like methods and properties.
-When the value is ``nil``,
-it returns ``nil`` and anything after it is ignored.
-Otherwise, it unwraps the optional
-and anything after the ``?`` acts on the unwrapped value.
-
-.. TODO: Revise para -- "it" doesn't really have a referent
+you can write ``?`` before operations like methods, properties, and subscripting.
+If the value before the ``?`` is ``nil``,
+everything after the ``?`` is ignored
+and the value of the whole expression is ``nil``.
+Otherwise, the optional value is unwrapped
+and everything after the ``?`` acts on the unwrapped value.
+In both cases,
+the value of the whole expression is an optional value.
 
 .. testcode::
 
-    -> let optionalSquare: Square? = Square(size: 2.5, name:"optional ssquare")
+    -> let optionalSquare: Square? = Square(size: 2.5, name:"optional square")
     -> let sideLength = optionalSquare?.sideLength
 
 Enumerations and Structures
@@ -783,23 +778,23 @@ enumerations can have methods associated with them.
 .. testcode::
 
     -> enum Rank: Int {
-          case Ace = 1
-          case Two, Three, Four, Five, Six, Seven, Eight, Nine, Ten
-          case Jack, Queen, King
-          func description() -> String {
-             switch self {
-                case .Ace:
-                   return "ace"
-                case .Jack:
-                   return "jack"
-                case .Queen:
-                   return "queen"
-                case .King:
-                   return "king"
-                default:
-                   return String(self.toRaw())
-             }
-          }
+           case Ace = 1
+           case Two, Three, Four, Five, Six, Seven, Eight, Nine, Ten
+           case Jack, Queen, King
+           func description() -> String {
+               switch self {
+                   case .Ace:
+                       return "ace"
+                   case .Jack:
+                       return "jack"
+                   case .Queen:
+                       return "queen"
+                   case .King:
+                       return "king"
+                   default:
+                       return String(self.toRaw())
+               }
+           }
        }
     -> let ace = Rank.Ace
     << // ace : Rank = <opaque>
@@ -825,8 +820,8 @@ between the raw value and the enumeration value.
 
     >> var test_threeDescription = ""
     -> if let convertedRank = Rank.fromRaw(3) {
-    ->    let threeDescription = convertedRank.description()
-    >>    test_threeDescription = threeDescription
+    ->     let threeDescription = convertedRank.description()
+    >>     test_threeDescription = threeDescription
     -> }
     >> test_threeDescription
     <$ : String "3"
@@ -840,19 +835,19 @@ you don't have to provide one.
 .. testcode::
 
     -> enum Suit {
-          case Spades, Hearts, Diamonds, Clubs
-          func description() -> String {
-             switch self {
-                case .Spades:
-                   return "spades"
-                case .Hearts:
-                   return "hearts"
-                case .Diamonds:
-                   return "diamonds"
-                case .Clubs:
-                   return "clubs"
-             }
-          }
+           case Spades, Hearts, Diamonds, Clubs
+           func description() -> String {
+               switch self {
+                   case .Spades:
+                       return "spades"
+                   case .Hearts:
+                       return "hearts"
+                   case .Diamonds:
+                       return "diamonds"
+                   case .Clubs:
+                       return "clubs"
+               }
+           }
        }
     -> let hearts = Suit.Hearts
     << // hearts : Suit = <opaque>
@@ -883,16 +878,17 @@ Structures support many of the same behaviors as classes,
 including methods and initializers.
 One of the most important differences
 between structures and classes is that
-structures are always copied when they are passed around in your code.
+structures are always copied when they are passed around in your code
+but classes are passed by reference.
 
 .. testcode::
 
     -> struct Card {
-          var rank: Rank
-          var suit: Suit
-          func description() -> String {
-             return "The \(rank.description()) of \(suit.description())"
-          }
+           var rank: Rank
+           var suit: Suit
+           func description() -> String {
+               return "The \(rank.description()) of \(suit.description())"
+           }
        }
     -> let threeOfSpades = Card(rank: .Three, suit:.Spades)
     << // threeOfSpades : Card = V4REPL4Card (has 2 children)
@@ -906,15 +902,12 @@ structures are always copied when they are passed around in your code.
    with one card of each combination of rank and suit.
 
 
-.. TODO: [Contributor 9502] wants me to rewrite the "different than raw" bit.
-
-An enumeration can have other values associated with it.
-This association is different than a raw value:
-the raw value for a member of an enumeration is always the same,
-but you provide the associated values
-when you create the instance of the enumeration,
-so different instances of the same member
+An instance of an enumeration member can have values associated with it.
+This is different than having a raw value:
+the raw value for an enumeration member is the same for all instances,
+but instances of the same enumeration member
 can have different associated values.
+You provide the associated values when you create the instance.
 For example,
 consider the case of requesting
 the sunrise and sunset time from a server.
@@ -924,8 +917,8 @@ or it responds with some error information.
 .. testcode::
 
     -> enum ServerResponse {
-          case Result(String, String)
-          case Error(String)
+           case Result(String, String)
+           case Error(String)
        }
     ---
     -> let success = ServerResponse.Result("6:00 am", "8:09 pm")
@@ -935,18 +928,18 @@ or it responds with some error information.
     ---
     >> var test_response: String = ""
     >> switch success {
-    >>    case let .Result(sunrise, sunset):
-    >>       test_response = "Sunrise is at \(sunrise) and sunset is at \(sunset)."
-    >>    case let .Error(error):
-    >>       test_response = "Failure...  \(error)"
+    >>     case let .Result(sunrise, sunset):
+    >>         test_response = "Sunrise is at \(sunrise) and sunset is at \(sunset)."
+    >>     case let .Error(error):
+    >>         test_response = "Failure...  \(error)"
     >> }
     >> test_response
     << // test_response : String = "Sunrise is at 6:00 am and sunset is at 8:09 pm."
     -> switch success {
-          case let .Result(sunrise, sunset):
-             let serverResponse = "Sunrise is at \(sunrise) and sunset is at \(sunset)."
-          case let .Error(error):
-             let serverResponse = "Failure...  \(error)"
+           case let .Result(sunrise, sunset):
+               let serverResponse = "Sunrise is at \(sunrise) and sunset is at \(sunset)."
+           case let .Error(error):
+               let serverResponse = "Failure...  \(error)"
        }
 
 .. Note:
@@ -972,8 +965,8 @@ Use ``protocol`` to declare a protocol:
 .. testcode::
 
     -> protocol ExampleProtocol {
-           var simpleDescription: String { get }
-           mutating func adjust()
+            var simpleDescription: String { get }
+            mutating func adjust()
        }
 
 Classes, enumerations, and structs can all adopt protocols.
@@ -981,11 +974,11 @@ Classes, enumerations, and structs can all adopt protocols.
 .. testcode::
 
     -> class SimpleClass: ExampleProtocol {
-           var simpleDescription: String = "A very simple class."
-           var anotherProperty: Int = 69105
-           func adjust() {
-               simpleDescription += "  Now 100% adjusted."
-           }
+            var simpleDescription: String = "A very simple class."
+            var anotherProperty: Int = 69105
+            func adjust() {
+                 simpleDescription += "  Now 100% adjusted."
+            }
        }
     -> var a = SimpleClass()
     << // a : SimpleClass = <SimpleClass instance>
@@ -994,10 +987,10 @@ Classes, enumerations, and structs can all adopt protocols.
     << // aDescription : String = "A very simple class.  Now 100% adjusted"
     ---
     -> struct SimpleStructure: ExampleProtocol {
-           var simpleDescription: String = "A simple structure"
-           mutating func adjust() {
-               simpleDescription += " (adjusted)"
-           }
+            var simpleDescription: String = "A simple structure"
+            mutating func adjust() {
+                 simpleDescription += " (adjusted)"
+            }
        }
     -> var b = SimpleStructure()
     << // b : SimpleStructure = SimpleStructure("A simple structure")
@@ -1069,11 +1062,11 @@ to make a generic function or type.
 .. testcode::
 
     -> func repeat<ItemType>(item: ItemType, times: Int) -> ItemType[] {
-          var result = Array<ItemType>()
-          for i in 0...times {
-              result += item
-          }
-          return result
+           var result = Array<ItemType>()
+           for i in 0...times {
+                result += item
+           }
+           return result
        }
     -> repeat("knock", 4)
     <$ : String[] = [knock, knock, knock, knock]
@@ -1087,8 +1080,8 @@ as well as classes, enumerations, and structures.
 
     // Re-implement the Swift standard library's optional type
     -> enum Optional<T> {
-          case None
-          case Some(T)
+           case None
+           case Some(T)
        }
     -> var possibleInteger = Optional.None
     -> possibleInteger = .Some(100)
@@ -1096,24 +1089,24 @@ as well as classes, enumerations, and structures.
 Use ``where`` after the type name
 to specify a list of requirements ---
 for example,
-a protocol that the type must implement,
-to require that two types be the same,
+to require the type to implement a protocol,
+to require two types to be the same,
 or to require a class to have a particular superclass.
 
 .. testcode::
 
    -> func anyCommonElements <T, U where
-         T: Sequence, U: Sequence,
-         T.GeneratorType.Element: Equatable,
-         T.GeneratorType.Element == U.GeneratorType.Element>
+          T: Sequence, U: Sequence,
+          T.GeneratorType.Element: Equatable,
+          T.GeneratorType.Element == U.GeneratorType.Element>
       (lhs: T, rhs: U) -> Bool {
-         for lhsItem in lhs {
-            for rhsItem in rhs {
-               if lhsItem == rhsItem {
-                  return true
-               }
-            }
-         }
+          for lhsItem in lhs {
+              for rhsItem in rhs {
+                  if lhsItem == rhsItem {
+                      return true
+                  }
+              }
+          }
          return false
       }
    -> anyCommonElements([1, 2, 3], [3])
@@ -1123,7 +1116,8 @@ or to require a class to have a particular superclass.
 
    Modify the ``anyCommonElements`` function
    to make a function that returns an array
-   of the elements any two sequences have in common.
+   of the elements that any two sequences have in common.
+   <C-D-o>
 
 ..
   TODO: dig into this error
