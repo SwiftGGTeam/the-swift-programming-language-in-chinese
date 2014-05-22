@@ -194,7 +194,7 @@ Braces around the body are required.
                teamScore += 1
            }
        }
-    >> teamScore
+    -> teamScore
     << // teamScore : Int = 11
 
 ..
@@ -259,15 +259,14 @@ and tests for equality.
    << // vegetable : String = "red pepper"
    -> switch vegetable {
           case "celery":
-              println("Add some raisins and make ants on a log.")
+              let vegetableComment = "Add some raisins and make ants on a log."
           case "cucumber", "watercress":
-              println("That would make a good tea sandwich.")
+              let vegetableComment = "That would make a good tea sandwich."
           case let x where x.hasSuffix("pepper"):
-              println("Is it a spicy \(x)?")
+              let vegetableComment = "Is it a spicy \(x)?"
           default:
-              println("Everything tastes good in soup.")
+              let vegetableComment = "Everything tastes good in soup."
       }
-   << Is it a spicy red pepper?
 
 .. admonition:: Experiment
 
@@ -304,7 +303,7 @@ for each key-value pair.
               }
           }
       }
-   >> largest
+   -> largest
    << // largest : Int = 25
 
 .. admonition:: Experiment
@@ -323,16 +322,16 @@ ensuring that the loop is run at least once.
    -> while n < 100 {
           n = n * 2
       }
-   -> println("n is \(n)")
-   << n is 128
+   -> n
+   << // n : Int =128
    ---
    -> var m = 2
    << // m : Int = 2
    -> do {
           m = m * 2
       } while m < 100
-   -> println("m is \(m)")
-   << m is 128
+   -> m
+   << // m : Int = 128
 
 You can also keep an index in a loop
 using ``..`` to make a range of indexes,
@@ -386,7 +385,7 @@ Use a tuple to return multiple values from a function.
    -> func getGasPrices() -> (Double, Double, Double) {
           return (3.59, 3.69, 3.79)
       }
-   >> getGasPrices()
+   -> getGasPrices()
    <$ : (Double, Double, Double) = (3.59, 3.69, 3.79)
 
 Functions can also take a variable number of arguments,
