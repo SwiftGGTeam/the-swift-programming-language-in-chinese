@@ -181,26 +181,28 @@ function types support functions and methods that take multiple paramaters
 and return multiple values.
 
 You can apply the ``auto_closure`` attribute to a function type that has a parameter
-type of ``()`` and that returns the type of an expression. An autoclosure function
+type of ``()`` and that returns the type of an expression
+(see :ref:`Attributes_TypeAttributes`).
+An autoclosure function
 captures an implicit closure over the specified expression, instead of the expression
-itself. For example, the following are equivalent:
+itself. The following example uses the ``auto_closure`` attribute in defining
+a very simple assert function:
 
 .. testcode::
 
-    -> var a: () -> Int = { 42 }
-    << // a : () -> Int = <unprintable value>
-    -> var a: @auto_closure () -> Int = 42
-    !! <REPL Input>:1:5: error: invalid redeclaration of 'a'
-    !! var a: () -> Int = { 42 }
-    !!     ^
-    !! <REPL Input>:1:5: note: 'a' previously declared here
-    !! var a: @auto_closure () -> Int = 42
-    !!     ^
+    -> func simpleAssert(condition: @auto_closure () -> Bool, message: String) {
+           if !condition() {
+               println(message)
+           }
+       }
+    -> let testNumber = 5
+    << // testNumber : Int = 5
+    -> simpleAssert(testNumber % 2 == 0, "testNumber isn't an even number.")
+    <- testNumber isn't an even number.
 
-For an example of how to use the ``auto_closure`` attribute,
-see :ref:`Closures_Autoclosures`. See also :ref:`Attributes_TypeAttributes`.
-
-.. Curried function types
+.. TODO: Add this back in after Dave updates the Guide with an autoclousre section:
+    "For an example of how to use the ``auto_closure`` attribute,
+    see :ref:`Closures_Autoclosures`."
 
 A function type can have a variadic parameter as the last parameter in its *parameter type*.
 Syntactically,
@@ -378,7 +380,7 @@ to declare an optional array of integers, write the type annotation as ``(Int[])
 writing ``Int[]?`` produces an error.
 
 If you don't provide an initial value when you declare an
-optional variable or property, it's value automatically defaults to ``nil``.
+optional variable or property, its value automatically defaults to ``nil``.
 
 Optionals conform to the ``LogicValue`` protocol and therefore may occur in a Boolean context.
 In that context,

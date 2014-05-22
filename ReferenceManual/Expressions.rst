@@ -97,9 +97,9 @@ The Swift standard library provides the following binary operators:
     - ``*`` Multiply
     - ``/`` Divide
     - ``%`` Remainder
-    - ``&*`` Mulitply with overflow
-    - ``&/`` Divide with overflow
-    - ``&%`` Remainder with overflow
+    - ``&*`` Multiply, ignoring overflow
+    - ``&/`` Divide, ignoring overflow
+    - ``&%`` Remainder, ignoring overflow
     - ``&`` Bitwise AND
 
 * Additive (Left associative, precedence level 140)
@@ -118,7 +118,7 @@ The Swift standard library provides the following binary operators:
     - ``is`` Type check
     - ``as`` Type cast
 
-* Comparitive (No associativity, precedence level 130)
+* Comparative (No associativity, precedence level 130)
     - ``<`` Less than
     - ``<=`` Less than or equal
     - ``>`` Greater than
@@ -974,7 +974,7 @@ the parentheses can be omitted:
 
     Grammar of a function call expression
 
-    function-call-expression --> postfix-expression parenthesized-expression trailing-closure-OPT
+    function-call-expression --> postfix-expression parenthesized-expression
     function-call-expression --> postfix-expression parenthesized-expression-OPT trailing-closure
     trailing-closure --> closure-expression
 
@@ -991,7 +991,7 @@ Initializer Expression
 ~~~~~~~~~~~~~~~~~~~~~~
 
 An :newTerm:`initializer expression` provides access
-to a types's initializer.
+to a type's initializer.
 It has the following form:
 
 .. syntax-outline::
@@ -1000,7 +1000,7 @@ It has the following form:
 
 You use the initializer expression in a function call expression
 to initialize a new instance of a type.
-Unlike other functions, an initializer can't be used as a value.
+Unlike functions, an initializer can't be used as a value.
 For example:
 
 .. testcode::
@@ -1133,9 +1133,9 @@ immediately followed by ``.dynamicType``. It has the following form:
 
     <#expression#>.dynamicType
 
-The *expression* must evaluate to an instance of a type.
-The entire ``dynamicType`` expression evaluates to the value of that instance's
-runtime type, as the following example shows:
+The *expression* can't be the name of a type.
+The entire ``dynamicType`` expression evaluates to the value of the
+runtime type of the *expression*, as the following example shows:
 
 .. testcode::
 
@@ -1261,8 +1261,7 @@ It has the following form:
     <#expression#>?
 
 On its own, the postfix ``?`` operator
-simply returns the value of its argument ---
-for example, the expression ``x?`` has the same value as ``x``.
+simply returns the value of its argument as an optional.
 
 Postfix expressions that contain an optional-chaining expression
 are evaluated in a special way.

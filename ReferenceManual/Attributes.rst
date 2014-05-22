@@ -126,9 +126,9 @@ the ``noreturn`` attribute to a function or method *type*.
 
 ``final``
     Apply this attribute to a class or to a property, method,
-    or subscript member of a class. It's applied to class to indicate that the class
+    or subscript member of a class. It's applied to a class to indicate that the class
     can't be subclassed. It's applied to a property, method, or subscript of a class
-    to indicate that those class members can't be overridden in any subclass.
+    to indicate that that class member can't be overridden in any subclass.
 
 .. TODO: Dave may or may not include an example of how to use the 'final' attribute
     in the guide. If he does, include the following sentence:
@@ -152,7 +152,7 @@ the ``noreturn`` attribute to a function or method *type*.
     method in a conforming type.
 
 ``NSCopying``
-    Apply this attribute to a variable stored property of a class.
+    Apply this attribute to a stored variable property of a class.
     This attribute causes the property's setter to be synthesized with a *copy*
     of the property's value---returned by the ``copyWithZone`` method---instead of the
     value of the property itself.
@@ -169,7 +169,7 @@ the ``noreturn`` attribute to a function or method *type*.
     provide a link to the relevant section.
 
 ``NSManaged``
-    Apply this attribute to a variable stored property of a class that inherits from
+    Apply this attribute to a stored variable property of a class that inherits from
     ``NSManagedObject`` to indicate that the storage and implementation of the
     property are provided dynamically by Core Data at runtime
     based on the associated entity description.
@@ -183,13 +183,14 @@ the ``noreturn`` attribute to a function or method *type*.
 
     If you apply the ``objc`` attribute to a class or protocol, it's
     implicitly applied to the members of that class or protocol.
-    The compiler also implicitly adds the ``objc`` attribute to a class or protocol
-    that inherits from another class or protocol marked with the ``objc`` attribute.
-    That said, protocols marked with the ``objc`` attribute can't inherit
+    The compiler also implicitly adds the ``objc`` attribute to a class
+    that inherits from another class marked with the ``objc`` attribute.
+    Protocols marked with the ``objc`` attribute can't inherit
     from protocols that aren't.
 
     The ``objc`` attribute optionally accepts a single attribute argument,
-    which consists of a string. Use this attribute when you want to expose a different
+    which consists of an identifier.
+    Use this attribute when you want to expose a different
     name to Objective-C for the entity the ``objc`` attribute applies to.
     You can use this argument to name classes, protocols, methods,
     getters, setters, and initializers. The example below exposes
@@ -343,7 +344,7 @@ attribute to a function or method *declaration*.
     Apply this attribue to a function or method type that takes no arguments
     and that returns the type of the expression.
     For an example of how to use the ``auto_closure`` attribute,
-    see :ref:`Closures_Autoclosures`.
+    see :ref:`Types_FunctionType`.
 
 ``noreturn``
     Apply this attribute to the type of a function or method

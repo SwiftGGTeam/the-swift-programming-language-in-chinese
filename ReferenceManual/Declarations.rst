@@ -154,7 +154,7 @@ is made available in the current scope.
 
 .. syntax-outline::
 
-    import <#import kind#> <#module#>
+    import <#import kind#> <#module#>.<#symbol name#>
     import <#module#>.<#submodule#>
 
 .. TODO: Need to add more to this section.
@@ -290,10 +290,10 @@ with the ``override`` keyword, as described in :ref:`Inheritance_Overriding`.
 
 .. _Declarations_StoredVariablesAndVariableStoredProperties:
 
-Stored Variables and Variable Stored Properties
+Stored Variables and Stored Variable Properties
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The following form declares a stored variable or variable stored property:
+The following form declares a stored variable or stored variable property:
 
 .. syntax-outline::
 
@@ -304,7 +304,7 @@ of a function, or in the context of a class or structure declaration.
 When a variable declaration of this form is declared at global scope or the local
 scope of a function, it is referred to as a :newTerm:`stored variable`.
 When it is declared in the context of a class or structure declaration,
-it is referred to as a :newTerm:`variable stored property`.
+it is referred to as a :newTerm:`stored variable property`.
 
 The initializer *expression* can't be present in a protocol declaration,
 but in all other contexts, the initializer *expression* is optional.
@@ -316,7 +316,7 @@ if the *variable name* is a tuple pattern,
 the name of each item in the tuple is bound to the corresponding value
 in the initializer *expression*.
 
-As their names suggest, the value of a stored variable or a variable stored property
+As their names suggest, the value of a stored variable or a stored variable property
 is stored in memory.
 
 
@@ -359,7 +359,7 @@ If you provide a setter name, it is used as the name of the parameter to the set
 If you do not provide a setter name, the default parameter name to the setter is ``newValue``,
 as described in :ref:`Properties_ShorthandSetterDeclaration`.
 
-Unlike stored named values and variable stored properties,
+Unlike stored named values and stored variable properties,
 the value of a computed named value or a computed property is not stored in memory.
 
 For more information and to see examples of computed properties,
@@ -432,17 +432,18 @@ see :ref:`Properties_PropertyObservers`.
 
 .. _Declarations_StaticVariableProperties:
 
-Static Variable Properties
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+Class and Static Variable Properties
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+To declare a class computed property, mark the declaration with the ``class`` keyword.
 To declare a static variable property,
-mark the declaration with the ``static`` keyword. Static properties
+mark the declaration with the ``static`` keyword. Class and static properties
 are discussed in :ref:`Properties_TypeProperties`.
 
 .. TODO: Discuss class properties after they're implemented
     (probably not until after 1.0)
-
-    To declare a class variable property, mark the declaration with the ``class`` keyword.
+    Update: we now have class computed properties. We'll get class stored properites
+    sometime after WWDC.
 
 .. TODO: Need to discuss static variable properties in more detail.
 
@@ -651,8 +652,16 @@ all initializers must be declared explicitly. Initializers can delegate
 to other initializers in the enumeration, but the initialization process is complete
 only after an initializer assigns one of the enumeration cases to ``self``.
 
+Like structures but unlike classes, enumerations are value types;
+instances of an enumeration are copied when assigned to
+variables or constants, or when passed as arguments to a function call.
+For information about value types,
+see :ref:`ClassesAndStructures_ValueTypesAndReferenceTypes`.
+
 You can extend the behavior of an enumeration type with an extension declaration,
 as discussed in :ref:`Declarations_ExtensionDeclaration`.
+
+.. _Declarations_EnumerationsWithCasesOfAnyType:
 
 Enumerations with Cases of Any Type
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -679,8 +688,10 @@ immediately following the name of the case.
 For more information and to see examples of cases with associated value types,
 see :ref:`Enumerations_AssociatedValues`.
 
-Enumerations with Cases of the Same Basic Type
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. _Declarations_EnumerationsWithRawCaseValues:
+
+Enumerations with Raw Cases Values
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The following form declares an enumeration type that contains
 enumeration cases of the same basic type:
@@ -920,9 +931,7 @@ declared properties and it must do so before calling any of its superclass's
 designated initializers.
 
 A class can override properties, methods, and initializers of its superclass.
-That said, a designated initializer of the class must call one of its superclass's
-designated initializers before the class overrides any of the superclass's properties.
-Overridden methods must be marked with the ``override`` keyword.
+Overridden methods and properties must be marked with the ``override`` keyword.
 
 Although properties and methods declared in the *superclass* are inherited by
 the current class, designated initializers declared in the *superclass* are not.
@@ -987,8 +996,8 @@ which describe the conformance requirements that any type adopting the protocol 
 In particular, a protocol can declare that conforming types must
 implement certain properties, methods, initializers, and subscripts.
 Protocols can also declare special kinds of type aliases,
-called :newTerm:`associated types`, that can clarify the relationship
-between the various declarations of the protocol.
+called :newTerm:`associated types`, that can specify relationships
+among the various declarations of the protocol.
 The *protocol member declarations* are discussed in detail below.
 
 Protocol types can inherit from any number of other protocols.
@@ -1016,7 +1025,7 @@ properties, methods, and subscripts declared in the protocol.
 That said, you can mark these protocol member declarations with the ``optional`` attribute
 to specify that their implementation by a conforming type is optional.
 The ``optional`` attribute can be applied only to protocols that are marked
-with the ``objc`` attribute. As a result, only classes types can adopt and conform
+with the ``objc`` attribute. As a result, only class types can adopt and conform
 to a protocol that contains optional member requirements.
 For more information about how to use the ``optional`` attribute
 and for guidance about how to access optional protocol members---
@@ -1034,6 +1043,12 @@ mark the entire protocol declaration with the ``class_protocol`` attribute.
 Any protocol that inherits from a protocol marked with the ``class_protocol`` attribute
 can likewise be adopted only by a class type.
 
+.. note::
+
+    If a protocol is already marked with the ``objc`` attribute,
+    the ``class_protocol`` attribute is implicitly applied to that protocol;
+    there’s no need to mark the protocol with the ``class_protocol`` attribute explicitly.
+
 Protocols are named types, and thus they can appear in all the same places
 in your code as other named types, as discussed in :ref:`Protocols_UsingProtocolsAsTypes`.
 However,
@@ -1041,7 +1056,7 @@ you can't construct an instance of a protocol,
 because protocols do not actually provide the implementations for the requirements
 they specify.
 
-You can also use protocols to declare which methods a delegate of a class or structure
+You can use protocols to declare which methods a delegate of a class or structure
 should implement, as described in :ref:`Protocols_Delegates`.
 
 .. TODO: Now that functions and methods have syntactically diverged,
@@ -1097,7 +1112,7 @@ directly in the protocol in which it is declared.
 
 The getter and setter requirements can be satisfied by a conforming type in a variety of ways.
 If a property declaration includes both the ``get`` and ``set`` keywords,
-a conforming type can implement it with a variable stored property
+a conforming type can implement it with a stored variable property
 or a computed property that is both readable and writeable
 (that is, one that implements both a getter and a setter). However,
 that property declaration can't be implemented as a constant property
