@@ -30,6 +30,17 @@ and enables you to catch any type mismatches early in your code's development.
    for (index, object) in enumerate(collection) { //... }
    Should these be mentioned, and if so, should it be here or in Control Flow?
 
+.. note::
+
+   Because they hold a collection of values rather than an individual value,
+   Swift's array and dictionary types exhibit slightly different behavior to other types
+   when they are assigned to a constant or variable,
+   or when are passed to a function or method.
+   This behavior is also different from the behavior of
+   Cocoa's ``NSArray`` and ``NSDictionary`` types.
+   For more information,
+   see :ref:`ClassesAndStructures_AssignmentAndCopyBehaviorForCollectionTypes`.
+
 .. _CollectionTypes_Mutability:
 
 Mutability of Collections
@@ -50,20 +61,6 @@ It is good practice to create immutable collections
 in all cases where the collection does not need to change.
 Doing so enables the Swift compiler to optimize the performance of
 the collections you create.
-
-.. note::
-
-   Swift's array and dictionary types are
-   *value types*, not *reference types*,
-   and are copied rather than referenced
-   when they are assigned to a constant or variable, or passed to a function.
-   This is different from the behavior of Cocoa's ``NSArray`` and ``NSDictionary`` classes.
-   The difference between value types and reference types is covered
-   in :ref:`ClassesAndStructures_ValueTypesAndReferenceTypes`.
-
-.. TODO: provide an example of what this means in practice
-   (similar to the Resolution examples in Classes and Structures),
-   particularly in light of recent changes to Array to give it partial reference semantics.
 
 .. _CollectionTypes_Arrays:
 

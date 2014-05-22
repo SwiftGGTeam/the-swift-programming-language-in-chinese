@@ -524,3 +524,271 @@ The process of defining your own implementations of the “equal to” and “no
 is described in :ref:`AdvancedOperators_EquivalenceOperators`.
 
 .. TODO: This needs clarifying with regards to function references.
+
+.. _ClassesAndStructures_AssignmentAndCopyBehaviorForCollectionTypes:
+
+Assignment and Copy Behavior for Collection Types
+-------------------------------------------------
+
+Swift's ``Array`` and ``Dictionary`` types are implemented as structures.
+However, because they hold a collection of values rather than an individual value,
+the ``Array`` and ``Dictionary`` types exhibit slightly different behavior to other Swift types
+when they are assigned to a constant or variable,
+or when they are passed to a function or method.
+Their behavior is also different from the behavior of
+Cocoa's ``NSArray`` and ``NSDictionary`` types, which are implemented as classes.
+
+.. _ClassesAndStructures_AssignmentAndCopyBehaviorForDictionaries:
+
+Assignment and Copy Behavior for Dictionaries
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Whenever you assign a ``Dictionary`` instance to a constant or variable,
+or pass a ``Dictionary`` instance as an argument to a function or method call,
+the dictionary is *copied* at the point that
+the assignment or call takes place.
+
+If the keys and/or values stored in the ``Dictionary`` instance are value types
+(that is, structures or enumerations),
+they too are copied when the assignment or call takes place.
+Conversely, if the keys and/or values are reference types
+(that is, classes or functions),
+the references are copied, but not the class instances or functions that they refer to.
+(This is known as a :newTerm:`shallow copy` of the dictionary.)
+
+.. note::
+
+   The behavior described above is different from the behavior of ``NSDictionary``,
+   which assigns and passes around a dictionary
+   as a reference to a single ``NSDictionary`` instance,
+   rather than making a copy.
+
+The example below defines a dictionary called ``ages``,
+which stores the names and ages of four people.
+The ``ages`` dictionary is then assigned to a new variable called ``copiedAges``,
+and is copied when this assignment takes place.
+After the assignment, ``ages`` and ``copiedAges`` are two separate dictionaries.
+
+.. testcode:: assignmentAndCopyForDictionaries
+
+   -> var ages = ["Peter": 23, "Wei": 35, "Anish": 65, "Katya": 19]
+   << // ages : Dictionary<String, Int> = ["Anish": 65, "Wei": 35, "Peter": 23, "Katya": 19]
+   -> var copiedAges = ages
+   << // copiedAges : Dictionary<String, Int> = ["Anish": 65, "Wei": 35, "Peter": 23, "Katya": 19]
+
+The keys for this dictionary are of type ``String``,
+and the values are of type ``Int``.
+Both of these types are value types in Swift,
+and so the keys and values are also copied when the dictionary copy takes place.
+
+You can prove that the ``ages`` dictionary has been copied
+by changing an age value in one of the dictionaries
+and checking the corresponding value in the other.
+If you set the value for ``"Peter"`` in the ``copiedAges`` dictionary to ``24``,
+the ``ages`` dictionary still returns the old value of ``23``
+from before the copy took place:
+
+.. testcode:: assignmentAndCopyForDictionaries
+
+   -> copiedAges["Peter"] = 24
+   -> println(ages["Peter"])
+   <- 23
+
+.. _ClassesAndStructures_AssignmentAndCopyBehaviorForArrays:
+
+Assignment and Copy Behavior for Arrays
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The assignment and copy behavior for Swift's ``Array`` type
+is slightly more complex than for its ``Dictionary`` type.
+This enables ``Array`` to provide C-like performance when working with an array's contents,
+and to copy an array's contents only when copying is necessary.
+
+If you assign an ``Array`` instance to a constant or variable,
+or pass an ``Array`` instance as an argument to a function or method call,
+the contents of the array are *not* copied at the point that
+the assignment or call takes place.
+This is different from the behavior of ``Dictionary`` described above,
+which is always copied.
+
+For arrays, copying only takes place when you perform an action
+that has the potential to modify the *length* of the array.
+This includes appending, inserting, or removing items,
+or using a ranged subscript to replace a range of items in the array.
+If and when array copying does take place,
+the copy behavior for an array's contents is the same shallow copy as for
+a dictionary's keys and values,
+as described in :ref:`ClassesAndStructures_AssignmentAndCopyBehaviorForDictionaries`.
+
+.. TODO: I don't actually describe how to replace a range of items!
+
+.. note::
+
+   The behavior described above is different from the behavior of ``NSArray``,
+   which assigns and passes around an array
+   as a reference to a single ``NSArray`` instance,
+   rather than making a copy.
+
+The example below assigns a new array of ``Int`` values to a variable called ``a``.
+This array is also assigned to two further variables called ``b`` and ``c``:
+
+.. testcode:: assignmentAndCopyForArrays
+
+   -> var a = [1, 2, 3]
+   << // a : Array<Int> = [1, 2, 3]
+   -> var b = a
+   << // b : Array<Int> = [1, 2, 3]
+   -> var c = a
+   << // c : Array<Int> = [1, 2, 3]
+
+You can retrieve the first value in the array with subscript syntax
+on either ``a``, ``b``, or ``c``:
+
+.. testcode:: assignmentAndCopyForArrays
+
+   -> println(a[0])
+   </ 1
+   -> println(b[0])
+   </ 1
+   -> println(c[0])
+   </ 1
+
+If you set an item in the array to a new value with subscript syntax,
+all three of ``a``, ``b``, and ``c`` will return the new value.
+Note that the array is not copied when you set a new value with subscript syntax,
+because setting a single value with subscript syntax
+does not have the potential to change the array's length:
+
+.. testcode:: assignmentAndCopyForArrays
+
+   -> a[0] = 42
+   -> println(a[0])
+   </ 42
+   -> println(b[0])
+   </ 42
+   -> println(c[0])
+   </ 42
+
+However, if you append a new item to ``a``, you *do* modify the array's length.
+This prompts Swift to create a new copy of the array
+at the point that you append the new value.
+Henceforth, ``a`` is a separate, independent copy of the array.
+
+If you change a value in ``a`` after the copy is made,
+``a`` will return a different value from ``b`` and ``c``,
+which both still reference the original array contents from before the copy took place:
+
+.. testcode:: assignmentAndCopyForArrays
+
+   -> a.append(4)
+   -> a[0] = 777
+   -> println(a[0])
+   </ 777
+   -> println(b[0])
+   </ 42
+   -> println(c[0])
+   </ 42
+
+.. _ClassesAndStructures_EnsuringThatAnArrayIsUnique:
+
+Ensuring that an Array is Unique
+________________________________
+
+It can sometimes be useful to ensure that you have a unique copy of an array
+before performing an action on that array's contents,
+or before passing that array to a function or method.
+You ensure the uniqueness of an array reference by calling the array's ``unshare`` method.
+
+If multiple constants or variables currently refer to the same array,
+and you call the ``unshare`` method on one of those constants or variables,
+the array is copied,
+so that the constant or variable has its own independent copy of the array.
+However, no copying takes place if the constant or variable
+is already the only reference to the array.
+
+At the end of the previous example,
+``b`` and ``c`` both reference the same array.
+Call the ``unshare`` method on ``b`` to make it become a unique copy:
+
+.. testcode:: assignmentAndCopyForArrays
+
+   -> b.unshare()
+
+If you change the first value in ``b`` after calling the ``unshare`` method,
+all three arrays will now report a different value:
+
+.. testcode:: assignmentAndCopyForArrays
+
+   -> b[0] = -105
+   -> println(a[0])
+   </ 777
+   -> println(b[0])
+   </ -105
+   -> println(c[0])
+   </ 42
+
+.. _ClassesAndStructures_CheckingForArrayUniqueness:
+
+Checking for Array Uniqueness
+_____________________________
+
+You can check whether two constants or variables refer to the same array
+by comparing them with the identity operators,
+as described in :ref:`ClassesAndStructures_IdentityOperators`.
+The example below uses the “identical to” operator (``===``)
+to check whether ``b`` and ``c`` still refer to the same array:
+
+.. testcode:: assignmentAndCopyForArrays
+
+   -> if b === c {
+         println("b and c still refer to the same array.")
+      } else {
+         println("b and c now refer to two independent arrays.")
+      }
+   <- b and c now refer to two independent arrays.
+
+.. _ClassesAndStructures_ForcingACopyOfAnArray:
+
+Forcing a Copy of an Array
+__________________________
+
+You can force an explicit copy of an array
+by calling the array's ``copy`` method.
+This method performs a shallow copy of the array
+and returns a new array containing the copied items.
+
+The example below defines an array called ``names``,
+which stores the names of four people.
+A new variable called ``copiedNames`` is set to the result of calling
+the ``copy`` method on the ``names`` array:
+
+.. testcode:: assignmentAndCopyForArrays
+
+   -> var names = ["Dave", "Ayumi", "Carlos", "Raeesa"]
+   << // names : Array<String> = ["Dave", "Ayumi", "Carlos", "Raeesa"]
+   -> var copiedNames = names.copy()
+   << // copiedNames : Array<String> = ["Dave", "Ayumi", "Carlos", "Raeesa"]
+
+You can prove that the ``names`` array has been copied
+by changing an item in one of the arrays
+and checking the corresponding item in the other.
+If you set the first item in the ``copiedNames`` array
+to ``"David"`` rather than ``"Dave"``,
+the ``names`` array still returns the old value of ``"Dave"``
+from before the copy took place:
+
+.. testcode:: assignmentAndCopyForArrays
+
+   -> copiedNames[0] = "David"
+   -> println(names[0])
+   <- Dave
+
+.. note::
+
+   If you just need to be sure that your reference to an array's contents
+   is the only reference in existence,
+   always call the ``unshare`` method, not the ``copy`` method.
+   The ``unshare`` method does not make a copy of the array
+   unless it is necessary to do so.
+   The ``copy`` method always copies the array,
+   even if it is already unique.
