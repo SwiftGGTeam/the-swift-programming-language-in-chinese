@@ -7,7 +7,6 @@ Contents
     GuidedTour/GuidedTourPart
     LanguageGuide/LanguageGuidePart
     ReferenceManual/ReferenceManualPart
-    ChangeLog/ChangeLogPart
 
 Internal Chapters
 =================
