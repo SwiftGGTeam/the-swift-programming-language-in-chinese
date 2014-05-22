@@ -701,7 +701,7 @@ For example, the class below ensures
 that the side length of its triangle
 is always the same as the side length of its square.
 
-.. testcode::
+.. FIXME Broken
 
    -> class TriangleAndSquare {
           var triangle: triangle {
