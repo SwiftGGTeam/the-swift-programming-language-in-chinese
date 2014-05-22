@@ -187,17 +187,15 @@ or a variable into a constant.
 
 The value of an existing variable can be changed to another value of a compatible type.
 In this example, the value of ``friendlyWelcome`` is changed from
-``"hello, world"`` to ``"👋, 🌎"``:
+``"Hello!"`` to ``"Bonjour!"``:
 
 .. testcode:: constantsAndVariables
 
-   -> var friendlyWelcome = "hello, world"
-   << // friendlyWelcome : String = "hello, world"
-   /> friendlyWelcome is \"\(friendlyWelcome)\"
-   </ friendlyWelcome is "hello, world"
-   -> friendlyWelcome = "👋, 🌎"
+   -> var friendlyWelcome = "Hello!"
+   << // friendlyWelcome : String = "Hello!"
+   -> friendlyWelcome = "Bonjour!"
    /> friendlyWelcome is now \"\(friendlyWelcome)\"
-   </ friendlyWelcome is now "👋, 🌎"
+   </ friendlyWelcome is now "Bonjour!"
 
 Unlike a variable, the value of a constant cannot be changed once it is set.
 Attempting to do so is reported as an error when your code is compiled:
@@ -222,7 +220,7 @@ You can print the current value of a constant or variable with the ``println`` f
 .. testcode:: constantsAndVariables
 
    -> println(friendlyWelcome)
-   <- 👋, 🌎
+   <- Bonjour!
 
 ``println`` is a global function that prints a value,
 followed by a line break, to an appropriate output.
@@ -266,7 +264,7 @@ and escape it with a backslash before the opening parenthesis:
 .. testcode:: constantsAndVariables
 
    -> println("The current value of friendlyWelcome is \(friendlyWelcome)")
-   <- The current value of friendlyWelcome is 👋, 🌎
+   <- The current value of friendlyWelcome is Bonjour!
 
 .. note::
 
