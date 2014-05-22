@@ -1135,16 +1135,3 @@ you can omit ``where`` and simply
 write the protocol or class name after a colon.
 Writing ``<T: Equatable>``
 is the same as writing ``<T where T: Equatable>``.
-
-Continue Reading
-----------------
-
-Access the rest of this book on on the web,
-download it in iBooks,
-or download it as a PDF.
-
-`The Swift Programming Language <//apple_ref/doc/uid/TP40014097>`_
-
-.. TODO: Would be better to make this a link to the second chapter.
-   Linking to a section though happens by name,
-   so the link would read "Why Swift?"
