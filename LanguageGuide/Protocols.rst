@@ -904,8 +904,8 @@ with a single property requirement of a gettable ``Double`` property called ``ar
    if your protocol is marked with the ``@objc`` attribute,
    as seen for the ``HasArea`` protocol above.
    This attribute is used to indicate that
-   the protocol should be exposed to Objective-C code,
-   and is described in *Building Cocoa Apps With Swift*.
+   the protocol should be exposed to Objective-C code, and is described in
+   `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
    Even if you are not interoperating with Objective-C,
    you will still need to mark your protocols with the ``@objc`` attribute
    if you want to be able to check for protocol conformance.

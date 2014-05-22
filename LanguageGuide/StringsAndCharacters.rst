@@ -34,7 +34,7 @@ This makes it easy to create custom string values for display, storage, and prin
    You can also use a ``String`` value with any API that requires an ``NSString`` instance.
    
    For more information about using ``String`` with Foundation and Cocoa,
-   see *Building Cocoa Apps With Swift*.
+   see `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
 
 .. TODO: make this be a link to BCAWS.
 
