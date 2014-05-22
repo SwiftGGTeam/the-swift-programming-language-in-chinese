@@ -1081,11 +1081,11 @@ as well as classes, enumerations, and structures.
 .. testcode::
 
     // Re-implement the Swift standard library's optional type
-    -> enum Optional<T> {
+    -> enum OptionalValue<T> {
            case None
            case Some(T)
        }
-    -> var possibleInteger = Optional.None
+    -> var possibleInteger: OptionalValue<Int> = .None
     -> possibleInteger = .Some(100)
 
 Use ``where`` after the type name
