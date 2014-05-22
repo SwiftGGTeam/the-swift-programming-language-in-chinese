@@ -375,8 +375,7 @@ that performs both tasks at the same time.
    You cannot write ``let b = a += 2``, for example.
    This behavior is different from the increment and decrement operators mentioned above.
 
-For a complete list of compound assignment operators
-see the :doc:`../ReferenceManual/index`.
+A complete list of compound assignment operators can be found in :doc:`../ReferenceManual/Expressions`.
 
 .. _BasicOperators_ComparisonOperators:
 
