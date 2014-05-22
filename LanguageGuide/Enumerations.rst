@@ -187,14 +187,14 @@ Each barcode has a “number system” digit,
 followed by ten “identifier” digits.
 These are followed by a “check” digit to verify that the code has been scanned correctly:
 
-.. image:: ../images/barcode_UPC.png
+.. image:: ../images/barcode_UPC_2x.png
    :align: center
 
 Other products are labeled with 2D barcodes in QR code format,
 which can use any ISO 8859-1 character
 and can encode a string up to 2,953 characters long:
 
-.. image:: ../images/barcode_QR.png
+.. image:: ../images/barcode_QR_2x.png
    :align: center
 
 It would be convenient for an inventory tracking system to be able to store UPC-A barcodes

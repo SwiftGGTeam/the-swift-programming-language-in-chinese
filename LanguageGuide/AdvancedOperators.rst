@@ -47,7 +47,7 @@ Bitwise NOT Operator
 
 The :newTerm:`bitwise NOT operator` (``~``) inverts all of the bits in a number:
 
-.. image:: ../images/bitwiseNOT.png
+.. image:: ../images/bitwiseNOT_2x.png
    :align: center
 
 The bitwise NOT operator is a prefix operator,
@@ -84,7 +84,7 @@ The :newTerm:`bitwise AND operator` (``&``) combines the bits of two numbers.
 It returns a new number whose bits are set to ``1``
 only if the bits were equal to ``1`` in *both* input numbers:
 
-.. image:: ../images/bitwiseAND.png
+.. image:: ../images/bitwiseAND_2x.png
    :align: center
 
 For example:
@@ -112,7 +112,7 @@ The :newTerm:`bitwise OR operator` (``|``) compares the bits of two numbers,
 and returns a new number whose bits are set to ``1``
 if the bits were equal to ``1`` in *either* of the input numbers:
 
-.. image:: ../images/bitwiseOR.png
+.. image:: ../images/bitwiseOR_2x.png
    :align: center
 
 For example:
@@ -140,7 +140,7 @@ compares the bits of two numbers,
 and returns a new number whose bits are set to ``1`` where the input bits are different,
 and ``0`` where the input bits are the same:
 
-.. image:: ../images/bitwiseXOR.png
+.. image:: ../images/bitwiseXOR_2x.png
    :align: center
 
 For example:
@@ -195,7 +195,7 @@ Blue numbers are shifted,
 gray numbers are discarded,
 and orange zeroes are inserted:
 
-.. image:: ../images/bitshiftUnsigned.png
+.. image:: ../images/bitshiftUnsigned_2x.png
    :align: center
 
 Here's how bit shifting looks in Swift code:
@@ -283,7 +283,7 @@ Positive numbers are stored in exactly the same way as for unsigned integers,
 counting upwards from ``0``.
 Here's how the bits inside an ``Int8`` look for the number ``4``:
 
-.. image:: ../images/bitshiftSignedFour.png
+.. image:: ../images/bitshiftSignedFour_2x.png
    :align: center
 
 The sign bit is ``0`` (meaning “positive”),
@@ -298,13 +298,13 @@ so this means ``2`` to the power of ``7``, or ``128``.
 
 Here's how the bits inside an ``Int8`` look for the number ``-4``:
 
-.. image:: ../images/bitshiftSignedMinusFour.png
+.. image:: ../images/bitshiftSignedMinusFour_2x.png
    :align: center
 
 This time, the sign bit is ``1`` (meaning “negative”),
 and the seven value bits have a binary value of ``124`` (which is ``128 - 4``):
 
-.. image:: ../images/bitshiftSignedMinusFourValue.png
+.. image:: ../images/bitshiftSignedMinusFourValue_2x.png
    :align: center
 
 The encoding for negative numbers is known as a :newTerm:`two's complement` representation.
@@ -316,7 +316,7 @@ simply by performing a standard binary addition of all eight bits
 (including the sign bit),
 and discarding anything that doesn't fit in the eight bits once you're done:
 
-.. image:: ../images/bitshiftSignedAddition.png
+.. image:: ../images/bitshiftSignedAddition_2x.png
    :align: center
 
 Secondly, the two's complement representation also lets you
@@ -330,7 +330,7 @@ To achieve this, an extra rule is used when signed integers are shifted to the r
   but fill any empty bits on the left with the *sign bit*,
   rather than with a zero.
 
-.. image:: ../images/bitshiftSigned.png
+.. image:: ../images/bitshiftSigned_2x.png
    :align: center
 
 This action ensures that signed integers have the same sign after they are shifted to the right,
@@ -413,7 +413,7 @@ as shown in the diagram below.
 The value that remains within the bounds of the ``UInt8``
 after the overflow addition is ``00000000``, or zero:
 
-.. image:: ../images/overflowAddition.png
+.. image:: ../images/overflowAddition_2x.png
    :align: center
 
 .. _AdvancedOperators_ValueUnderflow:
@@ -430,7 +430,7 @@ If you subtract ``1`` from ``00000000`` using the overflow subtraction operator,
 the number will overflow back round to ``11111111``,
 or ``255`` in decimal:
 
-.. image:: ../images/overflowUnsignedSubtraction.png
+.. image:: ../images/overflowUnsignedSubtraction_2x.png
    :align: center
 
 Here's how that looks in Swift code:
@@ -456,7 +456,7 @@ gives a binary value of ``01111111``,
 which toggles the sign bit and gives positive ``127``,
 the largest positive value that an ``Int8`` can hold:
 
-.. image:: ../images/overflowSignedSubtraction.png
+.. image:: ../images/overflowSignedSubtraction_2x.png
    :align: center
 
 Here's the same thing in Swift code:
@@ -659,7 +659,7 @@ so that it can be used as an infix operator between existing ``Vector2D`` instan
 This example adds together the vectors ``(3.0, 1.0)`` and ``(2.0, 4.0)``
 to make the vector ``(5.0, 5.0)``, as illustrated below.
 
-.. image:: ../images/vectorAddition.png
+.. image:: ../images/vectorAddition_2x.png
    :align: center
 
 .. _AdvancedOperators_PrefixAndPostfixOperators:

@@ -293,7 +293,7 @@ Setting the ``center`` property calls the setter for ``center``,
 which modifies the ``x`` and ``y`` values of the stored ``origin`` property,
 and moves the square to its new position.
 
-.. image:: ../images/computedProperties.png
+.. image:: ../images/computedProperties_2x.png
    :align: center
 
 .. _Properties_ShorthandSetterDeclaration:

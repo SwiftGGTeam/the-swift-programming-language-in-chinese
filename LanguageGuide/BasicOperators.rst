@@ -178,7 +178,7 @@ and returns the value that is left over
 Here's how the remainder operator works.
 To calculate ``9 % 4``, you first work out how many ``4``\ s will fit inside ``9``:
 
-.. image:: ../images/remainderInteger.png
+.. image:: ../images/remainderInteger_2x.png
    :align: center
 
 You can fit two ``4``\ s inside ``9``, and the remainder is ``1`` (shown in orange).
@@ -235,7 +235,7 @@ Swift's remainder operator can also operate on floating-point numbers:
 In this example, ``8`` divided by ``2.5`` equals ``3``, with a remainder of ``0.5``,
 so the remainder operator returns a ``Double`` value of ``0.5``.
 
-.. image:: ../images/remainderFloat.png
+.. image:: ../images/remainderFloat_2x.png
    :align: center
 
 .. _BasicOperators_IncrementAndDecrementOperators:
