@@ -313,7 +313,7 @@ whenever it is possible for that reference to have
 “no value” at some point in its life.
 (If the reference will *always* have a value,
 use an unowned reference instead,
-as described in :ref:`AutomaticReferenceCounting_UnownedReferences`.)
+as described in :ref:`AutomaticReferenceCounting_UnownedReferencesBetweenClassInstances`.)
 In the ``Apartment`` example above,
 it is appropriate for an apartment to be able to have
 “no tenant” at some point in its lifetime,
