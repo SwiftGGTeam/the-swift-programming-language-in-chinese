@@ -882,7 +882,8 @@ Structures support many of the same behaviors as classes,
 including methods and initializers.
 One of the most important differences
 between structures and classes is that
-structures are always copied when they are passed around in your code.
+structures are always copied when they are passed around in your code
+but classes are passed by reference.
 
 .. testcode::
 
@@ -905,15 +906,12 @@ structures are always copied when they are passed around in your code.
    with one card of each combination of rank and suit.
 
 
-.. TODO: [Contributor 9502] wants me to rewrite the "different than raw" bit.
-
-An enumeration can have other values associated with it.
-This association is different than a raw value:
-the raw value for a member of an enumeration is always the same,
-but you provide the associated values
-when you create the instance of the enumeration,
-so different instances of the same member
+An instance of an enumeration member can have values associated with it.
+This is different than having a raw value:
+the raw value for an enumeration member is always the same,
+but instances of the same enumeration member
 can have different associated values.
+You provide the associated values when you create the instance.
 For example,
 consider the case of requesting
 the sunrise and sunset time from a server.
