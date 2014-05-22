@@ -9,7 +9,7 @@ Type casting in Swift is implemented with the ``is`` and ``as`` operators.
 These two operators provide a simple and expressive way
 to check or cast a value as some different type.
 Because downcasting a class to one of its subclasses can fail,
-Swift uses the power of optionals to enable you to attempt a downcast,
+Swift uses optionals to enable you to attempt a downcast,
 and to check if that cast is successful.
 
 Type casting can also be used to check if a type conforms to a protocol,
@@ -144,9 +144,25 @@ Downcasting
 
 A constant or variable of a certain class type may actually refer to
 an instance of a subclass behind the scenes. Where this is the case,
-you can try to :newTerm:`downcast` to the subclass type by using the ``as`` operator.
+you can try to :newTerm:`downcast` to the subclass type
+by using the :newTerm:`downcast operator`.
+
 Because downcasting can fail,
-the ``as`` operator returns an *optional* value of the type you are trying to downcast to.
+the downcast operator comes in two different forms.
+The optional form, ``as?``, returns an optional value of the type you are trying to downcast to.
+The forced form, ``as``, attempts the downcast and force-unwraps the result
+as a single compound action.
+
+Use the optional form of the downcast operator (``as?``)
+when you are not sure if the downcast will succeed.
+This form of the operator will always return an optional value,
+and the value will be ``nil`` if the downcast was not possible.
+This enables you to check for a successful downcast.
+
+Use the forced form of the downcast operator (``as``)
+only when you are sure that the downcast will always succeed.
+This form of the operator will trigger an unrecoverable runtime error
+if you try to downcast to an incorrect class type.
 
 The example below iterates over each ``MediaItem`` in ``library``,
 and prints an appropriate description for each item.
@@ -156,12 +172,18 @@ This is necessary in order for it to be able to access
 the ``director`` or ``artist`` property of a ``Movie`` or ``Song``
 for use in the description.
 
+In this example, each item in the array might be a ``Movie``,
+or it might be a ``Song``.
+You don't know in advance which actual class to use for each item,
+and so it is appropriate to use the optional form of the downcast operator (``as?``)
+to check the downcast each time through the loop:
+
 .. testcode:: typeCasting
 
    -> for item in library {
-         if let movie = item as Movie {
+         if let movie = item as? Movie {
             println("Movie: '\(movie.name)', dir. \(movie.director)")
-         } else if let song = item as Song {
+         } else if let song = item as? Song {
             println("Song: '\(song.name)', by \(song.artist)")
          }
       }
@@ -176,7 +198,7 @@ The example starts by trying to downcast the current ``item`` as a ``Movie``.
 Because ``item`` is a ``MediaItem`` instance, it's possible that it *might* be a ``Movie``;
 equally, it's also possible that it might a ``Song``,
 or even just a base ``MediaItem``.
-Because of this uncertainty, the ``as`` operator returns an *optional* value
+Because of this uncertainty, the ``as?`` form of the downcast operator returns an *optional* value
 when attempting to downcast to a subclass type.
 The result of ``item as Movie`` is of type ``Movie?``, or “optional ``Movie``”.
 
@@ -185,10 +207,10 @@ the two ``Song`` instances in the library array.
 To cope with this, the example above uses optional binding
 to check whether the optional ``Movie`` actually contains a value
 (that is, to find out whether the downcast succeeded.)
-This optional binding is written “``if let movie = item as Movie``”,
+This optional binding is written “``if let movie = item as? Movie``”,
 which can be read as:
 
-“Try and access ``item`` as a ``Movie``.
+“Try to access ``item`` as a ``Movie``.
 If this is successful,
 set a new temporary constant called ``movie`` to
 the value stored in the returned optional ``Movie``.”
@@ -216,12 +238,81 @@ Swift provides two special type aliases for working with non-specific types:
 * ``Any``, which can represent an instance of any type at all,
   apart from function types
 
+.. note::
+
+   Use ``Any`` and ``AnyObject`` only when you explicitly need
+   the behavior and capabilities they provide.
+   It is always better to be specific about the types you expect to work with in your code.
+
 .. FIXME: remove the note about function types if / when rdar://16406907 is fixed.
 
 .. FIXME: also rdar://problem/16879900
    Assertion when assigning a global function to a constant of type Any
 
-Here's an example of using ``Any`` to work with a mix of different types:
+AnyObject
+~~~~~~~~~
+
+When working with Cocoa APIs, it is common to receive
+an array with a type of ``AnyObject[]``, or “an array of values of any object type”.
+This is because Objective-C does not have explicitly typed arrays.
+However, you can often be confident about the type of objects contained in such an array
+just from the information you know about the API that provided the array.
+
+In these situations, you can use the forced version of the downcast operator (``as``)
+to downcast each item in the array to a more specific class type than ``AnyObject``,
+without the need for optional unwrapping.
+
+The example below defines an array of type ``AnyObject[]``
+and populates this array with three instances of the ``Movie`` class:
+
+.. testcode:: typeCasting
+
+   -> let someObjects: AnyObject[] = [
+         Movie(name: "2001: A Space Odyssey", director: "Stanley Kubrick"),
+         Movie(name: "Moon", director: "Duncan Jones"),
+         Movie(name: "Alien", director: "Ridley Scott")
+      ]
+   << // someObjects : AnyObject[] = [C4REPL5Movie (has 2 children), C4REPL5Movie (has 2 children), C4REPL5Movie (has 2 children)]
+
+Because this array is known to contain only ``Movie`` instances,
+you can downcast and unwrap directly to a non-optional ``Movie``
+with the forced version of the downcast operator (``as``):
+
+.. testcode:: typeCasting
+
+   -> for object in someObjects {
+         let movie = object as Movie
+         println("Movie: '\(movie.name)', dir. \(movie.director)")
+      }
+   !! <REPL Input>:1:5: warning: constant 'object' inferred to have type 'AnyObject', which may be unexpected
+   !! for object in someObjects {
+   !!     ^
+   !! <REPL Input>:1:5: note: add an explicit type annotation to silence this warning
+   !! for object in someObjects {
+   !!     ^
+   !!            : AnyObject
+   </ Movie: '2001: A Space Odyssey', dir. Stanley Kubrick
+   </ Movie: 'Moon', dir. Duncan Jones
+   </ Movie: 'Alien', dir. Ridley Scott
+
+For an even shorter form of this loop,
+downcast the ``someObjects`` array to a type of ``Movie[]``
+instead of downcasting each item:
+
+.. testcode:: typeCasting
+
+   -> for movie in someObjects as Movie[] {
+         println("Movie: '\(movie.name)', dir. \(movie.director)")
+      }
+   </ Movie: '2001: A Space Odyssey', dir. Stanley Kubrick
+   </ Movie: 'Moon', dir. Duncan Jones
+   </ Movie: 'Alien', dir. Ridley Scott
+
+Any
+~~~
+
+Here's an example of using ``Any`` to work with a mix of different types,
+including non-class types:
 
 .. testcode:: typeCasting
 
@@ -242,26 +333,26 @@ two ``Int`` values, two ``Double`` values, a ``String`` value,
 a tuple of type ``(Double, Double)``,
 and the movie “Ghostbusters”, directed by Ivan Reitman.
 
-.. note::
-
-   Use ``Any`` and ``AnyObject`` only when you explicitly need
-   the behavior and capabilities they provide.
-   It is always better to be specific about the types you expect to work with in your code.
-
 .. _TypeCasting_TypeCastingForAnyAndAnyObject:
 
-Type Casting for Any and AnyObject
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Type Casting for Any and AnyObject with a Switch Statement
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you are working with a constant or variable
-whose type is only known to be ``Any`` or ``AnyObject``,
-you can use the ``is`` and ``as`` operators to find out about the types they hold,
-and to work with them as more specific types.
+You can use the ``is`` and ``as`` operators in a ``switch`` statement's cases
+to discover the specific type of a constant or variable
+that is known only to be of type ``Any`` or ``AnyObject``.
 
-For example, the ``is`` and ``as`` operators can be used within
-the cases of a ``switch`` statement to check and match values of a certain type,
-and to assign those values to temporary constants or variables
-(as described in :ref:`ControlFlow_ValueBindings`):
+.. note::
+
+   The cases of a ``switch`` statement use
+   the forced version of the downcast operator (``as``, not ``as?``)
+   to check and cast to a specific type.
+   This check is always safe within the context of a ``switch`` case statement.
+
+The example below iterates over the items in the ``things`` array
+and queries the type of each item with a ``switch`` statement.
+Several of the ``switch`` statement's cases bind their matched value to
+a constant of the specified type to enable its value to be printed:
 
 .. testcode:: typeCasting
 

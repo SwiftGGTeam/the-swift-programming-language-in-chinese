@@ -886,8 +886,11 @@ follows exactly the same syntax as checking for and casting to a type:
 
 * The ``is`` operator returns ``true`` if an instance conforms to a protocol,
   and returns ``false`` if it does not.
-* The ``as`` operator returns an optional value of the protocol's type,
+* The ``as?`` version of the downcasting operator returns
+  an optional value of the protocol's type,
   and this value is ``nil`` if the instance does not conform to that protocol.
+* The ``as`` version of the downcasting operator forces the downcast to the protocol type
+  and triggers an unrecoverable runtime error if the downcast does not succeed.
 
 This example defines a protocol called ``HasArea``,
 with a single property requirement of a gettable ``Double`` property called ``area``:
@@ -977,7 +980,7 @@ it conforms to the ``HasArea`` protocol:
 .. testcode:: protocolConformance
 
    -> for object in objects {
-         if let objectWithArea = object as HasArea {
+         if let objectWithArea = object as? HasArea {
             println("Area is \(objectWithArea.area)")
          } else {
             println("Something that doesn't have an area")
@@ -995,7 +998,7 @@ it conforms to the ``HasArea`` protocol:
    </ Something that doesn't have an area
 
 Whenever an object in the array conforms to the ``HasArea`` protocol,
-the optional value returned by the ``as`` operator is unwrapped with optional binding
+the optional value returned by the ``as?`` operator is unwrapped with optional binding
 into a constant called ``objectWithArea``.
 The ``objectWithArea`` constant is known to be of type ``HasArea``,
 and so its ``area`` property can be accessed and printed in a type-safe way.
