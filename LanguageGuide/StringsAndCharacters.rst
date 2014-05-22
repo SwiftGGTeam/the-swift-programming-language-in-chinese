@@ -69,7 +69,10 @@ String literals can include the following special characters:
 * Four-byte Unicode scalars, written as ``\Unnnnnnnn``,
   where ``nnnnnnnn`` is eight hexadecimal digits
 
-For example:
+The code below shows an example of each kind of special character.
+The ``wiseWords`` constant contains two escaped double quote characters,
+and the ``dollarSign``, ``blackHeart``, and ``swiftHeart`` constants
+demonstrate the three different Unicode scalar character formats:
 
 .. testcode:: specialCharacters
 
@@ -95,10 +98,10 @@ For example:
 Initializing an Empty String
 ----------------------------
 
-If you need to create an empty ``String`` value as the starting point
+To create an empty ``String`` value as the starting point
 for building a longer string,
-assign an empty string literal to a variable,
-or initialize a new ``String`` with initializer syntax:
+either assign an empty string literal to a variable,
+or initialize a new ``String`` instance with initializer syntax:
 
 .. testcode:: emptyStrings
 
@@ -190,7 +193,7 @@ when working with strings as value types.
 
 .. _StringsAndCharacters_WorkingWithCharacters:
 
-Working With Characters
+Working with Characters
 -----------------------
 
 Swift's ``String`` type represents a collection ``Character`` values in a specified order.
@@ -211,7 +214,7 @@ by iterating over that string with a ``for``-``in`` loop:
 
 The ``for``-``in`` loop is described in :ref:`ControlFlow_ForLoops`.
 
-You can create a stand-alone ``Character`` constant or variable
+Alternatively, you can create a stand-alone ``Character`` constant or variable
 from a single-character string literal by providing a ``Character`` type annotation:
 
 .. testcode:: characters
@@ -222,7 +225,7 @@ from a single-character string literal by providing a ``Character`` type annotat
 .. _StringsAndCharacters_CountingCharacters:
 
 Counting Characters
-~~~~~~~~~~~~~~~~~~~
+-------------------
 
 To retrieve a count of the characters in a string,
 call the global ``countElements`` function
@@ -237,22 +240,23 @@ and pass in a string as the function's sole parameter:
 
 .. note::
 
-   Different Unicode characters, and different representations of the same character,
+   Different Unicode characters,
+   and different representations of the same Unicode character,
    can require different amounts of memory to store.
    Because of this, characters in Swift do not each take up
    the same amount of memory within a string's representation.
    As a result, the length of a string cannot be calculated
    without iterating through the string to consider each of its characters in turn.
    If you are working with particularly long string values,
-   be aware that the ``countElements`` function will need to
-   iterate over the characters within a string
+   be aware that the ``countElements`` function
+   must iterate over the characters within a string
    in order to calculate an accurate character count for that string.
 
    Note also that the character count returned by ``countElements``
-   will not always be the same as the ``length`` property of
+   is not always the same as the ``length`` property of
    an ``NSString`` that contains the same characters.
    The length of an ``NSString`` is based on
-   the number of 16-bit code units within the string's UTF-16 representation,
+   the number of 16-bit code units within the string's UTF-16 representation
    and not the number of Unicode characters within the string.
 
 .. _StringsAndCharacters_ConcatenatingStringsAndCharacters:
@@ -302,7 +306,7 @@ an existing ``String`` variable with the addition assignment operator (``+=``):
 
 .. note::
 
-   You can't append a ``String`` or ``Character`` onto an existing ``Character`` variable,
+   You can't append a ``String`` or ``Character`` to an existing ``Character`` variable,
    because a ``Character`` value must contain a single character only.
 
 .. TODO: how to construct from length and Character (cf Array)
@@ -312,7 +316,7 @@ an existing ``String`` variable with the addition assignment operator (``+=``):
 String Interpolation
 --------------------
 
-String interpolation enables you to construct a new ``String`` value
+:newTerm:`String interpolation` is a way to construct a new ``String`` value
 from a mix of constants, variables, literals, and expressions
 by including their values inside a string literal.
 Each item that you insert into the string literal is wrapped in
@@ -332,7 +336,7 @@ the value of ``multiplier`` is inserted into a string literal as ``\(multiplier)
 This placeholder is replaced with the actual value of ``multiplier``
 when the string interpolation is evaluated to create an actual string.
 
-The value of ``multiplier`` is also used as part of a larger expression later in the string.
+The value of ``multiplier`` is also part of a larger expression later in the string.
 This expression calculates the value of ``Double(multiplier) * 2.5``
 and inserts the result (``7.5``) into the string.
 In this case, the expression is written as ``\(Double(multiplier) * 2.5)``
@@ -344,23 +348,7 @@ when it is included inside the string literal.
    cannot contain an unescaped double quote (``"``) or backslash (``\``),
    and cannot contain a carriage return or line feed.
 
-.. _StringsAndCharacters_StringInitializersForStringInterpolation:
-
-String Initializers for String Interpolation
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Any value that you use with string interpolation must be of a type that can be used
-to initialize a new ``String`` instance.
-In the example above, the first interpolated value (``multiplier``) is an ``Int``,
-and the second interpolated value (``Double(multiplier) * 2.5``) equates to a ``Double``.
-Both of these types can be used to construct a ``String`` value,
-and so the interpolation is valid.
-
-.. note::
-
-   If you want to make your own custom types available for use with string interpolation,
-   you can extend ``String`` to give it a new initializer that takes
-   an instance of your custom type. This process is described in :doc:`Extensions`.
+.. TODO: add a bit here about making things Printable.
 
 .. _StringsAndCharacters_ComparingStrings:
 
@@ -485,8 +473,8 @@ It provides a way to represent almost any character from any language in a stand
 and to read and write those characters to and from an external source
 such as a text file or web page.
 
-Swift's ``String`` and ``Character`` types are fully Unicode-compliant,
-and support a number of different Unicode encodings, as described below.
+Swift's ``String`` and ``Character`` types are fully Unicode-compliant.
+They support a number of different Unicode encodings, as described below.
 
 .. _StringsAndCharacters_UnicodeTerminology:
 
@@ -495,8 +483,8 @@ Unicode Terminology
 
 Every character in Unicode can be represented by one or more :newTerm:`unicode scalars`.
 A unicode scalar is a unique 21-bit number (and name) for a character or modifier,
-such as ``U+0061`` for ``LOWERCASE LATIN LETTER A`` (``a``),
-or ``U+1F425`` for ``FRONT-FACING BABY CHICK`` (``🐥``).
+such as ``U+0061`` for ``LOWERCASE LATIN LETTER A`` (``"a"``),
+or ``U+1F425`` for ``FRONT-FACING BABY CHICK`` (``"🐥"``).
 
 When a Unicode string is written to a text file or some other storage,
 these unicode scalars are encoded in one of several Unicode-defined formats.
@@ -515,7 +503,7 @@ You can iterate over the string with a ``for``-``in`` statement,
 to access its individual ``Character`` values as Unicode characters.
 This process is described in :ref:`StringsAndCharacters_WorkingWithCharacters`.
 
-Alternatively, you can access a ``String`` value
+Alternatively, access a ``String`` value
 in one of three other Unicode-compliant representations:
 
 * A collection of UTF-8 code units (accessed with the string's ``utf8`` property)
@@ -589,7 +577,7 @@ whose UTF-16 code units have the same values as in the string's UTF-8 representa
 
 The fifth and sixth ``codeUnit`` values (``55357`` and ``56374``)
 are a UTF-16 surrogate pair representation of the ``DOG FACE`` character.
-These values are a lead surrogate value of ``U+D83D`` (decimal value ``55357``),
+These values are a lead surrogate value of ``U+D83D`` (decimal value ``55357``)
 and a trail surrogate value of ``U+DC36`` (decimal value ``56374``).
 
 .. _StringsAndCharacters_UnicodeScalars:
