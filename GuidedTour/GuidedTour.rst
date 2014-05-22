@@ -1119,7 +1119,6 @@ or to require a class to have a particular superclass.
    Modify the ``anyCommonElements`` function
    to make a function that returns an array
    of the elements that any two sequences have in common.
-   <C-D-o>
 
 ..
   TODO: dig into this error
