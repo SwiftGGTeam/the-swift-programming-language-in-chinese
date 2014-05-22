@@ -1229,18 +1229,18 @@ Once the counter reaches zero, no more counting takes place:
    </ 0 
    </ 0 
 
-.. Other things to be included:
-.. ----------------------------
+.. TODO: Other things to be included
+.. ---------------------------------
 
-.. Class-only protocols
-.. @obj-c protocols
-.. Curried functions in protocols
-.. Standard-library protocols such as Sequence, Equatable etc.?
-.. Show how to make a custom type conform to LogicValue or some other protocol
-.. LogicValue certainly needs to be mentioned in here somewhere
-.. Show a protocol being used by an enumeration
-.. accessing protocol methods, properties etc. through a constant or variable that is *just* of protocol type
-.. Protocols can't be nested, but nested types can implement protocols
-.. Protocol requirements can be marked as @unavailable,
+.. TODO: Class-only protocols
+.. TODO: @obj-c protocols
+.. TODO: Curried functions in protocols
+.. TODO: Standard-library protocols such as Sequence, Equatable etc.?
+.. TODO: Show how to make a custom type conform to LogicValue or some other protocol
+.. TODO: Show a protocol being used by an enumeration
+.. TODO: accessing protocol methods, properties etc.
+   through a constant or variable that is *just* of protocol type
+.. TODO: Protocols can't be nested, but nested types can implement protocols
+.. TODO: Protocol requirements can be marked as @unavailable,
    but this currently only works if they are also marked as @objc.
-.. Checking for (and calling) optional implementations via optional binding and closures
+.. TODO: Checking for (and calling) optional implementations via optional binding and closures
