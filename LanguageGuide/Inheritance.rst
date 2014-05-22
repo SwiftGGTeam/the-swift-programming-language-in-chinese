@@ -153,7 +153,7 @@ to better match the requirements of the ``Bicycle`` class.
 The ``Bicycle`` class also defines an initializer
 to set up its tailored characteristics.
 The initializer for ``Bicycle`` starts by calling ``super.init()``.
-This calls the initializer for ``Bicycle``\ 's superclass, ``Vehicle``,
+This calls the initializer for the ``Bicycle`` class's superclass, ``Vehicle``,
 and ensures that all of the inherited properties are initialized by ``Vehicle``
 before ``Bicycle`` tries to modify them.
 
