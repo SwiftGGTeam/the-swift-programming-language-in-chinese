@@ -908,7 +908,7 @@ but classes are passed by reference.
 
 An instance of an enumeration member can have values associated with it.
 This is different than having a raw value:
-the raw value for an enumeration member is always the same,
+the raw value for an enumeration member is the same for all instances,
 but instances of the same enumeration member
 can have different associated values.
 You provide the associated values when you create the instance.
@@ -1093,8 +1093,8 @@ as well as classes, enumerations, and structures.
 Use ``where`` after the type name
 to specify a list of requirements ---
 for example,
-a protocol that the type must implement,
-to require that two types be the same,
+to require the type to implement a protocol,
+to require two types to be the same,
 or to require a class to have a particular superclass.
 
 .. testcode::
@@ -1120,7 +1120,8 @@ or to require a class to have a particular superclass.
 
    Modify the ``anyCommonElements`` function
    to make a function that returns an array
-   of the elements any two sequences have in common.
+   of the elements that any two sequences have in common.
+   <C-D-o>
 
 ..
   TODO: dig into this error
