@@ -68,11 +68,10 @@ that you determine once but use in many places.
 
 A constant or variable must have the same type
 as the value you want to assign to it.
-However, you don't have to explicitly write
-the type of every single constant and variable.
-Providing a value when you create it lets the compiler infer
-the type of the constant or variable.
-In example above
+However, you don't always have to write the type explicitly.
+Providing a value when you create a constant or variable
+lets the compiler infer its type.
+In the example above,
 the compiler infers that ``myVariable`` is an integer
 because its initial value is a integer.
 
