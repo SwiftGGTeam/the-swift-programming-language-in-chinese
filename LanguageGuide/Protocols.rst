@@ -776,11 +776,11 @@ The ``SnakesAndLadders`` class can be extended to adopt and conform to ``PrettyT
             for index in 1...finalSquare {
                switch board[index] {
                   case let ladder where ladder > 0:
-                     output += "👍 "
+                     output += "▲ "
                   case let snake where snake < 0:
-                     output += "🐍 "
+                     output += "▼ "
                   default:
-                     output += "🆓 "
+                     output += "○ "
                }
             }
             return output
@@ -799,11 +799,11 @@ It then iterates through the array of board squares,
 and appends an emoji representation for each square:
 
 * If the square's value is greater than ``0``, it is the base of a ladder,
-  and is represented by 👍
+  and is represented by ``▲``
 * If the square's value is less than ``0``, it is the head of a snake,
-  and is represented by 🐍
+  and is represented by ``▼``
 * Otherwise, the square's value is ``0``, and it is a “free” square,
-  represented by 🆓
+  represented by ``○``
 
 The method implementation can now be used to print a pretty text description
 of any ``SnakesAndLadders`` instance:
@@ -813,7 +813,7 @@ of any ``SnakesAndLadders`` instance:
 
    -> println(game.asPrettyText())
    </ A game of Snakes and Ladders with 25 squares:
-   </ 🆓 🆓 👍 🆓 🆓 👍 🆓 🆓 👍 👍 🆓 🆓 🆓 🐍 🆓 🆓 🆓 🆓 🐍 🆓 🆓 🐍 🆓 🐍 🆓 
+   </ ○ ○ ▲ ○ ○ ▲ ○ ○ ▲ ▲ ○ ○ ○ ▼ ○ ○ ○ ○ ▼ ○ ○ ▼ ○ ▼ ○
 
 .. _Protocols_ProtocolComposition:
 
