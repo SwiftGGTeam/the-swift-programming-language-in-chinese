@@ -529,7 +529,7 @@ Objects and Classes
 -------------------
 
 Use ``class`` followed by the class's name to create a class.
-A property declaration in class is written the same way
+A property declaration in a class is written the same way
 as a constant or variable declaration,
 except that it is in the context of a class.
 Likewise, method and function declarations are written the same way.
@@ -547,7 +547,7 @@ Likewise, method and function declarations are written the same way.
 
 .. admonition:: Experiment
 
-   Add a constant property with ``let``
+   Add a constant property with ``let``,
    and add another method that takes an argument.
 
 Create an instance of a class
