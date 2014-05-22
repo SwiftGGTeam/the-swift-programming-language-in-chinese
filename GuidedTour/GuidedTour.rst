@@ -758,17 +758,18 @@ You can specify a second name, which is used inside the method.
     -> counter.incrementBy(2, numberOfTimes: 7)
 
 When working with optional values,
-you can use ``?`` before operations like methods and properties.
-When the value is ``nil``,
-it returns ``nil`` and anything after it is ignored.
-Otherwise, it unwraps the optional
-and anything after the ``?`` acts on the unwrapped value.
-
-.. TODO: Revise para -- "it" doesn't really have a referent
+you can write ``?`` before operations like methods, properties, and subscripting.
+If the value before the ``?`` is ``nil``,
+everything after the ``?`` is ignored
+and the value of the whole expression is ``nil``.
+Otherwise, the optional value is unwrapped
+and everything after the ``?`` acts on the unwrapped value.
+In both cases,
+the value of the whole expression is an optional value.
 
 .. testcode::
 
-    -> let optionalSquare: Square? = Square(size: 2.5, name:"optional ssquare")
+    -> let optionalSquare: Square? = Square(size: 2.5, name:"optional square")
     -> let sideLength = optionalSquare?.sideLength
 
 Enumerations and Structures
