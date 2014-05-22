@@ -965,6 +965,7 @@ Protocols and Extensions
 Use ``protocol`` to declare a protocol:
 
 .. FIXME Broken
+   <rdar://problem/17000036> Declaring a protocol in a playground crashes Xcode
 
     -> protocol ExampleProtocol {
             var simpleDescription: String { get }
