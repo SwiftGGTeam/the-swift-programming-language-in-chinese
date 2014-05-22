@@ -3,8 +3,8 @@ Closures
 
 :newTerm:`Closures` are self-contained blocks of functionality
 that can be passed around and used in your code.
-Closures are similar to blocks in C and Objective-C,
-and lambdas in other programming languages.
+Closures in Swift are similar to blocks in C and Objective-C
+and to lambdas in other programming languages.
 
 Closures can capture and store references to any constants and variables
 from the context in which they are defined.
@@ -17,8 +17,7 @@ Swift handles all of the memory management of capturing for you.
    Don't worry if you are not familiar with the concept of “capturing”.
    It is explained in detail below in :ref:`Closures_CapturingValues`.
 
-Global and nested functions,
-as introduced in :doc:`Functions`,
+Global and nested functions, as introduced in :doc:`Functions`,
 are actually special cases of closures.
 Closures take one of three forms:
 
@@ -29,8 +28,8 @@ Closures take one of three forms:
 3) Closure expressions, which are unnamed closures written in a lightweight syntax
    that can capture values from their surrounding context
 
-Swift's closure expressions have a clean, clear syntax,
-with optimizations for writing brief, clutter-free closures in common scenarios.
+Swift's closure expressions have a clean, clear style,
+with optimizations that encourage brief, clutter-free syntax in common scenarios.
 These optimizations include:
 
 * Inferring parameter and return value types from context
@@ -38,33 +37,30 @@ These optimizations include:
 * Shorthand argument names
 * Trailing closure syntax
 
-All of these optimizations are described in detail below.
-
 .. _Closures_ClosureExpressions:
 
 Closure Expressions
 -------------------
 
 Nested functions, as introduced in :ref:`Functions_NestedFunctions`,
-are a convenient way to name and define self-contained blocks of code
+are a convenient means of naming and defining self-contained blocks of code
 as part of a larger function.
-However, it can sometimes be useful to write shorter versions of function-like constructs,
-without the need for a full declaration and name.
+However, it is sometimes useful to write shorter versions of function-like constructs
+without a full declaration and name.
 This is particularly true when working with functions that take other functions
 as one or more of their arguments.
 
 :newTerm:`Closure expressions` are a way to write inline closures in a brief, focused syntax.
-This section describes how to use closure expressions,
-and introduces several syntax optimizations
+Closure expressions provide several syntax optimizations
 for writing closures in their simplest form without loss of clarity or intent.
-
-The following section illustrates these optimizations
-by refining a single example over several iterations,
+The closure expression examples below illustrate these optimizations
+by refining a single example of the ``sort`` function over several iterations,
 each of which expresses the same functionality in a more succinct way.
 
-To illustrate the options for closure expression syntax,
-this section will refine a single example over several iterations,
-each showing a more succint way to express the same functionality.
+.. _Closures_TheSortFunction:
+
+The Sort Function
+~~~~~~~~~~~~~~~~~
 
 Swift's standard library provides a function called ``sort``,
 which sorts an array of values of a known type,
@@ -73,8 +69,8 @@ Once it completes the sorting process,
 the ``sort`` function returns a new array of the same type and size as the old one,
 with its elements in the correct sorted order.
 
-These examples use the ``sort`` function to sort an array of ``String`` values
-in reverse alphabetical order.
+The closure expression examples below use the ``sort`` function
+to sort an array of ``String`` values in reverse alphabetical order.
 Here's the initial array to be sorted:
 
 .. testcode:: closureSyntax
@@ -115,7 +111,7 @@ For characters in strings,
 This means that the letter ``"B"`` is “greater than” the letter ``"A"``,
 and the string ``"Tom"`` is greater than the string ``"Tim"``.
 This gives a reverse alphabetical sort,
-with ``"Brian"`` being placed before ``"Anna"``, and so on.
+with ``"Barry"`` being placed before ``"Alex"``, and so on.
 
 However, this is a rather long-winded way to write
 what is essentially a single-expression function (``a > b``).
@@ -138,7 +134,7 @@ Closure expression syntax has the following general form:
 Closure expression syntax can use
 constant parameters, variable parameters, and ``inout`` parameters.
 Default values cannot be provided.
-Variadic parameters can be used if you name the variadic parameter,
+Variadic parameters can be used if you name the variadic parameter
 and place it last in the parameter list.
 Tuples can also be used as parameter types and return types.
 
@@ -153,8 +149,8 @@ Tuples can also be used as parameter types and return types.
 .. QUESTION: is "reversed" the right name to use here?
    it's a backwards sort, not a reversed version of the original array
 
-This syntax provides a way to write an inline version of
-the ``backwards`` function shown in the earlier example:
+The example below shows a closure expression version of the ``backwards`` function
+from earlier:
 
 .. testcode:: closureSyntax
 
@@ -186,8 +182,8 @@ it can even be written on a single line:
    << // reversed : Array<String> = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
 
 This illustrates that the overall call to the ``sort`` function has remained the same.
-A pair of parentheses still wrap the entire set of arguments for the function –
-it's just that one of those arguments happens to be an inline closure.
+A pair of parentheses still wrap the entire set of arguments for the function.
+However, one of those arguments is now an inline closure.
 
 .. _Closures_InferringTypeFromContext:
 
@@ -195,29 +191,27 @@ Inferring Type From Context
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Because the sorting closure is passed as an argument to a function,
-Swift is able to infer the types of its parameters,
-and the type of the value it returns,
+Swift can infer the types of its parameters
+and the type of the value it returns
 from the type of the ``sort`` function's second parameter.
 This parameter is expecting a function of type ``(String, String) -> Bool``.
-This means that the ``String`` and ``Bool`` types do not need to be written
-as part of the closure expression.
-Because the return type is inferred,
-the return arrow (``->``) can also be omitted:
+This means that the ``String``, ``String``, and ``Bool`` types do not need to be written
+as part of the closure expression's definition.
+Because all of the types can be inferred,
+the return arrow (``->``) and the parentheses around the names of the parameters
+can also be omitted:
 
 .. testcode:: closureSyntax
 
-   -> reversed = sort(names, { (s1, s2) in return s1 > s2 } )
+   -> reversed = sort(names, { s1, s2 in return s1 > s2 } )
    >> reversed
    << // reversed : Array<String> = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
 
-.. TODO: if you're not providing a type,
-   we don't require you to put parens around the parameter list.
-
 It is always possible to infer parameter types and return type
 when passing a closure to a function as an inline closure expression.
-As a result, it is rare to need to write an inline closure in its fullest form.
+As a result, you rarely need to write an inline closure in its fullest form.
 
-Nonetheless, you are free to make the types explicit if you wish,
+Nonetheless, you can make the types explicit if you wish,
 and doing so is encouraged if it avoids ambiguity for readers of your code.
 In the case of the ``sort`` function,
 the purpose of the closure is clear from the fact that sorting is taking place,
@@ -227,7 +221,7 @@ because it is assisting with the sorting of an array of strings.
 
 .. _Closures_ImplicitReturnsFromSingleExpressionClosures:
 
-Implicit Returns From Single-Expression Closures
+Implicit Returns from Single-Expression Closures
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Single-expression closures can implicitly return the result of their single expression
@@ -236,7 +230,7 @@ as in this version of the previous example:
 
 .. testcode:: closureSyntax
 
-   -> reversed = sort(names, { (s1, s2) in s1 > s2 } )
+   -> reversed = sort(names, { s1, s2 in s1 > s2 } )
    >> reversed
    << // reversed : Array<String> = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
 
@@ -282,7 +276,7 @@ as a function that has two parameters of type ``String``,
 and returns a value of type ``Bool``.
 This exactly matches the function type needed for the ``sort`` function's
 second parameter.
-As a result, you can simply pass in the greater-than operator,
+Therefore, you can simply pass in the greater-than operator,
 and Swift will infer that you want to use its string-specific implementation:
 
 .. testcode:: closureSyntax
@@ -291,16 +285,16 @@ and Swift will infer that you want to use its string-specific implementation:
    >> reversed
    << // reversed : Array<String> = ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
 
-Operator functions are described in more detail in :ref:`AdvancedOperators_OperatorFunctions`.
+For more about operator functions, see :ref:`AdvancedOperators_OperatorFunctions`.
 
 .. _Closures_TrailingClosures:
 
 Trailing Closures
 -----------------
 
-If you need to pass a closure expression to a function as the function's final argument,
+If you need to pass a closure expression to a function as the function's final argument
 and the closure expression is long,
-it can sometimes be useful to write it as a :newTerm:`trailing closure` instead.
+it can be useful to write it as a :newTerm:`trailing closure` instead.
 A trailing closure is a closure expression
 that is written outside of (and *after*) the parentheses of the function call it supports:
 
@@ -344,7 +338,7 @@ As an example, Swift's ``Array`` type has a ``map`` method
 which takes a closure expression as its single argument.
 The closure is called once for each item in the array,
 and returns an alternative mapped value (possibly of some other type) for that item.
-The nature of the mapping, and the type of the returned value,
+The nature of the mapping and the type of the returned value
 is left up to the closure to specify.
 
 After applying the provided closure to each array element,
@@ -393,9 +387,10 @@ and that parameter is provided as a trailing closure:
    </ its value is ["OneSix", "FiveEight", "FiveOneZero"]
 
 The ``map`` function calls the closure expression once for each item in the array.
-The closure expression does not need to specify the type of its input parameter, ``number``,
+You do not need to specify the type of the closure's input parameter, ``number``,
 because the type can be inferred from the values in the array to be mapped.
-However, it chooses to define the closure's ``number`` parameter as a *variable parameter*,
+
+In this example, the closure's ``number`` parameter is defined as a *variable parameter*,
 as described in :ref:`Functions_ConstantAndVariableParameters`,
 so that the parameter's value can be modified within the closure body,
 rather than declaring a new local variable and assigning the passed ``number`` value to it.
@@ -431,9 +426,8 @@ The process is repeated until ``number /= 10`` is equal to ``0``,
 at which point the ``output`` string is returned by the closure,
 and is added to the output array by the ``map`` function.
 
-The use of a trailing closure here means that
-the closure's functionality is neatly encapsulated,
-and is written immediately after the function it supports,
+The trailing closure here neatly encapsulates the closures functionality
+immediately after the function it supports,
 without needing to wrap the entire closure within
 the ``map`` function's outer parentheses.
 
@@ -444,13 +438,13 @@ Capturing Values
 
 A closure can :newTerm:`capture` constants and variables
 from the surrounding context in which it is defined.
-The closure is then able to refer to and modify
+The closure can then refer to and modify
 the values of those constants and variables from within its body,
 even if the original scope that defined the constants and variables no longer exists.
 
 The simplest form of a closure in Swift is a nested function,
 written within the body of another function.
-A nested function can capture any of its outer function's arguments,
+A nested function can capture any of its outer function's arguments
 and can also capture any constants and variables defined within the outer function.
 
 Here's an example of a function called ``makeIncrementor``,
@@ -477,8 +471,8 @@ The return type of ``makeIncrementor`` is ``() -> Int``.
 This means that it returns a *function*, rather than a simple value.
 The function it returns has no parameters,
 and returns an ``Int`` value each time it is called.
-(For more information about how functions can return other functions,
-see :ref:`Functions_FunctionTypesAsReturnTypes`.)
+To learn how functions can return other functions,
+see :ref:`Functions_FunctionTypesAsReturnTypes`.
 
 The ``makeIncrementor`` function defines an integer variable called ``runningTotal``,
 to store the current running total of the incrementor that will be returned.
@@ -509,7 +503,7 @@ the nested ``incrementor`` function might seem unusual:
 The ``incrementor`` function doesn't have any parameters,
 and yet it refers to ``runningTotal`` and ``amount`` from within its function body.
 It does this by capturing the *existing* values of ``runningTotal`` and ``amount``
-from its surrounding function,
+from its surrounding function
 and using them within its own function body.
 
 Because it does not modify ``amount``,
@@ -526,11 +520,11 @@ the next time that the incrementor function is called.
 
 .. note::
 
-   Swift determines what should be captured by reference,
+   Swift determines what should be captured by reference
    and what should be copied by value.
    You don't need to annotate ``amount`` or ``runningTotal``
    to say that they can be used within the nested ``incrementor`` function.
-   Swift also handles all of the memory management involved in disposing of ``runningTotal``
+   Swift also handles all memory management involved in disposing of ``runningTotal``
    when it is no longer needed by the incrementor function.
 
 Here's an example of ``makeIncrementor`` in action:
@@ -589,8 +583,8 @@ and this variable is unconnected to the one captured by ``incrementByTen``:
 
 .. _Closures_ClosuresAreReferenceTypes:
 
-Closures are Reference Types
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Closures Are Reference Types
+----------------------------
 
 In the example above,
 ``incrementBySeven`` and ``incrementByTen`` are constants,
