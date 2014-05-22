@@ -509,14 +509,18 @@ can appear immediately after the parentheses.
     -> sort([1, 5, 3, 12, 2]) { $0 > $1 }
     <$ : Array<Int> = [12, 5, 3, 2, 1]
 
-The previous listing can be written without a closure at all
-by passing the ``>`` operator
-as the second argument to the ``sort`` function.
+.. This isn't working...
 
-.. testcode::
+    The previous listing can be written without a closure at all
+    by passing the ``>`` operator
+    as the second argument to the ``sort`` function.
 
-    -> sort([1, 5, 3, 12, 2], >)
-    <$ : Array<Int> = [12, 5, 3, 2, 1]
+    .. testcode::
+
+        -> sort([1, 5, 3, 12, 2], > )
+        <$ : Array<Int> = [12, 5, 3, 2, 1]
+
+    <rdar://problem/16998083> Passing an operator name as a closure requires an extra space
 
 .. Omitted curried functions and custom operators as "advanced" topics.
 
