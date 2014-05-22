@@ -327,6 +327,7 @@ if you want to write multiple separate statements on a single line:
 .. testcode:: semiColons
 
    -> let cat = "🐱"; println(cat)
+   << // cat : String = "🐱"
    <- 🐱
 
 .. _TheBasics_Integers:
