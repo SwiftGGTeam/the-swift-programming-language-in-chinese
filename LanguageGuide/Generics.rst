@@ -18,9 +18,9 @@ or indeed an array for any other type that can be created in Swift.
 Similarly, you can create a dictionary to store values of any specified type,
 and there are no limitations on what that type can be.
 
-.. _Generics_The ProblemThatGenericsSolve:
+.. _Generics_TheProblemThatGenericsSolve:
 
-The Problem That Generics Solve
+The Problem that Generics Solve
 -------------------------------
 
 Here's a standard, non-generic function called ``swapTwoInts``,
