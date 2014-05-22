@@ -650,7 +650,7 @@ properties can have a getter and a setter.
 .. testcode::
 
 
-    -> class EquilateralTriangle: Shape {
+    -> class EquilateralTriangle: NamedShape {
            var sideLength: Double = 0.0
     ---
            init(sideLength: Double, name: String) {
