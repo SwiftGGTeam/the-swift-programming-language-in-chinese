@@ -7,10 +7,10 @@ For example, the addition operator (``+``) adds two numbers together
 (as in ``let i = 1 + 2``).
 More complex examples include the logical AND operator ``&&``
 (as in ``if enteredDoorCode && passedRetinaScan``),
-or the increment operator ``++i``,
+and the increment operator ``++i``,
 which is a shortcut to increase the value of ``i`` by ``1``.
 
-Swift supports most standard C operators,
+Swift supports most standard C operators
 and improves several capabilities to eliminate common coding errors.
 The assignment operator (``=``) does not return a value,
 to prevent it from being mistakenly used when
@@ -19,9 +19,9 @@ Arithmetic operators (``+``, ``-``, ``*``, ``/``, ``%`` and so forth)
 detect and disallow value overflow,
 to avoid unexpected results when working with numbers that become larger or smaller
 than the allowed value range of the type that stores them.
-(You can choose to opt in to value overflow behavior
+You can opt in to value overflow behavior
 by using Swift's overflow operators,
-as described in :ref:`AdvancedOperators_OverflowOperators`.)
+as described in :ref:`AdvancedOperators_OverflowOperators`.
 
 Unlike C, remainder (``%``) calculations in Swift
 can be performed on floating-point numbers.
@@ -127,8 +127,8 @@ Swift supports the four standard :newTerm:`arithmetic operators` for all number 
    -> 10.0 / 2.5  // equals 4.0
    << // r3 : Double = 4.0
 
-Unlike C and Objective-C, the four arithmetic operators
-do not allow values to overflow by default.
+Unlike the arithmetic operators in C and Objective-C,
+the Swift arithmetic operators do not allow values to overflow by default.
 You can opt in to value overflow behavior by using Swift's overflow operators
 (such as ``a &+ b``). See :ref:`AdvancedOperators_OverflowOperators`.
 
@@ -164,7 +164,7 @@ Remainder Operator
 ~~~~~~~~~~~~~~~~~~
 
 The :newTerm:`remainder operator` (``a % b``)
-works out how many multiples of ``b`` will fit inside ``a``,
+works out how many multiples of ``b`` will fit inside ``a``
 and returns the value that is left over
 (known as the :newTerm:`remainder`).
 
@@ -191,7 +191,7 @@ In Swift, this would be written as:
    << // r5 : Int = 1
 
 To determine the answer for ``a % b``,
-the ``%`` operator calculates the following equation,
+the ``%`` operator calculates the following equation
 and returns ``remainder`` as its output:
 
 ``a`` = (``b`` × ``some multiplier``) + ``remainder``
@@ -199,7 +199,7 @@ and returns ``remainder`` as its output:
 where ``some multiplier`` is the largest number of multiples of ``b``
 that will fit inside ``a``.
 
-Inserting ``9`` and ``4`` into this equation gives:
+Inserting ``9`` and ``4`` into this equation yields:
 
 ``9`` = (``4`` × ``2``) + ``1``
 
@@ -210,7 +210,7 @@ The same method is applied when calculating the remainder for a negative value o
    -> -9 % 4   // equals -1
    << // r6 : Int = -1
 
-Inserting ``-9`` and ``4`` into the equation gives:
+Inserting ``-9`` and ``4`` into the equation yields:
 
 ``-9`` = (``4`` × ``-2``) + ``-1``
 
@@ -263,9 +263,9 @@ The ``++`` and ``--`` symbols can be used as prefix operators or as postfix oper
 ``++i`` and ``i++`` are both valid ways to increase the value of ``i`` by ``1``.
 Similarly, ``--i`` and ``i--`` are both valid ways to decrease the value of ``i`` by ``1``.
 
-Note that these operators modify ``i``, and also return a value.
+Note that these operators modify ``i`` and also return a value.
 If you only want to increment or decrement the value stored in ``i``,
-you can choose to ignore the returned value.
+you can ignore the returned value.
 However, if you *do* use the returned value,
 it will be different based on whether you used the prefix or postfix version of the operator,
 based on the following rules:
@@ -300,8 +300,8 @@ and ``a`` is then updated to equal ``2``.
 
 Unless you need the specific behavior of ``i++``,
 it is recommended that you use ``++i`` and ``--i`` in all cases,
-because they have the typical expected behavior of modifying ``i``,
-and then returning the result.
+because they have the typical expected behavior of modifying ``i``
+and returning the result.
 
 .. QUESTION: is this good advice
    (given the general prevalence of i++ in the world),
@@ -396,7 +396,7 @@ Swift supports all standard C :newTerm:`comparison operators`:
 
    Swift also provides two :newTerm:`identity operators` (``===`` and ``!==``),
    which you use to test whether two object references both refer to the same object instance.
-   These identity operators are described in more detail in :doc:`ClassesAndStructures`.
+   For more information, see :doc:`ClassesAndStructures`.
 
 Each of the comparison operators returns a ``Bool`` value to indicate whether or not the statement is true:
 
@@ -430,7 +430,7 @@ such as the ``if`` statement:
    << hello, world
    // prints "hello, world", because name is indeed equal to "world"
 
-The ``if`` statement is described in more detail in :doc:`ControlFlow`.
+For more on the ``if`` statement, see :doc:`ControlFlow`.
 
 .. TODO: which types do these operate on by default?
    How do they work with strings?
@@ -448,7 +448,7 @@ based on whether ``question`` is true or false.
 If ``question`` is true, it evaluates ``answer1`` and returns its value;
 otherwise, it evaluates ``answer2`` and returns its value.
 
-This operator is shorthand for:
+The ternary conditional operator is shorthand for the code below:
 
 .. testcode:: ternaryConditionalOperatorOutline
 
@@ -479,7 +479,7 @@ if the row has a header, and 20 pixels taller if it doesn't:
    /> rowHeight is equal to \(rowHeight)
    </ rowHeight is equal to 90
 
-This is shorthand for:
+The preceding example is shorthand for the code below:
 
 .. testcode:: ternaryConditionalOperatorPart2
 
@@ -501,13 +501,12 @@ The first example's use of the ternary conditional operator means that
 ``rowHeight`` can be set to the correct value on a single line of code.
 This is more concise than the second example,
 and removes the need for ``rowHeight`` to be a variable,
-because its value does not need to be modified within an ``if`` statement
-(as seen in the second example).
+because its value does not need to be modified within an ``if`` statement.
 
 The ternary conditional operator provides
 an efficient shorthand for deciding which of two expressions to consider.
-The ternary conditional operator should be used with care, however.
-It is very concise, but this conciseness can lead to hard-to-read code if overused.
+Use the ternary conditional operator with care, however.
+Its conciseness can lead to hard-to-read code if overused.
 Avoid combining multiple instances of the ternary conditional operator into one compound statement.
 
 .. _BasicOperators_RangeOperators:
@@ -542,7 +541,7 @@ such as with a ``for``-``in`` loop:
    </ 4 times 5 is 20
    </ 5 times 5 is 25
 
-``for``-``in`` loops are described in more detail in :doc:`ControlFlow`.
+For more on ``for``-``in`` loops, see :doc:`ControlFlow`.
 
 .. _BasicOperators_HalfClosedRangeOperator:
 
@@ -577,7 +576,7 @@ Note that the array contains four items,
 but ``0..count`` only counts as far as ``3``
 (the index of the last item in the array),
 because it is a half-closed range.
-(Arrays are described in more detail in :ref:`CollectionTypes_Arrays`.)
+For more on arrays, see :ref:`CollectionTypes_Arrays`.
 
 .. _BasicOperators_LogicalOperators:
 
@@ -628,7 +627,7 @@ while avoiding double negatives or confusing logic statements.
 Logical AND Operator
 ~~~~~~~~~~~~~~~~~~~~
 
-The :newTerm:`logical AND operator` (``a && b``) is used to create logical expressions
+The :newTerm:`logical AND operator` (``a && b``) creates logical expressions
 where both values must be ``true`` for the overall expression to also be ``true``.
 
 If either value is ``false``,
@@ -638,7 +637,7 @@ the second value won't even be evaluated,
 because it can't possibly make the overall expression equate to ``true``.
 This is known as :newTerm:`short-circuit evaluation`.
 
-This example considers two ``Bool`` values,
+This example considers two ``Bool`` values
 and only allows access if both values are ``true``:
 
 .. testcode:: logicalOperators
@@ -661,7 +660,8 @@ Logical OR Operator
 
 The :newTerm:`logical OR operator`
 (``a || b``) is an infix operator made from two adjacent pipe characters.
-You use it to create logical expressions where only *one* of the two values has to be ``true``
+You use it to create logical expressions in which
+only *one* of the two values has to be ``true``
 for the overall expression to be ``true``.
 
 Like the Logical AND operator above,
@@ -670,7 +670,12 @@ If the left side of a Logical OR expression is ``true``,
 the right side is not evaluated,
 because it cannot change the outcome of the overall expression.
 
-For example:
+In the example below,
+the first ``Bool`` value (``hasDoorKey``) is ``false``,
+but the second value (``knowsOverridePassword``) is ``true``.
+Because one value is ``true``,
+the overall expression also equates to ``true``,
+and access is allowed:
 
 .. testcode:: logicalOperators
 
@@ -684,13 +689,6 @@ For example:
          println("ACCESS DENIED")
       }
    <- Welcome!
-
-In this example,
-the first ``Bool`` value (``hasDoorKey``) is ``false``,
-but the second value (``knowsOverridePassword``) is ``true``.
-Because one value is ``true``,
-the overall expression also equates to ``true``,
-and access is allowed.
 
 .. _BasicOperators_CombiningLogicalOperators:
 
@@ -709,7 +707,7 @@ You can combine multiple logical operators to create longer compound expressions
    <- Welcome!
 
 This example uses multiple ``&&`` and ``||`` operators to create a longer compound expression.
-However, the ``&&`` and ``||`` operators still only operate on two values,
+However, the ``&&`` and ``||`` operators still operate on only two values,
 so this is actually three smaller expressions chained together.
 It can be read as:
 
@@ -718,7 +716,7 @@ or if we have a valid door key;
 or if we know the emergency override password,
 then allow access.
 
-Based on the example values from earlier,
+Based on the values of ``enteredDoorCode``, ``passedRetinaScan``, and ``hasDoorKey``,
 the first two mini-expressions are ``false``,
 but we know the emergency override password,
 so the overall compound expression still equates to ``true``.
@@ -744,7 +742,7 @@ to make its intent explicit:
    <- Welcome!
 
 The parentheses make it clear that the first two values
-are being considered as part of a separate possible state in the overall logic.
+are considered as part of a separate possible state in the overall logic.
 The output of the compound expression doesn't change,
 but the overall intention is clearer to the reader.
 Readability is always preferred over brevity;
