@@ -264,36 +264,23 @@ Mutating Instance Methods
 Instance methods added with an extension can also modify (or *mutate*) the instance itself.
 Structure and enumeration methods that modify ``self`` or its properties
 must mark the instance method as ``mutating``,
-just like mutating methods from an original implementation:
+just like mutating methods from an original implementation.
+
+The example below adds a new mutating method called ``square`` to Swift's ``Int`` type,
+which squares the original value:
 
 .. testcode:: extensionsInstanceMethods
 
    -> extension Int {
-         mutating func shiftRight(numberOfDecimalPlaces: Int) {
-            for _ in 1...numberOfDecimalPlaces {
-               self /= 10
-            }
+         mutating func square() {
+            self = self * self
          }
       }
-   -> var someInt = 123_456
-   << // someInt : Int = 123456
-   -> someInt.shiftRight(3)
+   -> var someInt = 3
+   << // someInt : Int = 3
+   -> someInt.square()
    /> someInt is now \(someInt)
-   </ someInt is now 123
-
-This example adds a ``shiftRight`` method to instances of ``Int``.
-The method shifts an ``Int`` to the right by ``numberOfDecimalPlaces``.
-It does this by diving the ``Int`` by ten, ``numberOfDecimalPlaces`` times.
-Because ``Int`` instances can only store whole numbers,
-and do not have a fractional component,
-the number is rounded down to the nearest whole number each time the division takes place.
-Calling ``shiftRight(3)`` on an integer variable containing the number ``123456``
-shifts the number to the right by three decimal places,
-and changes the variable to have a value of ``123``.
-
-This method is similar to the bitwise right shift operator
-(as described in :ref:`AdvancedOperators_BitwiseLeftAndRightShifts`),
-except that it shifts by powers of ten, rather than powers of two.
+   </ someInt is now 9
 
 .. _Extensions_Subscripts:
 
