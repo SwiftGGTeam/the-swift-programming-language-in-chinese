@@ -215,46 +215,44 @@ Methods
 -------
 
 Extensions can add new instance methods and type methods to existing types.
-The following example adds a new instance method called ``toSpooky`` to the ``String`` type:
+The following example adds a new instance method called ``times`` to the ``Int`` type:
 
 .. testcode:: extensionsInstanceMethods
 
-   -> extension String {
-         func toSpooky() -> String {
-            var i = 0
-            var spooky = ""
-            for character in self {
-               let charString = String(character)
-               if i % 2 == 0 {
-                  spooky += charString.uppercaseString
-               } else {
-                  spooky += charString.lowercaseString
-               }
-               ++i
+   -> extension Int {
+         func times(task: () -> ()) {
+            for i in 0..self {
+               task()
             }
-            return spooky
          }
       }
 
-.. TODO: improve the fact that I have to convert character to a String
-   to get this to work, based on where we end up with uppercase / lowercase conversions,
-   particularly for the Character type.
+The ``times`` method takes a single argument of type ``() -> ()``,
+or “a function that has no parameters and does not return a value”.
 
-The ``toSpooky`` method returns a spookier version of the original string,
-by converting odd-numbered characters to uppercase,
-and even-numbered characters to lowercase.
-
-After this extension is defined,
-you can call the ``toSpooky`` method on any ``String`` instance:
+After defining this extension,
+you can call the ``times`` method on any integer number
+to perform a task that many number of times:
 
 .. testcode:: extensionsInstanceMethods
 
-   -> let boring = "woooooooooooo, i am a ghost!"
-   << // boring : String = "woooooooooooo, i am a ghost!"
-   -> let spooky = boring.toSpooky()
-   << // spooky : String = "WoOoOoOoOoOoO, i aM A GhOsT!"
-   /> \"\(spooky)\"
-   </ "WoOoOoOoOoOoO, i aM A GhOsT!"
+   -> 3.times({
+         println("Hello!")
+      })
+   </ Hello!
+   </ Hello!
+   </ Hello!
+
+You can use trailing closure syntax to make the call more succint:
+
+.. testcode:: extensionsInstanceMethods
+
+   -> 3.times {
+         println("Goodbye!")
+      }
+   </ Goodbye!
+   </ Goodbye!
+   </ Goodbye!
 
 .. _Extensions_MutatingInstanceMethods:
 
