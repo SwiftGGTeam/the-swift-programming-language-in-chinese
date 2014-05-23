@@ -1,17 +1,17 @@
 Deinitialization
 ================
 
-A :newTerm:`deinitializer` is called just before a class instance is deallocated.
-Deinitializers are written with the ``deinit`` keyword,
-in a similar way to how intializers are written with the ``init`` keyword.
+A :newTerm:`deinitializer` is called immediately before a class instance is deallocated.
+You write deinitializers with the ``deinit`` keyword,
+similar to how intializers are written with the ``init`` keyword.
 Deinitializers are only available on class types.
 
 Swift automatically deallocates your instances when they are no longer needed,
 to free up resources.
-Swift handles the memory management of instances via
+Swift handles the memory management of instances through
 :newTerm:`automatic reference counting` (known as :newTerm:`ARC`),
 as described in :doc:`AutomaticReferenceCounting`.
-This means there is normally no need to perform any clean-up when your instances are deallocated.
+Typically you don't need to perform any manual clean-up when your instances are deallocated.
 However, there may be times when you are working with your own resources,
 and need to perform some additional clean-up yourself.
 For example, if you create a custom class to open a file and write some data to it,
@@ -29,23 +29,20 @@ and is written without parentheses:
       }
    >> }
 
-Deinitializers are called automatically, just before instance destruction takes place.
-You are not allowed to call ``super.deinit`` yourself.
+Deinitializers are called automatically, just before instance deallocation takes place.
+You are not allowed to call a deinitializer yourself.
 Superclass deinitializers are inherited by their subclasses,
 and the superclass deinitializer is called automatically at the end of
 a subclass deinitializer implementation.
 Superclass deinitializers are always called,
 even if a subclass does not provide its own deinitializer.
 
-.. TODO: note that this is true even if your subclass doesn't actually provide
-   an explicit deinitializer itself.
-
-Because the instance has not yet been deallocated,
-a deinitializer can access all of the properties of the instance it is called on,
+Because the instance has not yet been deallocated when a deinitializer is called,
+a deinitializer can access all properties of the instance it is called on,
 and can modify its behavior based on those properties
 (such as looking up the name of a file that needs to be closed).
 
-Here's an example of ``deinit`` in action.
+Here's an example of a deinitializer in action.
 This example defines two new types, ``Bank`` and ``Player``, for a simple game.
 The ``Bank`` structure manages a made-up currency,
 which can never have more than 10,000 coins in circulation.
@@ -67,17 +64,18 @@ to store and manage its current state:
          }
       }
 
-``Bank`` keeps track of the current number of coins it holds via its ``coinsInBank`` property.
+``Bank`` keeps track of the current number of coins it holds with its ``coinsInBank`` property.
 It also offers two methods – ``vendCoins`` and ``receiveCoins`` –
 to handle the distribution and collection of coins.
 
-``vendCoins`` checks that there are enough coins in the bank before handing any out.
-If there are not enough coins, it returns a smaller number than the number that was requested
-(and may even return zero if there are no coins left in the bank at all).
-It declares ``numberOfCoinsToVend`` as a variable parameter,
+``vendCoins`` checks that there are enough coins in the bank before distributing them.
+If there are not enough coins,
+``Bank`` returns a smaller number than the number that was requested
+(and returns zero if no coins are left in the bank).
+``vendCoins`` declares ``numberOfCoinsToVend`` as a variable parameter,
 so that the number can be modified within the method's body
-without needing to declare a new variable.
-It returns an integer value to indicate the actual number of coins that were vended.
+without the need to declare a new variable.
+It returns an integer value to indicate the actual number of coins that were provided.
 
 The ``receiveCoins`` method simply adds the received number of coins back into the bank's coin store.
 
@@ -109,9 +107,7 @@ which tries to retrieve a certain number of coins from the bank
 and add them to the player's purse.
 The ``Player`` class also implements a deinitializer,
 which is called just before a ``Player`` instance is deallocated.
-Here, the deinitializer simply returns all of the player's coins to the bank.
-
-Here's how that looks in action:
+Here, the deinitializer simply returns all of the player's coins to the bank:
 
 .. testcode:: deinitializer
 
@@ -125,7 +121,7 @@ Here's how that looks in action:
 A new ``Player`` instance is created, with a request for 100 coins if they are available.
 This ``Player`` instance is stored in an optional ``Player`` variable called ``playerOne``.
 An optional variable is used here, because players can leave the game at any point.
-Using an optional gives a way to keep track of whether there is currently a player in the game.
+The optional lets you track whether there is currently a player in the game.
 
 Because ``playerOne`` is an optional, it is qualified with an exclamation mark (``!``)
 when its ``coinsInPurse`` property is accessed to print its default number of coins,
@@ -140,8 +136,8 @@ and whenever its ``winCoins`` method is called:
    <- The bank now only has 7900 coins left
 
 Here, the player has won 2,000 coins.
-Their purse now contains 2,100 coins,
-and the bank only has 7,900 coins left.
+The player's purse now contains 2,100 coins,
+and the bank has only 7,900 coins left.
 
 .. testcode:: deinitializer
 
@@ -158,7 +154,7 @@ At the point that this happens,
 the ``playerOne`` variable's reference to the ``Player`` instance is broken.
 No other properties or variables are still referring to the ``Player`` instance,
 and so it is deallocated in order to free up its memory.
-Just before this happens, its deinitializer is called,
+Just before this happens, its deinitializer is called automatically,
 and its coins are returned to the bank.
 
 .. TODO: switch Bank to be a class rather than a structure
