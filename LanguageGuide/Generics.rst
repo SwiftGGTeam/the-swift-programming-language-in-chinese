@@ -449,12 +449,10 @@ or ``nil`` if the value cannot be found:
 .. testcode:: typeConstraints
 
    -> func findInt(array: Int[], valueToFind: Int) -> Int? {
-         var index = 0
-         for integer in array {
-            if integer == valueToFind {
+         for (index, value) in enumerate(array) {
+            if value == valueToFind {
                return index
             }
-            ++index
          }
          return nil
       }
@@ -478,16 +476,14 @@ Here's how a generic version of ``findInt``, called ``findValue``, might be writ
 .. testcode:: typeConstraints
 
    -> func findValue<T>(array: T[], valueToFind: T) -> Int? {
-         var index = 0
-         for value in array {
+         for (index, value) in enumerate(array) {
             if value == valueToFind {
                return index
             }
-            ++index
          }
          return nil
       }
-   !! <REPL Input>:4:18: error: could not find an overload for '==' that accepts the supplied arguments
+   !! <REPL Input>:3:18: error: could not find an overload for '==' that accepts the supplied arguments
    !!              if value == valueToFind {
    !!                 ~~~~~~^~~~~~~~~~~~~~
 
@@ -526,12 +522,10 @@ as part of the type parameter's definition when you define the function:
 .. testcode:: typeConstraintsEquatable
 
    -> func findValue<T: Equatable>(array: T[], valueToFind: T) -> Int? {
-         var index = 0
-         for value in array {
+         for (index, value) in enumerate(array) {
             if value == valueToFind {
                return index
             }
-            ++index
          }
          return nil
       }
