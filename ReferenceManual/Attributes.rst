@@ -93,7 +93,11 @@ the ``noreturn`` attribute to a function or method *type*.
     see :ref:`Inheritance_FinalMethodsPropertiesAndSubscripts`.
 
 ``lazy``
-    .. write-me::
+    Apply this attribute to a stored variable property of a class or structure
+    to indicate that the property's initial value is calculated and stored at most
+    once, when the property is first accessed.
+    For an example of how to use the ``lazy`` attribute,
+    see :ref:`Properties_LazyStoredProperties`.
 
 ``noreturn``
     Apply this attribute to a function or method declaration
