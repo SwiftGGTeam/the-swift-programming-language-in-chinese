@@ -531,12 +531,9 @@ Assignment and Copy Behavior for Collection Types
 -------------------------------------------------
 
 Swift's ``Array`` and ``Dictionary`` types are implemented as structures.
-However, because they hold a collection of values rather than an individual value,
-the ``Array`` and ``Dictionary`` types exhibit slightly different behavior to other Swift types
+However, arrays have slightly different behavior to dictionaries and other structures
 when they are assigned to a constant or variable,
 or when they are passed to a function or method.
-Their behavior is also different from the behavior of
-Cocoa's ``NSArray`` and ``NSDictionary`` types, which are implemented as classes.
 
 .. _ClassesAndStructures_AssignmentAndCopyBehaviorForDictionaries:
 
@@ -546,7 +543,8 @@ Assignment and Copy Behavior for Dictionaries
 Whenever you assign a ``Dictionary`` instance to a constant or variable,
 or pass a ``Dictionary`` instance as an argument to a function or method call,
 the dictionary is *copied* at the point that
-the assignment or call takes place.
+the assignment or call takes place,
+as described above in :ref:`ClassesAndStructures_ValueTypes`.
 
 If the keys and/or values stored in the ``Dictionary`` instance are value types
 (that is, structures or enumerations),
@@ -554,7 +552,8 @@ they too are copied when the assignment or call takes place.
 Conversely, if the keys and/or values are reference types
 (that is, classes or functions),
 the references are copied, but not the class instances or functions that they refer to.
-(This is known as a :newTerm:`shallow copy` of the dictionary.)
+This behavior is the same as when stored properties on other value types are copied,
+and is known as a :newTerm:`shallow copy` of the dictionary.
 
 .. note::
 
@@ -600,7 +599,7 @@ Assignment and Copy Behavior for Arrays
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The assignment and copy behavior for Swift's ``Array`` type
-is slightly more complex than for its ``Dictionary`` type.
+is more complex than for its ``Dictionary`` type.
 This enables ``Array`` to provide C-like performance when working with an array's contents,
 and to copy an array's contents only when copying is necessary.
 
@@ -619,8 +618,6 @@ If and when array copying does take place,
 the copy behavior for an array's contents is the same shallow copy as for
 a dictionary's keys and values,
 as described in :ref:`ClassesAndStructures_AssignmentAndCopyBehaviorForDictionaries`.
-
-.. TODO: I don't actually describe how to replace a range of items!
 
 .. note::
 
@@ -727,12 +724,12 @@ all three arrays will now report a different value:
    -> println(c[0])
    </ 42
 
-.. _ClassesAndStructures_CheckingForArrayUniqueness:
+.. _ClassesAndStructures_CheckingWhetherTwoArraysShareTheSameStorage:
 
-Checking for Array Uniqueness
-_____________________________
+Checking Whether Two Arrays Share the Same Storage
+__________________________________________________
 
-You can check whether two constants or variables refer to the same array
+You can check whether two constants or variables share the same array storage
 by comparing them with the identity operators,
 as described in :ref:`ClassesAndStructures_IdentityOperators`.
 The example below uses the “identical to” operator (``===``)
