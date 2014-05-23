@@ -515,11 +515,8 @@ as the second argument to the ``sort`` function.
 
 .. testcode::
 
-    -> sort([1, 5, 3, 12, 2], > )
+    -> sort([1, 5, 3, 12, 2], >)
     <$ : Array<Int> = [12, 5, 3, 2, 1]
-
-.. Note: Extra space after > is a workaround
-   <rdar://problem/16998083> Passing an operator name as a closure requires an extra space
 
 .. Omitted curried functions and custom operators as "advanced" topics.
 
