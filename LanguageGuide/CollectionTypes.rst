@@ -391,10 +391,21 @@ because it can be inferred from the default value:
 
 .. testcode:: arraysEmpty
 
-   -> var anotherThreeDoubles = Array(count: 3, repeatedValue: 0.0)
-   << // anotherThreeDoubles : Array<Double> = [0.0, 0.0, 0.0]
+   -> var anotherThreeDoubles = Array(count: 3, repeatedValue: 2.5)
+   << // anotherThreeDoubles : Array<Double> = [2.5, 2.5, 2.5]
    /> anotherThreeDoubles is inferred as Double[], and equals [\(anotherThreeDoubles[0]), \(anotherThreeDoubles[1]), \(anotherThreeDoubles[2])]
-   </ anotherThreeDoubles is inferred as Double[], and equals [0.0, 0.0, 0.0]
+   </ anotherThreeDoubles is inferred as Double[], and equals [2.5, 2.5, 2.5]
+
+Finally, you can create a new array by adding together two existing arrays of compatible type
+with the addition operator (``+``).
+The new array's type is inferred from the type of the two arrays you add together:
+
+.. testcode:: arraysEmpty
+
+   -> var sixDoubles = threeDoubles + anotherThreeDoubles
+   << // sixDoubles : Double[] = [0.0, 0.0, 0.0, 2.5, 2.5, 2.5]
+   /> sixDoubles is inferred as Double[], and equals [\(sixDoubles[0]), \(sixDoubles[1]), \(sixDoubles[2]), \(sixDoubles[3]), \(sixDoubles[4]), \(sixDoubles[5])]
+   </ sixDoubles is inferred as Double[], and equals [0.0, 0.0, 0.0, 2.5, 2.5, 2.5]
 
 .. TODO: func find<T: Equatable>(array: T[], value: T) -> Int?
    This is defined in Algorithm.swift,
