@@ -178,23 +178,16 @@ These properties store a value between ``0.0`` and ``1.0``
 to indicate the amount of red, green, and blue in the color.
 
 ``Color`` provides an initializer with
-three appropriately-named parameters of type ``Double``.
-``Color`` also defines a method called ``limitToRange``,
-to cope with argument values outside of the ``0.0`` to ``1.0`` range defined above:
+three appropriately-named parameters of type ``Double``:
 
 .. testcode:: externalParameterNames
 
    -> struct Color {
          let red = 0.0, green = 0.0, blue = 0.0
          init(red: Double, green: Double, blue: Double) {
-            self.red   = limitToRange(red)
-            self.green = limitToRange(green)
-            self.blue  = limitToRange(blue)
-         }
-         func limitToRange(component: Double) -> Double {
-            if component > 1.0 { return 1.0 }
-            if component < 0.0 { return 0.0 }
-            return component
+            self.red   = red
+            self.green = green
+            self.blue  = blue
          }
       }
 
