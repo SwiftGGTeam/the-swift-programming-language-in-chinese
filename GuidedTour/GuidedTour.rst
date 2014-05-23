@@ -308,7 +308,7 @@ for each key-value pair.
 
 .. admonition:: Experiment
 
-   Try keeping track of which kind of number
+   Add another variable to keep track of which kind of number
    was the largest, as well as what that largest number was.
 
 Use ``while`` to repeat a block of code until a condition changes.
