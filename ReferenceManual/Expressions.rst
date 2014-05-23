@@ -701,21 +701,25 @@ that allow closures to be written more concisely:
 
 The following closure expressions are equivalent,
 assuming they are used in a context
-that provides the needed type information: ::
+that provides the needed type information:
 
-    {
-        (x: Int, y: Int) -> Int in
-        return x + y
-    }
+.. testcode:: closure-expression-forms
 
-    {
-        (x, y) in
-        return x + y
-    }
+    -> {
+           (x: Int, y: Int) -> Int in
+           return x + y
+       }
+    ---
+    -> {
+           (x, y) in
+           return x + y
+       }
+    ---
+    -> { return $0 + $1 }
+    ---
+    -> { $0 + $1 }
 
-    { return $0 + $1 }
 
-    { $0 + $1 }
 
 For more information and examples of closure expressions,
 see :ref:`Closures_ClosureExpressions`.
