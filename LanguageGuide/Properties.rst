@@ -113,29 +113,27 @@ Lazy Stored Properties
 .. QUESTION: is this section too complex for this point in the book?
    Should it go in the Default Property Values section of Initialization instead?
 
-:newTerm:`Lazy stored properties`
-are stored properties whose initial value is not calculated
+A :newTerm:`lazy stored property` is a property whose initial value is not calculated
 until the first time it is used.
-These kinds of properties are indicated by writing
-the ``@lazy`` attribute before their declaration.
+You indicate a lazy stored property by writing
+the ``@lazy`` attribute before its declaration.
 
 .. note::
 
-   Lazy properties must always be declared as variables (with the ``var`` keyword),
-   because it is possible that their initial value may not be retrieved
-   until after instance initialization has finished.
-   Constant properties must always have a value *before* initialization finishes,
-   and cannot therefore be declared as lazy.
+   A lazy property must always be declared as a variable (with the ``var`` keyword),
+   because its initial value may not be retrieved until
+   after instance initialization completes.
+   Constant properties must always have a value *before* initialization completes,
+   and therefore cannot be declared as lazy.
 
 Lazy properties are useful when the initial value for a property
 is dependent on outside factors whose values are not known
 until after an instance's initialization is complete.
 Lazy properties are also useful when the initial value for a property requires
-complex or computationally-expensive setup that should not be performed
+complex or computationally expensive setup that should not be performed
 unless or until it is needed.
 
-The example below shows a hypothetical situation where
-a lazy stored property is an appropriate way to avoid
+The example below uses a lazy stored property to avoid
 unnecessary initialization of a complex class.
 This example defines two classes called ``DataImporter`` and ``DataManager``,
 neither of which is shown in full:
@@ -173,21 +171,20 @@ the purpose of this ``DataManager`` class is to manage and provide access to
 this array of ``String`` data.
 
 Part of the functionality of the ``DataManager`` class
-is the ability to import some data from a file.
+is the ability to import data from a file.
 This functionality is provided by the ``DataImporter`` class,
-which is assumed to take some non-trivial amount of time to initialize.
+which is assumed to take a non-trivial amount of time to initialize.
 This might be because a ``DataImporter`` instance needs to open a file
 and read its contents into memory when the ``DataImporter`` instance is initialized.
 
-In this hypothetical scenario,
-it is possible for a ``DataManager`` instance to manage its data
-without ever needing to import any data from a file,
-and so there is no need to create a new ``DataImporter`` instance
+It is possible for a ``DataManager`` instance to manage its data
+without ever importing data from a file,
+so there is no need to create a new ``DataImporter`` instance
 when the ``DataManager`` itself is created.
 Instead, it makes more sense to create the ``DataImporter`` instance
 if and when it is first used.
 
-Because it has been marked with the ``@lazy`` attribute,
+Because it is marked with the ``@lazy`` attribute,
 the ``DataImporter`` instance for the ``importer`` property
 is only created when the ``importer`` property is first accessed,
 such as when its ``fileName`` property is queried:
@@ -487,14 +484,18 @@ Global and Local Variables
 --------------------------
 
 The capabilities described above for computing and observing properties
-are also available to :newTerm:`global variables`
-(that is, variables defined outside of any function, method, closure, or type context),
-and :newTerm:`local variables`
-(that is, variables defined within a function, method, or closure context).
+are also available to :newTerm:`global variables` and :newTerm:`local variables`.
+Global variables are variables that are defined outside of any
+function, method, closure, or type context.
+Local variables are variables that are defined within
+a function, method, or closure context.
 
 The global and local variables you have encountered in previous chapters
-have all been *stored* variables.
-However, you can define computed variables, and define observers for stored variables,
+have all been :newTerm:`stored variables`.
+Stored variables, like stored properties,
+provide storage for a value of a certain type and allow that value to be set and retrieved.
+
+However, you can also define :newTerm:`computed variables`, and define observers for stored variables,
 in either a global or local scope.
 
 .. FIXME: observed variables in a closure trigger an assertion:
@@ -517,8 +518,7 @@ in either a global or local scope.
 Type Properties
 ---------------
 
-Instance properties, as described above,
-are properties that belong to an instance of a particular type.
+Instance properties are properties that belong to an instance of a particular type.
 Every time you create a new instance of that type,
 it has its own set of property values, separate from any other instance.
 
@@ -529,8 +529,8 @@ no matter how many instances of that type you create.
 These kinds of properties are called :newTerm:`type properties`.
 
 Type properties are useful for defining values that are universal to
-*all* instances of a particular type.
-This might be a constant property that all instances can use
+*all* instances of a particular type,
+such as a constant property that all instances can use
 (like a static constant in C),
 or a variable property that stores a value that is global to all instances of that type
 (like a static variable in C).
@@ -539,7 +539,7 @@ For value types (that is, structures and enumerations),
 you can define stored and computed type properties.
 For classes, you can define computed type properties only.
 
-Stored type properties (for value types) can be variables or constants.
+Stored type properties for value types can be variables or constants.
 Computed type properties are always declared as variable properties,
 in the same way as computed instance properties.
 
