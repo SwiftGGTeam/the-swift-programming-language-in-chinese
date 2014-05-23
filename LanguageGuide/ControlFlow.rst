@@ -958,7 +958,7 @@ The example below categorizes an (x, y) point on the following graph:
       }
    <- (1, -1) is on the line x == -y
 
-.. image:: ../images/coordinateGraphComplex.png
+.. image:: ../images/coordinateGraphComplex_2x.png
    :align: center
 
 The ``switch`` statement determines if the point is

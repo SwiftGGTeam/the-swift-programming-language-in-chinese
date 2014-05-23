@@ -226,7 +226,7 @@ Here's how the strong references look after creating and assigning these two ins
 The ``john`` variable now has a strong reference to the new ``Person`` instance,
 and the ``number73`` variable has a strong reference to the new ``Apartment`` instance:
 
-.. image:: ../images/referenceCycle01.png
+.. image:: ../images/referenceCycle01_2x.png
    :align: center
 
 You can now link the two instances together
@@ -242,7 +242,7 @@ so that the properties of those instances can be set:
 
 Here's how the strong references look after you link the two instances together:
 
-.. image:: ../images/referenceCycle02.png
+.. image:: ../images/referenceCycle02_2x.png
    :align: center
 
 Unfortunately, linking these two instances creates
@@ -268,7 +268,7 @@ from ever being disposed of, causing a memory leak in your app.
 Here's how the strong references look after you set
 the ``john`` and ``number73`` variables to ``nil``:
 
-.. image:: ../images/referenceCycle03.png
+.. image:: ../images/referenceCycle03_2x.png
    :align: center
 
 The strong references between the ``Person`` instance

@@ -689,7 +689,7 @@ A simple way to remember this is:
 
 These rules are illustrated in the figure below:
 
-.. image:: ../images/initializerDelegation01.png
+.. image:: ../images/initializerDelegation01_2x.png
    :align: center
 
 Here, the superclass has a single designated initializer, and two convenience initializers.
@@ -717,7 +717,7 @@ and illustrates how the designated initializers in this hierarchy
 act as “funnel” points for class initialization,
 simplifying the interrelationships between classes in the chain:
 
-.. image:: ../images/initializerDelegation02.png
+.. image:: ../images/initializerDelegation02_2x.png
    :align: center
 
 .. _Initialization_TwoPhaseInitialization:
