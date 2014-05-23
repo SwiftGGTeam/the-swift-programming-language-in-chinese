@@ -59,6 +59,8 @@ The Swift standard library provides the following prefix operators:
 For information about the behavior of these operators,
 see :doc:`../LanguageGuide/BasicOperators` and :doc:`../LanguageGuide/AdvancedOperators`.
 
+.. TODO: Need to a brief write up on the in-out-expression.
+
 .. langref-grammar
 
     expr-unary   ::= operator-prefix* expr-postfix
