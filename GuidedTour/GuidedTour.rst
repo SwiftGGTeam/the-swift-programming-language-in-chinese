@@ -725,10 +725,6 @@ is always the same as the side length of its square.
    -> triangleAndSquare.triangle.sideLength
    <$ : Double = 50.0
 
-.. What is getter-setter-keyword-clause for?
-   It looks like you write var foo: Type { get }
-   but what does that even mean?
-
 .. Grammatically, these clauses are general to variables.
    Not sure what it would look like
    (or if it's even allowed)
@@ -1076,7 +1072,7 @@ to make a generic function or type.
 You can make generic forms of functions and methods,
 as well as classes, enumerations, and structures.
 
-.. FIXME: Add testcode expectation lines.
+.. TODO: Add testcode expectation lines.
 
 .. testcode::
 
