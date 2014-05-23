@@ -386,20 +386,28 @@ Initializer Delegation For Value Types
 
 For value types, it can sometimes be useful for an initializer to call
 another initializer to help with the initialization process.
-This can avoid duplicating code across multiple initializers.
-You can use ``self.init`` to refer to other initializers from the same value type
-when writing your own custom initializers for a structure or enumeration.
+This avoids duplicating common code across multiple initializers.
+
+You use ``self.init`` to refer to other initializers from the same value type
+when writing your own custom initializers.
 You can only call ``self.init`` from within an initializer.
+
+Note that if you define a custom initializer for a value type,
+you will no longer have access to the default initializer
+(or the memberwise structure initializer, if it is a structure) for that type.
+This avoids a situation where you provide a more complex initializer
+that performs additional essential setup,
+but your more complex initializer is circumvented by someone accidentally using
+one of the automatic initializers instead.
 
 .. note::
 
-   If you define a custom initializer for a value type,
-   you will no longer have access to the default initializer
-   (or the memberwise structure initializer, if it is a structure) for that type.
-   This avoids a situation where you provide a more complex initializer
-   that performs additional essential setup,
-   but your more complex initializer is circumvented by someone accidentally using
-   one of the automatic initializers instead.
+   If you want your custom value type to be initializable with
+   the default initializer and memberwise initializer,
+   and also with your own custom initializers,
+   write your custom initializers in an extension
+   rather than as part of the value type's original implementation.
+   For more information, see :doc:`Extensions`.
 
 The following example defines a custom ``Rect`` structure to represent a geometric rectangle.
 The example requires two supporting structures called ``Size`` and ``Point``,

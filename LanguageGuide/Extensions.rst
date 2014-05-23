@@ -139,9 +139,11 @@ must always be provided by the original class implementation.
 
 .. note::
 
-   If you use an extension to add an initializer to a structure that provides
-   default values for all of its stored properties,
-   you can still call the default initializer and memberwise initializer for that structure.
+   If you use an extension to add an initializer to a value type that provides
+   default values for all of its stored properties
+   and does not define any custom initializers,
+   you can call the default initializer and memberwise initializer for that value type
+   from within your extension's initializer.
    This is different from if you had written the initializer
    as part of the type's original implementation.
 
