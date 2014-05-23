@@ -997,7 +997,7 @@ which provides a textual description of a ``ShoppingListItem`` instance:
 Because it provides a default value for all of the properties it introduces,
 and does not define any initializers itself,
 ``ShoppingListItem`` automatically inherits
-*all* of the designated and convenience initializers from it superclass.
+*all* of the designated and convenience initializers from its superclass.
 
 The figure below shows the overall initializer chain for all three classes:
 
@@ -1043,32 +1043,6 @@ shows that their default states have been set as expected.
 
 .. TODO: Feedback from Beto is that it would be useful to indicate the flow
    through these inherited initializers.
-
-.. _Initialization_RequiredInitializers:
-
-Required Initializers
-~~~~~~~~~~~~~~~~~~~~~
-
-You can apply the ``@required`` attribute to
-a designated or convenience initializer of a class
-to indicate that every subclass of that class must implement the initializer.
-
-Even if an initializer is marked as ``@required``,
-you may not have to provide an explicit implementation of that initializer,
-and may be able to satisfy the requirement with an inherited initializer instead.
-Requirements are satisfied based on the following two rules:
-
-**Rule 1**
-  If your superclass has a required *designated* initializer,
-  you must provide an implementation of that initializer.
-  The requirement can't be satisfied by an inherited initializer.
-
-**Rule 2**
-  If your superclass has a required *convenience* initializer,
-  you can satisfy the requirement with an inherited initializer,
-  even if the requirement started life as a designated initializer higher up the chain.
-
-.. TODO: provide an example.
 
 .. _Initialization_SettingADefaultPropertyValueWithAClosureOrFunction:
 
@@ -1174,3 +1148,6 @@ and can be queried with the ``squareIsBlackAtRow`` utility function:
    <- true
    -> println(board.squareIsBlackAtRow(9, column: 9))
    <- false
+
+.. TODO: reinstate the section about @required initializers
+   once we can say something about creating instances from values of protocol metatype.
