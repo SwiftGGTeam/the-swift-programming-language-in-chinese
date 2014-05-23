@@ -192,7 +192,7 @@ and are written immediately after the function's name,
 between a pair of matching angle brackets (such as ``<T>``).
 
 Once specified,
-a type parameter can be used as the type of a function's parameters
+a type parameter can be used to define the type of a function's parameters
 (such as the ``a`` and ``b`` parameters of the ``swapTwoValues`` function);
 or as the function's return type;
 or as a type annotation within the body of the function.
