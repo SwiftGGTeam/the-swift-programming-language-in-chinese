@@ -360,17 +360,18 @@ can be passed to the memberwise initializer by name:
    -> let twoByTwo = Size(width: 2.0, height: 2.0)
    << // twoByTwo : Size = V4REPL4Size (has 2 children)
 
-.. _Initialization_InitializerDelegation:
+.. _Initialization_InitializerDelegationForValueTypes:
 
-Initializer Delegation
-----------------------
+Initializer Delegation For Value Types
+--------------------------------------
 
 Initializers can call other initializers to perform part of an instance's initialization.
-This process is known as :newTerm:`initializer delegation`.
+This process is known as :newTerm:`initializer delegation`,
+and avoids duplicating code across multiple initializers.
+
 The rules for how initializer delegation works,
 and for what forms of delegation are allowed,
 are different for value types and class types.
-
 Value types (structures and enumerations) do not support inheritance,
 and so their initializer delegation process is relatively simple,
 because they can only delegate to another initializer that they provide themselves.
@@ -378,18 +379,11 @@ Classes, however, can inherit from other classes,
 as described in :doc:`Inheritance`.
 This means that classes have additional responsibilities for ensuring that
 all of the stored properties they inherit are assigned a suitable value during initialization.
+These responsibilities are described in
+:ref:`Initialization_ClassInheritanceAndInitialization` below.
 
-.. _Initialization_InitializerDelegationForValueTypes:
-
-Initializer Delegation For Value Types
---------------------------------------
-
-For value types, it can sometimes be useful for an initializer to call
-another initializer to help with the initialization process.
-This avoids duplicating common code across multiple initializers.
-
-You use ``self.init`` to refer to other initializers from the same value type
-when writing your own custom initializers.
+For value types, you use ``self.init`` to refer to other initializers
+from the same value type when writing your own custom initializers.
 You can only call ``self.init`` from within an initializer.
 
 Note that if you define a custom initializer for a value type,
@@ -503,12 +497,11 @@ that already provides exactly that functionality.
    the ``init()`` and ``init(origin:size:)`` initializers yourself,
    see :doc:`Extensions`.
 
-.. _Initialization_InitializerDelegationForClassTypes:
+.. _Initialization_ClassInheritanceAndInitialization:
 
-Initializer Delegation For Class Types
---------------------------------------
+Class Inheritance and Initialization
+------------------------------------
 
-Initializer delegation for class types comes with a few extra considerations than for value types.
 Classes can inherit from other classes, as described in :doc:`Inheritance`.
 This means that any subclass initializers you write
 must ensure that all of the subclass's stored properties –
