@@ -371,8 +371,7 @@ as shown in the following example:
 
 The ``is`` operator checks at runtime
 to see whether the *expression*
-is of the specified *type*
-(but not one of its subtypes).
+is of the specified *type*.
 If so, it returns ``true``; otherwise, it returns ``false``.
 
 .. If the bugs are fixed, this can be reworded:
