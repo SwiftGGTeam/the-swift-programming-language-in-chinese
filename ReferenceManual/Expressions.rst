@@ -719,7 +719,19 @@ that provides the needed type information:
     ---
     -> { $0 + $1 }
 
+A closure expression can explicitly specify
+the list of values that it captures from the surrounding scope
+using a :newTerm:`capture list`.
+A capture list is written as a comma separated list surrounded by square brackets,
+written before the list of parameters.
+If you use a capture list, you must also use the ``in`` keyword,
+even if you omit the parameter names, parameter types, and return type.
 
+Each entry in the capture list can be specified as ``weak`` or ``unownned``
+
+.. TODO: Do you get a compiler error yet
+   if you capture variables that are not mentioned
+   in the capture list?
 
 For more information and examples of closure expressions,
 see :ref:`Closures_ClosureExpressions`.
