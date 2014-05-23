@@ -103,13 +103,8 @@ Initialization Parameters
 
 Initializers can provide :newTerm:`initialization parameters`,
 which define the types and names of values that customize the initialization process.
-Initialization parameters are written in the same syntax as function and method parameters.
-
-Initializers can use
-constant parameters, variable parameters, and ``inout`` parameters.
-Default values can be provided for initializer parameters,
-and tuples can be used as parameter types.
-Variadic parameters can also be used.
+Initialization parameters have the same capabilities and syntax
+as function and method parameters.
 
 The following example defines a structure called ``Celsius``,
 which stores temperatures expressed in the Celsius scale.
