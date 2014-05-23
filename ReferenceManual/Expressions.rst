@@ -75,11 +75,9 @@ see :ref:`Functions_InOutParameters`.
 
     Grammar of a prefix expression
 
-    prefix-expression --> prefix-operators-OPT postfix-expression
+    prefix-expression --> prefix-operator-OPT postfix-expression
     prefix-expression --> in-out-expression
     in-out-expression --> ``&`` identifier
-    prefix-operators --> prefix-operator prefix-operators-OPT
-
 
 .. _Expressions_BinaryExpressions:
 
