@@ -162,7 +162,7 @@ This enables you to check for a successful downcast.
 
 Use the forced form of the type cast operator (``as``)
 only when you are sure that the downcast will always succeed.
-This form of the operator will trigger an unrecoverable runtime error
+This form of the operator will trigger a runtime error
 if you try to downcast to an incorrect class type.
 
 The example below iterates over each ``MediaItem`` in ``library``,

@@ -70,7 +70,7 @@ In the code below, ``john`` has a ``residence`` property value of ``nil``:
 
 If you try to access the ``numberOfRooms`` property of this person's ``residence``,
 by placing an exclamation mark after ``residence`` to force the unwrapping of its value,
-you will trigger an unrecoverable runtime error,
+you trigger a runtime error,
 because there is no ``residence`` value to unwrap:
 
 .. testcode:: optionalChainingIntroAssert
@@ -78,11 +78,11 @@ because there is no ``residence`` value to unwrap:
 
    -> let roomCount = john.residence!.numberOfRooms
    xx assert
-   // this triggers an unrecoverable runtime error
+   // this triggers a runtime error
 
 This code will succeed when ``john.residence`` has a non-``nil`` value,
 and will set ``roomCount`` to an ``Int`` value containing the appropriate number of rooms.
-However, this code will always fail in an unrecoverable way when ``residence`` is ``nil``,
+However, this code will always trigger a runtime error when ``residence`` is ``nil``,
 as illustrated above.
 
 Optional chaining provides an alternative way to access the value of ``numberOfRooms``.

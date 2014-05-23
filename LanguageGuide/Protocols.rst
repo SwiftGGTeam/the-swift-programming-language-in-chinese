@@ -887,7 +887,7 @@ follows exactly the same syntax as checking for and casting to a type:
   an optional value of the protocol's type
   and this value is ``nil`` if the instance does not conform to that protocol.
 * The ``as`` version of the downcast operator forces the downcast to the protocol type
-  and triggers an unrecoverable runtime error if the downcast does not succeed.
+  and triggers a runtime error if the downcast does not succeed.
 
 This example defines a protocol called ``HasArea``,
 with a single property requirement of a gettable ``Double`` property called ``area``:

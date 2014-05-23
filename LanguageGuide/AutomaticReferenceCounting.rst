@@ -451,7 +451,7 @@ because variables of a non-optional type cannot be set to ``nil``.
 
    If you try to access an unowned reference 
    after the instance that it references is deallocated,
-   you will trigger an unrecoverable runtime error.
+   you will trigger a runtime error.
    Use unowned references only when you are sure that
    the reference will *always* refer to an instance.
 

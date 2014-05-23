@@ -245,7 +245,7 @@ with ``"Bananas"`` and ``"Apples"``:
 
    If you try to use subscript syntax to retrieve or set a value for an index
    that is outside of an array's existing bounds,
-   you will trigger an unrecoverable runtime error.
+   you will trigger a runtime error.
    However, you can check that an index is valid before using it,
    by comparing it to the array's ``count`` property.
    Except when ``count`` is ``0`` (meaning the array is empty),

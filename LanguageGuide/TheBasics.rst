@@ -1009,7 +1009,7 @@ For more on the ``if`` statement, see :doc:`ControlFlow`.
 .. note::
 
    Trying to use ``!`` to access a non-existent optional value triggers
-   an unrecoverable runtime error.
+   a runtime error.
    Always make sure that an optional contains a non-``nil`` value
    before using ``!`` to force unwrap its value.
 
@@ -1170,7 +1170,7 @@ you place an exclamation mark after the optional's type when you declare it.
 
    If you try and access an implicitly unwrapped optional
    when it does not contain a value,
-   you will trigger an unrecoverable runtime error.
+   you will trigger a runtime error.
    This is exactly the same as if you place an exclamation mark
    after a normal optional that does not contain a value.
 
