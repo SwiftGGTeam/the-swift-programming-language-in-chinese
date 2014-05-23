@@ -59,6 +59,12 @@ The Swift standard library provides the following prefix operators:
 For information about the behavior of these operators,
 see :doc:`../LanguageGuide/BasicOperators` and :doc:`../LanguageGuide/AdvancedOperators`.
 
+In addition to the standard library operators listed above,
+you use ``&`` immediately before the name of a variable that's being passed
+as an in-out argument to a function call expression.
+For more information and to see an example,
+see :ref:`Functions_InOutParameters`.
+
 .. TODO: Need to a brief write up on the in-out-expression.
 
 .. langref-grammar
