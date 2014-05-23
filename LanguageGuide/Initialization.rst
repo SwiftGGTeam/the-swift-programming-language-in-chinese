@@ -382,7 +382,7 @@ all of the stored properties they inherit are assigned a suitable value during i
 .. _Initialization_InitializerDelegationForValueTypes:
 
 Initializer Delegation For Value Types
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------------------
 
 For value types, it can sometimes be useful for an initializer to call
 another initializer to help with the initialization process.
@@ -492,7 +492,7 @@ that already provides exactly that functionality.
 .. _Initialization_InitializerDelegationForClassTypes:
 
 Initializer Delegation For Class Types
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------------------
 
 Initializer delegation for class types comes with a few extra considerations than for value types.
 Classes can inherit from other classes, as described in :doc:`Inheritance`.
@@ -517,7 +517,7 @@ These are known as designated initializers and convenience initializers.
 .. _Initialization_DesignatedInitializersAndConvenienceInitializers:
 
 Designated Initializers and Convenience Initializers
-____________________________________________________
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :newTerm:`Designated initializers` are the primary initializers for a class.
 A designated initializer is responsible for making sure that
@@ -551,7 +551,7 @@ will save time or make initialization of the class clearer in intent.
 .. _Initialization_InitializerChaining:
 
 Initializer Chaining
-____________________
+~~~~~~~~~~~~~~~~~~~~
 
 To simplify the relationships between designated and convenience initializers,
 Swift applies the following three rules for delegation calls between initializers:
@@ -606,7 +606,7 @@ simplifying the interrelationships between classes in the chain:
 .. _Initialization_TwoPhaseInitialization:
 
 Two-Phase Initialization
-________________________
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 Class initialization in Swift is a two-phase process.
 In the first phase, each stored property is assigned an initial value
@@ -737,7 +737,7 @@ It can now access any of the properties on the class.
 .. _Initialization_InitializerInheritanceAndOverriding:
 
 Initializer Inheritance and Overriding
-______________________________________
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Unlike Objective-C,
 Swift subclasses do not not inherit their superclass initializers by default.
@@ -768,7 +768,7 @@ as per the rules described above in Initializer Chaining.
 .. _Initialization_AutomaticInitializerInheritance:
 
 Automatic Initializer Inheritance
-_________________________________
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 As mentioned above,
 subclasses do not not inherit their superclass initializers by default.
@@ -807,7 +807,7 @@ These rules apply even if your subclass adds further convenience initializers.
 .. _Initialization_SyntaxForDesignatedAndConvenienceInitializers:
 
 Syntax for Designated and Convenience Initializers
-__________________________________________________
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Designated initializers are written in the same way as simple initializers for value types:
 
@@ -828,7 +828,7 @@ separated by a space:
    }
 
 Designated and Convenience Initializers in Action
-_________________________________________________
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The following example shows designated initializers, convenience initializers,
 and automatic initializer inheritance in action.
@@ -1040,7 +1040,7 @@ shows that their default states have been set as expected.
 .. _Initialization_RequiredInitializers:
 
 Required Initializers
-_____________________
+~~~~~~~~~~~~~~~~~~~~~
 
 You can apply the ``@required`` attribute to
 a designated or convenience initializer of a class
