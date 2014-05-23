@@ -691,7 +691,7 @@ that allow closures to be written more concisely:
 
 * A closure can omit the types
   of its parameters, its return type, or both.
-  If you omit both types,
+  If you omit the parameter names and both types,
   omit the ``in`` keyword before the statements.
   If the omitted types can't be inferred,
   a compile-time error is raised.
