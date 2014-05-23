@@ -8,7 +8,7 @@ causes a side effect, or both.
 
 Prefix and binary expressions let you
 apply operators to smaller expressions.
-Primary expressions are conceptually the simplest kind of expression
+Primary expressions are conceptually the simplest kind of expression,
 and they provide a way to access values.
 Postfix expressions,
 like prefix and binary expressions,
@@ -323,7 +323,7 @@ It behaves as follows:
   the type of the cast expresion is an optional of the specified *type*.
   At runtime, if the cast succeeds,
   the value of *expression* is wrapped in an optional and returned;
-  otherwise the value returned is ``nil``.
+  otherwise, the value returned is ``nil``.
   An example is casting from a superclass to a subclass.
 
 .. testcode:: type-casting
@@ -573,7 +573,7 @@ The ``self`` expression is used to specify scope when accessing members,
 providing disambiguation when there is
 another variable of the same name in scope,
 such as a function parameter.
-For example, in an initializer:
+For example:
 
 .. testcode::
 
@@ -825,7 +825,7 @@ Wildcard Expression
 
 A :newTerm:`wildcard expression`
 is used to explicitly ignore a value during an assignment.
-For example in the following assignment
+For example, in the following assignment
 10 is assigned to ``x`` and 20 is ignored:
 
 .. testcode::
@@ -939,7 +939,7 @@ The following function calls are equivalent:
     <$ : Bool = false
 
 If the trailing closure is the function's only argument,
-the parentheses can be omitted:
+the parentheses can be omitted.
 
 .. testcode:: no-paren-trailing-closure
 
@@ -1006,7 +1006,7 @@ For example:
     !!                   ^
 
 You also use an initializer expression
-to delegate to the initializer of a superclass:
+to delegate to the initializer of a superclass.
 
 .. testcode::
 
@@ -1260,7 +1260,7 @@ are evaluated in a special way.
 If the optional-chaining expression is ``nil``,
 all of the other operations in the postfix expression are ignored
 and the entire postfix expression evaluates to ``nil``.
-Otherwise,
+If the optional-chaining expression is not ``nil``,
 the value of the optional-chaining expression is unwrapped
 and used to evaluate the rest of the postfix expression.
 In either case,
@@ -1287,7 +1287,7 @@ has a value of an optional type.
 
 The following example shows the behavior
 of the example above
-without using optional chaining:
+without using optional chaining.
 
 .. testcode:: optional-chaining-if-let
 
