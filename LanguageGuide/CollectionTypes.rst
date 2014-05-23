@@ -300,6 +300,46 @@ Like the ``removeAtIndex`` method, ``removeLast`` returns the removed item:
 
 .. TODO: write about the algorithmic methods on Array.
 
+.. _CollectionTypes_IteratingOverAnArray:
+
+Iterating Over an Array
+~~~~~~~~~~~~~~~~~~~~~~~
+
+You can iterate over the entire set of values in an array with the ``for``-``in`` loop:
+
+.. testcode:: arraysInferred
+
+   -> for item in shoppingList {
+         println(item)
+      }
+   </ Six eggs
+   </ Milk
+   </ Flour
+   </ Baking Powder
+   </ Bananas
+   </ Apples
+
+If you need the integer index of each item as well as its value,
+use the global ``enumerate`` function to iterate over the array instead.
+The ``enumerate`` function returns a tuple for each item in the array
+composed of the index and the value for that item.
+You can decompose the tuple into temporary constants or variables
+as part of the iteration:
+
+.. testcode:: arraysInferred
+
+   -> for (index, value) in enumerate(shoppingList) {
+         println("Item \(index + 1): \(value)")
+      }
+   </ Item 1: Six eggs
+   </ Item 2: Milk
+   </ Item 3: Flour
+   </ Item 4: Baking Powder
+   </ Item 5: Bananas
+   </ Item 6: Apples
+
+For more about the ``for``-``in`` loop, see :ref:`ControlFlow_ForLoops`.
+
 .. _CollectionTypes_CreatingAndInitializingAnArray:
 
 Creating and Initializing an Array
@@ -577,12 +617,27 @@ or ``nil`` if no value existed:
       }
    <- The removed airport's name is Dublin International.
 
-.. _CollectionTypes_AccessingADictionarysKeysAndValues:
+.. _CollectionTypes_IteratingOverADictionary:
 
-Accessing a Dictionary's Keys and Values
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Iterating Over a Dictionary
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can retrieve an iteratable collection of a dictionary's keys or values
+You can iterate over the key-value pairs in a dictionary with a ``for``-``in`` loop.
+Each item in the dictionary is returned as a ``(key, value)`` tuple,
+and you can decompose the tuple's members into temporary constants or variables
+as part of the iteration:
+
+.. testcode:: dictionariesInferred
+
+   -> for (airportCode, airportName) in airports {
+         println("\(airportCode): \(airportName)")
+      }
+   </ TYO: Tokyo
+   </ LHR: London Heathrow
+
+For more about the ``for``-``in`` loop, see :ref:`ControlFlow_ForLoops`.
+
+You can also retrieve an iteratable collection of a dictionary's keys or values
 by accessing its ``keys`` and ``values`` properties:
 
 .. testcode:: dictionariesInferred
@@ -614,6 +669,12 @@ with the ``keys`` or ``values`` property:
    << // airportNames : Array<String> = ["Tokyo", "London Heathrow"]
    /> airportNames is [\"\(airportNames[0])\", \"\(airportNames[1])\"]
    </ airportNames is ["Tokyo", "London Heathrow"]
+
+.. note::
+
+   Swift's ``Dictionary`` type is an unordered collection.
+   The order in which keys, values, and key-value pairs are retrieved
+   when iterating over a dictionary is not specificed.
 
 .. _CollectionTypes_CreatingAnEmptyDictionary:
 
