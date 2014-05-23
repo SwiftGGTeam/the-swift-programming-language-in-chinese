@@ -443,7 +443,6 @@ to make prefix expressions, binary expressions, and postfix expressions.
     primary-expression --> self-expression
     primary-expression --> superclass-expression
     primary-expression --> closure-expression
-    primary-expression --> anonymous-closure-argument
     primary-expression --> parenthesized-expression
     primary-expression --> implicit-member-expression
     primary-expression --> wildcard-expression
