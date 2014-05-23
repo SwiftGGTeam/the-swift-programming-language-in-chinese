@@ -2,34 +2,58 @@ Initialization
 ==============
 
 :newTerm:`Initialization` is the process of preparing an instance of
-a class, structure or enumeration for use.
-This involves setting an initial value for any stored properties,
-and performing any other setup or initialization that is required
+a class, structure, or enumeration for use.
+This involves setting an initial value for each stored property on that instance,
+and performing any other required setup or initialization that is required
 before the new instance is considered ready to for use.
 
-This initialization process is implemented by defining :newTerm:`initializers`,
+You implement this initialization process by defining :newTerm:`initializers`,
 which are like special methods that can be called
 to create a new instance of a particular type.
+Unlike Objective-C, Swift initializers do not return a value.
+Their primary role is to ensure that new instances of a type
+are correctly initialized before they are used for the first time.
 
 Instances of class types can also implement a :newTerm:`deinitializer`,
 which gives an opportunity to perform any custom cleanup
 just before an instance of that class is deallocated.
 For more information about deinitializers, see :doc:`Deinitialization`.
 
-.. TODO: mention that memory is automatically managed by ARC
-
 .. TODO: mention that you can't construct a class instance from a class metatype value,
    because you can't be sure that a subclass will definitely provide the constructor –
    see doug's notes from r14175 for more info
 
+.. _Initialization_SettingInitialValuesForStoredProperties:
+
+Setting Initial Values for Stored Properties
+--------------------------------------------
+
+Classes and structures **must** set all of their stored properties
+to an appropriate initial value by the time
+an instance of that class or structure is created.
+Stored properties cannot be left in an indeterminate state.
+
+You can set an initial value for a stored property within an initializer,
+or by assigning a default property value as part of the property's definition.
+These actions are described in the following sections.
+
+.. note::
+   When you assign a default value to a stored property,
+   or set its initial value within an initializer,
+   the value of that property is set directly,
+   without calling any property observers.
+
 .. _Initialization_Initializers:
 
 Initializers
-------------
+~~~~~~~~~~~~
 
-:newTerm:`Initializers` are called to create a new instance of a type.
+:newTerm:`Initializers` are called to create a new instance of a particular type.
 In its simplest form, an initializer is like an instance method with no parameters,
 written using the ``init`` keyword:
+
+The example below defines a new structure called ``Fahrenheit``
+to store temperatures expressed in the Fahrenheit scale:
 
 .. testcode:: fahrenheitInit
 
@@ -44,39 +68,30 @@ written using the ``init`` keyword:
    -> println("The default temperature is \(f.temperature)° Fahrenheit")
    <- The default temperature is 32.0° Fahrenheit
 
-This example defines a new structure to store temperatures expressed in the Fahrenheit scale.
-The structure has one stored property, ``temperature``, which is of type ``Double``.
+The ``Fahrenheit`` structure has one stored property,
+``temperature``, which is of type ``Double``.
 The structure defines a single initializer, ``init``, with no parameters,
 which initializes the stored temperature with a value of ``32.0``
 (the freezing point of water when expressed in the Fahrenheit scale).
 
-Unlike Objective-C, Swift initializers do not return a value.
-Their primary role is to ensure that new instances of that type
-are correctly initialized before they are used for the first time.
-
 .. _Initialization_DefaultPropertyValues:
 
 Default Property Values
------------------------
-
-Classes and structures **must** set all of their stored properties
-to an appropriate initial value by the time
-an instance of that class or structure is created.
-Stored properties cannot be left in an indeterminate state.
+~~~~~~~~~~~~~~~~~~~~~~~
 
 You can set the initial value of a stored property from within an initializer,
 as shown above.
-As an alternative, you can provide a :newTerm:`default property value`
+Alternatively, you can provide a :newTerm:`default property value`
 as part of the property's declaration.
 
 If a property always takes the same initial value,
-you should provide a default value as part of the property's declaration,
+provide a default value as part of the property's declaration,
 rather than setting its value within an initializer.
 The end result is the same,
-but the use of a default value ties the property's initialization more closely to its declaration,
+but the default value ties the property's initialization more closely to its declaration,
 and makes for shorter, clearer initializers.
 It also enables you to infer the type of the property from its default value.
-Finally, it makes it easier for you to take advantage of
+The default value also makes it easier for you to take advantage of
 default initializers and initializer inheritance,
 as described later in this chapter.
 
@@ -90,26 +105,31 @@ at the point that the property is declared:
          var temperature = 32.0
       }
 
-.. note::
-   When you assign a default value to a stored property,
-   or set its initial value within an initializer,
-   the value of that property is set directly,
-   without calling any property observers.
+.. _Initialization_CustomizingInitialization:
+
+Customizing Initialization
+--------------------------
+
+You can customize the initialization process
+with input parameters and optional property types,
+or by modifying constant properties during initialization,
+as described in the following sections.
 
 .. _Initialization_InitializationParameters:
 
 Initialization Parameters
--------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Initializers can provide :newTerm:`initialization parameters`,
-which define the types and names of values that customize the initialization process.
+You can provide :newTerm:`initialization parameters` as part of an initializer's definition,
+to define the types and names of values that customize the initialization process.
 Initialization parameters have the same capabilities and syntax
 as function and method parameters.
 
 The following example defines a structure called ``Celsius``,
 which stores temperatures expressed in the Celsius scale.
-The ``Celsius`` structure implements two custom initializers,
-each of which initializes a new instance of the structure
+The ``Celsius`` structure implements two custom initializers called
+``init(fromFahrenheit:)`` and ``init(fromKelvin:)``,
+which initialize a new instance of the structure
 with a value from a different temperature scale:
 
 .. testcode:: initialization
@@ -148,16 +168,15 @@ and store this value in a property called ``temperatureInCelsius``.
 Local and External Parameter Names
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Initializer input parameters are written in the same way as function and method parameters.
 As with function and method parameters,
-initializer input parameters can have both a local name
+initialization parameters can have both a local name
 for use within the initializer's body,
 and an external name for use when calling the initializer.
 
 However, initializers do not have an identifying function name before their parentheses
 in the way that functions and methods do.
 This means that the names and types of an initializer's parameters
-play a particularly important role in identifying which initializer is being called.
+play a particularly important role in identifying which initializer should be called.
 Because of this, it is usually desirable to provide an external name
 for every initialization parameter.
 
@@ -216,7 +235,7 @@ and omitting them is a compile-time error:
 .. _Initialization_OptionalPropertyTypes:
 
 Optional Property Types
------------------------
+~~~~~~~~~~~~~~~~~~~~~~~
 
 If your custom type has a stored property that is logically allowed to have “no value”,
 you should declare the property with an *optional* type.
@@ -259,10 +278,10 @@ when a new instance of ``SurveyQuestion`` is initialized.
 .. _Initialization_ModifyingConstantPropertiesDuringInitialization:
 
 Modifying Constant Properties During Initialization
----------------------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The value of a constant property can be modified at any point during initialization,
-as long as it is definitely set to a value by the time initialization has finished.
+as long as it is set to a definite value by the time initialization has finished.
 
 .. note::
 
@@ -271,7 +290,7 @@ as long as it is definitely set to a value by the time initialization has finish
    by the class that introduces it.
    It cannot be modified by a subclass.
 
-The ``SurveyQuestion`` example from above can be written to use
+You can revise the ``SurveyQuestion`` example from above to use
 a constant property rather than a variable property for the ``text`` property of the question,
 to indicate that the question does not change once an instance of ``SurveyQuestion`` is created.
 Even though the ``text`` property is now a constant,
@@ -308,7 +327,7 @@ The default initializer simply creates a new instance
 with all of its properties set to their default values.
 
 This example defines a class called ``ShoppingListItem``,
-which encapsulates the name, quantity and purchase state
+which encapsulates the name, quantity, and purchase state
 of an item in a shopping list:
 
 .. testcode:: initialization
@@ -321,7 +340,7 @@ of an item in a shopping list:
    -> var item = ShoppingListItem()
    << // item : ShoppingListItem = C4REPL16ShoppingListItem (has 3 children)
 
-Because all of the properties of the ``ShoppingListItem`` class have default values,
+Because all properties of the ``ShoppingListItem`` class have default values,
 and because it is a base class with no superclass,
 ``ShoppingListItem`` automatically gains a default initializer implementation
 that creates a new instance with all of its properties set to their default values.
@@ -329,7 +348,8 @@ that creates a new instance with all of its properties set to their default valu
 and so it automatically receives a default value of ``nil``,
 even though this value is not written in the code.)
 The example above uses the default initializer for the ``ShoppingListItem`` class
-to create a new instance of the class,
+to create a new instance of the class with initializer syntax
+(written as ``ShoppingListItem()``),
 and assigns this new instance to a variable called ``item``.
 
 .. QUESTION: How is this affected by inheritance?
@@ -344,10 +364,10 @@ Memberwise Initializers for Structure Types
 
 In addition to the default initializers mentioned above,
 structure types automatically receive a :newTerm:`memberwise initializer`
-if they provide default values for all of their stored properties,
+if they provide default values for all of their stored properties
 and do not define any of their own custom initializers.
 
-The memberwise initializer is used as a shorthand way
+The memberwise initializer is a shorthand way
 to initialise the member properties of new structure instances.
 Initial values for the properties of the new instance
 can be passed to the memberwise initializer by name:
@@ -362,7 +382,7 @@ can be passed to the memberwise initializer by name:
 
 .. _Initialization_InitializerDelegationForValueTypes:
 
-Initializer Delegation For Value Types
+Initializer Delegation for Value Types
 --------------------------------------
 
 Initializers can call other initializers to perform part of an instance's initialization.
@@ -416,7 +436,7 @@ both of which provide default values of ``0.0`` for all of their properties:
          var x = 0.0, y = 0.0
       }
 
-The ``Rect`` structure below can be initialized in one of three ways –
+You can initialize the ``Rect`` structure below in one of three ways –
 by using its default zero-initialized ``origin`` and ``size`` property values;
 by providing a specific origin point and size;
 or by providing a specific center point and size:
@@ -444,7 +464,7 @@ if it did not have its own custom initializers.
 This initializer has an empty body,
 represented by an empty pair of curly braces ``{}``,
 and does not perfom any initialization.
-If you call this initializer, it will return a ``Rect`` instance whose
+Calling this initializer returns a ``Rect`` instance whose
 ``origin`` and ``size`` properties are both initialized with
 the default values of ``Point(x: 0.0, y: 0.0)``
 and ``Size(width: 0.0, height: 0.0)``
@@ -508,18 +528,17 @@ must ensure that all of the subclass's stored properties –
 including any properties that the subclass inherits –
 are assigned a suitable value during initialization.
 
-It is often sufficient to leave the job of initializing inherited properties
-to an initializer from the superclass that introduced those properties.
-However, your subclass must still call the appropriate superclass initializer
-to ensure that initialization takes place, and it must be confident that
-the initializer it calls is an appropriate initializer to call.
+When defining a class, you often provide one or two initializers
+that ensure an instance of that class is fully initialized.
+These initializers are also typically called by subclasses
+as part of their own initialization.
 
-Additionally, it can sometimes be useful to provide
-alternative, more convenient initializers for a subclass,
+In addition to these primary initializers,
+it can also be useful to provide more convenient secondary initializers for a subclass,
 which provide simpler or more context-specific ways to create an instance of that subclass.
 
-Swift defines two different kinds of initializers for class types to reflect these needs.
-These are known as designated initializers and convenience initializers.
+Swift defines two different kinds of initializers for class types to reflect these needs,
+known as designated initializers and convenience initializers.
 
 .. _Initialization_DesignatedInitializersAndConvenienceInitializers:
 
@@ -527,32 +546,27 @@ Designated Initializers and Convenience Initializers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :newTerm:`Designated initializers` are the primary initializers for a class.
-A designated initializer is responsible for making sure that
-all of the properties introduced by that class are fully initialized,
-and for calling an appropriate superclass initializer
+A designated initializer fully initializes all properties introduced by that class,
+and calls an appropriate superclass initializer
 to continue the initialization process up the superclass chain.
 
 :newTerm:`Convenience initializers` are secondary, supporting initializers for a class.
-A convenience initializer is a way to provide a simpler, more convenient initializer
-which may not require callers to provide as much information as a designated initializer.
-A convenience initializer might call a designated initializer on the same class
+You can define a convenience initializer to call a designated initializer on the same class
 with some of the designated initializer's parameters set to default values,
-or it might provide a way to create an instance of that class
-for a specific use case or input value type.
+or to create an instance of that class for a specific use case or input value type.
 
 Classes tend to have very few designated initializers,
-and it is quite common for a class to only have one.
+and it is quite common for a class to have only one.
 Designated initializers are “funnel” points through which initialization takes place,
 and through which the initialization process continues up the superclass chain.
 
 Every class must have at least one designated initializer.
 In some cases, this requirement is satisfied
 by inheriting one or more designated initializers from a superclass,
-as described in Automatic Initializer Inheritance below.
+as described in :ref:`Initialization_AutomaticInitializerInheritance` below.
 
-You do not have to provide any convenience initializers if your class does not require them.
-Convenience initializers are a way to make your classes easier and more convenient to use,
-and should be created whenever a shortcut to a common initialization pattern
+You do not have to provide convenience initializers if your class does not require them.
+Create convenience initializers whenever a shortcut to a common initialization pattern
 will save time or make initialization of the class clearer in intent.
 
 .. _Initialization_InitializerChaining:
@@ -574,8 +588,8 @@ Swift applies the following three rules for delegation calls between initializer
 
 A simple way to remember this is:
 
-* Designated initializers must always delegate *up*
-* Convenience initializers must always delegate *across*
+* Designated initializers must always delegate *up*.
+* Convenience initializers must always delegate *across*.
 
 These rules are illustrated in the figure below:
 
@@ -588,24 +602,24 @@ which in turn calls the single designated initializer.
 This satisfies rules 2 and 3 from above.
 The superclass does not itself have a further superclass, and so rule 1 does not apply.
 
-The subclass in this figure has two designated initializers, and one convenience initializer.
+The subclass in this figure has two designated initializers and one convenience initializer.
 The convenience initializer must call one of the two designated initializers,
 because it can only call another initializer from the same class.
 This satisfies rules 2 and 3 from above.
-Both of the designated initializers must call the single designated initializer
+Both designated initializers must call the single designated initializer
 from the superclass, to satisfy rule 1 from above.
 
 .. note::
 
    These rules don't affect how users of your classes *create* instances of each class.
-   Any of the initializers in the diagram above can be used to create
+   Any initializer in the diagram above can be used to create
    a fully-initialized instance of the class they belong to.
    The rules only affect how you write the class's implementation.
 
 The figure below shows a more complex class hierarchy for four classes,
 and illustrates how the designated initializers in this hierarchy
 act as “funnel” points for class initialization,
-simplifying the interrelationships between classes in the chain:
+simplifying the interrelationships among classes in the chain:
 
 .. image:: ../images/initializerDelegation02_2x.png
    :align: center
@@ -619,16 +633,16 @@ Class initialization in Swift is a two-phase process.
 In the first phase, each stored property is assigned an initial value
 by the class that introduced it.
 Once the initial state for every stored property has been determined,
-a new class instance is allocated in memory,
-and the initial property values are assigned to that new instance.
-The second phase then begins,
+the second phase begins,
 and each class is given the opportunity to customize its stored properties further
 before the new instance is considered ready for use.
 
 The use of a two-phase initialization process makes initialization safe,
 while still giving complete flexibility to each class in a class hierarchy.
-Two-phase initialization avoids property values being accessed before they are initialized,
-and avoids property values being set to a different value by another initializer unexpectedly.
+Two-phase initialization prevents property values
+from being accessed before they are initialized,
+and prevents property values from being set to a different value
+by another initializer unexpectedly.
 
 .. note::
 
@@ -647,27 +661,25 @@ two-phase initialization is completed without error:
   are initialized before it delegates up to a superclass initializer.
 
 As mentioned above,
-the memory for an object is only allocated once the initial state
-of all of its stored properties is known.
-This happens when the final designated initializer in the chain is called
-on a base object with no further subclass.
-To enable this chain to complete, a designated initializer must make sure that
+the memory for an object is only considered fully initialized
+once the initial state of all of its stored properties is known.
+In order for this rule to be satisfied, a designated initializer must make sure that
 all of its own properties are initialized before it hands off up the chain.
 
 **Safety check 2**
   A designated initializer must delegate up to a superclass initializer
   before assigning a value to an inherited property.
 
-If it doesn't, the new value it assigns will be overwritten by the superclass
-as part of its own initialization.
+If it doesn't, the new value the designated initializer assigns
+will be overwritten by the superclass as part of its own initialization.
 
 **Safety check 3**
   A convenience initializer must delegate to another initializer
   before assigning a value to *any* property
-  (including properties defined by the same class)
+  (including properties defined by the same class).
 
-If it doesn't, the new value it assigns will be overwritten by
-its own class's designated initializer.
+If it doesn't, the new value the convenience initializer assigns
+will be overwritten by its own class's designated initializer.
 
 **Safety check 4**
   An initializer cannot call any instance methods,
@@ -683,10 +695,14 @@ Here's how two-phase initialization plays out, based on the four safety checks a
 
 **Phase 1**
 
-* Memory for a new instance is allocated. The memory is not yet considered initialized.
-* A designated initializer makes sure that all of the stored properties for its class have a value.
+* A designated or convenience initializer is called on some class.
+* Memory for a new instance of that class is allocated.
+  The memory is not yet considered initialized.
+* A designated initializer for that class confirms that
+  all stored properties introduced by that class have a value.
   The memory for these stored properties is now considered to be initialized.
-* The designated initializer hands off to a superclass initializer to perform the same task.
+* The designated initializer hands off to a superclass initializer to perform the same task
+  for its own stored properties.
 * This continues up the class inheritance chain until the top of the chain is reached.
 * Once the top of the chain is reached,
   and the final class in the chain has ensured that all of its stored properties have a value,
@@ -695,11 +711,10 @@ Here's how two-phase initialization plays out, based on the four safety checks a
 **Phase 2**
 
 * Working back down from the top of the chain,
-  each designated initializer in the chain is given
-  an opportunity to customize the instance further.
+  each designated initializer in the chain has the option to customize the instance further.
   Initializers are now able to access ``self``
   and can modify its properties, call its instance methods, and so on.
-* Finally, any convenience initializers in the chain are also given an opportunity
+* Finally, any convenience initializers in the chain have the option
   to customize the instance and to work with ``self``.
 
 Here's how phase 1 looks for an initialization call for a hypothetical subclass and superclass:
@@ -735,14 +750,12 @@ to customize the instance further
 (although it does not have to).
 
 Once the superclass's designated initializer is finished,
-the subclass's designated initializer is given
-an opportunity to perform additional customization
+the subclass's designated initializer can perform additional customization
 (although again, it does not have to).
 
 Finally, once the subclass's designated initializer is finished,
 the convenience initializer that was originally called
-has an opportunity to perform additional customization.
-It can now access any of the properties on the class.
+can perform additional customization.
 
 .. _Initialization_InitializerInheritanceAndOverriding:
 
@@ -751,7 +764,7 @@ Initializer Inheritance and Overriding
 
 Unlike Objective-C,
 Swift subclasses do not not inherit their superclass initializers by default.
-This avoids a situation where a simple initializer from a superclass
+This prevents a situation in which a simple initializer from a superclass
 is automatically inherited by a more specialized subclass,
 and can be used to create a new instance of the subclass
 that is not fully or correctly initialized.
@@ -768,7 +781,7 @@ and call the superclass version of the initializer from within your overriding v
 
 If the initializer you are overriding is a *convenience* initializer,
 your override must call another designated initializer from its own subclass,
-as per the rules described above in Initializer Chaining.
+as per the rules described above in :ref:`Initialization_InitializerChaining`.
 
 .. note::
 
@@ -797,7 +810,8 @@ the following two rules apply:
 **Rule 2**
   If your subclass provides an implementation of
   *all* of its superclass designated initializers –
-  even if it just automatically inherits them, as per rule 1 –
+  either by inheriting them as per rule 1,
+  or by providing a custom implementation as part of its definition –
   then it automatically inherits all of the superclass convenience initializers.
 
 These rules apply even if your subclass adds further convenience initializers.
@@ -880,7 +894,8 @@ This initializer can be used to create a new ``Food`` instance with a specific n
    /> namedMeat's name is \"\(namedMeat.name)\"
    </ namedMeat's name is "Bacon"
 
-The ``init(name: String)`` initializer is provided as a *designated* initializer,
+The ``init(name: String)`` initializer from the ``Food`` class
+is provided as a *designated* initializer,
 because it ensures that all of the stored properties of
 a new ``Food`` instance are fully initialized.
 The ``Food`` class does not have a superclass,
@@ -902,7 +917,7 @@ a ``name`` value of ``[Unnamed]``:
 The second class in the hierarchy is a subclass of ``Food`` called ``RecipeIngredient``.
 The ``RecipeIngredient`` class models an ingredient in a cooking recipe.
 It introduces an ``Int`` property called ``quantity``
-(in addition to the ``name`` property it inherits from ``Food``),
+(in addition to the ``name`` property it inherits from ``Food``)
 and defines two initializers for creating ``RecipeIngredient`` instances:
 
 .. testcode:: designatedConvenience
@@ -931,7 +946,8 @@ the passed ``quantity`` argument to the ``quantity`` property,
 which is the only new property introduced by ``RecipeIngredient``.
 After doing so, the initializer delegates up to
 the ``init(name: String)`` initializer of the ``Food`` class.
-This process satisfies safety check 1 from *Two-Phase Initialization* above.
+This process satisfies safety check 1
+from :ref:`Initialization_TwoPhaseInitialization` above.
 
 ``RecipeIngredient`` also defines a convenience initializer,
 ``init(name: String)``,
@@ -946,11 +962,15 @@ This convenience initializer simply delegates across to the class's designated i
 
 Note that the ``init(name: String)`` convenience initializer provided by ``RecipeIngredient``
 takes the same parameters as the ``init(name: String)`` *designated* initializer from ``Food``.
-Even though ``RecipeIngredient`` has provided this initializer as a convenience initializer,
-this nonetheless means that ``RecipeIngredient`` has provided
-an implementation of all of its superclass's designated initializers.
-Because of this, it automatically inherits all of its superclass's convenience initializers too.
-This means that ``RecipeIngredient`` inherits the ``init()`` initializer from ``Food``.
+Even though ``RecipeIngredient`` provides this initializer as a convenience initializer,
+``RecipeIngredient`` has nonetheless provided an implementation of
+all of its superclass's designated initializers.
+Therefore, ``RecipeIngredient`` automatically inherits
+all of its superclass's convenience initializers too.
+
+In this example, the superclass for ``RecipeIngredient`` is ``Food``,
+which has a single convenience initializer called ``init()``.
+This initializer is therefore inherited by ``RecipeIngredient``.
 The inherited version of ``init()`` functions in exactly the same way as the ``Food`` version,
 except that it delegates to the ``RecipeIngredient`` version of ``init(name: String)``
 rather than the ``Food`` version.
@@ -1004,8 +1024,8 @@ The figure below shows the overall initializer chain for all three classes:
 .. image:: ../images/initializersExample03_2x.png
    :align: center
 
-All three of the inherited initializers can be used to create
-a new ``ShoppingListItem`` instance:
+You can use all three of the inherited initializers
+to create a new ``ShoppingListItem`` instance:
 
 .. testcode:: designatedConvenience
 
@@ -1029,7 +1049,7 @@ an array literal containing three new ``ShoppingListItem`` instances.
 The type of the array is inferred to be ``ShoppingListItem[]``.
 After creating the array,
 the name of the unnamed ``ShoppingListItem`` at the start of the array
-is changed to be ``"Orange juice"``, and it is marked as having been purchased.
+is changed to ``"Orange juice"``, and it is marked as having been purchased.
 Printing the description of each item in the array
 shows that their default states have been set as expected.
 
@@ -1103,7 +1123,7 @@ with alternating black and white squares.
 To represent this game board,
 the ``Checkerboard`` structure has a single property called ``boardColors``,
 which is an array of 100 ``Bool`` values.
-A value of ``true`` in the array represents a black square,
+A value of ``true`` in the array represents a black square
 and a value of ``false`` represents a white square.
 The first item in the array represents the top left square on the board
 and the last item in the array represents the bottom right square on the board.
@@ -1130,14 +1150,14 @@ The ``boardColors`` array is initialized with a closure to set up its color valu
          }
       }
 
-Whenever a new ``Checkerboard`` instance is created, the closure is executed,
+Whenever a new ``Checkerboard`` instance is created, the closure is executed
 and the default value of ``boardColors`` is calculated and returned.
 The closure in the example above calculates and sets
 the appropriate color for each square on the board
 in a temporary array called ``temporaryBoard``,
 and returns this temporary array as the closure's return value
 once its setup is complete.
-The returned array value is stored in ``boardColors``,
+The returned array value is stored in ``boardColors``
 and can be queried with the ``squareIsBlackAtRow`` utility function:
 
 .. testcode:: checkers
