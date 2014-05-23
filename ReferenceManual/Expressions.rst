@@ -696,10 +696,8 @@ that allow closures to be written more concisely:
 
 * A closure that consists of only a single expression
   is understood to return the value of that expression.
-
-.. TODO: In the implied return case,
-   the expression in the closure
-   participates in type checking of the surrounding expression.
+  The contents of this expression is also considered
+  when performing type inference on the surrounding expression.
 
 The following closure expressions are equivalent,
 assuming they are used in a context
