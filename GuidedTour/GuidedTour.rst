@@ -680,13 +680,13 @@ the new value has the implicit name ``newValue``.
 You can provide an explicit name in parentheses after ``set``.
 
 Notice that the initializer for the ``EquilateralTriangle`` class
-is made up of three phases:
+has three different steps:
 
 1. Setting the value of properties that the subclass declares.
 
 2. Calling the superclass's initializer.
 
-3. Changing the value of properties set by the superclass.
+3. Changing the value of properties defined by the superclass.
    Any additional setup work that uses methods, getters, or setters
    can also be done at this point.
 
