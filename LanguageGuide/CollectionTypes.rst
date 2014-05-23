@@ -674,7 +674,7 @@ with the ``keys`` or ``values`` property:
 
    Swift's ``Dictionary`` type is an unordered collection.
    The order in which keys, values, and key-value pairs are retrieved
-   when iterating over a dictionary is not specificed.
+   when iterating over a dictionary is not specified.
 
 .. _CollectionTypes_CreatingAnEmptyDictionary:
 
