@@ -178,22 +178,12 @@ see :doc:`../LanguageGuide/BasicOperators` and :doc:`../LanguageGuide/AdvancedOp
     At parse time,
     an expression made up of binary operators is represented
     as a flat list.
-    The expression that follows each operator
-    is understood as its right-hand argument,
-    and the prefix expression of the containing expression
-    is understood as the left-hand argument
-    to the first operator in the list.
     This list is transformed into a tree
-    by applying operator precedence,
-    at which point the left- and right-hand arguments
-    of each operator are the appropriate expression.
-
+    by applying operator precedence
     For example, the expression ``2 + 3 * 5``
-    is initially understood as a list of three items,
-    ``2``, ``+ 3``, and ``* 5``.
+    is initially understood as a flat list of five items,
+    ``2``, ``+``, `` 3``, ``*``, and ``5``.
     This process transforms it into the tree (2 + (3 * 5)).
-
-.. TODO: In the amazing future, the previous paragraph would benefit from a diagram.
 
 .. langref-grammar
 
