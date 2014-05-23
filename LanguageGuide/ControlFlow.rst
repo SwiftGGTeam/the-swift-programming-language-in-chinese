@@ -308,7 +308,7 @@ Here's the general form of a ``while`` loop:
 This example plays a simple game of *Snakes and Ladders*
 (also known as *Chutes and Ladders*):
 
-.. image:: ../images/snakesAndLadders.png
+.. image:: ../images/snakesAndLadders_2x.png
    :align: center
 
 The rules of the game are as follows:
@@ -855,7 +855,7 @@ and categorizes it on the graph that follows the example:
       }
    <- (1, 1) is inside the box
 
-.. image:: ../images/coordinateGraphSimple.png
+.. image:: ../images/coordinateGraphSimple_2x.png
    :align: center
 
 The ``switch`` statement determines if the point is
@@ -900,7 +900,7 @@ and categorizes it on the graph that follows:
       }
    <- on the x-axis with an x value of 2
 
-.. image:: ../images/coordinateGraphMedium.png
+.. image:: ../images/coordinateGraphMedium_2x.png
    :align: center
 
 The ``switch`` statement determines if the point is
@@ -1243,7 +1243,7 @@ you must roll again until you roll the exact number needed to land on square 25.
 
 The game board is the same as before:
 
-.. image:: ../images/snakesAndLadders.png
+.. image:: ../images/snakesAndLadders_2x.png
    :align: center
 
 The values of ``finalSquare``, ``board``, ``square``, and ``diceRoll``

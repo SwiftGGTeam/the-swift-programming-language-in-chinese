@@ -214,7 +214,7 @@ The ``grid`` array for this ``Matrix`` instance
 is effectively a flattened version of the matrix,
 as read from top left to bottom right:
 
-.. image:: ../images/subscriptMatrix01.png
+.. image:: ../images/subscriptMatrix01_2x.png
    :align: center
 
 Values in the matrix can be set by passing row and column values into the subscript,
@@ -235,7 +235,7 @@ a value of ``1.5`` in the top right position of the matrix
 and ``3.2`` in the bottom left position
 (where ``row`` is ``1`` and ``column`` is ``0``):
 
-.. image:: ../images/subscriptMatrix02.png
+.. image:: ../images/subscriptMatrix02_2x.png
    :align: center
 
 The ``Matrix`` subscript's getter and setter both contain an assertion

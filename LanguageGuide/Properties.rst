@@ -619,7 +619,7 @@ an audio level meter for a number of audio channels.
 Each of these channels has an integer audio level between ``0`` and ``10`` inclusive,
 as shown in the figure below:
 
-.. image:: ../images/staticPropertiesVUMeter.png
+.. image:: ../images/staticPropertiesVUMeter_2x.png
    :align: center
 
 The figure above shows two separate audio channels as part of a stereo audio level meter.

@@ -380,7 +380,7 @@ and the links between the two instances, are created as before:
 
 Here's how the references look now that you've linked the two instances together:
 
-.. image:: ../images/weakReference01.png
+.. image:: ../images/weakReference01_2x.png
    :align: center
 
 The ``Person`` instance still has a strong reference to the ``Apartment`` instance,
@@ -389,7 +389,7 @@ This means that when you break the strong reference held by
 the ``john`` variables,
 there are no more strong references to the ``Person`` instance:
 
-.. image:: ../images/weakReference02.png
+.. image:: ../images/weakReference02_2x.png
    :align: center
 
 Because there are no more strong references to the ``Person`` instance,
@@ -406,7 +406,7 @@ is from the ``number73`` variable.
 If you break *that* strong reference,
 there are no more strong references to the ``Apartment`` instance:
 
-.. image:: ../images/weakReference03.png
+.. image:: ../images/weakReference03_2x.png
    :align: center
 
 Because there are no more strong references to the ``Apartment`` instance,
@@ -528,7 +528,7 @@ as that customer's ``card`` property:
 
 Here's how the references look now that you've linked the two instances:
 
-.. image:: ../images/unownedReference01.png
+.. image:: ../images/unownedReference01_2x.png
    :align: center
 
 The ``Customer`` instance now has a strong reference to the ``CreditCard`` instance,
@@ -538,7 +538,7 @@ Because of the unowned ``customer`` reference,
 when you break the strong reference held by the ``john`` variable,
 there are no more strong references to the ``Customer`` instance:
 
-.. image:: ../images/unownedReference02.png
+.. image:: ../images/unownedReference02_2x.png
    :align: center
 
 Because there are no more strong references to the ``Customer`` instance,
@@ -792,7 +792,7 @@ creates a strong reference cycle between
 an ``HTMLElement`` instance and the closure used for its default ``asHTML`` value.
 Here's how the cycle looks:
 
-.. image:: ../images/closureReferenceCycle01.png
+.. image:: ../images/closureReferenceCycle01_2x.png
    :align: center
 
 The instance's ``asHTML`` property holds a strong reference to its closure.
@@ -951,7 +951,7 @@ You can create and print an ``HTMLElement`` instance as before:
 
 Here's how the references look with the capture list in place:
 
-.. image:: ../images/closureReferenceCycle02.png
+.. image:: ../images/closureReferenceCycle02_2x.png
    :align: center
 
 This time, the capture of ``self`` by the closure is an unowned reference,

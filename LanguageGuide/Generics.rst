@@ -251,7 +251,7 @@ This type represents an ordered “stack” of values, with two operations:
 
 The illustration below shows the push / pop behavior for a stack:
 
-.. image:: ../images/stackPushPop.png
+.. image:: ../images/stackPushPop_2x.png
    :align: center
 
 1. There are currently three values on the stack.
@@ -330,7 +330,7 @@ such as a stack of ``String`` values:
 
 Here's how ``stackOfStrings`` looks after pushing these four values on to the stack:
 
-.. image:: ../images/stackPushedFourStrings.png
+.. image:: ../images/stackPushedFourStrings_2x.png
    :align: center
 
 Popping a value from the stack returns and removes the top value, ``"cuatro"``:
@@ -344,7 +344,7 @@ Popping a value from the stack returns and removes the top value, ``"cuatro"``:
 
 Here's how the stack looks after popping its top value:
 
-.. image:: ../images/stackPoppedOneString.png
+.. image:: ../images/stackPoppedOneString_2x.png
    :align: center
 
 Because it is a generic type,

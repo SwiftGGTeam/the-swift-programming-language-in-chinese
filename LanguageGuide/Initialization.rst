@@ -147,7 +147,7 @@ and not the return value of the closure.
 The example below defines a structure called ``Checkerboard``,
 which models a board for the game of *Checkers* (also known as *Draughts*):
 
-.. image:: ../images/checkersBoard.png
+.. image:: ../images/checkersBoard_2x.png
    :align: center
 
 The game of *Checkers* is played on a ten-by-ten board,
@@ -972,7 +972,7 @@ and provides two initializers for creating ``Food`` instances:
 
 The figure below shows the initializer chain for the ``Food`` class:
 
-.. image:: ../images/initializersExample01.png
+.. image:: ../images/initializersExample01_2x.png
    :align: center
 
 Classes do not have a default memberwise initializer,
@@ -1027,7 +1027,7 @@ and defines two initializers for creating ``RecipeIngredient`` instances:
 
 The figure below shows the initializer chain for the ``RecipeIngredient`` class:
 
-.. image:: ../images/initializersExample02.png
+.. image:: ../images/initializersExample02_2x.png
    :align: center
 
 The ``RecipeIngredient`` class has a single designated initializer,
@@ -1108,7 +1108,7 @@ and does not define any initializers itself,
 
 The figure below shows the overall initializer chain for all three classes:
 
-.. image:: ../images/initializersExample03.png
+.. image:: ../images/initializersExample03_2x.png
    :align: center
 
 All three of the inherited initializers can be used to create
