@@ -296,6 +296,7 @@ They have the following form:
 .. syntax-outline::
 
    <#expression#> as <#type#>
+   <#expression#> as? <#type#>
    <#expression#> is <#type#>
 
 The ``as`` operator
@@ -405,7 +406,7 @@ see :doc:`../LanguageGuide/TypeCasting`.
 
     Grammar of a type-casting operator
 
-    type-casting-operator --> ``is`` type | ``as`` type
+    type-casting-operator --> ``is`` type | ``as`` ``?``-OPT type
 
 
 .. _Expressions_PrimaryExpressions:
