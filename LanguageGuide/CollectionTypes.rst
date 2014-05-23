@@ -200,7 +200,7 @@ with the addition assignment operator (``+=``):
 
 .. testcode:: arraysInferred
 
-   -> shoppingList += ["Bananas", "Apples", "Cheese"]
+   -> shoppingList += ["Chocolate Spread", "Cheese", "Butter"]
    /> shoppingList now contains \(shoppingList.count) items
    </ shoppingList now contains 7 items
 
@@ -222,13 +222,24 @@ immediately after the name of the array:
 Note that the first item in the array has an index of ``0``, not ``1``.
 Arrays in Swift are always zero-indexed.
 
-You can also use subscript syntax to change an existing value at a given index:
+You can use subscript syntax to change an existing value at a given index:
 
 .. testcode:: arraysInferred
 
    -> shoppingList[0] = "Six eggs"
    /> the first item in the list is now equal to \"\(shoppingList[0])\" rather than \"Eggs\"
    </ the first item in the list is now equal to "Six eggs" rather than "Eggs"
+
+You can also use subscript syntax to change a range of values at once,
+even if the replacement set of values has a different length than the range you are replacing.
+The following example replaces ``"Chocolate Spread"``, ``"Cheese"``, and ``"Butter"``
+with ``"Bananas"`` and ``"Apples"``:
+
+.. testcode:: arraysInferred
+
+   -> shoppingList[4...6] = ["Bananas", "Apples"]
+   /> shoppingList now contains \(shoppingList.count) items
+   </ shoppingList now contains 6 items
 
 .. note::
 
@@ -252,7 +263,7 @@ by calling the array's ``insert(atIndex:)`` method:
 
    -> shoppingList.insert("Maple Syrup", atIndex: 0)
    /> shoppingList now contains \(shoppingList.count) items
-   </ shoppingList now contains 8 items
+   </ shoppingList now contains 7 items
    /> \"\(shoppingList[0])\" is now the first item in the list
    </ "Maple Syrup" is now the first item in the list
 
@@ -270,7 +281,7 @@ This method removes the item at the specified index, and returns the removed ite
    << // mapleSyrup : String = "Maple Syrup"
    // the item that was at index 0 has just been removed
    /> shoppingList now contains \(shoppingList.count) items, and no Maple Syrup
-   </ shoppingList now contains 7 items, and no Maple Syrup
+   </ shoppingList now contains 6 items, and no Maple Syrup
    /> the mapleSyrup constant is now equal to the removed \"\(mapleSyrup)\" string
    </ the mapleSyrup constant is now equal to the removed "Maple Syrup" string
 
@@ -290,13 +301,13 @@ Like the ``removeAtIndex`` method, ``removeLast`` returns the removed item:
 
 .. testcode:: arraysInferred
 
-   -> let cheese = shoppingList.removeLast()
-   << // cheese : String = "Cheese"
+   -> let apples = shoppingList.removeLast()
+   << // apples : String = "Apples"
    // the last item in the array has just been removed
    /> shoppingList now contains \(shoppingList.count) items, and no cheese
-   </ shoppingList now contains 6 items, and no cheese
-   /> the cheese constant is now equal to the removed \"\(cheese)\" string
-   </ the cheese constant is now equal to the removed "Cheese" string
+   </ shoppingList now contains 5 items, and no cheese
+   /> the apples constant is now equal to the removed \"\(apples)\" string
+   </ the apples constant is now equal to the removed "Apples" string
 
 .. TODO: write about the algorithmic methods on Array.
 
@@ -317,7 +328,6 @@ You can iterate over the entire set of values in an array with the ``for``-``in`
    </ Flour
    </ Baking Powder
    </ Bananas
-   </ Apples
 
 If you need the integer index of each item as well as its value,
 use the global ``enumerate`` function to iterate over the array instead.
@@ -336,7 +346,6 @@ as part of the iteration:
    </ Item 3: Flour
    </ Item 4: Baking Powder
    </ Item 5: Bananas
-   </ Item 6: Apples
 
 For more about the ``for``-``in`` loop, see :ref:`ControlFlow_ForLoops`.
 
