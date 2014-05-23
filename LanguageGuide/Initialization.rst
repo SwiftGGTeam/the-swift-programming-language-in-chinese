@@ -736,9 +736,9 @@ all of the superclass properties have a value.
 There are no further superclasses to initialize,
 and so no further delegation is needed.
 
-Memory for the new instance is initialized,
-and the initial property values are assigned.
-Phase 1 is now complete.
+As soon as all properties of the superclass have an initial value,
+its memory is considered to be fully initialized,
+and Phase 1 is complete.
 
 Here's how phase 2 looks for the same initialization call:
 
