@@ -313,9 +313,23 @@ Note how the generic version of ``Stack``
 is essentially the same as the non-generic version,
 but with a placeholder type parameter called ``T``
 instead of an actual type of ``Int``.
+This type parameter is written within a pair of angle brackets (``<T>``)
+immediately after the structure's name.
 
-The ``Stack`` structure can be used to create a stack of any type,
-such as a stack of ``String`` values:
+``T`` defines a placeholder name for “some type ``T``” to be provided later on.
+This future type can be referred to as “``T``” anywhere within the structure's definition.
+In this case, ``T`` is used as a placeholder in three places:
+
+1. to create a property called ``items``,
+   which is initialized with an empty array of values of type ``T``
+2. to specify that the ``push`` method has a single parameter called ``item``,
+   which must be of type ``T``
+3. to specify that the value returned by the ``pop`` method
+   will be a value of type ``T``
+
+You create instances of ``Stack`` in a similar way to ``Array`` and ``Dictionary``,
+by writing the actual type to be used for this specific stack within angle brackets
+after the type name when creating a new instance with initializer syntax:
 
 .. testcode:: genericStack
 
@@ -350,57 +364,6 @@ Here's how the stack looks after popping its top value:
 Because it is a generic type,
 ``Stack`` can be used to create a stack of *any* valid type in Swift,
 in a similar manner to ``Array`` and ``Dictionary``.
-
-.. _Generics_GenericTypeDefinitionSyntax:
-
-Generic Type Definition Syntax
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Generic types use type parameters to provide a name for the placeholder types they work with,
-in the same way as generic functions described above.
-
-Here's how a type parameter is used within the definition of ``Stack``:
-
-.. testcode:: genericStackDefinition
-
-   -> struct Stack<T> {
-         var items = T[]()
-         mutating func push(item: T) {
-            items.append(item)
-         }
-         mutating func pop() -> T {
-            return items.removeLast()
-         }
-      }
-
-As with ``swapTwoValues<T>``,
-the ``Stack`` definition includes a single type parameter called ``T``,
-written within a pair of angle brackets (``<T>``).
-This type parameter is written immediately after the structure name, ``Stack``.
-
-``T`` defines a placeholder name for “some type ``T``” to be provided later on.
-This future type can be referred to as “``T``” anywhere within the structure's definition.
-In this case, ``T`` is used as a placeholder in three places:
-
-1. to create a property called ``items``,
-   which is initialized with an empty array of values of type ``T``
-2. to specify that the ``push`` method has a single parameter called ``item``,
-   which must be of type ``T``
-3. to specify that the value returned by the ``pop`` method
-   will be a value of type ``T``
-
-This use of a placeholder type enables ``Stack`` to define the generic behavior
-of a stack of values, regardless of what type those values happen to be for a particular stack.
-
-You create instances of ``Stack`` in a similar way to ``Array`` and ``Dictionary``,
-by writing the actual type to be used for this specific stack within angle brackets
-after the variable name:
-
-.. testcode:: genericStackDefinition
-
-   -> var stackOfInts = Stack<Int>()
-   << // stackOfInts : Stack<Int> = V4REPL5Stack (has 1 child)
-   -> stackOfInts.push(42)
 
 .. _Generics_TypeConstraints:
 
