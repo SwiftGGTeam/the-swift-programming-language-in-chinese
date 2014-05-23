@@ -1,7 +1,7 @@
 Protocols
 =========
 
-A :newTerm:`protocol` defines a blueprint or template set of
+A :newTerm:`protocol` defines a blueprint of
 methods, properties, and other requirements
 that suit a particular task or piece of functionality.
 The protocol doesn't actually provide an implementation for any of these requirements –
@@ -28,7 +28,7 @@ instance properties, instance methods, type methods, operators, and subscripts.
 Protocol Syntax
 ---------------
 
-Protocols are defined in a very similar way to classes, structures, and enumerations:
+You define protocols in a very similar way to classes, structures, and enumerations:
 
 .. testcode:: protocolSyntax
 
@@ -36,10 +36,10 @@ Protocols are defined in a very similar way to classes, structures, and enumerat
          // protocol definition goes here
       }
 
-Custom types can state that they adopt a particular protocol
+Custom types state that they adopt a particular protocol
 by placing the protocol's name after the type's name,
 separated by a colon, as part of their definition.
-Multiple protocols can also be listed, separated by commas:
+Multiple protocols can be listed, and are separated by commas:
 
 .. testcode:: protocolSyntax
 
@@ -49,7 +49,7 @@ Multiple protocols can also be listed, separated by commas:
          // structure definition goes here
       }
 
-If a class has a superclass, the superclass name should be listed
+If a class has a superclass, list the superclass name
 before any protocols it adopts, followed by a comma:
 
 .. testcode:: protocolSyntax
@@ -68,24 +68,21 @@ A protocol can require any conforming type to provide
 an instance property or type property with a particular name and type.
 The protocol doesn't specify whether the property should be
 a stored property or a computed property –
-it just specifies the required property name and type.
-
-The protocol also specifies whether each property must be either:
-
-* gettable *and* settable, or
-* gettable
+it only specifies the required property name and type.
+The protocol also specifies whether each property must be gettable
+or gettable *and* settable.
 
 If a protocol requires a property to be gettable and settable,
 that property requirement cannot be fulfilled by
 a constant stored property or a read-only computed property.
 If the protocol only requires a property to be gettable,
 the requirement can be satisfied by any kind of property,
-and it is perfectly valid for it to also be settable
+and it is valid for it also to be settable
 if this is useful for your own code.
 
 Property requirements are always declared as variable properties,
 prefixed with the ``var`` keyword.
-Gettable-and-settable properties are indicated by writing
+Gettable and settable properties are indicated by writing
 ``{ get set }`` after their type declaration,
 and gettable properties are indicated by writing ``{ get }``.
 
@@ -143,7 +140,7 @@ Each instance of ``Person`` has a single stored property called ``fullName``,
 which is of type ``String``.
 This matches the single requirement of the ``FullyNamed`` protocol,
 and means that ``Person`` has correctly conformed to the protocol.
-(Swift will report an error at compile-time if a protocol requirement is not fulfilled.)
+(Swift reports an error at compile-time if a protocol requirement is not fulfilled.)
 
 Here's a more complex class, which also adopts and conforms to the ``FullyNamed`` protocol:
 
@@ -165,7 +162,8 @@ Here's a more complex class, which also adopts and conforms to the ``FullyNamed`
    /> ncc1701.fullName is \"\(ncc1701.fullName)\"
    </ ncc1701.fullName is "USS Enterprise"
 
-This class implements ``fullName`` as a computed read-only property for a starship.
+This class implements the ``fullName`` property requirement as
+a computed read-only property for a starship.
 Each ``Starship`` class instance stores a mandatory ``name``, and an optional ``prefix``.
 The ``fullName`` property uses the ``prefix`` value if it exists,
 and prepends it to the beginning of ``name`` to create a full name for the starship.
@@ -219,7 +217,7 @@ a number between ``0.0`` and ``1.0`` inclusive.)
 
 The ``RandomNumberGenerator`` protocol does not make any assumptions
 about how each random number will be generated –
-it just requires that any generator provides a standard way
+it simply requires the generator to provide a standard way
 to generate a new random number.
 
 Here's an implementation of a class that adopts and conforms to
@@ -255,11 +253,11 @@ It is sometimes necessary for a method to modify (or *mutate*) the instance it b
 For instance methods on value types (that is, structures and enumerations)
 you place the ``mutating`` keyword before a method's ``func`` keyword
 to indicate that the method is allowed to modify the instance it belongs to
-and / or any properties of that instance.
+and/or any properties of that instance.
 This process is described in :ref:`Methods_ModifyingValueTypesFromWithinInstanceMethods`.
 
 If you define a protocol instance method requirement
-that is intended to mutate instances of any adopting type,
+that is intended to mutate instances of any type that adopts the protocol,
 mark the method with the ``mutating`` keyword
 as part of the protocol's definition.
 This enables structures and enumerations to adopt the protocol
@@ -327,23 +325,23 @@ Protocols do not actually implement any functionality themselves.
 Nonetheless, any protocol you create will become a fully-fledged type for use in your code.
 
 Because it is a type,
-a protocol can be used in many places where other types are allowed, including:
+you can use a protocol in many places where other types are allowed, including:
 
-* as a parameter type or return type in a function, method, or initializer
-* as the type of a constant, variable, or property
-* as the type of items in an array, dictionary, or other container
+* As a parameter type or return type in a function, method, or initializer
+* As the type of a constant, variable, or property
+* As the type of items in an array, dictionary, or other container
 
 .. note::
 
    Because protocols are types,
    their names should begin with a capital letter
-   (such as ``FullyNamed`` and ``RandomNumberGenerator``),
+   (such as ``FullyNamed`` and ``RandomNumberGenerator``)
    to match the names of other types in Swift
    (such as ``Int``, ``String``, and ``Double``).
 
 .. TODO: what else should be on this list? And should it actually be complete?
 
-Here's an example of a protocol being used as a type:
+Here's an example of a protocol used as a type:
 
 .. testcode:: protocols
    :compile: true
@@ -361,15 +359,15 @@ Here's an example of a protocol being used as a type:
       }
 
 This example defines a new class called ``Dice``,
-which represents an n-sided dice for use in a board game.
+which represents an *n*-sided dice for use in a board game.
 ``Dice`` instances have an integer property called ``sides``,
 which represents how many sides they have,
 and a property called ``generator``,
-which provides them with a random number generator
-from which to create their dice roll values.
+which provides a random number generator
+from which to create dice roll values.
 
 The ``generator`` property is of type ``RandomNumberGenerator``.
-This means that it can be set to an instance of
+Therefore, it can be set to an instance of
 *any* type that adopts the ``RandomNumberGenerator`` protocol.
 Nothing else is specified about the nature of the generator –
 the only thing that matters is that it must
@@ -419,8 +417,8 @@ Delegates
 
 :newTerm:`Delegates` are a way for a class or structure to hand off (or *delegate*)
 some responsibilities to an instance of another type.
-Delegates can be used to notify an instance of another type that something has happened,
-or to retrieve information from an external data source without needing to know
+Delegates can notify an instance of another type that an action has occurred,
+or retrieve information from an external data source without needing to know
 the underlying type of that external source.
 The methods that a delegate must implement are typically described by a protocol.
 
@@ -442,14 +440,14 @@ This example defines two protocols for use with dice-based board games:
 The ``DiceGame`` protocol is a protocol that can be adopted
 by any game that involves a dice.
 The ``DiceGameDelegate`` protocol can be adopted by
-any type that wants to be able to observe and track the progress of a ``DiceGame``.
+any type to track the progress of a ``DiceGame``.
 
 .. QUESTION: is the Cocoa-style x:didStuffWithY: naming approach
    the right thing to advise for delegates written in Swift?
    It looks a little odd in the syntax above.
 
 Here's a version of the *Snakes and Ladders* game originally introduced in :doc:`ControlFlow`.
-This version has been adapted to use a ``Dice`` instance for its dice-rolls;
+This version is adapted to use a ``Dice`` instance for its dice-rolls;
 to adopt the ``DiceGame`` protocol;
 and to notify a ``DiceGameDelegate`` about its progress:
 
@@ -487,19 +485,20 @@ and to notify a ``DiceGameDelegate`` about its progress:
          }
       }
 
-(See the :ref:`ControlFlow_Break` section of the :doc:`ControlFlow` chapter
-for a description of the gameplay of the *Snakes and Ladders* game shown above.)
+See the :ref:`ControlFlow_Break` section of the :doc:`ControlFlow` chapter
+for a description of the gameplay of the *Snakes and Ladders* game shown above.
 
-This version of the game has been wrapped up as a class called ``SnakesAndLadders``,
+This version of the game is wrapped up as a class called ``SnakesAndLadders``,
 which adopts the ``DiceGame`` protocol.
 It provides a gettable ``dice`` property and a ``play`` method
 in order to conform to the protocol.
-(The ``dice`` property has been declared as a constant property
+(The ``dice`` property is declared as a constant property
 because it does not need to change after initialization,
 and the protocol only requires that it is gettable.)
 
-The *Snakes and Ladders* game board setup takes place during the class's initializer.
-All of the actual game logic has been moved into the protocol's ``play`` method,
+The *Snakes and Ladders* game board setup takes place within
+the class's ``init()`` initializer.
+All game logic is moved into the protocol's ``play`` method,
 which uses the protocol's required ``dice`` property to provide its dice roll values.
 
 Note that the ``delegate`` property is defined as an *optional* ``DiceGameDelegate``,
@@ -547,20 +546,20 @@ which adopts the ``DiceGameDelegate`` protocol:
          }
       }
 
-``DiceGameTracker`` implements all three of the methods required by ``DiceGameDelegate``.
+``DiceGameTracker`` implements all three methods required by ``DiceGameDelegate``.
 It uses these methods to keep track of the number of turns a game has taken.
 It resets a ``numberOfTurns`` property to zero when the game starts;
 increments it each time a new turn begins;
 and prints out the total number of turns once the game has ended.
 
-The implementation of ``gameDidStart`` shown above makes use of the ``game`` parameter
+The implementation of ``gameDidStart`` shown above uses the ``game`` parameter
 to print some introductory information about the game that is about to be played.
 The ``game`` parameter has a type of ``DiceGame``, not ``SnakesAndLadders``,
-and so ``gameDidStart`` can only access and use any methods and properties that
+and so ``gameDidStart`` can access and use only methods and properties that
 are implemented as part of the ``DiceGame`` protocol.
 However, the method is still able to use type casting to
 query the type of the underlying instance.
-In this example, it checks to see if ``game`` is actually
+In this example, it checks whether ``game`` is actually
 an instance of ``SnakesAndLadders`` behind the scenes,
 and prints an appropriate message if so.
 
@@ -589,16 +588,14 @@ Here's how ``DiceGameTracker`` looks in action:
 
 .. _Protocols_AddingProtocolConformanceWithAnExtension:
 
-Adding Protocol Conformance With An Extension
+Adding Protocol Conformance with an Extension
 ---------------------------------------------
 
-An existing type can be extended to adopt and conform to a new protocol,
+You can extend an existing type to adopt and conform to a new protocol,
 even if you do not have access to the source code for the existing type.
-This is achieved by defining an extension
-that adds the protocol's functionality to the existing type.
-Extensions give a way to add new properties, methods, and subscripts
-to an existing type,
-and are therefore able to add any of the requirements that a protocol may demand.
+Extensions can add new properties, methods, and subscripts to an existing type,
+and are therefore able to add any requirements that a protocol may demand.
+For more about extensions, see :doc:`Extensions`.
 
 .. note::
 
@@ -632,7 +629,7 @@ The ``Dice`` class from earlier can be extended to adopt and conform to ``TextRe
 This extension adopts the new protocol in exactly the same way
 as if ``Dice`` had provided it in its original implementation.
 The protocol name is provided after the type name, separated by a colon,
-and an implementation of all of the requirements of the protocol
+and an implementation of all requirements of the protocol
 is provided within the extension's curly braces.
 
 Any ``Dice`` instance can now be treated as ``TextRepresentable``:
@@ -665,7 +662,7 @@ Declaring Protocol Adoption
 
 If a type already conforms to all of the requirements of a protocol,
 but has not yet stated that it adopts that protocol,
-it can be made to adopt the protocol with an empty extension:
+you can make it adopt the protocol with an empty extension:
 
 .. testcode:: protocols
    :compile: true
@@ -733,7 +730,7 @@ it is safe to call ``thing.asText`` each time through the loop.
 Protocol Inheritance
 --------------------
 
-A protocol can :newTerm:`inherit` one or more other protocols,
+A protocol can :newTerm:`inherit` one or more other protocols
 and can add further requirements on top of the requirements it inherits.
 The syntax for protocol inheritance is similar to the syntax for class inheritance,
 but with the option to list multiple inherited protocols, separated by commas:
@@ -761,7 +758,7 @@ This example defines a new protocol, ``PrettyTextRepresentable``,
 which inherits from ``TextRepresentable``.
 Anything that adopts ``PrettyTextRepresentable`` must satisfy all of the requirements
 enforced by ``TextRepresentable``,
-*plus* the addition requirements enforced by ``PrettyTextRepresentable``.
+*plus* the additional requirements enforced by ``PrettyTextRepresentable``.
 In this example, ``PrettyTextRepresentable`` adds a single requirement
 to provide an instance method called ``asPrettyText`` that returns a ``String``.
 
@@ -799,11 +796,11 @@ It then iterates through the array of board squares,
 and appends an emoji representation for each square:
 
 * If the square's value is greater than ``0``, it is the base of a ladder,
-  and is represented by ``▲``
+  and is represented by ``▲``.
 * If the square's value is less than ``0``, it is the head of a snake,
-  and is represented by ``▼``
+  and is represented by ``▼``.
 * Otherwise, the square's value is ``0``, and it is a “free” square,
-  represented by ``○``
+  represented by ``○``.
 
 The method implementation can now be used to print a pretty text description
 of any ``SnakesAndLadders`` instance:
@@ -823,7 +820,7 @@ Protocol Composition
 It can sometimes be useful to require a type to conform to multiple protocols at once.
 You can combine multiple protocols into a single requirement
 with a :newTerm:`protocol composition`.
-Protocol compositions have the form ``protocol<SomeProtocol, AnotherProtocol>``,
+Protocol compositions have the form ``protocol<SomeProtocol, AnotherProtocol>``
 and you can list as many protocols within the pair of angle brackets (``<>``) as you need,
 separated by commas.
 
@@ -863,7 +860,7 @@ which means “any type that conforms to both the ``Named`` and ``Aged`` protoco
 It doesn't matter what specific type is passed to the function,
 as long as it conforms to both of the required protocols.
 
-The example then creates a new ``Person`` instance called ``birthdayPerson``,
+The example then creates a new ``Person`` instance called ``birthdayPerson``
 and passes this new instance to the ``wishHappyBirthday`` function.
 Because ``Person`` conforms to both protocols, this is a valid call,
 and the ``wishHappyBirthday`` function is able to print its birthday greeting.
@@ -879,15 +876,15 @@ and the ``wishHappyBirthday`` function is able to print its birthday greeting.
 Checking for Protocol Conformance
 ---------------------------------
 
-You can use the ``is`` and ``as`` operators (as described in :doc:`TypeCasting`)
+You can use the ``is`` and ``as`` operators described in :doc:`TypeCasting`
 to check for protocol conformance, and to cast to a specific protocol.
 Checking for and casting to a protocol
 follows exactly the same syntax as checking for and casting to a type:
 
-* The ``is`` operator returns ``true`` if an instance conforms to a protocol,
+* The ``is`` operator returns ``true`` if an instance conforms to a protocol
   and returns ``false`` if it does not.
 * The ``as?`` version of the downcast operator returns
-  an optional value of the protocol's type,
+  an optional value of the protocol's type
   and this value is ``nil`` if the instance does not conform to that protocol.
 * The ``as`` version of the downcast operator forces the downcast to the protocol type
   and triggers an unrecoverable runtime error if the downcast does not succeed.
@@ -903,20 +900,20 @@ with a single property requirement of a gettable ``Double`` property called ``ar
 
 .. note::
 
-   You can only check for protocol conformance
+   You can check for protocol conformance only
    if your protocol is marked with the ``@objc`` attribute,
    as seen for the ``HasArea`` protocol above.
-   This attribute is used to indicate that
-   the protocol should be exposed to Objective-C code, and is described in
+   This attribute indicates that
+   the protocol should be exposed to Objective-C code and is described in
    `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
    Even if you are not interoperating with Objective-C,
-   you will still need to mark your protocols with the ``@objc`` attribute
+   you need to mark your protocols with the ``@objc`` attribute
    if you want to be able to check for protocol conformance.
    
-   Note also that ``@objc`` protocols can only be adopted by classes,
+   Note also that ``@objc`` protocols can be adopted only by classes,
    and not by structures or enumerations.
    If you mark your protocol as ``@objc`` in order to check for conformance,
-   you will only be able to apply that protocol to class types.
+   you will be able to apply that protocol only to class types.
 
 .. QUESTION: is this acceptable wording for this limitation?
 
