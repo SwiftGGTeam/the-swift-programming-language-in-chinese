@@ -2,13 +2,10 @@ Optional Chaining
 =================
 
 :newTerm:`Optional chaining` is a way to query and call
-properties, methods, and subscripts on an optional that may be ``nil``.
-If the optional contains an actual value,
-the property, method, or subscript access succeeds;
-if the optional is ``nil``, the access fails without reporting an error.
-
-Optional chaining also gives a way to check if
-a property, method, or subscript access succeeds.
+properties, methods, and subscripts on an optional that might currently be ``nil``.
+If the optional contains a value,
+the property, method, or subscript call succeeds;
+if the optional is ``nil``, the property, method, or subscript call returns ``nil``.
 Multiple queries can be chained together,
 and the entire chain fails gracefully if any link in the chain is ``nil``.
 
@@ -22,26 +19,29 @@ and the entire chain fails gracefully if any link in the chain is ``nil``.
 Optional Chaining as an Alternative to Forced Unwrapping
 --------------------------------------------------------
 
-Optional chaining is written by placing a question mark (``?``)
-after the optional value that you wish to chain on if it exists.
+You specify optional chaining by placing a question mark (``?``)
+after the optional value on which you wish to call a property, method or subscript
+if the optional is non-``nil``.
 This is very similar to placing an exclamation mark (``!``)
 after an optional value to force the unwrapping of its value.
-The main difference is that optional chaining fails gracefully when no value exists,
-whereas forced unwrapping triggers an assertion if no value exists.
+The main difference is that optional chaining fails gracefully when the optional is ``nil``,
+whereas forced unwrapping triggers a runtime error when the optional is ``nil``.
 
-To reflect the fact that optional chaining can fail,
+To reflect the fact that optional chaining can be called on a ``nil`` value,
 the result of an optional chaining call is always an optional value,
 even if the property, method, or subscript you are querying returns a non-optional value.
-This gives a way to check if the optional chaining was successful.
+This gives a way to check whether the optional chaining call was successful.
 
 Specifically, the result of an optional chaining call
 is of the same type as the expected return value, but wrapped in an optional.
 A property that normally returns an ``Int`` will return an ``Int?``
 when accessed through optional chaining.
 
-Here's an example of how optional chaining differs from forced unwrapping
+The next several code snippets demonstrate
+how optional chaining differs from forced unwrapping
 and enables you to check for success.
-This example defines two classes called ``Person`` and ``Residence``:
+
+First, two classes called ``Person`` and ``Residence`` are defined:
 
 .. testcode:: optionalChainingIntro, optionalChainingIntroAssert
    :compile: true
@@ -80,9 +80,9 @@ because there is no ``residence`` value to unwrap:
    xx assert
    // this triggers a runtime error
 
-This code will succeed when ``john.residence`` has a non-``nil`` value,
+The code above succeeds when ``john.residence`` has a non-``nil`` value
 and will set ``roomCount`` to an ``Int`` value containing the appropriate number of rooms.
-However, this code will always trigger a runtime error when ``residence`` is ``nil``,
+However, this code always triggers a runtime error when ``residence`` is ``nil``,
 as illustrated above.
 
 Optional chaining provides an alternative way to access the value of ``numberOfRooms``.
@@ -98,20 +98,19 @@ To use optional chaining, use a question mark in place of the exclamation mark:
       }
    <- Unable to retrieve the number of rooms.
 
-This tells Swift to “chain” on the optional ``residence`` property,
+This tells Swift to “chain” on the optional ``residence`` property
 and to retrieve the value of ``numberOfRooms`` if ``residence`` exists.
-Conversely, if ``residence`` does *not* exist, no chaining takes place,
-and the attempt to access ``numberOfRooms`` fails without error.
 
 Because the attempt to access ``numberOfRooms`` has the potential to fail,
 the optional chaining attempt returns a value of type ``Int?``, or “optional ``Int``”.
-In the example above, ``residence`` is currently ``nil``,
-and so the attempt to access ``numberOfRooms`` fails.
-This means that ``roomCount`` has a value of ``nil``,
-which in this case means “no ``Int`` value”.
-This is true even though ``numberOfRooms`` is a non-optional ``Int``.
-The fact that it is queried through an optional chain that has the potential to fail
-means that the call will always return an ``Int?`` instead of an ``Int``.
+When ``residence`` is ``nil``, as in the example above,
+this optional ``Int`` will also be ``nil``,
+to reflect the fact that it was not possible to access ``numberOfRooms``.
+
+Note that this is true even though ``numberOfRooms`` is a non-optional ``Int``.
+The fact that it is queried through an optional chain
+means that the call to ``numberOfRooms``
+will always return an ``Int?`` instead of an ``Int``.
 
 You can assign a ``Residence`` instance to ``john.residence``,
 so that it no longer has a ``nil`` value:
@@ -122,7 +121,7 @@ so that it no longer has a ``nil`` value:
    -> john.residence = Residence()
 
 ``john.residence`` now contains an actual ``Residence`` instance, rather than ``nil``.
-If you try and access ``numberOfRooms`` with the same optional chaining as before,
+If you try to access ``numberOfRooms`` with the same optional chaining as before,
 it will now return an ``Int?`` that contains
 the default ``numberOfRooms`` value of ``1``:
 
@@ -143,14 +142,14 @@ Defining Model Classes for Optional Chaining
 
 You can use optional chaining with calls to properties, methods, and subscripts
 that are more than one level deep.
-This enables you to use optional chaining to drill down into sub-properties
+This enables you to drill down into subproperties
 within complex models of interrelated types,
 and to check whether it is possible to access
-properties, methods, and subscripts on those sub-properties.
+properties, methods, and subscripts on those subproperties.
 
 The code snippets below define four model classes
 for use in several subsequent examples,
-including examples of multi-level optional chaining.
+including examples of multilevel optional chaining.
 These classes expand upon the ``Person`` and ``Residence`` model from above
 by adding a ``Room`` and ``Address`` class,
 with associated properties, methods, and subscripts.
@@ -177,7 +176,6 @@ which is initialized with an empty array of type ``Room[]``:
             return rooms.count
          }
          subscript(i: Int) -> Room {
-            assert(i >= 0 || i < rooms.count, "Room index out of range")
             return rooms[i]
          }
          func printNumberOfRooms() {
@@ -192,7 +190,7 @@ not a stored property.
 The computed ``numberOfRooms`` property simply returns
 the value of the ``count`` property from the ``rooms`` array.
 
-As a shorthand way to access its ``rooms`` array,
+As a shortcut to accessing its ``rooms`` array,
 this version of ``Residence`` provides a read-only subscript,
 which starts by asserting that the index passed to the subscript is valid.
 If the index is valid, the subscript returns
@@ -243,9 +241,9 @@ The third property, ``street``, is used to name the street for that address:
 
 The ``Address`` class also provides a method called ``buildingIdentifier``,
 which has a return type of ``String?``.
-This method checks the ``buildingName`` and ``buildingNumber`` properties,
-and returns ``buildingName`` if it has a value;
-or ``buildingNumber`` if it has a value;
+This method checks the ``buildingName`` and ``buildingNumber`` properties
+and returns ``buildingName`` if it has a value,
+or ``buildingNumber`` if it has a value,
 or ``nil`` if neither property has a value.
 
 .. QUESTION: you could write this in a shorter form by just returning buildingNumber
@@ -269,7 +267,7 @@ You cannot, however, set a property's value through optional chaining.
    which is a P1 to be fixed after WWDC.
    The "you cannot" sentence should be removed once this is fixed.
 
-You can use the classes defined above to create a new ``Person`` instance,
+Use the classes defined above to create a new ``Person`` instance,
 and try to access its ``numberOfRooms`` property as before:
 
 .. testcode:: optionalChaining
@@ -297,7 +295,7 @@ Calling Methods Through Optional Chaining
 
 You can use optional chaining to call a method on an optional value,
 and to check if that method call is successful.
-This is true even if that method does not define a return value.
+This is the case even if that method does not define a return value.
 
 The ``printNumberOfRooms`` method on the ``Residence`` class
 prints the current value of ``numberOfRooms``.
@@ -321,8 +319,8 @@ This enables you to use an ``if`` statement
 to check whether it was possible to call the ``printNumberOfRooms`` method,
 even though the method does not itself define a return value.
 The implicit return value from the ``printNumberOfRooms`` will be equal to ``Void``
-if the method can be called through optional chaining,
-or ``nil`` if it cannot:
+if the method was called succesfully through optional chaining,
+or ``nil`` if was not:
 
 .. testcode:: optionalChaining
    :compile: true
@@ -344,7 +342,7 @@ Calling Subscripts Through Optional Chaining
 
 You can use optional chaining to try to retrieve
 a value from a subscript on an optional value,
-and to check if that subscript call is successful.
+and to check whether that subscript call is successful.
 You cannot, however, set a subscript through optional chaining.
 
 .. FIXME: this "you cannot" is because of
@@ -402,7 +400,7 @@ the actual items in the ``rooms`` array through optional chaining:
 
 .. _OptionalChaining_MultiLevelChaining:
 
-Multi-Level Chaining
+Multilevel Chaining
 --------------------
 
 You can link together multiple levels of optional chaining
@@ -411,23 +409,20 @@ However, multiple levels of optional chaining
 do not add more levels of optionality to the returned value.
 
 To put it another way:
-the return type of an optional chaining call
-is *always* based on the type of the value that you are ultimately trying to retrieve,
-regardless of how many levels of optional chaining you use.
 
 * If the type you are trying to retrieve is not optional,
   it will become optional because of the optional chaining.
 * If the type you are trying to retrieve is *already* optional,
-  it will *not* become more optional because of the chaining.
+  it will not become *more* optional because of the chaining.
 
 Therefore:
 
 * If you try to retrieve an ``Int`` value through optional chaining,
-  you will always be returned an ``Int?``,
+  an ``Int?`` is always returned,
   no matter how many levels of chaining are used.
 
-* If you try to retrieve an ``Int?`` value through optional chaining,
-  you will always be returned an ``Int?``,
+* Similarly, if you try to retrieve an ``Int?`` value through optional chaining,
+  an ``Int?`` is always returned,
   no matter how many levels of chaining are used.
 
 The example below tries to access the ``street`` property of the ``address`` property
