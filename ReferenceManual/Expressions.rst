@@ -195,8 +195,6 @@ see :doc:`../LanguageGuide/BasicOperators` and :doc:`../LanguageGuide/AdvancedOp
 
 .. TODO: In the amazing future, the previous paragraph would benefit from a diagram.
 
-.. TODO: Make sure this looks ok -- a grammar box right after a note.
-
 .. langref-grammar
 
     expr-binary ::= op-binary-or-ternary expr-unary expr-cast?
@@ -480,9 +478,6 @@ Literal             Type    Value
 ``__COLUMN__``      Int     The column number in which it begins.
 ``__FUNCTION__``    String  The name of the declaration in which it appears.
 ================    ======  ===============================================
-
-.. TODO: self and Self probably belong here as magic/special literals.
-   Also .dynamicType goes somewhere
 
 Inside a function,
 the value of ``__FUNCTION__`` is the name of that function,

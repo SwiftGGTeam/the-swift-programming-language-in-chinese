@@ -163,8 +163,6 @@ and then continues execution at the beginning of the loop.
 Otherwise, the program does not perform assignment or execute the *statements*,
 and it is finished executing the ``for``-``in`` statement.
 
-.. TODO: Move this info to the stdlib reference as appropriate.
-
 .. langref-grammar
 
     stmt-for-each ::= 'for' pattern 'in' expr-basic brace-item-list

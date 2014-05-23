@@ -130,11 +130,6 @@ of their appearance in source code.
 Import Declaration
 ------------------
 
-.. TODO: It seems odd to call these declarations -- they don't declare anything.
-   Directive or statement feels a little more appropriate,
-   although statement might not be strictly correct.
-   LangRef uses both "import declaration" and "directive".
-
 An :newTerm:`import declaration` lets you access symbols
 that are declared outside the current file.
 The basic form imports the entire module;
@@ -237,12 +232,8 @@ To declare a static constant property,
 mark the declaration with the ``static`` keyword. Static properties
 are discussed in :ref:`Properties_TypeProperties`.
 
-.. TODO: Discuss class properties after they're implemented
+.. TODO: Discuss class constant properties after they're implemented
     (probably not until after 1.0)
-
-    To declare a class constant property, mark the declaration with the ``class`` keyword.
-
-.. TODO: Need to discuss static constant properties in more detail.
 
 For more information about constants and for guidance about when to use them,
 see :ref:`TheBasics_ConstantsAndVariables` and :ref:`Properties_StoredProperties`.
@@ -582,7 +573,9 @@ Function Declaration
        <#statements#>
     }
 
-.. TODO: Discuss in prose: Variadic functions and the other permutations of function declarations.
+.. TODO: Make sure to discuss functions with variadic parameters and curried function.
+    Some of this material exists in the Function Type section in the Types chapter.
+    Also need to discuss the rules for parameter names.
 
 
 .. langref-grammar
@@ -622,7 +615,7 @@ Function Declaration
     default-argument-clause --> ``=`` expression
 
 
-.. TODO: Code block is optional in the context of a protocol.
+.. NOTE: Code block is optional in the context of a protocol.
     Everywhere else, it's required.
     We could refactor to have a separation between function definition/declaration.
     There is also the low-level "asm name" FFI
@@ -751,7 +744,7 @@ in the case blocks of the ``switch`` statement,
 as described in :ref:`Patterns_EnumerationCasePattern`.
 
 
-.. TODO: Note that you can require protocol adoption,
+.. NOTE: Note that you can require protocol adoption,
     by using a protocol type as the raw value type,
     but you do need to make it be one of the types
     that support = in order for you to specify the raw values.
@@ -876,8 +869,6 @@ see :ref:`ClassesAndStructures_ValueTypesAndReferenceTypes`.
 You can extend the behavior of a structure type with an extension declaration,
 as discussed in :ref:`Declarations_ExtensionDeclaration`.
 
-.. TODO: Discuss generic parameter clause in the context of a struct?
-
 .. langref-grammar
 
     decl-struct ::= attribute-list 'struct' identifier generic-params? inheritance? '{' decl-struct-body '}'
@@ -960,8 +951,6 @@ see :ref:`ClassesAndStructures_ValueTypesAndReferenceTypes`.
 
 You can extend the behavior of a class type with an extension declaration,
 as discussed in :ref:`Declarations_ExtensionDeclaration`.
-
-.. TODO: Discuss generic parameter clause in the context of a class?
 
 .. langref-grammar
 
@@ -1058,13 +1047,6 @@ they specify.
 
 You can use protocols to declare which methods a delegate of a class or structure
 should implement, as described in :ref:`Protocols_Delegates`.
-
-.. TODO: Now that functions and methods have syntactically diverged,
-    we need a protocol-operator-function-declaration production and section
-    to describe how you declare an operator requirement in a protocol and how the adopting
-    type conforms to that protocol. Currently, a type satisfies this requirement if it
-    adopts the protocol and the operator function is implemented at file-scope somewhere
-    in the same module as that type.
 
 .. langref-grammar
 
@@ -1306,11 +1288,6 @@ See also :ref:`Declarations_TypealiasDeclaration`.
 Initializer Declaration
 -----------------------
 
-.. TODO: Rewrite/verify this section after Doug writes his "How Initialization Works Now"
-    document, which should be finished later today, 3/18.
-    I'll also need to revisit any other discussions of initialization in the chapter:
-    enumerations, structures, classes, extensions, and protocols.
-
 An :newTerm:`initializer declaration` introduces an initializer for a class,
 structure, or enumeration into your program.
 Initializer declarations are declared using the keyword ``init`` and have
@@ -1491,15 +1468,6 @@ to ensure members of that type are properly initialized.
     extension-declaration --> ``extension`` type-identifier type-inheritance-clause-OPT extension-body
     extension-body --> ``{`` declarations-OPT ``}``
 
-.. TODO: TR: What are the semantic rules associated with extending different types?
-    The LangRef says "'extension' declarations allow adding member declarations to existing types,
-    even in other source files and modules. There are different semantic rules for each type that is extended.
-    enum, struct, and class declaration extensions. FIXME: Write this section."
-    What is the relevant, missing information?
-    What are the semantic rules associated with extending different types?
-
-    TODO: Email Doug et al. in a week or two (from 1/29/14) to get the rules.
-
 
 .. _Declarations_SubscriptDeclaration:
 
@@ -1671,43 +1639,6 @@ After declaring a new operator,
 you implement it by declaring a function that has the same name as the operator.
 To see an example of how to create and implement a new operator,
 see :ref:`AdvancedOperators_CustomOperators`.
-
-.. TODO: Should we give describe the most common stdlib operators somewhere?
-    If so, the description should include the fixity, precedence, and associativity
-    of each operator. Maybe a table would be best?
-    The Langauge Guide currently says:
-    "(A complete list of the default Swift operator precedence and associativity
-    settings can be found in the :doc:`../ReferenceManual/index`.)"
-    Aside: I'm not sure "settings" is the best word here. Maybe "values"?
-
-.. TR: Do all postfix operators default to the same precedence level? If so, what is it?
-
-.. TR: What do the current precedence levels (0—255) mean?
-    How you we discuss them in the prose.
-
-    The current LangRef says:
-    "Swift has simplified precedence levels when compared with C.
-    From highest to lowest:
-
-    "exponentiative:" <<, >>  (associativity none, precedence 160)
-    "multiplicative:" *, /, %, & (associativity left, precedence 150)
-    "additive:" +, -, |, ^ (associativity left, precedence 140)
-    "comparative:" ==, !=, <, <=, >=, > (associativity none, precedence 130)
-    "conjunctive:" && (associativity left, precedence 120)
-    "disjunctive:" || (associativity none, precedence 110)"
-
-    Also, from Policy.swift:
-    "compound (assignment):" *=, /=, %=, +=, -=, <<=, >>=, &=, ^=,
-    |=, &&=, ||= (associativity right, precedence 90)
-    "=" is hardcoded as if it had associativity right, precedence 90
-    "as" and "is" are hardcoded as if they had associativity none, precedence 95
-    "? :" is hardcoded as if it had associativity right, precedence 100
-
-    Should we be using these instead of the raw precedence level values?
-
-    Also, infix operators that are declared without specifying a precedence
-    associativity are initialized with the default operator attribues
-    "precedence 100" and "associativity none".
 
 .. syntax-grammar::
 

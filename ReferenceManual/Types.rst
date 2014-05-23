@@ -612,9 +612,6 @@ to specify the type of its raw values, see :ref:`Enumerations_RawValues`.
 Type Inference
 --------------
 
-.. NOTE: TODO: Discuss how it happens at the expression level
-    and list/describe the places where you can omit a type or part of a type.
-
 Swift uses type inference extensively,
 allowing you to omit the type or part of the type of many variables and expressions in your code.
 For example,
@@ -647,33 +644,5 @@ This means that all of the information needed to infer an omitted type or part o
 in an expression must be accessible from type-checking
 the expression or one of its subexpressions.
 
-.. TODO: Need an example to illustrate this (of something that you can't do).
-
 .. TODO: Email Doug for a list of rules or situations describing when type-inference
     is allowed and when types must be fully typed.
-
-.. Original: We may be able to avoid talking about fully-typed types.
-    I'm leaving the original text here in case we find that we do need it.
-
-    Fully-Typed Types
-    ~~~~~~~~~~~~~~~~~
-
-    A type may be *fully typed*. A type is fully-typed unless one of the following conditions hold:
-    It is a function type whose result or input type is not fully-typed.
-    It is a tuple type with an element that is not fully-typed. A tuple element is fully-typed unless it has no explicit type (which is permitted for defaultable elements) or its explicit type is not fully-typed. In other words, a type is fully-typed unless it syntactically contains a tuple element with no explicit type annotation.
-    A type being 'fully-typed' informally means that the type is specified directly from its type annotation without needing contextual or other information to resolve its type.
-
-    .. TODO: Rewrite this section.
-        The LangRef is trying to talk about fully-typed types.
-        In``(a, b : Int)`` the ``b : Int`` isn't actually a type annotation.
-        To get a non-fully typed type you need to be in a pattern matching context
-        like ``var (a : Int, b) = (1, 1.5)`` where the second half of the tuple has
-        some type variable instead of a fully typed type.
-        Likewise ``var a : Dictionary = ["A": 1]`` where the type of ``a`` is inferred.
-        The way you form an expression of tuple type like this is to do something
-        like ``(t, 5)`` or ``(t, _) = (7, 2)`` where the ``5`` or ``_`` picks up the type
-        from context.
-
-        The reason for discussing fully typed types is directly related to type inference
-        ---types in a source must be fully typed (as defined here) except in the contexts
-        where type inference is allowed.

@@ -30,45 +30,12 @@ Declaration Attributes
 You can apply a declaration attribute to declarations only. However, you can also apply
 the ``noreturn`` attribute to a function or method *type*.
 
-.. Current list of declaration attributes (as of 4/16/14, r16419):
-    ✓ ``assignment`` (OnFunc)
-
-    ``availability(arguments)`` (OnFunc | OnEnum | OnClass | OnProtocol | OnVar | OnConstructor | OnDestructor; AllowMultipleAttributes)
+..  ``availability(arguments)`` (OnFunc | OnEnum | OnClass | OnProtocol | OnVar | OnConstructor | OnDestructor; AllowMultipleAttributes)
     Update from Ted:
     "Let’s document this after WWDC, as details continue to evolve.
     Some functionality will be in place before the conference, but this is mainly for API authors.
     Since no Swift APIs will be published until at least 2.0, this isn’t even needed right now.
     It mainly serves as plumbing right now to import the availability information from Clang."
-
-
-    ✓ ``class_protocol`` (OnProtocol)
-    ✓ ``exported`` (OnImport)
-    ✓ ``final`` (OnClass | OnFunc | OnVar | OnSubscript)
-
-    ✓ ``NSCopying`` (OnVar)
-    ✓ ``noreturn`` (OnFunc)
-    ✓ ``objc(arguments)`` (OnFunc | OnClass | OnProtocol | OnVar | OnSubscript | OnConstructor | OnDestructor)
-
-    ✓ ``required`` (OnConstructor)
-
-    ``override`` (OnFunc | OnVar | OnSubscript) *Now a contextual keyword, not an attribute
-
-    ✓ ``optional``
-    ``transparent`` // Per Doug's email on 3/25, we probably shouldn't document this.
-
-    ``requires_stored_property_inits``
-    NOTE: According to [Contributor 7746] and Doug's email on 4/26/14,
-    we're not going to document this, because it's a very specialized attribute,
-    only introduced for NSManagedObject.
-
-    Keep an eye out for ``abstract``, which is coming soon (probably for WWDC).
-    "I don't provide an implementation, but subclasses **must**."
-    Similar to a class cluster in ObjC.
-    Update from Ted:
-    "We discussed using @abstract for CoreData.
-    Doug is talking to Ben Trumbull today [4/24/14] about our actual plan there,
-    and we shall see if is still needed."
-    TODO: Follow up next week.
 
     Keep an eye out for ``virtual``, which is coming soon (probably not for WWDC).
     "It's not there yet, but it'll be there at runtime, trust me."
@@ -81,7 +48,7 @@ the ``noreturn`` attribute to a function or method *type*.
     For an example of how to use the ``assignment`` attribute,
     see :ref:`AdvancedOperators_CompoundAssignmentOperators`.
 
-.. TR: ``assignment doesn't seem to be required as of r16459. Is this correct?
+.. NOTE: ``assignment doesn't seem to be required as of r16459.
     Emailed swift-dev on 4/17/14 with the following example:
 
     (swift) struct Vector2D {
@@ -99,16 +66,6 @@ the ``noreturn`` attribute to a function or method *type*.
     // original : Vector2D = Vector2D(4.0, 6.0)
 
     Update from [Contributor 7746]: This is a bug; he filed <rdar://problem/16656024> to track it.
-
-.. ``call_arguments(strict)``
-    The ``call_arguments(strict)`` attribute is applied to any function or method to
-    indicate that you must use the parameter names of that function or method when calling
-    it. In addition, you must specify those parameter names in the same order
-    in which they are declared as part of the function or methods definition.
-    For an example of how to use the ``call_arguments(strict)`` attribute,
-    see :ref:`Functions_StrictParameterNames`.
-
-.. NOTE: According to [Contributor 7746]'s email on 4/26/14, this won't be an attribute.
 
 ``class_protocol``
     Apply this attribute to a protocol to indicate
@@ -160,10 +117,6 @@ the ``noreturn`` attribute to a function or method *type*.
 
     The ``NSCopying`` attribute behaves in a way similar to the Objective-C ``copy``
     property attribute.
-
-.. TODO: Possibly put a link to "Copy Properties Maintain Their Own Copies" section
-    in Programming with Objective-C, after we have support in rst for linking to uBooks,
-    etc.
 
 .. TODO: If and when Dave includes a section about this in the Guide,
     provide a link to the relevant section.
@@ -274,39 +227,6 @@ to property declarations of a class. You apply the ``IBAction`` attribute
 to method declarations of a class and the ``IBDesignable`` attribute
 to class declarations.
 
-.. Current list of IB attributes (as of 4/16/14, r16419):
-    // Talk to Tony and Robert Morrish about where go for more information.
-    ``IBAction`` (OnFunc)
-    ``IBDesignable`` (OnClass)
-    ``IBInspectable`` (OnVar)
-    ``IBOutlet`` (OnVar)
-
-    Keep an eye out for @IBOutletCollection; it's not implemented yet,
-    but it will be soon (hopefully?). The intent is to bring parity with
-    Objective-C's @IBOutletCollection. It'll behave like so:
-
-    @IBOutletCollect var buttons: UIButton[]
-
-    And allow you to connect multiple UIButton instances from IB to your code,
-    populating the array.
-    UPDATE: According to [Contributor 6004]'s feedback on USWCAOC (04/24/14),
-    this is just going to be spelled @IBOutlet.
-
-    ``IBAction``
-        The ``IBAction`` attribute is applied to a method of a class to expose the method
-        as a potential action in Interface Builder.
-
-    ``IBDesignable``
-    TR: Need more information about this attribute.
-
-    ``IBInspectable``
-    TR: Need more information about this attribute.
-
-    ``IBOutlet``
-        The ``IBOutlet`` attribute is applied to a property of a class to expose that
-        property as an outlet in Interface Builder
-        so Interface Builder can synchronize the display and connection of outlets with Xcode.
-
 
 .. _Attributes_TypeAttributes:
 
@@ -316,23 +236,11 @@ Type Attributes
 You can apply type attributes to types only. However, you can also apply the ``noreturn``
 attribute to a function or method *declaration*.
 
-.. Current list of type attributes (as of 4/16/14, r16419):
-    ``auto_closure``
-    example:
-
-        func foo(@auto_closure f:() -> ()) {
-            f()
-        }
-        foo(x = 5)
-
-
-    ``cc`` // Mainly used for SIL at the moment. May eventually surface in the Swift
+..  ``cc`` // Mainly used for SIL at the moment. May eventually surface in the Swift
               type system at some point (for power users that need to tweak calling conventions).
-    ✓ ``noreturn``
-    ``objc_block`` // Confirm that we shouldn't document this.
-    ``thin`` // Mainly used for SIL at the moment. Confirm that we shouldn't document for 1.0
-    ``thick`` // Mainly used for SIL at the moment. Confirm that we shouldn't document for 1.0
-    ``unchecked`` // May be going away if we can come up with better syntactic sugar.
+    ``objc_block`` // Not documenting.
+    ``thin`` // Mainly used for SIL at the moment. Not documenting for 1.0.
+    ``thick`` // Mainly used for SIL at the moment. Not documenting for 1.0.
 
     // @thin and @cc are only accepted in SIL. (from attributes.swift test)
     var thinFunc : @thin () -> () // expected-error {{attribute is not supported}}

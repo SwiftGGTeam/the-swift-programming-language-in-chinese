@@ -53,6 +53,3 @@ where the alternatives are spelled out explicitly:
 
     getter-setter-block --> ``{`` getter-clause setter-clause-OPT ``}``
     getter-setter-block --> ``{`` setter-clause getter-clause ``}``
-
-.. TODO: Need to come up with another example here that's not an actual grammar
-    production, because otherwise we have multiple link destinations.

@@ -556,7 +556,6 @@ types, see :doc:`../LanguageGuide/StringsAndCharacters`.
    would just delete single quoted strings.  Right now, iterating over a String
    returns a sequence of UnicodeScalar values.  In the fullness of time, it
    should return a sequence of Char values.
-.. TODO: Scrub out UnicodeScalar literals from the docs.
 
 .. langref-grammar
 
