@@ -199,7 +199,7 @@ see :doc:`../LanguageGuide/BasicOperators` and :doc:`../LanguageGuide/AdvancedOp
     binary-expression --> binary-operator prefix-expression
     binary-expression --> assignment-operator prefix-expression
     binary-expression --> conditional-operator prefix-expression
-    binary-expression --> type-checking-operator
+    binary-expression --> type-casting-operator
     binary-expressions --> binary-expression binary-expressions-OPT
 
 
@@ -399,9 +399,9 @@ see :doc:`../LanguageGuide/TypeCasting`.
 
 .. syntax-grammar::
 
-    Grammar of a type-checking operator
+    Grammar of a type-casting operator
 
-    type-checking-operator --> ``is`` type | ``as`` type
+    type-casting-operator --> ``is`` type | ``as`` type
 
 
 .. _Expressions_PrimaryExpressions:
