@@ -497,6 +497,12 @@ However, it is more convenient (and clearer in intent)
 for the ``init(center:size:)`` initializer to take advantage of an existing initializer
 that already provides exactly that functionality.
 
+.. note::
+
+   For an alternative way to write this example without defining
+   the ``init()`` and ``init(origin:size:)`` initializers yourself,
+   see :doc:`Extensions`.
+
 .. _Initialization_InitializerDelegationForClassTypes:
 
 Initializer Delegation For Class Types
