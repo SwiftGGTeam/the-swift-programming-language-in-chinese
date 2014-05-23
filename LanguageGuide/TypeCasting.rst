@@ -102,8 +102,9 @@ as described below.
 Checking Type
 -------------
 
-You can check whether an instance is of a certain subclass type by using the ``is`` operator.
-The ``is`` operator returns ``true`` if the instance is of that subclass type,
+You can check whether an instance is of a certain subclass type by using
+the :newTerm:`type check operator` (``is``).
+The type check operator returns ``true`` if the instance is of that subclass type,
 and ``false`` if it is not.
 
 The example below defines two variables, ``movieCount`` and ``songCount``,
@@ -145,21 +146,21 @@ Downcasting
 A constant or variable of a certain class type may actually refer to
 an instance of a subclass behind the scenes. Where this is the case,
 you can try to :newTerm:`downcast` to the subclass type
-by using the :newTerm:`downcast operator`.
+with the :newTerm:`type cast operator` (``as``).
 
 Because downcasting can fail,
-the downcast operator comes in two different forms.
+the type cast operator comes in two different forms.
 The optional form, ``as?``, returns an optional value of the type you are trying to downcast to.
 The forced form, ``as``, attempts the downcast and force-unwraps the result
 as a single compound action.
 
-Use the optional form of the downcast operator (``as?``)
+Use the optional form of the type cast operator (``as?``)
 when you are not sure if the downcast will succeed.
 This form of the operator will always return an optional value,
 and the value will be ``nil`` if the downcast was not possible.
 This enables you to check for a successful downcast.
 
-Use the forced form of the downcast operator (``as``)
+Use the forced form of the type cast operator (``as``)
 only when you are sure that the downcast will always succeed.
 This form of the operator will trigger an unrecoverable runtime error
 if you try to downcast to an incorrect class type.
@@ -175,7 +176,7 @@ for use in the description.
 In this example, each item in the array might be a ``Movie``,
 or it might be a ``Song``.
 You don't know in advance which actual class to use for each item,
-and so it is appropriate to use the optional form of the downcast operator (``as?``)
+and so it is appropriate to use the optional form of the type cast operator (``as?``)
 to check the downcast each time through the loop:
 
 .. testcode:: typeCasting
@@ -198,7 +199,7 @@ The example starts by trying to downcast the current ``item`` as a ``Movie``.
 Because ``item`` is a ``MediaItem`` instance, it's possible that it *might* be a ``Movie``;
 equally, it's also possible that it might a ``Song``,
 or even just a base ``MediaItem``.
-Because of this uncertainty, the ``as?`` form of the downcast operator returns an *optional* value
+Because of this uncertainty, the ``as?`` form of the type cast operator returns an *optional* value
 when attempting to downcast to a subclass type.
 The result of ``item as Movie`` is of type ``Movie?``, or “optional ``Movie``”.
 
@@ -258,7 +259,7 @@ This is because Objective-C does not have explicitly typed arrays.
 However, you can often be confident about the type of objects contained in such an array
 just from the information you know about the API that provided the array.
 
-In these situations, you can use the forced version of the downcast operator (``as``)
+In these situations, you can use the forced version of the type cast operator (``as``)
 to downcast each item in the array to a more specific class type than ``AnyObject``,
 without the need for optional unwrapping.
 
@@ -276,7 +277,7 @@ and populates this array with three instances of the ``Movie`` class:
 
 Because this array is known to contain only ``Movie`` instances,
 you can downcast and unwrap directly to a non-optional ``Movie``
-with the forced version of the downcast operator (``as``):
+with the forced version of the type cast operator (``as``):
 
 .. testcode:: typeCasting
 
@@ -345,7 +346,7 @@ that is known only to be of type ``Any`` or ``AnyObject``.
 .. note::
 
    The cases of a ``switch`` statement use
-   the forced version of the downcast operator (``as``, not ``as?``)
+   the forced version of the type cast operator (``as``, not ``as?``)
    to check and cast to a specific type.
    This check is always safe within the context of a ``switch`` case statement.
 
