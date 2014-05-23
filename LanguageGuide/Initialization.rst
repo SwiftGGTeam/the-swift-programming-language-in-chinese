@@ -567,7 +567,7 @@ Swift applies the following three rules for delegation calls between initializer
   Designated initializers must call a designated initializer from their immediate superclass.
 
 **Rule 2**
-  Convenience initializers must call another initializer from the *same* class.
+  Convenience initializers must call another initializer available in the *same* class.
 
 **Rule 3**
   Convenience initializers must ultimately end up calling a designated initializer.
@@ -683,21 +683,24 @@ Here's how two-phase initialization plays out, based on the four safety checks a
 
 **Phase 1**
 
+* Memory for a new instance is allocated. The memory is not yet considered initialized.
 * A designated initializer makes sure that all of the stored properties for its class have a value.
-  Once it has done so, it hands off to a superclass initializer to perform the same task.
+  The memory for these stored properties is now considered to be initialized.
+* The designated initializer hands off to a superclass initializer to perform the same task.
 * This continues up the class inheritance chain until the top of the chain is reached.
 * Once the top of the chain is reached,
-  memory for the new class instance is allocated,
-  and the initial property values are assigned.
-  Phase 1 is now complete. 
+  and the final class in the chain has ensured that all of its stored properties have a value,
+  the instance's memory is considered to be fully initialized, and phase 1 is complete. 
 
 **Phase 2**
 
 * Working back down from the top of the chain,
   each designated initializer in the chain is given
-  an opportunity to customize the instance's stored properties.
-* Finally, any convenience initializers in the chain are given a chance
-  to customize the instance's stored properties.
+  an opportunity to customize the instance further.
+  Initializers are now able to access ``self``
+  and can modify its properties, call its instance methods, and so on.
+* Finally, any convenience initializers in the chain are also given an opportunity
+  to customize the instance and to work with ``self``.
 
 Here's how phase 1 looks for an initialization call for a hypothetical subclass and superclass:
 
