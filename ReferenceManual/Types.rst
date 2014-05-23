@@ -315,16 +315,13 @@ a three-dimensional array of integers using three sets of square brackets:
 .. testcode::
 
     -> var array3D: Int[][][] = [[[1, 2], [3, 4]], [[5, 6], [7, 8]]]
-    << // array3D : ((Int[])[])[] = [[[1, 2], [3, 4]], [[5, 6], [7, 8]]]
-
-The array types in a multidimensional array are grouped from left to right.
-For example, ``Int[][][]`` is understood as ``((Int[])[])[]``.
+    << // array3D : Int[][][] = [[[1, 2], [3, 4]], [[5, 6], [7, 8]]]
 
 When accessing the elements in a multidimensional array,
 the left-most subscript index refers to the element at that index in the outermost
-array type. The next subscript index to the right refers to the element
-at that index in the array type that's nested one level in. And so on. This means that,
-for example, ``array3D[0]`` refers to ``[[1, 2], [3, 4]]``,
+array. The next subscript index to the right refers to the element
+at that index in the array that's nested one level in. And so on. This means that in
+the example above, ``array3D[0]`` refers to ``[[1, 2], [3, 4]]``,
 ``array3D[0][1]`` refers to ``[3, 4]``, and ``array3D[0][1][1]`` refers to the value 4.
 
 For a detailed discussion of the Swift standard library ``Array`` type,
