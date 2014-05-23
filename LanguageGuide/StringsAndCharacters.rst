@@ -27,7 +27,7 @@ This makes it easy to create custom string values for display, storage, and prin
 
 .. note::
 
-   Swift's ``String`` type is bridged seamlessly to Objective-C's ``NSString`` class.
+   Swift's ``String`` type is bridged seamlessly to Foundation's ``NSString`` class.
    If you are working with the Foundation framework in Cocoa or Cocoa Touch,
    the entire ``NSString`` API is available to call on any ``String`` value you create,
    in addition to the ``String`` features described in this chapter.
@@ -35,8 +35,6 @@ This makes it easy to create custom string values for display, storage, and prin
    
    For more information about using ``String`` with Foundation and Cocoa,
    see `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
-
-.. TODO: make this be a link to BCAWS.
 
 .. _StringsAndCharacters_Literals:
 
@@ -258,6 +256,14 @@ and pass in a string as the function's sole parameter:
    The length of an ``NSString`` is based on
    the number of 16-bit code units within the string's UTF-16 representation
    and not the number of Unicode characters within the string.
+   To reflect this fact,
+   the ``length`` property from ``NSString`` is called ``utf16count``
+   when it is accessed on a Swift ``String`` value.
+
+.. FIXME: the capitalization of utf16count
+   is inconsistent with Cocoa's capitalization approach.
+   Update this section when it is fixed, as per <rdar://problem/17016806>
+   NSString's length property is imported as utf16count, but should be utf16Count.
 
 .. _StringsAndCharacters_ConcatenatingStringsAndCharacters:
 
