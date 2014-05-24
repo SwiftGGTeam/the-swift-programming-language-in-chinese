@@ -1,7 +1,7 @@
 Methods
 =======
 
-:newTerm:`Methods` are named functions that are associated with a particular type.
+:newTerm:`Methods` are functions that are associated with a particular type.
 Classes, structures, and enumerations can all define instance methods,
 which encapsulate specific tasks and functionality for working with an instance of a given type.
 Classes, structures, and enumerations can also define type methods,
@@ -14,19 +14,6 @@ In Objective-C, classes are the only types that can define methods.
 In Swift, you can choose whether to define a class, structure, or enumeration,
 and still have the flexibility to define methods on the type you create.
 
-All methods have access to an implicit ``self`` property.
-When used in an instance method, ``self`` is equivalent to the instance itself;
-for type methods, it is equivalent to the type.
-The ``self`` property is used to disambiguate between parameters and properties
-that have the same name.
-
-By default, an instance method on a structure or an enumeration
-cannot modify the properties of that instance.
-However, these methods can be marked as “mutating” methods,
-which *are* allowed to modify the instance's properties.
-Mutating instance methods can also assign
-an entirely new instance of the structure or enumeration to ``self`` from within the method.
-
 .. _Methods_InstanceMethods:
 
 Instance Methods
@@ -35,18 +22,18 @@ Instance Methods
 :newTerm:`Instance methods` are functions that belong to instances of
 a particular class, structure, or enumeration.
 They support the functionality of those instances,
-either by providing ways to access and modify their properties,
-or by providing useful functionality related to their purpose.
+either by providing ways to access and modify instance properties,
+or by providing functionality related to the instance's purpose.
 Instance methods have exactly the same syntax as functions,
 as described in :doc:`Functions`. 
 
 You write an instance method within the opening and closing braces of the type it belongs to.
-An instance method has implicit access to all of the other instance methods and properties of that type.
-An instance method can only be called on a specific instance of the type it belongs to.
+An instance method has implicit access to all other instance methods and properties of that type.
+An instance method can be called only on a specific instance of the type it belongs to.
 It cannot be called in isolation without an existing instance.
 
 Here's an example that defines a simple ``Counter`` class,
-which counts the number of times something has happened:
+which can be used to count the number of times an action occurs:
 
 .. testcode:: instanceMethods
 
@@ -65,14 +52,14 @@ which counts the number of times something has happened:
 
 The ``Counter`` class defines three instance methods:
 
-* ``increment``, which simply increments the counter by ``1``
-* ``incrementBy(amount: Int)``, which increments the counter by an arbitrary integer amount
-* ``reset``, which resets the counter to zero
+* ``increment`` increments the counter by ``1``.
+* ``incrementBy(amount: Int)`` increments the counter by an specified integer amount.
+* ``reset``, which resets the counter to zero.
 
 The ``Counter`` class also declares a variable property, ``count``,
 to keep track of the current counter value.
 
-Instance methods are called using the same dot syntax as properties:
+You call instance methods with the same dot syntax as properties:
 
 .. testcode:: instanceMethods
 
@@ -93,55 +80,34 @@ Instance methods are called using the same dot syntax as properties:
 .. QUESTION: I've used count++ rather than ++count here.
    Is this consistent with my advice and usage elsewhere?
 
-.. _Methods_LocalAndExternalNames:
+.. _Methods_LocalAndExternalNamesForMethods:
 
-Local and External Parameter Names
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Local and External Parameter Names for Methods
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Function parameters can have both a local name (for use within the function's body)
 and an external name (for use when calling the function),
 as described in :ref:`Functions_ExternalParameterNames`.
-The same is also true for method parameters,
-because methods are essentially just functions that are associated with a type.
+The same is true for method parameters,
+because methods are just functions that are associated with a type.
 However, the default behavior of local names and external names
 is different for functions and methods.
 
-.. _Methods_ExternalParameterNamesForFunctions:
-
-External Parameter Names for Functions
-______________________________________
-
-Stand-alone functions in Swift do not provide external parameter names by default.
-This follows the typical behavior of C functions,
-which tend not to name their arguments when the function is called.
-
-If you *do* want to provide an external name for a function parameter,
-to be used when calling the function,
-you opt in to this behavior by defining an external name yourself,
-or by placing a hash symbol (``#``) before the parameter's local name
-to indicate that the local name should also be used as an external name.
-This process is described in :ref:`Functions_ShorthandExternalParameterNames`.
-
-.. _Methods_ExternalParameterNamesForMethods:
-
-External Parameter Names for Methods
-____________________________________
-
 Methods in Swift are very similar to their counterparts in Objective-C.
-As in Objective-C, the name of a method in Swift tends to refer to
+As in Objective-C, the name of a method in Swift typically refers to
 the method's first parameter using a preposition such as
 ``with``, ``for``, or ``by``,
-as seen in the ``incrementBy`` method from the ``Counter`` class above.
-This enables the method to be read as a sentence when it is called.
+as seen in the ``incrementBy`` method from the preceding ``Counter`` class example.
+The use of a preposition enables the method to be read as a sentence when it is called.
 Swift makes this established method naming convention easy to write
 by using a different default approach for method parameters
 than it uses for function parameters.
 
-Specifically, Swift considers the *first* parameter name in a method
-to be a local parameter name by default,
-and the second and subsequent parameter names to be
+Specifically, Swift gives the *first* parameter name in a method
+a local parameter name by default,
+and gives the second and subsequent parameter names
 both local *and* external parameter names by default.
-This matches the typical naming and calling convention
+This convention matches the typical naming and calling convention
 you will be familiar with from writing Objective-C methods,
 and makes for expressive method calls without the need to qualify your parameter names.
 
@@ -158,10 +124,10 @@ which defines a more complex form of the ``incrementBy`` method:
       }
 
 This ``incrementBy`` method has two parameters –
-one called ``amount``, and one called ``numberOfTimes``.
-By default, Swift considers ``amount`` to be a local name only,
-but considers ``numberOfTimes`` to be both a local *and* an external name.
-This means that the method is called as follows:
+``amount`` and ``numberOfTimes``.
+By default, Swift treats ``amount`` as a local name only,
+but treats ``numberOfTimes`` as both a local *and* an external name.
+You call the method as follows:
 
 .. testcode:: externalParameterNames
 
@@ -171,7 +137,7 @@ This means that the method is called as follows:
    /> counter value is now \(counter.count)
    </ counter value is now 15
 
-There is no need to define an external parameter name for the first argument value,
+You don't need to define an external parameter name for the first argument value,
 because its purpose is clear from the function name ``incrementBy``.
 The second argument, however, is qualified by an external parameter name
 to make its purpose clear when the method is called.
@@ -199,33 +165,33 @@ The default behavior described above mean that method definitions in Swift
 are written with the same grammatical style as Objective-C,
 and are called in a natural, expressive way.
 
-.. _Methods_ModifyingTheExternalParameterNameBehaviorForMethods:
+.. _Methods_ModifyingExternalParameterNameBehaviorForMethods:
 
-Modifying the External Parameter Name Behavior for Methods
-__________________________________________________________
+Modifying External Parameter Name Behavior for Methods
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-It can sometimes be useful for a method to provide an external parameter name
-for its first parameter, even though this is not the default behavior.
-Where this is the case, you can either add an explicit external name yourself,
+Sometimes it's useful to provide an external parameter name
+for a method's first parameter, even though this is not the default behavior.
+You can either add an explicit external name yourself,
 or you can prefix the first parameter's name with a hash symbol
 to use the local name as an external name too.
 
 Conversely, if you do not want to provide an external name
 for the second or subsequent parameter of a method,
-you can override the default behavior by using an underscore character (``_``)
+override the default behavior by using an underscore character (``_``)
 as an explicit external parameter name for that parameter.
 
 .. TODO: provide (good, would-actually-be-appropriate) examples here.
 
 .. _Methods_TheSelfProperty:
 
-The “self” Property
-~~~~~~~~~~~~~~~~~~~~
+The self Property
+~~~~~~~~~~~~~~~~~
 
 Every instance of a type has an implicit property called ``self``,
 which is exactly equivalent to the instance itself.
-This implicit ``self`` property can be used
-to refer to the current instance within its own instance methods.
+You use this implicit ``self`` property to refer to the current instance
+within its own instance methods.
 
 The ``increment`` method in the example above could have been written like this:
 
@@ -254,8 +220,8 @@ and it becomes necessary to refer to the property in a more qualified way.
 You use the implicit ``self`` property to
 distinguish between the parameter name and the property name.
 
-Here, ``self`` is used to disambiguate between
-a method parameter called ``x``, and an instance property that is also called ``x``:
+Here, ``self`` disambiguates between
+a method parameter called ``x`` and an instance property that is also called ``x``:
 
 .. testcode:: self
 
@@ -317,12 +283,12 @@ The ``Point`` structure above defines a mutating ``moveByX`` method,
 which moves a ``Point`` instance by a certain amount.
 Instead of returning a new point,
 this method actually modifies the point on which it is called.
-The ``mutating`` keyword has been added to its definition
+The ``mutating`` keyword is added to its definition
 to enable it to modify its properties.
 
 Note that you cannot call a mutating method on a constant of structure type,
-because its properties cannot be changed, even if they are variable properties
-(as described in :ref:`Properties_StoredPropertiesOfConstantStructureInstances`):
+because its properties cannot be changed, even if they are variable properties,
+as described in :ref:`Properties_StoredPropertiesOfConstantStructureInstances`:
 
 .. testcode:: selfStructures
 
@@ -341,8 +307,8 @@ because its properties cannot be changed, even if they are variable properties
 
 .. _Methods_AssigningToSelfWithinAMutatingMethod:
 
-Assigning to “self” Within a Mutating Method
-____________________________________________
+Assigning to self Within a Mutating Method
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Mutating methods can assign an entirely new instance to the implicit ``self`` property.
 The ``Point`` example shown above could have been written in the following way instead:
@@ -405,21 +371,20 @@ Instance methods, as described above,
 are methods that are called on an instance of a particular type.
 You can also define methods that are called on the type itself.
 These kinds of methods are called :newTerm:`type methods`.
-Type methods for classes are indicated by writing
+You indicate type methods for classes by writing
 the keyword ``class`` before the method's ``func`` keyword,
-and type methods for structures and enumerations are indicated by writing
+and type methods for structures and enumerations by writing
 the keyword ``static`` before the method's ``func`` keyword.
 
 .. note::
 
-   In Objective-C, you can only define type-level methods for Objective-C classes.
+   In Objective-C, you can define type-level methods only for Objective-C classes.
    In Swift, you can define type-level methods for all classes, structures, and enumerations.
    Each type method is explicitly scoped to the type it supports.
 
-Type methods are called with dot syntax, just like instance methods.
-However, type methods are called on the type, and not on an instance of that type.
-To call a type method on a class called ``SomeClass``, for example,
-you write the following:
+Type methods are called with dot syntax, like instance methods.
+However, you call type methods on the type, not on an instance of that type.
+Here's how you call a type method on a class called ``SomeClass``:
 
 .. testcode:: typeMethods
 
@@ -440,14 +405,14 @@ just as you do for instance properties and instance method parameters.
 
 More generally, any unqualified method and property names that you use
 within the body of a type method will refer to other type-level methods and properties.
-A type method can call another type method just by using the other method's name,
+A type method can call another type method with the other method's name,
 without needing to prefix it with the type name.
 Similarly, type methods on structures and enumerations can access static properties
 by using the static property's name without a type name prefix.
 
 The example below defines a structure called ``LevelTracker``,
 which tracks a player's progress through the different levels or stages of a game.
-This game is a single-player game,
+It is a single-player game,
 but can store information for multiple players on a single device.
 
 All of the game's levels (apart from level one) are locked when the game is first played.
@@ -486,19 +451,19 @@ the ``highestUnlockedLevel`` property.
 The first is a type function called ``unlockLevel``,
 which updates the value of ``highestUnlockedLevel`` whenever a new level is unlocked.
 The second is a convenience type function called ``levelIsUnlocked``,
-which returns ``true`` if a particular level number has already been unlocked.
+which returns ``true`` if a particular level number is already unlocked.
 (Note that these type methods can access the ``highestUnlockedLevel`` static property
-without the need to write it as ``LevelTracker.highestUnlockedLevel``.)
+without your needing to write it as ``LevelTracker.highestUnlockedLevel``.)
 
 In addition to its static property and type methods,
-``LevelTracker`` also tracks an individual player's progress through the game.
+``LevelTracker`` tracks an individual player's progress through the game.
 It uses an instance property called ``currentLevel`` to track
 the level that a player is currently playing.
 
 To help manage the ``currentLevel`` property,
 ``LevelTracker`` defines an instance method called ``advanceToLevel``.
 Before updating ``currentLevel``,
-this method checks to make sure that the requested new level has already been unlocked.
+this method checks whether the requested new level is already unlocked.
 The ``advanceToLevel`` method returns a Boolean value to indicate
 whether or not it was actually able to set ``currentLevel``.
 
@@ -523,8 +488,8 @@ The ``Player`` class creates a new instance of ``LevelTracker``
 to track that player's progress.
 It also provides a method called ``completedLevel``,
 which is called whenever a player completes a particular level.
-This method unlocks the next level for all players,
-and updates the player's progress to move them on to the next level.
+This method unlocks the next level for all players
+and updates the player's progress to move them to the next level.
 (The Boolean return value of ``advanceToLevel`` is ignored,
 because the level is known to have been unlocked
 by the call to ``LevelTracker.unlockLevel`` on the previous line.)
@@ -540,9 +505,9 @@ and see what happens when the player completes level one:
    -> println("highest unlocked level is now \(LevelTracker.highestUnlockedLevel)")
    <- highest unlocked level is now 2
 
-If you create a second player, and try to move them ahead
-to a level that has not yet been unlocked by any player in the game,
-the attempt to set their current level will fail:
+If you create a second player, whom you try to move to a level
+that is not yet unlocked by any player in the game,
+the attempt to set the player's current level fails:
 
 .. testcode:: typeMethods
 
