@@ -698,7 +698,7 @@ Collections of Protocol Types
 
 A protocol can be used as the type to be stored in
 a collection such as an array or a dictionary,
-as mentioned in :ref:`Protocols_UsingProtocolsAsTypes`.
+as mentioned in :ref:`Protocols_ProtocolsAsTypes`.
 This example creates an array of ``TextRepresentable`` things:
 
 .. testcode:: protocols
