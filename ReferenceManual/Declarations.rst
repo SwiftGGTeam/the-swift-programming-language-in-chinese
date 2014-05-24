@@ -574,14 +574,15 @@ By default, the parameters to a function are constants.
 Write ``var`` in front of a parameter's name to make it a variable,
 scoping any changes made to the variable just to the function body,
 or write ``inout`` to make those changes also apply
-to the value that was passed in the caller's scope.
+to the argument that was passed in the caller's scope.
 
 Functions can return multiple values using a tuple type.
 
 Function definitions can appear inside other function declarations.
 This is known as a :newTerm:`nested function`.
 
-**Parameter Names**
+Parameter Names
+~~~~~~~~~~~~~~~
 
 Function parameters are a comma separated list
 where each parameter has one of several forms.
@@ -644,7 +645,8 @@ An underscore (``_``) before a local parameter name
 gives that parameter no name to be used in function calls.
 The corresponding argument must have no name in function or method calls.
 
-**Special Parameter Behaviors**
+Special Kinds of Parameters
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Parameters can be ignored,
 take a variable number of values,
@@ -678,7 +680,8 @@ For example, ``f()`` and ``f(x: 7)`` are both valid calls
 to a function with a single optional parameter named ``x``,
 but ``f(7)`` is invalid because it provides a value without a name.
 
-**Curried Functions**
+Curried Function
+~~~~~~~~~~~~~~~~
 
 Curried functions have the following form:
 
