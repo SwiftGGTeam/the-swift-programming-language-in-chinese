@@ -2,15 +2,11 @@ Subscripts
 ==========
 
 Classes, structures, and enumerations can define :newTerm:`subscripts`,
-which are used as shortcuts for accessing
-the member elements of a collection, list, or sequence.
-Subscripts are the way in which you access
-elements in an ``Array`` instance as ``someArray[index]``,
+which are shortcuts for accessing the member elements of a collection, list, or sequence.
+You use subscripts to set and retrieve values by index without needing
+separate methods for setting and retrieval.
+For example, you access elements in an ``Array`` instance as ``someArray[index]``,
 and elements in a ``Dictionary`` instance as ``someDictionary[key]``.
-
-Subscripts in Swift are defined in a very similar way to methods and computed properties.
-They are used as a shorthand way to set and retrieve values by index
-without the need for separate methods for setting and retrieval.
 
 You can define multiple subscripts for a single type,
 and the appropriate subscript overload to use is selected
@@ -29,12 +25,12 @@ Subscript Syntax
 
 Subscripts enable you to query instances of a type
 by writing one or more values in square brackets after the instance name.
-Subscript definitions are written with the ``subscript`` keyword,
-and their syntax is similar to both instance method syntax and computed property syntax.
-Subscripts specify one or more input parameters and a return type,
+Their syntax is similar to both instance method syntax and computed property syntax.
+You write subscript definitions with the ``subscript`` keyword,
+and specify one or more input parameters and a return type,
 in the same way as instance methods.
-Unlike instance methods, subscripts can be read-write or read-only,
-and this behavior is communicated via a getter and setter
+Unlike instance methods, subscripts can be read-write or read-only.
+This behavior is communicated by a getter and setter
 in the same way as for computed properties:
 
 .. testcode:: subscriptSyntax
@@ -199,7 +195,8 @@ and creates an array that is large enough to store ``rows * columns`` values of 
 Each position in the matrix is given an initial value of ``0.0``.
 To achieve this, the array's size, and an initial cell value of ``0.0``,
 are passed to an array initializer that creates and initializes a new array of the correct size.
-(This initializer is described in more detail in :ref:`CollectionTypes_CreatingAndInitializingAnArray`.)
+This initializer is described in more detail
+in :ref:`CollectionTypes_CreatingAndInitializingAnArray`.
 
 You can construct a new ``Matrix`` instance by passing
 an appropriate row and column count to its initializer:
@@ -209,7 +206,7 @@ an appropriate row and column count to its initializer:
    -> var matrix = Matrix(rows: 2, columns: 2)
    << // matrix : Matrix = V4REPL6Matrix (has 3 children)
 
-This creates a new ``Matrix`` instance with two rows and two columns.
+The preceding example creates a new ``Matrix`` instance with two rows and two columns.
 The ``grid`` array for this ``Matrix`` instance
 is effectively a flattened version of the matrix,
 as read from top left to bottom right:
@@ -242,7 +239,7 @@ The ``Matrix`` subscript's getter and setter both contain an assertion
 to check that the subscript's  ``row`` and ``column`` values are valid.
 To assist with these assertions,
 ``Matrix`` includes a convenience method called ``indexIsValid``,
-which checks to see if the requested ``row`` or ``column``
+which checks whether the requested ``row`` or ``column``
 is outside the bounds of the matrix:
 
 .. testcode:: matrixSubscript
@@ -255,7 +252,7 @@ is outside the bounds of the matrix:
          return row >= 0 && row < rows && column >= 0 && column < columns
       }
 
-An assertion is triggered if you try and access a subscript
+An assertion is triggered if you try to access a subscript
 that is outside of the matrix bounds:
 
 .. testcode:: matrixSubscriptAssert
