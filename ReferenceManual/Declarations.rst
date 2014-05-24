@@ -551,6 +551,8 @@ Function Declaration
 --------------------
 
 A :newTerm`function declaration` introduces a function or method into your program.
+A function declared in the context of class, structure, enumeration, or protocol
+is referred to as a :newTerm:`method`.
 Function declarations are declared using the keyword ``func`` and have the following form:
 
 .. syntax-outline::
@@ -569,17 +571,24 @@ the return type can be ommitted as follows:
     }
 
 The type of each parameter must be included ---
-they can't be inferred.
+it can't be inferred.
 By default, the parameters to a function are constants.
 Write ``var`` in front of a parameter's name to make it a variable,
 scoping any changes made to the variable just to the function body,
 or write ``inout`` to make those changes also apply
 to the argument that was passed in the caller's scope.
+For a discussion of in-out parameters,
+see :ref:`Functions_InOutParameters`.
 
-Functions can return multiple values using a tuple type.
+Functions can return multiple values using a tuple type
+as the return type of the function.
 
-Function definitions can appear inside other function declarations.
-This is known as a :newTerm:`nested function`.
+.. TODO: ^-- Add some more here.
+
+A function definition can appear inside another function declaration.
+This kind of function is known as a :newTerm:`nested function`.
+For a discussion of nested functions,
+see :ref:`Functions_NestedFunctions`.
 
 Parameter Names
 ~~~~~~~~~~~~~~~
@@ -599,7 +608,7 @@ the parameter name is used within the function body,
 but is not used when calling the function.
 For method parameters,
 the parameter name is used as within the function body,
-and is also used as a keyword when calling the method.
+and is also used as a label for the argument when calling the method.
 The name of a method's first parameter
 is used only within the function body,
 like the parameter of a function.
@@ -636,7 +645,7 @@ which can be different than the local parameter name.
 The external parameter name must be used when the function is called.
 The corresponding argument must have the external name in function or method calls.
 
-A number sign (``#``) before a parameter name
+A hash symbol (``#``) before a parameter name
 indicates that the name should be used as both an external and a local parameter name.
 It has the same meaning as writing the local paramater name twice.
 The corresponding argument must have this name in function or method calls.
@@ -659,7 +668,7 @@ using the following forms:
     <#parameter name#>: <#parameter type#>...
     <#parameter name#>: <#parameter type#> = <#default argument value#>
 
-A parameter with named with an underscore (``_``) is explicitly ignored
+A parameter named with an underscore (``_``) is explicitly ignored
 an can't be accessed within the body of the function.
 
 A parameter with a base type name followed immediately by three dots (``...``)
@@ -677,13 +686,15 @@ the default value is used instead.
 If the parameter is not omitted,
 it must have its name in the function call.
 For example, ``f()`` and ``f(x: 7)`` are both valid calls
-to a function with a single optional parameter named ``x``,
+to a function with a single default parameter named ``x``,
 but ``f(7)`` is invalid because it provides a value without a name.
 
-Special Kinds of Functions and Methods
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. TODO: Flesh out the above example into a code listing.
 
-Functions on an enumeration or a structure
+Special Kinds of Methods
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Methods on an enumeration or a structure
 that modify ``self`` must be marked with the ``mutating`` keyword
 at the start of the function declaration.
 
@@ -694,15 +705,15 @@ It is an error to override a method without the ``override`` keyword
 or to use the ``override`` keyword on a method
 that doesn't override a superclass method.
 
-Functions or methods associated with a type
+Methods associated with a type
 rather than an instance of a type
 must be marked with the ``static`` attribute for enumerations and structures
 or the ``class`` attribute for classes.
 
-Curried Function
-~~~~~~~~~~~~~~~~
+Curried Functions and Methods
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Curried functions have the following form:
+Curried functions and methods have the following form:
 
 .. syntax-outline::
 
