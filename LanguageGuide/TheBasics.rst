@@ -235,7 +235,7 @@ without appending a line break to the end of the value to be printed.)
    It will be expanded later on.
 
 .. QUESTION: is this *too* simplistic?
-   Strictly speaking, you can't print the value of *any* constant or variable –
+   Strictly speaking, you can't print the value of *any* constant or variable ---
    you can only print values of types for which String has a constructor.
 
 The ``println`` function prints any ``String`` value you pass to it:
@@ -642,7 +642,7 @@ because it is the sum of two ``UInt16`` values.
 and pass in an initial value.
 Behind the scenes, ``UInt16`` has an initializer that accepts a ``UInt8`` value,
 and so this initializer is used to make a new ``UInt16`` from an existing ``UInt8``.
-You can't pass in *any* type here, however –
+You can't pass in *any* type here, however ---
 it has to be a type for which ``UInt16`` provides an initializer.
 Extending existing types to provide initializers that accept new types
 (including your own type definitions)

@@ -98,7 +98,7 @@ written as ``TypeName`` followed by empty parentheses:
 The initializer for ``Vehicle`` sets some initial property values
 (``numberOfWheels = 0`` and ``maxPassengers = 1``)
 for an arbitrary vehicle.
-(It is assumed that any vehicle can carry at least one passenger –
+(It is assumed that any vehicle can carry at least one passenger ---
 it wouldn't be a very useful vehicle otherwise.)
 
 The ``Vehicle`` class defines common characteristics for an arbitrary vehicle,
@@ -195,7 +195,7 @@ This example creates a subclass of ``Bicycle`` for a two-seater bicycle
 known as a “tandem”.
 ``Tandem`` inherits the two properties from ``Bicycle``,
 which in turn inherits these properties from ``Vehicle``.
-``Tandem`` doesn't change the number of wheels --- it's still a bicycle, after all –
+``Tandem`` doesn't change the number of wheels --- it's still a bicycle, after all ---
 but it does update ``maxPassengers`` to have the correct value for a tandem.
 
 .. note::
@@ -335,7 +335,7 @@ You can provide a custom getter (and setter, if appropriate)
 to override *any* inherited property,
 regardless of whether the inherited property is implemented as
 a stored or computed property at its source.
-The stored or computed nature of an inherited property is not known by a subclass –
+The stored or computed nature of an inherited property is not known by a subclass ---
 it only knows that the inherited property has a certain name and type.
 You must always state both the name and the type of the property you are overriding,
 to enable the compiler to check that your override matches

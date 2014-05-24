@@ -526,7 +526,7 @@ Operator :newTerm:`precedence` gives some operators higher priority than others;
 these operators are calculated first.
 
 Operator :newTerm:`associativity` defines how operators of the same precedence
-are grouped together (or :newTerm:`associated`) –
+are grouped together (or :newTerm:`associated`) ---
 either grouped from the left, or grouped from the right.
 Think of it as meaning “they associate with the expression to their left,”
 or “they associate with the expression to their right.”

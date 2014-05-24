@@ -221,7 +221,7 @@ However, you are can use any valid identifier as the type parameter name.
 If you are defining more complex generic functions,
 or generic types with multiple parameters,
 it can be useful to provide more descriptive type parameter names.
-For example, Swift's ``Dictionary`` type has two type parameters –
+For example, Swift's ``Dictionary`` type has two type parameters ---
 one for its keys and one for its values.
 If you were writing ``Dictionary`` yourself,
 you might name these two type parameters ``KeyType`` and ``ValueType``
@@ -620,7 +620,7 @@ will be of the same type as the container's element type.
 To achieve this,
 the ``Container`` protocol declares an associated type called ``ItemType``,
 written as  ``typealias ItemType``.
-The protocol does not define what ``ItemType`` is an alias *for* –
+The protocol does not define what ``ItemType`` is an alias *for* ---
 that information is left for any conforming type to provide.
 Nonetheless, the ``ItemType`` alias provides a way to refer to
 the type of the items in a ``Container``,

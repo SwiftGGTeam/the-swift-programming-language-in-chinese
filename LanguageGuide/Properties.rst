@@ -210,8 +210,8 @@ A Swift property does not have a corresponding instance variable,
 and the backing store for a property is not accessed directly.
 This approach avoids confusion about how the value is accessed in different contexts
 and simplifies the property's declaration into a single, definitive statement.
-All information about the property –
-including its name, type, and memory management characteristics –
+All information about the property ---
+including its name, type, and memory management characteristics ---
 is defined in a single location as part of the type's definition.
 
 .. TODO: what happens if one property of a constant structure is an object reference?
@@ -332,7 +332,7 @@ and can be accessed through dot syntax, but cannot be set to a different value.
 
 .. note::
 
-   You must declare computed properties --- including read-only computed properties –
+   You must declare computed properties --- including read-only computed properties ---
    as variable properties with the ``var`` keyword, because their value is not fixed.
    The ``let`` keyword is only used for constant properties,
    to indicate that their values cannot be changed once they are set

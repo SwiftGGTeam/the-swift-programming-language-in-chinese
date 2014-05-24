@@ -218,7 +218,7 @@ which can take either a value of ``UPCA``
 with an associated value of type (``Int``, ``Int``, ``Int``),
 or a value of ``QRCode`` with an associated value of type ``String``.”
 
-This definition does not provide any actual ``Int`` or ``String`` values –
+This definition does not provide any actual ``Int`` or ``String`` values ---
 it just defines the *type* of associated values
 that ``Barcode`` constants and variables can store
 when they are equal to ``Barcode.UPCA`` or ``Barcode.QRCode``.

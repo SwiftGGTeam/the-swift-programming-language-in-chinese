@@ -4,7 +4,7 @@ Protocols
 A :newTerm:`protocol` defines a blueprint of
 methods, properties, and other requirements
 that suit a particular task or piece of functionality.
-The protocol doesn't actually provide an implementation for any of these requirements –
+The protocol doesn't actually provide an implementation for any of these requirements ---
 it only describes what an implementation will look like.
 The protocol can then be :newTerm:`adopted` by a class, structure, or enumeration
 to provide an actual implementation of those requirements.
@@ -67,7 +67,7 @@ Properties
 A protocol can require any conforming type to provide
 an instance property or type property with a particular name and type.
 The protocol doesn't specify whether the property should be
-a stored property or a computed property –
+a stored property or a computed property ---
 it only specifies the required property name and type.
 The protocol also specifies whether each property must be gettable
 or gettable *and* settable.
@@ -113,7 +113,7 @@ Here's an example of a protocol with a single instance property requirement:
       }
 
 The ``FullyNamed`` protocol defines any kind of thing that has a fully-qualified name.
-It doesn't specify what *kind* of thing it must be –
+It doesn't specify what *kind* of thing it must be ---
 it only specifies that the thing must be able to provide a full name for itself.
 It specifies this requirement by stating that any ``FullyNamed`` type must have
 a gettable instance property called ``fullName``, which is of type ``String``.
@@ -216,7 +216,7 @@ it is assumed that this value will be
 a number between ``0.0`` and ``1.0`` inclusive.)
 
 The ``RandomNumberGenerator`` protocol does not make any assumptions
-about how each random number will be generated –
+about how each random number will be generated ---
 it simply requires the generator to provide a standard way
 to generate a new random number.
 
@@ -369,7 +369,7 @@ from which to create dice roll values.
 The ``generator`` property is of type ``RandomNumberGenerator``.
 Therefore, it can be set to an instance of
 *any* type that adopts the ``RandomNumberGenerator`` protocol.
-Nothing else is specified about the nature of the generator –
+Nothing else is specified about the nature of the generator ---
 the only thing that matters is that it must
 adopt the ``RandomNumberGenerator`` protocol.
 
@@ -1137,15 +1137,15 @@ a non-optional ``Int`` value in the definition of ``CounterDataSource``.
 
 After calling ``incrementForCount``, the optional ``Int`` that it returns
 is unwrapped into a constant called ``amount``, using optional binding.
-If the optional ``Int`` does contain a value –
+If the optional ``Int`` does contain a value ---
 that is, if the delegate and method both exist,
-and the method returned a value –
+and the method returned a value ---
 the unwrapped ``amount`` is added onto the stored ``count`` property,
 and incrementation is complete.
 
-If it is *not* possible to retrieve a value from the ``incrementForCount`` method –
+If it is *not* possible to retrieve a value from the ``incrementForCount`` method ---
 either because ``dataSource`` is nil,
-or because the data source does not implement ``incrementForCount`` –
+or because the data source does not implement ``incrementForCount`` ---
 then the ``increment`` method tries to retrieve a value
 from the data source's ``fixedIncrement`` property instead.
 The ``fixedIncrement`` property is also an optional requirement,

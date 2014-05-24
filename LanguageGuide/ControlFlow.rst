@@ -110,7 +110,7 @@ It multiplies a starting value of ``1``
 (that is, ``3`` to the power of ``0``)
 by ``3``, ten times,
 using a half-closed loop that starts with ``0`` and ends with ``9``.
-This calculation doesn't need to know the individual counter values each time through the loop –
+This calculation doesn't need to know the individual counter values each time through the loop ---
 it simply needs to execute the loop the correct number of times.
 The underscore character ``_``
 (used in place of a loop variable)

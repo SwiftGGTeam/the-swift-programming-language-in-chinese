@@ -19,7 +19,7 @@ your code is always clear about the types of values it can work with
 and enables you to catch any type mismatches early in your code's development.
 
 .. TODO: should I mention about bridging to NSArray / NSDictionary?
-   Dictionary is not yet bridged to NSDictionary –
+   Dictionary is not yet bridged to NSDictionary ---
    the work for this is in rdar://16014066,
    which is currently scheduled (but I'd say unlikely) for the March milestone
 
@@ -426,7 +426,7 @@ Swift's dictionary type is written as ``Dictionary<KeyType, ValueType>``,
 where ``KeyType`` is the type of value that can be used as a dictionary key,
 and ``ValueType`` is the type of value that the dictionary stores for those keys.
 
-The only restriction is that ``KeyType`` must be :newTerm:`hashable` –
+The only restriction is that ``KeyType`` must be :newTerm:`hashable` ---
 that is, it must provide a way to make itself uniquely representable.
 All of Swift's basic types (such as ``String``, ``Int``, ``Double``, and ``Bool``)
 are hashable by default, and all of these types can be used as the keys of a dictionary.

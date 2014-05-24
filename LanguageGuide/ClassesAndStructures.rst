@@ -235,13 +235,13 @@ when it is assigned to a variable or constant,
 or when it is passed to a function.
 
 You've actually been using value types extensively throughout the previous chapters.
-In fact, all of the basic types in Swift –
-integers, floating-point numbers, Booleans, strings, arrays and dictionaries –
+In fact, all of the basic types in Swift ---
+integers, floating-point numbers, Booleans, strings, arrays and dictionaries ---
 are value types, and are implemented as structures behind the scenes.
 
 All structures and enumerations are value types in Swift.
-This means that any structure and enumeration instances you create –
-and any value types they have as properties –
+This means that any structure and enumeration instances you create ---
+and any value types they have as properties ---
 are always copied when they are passed around in your code.
 
 Consider this example, which uses the ``Resolution`` structure from the previous example:
@@ -375,7 +375,7 @@ Note that ``tenEighty`` and ``alsoTenEighty`` are declared as *constants*,
 rather than variables.
 However, you can still change ``tenEighty.frameRate`` and ``alsoTenEighty.frameRate`` because
 the values of the ``tenEighty`` and ``alsoTenEighty`` constants themselves do not actually change.
-``tenEighty`` and ``alsoTenEighty`` themselves do not “store” the ``VideoMode`` instance –
+``tenEighty`` and ``alsoTenEighty`` themselves do not “store” the ``VideoMode`` instance ---
 instead, they both *refer* to a ``VideoMode`` instance behind the scenes.
 It is the ``frameRate`` property of the underlying ``VideoMode`` that is changed,
 not the values of the constant references to that ``VideoMode``.
@@ -492,7 +492,7 @@ not structures.
 
 .. QUESTION: what's the deal with tuples and reference types / value types?
 
-.. TODO: Tim has suggested using Window as a good example here –
+.. TODO: Tim has suggested using Window as a good example here ---
    its location is a structure, but it doesn't make sense for Window
    to be a value type, as it is not copied when passed around.
 

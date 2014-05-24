@@ -44,10 +44,10 @@ A function's arguments must always be provided in the same order
 as the function's parameter list.
 
 The function in the example below is called ``greetingForPerson``,
-because that's what it does –
+because that's what it does ---
 it takes a person's name as input and returns a greeting for that person.
-To accomplish this, you define one input parameter –
-a ``String`` value called ``personName`` –
+To accomplish this, you define one input parameter ---
+a ``String`` value called ``personName`` ---
 and a return type of ``String``,
 which will contain a greeting for that person:
 
@@ -825,7 +825,7 @@ It calls the provided function with the values ``3`` and ``5``, and prints the r
 
 The role of ``printMathResult`` is to print the result of
 a call to a math function of an appropriate type.
-It doesn't matter what that function's implementation actually does –
+It doesn't matter what that function's implementation actually does ---
 it matters only that the function is of the correct type.
 This enables ``printMathResult`` to hand off some of its functionality
 to the caller of the function in a type-safe way.

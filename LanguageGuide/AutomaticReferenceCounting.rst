@@ -683,7 +683,7 @@ creating a strong reference cycle.
 This happens because closures, like classes, are *reference types*.
 When you assign a closure to a property,
 you are assigning a *reference* to that closure.
-In essence, it's the same problem as above –
+In essence, it's the same problem as above ---
 two different things are referencing each other with a strong reference
 and are keeping each other alive.
 However, rather than two class instances,

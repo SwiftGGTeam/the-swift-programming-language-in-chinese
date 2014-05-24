@@ -123,7 +123,7 @@ which defines a more complex form of the ``incrementBy`` method:
          }
       }
 
-This ``incrementBy`` method has two parameters –
+This ``incrementBy`` method has two parameters ---
 ``amount`` and ``numberOfTimes``.
 By default, Swift treats ``amount`` as a local name only,
 but treats ``numberOfTimes`` as both a local *and* an external name.

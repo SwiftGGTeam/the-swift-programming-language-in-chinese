@@ -90,7 +90,7 @@ a floating-point literal value with dot syntax,
 as a way to use that literal value to perform distance conversions.
 
 In this example, a ``Double`` value of ``1.0`` is considered to represent “one meter”.
-This is why the ``m`` computed property returns ``self`` –
+This is why the ``m`` computed property returns ``self`` ---
 the expression ``1.m`` is considered to calculate a ``Double`` value of ``1.0``.
 
 Other units require some conversion to be expressed as a value measured in meters.

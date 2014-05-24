@@ -19,7 +19,7 @@ which performs any custom cleanup just before an instance of that class is deall
 For more information about deinitializers, see :doc:`Deinitialization`.
 
 .. TODO: mention that you can't construct a class instance from a class metatype value,
-   because you can't be sure that a subclass will definitely provide the constructor –
+   because you can't be sure that a subclass will definitely provide the constructor ---
    see doug's notes from r14175 for more info
 
 .. _Initialization_SettingInitialValuesForStoredProperties:
@@ -236,9 +236,9 @@ and omitting them is a compile-time error:
 Optional Property Types
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-If your custom type has a stored property that is logically allowed to have “no value” –
+If your custom type has a stored property that is logically allowed to have “no value” ---
 perhaps because its value cannot be set during initialization,
-or because it is allowed to have “no value” at some later point –
+or because it is allowed to have “no value” at some later point ---
 declare the property with an *optional* type.
 Properties of optional type are automatically initialized with a value of ``nil``,
 indicating that the property is deliberately intended to have “no value yet”
@@ -441,7 +441,7 @@ both of which provide default values of ``0.0`` for all of their properties:
          var x = 0.0, y = 0.0
       }
 
-You can initialize the ``Rect`` structure below in one of three ways –
+You can initialize the ``Rect`` structure below in one of three ways ---
 by using its default zero-initialized ``origin`` and ``size`` property values;
 by providing a specific origin point and size;
 or by providing a specific center point and size:
@@ -529,8 +529,8 @@ Class Inheritance and Initialization
 
 Classes can inherit from other classes, as described in :doc:`Inheritance`.
 This means that any subclass initializers you write
-must ensure that all of the subclass's stored properties –
-including any properties that the subclass inherits –
+must ensure that all of the subclass's stored properties ---
+including any properties that the subclass inherits ---
 are assigned a suitable value during initialization.
 
 When defining a class, you often provide one or two primary initializers
@@ -772,8 +772,8 @@ and is used to create a new instance of the subclass
 that is not fully or correctly initialized.
 
 If you want your custom subclass to present
-one or more of the same initializers as its superclass –
-perhaps to perform some customization during initialization –
+one or more of the same initializers as its superclass ---
+perhaps to perform some customization during initialization ---
 you can provide an overriding implementation of the same initializer
 within your custom subclass.
 
@@ -811,9 +811,9 @@ the following two rules apply:
 
 **Rule 2**
   If your subclass provides an implementation of
-  *all* of its superclass designated initializers –
+  *all* of its superclass designated initializers ---
   either by inheriting them as per rule 1,
-  or by providing a custom implementation as part of its definition –
+  or by providing a custom implementation as part of its definition ---
   then it automatically inherits all of the superclass convenience initializers.
 
 These rules apply even if your subclass adds further convenience initializers.
