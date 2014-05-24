@@ -550,8 +550,10 @@ See also :ref:`Declarations_ProtocolAssociatedTypeDeclaration`.
 Function Declaration
 --------------------
 
-.. write-me:: Waiting for design decisions from compiler team.
-
+A :newTerm`function declaration` introduces a function or method into your program.
+A function declared in the context of class, structure, enumeration, or protocol
+is referred to as a :newTerm:`method`.
+Function declarations are declared using the keyword ``func`` and have the following form:
 
 .. syntax-outline::
 
@@ -559,13 +561,159 @@ Function Declaration
        <#statements#>
     }
 
+If the function has a return type of ``Void``,
+the return type can be ommitted as follows:
+
+.. syntax-outline::
+
+    func <#function name#>(<#parameters#>) {
+       <#statements#>
+    }
+
+The type of each parameter must be included ---
+it can't be inferred.
+By default, the parameters to a function are constants.
+Write ``var`` in front of a parameter's name to make it a variable,
+scoping any changes made to the variable just to the function body,
+or write ``inout`` to make those changes also apply
+to the argument that was passed in the caller's scope.
+For a discussion of in-out parameters,
+see :ref:`Functions_InOutParameters`.
+
+Functions can return multiple values using a tuple type
+as the return type of the function.
+
+.. TODO: ^-- Add some more here.
+
+A function definition can appear inside another function declaration.
+This kind of function is known as a :newTerm:`nested function`.
+For a discussion of nested functions,
+see :ref:`Functions_NestedFunctions`.
+
+Parameter Names
+~~~~~~~~~~~~~~~
+
+Function parameters are a comma separated list
+where each parameter has one of several forms.
+The order of arguments in a function call
+must match the order of parameters in the function's declaration.
+The simplest entry in a parameter list has the following form:
+
 .. syntax-outline::
 
     <#parameter name#>: <#parameter type#>
+
+For function parameters,
+the parameter name is used within the function body,
+but is not used when calling the function.
+For method parameters,
+the parameter name is used as within the function body,
+and is also used as a label for the argument when calling the method.
+The name of a method's first parameter
+is used only within the function body,
+like the parameter of a function.
+For example:
+
+.. testcode:: func-simple-param
+
+   -> func f(x: Int, y: String) -> String {
+          return y + String(x)
+      }
+   -> f(7, "hello")  // x and y have no name
+   ---
+   -> class C {
+          func f(x: Int, y: String) -> String {
+              return y + String(x)
+          }
+      }
+   -> let c = C()
+   -> c.f(7, y: "hello")  // x has no name, y has a name
+
+You can override the default behavior
+for how parameter names are used
+with one of the following forms:
+
+.. syntax-outline::
+
+    <#external parameter name#> <#local parameter name#>: <#parameter type#>
+    #<#parameter name#>: <#parameter type#>
+    _ <#local parameter name#>: <#parameter type#>
+
+A second name before the local parameter name
+gives the parameter an external name,
+which can be different than the local parameter name.
+The external parameter name must be used when the function is called.
+The corresponding argument must have the external name in function or method calls.
+
+A hash symbol (``#``) before a parameter name
+indicates that the name should be used as both an external and a local parameter name.
+It has the same meaning as writing the local paramater name twice.
+The corresponding argument must have this name in function or method calls.
+
+An underscore (``_``) before a local parameter name
+gives that parameter no name to be used in function calls.
+The corresponding argument must have no name in function or method calls.
+
+Special Kinds of Parameters
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Parameters can be ignored,
+take a variable number of values,
+and provide default values
+using the following forms:
+
+.. syntax-outline::
+
+    _ : <#parameter type#.
     <#parameter name#>: <#parameter type#>...
     <#parameter name#>: <#parameter type#> = <#default argument value#>
-    <#parameter name#> <#local parameter name#>: <#parameter type#>
-    #<#parameter name#>: <#parameter type#>
+
+A parameter named with an underscore (``_``) is explicitly ignored
+an can't be accessed within the body of the function.
+
+A parameter with a base type name followed immediately by three dots (``...``)
+is understood as a variadic parameter.
+A function can have at most one variadic parameter, which must be its last parameter.
+A variadic parameter is treated as an array that contains elements of the base type name.
+For instance, the variadic parameter ``Int...`` is treated as ``Int[]``.
+For an example that uses a variadic parameter,
+see :ref:`Functions_VariadicParameters`.
+
+A parameter with an equals sign (``=``) and an expression after its type
+is understood to have a default value of the given expression.
+If the parameter is omitted when calling the function,
+the default value is used instead.
+If the parameter is not omitted,
+it must have its name in the function call.
+For example, ``f()`` and ``f(x: 7)`` are both valid calls
+to a function with a single default parameter named ``x``,
+but ``f(7)`` is invalid because it provides a value without a name.
+
+.. TODO: Flesh out the above example into a code listing.
+
+Special Kinds of Methods
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Methods on an enumeration or a structure
+that modify ``self`` must be marked with the ``mutating`` keyword
+at the start of the function declaration.
+
+Methods that override a superclass method
+must be marked with the ``override`` keyword
+at the start of the function declaration.
+It is an error to override a method without the ``override`` keyword
+or to use the ``override`` keyword on a method
+that doesn't override a superclass method.
+
+Methods associated with a type
+rather than an instance of a type
+must be marked with the ``static`` attribute for enumerations and structures
+or the ``class`` attribute for classes.
+
+Curried Functions and Methods
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Curried functions and methods have the following form:
 
 .. syntax-outline::
 
@@ -573,10 +721,25 @@ Function Declaration
        <#statements#>
     }
 
-.. TODO: Make sure to discuss functions with variadic parameters and curried function.
-    Some of this material exists in the Function Type section in the Types chapter.
-    Also need to discuss the rules for parameter names.
+A function declared this way is understood
+as a function whose return type is another function.
+For example, the following two declarations are equivalent:
 
+.. testcode:: curried-function
+
+    -> func addTwoNumbers(a: Int)(b: Int) -> Int {
+          return a + b
+       }
+    -> func addTwoNumbers(a: Int) -> (Int -> Int) {
+          func addTheSecondNumber(b: Int) -> Int {
+             return a + b
+          }
+          return addTheSecondNumber
+       }
+    ---
+    -> addTwoNumbers(4)(5) // Returns 9
+
+Multiple levels of currying are allowed.
 
 .. langref-grammar
 

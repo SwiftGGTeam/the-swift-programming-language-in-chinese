@@ -695,28 +695,60 @@ that allow closures to be written more concisely:
 
 * A closure that consists of only a single expression
   is understood to return the value of that expression.
+  The contents of this expression is also considered
+  when performing type inference on the surrounding expression.
 
-.. TODO: In the implied return case,
-   the expression in the closure
-   participates in type checking of the surrounding expression.
+The following closure expressions are equivalent:
 
-The following closure expressions are equivalent,
-assuming they are used in a context
-that provides the needed type information: ::
+.. testcode:: closure-expression-forms
 
-    {
-        (x: Int, y: Int) -> Int in
-        return x + y
-    }
+    -> myFunction {
+           (x: Int, y: Int) -> Int in
+           return x + y
+      }
+    ---
+    -> myFunction {
+           (x, y) in
+           return x + y
+       }
+    ---
+    -> myFunction { return $0 + $1 }
+    ---
+    -> myFunction { $0 + $1 }
 
-    {
-        (x, y) in
-        return x + y
-    }
+For information about passing a closure as an argument to a function,
+see :ref:`Expressions_FunctionCallExpression`.
 
-    { return $0 + $1 }
+A closure expression can explicitly specify
+the values that it captures from the surrounding scope
+using a :newTerm:`capture list`.
+A capture list is written as a comma separated list surrounded by square brackets,
+before the list of parameters.
+If you use a capture list, you must also use the ``in`` keyword,
+even if you omit the parameter names, parameter types, and return type.
 
-    { $0 + $1 }
+.. Reasonably sure that accessing a variable that you didn't capture should be an error.
+   <rdar://problem/17024367> REPL - Accessing a variable not included in the capture list causes a segfault
+
+Each entry in the capture list can have be marked as ``weak`` or ``unowned``
+to capture a weak or unowned reference to the value.
+
+.. testcode:: closure-expression-weak
+
+    -> myFunction { print(self.title) }                    // strong capture
+    -> myFunction { [weak self] in print(self!.title) }    // weak capture
+    -> myFunction { [unowned self] in print(self.title) }  // unowned capture
+
+You can also bind arbitrary expression
+to named values in the capture list.
+The expression is evaluated when the closure is formed,
+and captured with the specified strength.
+For example:
+
+.. testcode:: closure-expression-capture
+
+    // Weak capture of "self.parent" as "parent"
+    myFunction { [weak parent = self.parent] in print(parent!.title) }
 
 For more information and examples of closure expressions,
 see :ref:`Closures_ClosureExpressions`.
