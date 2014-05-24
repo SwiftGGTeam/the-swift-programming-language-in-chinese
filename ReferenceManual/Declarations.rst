@@ -568,6 +568,14 @@ the return type can be ommitted as follows:
        <#statements#>
     }
 
+The type of each parameter must be included ---
+they can't be inferred.
+By default, the parameters to a function are constants.
+Write ``var`` in front of a parameter's name to make it a variable,
+scoping any changes made to the variable just to the function body,
+or write ``inout`` to make those changes also apply
+to the value that was passed in the caller's scope.
+
 Functions can return multiple values using a tuple type.
 
 Function definitions can appear inside other function declarations.
