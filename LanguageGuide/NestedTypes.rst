@@ -90,7 +90,7 @@ and initializes a new ``Values`` instance with appropriate values based on its r
 It uses special values for ``Jack``, ``Queen``, ``King``, and ``Ace``.
 For the numeric cards, it uses the rank's raw ``Int`` value.
 
-The ``BlackjackCard`` structure itself has two properties – ``rank`` and ``suit``.
+The ``BlackjackCard`` structure itself has two properties --- ``rank`` and ``suit``.
 It also defines a computed property called ``description``,
 which uses the values stored in ``rank`` and ``suit`` to build
 a description of the name and value of the card.

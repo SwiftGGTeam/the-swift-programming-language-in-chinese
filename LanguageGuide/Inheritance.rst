@@ -195,7 +195,7 @@ This example creates a subclass of ``Bicycle`` for a two-seater bicycle
 known as a “tandem”.
 ``Tandem`` inherits the two properties from ``Bicycle``,
 which in turn inherits these properties from ``Vehicle``.
-``Tandem`` doesn't change the number of wheels – it's still a bicycle, after all –
+``Tandem`` doesn't change the number of wheels --- it's still a bicycle, after all –
 but it does update ``maxPassengers`` to have the correct value for a tandem.
 
 .. note::

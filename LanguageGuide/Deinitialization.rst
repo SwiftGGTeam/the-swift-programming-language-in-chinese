@@ -65,7 +65,7 @@ to store and manage its current state:
       }
 
 ``Bank`` keeps track of the current number of coins it holds with its ``coinsInBank`` property.
-It also offers two methods – ``vendCoins`` and ``receiveCoins`` –
+It also offers two methods --- ``vendCoins`` and ``receiveCoins`` ---
 to handle the distribution and collection of coins.
 
 ``vendCoins`` checks that there are enough coins in the bank before distributing them.

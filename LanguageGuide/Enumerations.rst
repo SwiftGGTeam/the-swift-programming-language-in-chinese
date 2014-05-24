@@ -233,8 +233,8 @@ New barcodes can then be created using either type:
 This example creates a new variable called ``productBarcode``
 and assigns it a value of ``Barcode.UPCA``
 with an associated tuple value of ``(8, 8590951226, 3)``.
-The provided “identifier” value has an underscore within its integer literal –
-``85909_51226`` – to make it easier to read as a barcode.
+The provided “identifier” value has an underscore within its integer literal ---
+``85909_51226`` --- to make it easier to read as a barcode.
 
 The same product can be assigned a different type of barcode:
 

@@ -204,7 +204,7 @@ Attempting to do so is reported as an error when your code is compiled:
    -> let languageName = "Swift"
    << // languageName : String = "Swift"
    -> languageName = "Swift++"
-   // this is a compile-time error – languageName cannot be changed
+   // this is a compile-time error --- languageName cannot be changed
    !! <REPL Input>:1:14: error: cannot assign to 'let' value 'languageName'
    !! languageName = "Swift++"
    !! ~~~~~~~~~~~~ ^
@@ -930,7 +930,7 @@ An optional says:
    The nearest thing in Objective-C is
    the ability to return ``nil`` from a method that would otherwise return an object,
    with ``nil`` meaning “the absence of a valid object.”
-   However, this only works for objects – it doesn't work for
+   However, this only works for objects --- it doesn't work for
    structs, basic C types, or enumeration values.
    For these types,
    Objective-C methods typically return a special value (such as ``NSNotFound``)
@@ -1098,7 +1098,7 @@ the constant or variable is automatically set to ``nil`` for you:
 
    Swift's ``nil`` is not the same as ``nil`` in Objective-C.
    In Objective-C, ``nil`` is a pointer to a non-existent object.
-   In Swift, ``nil`` is not a pointer – it is the absence of a value of a certain type.
+   In Swift, ``nil`` is not a pointer --- it is the absence of a value of a certain type.
    Optionals of *any* type can be set to ``nil``, not just object types.
 
 .. _TheBasics_ImplicitlyUnwrappedOptionals:

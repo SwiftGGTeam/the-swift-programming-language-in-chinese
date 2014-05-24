@@ -477,7 +477,7 @@ called ``findValue``, to be written.
 Note that the return type of this function is still ``Int?``,
 because the function returns an optional index number,
 not an optional value from the array.
-Be warned, though – this function does not compile,
+Be warned, though --- this function does not compile,
 for reasons explained after the example:
 
 .. testcode:: typeConstraints

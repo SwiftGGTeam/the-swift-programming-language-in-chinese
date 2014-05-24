@@ -332,7 +332,7 @@ and can be accessed through dot syntax, but cannot be set to a different value.
 
 .. note::
 
-   You must declare computed properties – including read-only computed properties –
+   You must declare computed properties --- including read-only computed properties –
    as variable properties with the ``var`` keyword, because their value is not fixed.
    The ``let`` keyword is only used for constant properties,
    to indicate that their values cannot be changed once they are set
