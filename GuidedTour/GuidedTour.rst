@@ -27,8 +27,7 @@ In Swift, this can be done in a single line:
 
 If you have written code in C or Objective-C,
 this syntax looks familiar to you.
-Unlike those languages,
-this line of Swift code is a complete program.
+This line of Swift code is a complete program.
 You don't need to import a separate library for functionality like
 input/output or string handling.
 Code written at global scope is used
@@ -116,9 +115,10 @@ explicitly make an instance of the desired type.
    are these experiments that make you familiar with errors
    helping you learn something?
 
-A simpler way to include values in strings
-is to write ``\(`` and ``)`` around an expression,
-which includes it as part of the string.
+There's an even simpler way to include values in strings:
+Write the value in parentheses,
+and write a backslash (``\``) before the parentheses.
+For example:
 
 .. testcode::
 
@@ -126,13 +126,15 @@ which includes it as part of the string.
    << // apples : Int = 3
    -> let oranges = 5
    << // oranges : Int = 5
-   -> let summary = "I have \(apples + oranges) pieces of fruit."
+   -> let appleSummary = "I have \(apples) apples."
+   << // summary : String = "I have 3 apples."
+   -> let fruitSummary = "I have \(apples + oranges) pieces of fruit."
    << // summary : String = "I have 8 pieces of fruit."
 
 .. admonition:: Experiment
 
    Use ``\()`` to
-   include a floating point calculation in a string
+   include a floating-point calculation in a string
    and to include someone’s name in a greeting.
 
 Create arrays and dictionaries using brackets (``[]``),
@@ -163,10 +165,10 @@ use the initializer syntax.
    << // emptyDictionary : Dictionary<String, Float> = Dictionary<String, Float>(1.33333333333333, 0, <DictionaryBufferOwner<String, Float> instance>)
 
 If type information can be inferred,
-such as when you set a new value for a variable
-or pass an argument to a function,
 you can write an empty array as ``[]``
-and an empty dictionary as ``[:]``.
+and an empty dictionary as ``[:]`` ---
+for example, when you set a new value for a variable
+or pass an argument to a function.
 
 .. testcode::
 
@@ -206,7 +208,7 @@ Braces around the body are required.
 
 In an ``if`` statement,
 the conditional must be a Boolean expression ---
-this means code like ``if score { ... }`` is an error,
+this means that code such as ``if score { ... }`` is an error,
 not an implicit comparison to zero.
 
 You can use ``if`` and ``let`` together
@@ -275,14 +277,14 @@ and tests for equality.
 
 After executing the code inside the switch case that matched,
 the program exits from the switch statement.
-Execution doesn't continue or "fall through" to the next case,
+Execution doesn't continue to the next case,
 so there is no need to explicitly break out of the switch
 at the end of each case‘s code.
 
 .. Omitting mention of "fallthrough" keyword.
    It's in the guide/reference if you need it.
 
-You also use ``for``-``in`` to iterate over items in a dictionary
+You use ``for``-``in`` to iterate over items in a dictionary
 by providing a pair of names to use
 for each key-value pair.
 
@@ -333,9 +335,9 @@ ensuring that the loop is run at least once.
    -> m
    << // m : Int = 128
 
-You can also keep an index in a loop
-using ``..`` to make a range of indexes,
-or by writing an explicit increment and test.
+You can keep an index in a loop ---
+either by using ``..`` to make a range of indexes
+or by writing an explicit initialization, condition, and increment.
 These two loops do the same thing:
 
 .. testcode::
@@ -352,8 +354,8 @@ These two loops do the same thing:
       }
    -> secondForLoop
 
-Use ``..`` to make a range that omits its upper value
-and ``...`` to make a range that includes both values.
+Use ``..`` to make a range that omits its upper value,
+and use ``...`` to make a range that includes both values.
 
 Functions and Closures
 ----------------------
@@ -432,7 +434,7 @@ that is long or complex.
     <$ : Int = 15
 
 Functions are a first-class type.
-This means a function can return another function as its value.
+This means that a function can return another function as its value.
 
 .. testcode::
 
@@ -486,7 +488,7 @@ Use ``in`` to separate the arguments and return type from the body.
    Rewrite the closure to return zero for all odd numbers.
 
 You have several options for writing closures more concisely.
-When the closure's type is already known,
+When a closure's type is already known,
 such as the callback for a delegate,
 you can omit the type of its parameters,
 its return type, or both.
@@ -498,8 +500,8 @@ of their only statement.
     -> numbers.map({ number in 3 * number })
     <$ : Array<Int> = [24, 9, 15, 18]
 
-You can refer to parameters by number instead of by name,
-which is especially useful in very short closures.
+You can refer to parameters by number instead of by name ---
+this approach is especially useful in very short closures.
 A closure passed as the last argument to a function
 can appear immediately after the parentheses.
 
@@ -584,12 +586,12 @@ Notice how ``self`` is used to distinguish the ``name`` property
 from the ``name`` argument to the initializer.
 The arguments to the initializer are passed like a function call
 when you create an instance of the class.
-Every property either needs a value assigned
-when it is declared (like ``numberOfSides``)
-or in the initializer (like ``name``).
+Every property either needs a value assigned ---
+either in its declaration (as with ``numberOfSides``)
+or in the initializer (as with ``name``).
 
 Use ``deinit`` to create a deinitializer
-if you need to perform some clean-up
+if you need to perform some cleanup
 before the object is deallocated.
 
 Subclasses include their superclass name
@@ -730,8 +732,8 @@ is always the same as the side length of its square.
    to use them outside a class or a struct.
 
 Methods on classes have one important difference from functions.
-The parameter names in functions are only used within the function,
-but parameters in methods are also used when you call the method.
+Parameter names in functions are used only within the function,
+but parameters names in methods are also used when you call the method.
 By default, a method has the same name for its parameters
 when you call it and within the method itself.
 You can specify a second name, which is used inside the method.
@@ -850,7 +852,7 @@ you don't have to provide one.
 
 .. admonition:: Experiment
 
-   Add a ``color`` method to ``Suit`` which returns "black"
+   Add a ``color`` method to ``Suit`` that returns "black"
    for spades and clubs, and returns "red" for hearts and diamonds.
 
 .. Suits are in Bridge order, which matches Unicode order.
@@ -858,11 +860,11 @@ you don't have to provide one.
    Wikipedia lists a good half dozen orders.
 
 Notice the two ways that the ``Hearts`` member of the enumeration
-is referred to above.
+is referred to above:
 When assigning a value to the ``hearts`` constant,
-the enumeration member ``Suit.Hearts`` is written out in full
+the enumeration member ``Suit.Hearts`` is refered to by its full name
 because the constant doesn't have an explicit type specified.
-Inside the switch it could be abbreviated as just ``.Hearts``
+Inside the switch it is referred to by the abbreviated form ``.Hearts``
 because the value of ``self`` is already known to be a suit.
 You can use the abbreviated form
 anytime the value's type is already known.
@@ -908,7 +910,7 @@ and you provide the raw value when you define the enumeration.
 For example,
 consider the case of requesting
 the sunrise and sunset time from a server.
-The server either responds with the information,
+The server either responds with the information
 or it responds with some error information.
 
 .. testcode::
@@ -957,7 +959,7 @@ as part of matching the value against the switch cases.
 Protocols and Extensions
 ------------------------
 
-Use ``protocol`` to declare a protocol:
+Use ``protocol`` to declare a protocol.
 
 .. testcode::
 
@@ -999,16 +1001,18 @@ Classes, enumerations, and structs can all adopt protocols.
 
    Write an enumeration that conforms to this protocol.
 
-Notice the use of ``mutating`` in the declaration of ``SimpleStruct``
-to mark a struct method that modifies the structure.
-It is not needed in the declaration of ``SimpleClass``
-because any method on a class can modify the class.
+Notice the use of the ``mutating`` keyword
+in the declaration of ``SimpleStructure``
+to mark a method that modifies the structure.
+The declaration of ``SimpleClass`` doesn't need
+any of its methods marked as mutating
+because methods on a class can always modify the class.
 
 Use ``extension`` to add functionality to an existing type,
 such as new methods and computed properties.
 You can use an extension to add protocol conformance
 to a type that is declared elsewhere,
-or even a type you imported from a library or framework.
+or even to a type that you imported from a library or framework.
 
 .. testcode::
 
@@ -1031,7 +1035,7 @@ or even a type you imported from a library or framework.
 You can use a protocol name just like any other named type ---
 for example, to create a collection of objects
 that have different types
-but all conform to a particular protocol.
+but that all conform to a single protocol.
 When you work with values whose type is a protocol type,
 methods outside the protocol definition are not available.
 
@@ -1075,7 +1079,7 @@ as well as classes, enumerations, and structures.
 
 .. testcode::
 
-    // Re-implement the Swift standard library's optional type
+    // Reimplement the Swift standard library's optional type
     -> enum OptionalValue<T> {
            case None
            case Some(T)
