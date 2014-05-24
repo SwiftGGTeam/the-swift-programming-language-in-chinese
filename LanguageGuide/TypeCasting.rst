@@ -2,17 +2,18 @@ Type Casting
 ============
 
 :newTerm:`Type casting` is a way to check the type of an instance,
-and / or to treat that instance as if it is a different
+and/or to treat that instance as if it is a different
 superclass or subclass from somewhere else in its own class hierarchy.
 
 Type casting in Swift is implemented with the ``is`` and ``as`` operators.
 These two operators provide a simple and expressive way
-to check or cast a value as some different type.
-Because downcasting a class to one of its subclasses can fail,
-Swift uses optionals to enable you to attempt a downcast,
-and to check if that cast is successful.
+to check the type of a value or cast a value to a different type.
 
-Type casting can also be used to check if a type conforms to a protocol,
+Because downcasting a class to one of its subclasses can fail,
+Swift uses optionals to enable you to attempt a downcast
+and check whether that cast is successful.
+
+You can also use type casting to check whether a type conforms to a protocol,
 as described in :ref:`Protocols_CheckingForProtocolConformance`.
 
 .. _TypeCasting_DefiningAClassHierarchyForTypeCasting:
@@ -21,7 +22,7 @@ Defining a Class Hierarchy for Type Casting
 -------------------------------------------
 
 You can use type casting with a hierarchy of classes and subclasses
-to check the type of a particular class instance,
+to check the type of a particular class instance
 and to cast that instance to another class within the same hierarchy.
 The three code snippets below define a hierarchy of classes
 and an array containing instances of those classes,
@@ -90,10 +91,10 @@ and so it infers a type of ``MediaItem[]`` for the ``library`` array:
 
 The items stored in ``library`` are still ``Movie`` and ``Song`` instances behind the scenes.
 However, if you iterate over the contents of this array,
-the items you receive back will be typed as ``MediaItem``,
+the items you receive back are typed as ``MediaItem``,
 and not as ``Movie`` or ``Song``.
 In order to work with them as their native type,
-you will need to *check* their type,
+you need to *check* their type,
 or *downcast* them to a different type,
 as described below.
 
@@ -102,9 +103,9 @@ as described below.
 Checking Type
 -------------
 
-You can check whether an instance is of a certain subclass type by using
-the :newTerm:`type check operator` (``is``).
-The type check operator returns ``true`` if the instance is of that subclass type,
+Use the :newTerm:`type check operator` (``is``) to check
+whether an instance is of a certain subclass type.
+The type check operator returns ``true`` if the instance is of that subclass type
 and ``false`` if it is not.
 
 The example below defines two variables, ``movieCount`` and ``songCount``,
@@ -128,13 +129,13 @@ which count the number of ``Movie`` and ``Song`` instances in the ``library`` ar
    -> println("Media library contains \(movieCount) movies and \(songCount) songs")
    <- Media library contains 2 movies and 3 songs
 
-This example iterates through all of the items in the ``library`` array.
+This example iterates through all items in the ``library`` array.
 On each pass, the ``for``-``in`` loop sets the ``item`` constant
 to the next ``MediaItem`` in the array.
 
 ``item is Movie`` returns ``true`` if the current ``MediaItem``
-is a ``Movie`` instance, and ``false`` if it is not.
-Similarly, ``item is Song`` checks to see if the item is a ``Song`` instance.
+is a ``Movie`` instance and ``false`` if it is not.
+Similarly, ``item is Song`` checks whether the item is a ``Song`` instance.
 At the end of the ``for``-``in`` loop, the values of ``movieCount`` and ``songCount``
 contain a count of how many ``MediaItem`` instances were found of each type.
 
@@ -144,7 +145,8 @@ Downcasting
 -----------
 
 A constant or variable of a certain class type may actually refer to
-an instance of a subclass behind the scenes. Where this is the case,
+an instance of a subclass behind the scenes.
+If you know this might be the case,
 you can try to :newTerm:`downcast` to the subclass type
 with the :newTerm:`type cast operator` (``as``).
 
@@ -203,7 +205,7 @@ Because of this uncertainty, the ``as?`` form of the type cast operator returns 
 when attempting to downcast to a subclass type.
 The result of ``item as Movie`` is of type ``Movie?``, or “optional ``Movie``”.
 
-Downcasting to ``Movie`` will fail when applied to
+Downcasting to ``Movie`` fails when applied to
 the two ``Song`` instances in the library array.
 To cope with this, the example above uses optional binding
 to check whether the optional ``Movie`` actually contains a value
@@ -224,20 +226,20 @@ whenever a ``Song`` is found in the library.
 
 .. note::
 
-   Casting does not actually modify the instance, or change its values.
-   The underlying instance remains the same; it is just treated and accessed
+   Casting does not actually modify the instance or change its values.
+   The underlying instance remains the same; it is simply treated and accessed
    as an instance of the type to which it has been cast.
 
-.. _TypeCasting_AnyAndAnyObject:
+.. _TypeCasting_TypeCastingForAnyAndAnyObject:
 
-Any and AnyObject
------------------
+Type Casting for Any and AnyObject
+----------------------------------
 
 Swift provides two special type aliases for working with non-specific types:
 
-* ``AnyObject``, which can represent an instance of any class type
-* ``Any``, which can represent an instance of any type at all,
-  apart from function types
+* ``AnyObject`` can represent an instance of any class type.
+* ``Any`` can represent an instance of any type at all,
+  apart from function types.
 
 .. note::
 
@@ -313,7 +315,8 @@ Any
 ~~~
 
 Here's an example of using ``Any`` to work with a mix of different types,
-including non-class types:
+including non-class types.
+The example creates an array called ``things``, which can store values of type ``Any``:
 
 .. testcode:: typeCasting
 
@@ -328,28 +331,14 @@ including non-class types:
    -> things.append((3.0, 5.0))
    -> things.append(Movie(name: "Ghostbusters", director: "Ivan Reitman"))
 
-This example creates a new array called ``things``, which can store values of type ``Any``.
-In this case, it contains
+The ``things`` array contains
 two ``Int`` values, two ``Double`` values, a ``String`` value,
 a tuple of type ``(Double, Double)``,
 and the movie “Ghostbusters”, directed by Ivan Reitman.
 
-.. _TypeCasting_TypeCastingForAnyAndAnyObject:
-
-Type Casting for Any and AnyObject with a Switch Statement
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
 You can use the ``is`` and ``as`` operators in a ``switch`` statement's cases
 to discover the specific type of a constant or variable
 that is known only to be of type ``Any`` or ``AnyObject``.
-
-.. note::
-
-   The cases of a ``switch`` statement use
-   the forced version of the type cast operator (``as``, not ``as?``)
-   to check and cast to a specific type.
-   This check is always safe within the context of a ``switch`` case statement.
-
 The example below iterates over the items in the ``things`` array
 and queries the type of each item with a ``switch`` statement.
 Several of the ``switch`` statement's cases bind their matched value to
@@ -387,6 +376,13 @@ a constant of the specified type to enable its value to be printed:
    </ a string value of "hello"
    </ an (x, y) point at 3.0, 5.0
    </ a movie called 'Ghostbusters', dir. Ivan Reitman
+
+.. note::
+
+   The cases of a ``switch`` statement use
+   the forced version of the type cast operator (``as``, not ``as?``)
+   to check and cast to a specific type.
+   This check is always safe within the context of a ``switch`` case statement.
 
 .. TODO: Where should I mention “AnyClass”?
 
