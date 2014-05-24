@@ -308,7 +308,7 @@ for each key-value pair.
 
 .. admonition:: Experiment
 
-   Try keeping track of which kind of number
+   Add another variable to keep track of which kind of number
    was the largest, as well as what that largest number was.
 
 Use ``while`` to repeat a block of code until a condition changes.
@@ -509,9 +509,9 @@ can appear immediately after the parentheses.
     -> sort([1, 5, 3, 12, 2]) { $0 > $1 }
     <$ : Array<Int> = [12, 5, 3, 2, 1]
 
-The previous listing can be written without a closure at all
-by passing the ``>`` operator
-as the second argument to the ``sort`` function.
+The previous listing can be written without a closure at all.
+The ``>`` operator is the name of a function,
+so you can pass it as the second argument to the ``sort`` function.
 
 .. testcode::
 
@@ -680,13 +680,13 @@ the new value has the implicit name ``newValue``.
 You can provide an explicit name in parentheses after ``set``.
 
 Notice that the initializer for the ``EquilateralTriangle`` class
-is made up of three phases:
+has three different steps:
 
 1. Setting the value of properties that the subclass declares.
 
 2. Calling the superclass's initializer.
 
-3. Changing the value of properties set by the superclass.
+3. Changing the value of properties defined by the superclass.
    Any additional setup work that uses methods, getters, or setters
    can also be done at this point.
 
@@ -697,7 +697,7 @@ For example, the class below ensures
 that the side length of its triangle
 is always the same as the side length of its square.
 
-.. FIXME Broken
+.. testcode::
 
    -> class TriangleAndSquare {
           var triangle: EquilateralTriangle {
@@ -724,10 +724,6 @@ is always the same as the side length of its square.
    -> triangleAndSquare.square = Square(sideLength: 50, name: "larger square")
    -> triangleAndSquare.triangle.sideLength
    <$ : Double = 50.0
-
-.. What is getter-setter-keyword-clause for?
-   It looks like you write var foo: Type { get }
-   but what does that even mean?
 
 .. Grammatically, these clauses are general to variables.
    Not sure what it would look like
@@ -1076,7 +1072,7 @@ to make a generic function or type.
 You can make generic forms of functions and methods,
 as well as classes, enumerations, and structures.
 
-.. FIXME: Add testcode expectation lines.
+.. TODO: Add testcode expectation lines.
 
 .. testcode::
 
