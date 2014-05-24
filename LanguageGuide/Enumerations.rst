@@ -1,29 +1,31 @@
 Enumerations
 ============
 
-:newTerm:`Enumerations` are a way to define multiple related values of a similar kind,
+:newTerm:`Enumerations` are a way to define multiple related values of a similar kind
 and to work with those values in a type-safe way within your code.
 
-Enumerations in Swift are much more flexible than their counterparts in C and Objective-C.
-Swift enumerations can provide a default raw value for each enumeration member,
-and these raw values can be
-strings, characters, or any of the integer or floating-point number types.
+If you are familiar with C,
+you will know that C enumerations assign related names to a set of integer values.
+Enumerations in Swift are much more flexible,
+and do not have to provide a value for each member of the enumeration.
+If a value (known as a “raw” value) *is* provided for each enumeration member,
+the value can be a string, or a character, or any of the integer or floating-point number types.
 
 Alternatively, enumeration members can specify
 associated values of *any* type to be stored along with each different member value,
 in a similar way to unions or variants in other languages.
-This gives a way to define a common set of related members as part of one enumeration,
+You can define a common set of related members as part of one enumeration,
 each of which has a different set of values of appropriate types associated with it.
 
 Enumerations in Swift are first-class types in their own right.
-They adopt many features traditionally only supported by classes,
+They adopt many features traditionally supported only by classes,
 such as computed properties to provide additional information about their values,
 and instance methods to provide functionality related to the values they represent.
 Enumerations can also define initializers to provide an initial member value;
 can be extended to expand their functionality beyond their original implementation;
 and can conform to protocols to provide standard functionality.
 
-For more information on each of these capabilities, see
+For more on these capabilities, see
 :doc:`Properties`, :doc:`Methods`, :doc:`Initialization`,
 :doc:`Extensions`, and :doc:`Protocols`.
 
@@ -35,7 +37,7 @@ For more information on each of these capabilities, see
 Enumeration Syntax
 ------------------
 
-Enumerations are introduced by the ``enum`` keyword,
+You introduce enumerations with the ``enum`` keyword
 and place their entire definition within a pair of braces:
 
 .. testcode:: enums
@@ -80,7 +82,7 @@ Multiple member values can appear on a single line, separated by commas:
       }
 
 Each enumeration definition defines a brand new type.
-As a result, their names
+Like other types in Swift, their names
 (such as ``CompassPoint`` and ``Planet``)
 should start with a capital letter.
 Give enumeration types singular rather than plural names,
@@ -94,7 +96,7 @@ so that they read as self-evident:
 The type of ``directionToHead`` is inferred
 when it is initialized with one of the possible values of ``CompassPoint``.
 Once ``directionToHead`` is declared as a ``CompassPoint``,
-it can be set to a different ``CompassPoint`` value using a shorter dot syntax:
+you can set it to a different ``CompassPoint`` value using a shorter dot syntax:
 
 .. testcode:: enums
 
@@ -104,12 +106,12 @@ The type of ``directionToHead`` is already known,
 and so you can drop the type when setting its value.
 This makes for highly readable code when working with explicitly-typed enumeration values.
 
-.. _Enumerations_CheckingEnumerationValuesWithASwitchStatement:
+.. _Enumerations_MatchingEnumerationValuesWithASwitchStatement:
 
-Checking Enumeration Values with a Switch Statement
+Matching Enumeration Values with a Switch Statement
 ---------------------------------------------------
 
-You can check enumeration values with a ``switch`` statement:
+You can match individual enumeration values with a ``switch`` statement:
 
 .. testcode:: enums
 
@@ -126,7 +128,7 @@ You can check enumeration values with a ``switch`` statement:
       }
    <- Watch out for penguins
 
-You can read this as:
+You can read this code as:
 
 “Consider the value of ``directionToHead``.
 In the case where it equals ``.North``,
@@ -141,8 +143,7 @@ a ``switch`` statement must be exhaustive when considering an enumeration's memb
 If the ``case`` for ``.West`` is omitted,
 this code does not compile,
 because it does not consider the complete list of ``CompassPoint`` members.
-Enforcing completeness ensures that enumeration members are not accidentally missed or forgotten,
-and is part of Swift's goal of completeness and lack of ambiguity.
+Requiring exhaustiveness ensures that enumeration members are not accidentally omitted.
 
 When it is not appropriate to provide a ``case`` for every enumeration member,
 you can provide a ``default`` case to cover any members that are not addressed explicitly:
@@ -232,11 +233,10 @@ New barcodes can then be created using either type:
 This example creates a new variable called ``productBarcode``
 and assigns it a value of ``Barcode.UPCA``
 with an associated tuple value of ``(8, 8590951226, 3)``.
-(The provided “identifier” value has an underscore within its integer literal –
-``85909_51226`` –
-to make it easier to read as a barcode.)
+The provided “identifier” value has an underscore within its integer literal –
+``85909_51226`` – to make it easier to read as a barcode.
 
-The same product can be changed to have a different type of barcode:
+The same product can be assigned a different type of barcode:
 
 .. testcode:: enums
 
@@ -345,8 +345,8 @@ Access the raw value of an enumeration member with its ``toRaw`` method:
    </ earthsOrder is 3
 
 Use an enumeration's ``fromRaw`` method
-to try and find an enumeration member with a particular raw value.
-For example, to find Uranus from its raw value of ``7``:
+to try to find an enumeration member with a particular raw value.
+This example identifies Uranus from its raw value of ``7``:
 
 .. testcode:: rawValues
 
@@ -378,7 +378,7 @@ the optional ``Planet`` value returned by ``fromRaw`` will be ``nil``:
       }
    <- There isn't a planet at position 9
 
-This example uses optional binding to try and access a planet with a raw value of ``9``.
+This example uses optional binding to try to access a planet with a raw value of ``9``.
 The statement ``if let somePlanet = Planet.fromRaw(9)`` retrieves an optional ``Planet``,
 and sets ``somePlanet`` to the contents of that optional ``Planet`` if it can be retrieved.
 In this case, it is not possible to retrieve a planet with a position of ``9``,
