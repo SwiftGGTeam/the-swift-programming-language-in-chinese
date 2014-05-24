@@ -1,21 +1,26 @@
 Classes and Structures
 ======================
 
-Enumerations, as introduced in the previous chapter,
-enable you to define your own custom types to work with lists of values.
-Enumerations are particularly suited to representing a fixed set of values of a similar type.
-
-In Swift, you can also define custom data types
-as :newTerm:`classes` and :newTerm:`structures`.
-You use classes and structures to create general-purpose, flexible constructs
-that become the building blocks of your program's code.
+:newTerm:`Classes` and :newTerm:`structures` are general-purpose,
+flexible constructs that become the building blocks of your program's code.
+You define properties and methods to add functionality to your classes and structures,
+using exactly the same syntax as for constants, variables, and functions.
 
 Unlike other programming languages,
 Swift does not require you to create separate interface and implementation files
-for your custom types.
+for custom classes and structures.
 In Swift, you define a class or a structure in a single file,
 and the external interface to that class or structure is
 automatically made available for other code to use.
+
+.. note::
+
+   An instance of a *class* is traditionally known as an :newTerm:`object`.
+   However, Swift classes and structures
+   are much closer in functionality than in other languages,
+   and much of this chapter describes functionality that can apply to
+   instances of *either* a class or a structure type.
+   Because of this, the more general term :newTerm:`instance` is used.
 
 .. TODO: add a note here about public and private interfaces,
    once we know how these will be declared in Swift.
@@ -33,7 +38,7 @@ Both can:
 * Define subscripts to provide access to their values using subscript syntax
 * Define initializers to set up their initial state
 * Be extended to expand their functionality beyond a default implementation
-* Conform to protocols to provide standard functionality of a certain type
+* Conform to protocols to provide standard functionality of a certain kind
 
 For more information, see
 :doc:`Properties`, :doc:`Methods`, :doc:`Subscripts`, :doc:`Initialization`,
@@ -41,10 +46,10 @@ For more information, see
 
 Classes have additional capabilities that structures do not:
 
-* Inheritance, which enables one class to inherit the characteristics of another
-* Type casting, which enables you to check and interpret the type of a class instance at runtime
-* Deinitializers, which enable an instance of a class to clean up after itself
-* Reference counting, which allows more than one reference to a class instance
+* Inheritance enables one class to inherit the characteristics of another.
+* Type casting enables you to check and interpret the type of a class instance at runtime.
+* Deinitializers enable an instance of a class to free up any resources it has assigned.
+* Reference counting allows more than one reference to a class instance.
 
 For more information, see
 :doc:`Inheritance`, :doc:`TypeCasting`, and :doc:`Initialization`.
@@ -60,7 +65,7 @@ Definition Syntax
 ~~~~~~~~~~~~~~~~~
 
 Classes and structures have a similar definition syntax.
-You introduce classes with the ``class`` keyword,
+You introduce classes with the ``class`` keyword
 and structures with the ``struct`` keyword.
 Both place their entire definition within a pair of braces:
 
@@ -104,8 +109,7 @@ The example above defines a new structure called ``Resolution``,
 to describe a pixel-based display resolution.
 This structure has two stored properties called ``width`` and ``height``.
 Stored properties are constants or variables that are bundled up and stored
-as part of the class or structure,
-and are described in detail in :doc:`Properties`.
+as part of the class or structure.
 These two properties are inferred to be of type ``Int``
 by setting them to an initial integer value of ``0``.
 
@@ -145,7 +149,7 @@ The syntax for creating instances is very similar for both structures and classe
    -> let someVideoMode = VideoMode()
    << // someVideoMode : VideoMode = C4REPL9VideoMode (has 4 children)
 
-Structures and classes both use initializer syntax when creating new instances.
+Structures and classes both use initializer syntax for new instances.
 The simplest form of initializer syntax uses the type name of the class or structure
 followed by empty parentheses, such as ``Resolution()`` or ``VideoMode()``.
 This creates a new instance of the class or structure,
@@ -156,18 +160,6 @@ in :doc:`Initialization`.
 .. TODO: add more detail about inferring a variable's type when using initializer syntax.
 .. TODO: note that you can only use the default constructor if you provide default values
    for all properties on a structure or class.
-
-.. _ClassesAndStructures_Terminology:
-
-Terminology
-___________
-
-An instance of a *class* (such as ``someVideoMode`` above)
-is traditionally known as an :newTerm:`object`.
-However, Swift classes and structures are much closer in functionality than in other languages,
-and much of this chapter describes functionality that can apply to
-instances of *either* a class or a structure type.
-Because of this, the more general term :newTerm:`instance` is used below.
 
 .. _ClassesAndStructures_AccessingProperties:
 
@@ -233,29 +225,10 @@ Initializers are described in more detail in :doc:`Initialization`.
    as described in rdar://16704095.
    We hope to have this by WWDC, and this section will need updating if this lands.
 
-.. _ClassesAndStructures_ValueTypesAndReferenceTypes:
+.. _ClassesAndStructures_StructuresAndEnumerationsAreValueTypes:
 
-Value Types and Reference Types
--------------------------------
-
-Classes, structures, and enumerations have many things in common in Swift.
-All three can work with properties, methods, initializers, extensions, and protocols.
-However, there is one fundamental difference:
-
-* Structures and enumerations are *value* types
-* Classes are *reference* types
-
-This difference is very important as you decide how to define the building blocks of your code.
-
-.. TODO: this section needs updating to clarify that assignment is always like value semantics,
-   and it's only really possible to see the difference when looking at the properties of a type.
-
-.. _ClassesAndStructures_ValueTypes:
-
-Value Types
-~~~~~~~~~~~
-
-.. TODO: Have I actually described what a 'type' is by this point?
+Structures and Enumerations Are Value Types
+-------------------------------------------
 
 A :newTerm:`value type` is a type that is *copied*
 when it is assigned to a variable or constant,
@@ -271,7 +244,7 @@ This means that any structure and enumeration instances you create –
 and any value types they have as properties –
 are always copied when they are passed around in your code.
 
-For example, using the ``Resolution`` structure from above:
+Consider this example, which uses the ``Resolution`` structure from the previous example:
 
 .. testcode:: ClassesAndStructures
 
@@ -349,15 +322,15 @@ the copy of the original value that was stored in ``rememberedDirection``.
 
 .. TODO: Should I give an example of passing a value type to a function here?
 
-.. _ClassesAndStructures_ReferenceTypes:
+.. _ClassesAndStructures_ClassesAreReferenceTypes:
 
-Reference Types
-~~~~~~~~~~~~~~~
+Classes Are Reference Types
+---------------------------
 
 Unlike value types, :newTerm:`reference types` are *not* copied
 when they are assigned to a variable or constant,
 or when they are passed to a function.
-Rather than making a copy, a reference to the same existing instance is used instead.
+Rather than a copy, a reference to the same existing instance is used instead.
 
 Here's an example, using the ``VideoMode`` class defined above:
 
@@ -400,9 +373,7 @@ from the underlying ``VideoMode`` instance:
 
 Note that ``tenEighty`` and ``alsoTenEighty`` are declared as *constants*,
 rather than variables.
-However, it is still possible to change
-``tenEighty.frameRate`` and ``alsoTenEighty.frameRate``.
-This is allowed because
+However, you can still change ``tenEighty.frameRate`` and ``alsoTenEighty.frameRate`` because
 the values of the ``tenEighty`` and ``alsoTenEighty`` constants themselves do not actually change.
 ``tenEighty`` and ``alsoTenEighty`` themselves do not “store” the ``VideoMode`` instance –
 instead, they both *refer* to a ``VideoMode`` instance behind the scenes.
@@ -416,80 +387,16 @@ not the values of the constant references to that ``VideoMode``.
    as per the swift-discuss email thread "Dictionaries and key copying"
    started by Alex Migicovsky on Mar 1 2014.
 
-.. _ClassesAndStructures_Pointers:
-
-Pointers
-________
-
-If you have experience with C, C++, or Objective-C,
-you may know that these languages use :newTerm:`pointers` to refer to addresses in memory.
-A Swift constant or variable that refers to an instance of some reference type
-is similar to a pointer in C,
-but is not a direct pointer to an address in memory,
-and does not require you to write an asterisk (``*``)
-to indicate that you are creating a reference.
-Instead, these references are defined like any other constant or variable in Swift.
-
-.. TODO: functions aren't "instances". This needs clarifying.
-
-.. TODO: Add a justification here to say why this is a good thing.
-
-.. _ClassesAndStructures_ChoosingBetweenClassesAndStructures:
-
-Choosing Between Classes and Structures
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-You can use both classes and structures to define custom data types to use as
-the building blocks of your program's code.
-
-However, structure instances are always passed by *value*,
-and class instances are always passed by *reference*.
-This means that they are suited to different kinds of tasks.
-As you consider the data constructs and functionality that you need for a project,
-you need to decide whether each data construct should be
-defined as a class or as a structure.
-
-As a general guideline, consider creating a structure when:
-
-* The structure's primary purpose is to encapsulate a few relatively simple data values
-* It is reasonable to expect that the encapsulated values will be copied rather than referenced
-  when you assign or pass around an instance of that structure
-* Any properties stored by the structure are themselves value types,
-  which would also be expected to be copied rather than referenced
-* There is no need to inherit properties or behavior from another existing type
-
-Examples of good candidates for structures include:
-
-* The size of a geometric shape
-  (perhaps encapsulating a ``width`` property and a ``height`` property,
-  both of type ``Double``)
-* A way to refer to ranges within a series
-  (perhaps encapsulating a ``start`` property and a ``length`` property,
-  both of type ``Int``)
-* A point in a 3D coordinate system
-  (perhaps encapsulating ``x``, ``y`` and ``z`` properties, each of type ``Double``)
-
-In all other cases, define a class, and create instances of that class
-to be managed and passed by reference.
-In practice, this means that most custom data constructs should be classes,
-not structures.
-
-.. QUESTION: what's the deal with tuples and reference types / value types?
-
-.. TODO: Tim has suggested using Window as a good example here –
-   its location is a structure, but it doesn't make sense for Window
-   to be a value type, as it is not copied when passed around.
-
 .. _ClassesAndStructures_IdentityOperators:
 
 Identity Operators
-------------------
+~~~~~~~~~~~~~~~~~~
 
 Because classes are reference types,
 it is possible for multiple constants and variables to refer to
 the same single instance of a class behind the scenes.
 (The same is not true for structures and enumerations,
-because they are value types,
+because they are value types
 and are always copied when they are assigned to a constant or variable,
 or passed to a function.)
 
@@ -524,6 +431,70 @@ The process of defining your own implementations of the “equal to” and “no
 is described in :ref:`AdvancedOperators_EquivalenceOperators`.
 
 .. TODO: This needs clarifying with regards to function references.
+
+.. _ClassesAndStructures_Pointers:
+
+Pointers
+~~~~~~~~
+
+If you have experience with C, C++, or Objective-C,
+you may know that these languages use :newTerm:`pointers` to refer to addresses in memory.
+A Swift constant or variable that refers to an instance of some reference type
+is similar to a pointer in C,
+but is not a direct pointer to an address in memory,
+and does not require you to write an asterisk (``*``)
+to indicate that you are creating a reference.
+Instead, these references are defined like any other constant or variable in Swift.
+
+.. TODO: functions aren't "instances". This needs clarifying.
+
+.. TODO: Add a justification here to say why this is a good thing.
+
+.. _ClassesAndStructures_ChoosingBetweenClassesAndStructures:
+
+Choosing Between Classes and Structures
+---------------------------------------
+
+You can use both classes and structures to define custom data types to use as
+the building blocks of your program's code.
+
+However, structure instances are always passed by *value*,
+and class instances are always passed by *reference*.
+This means that they are suited to different kinds of tasks.
+As you consider the data constructs and functionality that you need for a project,
+decide whether each data construct should be defined as a class or as a structure.
+
+As a general guideline, consider creating a structure when
+one or more of these conditions apply:
+
+* The structure's primary purpose is to encapsulate a few relatively simple data values.
+* It is reasonable to expect that the encapsulated values will be copied rather than referenced
+  when you assign or pass around an instance of that structure.
+* Any properties stored by the structure are themselves value types,
+  which would also be expected to be copied rather than referenced.
+* The structure does not need to inherit properties or behavior from another existing type.
+
+Examples of good candidates for structures include:
+
+* The size of a geometric shape,
+  perhaps encapsulating a ``width`` property and a ``height`` property,
+  both of type ``Double``.
+* A way to refer to ranges within a series,
+  perhaps encapsulating a ``start`` property and a ``length`` property,
+  both of type ``Int``.
+* A point in a 3D coordinate system,
+  perhaps encapsulating ``x``, ``y`` and ``z`` properties, each of type ``Double``.
+
+In all other cases, define a class, and create instances of that class
+to be managed and passed by reference.
+In practice, this means that most custom data constructs should be classes,
+not structures.
+
+.. QUESTION: what's the deal with tuples and reference types / value types?
+
+.. TODO: Tim has suggested using Window as a good example here –
+   its location is a structure, but it doesn't make sense for Window
+   to be a value type, as it is not copied when passed around.
 
 .. _ClassesAndStructures_AssignmentAndCopyBehaviorForCollectionTypes:
 
