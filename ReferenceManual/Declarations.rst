@@ -550,8 +550,8 @@ See also :ref:`Declarations_ProtocolAssociatedTypeDeclaration`.
 Function Declaration
 --------------------
 
-.. write-me:: Waiting for design decisions from compiler team.
-
+A :newTerm`function declaration` introduces a function or method into your program.
+Function declarations are declared using the keyword ``func`` and have the following form:
 
 .. syntax-outline::
 
@@ -559,13 +559,107 @@ Function Declaration
        <#statements#>
     }
 
+If the function has a return type of ``Void``,
+the return type can be ommitted as follows:
+
+.. syntax-outline::
+
+    func <#function name#>(<#parameters#>) {
+       <#statements#>
+    }
+
+Function parameters are a comma separated list
+where each parameter has one of several forms.
+The order of arguments in a function call
+must match the order of parameters in the function's declaration.
+The simplest entry in a parameter list has the following form:
+
 .. syntax-outline::
 
     <#parameter name#>: <#parameter type#>
+
+For function parameters declared this way,
+the parameter name is local only,
+not to be used in function calls.
+For methods parameters declared this way,
+the parameter name is used locally and in method calls.
+The first parameter of a method
+has only a local name, like the parameter of a function.
+For example:
+
+.. testcode:: func-simple-param
+
+   -> func f(x: Int, y: String) -> String {
+          return y + String(x)
+      }
+   -> f(7, "hello")  // x and y have no name
+   ---
+   -> class C {
+          func f(x: Int, y: String) -> String {
+              return y + String(x)
+          }
+      }
+   -> let c = C()
+   -> c.f(7, y: "hello")  // x has no name, y has a name
+
+You can override the default naming behavior
+by using one of the following forms:
+
+.. syntax-outline::
+
+    <#external parameter name#> <#local parameter name#>: <#parameter type#>
+    #<#parameter name#>: <#parameter type#>
+    _ <#local parameter name#>: <#parameter type#>
+
+A second name before the local parameter name
+gives the parameter an external name,
+which can be different than the local parameter name.
+The external parameter name must be used when the function is called.
+The corresponding argument must have the external name in function or method calls.
+
+A number sign (``#``) before a parameter name
+indicates that the name should be used as both an external and a local parameter name.
+It has the same meaning as writing the local paramater name twice.
+The corresponding argument must have this name in function or method calls.
+
+An underscore (``_``) before a local parameter name
+gives that parameter no name to be used in function calls.
+The corresponding argument must have no name in function or method calls.
+
+Parameters can be ignored,
+take a variable number of values,
+and provide default values
+using the following forms:
+
+.. syntax-outline::
+
+    _ : <#parameter type#.
     <#parameter name#>: <#parameter type#>...
     <#parameter name#>: <#parameter type#> = <#default argument value#>
-    <#parameter name#> <#local parameter name#>: <#parameter type#>
-    #<#parameter name#>: <#parameter type#>
+
+A parameter with named with an underscore (``_``) is explicitly ignored
+an can't be accessed within the body of the function.
+
+A parameter with a base type name followed immediately by three dots (``...``)
+is understood as a variadic parameter.
+A function can have at most one variadic parameter, which must be its last parameter.
+A variadic parameter is treated as an array that contains elements of the base type name.
+For instance, the variadic parameter ``Int...`` is treated as ``Int[]``.
+For an example that uses a variadic parameter,
+see :ref:`Functions_VariadicParameters`.
+
+A parameter with an equals sign (``=``) and an expression after its type
+is understood to have a default value of the given expression.
+If the parameter is omitted when calling the function,
+the default value is used instead.
+If the parameter is not omitted,
+it must have its name in the function call.
+For example, ``f()`` and ``f(x: 7)`` are both valid calls
+to a function with a single optional parameter named ``x``,
+but ``f(7)`` is invalid because it provides a value without a name.
+
+
+Curried functions have the following form:
 
 .. syntax-outline::
 
@@ -573,10 +667,16 @@ Function Declaration
        <#statements#>
     }
 
-.. TODO: Make sure to discuss functions with variadic parameters and curried function.
-    Some of this material exists in the Function Type section in the Types chapter.
-    Also need to discuss the rules for parameter names.
+A function declared this way is understood
+as a function whose return type is another function.
+For example, the following two declarations are equivalent:
 
+.. testcode:: curried-function
+
+   -> func curried(a: Int, b: Int)(c: String, d: String) -> Bool { ... }
+   -> func curried(a: Int, b: Int) -> ((c: String, d: String) -> Bool) { ... }
+
+Multiple levels of currying are allowed.
 
 .. langref-grammar
 
