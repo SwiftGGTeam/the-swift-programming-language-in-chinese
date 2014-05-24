@@ -568,6 +568,13 @@ the return type can be ommitted as follows:
        <#statements#>
     }
 
+Functions can return multiple values using a tuple type.
+
+Function definitions can appear inside other function declarations.
+This is known as a :newTerm:`nested function`.
+
+**Parameter Names**
+
 Function parameters are a comma separated list
 where each parameter has one of several forms.
 The order of arguments in a function call
@@ -626,6 +633,8 @@ An underscore (``_``) before a local parameter name
 gives that parameter no name to be used in function calls.
 The corresponding argument must have no name in function or method calls.
 
+**Special Parameter Behaviors**
+
 Parameters can be ignored,
 take a variable number of values,
 and provide default values
@@ -658,6 +667,7 @@ For example, ``f()`` and ``f(x: 7)`` are both valid calls
 to a function with a single optional parameter named ``x``,
 but ``f(7)`` is invalid because it provides a value without a name.
 
+**Curried Functions**
 
 Curried functions have the following form:
 
@@ -673,8 +683,17 @@ For example, the following two declarations are equivalent:
 
 .. testcode:: curried-function
 
-   -> func curried(a: Int, b: Int)(c: String, d: String) -> Bool { ... }
-   -> func curried(a: Int, b: Int) -> ((c: String, d: String) -> Bool) { ... }
+    -> func addTwoNumbers(a: Int)(b: Int) -> Int {
+          return a + b
+       }
+    -> func addTwoNumbers(a: Int) -> (Int -> Int) {
+          func addTheSecondNumber(b: Int) -> Int {
+             return a + b
+          }
+          return addTheSecondNumber
+       }
+    ---
+    -> addTwoNumbers(4)(5) // Returns 9
 
 Multiple levels of currying are allowed.
 
