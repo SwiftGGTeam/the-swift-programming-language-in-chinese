@@ -137,7 +137,7 @@ to enable the function to return a single tuple containing multiple values.
 You can also name the elements of a tuple type and use those names to refer to
 the values of the individual elements. An element name consists of an identifier
 followed immediately by a colon (:). For an example that demonstrates both of
-these features, see :ref:`Functions_TupleTypesAsReturnTypes`.
+these features, see :ref:`Functions_FunctionsWithMultipleReturnValues`.
 
 ``Void`` is a typealias for the the empty tuple type, ``()``.
 If there is only one element inside the parentheses,

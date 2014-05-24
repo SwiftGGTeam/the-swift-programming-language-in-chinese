@@ -812,7 +812,7 @@ Like structures but unlike classes, enumerations are value types;
 instances of an enumeration are copied when assigned to
 variables or constants, or when passed as arguments to a function call.
 For information about value types,
-see :ref:`ClassesAndStructures_ValueTypesAndReferenceTypes`.
+see :ref:`ClassesAndStructures_StructuresAndEnumerationsAreValueTypes`.
 
 You can extend the behavior of an enumeration type with an extension declaration,
 as discussed in :ref:`Declarations_ExtensionDeclaration`.
@@ -901,7 +901,7 @@ as described in :ref:`Enumerations_EnumerationSyntax`
 and :ref:`Expressions_ImplicitMemberExpression`.
 
 To check the values of enumeration cases, use a ``switch`` statement,
-as shown in :ref:`Enumerations_CheckingEnumerationValuesWithASwitchStatement`.
+as shown in :ref:`Enumerations_MatchingEnumerationValuesWithASwitchStatement`.
 The enumeration type is pattern-matched against the enumeration case patterns
 in the case blocks of the ``switch`` statement,
 as described in :ref:`Patterns_EnumerationCasePattern`.
@@ -1027,7 +1027,7 @@ as described in :ref:`ClassesAndStructures_AccessingProperties`.
 Structures are value types; instances of a structure are copied when assigned to
 variables or constants, or when passed as arguments to a function call.
 For information about value types,
-see :ref:`ClassesAndStructures_ValueTypesAndReferenceTypes`.
+see :ref:`ClassesAndStructures_StructuresAndEnumerationsAreValueTypes`.
 
 You can extend the behavior of a structure type with an extension declaration,
 as discussed in :ref:`Declarations_ExtensionDeclaration`.
@@ -1110,7 +1110,7 @@ as described in :ref:`ClassesAndStructures_AccessingProperties`.
 Classes are reference types; instances of a class are referred to, rather than copied,
 when assigned to variables or constants, or when passed as arguments to a function call.
 For information about reference types,
-see :ref:`ClassesAndStructures_ValueTypesAndReferenceTypes`.
+see :ref:`ClassesAndStructures_StructuresAndEnumerationsAreValueTypes`.
 
 You can extend the behavior of a class type with an extension declaration,
 as discussed in :ref:`Declarations_ExtensionDeclaration`.
