@@ -104,7 +104,7 @@ explicitly make an instance of the desired type.
    << // label : String = "The width is "
    -> let width = 94
    << // width : Int = 94
-   -> println(label + String(width))
+   -> let widthLabel = label + String(width)
    << The width is 94
 
 .. admonition:: Experiment
@@ -340,18 +340,17 @@ These two loops do the same thing:
 
 .. testcode::
 
+   -> var firstForLoop = 0
    -> for i in 0..3 {
-          println(i)
+          firstForLoop += i
       }
-   << 0
-   << 1
-   << 2
+   -> firstForLoop
+   ---
+   -> var secondForLoop = 0
    -> for var i = 0; i < 3; ++i {
-          println(i)
+          secondForLoop += 1
       }
-   << 0
-   << 1
-   << 2
+   -> secondForLoop
 
 Use ``..`` to make a range that omits its upper value
 and ``...`` to make a range that includes both values.
