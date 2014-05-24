@@ -26,8 +26,8 @@ In Swift, this can be done in a single line:
    << Hello, world
 
 If you have written code in C or Objective-C,
-this syntax looks familiar to you.
-This line of Swift code is a complete program.
+this syntax looks familiar to you ---
+in Swift, this line of code is a complete program.
 You don't need to import a separate library for functionality like
 input/output or string handling.
 Code written at global scope is used
@@ -279,7 +279,7 @@ After executing the code inside the switch case that matched,
 the program exits from the switch statement.
 Execution doesn't continue to the next case,
 so there is no need to explicitly break out of the switch
-at the end of each case‘s code.
+at the end of each case’s code.
 
 .. Omitting mention of "fallthrough" keyword.
    It's in the guide/reference if you need it.
@@ -586,7 +586,7 @@ Notice how ``self`` is used to distinguish the ``name`` property
 from the ``name`` argument to the initializer.
 The arguments to the initializer are passed like a function call
 when you create an instance of the class.
-Every property either needs a value assigned ---
+Every property needs a value assigned ---
 either in its declaration (as with ``numberOfSides``)
 or in the initializer (as with ``name``).
 
@@ -862,9 +862,10 @@ you don't have to provide one.
 Notice the two ways that the ``Hearts`` member of the enumeration
 is referred to above:
 When assigning a value to the ``hearts`` constant,
-the enumeration member ``Suit.Hearts`` is refered to by its full name
+the enumeration member ``Suit.Hearts`` is referred to by its full name
 because the constant doesn't have an explicit type specified.
-Inside the switch it is referred to by the abbreviated form ``.Hearts``
+Inside the switch,
+the enumeration is referred to by the abbreviated form ``.Hearts``
 because the value of ``self`` is already known to be a suit.
 You can use the abbreviated form
 anytime the value's type is already known.
@@ -942,7 +943,7 @@ or it responds with some error information.
        }
 
 .. Note:
-   The repetition ond odd structure for the switch above is because
+   The repetition and odd structure for the switch above is because
    the REPL requires an initial value for variables to make it testable.
    From a playground side, I can see the value of a variable
    that's scoped only within the switch,
