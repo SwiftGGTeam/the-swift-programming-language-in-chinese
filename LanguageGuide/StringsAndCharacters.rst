@@ -609,11 +609,6 @@ the scalar's 21-bit value, represented within a ``UInt32`` value:
    -> print("\n")
    </ 68 111 103 33 128054
 
-.. FIXME: at the time of writing,
-   the ``unicodeScalars`` property actually returns a ``UTF16Scalars``,
-   which needs to be renamed to ``UnicodeScalarView``.
-   This is being tracked in rdar://16821900.
-
 The ``value`` properties for the first four ``UnicodeScalar`` values
 (``68``, ``111``, ``103``, ``33``)
 once again represent the characters ``D``, ``o``, ``g``, and ``!``.

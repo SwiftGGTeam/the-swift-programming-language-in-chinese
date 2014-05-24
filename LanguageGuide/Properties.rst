@@ -498,12 +498,6 @@ provide storage for a value of a certain type and allow that value to be set and
 However, you can also define :newTerm:`computed variables`, and define observers for stored variables,
 in either a global or local scope.
 
-.. FIXME: observed variables in a closure trigger an assertion:
-   <rdar://problem/16955318> Observed variable in a closure triggers an assertion
-   Nonetheless, I'm claiming they work everywhere,
-   on the assumption that this will be fixed.
-   It would be odd to say "…except for observed variables in a closure" here.
-
 .. note::
 
    Global constants and variables are always computed lazily,
