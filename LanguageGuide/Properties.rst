@@ -6,14 +6,13 @@ Stored properties store constant and variable values as part of an instance,
 whereas computed properties calculate (rather than store) a value.
 
 Stored and computed properties are usually associated with instances of a particular type.
-However, for value types, they can also be associated with the type itself.
-Such properties are known as static properties.
+However, properties can also be associated with the type itself.
+Such properties are known as type properties.
 
-In addition, you can define property observers
-to monitor and respond to changes in a property's value.
-Property observers can even be added to
-properties that your subclass inherits from its superclass,
-and are an easy way to add custom actions in response to property value changes.
+In addition, you can define property observers to monitor changes in a property's value,
+which you can respond to with custom actions.
+Property observers can be added to stored properties you define yourself,
+and also to properties that a subclass inherits from its superclass.
 
 .. note::
 
@@ -29,10 +28,10 @@ and are an easy way to add custom actions in response to property value changes.
 Stored Properties
 -----------------
 
-In its simplest form, a stored property is just a constant or variable
+In its simplest form, a stored property is a constant or variable
 that is stored as part of an instance of a particular class or structure.
 Stored properties can be either
-:newTerm:`variable stored properties` (introduced by the ``var`` keyword),
+:newTerm:`variable stored properties` (introduced by the ``var`` keyword)
 or :newTerm:`constant stored properties` (introduced by the ``let`` keyword).
 
 You can provide a default value for a stored property as part of its definition,
@@ -58,9 +57,9 @@ whose range length cannot be changed once it is created:
    // the range now represents integer values 6, 7, and 8
 
 Instances of ``FixedLengthRange`` have
-a variable stored property called ``firstValue``,
+a variable stored property called ``firstValue``
 and a constant stored property called ``length``.
-In the example above, ``length`` is initialized when the new range is created,
+In the example above, ``length`` is initialized when the new range is created
 and cannot be changed thereafter, because it is a constant property.
 
 .. _Properties_StoredPropertiesOfConstantStructureInstances:
@@ -88,8 +87,8 @@ Because ``rangeOfFourItems`` is declared as a constant (with the ``let`` keyword
 it is not possible to change its ``firstValue`` property,
 even though ``firstValue`` is a variable property.
 
-This behavior is due to the fact that structures are *value types*.
-When an instance of a value type is marked as being a constant,
+This behavior is due to structures being *value types*.
+When an instance of a value type is marked as a constant,
 so are all of its properties.
 
 The same is not true for classes, which are *reference types*.
@@ -206,12 +205,12 @@ to store values and references as part of a class instance.
 In addition to properties,
 you can use instance variables as a backing store for the values stored in a property.
 
-Swift unifies these two separate concepts into a single property declaration.
-There is no longer a distinction between properties and instance variables,
+Swift unifies these concepts into a single property declaration.
+A Swift property does not have a corresponding instance variable,
 and the backing store for a property is not accessed directly.
-This avoids confusion about how the value is accessed in different contexts,
+This approach avoids confusion about how the value is accessed in different contexts
 and simplifies the property's declaration into a single, definitive statement.
-All of the information about the property –
+All information about the property –
 including its name, type, and memory management characteristics –
 is defined in a single location as part of the type's definition.
 
@@ -222,9 +221,10 @@ is defined in a single location as part of the type's definition.
 Computed Properties
 -------------------
 
-Classes and structures can also define :newTerm:`computed properties`,
+In addition to stored properties,
+classes, structures, and enumerations can define :newTerm:`computed properties`,
 which do not actually store a value.
-Instead, they provide a getter, and an optional setter,
+Instead, they provide a getter and an optional setter
 to retrieve and set other properties and values indirectly.
 
 .. testcode:: computedProperties
@@ -261,9 +261,9 @@ to retrieve and set other properties and values indirectly.
 
 This example defines three structures for working with geometric shapes:
 
-* ``Point``, which encapsulates an ``(x, y)`` coordinate
-* ``Size``, which encapsulates a ``width`` and a ``height``
-* ``Rect``, which defines a rectangle by an origin point and a size
+* ``Point`` encapsulates an ``(x, y)`` coordinate.
+* ``Size`` encapsulates a ``width`` and a ``height``.
+* ``Rect`` defines a rectangle by an origin point and a size.
 
 The ``Rect`` structure also provides a computed property called ``center``.
 The current center position of a ``Rect`` can always be determined from its ``origin`` and ``size``,
@@ -271,7 +271,7 @@ and so you don't need to store the center point as an explicit ``Point`` value.
 Instead, ``Rect`` defines a custom getter and setter for a computed variable called ``center``,
 to enable you to work with the rectangle's ``center`` as if it were a real stored property.
 
-The example creates a new ``Rect`` variable called ``square``.
+The preceding example creates a new ``Rect`` variable called ``square``.
 The ``square`` variable is initialized with an origin point of ``(0, 0)``,
 and a width and height of ``10``.
 This square is represented by the blue square in the diagram below.
@@ -327,22 +327,19 @@ Read-Only Computed Properties
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 A computed property with a getter but no setter is known as a :newTerm:`read-only computed property`.
-Read-only computed properties enable you to
-define a property that will always return a value,
-and can be accessed through dot syntax,
-but which cannot be set to a different value.
+A read-only computed property always returns a value,
+and can be accessed through dot syntax, but cannot be set to a different value.
 
 .. note::
 
-   Computed properties – including read-only computed properties –
-   must be declared as variable properties with the ``var`` keyword,
-   because their value is not fixed.
+   You must declare computed properties – including read-only computed properties –
+   as variable properties with the ``var`` keyword, because their value is not fixed.
    The ``let`` keyword is only used for constant properties,
    to indicate that their values cannot be changed once they are set
    as part of instance initialization.
 
-The declaration of a read-only computed property can be simplified
-by removing the ``get`` keyword:
+You can simplify the declaration of a read-only computed property
+by removing the ``get`` keyword and its braces:
 
 .. testcode:: computedProperties
 
@@ -362,7 +359,7 @@ which represents a 3D rectangular box with ``width``, ``height``, and ``depth`` 
 This structure also has a read-only computed property called ``volume``,
 which calculates and returns the current volume of the cuboid.
 It doesn't make sense for ``volume`` to be settable,
-as it would be ambiguous as to which values of ``width``, ``height``, and ``depth``
+because it would be ambiguous as to which values of ``width``, ``height``, and ``depth``
 should be used for a particular ``volume`` value.
 Nonetheless, it is useful for a ``Cuboid`` to provide a read-only computed property
 to enable external users to discover its current calculated volume.
@@ -381,8 +378,7 @@ to enable external users to discover its current calculated volume.
 Property Observers
 ------------------
 
-:newTerm:`Property observers` are a way to observe and respond to
-changes in a property's value.
+:newTerm:`Property observers` observe and respond to changes in a property's value.
 Property observers are called every time a property's value is set,
 even if the new value is the same as the property's current value.
 
@@ -400,8 +396,8 @@ Property overriding is described in :ref:`Inheritance_Overriding`.
 
 You have the option to define either or both of these observers on a property:
 
-* ``willSet``, which is called just before the value is stored
-* ``didSet``, which is called immediately after the new value is stored
+* ``willSet`` is called just before the value is stored.
+* ``didSet`` is called immediately after the new value is stored.
 
 If you implement a ``willSet`` observer,
 it is passed the new property value as a constant parameter.
@@ -421,7 +417,11 @@ or use the default parameter name of ``oldValue``.
    They are only called when the property's value is set
    outside of an initialization context.
 
-Here's an example of ``willSet`` and ``didSet`` in action:
+Here's an example of ``willSet`` and ``didSet`` in action.
+The example below defines a new class called ``StepCounter``,
+which tracks the total number of steps that a person takes while walking.
+This class might be used with input data from a pedometer or other step counter
+to keep track of a person's exercise during their daily routine.
 
 .. testcode:: storedProperties
 
@@ -449,11 +449,6 @@ Here's an example of ``willSet`` and ``didSet`` in action:
    </ About to set totalSteps to 896
    </ Added 536 steps
 
-This example defines a new class called ``StepCounter``,
-which keeps track of the total number of steps that a person has taken while walking.
-This class might be used with input data from a pedometer or other step counter
-to keep track of a person's exercise during their daily routine.
-
 The ``StepCounter`` class declares a ``totalSteps`` property of type ``Int``.
 This is a stored property with ``willSet`` and ``didSet`` observers.
 
@@ -465,9 +460,8 @@ This example's ``willSet`` observer uses
 a custom parameter name of ``newTotalSteps`` for the upcoming new value.
 In this example, it simply prints out the value that is about to be set.
 
-The ``didSet`` observer is called after the value of ``totalSteps`` has been updated.
-In this example, it looks at the new value of ``totalSteps``,
-and compares it against the old value.
+The ``didSet`` observer is called after the value of ``totalSteps`` is updated.
+It compares the new value of ``totalSteps`` against the old value.
 If the total number of steps has increased,
 a message is printed to indicate how many new steps have been taken.
 The ``didSet`` observer does not provide a custom parameter name for the old value,
@@ -608,17 +602,18 @@ For example:
    -> println(SomeStructure.storedTypeProperty)
    <- Another value.
 
-The example below uses two stored type properties as part of a structure that models
+The following example uses two stored type properties as part of a structure that models
 an audio level meter for a number of audio channels.
-Each of these channels has an integer audio level between ``0`` and ``10`` inclusive,
-as shown in the figure below:
+Each channel has an integer audio level between ``0`` and ``10`` inclusive.
+
+The figure below shows two of these audio channels in use for a stereo audio level meter.
+When a channel's audio level is ``0``, none of the lights for that channel are lit.
+When the audio level is ``10``, all of the lights for that channel are lit.
+In the figure below, the left channel has a current level of ``9``,
+and the right channel has a current level of ``7``:
 
 .. image:: ../images/staticPropertiesVUMeter_2x.png
    :align: center
-
-The figure above shows two separate audio channels as part of a stereo audio level meter.
-The left channel has a current level of ``9``,
-and the right channel has a current level of ``7``.
 
 Each audio channel in the meter is modeled by an ``AudioChannel`` structure:
 
@@ -699,9 +694,9 @@ is updated to equal ``7``:
    -> println(AudioChannel.maxInputLevelForAllChannels)
    <- 7
 
-If you try and set the ``currentLevel`` of the *right* channel to ``11``,
+If you try to set the ``currentLevel`` of the *right* channel to ``11``,
 you can see that the right channel's ``currentLevel`` property
-has been capped to the maximum value of ``10``,
+is capped to the maximum value of ``10``,
 and the ``maxInputLevelForAllChannels`` type property is updated to equal ``10``:
 
 .. testcode:: staticProperties
