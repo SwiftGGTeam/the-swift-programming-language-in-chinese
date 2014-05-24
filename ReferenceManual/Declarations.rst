@@ -680,6 +680,25 @@ For example, ``f()`` and ``f(x: 7)`` are both valid calls
 to a function with a single optional parameter named ``x``,
 but ``f(7)`` is invalid because it provides a value without a name.
 
+Special Kinds of Functions and Methods
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Functions on an enumeration or a structure
+that modify ``self`` must be marked with the ``mutating`` keyword
+at the start of the function declaration.
+
+Methods that override a superclass method
+must be marked with the ``override`` keyword
+at the start of the function declaration.
+It is an error to override a method without the ``override`` keyword
+or to use the ``override`` keyword on a method
+that doesn't override a superclass method.
+
+Functions or methods associated with a type
+rather than an instance of a type
+must be marked with the ``static`` attribute for enumerations and structures
+or the ``class`` attribute for classes.
+
 Curried Function
 ~~~~~~~~~~~~~~~~
 
