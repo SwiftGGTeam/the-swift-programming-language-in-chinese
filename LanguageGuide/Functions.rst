@@ -61,7 +61,7 @@ which will contain a greeting for that person:
 All of this information is rolled up into the function's :newTerm:`definition`,
 which is prefixed with the ``func`` keyword.
 You indicate the function's return type with the :newTerm:`return arrow` ``->``
-(a hyphen followed by a greater-than symbol),
+(a hyphen followed by a right angle bracket),
 which is followed by the name of the type to return.
 
 The definition describes what the function does,
