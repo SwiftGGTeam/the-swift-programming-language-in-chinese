@@ -1096,11 +1096,7 @@ or to require a class to have a particular superclass.
 
 .. testcode::
 
-   -> func anyCommonElements <T, U where
-          T: Sequence, U: Sequence,
-          T.GeneratorType.Element: Equatable,
-          T.GeneratorType.Element == U.GeneratorType.Element>
-      (lhs: T, rhs: U) -> Bool {
+   -> func anyCommonElements <T, U where T: Sequence, U: Sequence, T.GeneratorType.Element: Equatable, T.GeneratorType.Element == U.GeneratorType.Element> (lhs: T, rhs: U) -> Bool {
           for lhsItem in lhs {
               for rhsItem in rhs {
                   if lhsItem == rhsItem {
