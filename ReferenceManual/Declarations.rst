@@ -585,13 +585,15 @@ The simplest entry in a parameter list has the following form:
 
     <#parameter name#>: <#parameter type#>
 
-For function parameters declared this way,
-the parameter name is local only,
-not to be used in function calls.
-For methods parameters declared this way,
-the parameter name is used locally and in method calls.
-The first parameter of a method
-has only a local name, like the parameter of a function.
+For function parameters,
+the parameter name is used within the function body,
+but is not used when calling the function.
+For method parameters,
+the parameter name is used as within the function body,
+and is also used as a keyword when calling the method.
+The name of a method's first parameter
+is used only within the function body,
+like the parameter of a function.
 For example:
 
 .. testcode:: func-simple-param
@@ -609,8 +611,9 @@ For example:
    -> let c = C()
    -> c.f(7, y: "hello")  // x has no name, y has a name
 
-You can override the default naming behavior
-by using one of the following forms:
+You can override the default behavior
+for how parameter names are used
+with one of the following forms:
 
 .. syntax-outline::
 
