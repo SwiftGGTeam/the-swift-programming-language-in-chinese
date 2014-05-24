@@ -509,9 +509,9 @@ can appear immediately after the parentheses.
     -> sort([1, 5, 3, 12, 2]) { $0 > $1 }
     <$ : Array<Int> = [12, 5, 3, 2, 1]
 
-The previous listing can be written without a closure at all
-by passing the ``>`` operator
-as the second argument to the ``sort`` function.
+The previous listing can be written without a closure at all.
+The ``>`` operator is the name of a function,
+so you can pass it as the second argument to the ``sort`` function.
 
 .. testcode::
 
