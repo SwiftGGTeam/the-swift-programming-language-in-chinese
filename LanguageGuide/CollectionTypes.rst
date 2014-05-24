@@ -25,42 +25,16 @@ and enables you to catch any type mismatches early in your code's development.
 
 .. TODO: should I mention the Collection protocol, to which both of these conform?
 
-.. TODO: we have a couple of ways to get the index of a Collection when iterating:
-   for i in indices(collection) { collection[i] }
-   for (index, object) in enumerate(collection) { //... }
-   Should these be mentioned, and if so, should it be here or in Control Flow?
+.. TODO: mention for i in indices(collection) { collection[i] }
 
 .. note::
 
-   Because they hold a collection of values rather than an individual value,
-   Swift's array and dictionary types exhibit slightly different behavior to other types
-   when they are assigned to a constant or variable,
-   or when are passed to a function or method.
-   This behavior is also different from the behavior of
-   Cocoa's ``NSArray`` and ``NSDictionary`` types.
+   Swift's ``Array`` type exhibits different behavior to other types
+   when assigned to a constant or variable,
+   or when passed to a function or method.
    For more information,
-   see :ref:`ClassesAndStructures_AssignmentAndCopyBehaviorForCollectionTypes`.
-
-.. _CollectionTypes_Mutability:
-
-Mutability of Collections
--------------------------
-
-Arrays and dictionaries store multiple values together in a single collection.
-If you create an array or a dictionary, and assign it to a variable,
-the collection that is created will be :newTerm:`mutable`.
-This means that you can change (or :newTerm:`mutate`) the collection after it is created,
-perhaps to add more items to the collection,
-or to remove existing items from the ones it already contains.
-
-However, if you assign an array or a dictionary to a constant,
-the collection will be :newTerm:`immutable`,
-and it is not possible to change the contents of the collection.
-
-It is good practice to create immutable collections
-in all cases where the collection does not need to change.
-Doing so enables the Swift compiler to optimize the performance of
-the collections you create.
+   see :ref:`CollectionTypes_MutabilityOfCollections`
+   and :ref:`ClassesAndStructures_AssignmentAndCopyBehaviorForCollectionTypes`.
 
 .. _CollectionTypes_Arrays:
 
@@ -735,3 +709,41 @@ which is written as ``[:]``
    Behind the scenes,
    Swift's array and dictionary types are implemented as :newTerm:`generic collections`.
    For more on generic types and collections, see :doc:`Generics`.
+
+.. _CollectionTypes_MutabilityOfCollections:
+
+Mutability of Collections
+-------------------------
+
+Arrays and dictionaries store multiple values together in a single collection.
+If you create an array or a dictionary, and assign it to a variable,
+the collection that is created will be :newTerm:`mutable`.
+This means that you can change (or :newTerm:`mutate`)
+the size of the collection after it is created
+by adding more items to the collection,
+or by removing existing items from the ones it already contains.
+Conversely, if you assign an array or a dictionary to a constant,
+that array or dictionary is :newTerm:`immutable`,
+and its size cannot be changed.
+
+For dictionaries, immutability also means that you cannot replace the value
+for an existing key in the dictionary.
+An immutable dictionary's contents cannot be changed once they are set.
+
+Immutability has a slightly different meaning for arrays, however.
+You are still not allowed to perform any action
+that has the potential to change the size of an immutable array,
+but you *are* allowed to set a new value for an existing index in the array.
+This enables Swift's ``Array`` type to provide optimal performance for array operations
+when the size of an array is fixed.
+
+The mutability behavior of Swift's ``Array`` type also affects how array instances
+are assigned and modified.
+For more information, see :ref:`ClassesAndStructures_AssignmentAndCopyBehaviorForCollectionTypes`.
+
+.. note::
+
+   It is good practice to create immutable collections
+   in all cases where the collection's size does not need to change.
+   Doing so enables the Swift compiler to optimize the performance of
+   the collections you create.
