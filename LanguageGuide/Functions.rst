@@ -6,16 +6,17 @@ You give a function a name that identifies what it does,
 and this name is used to “call” the function to perform its task when needed.
 
 Swift's unified function syntax is flexible enough to express anything from
-a simple C-style function with no parameter names,
-all the way to to a complex Objective-C-style method
+a simple C-style function with no parameter names
+to a complex Objective-C-style method
 with local and external parameter names for each parameter.
 Parameters can provide default values to simplify function calls,
 and can be passed as ``inout`` parameters,
 which modify a passed variable once the function has completed its execution.
 
-Every function in Swift has a type, made up of its parameter and return types,
-and this type can be used like any other type in Swift.
-This makes it easy to pass functions as parameters to other functions,
+Every function in Swift has a type,
+consisting of the function's parameter types and return type.
+You can use this type like any other type in Swift,
+which makes it easy to pass functions as parameters to other functions,
 and to return functions from functions.
 Functions can also be written within other functions
 to encapsulate useful functionality within a nested function scope.
@@ -28,24 +29,24 @@ to encapsulate useful functionality within a nested function scope.
 Defining and Calling Functions
 ------------------------------
 
-A function can define one or more types of value that it expects to receive as input
+When you define a function,
+you can optionally define one or more named, typed values that the function takes as input
 (known as :newTerm:`parameters`),
-and can define the type of value that it will pass back as output when it is done
+and/or a type of value that the function will pass back as output when it is done
 (known as its :newTerm:`return type`).
 
-Every function must have a :newTerm:`function name`,
-and this name should describe the task that the function performs.
-To use a function, you “call” that function with its name,
-and pass it some input values (known as :newTerm:`arguments`)
+Every function has a :newTerm:`function name`,
+which describes the task that the function performs.
+To use a function, you “call” that function with its name
+and pass it input values (known as :newTerm:`arguments`)
 that match the types of the function's parameters.
 A function's arguments must always be provided in the same order
 as the function's parameter list.
 
 The function in the example below is called ``greetingForPerson``,
 because that's what it does –
-it takes a person's name as input,
-and passes back a greeting for that person.
-To do this, it defines one input parameter –
+it takes a person's name as input and returns a greeting for that person.
+To accomplish this, you define one input parameter –
 a ``String`` value called ``personName`` –
 and a return type of ``String``,
 which will contain a greeting for that person:
@@ -57,9 +58,9 @@ which will contain a greeting for that person:
          return greeting
       }
 
-All of this information is rolled up into the function's :newTerm:`definition`.
-Functions are defined using the ``func`` keyword.
-The function's return type is indicated by the :newTerm:`return arrow` ``->``
+All of this information is rolled up into the function's :newTerm:`definition`,
+which is prefixed with the ``func`` keyword.
+You indicate the function's return type with the :newTerm:`return arrow` ``->``
 (a hyphen followed by a greater-than symbol),
 which is followed by the name of the type to return.
 
@@ -83,21 +84,19 @@ Because the function returns a ``String`` value,
 to print that string and see its return value, as shown above.
 
 The body of the ``sayHello`` function starts by
-defining a new ``String`` constant called ``greeting``,
+defining a new ``String`` constant called ``greeting``
 and setting it to a simple greeting message for ``personName``.
 This greeting is then passed back out of the function using the ``return`` keyword.
 As soon as ``return greeting`` is called,
-the function finishes its execution,
-and passes back the current value of ``greeting``.
+the function finishes its execution and returns the current value of ``greeting``.
 
-Now that it has been defined as a function,
-``sayHello`` can be called multiple times with different input values.
+You can call the ``sayHello`` function multiple times with different input values.
 The example above shows what happens if it is called with an input value of ``"Anna"``,
 and an input value of ``"Brian"``.
 The function returns a tailored greeting in each case.
 
-The contents of this function can be simplified further,
-to combine the message creation and the return statement into one line:
+To simplify the body of this function,
+combine the message creation and the return statement into one line:
 
 .. testcode:: definingAndCalling
 
@@ -121,10 +120,8 @@ to a complex function with expressive parameter names and different parameter op
 Multiple Input Parameters
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Functions can have multiple input parameters.
-Where this is the case,
-all of the parameter definitions are written within the function's parentheses
-when the function is defined.
+Functions can have multiple input parameters,
+which are written within the function's parentheses, separated by commas.
 
 This function takes a start and an end index for a half-open range,
 and works out how many elements the range contains:
@@ -142,7 +139,7 @@ and works out how many elements the range contains:
 Functions Without Parameters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Functions don't have to have input parameters.
+Functions are not required to define input parameters.
 Here's a function with no input parameters,
 which always returns the same ``String`` message whenever it is called:
 
@@ -164,7 +161,7 @@ an empty pair of parentheses when the function is called.
 Functions Without Return Values
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Functions don't have to return a value.
+Functions are not required to define a return type.
 Here's a version of the ``sayHello`` function,
 called ``waveGoodbye``,
 which prints its own ``String`` value rather than returning it:
@@ -226,13 +223,13 @@ but the returned value is not used.
    without returning a value,
    and attempting to do so will result in a compile-time error.
 
-.. _Functions_TupleTypesAsReturnTypes:
+.. _Functions_FunctionsWithMultipleReturnValues:
 
-Tuple Types as Return Types
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Functions with Multiple Return Values
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can use a tuple type as the return type for a function.
-This enables a function to return multiple values as part of one compound return value.
+You can use a tuple type as the return type for a function
+to return multiple values as part of one compound return value.
 
 The example below defines a function called ``count``,
 which counts the number of vowels, consonants, and other characters in a string,
@@ -268,7 +265,7 @@ and to retrieve the counted totals as a tuple of three named ``Int`` values:
 
 Note that the tuple's members do not need to be named
 at the point that the tuple is returned from the function,
-because their names have already been specified as part of the function's return type.
+because their names are already specified as part of the function's return type.
 
 .. TODO: mention that you can pass a tuple as the entire set of arguments,
    as in var argTuple = (0, "one", '2'); x.foo:bar:bas:(argTuple)
@@ -297,16 +294,14 @@ because they are only available for use within the function's body.
 External Parameter Names
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-It can sometimes be useful to provide a name for each parameter
-when you *call* a function too.
-This helps to indicate the intended purpose of each of the arguments
-you are passing to the function.
+Sometimes it's useful to name each parameter when you *call* a function,
+to indicate the purpose of each argument you pass to the function.
 
 If you want users of your function to provide parameter names
 when they call your function,
-you can define an :newTerm:`external parameter name` for each parameter,
+define an :newTerm:`external parameter name` for each parameter,
 in addition to the local parameter name.
-An external parameter name is written before the local parameter name it supports,
+You write an external parameter name before the local parameter name it supports,
 separated by a space:
 
 .. testcode:: externalParameterNames
@@ -341,7 +336,7 @@ the purpose of the three strings that you pass to the function is unclear:
    </ returns "hello, world"
 
 To make the purpose of these ``String`` values clearer,
-define external parameter names for each of the ``join`` function's parameters:
+define external parameter names for each ``join`` function parameter:
 
 .. testcode:: externalParameterNames
 
@@ -380,13 +375,12 @@ while still providing a function body that is readable and clear in intent.
 .. _Functions_ShorthandExternalParameterNames:
 
 Shorthand External Parameter Names
-__________________________________
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If you want to provide an external parameter name for a function parameter,
 and the local parameter name is already an appropriate name to use,
 you do not need to write the same name twice for that parameter.
-Instead, you can write the name once,
-and prefix the name with a hash symbol (``#``).
+Instead, write the name once, and prefix the name with a hash symbol (``#``).
 This tells Swift to use that name as both
 the local parameter name and the external parameter name.
 
@@ -427,7 +421,7 @@ If a default value is defined, you can omit that parameter when calling the func
 
    Place parameters with default values at the end of a function's parameter list.
    This ensures that all calls to the function
-   use the same order for their non-defaulted arguments,
+   use the same order for their non-default arguments,
    and makes it clear that the same function is being called in each case.
 
 Here's a version of the ``join`` function from earlier,
@@ -467,7 +461,7 @@ External Names for Parameters with Default Values
 
 In most cases, it is useful to provide (and therefore require) an external name
 for any parameter with a default value.
-This makes sure that the argument for that parameter is clear in purpose
+This ensures that the argument for that parameter is clear in purpose
 if a value is provided when the function is called.
 
 To make this process easier,
@@ -488,7 +482,7 @@ but still provides a default value for its ``joiner`` parameter:
 
 In this case, Swift automatically provides
 an external parameter name of ``joiner`` for the defaulted parameter.
-This means that the external name must be provided when calling the function,
+The external name must therefore be provided when calling the function,
 making the parameter's purpose clear and unambiguous:
 
 .. testcode:: automaticExternalNamesForDefaultParameterValues
@@ -513,13 +507,13 @@ Variadic Parameters
 A :newTerm:`variadic parameter` accepts zero or more values of a specified type.
 You use a variadic parameter to specify that the parameter can be passed
 a varying number of input values when the function is called.
-Variadic parameters are written by inserting
-three period characters (``...``) after the parameter's type name.
+You write variadic parameters by inserting three period characters (``...``)
+after the parameter's type name.
 
 The values passed to a variadic parameter are made available within the function's body
 as an array of the appropriate type.
 For example, a variadic parameter with a name of ``numbers`` and a type of ``Double...``
-will be made available within the function's body as
+is made available within the function's body as
 a constant array called ``numbers`` of type ``Double[]``.
 
 The example below calculates the :newTerm:`arithmetic mean`
@@ -551,7 +545,7 @@ The example below calculates the :newTerm:`arithmetic mean`
 
    If your function has one or more parameters with a default value,
    and also has a variadic parameter,
-   place the variadic parameter after all of the defaulted parameters
+   place the variadic parameter after all the defaulted parameters
    at the very end of the list.
 
 .. FIXME: A function's variadic parameter cannot be referred to by name
@@ -567,13 +561,13 @@ Constant and Variable Parameters
 Function parameters are constants by default.
 Trying to change the value of a function parameter
 from within the body of that function results in a compile-time error.
-This means that you can't accidentally change the value of a parameter by mistake.
+This means that you can't change the value of a parameter by mistake.
 
 However, sometimes it is useful for a function to have
 a *variable* copy of a parameter's value to work with.
 You can avoid defining a new variable yourself within the function
 by specifying one or more parameters as :newTerm:`variable parameters` instead.
-Variable parameters are available as variables rather than constants,
+Variable parameters are available as variables rather than as constants,
 and give a new modifiable copy of the parameter's value for your function to work with.
 
 Define variable parameters by prefixing the parameter name with the keyword ``var``:
@@ -611,13 +605,13 @@ in order to right-align it within the overall string.
 This value is stored in a local constant called ``amountToPad``.
 The function then adds ``amountToPad`` copies of the ``pad`` character
 to the left of the existing string and returns the result.
-It uses the ``string`` variable parameter for all of its string manipulation.
+It uses the ``string`` variable parameter for all its string manipulation.
 
 .. note::
 
    The changes you make to a variable parameter do not
    persist beyond the end of each call to the function,
-   and are not visible outside of the function's body.
+   and are not visible outside the function's body.
    The variable parameter only exists for the lifetime of that function call.
 
 .. _Functions_InOutParameters:
@@ -625,21 +619,19 @@ It uses the ``string`` variable parameter for all of its string manipulation.
 In-Out Parameters
 ~~~~~~~~~~~~~~~~~
 
-It is sometimes useful for a function parameter to represent
-the *actual* external value used for the call,
-and for any modifications to that value to change
-the original value from outside of the function,
-after the function has completed its execution.
-You define such parameters as :newTerm:`in-out parameters`,
-which are written by placing the ``inout`` keyword at the start of their parameter definition.
+Variable parameters, as described above,
+can only be changed within the function itself.
+If you want a function to be able to modify a parameter's value,
+and for those changes to persist after the function call has ended,
+define that parameter as an :newTerm:`in-out parameter` instead.
 
-You can think of in-out parameters in the following way:
-
-An in-out parameter has a value that is passed *in* to the function;
-is modified by the function;
+You write an in-out parameter by placing the ``inout`` keyword
+at the start of its parameter definition.
+An in-out parameter has a value that is passed *in* to the function,
+is modified by the function,
 and is passed back *out* of the function to replace the original value.
 
-You can only ever pass a variable as the argument for an in-out parameter.
+You can only pass a variable as the argument for an in-out parameter.
 You cannot pass a constant or a literal value as the argument,
 because constants and literals cannot be modified.
 You place an ampersand (``&``) directly before a variable's name
@@ -670,7 +662,7 @@ The function performs this swap by storing the value of ``a`` in
 a temporary constant called ``temporaryA``; assigning the value of ``b`` to ``a``;
 and then assigning ``temporaryA`` to ``b``.
 
-The ``swapTwoInts`` function can be called with two variables of type ``Int``
+You can call the ``swapTwoInts`` function with two variables of type ``Int``
 to swap their values.
 Note that the names of ``someInt`` and ``anotherInt`` are prefixed with an ampersand
 when they are passed to the ``swapTwoInts`` function:
@@ -685,7 +677,7 @@ when they are passed to the ``swapTwoInts`` function:
    -> println("someInt is now \(someInt), and anotherInt is now \(anotherInt)")
    <- someInt is now 107, and anotherInt is now 3
 
-After calling the ``swapTwoInts`` function,
+After you call the ``swapTwoInts`` function,
 the values of ``someInt`` and ``anotherInt`` have both been modified,
 even though they were originally defined outside of the function.
 
@@ -755,7 +747,7 @@ Using Function Types
 ~~~~~~~~~~~~~~~~~~~~
 
 You use function types just like any other types in Swift.
-For example, you can define a constant or variable to be of a function type,
+For example, you can define a constant or variable to be of a function type
 and assign an appropriate function to that variable:
 
 .. testcode:: functionTypes
@@ -827,7 +819,7 @@ You can pass any function of that type as the argument for this first parameter.
 The second and third parameters are called ``a`` and ``b``, and are both of type ``Int``.
 These are used as the two input values for the provided math function.
 
-When ``printMathResult`` is called above,
+When ``printMathResult`` is called,
 it is passed the ``addTwoInts`` function, and the integer values ``3`` and ``5``.
 It calls the provided function with the values ``3`` and ``5``, and prints the result of ``8``.
 
@@ -873,8 +865,7 @@ based on a Boolean parameter called ``backwards``:
       }
 
 You can now use ``chooseStepFunction`` to obtain a function
-that will step in one direction or the other.
-For example:
+that will step in one direction or the other:
 
 .. testcode:: functionTypes
 
@@ -915,15 +906,15 @@ Nested Functions
 
 All of the functions you have encountered so far in this chapter
 have been examples of :newTerm:`global functions`, which are defined at a global scope.
-However, functions can also be defined inside the bodies of other functions,
-and these kinds of functions are referred to as :newTerm:`nested functions`.
+You can also define functions inside the bodies of other functions,
+known as :newTerm:`nested functions`.
 
 Nested functions are hidden from the outside world by default,
 but can still be called and used by their enclosing function.
 An enclosing function can also return one of its nested functions
 to allow the nested function to be used in another scope.
 
-The ``chooseStepFunction`` example above can be rewritten
+You can rewrite the ``chooseStepFunction`` example above
 to use and return nested functions:
 
 .. testcode:: nestedFunctions
