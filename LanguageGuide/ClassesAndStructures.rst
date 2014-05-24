@@ -515,7 +515,7 @@ Whenever you assign a ``Dictionary`` instance to a constant or variable,
 or pass a ``Dictionary`` instance as an argument to a function or method call,
 the dictionary is *copied* at the point that
 the assignment or call takes place,
-as described above in :ref:`ClassesAndStructures_ValueTypes`.
+as described above in :ref:`ClassesAndStructures_StructuresAndEnumerationsAreValueTypes`.
 
 If the keys and/or values stored in the ``Dictionary`` instance are value types
 (that is, structures or enumerations),

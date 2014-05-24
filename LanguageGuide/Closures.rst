@@ -611,9 +611,6 @@ both of those constants or variables will refer to the same closure:
    /> returns a value of \(r5)
    </ returns a value of 50
 
-Reference types are covered in more detail
-in :ref:`ClassesAndStructures_ValueTypesAndReferenceTypes`.
-
 .. TODO: Autoclosures
    ------------------
 

@@ -451,7 +451,7 @@ Here's how that looks in Swift code:
 A similar underflow occurs for signed integers.
 All subtraction for signed integers is performed as straight binary subtraction,
 with the sign bit included as part of the numbers being subtracted,
-as described in :ref:`AdvancedOperators_BitwiseLeftAndRightShifts`.
+as described in :ref:`AdvancedOperators_BitwiseLeftAndRightShiftOperators`.
 The smallest number that an ``Int8`` can hold is ``-128``,
 which is ``10000000`` in binary.
 Subtracting ``1`` from this binary number with the overflow operator

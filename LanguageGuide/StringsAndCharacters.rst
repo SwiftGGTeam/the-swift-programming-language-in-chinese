@@ -167,7 +167,7 @@ that ``String`` value is *copied* when it is passed to a function or method,
 or when it is assigned to a constant or variable.
 In each case, a new copy of the existing ``String`` value is created,
 and the new copy is passed or assigned, not the original version.
-Value types are described in :ref:`ClassesAndStructures_ValueTypesAndReferenceTypes`.
+Value types are described in :ref:`ClassesAndStructures_StructuresAndEnumerationsAreValueTypes`.
 
 .. note::
 

@@ -139,7 +139,7 @@ The ``welcomeMessage`` variable can now be set to any string value without error
    It is rare that you need to write type annotations in practice.
    If you provide an initial value for a constant or variable at the point that it is defined,
    Swift can almost always infer the type to be used for that constant or variable,
-   as described in :ref:`TheBasics_TypeInference`.
+   as described in :ref:`TheBasics_TypeSafetyAndTypeInference`.
    In the ``welcomeMessage`` example above, no initial value is provided,
    and so the type of the ``welcomeMessage`` variable is specified with a type annotation
    rather than being inferred from an initial value.
@@ -395,7 +395,7 @@ which has the same size as the current platform's native word size:
    even when the values to be stored are known to be non-negative.
    A consistent use of ``Int`` for integer values aids code interoperability,
    avoids the need to convert between different number types,
-   and matches integer type inference, as described in :ref:`TheBasics_TypeInference`.
+   and matches integer type inference, as described in :ref:`TheBasics_TypeSafetyAndTypeInference`.
 
 .. _TheBasics_FloatingPointNumbers:
 
@@ -900,7 +900,7 @@ By returning a tuple with two distinct values,
 each of a different type,
 the function provides more useful information about its outcome
 than if it could only return a single value of a single type.
-For more information, see :ref:`Functions_TupleTypesAsReturnTypes`.
+For more information, see :ref:`Functions_FunctionsWithMultipleReturnValues`.
 
 .. note::
 
