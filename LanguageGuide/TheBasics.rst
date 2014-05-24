@@ -15,27 +15,27 @@ Like C, Swift uses variables to store and refer to values by an identifying name
 Swift also makes extensive use of variables whose values cannot be changed.
 These are known as constants, and are much more powerful than constants in C.
 Constants are used throughout Swift to make code safer and clearer in intent
-when working with values that do not need to change.
+when you work with values that do not need to change.
 
-In addition to all the familiar types,
-Swift introduces some advanced types not found in Objective-C.
+In addition to familiar types,
+Swift introduces advanced types not found in Objective-C.
 These include tuples,
-which enable you to create and pass around ad-hoc groupings of values.
-Tuples can be used to return multiple values from a function as a single compound value.
+which enable you to create and pass around groupings of values.
+Tuples can return multiple values from a function as a single compound value.
 
 Swift also introduces optional types,
-which are a way to handle the absence of a value.
-Optionals are a way to say either “there *is* a value, and it equals *x*”;
+which handle the absence of a value.
+Optionals are a way to say either “there *is* a value, and it equals *x*”
 or “there *isn't* a value at all”.
 Optionals are similar to working with ``nil`` in Objective-C,
-but in a way that works for any type, not just classes.
+but they work for any type, not just classes.
 Optionals are safer and more expressive than ``nil`` pointers in Objective-C,
 and are at the heart of many of Swift's most powerful features.
 
 Optionals are an example of the fact that Swift is a *type safe* language.
-This means that it helps you to be clear about the types of values your code can work with.
+Swift helps you to be clear about the types of values your code can work with.
 If part of your code expects a ``String``,
-type safety means that you can't accidentally pass it an ``Int`` by mistake.
+type safety prevents you from passing it an ``Int`` by mistake.
 This enables you to catch and fix errors as early as possible in the development process.
 
 .. _TheBasics_ConstantsAndVariables:
@@ -94,9 +94,8 @@ separated by commas:
 .. note::
 
    If a stored value in your code is not going to change,
-   it should always be declared as a constant with the ``let`` keyword.
-   Variables should only be used for
-   storing values that need to be able to change.
+   always declare it as a constant with the ``let`` keyword.
+   Use variables only for storing values that need to be able to change.
 
 .. _TheBasics_TypeAnnotations:
 
@@ -105,7 +104,7 @@ Type Annotations
 
 You can provide a :newTerm:`type annotation` when you declare a constant or variable,
 to be clear about the kind of values the constant or variable can store.
-Type annotations are written by placing a colon after the constant or variable name,
+Write a type annotation by placing a colon after the constant or variable name,
 followed by a space, followed by the name of the type to use.
 
 This example provides a type annotation for a variable called ``welcomeMessage``,
@@ -185,7 +184,7 @@ or a variable into a constant.
    a good example of when you *should* use a keyword as a name.
    Is this the right approach to take?
 
-The value of an existing variable can be changed to another value of a compatible type.
+You can change the value of an existing variable to another value of a compatible type.
 In this example, the value of ``friendlyWelcome`` is changed from
 ``"Hello!"`` to ``"Bonjour!"``:
 
@@ -246,20 +245,14 @@ The ``println`` function prints any ``String`` value you pass to it:
    -> println("This is a string")
    <- This is a string
 
-.. _TheBasics_StringInterpolation:
-
-String Interpolation
-~~~~~~~~~~~~~~~~~~~~
-
 The ``println`` function can print more complex logging messages,
 in a similar manner to Cocoa's ``NSLog`` function.
 These messages can include the current values of constants and variables.
 
-Swift uses :newTerm:`string interpolation` to include a constant or variable's name
+Swift uses :newTerm:`string interpolation` to include the name of a constant or variable
 as a placeholder in a longer string,
 and to prompt Swift to replace it with the current value of that constant or variable.
-Wrap the constant or variable's name in parentheses
-and escape it with a backslash before the opening parenthesis:
+Wrap the name in parentheses and escape it with a backslash before the opening parenthesis:
 
 .. testcode:: constantsAndVariables
 
@@ -268,7 +261,7 @@ and escape it with a backslash before the opening parenthesis:
 
 .. note::
 
-   The full set of options you can use with string interpolation
+   All options you can use with string interpolation
    are described in :ref:`StringsAndCharacters_StringInterpolation`.
 
 .. _TheBasics_Comments:
@@ -276,7 +269,7 @@ and escape it with a backslash before the opening parenthesis:
 Comments
 --------
 
-Comments are a way to include non-executable text in your code,
+Use comments to include non-executable text in your code,
 as a note or reminder to yourself.
 Comments are ignored by the Swift compiler when your code is compiled.
 
@@ -288,8 +281,8 @@ Single-line comments begin with two forward-slashes (``//``):
 
    -> // this is a comment
 
-You can also write multi-line comments,
-which start with a forward-slash followed by an asterisk (``/*``),
+You can also write multiline comments,
+which start with a forward-slash followed by an asterisk (``/*``)
 and end with an asterisk followed by a forward-slash (``*/``):
 
 .. testcode:: comments
@@ -298,20 +291,20 @@ and end with an asterisk followed by a forward-slash (``*/``):
    -> /* this is also a comment,
       but written over multiple lines */
 
-Unlike C, multi-line comments can be nested inside other multi-line comments.
-You write nested comments by starting a multi-line comment block,
-and then starting a second multi-line comment within the first block.
+Unlike C, multiline comments can be nested inside other multiline comments.
+You write nested comments by starting a multiline comment block
+and then starting a second multiline comment within the first block.
 The second block is then closed, followed by the first block:
 
 .. testcode:: comments
    :compile: true
 
-   -> /* this is the start of the first multi-line comment
-         /* this is the second, nested multi-line comment */
-      this is the end of the first multi-line comment */
+   -> /* this is the start of the first multiline comment
+         /* this is the second, nested multiline comment */
+      this is the end of the first multiline comment */
 
-Nested multi-line comments enable you to comment out large blocks of code quickly and easily,
-even if the code already contains multi-line comments.
+Nested multiline comments enable you to comment out large blocks of code quickly and easily,
+even if the code already contains multiline comments.
 
 .. _TheBasics_Semicolons:
 
@@ -319,8 +312,8 @@ Semicolons
 ----------
 
 Unlike many other languages,
-Swift does not require you to write a semicolon (``;``) after each statement in your code
-(although you can do so if you wish).
+Swift does not require you to write a semicolon (``;``) after each statement in your code,
+although you can do so if you wish.
 Semicolons *are* required, however,
 if you want to write multiple separate statements on a single line:
 
@@ -337,11 +330,10 @@ Integers
 
 :newTerm:`Integers` are whole numbers with no fractional component,
 such as ``42`` and ``-23``.
-Integers are either :newTerm:`signed` (which means they can be positive, zero, or negative),
-or :newTerm:`unsigned` (which means they can only be positive or zero).
+Integers are either :newTerm:`signed` (positive, zero, or negative),
+or :newTerm:`unsigned` (positive or zero).
 
-Swift provides integers in signed and unsigned forms in sizes of
-8, 16, 32, and 64 bits.
+Swift provides signed and unsigned integers in 8, 16, 32, and 64 bit forms.
 These integers follow a naming convention similar to C,
 in that an 8-bit unsigned integer is of type ``UInt8``,
 and a 32-bit signed integer is of type ``Int32``.
@@ -431,23 +423,22 @@ Swift provides two signed floating-point number types:
 
 .. TODO: mention infinity, -infinity etc.
 
-.. _TheBasics_TypeInference:
+.. _TheBasics_TypeSafetyAndTypeInference:
 
-Type Inference
---------------
+Type Safety and Type Inference
+------------------------------
 
 Swift is a :newTerm:`type safe` language.
-This means that it encourages you to be clear about
+A type safe language encourages you to be clear about
 the types of values your code can work with.
-If part of your code expects a ``String``,
-type safety means that you can't accidentally pass it an ``Int`` by mistake.
+If part of your code expects a ``String``, you can't pass it an ``Int`` by mistake.
 
 Because Swift is type safe,
 it performs :newTerm:`type checks` when compiling your code
 and flags any mismatched types as errors.
 This enables you to catch and fix errors as early as possible in the development process.
 
-Type-checking helps avoid accidental errors when you're working with different types of values.
+Type-checking helps you avoid errors when you're working with different types of values.
 However, this doesn't mean that you have to specify the type of
 every constant and variable that you declare.
 If you don't specify the type of value you need,
@@ -465,7 +456,7 @@ Type inference is particularly useful
 when you declare a constant or variable with an initial value.
 This is often done by assigning a :newTerm:`literal value` (or :newTerm:`literal`)
 to the constant or variable at the point that you declare it.
-(A literal value is a one-off value that appears directly in your source code,
+(A literal value is a value that appears directly in your source code,
 such as ``42`` and ``3.14159`` in the examples below.)
 
 For example, if you assign a literal value of ``42`` to a new constant
@@ -619,7 +610,7 @@ is reported as an error when your code is compiled:
 
 Because each numeric type can store a different range of values,
 you must opt in to numeric type conversion on a case-by-case basis.
-This opt-in approach avoids accidental errors
+This opt-in approach avoids hidden conversion errors
 and helps make type conversion intentions explicit in your code.
 
 To convert one specific number type to another,
@@ -765,7 +756,7 @@ As with ``Int`` and ``Double`` above,
 you don't need to declare constants or variables as ``Bool``
 if you set them to ``true`` or ``false`` as soon as you create them.
 Type inference helps make Swift code more concise and readable
-when initializing constants or variables with other values whose type is already known.
+when it initializes constants or variables with other values whose type is already known.
 
 Boolean values are particularly useful when you work with conditional statements
 such as the ``if`` statement:
@@ -781,7 +772,7 @@ such as the ``if`` statement:
 
 Conditional statements such as the ``if`` statement are covered in more detail in :doc:`ControlFlow`.
 
-Swift's type safety means that non-Boolean values cannot be substituted for ``Bool``.
+Swift's type safety prevents non-Boolean values from being be substituted for ``Bool``.
 The following example reports a compile-time error:
 
 .. testcode:: booleansNotLogicValue
@@ -830,7 +821,9 @@ Tuples
 The values within a tuple can be of any type
 and do not have to be of the same type as each other.
 
-Here's an example of a tuple:
+In this example, ``(404, "Not Found")`` is a tuple that describes an *HTTP status code*.
+An HTTP status code is a special value returned by a web server whenever you request a web page.
+A status code of ``404 Not Found`` is returned if you request a webpage that doesn't exist.
 
 .. testcode:: tuples
 
@@ -839,16 +832,12 @@ Here's an example of a tuple:
    /> http404Error is of type (Int, String), and equals (\(http404Error.0), \"\(http404Error.1)\")
    </ http404Error is of type (Int, String), and equals (404, "Not Found")
 
-``(404, "Not Found")`` is a tuple that describes an *HTTP status code*.
-An HTTP status code is a special value returned by a web server whenever you request a web page.
-A status code of ``404 Not Found`` is returned if you request a webpage that doesn't exist.
-
 The ``(404, "Not Found")`` tuple groups together an ``Int`` and a ``String``
 to give the HTTP status code two separate values:
-a number, and a human-readable description.
+a number and a human-readable description.
 It can be described as “a tuple of type ``(Int, String)``”.
 
-You can create tuples from whatever permutation of types you like,
+You can create tuples from any permutation of types,
 and they can contain as many different types as you like.
 There's nothing stopping you from having
 a tuple of type ``(Int, Int, Int)``, or ``(String, Bool)``,
@@ -867,7 +856,7 @@ which you then access as usual:
    <- The status message is Not Found
 
 If you only need some of the tuple's values,
-you can ignore parts of the tuple with an underscore (``_``)
+ignore parts of the tuple with an underscore (``_``)
 when you decompose the tuple:
 
 .. testcode:: tuples
@@ -878,7 +867,7 @@ when you decompose the tuple:
    <- The status code is 404
 
 Alternatively,
-you can access the individual element values in a tuple using index numbers starting at zero:
+access the individual element values in a tuple using index numbers starting at zero:
 
 .. testcode:: tuples
 
@@ -886,11 +875,6 @@ you can access the individual element values in a tuple using index numbers star
    <- The status code is 404
    -> println("The status message is \(http404Error.1)")
    <- The status message is Not Found
-
-.. _TheBasics_NamedTupleElements:
-
-Named Tuple Elements
-~~~~~~~~~~~~~~~~~~~~
 
 You can name the individual elements in a tuple when the tuple is defined:
 
@@ -932,9 +916,12 @@ Optionals
 ---------
 
 You use :newTerm:`optionals` in situations where a value may be absent.
-An optional says either:
+An optional says:
 
-* There *is* a value, and it equals *x*, or
+* There *is* a value, and it equals *x*
+
+*or*
+
 * There *isn't* a value at all
 
 .. note::
@@ -948,7 +935,7 @@ An optional says either:
    For these types,
    Objective-C methods typically return a special value (such as ``NSNotFound``)
    to indicate the absence of a value.
-   This assumes that the method's caller knows there is a special value to test against,
+   This assumes that the method's caller knows there is a special value to test against
    and remembers to check for it.
    Swift's optionals let you indicate the absence of a value for *any type at all*,
    without the need for special constants.
@@ -1011,23 +998,22 @@ For more on the ``if`` statement, see :doc:`ControlFlow`.
    Trying to use ``!`` to access a non-existent optional value triggers
    a runtime error.
    Always make sure that an optional contains a non-``nil`` value
-   before using ``!`` to force unwrap its value.
+   before using ``!`` to force-unwrap its value.
 
 .. _TheBasics_OptionalBinding:
 
 Optional Binding
 ~~~~~~~~~~~~~~~~
 
-:newTerm:`Optional binding` is a convenient way
-to find out whether an optional contains a value,
-and to make that value available as a constant or variable if it exists.
+You use :newTerm:`optional binding` to find out whether an optional contains a value,
+and if so, to make that value available as a temporary constant or variable.
 Optional binding can be used with ``if`` and ``while`` statements
 to check for a value inside an optional,
 and to extract that value into a constant or variable,
 as part of a single action.
-(``if`` and ``while`` statements are described in more detail in :doc:`ControlFlow`.)
+``if`` and ``while`` statements are described in more detail in :doc:`ControlFlow`.
 
-You write optional bindings for the ``if`` statement in the following form:
+Write optional bindings for the ``if`` statement as follows:
 
 .. syntax-outline::
 
@@ -1072,7 +1058,7 @@ would be made available as a variable rather than a constant.
    are only available within the code block following their creation,
    as in the first branch of the ``if`` statement above.
    If you want to work with the optional's value outside of this code block,
-   you should declare a constant or variable yourself
+   declare a constant or variable yourself
    before the ``if`` statement begins.
 
 .. _TheBasics_Nil:
@@ -1126,25 +1112,24 @@ Optionals can be checked with an ``if`` statement to see if a value exists,
 and can be conditionally unwrapped with optional binding
 to access the optional's value if it does exist.
 
-In a few cases, however,
-it is clear from a program's structure that an optional will *always* has a value,
+Sometimes it is clear from a program's structure that an optional will *always* have a value,
 after that value is first set.
 In these cases, it is useful to remove the need
 to check and unwrap the optional's value every time it is accessed,
-because it can confidently be assumed to have a value all of the time.
+because it can be safely assumed to have a value all of the time.
 
-These kinds of optionals are defined as :newTerm:`implicitly unwrapped optionals`,
-and are written by placing an exclamation mark (``String!``)
+These kinds of optionals are defined as :newTerm:`implicitly unwrapped optionals`.
+You write an implicitly unwrapped optional by placing an exclamation mark (``String!``)
 rather than a question mark (``String?``) after the type that you want to make optional.
 
 Implicitly unwrapped optionals are useful when
-an optional's value is confirmed to exist immediately after the optional is first defined,
+an optional's value is confirmed to exist immediately after the optional is first defined
 and can definitely be assumed to exist at every point thereafter.
 The primary use of implicitly unwrapped optionals in Swift is during class initialization,
 as described in :ref:`AutomaticReferenceCounting_UnownedReferencesAndImplicitlyUnwrappedOptionalProperties`.
 
 An implicitly unwrapped optional is a normal optional behind the scenes,
-but can also be used like a non-optional value,
+but can also be used like a nonoptional value,
 without the need to unwrap the optional value each time it is accessed.
 The following example shows the difference in behavior between
 an optional ``String`` and an implicitly unwrapped optional ``String``:
@@ -1168,10 +1153,10 @@ you place an exclamation mark after the optional's type when you declare it.
 
 .. note::
 
-   If you try and access an implicitly unwrapped optional
+   If you try to access an implicitly unwrapped optional
    when it does not contain a value,
    you will trigger a runtime error.
-   This is exactly the same as if you place an exclamation mark
+   The result is exactly the same as if you place an exclamation mark
    after a normal optional that does not contain a value.
 
 You can still treat an implicitly unwrapped optional like a normal optional,
@@ -1211,7 +1196,7 @@ and to write code that copes gracefully with the absence of a value.
 In some cases, however, it is simply not possible for your code to continue execution
 if a value does not exist, or if a provided value does not satisfy certain conditions.
 In these situations,
-you can trigger an :newTerm:`assertion` in your code to end code execution,
+you can trigger an :newTerm:`assertion` in your code to end code execution
 and to provide an opportunity to debug the cause of the absent or invalid value.
 
 .. _TheBasics_DebuggingWithAssertions:
@@ -1267,8 +1252,8 @@ Use an assert whenever a condition has the potential to be false,
 but must *definitely* be true in order for your code to continue execution.
 Suitable scenarios for an assertion check include:
 
-* A subscript index is passed to a custom subscript implementation,
-  but the subscript index could be invalid or out of bounds.
+* An integer subscript index is passed to a custom subscript implementation,
+  but the subscript index value could be too low or too high.
 
 * A value is passed to a function,
   but an invalid value means that the function cannot fulfill its task.
@@ -1280,12 +1265,10 @@ See also :doc:`Subscripts` and :doc:`Functions`.
 
 .. note::
 
-   Assertions cause your app to terminate,
+   Assertions cause your app to terminate
    and are not a substitute for designing your code in such a way
    that invalid conditions are unlikely to arise.
    Nonetheless, in situations where invalid conditions are possible,
    an assertion is an effective way to ensure that
    such conditions are highlighted and noticed during development,
    before your app is published.
-
-.. QUESTION: is this the right place for the assertions section to go?
