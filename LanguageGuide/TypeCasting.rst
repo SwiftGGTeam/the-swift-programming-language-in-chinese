@@ -146,7 +146,7 @@ Downcasting
 
 A constant or variable of a certain class type may actually refer to
 an instance of a subclass behind the scenes.
-If you know this might be the case,
+Where you know this might be the case,
 you can try to :newTerm:`downcast` to the subclass type
 with the :newTerm:`type cast operator` (``as``).
 
