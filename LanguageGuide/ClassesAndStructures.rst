@@ -669,15 +669,16 @@ ________________________________
 It can sometimes be useful to ensure that you have a unique copy of an array
 before performing an action on that array's contents,
 or before passing that array to a function or method.
-You ensure the uniqueness of an array reference by calling the array's ``unshare`` method.
+You ensure the uniqueness of an array reference
+by calling the ``unshare`` method on a variable of array type.
+(The ``unshare`` method cannot be called on a constant array.)
 
-If multiple constants or variables currently refer to the same array,
-and you call the ``unshare`` method on one of those constants or variables,
+If multiple variables currently refer to the same array,
+and you call the ``unshare`` method on one of those variables,
 the array is copied,
-so that the constant or variable has its own independent copy of the array.
-However, no copying takes place if the constant or variable
+so that the variable has its own independent copy of the array.
+However, no copying takes place if the variable
 is already the only reference to the array.
-The ``unshare`` method can only be called on a mutable array.
 
 At the end of the previous example,
 ``b`` and ``c`` both reference the same array.
