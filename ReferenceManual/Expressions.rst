@@ -730,7 +730,7 @@ even if you omit the parameter names, parameter types, and return type.
 .. Reasonably sure that accessing a variable that you didn't capture should be an error.
    <rdar://problem/17024367> REPL - Accessing a variable not included in the capture list causes a segfault
 
-Each entry in the capture list can have be marked as ``weak`` or ``unowned``
+Each entry in the capture list can be marked as ``weak`` or ``unowned``
 to capture a weak or unowned reference to the value.
 
 .. testcode:: closure-expression-weak
