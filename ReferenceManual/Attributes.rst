@@ -253,7 +253,7 @@ attribute to a function or method *declaration*.
 ``auto_closure``
     This attribute is used to delay the evaluation of an expression
     by automatically wrapping that expression in a closure with no arguments.
-    Apply this attribue to a function or method type that takes no arguments
+    Apply this attribute to a function or method type that takes no arguments
     and that returns the type of the expression.
     For an example of how to use the ``auto_closure`` attribute,
     see :ref:`Types_FunctionType`.

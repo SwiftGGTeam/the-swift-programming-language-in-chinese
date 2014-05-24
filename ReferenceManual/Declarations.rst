@@ -562,7 +562,7 @@ Function declarations are declared using the keyword ``func`` and have the follo
     }
 
 If the function has a return type of ``Void``,
-the return type can be ommitted as follows:
+the return type can be omitted as follows:
 
 .. syntax-outline::
 
@@ -647,7 +647,7 @@ The corresponding argument must have the external name in function or method cal
 
 A hash symbol (``#``) before a parameter name
 indicates that the name should be used as both an external and a local parameter name.
-It has the same meaning as writing the local paramater name twice.
+It has the same meaning as writing the local parameter name twice.
 The corresponding argument must have this name in function or method calls.
 
 An underscore (``_``) before a local parameter name
@@ -1657,9 +1657,9 @@ and have the following form:
 Subscript declarations can appear only in the context of a class, structure,
 enumeration, extension, or protocol declaration.
 
-The *parameters* specify one or more indicies used to access elements of the corresponding type
+The *parameters* specify one or more indexes used to access elements of the corresponding type
 in a subscript expression (for example, the ``i`` in the expression ``object[i]``).
-Although the indicies used to access the elements can be of any type,
+Although the indexes used to access the elements can be of any type,
 each parameter must include a type annotation to specify the type of each index.
 The *return type* specifies the type of the element being accessed.
 
