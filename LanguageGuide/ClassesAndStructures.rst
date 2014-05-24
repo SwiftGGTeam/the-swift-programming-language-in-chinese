@@ -502,9 +502,27 @@ Assignment and Copy Behavior for Collection Types
 -------------------------------------------------
 
 Swift's ``Array`` and ``Dictionary`` types are implemented as structures.
-However, arrays have slightly different behavior to dictionaries and other structures
+However, arrays have slightly different copying behavior to dictionaries and other structures
 when they are assigned to a constant or variable,
 or when they are passed to a function or method.
+
+The behavior described for ``Array`` and ``Dictionary`` below is different again from
+the behavior of ``NSArray`` and ``NSDictionary`` in Foundation,
+which are implemented as classes, not structures.
+``NSArray`` and ``NSDictionary`` instances are always
+assigned and passed around as a reference to an existing instance,
+rather than making a copy.
+
+.. note::
+
+   The descriptions below refer to the “copying” of
+   arrays, dictionaries, strings, and other values.
+   Where copying is mentioned,
+   the behavior you see in your code will always be as if a copy took place.
+   However, Swift only performs an *actual* copy behind the scenes
+   when it is absolutely necessary to do so.
+   Swift manages all value copying to ensure optimal performance,
+   and you should not avoid assignment to try to preempt this optimization.
 
 .. _ClassesAndStructures_AssignmentAndCopyBehaviorForDictionaries:
 
@@ -523,15 +541,7 @@ they too are copied when the assignment or call takes place.
 Conversely, if the keys and/or values are reference types
 (that is, classes or functions),
 the references are copied, but not the class instances or functions that they refer to.
-This behavior is the same as when stored properties on other value types are copied,
-and is known as a :newTerm:`shallow copy` of the dictionary.
-
-.. note::
-
-   The behavior described above is different from the behavior of ``NSDictionary``,
-   which assigns and passes around a dictionary
-   as a reference to a single ``NSDictionary`` instance,
-   rather than making a copy.
+This behavior is the same as when stored properties on other value types are copied.
 
 The example below defines a dictionary called ``ages``,
 which stores the names and ages of four people.
@@ -578,24 +588,18 @@ If you assign an ``Array`` instance to a constant or variable,
 or pass an ``Array`` instance as an argument to a function or method call,
 the contents of the array are *not* copied at the point that
 the assignment or call takes place.
-This is different from the behavior of ``Dictionary`` described above,
-which is always copied.
+Instead, both arrays share the same sequence of element values.
+When you modify an element value through one array,
+the result is observable through the other.
+This is different from the behavior of ``Dictionary`` described above.
 
 For arrays, copying only takes place when you perform an action
 that has the potential to modify the *length* of the array.
 This includes appending, inserting, or removing items,
 or using a ranged subscript to replace a range of items in the array.
 If and when array copying does take place,
-the copy behavior for an array's contents is the same shallow copy as for
-a dictionary's keys and values,
+the copy behavior for an array's contents is the same as for a dictionary's keys and values,
 as described in :ref:`ClassesAndStructures_AssignmentAndCopyBehaviorForDictionaries`.
-
-.. note::
-
-   The behavior described above is different from the behavior of ``NSArray``,
-   which assigns and passes around an array
-   as a reference to a single ``NSArray`` instance,
-   rather than making a copy.
 
 The example below assigns a new array of ``Int`` values to a variable called ``a``.
 This array is also assigned to two further variables called ``b`` and ``c``:
@@ -673,6 +677,7 @@ the array is copied,
 so that the constant or variable has its own independent copy of the array.
 However, no copying takes place if the constant or variable
 is already the only reference to the array.
+The ``unshare`` method can only be called on a mutable array.
 
 At the end of the previous example,
 ``b`` and ``c`` both reference the same array.
@@ -695,25 +700,38 @@ all three arrays will now report a different value:
    -> println(c[0])
    </ 42
 
-.. _ClassesAndStructures_CheckingWhetherTwoArraysShareTheSameStorage:
+.. _ClassesAndStructures_CheckingWhetherTwoArraysShareTheSameElements:
 
-Checking Whether Two Arrays Share the Same Storage
-__________________________________________________
+Checking Whether Two Arrays Share the Same Elements
+___________________________________________________
 
-You can check whether two constants or variables share the same array storage
-by comparing them with the identity operators,
-as described in :ref:`ClassesAndStructures_IdentityOperators`.
+You can check whether two arrays or subarrays share the same storage and elements
+by comparing them with the identity operators (``===`` and ``!==``).
+
 The example below uses the “identical to” operator (``===``)
-to check whether ``b`` and ``c`` still refer to the same array:
+to check whether ``b`` and ``c`` still share the same array elements:
 
 .. testcode:: assignmentAndCopyForArrays
 
    -> if b === c {
-         println("b and c still refer to the same array.")
+         println("b and c still share the same array elements.")
       } else {
-         println("b and c now refer to two independent arrays.")
+         println("b and c now refer to two independent sets of array elements.")
       }
-   <- b and c now refer to two independent arrays.
+   <- b and c now refer to two independent sets of array elements.
+
+You can also use the identity operators to check whether two subarrays share the same elements.
+The example below compares two identical subarrays from ``b``,
+and confirms that they refer to the same elements:
+
+.. testcode:: assignmentAndCopyForArrays
+
+   -> if b[0...1] === b[0...1] {
+         println("These two subarrays share the same elements.")
+      } else {
+         println("These two subarrays do not share the same elements.")
+      }
+   <- These two subarrays share the same elements.
 
 .. _ClassesAndStructures_ForcingACopyOfAnArray:
 
@@ -759,4 +777,4 @@ from before the copy took place:
    The ``unshare`` method does not make a copy of the array
    unless it is necessary to do so.
    The ``copy`` method always copies the array,
-   even if it is already unique.
+   even if it is already unshared.
