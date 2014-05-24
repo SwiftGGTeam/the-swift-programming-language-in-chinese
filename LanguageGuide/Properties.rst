@@ -4,6 +4,8 @@ Properties
 :newTerm:`Properties` associate values with a particular class, structure, or enumeration.
 Stored properties store constant and variable values as part of an instance,
 whereas computed properties calculate (rather than store) a value.
+Computed properties are provided by classes, structures, and enumerations.
+Stored properties are provided only by classes and structures.
 
 Stored and computed properties are usually associated with instances of a particular type.
 However, properties can also be associated with the type itself.
@@ -13,15 +15,6 @@ In addition, you can define property observers to monitor changes in a property'
 which you can respond to with custom actions.
 Property observers can be added to stored properties you define yourself,
 and also to properties that a subclass inherits from its superclass.
-
-.. note::
-
-   Computed properties can be provided by classes, structures, and enumerations.
-   Stored properties can only be provided by classes and structures.
-
-.. QUESTION: should I mention dot syntax again?
-   I introduced it in Custom Types out of necessity,
-   but maybe it should be mentioned here too.
 
 .. _Properties_StoredProperties:
 
@@ -119,7 +112,7 @@ the ``@lazy`` attribute before its declaration.
 
 .. note::
 
-   A lazy property must always be declared as a variable (with the ``var`` keyword),
+   You must always declare a lazy property as a variable (with the ``var`` keyword),
    because its initial value may not be retrieved until
    after instance initialization completes.
    Constant properties must always have a value *before* initialization completes,
@@ -489,8 +482,11 @@ have all been :newTerm:`stored variables`.
 Stored variables, like stored properties,
 provide storage for a value of a certain type and allow that value to be set and retrieved.
 
-However, you can also define :newTerm:`computed variables`, and define observers for stored variables,
+However, you can also define :newTerm:`computed variables`,
+and define observers for stored variables,
 in either a global or local scope.
+Computed variables calculate rather than store a value,
+and are written in the same way as computed properties.
 
 .. note::
 
@@ -511,7 +507,7 @@ Every time you create a new instance of that type,
 it has its own set of property values, separate from any other instance.
 
 You can also define properties that belong to the type itself,
-and not to any one instance of that type.
+not to any one instance of that type.
 There will only ever be one copy of these properties,
 no matter how many instances of that type you create.
 These kinds of properties are called :newTerm:`type properties`.
@@ -534,7 +530,7 @@ in the same way as computed instance properties.
 .. note::
 
    Unlike stored instance properties,
-   stored type properties must *always* be given a default value.
+   you must always give stored type properties a default value.
    This is because the type itself does not have an initializer
    that can assign a value to a stored type property at initialization time.
 
@@ -602,20 +598,22 @@ For example:
    -> println(SomeStructure.storedTypeProperty)
    <- Another value.
 
-The following example uses two stored type properties as part of a structure that models
-an audio level meter for a number of audio channels.
+The examples in this section use two stored type properties as part of a structure
+that models an audio level meter for a number of audio channels.
 Each channel has an integer audio level between ``0`` and ``10`` inclusive.
 
-The figure below shows two of these audio channels in use for a stereo audio level meter.
+The figure below illustrates how two of these audio channels can be combined
+to model a stereo audio level meter.
 When a channel's audio level is ``0``, none of the lights for that channel are lit.
 When the audio level is ``10``, all of the lights for that channel are lit.
-In the figure below, the left channel has a current level of ``9``,
+In this figure, the left channel has a current level of ``9``,
 and the right channel has a current level of ``7``:
 
 .. image:: ../images/staticPropertiesVUMeter_2x.png
    :align: center
 
-Each audio channel in the meter is modeled by an ``AudioChannel`` structure:
+The audio channels described above are represented by
+instances of the ``AudioChannel`` structure:
 
 .. testcode:: staticProperties
    :compile: true
