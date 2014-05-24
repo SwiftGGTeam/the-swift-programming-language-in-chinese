@@ -13,13 +13,17 @@ To nest a type within another type,
 write its definition within the outer braces of the type it supports.
 Types can be nested to as many levels as are required.
 
+.. _NestedTypes_NestedTypesInAction:
+
+Nested Types in Action
+----------------------
+
 The example below defines a structure called ``BlackjackCard``,
 which models a playing card as used in the game of Blackjack.
 The ``BlackJack`` structure contains two nested enumeration types
 called ``Suit`` and ``Rank``.
 
-One notable feature of Blackjack is that the Ace cards have a value of
-either one or eleven.
+In Blackjack, the Ace cards have a value of either one or eleven.
 This feature is represented by a structure called ``Values``,
 which is nested within the ``Rank`` enumeration:
 
@@ -81,7 +85,7 @@ The ``Values`` structure defines two properties to represent this:
 
 ``Rank`` also defines a computed property, ``values``,
 which returns an instance of the ``Values`` structure.
-This computed property considers the rank of the card,
+This computed property considers the rank of the card
 and initializes a new ``Values`` instance with appropriate values based on its rank.
 It uses special values for ``Jack``, ``Queen``, ``King``, and ``Ace``.
 For the numeric cards, it uses the rank's raw ``Int`` value.
@@ -118,8 +122,8 @@ the Ace of Spades has a value of ``1`` or ``11``.
 Referring to Nested Types
 -------------------------
 
-You can use a nested type outside of its definition context
-by prefixing its name with the name of the type it is nested within:
+To use a nested type outside of its definition context,
+prefix its name with the name of the type it is nested within:
 
 .. testcode:: nestedTypes
 
@@ -129,5 +133,5 @@ by prefixing its name with the name of the type it is nested within:
    </ heartsSymbol is "♡"
 
 For the example above, 
-this enables the names of ``Suit``, ``Rank`` and ``Values`` to be kept deliberately short,
+this enables the names of ``Suit``, ``Rank``, and ``Values`` to be kept deliberately short,
 because their names are naturally qualified by the context in which they are defined.
