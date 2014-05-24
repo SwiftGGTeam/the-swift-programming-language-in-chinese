@@ -726,30 +726,30 @@ This method performs a shallow copy of the array
 and returns a new array containing the copied items.
 
 The example below defines an array called ``names``,
-which stores the names of four people.
+which stores the names of seven people.
 A new variable called ``copiedNames`` is set to the result of calling
 the ``copy`` method on the ``names`` array:
 
 .. testcode:: assignmentAndCopyForArrays
 
-   -> var names = ["Dave", "Ayumi", "Carlos", "Raeesa"]
-   << // names : Array<String> = ["Dave", "Ayumi", "Carlos", "Raeesa"]
+   -> var names = ["Mohsen", "Hilary", "Justyn", "Amy", "Rich", "Graham", "Vic"]
+   << // names : Array<String> = ["Mohsen", "Hilary", "Justyn", "Amy", "Rich", "Graham", "Vic"]
    -> var copiedNames = names.copy()
-   << // copiedNames : Array<String> = ["Dave", "Ayumi", "Carlos", "Raeesa"]
+   << // copiedNames : Array<String> = ["Mohsen", "Hilary", "Justyn", "Amy", "Rich", "Graham", "Vic"]
 
 You can prove that the ``names`` array has been copied
 by changing an item in one of the arrays
 and checking the corresponding item in the other.
 If you set the first item in the ``copiedNames`` array
-to ``"David"`` rather than ``"Dave"``,
-the ``names`` array still returns the old value of ``"Dave"``
+to ``"Mo"`` rather than ``"Mohsen"``,
+the ``names`` array still returns the old value of ``"Mohsen"``
 from before the copy took place:
 
 .. testcode:: assignmentAndCopyForArrays
 
-   -> copiedNames[0] = "David"
+   -> copiedNames[0] = "Mo"
    -> println(names[0])
-   <- Dave
+   <- Mohsen
 
 .. note::
 
