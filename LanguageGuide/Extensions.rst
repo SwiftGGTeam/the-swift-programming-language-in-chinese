@@ -16,8 +16,7 @@ Extensions in Swift can:
 * Provide new initializers
 * Define subscripts
 * Define and use new nested types
-
-You can also use an extension to make an existing type conform to a protocol.
+* Make an existing type conform to a protocol
 
 .. note::
 
@@ -32,7 +31,7 @@ You can also use an extension to make an existing type conform to a protocol.
 Extension Syntax
 ----------------
 
-Extensions are declared with the ``extension`` keyword:
+Declare extensions with the ``extension`` keyword:
 
 .. testcode:: extensionSyntax
 
@@ -41,7 +40,7 @@ Extensions are declared with the ``extension`` keyword:
          // new functionality to add to SomeType goes here
       }
 
-An extension can also extend an existing type to make it adopt one or more protocols.
+An extension can extend an existing type to make it adopt one or more protocols.
 Where this is the case,
 the protocol names are written in exactly the same way as for a class or structure:
 
@@ -144,8 +143,10 @@ must always be provided by the original class implementation.
    and does not define any custom initializers,
    you can call the default initializer and memberwise initializer for that value type
    from within your extension's initializer.
-   This is different from if you had written the initializer
-   as part of the type's original implementation.
+
+   This would not be the case if you had written the initializer
+   as part of the value type's original implementation,
+   as described in :ref:`Initialization_InitializerDelegationForValueTypes`.
 
 The example below defines a custom ``Rect`` structure to represent a geometric rectangle.
 The example also defines two supporting structures called ``Size`` and ``Point``,
@@ -192,8 +193,9 @@ that takes a specific center point and size:
 
 This new initializer starts by calculating an appropriate origin point based on
 the provided ``center`` point and ``size`` value.
-The initializer then delegates across to the automatic memberwise initializer,
-which stores the new origin and size values in the appropriate properties:
+The initializer then calls the structure's automatic memberwise initializer
+``init(origin:size:)``, which stores the new origin and size values
+in the appropriate properties:
 
 .. testcode:: extensionsInitializers
 
@@ -228,7 +230,7 @@ The following example adds a new instance method called ``times`` to the ``Int``
       }
 
 The ``times`` method takes a single argument of type ``() -> ()``,
-or “a function that has no parameters and does not return a value”.
+which indicates a function that has no parameters and does not return a value.
 
 After defining this extension,
 you can call the ``times`` method on any integer number
@@ -243,7 +245,7 @@ to perform a task that many number of times:
    </ Hello!
    </ Hello!
 
-You can use trailing closure syntax to make the call more succint:
+Use trailing closure syntax to make the call more succinct:
 
 .. testcode:: extensionsInstanceMethods
 
@@ -288,8 +290,7 @@ Subscripts
 Extensions can add new subscripts to an existing type.
 This example adds an integer subscript to Swift's built-in ``Int`` type.
 This subscript ``[n]`` returns the decimal digit ``n`` places in
-from the right of the number,
-so:
+from the right of the number:
 
 * ``123456789[0]`` returns ``9``
 * ``123456789[1]`` returns ``8``
@@ -325,7 +326,7 @@ so:
    </ returns 7
 
 If the ``Int`` value does not have enough digits for the requested index,
-the subscript implementation will return ``0``,
+the subscript implementation returns ``0``,
 as if the number had been padded with zeroes to the left:
 
 .. testcode:: extensionsSubscripts
@@ -375,7 +376,7 @@ expresses the kind of letter that a particular character represents.
 Specifically, it expresses whether the character is
 a vowel or a consonant in a standard Latin script
 (without taking into account accents or regional variations),
-or whether it is some other kind of character.
+or whether it is another kind of character.
 
 This example also adds a new computed instance property to ``Character``,
 called ``kind``,
