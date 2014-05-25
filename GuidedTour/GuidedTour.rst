@@ -20,7 +20,7 @@ In Swift, this can be done in a single line:
 .. K&R uses “hello, world”.
    It seems worth breaking with tradition to use proper casing.
 
-.. testcode::
+.. testcode:: guided-tour
 
    -> println("Hello, world")
    << Hello, world
@@ -53,7 +53,7 @@ but you must assign it a value exactly once.
 This means you can use constants to name a value
 that you determine once but use in many places.
 
-.. testcode::
+.. testcode:: guided-tour
 
    -> var myVariable = 42
    << // myVariable : Int = 42
@@ -79,7 +79,7 @@ If the initial value doesn't provide enough information
 specify the type by writing it after the variable,
 separated by a colon.
 
-.. testcode::
+.. testcode:: guided-tour
 
    -> let implicitInteger = 70
    << // implicitInteger : Int = 70
@@ -97,7 +97,7 @@ Values are never implicitly converted to another type.
 If you need to convert a value to a different type,
 explicitly make an instance of the desired type.
 
-.. testcode::
+.. testcode:: guided-tour
 
    -> let label = "The width is "
    << // label : String = "The width is "
@@ -120,7 +120,7 @@ Write the value in parentheses,
 and write a backslash (``\``) before the parentheses.
 For example:
 
-.. testcode::
+.. testcode:: guided-tour
 
    -> let apples = 3
    << // apples : Int = 3
@@ -141,7 +141,7 @@ Create arrays and dictionaries using brackets (``[]``),
 and access their elements by writing
 the index or key in brackets.
 
-.. testcode::
+.. testcode:: guided-tour
 
     -> var shoppingList = ["catfish", "water", "tulips", "blue paint"]
     << // shoppingList : Array<String> = ["catfish", "water", "tulips", "blue paint"]
@@ -157,7 +157,7 @@ the index or key in brackets.
 To create an empty array or dictionary,
 use the initializer syntax.
 
-.. testcode::
+.. testcode:: guided-tour
 
    -> let emptyArray = String[]()
    << // emptyArray : Array<String> = []
@@ -170,7 +170,7 @@ and an empty dictionary as ``[:]`` ---
 for example, when you set a new value for a variable
 or pass an argument to a function.
 
-.. testcode::
+.. testcode:: guided-tour
 
    -> shoppingList = []   // Went shopping and bought everything.
 
@@ -183,7 +183,7 @@ to make loops.
 Parentheses around the condition or loop variable are optional.
 Braces around the body are required.
 
-.. testcode::
+.. testcode:: guided-tour
 
     -> let individualScores = [75, 43, 103, 87, 12]
     << // individualScores : Array<Int> = [75, 43, 103, 87, 12]
@@ -219,7 +219,7 @@ or contains ``nil`` to indicate that the value is missing.
 Write a question mark (``?``) after the type of a value
 to mark the value as optional.
 
-.. testcode::
+.. testcode:: guided-tour
 
    -> var optionalString: String? = "Hello"
    << // optionalString : String? = <unprintable value>
@@ -255,7 +255,7 @@ and a wide variety of comparison operations ---
 they aren't limited to integers
 and tests for equality.
 
-.. testcode::
+.. testcode:: guided-tour
 
    -> let vegetable = "red pepper"
    << // vegetable : String = "red pepper"
@@ -288,7 +288,7 @@ You use ``for``-``in`` to iterate over items in a dictionary
 by providing a pair of names to use
 for each key-value pair.
 
-.. testcode::
+.. testcode:: guided-tour
 
    -> let interestingNumbers = [
           "Prime": [2, 3, 5, 7, 11, 13],
@@ -317,7 +317,7 @@ Use ``while`` to repeat a block of code until a condition changes.
 The condition of a loop can be at the end instead,
 ensuring that the loop is run at least once.
 
-.. testcode::
+.. testcode:: guided-tour
 
    -> var n = 2
    << // n : Int = 2
@@ -340,7 +340,7 @@ either by using ``..`` to make a range of indexes
 or by writing an explicit initialization, condition, and increment.
 These two loops do the same thing:
 
-.. testcode::
+.. testcode:: guided-tour
 
    -> var firstForLoop = 0
    -> for i in 0..3 {
@@ -366,7 +366,7 @@ with a list of arguments in parentheses.
 Use ``->`` to separate the parameter names and types
 from the function's return type.
 
-.. testcode::
+.. testcode:: guided-tour
 
     -> func greet(name: String, day: String) -> String {
            return "Hello \(name), today is \(day)."
@@ -381,7 +381,7 @@ from the function's return type.
 
 Use a tuple to return multiple values from a function.
 
-.. testcode::
+.. testcode:: guided-tour
 
    -> func getGasPrices() -> (Double, Double, Double) {
           return (3.59, 3.69, 3.79)
@@ -392,7 +392,7 @@ Use a tuple to return multiple values from a function.
 Functions can also take a variable number of arguments,
 collecting them into an array.
 
-.. testcode::
+.. testcode:: guided-tour
 
    -> // Reimplement the Standard Library sum function for Int values.
    -> func sumOf(numbers: Int...) -> Int {
@@ -420,7 +420,7 @@ that is long or complex.
 
 .. TR: Any objections to this guidance?
 
-.. testcode::
+.. testcode:: guided-tour
 
     -> func returnFifteen() -> Int {
            var y = 10
@@ -436,7 +436,7 @@ that is long or complex.
 Functions are a first-class type.
 This means that a function can return another function as its value.
 
-.. testcode::
+.. testcode:: guided-tour
 
     -> func makeIncrementer() -> (Int -> Int) {
            func addOne(number: Int) -> Int {
@@ -451,7 +451,7 @@ This means that a function can return another function as its value.
 
 A function can take another function as one of its arguments.
 
-.. testcode::
+.. testcode:: guided-tour
 
     -> func hasAnyMatches(list: Int[], condition: Int -> Bool) -> Bool {
            for item in list {
@@ -474,7 +474,7 @@ You can write a closure without a name
 by surrounding code with braces (``{}``).
 Use ``in`` to separate the arguments and return type from the body.
 
-.. testcode::
+.. testcode:: guided-tour
 
     -> numbers.map({
            (number: Int) -> Int in
@@ -495,7 +495,7 @@ its return type, or both.
 Single statement closures implicitly return the value
 of their only statement.
 
-.. testcode::
+.. testcode:: guided-tour
 
     -> numbers.map({ number in 3 * number })
     <$ : Array<Int> = [24, 9, 15, 18]
@@ -505,7 +505,7 @@ this approach is especially useful in very short closures.
 A closure passed as the last argument to a function
 can appear immediately after the parentheses.
 
-.. testcode::
+.. testcode:: guided-tour
 
     -> sort([1, 5, 3, 12, 2]) { $0 > $1 }
     <$ : Array<Int> = [12, 5, 3, 2, 1]
@@ -514,7 +514,7 @@ The previous listing can be written without a closure at all.
 The ``>`` operator is the name of a function,
 so you can pass it as the second argument to the ``sort`` function.
 
-.. testcode::
+.. testcode:: guided-tour
 
     -> sort([1, 5, 3, 12, 2], >)
     <$ : Array<Int> = [12, 5, 3, 2, 1]
@@ -530,7 +530,7 @@ as a constant or variable declaration,
 except that it is in the context of a class.
 Likewise, method and function declarations are written the same way.
 
-.. testcode::
+.. testcode:: guided-tour
 
     -> class Shape {
            var numberOfSides: Int = 0
@@ -551,7 +551,7 @@ by putting parentheses after the class name.
 Use dot syntax to access
 the properties and methods of the instance.
 
-.. testcode::
+.. testcode:: guided-tour
 
     -> var shape = Shape()
     << // shape : Shape = <Shape instance>
@@ -563,7 +563,7 @@ This version of the ``Shape`` class is missing something important:
 an initializer to set up the class when an instance is created.
 Use ``init`` to create one.
 
-.. testcode::
+.. testcode:: guided-tour
 
     -> class NamedShape {
            var numberOfSides: Int = 0
@@ -607,7 +607,7 @@ is detected by the compiler as an error.
 The compiler also detects methods with ``override``
 that don't actually override any method in the superclass.
 
-.. testcode::
+.. testcode:: guided-tour
 
     -> class Square: NamedShape {
            var sideLength: Double
@@ -644,7 +644,7 @@ that don't actually override any method in the superclass.
 In addition to simple properties that are stored,
 properties can have a getter and a setter.
 
-.. testcode::
+.. testcode:: guided-tour
 
 
     -> class EquilateralTriangle: NamedShape {
@@ -698,7 +698,7 @@ For example, the class below ensures
 that the side length of its triangle
 is always the same as the side length of its square.
 
-.. testcode::
+.. testcode:: guided-tour
 
    -> class TriangleAndSquare {
           var triangle: EquilateralTriangle {
@@ -739,7 +739,7 @@ By default, a method has the same name for its parameters
 when you call it and within the method itself.
 You can specify a second name, which is used inside the method.
 
-.. testcode::
+.. testcode:: guided-tour
 
     -> class Counter {
            var count: Int = 0
@@ -760,7 +760,7 @@ and everything after the ``?`` acts on the unwrapped value.
 In both cases,
 the value of the whole expression is an optional value.
 
-.. testcode::
+.. testcode:: guided-tour
 
     -> let optionalSquare: Square? = Square(sideLength: 2.5, name: "optional square")
     -> let sideLength = optionalSquare?.sideLength
@@ -772,7 +772,7 @@ Use ``enum`` to create an enumeration.
 Like classes and all other named types,
 enumerations can have methods associated with them.
 
-.. testcode::
+.. testcode:: guided-tour
 
     -> enum Rank: Int {
            case Ace = 1
@@ -813,7 +813,7 @@ as the raw type of an enumeration.
 Use the ``toRaw`` and ``fromRaw`` functions to convert
 between the raw value and the enumeration value.
 
-.. testcode::
+.. testcode:: guided-tour
 
     >> var test_threeDescription = ""
     -> if let convertedRank = Rank.fromRaw(3) {
@@ -829,7 +829,7 @@ In fact,
 in cases where there isn't a meaningful raw value,
 you don't have to provide one.
 
-.. testcode::
+.. testcode:: guided-tour
 
     -> enum Suit {
            case Spades, Hearts, Diamonds, Clubs
@@ -879,7 +879,7 @@ between structures and classes is that
 structures are always copied when they are passed around in your code,
 but classes are passed by reference.
 
-.. testcode::
+.. testcode:: guided-tour
 
     -> struct Card {
            var rank: Rank
@@ -915,7 +915,7 @@ the sunrise and sunset time from a server.
 The server either responds with the information
 or it responds with some error information.
 
-.. testcode::
+.. testcode:: guided-tour
 
     -> enum ServerResponse {
            case Result(String, String)
@@ -963,7 +963,7 @@ Protocols and Extensions
 
 Use ``protocol`` to declare a protocol.
 
-.. testcode::
+.. testcode:: guided-tour
 
     -> protocol ExampleProtocol {
             var simpleDescription: String { get }
@@ -972,7 +972,7 @@ Use ``protocol`` to declare a protocol.
 
 Classes, enumerations, and structs can all adopt protocols.
 
-.. testcode::
+.. testcode:: guided-tour
 
     -> class SimpleClass: ExampleProtocol {
             var simpleDescription: String = "A very simple class."
@@ -1016,7 +1016,7 @@ You can use an extension to add protocol conformance
 to a type that is declared elsewhere,
 or even to a type that you imported from a library or framework.
 
-.. testcode::
+.. testcode:: guided-tour
 
     -> extension Int: ExampleProtocol {
            var simpleDescription: String {
@@ -1041,7 +1041,7 @@ but that all conform to a single protocol.
 When you work with values whose type is a protocol type,
 methods outside the protocol definition are not available.
 
-.. testcode::
+.. testcode:: guided-tour
 
     -> let protocolValue: ExampleProtocol = a
     << protocolValue : ExampleProtocol = <ExampleProtocol instance>
@@ -1062,7 +1062,7 @@ Generics
 Write a name inside angle brackets
 to make a generic function or type.
 
-.. testcode::
+.. testcode:: guided-tour
 
     -> func repeat<ItemType>(item: ItemType, times: Int) -> ItemType[] {
            var result = Array<ItemType>()
@@ -1079,7 +1079,7 @@ as well as classes, enumerations, and structures.
 
 .. TODO: Add testcode expectation lines.
 
-.. testcode::
+.. testcode:: guided-tour
 
     // Reimplement the Swift standard library's optional type
     -> enum OptionalValue<T> {
@@ -1096,7 +1096,7 @@ to require the type to implement a protocol,
 to require two types to be the same,
 or to require a class to have a particular superclass.
 
-.. testcode::
+.. testcode:: guided-tour
 
    -> func anyCommonElements <T, U where T: Sequence, U: Sequence, T.GeneratorType.Element: Equatable, T.GeneratorType.Element == U.GeneratorType.Element> (lhs: T, rhs: U) -> Bool {
           for lhsItem in lhs {
