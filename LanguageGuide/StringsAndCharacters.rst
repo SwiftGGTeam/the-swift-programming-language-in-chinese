@@ -69,7 +69,7 @@ String literals can include the following special characters:
 
 The code below shows an example of each kind of special character.
 The ``wiseWords`` constant contains two escaped double quote characters,
-and the ``dollarSign``, ``blackHeart``, and ``swiftHeart`` constants
+and the ``dollarSign``, ``blackHeart``, and ``sparklingHeart`` constants
 demonstrate the three different Unicode scalar character formats:
 
 .. testcode:: specialCharacters
@@ -82,8 +82,8 @@ demonstrate the three different Unicode scalar character formats:
    << // dollarSign : String = "$"
    -> let blackHeart = "\u2665"      // ♥,  Unicode scalar U+2665
    << // blackHeart : String = "♥"
-   -> let swiftHeart = "\U0001F496"  // 💖, Unicode scalar U+1F496
-   << // swiftHeart : String = "💖"
+   -> let sparklingHeart = "\U0001F496"  // 💖, Unicode scalar U+1F496
+   << // sparklingHeart : String = "💖"
 
 .. what about SNOWMAN WITHOUT SNOW?
    Unicode: U+26C4 U+FE0F, UTF-8: E2 9B 84 EF B8 8F
