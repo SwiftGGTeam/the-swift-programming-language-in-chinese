@@ -14,7 +14,7 @@ Swift supports most standard C operators
 and improves several capabilities to eliminate common coding errors.
 The assignment operator (``=``) does not return a value,
 to prevent it from being mistakenly used when
-the equal to operator (``==``) is intended.
+the equality operator (``==``) is intended.
 Arithmetic operators (``+``, ``-``, ``*``, ``/``, ``%`` and so forth)
 detect and disallow value overflow,
 to avoid unexpected results when working with numbers that become larger or smaller
@@ -98,7 +98,7 @@ The following statement is not valid:
    !!        ^
 
 This feature prevents the assignment operator (``=``) from being used by accident
-when the equal to operator (``==``) is actually intended.
+when the equality operator (``==``) is actually intended.
 By making ``if x = y`` invalid,
 Swift helps you to avoid these kinds of errors in your code.
 
