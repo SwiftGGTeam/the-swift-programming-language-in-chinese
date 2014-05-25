@@ -1202,14 +1202,14 @@ can likewise be adopted only by a class type.
     there’s no need to mark the protocol with the ``class_protocol`` attribute explicitly.
 
 Protocols are named types, and thus they can appear in all the same places
-in your code as other named types, as discussed in :ref:`Protocols_UsingProtocolsAsTypes`.
+in your code as other named types, as discussed in :ref:`Protocols_ProtocolsAsTypes`.
 However,
 you can't construct an instance of a protocol,
 because protocols do not actually provide the implementations for the requirements
 they specify.
 
 You can use protocols to declare which methods a delegate of a class or structure
-should implement, as described in :ref:`Protocols_Delegates`.
+should implement, as described in :ref:`Protocols_Delegation`.
 
 .. langref-grammar
 
@@ -1264,7 +1264,7 @@ that property declaration can't be implemented as a constant property
 or a read-only computed property. If a property declaration includes
 only the ``get`` keyword, it can be implemented as any kind of property.
 For examples of conforming types that implement the property requirements of a protocol,
-see :ref:`Protocols_Properties`.
+see :ref:`Protocols_PropertyRequirements`.
 
 .. TODO:
     Because we're not going to have 'class' properties for 1.0,
@@ -1299,7 +1299,7 @@ Protocol method declarations have the same form as
 function declarations, with two exceptions: They don't include a function body,
 and you can't provide any default parameter values as part of the function declaration.
 For examples of conforming types that implement the method requirements of a protocol,
-see :ref:`Protocols_Methods`.
+see :ref:`Protocols_MethodRequirements`.
 
 To declare a class or static method requirement in a protocol declaration,
 mark the method declaration with the ``class`` keyword. Classes that implement
