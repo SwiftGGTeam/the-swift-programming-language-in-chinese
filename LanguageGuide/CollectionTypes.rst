@@ -14,7 +14,7 @@ This means that you cannot insert a value of the wrong type
 into an array or dictionary by mistake.
 It also means you can be confident about the types of values
 you will retrieve from an array or dictionary.
-Swift's use of explicitly-typed collections ensures that
+Swift's use of explicitly typed collections ensures that
 your code is always clear about the types of values it can work with
 and enables you to catch any type mismatches early in your code's development.
 
@@ -55,7 +55,7 @@ In Swift, the type of values that a particular array can store is always made cl
 either through an explicit type annotation, or through type inference,
 and does not have to be a class type.
 If you create an array of ``Int`` values, for example,
-you can't insert anything other than ``Int`` values into that array.
+you can't insert any value other than ``Int`` values into that array.
 Swift arrays are type safe, and are always clear about what they may contain.
 
 .. _CollectionTypes_ArrayTypeShorthandSyntax:
@@ -107,7 +107,7 @@ Here, the ``shoppingList`` array is initialized with two ``String`` values
 
 In this case, the array literal contains two ``String`` values and nothing else.
 This matches the type of the ``shoppingList`` variable's declaration
-(an ``Array`` that can only contain ``String`` values),
+(an array that can only contain ``String`` values),
 and so the assignment of the array literal is permitted
 as a way to initialize ``shoppingList`` with two initial items.
 
@@ -182,7 +182,7 @@ with the addition assignment operator (``+=``):
    var anotherList = shoppingList + "Ham"
    This section should be updated as and when that feature is added.
 
-You can retrieve a value from the array by using :newTerm:`subscript syntax`,
+Retrieve a value from the array by using :newTerm:`subscript syntax`,
 passing the index of the value you want to retrieve within square brackets
 immediately after the name of the array:
 
@@ -230,8 +230,8 @@ with ``"Bananas"`` and ``"Apples"``:
    and expect the value in the array to change,
    because String is a value type?
 
-You can insert an item into the array at a specified index
-by calling the array's ``insert(atIndex:)`` method:
+To insert an item into the array at a specified index,
+call the array's ``insert(atIndex:)`` method:
 
 .. testcode:: arraysInferred
 
@@ -246,7 +246,7 @@ at the very beginning of the shopping list,
 indicated by an index of ``0``.
 
 Similarly, you remove an item from the array with the ``removeAtIndex`` method.
-This method removes the item at the specified index, and returns the removed item
+This method removes the item at the specified index and returns the removed item
 (although you can ignore the returned value if you do not need it):
 
 .. testcode:: arraysInferred
@@ -485,7 +485,7 @@ The second pair has a key of ``"DUB"`` and a value of ``"Dublin"``.
 
 This dictionary literal contains two ``String: String`` pairs.
 This matches the type of the ``airports`` variable declaration
-(a ``Dictionary`` with only ``String`` keys, and only ``String`` values)
+(a dictionary with only ``String`` keys, and only ``String`` values)
 and so the assignment of the dictionary literal is permitted
 as a way to initialize the ``airports`` dictionary with two initial items.
 
@@ -598,9 +598,9 @@ by assigning a value of ``nil`` for that key:
 
 Alternatively, remove a key-value pair from a dictionary
 with the ``removeValueForKey`` method.
-This method removes the key-value pair if it exists,
+This method removes the key-value pair if it exists
 and returns the removed value,
-or ``nil`` if no value existed:
+or returns ``nil`` if no value existed:
 
 .. testcode:: dictionariesInferred
 
@@ -649,7 +649,7 @@ by accessing its ``keys`` and ``values`` properties:
    </ Airport name: London Heathrow
 
 If you need to use a dictionary's keys or values
-with an API that takes an ``Array`` instance, you can initialize a new array
+with an API that takes an ``Array`` instance, initialize a new array
 with the ``keys`` or ``values`` property:
 
 .. testcode:: dictionariesInferred
@@ -689,7 +689,7 @@ to store human-readable names of integer values.
 Its keys are of type ``Int``, and its values are of type ``String``.
 
 If the context already provides type information,
-you can create an empty dictionary using an empty dictionary literal,
+create an empty dictionary with an empty dictionary literal,
 which is written as ``[:]``
 (a colon inside a pair of square brackets):
 
@@ -716,7 +716,7 @@ Mutability of Collections
 -------------------------
 
 Arrays and dictionaries store multiple values together in a single collection.
-If you create an array or a dictionary, and assign it to a variable,
+If you create an array or a dictionary and assign it to a variable,
 the collection that is created will be :newTerm:`mutable`.
 This means that you can change (or :newTerm:`mutate`)
 the size of the collection after it is created
