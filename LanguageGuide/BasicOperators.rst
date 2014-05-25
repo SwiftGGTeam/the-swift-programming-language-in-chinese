@@ -6,7 +6,7 @@ check, change, or combine values.
 For example, the addition operator (``+``) adds two numbers together
 (as in ``let i = 1 + 2``).
 More complex examples include the logical AND operator ``&&``
-(as in ``if enteredDoorCode && passedRetinaScan``),
+(as in ``if enteredDoorCode && passedRetinaScan``)
 and the increment operator ``++i``,
 which is a shortcut to increase the value of ``i`` by ``1``.
 
@@ -81,7 +81,8 @@ its elements can be decomposed into multiple constants or variables at once:
    /> x is equal to \(x), and y is equal to \(y)
    </ x is equal to 1, and y is equal to 2
 
-Unlike C and Objective-C, the assignment operator in Swift does not itself return a value.
+Unlike the assignment operator in C and Objective-C,
+the assignment operator in Swift does not itself return a value.
 The following statement is not valid:
 
 .. testcode:: assignmentOperatorInvalid
@@ -268,7 +269,7 @@ If you only want to increment or decrement the value stored in ``i``,
 you can ignore the returned value.
 However, if you *do* use the returned value,
 it will be different based on whether you used the prefix or postfix version of the operator,
-based on the following rules:
+according to the following rules:
 
 * If the operator is written *before* the variable,
   it increments the variable *before* returning its value.
@@ -465,7 +466,7 @@ The ternary conditional operator is shorthand for the code below:
 
 Here's an example, which calculates the pixel height for a table row.
 The row height should be 50 pixels taller than the content height
-if the row has a header, and 20 pixels taller if it doesn't:
+if the row has a header, and 20 pixels taller if the row doesn't have a header:
 
 .. testcode:: ternaryConditionalOperatorPart1
 
@@ -716,8 +717,8 @@ or if we know the emergency override password,
 then allow access.
 
 Based on the values of ``enteredDoorCode``, ``passedRetinaScan``, and ``hasDoorKey``,
-the first two mini-expressions are ``false``,
-but we know the emergency override password,
+the first two mini-expressions are ``false``.
+However, the emergency override password is known,
 so the overall compound expression still equates to ``true``.
 
 .. _BasicOperators_Explicit Parentheses:

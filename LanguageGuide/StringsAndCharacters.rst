@@ -68,8 +68,8 @@ String literals can include the following special characters:
   where ``nnnnnnnn`` is eight hexadecimal digits
 
 The code below shows an example of each kind of special character.
-The ``wiseWords`` constant contains two escaped double quote characters,
-and the ``dollarSign``, ``blackHeart``, and ``swiftHeart`` constants
+The ``wiseWords`` constant contains two escaped double quote characters.
+The ``dollarSign``, ``blackHeart``, and ``swiftHeart`` constants
 demonstrate the three different Unicode scalar character formats:
 
 .. testcode:: specialCharacters
@@ -212,7 +212,7 @@ by iterating over that string with a ``for``-``in`` loop:
 
 The ``for``-``in`` loop is described in :ref:`ControlFlow_ForLoops`.
 
-Alternatively, you can create a stand-alone ``Character`` constant or variable
+Alternatively, create a stand-alone ``Character`` constant or variable
 from a single-character string literal by providing a ``Character`` type annotation:
 
 .. testcode:: characters
@@ -238,8 +238,8 @@ and pass in a string as the function's sole parameter:
 
 .. note::
 
-   Different Unicode characters,
-   and different representations of the same Unicode character,
+   Different Unicode characters
+   and different representations of the same Unicode character
    can require different amounts of memory to store.
    Because of this, characters in Swift do not each take up
    the same amount of memory within a string's representation.
@@ -475,7 +475,7 @@ Unicode
 -------
 
 :newTerm:`Unicode` is an international standard for encoding and representing text.
-It provides a way to represent almost any character from any language in a standardized form,
+It enables you to represent almost any character from any language in a standardized form,
 and to read and write those characters to and from an external source
 such as a text file or web page.
 

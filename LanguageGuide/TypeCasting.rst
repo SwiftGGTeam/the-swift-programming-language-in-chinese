@@ -9,10 +9,6 @@ Type casting in Swift is implemented with the ``is`` and ``as`` operators.
 These two operators provide a simple and expressive way
 to check the type of a value or cast a value to a different type.
 
-Because downcasting a class to one of its subclasses can fail,
-Swift uses optionals to enable you to attempt a downcast
-and check whether that cast is successful.
-
 You can also use type casting to check whether a type conforms to a protocol,
 as described in :ref:`Protocols_CheckingForProtocolConformance`.
 
@@ -146,7 +142,7 @@ Downcasting
 
 A constant or variable of a certain class type may actually refer to
 an instance of a subclass behind the scenes.
-Where you know this might be the case,
+Where you believe this is the case,
 you can try to :newTerm:`downcast` to the subclass type
 with the :newTerm:`type cast operator` (``as``).
 

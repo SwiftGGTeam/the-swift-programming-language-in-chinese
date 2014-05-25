@@ -904,9 +904,9 @@ and categorizes it on the graph that follows:
    :align: center
 
 The ``switch`` statement determines if the point is
-on the red x-axis;
-on the orange y-axis;
-or somewhere else not on either axis.
+on the red x-axis,
+on the orange y-axis,
+or elsewhere, on neither axis.
 
 The three ``switch`` cases declare placeholder constants ``x`` and ``y``,
 which temporarily take on one or both tuple values from ``anotherPoint``.
@@ -962,8 +962,8 @@ The example below categorizes an (x, y) point on the following graph:
    :align: center
 
 The ``switch`` statement determines if the point is
-on the green diagonal line where ``x == y``;
-on the purple diagonal line where ``x == -y``;
+on the green diagonal line where ``x == y``,
+on the purple diagonal line where ``x == -y``,
 or neither.
 
 The three ``switch`` cases declare placeholder constants ``x`` and ``y``,
@@ -1194,7 +1194,7 @@ the number ``5`` is correctly identified as a prime number.
 .. note::
 
    The ``fallthrough`` keyword does not check the case conditions
-   for the ``switch`` case it causes execution to fall into.
+   for the ``switch`` case that it causes execution to fall into.
    The ``fallthrough`` keyword simply causes code execution to move
    directly to the statements inside the next case (or ``default`` case) block,
    as in C's standard ``switch`` statement behavior.

@@ -54,7 +54,7 @@ The ``Counter`` class defines three instance methods:
 
 * ``increment`` increments the counter by ``1``.
 * ``incrementBy(amount: Int)`` increments the counter by an specified integer amount.
-* ``reset``, which resets the counter to zero.
+* ``reset`` resets the counter to zero.
 
 The ``Counter`` class also declares a variable property, ``count``,
 to keep track of the current counter value.

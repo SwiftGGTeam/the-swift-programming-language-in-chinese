@@ -9,8 +9,8 @@ Swift's unified function syntax is flexible enough to express anything from
 a simple C-style function with no parameter names
 to a complex Objective-C-style method
 with local and external parameter names for each parameter.
-Parameters can provide default values to simplify function calls,
-and can be passed as ``inout`` parameters,
+Parameters can provide default values to simplify function calls
+and can be passed as in-out parameters,
 which modify a passed variable once the function has completed its execution.
 
 Every function in Swift has a type,
@@ -507,7 +507,7 @@ Variadic Parameters
 A :newTerm:`variadic parameter` accepts zero or more values of a specified type.
 You use a variadic parameter to specify that the parameter can be passed
 a varying number of input values when the function is called.
-You write variadic parameters by inserting three period characters (``...``)
+Write variadic parameters by inserting three period characters (``...``)
 after the parameter's type name.
 
 The values passed to a variadic parameter are made available within the function's body
@@ -621,8 +621,8 @@ In-Out Parameters
 
 Variable parameters, as described above,
 can only be changed within the function itself.
-If you want a function to be able to modify a parameter's value,
-and for those changes to persist after the function call has ended,
+If you want a function to modify a parameter's value,
+and you want those changes to persist after the function call has ended,
 define that parameter as an :newTerm:`in-out parameter` instead.
 
 You write an in-out parameter by placing the ``inout`` keyword
@@ -659,7 +659,7 @@ which has two in-out integer parameters called ``a`` and ``b``:
 The ``swapTwoInts`` function simply swaps the value of ``b`` into ``a``,
 and the value of ``a`` into ``b``.
 The function performs this swap by storing the value of ``a`` in
-a temporary constant called ``temporaryA``; assigning the value of ``b`` to ``a``;
+a temporary constant called ``temporaryA``, assigning the value of ``b`` to ``a``,
 and then assigning ``temporaryA`` to ``b``.
 
 You can call the ``swapTwoInts`` function with two variables of type ``Int``
@@ -677,8 +677,9 @@ when they are passed to the ``swapTwoInts`` function:
    -> println("someInt is now \(someInt), and anotherInt is now \(anotherInt)")
    <- someInt is now 107, and anotherInt is now 3
 
-After you call the ``swapTwoInts`` function,
-the values of ``someInt`` and ``anotherInt`` have both been modified,
+The example above shows that
+the original values of ``someInt`` and ``anotherInt``
+are modified by the ``swapTwoInts`` function,
 even though they were originally defined outside of the function.
 
 .. note::

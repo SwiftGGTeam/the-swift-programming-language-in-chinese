@@ -5,7 +5,7 @@ Classes, structures, and enumerations can define :newTerm:`subscripts`,
 which are shortcuts for accessing the member elements of a collection, list, or sequence.
 You use subscripts to set and retrieve values by index without needing
 separate methods for setting and retrieval.
-For example, you access elements in an ``Array`` instance as ``someArray[index]``,
+For example, you access elements in an ``Array`` instance as ``someArray[index]``
 and elements in a ``Dictionary`` instance as ``someDictionary[key]``.
 
 You can define multiple subscripts for a single type,
@@ -120,7 +120,7 @@ and assigning a value of the dictionary's value type to the subscript:
    << // numberOfLegs : Dictionary<String, Int> = ["spider": 8, "ant": 6, "cat": 4]
    -> numberOfLegs["bird"] = 2
 
-The example above defines a variable called ``numberOfLegs``,
+The example above defines a variable called ``numberOfLegs``
 and initializes it with a dictionary literal containing three key-value pairs.
 The type of the ``numberOfLegs`` dictionary is inferred to be ``Dictionary<String, Int>``.
 After creating the dictionary,

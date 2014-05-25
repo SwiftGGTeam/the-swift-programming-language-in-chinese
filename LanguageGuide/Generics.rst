@@ -239,16 +239,30 @@ Generic Types
 -------------
 
 In addition to generic functions,
-Swift also enables you to define your own :newTerm:`generic types`.
+Swift enables you to define your own :newTerm:`generic types`.
 These are custom classes, structures, and enumerations
 that can work with *any* type, in a similar way to ``Array`` and ``Dictionary``.
 
-This section shows you how to write a generic collection type called ``Stack``
-and compares it with a non-generic version of the same type.
-This type represents an ordered “stack” of values, with two operations:
+This section shows you how to write a generic collection type called ``Stack``.
+A “stack” is an ordered set of values, similar to an array,
+but with a more restricted set of operations than Swift's ``Array`` type.
+An array allows new items to be inserted and removed at any location in the array.
+A stack, however, only allows new items to be appended to the end of the collection
+(known as :newTerm:`pushing` a new value on to the stack).
+Similarly, a stack only allows items to be removed from the end of the collection
+(known as :newTerm:`popping` a value off the stack).
 
-* :newTerm:`Pushing` a new value on to the top of the stack
-* :newTerm:`Popping` a value off the top of the stack
+.. note::
+
+   The concept of a stack is used by the ``UINavigationController`` class
+   to model the view controllers in its navigation hierarchy.
+   You call the ``UINavigationController`` class's
+   ``pushViewController:animated:`` method to add (or push)
+   a view controller on to the navigation stack,
+   and its ``popViewControllerAnimated:`` method to remove (or pop)
+   a view controller from the navigation stack.
+   A stack is a useful collection model whenever you need a strict
+   “last in, first out” approach to managing a collection.
 
 The illustration below shows the push / pop behavior for a stack:
 
@@ -371,9 +385,8 @@ in a similar manner to ``Array`` and ``Dictionary``.
 Type Constraints
 ----------------
 
-The ``swapTwoValues`` function and the ``Stack`` type
-are both able to work with any type.
-However, it can sometimes be useful to enforce
+The ``swapTwoValues`` function and the ``Stack`` type can work with any type.
+However, it can be useful to enforce
 certain :newTerm:`type constraints` on the types that can be used with
 generic functions and generic types.
 Type constraints specify that a type parameter must
