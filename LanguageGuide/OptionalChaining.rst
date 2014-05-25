@@ -30,7 +30,11 @@ whereas forced unwrapping triggers a runtime error when the optional is ``nil``.
 To reflect the fact that optional chaining can be called on a ``nil`` value,
 the result of an optional chaining call is always an optional value,
 even if the property, method, or subscript you are querying returns a non-optional value.
-This gives a way to check whether the optional chaining call was successful.
+You can use this optional return value to check whether
+the optional chaining call was successful
+(in which case the returned optional will contain a value),
+or did not succeed due to a ``nil`` value in the chain
+(in which case the returned optional value will be ``nil``).
 
 Specifically, the result of an optional chaining call
 is of the same type as the expected return value, but wrapped in an optional.
@@ -294,7 +298,7 @@ Calling Methods Through Optional Chaining
 -----------------------------------------
 
 You can use optional chaining to call a method on an optional value,
-and to check if that method call is successful.
+and to check whether that method call is successful.
 This is the case even if that method does not define a return value.
 
 The ``printNumberOfRooms`` method on the ``Residence`` class
@@ -398,10 +402,10 @@ the actual items in the ``rooms`` array through optional chaining:
       }
    <- The first room name is Living Room.
 
-.. _OptionalChaining_MultiLevelChaining:
+.. _OptionalChaining_LinkingMultipleLevelsOfChaining:
 
-Multilevel Chaining
---------------------
+Linking Multiple Levels of Chaining
+-----------------------------------
 
 You can link together multiple levels of optional chaining
 to drill down to properties, methods, and subscripts deeper within a model.
