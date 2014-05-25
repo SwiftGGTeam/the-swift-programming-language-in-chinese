@@ -706,12 +706,12 @@ For example:
          return a + b
       }
    >> addTwoInts
-   << // r0 : (Int, Int) -> Int = <opaque>
+   << // r0 : (Int, Int) -> Int = (Function)
    -> func multiplyTwoInts(a: Int, b: Int) -> Int {
          return a * b
       }
    >> multiplyTwoInts
-   << // r1 : (Int, Int) -> Int = <opaque>
+   << // r1 : (Int, Int) -> Int = (Function)
 
 This example defines two simple mathematical functions
 called ``addTwoInts`` and ``multiplyTwoInts``.
@@ -735,7 +735,7 @@ Here's another example, for a function with no parameters or return value:
          println("hello, world")
       }
    >> printHelloWorld
-   << // r2 : () -> () = <opaque>
+   << // r2 : () -> () = (Function)
 
 The type of this function is ``() -> ()``,
 or “a function that has no parameters, and returns ``Void``.”
@@ -754,7 +754,7 @@ and assign an appropriate function to that variable:
 .. testcode:: functionTypes
 
    -> var mathFunction: (Int, Int) -> Int = addTwoInts
-   << // mathFunction : (Int, Int) -> Int = <opaque>
+   << // mathFunction : (Int, Int) -> Int = (Function)
 
 This can be read as:
 
@@ -789,7 +789,7 @@ when you assign a function to a constant or variable:
 .. testcode:: functionTypes
 
    -> let anotherMathFunction = addTwoInts
-   << // anotherMathFunction : (Int, Int) -> Int = <opaque>
+   << // anotherMathFunction : (Int, Int) -> Int = (Function)
    // anotherMathFunction is inferred to be of type (Int, Int) -> Int
 
 .. TODO: talk about defining typealiases for function types somewhere?
@@ -873,7 +873,7 @@ that will step in one direction or the other:
    -> var currentValue = 3
    << // currentValue : Int = 3
    -> let moveNearerToZero = chooseStepFunction(currentValue > 0)
-   << // moveNearerToZero : (Int) -> Int = <opaque>
+   << // moveNearerToZero : (Int) -> Int = (Function)
    // moveNearerToZero now refers to the stepBackward() function
 
 The preceding example works out whether a positive or negative step is needed
@@ -928,7 +928,7 @@ to use and return nested functions:
    -> var currentValue = -4
    << // currentValue : Int = -4
    -> let moveNearerToZero = chooseStepFunction(currentValue > 0)
-   << // moveNearerToZero : (Int) -> Int = <opaque>
+   << // moveNearerToZero : (Int) -> Int = (Function)
    // moveNearerToZero now refers to the nested stepForward() function
    -> while currentValue != 0 {
          println("\(currentValue)... ")

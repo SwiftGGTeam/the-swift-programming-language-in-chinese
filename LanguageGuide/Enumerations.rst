@@ -94,7 +94,7 @@ so that they read as self-evident:
 .. testcode:: enums
 
    -> var directionToHead = CompassPoint.West
-   << // directionToHead : CompassPoint = <opaque>
+   << // directionToHead : CompassPoint = (Enum Value)
 
 The type of ``directionToHead`` is inferred
 when it is initialized with one of the possible values of ``CompassPoint``.
@@ -154,7 +154,7 @@ you can provide a ``default`` case to cover any members that are not addressed e
 .. testcode:: enums
 
    -> let somePlanet = Planet.Earth
-   << // somePlanet : Planet = <opaque>
+   << // somePlanet : Planet = (Enum Value)
    -> switch somePlanet {
          case .Earth:
             println("Mostly harmless")
@@ -231,7 +231,7 @@ New barcodes can then be created using either type:
 .. testcode:: enums
 
    -> var productBarcode = Barcode.UPCA(8, 85909_51226, 3)
-   << // productBarcode : Barcode = <opaque>
+   << // productBarcode : Barcode = (Enum Value)
 
 This example creates a new variable called ``productBarcode``
 and assigns it a value of ``Barcode.UPCA``
@@ -354,7 +354,7 @@ This example identifies Uranus from its raw value of ``7``:
 .. testcode:: rawValues
 
    -> let possiblePlanet = Planet.fromRaw(7)
-   << // possiblePlanet : Planet? = <opaque>
+   << // possiblePlanet : Planet? = (Enum Value)
    // possiblePlanet is of type Planet? and equals Planet.Uranus
 
 Not all possible ``Int`` values will find a matching planet, however.

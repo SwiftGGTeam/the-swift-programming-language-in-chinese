@@ -312,7 +312,7 @@ to match the ``Togglable`` protocol's requirements:
          }
       }
    -> var lightSwitch = OnOffSwitch.Off
-   << // lightSwitch : OnOffSwitch = <opaque>
+   << // lightSwitch : OnOffSwitch = (Enum Value)
    -> lightSwitch.toggle()
    // lightSwitch is now equal to .On
 

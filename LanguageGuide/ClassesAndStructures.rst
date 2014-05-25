@@ -306,9 +306,9 @@ The same behavior applies to enumerations:
          case North, South, East, West
       }
    -> var currentDirection = CompassPoint.West
-   << // currentDirection : CompassPoint = <opaque>
+   << // currentDirection : CompassPoint = (Enum Value)
    -> let rememberedDirection = currentDirection
-   << // rememberedDirection : CompassPoint = <opaque>
+   << // rememberedDirection : CompassPoint = (Enum Value)
    -> currentDirection = .East
    -> if rememberedDirection == .West {
          println("The remembered direction is still .West")

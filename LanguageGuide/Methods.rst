@@ -351,7 +351,7 @@ a different member from the same enumeration:
          }
       }
    -> var ovenLight = TriStateSwitch.Low
-   << // ovenLight : TriStateSwitch = <opaque>
+   << // ovenLight : TriStateSwitch = (Enum Value)
    -> ovenLight.next()
    // ovenLight is now equal to .High
    -> ovenLight.next()
