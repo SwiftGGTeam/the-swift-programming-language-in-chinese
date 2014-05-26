@@ -1,7 +1,7 @@
 Optional Chaining
 =================
 
-:newTerm:`Optional chaining` is a way to query and call
+:newTerm:`Optional chaining` is a process for querying and calling
 properties, methods, and subscripts on an optional that might currently be ``nil``.
 If the optional contains a value,
 the property, method, or subscript call succeeds;
@@ -32,9 +32,9 @@ the result of an optional chaining call is always an optional value,
 even if the property, method, or subscript you are querying returns a non-optional value.
 You can use this optional return value to check whether
 the optional chaining call was successful
-(in which case the returned optional will contain a value),
+(the returned optional contains a value),
 or did not succeed due to a ``nil`` value in the chain
-(in which case the returned optional value will be ``nil``).
+(the returned optional value is ``nil``).
 
 Specifically, the result of an optional chaining call
 is of the same type as the expected return value, but wrapped in an optional.
@@ -299,7 +299,7 @@ Calling Methods Through Optional Chaining
 
 You can use optional chaining to call a method on an optional value,
 and to check whether that method call is successful.
-This is the case even if that method does not define a return value.
+You can do this even if that method does not define a return value.
 
 The ``printNumberOfRooms`` method on the ``Residence`` class
 prints the current value of ``numberOfRooms``.

@@ -98,8 +98,6 @@ written as ``TypeName`` followed by empty parentheses:
 The initializer for ``Vehicle`` sets some initial property values
 (``numberOfWheels = 0`` and ``maxPassengers = 1``)
 for an arbitrary vehicle.
-(It is assumed that any vehicle can carry at least one passenger ---
-it wouldn't be a very useful vehicle otherwise.)
 
 The ``Vehicle`` class defines common characteristics for an arbitrary vehicle,
 but is not much use in itself.

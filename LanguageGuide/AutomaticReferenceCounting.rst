@@ -663,7 +663,7 @@ while still avoiding a strong reference cycle.
 
 .. _AutomaticReferenceCounting_StrongReferenceCyclesForClosures:
 
-Strong Reference Cycles For Closures
+Strong Reference Cycles for Closures
 ------------------------------------
 
 You saw above how a strong reference cycle can be created
@@ -673,7 +673,7 @@ You also saw how to use weak and unowned references to break these strong refere
 A strong reference cycle can also occur
 if you assign a closure to a property of a class instance,
 and the body of that closure captures the instance.
-This might be because the closure's body accesses a property of the instance,
+This capture might occur because the closure's body accesses a property of the instance,
 such as ``self.someProperty``,
 or because the closure calls a method on the instance,
 such as ``self.someMethod()``.
@@ -684,8 +684,7 @@ This happens because closures, like classes, are *reference types*.
 When you assign a closure to a property,
 you are assigning a *reference* to that closure.
 In essence, it's the same problem as above ---
-two different things are referencing each other with a strong reference
-and are keeping each other alive.
+two strong references are keeping each other alive.
 However, rather than two class instances,
 this time it's a class instance and a closure that are keeping each other alive.
 

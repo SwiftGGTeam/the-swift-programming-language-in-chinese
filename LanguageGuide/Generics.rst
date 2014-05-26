@@ -244,19 +244,19 @@ These are custom classes, structures, and enumerations
 that can work with *any* type, in a similar way to ``Array`` and ``Dictionary``.
 
 This section shows you how to write a generic collection type called ``Stack``.
-A “stack” is an ordered set of values, similar to an array,
+A stack is an ordered set of values, similar to an array,
 but with a more restricted set of operations than Swift's ``Array`` type.
 An array allows new items to be inserted and removed at any location in the array.
-A stack, however, only allows new items to be appended to the end of the collection
+A stack, however, allows new items to be appended only to the end of the collection
 (known as :newTerm:`pushing` a new value on to the stack).
-Similarly, a stack only allows items to be removed from the end of the collection
+Similarly, a stack allows items to be removed only from the end of the collection
 (known as :newTerm:`popping` a value off the stack).
 
 .. note::
 
    The concept of a stack is used by the ``UINavigationController`` class
    to model the view controllers in its navigation hierarchy.
-   You call the ``UINavigationController`` class's
+   You call the ``UINavigationController`` class
    ``pushViewController:animated:`` method to add (or push)
    a view controller on to the navigation stack,
    and its ``popViewControllerAnimated:`` method to remove (or pop)
@@ -386,7 +386,7 @@ Type Constraints
 ----------------
 
 The ``swapTwoValues`` function and the ``Stack`` type can work with any type.
-However, it can be useful to enforce
+However, it is sometimes useful to enforce
 certain :newTerm:`type constraints` on the types that can be used with
 generic functions and generic types.
 Type constraints specify that a type parameter must

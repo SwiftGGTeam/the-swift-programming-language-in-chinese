@@ -1038,10 +1038,10 @@ These requirements do not have to be implemented by types that conform to the pr
 Optional requirements are prefixed by the ``@optional`` keyword
 as part of the protocol's definition.
 
-Optional protocol requirements can be checked and called with optional chaining,
-to cope with the fact that the requirement may not have been implemented
+An optional protocol requirement can be called with optional chaining,
+to account for the possibility that the requirement was not implemented
 by a type that conforms to the protocol.
-For more on optional chaining, see :doc:OptionalChaining:.
+For information on optional chaining, see :doc:`OptionalChaining`.
 
 You check for an implementation of an optional requirement
 by writing a question mark after the name of the requirement when it is called,

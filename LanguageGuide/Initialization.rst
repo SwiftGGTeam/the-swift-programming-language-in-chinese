@@ -3,7 +3,7 @@ Initialization
 
 :newTerm:`Initialization` is the process of preparing an instance of
 a class, structure, or enumeration for use.
-This process involves setting an initial value for each stored property on that instance,
+This process involves setting an initial value for each stored property on that instance
 and performing any other setup or initialization that is required
 before the new instance is ready to for use.
 
@@ -97,7 +97,7 @@ when it is defined.
    default initializers and initializer inheritance,
    as described later in this chapter.
 
-The ``Fahrenheit`` structure from above can be written in a simpler form
+You can write the ``Fahrenheit`` structure from above in a simpler form
 by providing a default value for its ``temperature`` property
 at the point that the property is declared:
 
@@ -444,7 +444,9 @@ both of which provide default values of ``0.0`` for all of their properties:
 You can initialize the ``Rect`` structure below in one of three ways ---
 by using its default zero-initialized ``origin`` and ``size`` property values;
 by providing a specific origin point and size;
-or by providing a specific center point and size:
+or by providing a specific center point and size.
+These initialization options are represented by
+three custom initializers provided as part of the ``Rect`` structure's definition:
 
 .. testcode:: valueDelegation
 
@@ -533,17 +535,9 @@ must ensure that all of the subclass's stored properties ---
 including any properties that the subclass inherits ---
 are assigned a suitable value during initialization.
 
-When defining a class, you often provide one or two primary initializers
-that ensure an instance of that class is fully initialized.
-These initializers are also typically called by subclasses
-as part of their own initialization.
-
-In addition to these primary initializers,
-it can be useful to define more convenient secondary initializers for a subclass,
-which provide simpler or more context-specific ways to create an instance of that subclass.
-
-Swift defines two different kinds of initializers for class types to reflect these needs,
-known as designated initializers and convenience initializers.
+To help with this,
+Swift defines two kinds of initializers for class types.
+These are known as designated initializers and convenience initializers.
 
 .. _Initialization_DesignatedInitializersAndConvenienceInitializers:
 
@@ -621,8 +615,8 @@ from the superclass, to satisfy rule 1 from above.
    a fully-initialized instance of the class they belong to.
    The rules only affect how you write the class's implementation.
 
-The figure below shows a more complex class hierarchy for four classes
-and illustrates how the designated initializers in this hierarchy
+The figure below shows a more complex class hierarchy for four classes.
+It illustrates how the designated initializers in this hierarchy
 act as “funnel” points for class initialization,
 simplifying the interrelationships among classes in the chain:
 
