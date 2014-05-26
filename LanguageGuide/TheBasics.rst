@@ -416,8 +416,8 @@ Swift provides two signed floating-point number types:
 
 .. note::
 
-   ``Double`` has a precision of at least 15 digits,
-   whereas the precision of ``Float`` can be as little as 6 digits.
+   ``Double`` has a precision of at least 15 decimal digits,
+   whereas the precision of ``Float`` can be as little as 6 decimal digits.
    The appropriate floating-point type to use depends on the nature and range of
    values you need to work with in your code.
 
