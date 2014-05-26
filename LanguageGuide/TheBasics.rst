@@ -1248,7 +1248,7 @@ The assertion message can be omitted if desired, as in the following example:
 When to Use Assertions
 ~~~~~~~~~~~~~~~~~~~~~~
 
-Use an assert whenever a condition has the potential to be false,
+Use an assertion whenever a condition has the potential to be false,
 but must *definitely* be true in order for your code to continue execution.
 Suitable scenarios for an assertion check include:
 
