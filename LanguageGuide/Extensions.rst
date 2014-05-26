@@ -217,28 +217,28 @@ Methods
 -------
 
 Extensions can add new instance methods and type methods to existing types.
-The following example adds a new instance method called ``times`` to the ``Int`` type:
+The following example adds a new instance method called ``repetitions`` to the ``Int`` type:
 
 .. testcode:: extensionsInstanceMethods
 
    -> extension Int {
-         func times(task: () -> ()) {
+         func repetitions(task: () -> ()) {
             for i in 0..self {
                task()
             }
          }
       }
 
-The ``times`` method takes a single argument of type ``() -> ()``,
+The ``repetitions`` method takes a single argument of type ``() -> ()``,
 which indicates a function that has no parameters and does not return a value.
 
 After defining this extension,
-you can call the ``times`` method on any integer number
+you can call the ``repetitions`` method on any integer number
 to perform a task that many number of times:
 
 .. testcode:: extensionsInstanceMethods
 
-   -> 3.times({
+   -> 3.repetitions({
          println("Hello!")
       })
    </ Hello!
@@ -249,7 +249,7 @@ Use trailing closure syntax to make the call more succinct:
 
 .. testcode:: extensionsInstanceMethods
 
-   -> 3.times {
+   -> 3.repetitions {
          println("Goodbye!")
       }
    </ Goodbye!
