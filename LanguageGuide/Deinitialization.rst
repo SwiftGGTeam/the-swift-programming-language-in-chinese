@@ -14,16 +14,16 @@ How Deinitialization Works
 Swift automatically deallocates your instances when they are no longer needed,
 to free up resources.
 Swift handles the memory management of instances through
-:newTerm:`automatic reference counting` (known as :newTerm:`ARC`),
+:newTerm:`automatic reference counting` (:newTerm:`ARC`),
 as described in :doc:`AutomaticReferenceCounting`.
-Typically you don't need to perform any manual clean-up when your instances are deallocated.
-However, there may be times when you are working with your own resources,
-and need to perform some additional clean-up yourself.
+Typically you don't need to perform manual clean-up when your instances are deallocated.
+However, when you are working with your own resources,
+you might need to perform some additional clean-up yourself.
 For example, if you create a custom class to open a file and write some data to it,
 you might need to close the file before the class instance is deallocated.
 
 Class definitions can have at most one deinitializer per class.
-The deinitializer does not take any parameters,
+The deinitializer does not take any parameters
 and is written without parentheses:
 
 .. testcode:: deinitializer
@@ -42,8 +42,8 @@ a subclass deinitializer implementation.
 Superclass deinitializers are always called,
 even if a subclass does not provide its own deinitializer.
 
-Because the instance has not yet been deallocated when a deinitializer is called,
-a deinitializer can access all properties of the instance it is called on,
+Because an instance is not deallocated until after its deinitializer is called,
+a deinitializer can access all properties of the instance it is called on
 and can modify its behavior based on those properties
 (such as looking up the name of a file that needs to be closed).
 
@@ -109,12 +109,13 @@ This is represented by the player's ``coinsInPurse`` property:
       }
 
 Each ``Player`` instance is initialized with a starting allowance of
-some specified number of coins from the bank during initialization
-(although it may receive fewer than that number, if not enough are available).
+a specified number of coins from the bank during initialization,
+although a ``Player`` instance may receive fewer than that number
+if not enough coins are available.
 
 The ``Player`` class defines a ``winCoins`` method,
-which tries to retrieve a certain number of coins from the bank
-and add them to the player's purse.
+which retrieves a certain number of coins from the bank
+and adds them to the player's purse.
 The ``Player`` class also implements a deinitializer,
 which is called just before a ``Player`` instance is deallocated.
 Here, the deinitializer simply returns all of the player's coins to the bank:

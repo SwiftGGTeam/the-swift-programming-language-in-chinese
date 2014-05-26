@@ -453,10 +453,10 @@ and a speed of ``35.0`` produces a gear of ``4``:
    -> println("AutomaticCar: \(automatic.description())")
    </ AutomaticCar: 4 wheels; up to 5 passengers; traveling at 35.0 mph in gear 4
 
-.. _Inheritance_PreventingOverridesOfMethodsPropertiesAndSubscripts:
+.. _Inheritance_PreventingOverrides:
 
-Preventing Overrides of Methods, Properties, and Subscripts
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Preventing Overrides
+--------------------
 
 You can prevent a method, property, or subscript from being overridden
 by marking it as :newTerm:`final`.

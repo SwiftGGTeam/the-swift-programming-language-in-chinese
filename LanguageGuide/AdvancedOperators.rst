@@ -144,7 +144,7 @@ and are set to ``0`` where the input bits are the same:
 
 In the example below,
 the values of ``firstBits`` and ``otherBits`` each have a bit set to ``1``
-that the other does not.
+in a location that the other does not.
 The bitwise XOR operator sets both of these bits to ``1`` in its output value.
 All of the other bits in ``firstBits`` and ``otherBits`` match
 and are set to ``0`` in the output value:
@@ -583,7 +583,7 @@ starting from their left:
    -> 2 + 2
    << // r3 : Int = 4
 
-This gives the final answer of ``4``.
+This calculation yields the final answer of ``4``.
 
 For a complete list of Swift operator precedences and associativity rules, see  :doc:`../ReferenceManual/Expressions`.
 

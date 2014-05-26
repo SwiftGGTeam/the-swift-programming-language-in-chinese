@@ -442,11 +442,11 @@ both of which provide default values of ``0.0`` for all of their properties:
       }
 
 You can initialize the ``Rect`` structure below in one of three ways ---
-by using its default zero-initialized ``origin`` and ``size`` property values;
-by providing a specific origin point and size;
+by using its default zero-initialized ``origin`` and ``size`` property values,
+by providing a specific origin point and size,
 or by providing a specific center point and size.
 These initialization options are represented by
-three custom initializers provided as part of the ``Rect`` structure's definition:
+three custom initializers that are part of the ``Rect`` structure's definition:
 
 .. testcode:: valueDelegation
 
@@ -529,14 +529,12 @@ that already provides exactly that functionality.
 Class Inheritance and Initialization
 ------------------------------------
 
-Classes can inherit from other classes, as described in :doc:`Inheritance`.
-This means that any subclass initializers you write
-must ensure that all of the subclass's stored properties ---
-including any properties that the subclass inherits ---
-are assigned a suitable value during initialization.
+All of a class's stored properties ---
+including any properties the class inherits from its superclass ---
+*must* be assigned an initial value during initialization.
 
-To help with this,
-Swift defines two kinds of initializers for class types.
+Swift defines two kinds of initializers for class types
+to help ensure all stored properties receive an initial value.
 These are known as designated initializers and convenience initializers.
 
 .. _Initialization_DesignatedInitializersAndConvenienceInitializers:
@@ -549,11 +547,6 @@ A designated initializer fully initializes all properties introduced by that cla
 and calls an appropriate superclass initializer
 to continue the initialization process up the superclass chain.
 
-:newTerm:`Convenience initializers` are secondary, supporting initializers for a class.
-You can define a convenience initializer to call a designated initializer on the same class
-with some of the designated initializer's parameters set to default values,
-or to create an instance of that class for a specific use case or input value type.
-
 Classes tend to have very few designated initializers,
 and it is quite common for a class to have only one.
 Designated initializers are “funnel” points through which initialization takes place,
@@ -563,6 +556,11 @@ Every class must have at least one designated initializer.
 In some cases, this requirement is satisfied
 by inheriting one or more designated initializers from a superclass,
 as described in :ref:`Initialization_AutomaticInitializerInheritance` below.
+
+:newTerm:`Convenience initializers` are secondary, supporting initializers for a class.
+You can define a convenience initializer to call a designated initializer on the same class
+with some of the designated initializer's parameters set to default values,
+or to create an instance of that class for a specific use case or input value type.
 
 You do not have to provide convenience initializers if your class does not require them.
 Create convenience initializers whenever a shortcut to a common initialization pattern

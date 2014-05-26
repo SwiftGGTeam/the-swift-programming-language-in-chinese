@@ -20,7 +20,7 @@ and there are no limitations on what that type can be.
 
 .. _Generics_TheProblemThatGenericsSolve:
 
-The Problem that Generics Solve
+The Problem That Generics Solve
 -------------------------------
 
 Here's a standard, non-generic function called ``swapTwoInts``,
@@ -449,7 +449,7 @@ that requires ``U`` to conform to the protocol ``SomeProtocol``.
 
 .. _Generics_TypeConstraintsInAction:
 
-Type Constraints In Action
+Type Constraints in Action
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Here's a non-generic function called ``findInt``,
@@ -583,7 +583,7 @@ Associated types are specified with the ``typealias`` keyword.
 
 .. _Generics_AssociatedTypesInAction:
 
-Associated Types In Action
+Associated Types in Action
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Here's an example of a protocol called ``Container``,
@@ -732,7 +732,7 @@ These three capabilities match the requirements of the ``Container`` protocol.
 This means that you can extend ``Array`` to conform to the ``Container`` protocol
 simply by declaring that ``Array`` adopts the protocol.
 You do this with an empty extension,
-as described in :ref:`Protocols_DeclaringProtocolAdoption`:
+as described in :ref:`Protocols_DeclaringProtocolAdoptionWithAnExtension`:
 
 .. testcode:: associatedTypes
 

@@ -56,7 +56,7 @@ and does not allow it to be deallocated for as long as that strong reference rem
 
 .. _AutomaticReferenceCounting_ARCInAction:
 
-ARC In Action
+ARC in Action
 -------------
 
 Here's an example of how Automatic Reference Counting works.
@@ -680,7 +680,7 @@ such as ``self.someMethod()``.
 In either case, these accesses cause the closure to “capture” ``self``,
 creating a strong reference cycle.
 
-This happens because closures, like classes, are *reference types*.
+This strong reference cycle occurs because closures, like classes, are *reference types*.
 When you assign a closure to a property,
 you are assigning a *reference* to that closure.
 In essence, it's the same problem as above ---
@@ -820,7 +820,7 @@ which shows that the ``HTMLElement`` instance is not deallocated.
 
 .. _AutomaticReferenceCounting_ResolvingStrongReferenceCyclesForClosures:
 
-Resolving Strong Reference Cycles For Closures
+Resolving Strong Reference Cycles for Closures
 ----------------------------------------------
 
 You resolve a strong reference cycle between a closure and a class instance

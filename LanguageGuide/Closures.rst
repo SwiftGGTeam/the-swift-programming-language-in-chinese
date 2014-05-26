@@ -21,8 +21,8 @@ Global and nested functions, as introduced in :doc:`Functions`,
 are actually special cases of closures.
 Closures take one of three forms:
 
-* Global functions are closures that have a name.
-  and do not capture any values
+* Global functions are closures that have a name
+  and do not capture any values.
 * Nested functions are closures that have a name
   and can capture values from their enclosing function.
 * Closure expressions are unnamed closures written in a lightweight syntax
@@ -426,7 +426,8 @@ The process is repeated until ``number /= 10`` is equal to ``0``,
 at which point the ``output`` string is returned by the closure,
 and is added to the output array by the ``map`` function.
 
-The trailing closure here neatly encapsulates the closure's functionality
+The use of trailing closure syntax in the example above
+neatly encapsulates the closure's functionality
 immediately after the function it supports,
 without needing to wrap the entire closure within
 the ``map`` function's outer parentheses.
@@ -588,7 +589,7 @@ Closures Are Reference Types
 
 In the example above,
 ``incrementBySeven`` and ``incrementByTen`` are constants,
-but the closures they refer to are still able to increment
+but the closures these constants refer to are still able to increment
 the ``runningTotal`` variables that they have captured.
 This is because functions and closures are :newTerm:`reference types`.
 

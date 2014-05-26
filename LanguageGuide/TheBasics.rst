@@ -25,11 +25,11 @@ Tuples can return multiple values from a function as a single compound value.
 
 Swift also introduces optional types,
 which handle the absence of a value.
-Optionals are a way to say either “there *is* a value, and it equals *x*”
+Optionals say either “there *is* a value, and it equals *x*”
 or “there *isn't* a value at all”.
-Optionals are similar to working with ``nil`` in Objective-C,
+Optionals are similar to ``nil`` in Objective-C,
 but they work for any type, not just classes.
-Optionals are safer and more expressive than ``nil`` pointers in Objective-C,
+Optionals are safer and more expressive than ``nil`` pointers in Objective-C
 and are at the heart of many of Swift's most powerful features.
 
 Optionals are an example of the fact that Swift is a *type safe* language.
@@ -43,12 +43,12 @@ This enables you to catch and fix errors as early as possible in the development
 Constants and Variables
 -----------------------
 
-Constants and variables give a name
+Constants and variables are a way to associate a name
 (such as ``maximumNumberOfLoginAttempts`` or ``welcomeMessage``)
-to a value of a particular type
-(such as the number ``10``, or the string ``"Hello"``).
-A :newTerm:`constant` cannot be changed once it is set, whereas
-a :newTerm:`variable` can be set to a different value in the future.
+with a value of a particular type
+(such as the number ``10`` or the string ``"Hello"``).
+The value of a :newTerm:`constant` cannot be changed once it is set,
+whereas a :newTerm:`variable` can be set to a different value in the future.
 
 .. _TheBasics_DeclaringConstantsAndVariables:
 
@@ -330,7 +330,7 @@ Integers
 
 :newTerm:`Integers` are whole numbers with no fractional component,
 such as ``42`` and ``-23``.
-Integers are either :newTerm:`signed` (positive, zero, or negative),
+Integers are either :newTerm:`signed` (positive, zero, or negative)
 or :newTerm:`unsigned` (positive or zero).
 
 Swift provides signed and unsigned integers in 8, 16, 32, and 64 bit forms.
@@ -610,7 +610,7 @@ is reported as an error when your code is compiled:
 
 Because each numeric type can store a different range of values,
 you must opt in to numeric type conversion on a case-by-case basis.
-This opt-in approach avoids hidden conversion errors
+This opt-in approach prevents hidden conversion errors
 and helps make type conversion intentions explicit in your code.
 
 To convert one specific number type to another,
@@ -935,7 +935,7 @@ An optional says:
    For these types,
    Objective-C methods typically return a special value (such as ``NSNotFound``)
    to indicate the absence of a value.
-   This assumes that the method's caller knows there is a special value to test against
+   This approach assumes that the method's caller knows there is a special value to test against
    and remembers to check for it.
    Swift's optionals let you indicate the absence of a value for *any type at all*,
    without the need for special constants.

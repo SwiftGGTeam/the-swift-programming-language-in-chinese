@@ -482,7 +482,7 @@ have all been :newTerm:`stored variables`.
 Stored variables, like stored properties,
 provide storage for a value of a certain type and allow that value to be set and retrieved.
 
-However, you can also define :newTerm:`computed variables`,
+However, you can also define :newTerm:`computed variables`
 and define observers for stored variables,
 in either a global or local scope.
 Computed variables calculate rather than store a value,
@@ -598,7 +598,7 @@ For example:
    -> println(SomeStructure.storedTypeProperty)
    <- Another value.
 
-The examples in this section use two stored type properties as part of a structure
+The examples that follow use two stored type properties as part of a structure
 that models an audio level meter for a number of audio channels.
 Each channel has an integer audio level between ``0`` and ``10`` inclusive.
 

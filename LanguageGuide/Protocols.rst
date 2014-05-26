@@ -656,10 +656,10 @@ adopt and conform to the ``TextRepresentable`` protocol:
    -> println(game.asText())
    <- A game of Snakes and Ladders with 25 squares
 
-.. _Protocols_DeclaringProtocolAdoption:
+.. _Protocols_DeclaringProtocolAdoptionWithAnExtension:
 
-Declaring Protocol Adoption
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Declaring Protocol Adoption with an Extension
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If a type already conforms to all of the requirements of a protocol,
 but has not yet stated that it adopts that protocol,

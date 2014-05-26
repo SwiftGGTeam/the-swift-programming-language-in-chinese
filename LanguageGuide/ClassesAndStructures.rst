@@ -502,7 +502,7 @@ Assignment and Copy Behavior for Collection Types
 -------------------------------------------------
 
 Swift's ``Array`` and ``Dictionary`` types are implemented as structures.
-However, arrays have slightly different copying behavior than dictionaries and other structures
+However, arrays have slightly different copying behavior from dictionaries and other structures
 when they are assigned to a constant or variable,
 and when they are passed to a function or method.
 
@@ -582,7 +582,7 @@ Assignment and Copy Behavior for Arrays
 
 The assignment and copy behavior for Swift's ``Array`` type
 is more complex than for its ``Dictionary`` type.
-``Array`` provides C-like performance when working with an array's contents
+``Array`` provides C-like performance when you work with an array's contents
 and copies an array's contents only when copying is necessary.
 
 If you assign an ``Array`` instance to a constant or variable,
