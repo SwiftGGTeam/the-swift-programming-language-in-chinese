@@ -559,7 +559,7 @@ the properties and methods of the instance.
 .. testcode:: guided-tour
 
     -> var shape = Shape()
-    << // shape : Shape = <Shape instance>
+    << // shape : Shape = C4REPL5Shape (has 1 child)
     -> shape.numberOfSides = 7
     -> var shapeDescription = shape.simpleDescription()
     << // shapeDescription : String = "A shape with 7 sides."
@@ -632,7 +632,7 @@ that don't actually override any method in the superclass.
            }
        }
     -> let test = Square(sideLength: 5.2, name: "my test square")
-    << // test : Square = <Square instance>
+    << // test : Square = C4REPL6Square (has 2 children)
     -> test.area()
     <$ : Double = 27.04
     -> test.simpleDescription()
@@ -675,6 +675,7 @@ properties can have a getter and a setter.
            }
        }
     -> var triangle = EquilateralTriangle(sideLength: 3.1, name: "a triangle")
+    << // triangle : EquilateralTriangle = C4REPL19EquilateralTriangle (has 2 children)
     -> triangle.perimeter
     <$ : Double = 9.3
     -> triangle.perimeter = 9.9
@@ -722,7 +723,7 @@ is always the same as the side length of its square.
           }
       }
    -> var triangleAndSquare = TriangleAndSquare(size: 10, name: "another test shape")
-   << // triangleAndSquare :TriangleAndSquare = <TriangleAndSquare instance>
+   << // triangleAndSquare : TriangleAndSquare = C4REPL17TriangleAndSquare (has 2 children)
    -> triangleAndSquare.square.sideLength
    <$ : Double = 10.0
    -> triangleAndSquare.triangle.sideLength
@@ -753,6 +754,7 @@ You can specify a second name, which is used inside the method.
            }
        }
     -> var counter = Counter()
+    << // counter : Counter = C4REPL7Counter (has 1 child)
     -> counter.incrementBy(2, numberOfTimes: 7)
 
 When working with optional values,
@@ -768,7 +770,9 @@ the value of the whole expression is an optional value.
 .. testcode:: guided-tour
 
     -> let optionalSquare: Square? = Square(sideLength: 2.5, name: "optional square")
+    << // optionalSquare : Square? = C4REPL6Square (has 2 children)
     -> let sideLength = optionalSquare?.sideLength
+    << // sideLength : Double? = 2.5
 
 Enumerations and Structures
 ---------------------------
@@ -799,7 +803,7 @@ enumerations can have methods associated with them.
            }
        }
     -> let ace = Rank.Ace
-    << // ace : Rank = <opaque>
+    << // ace : Rank = (Enum Value)
     -> let aceRawValue = ace.toRaw()
     <$ : Int = 1
 
@@ -820,12 +824,9 @@ between the raw value and the enumeration value.
 
 .. testcode:: guided-tour
 
-    >> var test_threeDescription = ""
     -> if let convertedRank = Rank.fromRaw(3) {
-    ->     let threeDescription = convertedRank.simpleDescription()
-    >>     test_threeDescription = threeDescription
-    -> }
-    >> test_threeDescription
+           let threeDescription = convertedRank.simpleDescription()
+       }
     <$ : String "3"
 
 The member values of an enumeration are actual values,
