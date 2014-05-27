@@ -63,28 +63,26 @@ the term *declaration* covers both declarations and definitions.
 Module Scope
 ------------
 
-.. write-me:: Need to get the TR below answered to write more about this.
+The module scope defines the code that's visible to other code in Swift source files
+that are part of the same module.
+The top-level code in a Swift source file consists of zero or more statements,
+declarations, and expressions.
+Variables, constants, and other named declarations that are declared
+at the top-level of a source file are visible to code
+in every source file that is part of the same module.
 
-The :newTerm:`module scope` defines the top-level (global) scope of a Swift source file.
-It consists of a series of statements, which include declarations,
-expressions, and other kinds of statements.
-
-Variables, constants, and other named declarations that are declared at global scope
-are visible to any other code in the same file.
-
-.. TODO: Need to add more to this section.
-
-.. TR: What exactly is "module scope"?
-    Is it the scope of a *single* Swift source file?
-    The way it's currently written here and in LangRef
-    makes it seem like module scope is the same as the scope
-    of a single Swift source file.
+.. TODO: Revisit and rewrite this section after WWDC
 
 .. langref-grammar
 
     top-level ::= brace-item*
 
-.. No formal grammar.
+
+.. syntax-grammar::
+
+    Grammar of a top-level declaration
+
+    top-level-declaration --> statements-OPT
 
 
 .. _LexicalStructure_CodeBlocks:
@@ -531,7 +529,7 @@ See also :ref:`Declarations_ProtocolAssociatedTypeDeclaration`.
 
 .. syntax-grammar::
 
-    Grammar of a typealias declaration
+    Grammar of a type alias declaration
 
     typealias-declaration --> typealias-head typealias-assignment
     typealias-head --> ``typealias`` typealias-name
@@ -1374,8 +1372,16 @@ See also :ref:`Declarations_SubscriptDeclaration`.
 Protocol Associated Type Declaration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. write-me:: Need to discuss with Dave what we want to call these things
-    and where he plans on covering them.
+Protocols declare associated types using the keyword ``typealias``.
+An associated type provides an alias for a type
+that is used as part of a protocol's declaration.
+Accosiated types are similiar to type paramters in generic parameter clauses,
+but they're associated with ``Self`` in the protocol in which they're declared.
+In that context, ``Self`` refers to the eventual type that conforms to the protocol.
+For more information and examples,
+see :ref:`Generics_AssociatedTypes`.
+
+.. TODO: Finish writing this section after WWDC.
 
 .. NOTE:
     What are associated types? What are they "associated" with? Is "Self"
