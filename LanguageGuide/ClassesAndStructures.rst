@@ -201,7 +201,7 @@ You can also use dot syntax to assign a new value to a variable property:
    Swift enables you to set sub-properties of properties directly.
    In the last example above,
    the ``width`` property of the ``resolution`` property of ``someVideoMode`` is set directly,
-   without needing to set the entire ``resolution`` property to a new value.
+   without your needing to set the entire ``resolution`` property to a new value.
 
 .. _ClassesAndStructures_MemberwiseInitializersForStructureTypes:
 
@@ -511,7 +511,7 @@ the behavior of ``NSArray`` and ``NSDictionary`` in Foundation,
 which are implemented as classes, not structures.
 ``NSArray`` and ``NSDictionary`` instances are always
 assigned and passed around as a reference to an existing instance,
-rather than making a copy.
+rather than as a copy.
 
 .. note::
 
@@ -773,7 +773,7 @@ from before the copy took place:
 
    If you simply need to be sure that your reference to an array's contents
    is the only reference in existence,
-   always call the ``unshare`` method, not the ``copy`` method.
+   call the ``unshare`` method, not the ``copy`` method.
    The ``unshare`` method does not make a copy of the array
    unless it is necessary to do so.
    The ``copy`` method always copies the array,

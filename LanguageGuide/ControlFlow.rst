@@ -153,7 +153,7 @@ and the dictionary's values are decomposed into a constant called ``legCount``:
 Items in a ``Dictionary`` may not necessarily be iterated in the same order as they were inserted.
 The contents of a ``Dictionary`` are inherently unordered,
 and iterating over them does not guarantee the order in which they will be retrieved.
-For more on Arrays and Dictionaries, see :doc:`CollectionTypes`.)
+For more on arrays and dictionaries, see :doc:`CollectionTypes`.)
 
 In addition to arrays and dictionaries,
 you can also use the ``for``-``in`` loop to iterate over the ``Character`` values in a string:
@@ -214,7 +214,7 @@ Here's the general form of this loop format:
    }
 
 Semicolons separate the three parts of the loop's definition, as in C.
-However, unlike C, you don't need to add parentheses around
+However, unlike C, Swift doesn't need parentheses around
 the entire “initialization; condition; increment” block.
 
 The loop is executed as follows:
@@ -732,7 +732,8 @@ This provision ensures that the ``switch`` statement is exhaustive.
 No Implicit Fallthrough
 _______________________
 
-Unlike C and Objective-C, ``switch`` statements in Swift do not
+In contrast with ``switch`` statements in C and Objective-C,
+``switch`` statements in Swift do not
 fall through the bottom of each case and into the next one by default.
 Instead, the entire ``switch`` statement finishes its execution
 as soon as the first matching ``switch`` case is completed,
@@ -765,7 +766,8 @@ It is not valid to write the following code, because the first case is empty:
    !!          ^~~~~~~~~
    // this will report a compile-time error
 
-Unlike C, this ``switch`` statement does not match both ``"a"`` and ``"A"``.
+Unlike a ``switch`` statement in C,
+this ``switch`` statement does not match both ``"a"`` and ``"A"``.
 Rather, it reports a compile-time error that ``case "a":``
 does not contain any executable statements.
 This approach avoids accidental fallthrough from one case to another,

@@ -14,7 +14,7 @@ or a value of any integer or floating-point type.
 
 Alternatively, enumeration members can specify
 associated values of *any* type to be stored along with each different member value,
-in a similar way to unions or variants in other languages.
+much as unions or variants do in other languages.
 You can define a common set of related members as part of one enumeration,
 each of which has a different set of values of appropriate types associated with it.
 
@@ -175,7 +175,7 @@ and check for this value later.
 However, it is sometimes useful to be able to store
 :newTerm:`associated values` of other types alongside these member values.
 This enables you to store additional custom information along with the member value,
-and for this information to vary each time you use that member in your code.
+and permits this information to vary each time you use that member in your code.
 
 You can define Swift enumerations to store associated values of any given type,
 and the value types can be different for each member of the enumeration if needed.
@@ -290,7 +290,7 @@ Raw Values
 The barcode example in :ref:`Enumerations_AssociatedValues`
 shows how members of an enumeration can declare that they store
 associated values of different types.
-In addition to associated values,
+As an alternative to associated values,
 enumeration members can come prepopulated with default values
 (called :newTerm:`raw values`),
 which are all of the same type.
