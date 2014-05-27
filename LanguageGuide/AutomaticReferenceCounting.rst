@@ -8,7 +8,7 @@ and you do not need to think about memory management yourself.
 ARC automatically frees up the memory used by class instances
 when those instances are no longer needed.
 
-However, there are a few cases where ARC requires more information
+However, in a few cases ARC requires more information
 about the relationships between parts of your code
 in order to manage memory for you.
 This chapter describes those situations
@@ -26,19 +26,17 @@ How ARC Works
 -------------
 
 Every time you create a new instance of a class,
-Swift allocates a chunk of memory to store information about that instance.
+ARC allocates a chunk of memory to store information about that instance.
 This memory holds information about the type of the instance,
 together with the values of any stored properties associated with that instance.
 
 Additionally, when an instance is no longer needed,
-Swift frees up the memory used by that instance
+ARC frees up the memory used by that instance
 so that the memory can be used for other purposes instead.
 This ensures that class instances do not take up space in memory
 when they are no longer needed.
 
-To manage this process for you,
-ARC needs to keep track of whether an instance is still being used.
-If ARC were to deallocate an instance that was still in use,
+However, if ARC were to deallocate an instance that was still in use,
 it would no longer be possible to access that instance's properties,
 or call that instance's methods.
 Indeed, if you tried to access the instance, your app would most likely crash.
@@ -58,7 +56,7 @@ and does not allow it to be deallocated for as long as that strong reference rem
 
 .. _AutomaticReferenceCounting_ARCInAction:
 
-ARC In Action
+ARC in Action
 -------------
 
 Here's an example of how Automatic Reference Counting works.
@@ -151,8 +149,8 @@ Strong Reference Cycles Between Class Instances
 -----------------------------------------------
 
 In the examples above,
-ARC is able to track the number of references to the new ``Person`` instance you create,
-and to dispose of that ``Person`` instance when it is no longer needed.
+ARC is able to track the number of references to the new ``Person`` instance you create
+and to deallocate that ``Person`` instance when it is no longer needed.
 
 However, it is possible to write code in which an instance of a class
 *never* gets to a point where it has zero strong references.
@@ -162,7 +160,7 @@ This is known as a :newTerm:`strong reference cycle`.
 
 You resolve strong reference cycles
 by defining some of the relationships between classes
-as weak or unowned references instead of strong references.
+as weak or unowned references instead of as strong references.
 This process is described in
 :ref:`AutomaticReferenceCounting_ResolvingStrongReferenceCyclesBetweenClassInstances`.
 However, before you learn how to resolve a strong reference cycle,
@@ -193,8 +191,8 @@ Every ``Person`` instance has a ``name`` property of type ``String``
 and an optional ``apartment`` property that is initially ``nil``.
 The ``apartment`` property is optional, because a person may not always have an apartment.
 
-Similarly, every ``Apartment`` instance has a ``number`` property of type ``Int``,
-and an optional ``tenant`` property that is initially ``nil``.
+Similarly, every ``Apartment`` instance has a ``number`` property of type ``Int``
+and has an optional ``tenant`` property that is initially ``nil``.
 The tenant property is optional because an apartment may not always have a tenant.
 
 Both of these classes also define a deinitializer,
@@ -226,7 +224,7 @@ Here's how the strong references look after creating and assigning these two ins
 The ``john`` variable now has a strong reference to the new ``Person`` instance,
 and the ``number73`` variable has a strong reference to the new ``Apartment`` instance:
 
-.. image:: ../images/referenceCycle01.png
+.. image:: ../images/referenceCycle01_2x.png
    :align: center
 
 You can now link the two instances together
@@ -242,7 +240,7 @@ so that the properties of those instances can be set:
 
 Here's how the strong references look after you link the two instances together:
 
-.. image:: ../images/referenceCycle02.png
+.. image:: ../images/referenceCycle02_2x.png
    :align: center
 
 Unfortunately, linking these two instances creates
@@ -263,12 +261,12 @@ and the instances are not deallocated by ARC:
 Note that neither deinitializer was called
 when you set these two variables to ``nil``.
 The strong reference cycle prevents the ``Person`` and ``Apartment`` instances
-from ever being disposed of, causing a memory leak in your app.
+from ever being deallocated, causing a memory leak in your app.
 
 Here's how the strong references look after you set
 the ``john`` and ``number73`` variables to ``nil``:
 
-.. image:: ../images/referenceCycle03.png
+.. image:: ../images/referenceCycle03_2x.png
    :align: center
 
 The strong references between the ``Person`` instance
@@ -311,9 +309,9 @@ before a property or variable declaration.
 Use a weak reference to avoid reference cycles
 whenever it is possible for that reference to have
 “no value” at some point in its life.
-(If the reference will *always* have a value,
+If the reference will *always* have a value,
 use an unowned reference instead,
-as described in :ref:`AutomaticReferenceCounting_UnownedReferences`.)
+as described in :ref:`AutomaticReferenceCounting_UnownedReferencesBetweenClassInstances`.
 In the ``Apartment`` example above,
 it is appropriate for an apartment to be able to have
 “no tenant” at some point in its lifetime,
@@ -363,8 +361,8 @@ is declared as a weak reference:
          deinit { println("Apartment #\(number) is being deinitialized") }
       }
 
-The strong references from the two variables (``john`` and ``number73``),
-and the links between the two instances, are created as before:
+The strong references from the two variables (``john`` and ``number73``)
+and the links between the two instances are created as before:
 
 .. testcode:: weakReferences
    :compile: true
@@ -380,7 +378,7 @@ and the links between the two instances, are created as before:
 
 Here's how the references look now that you've linked the two instances together:
 
-.. image:: ../images/weakReference01.png
+.. image:: ../images/weakReference01_2x.png
    :align: center
 
 The ``Person`` instance still has a strong reference to the ``Apartment`` instance,
@@ -389,7 +387,7 @@ This means that when you break the strong reference held by
 the ``john`` variables,
 there are no more strong references to the ``Person`` instance:
 
-.. image:: ../images/weakReference02.png
+.. image:: ../images/weakReference02_2x.png
    :align: center
 
 Because there are no more strong references to the ``Person`` instance,
@@ -406,7 +404,7 @@ is from the ``number73`` variable.
 If you break *that* strong reference,
 there are no more strong references to the ``Apartment`` instance:
 
-.. image:: ../images/weakReference03.png
+.. image:: ../images/weakReference03_2x.png
    :align: center
 
 Because there are no more strong references to the ``Apartment`` instance,
@@ -451,7 +449,7 @@ because variables of a non-optional type cannot be set to ``nil``.
 
    If you try to access an unowned reference 
    after the instance that it references is deallocated,
-   you will trigger an unrecoverable runtime error.
+   you will trigger a runtime error.
    Use unowned references only when you are sure that
    the reference will *always* refer to an instance.
 
@@ -460,7 +458,7 @@ because variables of a non-optional type cannot be set to ``nil``.
    after the instance it references is deallocated.
    You will never encounter unexpected behavior in this situation.
    Your app will always crash reliably,
-   although you should, of course, avoid it doing so.
+   although you should, of course, prevent it from doing so.
 
 The following example defines two classes, ``Customer`` and ``CreditCard``,
 which model a bank customer and a possible credit card for that customer.
@@ -526,9 +524,9 @@ as that customer's ``card`` property:
    -> john = Customer(name: "John Appleseed")
    -> john!.card = CreditCard(number: 1234_5678_9012_3456, customer: john!)
 
-Here's how the references look now that you've linked the two instances:
+Here's how the references look, now that you've linked the two instances:
 
-.. image:: ../images/unownedReference01.png
+.. image:: ../images/unownedReference01_2x.png
    :align: center
 
 The ``Customer`` instance now has a strong reference to the ``CreditCard`` instance,
@@ -538,7 +536,7 @@ Because of the unowned ``customer`` reference,
 when you break the strong reference held by the ``john`` variable,
 there are no more strong references to the ``Customer`` instance:
 
-.. image:: ../images/unownedReference02.png
+.. image:: ../images/unownedReference02_2x.png
    :align: center
 
 Because there are no more strong references to the ``Customer`` instance,
@@ -574,8 +572,8 @@ have the potential to cause a strong reference cycle.
 This scenario is best resolved with a weak reference.
 
 The ``Customer`` and ``CreditCard`` example
-shows a situation where one property that is allowed to be ``nil``,
-and another property that cannot be ``nil``,
+shows a situation where one property that is allowed to be ``nil``
+and another property that cannot be ``nil``
 have the potential to cause a strong reference cycle.
 This scenario is best resolved with an unowned reference.
 
@@ -586,7 +584,7 @@ In this scenario, it is useful to combine an unowned property on one class
 with an implicitly unwrapped optional property on the other class.
 
 This enables both properties to be accessed directly
-(without optional unwrapping) once initialiation is complete,
+(without optional unwrapping) once initialization is complete,
 while still avoiding a reference cycle.
 This section shows you how to set up such a relationship.
 
@@ -665,7 +663,7 @@ while still avoiding a strong reference cycle.
 
 .. _AutomaticReferenceCounting_StrongReferenceCyclesForClosures:
 
-Strong Reference Cycles For Closures
+Strong Reference Cycles for Closures
 ------------------------------------
 
 You saw above how a strong reference cycle can be created
@@ -673,21 +671,20 @@ when two class instance properties hold a strong reference to each other.
 You also saw how to use weak and unowned references to break these strong reference cycles.
 
 A strong reference cycle can also occur
-if you assign a closure to a property of some class instance,
+if you assign a closure to a property of a class instance,
 and the body of that closure captures the instance.
-This might be because the closure's body accesses a property of the instance,
+This capture might occur because the closure's body accesses a property of the instance,
 such as ``self.someProperty``,
 or because the closure calls a method on the instance,
 such as ``self.someMethod()``.
 In either case, these accesses cause the closure to “capture” ``self``,
 creating a strong reference cycle.
 
-This happens because closures, like classes, are *reference types*.
+This strong reference cycle occurs because closures, like classes, are *reference types*.
 When you assign a closure to a property,
 you are assigning a *reference* to that closure.
-In essence, it's the same problem as above –
-two different things are referencing each other with a strong reference,
-and keeping each other alive.
+In essence, it's the same problem as above ---
+two strong references are keeping each other alive.
 However, rather than two class instances,
 this time it's a class instance and a closure that are keeping each other alive.
 
@@ -792,7 +789,7 @@ creates a strong reference cycle between
 an ``HTMLElement`` instance and the closure used for its default ``asHTML`` value.
 Here's how the cycle looks:
 
-.. image:: ../images/closureReferenceCycle01.png
+.. image:: ../images/closureReferenceCycle01_2x.png
    :align: center
 
 The instance's ``asHTML`` property holds a strong reference to its closure.
@@ -809,7 +806,7 @@ see :ref:`Closures_CapturingValues`.)
    Even though the closure refers to ``self`` multiple times,
    it only captures one strong reference to the ``HTMLElement`` instance.
 
-If you set the ``paragraph`` variable to ``nil``,
+If you set the ``paragraph`` variable to ``nil``
 and break its strong reference to the ``HTMLElement`` instance,
 neither the ``HTMLElement`` instance nor its closure are deallocated,
 because of the strong reference cycle:
@@ -823,7 +820,7 @@ which shows that the ``HTMLElement`` instance is not deallocated.
 
 .. _AutomaticReferenceCounting_ResolvingStrongReferenceCyclesForClosures:
 
-Resolving Strong Reference Cycles For Closures
+Resolving Strong Reference Cycles for Closures
 ----------------------------------------------
 
 You resolve a strong reference cycle between a closure and a class instance
@@ -833,7 +830,7 @@ within the closure's body.
 As with strong reference cycles between two class instances,
 you declare each captured reference to be a weak or unowned reference
 rather than a strong reference.
-The appropriate choice of weak or unowned will depend on
+The appropriate choice of weak or unowned depends on
 the relationships between the different parts of your code.
 
 .. note::
@@ -841,7 +838,12 @@ the relationships between the different parts of your code.
    Swift requires you to write ``self.someProperty`` or ``self.someMethod``
    (rather than just ``someProperty`` or ``someMethod``)
    whenever you refer to a member of ``self`` within a closure.
-   This helps to help you remember that there is the possibility of capturing ``self``.
+   This helps you remember that it's possible to capture ``self`` by accident.
+
+.. _AutomaticReferenceCounting_DefiningACaptureList:
+
+Defining a Capture List
+~~~~~~~~~~~~~~~~~~~~~~~
 
 Each item in a capture list is a pairing of the ``weak`` or ``unowned`` keyword
 with a reference to a class instance (such as ``self`` or ``someInstance``).
@@ -888,11 +890,11 @@ followed by the ``in`` keyword:
 Weak and Unowned References
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You should define a capture in a closure as an unowned reference
+Define a capture in a closure as an unowned reference
 when the closure and the instance it captures will always refer to each other,
 and will always be deallocated at the same time.
 
-Conversely, you should define a capture as a weak reference when the captured reference
+Conversely, define a capture as a weak reference when the captured reference
 may become ``nil`` at some point in the future.
 Weak references are always of an optional type,
 and automatically become ``nil`` when the instance they reference is deallocated.
@@ -951,7 +953,7 @@ You can create and print an ``HTMLElement`` instance as before:
 
 Here's how the references look with the capture list in place:
 
-.. image:: ../images/closureReferenceCycle02.png
+.. image:: ../images/closureReferenceCycle02_2x.png
    :align: center
 
 This time, the capture of ``self`` by the closure is an unowned reference,

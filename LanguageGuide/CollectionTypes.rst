@@ -14,56 +14,27 @@ This means that you cannot insert a value of the wrong type
 into an array or dictionary by mistake.
 It also means you can be confident about the types of values
 you will retrieve from an array or dictionary.
-Swift's use of explicitly-typed collections ensures that
+Swift's use of explicitly typed collections ensures that
 your code is always clear about the types of values it can work with
 and enables you to catch any type mismatches early in your code's development.
 
 .. TODO: should I mention about bridging to NSArray / NSDictionary?
-   Dictionary is not yet bridged to NSDictionary –
+   Dictionary is not yet bridged to NSDictionary ---
    the work for this is in rdar://16014066,
    which is currently scheduled (but I'd say unlikely) for the March milestone
 
 .. TODO: should I mention the Collection protocol, to which both of these conform?
 
-.. TODO: we have a couple of ways to get the index of a Collection when iterating:
-   for i in indices(collection) { collection[i] }
-   for (index, object) in enumerate(collection) { //... }
-   Should these be mentioned, and if so, should it be here or in Control Flow?
-
-.. _CollectionTypes_Mutability:
-
-Mutability of Collections
--------------------------
-
-Arrays and dictionaries store multiple values together in a single collection.
-If you create an array or a dictionary, and assign it to a variable,
-the collection that is created will be :newTerm:`mutable`.
-This means that you can change (or :newTerm:`mutate`) the collection after it is created,
-perhaps to add more items to the collection,
-or to remove existing items from the ones it already contains.
-
-However, if you assign an array or a dictionary to a constant,
-the collection will be :newTerm:`immutable`,
-and it is not possible to change the contents of the collection.
-
-It is good practice to create immutable collections
-in all cases where the collection does not need to change.
-Doing so enables the Swift compiler to optimize the performance of
-the collections you create.
+.. TODO: mention for i in indices(collection) { collection[i] }
 
 .. note::
 
-   Swift's array and dictionary types are
-   *value types*, not *reference types*,
-   and are copied rather than referenced
-   when they are assigned to a constant or variable, or passed to a function.
-   This is different from the behavior of Cocoa's ``NSArray`` and ``NSDictionary`` classes.
-   The difference between value types and reference types is covered
-   in :ref:`ClassesAndStructures_ValueTypesAndReferenceTypes`.
-
-.. TODO: provide an example of what this means in practice
-   (similar to the Resolution examples in Classes and Structures),
-   particularly in light of recent changes to Array to give it partial reference semantics.
+   Swift's ``Array`` type exhibits different behavior to other types
+   when assigned to a constant or variable,
+   or when passed to a function or method.
+   For more information,
+   see :ref:`CollectionTypes_MutabilityOfCollections`
+   and :ref:`ClassesAndStructures_AssignmentAndCopyBehaviorForCollectionTypes`.
 
 .. _CollectionTypes_Arrays:
 
@@ -84,7 +55,7 @@ In Swift, the type of values that a particular array can store is always made cl
 either through an explicit type annotation, or through type inference,
 and does not have to be a class type.
 If you create an array of ``Int`` values, for example,
-you can't insert anything other than ``Int`` values into that array.
+you can't insert any value other than ``Int`` values into that array.
 Swift arrays are type safe, and are always clear about what they may contain.
 
 .. _CollectionTypes_ArrayTypeShorthandSyntax:
@@ -136,7 +107,7 @@ Here, the ``shoppingList`` array is initialized with two ``String`` values
 
 In this case, the array literal contains two ``String`` values and nothing else.
 This matches the type of the ``shoppingList`` variable's declaration
-(an ``Array`` that can only contain ``String`` values),
+(an array that can only contain ``String`` values),
 and so the assignment of the array literal is permitted
 as a way to initialize ``shoppingList`` with two initial items.
 
@@ -203,7 +174,7 @@ with the addition assignment operator (``+=``):
 
 .. testcode:: arraysInferred
 
-   -> shoppingList += ["Bananas", "Apples", "Cheese"]
+   -> shoppingList += ["Chocolate Spread", "Cheese", "Butter"]
    /> shoppingList now contains \(shoppingList.count) items
    </ shoppingList now contains 7 items
 
@@ -211,7 +182,7 @@ with the addition assignment operator (``+=``):
    var anotherList = shoppingList + "Ham"
    This section should be updated as and when that feature is added.
 
-You can retrieve a value from the array by using :newTerm:`subscript syntax`,
+Retrieve a value from the array by using :newTerm:`subscript syntax`,
 passing the index of the value you want to retrieve within square brackets
 immediately after the name of the array:
 
@@ -225,7 +196,7 @@ immediately after the name of the array:
 Note that the first item in the array has an index of ``0``, not ``1``.
 Arrays in Swift are always zero-indexed.
 
-You can also use subscript syntax to change an existing value at a given index:
+You can use subscript syntax to change an existing value at a given index:
 
 .. testcode:: arraysInferred
 
@@ -233,11 +204,22 @@ You can also use subscript syntax to change an existing value at a given index:
    /> the first item in the list is now equal to \"\(shoppingList[0])\" rather than \"Eggs\"
    </ the first item in the list is now equal to "Six eggs" rather than "Eggs"
 
+You can also use subscript syntax to change a range of values at once,
+even if the replacement set of values has a different length than the range you are replacing.
+The following example replaces ``"Chocolate Spread"``, ``"Cheese"``, and ``"Butter"``
+with ``"Bananas"`` and ``"Apples"``:
+
+.. testcode:: arraysInferred
+
+   -> shoppingList[4...6] = ["Bananas", "Apples"]
+   /> shoppingList now contains \(shoppingList.count) items
+   </ shoppingList now contains 6 items
+
 .. note::
 
    If you try to use subscript syntax to retrieve or set a value for an index
    that is outside of an array's existing bounds,
-   you will trigger an unrecoverable runtime error.
+   you will trigger a runtime error.
    However, you can check that an index is valid before using it,
    by comparing it to the array's ``count`` property.
    Except when ``count`` is ``0`` (meaning the array is empty),
@@ -248,14 +230,14 @@ You can also use subscript syntax to change an existing value at a given index:
    and expect the value in the array to change,
    because String is a value type?
 
-You can insert an item into the array at a specified index
-by calling the array's ``insert(atIndex:)`` method:
+To insert an item into the array at a specified index,
+call the array's ``insert(atIndex:)`` method:
 
 .. testcode:: arraysInferred
 
    -> shoppingList.insert("Maple Syrup", atIndex: 0)
    /> shoppingList now contains \(shoppingList.count) items
-   </ shoppingList now contains 8 items
+   </ shoppingList now contains 7 items
    /> \"\(shoppingList[0])\" is now the first item in the list
    </ "Maple Syrup" is now the first item in the list
 
@@ -264,7 +246,7 @@ at the very beginning of the shopping list,
 indicated by an index of ``0``.
 
 Similarly, you remove an item from the array with the ``removeAtIndex`` method.
-This method removes the item at the specified index, and returns the removed item
+This method removes the item at the specified index and returns the removed item
 (although you can ignore the returned value if you do not need it):
 
 .. testcode:: arraysInferred
@@ -273,7 +255,7 @@ This method removes the item at the specified index, and returns the removed ite
    << // mapleSyrup : String = "Maple Syrup"
    // the item that was at index 0 has just been removed
    /> shoppingList now contains \(shoppingList.count) items, and no Maple Syrup
-   </ shoppingList now contains 7 items, and no Maple Syrup
+   </ shoppingList now contains 6 items, and no Maple Syrup
    /> the mapleSyrup constant is now equal to the removed \"\(mapleSyrup)\" string
    </ the mapleSyrup constant is now equal to the removed "Maple Syrup" string
 
@@ -293,15 +275,53 @@ Like the ``removeAtIndex`` method, ``removeLast`` returns the removed item:
 
 .. testcode:: arraysInferred
 
-   -> let cheese = shoppingList.removeLast()
-   << // cheese : String = "Cheese"
+   -> let apples = shoppingList.removeLast()
+   << // apples : String = "Apples"
    // the last item in the array has just been removed
    /> shoppingList now contains \(shoppingList.count) items, and no cheese
-   </ shoppingList now contains 6 items, and no cheese
-   /> the cheese constant is now equal to the removed \"\(cheese)\" string
-   </ the cheese constant is now equal to the removed "Cheese" string
+   </ shoppingList now contains 5 items, and no cheese
+   /> the apples constant is now equal to the removed \"\(apples)\" string
+   </ the apples constant is now equal to the removed "Apples" string
 
 .. TODO: write about the algorithmic methods on Array.
+
+.. _CollectionTypes_IteratingOverAnArray:
+
+Iterating Over an Array
+~~~~~~~~~~~~~~~~~~~~~~~
+
+You can iterate over the entire set of values in an array with the ``for``-``in`` loop:
+
+.. testcode:: arraysInferred
+
+   -> for item in shoppingList {
+         println(item)
+      }
+   </ Six eggs
+   </ Milk
+   </ Flour
+   </ Baking Powder
+   </ Bananas
+
+If you need the integer index of each item as well as its value,
+use the global ``enumerate`` function to iterate over the array instead.
+The ``enumerate`` function returns a tuple for each item in the array
+composed of the index and the value for that item.
+You can decompose the tuple into temporary constants or variables
+as part of the iteration:
+
+.. testcode:: arraysInferred
+
+   -> for (index, value) in enumerate(shoppingList) {
+         println("Item \(index + 1): \(value)")
+      }
+   </ Item 1: Six eggs
+   </ Item 2: Milk
+   </ Item 3: Flour
+   </ Item 4: Baking Powder
+   </ Item 5: Bananas
+
+For more about the ``for``-``in`` loop, see :ref:`ControlFlow_ForLoops`.
 
 .. _CollectionTypes_CreatingAndInitializingAnArray:
 
@@ -354,10 +374,21 @@ because it can be inferred from the default value:
 
 .. testcode:: arraysEmpty
 
-   -> var anotherThreeDoubles = Array(count: 3, repeatedValue: 0.0)
-   << // anotherThreeDoubles : Array<Double> = [0.0, 0.0, 0.0]
+   -> var anotherThreeDoubles = Array(count: 3, repeatedValue: 2.5)
+   << // anotherThreeDoubles : Array<Double> = [2.5, 2.5, 2.5]
    /> anotherThreeDoubles is inferred as Double[], and equals [\(anotherThreeDoubles[0]), \(anotherThreeDoubles[1]), \(anotherThreeDoubles[2])]
-   </ anotherThreeDoubles is inferred as Double[], and equals [0.0, 0.0, 0.0]
+   </ anotherThreeDoubles is inferred as Double[], and equals [2.5, 2.5, 2.5]
+
+Finally, you can create a new array by adding together two existing arrays of compatible type
+with the addition operator (``+``).
+The new array's type is inferred from the type of the two arrays you add together:
+
+.. testcode:: arraysEmpty
+
+   -> var sixDoubles = threeDoubles + anotherThreeDoubles
+   << // sixDoubles : Double[] = [0.0, 0.0, 0.0, 2.5, 2.5, 2.5]
+   /> sixDoubles is inferred as Double[], and equals [\(sixDoubles[0]), \(sixDoubles[1]), \(sixDoubles[2]), \(sixDoubles[3]), \(sixDoubles[4]), \(sixDoubles[5])]
+   </ sixDoubles is inferred as Double[], and equals [0.0, 0.0, 0.0, 2.5, 2.5, 2.5]
 
 .. TODO: func find<T: Equatable>(array: T[], value: T) -> Int?
    This is defined in Algorithm.swift,
@@ -395,7 +426,7 @@ Swift's dictionary type is written as ``Dictionary<KeyType, ValueType>``,
 where ``KeyType`` is the type of value that can be used as a dictionary key,
 and ``ValueType`` is the type of value that the dictionary stores for those keys.
 
-The only restriction is that ``KeyType`` must be :newTerm:`hashable` –
+The only restriction is that ``KeyType`` must be :newTerm:`hashable` ---
 that is, it must provide a way to make itself uniquely representable.
 All of Swift's basic types (such as ``String``, ``Int``, ``Double``, and ``Bool``)
 are hashable by default, and all of these types can be used as the keys of a dictionary.
@@ -454,7 +485,7 @@ The second pair has a key of ``"DUB"`` and a value of ``"Dublin"``.
 
 This dictionary literal contains two ``String: String`` pairs.
 This matches the type of the ``airports`` variable declaration
-(a ``Dictionary`` with only ``String`` keys, and only ``String`` values)
+(a dictionary with only ``String`` keys, and only ``String`` values)
 and so the assignment of the dictionary literal is permitted
 as a way to initialize the ``airports`` dictionary with two initial items.
 
@@ -567,9 +598,9 @@ by assigning a value of ``nil`` for that key:
 
 Alternatively, remove a key-value pair from a dictionary
 with the ``removeValueForKey`` method.
-This method removes the key-value pair if it exists,
+This method removes the key-value pair if it exists
 and returns the removed value,
-or ``nil`` if no value existed:
+or returns ``nil`` if no value existed:
 
 .. testcode:: dictionariesInferred
 
@@ -580,12 +611,27 @@ or ``nil`` if no value existed:
       }
    <- The removed airport's name is Dublin International.
 
-.. _CollectionTypes_AccessingADictionarysKeysAndValues:
+.. _CollectionTypes_IteratingOverADictionary:
 
-Accessing a Dictionary's Keys and Values
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Iterating Over a Dictionary
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can retrieve an iteratable collection of a dictionary's keys or values
+You can iterate over the key-value pairs in a dictionary with a ``for``-``in`` loop.
+Each item in the dictionary is returned as a ``(key, value)`` tuple,
+and you can decompose the tuple's members into temporary constants or variables
+as part of the iteration:
+
+.. testcode:: dictionariesInferred
+
+   -> for (airportCode, airportName) in airports {
+         println("\(airportCode): \(airportName)")
+      }
+   </ TYO: Tokyo
+   </ LHR: London Heathrow
+
+For more about the ``for``-``in`` loop, see :ref:`ControlFlow_ForLoops`.
+
+You can also retrieve an iteratable collection of a dictionary's keys or values
 by accessing its ``keys`` and ``values`` properties:
 
 .. testcode:: dictionariesInferred
@@ -603,7 +649,7 @@ by accessing its ``keys`` and ``values`` properties:
    </ Airport name: London Heathrow
 
 If you need to use a dictionary's keys or values
-with an API that takes an ``Array`` instance, you can initialize a new array
+with an API that takes an ``Array`` instance, initialize a new array
 with the ``keys`` or ``values`` property:
 
 .. testcode:: dictionariesInferred
@@ -617,6 +663,12 @@ with the ``keys`` or ``values`` property:
    << // airportNames : Array<String> = ["Tokyo", "London Heathrow"]
    /> airportNames is [\"\(airportNames[0])\", \"\(airportNames[1])\"]
    </ airportNames is ["Tokyo", "London Heathrow"]
+
+.. note::
+
+   Swift's ``Dictionary`` type is an unordered collection.
+   The order in which keys, values, and key-value pairs are retrieved
+   when iterating over a dictionary is not specified.
 
 .. _CollectionTypes_CreatingAnEmptyDictionary:
 
@@ -637,7 +689,7 @@ to store human-readable names of integer values.
 Its keys are of type ``Int``, and its values are of type ``String``.
 
 If the context already provides type information,
-you can create an empty dictionary using an empty dictionary literal,
+create an empty dictionary with an empty dictionary literal,
 which is written as ``[:]``
 (a colon inside a pair of square brackets):
 
@@ -657,3 +709,41 @@ which is written as ``[:]``
    Behind the scenes,
    Swift's array and dictionary types are implemented as :newTerm:`generic collections`.
    For more on generic types and collections, see :doc:`Generics`.
+
+.. _CollectionTypes_MutabilityOfCollections:
+
+Mutability of Collections
+-------------------------
+
+Arrays and dictionaries store multiple values together in a single collection.
+If you create an array or a dictionary and assign it to a variable,
+the collection that is created will be :newTerm:`mutable`.
+This means that you can change (or :newTerm:`mutate`)
+the size of the collection after it is created
+by adding more items to the collection,
+or by removing existing items from the ones it already contains.
+Conversely, if you assign an array or a dictionary to a constant,
+that array or dictionary is :newTerm:`immutable`,
+and its size cannot be changed.
+
+For dictionaries, immutability also means that you cannot replace the value
+for an existing key in the dictionary.
+An immutable dictionary's contents cannot be changed once they are set.
+
+Immutability has a slightly different meaning for arrays, however.
+You are still not allowed to perform any action
+that has the potential to change the size of an immutable array,
+but you *are* allowed to set a new value for an existing index in the array.
+This enables Swift's ``Array`` type to provide optimal performance for array operations
+when the size of an array is fixed.
+
+The mutability behavior of Swift's ``Array`` type also affects how array instances
+are assigned and modified.
+For more information, see :ref:`ClassesAndStructures_AssignmentAndCopyBehaviorForCollectionTypes`.
+
+.. note::
+
+   It is good practice to create immutable collections
+   in all cases where the collection's size does not need to change.
+   Doing so enables the Swift compiler to optimize the performance of
+   the collections you create.

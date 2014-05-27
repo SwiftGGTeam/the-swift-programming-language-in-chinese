@@ -63,28 +63,26 @@ the term *declaration* covers both declarations and definitions.
 Module Scope
 ------------
 
-.. write-me:: Need to get the TR below answered to write more about this.
+The module scope defines the code that's visible to other code in Swift source files
+that are part of the same module.
+The top-level code in a Swift source file consists of zero or more statements,
+declarations, and expressions.
+Variables, constants, and other named declarations that are declared
+at the top-level of a source file are visible to code
+in every source file that is part of the same module.
 
-The :newTerm:`module scope` defines the top-level (global) scope of a Swift source file.
-It consists of a series of statements, which include declarations,
-expressions, and other kinds of statements.
-
-Variables, constants, and other named declarations that are declared at global scope
-are visible to any other code in the same file.
-
-.. TODO: Need to add more to this section.
-
-.. TR: What exactly is "module scope"?
-    Is it the scope of a *single* Swift source file?
-    The way it's currently written here and in LangRef
-    makes it seem like module scope is the same as the scope
-    of a single Swift source file.
+.. TODO: Revisit and rewrite this section after WWDC
 
 .. langref-grammar
 
     top-level ::= brace-item*
 
-.. No formal grammar.
+
+.. syntax-grammar::
+
+    Grammar of a top-level declaration
+
+    top-level-declaration --> statements-OPT
 
 
 .. _LexicalStructure_CodeBlocks:
@@ -130,11 +128,6 @@ of their appearance in source code.
 Import Declaration
 ------------------
 
-.. TODO: It seems odd to call these declarations -- they don't declare anything.
-   Directive or statement feels a little more appropriate,
-   although statement might not be strictly correct.
-   LangRef uses both "import declaration" and "directive".
-
 An :newTerm:`import declaration` lets you access symbols
 that are declared outside the current file.
 The basic form imports the entire module;
@@ -154,7 +147,7 @@ is made available in the current scope.
 
 .. syntax-outline::
 
-    import <#import kind#> <#module#>
+    import <#import kind#> <#module#>.<#symbol name#>
     import <#module#>.<#submodule#>
 
 .. TODO: Need to add more to this section.
@@ -237,12 +230,8 @@ To declare a static constant property,
 mark the declaration with the ``static`` keyword. Static properties
 are discussed in :ref:`Properties_TypeProperties`.
 
-.. TODO: Discuss class properties after they're implemented
+.. TODO: Discuss class constant properties after they're implemented
     (probably not until after 1.0)
-
-    To declare a class constant property, mark the declaration with the ``class`` keyword.
-
-.. TODO: Need to discuss static constant properties in more detail.
 
 For more information about constants and for guidance about when to use them,
 see :ref:`TheBasics_ConstantsAndVariables` and :ref:`Properties_StoredProperties`.
@@ -290,10 +279,10 @@ with the ``override`` keyword, as described in :ref:`Inheritance_Overriding`.
 
 .. _Declarations_StoredVariablesAndVariableStoredProperties:
 
-Stored Variables and Variable Stored Properties
+Stored Variables and Stored Variable Properties
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The following form declares a stored variable or variable stored property:
+The following form declares a stored variable or stored variable property:
 
 .. syntax-outline::
 
@@ -304,7 +293,7 @@ of a function, or in the context of a class or structure declaration.
 When a variable declaration of this form is declared at global scope or the local
 scope of a function, it is referred to as a :newTerm:`stored variable`.
 When it is declared in the context of a class or structure declaration,
-it is referred to as a :newTerm:`variable stored property`.
+it is referred to as a :newTerm:`stored variable property`.
 
 The initializer *expression* can't be present in a protocol declaration,
 but in all other contexts, the initializer *expression* is optional.
@@ -316,7 +305,7 @@ if the *variable name* is a tuple pattern,
 the name of each item in the tuple is bound to the corresponding value
 in the initializer *expression*.
 
-As their names suggest, the value of a stored variable or a variable stored property
+As their names suggest, the value of a stored variable or a stored variable property
 is stored in memory.
 
 
@@ -359,7 +348,7 @@ If you provide a setter name, it is used as the name of the parameter to the set
 If you do not provide a setter name, the default parameter name to the setter is ``newValue``,
 as described in :ref:`Properties_ShorthandSetterDeclaration`.
 
-Unlike stored named values and variable stored properties,
+Unlike stored named values and stored variable properties,
 the value of a computed named value or a computed property is not stored in memory.
 
 For more information and to see examples of computed properties,
@@ -432,17 +421,18 @@ see :ref:`Properties_PropertyObservers`.
 
 .. _Declarations_StaticVariableProperties:
 
-Static Variable Properties
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+Class and Static Variable Properties
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+To declare a class computed property, mark the declaration with the ``class`` keyword.
 To declare a static variable property,
-mark the declaration with the ``static`` keyword. Static properties
+mark the declaration with the ``static`` keyword. Class and static properties
 are discussed in :ref:`Properties_TypeProperties`.
 
 .. TODO: Discuss class properties after they're implemented
     (probably not until after 1.0)
-
-    To declare a class variable property, mark the declaration with the ``class`` keyword.
+    Update: we now have class computed properties. We'll get class stored properites
+    sometime after WWDC.
 
 .. TODO: Need to discuss static variable properties in more detail.
 
@@ -539,7 +529,7 @@ See also :ref:`Declarations_ProtocolAssociatedTypeDeclaration`.
 
 .. syntax-grammar::
 
-    Grammar of a typealias declaration
+    Grammar of a type alias declaration
 
     typealias-declaration --> typealias-head typealias-assignment
     typealias-head --> ``typealias`` typealias-name
@@ -558,8 +548,10 @@ See also :ref:`Declarations_ProtocolAssociatedTypeDeclaration`.
 Function Declaration
 --------------------
 
-.. write-me:: Waiting for design decisions from compiler team.
-
+A :newTerm`function declaration` introduces a function or method into your program.
+A function declared in the context of class, structure, enumeration, or protocol
+is referred to as a :newTerm:`method`.
+Function declarations are declared using the keyword ``func`` and have the following form:
 
 .. syntax-outline::
 
@@ -567,13 +559,159 @@ Function Declaration
        <#statements#>
     }
 
+If the function has a return type of ``Void``,
+the return type can be omitted as follows:
+
+.. syntax-outline::
+
+    func <#function name#>(<#parameters#>) {
+       <#statements#>
+    }
+
+The type of each parameter must be included ---
+it can't be inferred.
+By default, the parameters to a function are constants.
+Write ``var`` in front of a parameter's name to make it a variable,
+scoping any changes made to the variable just to the function body,
+or write ``inout`` to make those changes also apply
+to the argument that was passed in the caller's scope.
+For a discussion of in-out parameters,
+see :ref:`Functions_InOutParameters`.
+
+Functions can return multiple values using a tuple type
+as the return type of the function.
+
+.. TODO: ^-- Add some more here.
+
+A function definition can appear inside another function declaration.
+This kind of function is known as a :newTerm:`nested function`.
+For a discussion of nested functions,
+see :ref:`Functions_NestedFunctions`.
+
+Parameter Names
+~~~~~~~~~~~~~~~
+
+Function parameters are a comma separated list
+where each parameter has one of several forms.
+The order of arguments in a function call
+must match the order of parameters in the function's declaration.
+The simplest entry in a parameter list has the following form:
+
 .. syntax-outline::
 
     <#parameter name#>: <#parameter type#>
+
+For function parameters,
+the parameter name is used within the function body,
+but is not used when calling the function.
+For method parameters,
+the parameter name is used as within the function body,
+and is also used as a label for the argument when calling the method.
+The name of a method's first parameter
+is used only within the function body,
+like the parameter of a function.
+For example:
+
+.. testcode:: func-simple-param
+
+   -> func f(x: Int, y: String) -> String {
+          return y + String(x)
+      }
+   -> f(7, "hello")  // x and y have no name
+   ---
+   -> class C {
+          func f(x: Int, y: String) -> String {
+              return y + String(x)
+          }
+      }
+   -> let c = C()
+   -> c.f(7, y: "hello")  // x has no name, y has a name
+
+You can override the default behavior
+for how parameter names are used
+with one of the following forms:
+
+.. syntax-outline::
+
+    <#external parameter name#> <#local parameter name#>: <#parameter type#>
+    #<#parameter name#>: <#parameter type#>
+    _ <#local parameter name#>: <#parameter type#>
+
+A second name before the local parameter name
+gives the parameter an external name,
+which can be different than the local parameter name.
+The external parameter name must be used when the function is called.
+The corresponding argument must have the external name in function or method calls.
+
+A hash symbol (``#``) before a parameter name
+indicates that the name should be used as both an external and a local parameter name.
+It has the same meaning as writing the local parameter name twice.
+The corresponding argument must have this name in function or method calls.
+
+An underscore (``_``) before a local parameter name
+gives that parameter no name to be used in function calls.
+The corresponding argument must have no name in function or method calls.
+
+Special Kinds of Parameters
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Parameters can be ignored,
+take a variable number of values,
+and provide default values
+using the following forms:
+
+.. syntax-outline::
+
+    _ : <#parameter type#.
     <#parameter name#>: <#parameter type#>...
     <#parameter name#>: <#parameter type#> = <#default argument value#>
-    <#parameter name#> <#local parameter name#>: <#parameter type#>
-    #<#parameter name#>: <#parameter type#>
+
+A parameter named with an underscore (``_``) is explicitly ignored
+an can't be accessed within the body of the function.
+
+A parameter with a base type name followed immediately by three dots (``...``)
+is understood as a variadic parameter.
+A function can have at most one variadic parameter, which must be its last parameter.
+A variadic parameter is treated as an array that contains elements of the base type name.
+For instance, the variadic parameter ``Int...`` is treated as ``Int[]``.
+For an example that uses a variadic parameter,
+see :ref:`Functions_VariadicParameters`.
+
+A parameter with an equals sign (``=``) and an expression after its type
+is understood to have a default value of the given expression.
+If the parameter is omitted when calling the function,
+the default value is used instead.
+If the parameter is not omitted,
+it must have its name in the function call.
+For example, ``f()`` and ``f(x: 7)`` are both valid calls
+to a function with a single default parameter named ``x``,
+but ``f(7)`` is invalid because it provides a value without a name.
+
+.. TODO: Flesh out the above example into a code listing.
+
+Special Kinds of Methods
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Methods on an enumeration or a structure
+that modify ``self`` must be marked with the ``mutating`` keyword
+at the start of the function declaration.
+
+Methods that override a superclass method
+must be marked with the ``override`` keyword
+at the start of the function declaration.
+It is an error to override a method without the ``override`` keyword
+or to use the ``override`` keyword on a method
+that doesn't override a superclass method.
+
+Methods associated with a type
+rather than an instance of a type
+must be marked with the ``static`` attribute for enumerations and structures
+or the ``class`` attribute for classes.
+
+Curried Functions and Methods
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Curried functions and methods have the following form:
 
 .. syntax-outline::
 
@@ -581,8 +719,25 @@ Function Declaration
        <#statements#>
     }
 
-.. TODO: Discuss in prose: Variadic functions and the other permutations of function declarations.
+A function declared this way is understood
+as a function whose return type is another function.
+For example, the following two declarations are equivalent:
 
+.. testcode:: curried-function
+
+    -> func addTwoNumbers(a: Int)(b: Int) -> Int {
+          return a + b
+       }
+    -> func addTwoNumbers(a: Int) -> (Int -> Int) {
+          func addTheSecondNumber(b: Int) -> Int {
+             return a + b
+          }
+          return addTheSecondNumber
+       }
+    ---
+    -> addTwoNumbers(4)(5) // Returns 9
+
+Multiple levels of currying are allowed.
 
 .. langref-grammar
 
@@ -621,7 +776,7 @@ Function Declaration
     default-argument-clause --> ``=`` expression
 
 
-.. TODO: Code block is optional in the context of a protocol.
+.. NOTE: Code block is optional in the context of a protocol.
     Everywhere else, it's required.
     We could refactor to have a separation between function definition/declaration.
     There is also the low-level "asm name" FFI
@@ -651,8 +806,16 @@ all initializers must be declared explicitly. Initializers can delegate
 to other initializers in the enumeration, but the initialization process is complete
 only after an initializer assigns one of the enumeration cases to ``self``.
 
+Like structures but unlike classes, enumerations are value types;
+instances of an enumeration are copied when assigned to
+variables or constants, or when passed as arguments to a function call.
+For information about value types,
+see :ref:`ClassesAndStructures_StructuresAndEnumerationsAreValueTypes`.
+
 You can extend the behavior of an enumeration type with an extension declaration,
 as discussed in :ref:`Declarations_ExtensionDeclaration`.
+
+.. _Declarations_EnumerationsWithCasesOfAnyType:
 
 Enumerations with Cases of Any Type
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -679,8 +842,10 @@ immediately following the name of the case.
 For more information and to see examples of cases with associated value types,
 see :ref:`Enumerations_AssociatedValues`.
 
-Enumerations with Cases of the Same Basic Type
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. _Declarations_EnumerationsWithRawCaseValues:
+
+Enumerations with Raw Cases Values
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The following form declares an enumeration type that contains
 enumeration cases of the same basic type:
@@ -734,13 +899,13 @@ as described in :ref:`Enumerations_EnumerationSyntax`
 and :ref:`Expressions_ImplicitMemberExpression`.
 
 To check the values of enumeration cases, use a ``switch`` statement,
-as shown in :ref:`Enumerations_CheckingEnumerationValuesWithASwitchStatement`.
+as shown in :ref:`Enumerations_MatchingEnumerationValuesWithASwitchStatement`.
 The enumeration type is pattern-matched against the enumeration case patterns
 in the case blocks of the ``switch`` statement,
 as described in :ref:`Patterns_EnumerationCasePattern`.
 
 
-.. TODO: Note that you can require protocol adoption,
+.. NOTE: Note that you can require protocol adoption,
     by using a protocol type as the raw value type,
     but you do need to make it be one of the types
     that support = in order for you to specify the raw values.
@@ -860,12 +1025,10 @@ as described in :ref:`ClassesAndStructures_AccessingProperties`.
 Structures are value types; instances of a structure are copied when assigned to
 variables or constants, or when passed as arguments to a function call.
 For information about value types,
-see :ref:`ClassesAndStructures_ValueTypesAndReferenceTypes`.
+see :ref:`ClassesAndStructures_StructuresAndEnumerationsAreValueTypes`.
 
 You can extend the behavior of a structure type with an extension declaration,
 as discussed in :ref:`Declarations_ExtensionDeclaration`.
-
-.. TODO: Discuss generic parameter clause in the context of a struct?
 
 .. langref-grammar
 
@@ -920,9 +1083,7 @@ declared properties and it must do so before calling any of its superclass's
 designated initializers.
 
 A class can override properties, methods, and initializers of its superclass.
-That said, a designated initializer of the class must call one of its superclass's
-designated initializers before the class overrides any of the superclass's properties.
-Overridden methods must be marked with the ``override`` keyword.
+Overridden methods and properties must be marked with the ``override`` keyword.
 
 Although properties and methods declared in the *superclass* are inherited by
 the current class, designated initializers declared in the *superclass* are not.
@@ -947,12 +1108,10 @@ as described in :ref:`ClassesAndStructures_AccessingProperties`.
 Classes are reference types; instances of a class are referred to, rather than copied,
 when assigned to variables or constants, or when passed as arguments to a function call.
 For information about reference types,
-see :ref:`ClassesAndStructures_ValueTypesAndReferenceTypes`.
+see :ref:`ClassesAndStructures_StructuresAndEnumerationsAreValueTypes`.
 
 You can extend the behavior of a class type with an extension declaration,
 as discussed in :ref:`Declarations_ExtensionDeclaration`.
-
-.. TODO: Discuss generic parameter clause in the context of a class?
 
 .. langref-grammar
 
@@ -987,8 +1146,8 @@ which describe the conformance requirements that any type adopting the protocol 
 In particular, a protocol can declare that conforming types must
 implement certain properties, methods, initializers, and subscripts.
 Protocols can also declare special kinds of type aliases,
-called :newTerm:`associated types`, that can clarify the relationship
-between the various declarations of the protocol.
+called :newTerm:`associated types`, that can specify relationships
+among the various declarations of the protocol.
 The *protocol member declarations* are discussed in detail below.
 
 Protocol types can inherit from any number of other protocols.
@@ -1016,7 +1175,7 @@ properties, methods, and subscripts declared in the protocol.
 That said, you can mark these protocol member declarations with the ``optional`` attribute
 to specify that their implementation by a conforming type is optional.
 The ``optional`` attribute can be applied only to protocols that are marked
-with the ``objc`` attribute. As a result, only classes types can adopt and conform
+with the ``objc`` attribute. As a result, only class types can adopt and conform
 to a protocol that contains optional member requirements.
 For more information about how to use the ``optional`` attribute
 and for guidance about how to access optional protocol members---
@@ -1034,22 +1193,21 @@ mark the entire protocol declaration with the ``class_protocol`` attribute.
 Any protocol that inherits from a protocol marked with the ``class_protocol`` attribute
 can likewise be adopted only by a class type.
 
+.. note::
+
+    If a protocol is already marked with the ``objc`` attribute,
+    the ``class_protocol`` attribute is implicitly applied to that protocol;
+    there’s no need to mark the protocol with the ``class_protocol`` attribute explicitly.
+
 Protocols are named types, and thus they can appear in all the same places
-in your code as other named types, as discussed in :ref:`Protocols_UsingProtocolsAsTypes`.
+in your code as other named types, as discussed in :ref:`Protocols_ProtocolsAsTypes`.
 However,
 you can't construct an instance of a protocol,
 because protocols do not actually provide the implementations for the requirements
 they specify.
 
-You can also use protocols to declare which methods a delegate of a class or structure
-should implement, as described in :ref:`Protocols_Delegates`.
-
-.. TODO: Now that functions and methods have syntactically diverged,
-    we need a protocol-operator-function-declaration production and section
-    to describe how you declare an operator requirement in a protocol and how the adopting
-    type conforms to that protocol. Currently, a type satisfies this requirement if it
-    adopts the protocol and the operator function is implemented at file-scope somewhere
-    in the same module as that type.
+You can use protocols to declare which methods a delegate of a class or structure
+should implement, as described in :ref:`Protocols_Delegation`.
 
 .. langref-grammar
 
@@ -1097,14 +1255,14 @@ directly in the protocol in which it is declared.
 
 The getter and setter requirements can be satisfied by a conforming type in a variety of ways.
 If a property declaration includes both the ``get`` and ``set`` keywords,
-a conforming type can implement it with a variable stored property
+a conforming type can implement it with a stored variable property
 or a computed property that is both readable and writeable
 (that is, one that implements both a getter and a setter). However,
 that property declaration can't be implemented as a constant property
 or a read-only computed property. If a property declaration includes
 only the ``get`` keyword, it can be implemented as any kind of property.
 For examples of conforming types that implement the property requirements of a protocol,
-see :ref:`Protocols_Properties`.
+see :ref:`Protocols_PropertyRequirements`.
 
 .. TODO:
     Because we're not going to have 'class' properties for 1.0,
@@ -1139,7 +1297,7 @@ Protocol method declarations have the same form as
 function declarations, with two exceptions: They don't include a function body,
 and you can't provide any default parameter values as part of the function declaration.
 For examples of conforming types that implement the method requirements of a protocol,
-see :ref:`Protocols_Methods`.
+see :ref:`Protocols_MethodRequirements`.
 
 To declare a class or static method requirement in a protocol declaration,
 mark the method declaration with the ``class`` keyword. Classes that implement
@@ -1214,8 +1372,16 @@ See also :ref:`Declarations_SubscriptDeclaration`.
 Protocol Associated Type Declaration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. write-me:: Need to discuss with Dave what we want to call these things
-    and where he plans on covering them.
+Protocols declare associated types using the keyword ``typealias``.
+An associated type provides an alias for a type
+that is used as part of a protocol's declaration.
+Accosiated types are similiar to type paramters in generic parameter clauses,
+but they're associated with ``Self`` in the protocol in which they're declared.
+In that context, ``Self`` refers to the eventual type that conforms to the protocol.
+For more information and examples,
+see :ref:`Generics_AssociatedTypes`.
+
+.. TODO: Finish writing this section after WWDC.
 
 .. NOTE:
     What are associated types? What are they "associated" with? Is "Self"
@@ -1290,11 +1456,6 @@ See also :ref:`Declarations_TypealiasDeclaration`.
 
 Initializer Declaration
 -----------------------
-
-.. TODO: Rewrite/verify this section after Doug writes his "How Initialization Works Now"
-    document, which should be finished later today, 3/18.
-    I'll also need to revisit any other discussions of initialization in the chapter:
-    enumerations, structures, classes, extensions, and protocols.
 
 An :newTerm:`initializer declaration` introduces an initializer for a class,
 structure, or enumeration into your program.
@@ -1476,15 +1637,6 @@ to ensure members of that type are properly initialized.
     extension-declaration --> ``extension`` type-identifier type-inheritance-clause-OPT extension-body
     extension-body --> ``{`` declarations-OPT ``}``
 
-.. TODO: TR: What are the semantic rules associated with extending different types?
-    The LangRef says "'extension' declarations allow adding member declarations to existing types,
-    even in other source files and modules. There are different semantic rules for each type that is extended.
-    enum, struct, and class declaration extensions. FIXME: Write this section."
-    What is the relevant, missing information?
-    What are the semantic rules associated with extending different types?
-
-    TODO: Email Doug et al. in a week or two (from 1/29/14) to get the rules.
-
 
 .. _Declarations_SubscriptDeclaration:
 
@@ -1511,9 +1663,9 @@ and have the following form:
 Subscript declarations can appear only in the context of a class, structure,
 enumeration, extension, or protocol declaration.
 
-The *parameters* specify one or more indicies used to access elements of the corresponding type
+The *parameters* specify one or more indexes used to access elements of the corresponding type
 in a subscript expression (for example, the ``i`` in the expression ``object[i]``).
-Although the indicies used to access the elements can be of any type,
+Although the indexes used to access the elements can be of any type,
 each parameter must include a type annotation to specify the type of each index.
 The *return type* specifies the type of the element being accessed.
 
@@ -1656,43 +1808,6 @@ After declaring a new operator,
 you implement it by declaring a function that has the same name as the operator.
 To see an example of how to create and implement a new operator,
 see :ref:`AdvancedOperators_CustomOperators`.
-
-.. TODO: Should we give describe the most common stdlib operators somewhere?
-    If so, the description should include the fixity, precedence, and associativity
-    of each operator. Maybe a table would be best?
-    The Langauge Guide currently says:
-    "(A complete list of the default Swift operator precedence and associativity
-    settings can be found in the :doc:`../ReferenceManual/index`.)"
-    Aside: I'm not sure "settings" is the best word here. Maybe "values"?
-
-.. TR: Do all postfix operators default to the same precedence level? If so, what is it?
-
-.. TR: What do the current precedence levels (0—255) mean?
-    How you we discuss them in the prose.
-
-    The current LangRef says:
-    "Swift has simplified precedence levels when compared with C.
-    From highest to lowest:
-
-    "exponentiative:" <<, >>  (associativity none, precedence 160)
-    "multiplicative:" *, /, %, & (associativity left, precedence 150)
-    "additive:" +, -, |, ^ (associativity left, precedence 140)
-    "comparative:" ==, !=, <, <=, >=, > (associativity none, precedence 130)
-    "conjunctive:" && (associativity left, precedence 120)
-    "disjunctive:" || (associativity none, precedence 110)"
-
-    Also, from Policy.swift:
-    "compound (assignment):" *=, /=, %=, +=, -=, <<=, >>=, &=, ^=,
-    |=, &&=, ||= (associativity right, precedence 90)
-    "=" is hardcoded as if it had associativity right, precedence 90
-    "as" and "is" are hardcoded as if they had associativity none, precedence 95
-    "? :" is hardcoded as if it had associativity right, precedence 100
-
-    Should we be using these instead of the raw precedence level values?
-
-    Also, infix operators that are declared without specifying a precedence
-    associativity are initialized with the default operator attribues
-    "precedence 100" and "associativity none".
 
 .. syntax-grammar::
 

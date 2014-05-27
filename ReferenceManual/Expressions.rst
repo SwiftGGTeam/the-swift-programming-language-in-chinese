@@ -8,7 +8,7 @@ causes a side effect, or both.
 
 Prefix and binary expressions let you
 apply operators to smaller expressions.
-Primary expressions are conceptually the simplest kind of expression
+Primary expressions are conceptually the simplest kind of expression,
 and they provide a way to access values.
 Postfix expressions,
 like prefix and binary expressions,
@@ -59,6 +59,14 @@ The Swift standard library provides the following prefix operators:
 For information about the behavior of these operators,
 see :doc:`../LanguageGuide/BasicOperators` and :doc:`../LanguageGuide/AdvancedOperators`.
 
+In addition to the standard library operators listed above,
+you use ``&`` immediately before the name of a variable that's being passed
+as an in-out argument to a function call expression.
+For more information and to see an example,
+see :ref:`Functions_InOutParameters`.
+
+.. TODO: Need to a brief write up on the in-out-expression.
+
 .. langref-grammar
 
     expr-unary   ::= operator-prefix* expr-postfix
@@ -67,9 +75,9 @@ see :doc:`../LanguageGuide/BasicOperators` and :doc:`../LanguageGuide/AdvancedOp
 
     Grammar of a prefix expression
 
-    prefix-expression --> prefix-operators-OPT postfix-expression
-    prefix-operators --> prefix-operator prefix-operators-OPT
-
+    prefix-expression --> prefix-operator-OPT postfix-expression
+    prefix-expression --> in-out-expression
+    in-out-expression --> ``&`` identifier
 
 .. _Expressions_BinaryExpressions:
 
@@ -97,9 +105,9 @@ The Swift standard library provides the following binary operators:
     - ``*`` Multiply
     - ``/`` Divide
     - ``%`` Remainder
-    - ``&*`` Mulitply with overflow
-    - ``&/`` Divide with overflow
-    - ``&%`` Remainder with overflow
+    - ``&*`` Multiply, ignoring overflow
+    - ``&/`` Divide, ignoring overflow
+    - ``&%`` Remainder, ignoring overflow
     - ``&`` Bitwise AND
 
 * Additive (Left associative, precedence level 140)
@@ -118,7 +126,7 @@ The Swift standard library provides the following binary operators:
     - ``is`` Type check
     - ``as`` Type cast
 
-* Comparitive (No associativity, precedence level 130)
+* Comparative (No associativity, precedence level 130)
     - ``<`` Less than
     - ``<=`` Less than or equal
     - ``>`` Greater than
@@ -178,24 +186,12 @@ see :doc:`../LanguageGuide/BasicOperators` and :doc:`../LanguageGuide/AdvancedOp
     At parse time,
     an expression made up of binary operators is represented
     as a flat list.
-    The expression that follows each operator
-    is understood as its right-hand argument,
-    and the prefix expression of the containing expression
-    is understood as the left-hand argument
-    to the first operator in the list.
     This list is transformed into a tree
-    by applying operator precedence,
-    at which point the left- and right-hand arguments
-    of each operator are the appropriate expression.
-
+    by applying operator precedence
     For example, the expression ``2 + 3 * 5``
-    is initially understood as a list of three items,
-    ``2``, ``+ 3``, and ``* 5``.
+    is initially understood as a flat list of five items,
+    ``2``, ``+``, `` 3``, ``*``, and ``5``.
     This process transforms it into the tree (2 + (3 * 5)).
-
-.. TODO: In the amazing future, the previous paragraph would benefit from a diagram.
-
-.. TODO: Make sure this looks ok -- a grammar box right after a note.
 
 .. langref-grammar
 
@@ -211,7 +207,7 @@ see :doc:`../LanguageGuide/BasicOperators` and :doc:`../LanguageGuide/AdvancedOp
     binary-expression --> binary-operator prefix-expression
     binary-expression --> assignment-operator prefix-expression
     binary-expression --> conditional-operator prefix-expression
-    binary-expression --> type-checking-operator
+    binary-expression --> type-casting-operator
     binary-expressions --> binary-expression binary-expressions-OPT
 
 
@@ -304,6 +300,7 @@ They have the following form:
 .. syntax-outline::
 
    <#expression#> as <#type#>
+   <#expression#> as? <#type#>
    <#expression#> is <#type#>
 
 The ``as`` operator
@@ -326,7 +323,7 @@ It behaves as follows:
   the type of the cast expresion is an optional of the specified *type*.
   At runtime, if the cast succeeds,
   the value of *expression* is wrapped in an optional and returned;
-  otherwise the value returned is ``nil``.
+  otherwise, the value returned is ``nil``.
   An example is casting from a superclass to a subclass.
 
 .. testcode:: type-casting
@@ -373,8 +370,7 @@ as shown in the following example:
 
 The ``is`` operator checks at runtime
 to see whether the *expression*
-is of the specified *type*
-(but not one of its subtypes).
+is of the specified *type*.
 If so, it returns ``true``; otherwise, it returns ``false``.
 
 .. If the bugs are fixed, this can be reworded:
@@ -412,9 +408,9 @@ see :doc:`../LanguageGuide/TypeCasting`.
 
 .. syntax-grammar::
 
-    Grammar of a type-checking operator
+    Grammar of a type-casting operator
 
-    type-checking-operator --> ``is`` type | ``as`` type
+    type-casting-operator --> ``is`` type | ``as`` ``?``-OPT type
 
 
 .. _Expressions_PrimaryExpressions:
@@ -447,7 +443,6 @@ to make prefix expressions, binary expressions, and postfix expressions.
     primary-expression --> self-expression
     primary-expression --> superclass-expression
     primary-expression --> closure-expression
-    primary-expression --> anonymous-closure-argument
     primary-expression --> parenthesized-expression
     primary-expression --> implicit-member-expression
     primary-expression --> wildcard-expression
@@ -480,9 +475,6 @@ Literal             Type    Value
 ``__COLUMN__``      Int     The column number in which it begins.
 ``__FUNCTION__``    String  The name of the declaration in which it appears.
 ================    ======  ===============================================
-
-.. TODO: self and Self probably belong here as magic/special literals.
-   Also .dynamicType goes somewhere
 
 Inside a function,
 the value of ``__FUNCTION__`` is the name of that function,
@@ -581,7 +573,7 @@ The ``self`` expression is used to specify scope when accessing members,
 providing disambiguation when there is
 another variable of the same name in scope,
 such as a function parameter.
-For example, in an initializer:
+For example:
 
 .. testcode::
 
@@ -691,7 +683,7 @@ that allow closures to be written more concisely:
 
 * A closure can omit the types
   of its parameters, its return type, or both.
-  If you omit both types,
+  If you omit the parameter names and both types,
   omit the ``in`` keyword before the statements.
   If the omitted types can't be inferred,
   a compile-time error is raised.
@@ -703,28 +695,60 @@ that allow closures to be written more concisely:
 
 * A closure that consists of only a single expression
   is understood to return the value of that expression.
+  The contents of this expression is also considered
+  when performing type inference on the surrounding expression.
 
-.. TODO: In the implied return case,
-   the expression in the closure
-   participates in type checking of the surrounding expression.
+The following closure expressions are equivalent:
 
-The following closure expressions are equivalent,
-assuming they are used in a context
-that provides the needed type information: ::
+.. testcode:: closure-expression-forms
 
-    {
-        (x: Int, y: Int) -> Int in
-        return x + y
-    }
+    -> myFunction {
+           (x: Int, y: Int) -> Int in
+           return x + y
+      }
+    ---
+    -> myFunction {
+           (x, y) in
+           return x + y
+       }
+    ---
+    -> myFunction { return $0 + $1 }
+    ---
+    -> myFunction { $0 + $1 }
 
-    {
-        (x, y) in
-        return x + y
-    }
+For information about passing a closure as an argument to a function,
+see :ref:`Expressions_FunctionCallExpression`.
 
-    { return $0 + $1 }
+A closure expression can explicitly specify
+the values that it captures from the surrounding scope
+using a :newTerm:`capture list`.
+A capture list is written as a comma separated list surrounded by square brackets,
+before the list of parameters.
+If you use a capture list, you must also use the ``in`` keyword,
+even if you omit the parameter names, parameter types, and return type.
 
-    { $0 + $1 }
+.. Reasonably sure that accessing a variable that you didn't capture should be an error.
+   <rdar://problem/17024367> REPL - Accessing a variable not included in the capture list causes a segfault
+
+Each entry in the capture list can be marked as ``weak`` or ``unowned``
+to capture a weak or unowned reference to the value.
+
+.. testcode:: closure-expression-weak
+
+    -> myFunction { print(self.title) }                    // strong capture
+    -> myFunction { [weak self] in print(self!.title) }    // weak capture
+    -> myFunction { [unowned self] in print(self.title) }  // unowned capture
+
+You can also bind arbitrary expression
+to named values in the capture list.
+The expression is evaluated when the closure is formed,
+and captured with the specified strength.
+For example:
+
+.. testcode:: closure-expression-capture
+
+    // Weak capture of "self.parent" as "parent"
+    myFunction { [weak parent = self.parent] in print(parent!.title) }
 
 For more information and examples of closure expressions,
 see :ref:`Closures_ClosureExpressions`.
@@ -833,7 +857,7 @@ Wildcard Expression
 
 A :newTerm:`wildcard expression`
 is used to explicitly ignore a value during an assignment.
-For example in the following assignment
+For example, in the following assignment
 10 is assigned to ``x`` and 20 is ignored:
 
 .. testcode::
@@ -898,7 +922,7 @@ see :doc:`../LanguageGuide/BasicOperators` and :doc:`../LanguageGuide/AdvancedOp
     postfix-expression --> dynamic-type-expression
     postfix-expression --> subscript-expression
     postfix-expression --> forced-value-expression
-    postfix-expression --> optional-chaining-operator
+    postfix-expression --> optional-chaining-expression
 
 
 .. _Expressions_FunctionCallExpression:
@@ -947,7 +971,7 @@ The following function calls are equivalent:
     <$ : Bool = false
 
 If the trailing closure is the function's only argument,
-the parentheses can be omitted:
+the parentheses can be omitted.
 
 .. testcode:: no-paren-trailing-closure
 
@@ -974,7 +998,7 @@ the parentheses can be omitted:
 
     Grammar of a function call expression
 
-    function-call-expression --> postfix-expression parenthesized-expression trailing-closure-OPT
+    function-call-expression --> postfix-expression parenthesized-expression
     function-call-expression --> postfix-expression parenthesized-expression-OPT trailing-closure
     trailing-closure --> closure-expression
 
@@ -991,7 +1015,7 @@ Initializer Expression
 ~~~~~~~~~~~~~~~~~~~~~~
 
 An :newTerm:`initializer expression` provides access
-to a types's initializer.
+to a type's initializer.
 It has the following form:
 
 .. syntax-outline::
@@ -1000,7 +1024,7 @@ It has the following form:
 
 You use the initializer expression in a function call expression
 to initialize a new instance of a type.
-Unlike other functions, an initializer can't be used as a value.
+Unlike functions, an initializer can't be used as a value.
 For example:
 
 .. testcode::
@@ -1014,7 +1038,7 @@ For example:
     !!                   ^
 
 You also use an initializer expression
-to delegate to the initializer of a superclass:
+to delegate to the initializer of a superclass.
 
 .. testcode::
 
@@ -1133,9 +1157,9 @@ immediately followed by ``.dynamicType``. It has the following form:
 
     <#expression#>.dynamicType
 
-The *expression* must evaluate to an instance of a type.
-The entire ``dynamicType`` expression evaluates to the value of that instance's
-runtime type, as the following example shows:
+The *expression* can't be the name of a type.
+The entire ``dynamicType`` expression evaluates to the value of the
+runtime type of the *expression*, as the following example shows:
 
 .. testcode::
 
@@ -1261,15 +1285,14 @@ It has the following form:
     <#expression#>?
 
 On its own, the postfix ``?`` operator
-simply returns the value of its argument ---
-for example, the expression ``x?`` has the same value as ``x``.
+simply returns the value of its argument as an optional.
 
 Postfix expressions that contain an optional-chaining expression
 are evaluated in a special way.
 If the optional-chaining expression is ``nil``,
 all of the other operations in the postfix expression are ignored
 and the entire postfix expression evaluates to ``nil``.
-Otherwise,
+If the optional-chaining expression is not ``nil``,
 the value of the optional-chaining expression is unwrapped
 and used to evaluate the rest of the postfix expression.
 In either case,
@@ -1296,7 +1319,7 @@ has a value of an optional type.
 
 The following example shows the behavior
 of the example above
-without using optional chaining:
+without using optional chaining.
 
 .. testcode:: optional-chaining-if-let
 
@@ -1310,6 +1333,6 @@ without using optional chaining:
 
 .. syntax-grammar::
 
-   Grammar of a chained-optional expression
+   Grammar of an optional-chaining expression
 
-   chained-optional-expression --> postfix-expression ``?``
+   optional-chaining-expression --> postfix-expression ``?``

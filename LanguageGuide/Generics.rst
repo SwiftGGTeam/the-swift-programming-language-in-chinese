@@ -3,7 +3,7 @@ Generics
 
 :newTerm:`Generic code` enables you to write flexible, reusable functions and types
 that can work with any type, subject to requirements that you define.
-You can write code that avoids duplication,
+You can write code that avoids duplication
 and expresses its intent in a clear, abstracted manner.
 
 Generics are one of the most powerful features of Swift,
@@ -20,7 +20,7 @@ and there are no limitations on what that type can be.
 
 .. _Generics_TheProblemThatGenericsSolve:
 
-The Problem that Generics Solve
+The Problem That Generics Solve
 -------------------------------
 
 Here's a standard, non-generic function called ``swapTwoInts``,
@@ -192,7 +192,7 @@ and are written immediately after the function's name,
 between a pair of matching angle brackets (such as ``<T>``).
 
 Once specified,
-a type parameter can be used as the type of a function's parameters
+a type parameter can be used to define the type of a function's parameters
 (such as the ``a`` and ``b`` parameters of the ``swapTwoValues`` function);
 or as the function's return type;
 or as a type annotation within the body of the function.
@@ -202,14 +202,14 @@ is replaced with an *actual* type whenever the function is called.
 ``T`` was replaced with ``Int`` the first time the function was called,
 and was replaced with ``String`` the second time it was called.)
 
-You can provide more than one type parameter if needed,
-by writing multiple type parameters within the angle brackets,
+You can provide more than one type parameter
+by writing multiple type parameter names within the angle brackets,
 separated by commas.
 
 .. _Generics_NamingTypeParameters:
 
 Naming Type Parameters
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 In simple cases where a generic function or generic type
 needs to refer to a single placeholder type
@@ -221,7 +221,7 @@ However, you are can use any valid identifier as the type parameter name.
 If you are defining more complex generic functions,
 or generic types with multiple parameters,
 it can be useful to provide more descriptive type parameter names.
-For example, Swift's ``Dictionary`` type has two type parameters –
+For example, Swift's ``Dictionary`` type has two type parameters ---
 one for its keys and one for its values.
 If you were writing ``Dictionary`` yourself,
 you might name these two type parameters ``KeyType`` and ``ValueType``
@@ -239,23 +239,38 @@ Generic Types
 -------------
 
 In addition to generic functions,
-Swift also enables you to define your own :newTerm:`generic types`.
+Swift enables you to define your own :newTerm:`generic types`.
 These are custom classes, structures, and enumerations
 that can work with *any* type, in a similar way to ``Array`` and ``Dictionary``.
 
 This section shows you how to write a generic collection type called ``Stack``.
-This type represents an ordered “stack” of values, with two operations:
+A stack is an ordered set of values, similar to an array,
+but with a more restricted set of operations than Swift's ``Array`` type.
+An array allows new items to be inserted and removed at any location in the array.
+A stack, however, allows new items to be appended only to the end of the collection
+(known as :newTerm:`pushing` a new value on to the stack).
+Similarly, a stack allows items to be removed only from the end of the collection
+(known as :newTerm:`popping` a value off the stack).
 
-* :newTerm:`Pushing` a new value on to the top of the stack
-* :newTerm:`Popping` a value off the top of the stack
+.. note::
+
+   The concept of a stack is used by the ``UINavigationController`` class
+   to model the view controllers in its navigation hierarchy.
+   You call the ``UINavigationController`` class
+   ``pushViewController:animated:`` method to add (or push)
+   a view controller on to the navigation stack,
+   and its ``popViewControllerAnimated:`` method to remove (or pop)
+   a view controller from the navigation stack.
+   A stack is a useful collection model whenever you need a strict
+   “last in, first out” approach to managing a collection.
 
 The illustration below shows the push / pop behavior for a stack:
 
-.. image:: ../images/stackPushPop.png
+.. image:: ../images/stackPushPop_2x.png
    :align: center
 
 1. There are currently three values on the stack.
-2. A fourth value is “pushed” on to the top of the stack
+2. A fourth value is “pushed” on to the top of the stack.
 3. The stack now holds four values, with the most recent one at the top.
 4. The top item in the stack is removed, or “popped”.
 5. After popping a value, the stack once again holds three values.
@@ -313,9 +328,23 @@ Note how the generic version of ``Stack``
 is essentially the same as the non-generic version,
 but with a placeholder type parameter called ``T``
 instead of an actual type of ``Int``.
+This type parameter is written within a pair of angle brackets (``<T>``)
+immediately after the structure's name.
 
-The ``Stack`` structure can be used to create a stack of any type,
-such as a stack of ``String`` values:
+``T`` defines a placeholder name for “some type ``T``” to be provided later on.
+This future type can be referred to as “``T``” anywhere within the structure's definition.
+In this case, ``T`` is used as a placeholder in three places:
+
+* To create a property called ``items``,
+  which is initialized with an empty array of values of type ``T``
+* To specify that the ``push`` method has a single parameter called ``item``,
+  which must be of type ``T``
+* To specify that the value returned by the ``pop`` method
+  will be a value of type ``T``
+
+You create instances of ``Stack`` in a similar way to ``Array`` and ``Dictionary``,
+by writing the actual type to be used for this specific stack within angle brackets
+after the type name when creating a new instance with initializer syntax:
 
 .. testcode:: genericStack
 
@@ -330,7 +359,7 @@ such as a stack of ``String`` values:
 
 Here's how ``stackOfStrings`` looks after pushing these four values on to the stack:
 
-.. image:: ../images/stackPushedFourStrings.png
+.. image:: ../images/stackPushedFourStrings_2x.png
    :align: center
 
 Popping a value from the stack returns and removes the top value, ``"cuatro"``:
@@ -344,72 +373,20 @@ Popping a value from the stack returns and removes the top value, ``"cuatro"``:
 
 Here's how the stack looks after popping its top value:
 
-.. image:: ../images/stackPoppedOneString.png
+.. image:: ../images/stackPoppedOneString_2x.png
    :align: center
 
 Because it is a generic type,
 ``Stack`` can be used to create a stack of *any* valid type in Swift,
 in a similar manner to ``Array`` and ``Dictionary``.
 
-.. _Generics_GenericTypeDefinitionSyntax:
-
-Generic Type Definition Syntax
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Generic types use type parameters to provide a name for the placeholder types they work with,
-in the same way as generic functions described above.
-
-Here's how a type parameter is used within the definition of ``Stack``:
-
-.. testcode:: genericStackDefinition
-
-   -> struct Stack<T> {
-         var items = T[]()
-         mutating func push(item: T) {
-            items.append(item)
-         }
-         mutating func pop() -> T {
-            return items.removeLast()
-         }
-      }
-
-As with ``swapTwoValues<T>``,
-the ``Stack`` definition includes a single type parameter called ``T``,
-written within a pair of angle brackets (``<T>``).
-This type parameter is written immediately after the structure name, ``Stack``.
-
-``T`` defines a placeholder name for “some type ``T``” to be provided later on.
-This future type can be referred to as “``T``” anywhere within the structure's definition.
-In this case, ``T`` is used as a placeholder in three places:
-
-1. to create a property called ``items``,
-   which is initialized with an empty array of values of type ``T``
-2. to specify that the ``push`` method has a single parameter called ``item``,
-   which must be of type ``T``
-3. to specify that the value returned by the ``pop`` method
-   will be a value of type ``T``
-
-This use of a placeholder type enables ``Stack`` to define the generic behavior
-of a stack of values, regardless of what type those values happen to be for a particular stack.
-
-You create instances of ``Stack`` in a similar way to ``Array`` and ``Dictionary``,
-by writing the actual type to be used for this specific stack within angle brackets
-after the variable name:
-
-.. testcode:: genericStackDefinition
-
-   -> var stackOfInts = Stack<Int>()
-   << // stackOfInts : Stack<Int> = V4REPL5Stack (has 1 child)
-   -> stackOfInts.push(42)
-
 .. _Generics_TypeConstraints:
 
 Type Constraints
 ----------------
 
-The ``swapTwoValues`` function and the ``Stack`` type
-are both able to work with any type.
-However, it can sometimes be useful to enforce
+The ``swapTwoValues`` function and the ``Stack`` type can work with any type.
+However, it is sometimes useful to enforce
 certain :newTerm:`type constraints` on the types that can be used with
 generic functions and generic types.
 Type constraints specify that a type parameter must
@@ -420,17 +397,17 @@ For example,
 Swift's ``Dictionary`` type places a limitation on
 the types that can be used as keys for a dictionary.
 As described in :ref:`CollectionTypes_Dictionaries`,
-the type of a dictionary's keys must be :newTerm:`hashable` –
-that is, it must provide a way to make itself uniquely representable.
+the type of a dictionary's keys must be :newTerm:`hashable`.
+That is, it must provide a way to make itself uniquely representable.
 ``Dictionary`` needs its keys to be hashable so that it can
 check whether it already contains a value for a particular key.
 Without this requirement, ``Dictionary`` could not tell
 whether it should insert or replace a value for a particular key,
 nor would it be able to find a value for a given key that is already in the dictionary.
 
-``Dictionary`` enforces this requirement by saying that
-its key type must conform to the ``Hashable`` protocol,
-which is a special protocol defined in the Swift standard library.
+This requirement is enforced by a type constraint on the key type for ``Dictionary``,
+which specifies that the key type must conform to the ``Hashable`` protocol,
+a special protocol defined in the Swift standard library.
 All of Swift's basic types (such as ``String``, ``Int``, ``Double``, and ``Bool``)
 are hashable by default.
 
@@ -442,7 +419,7 @@ are hashable by default.
 You can define your own type constraints when creating custom generic types,
 and these constraints provide much of the power of generic programming.
 Abstract concepts like ``Hashable``
-give a way to talk about types in terms of their conceptual characteristics,
+characterize types in terms of their conceptual characteristics,
 rather than their explicit type.
 
 .. _Generics_TypeConstraintSyntax:
@@ -450,11 +427,10 @@ rather than their explicit type.
 Type Constraint Syntax
 ~~~~~~~~~~~~~~~~~~~~~~
 
-Type constraints are written by placing a single class or protocol constraint
+You write type constraints by placing a single class or protocol constraint
 after a type parameter's name, separated by a colon,
 as part of the type parameter list.
-The general syntax for type constraints is shown below for
-a generic function called ``someFunction``
+The general syntax for type constraints on a generic function is shown below
 (although the syntax is the same for generic types):
 
 .. testcode:: typeConstraints
@@ -469,11 +445,11 @@ The hypothetical function above has two type parameters.
 The first type parameter, ``T``, has a type constraint
 that requires ``T`` to be a subclass of ``SomeClass``.
 The second type parameter, ``U``, has a type constraint
-that requires ``U`` to conform to the protocol ``SomeProtocol``
+that requires ``U`` to conform to the protocol ``SomeProtocol``.
 
 .. _Generics_TypeConstraintsInAction:
 
-Type Constraints In Action
+Type Constraints in Action
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Here's a non-generic function called ``findInt``,
@@ -486,12 +462,10 @@ or ``nil`` if the value cannot be found:
 .. testcode:: typeConstraints
 
    -> func findInt(array: Int[], valueToFind: Int) -> Int? {
-         var index = 0
-         for integer in array {
-            if integer == valueToFind {
+         for (index, value) in enumerate(array) {
+            if value == valueToFind {
                return index
             }
-            ++index
          }
          return nil
       }
@@ -510,29 +484,30 @@ The ``findInt`` function can be used to find an integer value in an array of int
 The principle of finding a value in an array isn't useful only for integers, however.
 You can write the same functionality as a generic function called ``findValue``,
 by replacing any mention of integers with values of some type ``T`` instead.
-Here's how a generic version of ``findInt``, called ``findValue``, might be written:
+
+Here's how you might expect a generic version of ``findInt``,
+called ``findValue``, to be written.
+Note that the return type of this function is still ``Int?``,
+because the function returns an optional index number,
+not an optional value from the array.
+Be warned, though --- this function does not compile,
+for reasons explained after the example:
 
 .. testcode:: typeConstraints
 
    -> func findValue<T>(array: T[], valueToFind: T) -> Int? {
-         var index = 0
-         for value in array {
+         for (index, value) in enumerate(array) {
             if value == valueToFind {
                return index
             }
-            ++index
          }
          return nil
       }
-   !! <REPL Input>:4:18: error: could not find an overload for '==' that accepts the supplied arguments
+   !! <REPL Input>:3:18: error: could not find an overload for '==' that accepts the supplied arguments
    !!              if value == valueToFind {
    !!                 ~~~~~~^~~~~~~~~~~~~~
 
-Note that the return type of this function is still ``Int?``,
-because the function returns an optional index number,
-not an optional value from the array.
-
-However, this function will not compile as written above.
+This function does not compile as written above.
 The problem lies with the equality check, “``if value == valueToFind``”.
 Not every type in Swift can be compared with the equal to operator (``==``).
 If you create your own class or structure to represent a complex data model, for example,
@@ -563,12 +538,10 @@ as part of the type parameter's definition when you define the function:
 .. testcode:: typeConstraintsEquatable
 
    -> func findValue<T: Equatable>(array: T[], valueToFind: T) -> Int? {
-         var index = 0
-         for value in array {
+         for (index, value) in enumerate(array) {
             if value == valueToFind {
                return index
             }
-            ++index
          }
          return nil
       }
@@ -576,7 +549,7 @@ as part of the type parameter's definition when you define the function:
 The single type parameter for ``findValue`` is written as ``T: Equatable``,
 which means “any type ``T`` that conforms to the ``Equatable`` protocol.”
 
-The ``findValue`` function now compiles successfully,
+The ``findValue`` function now compiles successfully
 and can be used with any type that is ``Equatable``, such as ``Double`` or ``String``:
 
 .. testcode:: typeConstraintsEquatable
@@ -602,11 +575,16 @@ Associated Types
 When defining a protocol,
 it is sometimes useful to declare one or more :newterm:`associated types`
 as part of the protocol's definition.
-An associated type is a way to give a placeholder name (or :newTerm:`alias`)
+An associated type gives a placeholder name (or :newTerm:`alias`)
 to a type that is used as part of the protocol.
 The actual type to use for that associated type
 is not specified until the protocol is adopted.
 Associated types are specified with the ``typealias`` keyword.
+
+.. _Generics_AssociatedTypesInAction:
+
+Associated Types in Action
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Here's an example of a protocol called ``Container``,
 which declares an associated type called ``ItemType``:
@@ -620,30 +598,33 @@ which declares an associated type called ``ItemType``:
          subscript(i: Int) -> ItemType { get }
       }
 
-The ``Container`` protocol defines three requirements to describe a simple container.
-New items can be added to the container with an ``append`` method;
-a count of the items in the container can be retrieved with a ``count`` property;
-and each item in the container can be retrieved
-with a subscript that takes an ``Int`` index value.
+The ``Container`` protocol defines three required capabilities
+that any container must provide:
 
-This protocol doesn't specify how the items in the container should be stored,
+* It must be possible to add a new item to the container with an ``append`` method.
+* It must be possible to access a count of the items in the container
+  through a ``count`` property that returns an ``Int`` value.
+* It must be possible to retrieve each item in the container with a subscript
+  that takes an ``Int`` index value.
+
+This protocol doesn't specify how the items in the container should be stored
 or what type they are allowed to be.
 The protocol only specifies the three bits of functionality
 that any type must provide in order to be considered a ``Container``.
-A conforming type can provide additional functionality if it wishes,
-as long as it satisfies at least these three requirements.
+A conforming type can provide additional functionality,
+as long as it satisfies these three requirements.
 
-Any type that conforms to the ``Container`` protocol needs to be able to specify
+Any type that conforms to the ``Container`` protocol must be able to specify
 the type of values it stores.
-Specifically, it needs to make sure that only items of the right type
+Specifically, it must ensure that only items of the right type
 are added to the container,
-and it needs to be clear about the type of the items returned by its subscript.
+and it must be clear about the type of the items returned by its subscript.
 
-In order to be able to define these requirements,
-the ``Container`` protocol needs a way to talk about
+To define these requirements,
+the ``Container`` protocol needs a way to refer to
 the type of the elements that a container will hold,
 without knowing what that type is for a specific container.
-The ``Container`` protocol needs a way to say that
+The ``Container`` protocol needs to specify that
 any value passed to the ``append`` method
 must have the same type as the container's element type,
 and that the value returned by the container's subscript
@@ -652,9 +633,9 @@ will be of the same type as the container's element type.
 To achieve this,
 the ``Container`` protocol declares an associated type called ``ItemType``,
 written as  ``typealias ItemType``.
-The protocol does not define what ``ItemType`` is an alias *for* –
+The protocol does not define what ``ItemType`` is an alias *for* ---
 that information is left for any conforming type to provide.
-Nonetheless, the ``ItemType`` alias gives a way to talk about
+Nonetheless, the ``ItemType`` alias provides a way to refer to
 the type of the items in a ``Container``,
 and to define a type for use with the ``append`` method and subscript,
 to ensure that the expected behavior of any ``Container`` is enforced.
@@ -700,7 +681,7 @@ you don't actually need to declare a concrete ``ItemType`` of ``Int``
 as part of the definition of ``IntStack``.
 Because ``IntStack`` conforms to all of the requirements of the ``Container`` protocol,
 Swift can infer the appropriate ``ItemType`` to use,
-just by looking at the type of the ``append`` method's ``item`` parameter,
+simply by looking at the type of the ``append`` method's ``item`` parameter
 and the return type of the subscript.
 Indeed, if you delete the ``typealias ItemType = Int`` line from the code above,
 everything still works, because it is clear what type should be used for ``ItemType``.
@@ -731,7 +712,7 @@ You can also make the generic ``Stack`` type conform to the ``Container`` protoc
       }
 
 This time, the placeholder type parameter ``T`` is used as
-the type of the ``append`` method's ``item`` parameter,
+the type of the ``append`` method's ``item`` parameter
 and the return type of the subscript.
 Swift can therefore infer that ``T`` is the appropriate type to use
 as the ``ItemType`` for this particular container.
@@ -751,7 +732,7 @@ These three capabilities match the requirements of the ``Container`` protocol.
 This means that you can extend ``Array`` to conform to the ``Container`` protocol
 simply by declaring that ``Array`` adopts the protocol.
 You do this with an empty extension,
-as described in :ref:`Protocols_DeclaringProtocolAdoption`:
+as described in :ref:`Protocols_DeclaringProtocolAdoptionWithAnExtension`:
 
 .. testcode:: associatedTypes
 
@@ -771,26 +752,26 @@ Type constraints, as described in :ref:`Generics_TypeConstraints`,
 enable you to define requirements on the type parameters associated with
 a generic function or type.
 
-It can sometimes be useful to define requirements for associated types too.
-This is achieved by defining :newTerm:`where clauses` as part of a type parameter list.
+It can also be useful to define requirements for associated types.
+You do this by defining :newTerm:`where clauses` as part of a type parameter list.
 A where clause enables you to require that
 an associated type conforms to a certain protocol,
-and / or that certain type parameters and associated types are the same.
+and/or that certain type parameters and associated types be the same.
 You write a where clause by placing the ``where`` keyword
 immediately after the list of type parameters,
 followed by one or more constraints for associated types,
-and / or one or more equality relationships between types and associated types.
+and/or one or more equality relationships between types and associated types.
 
 The example below defines a generic function called ``allItemsMatch``,
 which checks to see if two ``Container`` instances contain
 the same items in the same order.
-The function returns a Boolean value of ``true`` if all items match,
+The function returns a Boolean value of ``true`` if all items match
 and a value of ``false`` if they do not.
 
 The two containers to be checked do not have to be
 the same type of container (although they can be),
 but they do have to hold the same type of items.
-This is expressed through a combination of type constraints and where clauses:
+This requirement is expressed through a combination of type constraints and where clauses:
 
 .. testcode:: associatedTypes
 
@@ -826,30 +807,29 @@ for two container types to be determined when the function is called.
 The function's type parameter list places
 the following requirements on the two type parameters:
 
-1) ``C1`` must conform to the ``Container`` protocol (written as ``C1: Container``)
-2) ``C2`` must also conform to the ``Container`` protocol (written as ``C2: Container``)
-3) The ``ItemType`` for ``C1`` must be the same as the ``ItemType`` for ``C2``
-   (written as ``C1.ItemType == C2.ItemType``)
-4) The ``ItemType`` for ``C1`` must conform to the ``Equatable`` protocol
-   (written as ``C1.ItemType: Equatable``)
+* ``C1`` must conform to the ``Container`` protocol (written as ``C1: Container``).
+* ``C2`` must also conform to the ``Container`` protocol (written as ``C2: Container``).
+* The ``ItemType`` for ``C1`` must be the same as the ``ItemType`` for ``C2``
+  (written as ``C1.ItemType == C2.ItemType``).
+* The ``ItemType`` for ``C1`` must conform to the ``Equatable`` protocol
+  (written as ``C1.ItemType: Equatable``).
 
 The third and fourth requirements are defined as part of a where clause,
 and are written after the ``where`` keyword as part of the function's type parameter list.
 
 These requirements mean:
 
-1) ``someContainer`` is a container of type ``C1``
-2) ``anotherContainer`` is a container of type ``C2``
-3) ``someContainer`` and ``anotherContainer`` contain the same type of items
-4) The items in ``someContainer`` can be checked with the not equal operator (``!=``)
-   to see if they are different from each other
+* ``someContainer`` is a container of type ``C1``.
+* ``anotherContainer`` is a container of type ``C2``.
+* ``someContainer`` and ``anotherContainer`` contain the same type of items.
+* The items in ``someContainer`` can be checked with the not equal operator (``!=``)
+  to see if they are different from each other.
 
 The third and fourth requirements combine to mean that
 the items in ``anotherContainer`` can *also* be checked with the ``!=`` operator,
 because they are exactly the same type as the items in ``someContainer``.
 
-These requirements mean that the ``allItemsMatch`` function
-is able to compare the two containers,
+These requirements enable the ``allItemsMatch`` function to compare the two containers,
 even if they are of a different container type.
 
 The ``allItemsMatch`` function starts by checking that
@@ -859,8 +839,7 @@ and the function returns ``false``.
 
 After making this check, the function iterates over all of the items in ``someContainer``
 with a ``for``-``in`` loop and the half-closed range operator (``..``).
-For each item, the function checks to see if
-the item from ``someContainer`` is not equal to
+For each item, the function checks whether the item from ``someContainer`` is not equal to
 the corresponding item in ``anotherContainer``.
 If the two items are not equal, then the two containers do not match,
 and the function returns ``false``.

@@ -152,7 +152,7 @@ A ``for``-``in`` statement has the following form:
     }
 
 The ``generate`` method is called on the *collection* expression
-to obtain a value of a stream type---that is,
+to obtain a value of a generator type---that is,
 a type that conforms to the ``Generator`` protocol.
 The program begins executing a loop
 by calling the ``next`` method on the stream.
@@ -162,8 +162,6 @@ the program executes the *statements*,
 and then continues execution at the beginning of the loop.
 Otherwise, the program does not perform assignment or execute the *statements*,
 and it is finished executing the ``for``-``in`` statement.
-
-.. TODO: Move this info to the stdlib reference as appropriate.
 
 .. langref-grammar
 
@@ -270,7 +268,7 @@ Branch Statements
 -----------------
 
 Branch statements allow the program to execute certain parts of code
-depending the value of one or more conditions.
+depending on the value of one or more conditions.
 The values of the conditions specified in a branch statement
 control how the program branches and, therefore, what block of code is executed.
 Swift has two branch statements: an ``if`` statement and a ``switch`` statement.

@@ -27,7 +27,7 @@ This makes it easy to create custom string values for display, storage, and prin
 
 .. note::
 
-   Swift's ``String`` type is bridged seamlessly to Objective-C's ``NSString`` class.
+   Swift's ``String`` type is bridged seamlessly to Foundation's ``NSString`` class.
    If you are working with the Foundation framework in Cocoa or Cocoa Touch,
    the entire ``NSString`` API is available to call on any ``String`` value you create,
    in addition to the ``String`` features described in this chapter.
@@ -35,8 +35,6 @@ This makes it easy to create custom string values for display, storage, and prin
    
    For more information about using ``String`` with Foundation and Cocoa,
    see `Using Swift with Cocoa and Objective-C <//apple_ref/doc/uid/TP40014216>`_.
-
-.. TODO: make this be a link to BCAWS.
 
 .. _StringsAndCharacters_Literals:
 
@@ -70,8 +68,8 @@ String literals can include the following special characters:
   where ``nnnnnnnn`` is eight hexadecimal digits
 
 The code below shows an example of each kind of special character.
-The ``wiseWords`` constant contains two escaped double quote characters,
-and the ``dollarSign``, ``blackHeart``, and ``swiftHeart`` constants
+The ``wiseWords`` constant contains two escaped double quote characters.
+The ``dollarSign``, ``blackHeart``, and ``sparklingHeart`` constants
 demonstrate the three different Unicode scalar character formats:
 
 .. testcode:: specialCharacters
@@ -84,8 +82,8 @@ demonstrate the three different Unicode scalar character formats:
    << // dollarSign : String = "$"
    -> let blackHeart = "\u2665"      // ♥,  Unicode scalar U+2665
    << // blackHeart : String = "♥"
-   -> let swiftHeart = "\U0001F496"  // 💖, Unicode scalar U+1F496
-   << // swiftHeart : String = "💖"
+   -> let sparklingHeart = "\U0001F496"  // 💖, Unicode scalar U+1F496
+   << // sparklingHeart : String = "💖"
 
 .. what about SNOWMAN WITHOUT SNOW?
    Unicode: U+26C4 U+FE0F, UTF-8: E2 9B 84 EF B8 8F
@@ -169,7 +167,7 @@ that ``String`` value is *copied* when it is passed to a function or method,
 or when it is assigned to a constant or variable.
 In each case, a new copy of the existing ``String`` value is created,
 and the new copy is passed or assigned, not the original version.
-Value types are described in :ref:`ClassesAndStructures_ValueTypesAndReferenceTypes`.
+Value types are described in :ref:`ClassesAndStructures_StructuresAndEnumerationsAreValueTypes`.
 
 .. note::
 
@@ -214,7 +212,7 @@ by iterating over that string with a ``for``-``in`` loop:
 
 The ``for``-``in`` loop is described in :ref:`ControlFlow_ForLoops`.
 
-Alternatively, you can create a stand-alone ``Character`` constant or variable
+Alternatively, create a stand-alone ``Character`` constant or variable
 from a single-character string literal by providing a ``Character`` type annotation:
 
 .. testcode:: characters
@@ -240,8 +238,8 @@ and pass in a string as the function's sole parameter:
 
 .. note::
 
-   Different Unicode characters,
-   and different representations of the same Unicode character,
+   Different Unicode characters
+   and different representations of the same Unicode character
    can require different amounts of memory to store.
    Because of this, characters in Swift do not each take up
    the same amount of memory within a string's representation.
@@ -258,6 +256,14 @@ and pass in a string as the function's sole parameter:
    The length of an ``NSString`` is based on
    the number of 16-bit code units within the string's UTF-16 representation
    and not the number of Unicode characters within the string.
+   To reflect this fact,
+   the ``length`` property from ``NSString`` is called ``utf16count``
+   when it is accessed on a Swift ``String`` value.
+
+.. FIXME: the capitalization of utf16count
+   is inconsistent with Cocoa's capitalization approach.
+   Update this section when it is fixed, as per <rdar://problem/17016806>
+   NSString's length property is imported as utf16count, but should be utf16Count.
 
 .. _StringsAndCharacters_ConcatenatingStringsAndCharacters:
 
@@ -469,7 +475,7 @@ Unicode
 -------
 
 :newTerm:`Unicode` is an international standard for encoding and representing text.
-It provides a way to represent almost any character from any language in a standardized form,
+It enables you to represent almost any character from any language in a standardized form,
 and to read and write those characters to and from an external source
 such as a text file or web page.
 
@@ -602,11 +608,6 @@ the scalar's 21-bit value, represented within a ``UInt32`` value:
       }
    -> print("\n")
    </ 68 111 103 33 128054
-
-.. FIXME: at the time of writing,
-   the ``unicodeScalars`` property actually returns a ``UTF16Scalars``,
-   which needs to be renamed to ``UnicodeScalarView``.
-   This is being tracked in rdar://16821900.
 
 The ``value`` properties for the first four ``UnicodeScalar`` values
 (``68``, ``111``, ``103``, ``33``)

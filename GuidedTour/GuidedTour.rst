@@ -26,9 +26,8 @@ In Swift, this can be done in a single line:
    << Hello, world
 
 If you have written code in C or Objective-C,
-this syntax looks familiar to you.
-Unlike those languages,
-this line of Swift code is a complete program.
+this syntax looks familiar to you ---
+in Swift, this line of code is a complete program.
 You don't need to import a separate library for functionality like
 input/output or string handling.
 Code written at global scope is used
@@ -104,7 +103,7 @@ explicitly make an instance of the desired type.
    << // label : String = "The width is "
    -> let width = 94
    << // width : Int = 94
-   -> println(label + String(width))
+   -> let widthLabel = label + String(width)
    << The width is 94
 
 .. admonition:: Experiment
@@ -116,9 +115,10 @@ explicitly make an instance of the desired type.
    are these experiments that make you familiar with errors
    helping you learn something?
 
-A simpler way to include values in strings
-is to write ``\(`` and ``)`` around an expression,
-which includes it as part of the string.
+There's an even simpler way to include values in strings:
+Write the value in parentheses,
+and write a backslash (``\``) before the parentheses.
+For example:
 
 .. testcode::
 
@@ -126,13 +126,15 @@ which includes it as part of the string.
    << // apples : Int = 3
    -> let oranges = 5
    << // oranges : Int = 5
-   -> let summary = "I have \(apples + oranges) pieces of fruit."
+   -> let appleSummary = "I have \(apples) apples."
+   << // summary : String = "I have 3 apples."
+   -> let fruitSummary = "I have \(apples + oranges) pieces of fruit."
    << // summary : String = "I have 8 pieces of fruit."
 
 .. admonition:: Experiment
 
    Use ``\()`` to
-   include a floating point calculation in a string
+   include a floating-point calculation in a string
    and to include someone’s name in a greeting.
 
 Create arrays and dictionaries using brackets (``[]``),
@@ -163,10 +165,10 @@ use the initializer syntax.
    << // emptyDictionary : Dictionary<String, Float> = Dictionary<String, Float>(1.33333333333333, 0, <DictionaryBufferOwner<String, Float> instance>)
 
 If type information can be inferred,
-such as when you set a new value for a variable
-or pass an argument to a function,
 you can write an empty array as ``[]``
-and an empty dictionary as ``[:]``.
+and an empty dictionary as ``[:]`` ---
+for example, when you set a new value for a variable
+or pass an argument to a function.
 
 .. testcode::
 
@@ -194,7 +196,7 @@ Braces around the body are required.
                teamScore += 1
            }
        }
-    >> teamScore
+    -> teamScore
     << // teamScore : Int = 11
 
 ..
@@ -206,7 +208,7 @@ Braces around the body are required.
 
 In an ``if`` statement,
 the conditional must be a Boolean expression ---
-this means code like ``if score { ... }`` is an error,
+this means that code such as ``if score { ... }`` is an error,
 not an implicit comparison to zero.
 
 You can use ``if`` and ``let`` together
@@ -259,15 +261,14 @@ and tests for equality.
    << // vegetable : String = "red pepper"
    -> switch vegetable {
           case "celery":
-              println("Add some raisins and make ants on a log.")
+              let vegetableComment = "Add some raisins and make ants on a log."
           case "cucumber", "watercress":
-              println("That would make a good tea sandwich.")
+              let vegetableComment = "That would make a good tea sandwich."
           case let x where x.hasSuffix("pepper"):
-              println("Is it a spicy \(x)?")
+              let vegetableComment = "Is it a spicy \(x)?"
           default:
-              println("Everything tastes good in soup.")
+              let vegetableComment = "Everything tastes good in soup."
       }
-   << Is it a spicy red pepper?
 
 .. admonition:: Experiment
 
@@ -276,14 +277,14 @@ and tests for equality.
 
 After executing the code inside the switch case that matched,
 the program exits from the switch statement.
-Execution doesn't continue or "fall through" to the next case,
+Execution doesn't continue to the next case,
 so there is no need to explicitly break out of the switch
-at the end of each case‘s code.
+at the end of each case’s code.
 
 .. Omitting mention of "fallthrough" keyword.
    It's in the guide/reference if you need it.
 
-You also use ``for``-``in`` to iterate over items in a dictionary
+You use ``for``-``in`` to iterate over items in a dictionary
 by providing a pair of names to use
 for each key-value pair.
 
@@ -304,12 +305,12 @@ for each key-value pair.
               }
           }
       }
-   >> largest
+   -> largest
    << // largest : Int = 25
 
 .. admonition:: Experiment
 
-   Try keeping track of which kind of number
+   Add another variable to keep track of which kind of number
    was the largest, as well as what that largest number was.
 
 Use ``while`` to repeat a block of code until a condition changes.
@@ -323,39 +324,38 @@ ensuring that the loop is run at least once.
    -> while n < 100 {
           n = n * 2
       }
-   -> println("n is \(n)")
-   << n is 128
+   -> n
+   << // n : Int =128
    ---
    -> var m = 2
    << // m : Int = 2
    -> do {
           m = m * 2
       } while m < 100
-   -> println("m is \(m)")
-   << m is 128
+   -> m
+   << // m : Int = 128
 
-You can also keep an index in a loop
-using ``..`` to make a range of indexes,
-or by writing an explicit increment and test.
+You can keep an index in a loop ---
+either by using ``..`` to make a range of indexes
+or by writing an explicit initialization, condition, and increment.
 These two loops do the same thing:
 
 .. testcode::
 
+   -> var firstForLoop = 0
    -> for i in 0..3 {
-          println(i)
+          firstForLoop += i
       }
-   << 0
-   << 1
-   << 2
+   -> firstForLoop
+   ---
+   -> var secondForLoop = 0
    -> for var i = 0; i < 3; ++i {
-          println(i)
+          secondForLoop += 1
       }
-   << 0
-   << 1
-   << 2
+   -> secondForLoop
 
-Use ``..`` to make a range that omits its upper value
-and ``...`` to make a range that includes both values.
+Use ``..`` to make a range that omits its upper value,
+and use ``...`` to make a range that includes both values.
 
 Functions and Closures
 ----------------------
@@ -386,7 +386,7 @@ Use a tuple to return multiple values from a function.
    -> func getGasPrices() -> (Double, Double, Double) {
           return (3.59, 3.69, 3.79)
       }
-   >> getGasPrices()
+   -> getGasPrices()
    <$ : (Double, Double, Double) = (3.59, 3.69, 3.79)
 
 Functions can also take a variable number of arguments,
@@ -434,7 +434,7 @@ that is long or complex.
     <$ : Int = 15
 
 Functions are a first-class type.
-This means a function can return another function as its value.
+This means that a function can return another function as its value.
 
 .. testcode::
 
@@ -488,7 +488,7 @@ Use ``in`` to separate the arguments and return type from the body.
    Rewrite the closure to return zero for all odd numbers.
 
 You have several options for writing closures more concisely.
-When the closure's type is already known,
+When a closure's type is already known,
 such as the callback for a delegate,
 you can omit the type of its parameters,
 its return type, or both.
@@ -500,8 +500,8 @@ of their only statement.
     -> numbers.map({ number in 3 * number })
     <$ : Array<Int> = [24, 9, 15, 18]
 
-You can refer to parameters by number instead of by name,
-which is especially useful in very short closures.
+You can refer to parameters by number instead of by name ---
+this approach is especially useful in very short closures.
 A closure passed as the last argument to a function
 can appear immediately after the parentheses.
 
@@ -510,9 +510,9 @@ can appear immediately after the parentheses.
     -> sort([1, 5, 3, 12, 2]) { $0 > $1 }
     <$ : Array<Int> = [12, 5, 3, 2, 1]
 
-The previous listing can be written without a closure at all
-by passing the ``>`` operator
-as the second argument to the ``sort`` function.
+The previous listing can be written without a closure at all.
+The ``>`` operator is the name of a function,
+so you can pass it as the second argument to the ``sort`` function.
 
 .. testcode::
 
@@ -586,12 +586,12 @@ Notice how ``self`` is used to distinguish the ``name`` property
 from the ``name`` argument to the initializer.
 The arguments to the initializer are passed like a function call
 when you create an instance of the class.
-Every property either needs a value assigned
-when it is declared (like ``numberOfSides``)
-or in the initializer (like ``name``).
+Every property needs a value assigned ---
+either in its declaration (as with ``numberOfSides``)
+or in the initializer (as with ``name``).
 
 Use ``deinit`` to create a deinitializer
-if you need to perform some clean-up
+if you need to perform some cleanup
 before the object is deallocated.
 
 Subclasses include their superclass name
@@ -647,7 +647,7 @@ properties can have a getter and a setter.
 .. testcode::
 
 
-    -> class EquilateralTriangle: Shape {
+    -> class EquilateralTriangle: NamedShape {
            var sideLength: Double = 0.0
     ---
            init(sideLength: Double, name: String) {
@@ -681,13 +681,13 @@ the new value has the implicit name ``newValue``.
 You can provide an explicit name in parentheses after ``set``.
 
 Notice that the initializer for the ``EquilateralTriangle`` class
-is made up of three phases:
+has three different steps:
 
 1. Setting the value of properties that the subclass declares.
 
 2. Calling the superclass's initializer.
 
-3. Changing the value of properties set by the superclass.
+3. Changing the value of properties defined by the superclass.
    Any additional setup work that uses methods, getters, or setters
    can also be done at this point.
 
@@ -701,7 +701,7 @@ is always the same as the side length of its square.
 .. testcode::
 
    -> class TriangleAndSquare {
-          var triangle: triangle {
+          var triangle: EquilateralTriangle {
               willSet {
                   square.sideLength = newValue.sideLength
               }
@@ -712,23 +712,19 @@ is always the same as the side length of its square.
               }
           }
           init(size: Double, name: String) {
-              square = Square(size, name)
-              triangle = triangle(size, name)
+              square = Square(sideLength: size, name: name)
+              triangle = EquilateralTriangle(sideLength: size, name: name)
           }
       }
    -> var triangleAndSquare = TriangleAndSquare(size: 10, name: "another test shape")
    << // triangleAndSquare :TriangleAndSquare = <TriangleAndSquare instance>
    -> triangleAndSquare.square.sideLength
    <$ : Double = 10.0
-   -> triangleAndSquare.triangle.radius
+   -> triangleAndSquare.triangle.sideLength
    <$ : Double = 10.0
    -> triangleAndSquare.square = Square(sideLength: 50, name: "larger square")
-   -> triangleAndSquare.triangle.radius
+   -> triangleAndSquare.triangle.sideLength
    <$ : Double = 50.0
-
-.. What is getter-setter-keyword-clause for?
-   It looks like you write var foo: Type { get }
-   but what does that even mean?
 
 .. Grammatically, these clauses are general to variables.
    Not sure what it would look like
@@ -736,8 +732,8 @@ is always the same as the side length of its square.
    to use them outside a class or a struct.
 
 Methods on classes have one important difference from functions.
-The parameter names in functions are only used within the function,
-but parameters in methods are also used when you call the method.
+Parameter names in functions are used only within the function,
+but parameters names in methods are also used when you call the method.
 By default, a method has the same name for its parameters
 when you call it and within the method itself.
 You can specify a second name, which is used inside the method.
@@ -758,14 +754,14 @@ you can write ``?`` before operations like methods, properties, and subscripting
 If the value before the ``?`` is ``nil``,
 everything after the ``?`` is ignored
 and the value of the whole expression is ``nil``.
-Otherwise, the optional value is unwrapped
+Otherwise, the optional value is unwrapped,
 and everything after the ``?`` acts on the unwrapped value.
 In both cases,
 the value of the whole expression is an optional value.
 
 .. testcode::
 
-    -> let optionalSquare: Square? = Square(size: 2.5, name:"optional square")
+    -> let optionalSquare: Square? = Square(sideLength: 2.5, name:"optional square")
     -> let sideLength = optionalSquare?.sideLength
 
 Enumerations and Structures
@@ -856,7 +852,7 @@ you don't have to provide one.
 
 .. admonition:: Experiment
 
-   Add a ``color`` method to ``Suit`` which returns "black"
+   Add a ``color`` method to ``Suit`` that returns "black"
    for spades and clubs, and returns "red" for hearts and diamonds.
 
 .. Suits are in Bridge order, which matches Unicode order.
@@ -864,11 +860,12 @@ you don't have to provide one.
    Wikipedia lists a good half dozen orders.
 
 Notice the two ways that the ``Hearts`` member of the enumeration
-is referred to above.
+is referred to above:
 When assigning a value to the ``hearts`` constant,
-the enumeration member ``Suit.Hearts`` is written out in full
+the enumeration member ``Suit.Hearts`` is referred to by its full name
 because the constant doesn't have an explicit type specified.
-Inside the switch it could be abbreviated as just ``.Hearts``
+Inside the switch,
+the enumeration is referred to by the abbreviated form ``.Hearts``
 because the value of ``self`` is already known to be a suit.
 You can use the abbreviated form
 anytime the value's type is already known.
@@ -878,7 +875,7 @@ Structures support many of the same behaviors as classes,
 including methods and initializers.
 One of the most important differences
 between structures and classes is that
-structures are always copied when they are passed around in your code
+structures are always copied when they are passed around in your code,
 but classes are passed by reference.
 
 .. testcode::
@@ -901,17 +898,20 @@ but classes are passed by reference.
    a full deck of cards,
    with one card of each combination of rank and suit.
 
-
-An instance of an enumeration member can have values associated with it.
-This is different than having a raw value:
-the raw value for an enumeration member is the same for all instances,
-but instances of the same enumeration member
-can have different associated values.
+An instance of an enumeration member
+can have values associated with the instance.
+Instances of the same enumeration member
+can have different values associated with them.
 You provide the associated values when you create the instance.
+Associated values and raw values are different:
+The raw value of an enumeration member
+is the same for all of its instances,
+and you provide the raw value when you define the enumeration.
+
 For example,
 consider the case of requesting
 the sunrise and sunset time from a server.
-The server either responds with the information,
+The server either responds with the information
 or it responds with some error information.
 
 .. testcode::
@@ -943,7 +943,7 @@ or it responds with some error information.
        }
 
 .. Note:
-   The repetition ond odd structure for the switch above is because
+   The repetition and odd structure for the switch above is because
    the REPL requires an initial value for variables to make it testable.
    From a playground side, I can see the value of a variable
    that's scoped only within the switch,
@@ -960,7 +960,7 @@ as part of matching the value against the switch cases.
 Protocols and Extensions
 ------------------------
 
-Use ``protocol`` to declare a protocol:
+Use ``protocol`` to declare a protocol.
 
 .. testcode::
 
@@ -1002,16 +1002,18 @@ Classes, enumerations, and structs can all adopt protocols.
 
    Write an enumeration that conforms to this protocol.
 
-Notice the use of ``mutating`` in the declaration of ``SimpleStruct``
-to mark a struct method that modifies the structure.
-It is not needed in the declaration of ``SimpleClass``
-because any method on a class can modify the class.
+Notice the use of the ``mutating`` keyword
+in the declaration of ``SimpleStructure``
+to mark a method that modifies the structure.
+The declaration of ``SimpleClass`` doesn't need
+any of its methods marked as mutating
+because methods on a class can always modify the class.
 
 Use ``extension`` to add functionality to an existing type,
 such as new methods and computed properties.
 You can use an extension to add protocol conformance
 to a type that is declared elsewhere,
-or even a type you imported from a library or framework.
+or even to a type that you imported from a library or framework.
 
 .. testcode::
 
@@ -1034,7 +1036,7 @@ or even a type you imported from a library or framework.
 You can use a protocol name just like any other named type ---
 for example, to create a collection of objects
 that have different types
-but all conform to a particular protocol.
+but that all conform to a single protocol.
 When you work with values whose type is a protocol type,
 methods outside the protocol definition are not available.
 
@@ -1063,7 +1065,7 @@ to make a generic function or type.
 
     -> func repeat<ItemType>(item: ItemType, times: Int) -> ItemType[] {
            var result = Array<ItemType>()
-           for i in 0...times {
+           for i in 0..times {
                 result += item
            }
            return result
@@ -1074,16 +1076,16 @@ to make a generic function or type.
 You can make generic forms of functions and methods,
 as well as classes, enumerations, and structures.
 
-.. FIXME: Add testcode expectation lines.
+.. TODO: Add testcode expectation lines.
 
 .. testcode::
 
-    // Re-implement the Swift standard library's optional type
-    -> enum Optional<T> {
+    // Reimplement the Swift standard library's optional type
+    -> enum OptionalValue<T> {
            case None
            case Some(T)
        }
-    -> var possibleInteger = Optional.None
+    -> var possibleInteger: OptionalValue<Int> = .None
     -> possibleInteger = .Some(100)
 
 Use ``where`` after the type name
@@ -1095,11 +1097,7 @@ or to require a class to have a particular superclass.
 
 .. testcode::
 
-   -> func anyCommonElements <T, U where
-          T: Sequence, U: Sequence,
-          T.GeneratorType.Element: Equatable,
-          T.GeneratorType.Element == U.GeneratorType.Element>
-      (lhs: T, rhs: U) -> Bool {
+   -> func anyCommonElements <T, U where T: Sequence, U: Sequence, T.GeneratorType.Element: Equatable, T.GeneratorType.Element == U.GeneratorType.Element> (lhs: T, rhs: U) -> Bool {
           for lhsItem in lhs {
               for rhsItem in rhs {
                   if lhsItem == rhsItem {
@@ -1117,7 +1115,6 @@ or to require a class to have a particular superclass.
    Modify the ``anyCommonElements`` function
    to make a function that returns an array
    of the elements that any two sequences have in common.
-   <C-D-o>
 
 ..
   TODO: dig into this error
@@ -1131,16 +1128,3 @@ you can omit ``where`` and simply
 write the protocol or class name after a colon.
 Writing ``<T: Equatable>``
 is the same as writing ``<T where T: Equatable>``.
-
-Continue Reading
-----------------
-
-Access the rest of this book on on the web,
-download it in iBooks.
-or download it as a PDF.
-
-`The Swift Programming Language <//apple_ref/doc/uid/TP40014097>`_
-
-.. TODO: Would be better to make this a link to the second chapter.
-   Linking to a section though happens by name,
-   so the link would read "Why Swift?"

@@ -1,7 +1,7 @@
 Patterns
 ========
 
-A :newTerm:`pattern` represents the structure (or "shape") of a single value
+A :newTerm:`pattern` represents the structure of a single value
 or a composite value.
 For example, the structure of a tuple ``(1, 2)`` is a comma-separated list of two
 elements. Because patterns represent the structure of a value rather than any
@@ -315,7 +315,7 @@ value with a range of integers in an ``Range`` object, as the following example 
     -> switch point {
           case (0, 0):
              println("(0, 0) is at the origin.")
-          case (-2..2, -2..2):
+          case (-2...2, -2...2):
              println("(\(point.0), \(point.1)) is near the origin.")
           default:
              println("The point is at (\(point.0), \(point.1)).")
@@ -335,7 +335,7 @@ with a string representations of points.
     -> switch point {
           case ("0", "0"):
              println("(0, 0) is at the origin.")
-          case ("-2..2", "-2..2"):
+          case ("-2...2", "-2...2"):
              println("(\(point.0), \(point.1)) is near the origin.")
           default:
              println("The point is at (\(point.0), \(point.1)).")

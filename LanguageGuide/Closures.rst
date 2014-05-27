@@ -21,12 +21,12 @@ Global and nested functions, as introduced in :doc:`Functions`,
 are actually special cases of closures.
 Closures take one of three forms:
 
-1) Global functions, which are closures that have a name,
-   and do not capture any values
-2) Nested functions, which are closures that have a name,
-   and can capture values from their enclosing function
-3) Closure expressions, which are unnamed closures written in a lightweight syntax
-   that can capture values from their surrounding context
+* Global functions are closures that have a name
+  and do not capture any values.
+* Nested functions are closures that have a name
+  and can capture values from their enclosing function.
+* Closure expressions are unnamed closures written in a lightweight syntax
+  that can capture values from their surrounding context.
 
 Swift's closure expressions have a clean, clear style,
 with optimizations that encourage brief, clutter-free syntax in common scenarios.
@@ -47,7 +47,7 @@ are a convenient means of naming and defining self-contained blocks of code
 as part of a larger function.
 However, it is sometimes useful to write shorter versions of function-like constructs
 without a full declaration and name.
-This is particularly true when working with functions that take other functions
+This is particularly true when you work with functions that take other functions
 as one or more of their arguments.
 
 :newTerm:`Closure expressions` are a way to write inline closures in a brief, focused syntax.
@@ -318,12 +318,12 @@ that is written outside of (and *after*) the parentheses of the function call it
 
 .. note::
 
-   If a closure expression is provided as the function's only argument,
+   If a closure expression is provided as the function's only argument
    and you provide that expression as a trailing closure,
    you do not need to write a pair of parentheses ``()``
    after the function's name when you call the function.
 
-The string-sorting closure from the *Closure Expression Syntax* section above
+The string-sorting closure from the :ref:`Closures_ClosureExpressionSyntax` section above
 can be written outside of the ``sort`` function's parentheses as a trailing closure:
 
 .. testcode:: closureSyntax
@@ -426,8 +426,9 @@ The process is repeated until ``number /= 10`` is equal to ``0``,
 at which point the ``output`` string is returned by the closure,
 and is added to the output array by the ``map`` function.
 
-The trailing closure here neatly encapsulates the closures functionality
-immediately after the function it supports,
+The use of trailing closure syntax in the example above
+neatly encapsulates the closure's functionality
+immediately after the function that closure supports,
 without needing to wrap the entire closure within
 the ``map`` function's outer parentheses.
 
@@ -532,7 +533,7 @@ Here's an example of ``makeIncrementor`` in action:
 .. testcode:: closures
 
    -> let incrementByTen = makeIncrementor(forIncrement: 10)
-   << // incrementByTen : () -> Int = <opaque>
+   << // incrementByTen : () -> Int = (Function)
 
 This example sets a constant called ``incrementByTen``
 to refer to an incrementor function that adds ``10`` to
@@ -563,7 +564,7 @@ and this variable is unconnected to the one captured by ``incrementByTen``:
 .. testcode:: closures
 
    -> let incrementBySeven = makeIncrementor(forIncrement: 7)
-   << // incrementBySeven : () -> Int = <opaque>
+   << // incrementBySeven : () -> Int = (Function)
    -> incrementBySeven()
    << // r3 : Int = 7
    /> returns a value of \(r3)
@@ -588,7 +589,7 @@ Closures Are Reference Types
 
 In the example above,
 ``incrementBySeven`` and ``incrementByTen`` are constants,
-but the closures they refer to are still able to increment
+but the closures these constants refer to are still able to increment
 the ``runningTotal`` variables that they have captured.
 This is because functions and closures are :newTerm:`reference types`.
 
@@ -605,14 +606,11 @@ both of those constants or variables will refer to the same closure:
 .. testcode:: closures
 
    -> let alsoIncrementByTen = incrementByTen
-   << // alsoIncrementByTen : () -> Int = <opaque>
+   << // alsoIncrementByTen : () -> Int = (Function)
    -> alsoIncrementByTen()
    << // r5 : Int = 50
    /> returns a value of \(r5)
    </ returns a value of 50
-
-Reference types are covered in more detail
-in :ref:`ClassesAndStructures_ValueTypesAndReferenceTypes`.
 
 .. TODO: Autoclosures
    ------------------

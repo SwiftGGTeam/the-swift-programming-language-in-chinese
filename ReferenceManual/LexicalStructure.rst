@@ -153,7 +153,9 @@ These names are valid identifiers within the scope of the closure.
 Keywords
 --------
 
-The following keywords are reserved and may not be used as identifiers.
+The following keywords are reserved and may not be used as identifiers,
+unless they're escaped with backticks,
+as described above in :ref:`LexicalStructure_Identifiers`.
 
 .. langref-grammar
 
@@ -542,7 +544,7 @@ For example, all the following string literals have the same value:
    << // x : Int = 3
    << // r3 : String = "1 2 3"
 
-String literals are of type ``String``. The characters that make up a string
+The default type of a string literal is ``String``. The characters that make up a string
 are of type ``Character``. For more information about the ``String`` and ``Character``
 types, see :doc:`../LanguageGuide/StringsAndCharacters`.
 
@@ -554,7 +556,6 @@ types, see :doc:`../LanguageGuide/StringsAndCharacters`.
    would just delete single quoted strings.  Right now, iterating over a String
    returns a sequence of UnicodeScalar values.  In the fullness of time, it
    should return a sequence of Char values.
-.. TODO: Scrub out UnicodeScalar literals from the docs.
 
 .. langref-grammar
 

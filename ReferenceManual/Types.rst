@@ -137,7 +137,7 @@ to enable the function to return a single tuple containing multiple values.
 You can also name the elements of a tuple type and use those names to refer to
 the values of the individual elements. An element name consists of an identifier
 followed immediately by a colon (:). For an example that demonstrates both of
-these features, see :ref:`Functions_TupleTypesAsReturnTypes`.
+these features, see :ref:`Functions_FunctionsWithMultipleReturnValues`.
 
 ``Void`` is a typealias for the the empty tuple type, ``()``.
 If there is only one element inside the parentheses,
@@ -181,26 +181,28 @@ function types support functions and methods that take multiple paramaters
 and return multiple values.
 
 You can apply the ``auto_closure`` attribute to a function type that has a parameter
-type of ``()`` and that returns the type of an expression. An autoclosure function
+type of ``()`` and that returns the type of an expression
+(see :ref:`Attributes_TypeAttributes`).
+An autoclosure function
 captures an implicit closure over the specified expression, instead of the expression
-itself. For example, the following are equivalent:
+itself. The following example uses the ``auto_closure`` attribute in defining
+a very simple assert function:
 
 .. testcode::
 
-    -> var a: () -> Int = { 42 }
-    << // a : () -> Int = <unprintable value>
-    -> var a: @auto_closure () -> Int = 42
-    !! <REPL Input>:1:5: error: invalid redeclaration of 'a'
-    !! var a: () -> Int = { 42 }
-    !!     ^
-    !! <REPL Input>:1:5: note: 'a' previously declared here
-    !! var a: @auto_closure () -> Int = 42
-    !!     ^
+    -> func simpleAssert(condition: @auto_closure () -> Bool, message: String) {
+           if !condition() {
+               println(message)
+           }
+       }
+    -> let testNumber = 5
+    << // testNumber : Int = 5
+    -> simpleAssert(testNumber % 2 == 0, "testNumber isn't an even number.")
+    <- testNumber isn't an even number.
 
-For an example of how to use the ``auto_closure`` attribute,
-see :ref:`Closures_Autoclosures`. See also :ref:`Attributes_TypeAttributes`.
-
-.. Curried function types
+.. TODO: Add this back in after Dave updates the Guide with an autoclousre section:
+    "For an example of how to use the ``auto_closure`` attribute,
+    see :ref:`Closures_Autoclosures`."
 
 A function type can have a variadic parameter as the last parameter in its *parameter type*.
 Syntactically,
@@ -313,16 +315,13 @@ a three-dimensional array of integers using three sets of square brackets:
 .. testcode::
 
     -> var array3D: Int[][][] = [[[1, 2], [3, 4]], [[5, 6], [7, 8]]]
-    << // array3D : ((Int[])[])[] = [[[1, 2], [3, 4]], [[5, 6], [7, 8]]]
-
-The array types in a multidimensional array are grouped from left to right.
-For example, ``Int[][][]`` is understood as ``((Int[])[])[]``.
+    << // array3D : Int[][][] = [[[1, 2], [3, 4]], [[5, 6], [7, 8]]]
 
 When accessing the elements in a multidimensional array,
 the left-most subscript index refers to the element at that index in the outermost
-array type. The next subscript index to the right refers to the element
-at that index in the array type that's nested one level in. And so on. This means that,
-for example, ``array3D[0]`` refers to ``[[1, 2], [3, 4]]``,
+array. The next subscript index to the right refers to the element
+at that index in the array that's nested one level in. And so on. This means that in
+the example above, ``array3D[0]`` refers to ``[[1, 2], [3, 4]]``,
 ``array3D[0][1]`` refers to ``[3, 4]``, and ``array3D[0][1][1]`` refers to the value 4.
 
 For a detailed discussion of the Swift standard library ``Array`` type,
@@ -378,7 +377,7 @@ to declare an optional array of integers, write the type annotation as ``(Int[])
 writing ``Int[]?`` produces an error.
 
 If you don't provide an initial value when you declare an
-optional variable or property, it's value automatically defaults to ``nil``.
+optional variable or property, its value automatically defaults to ``nil``.
 
 Optionals conform to the ``LogicValue`` protocol and therefore may occur in a Boolean context.
 In that context,
@@ -613,9 +612,6 @@ to specify the type of its raw values, see :ref:`Enumerations_RawValues`.
 Type Inference
 --------------
 
-.. NOTE: TODO: Discuss how it happens at the expression level
-    and list/describe the places where you can omit a type or part of a type.
-
 Swift uses type inference extensively,
 allowing you to omit the type or part of the type of many variables and expressions in your code.
 For example,
@@ -648,33 +644,5 @@ This means that all of the information needed to infer an omitted type or part o
 in an expression must be accessible from type-checking
 the expression or one of its subexpressions.
 
-.. TODO: Need an example to illustrate this (of something that you can't do).
-
 .. TODO: Email Doug for a list of rules or situations describing when type-inference
     is allowed and when types must be fully typed.
-
-.. Original: We may be able to avoid talking about fully-typed types.
-    I'm leaving the original text here in case we find that we do need it.
-
-    Fully-Typed Types
-    ~~~~~~~~~~~~~~~~~
-
-    A type may be *fully typed*. A type is fully-typed unless one of the following conditions hold:
-    It is a function type whose result or input type is not fully-typed.
-    It is a tuple type with an element that is not fully-typed. A tuple element is fully-typed unless it has no explicit type (which is permitted for defaultable elements) or its explicit type is not fully-typed. In other words, a type is fully-typed unless it syntactically contains a tuple element with no explicit type annotation.
-    A type being 'fully-typed' informally means that the type is specified directly from its type annotation without needing contextual or other information to resolve its type.
-
-    .. TODO: Rewrite this section.
-        The LangRef is trying to talk about fully-typed types.
-        In``(a, b : Int)`` the ``b : Int`` isn't actually a type annotation.
-        To get a non-fully typed type you need to be in a pattern matching context
-        like ``var (a : Int, b) = (1, 1.5)`` where the second half of the tuple has
-        some type variable instead of a fully typed type.
-        Likewise ``var a : Dictionary = ["A": 1]`` where the type of ``a`` is inferred.
-        The way you form an expression of tuple type like this is to do something
-        like ``(t, 5)`` or ``(t, _) = (7, 2)`` where the ``5`` or ``_`` picks up the type
-        from context.
-
-        The reason for discussing fully typed types is directly related to type inference
-        ---types in a source must be fully typed (as defined here) except in the contexts
-        where type inference is allowed.

@@ -110,7 +110,7 @@ It multiplies a starting value of ``1``
 (that is, ``3`` to the power of ``0``)
 by ``3``, ten times,
 using a half-closed loop that starts with ``0`` and ends with ``9``.
-This calculation doesn't need to know the individual counter values each time through the loop –
+This calculation doesn't need to know the individual counter values each time through the loop ---
 it simply needs to execute the loop the correct number of times.
 The underscore character ``_``
 (used in place of a loop variable)
@@ -308,7 +308,7 @@ Here's the general form of a ``while`` loop:
 This example plays a simple game of *Snakes and Ladders*
 (also known as *Chutes and Ladders*):
 
-.. image:: ../images/snakesAndLadders.png
+.. image:: ../images/snakesAndLadders_2x.png
    :align: center
 
 The rules of the game are as follows:
@@ -855,7 +855,7 @@ and categorizes it on the graph that follows the example:
       }
    <- (1, 1) is inside the box
 
-.. image:: ../images/coordinateGraphSimple.png
+.. image:: ../images/coordinateGraphSimple_2x.png
    :align: center
 
 The ``switch`` statement determines if the point is
@@ -900,13 +900,13 @@ and categorizes it on the graph that follows:
       }
    <- on the x-axis with an x value of 2
 
-.. image:: ../images/coordinateGraphMedium.png
+.. image:: ../images/coordinateGraphMedium_2x.png
    :align: center
 
 The ``switch`` statement determines if the point is
-on the red x-axis;
-on the orange y-axis;
-or somewhere else not on either axis.
+on the red x-axis,
+on the orange y-axis,
+or elsewhere, on neither axis.
 
 The three ``switch`` cases declare placeholder constants ``x`` and ``y``,
 which temporarily take on one or both tuple values from ``anotherPoint``.
@@ -958,12 +958,12 @@ The example below categorizes an (x, y) point on the following graph:
       }
    <- (1, -1) is on the line x == -y
 
-.. image:: ../images/coordinateGraphComplex.png
+.. image:: ../images/coordinateGraphComplex_2x.png
    :align: center
 
 The ``switch`` statement determines if the point is
-on the green diagonal line where ``x == y``;
-on the purple diagonal line where ``x == -y``;
+on the green diagonal line where ``x == y``,
+on the purple diagonal line where ``x == -y``,
 or neither.
 
 The three ``switch`` cases declare placeholder constants ``x`` and ``y``,
@@ -1194,7 +1194,7 @@ the number ``5`` is correctly identified as a prime number.
 .. note::
 
    The ``fallthrough`` keyword does not check the case conditions
-   for the ``switch`` case it causes execution to fall into.
+   for the ``switch`` case that it causes execution to fall into.
    The ``fallthrough`` keyword simply causes code execution to move
    directly to the statements inside the next case (or ``default`` case) block,
    as in C's standard ``switch`` statement behavior.
@@ -1243,7 +1243,7 @@ you must roll again until you roll the exact number needed to land on square 25.
 
 The game board is the same as before:
 
-.. image:: ../images/snakesAndLadders.png
+.. image:: ../images/snakesAndLadders_2x.png
    :align: center
 
 The values of ``finalSquare``, ``board``, ``square``, and ``diceRoll``

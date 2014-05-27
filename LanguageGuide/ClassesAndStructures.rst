@@ -1,21 +1,26 @@
 Classes and Structures
 ======================
 
-Enumerations, as introduced in the previous chapter,
-enable you to define your own custom types to work with lists of values.
-Enumerations are particularly suited to representing a fixed set of values of a similar type.
-
-In Swift, you can also define custom data types
-as :newTerm:`classes` and :newTerm:`structures`.
-You use classes and structures to create general-purpose, flexible constructs
-that become the building blocks of your program's code.
+:newTerm:`Classes` and :newTerm:`structures` are general-purpose,
+flexible constructs that become the building blocks of your program's code.
+You define properties and methods to add functionality to your classes and structures
+by using exactly the same syntax as for constants, variables, and functions.
 
 Unlike other programming languages,
 Swift does not require you to create separate interface and implementation files
-for your custom types.
+for custom classes and structures.
 In Swift, you define a class or a structure in a single file,
 and the external interface to that class or structure is
 automatically made available for other code to use.
+
+.. note::
+
+   An instance of a *class* is traditionally known as an :newTerm:`object`.
+   However, Swift classes and structures
+   are much closer in functionality than in other languages,
+   and much of this chapter describes functionality that can apply to
+   instances of *either* a class or a structure type.
+   Because of this, the more general term :newTerm:`instance` is used.
 
 .. TODO: add a note here about public and private interfaces,
    once we know how these will be declared in Swift.
@@ -33,7 +38,7 @@ Both can:
 * Define subscripts to provide access to their values using subscript syntax
 * Define initializers to set up their initial state
 * Be extended to expand their functionality beyond a default implementation
-* Conform to protocols to provide standard functionality of a certain type
+* Conform to protocols to provide standard functionality of a certain kind
 
 For more information, see
 :doc:`Properties`, :doc:`Methods`, :doc:`Subscripts`, :doc:`Initialization`,
@@ -41,10 +46,10 @@ For more information, see
 
 Classes have additional capabilities that structures do not:
 
-* Inheritance, which enables one class to inherit the characteristics of another
-* Type casting, which enables you to check and interpret the type of a class instance at runtime
-* Deinitializers, which enable an instance of a class to clean up after itself
-* Reference counting, which allows more than one reference to a class instance
+* Inheritance enables one class to inherit the characteristics of another.
+* Type casting enables you to check and interpret the type of a class instance at runtime.
+* Deinitializers enable an instance of a class to free up any resources it has assigned.
+* Reference counting allows more than one reference to a class instance.
 
 For more information, see
 :doc:`Inheritance`, :doc:`TypeCasting`, and :doc:`Initialization`.
@@ -60,7 +65,7 @@ Definition Syntax
 ~~~~~~~~~~~~~~~~~
 
 Classes and structures have a similar definition syntax.
-You introduce classes with the ``class`` keyword,
+You introduce classes with the ``class`` keyword
 and structures with the ``struct`` keyword.
 Both place their entire definition within a pair of braces:
 
@@ -104,8 +109,7 @@ The example above defines a new structure called ``Resolution``,
 to describe a pixel-based display resolution.
 This structure has two stored properties called ``width`` and ``height``.
 Stored properties are constants or variables that are bundled up and stored
-as part of the class or structure,
-and are described in detail in :doc:`Properties`.
+as part of the class or structure.
 These two properties are inferred to be of type ``Int``
 by setting them to an initial integer value of ``0``.
 
@@ -145,7 +149,7 @@ The syntax for creating instances is very similar for both structures and classe
    -> let someVideoMode = VideoMode()
    << // someVideoMode : VideoMode = C4REPL9VideoMode (has 4 children)
 
-Structures and classes both use initializer syntax when creating new instances.
+Structures and classes both use initializer syntax for new instances.
 The simplest form of initializer syntax uses the type name of the class or structure
 followed by empty parentheses, such as ``Resolution()`` or ``VideoMode()``.
 This creates a new instance of the class or structure,
@@ -156,18 +160,6 @@ in :doc:`Initialization`.
 .. TODO: add more detail about inferring a variable's type when using initializer syntax.
 .. TODO: note that you can only use the default constructor if you provide default values
    for all properties on a structure or class.
-
-.. _ClassesAndStructures_Terminology:
-
-Terminology
-___________
-
-An instance of a *class* (such as ``someVideoMode`` above)
-is traditionally known as an :newTerm:`object`.
-However, Swift classes and structures are much closer in functionality than in other languages,
-and much of this chapter describes functionality that can apply to
-instances of *either* a class or a structure type.
-Because of this, the more general term :newTerm:`instance` is used below.
 
 .. _ClassesAndStructures_AccessingProperties:
 
@@ -233,45 +225,26 @@ Initializers are described in more detail in :doc:`Initialization`.
    as described in rdar://16704095.
    We hope to have this by WWDC, and this section will need updating if this lands.
 
-.. _ClassesAndStructures_ValueTypesAndReferenceTypes:
+.. _ClassesAndStructures_StructuresAndEnumerationsAreValueTypes:
 
-Value Types and Reference Types
--------------------------------
-
-Classes, structures, and enumerations have many things in common in Swift.
-All three can work with properties, methods, initializers, extensions, and protocols.
-However, there is one fundamental difference:
-
-* Structures and enumerations are *value* types
-* Classes are *reference* types
-
-This difference is very important as you decide how to define the building blocks of your code.
-
-.. TODO: this section needs updating to clarify that assignment is always like value semantics,
-   and it's only really possible to see the difference when looking at the properties of a type.
-
-.. _ClassesAndStructures_ValueTypes:
-
-Value Types
-~~~~~~~~~~~
-
-.. TODO: Have I actually described what a 'type' is by this point?
+Structures and Enumerations Are Value Types
+-------------------------------------------
 
 A :newTerm:`value type` is a type that is *copied*
 when it is assigned to a variable or constant,
 or when it is passed to a function.
 
 You've actually been using value types extensively throughout the previous chapters.
-In fact, all of the basic types in Swift –
-integers, floating-point numbers, Booleans, strings, arrays and dictionaries –
+In fact, all of the basic types in Swift ---
+integers, floating-point numbers, Booleans, strings, arrays and dictionaries ---
 are value types, and are implemented as structures behind the scenes.
 
 All structures and enumerations are value types in Swift.
-This means that any structure and enumeration instances you create –
-and any value types they have as properties –
+This means that any structure and enumeration instances you create ---
+and any value types they have as properties ---
 are always copied when they are passed around in your code.
 
-For example, using the ``Resolution`` structure from above:
+Consider this example, which uses the ``Resolution`` structure from the previous example:
 
 .. testcode:: ClassesAndStructures
 
@@ -333,9 +306,9 @@ The same behavior applies to enumerations:
          case North, South, East, West
       }
    -> var currentDirection = CompassPoint.West
-   << // currentDirection : CompassPoint = <opaque>
+   << // currentDirection : CompassPoint = (Enum Value)
    -> let rememberedDirection = currentDirection
-   << // rememberedDirection : CompassPoint = <opaque>
+   << // rememberedDirection : CompassPoint = (Enum Value)
    -> currentDirection = .East
    -> if rememberedDirection == .West {
          println("The remembered direction is still .West")
@@ -349,15 +322,15 @@ the copy of the original value that was stored in ``rememberedDirection``.
 
 .. TODO: Should I give an example of passing a value type to a function here?
 
-.. _ClassesAndStructures_ReferenceTypes:
+.. _ClassesAndStructures_ClassesAreReferenceTypes:
 
-Reference Types
-~~~~~~~~~~~~~~~
+Classes Are Reference Types
+---------------------------
 
 Unlike value types, :newTerm:`reference types` are *not* copied
 when they are assigned to a variable or constant,
 or when they are passed to a function.
-Rather than making a copy, a reference to the same existing instance is used instead.
+Rather than a copy, a reference to the same existing instance is used instead.
 
 Here's an example, using the ``VideoMode`` class defined above:
 
@@ -400,11 +373,9 @@ from the underlying ``VideoMode`` instance:
 
 Note that ``tenEighty`` and ``alsoTenEighty`` are declared as *constants*,
 rather than variables.
-However, it is still possible to change
-``tenEighty.frameRate`` and ``alsoTenEighty.frameRate``.
-This is allowed because
+However, you can still change ``tenEighty.frameRate`` and ``alsoTenEighty.frameRate`` because
 the values of the ``tenEighty`` and ``alsoTenEighty`` constants themselves do not actually change.
-``tenEighty`` and ``alsoTenEighty`` themselves do not “store” the ``VideoMode`` instance –
+``tenEighty`` and ``alsoTenEighty`` themselves do not “store” the ``VideoMode`` instance ---
 instead, they both *refer* to a ``VideoMode`` instance behind the scenes.
 It is the ``frameRate`` property of the underlying ``VideoMode`` that is changed,
 not the values of the constant references to that ``VideoMode``.
@@ -416,80 +387,16 @@ not the values of the constant references to that ``VideoMode``.
    as per the swift-discuss email thread "Dictionaries and key copying"
    started by Alex Migicovsky on Mar 1 2014.
 
-.. _ClassesAndStructures_Pointers:
-
-Pointers
-________
-
-If you have experience with C, C++, or Objective-C,
-you may know that these languages use :newTerm:`pointers` to refer to addresses in memory.
-A Swift constant or variable that refers to an instance of some reference type
-is similar to a pointer in C,
-but is not a direct pointer to an address in memory,
-and does not require you to write an asterisk (``*``)
-to indicate that you are creating a reference.
-Instead, these references are defined like any other constant or variable in Swift.
-
-.. TODO: functions aren't "instances". This needs clarifying.
-
-.. TODO: Add a justification here to say why this is a good thing.
-
-.. _ClassesAndStructures_ChoosingBetweenClassesAndStructures:
-
-Choosing Between Classes and Structures
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-You can use both classes and structures to define custom data types to use as
-the building blocks of your program's code.
-
-However, structure instances are always passed by *value*,
-and class instances are always passed by *reference*.
-This means that they are suited to different kinds of tasks.
-As you consider the data constructs and functionality that you need for a project,
-you need to decide whether each data construct should be
-defined as a class or as a structure.
-
-As a general guideline, consider creating a structure when:
-
-* The structure's primary purpose is to encapsulate a few relatively simple data values
-* It is reasonable to expect that the encapsulated values will be copied rather than referenced
-  when you assign or pass around an instance of that structure
-* Any properties stored by the structure are themselves value types,
-  which would also be expected to be copied rather than referenced
-* There is no need to inherit properties or behavior from another existing type
-
-Examples of good candidates for structures include:
-
-* The size of a geometric shape
-  (perhaps encapsulating a ``width`` property and a ``height`` property,
-  both of type ``Double``)
-* A way to refer to ranges within a series
-  (perhaps encapsulating a ``start`` property and a ``length`` property,
-  both of type ``Int``)
-* A point in a 3D coordinate system
-  (perhaps encapsulating ``x``, ``y`` and ``z`` properties, each of type ``Double``)
-
-In all other cases, define a class, and create instances of that class
-to be managed and passed by reference.
-In practice, this means that most custom data constructs should be classes,
-not structures.
-
-.. QUESTION: what's the deal with tuples and reference types / value types?
-
-.. TODO: Tim has suggested using Window as a good example here –
-   its location is a structure, but it doesn't make sense for Window
-   to be a value type, as it is not copied when passed around.
-
 .. _ClassesAndStructures_IdentityOperators:
 
 Identity Operators
-------------------
+~~~~~~~~~~~~~~~~~~
 
 Because classes are reference types,
 it is possible for multiple constants and variables to refer to
 the same single instance of a class behind the scenes.
 (The same is not true for structures and enumerations,
-because they are value types,
+because they are value types
 and are always copied when they are assigned to a constant or variable,
 or passed to a function.)
 
@@ -524,3 +431,350 @@ The process of defining your own implementations of the “equal to” and “no
 is described in :ref:`AdvancedOperators_EquivalenceOperators`.
 
 .. TODO: This needs clarifying with regards to function references.
+
+.. _ClassesAndStructures_Pointers:
+
+Pointers
+~~~~~~~~
+
+If you have experience with C, C++, or Objective-C,
+you may know that these languages use :newTerm:`pointers` to refer to addresses in memory.
+A Swift constant or variable that refers to an instance of some reference type
+is similar to a pointer in C,
+but is not a direct pointer to an address in memory,
+and does not require you to write an asterisk (``*``)
+to indicate that you are creating a reference.
+Instead, these references are defined like any other constant or variable in Swift.
+
+.. TODO: functions aren't "instances". This needs clarifying.
+
+.. TODO: Add a justification here to say why this is a good thing.
+
+.. _ClassesAndStructures_ChoosingBetweenClassesAndStructures:
+
+Choosing Between Classes and Structures
+---------------------------------------
+
+You can use both classes and structures to define custom data types to use as
+the building blocks of your program's code.
+
+However, structure instances are always passed by *value*,
+and class instances are always passed by *reference*.
+This means that they are suited to different kinds of tasks.
+As you consider the data constructs and functionality that you need for a project,
+decide whether each data construct should be defined as a class or as a structure.
+
+As a general guideline, consider creating a structure when
+one or more of these conditions apply:
+
+* The structure's primary purpose is to encapsulate a few relatively simple data values.
+* It is reasonable to expect that the encapsulated values will be copied rather than referenced
+  when you assign or pass around an instance of that structure.
+* Any properties stored by the structure are themselves value types,
+  which would also be expected to be copied rather than referenced.
+* The structure does not need to inherit properties or behavior from another existing type.
+
+Examples of good candidates for structures include:
+
+* The size of a geometric shape,
+  perhaps encapsulating a ``width`` property and a ``height`` property,
+  both of type ``Double``.
+* A way to refer to ranges within a series,
+  perhaps encapsulating a ``start`` property and a ``length`` property,
+  both of type ``Int``.
+* A point in a 3D coordinate system,
+  perhaps encapsulating ``x``, ``y`` and ``z`` properties, each of type ``Double``.
+
+In all other cases, define a class, and create instances of that class
+to be managed and passed by reference.
+In practice, this means that most custom data constructs should be classes,
+not structures.
+
+.. QUESTION: what's the deal with tuples and reference types / value types?
+
+.. TODO: Tim has suggested using Window as a good example here ---
+   its location is a structure, but it doesn't make sense for Window
+   to be a value type, as it is not copied when passed around.
+
+.. _ClassesAndStructures_AssignmentAndCopyBehaviorForCollectionTypes:
+
+Assignment and Copy Behavior for Collection Types
+-------------------------------------------------
+
+Swift's ``Array`` and ``Dictionary`` types are implemented as structures.
+However, arrays have slightly different copying behavior from dictionaries and other structures
+when they are assigned to a constant or variable,
+and when they are passed to a function or method.
+
+The behavior described for ``Array`` and ``Dictionary`` below is different again from
+the behavior of ``NSArray`` and ``NSDictionary`` in Foundation,
+which are implemented as classes, not structures.
+``NSArray`` and ``NSDictionary`` instances are always
+assigned and passed around as a reference to an existing instance,
+rather than making a copy.
+
+.. note::
+
+   The descriptions below refer to the “copying” of
+   arrays, dictionaries, strings, and other values.
+   Where copying is mentioned,
+   the behavior you see in your code will always be as if a copy took place.
+   However, Swift only performs an *actual* copy behind the scenes
+   when it is absolutely necessary to do so.
+   Swift manages all value copying to ensure optimal performance,
+   and you should not avoid assignment to try to preempt this optimization.
+
+.. _ClassesAndStructures_AssignmentAndCopyBehaviorForDictionaries:
+
+Assignment and Copy Behavior for Dictionaries
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Whenever you assign a ``Dictionary`` instance to a constant or variable,
+or pass a ``Dictionary`` instance as an argument to a function or method call,
+the dictionary is *copied* at the point that
+the assignment or call takes place.
+This process is described in :ref:`ClassesAndStructures_StructuresAndEnumerationsAreValueTypes`.
+
+If the keys and/or values stored in the ``Dictionary`` instance are value types
+(structures or enumerations),
+they too are copied when the assignment or call takes place.
+Conversely, if the keys and/or values are reference types
+(classes or functions),
+the references are copied, but not the class instances or functions that they refer to.
+This copy behavior for a dictionary's keys and values is the same as
+the copy behavior for a structure's stored properties when the structure is copied.
+
+The example below defines a dictionary called ``ages``,
+which stores the names and ages of four people.
+The ``ages`` dictionary is then assigned to a new variable called ``copiedAges``
+and is copied when this assignment takes place.
+After the assignment, ``ages`` and ``copiedAges`` are two separate dictionaries.
+
+.. testcode:: assignmentAndCopyForDictionaries
+
+   -> var ages = ["Peter": 23, "Wei": 35, "Anish": 65, "Katya": 19]
+   << // ages : Dictionary<String, Int> = ["Anish": 65, "Wei": 35, "Peter": 23, "Katya": 19]
+   -> var copiedAges = ages
+   << // copiedAges : Dictionary<String, Int> = ["Anish": 65, "Wei": 35, "Peter": 23, "Katya": 19]
+
+The keys for this dictionary are of type ``String``,
+and the values are of type ``Int``.
+Both types are value types in Swift,
+and so the keys and values are also copied when the dictionary copy takes place.
+
+You can prove that the ``ages`` dictionary has been copied
+by changing an age value in one of the dictionaries
+and checking the corresponding value in the other.
+If you set the value for ``"Peter"`` in the ``copiedAges`` dictionary to ``24``,
+the ``ages`` dictionary still returns the old value of ``23``
+from before the copy took place:
+
+.. testcode:: assignmentAndCopyForDictionaries
+
+   -> copiedAges["Peter"] = 24
+   -> println(ages["Peter"])
+   <- 23
+
+.. _ClassesAndStructures_AssignmentAndCopyBehaviorForArrays:
+
+Assignment and Copy Behavior for Arrays
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The assignment and copy behavior for Swift's ``Array`` type
+is more complex than for its ``Dictionary`` type.
+``Array`` provides C-like performance when you work with an array's contents
+and copies an array's contents only when copying is necessary.
+
+If you assign an ``Array`` instance to a constant or variable,
+or pass an ``Array`` instance as an argument to a function or method call,
+the contents of the array are *not* copied at the point that
+the assignment or call takes place.
+Instead, both arrays share the same sequence of element values.
+When you modify an element value through one array,
+the result is observable through the other.
+
+For arrays, copying only takes place when you perform an action
+that has the potential to modify the *length* of the array.
+This includes appending, inserting, or removing items,
+or using a ranged subscript to replace a range of items in the array.
+If and when array copying does take place,
+the copy behavior for an array's contents is the same as for a dictionary's keys and values,
+as described in :ref:`ClassesAndStructures_AssignmentAndCopyBehaviorForDictionaries`.
+
+The example below assigns a new array of ``Int`` values to a variable called ``a``.
+This array is also assigned to two further variables called ``b`` and ``c``:
+
+.. testcode:: assignmentAndCopyForArrays
+
+   -> var a = [1, 2, 3]
+   << // a : Array<Int> = [1, 2, 3]
+   -> var b = a
+   << // b : Array<Int> = [1, 2, 3]
+   -> var c = a
+   << // c : Array<Int> = [1, 2, 3]
+
+You can retrieve the first value in the array with subscript syntax
+on either ``a``, ``b``, or ``c``:
+
+.. testcode:: assignmentAndCopyForArrays
+
+   -> println(a[0])
+   </ 1
+   -> println(b[0])
+   </ 1
+   -> println(c[0])
+   </ 1
+
+If you set an item in the array to a new value with subscript syntax,
+all three of ``a``, ``b``, and ``c`` will return the new value.
+Note that the array is not copied when you set a new value with subscript syntax,
+because setting a single value with subscript syntax
+does not have the potential to change the array's length:
+
+.. testcode:: assignmentAndCopyForArrays
+
+   -> a[0] = 42
+   -> println(a[0])
+   </ 42
+   -> println(b[0])
+   </ 42
+   -> println(c[0])
+   </ 42
+
+However, if you append a new item to ``a``, you *do* modify the array's length.
+This prompts Swift to create a new copy of the array
+at the point that you append the new value.
+Henceforth, ``a`` is a separate, independent copy of the array.
+
+If you change a value in ``a`` after the copy is made,
+``a`` will return a different value from ``b`` and ``c``,
+which both still reference the original array contents from before the copy took place:
+
+.. testcode:: assignmentAndCopyForArrays
+
+   -> a.append(4)
+   -> a[0] = 777
+   -> println(a[0])
+   </ 777
+   -> println(b[0])
+   </ 42
+   -> println(c[0])
+   </ 42
+
+.. _ClassesAndStructures_EnsuringThatAnArrayIsUnique:
+
+Ensuring That an Array Is Unique
+________________________________
+
+It can be useful to ensure that you have a unique copy of an array
+before performing an action on that array's contents,
+or before passing that array to a function or method.
+You ensure the uniqueness of an array reference
+by calling the ``unshare`` method on a variable of array type.
+(The ``unshare`` method cannot be called on a constant array.)
+
+If multiple variables currently refer to the same array,
+and you call the ``unshare`` method on one of those variables,
+the array is copied,
+so that the variable has its own independent copy of the array.
+However, no copying takes place if the variable
+is already the only reference to the array.
+
+At the end of the previous example,
+``b`` and ``c`` both reference the same array.
+Call the ``unshare`` method on ``b`` to make it become a unique copy:
+
+.. testcode:: assignmentAndCopyForArrays
+
+   -> b.unshare()
+
+If you change the first value in ``b`` after calling the ``unshare`` method,
+all three arrays will now report a different value:
+
+.. testcode:: assignmentAndCopyForArrays
+
+   -> b[0] = -105
+   -> println(a[0])
+   </ 777
+   -> println(b[0])
+   </ -105
+   -> println(c[0])
+   </ 42
+
+.. _ClassesAndStructures_CheckingWhetherTwoArraysShareTheSameElements:
+
+Checking Whether Two Arrays Share the Same Elements
+___________________________________________________
+
+Check whether two arrays or subarrays share the same storage and elements
+by comparing them with the identity operators (``===`` and ``!==``).
+
+The example below uses the “identical to” operator (``===``)
+to check whether ``b`` and ``c`` still share the same array elements:
+
+.. testcode:: assignmentAndCopyForArrays
+
+   -> if b === c {
+         println("b and c still share the same array elements.")
+      } else {
+         println("b and c now refer to two independent sets of array elements.")
+      }
+   <- b and c now refer to two independent sets of array elements.
+
+Alternatively, use the identity operators to check whether two subarrays share the same elements.
+The example below compares two identical subarrays from ``b``
+and confirms that they refer to the same elements:
+
+.. testcode:: assignmentAndCopyForArrays
+
+   -> if b[0...1] === b[0...1] {
+         println("These two subarrays share the same elements.")
+      } else {
+         println("These two subarrays do not share the same elements.")
+      }
+   <- These two subarrays share the same elements.
+
+.. _ClassesAndStructures_ForcingACopyOfAnArray:
+
+Forcing a Copy of an Array
+__________________________
+
+Force an explicit copy of an array by calling the array's ``copy`` method.
+This method performs a shallow copy of the array
+and returns a new array containing the copied items.
+
+The example below defines an array called ``names``,
+which stores the names of seven people.
+A new variable called ``copiedNames`` is set to the result of calling
+the ``copy`` method on the ``names`` array:
+
+.. testcode:: assignmentAndCopyForArrays
+
+   -> var names = ["Mohsen", "Hilary", "Justyn", "Amy", "Rich", "Graham", "Vic"]
+   << // names : Array<String> = ["Mohsen", "Hilary", "Justyn", "Amy", "Rich", "Graham", "Vic"]
+   -> var copiedNames = names.copy()
+   << // copiedNames : Array<String> = ["Mohsen", "Hilary", "Justyn", "Amy", "Rich", "Graham", "Vic"]
+
+You can prove that the ``names`` array has been copied
+by changing an item in one of the arrays
+and checking the corresponding item in the other.
+If you set the first item in the ``copiedNames`` array
+to ``"Mo"`` rather than ``"Mohsen"``,
+the ``names`` array still returns the old value of ``"Mohsen"``
+from before the copy took place:
+
+.. testcode:: assignmentAndCopyForArrays
+
+   -> copiedNames[0] = "Mo"
+   -> println(names[0])
+   <- Mohsen
+
+.. note::
+
+   If you simply need to be sure that your reference to an array's contents
+   is the only reference in existence,
+   always call the ``unshare`` method, not the ``copy`` method.
+   The ``unshare`` method does not make a copy of the array
+   unless it is necessary to do so.
+   The ``copy`` method always copies the array,
+   even if it is already unshared.

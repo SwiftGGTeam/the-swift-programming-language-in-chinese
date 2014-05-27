@@ -20,7 +20,7 @@ Generic Parameter Clause
 ------------------------
 
 A :newTerm:`generic parameter clause` specifies the type parameters of a generic
-type or function, along with any associated contraints and requirements on those parameters.
+type or function, along with any associated constraints and requirements on those parameters.
 A generic parameter clause is enclosed in angle brackets (<>)
 and has one of the following forms:
 
@@ -29,7 +29,7 @@ and has one of the following forms:
     <<#generic parameter list#>>
     <<#generic parameter list#> where <#requirements#>>
 
-The *generic parameter list* is a comma-separated list of generic paramaters,
+The *generic parameter list* is a comma-separated list of generic parameters,
 each of which has the following form:
 
 .. syntax-outline::
@@ -83,7 +83,7 @@ by including a ``where`` clause after the *generic parameter list*.
 A ``where`` clause consists of the keyword ``where``,
 followed by a comma-separated list of one or more *requirements*.
 
-The *requirements* in a ``where`` clause specify that a type paramater inherits from
+The *requirements* in a ``where`` clause specify that a type parameter inherits from
 a class or conforms to a protocol or protocol composition.
 Although the ``where`` clause provides syntactic
 sugar for expressing simple constraints on type parameters
@@ -185,7 +185,7 @@ the Swift standard library defines a generic dictionary type as:
 The specialized version of the generic ``Dictionary`` type, ``Dictionary<String, Int>``
 is formed by replacing the generic parameters ``KeyType: Hashable`` and ``ValueType``
 with the concrete type arguments ``String`` and ``Int``. Each type argument must satisfy
-all the contraints of the generic parameter it replaces, including any additional
+all the constraints of the generic parameter it replaces, including any additional
 requirements specified in a ``where`` clause. In the example above,
 the ``KeyType`` type parameter is constrained to conform to the ``Hashable`` protocol
 and therefore ``String`` must also conform to the ``Hashable`` protocol.

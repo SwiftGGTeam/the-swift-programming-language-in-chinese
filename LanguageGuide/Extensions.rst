@@ -16,8 +16,7 @@ Extensions in Swift can:
 * Provide new initializers
 * Define subscripts
 * Define and use new nested types
-
-You can also use an extension to make an existing type conform to a protocol.
+* Make an existing type conform to a protocol
 
 .. note::
 
@@ -32,7 +31,7 @@ You can also use an extension to make an existing type conform to a protocol.
 Extension Syntax
 ----------------
 
-Extensions are declared with the ``extension`` keyword:
+Declare extensions with the ``extension`` keyword:
 
 .. testcode:: extensionSyntax
 
@@ -41,7 +40,7 @@ Extensions are declared with the ``extension`` keyword:
          // new functionality to add to SomeType goes here
       }
 
-An extension can also extend an existing type to make it adopt one or more protocols.
+An extension can extend an existing type to make it adopt one or more protocols.
 Where this is the case,
 the protocol names are written in exactly the same way as for a class or structure:
 
@@ -91,7 +90,7 @@ a floating-point literal value with dot syntax,
 as a way to use that literal value to perform distance conversions.
 
 In this example, a ``Double`` value of ``1.0`` is considered to represent “one meter”.
-This is why the ``m`` computed property returns ``self`` –
+This is why the ``m`` computed property returns ``self`` ---
 the expression ``1.m`` is considered to calculate a ``Double`` value of ``1.0``.
 
 Other units require some conversion to be expressed as a value measured in meters.
@@ -128,77 +127,83 @@ Initializers
 
 Extensions can add new initializers to existing types.
 This enables you to extend other types to accept
-your own custom types as initializer parameters.
+your own custom types as initializer parameters,
+or to provide additional initialization options
+that were not included as part of the type's original implementation.
+
+Extensions can add new convenience initializers to a class,
+but they cannot add new designated initializers or deinitializers to a class.
+Designated initializers and deinitializers
+must always be provided by the original class implementation.
 
 .. note::
 
-   Extensions can add new convenience initializers to a class,
-   but they cannot add new designated initializers or deinitializers to a class.
-   Designated initializers and deinitializers
-   must always be provided by the original class implementation.
+   If you use an extension to add an initializer to a value type that provides
+   default values for all of its stored properties
+   and does not define any custom initializers,
+   you can call the default initializer and memberwise initializer for that value type
+   from within your extension's initializer.
 
-You can use this approach to extend the basic ``String`` type
-to accept an instance of your own custom type as an initializer parameter,
-for use with string interpolation,
-as described in :ref:`StringsAndCharacters_StringInterpolation`.
+   This would not be the case if you had written the initializer
+   as part of the value type's original implementation,
+   as described in :ref:`Initialization_InitializerDelegationForValueTypes`.
+
+The example below defines a custom ``Rect`` structure to represent a geometric rectangle.
+The example also defines two supporting structures called ``Size`` and ``Point``,
+both of which provide default values of ``0.0`` for all of their properties:
 
 .. testcode:: extensionsInitializers
 
+   -> struct Size {
+         var width = 0.0, height = 0.0
+      }
    -> struct Point {
          var x = 0.0, y = 0.0
       }
-   -> extension String {
-         init(_ point: Point) {
-            self = "(\(point.x), \(point.y))"
-         }
+   -> struct Rect {
+         var origin = Point()
+         var size = Size()
       }
-   -> let somePoint = Point(x: 3.0, y: 5.0)
-   << // somePoint : Point = V4REPL5Point (has 2 children)
-   -> let pointDescription = String(somePoint)
-   << // pointDescription : String = "(3.0, 5.0)"
-   /> pointDescription is \"\(pointDescription)\"
-   </ pointDescription is "(3.0, 5.0)"
 
-.. FIXME: if you don't use an underbar to avoid an external parameter name,
-   the initializer can't be used with string interpolation.
-   This is a side-effect of the stricter parameter name rules
-   introduced in Swift r17743.
-   I've filed this fact as rdar://16862627,
-   and have updated the example above so that it works with swifttest,
-   but I haven't yet described this as a requirement
-   because I'm awaiting feedback on that Radar.
-   I'll need to explain this requirement above if rdar://16862627 is not fixed by WWDC.
-   
-The preceding example defines a new structure called ``Point``
-to represent an ``(x, y)`` coordinate.
-It also extends ``String`` to add a new initializer implementation,
-which accepts a single ``Point`` instance as an initialization parameter.
-The initializer's implementation creates a string containing the two point values
-expressed within parentheses with a comma and a space between them,
-which in this case gives a string value of ``"(3.0, 5.0)"``.
-
-The new initializer can now be used to construct a ``String`` using initializer syntax
-by passing in a point, such as with ``String(somePoint)`` above.
-
-Now that a ``String`` can be initialized with a ``Point``,
-you can use ``Point`` instances directly within string interpolation syntax
-to incorporate their values as part of a longer string:
+Because the ``Rect`` structure provides default values for all of its properties,
+it receives a default initializer and a memberwise initializer automatically,
+as described in :ref:`Initialization_DefaultInitializers`.
+These initializers can be used to create new ``Rect`` instances:
 
 .. testcode:: extensionsInitializers
 
-   -> let anotherPoint = Point(x: -2.0, y: 6.0)
-   << // anotherPoint : Point = V4REPL5Point (has 2 children)
-   -> println("anotherPoint's value is \(anotherPoint)")
-   <- anotherPoint's value is (-2.0, 6.0)
+   -> let defaultRect = Rect()
+   << // defaultRect : Rect = V4REPL4Rect (has 2 children)
+   -> let memberwiseRect = Rect(origin: Point(x: 2.0, y: 2.0),
+         size: Size(width: 5.0, height: 5.0))
+   << // memberwiseRect : Rect = V4REPL4Rect (has 2 children)
 
-Whenever string interpolation discovers an instance in the string,
-it checks to see whether ``String`` has an initializer that accepts instances of that type.
-In this case, it successfully finds a ``String`` initializer that accepts ``Point`` instances;
-creates a new ``String`` using the initializer;
-and inserts this new string into the interpolated string.
-(Defining multiple initializers,
-and choosing which one to use based on the type of parameter passed to the initializer,
-is known as :newTerm:`initializer overloading`.)
+You can extend the ``Rect`` structure to provide an additional initializer
+that takes a specific center point and size:
+
+.. testcode:: extensionsInitializers
+
+   -> extension Rect {
+         init(center: Point, size: Size) {
+            let originX = center.x - (size.width / 2)
+            let originY = center.y - (size.height / 2)
+            self.init(origin: Point(x: originX, y: originY), size: size)
+         }
+      }
+
+This new initializer starts by calculating an appropriate origin point based on
+the provided ``center`` point and ``size`` value.
+The initializer then calls the structure's automatic memberwise initializer
+``init(origin:size:)``, which stores the new origin and size values
+in the appropriate properties:
+
+.. testcode:: extensionsInitializers
+
+   -> let centerRect = Rect(center: Point(x: 4.0, y: 4.0),
+         size: Size(width: 3.0, height: 3.0))
+   << // centerRect : Rect = V4REPL4Rect (has 2 children)
+   /> centerRect's origin is (\(centerRect.origin.x), \(centerRect.origin.y)) and its size is (\(centerRect.size.width), \(centerRect.size.height))
+   </ centerRect's origin is (2.5, 2.5) and its size is (3.0, 3.0)
 
 .. note::
 
@@ -206,48 +211,45 @@ is known as :newTerm:`initializer overloading`.)
    you are still responsible for making sure that each instance is fully initialized
    once the initializer completes.
 
-.. QUESTION: You can use 'self' in this way for structs and enums.
-   How might you do this kind of construction for a class?
-
 .. _Extensions_Methods:
 
 Methods
 -------
 
 Extensions can add new instance methods and type methods to existing types.
-The following example adds a new instance method called ``times`` to the ``Int`` type:
+The following example adds a new instance method called ``repetitions`` to the ``Int`` type:
 
 .. testcode:: extensionsInstanceMethods
 
    -> extension Int {
-         func times(task: () -> ()) {
+         func repetitions(task: () -> ()) {
             for i in 0..self {
                task()
             }
          }
       }
 
-The ``times`` method takes a single argument of type ``() -> ()``,
-or “a function that has no parameters and does not return a value”.
+The ``repetitions`` method takes a single argument of type ``() -> ()``,
+which indicates a function that has no parameters and does not return a value.
 
 After defining this extension,
-you can call the ``times`` method on any integer number
+you can call the ``repetitions`` method on any integer number
 to perform a task that many number of times:
 
 .. testcode:: extensionsInstanceMethods
 
-   -> 3.times({
+   -> 3.repetitions({
          println("Hello!")
       })
    </ Hello!
    </ Hello!
    </ Hello!
 
-You can use trailing closure syntax to make the call more succint:
+Use trailing closure syntax to make the call more succinct:
 
 .. testcode:: extensionsInstanceMethods
 
-   -> 3.times {
+   -> 3.repetitions {
          println("Goodbye!")
       }
    </ Goodbye!
@@ -288,8 +290,7 @@ Subscripts
 Extensions can add new subscripts to an existing type.
 This example adds an integer subscript to Swift's built-in ``Int`` type.
 This subscript ``[n]`` returns the decimal digit ``n`` places in
-from the right of the number,
-so:
+from the right of the number:
 
 * ``123456789[0]`` returns ``9``
 * ``123456789[1]`` returns ``8``
@@ -325,7 +326,7 @@ so:
    </ returns 7
 
 If the ``Int`` value does not have enough digits for the requested index,
-the subscript implementation will return ``0``,
+the subscript implementation returns ``0``,
 as if the number had been padded with zeroes to the left:
 
 .. testcode:: extensionsSubscripts
@@ -375,7 +376,7 @@ expresses the kind of letter that a particular character represents.
 Specifically, it expresses whether the character is
 a vowel or a consonant in a standard Latin script
 (without taking into account accents or regional variations),
-or whether it is some other kind of character.
+or whether it is another kind of character.
 
 This example also adds a new computed instance property to ``Character``,
 called ``kind``,
