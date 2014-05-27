@@ -61,6 +61,7 @@ that you determine once but use in many places.
    >> myVariable
    << // myVariable : Int = 50
    -> let myConstant = 42
+   << // myConstant : Int = 42
 
 .. TR: Is the requirement that constants need an initial value
    a current REPL limitation, or an expected language feature?
@@ -104,7 +105,7 @@ explicitly make an instance of the desired type.
    -> let width = 94
    << // width : Int = 94
    -> let widthLabel = label + String(width)
-   << The width is 94
+   << // widthLabel : String = "The width is 94"
 
 .. admonition:: Experiment
 
@@ -127,9 +128,9 @@ For example:
    -> let oranges = 5
    << // oranges : Int = 5
    -> let appleSummary = "I have \(apples) apples."
-   << // summary : String = "I have 3 apples."
+   << // appleSummary : String = "I have 3 apples."
    -> let fruitSummary = "I have \(apples + oranges) pieces of fruit."
-   << // summary : String = "I have 8 pieces of fruit."
+   << // fruitSummary : String = "I have 8 pieces of fruit."
 
 .. admonition:: Experiment
 
@@ -151,7 +152,7 @@ the index or key in brackets.
            "Malcolm": "Captain",
            "Kaylee": "Mechanic",
         ]
-    << // occupations : Dictionary<String, String> = Dictionary<String, String>(1.33333333333333, 3, <DictionaryBufferOwner<String, String> instance>)
+    << // occupations : Dictionary<String, String> = ["Kaylee": "Mechanic", "Malcolm": "Captain"]
     -> occupations["Jayne"] = "Public Relations"
 
 To create an empty array or dictionary,
@@ -160,9 +161,9 @@ use the initializer syntax.
 .. testcode:: guided-tour
 
    -> let emptyArray = String[]()
-   << // emptyArray : Array<String> = []
+   << // emptyArray : String[] = []
    -> let emptyDictionary = Dictionary<String, Float>()
-   << // emptyDictionary : Dictionary<String, Float> = Dictionary<String, Float>(1.33333333333333, 0, <DictionaryBufferOwner<String, Float> instance>)
+   << // emptyDictionary : Dictionary<String, Float> = [:]
 
 If type information can be inferred,
 you can write an empty array as ``[]``
@@ -222,12 +223,12 @@ to mark the value as optional.
 .. testcode:: guided-tour
 
    -> var optionalString: String? = "Hello"
-   << // optionalString : String? = <unprintable value>
+   << // optionalString : String? = Hello
    -> optionalString == nil
    <$ : Bool = false
    ---
    -> var optionalName: String? = "John Appleseed"
-   << // optionalName : String? = <unprintable value>
+   << // optionalName : String? = John Appleseed
    -> var greeting = "Hello!"
    << // greeting : String = "Hello!"
    -> if let name = optionalName {
@@ -295,7 +296,7 @@ for each key-value pair.
           "Fibonacci": [1, 1, 2, 3, 5, 8],
           "Square": [1, 4, 9, 16, 25],
       ]
-   << // interestingNumbers : Dictionary<String, Array<Int>> = Dictionary<String, Array<Int>>(1.33333333333333, 3, <DictionaryBufferOwner<String, Array<Int>> instance>)
+   << // interestingNumbers : Dictionary<String, Array<Int>> = ["Square": [1, 4, 9, 16, 25], "Prime": [2, 3, 5, 7, 11, 13], "Fibonacci": [1, 1, 2, 3, 5, 8]]
    -> var largest = 0
    << // largest : Int = 0
    -> for (kind, numbers) in interestingNumbers {
@@ -325,7 +326,7 @@ ensuring that the loop is run at least once.
           n = n * 2
       }
    -> n
-   << // n : Int =128
+   << // n : Int = 128
    ---
    -> var m = 2
    << // m : Int = 2
@@ -343,16 +344,20 @@ These two loops do the same thing:
 .. testcode:: guided-tour
 
    -> var firstForLoop = 0
+   << // firstForLoop : Int = 0
    -> for i in 0..3 {
           firstForLoop += i
       }
    -> firstForLoop
+   << // firstForLoop : Int = 3
    ---
    -> var secondForLoop = 0
+   << // secondForLoop : Int = 0
    -> for var i = 0; i < 3; ++i {
           secondForLoop += 1
       }
    -> secondForLoop
+   << // secondForLoop : Int = 3
 
 Use ``..`` to make a range that omits its upper value,
 and use ``...`` to make a range that includes both values.
@@ -445,7 +450,7 @@ This means that a function can return another function as its value.
            return addOne
        }
     -> var increment = makeIncrementer()
-    << // increment : (Int -> Int) = <unprintable value>
+    << // increment : Int -> Int = (Function)
     -> increment(7)
     <$ : Int = 8
 
@@ -465,7 +470,7 @@ A function can take another function as one of its arguments.
            return number < 10
        }
     -> var numbers = [20, 19, 7, 12]
-    << // numbers : Array<Int> = [8, 3, 5, 6]
+    << // numbers : Array<Int> = [20, 19, 7, 12]
     -> hasAnyMatches(numbers, lessThanTen)
     <$ : Bool = true
 
@@ -481,7 +486,7 @@ Use ``in`` to separate the arguments and return type from the body.
            let result = 3 * number
            return result
        })
-    <$ : Array<Int> = [24, 9, 15, 18]
+    <$ : Array<Int> = [60, 57, 21, 36]
 
 .. admonition:: Experiment
 
@@ -498,7 +503,7 @@ of their only statement.
 .. testcode:: guided-tour
 
     -> numbers.map({ number in 3 * number })
-    <$ : Array<Int> = [24, 9, 15, 18]
+    <$ : Array<Int> = [60, 57, 21, 36]
 
 You can refer to parameters by number instead of by name ---
 this approach is especially useful in very short closures.
