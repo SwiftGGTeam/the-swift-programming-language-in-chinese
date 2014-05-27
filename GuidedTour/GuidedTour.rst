@@ -534,11 +534,11 @@ Likewise, method and function declarations are written the same way.
 
     -> class Shape {
            var numberOfSides: Int = 0
-           func description() -> String {
+           func simpleDescription() -> String {
                return "A shape with \(numberOfSides) sides."
            }
        }
-    >> Shape().description()
+    >> Shape().simpleDescription()
     <$ : String = "A shape with 0 sides."
 
 .. admonition:: Experiment
@@ -556,7 +556,7 @@ the properties and methods of the instance.
     -> var shape = Shape()
     << // shape : Shape = <Shape instance>
     -> shape.numberOfSides = 7
-    -> var shapeDescription = shape.description()
+    -> var shapeDescription = shape.simpleDescription()
     << // shapeDescription : String = "A shape with 7 sides."
 
 This version of the ``Shape`` class is missing something important:
@@ -573,13 +573,13 @@ Use ``init`` to create one.
               self.name = name
            }
     ---
-           func description() -> String {
+           func simpleDescription() -> String {
               return "A shape with \(numberOfSides) sides."
            }
        }
     >> NamedShape(name: "test name").name
     <$ : String = "test name"
-    >> NamedShape(name: "test name").description()
+    >> NamedShape(name: "test name").simpleDescription()
     <$ : String = "A shape with 0 sides."
 
 Notice how ``self`` is used to distinguish the ``name`` property
@@ -622,7 +622,7 @@ that don't actually override any method in the superclass.
                return sideLength * sideLength
            }
     ---
-           override func description() -> String {
+           override func simpleDescription() -> String {
                return "A square with sides of length \(sideLength)."
            }
        }
@@ -630,7 +630,7 @@ that don't actually override any method in the superclass.
     << // test : Square = <Square instance>
     -> test.area()
     <$ : Double = 27.04
-    -> test.description()
+    -> test.simpleDescription()
     <$ : String = "A square with sides of length 5.2."
 
 .. admonition:: Experiment
@@ -665,7 +665,7 @@ properties can have a getter and a setter.
                }
            }
     ---
-           override func description() -> String {
+           override func simpleDescription() -> String {
                return "An equilateral triagle with sides of length \(sideLength)."
            }
        }
@@ -778,7 +778,7 @@ enumerations can have methods associated with them.
            case Ace = 1
            case Two, Three, Four, Five, Six, Seven, Eight, Nine, Ten
            case Jack, Queen, King
-           func description() -> String {
+           func simpleDescription() -> String {
                switch self {
                    case .Ace:
                        return "ace"
@@ -817,7 +817,7 @@ between the raw value and the enumeration value.
 
     >> var test_threeDescription = ""
     -> if let convertedRank = Rank.fromRaw(3) {
-    ->     let threeDescription = convertedRank.description()
+    ->     let threeDescription = convertedRank.simpleDescription()
     >>     test_threeDescription = threeDescription
     -> }
     >> test_threeDescription
@@ -833,7 +833,7 @@ you don't have to provide one.
 
     -> enum Suit {
            case Spades, Hearts, Diamonds, Clubs
-           func description() -> String {
+           func simpleDescription() -> String {
                switch self {
                    case .Spades:
                        return "spades"
@@ -848,7 +848,7 @@ you don't have to provide one.
        }
     -> let hearts = Suit.Hearts
     << // hearts : Suit = <opaque>
-    -> let heartsDescription = hearts.description()
+    -> let heartsDescription = hearts.simpleDescription()
     << // heartsDescription : String = "hearts"
 
 .. admonition:: Experiment
@@ -884,13 +884,13 @@ but classes are passed by reference.
     -> struct Card {
            var rank: Rank
            var suit: Suit
-           func description() -> String {
-               return "The \(rank.description()) of \(suit.description())"
+           func simpleDescription() -> String {
+               return "The \(rank.simpleDescription()) of \(suit.simpleDescription())"
            }
        }
     -> let threeOfSpades = Card(rank: .Three, suit: .Spades)
     << // threeOfSpades : Card = V4REPL4Card (has 2 children)
-    -> let threeOfSpadesDescription = threeOfSpades.description()
+    -> let threeOfSpadesDescription = threeOfSpades.simpleDescription()
     << // threeOfSpadesDescription : String = "The 3 of spades"
 
 .. admonition:: Experiment
