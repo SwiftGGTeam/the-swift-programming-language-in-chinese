@@ -733,7 +733,8 @@ is always the same as the side length of its square.
 
 Methods on classes have one important difference from functions.
 Parameter names in functions are used only within the function,
-but parameters names in methods are also used when you call the method.
+but parameters names in methods are also used when you call the method
+(except for the first parameter).
 By default, a method has the same name for its parameters
 when you call it and within the method itself.
 You can specify a second name, which is used inside the method.
