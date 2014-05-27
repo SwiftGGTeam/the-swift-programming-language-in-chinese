@@ -716,7 +716,7 @@ Here's how two-phase initialization plays out, based on the four safety checks a
 
 Here's how phase 1 looks for an initialization call for a hypothetical subclass and superclass:
 
-.. image:: ../images/twoPhaseInitialization01.png
+.. image:: ../images/twoPhaseInitialization01_2x.png
    :align: center
 
 In this example, initialization begins with a call to
@@ -738,7 +738,7 @@ its memory is considered fully initialized, and Phase 1 is complete.
 
 Here's how phase 2 looks for the same initialization call:
 
-.. image:: ../images/twoPhaseInitialization02.png
+.. image:: ../images/twoPhaseInitialization02_2x.png
    :align: center
 
 The superclass's designated initializer now has an opportunity
