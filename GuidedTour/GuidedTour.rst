@@ -827,7 +827,8 @@ between the raw value and the enumeration value.
     -> if let convertedRank = Rank.fromRaw(3) {
            let threeDescription = convertedRank.simpleDescription()
        }
-    <$ : String "3"
+
+.. TODO: ^-- the above needs a test expectation
 
 The member values of an enumeration are actual values,
 not just another way of writing their raw values.
@@ -853,7 +854,7 @@ you don't have to provide one.
            }
        }
     -> let hearts = Suit.Hearts
-    << // hearts : Suit = <opaque>
+    << // hearts : Suit = (Enum Value)
     -> let heartsDescription = hearts.simpleDescription()
     << // heartsDescription : String = "hearts"
 
@@ -929,11 +930,12 @@ or it responds with some error information.
        }
     ---
     -> let success = ServerResponse.Result("6:00 am", "8:09 pm")
-    << // success : ServerResponse = <unprintable value>
+    << // success : ServerResponse = (Enum Value)
     -> let failure = ServerResponse.Error("Out of cheese.")
-    << // failure : ServerResponse = <unprintable value>
+    << // failure : ServerResponse = (Enum Value)
     ---
     >> var test_response: String = ""
+    << // test_response : String = ""
     >> switch success {
     >>     case let .Result(sunrise, sunset):
     >>         test_response = "Sunrise is at \(sunrise) and sunset is at \(sunset)."
@@ -988,10 +990,10 @@ Classes, enumerations, and structs can all adopt protocols.
             }
        }
     -> var a = SimpleClass()
-    << // a : SimpleClass = <SimpleClass instance>
+    << // a : SimpleClass = C4REPL11SimpleClass (has 2 children)
     -> a.adjust()
     -> let aDescription = a.simpleDescription
-    << // aDescription : String = "A very simple class.  Now 100% adjusted"
+    << // aDescription : String = "A very simple class.  Now 100% adjusted."
     ---
     -> struct SimpleStructure: ExampleProtocol {
             var simpleDescription: String = "A simple structure"
@@ -1000,7 +1002,7 @@ Classes, enumerations, and structs can all adopt protocols.
             }
        }
     -> var b = SimpleStructure()
-    << // b : SimpleStructure = SimpleStructure("A simple structure")
+    << // b : SimpleStructure = V4REPL15SimpleStructure (has 1 child)
     -> b.adjust()
     -> let bDescription = b.simpleDescription
     << // bDescription : String = "A simple structure (adjusted)"
@@ -1033,7 +1035,7 @@ or even to a type that you imported from a library or framework.
            }
         }
     -> 7.simpleDescription
-    << // r0 : String = "The number 7"
+    <$ : String = "The number 7"
 
 .. admonition:: Experiment
 
@@ -1050,7 +1052,7 @@ methods outside the protocol definition are not available.
 .. testcode:: guided-tour
 
     -> let protocolValue: ExampleProtocol = a
-    << protocolValue : ExampleProtocol = <ExampleProtocol instance>
+    << // protocolValue : ExampleProtocol = C4REPL11SimpleClass (has 2 children)
     -> protocolValue.simpleDescription
     <$ : String = "A very simple class.  Now 100% adjusted"
     // protocolValue.anotherProperty  // Uncomment to see the error
@@ -1078,7 +1080,7 @@ to make a generic function or type.
            return result
        }
     -> repeat("knock", 4)
-    <$ : String[] = [knock, knock, knock, knock]
+    <$ : String[] = ["knock", "knock", "knock", "knock"]
 
 You can make generic forms of functions and methods,
 as well as classes, enumerations, and structures.
@@ -1093,6 +1095,7 @@ as well as classes, enumerations, and structures.
            case Some(T)
        }
     -> var possibleInteger: OptionalValue<Int> = .None
+    << // possibleInteger : OptionalValue<Int> = (Enum Value)
     -> possibleInteger = .Some(100)
 
 Use ``where`` after the type name
