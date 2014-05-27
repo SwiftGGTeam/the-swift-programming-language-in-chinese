@@ -558,9 +558,11 @@ by inheriting one or more designated initializers from a superclass,
 as described in :ref:`Initialization_AutomaticInitializerInheritance` below.
 
 :newTerm:`Convenience initializers` are secondary, supporting initializers for a class.
-You can define a convenience initializer to call a designated initializer on the same class
-with some of the designated initializer's parameters set to default values,
-or to create an instance of that class for a specific use case or input value type.
+You can define a convenience initializer to call a designated initializer
+from the same class as the convenience initializer
+with some of the designated initializer's parameters set to default values.
+You can also define a convenience initializer to create
+an instance of that class for a specific use case or input value type.
 
 You do not have to provide convenience initializers if your class does not require them.
 Create convenience initializers whenever a shortcut to a common initialization pattern

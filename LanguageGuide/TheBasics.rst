@@ -43,7 +43,7 @@ This enables you to catch and fix errors as early as possible in the development
 Constants and Variables
 -----------------------
 
-Constants and variables are a way to associate a name
+Constants and variables associate a name
 (such as ``maximumNumberOfLoginAttempts`` or ``welcomeMessage``)
 with a value of a particular type
 (such as the number ``10`` or the string ``"Hello"``).

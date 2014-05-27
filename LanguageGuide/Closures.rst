@@ -428,7 +428,7 @@ and is added to the output array by the ``map`` function.
 
 The use of trailing closure syntax in the example above
 neatly encapsulates the closure's functionality
-immediately after the function it supports,
+immediately after the function that closure supports,
 without needing to wrap the entire closure within
 the ``map`` function's outer parentheses.
 

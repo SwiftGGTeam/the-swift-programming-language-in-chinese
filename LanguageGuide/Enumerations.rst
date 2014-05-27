@@ -1,8 +1,8 @@
 Enumerations
 ============
 
-:newTerm:`Enumerations` define multiple related values of a similar kind
-and enable you to work with those values in a type-safe way within your code.
+An :newTerm:`enumeration` defines a common type for a group of related values
+and enables you to work with those values in a type-safe way within your code.
 
 If you are familiar with C,
 you will know that C enumerations assign related names to a set of integer values.
