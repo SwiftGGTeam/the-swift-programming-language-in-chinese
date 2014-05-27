@@ -109,7 +109,7 @@ You are free to implement subscripts in the most appropriate way for
 your particular class or structure's functionality.
 
 For example, Swift's ``Dictionary`` type implements a subscript
-to to set and retrieve the values stored in a ``Dictionary`` instance.
+to set and retrieve the values stored in a ``Dictionary`` instance.
 You can set a value in a dictionary
 by providing a key of the dictionary's key type within subscript braces,
 and assigning a value of the dictionary's value type to the subscript:
