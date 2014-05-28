@@ -213,6 +213,7 @@ with ``"Bananas"`` and ``"Apples"``:
 
 .. note::
 
+   You can't use subscript syntax to append a new item to the end of an array.
    If you try to use subscript syntax to retrieve or set a value for an index
    that is outside of an array's existing bounds,
    you will trigger a runtime error.
