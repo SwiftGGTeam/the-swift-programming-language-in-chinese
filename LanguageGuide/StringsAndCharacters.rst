@@ -194,7 +194,7 @@ when working with strings as value types.
 Working with Characters
 -----------------------
 
-Swift's ``String`` type represents a collection ``Character`` values in a specified order.
+Swift's ``String`` type represents a collection of ``Character`` values in a specified order.
 Each ``Character`` value represents a single Unicode character.
 You can access the individual ``Character`` values in a string
 by iterating over that string with a ``for``-``in`` loop:
