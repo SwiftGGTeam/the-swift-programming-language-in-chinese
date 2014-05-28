@@ -240,7 +240,7 @@ The loop is executed as follows:
 The loop format and execution process described above
 is shorthand for (and equivalent to) the outline below:
 
-::
+.. syntax-outline::
 
    <#initialization#>
    while <#condition#> {
