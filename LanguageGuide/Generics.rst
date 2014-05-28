@@ -430,7 +430,7 @@ Type Constraint Syntax
 You write type constraints by placing a single class or protocol constraint
 after a type parameter's name, separated by a colon,
 as part of the type parameter list.
-The general syntax for type constraints on a generic function is shown below
+The basic syntax for type constraints on a generic function is shown below
 (although the syntax is the same for generic types):
 
 .. testcode:: typeConstraints
