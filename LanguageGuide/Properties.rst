@@ -465,6 +465,11 @@ and the default name of ``oldValue`` is used instead.
    If you assign a value to a property within its own ``didSet`` observer,
    the new value that you assign will replace the one that was just set.
 
+.. TODO: If you add a property observer to a stored property of structure type,
+   that property observer is fired whenever any of the sub-properties
+   of that structure instance are set. This is cool, but non-obvious.
+   Provide an example of it here.
+
 .. _Properties_GlobalAndLocalVariables:
 
 Global and Local Variables
