@@ -226,6 +226,10 @@ whenever a ``Song`` is found in the library.
    The underlying instance remains the same; it is simply treated and accessed
    as an instance of the type to which it has been cast.
 
+.. TODO: This example should be followed by the same example written with switch,
+   to introduce type casting in a pattern matching context
+   and to set up the crazy Any example at the end of the chapter.
+
 .. _TypeCasting_TypeCastingForAnyAndAnyObject:
 
 Type Casting for Any and AnyObject

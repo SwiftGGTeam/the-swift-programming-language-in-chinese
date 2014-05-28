@@ -690,6 +690,9 @@ even though they were originally defined outside of the function.
    In-out parameters are an alternative way for a function to have an effect
    outside of the scope of its function body.
 
+.. TODO: you can pass a sub-property of something as an inout reference.
+   Would be great to show an example of this as a way to avoid temporary variables.
+
 .. _Functions_FunctionTypes:
 
 Function Types

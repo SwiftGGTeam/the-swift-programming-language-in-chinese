@@ -178,10 +178,6 @@ with the addition assignment operator (``+=``):
    /> shoppingList now contains \(shoppingList.count) items
    </ shoppingList now contains 7 items
 
-.. TODO: there is also a plan to make the Array type support addition, such as
-   var anotherList = shoppingList + "Ham"
-   This section should be updated as and when that feature is added.
-
 Retrieve a value from the array by using :newTerm:`subscript syntax`,
 passing the index of the value you want to retrieve within square brackets
 immediately after the name of the array:

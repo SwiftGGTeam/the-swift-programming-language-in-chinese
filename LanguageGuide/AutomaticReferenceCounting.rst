@@ -294,6 +294,10 @@ the reference will never be ``nil`` once it has been set during initialization.
    "which of the two properties in the reference cycle
    should be marked as weak or unowned?"
 
+.. TODO: mention the fact that unowned references don't have to perform checks.
+   Don't describe it in terms of speed;
+   rather, note that the extra checks don't need to be performed.
+
 .. _AutomaticReferenceCounting_WeakReferencesBetweenClassInstances:
 
 Weak References
@@ -424,6 +428,12 @@ This proves that the reference cycle has been broken.
 
 .. TODO: weak references can also be implicitly unchecked optionals.
    I should mention this here, but when would it be appropriate to use them?
+
+.. TODO: Feedback from [Contributor 7746] to be incorporated here:
+   “In the ARC section, at the end of the weak pointer section,
+   it is worth mentioning that trying to use weak pointers as a cache
+   (like you might do in a GC'd system) is doomed to failure:
+   values will be deallocated as soon as the last strong reference is removed.”
 
 .. _AutomaticReferenceCounting_UnownedReferencesBetweenClassInstances:
 
