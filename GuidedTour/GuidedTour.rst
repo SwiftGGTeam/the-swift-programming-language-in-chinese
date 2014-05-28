@@ -246,7 +246,7 @@ to mark the value as optional.
 If the optional value is ``nil``,
 the conditional is ``false`` and the code in braces is skipped.
 Otherwise, the optional value is unwrapped and assigned
-to the variable after ``let``,
+to the constant after ``let``,
 which makes the unwrapped value available
 inside the block of code.
 
@@ -762,7 +762,7 @@ the value of the whole expression is an optional value.
 
 .. testcode::
 
-    -> let optionalSquare: Square? = Square(sideLength: 2.5, name:"optional square")
+    -> let optionalSquare: Square? = Square(sideLength: 2.5, name: "optional square")
     -> let sideLength = optionalSquare?.sideLength
 
 Enumerations and Structures
@@ -888,7 +888,7 @@ but classes are passed by reference.
                return "The \(rank.description()) of \(suit.description())"
            }
        }
-    -> let threeOfSpades = Card(rank: .Three, suit:.Spades)
+    -> let threeOfSpades = Card(rank: .Three, suit: .Spades)
     << // threeOfSpades : Card = V4REPL4Card (has 2 children)
     -> let threeOfSpadesDescription = threeOfSpades.description()
     << // threeOfSpadesDescription : String = "The 3 of spades"
@@ -1047,7 +1047,7 @@ methods outside the protocol definition are not available.
     << protocolValue : ExampleProtocol = <ExampleProtocol instance>
     -> protocolValue.simpleDescription
     <$ : String = "A very simple class.  Now 100% adjusted"
-    // protocolValue[0].anotherProperty  // Uncomment to see the error
+    // protocolValue.anotherProperty  // Uncomment to see the error
 
 Even though the first element of the array
 has a runtime type of ``SimpleClass``,
