@@ -27,7 +27,7 @@ Swift also introduces optional types,
 which handle the absence of a value.
 Optionals say either “there *is* a value, and it equals *x*”
 or “there *isn't* a value at all”.
-Optionals are similar to ``nil`` in Objective-C,
+Optionals are similar to using ``nil`` with pointers in Objective-C,
 but they work for any type, not just classes.
 Optionals are safer and more expressive than ``nil`` pointers in Objective-C
 and are at the heart of many of Swift's most powerful features.
