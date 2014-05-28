@@ -234,6 +234,9 @@ A :newTerm:`value type` is a type that is *copied*
 when it is assigned to a variable or constant,
 or when it is passed to a function.
 
+.. TODO: Another way to position this: think of a structure as being like one big value.
+   When you change one of its properties, you're actually changing its overall value.
+
 You've actually been using value types extensively throughout the previous chapters.
 In fact, all of the basic types in Swift ---
 integers, floating-point numbers, Booleans, strings, arrays and dictionaries ---
