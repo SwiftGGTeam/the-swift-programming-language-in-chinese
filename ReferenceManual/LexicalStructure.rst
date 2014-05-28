@@ -134,7 +134,6 @@ These names are valid identifiers within the scope of the closure.
     identifier-head --> U+3004--U+3007, U+3021--U+302F, U+3031--U+303F, or U+3040--U+D7FF
     identifier-head --> U+F900--U+FD3D, U+FD40--U+FDCF, U+FDF0--U+FE1F, or U+FE30--U+FE44
     identifier-head --> U+FE47--U+FFFD
-
     identifier-head --> U+10000--U+1FFFD, U+20000--U+2FFFD, U+30000--U+3FFFD, or U+40000--U+4FFFD
     identifier-head --> U+50000--U+5FFFD, U+60000--U+6FFFD, U+70000--U+7FFFD, or U+80000--U+8FFFD
     identifier-head --> U+90000--U+9FFFD, U+A0000--U+AFFFD, U+B0000--U+BFFFD, or U+C0000--U+CFFFD
