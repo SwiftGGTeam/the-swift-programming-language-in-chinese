@@ -244,7 +244,7 @@ Increment and Decrement Operators
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Like C, Swift provides an :newTerm:`increment operator` (``++``)
-and an :newTerm:`decrement operator` (``--``)
+and a :newTerm:`decrement operator` (``--``)
 as a shortcut to increase or decrease the value of a numeric variable by ``1``.
 You can use these operators with variables of any integer or floating-point type.
 
