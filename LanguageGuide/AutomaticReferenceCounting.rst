@@ -746,10 +746,9 @@ For a paragraph element, the closure would return ``"<p>some text</p>"`` or ``"<
 depending on whether the ``text`` property equals ``"some text"`` or ``nil``.
 
 The ``asHTML`` property is named and used somewhat like an instance method.
-However, because it is a closure property rather than an instance method,
-the default value assigned to the ``asHTML`` property
-can be replaced with a custom closure of your own devising
-if you want to change the HTML rendering used for a particular HTML element.
+However, because ``asHTML`` is a closure property rather than an instance method,
+you can replace the default value of the ``asHTML`` property with a custom closure,
+if you want to change the HTML rendering for a particular HTML element.
 
 .. QUESTION: I don't actually do so, however. Is this a valid justification here?
 
