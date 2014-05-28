@@ -6,7 +6,8 @@ Swift provides several advanced operators that perform more complex value manipu
 These include all of the bitwise and bit shifting operators you will be familiar with
 from C and Objective-C.
 
-Unlike C, Swift's arithmetic operators do not overflow by default.
+Unlike arithmetic operators in C,
+arithmetic operators in Swift do not overflow by default.
 Overflow behavior is trapped and reported as an error.
 To opt in to overflow behavior,
 use Swift's second set of arithmetic operators that overflow by default,

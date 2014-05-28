@@ -10,7 +10,7 @@ before the new instance is ready to for use.
 You implement this initialization process by defining :newTerm:`initializers`,
 which are like special methods that can be called
 to create a new instance of a particular type.
-Unlike Objective-C, Swift initializers do not return a value.
+Unlike Objective-C initializers, Swift initializers do not return a value.
 Their primary role is to ensure that new instances of a type
 are correctly initialized before they are used for the first time.
 
@@ -758,7 +758,7 @@ can perform additional customization.
 Initializer Inheritance and Overriding
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Unlike Objective-C,
+Unlike subclasses in Objective-C,
 Swift subclasses do not not inherit their superclass initializers by default.
 Swift's approach prevents a situation in which a simple initializer from a superclass
 is automatically inherited by a more specialized subclass

@@ -409,7 +409,7 @@ Dictionaries
 A :newTerm:`dictionary` is a container that stores multiple values of the same type.
 Each value is associated with a unique :newTerm:`key`,
 which acts as an identifier for that value within the dictionary.
-Unlike an array, the items in a dictionary do not have a specified order.
+Unlike items in an array, items in a dictionary do not have a specified order.
 You use a dictionary when you need to look up values based on their identifier,
 in much the same way that a real-world dictionary is used to look up
 the definition for a particular word.
