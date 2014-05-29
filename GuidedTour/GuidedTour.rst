@@ -510,14 +510,7 @@ can appear immediately after the parentheses.
     -> sort([1, 5, 3, 12, 2]) { $0 > $1 }
     <$ : Array<Int> = [12, 5, 3, 2, 1]
 
-The previous listing can be written without a closure at all.
-The ``>`` operator is the name of a function,
-so you can pass it as the second argument to the ``sort`` function.
-
-.. testcode::
-
-    -> sort([1, 5, 3, 12, 2], >)
-    <$ : Array<Int> = [12, 5, 3, 2, 1]
+.. Omitted sort(foo, <) because it often causes a spurious warning in Xcode.  See <rdar://17047529>.
 
 .. Omitted curried functions and custom operators as "advanced" topics.
 
