@@ -142,14 +142,14 @@ with a value from a different temperature scale:
             temperatureInCelsius = (fahrenheit - 32.0) / 1.8
          }
          init(fromKelvin kelvin: Double) {
-            temperatureInCelsius = kelvin + 273.15
+            temperatureInCelsius = kelvin - 273.15
          }
       }
    -> let boilingPointOfWater = Celsius(fromFahrenheit: 212.0)
    << // boilingPointOfWater : Celsius = V4REPL7Celsius (has 1 child)
    /> boilingPointOfWater.temperatureInCelsius is \(boilingPointOfWater.temperatureInCelsius)
    </ boilingPointOfWater.temperatureInCelsius is 100.0
-   -> let freezingPointOfWater = Celsius(fromKelvin: -273.15)
+   -> let freezingPointOfWater = Celsius(fromKelvin: 273.15)
    << // freezingPointOfWater : Celsius = V4REPL7Celsius (has 1 child)
    /> freezingPointOfWater.temperatureInCelsius is \(freezingPointOfWater.temperatureInCelsius)
    </ freezingPointOfWater.temperatureInCelsius is 0.0
