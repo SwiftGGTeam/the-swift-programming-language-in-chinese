@@ -204,7 +204,7 @@ Attempting to do so is reported as an error when your code is compiled:
    -> let languageName = "Swift"
    << // languageName : String = "Swift"
    -> languageName = "Swift++"
-   // this is a compile-time error --- languageName cannot be changed
+   // this is a compile-time error - languageName cannot be changed
    !! <REPL Input>:1:14: error: cannot assign to 'let' value 'languageName'
    !! languageName = "Swift++"
    !! ~~~~~~~~~~~~ ^
