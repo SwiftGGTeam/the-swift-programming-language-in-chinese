@@ -423,7 +423,7 @@ that is long or complex.
 
     -> func returnFifteen() -> Int {
            var y = 10
-           func add() -> () {
+           func add() {
                y += 5
            }
            add()
