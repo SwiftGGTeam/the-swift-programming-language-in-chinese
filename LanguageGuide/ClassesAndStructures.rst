@@ -52,7 +52,8 @@ Classes have additional capabilities that structures do not:
 * Reference counting allows more than one reference to a class instance.
 
 For more information, see
-:doc:`Inheritance`, :doc:`TypeCasting`, and :doc:`Initialization`.
+:doc:`Inheritance`, :doc:`TypeCasting`, :doc:`Initialization`,
+and :doc:`AutomaticReferenceCounting`.
 
 .. note::
 
