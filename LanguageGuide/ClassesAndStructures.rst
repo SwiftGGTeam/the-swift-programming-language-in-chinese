@@ -199,7 +199,7 @@ You can also use dot syntax to assign a new value to a variable property:
 .. note::
 
    Unlike Objective-C,
-   Swift enables you to set sub-properties of properties directly.
+   Swift enables you to set sub-properties of a structure property directly.
    In the last example above,
    the ``width`` property of the ``resolution`` property of ``someVideoMode`` is set directly,
    without your needing to set the entire ``resolution`` property to a new value.
