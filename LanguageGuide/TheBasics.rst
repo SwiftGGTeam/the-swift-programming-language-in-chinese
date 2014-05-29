@@ -1053,8 +1053,7 @@ you could write ``if var actualNumber`` instead,
 and the value contained within the optional
 would be made available as a variable rather than a constant.
 
-.. note::
-
+.. TODO: This note is not actually correct. How *do* you do this?
    Constants or variables created with optional binding
    are only available within the code block following their creation,
    as in the first branch of the ``if`` statement above.
