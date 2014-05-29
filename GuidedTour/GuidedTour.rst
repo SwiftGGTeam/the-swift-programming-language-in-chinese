@@ -1048,7 +1048,7 @@ methods outside the protocol definition are not available.
     <$ : String = "A very simple class.  Now 100% adjusted"
     // protocolValue.anotherProperty  // Uncomment to see the error
 
-Even though the first element of the array
+Even though the variable ``protocolValue``
 has a runtime type of ``SimpleClass``,
 the compiler treats it as the given type of ``ExampleProtocol``.
 This means that you can't accidentally access
