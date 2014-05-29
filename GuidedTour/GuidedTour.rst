@@ -1064,7 +1064,7 @@ to make a generic function or type.
 .. testcode::
 
     -> func repeat<ItemType>(item: ItemType, times: Int) -> ItemType[] {
-           var result = Array<ItemType>()
+           var result = ItemType[]()
            for i in 0..times {
                 result += item
            }
