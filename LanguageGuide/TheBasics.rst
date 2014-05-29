@@ -204,7 +204,7 @@ Attempting to do so is reported as an error when your code is compiled:
    -> let languageName = "Swift"
    << // languageName : String = "Swift"
    -> languageName = "Swift++"
-   // this is a compile-time error --- languageName cannot be changed
+   // this is a compile-time error - languageName cannot be changed
    !! <REPL Input>:1:14: error: cannot assign to 'let' value 'languageName'
    !! languageName = "Swift++"
    !! ~~~~~~~~~~~~ ^
@@ -531,14 +531,14 @@ or an uppercase or lowercase ``p`` for hexadecimal floats.
 For decimal numbers with an exponent of ``exp``,
 the base number is multiplied by 10\ :superscript:`exp`:
 
-* ``1.25e2`` means 1.25 ⨉ 10\ :superscript:`2`, or ``125.0``.
-* ``1.25e-2`` means 1.25 ⨉ 10\ :superscript:`-2`, or ``0.0125``.
+* ``1.25e2`` means 1.25 × 10\ :superscript:`2`, or ``125.0``.
+* ``1.25e-2`` means 1.25 × 10\ :superscript:`-2`, or ``0.0125``.
 
 For hexadecimal numbers with an exponent of ``exp``,
 the base number is multiplied by 2\ :superscript:`exp`:
 
-* ``0xFp2`` means 15 ⨉ 2\ :superscript:`2`, or ``60.0``.
-* ``0xFp-2`` means 15 ⨉ 2\ :superscript:`-2`, or ``3.75``.
+* ``0xFp2`` means 15 × 2\ :superscript:`2`, or ``60.0``.
+* ``0xFp-2`` means 15 × 2\ :superscript:`-2`, or ``3.75``.
 
 All of these floating-point literals have a decimal value of ``12.1875``:
 
@@ -1053,8 +1053,7 @@ you could write ``if var actualNumber`` instead,
 and the value contained within the optional
 would be made available as a variable rather than a constant.
 
-.. note::
-
+.. TODO: This note is not actually correct. How *do* you do this?
    Constants or variables created with optional binding
    are only available within the code block following their creation,
    as in the first branch of the ``if`` statement above.

@@ -394,7 +394,6 @@ collecting them into an array.
 
 .. testcode::
 
-   -> // Reimplement the Standard Library sum function for Int values.
    -> func sumOf(numbers: Int...) -> Int {
           var sum = 0
           for number in numbers {
@@ -424,7 +423,7 @@ that is long or complex.
 
     -> func returnFifteen() -> Int {
            var y = 10
-           func add() -> () {
+           func add() {
                y += 5
            }
            add()
@@ -510,14 +509,7 @@ can appear immediately after the parentheses.
     -> sort([1, 5, 3, 12, 2]) { $0 > $1 }
     <$ : Array<Int> = [12, 5, 3, 2, 1]
 
-The previous listing can be written without a closure at all.
-The ``>`` operator is the name of a function,
-so you can pass it as the second argument to the ``sort`` function.
-
-.. testcode::
-
-    -> sort([1, 5, 3, 12, 2], >)
-    <$ : Array<Int> = [12, 5, 3, 2, 1]
+.. Omitted sort(foo, <) because it often causes a spurious warning in Xcode.  See <rdar://17047529>.
 
 .. Omitted curried functions and custom operators as "advanced" topics.
 
@@ -533,7 +525,7 @@ Likewise, method and function declarations are written the same way.
 .. testcode::
 
     -> class Shape {
-           var numberOfSides: Int = 0
+           var numberOfSides = 0
            func description() -> String {
                return "A shape with \(numberOfSides) sides."
            }
@@ -1049,7 +1041,7 @@ methods outside the protocol definition are not available.
     <$ : String = "A very simple class.  Now 100% adjusted"
     // protocolValue.anotherProperty  // Uncomment to see the error
 
-Even though the first element of the array
+Even though the variable ``protocolValue``
 has a runtime type of ``SimpleClass``,
 the compiler treats it as the given type of ``ExampleProtocol``.
 This means that you can't accidentally access
@@ -1065,7 +1057,7 @@ to make a generic function or type.
 .. testcode::
 
     -> func repeat<ItemType>(item: ItemType, times: Int) -> ItemType[] {
-           var result = Array<ItemType>()
+           var result = ItemType[]()
            for i in 0..times {
                 result += item
            }

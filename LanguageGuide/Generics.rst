@@ -452,16 +452,16 @@ that requires ``U`` to conform to the protocol ``SomeProtocol``.
 Type Constraints in Action
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Here's a non-generic function called ``findInt``,
-which is given an ``Int`` value to find
-and an array of ``Int`` values within which to find it.
-The ``findInt`` function returns an optional ``Int`` value,
-which will be the index of the first matching value in the array if it is found,
-or ``nil`` if the value cannot be found:
+Here's a non-generic function called ``findStringIndex``,
+which is given a ``String`` value to find
+and an array of ``String`` values within which to find it.
+The ``findStringIndex`` function returns an optional ``Int`` value,
+which will be the index of the first matching string in the array if it is found,
+or ``nil`` if the string cannot be found:
 
 .. testcode:: typeConstraints
 
-   -> func findInt(array: Int[], valueToFind: Int) -> Int? {
+   -> func findStringIndex(array: String[], valueToFind: String) -> Int? {
          for (index, value) in enumerate(array) {
             if value == valueToFind {
                return index
@@ -470,23 +470,23 @@ or ``nil`` if the value cannot be found:
          return nil
       }
 
-The ``findInt`` function can be used to find an integer value in an array of integers:
+The ``findStringIndex`` function can be used to find a string value in an array of strings:
 
 .. testcode:: typeConstraints
 
-   -> let integers = [-6, 0, -27, 3, 2001]
-   << // integers : Array<Int> = [-6, 0, -27, 3, 2001]
-   -> if let foundIndex = findInt(integers, -27) {
-         println("The index of -27 is \(foundIndex)")
+   -> let strings = ["cat", "dog", "llama", "parakeet", "terrapin"]
+   << // strings : Array<String> = ["cat", "dog", "llama", "parakeet", "terrapin"]
+   -> if let foundIndex = findStringIndex(strings, "llama") {
+         println("The index of llama is \(foundIndex)")
       }
-   <- The index of -27 is 2
+   <- The index of llama is 2
 
-The principle of finding a value in an array isn't useful only for integers, however.
-You can write the same functionality as a generic function called ``findValue``,
-by replacing any mention of integers with values of some type ``T`` instead.
+The principle of finding the index of a value in an array isn't useful only for strings, however.
+You can write the same functionality as a generic function called ``findIndex``,
+by replacing any mention of strings with values of some type ``T`` instead.
 
-Here's how you might expect a generic version of ``findInt``,
-called ``findValue``, to be written.
+Here's how you might expect a generic version of ``findStringIndex``,
+called ``findIndex``, to be written.
 Note that the return type of this function is still ``Int?``,
 because the function returns an optional index number,
 not an optional value from the array.
@@ -495,7 +495,7 @@ for reasons explained after the example:
 
 .. testcode:: typeConstraints
 
-   -> func findValue<T>(array: T[], valueToFind: T) -> Int? {
+   -> func findIndex<T>(array: T[], valueToFind: T) -> Int? {
          for (index, value) in enumerate(array) {
             if value == valueToFind {
                return index
@@ -530,14 +530,14 @@ All of Swift's standard types automatically support the ``Equatable`` protocol.
    and you can make your own types conform to ``Equatable`` too,
    as described in <link>.
 
-Any type that is ``Equatable`` can be used safely with the ``findValue`` function,
+Any type that is ``Equatable`` can be used safely with the ``findIndex`` function,
 because it is guaranteed to support the equal to operator.
 To express this fact, you write a type constraint of ``Equatable``
 as part of the type parameter's definition when you define the function:
 
 .. testcode:: typeConstraintsEquatable
 
-   -> func findValue<T: Equatable>(array: T[], valueToFind: T) -> Int? {
+   -> func findIndex<T: Equatable>(array: T[], valueToFind: T) -> Int? {
          for (index, value) in enumerate(array) {
             if value == valueToFind {
                return index
@@ -546,19 +546,19 @@ as part of the type parameter's definition when you define the function:
          return nil
       }
 
-The single type parameter for ``findValue`` is written as ``T: Equatable``,
+The single type parameter for ``findIndex`` is written as ``T: Equatable``,
 which means “any type ``T`` that conforms to the ``Equatable`` protocol.”
 
-The ``findValue`` function now compiles successfully
+The ``findIndex`` function now compiles successfully
 and can be used with any type that is ``Equatable``, such as ``Double`` or ``String``:
 
 .. testcode:: typeConstraintsEquatable
 
-   -> let doubleIndex = findValue([3.14159, 0.1, 0.25], 9.3)
+   -> let doubleIndex = findIndex([3.14159, 0.1, 0.25], 9.3)
    << // doubleIndex : Int? = nil
    /> doubleIndex is an optional Int with no value, because 9.3 is not in the array
    </ doubleIndex is an optional Int with no value, because 9.3 is not in the array
-   -> let stringIndex = findValue(["Mike", "Malcolm", "Andrea"], "Andrea")
+   -> let stringIndex = findIndex(["Mike", "Malcolm", "Andrea"], "Andrea")
    << // stringIndex : Int? = 2
    /> stringIndex is an optional Int containing a value of \(stringIndex!)
    </ stringIndex is an optional Int containing a value of 2
