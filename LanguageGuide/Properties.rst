@@ -378,22 +378,13 @@ and can be accessed through dot syntax, but cannot be set to a different value.
 
    -> class C {
          let x: Int { return 42 }
-         let y: Int { get { return 42 } set { // no-op } }
+         let y: Int { get { return 42 } set {} }
       }
    !! /tmp/swifttest.swift:2:15: error: 'let' declarations cannot be a computed property
    !! let x: Int { return 42 }
    !! ^
-   !! /tmp/swifttest.swift:5:1: error: expected '}' at end of variable get/set clause
-   !!-
-   !! ^
-   !! /tmp/swifttest.swift:3:15: note: to match this opening '{'
-   !! let y: Int { get { return 42 } set { // no-op } }
-   !! ^
    !! /tmp/swifttest.swift:3:15: error: 'let' declarations cannot be a computed property
-   !! let y: Int { get { return 42 } set { // no-op } }
-   !! ^
-   !! /tmp/swifttest.swift:5:1: error: expected declaration
-   !!-
+   !! let y: Int { get { return 42 } set {} }
    !! ^
    !! /tmp/swifttest.swift:1:7: error: class 'C' has no initializers
    !! class C {
@@ -403,7 +394,7 @@ and can be accessed through dot syntax, but cannot be set to a different value.
    !! ^
    !! = 0
    !! /tmp/swifttest.swift:3:8: note: stored property 'y' without initial value prevents synthesized initializers
-   !! let y: Int { get { return 42 } set { // no-op } }
+   !! let y: Int { get { return 42 } set {} }
    !! ^
    !! = 0
 
