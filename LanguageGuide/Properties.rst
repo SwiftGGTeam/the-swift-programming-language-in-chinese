@@ -657,6 +657,12 @@ and are written in the same way as computed properties.
 
    Local constants and variables are never computed lazily.
 
+.. TODO: clarify what we mean by "global variables" here.
+   According to [Contributor 6004], anything defined in a playground, REPL, or in main.swift
+   is a local variable in top-level code, not a global variable.
+
+.. TODO: this also makes it impossible (at present) to test the "always lazy" assertion.
+
 .. _Properties_TypeProperties:
 
 Type Properties
