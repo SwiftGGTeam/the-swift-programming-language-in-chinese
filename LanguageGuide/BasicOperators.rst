@@ -673,7 +673,7 @@ In the example below,
 the first ``Bool`` value (``hasDoorKey``) is ``false``,
 but the second value (``knowsOverridePassword``) is ``true``.
 Because one value is ``true``,
-the overall expression also equates to ``true``,
+the overall expression also evaluates to ``true``,
 and access is allowed:
 
 .. testcode:: logicalOperators
@@ -718,7 +718,7 @@ then allow access.
 Based on the values of ``enteredDoorCode``, ``passedRetinaScan``, and ``hasDoorKey``,
 the first two mini-expressions are ``false``.
 However, the emergency override password is known,
-so the overall compound expression still equates to ``true``.
+so the overall compound expression still evaluates to ``true``.
 
 .. _BasicOperators_Explicit Parentheses:
 

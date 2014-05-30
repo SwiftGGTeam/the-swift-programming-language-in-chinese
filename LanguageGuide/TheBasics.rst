@@ -1208,8 +1208,8 @@ An assertion is a runtime check that a logical condition definitely evaluates to
 Literally put, an assertion “asserts” that a condition is true.
 You use an assertion to make sure that an essential condition is satisfied
 before executing any further code.
-If the condition equates to ``true``, code execution continues as usual;
-if the condition equates to ``false``, code execution ends, and your app is terminated.
+If the condition evaluates to ``true``, code execution continues as usual;
+if the condition evaluates to ``false``, code execution ends, and your app is terminated.
 
 If your code triggers an assertion while running in a debug environment,
 such as when you build and run an app in Xcode,
@@ -1218,7 +1218,7 @@ and query the state of your app at the time that the assertion was triggered.
 An assertion also lets you provide a suitable debug message as to the nature of the assert.
 
 You write an assertion by calling the global ``assert`` function.
-You pass the ``assert`` function an expression that equates to ``true`` or ``false``
+You pass the ``assert`` function an expression that evaluates to ``true`` or ``false``
 and a message that should be displayed if the result of the condition is ``false``:
 
 .. testcode:: assertions
@@ -1229,10 +1229,10 @@ and a message that should be displayed if the result of the condition is ``false
    xx assert
    // this causes the assertion to trigger, because age is not >= 0
 
-In this example, code execution will continue only if ``age >= 0`` equates to ``true``,
+In this example, code execution will continue only if ``age >= 0`` evaluates to ``true``,
 that is, if the value of ``age`` is non-negative.
 If the value of ``age`` *is* negative, as in the code above,
-then ``age >= 0`` equates to ``false``,
+then ``age >= 0`` evaluates to ``false``,
 and the assertion is triggered, terminating the application.
 
 Assertion messages cannot use string interpolation.
