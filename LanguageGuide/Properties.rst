@@ -7,6 +7,13 @@ whereas computed properties calculate (rather than store) a value.
 Computed properties are provided by classes, structures, and enumerations.
 Stored properties are provided only by classes and structures.
 
+.. assertion:: enumerationsCantProvideStoredProperties
+
+   -> enum E { case A, B; var x = 0 }
+   !! <REPL Input>:1:21: error: 'var' declarations without getter/setter not allowed here
+   !! enum E { case A, B; var x = 0 }
+   !! ^
+
 Stored and computed properties are usually associated with instances of a particular type.
 However, properties can also be associated with the type itself.
 Such properties are known as type properties.
@@ -15,6 +22,31 @@ In addition, you can define property observers to monitor changes in a property'
 which you can respond to with custom actions.
 Property observers can be added to stored properties you define yourself,
 and also to properties that a subclass inherits from its superclass.
+
+.. assertion:: propertyObserverIntroClaims
+
+   -> class C {
+         var x: Int = 0 {
+            willSet { println("C willSet x to \(newValue)") }
+            didSet { println("C didSet x from \(oldValue)") }
+         }
+      }
+   -> class D: C {
+         override var x: Int {
+            willSet { println("D willSet x to \(newValue)") }
+            didSet { println("D didSet x from \(oldValue)") }
+         }
+      }
+   -> var c = C(); c.x = 42
+   << // c : C = C4REPL1C (has 1 child)
+   <- C willSet x to 42
+   <- C didSet x from 0
+   -> var d = D(); d.x = 42
+   << // d : D = C4REPL1D (has 1 child)
+   <- D willSet x to 42
+   <- C willSet x to 42
+   <- C didSet x from 0
+   <- D didSet x from 0
 
 .. _Properties_StoredProperties:
 
@@ -97,6 +129,8 @@ you can still change that instance's variable properties.
    in the first paragraph of this section, to set expectations.
    (I've also asked whether this is intentional, in rdar://16338553.)
 
+.. TODO: see the explanation in rdar://16338553, and write about it here.
+
 .. _Properties_LazyStoredProperties:
 
 Lazy Stored Properties
@@ -117,6 +151,14 @@ the ``@lazy`` attribute before its declaration.
    after instance initialization completes.
    Constant properties must always have a value *before* initialization completes,
    and therefore cannot be declared as lazy.
+
+.. assertion:: lazyPropertiesMustAlwaysBeVariables
+
+   -> class C { @lazy let x = 0 }
+   !! <REPL Input>:1:11: error: 'lazy' attribute cannot be used on a let
+   !! class C { @lazy let x = 0 }
+   !! ^~~~~
+   !!-
 
 Lazy properties are useful when the initial value for a property
 is dependent on outside factors whose values are not known
@@ -331,6 +373,40 @@ and can be accessed through dot syntax, but cannot be set to a different value.
    to indicate that their values cannot be changed once they are set
    as part of instance initialization.
 
+.. assertion:: readOnlyComputedPropertiesMustBeVariables
+   :compile: true
+
+   -> class C {
+         let x: Int { return 42 }
+         let y: Int { get { return 42 } set { // no-op } }
+      }
+   !! /tmp/swifttest.swift:2:15: error: 'let' declarations cannot be a computed property
+   !! let x: Int { return 42 }
+   !! ^
+   !! /tmp/swifttest.swift:5:1: error: expected '}' at end of variable get/set clause
+   !!-
+   !! ^
+   !! /tmp/swifttest.swift:3:15: note: to match this opening '{'
+   !! let y: Int { get { return 42 } set { // no-op } }
+   !! ^
+   !! /tmp/swifttest.swift:3:15: error: 'let' declarations cannot be a computed property
+   !! let y: Int { get { return 42 } set { // no-op } }
+   !! ^
+   !! /tmp/swifttest.swift:5:1: error: expected declaration
+   !!-
+   !! ^
+   !! /tmp/swifttest.swift:1:7: error: class 'C' has no initializers
+   !! class C {
+   !! ^
+   !! /tmp/swifttest.swift:2:8: note: stored property 'x' without initial value prevents synthesized initializers
+   !! let x: Int { return 42 }
+   !! ^
+   !! = 0
+   !! /tmp/swifttest.swift:3:8: note: stored property 'y' without initial value prevents synthesized initializers
+   !! let y: Int { get { return 42 } set { // no-op } }
+   !! ^
+   !! = 0
+
 You can simplify the declaration of a read-only computed property
 by removing the ``get`` keyword and its braces:
 
@@ -375,11 +451,61 @@ Property Observers
 Property observers are called every time a property's value is set,
 even if the new value is the same as the property's current value.
 
+.. assertion:: observersAreCalledEvenIfNewValueIsTheSameAsOldValue
+
+   -> class C { var x: Int = 0 { willSet { println("willSet") } didSet { println("didSet") } } }
+   -> let c = C()
+   << // c : C = C4REPL1C (has 1 child)
+   -> c.x = 24
+   <- willSet
+   <- didSet
+   -> c.x = 24
+   <- willSet
+   <- didSet
+
 You can add property observers to any stored properties you define,
 apart from lazy stored properties.
 You can also add property observers to any inherited property (whether stored or computed)
 by overriding the property within a subclass.
 Property overriding is described in :ref:`Inheritance_Overriding`.
+
+.. assertion:: lazyPropertiesCannotHaveObservers
+
+   -> class C {
+         @lazy var x: Int = 0 {
+            willSet { println("C willSet x to \(newValue)") }
+            didSet { println("C didSet x from \(oldValue)") }
+         }
+      }
+   !! <REPL Input>:2:6: error: @lazy properties may not have observers
+   !! @lazy var x: Int = 0 {
+   !! ^~~~~
+   !!-
+
+.. assertion:: storedAndComputedInheritedPropertiesCanBeObserved
+   :compile: true
+
+   -> class C {
+         var x = 0
+         var y: Int { get { return 42 } set {} }
+      }
+   -> class D: C {
+         override var x: Int {
+            willSet { println("D willSet x to \(newValue)") }
+            didSet { println("D didSet x from \(oldValue)") }
+         }
+         override var y: Int {
+            willSet { println("D willSet y to \(newValue)") }
+            didSet { println("D didSet y from \(oldValue)") }
+         }
+      }
+   -> var d = D()
+   -> d.x = 42
+   <- D willSet x to 42
+   <- D didSet x from 0
+   -> d.y = 42
+   <- D willSet y to 42
+   <- D didSet y from 42
 
 .. note::
 
@@ -409,6 +535,18 @@ or use the default parameter name of ``oldValue``.
    a property is first initialized.
    They are only called when the property's value is set
    outside of an initialization context.
+
+.. assertion:: observersAreNotCalledDuringInitialization
+
+   -> class C {
+         var x: Int { willSet { println("willSet") } didSet { println("didSet") } }
+         init(x: Int) { self.x = x }
+      }
+   -> let c = C(x: 42)
+   << // c : C = C4REPL1C (has 1 child)
+   -> c.x = 24
+   <- willSet
+   <- didSet
 
 Here's an example of ``willSet`` and ``didSet`` in action.
 The example below defines a new class called ``StepCounter``,
@@ -465,6 +603,15 @@ and the default name of ``oldValue`` is used instead.
    If you assign a value to a property within its own ``didSet`` observer,
    the new value that you assign will replace the one that was just set.
 
+.. assertion:: assigningANewValueInADidSetReplacesTheNewValue
+
+   -> class C { var x: Int = 0 { didSet { x = -273 } } }
+   -> let c = C()
+   << // c : C = C4REPL1C (has 1 child)
+   -> c.x = 24
+   -> println(c.x)
+   <- -273
+
 .. TODO: If you add a property observer to a stored property of structure type,
    that property observer is fired whenever any of the sub-properties
    of that structure instance are set. This is cool, but non-obvious.
@@ -492,6 +639,23 @@ and define observers for stored variables,
 in either a global or local scope.
 Computed variables calculate rather than store a value,
 and are written in the same way as computed properties.
+
+.. assertion:: computedVariables
+   :compile: true
+
+   -> var a: Int { get { return 42 } set { println("set a to \(newValue)") } }
+   -> a = 37
+   <- set a to 37
+   -> println(a)
+   <- 42
+
+.. assertion:: observersForStoredVariables
+   :compile: true
+
+   -> var a: Int = 0 { willSet { println("willSet") } didSet { println("didSet") } }
+   -> a = 42
+   <- willSet
+   <- didSet
 
 .. note::
 
@@ -538,6 +702,13 @@ in the same way as computed instance properties.
    you must always give stored type properties a default value.
    This is because the type itself does not have an initializer
    that can assign a value to a stored type property at initialization time.
+
+.. TODO: I've found a note saying that
+   "Global variables and static properties are now lazily initialized on first use.
+   Where you would use dispatch_once to lazily initialize a singleton object
+   in Objective-C, you can simply declare a global variable with an initializer in Swift.
+   Like dispatch_once, this lazy initialization is thread safe."
+   If this is true, I haven't yet mentioned it for static properties.
 
 .. _Properties_TypePropertySyntax:
 
