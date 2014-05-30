@@ -222,6 +222,14 @@ can be passed to the memberwise initializer by name:
 Unlike structures, class instances do not receive a default memberwise initializer.
 Initializers are described in more detail in :doc:`Initialization`.
 
+.. assertion:: classesDontHaveADefaultMemberwiseInitializer
+
+   -> class C { var x = 0, y = 0 }
+   -> let c = C(x: 1, y: 1)
+   !! <REPL Input>:1:10: error: extra argument 'x' in call
+   !! let c = C(x: 1, y: 1)
+   !! ^   ~
+
 .. FIXME: The current plan is to introduce a memberwise initializer for classes too,
    as described in rdar://16704095.
    We hope to have this by WWDC, and this section will need updating if this lands.
@@ -404,6 +412,30 @@ because they are value types
 and are always copied when they are assigned to a constant or variable,
 or passed to a function.)
 
+.. assertion:: structuresDontSupportTheIdentityOperators
+
+   -> struct S { var x = 0, y = 0 }
+   -> let s1 = S()
+   << // s1 : S = V4REPL1S (has 2 children)
+   -> let s2 = S()
+   << // s2 : S = V4REPL1S (has 2 children)
+   -> if s1 === s2 { println("s1 === s2") } else { println("s1 !== s2") }
+   !! <REPL Input>:1:7: error: could not find an overload for '===' that accepts the supplied arguments
+   !! if s1 === s2 { println("s1 === s2") } else { println("s1 !== s2") }
+   !! ~~~^~~~~~
+
+.. assertion:: enumerationsDontSupportTheIdentityOperators
+
+   -> enum E { case A, B }
+   -> let e1 = E.A
+   << // e1 : E = (Enum Value)
+   -> let e2 = E.B
+   << // e2 : E = (Enum Value)
+   -> if e1 === e2 { println("e1 === e2") } else { println("e1 !== e2") }
+   !! <REPL Input>:1:7: error: could not find an overload for '===' that accepts the supplied arguments
+   !! if e1 === e2 { println("e1 === e2") } else { println("e1 !== e2") }
+   !! ~~~^~~~~~
+
 It can sometimes be useful to find out if two constants or variables refer to
 exactly the same instance of a class.
 To enable this, Swift provides two identity operators:
@@ -433,6 +465,30 @@ When you define your own custom classes and structures,
 it is your responsibility to decide what qualifies as two instances being “equal”.
 The process of defining your own implementations of the “equal to” and “not equal to” operators
 is described in :ref:`AdvancedOperators_EquivalenceOperators`.
+
+.. assertion:: classesDontGetEqualityByDefault
+
+   -> class C { var x = 0, y = 0 }
+   -> let c1 = C()
+   << // c1 : C = C4REPL1C (has 2 children)
+   -> let c2 = C()
+   << // c2 : C = C4REPL1C (has 2 children)
+   -> if c1 == c2 { println("c1 == c2") } else { println("c1 != c2") }
+   !! <REPL Input>:1:7: error: could not find an overload for '==' that accepts the supplied arguments
+   !! if c1 == c2 { println("c1 == c2") } else { println("c1 != c2") }
+   !! ~~~^~~~~
+
+.. assertion:: structuresDontGetEqualityByDefault
+
+   -> struct S { var x = 0, y = 0 }
+   -> let s1 = S()
+   << // s1 : S = V4REPL1S (has 2 children)
+   -> let s2 = S()
+   << // s2 : S = V4REPL1S (has 2 children)
+   -> if s1 == s2 { println("s1 == s2") } else { println("s1 != s2") }
+   !! <REPL Input>:1:7: error: could not find an overload for '==' that accepts the supplied arguments
+   !! if s1 == s2 { println("s1 == s2") } else { println("s1 != s2") }
+   !! ~~~^~~~~
 
 .. TODO: This needs clarifying with regards to function references.
 
