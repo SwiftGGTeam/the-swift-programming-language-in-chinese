@@ -187,6 +187,10 @@ such as when its ``fileName`` property is queried:
    </ the DataImporter instance for the importer property has now been created
    <- data.txt
 
+.. FIXME: Add a note to describe whether or not @lazy is thread-safe.
+   This is as per <rdar://problem/17084977>
+   ER: We should document whether lazy initialization is thread safe
+
 .. _Properties_StoredPropertiesAndInstanceVariables:
 
 Stored Properties and Instance Variables
