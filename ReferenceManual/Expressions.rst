@@ -354,6 +354,8 @@ as shown in the following example:
     ---
     -> let y1 = x as SomeType
     << // y1 : SomeType = <SomeType instance>
+    -> let y2: SomeType = x
+    << // y2 : SomeType = <SomeType instance>
 
 .. NOTE: The following text is no longer relevant,
     because now that T! is a type, x as T! no longer means
