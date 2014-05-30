@@ -13,6 +13,12 @@ A Swift Tour
 
    We apologize for the inconvenience.
 
+.. note::
+
+    If this document is not displaying correctly,
+    enable line wrapping in Xcode preferences
+    and reopen the document.
+
 Tradition suggests that the first program in a new language
 should print the words “Hello, world” on the screen.
 In Swift, this can be done in a single line:
