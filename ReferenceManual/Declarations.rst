@@ -548,7 +548,7 @@ See also :ref:`Declarations_ProtocolAssociatedTypeDeclaration`.
 Function Declaration
 --------------------
 
-A :newTerm`function declaration` introduces a function or method into your program.
+A :newTerm:`function declaration` introduces a function or method into your program.
 A function declared in the context of class, structure, enumeration, or protocol
 is referred to as a :newTerm:`method`.
 Function declarations are declared using the keyword ``func`` and have the following form:
@@ -662,7 +662,7 @@ using the following forms:
 
 .. syntax-outline::
 
-    _ : <#parameter type#.
+    _ : <#parameter type#>
     <#parameter name#>: <#parameter type#>...
     <#parameter name#>: <#parameter type#> = <#default argument value#>
 
