@@ -1,10 +1,9 @@
 CACHE MANIFEST
-# Revision 1401776083021
+# Revision 1401773299874
 
 CACHE:
 index.html
 swift/README.html
-swift/swift.html
 gitbook/app.js
 gitbook/fonts/anonymouspro/400.woff
 gitbook/fonts/anonymouspro/400i.woff
