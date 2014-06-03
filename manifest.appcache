@@ -1,8 +1,9 @@
 CACHE MANIFEST
-# Revision 1401776083021
+# Revision 1401777859206
 
 CACHE:
 index.html
+a_swift_tour.html
 swift/README.html
 swift/swift.html
 gitbook/app.js
@@ -41,8 +42,8 @@ gitbook/jsrepl/sandbox.html
 gitbook/jsrepl/sandbox.js
 gitbook/print.css
 gitbook/style.css
-gitbook/plugins/gitbook-plugin-mixpanel/plugin.js
 gitbook/plugins/gitbook-plugin-mathjax/plugin.js
+gitbook/plugins/gitbook-plugin-mixpanel/plugin.js
 
 NETWORK:
 *
