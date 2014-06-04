@@ -12,7 +12,7 @@ Objc 和 Swift 文件可以在一个工程中并存，不管这个工程原本�
 
 混合语言的工作流程只有一点点区别，这取决于你是在写应用还是写框架。下面描述了普通的用两种语言在一个 target 中导入模型的情况，后续章节会有更多细节。
 
-![DAG_2x.png](https://github.com/haolloyin/the-swift-programming-language-in-chinese/blob/master/Using Swift with Cocoa and ObjectiveC/chapter3/DAG_2x.png?raw=true)
+![DAG_2x.png](https://raw.githubusercontent.com/haolloyin/the-swift-programming-language-in-chinese/translate/Using%20Swift%20with%20Cocoa%20and%20ObjectiveC/chapter3/DAG_2x.png?raw=true)
 
 ## Importing Code from Within the Same App Target - 在同个应用的 target 中导入
 
@@ -22,7 +22,7 @@ Objc 和 Swift 文件可以在一个工程中并存，不管这个工程原本�
 
 在一个应用的 target 中导入一些 Objc 文件供 Swift 代码使用时，你需要依赖与 Objc 的桥接头文件（`bridging header`）来暴露给 Swift。当你添加 Swift 文件到现有的 Objc 应用（或反之）时，Xcode 会自动创建这些头文件。
 
-![bridgingheader_2x.png](https://github.com/haolloyin/the-swift-programming-language-in-chinese/blob/master/Using Swift with Cocoa and ObjectiveC/chapter3/bridgingheader_2x.png?raw=true)
+![bridgingheader_2x.png](https://raw.githubusercontent.com/haolloyin/the-swift-programming-language-in-chinese/translate/Using%20Swift%20with%20Cocoa%20and%20ObjectiveC/chapter3/bridgingheader_2x.png?raw=true)
 
 如果你同意，Xcode 会在源文件创建的同时生成头文件，并用 product 的模块名加上 `-Bridging-Header.h` 命名。关于 product 的模块名，详见 [Naming Your Product Module](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/MixandMatch.html#//apple_ref/doc/uid/TP40014216-CH10-XID_85)。
 
