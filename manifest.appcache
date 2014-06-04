@@ -1,5 +1,5 @@
 CACHE MANIFEST
-# Revision 1401895096943
+# Revision 1401919801866
 
 CACHE:
 index.html
@@ -7,6 +7,8 @@ chapter1/README.html
 chapter1/a_swift_tour.html
 chapter1/swift.html
 chapter2/article_1.html
+chapter2/basic_operators.html
+chapter2/strings_and_characters.html
 chapter2/the_basics.html
 gitbook/app.js
 gitbook/fonts/anonymouspro/400.woff
