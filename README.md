@@ -42,7 +42,7 @@
 3. 在命令行运行 `git branch develop` 来创建一个新分支
 4. 运行 `git checkout develop` 来切换到新分支
 5. 运行 `git remote add upstream https://github.com/numbbbbb/the-swift-programming-language-in-chinese.git` 把我的库添加为远端库
-6. 运行 `git fetch upstream/gh-pages` 拉取我的库的更新到本地
+6. 运行 `git fetch upstream gh-pages` 拉取我的库的更新到本地
 7. 运行 `git rebase upstream/gh-pages` 将我的更新合并到你的分支
 
 这是一个初始化流程，只需要做一遍就行，之后请一直在develop分支进行翻译。
