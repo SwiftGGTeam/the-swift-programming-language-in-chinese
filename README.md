@@ -1,4 +1,4 @@
-the-swift-programming-language-in-chinese
+《The Swift Programming Language》in chinese
 =========================================
 
 中文版Apple官方Swift教程《The Swift Programming Language》
