@@ -15,6 +15,8 @@
         <meta name="generator" content="www.gitbook.io">
 
         
+        <link rel="next" href="../chapter2/basic_operators.html" />
+        
         
         <link rel="prev" href="../chapter2/the_basics.html" />
         
@@ -44,7 +46,7 @@
 
 
         
-    <div class="book"  data-level="2.1" data-basepath=".." data-revision="1401895096940">
+    <div class="book"  data-level="2.1" data-basepath=".." data-revision="1401919801865">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -173,6 +175,24 @@
             
         </li>
     
+        <li class="chapter " data-level="2.2" data-path="chapter2/basic_operators.html">
+            
+            <a href="../chapter2/basic_operators.html">
+                <i class="fa fa-check"></i> <b>2.2.</b> 基本操作符
+            </a>
+            
+            
+        </li>
+    
+        <li class="chapter " data-level="2.3" data-path="chapter2/strings_and_characters.html">
+            
+            <a href="../chapter2/strings_and_characters.html">
+                <i class="fa fa-check"></i> <b>2.3.</b> 字符串和字符
+            </a>
+            
+            
+        </li>
+    
 
             </ul>
             
@@ -195,28 +215,32 @@
             <div class="page-wrapper" tabindex="-1">
                 <div class="book-progress">
     <div class="bar">
-        <div class="inner" style="width: 100%;min-width: 80%;"></div>
+        <div class="inner" style="width: 71.42857142857143%;min-width: 57.142857142857146%;"></div>
     </div>
     <div class="chapters">
     
         <a href="../index.html" title="Introduction" class="chapter done new-chapter" data-progress="0" style="left: 0%;"></a>
     
-        <a href="../chapter1/README.html" title="欢迎使用 Swift" class="chapter done new-chapter" data-progress="1" style="left: 20%;"></a>
+        <a href="../chapter1/README.html" title="欢迎使用 Swift" class="chapter done new-chapter" data-progress="1" style="left: 14.285714285714286%;"></a>
     
-        <a href="../chapter1/swift.html" title="关于 Swift" class="chapter done " data-progress="1.1" style="left: 40%;"></a>
+        <a href="../chapter1/swift.html" title="关于 Swift" class="chapter done " data-progress="1.1" style="left: 28.571428571428573%;"></a>
     
-        <a href="../chapter1/a_swift_tour.html" title="Swift 初见" class="chapter done " data-progress="1.2" style="left: 60%;"></a>
+        <a href="../chapter1/a_swift_tour.html" title="Swift 初见" class="chapter done " data-progress="1.2" style="left: 42.857142857142854%;"></a>
     
-        <a href="../chapter2/the_basics.html" title="Swift 教程" class="chapter done new-chapter" data-progress="2" style="left: 80%;"></a>
+        <a href="../chapter2/the_basics.html" title="Swift 教程" class="chapter done new-chapter" data-progress="2" style="left: 57.142857142857146%;"></a>
     
-        <a href="../chapter2/article_1.html" title="基础部分" class="chapter done " data-progress="2.1" style="left: 100%;"></a>
+        <a href="../chapter2/article_1.html" title="基础部分" class="chapter done " data-progress="2.1" style="left: 71.42857142857143%;"></a>
+    
+        <a href="../chapter2/basic_operators.html" title="基本操作符" class="chapter  " data-progress="2.2" style="left: 85.71428571428571%;"></a>
+    
+        <a href="../chapter2/strings_and_characters.html" title="字符串和字符" class="chapter  " data-progress="2.3" style="left: 100%;"></a>
     
     </div>
 </div>
 
                 <div class="page-inner">
                 
-                    <section class="normal" id="section-gitbook_16">
+                    <section class="normal" id="section-gitbook_9">
                     
                         <h1 id="-">基础部分</h1>
 <p>Swift 是 iOS 和 OS X 应用开发的一门新语言。然而，如果你有 C 或者 Objective-C 开发经验的话，你会发现 Swift 的很多内容都是你熟悉的。</p>
@@ -255,10 +279,34 @@ var currentLoginAttempt = 0
 <p>你可以用任何你喜欢的字符作为常量和变量名，包括Unicode字符：</p>
 <pre><code>    let π = 3.14159
     let 你好 = &quot;你好世界&quot;
+    let 🐶🐮 = &quot;dogcow&quot;
 </code></pre><p>常量与变量名不能包含数学符号，箭头，保留的(或者非法的)Unicode码位，连线与制表符。尽管常量与变量名中可以包含数字，但是它们不能以数字打头。</p>
 <p>一旦你将常量或者变量声明为确定的类型，你就不能使用相同的名字再次进行声明，或者以改变其存储的值为其他类型。同时，你也不能将常量与变量进行互转。</p>
 <blockquote>
 <p>注意：如果你需要使用与Swift保留关键字相同的名称作为常量或者变量名，你可以使用反引号(`)将关键字围住的方式将其作为名字使用。无论如何，你应当避免使用关键字作为常量或变量名，除非你别无选择。</p>
+</blockquote>
+<p>你可以更改现有的变量值为其他同类型的值，在下面的例子中，<code>friendlyWelcome</code>的值从<code>&quot;Hello!&quot;</code>改为了<code>&quot;Bonjour!&quot;</code>:</p>
+<pre><code>    var friendlyWelcome = &quot;Hello!&quot;
+    friendlyWelcome = &quot;Bonjour!&quot;
+    // friendlyWelcome is now &quot;Bonjour!&quot;
+</code></pre><p>和变量不一样，常量的值一旦被确定以后就不能更改了。尝试这样做会在编译时报错：</p>
+<pre><code>    let languageName = &quot;Swift&quot;
+    languageName = &quot;Swift++&quot;
+    // this is a compile-time error - languageName cannot be changed
+</code></pre><h3 id="-">输出常量和变量</h3>
+<p>你可以用<code>println</code>函数来输出当前常量或变量的值:</p>
+<pre><code>    println(friendlyWelcome)
+    // prints &quot;Bonjour!&quot;
+</code></pre><p><code>println</code>是一个用来输出的全局函数，输出的内容会在最后带换行。如果你用Xcode，<code>println</code>将会输出内容到“console”面板上。(另一种函数叫<code>print</code>，唯一区别是在输出内容最后不会加入换行。)</p>
+<p><code>println</code>函数输出传入的<code>String</code>值：</p>
+<pre><code>    println(&quot;This is a string&quot;)
+    // prints &quot;This is a string&quot;
+</code></pre><p>像Cocoa里的<code>NSLog</code>函数一样，<code>println</code>函数可以输出更复杂的信息。这些信息可以包含当前常量和变量的值。</p>
+<p>Swift用字符串插值（string interpolation）的方式把常量名或者变量名当做占位符加入到长字符串中，Swift会用当前常量或变量的值替换这些占位符。将常量或变量名放入反斜杠符加一对圆括号中<code>&quot;\()&quot;</code>：</p>
+<pre><code>    println(&quot;The current value of friendlyWelcome is \(friendlyWelcome)&quot;)
+    // prints &quot;The current value of friendlyWelcome is Bonjour!
+</code></pre><blockquote>
+<p>注意：字符串插值所有可用的选项在 字符串插值 这章中讲述。</p>
 </blockquote>
 
                     
@@ -269,8 +317,10 @@ var currentLoginAttempt = 0
         </div>
 
         
-        <a href="../chapter2/the_basics.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page: Swift 教程"><i class="fa fa-angle-left"></i></a>
+        <a href="../chapter2/the_basics.html" class="navigation navigation-prev " aria-label="Previous page: Swift 教程"><i class="fa fa-angle-left"></i></a>
         
+        
+        <a href="../chapter2/basic_operators.html" class="navigation navigation-next " aria-label="Next page: 基本操作符"><i class="fa fa-angle-right"></i></a>
         
     </div>
 </div>
