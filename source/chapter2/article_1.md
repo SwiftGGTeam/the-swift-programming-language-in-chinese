@@ -61,9 +61,45 @@ Swift 是一个类型安全的语言，可选就是一个很好的例子。Swift
 
 		let π = 3.14159
 		let 你好 = "你好世界"
+		let 🐶🐮 = "dogcow"
 
 常量与变量名不能包含数学符号，箭头，保留的(或者非法的)Unicode码位，连线与制表符。尽管常量与变量名中可以包含数字，但是它们不能以数字打头。
 
 一旦你将常量或者变量声明为确定的类型，你就不能使用相同的名字再次进行声明，或者以改变其存储的值为其他类型。同时，你也不能将常量与变量进行互转。
 
 > 注意：如果你需要使用与Swift保留关键字相同的名称作为常量或者变量名，你可以使用反引号(`)将关键字围住的方式将其作为名字使用。无论如何，你应当避免使用关键字作为常量或变量名，除非你别无选择。
+
+你可以更改现有的变量值为其他同类型的值，在下面的例子中，`friendlyWelcome`的值从`"Hello!"`改为了`"Bonjour!"`:
+
+		var friendlyWelcome = "Hello!"
+		friendlyWelcome = "Bonjour!"
+		// friendlyWelcome is now "Bonjour!"
+
+和变量不一样，常量的值一旦被确定以后就不能更改了。尝试这样做会在编译时报错：
+
+		let languageName = "Swift"
+		languageName = "Swift++"
+		// this is a compile-time error - languageName cannot be changed
+		
+### 输出常量和变量
+
+你可以用`println`函数来输出当前常量或变量的值:
+
+		println(friendlyWelcome)
+		// prints "Bonjour!"
+		
+`println`是一个用来输出的全局函数，输出的内容会在最后带换行。如果你用Xcode，`println`将会输出内容到“console”面板上。(另一种函数叫`print`，唯一区别是在输出内容最后不会加入换行。)
+
+`println`函数输出传入的`String`值：
+
+		println("This is a string")
+		// prints "This is a string"
+
+像Cocoa里的`NSLog`函数一样，`println`函数可以输出更复杂的信息。这些信息可以包含当前常量和变量的值。
+
+Swift用字符串插值（string interpolation）的方式把常量名或者变量名当做占位符加入到长字符串中，Swift会用当前常量或变量的值替换这些占位符。将常量或变量名放入反斜杠符加一对圆括号中`"\()"`：
+
+		println("The current value of friendlyWelcome is \(friendlyWelcome)")
+		// prints "The current value of friendlyWelcome is Bonjour!
+		
+> 注意：字符串插值所有可用的选项在 字符串插值 这章中讲述。
