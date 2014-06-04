@@ -1,9 +1,11 @@
 CACHE MANIFEST
-# Revision 1401784865323
+# Revision 1401851927231
 
 CACHE:
 index.html
 a_swift_tour.html
+chapter2/article_1.html
+chapter2/the_basics.html
 swift/README.html
 swift/swift.html
 gitbook/app.js
