@@ -5,12 +5,12 @@
         
         
         <meta charset="UTF-8">
-        <title>基础部分 | Swift编程语言</title>
+        <title>基础部分 | Swift 编程语言</title>
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="robots" content="index, follow">
         <meta name="author" content="">
-        <meta name="description" content="Swift是苹果在WWDC2014上发布的一款全新的编程语言，本书译自苹果官方的Swift教程《The Swift Programming Language》。">
+        <meta name="description" content="Swift 是苹果在 WWDC 2014 上发布的一款全新的编程语言，本书译自苹果官方的 Swift 教程《The Swift Programming Language》。">
         <meta name="keywords" content="gitbook,github" >
         <meta name="generator" content="www.gitbook.io">
 
@@ -19,8 +19,8 @@
         <link rel="prev" href="../chapter2/the_basics.html" />
         
 
-        <meta property="og:title" content="基础部分 | Swift编程语言">
-        <meta property="og:site_name" content="Swift编程语言">
+        <meta property="og:title" content="基础部分 | Swift 编程语言">
+        <meta property="og:site_name" content="Swift 编程语言">
         <meta property="og:type" content="book">
         <meta property="og:locale" content="en_US">
 
@@ -44,7 +44,7 @@
 
 
         
-    <div class="book"  data-level="2.1" data-basepath=".." data-revision="1401879002086">
+    <div class="book"  data-level="2.1" data-basepath=".." data-revision="1401881908280">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -96,7 +96,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-spinner fa-spin"></i>
-        <a href="../" >Swift编程语言</a>
+        <a href="../" >Swift 编程语言</a>
     </h1>
 </div>
 
@@ -124,7 +124,7 @@
         <li class="chapter " data-level="1" data-path="chapter1/README.html">
             
             <a href="../chapter1/README.html">
-                <i class="fa fa-check"></i> <b>1.</b> 欢迎使用Swift
+                <i class="fa fa-check"></i> <b>1.</b> 欢迎使用 Swift
             </a>
             
             
@@ -134,7 +134,7 @@
         <li class="chapter " data-level="1.1" data-path="chapter1/swift.html">
             
             <a href="../chapter1/swift.html">
-                <i class="fa fa-check"></i> <b>1.1.</b> 关于Swift
+                <i class="fa fa-check"></i> <b>1.1.</b> 关于 Swift
             </a>
             
             
@@ -143,7 +143,7 @@
         <li class="chapter " data-level="1.2" data-path="chapter1/a_swift_tour.html">
             
             <a href="../chapter1/a_swift_tour.html">
-                <i class="fa fa-check"></i> <b>1.2.</b> Swift初见
+                <i class="fa fa-check"></i> <b>1.2.</b> Swift 初见
             </a>
             
             
@@ -157,7 +157,7 @@
         <li class="chapter " data-level="2" data-path="chapter2/the_basics.html">
             
             <a href="../chapter2/the_basics.html">
-                <i class="fa fa-check"></i> <b>2.</b> Swift教程
+                <i class="fa fa-check"></i> <b>2.</b> Swift 教程
             </a>
             
             
@@ -200,13 +200,13 @@
     
         <a href="../index.html" title="Introduction" class="chapter done new-chapter" data-progress="0" style="left: 0%;"></a>
     
-        <a href="../chapter1/README.html" title="欢迎使用Swift" class="chapter done new-chapter" data-progress="1" style="left: 20%;"></a>
+        <a href="../chapter1/README.html" title="欢迎使用 Swift" class="chapter done new-chapter" data-progress="1" style="left: 20%;"></a>
     
-        <a href="../chapter1/swift.html" title="关于Swift" class="chapter done " data-progress="1.1" style="left: 40%;"></a>
+        <a href="../chapter1/swift.html" title="关于 Swift" class="chapter done " data-progress="1.1" style="left: 40%;"></a>
     
-        <a href="../chapter1/a_swift_tour.html" title="Swift初见" class="chapter done " data-progress="1.2" style="left: 60%;"></a>
+        <a href="../chapter1/a_swift_tour.html" title="Swift 初见" class="chapter done " data-progress="1.2" style="left: 60%;"></a>
     
-        <a href="../chapter2/the_basics.html" title="Swift教程" class="chapter done new-chapter" data-progress="2" style="left: 80%;"></a>
+        <a href="../chapter2/the_basics.html" title="Swift 教程" class="chapter done new-chapter" data-progress="2" style="left: 80%;"></a>
     
         <a href="../chapter2/article_1.html" title="基础部分" class="chapter done " data-progress="2.1" style="left: 100%;"></a>
     
@@ -215,15 +215,15 @@
 
                 <div class="page-inner">
                 
-                    <section class="normal" id="section-gitbook_10">
+                    <section class="normal" id="section-gitbook_144">
                     
                         <h1 id="-">基础部分</h1>
-<p>Swift是iOS和OS X应用开发的一门新语言。然而，如果你有C或者Objective-C开发经验的话，你会发现Swift的很多内容都是你熟悉的。</p>
-<p>Swift的类型是在C和Objective-C的基础上提出的，<code>Int</code>是整型；<code>Double</code>和<code>Float</code>是浮点型；<code>Bool</code>是布尔型；<code>String</code>是字符串。Swift还有两个有用的集合类型，<code>Array</code>和<code>Dictionary</code>，详情参见<code>集合类型(待添加链接)</code>。</p>
-<p>就像C语言一样，Swift使用变量来进行存储并通过变量名来关联值。在Swift中，值不可变的变量有着广泛的应用，它们就是常量，而且比C语言的常量更强大。在Swift中，如果你要处理的值不需要改变，那使用常量可以让你的代码更加安全并且更好地表达你的意图。</p>
-<p>除了我们熟悉的类型，Swift还增加了Objective-C中没有的类型比如元组（Tuple）。元组可以让你创建或者传递一组数据，比如作为函数的返回值时，你可以用一个元组可以返回多个值。</p>
-<p>Swift还增加了可选（Optional）类型，用于处理值缺失的情况。可选表示“那儿有一个值，并且它等于x”或者“那儿没有值”。可选有点像在Objective-C中使用<code>nil</code>，但是它可以用在任何类型上，不仅仅是类。可选类型比Objective-C中的<code>nil</code>指针更加安全也更具表现力，它是Swift许多强大特性的重要组成部分。</p>
-<p>Swift是一个类型安全的语言，可选就是一个很好的例子。Swift可以让你清楚地知道值的类型。如果你的代码期望得到一个<code>String</code>，类型安全会阻止你不小心传入一个<code>Int</code>。你可以在开发阶段尽早发现并修正错误。</p>
+<p>Swift 是 iOS 和 OS X 应用开发的一门新语言。然而，如果你有 C 或者 Objective-C 开发经验的话，你会发现 Swift 的很多内容都是你熟悉的。</p>
+<p>Swift 的类型是在 C 和 Objective-C 的基础上提出的，<code>Int</code>是整型；<code>Double</code>和<code>Float</code>是浮点型；<code>Bool</code>是布尔型；<code>String</code>是字符串。Swift 还有两个有用的集合类型，<code>Array</code>和<code>Dictionary</code>，详情参见<code>集合类型(待添加链接)</code>。</p>
+<p>就像 C 语言一样，Swift 使用变量来进行存储并通过变量名来关联值。在 Swift 中，值不可变的变量有着广泛的应用，它们就是常量，而且比 C 语言的常量更强大。在 Swift 中，如果你要处理的值不需要改变，那使用常量可以让你的代码更加安全并且更好地表达你的意图。</p>
+<p>除了我们熟悉的类型，Swift 还增加了 Objective-C 中没有的类型比如元组（Tuple）。元组可以让你创建或者传递一组数据，比如作为函数的返回值时，你可以用一个元组可以返回多个值。</p>
+<p>Swift 还增加了可选（Optional）类型，用于处理值缺失的情况。可选表示“那儿有一个值，并且它等于 x ”或者“那儿没有值”。可选有点像在 Objective-C 中使用<code>nil</code>，但是它可以用在任何类型上，不仅仅是类。可选类型比 Objective-C 中的<code>nil</code>指针更加安全也更具表现力，它是 Swift 许多强大特性的重要组成部分。</p>
+<p>Swift 是一个类型安全的语言，可选就是一个很好的例子。Swift 可以让你清楚地知道值的类型。如果你的代码期望得到一个<code>String</code>，类型安全会阻止你不小心传入一个<code>Int</code>。你可以在开发阶段尽早发现并修正错误。</p>
 <h2 id="-">常量和变量</h2>
 <p>常量和变量把一个名字（比如<code>maximumNumberOfLoginAttempts</code>或者<code>welcomeMessage</code>）和一个指定类型的值（比如数字<code>10</code>或者字符串<code>Hello</code>）联系起来。常量的值一旦设定就不能改变，而变量的值可以随意更改。</p>
 <h3 id="-">声明常量和变量</h3>
@@ -251,6 +251,7 @@ var currentLoginAttempt = 0
 <p>注意：一般来说你很少需要写类型标注。如果你在声明常量或者变量的时候赋了一个初始值，Swift可以推断出这个常量或者变量的类型，详情参见<code>类型安全和类型推断(待添加链接)</code>。在上面的例子中，没有给<code>welcomeMessage</code>赋初始值，所以添加了一个类型标注。</p>
 </blockquote>
 <h3 id="-">常量和变量的命名</h3>
+<p>（未完）</p>
 
                     
                     </section>
@@ -260,7 +261,7 @@ var currentLoginAttempt = 0
         </div>
 
         
-        <a href="../chapter2/the_basics.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page: Swift教程"><i class="fa fa-angle-left"></i></a>
+        <a href="../chapter2/the_basics.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page: Swift 教程"><i class="fa fa-angle-left"></i></a>
         
         
     </div>
