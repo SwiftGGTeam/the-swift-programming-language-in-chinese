@@ -44,7 +44,7 @@
 
 
         
-    <div class="book"  data-level="2.1" data-basepath=".." data-revision="1401851927231">
+    <div class="book"  data-level="2.1" data-basepath=".." data-revision="1401879002086">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -121,9 +121,9 @@
         </li>
         
     
-        <li class="chapter " data-level="1" data-path="swift/README.html">
+        <li class="chapter " data-level="1" data-path="chapter1/README.html">
             
-            <a href="../swift/README.html">
+            <a href="../chapter1/README.html">
                 <i class="fa fa-check"></i> <b>1.</b> 欢迎使用Swift
             </a>
             
@@ -131,18 +131,18 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="1.1" data-path="swift/swift.html">
+        <li class="chapter " data-level="1.1" data-path="chapter1/swift.html">
             
-            <a href="../swift/swift.html">
+            <a href="../chapter1/swift.html">
                 <i class="fa fa-check"></i> <b>1.1.</b> 关于Swift
             </a>
             
             
         </li>
     
-        <li class="chapter " data-level="1.2" data-path="a_swift_tour.html">
+        <li class="chapter " data-level="1.2" data-path="chapter1/a_swift_tour.html">
             
-            <a href="../a_swift_tour.html">
+            <a href="../chapter1/a_swift_tour.html">
                 <i class="fa fa-check"></i> <b>1.2.</b> Swift初见
             </a>
             
@@ -200,11 +200,11 @@
     
         <a href="../index.html" title="Introduction" class="chapter done new-chapter" data-progress="0" style="left: 0%;"></a>
     
-        <a href="../swift/README.html" title="欢迎使用Swift" class="chapter done new-chapter" data-progress="1" style="left: 20%;"></a>
+        <a href="../chapter1/README.html" title="欢迎使用Swift" class="chapter done new-chapter" data-progress="1" style="left: 20%;"></a>
     
-        <a href="../swift/swift.html" title="关于Swift" class="chapter done " data-progress="1.1" style="left: 40%;"></a>
+        <a href="../chapter1/swift.html" title="关于Swift" class="chapter done " data-progress="1.1" style="left: 40%;"></a>
     
-        <a href="../a_swift_tour.html" title="Swift初见" class="chapter done " data-progress="1.2" style="left: 60%;"></a>
+        <a href="../chapter1/a_swift_tour.html" title="Swift初见" class="chapter done " data-progress="1.2" style="left: 60%;"></a>
     
         <a href="../chapter2/the_basics.html" title="Swift教程" class="chapter done new-chapter" data-progress="2" style="left: 80%;"></a>
     
@@ -215,18 +215,42 @@
 
                 <div class="page-inner">
                 
-                    <section class="normal" id="section-gitbook_1204">
+                    <section class="normal" id="section-gitbook_10">
                     
                         <h1 id="-">基础部分</h1>
-<p>Swift是iOS和OS X应用开发的一门新雨燕。然而，如果你有C或者Objective-C开发经验的话，你会发现Swift的很多内容都是你熟悉的。</p>
-<p>Swift的类型是在C和Objective-C的基础上提出的，<code>Int</code>是整型；<code>Double</code>和<code>Float</code>是浮点型；<code>Bool</code>是布尔型；<code>String</code>是字符串。Swift还有两个有用的集合类型，<code>Array</code>和<code>Dictionary</code>，具体内容在<code>集合类型(待添加连接)</code>一章中。</p>
+<p>Swift是iOS和OS X应用开发的一门新语言。然而，如果你有C或者Objective-C开发经验的话，你会发现Swift的很多内容都是你熟悉的。</p>
+<p>Swift的类型是在C和Objective-C的基础上提出的，<code>Int</code>是整型；<code>Double</code>和<code>Float</code>是浮点型；<code>Bool</code>是布尔型；<code>String</code>是字符串。Swift还有两个有用的集合类型，<code>Array</code>和<code>Dictionary</code>，详情参见<code>集合类型(待添加链接)</code>。</p>
 <p>就像C语言一样，Swift使用变量来进行存储并通过变量名来关联值。在Swift中，值不可变的变量有着广泛的应用，它们就是常量，而且比C语言的常量更强大。在Swift中，如果你要处理的值不需要改变，那使用常量可以让你的代码更加安全并且更好地表达你的意图。</p>
 <p>除了我们熟悉的类型，Swift还增加了Objective-C中没有的类型比如元组（Tuple）。元组可以让你创建或者传递一组数据，比如作为函数的返回值时，你可以用一个元组可以返回多个值。</p>
 <p>Swift还增加了可选（Optional）类型，用于处理值缺失的情况。可选表示“那儿有一个值，并且它等于x”或者“那儿没有值”。可选有点像在Objective-C中使用<code>nil</code>，但是它可以用在任何类型上，不仅仅是类。可选类型比Objective-C中的<code>nil</code>指针更加安全也更具表现力，它是Swift许多强大特性的重要组成部分。</p>
 <p>Swift是一个类型安全的语言，可选就是一个很好的例子。Swift可以让你清楚地知道值的类型。如果你的代码期望得到一个<code>String</code>，类型安全会阻止你不小心传入一个<code>Int</code>。你可以在开发阶段尽早发现并修正错误。</p>
 <h2 id="-">常量和变量</h2>
 <p>常量和变量把一个名字（比如<code>maximumNumberOfLoginAttempts</code>或者<code>welcomeMessage</code>）和一个指定类型的值（比如数字<code>10</code>或者字符串<code>Hello</code>）联系起来。常量的值一旦设定就不能改变，而变量的值可以随意更改。</p>
-<p>（未完）</p>
+<h3 id="-">声明常量和变量</h3>
+<p>常量和变量必须在使用前声明，用<code>let</code>来声明常量，用<code>var</code>来声明变量。下面的例子展示了如何用常量和变量来记录用户尝试登录的次数：</p>
+<pre><code>let maximumNumberOfLoginAttempts = 10
+var currentLoginAttempt = 0
+</code></pre><p>这两行代码可以被理解为：</p>
+<p>“声明一个名字是<code>maximumNumberOfLoginAttempts</code>的新常量，并给它一个值<code>10</code>。然后，声明一个名字是<code>currentLoginAttempt</code>的变量并将它的值初始化为0.”</p>
+<p>在这个例子中，允许的最大尝试登录次数被声明为一个常量，因为这个值不会改变。当前尝试登录次数被声明为一个变量，因为每次尝试登录失败的时候都需要增加这个值。</p>
+<p>你可以在一行中声明多个常量或者多个变量，用逗号隔开：</p>
+<pre><code>var x = 0.0, y = 0.0, z = 0.0
+</code></pre><blockquote>
+<p>注意：如果你的代码中有不需要改变的值，最好将它声明为常量。只将需要改变的值声明为变量。</p>
+</blockquote>
+<h3 id="-">类型标注</h3>
+<p>当你声明常量或者变量的时候可以加上类型标注，说明常量或者变量中要存储的值的类型。如果要添加类型标注，在常量或者变量名后面加上一个冒号和空格，然后加上类型名称。</p>
+<p>这个例子给<code>welcomeMessage</code>变量添加了类型标注，表示这个变量可以存储<code>String</code>类型的值：</p>
+<pre><code>var welcomeMessage: String
+</code></pre><p>声明中的冒号代表着“是...类型”，所以这行代码可以被理解为：：</p>
+<p>“声明一个类型为<code>String</code>，名字为<code>welcomeMessage</code>的变量。”</p>
+<p>“类型为<code>String</code>”的意思是“可以存储任意<code>String</code>类型的值。”</p>
+<p><code>welcomeMessage</code>变量现在可以被设置成任意字符串：</p>
+<pre><code>welcomeMessage = &quot;Hello&quot;
+</code></pre><blockquote>
+<p>注意：一般来说你很少需要写类型标注。如果你在声明常量或者变量的时候赋了一个初始值，Swift可以推断出这个常量或者变量的类型，详情参见<code>类型安全和类型推断(待添加链接)</code>。在上面的例子中，没有给<code>welcomeMessage</code>赋初始值，所以添加了一个类型标注。</p>
+</blockquote>
+<h3 id="-">常量和变量的命名</h3>
 
                     
                     </section>

@@ -1,13 +1,13 @@
 CACHE MANIFEST
-# Revision 1401851927231
+# Revision 1401879002087
 
 CACHE:
 index.html
-a_swift_tour.html
+chapter1/README.html
+chapter1/a_swift_tour.html
+chapter1/swift.html
 chapter2/article_1.html
 chapter2/the_basics.html
-swift/README.html
-swift/swift.html
 gitbook/app.js
 gitbook/fonts/anonymouspro/400.woff
 gitbook/fonts/anonymouspro/400i.woff
