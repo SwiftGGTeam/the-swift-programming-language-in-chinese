@@ -134,7 +134,7 @@ println("unusualMenagerie has \(countElements(unusualMenagerie)) characters")
 >
 >另外需要注意的是通过 `countElements` 返回的字符数量并不总是与包含相同字符的 NSString 的 `length` 属性相同。NSString 的 `length` 属性是基于利用 UTF-16 表示的十六位代码单元数字，而不是基于 Unicode 字符。为了解决这个问题，NSString 的 `length` 属性在被 Swift的 **String** 访问时会成为 `utf16count`。
 
-### Concatenating Strings and Characters
+### 连接字符串和字符
 
 字符串和字符的值可以通过加法运算符 (+) 相加在一起并创建一个新的字符串值：
 
