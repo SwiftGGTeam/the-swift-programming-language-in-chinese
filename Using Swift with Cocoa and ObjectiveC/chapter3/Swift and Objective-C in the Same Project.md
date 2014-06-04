@@ -120,10 +120,7 @@ Swift 将会看到所有你在 `umbrella header` 中公开暴露出来的头文�
 
 这个 import 语句所包含的 Swift 文件都可以被同个框架 target 下的 Objc .m 源文件访问。关于在 Objc 代码中使用 Swift 代码，详见 [Using Swift from Objective-C](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/MixandMatch.html#//apple_ref/doc/uid/TP40014216-CH10-XID_84)。
 
-   | 导入到 Swift | 导入到 Objc  
----------- | ---------- | ----------
-Swift 代码 | 不需要import语句 | #import <ProductName/ProductModuleName-Swift.h>  
-Objc 代码 | 不需要import语句；需要 Objc `umbrella头文件` | #import "Header.h"
+(表格错误)
 
 
 ## Importing External Frameworks - 导入外部 Framework
