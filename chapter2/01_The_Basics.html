@@ -46,7 +46,7 @@
 
 
         
-    <div class="book"  data-level="2.1" data-basepath=".." data-revision="1401935155501">
+    <div class="book"  data-level="2.1" data-basepath=".." data-revision="1401943865087">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -576,7 +576,7 @@
 
                 <div class="page-inner">
                 
-                    <section class="normal" id="section-gitbook_9">
+                    <section class="normal" id="section-gitbook_8">
                     
                         <h1 id="-">基础部分</h1>
 <p>Swift 是 iOS 和 OS X 应用开发的一门新语言。然而，如果你有 C 或者 Objective-C 开发经验的话，你会发现 Swift 的很多内容都是你熟悉的。</p>
@@ -586,18 +586,19 @@
 <p>Swift 还增加了可选（Optional）类型，用于处理值缺失的情况。可选表示“那儿有一个值，并且它等于 x ”或者“那儿没有值”。可选有点像在 Objective-C 中使用<code>nil</code>，但是它可以用在任何类型上，不仅仅是类。可选类型比 Objective-C 中的<code>nil</code>指针更加安全也更具表现力，它是 Swift 许多强大特性的重要组成部分。</p>
 <p>Swift 是一个类型安全的语言，可选就是一个很好的例子。Swift 可以让你清楚地知道值的类型。如果你的代码期望得到一个<code>String</code>，类型安全会阻止你不小心传入一个<code>Int</code>。你可以在开发阶段尽早发现并修正错误。</p>
 <h2 id="-">常量和变量</h2>
-<p>常量和变量把一个名字（比如<code>maximumNumberOfLoginAttempts</code>或者<code>welcomeMessage</code>）和一个指定类型的值（比如数字<code>10</code>或者字符串<code>Hello</code>）联系起来。常量的值一旦设定就不能改变，而变量的值可以随意更改。</p>
+<p>常量和变量把一个名字（比如<code>maximumNumberOfLoginAttempts</code>或者<code>welcomeMessage</code>）和一个指定类型的值（比如数字<code>10</code>或者字符串<code>Hello</code>）关联起来。常量的值一旦设定就不能改变，而变量的值可以随意更改。</p>
 <h3 id="-">声明常量和变量</h3>
 <p>常量和变量必须在使用前声明，用<code>let</code>来声明常量，用<code>var</code>来声明变量。下面的例子展示了如何用常量和变量来记录用户尝试登录的次数：</p>
 <pre><code>let maximumNumberOfLoginAttempts = 10
 var currentLoginAttempt = 0
-</code></pre><p>这两行代码可以被理解为：</p>
-<p>“声明一个名字是<code>maximumNumberOfLoginAttempts</code>的新常量，并给它一个值<code>10</code>。然后，声明一个名字是<code>currentLoginAttempt</code>的变量并将它的值初始化为0.”</p>
+</code></pre><p>这两行代码可以被理解为
+：
+“声明一个名字是<code>maximumNumberOfLoginAttempts</code>的新常量，并给它一个值<code>10</code>。然后，声明一个名字是<code>currentLoginAttempt</code>的变量并将它的值初始化为0.”</p>
 <p>在这个例子中，允许的最大尝试登录次数被声明为一个常量，因为这个值不会改变。当前尝试登录次数被声明为一个变量，因为每次尝试登录失败的时候都需要增加这个值。</p>
 <p>你可以在一行中声明多个常量或者多个变量，用逗号隔开：</p>
 <pre><code>var x = 0.0, y = 0.0, z = 0.0
 </code></pre><blockquote>
-<p>注意：如果你的代码中有不需要改变的值，最好将它声明为常量。只将需要改变的值声明为变量。</p>
+<p>注意：如果你的代码中有不需要改变的值，请将它声明为常量。只将需要改变的值声明为变量。</p>
 </blockquote>
 <h3 id="-">类型标注</h3>
 <p>当你声明常量或者变量的时候可以加上类型标注，说明常量或者变量中要存储的值的类型。如果要添加类型标注，在常量或者变量名后面加上一个冒号和空格，然后加上类型名称。</p>
@@ -644,6 +645,18 @@ var currentLoginAttempt = 0
 </code></pre><blockquote>
 <p>注意：字符串插值所有可用的选项在 字符串插值 这章中讲述。</p>
 </blockquote>
+<h3 id="-">注释</h3>
+<p>请将你的代码中的非执行文本注释成提示或者笔记以方便你将来阅读。Swift 的编译器将会在编译代码时自动忽略掉注释部分。</p>
+<p>Swift 中的注释与C 语言的注释非常相似。单行注释以双正斜杠作(//)为起始标记:</p>
+<pre><code>// this is a comment
+</code></pre><p>你也可以进行多行注释，其起始标记为单个正斜杠后跟随一个星号(/<em>)，终止标记为一个星号后跟随单个正斜杠(\</em>/):</p>
+<pre><code>/* this is also a comment,
+but written over multiple lines */
+</code></pre><p>与C 语言多行注释不同的是，Swift 的多行注释可以嵌套在其它的多行注释之中。你可以先生成一个多行注释块，然后在这个注释块之中再嵌套成第二个多行注释。终止注释时先插入第二个注释块的终止标记，然后再插入第一个注释块的终止标记：</p>
+<pre><code>/* this is the start of the first multiline comment
+/* this is the second, nested multiline comment */
+this is the end of the first multiline comment */
+</code></pre><p>通过运用嵌套多行注释，你可以快速方便的注释掉一大段代码，即使这段代码之中已经含有了多行注释块。</p>
 
                     
                     </section>
