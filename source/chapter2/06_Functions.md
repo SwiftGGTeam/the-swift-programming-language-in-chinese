@@ -14,20 +14,20 @@ Swift统一的函数语法足够灵活，可以用来表示任何函数，包括
 
 在下面例子中的函数叫做`"greetingForPerson"`，之所以叫这个名字是因为这个函数用一个人的名字当做输入，并返回给这个人的问候语。为了完成这个任务，你定义一个输入参数-一个叫做`personName`的`String`值，和一个包含给这个人问候语的`String`类型的返回值：
 
-			func sayHello(personName: String) -> String {
-    			let greeting = "Hello, " + personName + "!"
-    			return greeting
-			}
+            func sayHello(personName: String) -> String {
+                let greeting = "Hello, " + personName + "!"
+                return greeting
+            }
 
 所有的这些信息汇总起来成为函数的定义，并以`func`作为前缀。指定函数返回类型时，用返回箭头`->`（一个连字符后跟一个右尖括号）后跟返回类型的名称的方式来表示。
 
 该定义描述了函数做什么，它期望接收什么和执行结束时它返回的结果是什么。这样的定义使的函数可以在别的地方以一种清晰的方式被调用：
 
-			println(sayHello("Anna"))
-			// prints "Hello, Anna!"
-			println(sayHello("Brian"))
-			// prints "Hello, Brian!
-			
+            println(sayHello("Anna"))
+            // prints "Hello, Anna!"
+            println(sayHello("Brian"))
+            // prints "Hello, Brian!
+            
 调用`sayHello`函数时，在圆括号中传给它一个`String`类型的实参。因为这个函数返回一个`String`类型的值，`sayHello`可以被包含在`println`的调用中，用来输出这个函数的返回值，正如上面所示。
 
 在`sayHello`的函数体中，先定义了一个新的名为`greeting`的`String`常量，同时赋值了给`personName`的一个简单问候消息。然后用`return`关键字把这个问候返回出去。一旦`return greeting`被调用，该函数结束它的执行并返回`greeting`的当前值。
@@ -36,10 +36,10 @@ Swift统一的函数语法足够灵活，可以用来表示任何函数，包括
 
 为了简化这个函数的定义，可以将问候消息的创建和返回写成一句：
 
-			func sayHelloAgain(personName: String) -> String {
-    			return "Hello again, " + personName + "!"
-			}
-			println(sayHelloAgain("Anna"))
-			// prints "Hello again, Anna!
+            func sayHelloAgain(personName: String) -> String {
+                return "Hello again, " + personName + "!"
+            }
+            println(sayHelloAgain("Anna"))
+            // prints "Hello again, Anna!
 
 ## 函数参数与返回值
