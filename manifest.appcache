@@ -1,11 +1,12 @@
 CACHE MANIFEST
-# Revision 1401979263304
+# Revision 1402008022545
 
 CACHE:
 index.html
 chapter1/01_swift.html
 chapter1/02_a_swift_tour.html
 chapter1/chapter1.html
+chapter2/13_Inheritance.html
 chapter2/01_The_Basics.html
 chapter2/03_Strings_and_Characters.html
 chapter2/04_Collection_Types.html
@@ -39,7 +40,6 @@ chapter3/07_Patterns.html
 chapter3/08_Generic_Parameters_and_Arguments.html
 chapter3/09_Summary_of_the_Grammar.html
 chapter3/chapter3.html
-chapter2/13_Inheritance.html
 gitbook/app.js
 gitbook/fonts/anonymouspro/400.woff
 gitbook/fonts/anonymouspro/400i.woff
