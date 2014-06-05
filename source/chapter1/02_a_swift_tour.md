@@ -200,7 +200,7 @@
 
     func returnFifteen() -> Int {
         var y = 10
-            func add() {
+        func add() {
             y += 5
         }
         add()
@@ -345,7 +345,7 @@
     triangle.perimeter = 9.9
     triangle.sideLength
 
-在`perimeter`的 setter 中，新值的名字是`newValue`。你可以在`set`之后显示的设置一个名字。
+在`perimeter`的 setter 中，新值的名字是`newValue`。你可以在`set`之后显式的设置一个名字。
 
 注意`EquilateralTriangle`类的构造器执行了三步：
 

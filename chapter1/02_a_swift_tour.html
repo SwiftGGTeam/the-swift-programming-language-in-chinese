@@ -743,7 +743,7 @@ sumOf(42, 597, 12)
 <p>函数可以嵌套。被嵌套的函数可以访问外侧函数的变量，你可以使用嵌套函数来重构一个太长或者太复杂的函数。</p>
 <pre><code>func returnFifteen() -&gt; Int {
     var y = 10
-        func add() {
+    func add() {
         y += 5
     }
     add()
@@ -867,7 +867,7 @@ var triangle = EquilateralTriangle(sideLength: 3.1, name: &quot;a triangle&quot;
 triangle.perimeter
 triangle.perimeter = 9.9
 triangle.sideLength
-</code></pre><p>在<code>perimeter</code>的 setter 中，新值的名字是<code>newValue</code>。你可以在<code>set</code>之后显示的设置一个名字。</p>
+</code></pre><p>在<code>perimeter</code>的 setter 中，新值的名字是<code>newValue</code>。你可以在<code>set</code>之后显式的设置一个名字。</p>
 <p>注意<code>EquilateralTriangle</code>类的构造器执行了三步：</p>
 <ol>
 <li>设置子类声明的属性值</li>
