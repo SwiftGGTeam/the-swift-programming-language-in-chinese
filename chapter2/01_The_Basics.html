@@ -46,7 +46,7 @@
 
 
         
-    <div class="book"  data-level="2.1" data-basepath=".." data-revision="1401951667606">
+    <div class="book"  data-level="2.1" data-basepath=".." data-revision="1401953615319">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -576,7 +576,7 @@
 
                 <div class="page-inner">
                 
-                    <section class="normal" id="section-gitbook_9">
+                    <section class="normal" id="section-gitbook_1371">
                     
                         <h1 id="-">基础部分</h1>
 <p>Swift 是 iOS 和 OS X 应用开发的一门新语言。然而，如果你有 C 或者 Objective-C 开发经验的话，你会发现 Swift 的很多内容都是你熟悉的。</p>
@@ -661,7 +661,41 @@ this is the end of the first multiline comment */
 <p>与其他大部分编程语言不同，Swift 并不强制要求你在每条语句的结尾处使用分号(;)，当然，你也可以按照你自己的习惯添加分号。有一种情况下必须要用分号，即你打算在同一行内写多条独立的语句:</p>
 <pre><code>let cat = &quot;🐱&quot;; println(cat)
 // prints &quot;🐱&quot;
-</code></pre>
+</code></pre><h2 id="-">整数</h2>
+<p>整数就是没有小数部分的数字，比如<code>42</code>和<code>23</code>。整数分有符号（正、负、零）或者无符号（正、零）两种。</p>
+<p>Swift 提供了8、16、32和64位的有符号和无符号整数。这些整数和 C 的命名习惯很像，比如8位无符号整数类型是<code>UInt8</code>，32位有符号整数类型是<code>Int32</code>。就像 Swift 的其他类型一样，这些整数类型的名字使用大写字母来命名。</p>
+<h3 id="-">整数范围</h3>
+<p>你可以访问每个整数类型的<code>min</code>和<code>max</code>属性来获取这个类型的最小值和最大值：</p>
+<pre><code>let minValue = UInt8.min  // UInt8 类型的 minValue 等于0
+let maxValue = UInt8.max  // UInt8 类型的 maxValue 等于255
+</code></pre><p>这两个值的类型和右侧的整数类型是相同的（比如例子中的<code>UInt8</code>），因此你可以在表达式中把它们和同类型的值一同使用。</p>
+<h3 id="int">Int</h3>
+<p>大多数情况下，你并不需要指定整数长度。Swift 提供了一个特别的整数类型<code>Int</code>，这个类型的长度和当前平台的原生字长一样：</p>
+<ul>
+<li>在32位平台上，<code>Int</code>和<code>Int32</code>长度相同</li>
+<li>在64位平台上，<code>Int</code>和<code>Int64</code>长度相同</li>
+</ul>
+<p>一般来说，最好使用<code>Int</code>类型，除非你需要指定整数长度。这可以保证代码的一致性和可复用性。即使在32位平台上，<code>Int</code>也可以存储范围为<code>-2147483648</code>~<code>2147483647</code>的整数，大多数时候这已经够用了。</p>
+<h3 id="uint">Uint</h3>
+<p>Swift 还提供了一个无符号整数类型<code>UInt</code>，这个类型的长度和当前平台的原生字长一样：</p>
+<ul>
+<li>在32位平台上，<code>UInt</code>和<code>UInt32</code>长度相同</li>
+<li>在64位平台上，<code>UInt</code>和<code>UInt64</code>长度相同</li>
+</ul>
+<blockquote>
+<p>注意：只在你需要使用无符号整数类型并且长度和平台原生字长相同的时候才使用<code>Uint</code>。如果不是这种情况，最好使用<code>Int</code>，即使要存储的值已知是非负数。使用<code>Int</code>可以保证代码的可复用性，避免不同类型之间的转换，并且符合整数类型推测，详情请见<code>类型安全和类型推测(待添加链接)</code>。</p>
+</blockquote>
+<h2 id="-">浮点数</h2>
+<p>浮点数是有小数部分的数字，比如<code>3.14159</code>，<code>0.1</code>和<code>-273.15</code>。</p>
+<p>浮点类型可以表示的数字范围比整数类型要大，因此可以存储比<code>Int</code>类型更大或者更小的数字。Swift 提供了两种有符号浮点数类型：</p>
+<ul>
+<li><code>Double</code>表示64位浮点数。当浮点值非常大或者需要非常准确的时候使用此类型。</li>
+<li><code>Float</code>表示32位浮点数。当浮点值不需要使用<code>Double</code>的时候使用此类型。</li>
+</ul>
+<blockquote>
+<p>注意：<code>Double</code>的准确程度是至少15个十进制数字，而<code>Float</code>的准确程度是至少6个十进制数字。到底选择哪个浮点类型取决于你要存储的值。</p>
+</blockquote>
+
                     
                     </section>
                 
