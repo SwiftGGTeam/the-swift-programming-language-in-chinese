@@ -14,7 +14,7 @@ Swift 是一个类型安全的语言，可选就是一个很好的例子。Swift
 
 ## 常量和变量
 
-常量和变量把一个名字（比如`maximumNumberOfLoginAttempts`或者`welcomeMessage`）和一个指定类型的值（比如数字`10`或者字符串`Hello`）联系起来。常量的值一旦设定就不能改变，而变量的值可以随意更改。
+常量和变量把一个名字（比如`maximumNumberOfLoginAttempts`或者`welcomeMessage`）和一个指定类型的值（比如数字`10`或者字符串`Hello`）关联起来。常量的值一旦设定就不能改变，而变量的值可以随意更改。
 
 ### 声明常量和变量
 
@@ -23,8 +23,8 @@ Swift 是一个类型安全的语言，可选就是一个很好的例子。Swift
     let maximumNumberOfLoginAttempts = 10
     var currentLoginAttempt = 0
 
-这两行代码可以被理解为：
-
+这两行代码可以被理解为
+：
 “声明一个名字是`maximumNumberOfLoginAttempts`的新常量，并给它一个值`10`。然后，声明一个名字是`currentLoginAttempt`的变量并将它的值初始化为0.”
 
 在这个例子中，允许的最大尝试登录次数被声明为一个常量，因为这个值不会改变。当前尝试登录次数被声明为一个变量，因为每次尝试登录失败的时候都需要增加这个值。
@@ -33,7 +33,7 @@ Swift 是一个类型安全的语言，可选就是一个很好的例子。Swift
 
     var x = 0.0, y = 0.0, z = 0.0
 
-> 注意：如果你的代码中有不需要改变的值，最好将它声明为常量。只将需要改变的值声明为变量。
+> 注意：如果你的代码中有不需要改变的值，请将它声明为常量。只将需要改变的值声明为变量。
 
 ### 类型标注
 
@@ -103,3 +103,24 @@ Swift用字符串插值（string interpolation）的方式把常量名或者变�
         // prints "The current value of friendlyWelcome is Bonjour!
         
 > 注意：字符串插值所有可用的选项在 字符串插值 这章中讲述。
+
+### 注释
+请将你的代码中的非执行文本注释成提示或者笔记以方便你将来阅读。Swift 的编译器将会在编译代码时自动忽略掉注释部分。
+
+Swift 中的注释与C 语言的注释非常相似。单行注释以双正斜杠作(//)为起始标记:
+
+	// this is a comment
+
+你也可以进行多行注释，其起始标记为单个正斜杠后跟随一个星号(/*)，终止标记为一个星号后跟随单个正斜杠(\*/):
+
+	/* this is also a comment,
+	but written over multiple lines */
+	
+与C 语言多行注释不同的是，Swift 的多行注释可以嵌套在其它的多行注释之中。你可以先生成一个多行注释块，然后在这个注释块之中再嵌套成第二个多行注释。终止注释时先插入第二个注释块的终止标记，然后再插入第一个注释块的终止标记：
+	
+	/* this is the start of the first multiline comment
+	/* this is the second, nested multiline comment */
+	this is the end of the first multiline comment */
+
+通过运用嵌套多行注释，你可以快速方便的注释掉一大段代码，即使这段代码之中已经含有了多行注释块。
+
