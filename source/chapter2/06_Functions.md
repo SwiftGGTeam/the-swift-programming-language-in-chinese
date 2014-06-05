@@ -51,3 +51,109 @@ Swift统一的函数语法足够灵活，可以用来表示任何函数，包括
             // prints "Hello again, Anna!
 
 ## 函数参数与返回值
+
+函数参数与返回值在Swift中极为灵活。你可以定义任何类型的函数，包括从只带一个未名参数的简单函数到复杂的带有表达性参数名和不同参数选项的复杂函数。
+
+### 多重输入参数
+
+函数可以有多个输入参数，写在圆括号中，用逗号分隔。
+
+下面这个函数用一个半开区间的开始点和结束点，计算出这个范围内包含多少数字：
+
+			func halfOpenRangeLength(start: Int, end: Int) -> Int {
+    			return end - start
+			}
+			println(halfOpenRangeLength(1, 10))
+			// prints "9
+			
+### 无参函数
+
+函数可以没有参数。下面这个函数就是一个无参函数，当被调用时，它返回固定的`String`消息：
+
+			func sayHelloWorld() -> String {
+  			  return "hello, world"
+			}
+			println(sayHelloWorld())
+			// prints "hello, world
+
+尽管这个函数没有参数，但是定义中在函数名后还是需要一对圆括号。当被调用时，也需要在函数名后写一对圆括号。
+
+### 无返回值函数
+
+函数可以没有返回值。下面是`sayHello`函数的另一个版本，叫`waveGoodbye`，这个函数直接输出`String`值，而不是返回它：
+
+			func sayGoodbye(personName: String) {
+    			println("Goodbye, \(personName)!")
+			}
+			sayGoodbye("Dave")
+			// prints "Goodbye, Dave!
+
+因为这个函数不需要返回值，所以这个函数的定义中没有返回箭头（->）和返回类型。
+
+> 注意：
+> 严格上来说，虽然没有返回值被定义，`sayGoodbye`函数依然返回了值。没有定义返回类型的函数会返回特殊的值，叫`Void`。它其实是一个空的元组（tuple），没有任何元素，可以写成`()`。
+
+被调用时，一个函数的返回值可以被忽略：
+
+			func printAndCount(stringToPrint: String) -> Int {
+    			println(stringToPrint)
+    			return countElements(stringToPrint)
+			}
+			func printWithoutCounting(stringToPrint: String) {
+    			printAndCount(stringToPrint)
+			}
+			printAndCount("hello, world")
+			// prints "hello, world" and returns a value of 12
+			printWithoutCounting("hello, world")
+			// prints "hello, world" but does not return a value
+			
+第一个函数`printAndCount`，输出一个字符串并返回`Int`类型的字符数。第二个函数`printWithoutCounting`调用了第一个函数，但是忽略了它的返回值。当第二个函数被调用时，消息依然会由第一个函数输出，但是返回值不会被用到。
+
+> 注意：
+> 返回值可以被忽略，但定义了有返回值的函数必须返回一个值，如果在函数定义底部没有返回任何值，这叫导致编译错误（compile-time error）。
+
+### 多重返回值函数
+
+你可以用元组（tuple）类型让多个值作为一个复合值从函数中返回。
+
+下面的这个例子中，`count`函数用来计算一个字符串中元音，辅音和其他字母的个数（基于美式英语的标准）。
+
+			func count(string: String) -> (vowels: Int, consonants: Int, others: Int) {
+    			var vowels = 0, consonants = 0, others = 0
+    			for character in string {
+        			switch String(character).lowercaseString {
+        			case "a", "e", "i", "o", "u":
+           				++vowels
+        			case "b", "c", "d", "f", "g", "h", "j", "k", "l", "m",
+        			"n", "p", "q", "r", "s", "t", "v", "w", "x", "y", "z":
+            			++consonants
+        			default:
+            			++others
+        			}
+    			}
+    			return (vowels, consonants, others)
+			}
+			
+你可以用`count`函数来处理任何一个字符串，返回的值将是一个包含三个`Int`型值的元组（tuple）：
+
+			let total = count("some arbitrary string!")
+			println("\(total.vowels) vowels and \(total.consonants) consonants")
+			// prints "6 vowels and 13 consonants
+			
+需要注意的是，元组的成员不需要在函数中返回时命名，因为它们的名字已经在函数返回类型有有了定义。
+
+## 函数参数名
+
+以上所有的函数都给它们的参数定义了`参数名（parameter name）`：
+
+			func someFunction(parameterName: Int) {
+    			// function body goes here, and can use parameterName
+    			// to refer to the argument value for that parameter
+			}
+
+但是，这些参数名仅在函数体中使用，不能在函数调用时使用。这种类型的参数名被称作`本地参数名（local parameter name）`，因为它们只能在函数体中使用。
+
+### 外部参数名
+
+有时候，调用函数时，给每个参数命名是非常有用的，因为这些参数名可以指出各个实参的用途是什么。
+
