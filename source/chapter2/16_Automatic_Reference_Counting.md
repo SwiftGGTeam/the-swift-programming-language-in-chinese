@@ -25,6 +25,46 @@ Swift使用自动引用计数(ARC)这一机制来跟踪和管理你的应用程�
 
 为了使之成为可能，无论你将类实例赋值给属性，常量或者是变量，属性，常量或者变量，都会对此实例创建强引用。之所以称之为强引用，是因为它会将实例牢牢的保持住，只要强引用还在，实例是不允许被释放的。
 
-## 自动引用计数实践
+## 自动引用计数实战
 
+下面的例子展示了自动引用计数的工作机制。例子以一个简单的Person类开始，并定义了一个叫name的常量属性：
+
+		class Person {
+    		let name: String
+
+				init(name: String) {
+        		self.name = name
+        		println("\(name) is being initialized")
+    		}
+    		
+				deinit {
+        		println("\(name) is being deinitialized")
+    		}
+		}
+
+Person类有一个构造函数，此构造函数为实例的name属性赋值并打印出信息，以表明初始化过程生效。Person类同时也拥有析构函数，同样会在类实例被回收的时候打印出信息。
+
+接下来的代码片段定义了三个类型为Person?的变量，用来按照代码片段中的顺序，为新的Person类实例建立多个引用。由于这些变量是被定义为可选类型(Person?，而不是Person)，它们的值会被自动初始化为nil，目前还不会引用到Person类的实例。
+
+		var reference1: Person?
+		var reference2: Person?
+		var reference3: Person?
+
+现在你可以创建Person类的新实例，并且将它赋值给三个变量其中的一个：
+
+		reference1 = Person(name: "John Appleseed")
+		// prints "John Appleseed is being initialized”
+
+应当注意到当你调用Person类的构造函数的时候，"John Appleseed is being initialized”会被打印出来。由此可以确定构造函数被执行。
+
+由于Person类的新实例被赋值给了reference1变量，所以reference1到Person类的新实例之间建立了一个强引用。正是因为这个强引用，ARC会保证Person实例被保持在内存中不被回收。
+
+如果你将同样的Person类实例也赋值给其他两个变量，该实例又会多出两个强引用：
+
+		reference2 = reference1
+		reference3 = reference1
+
+现在这个Person类实例已经有三个强引用了。
+
+(未完待续)
 
