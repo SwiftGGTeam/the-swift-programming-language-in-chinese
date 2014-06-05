@@ -117,6 +117,18 @@ reversed = sort(names, { $0 > $1 } )
 
 在这个例子中，`$0` 和 `$1` 表示闭包中第一个和第二个 **String** 类型的参数。
 
+##### 运算符函数
+
+实际上还有一种更简短的方式来撰写上面例子中的闭包表达式。Swift 的 **String** 类型定义了关于大于号 (>) 的字符串实现，其作为一个函数接受两个 **String** 类型的参数并返回 **Bool** 类型的值。而这正好与 `sort` 函数的第二个参数需要的函数类型相符合。因此，您可以简单地传递一个大于号，Swift可以自动推断出您想使用大于号的字符串函数实现：
+
+```
+reversed = sort(names, >)
+```
+
+更多关于运算符表达式的内容请查看 [Operator Functions](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/AdvancedOperators.html#//apple_ref/doc/uid/TP40014097-CH27-XID_43) 。
+
+
+
 
 
 
