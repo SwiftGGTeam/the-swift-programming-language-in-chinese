@@ -47,3 +47,38 @@ rangeOfFourItems.firstValue = 6
 属于*引用类型*的类（class）则不一样，把一个引用类型的实例赋给一个常量后，仍然可以修改实例的变量属性。
 
 ### 延迟存储属性
+
+延迟存储属性是指当第一次被调用的时候才有初始值的属性。在属性声明前使用`@lazy`特性来表示一个延迟存储属性。
+
+> 注意
+> 
+> 必须将延迟存储属性声明成变量（使用`var`关键字），因为可能在实例构造完成之前属性的值无法得到。常量属性在构造过程完成之前必须要有初始值，因此无法声明成延迟属性。
+
+延迟属性很有用，当属性的值依赖于在实例的构造过程结束前无法知道具体值的外部因素时，或者当属性的值需要复杂或大量计算时，可以只在需要的时候来计算它。
+
+下面复合类的例子使用了延迟存储属性来避免不必要的初始化。例子中定义了`DataImporter`和`DataManager`两个类，下面是部分代码：
+
+```
+class DataImporter {
+    /*
+    DataImporter is a class to import data from an external file.
+    The class is assumed to take a non-trivial amount of time to initialize.
+    */
+    var fileName = "data.txt"
+    // the DataImporter class would provide data importing functionality here
+}
+ 
+class DataManager {
+    @lazy var importer = DataImporter()
+    var data = String[]()
+    // the DataManager class would provide data management functionality here
+}
+ 
+let manager = DataManager()
+manager.data += "Some data"
+manager.data += "Some more data"
+// the DataImporter instance for the importer property has not yet been created
+
+```
+
+
