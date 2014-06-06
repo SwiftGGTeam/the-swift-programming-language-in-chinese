@@ -636,7 +636,7 @@ constantString += &quot; and another Highlander&quot;
 <p>Swift 的 <strong>String</strong> 类型是值类型。如果您创建了一个新的字符串，那么当其进行常量、变量赋值操作或在函数/方法中传递时，会进行值拷贝。任何情况下，都会对已有字符串值创建新副本，并对该新副本进行传递或赋值。值类型在 <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/ClassesAndStructures.html#//apple_ref/doc/uid/TP40014097-CH13-XID_104" target="_blank">Structures and Enumerations Are Value Types</a> 中进行了说明。</p>
 <blockquote>
 <p>注意：</p>
-<p>其 Cocoa 中的 NSString 不同，当您在 Cocoa 中创建了一个 NSString 实例，并将其传递给一个函数/方法，或者赋值给一个变量，您永远都是传递或赋值同一个 NSString 实例的一个引用。除非您特别要求其进行值拷贝，否则字符串不会进行赋值新副本操作。</p>
+<p>与 Cocoa 中的 NSString 不同，当您在 Cocoa 中创建了一个 NSString 实例，并将其传递给一个函数/方法，或者赋值给一个变量，您永远都是传递或赋值同一个 NSString 实例的一个引用。除非您特别要求其进行值拷贝，否则字符串不会进行赋值新副本操作。</p>
 </blockquote>
 <p>Swift 默认字符串拷贝的方式保证了在函数/方法中传递的是字符串的值，其明确了无论该值来自于哪里，都是您独自拥有的。您可以放心您传递的字符串本身不会被更改。</p>
 <p>在实际编译时，Swift编译器会优化字符串的使用，使实际的复制只发生在绝对必要的情况下，这意味着您始终可以将字符串作为值类型的同时获得极高的性能。</p>
@@ -743,7 +743,7 @@ let whispered = normal.lowercaseString
 <p>Unicode 是文本编码和表示的国际标准。它使您可以用标准格式表示来自任意语言几乎所有的字符，并能够对文本文件或网页这样的外部资源中的字符进行读写操作。</p>
 <p>Swift 的字符串和字符类型是完全兼容 Unicode 的，它支持如下所述的一系列不同的 Unicode 编码。</p>
 <h6 id="unicode-terminology-">Unicode 术语(Terminology)</h6>
-<p>Unicode 中每一个字符都可以被解释为一个或多个 unicode 标量。字符的 unicode 标量是一个唯一的21位数字(和名称)，例如 <code>U+0061</code> 表示小写的拉丁字母A (&quot;a&quot;)，<code>U+1F425</code> 表示正面站立的鸡宝宝 (&quot;🐥&quot;)</p>
+<p>Unicode 中每一个字符都可以被解释为一个或多个 unicode 标量。字符的 unicode 标量是一个唯一的21位数字(和名称)，例如 <code>U+0061</code> 表示小写的拉丁字母A (&quot;a&quot;)，<code>U+1F425</code> 表示 (&quot;🐥&quot;)</p>
 <p>当 Unicode 字符串被写进文本文件或其他存储结构当中，这些 unicode 标量将会按照 Unicode 定义的集中格式之一进行编码。其包括 <code>UTF-8</code> (以8位代码单元进行编码) 和 <code>UTF-16</code> (以16位代码单元进行编码)。</p>
 <h5 id="-unicode-">字符串的 Unicode 表示</h5>
 <p>Swift 提供了几种不同的方式来访问字符串的 Unicode 表示。</p>
