@@ -18,14 +18,14 @@
    * 关于 Swift(完成 By numbbbbb)
    * Swift 初见(完成 By numbbbbb)
 * Swift 教程
-   * 基础部分(翻译中)
+   * 基础部分(完成 By numbbbbb, lyuka, JaySurplus)
    * 基本操作符(@xielingwang 认领)
    * 字符串和字符(完成 By @wh1100717)
    * 集合类型(@WilliamZang 认领)
    * 控制流(@vclwei 认领)
    * 函数(@honghaoz 认领)
    * 闭包(完成 By @wh1100717)
-   * 枚举
+   * 枚举(@yankuangshi 认领)
    * 类和结构体(@JaySurplus 认领)
    * 属性(@shinyzhu 认领)
    * 方法(@pp-prog 认领)
@@ -45,7 +45,7 @@
    * 关于语言参考(完成 By @ChildhoodAndy)
    * 词法结构
    * 类型
-   * 表达式
+   * 表达式(@sg552 认领)
    * 声明
    * 属性
    * 模式
