@@ -337,8 +337,21 @@ incrementByTen()
 > 如果您闭包分配给一个类实力的属性，并且该闭包通过指向该实例或其成员来捕获了该实例，您将创建一个在闭包和实例间的强引用圈。
 > Swift 使用捕获列表来打破这种强引用圈。更多信息，请参考 [Strong Reference Cycles for Closures](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/AutomaticReferenceCounting.html#//apple_ref/doc/uid/TP40014097-CH20-XID_61)。
 
+### 闭包是引用类型
 
+上面的例子中，`incrementBySeven` 和 `incrementByTen` 是常量，但是这些常量指向的闭包仍然可以增加其捕获的变量值。
+这是因为函数和闭包都是引用类型。
 
+无论您将函数/闭包赋值一个常量还是变量，您实际上都是将产量常量/变量值设置为对应函数/闭包的引用。
+上面的例子中，`incrementByTen` 指向闭包的引用是一个常量，而并非闭包内容本身。
+
+这也意味着如果您将闭包赋值给了两个不同的常量/变量，两个值都指向了同一个闭包：
+
+```
+let alsoIncrementByTen = incrementByTen
+alsoIncrementByTen()
+// 返回的值为50
+```
 
 
 
