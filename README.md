@@ -3,6 +3,8 @@
 
 中文版Apple官方Swift教程《The Swift Programming Language》
 
+中文Swift社区[Swiftist](http://swiftist.org/)，新社区，正在建设中，感兴趣的朋友可以一起参与进来。
+
 # 在线阅读
 
 使用Gitbook制作，可以直接[在线阅读](http://numbbbbb.github.io/the-swift-programming-language-in-chinese/)。
@@ -10,37 +12,37 @@
 
 # 翻译进度
 
-> 说明：翻译中表示只完成了一部分，你可以接着翻译剩下的部分。不过要及时pr，避免两个人重复翻译同一部分。
+> 说明：翻译之前请先到PR列表中查看别人认领的内容，尽量不要重复，谢谢！
 
 * 欢迎使用 Swift
-   * 关于 Swift(完成)
-   * Swift 初见(完成)
+   * 关于 Swift(完成 By numbbbbb)
+   * Swift 初见(完成 By numbbbbb)
 * Swift 教程
    * 基础部分(翻译中)
-   * 基本操作符
-   * 字符串和字符(完成)
-   * 集合类型
-   * 控制流
-   * 函数(翻译中)
-   * 闭包
+   * 基本操作符(@xielingwang 认领)
+   * 字符串和字符(完成 By @wh1100717)
+   * 集合类型(@WilliamZang 认领)
+   * 控制流(@vclwei 认领)
+   * 函数(@honghaoz 认领)
+   * 闭包(完成 By @wh1100717)
    * 枚举
-   * 类和结构体
-   * 属性
-   * 方法
-   * 下标
+   * 类和结构体(@JaySurplus 认领)
+   * 属性(@shinyzhu 认领)
+   * 方法(@pp-prog 认领)
+   * 下标(@siemenliu 认领)
    * 继承
-   * 构造函数
-   * 析构函数
-   * 自动引用计数
-   * 可选链
+   * 构造过程(@lifedim 认领)
+   * 析构过程(认领)
+   * 自动引用计数(@TimothyYe 认领)
+   * 可选链(认领)
    * 类型检查
-   * 嵌套类型
+   * 嵌套类型(完成 By @Lin-H)
    * 扩展
    * 接口
    * 泛型
    * 高级操作符
 * 语言参考
-   * 关于语言参考
+   * 关于语言参考(完成 By @ChildhoodAndy)
    * 词法结构
    * 类型
    * 表达式

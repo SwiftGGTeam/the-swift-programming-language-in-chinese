@@ -46,7 +46,7 @@
 
 
         
-    <div class="book"  data-level="2.19" data-basepath=".." data-revision="1401953615319">
+    <div class="book"  data-level="2.19" data-basepath=".." data-revision="1402043894290">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -575,6 +575,69 @@
 </div>
 
                 <div class="page-inner">
+                
+                    <section class="normal" id="section-gitbook_3744">
+                    
+                        <h1 id="-">类型嵌套</h1>
+<p>枚举类型常被用于实现特定类或结构体的功能。也能够在有多种变量类型的环境中，方便地定义通用类或结构体来使用，为了实现这种功能，Swift允许你定义类型嵌套，可以在枚举类型、类和结构体中定义支持嵌套的类型。</p>
+<p>要在一个类型中嵌套另一个类型，将需要嵌套的类型的定义写在被嵌套类型的区域{}内，而且可以根据需要定义多级嵌套。</p>
+<h2 id="-">类型嵌套实例</h2>
+<p>下面这个例子定义了一个结构体<code>BlackjackCard</code>(二十一点)，用来模拟<code>BlackjackCard</code>中的扑克牌点数。<code>BlackjackCard</code>结构体包含2个嵌套定义的枚举类型<code>Suit</code> 和 <code>Rank</code>。</p>
+<p>在<code>BlackjackCard</code>规则中，<code>Ace</code>牌可以表示1或者11，<code>Ace</code>牌的这一特征用一个嵌套在枚举型<code>Rank</code>的结构体<code>Values</code>来表示。</p>
+<pre><code>struct BlackjackCard {
+    // 嵌套定义枚举型Suit
+    enum Suit: Character {
+       case Spades = &quot;♠&quot;, Hearts = &quot;♡&quot;, Diamonds = &quot;♢&quot;, Clubs = &quot;♣&quot;
+   }
+    // 嵌套定义枚举型Rank
+    enum Rank: Int {
+       case Two = 2, Three, Four, Five, Six, Seven, Eight, Nine, Ten
+       case Jack, Queen, King, Ace
+       struct Values {
+           let first: Int, second: Int?
+       }
+       var values: Values {
+        switch self {
+        case .Ace:
+            return Values(first: 1, second: 11)
+        case .Jack, .Queen, .King:
+            return Values(first: 10, second: nil)
+        default:
+            return Values(first: self.toRaw(), second: nil)
+            }
+       }
+    }
+    // BlackjackCard 的属性和方法
+    let rank: Rank, suit: Suit
+    var description: String {
+    var output = &quot;suit is \(suit.toRaw()),&quot;
+        output += &quot; value is \(rank.values.first)&quot;
+        if let second = rank.values.second {
+            output += &quot; or \(second)&quot;
+        }
+        return output
+    }
+}
+</code></pre><p>枚举型的<code>Suit</code>用来描述扑克牌的四种花色，并分别用一个<code>Character</code>类型的值代表花色符号。</p>
+<p>枚举型的<code>Rank</code>用来描述扑克牌从<code>Ace</code>~10,<code>J</code>,<code>Q</code>,<code>K</code>,13张牌，并分别用一个<code>Int</code>类型的值表示牌的面值。(这个<code>Int</code>类型的值不适用于<code>Ace</code>,<code>J</code>,<code>Q</code>,<code>K</code>的牌)。</p>
+<p>如上文所提到的，枚举型<code>Rank</code>在自己内部定义了一个嵌套结构体<code>Values</code>。这个结构体包含两个变量，只有<code>Ace</code>有两个数值，其余牌都只有一个数值。结构体<code>Values</code>中定义的两个属性：</p>
+<p><code>first</code>, 为<code>Int</code>
+<code>second</code>, 为 <code>Int?</code>, 或 “optional <code>Int</code>”</p>
+<p><code>Rank</code>定义了一个计算属性<code>values</code>，这个计算属性会根据牌的面值，用适当的数值去初始化<code>Values</code>实例，并赋值给<code>values</code>。对于<code>J</code>,<code>Q</code>,<code>K</code>,<code>Ace</code>会使用特殊数值，对于数字面值的牌使用<code>Int</code>类型的值。</p>
+<p><code>BlackjackCard</code>结构体自身有两个属性—<code>rank</code>与<code>suit</code>，也同样定义了一个计算属性<code>description</code>，<code>description</code>属性用<code>rank</code>和<code>suit</code>的中内容来构建对这张扑克牌名字和数值的描述，并用可选类型<code>second</code>来检查是否存在第二个值，若存在，则在原有的描述中增加对第二数值的描述。</p>
+<p>因为<code>BlackjackCard</code>是一个没有自定义构造函数的结构体，在<a href="https://github.com/CocoaChina-editors/Welcome-to-Swift/blob/master/The%20Swift%20Programming%20Language/02Language%20Guide/14Initialization.md" target="_blank">Memberwise Initializers for Structure Types</a>中知道结构体有默认的成员构造函数，所以你可以用默认的<code>initializer</code>去初始化新的常量<code>theAceOfSpades</code>:</p>
+<pre><code>let theAceOfSpades = BlackjackCard(rank: .Ace, suit: .Spades)
+println(&quot;theAceOfSpades: \(theAceOfSpades.description)&quot;)
+// 打印出 &quot;theAceOfSpades: suit is ♠, value is 1 or 11&quot;
+</code></pre><p>尽管<code>Rank</code>和<code>Suit</code>嵌套在<code>BlackjackCard</code>中，但仍可被引用，所以在初始化实例时能够通过枚举类型中的成员名称单独引用。在上面的例子中<code>description</code>属性能正确得输出对<code>Ace</code>牌有1和11两个值。</p>
+<h2 id="-">类型嵌套的引用</h2>
+<p>在外部对嵌套类型的引用，以被嵌套类型的名字为前缀，加上所要引用的属性名：</p>
+<pre><code>let heartsSymbol = BlackjackCard.Suit.Hearts.toRaw()
+// 红心的符号 为 &quot;♡&quot;
+</code></pre><p>对于上面这个例子，这样可以使<code>Suit</code>, <code>Rank</code>, 和 <code>Values</code>的名字尽可能的短，因为它们的名字会自然的由被定义的上下文来限定。</p>
+
+                    
+                    </section>
                 
                 </div>
             </div>

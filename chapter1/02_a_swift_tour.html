@@ -46,7 +46,7 @@
 
 
         
-    <div class="book"  data-level="1.2" data-basepath=".." data-revision="1401953615319">
+    <div class="book"  data-level="1.2" data-basepath=".." data-revision="1402043894290">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -576,7 +576,7 @@
 
                 <div class="page-inner">
                 
-                    <section class="normal" id="section-gitbook_1368">
+                    <section class="normal" id="section-gitbook_3725">
                     
                         <h1 id="swift-">Swift 初见</h1>
 <p>通常来说，编程语言教程中的第一个程序应该在屏幕上打印“Hello, world”。在 Swift 中，可以用一行代码实现：</p>
@@ -743,7 +743,7 @@ sumOf(42, 597, 12)
 <p>函数可以嵌套。被嵌套的函数可以访问外侧函数的变量，你可以使用嵌套函数来重构一个太长或者太复杂的函数。</p>
 <pre><code>func returnFifteen() -&gt; Int {
     var y = 10
-        func add() {
+    func add() {
         y += 5
     }
     add()
@@ -783,7 +783,7 @@ hasAnyMatches(numbers, lessThanTen)
 <p>练习：重写闭包，对所有奇数返回0.</p>
 </blockquote>
 <p>有很多种创建闭包的方法。如果一个闭包的类型已知，比如作为一个回调函数，你可以忽略参数的类型和返回值。单个语句闭包会把它语句的值当做结果返回。</p>
-<p>你可以获取参数的数量——这个方法在非常短的闭包中很有用。一个被作为最后一个参数传入函数的时候可以直接出现在括号后面。</p>
+<p>你可以通过参数位置而不是参数名字来引用参数——这个方法在非常短的闭包中非常有用。当一个闭包作为最后一个参数传给一个函数的时候，它可以直接跟在括号后面。</p>
 <pre><code>sort([1, 5, 3, 12, 2]) { $0 &gt; $1 }
 </code></pre><h2 id="-">对象和类</h2>
 <p>使用<code>class</code>和类名来创建一个类。类中属性的声明和常量、变量声明一样，唯一的区别就是它们的上下文是类。同样，方法和函数声明也一样。</p>
@@ -867,7 +867,7 @@ var triangle = EquilateralTriangle(sideLength: 3.1, name: &quot;a triangle&quot;
 triangle.perimeter
 triangle.perimeter = 9.9
 triangle.sideLength
-</code></pre><p>在<code>perimeter</code>的 setter 中，新值的名字是<code>newValue</code>。你可以在<code>set</code>之后显示的设置一个名字。</p>
+</code></pre><p>在<code>perimeter</code>的 setter 中，新值的名字是<code>newValue</code>。你可以在<code>set</code>之后显式的设置一个名字。</p>
 <p>注意<code>EquilateralTriangle</code>类的构造器执行了三步：</p>
 <ol>
 <li>设置子类声明的属性值</li>
