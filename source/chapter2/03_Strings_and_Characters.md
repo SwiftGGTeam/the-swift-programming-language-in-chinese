@@ -1,5 +1,19 @@
 # 字符串和字符 (Strings and Characters)
 
+本页包含内容：
+
+-   字符串字面量
+-   初始化空字符串
+-   字符串可变性
+-   字符串是值类型
+-   使用字符
+-   计算字符数量
+-   连接字符串和字符
+-   字符串插值
+-   比较字符串
+-   字符串大小写
+-   Unicode
+
 **String** 是一个有序的字符集合，例如 "hello, world", "albatross"。
 Swift 字符串通过 **String** 类型来表示，也可以表示为 **Character** 类型值的集合。
 
@@ -374,3 +388,4 @@ for scalar in dogString.unicodeScalars {
 // 🐶
 ```
 
+                                            
