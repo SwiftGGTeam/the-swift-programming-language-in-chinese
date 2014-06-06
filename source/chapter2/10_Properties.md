@@ -81,4 +81,20 @@ manager.data += "Some more data"
 
 ```
 
+`DataManager`类包含一个名为`data`的存储属性，初始值是一个空的字符串（`String`）数组。虽然没有写出全部代码，`DataManager`类的目的是管理和提供对这个字符串数组的访问。
+
+`DataManager`的一个功能是从文件导入数据，该功能由`DataImporter`类提供，它需要一定的时间来处理。因为它需要在实例化之后打开文件、读取文件内容到内存。
+
+`DataManager`也可以不从文件中导入数据，所以当`DataManager`的实例被创建时，就没有必要创建一个`DataImporter`的实例。同时，更有意义的是当用到`DataImporter`的时候才去创建它。
+
+由于使用了`@lazy`特性，`importer`属性只有在第一次被访问的时候才被创建。比如访问它的属性`fileName`时：
+
+```
+println(manager.importer.fileName)
+// the DataImporter instance for the importer property has now been created
+// prints "data.txt”
+
+```
+
+### 存储属性和实例变量
 
