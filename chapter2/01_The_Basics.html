@@ -46,7 +46,7 @@
 
 
         
-    <div class="book"  data-level="2.1" data-basepath=".." data-revision="1402050704574">
+    <div class="book"  data-level="2.1" data-basepath=".." data-revision="1402067788809">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -481,7 +481,8 @@
         <li>
             <a href="http://www.gitbook.io/" target="blank" class="gitbook-link">Generated using GitBook</a>
         </li>
-        
+<li style="margin-left:15%;"> <iframe  src="http://ghbtns.com/github-btn.html?user=numbbbbb&repo=the-swift-programming-language-in-chinese&type=watch&count=true&size=large"
+  allowtransparency="true" frameborder="0" scrolling="0" width="170" height="30"></iframe></li>        
     </ul>
 </div>
 
@@ -575,7 +576,7 @@
 
                 <div class="page-inner">
                 
-                    <section class="normal" id="section-gitbook_12">
+                    <section class="normal" id="section-gitbook_170">
                     
                         <h1 id="-">基础部分</h1>
 <p>Swift 是 iOS 和 OS X 应用开发的一门新语言。然而，如果你有 C 或者 Objective-C 开发经验的话，你会发现 Swift 的很多内容都是你熟悉的。</p>
@@ -772,6 +773,188 @@ let pi = Double(three) + pointOneFourOneFiveNine
 <blockquote>
 <p>注意：结合数字类常量和变量不同于结合数字类原始值。原始值<code>3</code>可以直接和原始值<code>0.14159</code>相加，因为数字原始值本身没有明确的类型。它们的类型只在编译器需要求值的时候被推测。</p>
 </blockquote>
+<h2 id="-">类型别名</h2>
+<p>类型别名就是给现有类型定义一个可选名字。你可以使用<code>typealias</code>关键字来定义类型别名。</p>
+<p>当你想要给现有类型起一个更有意义的名字时，类型别名非常有用。假设你正在处理特定长度的外部资源的数据：</p>
+<pre><code>typealias AudioSample = UInt16
+</code></pre><p>定义了一个类型别名之后，你可以在任何使用原始名的地方使用别名：</p>
+<pre><code>var maxAmplitudeFound = AudioSample.min
+// maxAmplitudeFound 现在是 0
+</code></pre><p>本例中，<code>AudioSample</code>被定义为<code>UInt16</code>的一个别名。因为它是别名，<code>AudioSample.min</code>实际上是<code>UInt16.min</code>，所以会给<code>maxAmplitudeFound</code>赋一个初值<code>0</code>。</p>
+<h2 id="-">布尔值</h2>
+<p>Swift 有一个基本的布尔类型，叫做<code>Bool</code>。布尔值是指逻辑，因为它们只能是真或者假。Swift 有两个布尔常量，<code>true</code>和<code>false</code>：</p>
+<pre><code>let orangesAreOrange = true
+let turnipsAreDelicious = false
+</code></pre><p><code>orangesAreOrange</code>和<code>turnipsAreDelicious</code>的类型会被推测为<code>Bool</code>，因为它们的初值是布尔原始值。就像之前提到的<code>Int</code>和<code>Double</code>一样，如果你创建变量的时候给它们赋值<code>true</code>或者<code>false</code>，那你不需要给常量或者变量标明<code>Bool</code>类型。初始化常量或者变量的时候如果所赋的值类型已知，就可以触发类型推测，这让 Swift 代码更加简洁并且可读性更高。</p>
+<p>当你编写条件语句比如<code>if</code>语句的时候，布尔值非常有用：</p>
+<pre><code>if turnipsAreDelicious {
+    println(&quot;Mmm, tasty turnips!&quot;)
+} else {
+    println(&quot;Eww, turnips are horrible.&quot;)
+}
+// 输出 &quot;Eww, turnips are horrible.&quot;
+</code></pre><p>条件语句比如<code>if</code>语句的详细介绍参见<code>控制流(待添加链接)</code>。</p>
+<p>如果你在需要使用<code>Bool</code>类型的地方使用了非布尔值，Swift 的类型安全机制会报错。下面的例子会报告一个编译时错误：</p>
+<pre><code>let i = 1
+if i {
+    // 这个例子不会通过编译，会报错
+}
+</code></pre><p>然而，下面的例子是合法的：</p>
+<pre><code>let i = 1
+if i == 1 {
+    // 这个例子会编译成功
+}
+</code></pre><p><code>i == 1</code>的比较结果是<code>Bool</code>类型，所以第二个例子可以通过类型检查。类似<code>i == 1</code>这样的比较会在<code>基本操作符(待添加链接)</code>中详细讨论。</p>
+<p>和 Swift 中的其他类型安全的例子一样，这个方法可以避免错误并保证这块代码的作用总是在意料之中。</p>
+<h2 id="-">元组</h2>
+<p>元组把多个值组合成一个复合值。元组内的值可以使任意类型，并不要求是相同类型。</p>
+<p>下面这个例子中，<code>(404, &quot;Not Found&quot;)</code>是一个描述 HTTP 状态码的元组。HTTP 状态码是当你请求网页的时候 web 服务器返回的一个特殊值。如果你请求的网页不存在就会返回一个<code>404 Not Found</code>状态码。</p>
+<pre><code>let http404Error = (404, &quot;Not Found&quot;)
+// http404Error 的类型是 (Int, String)，值是 (404, &quot;Not Found&quot;)
+</code></pre><p><code>(404, &quot;Not Found&quot;)</code>元组把一个<code>Int</code>值和一个<code>String</code>值组合起来表示 HTTP 状态码的两个部分：一个数字和一个可以读懂的描述。这个元组可以被描述为“一个类型为<code>(Int, String)</code>的元组”。</p>
+<p>你可以把任意顺序的类型组合成一个元组，这个元组可以包含所有类型。只要你想，你可以创建一个类型为<code>(Int, Int, Int)</code>或者<code>(String, Bool)</code>或者包含其他类型的元组。</p>
+<p>你可以将一个元组的内容分解成单独的常量和变量，然后你就可以正常使用它们了：</p>
+<pre><code>let (statusCode, statusMessage) = http404Error
+println(&quot;The status code is \(statusCode)&quot;)
+// 输出 &quot;The status code is 404&quot;
+println(&quot;The status message is \(statusMessage)&quot;)
+// 输出 &quot;The status message is Not Found&quot;
+</code></pre><p>如果你只需要一部分元组值，分解的时候可以把要忽略的部分设置成<code>_</code>：</p>
+<pre><code>let (justTheStatusCode, _) = http404Error
+println(&quot;The status code is \(justTheStatusCode)&quot;)
+// 输出 &quot;The status code is 404&quot;
+</code></pre><p>此外，你还可以通过下标来访问元组中的单个元素，下标从零开始：</p>
+<pre><code>println(&quot;The status code is \(http404Error.0)&quot;)
+// 输出 &quot;The status code is 404&quot;
+println(&quot;The status message is \(http404Error.1)&quot;)
+// 输出 &quot;The status message is Not Found&quot;
+</code></pre><p>你可以在定义元组的时候给单个元素命名：</p>
+<pre><code>let http200Status = (statusCode: 200, description: &quot;OK&quot;)
+</code></pre><p>给元组中的元素命名后，你可以通过名字来获取这些元素的值：</p>
+<pre><code>println(&quot;The status code is \(http200Status.statusCode)&quot;)
+// 输出 &quot;The status code is 200&quot;
+println(&quot;The status message is \(http200Status.description)&quot;)
+// 输出 &quot;The status message is OK&quot;
+</code></pre><p>作为函数返回值时，元组非常有用。一个用来获取网页的函数可能会返回一个<code>(Int, String)</code>元组来描述是否获取成功。和只能返回一个类型的值比较起来，一个包含两个不同类型值的元组可以让函数的返回信息更有用。详情参见<code>返回多个值的函数(待添加链接)</code>。</p>
+<blockquote>
+<p>注意：元组在临时组织值的时候很有用，但是并不适合创建复杂的数据结构。如果你的数据结构并不是临时使用，请使用类或者结构体而不是元组。详情参见<code>类和结构体(待添加链接)</code>。</p>
+</blockquote>
+<h2 id="-">可选</h2>
+<p>使用可选来处理值可能缺失的情况。可选表示：</p>
+<ul>
+<li>有值，等于 x</li>
+</ul>
+<p>或者</p>
+<ul>
+<li>没有值</li>
+</ul>
+<blockquote>
+<p>注意：C 和 Objective-C 中并没有可选这个概念。最接近的是 Objective-C 中的一个特性，一个方法要不返回一个对象要不返回<code>nil</code>，<code>nil</code>表示“缺少一个合法的对象”。然而，这只对对象起作用——对于结构体，基本的 C 类型或者美剧类型不起作用。对于这些类型，Objective-C 方法一般会返回一个特殊值（比如<code>NSNotFound</code>）来暗示值缺失。这种方法假设方法的调用者知道并记得对特殊值进行判断。然而，Swift 的可选可以让你暗示任意类型的值缺失，并不需要一个特殊值。</p>
+</blockquote>
+<p>来看一个例子。Swift 的<code>String</code>类型有一个叫做<code>toInt</code>的方法，作用是将一个<code>String</code>值转换成一个<code>Int</code>值。然而，并不是所有的字符串都可以转换成一个整数。字符串<code>&quot;123&quot;</code>可以被转换成数字<code>123</code>，但是字符串<code>&quot;hello, world&quot;</code>不行。</p>
+<p>下面的例子使用<code>toInt</code>方法来尝试将一个<code>String</code>转换成<code>Int</code>：</p>
+<pre><code>let possibleNumber = &quot;123&quot;
+let convertedNumber = possibleNumber.toInt()
+// convertedNumber 被推测为类型 &quot;Int?&quot;， 或者类型 &quot;optional Int&quot;
+</code></pre><p>因为<code>toInt</code>方法可能会失败，所以它返回一个可选的<code>Int</code>，而不是一个<code>Int</code>。一个可选的<code>Int</code>被写作<code>Int?</code>而不是<code>Int</code>。问号暗示包含的值是可选，也就是说可能包含<code>Int</code>值也可能不包含值。（不能包含其他任何值比如<code>Bool</code>值或者<code>String</code>值。只能是<code>Int</code>或者什么都没有。）</p>
+<h3 id="if-">if 语句以及强制解析</h3>
+<p>你可以使用<code>if</code>语句来判断一个可选是否包含值。如果可选有值，结果是<code>true</code>；如果没有值，结果是<code>false</code>。</p>
+<p>当你确定可选包含值之后，你可以在可选的名字后面加一个<code>!</code>来获取值。这个惊叹号表示“我知道这个可选有值，请使用它。”这被称为可选值的强制解析：</p>
+<pre><code>if convertedNumber {
+    println(&quot;\(possibleNumber) has an integer value of \(convertedNumber!)&quot;)
+} else {
+    println(&quot;\(possibleNumber) could not be converted to an integer&quot;)
+}
+// 输出 &quot;123 has an integer value of 123&quot;
+</code></pre><p>更多关于<code>if</code>语句的内容参见<code>控制流(待添加链接)</code>。</p>
+<blockquote>
+<p>注意：使用<code>!</code>来获取一个不存在的可选值会导致运行时错误。。使用<code>!</code>来强制解析值之前，一定要确定可选包含一个非<code>nil</code>的值。</p>
+</blockquote>
+<h3 id="-">可选绑定</h3>
+<p>使用可选绑定来判断可选是否包含值，如果包含就把值赋给一个临时常量或者变量。可选绑定可以用在<code>if</code>和<code>while</code>语句中来对可选的值进行判断并把值赋给一个常量或者变量。<code>if</code>和<code>while</code>语句详情参见<code>控制流</code>。</p>
+<p>像下面这样写一个可选绑定：</p>
+<pre><code>if let constantName = someOptional {
+    statements
+}
+</code></pre><p>你可以像上面这样使用可选绑定来重写<code>possibleNumber</code>这个例子：</p>
+<pre><code>if let actualNumber = possibleNumber.toInt() {
+    println(&quot;\(possibleNumber) has an integer value of \(actualNumber)&quot;)
+} else {
+    println(&quot;\(possibleNumber) could not be converted to an integer&quot;)
+}
+// 输出 &quot;123 has an integer value of 123&quot;
+</code></pre><p>这段代码可以被理解为：</p>
+<p>“如果<code>possibleNumber.toInt</code>返回的可选<code>Int</code>包含一个值，创建一个叫做<code>actualNumber</code>的新常量并将可选包含的值赋给它。”</p>
+<p>如果转换成功，<code>actualNumber</code>常量可以在<code>if</code>语句的第一个分支中使用。它已经被可选包含的值初始化过，所以不需要再使用<code>!</code>后缀来获取它的值。在这个例子中，<code>actualNumber</code>只被用来输出转换结果。</p>
+<p>你可以在可选绑定中使用常量和变量。如果你想在<code>if</code>语句的第一个分支中操作<code>actualNumber</code>的值，你可以改成<code>if var actualNumber</code>，这样可选包含的值就会被赋给一个变量。</p>
+<h3 id="nil">nil</h3>
+<p>你可以给可选变量赋值为<code>nil</code>来表示它没有值：</p>
+<pre><code>var serverResponseCode: Int? = 404
+// serverResponseCode 包含一个可选的 Int 值 404
+serverResponseCode = nil
+// serverResponseCode 现在不包含值
+</code></pre><blockquote>
+<p>注意：<code>nil</code>不能用于非可选的常量和变量。如果你的代码中有常量或者变量需要处理值缺失的情况，请把它们声明成对应的可选类型。</p>
+</blockquote>
+<p>如果你声明一个可选常量或者变量但是没有赋值，它们会自动被设置为<code>nil</code>：</p>
+<pre><code>var surveyAnswer: String?
+// surveyAnswer 被自动设置为 nil
+</code></pre><blockquote>
+<p>注意：Swift 的<code>nil</code>和 Objective-C 中的<code>nil</code>并不一样。在 Objective-C 中，<code>nil</code>是一个指向不存在对象的指针。在 Swift 中，<code>nil</code>不是指针——它是一个确定的值，用来表示值缺失。任何类型的可选都可以被设置为<code>nil</code>，不只是对象类型。</p>
+</blockquote>
+<h3 id="-">隐式解析可选</h3>
+<p>如上所述，可选暗示了常量或者变量可以“没有值”。可选可以通过<code>if</code>语句来判断是否有值，如果有值的话可以通过可选绑定来解析值。</p>
+<p>有时候在程序架构中，第一次被赋值之后，可以确定一个可选总会有值。在这种情况下，每次都要判断和解析可选值是非常低效的，因为可以确定它总会有值。</p>
+<p>这种类型的可选被定义为隐式解析可选。把后缀<code>?</code>改成<code>!</code>来声明一个隐式解析可选，比如<code>String!</code>。</p>
+<p>当可选被第一次赋值之后就可以确定之后一直有值的时候，隐式解析可选非常有用。隐式解析可选主要被用在 Swift 中类的构造过程中，详情参见<code>无主引用和隐式解析可选属性(Unowned References and Implicitly Unwrapped Optional Properties待添加链接)</code>。</p>
+<p>一个隐式解析可选其实就是一个普通的可选，但是可以被当做非可选来使用，并不需要每次都使用解析来获取可选值。下面的例子展示了可选<code>String</code>和隐式解析可选<code>String</code>之间的区别：</p>
+<pre><code>let possibleString: String? = &quot;An optional string.&quot;
+println(possibleString!) // 需要惊叹号来获取值
+// 输出 &quot;An optional string.&quot;
+
+let assumedString: String! = &quot;An implicitly unwrapped optional string.&quot;
+println(assumedString)  // 不需要惊叹号
+// 输出 &quot;An implicitly unwrapped optional string.&quot;
+</code></pre><p>你可以把隐式解析可选当做一个可以自动解析的可选。你要做的只是声明的时候把惊叹号放到类型的结尾，而不是每次获取值的变量结尾。</p>
+<blockquote>
+<p>注意：如果你在隐式解析可选没有值的时候尝试获取，会触发运行时错误。和你在没有值的普通可选后面加一个惊叹号一样。</p>
+</blockquote>
+<p>你仍然可以把隐式解析可选当做普通可选来判断它是否包含值：
+    if assumedString {
+        println(assumedString)
+    }
+    // 输出 &quot;An implicitly unwrapped optional string.&quot;</p>
+<p>你也可以在可选绑定中使用隐式解析可选来检查并解析它的值：
+    if let definiteString = assumedString {
+        println(definiteString)
+    }
+    // 输出 &quot;An implicitly unwrapped optional string.&quot;</p>
+<blockquote>
+<p>注意：如果一个变量之后可能变成<code>nil</code>的话请不要使用隐式解析可选。如果你需要在变量的生命周期中判断是否是<code>nil</code>的话，请使用普通可选类型。</p>
+</blockquote>
+<h2 id="-">断言</h2>
+<p>可选可以让你判断值是否存在，你可以在代码中优雅地处理值缺失的情况。然而，在某些情况下，如果值缺失或者值并不满足特定的条件，你的代码可能并不需要继续执行。这时，你可以在你的代码中触发一个断言来结束代码运行并通过调试来找到值缺失的原因。</p>
+<h3 id="-">使用断言来调试</h3>
+<p>断言会在运行时判断一个逻辑条件是否为<code>true</code>。从字面意思来说，断言“断言”一个条件是否为真。你可以使用断言来保证在运行其他代码之前，某些重要的条件已经被满足。如果条件判断为<code>true</code>，代码运行会继续进行；如果条件判断为<code>false</code>，代码运行停止，你的应用被终止。</p>
+<p>如果你的代码在调试环境下触发了一个断言，比如你在 Xcode 中构建并运行一个应用，你可以清楚地看到不合法的状态发生在哪里并检查断言被触发时你的应用的状态。此外，断言允许你附加一条调试信息。</p>
+<p>你可以使用全局<code>assert</code>函数来写一个断言。给<code>assert</code>函数传入一个结果为<code>true</code>或者<code>false</code>的表达式以及一条信息，当表达式为<code>false</code>的时候这条信息会被显示：</p>
+<pre><code>let age = -3
+assert(age &gt;= 0, &quot;A person&#39;s age cannot be less than zero&quot;)
+// 因为 age &lt; 0，所以断言会触发
+</code></pre><p>在这个例子中，只有<code>age &gt;= 0</code>为<code>true</code>的时候代码运行才会继续，也就是说，当<code>age</code>的值非负的时候。如果<code>age</code>的值是负数，就像代码中那样，<code>age &gt;= 0</code>为<code>false</code>，断言被触发，结束应用。</p>
+<p>断言信息不能使用字符串插值。断言信息可以省略，就像这样：</p>
+<pre><code>assert(age &gt;= 0)
+</code></pre><h3 id="-">何时使用断言</h3>
+<p>当条件可能为假时使用断言，但是最终一定要保证条件为真，这样你的代码才能继续运行。断言的适用情景：</p>
+<ul>
+<li>整数的下标(subscript)索引被传入一个自定义下标实现，但是下标索引值可能太小或者太大。</li>
+<li>需要给函数传入一个值，但是非法的值可能导致函数不能正常执行。</li>
+<li>一个可选值现在是<code>nil</code>，但是后面的代码运行需要一个非<code>nil</code>值。</li>
+</ul>
+<p>查看<code>下标(链接待添加)</code>和<code>函数(链接待添加)</code>。</p>
+<blockquote>
+<p>注意：断言可能导致你的应用终止运行，所以你应当仔细设计你的代码来让非法条件不会出现。然而，在你的应用发布之前，有时候非法条件可能出现，这时使用断言可以快速发现问题。</p>
+</blockquote>
 
                     
                     </section>
@@ -791,8 +974,8 @@ let pi = Double(three) + pointOneFourOneFiveNine
 
         
 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.1.3/ace.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.1.3/mode-javascript.js"></script>
+        <script src="http://cdn.bootcss.com/ace/1.1.3/ace.js"></script>
+        <script src="http://cdn.bootcss.com/ace/1.1.3/mode-javascript.js"></script>
         <script src="../gitbook/jsrepl/jsrepl.js" id="jsrepl-script"></script>
         <script src="../gitbook/app.js"></script>
         
