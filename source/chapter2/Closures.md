@@ -149,7 +149,7 @@ reversed = sort(names, >)
 
 更多关于运算符表达式的内容请查看 [Operator Functions](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/AdvancedOperators.html#//apple_ref/doc/uid/TP40014097-CH27-XID_43) 。
 
-##### Trailing 闭包
+### Trailing 闭包
 
 如果您需要将一个很长的闭包表达式作为最后一个参数传递给函数，可以使用 trailing 闭包来增强函数的可读性。
 Trailing 闭包是一个书写在函数括号之外(之后)的闭包表达式，函数支持将其作为最后一个参数调用。
@@ -245,6 +245,97 @@ let strings = numbers.map {
 
 上例中 trailing 闭包语法在函数后整洁封装了具体的闭包功能，而不再需要将整个闭包包裹在 `map` 函数的括号内。
 
+### 捕捉 (Caputure)
+
+闭包可以在其定义的上下文中捕捉常量或变量。
+即使定义这些常量和变量的原域已经不存在，闭包仍然可以在闭包函数体内引用和修改这些值。
+
+Swift最简单的闭包形式是嵌套函数，也就是定义在其他函数的函数体内的函数。
+嵌套函数可以捕捉其外部函数所有的参数以及定义的常量和变量。
+
+下例为一个叫做 `makeIncrementor` 的函数，其包含了一个叫做 `incrementor` 嵌套函数。
+嵌套函数 `incrementor` 从上下文中捕获了两个值，`runningTotal` 和 `amount`。
+之后 `makeIncrementor` 将 `incrementor` 作为闭包返回。
+每次调用 `incrementor` 时，其会以 `amount` 作为增量增加 `runningTotal` 的值。
+
+```
+func makeIncrementor(forIncrement amount: Int) -> () -> Int {
+    var runningTotal = 0
+    func incrementor() -> Int {
+        runningTotal += amount
+        return runningTotal
+    }
+    return incrementor
+}
+```
+
+`makeIncrementor` 返回类型为 `() -> Int`。
+这意味着其返回的是一个函数，而不是一个简单的值。
+该函数在每次调用时不接受参数只返回一个 **Int** 类型的值。
+关于函数返回其他函数的内容，请查看[Function Types as Return Types](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Functions.html#//apple_ref/doc/uid/TP40014097-CH10-XID_232)。
+
+`makeIncrementor` 函数定义了一个整型变量 `runningTotal` (初始为0) 用来存储当前跑步总数。
+该值会通过 `incrementor` 将会返回的。
+
+`makeIncrementor` 有一个 **Int** 类型的参数，其外部命名为 `forIncrement`， 内部命名为 `amount`，表示每次 `incrementor` 被调用时 `runningTotal` 将要增加的量。
+
+`incrementor` 函数用来执行实际的增加操作。
+该函数简单地使 `runningTotal` 增加 `amount`，并将其返回。
+
+如果我们单独看这个函数，会发现看上去不同寻常：
+
+```
+func incrementor() -> Int {
+    runningTotal += amount
+    return runningTotal
+}
+```
+
+`incrementor` 函数并没有传递任何参数，但是在函数体内访问了 `runningTotal` 和 `amount` 变量。这是因为其通过捕获在包含它的函数体内已经存在的 `runningTotal` 和 `amount` 变量而实现。
+
+由于没有修改 `amount` 变量，`incrementor` 实际上捕获并存储了该变量的一个副本，而该副本随着 `incrementor` 一同被存储。
+
+然而，因为每次调用该函数的时候都会修改 `runningTotal` 的值，`incrementor` 捕获了当前 `runningTotal` 变量的引用，而不是仅仅复制该变量的初始值。捕获一个引用保证了当 `makeIncrementor` 结束时候并不会消失，也保证了当下一次执行 `incrementor` 函数时，`runningTotal` 可以继续增加。
+
+> 注意：
+>
+> Swift 会决定捕获引用还是拷贝值。
+> 您不需要标注 `amount` 或者 `runningTotal` 来声明在嵌入的 `incrementor` 函数中的使用方式。
+> Swift 同时也处理 `runingTotal` 变量的内存管理操作，如果不再被 `incrementor` 函数使用，则会被清除。
+
+下面为一个使用 `makeIncrementor` 的例子：
+
+```
+let incrementByTen = makeIncrementor(forIncrement: 10)
+```
+
+该例子定义了一个叫做 `incrementByTen` 的常量，该常量指向一个每次调用会加10的 `incrementor` 函数。
+调用这个函数多次可以得到以下结果：
+
+```
+incrementByTen()
+// 返回的值为10
+incrementByTen()
+// 返回的值为20
+incrementByTen()
+// 返回的值为30
+```
+
+如果您创建了另一个 `incrementor`，其会又一个属于自己的独立的 `runningTotal` 变量的引用。
+下面的例子中，`incrementBySevne` 捕获了一个新的 `runningTotal` 变量，该变量和 `incrementByTen` 中捕获的变量没有任何联系：
+
+```
+let incrementBySeven = makeIncrementor(forIncrement: 7)
+incrementBySeven()
+// 返回的值为7
+incrementByTen()
+// 返回的值为40
+```
+
+> 注意：
+>
+> 如果您闭包分配给一个类实力的属性，并且该闭包通过指向该实例或其成员来捕获了该实例，您将创建一个在闭包和实例间的强引用圈。
+> Swift 使用捕获列表来打破这种强引用圈。更多信息，请参考 [Strong Reference Cycles for Closures](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/AutomaticReferenceCounting.html#//apple_ref/doc/uid/TP40014097-CH20-XID_61)。
 
 
 
