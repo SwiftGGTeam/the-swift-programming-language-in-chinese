@@ -29,7 +29,7 @@
    * 类和结构体(@JaySurplus 认领)
    * 属性(@shinyzhu 认领)
    * 方法
-   * 下标
+   * 下标(@siemenliu 认领)
    * 继承
    * 构造过程(@lifedim 认领)
    * 析构过程(认领)
