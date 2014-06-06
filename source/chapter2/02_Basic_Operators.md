@@ -10,100 +10,129 @@ Swift支持大部分标准C的运算符, 且改进许多项来获得减少常规
 
 
 ‌# 术语
-运算符有一目,两目和三目运算符.
+运算符有一目,双目和三目运算符.
 
-一目运算符对单一目标操作, 如`-a`. 
+一目运算符对单一操作对象操作, 如`-a`. 
 
-Terminology
-Operators are unary, binary, or ternary:
+一目运算符分前置符和后置运算符, 前置运算符需紧排操作对象之前, 如`!b`, 后置运算符需紧跟操作对象之后,如`i++`,
 
-Unary operators operate on a single target (such as -a). Unary prefix operators appear immediately before their target (such as !b), and unary postfix operators appear immediately after their target (such as i++).
-Binary operators operate on two targets (such as 2 + 3) and are infix“because they appear in between their two targets.
-Ternary operators operate on three targets. Like C, Swift has only one ternary operator, the ternary conditional operator (a ? b : c).
-The values that operators affect are operands. In the expression 1 + 2, the + symbol is a binary operator and its two operands are the values 1 and 2.
+双目运算符操作两个操作对象, 如`2 + 3`. 是中置的, 因为它们出现在两个操作对象之间.
+
+三目运算符操作三个操作对象, 跟C一样, Swift只有一个三目运算符, 就是三目条件运算符 `a ? b : c`.
+
+受运算符影响的值叫操作数, 在表达式`1 + 2`中, 加号`+`是双目运算符, 它的两个操作数是值`1`和`2`.
+
 
 ‌
-Assignment Operator
-The assignment operator (a = b) initializes or updates the value of a with the value of b:
+# 赋值运算符
 
+赋值运算 `a = b`, 表示用`b`的值来初始化或更新`a`的值.
+
+```
 let b = 10
 var a = 5
 a = b
-// a is now equal to 10
-If the right side of the assignment is a tuple with multiple values, its elements can be decomposed into multiple constants or variables at once:
+// a 现在等于 10
+```
 
+如果赋值的右边是一个多元组, 它的元素可以马上被分解多个变量或变量
+```
 let (x, y) = (1, 2)
-// x is equal to 1, and y is equal to 2
-Unlike the assignment operator in C and Objective-C, the assignment operator in Swift does not itself return a value. The following statement is not valid:
+// 现在 x 等于 1, y 等于 2
+```
+与C和Objective-C又不同了, Swift的赋值操作并不返回任何值. 所以以下代码是错误的:
 
+```
 if x = y {
-    // this is not valid, because x = y does not return a value
+    // 此句错误, 因为 x = y 并不返回任何值
 }
-This feature prevents the assignment operator (=) from being used by accident when the equal to operator (==) is actually intended. By making if x = y invalid, Swift helps you to avoid these kinds of errors in your code.
+```
 
-Arithmetic Operators
-Swift supports the four standard arithmetic operators for all number types:
+这个特性使得你不能够再把`==`错写成`=`了, 由于`if x = y`是错误代码, Swift从底层帮你避免了这些代码错误.
 
-Addition (+)
-Subtraction (-)
-Multiplication (*)
-Division (/)
-1 + 2       // equals 3
-5 - 3       // equals 2
-2 * 3       // equals 6
-10.0 / 2.5  // equals 4.0
-Unlike the arithmetic operators in C and Objective-C, the Swift arithmetic operators do not allow values to overflow by default. You can opt in to value overflow behavior by using Swift’s overflow operators (such as a &+ b). See [Overflow Operators](http://#).
+# 数值运算
+Swift让所有数值类型都支持了基本的四则运算:
+- 加法 (+)
+- 减法 (-)
+- 乘法 (*)
+- 除法 (/)
 
-The addition operator is also supported for String concatenation:
+```
+1 + 2       // 等于 3
+5 - 3       // 等于 2
+2 * 3       // 等于 6
+10.0 / 2.5  // 等于 4.0
+```
 
-"hello, " + "world"  // equals "hello, world"
-Two Character values, or one Character value and one String value, can be added together to make a new String value:
+又与C和Objective-C不一样了, Swift默认不允许数值运算出现溢出. 但你可以使用Swift的溢出运算符来达到你的目的, (如 `a &+ b` ). 详情请移步: [溢出运算符](http://#).
 
+加法操作也可以用于字符串的拼接:
+
+```
+"hello, " + "world"  // 等于 "hello, world"
+```
+
+两个字符类型或一个字符类型和一个字符串类型, 相加会生成一个新的字符串类型:
+
+```
 let dog: Character = "🐶"
 let cow: Character = "🐮"
 let dogCow = dog + cow
-// dogCow is equal to "🐶🐮"
-See also [Concatenating Strings and Characters](http://#).
+// dogCow 现在是 "🐶🐮"
+```
+详细请点击 [字符,字符串的拼接](http://#).
 
-‌
-Remainder Operator
-The remainder operator (a % b) works out how many multiples of b will fit inside a and returns the value that is left over (known as the remainder).
+‌# 求余运算
 
+求余运算`a % b`是计算`b`的多少倍刚好可以装进`a`, 多出来的那部分叫余数.
 
-> NOTE
+> 注意
 
-> The remainder operator (%) is also known as a modulo operator in other languages. However, its behavior in Swift for negative numbers means that it is, strictly speaking, a remainder rather than a modulo operation.
+> 求余运算(%)在其他语言也叫取模运算. 然而, 鉴于在Swift中该运算符对负数的操作结果, 严格来说, 求余比取模更合适些.
 
-Here’s how the remainder operator works. To calculate 9 % 4, you first work out how many 4s will fit inside 9:
+我们来谈谈取余是怎么回事, 计算 `9 % 4`, 你先计算出4的多少倍会刚好可以装进`9`中. 
+2, 好的, 余数是1 (用橙色标出)
 
- 
-You can fit two 4s inside 9, and the remainder is 1 (shown in orange).
+```
+传说这里有张求余数的图...
+传说这里有张求余数的图...
+```
 
-In Swift, this would be written as:
+在Swift中这么来表达
 
-9 % 4    // equals 1
-To determine the answer for a % b, the % operator calculates the following equation and returns remainder as its output:
+```
+9 % 4    // 等于 1
+```
 
-a = (b × some multiplier) + remainder
+为了得到`a % b`的结果, `%`计算了以下等式, 并输出`余数`作为结果:
+```
+a = (b × `倍数`) + `余数`
+```
+当`倍数`取最大值的时候, 就会刚好可以装进`a`中.
 
-where some multiplier is the largest number of multiples of b that will fit inside a.
+把 `9` 和 `4` 代入等式中:
 
-Inserting 9 and 4 into this equation yields:
-
+```
 9 = (4 × 2) + 1
+```
 
-The same method is applied when calculating the remainder for a negative value of a:
-
+同样的方法, 我来们计算`-9 % 4`:
+```
 -9 % 4   // equals -1
-Inserting -9 and 4 into the equation yields:
+```
 
+把 `-9` 和 4 代入等式:
+
+```
 -9 = (4 × -2) + -1
+```
 
-giving a remainder value of -1.
+等于余数是-1.
 
-The sign of b is ignored for negative values of b. This means that a % b and a % -b always give the same answer.
+在对负数的`b`求余时, `b`的符号会被忽略. 这意味着 `a % b` 和 `a % -b`的结果是相同的.
 
-‌
+# 浮点数的求余计算
+
 Floating-Point Remainder Calculations
 Unlike the remainder operator in C and Objective-C, Swift’s remainder operator can also operate on floating-point numbers:
 
