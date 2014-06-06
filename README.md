@@ -1,5 +1,4 @@
-《The Swift Programming Language》in Chinese
-=============================================
+《The Swift Programming Language》in Chinese =============================================
 
 中文版Apple官方Swift教程《The Swift Programming Language》
 
@@ -45,7 +44,7 @@
    * 关于语言参考(完成 By @ChildhoodAndy)
    * 词法结构
    * 类型
-   * 表达式
+   * 表达式(Expressions) (@sg552 认领)
    * 声明
    * 属性
    * 模式
