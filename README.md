@@ -39,7 +39,7 @@
    * 嵌套类型(完成 By @Lin-H)
    * 扩展
    * 接口
-   * 泛型
+   * 泛型(完成 By @takalard)
    * 高级操作符
 * 语言参考
    * 关于语言参考(完成 By @ChildhoodAndy)
