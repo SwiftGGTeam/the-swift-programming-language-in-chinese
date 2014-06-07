@@ -40,7 +40,7 @@
    * 类型检查(完成 By @xiehurricane)
    * 嵌套类型(完成 By @Lin-H)
    * 扩展(@lyuka 认领)
-   * 接口
+   * 协议(@geek5nan 认领)
    * 泛型(完成 By @takalard)
    * 高级操作符(@xielingwang 认领)
 * 语言参考
