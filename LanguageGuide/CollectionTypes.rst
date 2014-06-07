@@ -441,7 +441,7 @@ are also hashable by default.
 Dictionary Literals
 ~~~~~~~~~~~~~~~~~~~
 
-You can initialize a dictionary with with a :newTerm:`dictionary literal`,
+You can initialize a dictionary with a :newTerm:`dictionary literal`,
 which has a similar syntax to the array literal seen earlier.
 A dictionary literal is a shorthand way to write
 one or more key-value pairs as a ``Dictionary`` collection.
