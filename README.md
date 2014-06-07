@@ -42,7 +42,7 @@
    * 扩展
    * 接口
    * 泛型(完成 By @takalard)
-   * 高级操作符
+   * 高级操作符(@xielingwang 认领)
 * 语言参考
    * 关于语言参考(完成 By @ChildhoodAndy)
    * 词法结构
