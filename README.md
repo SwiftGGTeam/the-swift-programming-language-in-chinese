@@ -45,7 +45,7 @@
    * 高级操作符(@xielingwang 认领)
 * 语言参考
    * 关于语言参考(完成 By @ChildhoodAndy)
-   * 词法结构
+   * 词法结构(@superkam 认领)
    * 类型
    * 表达式(@sg552 认领)
    * 声明
