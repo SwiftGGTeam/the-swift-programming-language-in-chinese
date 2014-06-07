@@ -60,10 +60,10 @@ extension Double{
  var ft: Double { return self / 3.28084 }
 }
 let oneInch = 25.4.mm
-println("One inch is \\(oneInch) meters")
+println("One inch is \(oneInch) meters")
 // prints "One inch is 0.0254 meters"
 let threeFeet = 3.ft
-println("Three feet is \\(threeFeet) meters")
+println("Three feet is \(threeFeet) meters")
 // prints "Three feet is 0.914399970739201 meters"
 ```
 
@@ -76,8 +76,8 @@ println("Three feet is \\(threeFeet) meters")
 这些属性是只读的计算属性，所有从简考虑它们不用`get`关键字表示。它们的返回值是`Double`型，而且可以用于所有接受`Double`的数学计算中：
 
 ```javascript
-let aMarathon = 42.km \+ 195.m
-println("A marathon is \\(aMarathon) meters long")
+let aMarathon = 42.km + 195.m
+println("A marathon is \(aMarathon) meters long")
 // prints "A marathon is 42495.0 meters long"
 ```
 
@@ -93,7 +93,7 @@ println("A marathon is \\(aMarathon) meters long")
 
 注意
 
-如果你使用扩展向一个值类型添加一个构造器，该构造器向所有的存储属性提供默认值，而且没有定义任何定制构造器（custom initializers），那么对于来自你的扩展构造器中的值类型，你可以调用默认构造器(default initializers)和成员级构造器(memberwise initializer)。
+如果你使用扩展向一个值类型添加一个构造器，该构造器向所有的存储属性提供默认值，而且没有定义任何定制构造器（custom initializers），那么对于来自你的扩展构造器中的值类型，你可以调用默认构造器(default initializers)和成员级构造器(memberwise initializers)。
 
 正如在值类型的构造器授权中描述的，如果你已经把构造器写成值类型原始实现的一部分，上述规则不再适用。
 
@@ -123,8 +123,8 @@ let memberwiseRect = Rect(origin: Point(x: 2.0, y: 2.0),
 ```javascript
 extension Rect{
  init(center: Point, size: Size){
- let originX = center.x \- (size.width / 2)
- let originY = center.y \- (size.height / 2)
+ let originX = center.x - (size.width / 2)
+ let originY = center.y - (size.height / 2)
  self.init(origin: Point(x: originX, y: originY), size: size)
  }
 }
