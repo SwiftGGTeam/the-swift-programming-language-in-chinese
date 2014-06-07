@@ -72,7 +72,7 @@
 	}
 	// prints "Watch out for penguins”
 
-你可以如此这段代码：
+你可以如此理解这段代码：
 
 “考虑`directionToHead`的值。当它等于`.North`，打印`“Lots of planets have a north”`。当它等于`.South`，打印`“Watch out for penguins”`。”
 
@@ -91,7 +91,7 @@
 	}
 	// prints "Mostly harmless”
 
-## 实例值（associated values）
+## 实例值（Associated Values）
 
 上一小节的例子演示了一个枚举的成员是如何被定义（分类）的。你可以为`Planet.Earth`设置一个常量或则变量，并且在之后查看这个值。然而，有时候会很有用如果能够把其他类型的实例值和成员值一起存储起来。这能让你随着成员值存储额外的自定义信息，并且当每次你在代码中利用该成员时允许这个信息产生变化。
 
@@ -103,3 +103,49 @@
 
 对于库存跟踪系统来说，能够把UPC-A码作为三个整型值的元组，和把QR码作为一个任何长度的字符串存储起来是方便的。
 
+在Swift中，用来定义两种商品条码的枚举是这样子的：
+
+	enum Barcode {
+		case UPCA(Int, Int, Int)
+		case QRCode(String)
+	}
+
+以上代码可以这么理解：
+
+“定义一个名为`Barcode`的枚举类型，它可以是`UPCA`的一个实例值（`Int`，`Int`，`Int`），或者`QRCode`的一个字符串类型（`String`）实例值。”
+
+这个定义不提供任何`Int`或`String`的实际值，它只是定义了，当`Barcode`常量和变量等于`Barcode.UPCA`或`Barcode.QRCode`时，其实例值的类型。
+
+然后可以使用任何一种类型类创建新的条码，如：
+	
+	var productBarcode = Barcode.UPCA(8, 85909_51226, 3)
+	
+以上例子创建了一个名为`productBarcode`的新变量，并且赋给它一个`Barcode.UPCA`的实例元组值`(8, 8590951226, 3)`。提供的“标识符”值在整数字中有一个下划线，使其便于阅读条形码。
+
+同一个商品可以被分配一个不同类型的条形码，如：
+
+	productBarcode = .QRCode("ABCDEFGHIJKLMNOP")
+	
+这时，原始的`Barcode.UPCA`和其整数值被新的`Barcode.QRCode`和其字符串值所替代。条形码的常量和变量可以存储一个`.UPCA`或者一个`.QRCode`（连同其实例值），但是在任何指定时间只能存储其中之一。
+
+像以前那样，不同的条形码类型可以使用一个switch语句来检查，然而这次实例值可以被提取作为switch语句的一部分。你可以在`switch`的case分支代码中，提取每个实例值作为一个常量（用`let`前缀）或者作为一个变量（用`var`前缀）来使用：
+
+	switch productBarcode {
+	case .UPCA(let numberSystem, let identifier, let check):
+    	println("UPC-A with value of \(numberSystem), \(identifier), \(check).")
+	case .QRCode(let productCode):
+    	println("QR code with value of \(productCode).")
+	}
+	// prints "QR code with value of ABCDEFGHIJKLMNOP.”
+	
+如果一个枚举成员的所有实例值被提取为常量，或者它们全部被提取为变量，为了简洁，你可以只放置一个`var`或者`let`标注在成员名称前：
+
+	switch productBarcode {
+	case let .UPCA(numberSystem, identifier, check):
+    	println("UPC-A with value of \(numberSystem), \(identifier), \(check).")
+	case let .QRCode(productCode):
+    	println("QR code with value of \(productCode).")
+	}
+	// prints "QR code with value of ABCDEFGHIJKLMNOP."
+
+## 原始值（Raw Values）
