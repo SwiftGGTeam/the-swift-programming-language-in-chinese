@@ -21,7 +21,7 @@
    * Swift 初见(完成 By numbbbbb)
 * Swift 教程
    * 基础部分(完成 By numbbbbb, lyuka, JaySurplus)
-   * 基本操作符(@xielingwang 认领)
+   * 基本操作符(完成 By @xielingwang)
    * 字符串和字符(完成 By @wh1100717)
    * 集合类型(@WilliamZang 认领)
    * 控制流(@vclwei 认领)
@@ -32,7 +32,7 @@
    * 属性(@shinyzhu 认领)
    * 方法(@pp-prog 认领)
    * 下标(@siemenliu 认领)
-   * 继承
+   * 继承(@awstein 认领)
    * 构造过程(@lifedim 认领)
    * 析构过程(认领)
    * 自动引用计数(@TimothyYe 认领)
