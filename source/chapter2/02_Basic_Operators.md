@@ -4,12 +4,12 @@
 
 Swift支持大部分标准C的运算符, 且改进许多项来获得减少常规编码错误. 赋值符`=`不返回值, 以防止出现错把等号 `==` 写成赋值号 `=` 导致的Bug. 数值运算符(`+`, `-`, `*`, `/`, `%`等)会检测并不允许值溢出, 以此来避免保存变量时由于变量大于或小于其类型所能承载的范围时导致的异常结果. 你可以选择使用Swift的溢出运算符来玩溢出. 具体使用请移步[溢出运算符](http://#).
 
-与C不同, Swift中你可以对浮点数进行取余运算(`%`). Swift也提供在C语言没有的表达两数之间的范围操作符, (`a..b`和`a...b`),这方便我们表达一个范围的数值.
+与C不同, Swift中你可以对浮点数进行取余运算(`%`). Swift也提供在C语言没有的表达两数之间的区间运算符, (`a..b`和`a...b`),这方便我们表达一个区间的数值.
 
 本章节只描述了Swift中的常规运算符, [高级运算符](http://#)包含了高级运算符,及如何自定义运算符,及自定义类型的运算符重载.
 
+# 术语
 
-‌# 术语
 运算符有一目,双目和三目运算符.
 
 一目运算符对单一操作对象操作, 如`-a`. 
@@ -22,13 +22,11 @@ Swift支持大部分标准C的运算符, 且改进许多项来获得减少常规
 
 受运算符影响的值叫操作数, 在表达式`1 + 2`中, 加号`+`是双目运算符, 它的两个操作数是值`1`和`2`.
 
-
-‌
 # 赋值运算符
 
-赋值运算 `a = b`, 表示用`b`的值来初始化或更新`a`的值.
+赋值运算 `a = b`, 表示用 `b` 的值来初始化或更新 `a` 的值.
 
-```
+```swift
 let b = 10
 var a = 5
 a = b
@@ -42,7 +40,7 @@ let (x, y) = (1, 2)
 ```
 与C和Objective-C又不同了, Swift的赋值操作并不返回任何值. 所以以下代码是错误的:
 
-```
+```swift
 if x = y {
     // 此句错误, 因为 x = y 并不返回任何值
 }
@@ -57,7 +55,7 @@ Swift让所有数值类型都支持了基本的四则运算:
 - 乘法 (*)
 - 除法 (/)
 
-```
+```swift
 1 + 2       // 等于 3
 5 - 3       // 等于 2
 2 * 3       // 等于 6
@@ -68,13 +66,13 @@ Swift让所有数值类型都支持了基本的四则运算:
 
 加法操作也可以用于字符串的拼接:
 
-```
+```swift
 "hello, " + "world"  // 等于 "hello, world"
 ```
 
 两个字符类型或一个字符类型和一个字符串类型, 相加会生成一个新的字符串类型:
 
-```
+```swift
 let dog: Character = "🐶"
 let cow: Character = "🐮"
 let dogCow = dog + cow
@@ -84,7 +82,7 @@ let dogCow = dog + cow
 
 ‌# 求余运算
 
-求余运算`a % b`是计算`b`的多少倍刚好可以装进`a`, 多出来的那部分叫余数.
+求余运算`a % b`是计算 `b` 的多少倍刚好可以装进 `a` , 多出来的那部分叫余数.
 
 > 注意
 
@@ -93,14 +91,14 @@ let dogCow = dog + cow
 我们来谈谈取余是怎么回事, 计算 `9 % 4`, 你先计算出4的多少倍会刚好可以装进`9`中. 
 2, 好的, 余数是1 (用橙色标出)
 
-```
+```swift
 传说这里有张求余数的图...
 传说这里有张求余数的图...
 ```
 
 在Swift中这么来表达
 
-```
+```swift
 9 % 4    // 等于 1
 ```
 
@@ -108,11 +106,11 @@ let dogCow = dog + cow
 ```
 a = (b × `倍数`) + `余数`
 ```
-当`倍数`取最大值的时候, 就会刚好可以装进`a`中.
+当`倍数`取最大值的时候, 就会刚好可以装进 `a` 中.
 
 把 `9` 和 `4` 代入等式中:
 
-```
+```swift
 9 = (4 × 2) + 1
 ```
 
@@ -123,134 +121,170 @@ a = (b × `倍数`) + `余数`
 
 把 `-9` 和 4 代入等式:
 
-```
+```swift
 -9 = (4 × -2) + -1
 ```
 
 等于余数是-1.
 
-在对负数的`b`求余时, `b`的符号会被忽略. 这意味着 `a % b` 和 `a % -b`的结果是相同的.
+在对负数的 `b` 求余时, `b`的符号会被忽略. 这意味着 `a % b` 和 `a % -b`的结果是相同的.
 
-# 浮点数的求余计算
+## 浮点数求余计算
 
-Floating-Point Remainder Calculations
-Unlike the remainder operator in C and Objective-C, Swift’s remainder operator can also operate on floating-point numbers:
+不同于C和Objective-C, Swift中是可以对浮点数进行求余的.
 
-“8 % 2.5   // equals 0.5
-In this example, 8 divided by 2.5 equals 3, with a remainder of 0.5, so the remainder operator returns a Double value of 0.5.
+```swift
+8 % 2.5 // 等于 0.5
+```
 
- 
+这个例子中, 8除于2.5等于3余0.5, 所以结果是0.5.
+
+# 自增和自增运算
+
+和C一样, Swift也提供了方便对变量本身加1或减1的自增 `++` 和自减 `--` 的运算符. 其操作对象可以是整形和浮点型。
 ‌
-Increment and Decrement Operators
-Like C, Swift provides an increment operator (++) and a decrement operator (--) as a shortcut to increase or decrease the value of a numeric variable by 1. You can use these operators with variables of any integer or floating-point type.
-
+```
 var i = 0
-++i      // i now equals 1
-Each time you call ++i, the value of i is increased by 1. Essentially, ++i is shorthand for saying i = i + 1. Likewise, --i can be used as shorthand for i = i - 1.
+++i      // 现在 i = 1
+```
 
-The ++ and -- symbols can be used as prefix operators or as postfix operators. ++i and i++ are both valid ways to increase the value of i by 1. Similarly, --i and i-- are both valid ways to decrease the value of i by 1.
+调用一次 `++i`, `i` 的值就会加1.
+实际上, `++i` 是 `i = i + 1` 的简写, 而 `--i` 是 `i = i - 1`的简写.
 
-Note that these operators modify i and also return a value. If you only want to increment or decrement the value stored in i, you can ignore the returned value. However, if you do use the returned value, it will be different “based on whether you used the prefix or postfix version of the operator, according to the following rules:
+`++` 和 `--`既是前置又是后置运算. `++i`, `i++`, `--i` 和 `i--` 都是有效的写法.
 
-If the operator is written before the variable, it increments the variable before returning its value.
-If the operator is written after the variable, it increments the variable after returning its value.
-For example:
+我们需要注意的是这些运算符修改了 `i` 后有一个返回值. 如果你只想修改 `i` 的值, 那你就忽略这个返回值. 但如果你想使用返回值, 你就要留意前置和后置操作的返回值是不同的.
 
+当 `++` 前置的时候, 先自増再返回.
+当 `++` 后置的时候, 先返回再自增.
+
+不懂? 我们看例子:
+
+```swift
 var a = 0
-let b = ++a
-// a and b are now both equal to 1
-let c = a++
-// a is now equal to 2, but c has been set to the pre-increment value of 1
-In the example above, let b = ++a increments a before returning its value. This is why both a and b are equal to to the new value of 1.
+let b = ++a // a 和 b 现在都是 1
+let c = a++ // a 现在 2, 但 c 是 a 自增前的值 1
+```
 
-However, let c = a++ increments a after returning its value. This means that c gets the old value of 1, and a is then updated to equal 2.
+上述例子, `let b = ++a`, 先把 `a` 加1了再返回 `a` 的值. 所以 `a` 和 `b` 都是新值 `1`.
 
-Unless you need the specific behavior of i++, it is recommended that you use ++i and --i in all cases, because they have the typical expected behavior of modifying i and returning the result.
+而 `let c = a++`, 是先返回了 `a` 的值, 然后 `a` 才加1. 所以 `c` 得到了 `a` 的旧值1, 而 `a` 加1后变成2.
 
-“Unary Minus Operator
-The sign of a numeric value can be toggled using a prefixed -, known as the unary minus operator:
+除非你需要使用 `i++` 的特性, 不然推荐你使用 `++i` 和 `--i`, 因为先修改后返回这样的行为更符合我们的逻辑.
 
+
+# 单目负号
+
+
+
+Unary Minus Operator
+数值的正负号可以使用前缀 `-` (即单目负号) 来切换:
+
+```swift
 let three = 3
-let minusThree = -three       // minusThree equals -3
-let plusThree = -minusThree   // plusThree equals 3, or "minus minus three"
-The unary minus operator (-) is prepended directly before the value it operates on, without any white space.
+let minusThree = -three       // minusThree 等于 -3
+let plusThree = -minusThree   // plusThree 等于 3, o或 "负负3"
+```
 
-‌
-Unary Plus Operator
-The unary plus operator (+) simply returns the value it operates on, without any change:
+单目负号写在需要操作的值之前, 之间不要空格.
 
+# 单目正号
+
+单目正号 `+` 不做任何改变地返回被操作的值.
+
+```swift
 let minusSix = -6
-let alsoMinusSix = +minusSix  // alsoMinusSix equals -6
-Although the unary plus operator doesn’t actually do anything, you can use it to provide symmetry in your code for positive numbers when also using the unary minus operator for negative numbers.
+let alsoMinusSix = +minusSix  // alsoMinusSix 等于 -6
+```
+虽然单目`+`做无用功, 但当你在使用单目负号来表达负数时, 你可以使用单目正号来表达正数, 如此你的代码会具有对称美.
 
-“Compound Assignment Operators
-Like C, Swift provides compound assignment operators that combine assignment (=) with another operation. One example is the addition assignment operator (+=):
 
+# 复合赋值
+
+C的影子又来了, Swift也提供把其他运算符和赋值运算 `=` 组合的复合赋值运算符, 加赋运算 `+=` 是其中一个例子:
+
+```swift
 var a = 1
-a += 2
-// a is now equal to 3
-The expression a += 2 is shorthand for a = a + 2. Effectively, the addition and the assignment are combined into one operator that performs both tasks at the same time.
+a += 2 // a 现在是 3
+```
 
-NOTE
+表达式 `a += 2` 是 `a = a + 2` 的简写, 一个加赋运算就把加法和赋值两件事完成了.
 
-The compound assignment operators do not return a value. You cannot write let b = a += 2, for example. This behavior is different from the increment and decrement operators mentioned above.
+> 注意:
 
-A complete list of compound assignment operators can be found in [Expressions](http://#).
+> 复合赋值运算没有返回值, `let b = a += 2` 这类代码是错误. 这不同于上面提到的自增和自减运算符.
+
+[表达式](http://#)里有复合运算符的完整列表.
 
 ‌
+# 比较运算
+
+所有标准C中的比较运算都可以在Swift中使用.
 Comparison Operators
 Swift supports all standard C comparison operators:
 
-Equal to (a == b)
-Not equal to (a != b)
+- 等于 `a == b`
+- 不等于 `a != b`
+- 大于 `a > b`
+- 小于 `a < b`
+- 大于等于 `a >= b`
+- 小于等于 `a <= b`
 
-“Greater than (a > b)
-Less than (a < b)
-Greater than or equal to (a >= b)
-Less than or equal to (a <= b)
-NOTE
+> 注意:
 
-Swift also provides two identity operators (=== and !==), which you use to test whether two object references both refer to the same object instance. For more information, see [Classes and Structures](http://#).
+> Swift也提供恒等 `===` 和不恒等 `!==` 这两个比较符来判断两个对象是否引用同一个对象实例. 更多细节在 [类与结构](Classes and Structures).
 
-Each of the comparison operators returns a Bool value to indicate whether or not the statement is true:
+每个比较运算都返回了一个指示表达式是否成立的布尔值:
 
-1 == 1   // true, because 1 is equal to 1
-2 != 1   // true, because 2 is not equal to 1
-2 > 1    // true, because 2 is greater than 1
-1 < 2    // true, because 1 is less than 2
-1 >= 1   // true, because 1 is greater than or equal to 1
-2 <= 1   // false, because 2 is not less than or equal to 1
-Comparison operators are often used in conditional statements, such as the if statement:
+```swift
+1 == 1   // true, 因为 1 等于 1
+2 != 1   // true, 因为 2 不等于 1
+2 > 1    // true, 因为 2 大于 1
+1 < 2    // true, 因为 1 小于2
+1 >= 1   // true, 因为 1 大于等于 1
+2 <= 1   // false, 因为 2 并不小于等于 1
+```
 
+比较运算多用于条件语句, 如 `if` 条件:
 
-“let name = "world"
+```swift
+let name = "world"
 if name == "world" {
     println("hello, world")
 } else {
-    println("I'm sorry \(name), but I don't recognize you")
+    println("对不起, \(name), 我不认识你!")
 }
-// prints "hello, world", because name is indeed equal to "world"
-For more on the if statement, see Control Flow.
+// 输出 "hello, world", 因为 `name` 就是等于 "world"
+```
+关于 `if` 语句, 请看 [控制流](Control Flow).
 
-‌
-Ternary Conditional Operator
-The ternary conditional operator is a special operator with three parts, which takes the form question ? answer1 : answer2. It is a shortcut for evaluating one of two expressions based on whether question is true or false. If question is true, it evaluates answer1 and returns its value; otherwise, it evaluates answer2 and returns its value.
+‌# 三目条件运算
 
-The ternary conditional operator is shorthand for the code below:
+这是一个特殊的有三个部分的运算符, 它的形式是 `问题 ? 答案1 : 答案2`. 它是根据 `问题` 成立与否作出二选一操作的简化表达. 如果 `问题` 成立, 返回 `答案1` 的结果; 如果不成立, 返回 `答案2` 的结果.
 
-if question {
-    answer1
-} else {
-    answer2
+三目条件运算是以下代码的精简表达:
+
+```swift
+if question: {
+  answer1
 }
-Here’s an example, which calculates the pixel height for a table row. The row height should be 50 pixels taller “than the content height if the row has a header, and 20 pixels taller if the row doesn’t have a header:
+else {
+  answer2
+}
+```
 
+这里有个计算表格行高的例子. 如果有表头, 那行高应比内容高度高出50像素; 如果没有表头, 只需高出20像素.
+
+```swift
 let contentHeight = 40
 let hasHeader = true
 let rowHeight = contentHeight + (hasHeader ? 50 : 20)
-// rowHeight is equal to 90
-The preceding example is shorthand for the code below:
+// rowHeight 现在是 90
+```
 
+这代码会比下面的代码简单:
+
+```swift
 let contentHeight = 40
 let hasHeader = true
 var rowHeight = contentHeight
@@ -259,76 +293,89 @@ if hasHeader {
 } else {
     rowHeight = rowHeight + 20
 }
-// rowHeight is equal to 90
-The first example’s use of the ternary conditional operator means that rowHeight can be set to the correct value on a single line of code. This is more concise than the second example, and removes the need for rowHeight to be a variable, because its value does not need to be modified within an if statement.
+// rowHeight 现在是 90
+```
 
-“The ternary conditional operator provides an efficient shorthand for deciding which of two expressions to consider. Use the ternary conditional operator with care, however. Its conciseness can lead to hard-to-read code if overused. Avoid combining multiple instances of the ternary conditional operator into one compound statement.
+第一段代码例子使用了三目条件运算, 所以一行代码就能得到正确答案. 这比第二段代码简洁得多, 无需将 `rowHeight` 定义成变量, 因它的值不用在 `if` 语句中改变.
 
+三目条件运算提供有效率且便捷的方式来表达二选一的选择. 需要注意的事, 过度使用三目条件运算就会由简洁的代码变成难懂的代码. 我们应避免在一个组合语句使用多个三目条件运算符. 
+
+# 区间运算符
+
+Swift提供了两个方便表达一个区间的值的运算符.
+
+## 闭区间运算符
+闭区间运算符 `a...b` 定义一个包含从 `a` 到 `b` (包括 `a` 和 `b`)的所有值的区间.
 ‌
-Range Operators
-Swift includes two range operators, which are shortcuts for expressing a range of values.
+闭区间运算符在迭代一个区间的所有值时是非常有用的, 如在 `for-in` 循环中:
 
-‌
-Closed Range Operator
-The closed range operator (a...b) defines a range that runs from a to b, and includes the values a and b.
-
-The closed range operator is useful when iterating over a range in which you want all of the values to be used, such as with a for-in loop:
-
+```swift
 for index in 1...5 {
-    println("\(index) times 5 is \(index * 5)")
+  println("\(index) * 5 = \(index * 5)")
 }
-// 1 times 5 is 5
-// 2 times 5 is 10
-// 3 times 5 is 15
-// 4 times 5 is 20
-// 5 times 5 is 25
-For more on for-in loops, see [Control Flow](http://#). 
+// 1 * 5 = 5
+// 2 * 5 = 10
+// 3 * 5 = 15
+// 4 * 5 = 20
+// 5 * 5 = 25
+```
 
-“Half-Closed Range Operator
-The half-closed range operator (a..b) defines a range that runs from a to b, but does not include b. It is said to be half-closed because it contains its first value, but not its final value.
+关于 `for-in`, 请看 [控制流](Control Flow). 
 
-Half-closed ranges are particularly useful when you work with zero-based lists such as arrays, where it is useful to count up to (but not including) the length of the list:
+## 半闭区间
 
+半闭区间 `a..b` 定义一个从 `a` 到 `b` 但不包括 `b` 的区间.
+之所以称为半闭区间, 是因为该区间包含第一个值而不包括最后的值.
+
+半闭区间的实用性在于当你使用一个0始的列表(如数组)时, 非常方便地从0数到列表的长度.
+
+```swift
 let names = ["Anna", "Alex", "Brian", "Jack"]
 let count = names.count
 for i in 0..count {
-    println("Person \(i + 1) is called \(names[i])")
+    println("第 \(i + 1) 个人叫 \(names[i])")
 }
-// Person 1 is called Anna
-// Person 2 is called Alex
-// Person 3 is called Brian
-// Person 4 is called Jack
-Note that the array contains four items, but 0..count only counts as far as 3 (the index of the last item in the array), because it is a half-closed range. For more on arrays, see [Arrays](http://#).
+// 第 1 个人叫 Anna
+// 第 2 个人叫 Alex
+// 第 3 个人叫 Brian
+// 第 4 个人叫 Jack
+```
+> 注意数组有4个元素, 但 `0..count` 只数到 3 (最后一个元素的下标), 因为它是半闭区间. 关于数组, 请查阅  [数组](Arrays).
 
+# 逻辑运算
 
-“Logical Operators
-Logical operators modify or combine the Boolean logic values true and false. Swift supports the three standard logical operators found in C-based languages:
+逻辑运算的操作对象是逻辑布尔值. Swift支持基于C语言的三个标准逻辑运算.
 
-Logical NOT (!a)
-Logical AND (a && b)
-Logical OR (a || b)
+- 逻辑非 `!a`
+- 逻辑与 `a && b`
+- 逻辑或 `a || b`
 ‌
-Logical NOT Operator
-The logical NOT operator (!a) inverts a Boolean value so that true becomes false, and false becomes true.
+## 逻辑非
 
-The logical NOT operator is a prefix operator, and appears immediately before the value it operates on, without any white space. It can be read as “not a”, as seen in the following example:
+逻辑非运算 `!a` 对一个布尔值取反, 使得 `true` 变 `false`, `false` 变 `true`.
 
+它是一个前置运算符, 需出现在操作数之前, 且不加空格. 读作 `非 a`, 然后我们看以下例子:
+
+```swift
 let allowedEntry = false
 if !allowedEntry {
     println("ACCESS DENIED")
 }
 // prints "ACCESS DENIED"
-The phrase if !allowedEntry can be read as “if not allowed entry.” The subsequent line is only executed if “not allowed entry” is true; that is, if allowedEntry is false.
+```
 
-As in this example, careful choice of Boolean constant and variable names can help to keep code readable and concise, while avoiding double negatives or confusing logic statements.
+`if !allowedEntry`语句可以读作 "如果 非 alowed entry.", 接下一行代码只有在如果 "非 allow entry" 为 `true`, 即 `allowEntry` 为 `false` 时被执行.
 
-“Logical AND Operator
-The logical AND operator (a && b) creates logical expressions where both values must be true for the overall expression to also be true.
+在示例代码中, 小心地选择布尔常量或变量有助于代码的可读性, 并且避免使用双重逻辑非运算, 或混乱的逻辑语句.
 
-If either value is false, the overall expression will also be false. In fact, if the first value is false, the second value won’t even be evaluated, because it can’t possibly make the overall expression equate to true. This is known as short-circuit evaluation.
+## 逻辑与
+逻辑与 `a && b` 表达了只有 `a` 和 `b` 的值都为 `true` 时, 整个表达式的值才会 `true` .
 
-This example considers two Bool values and only allows access if both values are true:
+只要任意一个值为 `false`, 整个表达式的值就为 `false`. 事实上, 如果第一个值为 `false`, 那么第二个值是不会被计算的, 因为它已经不可能影响整个表达式的结果了. 这被叫做 "短路计算".
 
+以下例子, 只有两个值都为值的时候才允许进入:
+
+```swift
 let enteredDoorCode = true
 let passedRetinaScan = false
 if enteredDoorCode && passedRetinaScan {
@@ -336,15 +383,17 @@ if enteredDoorCode && passedRetinaScan {
 } else {
     println("ACCESS DENIED")
 }
-// prints "ACCESS DENIED
+// 输出 "ACCESS DENIED
+```
 
-“Logical OR Operator
-The logical OR operator (a || b) is an infix operator made from two adjacent pipe characters. You use it to create logical expressions in which only one of the two values has to be true for the overall expression to be true.
+逻辑或
+逻辑或 `a || b` 是一个由两个相邻的竖线组成的中置运算符. 它表达了两个逻辑表达式的其中一个为 `true`, 整个表达式就为 `true`.
 
-Like the Logical AND operator above, the Logical OR operator uses short-circuit evaluation to consider its expressions. If the left side of a Logical OR expression is true, the right side is not evaluated, because it cannot change the outcome of the overall expression.
+同逻辑与运算类似, 逻辑或也是"短路计算", 当左端的表达式为真是, 右边的表达式就不进行计算了, 因为它也可能改变整个表达式的值了.
 
-In the example below, the first Bool value (hasDoorKey) is false, but the second value (knowsOverridePassword) is true. Because one value is true, the overall expression also evaluates to true, and access is allowed:
+以下示例代码中, 第一个布尔值 `hasDoorKey` 为 `false`, 但第二个值 `knowsOverridePassword` 为 `true`, 所以整个表达是 `true`, 于是允许进入:
 
+```swift
 let hasDoorKey = false
 let knowsOverridePassword = true
 if hasDoorKey || knowsOverridePassword {
@@ -352,31 +401,40 @@ if hasDoorKey || knowsOverridePassword {
 } else {
     println("ACCESS DENIED")
 }
-// prints "Welcome!"
-‌
-Combining Logical Operators
-You can combine multiple logical operators to create longer compound expressions:
+// 输出 "Welcome!"
+‌```
 
-“if enteredDoorCode && passedRetinaScan || hasDoorKey || knowsOverridePassword {
+# 组合逻辑
+
+我们可以组合多个逻辑运算来表达一个复合逻辑:
+
+```swift
+if enteredDoorCode && passedRetinaScan || hasDoorKey || knowsOverridePassword {
     println("Welcome!")
 } else {
     println("ACCESS DENIED")
 }
-// prints "Welcome!"
-This example uses multiple && and || operators to create a longer compound expression. However, the && and || operators still operate on only two values, so this is actually three smaller expressions chained together. It can be read as:
+// 输出 "Welcome!"
+```
 
-If we’ve entered the correct door code and passed the retina scan; or if we have a valid door key; or if we know the emergency override password, then allow access.
+这个例子使用了含多个 `&&` 和 `||` 的复合逻辑. 但无论怎样, `&&` 和 `&&` 始终只能操作两个值. 所以这实际是三个简单逻辑连续操作的结果. 我们来解读一下:
 
-Based on the values of enteredDoorCode, passedRetinaScan, and hasDoorKey, the first two mini-expressions are false. However, the emergency override password is known, so the overall compound expression still evaluates to true.
+如果我们输入了正确的密码并通过了视网膜扫描; 或者我们有一把有效的钥匙; 又或者我们知道紧急情况下重置的密码, 我们就能把门打开进入.
 
-‌
-Explicit Parentheses
-It is sometimes useful to include parentheses when they are not strictly needed, to make the intention of a complex expression easier to read. In the door access example above, it is useful to add parentheses around the first part of the compound expression to make its intent explicit:
+前两种情况, 我们都不满足, 所以前两个简单逻辑的结果是 `false`, 但是我们知道紧急情况下重置的密码, 所以整个复杂表达式的值还是 `true`.
 
+
+‌## 使用括号来明确优先级
+
+为了一个复杂表达式更容易读懂, 在合适的地方使用括号来明确优先级是很有效的, 虽然它并不是必要的. 在上个关于门的权限的例子中, 我们给第一个部分加个括号, 使用它看起来更准确.
+
+```swift
 if (enteredDoorCode && passedRetinaScan) || hasDoorKey || knowsOverridePassword {
     println("Welcome!")
 } else {
     println("ACCESS DENIED")
 }
 // prints "Welcome!"
-The parentheses make it clear that the first two values are considered as part of a separate possible state in the overall logic. “The output of the compound expression doesn’t change, but the overall intention is clearer to the reader. Readability is always preferred over brevity; use parentheses where they help to make your intentions clear.
+```
+
+这括号使得前两个值被看成整个逻辑表达中独立的一个部分. 有括号和没括号的输出结果是一样的, 但对于读代码的人来说有括号的代码更清晰. 可读性比简洁性更重要, 请在可以让你代码变清晰地地方加个括号吧!
