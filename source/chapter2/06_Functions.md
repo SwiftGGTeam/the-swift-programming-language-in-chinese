@@ -14,7 +14,7 @@ Swift统一的函数语法足够灵活，可以用来表示任何函数，包括
 
 在Swift中，每个函数都有一种类型，包括函数的参数值类型和返回值类型。你可以把函数类型当做任何其他普通变量类型一样处理，这样就可以更简单地把函数当做别的函数的参数，也可以从其他函数中返回函数。函数的定义可以写在在其他函数定义中，这样可以在嵌套函数范围内实现功能封装。
 
-## 函数的定义与调用
+## 函数的定义与调用（Defining and Calling Functions）
 
 当你定义一个函数时，你可以定义一个或多个有名字和类型的值，作为函数的输入（称为参数，parameters），也可以定义某种类型的值作为函数执行结束的输出（称为返回类型）。
 
@@ -50,11 +50,11 @@ Swift统一的函数语法足够灵活，可以用来表示任何函数，包括
             println(sayHelloAgain("Anna"))
             // prints "Hello again, Anna!
 
-## 函数参数与返回值
+## 函数参数与返回值（Function Parameters and Return Values）
 
 函数参数与返回值在Swift中极为灵活。你可以定义任何类型的函数，包括从只带一个未名参数的简单函数到复杂的带有表达性参数名和不同参数选项的复杂函数。
 
-### 多重输入参数
+### 多重输入参数（Multiple Input Parameters）
 
 函数可以有多个输入参数，写在圆括号中，用逗号分隔。
 
@@ -66,7 +66,7 @@ Swift统一的函数语法足够灵活，可以用来表示任何函数，包括
 			println(halfOpenRangeLength(1, 10))
 			// prints "9
 			
-### 无参函数
+### 无参函数（Functions Without Parameters）
 
 函数可以没有参数。下面这个函数就是一个无参函数，当被调用时，它返回固定的`String`消息：
 
@@ -78,7 +78,7 @@ Swift统一的函数语法足够灵活，可以用来表示任何函数，包括
 
 尽管这个函数没有参数，但是定义中在函数名后还是需要一对圆括号。当被调用时，也需要在函数名后写一对圆括号。
 
-### 无返回值函数
+### 无返回值函数（Functions Without Return Values）
 
 函数可以没有返回值。下面是`sayHello`函数的另一个版本，叫`waveGoodbye`，这个函数直接输出`String`值，而不是返回它：
 
@@ -112,7 +112,7 @@ Swift统一的函数语法足够灵活，可以用来表示任何函数，包括
 > 注意：
 > 返回值可以被忽略，但定义了有返回值的函数必须返回一个值，如果在函数定义底部没有返回任何值，这叫导致编译错误（compile-time error）。
 
-### 多重返回值函数
+### 多重返回值函数（Functions with Multiple Return Values）
 
 你可以用元组（tuple）类型让多个值作为一个复合值从函数中返回。
 
@@ -142,7 +142,7 @@ Swift统一的函数语法足够灵活，可以用来表示任何函数，包括
 			
 需要注意的是，元组的成员不需要在函数中返回时命名，因为它们的名字已经在函数返回类型有有了定义。
 
-## 函数参数名
+## 函数参数名（Function Parameter Names）
 
 以上所有的函数都给它们的参数定义了`参数名（parameter name）`：
 
@@ -151,13 +151,13 @@ Swift统一的函数语法足够灵活，可以用来表示任何函数，包括
     			// to refer to the argument value for that parameter
 			}
 
-但是，这些参数名仅在函数体中使用，不能在函数调用时使用。这种类型的参数名被称作`本地参数名（local parameter name）`，因为它们只能在函数体中使用。
+但是，这些参数名仅在函数体中使用，不能在函数调用时使用。这种类型的参数名被称作`局部参数名（local parameter name）`，因为它们只能在函数体中使用。
 
-### 外部参数名
+### 外部参数名（External Parameter Names）
 
 有时候，调用函数时，给每个参数命名是非常有用的，因为这些参数名可以指出各个实参的用途是什么。
 
-如果你希望函数的使用者在调用函数时提供参数名字，那就需要给每个参数除了本地参数名外再定义一个`外部参数名`。外部参数名写在本地参数名之前，用空格分隔。
+如果你希望函数的使用者在调用函数时提供参数名字，那就需要给每个参数除了局部参数名外再定义一个`外部参数名`。外部参数名写在局部参数名之前，用空格分隔。
 
 			func someFunction(externalParameterName localParameterName: Int) {
     			// function body goes here, and can use localParameterName
@@ -184,7 +184,7 @@ Swift统一的函数语法足够灵活，可以用来表示任何函数，包括
         			return s1 + joiner + s2
 			}
 			
-在这个版本的`join`函数中，第一个参数有一个叫`string`的外部参数名和`s1`的本地参数名，第二个参数有一个叫`toString`的外部参数名和`s2`的本地参数名，第三个参数有一个叫`withJoiner`的外部参数名和`joiner`的本地参数名。
+在这个版本的`join`函数中，第一个参数有一个叫`string`的外部参数名和`s1`的局部参数名，第二个参数有一个叫`toString`的外部参数名和`s2`的局部参数名，第三个参数有一个叫`withJoiner`的外部参数名和`joiner`的局部参数名。
 
 现在，你可以使用这些外部参数名以一种清晰地方式来调用函数了：
 
@@ -196,9 +196,9 @@ Swift统一的函数语法足够灵活，可以用来表示任何函数，包括
 > 注意：
 > 当其他人在第一次读你的代码，函数参数的意图显得不明显时，考虑使用外部参数名。如果函数参数名的意图是很明显的，那就不需要定义外部参数名了。
 
-### 简写外部参数名
+### 简写外部参数名（Shorthand External Parameter Names）
 
-如果你需要提供外部参数名，但是本地参数名已经定义好了，那么你不需要写两次这些参数名。相反，只写一次参数名，并用`井号（#）`作为前缀就可以了。这告诉Swift使用这个参数名作为本地和外部参数名。
+如果你需要提供外部参数名，但是局部参数名已经定义好了，那么你不需要写两次这些参数名。相反，只写一次参数名，并用`井号（#）`作为前缀就可以了。这告诉Swift使用这个参数名作为局部和外部参数名。
 
 下面这个例子定义了一个叫`containsCharacter`的函数，使用`井号（#）`的方式定义了外部参数名：
 
@@ -217,7 +217,7 @@ Swift统一的函数语法足够灵活，可以用来表示任何函数，包括
 			// containsAVee equals true, because "aardvark" contains a "v”
 
 
-### 默认参数值
+### 默认参数值（Default Parameter Values）
 
 你可以在函数体中为每个参数定义`默认值`。当默认值被定义后，调用这个函数时可以略去这个参数。
 
@@ -240,11 +240,11 @@ Swift统一的函数语法足够灵活，可以用来表示任何函数，包括
 			join(string: "hello", toString: "world", withJoiner: "-")
 			// returns "hello-world
 			
-### 默认值参数的外部参数名
+### 默认值参数的外部参数名（External Names for Parameters with Default Values）
 
 在大多数情况下，给带默认值的参数起一个外部参数名是很有用的。这样可以保证当函数被调用且带默认值的参数被提供值时，实参的意图是明显的。
 
-为了使定义外部参数名更加简单，当你未给带默认值的参数提供外部参数名时，Swift会自动提供外部名字。此时外部参数名与本地名字是一样的，就像你已经在本地参数名前写了`井号（#）`一样。
+为了使定义外部参数名更加简单，当你未给带默认值的参数提供外部参数名时，Swift会自动提供外部名字。此时外部参数名与局部名字是一样的，就像你已经在局部参数名前写了`井号（#）`一样。
 
 下面是`join`函数的另一个版本，这个版本中并没有为它的参数提供外部参数名，但是`joiner`参数依然有外部参数名：
 
@@ -259,6 +259,99 @@ Swift统一的函数语法足够灵活，可以用来表示任何函数，包括
 			}
 
 > 注意：
-> 你可以用用`下划线（_）`
+> 你可以使用`下划线（_）`作为默认值参数的外部参数名，这样可以在调用时不用提供外部参数名。但是给带默认值的参数命名总是更加合适的。
+
+### 可变参数（Variadic Parameters）
+
+一个`可变参数（variadic parameter）`可以接受一个或多个值。函数调用时，你可以用可变参数来传入不确定数量的输入参数。通过在变量类型名后面加入`（...）`的方式来定义可变参数。
+
+传入可变参数的值在函数体内当做这个类型的一个数组。例如，一个叫做`numbers`的`Double...`型可变参数，在函数体内可以当做一个叫`numbers`的`Double[]`型的数组常量。
+
+下面的这个函数用来计算一组任意长度数字的算术平均数：
+
+			func arithmeticMean(numbers: Double...) -> Double {
+    			var total: Double = 0
+    			for number in numbers {
+        			total += number
+    			}
+    			return total / Double(numbers.count)
+			}
+			arithmeticMean(1, 2, 3, 4, 5)
+			// returns 3.0, which is the arithmetic mean of these five numbers
+			arithmeticMean(3, 8, 19)
+			// returns 10.0, which is the arithmetic mean of these three numbers
+			
+> 注意：
+> 一个函数至多能有一个可变参数，而且它必须是参数表中最后的一个。这样做是为了避免函数调用时出现歧义。
+
+如果函数有一个或多个带默认值的参数，而且还有一个可变参数，那么把可变参数放在参数表的最后。
+
+### 常量参数和变量参数（Constant and Variable Parameters）
+
+函数参数默认是常量。试图在函数体中更改参数值将会导致编译错误。这意味着你不能错误地更改参数值。
+
+但是，有时候，如果函数中有传入参数的变量值副本将是很有用的。你可以通过指定一个或多个参数为变量参数，从而避免自己在函数中定义新的变量。变量参数不是常量，你可以在函数中把它当做新的可修改副本来使用。
+
+通过在参数名前加关键字`var`来定义变量参数：
+
+			func alignRight(var string: String, count: Int, pad: Character) -> String {
+    			let amountToPad = count - countElements(string)
+    			for _ in 1...amountToPad {
+        			string = pad + string
+    			}
+    			return string
+			}
+			let originalString = "hello"
+			let paddedString = alignRight(originalString, 10, "-")
+			// paddedString is equal to "-----hello"
+			// originalString is still equal to "hello”
+			
+这个例子中定义了一个新的叫做`alignRight`的函数，用来右对齐输入的字符串到一个长的输出字符串中。左侧空余的地方用指定的填充字符填充。这个例子中，字符串`"hello"`被转换成了`"-----hello"`。
+
+`alignRight`函数将参数`string`定义为变量参数。这意味着`string`现在可以作为一个局部变量，用传入的字符串值初始化，并且可以在函数体中进行操作。
+
+该函数首先计算出多少个字符需要被添加到`string`的左边，以右对齐到总的字符串中。这个值存在局部常量`amountToPad`中。这个函数然后将`amountToPad`多的填充（pad）字符填充到`string`左边，并返回结果。它使用了`string`这个变量参数来进行所有字符串操作。
+
+> 注意：
+> 对变量参数所进行的修改在函数调用结束后变消息了，并且对于函数体外是不可见的。变量参数仅仅存在于函数调用的生命周期中。
+
+### 输入输出参数（In-Out Parameters）
+
+变量参数，正如上面所述，仅仅能在函数体内被更改。如果你想要一个函数可以修改参数的值，并且想要在这些修改在函数调用结束后仍然存在，那么就应该把这个参数定义为输入输出参数（In-Out Parameters）。
+
+定义一个输入输出参数时，在参数定以前加`inout`关键字。一个输入输出参数有传入函数的值，这个值被函数修改，然后被传出函数，替换原来的值。
+
+你只能传入一个变量作为输入输出参数。你不能传入常量或者字面量（literal value），因为这些量是不能被修改的。当传入的参数作为输入输出参数时，需要在参数前加`&`符，表示这个值可以被函数修改。
+
+> 注意：
+> 输入输出参数不能有默认值，而且变量参数不能用`inout`标记。如果你用`inout`标记一个参数，这个参数不能别`var`或者`let`标记。
+
+下面是例子，`swapTwoInts`函数，有两个分别叫做`a`和`b`的输出输出参数：
+
+			func swapTwoInts(inout a: Int, inout b: Int) {
+    			let temporaryA = a
+    			a = b
+    			b = temporaryA
+			}
+			
+这个`swapTwoInts`函数仅仅交换`a`与`b`的值。该函数先将`a`的值存到一个暂时常量`temporaryA`中，然后将`b`的值赋给`a`，最后将`temporaryA`幅值给`b`。
+
+你可以用两个`Int`型的变量来调用`swapTwoInts`。需要注意的是，`someInt`和`anotherInt`在传入`swapTwoInts`函数前，都加了`&`的前缀：
+
+			var someInt = 3
+			var anotherInt = 107
+			swapTwoInts(&someInt, &anotherInt)
+			println("someInt is now \(someInt), and anotherInt is now \(anotherInt)")
+			// prints "someInt is now 107, and anotherInt is now 3”
+
+从上面这个例子中，我们可以看到`someInt`和`anotherInt`的原始值在`swapTwoInts`函数中被修改，尽管它们的定义在函数体外。
+
+> 注意：
+> 输出输出参数和返回值是不一样的。上面的`swapTwoInts`函数并没有定义任何返回值，但仍然修改了`someInt`和`anotherInt`的值。输入输出参数是函数对函数体外产生影响的另一种方式。
+
+## 函数类型（Function Types）
+
+
+
 
 
