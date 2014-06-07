@@ -54,3 +54,42 @@
 	directionToHead = .East
 	
 `directionToHead`的类型已知时，当设定它的值时，你可以不写类型名。使用显示类型的枚举值可以让代码具有更好的可读性。
+
+## 匹配枚举值和`Switch`语句
+
+你可以匹配单个枚举值和`switch`语句：
+
+	directionToHead = .South
+	switch directionToHead {
+	case .North:
+    	println("Lots of planets have a north")
+	case .South:
+    	println("Watch out for penguins")
+	case .East:
+    	println("Where the sun rises")
+	case .West:
+    	println("Where the skies are blue")
+	}
+	// prints "Watch out for penguins”
+
+你可以如此这段代码：
+
+“考虑`directionToHead`的值。当它等于`.North`，打印`“Lots of planets have a north”`。当它等于`.South`，打印`“Watch out for penguins”`。”
+
+。。。。。。等等。
+
+正如在控制流（Control Flow）中介绍，当考虑一个枚举的成员们时，一个`switch`语句必须全面。如果忽略了`.West`这种情况，上面那段代码将如果通过编译，因为它没有考虑到`CompassPoint`的全部成员。全面性的要求确保了枚举成员不会被意外遗漏。
+
+当不需要匹配每个枚举成员的时候，你可以提供一个默认`default`分支来涵盖所有未明确提出的任何成员：
+
+	let somePlanet = Planet.Earth
+	switch somePlanet {
+	case .Earth:
+    	println("Mostly harmless")
+	default:
+    	println("Not a safe place for humans")
+	}
+	// prints "Mostly harmless”
+
+## 实例值（associated values）
+
