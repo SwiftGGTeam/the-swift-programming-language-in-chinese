@@ -157,3 +157,108 @@ Swift统一的函数语法足够灵活，可以用来表示任何函数，包括
 
 有时候，调用函数时，给每个参数命名是非常有用的，因为这些参数名可以指出各个实参的用途是什么。
 
+如果你希望函数的使用者在调用函数时提供参数名字，那就需要给每个参数除了本地参数名外再定义一个`外部参数名`。外部参数名写在本地参数名之前，用空格分隔。
+
+			func someFunction(externalParameterName localParameterName: Int) {
+    			// function body goes here, and can use localParameterName
+    			// to refer to the argument value for that parameter
+			}
+			
+> 注意：
+> 如果你提供了外部参数名，那么函数在被调用时，必须使用外部参数名。
+
+以下是个例子，这个函数使用一个`结合者（joiner）`把两个字符串联在一起：
+
+			func join(s1: String, s2: String, joiner: String) -> String {
+    			return s1 + joiner + s2
+			}
+			
+当你调用这个函数时，这三个字符串的用途是不清楚的：
+
+			join("hello", "world", ", ")
+			// returns "hello, world
+			
+为了让这些字符串的用途更为明显，我们为`join`函数添加外部参数名：
+
+			func join(string s1: String, toString s2: String, withJoiner joiner: String) -> String {
+        			return s1 + joiner + s2
+			}
+			
+在这个版本的`join`函数中，第一个参数有一个叫`string`的外部参数名和`s1`的本地参数名，第二个参数有一个叫`toString`的外部参数名和`s2`的本地参数名，第三个参数有一个叫`withJoiner`的外部参数名和`joiner`的本地参数名。
+
+现在，你可以使用这些外部参数名以一种清晰地方式来调用函数了：
+
+			join(string: "hello", toString: "world", withJoiner: ", ")
+			// returns "hello, world
+			
+使用外部参数名让第二个版本的`join`函数的调用更为有表现力，更为通顺，同时还保持了函数体是可读的和有明确意图的。
+
+> 注意：
+> 当其他人在第一次读你的代码，函数参数的意图显得不明显时，考虑使用外部参数名。如果函数参数名的意图是很明显的，那就不需要定义外部参数名了。
+
+### 简写外部参数名
+
+如果你需要提供外部参数名，但是本地参数名已经定义好了，那么你不需要写两次这些参数名。相反，只写一次参数名，并用`井号（#）`作为前缀就可以了。这告诉Swift使用这个参数名作为本地和外部参数名。
+
+下面这个例子定义了一个叫`containsCharacter`的函数，使用`井号（#）`的方式定义了外部参数名：
+
+			func containsCharacter(#string: String, #characterToFind: Character) -> Bool {
+    			for character in string {
+        			if character == characterToFind {
+            			return true
+        			}
+    			}
+    			return false
+			}
+			
+这样定义参数名，使得函数体更为可读，清晰，同时也可以以一个不含糊的方式被调用：
+
+			let containsAVee = containsCharacter(string: "aardvark", characterToFind: "v")
+			// containsAVee equals true, because "aardvark" contains a "v”
+
+
+### 默认参数值
+
+你可以在函数体中为每个参数定义`默认值`。当默认值被定义后，调用这个函数时可以略去这个参数。
+
+> 注意：
+> 将带有默认值的参数放在函数参数表的最后。这样可以保证在函数调用时，非默认参数的顺序是一致的，同时使得相同的函数在不同情况下调用时显得更为清晰。
+
+以下是另一个版本的`join`函数，其中`joiner`有了默认参数值：
+
+			func join(string s1: String, toString s2: String, withJoiner joiner: String = " ") -> String {
+        		return s1 + joiner + s2
+			}
+
+像第一个版本的`join`函数一样，如果`joiner`被幅值时，函数将使用这个字符串值来连接两个字符串：
+
+			join(string: "hello", toString: "world", withJoiner: "-")
+			// returns "hello-world
+
+当这个函数被调用时，如果`joiner`的值没有被指定，函数会使用默认值（" "）：
+
+			join(string: "hello", toString: "world", withJoiner: "-")
+			// returns "hello-world
+			
+### 默认值参数的外部参数名
+
+在大多数情况下，给带默认值的参数起一个外部参数名是很有用的。这样可以保证当函数被调用且带默认值的参数被提供值时，实参的意图是明显的。
+
+为了使定义外部参数名更加简单，当你未给带默认值的参数提供外部参数名时，Swift会自动提供外部名字。此时外部参数名与本地名字是一样的，就像你已经在本地参数名前写了`井号（#）`一样。
+
+下面是`join`函数的另一个版本，这个版本中并没有为它的参数提供外部参数名，但是`joiner`参数依然有外部参数名：
+
+			func join(s1: String, s2: String, joiner: String = " ") -> String {
+    			return s1 + joiner + s2
+			}
+
+在这个例子中，Swift自动为`joiner`提供了外部参数名。因此，当函数调用时，外部参数名必须使用，这样使得参数的用途变得清晰。
+
+			func join(s1: String, s2: String, joiner: String = " ") -> String {
+    			return s1 + joiner + s2
+			}
+
+> 注意：
+> 你可以用用`下划线（_）`
+
+
