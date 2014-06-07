@@ -351,7 +351,139 @@ Swift统一的函数语法足够灵活，可以用来表示任何函数，包括
 
 ## 函数类型（Function Types）
 
+每个函数都有种特定的函数类型，由函数的参数类型和返回类型组成。
 
+例如：
 
+			func addTwoInts(a: Int, b: Int) -> Int {
+    			return a + b
+			}
+			func multiplyTwoInts(a: Int, b: Int) -> Int {
+    			return a * b
+			}
+			
+这个例子中定义了两个简单的数学函数：`addTwoInts`和`multiplyTwoInts`。这两个函数都传入两个`Int`类型， 返回一个合适的`Int`值。
 
+这两个函数的类型是`(Int, Int) -> Int`，可以读作“这个函数类型，它有两个`Int`型的参数并返回一个`Int`型的值。”。
 
+下面是另一个例子，一个没有参数，也没有返回值的函数：
+
+			func printHelloWorld() {
+    			println("hello, world")
+			}
+			
+这个函数的类型是：`() -> ()`，或者叫“没有参数，并返回`Void`类型的函数。”。没有指定返回类型的函数总返回	`Void`。在Swift中，`Void`与空的元组是一样的。
+
+### 使用函数类型（Using Function Types）
+
+在Swift中，使用函数类型就像使用其他类型一样。例如，你可以定义一个常量或变量，它的类型是函数，并且可以幅值为一个函数：
+
+			var mathFunction: (Int, Int) -> Int = addTwoInts
+
+这个可以读作：
+
+“定义一个叫做`mathFunction`的变量，类型是‘一个有两个`Int`型的参数并返回一个`Int`型的值的函数’，并让这个新变量指向`addTwoInts`函数”。
+
+`addTwoInts`和`mathFunction`有同样的类型，所以这个赋值过程在Swift类型检查中是允许的。
+
+现在，你可以用`mathFunction`来调用被赋值的函数了：
+
+			println("Result: \(mathFunction(2, 3))")
+			// prints "Result: 5
+
+有相同匹配类型的不同函数可以被赋值给同一个变量，就像非函数类型的变量一样：
+
+			mathFunction = multiplyTwoInts
+			println("Result: \(mathFunction(2, 3))")
+			// prints "Result: 6"
+			
+就像其他类型一样，当赋值一个函数给常量或变量时，你可以让Swift来推测其函数类型：
+
+			let anotherMathFunction = addTwoInts
+			// anotherMathFunction is inferred to be of type (Int, Int) -> Int
+
+### 函数类型作为参数类型（Function Types as Parameter Types）
+
+你可以用`(Int, Int) -> Int`这样的函数类型作为另一个函数的参数类型。这样你可以将函数的一部分实现交由给函数的调用者。
+
+下面是另一个例子，正如上面的函数一样，同样是输出某种数学运算结果：
+
+			func printMathResult(mathFunction: (Int, Int) -> Int, a: Int, b: Int) {
+    			println("Result: \(mathFunction(a, b))")
+			}
+			printMathResult(addTwoInts, 3, 5)
+			// prints "Result: 8”
+
+这个例子定义了`printMathResult`函数，它有三个参数：第一个参数叫`mathFunction`，类型是`(Int, Int) -> Int`，你可以传入任何这种类型的函数；第二个和第三个参数叫`a`和`b`，它们的类型都是`Int`，这两个值作为已给的函数的输入值。
+
+当`printMathResult`被调用时，它被传入`addTwoInts`函数和整数`3`和`5`。它用传入`3`和`5`调用`addTwoInts`，并输出结果：`8`。
+
+`printMathResult`函数的作用就是输出另一个合适类型的数学函数的调用结果。它不关心传入函数是如何实现的，它只关心这个传入的函数类型是正确的。这使得`printMathResult`可以以一种类型安全（type-safe）的方式来保证传入函数的调用是正确的。
+
+### 函数类型作为返回类型（Function Type as Return Types）
+
+你可以用函数类型作为另一个函数的返回类型。你需要做的是在返回箭头（`->`）后写一个完整的函数类型。
+
+下面的这个例子中定义了两个简单函数，分别是`stepForward`和`stepBackward`。`stepForward`函数返回一个比输入值大一的值。`stepBackward`函数返回一个比输入值小一的值。这两个函数的类型都是`(Int) -> Int`：
+
+			func stepForward(input: Int) -> Int {
+    			return input + 1
+			}
+			func stepBackward(input: Int) -> Int {
+    			return input - 1
+			}
+
+下面这个叫做`chooseStepFunction`的函数，它的返回类型是`(Int) -> Int`的函数。`chooseStepFunction`根据布尔值`backwards`来返回`stepForward`函数或`stepBackward`函数：
+
+			func chooseStepFunction(backwards: Bool) -> (Int) -> Int {
+    			return backwards ? stepBackward : stepForward
+			}
+
+你现在可以用`chooseStepFunction`来获得一个函数，不管是那个方向：
+
+			var currentValue = 3
+			let moveNearerToZero = chooseStepFunction(currentValue > 0)
+			// moveNearerToZero now refers to the stepBackward() function
+			
+上面这个例子中计算出从`currentValue`逐渐接近到`0`是需要向正数走还是向负数走。`currentValue`的初始值是`3`，这意味着`currentValue > 0`是真的（`true`），这将使得`chooseStepFunction`返回`stepBackward`函数。一个指向返回的函数的引用保存在了`moveNearerToZero`常量中。
+
+现在，`moveNearerToZero`指向了正确的函数，它可以被用来数到`0`：
+
+			println("Counting to zero:")
+			// Counting to zero:
+			while currentValue != 0 {
+    			println("\(currentValue)... ")
+    			currentValue = moveNearerToZero(currentValue)
+			}
+			println("zero!")
+			// 3...
+			// 2...
+			// 1...
+			// zero!
+
+## 嵌套函数（Nested Functions）
+
+这章中你所见到的所有函数都叫全局函数（global functions），它们定义在全局域中。你也可以把函数定义在别的函数体中，称作嵌套函数（nested functions）。
+
+默认情况下，嵌套函数是对外界不可见的，但是可以被他们封闭函数（enclosing function）来调用。一个封闭函数也可以返回它的某一个嵌套函数，使得这个函数可以在其他域中被使用。
+
+你可以用返回嵌套函数的方式重写`chooseStepFunction`函数：
+
+			func chooseStepFunction(backwards: Bool) -> (Int) -> Int {
+    			func stepForward(input: Int) -> Int { return input + 1 }
+    			func stepBackward(input: Int) -> Int { return input - 1 }
+    			return backwards ? stepBackward : stepForward
+			}
+			var currentValue = -4
+			let moveNearerToZero = chooseStepFunction(currentValue > 0)
+			// moveNearerToZero now refers to the nested stepForward() function
+			while currentValue != 0 {
+    			println("\(currentValue)... ")
+    			currentValue = moveNearerToZero(currentValue)
+			}
+			println("zero!")
+			// -4...
+			// -3...
+			// -2...
+			// -1...
+			// zero!
