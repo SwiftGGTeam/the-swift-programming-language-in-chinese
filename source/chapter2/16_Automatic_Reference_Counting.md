@@ -65,5 +65,4 @@ Person类有一个构造函数，此构造函数为实例的name属性赋值并�
 		reference3 = reference1
 
 现在这个Person类实例已经有三个强引用了。
-
 (未完待续)
