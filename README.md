@@ -32,7 +32,7 @@
    * 属性(@shinyzhu 认领)
    * 方法(@pp-prog 认领)
    * 下标(@siemenliu 认领)
-   * 继承
+   * 继承(@Hawstein 认领)
    * 构造过程(@lifedim 认领)
    * 析构过程(认领)
    * 自动引用计数(@TimothyYe 认领)
