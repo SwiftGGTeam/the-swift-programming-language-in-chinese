@@ -463,9 +463,9 @@ The ternary conditional operator is shorthand for the code below:
          answer2
       }
 
-Here's an example, which calculates the pixel height for a table row.
-The row height should be 50 pixels taller than the content height
-if the row has a header, and 20 pixels taller if the row doesn't have a header:
+Here's an example, which calculates the height for a table row.
+The row height should be 50 points taller than the content height
+if the row has a header, and 20 points taller if the row doesn't have a header:
 
 .. testcode:: ternaryConditionalOperatorPart1
 
