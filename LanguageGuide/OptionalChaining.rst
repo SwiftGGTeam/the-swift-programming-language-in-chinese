@@ -195,9 +195,7 @@ The computed ``numberOfRooms`` property simply returns
 the value of the ``count`` property from the ``rooms`` array.
 
 As a shortcut to accessing its ``rooms`` array,
-this version of ``Residence`` provides a read-only subscript,
-which starts by asserting that the index passed to the subscript is valid.
-If the index is valid, the subscript returns
+this version of ``Residence`` provides a read-only subscript that returns
 the room at the requested index in the ``rooms`` array.
 
 This version of ``Residence`` also provides a method called ``printNumberOfRooms``,
