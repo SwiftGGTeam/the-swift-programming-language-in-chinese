@@ -47,7 +47,7 @@ class Counter {
  // the counter's value is now 0
 ```
 
-### 方法的局部和外部参数名称(Local and External Parameter Names for Methods)
+### 方法的局部参数名称和外部参数名称(Local and External Parameter Names for Methods)
 
 函数参数有一个局部名称(在函数体内部使用)和一个外部名称(在调用函数时使用),参考[External Parameter Names](external_parameter_names.md)。对于方法参数也是这样，因为方法就是函数(只是这个函数与某个类型相关联了)。但是，方法和函数的局部名称和外部名称的默认行为是不一样的。
 
@@ -59,20 +59,20 @@ Swift中的方法和Objective-C中的方法极其相似。像在Objective-C中�
 看看下面这个`Counter`的替换版本（它定义了一个更复杂的`incrementBy`方法）：
 
 ```
-1| class Counter {
-2|   var count: Int = 0
-3|   func incrementBy(amount: Int, numberOfTimes: Int) {
-4|     count += amount * numberOfTimes
-5|   }
-6| }
+class Counter {
+  var count: Int = 0
+  func incrementBy(amount: Int, numberOfTimes: Int) {
+    count += amount * numberOfTimes
+  }
+}
 ```
 
 `incrementBy`方法有两个参数： `amount`和`numberOfTimes`。默认地，Swift只把`amount`当作一个局部名称，但是把`numberOfTimes`即看作本地名称又看作外部名称。下面调用这个方法：
 
 ```
-1| let counter = Counter()
-2| counter.incrementBy(5, numberOfTimes: 3)
-3| // counter value is now 15
+let counter = Counter()
+counter.incrementBy(5, numberOfTimes: 3)
+// counter value is now 15
 ```
 
 你不必为第一个参数值再定义一个外部变量名：因为从函数名`incrementBy`已经能很清楚地看出它的目的/作用。但是第二个参数，就要被一个外部参数名称所限定,以便在方法被调用时让他目的/作用明确。
@@ -80,20 +80,20 @@ Swift中的方法和Objective-C中的方法极其相似。像在Objective-C中�
 这种默认的行为能够有效的检查方法，比如你在参数numberOfTimes前写了个井号( `#` )时:
 
 ```
-1| func incrementBy(amount: Int, #numberOfTimes: Int) {
-2|  count += amount * numberOfTimes
-3| }
+func incrementBy(amount: Int, #numberOfTimes: Int) {
+ count += amount * numberOfTimes
+}
 ```
 
 这种默认行为使上面代码意味着：在Swift中定义方法使用了与Objective-C同样的语法风格，并且方法将以自然表达式的方式被调用。
 
-### Modifying External Parameter Name Behavior for Methods
+### 修改外部参数名称(Modifying External Parameter Name Behavior for Methods)
 
 有时为方法的第一个参数提供一个外部参数名称是非常有用的，尽管这不是默认的行为。你可以自己添加一个明确的外部名称;你也可以用一个hash符号作为第一个参数的前缀，然后用这个局部名字作为外部名字。
 
 相反，如果你不想为方法的第二个及后续的参数提供一个外部名称，你可以通过使用下划线(`_`)作为该参数的显式外部名称来覆盖默认行为。
 
-### The self Property
+### `self`属性(The self Property)
 
 类型的每一个实例都有一个隐含属性叫做`self`，它完全等同于这个实力变量本身。你可以在一个实例的实例方法中使用这个隐含的`self`属性来引用当前实例。
 
@@ -128,5 +128,75 @@ if somePoint.isToTheRightOfX(1.0) {
 
 如果不使用`self`前缀，Swift就认为两次使用的`x`都指的是名称为`x`的函数参数。
 
-### Modifying Value Types from Within Instance Methods
+### 在实例方法中修改值类型(Modifying Value Types from Within Instance Methods)
 
+结构体和枚举是**值类型**[Structures and Enumerations Are Value Types]("#")。一般情况下，值类型的属性不能在他的实例方法中被修改。
+
+但是，如果你确实需要在某个具体的方法中修改结构体或者枚举的属性，你可以选择`变异(mutating)`这个方法。方法可以从内部变异它的属性；并且它做的任何改变在方法结束时都会回写到原始结构。方法会给它隐含的`self`属性赋值一个全新的实例,这个新实例在方法结束后将替换原来的实例。
+
+要`变异`方法, 将关键字`mutating` 放到方法的`func`关键字之前就可以了：
+
+```
+struct Point {
+  var x = 0.0, y = 0.0
+  mutating func moveByX(deltaX: Double, y deltaY: Double) {
+    x += deltaX
+    y += deltaY
+  }
+}
+var somePoint = Point(x: 1.0, y: 1.0)
+somePoint.moveByX(2.0, y: 3.0)
+println("The point is now at (\(somePoint.x), \(somePoint.y))")
+// prints "The point is now at (3.0, 4.0)"
+```
+
+上面的Point结构体定义了一个变异方法(mutating method)`moveByX`，`moveByX`用来移动一个point。`moveByX`方法在被调用时修改了这个point,而不是返回一个新的point。方法定义是加上那个了`mutating`关键字,所以方法可以修改值类型的属性了。
+
+注意：不能在结构体类型的常量上调用变异方法,因为常量的属性不能被改变,就算你想改变的是常量的可变属性也不行，参考[Stored Properties of Constant Structure Instances]("#")
+
+```
+let fixedPoint = Point(x: 3.0, y: 3.0)
+fixedPoint.moveByX(2.0, y: 3.0)
+// this will report an error
+```
+### 在变异方法中给self赋值(Assigning to self Within a Mutating Method)
+
+变异方法能够赋给隐含属性`self`一个全新的实例。上面`Point`的例子可以用下面的方式改写：
+
+```
+struct Point {
+  var x = 0.0, y = 0.0
+  mutating func moveByX(deltaX: Double, y deltaY: Double) {
+    self = Point(x: x + deltaX, y: y + deltaY)
+  }
+}
+```
+
+新版的变异方法`moveByX`创建了一个新的分支结构(他的x和y的值都被设定为目标值了)。调用这个版本的方法和调用上个版本的最终结果是一样的。
+
+枚举的变异方法可以让`self`从相同的枚举设置为不同的成员。
+
+```
+enum TriStateSwitch {
+  case Off, Low, High
+  mutating func next() {
+    switch self {
+    case Off:
+      self = Low
+    case Low:
+      self = High
+    case High:
+      self = Off
+    }
+  }
+}
+var ovenLight = TriStateSwitch.Low
+ovenLight.next()
+// ovenLight is now equal to .High
+ovenLight.next()
+// ovenLight is now equal to .Off
+```
+
+上面的例子中定义了一个三态开关的枚举。每次调用`next`方法时，开关在不同的电源状态(`Off`,`Low`,`High`)之前循环切换。
+
+### 类型方法(Type Methods)
