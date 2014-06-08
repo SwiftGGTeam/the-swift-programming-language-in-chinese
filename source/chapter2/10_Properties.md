@@ -177,3 +177,32 @@ struct AlternativeRect {
 }
 
 ```
+
+### 只读计算属性
+
+只有getter没有setter的计算属性就是*只读计算属性*。只读计算属性总是返回一个值，可以通过点运算符访问，但不能设置新的值。
+
+> 注意
+> 必须使用`var`关键字定义计算属性，包括只读计算属性，因为他们的值不是固定的。`let`关键字只用来声明常量属性，表示初始化后再也无法修改的值。
+
+只读计算属性的声明可以去掉`get`关键字和花括号：
+
+```
+struct Cuboid {
+    var width = 0.0, height = 0.0, depth = 0.0
+    var volume: Double {
+    return width * height * depth
+    }
+}
+let fourByFiveByTwo = Cuboid(width: 4.0, height: 5.0, depth: 2.0)
+println("the volume of fourByFiveByTwo is \(fourByFiveByTwo.volume)")
+// prints "the volume of fourByFiveByTwo is 40.0"
+
+```
+
+这个例子定义了一个名为`Cuboid`的结构体，表示三维空间的立方体，包含`width`、`height`和`depth`属性，还有一个名为`volume`的只读计算属性用来返回立方体的体积，设置`volume`的值毫无意义，因为无法确定`width`、`height`和`depth`的值。
+
+尽管如此，`Cuboid`提供一个只读计算属性来让外部用户直接获取体积是很有用的。
+
+## 属性观察者
+
