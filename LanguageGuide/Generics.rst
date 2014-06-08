@@ -216,7 +216,7 @@ needs to refer to a single placeholder type
 (such as the ``swapTwoValues`` generic function above,
 or a generic collection that stores a single type, such as ``Array``),
 it is traditional to use the single-character name ``T`` for the type parameter.
-However, you are can use any valid identifier as the type parameter name.
+However, you can use any valid identifier as the type parameter name.
 
 If you are defining more complex generic functions,
 or generic types with multiple parameters,
