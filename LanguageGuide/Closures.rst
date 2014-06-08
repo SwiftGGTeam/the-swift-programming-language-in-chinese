@@ -514,7 +514,7 @@ This value is stored along with the new ``incrementor`` function.
 However, because it modifies the ``runningTotal`` variable each time it is called,
 ``incrementor`` captures a *reference* to the current ``runningTotal`` variable,
 and not just a copy of its initial value.
-Capturing a reference ensures sure that ``runningTotal`` does not disappear
+Capturing a reference ensures that ``runningTotal`` does not disappear
 when the call to ``makeIncrementor`` ends,
 and ensures that ``runningTotal`` will continue to be available
 the next time that the incrementor function is called.
