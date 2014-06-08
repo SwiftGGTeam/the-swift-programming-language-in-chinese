@@ -206,6 +206,52 @@ else {
 
 ### Switch 语句
 
+取决于控制`switch`语句的表达式，`switch`语句将决定执行哪一块代码。
+
+`switch`语句的形式如下：
+
+```swift
+switch `control expression` {
+	case `pattern 1`:
+	    `statements`
+	case `pattern 2` where `condition`:
+	    `statements`
+	case `pattern 3` where `condition`,
+	`pattern 4` where `condition`:
+	    `statements`
+	default:
+	    `statements`
+}
+```
+
+#### Switch 语句必须是完备的
+
+在 Swift 中，控制`switch`语句的表达式的每一个可能的值都必须有至少一个`case`块与之对应。在某些情况下（例如，表达式的类型是`Int`），你可以使用`default`块满足该要求。
+
+#### 不存在隐式的Fallthrough
+
+当匹配的`case`块中的代码执行完毕后，程序会终止`switch`语句，而不会继续执行下一个`case`块。这就意味着，如果你想执行下一个`case`块，需要显式地在你需要的`case`块里使用`fallthrough`语句。关于`fallthrough`语句的更多信息，请参考[Fallthrough 语句`待添加链接`]()。
+
+> GRAMMAR OF A SWITCH STATEMENT
+
+> *switch-statement* → **switch** [*expression*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/swift/grammar/expression) **{** [*switch-cases*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/switch-cases)*opt **}**
+
+> *switch-cases* → [*switch-case*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/switch-case) [*switch-cases*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/switch-cases)*opt
+
+> *switch-case* → [*case-label*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/case-label) [*statement*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/statements) | [*default-label*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/default-label) [*statements*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/statements)
+
+> *switch-case* → [*case-label*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/case-label) **;** | [*default-label*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/default-label) **;**
+
+> *case-label* → **case** [*case-item-list*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/case-item-list) **:**
+
+> *case-item-list* → [*pattern*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Patterns.html#//apple_ref/swift/grammar/pattern) [*guard-clause*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/guard-clause)*opt* | [*pattern*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Patterns.html#//apple_ref/swift/grammar/pattern) [*guard-clause*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/guard-clause)*opt*, [*case-item-list*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/case-item-list)
+
+> *default-label* → **default :**
+
+> *guard-clause* → **where** [*guard-expression*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/guard-expression)
+
+> *guard-expression* → [*expression*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/swift/grammar/expression)
+
 ## 带标签的语句
 
 你可以在循环语句或`switch`语句前面加上*标签*，它由标签名和紧随其后的冒号(:)组成。在`break`和`continue`后面跟上标签名可以显式地在循环语句或`switch`语句中更改控制流，把控制权传递给指定标签标记的语句。关于这两条语句用法，请参考[Break 语句`待添加链接`]()和[Continue 语句`待添加链接`]()。
@@ -282,7 +328,7 @@ continue `标签名`
 
 ### Fallthrough 语句
 
-`fallthrough`语句用于在`switch`语句中传递控制权。`fallthrough`语句会把控制权从`switch`语句中的一个`case`传递给下一个`case`。这种控制权的传递是无条件的，即使下一个`case`的值与`switch`语句处理的表达式的值不匹配。
+`fallthrough`语句用于在`switch`语句中传递控制权。`fallthrough`语句会把控制权从`switch`语句中的一个`case`传递给下一个`case`。这种传递是无条件的，即使下一个`case`的值与控制`switch`语句的表达式的值不匹配。
 
 `fallthrough`语句可出现在`switch`语句中的任意`case`里，但不能出现在最后一个'case'块。同时，`fallthrough`语句也不能把控制权传递给使用了可选绑定的`case`块。
 
