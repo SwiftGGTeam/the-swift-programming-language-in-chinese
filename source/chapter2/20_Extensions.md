@@ -22,8 +22,10 @@ Swift中的扩展可以：
 -   定义和使用新的嵌套类型
 -   使一个已有类型符合某个接口
 
+
 >注意
 如果你定义了一个扩展向一个已有类型添加新功能，那么这个新功能对该类型的所有已有实例中都是可用的，即使它们是在你的这个扩展的前面定义的。
+
 
 ##扩展语法
 
@@ -80,6 +82,7 @@ println("A marathon is \(aMarathon) meters long")
 // prints "A marathon is 42495.0 meters long"
 ```
 
+
 >注意
 扩展可以添加新的计算属性，但是不可以添加存储属性，也不可以向已有属性添加属性观测器(property observers)。
 
@@ -87,7 +90,6 @@ println("A marathon is \(aMarathon) meters long")
 
 扩展可以向已有类型添加新的构造器。这可以让你扩展其它类型，将你自己的定制类型作为构造器参数，或者提供该类型的原始实现中没有包含的额外初始化选项。
 
-扩展可以向一个类添加新的便捷构造器（convenience initializers），但是无法添加新的指定构造器（designated initializers），也无法添加析构器（deinitializers）。指定构造器和析构器必须由原始的类实现来提供。
 
 >注意
 如果你使用扩展向一个值类型添加一个构造器，该构造器向所有的存储属性提供默认值，而且没有定义任何定制构造器（custom initializers），那么对于来自你的扩展构造器中的值类型，你可以调用默认构造器(default initializers)和成员级构造器(memberwise initializers)。
@@ -132,6 +134,7 @@ let centerRect = Rect(center: Point(x: 4.0, y: 4.0),
     size: Size(width: 3.0, height: 3.0))
 // centerRect's origin is (2.5, 2.5) and its size is (3.0, 3.0)
 ```
+
 
 >注意
 如果你使用扩展提供了一个新的构造器，你依旧有责任保证构造过程能够让所有实例完全初始化。
