@@ -39,7 +39,7 @@
    * 可选链(完成)
    * 类型检查(完成 By @xiehurricane)
    * 嵌套类型(完成 By @Lin-H)
-   * 扩展(@lyuka 认领)
+   * 扩展(完成 By @lyuka)
    * 协议(@geek5nan 认领)
    * 泛型(完成 By @takalard)
    * 高级操作符(@xielingwang 认领)
