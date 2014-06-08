@@ -155,5 +155,25 @@ println("square.origin is now at (\(square.origin.x), \(square.origin.y))")
 <img src="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/computedProperties_2x.png" alt="Computed Properties sample" width="388" height="387" />
 
 
-### Setter的便捷方式
+### 便捷Setter声明
 
+如果计算属性的setter没有定义表示新值的参数名，则可以使用默认名称`newValue`。下面是使用了便捷Setter声明的`Rect`结构体代码：
+
+```
+struct AlternativeRect {
+    var origin = Point()
+    var size = Size()
+    var center: Point {
+    get {
+        let centerX = origin.x + (size.width / 2)
+        let centerY = origin.y + (size.height / 2)
+        return Point(x: centerX, y: centerY)
+    }
+    set {
+        origin.x = newValue.x - (size.width / 2)
+        origin.y = newValue.y - (size.height / 2)
+    }
+    }
+}
+
+```
