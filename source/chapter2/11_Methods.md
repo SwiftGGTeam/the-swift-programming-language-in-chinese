@@ -200,3 +200,97 @@ ovenLight.next()
 上面的例子中定义了一个三态开关的枚举。每次调用`next`方法时，开关在不同的电源状态(`Off`,`Low`,`High`)之前循环切换。
 
 ### 类型方法(Type Methods)
+
+实例方法是被类型的某个实例调用的方法。你也可以定义类列本身调用的方法，这种方法就叫做**类型方法**。声明类的类型方法，在方法的`func`关键字之前加上关键字`class`；声明结构体和枚举的类型方法，在方法的`func`关键字之前加上关键字`static`。
+
+> 注意：
+
+> 在Objective-C里面，你只能为Objective-C的类定义类型方法(type-level methods)。在Swift中，你可以为所有的类、结构体和枚举定义类型方法：Each type method is explicitly scoped to the type it supports.
+
+类型方法和实例方法一样用点语法调用。但是，你是在类型上调用这个方法，而不是在实例上调用。下面是如何在SomeClass类上调用类型方法的例子：
+
+```
+class SomeClass {
+  class func someTypeMethod() {
+    // type method implementation goes here
+  }
+}
+SomeClass.someTypeMethod()
+```
+
+在类型方法的方法体(body)中，`self`指向这个类型本身，而不是类型的某个实例。对于结构体和枚举来说，这意味着你可以用`self`来消除静态属性和静态方法参数之间的二意性(类似于我们在前面处理实例属性和实例方法参数时做的那样)。
+
+一般地，在类型方法里面所使用的任何未限定的方法和属性名称，将会指向其他的类型级别的方法和属性。一个类型方法可以用另一个类型方法的名称调用踏，而无需在方法名称前面加上类型名称的前缀。同样，结构体和枚举的类型方法也能够直接通过静态属性的名称访问静态属性，而不需要类型名称前缀。
+
+下面的例子定义了一个名为`LevelTracker`结构体。它监测玩家的发展情况(游戏的不同层次或阶段)。这是一个单人游戏，但也可以用作多玩家游戏中单个设备上的信息存储。
+
+游戏初始时，所有的游戏等级(除了等级1)都被锁定。每次有玩家完成一个等级，这个等级就对这个设备上的所有玩家解锁。`LevelTracker`结构体用静态属性和方法监测游戏的哪个等级已经被解锁。他还监测每个玩家的当前等级。
+
+```
+struct LevelTracker {
+  static var highestUnlockedLevel = 1
+  static func unlockLevel(level: Int) {
+    if level > highestUnlockedLevel { highestUnlockedLevel = level }
+  }
+  static func levelIsUnlocked(level: Int) -> Bool {
+    return level <= highestUnlockedLevel
+  }
+  var currentLevel = 1
+  mutating func advanceToLevel(level: Int) -> Bool {
+    if LevelTracker.levelIsUnlocked(level) {
+      currentLevel = level
+      return true
+    } else {
+      return false
+    }
+  }
+}
+```
+
+`LevelTracker`监测玩家的已解锁的最高等级。这个值被存储在静态属性`highestUnlockedLevel`中。
+
+`LevelTracker`还定义了两个类型方法与`highestUnlockedLevel`配合工作。第一个类型方法是`unlockLevel`：一旦新等级被解锁，它会更新`highestUnlockedLevel`的值。第二个类型方法是`levelIsUnlocked`：如果某个给定的等级已经被解锁，他返回`true`。(注意：我们没用使用`LevelTracker.highestUnlockedLevel`，这个类型方法还是能够访问静态属性`highestUnlockedLevel`)
+
+除了静态属性和类型方法，`LevelTracker`还监测每个玩家的进度。它用实例属性`currentLevel`来监测玩家当前正在进行的等级。
+
+为了便于管理`currentLevel`属性，`LevelTracker`定义了实例方法`advanceToLevel`。这个方法会在更新`currentLevel`之前检查所请求的新等级是否已经解锁。`advanceToLevel`方法返回布尔值以指示是否确实能够设置`currentLevel`了。
+
+下面，`Player`类使用`LevelTracker`来监测和更新每个玩家的发展进度：
+
+```
+class Player {
+  var tracker = LevelTracker()
+  let playerName: String
+  func completedLevel(level: Int) {
+    LevelTracker.unlockLevel(level + 1)
+    tracker.advanceToLevel(level + 1)
+  }
+  init(name: String) {
+    playerName = name
+  }
+}
+```
+
+`Player`类创建一个新的`LevelTracker`实例来检测这个用户的发展进度。他提供了`completedLevel`方法：一旦玩家完成某个指定等级就调用它。这个方法为所有玩家解锁下一等级，并且将当前玩家的进度更新为下一等级。（我们忽略了`advanceToLevel`返回的布尔值，因为之前调用`LevelTracker.unlockLevel`时就知道了这个等级已经被解锁了）
+
+你还可以为一个新的玩家创建一个`Player`的实例，然后看这个玩家完成等级一时发生了什么：
+
+```
+var player = Player(name: "Argyrios")
+player.completedLevel(1)
+println("highest unlocked level is now \(LevelTracker.highestUnlockedLevel)")
+// prints "highest unlocked level is now 2"
+```
+
+如果你创建了第二个玩家，并尝试让他开始一个没有被任何玩家解锁的等级，你试图去设置玩家当前等级时会失败的：
+
+```
+player = Player(name: "Beto")
+if player.tracker.advanceToLevel(6) {
+println("player is now on level 6")
+} else {
+println("level 6 has not yet been unlocked")
+}
+// prints "level 6 has not yet been unlocked"
+```
+
