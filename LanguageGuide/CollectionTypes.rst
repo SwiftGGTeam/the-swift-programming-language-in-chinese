@@ -275,8 +275,8 @@ Like the ``removeAtIndex`` method, ``removeLast`` returns the removed item:
    -> let apples = shoppingList.removeLast()
    << // apples : String = "Apples"
    // the last item in the array has just been removed
-   /> shoppingList now contains \(shoppingList.count) items, and no cheese
-   </ shoppingList now contains 5 items, and no cheese
+   /> shoppingList now contains \(shoppingList.count) items, and no apples
+   </ shoppingList now contains 5 items, and no apples
    /> the apples constant is now equal to the removed \"\(apples)\" string
    </ the apples constant is now equal to the removed "Apples" string
 
