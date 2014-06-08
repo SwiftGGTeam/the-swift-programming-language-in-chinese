@@ -43,7 +43,7 @@ that match the types of the function's parameters.
 A function's arguments must always be provided in the same order
 as the function's parameter list.
 
-The function in the example below is called ``greetingForPerson``,
+The function in the example below is called ``sayHello``,
 because that's what it does ---
 it takes a person's name as input and returns a greeting for that person.
 To accomplish this, you define one input parameter ---
