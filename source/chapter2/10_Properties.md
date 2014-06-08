@@ -138,3 +138,18 @@ println("square.origin is now at (\(square.origin.x), \(square.origin.y))")
 
 ```
 
+这个例子定义了3个几何形状的结构体：
+
+- `Point`封装了一个`(x, y)`的坐标
+- `Size`封装了一个`width`和`height`
+- `Rect`表示一个有原点和尺寸的矩形
+
+`Rect`也提供了一个名为`center`的计算属性。一个矩形的中心点可以从原点和尺寸来算出，所以不需要将它以显式声明的`Point`来保存。`Rect`的计算属性`center`提供了自定义的getter和setter来获取和设置矩形的中心点，就像它有一个存储属性一样。
+
+例子中接下来创建了一个名为`square`的`Rect`实例，初始值原点是`(0, 0)`，宽度高度都是`10`。如图所示蓝色正方形。
+
+`square`的`center`属性可以通过点运算符（`square.center`）来访问，这会调用getter来获取属性的值。跟直接返回已经存在的值不同，getter实际上通过计算然后返回一个新的`Point`实例表示`square`的中心点。如代码所示，它正确返回了中心点`(5, 5)`。
+
+`center`属性之后被设置了一个新的值`(15, 15)`，表示向右上方移动正方形到如图所示橙色正方形的位置。设置属性`center`的值会调用setter来修改属性`origin`的`x`和`y`的值，从而实现移动正方形到新的位置。
+
+![Computed Properties sample](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/computedProperties_2x.png)
