@@ -50,7 +50,11 @@ for `initialzation`; `condition`; `increment` {
 }
 ```
 
+<<<<<<< HEAD
 *initialzation*、*condition*和*increment*之间的分号，以及包围循环体*statements*的大括号都是不可省略的。
+=======
+*initialzation*、*condition*和*increment*之间的分号，以及包围在循环体*statements*的大括号都是不可省略的。
+>>>>>>> 完成第一节Loop Statements的翻译
 
 `for`语句的执行流程如下：
 
@@ -59,15 +63,25 @@ for `initialzation`; `condition`; `increment` {
 2. 计算*condition*表达式：
 	如果为真(`true`)，*statements*将会被执行，然后转到第3步。如果为假(`false`)，*statements*和*increment*都不会被执行，`for`至此执行完毕。
 
+<<<<<<< HEAD
 3. 计算*increment*表达式，然后转到第2步。
+=======
+3. 执行*increment*表达式，然后转到第2步。
+>>>>>>> 完成第一节Loop Statements的翻译
 
 定义在*initialzation*中的变量仅在`for`语句的作用域以内有效。*condition*表达式的值的类型必须符合`LogicValue`协议。
 
 > GRAMMAR OF A FOR STATEMENT
 
+<<<<<<< HEAD
 > *for-statement* → **for** [*for-init*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/for-init) *opt* **;** [*expression*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/swift/grammar/expression) *opt* **;** [*expression*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/swift/grammar/expression) *opt* [*code-block*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/code-block)
 
 > *for-statement* → **for ( ** [*for-init*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/for-init) *opt* **;** [*expression*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/swift/grammar/expression) *opt* **;** [*expression*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/swift/grammar/expression) *opt* **)** [*code-block*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/code-block)
+=======
+> *for-statement* → **for** [*for-init*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/for-init)*opt* **;** [*expression*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/swift/grammar/expression)*opt* **;** [*expression*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/swift/grammar/expression)*opt* [*code-block*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/code-block)
+
+> *for-statement* → **for ( ** [*for-init*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/for-init)*opt* **;** [*expression*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/swift/grammar/expression)*opt* **;** [*expression*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/swift/grammar/expression)*opt* **)** [*code-block*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/code-block)
+>>>>>>> 完成第一节Loop Statements的翻译
 
 > *for-statement* → [*variable-declaration*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/variable-declaration) | [*expression-list*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/swift/grammar/expression-list)
 
@@ -110,7 +124,11 @@ while `condition` {
 
 由于*condition*的值在*statements*执行前就已计算出，因此*while*语句中的*statements*可能会被执行若干次，也可能不会被执行。
 
+<<<<<<< HEAD
 *condition*表达式的值的类型必须符合`LogicValue`协议。同时，*condition*表达式也可以使用可选绑定，请参考[可选绑定`待添加链接`]()。
+=======
+*condition*表达式的值的类型必须符合`LogicValue`协议。同时，*condition*表达式也可以套用可选绑定，请参考[可选绑定`待添加链接`]()。
+>>>>>>> 完成第一节Loop Statements的翻译
 
 > GRAMMAR OF A WHILE STATEMENT
 
@@ -139,6 +157,7 @@ do {
 
 由于*condition*表达式的值是在*statements*表达式执行后才计算出，因此*do-while*语句中的*statements*至少会被执行一次。
 
+<<<<<<< HEAD
 *condition*表达式的值的类型必须符合`LogicValue`协议。同时，*condition*表达式也可以使用可选绑定，请参考[可选绑定`待添加链接`]()。
 
 > GRAMMAR OF A DO-WHILE STATEMENT
@@ -373,3 +392,10 @@ return `表达式`
 > GRAMMAR OF A RETURN STATEMENT
 
 > *return-statement* → **return** [*expression*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/swift/grammar/expression) *opt*
+=======
+*condition*表达式的值的类型必须符合`LogicValue`协议。同时，*condition*表达式也可以套用可选绑定，请参考[可选绑定`待添加链接`]()。
+
+> GRAMMAR OF A DO-WHILE STATEMENT
+
+> *do-while-statement* → **do** [*code-block*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/code-block) **while** [*while-condition*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/while-condition) 
+>>>>>>> 完成第一节Loop Statements的翻译
