@@ -108,12 +108,12 @@ variableString += " and carriage"
 // variableString 现在为 "Horse and carriage"
 let constantString = "Highlander"
 constantString += " and another Highlander"
-// 这会报告一个编译错误(compile-time error) - 常量不可以被修改。
+// 这会报告一个编译错误 (compile-time error) - 常量不可以被修改。
 ```
 
 > 注意：
 >
-> 在 Objective-C 和 Cocoa 中，您通过选择两个不同的类( NSString 和 NSMutableString )来指定该字符串是否可以被修改，Swift中的字符串是否可以修改仅通过定义的是变量还是常量来决定，实现了多种类型可变性操作的统一。
+> 在 Objective-C 和 Cocoa 中，您通过选择两个不同的类( `NSString` 和 `NSMutableString` )来指定该字符串是否可以被修改，Swift 中的字符串是否可以修改仅通过定义的是变量还是常量来决定，实现了多种类型可变性操作的统一。
 
 ---
 
@@ -121,14 +121,15 @@ constantString += " and another Highlander"
 
 Swift 的 **String** 类型是值类型。
 如果您创建了一个新的字符串，那么当其进行常量、变量赋值操作或在函数/方法中传递时，会进行值拷贝。
-任何情况下，都会对已有字符串值创建新副本，并对该新副本进行传递或赋值。
+任何情况下，都会对已有字符串值创建新副本，并对该新副本进行传递或赋值操作。
 值类型在 [Structures and Enumerations Are Value Types](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/ClassesAndStructures.html#//apple_ref/doc/uid/TP40014097-CH13-XID_104) 中进行了说明。
 
 > 注意：
 >
-> 与 Cocoa 中的 NSString 不同，当您在 Cocoa 中创建了一个 NSString 实例，并将其传递给一个函数/方法，或者赋值给一个变量，您永远都是传递或赋值同一个 NSString 实例的一个引用，除非您特别要求其进行值拷贝，否则字符串不会进行赋值新副本操作。
+> 与 Cocoa 中的 NSString 不同，当您在 Cocoa 中创建了一个 NSString 实例，并将其传递给一个函数/方法，或者赋值给一个变量，您传递或赋值的是该 NSString 实例的一个引用，除非您特别要求进行值拷贝，否则字符串不会生成新的副本来进行赋值操作。
 
-Swift 默认字符串拷贝的方式保证了在函数/方法中传递的是字符串的值，其明确了无论该值来自于哪里，都是您独自拥有的。
+Swift 默认字符串拷贝的方式保证了在函数/方法中传递的是字符串的值。
+很明显无论该值来自于哪里，都是您独自拥有的。
 您可以放心您传递的字符串本身不会被更改。
 
 在实际编译时，Swift编译器会优化字符串的使用，使实际的复制只发生在绝对必要的情况下，这意味着您始终可以将字符串作为值类型的同时获得极高的性能。
