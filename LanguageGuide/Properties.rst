@@ -167,6 +167,9 @@ Lazy properties are also useful when the initial value for a property requires
 complex or computationally expensive setup that should not be performed
 unless or until it is needed.
 
+.. TODO: add a note that if you assign a value to a lazy property before first access,
+   the initial value you give in your code will be ignored.
+
 The example below uses a lazy stored property to avoid
 unnecessary initialization of a complex class.
 This example defines two classes called ``DataImporter`` and ``DataManager``,
