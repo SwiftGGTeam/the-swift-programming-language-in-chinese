@@ -106,7 +106,7 @@ even if they were declared as variable properties:
    !! <REPL Input>:1:29: error: cannot assign to 'firstValue' in 'rangeOfFourItems'
    !! rangeOfFourItems.firstValue = 6
    !! ~~~~~~~~~~~~~~~~~~~~~~~~~~~ ^
-   // this will report an error, even thought firstValue is a variable property
+   // this will report an error, even though firstValue is a variable property
 
 Because ``rangeOfFourItems`` is declared as a constant (with the ``let`` keyword),
 it is not possible to change its ``firstValue`` property,
