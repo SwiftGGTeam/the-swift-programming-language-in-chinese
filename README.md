@@ -46,7 +46,7 @@
 * 语言参考
    * 关于语言参考(完成 By @ChildhoodAndy)
    * 词法结构(@superkam 认领)
-   * 类型
+   * 类型(@lyuka 认领)
    * 表达式(@sg552 认领)
    * 语句(@coverxit 认领)
    * 声明(@marsprince 认领)
