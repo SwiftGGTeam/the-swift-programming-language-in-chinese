@@ -109,7 +109,7 @@ This example calculates the value of one number to the power of another
 It multiplies a starting value of ``1``
 (that is, ``3`` to the power of ``0``)
 by ``3``, ten times,
-using a half-closed loop that starts with ``0`` and ends with ``9``.
+using a closed range that starts with ``1`` and ends with ``10``.
 This calculation doesn't need to know the individual counter values each time through the loop ---
 it simply needs to execute the loop the correct number of times.
 The underscore character ``_``
