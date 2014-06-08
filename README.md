@@ -34,7 +34,7 @@
    * 下标(@siemenliu 认领)
    * 继承(@awstein 认领)
    * 构造过程(@lifedim 认领)
-   * 析构过程(认领)
+   * 析构过程(@reyesyang 认领)
    * 自动引用计数(@TimothyYe 认领)
    * 可选链(认领)
    * 类型检查(完成 By @xiehurricane)
