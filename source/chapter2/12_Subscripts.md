@@ -78,9 +78,84 @@ numberOfLegs["bird"] = 2
 
 ## 下标选项
 
-下标允许任意数量的入参索引，并且每个入参类型也没有限制。下标的返回值也可以是任何类型。
+下标允许任意数量的入参索引，并且每个入参类型也没有限制。下标的返回值也可以是任何类型。下标可以使用变量参数和可变参数，但使用in-out参数或给参数设置默认值都是不允许的。
 
+一个类或结构体可以根据自身需要提供多个下标实现，在定义下标时通过入参个类型进行区分，使用下标时会自动匹配合适的下标实现运行，这就是下标的重载。
 
+一个下标入参是最常见的情况，但只要有合适的场景也可以定义多个下标入参。如下例定义了一个Matrix结构体，将呈现一个Double类型的二维数组。Matrix结构体的下标需要两个整型参数：
+
+```
+struct Matrix {
+	let rows: Int, columns: Int
+	var grid: Double[]
+	init(rows: Int, columns: Int) {
+		self.rows = rows
+		self.columns = columns
+		grid = Array(count: rows * columns, repeatedValue: 0.0)
+	}
+	func indexIsValidForRow(row: Int, column: Int) -> Bool {
+        return row >= 0 && row < rows && column >= 0 && column < columns
+    }
+    subscript(row: Int, column: Int) -> Double {
+        get {
+            assert(indexIsValidForRow(row, column: column), "Index out of range")
+            return grid[(row * columns) + column]
+        }
+        set {
+            assert(indexIsValidForRow(row, column: column), "Index out of range")
+            grid[(row * columns) + columns] = newValue
+        }
+	}
+}
+```
+
+Matrix提供了一个两个入参的构造方法，入参分别是`rows`和`columns`，创建了一个足够容纳rows * columns个数的Double类型数组。为了存储，将数组的大小和数组每个元素初始值0.0，都传入数组的构造方法中来创建一个正确大小的新数组。关于数组的构造方法和析构方法请参考[Creating and Initializing an Array](#)。
+
+你可以通过传入合适的row和column的数量来构造一个新的Matrix实例：
+
+```
+var matrix = Matrix(rows: 2, columns: 2)
+```
+
+上例中创建了一个新的两行两列的Matrix实例。在阅读顺序从左上到右下的Matrix实例中的数组实例grid是矩阵二维数组的扁平化存储：
+
+```
+// 示意图
+grid = [0.0, 0.0, 0.0, 0.0]
+
+		col0 	col1
+row0   [0.0, 	0.0,
+row1	0.0, 	0.0]
+```
+
+将值赋给带有row和column下标的matrix实例表达式可以完成赋值操作，下标入参使用逗号分割
+
+```
+matrix[0, 1] = 1.5
+matrix[1, 0] = 3.2
+```
+
+上面两句话分别让matrix的右上值为1.5，坐下值为3.2：
+
+```
+[0.0, 1.5,
+ 3.2, 0.0]
+```
+
+Matrix下标的getter和setter中同时调用了下标入参的row和column是否有效的判断。为了方便进行断言，Matrix包含了一个名为indexIsValid的成员方法，用来确认入参的row或column值是否会造成数组越界：
+
+```
+func indexIsValidForRow(row: Int, column: Int) -> Bool {
+    return row >= 0 && row < rows && column >= 0 && column < columns
+}
+```
+
+断言在下标越界时触发：
+
+```
+let someValue = matrix[2, 2]
+// 断言将会触发，因为 [2, 2] 已经超过了matrix的最大长度
+```
 
 > 译者：这里有个词Computed Properties 这里统一翻译为实例属性了 微软术语引擎里没有这个词
 
