@@ -11,7 +11,7 @@
 
 如果你熟悉C语言，你就会知道，在C语言中枚举会把一些整型值赋予枚举标识符。Swift中的枚举更加灵活，不需要给每一个枚举成员提供一个值。如果一个值（一个“原始”值）被提供给每个枚举成员（enumeration member），则该值可以是一个字符串，一个字符，或是一个整型值或浮点值。
 
-此外，枚举成员可以指定任何类型的实例值（associated value）被每个枚举成
+此外，枚举成员可以指定任何类型的实例值（associated value）存储到枚举成员值中，就像其他语言中的联合体（unions）和变体（variants）。你可以定义一组通用的相关成员作为一个枚举的一部分，每一组都有不同的一组与它相关的适当类型的数值。
 
 在Swift中，枚举类型是一等公民类型。它们采用了很多传统上只被类（class)所支持的特征，例如计算属性（computed properties)，用于提供关于枚举当前值的附加信息， 实例方法（instance methods），用于提供和枚举所代表的值相关联的功能。枚举也可以定义实例初始化（initializers）来提供一个初始成员值；可以在原始的实现基础上扩展它们的功能；可以遵守协议（protocols）来提供标准的功能。
 
@@ -99,7 +99,11 @@
 
 例如，假设一个库存跟踪系统需要利用两种不同类型的条形码来跟踪商品。有些商品上标有UPC-A格式的一维码，它使用数字0到9.每一个条形码都有一个代表“数字系统”的数字，该数字后接10个代表“标识符”的数字。最后一个数字是“检查”位，用来验证代码是否被正确扫描：
 
-其他商品上标有QR码格式的二维码，它可以使用任何ISO8859-1字符，并且可以编码一个最多拥有2,953字符的字符串。
+<img width="252" height="120" a"" src="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/barcode_UPC_2x.png">
+
+其他商品上标有QR码格式的二维码，它可以使用任何ISO8859-1字符，并且可以编码一个最多拥有2,953字符的字符串:
+
+<img width="169" height="169" alt="" src="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/barcode_QR_2x.png">
 
 对于库存跟踪系统来说，能够把UPC-A码作为三个整型值的元组，和把QR码作为一个任何长度的字符串存储起来是方便的。
 
@@ -149,3 +153,56 @@
 	// prints "QR code with value of ABCDEFGHIJKLMNOP."
 
 ## 原始值（Raw Values）
+
+在实例值（Associated Values）小节的条形码例子演示了一个枚举的成员如何声明它们存储不同类型的实例值。作为实例值的替代，枚举成员可以被默认值（称为原始值）预先填充，其中这些原始值具有相同的类型。
+
+这里是一个枚举成员存储原始ASCII值的例子：
+
+	enum ASCIIControlCharacter: Character {
+    	case Tab = "\t"
+    	case LineFeed = "\n"
+    	case CarriageReturn = "\r"
+	}
+	
+在这里，称为`ASCIIControlCharacter`的枚举的原始值类型被定义为字符型`Character`，并被设置了一些比较常见的ASCII控制字符。字符值的描述请详见`Strings and Characters`部分。
+
+注意，原始值和实例值是不相同的。当你开始在你的代码中定义枚举的时候原始值是被预先填充的值，像上述三个ASCII码。对于一个特定的枚举成员，它的原始值始终是相同的。实例值是当你在创建一个基于枚举成员的新常量或变量时才会被设置，并且每次当你这么做得时候，它的值可以是不同的。
+
+原始值可以是字符串，字符，或者任何整型值或浮点型值。每个原始值在它的枚举声明中必须是唯一的。当整型值被用于原始值，如果其他枚举成员没有值时，它们会自动递增。
+
+下面的枚举是对之前`Planet`这个枚举的一个细化，利用原始整型值来表示每个planet在太阳系中的顺序：
+
+	enum Planet: Int {
+    	case Mercury = 1, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune
+	}
+	
+自动递增意味着`Planet.Venus`的原始值是`2`，依次类推。
+
+使用枚举成员的`toRaw`方法可以访问该枚举成员的原始值：
+
+	let earthsOrder = Planet.Earth.toRaw()
+	// earthsOrder is 3
+	
+使用枚举的`fromRaw`方法来试图找到具有特定原始值的枚举成员。这个例子通过原始值`7`识别`Uranus`：
+
+	let possiblePlanet = Planet.fromRaw(7)
+	// possiblePlanet is of type Planet? and equals Planet.Uranus
+	
+然后，并非所有可能的`Int`值都可以找到一个匹配的行星。正因为如此，`fromRaw`方法可以返回一个***可选***的枚举成员。在上面的例子中，`possiblePlanet`是`Planet?`类型，或“可选的`Planet`”。
+
+如果你试图寻找一个位置为9的行星，通过`fromRaw`返回的可选`Planet`值将是`nil`：
+
+	let positionToFind = 9
+	if let somePlanet = Planet.fromRaw(positionToFind) {
+    	switch somePlanet {
+    	case .Earth:
+        	println("Mostly harmless")
+    	default:
+        	println("Not a safe place for humans")
+    	}
+	} else {
+    	println("There isn't a planet at position \(positionToFind)")
+	}
+	// prints "There isn't a planet at position 9
+	
+这个范例使用可选绑定（optional binding），通过原始值`9`试图访问一个行星。通过`if let somePlanet = Planet.fromRaw(9)`语句获得一个可选`Planet`，如果可选`Planet`可以被获得，把`somePlanet`设置成该可选`Planet`的内容。在这个范例中，无法检索到位置为`9`的行星，所以`else`分支被执行。
