@@ -228,8 +228,45 @@ println("the volume of fourByFiveByTwo is \(fourByFiveByTwo.volume)")
 > 
 > `willSet`和`didSet`监视器在属性初始化过程中不会被调用，他们只会当属性的值在初始化之外的地方被设置时被调用。
 
-这里是一个`willSet`和`didSet`的例子。
+这里是一个`willSet`和`didSet`的实际例子，其中定义了一个名为`StepCounter`的类，用来统计当人步行时的总步数，可以跟计步器或其他日常锻炼的统计装置的输入数据配合使用。
 
+```
+class StepCounter {
+    var totalSteps: Int = 0 {
+    willSet(newTotalSteps) {
+        println("About to set totalSteps to \(newTotalSteps)")
+    }
+    didSet {
+        if totalSteps > oldValue  {
+            println("Added \(totalSteps - oldValue) steps")
+        }
+    }
+    }
+}
+let stepCounter = StepCounter()
+stepCounter.totalSteps = 200
+// About to set totalSteps to 200
+// Added 200 steps
+stepCounter.totalSteps = 360
+// About to set totalSteps to 360
+// Added 160 steps
+stepCounter.totalSteps = 896
+// About to set totalSteps to 896
+// Added 536 steps
 
+```
 
+`StepCounter`类定义了一个`Int`类型的属性`totalSteps`，它是一个存储属性，包含`willSet`和`didSet`监视器。
+
+当`totalSteps`设置新值的时候，它的`willSet`和`didSet`监视器都会被调用，甚至当新的值和现在的值完全相同也会调用。
+
+例子中的`willSet`监视器将表示新值的参数自定义为`newTotalSteps`，这个监视器只是简单的将新的值输出。
+
+`didSet`监视器在`totalSteps`的值改变后被调用，它把新的值和旧的值进行对比，如果总的步数增加了，就输出一个消息表示增加了多少步。`didSet`没有提供自定义名称，所以默认值`oldValue`表示旧值的参数名。
+
+> 注意
+> 
+> 如果在`didSet`监视器里为属性赋值，这个值会替换监视器之前设置的值。
+
+##全局和本地变量
 
