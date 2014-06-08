@@ -188,7 +188,7 @@ track products by two different types of barcode.
 Some products are labeled with 1D barcodes in UPC-A format,
 which uses the numbers ``0`` to ``9``.
 Each barcode has a “number system” digit,
-followed by ten “identifier” digits.
+followed by five “manufacturer code” digits and five “product code” digits.
 These are followed by a “check” digit to verify that the code has been scanned correctly:
 
 .. image:: ../images/barcode_UPC_2x.png
@@ -202,7 +202,7 @@ and can encode a string up to 2,953 characters long:
    :align: center
 
 It would be convenient for an inventory tracking system to be able to store UPC-A barcodes
-as a tuple of three integers,
+as a tuple of four integers,
 and QR code barcodes as a string of any length.
 
 In Swift, an enumeration to define product barcodes of either type might look like this:
@@ -210,7 +210,7 @@ In Swift, an enumeration to define product barcodes of either type might look li
 .. testcode:: enums
 
    -> enum Barcode {
-         case UPCA(Int, Int, Int)
+         case UPCA(Int, Int, Int, Int)
          case QRCode(String)
       }
 
@@ -218,7 +218,7 @@ This can be read as:
 
 “Define an enumeration type called ``Barcode``,
 which can take either a value of ``UPCA``
-with an associated value of type (``Int``, ``Int``, ``Int``),
+with an associated value of type (``Int``, ``Int``, ``Int``, ``Int``),
 or a value of ``QRCode`` with an associated value of type ``String``.”
 
 This definition does not provide any actual ``Int`` or ``String`` values ---
@@ -230,14 +230,12 @@ New barcodes can then be created using either type:
 
 .. testcode:: enums
 
-   -> var productBarcode = Barcode.UPCA(8, 85909_51226, 3)
+   -> var productBarcode = Barcode.UPCA(8, 85909, 51226, 3)
    << // productBarcode : Barcode = (Enum Value)
 
 This example creates a new variable called ``productBarcode``
 and assigns it a value of ``Barcode.UPCA``
-with an associated tuple value of ``(8, 8590951226, 3)``.
-The provided “identifier” value has an underscore within its integer literal ---
-``85909_51226`` --- to make it easier to read as a barcode.
+with an associated tuple value of ``(8, 85909, 51226, 3)``.
 
 The same product can be assigned a different type of barcode:
 
@@ -261,12 +259,12 @@ for use within the ``switch`` case's body:
 .. testcode:: enums
 
    -> switch productBarcode {
-         case .UPCA(let numberSystem, let identifier, let check):
-            println("UPC-A with value of \(numberSystem), \(identifier), \(check).")
+         case .UPCA(let numberSystem, let manufacturer, let product, let check):
+            println("UPC-A: \(numberSystem), \(manufacturer), \(product), \(check).")
          case .QRCode(let productCode):
-            println("QR code with value of \(productCode).")
+            println("QR code: \(productCode).")
       }
-   <- QR code with value of ABCDEFGHIJKLMNOP.
+   <- QR code: ABCDEFGHIJKLMNOP.
 
 If all of the associated values for a enumeration member
 are extracted as constants, or if all are extracted as variables,
@@ -275,12 +273,12 @@ you can place a single ``var`` or ``let`` annotation before the member name, for
 .. testcode:: enums
 
    -> switch productBarcode {
-         case let .UPCA(numberSystem, identifier, check):
-            println("UPC-A with value of \(numberSystem), \(identifier), \(check).")
+         case let .UPCA(numberSystem, manufacturer, product, check):
+            println("UPC-A: \(numberSystem), \(manufacturer), \(product), \(check).")
          case let .QRCode(productCode):
-            println("QR code with value of \(productCode).")
+            println("QR code: \(productCode).")
       }
-   <- QR code with value of ABCDEFGHIJKLMNOP.
+   <- QR code: ABCDEFGHIJKLMNOP.
 
 .. _Enumerations_RawValues:
 
