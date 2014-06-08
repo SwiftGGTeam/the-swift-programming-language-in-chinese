@@ -506,14 +506,21 @@ to avoid a strong reference cycle:
       }
    ---
    -> class CreditCard {
-         let number: Int
+         let number: UInt64
          unowned let customer: Customer
-         init(number: Int, customer: Customer) {
+         init(number: UInt64, customer: Customer) {
             self.number = number
             self.customer = customer
          }
          deinit { println("Card #\(number) is being deinitialized") }
       }
+
+.. note::
+
+   The ``number`` property of the ``CreditCard`` class is defined with
+   a type of ``UInt64`` rather than ``Int``,
+   to ensure that the ``number`` property's capacity is large enough to store
+   a 16-digit card number on both 32-bit and 64-bit systems.
 
 This next code snippet defines an optional ``Customer`` variable called ``john``,
 which will be used to store a reference to a specific customer.
