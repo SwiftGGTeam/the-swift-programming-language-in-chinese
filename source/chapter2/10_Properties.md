@@ -152,4 +152,8 @@ println("square.origin is now at (\(square.origin.x), \(square.origin.y))")
 
 `center`属性之后被设置了一个新的值`(15, 15)`，表示向右上方移动正方形到如图所示橙色正方形的位置。设置属性`center`的值会调用setter来修改属性`origin`的`x`和`y`的值，从而实现移动正方形到新的位置。
 
-![Computed Properties sample](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/computedProperties_2x.png)
+<img src="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/computedProperties_2x.png" alt="Computed Properties sample" width="388" height="387" />
+
+
+### Setter的便捷方式
+
