@@ -30,7 +30,7 @@
    * 枚举(@yankuangshi 认领)
    * 类和结构体(@JaySurplus 认领)
    * 属性(@shinyzhu 认领)
-   * 方法(@pp-prog 认领)
+   * 方法(完成 By @pp-prog)
    * 下标(完成 By @siemenliu)
    * 继承(完成 By @Hawstein)
    * 构造过程(@lifedim 认领)
