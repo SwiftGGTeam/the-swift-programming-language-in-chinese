@@ -1,6 +1,6 @@
 # 关于 Swift
 
-Swift 是一种新的编程语言，用于编写 iOS 和 OS X 应用程序。Swift 结合了 C 和 Objective-C 的优点并且不受C的兼容性的限制。Swift 使用安全的编程模式并添加了很多新特性，这将使编程更简单，扩展性更强，也更有趣。除此之外，Swift 还支持人见人爱的 Cocoa 和 Cocoa Touch 框架。拥有了这些特性，Swift将重新定义软件开发。
+Swift 是一种新的编程语言，用于编写 iOS 和 OS X 应用。Swift 结合了 C 和 Objective-C 的优点并且不受C的兼容性的限制。Swift 使用安全的编程模式并添加了很多新特性，这将使编程更简单，扩展性更强，也更有趣。除此之外，Swift 还支持人见人爱的 Cocoa 和 Cocoa Touch 框架。拥有了这些特性，Swift将重新定义软件开发。
 
 Swift 的开发从很久之前就开始了。为了给 Swift 打好基础，苹果公司改进了编译器，调试器和框架结构。我们使用自动引用计数（Automatic Reference Counting, ARC）来简化内存管理。我们在 Foundation 和 Cocoa的基础上构建框架栈并将其标准化。Objective-C 本身支持块、集合语法和模块，所以框架可以轻松支持现代编程语言技术。得益于这些基础工作，我们现在可以发布一个新语言，用于未来的苹果软件的开发。
 
