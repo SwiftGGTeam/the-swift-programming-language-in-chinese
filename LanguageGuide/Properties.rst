@@ -147,7 +147,7 @@ the ``@lazy`` attribute before its declaration.
 .. note::
 
    You must always declare a lazy property as a variable (with the ``var`` keyword),
-   because its initial value may not be retrieved until
+   because its initial value might not be retrieved until
    after instance initialization completes.
    Constant properties must always have a value *before* initialization completes,
    and therefore cannot be declared as lazy.
