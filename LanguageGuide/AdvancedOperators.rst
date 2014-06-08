@@ -358,7 +358,7 @@ This behavior gives extra safety when you work with numbers that are too large o
 
 For example, the ``Int16`` integer type can hold
 any signed integer number between ``-32768`` and ``32767``.
-Trying to set a ``UInt16`` constant or variable to a number outside of this range
+Trying to set an ``Int16`` constant or variable to a number outside of this range
 causes an error:
 
 .. testcode:: overflowOperatorsWillFailToOverflow
