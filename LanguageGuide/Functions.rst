@@ -163,7 +163,7 @@ Functions Without Return Values
 
 Functions are not required to define a return type.
 Here's a version of the ``sayHello`` function,
-called ``waveGoodbye``,
+called ``sayGoodbye``,
 which prints its own ``String`` value rather than returning it:
 
 .. testcode:: functionsWithoutReturnValues
