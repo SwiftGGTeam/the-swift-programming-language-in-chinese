@@ -46,7 +46,7 @@
 
 
         
-    <div class="book"  data-level="3.7" data-basepath=".." data-revision="1402267410054">
+    <div class="book"  data-level="3.7" data-basepath=".." data-revision="1402287112409">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -586,6 +586,79 @@
 </div>
 
                 <div class="page-inner">
+                
+                    <section class="normal" id="section-gitbook_77">
+                    
+                        <h1 id="-">特性</h1>
+<p>特性提供了关于声明和类型的更多信息。在Swift中有两类特性，用于修饰声明的以及用于修饰类型的。例如，<code>required</code>特性，当应用于一个类的指定或便利初始化器声明时，表明它的每个子类都必须实现那个初始化器。再比如<code>noreturn</code>特性，当应用于函数或方法类型时，表明该函数或方法不会返回到它的调用者。</p>
+<p>通过以下方式指定一个特性：符号<code>@</code>后面跟特性名，如果包含参数，则把参数带上：</p>
+<pre><code>@attribute name
+@attribute name(attribute arguments)
+</code></pre><p>有些声明特性通过接收参数来指定特性的更多信息以及它是如何修饰一个特定的声明的。这些特性的参数写在小括号内，它们的格式由它们所属的特性来定义。</p>
+<h2 id="-">声明特性</h2>
+<p>声明特性只能应用于声明。然而，你也可以将<code>noreturn</code>特性应用于函数或方法类型。</p>
+<p><code>assignment</code></p>
+<p>该特性用于修饰重载了复合赋值运算符的函数。重载了复合赋值运算符的函数必需将它们的初始输入参数标记为<code>inout</code>。如何使用<code>assignment</code>特性的一个例子，请见：<a href="">复合赋值运算符</a>。</p>
+<p><code>class_protocol</code></p>
+<p>该特性用于修饰一个协议表明该协议只能被类类型采用[待改：adopted]。</p>
+<p>如果你用<code>objc</code>特性修饰一个协议，<code>class_protocol</code>特性就会隐式地应用到该协议，因此无需显式地用<code>class_protocol</code>特性标记该协议。</p>
+<p><code>exported</code></p>
+<p>该特性用于修饰导入声明，以此来导出已导入的模块，子模块，或当前模块的声明。如果另一个模块导入了当前模块，那么那个模块可以访问当前模块的导出项。</p>
+<p><code>final</code></p>
+<p>该特性用于修饰一个类或类中的属性，方法，以及下标成员。如果用它修饰一个类，那么这个类则不能被继承。如果用它修饰类中的属性，方法或下标，则表示在子类中，它们不能被重写。</p>
+<p><code>lazy</code></p>
+<p>该特性用于修饰类或结构体中的存储型变量属性，表示该属性的初始值最多只被计算和存储一次，且发生在第一次访问它时。如何使用<code>lazy</code>特性的一个例子，请见：<a href="">惰性存储型属性</a>。</p>
+<p><code>noreturn</code></p>
+<p>该特性用于修饰函数或方法声明，表明该函数或方法的对应类型，<code>T</code>，是<code>@noreturn T</code>。你可以用这个特性修饰函数或方法的类型，这样一来，函数或方法就不会返回到它的调用者中去。</p>
+<p>对于一个没有用<code>noreturn</code>特性标记的函数或方法，你可以将它重写(override)为用该特性标记的。相反，对于一个已经用<code>noreturn</code>特性标记的函数或方法，你则不可以将它重写为没使用该特性标记的。相同的规则试用于当你在一个comforming类型中实现一个协议方法时。</p>
+<p><code>NSCopying</code></p>
+<p>该特性用于修饰一个类的存储型变量属性。该特性将使属性的setter与属性值的一个副本合成，由<code>copyWithZone</code>方法返回，而不是属性本身的值。该属性的类型必需遵循<code>NSCopying</code>协议。</p>
+<p><code>NSCopying</code>特性的行为与Objective-C中的<code>copy</code>特性相似。</p>
+<p><code>NSManaged</code></p>
+<p>该特性用于修饰<code>NSManagedObject</code>子类中的存储型变量属性，表明属性的存储和实现由Core Data在运行时基于相关实体描述动态提供。</p>
+<p><code>objc</code></p>
+<p>该特性用于修饰任意可以在Objective-C中表示的声明，比如，非嵌套类，协议，类和协议中的属性和方法（包含getter和setter），初始化器，析构器，以下下标。<code>objc</code>特性告诉编译器该声明可以在Objective-C代码中使用。</p>
+<p>如果你将<code>objc</code>特性应用于一个类或协议，它也会隐式地应用于那个类或协议的成员。对于标记了<code>objc</code>特性的类，编译器会隐式地为它的子类添加<code>objc</code>特性。标记了<code>objc</code>特性的协议不能继承自没有标记<code>objc</code>的协议。</p>
+<p><code>objc</code>特性有一个可选的参数，由标记符组成。当你想把<code>objc</code>所修饰的实体以一个不同的名字暴露给Objective-C，你就可以使用这个特性参数。你可以使用这个参数来命名类，协议，方法，getters，setters，以及初始化器。下面的例子把<code>ExampleClass</code>中<code>enabled</code>属性的getter暴露给Objective-C，名字是<code>isEnabled</code>，而不是它原来的属性名。</p>
+<pre><code>@objc
+class ExampleClass {
+    var enabled: Bool {
+    @objc(isEnabled) get {
+        // Return the appropriate value
+    }
+    }
+}
+</code></pre><p><code>optional</code></p>
+<p>用该特性修饰协议的属性，方法或下标成员，表示实现这些成员并不需要一致性类型（conforming type）。</p>
+<p>你只能用<code>optional</code>特性修饰那些标记了<code>objc</code>特性的协议。因此，只有类类型可以adopt和comform to那些包含可选成员需求的协议。更多关于如何使用<code>optional</code>特性以及如何访问可选协议成员的指导，例如，当你不确定一个conforming类型是否实现了它们，请见：<a href="">可选协议需求</a>。</p>
+<p><code>required</code></p>
+<p>用该特性修饰一个类的指定或便利初始化器，表示该类的所有子类都必需实现该初始化器。</p>
+<p>加了该特性的指定初始化器必需显式地实现，而便利初始化器既可显式地实现，也可以在子类实现了超类所有指定初始化器后继承而来（或者当子类使用便利初始化器重写了指定初始化器）。</p>
+<h3 id="interface-builder-">Interface Builder使用的声明特性</h3>
+<p>Interface Builder特性是Interface Builder用来与Xcode同步的声明特性。Swift提供了以下的Interface Builder特性：<code>IBAction</code>，<code>IBDesignable</code>，<code>IBInspectable</code>，以及<code>IBOutlet</code>。这些特性与Objective-C中对应的特性在概念上是相同的。</p>
+<p><code>IBOutlet</code>和<code>IBInspectable</code>用于修饰一个类的属性声明；<code>IBAction</code>特性用于修饰一个类的方法声明；<code>IBDesignable</code>用于修饰类的声明。</p>
+<h2 id="-">类型特性</h2>
+<p>类型特性只能用于修饰类型。然而，你也可以用<code>noreturn</code>特性去修饰函数或方法声明。</p>
+<p><code>auto_closure</code></p>
+<p>这个特性通过自动地将表达式封闭到一个无参数闭包中来延迟表达式的求值。使用该特性修饰无参的函数或方法类型，返回表达式的类型。一个如何使用<code>auto_closure</code>特性的例子，见<a href="">函数类型</a></p>
+<p><code>noreturn</code></p>
+<p>该特性用于修饰函数或方法的类型，表明该函数或方法不会返回到它的调用者中去。你也可以用它标记函数或方法的声明，表示函数或方法的相应类型，<code>T</code>，是<code>@noreturn T</code>。</p>
+<blockquote>
+<p>特性的语法
+attribute -&gt; @ <a href="">attribute-name</a> <a href="">attribute-argument-clause</a>opt
+attribute-name -&gt; <a href="">identifier</a>
+attribute-argument-clause -&gt; ( <a href="">balanced-tokens</a>opt )
+attributes -&gt; <a href="">attribute</a> <a href="">attributes</a>opt
+balanced-tokens -&gt; <a href="">balanced-token</a> <a href="">balanced-tokens</a>opt
+balanced-token -&gt; ( <a href="">balanced-tokens</a>opt )
+balanced-token -&gt; [ <a href="">balanced-tokens</a>opt ]
+balanced-token -&gt; { <a href="">balanced-tokens</a>opt }
+balanced-token -&gt; 任意标识符，关键字，字面量，或运算符
+balanced-token -&gt; 任意标点符号，除了(, ), [, ], {, 或 }</p>
+</blockquote>
+
+                    
+                    </section>
                 
                 </div>
             </div>
