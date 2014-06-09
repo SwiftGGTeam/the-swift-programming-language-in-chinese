@@ -177,9 +177,11 @@ This number is then shifted 16 places to the right (>> 16). Each pair of charact
 
 Similarly, the green component is obtained by performing a bitwise AND between the numbers 0xCC6699 and 0x00FF00, which gives an output value of 0x006600. This output value is then shifted eight places to the right, giving a a value of 0x66, which has a decimal value of 102.
 
-
+同样的, 绿色部分来自于 `0xCC6699` 和 `0x00FF00` 的按位操作得到 `0x006600`. 然后向右移动8們, 得到 `0x66`, 即十进制的 `102`.
 
 Finally, the blue component is obtained by performing a bitwise AND between the numbers 0xCC6699 and 0x0000FF, which gives an output value of 0x000099. There’s no need to shift this to the right, as 0x000099 already equals 0x99, which has a decimal value of 153.
+
+最后, 蓝色部分对 `0xCC6699` 和 `0x0000FF` 进行按位与运算, 得到 `0x000099`, 无需向右移位了, 所以结果就是 `0x99`, 即十进制的 `153`.
 
 ### Shifting Behavior for Signed Integers
 
