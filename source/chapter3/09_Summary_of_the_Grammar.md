@@ -111,7 +111,7 @@
 
 <p></p>
 
->  (Grammar of a generic parameter clause)  
+> 泛型形参子句 (Grammar of a generic parameter clause)  
 > *generic-parameter-clause* → **<** [*generic-parameter-list*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/GenericParametersAndArguments.html#//apple_ref/swift/grammar/generic-parameter-list) [*requirement-clause*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/GenericParametersAndArguments.html#//apple_ref/swift/grammar/requirement-clause) _opt_ **>**  
 > *generic-parameter-list* → [*generic-parameter*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/GenericParametersAndArguments.html#//apple_ref/swift/grammar/generic-parameter) | [*generic-parameter*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/GenericParametersAndArguments.html#//apple_ref/swift/grammar/generic-parameter) **,** [*generic-parameter-list*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/GenericParametersAndArguments.html#//apple_ref/swift/grammar/generic-parameter-list)  
 > *generic-parameter* → [*type-name*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Types.html#//apple_ref/swift/grammar/type-name)  
@@ -126,7 +126,7 @@
 
 <p></p>
 
->  (Grammar of a generic argument clause)  
+> 泛型参数子句 (Grammar of a generic argument clause)  
 > *generic-argument-clause* → **<** [*generic-argument-list*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/GenericParametersAndArguments.html#//apple_ref/swift/grammar/generic-argument-list) **>**  
 > *generic-argument-list* → [*generic-argument*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/GenericParametersAndArguments.html#//apple_ref/swift/grammar/generic-argument) | [*generic-argument*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/GenericParametersAndArguments.html#//apple_ref/swift/grammar/generic-argument) **,** [*generic-argument-list*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/GenericParametersAndArguments.html#//apple_ref/swift/grammar/generic-argument-list)  
 > *generic-argument* → [*type*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Types.html#//apple_ref/swift/grammar/type)  
@@ -135,7 +135,7 @@
 
 <p></p>
 
->  (Grammar of a declaration)  
+> 声明语法 (Grammar of a declaration)  
 > *declaration* → [*import-declaration*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/import-declaration)  
 > *declaration* → [*constant-declaration*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/constant-declaration)  
 > *declaration* → [*variable-declaration*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/variable-declaration)  
@@ -161,7 +161,7 @@
 
 <p></p>
 
->  (Grammar of a code block)  
+> 代码块 (Grammar of a code block)  
 > *code-block* → **{** [*statements*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/statements) _opt_ **}**  
 
 <p></p>
@@ -174,7 +174,7 @@
 
 <p></p>
 
->  (Grammar of a constant declaration)  
+> 常数声明 (Grammar of a constant declaration)  
 > *constant-declaration* → [*attributes*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Attributes.html#//apple_ref/swift/grammar/attributes) _opt_ [*declaration-specifiers*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/declaration-specifiers) _opt_ **let** [*pattern-initializer-list*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/pattern-initializer-list)  
 > *pattern-initializer-list* → [*pattern-initializer*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/pattern-initializer) | [*pattern-initializer*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/pattern-initializer) **,** [*pattern-initializer-list*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/pattern-initializer-list)  
 > *pattern-initializer* → [*pattern*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Patterns.html#//apple_ref/swift/grammar/pattern) [*initializer*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/initializer) _opt_  
@@ -182,7 +182,7 @@
 
 <p></p>
 
->  (Grammar of a variable declaration)  
+> 变量声明 (Grammar of a variable declaration)  
 > *variable-declaration* → [*variable-declaration-head*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/variable-declaration-head) [*pattern-initializer-list*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/pattern-initializer-list)  
 > *variable-declaration* → [*variable-declaration-head*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/variable-declaration-head) [*variable-name*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/variable-name) [*type-annotation*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Types.html#//apple_ref/swift/grammar/type-annotation) [*code-block*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/code-block)  
 > *variable-declaration* → [*variable-declaration-head*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/variable-declaration-head) [*variable-name*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/variable-name) [*type-annotation*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Types.html#//apple_ref/swift/grammar/type-annotation) [*getter-setter-block*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/getter-setter-block)  
@@ -206,7 +206,7 @@
 
 <p></p>
 
->  (Grammar of a type alias declaration)  
+> 类型别名声明 (Grammar of a type alias declaration)  
 > *typealias-declaration* → [*typealias-head*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/typealias-head) [*typealias-assignment*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/typealias-assignment)  
 > *typealias-head* → **typealias** [*typealias-name*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/typealias-name)  
 > *typealias-name* → [*identifier*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/LexicalStructure.html#//apple_ref/swift/grammar/identifier)  
@@ -214,7 +214,7 @@
 
 <p></p>
 
->  (Grammar of a function declaration)  
+> 函数声明 (Grammar of a function declaration)  
 > *function-declaration* → [*function-head*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/function-head) [*function-name*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/function-name) [*generic-parameter-clause*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/GenericParametersAndArguments.html#//apple_ref/swift/grammar/generic-parameter-clause) _opt_ [*function-signature*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/function-signature) [*function-body*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/function-body)  
 > *function-head* → [*attributes*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Attributes.html#//apple_ref/swift/grammar/attributes) _opt_ [*declaration-specifiers*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/declaration-specifiers) _opt_ **func**  
 > *function-name* → [*identifier*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/LexicalStructure.html#//apple_ref/swift/grammar/identifier) | [*operator*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/LexicalStructure.html#//apple_ref/swift/grammar/operator)  
@@ -233,7 +233,7 @@
 
 <p></p>
 
->  (Grammar of an enumeration declaration)  
+> 枚举声明 (Grammar of an enumeration declaration)  
 > *enum-declaration* → [*attributes*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Attributes.html#//apple_ref/swift/grammar/attributes) _opt_ [*union-style-enum*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/union-style-enum) | [*attributes*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Attributes.html#//apple_ref/swift/grammar/attributes) _opt_ [*raw-value-style-enum*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/raw-value-style-enum)  
 > *union-style-enum* → [*enum-name*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/enum-name) [*generic-parameter-clause*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/GenericParametersAndArguments.html#//apple_ref/swift/grammar/generic-parameter-clause) _opt_ **{** [*union-style-enum-members*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/union-style-enum-members) _opt_ **}**  
 > *union-style-enum-members* → [*union-style-enum-member*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/union-style-enum-member) [*union-style-enum-members*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/union-style-enum-members) _opt_  
@@ -253,21 +253,21 @@
 
 <p></p>
 
->  (Grammar of a structure declaration)  
+> 结构体声明 (Grammar of a structure declaration)  
 > *struct-declaration* → [*attributes*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Attributes.html#//apple_ref/swift/grammar/attributes) _opt_ **struct** [*struct-name*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/struct-name) [*generic-parameter-clause*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/GenericParametersAndArguments.html#//apple_ref/swift/grammar/generic-parameter-clause) _opt_ [*type-inheritance-clause*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Types.html#//apple_ref/swift/grammar/type-inheritance-clause) _opt_ [*struct-body*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/struct-body)  
 > *struct-name* → [*identifier*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/LexicalStructure.html#//apple_ref/swift/grammar/identifier)  
 > *struct-body* → **{** [*declarations*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/declarations) _opt_ **}**  
 
 <p></p>
 
->  (Grammar of a class declaration)  
+> 类声明 (Grammar of a class declaration)  
 > *class-declaration* → [*attributes*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Attributes.html#//apple_ref/swift/grammar/attributes) _opt_ **class** [*class-name*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/class-name) [*generic-parameter-clause*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/GenericParametersAndArguments.html#//apple_ref/swift/grammar/generic-parameter-clause) _opt_ [*type-inheritance-clause*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Types.html#//apple_ref/swift/grammar/type-inheritance-clause) _opt_ [*class-body*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/class-body)  
 > *class-name* → [*identifier*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/LexicalStructure.html#//apple_ref/swift/grammar/identifier)  
 > *class-body* → **{** [*declarations*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/declarations) _opt_ **}**  
 
 <p></p>
 
->  (Grammar of a protocol declaration)  
+> 协议声明 (Grammar of a protocol declaration)  
 > *protocol-declaration* → [*attributes*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Attributes.html#//apple_ref/swift/grammar/attributes) _opt_ **protocol** [*protocol-name*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/protocol-name) [*type-inheritance-clause*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Types.html#//apple_ref/swift/grammar/type-inheritance-clause) _opt_ [*protocol-body*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/protocol-body)  
 > *protocol-name* → [*identifier*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/LexicalStructure.html#//apple_ref/swift/grammar/identifier)  
 > *protocol-body* → **{** [*protocol-member-declarations*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/protocol-member-declarations) _opt_ **}**  
@@ -280,12 +280,12 @@
 
 <p></p>
 
->  (Grammar of a protocol property declaration)  
+> 协议属性声明 (Grammar of a protocol property declaration)  
 > *protocol-property-declaration* → [*variable-declaration-head*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/variable-declaration-head) [*variable-name*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/variable-name) [*type-annotation*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Types.html#//apple_ref/swift/grammar/type-annotation) [*getter-setter-keyword-block*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/getter-setter-keyword-block)  
 
 <p></p>
 
->  (Grammar of a protocol method declaration)  
+> 协议方法声明 (Grammar of a protocol method declaration)  
 > *protocol-method-declaration* → [*function-head*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/function-head) [*function-name*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/function-name) [*generic-parameter-clause*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/GenericParametersAndArguments.html#//apple_ref/swift/grammar/generic-parameter-clause) _opt_ [*function-signature*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/function-signature)  
 
 <p></p>
@@ -305,14 +305,14 @@
 
 <p></p>
 
->  (Grammar of an initializer declaration)  
+> 构造声明 (Grammar of an initializer declaration)  
 > *initializer-declaration* → [*initializer-head*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/initializer-head) [*generic-parameter-clause*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/GenericParametersAndArguments.html#//apple_ref/swift/grammar/generic-parameter-clause) _opt_ [*parameter-clause*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/parameter-clause) [*initializer-body*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/initializer-body)  
 > *initializer-head* → [*attributes*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Attributes.html#//apple_ref/swift/grammar/attributes) _opt_ **convenience** _opt_ **init**  
 > *initializer-body* → [*code-block*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/code-block)  
 
 <p></p>
 
->  (Grammar of a deinitializer declaration)  
+> 析构声明 (Grammar of a deinitializer declaration)  
 > *deinitializer-declaration* → [*attributes*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Attributes.html#//apple_ref/swift/grammar/attributes) _opt_ **deinit** [*code-block*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/code-block)  
 
 <p></p>
@@ -332,7 +332,7 @@
 
 <p></p>
 
->  (Grammar of an operator declaration)  
+> 操作符声明 (Grammar of an operator declaration)  
 > *operator-declaration* → [*prefix-operator-declaration*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/prefix-operator-declaration) | [*postfix-operator-declaration*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/postfix-operator-declaration) | [*infix-operator-declaration*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/infix-operator-declaration)  
 > *prefix-operator-declaration* → **operator** **prefix** [*operator*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/LexicalStructure.html#//apple_ref/swift/grammar/operator) **{** **}**  
 > *postfix-operator-declaration* → **operator** **postfix** [*operator*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/LexicalStructure.html#//apple_ref/swift/grammar/operator) **{** **}**  
@@ -347,7 +347,7 @@
 
 <p></p>
 
->  (Grammar of a pattern)  
+> 模式语法 (Grammar of a pattern)  
 > *pattern* → [*wildcard-pattern*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Patterns.html#//apple_ref/swift/grammar/wildcard-pattern) [*type-annotation*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Types.html#//apple_ref/swift/grammar/type-annotation) _opt_  
 > *pattern* → [*identifier-pattern*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Patterns.html#//apple_ref/swift/grammar/identifier-pattern) [*type-annotation*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Types.html#//apple_ref/swift/grammar/type-annotation) _opt_  
 > *pattern* → [*value-binding-pattern*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Patterns.html#//apple_ref/swift/grammar/value-binding-pattern)  
@@ -358,48 +358,48 @@
 
 <p></p>
 
->  (Grammar of a wildcard pattern)  
+> 通配符模式 (Grammar of a wildcard pattern)  
 > *wildcard-pattern* → **_**  
 
 <p></p>
 
->  (Grammar of an identifier pattern)  
+> 标识符模式 (Grammar of an identifier pattern)  
 > *identifier-pattern* → [*identifier*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/LexicalStructure.html#//apple_ref/swift/grammar/identifier)  
 
 <p></p>
 
->  (Grammar of a value-binding pattern)  
+> 值绑定模式 (Grammar of a value-binding pattern)  
 > *value-binding-pattern* → **var** [*pattern*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Patterns.html#//apple_ref/swift/grammar/pattern) | **let** [*pattern*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Patterns.html#//apple_ref/swift/grammar/pattern)  
 
 <p></p>
 
->  (Grammar of a tuple pattern)  
+> 元组模式 (Grammar of a tuple pattern)  
 > *tuple-pattern* → **(** [*tuple-pattern-element-list*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Patterns.html#//apple_ref/swift/grammar/tuple-pattern-element-list) _opt_ **)**  
 > *tuple-pattern-element-list* → [*tuple-pattern-element*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Patterns.html#//apple_ref/swift/grammar/tuple-pattern-element) | [*tuple-pattern-element*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Patterns.html#//apple_ref/swift/grammar/tuple-pattern-element) **,** [*tuple-pattern-element-list*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Patterns.html#//apple_ref/swift/grammar/tuple-pattern-element-list)  
 > *tuple-pattern-element* → [*pattern*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Patterns.html#//apple_ref/swift/grammar/pattern)  
 
 <p></p>
 
->  (Grammar of an enumeration case pattern)  
+> 枚举用例模式 (Grammar of an enumeration case pattern)  
 > *enum-case-pattern* → [*type-identifier*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Types.html#//apple_ref/swift/grammar/type-identifier) _opt_ **.** [*enum-case-name*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/enum-case-name) [*tuple-pattern*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Patterns.html#//apple_ref/swift/grammar/tuple-pattern) _opt_  
 
 <p></p>
 
->  (Grammar of a type casting pattern)  
+> 类型转换模式 (Grammar of a type casting pattern)  
 > *type-casting-pattern* → [*is-pattern*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Patterns.html#//apple_ref/swift/grammar/is-pattern) | [*as-pattern*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Patterns.html#//apple_ref/swift/grammar/as-pattern)  
 > *is-pattern* → **is** [*type*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Types.html#//apple_ref/swift/grammar/type)  
 > *as-pattern* → [*pattern*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Patterns.html#//apple_ref/swift/grammar/pattern) **as** [*type*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Types.html#//apple_ref/swift/grammar/type)  
 
 <p></p>
 
->  (Grammar of an expression pattern)  
+> 表达式模式 (Grammar of an expression pattern)  
 > *expression-pattern* → [*expression*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/swift/grammar/expression)  
 
 ## 特性 (Attributes)
 
 <p></p>
 
->  (Grammar of an attribute)  
+> 特性语法 (Grammar of an attribute)  
 > *attribute* → **@** [*attribute-name*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Attributes.html#//apple_ref/swift/grammar/attribute-name) [*attribute-argument-clause*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Attributes.html#//apple_ref/swift/grammar/attribute-argument-clause) _opt_  
 > *attribute-name* → [*identifier*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/LexicalStructure.html#//apple_ref/swift/grammar/identifier)  
 > *attribute-argument-clause* → **(** [*balanced-tokens*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Attributes.html#//apple_ref/swift/grammar/balanced-tokens) _opt_ **)**  
@@ -415,20 +415,20 @@
 
 <p></p>
 
->  (Grammar of an expression)  
+> 表达式语法 (Grammar of an expression)  
 > *expression* → [*prefix-expression*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/swift/grammar/prefix-expression) [*binary-expressions*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/swift/grammar/binary-expressions) _opt_  
 > *expression-list* → [*expression*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/swift/grammar/expression) | [*expression*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/swift/grammar/expression) **,** [*expression-list*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/swift/grammar/expression-list)  
 
 <p></p>
 
->  (Grammar of a prefix expression)  
+> 前缀表达式 (Grammar of a prefix expression)  
 > *prefix-expression* → [*prefix-operator*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/LexicalStructure.html#//apple_ref/swift/grammar/prefix-operator) _opt_ [*postfix-expression*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/swift/grammar/postfix-expression)  
 > *prefix-expression* → [*in-out-expression*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/swift/grammar/in-out-expression)  
 > *in-out-expression* → **&** [*identifier*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/LexicalStructure.html#//apple_ref/swift/grammar/identifier)  
 
 <p></p>
 
->  (Grammar of a binary expression)  
+> 二进制表达式 (Grammar of a binary expression)  
 > *binary-expression* → [*binary-operator*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/LexicalStructure.html#//apple_ref/swift/grammar/binary-operator) [*prefix-expression*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/swift/grammar/prefix-expression)  
 > *binary-expression* → [*assignment-operator*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/swift/grammar/assignment-operator) [*prefix-expression*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/swift/grammar/prefix-expression)  
 > *binary-expression* → [*conditional-operator*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/swift/grammar/conditional-operator) [*prefix-expression*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/swift/grammar/prefix-expression)  
@@ -437,22 +437,22 @@
 
 <p></p>
 
->  (Grammar of an assignment operator)  
+> 赋值操作符 (Grammar of an assignment operator)  
 > *assignment-operator* → **=**  
 
 <p></p>
 
->  (Grammar of a conditional operator)  
+> 条件操作符 (Grammar of a conditional operator)  
 > *conditional-operator* → **?** [*expression*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/swift/grammar/expression) **:**  
 
 <p></p>
 
->  (Grammar of a type-casting operator)  
+> 类型转换操作符 (Grammar of a type-casting operator)  
 > *type-casting-operator* → **is** [*type*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Types.html#//apple_ref/swift/grammar/type) | **as** **?** _opt_ [*type*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Types.html#//apple_ref/swift/grammar/type)  
 
 <p></p>
 
->  (Grammar of a primary expression)  
+> 主表达式 (Grammar of a primary expression)  
 > *primary-expression* → [*identifier*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/LexicalStructure.html#//apple_ref/swift/grammar/identifier) [*generic-argument-clause*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/GenericParametersAndArguments.html#//apple_ref/swift/grammar/generic-argument-clause) _opt_  
 > *primary-expression* → [*literal-expression*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/swift/grammar/literal-expression)  
 > *primary-expression* → [*self-expression*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/swift/grammar/self-expression)  
@@ -464,7 +464,7 @@
 
 <p></p>
 
->  (Grammar of a literal expression)  
+> 文本表达式 (Grammar of a literal expression)  
 > *literal-expression* → [*literal*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/LexicalStructure.html#//apple_ref/swift/grammar/literal)  
 > *literal-expression* → [*array-literal*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/swift/grammar/array-literal) | [*dictionary-literal*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/swift/grammar/dictionary-literal)  
 > *literal-expression* → **&#95;&#95;FILE&#95;&#95;** | **&#95;&#95;LINE&#95;&#95;** | **&#95;&#95;COLUMN&#95;&#95;** | **&#95;&#95;FUNCTION&#95;&#95;**  
@@ -477,7 +477,7 @@
 
 <p></p>
 
->  (Grammar of a self expression)  
+> Self 表达式 (Grammar of a self expression)  
 > *self-expression* → **self**  
 > *self-expression* → **self** **.** [*identifier*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/LexicalStructure.html#//apple_ref/swift/grammar/identifier)  
 > *self-expression* → **self** **[** [*expression*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/swift/grammar/expression) **]**  
@@ -485,7 +485,7 @@
 
 <p></p>
 
->  (Grammar of a superclass expression)  
+> 超类表达式 (Grammar of a superclass expression)  
 > *superclass-expression* → [*superclass-method-expression*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/swift/grammar/superclass-method-expression) | [*superclass-subscript-expression*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/swift/grammar/superclass-subscript-expression) | [*superclass-initializer-expression*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/swift/grammar/superclass-initializer-expression)  
 > *superclass-method-expression* → **super** **.** [*identifier*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/LexicalStructure.html#//apple_ref/swift/grammar/identifier)  
 > *superclass-subscript-expression* → **super** **[** [*expression*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/swift/grammar/expression) **]**  
@@ -493,7 +493,7 @@
 
 <p></p>
 
->  (Grammar of a closure expression)  
+> 闭包表达式 (Grammar of a closure expression)  
 > *closure-expression* → **{** [*closure-signature*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/swift/grammar/closure-signature) _opt_ [*statements*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/statements) **}**  
 > *closure-signature* → [*parameter-clause*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/parameter-clause) [*function-result*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/function-result) _opt_ **in**  
 > *closure-signature* → [*identifier-list*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/LexicalStructure.html#//apple_ref/swift/grammar/identifier-list) [*function-result*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/function-result) _opt_ **in**  
@@ -505,24 +505,24 @@
 
 <p></p>
 
->  (Grammar of a implicit member expression)  
+> 隐式成员表达式 (Grammar of a implicit member expression)  
 > *implicit-member-expression* → **.** [*identifier*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/LexicalStructure.html#//apple_ref/swift/grammar/identifier)  
 
 <p></p>
 
->  (Grammar of a parenthesized expression)  
+> 带圆括号的表达式 (Grammar of a parenthesized expression)  
 > *parenthesized-expression* → **(** [*expression-element-list*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/swift/grammar/expression-element-list) _opt_ **)**  
 > *expression-element-list* → [*expression-element*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/swift/grammar/expression-element) | [*expression-element*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/swift/grammar/expression-element) **,** [*expression-element-list*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/swift/grammar/expression-element-list)  
 > *expression-element* → [*expression*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/swift/grammar/expression) | [*identifier*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/LexicalStructure.html#//apple_ref/swift/grammar/identifier) **:** [*expression*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/swift/grammar/expression)  
 
 <p></p>
 
->  (Grammar of a wildcard expression)  
+> 通配符表达式 (Grammar of a wildcard expression)  
 > *wildcard-expression* → **_**  
 
 <p></p>
 
->  (Grammar of a postfix expression)  
+> 后缀表达式 (Grammar of a postfix expression)  
 > *postfix-expression* → [*primary-expression*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/swift/grammar/primary-expression)  
 > *postfix-expression* → [*postfix-expression*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/swift/grammar/postfix-expression) [*postfix-operator*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/LexicalStructure.html#//apple_ref/swift/grammar/postfix-operator)  
 > *postfix-expression* → [*function-call-expression*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/swift/grammar/function-call-expression)  
@@ -536,19 +536,19 @@
 
 <p></p>
 
->  (Grammar of a function call expression)  
+> 函数调用表达式 (Grammar of a function call expression)  
 > *function-call-expression* → [*postfix-expression*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/swift/grammar/postfix-expression) [*parenthesized-expression*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/swift/grammar/parenthesized-expression)  
 > *function-call-expression* → [*postfix-expression*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/swift/grammar/postfix-expression) [*parenthesized-expression*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/swift/grammar/parenthesized-expression) _opt_ [*trailing-closure*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/swift/grammar/trailing-closure)  
 > *trailing-closure* → [*closure-expression*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/swift/grammar/closure-expression)  
 
 <p></p>
 
->  (Grammar of an initializer expression)  
+> 初始化表达式 (Grammar of an initializer expression)  
 > *initializer-expression* → [*postfix-expression*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/swift/grammar/postfix-expression) **.** **init**  
 
 <p></p>
 
->  (Grammar of an explicit member expression)  
+> 显式成员表达式 (Grammar of an explicit member expression)  
 > *explicit-member-expression* → [*postfix-expression*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/swift/grammar/postfix-expression) **.** [*decimal-digit*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/LexicalStructure.html#//apple_ref/swift/grammar/decimal-digit)  
 > *explicit-member-expression* → [*postfix-expression*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/swift/grammar/postfix-expression) **.** [*identifier*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/LexicalStructure.html#//apple_ref/swift/grammar/identifier) [*generic-argument-clause*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/GenericParametersAndArguments.html#//apple_ref/swift/grammar/generic-argument-clause) _opt_  
 
@@ -559,7 +559,7 @@
 
 <p></p>
 
->  (Grammar of a dynamic type expression)  
+> 动态类型表达式 (Grammar of a dynamic type expression)  
 > *dynamic-type-expression* → [*postfix-expression*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/swift/grammar/postfix-expression) **.** **dynamicType**  
 
 <p></p>
@@ -665,7 +665,7 @@
 
 <p></p>
 
->  (Grammar of operators)  
+> 操作符语法 (Grammar of operators)  
 > *operator* → [*operator-character*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/LexicalStructure.html#//apple_ref/swift/grammar/operator-character) [*operator*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/LexicalStructure.html#//apple_ref/swift/grammar/operator) _opt_  
 > *operator-character* → **/** | **=** | **-** | **+** | **!** | **&#42;** | **%** | **<** | **>** | **&** | **|** | **^** | **~** | **.**  
 > *binary-operator* → [*operator*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/LexicalStructure.html#//apple_ref/swift/grammar/operator)  
@@ -728,11 +728,11 @@
 
 <p></p>
 
-> MetaType类型 (Grammar of a metatype type)  
+> Metatype类型 (Grammar of a metatype type)  
 > *metatype-type* → [*type*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Types.html#//apple_ref/swift/grammar/type) **.** **Type** | [*type*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Types.html#//apple_ref/swift/grammar/type) **.** **Protocol**  
 
 <p></p>
 
->  (Grammar of a type inheritance clause)  
+> 类型继承子句 (Grammar of a type inheritance clause)  
 > *type-inheritance-clause* → **:** [*type-inheritance-list*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Types.html#//apple_ref/swift/grammar/type-inheritance-list)  
 > *type-inheritance-list* → [*type-identifier*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Types.html#//apple_ref/swift/grammar/type-identifier) | [*type-identifier*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Types.html#//apple_ref/swift/grammar/type-identifier) **,** [*type-inheritance-list*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Types.html#//apple_ref/swift/grammar/type-inheritance-list)
