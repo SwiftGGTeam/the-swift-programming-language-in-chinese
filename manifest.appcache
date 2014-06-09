@@ -1,5 +1,5 @@
 CACHE MANIFEST
-# Revision 1402322595981
+# Revision 1402322774245
 
 CACHE:
 index.html
@@ -21,8 +21,8 @@ chapter2/12_Subscripts.html
 chapter2/02_Basic_Operators.html
 chapter2/14_Initialization.html
 chapter2/15_Deinitialization.html
-chapter2/16_Automatic_Reference_Counting.html
 chapter2/17_Optional_Chaining.html
+chapter2/16_Automatic_Reference_Counting.html
 chapter2/18_Type_Casting.html
 chapter2/19_Nested_Types.html
 chapter2/20_Extensions.html
@@ -77,8 +77,8 @@ gitbook/jsrepl/sandbox.html
 gitbook/jsrepl/sandbox.js
 gitbook/print.css
 gitbook/style.css
-gitbook/plugins/gitbook-plugin-mixpanel/plugin.js
 gitbook/plugins/gitbook-plugin-mathjax/plugin.js
+gitbook/plugins/gitbook-plugin-mixpanel/plugin.js
 
 NETWORK:
 *

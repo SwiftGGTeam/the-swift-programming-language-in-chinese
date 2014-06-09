@@ -254,9 +254,8 @@ Swift统一的函数语法足够灵活，可以用来表示任何函数，包括
 
 在这个例子中，Swift自动为`joiner`提供了外部参数名。因此，当函数调用时，外部参数名必须使用，这样使得参数的用途变得清晰。
 
-			func join(s1: String, s2: String, joiner: String = " ") -> String {
-    			return s1 + joiner + s2
-			}
+			join("hello", "world", joiner: "-")
+            // returns "hello-world"
 
 > 注意：
 > 你可以使用`下划线（_）`作为默认值参数的外部参数名，这样可以在调用时不用提供外部参数名。但是给带默认值的参数命名总是更加合适的。
