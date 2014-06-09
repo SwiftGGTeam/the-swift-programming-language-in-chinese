@@ -1,5 +1,5 @@
 CACHE MANIFEST
-# Revision 1402311241484
+# Revision 1402321232918
 
 CACHE:
 index.html
@@ -10,12 +10,12 @@ chapter2/13_Inheritance.html
 chapter2/01_The_Basics.html
 chapter2/03_Strings_and_Characters.html
 chapter2/04_Collection_Types.html
-chapter2/05_Control_Flow.html
 chapter2/06_Functions.html
+chapter2/05_Control_Flow.html
 chapter2/07_Closures.html
 chapter2/08_Enumerations.html
-chapter2/09_Classes_and_Structures.html
 chapter2/10_Properties.html
+chapter2/09_Classes_and_Structures.html
 chapter2/11_Methods.html
 chapter2/12_Subscripts.html
 chapter2/02_Basic_Operators.html
