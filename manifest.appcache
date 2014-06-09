@@ -1,5 +1,5 @@
 CACHE MANIFEST
-# Revision 1402322774245
+# Revision 1402323563629
 
 CACHE:
 index.html
@@ -21,16 +21,16 @@ chapter2/12_Subscripts.html
 chapter2/02_Basic_Operators.html
 chapter2/14_Initialization.html
 chapter2/15_Deinitialization.html
-chapter2/17_Optional_Chaining.html
 chapter2/16_Automatic_Reference_Counting.html
+chapter2/17_Optional_Chaining.html
 chapter2/18_Type_Casting.html
 chapter2/19_Nested_Types.html
-chapter2/20_Extensions.html
 chapter2/21_Protocols.html
-chapter2/22_Generics.html
+chapter2/20_Extensions.html
 chapter2/23_Advanced_Operators.html
 chapter2/chapter2.html
 chapter3/06_Attributes.html
+chapter2/22_Generics.html
 chapter3/01_About_the_Language_Reference.html
 chapter3/03_Types.html
 chapter3/04_Expressions.html
