@@ -54,7 +54,7 @@ for `initialzation`; `condition`; `increment` {
 
 `for`语句的执行流程如下：
 
-1. 执行*initialzation*，通常用于声明和初始化在接下来的循环中需要使用的变量。
+1. *initialzation*只会被执行一次，通常用于声明和初始化在接下来的循环中需要使用的变量。
 
 2. 计算*condition*表达式：
 	如果为真(`true`)，*statements*将会被执行，然后转到第3步。如果为假(`false`)，*statements*和*increment*都不会被执行，`for`至此执行完毕。
@@ -83,7 +83,7 @@ for `item` in `collection` {
 }
 ```
 
-`for-in`语句在循环开始前会调用*collection*表达式的`generate`方法来获取一个生成器类型（这是一个符合`Generator`协议的类型）的值。接下来循环开始，调用*collection*表达式的`next`方法。如果其返回值不是`None`，它将会被赋给`item`，然后执行`statements`，执行完毕后回到循环开始处；否则，将不会赋值给`item`也不会执行`statements`，`for-in`至此执行完毕。
+`for-in`语句在循环开始前会调用*collection*表达式的`generate`方法来获取一个生成器类型（这是一个符合`Generator`协议的类型）的值。接下来循环开始，调用*collection*表达式的`next`方法。如果其返回值不是`None`，它将会被赋给*item*，然后执行*statements*，执行完毕后回到循环开始处；否则，将不会赋值给*item*也不会执行*statements*，`for-in`至此执行完毕。
 
 > GRAMMAR OF A FOR-IN STATEMENT
 
@@ -106,9 +106,9 @@ while `condition` {
 1. 计算*condition*表达式：
 	如果为真(`true`)，转到第2步。如果为假(`false`)，`while`至此执行完毕。
 
-2. 执行*statements*表达式，然后转到第1步。
+2. 执行*statements*，然后转到第1步。
 
-由于*condition*的值在*statements*执行前就已计算出，因此*while*语句中的*statements*可能会被执行若干次，也可能不会被执行。
+由于*condition*的值在*statements*执行前就已计算出，因此`while`语句中的*statements*可能会被执行若干次，也可能不会被执行。
 
 *condition*表达式的值的类型必须符合`LogicValue`协议。同时，*condition*表达式也可以使用可选绑定，请参考[可选绑定`待添加链接`]()。
 
@@ -132,7 +132,7 @@ do {
 
 `do-while`语句的执行流程如下：
 
-1. 执行*statements*表达式，然后转到第2步。
+1. 执行*statements*，然后转到第2步。
 
 2. 计算*condition*表达式：
 	如果为真(`true`)，转到第1步。如果为假(`false`)，`do-while`至此执行完毕。
@@ -171,7 +171,7 @@ if `condition` {
 }
 ```
 
-第二种形式是在第一种形式的基础上添加*else语句*，当只有一个`else`语句时，像下面这样：
+第二种形式是在第一种形式的基础上添加*else语句*，当只有一个*else语句*时，像下面这样：
 
 ```swift
 if `condition` {
@@ -181,7 +181,7 @@ if `condition` {
 }
 ```
 
-同时，`else`语句也可包含`if`语句，从而形成一条链来测试更多的条件，像下面这样：
+同时，*else语句*也可包含`if`语句，从而形成一条链来测试更多的条件，像下面这样：
 
 ```swift
 if `condition 1` {
@@ -224,22 +224,22 @@ switch `control expression` {
 }
 ```
 
-`switch`语句的*控制表达式(control expression)*会首先被计算，然后与每一个`case`的模式(pattern)进行匹配。如果匹配成功，程序将会执行对应的`case`块里的`statements`。另外，每一个`case`块都不能为空，也就是说在每一个`case`块中至少有一条语句。如果你不想在匹配到的`case`块中执行代码，只需在块里写一条`break`语句即可。
+`switch`语句的*控制表达式(control expression)*会首先被计算，然后与每一个*case*的模式(pattern)进行匹配。如果匹配成功，程序将会执行对应的*case*块里的*statements*。另外，每一个*case*块都不能为空，也就是说在每一个*case*块中至少有一条语句。如果你不想在匹配到的*case*块中执行代码，只需在块里写一条`break`语句即可。
 
 可以用作控制表达式的值是十分灵活的，除了标量类型(scalar types，如`Int`、`Character`)外，你可以使用任何类型的值，包括浮点数、字符串、元组、自定义类的实例和可选(optional)类型，甚至是枚举类型中的成员值和指定的范围(range)等。关于在`switch`语句中使用这些类型，请参考[控制流`待添加链接`]()一章的[Switch`待添加链接`]()。
 
-你可以在模式后面添加一个起保护作用的表达式(guard expression)。*起保护作用的表达式*是这样构成的：关键字`where`后面跟着一个作为额外测试条件的表达式。因此，当且仅当*控制表达式*匹配一个`case`的某个模式且起保护作用的表达式为真时，对应`case`块中的`statements`才会被执行。在下面的例子中，*控制表达式*只会匹配含两个相等元素的元组，如`(1, 1)`：
+你可以在模式后面添加一个起保护作用的表达式(guard expression)。*起保护作用的表达式*是这样构成的：关键字`where`后面跟着一个作为额外测试条件的表达式。因此，当且仅当*控制表达式*匹配一个*case*的某个模式且起保护作用的表达式为真时，对应*case*块中的*statements*才会被执行。在下面的例子中，*控制表达式*只会匹配含两个相等元素的元组，如`(1, 1)`：
 
 ```swift
 case let (x, y) where x == y:
 }
 ```
 
-正如上面这个例子，也可以在模式中使用`let`（或`var`）语句来绑定常量（或变量）。这些常量（或变量）可以在其对应的起保护作用的表达式和其对应的`case`块里的代码中引用。但是，如果`case`中有多个模式匹配控制表达式，那么这些模式都不能绑定常量（或变量）。
+正如上面这个例子，也可以在模式中使用`let`（或`var`）语句来绑定常量（或变量）。这些常量（或变量）可以在其对应的起保护作用的表达式和其对应的*case*块里的代码中引用。但是，如果*case*中有多个模式匹配控制表达式，那么这些模式都不能绑定常量（或变量）。
 
-`switch`语句也可以包含默认(`default`)块，只有其它`case`块都无法匹配控制表达式时，默认块中的代码才会被执行。一个`switch`语句只能有一个默认块，而且必须在`switch`语句的最后面。
+`switch`语句也可以包含默认(`default`)块，只有其它*case*块都无法匹配控制表达式时，默认块中的代码才会被执行。一个`switch`语句只能有一个默认块，而且必须在`switch`语句的最后面。
 
-尽管模式匹配操作实际的执行顺序，特别是模式的计算顺序是不可知的，但是 Swift 规定`switch`语句中的模式匹配的顺序和书写源代码的顺序保持一致。因此，当多个模式含有相同的值且能够匹配控制表达式时，程序只会执行源代码中第一个匹配的`case`块中的代码。
+尽管模式匹配操作实际的执行顺序，特别是模式的计算顺序是不可知的，但是 Swift 规定`switch`语句中的模式匹配的顺序和书写源代码的顺序保持一致。因此，当多个模式含有相同的值且能够匹配控制表达式时，程序只会执行源代码中第一个匹配的*case*块中的代码。
 
 #### Switch 语句必须是完备的
 
@@ -247,7 +247,7 @@ case let (x, y) where x == y:
 
 #### 不存在隐式的贯穿(fall through)
 
-当匹配的`case`块中的代码执行完毕后，程序会终止`switch`语句，而不会继续执行下一个`case`块。这就意味着，如果你想执行下一个`case`块，需要显式地在你需要的`case`块里使用`fallthrough`语句。关于`fallthrough`语句的更多信息，请参考[Fallthrough 语句`待添加链接`]()。
+当匹配的*case*块中的代码执行完毕后，程序会终止`switch`语句，而不会继续执行下一个*case*块。这就意味着，如果你想执行下一个*case*块，需要显式地在你需要的*case*块里使用`fallthrough`语句。关于`fallthrough`语句的更多信息，请参考[Fallthrough 语句`待添加链接`]()。
 
 > GRAMMAR OF A SWITCH STATEMENT
 
@@ -301,11 +301,11 @@ case let (x, y) where x == y:
 
 ### Break 语句
 
-`break`语句用于终止循环或`switch`语句的执行。使用`break`语句时，可以只写`break`这个关键词，也可以在`break`后面跟上标签名，像下面这样：
+`break`语句用于终止循环或`switch`语句的执行。使用`break`语句时，可以只写`break`这个关键词，也可以在`break`后面跟上标签名(label name)，像下面这样：
 
 ```swift
 break
-break `标签名`
+break `label name`
 ```
 
 当`break`语句后面带标签名时，可用于终止由这个标签标记的循环或`switch`语句的执行。
@@ -322,11 +322,11 @@ break `标签名`
 
 ### Continue 语句
 
-`continue`语句用于终止循环中当前迭代的执行，但不会终止该循环的执行。使用`continue`语句时，可以只写`continue`这个关键词，也可以在`continue`后面跟上标签名，像下面这样：
+`continue`语句用于终止循环中当前迭代的执行，但不会终止该循环的执行。使用`continue`语句时，可以只写`continue`这个关键词，也可以在`continue`后面跟上标签名(label name)，像下面这样：
 
 ```swift
 continue
-continue `标签名`
+continue `label name`
 ```
 
 当`continue`语句后面带标签名时，可用于终止由这个标签标记的循环中当前迭代的执行。
@@ -373,4 +373,3 @@ return `表达式`
 > GRAMMAR OF A RETURN STATEMENT
 
 > *return-statement* → **return** [*expression*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/swift/grammar/expression) *opt*
-
