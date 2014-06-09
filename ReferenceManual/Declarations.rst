@@ -548,7 +548,7 @@ See also :ref:`Declarations_ProtocolAssociatedTypeDeclaration`.
 Function Declaration
 --------------------
 
-A :newTerm`function declaration` introduces a function or method into your program.
+A :newTerm:`function declaration` introduces a function or method into your program.
 A function declared in the context of class, structure, enumeration, or protocol
 is referred to as a :newTerm:`method`.
 Function declarations are declared using the keyword ``func`` and have the following form:
@@ -570,7 +570,8 @@ the return type can be omitted as follows:
 
 The type of each parameter must be included ---
 it can't be inferred.
-By default, the parameters to a function are constants.
+Although the parameters to a function are constants by default,
+you can write ``let`` in front of a parameter's name to emphasize this behavior.
 Write ``var`` in front of a parameter's name to make it a variable,
 scoping any changes made to the variable just to the function body,
 or write ``inout`` to make those changes also apply
@@ -662,12 +663,12 @@ using the following forms:
 
 .. syntax-outline::
 
-    _ : <#parameter type#.
+    _ : <#parameter type#>.
     <#parameter name#>: <#parameter type#>...
     <#parameter name#>: <#parameter type#> = <#default argument value#>
 
 A parameter named with an underscore (``_``) is explicitly ignored
-an can't be accessed within the body of the function.
+and can't be accessed within the body of the function.
 
 A parameter with a base type name followed immediately by three dots (``...``)
 is understood as a variadic parameter.
