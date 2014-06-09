@@ -245,7 +245,7 @@
     var numbers = [20, 19, 7, 12]
     hasAnyMatches(numbers, lessThanTen)
 
-函数实际上是一种特殊的闭包，你可以使用`{}`来创建一个匿名闭包。使用`in`来分割参数并返回类型。
+函数实际上是一种特殊的闭包，你可以使用`{}`来创建一个匿名闭包。使用`in`来分割参数、返回值与执行体。
 
     numbers.map({
         (number: Int) -> Int in
