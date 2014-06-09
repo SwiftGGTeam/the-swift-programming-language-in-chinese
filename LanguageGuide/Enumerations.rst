@@ -69,7 +69,7 @@ The ``case`` keyword indicates that a new line of member values is about to be d
 
    Unlike C and Objective-C,
    Swift enumeration members are not assigned a default integer value when they are created.
-   In the ``CompassPoints`` example above,
+   In the ``CompassPoint`` example above,
    ``North``, ``South``, ``East`` and ``West``
    do not implicitly equal
    ``0``, ``1``, ``2`` and ``3``.
