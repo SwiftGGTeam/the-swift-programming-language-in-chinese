@@ -331,3 +331,91 @@ class SomeClass {
 
 ###获取和设置类属性的值
 
+跟实例的属性一样，类属性的访问也是通过点运算符来进行，但是，类属性是通过类型本身来获取和设置，而不是通过实例。比如：
+
+```
+println(SomeClass.computedTypeProperty)
+// prints "42"
+ 
+println(SomeStructure.storedTypeProperty)
+// prints "Some value."
+SomeStructure.storedTypeProperty = "Another value."
+println(SomeStructure.storedTypeProperty)
+// prints "Another value.”
+
+```
+
+下面的例子定义了一个结构体，使用两个存储型类属性来表示多个声道的声音电平值，每个声道有一个 0 到 10 之间的整数表示声音电平值。
+
+后面的图表展示了如何联合使用两个声道来表示一个立体声的声音电平值。当声道的电平值是 0，没有一个灯会亮；当声道的电平值是 10，所有灯点亮。本图中，左声道的电平是 9，右声道的电平是 7。
+
+<img src="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/staticPropertiesVUMeter_2x.png" alt="Static Properties VUMeter" width="243" height="357" />
+
+上面所描述的声道模型使用`AudioChannel`结构体来表示：
+
+```
+struct AudioChannel {
+    static let thresholdLevel = 10
+    static var maxInputLevelForAllChannels = 0
+    var currentLevel: Int = 0 {
+    didSet {
+        if currentLevel > AudioChannel.thresholdLevel {
+            // cap the new audio level to the threshold level
+            currentLevel = AudioChannel.thresholdLevel
+        }
+        if currentLevel > AudioChannel.maxInputLevelForAllChannels {
+            // store this as the new overall maximum input level
+            AudioChannel.maxInputLevelForAllChannels = currentLevel
+        }
+    }
+    }
+}
+
+```
+
+结构`AudioChannel`定义了 2 个存储型类属性来实现上述功能。第一个是`thresholdLevel`，表示声音电平的最大上限阈值，它是一个取值为 10 的常量，对所有实例都可见，如果声音电平高于 10，则取最大上限值 10（见后面描述）。
+
+第二个类属性是变量存储型属性`maxInputLevelForAllChannels`，它用来表示所有`AudioChannel`实例的电平值的最大值，初始值是 0。
+
+`AudioChannel`也定义了一个名为`currentLevel`的实例存储属性，表示当前声道现在的电平值，取值为 0 到 10。
+
+属性`currentLevel`包含`didSet`属性监视器来检查每次新设置后的属性值，有如下两个检查：
+
+- 如果`currentLevel`的新值大于允许的阈值`thresholdLevel`，属性监视器将`currentLevel`的值限定为阈值`thresholdLevel`。
+- 如果修正后的`currentLevel`值大于任何之前任意`AudioChannel`实例中的值，属性监视器将新值保存在静态属性`maxInputLevelForAllChannels`中。
+
+> 注意
+> 
+> 在第一个检查过程中，`didSet`属性监视器将`currentLevel`设置成了不同的值，但这不会再次调用属性监视器。
+
+可以使用结构`AudioChannel`来创建表示立体声系统的两个声道`leftChannel`和`rightChannel`：
+
+```
+var leftChannel = AudioChannel()
+var rightChannel = AudioChannel()
+
+```
+
+如果将左声道的电平设置成 7，类属性`maxInputLevelForAllChannels`也会更新成 7：
+
+```
+leftChannel.currentLevel = 7
+println(leftChannel.currentLevel)
+// prints "7"
+println(AudioChannel.maxInputLevelForAllChannels)
+// prints "7”
+
+```
+
+如果试图将右声道的电平设置成 11，则会将右声道的`currentLevel`修正到最大值 10，同时`maxInputLevelForAllChannels`的值也会更新到 10：
+
+```
+rightChannel.currentLevel = 11
+println(rightChannel.currentLevel)
+// prints "10"
+println(AudioChannel.maxInputLevelForAllChannels)
+// prints "10”
+
+```
+
+[本章完]
