@@ -414,7 +414,7 @@ followed by either a decimal fraction, a decimal exponent, or both.
 The decimal fraction consists of a decimal point (``.``)
 followed by a sequence of decimal digits.
 The exponent consists of an upper- or lowercase ``e`` prefix
-followed by sequence of decimal digits that indicates
+followed by a sequence of decimal digits that indicates
 what power of 10 the value preceding the ``e`` is multiplied by.
 For example, ``1.25e2`` represents 1.25 ⨉ 10\ :superscript:`2`,
 which evaluates to ``125.0``.
@@ -539,7 +539,7 @@ For example, all the following string literals have the same value:
    << // r1 : String = "1 2 3"
    -> "1 2 \(1 + 2)"
    << // r2 : String = "1 2 3"
-   -> var x = 3; "1 2 \(x)"
+   -> let x = 3; "1 2 \(x)"
    << // x : Int = 3
    << // r3 : String = "1 2 3"
 
@@ -632,7 +632,7 @@ or a binary operator. This behavior is summarized in the following rules:
 * If an operator has no whitespace on the left but is followed immediately by a dot (``.``),
   it is treated as a postfix unary operator.
   As an example, the  ``++`` operator in ``a++.b`` is treated as a postfix unary operator
-  (``a++ . b`` rather than ``a ++ .b``).
+  (``a++ .b`` rather than ``a ++ .b``).
 
 For the purposes of these rules,
 the characters ``(``, ``[``, and ``{`` before an operator,

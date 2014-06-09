@@ -7,7 +7,7 @@ For example, the structure of a tuple ``(1, 2)`` is a comma-separated list of tw
 elements. Because patterns represent the structure of a value rather than any
 one particular value, you can match them with a variety of values.
 For instance, the pattern ``(x, y)`` matches the tuple ``(1, 2)`` and any other
-two-element tuple. In addition matching a pattern with a value,
+two-element tuple. In addition to matching a pattern with a value,
 you can extract part or all of a composite value and bind each part
 to a constant or variable name.
 
@@ -19,7 +19,7 @@ only wildcard patterns, identifier patterns, and patterns containing those two
 patterns can occur.
 
 You can specify a type annotation for a wildcard pattern, an identifier pattern,
-and a tuple pattern to constraint the pattern to match only values of a certain type.
+and a tuple pattern to constrain the pattern to match only values of a certain type.
 
 .. langref-grammar
 

@@ -190,7 +190,7 @@ see :doc:`../LanguageGuide/BasicOperators` and :doc:`../LanguageGuide/AdvancedOp
     by applying operator precedence
     For example, the expression ``2 + 3 * 5``
     is initially understood as a flat list of five items,
-    ``2``, ``+``, `` 3``, ``*``, and ``5``.
+    ``2``, ``+``, ``3``, ``*``, and ``5``.
     This process transforms it into the tree (2 + (3 * 5)).
 
 .. langref-grammar
@@ -584,7 +584,7 @@ For example:
            }
        }
 
-In a mutating method of value type,
+In a mutating method of a value type,
 you can assign a new instance of that value type to ``self``.
 For example:
 
@@ -695,7 +695,7 @@ that allow closures to be written more concisely:
 
 * A closure that consists of only a single expression
   is understood to return the value of that expression.
-  The contents of this expression is also considered
+  The contents of this expression are also considered
   when performing type inference on the surrounding expression.
 
 The following closure expressions are equivalent:
@@ -739,7 +739,7 @@ to capture a weak or unowned reference to the value.
     -> myFunction { [weak self] in print(self!.title) }    // weak capture
     -> myFunction { [unowned self] in print(self.title) }  // unowned capture
 
-You can also bind arbitrary expression
+You can also bind an arbitrary expression
 to named values in the capture list.
 The expression is evaluated when the closure is formed,
 and captured with the specified strength.

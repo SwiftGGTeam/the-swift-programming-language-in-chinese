@@ -307,7 +307,7 @@ and has the following form:
 The second form of an ``if`` statement provides an additional *else clause*
 (introduced by the ``else`` keyword)
 and is used for executing one part of code when the condition is true
-and another part code when the same condition is false.
+and another part of code when the same condition is false.
 When a single else clause is present, an ``if`` statement has the following form:
 
 .. syntax-outline::
@@ -384,7 +384,7 @@ As a result, you must include at least one statement
 following the colon (``:``) of each case label. Use a single ``break`` statement
 if you don't intend to execute any code in the body of a matched case.
 
-The values of expressions your code can branch on is very flexible. For instance,
+The values of expressions your code can branch on are very flexible. For instance,
 in addition to the values of scalar types, such as integers and characters,
 your code can branch on the values of any type, including floating-point numbers, strings,
 tuples, instances of custom classes, and optionals.

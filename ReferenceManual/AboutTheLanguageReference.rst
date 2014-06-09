@@ -49,7 +49,7 @@ where the alternatives are spelled out explicitly:
 
 .. syntax-grammar:: omit
 
-    Grammar of a getter setter block
+    Grammar of a getter-setter block
 
     getter-setter-block --> ``{`` getter-clause setter-clause-OPT ``}``
     getter-setter-block --> ``{`` setter-clause getter-clause ``}``

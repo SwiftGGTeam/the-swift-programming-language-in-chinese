@@ -700,7 +700,7 @@ at the start of the function declaration.
 Methods that override a superclass method
 must be marked with the ``override`` keyword
 at the start of the function declaration.
-It is an error to override a method without the ``override`` keyword
+It's compile-time error to override a method without the ``override`` keyword
 or to use the ``override`` keyword on a method
 that doesn't override a superclass method.
 
@@ -1376,7 +1376,7 @@ Protocol Associated Type Declaration
 Protocols declare associated types using the keyword ``typealias``.
 An associated type provides an alias for a type
 that is used as part of a protocol's declaration.
-Accosiated types are similiar to type paramters in generic parameter clauses,
+Associated types are similar to type parameters in generic parameter clauses,
 but they're associated with ``Self`` in the protocol in which they're declared.
 In that context, ``Self`` refers to the eventual type that conforms to the protocol.
 For more information and examples,
