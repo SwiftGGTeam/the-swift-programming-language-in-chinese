@@ -54,6 +54,7 @@
 
 下例是一个`遵循`了 `FullyNamed` 协议的简单结构体
 
+
 	struct Person: FullyNamed{
 		var fullName: String
 	}
@@ -135,6 +136,7 @@
 
 下例定义了一个名为`OnOffSwitch`的枚举. 这个枚举可以切换`On`,`Off`两种状态. 该枚举中的 `toggle`含有`mutating`标记,用以匹配`Togglable`协议的方法要求:
 
+
 	enum OnOffSwitch: Togglable {
 		case Off, On
 		mutating func toggle() {
@@ -152,6 +154,7 @@
 
 
 ## 协议作为类型
+
 尽管`协议`本身不实现任何功能,但你可以将它当做`类型`来使用.
 
 包括:  
@@ -160,7 +163,9 @@
 * 作为常量,变量,属性的类型
 * 作为数组,字典或其他容器中的元素类型
 
+
 > Note: 协议是一种类型,因此你应该向其他类型那样(Int,Double,String),使用驼峰式写法来书写协议
+
 
 这里有一个使用协议类型的例子:
 
@@ -184,9 +189,10 @@
 
 `Dice`也拥有一个`构造器(initializer)`用来设置它的初始状态.构造器中含有一个名为`generator`,类型为`RandomNumberGenerator`的形参.你可以在此传入任意遵循`RandomNumberGenerator`协议的类型.
 
-`Dice`拥有一个名为`roll`,用以返回骰子面值的实例方法.该方法先调用`generator`的`random`方法来创建一个 [0-1] 之间的随机数,然后使用这个随机数来生成骰子的面值. 这里的`generator` 被声明为采纳了`RandomNumberGenerator`协议,用以确保`random`方法能够被调用 
+`roll`是一个用以返回骰子面值的实例方法.该方法先调用`generator`的`random`方法来创建一个 [0-1] 之间的随机数,然后使用这个随机数来生成骰子的面值. 这里的`generator` 被声明为采纳了`RandomNumberGenerator`协议,用以确保`random`方法能够被调用 
 
 下例展示了一个使用`LinearCongruentialGenerator`实例作为随机数生成器的六面骰子
+
 
 	var d6 = Dice(sides: 6,generator: LinearCongruentialGenerator())
 	for _ in 1...5 {
@@ -259,13 +265,12 @@
 游戏的初始化设置(`setup`)被为类的构造器(`init()`)来实现.所有的游戏逻辑被转移到了协议方法`play`中.
 
 注意:`delegate` 被定义为遵循`DiceGameDelegate`协议的可选属性,因为委托并不是该游戏的必备条件.
-因为`delegate` 是可选的,它的默认值为`nil`
 
 `DicegameDelegate` 提供了三个方法用来追踪游戏过程.被放置于游戏的逻辑中,即`play()`方法内.分别在游戏开始时,新一轮开始时,游戏结束时被调用.
 
-因为 `delegate` 是一个遵循 `DiceGameDelegate` 的可选属性,因此在 `play()` 方法中使用了`可选链`来调用委托方法. 如果`delegate` 属性为 `nil` , 则委托调用*优雅的,不含错误的*失败.如果`delegate`不为`nil`, 则这些委托方法被调用,并且把`SnakesAndLadders`的这个实例当做参数一并传递
+因为`delegate`是一个遵循`DiceGameDelegate`的可选属性,因此在`play()`方法中使用了`可选链`来调用委托方法. 如果`delegate`属性为`nil`, 则委托调用*优雅的,不含错误的*失败.如果`delegate`不为`nil`, 则这些委托方法被调用,并且把`SnakesAndLadders`的这个实例当做参数一并传递
 
-下边的这个例子展示了一个名为`DiceGameTracker`,实现`DiceGameDelegate`协议的类
+下边的这个例子展示了一个名为`DiceGameTracker`,实现`DiceGameDelegate` 协议的类
 
 	class DiceGameTracker: DiceGameDelegate {
     	var numberOfTurns = 0
@@ -304,8 +309,318 @@
 	// Rolled a 5
 	// The game lasted for 4 turns”
 
+## 在延展(Extension)中添加协议成员
+
+即使无法修改源代码,依然可以通过`延展(Extension)`来扩展已存在类型(*译者注: 类,结构体,枚举等*).`延展`中可以为已存在的类型添加属性,方法,下标,协议等成员. 详情请在[延展](4)章节中查看.
+
+> 笔记: 通过延展为已存在的类型增加协议时,该类型的实例会自动添加协议中的方法
+
+下例中`TextRepresentable`协议含有一个`asText` 方法,可以被任何类型`遵循`
+
+	protocol TextRepresentable {
+		func asText() -> String
+	}
+	
+通过延展为为上一节中的`Dice`类实现并遵循`TextRepresentable`协议
+
+	extension Dice: TextRepresentable {
+		cun asText() -> String {
+			return "A \(sides)-sided dice"
+		}
+	}
+	
+`Dice`类型的实例现在可以被视为`TextRepresentable`类型:
+
+	let d12 = Dice(sides: 12,generator: LinearCongruentialGenerator())
+	println(d12.asText())
+	// 输出 "A 12-sided dice"
+
+`SnakesAndLadders` 类也可通过`延展`来遵循协议:
+
+	extension SnakeAndLadders: TextRepresentable {
+		func asText() -> String {
+			return "A game of Snakes and Ladders with \(finalSquare) squares"
+		}
+	}
+	println(game.asText())
+	// 输出 "A game of Snakes and Ladders with 25 squares"
+
+## 通过延展声明协议
+
+如果一个类型已经实现了协议中的所有要求,却没有声明时,可以通过声明空`延展`来采纳协议:
+
+	struct Hamster {
+		var name: String
+		func asText() -> String {
+			return "A hamster named \(name)"
+		}	
+	}
+	extension Hamster: TextRepresentabl {}
+
+现在开始,`Hamster`的实例可以被当做`TextRepresentable`类型使用
+
+	let simonTheHamster = Hamster(name: "Simon")
+	let somethingTextRepresentable: TextRepresentabl = simonTheHamester
+	println(somethingTextRepresentable.asText())
+	// 输出 "A hamster named Simon"
+
+> 注意: 类型不会因为满足了某协议而直接改变,你必须为它做出明显的实现协议声明
+
+## 集合中的协议类型
+
+协议类型可以被集合使用,表示集合中的元素均为协议类型:
+
+	let things: TextRepresentable[] = [game,d12,simoTheHamster]
+
+`things`数组可以被直接遍历,并调用其中元素的`asText()`函数:
+
+	for thing in things {
+		println(thing.asText())
+	}
+	// A game of Snakes and Ladders with 25 squares
+	// A 12-sided dice
+	// A hamster named Simon
+
+上文代码中,`thing`被认为是`TextRepresentable`类型而不是`Dice`,`DiceGame`,`Hamster`等类型.因此,可以在循环中调用它们的`asText`方法
+
+## 协议的继承
+
+协议可以通过继承一个或多个其他协议.继承协议的语法和继承类的语法相似,多个协议间用逗号`,`分隔
+
+	protocol InheritingProtocol: SomeProtocol, AnotherProtocol {
+		// 协议定义
+	}
+
+下边是一个继承了`TextRepresentable`的协议
+
+	protocol PrettyTextRepresentable: TextRepresentable {
+		func asPrettyText() -> String 
+	}
+
+`PrettyTextRepresentable`协议继承自`TextRepresentable`协议.任何实现`PrettyTextRepresentable`协议的类型,也需要`遵循`TextRepresentable`协议.
+
+用延展为`SnakesAndLadders`遵循`PrettyTextRepresentable`协议:
+
+	extension SnakesAndLadders: PrettyTextRepresentable {
+    	func asPrettyText() -> String {
+        	var output = asText() + ":\n"
+        	for index in 1...finalSquare {
+            	switch board[index] {
+           	 	case let ladder where ladder > 0:
+        	        output += "▲ "
+    	        case let snake where snake < 0:
+	                output += "▼ "
+            	default:
+                	output += "○ "
+            	}
+        	}
+        	return output
+    	}
+	}
+
+上边的延展为`SnakesAndLadders`遵循了`PrettyTextRepresentabel`协议.在`for in`中迭代出了`board`数组中的每一个元素:
+
+* 当数组中元素的值大于0时,用`▲`表示
+* 当数组中元素的值小于0时,用`▼`表示
+* 当数组中元素的值等于0时,用`○`表示
+
+任意`SankesAndLadders`的实例都可以使用`asPrettyText()`方法.
+
+	println(game.asPrettyText())
+	// A game of Snakes and Ladders with 25 squares:
+	// ○ ○ ▲ ○ ○ ▲ ○ ○ ▲ ▲ ○ ○ ○ ▼ ○ ○ ○ ○ ▼ ○ ○ ▼ ○ ▼ ○
+
+## 协议合成
+
+一个协议可由多个协议组成,称为`协议合成(protocol composition)`,采用`protocol<SomeProtocol, AnotherProtocol>`这样的语法.当有多个协议时,中间以`,`分隔.
+
+举个栗子:
+
+	protocol Named {
+    var name: String { get }
+	}
+	protocol Aged {
+	    var age: Int { get }
+	}
+	struct Person: Named, Aged {
+    	var name: String
+    	var age: Int
+	}
+	func wishHappyBirthday(celebrator: protocol<Named, Aged>) {
+    println("Happy birthday \(celebrator.name) - you're \(celebrator.age)!")
+	}
+	let birthdayPerson = Person(name: "Malcolm", age: 21)
+	wishHappyBirthday(birthdayPerson)
+	// 输出 "Happy birthday Malcolm - you're 21!
+
+上例中,`Named`协议中含有`String`类型的`name`属性;`Aged`协议中含有`Int`类型的`age`属性.`Person`结构体`遵循`了这两个协议.
+
+此外还定义了`wishHappyBirthday`函数,该函数的形参`celebrator`的类型为`protocol<Named,Aged>`,也就是说可以接受任意`遵循`了这两个协议的`类型`.
+
+> 笔记: `协议合成`并不会生成一个新协议,而是将多个协议合成为一个临时的协议.
+
+## 检验协议的一致性
+
+使用`is`和`as`可以检验协议一致性,也可以将协议转换为特定的其他协议类型.检验与转换的语法和之前相同(*详情查看[Typy Casting章节](5)*):
+
+* `is`操作符用来检查实例是否`遵循`了某个`协议`. 
+* `as?`返回一个可选值,当实例`遵循`协议时,返回该协议类型;否则返回`nil`
+* `as`可以用来强制向下转型.
+
+	@objc protocol HasArea {
+		var area: Double { get }
+	}
+
+> 笔记: `@objc`用来表示协议是可选的,也可以用来表示暴露给`Objective-C`的代码,在*[Using Siwft with Cocoa and Objectivei-c]*(6)一节中有详细介绍.
+> `@objc`型协议只对`类`有效,因此只能在`类`中检查协议的一致性.
+
+	class Circle: HasArea {
+    let pi = 3.1415927
+    var radius: Double
+    var area: Double { return pi * radius * radius }
+    init(radius: Double) { self.radius = radius }
+	}
+	class Country: HasArea {
+    var area: Double
+    init(area: Double) { self.area = area }
+	}
+
+`Circle`和`Country`都遵循了`HasArea`协议,前者把`area`写为`计算型属性`,后者则把`area`写为`存储型属性`
+
+下边是一个没事实现`HasArea`协议的`Animal`类:
+
+	class Animal {
+		var legs: Int
+		init(legs: Int) { self.legs = legs }
+	}
+
+`Circle,Country,Animal`并没有一个相同的基础类,可以使用`AnyObject`类型的数组来装在他们的实例:
+
+	let objects: AnyObject[] = [
+		Circle(radius: 2.0),
+		Country(area: 243_610),
+		Animal(legs: 4)
+	]
+
+在迭代时可以检查`object`数组的元素是否`遵循`了`HasArea`协议:
+
+	for object in objects {
+	    if let objectWithArea = object as? HasArea {
+	        println("Area is \(objectWithArea.area)")
+	    } else {
+	        println("Something that doesn't have an area")
+	    }
+	}
+	// Area is 12.5663708
+	// Area is 243610.0
+	// Something that doesn't have an area
+
+当数组中的元素遵循`HasArea`协议时,通过`as?`操作符将其`可选绑定(optional binding)`到`objectWithArea`常量上.
+
+`objects`数组中元素的类型并不会被改变,但是当它们被赋值给`objectWithArea`时只被视为`HasArea`类型,并且只有`area`属性可以被访问.
+
+## 可选协议要求
+
+可选协议含有可选成员,其`遵循者`可以选择是否实现这些成员.在协议中使用`@optional`关键字作为前缀来定义可选成员.
+
+可选协议在调用时使用`可选链`,详细内容在[Optional Chaning](7)章节中查看.
+
+像`someOptionalMethod?(someArgument)`一样,你可以在可选方法名称后加上`?`来检查该方法是否被实现.`可选方法`和`可选属性`都会返回一个`可选值(optional value)`,当其不可访问时,`?`之后语句不会执行,并返回`nil`
+
+> 笔记: 可选协议只能在含有`@objc`前缀的协议中生效.且`@objc`的协议只能被`类`遵循
+
+下问定义了整型计数器`Counter`类,该类使用外部的数据源来提供`增量值(increment amount)`. 数据源定义为`CounterDataSource`类型的协议,如下所示
+
+	@objc protocol CounterDataSource {
+    	@optional func incrementForCount(count: Int) -> Int
+    	@optional var fixedIncrement: Int { get }
+	}
+
+`CounterDataSource`含有`incrementForCount`的`可选方法`和`fiexdIncrement`的`可选属性`.
+
+> 笔记: `CounterDataSource`中的属性和方法都是可选的,因此可以不提供所需要的属性或方法来实现它.尽管技术上允许,但这并不提倡这样用.
+
+`Counter`类的定义在下边,它含有一个名为`dataSource`,`CounterDataSource?`类型的可选属性:
+
+	@objc class Counter {
+	    var count = 0
+	    var dataSource: CounterDataSource?
+	    func increment() {
+	        if let amount = dataSource?.incrementForCount?(count) {
+	            count += amount
+	        } else if let amount = dataSource?.fixedIncrement? {
+	            count += amount
+	        }
+	    }
+	}
+
+`count`属性用于存储当前的值,`increment`方法用来为`count`赋值.
+
+`increment`方法通过`可选链`,尝试从两种`可选成员`中获取`count`.
+	
+1. 由于`dataSource`可能为`nil`,因此在`dataSource`后边加上了`?`标记来表明只在`dataSource`非空时才去调用incrementForCount`方法.
+2. 即使`dataSource`存在,但是也无法保证其是否实现了`incrementForCount`方法,因此在`incrementForCount`方法后边也加有`?`标记
+
+在调用`incrementForCount`方法后,`Int`型`可选值`通过`可选绑定(optional binding)`自动拆包并赋值给常量`amount`.
+
+当`incrementForCount`不能被调用时,尝试使用`可选属性``fixedIncrement`来代替.
+
+下边是一个简单的`CounterDataSource`协议的实现.
+
+	class ThreeSource: CounterDataSource {
+		let fixedIncrement = 3
+	}
+
+可以使用`ThreeSource`作为数据源开实例化一个`Counter`:
+
+	var counter = Counter()
+	counter.dataSource = ThreeSource()
+	for _ in 1...4 {
+	    counter.increment()
+	    println(counter.count)
+	}
+	// 3
+	// 6
+	// 9
+	// 12
+
+下边是一个更为复杂的数据源实现:
+
+	class TowardsZeroSource: CounterDataSource {
+    func incrementForCount(count: Int) -> Int {
+	        if count == 0 {
+	            return 0
+	        } else if count < 0 {
+	            return 1
+	        } else {
+	            return -1
+	        }
+    	}
+	}
+
+`TowardZeroSource`类实现了`CounterDataSource`中`可选方法``incrementForCount`.
+
+下边是执行的代码:
+
+	counter.count = -4
+	counter.dataSource = TowardsZeroSource()
+	for _ in 1...5 {
+	    counter.increment()
+	    println(counter.count)
+	}
+	// -3
+	// -2
+	// -1
+	// 0
+	// 0
+
 
 
 [1]:http://baidu.com
 [2]:http://baidu.com
 [3]:http://baidu.com
+[4]:http://baidu.com
+[5]:http://baidu.com
+[6]:http://baidu.com
+[7]:http://baidu.com
+
