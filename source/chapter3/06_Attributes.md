@@ -91,3 +91,25 @@ Interface Builder特性是Interface Builder用来与Xcode同步的声明特性�
 `IBOutlet`和`IBInspectable`用于修饰一个类的属性声明；`IBAction`特性用于修饰一个类的方法声明；`IBDesignable`用于修饰类的声明。
 
 ## 类型特性
+
+类型特性只能用于修饰类型。然而，你也可以用`noreturn`特性去修饰函数或方法声明。
+
+`auto_closure`
+
+这个特性通过自动地将表达式封闭到一个无参数闭包中来延迟表达式的求值。使用该特性修饰无参的函数或方法类型，返回表达式的类型。一个如何使用`auto_closure`特性的例子，见[函数类型]()
+
+`noreturn`
+
+该特性用于修饰函数或方法的类型，表明该函数或方法不会返回到它的调用者中去。你也可以用它标记函数或方法的声明，表示函数或方法的相应类型，`T`，是`@noreturn T`。
+
+> 特性的语法
+> attribute -> @ [attribute-name]() [attribute-argument-clause]()opt
+> attribute-name -> [identifier]()
+> attribute-argument-clause -> ( [balanced-tokens]()opt )
+> attributes -> [attribute]() [attributes]()opt
+> balanced-tokens -> [balanced-token]() [balanced-tokens]()opt
+> balanced-token -> ( [balanced-tokens]()opt )
+> balanced-token -> [ [balanced-tokens]()opt ]
+> balanced-token -> { [balanced-tokens]()opt }
+> balanced-token -> 任意标识符，关键字，字面量，或运算符
+> balanced-token -> 任意标点符号，除了(, ), [, ], {, 或 }
