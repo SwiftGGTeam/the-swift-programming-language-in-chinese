@@ -70,4 +70,46 @@ Swift 中类和结构体有很多共同点。共同处在于：
 
 
 ### 属性访问
-通过使用*点语法*（*dot syntax*）,你可以访问实例中所含有的属性。
+通过使用*点语法*（*dot syntax*）,你可以访问实例中所含有的属性。其语法规则是，实例名后面紧跟属性名，两者通过点号(.)连接：
+	
+	println("The width of someResolution is \(someResolution.width)")
+	// prints "The width of someResolution is 0"
+	
+在上面的例子中，`someResolution.width`引用`someResolution`的`width`属性，返回`width`的初始值`0`。
+
+你也可以访问子属性，如何`VideoMode`中`Resolution`属性的`width`属性：
+	
+	println("The width of someVideoMode is \(someVideoMode.resolution.width)")
+	// prints "The width of someVideoMode is 0"
+	
+你也可以使用点语法为属性变量赋值：
+	
+	someVideoMode.resolution.width = 12880
+	println("The width of someVideoMode is now \(someVideoMode.resolution.width)")
+	// prints "The width of someVideoMode is now 1280"
+	
+> 与Objective-C 语言不同的是，Swift 允许直接设置结构体属性的子属性。上面的最后一个例子，就是直接设置了`someVideoMode`中`resolution`属性的`width`这个子属性，以上操作并不需要从新设置`resolution`属性。
+
+### 结构体类型的成员逐一初始化器
+//Memberwise Initializers for structure Types
+
+所有结构体都有一个自动生成的成员逐一初始化器，用于初始化新结构体实例中成员的属性。新实例中各个属性的初始值可以通过属性的名称传递到成员逐一初始化器之中：
+	
+	let vga = resolution（width:640, heigth: 480）
+	
+与结构体不同，类实例没有默认的成员逐一初始化器。初始化器在[Initialization](http://)章节进行更详细的讨论。
+
+### 结构体和枚举是值类型
+
+
+
+
+
+
+
+
+
+
+
+
+
