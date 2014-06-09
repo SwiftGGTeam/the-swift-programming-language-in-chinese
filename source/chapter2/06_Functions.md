@@ -35,7 +35,7 @@ Swift统一的函数语法足够灵活，可以用来表示任何函数，包括
             // prints "Hello, Anna!"
             println(sayHello("Brian"))
             // prints "Hello, Brian!
-            
+
 调用`sayHello`函数时，在圆括号中传给它一个`String`类型的实参。因为这个函数返回一个`String`类型的值，`sayHello`可以被包含在`println`的调用中，用来输出这个函数的返回值，正如上面所示。
 
 在`sayHello`的函数体中，先定义了一个新的名为`greeting`的`String`常量，同时赋值了给`personName`的一个简单问候消息。然后用`return`关键字把这个问候返回出去。一旦`return greeting`被调用，该函数结束它的执行并返回`greeting`的当前值。
@@ -65,7 +65,7 @@ Swift统一的函数语法足够灵活，可以用来表示任何函数，包括
 			}
 			println(halfOpenRangeLength(1, 10))
 			// prints "9
-			
+
 ### 无参函数（Functions Without Parameters）
 
 函数可以没有参数。下面这个函数就是一个无参函数，当被调用时，它返回固定的`String`消息：
@@ -106,7 +106,7 @@ Swift统一的函数语法足够灵活，可以用来表示任何函数，包括
 			// prints "hello, world" and returns a value of 12
 			printWithoutCounting("hello, world")
 			// prints "hello, world" but does not return a value
-			
+
 第一个函数`printAndCount`，输出一个字符串并返回`Int`类型的字符数。第二个函数`printWithoutCounting`调用了第一个函数，但是忽略了它的返回值。当第二个函数被调用时，消息依然会由第一个函数输出，但是返回值不会被用到。
 
 > 注意：
@@ -133,13 +133,13 @@ Swift统一的函数语法足够灵活，可以用来表示任何函数，包括
     			}
     			return (vowels, consonants, others)
 			}
-			
+
 你可以用`count`函数来处理任何一个字符串，返回的值将是一个包含三个`Int`型值的元组（tuple）：
 
 			let total = count("some arbitrary string!")
 			println("\(total.vowels) vowels and \(total.consonants) consonants")
 			// prints "6 vowels and 13 consonants
-			
+
 需要注意的是，元组的成员不需要在函数中返回时命名，因为它们的名字已经在函数返回类型有有了定义。
 
 ## 函数参数名（Function Parameter Names）
@@ -163,7 +163,7 @@ Swift统一的函数语法足够灵活，可以用来表示任何函数，包括
     			// function body goes here, and can use localParameterName
     			// to refer to the argument value for that parameter
 			}
-			
+
 > 注意：
 > 如果你提供了外部参数名，那么函数在被调用时，必须使用外部参数名。
 
@@ -172,25 +172,25 @@ Swift统一的函数语法足够灵活，可以用来表示任何函数，包括
 			func join(s1: String, s2: String, joiner: String) -> String {
     			return s1 + joiner + s2
 			}
-			
+
 当你调用这个函数时，这三个字符串的用途是不清楚的：
 
 			join("hello", "world", ", ")
 			// returns "hello, world
-			
+
 为了让这些字符串的用途更为明显，我们为`join`函数添加外部参数名：
 
 			func join(string s1: String, toString s2: String, withJoiner joiner: String) -> String {
         			return s1 + joiner + s2
 			}
-			
+
 在这个版本的`join`函数中，第一个参数有一个叫`string`的外部参数名和`s1`的局部参数名，第二个参数有一个叫`toString`的外部参数名和`s2`的局部参数名，第三个参数有一个叫`withJoiner`的外部参数名和`joiner`的局部参数名。
 
 现在，你可以使用这些外部参数名以一种清晰地方式来调用函数了：
 
 			join(string: "hello", toString: "world", withJoiner: ", ")
 			// returns "hello, world
-			
+
 使用外部参数名让第二个版本的`join`函数的调用更为有表现力，更为通顺，同时还保持了函数体是可读的和有明确意图的。
 
 > 注意：
@@ -210,7 +210,7 @@ Swift统一的函数语法足够灵活，可以用来表示任何函数，包括
     			}
     			return false
 			}
-			
+
 这样定义参数名，使得函数体更为可读，清晰，同时也可以以一个不含糊的方式被调用：
 
 			let containsAVee = containsCharacter(string: "aardvark", characterToFind: "v")
@@ -237,9 +237,9 @@ Swift统一的函数语法足够灵活，可以用来表示任何函数，包括
 
 当这个函数被调用时，如果`joiner`的值没有被指定，函数会使用默认值（" "）：
 
-			join(string: "hello", toString: "world", withJoiner: "-")
-			// returns "hello-world
-			
+			join(string: "hello", toString:"world")
+            // returns "hello world"
+
 ### 默认值参数的外部参数名（External Names for Parameters with Default Values）
 
 在大多数情况下，给带默认值的参数起一个外部参数名是很有用的。这样可以保证当函数被调用且带默认值的参数被提供值时，实参的意图是明显的。
@@ -280,7 +280,7 @@ Swift统一的函数语法足够灵活，可以用来表示任何函数，包括
 			// returns 3.0, which is the arithmetic mean of these five numbers
 			arithmeticMean(3, 8, 19)
 			// returns 10.0, which is the arithmetic mean of these three numbers
-			
+
 > 注意：
 > 一个函数至多能有一个可变参数，而且它必须是参数表中最后的一个。这样做是为了避免函数调用时出现歧义。
 
@@ -305,7 +305,7 @@ Swift统一的函数语法足够灵活，可以用来表示任何函数，包括
 			let paddedString = alignRight(originalString, 10, "-")
 			// paddedString is equal to "-----hello"
 			// originalString is still equal to "hello”
-			
+
 这个例子中定义了一个新的叫做`alignRight`的函数，用来右对齐输入的字符串到一个长的输出字符串中。左侧空余的地方用指定的填充字符填充。这个例子中，字符串`"hello"`被转换成了`"-----hello"`。
 
 `alignRight`函数将参数`string`定义为变量参数。这意味着`string`现在可以作为一个局部变量，用传入的字符串值初始化，并且可以在函数体中进行操作。
@@ -333,7 +333,7 @@ Swift统一的函数语法足够灵活，可以用来表示任何函数，包括
     			a = b
     			b = temporaryA
 			}
-			
+
 这个`swapTwoInts`函数仅仅交换`a`与`b`的值。该函数先将`a`的值存到一个暂时常量`temporaryA`中，然后将`b`的值赋给`a`，最后将`temporaryA`幅值给`b`。
 
 你可以用两个`Int`型的变量来调用`swapTwoInts`。需要注意的是，`someInt`和`anotherInt`在传入`swapTwoInts`函数前，都加了`&`的前缀：
@@ -361,7 +361,7 @@ Swift统一的函数语法足够灵活，可以用来表示任何函数，包括
 			func multiplyTwoInts(a: Int, b: Int) -> Int {
     			return a * b
 			}
-			
+
 这个例子中定义了两个简单的数学函数：`addTwoInts`和`multiplyTwoInts`。这两个函数都传入两个`Int`类型， 返回一个合适的`Int`值。
 
 这两个函数的类型是`(Int, Int) -> Int`，可以读作“这个函数类型，它有两个`Int`型的参数并返回一个`Int`型的值。”。
@@ -371,7 +371,7 @@ Swift统一的函数语法足够灵活，可以用来表示任何函数，包括
 			func printHelloWorld() {
     			println("hello, world")
 			}
-			
+
 这个函数的类型是：`() -> ()`，或者叫“没有参数，并返回`Void`类型的函数。”。没有指定返回类型的函数总返回	`Void`。在Swift中，`Void`与空的元组是一样的。
 
 ### 使用函数类型（Using Function Types）
@@ -396,7 +396,7 @@ Swift统一的函数语法足够灵活，可以用来表示任何函数，包括
 			mathFunction = multiplyTwoInts
 			println("Result: \(mathFunction(2, 3))")
 			// prints "Result: 6"
-			
+
 就像其他类型一样，当赋值一个函数给常量或变量时，你可以让Swift来推测其函数类型：
 
 			let anotherMathFunction = addTwoInts
@@ -444,7 +444,7 @@ Swift统一的函数语法足够灵活，可以用来表示任何函数，包括
 			var currentValue = 3
 			let moveNearerToZero = chooseStepFunction(currentValue > 0)
 			// moveNearerToZero now refers to the stepBackward() function
-			
+
 上面这个例子中计算出从`currentValue`逐渐接近到`0`是需要向正数走还是向负数走。`currentValue`的初始值是`3`，这意味着`currentValue > 0`是真的（`true`），这将使得`chooseStepFunction`返回`stepBackward`函数。一个指向返回的函数的引用保存在了`moveNearerToZero`常量中。
 
 现在，`moveNearerToZero`指向了正确的函数，它可以被用来数到`0`：

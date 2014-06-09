@@ -46,7 +46,7 @@
 
 
         
-    <div class="book"  data-level="2.6" data-basepath=".." data-revision="1402238318316">
+    <div class="book"  data-level="2.6" data-basepath=".." data-revision="1402300498179">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -178,7 +178,7 @@
         <li class="chapter " data-level="2.2" data-path="chapter2/02_Basic_Operators.html">
             
             <a href="../chapter2/02_Basic_Operators.html">
-                <i class="fa fa-check"></i> <b>2.2.</b> 基本操作符
+                <i class="fa fa-check"></i> <b>2.2.</b> 基本运算符
             </a>
             
             
@@ -268,7 +268,7 @@
         <li class="chapter " data-level="2.12" data-path="chapter2/12_Subscripts.html">
             
             <a href="../chapter2/12_Subscripts.html">
-                <i class="fa fa-check"></i> <b>2.12.</b> 下标
+                <i class="fa fa-check"></i> <b>2.12.</b> 附属脚本
             </a>
             
             
@@ -520,7 +520,7 @@
     
         <a href="../chapter2/11_Methods.html" title="方法" class="chapter done " data-progress="2.11" style="left: 18.42105263157895%;"></a>
     
-        <a href="../chapter2/12_Subscripts.html" title="下标" class="chapter done " data-progress="2.12" style="left: 21.05263157894737%;"></a>
+        <a href="../chapter2/12_Subscripts.html" title="附属脚本" class="chapter done " data-progress="2.12" style="left: 21.05263157894737%;"></a>
     
         <a href="../chapter2/13_Inheritance.html" title="继承" class="chapter done " data-progress="2.13" style="left: 23.68421052631579%;"></a>
     
@@ -536,7 +536,7 @@
     
         <a href="../chapter2/19_Nested_Types.html" title="嵌套类型" class="chapter done " data-progress="2.19" style="left: 39.473684210526315%;"></a>
     
-        <a href="../chapter2/02_Basic_Operators.html" title="基本操作符" class="chapter done " data-progress="2.2" style="left: 42.10526315789474%;"></a>
+        <a href="../chapter2/02_Basic_Operators.html" title="基本运算符" class="chapter done " data-progress="2.2" style="left: 42.10526315789474%;"></a>
     
         <a href="../chapter2/20_Extensions.html" title="扩展" class="chapter done " data-progress="2.20" style="left: 44.73684210526316%;"></a>
     
@@ -587,7 +587,7 @@
 
                 <div class="page-inner">
                 
-                    <section class="normal" id="section-gitbook_24">
+                    <section class="normal" id="section-gitbook_137">
                     
                         <h1 id="-functions-">函数（Functions）</h1>
 <p>本页包含内容：</p>
@@ -760,8 +760,8 @@
 <pre><code>        join(string: &quot;hello&quot;, toString: &quot;world&quot;, withJoiner: &quot;-&quot;)
         // returns &quot;hello-world
 </code></pre><p>当这个函数被调用时，如果<code>joiner</code>的值没有被指定，函数会使用默认值（&quot; &quot;）：</p>
-<pre><code>        join(string: &quot;hello&quot;, toString: &quot;world&quot;, withJoiner: &quot;-&quot;)
-        // returns &quot;hello-world
+<pre><code>        join(string: &quot;hello&quot;, toString:&quot;world&quot;)
+        // returns &quot;hello world&quot;
 </code></pre><h3 id="-external-names-for-parameters-with-default-values-">默认值参数的外部参数名（External Names for Parameters with Default Values）</h3>
 <p>在大多数情况下，给带默认值的参数起一个外部参数名是很有用的。这样可以保证当函数被调用且带默认值的参数被提供值时，实参的意图是明显的。</p>
 <p>为了使定义外部参数名更加简单，当你未给带默认值的参数提供外部参数名时，Swift会自动提供外部名字。此时外部参数名与局部名字是一样的，就像你已经在局部参数名前写了<code>井号（#）</code>一样。</p>

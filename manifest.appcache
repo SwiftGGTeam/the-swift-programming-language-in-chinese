@@ -1,5 +1,5 @@
 CACHE MANIFEST
-# Revision 1402238318317
+# Revision 1402300498180
 
 CACHE:
 index.html
@@ -15,8 +15,8 @@ chapter2/06_Functions.html
 chapter2/07_Closures.html
 chapter2/08_Enumerations.html
 chapter2/09_Classes_and_Structures.html
-chapter2/11_Methods.html
 chapter2/10_Properties.html
+chapter2/11_Methods.html
 chapter2/12_Subscripts.html
 chapter2/02_Basic_Operators.html
 chapter2/14_Initialization.html
