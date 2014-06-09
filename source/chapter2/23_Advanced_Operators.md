@@ -113,28 +113,39 @@ let otherBits: UInt8 = 0b00000101
 let outputBits = firstBits ^ otherBits  // 等于 00010001
 ```
 
-### Bitwise Left and Right Shift Operators
+## Bitwise Left and Right Shift Operators
+## 按位左移/右移运算符
 
 The bitwise left shift operator (<<) and bitwise right shift operator (>>) move all bits in a number to the left or the right by a certain number of places, according to the rules defined below.
 
+左移运算符 `<<` 和右移运算符 `>>` 会把一个数的所有比特位按以下定义的规则向左或向右移动指定位数.
+
 Bitwise left and right shifts have the effect of multiplying or dividing an integer number by a factor of two. Shifting an integer’s bits to the left by one position doubles its value, whereas shifting it to the right by one position halves its value.
 
+按位左移和按位右移的效果相当把一个整数乘于或除于一个因子为 `2` 的整数. 向左移动一个整型的比特位相当于把这个数乘于 `2`, 向右移一位就是除于 `2`.
+
 ### Shifting Behavior for Unsigned Integers
+### 对无符整型进行移位
 
 The bit-shifting behavior for unsigned integers is as follows:
+对无符整型的移位的效果如下:
 
 Existing bits are moved to the left or right by the requested number of places.
 Any bits that are moved beyond the bounds of the integer’s storage are discarded.
 Zeroes are inserted in the spaces left behind after the original bits are moved to the left or right.
 This approach is known as a logical shift.
 
+已经存在的比特位向左或向右移动指定的位数. 被移出整型存储边界的的位数直接抛弃, 移动留下的空白位用零 `0` 来填充. 这种方法称为逻辑移位.
+
 The illustration below shows the results of 11111111 << 1 (which is 11111111 shifted to the left by 1 place), and 11111111 >> 1 (which is 11111111 shifted to the right by 1 place). Blue numbers are shifted, gray numbers are discarded, and orange zeroes are inserted:
+
+以下这张把展示了 `11111111 << 1` (`11111111` 向左移1位), 和 `11111111 << 1` (`11111111` 向右移1位). 蓝色的是被移位的, 灰色是被抛弃的, 橙色的 `0` 是被填充进来的.
 
 ![Art/bitshiftUnsigned_2x.png](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/bitshiftUnsigned_2x.png "Art/bitshiftUnsigned_2x.png")
 Here’s how bit shifting looks in Swift code:
 
 ```
-let shiftBits: UInt8 = 4   // 00000100 in binary
+let shiftBits: UInt8 = 4   // 即二进制的00000100
 shiftBits << 1             // 00001000
 shiftBits << 2             // 00010000
 shiftBits << 5             // 10000000
@@ -143,21 +154,30 @@ shiftBits >> 2             // 00000001
 ```
 
 You can use bit shifting to encode and decode values within other data types:
+你可以使用移位操作进行其他数据类型的编码和解码.
 
 ```
 let pink: UInt32 = 0xCC6699
-let redComponent = (pink & 0xFF0000) >> 16    // redComponent is 0xCC, or 204
-let greenComponent = (pink & 0x00FF00) >> 8   // greenComponent is 0x66, or 102
-let blueComponent = pink & 0x0000FF           // blueComponent is 0x99, or 153
+let redComponent = (pink & 0xFF0000) >> 16    // redComponent 是 0xCC, 即 204
+let greenComponent = (pink & 0x00FF00) >> 8   // greenComponent 是 0x66, 即 102
+let blueComponent = pink & 0x0000FF           // blueComponent 是 0x99, 即 153
 ```
 
 This example uses a UInt32 constant called pink to store a Cascading Style Sheets color value for the color pink. The CSS color value #CC6699 is written as 0xCC6699 in Swift’s hexadecimal number representation. This color is then decomposed into its red (CC), green (66), and blue (99) components by the bitwise AND operator (&) and the bitwise right shift operator (>>).
 
+这个例子使用了一个 `UInt32` 的命名为 `pink`的常量来储存层叠样式表 `CSS` 中粉色的颜色值, `CSS`颜色`#CC6699`在Swift用十六进制`0xCC6699`来表示. 然后使用按位与(&)和按位右移就可以从这个颜色值中解析出红(CC), 绿(66), 蓝(99)三个部分.
+
 The red component is obtained by performing a bitwise AND between the numbers 0xCC6699 and 0xFF0000. The zeroes in 0xFF0000 effectively “mask” the second and third bytes of 0xCC6699, causing the 6699 to be ignored and leaving 0xCC0000 as the result.
+
+对 `0xCC6699` 和 `0xFF0000` 进行按位与 `&` 操作就可以得到红色部分. `0xFF0000` 中的 `0` 了遮盖了 `OxCC6699` 的第二和第三个字节, 这样 `6699` 被忽略了, 只留下 `0xCC0000`.
 
 This number is then shifted 16 places to the right (>> 16). Each pair of characters in a hexadecimal number uses 8 bits, so a move 16 places to the right will convert 0xCC0000 into 0x0000CC. This is the same as 0xCC, which has a decimal value of 204.
 
+然后, 按向右移动16位, 即 `>> 16`. 十六进制中每两个字符是8比特位, 所以移动16位的结果是把 `0xCC0000` 变成 `0x0000CC`. 这和 `0xCC` 是相等的, 都是十进制的 `204`.
+
 Similarly, the green component is obtained by performing a bitwise AND between the numbers 0xCC6699 and 0x00FF00, which gives an output value of 0x006600. This output value is then shifted eight places to the right, giving a a value of 0x66, which has a decimal value of 102.
+
+
 
 Finally, the blue component is obtained by performing a bitwise AND between the numbers 0xCC6699 and 0x0000FF, which gives an output value of 0x000099. There’s no need to shift this to the right, as 0x000099 already equals 0x99, which has a decimal value of 153.
 
