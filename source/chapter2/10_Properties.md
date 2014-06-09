@@ -298,5 +298,36 @@ stepCounter.totalSteps = 896
 > 
 > 跟实例的存储属性不同，必须给存储型类属性指定默认值，因为类型本身无法在初始化过程中使用构造器给类属性赋值。
 
-###类属性的语法
+###类属性语法
+
+在 C 或 Objective-C 中，静态常量和静态变量的定义是通过特定类型加上`global`关键字。在 Swift 编程语言中，类属性是作为类型定义的一部分写在类型最外层的花括号内，因此它的作用范围也就在类型支持的范围内。
+
+使用关键字`static`来定义值类型的类属性，关键字`class`来为类（class）定义类属性。下面的例子演示了存储型和计算型类属性的语法：
+
+```
+struct SomeStructure {
+    static var storedTypeProperty = "Some value."
+    static var computedTypeProperty: Int {
+    // return an Int value here
+    }
+}
+enum SomeEnumeration {
+    static var storedTypeProperty = "Some value."
+    static var computedTypeProperty: Int {
+    // return an Int value here
+    }
+}
+class SomeClass {
+    class var computedTypeProperty: Int {
+    // return an Int value here
+    }
+}
+
+```
+
+> 注意
+> 
+> 例子中的计算型类属性是只读的，但也可以定义可读可写的计算型类属性，跟实例计算属性的语法类似。
+
+###获取和设置类属性的值
 
