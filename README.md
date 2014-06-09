@@ -25,34 +25,35 @@
    * 字符串和字符(完成 By @wh1100717)
    * 集合类型(@WilliamZang 认领)
    * 控制流(@vclwei 认领)
-   * 函数(@honghaoz 认领)
+   * 函数(完成 By @honghaoz)
    * 闭包(完成 By @wh1100717)
    * 枚举(@yankuangshi 认领)
    * 类和结构体(@JaySurplus 认领)
    * 属性(@shinyzhu 认领)
-   * 方法(@pp-prog 认领)
-   * 下标(@siemenliu 认领)
-   * 继承(@awstein 认领)
+   * 方法(完成 By @pp-prog)
+   * 下标(完成 By @siemenliu)
+   * 继承(完成 By @Hawstein)
    * 构造过程(@lifedim 认领)
-   * 析构过程(认领)
+   * 析构过程(完成)
    * 自动引用计数(@TimothyYe 认领)
-   * 可选链(认领)
+   * 可选链(完成)
    * 类型检查(完成 By @xiehurricane)
    * 嵌套类型(完成 By @Lin-H)
-   * 扩展(@lyuka 认领)
+   * 扩展(完成 By @lyuka)
    * 协议(@geek5nan 认领)
    * 泛型(完成 By @takalard)
    * 高级操作符(@xielingwang 认领)
 * 语言参考
    * 关于语言参考(完成 By @ChildhoodAndy)
-   * 词法结构
-   * 类型
+   * 词法结构(@superkam 认领)
+   * 类型(@lyuka 认领)
    * 表达式(@sg552 认领)
-   * 声明
-   * 属性
-   * 模式
-   * 泛型参数
-   * 语法总结
+   * 语句(@coverxit 认领)
+   * 声明(@marsprince 认领)
+   * 特性(@Hawstein 认领)
+   * 模式(@honghaoz 认领)
+   * 泛型参数(@fd5788 认领)
+   * 语法总结(@StanZhai 认领)
 
 # 更新频率
 
@@ -102,12 +103,13 @@
 3. 在命令行运行 `git branch develop` 来创建一个新分支
 4. 运行 `git checkout develop` 来切换到新分支
 5. 运行 `git remote add upstream https://github.com/numbbbbb/the-swift-programming-language-in-chinese.git` 把我的库添加为远端库
-6. 运行 `git fetch upstream gh-pages` 拉取我的库的更新到本地
-7. 运行 `git rebase upstream/gh-pages` 将我的更新合并到你的分支
+6. 运行 `git remote update`更新
+7. 运行 `git fetch upstream gh-pages` 拉取我的库的更新到本地
+8. 运行 `git rebase upstream/gh-pages` 将我的更新合并到你的分支
 
 这是一个初始化流程，只需要做一遍就行，之后请一直在develop分支进行翻译。
 
-如果翻译过程中我的库有了更新，请重复6、7步。
+如果翻译过程中我的库有了更新，请重复6、7、8步。
 
 翻译完成之后，首先push到你的库，然后登录GitHub，在你的库的首页可以看到一个 `pull request` 按钮，点击它，填写一些说明信息，然后提交即可。
 

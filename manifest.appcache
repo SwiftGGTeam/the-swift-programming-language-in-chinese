@@ -1,5 +1,5 @@
 CACHE MANIFEST
-# Revision 1402148739560
+# Revision 1402287112410
 
 CACHE:
 index.html
@@ -30,15 +30,16 @@ chapter2/21_Protocols.html
 chapter2/22_Generics.html
 chapter2/23_Advanced_Operators.html
 chapter2/chapter2.html
+chapter3/06_Attributes.html
 chapter3/01_About_the_Language_Reference.html
-chapter3/02_Lexical_Structure.html
 chapter3/03_Types.html
 chapter3/04_Expressions.html
 chapter3/05_Declarations.html
-chapter3/06_Attributes.html
+chapter3/02_Lexical_Structure.html
 chapter3/07_Patterns.html
 chapter3/08_Generic_Parameters_and_Arguments.html
 chapter3/09_Summary_of_the_Grammar.html
+chapter3/10_Statements.html
 chapter3/chapter3.html
 gitbook/app.js
 gitbook/fonts/anonymouspro/400.woff
