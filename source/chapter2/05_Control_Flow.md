@@ -262,12 +262,14 @@ println("Game over!")
 
 循环条件（`while square < finalSquare`）和 `while` 方式相同，但是只会在循环结束后进行计算。在这个游戏中，`do-while` 表现得比 `while` 循环更好。 `do-while` 方式会在条件判断 `square` 没有超出后直接运行 `square += board[square]` ，这种方式可以去掉 `while` 版本中的数组越界判断。
 
+<a name="conditional_statement"></a>
 ## 条件语句
 
 根据特定的条件执行特定的代码通常是十分有用的，例如：当错误发生时，你可能想运行额外的代码；或者，当输入的值太大或太小时，向用户显示一条消息等。要实现这些功能，你就需要使用*条件语句*。
 
 Swift 提供两种类型的条件语句：`if`语句和`switch`语句。通常，当条件较为简单且可能的情况很少时，使用`if`语句。而`switch`语句更适用于复杂的条件、可能的情况很多且需要用到模式匹配(pattern-matching)的情境。
 
+<a name="if"></a>
 ### If
 
 `if`语句最简单的形式就是只包含一个条件，当且仅当该条件为`真`时，才执行相关代码：
@@ -325,6 +327,7 @@ if temperatureInFahrenheit <= 32 {
 
 在这个例子中，由于既不冷也不热，所以不会触发`if`或`else if`分支，也就不会打印任何消息。
 
+<a name="switch"></a>
 ### Switch
 
 `switch`语句会尝试把某个值与若干个模式(pattern)进行匹配。根据第一个匹配成功的模式，`switch`语句会执行对应的代码。当有可能的情况较多时，通常用`switch`语句替换`if`语句。
@@ -512,7 +515,7 @@ case let (x, y):
 
 <img src="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/coordinateGraphComplex_2x.png" width="289" height="290">
 
-在上面的例子中，`switch`语句会判断某个点是否在绿色的对角线`x == y`上，是否在紫色的对角线'x == -y'上，或者不在对角线上。
+在上面的例子中，`switch`语句会判断某个点是否在绿色的对角线`x == y`上，是否在紫色的对角线`x == -y`上，或者不在对角线上。
 
 这三个*case*都声明了常量`x`和`y`的占位符，用于临时获取元组`yetAnotherPoint`的两个值。这些常量被用作`where`语句的一部分，从而创建一个动态的过滤器(filter)。当且仅当`where`语句的条件为`真`时，匹配到的*case*块才会被执行。
 
