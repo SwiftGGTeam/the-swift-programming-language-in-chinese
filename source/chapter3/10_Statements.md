@@ -243,7 +243,7 @@ case let (x, y) where x == y:
 
 #### Switch 语句必须是完备的
 
-在 Swift 中，`switch`语句中控制表达式的每一个可能的值都必须至少有一个`case`块与之对应。在某些情况下（例如，表达式的类型是`Int`），你可以使用默认块满足该要求。
+在 Swift 中，`switch`语句中控制表达式的每一个可能的值都必须至少有一个*case*块与之对应。在某些情况下（例如，表达式的类型是`Int`），你可以使用默认块满足该要求。
 
 #### 不存在隐式的贯穿(fall through)
 
@@ -345,9 +345,9 @@ continue `label name`
 
 ### Fallthrough 语句
 
-`fallthrough`语句用于在`switch`语句中传递控制权。`fallthrough`语句会把控制权从`switch`语句中的一个`case`传递给下一个`case`。这种传递是无条件的，即使下一个`case`的值与`switch`语句的控制表达式的值不匹配。
+`fallthrough`语句用于在`switch`语句中传递控制权。`fallthrough`语句会把控制权从`switch`语句中的一个*case*传递给下一个*case*。这种传递是无条件的，即使下一个*case*的值与`switch`语句的控制表达式的值不匹配。
 
-`fallthrough`语句可出现在`switch`语句中的任意`case`里，但不能出现在最后一个'case'块。同时，`fallthrough`语句也不能把控制权传递给使用了可选绑定的`case`块。
+`fallthrough`语句可出现在`switch`语句中的任意*case*里，但不能出现在最后一个*case*块中。同时，`fallthrough`语句也不能把控制权传递给使用了可选绑定的*case*块。
 
 关于在`switch`语句中使用`fallthrough`语句的例子，请参考[控制流`待添加链接`]()一章的[控制传递语句`待添加链接`]()。
 
