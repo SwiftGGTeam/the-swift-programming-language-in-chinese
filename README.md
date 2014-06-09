@@ -27,7 +27,7 @@
    * 控制流(@vclwei 认领)
    * 函数(完成 By @honghaoz)
    * 闭包(完成 By @wh1100717)
-   * 枚举(@yankuangshi 认领)
+   * 枚举(完成 By @yankuangshi)
    * 类和结构体(@JaySurplus 认领)
    * 属性(@shinyzhu 认领)
    * 方法(完成 By @pp-prog)
