@@ -370,19 +370,13 @@ Note that no whitespace may appear between the type and the ``?``.
 The type ``Optional<T>`` is an enumeration with two cases, ``None`` and ``Some(T)``,
 which are used to represent values that may or may not be present.
 Any type can be explicitly declared to be (or implicitly converted to) an optional type.
-When declaring an optional type,
-be sure to use parentheses to properly scope the ``?`` operator.
-As an example,
-to declare an optional array of integers, write the type annotation as ``(Int[])?``;
-writing ``Int[]?`` produces an error.
-
 If you don't provide an initial value when you declare an
 optional variable or property, its value automatically defaults to ``nil``.
 
 Optionals conform to the ``LogicValue`` protocol and therefore may occur in a Boolean context.
 In that context,
 if an instance of an optional type ``T?`` contains any value of type ``T``
-(that is, it's value is ``Optional.Some(T)``),
+(that is, its value is ``Optional.Some(T)``),
 the optional type evaluates to ``true``. Otherwise, it evaluates to ``false``.
 
 If an instance of an optional type contains a value,
