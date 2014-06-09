@@ -53,7 +53,10 @@
 `FullyNamed` 定义了一个拥有 `fullName` 属性的协议. 该协议要求其 `遵循者` 必须拥有一个名为 `fullName`, 类型为 `String` 的可读属性.
 
 下例是一个`遵循`了 `FullyNamed` 协议的简单结构体
+<<<<<<< HEAD
 
+=======
+>>>>>>> modifi Protocols.md
 
 	struct Person: FullyNamed{
 		var fullName: String
@@ -133,9 +136,14 @@
 	}
 	
 如果你使用枚举或结构体来实现`Togglabl`协议时,必须在枚举或接头体的`toggle`方法前加上`mutating`关键字.
+<<<<<<< HEAD
 
 下例定义了一个名为`OnOffSwitch`的枚举. 这个枚举可以切换`On`,`Off`两种状态. 该枚举中的 `toggle`含有`mutating`标记,用以匹配`Togglable`协议的方法要求:
 
+=======
+
+下例定义了一个名为`OnOffSwitch`的枚举. 这个枚举可以切换`On`,`Off`两种状态. 该枚举中的 `toggle`含有`mutating`标记,用以匹配`Togglable`协议的方法要求:
+>>>>>>> modifi Protocols.md
 
 	enum OnOffSwitch: Togglable {
 		case Off, On
@@ -154,7 +162,10 @@
 
 
 ## 协议作为类型
+<<<<<<< HEAD
 
+=======
+>>>>>>> modifi Protocols.md
 尽管`协议`本身不实现任何功能,但你可以将它当做`类型`来使用.
 
 包括:  
@@ -163,9 +174,13 @@
 * 作为常量,变量,属性的类型
 * 作为数组,字典或其他容器中的元素类型
 
+<<<<<<< HEAD
 
 > Note: 协议是一种类型,因此你应该向其他类型那样(Int,Double,String),使用驼峰式写法来书写协议
 
+=======
+> Note: 协议是一种类型,因此你应该向其他类型那样(Int,Double,String),使用驼峰式写法来书写协议
+>>>>>>> modifi Protocols.md
 
 这里有一个使用协议类型的例子:
 
@@ -189,10 +204,16 @@
 
 `Dice`也拥有一个`构造器(initializer)`用来设置它的初始状态.构造器中含有一个名为`generator`,类型为`RandomNumberGenerator`的形参.你可以在此传入任意遵循`RandomNumberGenerator`协议的类型.
 
+<<<<<<< HEAD
 `roll`是一个用以返回骰子面值的实例方法.该方法先调用`generator`的`random`方法来创建一个 [0-1] 之间的随机数,然后使用这个随机数来生成骰子的面值. 这里的`generator` 被声明为采纳了`RandomNumberGenerator`协议,用以确保`random`方法能够被调用 
 
 下例展示了一个使用`LinearCongruentialGenerator`实例作为随机数生成器的六面骰子
 
+=======
+`Dice`拥有一个名为`roll`,用以返回骰子面值的实例方法.该方法先调用`generator`的`random`方法来创建一个 [0-1] 之间的随机数,然后使用这个随机数来生成骰子的面值. 这里的`generator` 被声明为采纳了`RandomNumberGenerator`协议,用以确保`random`方法能够被调用 
+
+下例展示了一个使用`LinearCongruentialGenerator`实例作为随机数生成器的六面骰子
+>>>>>>> modifi Protocols.md
 
 	var d6 = Dice(sides: 6,generator: LinearCongruentialGenerator())
 	for _ in 1...5 {
@@ -268,9 +289,13 @@
 
 `DicegameDelegate` 提供了三个方法用来追踪游戏过程.被放置于游戏的逻辑中,即`play()`方法内.分别在游戏开始时,新一轮开始时,游戏结束时被调用.
 
+<<<<<<< HEAD
 因为`delegate`是一个遵循`DiceGameDelegate`的可选属性,因此在`play()`方法中使用了`可选链`来调用委托方法. 如果`delegate`属性为`nil`, 则委托调用*优雅的,不含错误的*失败.如果`delegate`不为`nil`, 则这些委托方法被调用,并且把`SnakesAndLadders`的这个实例当做参数一并传递
+=======
+因为 `delegate` 是一个遵循 `DiceGameDelegate` 的可选属性,因此在 `play()` 方法中使用了`可选链`来调用委托方法. 如果`delegate` 属性为 `nil` , 则委托调用*优雅的,不含错误的*失败.如果`delegate`不为`nil`, 则这些委托方法被调用,并且把`SnakesAndLadders`的这个实例当做参数一并传递
+>>>>>>> modifi Protocols.md
 
-下边的这个例子展示了一个名为`DiceGameTracker`,实现`DiceGameDelegate` 协议的类
+下边的这个例子展示了一个名为`DiceGameTracker`,实现`DiceGameDelegate`协议的类
 
 	class DiceGameTracker: DiceGameDelegate {
     	var numberOfTurns = 0
