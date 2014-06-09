@@ -29,7 +29,7 @@
    * 闭包(完成 By @wh1100717)
    * 枚举(完成 By @yankuangshi)
    * 类和结构体(@JaySurplus 认领)
-   * 属性(@shinyzhu 认领)
+   * 属性(完成 By @shinyzhu)
    * 方法(完成 By @pp-prog)
    * 下标(完成 By @siemenliu)
    * 继承(完成 By @Hawstein)
