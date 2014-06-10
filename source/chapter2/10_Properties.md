@@ -21,7 +21,7 @@
 
 简单来说，一个存储属性就是一个特定类型实例里表示常量或变量的部分，存储属性可以是*变量存储属性*（用关键字`var`定义），也可以是*常量存储属性*（用关键字`let`定义）。
 
-可以在定义存储属性的时候指定默认值，详见[默认属性值](chapter2/14_Initialization.md#)一节。也可以在初始化阶段设置或修改存储属性的值，甚至修改常量存储属性的值，详见[在初始化阶段修改常量存储属性](chapter2/14_Initialization.md#)一节。
+可以在定义存储属性的时候指定默认值，详见[默认属性值](chapter2/14_Initialization.html#default_property_values)一节。也可以在初始化阶段设置或修改存储属性的值，甚至修改常量存储属性的值，详见[在初始化阶段修改常量存储属性](chapter2/14_Initialization.html#modifying_constant_properties_during_initialization)一节。
 
 下面的例子定义了一个名为`FixedLengthRange`的结构体，表示一个在创建后无法修改整数范围的类型：
 
@@ -224,7 +224,7 @@ println("the volume of fourByFiveByTwo is \(fourByFiveByTwo.volume)")
 
 *属性监视器*监控和响应属性值的变化，每次属性被设置值的时候都会调用属性监视器，甚至新的值和现在的值相同的时候也不例外。
 
-可以为除了延迟存储属性之外的其他存储属性添加属性监视器，也可以通过重载属性的方式为继承的属性（包括存储属性和计算属性）添加属性监视器。属性重载详见[重载](chapter/13_Inheritance.md#)一节。
+可以为除了延迟存储属性之外的其他存储属性添加属性监视器，也可以通过重载属性的方式为继承的属性（包括存储属性和计算属性）添加属性监视器。属性重载详见[重载](chapter/13_Inheritance.html#overriding)一节。
 
 > 注意
 > 
