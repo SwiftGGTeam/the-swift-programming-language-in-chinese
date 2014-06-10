@@ -126,7 +126,7 @@ Swift 的 **String** 类型是值类型。
 值类型在 [Structures and Enumerations Are Value Types](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/ClassesAndStructures.html#//apple_ref/doc/uid/TP40014097-CH13-XID_104)(**章节信息URL需要替换**) 中进行了说明。
 
 > 注意：
-> 与 Cocoa 中的 NSString 不同，当您在 Cocoa 中创建了一个 NSString 实例，并将其传递给一个函数/方法，或者赋值给一个变量，您传递或赋值的是该 NSString 实例的一个引用，除非您特别要求进行值拷贝，否则字符串不会生成新的副本来进行赋值操作。
+> 与 Cocoa 中的`NSString`不同，当您在 Cocoa 中创建了一个`NSString`实例，并将其传递给一个函数/方法，或者赋值给一个变量，您传递或赋值的是该`NSString`实例的一个引用，除非您特别要求进行值拷贝，否则字符串不会生成新的副本来进行赋值操作。
 
 Swift 默认字符串拷贝的方式保证了在函数/方法中传递的是字符串的值。
 很明显无论该值来自于哪里，都是您独自拥有的。
@@ -141,7 +141,7 @@ Swift 默认字符串拷贝的方式保证了在函数/方法中传递的是字�
 
 Swift 的 **String** 类型表示特定序列的 **Character** (字符) 类型值的集合。
 每一个字符值代表一个 Unicode 字符。
-您可利用 for-in 循环来遍历字符串中的每一个字符：
+您可利用`for-in`循环来遍历字符串中的每一个字符：
 
 ```
 for character in "Dog!🐶" {
@@ -177,13 +177,13 @@ println("unusualMenagerie has \(countElements(unusualMenagerie)) characters")
 
 > 注意：
 > 不同的 Unicode 字符以及相同 Unicode 字符的不同表示方式可能需要不同数量的内存空间来存储。
-> 所以Swift 中的字符在一个字符串中并不一定占用相同的内存空间。
+> 所以 Swift 中的字符在一个字符串中并不一定占用相同的内存空间。
 > 因此字符串的长度不得不通过迭代字符串中每一个字符的长度来进行计算。
 > 如果您正在处理一个长字符串，需要注意`countElements`函数必须遍历字符串中的字符以精准计算字符串的长度。
 >
-> 另外需要注意的是通过`countElements`返回的字符数量并不总是与包含相同字符的 NSString 的`length`属性相同。
-> NSString 的`length`属性是基于利用 UTF-16 表示的十六位代码单元数字，而不是基于 Unicode 字符。
-> 为了解决这个问题，NSString 的`length`属性在被 Swift的 **String** 访问时会成为`utf16count`。
+> 另外需要注意的是通过`countElements`返回的字符数量并不总是与包含相同字符的`NSString`的`length`属性相同。
+> `NSString`的`length`属性是基于利用 UTF-16 表示的十六位代码单元数字，而不是基于 Unicode 字符。
+> 为了解决这个问题，`NSString`的`length`属性在被 Swift 的 **String** 访问时会成为`utf16count`。
 
 <a name="concatenating_strings_and_characters"></a>
 ### 连接字符串和字符 (Concatenating Strings and Characters)
@@ -204,7 +204,7 @@ let characterPlusString = character1 + string1        // 等于 "!hello"
 let characterPlusCharacter = character1 + character2  // 等于 "!?"
 ```
 
-您也可以通过加法赋值运算符 (+=) 将一个字符串或者字符添加到一个已经存在字符串变量上：
+您也可以通过加法赋值运算符 (`+=`) 将一个字符串或者字符添加到一个已经存在字符串变量上：
 
 ```
 var instruction = "look over"
@@ -248,7 +248,7 @@ let message = "\(multiplier) 乘以 2.5 是 \(Double(multiplier) * 2.5)"
 
 ---
 
-Swift 提供了三种方式来比较字符串的值：字符串相等，前缀相等和后缀相等。
+Swift 提供了三种方式来比较字符串的值：字符串相等、前缀相等和后缀相等。
 
 <a name="string_equality"></a>
 ##### 字符串相等 (String Equality)
@@ -271,7 +271,7 @@ if quotation == sameQuotation {
 两个方法均需要以字符串作为参数传入并传出 **Boolean** 值。
 两个方法均执行基本字符串和前缀/后缀字符串之间逐个字符的比较操作。
 
-下面的例子以一个字符串数组表示莎士比亚话剧`罗密欧与朱丽叶`中前两场的场景位置：
+下面的例子以一个字符串数组表示莎士比亚话剧《罗密欧与朱丽叶》中前两场的场景位置：
 
 ```
 let romeoAndJuliet = [
@@ -367,7 +367,7 @@ print("\n")
 // 68 111 103 33 240 159 144 182
 ```
 
-上面的例子中，前四个10进制代码单元值 (68, 111, 103, 33) 代表了字符`D``o``g`和`!`，他们的 UTF-8 表示与 ASCII 表示相同。
+上面的例子中，前四个10进制代码单元值 (68, 111, 103, 33) 代表了字符`D` `o` `g`和`!`，他们的 UTF-8 表示与 ASCII 表示相同。
 后四个代码单元值 (240, 159, 144, 182) 是`DOG FACE`的4位 UTF-8 表示。
 
 <a name="UTF-16"></a>
@@ -384,7 +384,7 @@ print("\n")
 // 68 111 103 33 55357 56374
 ```
 
-同样，前四个代码单元值 (68, 111, 103, 33) 代表了字符`D``o``g`和`!`，他们的 UTF-16 代码单元和 UTF-8 完全相同。
+同样，前四个代码单元值 (68, 111, 103, 33) 代表了字符`D` `o` `g`和`!`，他们的 UTF-16 代码单元和 UTF-8 完全相同。
 
 第五和第六个代码单元值 (55357 and 56374) 是`DOG FACE`字符的UTF-16 表示。
 第一个值为`U+D83D`(十进制值为 55357)，第二个值为`U+DC36`(十进制值为 56374)。
@@ -406,7 +406,7 @@ print("\n")
 // 68 111 103 33 128054
 ```
 
-同样，前四个代码单元值 (68, 111, 103, 33) 代表了字符`D``o``g`和`!`。
+同样，前四个代码单元值 (68, 111, 103, 33) 代表了字符`D` `o` `g`和`!`。
 第五位数值，128054，是一个十六进制1F436的十进制表示。
 其等同于`DOG FACE`的Unicode 标量 U+1F436。
 
