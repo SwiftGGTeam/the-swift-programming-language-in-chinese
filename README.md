@@ -52,7 +52,7 @@
    * 声明(@marsprince 认领)
    * 特性(完成 By @Hawstein)
    * 模式(@honghaoz 认领)
-   * 泛型参数(@fd5788 认领)
+   * 泛型参数(完成 By @fd5788)
    * 语法总结(@StanZhai 认领)
 
 # 更新频率
