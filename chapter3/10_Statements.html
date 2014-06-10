@@ -46,7 +46,7 @@
 
 
         
-    <div class="book"  data-level="3.5" data-basepath=".." data-revision="1402373659943">
+    <div class="book"  data-level="3.5" data-basepath=".." data-revision="1402376272084">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -587,7 +587,7 @@
 
                 <div class="page-inner">
                 
-                    <section class="normal" id="section-gitbook_59">
+                    <section class="normal" id="section-gitbook_56">
                     
                         <h1 id="-">语句</h1>
 <p>在 Swift 中，有两种类型的语句：简单语句和控制流语句。简单语句是最常见的，用于构造表达式和声明。控制流语句则用于控制程序执行的流程，Swift 中有三种类型的控制流语句：循环语句、分支语句和控制传递语句。</p>
@@ -605,7 +605,7 @@
 </blockquote>
 <h2 id="-">循环语句</h2>
 <p>取决于特定的循环条件，循环语句允许重复执行代码块。Swift 提供四种类型的循环语句：<code>for</code>语句、<code>for-in</code>语句、<code>while</code>语句和<code>do-while</code>语句。</p>
-<p>通过<code>break</code>语句和<code>continue</code>语句可以改变循环语句的控制流。有关这两条语句，请参考<a href=""><em>Break 语句</em><code>待添加链接</code></a>和<a href=""><em>Continue 语句</em><code>待添加链接</code></a>。</p>
+<p>通过<code>break</code>语句和<code>continue</code>语句可以改变循环语句的控制流。有关这两条语句，请参考<a href="#break_statement">Break 语句</a>和<a href="#continue_statement">Continue 语句</a>。</p>
 <blockquote>
 <p>GRAMMAR OF A LOOP STATEMENT</p>
 <p><em>loop-statement</em> → <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/for-statement" target="_blank"><em>for-statement</em></a></p>
@@ -695,7 +695,7 @@
 </blockquote>
 <h2 id="-">分支语句</h2>
 <p>取决于一个或者多个条件的值，分支语句允许程序执行指定部分的代码。显然，分支语句中条件的值将会决定如何分支以及执行哪一块代码。Swift 提供两种类型的分支语句：<code>if</code>语句和<code>switch</code>语句。</p>
-<p><code>switch</code>语句中的控制流可以用<code>break</code>语句修改，请参考<a href="">Break 语句<code>待添加链接</code></a>。</p>
+<p><code>switch</code>语句中的控制流可以用<code>break</code>语句修改，请参考<a href="#break_statement">Break 语句</a>。</p>
 <blockquote>
 <p>GRAMMAR OF A BRANCH STATEMENT</p>
 <p><em>branch-statement</em> → <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/if-statement" target="_blank"><em>if-statement</em></a></p>
@@ -749,7 +749,7 @@ else {
 }
 </code></pre>
 <p><code>switch</code>语句的<em>控制表达式(control expression)</em>会首先被计算，然后与每一个<em>case</em>的模式(pattern)进行匹配。如果匹配成功，程序将会执行对应的<em>case</em>块里的<em>statements</em>。另外，每一个<em>case</em>块都不能为空，也就是说在每一个<em>case</em>块中至少有一条语句。如果你不想在匹配到的<em>case</em>块中执行代码，只需在块里写一条<code>break</code>语句即可。</p>
-<p>可以用作控制表达式的值是十分灵活的，除了标量类型(scalar types，如<code>Int</code>、<code>Character</code>)外，你可以使用任何类型的值，包括浮点数、字符串、元组、自定义类的实例和可选(optional)类型，甚至是枚举类型中的成员值和指定的范围(range)等。关于在<code>switch</code>语句中使用这些类型，请参考<a href="">控制流<code>待添加链接</code></a>一章的<a href="">Switch<code>待添加链接</code></a>。</p>
+<p>可以用作控制表达式的值是十分灵活的，除了标量类型(scalar types，如<code>Int</code>、<code>Character</code>)外，你可以使用任何类型的值，包括浮点数、字符串、元组、自定义类的实例和可选(optional)类型，甚至是枚举类型中的成员值和指定的范围(range)等。关于在<code>switch</code>语句中使用这些类型，请参考<a href="../chapter2/05_Control_Flow.html">控制流</a>一章的<a href="../chapter2/05_Control_Flow.html#switch">Switch</a>。</p>
 <p>你可以在模式后面添加一个起保护作用的表达式(guard expression)。<em>起保护作用的表达式</em>是这样构成的：关键字<code>where</code>后面跟着一个作为额外测试条件的表达式。因此，当且仅当<em>控制表达式</em>匹配一个<em>case</em>的某个模式且起保护作用的表达式为真时，对应<em>case</em>块中的<em>statements</em>才会被执行。在下面的例子中，<em>控制表达式</em>只会匹配含两个相等元素的元组，如<code>(1, 1)</code>：</p>
 <pre><code class="lang-swift">case let (x, y) where x == y:
 }
@@ -758,9 +758,9 @@ else {
 <p><code>switch</code>语句也可以包含默认(<code>default</code>)块，只有其它<em>case</em>块都无法匹配控制表达式时，默认块中的代码才会被执行。一个<code>switch</code>语句只能有一个默认块，而且必须在<code>switch</code>语句的最后面。</p>
 <p>尽管模式匹配操作实际的执行顺序，特别是模式的计算顺序是不可知的，但是 Swift 规定<code>switch</code>语句中的模式匹配的顺序和书写源代码的顺序保持一致。因此，当多个模式含有相同的值且能够匹配控制表达式时，程序只会执行源代码中第一个匹配的<em>case</em>块中的代码。</p>
 <h4 id="switch-">Switch 语句必须是完备的</h4>
-<p>在 Swift 中，<code>switch</code>语句中控制表达式的每一个可能的值都必须至少有一个<code>case</code>块与之对应。在某些情况下（例如，表达式的类型是<code>Int</code>），你可以使用默认块满足该要求。</p>
+<p>在 Swift 中，<code>switch</code>语句中控制表达式的每一个可能的值都必须至少有一个<em>case</em>块与之对应。在某些情况下（例如，表达式的类型是<code>Int</code>），你可以使用默认块满足该要求。</p>
 <h4 id="-fall-through-">不存在隐式的贯穿(fall through)</h4>
-<p>当匹配的<em>case</em>块中的代码执行完毕后，程序会终止<code>switch</code>语句，而不会继续执行下一个<em>case</em>块。这就意味着，如果你想执行下一个<em>case</em>块，需要显式地在你需要的<em>case</em>块里使用<code>fallthrough</code>语句。关于<code>fallthrough</code>语句的更多信息，请参考<a href="">Fallthrough 语句<code>待添加链接</code></a>。</p>
+<p>当匹配的<em>case</em>块中的代码执行完毕后，程序会终止<code>switch</code>语句，而不会继续执行下一个<em>case</em>块。这就意味着，如果你想执行下一个<em>case</em>块，需要显式地在你需要的<em>case</em>块里使用<code>fallthrough</code>语句。关于<code>fallthrough</code>语句的更多信息，请参考<a href="#fallthrough_statement">Fallthrough 语句</a>。</p>
 <blockquote>
 <p>GRAMMAR OF A SWITCH STATEMENT</p>
 <p><em>switch-statement</em> → <strong>switch</strong> <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/swift/grammar/expression" target="_blank"><em>expression</em></a> <strong>{</strong> <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/switch-cases" target="_blank"><em>switch-cases</em></a> <em>opt</em> <strong>}</strong></p>
@@ -774,9 +774,9 @@ else {
 <p><em>guard-expression</em> → <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/swift/grammar/expression" target="_blank"><em>expression</em></a></p>
 </blockquote>
 <h2 id="-">带标签的语句</h2>
-<p>你可以在循环语句或<code>switch</code>语句前面加上<em>标签</em>，它由标签名和紧随其后的冒号(:)组成。在<code>break</code>和<code>continue</code>后面跟上标签名可以显式地在循环语句或<code>switch</code>语句中更改控制流，把控制权传递给指定标签标记的语句。关于这两条语句用法，请参考<a href="">Break 语句<code>待添加链接</code></a>和<a href="">Continue 语句<code>待添加链接</code></a>。</p>
+<p>你可以在循环语句或<code>switch</code>语句前面加上<em>标签</em>，它由标签名和紧随其后的冒号(:)组成。在<code>break</code>和<code>continue</code>后面跟上标签名可以显式地在循环语句或<code>switch</code>语句中更改控制流，把控制权传递给指定标签标记的语句。关于这两条语句用法，请参考<a href="#break_statement">Break 语句</a>和<a href="#continue_statement">Continue 语句</a>。</p>
 <p>标签的作用域是该标签所标记的语句之后的所有语句。你可以不使用带标签的语句，但只要使用它，标签名就必唯一。</p>
-<p>关于使用带标签的语句的例子，请参考<a href="">控制流<code>待添加链接</code></a>一章的<a href="">带标签的语句<code>待添加链接</code></a>。</p>
+<p>关于使用带标签的语句的例子，请参考<a href="../chapter2/05_Control_Flow.html">控制流</a>一章的<a href="">带标签的语句<code>待添加链接</code></a>。</p>
 <blockquote>
 <p>GRAMMAR OF A LABELED STATEMENT</p>
 <p><em>labeled-statement</em> → <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/statement-label" target="_blank"><em>statement-label</em></a> <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/loop-statement" target="_blank"><em>loop-statement</em></a> | <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/statement-label" target="_blank"><em>statement-label</em></a> <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/switch-statement" target="_blank"><em>switch-statement</em></a></p>
@@ -792,6 +792,7 @@ else {
 <p><em>control-transfer-statement</em> → <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/fallthrough-statement" target="_blank"><em>fallthrough-statement</em></a></p>
 <p><em>control-transfer-statement</em> → <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/return-statement" target="_blank"><em>return-statement</em></a></p>
 </blockquote>
+<p><a name="break_statement"></a></p>
 <h3 id="break-">Break 语句</h3>
 <p><code>break</code>语句用于终止循环或<code>switch</code>语句的执行。使用<code>break</code>语句时，可以只写<code>break</code>这个关键词，也可以在<code>break</code>后面跟上标签名(label name)，像下面这样：</p>
 <pre><code class="lang-swift">break
@@ -800,11 +801,12 @@ break `label name`
 <p>当<code>break</code>语句后面带标签名时，可用于终止由这个标签标记的循环或<code>switch</code>语句的执行。</p>
 <p>而当只写<code>break</code>时，则会终止<code>switch</code>语句或上下文中包含<code>break</code>语句的最内层循环的执行。</p>
 <p>在这两种情况下，控制权都会被传递给循环或<code>switch</code>语句外面的第一行语句。</p>
-<p>关于使用<code>break</code>语句的例子，请参考<a href="">控制流<code>待添加链接</code></a>一章的<a href="">Break<code>待添加链接</code></a>和<a href="">带标签的语句<code>待添加链接</code></a>。</p>
+<p>关于使用<code>break</code>语句的例子，请参考<a href="../chapter2/05_Control_Flow.html">控制流</a>一章的<a href="">Break<code>待添加链接</code></a>和<a href="">带标签的语句<code>待添加链接</code></a>。</p>
 <blockquote>
 <p>GRAMMAR OF A BREAK STATEMENT</p>
 <p><em>break-statement</em> → <strong>break</strong> <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/label-name" target="_blank"><em>label-name</em></a> <em>opt</em></p>
 </blockquote>
+<p><a name="continue_statement"></a></p>
 <h3 id="continue-">Continue 语句</h3>
 <p><code>continue</code>语句用于终止循环中当前迭代的执行，但不会终止该循环的执行。使用<code>continue</code>语句时，可以只写<code>continue</code>这个关键词，也可以在<code>continue</code>后面跟上标签名(label name)，像下面这样：</p>
 <pre><code class="lang-swift">continue
@@ -814,17 +816,18 @@ continue `label name`
 <p>而当只写<code>break</code>时，可用于终止上下文中包含<code>continue</code>语句的最内层循环中当前迭代的执行。</p>
 <p>在这两种情况下，控制权都会被传递给循环外面的第一行语句。</p>
 <p>在<code>for</code>语句中，<code>continue</code>语句执行后，<em>increment</em>表达式还是会被计算，这是因为每次循环体执行完毕后<em>increment</em>表达式都会被计算。</p>
-<p>关于使用<code>continue</code>语句的例子，请参考<a href="">控制流<code>待添加链接</code></a>一章的<a href="">Continue<code>待添加链接</code></a>和<a href="">带标签的语句<code>待添加链接</code></a>。</p>
+<p>关于使用<code>continue</code>语句的例子，请参考<a href="../chapter2/05_Control_Flow.html">控制流</a>一章的<a href="">Continue<code>待添加链接</code></a>和<a href="">带标签的语句<code>待添加链接</code></a>。</p>
 <blockquote>
 <p>GRAMMAR OF A CONTINUE STATEMENT</p>
 <p><em>continue-statement</em> → <strong>continue</strong> <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/label-name" target="_blank"><em>label-name</em></a> <em>opt</em></p>
 </blockquote>
+<p><a name="fallthrough_statement"></a></p>
 <h3 id="fallthrough-">Fallthrough 语句</h3>
-<p><code>fallthrough</code>语句用于在<code>switch</code>语句中传递控制权。<code>fallthrough</code>语句会把控制权从<code>switch</code>语句中的一个<code>case</code>传递给下一个<code>case</code>。这种传递是无条件的，即使下一个<code>case</code>的值与<code>switch</code>语句的控制表达式的值不匹配。</p>
-<p><code>fallthrough</code>语句可出现在<code>switch</code>语句中的任意<code>case</code>里，但不能出现在最后一个&#39;case&#39;块。同时，<code>fallthrough</code>语句也不能把控制权传递给使用了可选绑定的<code>case</code>块。</p>
-<p>关于在<code>switch</code>语句中使用<code>fallthrough</code>语句的例子，请参考<a href="">控制流<code>待添加链接</code></a>一章的<a href="">控制传递语句<code>待添加链接</code></a>。</p>
+<p><code>fallthrough</code>语句用于在<code>switch</code>语句中传递控制权。<code>fallthrough</code>语句会把控制权从<code>switch</code>语句中的一个<em>case</em>传递给下一个<em>case</em>。这种传递是无条件的，即使下一个<em>case</em>的值与<code>switch</code>语句的控制表达式的值不匹配。</p>
+<p><code>fallthrough</code>语句可出现在<code>switch</code>语句中的任意<em>case</em>里，但不能出现在最后一个<em>case</em>块中。同时，<code>fallthrough</code>语句也不能把控制权传递给使用了可选绑定的<em>case</em>块。</p>
+<p>关于在<code>switch</code>语句中使用<code>fallthrough</code>语句的例子，请参考<a href="../chapter2/05_Control_Flow.html">控制流</a>一章的<a href="">控制传递语句<code>待添加链接</code></a>。</p>
 <blockquote>
-<p>GRAMMAR OF A FALLTRHOUGH STATEMENT</p>
+<p>GRAMMAR OF A FALLTHROUGH STATEMENT</p>
 <p><em>continue-statement</em> → <strong>fallthrough</strong></p>
 </blockquote>
 <h3 id="return-">Return 语句</h3>

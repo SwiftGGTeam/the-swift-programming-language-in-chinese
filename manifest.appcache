@@ -1,5 +1,5 @@
 CACHE MANIFEST
-# Revision 1402373659944
+# Revision 1402376272086
 
 CACHE:
 index.html
@@ -39,8 +39,8 @@ chapter3/02_Lexical_Structure.html
 chapter3/07_Patterns.html
 chapter3/08_Generic_Parameters_and_Arguments.html
 chapter3/09_Summary_of_the_Grammar.html
-chapter3/chapter3.html
 chapter3/10_Statements.html
+chapter3/chapter3.html
 gitbook/app.js
 gitbook/fonts/anonymouspro/400.woff
 gitbook/fonts/anonymouspro/400i.woff

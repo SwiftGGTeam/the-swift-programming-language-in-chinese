@@ -46,7 +46,7 @@
 
 
         
-    <div class="book"  data-level="2.21" data-basepath=".." data-revision="1402373659943">
+    <div class="book"  data-level="2.21" data-basepath=".." data-revision="1402376272084">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -587,7 +587,7 @@
 
                 <div class="page-inner">
                 
-                    <section class="normal" id="section-gitbook_41">
+                    <section class="normal" id="section-gitbook_39">
                     
                         <h1 id="-">协议</h1>
 <p><code>Protocol(协议)</code>用于<strong>统一</strong>方法和属性的名称,而不实现任何功能,(<em>译者注: 协议在其他语言中也称作<code>接口(Interface)</code></em>).<code>协议</code>能够被<code>类</code>,<code>枚举</code>,<code>结构体</code>实现,满足协议要求的<code>类</code>,<code>枚举</code>,<code>结构体</code>被称为协议的<code>遵循者</code>.</p>
@@ -619,14 +619,14 @@
 
 protocol FullyNamed {
     var fullName: String { get }
-}    
+}
 </code></pre><p><code>FullyNamed</code>协议含有<code>fullName</code>属性.因此其<code>遵循者</code>必须含有一个名为<code>fullName</code>,类型为<code>String</code>的可读属性.</p>
 <pre><code>struct Person: FullyNamed{
     var fullName: String
 }
 let john = Person(fullName: &quot;John Appleseed&quot;)
 //john.fullName 为 &quot;John Appleseed&quot;
-</code></pre><p><code>Person</code>结构体含有一个名为<code>fullName</code>的<code>存储型属性</code>,完整的<code>遵循</code>了协议.(<em>若协议未被完整遵循,编译时则会报错</em>).  </p>
+</code></pre><p><code>Person</code>结构体含有一个名为<code>fullName</code>的<code>存储型属性</code>,完整的<code>遵循</code>了协议.(<em>若协议未被完整遵循,编译时则会报错</em>).</p>
 <p>如下所示,<code>Startship</code>类<code>遵循</code>了<code>FullyNamed</code>协议:</p>
 <pre><code>class Starship: FullyNamed {
     var prefix: String?
@@ -700,7 +700,7 @@ lightSwitch.toggle()
 //lightSwitch 现在的值为 .On
 </code></pre><h2 id="-">协议类型</h2>
 <p><code>协议</code>本身不实现任何功能,但你可以将它当做<code>类型</code>来使用.</p>
-<p>使用场景:  </p>
+<p>使用场景:</p>
 <ul>
 <li>作为函数,方法或构造器中的参数类型,返回值类型</li>
 <li>作为常量,变量,属性的类型</li>
@@ -712,7 +712,7 @@ lightSwitch.toggle()
 <pre><code>class Dice {
     let sides: Int
     let generator: RandomNumberGenerator
-    init(sides: Int, generator: RandomNumberGenerator) { 
+    init(sides: Int, generator: RandomNumberGenerator) {
         self.sides = sides
         self.generator = generator
     }
@@ -739,7 +739,7 @@ for _ in 1...5 {
 <p>委托是一种设计模式(<em>译者注: 想起了那年 UITableViewDelegate 中的奔跑,那是我逝去的Objective-C...</em>),它允许<code>类</code>或<code>结构体</code>将一些需要它们负责的功能<code>交由(委托)</code>给其他的类型.</p>
 <p>委托模式的实现很简单: 定义<code>协议</code>来<code>封装</code>那些需要被委托的<code>函数和方法</code>, 使其<code>遵循者</code>拥有这些被委托的<code>函数和方法</code>.</p>
 <p>委托模式可以用来响应特定的动作或接收外部数据源提供的数据,而无需要知道外部数据源的类型.</p>
-<p>下文是两个基于骰子游戏的协议: </p>
+<p>下文是两个基于骰子游戏的协议:</p>
 <pre><code>protocol DiceGame {
     var dice: Dice { get }
     func play()
@@ -773,7 +773,7 @@ protocol DiceGameDelegate {
                  break gameLoop
              case let newSquare where newSquare &gt; finalSquare:
                  continue gameLoop
-             default: 
+             default:
              square += diceRoll
              square += board[square]
              }
@@ -852,7 +852,7 @@ println(game.asText())
     var name: String
     func asText() -&gt; String {
         return &quot;A hamster named \(name)&quot;
-    }    
+    }
 }
 extension Hamster: TextRepresentabl {}
 </code></pre><p>从现在起,<code>Hamster</code>的实例可以作为<code>TextRepresentable</code>类型使用</p>
@@ -881,7 +881,7 @@ println(somethingTextRepresentable.asText())
 }
 </code></pre><p>如下所示,<code>PrettyTextRepresentable</code>协议继承了<code>TextRepresentable</code>协议</p>
 <pre><code>protocol PrettyTextRepresentable: TextRepresentable {
-    func asPrettyText() -&gt; String 
+    func asPrettyText() -&gt; String
 }
 </code></pre><p><code>遵循``PrettyTextRepresentable</code>协议的同时,也需要<code>遵循</code>TextRepresentable`协议.</p>
 <p>如下所示,用<code>扩展</code>为<code>SnakesAndLadders</code>遵循<code>PrettyTextRepresentable</code>协议:</p>
@@ -938,9 +938,9 @@ wishHappyBirthday(birthdayPerson)
 <h2 id="-">检验协议的一致性</h2>
 <p>使用<code>is</code>检验协议一致性,使用<code>as</code>将协议类型<code>向下转换(downcast)</code>为的其他协议类型.检验与转换的语法和之前相同(<em>详情查看<a href="5">Typy Casting章节</a></em>):</p>
 <ul>
-<li><code>is</code>操作符用来检查实例是否<code>遵循</code>了某个<code>协议</code>. </li>
+<li><code>is</code>操作符用来检查实例是否<code>遵循</code>了某个<code>协议</code>.</li>
 <li><code>as?</code>返回一个可选值,当实例<code>遵循</code>协议时,返回该协议类型;否则返回<code>nil</code></li>
-<li><p><code>as</code>用以强制向下转型.  </p>
+<li><p><code>as</code>用以强制向下转型.</p>
 <p>  @objc protocol HasArea {</p>
 <pre><code>  var area: Double { get }
 </code></pre><p>  }</p>

@@ -46,7 +46,7 @@
 
 
         
-    <div class="book"  data-level="2.5" data-basepath=".." data-revision="1402373659943">
+    <div class="book"  data-level="2.5" data-basepath=".." data-revision="1402376272084">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -587,10 +587,371 @@
 
                 <div class="page-inner">
                 
-                    <section class="normal" id="section-gitbook_24">
+                    <section class="normal" id="section-gitbook_22">
                     
                         <h1 id="-">控制流</h1>
-<p>Swift提供了类似C语言的流程控制结构，包括将任务执行多次的<code>for</code>和<code>while</code>循环，基于特定条件选择执行不同分支的<code>if</code>和<code>switch</code>语句，还有控制流程跳转到其他代码的<code>break</code>和<code>continue</code>语句。</p>
+<p>Swift提供了类似C语言的流程控制结构，包括可以多次执行任务的<code>for</code>和<code>while</code>循环，基于特定条件选择执行不同代码分支的<code>if</code>和<code>switch</code>语句，还有控制流程跳转到其他代码的<code>break</code>和<code>continue</code>语句。</p>
+<p>除了C里面传统的 <code>for</code> 条件递增循环，Swift 还增加了 <code>for-in</code> 循环，用来更简单地遍历数组(array)，字典(dictionary)，范围（range），字符串（string）和其他序列类型。</p>
+<p>Swift 的 <code>switch</code> 语句比 C 语言中更加强大。在 C 语言中，如果某个 case 不小心漏写了 <code>break</code>，这个 case 就会“掉入”下一个 case，Swift 无需写 <code>break</code>，所以不会发生这种“掉入”的情况。Case 还可以匹配更多的类型模式，包括范围（range）匹配，元组（tuple）和特定类型的描述。<code>switch</code> case 语句中匹配的值可以是由 case 体内部临时的常量或者变量决定，也可以由 <code>where</code> 分句描述更复杂的匹配条件。</p>
+<h2 id="for-">For 循环</h2>
+<p><code>for</code> 循环用来按照指定的次数多次执行一系列语句。Swift 提供两种 <code>for</code> 循环形式：</p>
+<ul>
+<li><p><code>for-in</code> 用来遍历一个范围(range)，队列(sequence)，集合(collection)，系列(progression)里面所有的元素执行一系列语句。</p>
+</li>
+<li><p><code>for</code> 条件递增语句(<code>for-condition-increment</code>)，用来重复执行一系列语句直到特定条件达成，一般通过在每次循环完成后增加计数器的值来实现。</p>
+</li>
+</ul>
+<h3 id="for-in">For-In</h3>
+<p>你可以使用 <code>for-in</code> 循环来遍历一个集合里面的所有元素，例如由数字表示的范围、数组中的元素、字符串中的字符。</p>
+<p>下面的例子用来输出乘5乘法表前面一部分内容：</p>
+<pre><code>for index in 1...5 {
+    println(&quot;\(index) times 5 is \(index * 5)&quot;)
+}
+// 1 times 5 is 5
+// 2 times 5 is 10
+// 3 times 5 is 15
+// 4 times 5 is 20
+// 5 times 5 is 25
+</code></pre><p>例子中用来进行遍历的元素是一组使用闭区间操作符(...)表示的从1到5的闭区间数字。<code>index</code> 被赋值为闭区间范围中的第一个数字（1），然后循环中的语句被执行一次。在本例中，这个循环只包含一个语句，用来输出当前 <code>index</code> 值所对应的乘5乘法表结果。该语句执行后，<code>index</code> 的值被更新为闭区间范围中的第二个数字（2），之后 <code>println</code> 方法会再执行一次。整个过程会进行到闭区间范围结尾为止。</p>
+<p>上面的例子中，<code>index</code> 是一个每次循环遍历开始时被自动赋值的常量。这种情况下，<code>index</code> 在使用前不需要声明，只需要将它包含在循环的声明中，就可以对其进行隐式声明，而无需使用 <code>let</code> 关键字声明。</p>
+<pre><code>注意：
+
+index 常量只存在于循环的生命周期里。如果你想在循环完成后访问 index 的值，又或者想让 index 成为一个变量而不是常量，你必须在循环之前自己进行声明。
+</code></pre><p>如果你不需要知道范围内每一项的值，你可以使用下划线（_）替代变量名来忽略对值的访问：</p>
+<pre><code>let base = 3
+let power = 10
+var answer = 1
+for _ in 1...power {
+    answer *= base
+}
+println(&quot;\(base) to the power of \(power) is \(answer)&quot;)
+// prints &quot;3 to the power of 10 is 59049
+</code></pre><p>这个例子计算 base 这个数的 power 次幂（本例中，是 3 的 10 次幂），从 1 开始做 3 的乘法（3 的 0 次幂）， 进行 10 次，使用 0 到 9 的半闭区间循环。这个计算并不需要知道每一次循环中计数器具体的值，只需要执行了正确的循环次数即可。下划线符号 _ （替代循环中的变量）能够忽略具体的值，并且不提供循环遍历时对值的访问。</p>
+<p>使用 <code>for-in</code> 遍历一个数组所有元素：</p>
+<pre><code>let names = [&quot;Anna&quot;, &quot;Alex&quot;, &quot;Brian&quot;, &quot;Jack&quot;]
+for name in names {
+    println(&quot;Hello, \(name)!&quot;)
+}
+// Hello, Anna!
+// Hello, Alex!
+// Hello, Brian!
+// Hello, Jack!
+</code></pre><p>你也可以通过遍历一个字典来访问它的键值对(key-value pairs)。遍历字典时，字典的每项元素会以 （key, value）元组的形式返回，你可以在 <code>for-in</code> 循环中使用显式的常量名称来解读 （key, value）元组。下面的例子中，字典的键(key)解读为 <code>animalName</code> 常量，字典的值会被解读为 <code>legCount</code> 常量：</p>
+<pre><code>let numberOfLegs = [&quot;spider&quot;: 8, &quot;ant&quot;: 6, &quot;cat&quot;: 4]
+for (animalName, legCount) in numberOfLegs {
+    println(&quot;\(animalName)s have \(legCount) legs&quot;)
+}
+// spiders have 8 legs
+// ants have 6 legs
+// cats have 4 legs
+</code></pre><p>字典元素的遍历顺序和插入顺序可能不同，字典的内容在内部是无序的，所以遍历元素时不能保证顺序。更多数组和字典相关内容，查看<a href="http://numbbbbb.github.io/the-swift-programming-language-in-chinese/chapter2/04_Collection_Types.html" target="_blank">集合类型章节</a>。</p>
+<p>除了数组和字典，你也可以使用 <code>for-in</code> 循环来遍历字符串中的字符：</p>
+<pre><code>for character in &quot;Hello&quot; {
+    println(character)
+}
+// H
+// e
+// l
+// l
+// o
+</code></pre><h3 id="for-for-condition-increment-">For条件递增（for-condition-increment）</h3>
+<p>除了 <code>for-in</code> 循环，Swift 提供使用条件判断和递增方法的标准C样式 <code>for</code> 循环:</p>
+<pre><code>for var index = 0; index &lt; 3; ++index {
+    println(&quot;index is \(index)&quot;)
+}
+// index is 0
+// index is 1
+// index is 2
+</code></pre><p>下面是一般情况下这种循环方式的格式：</p>
+<pre><code>for initialization; condition; increment {
+    statements
+}
+</code></pre><p>和 C 语言中一样，分号将循环的定义分为 3 个部分，不同的是，Swift 不需要使用圆括号将“initialization; condition; increment”包括起来。</p>
+<p>这个循环执行流程如下：</p>
+<ol>
+<li>循环首次启动时，初始化表达式（<em>initialization expression</em>）被调用一次，用来初始化循环所需的所有常量和变量。</li>
+<li>条件表达式（<em>condition expression</em>）被调用，如果表达式调用结果为 <code>false</code>，循环结束，继续执行 <code>for</code> 循环关闭大括号(})之后的代码。如果表达式调用结果为 <code>true</code>，则会执行大括号内部的代码（<em>statements</em>）。</li>
+<li>执行所有语句（<em>statements</em>）之后，执行递增表达式（<em>increment expression</em>）。通常会增加或减少计数器的值，或者根据语句（<em>statements</em>）输出来修改某一个初始化的变量。当递增表达式运行完成后，重复执行第2步，条件表达式会再次执行。</li>
+</ol>
+<p>上述描述和循环格式等同于：</p>
+<pre><code>initialization
+while condition {
+    statements
+    increment
+}
+</code></pre><p>在初始化表达式中声明的常量和变量(比如 var index = 0)只在 <code>for</code> 循环的生命周期里有效。如果想在循环结束后访问 index 的值，你必须要在循环生命周期开始前声明 index。</p>
+<pre><code>var index: Int
+for index = 0; index &lt; 3; ++index {
+    println(&quot;index is \(index)&quot;)
+}
+// index is 0
+// index is 1
+// index is 2
+println(&quot;The loop statements were executed \(index) times&quot;)
+// prints &quot;The loop statements were executed 3 times
+</code></pre><p>注意 <code>index</code> 在循环结束后最终的值是 3 而不是 2。最后一次调用递增表达式 <code>++index</code> 会将 <code>index</code> 设置为 3，从而导致 <code>index &lt; 3</code> 条件为 <code>false</code>，并终止循环。</p>
+<h2 id="while-">While 循环</h2>
+<p><code>While</code> 循环运行一系列语句直到条件变成 <code>false</code>。这类循环适合使用在第一次迭代前迭代次数未知的情况下。Swift 提供两种 <code>while</code> 循环形式：</p>
+<ul>
+<li><p><code>while</code> 循环，每次在循环开始时计算条件是否符合；</p>
+</li>
+<li><p><code>do-while</code> 循环，每次在循环结束时计算条件是否符合。</p>
+</li>
+</ul>
+<h3 id="while">While</h3>
+<p><code>While</code> 循环从计算单一条件开始。如果条件为 <code>true</code>，会重复运行一系列语句，直到条件变为<code>false</code>。</p>
+<p>下面是一般情况下 <code>while</code> 循环格式：</p>
+<pre><code>while condition {
+    statements
+}
+</code></pre><p>下面的例子来玩一个叫做 <em>蛇和梯子</em> 的小游戏（也叫做 <em>滑道和梯子</em> ）:</p>
+<p><img src="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/snakesAndLadders_2x.png" alt="image"></p>
+<p>游戏的规则如下：</p>
+<ul>
+<li>游戏盘面包括 25 个方格，游戏目标是达到或者超过第 25 个方格；</li>
+<li>每一轮，你通过掷一个6边的骰子来确定你移动方块的步数，移动的路线由上图中横向的虚线所示；</li>
+<li>如果在某轮结束，你移动到了梯子的底部，可以顺着梯子爬上去；</li>
+<li>如果在某轮结束，你移动到了蛇的头部，你会顺着蛇的身体滑下去。</li>
+</ul>
+<p>游戏盘面可以使用一个 <code>Int</code> 数组来表达。数组的长度由一个 <code>finalSquare</code> 常量储存，用来初始化数组和检测最终胜利条件。游戏盘面由 26 个 <code>Int</code> 0 值初始化，而不是 25个 （由 0 到 25，一共 26 个）：</p>
+<pre><code>let finalSquare = 25
+var board = Int[](count: finalSquare + 1, repeatedValue: 0)
+</code></pre><p>一些方块被设置成有蛇或者梯子的指定值。梯子底部的方块是一个正值，是你可以向上移动，蛇头处的方块是一个负值，会让你向下移动：</p>
+<pre><code>board[03] = +08; board[06] = +11; board[09] = +09; board[10] = +02
+board[14] = -10; board[19] = -11; board[22] = -02; board[24] = -08
+</code></pre><p>3 号方块是梯子的底部，会让你向上移动到 11 号方格，我们使用 <code>board[03]</code> 等于 <code>+08</code> 来表示（11 和 3 之间的差值）。使用一元加运算符（+i）是为了和一元减运算符（-i）对称，为了让盘面代码整齐，小于 10 的数字都使用 0 补齐（这些风格上的调整都不是必须的，只是为了让代码看起来更加整洁）。</p>
+<p>玩家由左下角编号为 0 的方格开始游戏。一般来说玩家第一次掷骰子后才会进入游戏盘面：</p>
+<pre><code>var square = 0
+var diceRoll = 0
+while square &lt; finalSquare {
+    // roll the dice
+    if ++diceRoll == 7 { diceRoll = 1 }
+    // move by the rolled amount
+    square += diceRoll
+    if square &lt; board.count {
+        // if we&#39;re still on the board, move up or down for a snake or a ladder
+        square += board[square]
+    }
+}
+println(&quot;Game over!&quot;)
+</code></pre><p>本例中使用了最简单的方法来模拟掷骰子。 <code>diceRoll</code> 的值并不是一个随机数，而是以 0 为初始值，之后每一次 <code>while</code> 循环，<code>diceRoll</code> 的值使用前置自增操作符(++i)来自增 1 ，然后检测是否超出了最大值。<code>++diceRoll</code> 调用完成后，返回值等于 <code>diceRoll</code> 自增后的值。任何时候如果 <code>diceRoll</code> 的值等于7时，就超过了骰子的最大值，会被重置为 1。所以 <code>diceRoll</code> 的取值顺序会一直是 1, 2, 3, 4, 5, 6, 1, 2。</p>
+<p>掷完骰子后，玩家向前移动 <code>diceRoll</code> 个方格，如果玩家移动超过了第 25 个方格，这个时候游戏结束，相应的，代码会在 <code>square</code> 增加 <code>board[square]</code> 的值向前或向后移动（遇到了梯子或者蛇）之前，检测 <code>square</code> 的值是否小于 <code>board</code> 的 <code>count</code> 属性。</p>
+<p>如果没有这个检测（<code>square &lt; board.count</code>），<code>board[square]</code> 可能会越界访问 <code>board</code> 数组，导致错误。例如如果 <code>square</code> 等于 26， 代码会去尝试访问 <code>board[26]</code>，超过数组的长度。</p>
+<p>当本轮 <code>while</code> 循环运行完毕，会再检测循环条件是否需要再运行一次循环。如果玩家移动到或者超过第 25 个方格，循环条件结果为 <code>false</code>，此时游戏结束。</p>
+<p><code>while</code> 循环比较适合本例中的这种情况，因为在 <code>while</code> 循环开始时，我们并不知道游戏的长度或者循环的次数，只有在达成指定条件时循环才会结束。</p>
+<h3 id="do-while">Do-While</h3>
+<p><code>while</code> 循环的另外一种形式是 <code>do-while</code>，它和 <code>while</code> 的区别是在判断循环条件之前，先执行一次循环的代码块，然后重复循环直到条件为 <code>false</code>。</p>
+<p>下面是一般情况下 <code>do-while</code> 循环的格式：</p>
+<pre><code>do {
+    statements
+} while condition
+</code></pre><p>还是蛇和梯子的游戏，使用 <code>do-while</code> 循环来替代 <code>while</code> 循环。<code>finalSquare</code>，<code>board</code>，<code>square</code> 和 <code>diceRoll</code> 的值初始化同 <code>while</code> 循环一样：</p>
+<pre><code>let finalSquare = 25
+var board = Int[](count: finalSquare + 1, repeatedValue: 0)
+board[03] = +08; board[06] = +11; board[09] = +09; board[10] = +02
+board[14] = -10; board[19] = -11; board[22] = -02; board[24] = -08
+var square = 0
+var diceRoll = 0
+</code></pre><p><code>do-while</code> 的循环版本，循环中第一步就需要去检测是否在梯子或者蛇的方块上。没有梯子会让玩家直接上到第 25 个方格，所以玩家不会通过梯子直接赢得游戏。这样在循环开始时先检测是否踩在梯子或者蛇上是安全的。</p>
+<p>游戏开始时，玩家在第 0 个方格上，<code>board[0]</code> 一直等于 0， 不会有什么影响：</p>
+<pre><code>do {
+    // move up or down for a snake or ladder
+    square += board[square]
+    // roll the dice
+    if ++diceRoll == 7 { diceRoll = 1 }
+    // move by the rolled amount
+    square += diceRoll
+} while square &lt; finalSquare
+println(&quot;Game over!&quot;)
+</code></pre><p>检测完玩家是否踩在梯子或者蛇上之后，开始掷骰子，然后玩家向前移动 <code>diceRoll</code> 个方格，本轮循环结束。</p>
+<p>循环条件（<code>while square &lt; finalSquare</code>）和 <code>while</code> 方式相同，但是只会在循环结束后进行计算。在这个游戏中，<code>do-while</code> 表现得比 <code>while</code> 循环更好。 <code>do-while</code> 方式会在条件判断 <code>square</code> 没有超出后直接运行 <code>square += board[square]</code> ，这种方式可以去掉 <code>while</code> 版本中的数组越界判断。</p>
+<p><a name="conditional_statement"></a></p>
+<h2 id="-">条件语句</h2>
+<p>根据特定的条件执行特定的代码通常是十分有用的，例如：当错误发生时，你可能想运行额外的代码；或者，当输入的值太大或太小时，向用户显示一条消息等。要实现这些功能，你就需要使用<em>条件语句</em>。</p>
+<p>Swift 提供两种类型的条件语句：<code>if</code>语句和<code>switch</code>语句。通常，当条件较为简单且可能的情况很少时，使用<code>if</code>语句。而<code>switch</code>语句更适用于复杂的条件、可能的情况很多且需要用到模式匹配(pattern-matching)的情境。</p>
+<p><a name="if"></a></p>
+<h3 id="if">If</h3>
+<p><code>if</code>语句最简单的形式就是只包含一个条件，当且仅当该条件为<code>真</code>时，才执行相关代码：</p>
+<pre><code class="lang-swift">var temperatureInFahrenheit = 30
+if temperatureInFahrenheit &lt;= 32 {
+    println(&quot;It&#39;s very cold. Consider wearing a scarf.&quot;)
+}
+// prints &quot;It&#39;s very cold. Consider wearing a scarf.&quot;
+</code></pre>
+<p>上面的例子会判断温度是否小于等于32华氏度（水的冰点）。如果是，则打印一条消息；否则，不打印任何消息，继续执行<code>if</code>块后面的代码。</p>
+<p>当然，<code>if</code>语句允许二选一，也就是当条件为假时，执行<em>else语句</em>：</p>
+<pre><code class="lang-swift">temperatureInFahrenheit = 40
+if temperatureInFahrenheit &lt;= 32 {
+    println(&quot;It&#39;s very cold. Consider wearing a scarf.&quot;)
+} else {
+    println(&quot;It&#39;s not that cold. Wear a t-shirt.&quot;)
+}
+// prints &quot;It&#39;s not that cold. Wear a t-shirt.&quot;
+</code></pre>
+<p>显然，这两条分支中总有一条会被执行。由于温度已升至40华氏度，不算太冷，没必要再围围巾——因此，<code>else</code>分支就被触发了。</p>
+<p>你可以把多个<code>if</code>语句链接在一起，像下面这样：</p>
+<pre><code class="lang-swift">temperatureInFahrenheit = 90
+if temperatureInFahrenheit &lt;= 32 {
+    println(&quot;It&#39;s very cold. Consider wearing a scarf.&quot;)
+} else if temperatureInFahrenheit &gt;= 86 {
+    println(&quot;It&#39;s really warm. Don&#39;t forget to wear sunscreen.&quot;)
+} else {
+    println(&quot;It&#39;s not that cold. Wear a t-shirt.&quot;)
+}
+// prints &quot;It&#39;s really warm. Don&#39;t forget to wear sunscreen.&quot;
+</code></pre>
+<p>在上面的例子中，额外的<code>if</code>语句用于判断是不是特别热。而最后的<em>else语句</em>被保留了下来，用于打印既不冷也不热时的消息。</p>
+<p>实际上，最后的<em>else语句</em>是可选的：</p>
+<pre><code class="lang-swift">temperatureInFahrenheit = 72
+if temperatureInFahrenheit &lt;= 32 {
+    println(&quot;It&#39;s very cold. Consider wearing a scarf.&quot;)
+} else if temperatureInFahrenheit &gt;= 86 {
+    println(&quot;It&#39;s really warm. Don&#39;t forget to wear sunscreen.&quot;)
+}
+</code></pre>
+<p>在这个例子中，由于既不冷也不热，所以不会触发<code>if</code>或<code>else if</code>分支，也就不会打印任何消息。</p>
+<p><a name="switch"></a></p>
+<h3 id="switch">Switch</h3>
+<p><code>switch</code>语句会尝试把某个值与若干个模式(pattern)进行匹配。根据第一个匹配成功的模式，<code>switch</code>语句会执行对应的代码。当有可能的情况较多时，通常用<code>switch</code>语句替换<code>if</code>语句。</p>
+<p><code>switch</code>语句最简单的形式就是把某个值与一个或若干个相同类型的值作比较：</p>
+<pre><code class="lang-swift">switch `some value to consider` {
+case `value 1`:
+    `respond to value 1`
+case `value 2`,
+`value 3`:
+    `respond to value 2 or 3`
+default:
+    `otherwise, do something else`
+}
+</code></pre>
+<p><code>switch</code>语句都由多个<em>case</em>构成。为了匹配某些更特定的值，Swift 提供了几种更复杂的匹配模式，这些模式将在本节的稍后部分提到。</p>
+<p>每一个<em>case</em>都是代码执行的一条分支，这与<code>if</code>语句类似。与之不同的是，<code>switch</code>语句会决定哪一条分支应该被执行。</p>
+<p><code>switch</code>语句必须是完备的。这就是说，每一个可能的值都必须至少有一个<em>case</em>块与之对应。在某些不可能涵盖所有值的情况下，你可以使用默认(<code>default</code>)块满足该要求，这个默认块必须在<code>switch</code>语句的最后面。</p>
+<p>下面的例子使用<code>switch</code>语句来匹配一个名为<code>someCharacter</code>的小写字符：</p>
+<pre><code class="lang-swift">let someCharacter: Character = &quot;e&quot;
+switch someCharacter {
+case &quot;a&quot;, &quot;e&quot;, &quot;i&quot;, &quot;o&quot;, &quot;u&quot;:
+    println(&quot;\(someCharacter) is a vowel&quot;)
+case &quot;b&quot;, &quot;c&quot;, &quot;d&quot;, &quot;f&quot;, &quot;g&quot;, &quot;h&quot;, &quot;j&quot;, &quot;k&quot;, &quot;l&quot;, &quot;m&quot;,
+&quot;n&quot;, &quot;p&quot;, &quot;q&quot;, &quot;r&quot;, &quot;s&quot;, &quot;t&quot;, &quot;v&quot;, &quot;w&quot;, &quot;x&quot;, &quot;y&quot;, &quot;z&quot;:
+    println(&quot;\(someCharacter) is a consonant&quot;)
+default:
+    println(&quot;\(someCharacter) is not a vowel or a consonant&quot;)
+}
+// prints &quot;e is a vowel&quot;
+</code></pre>
+<p>在这个例子中，第一个<em>case</em>块用于匹配五个元音，第二个<em>case</em>块用于匹配所有的辅音。</p>
+<p>由于为其它可能的字符写<em>case</em>快没有实际的意义，因此在这个例子中使用了默认块来处理剩下的既不是元音也不是辅音的字符——这就保证了<code>switch</code>语句的完备性。</p>
+<h4 id="-fallthrough-">不存在隐式的贯穿(Fallthrough)</h4>
+<p>与C语言和Objective-C中的<code>switch</code>语句不同，在 Swift 中，当匹配的<em>case</em>块中的代码执行完毕后，程序会终止<code>switch</code>语句，而不会继续执行下一个<em>case</em>块。这也就是说，不需要在<em>case</em>块中显式地使用<code>break</code>语句。这使得<code>switch</code>语句更安全、更易用，也避免了因忘记写<code>break</code>语句而产生的错误。</p>
+<blockquote>
+<p>注意：你依然可以在<em>case</em>块中的代码执行完毕前跳出，详情请参考<a href="">Switch 语句中的 Break<code>待添加链接</code></a></p>
+</blockquote>
+<p>每一个<em>case</em>块都<em>必须</em>包含至少一条语句。像下面这样书写代码是无效的，因为第一个<em>case</em>块是空的：</p>
+<pre><code class="lang-swift">let anotherCharacter: Character = &quot;a&quot;
+switch anotherCharacter {
+case &quot;a&quot;:
+case &quot;A&quot;:
+    println(&quot;The letter A&quot;)
+default:
+    println(&quot;Not the letter A&quot;)
+}
+// this will report a compile-time error
+</code></pre>
+<p>不像C语言里的<code>switch</code>语句，在 Swift 中，<code>switch</code>语句不会同时匹配<code>&quot;a&quot;</code>和<code>&quot;A&quot;</code>。相反的，上面的代码会引起编译期错误：<code>case &quot;a&quot;: does not contain any executable statements</code>——这就避免了意外地从一个<em>case</em>块贯穿到另外一个，使得代码更安全、也更直观。</p>
+<p>一个<em>case</em>也可以包含多个模式，用逗号把它们分开（如果太长了也可以分行写）：</p>
+<pre><code class="lang-swift">switch `some value to consider` {
+case `value 1`,
+`value 2`:
+    `statements`
+}
+</code></pre>
+<blockquote>
+<p>注意：如果想要贯穿特定的<em>case</em>块中，请使用<code>fallthrough</code>语句，详情请参考<a href="">贯穿 (Fallthrough)<code>待添加链接</code></a></p>
+</blockquote>
+<h4 id="-">范围匹配</h4>
+<p><em>case</em>块的模式也可以是一个值的范围。下面的例子展示了如何使用范围匹配来输出任意数字对应的自然语言格式：</p>
+<pre><code class="lang-swift">let count = 3_000_000_000_000
+let countedThings = &quot;stars in the Milky Way&quot;
+var naturalCount: String
+switch count {
+case 0:
+    naturalCount = &quot;no&quot;
+case 1...3:
+    naturalCount = &quot;a few&quot;
+case 4...9:
+    naturalCount = &quot;several&quot;
+case 10...99:
+    naturalCount = &quot;tens of&quot;
+case 100...999:
+    naturalCount = &quot;hundreds of&quot;
+case 1000...999_999:
+    naturalCount = &quot;thousands of&quot;
+default:
+    naturalCount = &quot;millions and millions of&quot;
+}
+println(&quot;There are \(naturalCount) \(countedThings).&quot;)
+// prints &quot;There are millions and millions of stars in the Milky Way.&quot;
+</code></pre>
+<h4 id="-tuple-">元组 (Tuple)</h4>
+<p>你可以使用元组在同一个<code>switch</code>语句中测试多个值。元组中的元素可以是值，也可以是范围。另外，使用下划线(_)来匹配所有可能的值。</p>
+<p>下面的例子展示了如何使用一个<code>(Int, Int)</code>类型的元组来分类下图中的点(x, y)：</p>
+<pre><code class="lang-swift">let somePoint = (1, 1)
+switch somePoint {
+case (0, 0):
+    println(&quot;(0, 0) is at the origin&quot;)
+case (_, 0):
+    println(&quot;(\(somePoint.0), 0) is on the x-axis&quot;)
+case (0, _):
+    println(&quot;(0, \(somePoint.1)) is on the y-axis&quot;)
+case (-2...2, -2...2):
+    println(&quot;(\(somePoint.0), \(somePoint.1)) is inside the box&quot;)
+default:
+    println(&quot;(\(somePoint.0), \(somePoint.1)) is outside of the box&quot;)
+}
+// prints &quot;(1, 1) is inside the box&quot;
+</code></pre>
+<p><img src="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/coordinateGraphSimple_2x.png" width="288" height="288"></p>
+<p>在上面的例子中，<code>switch</code>语句会判断某个点是否是原点(0, 0)，是否在红色的x轴上，是否在黄色y轴上，是否在一个以原点为中心的4x4的矩形里，或者在这个矩形外面。</p>
+<p>不像C语言，Swift 允许多个<em>case</em>匹配同一个值。实际上，在这个例子中，点(0, 0)可以匹配所有<em>四个case</em>。但是，如果存在多个匹配，那么只会执行第一个被匹配到的<em>case</em>块。考虑点(0, 0)会首先匹配<code>case (0, 0)</code>，因此剩下的能够匹配(0, 0)的<em>case</em>块都会被忽视掉。</p>
+<h4 id="-value-bindings-">值绑定 (Value Bindings)</h4>
+<p><em>case</em>块的模式允许将匹配的值绑定到一个临时的常量或变量，这些常量或变量在该<em>case</em>块里就可以被引用了——这种行为被称为<em>值绑定</em>。</p>
+<p>下面的例子展示了如何在一个<code>(Int, Int)</code>类型的元组中使用值绑定来分类下图中的点(x, y)：</p>
+<pre><code class="lang-swift">let anotherPoint = (2, 0)
+switch anotherPoint {
+case (let x, 0):
+    println(&quot;on the x-axis with an x value of \(x)&quot;)
+case (0, let y):
+    println(&quot;on the y-axis with a y value of \(y)&quot;)
+case let (x, y):
+    println(&quot;somewhere else at (\(x), \(y))&quot;)
+}
+// prints &quot;on the x-axis with an x value of 2&quot;
+</code></pre>
+<p><img src="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/coordinateGraphMedium_2x.png" width="288" height="288"></p>
+<p>在上面的例子中，<code>switch</code>语句会判断某个点是否在红色的x轴上，是否在黄色y轴上，或者不在坐标轴上。</p>
+<p>这三个<em>case</em>都声明了常量<code>x</code>和<code>y</code>的占位符，用于临时获取元组<code>anotherPoint</code>的一个或两个值。第一个<em>case</em>——<code>case (let x, 0)</code>将匹配一个纵坐标为<code>0</code>的点，并把这个点的横坐标赋给临时的常量<code>x</code>。类似的，第二个<em>case</em>——<code>case (0, let y)</code>将匹配一个横坐标为<code>0</code>的点，并把这个点的纵坐标赋给临时的常量<code>y</code>。</p>
+<p>一旦声明了这些临时的常量，它们就可以在其对应的<em>case</em>块里引用。在这个例子中，它们用于简化<code>println</code>的书写。</p>
+<p>请注意，这个<code>switch</code>语句不包含默认块。这是因为最后一个<em>case</em>——<code>case let(x, y)</code>声明了一个可以匹配余下所有值的元组。这使得<code>switch</code>语句已经完备了，因此不需要再书写默认块。</p>
+<p>在上面的例子中，<code>x</code>和<code>y</code>是常量，这是因为没有必要在其对应的<em>case</em>块中修改它们的值。然而，它们也可以是变量——程序将会创建临时变量，并用相应的值初始化它。修改这些变量只会影响其对应的<em>case</em>块。</p>
+<h4 id="where">Where</h4>
+<p><em>case</em>块的模式可以使用<code>where</code>语句来判断额外的条件。</p>
+<p>下面的例子把下图中的点(x, y)进行了分类：</p>
+<pre><code class="lang-swift">let yetAnotherPoint = (1, -1)
+switch yetAnotherPoint {
+case let (x, y) where x == y:
+    println(&quot;(\(x), \(y)) is on the line x == y&quot;)
+case let (x, y) where x == -y:
+    println(&quot;(\(x), \(y)) is on the line x == -y&quot;)
+case let (x, y):
+    println(&quot;(\(x), \(y)) is just some arbitrary point&quot;)
+}
+// prints &quot;(1, -1) is on the line x == -y&quot;
+</code></pre>
+<p><img src="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/coordinateGraphComplex_2x.png" width="289" height="290"></p>
+<p>在上面的例子中，<code>switch</code>语句会判断某个点是否在绿色的对角线<code>x == y</code>上，是否在紫色的对角线<code>x == -y</code>上，或者不在对角线上。</p>
+<p>这三个<em>case</em>都声明了常量<code>x</code>和<code>y</code>的占位符，用于临时获取元组<code>yetAnotherPoint</code>的两个值。这些常量被用作<code>where</code>语句的一部分，从而创建一个动态的过滤器(filter)。当且仅当<code>where</code>语句的条件为<code>真</code>时，匹配到的<em>case</em>块才会被执行。</p>
+<p>就像是值绑定中的例子，由于最后一个<em>case</em>块匹配了余下所有可能的值，<code>switch</code>语句就已经完备了，因此不需要再书写默认块。</p>
 
                     
                     </section>
