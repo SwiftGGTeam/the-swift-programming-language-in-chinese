@@ -335,12 +335,10 @@ with a string representations of points.
     -> switch point {
           case ("0", "0"):
              println("(0, 0) is at the origin.")
-          case ("-2...2", "-2...2"):
-             println("(\(point.0), \(point.1)) is near the origin.")
           default:
              println("The point is at (\(point.0), \(point.1)).")
        }
-    <- (1, 2) is near the origin.
+    <- The point is at (1, 2).
 
 
 .. syntax-grammar::
