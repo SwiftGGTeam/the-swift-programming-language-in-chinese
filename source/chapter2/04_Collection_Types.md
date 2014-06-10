@@ -284,7 +284,7 @@ Swift 的字典使用`Dictionary<KeyType, ValueType>`定义,其中`KeyType`是�
     // Airport code: TYO
     // Airport code: LHR
 
-    for airportName in airports。values {
+    for airportName in airports.values {
         prINTln("Airport name: \(airportName)")
     }
     // Airport name: Tokyo
