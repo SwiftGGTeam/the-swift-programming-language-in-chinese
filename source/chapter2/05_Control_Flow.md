@@ -6,7 +6,7 @@ Swift提供了类似C语言的流程控制结构，包括可以多次执行任�
 
 Swift 的 `switch` 语句比 C 语言中更加强大。在 C 语言中，如果某个 case 不小心漏写了 `break`，这个 case 就会“掉入”下一个 case，Swift 无需写 `break`，所以不会发生这种“掉入”的情况。Case 还可以匹配更多的类型模式，包括范围（range）匹配，元组（tuple）和特定类型的描述。`switch` case 语句中匹配的值可以是由 case 体内部临时的常量或者变量决定，也可以由 `where` 分句描述更复杂的匹配条件。
 
-###For 循环
+##For 循环
 `for` 循环用来按照指定的次数多次执行一系列语句。Swift 提供两种 `for` 循环形式：
 
 * `for-in` 用来遍历一个范围(range)，队列(sequence)，集合(collection)，系列(progression)里面所有的元素执行一系列语句。
@@ -146,7 +146,7 @@ println("The loop statements were executed \(index) times")
 ```
 注意 `index` 在循环结束后最终的值是 3 而不是 2。最后一次调用递增表达式 `++index` 会将 `index` 设置为 3，从而导致 `index < 3` 条件为 `false`，并终止循环。
 
-###While 循环
+##While 循环
 
 `While` 循环运行一系列语句直到条件变成 `false`。这类循环适合使用在第一次迭代前迭代次数未知的情况下。Swift 提供两种 `while` 循环形式：
 
