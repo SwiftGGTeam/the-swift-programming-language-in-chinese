@@ -51,7 +51,7 @@
    * 语句(完成 By @coverxit)
    * 声明(@marsprince 认领)
    * 特性(完成 By @Hawstein)
-   * 模式(@honghaoz 认领)
+   * 模式(完成 By @honghaoz)
    * 泛型参数(完成 By @fd5788)
    * 语法总结(完成 By @StanZhai)
 
