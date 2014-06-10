@@ -279,7 +279,7 @@ println("highest unlocked level is now \(LevelTracker.highestUnlockedLevel)")
 // prints "highest unlocked level is now 2"
 ```
 
-如果你创建了第二个玩家，并尝试让他开始一个没有被任何玩家解锁的等级，你试图去设置玩家当前等级时会失败的：
+如果你创建了第二个玩家，并尝试让他开始一个没有被任何玩家解锁的等级，当你试图去设置玩家当前等级时会失败的：
 
 ```
 player = Player(name: "Beto")
@@ -290,4 +290,3 @@ println("level 6 has not yet been unlocked")
 }
 // prints "level 6 has not yet been unlocked"
 ```
-
