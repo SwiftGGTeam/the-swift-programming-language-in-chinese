@@ -1,159 +1,151 @@
-表达式(Expressions)
+# 表达式(Expressions)
+
+---
 
 Swift 中存在四种表达式： 前缀(prefix)表达式，二元(binary)表达式，主要(primary)表达式和后缀(postfix)表达式。表达式可以返回一个值，以及运行某些逻辑(causes a side effect)。
 
-Prefix and binary expressions let you apply operators to smaller expressions. Primary expressions are conceptually the simplest kind of expression, and they provide a way to access values. Postfix expressions, like prefix and binary expressions, let you build up more complex expressions using postfixes such as function calls and member access. Each kind of expression is described in detail in the sections below.
 前缀表达式和二元表达式就是对某些表达式使用各种运算符(operators)。 主要表达式是最短小的表达式，它提供了获取(变量的)值的一种途径。 后缀表达式则允许你建立复杂的表达式，例如配合函数调用和成员访问。 每种表达式都在下面有详细论述～
 
-GRAMMAR OF AN EXPRESSION
+> 表达式的语法
+>
+> *expression* → *prefix-expression*­*binary-expressions*(opt)
+> *expression-list* → *expression*­| *expression*­,­*expression-list*
 
-expression → prefix-expression­binary-expressions­opt­
-expression-list → expression­  expression­,­expression-list­
+## 前缀表达式(Prefix Expressions)
 
-前缀表达式(Prefix Expressions)
-
-Prefix expressions combine an optional prefix operator with an expression. Prefix operators take one argument, the expression that follows them.
 前缀表达式由 前缀符号和表达式组成。(这个前缀符号只能接收一个参数)
 
 Swift 标准库支持如下的前缀操作符：
 
-++ Increment
--- Decrement
-! Logical NOT 逻辑否
-~ Bitwise NOT 按位否
-+ Unary plus
-- Unary minus
+- ++ 自增1 (increment)
+- -- 自减1 (decrement)
+- ! 逻辑否 (Logical NOT )
+- ~ 按位否 (Bitwise NOT )
+- + 加(Unary plus)
+- - 减(Unary minus)
 
-For information about the behavior of these operators, see Basic Operators and Advanced Operators.
+对于这些操作符的使用，请参见： Basic Operators and Advanced Operators
 
-In addition to the standard library operators listed above, you use & immediately before the name of a variable that’s being passed as an in-out argument to a function call expression. For more information and to see an example, see In-Out Parameters.
 作为对上面标准库运算符的补充，你也可以对 某个函数的参数使用 '&'运算符。 更多信息，请参见： "In-Out parameters".
 
-GRAMMAR OF A PREFIX EXPRESSION
+> 前缀表达式的语法
+>
+> *prefix-expression* → *prefix-operator* (opt) *postfix-expression*
+> *prefix-expression* → *in-out-expression*­
+> *in-out-expression* → &­*identifier*­
 
-prefix-expression → prefix-operator­opt­postfix-expression­
-prefix-expression → in-out-expression­
-in-out-expression → &­identifier­
+## 二元表达式( Binary Expressions)
 
-二元表达式( Binary Expressions)
+二元表达式由 "左边参数" + "二元运算符" + "右边参数" 组成, 它有如下的形式：
 
-二元表达式由 “左边参数“ + 二元运算符 + “右边参数” 组成, 它有如下的形式：
-
-left-hand argument operator right-hand argument
+    `left-hand argument` `operator` `right-hand argument`
 
 Swift 标准库提供了如下的二元运算符：
 
-Exponentiative (No associativity, precedence level 160)
-求幂（无结合，优先级160）
+- 求幂相关（无结合，优先级160）
+  - << 按位左移(Bitwise left shift)
+  - >> 按位右移(Bitwise right shift)
+- 乘除法相关（左结合，优先级150）
+  - \* 乘
+  - / 除
+  - % 求余
+  - &* 乘法，忽略溢出( Multiply, ignoring overflow)
+  - &/ 除法，忽略溢出(Divide, ignoring overflow)
+  - &% 求余, 忽略溢出( Remainder, ignoring overflow)
+  - & 位与( Bitwise AND)
+- 加减法相关(左结合, 优先级140)
+  - + 加
+  - - 减
+  - &+ Add with overflow
+  - &- Subtract with overflow
+  - | 按位或(Bitwise OR )
+  - ^ 按位异或(Bitwise XOR)
+- Range (无结合,优先级 135)
+  - .. 半闭值域 Half-closed range
+  - ... 全闭值域 Closed range
+- 类型转换 (无结合,优先级 132)
+  - is 类型检查( type check)
+  - as 类型转换( type cast)
+- Comparative (无结合,优先级 130)
+  - < 小于
+  - <= 小于等于
+  - > 大于
+  - >= 大于等于
+  - == 等于
+  - != 不等
+  - === 恒等于
+  - !== 不恒等
+  - ~= 模式匹配( Pattern match)
+- 合取( Conjunctive) (左结合,优先级 120)
+  - && 逻辑与(Logical AND)
+- 析取(Disjunctive) (左结合,优先级 110)
+  - || 逻辑或( Logical OR)
+- 三元条件(Ternary Conditional )(右结合,优先级 100)
+  - ?: 三元条件 Ternary conditional
+- 赋值 (Assignment) (右结合, 优先级 90)
+  - = 赋值(Assign)
+  - *=  Multiply and assign
+  - /= Divide and assign
+  - %= Remainder and assign
+  - += Add and assign
+  - -= Subtract and assign
+  - <<= Left bit shift and assign
+  - >>= Right bit shift and assign
+  - &= Bitwise AND and assign
+  - ^= Bitwise XOR and assign
+  - |= Bitwise OR and assign
+  - &&= Logical AND and assign
+  - ||= Logical OR and assign
 
-<< Bitwise left shift
->> Bitwise right shift
+关于这些运算符(operators)的更多信息，请参见：Basic Operators and Advanced Operators.
 
-Multiplicative (Left associative, precedence level 150)
-乘法（左结合，优先级150）
+>> 注意
+>>
+>> 在解析时,  一个二元表达式表示为一个一级数组(a flat list), 这个数组(List)根据运算符的先后顺序，被转换成了一个tree. 例如： 2 + 3 * 5 首先被认为是：  2, + , `` 3``, *, 5. 随后它被转换成 tree (2 + (3 * 5))
 
-* Multiply
-/ Divide
-% Remainder
-&* Multiply, ignoring overflow
-&/ Divide, ignoring overflow
-&% Remainder, ignoring overflow
-& Bitwise AND
+> 二元表达式的语法
+>
+> *binary-expression* → *binary-operator*­*prefix-expression*­
+> *binary-expression* → *assignment-operator*­prefix-expression*
+> *binary-expression* → *conditional-operator*­prefix-expression*
+> *binary-expression* → *type-casting-operator*­
+> *binary-expression*s → *binary-expression*­*binary-expressions*(opt­)
 
-Additive (Left associative, precedence level 140)
-+ Add
-- Subtract
-&+ Add with overflow
-&- Subtract with overflow
-| Bitwise OR
-^ Bitwise XOR
-Range (No associativity, precedence level 135)
-.. Half-closed range
-... Closed range
-Cast (No associativity, precedence level 132)
-is Type check
-as Type cast
-Comparative (No associativity, precedence level 130)
-< Less than
-<= Less than or equal
-> Greater than
->= Greater than or equal
-== Equal
-!= Not equal
-=== Identical
-!== Not identical
-~= Pattern match
-Conjunctive (Left associative, precedence level 120)
-&& Logical AND
-Disjunctive (Left associative, precedence level 110)
-|| Logical OR
-Ternary Conditional (Right associative, precedence level 100)
-?: Ternary conditional
-Assignment (Right associative, precedence level 90)
-= Assign
-*= Multiply and assign
-/= Divide and assign
-%= Remainder and assign
-+= Add and assign
--= Subtract and assign
-<<= Left bit shift and assign
->>= Right bit shift and assign
-&= Bitwise AND and assign
-^= Bitwise XOR and assign
-|= Bitwise OR and assign
-&&= Logical AND and assign
-||= Logical OR and assign
-For information about the behavior of these operators, see Basic Operators and Advanced Operators.
-
-NOTE
-注意：
-
-At parse time, an expression made up of binary operators is represented as a flat list. This list is transformed into a tree by applying operator precedence For example, the expression 2 + 3 * 5 is initially understood as a flat list of five items, 2, +, `` 3``, *, and 5. This process transforms it into the tree (2 + (3 * 5)).
-在解析时,  一个二元表达式表示为一个一级数组(a flat list), 这个数组(List)根据运算符的先后顺序，被转换成了一个tree. 例如： 2 + 3 * 5 首先被认为是：  2, + , `` 3``, *, 5. 随后它被转换成 tree (2 + (3 * 5))
-
-GRAMMAR OF A BINARY EXPRESSION
-二元表达式的语法
-
-binary-expression → binary-operator­prefix-expression­
-binary-expression → assignment-operator­prefix-expression­
-binary-expression → conditional-operator­prefix-expression­
-binary-expression → type-casting-operator­
-binary-expressions → binary-expression­binary-expressions­opt­
-
-赋值表达式( Assignment Operator)
+## 赋值表达式( Assignment Operator)
 
 The assigment operator sets a new value for a given expression. It has the following form:
 赋值表达式会对某个给定的表达式赋值。 它有如下的形式；
 
-expression = value
+    `expression` = `value`
 
-就是把右边的 value 赋值给左边的expression.(The value of the expression is set to the value obtained by evaluating the value). If the expression is a tuple, the value must be a tuple with the same number of elements. (Nested tuples are allowed.) Assignment is performed from each part of the value to the corresponding part of the expression. For example:
-如果左边的expression 需要接收多个参数（是一个tuple )，那么右边必须也是一个具有同样数量参数的tuple. (允许嵌套的tuple)
+就是把右边的 *value* 赋值给左边的 *expression*. 如果左边的*expression* 需要接收多个参数（是一个tuple )，那么右边必须也是一个具有同样数量参数的tuple. (允许嵌套的tuple)
 
+```swift
 (a, _, (b, c)) = ("test", 9.45, (12, 3))
 // a is "test", b is 12, c is 3, and 9.45 is ignored
-The assignment operator does not return any value.
-赋值运算符不返回值。
+```
 
-GRAMMAR OF AN ASSIGNMENT OPERATOR
+赋值运算符不返回任何值。
 
-assignment-operator → =­
+> GRAMMAR OF AN ASSIGNMENT OPERATOR
+>
+> *assignment-operator* → =­
 
 三元条件运算符(Ternary Conditional Operator)
 
 三元条件运算符 是根据条件来获取值。 形式如下：
 
-condition ? expression used if true : expression used if false
+    `condition` ? `expression used if true` : `expression used if false`
 
-如果 condition 是true, 那么返回 第一个表达式的值(此时不会调用第二个表达式）， 否则返回第二个表达式的值(此时不会调用第一个表达式）。
+如果 `condition` 是true, 那么返回 第一个表达式的值(此时不会调用第二个表达式）， 否则返回第二个表达式的值(此时不会调用第一个表达式）。
 
-For an example that uses the ternary conditional operator, see Ternary Conditional Operator.
+想看三元条件运算符的例子，请参见： Ternary Conditional Operator.
 
-GRAMMAR OF A CONDITIONAL OPERATOR
+> 三元条件表达式
+>
+> `conditional-operator` → ?­`expression`­:­
 
-conditional-operator → ?­expression­:­
-
-类型转换运算符(Type-Casting Operators)
+## 类型转换运算符(Type-Casting Operators)
 
 There are two type-casting operators, the as operator and the is operator. They have the following form:
 有两种类型转换操作符： as 和 is.  它们有如下的形式：
