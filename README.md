@@ -53,7 +53,7 @@
    * 特性(完成 By @Hawstein)
    * 模式(@honghaoz 认领)
    * 泛型参数(完成 By @fd5788)
-   * 语法总结(@StanZhai 认领)
+   * 语法总结(完成 By @StanZhai)
 
 # 更新频率
 
