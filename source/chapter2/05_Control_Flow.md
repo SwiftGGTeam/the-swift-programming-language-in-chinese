@@ -261,3 +261,5 @@ println("Game over!")
 检测完玩家是否踩在梯子或者蛇上之后，开始掷骰子，然后玩家向前移动 `diceRoll` 个方格，本轮循环结束。
 
 循环条件（`while square < finalSquare`）和 `while` 方式相同，但是只会在循环结束后进行计算。在这个游戏中，`do-while` 表现得比 `while` 循环更好。 `do-while` 方式会在条件判断 `square` 没有超出后直接运行 `square += board[square]` ，这种方式可以去掉 `while` 版本中的数组越界判断。
+
+## 条件语句
