@@ -46,7 +46,7 @@
 
 
         
-    <div class="book"  data-level="2.10" data-basepath=".." data-revision="1402377857835">
+    <div class="book"  data-level="2.10" data-basepath=".." data-revision="1402386668059">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -587,7 +587,7 @@
 
                 <div class="page-inner">
                 
-                    <section class="normal" id="section-gitbook_27">
+                    <section class="normal" id="section-gitbook_414">
                     
                         <h1 id="-properties-">属性 (Properties)</h1>
 <p><strong>属性</strong>将值跟特定的类、结构或枚举关联。一种是存储属性，把常量或变量的值作为实例的一部分，一种是计算属性，它计算一个值。计算属性可以用于类、结构和枚举里，存储属性只能用于类和结构。</p>
@@ -595,7 +595,7 @@
 <p>另外，还可以定义属性监视器来监控属性值的变化，以此来触发一个自定义的操作。属性监视器可以添加到自己写的存储属性上，也可以添加到从父类继承的属性上。</p>
 <h2 id="-">存储属性</h2>
 <p>简单来说，一个存储属性就是一个特定类型实例里表示常量或变量的部分，存储属性可以是<em>变量存储属性</em>（用关键字<code>var</code>定义），也可以是<em>常量存储属性</em>（用关键字<code>let</code>定义）。</p>
-<p>可以在定义存储属性的时候指定默认值，详见<a href="#">默认属性值</a>一节。也可以在初始化阶段设置或修改存储属性的值，甚至修改常量存储属性的值，详见<a href="#">在初始化阶段修改常量存储属性</a>一节。</p>
+<p>可以在定义存储属性的时候指定默认值，详见<a href="chapter2/14_Initialization.md#">默认属性值</a>一节。也可以在初始化阶段设置或修改存储属性的值，甚至修改常量存储属性的值，详见<a href="chapter2/14_Initialization.md#">在初始化阶段修改常量存储属性</a>一节。</p>
 <p>下面的例子定义了一个名为<code>FixedLengthRange</code>的结构体，表示一个在创建后无法修改整数范围的类型：</p>
 <pre><code>struct FixedLengthRange {
     var firstValue: Int
@@ -605,7 +605,7 @@ var rangeOfThreeItems = FixedLengthRange(firstValue: 0, length: 3)
 // the range represents integer values 0, 1, and 2
 rangeOfThreeItems.firstValue = 6
 // the range now represents integer values 6, 7, and 8
-</code></pre><p><code>FixedLengthRange</code>的实例包含一个名为<code>firstValue</code>的变量存储属性和一个名为<code>length</code>的常量存储属性。在上面的例子中，<code>length</code>在创建实例的时候被赋值，因为它是一个常量存储属性，所以再无法修改它的值。</p>
+</code></pre><p><code>FixedLengthRange</code>的实例包含一个名为<code>firstValue</code>的变量存储属性和一个名为<code>length</code>的常量存储属性。在上面的例子中，<code>length</code>在创建实例的时候被赋值，因为它是一个常量存储属性，所以无法修改它的值。</p>
 <h3 id="-">常量和存储属性</h3>
 <p>如果创建了一个结构体的实例并赋值给一个常量，则无法修改实例的任何属性，即使定义了变量存储属性：</p>
 <pre><code>let rangeOfFourItems = FixedLengthRange(firstValue: 0, length: 4)
@@ -615,6 +615,7 @@ rangeOfFourItems.firstValue = 6
 </code></pre><p>因为<code>rangeOfFourItems</code>声明成了常量（用<code>let</code>关键字），即使<code>firstValue</code>是一个变量属性，也无法再修改属性它的值。</p>
 <p>这种行为是由于结构体（struct）属于<em>值类型</em>。当值类型的实例被声明为常量的时候，它的所有属性也就成了常量。</p>
 <p>属于<em>引用类型</em>的类（class）则不一样，把一个引用类型的实例赋给一个常量后，仍然可以修改实例的变量属性。</p>
+<p><a name="lazy_stored_properties"></a></p>
 <h3 id="-">延迟存储属性</h3>
 <p>延迟存储属性是指当第一次被调用的时候才有初始值的属性。在属性声明前使用<code>@lazy</code>特性来表示一个延迟存储属性。</p>
 <blockquote>
@@ -650,11 +651,11 @@ manager.data += &quot;Some more data&quot;
 // the DataImporter instance for the importer property has now been created
 // prints &quot;data.txt”
 </code></pre><h3 id="-">存储属性和实例变量</h3>
-<p>如果您有过Objective-C经验，应该知道有2种方式在类实例存储值和引用。对于属性来说，也可以使用实例变量作为属性值的后端存储。</p>
-<p>Swift编程语言中把这些理论统一用属性来实现。Swift中的属性没有对应的实例变量，属性的后端存储也无法直接访问。这就避免了不同场景下访问方式的困扰，同时也将属性的定义简化成一个语句。
+<p>如果您有过 Objective-C 经验，应该知道有两种方式在类实例存储值和引用。对于属性来说，也可以使用实例变量作为属性值的后端存储。</p>
+<p>Swift 编程语言中把这些理论统一用属性来实现。Swift 中的属性没有对应的实例变量，属性的后端存储也无法直接访问。这就避免了不同场景下访问方式的困扰，同时也将属性的定义简化成一个语句。
 一个类型中属性的全部信息——包括命名、类型和内存管理特征——都在唯一一个地方定义。</p>
 <h2 id="-">计算属性</h2>
-<p>除存储属性外，类、结构体和枚举可以定义<em>计算属性</em>，计算属性不直接存储值，而是提供一个getter来获取值，一个可选的setter来间接设置其他属性或变量的值。</p>
+<p>除存储属性外，类、结构体和枚举可以定义<em>计算属性</em>，计算属性不直接存储值，而是提供一个 getter 来获取值，一个可选的 setter 来间接设置其他属性或变量的值。</p>
 <pre><code>struct Point {
     var x = 0.0, y = 0.0
 }
@@ -682,7 +683,7 @@ let initialSquareCenter = square.center
 square.center = Point(x: 15.0, y: 15.0)
 println(&quot;square.origin is now at (\(square.origin.x), \(square.origin.y))&quot;)
 // prints &quot;square.origin is now at (10.0, 10.0)”
-</code></pre><p>这个例子定义了3个几何形状的结构体：</p>
+</code></pre><p>这个例子定义了 3 个几何形状的结构体：</p>
 <ul>
 <li><code>Point</code>封装了一个<code>(x, y)</code>的坐标</li>
 <li><code>Size</code>封装了一个<code>width</code>和<code>height</code></li>
@@ -693,8 +694,8 @@ println(&quot;square.origin is now at (\(square.origin.x), \(square.origin.y))&q
 <p><code>square</code>的<code>center</code>属性可以通过点运算符（<code>square.center</code>）来访问，这会调用getter来获取属性的值。跟直接返回已经存在的值不同，getter实际上通过计算然后返回一个新的<code>Point</code>实例表示<code>square</code>的中心点。如代码所示，它正确返回了中心点<code>(5, 5)</code>。</p>
 <p><code>center</code>属性之后被设置了一个新的值<code>(15, 15)</code>，表示向右上方移动正方形到如图所示橙色正方形的位置。设置属性<code>center</code>的值会调用setter来修改属性<code>origin</code>的<code>x</code>和<code>y</code>的值，从而实现移动正方形到新的位置。</p>
 <p><img src="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/computedProperties_2x.png" alt="Computed Properties sample" width="388" height="387" /></p>
-<h3 id="-setter-">便捷Setter声明</h3>
-<p>如果计算属性的setter没有定义表示新值的参数名，则可以使用默认名称<code>newValue</code>。下面是使用了便捷Setter声明的<code>Rect</code>结构体代码：</p>
+<h3 id="-setter-">便捷 setter 声明</h3>
+<p>如果计算属性的 setter 没有定义表示新值的参数名，则可以使用默认名称<code>newValue</code>。下面是使用了便捷 setter 声明的<code>Rect</code>结构体代码：</p>
 <pre><code>struct AlternativeRect {
     var origin = Point()
     var size = Size()
@@ -711,7 +712,7 @@ println(&quot;square.origin is now at (\(square.origin.x), \(square.origin.y))&q
     }
 }
 </code></pre><h3 id="-">只读计算属性</h3>
-<p>只有getter没有setter的计算属性就是<em>只读计算属性</em>。只读计算属性总是返回一个值，可以通过点运算符访问，但不能设置新的值。</p>
+<p>只有 getter 没有 setter 的计算属性就是<em>只读计算属性</em>。只读计算属性总是返回一个值，可以通过点运算符访问，但不能设置新的值。</p>
 <blockquote>
 <p>注意</p>
 <p>必须使用<code>var</code>关键字定义计算属性，包括只读计算属性，因为他们的值不是固定的。<code>let</code>关键字只用来声明常量属性，表示初始化后再也无法修改的值。</p>
@@ -730,10 +731,10 @@ println(&quot;the volume of fourByFiveByTwo is \(fourByFiveByTwo.volume)&quot;)
 <p>尽管如此，<code>Cuboid</code>提供一个只读计算属性来让外部用户直接获取体积是很有用的。</p>
 <h2 id="-">属性监视器</h2>
 <p><em>属性监视器</em>监控和响应属性值的变化，每次属性被设置值的时候都会调用属性监视器，甚至新的值和现在的值相同的时候也不例外。</p>
-<p>可以为除了延迟存储属性之外的其他存储属性添加属性监视器，也可以通过重载属性的方式为继承的属性（包括存储属性和计算属性）添加属性监视器。属性重载详见<a href="#">重载</a>一节。</p>
+<p>可以为除了延迟存储属性之外的其他存储属性添加属性监视器，也可以通过重载属性的方式为继承的属性（包括存储属性和计算属性）添加属性监视器。属性重载详见<a href="chapter/13_Inheritance.md#">重载</a>一节。</p>
 <blockquote>
 <p>注意</p>
-<p>不需要为无法重载的计算属性添加属性监视器，因为可以通过setter直接监控和响应值的变化。</p>
+<p>不需要为无法重载的计算属性添加属性监视器，因为可以通过 setter 直接监控和响应值的变化。</p>
 </blockquote>
 <p>可以为属性添加如下的一个或全部监视器：</p>
 <ul>
@@ -783,7 +784,7 @@ stepCounter.totalSteps = 896
 <p>另外，在全局或局部范围都可以定义计算型变量和为存储型变量定义监视器，计算型变量跟计算属性一样，返回一个计算的值而不是存储值，声明格式也完全一样。</p>
 <blockquote>
 <p>注意</p>
-<p>全局的常量或变量都是延迟计算的，跟<a href="#">延迟存储属性</a>相似，不同的地方在于，全局的常量或变量不需要标记<code>@lazy</code>特性。</p>
+<p>全局的常量或变量都是延迟计算的，跟<a href="#lazy_stored_properties">延迟存储属性</a>相似，不同的地方在于，全局的常量或变量不需要标记<code>@lazy</code>特性。</p>
 <p>局部范围的常量或变量不会延迟计算。</p>
 </blockquote>
 <h2 id="-">类属性</h2>
@@ -877,8 +878,7 @@ println(rightChannel.currentLevel)
 // prints &quot;10&quot;
 println(AudioChannel.maxInputLevelForAllChannels)
 // prints &quot;10”
-</code></pre><p>[本章完]</p>
-
+</code></pre>
                     
                     </section>
                 

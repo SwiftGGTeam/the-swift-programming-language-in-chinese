@@ -11,20 +11,20 @@
 	protocol SomeProtocol {
 		// 协议内容
 	}
-	
+
 
 在`类`,`结构体`,`枚举`的名称后加上`协议名称`,中间以冒号`:`分隔即可实现协议;实现多个协议时,各协议之间用逗号`,`分隔,如下所示:
 
 	struct SomeStructure: FirstProtocol, AnotherProtocol {
 		// 结构体内容
 	}
-	
+
 当某个类含有`父类`的同时并实现了协议,应当把`父类`放在所有的`协议`之前,如下所示:
 
 	class SomeClass: SomeSuperClass, FirstProtocol, AnotherProtocol {
 		// 类的内容
 	}
-	
+
 ## 属性要求
 
 `协议`能够要求其`遵循者`必须含有一些**特定名称和类型**的`实例属性(instance property)`或`类属性 (type property)`,也能够要求属性的`(设置权限)settable` 和`(访问权限)gettable`,但它不要求`属性`是`存储型属性(stored property)`还是`计算型属性(calculate property)`.
@@ -35,17 +35,17 @@
 		var musBeSettable : Int { get set }
 		var doesNotNeedToBeSettable: Int { get }
 	}
-	
+
 用`类`来实现`协议`时,使用`class`关键字来表示该属性为类成员;用`结构体`或`枚举`实现`协议`时,则使用`static`关键字来表示:
 
 	protocol AnotherProtocol {
 		class var someTypeProperty: Int { get set }
 	}
-	
+
 	protocol FullyNamed {
 		var fullName: String { get }
-	}	
-	
+	}
+
 `FullyNamed`协议含有`fullName`属性.因此其`遵循者`必须含有一个名为`fullName`,类型为`String`的可读属性.
 
 	struct Person: FullyNamed{
@@ -53,11 +53,11 @@
 	}
 	let john = Person(fullName: "John Appleseed")
 	//john.fullName 为 "John Appleseed"
-	
-`Person`结构体含有一个名为`fullName`的`存储型属性`,完整的`遵循`了协议.(*若协议未被完整遵循,编译时则会报错*).  
+
+`Person`结构体含有一个名为`fullName`的`存储型属性`,完整的`遵循`了协议.(*若协议未被完整遵循,编译时则会报错*).
 
 如下所示,`Startship`类`遵循`了`FullyNamed`协议:
-	
+
 	class Starship: FullyNamed {
 		var prefix: String?
 		var name: String
@@ -71,7 +71,7 @@
 	}
 	var ncc1701 = Starship(name: "Enterprise", prefix: "USS")
 	// ncc1701.fullName == "USS Enterprise"
-	
+
 `Starship`类将`fullName`实现为可读的`计算型属性`.它的每一个实例都有一个名为`name`的必备属性和一个名为`prefix`的可选属性. 当`prefix`存在时,将`prefix`插入到`name`之前来为`Starship`构建`fullName`
 
 ## 方法要求
@@ -85,11 +85,11 @@
 	protocol SomeProtocol {
 		class func someTypeMethod()
 	}
-	
+
 	protocol RandomNumberGenerator {
 		func random() -> Double
 	}
-	
+
 `RandomNumberGenerator`协议要求其`遵循者`必须拥有一个名为`random`, 返回值类型为`Double`的实例方法. (我们假设随机数在[0,1]区间内).
 
 `LinearCongruentialGenerator`类`遵循`了`RandomNumberGenerator`协议,并提供了一个叫做*线性同余生成器(linear congruential generator)*的伪随机数算法.
@@ -109,7 +109,7 @@
 	// 输出 : "Here's a random number: 0.37464991998171"
 	println("And another one: \(generator.random())")
 	// 输出 : "And another one: 0.729023776863283"
-	
+
 ## 突变方法要求
 
 能在`方法`或`函数`内部改变实例类型的方法称为`突变方法`.在`值类型(Value Type)`(*译者注:特指结构体和枚举*)中的的`函数`前缀加上`mutating`关键字来表示该函数允许改变该实例和其属性的类型. 这一变换过程在[Modifyting Value Types from Within Instance Methods](1)章节中有详细描述.
@@ -123,7 +123,7 @@
 	protocol Togglable {
 		mutating func toggle()
 	}
-	
+
 当使用`枚举`或`结构体`来实现`Togglabl`协议时,必须在`toggle`方法前加上`mutating`关键字.
 
 如下所示,`OnOffSwitch`枚举`遵循`了`Togglable`协议,`On`,`Off`两个成员用于表示当前状态
@@ -148,7 +148,7 @@
 
 `协议`本身不实现任何功能,但你可以将它当做`类型`来使用.
 
-使用场景:  
+使用场景:
 
 * 作为函数,方法或构造器中的参数类型,返回值类型
 * 作为常量,变量,属性的类型
@@ -159,7 +159,7 @@
 	class Dice {
 		let sides: Int
 		let generator: RandomNumberGenerator
-		init(sides: Int, generator: RandomNumberGenerator) { 
+		init(sides: Int, generator: RandomNumberGenerator) {
 			self.sides = sides
 			self.generator = generator
 		}
@@ -188,7 +188,7 @@
 	//Random dice roll is 4
 	//Random dice roll is 5
 	//Random dice roll is 4
-	
+
 ## 委托(代理)模式
 
 委托是一种设计模式(*译者注: 想起了那年 UITableViewDelegate 中的奔跑,那是我逝去的Objective-C...*),它允许`类`或`结构体`将一些需要它们负责的功能`交由(委托)`给其他的类型.
@@ -197,7 +197,7 @@
 
 委托模式可以用来响应特定的动作或接收外部数据源提供的数据,而无需要知道外部数据源的类型.
 
-下文是两个基于骰子游戏的协议: 
+下文是两个基于骰子游戏的协议:
 
 	protocol DiceGame {
 		var dice: Dice { get }
@@ -208,9 +208,9 @@
 		func game(game: DiceGame, didStartNewTurnWithDiceRoll diceRoll:Int)
 		func gameDidEnd(game: DiceGame)
 	}
-	
+
 `DiceGame`协议可以在任意含有骰子的游戏中实现,`DiceGameDelegate`协议可以用来追踪`DiceGame`的游戏过程
-	
+
 如下所示,`SnakesAndLadders`是`Snakes and Ladders`(译者注:[Control Flow](2)章节有该游戏的详细介绍)游戏的新版本.新版本使用`Dice`作为骰子,并且实现了`DiceGame`和`DiceGameDelegate`协议
 
 	class SnakesAndLadders: DiceGame {
@@ -235,7 +235,7 @@
 	 				break gameLoop
  				case let newSquare where newSquare > finalSquare:
  					continue gameLoop
- 				default: 
+ 				default:
  				square += diceRoll
  				square += board[square]
  				}
@@ -243,7 +243,7 @@
  			delegate?.gameDIdEnd(self)
  		}
 	}
-	
+
 游戏的`初始化设置(setup)`被为`SnakesAndLadders`类的`构造器(initializer)`实现.所有的游戏逻辑被转移到了`play`方法中.
 
 > 注意:因为`delegate`并不是该游戏的必备条件,`delegate`被定义为遵循`DiceGameDelegate`协议的可选属性
@@ -301,7 +301,7 @@
 	protocol TextRepresentable {
 		func asText() -> String
 	}
-	
+
 通过`扩展`为上一节中提到的`Dice`类遵循`TextRepresentable`协议
 
 	extension Dice: TextRepresentable {
@@ -309,7 +309,7 @@
 			return "A \(sides)-sided dice"
 		}
 	}
-	
+
 从现在起,`Dice`类型的实例可被当作`TextRepresentable`类型:
 
 	let d12 = Dice(sides: 12,generator: LinearCongruentialGenerator())
@@ -334,7 +334,7 @@
 		var name: String
 		func asText() -> String {
 			return "A hamster named \(name)"
-		}	
+		}
 	}
 	extension Hamster: TextRepresentabl {}
 
@@ -375,7 +375,7 @@
 如下所示,`PrettyTextRepresentable`协议继承了`TextRepresentable`协议
 
 	protocol PrettyTextRepresentable: TextRepresentable {
-		func asPrettyText() -> String 
+		func asPrettyText() -> String
 	}
 
 `遵循``PrettyTextRepresentable`协议的同时,也需要`遵循`TextRepresentable`协议.
@@ -444,9 +444,9 @@
 
 使用`is`检验协议一致性,使用`as`将协议类型`向下转换(downcast)`为的其他协议类型.检验与转换的语法和之前相同(*详情查看[Typy Casting章节](5)*):
 
-* `is`操作符用来检查实例是否`遵循`了某个`协议`. 
+* `is`操作符用来检查实例是否`遵循`了某个`协议`.
 * `as?`返回一个可选值,当实例`遵循`协议时,返回该协议类型;否则返回`nil`
-* `as`用以强制向下转型.  
+* `as`用以强制向下转型.
 
 	@objc protocol HasArea {
 		var area: Double { get }
@@ -538,7 +538,7 @@
 `count`属性用于存储当前的值,`increment`方法用来为`count`赋值.
 
 `increment`方法通过`可选链`,尝试从两种`可选成员`中获取`count`.
-	
+
 1. 由于`dataSource`可能为`nil`,因此在`dataSource`后边加上了`?`标记来表明只在`dataSource`非空时才去调用incrementForCount`方法.
 2. 即使`dataSource`存在,但是也无法保证其是否实现了`incrementForCount`方法,因此在`incrementForCount`方法后边也加有`?`标记
 
