@@ -35,7 +35,7 @@ Swift可以在常量、变量、字面量和表达式中进行字符串插值操
 > 除此之外，还可以使用本章介绍的 **String** 特性。
 > 您也可以在任意要求传入 **NSString** 实例作为参数的 API 中使用 **String** 类型的值作为替代。
 >
->更多关于在 Foundation 和 Cocoa 中使用 **String** 的信息请查看 [Using Swift with Cocoa and Objective-C](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/index.html#//apple_ref/doc/uid/TP40014216)。
+>更多关于在 Foundation 和 Cocoa 中使用 **String** 的信息请查看 [Using Swift with Cocoa and Objective-C](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/index.html#//apple_ref/doc/uid/TP40014216)(**章节信息url需要替换**)。
 
 <a name="string_literals"></a>
 ### 字符串字面量 (String Literals)
@@ -123,7 +123,7 @@ constantString += " and another Highlander"
 Swift 的 **String** 类型是值类型。
 如果您创建了一个新的字符串，那么当其进行常量、变量赋值操作或在函数/方法中传递时，会进行值拷贝。
 任何情况下，都会对已有字符串值创建新副本，并对该新副本进行传递或赋值操作。
-值类型在 [Structures and Enumerations Are Value Types](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/ClassesAndStructures.html#//apple_ref/doc/uid/TP40014097-CH13-XID_104) 中进行了说明。
+值类型在 [Structures and Enumerations Are Value Types](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/ClassesAndStructures.html#//apple_ref/doc/uid/TP40014097-CH13-XID_104)(**章节信息URL需要替换**) 中进行了说明。
 
 > 注意：
 > 与 Cocoa 中的 NSString 不同，当您在 Cocoa 中创建了一个 NSString 实例，并将其传递给一个函数/方法，或者赋值给一个变量，您传递或赋值的是该 NSString 实例的一个引用，除非您特别要求进行值拷贝，否则字符串不会生成新的副本来进行赋值操作。
@@ -154,7 +154,7 @@ for character in "Dog!🐶" {
 // 🐶
 ```
 
-for-in 循环在[For Loops](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/ControlFlow.html#//apple_ref/doc/uid/TP40014097-CH9-XID_154)中进行了详细描述。
+for-in 循环在[For Loops](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/ControlFlow.html#//apple_ref/doc/uid/TP40014097-CH9-XID_154)(**章节信息URL需要替换**)中进行了详细描述。
 
 另外，通过标明一个 **Character** 类型注解并通过字符字面量进行赋值，可以建立一个独立的字符常量或变量：
 
@@ -339,7 +339,7 @@ Unicode 中每一个字符都可以被解释为一个或多个 unicode 标量。
 Swift 提供了几种不同的方式来访问字符串的 Unicode 表示。
 
 您可以利用`for-in`来对字符串进行遍历，从而以 Unicode 字符的方式访问每一个字符值。
-该过程在 [Working with Characters](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/StringsAndCharacters.html#//apple_ref/doc/uid/TP40014097-CH7-XID_376) 中进行了描述。
+该过程在 [Working with Characters](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/StringsAndCharacters.html#//apple_ref/doc/uid/TP40014097-CH7-XID_376)(**章节信息URL需要替换**) 中进行了描述。
 
 另外，能够以其他三种 Unicode 兼容的方式访问字符串的值：
 
