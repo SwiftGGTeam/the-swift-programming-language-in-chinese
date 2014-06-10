@@ -226,6 +226,489 @@ class关键字用来声明类的计算型属性。static关键字用来声明类
 
 #类型的别名声明
 
+类型别名的声明可以在你的程序里为一个已存在的类型声明一个别名。类型的别名声明以关键字typealias开始，遵循如下的
+形式：
+
+    typealias name = existing type
+
+当一个类型被别名被声明后，你可以在你程序的任何地方使用别名来代替已存在的类型。已存在的类型可以是已经被命名的
+类型或者是混合类型。类型的别名不产生新的类型，它只是简单的和已存在的类型做名称替换。
+
+查看更多Protocol Associated Type Declaration.
+
+    GRAMMAR OF A TYPE ALIAS DECLARATION
+
+    typealias-declaration → typealias-head­typealias-assignment
+    typealias-head → typealias­typealias-name
+    typealias-name → identifier
+    typealias-assignment → =type
+
+#函数声明
+
+你可以使用函数声明在你的程序里引入新的函数。函数可以在类的上下文，结构体，枚举，或者作为方法的协议中被声明。
+函数声明使用关键字func，遵循如下的形式：
+
+    func function name(parameters) -> return type {
+        statements
+    }
+
+如果函数不返回任何值，返回类型可以被忽略，如下所示：
+
+    func function name(parameters) {
+        statements
+    }
+
+每个参数的类型都要标明，它们不能被推断出来。初始时函数的参数是常值。在这些参数前面添加var使它们成为变量，
+作用域内任何对变量的改变只在函数体内有效，或者用inout使的这些改变可以在调用域内生效。
+更多关于in-out参数的讨论，参见in-out参数(in-out parameters)
+
+函数可以使用元组类型作为返回值来返回多个变量。
+
+函数定义可以出现在另一个函数声明内。这种函数被称作nested函数。更多关于nested函数的讨论，参见nestde functions。
+
+###参数名
+
+函数的参数是一个以逗号分隔的列表(待改进)。函数调用是的变量顺序必须和函数声明时的参数顺序一致。
+最简单的参数列表有着如下的形式：
+
+    parameter name: parameter type
+
+对于函数参数来讲，参数名在函数体内被使用，而不是在函数调用时使用。对于方法参数，参数名在函数体内被使用，
+同时也在方法被调用时作为标签被使用。该方法的第一个参数名仅仅在函数体内被使用，就像函数的参数一样，举例来讲：
+
+    func f(x: Int, y: String) -> String {
+        return y + String(x)
+    }
+    f(7, "hello")  // x and y have no name
+ 
+    class C {
+        func f(x: Int, y: String) -> String {
+           return y + String(x)
+        }
+    }
+    let c = C()
+    c.f(7, y: "hello")  // x has no name, y has a name
+
+你可以按如下的形式，重写参数名被使用的过程：
+
+    external parameter name local parameter name: parameter type
+    #parameter name: parameter type
+    _ local parameter name: parameter type
+
+在本地参数前命名的第二名称(second name)使得参数有一个扩展名。且不同于本地的参数名。
+扩展参数名在函数被调用时必须被使用。对应的参数在方法或函数被调用时必须有扩展名(待改进)。
+
+在参数名前所写的哈希符号(#)代表着这个参数名可以同时作为外部或本体参数名来使用。等同于书写两次本地参数名。
+在函数或方法调用时，与其对应的语句必须包含这个名字。
+
+本地参数名前的强调字符(_)使参数在函数被调用时没有名称。在函数或方法调用时，与其对应的语句必须没有名字。
+
+###特殊类型的参数
+
+参数可以被忽略，值可以是变化的，并且提供一个初始值，这种方法有着如下的形式：
+
+    _ : <#parameter type#.
+    parameter name: parameter type...
+    parameter name: parameter type = default argument value
+
+以强调符(_)命名的参数明确的在函数体内不能被访问。
+
+一个以基础类型名的参数，如果紧跟着三个点(...)，被理解为是可变参数。一个函数至多可以拥有一个可变参数，
+且必须是最后一个参数。可变参数被作为该基本类型名的数组来看待。举例来讲，可变参数int...被看做是int[]。
+查看可变参数的使用例子，详见可变参数(variadic parameters)一节。
+
+在参数的类型后面有一个以等号(=)连接的表达式，这样的参数被看做有着给定表达式的初试值。如果参数在函数
+调用时被省略了，就会使用初始值。如果参数没有胜率，那么它在函数调用是必须有自己的名字.举例来讲，
+f()和f(x:7)都是只有一个变量x的函数的有效调用，但是f(7)是非法的，因为它提供了一个值而不是名称。
+
+###特殊方法
+
+以self修饰的枚举或结构体方法必须以mutating关键字作为函数声明头。
+
+子类重写的方法必须以override关键字作为函数声明头。不用override关键字重写的方法，使用了override关键字
+却并没有重写父类方法都会报错。
+
+和类型相关而不是和类型实例相关的方法必须在static声明的结构以或枚举内，亦或是以class关键字定义的类内。
+
+###柯里化函数和方法
+
+柯里化函数或方法有着如下的形式：
+
+    func function name(parameters)(parameters) -> return type {
+        statements
+    }
+
+以这种形式定义的函数的返回值是另一个函数。举例来说，下面的两个声明时等价的:
+
+    func addTwoNumbers(a: Int)(b: Int) -> Int {
+        return a + b
+    }
+    func addTwoNumbers(a: Int) -> (Int -> Int) {
+        func addTheSecondNumber(b: Int) -> Int {
+            return a + b
+        }
+        return addTheSecondNumber
+    }
+ 
+    addTwoNumbers(4)(5) // Returns 9
+
+多级柯里化应用如下
+
+    GRAMMAR OF A FUNCTION DECLARATION
+
+    function-declaration → function-head­function-name­generic-parameter-clause­opt­function-signature­function-body­
+    function-head → attributes­opt­declaration-specifiers­opt­func­
+    function-name → identifier­  operator­
+    function-signature → parameter-clauses­function-result­opt­
+    function-result → ->­attributes­opt­type­
+    function-body → code-block­
+    parameter-clauses → parameter-clause­parameter-clauses­opt­
+    parameter-clause → (­)­  (­parameter-list­...­opt­)­
+    parameter-list → parameter­  parameter­,­parameter-list­
+    parameter → inout­opt­let­opt­#­opt­parameter-name­local-parameter-name­opt­type-annotation­default-argument-clause­opt­
+    parameter → inout­opt­var­#­opt­parameter-name­local-parameter-name­opt­type-annotation­default-argument-clause­opt­
+    parameter → attributes­opt­type­
+    parameter-name → identifier­  _­
+    local-parameter-name → identifier­  _­
+    default-argument-clause → =­expression­：
+
+#枚举声明
+
+在你的程序里使用枚举声明来引入一个枚举类型。
+
+枚举声明有两种基本的形式，使用关键字enum来声明。枚举声明体使用从零开始的变量——叫做枚举事件，和任意数量的
+声明，包括计算型属性，实例方法，静态方法，构造函数，类型别名，甚至其他枚举，结构体，和类。枚举声明不能
+包含析构函数或者协议声明。(待改进)
+
+不像类或者结构体。枚举类型并不提供隐式的初始构造函数，所有构造函数必须显式的声明。构造函数可以委托枚举中的其他
+构造函数，但是构造过程仅当构造函数将一个枚举时间完成后才全部完成。(待改进)
+
+和结构体类似但是和类不同，枚举是值类型：枚举实例在赋予变量或常量时，或者被函数调用时被复制。
+更多关于值类型的信息，参见结构体和枚举都是值类型(Structures and Enumerations Are Value Types)一节。
+
+你可以扩展枚举类型，正如在扩展名声明(Extension Declaration)中讨论的一样。
+
+###任意事件类型的枚举
+
+如下的形式声明了一个包含任意类型枚举时间的枚举变量
+
+    enum enumeration name {
+        case enumeration case 1
+        case enumeration case 2(associated value types)
+    }
+
+这种形式的枚举声明在其他语言中有时被叫做可识别联合(discrinminated)。
+
+这种形式中，每一个事件块由关键字case开始，后面紧接着一个或多个以逗号分隔的枚举事件。每一个事件名必须是
+独一无二的。每一个事件也可以指定它所存储的指定类型的值，这些类型在关联值类型的元祖里被指定，立即书写在事件
+名后。获得更多关于关联值类型的信息和例子，请查看关联值(associated values)一节。
+
+###使用原始事件值的枚举
+
+以下的形式声明了一个包含相同基础类型的枚举事件的枚举：
+
+    enum enumeration name: raw value type {
+        case enumeration case 1 = raw value 1
+        case enumeration case 2 = raw value 2
+    }
+
+在这种形式中，每一个事件块由case关键字开始，后面紧接着一个或多个以逗号分隔的枚举事件。和第一种形式的枚举
+事件不同，这种形式的枚举事件包含一个同类型的基础值，叫做原始值(raw value)。这些值的类型在原始值类型(raw value type)
+中被指定，必须是字面上的整数，浮点数，字符或者字符串。
+
+每一个事件必须有唯一的名字，必须有一个唯一的初始值。如果初始值类型被指定为int，则不必为事件显式的指定值，
+它们会隐式的被标为值0,1,2等。每一个没有被赋值的Int类型时间会隐式的赋予一个初始值，它们是自动递增的。
+
+    num ExampleEnum: Int {
+        case A, B, C = 5, D
+    }
+
+在上面的例子中，ExampleEnum.A的值是0，ExampleEnum.B的值是。因为ExampleEnum.C的值被显式的设定为5，因此
+ExampleEnum.D的值会自动增长为6.
+
+枚举事件的初始值可以调用方法roRaw获得，如ExampleEnum.B.toRaw()。你也可以通过调用fromRaw方法来使用初始值找到
+其对应的事件，并返回一个可选的事件。查看更多信息和获取初始值类型事件的信息，参阅初始值(raw values)。
+
+###获得枚举事件
+
+使用点(.)来引用枚举类型的事件，如 EnumerationType.EnumerationCase。当枚举类型可以上下文推断出时，你可以
+省略它(.仍然需要)，参照枚举语法(Enumeration Syntax)和显式成员表达(Implicit Member Expression).
+
+使用switch语句来检验枚举事件的值，正如使用switch语句匹配枚举值（Matching Enumeration Values with a Switch Statement)一节描述的那样。
+
+枚举类型是模式匹配(pattern-matched)的，和其相反的是switch语句case块中枚举事件匹配，在枚举事件类型(Enumeration Case Pattern)中有描述。
+
+    GRAMMAR OF AN ENUMERATION DECLARATION
+
+    enum-declaration → attributes­opt­union-style-enum­  attributes­opt­raw-value-style-enum­
+    union-style-enum → enum-name­generic-parameter-clause­opt­{­union-style-enum-members­opt­}­
+    union-style-enum-members → union-style-enum-member­union-style-enum-members­opt­
+    union-style-enum-member → declaration­  union-style-enum-case-clause­
+    union-style-enum-case-clause → attributes­opt­case­union-style-enum-case-list­
+    union-style-enum-case-list → union-style-enum-case­  union-style-enum-case­,­union-style-enum-case-list­
+    union-style-enum-case → enum-case-name­tuple-type­opt­
+    enum-name → identifier­
+    enum-case-name → identifier­
+    raw-value-style-enum → enum-name­generic-parameter-clause­opt­:­type-identifier­{­raw-value-style-enum-members­opt­}­
+    raw-value-style-enum-members → raw-value-style-enum-member­raw-value-style-enum-members­opt­
+    raw-value-style-enum-member → declaration­  raw-value-style-enum-case-clause­
+    raw-value-style-enum-case-clause → attributes­opt­case­raw-value-style-enum-case-list­
+    raw-value-style-enum-case-list → raw-value-style-enum-case­  raw-value-style-enum-case­,­raw-value-style-enum-case-list­
+    raw-value-style-enum-case → enum-case-name­raw-value-assignment­opt­
+    raw-value-assignment → =­literal­
+
+#结构体声明
+
+使用结构体声明可以在你的程序里引入一个结构体类型。结构体声明使用struct关键字，遵循如下的形式：
+
+    struct structure name: adopted protocols {
+        declarations
+    }
+
+结构体内包含零或多个声明。这些声明可以包括存储型和计算型属性，静态属性，实例方法，静态方法，构造函数，
+类型别名，甚至其他结构体，类，和枚举声明。结构体声明不能包含析构函数或者协议声明。详细讨论和包含多种结构体
+声明的实例，参见类和结构体一节。
+
+结构体可以包含任意数量的协议，但是不能继承自类，枚举或者其他结构体。
+
+有三种方法可以创建一个声明过的结构体实例：
+
+-调用结构体内声明的构造函数，参照构造函数(initializers)一节。
+
+—如果没有声明构造函数，调用结构体的逐个构造函数，详情参见Memberwise Initializers for Structure Types.
+
+—如果没有声明析构函数，结构体的所有属性都有初始值，调用结构体的默认构造函数，详情参见默认构造函数(Default Initializers).
+
+结构体的构造过程参见初始化(initiaization)一节。
+
+结构体实例属性可以用点(.)来获得，详情参见获得属性(Accessing Properties)一节。
+
+结构体是值类型；结构体的实例在被赋予变量或常量，被函数调用时被复制。获得关于值类型更多信息，参见
+结构体和枚举都是值类型(Structures and Enumerations Are Value Types)一节。
+
+你可以使用扩展声明来扩展结构体类型的行为，参见扩展声明(Extension Declaration).
+
+    GRAMMAR OF A STRUCTURE DECLARATION
+
+    struct-declaration → attributes­opt­struct­struct-name­generic-parameter-clause­opt­type-inheritance-clause­opt­struct-body­
+    struct-name → identifier­
+    struct-body → {­declarations­opt­}
+
+#类声明
+
+你可以在你的程序中使用类声明来引入一个类。类声明使用关键字class，遵循如下的形式：
+
+    class class name: superclass, adopted protocols {
+        declarations
+    }
+
+一个类内包含零或多个声明。这些声明可以包括存储型和计算型属性，实例方法，类方法，构造函数，单独的析构函数方法，
+类型别名，甚至其他结构体，类，和枚举声明。类声明不能包含协议声明。详细讨论和包含多种类声明的实例，参见类和
+结构体一节。
+
+一个类只能继承一个父类，超类，但是可以包含任意数量的协议。这些超类第一次在type-inheritance-clause出现，遵循任意协议。
+
+正如在初始化声明(Initializer Declaration)谈及的那样，类可以有指定和方便的构造函数。当你声明任一中构造函数时，
+你可以使用requierd变量来标记构造函数，要求任意子类来重写它。指定类的构造函数必须初始化类所有的已声明的属性，
+它必须在子类构造器调用前被执行。
+
+类可以重写属性，方法和它的超类的构造函数。重写的方法和属性必须以override标注。
+
+虽然超类的属性和方法声明可以被当前类继承，但是超类声明的指定构造函数却不能。这意味着，如果当前类重写了超类
+的所有指定构造函数，它就继承了超类的方便构造函数。Swift的类并不是继承自一个全局基础类。
+
+有两种方法来创建已声明的类的实例：
+
+-调用类的一个构造函数，参见构造函数(initializers)。
+
+-如果没有声明构造函数，而且类的所有属性都被赋予了初始值，调用类的默认构造函数，参见默认构造函数(default initializers).
+
+类实例属性可以用点(.)来获得，详情参见获得属性(Accessing Properties)一节。
+
+类是引用类型；当被赋予常量或变量，函数调用时，类的实例是被引用，而不是复制。获得更多关于引用类型的信息，
+结构体和枚举都是值类型(Structures and Enumerations Are Value Types)一节。
+
+你可以使用扩展声明来扩展类的行为，参见扩展声明(Extension Declaration).
+
+    GRAMMAR OF A CLASS DECLARATION
+
+    class-declaration → attributes­opt­class­class-name­generic-parameter-clause­opt­type-inheritance-clause­opt­class-body­
+    class-name → identifier­
+    class-body → {­declarations­opt­}
+
+<a name="protocol_declaration"></a>
+##协议声明(translated by 小一)
+
+一个协议声明为你的程序引入一个命名了的协议类型。协议声明使用 `protocol` 关键词来进行声明并有下面这样的形式：
+
+```javascript
+protocol protocol name: inherited protocols {
+	protocol member declarations
+} 
+```
+
+协议的主体包含零或多个协议成员声明，这些成员描述了任何采用该协议必须满足的一致性要求。特别的，一个协议可以声明必须实现某些属性、方法、初始化程序及附属脚本的一致性类型。协议也可以声明专用种类的类型别名，叫做关联类型，它可以指定协议的不同声明之间的关系。协议成员声明会在下面的详情里进行讨论。
+
+协议类型可以从很多其它协议那继承。当一个协议类型从其它协议那继承的时候，来自其它协议的所有要求就集合了，而且从当前协议继承的任何类型必须符合所有的这些要求。对于如何使用协议继承的例子，查看[协议继承](../chapter2/21_Protocols.html#protocol_inheritance)
+
+> 注意
+> 你也可以使用协议合成类型集合多个协议的一致性要求，详情参见[协议合成类型](../chapter3/03_Types.html#protocol_composition_type)和[协议合成](../chapter2/21_Protocols.html#protocol_composition)
+
+你可以通过采用在类型的扩展声明中的协议来为之前声明的类型添加协议一致性。在扩展中你必须实现所有采用协议的要求。如果该类型已经实现了所有的要求，你可以让这个扩展声明的主题留空。
+
+默认地，符合某一个协议的类型必须实现所有声明在协议中的属性、方法和附属脚本。也就是说，你可以用`optional`属性标注这些协议成员声明以指定它们的一致性类型实现是可选的。`optional`属性仅仅可以用于使用`objc`属性标记过的协议。这样的结果就是仅仅类类型可以采用并符合包含可选成员要求的协议。更多关于如何使用`optional`属性的信息及如何访问可选协议成员的指导——比如当你不能肯定是否一致性的类型实现了它们——参见[可选协议要求](../chapter2/21_Protocols.html#optional_protocol_requirements)
+
+为了限制协议的采用仅仅针对类类型，需要使用`class_protocol`属性标记整个协议声明。任意继承自标记有`class_protocol`属性协议的协议都可以智能地仅能被类类型采用。
+
+>注意
+如果协议已经用`object`属性标记了，`class_protocol`属性就隐性地应用于该协议；没有必要再明确地使用`class_protocol`属性来标记该协议了。
+
+协议是命名的类型，因此它们可以以另一个命名类型出现在你代码的所有地方，就像[协议类型](../chapter2/21_Protocols.html#protocols_as_types)里讨论的那样。然而你不能构造一个协议的实例，因为协议实际上不提供它们指定的要求的实现。
+
+你可以使用协议来声明一个类的代理的方法或者应该实现的结构，就像[委托(代理)模式](../chapter2/21_Protocols.html#delegation)描述的那样。
+
+>协议声明的语法
+protocol-declaration → attributes­opt­protocol­protocol-name­type-inheritance-clause­opt­protocol-body­
+protocol-name → identifier­
+protocol-body → {­protocol-member-declarations­opt­}­
+protocol-member-declaration → protocol-property-declaration­
+protocol-member-declaration → protocol-method-declaration­
+protocol-member-declaration → protocol-initializer-declaration­
+protocol-member-declaration → protocol-subscript-declaration­
+protocol-member-declaration → protocol-associated-type-declaration­
+protocol-member-declarations → protocol-member-declaration­protocol-member-declarations­opt­
+
+<a name="protocol_property_declaration"></a>
+##协议属性声明
+
+协议声明了一致性类型必须在协议声明的主体里通过引入一个协议属性声明来实现一个属性。协议属性声明有一种特殊的类型声明形式：
+
+```javascript
+var property name: type { get set }
+```
+
+同其它协议成员声明一样，这些属性声明仅仅针对符合该协议的类型声明了`getter`和`setter`要求。结果就是你不需要在协议里它被声明的地方实现`getter`和`setter`。
+
+`getter`和`setter`要求可以通过一致性类型以各种方式满足。如果属性声明包含`get`和`set`关键词，一致性类型就可以用可读写（实现了`getter`和`setter`）的存储型变量属性或计算型属性，但是属性不能以常量属性或只读计算型属性实现。如果属性声明仅仅包含`get`关键词的话，它可以作为任意类型的属性被实现。比如说实现了协议的属性要求的一致性类型，参见[属性要求](../chapter2/21_Protocols.html#property_requirements)
+
+更多参见[变量声明](../chapter3/05_Declarations.html#variable_declaration)
+
+>协议属性声明语法
+protocol-property-declaration → variable-declaration-head­variable-name­type-annotation­getter-setter-keyword-block­
 
 
 
+
+
+
+
+
+#扩展声明
+
+扩展声明用于扩展一个现存的类，结构体，枚举的行为。扩展声明以关键字extension开始，遵循如下的规则：
+
+>extension type: adopted protocols {
+>   declarations
+>}
+
+一个扩展声明体包括零个或多个声明。这些声明可以包括计算型属性，计算型静态属性，实例方法，静态和类方法，构造函数，
+附属脚本声明，甚至其他结构体，类，和枚举声明。扩展声明不能包含析构函数，协议声明，存储型属性，属性监测器或其他
+的扩展属性。详细讨论和查看包含多种扩展声明的实例，参见扩展一节。
+
+扩展声明可以向现存的类，结构体，枚举内添加一致的协议。扩展声明不能向一个类中添加继承的类，因此
+type-inheritance-clause是一个只包含协议列表的扩展声明。
+
+属性，方法，现存类型的构造函数不能被它们类型的扩展所重写。
+
+扩展声明可以包含构造函数声明，这意味着，如果你扩展的类型在其他模块中定义，构造函数声明必须委托另一个在
+那个模块里声明的构造函数来恰当的初始化。
+
+>GRAMMAR OF AN EXTENSION DECLARATION
+
+>extension-declaration → extension­type-identifier­type-inheritance-clause­opt­extension-body­
+>extension-body → {­declarations­opt­}­
+
+#附属脚本声明(translated by 林)
+-----------
+附属脚本用于向特定类型添加附属脚本支持，通常为访问集合，列表和序列的元素时提供语法便利。附属脚本声明使用关键字`subscript`，声明形式如下：
+> subscript (`parameter`) -> (return type){
+    get{
+      `statements`
+    }
+    set(`setter name`){
+      `statements`
+    }
+}
+附属脚本声明只能在类，结构体，枚举，扩展和协议声明的上下文进行声明。
+
+_变量(parameters)_指定一个或多个用于在相关类型的附属脚本中访问元素的索引（例如，表达式`object[i]`中的`i`）。尽管用于元素访问的索引可以是任意类型的，但是每个变量必须包含一个用于指定每种索引类型的类型标注。_返回类型(return type)_指定被访问的元素的类型。
+
+和计算性属性一样，附属脚本声明支持对访问元素的读写操作。getter用于读取值，setter用于写入值。setter子句是可选的，当仅需要一个getter子句时，可以将二者都忽略且直接返回请求的值即可。也就是说，如果使用了setter子句，就必须使用getter子句。
+
+setter的名字和封闭的括号是可选的。如果使用了setter名称，它会被当做传给setter的变量的名称。如果不使用setter名称，那么传给setter的变量的名称默认是`value`。setter名称的类型必须与_返回类型(return type)_的类型相同。
+
+可以在附属脚本声明的类型中，可以重载附属脚本，只要_变量(parameters)_或_返回类型(return type)_与先前的不同即可。此时，必须使用`override`关键字声明那个被覆盖的附属脚本。(注：好乱啊！到底是重载还是覆盖？！)
+
+同样可以在协议声明的上下文中声明附属脚本，[Protocol Subscript Declaration](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/doc/uid/TP40014097-CH34-XID_619)中有所描述。
+
+更多关于附属脚本和附属脚本声明的例子，请参考[Subscripts](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Subscripts.html#//apple_ref/doc/uid/TP40014097-CH16-XID_393)。
+
+>GRAMMAR OF A SUBSCRIPT DECLARATION
+
+>subscript-declaration → subscript-head­subscript-result­code-block­
+>subscript-declaration → subscript-head­subscript-result­getter-setter-block­
+>subscript-declaration → subscript-head­subscript-result­getter-setter-keyword-block­
+>subscript-head → attributes­opt­subscript­parameter-clause­
+>subscript-result → ->­attributes­opt­type­
+
+#运算符声明(translated by 林)
+----------
+运算符声明会向程序中引入中缀、前缀或后缀运算符，它使用上下文关键字`operator`声明。
+可以声明三种不同的缀性：中缀、前缀和后缀。操作符的缀性描述了操作符与它的操作数的相对位置。
+运算符声明有三种基本形式，每种缀性各一种。运算符的缀性通过在`operator`和运算符之间添加上下文关键字`infix`，`prefix`或`postfix`来指定。每种形式中，运算符的名字只能包含[Operators](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/LexicalStructure.html#//apple_ref/doc/uid/TP40014097-CH30-XID_871)中定义的运算符字符。
+
+下面的这种形式声明了一个新的中缀运算符：
+> operator infix `operator name`{
+    precedence `precedence level`
+    associativity `associativity`
+ }
+
+_中缀_运算符是二元运算符，它可以被置于两个操作数之间，比如表达式`1 + 2` 中的加法运算符(`+`)。
+
+中缀运算符可以可选地指定优先级，结合性，或两者同时指定。
+
+运算符的_优先级_可以指定在没有括号包围的情况下，运算符与它的操作数如何紧密绑定的。可以使用上下文关键字`precedence`并_优先级(precedence level)_一起来指定一个运算符的优先级。_优先级_可以是0到255之间的任何一个数字(十进制整数)；与十进制整数字面量不同的是，它不可以包含任何下划线字符。尽管优先级是一个特定的数字，但它仅用作与另一个运算符比较(大小)。也就是说，一个操作数可以同时被两个运算符使用时，例如`2 + 3 * 5`，优先级更高的运算符将优先与操作数绑定。
+
+运算符的_结合性_可以指定在没有括号包围的情况下，优先级相同的运算符以何种顺序被分组的。可以使用上下文关键字`associativity`并_结合性(associativity)_一起来指定一个运算符的结合性，其中_结合性_可以说是上下文关键字`left`，`right`或`none`中的任何一个。左结合运算符以从左到右的形式分组。例如，减法运算符(`-`)具有左结合性，因此`4 - 5 - 6`被以`(4 - 5) - 6`的形式分组，其结果为`-7`。
+右结合运算符以从右到左的形式分组，对于设置为`none`的非结合运算符，它们不以任何形式分组。具有相同优先级的非结合运算符，不可以互相邻接。例如，表达式`1 < 2 < 3`非法的。
+
+声明时不指定任何优先级或结合性的中缀运算符，它们的优先级会被初始化为100，结合性被初始化为`none`。
+
+下面的这种形式声明了一个新的前缀运算符：
+> operator prefix `operator name`{}
+
+紧跟在操作数前边的_前缀运算符(prefix operator)_是一元运算符，例如表达式`++i`中的前缀递增运算符(`++`)。
+
+前缀运算符的声明中不指定优先级。前缀运算符是非结合的。
+
+下面的这种形式声明了一个新的后缀运算符：
+
+> operator postfix `operator name`{}
+
+紧跟在操作数后边的_后缀运算符(postfix operator)_是一元运算符，例如表达式`i++`中的前缀递增运算符(`++`)。
+
+和前缀运算符一样，后缀运算符的声明中不指定优先级。后缀运算符是非结合的。
+
+声明了一个新的运算符以后，需要声明一个跟这个运算符同名的函数来实现这个运算符。如何实现一个新的运算符，请参考[Custom Operators](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/AdvancedOperators.html#//apple_ref/doc/uid/TP40014097-CH27-XID_48)。
+
+>GRAMMAR OF AN OPERATOR DECLARATION
+>
+>operator-declaration → prefix-operator-declaration­  postfix-operator-declaration­  >infix-operator-declaration­
+>prefix-operator-declaration → operator­prefix­operator­{­}­
+>postfix-operator-declaration → operator­postfix­operator­{­}­
+>infix-operator-declaration → operator­infix­operator­{­infix-operator-attributes­opt­}­
+>infix-operator-attributes → precedence-clause­opt­associativity-clause­opt­
+>precedence-clause → precedence­precedence-level­
+>precedence-level → Digit 0 through 255
+>associativity-clause → associativity­associativity­
+>associativity → left­  right­  none
