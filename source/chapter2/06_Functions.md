@@ -23,8 +23,8 @@ Swift统一的函数语法足够灵活，可以用来表示任何函数，包括
 在下面例子中的函数叫做`"greetingForPerson"`，之所以叫这个名字是因为这个函数用一个人的名字当做输入，并返回给这个人的问候语。为了完成这个任务，你定义一个输入参数-一个叫做`personName`的`String`值，和一个包含给这个人问候语的`String`类型的返回值：
 
     func sayHello(personName: String) -> String {
-      let greeting = "Hello, " + personName + "!"
-      return greeting
+        let greeting = "Hello, " + personName + "!"
+        return greeting
     }
 
 所有的这些信息汇总起来成为函数的定义，并以`func`作为前缀。指定函数返回类型时，用返回箭头`->`（一个连字符后跟一个右尖括号）后跟返回类型的名称的方式来表示。
