@@ -46,7 +46,7 @@
 
 
         
-    <div class="book"  data-level="3.5" data-basepath=".." data-revision="1402402017737">
+    <div class="book"  data-level="3.5" data-basepath=".." data-revision="1402440614492">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -587,7 +587,7 @@
 
                 <div class="page-inner">
                 
-                    <section class="normal" id="section-gitbook_83">
+                    <section class="normal" id="section-gitbook_85">
                     
                         <h1 id="-">语句</h1>
 <hr>
@@ -632,7 +632,7 @@
 <li><p>计算<em>increment</em>表达式，然后转到第2步。</p>
 </li>
 </ol>
-<p>定义在<em>initialzation</em>中的变量仅在<code>for</code>语句的作用域以内有效。<em>condition</em>表达式的值的类型必须符合<code>LogicValue</code>协议。</p>
+<p>定义在<em>initialzation</em>中的变量仅在<code>for</code>语句的作用域以内有效。<em>condition</em>表达式的值的类型必须遵循<code>LogicValue</code>协议。</p>
 <blockquote>
 <p>GRAMMAR OF A FOR STATEMENT</p>
 <p><em>for-statement</em> → <strong>for</strong> <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/for-init" target="_blank"><em>for-init</em></a> <em>opt</em> <strong>;</strong> <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/swift/grammar/expression" target="_blank"><em>expression</em></a> <em>opt</em> <strong>;</strong> <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/swift/grammar/expression" target="_blank"><em>expression</em></a> <em>opt</em> <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/code-block" target="_blank"><em>code-block</em></a></p>
@@ -640,13 +640,13 @@
 <p><em>for-statement</em> → <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/variable-declaration" target="_blank"><em>variable-declaration</em></a> | <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/swift/grammar/expression-list" target="_blank"><em>expression-list</em></a></p>
 </blockquote>
 <h3 id="for-in-">For-In 语句</h3>
-<p><code>for-in</code>语句允许在重复执行代码块的同时，迭代集合(或符合<code>Sequence</code>协议的任意类型)中的每一项。</p>
+<p><code>for-in</code>语句允许在重复执行代码块的同时，迭代集合(或遵循<code>Sequence</code>协议的任意类型)中的每一项。</p>
 <p><code>for-in</code>语句的形式如下：</p>
 <pre><code class="lang-swift">for `item` in `collection` {
     `statements`
 }
 </code></pre>
-<p><code>for-in</code>语句在循环开始前会调用<em>collection</em>表达式的<code>generate</code>方法来获取一个生成器类型（这是一个符合<code>Generator</code>协议的类型）的值。接下来循环开始，调用<em>collection</em>表达式的<code>next</code>方法。如果其返回值不是<code>None</code>，它将会被赋给<em>item</em>，然后执行<em>statements</em>，执行完毕后回到循环开始处；否则，将不会赋值给<em>item</em>也不会执行<em>statements</em>，<code>for-in</code>至此执行完毕。</p>
+<p><code>for-in</code>语句在循环开始前会调用<em>collection</em>表达式的<code>generate</code>方法来获取一个生成器类型（这是一个遵循<code>Generator</code>协议的类型）的值。接下来循环开始，调用<em>collection</em>表达式的<code>next</code>方法。如果其返回值不是<code>None</code>，它将会被赋给<em>item</em>，然后执行<em>statements</em>，执行完毕后回到循环开始处；否则，将不会赋值给<em>item</em>也不会执行<em>statements</em>，<code>for-in</code>至此执行完毕。</p>
 <blockquote>
 <p>GRAMMAR OF A FOR-IN STATEMENT</p>
 <p><em>for-in-statement</em> → <strong>for</strong> <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Patterns.html#//apple_ref/swift/grammar/pattern" target="_blank"><em>pattern</em></a> <strong>in</strong> <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/swift/grammar/expression" target="_blank"><em>expression</em></a> <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/code-block" target="_blank"><em>code-block</em></a></p>
@@ -667,7 +667,7 @@
 </li>
 </ol>
 <p>由于<em>condition</em>的值在<em>statements</em>执行前就已计算出，因此<code>while</code>语句中的<em>statements</em>可能会被执行若干次，也可能不会被执行。</p>
-<p><em>condition</em>表达式的值的类型必须符合<code>LogicValue</code>协议。同时，<em>condition</em>表达式也可以使用可选绑定，请参考<a href="">可选绑定<code>待添加链接</code></a>。</p>
+<p><em>condition</em>表达式的值的类型必须遵循<code>LogicValue</code>协议。同时，<em>condition</em>表达式也可以使用可选绑定，请参考<a href="">可选绑定<code>待添加链接</code></a>。</p>
 <blockquote>
 <p>GRAMMAR OF A WHILE STATEMENT</p>
 <p><em>while-statement</em> → <strong>while</strong> <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/while-condition" target="_blank"><em>while-condition</em></a> <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/code-block" target="_blank"><em>code-block</em></a></p>
@@ -689,7 +689,7 @@
 </li>
 </ol>
 <p>由于<em>condition</em>表达式的值是在<em>statements</em>表达式执行后才计算出，因此<em>do-while</em>语句中的<em>statements</em>至少会被执行一次。</p>
-<p><em>condition</em>表达式的值的类型必须符合<code>LogicValue</code>协议。同时，<em>condition</em>表达式也可以使用可选绑定，请参考<a href="">可选绑定<code>待添加链接</code></a>。</p>
+<p><em>condition</em>表达式的值的类型必须遵循<code>LogicValue</code>协议。同时，<em>condition</em>表达式也可以使用可选绑定，请参考<a href="">可选绑定<code>待添加链接</code></a>。</p>
 <blockquote>
 <p>GRAMMAR OF A DO-WHILE STATEMENT</p>
 <p><em>do-while-statement</em> → <strong>do</strong> <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/code-block" target="_blank"><em>code-block</em></a> <strong>while</strong> <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/while-condition" target="_blank"><em>while-condition</em></a> </p>
@@ -727,7 +727,7 @@ else {
     `statements to execute if both conditions are false`
 }
 </code></pre>
-<p><code>if</code>语句中条件的值的类型必须符合<code>LogicValue</code>协议。同时，条件也可以使用可选绑定，请参考<a href="">可选绑定<code>待添加链接</code></a>。</p>
+<p><code>if</code>语句中条件的值的类型必须遵循<code>LogicValue</code>协议。同时，条件也可以使用可选绑定，请参考<a href="">可选绑定<code>待添加链接</code></a>。</p>
 <blockquote>
 <p>GRAMMAR OF AN IF STATEMENT</p>
 <p><em>if-statement</em> → <strong>if</strong> <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/if-condition" target="_blank"><em>if-condition</em></a> <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/code-block" target="_blank"><em>code-block</em></a> <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/else-clause" target="_blank"><em>else-clause</em></a> <em>opt</em></p>

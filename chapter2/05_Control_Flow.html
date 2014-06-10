@@ -46,7 +46,7 @@
 
 
         
-    <div class="book"  data-level="2.5" data-basepath=".." data-revision="1402402017737">
+    <div class="book"  data-level="2.5" data-basepath=".." data-revision="1402440614492">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -627,7 +627,7 @@ for _ in 1...power {
 }
 println(&quot;\(base) to the power of \(power) is \(answer)&quot;)
 // prints &quot;3 to the power of 10 is 59049
-</code></pre><p>这个例子计算 base 这个数的 power 次幂（本例中，是 3 的 10 次幂），从 1 开始做 3 的乘法（3 的 0 次幂）， 进行 10 次，使用 0 到 9 的半闭区间循环。这个计算并不需要知道每一次循环中计数器具体的值，只需要执行了正确的循环次数即可。下划线符号 _ （替代循环中的变量）能够忽略具体的值，并且不提供循环遍历时对值的访问。</p>
+</code></pre><p>这个例子计算 base 这个数的 power 次幂（本例中，是 3 的 10 次幂），从 1 （3 的 0 次幂）开始做 3 的乘法， 进行 10 次，使用 0 到 9 的半闭区间循环。这个计算并不需要知道每一次循环中计数器具体的值，只需要执行了正确的循环次数即可。下划线符号 _ （替代循环中的变量）能够忽略具体的值，并且不提供循环遍历时对值的访问。</p>
 <p>使用 <code>for-in</code> 遍历一个数组所有元素：</p>
 <pre><code>let names = [&quot;Anna&quot;, &quot;Alex&quot;, &quot;Brian&quot;, &quot;Jack&quot;]
 for name in names {
@@ -637,7 +637,7 @@ for name in names {
 // Hello, Alex!
 // Hello, Brian!
 // Hello, Jack!
-</code></pre><p>你也可以通过遍历一个字典来访问它的键值对(key-value pairs)。遍历字典时，字典的每项元素会以 （key, value）元组的形式返回，你可以在 <code>for-in</code> 循环中使用显式的常量名称来解读 （key, value）元组。下面的例子中，字典的键(key)解读为 <code>animalName</code> 常量，字典的值会被解读为 <code>legCount</code> 常量：</p>
+</code></pre><p>你也可以通过遍历一个字典来访问它的键值对(key-value pairs)。遍历字典时，字典的每项元素会以 （key, value）元组的形式返回，你可以在 <code>for-in</code> 循环中使用显式的常量名称来解读 （key, value）元组。下面的例子中，字典的键(key)解读为常量 <code>animalName</code> ，字典的值会被解读为常量 <code>legCount</code> ：</p>
 <pre><code>let numberOfLegs = [&quot;spider&quot;: 8, &quot;ant&quot;: 6, &quot;cat&quot;: 4]
 for (animalName, legCount) in numberOfLegs {
     println(&quot;\(animalName)s have \(legCount) legs&quot;)
