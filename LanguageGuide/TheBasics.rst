@@ -204,7 +204,7 @@ Attempting to do so is reported as an error when your code is compiled:
    -> let languageName = "Swift"
    << // languageName : String = "Swift"
    -> languageName = "Swift++"
-   // this is a compile-time error --- languageName cannot be changed
+   // this is a compile-time error - languageName cannot be changed
    !! <REPL Input>:1:14: error: cannot assign to 'let' value 'languageName'
    !! languageName = "Swift++"
    !! ~~~~~~~~~~~~ ^
@@ -531,14 +531,14 @@ or an uppercase or lowercase ``p`` for hexadecimal floats.
 For decimal numbers with an exponent of ``exp``,
 the base number is multiplied by 10\ :superscript:`exp`:
 
-* ``1.25e2`` means 1.25 ⨉ 10\ :superscript:`2`, or ``125.0``.
-* ``1.25e-2`` means 1.25 ⨉ 10\ :superscript:`-2`, or ``0.0125``.
+* ``1.25e2`` means 1.25 × 10\ :superscript:`2`, or ``125.0``.
+* ``1.25e-2`` means 1.25 × 10\ :superscript:`-2`, or ``0.0125``.
 
 For hexadecimal numbers with an exponent of ``exp``,
 the base number is multiplied by 2\ :superscript:`exp`:
 
-* ``0xFp2`` means 15 ⨉ 2\ :superscript:`2`, or ``60.0``.
-* ``0xFp-2`` means 15 ⨉ 2\ :superscript:`-2`, or ``3.75``.
+* ``0xFp2`` means 15 × 2\ :superscript:`2`, or ``60.0``.
+* ``0xFp-2`` means 15 × 2\ :superscript:`-2`, or ``3.75``.
 
 All of these floating-point literals have a decimal value of ``12.1875``:
 
@@ -1053,8 +1053,7 @@ you could write ``if var actualNumber`` instead,
 and the value contained within the optional
 would be made available as a variable rather than a constant.
 
-.. note::
-
+.. TODO: This note is not actually correct. How *do* you do this?
    Constants or variables created with optional binding
    are only available within the code block following their creation,
    as in the first branch of the ``if`` statement above.
@@ -1209,8 +1208,8 @@ An assertion is a runtime check that a logical condition definitely evaluates to
 Literally put, an assertion “asserts” that a condition is true.
 You use an assertion to make sure that an essential condition is satisfied
 before executing any further code.
-If the condition equates to ``true``, code execution continues as usual;
-if the condition equates to ``false``, code execution ends, and your app is terminated.
+If the condition evaluates to ``true``, code execution continues as usual;
+if the condition evaluates to ``false``, code execution ends, and your app is terminated.
 
 If your code triggers an assertion while running in a debug environment,
 such as when you build and run an app in Xcode,
@@ -1219,7 +1218,7 @@ and query the state of your app at the time that the assertion was triggered.
 An assertion also lets you provide a suitable debug message as to the nature of the assert.
 
 You write an assertion by calling the global ``assert`` function.
-You pass the ``assert`` function an expression that equates to ``true`` or ``false``
+You pass the ``assert`` function an expression that evaluates to ``true`` or ``false``
 and a message that should be displayed if the result of the condition is ``false``:
 
 .. testcode:: assertions
@@ -1230,10 +1229,10 @@ and a message that should be displayed if the result of the condition is ``false
    xx assert
    // this causes the assertion to trigger, because age is not >= 0
 
-In this example, code execution will continue only if ``age >= 0`` equates to ``true``,
+In this example, code execution will continue only if ``age >= 0`` evaluates to ``true``,
 that is, if the value of ``age`` is non-negative.
 If the value of ``age`` *is* negative, as in the code above,
-then ``age >= 0`` equates to ``false``,
+then ``age >= 0`` evaluates to ``false``,
 and the assertion is triggered, terminating the application.
 
 Assertion messages cannot use string interpolation.

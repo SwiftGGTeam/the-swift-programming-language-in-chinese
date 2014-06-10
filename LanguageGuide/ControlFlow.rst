@@ -224,9 +224,9 @@ The loop is executed as follows:
    to set up any constants or variables that are needed for the loop.
 
 2. The :newTerm:`condition expression` is evaluated.
-   If it equates to ``false``, the loop ends,
+   If it evaluates to ``false``, the loop ends,
    and code execution continues after the ``for`` loop's closing brace (``}``).
-   If the expression equates to ``true``,
+   If the expression evaluates to ``true``,
    code execution continues by executing the statements inside the braces.
 
 3. After all statements are executed,
@@ -301,7 +301,7 @@ Here's the general form of a ``while`` loop:
 
 .. syntax-outline::
 
-   while <#condition equates to true#> {
+   while <#condition#> {
       <#statements#>
    }
 
@@ -441,7 +441,7 @@ which is larger than the size of the array.
 The current ``while`` loop execution then ends,
 and the loop's condition is checked to see if the loop should be executed again.
 If the player has moved on or beyond square number ``25``,
-the loop's condition equates to ``false``, and the game ends.
+the loop's condition evaluates to ``false``, and the game ends.
 
 A ``while`` loop is appropriate in this case
 because the length of the game is not clear at the start of the ``while`` loop.
@@ -464,7 +464,7 @@ Here's the general form of a ``do``-``while`` loop:
 
    do {
       <#statements#>
-   } while <#condition equates to true#>
+   } while <#condition#>
 
 Here's the *Snakes and Ladders* example again,
 written as a ``do``-``while`` loop rather than a ``while`` loop.
@@ -973,7 +973,7 @@ which temporarily take on the two tuple values from ``point``.
 These constants are used as part of a ``where`` clause,
 to create a dynamic filter.
 The ``switch`` case matches the current value of ``point``
-only if the ``where`` clause's condition equates to ``true`` for that value.
+only if the ``where`` clause's condition evaluates to ``true`` for that value.
 
 As in the previous example, the final case matches all possible remaining values,
 and so a ``default`` case is not needed to make the ``switch`` statement exhaustive.
@@ -1229,7 +1229,7 @@ although the principle is the same for all loops and ``switch`` statements:
 
 .. syntax-outline::
 
-   <#label name#>: while <#condition equates to true#> {
+   <#label name#>: while <#condition#> {
       <#statements#>
    }
 

@@ -351,10 +351,9 @@ as shown in the following example:
 
     >> class SomeType {}
     >> let x = SomeType()
-    ---
-    -> let y1 = x as SomeType
+    -> let y1 = x as SomeType  // Type information from 'as'
     << // y1 : SomeType = <SomeType instance>
-    -> let y2: SomeType = x
+    -> let y2: SomeType = x    // Type information from an annotation
     << // y2 : SomeType = <SomeType instance>
 
 .. NOTE: The following text is no longer relevant,
