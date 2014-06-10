@@ -29,7 +29,6 @@ Swift 的 **String** 和 **Character** 类型提供了一个快速的，兼容 U
 Swift可以在常量、变量、字面量和表达式中进行字符串插值操作，可以轻松创建用于展示、存储和打印的自定义字符串。
 
 > 注意：
-> 
 > Swift 的 **String** 类型与 Foundation NSString 类进行了无缝桥接。
 > 如果您利用 Cocoa 或 Cocoa Touch 中的 Foundation 框架进行工作。
 > 所有 **NSString** API 都可以调用您创建的任意 **String** 类型的值。
@@ -53,7 +52,6 @@ let someString = "Some string literal value"
 ```
 
 > 注意：
->
 > `someString`变量通过字符串字面量进行初始化，Swift 因此推断该变量为 **String** 类型。
 
 字符串字面量可以包含以下特殊字符：
@@ -115,7 +113,6 @@ constantString += " and another Highlander"
 ```
 
 > 注意：
->
 > 在 Objective-C 和 Cocoa 中，您通过选择两个不同的类(`NSString`和`NSMutableString`)来指定该字符串是否可以被修改，Swift 中的字符串是否可以修改仅通过定义的是变量还是常量来决定，实现了多种类型可变性操作的统一。
 
 <a name="strings_are_value_types"></a>
@@ -129,7 +126,6 @@ Swift 的 **String** 类型是值类型。
 值类型在 [Structures and Enumerations Are Value Types](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/ClassesAndStructures.html#//apple_ref/doc/uid/TP40014097-CH13-XID_104) 中进行了说明。
 
 > 注意：
->
 > 与 Cocoa 中的 NSString 不同，当您在 Cocoa 中创建了一个 NSString 实例，并将其传递给一个函数/方法，或者赋值给一个变量，您传递或赋值的是该 NSString 实例的一个引用，除非您特别要求进行值拷贝，否则字符串不会生成新的副本来进行赋值操作。
 
 Swift 默认字符串拷贝的方式保证了在函数/方法中传递的是字符串的值。
@@ -180,7 +176,6 @@ println("unusualMenagerie has \(countElements(unusualMenagerie)) characters")
 ```
 
 > 注意：
->
 > 不同的 Unicode 字符以及相同 Unicode 字符的不同表示方式可能需要不同数量的内存空间来存储。
 > 所以Swift 中的字符在一个字符串中并不一定占用相同的内存空间。
 > 因此字符串的长度不得不通过迭代字符串中每一个字符的长度来进行计算。
@@ -222,7 +217,6 @@ welcome += character1
 ```
 
 >注意：
->
 >您不能将一个字符串或者字符添加到一个已经存在的字符变量上，因为字符变量只能包含一个字符。
 
 <a name="string_interpolation"></a>
@@ -247,7 +241,6 @@ let message = "\(multiplier) 乘以 2.5 是 \(Double(multiplier) * 2.5)"
 在这个例子中，表达式写为`\(Double(multiplier) * 2.5)`并包含在字符串字面量中。
 
 >注意：
->
 >您插值字符串中写在括号中的表达式不能包含非转义双引号 (`"`) 和反斜杠 (`\`)，并且不能包含回车或换行符。
 
 <a name="comparing_strings"></a>
