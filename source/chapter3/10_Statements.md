@@ -26,7 +26,7 @@
 
 取决于特定的循环条件，循环语句允许重复执行代码块。Swift 提供四种类型的循环语句：`for`语句、`for-in`语句、`while`语句和`do-while`语句。
 
-通过`break`语句和`continue`语句可以改变循环语句的控制流。有关这两条语句，请参考[*Break 语句*`待添加链接`]()和[*Continue 语句*`待添加链接`]()。
+通过`break`语句和`continue`语句可以改变循环语句的控制流。有关这两条语句，请参考[Break 语句](#break_statement)和[Continue 语句](#continue_statement)。
 
 > GRAMMAR OF A LOOP STATEMENT
 
@@ -149,7 +149,7 @@ do {
 
 取决于一个或者多个条件的值，分支语句允许程序执行指定部分的代码。显然，分支语句中条件的值将会决定如何分支以及执行哪一块代码。Swift 提供两种类型的分支语句：`if`语句和`switch`语句。
 
-`switch`语句中的控制流可以用`break`语句修改，请参考[Break 语句`待添加链接`]()。
+`switch`语句中的控制流可以用`break`语句修改，请参考[Break 语句](#break_statement)。
 
 > GRAMMAR OF A BRANCH STATEMENT
 
@@ -226,7 +226,7 @@ switch `control expression` {
 
 `switch`语句的*控制表达式(control expression)*会首先被计算，然后与每一个*case*的模式(pattern)进行匹配。如果匹配成功，程序将会执行对应的*case*块里的*statements*。另外，每一个*case*块都不能为空，也就是说在每一个*case*块中至少有一条语句。如果你不想在匹配到的*case*块中执行代码，只需在块里写一条`break`语句即可。
 
-可以用作控制表达式的值是十分灵活的，除了标量类型(scalar types，如`Int`、`Character`)外，你可以使用任何类型的值，包括浮点数、字符串、元组、自定义类的实例和可选(optional)类型，甚至是枚举类型中的成员值和指定的范围(range)等。关于在`switch`语句中使用这些类型，请参考[控制流`待添加链接`]()一章的[Switch`待添加链接`]()。
+可以用作控制表达式的值是十分灵活的，除了标量类型(scalar types，如`Int`、`Character`)外，你可以使用任何类型的值，包括浮点数、字符串、元组、自定义类的实例和可选(optional)类型，甚至是枚举类型中的成员值和指定的范围(range)等。关于在`switch`语句中使用这些类型，请参考[控制流](../chapter2/05_Control_Flow.html)一章的[Switch](../chapter2/05_Control_Flow.html#switch)。
 
 你可以在模式后面添加一个起保护作用的表达式(guard expression)。*起保护作用的表达式*是这样构成的：关键字`where`后面跟着一个作为额外测试条件的表达式。因此，当且仅当*控制表达式*匹配一个*case*的某个模式且起保护作用的表达式为真时，对应*case*块中的*statements*才会被执行。在下面的例子中，*控制表达式*只会匹配含两个相等元素的元组，如`(1, 1)`：
 
@@ -247,7 +247,7 @@ case let (x, y) where x == y:
 
 #### 不存在隐式的贯穿(fall through)
 
-当匹配的*case*块中的代码执行完毕后，程序会终止`switch`语句，而不会继续执行下一个*case*块。这就意味着，如果你想执行下一个*case*块，需要显式地在你需要的*case*块里使用`fallthrough`语句。关于`fallthrough`语句的更多信息，请参考[Fallthrough 语句`待添加链接`]()。
+当匹配的*case*块中的代码执行完毕后，程序会终止`switch`语句，而不会继续执行下一个*case*块。这就意味着，如果你想执行下一个*case*块，需要显式地在你需要的*case*块里使用`fallthrough`语句。关于`fallthrough`语句的更多信息，请参考[Fallthrough 语句](#fallthrough_statement)。
 
 > GRAMMAR OF A SWITCH STATEMENT
 
@@ -271,11 +271,11 @@ case let (x, y) where x == y:
 
 ## 带标签的语句
 
-你可以在循环语句或`switch`语句前面加上*标签*，它由标签名和紧随其后的冒号(:)组成。在`break`和`continue`后面跟上标签名可以显式地在循环语句或`switch`语句中更改控制流，把控制权传递给指定标签标记的语句。关于这两条语句用法，请参考[Break 语句`待添加链接`]()和[Continue 语句`待添加链接`]()。
+你可以在循环语句或`switch`语句前面加上*标签*，它由标签名和紧随其后的冒号(:)组成。在`break`和`continue`后面跟上标签名可以显式地在循环语句或`switch`语句中更改控制流，把控制权传递给指定标签标记的语句。关于这两条语句用法，请参考[Break 语句](#break_statement)和[Continue 语句](#continue_statement)。
 
 标签的作用域是该标签所标记的语句之后的所有语句。你可以不使用带标签的语句，但只要使用它，标签名就必唯一。
 
-关于使用带标签的语句的例子，请参考[控制流`待添加链接`]()一章的[带标签的语句`待添加链接`]()。
+关于使用带标签的语句的例子，请参考[控制流](../chapter2/05_Control_Flow.html)一章的[带标签的语句`待添加链接`]()。
 
 > GRAMMAR OF A LABELED STATEMENT
 
@@ -299,6 +299,7 @@ case let (x, y) where x == y:
 
 > *control-transfer-statement* → [*return-statement*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/return-statement)
 
+<a name="break_statement"></a>
 ### Break 语句
 
 `break`语句用于终止循环或`switch`语句的执行。使用`break`语句时，可以只写`break`这个关键词，也可以在`break`后面跟上标签名(label name)，像下面这样：
@@ -314,12 +315,13 @@ break `label name`
 
 在这两种情况下，控制权都会被传递给循环或`switch`语句外面的第一行语句。
 
-关于使用`break`语句的例子，请参考[控制流`待添加链接`]()一章的[Break`待添加链接`]()和[带标签的语句`待添加链接`]()。
+关于使用`break`语句的例子，请参考[控制流](../chapter2/05_Control_Flow.html)一章的[Break`待添加链接`]()和[带标签的语句`待添加链接`]()。
 
 > GRAMMAR OF A BREAK STATEMENT
 
 > *break-statement* → **break** [*label-name*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/label-name) *opt*
 
+<a name="continue_statement"></a>
 ### Continue 语句
 
 `continue`语句用于终止循环中当前迭代的执行，但不会终止该循环的执行。使用`continue`语句时，可以只写`continue`这个关键词，也可以在`continue`后面跟上标签名(label name)，像下面这样：
@@ -337,21 +339,22 @@ continue `label name`
 
 在`for`语句中，`continue`语句执行后，*increment*表达式还是会被计算，这是因为每次循环体执行完毕后*increment*表达式都会被计算。
 
-关于使用`continue`语句的例子，请参考[控制流`待添加链接`]()一章的[Continue`待添加链接`]()和[带标签的语句`待添加链接`]()。
+关于使用`continue`语句的例子，请参考[控制流](../chapter2/05_Control_Flow.html)一章的[Continue`待添加链接`]()和[带标签的语句`待添加链接`]()。
 
 > GRAMMAR OF A CONTINUE STATEMENT
 
 > *continue-statement* → **continue** [*label-name*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/label-name) *opt*
 
+<a name="fallthrough_statement"></a>
 ### Fallthrough 语句
 
 `fallthrough`语句用于在`switch`语句中传递控制权。`fallthrough`语句会把控制权从`switch`语句中的一个*case*传递给下一个*case*。这种传递是无条件的，即使下一个*case*的值与`switch`语句的控制表达式的值不匹配。
 
 `fallthrough`语句可出现在`switch`语句中的任意*case*里，但不能出现在最后一个*case*块中。同时，`fallthrough`语句也不能把控制权传递给使用了可选绑定的*case*块。
 
-关于在`switch`语句中使用`fallthrough`语句的例子，请参考[控制流`待添加链接`]()一章的[控制传递语句`待添加链接`]()。
+关于在`switch`语句中使用`fallthrough`语句的例子，请参考[控制流](../chapter2/05_Control_Flow.html)一章的[控制传递语句`待添加链接`]()。
 
-> GRAMMAR OF A FALLTRHOUGH STATEMENT
+> GRAMMAR OF A FALLTHROUGH STATEMENT
 
 > *continue-statement* → **fallthrough**
 
