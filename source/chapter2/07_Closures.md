@@ -16,7 +16,6 @@ Swift 中的闭包与 C 和 Objective-C 中的 `blocks` 以及其他一些编程
 这就是所谓的闭合并包裹着这些常量和变量，俗称闭包。Swift 会为您管理在 **捕获** 过程中涉及到的内存操作。
 
 > 注意：
->
 > 如果您不熟悉 **捕获** (capturing) 这个概念也不用担心，后面会详细对其进行介绍。
 
 在 `函数` 章节中介绍的全局和嵌套函数实际上也是特殊的闭包，闭包采取如下三种形式之一：
@@ -191,7 +190,6 @@ someFunctionThatTakesAClosure() {
 }
 ```
 > 注意：
->
 > 如果函数只需要闭包表达式一个参数，当您使用 trailing 闭包时，您甚至可以把 () 省略掉。
 NOTE
 
@@ -248,7 +246,6 @@ let strings = numbers.map {
 其使用求余运算符 (number % 10) 计算最后一位数字并利用 `digitNames` 字典获取所映射的字符串。
 
 > 注意：
->
 > 字典 `digitNames` 下标后跟着一个叹号 (!)，因为字典下标返回一个可选值 (optional value)，表明即使该 key 不存在也不会查找失败。
 > 在上例中，它保证了 `number % 10` 可以总是作为一个 `digitNames` 字典的有效下标 key。
 > 因此叹号可以用于强制展开 (force-unwrap) 存储在可选下标项中的 **String** 类型值。
@@ -318,7 +315,6 @@ func incrementor() -> Int {
 然而，因为每次调用该函数的时候都会修改 `runningTotal` 的值，`incrementor` 捕获了当前 `runningTotal` 变量的引用，而不是仅仅复制该变量的初始值。捕获一个引用保证了当 `makeIncrementor` 结束时候并不会消失，也保证了当下一次执行 `incrementor` 函数时，`runningTotal` 可以继续增加。
 
 > 注意：
->
 > Swift 会决定捕获引用还是拷贝值。
 > 您不需要标注 `amount` 或者 `runningTotal` 来声明在嵌入的 `incrementor` 函数中的使用方式。
 > Swift 同时也处理 `runingTotal` 变量的内存管理操作，如果不再被 `incrementor` 函数使用，则会被清除。
@@ -353,7 +349,6 @@ incrementByTen()
 ```
 
 > 注意：
->
 > 如果您闭包分配给一个类实例的属性，并且该闭包通过指向该实例或其成员来捕获了该实例，您将创建一个在闭包和实例间的强引用环。
 > Swift 使用捕获列表来打破这种强引用环。更多信息，请参考 [Strong Reference Cycles for Closures](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/AutomaticReferenceCounting.html#//apple_ref/doc/uid/TP40014097-CH20-XID_61)。
 
