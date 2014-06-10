@@ -700,7 +700,7 @@ at the start of the function declaration.
 Methods that override a superclass method
 must be marked with the ``override`` keyword
 at the start of the function declaration.
-It's compile-time error to override a method without the ``override`` keyword
+It's a compile-time error to override a method without the ``override`` keyword
 or to use the ``override`` keyword on a method
 that doesn't override a superclass method.
 
