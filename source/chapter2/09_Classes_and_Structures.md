@@ -66,7 +66,7 @@ Swift 中类和结构体有很多共同点。共同处在于：
 	let someResolution = Resolution()
 	let someVideoMode = VideoMode()
 	
-结构体和类都使用初始化器语法来生成新的实例。初始化器语法的最简单形式是在结构体或者类的类型名称后跟随一个空括弧，如`Resolution()`或`VideoMode()`。通过这种方式所创建的类或者结构体实例，其属均会被初始化为默认值。类和结构体的初始化在[Initialization](http://)章节会进行更详细的讨论。
+结构体和类都使用初始化器语法来生成新的实例。初始化器语法的最简单形式是在结构体或者类的类型名称后跟随一个空括弧，如`Resolution()`或`VideoMode()`。通过这种方式所创建的类或者结构体实例，其属均会被初始化为默认值。[Initialization](http://)章节会对类和结构体的初始化进行更详细的讨论。
 
 
 ### 属性访问
@@ -97,19 +97,55 @@ Swift 中类和结构体有很多共同点。共同处在于：
 	
 	let vga = resolution（width:640, heigth: 480）
 	
-与结构体不同，类实例没有默认的成员逐一初始化器。初始化器在[Initialization](http://)章节进行更详细的讨论。
+与结构体不同，类实例没有默认的成员逐一初始化器。[Initialization](http://)章节会对初始化器进行更详细的讨论。
 
 ### 结构体和枚举是值类型
 
+值类型被赋予一个变量，常数或者本身被传递给一个函数的时候，将会保存其数据拷贝。
 
+在之前的章节中，我们已经大量使用了值类型。实际上，在Swift 中，所有的基本类型：整数(Integer)、浮点数(floating-point)、布尔值(Booleans)、字符串(string)、阵列(array)和字典(dictionaries)，都是值类型，并且都是以结构体的形式在后台所实现。
 
+在Swift中，所有的结构体和枚举都是值类型。这意味着它们的实例，以及实例中所包含的任何值类型属性，在代码中传递的时候都会被复制。
 
+请看下面这个示例，其使用了前一个示例中`Resolution`结构体：
+	
+	let hd = Resolution(width: 1920, height: 1080)
+	var cinema = hd
+	
+在以上示例中，声明了一个名为`hd`的常量，其值为一个初始化为全高清视频分辨率(1920像素宽，1080像素高)的`Resolution`实例。
 
+然后示例中又声明了一个名为`cinema`的变量，其值为之前声明的`hd`。因为`Resolution`是一个结构体，所以`cinema`的值其实是`hd`的一个拷贝副本，而不是`hd`本身。尽管`hd`和`cinema`有着相同的宽(width)和高(height)属性，但是在后台中，它们是两个完全不同的实例。
 
+下面，为了符合数码影院放映的需求(2048像素宽，1080像素高)，`cinema`的`width`属性需要作如下修改：
+	
+	cinema.width = 2048
 
+这里，将会显示`cinema`的`width`属性确已改为了`2048`：
+	
+	println("cinema is now  \(cinema.width) pixels wide")
+	// prints "cinema is now 2048 pixels wide"
 
+然而，初始的`hd`实例中`width`属性还是`1920`：
+	
+	println("hd is still \(hd.width	) pixels wide")
+	// prints "hd is still 1920 pixels wide"
 
+在将`hd`赋予给`cinema`的时候，实际上是将`hd`中所储存的`值(values)`进行拷贝，然后将拷贝的数据储存到新的`cinema`实例中。结果就是两个完全独立的实例碰巧包含有相同的数值。由于两者相互独立，因此将`cinema`的`width`修改为`2048`并不会影响`hd`中的宽(width)。
 
+枚举也遵循相同的行为准则：
+
+	enum CompassPoint {
+		case North, South, East, West
+	}
+	var currentDirection = CompassPoint.West
+	let rememberedDirection = currentDirection
+	currentDirection = .East
+	if rememberDirection == .West {
+		println("The remembered direction is still .West")
+	}
+	// prints "The remembered direction is still .West"
+
+上例中`rememberedDirection`被赋予了`currentDirection`的值(value)，实际上它被赋予的是值(value)的一个拷贝。赋值过程结束后再修改`currentDirection`的值并不影响`rememberedDirection`所储存的原始值(value)的拷贝。
 
 
 
