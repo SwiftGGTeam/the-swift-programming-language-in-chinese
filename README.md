@@ -23,7 +23,7 @@
    * 基础部分(完成 By numbbbbb, lyuka, JaySurplus)
    * 基本操作符(完成 By @xielingwang)
    * 字符串和字符(完成 By @wh1100717)
-   * 集合类型(认领)
+   * 集合类型(完成)
    * 控制流(@vclwei, @coverxit, @NicePiao 认领)
    * 函数(完成 By @honghaoz)
    * 闭包(完成 By @wh1100717)
@@ -42,7 +42,7 @@
    * 扩展(完成 By @lyuka)
    * 协议(完成 By @geek5nan)
    * 泛型(完成 By @takalard)
-   * 高级操作符(@xielingwang 认领)
+   * 高级操作符(完成 By @xielingwang)
 * 语言参考
    * 关于语言参考(完成 By @ChildhoodAndy)
    * 词法结构(完成 By @superkam)
