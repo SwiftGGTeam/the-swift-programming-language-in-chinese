@@ -1,15 +1,16 @@
 # 语法总结
+-----------------
 
 本页包含内容：
 
-* <a href="#label1">语句（Statements）</a>
-* <a href="#label2">泛型参数（Generic Parameters and Arguments）</a>
-* <a href="#label3">声明（Declarations）</a>
-* <a href="#label4">模式（Patterns）</a>
-* <a href="#label5">特性（Attributes）</a>
-* <a href="#label6">表达式（Expressions）</a>
-* <a href="#label7">词法结构（Lexical Structure）</a>
-* <a href="#label8">类型（Types）</a>
+* [语句（Statements）](#label1)
+* [泛型参数（Generic Parameters and Arguments）](#label2)
+* [声明（Declarations）](#label3)
+* [模式（Patterns）](#label4)
+* [特性（Attributes）](#label5)
+* [表达式（Expressions）](#label6)
+* [词法结构（Lexical Structure）](#label7)
+* [类型（Types）](#label8)
 
 <a name="label1"></a>
 ## 语句
