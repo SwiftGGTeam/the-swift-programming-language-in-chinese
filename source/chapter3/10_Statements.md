@@ -62,7 +62,7 @@ for `initialzation`; `condition`; `increment` {
 
 3. 计算*increment*表达式，然后转到第2步。
 
-定义在*initialzation*中的变量仅在`for`语句的作用域以内有效。*condition*表达式的值的类型必须符合`LogicValue`协议。
+定义在*initialzation*中的变量仅在`for`语句的作用域以内有效。*condition*表达式的值的类型必须遵循`LogicValue`协议。
 
 > GRAMMAR OF A FOR STATEMENT
 
@@ -74,7 +74,7 @@ for `initialzation`; `condition`; `increment` {
 
 ### For-In 语句
 
-`for-in`语句允许在重复执行代码块的同时，迭代集合(或符合`Sequence`协议的任意类型)中的每一项。
+`for-in`语句允许在重复执行代码块的同时，迭代集合(或遵循`Sequence`协议的任意类型)中的每一项。
 
 `for-in`语句的形式如下：
 	
@@ -84,7 +84,7 @@ for `item` in `collection` {
 }
 ```
 
-`for-in`语句在循环开始前会调用*collection*表达式的`generate`方法来获取一个生成器类型（这是一个符合`Generator`协议的类型）的值。接下来循环开始，调用*collection*表达式的`next`方法。如果其返回值不是`None`，它将会被赋给*item*，然后执行*statements*，执行完毕后回到循环开始处；否则，将不会赋值给*item*也不会执行*statements*，`for-in`至此执行完毕。
+`for-in`语句在循环开始前会调用*collection*表达式的`generate`方法来获取一个生成器类型（这是一个遵循`Generator`协议的类型）的值。接下来循环开始，调用*collection*表达式的`next`方法。如果其返回值不是`None`，它将会被赋给*item*，然后执行*statements*，执行完毕后回到循环开始处；否则，将不会赋值给*item*也不会执行*statements*，`for-in`至此执行完毕。
 
 > GRAMMAR OF A FOR-IN STATEMENT
 
@@ -111,7 +111,7 @@ while `condition` {
 
 由于*condition*的值在*statements*执行前就已计算出，因此`while`语句中的*statements*可能会被执行若干次，也可能不会被执行。
 
-*condition*表达式的值的类型必须符合`LogicValue`协议。同时，*condition*表达式也可以使用可选绑定，请参考[可选绑定`待添加链接`]()。
+*condition*表达式的值的类型必须遵循`LogicValue`协议。同时，*condition*表达式也可以使用可选绑定，请参考[可选绑定`待添加链接`]()。
 
 > GRAMMAR OF A WHILE STATEMENT
 
@@ -140,7 +140,7 @@ do {
 
 由于*condition*表达式的值是在*statements*表达式执行后才计算出，因此*do-while*语句中的*statements*至少会被执行一次。
 
-*condition*表达式的值的类型必须符合`LogicValue`协议。同时，*condition*表达式也可以使用可选绑定，请参考[可选绑定`待添加链接`]()。
+*condition*表达式的值的类型必须遵循`LogicValue`协议。同时，*condition*表达式也可以使用可选绑定，请参考[可选绑定`待添加链接`]()。
 
 > GRAMMAR OF A DO-WHILE STATEMENT
 
@@ -195,7 +195,7 @@ else {
 }
 ```
 
-`if`语句中条件的值的类型必须符合`LogicValue`协议。同时，条件也可以使用可选绑定，请参考[可选绑定`待添加链接`]()。
+`if`语句中条件的值的类型必须遵循`LogicValue`协议。同时，条件也可以使用可选绑定，请参考[可选绑定`待添加链接`]()。
 
 > GRAMMAR OF AN IF STATEMENT
 
