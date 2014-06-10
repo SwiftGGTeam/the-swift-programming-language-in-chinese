@@ -345,19 +345,19 @@ These two loops do the same thing:
 
    -> var firstForLoop = 0
    << // firstForLoop : Int = 0
-   -> for i in 0..3 {
+   -> for i in 0..4 {
           firstForLoop += i
       }
    -> firstForLoop
-   << // firstForLoop : Int = 3
+   << // firstForLoop : Int = 6
    ---
    -> var secondForLoop = 0
    << // secondForLoop : Int = 0
-   -> for var i = 0; i < 3; ++i {
-          secondForLoop += 1
+   -> for var i = 0; i < 4; ++i {
+          secondForLoop += i
       }
    -> secondForLoop
-   << // secondForLoop : Int = 3
+   << // secondForLoop : Int = 6
 
 Use ``..`` to make a range that omits its upper value,
 and use ``...`` to make a range that includes both values.
