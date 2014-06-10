@@ -10,7 +10,7 @@
 
 简单来说，一个存储属性就是一个特定类型实例里表示常量或变量的部分，存储属性可以是*变量存储属性*（用关键字`var`定义），也可以是*常量存储属性*（用关键字`let`定义）。
 
-可以在定义存储属性的时候指定默认值，详见[默认属性值](#)一节。也可以在初始化阶段设置或修改存储属性的值，甚至修改常量存储属性的值，详见[在初始化阶段修改常量存储属性](#)一节。
+可以在定义存储属性的时候指定默认值，详见[默认属性值](chapter2/14_Initialization.md#)一节。也可以在初始化阶段设置或修改存储属性的值，甚至修改常量存储属性的值，详见[在初始化阶段修改常量存储属性](chapter2/14_Initialization.md#)一节。
 
 下面的例子定义了一个名为`FixedLengthRange`的结构体，表示一个在创建后无法修改整数范围的类型：
 
@@ -26,7 +26,7 @@ rangeOfThreeItems.firstValue = 6
 
 ```
 
-`FixedLengthRange`的实例包含一个名为`firstValue`的变量存储属性和一个名为`length`的常量存储属性。在上面的例子中，`length`在创建实例的时候被赋值，因为它是一个常量存储属性，所以再无法修改它的值。
+`FixedLengthRange`的实例包含一个名为`firstValue`的变量存储属性和一个名为`length`的常量存储属性。在上面的例子中，`length`在创建实例的时候被赋值，因为它是一个常量存储属性，所以无法修改它的值。
 
 ### 常量和存储属性
 
@@ -45,6 +45,8 @@ rangeOfFourItems.firstValue = 6
 这种行为是由于结构体（struct）属于*值类型*。当值类型的实例被声明为常量的时候，它的所有属性也就成了常量。
 
 属于*引用类型*的类（class）则不一样，把一个引用类型的实例赋给一个常量后，仍然可以修改实例的变量属性。
+
+<a name="lazy_stored_properties"></a>
 
 ### 延迟存储属性
 
@@ -98,14 +100,14 @@ println(manager.importer.fileName)
 
 ### 存储属性和实例变量
 
-如果您有过Objective-C经验，应该知道有2种方式在类实例存储值和引用。对于属性来说，也可以使用实例变量作为属性值的后端存储。
+如果您有过 Objective-C 经验，应该知道有两种方式在类实例存储值和引用。对于属性来说，也可以使用实例变量作为属性值的后端存储。
 
-Swift编程语言中把这些理论统一用属性来实现。Swift中的属性没有对应的实例变量，属性的后端存储也无法直接访问。这就避免了不同场景下访问方式的困扰，同时也将属性的定义简化成一个语句。
+Swift 编程语言中把这些理论统一用属性来实现。Swift 中的属性没有对应的实例变量，属性的后端存储也无法直接访问。这就避免了不同场景下访问方式的困扰，同时也将属性的定义简化成一个语句。
 一个类型中属性的全部信息——包括命名、类型和内存管理特征——都在唯一一个地方定义。
 
 ## 计算属性
 
-除存储属性外，类、结构体和枚举可以定义*计算属性*，计算属性不直接存储值，而是提供一个getter来获取值，一个可选的setter来间接设置其他属性或变量的值。
+除存储属性外，类、结构体和枚举可以定义*计算属性*，计算属性不直接存储值，而是提供一个 getter 来获取值，一个可选的 setter 来间接设置其他属性或变量的值。
 
 ```
 struct Point {
@@ -138,7 +140,7 @@ println("square.origin is now at (\(square.origin.x), \(square.origin.y))")
 
 ```
 
-这个例子定义了3个几何形状的结构体：
+这个例子定义了 3 个几何形状的结构体：
 
 - `Point`封装了一个`(x, y)`的坐标
 - `Size`封装了一个`width`和`height`
@@ -155,9 +157,9 @@ println("square.origin is now at (\(square.origin.x), \(square.origin.y))")
 <img src="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/computedProperties_2x.png" alt="Computed Properties sample" width="388" height="387" />
 
 
-### 便捷Setter声明
+### 便捷 setter 声明
 
-如果计算属性的setter没有定义表示新值的参数名，则可以使用默认名称`newValue`。下面是使用了便捷Setter声明的`Rect`结构体代码：
+如果计算属性的 setter 没有定义表示新值的参数名，则可以使用默认名称`newValue`。下面是使用了便捷 setter 声明的`Rect`结构体代码：
 
 ```
 struct AlternativeRect {
@@ -180,7 +182,7 @@ struct AlternativeRect {
 
 ### 只读计算属性
 
-只有getter没有setter的计算属性就是*只读计算属性*。只读计算属性总是返回一个值，可以通过点运算符访问，但不能设置新的值。
+只有 getter 没有 setter 的计算属性就是*只读计算属性*。只读计算属性总是返回一个值，可以通过点运算符访问，但不能设置新的值。
 
 > 注意
 > 
@@ -209,11 +211,11 @@ println("the volume of fourByFiveByTwo is \(fourByFiveByTwo.volume)")
 
 *属性监视器*监控和响应属性值的变化，每次属性被设置值的时候都会调用属性监视器，甚至新的值和现在的值相同的时候也不例外。
 
-可以为除了延迟存储属性之外的其他存储属性添加属性监视器，也可以通过重载属性的方式为继承的属性（包括存储属性和计算属性）添加属性监视器。属性重载详见[重载](#)一节。
+可以为除了延迟存储属性之外的其他存储属性添加属性监视器，也可以通过重载属性的方式为继承的属性（包括存储属性和计算属性）添加属性监视器。属性重载详见[重载](chapter/13_Inheritance.md#)一节。
 
 > 注意
 > 
-> 不需要为无法重载的计算属性添加属性监视器，因为可以通过setter直接监控和响应值的变化。
+> 不需要为无法重载的计算属性添加属性监视器，因为可以通过 setter 直接监控和响应值的变化。
 
 可以为属性添加如下的一个或全部监视器：
 
@@ -278,7 +280,7 @@ stepCounter.totalSteps = 896
 
 > 注意
 > 
-> 全局的常量或变量都是延迟计算的，跟[延迟存储属性](#)相似，不同的地方在于，全局的常量或变量不需要标记`@lazy`特性。
+> 全局的常量或变量都是延迟计算的，跟[延迟存储属性](#lazy_stored_properties)相似，不同的地方在于，全局的常量或变量不需要标记`@lazy`特性。
 > 
 > 局部范围的常量或变量不会延迟计算。
 
@@ -417,5 +419,3 @@ println(AudioChannel.maxInputLevelForAllChannels)
 // prints "10”
 
 ```
-
-[本章完]
