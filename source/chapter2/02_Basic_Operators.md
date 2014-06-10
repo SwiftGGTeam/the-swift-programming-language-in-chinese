@@ -199,7 +199,7 @@ let c = a++ // a 现在 2, 但 c 是 a 自增前的值 1
 ```swift
 let three = 3
 let minusThree = -three       // minusThree 等于 -3
-let plusThree = -minusThree   // plusThree 等于 3, o或 "负负3"
+let plusThree = -minusThree   // plusThree 等于 3, 或 "负负3"
 ```
 
 单目负号写在操作数之前, 中间没有空格.

@@ -46,7 +46,7 @@
 
 
         
-    <div class="book"  data-level="2.6" data-basepath=".." data-revision="1402305571512">
+    <div class="book"  data-level="2.6" data-basepath=".." data-revision="1402328527093">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -587,7 +587,7 @@
 
                 <div class="page-inner">
                 
-                    <section class="normal" id="section-gitbook_23">
+                    <section class="normal" id="section-gitbook_28">
                     
                         <h1 id="-functions-">函数（Functions）</h1>
 <p>本页包含内容：</p>
@@ -770,9 +770,8 @@
             return s1 + joiner + s2
         }
 </code></pre><p>在这个例子中，Swift自动为<code>joiner</code>提供了外部参数名。因此，当函数调用时，外部参数名必须使用，这样使得参数的用途变得清晰。</p>
-<pre><code>        func join(s1: String, s2: String, joiner: String = &quot; &quot;) -&gt; String {
-            return s1 + joiner + s2
-        }
+<pre><code>        join(&quot;hello&quot;, &quot;world&quot;, joiner: &quot;-&quot;)
+        // returns &quot;hello-world&quot;
 </code></pre><blockquote>
 <p>注意：
 你可以使用<code>下划线（_）</code>作为默认值参数的外部参数名，这样可以在调用时不用提供外部参数名。但是给带默认值的参数命名总是更加合适的。</p>
@@ -821,7 +820,7 @@
 </blockquote>
 <h3 id="-in-out-parameters-">输入输出参数（In-Out Parameters）</h3>
 <p>变量参数，正如上面所述，仅仅能在函数体内被更改。如果你想要一个函数可以修改参数的值，并且想要在这些修改在函数调用结束后仍然存在，那么就应该把这个参数定义为输入输出参数（In-Out Parameters）。</p>
-<p>定义一个输入输出参数时，在参数定以前加<code>inout</code>关键字。一个输入输出参数有传入函数的值，这个值被函数修改，然后被传出函数，替换原来的值。</p>
+<p>定义一个输入输出参数时，在参数定义前加<code>inout</code>关键字。一个输入输出参数有传入函数的值，这个值被函数修改，然后被传出函数，替换原来的值。</p>
 <p>你只能传入一个变量作为输入输出参数。你不能传入常量或者字面量（literal value），因为这些量是不能被修改的。当传入的参数作为输入输出参数时，需要在参数前加<code>&amp;</code>符，表示这个值可以被函数修改。</p>
 <blockquote>
 <p>注意：

@@ -46,7 +46,7 @@
 
 
         
-    <div class="book"  data-level="2.8" data-basepath=".." data-revision="1402305571512">
+    <div class="book"  data-level="2.8" data-basepath=".." data-revision="1402328527093">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -587,20 +587,20 @@
 
                 <div class="page-inner">
                 
-                    <section class="normal" id="section-gitbook_25">
+                    <section class="normal" id="section-gitbook_30">
                     
                         <h1 id="-">枚举</h1>
 <p>本页内容包含：</p>
 <ul>
 <li>枚举语法</li>
 <li>匹配枚举值与<code>Swith</code>语句</li>
-<li>实例值（associated values）</li>
+<li>关联值（associated values）</li>
 <li>原始值（raw values）</li>
 </ul>
 <p>枚举（enumeration）定义了一个通用类型的一组相关的值，使你可以在你的代码中以一个安全的方式来使用这些值。</p>
 <p>如果你熟悉C语言，你就会知道，在C语言中枚举指定相关名称为一组整型值。Swift中的枚举更加灵活，不必给每一个枚举成员（enumeration member）提供一个值。如果一个值（被认为是“原始”值）被提供给每个枚举成员，则该值可以是一个字符串，一个字符，或是一个整型值或浮点值。</p>
-<p>此外，枚举成员可以指定任何类型的实例值存储到枚举成员值中，就像其他语言中的联合体（unions）和变体（variants）。你可以定义一组通用的相关成员作为枚举的一部分，每一组都有不同的一组与它相关的适当类型的数值。</p>
-<p>在Swift中，枚举类型是一等（first-class）类型。它们采用了很多传统上只被类（class)所支持的特征，例如计算型属性（computed properties)，用于提供关于枚举当前值的附加信息， 实例方法（instance methods），用于提供和枚举所代表的值相关联的功能。枚举也可以定义构造函数（initializers）来提供一个初始成员值；可以在原始的实现基础上扩展它们的功能；可以遵守协议（protocols）来提供标准的功能。</p>
+<p>此外，枚举成员可以指定任何类型的关联值存储到枚举成员值中，就像其他语言中的联合体（unions）和变体（variants）。你可以定义一组通用的相关成员作为枚举的一部分，每一组都有不同的一组与它相关的适当类型的数值。</p>
+<p>在Swift中，枚举类型是一等（first-class）类型。它们采用了很多传统上只被类（class)所支持的特征，例如计算型属性（computed properties)，用于提供关于枚举当前值的附加信息，实例方法（instance methods），用于提供和枚举所代表的值相关联的功能。枚举也可以定义构造函数（initializers）来提供一个初始成员值；可以在原始的实现基础上扩展它们的功能；可以遵守协议（protocols）来提供标准的功能。</p>
 <p>欲了解更多相关功能，请参见属性（Properties），方法（Methods），构造过程（Initialization），扩展（Extensions），和协议（Protocols）。</p>
 <h2 id="-">枚举语法</h2>
 <p>使用<code>enum</code>关键词并且把它们的整个定义放在一对大括号内：</p>
@@ -655,9 +655,9 @@ default:
     println(&quot;Not a safe place for humans&quot;)
 }
 // prints &quot;Mostly harmless”
-</code></pre><h2 id="-associated-values-">实例值（Associated Values）</h2>
-<p>上一小节的例子演示了一个枚举的成员是如何被定义（分类）的。你可以为<code>Planet.Earth</code>设置一个常量或则变量，并且在之后查看这个值。然而，有时候会很有用如果能够把其他类型的实例值和成员值一起存储起来。这能让你随着成员值存储额外的自定义信息，并且当每次你在代码中利用该成员时允许这个信息产生变化。</p>
-<p>你可以定义Swift的枚举存储任何类型的实例值，如果需要的话，每个成员的数据类型可以是各不相同的。枚举的这种特性跟其他语言中的可辨识联合（discriminated unions），标签联合（tagged unions），或者变体（variants）相似。</p>
+</code></pre><h2 id="-associated-values-">关联值（Associated Values）</h2>
+<p>上一小节的例子演示了一个枚举的成员是如何被定义（分类）的。你可以为<code>Planet.Earth</code>设置一个常量或则变量，并且在之后查看这个值。然而，有时候会很有用如果能够把其他类型的关联值和成员值一起存储起来。这能让你随着成员值存储额外的自定义信息，并且当每次你在代码中利用该成员时允许这个信息产生变化。</p>
+<p>你可以定义Swift的枚举存储任何类型的关联值，如果需要的话，每个成员的数据类型可以是各不相同的。枚举的这种特性跟其他语言中的可辨识联合（discriminated unions），标签联合（tagged unions），或者变体（variants）相似。</p>
 <p>例如，假设一个库存跟踪系统需要利用两种不同类型的条形码来跟踪商品。有些商品上标有UPC-A格式的一维码，它使用数字0到9.每一个条形码都有一个代表“数字系统”的数字，该数字后接10个代表“标识符”的数字。最后一个数字是“检查”位，用来验证代码是否被正确扫描：</p>
 <p><img width="252" height="120" a"" src="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/barcode_UPC_2x.png"></p>
 <p>其他商品上标有QR码格式的二维码，它可以使用任何ISO8859-1字符，并且可以编码一个最多拥有2,953字符的字符串:</p>
@@ -669,15 +669,15 @@ default:
     case QRCode(String)
 }
 </code></pre><p>以上代码可以这么理解：</p>
-<p>“定义一个名为<code>Barcode</code>的枚举类型，它可以是<code>UPCA</code>的一个实例值（<code>Int</code>，<code>Int</code>，<code>Int</code>），或者<code>QRCode</code>的一个字符串类型（<code>String</code>）实例值。”</p>
-<p>这个定义不提供任何<code>Int</code>或<code>String</code>的实际值，它只是定义了，当<code>Barcode</code>常量和变量等于<code>Barcode.UPCA</code>或<code>Barcode.QRCode</code>时，实例值的类型。</p>
+<p>“定义一个名为<code>Barcode</code>的枚举类型，它可以是<code>UPCA</code>的一个关联值（<code>Int</code>，<code>Int</code>，<code>Int</code>），或者<code>QRCode</code>的一个字符串类型（<code>String</code>）关联值。”</p>
+<p>这个定义不提供任何<code>Int</code>或<code>String</code>的实际值，它只是定义了，当<code>Barcode</code>常量和变量等于<code>Barcode.UPCA</code>或<code>Barcode.QRCode</code>时，关联值的类型。</p>
 <p>然后可以使用任何一种条码类型创建新的条码，如：</p>
 <pre><code>var productBarcode = Barcode.UPCA(8, 85909_51226, 3)
-</code></pre><p>以上例子创建了一个名为<code>productBarcode</code>的新变量，并且赋给它一个<code>Barcode.UPCA</code>的实例元组值<code>(8, 8590951226, 3)</code>。提供的“标识符”值在整数字中有一个下划线，使其便于阅读条形码。</p>
+</code></pre><p>以上例子创建了一个名为<code>productBarcode</code>的新变量，并且赋给它一个<code>Barcode.UPCA</code>的关联元组值<code>(8, 8590951226, 3)</code>。提供的“标识符”值在整数字中有一个下划线，使其便于阅读条形码。</p>
 <p>同一个商品可以被分配给一个不同类型的条形码，如：</p>
 <pre><code>productBarcode = .QRCode(&quot;ABCDEFGHIJKLMNOP&quot;)
-</code></pre><p>这时，原始的<code>Barcode.UPCA</code>和其整数值被新的<code>Barcode.QRCode</code>和其字符串值所替代。条形码的常量和变量可以存储一个<code>.UPCA</code>或者一个<code>.QRCode</code>（连同它的实例值），但是在任何指定时间只能存储其中之一。</p>
-<p>像以前那样，不同的条形码类型可以使用一个switch语句来检查，然而这次实例值可以被提取作为switch语句的一部分。你可以在<code>switch</code>的case分支代码中提取每个实例值作为一个常量（用<code>let</code>前缀）或者作为一个变量（用<code>var</code>前缀）来使用：</p>
+</code></pre><p>这时，原始的<code>Barcode.UPCA</code>和其整数值被新的<code>Barcode.QRCode</code>和其字符串值所替代。条形码的常量和变量可以存储一个<code>.UPCA</code>或者一个<code>.QRCode</code>（连同它的关联值），但是在任何指定时间只能存储其中之一。</p>
+<p>像以前那样，不同的条形码类型可以使用一个switch语句来检查，然而这次关联值可以被提取作为switch语句的一部分。你可以在<code>switch</code>的case分支代码中提取每个关联值作为一个常量（用<code>let</code>前缀）或者作为一个变量（用<code>var</code>前缀）来使用：</p>
 <pre><code>switch productBarcode {
 case .UPCA(let numberSystem, let identifier, let check):
     println(&quot;UPC-A with value of \(numberSystem), \(identifier), \(check).&quot;)
@@ -685,7 +685,7 @@ case .QRCode(let productCode):
     println(&quot;QR code with value of \(productCode).&quot;)
 }
 // prints &quot;QR code with value of ABCDEFGHIJKLMNOP.”
-</code></pre><p>如果一个枚举成员的所有实例值被提取为常量，或者它们全部被提取为变量，为了简洁，你可以只放置一个<code>var</code>或者<code>let</code>标注在成员名称前：</p>
+</code></pre><p>如果一个枚举成员的所有关联值被提取为常量，或者它们全部被提取为变量，为了简洁，你可以只放置一个<code>var</code>或者<code>let</code>标注在成员名称前：</p>
 <pre><code>switch productBarcode {
 case let .UPCA(numberSystem, identifier, check):
     println(&quot;UPC-A with value of \(numberSystem), \(identifier), \(check).&quot;)
@@ -694,7 +694,7 @@ case let .QRCode(productCode):
 }
 // prints &quot;QR code with value of ABCDEFGHIJKLMNOP.&quot;
 </code></pre><h2 id="-raw-values-">原始值（Raw Values）</h2>
-<p>在实例值小节的条形码例子中演示了一个枚举的成员如何声明它们存储不同类型的实例值。作为实例值的替代，枚举成员可以被默认值（称为原始值）预先填充，其中这些原始值具有相同的类型。</p>
+<p>在关联值小节的条形码例子中演示了一个枚举的成员如何声明它们存储不同类型的关联值。作为关联值的替代，枚举成员可以被默认值（称为原始值）预先填充，其中这些原始值具有相同的类型。</p>
 <p>这里是一个枚举成员存储原始ASCII值的例子：</p>
 <pre><code>enum ASCIIControlCharacter: Character {
     case Tab = &quot;\t&quot;
@@ -702,7 +702,7 @@ case let .QRCode(productCode):
     case CarriageReturn = &quot;\r&quot;
 }
 </code></pre><p>在这里，称为<code>ASCIIControlCharacter</code>的枚举的原始值类型被定义为字符型<code>Character</code>，并被设置了一些比较常见的ASCII控制字符。字符值的描述请详见字符串和字符<code>Strings and Characters</code>部分。</p>
-<p>注意，原始值和实例值是不相同的。当你开始在你的代码中定义枚举的时候原始值是被预先填充的值，像上述三个ASCII码。对于一个特定的枚举成员，它的原始值始终是相同的。实例值是当你在创建一个基于枚举成员的新常量或变量时才会被设置，并且每次当你这么做得时候，它的值可以是不同的。</p>
+<p>注意，原始值和关联值是不相同的。当你开始在你的代码中定义枚举的时候原始值是被预先填充的值，像上述三个ASCII码。对于一个特定的枚举成员，它的原始值始终是相同的。关联值是当你在创建一个基于枚举成员的新常量或变量时才会被设置，并且每次当你这么做得时候，它的值可以是不同的。</p>
 <p>原始值可以是字符串，字符，或者任何整型值或浮点型值。每个原始值在它的枚举声明中必须是唯一的。当整型值被用于原始值，如果其他枚举成员没有值时，它们会自动递增。</p>
 <p>下面的枚举是对之前<code>Planet</code>这个枚举的一个细化，利用原始整型值来表示每个planet在太阳系中的顺序：</p>
 <pre><code>enum Planet: Int {
