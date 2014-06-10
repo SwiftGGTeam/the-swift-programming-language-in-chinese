@@ -352,7 +352,7 @@
 <a name="label4"></a>
 ## 模式
 
-> 模式语法语法  
+> 模式语法  
 > *pattern* → [*wildcard-pattern*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Patterns.html#//apple_ref/swift/grammar/wildcard-pattern) [*type-annotation*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Types.html#//apple_ref/swift/grammar/type-annotation) _opt_  
 > *pattern* → [*identifier-pattern*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Patterns.html#//apple_ref/swift/grammar/identifier-pattern) [*type-annotation*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Types.html#//apple_ref/swift/grammar/type-annotation) _opt_  
 > *pattern* → [*value-binding-pattern*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Patterns.html#//apple_ref/swift/grammar/value-binding-pattern)  
