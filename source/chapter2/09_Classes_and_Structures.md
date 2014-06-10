@@ -101,7 +101,7 @@ Swift 中类和结构体有很多共同点。共同处在于：
 
 ### 结构体和枚举是值类型
 
-值类型被赋予一个变量，常数或者本身被传递给一个函数的时候，将会保存其数据拷贝。
+值类型被赋予给一个变量，常数或者本身被传递给一个函数的时候，实际上操作的是其的拷贝。
 
 在之前的章节中，我们已经大量使用了值类型。实际上，在Swift 中，所有的基本类型：整数(Integer)、浮点数(floating-point)、布尔值(Booleans)、字符串(string)、阵列(array)和字典(dictionaries)，都是值类型，并且都是以结构体的形式在后台所实现。
 
@@ -146,6 +146,56 @@ Swift 中类和结构体有很多共同点。共同处在于：
 	// prints "The remembered direction is still .West"
 
 上例中`rememberedDirection`被赋予了`currentDirection`的值(value)，实际上它被赋予的是值(value)的一个拷贝。赋值过程结束后再修改`currentDirection`的值并不影响`rememberedDirection`所储存的原始值(value)的拷贝。
+
+### 类是引用类型
+与值类型不同，引用类型在被赋予到一个变量，常量或者被传递到一个函数时，操作的并不是其拷贝。因此，引用的是已存在的实例本身而不是其拷贝。
+
+请看下面这个示例，其使用了之前定义的`VideoMode`类：
+	
+	let tenEighty = VideoMode()
+	tenEighty.resolution = hd
+	tenEighty.interlaced = true
+	tenEighty.name = "1080i"
+	tenEighty.frameRate = 25.0
+
+以上示例中，声明了一个名为`tenEighty`的常量，其引用了一个`VideoMode`类的新实例。在之前的示例中，这个视频模式(video mode)被赋予了HD分辨率(1920*1080)的一个拷贝(`hd`)。同时设置为交错(interlaced),命名为`“1080i”`。最后，其帧率是`25.0`帧每秒。
+
+然后，`tenEighty` 被赋予名为`alsoTenEighty`的新常量，同时对`alsoTenEighty`的帧率进行修改：
+	
+	let alsoTenEighty = tenEighty
+	alsoTenEighty.frameRate = 30.0
+
+因为类是引用类型，所以`tenEight`和`alsoTenEight`实际上引用的是相同的`VideoMode`实例。换句话说，它们只是同一个实例的两种叫法。
+
+下面，通过查看`tenEighty`的`frameRate`属性，我们会发现它正确的显示了基本`VideoMode`实例的新帧率，其值为`30.0`：
+	
+	println("The frameRate property of tenEighty is now \(tenEighty.frameRate)")
+	// prints "The frameRate property of theEighty is now 30.0"
+
+需要注意的是`tenEighty`和`alsoTenEighty`被声明为*常量(constants)*而不是变量。然而你依然可以改变`tenEighty.frameRate`和`alsoTenEighty.frameRate`,因为这两个常量本身不会改变。它们并不`储存`这个`VideoMode`实例，在后台仅仅是对`VideoMode`实例的引用。所以，改变的是被引用的基础`VideoMode`的`frameRate`参数，而不改变常量的值。
+
+### 恒等运算符
+
+因为类是引用类型，有可能有多个常量和变量在后台同时引用某一个类实例。(对于结构体和枚举来说，这并不成立。因为它们作值类型，在被赋予到常量，变量或者传递到函数时，总是会被拷贝。)
+
+如果能够判定两个常量或者变量是否引用同一个类实例将会很有帮助。为了达到这个目的，Swift 内建了两个恒等运算符：
+	
+* 等价于 ( === )
+* 不等价于 ( !== )
+
+以下是运用这两个运算符检测两个常量或者变量是否引用同一个实例：
+	
+	if tenEighty === alsoTenTighty {
+		println("tenTighty and alsoTenEighty refer to the same Resolution instance.")
+	}
+	//prints "tenEighty and alsoTenEighty refer to the same Resolution instance."
+	
+请注意“等价于”(用三个等号表示，===) 与“等于”(用两个等号表示，==)的不同：
+	
+* “等价于”表示两个类类型(class type)的常量或者变量引用同一个类实例。
+* “等于”表示两个实例的值“相等”或“相同”，判定时要遵照类设计者定义定义的评判标准，因此相比于“相等”，这是一种更加合适的叫法。
+
+当你在定义你的自定义类和结构体的时候，你有义务来决定判定两个实例“相等”的标准。在章节[Equivalence Operators](http://)中将会详细介绍实现自定义“等于”和“不等于”运算符的流程。
 
 
 
