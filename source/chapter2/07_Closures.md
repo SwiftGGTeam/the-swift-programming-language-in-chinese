@@ -45,6 +45,7 @@ Swift 的闭包表达式拥有简洁的风格，并鼓励在常见场景中进�
 下面闭包表达式的例子通过使用几次迭代展示了 `sort` 函数定义和语法优化的方式。
 每一次迭代都用更简洁的方式描述了相同的功能。
 
+<a name="the_sort_function"></a>
 ##### `sort` 函数
 
 Swift 标准库提供了 `sort` 函数，会根据您提供的排序闭包将已知类型数组中的值进行排序。
@@ -76,6 +77,7 @@ var reversed = sort(names, backwards)
 然而，这是一个相当冗长的方式，本质上只是写了一个单表达式函数 (a > b)。
 在下面的例子中，利用闭合表达式语法可以更好的构造一个内联排序闭包。
 
+<a name="closure_expression_syntax"></a>
 ##### 闭包表达式语法
 
 闭包表达式语法有如下一般形式：
@@ -112,6 +114,7 @@ reversed = sort(names, { (s1: String, s2: String) -> Bool in return s1 > s2 } )
 
 这说明 `sort` 函数的整体调用保持不变，一对圆括号仍然包裹住了函数中整个参数集合。而其中一个参数现在变成了内联闭包 (相比于 `backwards` 版本的代码)。
 
+<a name="inferring_type_from_context"></a>
 ##### 根据上下文推断类型
 
 因为排序闭包是作为函数的参数进行传入的，Swift可以推断其参数和返回值的类型。
@@ -124,6 +127,7 @@ reversed = sort(names, { s1, s2 in return s1 > s2 } )
 
 实际上任何情况下，通过内联闭包表达式构造的闭包作为参数传递给函数时，都可以推断出闭包的参数和返回值类型，这意味着您几乎不需要利用完整格式构造任何内联闭包。
 
+<a name="implicit_returns_from_single_expression_closures"></a>
 ##### 单行表达式闭包可以省略 `return`
 
 单行表达式闭包可以通过隐藏 `return` 关键字来隐式返回单行表达式的结果，如上版本的例子可以改写为：
@@ -135,6 +139,7 @@ reversed = sort(names, { s1, s2 in s1 > s2 } )
 在这个例子中，`sort` 函数的第二个参数函数类型明确了闭包必须返回一个 **Bool** 类型值。
 因为闭包函数体只包含了一个单一表达式 (s1 > s2)，该表达式返回 **Bool** 类型值，因此这里没有歧义，`return`关键字可以省略。
 
+<a name="shorthand_argument_names"></a>
 ##### 参数名称缩写
 
 Swift 自动为内联函数提供了参数名称缩写功能，您可以直接通过 `$0`,`$1`,`$2` 来顺序调用闭包的参数。
@@ -148,6 +153,7 @@ reversed = sort(names, { $0 > $1 } )
 
 在这个例子中，`$0` 和 `$1` 表示闭包中第一个和第二个 **String** 类型的参数。
 
+<a name="operator_functions"></a>
 ##### 运算符函数
 
 实际上还有一种更简短的方式来撰写上面例子中的闭包表达式。
