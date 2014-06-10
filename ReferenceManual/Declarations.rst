@@ -663,7 +663,7 @@ using the following forms:
 
 .. syntax-outline::
 
-    _ : <#parameter type#>.
+    _ : <#parameter type#>
     <#parameter name#>: <#parameter type#>...
     <#parameter name#>: <#parameter type#> = <#default argument value#>
 
