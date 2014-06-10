@@ -64,11 +64,11 @@ Identifiers
 -----------
 
 :newTerm:`Identifiers` begin with
-an upper case or lower case letter A through Z,
+an uppercase or lowercase letter A through Z,
 an underscore (``_``),
 a noncombining alphanumeric Unicode character
 in the Basic Multilingual Plane,
-or a character outside the Basic Multilingual Plan
+or a character outside the Basic Multilingual Plane
 that isn't in a Private Use Area.
 After the first character,
 digits and combining Unicode characters are also allowed.
@@ -123,7 +123,7 @@ These names are valid identifiers within the scope of the closure.
     identifier --> implicit-parameter-name
     identifier-list --> identifier | identifier ``,`` identifier-list
 
-    identifier-head --> Upper- or lowercase letter A through Z
+    identifier-head --> Upper- or lowercase letter A through Z | ``_``
     identifier-head --> U+00A8, U+00AA, U+00AD, U+00AF, U+00B2--U+00B5, or U+00B7--U+00BA
     identifier-head --> U+00BC--U+00BE, U+00C0--U+00D6, U+00D8--U+00F6, or U+00F8--U+00FF
     identifier-head --> U+0100--U+02FF, U+0370--U+167F, U+1681--U+180D, or U+180F--U+1DBF
