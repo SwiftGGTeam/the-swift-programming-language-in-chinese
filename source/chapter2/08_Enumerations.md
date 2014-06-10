@@ -4,10 +4,10 @@
 
 本页内容包含：
 
--	枚举语法（Enumeration Syntax）
--	匹配枚举值与`Switch`语句（Matching Enumeration Values with a Switch Statement）
--	关联值（Associated values）
--	原始值（Raw values）
+-	[枚举语法（Enumeration Syntax）](#enumeration_syntax)
+-	[匹配枚举值与`Switch`语句（Matching Enumeration Values with a Switch Statement）](#matching_enumeration_values_with_a_switch_statement)
+-	[关联值（Associated values）](#associated_values)
+-	[原始值（Raw values）](#raw_values)
 
 **枚举**定义了一个通用类型的一组相关的值，使你可以在你的代码中以一个安全的方式来使用这些值。
 
