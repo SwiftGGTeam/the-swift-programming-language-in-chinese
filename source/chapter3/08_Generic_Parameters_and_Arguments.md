@@ -3,15 +3,16 @@
 
 本页包含内容：
 
-* <a href="#label1">泛型形参语句</a>
-* <a href="#label2">泛型实参语句</a>
+- [泛型形参语句](#generic_parameter)
+- [泛型实参语句](#generic_argument)
 
 本节涉及泛型类型、泛型函数以及泛型构造器的参数，包括形参和实参。声明泛型类型、函数或构造器时，须指定相应的类型参数。类型参数相当于一个占位符，当实例化泛型类型、调用泛型函数或泛型构造器时，就用具体的类型实参替代之。
 
 关于 Swift 语言的泛型概述，见[泛型](../charpter2/22_Generics.md)(第二部分第22章)。
 
-## <a name="label1">泛型实参语句</a>
-泛型形参语句指定泛型类型或函数的类型形参，以及这些参数的关联约束和要求。泛型形参语句用尖括号（<>）包住，并且有以下两种声明形式：
+## <a name="generic_parameter">泛型形参语句</a>
+
+泛型形参语句指定泛型类型或函数的类型形参，以及这些参数的关联约束和要求。泛型形参语句用尖括号（<>）包住，并且有以下两种形式：
 
     <generic parameter list>
     <generic parameter list where requirements >
@@ -76,9 +77,9 @@
 >
 > same-type-requirement → type-identifier­==­type-identifier
 
-## <a name="label2">泛型实参语句</a>
+## <a name="generic_argument">泛型实参语句</a>
 
-泛型实参语句指定泛型类型的类型实参。泛型实参语句用尖括号（<>）包住，并且按如下形式声明：
+泛型实参语句指定_泛型类型_的类型实参。泛型实参语句用尖括号（<>）包住，形式如下：
 
     < generic argument list >
 
@@ -95,7 +96,7 @@
 
     let arrayOfArrays: Array<Array<Int>> = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
 
-同<a href="#label1">泛型形参语句</a>一样，不能用泛型实参语句来指定泛型函数或构造器的类型实参。
+如[泛型形参语句](#generic_parameter)所述，不能用泛型实参语句来指定泛型函数或构造器的类型实参。
 
 > Grammar of a generic argument clause
 
@@ -104,3 +105,9 @@
 > generic-argument-list → generic-argument­ generic-argument­,­generic-argument-list­
 
 > generic-argument → type
+
+
+==============================================
+上篇：[模式](07_Patterns.md)
+
+下篇：[语法总结](09_Summary_of_the_Grammar.md)
