@@ -46,7 +46,7 @@
 
 
         
-    <div class="book"  data-level="3.9" data-basepath=".." data-revision="1402386668059">
+    <div class="book"  data-level="3.9" data-basepath=".." data-revision="1402387034522">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -587,19 +587,19 @@
 
                 <div class="page-inner">
                 
-                    <section class="normal" id="section-gitbook_441">
+                    <section class="normal" id="section-gitbook_59">
                     
                         <h1 id="-">泛型参数</h1>
 <hr>
 <p>本页包含内容：</p>
 <ul>
-<li><a href="#label1">泛型形参语句</a></li>
-<li><a href="#label2">泛型实参语句</a></li>
+<li><a href="#generic_parameter">泛型形参语句</a></li>
+<li><a href="#generic_argument">泛型实参语句</a></li>
 </ul>
 <p>本节涉及泛型类型、泛型函数以及泛型构造器的参数，包括形参和实参。声明泛型类型、函数或构造器时，须指定相应的类型参数。类型参数相当于一个占位符，当实例化泛型类型、调用泛型函数或泛型构造器时，就用具体的类型实参替代之。</p>
 <p>关于 Swift 语言的泛型概述，见<a href="../charpter2/22_Generics.html">泛型</a>(第二部分第22章)。</p>
-<h2 id="-a-name-label1-a-"><a name="label1">泛型实参语句</a></h2>
-<p>泛型形参语句指定泛型类型或函数的类型形参，以及这些参数的关联约束和要求。泛型形参语句用尖括号（&lt;&gt;）包住，并且有以下两种声明形式：</p>
+<h2 id="-a-name-generic_parameter-a-"><a name="generic_parameter">泛型形参语句</a></h2>
+<p>泛型形参语句指定泛型类型或函数的类型形参，以及这些参数的关联约束和要求。泛型形参语句用尖括号（&lt;&gt;）包住，并且有以下两种形式：</p>
 <pre><code>&lt;generic parameter list&gt;
 &lt;generic parameter list where requirements &gt;
 </code></pre><p>泛型形参列表中泛型形参用逗号分开，每一个采用以下形式：</p>
@@ -637,8 +637,8 @@ simpleMin(3.14159, 2.71828) // T is inferred to be Double
 <p>conformance-requirement → type-identifier­:­protocol-composition-type­</p>
 <p>same-type-requirement → type-identifier­==­type-identifier</p>
 </blockquote>
-<h2 id="-a-name-label2-a-"><a name="label2">泛型实参语句</a></h2>
-<p>泛型实参语句指定泛型类型的类型实参。泛型实参语句用尖括号（&lt;&gt;）包住，并且按如下形式声明：</p>
+<h2 id="-a-name-generic_argument-a-"><a name="generic_argument">泛型实参语句</a></h2>
+<p>泛型实参语句指定<em>泛型类型</em>的类型实参。泛型实参语句用尖括号（&lt;&gt;）包住，形式如下：</p>
 <pre><code>&lt; generic argument list &gt;
 </code></pre><p>泛型实参列表中类型实参有逗号分开。类型实参是实际具体类型的名字，用来替代泛型类型的泛型形参语句中的相应的类型形参。从而得到泛型类型的一个特化版本。如，Swift标准库的泛型字典类型定义如下：</p>
 <pre><code>  struct Dictionary&lt;KeyTypel: Hashable, ValueType&gt;: Collection,
@@ -648,13 +648,16 @@ DictionaryLiteralConvertible {
 </code></pre><p>泛型<code>Dictionary</code>类型的特化版本，<code>Dictionary&lt;String, Int&gt;</code>就是用具体的<code>String</code>和<code>Int</code>类型替代泛型类型<code>KeyType: Hashable</code>和<code>ValueType</code>产生的。每一个类型实参必须满足它所替代的泛型形参的所有约束，包括任何<code>where</code>语句所指定的额外的要求。上面的例子中，类型形参<code>KeyType</code>要求满足<code>Hashable</code>协议，因此<code>String</code>也必须满足<code>Hashable</code>协议。</p>
 <p>可以用本身就是泛型类型的特化版本的类型实参替代类型形参（假设已满足合适的约束和要求）。例如，为了生成一个元素类型是整型数组的数组，可以用数组的特化版本<code>Array&lt;Int&gt;</code>替代泛型类型<code>Array&lt;T&gt;</code>的类型形参<code>T</code>来实现。</p>
 <pre><code>let arrayOfArrays: Array&lt;Array&lt;Int&gt;&gt; = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
-</code></pre><p>同<a href="#label1">泛型形参语句</a>一样，不能用泛型实参语句来指定泛型函数或构造器的类型实参。</p>
+</code></pre><p>如<a href="#generic_parameter">泛型形参语句</a>所述，不能用泛型实参语句来指定泛型函数或构造器的类型实参。</p>
 <blockquote>
 <p>Grammar of a generic argument clause</p>
 <p>generic-argument-clause → &lt;­generic-argument-list­&gt;­</p>
 <p>generic-argument-list → generic-argument­ generic-argument­,­generic-argument-list­</p>
 <p>generic-argument → type</p>
 </blockquote>
+<p>==============================================
+上篇：<a href="07_Patterns.html">模式</a></p>
+<p>下篇：<a href="09_Summary_of_the_Grammar.html">语法总结</a></p>
 
                     
                     </section>
