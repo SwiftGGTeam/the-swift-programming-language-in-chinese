@@ -1,16 +1,27 @@
 # 属性 (Properties)
 
+---
+
+本页包含内容：
+
+- [存储属性（Stored Properties）](#stored_properties)
+- [计算属性（Computed Properties）](#computed_properties)
+- [属性监视器（Property Observers）](#property_observers)
+- [全局变量和局部变量（Global and Local Variables）](global_and_local_variables)
+- [类属性（Type Properties）](#type_properties)
+
 **属性**将值跟特定的类、结构或枚举关联。一种是存储属性，把常量或变量的值作为实例的一部分，一种是计算属性，它计算一个值。计算属性可以用于类、结构和枚举里，存储属性只能用于类和结构。
 
 存储属性和计算属性通常用于特定类型的实例，但是，属性也可以直接用于类型本身，这种属性称为类属性。
 
 另外，还可以定义属性监视器来监控属性值的变化，以此来触发一个自定义的操作。属性监视器可以添加到自己写的存储属性上，也可以添加到从父类继承的属性上。
 
+<a name="stored_properties"></a>
 ## 存储属性
 
 简单来说，一个存储属性就是一个特定类型实例里表示常量或变量的部分，存储属性可以是*变量存储属性*（用关键字`var`定义），也可以是*常量存储属性*（用关键字`let`定义）。
 
-可以在定义存储属性的时候指定默认值，详见[默认属性值](chapter2/14_Initialization.md#)一节。也可以在初始化阶段设置或修改存储属性的值，甚至修改常量存储属性的值，详见[在初始化阶段修改常量存储属性](chapter2/14_Initialization.md#)一节。
+可以在定义存储属性的时候指定默认值，详见[默认属性值](chapter2/14_Initialization.html#default_property_values)一节。也可以在初始化阶段设置或修改存储属性的值，甚至修改常量存储属性的值，详见[在初始化阶段修改常量存储属性](chapter2/14_Initialization.html#modifying_constant_properties_during_initialization)一节。
 
 下面的例子定义了一个名为`FixedLengthRange`的结构体，表示一个在创建后无法修改整数范围的类型：
 
@@ -28,6 +39,7 @@ rangeOfThreeItems.firstValue = 6
 
 `FixedLengthRange`的实例包含一个名为`firstValue`的变量存储属性和一个名为`length`的常量存储属性。在上面的例子中，`length`在创建实例的时候被赋值，因为它是一个常量存储属性，所以无法修改它的值。
 
+<a name="stored_properties_of_constant_structure_instances"></a>
 ### 常量和存储属性
 
 如果创建了一个结构体的实例并赋值给一个常量，则无法修改实例的任何属性，即使定义了变量存储属性：
@@ -47,7 +59,6 @@ rangeOfFourItems.firstValue = 6
 属于*引用类型*的类（class）则不一样，把一个引用类型的实例赋给一个常量后，仍然可以修改实例的变量属性。
 
 <a name="lazy_stored_properties"></a>
-
 ### 延迟存储属性
 
 延迟存储属性是指当第一次被调用的时候才有初始值的属性。在属性声明前使用`@lazy`特性来表示一个延迟存储属性。
@@ -97,7 +108,7 @@ println(manager.importer.fileName)
 // prints "data.txt”
 
 ```
-
+<a name="stored_properties_and_instance_variables"></a>
 ### 存储属性和实例变量
 
 如果您有过 Objective-C 经验，应该知道有两种方式在类实例存储值和引用。对于属性来说，也可以使用实例变量作为属性值的后端存储。
@@ -105,6 +116,7 @@ println(manager.importer.fileName)
 Swift 编程语言中把这些理论统一用属性来实现。Swift 中的属性没有对应的实例变量，属性的后端存储也无法直接访问。这就避免了不同场景下访问方式的困扰，同时也将属性的定义简化成一个语句。
 一个类型中属性的全部信息——包括命名、类型和内存管理特征——都在唯一一个地方定义。
 
+<a name="computed_properties"></a>
 ## 计算属性
 
 除存储属性外，类、结构体和枚举可以定义*计算属性*，计算属性不直接存储值，而是提供一个 getter 来获取值，一个可选的 setter 来间接设置其他属性或变量的值。
@@ -156,7 +168,7 @@ println("square.origin is now at (\(square.origin.x), \(square.origin.y))")
 
 <img src="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/computedProperties_2x.png" alt="Computed Properties sample" width="388" height="387" />
 
-
+<a name="shorthand_setter_declaration"></a>
 ### 便捷 setter 声明
 
 如果计算属性的 setter 没有定义表示新值的参数名，则可以使用默认名称`newValue`。下面是使用了便捷 setter 声明的`Rect`结构体代码：
@@ -179,7 +191,7 @@ struct AlternativeRect {
 }
 
 ```
-
+<a name="readonly_computed_properties"></a>
 ### 只读计算属性
 
 只有 getter 没有 setter 的计算属性就是*只读计算属性*。只读计算属性总是返回一个值，可以通过点运算符访问，但不能设置新的值。
@@ -207,11 +219,12 @@ println("the volume of fourByFiveByTwo is \(fourByFiveByTwo.volume)")
 
 尽管如此，`Cuboid`提供一个只读计算属性来让外部用户直接获取体积是很有用的。
 
+<a name="property_observers"></a>
 ## 属性监视器
 
 *属性监视器*监控和响应属性值的变化，每次属性被设置值的时候都会调用属性监视器，甚至新的值和现在的值相同的时候也不例外。
 
-可以为除了延迟存储属性之外的其他存储属性添加属性监视器，也可以通过重载属性的方式为继承的属性（包括存储属性和计算属性）添加属性监视器。属性重载详见[重载](chapter/13_Inheritance.md#)一节。
+可以为除了延迟存储属性之外的其他存储属性添加属性监视器，也可以通过重载属性的方式为继承的属性（包括存储属性和计算属性）添加属性监视器。属性重载详见[重载](chapter/13_Inheritance.html#overriding)一节。
 
 > 注意
 > 
@@ -270,6 +283,7 @@ stepCounter.totalSteps = 896
 > 
 > 如果在`didSet`监视器里为属性赋值，这个值会替换监视器之前设置的值。
 
+<a name="global_and_local_variables"></a>
 ##全局变量和局部变量
 
 计算属性和属性监视器所描述的模式也可以用于全局变量和局部变量，全局变量是在函数、方法、闭包或任何类型之外定义的变量，局部变量是在函数、方法或闭包内部定义的变量。
@@ -284,6 +298,7 @@ stepCounter.totalSteps = 896
 > 
 > 局部范围的常量或变量不会延迟计算。
 
+<a name="type_properties"></a>
 ##类属性
 
 实例的属性属于一个特定类型实例，每次类型实例化后都拥有自己的一套属性值，实例之间的属性相互独立。
@@ -300,6 +315,7 @@ stepCounter.totalSteps = 896
 > 
 > 跟实例的存储属性不同，必须给存储型类属性指定默认值，因为类型本身无法在初始化过程中使用构造器给类属性赋值。
 
+<a name="type_property_syntax"></a>
 ###类属性语法
 
 在 C 或 Objective-C 中，静态常量和静态变量的定义是通过特定类型加上`global`关键字。在 Swift 编程语言中，类属性是作为类型定义的一部分写在类型最外层的花括号内，因此它的作用范围也就在类型支持的范围内。
@@ -331,6 +347,7 @@ class SomeClass {
 > 
 > 例子中的计算型类属性是只读的，但也可以定义可读可写的计算型类属性，跟实例计算属性的语法类似。
 
+<a name="querying_and_setting_type_properties"></a>
 ###获取和设置类属性的值
 
 跟实例的属性一样，类属性的访问也是通过点运算符来进行，但是，类属性是通过类型本身来获取和设置，而不是通过实例。比如：
