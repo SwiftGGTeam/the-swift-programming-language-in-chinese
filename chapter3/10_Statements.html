@@ -46,7 +46,7 @@
 
 
         
-    <div class="book"  data-level="3.5" data-basepath=".." data-revision="1402377602937">
+    <div class="book"  data-level="3.5" data-basepath=".." data-revision="1402377857835">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -587,7 +587,7 @@
 
                 <div class="page-inner">
                 
-                    <section class="normal" id="section-gitbook_129">
+                    <section class="normal" id="section-gitbook_56">
                     
                         <h1 id="-">语句</h1>
 <p>在 Swift 中，有两种类型的语句：简单语句和控制流语句。简单语句是最常见的，用于构造表达式和声明。控制流语句则用于控制程序执行的流程，Swift 中有三种类型的控制流语句：循环语句、分支语句和控制传递语句。</p>
@@ -635,7 +635,7 @@
 <blockquote>
 <p>GRAMMAR OF A FOR STATEMENT</p>
 <p><em>for-statement</em> → <strong>for</strong> <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/for-init" target="_blank"><em>for-init</em></a> <em>opt</em> <strong>;</strong> <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/swift/grammar/expression" target="_blank"><em>expression</em></a> <em>opt</em> <strong>;</strong> <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/swift/grammar/expression" target="_blank"><em>expression</em></a> <em>opt</em> <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/code-block" target="_blank"><em>code-block</em></a></p>
-<p><em>for-statement</em> → <strong>for ( </strong> <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/for-init" target="_blank"><em>for-init</em></a> <em>opt</em> <strong>;</strong> <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/swift/grammar/expression" target="_blank"><em>expression</em></a> <em>opt</em> <strong>;</strong> <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/swift/grammar/expression" target="_blank"><em>expression</em></a> <em>opt</em> <strong>)</strong> <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/code-block" target="_blank"><em>code-block</em></a></p>
+<p><em>for-statement</em> → <strong>for (</strong> <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/for-init" target="_blank"><em>for-init</em></a> <em>opt</em> <strong>;</strong> <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/swift/grammar/expression" target="_blank"><em>expression</em></a> <em>opt</em> <strong>;</strong> <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/swift/grammar/expression" target="_blank"><em>expression</em></a> <em>opt</em> <strong>)</strong> <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/code-block" target="_blank"><em>code-block</em></a></p>
 <p><em>for-statement</em> → <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/variable-declaration" target="_blank"><em>variable-declaration</em></a> | <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/swift/grammar/expression-list" target="_blank"><em>expression-list</em></a></p>
 </blockquote>
 <h3 id="for-in-">For-In 语句</h3>
@@ -834,7 +834,7 @@ continue `label name`
 <p><code>return</code>语句用于在函数或方法的实现中将控制权传递给调用者，接着程序将会从调用者的位置继续向下执行。</p>
 <p>使用<code>return</code>语句时，可以只写<code>return</code>这个关键词，也可以在<code>return</code>后面跟上表达式，像下面这样：</p>
 <pre><code class="lang-swift">return
-return `表达式`
+return `expression`
 </code></pre>
 <p>当<code>return</code>语句后面带表达式时，表达式的值将会返回给调用者。如果表达式值的类型与调用者期望的类型不匹配，Swift 则会在返回表达式的值之前将表达式值的类型转换为调用者期望的类型。</p>
 <p>而当只写<code>return</code>时，仅仅是将控制权从该函数或方法传递给调用者，而不返回一个值。（这就是说，该函数或方法的返回类型为<code>Void</code>或<code>()</code>）</p>
