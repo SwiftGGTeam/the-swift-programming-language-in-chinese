@@ -46,7 +46,7 @@
 
 
         
-    <div class="book"  data-level="2.15" data-basepath=".." data-revision="1402397411238">
+    <div class="book"  data-level="2.15" data-basepath=".." data-revision="1402402017737">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -587,9 +587,10 @@
 
                 <div class="page-inner">
                 
-                    <section class="normal" id="section-gitbook_38">
+                    <section class="normal" id="section-gitbook_49">
                     
                         <h1 id="-">析构过程</h1>
+<hr>
 <p>在一个类的实例被释放之前，析构函数被立即调用。用关键字deinit来标示析构函数，类似于初始化函数用init来标示。析构函数只适用于类类型。</p>
 <h2 id="-">析构过程原理</h2>
 <p>Swift会自动释放不再需要的实例以释放资源。如自动引用计数那一章描述，Swift通过自动引用计数（ARC）处理实例的内存管理。通常当你的实例被释放时不需要手动的去清理。但是，当使用自己的资源时，你可能需要进行一些额外的清理。例如，如果创建了一个自定义的类来打开一个文件，并写入一些数据，你可能需要在类实例被释放之前关闭该文件。</p>
