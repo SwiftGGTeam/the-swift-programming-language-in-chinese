@@ -94,7 +94,7 @@ for name in names {
 // Hello, Jack!
 ```
 
-你也可以通过遍历一个字典来访问它的键值对(key-value pairs)。遍历字典时，字典的每项元素会以`(key, value)`元组的形式返回，你可以在`for-in`循环中使用显式的常量名称来解读`(key, value)`元组。下面的例子中，字典的键(key)解读为常量`animalName`，字典的值会被解读为常量`legCount`：
+你也可以通过遍历一个字典来访问它的键值对（key-value pairs）。遍历字典时，字典的每项元素会以`(key, value)`元组的形式返回，你可以在`for-in`循环中使用显式的常量名称来解读`(key, value)`元组。下面的例子中，字典的键（key）解读为常量`animalName`，字典的值会被解读为常量`legCount`：
 
 ```swift
 let numberOfLegs = ["spider": 8, "ant": 6, "cat": 4]
@@ -181,7 +181,7 @@ println("The loop statements were executed \(index) times")
 <a name="while_loops"></a>
 ## While 循环
 
-`While`循环运行一系列语句直到条件变成`false`。这类循环适合使用在第一次迭代前迭代次数未知的情况下。Swift 提供两种`while`循环形式：
+`while`循环运行一系列语句直到条件变成`false`。这类循环适合使用在第一次迭代前迭代次数未知的情况下。Swift 提供两种`while`循环形式：
 
 * `while`循环，每次在循环开始时计算条件是否符合；
 
@@ -190,7 +190,7 @@ println("The loop statements were executed \(index) times")
 <a name="while"></a>
 ###While
 
-`While`循环从计算单一条件开始。如果条件为`true`，会重复运行一系列语句，直到条件变为`false`。
+`while`循环从计算单一条件开始。如果条件为`true`，会重复运行一系列语句，直到条件变为`false`。
 
 下面是一般情况下 `while` 循环格式：
 
@@ -207,7 +207,7 @@ while `condition` {
 游戏的规则如下：
 
 * 游戏盘面包括 25 个方格，游戏目标是达到或者超过第 25 个方格；
-* 每一轮，你通过掷一个6边的骰子来确定你移动方块的步数，移动的路线由上图中横向的虚线所示；
+* 每一轮，你通过掷一个 6 边的骰子来确定你移动方块的步数，移动的路线由上图中横向的虚线所示；
 * 如果在某轮结束，你移动到了梯子的底部，可以顺着梯子爬上去；
 * 如果在某轮结束，你移动到了蛇的头部，你会顺着蛇的身体滑下去。
 
@@ -218,7 +218,7 @@ let finalSquare = 25
 var board = Int[](count: finalSquare + 1, repeatedValue: 0)
 ```
 
-一些方块被设置成有蛇或者梯子的指定值。梯子底部的方块是一个正值，是你可以向上移动，蛇头处的方块是一个负值，会让你向下移动：
+一些方块被设置成有蛇或者梯子的指定值。梯子底部的方块是一个正值，使你可以向上移动，蛇头处的方块是一个负值，会让你向下移动：
 
 ```swift
 board[03] = +08; board[06] = +11; board[09] = +09; board[10] = +02
@@ -238,14 +238,14 @@ while square < finalSquare {
     // 根据点数移动
     square += diceRoll
     if square < board.count {
-        // 如果玩家还在棋盘上，顺着梯子上去或者顺着蛇下去
+        // 如果玩家还在棋盘上，顺着梯子爬上去或者顺着蛇滑下去
         square += board[square]
     }
 }
 println("Game over!")
 ```
 
-本例中使用了最简单的方法来模拟掷骰子。 `diceRoll`的值并不是一个随机数，而是以`0`为初始值，之后每一次`while`循环，`diceRoll`的值使用前置自增操作符(`++i`)来自增 1 ，然后检测是否超出了最大值。`++diceRoll`调用完成_后_，返回值等于`diceRoll`自增后的值。任何时候如果`diceRoll`的值等于7时，就超过了骰子的最大值，会被重置为`1`。所以`diceRoll`的取值顺序会一直是`1`,`2`,`3`,`4`,`5`,`6`,`1`,`2`。
+本例中使用了最简单的方法来模拟掷骰子。 `diceRoll`的值并不是一个随机数，而是以`0`为初始值，之后每一次`while`循环，`diceRoll`的值使用前置自增操作符(`++i`)来自增 1 ，然后检测是否超出了最大值。`++diceRoll`调用完成_后_，返回值等于`diceRoll`自增后的值。任何时候如果`diceRoll`的值等于7时，就超过了骰子的最大值，会被重置为`1`。所以`diceRoll`的取值顺序会一直是`1`，`2`，`3`，`4`，`5`，`6`，`1`，`2`。
 
 掷完骰子后，玩家向前移动`diceRoll`个方格，如果玩家移动超过了第 25 个方格，这个时候游戏结束，相应地，代码会在`square`增加`board[square]`的值向前或向后移动（遇到了梯子或者蛇）之前，检测`square`的值是否小于`board`的`count`属性。
 
@@ -269,7 +269,7 @@ do {
 } while `condition`
 ```
 
-还是蛇和梯子的游戏，使用`do-while`循环来替代`while`循环。`finalSquare`，`board`，`square`和`diceRoll`的值初始化同`while`循环一样：
+还是蛇和梯子的游戏，使用`do-while`循环来替代`while`循环。`finalSquare`、`board`、`square`和`diceRoll`的值初始化同`while`循环一样：
 
 ``` swift
 let finalSquare = 25
@@ -286,7 +286,7 @@ var diceRoll = 0
 
 ```swift
 do {
-    // 顺着梯子上去或者顺着蛇下去
+    // 顺着梯子爬上去或者顺着蛇滑下去
     square += board[square]
     // 掷骰子
     if ++diceRoll == 7 { diceRoll = 1 }
@@ -305,7 +305,7 @@ println("Game over!")
 
 根据特定的条件执行特定的代码通常是十分有用的，例如：当错误发生时，你可能想运行额外的代码；或者，当输入的值太大或太小时，向用户显示一条消息等。要实现这些功能，你就需要使用*条件语句*。
 
-Swift 提供两种类型的条件语句：`if`语句和`switch`语句。通常，当条件较为简单且可能的情况很少时，使用`if`语句。而`switch`语句更适用于复杂的条件、可能的情况很多且需要用到模式匹配（pattern-matching）的情境。
+Swift 提供两种类型的条件语句：`if`语句和`switch`语句。通常，当条件较为简单且可能的情况很少时，使用`if`语句。而`switch`语句更适用于条件较复杂、可能情况较多且需要用到模式匹配（pattern-matching）的情境。
 
 <a name="if"></a>
 ### If
@@ -320,7 +320,7 @@ if temperatureInFahrenheit <= 32 {
 // 输出 "It's very cold. Consider wearing a scarf."
 ```
 
-上面的例子会判断温度是否小于等于32华氏度（水的冰点）。如果是，则打印一条消息；否则，不打印任何消息，继续执行`if`块后面的代码。
+上面的例子会判断温度是否小于等于 32 华氏度（水的冰点）。如果是，则打印一条消息；否则，不打印任何消息，继续执行`if`块后面的代码。
 
 当然，`if`语句允许二选一，也就是当条件为`false`时，执行 *else 语句*：
 
@@ -334,7 +334,7 @@ if temperatureInFahrenheit <= 32 {
 // 输出 "It's not that cold. Wear a t-shirt."
 ```
 
-显然，这两条分支中总有一条会被执行。由于温度已升至40华氏度，不算太冷，没必要再围围巾——因此，`else`分支就被触发了。
+显然，这两条分支中总有一条会被执行。由于温度已升至 40 华氏度，不算太冷，没必要再围围巾——因此，`else`分支就被触发了。
 
 你可以把多个`if`语句链接在一起，像下面这样：
 
@@ -368,7 +368,7 @@ if temperatureInFahrenheit <= 32 {
 <a name="switch"></a>
 ### Switch
 
-`switch`语句会尝试把某个值与若干个模式(pattern)进行匹配。根据第一个匹配成功的模式，`switch`语句会执行对应的代码。当有可能的情况较多时，通常用`switch`语句替换`if`语句。
+`switch`语句会尝试把某个值与若干个模式（pattern）进行匹配。根据第一个匹配成功的模式，`switch`语句会执行对应的代码。当有可能的情况较多时，通常用`switch`语句替换`if`语句。
 
 `switch`语句最简单的形式就是把某个值与一个或若干个相同类型的值作比较：
 
@@ -388,7 +388,7 @@ default:
 
 每一个 case 都是代码执行的一条分支，这与`if`语句类似。与之不同的是，`switch`语句会决定哪一条分支应该被执行。
 
-`switch`语句必须是_完备的_。这就是说，每一个可能的值都必须至少有一个 case 分支与之对应。在某些不可能涵盖所有值的情况下，你可以使用默认（`default`）块满足该要求，这个默认块必须在`switch`语句的最后面。
+`switch`语句必须是_完备的_。这就是说，每一个可能的值都必须至少有一个 case 分支与之对应。在某些不可能涵盖所有值的情况下，你可以使用默认（`default`）分支满足该要求，这个默认分支必须在`switch`语句的最后面。
 
 下面的例子使用`switch`语句来匹配一个名为`someCharacter`的小写字符：
 
@@ -408,7 +408,7 @@ default:
 
 在这个例子中，第一个 case 分支用于匹配五个元音，第二个 case 分支用于匹配所有的辅音。
 
-由于为其它可能的字符写 case 分支没有实际的意义，因此在这个例子中使用了默认块来处理剩下的既不是元音也不是辅音的字符——这就保证了`switch`语句的完备性。
+由于为其它可能的字符写 case 分支没有实际的意义，因此在这个例子中使用了默认分支来处理剩下的既不是元音也不是辅音的字符——这就保证了`switch`语句的完备性。
 
 <a name="no_implicit_fallthrough"></a>
 #### 不存在隐式的贯穿（No Implicit Fallthrough）
@@ -416,7 +416,7 @@ default:
 与 C 语言和 Objective-C 中的`switch`语句不同，在 Swift 中，当匹配的 case 分支中的代码执行完毕后，程序会终止`switch`语句，而不会继续执行下一个 case 分支。这也就是说，不需要在 case 分支中显式地使用`break`语句。这使得`switch`语句更安全、更易用，也避免了因忘记写`break`语句而产生的错误。
 
 > 注意：
-你依然可以在 case 分支中的代码执行完毕前跳出，详情请参考[Switch 语句中的 break](#break_in_a_switch_statement)
+你依然可以在 case 分支中的代码执行完毕前跳出，详情请参考[Switch 语句中的 break](#break_in_a_switch_statement)。
 
 每一个 case 分支都*必须*包含至少一条语句。像下面这样书写代码是无效的，因为第一个 case 分支是空的：
 
@@ -445,7 +445,7 @@ case `value 1`,
 ```
 
 > 注意：
-如果想要贯穿至特定的 case 分支中，请使用`fallthrough`语句，详情请参考[贯穿（Fallthrough）](#fallthrough)
+如果想要贯穿至特定的 case 分支中，请使用`fallthrough`语句，详情请参考[贯穿（Fallthrough）](#fallthrough)。
 
 <a name="range_matching"></a>
 #### 区间匹配（Range Matching）
@@ -504,7 +504,7 @@ default:
 
 在上面的例子中，`switch`语句会判断某个点是否是原点(0, 0)，是否在红色的x轴上，是否在黄色y轴上，是否在一个以原点为中心的4x4的矩形里，或者在这个矩形外面。
 
-不像C语言，Swift 允许多个 case 匹配同一个值。实际上，在这个例子中，点(0, 0)可以匹配所有_四个 case_。但是，如果存在多个匹配，那么只会执行第一个被匹配到的 case 分支。考虑点(0, 0)会首先匹配`case (0, 0)`，因此剩下的能够匹配(0, 0)的 case 分支都会被忽视掉。
+不像 C 语言，Swift 允许多个 case 匹配同一个值。实际上，在这个例子中，点(0, 0)可以匹配所有_四个 case_。但是，如果存在多个匹配，那么只会执行第一个被匹配到的 case 分支。考虑点(0, 0)会首先匹配`case (0, 0)`，因此剩下的能够匹配(0, 0)的 case 分支都会被忽视掉。
 
 
 <a name="value_bindings"></a>
@@ -535,7 +535,7 @@ case let (x, y):
 
 一旦声明了这些临时的常量，它们就可以在其对应的 case 分支里引用。在这个例子中，它们用于简化`println`的书写。
 
-请注意，这个`switch`语句不包含默认块。这是因为最后一个 case ——`case let(x, y)`声明了一个可以匹配余下所有值的元组。这使得`switch`语句已经完备了，因此不需要再书写默认块。
+请注意，这个`switch`语句不包含默认分支。这是因为最后一个 case ——`case let(x, y)`声明了一个可以匹配余下所有值的元组。这使得`switch`语句已经完备了，因此不需要再书写默认分支。
 
 在上面的例子中，`x`和`y`是常量，这是因为没有必要在其对应的 case 分支中修改它们的值。然而，它们也可以是变量——程序将会创建临时变量，并用相应的值初始化它。修改这些变量只会影响其对应的 case 分支。
 
@@ -563,9 +563,9 @@ case let (x, y):
 
 在上面的例子中，`switch`语句会判断某个点是否在绿色的对角线`x == y`上，是否在紫色的对角线`x == -y`上，或者不在对角线上。
 
-这三个 case 都声明了常量`x`和`y`的占位符，用于临时获取元组`yetAnotherPoint`的两个值。这些常量被用作`where`语句的一部分，从而创建一个动态的过滤器(filter)。当且仅当`where`语句的条件为`真`时，匹配到的 case 分支才会被执行。
+这三个 case 都声明了常量`x`和`y`的占位符，用于临时获取元组`yetAnotherPoint`的两个值。这些常量被用作`where`语句的一部分，从而创建一个动态的过滤器(filter)。当且仅当`where`语句的条件为`true`时，匹配到的 case 分支才会被执行。
 
-就像是值绑定中的例子，由于最后一个 case 分支匹配了余下所有可能的值，`switch`语句就已经完备了，因此不需要再书写默认块。
+就像是值绑定中的例子，由于最后一个 case 分支匹配了余下所有可能的值，`switch`语句就已经完备了，因此不需要再书写默认分支。
 
 <a name="control_transfer_statements"></a>
 ## 控制传递语句（Control Transfer Statements）
@@ -577,7 +577,7 @@ case let (x, y):
 -   fallthrough
 -   return
 
-我们将会在下面讨论`continue`,`break`,和`fallthrough`语句。`return`语句将会在[函数](../chapter2/06_Functions.html)章节讨论。
+我们将会在下面讨论`continue`、`break`和`fallthrough`语句。`return`语句将会在[函数](../chapter2/06_Functions.html)章节讨论。
 
 <a name="continue"></a>
 ### Continue
@@ -621,7 +621,7 @@ println(puzzleOutput)
 
 当在一个`switch`代码块中使用`break`时，会立即中断该`switch`代码块的执行，并且跳转到表示`switch`代码块结束的大括号(`}`)后的第一行代码。
 
-这种特性可以被用来匹配或者忽略一个或多个分支。因为Swift语言的`switch`需要包含所有的分支而且不允许有为空的分支，有时为了使你的意图更明显，需要特意匹配或者忽略某个分支。那么当你想忽略某个分支时，可以在该分支内写上`break`语句。当那个分支被匹配到时，分支内的`break`语句立即结束`switch`代码块。
+这种特性可以被用来匹配或者忽略一个或多个分支。因为 Swift 的`switch`需要包含所有的分支而且不允许有为空的分支，有时为了使你的意图更明显，需要特意匹配或者忽略某个分支。那么当你想忽略某个分支时，可以在该分支内写上`break`语句。当那个分支被匹配到时，分支内的`break`语句立即结束`switch`代码块。
 
 >注意：
 当一个`switch`分支仅仅包含注释时，会被报编译时错误。注释不是代码语句而且也不能让`switch`分支达到被忽略的效果。你总是可以使用`break`来忽略某个分支。
@@ -653,16 +653,16 @@ if let integerValue = possibleIntegerValue {
 
 这个例子检查`numberSymbol`是否是拉丁，阿拉伯，中文或者泰语中的`1`到`4`之一。如果被匹配到，该`switch`分支语句给`Int?`类型变量`possibleIntegerValue`设置一个整数值。
 
-当`switch`代码块执行完后，接下来的代码通过使用可选绑定来判断`possibleIntegerValue`是否曾经被设置过值。因为是可选类型的缘故，'possibleIntegerValue'有一个隐式的初始值`nil`，所以仅仅当`possibleIntegerValue`曾被`switch`代码块的前四个分支中的某个设置过一个值时，可选的绑定将会被判定为成功。
+当`switch`代码块执行完后，接下来的代码通过使用可选绑定来判断`possibleIntegerValue`是否曾经被设置过值。因为是可选类型的缘故，`possibleIntegerValue`有一个隐式的初始值`nil`，所以仅仅当`possibleIntegerValue`曾被`switch`代码块的前四个分支中的某个设置过一个值时，可选的绑定将会被判定为成功。
 
 在上面的例子中，想要把`Character`所有的的可能性都枚举出来是不现实的，所以使用`default`分支来包含所有上面没有匹配到字符的情况。由于这个`default`分支不需要执行任何动作，所以它只写了一条`break`语句。一旦落入到`default`分支中后，`break`语句就完成了该分支的所有代码操作，代码继续向下，开始执行`if let`语句。
 
 <a name="fallthrough"></a>
 ### 贯穿（Fallthrough）
 
-Swift语言中的`switch`不会从上一个 case 分支落入到下一个 case 分支中。相反，只要第一个匹配到的 case 分支完成了它需要执行的语句，整个`switch`代码块完成了它的执行。相比之下，C语言要求你显示的插入`break`语句到每个`switch`分支的末尾来阻止自动落入到下一个 case 分支中。Swift语言的这种避免默认落入到下一个分支中的特性意味着它的`switch` 功能要比C语言的更加清晰和可预测，可以避免无意识地执行多个 case 分支从而引发的错误。
+Swift 中的`switch`不会从上一个 case 分支落入到下一个 case 分支中。相反，只要第一个匹配到的 case 分支完成了它需要执行的语句，整个`switch`代码块完成了它的执行。相比之下，C 语言要求你显示的插入`break`语句到每个`switch`分支的末尾来阻止自动落入到下一个 case 分支中。Swift 的这种避免默认落入到下一个分支中的特性意味着它的`switch` 功能要比 C 语言的更加清晰和可预测，可以避免无意识地执行多个 case 分支从而引发的错误。
 
-如果你确实需要C风格的贯穿（fallthrough）的特性，你可以在每个需要该特性的 case 分支中使用`fallthrough`关键字。下面的例子使用`fallthrough`来创建一个数字的描述语句。
+如果你确实需要 C 风格的贯穿（fallthrough）的特性，你可以在每个需要该特性的 case 分支中使用`fallthrough`关键字。下面的例子使用`fallthrough`来创建一个数字的描述语句。
 
 ```swift
 let integerToDescribe = 5
@@ -678,7 +678,7 @@ println(description)
 // 输出 "The number 5 is a prime number, and also an integer."
 ```
 
-这个例子定义了一个`String`类型的变量`description`并且给它设置了一个初始值。函数使用`switch`逻辑来判断`integerToDescribe`变量的值。当`integerToDescribe`的值属于列表中的质数之一时，该函数添加一段文字在`description`后，来表明这个是数字是一个质数。然后它使用`fallthrough`关键字来“贯穿”到`default`分支中。`default`分支添加一段额外的文字在`description`的最后,至此`switch`代码块执行完了。
+这个例子定义了一个`String`类型的变量`description`并且给它设置了一个初始值。函数使用`switch`逻辑来判断`integerToDescribe`变量的值。当`integerToDescribe`的值属于列表中的质数之一时，该函数添加一段文字在`description`后，来表明这个是数字是一个质数。然后它使用`fallthrough`关键字来“贯穿”到`default`分支中。`default`分支添加一段额外的文字在`description`的最后，至此`switch`代码块执行完了。
 
 如果`integerToDescribe`的值不属于列表中的任何质数，那么它不会匹配到第一个`switch`分支。而这里没有其他特别的分支情况，所以`integerToDescribe`匹配到包含所有的`default`分支中。
 
@@ -690,7 +690,7 @@ println(description)
 <a name="labeled_statements"></a>
 ### 带标签的语句（Labeled Statements）
 
-在Swift语言中，你可以在循环体和`switch`代码块中嵌套循环体和`switch`代码块来创造复杂的控制流结构。然而，循环体和`switch`代码块两者都可以使用`break`语句来提前结束整个方法体。因此，显示地指明`break`语句想要终止的是哪个循环体或者`switch`代码块,会很有用。类似地，如果你有许多嵌套的循环体，显示指明`continue`语句想要影响哪一个循环体也会非常有用。
+在 Swift 中，你可以在循环体和`switch`代码块中嵌套循环体和`switch`代码块来创造复杂的控制流结构。然而，循环体和`switch`代码块两者都可以使用`break`语句来提前结束整个方法体。因此，显示地指明`break`语句想要终止的是哪个循环体或者`switch`代码块，会很有用。类似地，如果你有许多嵌套的循环体，显示指明`continue`语句想要影响哪一个循环体也会非常有用。
 
 为了实现这个目的，你可以使用标签来标记一个循环体或者`switch`代码块，当使用`break`或者`continue`时，带上这个标签，可以控制该标签代表对象的中断或者执行。
 
@@ -702,7 +702,7 @@ println(description)
 }
 ```
 
-下面的例子是在一个带有标签的`while`循环体中调用`break`和`continue`语句，该循环体是上述章节中_蛇和梯子_的改编版本。这次，游戏增加了一条额外的规则：
+下面的例子是在一个带有标签的`while`循环体中调用`break`和`continue`语句，该循环体是前面章节中_蛇和梯子_的改编版本。这次，游戏增加了一条额外的规则：
 
 - 为了获胜，你必须_刚好_落在第 25 个方块中。
 
@@ -712,7 +712,7 @@ println(description)
 
 ![image](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/snakesAndLadders_2x.png)
 
-值`finalSquare`,`board`,`square`和`diceRoll`的初始化也和之前一样：
+值`finalSquare`、`board`、`square`和`diceRoll`的初始化也和之前一样：
 
 ```swift
 let finalSquare = 25
@@ -725,7 +725,7 @@ var diceRoll = 0
 
 这个版本的游戏使用`while`循环体和`switch`方法块来实现游戏的逻辑。`while`循环体有一个标签名`gameLoop`，来表明它是蛇与梯子的主循环。
 
-该`while`循环体的条件判断语句是`while square !=finalSquare`,这表明你必须刚好落在方格25中。
+该`while`循环体的条件判断语句是`while square !=finalSquare`，这表明你必须刚好落在方格25中。
 
 ```swift
 gameLoop: while square != finalSquare {
