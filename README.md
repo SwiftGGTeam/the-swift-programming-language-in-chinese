@@ -24,7 +24,7 @@
    * 基本操作符(完成 By @xielingwang)
    * 字符串和字符(完成 By @wh1100717)
    * 集合类型(完成)
-   * 控制流(@vclwei, @coverxit, @NicePiao 认领)
+   * 控制流(完成 By @vclwei, @coverxit, @NicePiao)
    * 函数(完成 By @honghaoz)
    * 闭包(完成 By @wh1100717)
    * 枚举(完成 By @yankuangshi)
