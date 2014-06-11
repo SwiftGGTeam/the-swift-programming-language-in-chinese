@@ -33,8 +33,6 @@ Swift 的闭包表达式拥有简洁的风格，并鼓励在常见场景中进�
 <a name="closure_expressions"></a>
 ## 闭包表达式（Closure Expressions）
 
----
-
 [嵌套函数](../chapter2/06_Function.html#nested_function) 是一个在较复杂函数中方便进行命名和定义自包含代码模块的方式。
 当然，有时候撰写小巧的没有完整定义和命名的类函数结构也是很有用处的，尤其是在您处理一些函数并需要将另外一些函数作为该函数的参数时。
 
@@ -116,7 +114,7 @@ reversed = sort(names, { (s1: String, s2: String) -> Bool in
 reversed = sort(names, { (s1: String, s2: String) -> Bool in return s1 > s2 } )
 ```
 
-这说明`sort`函数的整体调用保持不变，一对圆括号仍然包裹住了函数中整个参数集合。而其中一个参数现在变成了内联闭包 (相比于`backwards`版本的代码)。
+这说明`sort`函数的整体调用保持不变，一对圆括号仍然包裹住了函数中整个参数集合。而其中一个参数现在变成了内联闭包（相比于`backwards`版本的代码）。
 
 <a name="inferring_type_from_context"></a>
 ### 根据上下文推断类型（Inferring Type From Context）
@@ -174,7 +172,6 @@ reversed = sort(names, >)
 <a name="trailing_closures"></a>
 ## 尾随闭包（Trailing Closures）
 
----
 
 如果您需要将一个很长的闭包表达式作为最后一个参数传递给函数，可以使用尾随闭包来增强函数的可读性。
 尾随闭包是一个书写在函数括号之后的闭包表达式，函数支持将其作为最后一个参数调用。
@@ -271,7 +268,6 @@ let strings = numbers.map {
 <a name="capturing_values"></a>
 ## 捕获值（Capturing Values）
 
----
 
 闭包可以在其定义的上下文中捕获常量或变量。
 即使定义这些常量和变量的原域已经不存在，闭包仍然可以在闭包函数体内引用和修改这些值。
@@ -364,7 +360,6 @@ incrementByTen()
 <a name="closures_are_reference_types"></a>
 ## 闭包是引用类型（Closures Are Reference Types）
 
----
 
 上面的例子中，`incrementBySeven`和`incrementByTen`是常量，但是这些常量指向的闭包仍然可以增加其捕获的变量值。
 这是因为函数和闭包都是引用类型。
