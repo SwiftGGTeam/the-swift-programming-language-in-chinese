@@ -1,4 +1,4 @@
-> 翻译：vclwei, @coverxit, @NicePiao
+> 翻译：vclwei, coverxit, NicePiao
 
 > 校对：coverxit
 
