@@ -294,6 +294,62 @@ Swift 中`数组(Array)`和`字典(Dictionary)`类型均以结构体的形式实
 	// 42
 	
 ### 确保数组的唯一性
-
+在操作一个数组，或将其传递给函数以及方法调用之前是很有必要先确定这个数组是有一个唯一拷贝的。通过在数组变量上调用`unshare`方法来确定数组引用的唯一性。(当数组赋给常量时，不能调用`unshare`方法)
 	
+如果一个数组被多个变量引用，在其中的一个变量上调用`unshare`方法，则会拷贝此数组，此时这个变量将会有属于它自己的独立数组拷贝。当数组仅被一个变量引用时，则不会有拷贝发生。
+
+在上一个示例的最后，`b`和`c`都引用了同一个数组。此时在`b`上调用`unshare`方法则会将`b`变成一个唯一个拷贝：
+	
+	b.unshare()
+	
+在`unshare`方法调用后再修改`b`中第一个元素的值，这三个数组(`a`,`b`,`c`)会返回不同的三个值：
+	
+	b[0] = -105
+	println(a[0])
+	// 77
+	println(b[0])
+	// -105
+	println(c[0])
+	// 42
+	
+
+### 判定两个数组是否共用相同元素
+
+我们通过使用恒等运算符(identity operators)( === and !==)来判定两个数组或子数组共用相同的储存空间或元素。
+
+下面这个示例使用了“恒等于(identical to)” 运算符(===) 来判定`b`和`c`是否共用相同的数组元素：
+	
+	if b === c {
+		println("b and c still share the same array elements.")
+	} else {
+		println("b and c now refer to two independent sets of array elements.")
+	}
+	
+	// prints "b and c now refer totwo independent sets of array elements."
+	
+此外，我们还可以使用恒等运算符来判定两个子数组是否共用相同的元素。下面这个示例中，比较了`b`的两个相等的子数组，并且确定了这两个子数组都引用相同的元素：
+	
+	if b[0...1] === b[0...1] {
+		println("These two subarrays share the same elements.")
+	} else {
+		println("These two subarrays do not share the same elements.")
+	}
+	// prints "These two subarrays share the same elements."
+	
+### 强制复制数组
+
+我们通过调用数组的`copy`方法进行强制显性复制。这个方法对数组进行了浅拷贝(shallow copy),并且返回一个包含此拷贝的新数组。
+
+下面这个示例中定义了一个`names`数组，其包含了七个人名。还定义了一个`copiedNames`变量，用以储存在`names`上调用`copy`方法所返回的结果：
+	
+	var names = ["Mohsen", "Hilary", "Justyn", "Amy", "Rich", "Graham", "Vic"]
+	var copiedNames = names.copy
+	
+我们可以通过修改一个数组中某元素，并且检查另一个数组中对应元素的方法来判定`names`数组确已被复制。如果你将`copiedNames`中第一个元素从"`Mohsen`"修改为"`Mo`",则`names`数组返回的仍是拷贝发生前的"`Mohsen`"：
+	
+	copiedName[0] = "Mo"
+	println(name[0])
+	// prints "Mohsen"
+
+> 如果你仅需要确保你对数组的引用是唯一引用，请调用`unshare`方法，而不是`copy`方法。`unshare`方法仅会在确有必要时才会创建数组拷贝。`copy`方法会在任何时候都创建一个新的拷贝，即使引用已经是唯一引用。
 	
