@@ -411,7 +411,7 @@ default:
 由于为其它可能的字符写 case 分支没有实际的意义，因此在这个例子中使用了默认块来处理剩下的既不是元音也不是辅音的字符——这就保证了`switch`语句的完备性。
 
 <a name="no_implicit_fallthrough"></a>
-#### 不存在隐式的贯穿(No Implicit Fallthrough)
+#### 不存在隐式的贯穿（No Implicit Fallthrough）
 
 与 C 语言和 Objective-C 中的`switch`语句不同，在 Swift 中，当匹配的 case 分支中的代码执行完毕后，程序会终止`switch`语句，而不会继续执行下一个 case 分支。这也就是说，不需要在 case 分支中显式地使用`break`语句。这使得`switch`语句更安全、更易用，也避免了因忘记写`break`语句而产生的错误。
 
@@ -477,7 +477,7 @@ println("There are \(naturalCount) \(countedThings).")
 ```
 
 <a name="tuples"></a>
-#### 元组 (Tuple)
+#### 元组（Tuple）
 
 你可以使用元组在同一个`switch`语句中测试多个值。元组中的元素可以是值，也可以是范围。另外，使用下划线（`_`）来匹配所有可能的值。
 
@@ -508,7 +508,7 @@ default:
 
 
 <a name="value_bindings"></a>
-#### 值绑定 (Value Bindings)
+#### 值绑定（Value Bindings）
 
 case 分支的模式允许将匹配的值绑定到一个临时的常量或变量，这些常量或变量在该 case 分支里就可以被引用了——这种行为被称为*值绑定*（value binding）。
 
