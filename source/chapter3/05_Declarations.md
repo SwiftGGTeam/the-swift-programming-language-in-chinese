@@ -1,4 +1,5 @@
 # 声明
+ -----------------
 
 一条声明可以在你的程序里引入新的名字和构造。举例来说，你可以使用声明来引入函数和方法，变量和常量，或者来定义
 新的命名好的枚举，结构，类和协议类型。你也可以使用一条声明来延长一个已经存在的命名好的类型的行为。或者在你的
@@ -7,68 +8,85 @@
 在swift中，大多数声明在某种意义上讲也是执行或同事声明它们的初始化定义。这意味着，因为协议和他们的成员不匹配，
 大多数协议成员需要单独的声明。为了方便起见，也因为这些区别在swift里不是很重要，声明语句同时包含了声明和定义。
 
-    GRAMMAR OF A DECLARATION
+>GRAMMAR OF A DECLARATION
 
-    declaration → import-declaration­
-    declaration → constant-declaration­
-    declaration → variable-declaration­
-    declaration → typealias-declaration­
-    declaration → function-declaration­
-    declaration → enum-declaration­
-    declaration → struct-declaration­
-    declaration → class-declaration­
-    declaration → protocol-declaration­
-    declaration → initializer-declaration­
-    declaration → deinitializer-declaration­
-    declaration → extension-declaration­
-    declaration → subscript-declaration­
-    declaration → operator-declaration­
-    declarations → declaration­declarations­opt­
-    declaration-specifiers → declaration-specifier­declaration-specifiers­opt­
-    declaration-specifier → class­  mutating­  nonmutating­  override­  static­  unowned­ unowned(safe)­  unowned(unsafe)­  weak­
+>declaration → import-declaration­
+
+>declaration → constant-declaration­
+
+>declaration → variable-declaration­
+
+>declaration → typealias-declaration­
+
+>declaration → function-declaration­
+
+>declaration → enum-declaration­
+
+>declaration → struct-declaration­
+
+>declaration → class-declaration­
+
+>declaration → protocol-declaration­
+
+> declaration → initializer-declaration­
+
+>declaration → deinitializer-declaration­
+
+> declaration → extension-declaration­
+
+> declaration → subscript-declaration­
+
+>declaration → operator-declaration­
+
+>declarations → declaration­declarations­opt­
+
+>declaration-specifiers → declaration-specifier­declaration-specifiers­opt­
+
+>declaration-specifier → class­ | mutating ­| nonmutating­ | override­ | static­ | unowned |
+    
 
 #模块范围
 
 模块范围定义了对模块中其他源文件可见的代码。（注：待改进）在swift的源文件中，最高级别的代码由零个或多个语句，
-声明和表达组成。变量，常量和其他的声明语句在一个源文件的最顶级被声明，使得他们对同一模块中的每个源文件都是可、
-见的。
+声明和表达组成。变量，常量和其他的声明语句在一个源文件的最顶级被声明，使得他们对同一模块中的每个源文件都是可见的。
 
-    GRAMMAR OF A TOP-LEVEL DECLARATION
+>GRAMMAR OF A TOP-LEVEL DECLARATION
 
-    top-level-declaration → statements­opt
+>top-level-declaration → statements ­opt
 
 #代码块
 
 代码块用来将一些声明和控制结构的语句组织在一起。它有如下的形式：
 
     {
-        statements
+        `statements`
     }
 
 代码块中的语句包括声明，表达式和各种其他类型的语句，它们按照在源码中的出现顺序被依次执行。
 
-    GRAMMAR OF A CODE BLOCK
+>GRAMMAR OF A CODE BLOCK
 
-    code-block → {­statements­opt­}­
+>code-block → ­statements ­opt­
 
 #引入声明
 
 引入声明使你可以使用在其他文件中声明的内容。引入语句的基本形式是引入整个代码模块；它由import关键字开始，后面
 紧跟一个模块名：
     
-    import module
+    import  module
 
 你可以提供更多的细节来限制引入的符号，如声明一个特殊的子模块或者在一个模块或子模块中做特殊的声明。（待改进）
 当你使用了这些细节后，在当前的程序汇总只有引入的符号是可用的（并不是声明的整个模块）。
 
-    mport import kind module.symbol name
+    import import kind module.symbol name
     import module.submodule
 
-    GRAMMAR OF AN IMPORT DECLARATION
+>GRAMMAR OF AN IMPORT DECLARATION
 
-    import-declaration → attributes­opt­import­import-kind­opt­import-path­
-    import-path → import-path-identifier­  import-path-identifier­.­import-path­
-    import-path-identifier → identifier­  operator­
+>import-declaration → attributes ­opt ­import­ import-kind­ opt import-path­
+>import-kind → typealias­ | struct­ | class­ | enum­ | protocol­ | var­ | func­
+>import-path → import-path-identifier­  import-path-identifier­.­import-path­
+>import-path-identifier → identifier­  operator
 
 #常量声明
 
@@ -99,12 +117,12 @@
 如果还想获得更多关于常量的信息或者想在使用中获得帮助，请查看常量和变量（constants and variables）,
 存储属性（stored properties）等节。
 
-    GRAMMAR OF A CONSTANT DECLARATION
+>GRAMMAR OF A CONSTANT DECLARATION
 
-    constant-declaration → attributes­opt­declaration-specifiers­opt­let­pattern-initializer-list­
-    pattern-initializer-list → pattern-initializer­  pattern-initializer­,­pattern-initializer-list­
-    pattern-initializer → pattern­initializer­opt­
-    initializer → =­expression
+>constant-declaration → attributes­ opt ­declaration-specifiers­ opt ­let­pattern-initializer-list­
+>pattern-initializer-list → pattern-initializer­ | pattern-initializer­ , pattern-initializer-list­
+>pattern-initializer → pattern ­initializer ­opt­
+>initializer → =­expression
 
 #变量声明
 
@@ -112,9 +130,9 @@
 变量和属性，存储变量和属性监视，和静态变量属性，有着不同的声明形式。（待改进）
 所使用的声明形式取决于变量所声明的范围和你打算声明的变量类型。
 
-    NOTE
+>注意
 
-    You can also declare properties in the context of a protocol declaration, as described in Protocol Property Declaration.
+>你也可以在协议声明的上下文声明属性，详情参见类型属性声明。
  
 ###存储型变量和存储型属性
 
@@ -201,28 +219,47 @@ willset监视器初始名为newvalue，didset监视器初始名为oldvalue。
 
 class关键字用来声明类的计算型属性。static关键字用来声明类的静态变量属性。类和静态变量在类型属性(type properties)中有详细讨论。
 
-    GRAMMAR OF A VARIABLE DECLARATION
+>GRAMMAR OF A VARIABLE DECLARATION
 
-    variable-declaration → variable-declaration-head­pattern-initializer-list­
-    variable-declaration → variable-declaration-head­variable-name­type-annotation­code-block­
-    variable-declaration → variable-declaration-head­variable-name­type-annotation­getter-setter-block­
-    variable-declaration → variable-declaration-head­variable-name­type-annotation­getter-setter-keyword-block­
-    variable-declaration → variable-declaration-head­variable-name­type-annotation­initializer­opt­willSet-didSet-block­
-    variable-declaration-head → attributes­opt­declaration-specifiers­opt­var­
-    variable-name → identifier­
-    getter-setter-block → {­getter-clause­setter-clause­opt­}­
-    getter-setter-block → {­setter-clause­getter-clause­}­
-    getter-clause → attributes­opt­get­code-block­
-    setter-clause → attributes­opt­set­setter-name­opt­code-block­
-    setter-name → (­identifier­)­
-    getter-setter-keyword-block → {­getter-keyword-clause­setter-keyword-clause­opt­}­
-    getter-setter-keyword-block → {­setter-keyword-clause­getter-keyword-clause­}­
-    getter-keyword-clause → attributes­opt­get­
-    setter-keyword-clause → attributes­opt­set­
-    willSet-didSet-block → {­willSet-clause­didSet-clause­opt­}­
-    willSet-didSet-block → {­didSet-clause­willSet-clause­}­
-    willSet-clause → attributes­opt­willSet­setter-name­opt­code-block­
-    didSet-clause → attributes­opt­didSet­setter-name­opt­code-block­
+>variable-declaration → variable-declaration-head­pattern-initializer-list­
+
+>variable-declaration → variable-declaration-head ­variable-name ­type-annotation ­code-block­
+
+>variable-declaration → variable-declaration-head ­variable-name ­type-annotation ­getter-setter-block­
+
+>variable-declaration → variable-declaration-head ­variable-name­ type-annotation ­getter-setter-keyword-block­
+
+ > variable-declaration → variable-declaration-head­ variable-name ­type-annotation­initializer­ opt ­willSet-didSet-block­
+
+>variable-declaration-head → attributes ­opt­ declaration-specifiers ­opt ­var
+­
+>variable-name → identifier­
+
+>getter-setter-block → {­getter-clause ­setter-clause­ opt­}­
+
+>getter-setter-block → {­setter-clause ­getter-clause­}­
+
+>getter-clause → attributes ­opt­get­code-block­
+
+>setter-clause → attributes ­opt ­set­ setter-name­ opt­ code-block­
+
+>setter-name → (­identifier­)­
+
+>getter-setter-keyword-block → {­getter-keyword-clause ­setter-keyword-clause­ opt­}
+­
+>getter-setter-keyword-block → {­setter-keyword-clause ­getter-keyword-clause­}
+
+>getter-keyword-clause → attributes­ opt­ get­
+
+>setter-keyword-clause → attributes ­opt­ set­
+
+>willSet-didSet-block → {­willSet-clause ­didSet-clause ­opt­}­
+
+>willSet-didSet-block → {­didSet-clause ­willSet-clause­}­
+
+>willSet-clause → attributes ­opt ­willSet ­setter-name­ opt ­code-block­
+
+>didSet-clause → attributes ­opt ­didSet ­setter-name ­opt­ code-block­
 
 #类型的别名声明
 
@@ -236,12 +273,12 @@ class关键字用来声明类的计算型属性。static关键字用来声明类
 
 查看更多Protocol Associated Type Declaration.
 
-    GRAMMAR OF A TYPE ALIAS DECLARATION
+>GRAMMAR OF A TYPE ALIAS DECLARATION
 
-    typealias-declaration → typealias-head­typealias-assignment
-    typealias-head → typealias­typealias-name
-    typealias-name → identifier
-    typealias-assignment → =type
+> typealias-declaration → typealias-head­ typealias-assignment
+> typealias-head → typealias­ typealias-name
+> typealias-name → identifier
+> typealias-assignment → =type
 
 #函数声明
 
@@ -287,7 +324,7 @@ class关键字用来声明类的计算型属性。static关键字用来声明类
         }
     }
     let c = C()
-    c.f(7, y: "hello")  // x has no name, y has a name
+    c.f(7, y: "hello")  // x没有名称，y有名称
 
 你可以按如下的形式，重写参数名被使用的过程：
 
@@ -354,23 +391,23 @@ f()和f(x:7)都是只有一个变量x的函数的有效调用，但是f(7)是非
 
 多级柯里化应用如下
 
-    GRAMMAR OF A FUNCTION DECLARATION
+>GRAMMAR OF A FUNCTION DECLARATION
 
-    function-declaration → function-head­function-name­generic-parameter-clause­opt­function-signature­function-body­
-    function-head → attributes­opt­declaration-specifiers­opt­func­
-    function-name → identifier­  operator­
-    function-signature → parameter-clauses­function-result­opt­
-    function-result → ->­attributes­opt­type­
-    function-body → code-block­
-    parameter-clauses → parameter-clause­parameter-clauses­opt­
-    parameter-clause → (­)­  (­parameter-list­...­opt­)­
-    parameter-list → parameter­  parameter­,­parameter-list­
-    parameter → inout­opt­let­opt­#­opt­parameter-name­local-parameter-name­opt­type-annotation­default-argument-clause­opt­
-    parameter → inout­opt­var­#­opt­parameter-name­local-parameter-name­opt­type-annotation­default-argument-clause­opt­
-    parameter → attributes­opt­type­
-    parameter-name → identifier­  _­
-    local-parameter-name → identifier­  _­
-    default-argument-clause → =­expression­：
+>function-declaration → function-head­ function-name­ generic-parameter-clause ­opt­function-signature­ function-body­
+> function-head → attributes ­opt ­declaration-specifiers ­opt ­func­
+> function-name → identifier­  operator­
+>function-signature → parameter-clauses ­function-result ­opt­
+> function-result → ->­attributes ­opt ­type­
+>  function-body → code-block­
+>  parameter-clauses → parameter-clause ­parameter-clauses ­opt­
+>  parameter-clause → (­)­  (­parameter-list­...­opt­)­
+>  parameter-list → parameter­  parameter­,­parameter-list­
+> parameter → inout ­opt ­let ­opt­#­opt­parameter-name local-parameter-name ­opt­ type-annotation ­default-argument-clause ­opt­
+> parameter → inout­opt­var­#­opt­parameter-name­local-parameter-name ­opt­ type-annotation­default-argument-clause ­opt­
+> parameter → attributes ­opt ­type­
+> parameter-name → identifier­  _­
+>  local-parameter-name → identifier­  _­
+>  default-argument-clause → =­expression­：
 
 #枚举声明
 
@@ -438,10 +475,10 @@ ExampleEnum.D的值会自动增长为6.
 
 枚举类型是模式匹配(pattern-matched)的，和其相反的是switch语句case块中枚举事件匹配，在枚举事件类型(Enumeration Case Pattern)中有描述。
 
-    GRAMMAR OF AN ENUMERATION DECLARATION
+>GRAMMAR OF AN ENUMERATION DECLARATION
 
-    enum-declaration → attributes­opt­union-style-enum­  attributes­opt­raw-value-style-enum­
-    union-style-enum → enum-name­generic-parameter-clause­opt­{­union-style-enum-members­opt­}­
+>   enum-declaration → attributes­opt­union-style-enum­  attributes­opt­raw-value-style-enum­
+>    union-style-enum → enum-name­generic-parameter-clause­opt­{­union-style-enum-members­opt­}­
     union-style-enum-members → union-style-enum-member­union-style-enum-members­opt­
     union-style-enum-member → declaration­  union-style-enum-case-clause­
     union-style-enum-case-clause → attributes­opt­case­union-style-enum-case-list­
@@ -488,11 +525,11 @@ ExampleEnum.D的值会自动增长为6.
 
 你可以使用扩展声明来扩展结构体类型的行为，参见扩展声明(Extension Declaration).
 
-    GRAMMAR OF A STRUCTURE DECLARATION
+>GRAMMAR OF A STRUCTURE DECLARATION
 
-    struct-declaration → attributes­opt­struct­struct-name­generic-parameter-clause­opt­type-inheritance-clause­opt­struct-body­
-    struct-name → identifier­
-    struct-body → {­declarations­opt­}
+>    struct-declaration → attributes­opt­struct­struct-name­generic-parameter-clause­opt­type-inheritance-clause­opt­struct-body­
+>    struct-name → identifier­
+>    struct-body → {­declarations­opt­}
 
 #类声明
 
@@ -530,11 +567,11 @@ ExampleEnum.D的值会自动增长为6.
 
 你可以使用扩展声明来扩展类的行为，参见扩展声明(Extension Declaration).
 
-    GRAMMAR OF A CLASS DECLARATION
+ >  GRAMMAR OF A CLASS DECLARATION
 
-    class-declaration → attributes­opt­class­class-name­generic-parameter-clause­opt­type-inheritance-clause­opt­class-body­
-    class-name → identifier­
-    class-body → {­declarations­opt­}
+ >   class-declaration → attributes­opt­class­class-name­generic-parameter-clause­opt­type-inheritance-clause­opt­class-body­
+ >   class-name → identifier­
+ >  class-body → {­declarations­opt­}
 
 <a name="protocol_declaration"></a>
 ##协议声明(translated by 小一)
@@ -596,20 +633,132 @@ var property name: type { get set }
 >协议属性声明语法
 protocol-property-declaration → variable-declaration-head­variable-name­type-annotation­getter-setter-keyword-block­
 
+#协议方法声明
 
+协议声明了一致性类型必须在协议声明的主体里通过引入一个协议方法声明来实现一个方法.(待改进)
+协议方法声明和函数方法声明有着相同的形式，包含如下两条规则：他们不包括函数体，你不能在类的声明内为他们的
+参数提供初始值.举例来说，符合的类型执行协议必需的方法。参见必需方法一节。
 
+使用关键字class可以在协议声明中声明一个类或必需的静态方法。执行这些方法的类也用关键字class声明。
+相反的，执行这些方法的结构体必须以关键字static声明。如果你想使用扩展方法，在扩展类时使用class关键字，
+在扩展结构体时使用static关键字。
 
+更多请参阅函数声明。
 
+>GRAMMAR OF A PROTOCOL METHOD DECLARATION
 
+>protocol-method-declaration → function-head­function-name­generic-parameter-clause­opt­function-signature­
 
+#协议构造函数声明
+
+协议声明了一致性类型必须在协议声明的主体里通过引入一个协议构造函数声明来实现一个构造函数。协议构造函数声明
+除了不包含构造函数体外，和构造函数声明有着相同的形式，
+
+更多请参阅构造函数声明。
+
+>GRAMMAR OF A PROTOCOL INITIALIZER DECLARATION
+
+>protocol-initializer-declaration → initializer-head­generic-parameter-clause­opt­parameter-clause­
+
+#协议附属脚本声明
+
+协议声明了一致性类型必须在协议声明的主体里通过引入一个协议附属脚本声明来实现一个附属脚本。协议属性声明
+对附属脚本声明有一个特殊的形式：
+
+>subscript (parameters) -> return type { get set }
+
+附属脚本声明只为和协议一致的类型声明了必需的最小数量的的getter和setter。如果附属脚本申明包含get和set关键字，
+一致的类型也必须有一个getter和setter语句。如果附属脚本声明值包含get关键字，一致的类型必须至少包含一个
+getter语句，可以选择是否包含setter语句。
+
+更多参阅附属脚本声明。
+
+>GRAMMAR OF A PROTOCOL SUBSCRIPT DECLARATION
+
+>protocol-subscript-declaration → subscript-head­subscript-result­getter-setter-keyword-block­
+
+#协议相关类型声明
+
+协议声明相关类型使用关键字typealias。相关类型为作为协议声明的一部分的类型提供了一个别名。相关类型和参数
+语句中的类型参数很相似，但是它们在声明的协议中包含self关键字。在这些语句中，self指代和协议一致的可能的类型。
+获得更多信息和例子，查看相关类型或类型别名声明。
+
+>GRAMMAR OF A PROTOCOL ASSOCIATED TYPE DECLARATION
+
+>protocol-associated-type-declaration → typealias-head­type-inheritance-clause­opt­typealias-assignment­opt­
+
+#构造函数声明
+
+构造函数声明会为程序内的类，结构体或枚举引入构造函数。构造函数使用关键字Init来声明，遵循两条基本形式。
+
+结构体，枚举，类可以有任意数量的构造函数，但是类的构造函数的规则和行为是不一样的。不像结构体和枚举那样，类
+有两种结构体，designed initializers 和convenience initializers，参见构造函数一节。
+
+如下的形式声明了结构体，枚举和类的指定构造器：
+
+    init(parameters) {
+         statements
+    }
+
+类的指定构造器将类的所有属性直接初始化。如果类有超类，它不能调用该类的其他构造函数,它只能调用超类的一个
+指定构造器。如果该类从它的超类处继承了任何属性，这些属性在当前类内被赋值或修饰时，必须带哦用一个超类的
+指定构造器。
+
+指定构造器可以在类声明的上下文中声明，因此它不能用扩展声明的方法加入一个类中。
+
+结构体和枚举的构造函数可以带哦用其他的已声明的构造函数，来委托其中一个火全部进行初始化过程。
+
+以关键字convenience来声明一个类的便利构造器：
+
+    convenience init(parameters) {
+       statements
+    }
+
+便利构造器可以将初始化过程委托给另一个便利构造器或类的一个指定构造器。这意味着，类的初始化过程必须
+以一个将所有类属性完全初始化的指定构造器的调用作为结束。便利构造器不能调用超类的构造器。
+
+你可以使用requierd关键字，将便利构造器和指定构造器标记为每个子类的构造器都必须拥有的。因为指定构造器
+不被子类继承，他们必须被立即执行。当子类直接执行所有超类的指定构造器(或使用便利构造器重写指定构造器)时，
+必需的便利构造器可以被隐式的执行，亦可以被继承。不像方法，附属脚本那样，你不需要为这些重写的构造器标注
+overrride关键字。
+
+查看更多关于不同声明方法的构造函数的例子，参阅构造过程一节。
+
+>GRAMMAR OF AN INITIALIZER DECLARATION
+
+>initializer-declaration → initializer-head­generic-parameter-clause­opt­parameter-clause­initializer-body­
+>initializer-head → attributes­opt­convenience­opt­init­
+>initializer-body → code-block­
+
+#析构声明
+
+析构声明为类声明了一个析构函数。析构函数没有参数，遵循如下的格式：
+
+    deinit {
+       statements
+    }
+
+当类没有任何语句时将要被释放时，析构函数会自动的被调用。析构函数在类的声明体内只能被声明一次——但是不能在
+类的扩展声明内，每个类最多只能有一个。
+
+子类继承了它的超类的析构函数，在子类将要被释放时隐式的调用。子类在所有析构函数被执行完毕前不会被释放。
+
+析构函数不会被直接调用。
+
+查看例子和如何在类的声明中使用析构函数，参见析构过程一节
+。
+
+>GRAMMAR OF A DEINITIALIZER DECLARATION
+
+>deinitializer-declaration → attributes­opt­deinit­code-block
 
 #扩展声明
 
 扩展声明用于扩展一个现存的类，结构体，枚举的行为。扩展声明以关键字extension开始，遵循如下的规则：
 
->extension type: adopted protocols {
->   declarations
->}
+    extension type: adopted protocols {
+       declarations
+    }
 
 一个扩展声明体包括零个或多个声明。这些声明可以包括计算型属性，计算型静态属性，实例方法，静态和类方法，构造函数，
 附属脚本声明，甚至其他结构体，类，和枚举声明。扩展声明不能包含析构函数，协议声明，存储型属性，属性监测器或其他
@@ -704,8 +853,8 @@ _中缀_运算符是二元运算符，它可以被置于两个操作数之间，
 >GRAMMAR OF AN OPERATOR DECLARATION
 >
 >operator-declaration → prefix-operator-declaration­  postfix-operator-declaration­  >infix-operator-declaration­
->prefix-operator-declaration → operator­prefix­operator­{­}­
->postfix-operator-declaration → operator­postfix­operator­{­}­
+>prefix-operator-declaration → operator ­prefix­ operator­{­}­
+>postfix-operator-declaration → operator ­postfix­ operator­{­}­
 >infix-operator-declaration → operator­infix­operator­{­infix-operator-attributes­opt­}­
 >infix-operator-attributes → precedence-clause­opt­associativity-clause­opt­
 >precedence-clause → precedence­precedence-level­
