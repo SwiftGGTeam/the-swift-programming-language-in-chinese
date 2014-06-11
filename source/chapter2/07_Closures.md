@@ -243,7 +243,7 @@ let strings = numbers.map {
 `map`在数组中为每一个元素调用了闭包表达式。
 您不需要指定闭包的输入参数`number`的类型，因为可以通过要映射的数组类型进行推断。
 
-闭包`number`参数被声明为一个变量参数 (变量的具体描述请参看[常量参数和变量参数](../chapter2/06_Functions.html#closure_expression_syntax))，因此可以在闭包函数体内对其进行修改。
+闭包`number`参数被声明为一个变量参数（变量的具体描述请参看[常量参数和变量参数](../chapter2/06_Functions.html#closure_expression_syntax)），因此可以在闭包函数体内对其进行修改。
 闭包表达式制定了返回类型为`String`，以表明存储映射值的新数组类型为`String`。
 
 闭包表达式在每次被调用的时候创建了一个字符串并返回。
@@ -255,7 +255,7 @@ let strings = numbers.map {
 > 因此叹号可以用于强制解析 (force-unwrap) 存储在可选下标项中的`String`类型值。
 
 从`digitNames`字典中获取的字符串被添加到输出的前部，逆序建立了一个字符串版本的数字。
-(在表达式`number % 10`中，如果number为16，则返回6，58返回8，510返回0)。
+（在表达式`number % 10`中，如果number为16，则返回6，58返回8，510返回0）。
 
 `number`变量之后除以10。
 因为其是整数，在计算过程中未除尽部分被忽略。
