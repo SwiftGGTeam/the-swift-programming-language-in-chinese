@@ -1,6 +1,17 @@
+# 高级运算符
+-----------------
+
+本页内容包括：
+
+- [位运算符](#bitwise_operators)
+- [溢出运算符](#overflow_operators)
+- [优先级和结合性(Precedence and Associativity)](#precedence_and_associativity)
+- [运算符函数(Operator Functions)](#operator_functions)
+- [自定义运算符](#custom_operators)
+
 In addition to the operators described in [Basic Operators](Basic Operators), Swift provides several advanced operators that perform more complex value manipulation. These include all of the bitwise and bit shifting operators you will be familiar with from C and Objective-C.
 
-除了[基本操作符](Basic Operators)中所讲的运算符，Swift还有许多复杂的高级运算符，包括了C语和Objective-C中的位运算符和移位运算。
+除了[基本操作符](02_Basic_Operators.html)中所讲的运算符，Swift还有许多复杂的高级运算符，包括了C语和Objective-C中的位运算符和移位运算。
 
 Unlike arithmetic operators in C, arithmetic operators in Swift do not overflow by default. Overflow behavior is trapped and reported as an error. To opt in to overflow behavior, use Swift’s second set of arithmetic operators that overflow by default, such as the overflow addition operator (&+). All of these overflow operators begin with an ampersand (&).
 
@@ -14,9 +25,10 @@ You’re not just limited to the predefined operators. Swift gives you the freed
 
 可定制的运算符并不限于那些预设的运算符，自定义有个性的中置，前置，后置及赋值运算符，当然还有优先级和结合性。这些运算符的实现可以运用预设的运算符，也可以运用之前定制的运算符。
 
-# Bitwise Operators
+## Bitwise Operators
 
-# 位运算符
+<a name="bitwise_operators"></a>
+## 位运算符
 
 Bitwise operators enable you to manipulate the individual raw data bits within a data structure. They are often used in low-level programming, such as graphics programming and device driver creation. Bitwise operators can also be useful when you work with raw data from external sources, such as encoding and decoding data for communication over a custom protocol.
 
@@ -26,9 +38,9 @@ Swift supports all of the bitwise operators found in C, as described below.
 
 Swift支持如下所有C语言的位运算符：
 
-## Bitwise NOT Operator
+### Bitwise NOT Operator
 
-## 按位取反运算符
+### 按位取反运算符
  
 The bitwise NOT operator (~) inverts all bits in a number:
 
@@ -53,9 +65,9 @@ The bitwise NOT operator is then used to create a new constant called invertedBi
 
 使用按位取反运算`~`对`initialBits`操作，然后赋值给`invertedBits`这个新常量。这个新常量的值等于所有位都取反的`initialBits`，即`1`变成`0`，`0`变成`1`，变成了`11110000`，十进制值为`240`。
 
-## Bitwise AND Operator
+### Bitwise AND Operator
 
-## 按位与运算符
+### 按位与运算符
 
 The bitwise AND operator (&) combines the bits of two numbers. It returns a new number whose bits are set to 1 only if the bits were equal to 1 in both input numbers:
 
@@ -73,9 +85,9 @@ let lastSixBits: UInt8  = 0b00111111
 let middleFourBits = firstSixBits & lastSixBits  // 等于 00111100
 ```
 
-## Bitwise OR Operator
+### Bitwise OR Operator
 
-## 按位或运算
+### 按位或运算
 
 The bitwise OR operator (|) compares the bits of two numbers. The operator returns a new number whose bits are set to 1 if the bits are equal to 1 in either input number:
 
@@ -93,9 +105,9 @@ let moreBits: UInt8 = 0b01011110
 let combinedbits = someBits | moreBits  // 等于 11111110
 ```
 
-## Bitwise XOR Operator
+### Bitwise XOR Operator
 
-## 按位异或运算符
+### 按位异或运算符
 
 The bitwise XOR operator, or “exclusive OR operator” (^), compares the bits of two numbers. The operator returns a new number whose bits are set to 1 where the input bits are different and are set to 0 where the input bits are the same:
 
@@ -113,8 +125,8 @@ let otherBits: UInt8 = 0b00000101
 let outputBits = firstBits ^ otherBits  // 等于 00010001
 ```
 
-## Bitwise Left and Right Shift Operators
-## 按位左移/右移运算符
+### Bitwise Left and Right Shift Operators
+### 按位左移/右移运算符
 
 The bitwise left shift operator (<<) and bitwise right shift operator (>>) move all bits in a number to the left or the right by a certain number of places, according to the rules defined below.
 
@@ -124,8 +136,8 @@ Bitwise left and right shifts have the effect of multiplying or dividing an inte
 
 按位左移和按位右移的效果相当把一个整数乘于或除于一个因子为`2`的整数。向左移动一个整型的比特位相当于把这个数乘于`2`，向右移一位就是除于`2`。
 
-### Shifting Behavior for Unsigned Integers
-### 无符整型的移位操作
+#### Shifting Behavior for Unsigned Integers
+#### 无符整型的移位操作
 
 The bit-shifting behavior for unsigned integers is as follows:
 对无符整型的移位的效果如下：
@@ -183,8 +195,8 @@ Finally, the blue component is obtained by performing a bitwise AND between the 
 
 最后，蓝色部分对`0xCC6699`和`0x0000FF`进行按位与运算，得到`0x000099`，无需向右移位了，所以结果就是`0x99`，即十进制的`153`。
 
-### Shifting Behavior for Signed Integers
-### 有符整型的移位操作
+#### Shifting Behavior for Signed Integers
+#### 有符整型的移位操作
 
 The shifting behavior is more complex for signed integers than for unsigned integers, because of the way signed integers are represented in binary. (The examples below are based on 8-bit signed integers for simplicity, but the same principles apply for signed integers of any size.)
 
@@ -249,8 +261,10 @@ Because of the special way that positive and negative numbers are stored, shifti
 
 正因为正数和负数特殊的存储方式，向右移位使它接近于`0`。移位过程中保持符号会不变，负数在接近`0`的过程中一直是负数。
 
-# Overflow Operators
-# 溢出运算符
+## Overflow Operators
+
+<a name="overflow_operators"></a>
+## 溢出运算符
 
 If you try to insert a number into an integer constant or variable that cannot hold that value, by default Swift reports an error rather than allowing an invalid value to be created. This behavior gives extra safety when you work with numbers that are too large or too small.
 
@@ -281,8 +295,8 @@ However, when you specifically want an overflow condition to truncate the number
 - 溢出除法 `&/`
 - 溢出求余 `&%`
 
-## Value Overflow
-## 值的上溢出
+### Value Overflow
+### 值的上溢出
 
 Here’s an example of what happens when an unsigned value is allowed to overflow, using the overflow addition operator (&+):
 
@@ -301,8 +315,8 @@ The variable willOverflow is initialized with the largest value a UInt8 can hold
 
 ![Art/overflowAddition_2x.png](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/overflowAddition_2x.png "Art/overflowAddition_2x.png")
 
-## Value Underflow
-## 值的下溢出
+### Value Underflow
+### 值的下溢出
 
 Numbers can also become too small to fit in their type’s maximum bounds. Here’s an example.
 数值也有可能因为太小而越界。举个例子：
@@ -343,8 +357,8 @@ signedUnderflow = signedUnderflow &- 1
 
 The end result of the overflow and underflow behavior described above is that for both signed and unsigned integers, overflow always wraps around from the largest valid integer value back to the smallest, and underflow always wraps around from the smallest value to the largest.
 
-## Division by Zero
-## 除零溢出
+### Division by Zero
+### 除零溢出
 
 Dividing a number by zero(i / 0), or trying to calculate remainder by zero(i % 0), causes an error:
 
@@ -365,9 +379,10 @@ let y = x &/ 0
 // y 等于 0
 ```
 
-<a name="PrecedenceandAssociativity"></a>
-# Precedence and Associativity
-# 优先级和结合性
+## Precedence and Associativity
+
+<a name="precedence_and_associativity"></a>
+## 优先级和结合性
 
 Operator precedence gives some operators higher priority than others; these operators are calculated first.
 
@@ -430,18 +445,19 @@ This calculation yields the final answer of 4.
 
 For a complete list of Swift operator precedences and associativity rules, see [Expressions](Expressions).
 
-查阅Swift运算符的优先级和结合性的完整列表，请看[表达式](Expressions)。
+查阅Swift运算符的优先级和结合性的完整列表，请看[表达式](../chapter3/04_Expressions.html)。
 
 > NOTE
 
-> 注意
-
 > Swift’s operator precedences and associativity rules are simpler and more predictable than those found in C and Objective-C. However, this means that they are not the same as in C-based languages. Be careful to ensure that operator interactions still behave in the way you intend when porting existing code to Swift.
 
-> Swift的运算符较C语言和Objective-C来得更简单和保守，这意味着跟基于C的语言可能不一样。所以，在移植已有代码到Swift时，注意去确保代码按你想的那样去执行。
+> 注意：
+Swift的运算符较C语言和Objective-C来得更简单和保守，这意味着跟基于C的语言可能不一样。所以，在移植已有代码到Swift时，注意去确保代码按你想的那样去执行。
 
-# Operator Functions
-# 运算符函数
+## Operator Functions
+
+<a name="operator_functions"></a>
+## 运算符函数
 
 Classes and structures can provide their own implementations of existing operators. This is known as overloading the existing operators.
 
@@ -485,12 +501,12 @@ let combinedVector = vector + anotherVector
 
 This example adds together the vectors (3.0, 1.0) and (2.0, 4.0) to make the vector (5.0, 5.0), as illustrated below.
 
-这个例子实现两个向量 `(3。0，1。0)` 和 `(2。0，4。0)` 相加，得到向量 `(5。0，5。0)` 的过程。如下图示：
+这个例子实现两个向量 `(3.0，1.0)` 和 `(2.0，4.0)` 相加，得到向量 `(5.0，5.0)` 的过程。如下图示：
 
 ![Art/vectorAddition_2x.png](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/vectorAddition_2x.png "Art/vectorAddition_2x.png")
 
-## Prefix and Postfix Operators
-## 前置和后置运算符
+### Prefix and Postfix Operators
+### 前置和后置运算符
 
 The example shown above demonstrates a custom implementation of a binary infix operator. Classes and structures can also provide implementations of the standard unary operators. Unary operators operate on a single target. They are prefix if they precede their target (such as -a) and postfix operators if they follow their target (such as i++).
 
@@ -508,7 +524,7 @@ You implement a prefix or postfix unary operator by writing the @prefix or @post
 
 The example above implements the unary minus operator (-a) for Vector2D instances. The unary minus operator is a prefix operator, and so this function has to be qualified with the @prefix attribute.
 
-这段代码为`Vector2D`类型提供了单目减运算`-a`，`@prefix` 表明这是个前置运算符。这个运算符，
+这段代码为`Vector2D`类型提供了单目减运算`-a`，`@prefix`属性表明这是个前置运算符。
 
 For simple numeric values, the unary minus operator converts positive numbers into their negative equivalent and vice versa. The corresponding implementation for Vector2D instances performs this operation on both the x and y properties:
 
@@ -522,14 +538,14 @@ let alsoPositive = -negative
 // alsoPositive 为 (3.0, 4.0)
 ```
 
-## Compound Assignment Operators
-## 组合赋值运算符
+### Compound Assignment Operators
+### 组合赋值运算符
 
 Compound assignment operators combine assignment (=) with another operation. For example, the addition assignment operator (+=) combines addition and assignment into a single operation. Operator functions that implement compound assignment must be qualified with the @assignment attribute. You must also mark a compound assignment operator’s left input parameter as inout, because the parameter’s value will be modified directly from within the operator function.
 
 The example below implements an addition assignment operator function for Vector2D instances:
 
-组合赋值是其他运算符和赋值运算符一起执行的运算。如`+=`把加运算和赋值运算组合成一个操作。实现一个组合赋值符号需要使用 `@assignment` 属性，
+组合赋值是其他运算符和赋值运算符一起执行的运算。如`+=`把加运算和赋值运算组合成一个操作。实现一个组合赋值符号需要使用`@assignment`属性，还需要把运算符的左参数设置成`inout`，因为这个参数会在运算符函数内直接修改它的值。
 
 ```
 @assignment func += (inout left: Vector2D, right: Vector2D) {
@@ -561,7 +577,7 @@ You can combine the @assignment attribute with either the @prefix or @postfix at
 
 The prefix increment operator function above takes advantage of the addition assignment operator defined earlier. It adds a Vector2D with x and y values of 1.0 to the Vector2D on which it is called, and returns the result:
 
-这个前置使用了已经定义好的高级加赋运算，将自己加上一个值为 `(1。0，1。0)` 的对象然后赋给自己，然后再将自己返回。
+这个前置使用了已经定义好的高级加赋运算，将自己加上一个值为 `(1.0，1.0)` 的对象然后赋给自己，然后再将自己返回。
 
 ```
 var toIncrement = Vector2D(x: 3.0, y: 4.0)
@@ -572,14 +588,13 @@ let afterIncrement = ++toIncrement
 
 > NOTE
 
-> 注意
-
 > It is not possible to overload the default assignment operator (=). Only the compound assignment operators can be overloaded. Similarly, the ternary conditional operator (a ? b : c) cannot be overloaded.
 
-> 默认的赋值符是不可重载的。只有组合赋值符可以重载。三目条件运算符 `a？b：c` 也是不可重载。
+>注意：
+默认的赋值符是不可重载的。只有组合赋值符可以重载。三目条件运算符 `a？b：c` 也是不可重载。
 
-## Equivalence Operators
-## 比较运算符
+### Equivalence Operators
+### 比较运算符
 
 Custom classes and structures do not receive a default implementation of the equivalence operators, known as the “equal to” operator (==) and “not equal to” operator (!=). It is not possible for Swift to guess what would qualify as “equal” for your own custom types, because the meaning of “equal” depends on the roles that those types play in your code.
 
@@ -616,8 +631,8 @@ if twoThree == anotherTwoThree {
 // prints "这两个向量是相等的."
 ```
 
-## Custom Operators
-## 自定义运算符
+### Custom Operators
+### 自定义运算符
 
 You can declare and implement your own custom operators in addition to the standard operators provided by Swift. Custom operators can be defined only with the characters / = - + * % < > ! & | ^ . ~.
 
@@ -653,8 +668,8 @@ let afterDoubling = +++toBeDoubled
 // afterDoubling 现在也是 (2.0, 8.0)
 ```
 
-## Precedence and Associativity for Custom Infix Operators
-## 自定义中置运算符的优先级和结合性
+### Precedence and Associativity for Custom Infix Operators
+### 自定义中置运算符的优先级和结合性
 
 Custom infix operators can also specify a precedence and an associativity. See [Precedence and Associativity](#PrecedenceandAssociativity) for an explanation of how these two characteristics affect an infix operator’s interaction with other infix operators.
 
@@ -685,4 +700,4 @@ let plusMinusVector = firstVector +- secondVector
 
 This operator adds together the x values of two vectors, and subtracts the y value of the second vector from the first. Because it is in essence an “additive” operator, it has been given the same associativity and precedence values (left and 140) as default additive infix operators such as + and -. For a complete list of the default Swift operator precedence and associativity settings, see [Expressions](Expressions).
 
-这个运算符把两个向量的`x`相加，把向量的`y`相减。因为他实际是属于加减运算，所以让它保持了和加法一样的结合性和优先级(`left`和`140`)。查阅完整的Swift默认结合性和优先级的设置，请移步[表达式](Expressions);
+这个运算符把两个向量的`x`相加，把向量的`y`相减。因为他实际是属于加减运算，所以让它保持了和加法一样的结合性和优先级(`left`和`140`)。查阅完整的Swift默认结合性和优先级的设置，请移步[表达式](../chapter3/04_Expressions.html);
