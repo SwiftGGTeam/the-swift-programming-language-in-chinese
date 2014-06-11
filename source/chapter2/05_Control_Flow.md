@@ -13,7 +13,7 @@
     - [If](#if)
     - [Switch](#switch)
         - [不存在隐式的贯穿（No Implicit Fallthrough）](#no_implicit_fallthrough)
-        - [范围匹配（Range Matching）](#range_matching)
+        - [区间匹配（Range Matching）](#range_matching)
         - [元组（Tuple）](#tuples)
         - [值绑定（Value Bindings）](#value_bindings)
         - [Where](#where)
@@ -28,25 +28,25 @@
 
 Swift提供了类似 C 语言的流程控制结构，包括可以多次执行任务的`for`和`while`循环，基于特定条件选择执行不同代码分支的`if`和`switch`语句，还有控制流程跳转到其他代码的`break`和`continue`语句。
 
-除了 C 语言里面传统的for条件递增（`for-condition-increment`）循环，Swift 还增加了`for-in`循环，用来更简单地遍历数组（array），字典（dictionary），范围（range），字符串（string）和其他序列类型。
+除了 C 语言里面传统的for条件递增（`for-condition-increment`）循环，Swift 还增加了`for-in`循环，用来更简单地遍历数组（array），字典（dictionary），区间（range），字符串（string）和其他序列类型。
 
-Swift 的`switch`语句比 C 语言中更加强大。在 C 语言中，如果某个 case 不小心漏写了`break`，这个 case 就会贯穿（fallthrough）至下一个 case，Swift 无需写`break`，所以不会发生这种贯穿（fallthrough）的情况。Case 还可以匹配更多的类型模式，包括范围（range）匹配，元组（tuple）和特定类型的描述。`switch`的 case 语句中匹配的值可以是由 case 体内部临时的常量或者变量决定，也可以由`where`分句描述更复杂的匹配条件。
+Swift 的`switch`语句比 C 语言中更加强大。在 C 语言中，如果某个 case 不小心漏写了`break`，这个 case 就会贯穿（fallthrough）至下一个 case，Swift 无需写`break`，所以不会发生这种贯穿（fallthrough）的情况。case 还可以匹配更多的类型模式，包括区间匹配（range matching），元组（tuple）和特定类型的描述。`switch`的 case 语句中匹配的值可以是由 case 体内部临时的常量或者变量决定，也可以由`where`分句描述更复杂的匹配条件。
 
 <a name="for_loops"></a>
 ## For 循环
 
 `for`循环用来按照指定的次数多次执行一系列语句。Swift 提供两种`for`循环形式：
 
-* `for-in`用来遍历一个范围（range），队列（sequence），集合（collection），系列（progression）里面所有的元素执行一系列语句。
+* `for-in`用来遍历一个区间（range），队列（sequence），集合（collection），系列（progression）里面所有的元素执行一系列语句。
 
-* for条件递增（`for-condition-increment`）语句，用来重复执行一系列语句直到特定条件达成，一般通过在每次循环完成后增加计数器的值来实现。
+* for条件递增（`for-condition-increment`）语句，用来重复执行一系列语句直到达成特定条件达成，一般通过在每次循环完成后增加计数器的值来实现。
 
 <a name="for_in"></a>
-###For-In
+### For-In
 
-你可以使用`for-in`循环来遍历一个集合里面的所有元素，例如由数字表示的范围、数组中的元素、字符串中的字符。
+你可以使用`for-in`循环来遍历一个集合里面的所有元素，例如由数字表示的区间、数组中的元素、字符串中的字符。
 
-下面的例子用来输出乘5乘法表前面一部分内容：
+下面的例子用来输出乘 5 乘法表前面一部分内容：
 
 ```swift
 for index in 1...5 {
@@ -59,14 +59,14 @@ for index in 1...5 {
 // 5 times 5 is 25
 ```
 
-例子中用来进行遍历的元素是一组使用闭区间操作符（`...`）表示的从`1`到`5`的闭区间数字。`index`被赋值为闭区间范围中的第一个数字（`1`），然后循环中的语句被执行一次。在本例中，这个循环只包含一个语句，用来输出当前`index`值所对应的乘5乘法表结果。该语句执行后，`index`的值被更新为闭区间范围中的第二个数字（`2`），之后`println`方法会再执行一次。整个过程会进行到闭区间范围结尾为止。
+例子中用来进行遍历的元素是一组使用闭区间操作符（`...`）表示的从`1`到`5`的数字。`index`被赋值为闭区间中的第一个数字（`1`），然后循环中的语句被执行一次。在本例中，这个循环只包含一个语句，用来输出当前`index`值所对应的乘 5 乘法表结果。该语句执行后，`index`的值被更新为闭区间中的第二个数字（`2`），之后`println`方法会再执行一次。整个过程会进行到闭区间结尾为止。
 
 上面的例子中，`index`是一个每次循环遍历开始时被自动赋值的常量。这种情况下，`index`在使用前不需要声明，只需要将它包含在循环的声明中，就可以对其进行隐式声明，而无需使用`let`关键字声明。
 
 >注意：
 `index`常量只存在于循环的生命周期里。如果你想在循环完成后访问`index`的值，又或者想让`index`成为一个变量而不是常量，你必须在循环之前自己进行声明。
 
-如果你不需要知道范围内每一项的值，你可以使用下划线（_）替代变量名来忽略对值的访问：
+如果你不需要知道区间内每一项的值，你可以使用下划线（`_`）替代变量名来忽略对值的访问：
 
 ```swift
 let base = 3
@@ -76,10 +76,10 @@ for _ in 1...power {
     answer *= base
 }
 println("\(base) to the power of \(power) is \(answer)")
-// 输出 "3 to the power of 10 is 59049
+// 输出 "3 to the power of 10 is 59049"
 ```
 
-这个例子计算 base 这个数的 power 次幂（本例中，是`3`的`10`次幂），从`1`（3 的 0 次幂）开始做`3`的乘法， 进行`10`次，使用`0`到`9`的半闭区间循环。这个计算并不需要知道每一次循环中计数器具体的值，只需要执行了正确的循环次数即可。下划线符号`_`（替代循环中的变量）能够忽略具体的值，并且不提供循环遍历时对值的访问。
+这个例子计算 base 这个数的 power 次幂（本例中，是`3`的`10`次幂），从`1`（`3`的`0`次幂）开始做`3`的乘法， 进行`10`次，使用`0`到`9`的半闭区间循环。这个计算并不需要知道每一次循环中计数器具体的值，只需要执行了正确的循环次数即可。下划线符号`_`（替代循环中的变量）能够忽略具体的值，并且不提供循环遍历时对值的访问。
 
 使用`for-in`遍历一个数组所有元素：
 
@@ -448,9 +448,9 @@ case `value 1`,
 如果想要贯穿至特定的 case 分支中，请使用`fallthrough`语句，详情请参考[贯穿（Fallthrough）](#fallthrough)
 
 <a name="range_matching"></a>
-#### 范围匹配（Range Matching）
+#### 区间匹配（Range Matching）
 
-case 分支的模式也可以是一个值的范围。下面的例子展示了如何使用范围匹配来输出任意数字对应的自然语言格式：
+case 分支的模式也可以是一个值的区间。下面的例子展示了如何使用区间匹配来输出任意数字对应的自然语言格式：
 
 ```swift
 let count = 3_000_000_000_000
@@ -479,7 +479,7 @@ println("There are \(naturalCount) \(countedThings).")
 <a name="tuples"></a>
 #### 元组（Tuple）
 
-你可以使用元组在同一个`switch`语句中测试多个值。元组中的元素可以是值，也可以是范围。另外，使用下划线（`_`）来匹配所有可能的值。
+你可以使用元组在同一个`switch`语句中测试多个值。元组中的元素可以是值，也可以是区间。另外，使用下划线（`_`）来匹配所有可能的值。
 
 下面的例子展示了如何使用一个`(Int, Int)`类型的元组来分类下图中的点(x, y)：
 
