@@ -83,7 +83,7 @@ ARC会在第三个，也即最后一个强引用被断开的时候，销毁Perso
 
 然而，我们可能会写出这样的代码，一个类永远不会有0个强引用。这种情况发生在两个类实例互相保持对方的强引用，并让对方不被销毁。这就是所谓的循环强引用。
 
-你可以通过定义类之间的关系为弱引用或者无主引用，以此替代强引用，从而解决循环强引用的问题。具体的过程在[解决类实例之间的循环强引用](http://numbbbbb.github.io/the-swift-programming-language-in-chinese/chapter2/16_Automatic_Reference_Counting.html#1)中有描述。不管怎样，在你学习怎样解决循环强引用之前，很有必要了解一下它是怎样产生的。
+你可以通过定义类之间的关系为弱引用或者无主引用，以此替代强引用，从而解决循环强引用的问题。具体的过程在[解决类实例之间的循环强引用](#1)中有描述。不管怎样，在你学习怎样解决循环强引用之前，很有必要了解一下它是怎样产生的。
 
 下面展示了一个不经意产生循环强引用的例子。例子定义了两个类：Person和Apartment，用来建模公寓和它其中的居民:
 
@@ -143,7 +143,7 @@ ARC会在第三个，也即最后一个强引用被断开的时候，销毁Perso
 
 Person和Apartment实例之间的强引用关系保留了下来并且不会被断开。
 
-##解决实例之间的循环强引用
+##<a name="1">解决实例之间的循环强引用</a>
 
 Swift提供了两种办法用来解决你在使用类的属性时所遇到的循环强引用问题：弱引用(weak reference)和无主引用(unowned reference)。
 
@@ -155,7 +155,7 @@ Swift提供了两种办法用来解决你在使用类的属性时所遇到的循
 
 弱引用不会牢牢保持住引用的实例，并且不会阻止ARC销毁被引用的实例。这种行为阻止了引用变为循环强引用。声明属性或者变量时，在前面加上weak关键字表明这是一个弱引用。
 
-在实例的生命周期中，如果某些时候引用没有值，那么弱引用可以阻止循环强引用。如果引用总是有值，则可以使用无主引用，在[无主引用](http://numbbbbb.github.io/the-swift-programming-language-in-chinese/chapter2/16_Automatic_Reference_Counting.html#2)中有描述。在上面Apartment的例子中，一个公寓的生命周期中，有时是没有“居民”的，因此适合使用弱引用来解决循环强引用。
+在实例的生命周期中，如果某些时候引用没有值，那么弱引用可以阻止循环强引用。如果引用总是有值，则可以使用无主引用，在[无主引用](#2)中有描述。在上面Apartment的例子中，一个公寓的生命周期中，有时是没有“居民”的，因此适合使用弱引用来解决循环强引用。
 
 > 注意: 弱引用必须被声明为变量，表明其值能在运行时被修改。弱引用不能被声明为常量。
 
@@ -214,7 +214,7 @@ Person实例依然保持对Apartment实例的强引用，但是Apartment实例�
     
 上面的两段代码展示了变量john和number73在被赋值为nil后，Person实例和Apartment实例的析构函数都打印出“销毁”的信息。这证明了引用循环被打破了。
 
-##无主引用
+##<a name="2">无主引用</a>
 
 和弱引用类似，无主引用不会牢牢保持住引用的实例。和弱引用不同的是，无主引用是永远有值的。因此，无主引用总是被定义为非可选类型(non-optional type)。你可以在声明属性或者变量时，在前面加上关键字unowned表示这是一个无主引用。
 
@@ -312,9 +312,9 @@ Customer和CreditCard的例子展示了一个属性的值允许为nil，而另�
     
 为了建立两个类的依赖关系，City的构造函数有一个Country实例的参数，并且将实例保存为country属性。
 
-Country的构造函数调用了City的构造函数。然而，只有Country的实例完全初始化完后，Country的构造函数才能把self传给City的构造函数。([在两阶段构造函数中有具体描述](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Initialization.html#//apple_ref/doc/uid/TP40014097-CH18-XID_288))
+Country的构造函数调用了City的构造函数。然而，只有Country的实例完全初始化完后，Country的构造函数才能把self传给City的构造函数。([在两步构造函数中有具体描述](./14_Initialization.html)
 
-为了满足这种需求，通过在类型结尾处加上感叹号(City!)的方式，将Country的capitalCity属性声明为显示展开的可选类型属性。这表示像其他可选类型一样，capitalCity属性的默认值为nil，但是不需要展开他的值就能访问它。([在显示展开的可选类型中有描述](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/TheBasics.html#//apple_ref/doc/uid/TP40014097-CH5-XID_436))
+为了满足这种需求，通过在类型结尾处加上感叹号(City!)的方式，将Country的capitalCity属性声明为显示展开的可选类型属性。这表示像其他可选类型一样，capitalCity属性的默认值为nil，但是不需要展开他的值就能访问它。([在显示展开的可选类型中有描述](./01_The_Basics.html))
 
 由于capitalCity默认值为nil，一旦Country的实例在构造函数中给name属性赋值后，整个初始化过程就完成了。这代表一旦name属性被后，Country的构造函数就能引用并传递显式的self。Country的构造函数在赋值capitalCity时，就能将self作为参数传递给City的构造函数。
 
@@ -386,7 +386,7 @@ HTMLElement类只提供一个构造函数，通过name和text(如果有的话)�
 
 ![](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/closureReferenceCycle01_2x.png)
 
-实例的asHTML属性持有闭包的强引用。但是，闭包在其闭包体内使用了self（引用了self.name和self.text），因此闭包占有了self，这意味着闭包又反过来持有了HTMLElement实例的强引用。这样两个对象就产生了循环强引用。（更多关于闭包占有值的信息，请参考[Capturing Values](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Closures.html#//apple_ref/doc/uid/TP40014097-CH11-XID_129)）。
+实例的asHTML属性持有闭包的强引用。但是，闭包在其闭包体内使用了self（引用了self.name和self.text），因此闭包占有了self，这意味着闭包又反过来持有了HTMLElement实例的强引用。这样两个对象就产生了循环强引用。（更多关于闭包占有值的信息，请参考[值捕获](./07_Closures.html)）。
 
 >注意: 虽然闭包多次使用了self，它只占有HTMLElement实例的一个强引用。
 
