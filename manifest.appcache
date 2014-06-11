@@ -1,5 +1,5 @@
 CACHE MANIFEST
-# Revision 1402451678089
+# Revision 1402469309777
 
 CACHE:
 index.html
@@ -13,8 +13,8 @@ chapter2/04_Collection_Types.html
 chapter2/05_Control_Flow.html
 chapter2/06_Functions.html
 chapter2/07_Closures.html
-chapter2/09_Classes_and_Structures.html
 chapter2/08_Enumerations.html
+chapter2/09_Classes_and_Structures.html
 chapter2/10_Properties.html
 chapter2/11_Methods.html
 chapter2/12_Subscripts.html
@@ -28,8 +28,8 @@ chapter2/19_Nested_Types.html
 chapter2/20_Extensions.html
 chapter2/21_Protocols.html
 chapter2/22_Generics.html
-chapter2/23_Advanced_Operators.html
 chapter2/chapter2.html
+chapter2/23_Advanced_Operators.html
 chapter3/06_Attributes.html
 chapter3/01_About_the_Language_Reference.html
 chapter3/03_Types.html
