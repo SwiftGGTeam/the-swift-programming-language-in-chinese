@@ -406,12 +406,8 @@ default:
 与 C 语言和 Objective-C 中的`switch`语句不同，在 Swift 中，当匹配的 case 分支中的代码执行完毕后，程序会终止`switch`语句，而不会继续执行下一个 case 分支。这也就是说，不需要在 case 分支中显式地使用`break`语句。这使得`switch`语句更安全、更易用，也避免了因忘记写`break`语句而产生的错误。
 
 > 注意：
-<<<<<<< HEAD
 >
 你依然可以在 case 分支中的代码执行完毕前跳出，详情请参考[Switch 语句中的 break](#break_in_a_switch_statement)。
-=======
-你依然可以在 case 分支中的代码执行完毕前跳出，详情请参考[Switch 语句中的 break](#break_in_a_switch_statement)
->>>>>>> 大小写的疏忽
 
 每一个 case 分支都*必须*包含至少一条语句。像下面这样书写代码是无效的，因为第一个 case 分支是空的：
 
