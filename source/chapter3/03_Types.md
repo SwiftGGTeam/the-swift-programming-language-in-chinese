@@ -1,33 +1,38 @@
+> 翻译：lyuka
+
+> 校对：numbbbbb
+
 # 类型（Types）
 -----------------
 
 本页包含内容：
 
--   类型标注（Type Annotation）
--   类型标识符（Type Identifier）
--   元组类型（Tuple Type）
--   函数类型（Function Type）
--   数组类型（Array Type）
--   可选类型（Optional Type）
--   隐式解析可选类型（Implicitly Unwrapped Optional Type）
--   协议合成类型（Protocol Composition Type）
--   元类型（Metatype Type）
--   类型继承子句（Type Inheritance Clause）
--   类型推断（Type Inference）
+-   [类型注解（Type Annotation）](#type_annotation)
+-   [类型标识符（Type Identifier）](#type_identifier)
+-   [元组类型（Tuple Type）](#tuple_type)
+-   [函数类型（Function Type）](#function_type)
+-   [数组类型（Array Type）](#array_type)
+-   [可选类型（Optional Type）](#optional_type)
+-   [隐式解析可选类型（Implicitly Unwrapped Optional Type）](#implicitly_unwrapped_optional_type)
+-   [协议合成类型（Protocol Composition Type）](#protocol_composition_type)
+-   [元类型（Metatype Type）](#metatype_type)
+-   [类型继承子句（Type Inheritance Clause）](#type_inheritance_clause)
+-   [类型推断（Type Inference）](#type_inference)
 
-Swift语言存在两种类型：命名型类型和复合型类型。*命名型类型*是指定义时可以给定名字的类型。命名型类型包括类、结构体、枚举和协议。比如，一个用户定义的类`MyClass`的实例拥有类型`MyClass`。除了用户定义的命名型类型，Swift标准库也定义了很多常用的命名型类型，包括那些表示数组、字典和可选值的类型。
+Swift 语言存在两种类型：命名型类型和复合型类型。*命名型类型*是指定义时可以给定名字的类型。命名型类型包括类、结构体、枚举和协议。比如，一个用户定义的类`MyClass`的实例拥有类型`MyClass`。除了用户定义的命名型类型，Swift 标准库也定义了很多常用的命名型类型，包括那些表示数组、字典和可选值的类型。
 
-那些通常被其它语言认为是基本或初级的数据型类型（Data types）——比如表示数字、字符和字符串——实际上就是命名型类型，Swift标准库是使用结构体定义和实现它们的。因为它们是命名型类型，因此你可以按照“扩展和扩展声明”章节里讨论的那样，声明一个扩展来增加它们的行为以适应你程序的需求。
+那些通常被其它语言认为是基本或初级的数据型类型（Data types）——比如表示数字、字符和字符串——实际上就是命名型类型，Swift 标准库是使用结构体定义和实现它们的。因为它们是命名型类型，因此你可以按照“扩展和扩展声明”章节里讨论的那样，声明一个扩展来增加它们的行为以适应你程序的需求。
 
-*复合型类型*是没有名字的类型，它由Swift本身定义。Swift存在两种复合型类型：函数类型和元组类型。一个复合型类型可以包含命名型类型和其它复合型类型。例如，元组类型`(Int, (Int, Int))`包含两个元素：第一个是命名型类型`Int`，第二个是另一个复合型类型`(Int, Int)`.
+*复合型类型*是没有名字的类型，它由 Swift 本身定义。Swift 存在两种复合型类型：函数类型和元组类型。一个复合型类型可以包含命名型类型和其它复合型类型。例如，元组类型`(Int, (Int, Int))`包含两个元素：第一个是命名型类型`Int`，第二个是另一个复合型类型`(Int, Int)`.
 
-本节讨论Swift语言本身定义的类型，并描述Swift中的类型推断行为。
+本节讨论 Swift 语言本身定义的类型，并描述 Swift 中的类型推断行为。
 
 >类型的语法：
 *type* → *array-type* | *function-type* | *type-identifier* | *tuple-type* | *optional-type* | *implicitly-unwrapped-optional-type* | protocol-composition-type | metatype-type
 
-##类型标注
-类型标注显式地指定一个变量或表达式的值。类型标注始于冒号`:`终于类型，比如下面两个例子：
+<a name="type_annotation"></a>
+##类型注解
+类型注解显式地指定一个变量或表达式的值。类型注解始于冒号`:`终于类型，比如下面两个例子：
 
 ```javascript
 let someTuple：(Double, Double) = (3.14159, 2.71828)
@@ -35,11 +40,12 @@ func someFunction(a: Int){ /* ... */ }
 ```
 在第一个例子中，表达式`someTuple`的类型被指定为`(Double, Double)`。在第二个例子中，函数`someFunction`的参数`a`的类型被指定为`Int`。
 
-类型标注可以在类型之前包含一个类型特性（type attributes）的可选列表。
+类型注解可以在类型之前包含一个类型特性（type attributes）的可选列表。
 
->类型标注的语法：
+>类型注解的语法：
 *type-annotation* → :*attributes*[opt] *type*
 
+<a name="type_identifier"></a>
 ##类型标识符
 类型标识符引用命名型类型或者是命名型/复合型类型的别名。
 
@@ -62,6 +68,7 @@ var someValue: ExampleModule.MyType
 *type-identifier* → *type-name generic-argument-clause*[opt] | *type-name generic-argument-clause*[opt].*type-identifier*
 *type-name* → *identifier*
 
+<a name="tuple_type"></a>
 ##元组类型
 元组类型使用逗号隔开并使用括号括起来的0个或多个类型组成的列表。
 
@@ -72,10 +79,11 @@ var someValue: ExampleModule.MyType
 >元组类型语法：
 *tuple* → (*tuple-type-body*[opt])
 *tuple-type-body* → *tuple-type-element-list* ...[opt]
-*tuple-type-element-list* → *tuple-type-element* | *tuple-type-element*, *tuple-type-element-list* 
-*tuple-type-element* → *attributes*[opt] **inout** [opt] *type* | **inout** [opt] *element-name type-annotation* 
+*tuple-type-element-list* → *tuple-type-element* | *tuple-type-element*, *tuple-type-element-list*
+*tuple-type-element* → *attributes*[opt] **inout** [opt] *type* | **inout** [opt] *element-name type-annotation*
 *element-name* → *identifier*
 
+<a name="function_type"></a>
 ##函数类型
 函数类型表示一个函数、方法或闭包的类型，它由一个参数类型和返回值类型组成，中间用箭头`->`隔开：
 
@@ -121,6 +129,7 @@ addTwoNumbers(4)(5)     // Returns 9
 >函数类型的语法：
 *function-type* → *type* **->** *type*
 
+<a name="array_type"></a>
 ##数组类型
 Swift语言使用类型名紧接中括号`[]`来简化标准库中定义的命名型类型`Array<T>`。换句话说，下面两个声明是等价的：
 
@@ -147,6 +156,7 @@ var array3D: Int[][][] = [[[1, 2], [3, 4]], [[5, 6], [7, 8]]]
 >数组类型的语法：
 *array-type* → *type*`[ ]` | *array-type*`[ ]`
 
+<a name="optional_type"></a>
 ##可选类型
 Swift定义后缀`?`来作为标准库中的定义的命名型类型`Optional<T>`的简写。换句话说，下面两个声明是等价的：
 
@@ -177,6 +187,7 @@ optionalInteger!      // 42
 >可选类型语法：
 *optional-type* → *type*?
 
+<a name="implicitly_unwrapped_optional_type"></a>
 ##隐式解析可选类型
 Swift语言定义后缀`!`作为标准库中命名类型`ImplicitlyUnwrappedOptional<T>`的简写。换句话说，下面两个声明等价：
 
@@ -199,8 +210,9 @@ var implicitlyUnwrappedString: ImplicitlyUnwrappedOptional<String>
 >隐式解析可选的语法：
 implicitly-unwrapped-optional-type → type!
 
+<a name="protocol_composition_type"></a>
 ##协议合成类型
-协议合成类型是一种符合每个协议的指定协议列表类型。协议合成类型可能会用在类型标注和泛型参数中。
+协议合成类型是一种符合每个协议的指定协议列表类型。协议合成类型可能会用在类型注解和泛型参数中。
 
 协议合成类型的形式如下：
 ```javascript
@@ -212,9 +224,10 @@ protocol<Protocol 1, Procotol 2>
 
 >协议合成类型的语法：
 *protocol-composition-type* → **protocol** <*protocol-identifier-list[opt]*>
-*protocol-identifier-list* → *protocol-identifier* | *protocol-identifier, protocol-identifier-list* 
+*protocol-identifier-list* → *protocol-identifier* | *protocol-identifier, protocol-identifier-list*
 *protocol-identifier* → *type-identifier*
 
+<a name="metatype_type"></a>
 ##元类型
 元类型是指所有类型的类型，包括类、结构体、枚举和协议。
 
@@ -243,6 +256,7 @@ someInstance.dynamicType.printClassName()
 >元类型的语法：
 *metatype-type* → *type*.**Type** | *type*.**Protocol**
 
+<a name="type_inheritance_clause"></a>
 ##类型继承子句
 类型继承子句被用来指定一个命名型类型继承哪个类且适配哪些协议。类型继承子句开始于冒号`:`，紧跟由`,`隔开的类型标识符列表。
 
@@ -253,15 +267,16 @@ someInstance.dynamicType.printClassName()
 枚举定义中的类型继承子句可以是一个协议列表，或是指定原始值的枚举，一个单独的指定原始值类型的命名型类型。使用类型继承子句来指定原始值类型的枚举定义的例子，见章节“原始值”。
 
 >类型继承子句的语法：
-*type-inheritance-clause* → :*type-inheritance-list* 
+*type-inheritance-clause* → :*type-inheritance-list*
 *type-inheritance-list* → *type-identifier* | *type-identifier*, *type-inheritance-list*
 
+<a name="type_inference"></a>
 ##类型推断
 Swift广泛的使用类型推断，从而允许你可以忽略很多变量和表达式的类型或部分类型。比如，对于`var x: Int = 0`，你可以完全忽略类型而简写成`var x = 0`——编译器会正确的推断出`x`的类型`Int`。类似的，当完整的类型可以从上下文推断出来时，你也可以忽略类型的一部分。比如，如果你写了`let dict: Dictionary = ["A": 1]`，编译提也能推断出`dict`的类型是`Dictionary<String, Int>`。
 
 在上面的两个例子中，类型信息从表达式树（expression tree）的叶子节点传向根节点。也就是说，`var x: Int = 0`中`x`的类型首先根据`0`的类型进行推断，然后将该类型信息传递到根节点（变量`x`）。
 
-在Swift中，类型信息也可以反方向流动——从根节点传向叶子节点。在下面的例子中，常量`eFloat`上的显式类型标注（`:Float`）导致数字字面量`2.71828`的类型是`Float`而非`Double`。
+在Swift中，类型信息也可以反方向流动——从根节点传向叶子节点。在下面的例子中，常量`eFloat`上的显式类型注解（`:Float`）导致数字字面量`2.71828`的类型是`Float`而非`Double`。
 
 ```javascript
 let e = 2.71828 // The type of e is inferred to be Double.

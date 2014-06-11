@@ -5,12 +5,12 @@
         
         
         <meta charset="UTF-8">
-        <title>Swift 初见 | Swift 编程语言</title>
+        <title>《The Swift Programming Language》中文版</title>
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="robots" content="index, follow">
         <meta name="author" content="">
-        <meta name="description" content="Swift 是苹果在 WWDC 2014 上发布的一款全新的编程语言，本书译自苹果官方的 Swift 教程《The Swift Programming Language》。">
+        <meta name="description" content="Swift 中文翻译组：364279588（要求对翻译感兴趣）">
         <meta name="keywords" content="gitbook,github" >
         <meta name="generator" content="www.gitbook.io">
 
@@ -21,8 +21,8 @@
         <link rel="prev" href="../chapter1/01_swift.html" />
         
 
-        <meta property="og:title" content="Swift 初见 | Swift 编程语言">
-        <meta property="og:site_name" content="Swift 编程语言">
+        <meta property="og:title" content="Swift 初见 | 这一次，让中国和世界同步">
+        <meta property="og:site_name" content="这一次，让中国和世界同步">
         <meta property="og:type" content="book">
         <meta property="og:locale" content="en_US">
 
@@ -46,7 +46,7 @@
 
 
         
-    <div class="book"  data-level="1.2" data-basepath=".." data-revision="1402493167130">
+    <div class="book"  data-level="1.2" data-basepath=".." data-revision="1402523087598">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -98,7 +98,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-spinner fa-spin"></i>
-        <a href="../" >Swift 编程语言</a>
+        <a href="../" >这一次，让中国和世界同步</a>
     </h1>
 </div>
 
@@ -119,7 +119,7 @@
         
 
         <li data-level="0" data-path="index.html">
-            <a href="../"><i class="fa fa-check"></i> Introduction</a>
+            <a href="../"><i class="fa fa-check"></i> 序</a>
         </li>
         
     
@@ -331,7 +331,7 @@
         <li class="chapter " data-level="2.19" data-path="chapter2/19_Nested_Types.html">
             
             <a href="../chapter2/19_Nested_Types.html">
-                <i class="fa fa-check"></i> <b>2.19.</b> 嵌套类型
+                <i class="fa fa-check"></i> <b>2.19.</b> 类型嵌套
             </a>
             
             
@@ -534,7 +534,7 @@
     
         <a href="../chapter2/18_Type_Casting.html" title="类型检查" class="chapter  " data-progress="2.18" style="left: 36.8421052631579%;"></a>
     
-        <a href="../chapter2/19_Nested_Types.html" title="嵌套类型" class="chapter  " data-progress="2.19" style="left: 39.473684210526315%;"></a>
+        <a href="../chapter2/19_Nested_Types.html" title="类型嵌套" class="chapter  " data-progress="2.19" style="left: 39.473684210526315%;"></a>
     
         <a href="../chapter2/02_Basic_Operators.html" title="基本运算符" class="chapter  " data-progress="2.2" style="left: 42.10526315789474%;"></a>
     
@@ -587,29 +587,35 @@
 
                 <div class="page-inner">
                 
-                    <section class="normal" id="section-gitbook_102">
+                    <section class="normal" id="section-gitbook_6468">
                     
-                        <h1 id="swift-">Swift 初见</h1>
+                        <blockquote>
+<p>翻译：numbbbbb
+校对：shinyzhu</p>
+</blockquote>
+<h1 id="swift-">Swift 初见</h1>
 <hr>
 <p>本页内容包括：</p>
 <ul>
-<li>简单值</li>
-<li>控制流</li>
-<li>函数和闭包</li>
-<li>对象和类</li>
-<li>枚举和结构体</li>
-<li>接口和扩展</li>
-<li>泛型</li>
+<li><a href="#simple_values">简单值（Simple Values）</a></li>
+<li><a href="#control_flow">控制流（Control Flow）</a></li>
+<li><a href="#functions_and_closures">函数和闭包（Functions and Closures）</a></li>
+<li><a href="#objects_and_classes">对象和类（Objects and Classes）</a></li>
+<li><a href="#enumerations_and_structures">枚举和结构体（Enumerations and Structures）</a></li>
+<li><a href="#protocols_and_extensions">接口和扩展（Protocols and Extensions）</a></li>
+<li><a href="#generics">泛型（Generics）</a></li>
 </ul>
 <p>通常来说，编程语言教程中的第一个程序应该在屏幕上打印“Hello, world”。在 Swift 中，可以用一行代码实现：</p>
 <pre><code>println(&quot;Hello, world&quot;)
 </code></pre><p>如果你写过 C 或者 Objective-C 代码，那你应该很熟悉这种形式——在 Swift 中，这行代码就是一个完整的程序。你不需要为了输入输出或者字符串处理导入一个单独的库。全局作用域中的代码会被自动当做程序的入口点，所以你也不需要<code>main</code>函数。你同样不需要在每个语句结尾写上分号。</p>
 <p>这个教程会通过一系列编程例子来让你对 Swift 有初步了解，如果你有什么不理解的地方也不用担心——任何本章介绍的内容都会在后面的章节中详细讲解。</p>
 <blockquote>
-<p>注意：为了获得最好的体验，在 Xcode 当中使用代码预览功能。代码预览功能可以让你编辑代码并实时看到运行结果。</p>
+<p>注意：</p>
+<p>为了获得最好的体验，在 Xcode 当中使用代码预览功能。代码预览功能可以让你编辑代码并实时看到运行结果。</p>
 </blockquote>
+<p><a name="simple_values"></a></p>
 <h2 id="-">简单值</h2>
-<p>使用<code>let</code>来声明常量，使用<code>var</code>来声明变量。一个常量的值在编译时并不需要获取，但是你必须而且只能为它赋值一次。也就是说你可以用常量来表示这样一个值：你只需要决定一次，但是需要使用很多次。</p>
+<p>使用<code>let</code>来声明常量，使用<code>var</code>来声明变量。一个常量的值在编译时并不需要获取，但是你只能为它赋值一次。也就是说你可以用常量来表示这样一个值：你只需要决定一次，但是需要使用很多次。</p>
 <pre><code>var myVariable = 42
 myVariable = 50
 let myConstant = 42
@@ -619,14 +625,16 @@ let myConstant = 42
 let implicitDouble = 70.0
 let explicitDouble: Double = 70
 </code></pre><blockquote>
-<p>练习：创建一个常量，显式指定类型为<code>Float</code>并指定初始值为4。</p>
+<p>练习：</p>
+<p>创建一个常量，显式指定类型为<code>Float</code>并指定初始值为4。</p>
 </blockquote>
 <p>值永远不会被隐式转换为其他类型。如果你需要把一个值转换成其他类型，请显式转换。</p>
 <pre><code>let label = &quot;The width is&quot;
 let width = 94
 let widthLabel = label + String(width)
 </code></pre><blockquote>
-<p>练习：删除最后一行中的<code>String</code>，错误提示是什么？</p>
+<p>练习：</p>
+<p>删除最后一行中的<code>String</code>，错误提示是什么？</p>
 </blockquote>
 <p>有一种更简单的把值转换成字符串的方法：把值写到括号中，并且在括号之前写一个反斜杠。例如：</p>
 <pre><code>let apples = 3
@@ -634,7 +642,8 @@ let oranges = 5
 let appleSummary = &quot;I have \(apples) apples.&quot;
 let fruitSummary = &quot;I have \(apples + oranges) pieces of fruit.&quot;
 </code></pre><blockquote>
-<p>练习：使用<code>\()</code>来把一个浮点计算转换成字符串，并加上某人的名字，和他打个招呼。</p>
+<p>练习：</p>
+<p>使用<code>\()</code>来把一个浮点计算转换成字符串，并加上某人的名字，和他打个招呼。</p>
 </blockquote>
 <p>使用方括号<code>[]</code>来创建数组和字典，并使用下标或者键（key）来访问元素。</p>
 <pre><code>var shoppingList = [&quot;catfish&quot;, &quot;water&quot;, &quot;tulips&quot;, &quot;blue paint&quot;]
@@ -650,7 +659,8 @@ occupations[&quot;Jayne&quot;] = &quot;Public Relations&quot;
 let emptyDictionary = Dictionary&lt;String, Float&gt;()
 </code></pre><p>如果类型信息可以被推断出来，你可以用<code>[]</code>和<code>[:]</code>来创建空数组和空字典——就像你声明变量或者给函数传参数的时候一样。</p>
 <pre><code>shoppingList = []   // 去逛街并买点东西
-</code></pre><h2 id="-">控制流</h2>
+</code></pre><p><a name="control_flow"></a></p>
+<h2 id="-">控制流</h2>
 <p>使用<code>if</code>和<code>switch</code>来进行条件操作，使用<code>for-in</code>、<code>for</code>、<code>while</code>和<code>do-while</code>来进行循环。包裹条件和循环变量括号可以省略，但是语句体的大括号是必须的。</p>
 <pre><code>let individualScores = [75, 43, 103, 87, 12]
 var teamScore = 0
@@ -673,7 +683,8 @@ if let name = optionalName {
     greeting = &quot;Hello, \(name)&quot;
 }
 </code></pre><blockquote>
-<p>练习：把<code>optionalName</code>改成<code>nil</code>，greeting会是什么？添加一个<code>else</code>语句，当<code>optionalName</code>是<code>nil</code>时给greeting赋一个不同的值。</p>
+<p>练习：</p>
+<p>把<code>optionalName</code>改成<code>nil</code>，greeting会是什么？添加一个<code>else</code>语句，当<code>optionalName</code>是<code>nil</code>时给greeting赋一个不同的值。</p>
 </blockquote>
 <p>如果变量的可选值是<code>nil</code>，条件会判断为<code>false</code>，大括号中的代码会被跳过。如果不是<code>nil</code>，会将值赋给<code>let</code>后面的常量，这样代码块中就可以使用这个值了。</p>
 <p><code>switch</code>支持任意类型的数据以及各种比较操作——不仅仅是整数以及测试相等。</p>
@@ -689,7 +700,8 @@ default:
     let vegetableComment = &quot;Everything tastes good in soup.&quot;
 }
 </code></pre><blockquote>
-<p>练习：删除<code>default</code>语句，看看会有什么错误？</p>
+<p>练习：</p>
+<p>删除<code>default</code>语句，看看会有什么错误？</p>
 </blockquote>
 <p>运行<code>switch</code>中匹配到的子句之后，程序会退出<code>switch</code>语句，并不会继续向下运行，所以不需要在每个子句结尾写<code>break</code>。</p>
 <p>你可以使用<code>for-in</code>来遍历字典，需要两个变量来表示每个键值对。</p>
@@ -708,7 +720,8 @@ for (kind, numbers) in interestingNumbers {
 }
 largest
 </code></pre><blockquote>
-<p>练习：添加另一个变量来记录哪种类型的数字是最大的。</p>
+<p>练习：</p>
+<p>添加另一个变量来记录哪种类型的数字是最大的。</p>
 </blockquote>
 <p>使用<code>while</code>来重复运行一段代码直到不满足条件。循环条件可以在开头也可以在结尾。</p>
 <pre><code>var n = 2
@@ -735,6 +748,7 @@ for var i = 0; i &lt; 3; ++i {
 }
 secondForLoop
 </code></pre><p>使用<code>..</code>创建的范围不包含上界，如果想包含的话需要使用<code>...</code>。</p>
+<p><a name="functions_and_closures"></a></p>
 <h2 id="-">函数和闭包</h2>
 <p>使用<code>func</code>来声明一个函数，使用名字和参数来调用函数。使用<code>-&gt;</code>来指定函数返回值。</p>
 <pre><code>func greet(name: String, day: String) -&gt; String {
@@ -742,7 +756,8 @@ secondForLoop
 }
 greet(&quot;Bob&quot;, &quot;Tuesday&quot;)
 </code></pre><blockquote>
-<p>练习：删除<code>day</code>参数，添加一个参数来表示今天吃了什么午饭。</p>
+<p>练习：</p>
+<p>删除<code>day</code>参数，添加一个参数来表示今天吃了什么午饭。</p>
 </blockquote>
 <p>使用一个元组来返回多个值。</p>
 <pre><code>func getGasPrices() -&gt; (Double, Double, Double) {
@@ -760,7 +775,8 @@ getGasPrices()
 sumOf()
 sumOf(42, 597, 12)
 </code></pre><blockquote>
-<p>练习：写一个计算参数平均值的函数。</p>
+<p>练习：</p>
+<p>写一个计算参数平均值的函数。</p>
 </blockquote>
 <p>函数可以嵌套。被嵌套的函数可以访问外侧函数的变量，你可以使用嵌套函数来重构一个太长或者太复杂的函数。</p>
 <pre><code>func returnFifteen() -&gt; Int {
@@ -795,19 +811,21 @@ func lessThanTen(number: Int) -&gt; Bool {
 }
 var numbers = [20, 19, 7, 12]
 hasAnyMatches(numbers, lessThanTen)
-</code></pre><p>函数实际上是一种特殊的闭包，你可以使用<code>{}</code>来创建一个匿名闭包。使用<code>in</code>来分割参数、返回值与执行体。</p>
+</code></pre><p>函数实际上是一种特殊的闭包，你可以使用<code>{}</code>来创建一个匿名闭包。使用<code>in</code>来分割参数并返回类型。</p>
 <pre><code>numbers.map({
     (number: Int) -&gt; Int in
     let result = 3 * number
     return result
     })
 </code></pre><blockquote>
-<p>练习：重写闭包，对所有奇数返回0.</p>
+<p>练习：</p>
+<p>重写闭包，对所有奇数返回 0.</p>
 </blockquote>
 <p>有很多种创建闭包的方法。如果一个闭包的类型已知，比如作为一个回调函数，你可以忽略参数的类型和返回值。单个语句闭包会把它语句的值当做结果返回。</p>
 <p>你可以通过参数位置而不是参数名字来引用参数——这个方法在非常短的闭包中非常有用。当一个闭包作为最后一个参数传给一个函数的时候，它可以直接跟在括号后面。</p>
 <pre><code>sort([1, 5, 3, 12, 2]) { $0 &gt; $1 }
-</code></pre><h2 id="-">对象和类</h2>
+</code></pre><p><a name="objects_and_classes"></a></p>
+<h2 id="-">对象和类</h2>
 <p>使用<code>class</code>和类名来创建一个类。类中属性的声明和常量、变量声明一样，唯一的区别就是它们的上下文是类。同样，方法和函数声明也一样。</p>
 <pre><code>class Shape {
     var numberOfSides = 0
@@ -816,7 +834,8 @@ hasAnyMatches(numbers, lessThanTen)
     }
 }
 </code></pre><blockquote>
-<p>练习：使用<code>let</code>添加一个常量属性，再添加一个接收一个参数的方法。</p>
+<p>练习：</p>
+<p>使用<code>let</code>添加一个常量属性，再添加一个接收一个参数的方法。</p>
 </blockquote>
 <p>要创建一个类的实例，在类名后面加上括号。使用点语法来访问实例的属性和方法。</p>
 <pre><code>var shape = Shape()
@@ -860,7 +879,8 @@ let test = Square(sideLength: 5.2, name: &quot;my test square&quot;)
 test.area()
 test.simpleDescription()
 </code></pre><blockquote>
-<p>练习：创建<code>NamedShape</code>的另一个子类<code>Circle</code>，构造器接收两个参数，一个是半径一个是名称，实现<code>area</code>和<code>describe</code>方法。</p>
+<p>练习：</p>
+<p>创建<code>NamedShape</code>的另一个子类<code>Circle</code>，构造器接收两个参数，一个是半径一个是名称，实现<code>area</code>和<code>describe</code>方法。</p>
 </blockquote>
 <p>属性可以有 getter 和 setter 。</p>
 <pre><code>class EquilateralTriangle: NamedShape {
@@ -931,7 +951,8 @@ counter.incrementBy(2, numberOfTimes: 7)
 </code></pre><p>处理变量的可选值时，你可以在操作（比如方法、属性和子脚本）之前加<code>?</code>。如果<code>?</code>之前的值是<code>nil</code>，<code>?</code>后面的东西都会被忽略，并且整个表达式返回<code>nil</code>。否则，<code>?</code>之后的东西都会被运行。在这两种情况下，整个表达式的值也是一个可选值。</p>
 <pre><code>let optionalSquare: Square? = Square(sideLength: 2.5, name: &quot;optional square&quot;)
 let sideLength = optionalSquare?.sideLength
-</code></pre><h2 id="-">枚举和结构体</h2>
+</code></pre><p><a name="enumerations_and_structure"></a></p>
+<h2 id="-">枚举和结构体</h2>
 <p>使用<code>enum</code>来创建一个枚举。就像类和其他所有命名类型一样，枚举可以包含方法。</p>
 <pre><code>enum Rank: Int {
     case Ace = 1
@@ -955,7 +976,8 @@ let sideLength = optionalSquare?.sideLength
 let ace = Rank.Ace
 let aceRawValue = ace.toRaw()
 </code></pre><blockquote>
-<p>练习：写一个函数，通过比较它们的原始值来比较两个<code>Rank</code>值。</p>
+<p>练习：</p>
+<p>写一个函数，通过比较它们的原始值来比较两个<code>Rank</code>值。</p>
 </blockquote>
 <p>在上面的例子中，枚举原始值的类型是<code>Int</code>，所以你只需要设置第一个原始值。剩下的原始值会按照顺序赋值。你也可以使用字符串或者浮点数作为枚举的原始值。</p>
 <p>使用<code>toRaw</code>和<code>fromRaw</code>函数来在原始值和枚举值之间进行转换。</p>
@@ -982,7 +1004,8 @@ let aceRawValue = ace.toRaw()
 let hearts = Suit.Hearts
 let heartsDescription = hearts.simpleDescription()
 </code></pre><blockquote>
-<p>练习：给<code>Suit</code>添加一个<code>color</code>方法，对<code>spades</code>和<code>clubs</code>返回“black”，对<code>hearts</code>和<code>diamonds</code>返回“red”。</p>
+<p>练习：</p>
+<p>给<code>Suit</code>添加一个<code>color</code>方法，对<code>spades</code>和<code>clubs</code>返回“black”，对<code>hearts</code>和<code>diamonds</code>返回“red”。</p>
 </blockquote>
 <p>注意，有两种方式可以引用<code>Hearts</code>成员：给<code>hearts</code>常量赋值时，枚举成员<code>Suit.Hearts</code>需要用全名来引用，因为常量没有显式指定类型。在<code>switch</code>里，枚举成员使用缩写<code>.Hearts</code>来引用，因为<code>self</code>的值已经知道是一个<code>suit</code>。已知变量类型的情况下你可以使用缩写。</p>
 <p>使用<code>struct</code>来创建一个结构体。结构体和类有很多相同的地方，比如方法和构造器。它们之间最大的一个区别就是
@@ -998,7 +1021,8 @@ let heartsDescription = hearts.simpleDescription()
 let threeOfSpades = Card(rank: .Three, suit: .Spades)
 let threeOfSpadesDescription = threeOfSpades.simpleDescription()
 </code></pre><blockquote>
-<p>练习：给<code>Card</code>添加一个方法，创建一副完整的扑克牌并把每张牌的rank和suit对应起来。</p>
+<p>练习：</p>
+<p>给<code>Card</code>添加一个方法，创建一副完整的扑克牌并把每张牌的 rank 和 suit 对应起来。</p>
 </blockquote>
 <p>一个枚举成员的实例可以有实例值。相同枚举成员的实例可以有不同的值。创建实例的时候传入值即可。实例值和原始值是不同的：枚举成员的原始值对于所有实例都是相同的，而且你是在定义枚举的时候设置原始值。</p>
 <p>例如，考虑从服务器获取日出和日落的时间。服务器会返回正常结果或者错误信息。</p>
@@ -1017,9 +1041,11 @@ case let .Error(error):
     let serverResponse = &quot;Failure...  \(error)&quot;
 }
 </code></pre><blockquote>
-<p>练习：给<code>ServerResponse</code>和<code>switch</code>添加第三种情况。</p>
+<p>练习：</p>
+<p>给<code>ServerResponse</code>和<code>switch</code>添加第三种情况。</p>
 </blockquote>
 <p>注意如何从<code>ServerResponse</code>中提取日升和日落时间。</p>
+<p><a name="protocols_and_extensions"></a></p>
 <h2 id="-">接口和扩展</h2>
 <p>使用<code>protocol</code>来声明一个接口。</p>
 <pre><code>protocol ExampleProtocol {
@@ -1048,7 +1074,8 @@ var b = SimpleStructure()
 b.adjust()
 let bDescription = b.simpleDescription
 </code></pre><blockquote>
-<p>练习：写一个实现这个接口的枚举。</p>
+<p>练习：</p>
+<p>写一个实现这个接口的枚举。</p>
 </blockquote>
 <p>注意声明<code>SimpleStructure</code>时候<code>mutating</code>关键字用来标记一个会修改结构体的方法。<code>SimpleClass</code>的声明不需要标记任何方法因为类中的方法经常会修改类。</p>
 <p>使用<code>extension</code>来为现有的类型添加功能，比如添加一个计算属性的方法。你可以使用扩展来给任意类型添加协议，甚至是你从外部库或者框架中导入的类型。</p>
@@ -1062,13 +1089,15 @@ let bDescription = b.simpleDescription
 }
 7.simpleDescription
 </code></pre><blockquote>
-<p>练习：给<code>Double</code>类型写一个扩展，添加<code>absoluteValue</code>功能。</p>
+<p>练习：</p>
+<p>给<code>Double</code>类型写一个扩展，添加<code>absoluteValue</code>功能。</p>
 </blockquote>
 <p>你可以像使用其他命名类型一样使用接口名——例如，创建一个有不同类型但是都实现一个接口的对象集合。当你处理类型是接口的值时，接口外定义的方法不可用。</p>
 <pre><code>let protocolValue: ExampleProtocol = a
 protocolValue.simpleDescription
 // protocolValue.anotherProperty  // Uncomment to see the error
 </code></pre><p>即使<code>protocolValue</code>变量运行时的类型是<code>simpleClass</code>，编译器会把它的类型当做<code>ExampleProtocol</code>。这表示你不能调用类在它实现的接口之外实现的方法或者属性。</p>
+<p><a name="generics"></a></p>
 <h2 id="-">泛型</h2>
 <p>在尖括号里写一个名字来创建一个泛型函数或者类型。</p>
 <pre><code>func repeat&lt;ItemType&gt;(item: ItemType, times: Int) -&gt; ItemType[] {
@@ -1100,7 +1129,8 @@ possibleInteger = .Some(100)
 }
 anyCommonElements([1, 2, 3], [3])
 </code></pre><blockquote>
-<p>练习：修改<code>anyCommonElements</code>函数来创建一个函数，返回一个数组，内容是两个序列的共有元素。</p>
+<p>练习：</p>
+<p>修改<code>anyCommonElements</code>函数来创建一个函数，返回一个数组，内容是两个序列的共有元素。</p>
 </blockquote>
 <p>简单起见，你可以忽略<code>where</code>，只在冒号后面写接口或者类名。<code>&lt;T: Equatable&gt;</code>和<code>&lt;T where T: Equatable&gt;</code>是等价的。</p>
 
@@ -1148,6 +1178,6 @@ require(["gitbook"], function(gitbook) {
 </script>
 
         
-    <script src="http://s19.cnzz.com/z_stat.php?id=1000480711&web_id=1000480711" language="JavaScript"></script></body>
+    </body>
     
 </html>

@@ -1,24 +1,35 @@
 # 集合类型 (Collection Types)
 -----------------
 
-Swift语言提供经典的数组和字典两种集合类型来存储集合数据。数组用来按顺序存储相同类型的数据。字典虽然无序存储相同类型数据值但是需要由独有的标识符引用和寻址（就是键值对）。
+本页包含内容：
 
-Swift语言里的数组和字典中存储的数据值类型必须明确。 这意味着我们不能把不正确的数据类型插入其中。 同时这也说明我们完全可以对获取出的值类型非常自信。 Swift对显式类型集合的使用确保了我们的代码对工作所需要的类型非常清楚，也让我们在开发中可以早早地找到任何的类型不匹配错误。
+- [数组（Arrays）](#arrays)
+- [字典（Dictionaries）](#dictionaries)
+- [集合的可变性（Mutability of Collections）](#mutability_of_collections)
+
+Swift 语言提供经典的数组和字典两种集合类型来存储集合数据。数组用来按顺序存储相同类型的数据。字典虽然无序存储相同类型数据值但是需要由独有的标识符引用和寻址（就是键值对）。
+
+Swift 语言里的数组和字典中存储的数据值类型必须明确。 这意味着我们不能把不正确的数据类型插入其中。 同时这也说明我们完全可以对获取出的值类型非常自信。 Swift 对显式类型集合的使用确保了我们的代码对工作所需要的类型非常清楚，也让我们在开发中可以早早地找到任何的类型不匹配错误。
 
 > 注意：
-Swift的数组结构在被声明成常量和变量或者被传入函数与方法中时会相对于其他类型展现出不同的特性。 获取更多信息请参见see Mutability of Collections and Assignment and Copy Behavior for Collection Types。（集合的可变性与集合在赋值和复制中的行为章节）
+>
+Swift 的数组结构在被声明成常量和变量或者被传入函数与方法中时会相对于其他类型展现出不同的特性。 获取更多信息请参见[集合的可变性](#mutability_of_collections)与[集合在赋值和复制中的行为](09_Classes_and_Structures.html#assignment_and_copy_behavior_for_collection_types)章节。
 
-
+<a name="arrays"></a>
 ## 数组
 
 数组使用有序列表存储相同类型的多重数据。相同的值可以多次出现在一个数组的不同位置中。
 
-Swift数组对存储数据有具体要求。 不同于 Objective-C的`NSArray`和`NSMutableArray`类，他们可以存储任何类型的实例而且不提供他们返回对象的任何本质信息。 在 Swift 中，数据值在被存储进入某个数组之前类型必须明确，方法是通过显式的类型标注或类型推断，而且不是必须是`class`类型。例如： 如果我们创建了一个`Int`值类型的数组，我们不能往其中插入任何不是`Int`类型的数据。 Swift 中的数组是类型安全的，并且它们中包含的类型必须明确。
+Swift 数组对存储数据有具体要求。 不同于 Objective-C 的`NSArray`和`NSMutableArray`类，他们可以存储任何类型的实例而且不提供他们返回对象的任何本质信息。 在 Swift 中，数据值在被存储进入某个数组之前类型必须明确，方法是通过显式的类型标注或类型推断，而且不是必须是`class`类型。例如： 如果我们创建了一个`Int`值类型的数组，我们不能往其中插入任何不是`Int`类型的数据。 Swift 中的数组是类型安全的，并且它们中包含的类型必须明确。
 
+<a name="array_type_shorthand_syntax"></a>
 ### 数组的简单语法
-写 Swift 数组应该遵循像`Array<SomeType>`这样的形式，其中sometype是这个数组中唯一允许存在的数据类型。 我们也可以使用像`SomeType[]`这样的简单语法。 尽管两种形式在功能上是一样的， 但是我们推荐较短的那种，而且在本文中都会使用这种形式来使用数组。
 
+写 Swift 数组应该遵循像`Array<SomeType>`这样的形式，其中`SomeType`是这个数组中唯一允许存在的数据类型。 我们也可以使用像`SomeType[]`这样的简单语法。 尽管两种形式在功能上是一样的，但是推荐较短的那种，而且在本文中都会使用这种形式来使用数组。
+
+<a name="array_literals"></a>
 ### 数组构造语句
+
 我们可以使用字面语句来进行数组构造，这是一种用一个或者多个数值构造数组的简单方法。字面语句是一系列由逗号分割并由方括号包含的数值。
 `[value 1, value 2, value 3]`。
 
@@ -30,26 +41,27 @@ Swift数组对存储数据有具体要求。 不同于 Objective-C的`NSArray`�
 `shoppingList`变量被声明为“字符串值类型的数组“，记作`String[]`。 因为这个数组被规定只有`String`一种数据结构，所以只有`String`类型可以在其中被存取。 在这里，`shoppinglist`数组由两个`String`值（`"Eggs"` 和`"Milk"`）构造，并且由字面语句定义。
 
 > 注意：
-`Shoppinglist`数组被声明为变量（`var`关键字创建）而不是常量（`let`创建）是因为以后可能会有更多的数据项被插入其中。
+>
+> `Shoppinglist`数组被声明为变量（`var`关键字创建）而不是常量（`let`创建）是因为以后可能会有更多的数据项被插入其中。
 
 在这个例子中，字面语句仅仅包含两个`String`值。匹配了该数组的变量声明（只能包含`String`的数组），所以这个字面语句的分配过程就是允许用两个初始项来构造`shoppinglist`。
 
-由 于Swift 的类型推断机制，当我们用字面语句构造只拥有相同类型值数组的时候，我们不必把数组的类型定义清楚。 `shoppinglist`的构造也可以这样写：
+由于 Swift 的类型推断机制，当我们用字面语句构造只拥有相同类型值数组的时候，我们不必把数组的类型定义清楚。 `shoppinglist`的构造也可以这样写：
 
     var shoppingList = ["Eggs", "Milk"]
 
 因为所有字面语句中的值都是相同的类型，Swift 可以推断出`String[]`是`shoppinglist`中变量的正确类型。
 
-
+<a name="accessing_and_modifying_an_array"></a>
 ### 访问和修改数组
 
 我们可以通过数组的方法和属性来访问和修改数组，或者下标语法。
 还可以使用数组的只读属性`count`来获取数组中的数据项数量。
 
     println("The shopping list contains \(shoppingList.count) items.")
-    // 打印出"The shopping list contains 2 items."（这个数组有2个项）
+    // 输出"The shopping list contains 2 items."（这个数组有2个项）
 
-使用布尔项`isEmpty`来作为检查`count`属性的值是否为0的捷径。
+使用布尔项`isEmpty`来作为检查`count`属性的值是否为 0 的捷径。
 
     if shoppingList.isEmpty {
         println("The shopping list is empty.")
@@ -91,7 +103,8 @@ Swift数组对存储数据有具体要求。 不同于 Objective-C的`NSArray`�
     // shoppingList 现在有六项
 
 > 注意：
-我们不能使用下标语法在数组尾部添加新项。如果我们试着用这种方法对索引越界的数据进行检索或者设置新值的操作，我们会引发一个运行期错误。我们可以使用索引值和数组的`count`属性进行比较来在使用某个索引之前先检验是否有效。除了当`count`等于0时（说明这是个空数组），最大索引值一直是`count - 1`，因为数组都是零起索引。
+>
+>我们不能使用下标语法在数组尾部添加新项。如果我们试着用这种方法对索引越界的数据进行检索或者设置新值的操作，我们会引发一个运行期错误。我们可以使用索引值和数组的`count`属性进行比较来在使用某个索引之前先检验是否有效。除了当`count`等于 0 时（说明这是个空数组），最大索引值一直是`count - 1`，因为数组都是零起索引。
 
 调用数组的`insert(atIndex:)`方法来在某个具体索引值之前添加数据项：
 
@@ -99,7 +112,7 @@ Swift数组对存储数据有具体要求。 不同于 Objective-C的`NSArray`�
     // shoppingList 现在有7项
     // "Maple Syrup" 现在是这个列表中的第一项
 
-这次`insert`函数调用把值为`"Maple Syrup"`的新数据项插入shopping列表的最开始位置，并且使用`0`作为索引值。
+这次`insert`函数调用把值为`"Maple Syrup"`的新数据项插入列表的最开始位置，并且使用`0`作为索引值。
 
 类似的我们可以使用`removeAtIndex`方法来移除数组中的某一项。这个方法把数组在特定索引值中存储的数据项移除并且返回这个被移除的数据项（我们不需要的时候就可以无视它）:
 
@@ -120,6 +133,7 @@ Swift数组对存储数据有具体要求。 不同于 Objective-C的`NSArray`�
     // shoppingList现在只有5项，不包括cheese
     //  apples 常量的值现在等于"Apples" 字符串
 
+<a name="iterating_over_an_array"></a>
 ### 数组的遍历
 
 我们可以使用`for-in`循环来遍历所有数组中的数据项：
@@ -144,8 +158,9 @@ Swift数组对存储数据有具体要求。 不同于 Objective-C的`NSArray`�
     // Item 4: Baking Powder
     // Item 5: Bananas
 
-更多关于`for-in`循环的介绍请参见[for循环](待添加链接)。
+更多关于`for-in`循环的介绍请参见[for 循环](05_Control_Flow.html#for_loops)。
 
+<a name="creating_and_initializing_an_array"></a>
 ### 创建并且构造一个数组
 
 我们可以使用构造语法来创建一个由特定数据类型构成的空数组：
@@ -178,6 +193,7 @@ Swift 中的`Array`类型还提供一个可以创建特定大小并且所有数�
     var sixDoubles = threeDoubles + anotherThreeDoubles
     // sixDoubles 被推断为 Double[], 等于 [0.0, 0.0, 0.0, 2.5, 2.5, 2.5]
 
+<a name="dictionaries"></a>
 ## 字典
 
 字典是一种存储相同类型多重数据的存储器。每个值（value）都关联独特的键（key），键作为字典中的这个值数据的标识符。和数组中的数据项不同，字典中的数据项并没有具体顺序。我们在需要通过标识符（键）访问数据的时候使用字典，这种方法很大程度上和我们在现实世界中使用字典查字义的方法一样。
@@ -186,8 +202,9 @@ Swift 的字典使用时需要具体规定可以存储键和值类型。不同�
 
 Swift 的字典使用`Dictionary<KeyType, ValueType>`定义,其中`KeyType`是字典中键的数据类型，`ValueType`是字典中对应于这些键所存储值的数据类型。
 
-`KeyType`的唯一限制就是可哈希的，这样可以保证它是独一无二的，所有的 Swift 基本类型（例如`String`，`Int`， `Double`和`Bool`）都是默认可哈希的，并且所有这些类型都可以在字典中当做键使用。未关联值的枚举成员（参见[枚举](链接待添加)）也是默认可哈希的。
+`KeyType`的唯一限制就是可哈希的，这样可以保证它是独一无二的，所有的 Swift 基本类型（例如`String`，`Int`， `Double`和`Bool`）都是默认可哈希的，并且所有这些类型都可以在字典中当做键使用。未关联值的枚举成员（参见[枚举](08_Enumerations.html)）也是默认可哈希的。
 
+<a name="dictionary_literals"></a>
 ## 字典字面语句
 
 我们可以使用字典字面语句来构造字典，他们和我们刚才介绍过的数组字面语句拥有相似语法。一个字典字面语句是一个定义拥有一个或者多个键值对的字典集合的简单语句。
@@ -203,7 +220,8 @@ Swift 的字典使用`Dictionary<KeyType, ValueType>`定义,其中`KeyType`是�
 `airports`字典被定义为一种`Dictionary<String, String>`,它意味着这个字典的键和值都是`String`类型。
 
 > 注意：
-`airports`字典被声明为变量（用`var`关键字）而不是常量（`let`关键字）因为后来更多的机场信息会被添加到这个示例字典中。
+>
+> `airports`字典被声明为变量（用`var`关键字）而不是常量（`let`关键字）因为后来更多的机场信息会被添加到这个示例字典中。
 
 `airports`字典使用字典字面语句初始化，包含两个键值对。第一对的键是`TYO`，值是`Tokyo`。第二对的键是`DUB`，值是`Dublin`。
 
@@ -215,6 +233,7 @@ Swift 的字典使用`Dictionary<KeyType, ValueType>`定义,其中`KeyType`是�
 
 因为这个语句中所有的键和值都分别是相同的数据类型，Swift 可以推断出`Dictionary<String, String>`是`airports`字典的正确类型。
 
+<a name="accessing_and_modifying_a_dictionary"></a>
 ### 读取和修改字典
 
 我们可以通过字典的方法和属性来读取和修改字典，或者使用下标语法。和数组一样，我们可以通过字典的只读属性`count`来获取某个字典的数据项数量：
@@ -222,7 +241,7 @@ Swift 的字典使用`Dictionary<KeyType, ValueType>`定义,其中`KeyType`是�
     println("The dictionary of airports contains \(airports.count) items.")
     // 打印 "The dictionary of airports contains 2 items."（这个字典有两个数据项）
 
-我们也可以在字典中使用下标语法来添加新的数据项。可以使用一个合适类型的key作为下标索引，并且分配新的合适类型的值：
+我们也可以在字典中使用下标语法来添加新的数据项。可以使用一个合适类型的 key 作为下标索引，并且分配新的合适类型的值：
 
     airports["LHR"] = "London"
     // airports 字典现在有三个数据项
@@ -239,9 +258,9 @@ Swift 的字典使用`Dictionary<KeyType, ValueType>`定义,其中`KeyType`是�
     if let oldValue = airports.updateValue("Dublin Internation", forKey: "DUB") {
         println("The old value for DUB was \(oldValue).")
     }
-    // 打印出 "The old value for DUB was Dublin."（dub原值是dublin）
+    // 输出 "The old value for DUB was Dublin."（dub原值是dublin）
 
-我们也可以使用下标语法来在字典中检索特定键对应的值。由于使用一个没有值的键这种情况是有可能发生的，可选 类型返回这个键存在的相关值，否则就返回`nil`：
+我们也可以使用下标语法来在字典中检索特定键对应的值。由于使用一个没有值的键这种情况是有可能发生的，可选类型返回这个键存在的相关值，否则就返回`nil`：
 
     if let airportName = airports["DUB"] {
         println("The name of the airport is \(airportName).")
@@ -264,9 +283,11 @@ Swift 的字典使用`Dictionary<KeyType, ValueType>`定义,其中`KeyType`是�
     } else {
         println("The airports dictionary does not contain a value for DUB.")
     }
-    // 打印 "The removed airport's name is Dublin International."（被移除的机场名字是都柏林国际）
+    // prints "The removed airport's name is Dublin International."
 
+<a name="iterating_over_a_dictionary"></a>
 ### 字典遍历
+
 我们可以使用`for-in`循环来遍历某个字典中的键值对。每一个字典中的数据项都由`(key, value)`元组形式返回，并且我们可以使用暂时性常量或者变量来分解这些元组：
 
     for (airportCode, airportName) in airports {
@@ -274,7 +295,7 @@ Swift 的字典使用`Dictionary<KeyType, ValueType>`定义,其中`KeyType`是�
     }
     // TYO: Tokyo
     // LHR: London Heathrow
-`for-in`循环请参见[For 循环](链接待添加)。
+`for-in`循环请参见[For 循环](05_Control_Flow.html#for_loops)。
 
 我们也可以通过访问他的`keys`或者`values`属性（都是可遍历集合）检索一个字典的键或者值：
 
@@ -299,8 +320,10 @@ Swift 的字典使用`Dictionary<KeyType, ValueType>`定义,其中`KeyType`是�
     // airportNames is ["Tokyo", "London Heathrow"]
 
 > 注意：
-Swift 的字典类型是无序集合类型。其中字典键，值，键值对在遍历的时候会重新排列，而且其中顺序是不固定的。
+>
+> Swift 的字典类型是无序集合类型。其中字典键，值，键值对在遍历的时候会重新排列，而且其中顺序是不固定的。
 
+<a name="creating_an_empty_dictionary"></a>
 ### 创建一个空字典
 
 我们可以像数组一样使用构造语法创建一个空字典：
@@ -318,16 +341,19 @@ Swift 的字典类型是无序集合类型。其中字典键，值，键值对�
     // namesOfIntegers 又成为了一个 Int, String类型的空字典
 
 > 注意：
-在后台，Swift 的数组和字典都是由泛型集合来实现的，想了解更多泛型和集合信息请参见[泛型](链接待添加)。
+>
+> 在后台，Swift 的数组和字典都是由泛型集合来实现的，想了解更多泛型和集合信息请参见[泛型](22_Generics.html)。
 
+<a name="mutability_of_collections"></a>
 ## 集合的可变性
 
 数组和字典都是在单个集合中存储可变值。如果我们创建一个数组或者字典并且把它分配成一个变量，这个集合将会是可变的。这意味着我们可以在创建之后添加更多或移除已存在的数据项来改变这个集合的大小。与此相反，如果我们把数组或字典分配成常量，那么他就是不可变的，它的大小不能被改变。
 
 对字典来说，不可变性也意味着我们不能替换其中任何现有键所对应的值。不可变字典的内容在被首次设定之后不能更改。
-不可变行对数组来说有一点不同，当然我们不能试着改变任何不可变数组的大小，但是我们可以重新设定相对现存索引所对应的值。这使得 Swift 数组在大小被固定的时候依然可以做的很棒。
+不可变行对数组来说有一点不同，当然我们不能试着改变任何不可变数组的大小，但是我们·可以重新设定相对现存索引所对应的值。这使得 Swift 数组在大小被固定的时候依然可以做的很棒。
 
-Swift 数组的可变性行为同时影响了数组实例如何被分配和修改，想获取更多信息，请参见[Assignment and Copy Behavior for Collection Types](待翻译，链接待添加，请查看对应章节的翻译)。
+Swift 数组的可变性行为同时影响了数组实例如何被分配和修改，想获取更多信息，请参见[集合在赋值和复制中的行为](09_Classes_and_Structures.html#assignment_and_copy_behavior_for_collection_types)。
 
 > 注意：
-在我们不需要改变数组大小的时候创建不可变数组是很好的习惯。如此 Swift 编译器可以优化我们创建的集合。
+>
+> 在我们不需要改变数组大小的时候创建不可变数组是很好的习惯。如此 Swift 编译器可以优化我们创建的集合。

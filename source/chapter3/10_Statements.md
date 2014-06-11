@@ -1,5 +1,16 @@
+> 翻译：coverxit
+
+> 校对：numbbbbb
+
 # 语句
 -----------------
+
+本页包含内容：
+
+- [循环语句](#loop_statements)
+- [分支语句](#branch_statements)
+- [带标签的语句](#labeled_statement)
+- [控制传递语句](#control_transfer_statements)
 
 在 Swift 中，有两种类型的语句：简单语句和控制流语句。简单语句是最常见的，用于构造表达式和声明。控制流语句则用于控制程序执行的流程，Swift 中有三种类型的控制流语句：循环语句、分支语句和控制传递语句。
 
@@ -23,6 +34,7 @@
 
 > *statement* → [*statment*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/statement) [*statements*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/statements)**;** *opt*
 
+<a name="loop_statements"></a>
 ## 循环语句
 
 取决于特定的循环条件，循环语句允许重复执行代码块。Swift 提供四种类型的循环语句：`for`语句、`for-in`语句、`while`语句和`do-while`语句。
@@ -44,7 +56,7 @@
 `for`语句允许在重复执行代码块的同时，递增一个计数器。
 
 `for`语句的形式如下：
-	
+
 ```swift
 for `initialzation`; `condition`; `increment` {
 	`statements`
@@ -77,7 +89,7 @@ for `initialzation`; `condition`; `increment` {
 `for-in`语句允许在重复执行代码块的同时，迭代集合(或遵循`Sequence`协议的任意类型)中的每一项。
 
 `for-in`语句的形式如下：
-	
+
 ```swift
 for `item` in `collection` {
 	`statements`
@@ -95,7 +107,7 @@ for `item` in `collection` {
 `while`语句允许重复执行代码块。
 
 `while`语句的形式如下：
-	
+
 ```swift
 while `condition` {
 	`statements`
@@ -124,7 +136,7 @@ while `condition` {
 `do-while`语句允许代码块被执行一次或多次。
 
 `do-while`语句的形式如下：
-	
+
 ```swift
 do {
 	`statements`
@@ -144,8 +156,9 @@ do {
 
 > GRAMMAR OF A DO-WHILE STATEMENT
 
-> *do-while-statement* → **do** [*code-block*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/code-block) **while** [*while-condition*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/while-condition) 
+> *do-while-statement* → **do** [*code-block*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/code-block) **while** [*while-condition*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/while-condition)
 
+<a name="branch_statements"></a>
 ## 分支语句
 
 取决于一个或者多个条件的值，分支语句允许程序执行指定部分的代码。显然，分支语句中条件的值将会决定如何分支以及执行哪一块代码。Swift 提供两种类型的分支语句：`if`语句和`switch`语句。
@@ -270,7 +283,8 @@ case let (x, y) where x == y:
 
 > *guard-expression* → [*expression*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/swift/grammar/expression)
 
-## 带标签的语句
+<a name="labeled_statement"></a>
+<a name="control_transfer_statements"></a> 带标签的语句
 
 你可以在循环语句或`switch`语句前面加上*标签*，它由标签名和紧随其后的冒号(:)组成。在`break`和`continue`后面跟上标签名可以显式地在循环语句或`switch`语句中更改控制流，把控制权传递给指定标签标记的语句。关于这两条语句用法，请参考[Break 语句](#break_statement)和[Continue 语句](#continue_statement)。
 
@@ -285,6 +299,7 @@ case let (x, y) where x == y:
 > *statement-label* → [*label-name*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/label-name) **:**
 
 > *label-name* → [*identifier*](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/LexicalStructure.html#//apple_ref/swift/grammar/identifier)
+
 
 ## 控制传递语句
 

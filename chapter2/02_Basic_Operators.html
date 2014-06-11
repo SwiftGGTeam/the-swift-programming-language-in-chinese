@@ -5,12 +5,12 @@
         
         
         <meta charset="UTF-8">
-        <title>基本运算符 | Swift 编程语言</title>
+        <title>《The Swift Programming Language》中文版</title>
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="robots" content="index, follow">
         <meta name="author" content="">
-        <meta name="description" content="Swift 是苹果在 WWDC 2014 上发布的一款全新的编程语言，本书译自苹果官方的 Swift 教程《The Swift Programming Language》。">
+        <meta name="description" content="Swift 中文翻译组：364279588（要求对翻译感兴趣）">
         <meta name="keywords" content="gitbook,github" >
         <meta name="generator" content="www.gitbook.io">
 
@@ -21,8 +21,8 @@
         <link rel="prev" href="../chapter2/01_The_Basics.html" />
         
 
-        <meta property="og:title" content="基本运算符 | Swift 编程语言">
-        <meta property="og:site_name" content="Swift 编程语言">
+        <meta property="og:title" content="基本运算符 | 这一次，让中国和世界同步">
+        <meta property="og:site_name" content="这一次，让中国和世界同步">
         <meta property="og:type" content="book">
         <meta property="og:locale" content="en_US">
 
@@ -46,7 +46,7 @@
 
 
         
-    <div class="book"  data-level="2.2" data-basepath=".." data-revision="1402493167130">
+    <div class="book"  data-level="2.2" data-basepath=".." data-revision="1402523087598">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -98,7 +98,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-spinner fa-spin"></i>
-        <a href="../" >Swift 编程语言</a>
+        <a href="../" >这一次，让中国和世界同步</a>
     </h1>
 </div>
 
@@ -119,7 +119,7 @@
         
 
         <li data-level="0" data-path="index.html">
-            <a href="../"><i class="fa fa-check"></i> Introduction</a>
+            <a href="../"><i class="fa fa-check"></i> 序</a>
         </li>
         
     
@@ -331,7 +331,7 @@
         <li class="chapter " data-level="2.19" data-path="chapter2/19_Nested_Types.html">
             
             <a href="../chapter2/19_Nested_Types.html">
-                <i class="fa fa-check"></i> <b>2.19.</b> 嵌套类型
+                <i class="fa fa-check"></i> <b>2.19.</b> 类型嵌套
             </a>
             
             
@@ -534,7 +534,7 @@
     
         <a href="../chapter2/18_Type_Casting.html" title="类型检查" class="chapter done " data-progress="2.18" style="left: 36.8421052631579%;"></a>
     
-        <a href="../chapter2/19_Nested_Types.html" title="嵌套类型" class="chapter done " data-progress="2.19" style="left: 39.473684210526315%;"></a>
+        <a href="../chapter2/19_Nested_Types.html" title="类型嵌套" class="chapter done " data-progress="2.19" style="left: 39.473684210526315%;"></a>
     
         <a href="../chapter2/02_Basic_Operators.html" title="基本运算符" class="chapter done " data-progress="2.2" style="left: 42.10526315789474%;"></a>
     
@@ -587,167 +587,176 @@
 
                 <div class="page-inner">
                 
-                    <section class="normal" id="section-gitbook_144">
+                    <section class="normal" id="section-gitbook_6494">
                     
-                        <h1 id="-">基本运算符</h1>
+                        <blockquote>
+<p>翻译：xielingwang</p>
+<p>校对：Evilcome</p>
+</blockquote>
+<h1 id="-">基本运算符</h1>
 <hr>
 <p>本页包含内容：</p>
 <ul>
 <li><a href="#terminology">术语</a></li>
 <li><a href="#assignment_operator">赋值运算符</a></li>
 <li><a href="#arithmetic_operators">数值运算符</a></li>
-<li><a href="#compound_assignment_operators">组合赋值运算符(Compound Assignment Operators)</a></li>
+<li><a href="#compound_assignment_operators">组合赋值运算符（Compound Assignment Operators）</a></li>
 <li><a href="#comparison_operators">比较运算符</a></li>
-<li><a href="#ternary_conditional_operator">三目条件运算符(Ternary Conditional Operator)</a></li>
+<li><a href="#ternary_conditional_operator">三元条件运算符（Ternary Conditional Operator）</a></li>
 <li><a href="#range_operators">区间运算符</a></li>
 <li><a href="#logical_operators">逻辑运算符</a></li>
 </ul>
-<p>运算符是检查，改变，合并值的特殊符号或短语。例如，加号<code>+</code>把计算两个数的和(如 <code>let i = 1 + 2</code>)。复杂些的运行算包括逻辑与<code>&amp;&amp;</code>(如 <code>if enteredDoorCode &amp;&amp; passedRetinaScan</code>)，还有自增运算符<code>++i</code>这样让自身加一的便捷运算。</p>
-<p>Swift支持大部分标准C语言的运算符，且改进许多特性来减少常规编码错误。如，赋值符<code>=</code>不返回值，以防止错把等号<code>==</code>写成赋值号<code>=</code>而导致Bug。数值运算符(<code>+</code>，<code>-</code>，<code>*</code>，<code>/</code>，<code>%</code>等)会检测并不允许值溢出，以此来避免保存变量时由于变量大于或小于其类型所能承载的范围时导致的异常结果。当然允许你选择使用Swift的溢出运算符来玩溢出。具体使用请移步<a href="23_Advanced_Operators.html#overflow_operators">溢出运算符</a>。</p>
-<p>区别于C语言，在Swift中你可以对浮点数进行取余运算(<code>%</code>)，还提供了C语言没有的表达两数之间的值的区间运算符，(<code>a..b</code>和<code>a...b</code>)，这方便我们表达一个区间内的数值。</p>
-<p>本章节只描述了Swift中的基本运算符，<a href="23_Advanced_Operators.html">高级运算符</a>包含了高级运算符，及如何自定义运算符，及如何进行自定义类型的运算符重载。</p>
+<p>运算符是检查，改变，合并值的特殊符号或短语。例如，加号<code>+</code>将两个数相加（如<code>let i = 1 + 2</code>）。复杂些的运行算例如逻辑与运算符<code>&amp;&amp;</code>（如<code>if enteredDoorCode &amp;&amp; passedRetinaScan</code>），又或让 i 值加1的便捷运算符自增运算符<code>++i</code>等。</p>
+<p>Swift 支持大部分标准 C 语言的运算符，且改进许多特性来减少常规编码错误。如，赋值符（<code>=</code>）不返回值，以防止把想要判断相等运算符（<code>==</code>）的地方写成赋值符导致的错误。数值运算符（<code>+</code>，<code>-</code>，<code>*</code>，<code>/</code>，<code>%</code>等）会检测并不允许值溢出，以此来避免保存变量时由于变量大于或小于其类型所能承载的范围时导致的异常结果。当然允许你使用 Swift 的溢出运算符来实现溢出。详情参见<a href="23_Advanced_Operators.html#overflow_operators">溢出运算符</a>。</p>
+<p>区别于 C 语言，在 Swift 中你可以对浮点数进行取余运算（<code>%</code>），Swift 还提供了 C 语言没有的表达两数之间的值的区间运算符，（<code>a..b</code>和<code>a...b</code>），这方便我们表达一个区间内的数值。</p>
+<p>本章节只描述了 Swift 中的基本运算符，<a href="23_Advanced_Operators.html">高级运算符</a>包含了高级运算符，及如何自定义运算符，及如何进行自定义类型的运算符重载。</p>
 <p><a name="terminology"></a></p>
 <h2 id="-">术语</h2>
-<p>运算符有一目，双目和三目运算符。</p>
+<p>运算符有一元，二元和三元运算符。</p>
 <ul>
-<li>一目运算符对单一操作对象操作，如<code>-a</code>。一目运算符分前置符和后置运算符，前置运算符需紧排操作对象之前，如<code>!b</code>，后置运算符需紧跟操作对象之后，如<code>i++</code>，</li>
-<li>双目运算符操作两个操作对象，如 <code>2 + 3</code>。是中置的，因为它们出现在两个操作对象之间。</li>
-<li>三目运算符操作三个操作对象，和C语言一样，Swift只有一个三目运算符，就是三目条件运算符 <code>a？b：c</code>。</li>
+<li>一元运算符对单一操作对象操作（如<code>-a</code>）。一元运算符分前置符和后置运算符，前置运算符需紧排操作对象之前（如<code>!b</code>），后置运算符需紧跟操作对象之后（如<code>i++</code>）。</li>
+<li>二元运算符操作两个操作对象（如<code>2 + 3</code>），是中置的，因为它们出现在两个操作对象之间。</li>
+<li>三元运算符操作三个操作对象，和 C 语言一样，Swift 只有一个三元运算符，就是三元条件运算符（<code>a ? b : c</code>）。</li>
 </ul>
-<p>受运算符影响的值叫操作数，在表达式<code>1 + 2</code>中，加号<code>+</code>是双目运算符，它的两个操作数是值<code>1</code>和<code>2</code>。</p>
+<p>受运算符影响的值叫操作数，在表达式<code>1 + 2</code>中，加号<code>+</code>是二元运算符，它的两个操作数是值<code>1</code>和<code>2</code>。</p>
 <p><a name="assignment_operator"></a></p>
 <h2 id="-">赋值运算符</h2>
-<p>赋值运算 <code>a = b</code>，表示用<code>b</code>的值来初始化或更新<code>a</code>的值。</p>
+<p>赋值运算（<code>a = b</code>），表示用<code>b</code>的值来初始化或更新<code>a</code>的值：</p>
 <pre><code class="lang-swift">let b = 10
 var a = 5
 a = b
 // a 现在等于 10
 </code></pre>
-<p>如果赋值的右边是一个多元组，它的元素可以马上被分解多个变量或变量</p>
+<p>如果赋值的右边是一个多元组，它的元素可以马上被分解多个变量或变量：</p>
 <pre><code>let (x, y) = (1, 2)
 // 现在 x 等于 1, y 等于 2
-</code></pre><p>与C语言和Objective-C不同，Swift的赋值操作并不返回任何值。所以以下代码是错误的：</p>
+</code></pre><p>与 C 语言和 Objective-C 不同，Swift 的赋值操作并不返回任何值。所以以下代码是错误的：</p>
 <pre><code class="lang-swift">if x = y {
     // 此句错误, 因为 x = y 并不返回任何值
 }
 </code></pre>
-<p>这个特性使得你不无法把<code>==</code>错写成<code>=</code>了，由于<code>if x = y</code>是错误代码，Swift从底层帮你避免了这些代码错误。</p>
+<p>这个特性使得你无法把（<code>==</code>）错写成（<code>=</code>）了，由于<code>if x = y</code>是错误代码，Swift 从底层帮你避免了这些代码错误。</p>
 <p><a name="arithmetic_operators"></a></p>
 <h2 id="-">数值运算</h2>
-<p>Swift让所有数值类型都支持了基本的四则运算：</p>
+<p>Swift 让所有数值类型都支持了基本的四则运算：</p>
 <ul>
-<li>加法<code>+</code></li>
-<li>减法<code>-</code></li>
-<li>乘法<code>*</code></li>
-<li>除法<code>/</code></li>
+<li>加法（<code>+</code>）</li>
+<li>减法（<code>-</code>）</li>
+<li>乘法（<code>*</code>）</li>
+<li>除法（<code>/</code>）</li>
 </ul>
 <pre><code class="lang-swift">1 + 2       // 等于 3
 5 - 3       // 等于 2
 2 * 3       // 等于 6
 10.0 / 2.5  // 等于 4.0
 </code></pre>
-<p>与C语言和Objective-C不同的是，Swift默认不允许在数值运算中出现溢出情况。但你可以使用Swift的溢出运算符来达到你有目的的溢出，(如 <code>a &amp;+ b</code>)。详情请移步：<a href="23_Advanced_Operators.html#overflow_operators">溢出运算符</a>。</p>
-<p>加法操作<code>+</code>也用于字符串的拼接：</p>
+<p>与 C 语言和 Objective-C 不同的是，Swift 默认不允许在数值运算中出现溢出情况。但你可以使用 Swift 的溢出运算符来达到你有目的的溢出（如<code>a &amp;+ b</code>）。详情参见<a href="23_Advanced_Operators.html#overflow_operators">溢出运算符</a>。</p>
+<p>加法运算符也用于<code>String</code>的拼接：</p>
 <pre><code class="lang-swift">&quot;hello, &quot; + &quot;world&quot;  // 等于 &quot;hello, world&quot;
 </code></pre>
-<p>两个字符类型或一个字符类型和一个字符串类型，相加会生成一个新的字符串类型：</p>
+<p>两个<code>Character</code>值或一个<code>String</code>和一个<code>Character</code>值，相加会生成一个新的<code>String</code>值：</p>
 <pre><code class="lang-swift">let dog: Character = &quot;d&quot;
 let cow: Character = &quot;c&quot;
 let dogCow = dog + cow
 // 译者注: 原来的引号内是很可爱的小狗和小牛, 但win os下不支持表情字符, 所以改成了普通字符
 // dogCow 现在是 &quot;dc&quot;
 </code></pre>
-<p>详细请点击<a href="03_Strings_and_Characters.html#concatenating_strings_and_characters">字符，字符串的拼接</a>。</p>
+<p>详情参见<a href="03_Strings_and_Characters.html#concatenating_strings_and_characters">字符，字符串的拼接</a>。</p>
 <h3 id="-">求余运算</h3>
-<p>求余运算 <code>a % b</code> 是计算<code>b</code>的多少倍刚刚好可以容入<code>a</code>，多出来的那部分叫余数。</p>
+<p>求余运算（<code>a % b</code>）是计算<code>b</code>的多少倍刚刚好可以容入<code>a</code>，返回多出来的那部分（余数）。</p>
 <blockquote>
-<p>注意：
-求余运算(%)在其他语言也叫取模运算。然而严格说来，我们看该运算符对负数的操作结果，&quot;求余&quot;比&quot;取模&quot;更合适些。</p>
+<p>注意：</p>
+<p>求余运算（<code>%</code>）在其他语言也叫取模运算。然而严格说来，我们看该运算符对负数的操作结果，&quot;求余&quot;比&quot;取模&quot;更合适些。</p>
 </blockquote>
-<p>我们来谈谈取余是怎么回事，计算<code>9 % 4</code>，你先计算出4的多少倍会刚好可以容入<code>9</code>中。</p>
-<p>2倍，非常好，那余数是1(用橙色标出)</p>
+<p>我们来谈谈取余是怎么回事，计算<code>9 % 4</code>，你先计算出<code>4</code>的多少倍会刚好可以容入<code>9</code>中：</p>
 <p><img src="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/remainderInteger_2x.png" alt="Art/remainderInteger_2x.png" title="Art/remainderInteger_2x.png"></p>
-<p>在Swift中这么来表达</p>
+<p>2倍，非常好，那余数是1（用橙色标出）</p>
+<p>在 Swift 中这么来表达：</p>
 <pre><code class="lang-swift">9 % 4    // 等于 1
 </code></pre>
-<p>为了得到 <code>a % b</code> 的结果，<code>%</code>计算了以下等式，并输出<code>余数</code>作为结果：</p>
+<p>为了得到<code>a % b</code>的结果，<code>%</code>计算了以下等式，并输出<code>余数</code>作为结果：</p>
 <p><em>a = (b × 倍数) + 余数</em></p>
 <p>当<code>倍数</code>取最大值的时候，就会刚好可以容入<code>a</code>中。</p>
 <p>把<code>9</code>和<code>4</code>代入等式中，我们得<code>1</code>：</p>
 <pre><code class="lang-swift">9 = (4 × 2) + 1
 </code></pre>
 <p>同样的方法，我来们计算 <code>-9 % 4</code>：</p>
-<pre><code>-9 % 4   // 等于 -1
-</code></pre><p>把<code>-9</code>和<code>4</code>代入等式，<code>-2</code>是取到的最大整数：</p>
+<pre><code class="lang-swift">-9 % 4   // 等于 -1
+</code></pre>
+<p>把<code>-9</code>和<code>4</code>代入等式，<code>-2</code>是取到的最大整数：</p>
 <pre><code class="lang-swift">-9 = (4 × -2) + -1
 </code></pre>
 <p>余数是<code>-1</code>。</p>
-<p>在对负数<code>-b</code>求余时，<code>-b</code>的符号会被忽略。这意味着 <code>a % b</code> 和 <code>a % -b</code>的结果是相同的。</p>
+<p>在对负数<code>b</code>求余时，<code>b</code>的符号会被忽略。这意味着 <code>a % b</code> 和 <code>a % -b</code>的结果是相同的。</p>
 <h3 id="-">浮点数求余计算</h3>
-<p>不同于C和Objective-C，Swift中是可以对浮点数进行求余的。</p>
+<p>不同于 C 语言和 Objective-C，Swift 中是可以对浮点数进行求余的。</p>
 <pre><code class="lang-swift">8 % 2.5 // 等于 0.5
 </code></pre>
-<p>这个例子中，8除于2.5等于3余0.5，所以结果是0.5。</p>
+<p>这个例子中，<code>8</code>除于<code>2.5</code>等于<code>3</code>余<code>0.5</code>，所以结果是一个<code>Double</code>值<code>0.5</code>。</p>
 <p><img src="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/remainderFloat_2x.png" alt="Art/remainderFloat_2x.png" title="Art/remainderFloat_2x.png"></p>
 <h3 id="-">自增和自增运算</h3>
-<p>和C一样，Swift也提供了方便对变量本身加1或减1的自增<code>++</code>和自减<code>--</code>的运算符。其操作对象可以是整形和浮点型。
+<p>和 C 语言一样，Swift 也提供了方便对变量本身加1或减1的自增（<code>++</code>）和自减（<code>--</code>）的运算符。其操作对象可以是整形和浮点型。
 ‌</p>
-<pre><code>var i = 0
+<pre><code class="lang-swift">var i = 0
 ++i      // 现在 i = 1
-</code></pre><p>每调用一次<code>++i</code>，<code>i</code>的值就会加1。
-实际上，<code>++i</code>是 <code>i = i + 1</code> 的简写，而<code>--i</code>是 <code>i = i - 1</code>的简写。</p>
+</code></pre>
+<p>每调用一次<code>++i</code>，<code>i</code>的值就会加1。实际上，<code>++i</code>是<code>i = i + 1</code>的简写，而<code>--i</code>是<code>i = i - 1</code>的简写。</p>
 <p><code>++</code>和<code>--</code>既是前置又是后置运算。<code>++i</code>，<code>i++</code>，<code>--i</code>和<code>i--</code>都是有效的写法。</p>
 <p>我们需要注意的是这些运算符修改了<code>i</code>后有一个返回值。如果你只想修改<code>i</code>的值，那你就可以忽略这个返回值。但如果你想使用返回值，你就需要留意前置和后置操作的返回值是不同的。</p>
-<p>当<code>++</code>前置的时候，先自増再返回。</p>
-<p>当<code>++</code>后置的时候，先返回再自增。</p>
-<p>不懂？我们看例子：</p>
+<ul>
+<li><p>当<code>++</code>前置的时候，先自増再返回。</p>
+</li>
+<li><p>当<code>++</code>后置的时候，先返回再自增。</p>
+</li>
+</ul>
+<p>例如：</p>
 <pre><code class="lang-swift">var a = 0
 let b = ++a // a 和 b 现在都是 1
 let c = a++ // a 现在 2, 但 c 是 a 自增前的值 1
 </code></pre>
-<p>上述例子，<code>let b = ++a</code>，先把<code>a</code>加1了再返回<code>a</code>的值。所以<code>a</code>和<code>b</code>都是新值<code>1</code>。</p>
-<p>而 <code>let c = a++</code>，是先返回了<code>a</code>的值，然后<code>a</code>才加1。所以<code>c</code>得到了<code>a</code>的旧值1，而<code>a</code>加1后变成2。</p>
+<p>上述例子，<code>let b = ++a</code>先把<code>a</code>加1了再返回<code>a</code>的值。所以<code>a</code>和<code>b</code>都是新值<code>1</code>。</p>
+<p>而<code>let c = a++</code>，是先返回了<code>a</code>的值，然后<code>a</code>才加1。所以<code>c</code>得到了<code>a</code>的旧值1，而<code>a</code>加1后变成2。</p>
 <p>除非你需要使用<code>i++</code>的特性，不然推荐你使用<code>++i</code>和<code>--i</code>，因为先修改后返回这样的行为更符合我们的逻辑。</p>
-<h3 id="-">单目负号</h3>
-<p>数值的正负号可以使用前缀<code>-</code>(即单目负号)来切换：</p>
+<h3 id="-">一元负号</h3>
+<p>数值的正负号可以使用前缀<code>-</code>（即一元负号）来切换：</p>
 <pre><code class="lang-swift">let three = 3
 let minusThree = -three       // minusThree 等于 -3
 let plusThree = -minusThree   // plusThree 等于 3, 或 &quot;负负3&quot;
 </code></pre>
-<p>单目负号写在操作数之前，中间没有空格。</p>
-<h3 id="-">单目正号</h3>
-<p>单目正号<code>+</code>不做任何改变地返回操作数的值。</p>
+<p>一元负号（<code>-</code>）写在操作数之前，中间没有空格。</p>
+<h3 id="-">一元正号</h3>
+<p>一元正号（<code>+</code>）不做任何改变地返回操作数的值。</p>
 <pre><code class="lang-swift">let minusSix = -6
 let alsoMinusSix = +minusSix  // alsoMinusSix 等于 -6
 </code></pre>
-<p>虽然单目<code>+</code>做无用功，但当你在使用单目负号来表达负数时，你可以使用单目正号来表达正数，如此你的代码会具有对称美。</p>
+<p>虽然一元<code>+</code>做无用功，但当你在使用一元负号来表达负数时，你可以使用一元正号来表达正数，如此你的代码会具有对称美。</p>
 <p><a name="compound_assignment_operators"></a></p>
-<h2 id="-">复合赋值</h2>
-<p>如同强大的C语言，Swift也提供把其他运算符和赋值运算<code>=</code>组合的复合赋值运算符，加赋运算<code>+=</code>是其中一个例子：</p>
+<h2 id="-compound-assignment-operators-">复合赋值（Compound Assignment Operators）</h2>
+<p>如同强大的 C 语言，Swift 也提供把其他运算符和赋值运算（<code>=</code>）组合的复合赋值运算符，加赋运算（<code>+=</code>）是其中一个例子：</p>
 <pre><code class="lang-swift">var a = 1
 a += 2 // a 现在是 3
 </code></pre>
-<p>表达式 <code>a += 2</code> 是 <code>a = a + 2</code> 的简写，一个加赋运算就把加法和赋值两件事完成了。</p>
+<p>表达式<code>a += 2</code>是<code>a = a + 2</code>的简写，一个加赋运算就把加法和赋值两件事完成了。</p>
 <blockquote>
-<p>注意：
-复合赋值运算没有返回值，<code>let b = a += 2</code> 这类代码是错误。这不同于上面提到的自增和自减运算符。</p>
+<p>注意：</p>
+<p>复合赋值运算没有返回值，<code>let b = a += 2</code>这类代码是错误。这不同于上面提到的自增和自减运算符。</p>
 </blockquote>
 <p>在<a href="../chapter3/04_Expressions.html">表达式</a>章节里有复合运算符的完整列表。
 ‌
 <a name="comparison_operators"></a></p>
 <h2 id="-">比较运算</h2>
-<p>所有标准C中的比较运算都可以在Swift中使用。</p>
+<p>所有标准 C 语言中的比较运算都可以在 Swift 中使用。</p>
 <ul>
-<li>等于 <code>a == b</code></li>
-<li>不等于 <code>a！= b</code></li>
-<li>大于 <code>a &gt; b</code></li>
-<li>小于 <code>a &lt; b</code></li>
-<li>大于等于 <code>a &gt;= b</code></li>
-<li>小于等于 <code>a &lt;= b</code></li>
+<li>等于（<code>a == b</code>）</li>
+<li>不等于（<code>a！= b</code>）</li>
+<li>大于（<code>a &gt; b</code>）</li>
+<li>小于（<code>a &lt; b</code>）</li>
+<li>大于等于（<code>a &gt;= b</code>）</li>
+<li>小于等于（<code>a &lt;= b</code>）</li>
 </ul>
 <blockquote>
-<p>注意：
-Swift也提供恒等<code>===</code>和不恒等<code>!==</code>这两个比较符来判断两个对象是否引用同一个对象实例。更多细节在<a href="09_Classes_and_Structures.html">类与结构</a>。</p>
+<p>注意：</p>
+<p>Swift 也提供恒等<code>===</code>和不恒等<code>!==</code>这两个比较符来判断两个对象是否引用同一个对象实例。更多细节在<a href="09_Classes_and_Structures.html">类与结构</a>。</p>
 </blockquote>
 <p>每个比较运算都返回了一个标识表达式是否成立的布尔值：</p>
 <pre><code class="lang-swift">1 == 1   // true, 因为 1 等于 1
@@ -762,20 +771,20 @@ Swift也提供恒等<code>===</code>和不恒等<code>!==</code>这两个比较�
 if name == &quot;world&quot; {
     println(&quot;hello, world&quot;)
 } else {
-    println(&quot;对不起, \(name), 我不认识你!&quot;)
+    println(&quot;I&#39;m sorry \(name), but I don&#39;t recognize you&quot;)
 }
 // 输出 &quot;hello, world&quot;, 因为 `name` 就是等于 &quot;world&quot;
 </code></pre>
 <p>关于<code>if</code>语句，请看<a href="05_Control_Flow.html">控制流</a>。</p>
 <p><a name="ternary_conditional_operator"></a></p>
-<h2 id="-">三目条件运算</h2>
-<p>三目条件运算的特殊在于它是有三个操作数的运算符，它的原型是 <code>问题？答案1：答案2</code>。它简洁地表达根据 <code>问题</code> 成立与否作出二选一的操作。如果 <code>问题</code> 成立，返回 <code>答案1</code> 的结果; 如果不成立，返回 <code>答案2</code> 的结果。</p>
-<p>使用三目条件运算简化了以下代码：</p>
+<h2 id="-ternary-conditional-operator-">三元条件运算(Ternary Conditional Operator)</h2>
+<p>三元条件运算的特殊在于它是有三个操作数的运算符，它的原型是<code>问题？答案1：答案2</code>。它简洁地表达根据<code>问题</code>成立与否作出二选一的操作。如果<code>问题</code>成立，返回<code>答案1</code>的结果; 如果不成立，返回<code>答案2</code>的结果。</p>
+<p>使用三元条件运算简化了以下代码：</p>
 <pre><code class="lang-swift">if question: {
-  answer1
+    answer1
 }
 else {
-  answer2
+    answer2
 }
 </code></pre>
 <p>这里有个计算表格行高的例子。如果有表头，那行高应比内容高度要高出50像素; 如果没有表头，只需高出20像素。</p>
@@ -795,17 +804,17 @@ if hasHeader {
 }
 // rowHeight 现在是 90
 </code></pre>
-<p>第一段代码例子使用了三目条件运算，所以一行代码就能让我们得到正确答案。这比第二段代码简洁得多，无需将<code>rowHeight</code>定义成变量，因为它的值无需在<code>if</code>语句中改变。</p>
-<p>三目条件运算提供有效率且便捷的方式来表达二选一的选择。需要注意的事，过度使用三目条件运算就会由简洁的代码变成难懂的代码。我们应避免在一个组合语句使用多个三目条件运算符。</p>
+<p>第一段代码例子使用了三元条件运算，所以一行代码就能让我们得到正确答案。这比第二段代码简洁得多，无需将<code>rowHeight</code>定义成变量，因为它的值无需在<code>if</code>语句中改变。</p>
+<p>三元条件运算提供有效率且便捷的方式来表达二选一的选择。需要注意的事，过度使用三元条件运算就会由简洁的代码变成难懂的代码。我们应避免在一个组合语句使用多个三元条件运算符。</p>
 <p><a name="range_operators"></a></p>
 <h2 id="-">区间运算符</h2>
-<p>Swift提供了两个方便表达一个区间的值的运算符。</p>
+<p>Swift 提供了两个方便表达一个区间的值的运算符。</p>
 <h3 id="-">闭区间运算符</h3>
-<p>闭区间运算符<code>a...b</code>定义一个包含从<code>a</code>到<code>b</code>(包括<code>a</code>和<code>b</code>)的所有值的区间。
+<p>闭区间运算符（<code>a...b</code>）定义一个包含从<code>a</code>到<code>b</code>(包括<code>a</code>和<code>b</code>)的所有值的区间。
 ‌
 闭区间运算符在迭代一个区间的所有值时是非常有用的，如在<code>for-in</code>循环中：</p>
 <pre><code class="lang-swift">for index in 1...5 {
-  println(&quot;\(index) * 5 = \(index * 5)&quot;)
+      println(&quot;\(index) * 5 = \(index * 5)&quot;)
 }
 // 1 * 5 = 5
 // 2 * 5 = 10
@@ -815,7 +824,7 @@ if hasHeader {
 </code></pre>
 <p>关于<code>for-in</code>，请看<a href="05_Control_Flow.html">控制流</a>。</p>
 <h3 id="-">半闭区间</h3>
-<p>半闭区间<code>a..b</code>定义一个从<code>a</code>到<code>b</code>但不包括<code>b</code>的区间。
+<p>半闭区间（<code>a..b</code>）定义一个从<code>a</code>到<code>b</code>但不包括<code>b</code>的区间。
 之所以称为半闭区间，是因为该区间包含第一个值而不包括最后的值。</p>
 <p>半闭区间的实用性在于当你使用一个0始的列表(如数组)时，非常方便地从0数到列表的长度。</p>
 <pre><code class="lang-swift">let names = [&quot;Anna&quot;, &quot;Alex&quot;, &quot;Brian&quot;, &quot;Jack&quot;]
@@ -828,33 +837,30 @@ for i in 0..count {
 // 第 3 个人叫 Brian
 // 第 4 个人叫 Jack
 </code></pre>
-<blockquote>
-<p>注意：
-数组有4个元素，但<code>0..count</code>只数到 3(最后一个元素的下标)，因为它是半闭区间。关于数组，请查阅<a href="04_Collection_Types.html#arrays">数组</a>。</p>
-</blockquote>
+<p>数组有4个元素，但<code>0..count</code>只数到3(最后一个元素的下标)，因为它是半闭区间。关于数组，请查阅<a href="04_Collection_Types.html#arrays">数组</a>。</p>
 <p><a name="logical_operators"></a></p>
 <h2 id="-">逻辑运算</h2>
-<p>逻辑运算的操作对象是逻辑布尔值。Swift支持基于C语言的三个标准逻辑运算。</p>
+<p>逻辑运算的操作对象是逻辑布尔值。Swift 支持基于 C 语言的三个标准逻辑运算。</p>
 <ul>
-<li>逻辑非<code>!a</code></li>
-<li>逻辑与 <code>a &amp;&amp; b</code></li>
-<li>逻辑或 <code>a || b</code></li>
+<li>逻辑非（<code>!a</code>）</li>
+<li>逻辑与（<code>a &amp;&amp; b</code>）</li>
+<li>逻辑或（<code>a || b</code>）</li>
 </ul>
 <h3 id="-">逻辑非</h3>
-<p>逻辑非运算<code>!a</code>对一个布尔值取反，使得<code>true</code>变<code>false</code>，<code>false</code>变<code>true</code>。</p>
-<p>它是一个前置运算符，需出现在操作数之前，且不加空格。读作 <code>非 a</code>，然后我们看以下例子：</p>
+<p>逻辑非运算（<code>!a</code>）对一个布尔值取反，使得<code>true</code>变<code>false</code>，<code>false</code>变<code>true</code>。</p>
+<p>它是一个前置运算符，需出现在操作数之前，且不加空格。读作<code>非 a</code>，然后我们看以下例子：</p>
 <pre><code class="lang-swift">let allowedEntry = false
 if !allowedEntry {
     println(&quot;ACCESS DENIED&quot;)
 }
-// prints &quot;ACCESS DENIED&quot;
+// 输出 &quot;ACCESS DENIED&quot;
 </code></pre>
 <p><code>if！allowedEntry</code>语句可以读作 &quot;如果 非 alowed entry。&quot;，接下一行代码只有在如果 &quot;非 allow entry&quot; 为<code>true</code>，即<code>allowEntry</code>为<code>false</code>时被执行。</p>
 <p>在示例代码中，小心地选择布尔常量或变量有助于代码的可读性，并且避免使用双重逻辑非运算，或混乱的逻辑语句。</p>
 <h3 id="-">逻辑与</h3>
-<p>逻辑与 <code>a &amp;&amp; b</code> 表达了只有<code>a</code>和<code>b</code>的值都为<code>true</code>时，整个表达式的值才会是<code>true</code>。</p>
-<p>只要任意一个值为<code>false</code>，整个表达式的值就为<code>false</code>。事实上，如果第一个值为<code>false</code>，那么是不去计算第二个值的，因为它已经不可能影响整个表达式的结果了。这被称做 &quot;短路计算&quot;。</p>
-<p>以下例子，只有两个值都为值的时候才允许进入：</p>
+<p>逻辑与（<code>a &amp;&amp; b</code>）表达了只有<code>a</code>和<code>b</code>的值都为<code>true</code>时，整个表达式的值才会是<code>true</code>。</p>
+<p>只要任意一个值为<code>false</code>，整个表达式的值就为<code>false</code>。事实上，如果第一个值为<code>false</code>，那么是不去计算第二个值的，因为它已经不可能影响整个表达式的结果了。这被称做 &quot;短路计算（short-circuit evaluation）&quot;。</p>
+<p>以下例子，只有两个<code>Bool</code>值都为<code>true</code>值的时候才允许进入：</p>
 <pre><code class="lang-swift">let enteredDoorCode = true
 let passedRetinaScan = false
 if enteredDoorCode &amp;&amp; passedRetinaScan {
@@ -862,12 +868,12 @@ if enteredDoorCode &amp;&amp; passedRetinaScan {
 } else {
     println(&quot;ACCESS DENIED&quot;)
 }
-// 输出 &quot;ACCESS DENIED
+// 输出 &quot;ACCESS DENIED&quot;
 </code></pre>
 <h3 id="-">逻辑或</h3>
-<p>逻辑或 <code>a || b</code> 是一个由两个连续的<code>|</code>组成的中置运算符。它表示了两个逻辑表达式的其中一个为<code>true</code>，整个表达式就为<code>true</code>。</p>
+<p>逻辑或（<code>a || b</code>）是一个由两个连续的<code>|</code>组成的中置运算符。它表示了两个逻辑表达式的其中一个为<code>true</code>，整个表达式就为<code>true</code>。</p>
 <p>同逻辑与运算类似，逻辑或也是&quot;短路计算&quot;的，当左端的表达式为<code>true</code>时，将不计算右边的表达式了，因为它不可能改变整个表达式的值了。</p>
-<p>以下示例代码中，第一个布尔值<code>hasDoorKey</code>为<code>false</code>，但第二个值<code>knowsOverridePassword</code>为<code>true</code>，所以整个表达是<code>true</code>，于是允许进入：</p>
+<p>以下示例代码中，第一个布尔值（<code>hasDoorKey</code>）为<code>false</code>，但第二个值（<code>knowsOverridePassword</code>）为<code>true</code>，所以整个表达是<code>true</code>，于是允许进入：</p>
 <pre><code class="lang-swift">let hasDoorKey = false
 let knowsOverridePassword = true
 if hasDoorKey || knowsOverridePassword {
@@ -890,16 +896,15 @@ if hasDoorKey || knowsOverridePassword {
 <p>如果我们输入了正确的密码并通过了视网膜扫描; 或者我们有一把有效的钥匙; 又或者我们知道紧急情况下重置的密码，我们就能把门打开进入。</p>
 <p>前两种情况，我们都不满足，所以前两个简单逻辑的结果是<code>false</code>，但是我们是知道紧急情况下重置的密码的，所以整个复杂表达式的值还是<code>true</code>。</p>
 <h3 id="-">使用括号来明确优先级</h3>
-<p>为了一个复杂表达式更容易读懂，在合适的地方使用括号来明确优先级是很有效的，虽然它并非必要的。在上个关于门的权限的例子中，我们给第一个部分加个括号，使用它看起来逻辑更明确。</p>
+<p>为了一个复杂表达式更容易读懂，在合适的地方使用括号来明确优先级是很有效的，虽然它并非必要的。在上个关于门的权限的例子中，我们给第一个部分加个括号，使用它看起来逻辑更明确：</p>
 <pre><code class="lang-swift">if (enteredDoorCode &amp;&amp; passedRetinaScan) || hasDoorKey || knowsOverridePassword {
     println(&quot;Welcome!&quot;)
 } else {
     println(&quot;ACCESS DENIED&quot;)
 }
-// prints &quot;Welcome!&quot;
+// 输出 &quot;Welcome!&quot;
 </code></pre>
-<p>这括号使得前两个值被看成整个逻辑表达中独立的一个部分。虽然有括号和没括号的输出结果是一样的，但对于读代码的人来说有括号的代码更清晰。</p>
-<p>可读性比简洁性更重要，请在可以让你代码变清晰地地方加个括号吧！</p>
+<p>这括号使得前两个值被看成整个逻辑表达中独立的一个部分。虽然有括号和没括号的输出结果是一样的，但对于读代码的人来说有括号的代码更清晰。可读性比简洁性更重要，请在可以让你代码变清晰地地方加个括号吧！</p>
 
                     
                     </section>
@@ -945,6 +950,6 @@ require(["gitbook"], function(gitbook) {
 </script>
 
         
-    <script src="http://s19.cnzz.com/z_stat.php?id=1000480711&web_id=1000480711" language="JavaScript"></script></body>
+    </body>
     
 </html>

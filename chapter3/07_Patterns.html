@@ -5,12 +5,12 @@
         
         
         <meta charset="UTF-8">
-        <title>模式 | Swift 编程语言</title>
+        <title>《The Swift Programming Language》中文版</title>
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="robots" content="index, follow">
         <meta name="author" content="">
-        <meta name="description" content="Swift 是苹果在 WWDC 2014 上发布的一款全新的编程语言，本书译自苹果官方的 Swift 教程《The Swift Programming Language》。">
+        <meta name="description" content="Swift 中文翻译组：364279588（要求对翻译感兴趣）">
         <meta name="keywords" content="gitbook,github" >
         <meta name="generator" content="www.gitbook.io">
 
@@ -21,8 +21,8 @@
         <link rel="prev" href="../chapter3/06_Attributes.html" />
         
 
-        <meta property="og:title" content="模式 | Swift 编程语言">
-        <meta property="og:site_name" content="Swift 编程语言">
+        <meta property="og:title" content="模式 | 这一次，让中国和世界同步">
+        <meta property="og:site_name" content="这一次，让中国和世界同步">
         <meta property="og:type" content="book">
         <meta property="og:locale" content="en_US">
 
@@ -46,7 +46,7 @@
 
 
         
-    <div class="book"  data-level="3.8" data-basepath=".." data-revision="1402493167130">
+    <div class="book"  data-level="3.8" data-basepath=".." data-revision="1402523087598">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -98,7 +98,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-spinner fa-spin"></i>
-        <a href="../" >Swift 编程语言</a>
+        <a href="../" >这一次，让中国和世界同步</a>
     </h1>
 </div>
 
@@ -119,7 +119,7 @@
         
 
         <li data-level="0" data-path="index.html">
-            <a href="../"><i class="fa fa-check"></i> Introduction</a>
+            <a href="../"><i class="fa fa-check"></i> 序</a>
         </li>
         
     
@@ -331,7 +331,7 @@
         <li class="chapter " data-level="2.19" data-path="chapter2/19_Nested_Types.html">
             
             <a href="../chapter2/19_Nested_Types.html">
-                <i class="fa fa-check"></i> <b>2.19.</b> 嵌套类型
+                <i class="fa fa-check"></i> <b>2.19.</b> 类型嵌套
             </a>
             
             
@@ -534,7 +534,7 @@
     
         <a href="../chapter2/18_Type_Casting.html" title="类型检查" class="chapter done " data-progress="2.18" style="left: 36.8421052631579%;"></a>
     
-        <a href="../chapter2/19_Nested_Types.html" title="嵌套类型" class="chapter done " data-progress="2.19" style="left: 39.473684210526315%;"></a>
+        <a href="../chapter2/19_Nested_Types.html" title="类型嵌套" class="chapter done " data-progress="2.19" style="left: 39.473684210526315%;"></a>
     
         <a href="../chapter2/02_Basic_Operators.html" title="基本运算符" class="chapter done " data-progress="2.2" style="left: 42.10526315789474%;"></a>
     
@@ -587,10 +587,24 @@
 
                 <div class="page-inner">
                 
-                    <section class="normal" id="section-gitbook_178">
+                    <section class="normal" id="section-gitbook_6529">
                     
-                        <h1 id="-patterns-">模式（Patterns）</h1>
+                        <blockquote>
+<p>翻译：honghaoz</p>
+<p>校对：numbbbbb</p>
+</blockquote>
+<h1 id="-patterns-">模式（Patterns）</h1>
 <hr>
+<p>本页内容包括：</p>
+<ul>
+<li><a href="#wildcard_pattern">通配符模式（Wildcard Pattern）</a></li>
+<li><a href="#identifier_pattern">标识符模式（Identifier Pattern）</a></li>
+<li><a href="#value-binding_pattern">值绑定模式（Value-Binding Pattern）</a></li>
+<li><a href="#tuple_pattern">元组模式（Tuple Pattern）</a></li>
+<li><a href="#enumeration_case_pattern">枚举案例模式（Enumeration Case Pattern）</a></li>
+<li><a href="#type-casting_patterns">类型转换模式（Type-Casting Patterns）</a></li>
+<li><a href="#expression_pattern">表达式模式（Expression Pattern）</a></li>
+</ul>
 <p>模式（pattern）代表了单个值或者复合值的结构。例如，元组<code>(1, 2)</code>的结构是逗号分隔的，包含两个元素的列表。因为模式代表一种值的结构，而不是特定的某个值，你可以把模式和各种同类型的值匹配起来。比如，<code>(x, y)</code>可以匹配元组<code>(1, 2)</code>，以及任何含两个元素的元组。除了将模式与一个值匹配外，你可以从合成值中提取出部分或全部，然后分别把各个部分和一个常量或变量绑定起来。</p>
 <p>在Swift中，模式出现在变量和常量的声明（在它们的左侧），<code>for-in</code>语句和<code>switch</code>语句（在他们的case标签）中。尽管任何模式都可以出现在<code>switch</code>语句的case标签中，但在其他情况下，只有通配符模式（wildcard pattern），标识符模式（identifier pattern）和包含这两种模式的模式才能出现。</p>
 <p>你可以为通配符模式（wildcard pattern），标识符模式（identifier pattern）和元组模式（tuple pattern）指定类型注释，用来限制这种模式只匹配某种类型的值。</p>
@@ -604,6 +618,7 @@
 <p>pattern → type-casting-pattern</p>
 <p>pattern → expression-pattern</p>
 </blockquote>
+<p><a name="wildcard_pattern"></a></p>
 <h2 id="-wildcard-pattern-">通配符模式（Wildcard Pattern）</h2>
 <p>通配符模式匹配并忽略任何值，包含一个下划线（_）。当你不关心被匹配的值时，可以使用此模式。例如，下面这段代码进行了<code>1...3</code>的循环，并忽略了每次循环的值：</p>
 <pre><code>        for _ in 1...3 {
@@ -613,6 +628,7 @@
 <p>通配符模式的语法：</p>
 <p>wildcard-pattern → _</p>
 </blockquote>
+<p><a name="identifier_pattern"></a></p>
 <h2 id="-identifier-pattern-">标识符模式（Identifier Pattern）</h2>
 <p>标识符模式匹配任何值，并将匹配的值和一个变量或常量绑定起来。例如，在下面的常量申明中，<code>someValue</code>是一个标识符模式，匹配了类型是<code>Int</code>的<code>42</code>。</p>
 <pre><code>        let someValue = 42
@@ -622,6 +638,7 @@
 <p>标识符模式的语法：</p>
 <p>identifier-pattern → identifier</p>
 </blockquote>
+<p><a name="value-binding_pattern"></a></p>
 <h2 id="-value-binding-pattern-">值绑定模式（Value-Binding Pattern）</h2>
 <p>值绑定模式绑定匹配的值到一个变量或常量。当绑定匹配值给常量时，用关键字<code>let</code>,绑定给变量时，用关键之<code>var</code>。</p>
 <p>标识符模式包含在值绑定模式中，绑定新的变量或常量到匹配的值。例如，你可以分解一个元组的元素，并把每个元素绑定到相应的标识符模式中。</p>
@@ -637,6 +654,7 @@
 <p>值绑定模式的语法：</p>
 <p>value-binding-pattern → var pattern | let pattern</p>
 </blockquote>
+<p><a name="tuple_pattern"></a></p>
 <h2 id="-tuple-pattern-">元组模式（Tuple Pattern）</h2>
 <p>元组模式是逗号分隔的列表，包含一个或多个模式，并包含在一对圆括号中。元组模式匹配相应元组类型的值。</p>
 <p>你可以使用类型注释来限制一个元组模式来匹配某种元组类型。例如，在常量申明<code>let (x, y): (Int, Int) = (1, 2)</code>中的元组模式<code>(x, y): (Int, Int)</code>，只匹配两个元素都是<code>Int</code>这种类型的元组。如果仅需要限制一个元组模式中的某几个元素，只需要直接对这几个元素提供类型注释即可。例如，在<code>let (x: String, y)</code>中的元组模式，只要某个元组类型是包含两个元素，且第一个元素类型是<code>String</code>，则被匹配。</p>
@@ -656,6 +674,7 @@
 <p>tuple-pattern-element-list → tuple-pattern-element | tuple-pattern-element, tuple-pattern-element-list</p>
 <p>tuple-pattern-element → pattern</p>
 </blockquote>
+<p><a name="enumeration_case_pattern"></a></p>
 <h2 id="-enumeration-case-pattern-">枚举案例模式（Enumeration Case Pattern）</h2>
 <p>枚举案例模式匹配现有的枚举类型的某种案例。枚举案例模式仅在<code>switch</code>语句中的<code>case</code>标签中出现。</p>
 <p>如果你准备匹配的枚举案例有任何关联的值，则相应的枚举案例模式必须指定一个包含每个关联值元素的元组模式。关于使用<code>switch</code>语句来匹配包含关联值枚举案例的例子，请参阅<code>Associated Values</code>.</p>
@@ -663,6 +682,7 @@
 <p>枚举案例模式的语法：</p>
 <p>enum-case-pattern → type-identifier opt . enum-case-name tuple-pattern opt</p>
 </blockquote>
+<p><a name="type-casting_patterns"></a></p>
 <h2 id="-type-casting-patterns-">类型转换模式（Type-Casting Patterns）</h2>
 <p>有两种类型转换模式，<code>is</code>模式和<code>as</code>模式。这两种模式均只出现在<code>switch</code>语句中的<code>case</code>标签中。<code>is</code>模式和<code>as</code>模式有以下形式：</p>
 <pre><code>        is type
@@ -676,6 +696,7 @@
 <p>is-pattern → istype</p>
 <p>as-pattern → patternastype</p>
 </blockquote>
+<p><a name="expression_pattern"></a></p>
 <h2 id="-expression-pattern-">表达式模式（Expression Pattern）</h2>
 <p>表达式模式代表了一个表达式的值。这个模式只出现在<code>switch</code>语句中的<code>case</code>标签中。</p>
 <p>由表达式模式所代表的表达式用Swift标准库中的<code>~=</code>操作符与输入表达式的值进行比较。如果<code>~=</code>操作符返回<code>true</code>，则匹配成功。默认情况下，<code>~=</code>操作符使用<code>==</code>操作符来比较两个相同类型的值。它也可以匹配一个整数值与一个<code>Range</code>对象中的整数范围，正如下面这个例子所示：</p>
@@ -752,6 +773,6 @@ require(["gitbook"], function(gitbook) {
 </script>
 
         
-    <script src="http://s19.cnzz.com/z_stat.php?id=1000480711&web_id=1000480711" language="JavaScript"></script></body>
+    </body>
     
 </html>

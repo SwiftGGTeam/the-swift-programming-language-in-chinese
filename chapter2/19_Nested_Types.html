@@ -5,12 +5,12 @@
         
         
         <meta charset="UTF-8">
-        <title>嵌套类型 | Swift 编程语言</title>
+        <title>《The Swift Programming Language》中文版</title>
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="robots" content="index, follow">
         <meta name="author" content="">
-        <meta name="description" content="Swift 是苹果在 WWDC 2014 上发布的一款全新的编程语言，本书译自苹果官方的 Swift 教程《The Swift Programming Language》。">
+        <meta name="description" content="Swift 中文翻译组：364279588（要求对翻译感兴趣）">
         <meta name="keywords" content="gitbook,github" >
         <meta name="generator" content="www.gitbook.io">
 
@@ -21,8 +21,8 @@
         <link rel="prev" href="../chapter2/18_Type_Casting.html" />
         
 
-        <meta property="og:title" content="嵌套类型 | Swift 编程语言">
-        <meta property="og:site_name" content="Swift 编程语言">
+        <meta property="og:title" content="类型嵌套 | 这一次，让中国和世界同步">
+        <meta property="og:site_name" content="这一次，让中国和世界同步">
         <meta property="og:type" content="book">
         <meta property="og:locale" content="en_US">
 
@@ -46,7 +46,7 @@
 
 
         
-    <div class="book"  data-level="2.19" data-basepath=".." data-revision="1402493167130">
+    <div class="book"  data-level="2.19" data-basepath=".." data-revision="1402523087598">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -98,7 +98,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-spinner fa-spin"></i>
-        <a href="../" >Swift 编程语言</a>
+        <a href="../" >这一次，让中国和世界同步</a>
     </h1>
 </div>
 
@@ -119,7 +119,7 @@
         
 
         <li data-level="0" data-path="index.html">
-            <a href="../"><i class="fa fa-check"></i> Introduction</a>
+            <a href="../"><i class="fa fa-check"></i> 序</a>
         </li>
         
     
@@ -331,7 +331,7 @@
         <li class="chapter " data-level="2.19" data-path="chapter2/19_Nested_Types.html">
             
             <a href="../chapter2/19_Nested_Types.html">
-                <i class="fa fa-check"></i> <b>2.19.</b> 嵌套类型
+                <i class="fa fa-check"></i> <b>2.19.</b> 类型嵌套
             </a>
             
             
@@ -534,7 +534,7 @@
     
         <a href="../chapter2/18_Type_Casting.html" title="类型检查" class="chapter done " data-progress="2.18" style="left: 36.8421052631579%;"></a>
     
-        <a href="../chapter2/19_Nested_Types.html" title="嵌套类型" class="chapter done " data-progress="2.19" style="left: 39.473684210526315%;"></a>
+        <a href="../chapter2/19_Nested_Types.html" title="类型嵌套" class="chapter done " data-progress="2.19" style="left: 39.473684210526315%;"></a>
     
         <a href="../chapter2/02_Basic_Operators.html" title="基本运算符" class="chapter  " data-progress="2.2" style="left: 42.10526315789474%;"></a>
     
@@ -587,17 +587,22 @@
 
                 <div class="page-inner">
                 
-                    <section class="normal" id="section-gitbook_155">
+                    <section class="normal" id="section-gitbook_6506">
                     
-                        <h1 id="-">类型嵌套</h1>
+                        <blockquote>
+<p>翻译：Lin-H</p>
+<p>校对：shinyzhu</p>
+</blockquote>
+<h1 id="-">类型嵌套</h1>
 <hr>
 <p>本页包含内容：</p>
 <ul>
-<li>类型嵌套实例</li>
-<li>类型嵌套的引用</li>
+<li><a href="#nested_types_in_action">类型嵌套实例</a></li>
+<li><a href="#referring_to_nested_types">类型嵌套的引用</a></li>
 </ul>
 <p>枚举类型常被用于实现特定类或结构体的功能。也能够在有多种变量类型的环境中，方便地定义通用类或结构体来使用，为了实现这种功能，Swift允许你定义类型嵌套，可以在枚举类型、类和结构体中定义支持嵌套的类型。</p>
 <p>要在一个类型中嵌套另一个类型，将需要嵌套的类型的定义写在被嵌套类型的区域{}内，而且可以根据需要定义多级嵌套。</p>
+<p><a name="nested_types_in_action"></a></p>
 <h2 id="-">类型嵌套实例</h2>
 <p>下面这个例子定义了一个结构体<code>BlackjackCard</code>(二十一点)，用来模拟<code>BlackjackCard</code>中的扑克牌点数。<code>BlackjackCard</code>结构体包含2个嵌套定义的枚举类型<code>Suit</code> 和 <code>Rank</code>。</p>
 <p>在<code>BlackjackCard</code>规则中，<code>Ace</code>牌可以表示1或者11，<code>Ace</code>牌的这一特征用一个嵌套在枚举型<code>Rank</code>的结构体<code>Values</code>来表示。</p>
@@ -647,6 +652,7 @@
 println(&quot;theAceOfSpades: \(theAceOfSpades.description)&quot;)
 // 打印出 &quot;theAceOfSpades: suit is ♠, value is 1 or 11&quot;
 </code></pre><p>尽管<code>Rank</code>和<code>Suit</code>嵌套在<code>BlackjackCard</code>中，但仍可被引用，所以在初始化实例时能够通过枚举类型中的成员名称单独引用。在上面的例子中<code>description</code>属性能正确得输出对<code>Ace</code>牌有1和11两个值。</p>
+<p><a name="referring_to_nested_types"></a></p>
 <h2 id="-">类型嵌套的引用</h2>
 <p>在外部对嵌套类型的引用，以被嵌套类型的名字为前缀，加上所要引用的属性名：</p>
 <pre><code>let heartsSymbol = BlackjackCard.Suit.Hearts.toRaw()
@@ -697,6 +703,6 @@ require(["gitbook"], function(gitbook) {
 </script>
 
         
-    <script src="http://s19.cnzz.com/z_stat.php?id=1000480711&web_id=1000480711" language="JavaScript"></script></body>
+    </body>
     
 </html>

@@ -1,5 +1,14 @@
+> 翻译：Hawstein
+
+> 校对：numbbbbb
+
 # 特性
 -----------------
+
+本页内容包括：
+
+- [声明特性](#declaration_attributes)
+- [类型特性](#type_attributes)
 
 特性提供了关于声明和类型的更多信息。在Swift中有两类特性，用于修饰声明的以及用于修饰类型的。例如，`required`特性，当应用于一个类的指定或便利初始化器声明时，表明它的每个子类都必须实现那个初始化器。再比如`noreturn`特性，当应用于函数或方法类型时，表明该函数或方法不会返回到它的调用者。
 
@@ -12,6 +21,7 @@
 
 有些声明特性通过接收参数来指定特性的更多信息以及它是如何修饰一个特定的声明的。这些特性的参数写在小括号内，它们的格式由它们所属的特性来定义。
 
+<a name="declaration_attributes"></a>
 ## 声明特性
 
 声明特性只能应用于声明。然而，你也可以将`noreturn`特性应用于函数或方法类型。
@@ -91,6 +101,7 @@ Interface Builder特性是Interface Builder用来与Xcode同步的声明特性�
 
 `IBOutlet`和`IBInspectable`用于修饰一个类的属性声明；`IBAction`特性用于修饰一个类的方法声明；`IBDesignable`用于修饰类的声明。
 
+<a name="type_attributes"></a>
 ## 类型特性
 
 类型特性只能用于修饰类型。然而，你也可以用`noreturn`特性去修饰函数或方法声明。

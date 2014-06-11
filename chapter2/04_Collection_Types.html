@@ -5,12 +5,12 @@
         
         
         <meta charset="UTF-8">
-        <title>集合类型 | Swift 编程语言</title>
+        <title>《The Swift Programming Language》中文版</title>
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="robots" content="index, follow">
         <meta name="author" content="">
-        <meta name="description" content="Swift 是苹果在 WWDC 2014 上发布的一款全新的编程语言，本书译自苹果官方的 Swift 教程《The Swift Programming Language》。">
+        <meta name="description" content="Swift 中文翻译组：364279588（要求对翻译感兴趣）">
         <meta name="keywords" content="gitbook,github" >
         <meta name="generator" content="www.gitbook.io">
 
@@ -21,8 +21,8 @@
         <link rel="prev" href="../chapter2/03_Strings_and_Characters.html" />
         
 
-        <meta property="og:title" content="集合类型 | Swift 编程语言">
-        <meta property="og:site_name" content="Swift 编程语言">
+        <meta property="og:title" content="集合类型 | 这一次，让中国和世界同步">
+        <meta property="og:site_name" content="这一次，让中国和世界同步">
         <meta property="og:type" content="book">
         <meta property="og:locale" content="en_US">
 
@@ -46,7 +46,7 @@
 
 
         
-    <div class="book"  data-level="2.4" data-basepath=".." data-revision="1402493167130">
+    <div class="book"  data-level="2.4" data-basepath=".." data-revision="1402523087598">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -98,7 +98,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-spinner fa-spin"></i>
-        <a href="../" >Swift 编程语言</a>
+        <a href="../" >这一次，让中国和世界同步</a>
     </h1>
 </div>
 
@@ -119,7 +119,7 @@
         
 
         <li data-level="0" data-path="index.html">
-            <a href="../"><i class="fa fa-check"></i> Introduction</a>
+            <a href="../"><i class="fa fa-check"></i> 序</a>
         </li>
         
     
@@ -331,7 +331,7 @@
         <li class="chapter " data-level="2.19" data-path="chapter2/19_Nested_Types.html">
             
             <a href="../chapter2/19_Nested_Types.html">
-                <i class="fa fa-check"></i> <b>2.19.</b> 嵌套类型
+                <i class="fa fa-check"></i> <b>2.19.</b> 类型嵌套
             </a>
             
             
@@ -534,7 +534,7 @@
     
         <a href="../chapter2/18_Type_Casting.html" title="类型检查" class="chapter done " data-progress="2.18" style="left: 36.8421052631579%;"></a>
     
-        <a href="../chapter2/19_Nested_Types.html" title="嵌套类型" class="chapter done " data-progress="2.19" style="left: 39.473684210526315%;"></a>
+        <a href="../chapter2/19_Nested_Types.html" title="类型嵌套" class="chapter done " data-progress="2.19" style="left: 39.473684210526315%;"></a>
     
         <a href="../chapter2/02_Basic_Operators.html" title="基本运算符" class="chapter done " data-progress="2.2" style="left: 42.10526315789474%;"></a>
     
@@ -587,21 +587,30 @@
 
                 <div class="page-inner">
                 
-                    <section class="normal" id="section-gitbook_123">
+                    <section class="normal" id="section-gitbook_6477">
                     
                         <h1 id="-collection-types-">集合类型 (Collection Types)</h1>
 <hr>
-<p>Swift语言提供经典的数组和字典两种集合类型来存储集合数据。数组用来按顺序存储相同类型的数据。字典虽然无序存储相同类型数据值但是需要由独有的标识符引用和寻址（就是键值对）。</p>
-<p>Swift语言里的数组和字典中存储的数据值类型必须明确。 这意味着我们不能把不正确的数据类型插入其中。 同时这也说明我们完全可以对获取出的值类型非常自信。 Swift对显式类型集合的使用确保了我们的代码对工作所需要的类型非常清楚，也让我们在开发中可以早早地找到任何的类型不匹配错误。</p>
+<p>本页包含内容：</p>
+<ul>
+<li><a href="#arrays">数组（Arrays）</a></li>
+<li><a href="#dictionaries">字典（Dictionaries）</a></li>
+<li><a href="#mutability_of_collections">集合的可变性（Mutability of Collections）</a></li>
+</ul>
+<p>Swift 语言提供经典的数组和字典两种集合类型来存储集合数据。数组用来按顺序存储相同类型的数据。字典虽然无序存储相同类型数据值但是需要由独有的标识符引用和寻址（就是键值对）。</p>
+<p>Swift 语言里的数组和字典中存储的数据值类型必须明确。 这意味着我们不能把不正确的数据类型插入其中。 同时这也说明我们完全可以对获取出的值类型非常自信。 Swift 对显式类型集合的使用确保了我们的代码对工作所需要的类型非常清楚，也让我们在开发中可以早早地找到任何的类型不匹配错误。</p>
 <blockquote>
-<p>注意：
-Swift的数组结构在被声明成常量和变量或者被传入函数与方法中时会相对于其他类型展现出不同的特性。 获取更多信息请参见see Mutability of Collections and Assignment and Copy Behavior for Collection Types。（集合的可变性与集合在赋值和复制中的行为章节）</p>
+<p>注意：</p>
+<p>Swift 的数组结构在被声明成常量和变量或者被传入函数与方法中时会相对于其他类型展现出不同的特性。 获取更多信息请参见<a href="#mutability_of_collections">集合的可变性</a>与<a href="09_Classes_and_Structures.html#assignment_and_copy_behavior_for_collection_types">集合在赋值和复制中的行为</a>章节。</p>
 </blockquote>
+<p><a name="arrays"></a></p>
 <h2 id="-">数组</h2>
 <p>数组使用有序列表存储相同类型的多重数据。相同的值可以多次出现在一个数组的不同位置中。</p>
-<p>Swift数组对存储数据有具体要求。 不同于 Objective-C的<code>NSArray</code>和<code>NSMutableArray</code>类，他们可以存储任何类型的实例而且不提供他们返回对象的任何本质信息。 在 Swift 中，数据值在被存储进入某个数组之前类型必须明确，方法是通过显式的类型标注或类型推断，而且不是必须是<code>class</code>类型。例如： 如果我们创建了一个<code>Int</code>值类型的数组，我们不能往其中插入任何不是<code>Int</code>类型的数据。 Swift 中的数组是类型安全的，并且它们中包含的类型必须明确。</p>
+<p>Swift 数组对存储数据有具体要求。 不同于 Objective-C 的<code>NSArray</code>和<code>NSMutableArray</code>类，他们可以存储任何类型的实例而且不提供他们返回对象的任何本质信息。 在 Swift 中，数据值在被存储进入某个数组之前类型必须明确，方法是通过显式的类型标注或类型推断，而且不是必须是<code>class</code>类型。例如： 如果我们创建了一个<code>Int</code>值类型的数组，我们不能往其中插入任何不是<code>Int</code>类型的数据。 Swift 中的数组是类型安全的，并且它们中包含的类型必须明确。</p>
+<p><a name="array_type_shorthand_syntax"></a></p>
 <h3 id="-">数组的简单语法</h3>
-<p>写 Swift 数组应该遵循像<code>Array&lt;SomeType&gt;</code>这样的形式，其中sometype是这个数组中唯一允许存在的数据类型。 我们也可以使用像<code>SomeType[]</code>这样的简单语法。 尽管两种形式在功能上是一样的， 但是我们推荐较短的那种，而且在本文中都会使用这种形式来使用数组。</p>
+<p>写 Swift 数组应该遵循像<code>Array&lt;SomeType&gt;</code>这样的形式，其中<code>SomeType</code>是这个数组中唯一允许存在的数据类型。 我们也可以使用像<code>SomeType[]</code>这样的简单语法。 尽管两种形式在功能上是一样的，但是推荐较短的那种，而且在本文中都会使用这种形式来使用数组。</p>
+<p><a name="array_literals"></a></p>
 <h3 id="-">数组构造语句</h3>
 <p>我们可以使用字面语句来进行数组构造，这是一种用一个或者多个数值构造数组的简单方法。字面语句是一系列由逗号分割并由方括号包含的数值。
 <code>[value 1, value 2, value 3]</code>。</p>
@@ -610,19 +619,20 @@ Swift的数组结构在被声明成常量和变量或者被传入函数与方法
 // shoppingList 已经被构造并且拥有两个初始项。
 </code></pre><p><code>shoppingList</code>变量被声明为“字符串值类型的数组“，记作<code>String[]</code>。 因为这个数组被规定只有<code>String</code>一种数据结构，所以只有<code>String</code>类型可以在其中被存取。 在这里，<code>shoppinglist</code>数组由两个<code>String</code>值（<code>&quot;Eggs&quot;</code> 和<code>&quot;Milk&quot;</code>）构造，并且由字面语句定义。</p>
 <blockquote>
-<p>注意：
-<code>Shoppinglist</code>数组被声明为变量（<code>var</code>关键字创建）而不是常量（<code>let</code>创建）是因为以后可能会有更多的数据项被插入其中。</p>
+<p>注意：</p>
+<p><code>Shoppinglist</code>数组被声明为变量（<code>var</code>关键字创建）而不是常量（<code>let</code>创建）是因为以后可能会有更多的数据项被插入其中。</p>
 </blockquote>
 <p>在这个例子中，字面语句仅仅包含两个<code>String</code>值。匹配了该数组的变量声明（只能包含<code>String</code>的数组），所以这个字面语句的分配过程就是允许用两个初始项来构造<code>shoppinglist</code>。</p>
-<p>由 于Swift 的类型推断机制，当我们用字面语句构造只拥有相同类型值数组的时候，我们不必把数组的类型定义清楚。 <code>shoppinglist</code>的构造也可以这样写：</p>
+<p>由于 Swift 的类型推断机制，当我们用字面语句构造只拥有相同类型值数组的时候，我们不必把数组的类型定义清楚。 <code>shoppinglist</code>的构造也可以这样写：</p>
 <pre><code>var shoppingList = [&quot;Eggs&quot;, &quot;Milk&quot;]
 </code></pre><p>因为所有字面语句中的值都是相同的类型，Swift 可以推断出<code>String[]</code>是<code>shoppinglist</code>中变量的正确类型。</p>
+<p><a name="accessing_and_modifying_an_array"></a></p>
 <h3 id="-">访问和修改数组</h3>
 <p>我们可以通过数组的方法和属性来访问和修改数组，或者下标语法。
 还可以使用数组的只读属性<code>count</code>来获取数组中的数据项数量。</p>
 <pre><code>println(&quot;The shopping list contains \(shoppingList.count) items.&quot;)
-// 打印出&quot;The shopping list contains 2 items.&quot;（这个数组有2个项）
-</code></pre><p>使用布尔项<code>isEmpty</code>来作为检查<code>count</code>属性的值是否为0的捷径。</p>
+// 输出&quot;The shopping list contains 2 items.&quot;（这个数组有2个项）
+</code></pre><p>使用布尔项<code>isEmpty</code>来作为检查<code>count</code>属性的值是否为 0 的捷径。</p>
 <pre><code>if shoppingList.isEmpty {
     println(&quot;The shopping list is empty.&quot;)
 } else {
@@ -649,14 +659,14 @@ Swift的数组结构在被声明成常量和变量或者被传入函数与方法
 <pre><code>shoppingList[4...6] = [&quot;Bananas&quot;, &quot;Apples&quot;]
 // shoppingList 现在有六项
 </code></pre><blockquote>
-<p>注意：
-我们不能使用下标语法在数组尾部添加新项。如果我们试着用这种方法对索引越界的数据进行检索或者设置新值的操作，我们会引发一个运行期错误。我们可以使用索引值和数组的<code>count</code>属性进行比较来在使用某个索引之前先检验是否有效。除了当<code>count</code>等于0时（说明这是个空数组），最大索引值一直是<code>count - 1</code>，因为数组都是零起索引。</p>
+<p>注意：</p>
+<p>我们不能使用下标语法在数组尾部添加新项。如果我们试着用这种方法对索引越界的数据进行检索或者设置新值的操作，我们会引发一个运行期错误。我们可以使用索引值和数组的<code>count</code>属性进行比较来在使用某个索引之前先检验是否有效。除了当<code>count</code>等于 0 时（说明这是个空数组），最大索引值一直是<code>count - 1</code>，因为数组都是零起索引。</p>
 </blockquote>
 <p>调用数组的<code>insert(atIndex:)</code>方法来在某个具体索引值之前添加数据项：</p>
 <pre><code>shoppingList.insert(&quot;Maple Syrup&quot;, atIndex: 0)
 // shoppingList 现在有7项
 // &quot;Maple Syrup&quot; 现在是这个列表中的第一项
-</code></pre><p>这次<code>insert</code>函数调用把值为<code>&quot;Maple Syrup&quot;</code>的新数据项插入shopping列表的最开始位置，并且使用<code>0</code>作为索引值。</p>
+</code></pre><p>这次<code>insert</code>函数调用把值为<code>&quot;Maple Syrup&quot;</code>的新数据项插入列表的最开始位置，并且使用<code>0</code>作为索引值。</p>
 <p>类似的我们可以使用<code>removeAtIndex</code>方法来移除数组中的某一项。这个方法把数组在特定索引值中存储的数据项移除并且返回这个被移除的数据项（我们不需要的时候就可以无视它）:</p>
 <pre><code>let mapleSyrup = shoppingList.removeAtIndex(0)
 //索引值为0的数据项被移除
@@ -670,7 +680,8 @@ Swift的数组结构在被声明成常量和变量或者被传入函数与方法
 // 数组的最后一项被移除了
 // shoppingList现在只有5项，不包括cheese
 //  apples 常量的值现在等于&quot;Apples&quot; 字符串
-</code></pre><h3 id="-">数组的遍历</h3>
+</code></pre><p><a name="iterating_over_an_array"></a></p>
+<h3 id="-">数组的遍历</h3>
 <p>我们可以使用<code>for-in</code>循环来遍历所有数组中的数据项：</p>
 <pre><code>for item in shoppingList {
     println(item)
@@ -689,7 +700,8 @@ Swift的数组结构在被声明成常量和变量或者被传入函数与方法
 // Item 3: Flour
 // Item 4: Baking Powder
 // Item 5: Bananas
-</code></pre><p>更多关于<code>for-in</code>循环的介绍请参见<a href="待添加链接">for循环</a>。</p>
+</code></pre><p>更多关于<code>for-in</code>循环的介绍请参见<a href="05_Control_Flow.html#for_loops">for 循环</a>。</p>
+<p><a name="creating_and_initializing_an_array"></a></p>
 <h3 id="-">创建并且构造一个数组</h3>
 <p>我们可以使用构造语法来创建一个由特定数据类型构成的空数组：</p>
 <pre><code>var someInts = Int[]()
@@ -710,11 +722,13 @@ someInts = []
 </code></pre><p>最后，我们可以使用加法操作符（<code>+</code>）来组合两种已存在的相同类型数组。新数组的数据类型会被从两个数组的数据类型中推断出来：</p>
 <pre><code>var sixDoubles = threeDoubles + anotherThreeDoubles
 // sixDoubles 被推断为 Double[], 等于 [0.0, 0.0, 0.0, 2.5, 2.5, 2.5]
-</code></pre><h2 id="-">字典</h2>
+</code></pre><p><a name="dictionaries"></a></p>
+<h2 id="-">字典</h2>
 <p>字典是一种存储相同类型多重数据的存储器。每个值（value）都关联独特的键（key），键作为字典中的这个值数据的标识符。和数组中的数据项不同，字典中的数据项并没有具体顺序。我们在需要通过标识符（键）访问数据的时候使用字典，这种方法很大程度上和我们在现实世界中使用字典查字义的方法一样。</p>
 <p>Swift 的字典使用时需要具体规定可以存储键和值类型。不同于 Objective-C 的<code>NSDictionary</code>和<code>NSMutableDictionary</code> 类可以使用任何类型的对象来作键和值并且不提供任何关于这些对象的本质信息。在 Swift 中，在某个特定字典中可以存储的键和值必须提前定义清楚，方法是通过显性类型标注或者类型推断。</p>
 <p>Swift 的字典使用<code>Dictionary&lt;KeyType, ValueType&gt;</code>定义,其中<code>KeyType</code>是字典中键的数据类型，<code>ValueType</code>是字典中对应于这些键所存储值的数据类型。</p>
-<p><code>KeyType</code>的唯一限制就是可哈希的，这样可以保证它是独一无二的，所有的 Swift 基本类型（例如<code>String</code>，<code>Int</code>， <code>Double</code>和<code>Bool</code>）都是默认可哈希的，并且所有这些类型都可以在字典中当做键使用。未关联值的枚举成员（参见<a href="链接待添加">枚举</a>）也是默认可哈希的。</p>
+<p><code>KeyType</code>的唯一限制就是可哈希的，这样可以保证它是独一无二的，所有的 Swift 基本类型（例如<code>String</code>，<code>Int</code>， <code>Double</code>和<code>Bool</code>）都是默认可哈希的，并且所有这些类型都可以在字典中当做键使用。未关联值的枚举成员（参见<a href="08_Enumerations.html">枚举</a>）也是默认可哈希的。</p>
+<p><a name="dictionary_literals"></a></p>
 <h2 id="-">字典字面语句</h2>
 <p>我们可以使用字典字面语句来构造字典，他们和我们刚才介绍过的数组字面语句拥有相似语法。一个字典字面语句是一个定义拥有一个或者多个键值对的字典集合的简单语句。</p>
 <p>一个键值对是一个<code>key</code>和一个<code>value</code>的结合体。在字典字面语句中，每一个键值对的键和值都由冒号分割。这些键值对构成一个列表，其中这些键值对由方括号包含并且由逗号分割：</p>
@@ -723,19 +737,20 @@ someInts = []
 <pre><code>var airports: Dictionary&lt;String, String&gt; = [&quot;TYO&quot;: &quot;Tokyo&quot;, &quot;DUB&quot;: &quot;Dublin&quot;]
 </code></pre><p><code>airports</code>字典被定义为一种<code>Dictionary&lt;String, String&gt;</code>,它意味着这个字典的键和值都是<code>String</code>类型。</p>
 <blockquote>
-<p>注意：
-<code>airports</code>字典被声明为变量（用<code>var</code>关键字）而不是常量（<code>let</code>关键字）因为后来更多的机场信息会被添加到这个示例字典中。</p>
+<p>注意：</p>
+<p><code>airports</code>字典被声明为变量（用<code>var</code>关键字）而不是常量（<code>let</code>关键字）因为后来更多的机场信息会被添加到这个示例字典中。</p>
 </blockquote>
 <p><code>airports</code>字典使用字典字面语句初始化，包含两个键值对。第一对的键是<code>TYO</code>，值是<code>Tokyo</code>。第二对的键是<code>DUB</code>，值是<code>Dublin</code>。</p>
 <p>这个字典语句包含了两个<code>String: String</code>类型的键值对。他们对应<code>airports</code>变量声明的类型（一个只有<code>String</code>键和<code>String</code>值的字典）所以这个字典字面语句是构造两个初始数据项的<code>airport</code>字典。</p>
 <p>和数组一样，如果我们使用字面语句构造字典就不用把类型定义清楚。<code>airports</code>的也可以用这种方法简短定义：</p>
 <pre><code>var airports = [&quot;TYO&quot;: &quot;Tokyo&quot;, &quot;DUB&quot;: &quot;Dublin&quot;]
 </code></pre><p>因为这个语句中所有的键和值都分别是相同的数据类型，Swift 可以推断出<code>Dictionary&lt;String, String&gt;</code>是<code>airports</code>字典的正确类型。</p>
+<p><a name="accessing_and_modifying_a_dictionary"></a></p>
 <h3 id="-">读取和修改字典</h3>
 <p>我们可以通过字典的方法和属性来读取和修改字典，或者使用下标语法。和数组一样，我们可以通过字典的只读属性<code>count</code>来获取某个字典的数据项数量：</p>
 <pre><code>println(&quot;The dictionary of airports contains \(airports.count) items.&quot;)
 // 打印 &quot;The dictionary of airports contains 2 items.&quot;（这个字典有两个数据项）
-</code></pre><p>我们也可以在字典中使用下标语法来添加新的数据项。可以使用一个合适类型的key作为下标索引，并且分配新的合适类型的值：</p>
+</code></pre><p>我们也可以在字典中使用下标语法来添加新的数据项。可以使用一个合适类型的 key 作为下标索引，并且分配新的合适类型的值：</p>
 <pre><code>airports[&quot;LHR&quot;] = &quot;London&quot;
 // airports 字典现在有三个数据项
 </code></pre><p>我们也可以使用下标语法来改变特定键对应的值：</p>
@@ -746,8 +761,8 @@ someInts = []
 <pre><code>if let oldValue = airports.updateValue(&quot;Dublin Internation&quot;, forKey: &quot;DUB&quot;) {
     println(&quot;The old value for DUB was \(oldValue).&quot;)
 }
-// 打印出 &quot;The old value for DUB was Dublin.&quot;（dub原值是dublin）
-</code></pre><p>我们也可以使用下标语法来在字典中检索特定键对应的值。由于使用一个没有值的键这种情况是有可能发生的，可选 类型返回这个键存在的相关值，否则就返回<code>nil</code>：</p>
+// 输出 &quot;The old value for DUB was Dublin.&quot;（dub原值是dublin）
+</code></pre><p>我们也可以使用下标语法来在字典中检索特定键对应的值。由于使用一个没有值的键这种情况是有可能发生的，可选类型返回这个键存在的相关值，否则就返回<code>nil</code>：</p>
 <pre><code>if let airportName = airports[&quot;DUB&quot;] {
     println(&quot;The name of the airport is \(airportName).&quot;)
 } else {
@@ -765,15 +780,16 @@ airports[&quot;APL&quot;] = nil
 } else {
     println(&quot;The airports dictionary does not contain a value for DUB.&quot;)
 }
-// 打印 &quot;The removed airport&#39;s name is Dublin International.&quot;（被移除的机场名字是都柏林国际）
-</code></pre><h3 id="-">字典遍历</h3>
+// prints &quot;The removed airport&#39;s name is Dublin International.&quot;
+</code></pre><p><a name="iterating_over_a_dictionary"></a></p>
+<h3 id="-">字典遍历</h3>
 <p>我们可以使用<code>for-in</code>循环来遍历某个字典中的键值对。每一个字典中的数据项都由<code>(key, value)</code>元组形式返回，并且我们可以使用暂时性常量或者变量来分解这些元组：</p>
 <pre><code>for (airportCode, airportName) in airports {
     prINTln(&quot;\(airportCode): \(airportName)&quot;)
 }
 // TYO: Tokyo
 // LHR: London Heathrow
-</code></pre><p><code>for-in</code>循环请参见<a href="链接待添加">For 循环</a>。</p>
+</code></pre><p><code>for-in</code>循环请参见<a href="05_Control_Flow.html#for_loops">For 循环</a>。</p>
 <p>我们也可以通过访问他的<code>keys</code>或者<code>values</code>属性（都是可遍历集合）检索一个字典的键或者值：</p>
 <pre><code>for airportCode in airports.keys {
     prINTln(&quot;Airport code: \(airportCode)&quot;)
@@ -793,9 +809,10 @@ for airportName in airports.values {
 let airportNames = Array(airports.values)
 // airportNames is [&quot;Tokyo&quot;, &quot;London Heathrow&quot;]
 </code></pre><blockquote>
-<p>注意：
-Swift 的字典类型是无序集合类型。其中字典键，值，键值对在遍历的时候会重新排列，而且其中顺序是不固定的。</p>
+<p>注意：</p>
+<p>Swift 的字典类型是无序集合类型。其中字典键，值，键值对在遍历的时候会重新排列，而且其中顺序是不固定的。</p>
 </blockquote>
+<p><a name="creating_an_empty_dictionary"></a></p>
 <h3 id="-">创建一个空字典</h3>
 <p>我们可以像数组一样使用构造语法创建一个空字典：</p>
 <pre><code>var namesOfIntegers = Dictionary&lt;Int, String&gt;()
@@ -807,17 +824,18 @@ Swift 的字典类型是无序集合类型。其中字典键，值，键值对�
 namesOfIntegers = [:]
 // namesOfIntegers 又成为了一个 Int, String类型的空字典
 </code></pre><blockquote>
-<p>注意：
-在后台，Swift 的数组和字典都是由泛型集合来实现的，想了解更多泛型和集合信息请参见<a href="链接待添加">泛型</a>。</p>
+<p>注意：</p>
+<p>在后台，Swift 的数组和字典都是由泛型集合来实现的，想了解更多泛型和集合信息请参见<a href="22_Generics.html">泛型</a>。</p>
 </blockquote>
+<p><a name="mutability_of_collections"></a></p>
 <h2 id="-">集合的可变性</h2>
 <p>数组和字典都是在单个集合中存储可变值。如果我们创建一个数组或者字典并且把它分配成一个变量，这个集合将会是可变的。这意味着我们可以在创建之后添加更多或移除已存在的数据项来改变这个集合的大小。与此相反，如果我们把数组或字典分配成常量，那么他就是不可变的，它的大小不能被改变。</p>
 <p>对字典来说，不可变性也意味着我们不能替换其中任何现有键所对应的值。不可变字典的内容在被首次设定之后不能更改。
-不可变行对数组来说有一点不同，当然我们不能试着改变任何不可变数组的大小，但是我们可以重新设定相对现存索引所对应的值。这使得 Swift 数组在大小被固定的时候依然可以做的很棒。</p>
-<p>Swift 数组的可变性行为同时影响了数组实例如何被分配和修改，想获取更多信息，请参见<a href="待翻译，链接待添加，请查看对应章节的翻译">Assignment and Copy Behavior for Collection Types</a>。</p>
+不可变行对数组来说有一点不同，当然我们不能试着改变任何不可变数组的大小，但是我们·可以重新设定相对现存索引所对应的值。这使得 Swift 数组在大小被固定的时候依然可以做的很棒。</p>
+<p>Swift 数组的可变性行为同时影响了数组实例如何被分配和修改，想获取更多信息，请参见<a href="09_Classes_and_Structures.html#assignment_and_copy_behavior_for_collection_types">集合在赋值和复制中的行为</a>。</p>
 <blockquote>
-<p>注意：
-在我们不需要改变数组大小的时候创建不可变数组是很好的习惯。如此 Swift 编译器可以优化我们创建的集合。</p>
+<p>注意：</p>
+<p>在我们不需要改变数组大小的时候创建不可变数组是很好的习惯。如此 Swift 编译器可以优化我们创建的集合。</p>
 </blockquote>
 
                     
@@ -864,6 +882,6 @@ require(["gitbook"], function(gitbook) {
 </script>
 
         
-    <script src="http://s19.cnzz.com/z_stat.php?id=1000480711&web_id=1000480711" language="JavaScript"></script></body>
+    </body>
     
 </html>

@@ -5,12 +5,12 @@
         
         
         <meta charset="UTF-8">
-        <title>词法结构 | Swift 编程语言</title>
+        <title>《The Swift Programming Language》中文版</title>
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="robots" content="index, follow">
         <meta name="author" content="">
-        <meta name="description" content="Swift 是苹果在 WWDC 2014 上发布的一款全新的编程语言，本书译自苹果官方的 Swift 教程《The Swift Programming Language》。">
+        <meta name="description" content="Swift 中文翻译组：364279588（要求对翻译感兴趣）">
         <meta name="keywords" content="gitbook,github" >
         <meta name="generator" content="www.gitbook.io">
 
@@ -21,8 +21,8 @@
         <link rel="prev" href="../chapter3/01_About_the_Language_Reference.html" />
         
 
-        <meta property="og:title" content="词法结构 | Swift 编程语言">
-        <meta property="og:site_name" content="Swift 编程语言">
+        <meta property="og:title" content="词法结构 | 这一次，让中国和世界同步">
+        <meta property="og:site_name" content="这一次，让中国和世界同步">
         <meta property="og:type" content="book">
         <meta property="og:locale" content="en_US">
 
@@ -46,7 +46,7 @@
 
 
         
-    <div class="book"  data-level="3.2" data-basepath=".." data-revision="1402493167130">
+    <div class="book"  data-level="3.2" data-basepath=".." data-revision="1402523087598">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -98,7 +98,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-spinner fa-spin"></i>
-        <a href="../" >Swift 编程语言</a>
+        <a href="../" >这一次，让中国和世界同步</a>
     </h1>
 </div>
 
@@ -119,7 +119,7 @@
         
 
         <li data-level="0" data-path="index.html">
-            <a href="../"><i class="fa fa-check"></i> Introduction</a>
+            <a href="../"><i class="fa fa-check"></i> 序</a>
         </li>
         
     
@@ -331,7 +331,7 @@
         <li class="chapter " data-level="2.19" data-path="chapter2/19_Nested_Types.html">
             
             <a href="../chapter2/19_Nested_Types.html">
-                <i class="fa fa-check"></i> <b>2.19.</b> 嵌套类型
+                <i class="fa fa-check"></i> <b>2.19.</b> 类型嵌套
             </a>
             
             
@@ -534,7 +534,7 @@
     
         <a href="../chapter2/18_Type_Casting.html" title="类型检查" class="chapter done " data-progress="2.18" style="left: 36.8421052631579%;"></a>
     
-        <a href="../chapter2/19_Nested_Types.html" title="嵌套类型" class="chapter done " data-progress="2.19" style="left: 39.473684210526315%;"></a>
+        <a href="../chapter2/19_Nested_Types.html" title="类型嵌套" class="chapter done " data-progress="2.19" style="left: 39.473684210526315%;"></a>
     
         <a href="../chapter2/02_Basic_Operators.html" title="基本运算符" class="chapter done " data-progress="2.2" style="left: 42.10526315789474%;"></a>
     
@@ -587,23 +587,29 @@
 
                 <div class="page-inner">
                 
-                    <section class="normal" id="section-gitbook_176">
+                    <section class="normal" id="section-gitbook_6527">
                     
-                        <h1 id="-">语法结构</h1>
+                        <blockquote>
+<p>翻译：superkam</p>
+<p>校对：numbbbbb</p>
+</blockquote>
+<h1 id="-">词法结构</h1>
 <hr>
 <p>本页包含内容：</p>
 <ul>
-<li>空白与注释（<em>Whitespace and Comments</em>）</li>
-<li>标识符（<em>Identifiers</em>）</li>
-<li>关键字（<em>Keywords</em>）</li>
-<li>字面量（<em>Literals</em>）</li>
-<li>运算符（<em>Operators</em>）</li>
+<li><a href="#whitespace_and_comments">空白与注释（<em>Whitespace and Comments</em>）</a></li>
+<li><a href="#identifiers">标识符（<em>Identifiers</em>）</a></li>
+<li><a href="#keywords">关键字（<em>Keywords</em>）</a></li>
+<li><a href="#literals">字面量（<em>Literals</em>）</a></li>
+<li><a href="#operators">运算符（<em>Operators</em>）</a></li>
 </ul>
-<p>Swift 的“语法结构（<em>lexical structure</em>）”描述了如何在该语言中用字符序列构建合法标记，组成该语言中最底层的代码块，并在之后的章节中用于描述语言的其他部分。</p>
+<p>Swift 的“词法结构（<em>lexical structure</em>）”描述了如何在该语言中用字符序列构建合法标记，组成该语言中最底层的代码块，并在之后的章节中用于描述语言的其他部分。</p>
 <p>通常，标记在随后介绍的语法约束下，由 Swift 源文件的输入文本中提取可能的最长子串生成。这种方法称为“最长匹配项（<em>longest match</em>）”，或者“最大适合”（<em>maximal munch</em>）。</p>
+<p><a name="whitespace_and_comments"></a></p>
 <h2 id="-">空白与注释</h2>
 <p>空白（<em>whitespace</em>）有两个用途：分隔源文件中的标记和区分运算符属于前缀还是后缀，（参见 <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/LexicalStructure.html#//apple_ref/doc/uid/TP40014097-CH30-XID_871" target="_blank">运算符</a>）在其他情况下则会被忽略。以下的字符会被当作空白：空格（<em>space</em>）（U+0020）、换行符（<em>line feed</em>）（U+000A）、回车符（<em>carriage return</em>）（U+000D）、水平 tab（<em>horizontal tab</em>）（U+0009）、垂直 tab（<em>vertical tab</em>）（U+000B）、换页符（<em>form feed</em>）（U+000C）以及空（<em>null</em>）（U+0000）。</p>
 <p>注释（<em>comments</em>）被编译器当作空白处理。单行注释由 <code>//</code> 开始直到该行结束。多行注释由 <code>/*</code> 开始，以 <code>*/</code> 结束。可以嵌套注释，但注意注释标记必须匹配。</p>
+<p><a name="identifiers"></a></p>
 <h2 id="-">标识符</h2>
 <p>标识符（<em>identifiers</em>）可以由以下的字符开始：大写或小写的字母 <code>A</code> 到 <code>Z</code>、下划线 <code>_</code>、基本多语言面（<em>Basic Multilingual Plane</em>）中的 Unicode 非组合字符以及基本多语言面以外的非专用区（<em>Private Use Area</em>）字符。首字符之后，标识符允许使用数字和 Unicode 字符组合。</p>
 <p>使用保留字（<em>reserved word</em>）作为标识符，需要在其前后增加反引号 <code>`</code>。例如，<code>class</code> 不是合法的标识符，但可以使用 <code>`class`</code>。反引号不属于标识符的一部分，<code>`x`</code> 和 <code>x</code> 表示同一标识符。</p>
@@ -635,10 +641,11 @@
 <p><em>identifier-characters</em> → <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/LexicalStructure.html#//apple_ref/swift/grammar/identifier-character" target="_blank">identifier-character</a> <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/LexicalStructure.html#//apple_ref/swift/grammar/identifier-characters" target="_blank">­identifier-characters­</a> <em>opt­</em></p>
 <p><em>implicit-parameter-name</em> → <strong>$­</strong> <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/LexicalStructure.html#//apple_ref/swift/grammar/decimal-digits" target="_blank">decimal-digits­</a></p>
 </blockquote>
+<p><a name="keywords"></a></p>
 <h2 id="-">关键字</h2>
 <p>被保留的关键字（<em>keywords</em>）不允许用作标识符，除非被反引号转义，参见 <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/LexicalStructure.html#//apple_ref/doc/uid/TP40014097-CH30-XID_796" target="_blank">标识符</a>。</p>
 <ul>
-<li><p><strong>用作声明的关键字：</strong> <em>class</em>、<em>deinit</em>、<em>enum</em>、<em>extension</em>、<em>func</em>、<em>import</em>、<em>init</em>、<em>let</em>、<em>protocol</em>、<em>static</em>、<em>struct</em>、<em>subscript</em>、<em>typealias</em>、<em>var</em> </p>
+<li><p><strong>用作声明的关键字：</strong> <em>class</em>、<em>deinit</em>、<em>enum</em>、<em>extension</em>、<em>func</em>、<em>import</em>、<em>init</em>、<em>let</em>、<em>protocol</em>、<em>static</em>、<em>struct</em>、<em>subscript</em>、<em>typealias</em>、<em>var</em></p>
 </li>
 <li><p><strong>用作语句的关键字：</strong> <em>break</em>、<em>case</em>、<em>continue</em>、<em>default</em>、<em>do</em>、<em>else</em>、<em>fallthrough</em>、<em>if</em>、<em>in</em>、<em>for</em>、<em>return</em>、<em>switch</em>、<em>where</em>、<em>while</em></p>
 </li>
@@ -647,6 +654,7 @@
 <li><p><strong>特定上下文中被保留的关键字：</strong> <em>associativity</em>、<em>didSet</em>、<em>get</em>、<em>infix</em>、<em>inout</em>、<em>left</em>、<em>mutating</em>、<em>none</em>、<em>nonmutating</em>、<em>operator</em>、<em>override</em>、<em>postfix</em>、<em>precedence</em>、<em>prefix</em>、<em>right</em>、<em>set</em>、<em>unowned</em>、<em>unowned(safe)</em>、<em>unowned(unsafe)</em>、<em>weak</em>、<em>willSet</em>，这些关键字在特定上下文之外可以被用于标识符。</p>
 </li>
 </ul>
+<p><a name="literals"></a></p>
 <h2 id="-">字面量</h2>
 <p>字面值表示整型、浮点型数字或文本类型的值，举例如下：</p>
 <pre><code>42                 // 整型字面量
@@ -750,6 +758,7 @@ var x = 3; &quot;1 2 \(x)&quot;
 <p><em>escaped-character</em> → <strong>\u</strong> ­<a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/LexicalStructure.html#//apple_ref/swift/grammar/hexadecimal-digit" target="_blank">hexadecimal-digit­</a> <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/LexicalStructure.html#//apple_ref/swift/grammar/hexadecimal-digit" target="_blank">hexadecimal-digit</a> <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/LexicalStructure.html#//apple_ref/swift/grammar/hexadecimal-digit" target="_blank">­hexadecimal-digit</a>­ <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/LexicalStructure.html#//apple_ref/swift/grammar/hexadecimal-digit" target="_blank">hexadecimal-digit­</a></p>
 <p><em>escaped-character</em> → <strong>\U­</strong> <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/LexicalStructure.html#//apple_ref/swift/grammar/hexadecimal-digit" target="_blank">hexadecimal-digit­</a> <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/LexicalStructure.html#//apple_ref/swift/grammar/hexadecimal-digit" target="_blank">hexadecimal-digit­</a> <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/LexicalStructure.html#//apple_ref/swift/grammar/hexadecimal-digit" target="_blank">hexadecimal-digit­</a> <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/LexicalStructure.html#//apple_ref/swift/grammar/hexadecimal-digit" target="_blank">hexadecimal-digit­</a> <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/LexicalStructure.html#//apple_ref/swift/grammar/hexadecimal-digit" target="_blank">hexadecimal-digit­</a> <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/LexicalStructure.html#//apple_ref/swift/grammar/hexadecimal-digit" target="_blank">hexadecimal-digit­</a> <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/LexicalStructure.html#//apple_ref/swift/grammar/hexadecimal-digit" target="_blank">hexadecimal-digit­</a> <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/LexicalStructure.html#//apple_ref/swift/grammar/hexadecimal-digit" target="_blank">hexadecimal-digit­</a></p>
 </blockquote>
+<p><a name="operators"></a></p>
 <h2 id="-">运算符</h2>
 <p>Swift 标准库定义了许多可供使用的运算符，其中大部分在 <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/BasicOperators.html#//apple_ref/doc/uid/TP40014097-CH6-XID_70" target="_blank">基础运算符</a> 和 <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/AdvancedOperators.html#//apple_ref/doc/uid/TP40014097-CH27-XID_28" target="_blank">高级运算符</a> 中进行了阐述。这里将描述哪些字符能用作运算符。</p>
 <p>运算符由一个或多个以下字符组成：
@@ -766,7 +775,7 @@ var x = 3; &quot;1 2 \(x)&quot;
 </li>
 </ul>
 <p>鉴于这些规则，运算符前的字符 <code>(</code>、<code>[</code> 和 <code>{</code> ；运算符后的字符 <code>)</code>、<code>]</code> 和 <code>}</code> 以及字符 <code>,</code>、<code>;</code> 和 <code>:</code> 都将用于空白检测。</p>
-<p>以上规则需注意一点，如果运算符 <code>!</code> 或 <code>?</code> 左侧没有空白，则不管右侧是否有空白都将被看作后缀运算符。如果将 <code>?</code> 用作可选类型（<em>optional type</em>）修饰，左侧必须无空白。如果用于条件运算符 <code>? :</code>，必须两侧都有空白。 </p>
+<p>以上规则需注意一点，如果运算符 <code>!</code> 或 <code>?</code> 左侧没有空白，则不管右侧是否有空白都将被看作后缀运算符。如果将 <code>?</code> 用作可选类型（<em>optional type</em>）修饰，左侧必须无空白。如果用于条件运算符 <code>? :</code>，必须两侧都有空白。</p>
 <p>在特定构成中 ，以 <code>&lt;</code> 或 <code>&gt;</code> 开头的运算符会被分离成两个或多个标记，剩余部分以同样的方式会被再次分离。因此，在 <code>Dictionary&lt;String, Array&lt;Int&gt;&gt;</code> 中没有必要添加空白来消除闭合字符 <code>&gt;</code> 的歧义。在这个例子中， 闭合字符 <code>&gt;</code> 被看作单字符标记，而不会被误解为移位运算符 <code>&gt;&gt;</code>。</p>
 <p>要学习如何自定义新的运算符，请参考 <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/AdvancedOperators.html#//apple_ref/doc/uid/TP40014097-CH27-XID_48" target="_blank">自定义操作符</a> 和 <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/doc/uid/TP40014097-CH34-XID_644" target="_blank">运算符声明</a>。学习如何重写现有运算符，请参考 <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/AdvancedOperators.html#//apple_ref/doc/uid/TP40014097-CH27-XID_43" target="_blank">运算符方法</a>。</p>
 <blockquote>
@@ -822,6 +831,6 @@ require(["gitbook"], function(gitbook) {
 </script>
 
         
-    <script src="http://s19.cnzz.com/z_stat.php?id=1000480711&web_id=1000480711" language="JavaScript"></script></body>
+    </body>
     
 </html>

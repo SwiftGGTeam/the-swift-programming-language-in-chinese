@@ -5,12 +5,12 @@
         
         
         <meta charset="UTF-8">
-        <title>类型 | Swift 编程语言</title>
+        <title>《The Swift Programming Language》中文版</title>
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="robots" content="index, follow">
         <meta name="author" content="">
-        <meta name="description" content="Swift 是苹果在 WWDC 2014 上发布的一款全新的编程语言，本书译自苹果官方的 Swift 教程《The Swift Programming Language》。">
+        <meta name="description" content="Swift 中文翻译组：364279588（要求对翻译感兴趣）">
         <meta name="keywords" content="gitbook,github" >
         <meta name="generator" content="www.gitbook.io">
 
@@ -21,8 +21,8 @@
         <link rel="prev" href="../chapter3/02_Lexical_Structure.html" />
         
 
-        <meta property="og:title" content="类型 | Swift 编程语言">
-        <meta property="og:site_name" content="Swift 编程语言">
+        <meta property="og:title" content="类型 | 这一次，让中国和世界同步">
+        <meta property="og:site_name" content="这一次，让中国和世界同步">
         <meta property="og:type" content="book">
         <meta property="og:locale" content="en_US">
 
@@ -46,7 +46,7 @@
 
 
         
-    <div class="book"  data-level="3.3" data-basepath=".." data-revision="1402493167130">
+    <div class="book"  data-level="3.3" data-basepath=".." data-revision="1402523087598">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -98,7 +98,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-spinner fa-spin"></i>
-        <a href="../" >Swift 编程语言</a>
+        <a href="../" >这一次，让中国和世界同步</a>
     </h1>
 </div>
 
@@ -119,7 +119,7 @@
         
 
         <li data-level="0" data-path="index.html">
-            <a href="../"><i class="fa fa-check"></i> Introduction</a>
+            <a href="../"><i class="fa fa-check"></i> 序</a>
         </li>
         
     
@@ -331,7 +331,7 @@
         <li class="chapter " data-level="2.19" data-path="chapter2/19_Nested_Types.html">
             
             <a href="../chapter2/19_Nested_Types.html">
-                <i class="fa fa-check"></i> <b>2.19.</b> 嵌套类型
+                <i class="fa fa-check"></i> <b>2.19.</b> 类型嵌套
             </a>
             
             
@@ -534,7 +534,7 @@
     
         <a href="../chapter2/18_Type_Casting.html" title="类型检查" class="chapter done " data-progress="2.18" style="left: 36.8421052631579%;"></a>
     
-        <a href="../chapter2/19_Nested_Types.html" title="嵌套类型" class="chapter done " data-progress="2.19" style="left: 39.473684210526315%;"></a>
+        <a href="../chapter2/19_Nested_Types.html" title="类型嵌套" class="chapter done " data-progress="2.19" style="left: 39.473684210526315%;"></a>
     
         <a href="../chapter2/02_Basic_Operators.html" title="基本运算符" class="chapter done " data-progress="2.2" style="left: 42.10526315789474%;"></a>
     
@@ -587,43 +587,49 @@
 
                 <div class="page-inner">
                 
-                    <section class="normal" id="section-gitbook_171">
+                    <section class="normal" id="section-gitbook_6521">
                     
-                        <h1 id="-types-">类型（Types）</h1>
+                        <blockquote>
+<p>翻译：lyuka</p>
+<p>校对：numbbbbb</p>
+</blockquote>
+<h1 id="-types-">类型（Types）</h1>
 <hr>
 <p>本页包含内容：</p>
 <ul>
-<li>类型标注（Type Annotation）</li>
-<li>类型标识符（Type Identifier）</li>
-<li>元组类型（Tuple Type）</li>
-<li>函数类型（Function Type）</li>
-<li>数组类型（Array Type）</li>
-<li>可选类型（Optional Type）</li>
-<li>隐式解析可选类型（Implicitly Unwrapped Optional Type）</li>
-<li>协议合成类型（Protocol Composition Type）</li>
-<li>元类型（Metatype Type）</li>
-<li>类型继承子句（Type Inheritance Clause）</li>
-<li>类型推断（Type Inference）</li>
+<li><a href="#type_annotation">类型注解（Type Annotation）</a></li>
+<li><a href="#type_identifier">类型标识符（Type Identifier）</a></li>
+<li><a href="#tuple_type">元组类型（Tuple Type）</a></li>
+<li><a href="#function_type">函数类型（Function Type）</a></li>
+<li><a href="#array_type">数组类型（Array Type）</a></li>
+<li><a href="#optional_type">可选类型（Optional Type）</a></li>
+<li><a href="#implicitly_unwrapped_optional_type">隐式解析可选类型（Implicitly Unwrapped Optional Type）</a></li>
+<li><a href="#protocol_composition_type">协议合成类型（Protocol Composition Type）</a></li>
+<li><a href="#metatype_type">元类型（Metatype Type）</a></li>
+<li><a href="#type_inheritance_clause">类型继承子句（Type Inheritance Clause）</a></li>
+<li><a href="#type_inference">类型推断（Type Inference）</a></li>
 </ul>
-<p>Swift语言存在两种类型：命名型类型和复合型类型。<em>命名型类型</em>是指定义时可以给定名字的类型。命名型类型包括类、结构体、枚举和协议。比如，一个用户定义的类<code>MyClass</code>的实例拥有类型<code>MyClass</code>。除了用户定义的命名型类型，Swift标准库也定义了很多常用的命名型类型，包括那些表示数组、字典和可选值的类型。</p>
-<p>那些通常被其它语言认为是基本或初级的数据型类型（Data types）——比如表示数字、字符和字符串——实际上就是命名型类型，Swift标准库是使用结构体定义和实现它们的。因为它们是命名型类型，因此你可以按照“扩展和扩展声明”章节里讨论的那样，声明一个扩展来增加它们的行为以适应你程序的需求。</p>
-<p><em>复合型类型</em>是没有名字的类型，它由Swift本身定义。Swift存在两种复合型类型：函数类型和元组类型。一个复合型类型可以包含命名型类型和其它复合型类型。例如，元组类型<code>(Int, (Int, Int))</code>包含两个元素：第一个是命名型类型<code>Int</code>，第二个是另一个复合型类型<code>(Int, Int)</code>.</p>
-<p>本节讨论Swift语言本身定义的类型，并描述Swift中的类型推断行为。</p>
+<p>Swift 语言存在两种类型：命名型类型和复合型类型。<em>命名型类型</em>是指定义时可以给定名字的类型。命名型类型包括类、结构体、枚举和协议。比如，一个用户定义的类<code>MyClass</code>的实例拥有类型<code>MyClass</code>。除了用户定义的命名型类型，Swift 标准库也定义了很多常用的命名型类型，包括那些表示数组、字典和可选值的类型。</p>
+<p>那些通常被其它语言认为是基本或初级的数据型类型（Data types）——比如表示数字、字符和字符串——实际上就是命名型类型，Swift 标准库是使用结构体定义和实现它们的。因为它们是命名型类型，因此你可以按照“扩展和扩展声明”章节里讨论的那样，声明一个扩展来增加它们的行为以适应你程序的需求。</p>
+<p><em>复合型类型</em>是没有名字的类型，它由 Swift 本身定义。Swift 存在两种复合型类型：函数类型和元组类型。一个复合型类型可以包含命名型类型和其它复合型类型。例如，元组类型<code>(Int, (Int, Int))</code>包含两个元素：第一个是命名型类型<code>Int</code>，第二个是另一个复合型类型<code>(Int, Int)</code>.</p>
+<p>本节讨论 Swift 语言本身定义的类型，并描述 Swift 中的类型推断行为。</p>
 <blockquote>
 <p>类型的语法：
 <em>type</em> → <em>array-type</em> | <em>function-type</em> | <em>type-identifier</em> | <em>tuple-type</em> | <em>optional-type</em> | <em>implicitly-unwrapped-optional-type</em> | protocol-composition-type | metatype-type</p>
 </blockquote>
-<h2 id="-">类型标注</h2>
-<p>类型标注显式地指定一个变量或表达式的值。类型标注始于冒号<code>:</code>终于类型，比如下面两个例子：</p>
+<p><a name="type_annotation"></a></p>
+<h2 id="-">类型注解</h2>
+<p>类型注解显式地指定一个变量或表达式的值。类型注解始于冒号<code>:</code>终于类型，比如下面两个例子：</p>
 <pre><code class="lang-javascript"><span class="hljs-keyword">let</span> someTuple：(Double, Double) = (<span class="hljs-number">3.14159</span>, <span class="hljs-number">2.71828</span>)
 func someFunction(a: Int){ <span class="hljs-comment">/* ... */</span> }
 </code></pre>
 <p>在第一个例子中，表达式<code>someTuple</code>的类型被指定为<code>(Double, Double)</code>。在第二个例子中，函数<code>someFunction</code>的参数<code>a</code>的类型被指定为<code>Int</code>。</p>
-<p>类型标注可以在类型之前包含一个类型特性（type attributes）的可选列表。</p>
+<p>类型注解可以在类型之前包含一个类型特性（type attributes）的可选列表。</p>
 <blockquote>
-<p>类型标注的语法：
+<p>类型注解的语法：
 <em>type-annotation</em> → :<em>attributes</em>[opt] <em>type</em></p>
 </blockquote>
+<p><a name="type_identifier"></a></p>
 <h2 id="-">类型标识符</h2>
 <p>类型标识符引用命名型类型或者是命名型/复合型类型的别名。</p>
 <p>大多数情况下，类型标识符引用的是同名的命名型类型。例如类型标识符<code>Int</code>引用命名型类型<code>Int</code>，同样，类型标识符<code>Dictionary&lt;String, Int&gt;</code>引用命名型类型<code>Dictionary&lt;String, Int&gt;</code>。</p>
@@ -639,6 +645,7 @@ func someFunction(a: Int){ <span class="hljs-comment">/* ... */</span> }
 <em>type-identifier</em> → <em>type-name generic-argument-clause</em>[opt] | <em>type-name generic-argument-clause</em>[opt].<em>type-identifier</em>
 <em>type-name</em> → <em>identifier</em></p>
 </blockquote>
+<p><a name="tuple_type"></a></p>
 <h2 id="-">元组类型</h2>
 <p>元组类型使用逗号隔开并使用括号括起来的0个或多个类型组成的列表。</p>
 <p>你可以使用元组类型作为一个函数的返回类型，这样就可以使函数返回多个值。你也可以命名元组类型中的元素，然后用这些名字来引用每个元素的值。元素的名字由一个标识符和<code>:</code>组成。“函数和多返回值”章节里有一个展示上述特性的例子。</p>
@@ -647,10 +654,11 @@ func someFunction(a: Int){ <span class="hljs-comment">/* ... */</span> }
 <p>元组类型语法：
 <em>tuple</em> → (<em>tuple-type-body</em>[opt])
 <em>tuple-type-body</em> → <em>tuple-type-element-list</em> ...[opt]
-<em>tuple-type-element-list</em> → <em>tuple-type-element</em> | <em>tuple-type-element</em>, <em>tuple-type-element-list</em> 
-<em>tuple-type-element</em> → <em>attributes</em>[opt] <strong>inout</strong> [opt] <em>type</em> | <strong>inout</strong> [opt] <em>element-name type-annotation</em> 
+<em>tuple-type-element-list</em> → <em>tuple-type-element</em> | <em>tuple-type-element</em>, <em>tuple-type-element-list</em>
+<em>tuple-type-element</em> → <em>attributes</em>[opt] <strong>inout</strong> [opt] <em>type</em> | <strong>inout</strong> [opt] <em>element-name type-annotation</em>
 <em>element-name</em> → <em>identifier</em></p>
 </blockquote>
+<p><a name="function_type"></a></p>
 <h2 id="-">函数类型</h2>
 <p>函数类型表示一个函数、方法或闭包的类型，它由一个参数类型和返回值类型组成，中间用箭头<code>-&gt;</code>隔开：</p>
 <ul>
@@ -688,6 +696,7 @@ addTwoNumbers(<span class="hljs-number">4</span>)(<span class="hljs-number">5</s
 <p>函数类型的语法：
 <em>function-type</em> → <em>type</em> <strong>-&gt;</strong> <em>type</em></p>
 </blockquote>
+<p><a name="array_type"></a></p>
 <h2 id="-">数组类型</h2>
 <p>Swift语言使用类型名紧接中括号<code>[]</code>来简化标准库中定义的命名型类型<code>Array&lt;T&gt;</code>。换句话说，下面两个声明是等价的：</p>
 <pre><code class="lang-javascript"><span class="hljs-keyword">let</span> someArray: <span class="hljs-built_in">String</span>[] = [<span class="hljs-string">"Alex"</span>, <span class="hljs-string">"Brian"</span>, <span class="hljs-string">"Dave"</span>]
@@ -706,6 +715,7 @@ addTwoNumbers(<span class="hljs-number">4</span>)(<span class="hljs-number">5</s
 <p>数组类型的语法：
 <em>array-type</em> → <em>type</em><code>[ ]</code> | <em>array-type</em><code>[ ]</code></p>
 </blockquote>
+<p><a name="optional_type"></a></p>
 <h2 id="-">可选类型</h2>
 <p>Swift定义后缀<code>?</code>来作为标准库中的定义的命名型类型<code>Optional&lt;T&gt;</code>的简写。换句话说，下面两个声明是等价的：</p>
 <pre><code class="lang-javascript"><span class="hljs-keyword">var</span> optionalInteger: Int?
@@ -726,6 +736,7 @@ optionalInteger!      <span class="hljs-comment">// 42</span>
 <p>可选类型语法：
 <em>optional-type</em> → <em>type</em>?</p>
 </blockquote>
+<p><a name="implicitly_unwrapped_optional_type"></a></p>
 <h2 id="-">隐式解析可选类型</h2>
 <p>Swift语言定义后缀<code>!</code>作为标准库中命名类型<code>ImplicitlyUnwrappedOptional&lt;T&gt;</code>的简写。换句话说，下面两个声明等价：</p>
 <pre><code class="lang-javascript"><span class="hljs-keyword">var</span> implicitlyUnwrappedString: <span class="hljs-built_in">String</span>!
@@ -741,8 +752,9 @@ optionalInteger!      <span class="hljs-comment">// 42</span>
 <p>隐式解析可选的语法：
 implicitly-unwrapped-optional-type → type!</p>
 </blockquote>
+<p><a name="protocol_composition_type"></a></p>
 <h2 id="-">协议合成类型</h2>
-<p>协议合成类型是一种符合每个协议的指定协议列表类型。协议合成类型可能会用在类型标注和泛型参数中。</p>
+<p>协议合成类型是一种符合每个协议的指定协议列表类型。协议合成类型可能会用在类型注解和泛型参数中。</p>
 <p>协议合成类型的形式如下：</p>
 <pre><code class="lang-javascript">protocol&lt;Protocol <span class="hljs-number">1</span>, Procotol <span class="hljs-number">2</span>&gt;
 </code></pre>
@@ -751,9 +763,10 @@ implicitly-unwrapped-optional-type → type!</p>
 <blockquote>
 <p>协议合成类型的语法：
 <em>protocol-composition-type</em> → <strong>protocol</strong> &lt;<em>protocol-identifier-list[opt]</em>&gt;
-<em>protocol-identifier-list</em> → <em>protocol-identifier</em> | <em>protocol-identifier, protocol-identifier-list</em> 
+<em>protocol-identifier-list</em> → <em>protocol-identifier</em> | <em>protocol-identifier, protocol-identifier-list</em>
 <em>protocol-identifier</em> → <em>type-identifier</em></p>
 </blockquote>
+<p><a name="metatype_type"></a></p>
 <h2 id="-">元类型</h2>
 <p>元类型是指所有类型的类型，包括类、结构体、枚举和协议。</p>
 <p>类、结构体或枚举类型的元类型是相应的类型名紧跟<code>.Type</code>。协议类型的元类型——并不是运行时适配该协议的具体类型——是该协议名字紧跟<code>.Protocol</code>。比如，类<code>SomeClass</code>的元类型就是<code>SomeClass.Type</code>，协议<code>SomeProtocol</code>的元类型就是<code>SomeProtocal.Protocol</code>。</p>
@@ -778,6 +791,7 @@ someInstance.dynamicType.printClassName()
 <p>元类型的语法：
 <em>metatype-type</em> → <em>type</em>.<strong>Type</strong> | <em>type</em>.<strong>Protocol</strong></p>
 </blockquote>
+<p><a name="type_inheritance_clause"></a></p>
 <h2 id="-">类型继承子句</h2>
 <p>类型继承子句被用来指定一个命名型类型继承哪个类且适配哪些协议。类型继承子句开始于冒号<code>:</code>，紧跟由<code>,</code>隔开的类型标识符列表。</p>
 <p>类可以继承单个超类，适配任意数量的协议。当定义一个类时，超类的名字必须出现在类型标识符列表首位，然后跟上该类需要适配的任意数量的协议。如果一个类不是从其它类继承而来，那么列表可以以协议开头。关于类继承更多的讨论和例子，见章节“继承”。</p>
@@ -785,13 +799,14 @@ someInstance.dynamicType.printClassName()
 <p>枚举定义中的类型继承子句可以是一个协议列表，或是指定原始值的枚举，一个单独的指定原始值类型的命名型类型。使用类型继承子句来指定原始值类型的枚举定义的例子，见章节“原始值”。</p>
 <blockquote>
 <p>类型继承子句的语法：
-<em>type-inheritance-clause</em> → :<em>type-inheritance-list</em> 
+<em>type-inheritance-clause</em> → :<em>type-inheritance-list</em>
 <em>type-inheritance-list</em> → <em>type-identifier</em> | <em>type-identifier</em>, <em>type-inheritance-list</em></p>
 </blockquote>
+<p><a name="type_inference"></a></p>
 <h2 id="-">类型推断</h2>
 <p>Swift广泛的使用类型推断，从而允许你可以忽略很多变量和表达式的类型或部分类型。比如，对于<code>var x: Int = 0</code>，你可以完全忽略类型而简写成<code>var x = 0</code>——编译器会正确的推断出<code>x</code>的类型<code>Int</code>。类似的，当完整的类型可以从上下文推断出来时，你也可以忽略类型的一部分。比如，如果你写了<code>let dict: Dictionary = [&quot;A&quot;: 1]</code>，编译提也能推断出<code>dict</code>的类型是<code>Dictionary&lt;String, Int&gt;</code>。</p>
 <p>在上面的两个例子中，类型信息从表达式树（expression tree）的叶子节点传向根节点。也就是说，<code>var x: Int = 0</code>中<code>x</code>的类型首先根据<code>0</code>的类型进行推断，然后将该类型信息传递到根节点（变量<code>x</code>）。</p>
-<p>在Swift中，类型信息也可以反方向流动——从根节点传向叶子节点。在下面的例子中，常量<code>eFloat</code>上的显式类型标注（<code>:Float</code>）导致数字字面量<code>2.71828</code>的类型是<code>Float</code>而非<code>Double</code>。</p>
+<p>在Swift中，类型信息也可以反方向流动——从根节点传向叶子节点。在下面的例子中，常量<code>eFloat</code>上的显式类型注解（<code>:Float</code>）导致数字字面量<code>2.71828</code>的类型是<code>Float</code>而非<code>Double</code>。</p>
 <pre><code class="lang-javascript"><span class="hljs-keyword">let</span> e = <span class="hljs-number">2.71828</span> <span class="hljs-comment">// The type of e is inferred to be Double.</span>
 <span class="hljs-keyword">let</span> eFloat: Float = <span class="hljs-number">2.71828</span> <span class="hljs-comment">// The type of eFloat is Float.</span>
 </code></pre>
@@ -841,6 +856,6 @@ require(["gitbook"], function(gitbook) {
 </script>
 
         
-    <script src="http://s19.cnzz.com/z_stat.php?id=1000480711&web_id=1000480711" language="JavaScript"></script></body>
+    </body>
     
 </html>

@@ -5,12 +5,12 @@
         
         
         <meta charset="UTF-8">
-        <title>语句 | Swift 编程语言</title>
+        <title>《The Swift Programming Language》中文版</title>
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="robots" content="index, follow">
         <meta name="author" content="">
-        <meta name="description" content="Swift 是苹果在 WWDC 2014 上发布的一款全新的编程语言，本书译自苹果官方的 Swift 教程《The Swift Programming Language》。">
+        <meta name="description" content="Swift 中文翻译组：364279588（要求对翻译感兴趣）">
         <meta name="keywords" content="gitbook,github" >
         <meta name="generator" content="www.gitbook.io">
 
@@ -21,8 +21,8 @@
         <link rel="prev" href="../chapter3/04_Expressions.html" />
         
 
-        <meta property="og:title" content="语句 | Swift 编程语言">
-        <meta property="og:site_name" content="Swift 编程语言">
+        <meta property="og:title" content="语句 | 这一次，让中国和世界同步">
+        <meta property="og:site_name" content="这一次，让中国和世界同步">
         <meta property="og:type" content="book">
         <meta property="og:locale" content="en_US">
 
@@ -46,7 +46,7 @@
 
 
         
-    <div class="book"  data-level="3.5" data-basepath=".." data-revision="1402493167130">
+    <div class="book"  data-level="3.5" data-basepath=".." data-revision="1402523087598">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -98,7 +98,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-spinner fa-spin"></i>
-        <a href="../" >Swift 编程语言</a>
+        <a href="../" >这一次，让中国和世界同步</a>
     </h1>
 </div>
 
@@ -119,7 +119,7 @@
         
 
         <li data-level="0" data-path="index.html">
-            <a href="../"><i class="fa fa-check"></i> Introduction</a>
+            <a href="../"><i class="fa fa-check"></i> 序</a>
         </li>
         
     
@@ -331,7 +331,7 @@
         <li class="chapter " data-level="2.19" data-path="chapter2/19_Nested_Types.html">
             
             <a href="../chapter2/19_Nested_Types.html">
-                <i class="fa fa-check"></i> <b>2.19.</b> 嵌套类型
+                <i class="fa fa-check"></i> <b>2.19.</b> 类型嵌套
             </a>
             
             
@@ -534,7 +534,7 @@
     
         <a href="../chapter2/18_Type_Casting.html" title="类型检查" class="chapter done " data-progress="2.18" style="left: 36.8421052631579%;"></a>
     
-        <a href="../chapter2/19_Nested_Types.html" title="嵌套类型" class="chapter done " data-progress="2.19" style="left: 39.473684210526315%;"></a>
+        <a href="../chapter2/19_Nested_Types.html" title="类型嵌套" class="chapter done " data-progress="2.19" style="left: 39.473684210526315%;"></a>
     
         <a href="../chapter2/02_Basic_Operators.html" title="基本运算符" class="chapter done " data-progress="2.2" style="left: 42.10526315789474%;"></a>
     
@@ -587,10 +587,21 @@
 
                 <div class="page-inner">
                 
-                    <section class="normal" id="section-gitbook_182">
+                    <section class="normal" id="section-gitbook_6535">
                     
-                        <h1 id="-">语句</h1>
+                        <blockquote>
+<p>翻译：coverxit</p>
+<p>校对：numbbbbb</p>
+</blockquote>
+<h1 id="-">语句</h1>
 <hr>
+<p>本页包含内容：</p>
+<ul>
+<li><a href="#loop_statements">循环语句</a></li>
+<li><a href="#branch_statements">分支语句</a></li>
+<li><a href="#labeled_statement">带标签的语句</a></li>
+<li><a href="#control_transfer_statements">控制传递语句</a></li>
+</ul>
 <p>在 Swift 中，有两种类型的语句：简单语句和控制流语句。简单语句是最常见的，用于构造表达式和声明。控制流语句则用于控制程序执行的流程，Swift 中有三种类型的控制流语句：循环语句、分支语句和控制传递语句。</p>
 <p>循环语句用于重复执行代码块；分支语句用于执行满足特定条件的代码块；控制传递语句则用于修改代码的执行顺序。在稍后的叙述中，将会详细地介绍每一种类型的控制流语句。</p>
 <p>是否将分号(;)添加到语句的结尾处是可选的。但若要在同一行内写多条独立语句，请务必使用分号。</p>
@@ -604,6 +615,7 @@
 <p><em>statement</em> → <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/control-transfer-statement" target="_blank"><em>control-transfer-statement</em></a><strong>;</strong> <em>opt</em></p>
 <p><em>statement</em> → <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/statement" target="_blank"><em>statment</em></a> <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/statements" target="_blank"><em>statements</em></a><strong>;</strong> <em>opt</em></p>
 </blockquote>
+<p><a name="loop_statements"></a></p>
 <h2 id="-">循环语句</h2>
 <p>取决于特定的循环条件，循环语句允许重复执行代码块。Swift 提供四种类型的循环语句：<code>for</code>语句、<code>for-in</code>语句、<code>while</code>语句和<code>do-while</code>语句。</p>
 <p>通过<code>break</code>语句和<code>continue</code>语句可以改变循环语句的控制流。有关这两条语句，请参考<a href="#break_statement">Break 语句</a>和<a href="#continue_statement">Continue 语句</a>。</p>
@@ -692,8 +704,9 @@
 <p><em>condition</em>表达式的值的类型必须遵循<code>LogicValue</code>协议。同时，<em>condition</em>表达式也可以使用可选绑定，请参考<a href="">可选绑定<code>待添加链接</code></a>。</p>
 <blockquote>
 <p>GRAMMAR OF A DO-WHILE STATEMENT</p>
-<p><em>do-while-statement</em> → <strong>do</strong> <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/code-block" target="_blank"><em>code-block</em></a> <strong>while</strong> <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/while-condition" target="_blank"><em>while-condition</em></a> </p>
+<p><em>do-while-statement</em> → <strong>do</strong> <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Declarations.html#//apple_ref/swift/grammar/code-block" target="_blank"><em>code-block</em></a> <strong>while</strong> <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/while-condition" target="_blank"><em>while-condition</em></a></p>
 </blockquote>
+<p><a name="branch_statements"></a></p>
 <h2 id="-">分支语句</h2>
 <p>取决于一个或者多个条件的值，分支语句允许程序执行指定部分的代码。显然，分支语句中条件的值将会决定如何分支以及执行哪一块代码。Swift 提供两种类型的分支语句：<code>if</code>语句和<code>switch</code>语句。</p>
 <p><code>switch</code>语句中的控制流可以用<code>break</code>语句修改，请参考<a href="#break_statement">Break 语句</a>。</p>
@@ -774,7 +787,8 @@ else {
 <p><em>guard-clause</em> → <strong>where</strong> <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Statements.html#//apple_ref/swift/grammar/guard-expression" target="_blank"><em>guard-expression</em></a></p>
 <p><em>guard-expression</em> → <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Expressions.html#//apple_ref/swift/grammar/expression" target="_blank"><em>expression</em></a></p>
 </blockquote>
-<h2 id="-">带标签的语句</h2>
+<p><a name="labeled_statement"></a>
+<a name="control_transfer_statements"></a> 带标签的语句</p>
 <p>你可以在循环语句或<code>switch</code>语句前面加上<em>标签</em>，它由标签名和紧随其后的冒号(:)组成。在<code>break</code>和<code>continue</code>后面跟上标签名可以显式地在循环语句或<code>switch</code>语句中更改控制流，把控制权传递给指定标签标记的语句。关于这两条语句用法，请参考<a href="#break_statement">Break 语句</a>和<a href="#continue_statement">Continue 语句</a>。</p>
 <p>标签的作用域是该标签所标记的语句之后的所有语句。你可以不使用带标签的语句，但只要使用它，标签名就必唯一。</p>
 <p>关于使用带标签的语句的例子，请参考<a href="../chapter2/05_Control_Flow.html">控制流</a>一章的<a href="">带标签的语句<code>待添加链接</code></a>。</p>
@@ -888,6 +902,6 @@ require(["gitbook"], function(gitbook) {
 </script>
 
         
-    <script src="http://s19.cnzz.com/z_stat.php?id=1000480711&web_id=1000480711" language="JavaScript"></script></body>
+    </body>
     
 </html>

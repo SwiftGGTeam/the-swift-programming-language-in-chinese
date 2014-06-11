@@ -1,15 +1,19 @@
+> 翻译：numbbbbb
+> 校对：shinyzhu
+
 # Swift 初见
------------------
+
+---
 
 本页内容包括：
 
--   简单值
--   控制流
--   函数和闭包
--   对象和类
--   枚举和结构体
--   接口和扩展
--   泛型
+-   [简单值（Simple Values）](#simple_values)
+-   [控制流（Control Flow）](#control_flow)
+-   [函数和闭包（Functions and Closures）](#functions_and_closures)
+-   [对象和类（Objects and Classes）](#objects_and_classes)
+-   [枚举和结构体（Enumerations and Structures）](#enumerations_and_structures)
+-   [接口和扩展（Protocols and Extensions）](#protocols_and_extensions)
+-   [泛型（Generics）](#generics)
 
 通常来说，编程语言教程中的第一个程序应该在屏幕上打印“Hello, world”。在 Swift 中，可以用一行代码实现：
 
@@ -19,11 +23,14 @@
 
 这个教程会通过一系列编程例子来让你对 Swift 有初步了解，如果你有什么不理解的地方也不用担心——任何本章介绍的内容都会在后面的章节中详细讲解。
 
-> 注意：为了获得最好的体验，在 Xcode 当中使用代码预览功能。代码预览功能可以让你编辑代码并实时看到运行结果。
+> 注意：
 
+> 为了获得最好的体验，在 Xcode 当中使用代码预览功能。代码预览功能可以让你编辑代码并实时看到运行结果。
+
+<a name="simple_values"></a>
 ## 简单值
 
-使用`let`来声明常量，使用`var`来声明变量。一个常量的值在编译时并不需要获取，但是你必须而且只能为它赋值一次。也就是说你可以用常量来表示这样一个值：你只需要决定一次，但是需要使用很多次。
+使用`let`来声明常量，使用`var`来声明变量。一个常量的值在编译时并不需要获取，但是你只能为它赋值一次。也就是说你可以用常量来表示这样一个值：你只需要决定一次，但是需要使用很多次。
 
     var myVariable = 42
     myVariable = 50
@@ -37,7 +44,9 @@
     let implicitDouble = 70.0
     let explicitDouble: Double = 70
 
-> 练习：创建一个常量，显式指定类型为`Float`并指定初始值为4。
+> 练习：
+>
+> 创建一个常量，显式指定类型为`Float`并指定初始值为4。
 
 值永远不会被隐式转换为其他类型。如果你需要把一个值转换成其他类型，请显式转换。
 
@@ -45,7 +54,9 @@
     let width = 94
     let widthLabel = label + String(width)
 
-> 练习：删除最后一行中的`String`，错误提示是什么？
+> 练习：
+>
+> 删除最后一行中的`String`，错误提示是什么？
 
 有一种更简单的把值转换成字符串的方法：把值写到括号中，并且在括号之前写一个反斜杠。例如：
 
@@ -54,7 +65,9 @@
     let appleSummary = "I have \(apples) apples."
     let fruitSummary = "I have \(apples + oranges) pieces of fruit."
 
-> 练习：使用`\()`来把一个浮点计算转换成字符串，并加上某人的名字，和他打个招呼。
+> 练习：
+>
+> 使用`\()`来把一个浮点计算转换成字符串，并加上某人的名字，和他打个招呼。
 
 使用方括号`[]`来创建数组和字典，并使用下标或者键（key）来访问元素。
 
@@ -76,6 +89,7 @@
 
     shoppingList = []   // 去逛街并买点东西
 
+<a name="control_flow"></a>
 ## 控制流
 
 使用`if`和`switch`来进行条件操作，使用`for-in`、`for`、`while`和`do-while`来进行循环。包裹条件和循环变量括号可以省略，但是语句体的大括号是必须的。
@@ -104,7 +118,9 @@
         greeting = "Hello, \(name)"
     }
 
-> 练习：把`optionalName`改成`nil`，greeting会是什么？添加一个`else`语句，当`optionalName`是`nil`时给greeting赋一个不同的值。
+> 练习：
+>
+> 把`optionalName`改成`nil`，greeting会是什么？添加一个`else`语句，当`optionalName`是`nil`时给greeting赋一个不同的值。
 
 如果变量的可选值是`nil`，条件会判断为`false`，大括号中的代码会被跳过。如果不是`nil`，会将值赋给`let`后面的常量，这样代码块中就可以使用这个值了。
 
@@ -122,7 +138,9 @@
         let vegetableComment = "Everything tastes good in soup."
     }
 
-> 练习：删除`default`语句，看看会有什么错误？
+> 练习：
+>
+> 删除`default`语句，看看会有什么错误？
 
 运行`switch`中匹配到的子句之后，程序会退出`switch`语句，并不会继续向下运行，所以不需要在每个子句结尾写`break`。
 
@@ -143,7 +161,9 @@
     }
     largest
 
-> 练习：添加另一个变量来记录哪种类型的数字是最大的。
+> 练习：
+>
+> 添加另一个变量来记录哪种类型的数字是最大的。
 
 使用`while`来重复运行一段代码直到不满足条件。循环条件可以在开头也可以在结尾。
 
@@ -175,6 +195,7 @@
 
 使用`..`创建的范围不包含上界，如果想包含的话需要使用`...`。
 
+<a name="functions_and_closures"></a>
 ## 函数和闭包
 
 使用`func`来声明一个函数，使用名字和参数来调用函数。使用`->`来指定函数返回值。
@@ -184,7 +205,9 @@
     }
     greet("Bob", "Tuesday")
 
-> 练习：删除`day`参数，添加一个参数来表示今天吃了什么午饭。
+> 练习：
+>
+> 删除`day`参数，添加一个参数来表示今天吃了什么午饭。
 
 使用一个元组来返回多个值。
 
@@ -205,7 +228,9 @@
     sumOf()
     sumOf(42, 597, 12)
 
-> 练习：写一个计算参数平均值的函数。
+> 练习：
+>
+> 写一个计算参数平均值的函数。
 
 函数可以嵌套。被嵌套的函数可以访问外侧函数的变量，你可以使用嵌套函数来重构一个太长或者太复杂的函数。
 
@@ -246,7 +271,7 @@
     var numbers = [20, 19, 7, 12]
     hasAnyMatches(numbers, lessThanTen)
 
-函数实际上是一种特殊的闭包，你可以使用`{}`来创建一个匿名闭包。使用`in`来分割参数、返回值与执行体。
+函数实际上是一种特殊的闭包，你可以使用`{}`来创建一个匿名闭包。使用`in`来分割参数并返回类型。
 
     numbers.map({
         (number: Int) -> Int in
@@ -254,7 +279,9 @@
         return result
         })
 
-> 练习：重写闭包，对所有奇数返回0.
+> 练习：
+>
+> 重写闭包，对所有奇数返回 0.
 
 有很多种创建闭包的方法。如果一个闭包的类型已知，比如作为一个回调函数，你可以忽略参数的类型和返回值。单个语句闭包会把它语句的值当做结果返回。
 
@@ -262,6 +289,7 @@
 
     sort([1, 5, 3, 12, 2]) { $0 > $1 }
 
+<a name="objects_and_classes"></a>
 ## 对象和类
 
 使用`class`和类名来创建一个类。类中属性的声明和常量、变量声明一样，唯一的区别就是它们的上下文是类。同样，方法和函数声明也一样。
@@ -273,7 +301,9 @@
         }
     }
 
-> 练习：使用`let`添加一个常量属性，再添加一个接收一个参数的方法。
+> 练习：
+>
+> 使用`let`添加一个常量属性，再添加一个接收一个参数的方法。
 
 要创建一个类的实例，在类名后面加上括号。使用点语法来访问实例的属性和方法。
 
@@ -325,7 +355,9 @@
     test.area()
     test.simpleDescription()
 
-> 练习：创建`NamedShape`的另一个子类`Circle`，构造器接收两个参数，一个是半径一个是名称，实现`area`和`describe`方法。
+> 练习：
+>
+> 创建`NamedShape`的另一个子类`Circle`，构造器接收两个参数，一个是半径一个是名称，实现`area`和`describe`方法。
 
 属性可以有 getter 和 setter 。
 
@@ -406,7 +438,7 @@
     let optionalSquare: Square? = Square(sideLength: 2.5, name: "optional square")
     let sideLength = optionalSquare?.sideLength
 
-
+<a name="enumerations_and_structure"></a>
 ## 枚举和结构体
 
 使用`enum`来创建一个枚举。就像类和其他所有命名类型一样，枚举可以包含方法。
@@ -433,7 +465,9 @@
     let ace = Rank.Ace
     let aceRawValue = ace.toRaw()
 
-> 练习：写一个函数，通过比较它们的原始值来比较两个`Rank`值。
+> 练习：
+>
+> 写一个函数，通过比较它们的原始值来比较两个`Rank`值。
 
 在上面的例子中，枚举原始值的类型是`Int`，所以你只需要设置第一个原始值。剩下的原始值会按照顺序赋值。你也可以使用字符串或者浮点数作为枚举的原始值。
 
@@ -464,7 +498,9 @@
     let hearts = Suit.Hearts
     let heartsDescription = hearts.simpleDescription()
 
-> 练习：给`Suit`添加一个`color`方法，对`spades`和`clubs`返回“black”，对`hearts`和`diamonds`返回“red”。
+> 练习：
+>
+> 给`Suit`添加一个`color`方法，对`spades`和`clubs`返回“black”，对`hearts`和`diamonds`返回“red”。
 
 注意，有两种方式可以引用`Hearts`成员：给`hearts`常量赋值时，枚举成员`Suit.Hearts`需要用全名来引用，因为常量没有显式指定类型。在`switch`里，枚举成员使用缩写`.Hearts`来引用，因为`self`的值已经知道是一个`suit`。已知变量类型的情况下你可以使用缩写。
 
@@ -482,7 +518,9 @@
     let threeOfSpades = Card(rank: .Three, suit: .Spades)
     let threeOfSpadesDescription = threeOfSpades.simpleDescription()
 
-> 练习：给`Card`添加一个方法，创建一副完整的扑克牌并把每张牌的rank和suit对应起来。
+> 练习：
+>
+> 给`Card`添加一个方法，创建一副完整的扑克牌并把每张牌的 rank 和 suit 对应起来。
 
 一个枚举成员的实例可以有实例值。相同枚举成员的实例可以有不同的值。创建实例的时候传入值即可。实例值和原始值是不同的：枚举成员的原始值对于所有实例都是相同的，而且你是在定义枚举的时候设置原始值。
 
@@ -503,10 +541,13 @@
         let serverResponse = "Failure...  \(error)"
     }
 
-> 练习：给`ServerResponse`和`switch`添加第三种情况。
+> 练习：
+>
+> 给`ServerResponse`和`switch`添加第三种情况。
 
 注意如何从`ServerResponse`中提取日升和日落时间。
 
+<a name="protocols_and_extensions"></a>
 ## 接口和扩展
 
 使用`protocol`来声明一个接口。
@@ -539,7 +580,9 @@
     b.adjust()
     let bDescription = b.simpleDescription
 
-> 练习：写一个实现这个接口的枚举。
+> 练习：
+>
+> 写一个实现这个接口的枚举。
 
 注意声明`SimpleStructure`时候`mutating`关键字用来标记一个会修改结构体的方法。`SimpleClass`的声明不需要标记任何方法因为类中的方法经常会修改类。
 
@@ -555,7 +598,9 @@
     }
     7.simpleDescription
 
-> 练习：给`Double`类型写一个扩展，添加`absoluteValue`功能。
+> 练习：
+>
+> 给`Double`类型写一个扩展，添加`absoluteValue`功能。
 
 你可以像使用其他命名类型一样使用接口名——例如，创建一个有不同类型但是都实现一个接口的对象集合。当你处理类型是接口的值时，接口外定义的方法不可用。
 
@@ -565,6 +610,7 @@
 
 即使`protocolValue`变量运行时的类型是`simpleClass`，编译器会把它的类型当做`ExampleProtocol`。这表示你不能调用类在它实现的接口之外实现的方法或者属性。
 
+<a name="generics"></a>
 ## 泛型
 
 在尖括号里写一个名字来创建一个泛型函数或者类型。
@@ -602,6 +648,8 @@
     }
     anyCommonElements([1, 2, 3], [3])
 
-> 练习：修改`anyCommonElements`函数来创建一个函数，返回一个数组，内容是两个序列的共有元素。
+> 练习：
+>
+> 修改`anyCommonElements`函数来创建一个函数，返回一个数组，内容是两个序列的共有元素。
 
 简单起见，你可以忽略`where`，只在冒号后面写接口或者类名。` <T: Equatable>`和`<T where T: Equatable>`是等价的。
