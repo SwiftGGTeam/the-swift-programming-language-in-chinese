@@ -521,3 +521,171 @@ case let (x, y):
 这三个*case*都声明了常量`x`和`y`的占位符，用于临时获取元组`yetAnotherPoint`的两个值。这些常量被用作`where`语句的一部分，从而创建一个动态的过滤器(filter)。当且仅当`where`语句的条件为`真`时，匹配到的*case*块才会被执行。
 
 就像是值绑定中的例子，由于最后一个*case*块匹配了余下所有可能的值，`switch`语句就已经完备了，因此不需要再书写默认块。
+
+## 控制转移语句
+
+控制转移语句改变你代码的执行顺序，通过它你可以实现代码的跳转。Swift有四种控制转移语句。
+
+-   continue
+-   break
+-   fallthrough
+-   return
+
+我们将会在下面讨论`continue` ,`break`,和`fallthrough`语句。`return`语句将会在[函数](http://numbbbbb.github.io/the-swift-programming-language-in-chinese/chapter2/06_Functions.html)章节讨论。
+
+
+###Continue
+
+`continue`告诉一个循环体立刻停止本次循环迭代，重新开始下次循环迭代。就好像在说“本次循环迭代我已经执行完了”，但是并不会离开整个循环体。
+
+>__NOTE__
+在一个`for-condition-increment `循环体中，在调用`continue`语句后，迭代增量仍然会被计算求值。循环体继续像往常一样工作，仅仅只是循环体中的执行代码会被跳过。
+
+下面的例子把一个小写字符串中的元音字母和空格字符移除，生成了一个含义模糊的短句：
+
+    let puzzleInput = "great minds think alike"
+    var puzzleOutput = ""
+    for character in puzzleInput {
+        switch character {
+        case "a", "e", "i", "o", "u", " ":
+            continue
+        default:
+        puzzleOutput += character
+        }
+    }
+    println(puzzleOutput)
+    // prints "grtmndsthnklk"
+
+在上面的代码中，只要匹配到元音字母或者空格字符，就调用`continue`语句，使本次循环迭代结束，从新开始下次循环迭代。这种行为使`switch`匹配到元音字母和空格字符时不做处理，而不是让每一个匹配到的字符都被打印。
+
+
+###Break
+`break`语句会立刻结束整个控制流的执行。当你想要更早的结束一个`switch`代码块或者一个循环体时，你都可以使用`break`语句。
+
+####在循环体中使用Break
+当在一个循环体中使用`break`时，会立刻中断该循环体的执行，然后跳转到表示循环体结束的大括号(})后的第一行代码。不会再有本次循环迭代的代码被执行，也不会再有下次的循环迭代产生。
+
+####在Switch代码块中使用Break
+当在一个`switch`代码块中使用`break`时，会立即中断该`switch`代码块的执行，并且跳转到表示`switch`代码块结束的大括号(})后的第一行代码。
+
+这种特性可以被用来匹配或者忽略一个或多个分支。因为Swift语言的`switch`需要包含所有的分支而且不允许有为空的分支，有时为了使你的意图更明显，需要特意匹配或者忽略某个分支。那么当你想忽略某个分支时，可以在该分支内写上`break`语句。当那个分支被匹配到时，分支内的`break`语句立即结束`switch`代码块。
+>__NOTE__
+当一个`switch`分支仅仅包含注释时，会被报编译时错误。注释不是代码语句而且也不能让`switch`分支达到被忽略的效果。你总是可以使用`break`来忽略某个分支。
+
+下面的例子通过`switch`来判断一个`Character`值是否代表下面四种语言之一。为了简洁，多个值被包含在了同一个分支情况中。
+
+    let numberSymbol: Character = "三"  // Simplified Chinese for the number 3
+    possibleIntegerValue: Int?
+    switch numberSymbol {
+    case "1", "?", "一", "?":
+        possibleIntegerValue = 1
+    case "2", "?", "二", "?":
+        possibleIntegerValue = 2
+    case "3", "?", "三", "?":
+        possibleIntegerValue = 3
+    case "4", "?", "四", "?":
+        possibleIntegerValue = 4
+    default:
+        break
+    }
+    if let integerValue = possibleIntegerValue {
+        println("The integer value of \(numberSymbol) is \(integerValue).")
+    } else {
+        println("An integer value could not be found for \(numberSymbol).")
+    }
+    // prints "The integer value of 三 is 3."
+
+这个例子检查`numberSymbol`是否是拉丁，阿拉伯，中文或者泰语中的1...4之一。如果被匹配到，该`switch`分支语句给`Int?`类型变量`possibleIntegerValue`设置一个整数值。
+
+当`switch`代码块执行完后，接下来的代码通过使用可选绑定来判断'possibleIntegerValue'是否曾经被设置过值。因为是可选类型的缘故，'possibleIntegerValue'有一个隐式的初始值`nil`，所以仅仅当`possibleIntegerValue`曾被`switch`代码块的前四个分支中的某个设置过一个值时，可选的绑定将会被判定为成功。
+
+在上面的例子中，想要把`Character`所有的的可能性都枚举出来是不现实的，所以使用`default`分支来包含所有上面没有匹配到字符的情况。由于这个`default`分支不需要执行任何动作，所以它只写了一条`break`语句。一旦落入到`default`分支中后，`break`语句就完成了该分支的所有代码操作，代码继续向下,开始执行`if let`语句。
+
+###Fallthrough
+Swift语言中的`switch`不会从上一个`case`分支落入到下一个`case`分支中。相反，只要第一个匹配到的`case`分支完成了它需要执行的语句，整个`switch`代码块完成了它的执行。相比之下，C语言要求你显示的插入`break`语句到每个`switch`分支的末尾来阻止自动落入到下一个`case`分支中。Swift语言的这种避免默认落入到下一个分支中的特性意味着它的`switch` 功能要比C语言的更加清晰和可预测，可以避免无意识地执行多个`case`分支从而引发的错误。
+
+如果你确实需要C风格的落入(fallthrough)的特性，你可以在每个需要该特性的`case`分支中使用`fallthrough`关键字。下面的例子使用`fallthrough`来创建一个数字的描述语句。
+
+    let integerToDescribe = 5
+    var description = "The number \(integerToDescribe) is"
+    switch integerToDescribe {
+    case 2, 3, 5, 7, 11, 13, 17, 19:
+        description += " a prime number, and also"
+        fallthrough
+    default:
+        description += " an integer."
+    }
+    println(description)
+    // prints "The number 5 is a prime number, and also an integer."
+
+这个例子定义了一个`String`类型的变量`description`并且给它设置了一个初始值。函数使用`switch`逻辑来判断`integerToDescribe`变量的值。当`integerToDescribe`的值属于列表中的质数之一时，该函数添加一段文字在`description`后，来表明这个是数字是一个质数。然后它使用`fallthrough`关键字来"落入"到`default`分支中。`default`分支添加一段额外的文字在`description`的最后,至此`switch`代码块执行完了。
+
+如果`integerToDescribe`的值不属于列表中的任何质数，那么它不会匹配到第一个`switch`分支。而这里没有其他特别的分支情况，所以`integerToDescribe`匹配到包含所有的`default`分支中。
+
+当`switch`代码块执行完后，使用`println`函数打印该数字的描述。在这个例子中，数字`5`被准确的识别为了一个质数。
+>__NOTE__
+`fallthrough`关键字不会检查它下一个将会落入执行的`case`中的匹配条件。`fallthrough`简单地使代码执行继续连接到下一个`case`中的执行代码，这和C语言标准中的`switch`语句特性是一样的。
+
+###Labeled Statements
+在Swift语言中，你可以在循环体和`switch`代码块中嵌套循环体和`switch`代码块来创造复杂的控制流结构。然而，循环体和`switch`代码块两者都可以使用`break`语句来提前结束整个方法体。因此，显示地指明`break`语句想要终止的是哪个循环体或者`switch`代码块,会很有用。类似地，如果你有许多嵌套的循环体，显示指明`continue`语句想要影响哪一个循环体也会非常有用。
+
+为了实现这个目的，你可以使用标签来标记一个循环体或者`switch`代码块，当使用`break`或者`continue`时，带上这个标签，可以控制该标签代表对象的中断或者执行。
+
+产生一个带标签的语句是通过在该语句的关键词的同一行前面放置一个标签，并且该标签后面还需带着一个冒号。下面是一个`while`循环体的语法，同样的规则适用于所有的循环体和`switch`代码块。
+
+    label name: while condition {
+        statements
+    }
+
+下面的例子是在一个带有标签的`while`循环体中调用`break`和`continue`语句，该循环体是上述章节中蛇梯棋游戏的改编版本。这次，游戏增加了一条额外的规则：
+
+- 为了获胜，你必须刚好落在方格25中。
+
+如果某次掷骰子使你的移动超出方格25，你必须重新掷骰子，直到你掷出的骰子数刚好使你能落在方格25中。
+
+游戏的棋盘和之前一样：
+
+![image](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/snakesAndLadders_2x.png)
+
+值`finalSquare`,`board`,`square`和`diceRoll`的初始化也和之前一样：
+
+    let finalSquare = 25
+    var board = Int[](count: finalSquare + 1, repeatedValue: 0)
+    board[03] = +08; board[06] = +11; board[09] = +09; board[10] = +02
+    board[14] = -10; board[19] = -11; board[22] = -02; board[24] = -08
+    var square = 0
+    var diceRoll = 0
+
+这个版本的游戏使用`while`循环体和`switch`方法块来实现游戏的逻辑。`while`循环体有一个标签名`gameLoop`，来表明它是蛇梯棋游戏的主循环。
+
+该`while`循环体的条件判断语句是`while square !=finalSquare`,这表明你必须刚好落在方格25中。
+
+    gameLoop: while square != finalSquare {
+        if ++diceRoll == 7 { diceRoll = 1 }
+        switch square + diceRoll {
+        case finalSquare:
+            // diceRoll will move us to the final square, so the game is over
+            break gameLoop
+        case let newSquare where newSquare > finalSquare:
+            // diceRoll will move us beyond the final square, so roll again
+            continue gameLoop
+        default:
+            // this is a valid move, so find out its effect
+            square += diceRoll
+            square += board[square]
+        }
+    }
+    println("Game over!")
+
+每次循环迭代开始时掷骰子。与之前玩家掷完骰子就立即移动不同，这里使用了`switch`来考虑每次移动可能产生的结果，从而决定玩家本次是否能够移动。
+
+- 如果骰子数刚好使玩家移动到最终的方格里，游戏结束。`break gameLoop`语句跳转控制去执行`while`循环体后的第一行代码，游戏结束。
+
+- 如果骰子数将会使玩家的移动超出最后的方格，那么这种移动是不合法的，玩家需要重新掷骰子。`continue gameLoop`语句结束本次`while`循环的迭代，开始下一次循环迭代。
+
+- 在剩余的所有情况中，骰子数产生的都是合法的移动。玩家向前移动骰子数个方格，然后游戏逻辑再处理玩家当前是否处于蛇头或者梯子的底部。本次循环迭代结束，控制跳转到`while`循环体的条件判断语句处，再决定是否能够继续执行下次循环迭代。
+
+>__NOTE__
+如果上述的`break`语句没有使用`gameLoop`标签，那么它将会中断`switch`代码块而不是`while`循环体。使用`gameLoop`标签清晰的表明了`break`想要中断的是哪个代码块。
+同时请注意，当调用`continue gameLoop`去跳转到下一次循环迭代时，这里使用`gameLoop`标签并不是严格必须的。因为在这个游戏中，只有一个循环体，所以`continue`语句会影响到哪个循环体是没有歧义的。然而，`continue`语句使用`gameLoop`标签也是没有危害的。这样做符合标签的使用规则，同时参照旁边的`break gameLoop`，能够使游戏的逻辑更加清晰和易于理解。
+
