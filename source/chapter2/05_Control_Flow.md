@@ -200,7 +200,7 @@ while `condition` {
 }
 ```
 
-下面的例子来玩一个叫做_蛇和梯子_（_Snakes and Ladders_）的小游戏，也叫做_滑道和梯子_（_Chutes and Ladders_）：
+下面的例子来玩一个叫做_蛇和梯子（Snakes and Ladders）_的小游戏，也叫做_滑道和梯子（Chutes and Ladders）_：
 
 ![image](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/snakesAndLadders_2x.png)
 
