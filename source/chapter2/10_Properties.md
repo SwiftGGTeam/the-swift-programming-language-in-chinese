@@ -52,7 +52,7 @@ rangeOfThreeItems.firstValue = 6
 let rangeOfFourItems = FixedLengthRange(firstValue: 0, length: 4)
 // 该区间表示整数0，1，2，3
 rangeOfFourItems.firstValue = 6
-// 尽管firstValue诗歌变量属性，这里还是会报错
+// 尽管 firstValue 是个变量属性，这里还是会报错
 
 ```
 
