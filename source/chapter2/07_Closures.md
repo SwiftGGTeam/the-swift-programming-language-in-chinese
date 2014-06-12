@@ -2,6 +2,7 @@
 
 > 校对：lyuka
 
+
 # 闭包（Closures）
 -----------------
 
@@ -22,7 +23,7 @@ Swift 中的闭包与 C 和 Objective-C 中的代码块（blocks）以及其他�
 >
 > 如果您不熟悉捕获（capturing）这个概念也不用担心，您可以在 [值捕获](#capturing_values) 章节对其进行详细了解。
 
-在[函数](../chapter2/06_Function.html) 章节中介绍的全局和嵌套函数实际上也是特殊的闭包，闭包采取如下三种形式之一：
+在[函数](../chapter2/06_Functions.html) 章节中介绍的全局和嵌套函数实际上也是特殊的闭包，闭包采取如下三种形式之一：
 
 *	全局函数是一个有名字但不会捕获任何值的闭包
 *	嵌套函数是一个有名字并可以捕获其封闭函数域内值的闭包
@@ -38,7 +39,7 @@ Swift 的闭包表达式拥有简洁的风格，并鼓励在常见场景中进�
 <a name="closure_expressions"></a>
 ## 闭包表达式（Closure Expressions）
 
-[嵌套函数](../chapter2/06_Function.html#nested_function) 是一个在较复杂函数中方便进行命名和定义自包含代码模块的方式。
+[嵌套函数](../chapter2/06_Functions.html#nested_function) 是一个在较复杂函数中方便进行命名和定义自包含代码模块的方式。
 当然，有时候撰写小巧的没有完整定义和命名的类函数结构也是很有用处的，尤其是在您处理一些函数并需要将另外一些函数作为该函数的参数时。
 
 闭包表达式是一种利用简洁语法构建内联闭包的方式。
@@ -249,8 +250,7 @@ let strings = numbers.map {
 `map`在数组中为每一个元素调用了闭包表达式。
 您不需要指定闭包的输入参数`number`的类型，因为可以通过要映射的数组类型进行推断。
 
-闭包`number`参数被声明为一个变量参数（变量的具体描述请参看[常量参数和变量参数](../chapter2/06_Functions.html#closure_expression_syntax)），因此可以在闭包函数体内对其进行修改。
-闭包表达式制定了返回类型为`String`，以表明存储映射值的新数组类型为`String`。
+闭包`number`参数被声明为一个变量参数（变量的具体描述请参看[常量参数和变量参数](../chapter2/06_Functions.html#constant_and_variable_parameters)），因此可以在闭包函数体内对其进行修改。闭包表达式制定了返回类型为`String`，以表明存储映射值的新数组类型为`String`。
 
 闭包表达式在每次被调用的时候创建了一个字符串并返回。
 其使用求余运算符 (number % 10) 计算最后一位数字并利用`digitNames`字典获取所映射的字符串。
