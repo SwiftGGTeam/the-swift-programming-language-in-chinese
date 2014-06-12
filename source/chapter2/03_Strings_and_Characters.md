@@ -19,7 +19,7 @@
 - [字符串大小写](#uppercase_and_lowercase_strings)
 - [Unicode](#unicode)
 
-`String`是例如“hello, world“”，“海贼王” 这样的有序的`Character`（字符）类型的值的集合，通过`String`类型来表示。
+`String`是例如“hello, world”，“海贼王” 这样的有序的`Character`（字符）类型的值的集合，通过`String`类型来表示。
 
 Swift 的`String`和`Character`类型提供了一个快速的，兼容 Unicode 的方式来处理代码中的文本信息。
 创建和操作字符串的语法与 C 语言中字符串操作相似，轻量并且易读。
@@ -226,7 +226,7 @@ let message = "\(multiplier) 乘以 2.5 是 \(Double(multiplier) * 2.5)"
 
 > 注意：
 >
-您插值字符串中写在括号中的表达式不能包含非转义双引号 (`"`) 和反斜杠 (`\`)，并且不能包含回车或换行符。
+插值字符串中写在括号中的表达式不能包含非转义双引号 (`"`) 和反斜杠 (`\`)，并且不能包含回车或换行符。
 
 <a name="comparing_strings"></a>
 ## 比较字符串 (Comparing Strings)
