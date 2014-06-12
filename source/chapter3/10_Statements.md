@@ -39,7 +39,7 @@
 
 取决于特定的循环条件，循环语句允许重复执行代码块。Swift 提供四种类型的循环语句：`for`语句、`for-in`语句、`while`语句和`do-while`语句。
 
-通过`break`语句和`continue`语句可以改变循环语句的控制流。有关这两条语句，详情参见[Break 语句](#break_statement)和[Continue 语句](#continue_statement)。
+通过`break`语句和`continue`语句可以改变循环语句的控制流。有关这两条语句，详情参见 [Break 语句](#break_statement)和 [Continue 语句](#continue_statement)。
 
 > GRAMMAR OF A LOOP STATEMENT
 
@@ -240,7 +240,7 @@ switch `control expression` {
 
 `switch`语句的*控制表达式（control expression）*会首先被计算，然后与每一个 case 的模式（pattern）进行匹配。如果匹配成功，程序将会执行对应的 case 分支里的 *statements*。另外，每一个 case 分支都不能为空，也就是说在每一个 case 分支中至少有一条语句。如果你不想在匹配到的 case 分支中执行代码，只需在该分支里写一条`break`语句即可。
 
-可以用作控制表达式的值是十分灵活的，除了标量类型(scalar types，如`Int`、`Character`)外，你可以使用任何类型的值，包括浮点数、字符串、元组、自定义类的实例和可选（optional）类型，甚至是枚举类型中的成员值和指定的范围(range)等。关于在`switch`语句中使用这些类型，详情参见[控制流](../chapter2/05_Control_Flow.html)一章的[Switch](../chapter2/05_Control_Flow.html#switch)。
+可以用作控制表达式的值是十分灵活的，除了标量类型(scalar types，如`Int`、`Character`)外，你可以使用任何类型的值，包括浮点数、字符串、元组、自定义类的实例和可选（optional）类型，甚至是枚举类型中的成员值和指定的范围(range)等。关于在`switch`语句中使用这些类型，详情参见[控制流](../chapter2/05_Control_Flow.html)一章的 [Switch](../chapter2/05_Control_Flow.html#switch)。
 
 你可以在模式后面添加一个起保护作用的表达式(guard expression)。*起保护作用的表达式*是这样构成的：关键字`where`后面跟着一个作为额外测试条件的表达式。因此，当且仅当*控制表达式*匹配一个*case*的某个模式且起保护作用的表达式为真时，对应 case 分支中的 *statements* 才会被执行。在下面的例子中，*控制表达式*只会匹配含两个相等元素的元组，如`(1, 1)`：
 
@@ -260,7 +260,7 @@ case let (x, y) where x == y:
 
 #### 不存在隐式的贯穿(fall through)
 
-当匹配的 case 分支中的代码执行完毕后，程序会终止`switch`语句，而不会继续执行下一个 case 分支。这就意味着，如果你想执行下一个 case 分支，需要显式地在你需要的 case 分支s里使用`fallthrough`语句。关于`fallthrough`语句的更多信息，详情参见[Fallthrough 语句](#fallthrough_statement)。
+当匹配的 case 分支中的代码执行完毕后，程序会终止`switch`语句，而不会继续执行下一个 case 分支。这就意味着，如果你想执行下一个 case 分支，需要显式地在你需要的 case 分支里使用`fallthrough`语句。关于`fallthrough`语句的更多信息，详情参见 [Fallthrough 语句](#fallthrough_statement)。
 
 > GRAMMAR OF A SWITCH STATEMENT
 
@@ -285,7 +285,7 @@ case let (x, y) where x == y:
 <a name="labeled_statement"></a>
 <a name="control_transfer_statements"></a> 带标签的语句
 
-你可以在循环语句或`switch`语句前面加上*标签*，它由标签名和紧随其后的冒号(:)组成。在`break`和`continue`后面跟上标签名可以显式地在循环语句或`switch`语句中更改控制流，把控制权传递给指定标签标记的语句。关于这两条语句用法，详情参见[Break 语句](#break_statement)和[Continue 语句](#continue_statement)。
+你可以在循环语句或`switch`语句前面加上*标签*，它由标签名和紧随其后的冒号(:)组成。在`break`和`continue`后面跟上标签名可以显式地在循环语句或`switch`语句中更改控制流，把控制权传递给指定标签标记的语句。关于这两条语句用法，详情参见 [Break 语句](#break_statement)和 [Continue 语句](#continue_statement)。
 
 标签的作用域是该标签所标记的语句之后的所有语句。你可以不使用带标签的语句，但只要使用它，标签名就必唯一。
 
@@ -330,7 +330,7 @@ break `label name`
 
 在这两种情况下，控制权都会被传递给循环或`switch`语句外面的第一行语句。
 
-关于使用`break`语句的例子，详情参见[控制流](../chapter2/05_Control_Flow.html)一章的[Break](../chapter2/05_Control_Flow.html#break)和[带标签的语句](../chapter2/05_Control_Flow.html#labeled_statements)。
+关于使用`break`语句的例子，详情参见[控制流](../chapter2/05_Control_Flow.html)一章的 [Break](../chapter2/05_Control_Flow.html#break) 和[带标签的语句](../chapter2/05_Control_Flow.html#labeled_statements)。
 
 > GRAMMAR OF A BREAK STATEMENT
 
@@ -354,7 +354,7 @@ continue `label name`
 
 在`for`语句中，`continue`语句执行后，*increment* 表达式还是会被计算，这是因为每次循环体执行完毕后 *increment* 表达式都会被计算。
 
-关于使用`continue`语句的例子，详情参见[控制流](../chapter2/05_Control_Flow.html)一章的[Continue](../chapter2/05_Control_Flow.html#continue)和[带标签的语句](../chapter2/05_Control_Flow.html#labeled_statements)。
+关于使用`continue`语句的例子，详情参见[控制流](../chapter2/05_Control_Flow.html)一章的 [Continue](../chapter2/05_Control_Flow.html#continue) 和[带标签的语句](../chapter2/05_Control_Flow.html#labeled_statements)。
 
 > GRAMMAR OF A CONTINUE STATEMENT
 
