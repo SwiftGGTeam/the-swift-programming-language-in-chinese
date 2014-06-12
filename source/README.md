@@ -7,7 +7,9 @@
 <!-- -->
 > 如果你觉得这个项目不错，请[点击Star一下](https://github.com/numbbbbb/the-swift-programming-language-in-chinese)，您的支持我们最大的动力。
 
-# 这一次，让中国和世界同步
+# The Swift Programming Language 中文版
+
+###这一次，让中国和世界同步
 
 现在是6月12日凌晨4:38，我用了整整一晚上的时间来进行最后的校对，终于可以在12日拿出一个可以发布的版本。
 
@@ -62,4 +64,5 @@ lifedim说他平时12点就会睡，1点47分，发给我校对后的文档。
 - Evilcome
 - lslxdx
 - yeahdongcn
+- zqp
 

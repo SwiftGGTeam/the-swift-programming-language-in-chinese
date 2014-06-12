@@ -1,3 +1,7 @@
+> 翻译：zqp
+
+> 校对：shinyzhu
+
 # 集合类型 (Collection Types)
 -----------------
 

@@ -10,7 +10,7 @@
 - [For 循环](#for_loops)
 - [While 循环](#while_loops)
 - [条件语句](#conditional_statement)
-- [控制传递语句（Control Transfer Statements）](#control_transfer_statements)
+- [控制转移语句（Control Transfer Statements）](#control_transfer_statements)
 
 Swift提供了类似 C 语言的流程控制结构，包括可以多次执行任务的`for`和`while`循环，基于特定条件选择执行不同代码分支的`if`和`switch`语句，还有控制流程跳转到其他代码的`break`和`continue`语句。
 
@@ -556,7 +556,7 @@ case let (x, y):
 就像是值绑定中的例子，由于最后一个 case 分支匹配了余下所有可能的值，`switch`语句就已经完备了，因此不需要再书写默认分支。
 
 <a name="control_transfer_statements"></a>
-## 控制传递语句（Control Transfer Statements）
+## 控制转移语句（Control Transfer Statements）
 
 控制转移语句改变你代码的执行顺序，通过它你可以实现代码的跳转。Swift有四种控制转移语句。
 
