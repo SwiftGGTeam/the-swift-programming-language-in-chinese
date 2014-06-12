@@ -21,8 +21,8 @@
         <link rel="prev" href="../chapter2/11_Methods.html" />
         
 
-        <meta property="og:title" content="附属脚本 | 这一次，让中国和世界同步">
-        <meta property="og:site_name" content="这一次，让中国和世界同步">
+        <meta property="og:title" content="附属脚本 | Swift 编程语言">
+        <meta property="og:site_name" content="Swift 编程语言">
         <meta property="og:type" content="book">
         <meta property="og:locale" content="en_US">
 
@@ -46,7 +46,7 @@
 
 
         
-    <div class="book"  data-level="2.12" data-basepath=".." data-revision="1402523087598">
+    <div class="book"  data-level="2.12" data-basepath=".." data-revision="1402550478518">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -98,7 +98,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-spinner fa-spin"></i>
-        <a href="../" >这一次，让中国和世界同步</a>
+        <a href="../" >Swift 编程语言</a>
     </h1>
 </div>
 
@@ -587,7 +587,7 @@
 
                 <div class="page-inner">
                 
-                    <section class="normal" id="section-gitbook_6492">
+                    <section class="normal" id="section-gitbook_119">
                     
                         <blockquote>
 <p>翻译：siemenliu</p>
@@ -634,7 +634,7 @@ let threeTimesTable = TimesTable(multiplier: 3)
 println(&quot;3的6倍是\(threeTimesTable[6])&quot;)
 // 输出 &quot;3的6倍是18&quot;
 </code></pre><p>在上例中，通过<code>TimesTable</code>结构体创建了一个用来表示索引值三倍的实例。数值<code>3</code>作为结构体<code>构造函数</code>入参初始化实例成员<code>multiplier</code>。</p>
-<p>你可以通过附属脚本来来得到结果，比如<code>threeTimesTable[6]</code>。这句话访问了<code>threeTimesTable</code>的第六个元素，返回<code>18</code>或者<code>6</code>的<code>3</code>倍。</p>
+<p>你可以通过附属脚本来得到结果，比如<code>threeTimesTable[6]</code>。这条语句访问了<code>threeTimesTable</code>的第六个元素，返回<code>6</code>的<code>3</code>倍即<code>18</code>。</p>
 <blockquote>
 <p>注意：</p>
 <p><code>TimesTable</code>例子是基于一个固定的数学公式。它并不适合开放写权限来对<code>threeTimesTable[someIndex]</code>进行赋值操作，这也是为什么附属脚本只定义为只读的原因。</p>
@@ -649,7 +649,7 @@ numberOfLegs[&quot;bird&quot;] = 2
 <p>更多关于字典（Dictionary）附属脚本的信息请参考<a href="../chapter2/04_Collection_Types.html">读取和修改字典</a></p>
 <blockquote>
 <p>注意：</p>
-<p>Swift 中字典的附属脚本实现中，在<code>get</code>部分返回值是<code>Int?</code>，上例中的<code>numberOfLegs</code>字典通过下边返回的是一个<code>Int?</code>或者说“可选的int”，不是每个字典的索引都能得到一个整型值，对于没有设过值的索引的访问返回的结果就是<code>nil</code>；同样想要从字典实例中删除某个索引下的值也只需要给这个索引赋值为<code>nil</code>即可。</p>
+<p>Swift 中字典的附属脚本实现中，在<code>get</code>部分返回值是<code>Int?</code>，上例中的<code>numberOfLegs</code>字典通过附属脚本返回的是一个<code>Int?</code>或者说“可选的int”，不是每个字典的索引都能得到一个整型值，对于没有设过值的索引的访问返回的结果就是<code>nil</code>；同样想要从字典实例中删除某个索引下的值也只需要给这个索引赋值为<code>nil</code>即可。</p>
 </blockquote>
 <p><a name="subscript_options"></a></p>
 <h2 id="-">附属脚本选项</h2>

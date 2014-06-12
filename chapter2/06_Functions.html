@@ -21,8 +21,8 @@
         <link rel="prev" href="../chapter2/05_Control_Flow.html" />
         
 
-        <meta property="og:title" content="函数 | 这一次，让中国和世界同步">
-        <meta property="og:site_name" content="这一次，让中国和世界同步">
+        <meta property="og:title" content="函数 | Swift 编程语言">
+        <meta property="og:site_name" content="Swift 编程语言">
         <meta property="og:type" content="book">
         <meta property="og:locale" content="en_US">
 
@@ -46,7 +46,7 @@
 
 
         
-    <div class="book"  data-level="2.6" data-basepath=".." data-revision="1402523087598">
+    <div class="book"  data-level="2.6" data-basepath=".." data-revision="1402550478518">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -98,7 +98,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-spinner fa-spin"></i>
-        <a href="../" >这一次，让中国和世界同步</a>
+        <a href="../" >Swift 编程语言</a>
     </h1>
 </div>
 
@@ -587,7 +587,7 @@
 
                 <div class="page-inner">
                 
-                    <section class="normal" id="section-gitbook_6481">
+                    <section class="normal" id="section-gitbook_108">
                     
                         <blockquote>
 <p>翻译：honghaoz</p>
@@ -832,7 +832,7 @@ let paddedString = alignRight(originalString, 10, &quot;-&quot;)
 <p>你只能传入一个变量作为输入输出参数。你不能传入常量或者字面量（literal value），因为这些量是不能被修改的。当传入的参数作为输入输出参数时，需要在参数前加<code>&amp;</code>符，表示这个值可以被函数修改。</p>
 <blockquote>
 <p>注意：</p>
-<p>输入输出参数不能有默认值，而且变量参数不能用 <code>inout</code> 标记。如果你用 <code>inout</code> 标记一个参数，这个参数不能别 <code>var</code> 或者 <code>let</code> 标记。</p>
+<p>输入输出参数不能有默认值，而且可变参数不能用 <code>inout</code> 标记。如果你用 <code>inout</code> 标记一个参数，这个参数不能被 <code>var</code> 或者 <code>let</code> 标记。</p>
 </blockquote>
 <p>下面是例子，<code>swapTwoInts</code> 函数，有两个分别叫做 <code>a</code> 和 <code>b</code> 的输出输出参数：</p>
 <pre><code>func swapTwoInts(inout a: Int, inout b: Int) {

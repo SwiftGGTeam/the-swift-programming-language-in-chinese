@@ -21,8 +21,8 @@
         <link rel="prev" href="../chapter2/06_Functions.html" />
         
 
-        <meta property="og:title" content="闭包 | 这一次，让中国和世界同步">
-        <meta property="og:site_name" content="这一次，让中国和世界同步">
+        <meta property="og:title" content="闭包 | Swift 编程语言">
+        <meta property="og:site_name" content="Swift 编程语言">
         <meta property="og:type" content="book">
         <meta property="og:locale" content="en_US">
 
@@ -46,7 +46,7 @@
 
 
         
-    <div class="book"  data-level="2.7" data-basepath=".." data-revision="1402523087598">
+    <div class="book"  data-level="2.7" data-basepath=".." data-revision="1402550478518">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -98,7 +98,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-spinner fa-spin"></i>
-        <a href="../" >这一次，让中国和世界同步</a>
+        <a href="../" >Swift 编程语言</a>
     </h1>
 </div>
 
@@ -587,7 +587,7 @@
 
                 <div class="page-inner">
                 
-                    <section class="normal" id="section-gitbook_6483">
+                    <section class="normal" id="section-gitbook_110">
                     
                         <blockquote>
 <p>翻译：wh1100717</p>
@@ -610,7 +610,7 @@ Swift 中的闭包与 C 和 Objective-C 中的代码块（blocks）以及其他�
 <p>注意：</p>
 <p>如果您不熟悉捕获（capturing）这个概念也不用担心，您可以在 <a href="#capturing_values">值捕获</a> 章节对其进行详细了解。</p>
 </blockquote>
-<p>在<a href="../chapter2/06_Function.html">函数</a> 章节中介绍的全局和嵌套函数实际上也是特殊的闭包，闭包采取如下三种形式之一：</p>
+<p>在<a href="../chapter2/06_Functions.html">函数</a> 章节中介绍的全局和嵌套函数实际上也是特殊的闭包，闭包采取如下三种形式之一：</p>
 <ul>
 <li>全局函数是一个有名字但不会捕获任何值的闭包</li>
 <li>嵌套函数是一个有名字并可以捕获其封闭函数域内值的闭包</li>
@@ -625,8 +625,7 @@ Swift 中的闭包与 C 和 Objective-C 中的代码块（blocks）以及其他�
 </ul>
 <p><a name="closure_expressions"></a></p>
 <h2 id="-closure-expressions-">闭包表达式（Closure Expressions）</h2>
-<p><a href="../chapter2/06_Function.html#nested_function">嵌套函数</a> 是一个在较复杂函数中方便进行命名和定义自包含代码模块的方式。
-当然，有时候撰写小巧的没有完整定义和命名的类函数结构也是很有用处的，尤其是在您处理一些函数并需要将另外一些函数作为该函数的参数时。</p>
+<p><a href="../chapter2/06_Functions.html#nested_function">嵌套函数</a> 是一个在较复杂函数中方便进行命名和定义自包含代码模块的方式。当然，有时候撰写小巧的没有完整定义和命名的类函数结构也是很有用处的，尤其是在您处理一些函数并需要将另外一些函数作为该函数的参数时。</p>
 <p>闭包表达式是一种利用简洁语法构建内联闭包的方式。
 闭包表达式提供了一些语法优化，使得撰写闭包变得简单明了。
 下面闭包表达式的例子通过使用几次迭代展示了<code>sort</code>函数定义和语法优化的方式。
@@ -757,8 +756,7 @@ let numbers = [16, 58, 510]
 // 其值为 [&quot;OneSix&quot;, &quot;FiveEight&quot;, &quot;FiveOneZero&quot;]
 </code></pre><p><code>map</code>在数组中为每一个元素调用了闭包表达式。
 您不需要指定闭包的输入参数<code>number</code>的类型，因为可以通过要映射的数组类型进行推断。</p>
-<p>闭包<code>number</code>参数被声明为一个变量参数（变量的具体描述请参看<a href="../chapter2/06_Functions.html#closure_expression_syntax">常量参数和变量参数</a>），因此可以在闭包函数体内对其进行修改。
-闭包表达式制定了返回类型为<code>String</code>，以表明存储映射值的新数组类型为<code>String</code>。</p>
+<p>闭包<code>number</code>参数被声明为一个变量参数（变量的具体描述请参看<a href="../chapter2/06_Functions.html#constant_and_variable_parameters">常量参数和变量参数</a>），因此可以在闭包函数体内对其进行修改。闭包表达式制定了返回类型为<code>String</code>，以表明存储映射值的新数组类型为<code>String</code>。</p>
 <p>闭包表达式在每次被调用的时候创建了一个字符串并返回。
 其使用求余运算符 (number % 10) 计算最后一位数字并利用<code>digitNames</code>字典获取所映射的字符串。</p>
 <blockquote>
