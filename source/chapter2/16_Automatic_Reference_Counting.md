@@ -406,11 +406,11 @@ Swift 提供了一种优雅的方法来解决这个问题，称之为闭包占�
 
 ![](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/closureReferenceCycle01_2x.png)
 
-实例的`asHTML`属性持有闭包的强引用。但是，闭包在其闭包体内使用了`self`（引用了`self.name`和`self.text`），因此闭包占有了`self`，这意味着闭包又反过来持有了`HTMLElement`实例的强引用。这样两个对象就产生了循环强引用。（更多关于闭包占有值的信息，请参考[值捕获](07_Closures.html)）。
+实例的`asHTML`属性持有闭包的强引用。但是，闭包在其闭包体内使用了`self`（引用了`self.name`和`self.text`），因此闭包捕获了`self`，这意味着闭包又反过来持有了`HTMLElement`实例的强引用。这样两个对象就产生了循环强引用。（更多关于闭包捕获值的信息，请参考[值捕获](07_Closures.html)）。
 
 >注意:
 >
-虽然闭包多次使用了`self`，它只占有`HTMLElement`实例的一个强引用。
+虽然闭包多次使用了`self`，它只捕获`HTMLElement`实例的一个强引用。
 
 如果设置`paragraph`变量为`nil`，打破它持有的`HTMLElement`实例的强引用，`HTMLElement`实例和它的闭包都不会被销毁，也是因为循环强引用：
 
@@ -420,24 +420,24 @@ Swift 提供了一种优雅的方法来解决这个问题，称之为闭包占�
 
 ##解决闭包引起的循环强引用
 
-在定义闭包时同时定义占有列表作为闭包的一部分，通过这种方式可以解决闭包和类实例之间的循环强引用。占有列表定义了闭包体内占有一个或者多个引用类型的规则。跟解决两个类实例间的循环强引用一样，声明每个占有的引用为弱引用或无主引用，而不是强引用。应当根据代码关系来决定使用弱引用还是无主引用。
+在定义闭包时同时定义捕获列表作为闭包的一部分，通过这种方式可以解决闭包和类实例之间的循环强引用。捕获列表定义了闭包体内捕获一个或者多个引用类型的规则。跟解决两个类实例间的循环强引用一样，声明每个捕获的引用为弱引用或无主引用，而不是强引用。应当根据代码关系来决定使用弱引用还是无主引用。
 
 >注意:
 >
-Swift 有如下要求：只要在闭包内使用`self`的成员，就要用`self.someProperty`或者`self.someMethod`（而不只是`someProperty`或`someMethod`）。这提醒你可能会不小心就占有了`self`。
+Swift 有如下要求：只要在闭包内使用`self`的成员，就要用`self.someProperty`或者`self.someMethod`（而不只是`someProperty`或`someMethod`）。这提醒你可能会不小心就捕获了`self`。
 
-###定义占有列表
+###定义捕获列表
 
-占有列表中的每个元素都是由`weak`或者`unowned`关键字和实例的引用（如`self`或`someInstance`）成对组成。每一对都在花括号中，通过逗号分开。
+捕获列表中的每个元素都是由`weak`或者`unowned`关键字和实例的引用（如`self`或`someInstance`）成对组成。每一对都在方括号中，通过逗号分开。
 
-占有列表放置在闭包参数列表和返回类型之前：
+捕获列表放置在闭包参数列表和返回类型之前：
 
     @lazy var someClosure: (Int, String) -> String = {
         [unowned self] (index: Int, stringToProcess: String) -> String in
         // closure body goes here
     }
 
-如果闭包没有指定参数列表或者返回类型，则可以通过上下文推断，那么可以占有列表放在闭包开始的地方，跟着是关键字`in`：
+如果闭包没有指定参数列表或者返回类型，则可以通过上下文推断，那么可以捕获列表放在闭包开始的地方，跟着是关键字`in`：
 
     @lazy var someClosure: () -> String = {
         [unowned self] in
@@ -446,13 +446,13 @@ Swift 有如下要求：只要在闭包内使用`self`的成员，就要用`self
 
 ###弱引用和无主引用
 
-当闭包和占有的实例总是互相引用时并且总是同时销毁时，将闭包内的占有定义为无主引用。
+当闭包和捕获的实例总是互相引用时并且总是同时销毁时，将闭包内的捕获定义为无主引用。
 
-相反的，当占有引用有时可能会是`nil`时，将闭包内的占有定义为弱引用。弱引用总是可选类型，并且当引用的实例被销毁后，弱引用的值会自动置为`nil`。这使我们可以在闭包内检查他们是否存在。
+相反的，当捕获引用有时可能会是`nil`时，将闭包内的捕获定义为弱引用。弱引用总是可选类型，并且当引用的实例被销毁后，弱引用的值会自动置为`nil`。这使我们可以在闭包内检查他们是否存在。
 
 >注意:
 >
-如果占有的引用绝对不会置为`nil`，应该用无主引用，而不是弱引用。
+如果捕获的引用绝对不会置为`nil`，应该用无主引用，而不是弱引用。
 
 前面的`HTMLElement`例子中，无主引用是正确的解决循环强引用的方法。这样这样编写`HTMLElement`类来避免循环强引用：
 
@@ -481,7 +481,7 @@ Swift 有如下要求：只要在闭包内使用`self`的成员，就要用`self
 
     }
 
-上面的`HTMLElement`实现和之前的实现一致，只是在`asHTML`闭包中多了一个占有列表。这里，占有列表是`[unowned self]`，表示“用无主引用而不是强引用来占有`self`”。
+上面的`HTMLElement`实现和之前的实现一致，只是在`asHTML`闭包中多了一个捕获列表。这里，捕获列表是`[unowned self]`，表示“用无主引用而不是强引用来捕获`self`”。
 
 和之前一样，我们可以创建并打印`HTMLElement`实例：
 
@@ -489,11 +489,11 @@ Swift 有如下要求：只要在闭包内使用`self`的成员，就要用`self
     println(paragraph!.asHTML())
     // prints "<p>hello, world</p>"
 
-使用占有列表后引用关系如下图所示：
+使用捕获列表后引用关系如下图所示：
 
 ![](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/closureReferenceCycle02_2x.png)
 
-这一次，闭包以无主引用的形式占有`self`，并不会持有`HTMLElement`实例的强引用。如果将`paragraph`赋值为`nil`，`HTMLElement`实例将会被销毁，并能看到它的析构函数打印出的消息。
+这一次，闭包以无主引用的形式捕获`self`，并不会持有`HTMLElement`实例的强引用。如果将`paragraph`赋值为`nil`，`HTMLElement`实例将会被销毁，并能看到它的析构函数打印出的消息。
 
     paragraph = nil
     // prints "p is being deinitialized"
