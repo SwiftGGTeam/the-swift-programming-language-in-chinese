@@ -35,6 +35,14 @@
 
   下一个代码段定义了 `MediaItem` 的两个子类。第一个子类`Movie`，在父类（或者说基类）的基础上增加了一个 `director`（导演） 属性，和相应的初始化器。第二个类在父类的基础上增加了一个 `artist`（艺术家） 属性，和相应的初始化器：
 
+    class Movie: MediaItem {
+        var director: String
+        init(name: String, director: String) {
+            self.director = director
+            super.init(name: name)
+           }
+    }
+
     class Song: MediaItem {
         var artist: String
         init(name: String, artist: String) {
