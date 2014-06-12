@@ -331,7 +331,7 @@ Swift 提供了两种办法用来解决你在使用类的属性时所遇到的�
 
 为了满足这种需求，通过在类型结尾处加上感叹号（City!）的方式，将`Country`的`capitalCity`属性声明为隐式解析可选类型的属性。这表示像其他可选类型一样，`capitalCity`属性的默认值为`nil`，但是不需要展开他的值就能访问它。（[在隐式解析可选类型中有描述](01_The_Basics.html)）
 
-由于`capitalCity`默认值为`nil`，一旦`Country`的实例在构造函数中给`name`属性赋值后，整个初始化过程就完成了。这代表一旦`name`属性被后，`Country`的构造函数就能引用并传递显式的`self`。`Country`的构造函数在赋值`capitalCity`时，就能将`self`作为参数传递给`City`的构造函数。
+由于`capitalCity`默认值为`nil`，一旦`Country`的实例在构造函数中给`name`属性赋值后，整个初始化过程就完成了。这代表一旦`name`属性被赋值后，`Country`的构造函数就能引用并传递隐式的`self`。`Country`的构造函数在赋值`capitalCity`时，就能将`self`作为参数传递给`City`的构造函数。
 
 以上的意义在于你可以通过一条语句同时创建`Country`和`City`的实例，而不产生循环强引用，并且`capitalCity`的属性能被直接访问，而不需要通过感叹号来展开它的可选值：
 
@@ -339,7 +339,7 @@ Swift 提供了两种办法用来解决你在使用类的属性时所遇到的�
     println("\(country.name)'s capital city is called \(country.capitalCity.name)")
     // prints "Canada's capital city is called Ottawa"
 
-在上面的例子中，使用隐式解析可选值的意义在于满足了两个类构造函数的需求。`capitalCity`属性在初始化完成后，能作为非可选值使用同事还避免了循环强引用。
+在上面的例子中，使用隐式解析可选值的意义在于满足了两个类构造函数的需求。`capitalCity`属性在初始化完成后，能像非可选值一样使用和存取同时还避免了循环强引用。
 
 <a name="strong_reference_cycles_for_closures"></a>
 ##闭包引起的循环强引用
