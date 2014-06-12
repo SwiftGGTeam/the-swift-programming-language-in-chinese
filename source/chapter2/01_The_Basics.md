@@ -42,8 +42,10 @@ Swift 是一个类型安全的语言，可选就是一个很好的例子。Swift
 
 常量和变量必须在使用前声明，用`let`来声明常量，用`var`来声明变量。下面的例子展示了如何用常量和变量来记录用户尝试登录的次数：
 
-    let maximumNumberOfLoginAttempts = 10
-    var currentLoginAttempt = 0
+```swift
+let maximumNumberOfLoginAttempts = 10
+var currentLoginAttempt = 0
+```
 
 这两行代码可以被理解为：
 
