@@ -46,7 +46,7 @@
 
 
         
-    <div class="book"  data-level="2.18" data-basepath=".." data-revision="1402556298428">
+    <div class="book"  data-level="2.18" data-basepath=".." data-revision="1402565541342">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -491,7 +491,7 @@
             <a href="http://www.gitbook.io/" target="blank" class="gitbook-link">Generated using GitBook</a>
         </li>
 <li style="margin-left:15%;"> <iframe  src="http://ghbtns.com/github-btn.html?user=numbbbbb&repo=the-swift-programming-language-in-chinese&type=watch&count=true&size=large"
-  allowtransparency="true" frameborder="0" scrolling="0" width="170" height="30"></iframe></li>        
+  allowtransparency="true" frameborder="0" scrolling="0" width="170" height="30"></iframe></li><li><p style="padding-left:5px;padding-right:5px;">翻译无任何商业目的，仅供内部学习交流使用！</p></li><li><script src="http://s19.cnzz.com/z_stat.php?id=1000480711&web_id=1000480711" language="JavaScript"></script></li>        
     </ul>
 </div>
 
@@ -587,7 +587,7 @@
 
                 <div class="page-inner">
                 
-                    <section class="normal" id="section-gitbook_154">
+                    <section class="normal" id="section-gitbook_42">
                     
                         <blockquote>
 <p>翻译：xiehurricane</p>
@@ -616,7 +616,15 @@
     }
 }
 </code></pre><p>  下一个代码段定义了 <code>MediaItem</code> 的两个子类。第一个子类<code>Movie</code>，在父类（或者说基类）的基础上增加了一个 <code>director</code>（导演） 属性，和相应的初始化器。第二个类在父类的基础上增加了一个 <code>artist</code>（艺术家） 属性，和相应的初始化器：</p>
-<pre><code>class Song: MediaItem {
+<pre><code>class Movie: MediaItem {
+    var director: String
+    init(name: String, director: String) {
+        self.director = director
+        super.init(name: name)
+       }
+}
+
+class Song: MediaItem {
     var artist: String
     init(name: String, artist: String) {
         self.artist = artist
@@ -819,6 +827,6 @@ require(["gitbook"], function(gitbook) {
 </script>
 
         
-    <script src="http://s19.cnzz.com/z_stat.php?id=1000480711&web_id=1000480711" language="JavaScript"></script></body>
+    <script src="http://yandex.st/highlightjs/8.0/styles/default.min.css"></script><script src="http://yandex.st/highlightjs/8.0/highlight.min.js"></script><script text="javascript">$('pre code').each(function(i, block) {hljs.highlightBlock(block);});</script></body>
     
 </html>
