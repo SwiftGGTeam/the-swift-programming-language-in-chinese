@@ -1,6 +1,6 @@
 > 翻译：coverxit
 
-> 校对：numbbbbb
+> 校对：numbbbbb, coverxit
 
 # 语句
 -----------------
