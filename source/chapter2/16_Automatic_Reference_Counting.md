@@ -327,7 +327,7 @@ Swift 提供了两种办法用来解决你在使用类的属性时所遇到的�
 
 为了建立两个类的依赖关系，`City`的构造函数有一个`Country`实例的参数，并且将实例保存为`country`属性。
 
-`Country`的构造函数调用了`City`的构造函数。然而，只有`Country`的实例完全初始化完后，`Country`的构造函数才能把`self`传给`City`的构造函数。（[在两步构造函数中有具体描述](14_Initialization.html)）
+`Country`的构造函数调用了`City`的构造函数。然而，只有`Country`的实例完全初始化完后，`Country`的构造函数才能把`self`传给`City`的构造函数。（[在两段式构造过程中有具体描述](14_Initialization.html)）
 
 为了满足这种需求，通过在类型结尾处加上感叹号（City!）的方式，将`Country`的`capitalCity`属性声明为隐式解析可选类型的属性。这表示像其他可选类型一样，`capitalCity`属性的默认值为`nil`，但是不需要展开他的值就能访问它。（[在隐式解析可选类型中有描述](01_The_Basics.html)）
 
