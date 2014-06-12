@@ -1,18 +1,18 @@
 CACHE MANIFEST
-# Revision 1402550478519
+# Revision 1402550801707
 
 CACHE:
 index.html
 chapter1/01_swift.html
-chapter1/02_a_swift_tour.html
 chapter1/chapter1.html
+chapter1/02_a_swift_tour.html
 chapter2/13_Inheritance.html
 chapter2/01_The_Basics.html
 chapter2/03_Strings_and_Characters.html
 chapter2/04_Collection_Types.html
-chapter2/05_Control_Flow.html
 chapter2/06_Functions.html
 chapter2/07_Closures.html
+chapter2/05_Control_Flow.html
 chapter2/08_Enumerations.html
 chapter2/09_Classes_and_Structures.html
 chapter2/10_Properties.html
