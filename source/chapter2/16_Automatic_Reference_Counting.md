@@ -126,7 +126,7 @@ ARC 会在第三个，也即最后一个强引用被断开的时候，销毁`Per
     john = Person(name: "John Appleseed")
     number73 = Apartment(number: 73)
 
-在两个实例被创建和赋值后，下图表面了强引用的关系。变量`john`现在有一个指向`Person`实例的强引用，而变量`number73`有一个指向`Apartment`实例的强引用：
+在两个实例被创建和赋值后，下图表现了强引用的关系。变量`john`现在有一个指向`Person`实例的强引用，而变量`number73`有一个指向`Apartment`实例的强引用：
 
 ![](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/referenceCycle01_2x.png)
 
@@ -293,7 +293,7 @@ Swift 提供了两种办法用来解决你在使用类的属性时所遇到的�
 最后的代码展示了在`john`变量被设为`nil`后`Customer`实例和`CreditCard`实例的构造函数都打印出了“销毁”的信息。
 
 
-###无主引用以及显式展开的可选属性
+###无主引用以及隐式解析可选属性
 
 上面弱引用和无主引用的例子涵盖了两种常用的需要打破循环强引用的场景。
 
@@ -301,7 +301,7 @@ Swift 提供了两种办法用来解决你在使用类的属性时所遇到的�
 
 `Customer`和`CreditCard`的例子展示了一个属性的值允许为`nil`，而另一个属性的值不允许为`nil`，并会潜在的产生循环强引用。这种场景最适合通过无主引用来解决。
 
-然而，存在着第三种场景，在这种场景中，两个属性都必须有值，并且初始化完成后不能为`nil`。在这种场景中，需要一个类使用无主属性，而另外一个类使用显示展开的可选属性。
+然而，存在着第三种场景，在这种场景中，两个属性都必须有值，并且初始化完成后不能为`nil`。在这种场景中，需要一个类使用无主属性，而另外一个类使用隐式解析可选属性。
 
 这使两个属性在初始化完成后能被直接访问（不需要可选展开），同时避免了循环引用。这一节将为你展示如何建立这种关系。
 
@@ -329,7 +329,7 @@ Swift 提供了两种办法用来解决你在使用类的属性时所遇到的�
 
 `Country`的构造函数调用了`City`的构造函数。然而，只有`Country`的实例完全初始化完后，`Country`的构造函数才能把`self`传给`City`的构造函数。（[在两步构造函数中有具体描述](14_Initialization.html)）
 
-为了满足这种需求，通过在类型结尾处加上感叹号（City!）的方式，将`Country`的`capitalCity`属性声明为显示展开的可选类型属性。这表示像其他可选类型一样，`capitalCity`属性的默认值为`nil`，但是不需要展开他的值就能访问它。（[在显示展开的可选类型中有描述](01_The_Basics.html)）
+为了满足这种需求，通过在类型结尾处加上感叹号（City!）的方式，将`Country`的`capitalCity`属性声明为隐式解析可选类型的属性。这表示像其他可选类型一样，`capitalCity`属性的默认值为`nil`，但是不需要展开他的值就能访问它。（[在隐式解析可选类型中有描述](01_The_Basics.html)）
 
 由于`capitalCity`默认值为`nil`，一旦`Country`的实例在构造函数中给`name`属性赋值后，整个初始化过程就完成了。这代表一旦`name`属性被后，`Country`的构造函数就能引用并传递显式的`self`。`Country`的构造函数在赋值`capitalCity`时，就能将`self`作为参数传递给`City`的构造函数。
 
@@ -339,7 +339,7 @@ Swift 提供了两种办法用来解决你在使用类的属性时所遇到的�
     println("\(country.name)'s capital city is called \(country.capitalCity.name)")
     // prints "Canada's capital city is called Ottawa"
 
-在上面的例子中，使用显示展开可选值的意义在于满足了两个类构造函数的需求。`capitalCity`属性在初始化完成后，能作为非可选值使用同事还避免了循环强引用。
+在上面的例子中，使用隐式解析可选值的意义在于满足了两个类构造函数的需求。`capitalCity`属性在初始化完成后，能作为非可选值使用同事还避免了循环强引用。
 
 <a name="strong_reference_cycles_for_closures"></a>
 ##闭包引起的循环强引用
