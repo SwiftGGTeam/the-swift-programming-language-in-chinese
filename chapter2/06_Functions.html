@@ -840,7 +840,7 @@ let paddedString = alignRight(originalString, 10, &quot;-&quot;)
     a = b
     b = temporaryA
 }
-</code></pre><p>这个 <code>swapTwoInts</code> 函数仅仅交换 <code>a</code> 与 <code>b</code> 的值。该函数先将 <code>a</code> 的值存到一个暂时常量 <code>temporaryA</code> 中，然后将 <code>b</code> 的值赋给 <code>a</code>，最后将 <code>temporaryA</code> 幅值给 <code>b</code>。</p>
+</code></pre><p>这个 <code>swapTwoInts</code> 函数仅仅交换 <code>a</code> 与 <code>b</code> 的值。该函数先将 <code>a</code> 的值存到一个暂时常量 <code>temporaryA</code> 中，然后将 <code>b</code> 的值赋给 <code>a</code>，最后将 <code>temporaryA</code> 赋值给 <code>b</code>。</p>
 <p>你可以用两个 <code>Int</code> 型的变量来调用 <code>swapTwoInts</code>。需要注意的是，<code>someInt</code> 和 <code>anotherInt</code> 在传入 <code>swapTwoInts</code> 函数前，都加了 <code>&amp;</code> 的前缀：</p>
 <pre><code>var someInt = 3
 var anotherInt = 107
@@ -870,7 +870,7 @@ func multiplyTwoInts(a: Int, b: Int) -&gt; Int {
 }
 </code></pre><p>这个函数的类型是：<code>() -&gt; ()</code>，或者叫“没有参数，并返回 <code>Void</code> 类型的函数。”。没有指定返回类型的函数总返回 <code>Void</code>。在Swift中，<code>Void</code> 与空的元组是一样的。</p>
 <h3 id="-using-function-types-">使用函数类型（Using Function Types）</h3>
-<p>在Swift中，使用函数类型就像使用其他类型一样。例如，你可以定义一个常量或变量，它的类型是函数，并且可以幅值为一个函数：</p>
+<p>在Swift中，使用函数类型就像使用其他类型一样。例如，你可以定义一个常量或变量，它的类型是函数，并且可以赋值为一个函数：</p>
 <pre><code>var mathFunction: (Int, Int) -&gt; Int = addTwoInts
 </code></pre><p>这个可以读作：</p>
 <p>“定义一个叫做 <code>mathFunction</code> 的变量，类型是‘一个有两个 <code>Int</code> 型的参数并返回一个 <code>Int</code> 型的值的函数’，并让这个新变量指向 <code>addTwoInts</code> 函数”。</p>
