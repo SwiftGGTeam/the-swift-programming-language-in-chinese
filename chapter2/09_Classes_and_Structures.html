@@ -21,8 +21,8 @@
         <link rel="prev" href="../chapter2/08_Enumerations.html" />
         
 
-        <meta property="og:title" content="类和结构体 | The Swift Programming Language 中文版">
-        <meta property="og:site_name" content="The Swift Programming Language 中文版">
+        <meta property="og:title" content="类和结构体 | 这一次，让中国和世界同步">
+        <meta property="og:site_name" content="这一次，让中国和世界同步">
         <meta property="og:type" content="book">
         <meta property="og:locale" content="en_US">
 
@@ -46,7 +46,7 @@
 
 
         
-    <div class="book"  data-level="2.9" data-basepath=".." data-revision="1402551179317">
+    <div class="book"  data-level="2.9" data-basepath=".." data-revision="1402555449431">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -98,7 +98,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-spinner fa-spin"></i>
-        <a href="../" >The Swift Programming Language 中文版</a>
+        <a href="../" >这一次，让中国和世界同步</a>
     </h1>
 </div>
 
@@ -587,7 +587,7 @@
 
                 <div class="page-inner">
                 
-                    <section class="normal" id="section-gitbook_107">
+                    <section class="normal" id="section-gitbook_25">
                     
                         <blockquote>
 <p>翻译：JaySurplus</p>
@@ -615,7 +615,7 @@
 <li>定义属性用于储存值</li>
 <li>定义方法用于提供功能</li>
 <li>定义下标用于通过下标语法访问值</li>
-<li>定义初始化器用于生成初始化值</li>
+<li>定义构造器用于生成初始化值</li>
 <li>通过扩展以增加默认实现的功能</li>
 <li>符合协议以对某类提供标准功能</li>
 </ul>
@@ -624,7 +624,7 @@
 <ul>
 <li>继承允许一个类继承另一个类的特征</li>
 <li>类型转换允许在运行时检查和解释一个类实例的类型</li>
-<li>取消初始化器允许一个类实例释放任何其所被分配的资源</li>
+<li>解构器允许一个类实例释放任何其所被分配的资源</li>
 <li>引用计数允许对一个类的多次引用</li>
 </ul>
 <p>更多信息请参见<a href="http://" target="_blank">继承</a>，<a href="http://" target="_blank">类型转换</a>，<a href="http://" target="_blank">初始化</a>，和<a href="http://" target="_blank">自动引用计数</a>。</p>
@@ -662,7 +662,7 @@ class VideoMode {
 <p>生成结构体和类实例的语法非常相似：</p>
 <pre><code>let someResolution = Resolution()
 let someVideoMode = VideoMode()
-</code></pre><p>结构体和类都使用初始化器语法来生成新的实例。初始化器语法的最简单形式是在结构体或者类的类型名称后跟随一个空括弧，如<code>Resolution()</code>或<code>VideoMode()</code>。通过这种方式所创建的类或者结构体实例，其属均会被初始化为默认值。<a href="14_Initialization.html">构造过程</a>章节会对类和结构体的初始化进行更详细的讨论。</p>
+</code></pre><p>结构体和类都使用构造器语法来生成新的实例。构造器语法的最简单形式是在结构体或者类的类型名称后跟随一个空括弧，如<code>Resolution()</code>或<code>VideoMode()</code>。通过这种方式所创建的类或者结构体实例，其属均会被初始化为默认值。<a href="14_Initialization.html">构造过程</a>章节会对类和结构体的初始化进行更详细的讨论。</p>
 <h3 id="-">属性访问</h3>
 <p>通过使用<em>点语法</em>（<em>dot syntax</em>）,你可以访问实例中所含有的属性。其语法规则是，实例名后面紧跟属性名，两者通过点号(.)连接：</p>
 <pre><code>println(&quot;The width of someResolution is \(someResolution.width)&quot;)
@@ -679,11 +679,11 @@ println(&quot;The width of someVideoMode is now \(someVideoMode.resolution.width
 <p> 注意：</p>
 <p>与 Objective-C 语言不同的是，Swift 允许直接设置结构体属性的子属性。上面的最后一个例子，就是直接设置了<code>someVideoMode</code>中<code>resolution</code>属性的<code>width</code>这个子属性，以上操作并不需要从新设置<code>resolution</code>属性。</p>
 </blockquote>
-<h3 id="-">结构体类型的成员逐一初始化器</h3>
+<h3 id="-">结构体类型的成员逐一构造器</h3>
 <p>//Memberwise Initializers for structure Types</p>
-<p>所有结构体都有一个自动生成的成员逐一初始化器，用于初始化新结构体实例中成员的属性。新实例中各个属性的初始值可以通过属性的名称传递到成员逐一初始化器之中：</p>
+<p>所有结构体都有一个自动生成的成员逐一构造器，用于初始化新结构体实例中成员的属性。新实例中各个属性的初始值可以通过属性的名称传递到成员逐一构造器之中：</p>
 <pre><code>let vga = resolution（width:640, heigth: 480）
-</code></pre><p>与结构体不同，类实例没有默认的成员逐一初始化器。<a href="14_Initialization.html">构造过程</a>章节会对初始化器进行更详细的讨论。</p>
+</code></pre><p>与结构体不同，类实例没有默认的成员逐一构造器。<a href="14_Initialization.html">构造过程</a>章节会对构造器进行更详细的讨论。</p>
 <p><a name="structures_and_enumerations_are_value_types"></a></p>
 <h2 id="-">结构体和枚举是值类型</h2>
 <p>值类型被赋予给一个变量，常数或者本身被传递给一个函数的时候，实际上操作的是其的拷贝。</p>

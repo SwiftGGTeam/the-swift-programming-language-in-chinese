@@ -21,8 +21,8 @@
         <link rel="prev" href="../chapter2/chapter2.html" />
         
 
-        <meta property="og:title" content="基础部分 | The Swift Programming Language 中文版">
-        <meta property="og:site_name" content="The Swift Programming Language 中文版">
+        <meta property="og:title" content="基础部分 | 这一次，让中国和世界同步">
+        <meta property="og:site_name" content="这一次，让中国和世界同步">
         <meta property="og:type" content="book">
         <meta property="og:locale" content="en_US">
 
@@ -46,7 +46,7 @@
 
 
         
-    <div class="book"  data-level="2.1" data-basepath=".." data-revision="1402551179317">
+    <div class="book"  data-level="2.1" data-basepath=".." data-revision="1402555449431">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -98,7 +98,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-spinner fa-spin"></i>
-        <a href="../" >The Swift Programming Language 中文版</a>
+        <a href="../" >这一次，让中国和世界同步</a>
     </h1>
 </div>
 
@@ -587,7 +587,7 @@
 
                 <div class="page-inner">
                 
-                    <section class="normal" id="section-gitbook_91">
+                    <section class="normal" id="section-gitbook_11">
                     
                         <blockquote>
 <p>翻译：numbbbbb, lyuka, JaySurplus</p>
@@ -798,7 +798,7 @@ let justOverOneMillion = 1_000_000.000_000_1
 let tooBig: Int8 = Int8.max + 1
 // Int8 类型不能存储超过最大值的数，所以会报错
 </code></pre><p>由于每中整数类型都可以存储不同范围的值，所以你必须根据不同情况选择性使用数值型类型转换。这种选择性使用的方式，可以预防隐式转换的错误并让你的代码中的类型转换意图变得清晰。</p>
-<p>要将一种数字类型转换成另一种，你要用当前值来初始化一个期望类型的新数字，这个数字的类型就是你的目标类型。在下面的例子中，常量<code>twoThousand</code>是<code>UInt16</code>类型，然而常量<code>one</code>是<code>Uint8</code>类型。它们不能直接相加，因为它们类型不同。所以要调用<code>UInt16(one)</code>来创建一个新的<code>UInt16</code>数字并用<code>one</code>的值来初始化，然后使用这个新数字来计算：</p>
+<p>要将一种数字类型转换成另一种，你要用当前值来初始化一个期望类型的新数字，这个数字的类型就是你的目标类型。在下面的例子中，常量<code>twoThousand</code>是<code>UInt16</code>类型，然而常量<code>one</code>是<code>UInt8</code>类型。它们不能直接相加，因为它们类型不同。所以要调用<code>UInt16(one)</code>来创建一个新的<code>UInt16</code>数字并用<code>one</code>的值来初始化，然后使用这个新数字来计算：</p>
 <pre><code>let twoThousand: UInt16 = 2_000
 let one: UInt8 = 1
 let twoThousandAndOne = twoThousand + UInt16(one)
