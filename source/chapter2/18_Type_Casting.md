@@ -40,7 +40,7 @@
         init(name: String, director: String) {
             self.director = director
             super.init(name: name)
-           }
+        }
     }
 
     class Song: MediaItem {
@@ -55,11 +55,11 @@
   ，包含两个`Movie`实例和三个`Song`实例。`library`的类型是在它被初始化时根据它数组中所包含的内容推断来的。Swift 的类型检测器能够演绎出`Movie` 和 `Song` 有共同的父类 `MediaItem` ，所以它推断出 `MediaItem[]` 类作为 `library` 的类型。
 
     let library = [
-    Movie(name: "Casablanca", director: "Michael Curtiz"),
-    Song(name: "Blue Suede Shoes", artist: "Elvis Presley"),
-    Movie(name: "Citizen Kane", director: "Orson Welles"),
-    Song(name: "The One And Only", artist: "Chesney Hawkes"),
-    Song(name: "Never Gonna Give You Up", artist: "Rick Astley")
+        Movie(name: "Casablanca", director: "Michael Curtiz"),
+        Song(name: "Blue Suede Shoes", artist: "Elvis Presley"),
+        Movie(name: "Citizen Kane", director: "Orson Welles"),
+        Song(name: "The One And Only", artist: "Chesney Hawkes"),
+        Song(name: "Never Gonna Give You Up", artist: "Rick Astley")
     ]
     // the type of "library" is inferred to be MediaItem[]
 
