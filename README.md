@@ -13,7 +13,9 @@
 
 # 电子书下载
 
-PDF，Epub，mobi格式→[点我下载](http://yun.baidu.com/share/link?shareid=2138443313&uk=2301552351)
+CocoaChina精校PDF→[点我下载](http://vdisk.weibo.com/s/EhsPPzRRQ5CZ/1402621206)
+
+其他格式可以通过PDF转换
 
 # 当前阶段
 
