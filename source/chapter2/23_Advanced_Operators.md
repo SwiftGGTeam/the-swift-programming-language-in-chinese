@@ -36,7 +36,7 @@ Swift支持如下所有C语言的位运算符：
 
 这个运算符是前置的，所以请不加任何空格地写着操作数之前。
 
-```
+```swift
 let initialBits: UInt8 = 0b00001111
 let invertedBits = ~initialBits  // 等于 0b11110000
 ```
@@ -53,7 +53,7 @@ let invertedBits = ~initialBits  // 等于 0b11110000
 
 以下代码，`firstSixBits`和`lastSixBits`中间4个位都为1。对它俩进行按位与运算后，就得到了`00111100`，即十进制的`60`。
 
-```
+```swift
 let firstSixBits: UInt8 = 0b11111100
 let lastSixBits: UInt8  = 0b00111111
 let middleFourBits = firstSixBits & lastSixBits  // 等于 00111100
@@ -67,7 +67,7 @@ let middleFourBits = firstSixBits & lastSixBits  // 等于 00111100
 
 如下代码，`someBits`和`moreBits`在不同位上有`1`。按位或运行的结果是`11111110`，即十进制的`254`。
 
-```
+```swift
 let someBits: UInt8 = 0b10110010
 let moreBits: UInt8 = 0b01011110
 let combinedbits = someBits | moreBits  // 等于 11111110
@@ -81,7 +81,7 @@ let combinedbits = someBits | moreBits  // 等于 11111110
 
 以下代码，`firstBits`和`otherBits`都有一个`1`跟另一个数不同的。所以按位异或的结果是把它这些位置为`1`，其他都置为`0`。
 
-```
+```swift
 let firstBits: UInt8 = 0b00010100
 let otherBits: UInt8 = 0b00000101
 let outputBits = firstBits ^ otherBits  // 等于 00010001
@@ -103,7 +103,7 @@ let outputBits = firstBits ^ otherBits  // 等于 00010001
 
 ![Art/bitshiftUnsigned_2x.png](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Art/bitshiftUnsigned_2x.png "Art/bitshiftUnsigned_2x.png")
 
-```
+```swift
 let shiftBits: UInt8 = 4   // 即二进制的00000100
 shiftBits << 1             // 00001000
 shiftBits << 2             // 00010000
@@ -114,7 +114,7 @@ shiftBits >> 2             // 00000001
 
 你可以使用移位操作进行其他数据类型的编码和解码。
 
-```
+```swift
 let pink: UInt32 = 0xCC6699
 let redComponent = (pink & 0xFF0000) >> 16    // redComponent 是 0xCC, 即 204
 let greenComponent = (pink & 0x00FF00) >> 8   // greenComponent 是 0x66, 即 102
@@ -176,7 +176,7 @@ let blueComponent = pink & 0x0000FF           // blueComponent 是 0x99, 即 153
 
 例如，`Int16`整型能承载的整数范围是`-32768`到`32767`，如果给它赋上超过这个范围的数，就会报错：
 
-```
+```swift
 var potentialOverflow = Int16.max
 // potentialOverflow 等于 32767, 这是 Int16 能承载的最大整数
 potentialOverflow += 1
@@ -197,7 +197,7 @@ potentialOverflow += 1
 
 下面例子使用了溢出加法`&+`来解剖的无符整数的上溢出
 
-```
+```swift
 var willOverflow = UInt8.max
 // willOverflow 等于UInt8的最大整数 255
 willOverflow = willOverflow &+ 1
@@ -218,7 +218,7 @@ willOverflow = willOverflow &+ 1
 
 Swift代码是这样的:
 
-```
+```swift
 var willUnderflow = UInt8.min
 // willUnderflow 等于UInt8的最小值0
 willUnderflow = willUnderflow &- 1
@@ -231,7 +231,7 @@ willUnderflow = willUnderflow &- 1
 
 来看看Swift代码：
 
-```
+```swift
 var signedUnderflow = Int8.min
 // signedUnderflow 等于最小的有符整数 -128
 signedUnderflow = signedUnderflow &- 1
@@ -242,14 +242,14 @@ signedUnderflow = signedUnderflow &- 1
 
 一个数除于0 `i / 0`，或者对0求余数 `i % 0`，就会产生一个错误。
 
-```
+```swift
 let x = 1
 let y = x / 0
 ```
 
 使用它们对应的可溢出的版本的运算符`&/`和`&%`进行除0操作时就会得到`0`值。
 
-```
+```swift
 let x = 1
 let y = x &/ 0
 // y 等于 0
@@ -264,7 +264,7 @@ let y = x &/ 0
 
 在混合表达式中，运算符的优先级和结合性是非常重要的。举个例子，为什么下列表达式的结果为`4`？
 
-```
+```swift
 2 + 3 * 4 % 5
 // 结果是 4
 ```
@@ -282,7 +282,7 @@ let y = x &/ 0
 
 乘法和求余拥有相同的优先级，在运算过程中，我们还需要结合性，乘法和求余运算都是左结合的。这相当于在表达式中有隐藏的括号让运算从左开始。
 
-```
+```swift
 2 + ((3 * 4) % 5)
 ```
 
@@ -290,14 +290,14 @@ let y = x &/ 0
 3 * 4 = 12，所以这相当于：
 
 
-```
+```swift
 2 + (12 % 5)
 ```
 
 (12 % 5) is 2, so this is equivalent to:
 12 % 5 = 2，所这又相当于
 
-```
+```swift
 2 + 2
 ```
 
@@ -318,7 +318,7 @@ Swift的运算符较C语言和Objective-C来得更简单和保守，这意味着
 
 例子中定义了一个名为`Vector2D`的二维坐标向量 `(x，y)` 的结构，然后定义了让两个`Vector2D`的对象相加的运算符函数。
 
-```
+```swift
 struct Vector2D {
     var x = 0.0, y = 0.0
 }
@@ -334,7 +334,7 @@ struct Vector2D {
 
 这个函数是全局的，而不是`Vector2D`结构的成员方法，所以任意两个`Vector2D`对象都可以使用这个中置运算符。
 
-```
+```swift
 let vector = Vector2D(x: 3.0, y: 1.0)
 let anotherVector = Vector2D(x: 2.0, y: 4.0)
 let combinedVector = vector + anotherVector
@@ -351,7 +351,7 @@ let combinedVector = vector + anotherVector
 
 实现一个前置或后置运算符时，在定义该运算符的时候于关键字`func`之前标注 `@prefix` 或 `@postfix` 属性。
 
-```
+```swift
 @prefix func - (vector: Vector2D) -> Vector2D {
     return Vector2D(x: -vector.x, y: -vector.y)
 }
@@ -361,7 +361,7 @@ let combinedVector = vector + anotherVector
 
 对于数值，单目减运算符可以把正数变负数，把负数变正数。对于`Vector2D`，单目减运算将其`x`和`y`都进进行单目减运算。
 
-```
+```swift
 let positive = Vector2D(x: 3.0, y: 4.0)
 let negative = -positive
 // negative 为 (-3.0, -4.0)
@@ -373,7 +373,7 @@ let alsoPositive = -negative
 
 组合赋值是其他运算符和赋值运算符一起执行的运算。如`+=`把加运算和赋值运算组合成一个操作。实现一个组合赋值符号需要使用`@assignment`属性，还需要把运算符的左参数设置成`inout`，因为这个参数会在运算符函数内直接修改它的值。
 
-```
+```swift
 @assignment func += (inout left: Vector2D, right: Vector2D) {
     left = left + right
 }
@@ -381,7 +381,7 @@ let alsoPositive = -negative
 
 因为加法运算在之前定义过了，这里无需重新定义。所以，加赋运算符函数使用已经存在的高级加法运算符函数来执行左值加右值的运算。
 
-```
+```swift
 var original = Vector2D(x: 1.0, y: 2.0)
 let vectorToAdd = Vector2D(x: 3.0, y: 4.0)
 original += vectorToAdd
@@ -390,7 +390,7 @@ original += vectorToAdd
 
 你可以将 `@assignment` 属性和 `@prefix` 或 `@postfix` 属性起来组合，实现一个`Vector2D`的前置运算符。
 
-```
+```swift
 @prefix @assignment func ++ (inout vector: Vector2D) -> Vector2D {
     vector += Vector2D(x: 1.0, y: 1.0)
     return vector
@@ -399,7 +399,7 @@ original += vectorToAdd
 
 这个前置使用了已经定义好的高级加赋运算，将自己加上一个值为 `(1.0，1.0)` 的对象然后赋给自己，然后再将自己返回。
 
-```
+```swift
 var toIncrement = Vector2D(x: 3.0, y: 4.0)
 let afterIncrement = ++toIncrement
 // toIncrement 现在是 (4.0, 5.0)
@@ -416,7 +416,7 @@ Swift无所知道自定义类型是否相等或不等，因为等于或者不等
 
 定义相等运算符函数跟定义其他中置运算符雷同：
 
-```
+```swift
 @infix func == (left: Vector2D, right: Vector2D) -> Bool {
     return (left.x == right.x) && (left.y == right.y)
 }
@@ -430,7 +430,7 @@ Swift无所知道自定义类型是否相等或不等，因为等于或者不等
 
 现在我们可以使用这两个运算符来判断两个`Vector2D`对象是否相等。
 
-```
+```swift
 let twoThree = Vector2D(x: 2.0, y: 3.0)
 let anotherTwoThree = Vector2D(x: 2.0, y: 3.0)
 if twoThree == anotherTwoThree {
@@ -445,14 +445,14 @@ if twoThree == anotherTwoThree {
 
 新的运算符声明需在全局域使用`operator`关键字声明，可以声明为前置，中置或后置的。
 
-```
+```swift
 operator prefix +++ {}
 ```
 
 
 这段代码定义了一个新的前置运算符叫`+++`，此前Swift并不存在这个运算符。此处为了演示，我们让`+++`对`Vector2D`对象的操作定义为 `双自增` 这样一个独有的操作，这个操作使用了之前定义的加赋运算实现了自已加上自己然后返回的运算。
 
-```
+```swift
 @prefix @assignment func +++ (inout vector: Vector2D) -> Vector2D {
     vector += vector
     return vector
@@ -461,7 +461,7 @@ operator prefix +++ {}
 
 `Vector2D` 的 `+++` 的实现和 `++` 的实现很接近, 唯一不同的前者是加自己, 后者是加值为 `(1.0, 1.0)` 的向量.
 
-```
+```swift
 var toBeDoubled = Vector2D(x: 1.0, y: 4.0)
 let afterDoubling = +++toBeDoubled
 // toBeDoubled 现在是 (2.0, 8.0)
@@ -478,7 +478,7 @@ let afterDoubling = +++toBeDoubled
 
 以下例子定义了一个新的中置符`+-`，是左结合的`left`，优先级为`140`。
 
-```
+```swift
 operator infix +- { associativity left precedence 140 }
 func +- (left: Vector2D, right: Vector2D) -> Vector2D {
     return Vector2D(x: left.x + right.x, y: left.y - right.y)
