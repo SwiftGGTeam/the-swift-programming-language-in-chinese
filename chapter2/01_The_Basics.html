@@ -46,7 +46,7 @@
 
 
         
-    <div class="book"  data-level="2.1" data-basepath=".." data-revision="1402565541342">
+    <div class="book"  data-level="2.1" data-basepath=".." data-revision="1402617910282">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -587,7 +587,7 @@
 
                 <div class="page-inner">
                 
-                    <section class="normal" id="section-gitbook_9">
+                    <section class="normal" id="section-gitbook_11">
                     
                         <blockquote>
 <p>翻译：numbbbbb, lyuka, JaySurplus</p>
@@ -634,7 +634,7 @@ var currentLoginAttempt = 0
 <p>如果你的代码中有不需要改变的值，请使用<code>let</code>关键字将它声明为常量。只将需要改变的值声明为变量。</p>
 </blockquote>
 <h3 id="-">类型标注</h3>
-<p>当你声明常量或者变量的时候可以加上<em>类型标注(type annotation)</em>，说明常量或者变量中要存储的值的类型。如果要添加类型标注，需要在常量或者变量名后面加上一个冒号和空格，然后加上类型名称。</p>
+<p>当你声明常量或者变量的时候可以加上<em>类型标注（type annotation）</em>，说明常量或者变量中要存储的值的类型。如果要添加类型标注，需要在常量或者变量名后面加上一个冒号和空格，然后加上类型名称。</p>
 <p>这个例子给<code>welcomeMessage</code>变量添加了类型标注，表示这个变量可以存储<code>String</code>类型的值：</p>
 <pre><code>var welcomeMessage: String
 </code></pre><p>声明中的冒号代表着“是...类型”，所以这行代码可以被理解为：</p>
@@ -684,12 +684,12 @@ languageName = &quot;Swift++&quot;
 <p><a name="comments"></a></p>
 <h2 id="-">注释</h2>
 <p>请将你的代码中的非执行文本注释成提示或者笔记以方便你将来阅读。Swift 的编译器将会在编译代码时自动忽略掉注释部分。</p>
-<p>Swift 中的注释与C 语言的注释非常相似。单行注释以双正斜杠作(<code>//</code>)为起始标记:</p>
+<p>Swift 中的注释与C 语言的注释非常相似。单行注释以双正斜杠（<code>//</code>）作为起始标记:</p>
 <pre><code>// 这是一个注释
-</code></pre><p>你也可以进行多行注释，其起始标记为单个正斜杠后跟随一个星号(<code>/*</code>)，终止标记为一个星号后跟随单个正斜杠(<code>*/</code>):</p>
+</code></pre><p>你也可以进行多行注释，其起始标记为单个正斜杠后跟随一个星号（<code>/*</code>），终止标记为一个星号后跟随单个正斜杠（<code>*/</code>）:</p>
 <pre><code>/* 这是一个,
 多行注释 */
-</code></pre><p>与C 语言多行注释不同，Swift 的多行注释可以嵌套在其它的多行注释之中。你可以先生成一个多行注释块，然后在这个注释块之中再嵌套成第二个多行注释。终止注释时先插入第二个注释块的终止标记，然后再插入第一个注释块的终止标记：</p>
+</code></pre><p>与 C 语言多行注释不同，Swift 的多行注释可以嵌套在其它的多行注释之中。你可以先生成一个多行注释块，然后在这个注释块之中再嵌套成第二个多行注释。终止注释时先插入第二个注释块的终止标记，然后再插入第一个注释块的终止标记：</p>
 <pre><code>/* 这是第一个多行注释的开头
 /* 这是第二个被嵌套的多行注释 */
 这是第一个多行注释的结尾 */
@@ -738,11 +738,11 @@ let maxValue = UInt8.max  // maxValue 为 255，是 UInt8 类型的最大值
 </blockquote>
 <p><a name="type_safety_and_type_inference"></a></p>
 <h2 id="-">类型安全和类型推测</h2>
-<p>Swift 是一个<em>类型安全(type safe )</em>的语言。类型安全的语言可以让你清楚地知道代码要处理的值的类型。如果你的代码需要一个<code>String</code>，你绝对不可能不小心传进去一个<code>Int</code>。</p>
-<p>由于 Swift 是类型安全的，所以它会在编译你的代码时进行<em>类型检查(type checks)</em>，并把不匹配的类型标记为错误。这可以让你在开发的时候尽早发现并修复错误。</p>
-<p>当你要处理不同类型的值时，类型检查可以帮你避免错误。然而，这并不是说你每次声明常量和变量的时候都需要显式指定类型。如果你没有显式指定类型，Swift 会使用<em>类型推测(type inference)</em>来选择合适的类型。有了类型推测，编译器可以在编译代码的时候自动推测出表达式的类型。原理很简单，只要检查你赋的值即可。</p>
+<p>Swift 是一个<em>类型安全（type safe）</em>的语言。类型安全的语言可以让你清楚地知道代码要处理的值的类型。如果你的代码需要一个<code>String</code>，你绝对不可能不小心传进去一个<code>Int</code>。</p>
+<p>由于 Swift 是类型安全的，所以它会在编译你的代码时进行<em>类型检查（type checks）</em>，并把不匹配的类型标记为错误。这可以让你在开发的时候尽早发现并修复错误。</p>
+<p>当你要处理不同类型的值时，类型检查可以帮你避免错误。然而，这并不是说你每次声明常量和变量的时候都需要显式指定类型。如果你没有显式指定类型，Swift 会使用<em>类型推测（type inference）</em>来选择合适的类型。有了类型推测，编译器可以在编译代码的时候自动推测出表达式的类型。原理很简单，只要检查你赋的值即可。</p>
 <p>因为有类型推测，和 C 或者 Objective-C 比起来 Swift 很少需要声明类型。常量和变量虽然需要明确类型，但是大部分工作并不需要你自己来完成。</p>
-<p>当你声明常量或者变量并赋初值的时候类型推测非常有用。当你在声明常量或者变量的时候赋给它们一个<em>字面量(literal value 或 literal)</em>即可触发类型推测。（字面量就是会直接出现在你代码中的值，比如<code>42</code>和<code>3.14159</code>。）</p>
+<p>当你声明常量或者变量并赋初值的时候类型推测非常有用。当你在声明常量或者变量的时候赋给它们一个<em>字面量（literal value 或 literal）</em>即可触发类型推测。（字面量就是会直接出现在你代码中的值，比如<code>42</code>和<code>3.14159</code>。）</p>
 <p>例如，如果你给一个新常量赋值<code>42</code>并且没有标明类型，Swift 可以推测出常量类型是<code>Int</code>，因为你给它赋的初始值看起来像一个整数：</p>
 <pre><code>let meaningOfLife = 42
 // meaningOfLife 会被推测为 Int 类型
@@ -768,7 +768,7 @@ let maxValue = UInt8.max  // maxValue 为 255，是 UInt8 类型的最大值
 let binaryInteger = 0b10001       // 二进制的17
 let octalInteger = 0o21           // 八进制的17
 let hexadecimalInteger = 0x11     // 十六进制的17
-</code></pre><p>浮点字面量可以是十进制（没有前缀）或者是十六进制（前缀是<code>0x</code>）。小数点两边必须有至少一个十进制数字（或者是十六进制的数字）。浮点字面量还有一个可选的<em>指数(exponent)</em>，在十进制浮点数中通过大写或者小写的<code>e</code>来指定，在十六进制浮点数中通过大写或者小写的<code>p</code>来指定。</p>
+</code></pre><p>浮点字面量可以是十进制（没有前缀）或者是十六进制（前缀是<code>0x</code>）。小数点两边必须有至少一个十进制数字（或者是十六进制的数字）。浮点字面量还有一个可选的<em>指数（exponent）</em>，在十进制浮点数中通过大写或者小写的<code>e</code>来指定，在十六进制浮点数中通过大写或者小写的<code>p</code>来指定。</p>
 <p>如果一个十进制数的指数为<code>exp</code>，那这个数相当于基数和$10^{exp}$的乘积：</p>
 <ul>
 <li><code>1.25e2</code> 表示 $1.25 × 10^{2}$，等于 <code>125.0</code>。</li>
@@ -797,7 +797,7 @@ let justOverOneMillion = 1_000_000.000_000_1
 // UInt8 类型不能存储负数，所以会报错
 let tooBig: Int8 = Int8.max + 1
 // Int8 类型不能存储超过最大值的数，所以会报错
-</code></pre><p>由于每中整数类型都可以存储不同范围的值，所以你必须根据不同情况选择性使用数值型类型转换。这种选择性使用的方式，可以预防隐式转换的错误并让你的代码中的类型转换意图变得清晰。</p>
+</code></pre><p>由于每种整数类型都可以存储不同范围的值，所以你必须根据不同情况选择性使用数值型类型转换。这种选择性使用的方式，可以预防隐式转换的错误并让你的代码中的类型转换意图变得清晰。</p>
 <p>要将一种数字类型转换成另一种，你要用当前值来初始化一个期望类型的新数字，这个数字的类型就是你的目标类型。在下面的例子中，常量<code>twoThousand</code>是<code>UInt16</code>类型，然而常量<code>one</code>是<code>UInt8</code>类型。它们不能直接相加，因为它们类型不同。所以要调用<code>UInt16(one)</code>来创建一个新的<code>UInt16</code>数字并用<code>one</code>的值来初始化，然后使用这个新数字来计算：</p>
 <pre><code>let twoThousand: UInt16 = 2_000
 let one: UInt8 = 1
@@ -821,7 +821,7 @@ let pi = Double(three) + pointOneFourOneFiveNine
 </blockquote>
 <p><a name="type_aliases"></a></p>
 <h2 id="-">类型别名</h2>
-<p><em>类型别名(type aliases)</em>就是给现有类型定义另一个名字。你可以使用<code>typealias</code>关键字来定义类型别名。</p>
+<p><em>类型别名（type aliases）</em>就是给现有类型定义另一个名字。你可以使用<code>typealias</code>关键字来定义类型别名。</p>
 <p>当你想要给现有类型起一个更有意义的名字时，类型别名非常有用。假设你正在处理特定长度的外部资源的数据：</p>
 <pre><code>typealias AudioSample = UInt16
 </code></pre><p>定义了一个类型别名之后，你可以在任何使用原始名的地方使用别名：</p>
@@ -830,7 +830,7 @@ let pi = Double(three) + pointOneFourOneFiveNine
 </code></pre><p>本例中，<code>AudioSample</code>被定义为<code>UInt16</code>的一个别名。因为它是别名，<code>AudioSample.min</code>实际上是<code>UInt16.min</code>，所以会给<code>maxAmplitudeFound</code>赋一个初值<code>0</code>。</p>
 <p><a name="booleans"></a></p>
 <h2 id="-">布尔值</h2>
-<p>Swift 有一个基本的<em>布尔(Boolean)</em>类型，叫做<code>Bool</code>。布尔值指<em>逻辑上的(logical)</em>，因为它们只能是真或者假。Swift 有两个布尔常量，<code>true</code>和<code>false</code>：</p>
+<p>Swift 有一个基本的<em>布尔（Boolean）</em>类型，叫做<code>Bool</code>。布尔值指<em>逻辑上的（logical）</em>，因为它们只能是真或者假。Swift 有两个布尔常量，<code>true</code>和<code>false</code>：</p>
 <pre><code>let orangesAreOrange = true
 let turnipsAreDelicious = false
 </code></pre><p><code>orangesAreOrange</code>和<code>turnipsAreDelicious</code>的类型会被推测为<code>Bool</code>，因为它们的初值是布尔字面量。就像之前提到的<code>Int</code>和<code>Double</code>一样，如果你创建变量的时候给它们赋值<code>true</code>或者<code>false</code>，那你不需要将常量或者变量声明为<code>Bool</code>类型。初始化常量或者变量的时候如果所赋的值类型已知，就可以触发类型推测，这让 Swift 代码更加简洁并且可读性更高。</p>
@@ -884,7 +884,7 @@ println(&quot;The status message is \(http404Error.1)&quot;)
 // 输出 &quot;The status code is 200&quot;
 println(&quot;The status message is \(http200Status.description)&quot;)
 // 输出 &quot;The status message is OK&quot;
-</code></pre><p>作为函数返回值时，元组非常有用。一个用来获取网页的函数可能会返回一个<code>(Int, String)</code>元组来描述是否获取成功。和只能返回一个类型的值比较起来，一个包含两个不同类型值的元组可以让函数的返回信息更有用。请参考[函数参数与返回值(06_Functions.html#Function_Parameters_and_Return_Values)。</p>
+</code></pre><p>作为函数返回值时，元组非常有用。一个用来获取网页的函数可能会返回一个<code>(Int, String)</code>元组来描述是否获取成功。和只能返回一个类型的值比较起来，一个包含两个不同类型值的元组可以让函数的返回信息更有用。请参考<a href="06_Functions.html#Function_Parameters_and_Return_Values">函数参数与返回值</a>。</p>
 <blockquote>
 <p>注意：</p>
 <p>元组在临时组织值的时候很有用，但是并不适合创建复杂的数据结构。如果你的数据结构并不是临时使用，请使用类或者结构体而不是元组。请参考<a href="09_Classes_and_Structures.html">类和结构体</a>。</p>
@@ -911,7 +911,7 @@ let convertedNumber = possibleNumber.toInt()
 </code></pre><p>因为<code>toInt</code>方法可能会失败，所以它返回一个<em>可选的（optional）</em><code>Int</code>，而不是一个<code>Int</code>。一个可选的<code>Int</code>被写作<code>Int?</code>而不是<code>Int</code>。问号暗示包含的值是可选，也就是说可能包含<code>Int</code>值也可能不包含值。（不能包含其他任何值比如<code>Bool</code>值或者<code>String</code>值。只能是<code>Int</code>或者什么都没有。）</p>
 <h3 id="if-">if 语句以及强制解析</h3>
 <p>你可以使用<code>if</code>语句来判断一个可选是否包含值。如果可选有值，结果是<code>true</code>；如果没有值，结果是<code>false</code>。</p>
-<p>当你确定可选包<em>确实</em>含值之后，你可以在可选的名字后面加一个感叹号(<code>!</code>)来获取值。这个惊叹号表示“我知道这个可选有值，请使用它。”这被称为可选值的<em>强制解析（forced unwrapping）</em>：</p>
+<p>当你确定可选<em>确实</em>包含值之后，你可以在可选的名字后面加一个感叹号（<code>!</code>）来获取值。这个惊叹号表示“我知道这个可选有值，请使用它。”这被称为可选值的<em>强制解析（forced unwrapping）</em>：</p>
 <pre><code>if convertedNumber {
     println(&quot;\(possibleNumber) has an integer value of \(convertedNumber!)&quot;)
 } else {
