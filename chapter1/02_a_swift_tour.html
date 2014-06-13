@@ -979,7 +979,7 @@
     var counter = Counter()
     counter.incrementBy(2, numberOfTimes: 7)
 </code></pre>
-<p>处理变量的可选值时，你可以在操作（比如方法、属性和子脚本）之前加<code>?</code>。如果<code>?</code>之前的值是<code>nil</code>，<code>?</code>后面的东西都会被忽略，并且整个表达式返回<code>nil</code>。否则，<code>?</code>之后的东西都会被运行。在这两种情况下，整个表达式的值也是一个可选值。</p>
+<p>处理变量的可选值时，你可以在操作（比如方法、属性和下标）之前加<code>?</code>。如果<code>?</code>之前的值是<code>nil</code>，<code>?</code>后面的东西都会被忽略，并且整个表达式返回<code>nil</code>。否则，<code>?</code>之后的东西都会被运行。在这两种情况下，整个表达式的值也是一个可选值。</p>
 <pre><code class="lang-swift">    let optionalSquare: Square? = Square(sideLength: 2.5, name: &quot;optional square&quot;)
     let sideLength = optionalSquare?.sideLength
 </code></pre>
