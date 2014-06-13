@@ -46,7 +46,7 @@
 
 
         
-    <div class="book"  data-level="2.6" data-basepath=".." data-revision="1402634093001">
+    <div class="book"  data-level="2.6" data-basepath=".." data-revision="1402644301599">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -587,7 +587,7 @@
 
                 <div class="page-inner">
                 
-                    <section class="normal" id="section-gitbook_19">
+                    <section class="normal" id="section-gitbook_461">
                     
                         <blockquote>
 <p>翻译：honghaoz</p>
@@ -875,10 +875,10 @@ println(&quot;someInt is now \(someInt), and anotherInt is now \(anotherInt)&quo
 <p>从上面这个例子中，我们可以看到 <code>someInt</code> 和 <code>anotherInt</code> 的原始值在 <code>swapTwoInts</code> 函数中被修改，尽管它们的定义在函数体外。</p>
 <blockquote>
 <p>注意：</p>
-<p>输出输出参数和返回值是不一样的。上面的 <code>swapTwoInts</code> 函数并没有定义任何返回值，但仍然修改了 <code>someInt</code> 和 <code>anotherInt</code> 的值。输入输出参数是函数对函数体外产生影响的另一种方式。
-<a name="Function_Types"></a></p>
-<h2 id="-function-types-">函数类型（Function Types）</h2>
+<p>输出输出参数和返回值是不一样的。上面的 <code>swapTwoInts</code> 函数并没有定义任何返回值，但仍然修改了 <code>someInt</code> 和 <code>anotherInt</code> 的值。输入输出参数是函数对函数体外产生影响的另一种方式。</p>
 </blockquote>
+<p><a name="Function_Types"></a></p>
+<h2 id="-function-types-">函数类型（Function Types）</h2>
 <p>每个函数都有种特定的函数类型，由函数的参数类型和返回类型组成。</p>
 <p>例如：</p>
 <pre><code class="lang-swift">func addTwoInts(a: Int, b: Int) -&gt; Int {
@@ -897,7 +897,7 @@ func multiplyTwoInts(a: Int, b: Int) -&gt; Int {
 </code></pre>
 <p>这个函数的类型是：<code>() -&gt; ()</code>，或者叫“没有参数，并返回 <code>Void</code> 类型的函数。”。没有指定返回类型的函数总返回 <code>Void</code>。在Swift中，<code>Void</code> 与空的元组是一样的。</p>
 <h3 id="-using-function-types-">使用函数类型（Using Function Types）</h3>
-<p>在Swift中，使用函数类型就像使用其他类型一样。例如，你可以定义一个类型为函数的常量或变量，并将函数赋值给它：</p>
+<p>在 Swift 中，使用函数类型就像使用其他类型一样。例如，你可以定义一个类型为函数的常量或变量，并将函数赋值给它：</p>
 <pre><code class="lang-swift">var mathFunction: (Int, Int) -&gt; Int = addTwoInts
 </code></pre>
 <p>这个可以读作：</p>

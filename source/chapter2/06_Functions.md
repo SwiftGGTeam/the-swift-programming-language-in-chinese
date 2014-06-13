@@ -60,7 +60,7 @@ func sayHelloAgain(personName: String) -> String {
 println(sayHelloAgain("Anna"))
 // prints "Hello again, Anna!
 ```
-	
+
 <a name="Function_Parameters_and_Return_Values"></a>
 ## 函数参数与返回值（Function Parameters and Return Values）
 
@@ -411,6 +411,7 @@ println("someInt is now \(someInt), and anotherInt is now \(anotherInt)")
 > 注意：
 >
 > 输出输出参数和返回值是不一样的。上面的 `swapTwoInts` 函数并没有定义任何返回值，但仍然修改了 `someInt` 和 `anotherInt` 的值。输入输出参数是函数对函数体外产生影响的另一种方式。
+
 <a name="Function_Types"></a>
 ## 函数类型（Function Types）
 
@@ -443,7 +444,7 @@ func printHelloWorld() {
 
 ### 使用函数类型（Using Function Types）
 
-在Swift中，使用函数类型就像使用其他类型一样。例如，你可以定义一个类型为函数的常量或变量，并将函数赋值给它：
+在 Swift 中，使用函数类型就像使用其他类型一样。例如，你可以定义一个类型为函数的常量或变量，并将函数赋值给它：
 
 ```swift
 var mathFunction: (Int, Int) -> Int = addTwoInts

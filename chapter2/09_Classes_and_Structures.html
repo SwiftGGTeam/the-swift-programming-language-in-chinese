@@ -46,7 +46,7 @@
 
 
         
-    <div class="book"  data-level="2.9" data-basepath=".." data-revision="1402634093001">
+    <div class="book"  data-level="2.9" data-basepath=".." data-revision="1402644301599">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -587,7 +587,7 @@
 
                 <div class="page-inner">
                 
-                    <section class="normal" id="section-gitbook_25">
+                    <section class="normal" id="section-gitbook_471">
                     
                         <blockquote>
 <p>翻译：JaySurplus</p>
@@ -614,12 +614,12 @@
 <ul>
 <li>定义属性用于储存值</li>
 <li>定义方法用于提供功能</li>
-<li>定义下标用于通过下标语法访问值</li>
+<li>定义附属脚本用于访问值</li>
 <li>定义构造器用于生成初始化值</li>
 <li>通过扩展以增加默认实现的功能</li>
 <li>符合协议以对某类提供标准功能</li>
 </ul>
-<p>更多信息请参见 <a href="10_Properties.html">属性</a>，<a href="11_Methods.html">方法</a>，<a href="12_Subscripts.html">下标</a>，<a href="14_Initialization.html">初始过程</a>，<a href="20_Extensions.html">扩展</a>，和<a href="21_Protocols.html">协议</a>。</p>
+<p>更多信息请参见 <a href="10_Properties.html">属性</a>，<a href="11_Methods.html">方法</a>，<a href="12_Subscripts.html">附属脚本</a>，<a href="14_Initialization.html">初始过程</a>，<a href="20_Extensions.html">扩展</a>，和<a href="21_Protocols.html">协议</a>。</p>
 <p>与结构体相比，类还有如下的附加功能：</p>
 <ul>
 <li>继承允许一个类继承另一个类的特征</li>
@@ -682,19 +682,19 @@ println(&quot;The width of someVideoMode is now \(someVideoMode.resolution.width
 <h3 id="-">结构体类型的成员逐一构造器</h3>
 <p>//Memberwise Initializers for structure Types</p>
 <p>所有结构体都有一个自动生成的成员逐一构造器，用于初始化新结构体实例中成员的属性。新实例中各个属性的初始值可以通过属性的名称传递到成员逐一构造器之中：</p>
-<pre><code>let vga = resolution（width:640, heigth: 480）
+<pre><code>let vga = resolution(width:640, heigth: 480)
 </code></pre><p>与结构体不同，类实例没有默认的成员逐一构造器。<a href="14_Initialization.html">构造过程</a>章节会对构造器进行更详细的讨论。</p>
 <p><a name="structures_and_enumerations_are_value_types"></a></p>
 <h2 id="-">结构体和枚举是值类型</h2>
 <p>值类型被赋予给一个变量，常数或者本身被传递给一个函数的时候，实际上操作的是其的拷贝。</p>
-<p>在之前的章节中，我们已经大量使用了值类型。实际上，在 Swift 中，所有的基本类型：整数(Integer)、浮点数(floating-point)、布尔值(Booleans)、字符串(string)、数组(array)和字典(dictionaries)，都是值类型，并且都是以结构体的形式在后台所实现。</p>
+<p>在之前的章节中，我们已经大量使用了值类型。实际上，在 Swift 中，所有的基本类型：整数（Integer）、浮点数（floating-point）、布尔值（Booleans）、字符串（string)、数组（array）和字典（dictionaries），都是值类型，并且都是以结构体的形式在后台所实现。</p>
 <p>在 Swift 中，所有的结构体和枚举都是值类型。这意味着它们的实例，以及实例中所包含的任何值类型属性，在代码中传递的时候都会被复制。</p>
 <p>请看下面这个示例，其使用了前一个示例中<code>Resolution</code>结构体：</p>
 <pre><code>let hd = Resolution(width: 1920, height: 1080)
 var cinema = hd
-</code></pre><p>在以上示例中，声明了一个名为<code>hd</code>的常量，其值为一个初始化为全高清视频分辨率(1920 像素宽，1080 像素高)的<code>Resolution</code>实例。</p>
-<p>然后示例中又声明了一个名为<code>cinema</code>的变量，其值为之前声明的<code>hd</code>。因为<code>Resolution</code>是一个结构体，所以<code>cinema</code>的值其实是<code>hd</code>的一个拷贝副本，而不是<code>hd</code>本身。尽管<code>hd</code>和<code>cinema</code>有着相同的宽(width)和高(height)属性，但是在后台中，它们是两个完全不同的实例。</p>
-<p>下面，为了符合数码影院放映的需求(2048 像素宽，1080 像素高)，<code>cinema</code>的<code>width</code>属性需要作如下修改：</p>
+</code></pre><p>在以上示例中，声明了一个名为<code>hd</code>的常量，其值为一个初始化为全高清视频分辨率（1920 像素宽，1080 像素高）的<code>Resolution</code>实例。</p>
+<p>然后示例中又声明了一个名为<code>cinema</code>的变量，其值为之前声明的<code>hd</code>。因为<code>Resolution</code>是一个结构体，所以<code>cinema</code>的值其实是<code>hd</code>的一个拷贝副本，而不是<code>hd</code>本身。尽管<code>hd</code>和<code>cinema</code>有着相同的宽（width）和高（height）属性，但是在后台中，它们是两个完全不同的实例。</p>
+<p>下面，为了符合数码影院放映的需求（2048 像素宽，1080 像素高），<code>cinema</code>的<code>width</code>属性需要作如下修改：</p>
 <pre><code>cinema.width = 2048
 </code></pre><p>这里，将会显示<code>cinema</code>的<code>width</code>属性确已改为了<code>2048</code>：</p>
 <pre><code>println(&quot;cinema is now  \(cinema.width) pixels wide&quot;)
@@ -702,7 +702,7 @@ var cinema = hd
 </code></pre><p>然而，初始的<code>hd</code>实例中<code>width</code>属性还是<code>1920</code>：</p>
 <pre><code>println(&quot;hd is still \(hd.width    ) pixels wide&quot;)
 // 输出 &quot;hd is still 1920 pixels wide&quot;
-</code></pre><p>在将<code>hd</code>赋予给<code>cinema</code>的时候，实际上是将<code>hd</code>中所储存的<code>值(values)</code>进行拷贝，然后将拷贝的数据储存到新的<code>cinema</code>实例中。结果就是两个完全独立的实例碰巧包含有相同的数值。由于两者相互独立，因此将<code>cinema</code>的<code>width</code>修改为<code>2048</code>并不会影响<code>hd</code>中的宽(width)。</p>
+</code></pre><p>在将<code>hd</code>赋予给<code>cinema</code>的时候，实际上是将<code>hd</code>中所储存的<code>值（values）</code>进行拷贝，然后将拷贝的数据储存到新的<code>cinema</code>实例中。结果就是两个完全独立的实例碰巧包含有相同的数值。由于两者相互独立，因此将<code>cinema</code>的<code>width</code>修改为<code>2048</code>并不会影响<code>hd</code>中的宽（width）。</p>
 <p>枚举也遵循相同的行为准则：</p>
 <pre><code>enum CompassPoint {
     case North, South, East, West
@@ -714,7 +714,7 @@ if rememberDirection == .West {
     println(&quot;The remembered direction is still .West&quot;)
 }
 // 输出 &quot;The remembered direction is still .West&quot;
-</code></pre><p>上例中<code>rememberedDirection</code>被赋予了<code>currentDirection</code>的值(value)，实际上它被赋予的是值(value)的一个拷贝。赋值过程结束后再修改<code>currentDirection</code>的值并不影响<code>rememberedDirection</code>所储存的原始值(value)的拷贝。</p>
+</code></pre><p>上例中<code>rememberedDirection</code>被赋予了<code>currentDirection</code>的值（value），实际上它被赋予的是值（value）的一个拷贝。赋值过程结束后再修改<code>currentDirection</code>的值并不影响<code>rememberedDirection</code>所储存的原始值（value）的拷贝。</p>
 <p><a name="classes_are_reference_types"></a></p>
 <h2 id="-">类是引用类型</h2>
 <p>与值类型不同，引用类型在被赋予到一个变量，常量或者被传递到一个函数时，操作的并不是其拷贝。因此，引用的是已存在的实例本身而不是其拷贝。</p>
@@ -724,7 +724,7 @@ tenEighty.resolution = hd
 tenEighty.interlaced = true
 tenEighty.name = &quot;1080i&quot;
 tenEighty.frameRate = 25.0
-</code></pre><p>以上示例中，声明了一个名为<code>tenEighty</code>的常量，其引用了一个<code>VideoMode</code>类的新实例。在之前的示例中，这个视频模式(video mode)被赋予了HD分辨率(1920*1080)的一个拷贝(<code>hd</code>)。同时设置为交错(interlaced),命名为<code>“1080i”</code>。最后，其帧率是<code>25.0</code>帧每秒。</p>
+</code></pre><p>以上示例中，声明了一个名为<code>tenEighty</code>的常量，其引用了一个<code>VideoMode</code>类的新实例。在之前的示例中，这个视频模式（video mode）被赋予了HD分辨率（1920*1080）的一个拷贝（<code>hd</code>）。同时设置为交错（interlaced）,命名为<code>“1080i”</code>。最后，其帧率是<code>25.0</code>帧每秒。</p>
 <p>然后，<code>tenEighty</code> 被赋予名为<code>alsoTenEighty</code>的新常量，同时对<code>alsoTenEighty</code>的帧率进行修改：</p>
 <pre><code>let alsoTenEighty = tenEighty
 alsoTenEighty.frameRate = 30.0
@@ -732,27 +732,27 @@ alsoTenEighty.frameRate = 30.0
 <p>下面，通过查看<code>tenEighty</code>的<code>frameRate</code>属性，我们会发现它正确的显示了基本<code>VideoMode</code>实例的新帧率，其值为<code>30.0</code>：</p>
 <pre><code>println(&quot;The frameRate property of tenEighty is now \(tenEighty.frameRate)&quot;)
 // 输出 &quot;The frameRate property of theEighty is now 30.0&quot;
-</code></pre><p>需要注意的是<code>tenEighty</code>和<code>alsoTenEighty</code>被声明为<em>常量(constants)</em>而不是变量。然而你依然可以改变<code>tenEighty.frameRate</code>和<code>alsoTenEighty.frameRate</code>,因为这两个常量本身不会改变。它们并不<code>储存</code>这个<code>VideoMode</code>实例，在后台仅仅是对<code>VideoMode</code>实例的引用。所以，改变的是被引用的基础<code>VideoMode</code>的<code>frameRate</code>参数，而不改变常量的值。</p>
+</code></pre><p>需要注意的是<code>tenEighty</code>和<code>alsoTenEighty</code>被声明为<em>常量（（constants）</em>而不是变量。然而你依然可以改变<code>tenEighty.frameRate</code>和<code>alsoTenEighty.frameRate</code>,因为这两个常量本身不会改变。它们并不<code>储存</code>这个<code>VideoMode</code>实例，在后台仅仅是对<code>VideoMode</code>实例的引用。所以，改变的是被引用的基础<code>VideoMode</code>的<code>frameRate</code>参数，而不改变常量的值。</p>
 <h3 id="-">恒等运算符</h3>
-<p>因为类是引用类型，有可能有多个常量和变量在后台同时引用某一个类实例。(对于结构体和枚举来说，这并不成立。因为它们作值类型，在被赋予到常量，变量或者传递到函数时，总是会被拷贝。)</p>
+<p>因为类是引用类型，有可能有多个常量和变量在后台同时引用某一个类实例。（对于结构体和枚举来说，这并不成立。因为它们作值类型，在被赋予到常量，变量或者传递到函数时，总是会被拷贝。）</p>
 <p>如果能够判定两个常量或者变量是否引用同一个类实例将会很有帮助。为了达到这个目的，Swift 内建了两个恒等运算符：</p>
 <ul>
-<li>等价于 ( === )</li>
-<li>不等价于 ( !== )</li>
+<li>等价于 （ === ）</li>
+<li>不等价于 （ !== ）</li>
 </ul>
 <p>以下是运用这两个运算符检测两个常量或者变量是否引用同一个实例：</p>
 <pre><code>if tenEighty === alsoTenTighty {
     println(&quot;tenTighty and alsoTenEighty refer to the same Resolution instance.&quot;)
 }
 //输出 &quot;tenEighty and alsoTenEighty refer to the same Resolution instance.&quot;
-</code></pre><p>请注意“等价于”(用三个等号表示，===) 与“等于”(用两个等号表示，==)的不同：</p>
+</code></pre><p>请注意“等价于”（用三个等号表示，===） 与“等于”（用两个等号表示，==）的不同：</p>
 <ul>
-<li>“等价于”表示两个类类型(class type)的常量或者变量引用同一个类实例。</li>
+<li>“等价于”表示两个类类型（class type）的常量或者变量引用同一个类实例。</li>
 <li>“等于”表示两个实例的值“相等”或“相同”，判定时要遵照类设计者定义定义的评判标准，因此相比于“相等”，这是一种更加合适的叫法。</li>
 </ul>
 <p>当你在定义你的自定义类和结构体的时候，你有义务来决定判定两个实例“相等”的标准。在章节<a href="23_Advanced_Operators.html#operator_functions">运算符函数(Operator Functions)</a>中将会详细介绍实现自定义“等于”和“不等于”运算符的流程。</p>
 <h3 id="-">指针</h3>
-<p>如果你有 C，C++ 或者 Objective-C 语言的经验，那么你也许会知道这些语言使用指针来引用内存中的地址。一个 Swift 常量或者变量引用一个引用类型的实例与C语言中的指针类似，不同的是并不直接指向内存中的某个地址，而且也不要求你使用星号(*)来表明你在创建一个引用。Swift 中这些引用与其它的常量或变量的定义方式相同。</p>
+<p>如果你有 C，C++ 或者 Objective-C 语言的经验，那么你也许会知道这些语言使用指针来引用内存中的地址。一个 Swift 常量或者变量引用一个引用类型的实例与 C 语言中的指针类似，不同的是并不直接指向内存中的某个地址，而且也不要求你使用星号（*）来表明你在创建一个引用。Swift 中这些引用与其它的常量或变量的定义方式相同。</p>
 <p><a name="choosing_between_classes_and_structures"></a></p>
 <h2 id="-">类和结构体的选择</h2>
 <p>在你的代码中，你可以使用类和结构体来定义你的自定义数据类型。</p>
@@ -772,30 +772,30 @@ alsoTenEighty.frameRate = 30.0
 </ul>
 <p>在所有其它案例中，定义一个类，生成一个它的实例，并通过引用来管理和传递。实际中，这意味着绝大部分的自定义数据构造都应该是类，而非结构体。</p>
 <p><a name="assignment_and_copy_behavior_for_collection_types"></a></p>
-<h2 id="-collection-">集合(Collection)类型的赋值和拷贝行为</h2>
-<p>Swift 中<code>数组(Array)</code>和<code>字典(Dictionary)</code>类型均以结构体的形式实现。然而当数组被赋予一个常量或变量，或被传递给一个函数或方法时，其拷贝行为与字典和其它结构体有些许不同。</p>
+<h2 id="-collection-">集合（Collection）类型的赋值和拷贝行为</h2>
+<p>Swift 中<code>数组（Array）</code>和<code>字典（Dictionary）</code>类型均以结构体的形式实现。然而当数组被赋予一个常量或变量，或被传递给一个函数或方法时，其拷贝行为与字典和其它结构体有些许不同。</p>
 <p>以下对<code>数组</code>和<code>结构体</code>的行为描述与对<code>NSArray</code>和<code>NSDictionary</code>的行为描述在本质上不同，后者是以类的形式实现，前者是以结构体的形式实现。<code>NSArray</code>和<code>NSDictionary</code>实例总是以对已有实例引用,而不是拷贝的方式被赋值和传递。</p>
 <blockquote>
 <p>注意：</p>
 <p>以下是对于数组，字典，字符串和其它值的<code>拷贝</code>的描述。
-在你的代码中，拷贝好像是确实是在有拷贝行为的地方产生过。然而，在Swift 的后台中，只有确有必要，<code>实际(actual)</code>拷贝才会被执行。Swift 管理所有的值拷贝以确保性能最优化的性能，所以你也没有必要去避免赋值以保证最优性能。(实际赋值由系统管理优化)</p>
+在你的代码中，拷贝好像是确实是在有拷贝行为的地方产生过。然而，在 Swift 的后台中，只有确有必要，<code>实际（actual）</code>拷贝才会被执行。Swift 管理所有的值拷贝以确保性能最优化的性能，所以你也没有必要去避免赋值以保证最优性能。（实际赋值由系统管理优化）</p>
 </blockquote>
 <h3 id="-">字典类型的赋值和拷贝行为</h3>
 <p>无论何时将一个<code>字典</code>实例赋给一个常量或变量，或者传递给一个函数或方法，这个字典会即会在赋值或调用发生时被拷贝。在章节<a href="#structures_and_enumerations_are_value_types">结构体和枚举是值类型</a>中将会对此过程进行详细介绍。</p>
-<p>如果<code>字典</code>实例中所储存的键(keys)和/或值(values)是值类型(结构体或枚举)，当赋值或调用发生时，它们都会被拷贝。相反，如果键(keys)和/或值(values)是引用类型，被拷贝的将会是引用，而不是被它们引用的类实例或函数。<code>字典</code>的键和值的拷贝行为与结构体所储存的属性的拷贝行为相同。</p>
+<p>如果<code>字典</code>实例中所储存的键（keys）和/或值（values）是值类型（结构体或枚举），当赋值或调用发生时，它们都会被拷贝。相反，如果键（keys）和/或值（values）是引用类型，被拷贝的将会是引用，而不是被它们引用的类实例或函数。<code>字典</code>的键和值的拷贝行为与结构体所储存的属性的拷贝行为相同。</p>
 <p>下面的示例定义了一个名为<code>ages</code>的字典，其中储存了四个人的名字和年龄。<code>ages</code>字典被赋予了一个名为<code>copiedAges</code>的新变量，同时<code>ages</code>在赋值的过程中被拷贝。赋值结束后，<code>ages</code>和<code>copiedAges</code>成为两个相互独立的字典。</p>
 <pre><code>var ages = [&quot;Peter&quot;: 23, &quot;Wei&quot;: 35, &quot;Anish&quot;: 65, &quot;Katya&quot;: 19]
 var copiedAges = ages
-</code></pre><p>这个字典的键(keys)是<code>字符串(String)</code>类型，值(values)是<code>整(Int)</code>类型。这两种类型在Swift 中都是值类型(value types)，所以当字典被拷贝时，两者都会被拷贝。</p>
-<p>我们可以通过改变一个字典中的年龄值(age value)，检查另一个字典中所对应的值，来证明<code>ages</code>字典确实是被拷贝了。如果在<code>copiedAges</code>字典中将<code>Peter</code>的值设为<code>24</code>，那么<code>ages</code>字典仍然会返回修改前的值<code>23</code>：</p>
+</code></pre><p>这个字典的键（keys）是<code>字符串（String）</code>类型，值（values）是<code>整（Int）</code>类型。这两种类型在Swift 中都是值类型（value types），所以当字典被拷贝时，两者都会被拷贝。</p>
+<p>我们可以通过改变一个字典中的年龄值（age value），检查另一个字典中所对应的值，来证明<code>ages</code>字典确实是被拷贝了。如果在<code>copiedAges</code>字典中将<code>Peter</code>的值设为<code>24</code>，那么<code>ages</code>字典仍然会返回修改前的值<code>23</code>：</p>
 <pre><code>copiedAges[&quot;Peter&quot;] = 24
 println(ages[&quot;Peter&quot;])
 // 输出 &quot;23&quot;
 </code></pre><h3 id="-">数组的赋值和拷贝行为</h3>
-<p>在Swift 中，<code>数组(Arrays)</code>类型的赋值和拷贝行为要比<code>字典(Dictionary)</code>类型的复杂的多。当操作数组内容时，<code>数组(Array)</code>能提供接近C语言的的性能，并且拷贝行为只有在必要时才会发生。</p>
-<p>如果你将一个<code>数组(Array)</code>实例赋给一个变量或常量，或者将其作为参数传递给函数或方法调用，在事件发生时数组的内容<code>不</code>会被拷贝。相反，数组公用相同的元素序列。当你在一个数组内修改某一元素，修改结果也会在另一数组显示。</p>
-<p>对数组来说，拷贝行为仅仅当操作有可能修改数组<code>长度</code>时才会发生。这种行为包括了附加(appending),插入(inserting),删除(removing)或者使用范围下标(ranged subscript)去替换这一范围内的元素。只有当数组拷贝确要发生时，数组内容的行为规则与字典中键值的相同，参见章节[集合（collection）类型的赋值与复制行为](#assignment_and_copy_behavior_for_collection_types。</p>
-<p>下面的示例将一个<code>整数(Int)</code>数组赋给了一个名为<code>a</code>的变量，继而又被赋给了变量<code>b</code>和<code>c</code>：</p>
+<p>在Swift 中，<code>数组（Arrays）</code>类型的赋值和拷贝行为要比<code>字典（Dictionary）</code>类型的复杂的多。当操作数组内容时，<code>数组（Array）</code>能提供接近C语言的的性能，并且拷贝行为只有在必要时才会发生。</p>
+<p>如果你将一个<code>数组（Array）</code>实例赋给一个变量或常量，或者将其作为参数传递给函数或方法调用，在事件发生时数组的内容<code>不</code>会被拷贝。相反，数组公用相同的元素序列。当你在一个数组内修改某一元素，修改结果也会在另一数组显示。</p>
+<p>对数组来说，拷贝行为仅仅当操作有可能修改数组<code>长度</code>时才会发生。这种行为包括了附加（appending）,插入（inserting）,删除（removing）或者使用范围下标（ranged subscript）去替换这一范围内的元素。只有当数组拷贝确要发生时，数组内容的行为规则与字典中键值的相同，参见章节[集合（collection）类型的赋值与复制行为](#assignment_and_copy_behavior_for_collection_types。</p>
+<p>下面的示例将一个<code>整数（Int）</code>数组赋给了一个名为<code>a</code>的变量，继而又被赋给了变量<code>b</code>和<code>c</code>：</p>
 <pre><code>var a = [1, 2, 3]
 var b = a
 var c = a
@@ -826,11 +826,11 @@ println(b[0])
 println(c[0])
 // 42
 </code></pre><h3 id="-">确保数组的唯一性</h3>
-<p>在操作一个数组，或将其传递给函数以及方法调用之前是很有必要先确定这个数组是有一个唯一拷贝的。通过在数组变量上调用<code>unshare</code>方法来确定数组引用的唯一性。(当数组赋给常量时，不能调用<code>unshare</code>方法)</p>
+<p>在操作一个数组，或将其传递给函数以及方法调用之前是很有必要先确定这个数组是有一个唯一拷贝的。通过在数组变量上调用<code>unshare</code>方法来确定数组引用的唯一性。（当数组赋给常量时，不能调用<code>unshare</code>方法）</p>
 <p>如果一个数组被多个变量引用，在其中的一个变量上调用<code>unshare</code>方法，则会拷贝此数组，此时这个变量将会有属于它自己的独立数组拷贝。当数组仅被一个变量引用时，则不会有拷贝发生。</p>
 <p>在上一个示例的最后，<code>b</code>和<code>c</code>都引用了同一个数组。此时在<code>b</code>上调用<code>unshare</code>方法则会将<code>b</code>变成一个唯一个拷贝：</p>
 <pre><code>b.unshare()
-</code></pre><p>在<code>unshare</code>方法调用后再修改<code>b</code>中第一个元素的值，这三个数组(<code>a</code>,<code>b</code>,<code>c</code>)会返回不同的三个值：</p>
+</code></pre><p>在<code>unshare</code>方法调用后再修改<code>b</code>中第一个元素的值，这三个数组（<code>a</code>,<code>b</code>,<code>c</code>）会返回不同的三个值：</p>
 <pre><code>b[0] = -105
 println(a[0])
 // 77
@@ -839,8 +839,8 @@ println(b[0])
 println(c[0])
 // 42
 </code></pre><h3 id="-">判定两个数组是否共用相同元素</h3>
-<p>我们通过使用恒等运算符(identity operators)( === and !==)来判定两个数组或子数组共用相同的储存空间或元素。</p>
-<p>下面这个示例使用了“恒等于(identical to)” 运算符(===) 来判定<code>b</code>和<code>c</code>是否共用相同的数组元素：</p>
+<p>我们通过使用恒等运算符（identity operators）（ === 和 !==）来判定两个数组或子数组共用相同的储存空间或元素。</p>
+<p>下面这个示例使用了“等同（identical to）” 运算符（===） 来判定<code>b</code>和<code>c</code>是否共用相同的数组元素：</p>
 <pre><code>if b === c {
     println(&quot;b and c still share the same array elements.&quot;)
 } else {
@@ -856,10 +856,10 @@ println(c[0])
 }
 // 输出 &quot;These two subarrays share the same elements.&quot;
 </code></pre><h3 id="-">强制复制数组</h3>
-<p>我们通过调用数组的<code>copy</code>方法进行强制显性复制。这个方法对数组进行了浅拷贝(shallow copy),并且返回一个包含此拷贝的新数组。</p>
+<p>我们通过调用数组的<code>copy</code>方法进行强制显性复制。这个方法对数组进行了浅拷贝（shallow copy）,并且返回一个包含此拷贝的新数组。</p>
 <p>下面这个示例中定义了一个<code>names</code>数组，其包含了七个人名。还定义了一个<code>copiedNames</code>变量，用以储存在<code>names</code>上调用<code>copy</code>方法所返回的结果：</p>
 <pre><code>var names = [&quot;Mohsen&quot;, &quot;Hilary&quot;, &quot;Justyn&quot;, &quot;Amy&quot;, &quot;Rich&quot;, &quot;Graham&quot;, &quot;Vic&quot;]
-var copiedNames = names.copy
+var copiedNames = names.copy()
 </code></pre><p>我们可以通过修改一个数组中某元素，并且检查另一个数组中对应元素的方法来判定<code>names</code>数组确已被复制。如果你将<code>copiedNames</code>中第一个元素从&quot;<code>Mohsen</code>&quot;修改为&quot;<code>Mo</code>&quot;,则<code>names</code>数组返回的仍是拷贝发生前的&quot;<code>Mohsen</code>&quot;：</p>
 <pre><code>copiedName[0] = &quot;Mo&quot;
 println(name[0])

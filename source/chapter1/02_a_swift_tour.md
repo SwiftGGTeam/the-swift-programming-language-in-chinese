@@ -249,7 +249,7 @@
     getGasPrices()
 ```
 
-函数的参数数量是可变的，用一个数组来获取它们：
+函数可以带有可变个数的参数，这些参数在函数内表现为数组的形式：
 
 ```swift
     func sumOf(numbers: Int...) -> Int {
