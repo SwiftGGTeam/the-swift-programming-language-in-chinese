@@ -1,5 +1,5 @@
 CACHE MANIFEST
-# Revision 1402675413379
+# Revision 1402675563757
 
 CACHE:
 index.html
@@ -19,9 +19,9 @@ chapter2/10_Properties.html
 chapter2/11_Methods.html
 chapter2/12_Subscripts.html
 chapter2/02_Basic_Operators.html
+chapter2/14_Initialization.html
 chapter2/15_Deinitialization.html
 chapter2/16_Automatic_Reference_Counting.html
-chapter2/14_Initialization.html
 chapter2/17_Optional_Chaining.html
 chapter2/18_Type_Casting.html
 chapter2/19_Nested_Types.html
