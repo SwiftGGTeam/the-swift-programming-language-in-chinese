@@ -46,7 +46,7 @@ CocoaChina精校PDF→[点我下载](http://vdisk.weibo.com/s/EhsPPzRRQ5CZ/14026
    * 构造过程(完成 By @lifedim)
    * 析构过程(完成)
    * 自动引用计数(完成 By @TimothyYe)
-   * 可选链(完成)
+   * 可选链(完成 By @Jasonbroker)
    * 类型检查(完成 By @xiehurricane)
    * 嵌套类型(完成 By @Lin-H)
    * 扩展(完成 By @lyuka)
