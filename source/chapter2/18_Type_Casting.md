@@ -35,6 +35,14 @@
 
   下一个代码段定义了 `MediaItem` 的两个子类。第一个子类`Movie`，在父类（或者说基类）的基础上增加了一个 `director`（导演） 属性，和相应的初始化器。第二个类在父类的基础上增加了一个 `artist`（艺术家） 属性，和相应的初始化器：
 
+    class Movie: MediaItem {
+        var director: String
+        init(name: String, director: String) {
+            self.director = director
+            super.init(name: name)
+        }
+    }
+
     class Song: MediaItem {
         var artist: String
         init(name: String, artist: String) {
@@ -47,11 +55,11 @@
   ，包含两个`Movie`实例和三个`Song`实例。`library`的类型是在它被初始化时根据它数组中所包含的内容推断来的。Swift 的类型检测器能够演绎出`Movie` 和 `Song` 有共同的父类 `MediaItem` ，所以它推断出 `MediaItem[]` 类作为 `library` 的类型。
 
     let library = [
-    Movie(name: "Casablanca", director: "Michael Curtiz"),
-    Song(name: "Blue Suede Shoes", artist: "Elvis Presley"),
-    Movie(name: "Citizen Kane", director: "Orson Welles"),
-    Song(name: "The One And Only", artist: "Chesney Hawkes"),
-    Song(name: "Never Gonna Give You Up", artist: "Rick Astley")
+        Movie(name: "Casablanca", director: "Michael Curtiz"),
+        Song(name: "Blue Suede Shoes", artist: "Elvis Presley"),
+        Movie(name: "Citizen Kane", director: "Orson Welles"),
+        Song(name: "The One And Only", artist: "Chesney Hawkes"),
+        Song(name: "Never Gonna Give You Up", artist: "Rick Astley")
     ]
     // the type of "library" is inferred to be MediaItem[]
 
