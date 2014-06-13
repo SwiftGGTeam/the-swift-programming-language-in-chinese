@@ -46,7 +46,7 @@
 
 
         
-    <div class="book"  data-level="2.2" data-basepath=".." data-revision="1402617910282">
+    <div class="book"  data-level="2.2" data-basepath=".." data-revision="1402634093001">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -748,7 +748,7 @@ a += 2 // a 现在是 3
 <p>所有标准 C 语言中的比较运算都可以在 Swift 中使用。</p>
 <ul>
 <li>等于（<code>a == b</code>）</li>
-<li>不等于（<code>a！= b</code>）</li>
+<li>不等于（<code>a != b</code>）</li>
 <li>大于（<code>a &gt; b</code>）</li>
 <li>小于（<code>a &lt; b</code>）</li>
 <li>大于等于（<code>a &gt;= b</code>）</li>
@@ -778,7 +778,7 @@ if name == &quot;world&quot; {
 <p>关于<code>if</code>语句，请看<a href="05_Control_Flow.html">控制流</a>。</p>
 <p><a name="ternary_conditional_operator"></a></p>
 <h2 id="-ternary-conditional-operator-">三元条件运算(Ternary Conditional Operator)</h2>
-<p>三元条件运算的特殊在于它是有三个操作数的运算符，它的原型是<code>问题？答案1：答案2</code>。它简洁地表达根据<code>问题</code>成立与否作出二选一的操作。如果<code>问题</code>成立，返回<code>答案1</code>的结果; 如果不成立，返回<code>答案2</code>的结果。</p>
+<p>三元条件运算的特殊在于它是有三个操作数的运算符，它的原型是 <code>问题 ? 答案1 : 答案2</code>。它简洁地表达根据<code>问题</code>成立与否作出二选一的操作。如果<code>问题</code>成立，返回<code>答案1</code>的结果; 如果不成立，返回<code>答案2</code>的结果。</p>
 <p>使用三元条件运算简化了以下代码：</p>
 <pre><code class="lang-swift">if question: {
     answer1
@@ -855,7 +855,7 @@ if !allowedEntry {
 }
 // 输出 &quot;ACCESS DENIED&quot;
 </code></pre>
-<p><code>if！allowedEntry</code>语句可以读作 &quot;如果 非 alowed entry。&quot;，接下一行代码只有在如果 &quot;非 allow entry&quot; 为<code>true</code>，即<code>allowEntry</code>为<code>false</code>时被执行。</p>
+<p><code>if !allowedEntry</code>语句可以读作 &quot;如果 非 alowed entry。&quot;，接下一行代码只有在如果 &quot;非 allow entry&quot; 为<code>true</code>，即<code>allowEntry</code>为<code>false</code>时被执行。</p>
 <p>在示例代码中，小心地选择布尔常量或变量有助于代码的可读性，并且避免使用双重逻辑非运算，或混乱的逻辑语句。</p>
 <h3 id="-">逻辑与</h3>
 <p>逻辑与（<code>a &amp;&amp; b</code>）表达了只有<code>a</code>和<code>b</code>的值都为<code>true</code>时，整个表达式的值才会是<code>true</code>。</p>

@@ -46,7 +46,7 @@
 
 
         
-    <div class="book"  data-level="3.2" data-basepath=".." data-revision="1402617910282">
+    <div class="book"  data-level="3.2" data-basepath=".." data-revision="1402634093001">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -657,10 +657,11 @@
 <p><a name="literals"></a></p>
 <h2 id="-">字面量</h2>
 <p>字面值表示整型、浮点型数字或文本类型的值，举例如下：</p>
-<pre><code>42                 // 整型字面量
+<pre><code class="lang-swift">42                 // 整型字面量
 3.14159            // 浮点型字面量
 &quot;Hello, world!&quot;    // 文本型字面量
-</code></pre><blockquote>
+</code></pre>
+<blockquote>
 <p>字面量语法</p>
 <p><em>literal</em> → <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/LexicalStructure.html#//apple_ref/swift/grammar/integer-literal" target="_blank">integer-literal­</a> | <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/LexicalStructure.html#//apple_ref/swift/grammar/floating-point-literal" target="_blank">floating-point-literal</a>­ | <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/LexicalStructure.html#//apple_ref/swift/grammar/string-literal" target="_blank">string-literal­</a></p>
 </blockquote>
@@ -669,9 +670,10 @@
 <p>十进制字面量包含数字 <code>0</code> 至 <code>9</code>。二进制字面量只包含 <code>0</code> 或 <code>1</code>，八进制字面量包含数字 <code>0</code> 至 <code>7</code>，十六进制字面量包含数字 <code>0</code> 至 <code>9</code> 以及字母 <code>A</code> 至 <code>F</code> （大小写均可）。</p>
 <p>负整数的字面量在数字前加减号 <code>-</code>，比如 <code>-42</code>。</p>
 <p>允许使用下划线 <code>_</code> 来增加数字的可读性，下划线不会影响字面量的值。整型字面量也可以在数字前加 <code>0</code>，同样不会影响字面量的值。</p>
-<pre><code>1000_000     // 等于 1000000
+<pre><code class="lang-swift">1000_000     // 等于 1000000
 005          // 等于 5
-</code></pre><p>除非特殊指定，整型字面量的默认类型为 Swift 标准库类型中的 <code>Int</code>。Swift 标准库还定义了其他不同长度以及是否带符号的整数类型，请参考 <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/TheBasics.html#//apple_ref/doc/uid/TP40014097-CH5-XID_411" target="_blank">整数类型</a>。</p>
+</code></pre>
+<p>除非特殊指定，整型字面量的默认类型为 Swift 标准库类型中的 <code>Int</code>。Swift 标准库还定义了其他不同长度以及是否带符号的整数类型，请参考 <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/TheBasics.html#//apple_ref/doc/uid/TP40014097-CH5-XID_411" target="_blank">整数类型</a>。</p>
 <blockquote>
 <p>整型字面量语法</p>
 <p><em>integer-literal</em> → <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/LexicalStructure.html#//apple_ref/swift/grammar/binary-literal" target="_blank">binary-literal­</a></p>
@@ -703,9 +705,10 @@
 <p>十六进制浮点型字面量（<em>hexadecimal floating-point literals</em>）由前缀 <code>0x</code> 后跟可选的十六进制小数部分以及十六进制指数部分组成。十六进制小数部分由小数点后跟十六进制数字串组成。指数部分由大写或小写字母 <code>p</code> 后跟十进制数字串组成，这串数字表示 <code>p</code> 之前的数量乘以 2 的几次方。例如：<code>0xFp2</code> 表示 <code>15 ⨉ 2^2</code>，也就是 <code>60</code>；同样，<code>0xFp-2</code> 表示 <code>15 ⨉ 2^-2</code>，也就是 <code>3.75</code>。</p>
 <p>与整型字面量不同，负的浮点型字面量由一元运算符减号 <code>-</code> 和浮点型字面量组成，例如 <code>-42.0</code>。这代表一个表达式，而不是一个浮点整型字面量。</p>
 <p>允许使用下划线 <code>_</code> 来增强可读性，下划线不会影响字面量的值。浮点型字面量也可以在数字前加 <code>0</code>，同样不会影响字面量的值。</p>
-<pre><code>10_000.56     // 等于 10000.56
+<pre><code class="lang-swift">10_000.56     // 等于 10000.56
 005000.76     // 等于 5000.76
-</code></pre><p>除非特殊指定，浮点型字面量的默认类型为 Swift 标准库类型中的 <code>Double</code>，表示64位浮点数。Swift 标准库也定义 <code>Float</code> 类型，表示32位浮点数。</p>
+</code></pre>
+<p>除非特殊指定，浮点型字面量的默认类型为 Swift 标准库类型中的 <code>Double</code>，表示64位浮点数。Swift 标准库也定义 <code>Float</code> 类型，表示32位浮点数。</p>
 <blockquote>
 <p>浮点型字面量语法</p>
 <p><em>floating-point-literal</em> → <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/LexicalStructure.html#//apple_ref/swift/grammar/decimal-literal" target="_blank">decimal-literal</a> ­<a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/LexicalStructure.html#//apple_ref/swift/grammar/decimal-fraction" target="_blank">decimal-fraction­</a> <em>opt</em> ­<a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/LexicalStructure.html#//apple_ref/swift/grammar/decimal-exponent" target="_blank">decimal-exponent­</a> <em>opt­</em></p>
@@ -741,11 +744,12 @@
 <p>后跟的数字表示一个 Unicode 码点。</p>
 <p>文本型字面量允许在反斜线小括号 <code>\()</code> 中插入表达式的值。插入表达式（<em>interpolated expression</em>）不能包含未转义的双引号 <code>&quot;</code>、反斜线 <code>\</code>、回车符或者换行符。表达式值的类型必须在 <em>String</em> 类中有对应的初始化方法。</p>
 <p>例如，以下所有文本型字面量的值相同：</p>
-<pre><code>&quot;1 2 3&quot;
+<pre><code class="lang-swift">&quot;1 2 3&quot;
 &quot;1 2 \(3)&quot;
 &quot;1 2 \(1 + 2)&quot;
 var x = 3; &quot;1 2 \(x)&quot;
-</code></pre><p>文本型字面量的默认类型为 <code>String</code>。组成字符串的字符类型为 <code>Character</code>。更多有关 <code>String</code> 和 <code>Character</code> 的信息请参照 <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/StringsAndCharacters.html#//apple_ref/doc/uid/TP40014097-CH7-XID_368" target="_blank">字符串和字符</a>。</p>
+</code></pre>
+<p>文本型字面量的默认类型为 <code>String</code>。组成字符串的字符类型为 <code>Character</code>。更多有关 <code>String</code> 和 <code>Character</code> 的信息请参照 <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/StringsAndCharacters.html#//apple_ref/doc/uid/TP40014097-CH7-XID_368" target="_blank">字符串和字符</a>。</p>
 <blockquote>
 <p>文本型字面量语法</p>
 <p><em>string-literal</em> → <strong>&quot;­</strong> <a href="https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/LexicalStructure.html#//apple_ref/swift/grammar/quoted-text" target="_blank">quoted-text</a> <strong>­&quot;­</strong></p>
