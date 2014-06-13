@@ -101,9 +101,11 @@ Swift 的“词法结构（*lexical structure*）”描述了如何在该语言�
 
 字面值表示整型、浮点型数字或文本类型的值，举例如下：
 
-	42                 // 整型字面量
-	3.14159            // 浮点型字面量
-	"Hello, world!"    // 文本型字面量
+```swift
+42                 // 整型字面量
+3.14159            // 浮点型字面量
+"Hello, world!"    // 文本型字面量
+```
 
 > 字面量语法
 >
@@ -119,8 +121,10 @@ Swift 的“词法结构（*lexical structure*）”描述了如何在该语言�
 
 允许使用下划线 `_` 来增加数字的可读性，下划线不会影响字面量的值。整型字面量也可以在数字前加 `0`，同样不会影响字面量的值。
 
-	1000_000     // 等于 1000000
-	005          // 等于 5
+```swift
+1000_000     // 等于 1000000
+005          // 等于 5
+```
 
 除非特殊指定，整型字面量的默认类型为 Swift 标准库类型中的 `Int`。Swift 标准库还定义了其他不同长度以及是否带符号的整数类型，请参考 [整数类型](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/TheBasics.html#//apple_ref/doc/uid/TP40014097-CH5-XID_411)。
 
@@ -182,8 +186,10 @@ Swift 的“词法结构（*lexical structure*）”描述了如何在该语言�
 
 允许使用下划线 `_` 来增强可读性，下划线不会影响字面量的值。浮点型字面量也可以在数字前加 `0`，同样不会影响字面量的值。
 
-	10_000.56     // 等于 10000.56
-	005000.76     // 等于 5000.76
+```swift
+10_000.56     // 等于 10000.56
+005000.76     // 等于 5000.76
+```
 
 除非特殊指定，浮点型字面量的默认类型为 Swift 标准库类型中的 `Double`，表示64位浮点数。Swift 标准库也定义 `Float` 类型，表示32位浮点数。
 
@@ -239,10 +245,12 @@ Swift 的“词法结构（*lexical structure*）”描述了如何在该语言�
 
 例如，以下所有文本型字面量的值相同：
 
-	"1 2 3"
-	"1 2 \(3)"
-	"1 2 \(1 + 2)"
-	var x = 3; "1 2 \(x)"
+```swift
+"1 2 3"
+"1 2 \(3)"
+"1 2 \(1 + 2)"
+var x = 3; "1 2 \(x)"
+```
 
 文本型字面量的默认类型为 `String`。组成字符串的字符类型为 `Character`。更多有关 `String` 和 `Character` 的信息请参照 [字符串和字符](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/Swift_Programming_Language/StringsAndCharacters.html#//apple_ref/doc/uid/TP40014097-CH7-XID_368)。
 
