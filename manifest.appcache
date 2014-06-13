@@ -1,5 +1,5 @@
 CACHE MANIFEST
-# Revision 1402675563757
+# Revision 1402676386944
 
 CACHE:
 index.html
@@ -7,9 +7,9 @@ chapter1/01_swift.html
 chapter1/02_a_swift_tour.html
 chapter1/chapter1.html
 chapter2/13_Inheritance.html
-chapter2/01_The_Basics.html
 chapter2/03_Strings_and_Characters.html
 chapter2/04_Collection_Types.html
+chapter2/01_The_Basics.html
 chapter2/05_Control_Flow.html
 chapter2/06_Functions.html
 chapter2/07_Closures.html
@@ -77,8 +77,8 @@ gitbook/jsrepl/sandbox.html
 gitbook/jsrepl/sandbox.js
 gitbook/print.css
 gitbook/style.css
-gitbook/plugins/gitbook-plugin-mixpanel/plugin.js
 gitbook/plugins/gitbook-plugin-mathjax/plugin.js
+gitbook/plugins/gitbook-plugin-mixpanel/plugin.js
 
 NETWORK:
 *

@@ -46,7 +46,7 @@
 
 
         
-    <div class="book"  data-level="2.17" data-basepath=".." data-revision="1402675563756">
+    <div class="book"  data-level="2.17" data-basepath=".." data-revision="1402676386943">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -587,7 +587,7 @@
 
                 <div class="page-inner">
                 
-                    <section class="normal" id="section-gitbook_429">
+                    <section class="normal" id="section-gitbook_40">
                     
                         <blockquote>
 <p>翻译：Jasonbroker</p>
@@ -603,16 +603,16 @@
 <li><a href="#calling_methods_through_optional_chaining">通过可选链调用方法</a></li>
 <li><a href="#calling_subscripts_through_optional_chaining">使用可选链调用子脚本</a></li>
 <li><a href="#linking_multiple_levels_of_chaining">连接多层链接</a></li>
-<li><a href="#chaining_on_methods_with_optional_return_values">链接自判断返回值的方法</a></li>
+<li><a href="#chaining_on_methods_with_optional_return_values">链接可选返回值的方法</a></li>
 </ul>
-<p>可选链（Optional Chaining）是一种可以请求和调用属性、方法及子脚本的过程，它的自判断性体现于请求或调用的目标当前可能为空（<code>nil</code>）。如果自判断的目标有值，那么调用就会成功；相反，如果选择的目标为空（<code>nil</code>），则这种调用将返回空（<code>nil</code>）。多次请求或调用可以被链接在一起形成一个链，如果任何一个节点为空（<code>nil</code>）将导致整个链失效。</p>
+<p>可选链（Optional Chaining）是一种可以请求和调用属性、方法及子脚本的过程，它的可选性体现于请求或调用的目标当前可能为空（<code>nil</code>）。如果可选的目标有值，那么调用就会成功；相反，如果选择的目标为空（<code>nil</code>），则这种调用将返回空（<code>nil</code>）。多次请求或调用可以被链接在一起形成一个链，如果任何一个节点为空（<code>nil</code>）将导致整个链失效。</p>
 <blockquote>
 <p>注意：
-Swift 的自判断链和 Objective-C 中的消息为空有些相像，但是 Swift 可以使用在任意类型中，并且失败与否可以被检测到。</p>
+Swift 的可选链和 Objective-C 中的消息为空有些相像，但是 Swift 可以使用在任意类型中，并且失败与否可以被检测到。</p>
 </blockquote>
 <p><a name="optional_chaining_as_an_alternative_to_forced_unwrapping"></a></p>
 <h2 id="-">可选链可替代强制解析</h2>
-<p>通过在想调用的属性、方法、或子脚本的可选值（<code>optional value</code>）（非空）后面放一个问号，可以定义一个可选链。这一点很像在可选值后面放一个声明符号来强制拆得其封包内的值。他们的主要的区别在于当可选值为空时可选链即刻失败，然而一般的强制解析将会引发运行时错误。</p>
+<p>通过在想调用的属性、方法、或子脚本的可选值（<code>optional value</code>）（非空）后面放一个问号，可以定义一个可选链。这一点很像在可选值后面放一个叹号来强制拆得其封包内的值。他们的主要的区别在于当可选值为空时可选链即刻失败，然而一般的强制解析将会引发运行时错误。</p>
 <p>为了反映可选链可以调用空（<code>nil</code>），不论你调用的属性、方法、子脚本等返回的值是不是可选值，它的返回结果都是一个可选值。你可以利用这个返回值来检测你的可选链是否调用成功，有返回值即成功，返回nil则失败。</p>
 <p>调用可选链的返回结果与原本的返回结果具有相同的类型，但是原本的返回结果被包装成了一个可选值，当可选链调用成功时，一个应该返回<code>Int</code>的属性将会返回<code>Int?</code>。</p>
 <p>下面几段代码将解释可选链和强制解析的不同。</p>
@@ -624,8 +624,8 @@ Swift 的自判断链和 Objective-C 中的消息为空有些相像，但是 Swi
 class Residence {
     var numberOfRooms = 1
 }
-</code></pre><p><code>Residence</code>具有一个<code>Int</code>类型的<code>numberOfRooms</code>，其值为 1。<code>Person</code>具有一个自判断<code>residence</code>属性，它的类型是<code>Residence？</code>。</p>
-<p>如果你创建一个新的<code>Person</code>实例，它的<code>residence</code>属性由于是被定义为自判断型的，此属性将默认初始化为空：</p>
+</code></pre><p><code>Residence</code>具有一个<code>Int</code>类型的<code>numberOfRooms</code>，其值为 1。<code>Person</code>具有一个可选<code>residence</code>属性，它的类型是<code>Residence？</code>。</p>
+<p>如果你创建一个新的<code>Person</code>实例，它的<code>residence</code>属性由于是被定义为可选型的，此属性将默认初始化为空：</p>
 <pre><code>let john = Person()
 </code></pre><p>如果你想使用感叹号（<code>!</code>）强制解析获得这个人<code>residence</code>属性<code>numberOfRooms</code>属性值，将会引发运行时错误，因为这时没有可以供解析的<code>residence</code>值。</p>
 <pre><code>let roomCount = john.residence!.numberOfRooms
@@ -638,9 +638,9 @@ class Residence {
     println(&quot;Unable to retrieve the number of rooms.&quot;)
 }
 // 打印 &quot;Unable to retrieve the number of rooms.
-</code></pre><p>这告诉 Swift 来链接自判断<code>residence?</code>属性，如果<code>residence</code>存在则取回<code>numberOfRooms</code>的值。</p>
-<p>因为这种尝试获得<code>numberOfRooms</code>的操作有可能失败，可选链会返回<code>Int?</code>类型值，或者称作“自判断<code>Int</code>”。当<code>residence</code>是空的时候（上例），选择<code>Int</code>将会为空，因此会出先无法访问<code>numberOfRooms</code>的情况。</p>
-<p>要注意的是，即使numberOfRooms是非自判断<code>Int</code>（<code>Int?</code>）时这一点也成立。只要是通过可选链的请求就意味着最后<code>numberOfRooms</code>总是返回一个<code>Int?</code>而不是<code>Int</code>。</p>
+</code></pre><p>这告诉 Swift 来链接可选<code>residence?</code>属性，如果<code>residence</code>存在则取回<code>numberOfRooms</code>的值。</p>
+<p>因为这种尝试获得<code>numberOfRooms</code>的操作有可能失败，可选链会返回<code>Int?</code>类型值，或者称作“可选<code>Int</code>”。当<code>residence</code>是空的时候（上例），选择<code>Int</code>将会为空，因此会出先无法访问<code>numberOfRooms</code>的情况。</p>
+<p>要注意的是，即使numberOfRooms是非可选<code>Int</code>（<code>Int?</code>）时这一点也成立。只要是通过可选链的请求就意味着最后<code>numberOfRooms</code>总是返回一个<code>Int?</code>而不是<code>Int</code>。</p>
 <p>你可以自己定义一个<code>Residence</code>实例给<code>john.residence</code>，这样它就不再为空了：</p>
 <pre><code>john.residence = Residence()
 </code></pre><p><code>john.residence</code> 现在有了实际存在的实例而不是nil了。如果你想使用和前面一样的可选链来获得<code>numberOfRoooms</code>，它将返回一个包含默认值 1 的<code>Int?</code>：</p>
@@ -675,13 +675,13 @@ class Residence {
 </code></pre><p>因为<code>Residence</code>存储了一个<code>Room</code>实例的数组，它的<code>numberOfRooms</code>属性值不是一个固定的存储值，而是通过计算而来的。<code>numberOfRooms</code>属性值是由返回<code>rooms</code>数组的<code>count</code>属性值得到的。</p>
 <p>为了能快速访问<code>rooms</code>数组，<code>Residence</code>定义了一个只读的子脚本，通过插入数组的元素角标就可以成功调用。如果该角标存在，子脚本则将该元素返回。</p>
 <p><code>Residence</code>中也提供了一个<code>printNumberOfRooms</code>的方法，即简单的打印房间个数。</p>
-<p>最后，<code>Residence</code>定义了一个自判断属性叫<code>address</code>（<code>address?</code>）。<code>Address</code>类的属性将在后面定义。
+<p>最后，<code>Residence</code>定义了一个可选属性叫<code>address</code>（<code>address?</code>）。<code>Address</code>类的属性将在后面定义。
 用于<code>rooms</code>数组的<code>Room</code>类是一个很简单的类，它只有一个<code>name</code>属性和一个设定<code>room</code>名的初始化器。</p>
 <pre><code>class Room {
     let name: String
     init(name: String) { self.name = name }
 }
-</code></pre><p>这个模型中的最终类叫做<code>Address</code>。它有三个自判断属性他们额类型是<code>String?</code>。前面两个自判断属性<code>buildingName</code>和 <code>buildingNumber</code>作为地址的一部分，是定义某个建筑物的两种方式。第三个属性<code>street</code>，用于命名地址的街道名：</p>
+</code></pre><p>这个模型中的最终类叫做<code>Address</code>。它有三个类型是<code>String?</code>的可选属性。前面两个可选属性<code>buildingName</code>和 <code>buildingNumber</code>作为地址的一部分，是定义某个建筑物的两种方式。第三个属性<code>street</code>，用于命名地址的街道名：</p>
 <pre><code>class Address {
     var buildingName: String?
     var buildingNumber: String?
@@ -717,7 +717,7 @@ if let roomCount = john.residence?.numberOfRooms {
     println(“The number of rooms is \(numberOfRooms)”)
 }
 </code></pre><p>这个方法没有返回值。但是，没有返回值类型的函数和方法有一个隐式的返回值类型<code>Void</code>（参见Function Without Return Values）。</p>
-<p>如果你利用可选链调用此方法，这个方法的返回值类型将是<code>Void?</code>，而不是<code>Void</code>，因为当通过可选链调用方法时返回值总是可选类型（optional type）。，即使是这个方法本是没有定义返回值，你也可以使用<code>if</code>语句来检查是否能成功调用<code>printNumberOfRooms</code>方法：如果方法通过可选链调用成功，<code>printNumberOfRooms</code>的隐式返回值将会是<code>Void</code>，如果没有成功，将返回<code>nil</code>：</p>
+<p>如果你利用可选链调用此方法，这个方法的返回值类型将是<code>Void?</code>，而不是<code>Void</code>，因为当通过可选链调用方法时返回值总是可选类型（optional type）。即使这个方法本身没有定义返回值，你也可以使用<code>if</code>语句来检查是否能成功调用<code>printNumberOfRooms</code>方法：如果方法通过可选链调用成功，<code>printNumberOfRooms</code>的隐式返回值将会是<code>Void</code>，如果没有成功，将返回<code>nil</code>：</p>
 <pre><code>if john.residence?.printNumberOfRooms() {
     println(&quot;It was possible to print the number of rooms.&quot;)
 } else {
@@ -729,7 +729,7 @@ if let roomCount = john.residence?.numberOfRooms {
 <p>你可以使用可选链来尝试从子脚本获取值并检查子脚本的调用是否成功，然而，你不能通过可选链来设置子代码。</p>
 <blockquote>
 <p>注意：
-当你使用可选链来获取子脚本的时候，你应该将问号放在子脚本括号的前面而不是后面。可选链的问号一般直接跟在自判断表达语句的后面。</p>
+当你使用可选链来获取子脚本的时候，你应该将问号放在子脚本括号的前面而不是后面。可选链的问号一般直接跟在表达语句的后面。</p>
 </blockquote>
 <p>下面这个例子用在<code>Residence</code>类中定义的子脚本来获取<code>john.residence</code>数组中第一个房间的名字。因为<code>john.residence</code>现在是<code>nil</code>，子脚本的调用失败了。</p>
 <pre><code>if let firstRoomName = john.residence?[0].name {
@@ -756,7 +756,7 @@ if let firstRoomName = john.residence?[0].name {
 <p>你可以将多层可选链连接在一起，可以掘取模型内更下层的属性方法和子脚本。然而多层可选链不能再添加比已经返回的可选值更多的层。
 也就是说：</p>
 <p>如果你试图获得的类型不是可选类型，由于使用了可选链它将变成可选类型。
-如果你试图获得的类型已经是可选类型，由于可选链它也不会提高自判断性。</p>
+如果你试图获得的类型已经是可选类型，由于可选链它也不会提高可选性。</p>
 <p>因此：</p>
 <p>如果你试图通过可选链获得<code>Int</code>值，不论使用了多少层链接返回的总是<code>Int?</code>。
 相似的，如果你试图通过可选链获得<code>Int?</code>值，不论使用了多少层链接返回的总是<code>Int?</code>。</p>
@@ -781,10 +781,10 @@ if let johnsStreet = john.residence?.address?.street {
     println(&quot;Unable to retrieve the address.&quot;)
 }
 // 打印 &quot;John&#39;s street name is Laurel Street.&quot;。
-</code></pre><p>值得注意的是，“<code>!</code>”符的在定义<code>address</code>实例时的使用（<code>john.residence.address</code>）。<code>john.residence</code>属性是一个可选类型，因此你需要在它获取<code>address</code>属性之前使用<code>!</code>解析以获得它的实际值。</p>
+</code></pre><p>值得注意的是，“<code>!</code>”符号在给<code>john.residence.address</code>分配<code>address</code>实例时的使用。<code>john.residence</code>属性是一个可选类型，因此你需要在它获取<code>address</code>属性之前使用<code>!</code>解析以获得它的实际值。</p>
 <p><a name="chaining_on_methods_with_optional_return_values"></a></p>
-<h2 id="-">链接自判断返回值的方法</h2>
-<p>前面的例子解释了如何通过可选链来获得可选类型属性值。你也可以通过调用返回可选类型值的方法并按需链接方法的返回值。</p>
+<h2 id="-">链接可选返回值的方法</h2>
+<p>前面的例子解释了如何通过可选链来获得可选类型属性值。你也可以通过可选链调用一个返回可选类型值的方法并按需链接该方法的返回值。</p>
 <p>下面的例子通过可选链调用了<code>Address</code>类中的<code>buildingIdentifier</code> 方法。这个方法的返回值类型是<code>String?</code>。如上所述，这个方法在可选链调用后最终的返回值类型依然是<code>String?</code>：</p>
 <pre><code>if let buildingIdentifier = john.residence?.address?.buildingIdentifier() {
     println(&quot;John&#39;s building identifier is \(buildingIdentifier).&quot;)
