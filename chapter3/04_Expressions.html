@@ -46,7 +46,7 @@
 
 
         
-    <div class="book"  data-level="3.4" data-basepath=".." data-revision="1402644301599">
+    <div class="book"  data-level="3.4" data-basepath=".." data-revision="1402673847562">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -587,7 +587,7 @@
 
                 <div class="page-inner">
                 
-                    <section class="normal" id="section-gitbook_503">
+                    <section class="normal" id="section-gitbook_69">
                     
                         <blockquote>
 <p>翻译：sg552</p>
@@ -597,13 +597,13 @@
 <hr>
 <p>本页包含内容：</p>
 <ul>
-<li>[前缀表达式（Prefix Expressions）]</li>
-<li>[二元表达式（Binary Expressions）]</li>
-<li>[赋值表达式（Assignment Operator）]</li>
-<li>[三元条件运算符（Ternary Conditional Operator）]</li>
-<li>[类型转换运算符（Type-Casting Operators）]</li>
-<li>[主要表达式（Primary Expressions）]</li>
-<li>[后缀表达式（Postfix Expressions）]</li>
+<li><a href="#prefix_expressions">前缀表达式（Prefix Expressions）</a></li>
+<li><a href="#binary_expressions">二元表达式（Binary Expressions）</a></li>
+<li><a href="#assignment_operator">赋值表达式（Assignment Operator）</a></li>
+<li><a href="#ternary_conditional_operator">三元条件运算符（Ternary Conditional Operator）</a></li>
+<li><a href="#type-casting_operators">类型转换运算符（Type-Casting Operators）</a></li>
+<li><a href="#primary_expressions">主要表达式（Primary Expressions）</a></li>
+<li><a href="#postfix_expressions">后缀表达式（Postfix Expressions）</a></li>
 </ul>
 <p>Swift 中存在四种表达式： 前缀（prefix）表达式，二元（binary）表达式，主要（primary）表达式和后缀（postfix）表达式。表达式可以返回一个值，以及运行某些逻辑（causes a side effect）。</p>
 <p>前缀表达式和二元表达式就是对某些表达式使用各种运算符（operators）。 主要表达式是最短小的表达式，它提供了获取（变量的）值的一种途径。 后缀表达式则允许你建立复杂的表达式，例如配合函数调用和成员访问。 每种表达式都在下面有详细论述～</p>
@@ -612,6 +612,7 @@
 <p><em>expression</em> → <em>prefix-expression</em>­<em>binary-expressions(</em>opt)
 <em>expression-list</em> → <em>expression</em>­| <em>expression</em>­,­<em>expression-list</em></p>
 </blockquote>
+<p><a name="prefix_expressions"></a></p>
 <h2 id="-prefix-expressions-">前缀表达式（Prefix Expressions）</h2>
 <p>前缀表达式由 前缀符号和表达式组成。（这个前缀符号只能接收一个参数）</p>
 <p>Swift 标准库支持如下的前缀操作符：</p>
@@ -631,6 +632,7 @@
 <em>prefix-expression</em> → <em>in-out-expression</em>­
 <em>in-out-expression</em> → &amp;­<em>identifier</em>­</p>
 </blockquote>
+<p><a name="binary_expressions"></a></p>
 <h2 id="-binary-expressions-">二元表达式（Binary Expressions）</h2>
 <p>二元表达式由 &quot;左边参数&quot; + &quot;二元运算符&quot; + &quot;右边参数&quot; 组成, 它有如下的形式：</p>
 <p>  <code>left-hand argument</code> <code>operator</code> <code>right-hand argument</code></p>
@@ -740,6 +742,7 @@
 <em>binary-expression</em> → <em>type-casting-operator</em>­
 <em>binary-expression</em>s → <em>binary-expression</em>­<em>binary-expressions</em>(opt)</p>
 </blockquote>
+<p><a name="assignment_operator"></a></p>
 <h2 id="-assignment-operator-">赋值表达式（Assignment Operator）</h2>
 <p>The assigment operator sets a new value for a given expression. It has the following form:
 赋值表达式会对某个给定的表达式赋值。 它有如下的形式；</p>
@@ -753,6 +756,7 @@
 <p>赋值表达式的语法</p>
 <p><em>assignment-operator</em> → =­</p>
 </blockquote>
+<p><a name="ternary_conditional_operator"></a></p>
 <h2 id="-ternary-conditional-operator-">三元条件运算符（Ternary Conditional Operator）</h2>
 <p>三元条件运算符 是根据条件来获取值。 形式如下：</p>
 <pre><code>`condition` ? `expression used if true` : `expression used if false`
@@ -762,6 +766,7 @@
 <p>三元条件表达式</p>
 <p><code>conditional-operator</code> → ?­<code>expression</code>­:­</p>
 </blockquote>
+<p><a name="type-casting_operators"></a></p>
 <h2 id="-type-casting-operators-">类型转换运算符（Type-Casting Operators）</h2>
 <p>有两种类型转换操作符： as 和 is.  它们有如下的形式：</p>
 <pre><code>`expression` as `type`
@@ -800,6 +805,7 @@ let y2: SomeType = x    // Type information from an annotation
 <p>类型转换的语法</p>
 <p><em>type-casting-operator</em> → is­<em>type</em>­| as­?(opt)­<em>type</em></p>
 </blockquote>
+<p><a name="primary_expressions"></a></p>
 <h2 id="-primary-expressions-">主要表达式（Primary Expressions）</h2>
 <p><code>主要表达式</code>是最基本的表达式。 它们可以跟 前缀表达式，二元表达式，后缀表达式以及其他主要表达式组合使用。</p>
 <blockquote>
@@ -994,6 +1000,7 @@ x = .AnotherValue
 <p>通配符表达式的语法</p>
 <p><em>wildcard-expression</em> → _­</p>
 </blockquote>
+<p><a name="postfix_expressions"></a></p>
 <h2 id="-postfix-expressions-">后缀表达式（Postfix Expressions）</h2>
 <p>后缀表达式就是在某个表达式的后面加上 操作符。 严格的讲，每个主要表达式（primary expression）都是一个后缀表达式</p>
 <p>Swift 标准库提供了下列后缀表达式：</p>

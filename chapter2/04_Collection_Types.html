@@ -46,7 +46,7 @@
 
 
         
-    <div class="book"  data-level="2.4" data-basepath=".." data-revision="1402644301599">
+    <div class="book"  data-level="2.4" data-basepath=".." data-revision="1402673847562">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -587,7 +587,7 @@
 
                 <div class="page-inner">
                 
-                    <section class="normal" id="section-gitbook_457">
+                    <section class="normal" id="section-gitbook_23">
                     
                         <blockquote>
 <p>翻译：zqp</p>
@@ -709,7 +709,7 @@
 <h3 id="-">创建并且构造一个数组</h3>
 <p>我们可以使用构造语法来创建一个由特定数据类型构成的空数组：</p>
 <pre><code>var someInts = Int[]()
-println(&quot;someInts is of type Int[] with \(someInts。count) items。&quot;)
+println(&quot;someInts is of type Int[] with \(someInts.count) items。&quot;)
 // 打印 &quot;someInts is of type Int[] with 0 items。&quot;（someInts是0数据项的Int[]数组）
 </code></pre><p>注意<code>someInts</code>被设置为一个<code>Int[]</code>构造函数的输出所以它的变量类型被定义为<code>Int[]</code>。</p>
 <p>除此之外，如果代码上下文中提供了类型信息， 例如一个函数参数或者一个已经定义好类型的常量或者变量，我们可以使用空数组语句创建一个空数组，它的写法很简单：<code>[]</code>（一对空方括号）：</p>
@@ -765,14 +765,14 @@ someInts = []
 <pre><code>if let oldValue = airports.updateValue(&quot;Dublin Internation&quot;, forKey: &quot;DUB&quot;) {
     println(&quot;The old value for DUB was \(oldValue).&quot;)
 }
-// 输出 &quot;The old value for DUB was Dublin.&quot;（dub原值是dublin）
+// 输出 &quot;The old value for DUB was Dublin.&quot;（DUB原值是dublin）
 </code></pre><p>我们也可以使用下标语法来在字典中检索特定键对应的值。由于使用一个没有值的键这种情况是有可能发生的，可选类型返回这个键存在的相关值，否则就返回<code>nil</code>：</p>
 <pre><code>if let airportName = airports[&quot;DUB&quot;] {
     println(&quot;The name of the airport is \(airportName).&quot;)
 } else {
     println(&quot;That airport is not in the airports dictionary.&quot;)
 }
-// 打印 &quot;The name of the airport is Dublin INTernation.&quot;（机场的名字是都柏林国际）
+// 打印 &quot;The name of the airport is Dublin Internation.&quot;（机场的名字是都柏林国际）
 </code></pre><p>我们还可以使用下标语法来通过给某个键的对应值赋值为<code>nil</code>来从字典里移除一个键值对：</p>
 <pre><code>airports[&quot;APL&quot;] = &quot;Apple Internation&quot;
 // &quot;Apple Internation&quot;不是真的 APL机场, 删除它
@@ -789,20 +789,20 @@ airports[&quot;APL&quot;] = nil
 <h3 id="-">字典遍历</h3>
 <p>我们可以使用<code>for-in</code>循环来遍历某个字典中的键值对。每一个字典中的数据项都由<code>(key, value)</code>元组形式返回，并且我们可以使用暂时性常量或者变量来分解这些元组：</p>
 <pre><code>for (airportCode, airportName) in airports {
-    prINTln(&quot;\(airportCode): \(airportName)&quot;)
+    println(&quot;\(airportCode): \(airportName)&quot;)
 }
 // TYO: Tokyo
 // LHR: London Heathrow
 </code></pre><p><code>for-in</code>循环请参见<a href="05_Control_Flow.html#for_loops">For 循环</a>。</p>
 <p>我们也可以通过访问他的<code>keys</code>或者<code>values</code>属性（都是可遍历集合）检索一个字典的键或者值：</p>
 <pre><code>for airportCode in airports.keys {
-    prINTln(&quot;Airport code: \(airportCode)&quot;)
+    println(&quot;Airport code: \(airportCode)&quot;)
 }
 // Airport code: TYO
 // Airport code: LHR
 
 for airportName in airports.values {
-    prINTln(&quot;Airport name: \(airportName)&quot;)
+    println(&quot;Airport name: \(airportName)&quot;)
 }
 // Airport name: Tokyo
 // Airport name: London Heathrow
@@ -835,7 +835,7 @@ namesOfIntegers = [:]
 <h2 id="-">集合的可变性</h2>
 <p>数组和字典都是在单个集合中存储可变值。如果我们创建一个数组或者字典并且把它分配成一个变量，这个集合将会是可变的。这意味着我们可以在创建之后添加更多或移除已存在的数据项来改变这个集合的大小。与此相反，如果我们把数组或字典分配成常量，那么他就是不可变的，它的大小不能被改变。</p>
 <p>对字典来说，不可变性也意味着我们不能替换其中任何现有键所对应的值。不可变字典的内容在被首次设定之后不能更改。
-不可变行对数组来说有一点不同，当然我们不能试着改变任何不可变数组的大小，但是我们·可以重新设定相对现存索引所对应的值。这使得 Swift 数组在大小被固定的时候依然可以做的很棒。</p>
+不可变性对数组来说有一点不同，当然我们不能试着改变任何不可变数组的大小，但是我们可以重新设定相对现存索引所对应的值。这使得 Swift 数组在大小被固定的时候依然可以做的很棒。</p>
 <p>Swift 数组的可变性行为同时影响了数组实例如何被分配和修改，想获取更多信息，请参见<a href="09_Classes_and_Structures.html#assignment_and_copy_behavior_for_collection_types">集合在赋值和复制中的行为</a>。</p>
 <blockquote>
 <p>注意：</p>
