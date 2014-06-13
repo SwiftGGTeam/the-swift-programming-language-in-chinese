@@ -262,7 +262,7 @@ Swift 的字典使用`Dictionary<KeyType, ValueType>`定义,其中`KeyType`是�
     if let oldValue = airports.updateValue("Dublin Internation", forKey: "DUB") {
         println("The old value for DUB was \(oldValue).")
     }
-    // 输出 "The old value for DUB was Dublin."（dub原值是dublin）
+    // 输出 "The old value for DUB was Dublin."（DUB原值是dublin）
 
 我们也可以使用下标语法来在字典中检索特定键对应的值。由于使用一个没有值的键这种情况是有可能发生的，可选类型返回这个键存在的相关值，否则就返回`nil`：
 
