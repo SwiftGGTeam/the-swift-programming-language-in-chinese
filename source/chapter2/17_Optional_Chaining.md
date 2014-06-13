@@ -14,17 +14,17 @@
 - [通过可选链调用方法](#calling_methods_through_optional_chaining)
 - [使用可选链调用子脚本](#calling_subscripts_through_optional_chaining)
 - [连接多层链接](#linking_multiple_levels_of_chaining)
-- [链接自判断返回值的方法](#chaining_on_methods_with_optional_return_values)
+- [链接可选返回值的方法](#chaining_on_methods_with_optional_return_values)
 
-可选链（Optional Chaining）是一种可以请求和调用属性、方法及子脚本的过程，它的自判断性体现于请求或调用的目标当前可能为空（`nil`）。如果自判断的目标有值，那么调用就会成功；相反，如果选择的目标为空（`nil`），则这种调用将返回空（`nil`）。多次请求或调用可以被链接在一起形成一个链，如果任何一个节点为空（`nil`）将导致整个链失效。
+可选链（Optional Chaining）是一种可以请求和调用属性、方法及子脚本的过程，它的可选性体现于请求或调用的目标当前可能为空（`nil`）。如果可选的目标有值，那么调用就会成功；相反，如果选择的目标为空（`nil`），则这种调用将返回空（`nil`）。多次请求或调用可以被链接在一起形成一个链，如果任何一个节点为空（`nil`）将导致整个链失效。
 
 > 注意：
-Swift 的自判断链和 Objective-C 中的消息为空有些相像，但是 Swift 可以使用在任意类型中，并且失败与否可以被检测到。
+Swift 的可选链和 Objective-C 中的消息为空有些相像，但是 Swift 可以使用在任意类型中，并且失败与否可以被检测到。
 
 <a name="optional_chaining_as_an_alternative_to_forced_unwrapping"></a>
 ## 可选链可替代强制解析
 
-通过在想调用的属性、方法、或子脚本的可选值（`optional value`）（非空）后面放一个问号，可以定义一个可选链。这一点很像在可选值后面放一个声明符号来强制拆得其封包内的值。他们的主要的区别在于当可选值为空时可选链即刻失败，然而一般的强制解析将会引发运行时错误。
+通过在想调用的属性、方法、或子脚本的可选值（`optional value`）（非空）后面放一个问号，可以定义一个可选链。这一点很像在可选值后面放一个叹号来强制拆得其封包内的值。他们的主要的区别在于当可选值为空时可选链即刻失败，然而一般的强制解析将会引发运行时错误。
 
 为了反映可选链可以调用空（`nil`），不论你调用的属性、方法、子脚本等返回的值是不是可选值，它的返回结果都是一个可选值。你可以利用这个返回值来检测你的可选链是否调用成功，有返回值即成功，返回nil则失败。
 
@@ -42,9 +42,9 @@ Swift 的自判断链和 Objective-C 中的消息为空有些相像，但是 Swi
         var numberOfRooms = 1
 	}
 
-`Residence`具有一个`Int`类型的`numberOfRooms`，其值为 1。`Person`具有一个自判断`residence`属性，它的类型是`Residence？`。
+`Residence`具有一个`Int`类型的`numberOfRooms`，其值为 1。`Person`具有一个可选`residence`属性，它的类型是`Residence？`。
 
-如果你创建一个新的`Person`实例，它的`residence`属性由于是被定义为自判断型的，此属性将默认初始化为空：
+如果你创建一个新的`Person`实例，它的`residence`属性由于是被定义为可选型的，此属性将默认初始化为空：
 
 	let john = Person()
 
@@ -64,11 +64,11 @@ Swift 的自判断链和 Objective-C 中的消息为空有些相像，但是 Swi
 	// 打印 "Unable to retrieve the number of rooms.
 
 
-这告诉 Swift 来链接自判断`residence?`属性，如果`residence`存在则取回`numberOfRooms`的值。
+这告诉 Swift 来链接可选`residence?`属性，如果`residence`存在则取回`numberOfRooms`的值。
 
-因为这种尝试获得`numberOfRooms`的操作有可能失败，可选链会返回`Int?`类型值，或者称作“自判断`Int`”。当`residence`是空的时候（上例），选择`Int`将会为空，因此会出先无法访问`numberOfRooms`的情况。
+因为这种尝试获得`numberOfRooms`的操作有可能失败，可选链会返回`Int?`类型值，或者称作“可选`Int`”。当`residence`是空的时候（上例），选择`Int`将会为空，因此会出先无法访问`numberOfRooms`的情况。
 
-要注意的是，即使numberOfRooms是非自判断`Int`（`Int?`）时这一点也成立。只要是通过可选链的请求就意味着最后`numberOfRooms`总是返回一个`Int?`而不是`Int`。
+要注意的是，即使numberOfRooms是非可选`Int`（`Int?`）时这一点也成立。只要是通过可选链的请求就意味着最后`numberOfRooms`总是返回一个`Int?`而不是`Int`。
 
 你可以自己定义一个`Residence`实例给`john.residence`，这样它就不再为空了：
 
@@ -118,7 +118,7 @@ Swift 的自判断链和 Objective-C 中的消息为空有些相像，但是 Swi
 
 `Residence`中也提供了一个`printNumberOfRooms`的方法，即简单的打印房间个数。
 
-最后，`Residence`定义了一个自判断属性叫`address`（`address?`）。`Address`类的属性将在后面定义。
+最后，`Residence`定义了一个可选属性叫`address`（`address?`）。`Address`类的属性将在后面定义。
 用于`rooms`数组的`Room`类是一个很简单的类，它只有一个`name`属性和一个设定`room`名的初始化器。
 
 	class Room {
@@ -127,7 +127,7 @@ Swift 的自判断链和 Objective-C 中的消息为空有些相像，但是 Swi
 	}
 
 
-这个模型中的最终类叫做`Address`。它有三个自判断属性他们额类型是`String?`。前面两个自判断属性`buildingName`和 `buildingNumber`作为地址的一部分，是定义某个建筑物的两种方式。第三个属性`street`，用于命名地址的街道名：
+这个模型中的最终类叫做`Address`。它有三个类型是`String?`的可选属性。前面两个可选属性`buildingName`和 `buildingNumber`作为地址的一部分，是定义某个建筑物的两种方式。第三个属性`street`，用于命名地址的街道名：
 
 	class Address {
 	    var buildingName: String?
@@ -176,7 +176,7 @@ Swift 的自判断链和 Objective-C 中的消息为空有些相像，但是 Swi
 
 这个方法没有返回值。但是，没有返回值类型的函数和方法有一个隐式的返回值类型`Void`（参见Function Without Return Values）。
 
-如果你利用可选链调用此方法，这个方法的返回值类型将是`Void?`，而不是`Void`，因为当通过可选链调用方法时返回值总是可选类型（optional type）。，即使是这个方法本是没有定义返回值，你也可以使用`if`语句来检查是否能成功调用`printNumberOfRooms`方法：如果方法通过可选链调用成功，`printNumberOfRooms`的隐式返回值将会是`Void`，如果没有成功，将返回`nil`：
+如果你利用可选链调用此方法，这个方法的返回值类型将是`Void?`，而不是`Void`，因为当通过可选链调用方法时返回值总是可选类型（optional type）。即使这个方法本身没有定义返回值，你也可以使用`if`语句来检查是否能成功调用`printNumberOfRooms`方法：如果方法通过可选链调用成功，`printNumberOfRooms`的隐式返回值将会是`Void`，如果没有成功，将返回`nil`：
 
 	if john.residence?.printNumberOfRooms() {
 	    println("It was possible to print the number of rooms.")
@@ -191,7 +191,7 @@ Swift 的自判断链和 Objective-C 中的消息为空有些相像，但是 Swi
 你可以使用可选链来尝试从子脚本获取值并检查子脚本的调用是否成功，然而，你不能通过可选链来设置子代码。
 
 > 注意：
-当你使用可选链来获取子脚本的时候，你应该将问号放在子脚本括号的前面而不是后面。可选链的问号一般直接跟在自判断表达语句的后面。
+当你使用可选链来获取子脚本的时候，你应该将问号放在子脚本括号的前面而不是后面。可选链的问号一般直接跟在表达语句的后面。
 
 下面这个例子用在`Residence`类中定义的子脚本来获取`john.residence`数组中第一个房间的名字。因为`john.residence`现在是`nil`，子脚本的调用失败了。
 
@@ -225,7 +225,7 @@ Swift 的自判断链和 Objective-C 中的消息为空有些相像，但是 Swi
 也就是说：
 
 如果你试图获得的类型不是可选类型，由于使用了可选链它将变成可选类型。
-如果你试图获得的类型已经是可选类型，由于可选链它也不会提高自判断性。
+如果你试图获得的类型已经是可选类型，由于可选链它也不会提高可选性。
 
 因此：
 
@@ -259,12 +259,12 @@ Swift 的自判断链和 Objective-C 中的消息为空有些相像，但是 Swi
 	}
 	// 打印 "John's street name is Laurel Street."。
 
-值得注意的是，“`!`”符的在定义`address`实例时的使用（`john.residence.address`）。`john.residence`属性是一个可选类型，因此你需要在它获取`address`属性之前使用`!`解析以获得它的实际值。
+值得注意的是，“`!`”符号在给`john.residence.address`分配`address`实例时的使用。`john.residence`属性是一个可选类型，因此你需要在它获取`address`属性之前使用`!`解析以获得它的实际值。
 
 <a name="chaining_on_methods_with_optional_return_values"></a>
-##链接自判断返回值的方法
+##链接可选返回值的方法
 
-前面的例子解释了如何通过可选链来获得可选类型属性值。你也可以通过调用返回可选类型值的方法并按需链接方法的返回值。
+前面的例子解释了如何通过可选链来获得可选类型属性值。你也可以通过可选链调用一个返回可选类型值的方法并按需链接该方法的返回值。
 
 下面的例子通过可选链调用了`Address`类中的`buildingIdentifier` 方法。这个方法的返回值类型是`String?`。如上所述，这个方法在可选链调用后最终的返回值类型依然是`String?`：
 
