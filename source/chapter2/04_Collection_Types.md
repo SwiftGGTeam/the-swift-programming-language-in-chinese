@@ -335,7 +335,7 @@ Swift 的字典使用`Dictionary<KeyType, ValueType>`定义,其中`KeyType`是�
     var namesOfIntegers = Dictionary<Int, String>()
     // namesOfIntegers 是一个空的 Dictionary<Int, String>
 
-这个例子创建了一个`Int, String`类型的空字典来储存英语对整数的命名。他的键是`Int`型，值是`String`型。
+这个例子创建了一个`Int, String`类型的空字典来储存英语对整数的命名。它的键是`Int`型，值是`String`型。
 
 如果上下文已经提供了信息类型，我们可以使用空字典字面语句来创建一个空字典，记作`[:]`（中括号中放一个冒号）：
 
