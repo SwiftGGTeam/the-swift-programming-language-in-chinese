@@ -8,7 +8,7 @@
 本页包含内容：
 
 - [前缀表达式（Prefix Expressions）](#prefix_expressions)
-- [二元表达式（Binary Expressions）](#binary_exprssions)
+- [二元表达式（Binary Expressions）](#binary_expressions)
 - [赋值表达式（Assignment Operator）](#assignment_operator)
 - [三元条件运算符（Ternary Conditional Operator）](#ternary_conditional_operator)
 - [类型转换运算符（Type-Casting Operators）](#type-casting_operators)
