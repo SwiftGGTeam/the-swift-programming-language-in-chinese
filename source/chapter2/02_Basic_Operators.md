@@ -242,7 +242,7 @@ a += 2 // a 现在是 3
 所有标准 C 语言中的比较运算都可以在 Swift 中使用。
 
 - 等于（`a == b`）
-- 不等于（`a！= b`）
+- 不等于（`a != b`）
 - 大于（`a > b`）
 - 小于（`a < b`）
 - 大于等于（`a >= b`）
@@ -387,7 +387,7 @@ if !allowedEntry {
 // 输出 "ACCESS DENIED"
 ```
 
-`if！allowedEntry`语句可以读作 "如果 非 alowed entry。"，接下一行代码只有在如果 "非 allow entry" 为`true`，即`allowEntry`为`false`时被执行。
+`if !allowedEntry`语句可以读作 "如果 非 alowed entry。"，接下一行代码只有在如果 "非 allow entry" 为`true`，即`allowEntry`为`false`时被执行。
 
 在示例代码中，小心地选择布尔常量或变量有助于代码的可读性，并且避免使用双重逻辑非运算，或混乱的逻辑语句。
 
