@@ -126,9 +126,9 @@ _________________
 > 泛型形参子句(Generic Parameter Clause) 语法  
 > *泛型参数子句* → **<** [*泛型参数列表*](GenericParametersAndArguments.html#generic_parameter_list) [*约束子句*](GenericParametersAndArguments.html#requirement_clause) _可选_ **>**  
 > *泛型参数列表* → [*泛形参数*](GenericParametersAndArguments.html#generic_parameter) | [*泛形参数*](GenericParametersAndArguments.html#generic_parameter) **,** [*泛型参数列表*](GenericParametersAndArguments.html#generic_parameter_list)  
-> *泛形参数* → [*类名*](..\chapter3\03_Types.html#type_name)  
-> *泛形参数* → [*类名*](..\chapter3\03_Types.html#type_name) **:** [*类型标识*](..\chapter3\03_Types.html#type_identifier)  
-> *泛形参数* → [*类名*](..\chapter3\03_Types.html#type_name) **:** [*协议合成类型*](..\chapter3\03_Types.html#protocol_composition_type)  
+> *泛形参数* → [*类型名称*](..\chapter3\03_Types.html#type_name)  
+> *泛形参数* → [*类型名称*](..\chapter3\03_Types.html#type_name) **:** [*类型标识*](..\chapter3\03_Types.html#type_identifier)  
+> *泛形参数* → [*类型名称*](..\chapter3\03_Types.html#type_name) **:** [*协议合成类型*](..\chapter3\03_Types.html#protocol_composition_type)  
 > *约束子句* → **where** [*约束列表*](GenericParametersAndArguments.html#requirement_list)  
 > *约束列表* → [*约束*](GenericParametersAndArguments.html#requirement) | [*约束*](GenericParametersAndArguments.html#requirement) **,** [*约束列表*](GenericParametersAndArguments.html#requirement_list)  
 > *约束* → [*一致性约束*](GenericParametersAndArguments.html#conformance_requirement) | [*同类型约束*](GenericParametersAndArguments.html#same_type_requirement)  
@@ -693,7 +693,7 @@ _________________
 <p></p>
 
 > 类型标识语法  
-> *类型标识* → [*类名*](..\chapter3\03_Types.html#type_name) [*泛型参数子句*](GenericParametersAndArguments.html#generic_argument_clause) _可选_ | [*类名*](..\chapter3\03_Types.html#type_name) [*泛型参数子句*](GenericParametersAndArguments.html#generic_argument_clause) _可选_ **.** [*类型标识*](..\chapter3\03_Types.html#type_identifier)  
+> *类型标识* → [*类型名称*](..\chapter3\03_Types.html#type_name) [*泛型参数子句*](GenericParametersAndArguments.html#generic_argument_clause) _可选_ | [*类型名称*](..\chapter3\03_Types.html#type_name) [*泛型参数子句*](GenericParametersAndArguments.html#generic_argument_clause) _可选_ **.** [*类型标识*](..\chapter3\03_Types.html#type_identifier)  
 > *类名* → [*标识符*](LexicalStructure.html#identifier)  
 
 <p></p>
