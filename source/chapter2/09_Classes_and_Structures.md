@@ -50,12 +50,14 @@ Swift 中类和结构体有很多共同点。共同处在于：
 ### 定义
 类和结构体有着类似的定义方式。我们通过关键字`class`和`struct`来分别表示类和结构体，并在一对大括号中定义它们的具体内容：
 
+```swift
 	class SomeClass {
 		// class definition goes here
 	}
 	struct SomeStructure {
 		// structure definition goes here
 	}
+```
 
 >  注意：
 >
@@ -63,6 +65,7 @@ Swift 中类和结构体有很多共同点。共同处在于：
 
 以下是定义结构体和定义类的示例：
 
+```swift
 	struct Resolution {
 		var width = 0
 		var heigth = 0
@@ -73,6 +76,7 @@ Swift 中类和结构体有很多共同点。共同处在于：
 		var frameRate = 0.0
 		var name: String?
 	}
+```
 
 在上面的示例中我们定义了一个名为`Resolution`的结构体，用来描述一个显示器的像素分辨率。这个结构体包含了两个名为`width`和`height`的储存属性。储存属性是捆绑和储存在类或结构体中的常量或变量。当这两个属性被初始化为整数`0`的时候，它们会被推断为`Int`类型。
 
@@ -83,8 +87,10 @@ Swift 中类和结构体有很多共同点。共同处在于：
 
 生成结构体和类实例的语法非常相似：
 
+```swift
 	let someResolution = Resolution()
 	let someVideoMode = VideoMode()
+```
 
 结构体和类都使用构造器语法来生成新的实例。构造器语法的最简单形式是在结构体或者类的类型名称后跟随一个空括弧，如`Resolution()`或`VideoMode()`。通过这种方式所创建的类或者结构体实例，其属均会被初始化为默认值。[构造过程](14_Initialization.html)章节会对类和结构体的初始化进行更详细的讨论。
 
@@ -92,15 +98,19 @@ Swift 中类和结构体有很多共同点。共同处在于：
 ### 属性访问
 通过使用*点语法*（*dot syntax*）,你可以访问实例中所含有的属性。其语法规则是，实例名后面紧跟属性名，两者通过点号(.)连接：
 
+```swift
 	println("The width of someResolution is \(someResolution.width)")
 	// 输出 "The width of someResolution is 0"
+```
 
 在上面的例子中，`someResolution.width`引用`someResolution`的`width`属性，返回`width`的初始值`0`。
 
 你也可以访问子属性，如何`VideoMode`中`Resolution`属性的`width`属性：
 
+```swift
 	println("The width of someVideoMode is \(someVideoMode.resolution.width)")
 	// 输出 "The width of someVideoMode is 0"
+```
 
 你也可以使用点语法为属性变量赋值：
 
@@ -112,12 +122,13 @@ Swift 中类和结构体有很多共同点。共同处在于：
 >
 与 Objective-C 语言不同的是，Swift 允许直接设置结构体属性的子属性。上面的最后一个例子，就是直接设置了`someVideoMode`中`resolution`属性的`width`这个子属性，以上操作并不需要从新设置`resolution`属性。
 
-### 结构体类型的成员逐一构造器
-//Memberwise Initializers for structure Types
+### 结构体类型的成员逐一构造器（Memberwise Initializers for structure Types）
 
 所有结构体都有一个自动生成的成员逐一构造器，用于初始化新结构体实例中成员的属性。新实例中各个属性的初始值可以通过属性的名称传递到成员逐一构造器之中：
 
+```swift
 	let vga = resolution（width:640, heigth: 480）
+```
 
 与结构体不同，类实例没有默认的成员逐一构造器。[构造过程](14_Initialization.html)章节会对构造器进行更详细的讨论。
 
@@ -132,8 +143,10 @@ Swift 中类和结构体有很多共同点。共同处在于：
 
 请看下面这个示例，其使用了前一个示例中`Resolution`结构体：
 
+```swift
 	let hd = Resolution(width: 1920, height: 1080)
 	var cinema = hd
+```
 
 在以上示例中，声明了一个名为`hd`的常量，其值为一个初始化为全高清视频分辨率(1920 像素宽，1080 像素高)的`Resolution`实例。
 
@@ -141,22 +154,29 @@ Swift 中类和结构体有很多共同点。共同处在于：
 
 下面，为了符合数码影院放映的需求(2048 像素宽，1080 像素高)，`cinema`的`width`属性需要作如下修改：
 
+```swift
 	cinema.width = 2048
+```
 
 这里，将会显示`cinema`的`width`属性确已改为了`2048`：
 
+```swift
 	println("cinema is now  \(cinema.width) pixels wide")
 	// 输出 "cinema is now 2048 pixels wide"
+```
 
 然而，初始的`hd`实例中`width`属性还是`1920`：
 
+```swift
 	println("hd is still \(hd.width	) pixels wide")
 	// 输出 "hd is still 1920 pixels wide"
+```
 
 在将`hd`赋予给`cinema`的时候，实际上是将`hd`中所储存的`值(values)`进行拷贝，然后将拷贝的数据储存到新的`cinema`实例中。结果就是两个完全独立的实例碰巧包含有相同的数值。由于两者相互独立，因此将`cinema`的`width`修改为`2048`并不会影响`hd`中的宽(width)。
 
 枚举也遵循相同的行为准则：
 
+```swift
 	enum CompassPoint {
 		case North, South, East, West
 	}
@@ -167,6 +187,7 @@ Swift 中类和结构体有很多共同点。共同处在于：
 		println("The remembered direction is still .West")
 	}
 	// 输出 "The remembered direction is still .West"
+```
 
 上例中`rememberedDirection`被赋予了`currentDirection`的值(value)，实际上它被赋予的是值(value)的一个拷贝。赋值过程结束后再修改`currentDirection`的值并不影响`rememberedDirection`所储存的原始值(value)的拷贝。
 
@@ -176,25 +197,31 @@ Swift 中类和结构体有很多共同点。共同处在于：
 
 请看下面这个示例，其使用了之前定义的`VideoMode`类：
 
+```swift
 	let tenEighty = VideoMode()
 	tenEighty.resolution = hd
 	tenEighty.interlaced = true
 	tenEighty.name = "1080i"
 	tenEighty.frameRate = 25.0
+```
 
 以上示例中，声明了一个名为`tenEighty`的常量，其引用了一个`VideoMode`类的新实例。在之前的示例中，这个视频模式(video mode)被赋予了HD分辨率(1920*1080)的一个拷贝(`hd`)。同时设置为交错(interlaced),命名为`“1080i”`。最后，其帧率是`25.0`帧每秒。
 
 然后，`tenEighty` 被赋予名为`alsoTenEighty`的新常量，同时对`alsoTenEighty`的帧率进行修改：
 
+```swift
 	let alsoTenEighty = tenEighty
 	alsoTenEighty.frameRate = 30.0
+```
 
 因为类是引用类型，所以`tenEight`和`alsoTenEight`实际上引用的是相同的`VideoMode`实例。换句话说，它们只是同一个实例的两种叫法。
 
 下面，通过查看`tenEighty`的`frameRate`属性，我们会发现它正确的显示了基本`VideoMode`实例的新帧率，其值为`30.0`：
 
+```swift
 	println("The frameRate property of tenEighty is now \(tenEighty.frameRate)")
 	// 输出 "The frameRate property of theEighty is now 30.0"
+```
 
 需要注意的是`tenEighty`和`alsoTenEighty`被声明为*常量(constants)*而不是变量。然而你依然可以改变`tenEighty.frameRate`和`alsoTenEighty.frameRate`,因为这两个常量本身不会改变。它们并不`储存`这个`VideoMode`实例，在后台仅仅是对`VideoMode`实例的引用。所以，改变的是被引用的基础`VideoMode`的`frameRate`参数，而不改变常量的值。
 
@@ -204,17 +231,19 @@ Swift 中类和结构体有很多共同点。共同处在于：
 
 如果能够判定两个常量或者变量是否引用同一个类实例将会很有帮助。为了达到这个目的，Swift 内建了两个恒等运算符：
 
-* 等价于 ( === )
-* 不等价于 ( !== )
+* 等同于 ( === )
+* 不等同于 ( !== )
 
 以下是运用这两个运算符检测两个常量或者变量是否引用同一个实例：
 
+```swift
 	if tenEighty === alsoTenTighty {
 		println("tenTighty and alsoTenEighty refer to the same Resolution instance.")
 	}
 	//输出 "tenEighty and alsoTenEighty refer to the same Resolution instance."
+```
 
-请注意“等价于”(用三个等号表示，===) 与“等于”(用两个等号表示，==)的不同：
+请注意“等同于”(用三个等号表示，===) 与“等于”(用两个等号表示，==)的不同：
 
 * “等价于”表示两个类类型(class type)的常量或者变量引用同一个类实例。
 * “等于”表示两个实例的值“相等”或“相同”，判定时要遵照类设计者定义定义的评判标准，因此相比于“相等”，这是一种更加合适的叫法。
@@ -263,16 +292,20 @@ Swift 中`数组(Array)`和`字典(Dictionary)`类型均以结构体的形式实
 
 下面的示例定义了一个名为`ages`的字典，其中储存了四个人的名字和年龄。`ages`字典被赋予了一个名为`copiedAges`的新变量，同时`ages`在赋值的过程中被拷贝。赋值结束后，`ages`和`copiedAges`成为两个相互独立的字典。
 
+```swift
 	var ages = ["Peter": 23, "Wei": 35, "Anish": 65, "Katya": 19]
 	var copiedAges = ages
+```
 
 这个字典的键(keys)是`字符串(String)`类型，值(values)是`整(Int)`类型。这两种类型在Swift 中都是值类型(value types)，所以当字典被拷贝时，两者都会被拷贝。
 
 我们可以通过改变一个字典中的年龄值(age value)，检查另一个字典中所对应的值，来证明`ages`字典确实是被拷贝了。如果在`copiedAges`字典中将`Peter`的值设为`24`，那么`ages`字典仍然会返回修改前的值`23`：
 
+```swift
 	copiedAges["Peter"] = 24
 	println(ages["Peter"])
 	// 输出 "23"
+```
 
 ### 数组的赋值和拷贝行为
 
@@ -284,21 +317,26 @@ Swift 中`数组(Array)`和`字典(Dictionary)`类型均以结构体的形式实
 
 下面的示例将一个`整数(Int)`数组赋给了一个名为`a`的变量，继而又被赋给了变量`b`和`c`：
 
+```swift
 	var a = [1, 2, 3]
 	var b = a
 	var c = a
+```
 
 我们可以在`a`,`b`,`c`上使用下标语法以得到数组的第一个元素：
 
+```swift
 	println(a[0])
 	// 1
 	println(b[0])
 	// 1
 	println(c[0])
 	// 1
+```
 
 如果通过下标语法修改数组中某一元素的值，那么`a`,`b`,`c`中的相应值都会发生改变。请注意当你用下标语法修改某一值时，并没有拷贝行为伴随发生，因为下表语法修改值时没有改变数组长度的可能：
 
+```swift
 	a[0] = 42
 	println(a[0])
 	// 42
@@ -306,12 +344,14 @@ Swift 中`数组(Array)`和`字典(Dictionary)`类型均以结构体的形式实
 	// 42
 	println(c[0])
 	// 42
+```
 
 然而，当你给`a`附加新元素时，数组的长度`会`改变。
 当附加元素这一事件发生时，Swift 会创建这个数组的一个拷贝。从此以后，`a`将会是原数组的一个独立拷贝。
 
 拷贝发生后，如果再修改`a`中元素值的话，`a`将会返回与`b`，`c`不同的结果，因为后两者引用的是原来的数组：
 
+```swift
 	a.append(4)
 	a[0] = 777
 	println(a[0])
@@ -320,6 +360,7 @@ Swift 中`数组(Array)`和`字典(Dictionary)`类型均以结构体的形式实
 	// 42
 	println(c[0])
 	// 42
+```
 
 ### 确保数组的唯一性
 在操作一个数组，或将其传递给函数以及方法调用之前是很有必要先确定这个数组是有一个唯一拷贝的。通过在数组变量上调用`unshare`方法来确定数组引用的唯一性。(当数组赋给常量时，不能调用`unshare`方法)
@@ -328,10 +369,13 @@ Swift 中`数组(Array)`和`字典(Dictionary)`类型均以结构体的形式实
 
 在上一个示例的最后，`b`和`c`都引用了同一个数组。此时在`b`上调用`unshare`方法则会将`b`变成一个唯一个拷贝：
 
+```swift
 	b.unshare()
+```
 
 在`unshare`方法调用后再修改`b`中第一个元素的值，这三个数组(`a`,`b`,`c`)会返回不同的三个值：
 
+```swift
 	b[0] = -105
 	println(a[0])
 	// 77
@@ -339,14 +383,15 @@ Swift 中`数组(Array)`和`字典(Dictionary)`类型均以结构体的形式实
 	// -105
 	println(c[0])
 	// 42
-
+```
 
 ### 判定两个数组是否共用相同元素
 
 我们通过使用恒等运算符(identity operators)( === and !==)来判定两个数组或子数组共用相同的储存空间或元素。
 
-下面这个示例使用了“恒等于(identical to)” 运算符(===) 来判定`b`和`c`是否共用相同的数组元素：
+下面这个示例使用了“等同于(identical to)” 运算符(===) 来判定`b`和`c`是否共用相同的数组元素：
 
+```swift
 	if b === c {
 		println("b and c still share the same array elements.")
 	} else {
@@ -354,15 +399,18 @@ Swift 中`数组(Array)`和`字典(Dictionary)`类型均以结构体的形式实
 	}
 
 	// 输出 "b and c now refer totwo independent sets of array elements."
+```
 
 此外，我们还可以使用恒等运算符来判定两个子数组是否共用相同的元素。下面这个示例中，比较了`b`的两个相等的子数组，并且确定了这两个子数组都引用相同的元素：
 
+```swift
 	if b[0...1] === b[0...1] {
 		println("These two subarrays share the same elements.")
 	} else {
 		println("These two subarrays do not share the same elements.")
 	}
 	// 输出 "These two subarrays share the same elements."
+```
 
 ### 强制复制数组
 
@@ -370,14 +418,18 @@ Swift 中`数组(Array)`和`字典(Dictionary)`类型均以结构体的形式实
 
 下面这个示例中定义了一个`names`数组，其包含了七个人名。还定义了一个`copiedNames`变量，用以储存在`names`上调用`copy`方法所返回的结果：
 
+```swift
 	var names = ["Mohsen", "Hilary", "Justyn", "Amy", "Rich", "Graham", "Vic"]
-	var copiedNames = names.copy
+	var copiedNames = names.copy()
+```
 
 我们可以通过修改一个数组中某元素，并且检查另一个数组中对应元素的方法来判定`names`数组确已被复制。如果你将`copiedNames`中第一个元素从"`Mohsen`"修改为"`Mo`",则`names`数组返回的仍是拷贝发生前的"`Mohsen`"：
 
+```swift
 	copiedName[0] = "Mo"
 	println(name[0])
 	// 输出 "Mohsen"
+```
 
 > 注意：
 >
