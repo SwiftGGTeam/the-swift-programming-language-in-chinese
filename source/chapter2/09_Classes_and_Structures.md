@@ -114,9 +114,11 @@ Swift 中类和结构体有很多共同点。共同处在于：
 
 你也可以使用点语法为属性变量赋值：
 
+```swift
 	someVideoMode.resolution.width = 12880
 	println("The width of someVideoMode is now \(someVideoMode.resolution.width)")
 	// 输出 "The width of someVideoMode is now 1280"
+```
 
 >  注意：
 >
@@ -127,7 +129,7 @@ Swift 中类和结构体有很多共同点。共同处在于：
 所有结构体都有一个自动生成的成员逐一构造器，用于初始化新结构体实例中成员的属性。新实例中各个属性的初始值可以通过属性的名称传递到成员逐一构造器之中：
 
 ```swift
-	let vga = resolution（width:640, heigth: 480）
+	let vga = resolution(width:640, heigth: 480)
 ```
 
 与结构体不同，类实例没有默认的成员逐一构造器。[构造过程](14_Initialization.html)章节会对构造器进行更详细的讨论。
