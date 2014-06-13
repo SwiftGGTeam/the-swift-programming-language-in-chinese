@@ -17,7 +17,9 @@
 
 通常来说，编程语言教程中的第一个程序应该在屏幕上打印“Hello, world”。在 Swift 中，可以用一行代码实现：
 
+```swift
     println("Hello, world")
+```
 
 如果你写过 C 或者 Objective-C 代码，那你应该很熟悉这种形式——在 Swift 中，这行代码就是一个完整的程序。你不需要为了输入输出或者字符串处理导入一个单独的库。全局作用域中的代码会被自动当做程序的入口点，所以你也不需要`main`函数。你同样不需要在每个语句结尾写上分号。
 
@@ -32,17 +34,21 @@
 
 使用`let`来声明常量，使用`var`来声明变量。一个常量的值在编译时并不需要获取，但是你只能为它赋值一次。也就是说你可以用常量来表示这样一个值：你只需要决定一次，但是需要使用很多次。
 
+```swift
     var myVariable = 42
     myVariable = 50
     let myConstant = 42
+```
 
 常量或者变量的类型必须和你赋给它们的值一样。然而，声明时类型是可选的，声明的同时赋值的话，编译器会自动推断类型。在上面的例子中，编译器推断出`myVariable`是一个整数（integer）因为它的初始值是整数。
 
 如果初始值没有提供足够的信息（或者没有初始值），那你需要在变量后面声明类型，用冒号分割。
 
+```swift
     let implicitInteger = 70
     let implicitDouble = 70.0
     let explicitDouble: Double = 70
+```
 
 > 练习：
 >
@@ -50,10 +56,11 @@
 
 值永远不会被隐式转换为其他类型。如果你需要把一个值转换成其他类型，请显式转换。
 
+```swift
     let label = "The width is"
     let width = 94
     let widthLabel = label + String(width)
-
+```
 > 练习：
 >
 > 删除最后一行中的`String`，错误提示是什么？
