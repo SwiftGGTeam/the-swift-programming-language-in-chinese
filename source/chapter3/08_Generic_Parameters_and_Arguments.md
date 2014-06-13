@@ -109,9 +109,3 @@
 > generic-argument-list → generic-argument­ generic-argument­,­generic-argument-list­
 
 > generic-argument → type
-
-
-==============================================
-上篇：[模式](07_Patterns.md)
-
-下篇：[语法总结](09_Summary_of_the_Grammar.md)
