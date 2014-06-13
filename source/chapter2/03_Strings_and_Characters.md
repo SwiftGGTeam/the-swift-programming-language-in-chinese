@@ -288,7 +288,7 @@ println("There are \(act1SceneCount) scenes in Act 1")
 相似地，您可以用`hasSuffix`方法来计算发生在不同地方的场景数：
 
 ```
-“var mansionCount = 0
+var mansionCount = 0
 var cellCount = 0
 for scene in romeoAndJuliet {
     if scene.hasSuffix("Capulet's mansion") {
