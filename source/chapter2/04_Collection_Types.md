@@ -271,7 +271,7 @@ Swift 的字典使用`Dictionary<KeyType, ValueType>`定义,其中`KeyType`是�
     } else {
         println("That airport is not in the airports dictionary.")
     }
-    // 打印 "The name of the airport is Dublin INTernation."（机场的名字是都柏林国际）
+    // 打印 "The name of the airport is Dublin Internation."（机场的名字是都柏林国际）
 
 我们还可以使用下标语法来通过给某个键的对应值赋值为`nil`来从字典里移除一个键值对：
 
