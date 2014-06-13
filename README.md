@@ -11,6 +11,10 @@
 
 使用Gitbook制作，可以直接[在线阅读](http://numbbbbb.github.io/the-swift-programming-language-in-chinese/)。
 
+# 电子书下载
+
+PDF，Epub，mobi格式→[点我下载](http://yun.baidu.com/share/link?shareid=2138443313&uk=2301552351)
+
 # 当前阶段
 
 文章已经全部翻译完成，当前阶段为自由校对阶段，可以随意提issue和pr。
