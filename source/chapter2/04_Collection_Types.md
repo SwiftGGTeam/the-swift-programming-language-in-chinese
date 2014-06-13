@@ -170,7 +170,7 @@ Swift 数组对存储数据有具体要求。 不同于 Objective-C 的`NSArray`
 我们可以使用构造语法来创建一个由特定数据类型构成的空数组：
 
     var someInts = Int[]()
-    println("someInts is of type Int[] with \(someInts。count) items。")
+    println("someInts is of type Int[] with \(someInts.count) items。")
     // 打印 "someInts is of type Int[] with 0 items。"（someInts是0数据项的Int[]数组）
 
 注意`someInts`被设置为一个`Int[]`构造函数的输出所以它的变量类型被定义为`Int[]`。
