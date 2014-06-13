@@ -295,7 +295,7 @@ Swift 的字典使用`Dictionary<KeyType, ValueType>`定义,其中`KeyType`是�
 我们可以使用`for-in`循环来遍历某个字典中的键值对。每一个字典中的数据项都由`(key, value)`元组形式返回，并且我们可以使用暂时性常量或者变量来分解这些元组：
 
     for (airportCode, airportName) in airports {
-        prINTln("\(airportCode): \(airportName)")
+        println("\(airportCode): \(airportName)")
     }
     // TYO: Tokyo
     // LHR: London Heathrow
@@ -304,13 +304,13 @@ Swift 的字典使用`Dictionary<KeyType, ValueType>`定义,其中`KeyType`是�
 我们也可以通过访问他的`keys`或者`values`属性（都是可遍历集合）检索一个字典的键或者值：
 
     for airportCode in airports.keys {
-        prINTln("Airport code: \(airportCode)")
+        println("Airport code: \(airportCode)")
     }
     // Airport code: TYO
     // Airport code: LHR
 
     for airportName in airports.values {
-        prINTln("Airport name: \(airportName)")
+        println("Airport name: \(airportName)")
     }
     // Airport name: Tokyo
     // Airport name: London Heathrow
