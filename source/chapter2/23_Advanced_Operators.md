@@ -1,6 +1,5 @@
-> 翻译：xielingwang
-
-> 校对：numbbbbb
+> 翻译：xielingwang  
+> 校对：numbbbbb  
 
 # 高级运算符
 -----------------
@@ -305,8 +304,7 @@ let y = x &/ 0
 
 查阅Swift运算符的优先级和结合性的完整列表，请看[表达式](../chapter3/04_Expressions.html)。
 
-> 注意：
->
+> 注意：  
 Swift的运算符较C语言和Objective-C来得更简单和保守，这意味着跟基于C的语言可能不一样。所以，在移植已有代码到Swift时，注意去确保代码按你想的那样去执行。
 
 <a name="operator_functions"></a>
@@ -328,7 +326,6 @@ struct Vector2D {
 ```
 
 该运算符函数定义了一个全局的`+`函数，这个函数需要两个`Vector2D`类型的参数，返回值也是`Vector2D`类型。需要定义和实现一个中置运算的时候，在关键字`func`之前写上属性 `@infix` 就可以了。
-
 
 在这个代码实现中，参数被命名为了`left`和`right`，代表`+`左边和右边的两个`Vector2D`对象。函数返回了一个新的`Vector2D`的对象，这个对象的`x`和`y`分别等于两个参数对象的`x`和`y`的和。
 
@@ -406,8 +403,7 @@ let afterIncrement = ++toIncrement
 // afterIncrement 现在也是 (4.0, 5.0)
 ```
 
->注意：
->
+>注意：  
 默认的赋值符是不可重载的。只有组合赋值符可以重载。三目条件运算符 `a？b：c` 也是不可重载。
 
 ### 比较运算符
@@ -490,3 +486,4 @@ let plusMinusVector = firstVector +- secondVector
 ```
 
 这个运算符把两个向量的`x`相加，把向量的`y`相减。因为他实际是属于加减运算，所以让它保持了和加法一样的结合性和优先级(`left`和`140`)。查阅完整的Swift默认结合性和优先级的设置，请移步[表达式](../chapter3/04_Expressions.html);
+
