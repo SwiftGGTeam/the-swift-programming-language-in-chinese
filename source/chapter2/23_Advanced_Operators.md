@@ -485,9 +485,4 @@ let plusMinusVector = firstVector +- secondVector
 // plusMinusVector 此时的值为 (4.0, -2.0)
 ```
 
-<<<<<<< HEAD
 这个运算符把两个向量的`x`相加，把向量的`y`相减。因为他实际是属于加减运算，所以让它保持了和加法一样的结合性和优先级(`left`和`140`)。查阅完整的Swift默认结合性和优先级的设置，请移步[表达式](../chapter3/04_Expressions.html);
-=======
-这个运算符把两个向量的`x`相加，把向量的`y`相减。因为他实际是属于加减运算，所以让它保持了和加法一样的结合性和优先级(`left`和`140`)。查阅完整的Swift默认结合性和优先级的设置，请移步[表达式](../chapter3/04_Expressions.html);
-
->>>>>>> 698efafc26795151faeb79f5a98eab5a58d5721e
