@@ -1,5 +1,5 @@
-> 翻译：geek5nan  
-> 校对：dabing1022  
+> 翻译：geek5nan
+> 校对：dabing1022
 
 # 协议
 -----------------
@@ -13,7 +13,7 @@
 - [协议类型（Protocols as Types）](#protocols_as_types)
 - [委托(代理)模式（Delegation）](#delegation)
 - [在扩展中添加协议成员（Adding Protocol Conformance with an Extension）](#adding_protocol_conformance_with_an_extension)
-- [通过延展补充协议声明（Declaring Protocol Adoption with an Extension）](#declaring_protocol_adoption_with_an_extension)
+- [通过扩展补充协议声明（Declaring Protocol Adoption with an Extension）](#declaring_protocol_adoption_with_an_extension)
 - [集合中的协议类型（Collections of Protocol Types）](#collections_of_protocol_types)
 - [协议的继承（Protocol Inheritance）](#protocol_inheritance)
 - [协议合成（Protocol Composition）](#protocol_composition)
@@ -54,7 +54,9 @@ class SomeClass: SomeSuperClass, FirstProtocol, AnotherProtocol {
 <a name="property_requirements"></a>
 ## 属性要求
 
-`协议`能够要求其`遵循者`必须含有一些**特定名称和类型**的`实例属性(instance property)`或`类属性 (type property)`，也能够要求属性的`(设置权限)settable` 和`(访问权限)gettable`，但它不要求`属性`是`存储型属性(stored property)`还是`计算型属性(calculate property)`。
+`协议`能够要求其`遵循者`必须含有一些**特定名称和类型**的`实例属性(instance property)`或`类属性 (type property)`，也能够要求属性具有`(设置权限)settable` 和`(访问权限)gettable`，但它不要求`属性`是`存储型属性(stored property)`还是`计算型属性(calculate property)`。
+
+如果协议要求属性具有设置权限和访问权限，那常量存储型属性或者只读计算型属性都无法满足此要求。如果协议只要求属性具有访问权限，那任何类型的属性都可以满足此要求，无论这些属性是否具有设置权限。
 
 通常前置`var`关键字将属性声明为变量。在属性声明后写上`{ get set }`表示属性为可读写的。`{ get }`用来表示属性为可读的。即使你为可读的属性实现了`setter`方法，它也不会出错。
 
@@ -114,7 +116,7 @@ var ncc1701 = Starship(name: "Enterprise", prefix: "USS")
 
 `协议`能够要求其`遵循者`必备某些特定的`实例方法`和`类方法`。协议方法的声明与普通方法声明相似，但它不需要`方法`内容。
 
-> 注意：  
+> 注意：
 协议方法支持`变长参数(variadic parameter)`，不支持`默认参数(default parameter)`。
 
 前置`class`关键字表示协议中的成员为`类成员`；当协议用于被`枚举`或`结构体`遵循时，则使用`static`关键字。如下所示：
@@ -158,7 +160,7 @@ println("And another one: \(generator.random())")
 
 (*译者注：类中的成员为`引用类型(Reference Type)`，可以方便的修改实例及其属性的值而无需改变类型；而`结构体`和`枚举`中的成员均为`值类型(Value Type)`，修改变量的值就相当于修改变量的类型，而`Swift`默认不允许修改类型，因此需要前置`mutating`关键字用来表示该`函数`中能够修改类型*)
 
-> 注意：  
+> 注意：
 用`class`实现协议中的`mutating`方法时，不用写`mutating`关键字；用`结构体`，`枚举`实现协议中的`mutating`方法时，必须写`mutating`关键字。
 
 如下所示，`Togglable`协议含有`toggle`函数。根据函数名称推测，`toggle`可能用于**切换或恢复**某个属性的状态。`mutating`关键字表示它为`突变方法`：
@@ -201,7 +203,7 @@ lightSwitch.toggle()
 * 作为常量，变量，属性的类型
 * 作为数组，字典或其他容器中的元素类型
 
-> 注意：  
+> 注意：
 协议类型应与其他类型(Int，Double，String)的写法相同，使用驼峰式
 
 ```swift
@@ -304,7 +306,7 @@ class SnakesAndLadders: DiceGame {
 
 游戏的`初始化设置(setup)`被`SnakesAndLadders`类的`构造器(initializer)`实现。所有的游戏逻辑被转移到了`play`方法中。
 
-> 注意：  
+> 注意：
 因为`delegate`并不是该游戏的必备条件，`delegate`被定义为遵循`DiceGameDelegate`协议的可选属性
 
 `DicegameDelegate`协议提供了三个方法用来追踪游戏过程。被放置于游戏的逻辑中，即`play()`方法内。分别在游戏开始时，新一轮开始时，游戏结束时被调用。
@@ -358,7 +360,7 @@ game.play()
 
 即便无法修改源代码，依然可以通过`扩展(Extension)`来扩充已存在类型(*译者注： 类，结构体，枚举等*)。`扩展`可以为已存在的类型添加`属性`，`方法`，`下标`，`协议`等成员。详情请在[扩展](20_Extensions.html)章节中查看。
 
-> 注意：  
+> 注意：
 通过`扩展`为已存在的类型`遵循`协议时，该类型的所有实例也会随之添加协议中的方法
 
 `TextRepresentable`协议含有一个`asText`，如下所示：
@@ -400,7 +402,7 @@ println(game.asText())
 ```
 
 <a name="declaring_protocol_adoption_with_an_extension"></a>
-## 通过延展补充协议声明
+## 通过扩展补充协议声明
 
 当一个类型已经实现了协议中的所有要求，却没有声明时，可以通过`扩展`来补充协议声明：
 
@@ -423,7 +425,7 @@ println(somethingTextRepresentable.asText())
 // 输出 "A hamster named Simon"
 ```
 
-> 注意：  
+> 注意：
 即时满足了协议的所有要求，类型也不会自动转变，因此你必须为它做出明显的协议声明
 
 <a name="collections_of_protocol_types"></a>
@@ -534,7 +536,7 @@ wishHappyBirthday(birthdayPerson)
 
 `wishHappyBirthday`函数的形参`celebrator`的类型为`protocol<Named,Aged>`。可以传入任意`遵循`这两个协议的类型的实例
 
-> 注意：  
+> 注意：
 `协议合成`并不会生成一个新协议类型，而是将多个协议合成为一个临时的协议，超出范围后立即失效。
 
 <a name="checking_for_protocol_conformance"></a>
@@ -553,7 +555,7 @@ wishHappyBirthday(birthdayPerson)
 ```
 
 
-> 注意：  
+> 注意：
 `@objc`用来表示协议是可选的，也可以用来表示暴露给`Objective-C`的代码，此外，`@objc`型协议只对`类`有效，因此只能在`类`中检查协议的一致性。详情查看*[Using Siwft with Cocoa and Objectivei-c](https://developer.apple.com/library/prerelease/ios/documentation/Swift/Conceptual/BuildingCocoaApps/index.html#//apple_ref/doc/uid/TP40014216)*。
 
 ```swift
@@ -618,7 +620,7 @@ for object in objects {
 
 像`someOptionalMethod?(someArgument)`一样，你可以在可选方法名称后加上`?`来检查该方法是否被实现。`可选方法`和`可选属性`都会返回一个`可选值(optional value)`，当其不可访问时，`?`之后语句不会执行，并返回`nil`。
 
-> 注意：  
+> 注意：
 可选协议只能在含有`@objc`前缀的协议中生效。且`@objc`的协议只能被`类`遵循。
 
 `Counter`类使用`CounterDataSource`类型的外部数据源来提供`增量值(increment amount)`，如下所示：
@@ -632,7 +634,7 @@ for object in objects {
 
 `CounterDataSource`含有`incrementForCount`的`可选方法`和`fiexdIncrement`的`可选属性`。
 
-> 注意：  
+> 注意：
 `CounterDataSource`中的属性和方法都是可选的，因此可以在类中声明但不实现这些成员，尽管技术上允许这样做，不过最好不要这样写。
 
 `Counter`类含有`CounterDataSource?`类型的可选属性`dataSource`，如下所示：
