@@ -285,7 +285,7 @@ class Player {
 }
 ```
 
-`Player`类创建一个新的`LevelTracker`实例来监测这个用户的发展进度。他提供了`completedLevel`方法：一旦玩家完成某个指定等级就调用它。这个方法为所有玩家解锁下一等级，并且将当前玩家的进度更新为下一等级。（我们忽略了`advanceToLevel`返回的布尔值，因为之前调用`LevelTracker.unlockLevel`时就知道了这个等级已经被解锁了）。
+`Player`类创建一个新的`LevelTracker`实例来监测这个用户的发展进度。它提供了`completedLevel`方法：一旦玩家完成某个指定等级就调用它。这个方法为所有玩家解锁下一等级，并且将当前玩家的进度更新为下一等级。（我们忽略了`advanceToLevel`返回的布尔值，因为之前调用`LevelTracker.unlockLevel`时就知道了这个等级已经被解锁了）。
 
 你还可以为一个新的玩家创建一个`Player`的实例，然后看这个玩家完成等级一时发生了什么：
 
@@ -297,7 +297,7 @@ println("highest unlocked level is now \(LevelTracker.highestUnlockedLevel)")
 ）
 ```
 
-如果你创建了第二个玩家，并尝试让他开始一个没有被任何玩家解锁的等级，那么这次设置玩家当前等级的尝试将会失败：
+如果你创建了第二个玩家，并尝试让它开始一个没有被任何玩家解锁的等级，那么这次设置玩家当前等级的尝试将会失败：
 
 ```
 player = Player(name: "Beto")
