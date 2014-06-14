@@ -90,7 +90,7 @@ class Bicycle: Vehicle {
     }
 }
 ```
-
+preview
  `Bicycle`是`Vehicle`的子类，`Vehicle`是`Bicycle`的超类。新的`Bicycle`类自动获得`Vehicle`类的特性，比如 `maxPassengers`和`numberOfWheels`属性。你可以在子类中定制这些特性，或添加新的特性来更好地描述`Bicycle`类。
 
 `Bicycle`类定义了一个构造器来设置它定制的特性（自行车只有2个轮子）。`Bicycle`的构造器调用了它父类`Vehicle`的构造器 `super.init()`，以此确保在`Bicycle`类试图修改那些继承来的属性前`Vehicle`类已经初始化过它们了。
