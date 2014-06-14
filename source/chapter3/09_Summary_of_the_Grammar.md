@@ -1,4 +1,4 @@
-> 翻译：StanZhai
+> 翻译：stanzhai
 
 > 校对：xielingwang
 

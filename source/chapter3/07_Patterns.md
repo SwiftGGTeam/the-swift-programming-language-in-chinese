@@ -1,6 +1,6 @@
 > 翻译：honghaoz
 
-> 校对：numbbbbb、stanzhai
+> 校对：numbbbbb, stanzhai
 
 # 模式（Patterns）
 -----------------
